@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure 1.2//EN" "http://jetty.mortbay.org/configure_1_2.dtd">
+
+<Configure class="org.mortbay.jetty.Server">
+
+  <Set name="requestsPerGC">50</Set>
+
+<!-- Recommended: Use HTTPS in port 8443 when the Engine and GUI run
+     in different machines.
+-->
+<!--
+  <Call name="addListener">
+    <Arg>
+      <New class="org.mortbay.http.SunJsseListener">
+        <Set name="Port">8443</Set>
+        <Set name="MinThreads">5</Set>
+        <Set name="MaxThreads">30</Set>
+        <Set name="acceptQueueSize">5</Set>
+        <Set name="MaxIdleTimeMs">30000</Set>
+        <Set name="lowResources">8</Set>
+        <Set name="LowResourcePersistTimeMs">10000</Set>
+        <Set name="Keystore"><SystemProperty name="empweb.home"/>/ewengine-keystore</Set>
+        <Set name="Password">pepepepe</Set>
+        <Set name="KeyPassword">pepepepe</Set>
+        <Set name="useDefaultTrustStore">false</Set>
+        <Set name="NeedClientAuth">true</Set>
+      </New>
+    </Arg>
+  </Call>
+-->
+
+  <Call name="addListener">
+    <Arg>
+      <New class="org.mortbay.http.SocketListener">
+        <!-- UNCOMENT IN A PRODUCTION ENVIRONMENT
+             <Set name="Host">localhost</Set>
+        -->
+
+        <Set name="Port">8086</Set>
+<!--        <Set name="ConfidentialPort">8443</Set> -->
+<!--        <Set name="IntegralPort">8443</Set> -->
+        <Set name="MinThreads">5</Set>
+        <Set name="MaxThreads">70</Set>
+        <Set name="acceptQueueSize">5</Set>
+        <Set name="MaxIdleTimeMs">30000</Set>
+        <Set name="lowResources">8</Set>
+        <Set name="LowResourcePersistTimeMs">10000</Set>
+      </New>
+    </Arg>
+  </Call>
+
+
+  <Set name="WebApplicationConfigurationClassNames">
+    <Array type="java.lang.String">
+      <Item>org.mortbay.jetty.servlet.XMLConfiguration</Item>
+      <Item>org.mortbay.jetty.servlet.JettyWebConfiguration</Item>
+      <Item>net.kalio.utils.jetty.ClassPathConfiguration</Item>
+    </Array>
+  </Set>
+
+
+  <Call name="addWebApplication">
+    <Arg>/ewengine</Arg>
+    <Arg><SystemProperty name="empweb.home"/>/engine</Arg>
+
+    <Set name="extractWAR">false</Set>
+    <Set name="defaultsDescriptor">org/mortbay/jetty/servlet/webdefault.xml</Set>
+    <Set name="classLoaderJava2Compliant">false</Set>
+
+    <Set name="RequestLog">
+      <New class="org.mortbay.http.NCSARequestLog">
+        <Set name="filename"><SystemProperty name="empweb.home" default="."/>/logs/yyyy_mm_dd-engine-access.log</Set>
+        <Set name="retainDays">90</Set>
+        <Set name="append">true</Set>
+        <Set name="extended">true</Set>
+        <Set name="LogTimeZone">GMT</Set>
+      </New>
+    </Set>
+  </Call>
+
+
+      <!--    Verbose Mode
+         -1 = INFO OFF
+          0  = INFO
+          1  = TRACE
+        -->
+      <!--  <Set name="verbose">0</Set> -->
+<!--
+  <Call class="org.apache.commons.logging.LogFactory" name="getFactory">
+    <Call name="getInstance">
+      <Arg/>
+      <Call name="reset"/>
+      <Call name="add">
+        <Arg>
+          <New class="org.mortbay.log.OutputStreamLogSink">
+            <Set name="filename"><SystemProperty name="empweb.home"/>/logs/yyyy_mm_dd-engine-errors.log</Set>
+            <Set name="retainDays">90</Set>
+            <Set name="append">true</Set>
+            <Set name="logLabels">true</Set>
+            <Set name="logStackSize">true</Set>
+            <Set name="logStackTrace">true</Set>
+            <Set name="logOneLine">false</Set>
+            <Set name="suppressStack">false</Set>
+            <Set name="logTimeZone">GMT</Set>
+          </New>
+        </Arg>
+      </Call>
+    </Call>
+  </Call>
+-->
+</Configure>

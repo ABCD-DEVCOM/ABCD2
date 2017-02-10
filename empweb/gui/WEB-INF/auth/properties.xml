@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <user id="ВПАДИМИР">
+    <property id="default-object-db" />
+    <property id="default-user-db" />
+  </user>
+  <user id="abcd">
+    <property id="accountenabled">on</property>
+    <property id="library-ARQ">on</property>
+    <property id="libraryHoursUnrestricted-VET">on</property>
+    <property id="libraryHoursUnrestricted-ING">on</property>
+    <property id="libraryHoursUnrestricted-AGR">on</property>
+    <property id="library-VET">on</property>
+    <property id="connectfrom-iplist" />
+    <property id="default-object-db">objetos</property>
+    <property id="libraryHoursUnrestricted-ARQ">on</property>
+    <property id="connectfrom-anywhere">on</property>
+    <property id="library-ING">on</property>
+    <property id="default-user-db">usuarios</property>
+    <property id="library-AGR">on</property>
+  </user>
+  <user id="ernesto">
+    <property id="accountenabled">on</property>
+    <property id="libraryHoursUnrestricted-AGR">on</property>
+    <property id="default-object-db">*</property>
+    <property id="connectfrom-iplist" />
+    <property id="connectfrom-anywhere">on</property>
+    <property id="default-user-db">*</property>
+    <property id="library-AGR">on</property>
+  </user>
+  <user id="egbert">
+    <property id="accountenabled">on</property>
+    <property id="library-ARQ">on</property>
+    <property id="libraryHoursUnrestricted-VET">on</property>
+    <property id="libraryHoursUnrestricted-ING">on</property>
+    <property id="libraryHoursUnrestricted-AGR">on</property>
+    <property id="library-VET">on</property>
+    <property id="connectfrom-iplist" />
+    <property id="default-object-db">objetos</property>
+    <property id="libraryHoursUnrestricted-ARQ">on</property>
+    <property id="connectfrom-anywhere">on</property>
+    <property id="library-ING">on</property>
+    <property id="default-user-db">usuarios</property>
+    <property id="library-AGR">on</property>
+  </user>
+  <user id="albertor">
+    <property id="accountenabled">on</property>
+    <property id="libraryHoursUnrestricted-AGR">on</property>
+    <property id="default-object-db">*</property>
+    <property id="connectfrom-iplist" />
+    <property id="connectfrom-anywhere">on</property>
+    <property id="default-user-db">*</property>
+    <property id="library-AGR">on</property>
+  </user>
+  <user id="admin">
+    <property id="libraryHoursUnrestricted-ING">on</property>
+    <property id="library-ING">on</property>
+    <property id="libraryHoursUnrestricted-ARQ">on</property>
+    <property id="accountenabled">on</property>
+    <property id="default-object-db">objetos</property>
+    <property id="default-user-db">*</property>
+    <property id="library-AGR">on</property>
+    <property id="connectfrom-anywhere">on</property>
+    <property id="library-ARQ">on</property>
+    <property id="connectfrom-iplist" />
+    <property id="libraryHoursUnrestricted-AGR">on</property>
+  </user>
+</properties>

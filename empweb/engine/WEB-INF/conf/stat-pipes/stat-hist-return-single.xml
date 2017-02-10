@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-hist-return-single" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListReturns"><params>
+    <param name="script">
+<![CDATA[
+
+te = tc.get(TransactionContext.TRANSACTION_EXTRAS);
+userDb = te.get("userDb");
+objectDb= te.get("objectDb");
+operatorLocation=te.get("operatorLocation");
+if (te != null)
+{
+	searchValue = te.get("loanId");
+}
+else
+   return false;
+
+
+print ("-------------------->"+searchValue);
+
+returnFilter = ewdb.getEwdbObjectFactory().createReturn();
+returnFilter.setLoanId(searchValue);
+
+tc.put('searchFilter', returnFilter);
+return true;
+
+]]>
+    </param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GetHistoricTransactions" name="GetHistoricTransactions" />
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListIds">
+  <params>
+    <param name="script">
+<![CDATA[
+
+tl = tc.get("searchResult");
+
+result.append("<transactionList xmlns=\"http://kalio.net/empweb/schema/transactionlist/v1\">");
+for (tr in tl)
+  {
+    result.append(tr.toXMLString());
+  }
+result.append("</transactionList>");
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+</transaction>

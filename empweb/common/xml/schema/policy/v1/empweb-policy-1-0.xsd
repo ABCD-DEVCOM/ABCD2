@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/policy/v1" elementFormDefault="qualified" 
+            xmlns="http://kalio.net/empweb/schema/policy/v1" 
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Policy Schema. Version 1 / January 2005
+  ===================================================
+
+  Description:
+  This schema specifies the XML elements that describe a policy.
+
+
+  Schema location
+  http://kalio.net/empweb/schema/policy/v1/empweb-policy-1-0.xsd
+
+  Minimum valid XML example:
+  <policy  id="verano2322"  active="true" xmlns="http://kalio.net/empweb/schema/policy/v1">
+    <name>verano</name>
+    <profiles>
+      <profile  id="P_R_verano_323232222">
+        <userClass>*</userClass>
+        <objectCategory>*</objectCategory>
+      </profile>
+   </profiles>
+  </policy>
+
+
+  Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  January 2005
+
+  -->
+
+
+  <!-- Summary of policies   
+      <policies xmlns="http://kalio.net/empweb/schema/policy/v1">
+        <policy id="summer332">
+          <name>summer</name>
+        </policy>
+  
+        <policy id="winter2005" active="true">
+          <name>verano</name>
+        </policy>
+      </policies>
+  -->
+  <xsd:element name="policies">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="policy" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="name" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:string" use="required"/>
+            <xsd:attribute name="active" type="xsd:boolean" default="false"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <!-- an individual policy in full detail as shown in the top comment of the file -->
+  <xsd:element name="policy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name" type="xsd:string"/>
+
+        <xsd:element name="profiles">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="profile" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+		                <xsd:element name="userClass" type="xsd:string"/>
+		                <xsd:element name="objectCategory" type="xsd:string"/>
+		              </xsd:sequence>
+		              <xsd:attribute name="id" type="xsd:string" use="required"/>
+	              </xsd:complexType>
+	            </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+	      </xsd:element>
+      </xsd:sequence>
+
+      <xsd:attribute name="id" type="xsd:string" use="required"/>		    
+      <xsd:attribute name="active" type="xsd:boolean" default="false"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

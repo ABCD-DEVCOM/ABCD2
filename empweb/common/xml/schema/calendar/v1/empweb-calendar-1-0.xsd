@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified" attributeFormDefault="unqualified"
+    targetNamespace="http://kalio.net/empweb/schema/calendar/v1"
+    xmlns="http://kalio.net/empweb/schema/calendar/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/soap/ http://schemas.xmlsoap.org/wsdl/soap/ http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+<!--
+Empweb Calendar Schema. Version 1 / January 2005
+===================================================
+
+Description:
+This schema specifies the XML elements that describe a calendar.
+
+
+Schema location
+http://kalio.net/empweb/schema/calendar/v1/empweb-calendar-1-0.xsd
+
+Minimum valid XML example:
+<calendar id="20041117_1212" xmlns="http://kalio.net/empweb/schema/calendar/v1">
+  <year value="2004">
+    <month value="01">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"></day>
+      ...
+    </month>
+    ...
+  </year>
+</calendar>
+
+The attribut "dow" of element "day" refers to day-of-week, with 1 meaning Sunday.
+
+Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+All Rights Reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+January 2005
+
+-->
+
+  <!-- root element: calendars -->
+  <xsd:element name="calendars">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="calendar" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="year">
+                <xsd:complexType>
+                  <xsd:attribute name="value" type="xsd:string"/>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+
+  <!-- Root element: calendar -->
+  <xsd:element name="calendar">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="year" type="yearType"/>
+      </xsd:sequence>
+
+      <xsd:attribute name="id" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <!-- YEAR TYPE -->
+  <xsd:complexType name="yearType">
+    <xsd:sequence>
+      <xsd:element name="month" type="monthType" minOccurs="0" maxOccurs="12"/>
+    </xsd:sequence>
+
+    <xsd:attribute name="value" type="xsd:integer" use="required"/>
+  </xsd:complexType>
+
+
+  <!-- MONTH TYPE -->
+  <xsd:complexType name="monthType">
+    <xsd:sequence>
+      <xsd:element name="day" type="dayType" minOccurs="0" maxOccurs="31" />
+    </xsd:sequence>
+
+    <xsd:attribute name="value" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1"/>
+          <xsd:maxInclusive value="12"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+
+  <!-- DAY TYPE -->
+  <xsd:complexType name="dayType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="skipDay" />
+    </xsd:sequence>
+
+    <xsd:attribute name="value" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1"/>
+          <xsd:maxInclusive value="31"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+
+    <xsd:attribute name="dow">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1"/>
+          <xsd:maxInclusive value="7"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<policy mockup="true" id="verano2322"
+        xmlns="http://kalio.net/empweb/schema/policy/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/policy/v1 ../../../common/xml/schema/policy/v1/empweb-policy-1-0.xsd ">
+
+      <name>verano</name>
+
+      <profiles>
+        <profile id="P_R_verano_32232">
+          <userClass>P</userClass>
+          <objectCategory>R</objectCategory>
+          </profile>
+          
+        <profile id="x_x_verano_32232">
+          <userClass>*</userClass>
+          <objectCategory>*</objectCategory>
+        </profile>
+        
+      </profiles>
+      
+</policy>
+

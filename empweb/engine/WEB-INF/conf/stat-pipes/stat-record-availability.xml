@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction  classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut"
+              name="stat-record-availability" type="statistic"
+              xmlns="http://kalio.net/empweb/schema/transaction/v1"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1
+                                  ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+</environment>
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="PrepareGetObject">
+  <params>
+    <param name="script">
+<![CDATA[
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras?.size() > 0)
+  {
+    recordId= transExtras.get("recordId");
+    objectDb = transExtras.get("objectDb");
+
+    tc.put(TransactionContext.RECORD_ID, recordId);
+    tc.put(TransactionContext.OBJECT_DB, objectDb);
+
+    return true;
+  }
+else
+  {
+    msg.addText('en', 'Missing parameters');
+    msg.addText('es', 'Parámetros ausentes');
+    return false;
+  }
+]]>
+    </param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GetObject" name="GetObject">
+  <doc>Get Object DOM (mods) from (copyId/recordId, objectDb)</doc>
+  <params>
+    <param name="mode">recordId</param>
+  </params>
+</rule>
+
+<!-- ========================================================================== -->
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="true" name="ReturnAvailability">
+  <params>
+    <param name="script">
+<![CDATA[
+def mods= tc.getObjectDOM();                // Put into the TC by GetObject
+
+// Obtain some parameters from Transaction Extras
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+recordId=       transExtras.recordId;
+objectDb=       transExtras.objectDb;
+volumeId=       transExtras.volumeId;
+objectCategory= transExtras.objectCategory;
+objectLocation= transExtras.objectLocation;
+
+
+//Prepare constraints, only admit null or non-empty (if empty is passed, convert it to null)
+volumeId=       (volumeId       == '') ? null : volumeId;
+objectCategory= (objectCategory == '') ? null : objectCategory;
+objectLocation= (objectLocation == '') ? null : objectLocation;
+
+constraints=  [ "h:volumeId":volumeId,
+                "h:copyLocation":objectLocation,
+                "h:objectCategory":objectCategory
+              ];
+
+
+// Gather Set of copyLocations, taken from the MODS (for contraints of volumeId, objectCategory, objectLocation)
+locations= EngineUtil.collectForEachCopy(mods, "h:copyLocation", constraints, null) as Set;
+loc2CatMap= mapLoc2Cat(mods, locations, constraints)
+
+result << """
+<values>
+  <value name='availability'>
+""";
+
+for (loc in loc2CatMap.keySet())                        // for each copyLocation in the map
+  {
+    result << "    <location name='${loc}'>\n"
+    for (cat in loc2CatMap[loc])                        // for each objectCategory in that copyLocation
+      {
+        // get total holdings for these constraints
+        constraints["h:copyLocation"]= loc;
+        constraints["h:objectCategory"]= cat;
+        holdTotal= EngineUtil.collectForEachCopy(mods, "h:copyId", constraints, null).size();
+
+        long timei= System.currentTimeMillis(); // BBB debug
+        availabilities= getAvailabilities(recordId, objectDb, volumeId, cat, loc);
+        long timef= System.currentTimeMillis(); // BBB debug
+        result <<
+              "      <category time='${(timef-timei)}' name='$cat' holdings='$holdTotal'>\n" <<
+                      availabilities <<
+              "      </category>\n"
+      }                                                 // each cat in loc
+    result << "    </location>\n"
+  }                                                     // each location
+
+result << """
+  </value>
+</values>
+""";
+
+println result; // BBBBBBBB debug
+
+return true;
+
+//==================================================
+//=== Aux functions
+//==================================================
+
+// Return a Map from copyLocation to Set of object categories using
+//    * key: copyLocation
+//    * value: Set of objectCategories at copyLocation
+// All the values are collected from the mods document for the given map of copy constraints.
+Map mapLoc2Cat(mods, locations, constraints)
+{
+  l2c= [:]
+  locations.each
+    { constraints["h:copyLocation"]= it;              // Set the copyLocation constraint
+      cats= EngineUtil.collectForEachCopy(mods, "h:objectCategory", constraints, null) as Set;
+
+      l2c[it]= cats;                                  // For location "it", we have a Set of categories "cats"
+    }
+
+  return l2c;
+}
+
+//------------------------------------------------------------
+
+def getAvailabilities(recordId, objectDb, volumeId, cat, loc)
+{
+  StringBuffer ret= new StringBuffer();         // the string buffer we will return
+
+  // parameters
+  startDate=      transExtras.startTimestamp;
+  endDate=        transExtras.endTimestamp;
+  grainParam=     transExtras.granularity;      // in seconds or aliases: hour, day
+
+  grainAmount= 1;                               // default grain amount to add to Calendar field (add 1 unit)
+  grainAlias= [ 'day':GregorianCalendar.DATE,
+                'hour':GregorianCalendar.HOUR_OF_DAY];
+  calField= grainAlias[grainParam];             // search for alias granularity
+  if (calField == null)                         // if grainParam not in map...
+    {
+      calField= GregorianCalendar.SECOND;       // ...assume literal number passed by default
+      grainAmount= grainParam.toInteger();
+    }
+
+
+  tel= EngineUtil.getTransactionEventList(recordId, objectDb, volumeId, cat, loc);
+
+  // Create GregorianCalendar objects from startDate and endDate
+  // Use default values if they are missing.
+  calStart= startDate ? Calendars.parseTimestamp(startDate) :
+                        new GregorianCalendar();
+  calEnd=   endDate ? Calendars.parseTimestamp(endDate) :
+                      Calendars.advanceDays(calStart, 45, false);   // TODO: BBB hardcoded 45 days
+
+
+  while (calStart < calEnd)
+    {
+      calNext= calStart.clone();
+      calNext.add(calField , grainAmount);
+      calNext.add(GregorianCalendar.SECOND, -1);
+
+      avail= tel.getAvailAt(calNext);                               // avail @ end of grain
+
+      // attributes: start, end, maxAvail, [noresAttr]
+      startTS= Calendars.getFullTimestamp(calStart);
+      endTS= Calendars.getFullTimestamp(calNext);
+      maxAvailAttr= tel.getMaxAvailDuring(startTS, endTS);          // max avail during [start, end)
+      noresAttr=  Calendars.isSkipDay(calNext) ? "noreserv='true'" : "";
+
+      ret << "        <avail start='$startTS' end='$endTS' maxAvail='$maxAvailAttr' $noresAttr>$avail</avail>\n";
+
+      calNext.add(GregorianCalendar.SECOND, 1);
+      calStart= calNext;
+    }
+
+
+  return ret;
+}
+]]>
+    </param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="false" name="Mockup">
+  <params>
+    <param name="script">
+<![CDATA[
+
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras != null) {
+  recordId = transExtras.get("recordId");
+  objectDb = transExtras.get("objectDb");
+  volumeId = transExtras.get("volumeId");
+  objectCategory = transExtras.get("objectCategory");
+  objectLocation = transExtras.get("objectLocation");
+  startDate = transExtras.get("startTimestamp");
+  endDate = transExtras.get("endTimestamp");
+  granularity = transExtras.get("granularity");   // in seconds or aliases: minute, hour, day, month, year
+
+  //recordAvailability = tc.get('recordAvailability');
+
+  // MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP
+  // MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP MOCKUP
+
+  recordAvailability = ['AGR':['R','RX'], 'ING':['R','RX']];
+  result.append("<values>\n");
+  result.append("  <value name='availability'>\n");
+  for (location in recordAvailability) {
+    result.append("    <location name='"+location.key+"'>\n")
+    for (category in location.value) {
+      result.append("      <category name='"+category+"'>\n")
+        for (d in (1..28)) {
+          result.append("        <avail "+(((d*7%5)==1)?"noreserv='true' ":" ")+"start='200702"+((d<10)?('0'+d):(d))+"000000' end='200702"+((d<10)?('0'+d):(d))+"235959'>"+(d*3%5)+"</avail>\n")
+        }
+        for (d in (1..15)) {
+          result.append("        <avail "+(((d*7%5)==1)?"noreserv='true' ":" ")+"start='200703"+((d<10)?('0'+d):(d))+"000000' end='200703"+((d<10)?('0'+d):(d))+"235959'>"+(d*3%5)+"</avail>\n")
+        }
+
+      result.append("      </category>\n")
+    }
+    result.append("    </location>\n")
+  }
+  result.append("  </value>\n");
+  result.append("</values>\n");
+
+  // END MOCKUP END MOCKUP END MOCKUP END MOCKUP END MOCKUP END MOCKUP
+  // END MOCKUP END MOCKUP END MOCKUP END MOCKUP END MOCKUP END MOCKUP
+
+  return true;
+
+} else {
+  return false;
+}
+]]>
+    </param>
+  </params>
+</rule>
+</transaction>
+

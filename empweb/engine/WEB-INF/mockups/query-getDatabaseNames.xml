@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<databases mockup="true" xmlns="http://kalio.net/empweb/schema/databases/v1">
+  <database type="users">STUDENTS</database>
+  <database type="objects">LibraryOne</database>
+  <database type="objects">LibraryTwo</database>
+  <database type="other">SomeOTHER</database>
+</databases>
+

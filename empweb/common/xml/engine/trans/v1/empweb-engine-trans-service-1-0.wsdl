@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="empweb-engine-trans-service"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+  targetNamespace="http://kalio.net/empweb/engine/trans/v1"
+  xmlns:tns="http://kalio.net/empweb/engine/trans/v1"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/soap/ http://schemas.xmlsoap.org/wsdl/soap/ http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Engine Trans Service WSDL - Version 1 / Jan 2005
+  ==============================================================
+  This wsdl describes the services provided by the EmpwebEngineTransService.
+
+  Schema location
+  http://kalio.net/empweb/engine/trans/v1/empweb-engine-trans-service-1-0.wsdl
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All Rights Reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+
+  === July 2005
+  * added engine result types
+  * removed operation result 
+  
+  === August 2005
+  * added cancelSuspension 
+
+  === Feb 2006
+  * added transactionExtras
+  * cancelReservation with operator and obs
+  * cancelWait
+
+  === Mar 2006
+  * added suspensionSingle and fineSingle
+
+  -->
+
+  <!-- ======== types ======== -->
+  <wsdl:types>
+    <xsd:schema
+      targetNamespace="http://kalio.net/empweb/engine/trans/v1" elementFormDefault="qualified"  
+      xmlns="http://kalio.net/empweb/engine/trans/v1"
+
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+      xmlns:ewloa="http://kalio.net/empweb/schema/loan/v1"
+      xmlns:ewres="http://kalio.net/empweb/schema/reservation/v1"
+      xmlns:ewsus="http://kalio.net/empweb/schema/suspension/v1"
+      xmlns:ewfin="http://kalio.net/empweb/schema/fine/v1"
+      xmlns:ewwai="http://kalio.net/empweb/schema/wait/v1"
+      xmlns:ewtr="http://kalio.net/empweb/schema/transactionresult/v1"
+      xmlns:ewer="http://kalio.net/empweb/schema/engineresult/v1">
+
+
+      <xsd:import namespace="http://kalio.net/empweb/schema/loan/v1"
+        schemaLocation="../../../schema/loan/v1/empweb-loan-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/reservation/v1"
+        schemaLocation="../../../schema/reservation/v1/empweb-reservation-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/suspension/v1"
+        schemaLocation="../../../schema/suspension/v1/empweb-suspension-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/fine/v1"
+        schemaLocation="../../../schema/fine/v1/empweb-fine-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/wait/v1"
+        schemaLocation="../../../schema/wait/v1/empweb-wait-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/transactionresult/v1"
+        schemaLocation="../../../schema/transactionresult/v1/empweb-transactionresult-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/engineresult/v1"
+        schemaLocation="../../../schema/engineresult/v1/empweb-engineresult-1-0.xsd"/>
+
+
+      <!--====== services types =================-->
+      <!-- auxiliary transactionExtras type -->
+      <xsd:complexType name="transactionExtrasType">
+        <xsd:sequence>
+          <xsd:element name="params">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="param" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:complexType>
+                    <xsd:simpleContent>
+                      <xsd:extension base="xsd:string">
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                      </xsd:extension>
+                    </xsd:simpleContent>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence> 
+      </xsd:complexType>
+      
+      
+      <!-- loanSingle types -->
+      <xsd:element name="loanSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string"/>
+            <xsd:element name="copyId" type="xsd:string"/>
+            <xsd:element name="userDb" type="xsd:string"/>
+            <xsd:element name="objectDb" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType"  />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="loanSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- reservationSingle types -->
+      <xsd:element name="reservationSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string"/>
+            <xsd:element name="recordId" type="xsd:string"/>
+            <xsd:element name="volumeId" type="xsd:string"/>
+            <xsd:element name="objectCategory" type="xsd:string"/>
+            <xsd:element name="userDb" type="xsd:string"/>
+            <xsd:element name="objectDb" type="xsd:string"/>
+            <xsd:element name="objectLocation" type="xsd:string"/>
+            <xsd:element name="startDate" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="reservationSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- renewalSingle types -->
+      <xsd:element name="renewalSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string"/>
+            <xsd:element name="copyId" type="xsd:string"/>
+            <xsd:element name="userDb" type="xsd:string"/>
+            <xsd:element name="objectDb" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="renewalSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- returnSingle types -->
+      <xsd:element name="returnSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="copyId" type="xsd:string"/>
+            <xsd:element name="objectDb" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="returnSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- suspensionSingle types -->
+      <xsd:element name="suspensionSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId"         type="xsd:string"/>
+            <xsd:element name="userDb"         type="xsd:string"/>
+            <xsd:element name="suspensionDays" type="xsd:string"/>
+            <xsd:element name="operatorId"     type="xsd:string"/>
+            <xsd:element name="obs"            type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType"  />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="suspensionSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- fineSingle types -->
+      <xsd:element name="fineSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId"     type="xsd:string"/>
+            <xsd:element name="userDb"     type="xsd:string"/>
+            <xsd:element name="amount"     type="xsd:string"/>
+            <xsd:element name="operatorId" type="xsd:string"/>
+            <xsd:element name="obs"        type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType"  />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="fineSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- cancelReservationSingle types -->
+      <xsd:element name="cancelReservationSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="operatorId" type="xsd:string"/>
+            <xsd:element name="obs" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="cancelReservationSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- cancelWaitSingle types -->
+      <xsd:element name="cancelWaitSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="operatorId" type="xsd:string"/>
+            <xsd:element name="obs" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="cancelWaitSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- cancelSuspensionSingle types -->
+      <xsd:element name="cancelSuspensionSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="operatorId" type="xsd:string"/>
+            <xsd:element name="obs" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="cancelSuspensionSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <!-- cancelFineSingle types -->
+      <xsd:element name="cancelFineSingle">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="operatorId" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:string"/>
+            <xsd:element name="obs" type="xsd:string"/>
+            <xsd:element name="transactionExtras" type="transactionExtrasType" nillable="true" minOccurs="0" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="cancelFineSingleReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- doTransaction types -->
+      <xsd:element name="doTransaction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="body" minOccurs="0">
+              <xsd:complexType>
+                <xsd:sequence minOccurs="0">
+                  <xsd:any processContents="skip"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="doTransactionReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtr:transactionResult"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </wsdl:types>
+
+
+  <!-- ======== messages ======== -->
+  <wsdl:message name="loanSingleRequest">
+    <wsdl:part element="tns:loanSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="loanSingleResponse">
+    <wsdl:part element="tns:loanSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="reservationSingleRequest">
+    <wsdl:part element="tns:reservationSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="reservationSingleResponse">
+    <wsdl:part element="tns:reservationSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="renewalSingleRequest">
+    <wsdl:part element="tns:renewalSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="renewalSingleResponse">
+    <wsdl:part element="tns:renewalSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="returnSingleRequest">
+    <wsdl:part element="tns:returnSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="returnSingleResponse">
+    <wsdl:part element="tns:returnSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="suspensionSingleRequest">
+    <wsdl:part element="tns:suspensionSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="suspensionSingleResponse">
+    <wsdl:part element="tns:suspensionSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="fineSingleRequest">
+    <wsdl:part element="tns:fineSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="fineSingleResponse">
+    <wsdl:part element="tns:fineSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="cancelReservationSingleRequest">
+    <wsdl:part element="tns:cancelReservationSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="cancelReservationSingleResponse">
+    <wsdl:part element="tns:cancelReservationSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="cancelWaitSingleRequest">
+    <wsdl:part element="tns:cancelWaitSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="cancelWaitSingleResponse">
+    <wsdl:part element="tns:cancelWaitSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="cancelSuspensionSingleRequest">
+    <wsdl:part element="tns:cancelSuspensionSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="cancelSuspensionSingleResponse">
+    <wsdl:part element="tns:cancelSuspensionSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="cancelFineSingleRequest">
+    <wsdl:part element="tns:cancelFineSingle" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="cancelFineSingleResponse">
+    <wsdl:part element="tns:cancelFineSingleReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="doTransactionRequest">
+    <wsdl:part element="tns:doTransaction" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="doTransactionResponse">
+    <wsdl:part element="tns:doTransactionReturn" name="parameters"/>
+  </wsdl:message>
+
+  <!-- ======== portTypes ======== -->
+  <wsdl:portType name="EmpwebEngineTransServiceInterface">
+    <wsdl:operation name="loanSingle">
+      <wsdl:input message="tns:loanSingleRequest" name="loanSingleRequest"/>
+      <wsdl:output message="tns:loanSingleResponse" name="loanSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="reservationSingle">
+      <wsdl:input message="tns:reservationSingleRequest" name="reservationSingleRequest"/>
+      <wsdl:output message="tns:reservationSingleResponse" name="reservationSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="renewalSingle">
+      <wsdl:input message="tns:renewalSingleRequest" name="renewalSingleRequest"/>
+      <wsdl:output message="tns:renewalSingleResponse" name="renewalSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="returnSingle">
+      <wsdl:input message="tns:returnSingleRequest" name="returnSingleRequest"/>
+      <wsdl:output message="tns:returnSingleResponse" name="returnSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="suspensionSingle">
+      <wsdl:input message="tns:suspensionSingleRequest" name="suspensionSingleRequest"/>
+      <wsdl:output message="tns:suspensionSingleResponse" name="suspensionSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="fineSingle">
+      <wsdl:input message="tns:fineSingleRequest" name="fineSingleRequest"/>
+      <wsdl:output message="tns:fineSingleResponse" name="fineSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelReservationSingle">
+      <wsdl:input message="tns:cancelReservationSingleRequest" name="cancelReservationSingleRequest"/>
+      <wsdl:output message="tns:cancelReservationSingleResponse" name="cancelReservationSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelWaitSingle">
+      <wsdl:input message="tns:cancelWaitSingleRequest" name="cancelWaitSingleRequest"/>
+      <wsdl:output message="tns:cancelWaitSingleResponse" name="cancelWaitSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelSuspensionSingle">
+      <wsdl:input message="tns:cancelSuspensionSingleRequest" name="cancelSuspensionSingleRequest"/>
+      <wsdl:output message="tns:cancelSuspensionSingleResponse" name="cancelSuspensionSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelFineSingle">
+      <wsdl:input message="tns:cancelFineSingleRequest" name="cancelFineSingleRequest"/>
+      <wsdl:output message="tns:cancelFineSingleResponse" name="cancelFineSingleResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="doTransaction">
+      <wsdl:input message="tns:doTransactionRequest" name="doTransactionRequest"/>
+      <wsdl:output message="tns:doTransactionResponse" name="doTransactionResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <!-- ======== bindings ======== -->
+  <wsdl:binding name="EmpwebEngineTransServiceSoapBinding" type="tns:EmpwebEngineTransServiceInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <wsdl:operation name="loanSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="loanSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loanSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="reservationSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="reservationSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="reservationSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="renewalSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="renewalSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="renewalSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="returnSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="returnSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="returnSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="suspensionSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="suspensionSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="suspensionSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="fineSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="fineSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="fineSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="cancelReservationSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="cancelReservationSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelReservationSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="cancelWaitSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="cancelWaitSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelWaitSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="cancelSuspensionSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="cancelSuspensionSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelSuspensionSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="cancelFineSingle">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="cancelFineSingleRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelFineSingleResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="doTransaction">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="doTransactionRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="doTransactionResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/trans/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <!-- ======== services ======== -->
+  <wsdl:service name="EmpwebEngineTransService">
+    <wsdl:port binding="tns:EmpwebEngineTransServiceSoapBinding" name="EmpwebEngineTransServicePort">
+      <!-- the address must be replaced with the corresponding url for the service -->
+      <wsdlsoap:address location="http://www.kalio.net:8080/ewengine/services/EmpwebEngineTransService"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

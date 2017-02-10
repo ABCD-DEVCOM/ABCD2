@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="return" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1               ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+
+  <environment>
+    <!-- <param name="debug">true</param> -->
+  </environment>
+
+  <!-- ========================================================================== -->
+
+
+  <rule class="net.kalio.empweb.engine.rules.GetObject" name="GetObject">
+    <doc>Get Object DOM (mods) from (copyId, objectDb) in copyId mode.
+         This transaction usually receives copyId and objectDb as its initial parameters.
+    </doc>
+    <params>
+      <param name="mode">copyId</param>
+      <param name="extractExtraCopyInfo">true</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.ExtractObjectCategory" name="ExtractObjectCategroy">
+    <doc>Extract the object category from the object XML and store it in the TransactionContext.</doc>
+    <params>
+      <!-- If "useDefault" is true, it will return "*" when an object category can't be determined -->
+      <param name="useDefault">false</param>
+      <param name="mode">copyId</param>   <!-- for a return, we use copyId mode -->
+    </params>
+  </rule>
+
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="LockObjectStatus">
+    <doc>Logical lock of ObjectStatus (the only status so far in the TC)</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetObjectStatus" name="GetObjectStatus">
+    <doc />
+  </rule>
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.ExtractLoan" name="ExtractLoan">
+    <doc>Gets the Loan that corresponds to (copyId, objectDb) from the ObjectStatus.
+         The ObjectStatus is found in the TransactionContext. If the Loan is found, it
+         stores it in the TC under the name given by the "loanKey" parameter (or "loan" by default).
+         If the parameter "extractUserInfo" is true (which is the default value), it gets the
+         userId and userDb from the Loan and stores them in the TransactionContext to be used
+         later in the transaction.
+    </doc>
+    <params>
+      <!-- Where to extract the loan from, userStatus or objectStatus(default)? -->
+      <param name="from">objectStatus</param>
+      <!-- The TransactionContext key under which we store the Loan -->
+      <param name="loanKey">loan</param>
+      <param name="extractUserInfo">true</param>
+    </params>
+  </rule>
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GetUser" name="GetUser">
+    <doc>Get User DOM from (userId, userDb)</doc>
+    <params>
+      <param name="checkValidity">false</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.ExtractUserClass" name="ExtractUserClass">
+    <doc>Extract the user class from the user XML and store it in the TransactionContext.</doc>
+    <params>
+      <!-- If "useDefault" is true, it will return "*" when a user class can't be found -->
+      <!--<param name="useDefault">true</param>-->
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="LockUserStatus">
+    <doc>Logical lock of UserStatus (the ObjectStatus is already locked)</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus" />
+
+  <!-- ========================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.pucv.PublishTimestampAdjustments" enabled="false" name="PublishTimestampAdjustments">
+    <doc>Corrige la hora de devolucion en casos EXCEPCIONALES, si ocurrio algun evento que impidio la misma.
+      Obtiene los valores indicados en el pipeline globalenvironment:
+        * returnHour
+        * exceptionReturnHour
+        * exceptionDays
+    </doc>
+    <params />
+  </process>
+
+  <!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="PucvObjetoEsDeBiblioteca">
+    <doc>Verifica si el objeto pertenece a la biblioteca donde se estra realizando la transaccion.
+         La informacion de biblioteca para el objeto fue puesta en el TransactionContext.OBJECT_LOCATION
+         por la regla GetObject al usar el parametro"extractExtraCopyInfo". Esta regla compara ese
+         valor contra el "operatorLocation" que viene en el transactionExtras, y falla si el
+         operador esta logueado en una biblioteca distinta.
+    </doc>
+    <params>
+      <param name="script">
+        <![CDATA[
+        copyId          = tc.get(TransactionContext.COPY_ID);
+        biblioteca      = tc.get(TransactionContext.OBJECT_LOCATION);
+        transExtras     = tc.get(TransactionContext.TRANSACTION_EXTRAS);
+        operatorLocation= transExtras != null ? transExtras.get("operatorLocation") : "";
+
+        //DEBUG      println "PucvObjetoEsDeBiblioteca: copyId: ${copyId}  biblioteca: ${biblioteca}  operatorLocation: ${operatorLocation}";
+        if (operatorLocation != biblioteca)
+          { msg.setText("Este objeto no pertenece a la biblioteca");
+            return false;
+          }
+        else
+          return true;
+        ]]>
+      </param>
+    </params>
+  </rule>
+
+
+ <!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+  <process class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ProcessWaits">
+    <doc>Chequea en la cola de waits para ver si hay waits para este objeto sin fecha de confirmación esperando, en caso que si, le asigna fecha de confirmacion</doc>
+    <limits>
+    <limit name="expirationDays">1</limit>
+    </limits>    
+    <params>
+      <param name="script">
+        <![CDATA[
+
+                //Primero voy a sacar la categoría del objeto y me voy a fijar que no entre en préstamos por hora
+                 genv = tc.get("globalEnvironment");
+                 typeofobjectforbidden = "";
+
+                 for (v in genv) {
+                        if (v.key.startsWith('typeOfObjectForbiddenToReservation'))
+                        typeofobjectforbidden=v.value;
+                 }
+                 transCat= tc.get(TransactionContext.OBJECT_CATEGORY); 
+                  
+                 if (typeofobjectforbidden!="" && transCat!=typeofobjectforbidden)
+                 {
+	         
+                   Profile profile= tc.get('profile');
+                   volumeId = tc.get(TransactionContext.VOLUME_ID);
+
+                   String myexpirationDays=  profile.getLimit('expirationDays', defaultLimits.get('expirationDays'));
+
+
+      		   objStatus = tc.get(TransactionContext.OBJECT_STATUS);
+      		   waits = objStatus.getWaits();
+
+      		   //waits = waits.findAll {
+                   //it.confirmedDate!=null && it.confirmedDate!=""
+                   //}.sort { w1, w2 -> w1.date.compareTo(w2.date) }
+      		       
+      		       
+      		 
+
+                   // Aca recorre la lista de waits que no están en historic buscando
+                   // el primero que tenga vacio confirmedDate
+                 
+                
+                   i=0;
+                   while (i<waits.size())
+                   {
+                     if (volumeId=="") 
+                     {
+
+                       if (waits[i].getConfirmedDate()==null || waits[i].getConfirmedDate()=="")
+                       {
+	                 break;
+                       }
+                     }
+                     else
+                     {
+                        if ((waits[i].getConfirmedDate()==null || waits[i].getConfirmedDate()=="") && (waits[i].getVolumeId()==volumeId))
+                        {
+	                   break;
+                        }
+	             }
+                          
+                     i++;           
+                   }
+ 
+
+		   if (i<waits.size())
+		   {
+		        GregorianCalendar gcNow= new GregorianCalendar();
+		        myselectedwait = waits[i];
+			myselectedwait.setConfirmedDate(Calendars.getFullTimestamp(gcNow));
+                        myselectedwait.setExpirationDate(Calendars.getFullTimestamp(Calendars.advanceDays(gcNow, myexpirationDays.toInteger(),true)));
+			waitKey=   tc.getParameter("waitKey", "wait");
+			tc.put(waitKey, myselectedwait);
+			      //println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+			      //println(myselectedwait.getExpirationDate()+"\n");
+		   }
+
+             // del if del tipo de objeto
+             }
+
+
+         return true;
+        ]]>
+      </param>
+    </params>
+  </process>
+
+
+  <rule class="net.kalio.empweb.engine.rules.CheckLateReturn" name="CheckLateReturn">
+    <doc>Check whether this object is overdue.
+         It looks for the "returnHour" value in the TransactionContext, and if it exists it will change
+         the Loan's return hour to that value before considering whether the object overdue.
+         It then stores the number of overdue days under the TransactionContext key given by the
+         "daysOverdueKey" parameter.
+    </doc>
+    <params>
+      <!-- input -->
+      <param name="loanKey">loan</param>        <!-- The TransactionContext key under which a previous Process stored the Loan  -->
+      <param name="exceptionReturnHourKey">exceptionReturnHour</param>
+      <param name="exceptionDaysKey">exceptionDays</param>
+      <param name="penalizeSkipDays">false</param>
+      <param name="graceMinutes">15</param>
+      <!-- output -->
+      <param name="daysOverdueKey">daysOverdue</param>
+    </params>
+  </rule>
+
+  <!-- ========================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.CreateFine" name="CreateFine">
+    <doc>Creates a Fine object.
+         It may be a manual fine, or a fine related to a late return or expired reservation.
+         The behaviour of the Process depends on the existence of a Loan or Reservation in
+         the TransactionContext (in which case it will be an object-related Fine), or the
+         abscence of both (in which case it will create a manual Fine)
+    </doc>
+    <limits>
+      <limit name="createFineIfLate">true</limit>      <!-- create a fine if the objet is returned late -->
+      <limit name="fineAmountNormal">1</limit>         <!-- amount if returned object is not requested -->
+      <limit name="fineAmountReserved">2</limit>       <!-- amount if returned object has reservations/waits -->
+    </limits>
+    <params>
+      <param name="fineKey">fine</param>               <!-- The TC key under which the Fine will be stored. (default "fine") -->
+      <param name="normalType">N</param>               <!-- Type of fine for unrequested late objects -->
+      <param name="reservedType">R</param>             <!-- Type of fine for requested late objects -->
+        <param name="daysOverdueKey">daysOverdue</param> <!-- The TC key under which some other process stored the number of overdue days (default "daysOverdue")-->
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.CreateSuspension" name="CreateSuspension">
+    <doc>Creates a Suspension object.
+         It may be a manual suspension, or a suspension related to a late return or expired reservation.
+         The behaviour of the Process depends on the existence of a Loan or Reservation in
+         the TransactionContext (in which case it will be an object-related Suspension), or the
+         abscence of both (in which case it will create a manual Suspension)
+    </doc>
+    <limits>
+      <limit name="createSuspensionIfLate">true</limit> <!-- create a suspension if the objet is returned late -->
+      <limit name="suspensionDaysNormal">2</limit>      <!-- suspension days if returned object is not requested -->
+      <limit name="suspensionDaysReserved">3</limit>    <!-- suspension days if returned object reservations/waits -->
+    </limits>
+    <params>
+      <param name="suspensionKey">suspension</param>
+
+      <!-- considerSkipDays: false(default) quiere decir que calcula dias contiguos.
+                             true quiere decir que saltea los dias de biblioteca cerrada, dando
+                             un total dias suspendidos posiblemente mayor a los dias contiguos. -->
+      <param name="considerSkipDays">true</param>
+
+      <!-- tailSuspensions: false(default) Si es "true", agrega la multa al final de las que
+                            el usuario ya tiene. -->
+      <param name="tailSuspensions">true</param>
+
+      <!-- The TC key under which some other process stored the number of overdue days (default "daysOverdue")-->
+      <param name="daysOverdueKey">daysOverdue</param>
+      <param name="suspensionDaysMultiply">false</param>  <!-- are suspension days multiplied by the number of overdue days? -->
+      <param name="normalType">N</param>
+      <param name="reservedType">R</param>
+    </params>
+  </process>
+
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddFineToStatus">
+    <params>
+      <param name="transactionKey">fine</param>
+      <param name="toObjectStatus">false</param>
+      <param name="transactionType">insert</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddWaitToStatus">
+    <params>
+      <param name="transactionKey">wait</param>
+      <param name="toObjectStatus">false</param>
+      <param name="transactionType">update</param>
+    </params>
+  </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddSuspensionToStatus">
+    <params>
+      <param name="transactionKey">suspension</param>
+      <param name="toObjectStatus">false</param>
+      <param name="transactionType">insert</param>
+    </params>
+  </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemoveLoanFromStatus">
+    <params>
+      <param name="transactionKey">loan</param>
+    </params>
+  </rule>
+
+  
+
+  <process class="net.kalio.empweb.engine.rules.CreateReturn" name="CreateReturn" />
+
+  <process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDb">
+    <doc>Updates User/Object Status databases, and stores Return to transaction log.</doc>
+    <params>
+      <param name="transactionKeys">return, fine, suspension,wait</param>
+      <param name="ignoreTransactionNotFound">true</param>
+      <param name="storeUserStatus">true</param>
+      <param name="storeObjectStatus">true</param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+    <params>
+      <param name="resultKeys">suspension, fine, return, wait</param>
+    </params>
+  </process>
+
+  <!-- ======================== FINALLY SECTION ====================== -->
+  <finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+    <doc>Release the logic locks done at the beginning.</doc>
+  </finally>
+
+</transaction>

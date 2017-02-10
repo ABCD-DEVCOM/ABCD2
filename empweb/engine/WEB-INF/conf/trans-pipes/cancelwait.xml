@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="cancelwait" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+ <param name="debug">true</param> 
+</environment>
+
+  <!-- ====================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GetWait" name="GetWait">
+    <doc>Get wait DOM from User Status database using the waitId from the TransactionContext</doc>
+    <params>
+      <param name="waitKey">wait</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUser" name="GetUser">
+    <doc>Get User DOM from (userId, userDb)</doc>
+    <params>
+      <!-- checks for expired or disabled user -->
+      <param name="checkValidity">false</param>
+    </params>
+  </rule>
+  
+  <rule class="net.kalio.empweb.engine.rules.ExtractUserClass" name="ExtractUserClass">
+    <doc>Extract the user class from the user XML and store it in the TransactionContext.</doc>
+    <params>
+      <!-- If "useDefault" is true, it will return "*" when a user class can't be found -->
+      <param name="useDefault">true</param>
+    </params>
+  </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.GetObject" name="GetObject">
+    <doc>Get Object DOM (mods) from (recordId, objectDb), in recordId mode.</doc>
+    <params>
+      <param name="mode">recordId</param>
+    </params>
+  </rule>
+  
+  <rule class="net.kalio.empweb.engine.rules.ExtractObjectCategory" name="ExtractObjectCategroy">
+  <doc>Extract the object category from the object XML and store it in the TransactionContext.</doc>
+  <params>
+    <!-- If "useDefault" is true, it will return "*" when an object category can't be determined -->
+    <param name="useDefault">false</param>
+    <param name="mode">recordId</param>   <!-- for a loan, we use copyId mode -->
+  </params>
+ </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="Lock">
+    <doc>Logical lock of UserStatus and ObjectStatus</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  
+  <rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus" />
+  <rule class="net.kalio.empweb.engine.rules.GetObjectStatus" name="GetObjectStatus" />
+
+  <!-- ====================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="CheckWaitInUserStatus">
+    <params>
+      <param name="waitKey">wait</param>
+      <param name="script">
+<![CDATA[
+// Check if the reservation is in the status, so we dont cancel reservations that were already paid
+
+theReservation = tc.get(tc.getParameter("waitKey","wait"))
+UserStatus us = tc.get(TransactionContext.USER_STATUS)
+if (us.getTransaction(theReservation.getId()) == null)
+{
+	msg.addText("es","La reserva con ID:${theReservation.getId()} ya fue cancelada.")
+        msg.addText("en","The reservation with ID:${theReservation.getId()} was already cancelled.")
+    	return false
+}
+else
+  	return true
+]]>
+      </param>
+    </params>
+  </rule>
+  
+  
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GetProfile" name="GetProfile">
+  <doc>Gets a Profile for the userClass and objectCategory stored in the TransactionContext.
+       It does a strict match or it fails, unless the "priority" parameter is passed in which
+       case it will attempt to use wildcard "*" in the order determined by the priority.
+       The Profile is stored in the TransactionContext under the well-known name "profile"
+       (TransactionContex.PROFILE).
+       Read the javadoc for more information.
+  </doc>
+  <params>
+    <!-- priority param may be "userClass" or "objectCategory" -->
+    <param name="priority">userClass</param>
+  </params>
+</rule>
+
+   
+  
+  
+  
+  <!-- ====================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.CreateCancelWait" name="CreateCancelWait">
+    <params>
+      <param name="cancelledWaitKey">wait</param>
+      <param name="cancellationKey">cancelWait</param>
+    </params>
+  </process>
+
+  <rule class="net.kalio.empweb.engine.rules.CheckExpiredWait" name="CheckExpiredWait">
+    <doc>Check whether this reservation is expired and possibly  generate a fine for the user.
+    </doc>
+    <params>
+      <param name="waitKey">wait</param>
+      <param name="exceptionDaysKey">exceptionDays</param>
+      <param name="graceMinutes">15</param>
+      <param name="daysOverdueKey">daysOverdue</param>
+      <!-- DEBUG  --> <param name="debug">true</param>
+    </params>
+  </rule>
+  
+  
+
+
+
+  <process class="net.kalio.empweb.engine.rules.CreateSuspension" name="CreateSuspension">
+    <limits>
+      <limit name="createSuspensionIfReservationExpired">true</limit>  <!-- create a suspension if the reservation expired -->
+      <limit name="suspensionDaysIfExpiredNormal">2</limit>            <!-- suspension days if expired  object is not requested -->
+      <limit name="suspensionDaysIfExpiredReserved">3</limit>          <!-- suspension days if expired object is not requested -->
+    </limits>
+    <params>
+      <!-- are suspension days multiplied? (suspensionDaysNormal*overdue = suspensionDays) -->
+      <param name="suspensionDaysMultiply">false</param>
+    </params>
+  </process>
+
+
+   <!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+  <process class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ProcessWaits">
+    <doc>Chequea en la cola de waits para ver si hay waits para este objeto sin fecha de confirmación esperando, en caso que si, le asigna fecha de confirmacion</doc>
+    <limits>
+    <limit name="expirationDays">1</limit>
+    </limits>    
+    <params>
+      <param name="script">
+        <![CDATA[
+
+                //Primero voy a sacar la categoría del objeto y me voy a fijar que no entre en préstamos por hora
+                 genv = tc.get("globalEnvironment");
+                 typeofobjectforbidden = "";
+
+                 for (v in genv) {
+                        if (v.key.startsWith('typeOfObjectForbiddenToReservation'))
+                        typeofobjectforbidden=v.value;
+                 }
+                 transCat= tc.get(TransactionContext.OBJECT_CATEGORY); 
+                  
+                 if (typeofobjectforbidden!="" && transCat!=typeofobjectforbidden)
+                 {
+	         
+                   Profile profile= tc.get('profile');
+                   volumeId = tc.get(TransactionContext.VOLUME_ID);
+
+                   String myexpirationDays=  profile.getLimit('expirationDays', defaultLimits.get('expirationDays'));
+
+
+      		   objStatus = tc.get(TransactionContext.OBJECT_STATUS);
+      		   waits = objStatus.getWaits();
+
+      		   //waits = waits.findAll {
+                   //it.confirmedDate!=null && it.confirmedDate!=""
+                   //}.sort { w1, w2 -> w1.date.compareTo(w2.date) }
+      		       
+      		       
+      		 
+
+                   // Aca recorre la lista de waits que no están en historic buscando
+                   // el primero que tenga vacio confirmedDate
+                 
+                
+                   i=0;
+                   while (i<waits.size())
+                   {
+                     if (volumeId=="") 
+                     {
+
+                       if (waits[i].getConfirmedDate()==null || waits[i].getConfirmedDate()=="")
+                       {
+	                 break;
+                       }
+                     }
+                     else
+                     {
+                        if ((waits[i].getConfirmedDate()==null || waits[i].getConfirmedDate()=="") && (waits[i].getVolumeId()==volumeId))
+                        {
+	                   break;
+                        }
+	             }
+                          
+                     i++;           
+                   }
+ 
+
+		   if (i<waits.size())
+		   {
+		                GregorianCalendar gcNow= new GregorianCalendar();
+		                myselectedwait = waits[i];
+			            myselectedwait.setConfirmedDate(Calendars.getFullTimestamp(gcNow));
+                        myselectedwait.setExpirationDate(Calendars.getFullTimestamp(Calendars.advanceDays(gcNow, myexpirationDays.toInteger(),true)));
+			            waitKey=   "waitMoved";
+			            tc.put(waitKey, myselectedwait);
+			      //println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+			      //println(myselectedwait.getExpirationDate()+"\n");
+		   }
+
+             // del if del tipo de objeto
+             }
+
+
+         return true;
+        ]]>
+      </param>
+    </params>
+  </process>
+
+
+
+  <!-- ====================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemoveReservationFromStatus">
+    <params>
+      <param name="transactionKey">wait</param>
+    </params>
+  </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddFineToStatus">
+    <params>
+      <param name="transactionKey">fine</param>
+      <param name="toObjectStatus">false</param>
+      <!-- DEBUG --> <param name="debug">true</param>
+
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddSuspensionToStatus">
+     <params>
+      <param name="transactionKey">suspension</param>
+      <param name="toObjectStatus">false</param>
+      <!-- DEBUG --> <param name="debug">true</param>
+
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddWaitToStatus">
+    <params>
+      <param name="transactionKey">waitMoved</param>
+      <param name="toObjectStatus">false</param>
+      <param name="transactionType">update</param>
+    </params>
+  </rule>
+
+
+
+  <process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDb">
+    <doc>Updates User/Object Status databases, and stores the cancelled reservation to the transaction log.</doc>
+    <params>
+      <param name="transactionKeys">suspension,fine,waitMoved,cancelWait</param>
+      <param name="ignoreTransactionNotFound">true</param>
+      <param name="storeUserStatus">false</param>
+      <param name="storeObjectStatus">true</param>
+    </params>
+  </process>
+
+  <!-- ====================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+  <params>
+    <param name="resultKeys">suspension, fine, cancelWait, waitMoved</param>
+  </params>
+</process>
+
+  <!-- ======================== FINALLY SECTION ====================== -->
+
+  <finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+    <doc>Release the logic locks done at the beginning.</doc>
+  </finally>
+
+</transaction>

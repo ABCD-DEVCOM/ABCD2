@@ -1,0 +1,119 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<queryResult mockup="true" xmlns="http://kalio.net/empweb/schema/queryresult/v1">
+
+  <databaseResult successful="false" name="objectmain">
+    <msg xmlns:m="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.engine">error_connecting_to_database</key>
+      <params>
+        <param>connection refused</param>
+        <param>objectmain</param>
+      </params>
+    </msg>
+  </databaseResult>
+
+  <databaseResult successful="true" name="objectdb1">
+    <result>
+      <modsCollection version="3.0"  xmlns="http://www.loc.gov/mods/v3">
+        <mods>
+          <recordInfo>
+            <recordIdentifier>98765432-123</recordIdentifier>
+          </recordInfo>
+
+          <extension>
+            <holdingsInfo version="1.0" xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1">
+              <copies>
+                <copy>
+                  <copyId>AA528</copyId>
+                  <objectCategory>S</objectCategory>
+                </copy>
+
+                <copy>
+                  <copyId>BB678</copyId>
+                  <objectCategory>NS</objectCategory>
+                </copy>
+              </copies>
+            </holdingsInfo>
+          </extension>
+
+          <titleInfo>
+            <title>Caperucita Roja</title>
+          </titleInfo>
+
+          <name type="personal">
+            <namePart>Mr. Lobo Feroz</namePart>
+            <role><roleTerm type="text">autor</roleTerm></role>
+          </name>
+        </mods>
+
+        <mods>
+          <recordInfo>
+            <recordIdentifier>23456789-000</recordIdentifier>
+          </recordInfo>
+
+          <extension>
+            <holdingsInfo version="1.0" xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1">
+              <copies>
+                <copy>
+                  <copyId>AA999</copyId>
+                  <objectCategory>F</objectCategory>
+                </copy>
+
+                <copy>
+                  <copyId>BB222</copyId>
+                  <objectCategory>XX</objectCategory>
+                </copy>
+              </copies>
+            </holdingsInfo>
+          </extension>
+
+          <titleInfo>
+            <title>Constituci�n del Imperio</title>
+          </titleInfo>
+
+          <name type="institutional">
+            <namePart>Comit� Imperial</namePart>
+            <role><roleTerm type="text">autor</roleTerm></role>
+          </name>
+        </mods>
+      </modsCollection>
+    </result>
+  </databaseResult>
+
+  <databaseResult successful="true" name="objectdb1">
+    <result>
+      <modsCollection version="3.0"  xmlns="http://www.loc.gov/mods/v3">
+        <mods>
+          <recordInfo>
+            <recordIdentifier>98765432-123</recordIdentifier>
+          </recordInfo>
+
+          <extension>
+            <holdingsInfo version="1.0" xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1">
+              <copies>
+                <copy>
+                  <copyId>AA528</copyId>
+                  <objectCategory>S</objectCategory>
+                </copy>
+
+                <copy>
+                  <copyId>BB678</copyId>
+                  <objectCategory>NS</objectCategory>
+                </copy>
+              </copies>
+            </holdingsInfo>
+          </extension>
+
+          <titleInfo>
+            <title>Caperucita Roja</title>
+          </titleInfo>
+
+          <name type="personal">
+            <namePart>Mr. Lobo Feroz</namePart>
+            <role><roleTerm type="text">autor</roleTerm></role>
+          </name>
+        </mods>
+      </modsCollection>
+    </result>
+  </databaseResult>
+
+</queryResult>

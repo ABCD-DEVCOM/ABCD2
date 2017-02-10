@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<calendar version="20041117_1212">
+    <!--  La version es el timestamp de cuando se guarda este calendario en la db.
+          Normalmente, deberia pasar a ser la version activa para el año
+
+          Los meses (month) se cuentan desde 1 a 12.
+          Los dias (day) se cuentan desde 1 a 31. El atributo dow (day of week) se cuenta
+          desde 1 a 7, donde 1=domingo.
+
+          Si un elemento day contiene un elemento skipDay, quiere decir que ese dia no se
+          cuenta a los efectos de prestamos, etc.
+    -->
+
+  <year value="2004">
+    <month value="01">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="02">
+      <day value="01" dow="06"><skipDay/></day>
+      <day value="02" dow="07"><skipDay/></day>
+      <day value="03" dow="01"></day>
+      <day value="04" dow="02"></day>
+      <day value="05" dow="03"></day>
+      <day value="06" dow="04"></day>
+      <day value="07" dow="05"><skipDay/></day>
+      <day value="08" dow="06"><skipDay/></day>
+      <day value="09" dow="07"><skipDay/></day>
+      <day value="10" dow="01"><skipDay/></day>
+      <day value="11" dow="02"><skipDay/></day>
+      <day value="12" dow="03"></day>
+      <day value="13" dow="04"></day>
+      <day value="14" dow="05"><skipDay/></day>
+      <day value="15" dow="06"><skipDay/></day>
+      <day value="16" dow="07"><skipDay/></day>
+      <day value="17" dow="01"><skipDay/></day>
+      <day value="18" dow="02"><skipDay/></day>
+      <day value="19" dow="03"></day>
+      <day value="20" dow="04"></day>
+      <day value="21" dow="05"><skipDay/></day>
+      <day value="22" dow="06"><skipDay/></day>
+      <day value="23" dow="07"><skipDay/></day>
+      <day value="24" dow="01"><skipDay/></day>
+      <day value="25" dow="02"><skipDay/></day>
+      <day value="26" dow="03"></day>
+      <day value="27" dow="04"></day>
+      <day value="28" dow="05"><skipDay/></day>
+    </month>
+    <month value="03">
+      <day value="01" dow="02"><skipDay/></day>
+      <day value="02" dow="03"><skipDay/></day>
+      <day value="03" dow="04"><skipDay/></day>
+      <day value="04" dow="05"><skipDay/></day>
+      <day value="05" dow="06"><skipDay/></day>
+      <day value="06" dow="07"></day>
+      <day value="07" dow="01"><skipDay/></day>
+      <day value="08" dow="02"><skipDay/></day>
+      <day value="09" dow="03"><skipDay/></day>
+      <day value="10" dow="04"><skipDay/></day>
+      <day value="11" dow="05"><skipDay/></day>
+      <day value="12" dow="06"></day>
+      <day value="13" dow="07"></day>
+      <day value="14" dow="01"><skipDay/></day>
+      <day value="15" dow="02"><skipDay/></day>
+      <day value="16" dow="03"><skipDay/></day>
+      <day value="17" dow="04"><skipDay/></day>
+      <day value="18" dow="05"><skipDay/></day>
+      <day value="19" dow="06"></day>
+      <day value="20" dow="07"></day>
+      <day value="21" dow="01"><skipDay/></day>
+      <day value="22" dow="02"><skipDay/></day>
+      <day value="23" dow="03"><skipDay/></day>
+      <day value="24" dow="04"><skipDay/></day>
+      <day value="25" dow="05"><skipDay/></day>
+      <day value="26" dow="06"></day>
+      <day value="27" dow="07"></day>
+      <day value="28" dow="01"><skipDay/></day>
+      <day value="29" dow="02"><skipDay/></day>
+      <day value="30" dow="03"><skipDay/></day>
+      <day value="31" dow="04"><skipDay/></day>
+    </month>
+    <month value="04">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"><skipDay/></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+    </month>
+    <month value="05">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="06">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="07">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="08">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="09">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+    </month>
+    <month value="10">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="11">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"><skipDay/></day>
+      <day value="04" dow="06"><skipDay/></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+    <month value="12">
+      <day value="01" dow="03"><skipDay/></day>
+      <day value="02" dow="04"><skipDay/></day>
+      <day value="03" dow="05"></day>
+      <day value="04" dow="06"></day>
+      <day value="05" dow="07"></day>
+      <day value="06" dow="01"></day>
+      <day value="07" dow="02"><skipDay/></day>
+      <day value="08" dow="03"><skipDay/></day>
+      <day value="09" dow="04"><skipDay/></day>
+      <day value="10" dow="05"><skipDay/></day>
+      <day value="11" dow="06"><skipDay/></day>
+      <day value="12" dow="07"></day>
+      <day value="13" dow="01"></day>
+      <day value="14" dow="02"><skipDay/></day>
+      <day value="15" dow="03"><skipDay/></day>
+      <day value="16" dow="04"><skipDay/></day>
+      <day value="17" dow="05"><skipDay/></day>
+      <day value="18" dow="06"><skipDay/></day>
+      <day value="19" dow="07"></day>
+      <day value="20" dow="01"></day>
+      <day value="21" dow="02"><skipDay/></day>
+      <day value="22" dow="03"><skipDay/></day>
+      <day value="23" dow="04"><skipDay/></day>
+      <day value="24" dow="05"><skipDay/></day>
+      <day value="25" dow="06"><skipDay/></day>
+      <day value="26" dow="07"></day>
+      <day value="27" dow="01"></day>
+      <day value="28" dow="02"><skipDay/></day>
+      <day value="29" dow="03"><skipDay/></day>
+      <day value="30" dow="04"><skipDay/></day>
+      <day value="31" dow="05"><skipDay/></day>
+    </month>
+  </year>
+</calendar>
+

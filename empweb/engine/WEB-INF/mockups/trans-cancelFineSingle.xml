@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<transactionResult mockup="true" xmlns="http://kalio.net/empweb/schema/transactionresult/v1"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://kalio.net/empweb/schema/transactionresult/v1 ../../../common/xml/schema/transactionresult/v1/empweb-transactionresult-1-0.xsd ">
+  <processResult successful="true" name="GetUser"/>
+  <processResult successful="true" name="GetObject"/>
+  <processResult successful="false" name="Lock">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.process">net.kalio.empweb.engine.rules.Lock_lock_ok</key>
+    </msg>
+  </processResult>
+  <processResult successful="true" name="GetUserStatus"/>
+  <processResult successful="true" name="GetObjectStatus"/>
+  <processResult successful="false" name="GetFunky">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="local.myproc">my.weird.class.GetFunky_get_funky</key>
+    </msg>
+  </processResult>
+  <processResult successful="true" name="StorePayFine">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.process">net.kalio.empweb.engine.rules.StorePayFine_fine_info</key>
+    </msg>
+    <result>
+      <fine id="232312" xmlns="http://kalio.net/empweb/schema/fine/v1">
+        <userId>13232</userId>
+        <userDb>usuarios</userDb>
+        <date>20050101031203</date>
+        <type>XXX</type>
+        <amount>123</amount>
+        <obs>observations for the fine</obs>
+
+        <object>
+          <copyId>123123</copyId>
+          <objectDb>objetos</objectDb>
+          <profile id="131231"/>
+          <loanStartDate>20050101031293</loanStartDate>
+          <loanEndDate>20050130031293</loanEndDate>
+          <daysOverdue>5</daysOverdue>
+        </object>
+        <paid>
+          <date>20031223010101</date>
+          <operatorId>ciro</operatorId>
+          <amount>123</amount>
+        </paid>
+      </fine>
+    </result>
+  </processResult>
+
+  <processResult successful="true" name="Unlock"/>
+</transactionResult>
+
+  
+<!-- 
+  <error mockup="true" xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+    <msg>
+    <key bundle="core.engine">ewengine_error_in_engineconf_line</key>
+    <params>
+      <param>123</param>
+    </params>
+    </msg>
+  </error>
+-->

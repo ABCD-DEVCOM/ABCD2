@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<policy  id="verano2322"  active="true">
+  <name>verano</name>
+  <profiles>
+    <profile  id="P_R_verano_323232222">
+      <userClass>*</userClass>
+      <objectCategory>*</objectCategory>
+    </profile>
+    
+    <profile  id="P_R_verano_323232222">
+      <userClass>Profesor</userClass>
+      <objectCategory>*</objectCategory>
+    </profile>
+    
+    <profile  id="P_R_verano_323232222">
+      <userClass>Alumno</userClass>
+      <objectCategory>*</objectCategory>
+    </profile>
+
+   </profiles>
+</policy>
+

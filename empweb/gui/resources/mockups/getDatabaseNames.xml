@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<databases xmlns="http://kalio.net/empweb/schema/databases/v1">
+ <database type="users">users pepe 1</database>
+ <database type="users">users pepe 2</database>
+ <database type="objects">objects pepe 2</database>
+ <database type="other">user pepe 2</database>
+</databases>
+
+

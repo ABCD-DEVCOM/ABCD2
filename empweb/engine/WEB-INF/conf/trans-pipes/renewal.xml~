@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="renewal" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1               ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+
+  <environment>
+    <param name="debug">false</param>
+  </environment>
+
+  <!-- proviene del return -->
+
+
+
+  <!-- ========================================================================== -->
+
+  
+
+  <rule class="net.kalio.empweb.engine.rules.GetObject" name="GetObject">
+    <doc>Get Object DOM (mods) from (copyId, objectDb) in copyId mode.
+         This transaction usually receives copyId and objectDb as its initial parameters.
+    </doc>
+    <params>
+      <param name="mode">copyId</param>
+      <param name="extractExtraCopyInfo">true</param>
+    </params>
+  </rule>
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.ExtractObjectCategory" name="ExtractObjectCategroy">
+    <doc>Extract the object category from the object XML and store it in the TransactionContext.</doc>
+    <params>
+      <!-- If "useDefault" is true, it will return "*" when an object category can't be determined -->
+      <param name="useDefault">false</param>
+      <param name="mode">copyId</param>   <!-- for a return, we use copyId mode -->
+    </params>
+  </rule>
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="LockObjectStatus">
+    <doc>Logical lock of ObjectStatus (the only status so far in the TC)</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  
+  <rule class="net.kalio.empweb.engine.rules.GetObjectStatus" name="GetObjectStatus">
+    <doc />
+  </rule>
+
+   
+  <rule class="net.kalio.empweb.engine.rules.ExtractLoan" name="ExtractLoan">
+    <doc>Gets the Loan that corresponds to (copyId, objectDb) from the ObjectStatus.
+         The ObjectStatus is found in the TransactionContext. If the Loan is found, it
+         stores it in the TC under the name given by the "loanKey" parameter (or "loan" by default).
+         If the parameter "extractUserInfo" is true (which is the default value), it gets the
+         userId and userDb from the Loan and stores them in the TransactionContext to be used
+         later in the transaction.
+    </doc>
+    <params>
+      <!-- Where to extract the loan from, userStatus or objectStatus(default)? -->
+      <param name="from">objectStatus</param>
+      <!-- The TransactionContext key under which we store the Loan -->
+      <param name="loanKey">loan</param>
+      <param name="extractUserInfo">true</param>
+    </params>
+  </rule>
+  
+    
+  
+
+  <rule class="net.kalio.empweb.engine.rules.GetUser" name="GetUser">
+    <doc>Get User DOM from (userId, userDb)</doc>
+    <params>
+      <param name="checkValidity">false</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.ExtractUserClass" name="ExtractUserClass">
+    <doc>Extract the user class from the user XML and store it in the TransactionContext.</doc>
+    <params>
+      <!-- If "useDefault" is true, it will return "*" when a user class can't be found -->
+      <!--<param name="useDefault">true</param>-->
+    </params>
+  </rule>
+
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="LockUserStatus">
+    <doc>Logical lock of UserStatus (the ObjectStatus is already locked)</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus" />
+
+  <rule class="net.kalio.empweb.engine.rules.GetProfile" name="GetProfile">
+  <doc>Gets a Profile for the userClass and objectCategory stored in the TransactionContext.
+       It does a strict match or it fails, unless the "priority" parameter is passed in which
+       case it will attempt to use wildcard "*" in the order determined by the priority.
+       The Profile is stored in the TransactionContext under the well-known name "profile"
+       (TransactionContex.PROFILE).
+       Read the javadoc for more information.
+  </doc>
+  <params>
+    <!-- priority param may be "userClass" or "objectCategory" -->
+    <param name="priority">objectCategory</param>
+  </params>
+</rule>
+
+
+
+  <!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+  <rule class="net.kalio.empweb.engine.rules.HasFineOrSuspension" name="HasFineOrSuspension">
+  <doc>Verifies if the user has fine or suspension.
+       Uses the limits' values to decide whether the requested transaction is performed.
+  </doc>
+	<limits>
+	  <limit name="maxLoansIfFine">0</limit>
+	  <limit name="maxLoansIfSuspension">0</limit>
+	  <limit name="maxFinesForLoan">2</limit>
+	  <limit name="maxFineAmountForLoan">3</limit>
+	</limits>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="PucvObjetoEsDeBiblioteca">
+  <doc>Verifica si el objeto pertenece a la biblioteca donde se estra realizando la transaccion.
+       La biblioteca viene en el elemento "copyLocation" del holdingsInfo y lo compara
+       contra el "operatorLocation" que viene en el transactionExtras.
+  </doc>
+  <params>
+    <param name="script">
+		<![CDATA[
+		copyId= tc.get(TransactionContext.COPY_ID);
+		biblioteca= tc.getObjectValue("//hold:copy[hold:copyId='${copyId}']/hold:copyLocation");
+
+		transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+		operatorLocation= transExtras != null ? transExtras.get("operatorLocation") : "";
+
+		if (operatorLocation != biblioteca)
+		  { msg.setText("Este objeto no pertenece a la biblioteca");
+			return false;
+		  }
+		else
+		  return true;
+		]]>
+    </param>
+  </params>
+</rule>
+
+
+ <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="CheckIfDocumentHasReserves">
+ <doc>Check Maximun number of renewals according to profile</doc>
+
+    <params>
+      <param name="script">
+        <![CDATA[
+
+	   objStatus  = tc.get(TransactionContext.OBJECT_STATUS);
+           myRecordId = tc.get(TransactionContext.RECORD_ID);
+           myVolumeId = tc.get(TransactionContext.VOLUME_ID);
+           myObjCateg = tc.get(TransactionContext.OBJECT_CATEGORY);
+         
+           waitList = objStatus.getWaits();
+           for (wait in waitList)
+           {
+                 recordId = wait.getRecordId();
+                 volumeId = wait.getVolumeId();
+                 Profile perfil  = wait.getProfile();
+        
+		if (perfil.getObjectCategory()==myObjCateg)
+                {
+	            //Hablamos del mismo tipo de publicación
+
+                    if (recordId==myRecordId && (myVolumeId=="" || volumeId=="" || (myVolumeId==volumeId)))
+                    {
+                       msg.addText("es","No se puede renovar esta publicación dado que posee una reserva activa.");
+                       msg.addText("en","It's impossible to renew this publication because it has an active reservation'");
+                       return false;
+                     }
+                }
+           }
+
+        return true; 
+       
+
+        ]]>
+      </param>
+    </params>
+  </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="CheckMaxNumberRenewalsTotal">
+    <doc>Check Maximun number of renewals according to profile</doc>
+	<limits>
+   <limit name="maxNumberOfRenewals">0</limit>
+   </limits>
+
+    <params>
+      <param name="script">
+        <![CDATA[
+
+                Profile profile= tc.get('profile');
+                String mmax=profile.getLimit('maxNumberOfRenewals', defaultLimits.get('maxNumberOfRenewals'));
+
+               
+                int mymax = Integer.parseInt(mmax);
+                if (mymax==0)
+                    return true;
+
+                myloan = tc.get("loan");
+
+                int mychain = Integer.parseInt((String)myloan.getOrdinalRenewal());                
+                mychain++;
+
+                if (mychain<=mymax)
+                {
+                      //Si es la primer renovación que tome el ID del préstamo como ref
+                      //y de ahí en adelante siempre ese para poderlos procesar en conjunto
+
+                      if (mychain==1)
+	                  tc.put("renewId", myloan.getId());
+                      else
+                          tc.put("renewId", myloan.getRenewId());
+
+                      if (mychain==mymax)
+                      {
+	                msg.addText("en", "This is the last renewal admited.");
+                        msg.addText("es", "Atención! Esta es la última renovación admitida");
+                       }
+		       return true;
+                }
+                else
+                {
+	                msg.addText("en", "The renovation limit has been reached.");
+                        msg.addText("es", "No se admiten mas renovaciones");
+                        return false;
+                 }
+			
+			
+
+       // println ("LOAN "+tc.get("loan"));
+		//println ("LOAN KEY"+tc.get("loanKey"));
+		//return true;
+        //loan          = tc.get(loan);
+        //println loan.toString();
+      
+        ]]>
+      </param>
+    </params>
+  </rule>
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="CheckMaxNumberRenewalsFromMySite">
+<doc>Check Maximun number of renewals admited from ABCD mysite</doc>
+<limits>
+<limit name="maxNumberOfRenewalsFromMySite">0</limit>
+</limits>
+    <params>
+      <param name="script">
+        <![CDATA[
+
+                //Todo esto es condicional, dependiendo de donde llega la reserva
+                //si desde desktop o desde web
+                java.util.Map transExtras= (java.util.Map) tc.get(TransactionContext.TRANSACTION_EXTRAS);
+
+                fromwhere= (transExtras != null) ? transExtras.get("desktopOrWS") : null ;
+				//fromwhere="desktop";
+
+  
+                if (fromwhere != "desktop")
+                {
+
+                   //Solo permito que renueve prestamos en sala desde desk
+                   
+                   genv = tc.get("globalEnvironment");
+                   typeofobjectforbidden = "";
+
+                   for (v in genv) {
+                       if (v.key.startsWith('typeOfObjectForbiddenToReservation'))
+                                          typeofobjectforbidden=v.value;
+                   }                 
+                    
+                   transCat= tc.get(TransactionContext.OBJECT_CATEGORY); 
+
+                    if (typeofobjectforbidden!="" && typeofobjectforbidden==transCat)
+                   {
+	                    msg.addText("en", "Loan by hours are not admitted to be renewed from mySite");
+                            msg.addText("es", "Los préstamos por hora no pueden renovarse desde el mySite");
+                            return false;
+                   }
+
+
+                   Profile profile= tc.get('profile');
+                   String mmax=profile.getLimit('maxNumberOfRenewalsFromMySite', defaultLimits.get('maxNumberOfRenewalsFromMySite'));
+
+               
+                   int mymax = Integer.parseInt(mmax);
+                   if (mymax==0)
+                    return true;
+
+                   myloan = tc.get("loan");
+
+                   int mychain = Integer.parseInt((String)myloan.getOrdinalRenewalFromWS());                
+                   mychain++;
+
+                   if (mychain<=mymax)
+                   {
+
+                      if (mychain==mymax)
+                      {
+	                    msg.addText("en", "This is the last renewal admited from MySite.");
+                            msg.addText("es", "Atención! Esta es la última renovación admitida permitida desde el MySite");
+                       }
+		               return true;
+                   }
+                   else
+                   {
+	                  msg.addText("en", "The renovation limit for mysite has been reached.");
+                      msg.addText("es", "No se admiten mas renovaciones desde el Sitio del Usuario. Lleve la publicación a la Biblioteca");
+                      return false;
+                   }
+	           }	
+			   else
+			   {
+			      return true;
+			   }
+      
+        ]]>
+      </param>
+    </params>
+  </rule>
+
+
+  <process class="net.kalio.empweb.engine.rules.pucv.PublishTimestampAdjustments" name="PublishTimestampAdjustments">
+    <doc>Corrige la hora de devolucion en casos EXCEPCIONALES, si ocurrio algun evento que impidio la misma.
+      Obtiene los valores indicados en el pipeline globalenvironment:
+        * returnHour
+        * exceptionReturnHour
+        * exceptionDays
+    </doc>
+    <params />
+  </process>
+
+
+  <rule class="net.kalio.empweb.engine.rules.CheckLateReturn" name="CheckLateReturn">
+    <doc>Check whether this object is overdue.
+         It looks for the "returnHour" value in the TransactionContext, and if it exists it will change
+         the Loan's return hour to that value before considering whether the object overdue.
+         It then stores the number of overdue days under the TransactionContext key given by the
+         "daysOverdueKey" parameter.
+    </doc>
+    <params>
+      <!-- input -->
+      <param name="loanKey">loan</param>        <!-- The TransactionContext key under which a previous Process stored the Loan  -->
+      <param name="exceptionReturnHourKey">exceptionReturnHour</param>
+      <param name="exceptionDaysKey">exceptionDays</param>
+      <param name="penalizeSkipDays">true</param>
+      <param name="graceMinutes">15</param>
+      <!-- output -->
+      <param name="daysOverdueKey">daysOverdue</param>
+    </params>
+  </rule>
+
+
+  <!-- ========================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="StopIfOverdue">
+    <doc>If the object is overdue stops the transaction and informs that should be not renewed
+    </doc>
+    <params>
+      <param name="script">
+        <![CDATA[
+		
+		//println ("OVERDUE=>"+(tc.get("daysOverdue")==0)); 
+        daysoverdue     = tc.get("daysOverdue");
+
+        if (daysoverdue != "0")
+          { msg.setText("The object that is tried to renew is overdue, please process it under returns");
+            return false;
+          }
+        else
+          return true;
+        ]]>
+      </param>
+    </params>
+  </rule>
+
+
+
+  <!-- ========================================================================== -->
+
+ <!-- <process class="net.kalio.empweb.engine.rules.pucv.PublishTimestampAdjustments" name="PublishTimestampAdjustments">
+    <doc>Corrige la hora de devolucion en casos EXCEPCIONALES, si ocurrio algun evento que impidio la misma.
+      Obtiene los valores indicados en el pipeline globalenvironment:
+        * returnHour
+        * exceptionReturnHour
+        * exceptionDays
+    </doc>
+    <params />
+  </process>-->
+
+  <!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+
+  <rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemoveLoanFromStatus">
+    <params>
+      <param name="transactionKey">loan</param>
+    </params>
+  </rule>
+
+  <process class="net.kalio.empweb.engine.rules.CreateReturn" name="CreateReturn" />
+
+  <rule class="net.kalio.empweb.engine.rules.GetExistingReservation" name="GetExistingReservation">
+  <doc>Finds an existing Reservation for the user that matches the object we are lending.</doc>
+    <params>
+      <param name="prevReservationKey">prevReservation</param>
+      <param name="expiredReservationKey">expiredReservation</param>
+      <param name="exceptionDaysKey">exceptionDays</param>
+      <param name="failOnExpired">true</param>
+      <param name="failOnNonMatchingObjectCategory">true</param>
+      <param name="failOnNonMatchingCopyLocation">true</param>
+    </params>
+</rule>
+
+  <!--<process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+    <params>
+      <param name="resultKeys">suspension, fine, return</param>
+    </params>
+  </process>-->
+
+
+   <!-- proviene del Loan -->
+
+
+
+ <!-- =========================================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="objectAlreadyLent">
+  <doc>Checks whether the object is already lent.</doc>
+  <params>
+    <param name="script">
+<![CDATA[
+objectStatus = tc.get('objectStatus');
+copyId = tc.get('copyId');
+
+loansList = objectStatus.getLoans();
+for (loan in loansList)
+  {
+    if (loan.getCopyId() == copyId)
+      {
+        msg.addText('en', "This object is already lent to user ${loan.getUserId()}!");
+        msg.addText('es', "Este objeto ya esta prestado al usuario ${loan.getUserId()}!");
+        return false;
+      }
+  }
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+<!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="LoanIfLate">
+  <doc>Can we loan to a late user?</doc>
+  <limits>
+    <!-- Do we allow a loan if the user is late (the user might be "virtually" suspended until s/he returns everything -->
+    <limit name="maxLoansIfLate">1</limit>
+  </limits>
+  <params>
+    <param name="script">
+<![CDATA[
+
+String now= Calendars.getFullTimestamp();
+Profile profile = tc.get('profile');
+
+// Busca el limite maxLoansIfLate en el perfil, y si no lo toma del defaultLimits de esta regla
+// Cuidado que los limites son String y hay que convertirlo a int para hacer calculos!!!!!!!!!!!!!!!!
+int maxLoansIfLate= profile.getLimit('maxLoansIfLate', defaultLimits.get('maxLoansIfLate')).toInteger();
+
+UserStatus userStatus= tc.get('userStatus');
+int loansTotal= 0;
+int totalAtrasos= 0;
+
+
+// Primero iteramos los Loans y vemos si hay alguno atrasado
+// BBBBBBBBBBBB Por ahora se fija TRIVIALMENTE el atraso, sin todas las sutilezas
+// BBBBBBBBBBBB de CheckLateReturn
+java.util.List loansList = userStatus.getLoans();
+for (loan in loansList)
+  { loansTotal++;
+    String returnDate= loan.getEndDate();
+    if (returnDate < now)                    // Esta atrasado!!
+      totalAtrasos++;
+  }
+
+// Si tiene prestamos atrasados y la cantidad total de prestamos que ya tiene, mas este que
+// estamos por hacer supera el limite.... entonces no lo permitimos
+if ( totalAtrasos > 0 && ((loansTotal + 1) > maxLoansIfLate) )
+  { 
+    msg.addText('es', "Este usuario tiene "+totalAtrasos+" objeto(s) atrasado(s).");
+    msg.addText('en', "This user has "+totalAtrasos+" late objects(s).");
+    return false;
+  }
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="UserQuantities">
+  <limits>
+    <limit name="maxLoansTotal">1</limit>
+    <limit name="maxLoansSameRecord">1</limit>
+    <limit name="maxLoansSameCategory">1</limit>
+  </limits>
+  <params>
+    <param name="script">
+<![CDATA[
+
+Profile profile= tc.get('profile');
+
+// First get the values as String
+String maxLoansTotalStr=         profile.getLimit('maxLoansTotal', defaultLimits.get('maxLoansTotal'));
+String maxLoansSameRecordStr=    profile.getLimit('maxLoansSameRecord', defaultLimits.get('maxLoansSameRecord'));
+String maxLoansSameCategoryStr=  profile.getLimit('maxLoansSameCategory', defaultLimits.get('maxLoansSameCategory'));
+
+// Then convert them to int
+int maxLoansTotal=         Integer.parseInt(maxLoansTotalStr);
+int maxLoansSameRecord=    Integer.parseInt(maxLoansSameRecordStr);
+int maxLoansSameCategory=  Integer.parseInt(maxLoansSameCategoryStr);
+
+
+// Algunos valores para el objeto que estamos intentando prestar en esta transaccion
+String transObjectCategory= tc.get(TransactionContext.OBJECT_CATEGORY);
+String transRecordId=       tc.get(TransactionContext.RECORD_ID);
+String transCopyId=         tc.get(TransactionContext.COPY_ID);
+String transVolumeId=       tc.getObjectValue("//hold:copy[hold:copyId='${transCopyId}']/hold:volumeId");
+transVolumeId= (transVolumeId == null) ? "" : transVolumeId.trim();  // fix transVolumeId
+
+
+// En el userStatus es donde estan guardados los prestamos que este usuario tiene (entre otras cosas)
+UserStatus userStatus= tc.get('userStatus');
+
+
+int loansTotal= 0;
+int loansSameRecord= 0;
+int loansSameCategory= 0;
+
+// Vamos a iterar por todos los prestamos que este usuario tiene en su userStatus
+
+java.util.List loansList= userStatus.getLoans();
+for (loan in loansList)
+  {
+    // 1) verificamos maxLoansTotals, cualquier Loan que tenga se cuenta contra su loansTotal
+    //
+    loansTotal++;
+
+
+    // 2) verificamos maxLoansSameRecord. Dos volumenes/tomos del mismo registro
+    //    los consideramos como registros distintos, para poder hacer prestamo multi-volumen
+    //
+    if (loan.getRecordId() == transRecordId)    // El usyario ya tiene una copia de este registro
+      {
+        if (transVolumeId != "")                // Si la copia a prestar tiene info de volumen...
+          {                                     // ...buscamos si este loan es del MISMO volumen
+            loanCopyId= loan.getCopyId();
+            loanVolId=  tc.getObjectValue("//hold:copy[hold:copyId='${loanCopyId}']/hold:volumeId");
+
+            if (loanVolId == transVolumeId)     // ya tiene una copia de este mismo volumen!!!!
+              {
+                loansSameRecord++;              // lo consideramos como una copia mas del registro
+              }
+          }
+        else                                    // no es una copia con info con volumen...
+          loansSameRecord++;                    // ... pero era del mismo registro
+
+      } // if same record
+
+
+    // 3) verificamos maxLoansSameCategory
+    //    Obtenemos la categoria del cada Loan del usuario usando la categoria del Profile
+    //    que se uso al prestarlo. Por eso es importante que en el Loan se guarden las categorias
+    //    calculadas y no asteriscos.
+    //
+    if (loan.getProfile().getObjectCategory() == transObjectCategory)
+      { // Tiene un loan de la misma categoria que el objeto que intento prestar ahora!!
+        loansSameCategory++;
+      } // if same record
+
+  } // for iterator
+
+
+// Ahora comparamos los totales calculados con los valores que los limites del perfil permiten
+
+if (maxLoansTotal <= loansTotal)
+  {
+    msg.addText("en", "The user already has ${loansTotal} loans which is greater than "+
+                                   "than or equal to the maximum allowed for the profile (${maxLoansTotal}).");
+
+    msg.addText("es", "El usuario ya posee ${loansTotal} pr�stamos, lo cual es mayor que "+
+                                   "o igual al m�ximo permitido en su perfil (${maxLoansTotal}).");
+    return false;
+  } // if max total
+
+
+if (maxLoansSameRecord <= loansSameRecord)        // ...y no puede tener mas copias
+  {
+    msg.addText("en", "The user already has ${loansSameRecord} loans for this record (${transRecordId}) "+
+                                    "which is greater than or equal to the maximum allowed for the profile (${maxLoansSameRecord}).");
+
+    msg.addText("es", "El usuario ya posee ${loansSameRecord} pr�stamos para este registro (${transRecordId}) "+
+                                   "lo cual es mayor que o igual al m�ximo permitido en su perfil (${maxLoansSameRecord}).");
+
+    return false;
+  } // if same record
+
+
+if (maxLoansSameCategory <= loansSameCategory)        // ya no puede tener mas objetos de esta categoria
+  {
+    msg.addText("en", "The user already has ${loansSameCategory} loans for objects of this category "+
+                      "(${transObjectCategory}) which is greater than or equal to the maximum "+
+                      "allowed for the profile (${maxLoansSameCategory}).");
+
+    msg.addText("es", "El usuario ya posee ${loansSameCategory} pr�stamos para objetos de esta "+
+                      "categor�a (${transObjectCategory}) lo cual es mayor que o igual al m�ximo "+
+                      "permitido en su perfil (${maxLoansSameCategory}).");
+
+    return false;
+  } // if same record
+
+
+// If we reach this point, we passed all tests of quantities, and we return "true".
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="false" name="checkAvailability">
+  <doc>(DISABLED) Chance to do a final verification.</doc>
+  <params>
+    <param name="script">
+<![CDATA[
+//BBBBBBB Aca podemos hacer una ultima verificacion a ver si este objeto esta disponible, luego de haber
+//BBBBBBB superado todos los chequeos de "cantidades". Tal vez este objeto tiene alguna condicion
+//BBBBBBB especial que impida prestarlo....
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemovePrevReservationFromStatus">
+  <params>
+    <param name="transactionKey">prevReservation</param>
+    <param name="failIfNoTrans">false</param>
+  </params>
+</rule>
+
+<!-- ========================================================================== -->
+
+<process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDb">
+    <doc>Updates User/Object Status databases, and stores Return to transaction log.</doc>
+    <params>
+      <param name="transactionKeys">return</param>
+      <param name="ignoreTransactionNotFound">true</param>
+      <param name="storeUserStatus">true</param>
+      <param name="storeObjectStatus">true</param>
+    </params>
+ </process>
+
+
+ <!-- ========================================================================== -->
+
+<process class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="obtainLibrariesInformation"><environment>
+   <param name="maxHourForLoanByHour_ING">18:00</param>
+   <param name="maxHourForLoanByHour_ARQ">17:00</param>
+   <param name="maxHourForLoanByHour_AGR">19:00</param>
+   <param name="maxHourForLoanByHour_VET">16:00</param>
+</environment><params>
+    <param name="script">
+<![CDATA[
+
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+operatorLocation= transExtras != null ? transExtras.get("operatorLocation") : "";
+
+genv = tc.get("globalEnvironment");
+libs = [:];
+
+for (v in genv) {
+  if (v.key.startsWith('pucvua'))
+      libs.put(v.value,v.value);
+}
+
+libNames = libs.keySet().sort();
+
+for (lib in libNames) {
+if (lib==operatorLocation){
+   //print ("LIBRARY.HOURS"+lib+"--"+lenv["maxHourForLoanByHour_"+lib]);
+   tc.put(TransactionContext.LIBRARY_MAX_HOUR,(String)genv["maxHourForLoanByHour_"+lib]);	
+   }
+}
+
+
+return true;
+
+
+]]>
+    </param>
+  </params></process>
+
+
+
+<process class="net.kalio.empweb.engine.rules.CreateLoan" name="CreateLoan">
+  <doc>Creates a Loan object in the TransactionContext.
+       It stores it under the key given by the "loanKey" param (or under "loan" by default).
+       A following process will actually decide whether we make this loan effective.
+       We separate the two actions (creation and storage) to give a chance to another process/rule
+       to modify/show/cancel the operation later down the pipeline evaluation.
+  </doc>
+  <limits>
+    <limit name="loanDays">2</limit>         <!-- Loan for how many days? -->
+  </limits>
+  <params>
+    <!-- The TransactionContext key under which we store the Loan -->
+    <param name="loanKey">loan</param>
+
+    <!-- How to count the loanDays. Default is "false". Read the Javadoc for this class for a complete explanation  -->
+    <param name="considerSkipDays">false</param>
+
+    <!-- Do we allow the return date to fall on a skipDay?  "false" by default (advance to the next non-skipDay) -->
+    <param name="allowSkipDayReturn">false</param>
+
+    <!-- Default 2359. What is the time limit to return a book on the date of return? -->
+    <param name="returnHour">1500</param>
+
+    <!-- BBB --> <param name="log" />
+  </params>
+</process>
+
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.ValidateAvailability" name="ValidateAvailability">
+  <doc>Enough copies to make the loan</doc>
+  <params>
+    <!-- The TransactionContext key under which we store the Loan -->
+    <param name="transactionKey">loan</param>
+    <param name="remainingSameLocation">true</param>
+    <!-- BBB --> <param name="log" />
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddLoanToStatus">
+  <params>
+    <param name="transactionKey">loan</param>   <!-- The TransactionContext key under which the Loan was stored -->
+  </params>
+</rule>
+
+
+
+
+<process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDbLoan">
+  <params>
+    <param name="transactionKeys">loan</param>  <!-- The TransactionContext key under which the Loan was stored -->
+    <param name="storeUserStatus">true</param>
+    <param name="storeObjectStatus">true</param>
+    <!-- <param name="debug" /> -->
+  </params>
+</process>
+
+<process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+  <params>
+    <param name="resultKeys">return,loan</param>
+  </params>
+</process>
+
+<!-- ======================== FINALLY SECTION ====================== -->
+  <finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+    <doc>Release the logic locks done at the beginning.</doc>
+  </finally>
+
+
+</transaction>

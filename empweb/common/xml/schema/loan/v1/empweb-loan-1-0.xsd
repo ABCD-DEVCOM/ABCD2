@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/loan/v1" elementFormDefault="qualified"
+            xmlns="http://kalio.net/empweb/schema/loan/v1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Loan Schema. Version 1 / January 2005
+  ============================================
+
+  Description:
+  This schema specifies the XML elements that describe a loan.
+  The schema admits two top level elements: loans and loan
+
+  Schema location
+  http://kalio.net/empweb/schema/loan/v1/empweb-loan-1-0.xsd
+
+  Minimum valid XML example:
+  <loan id="232312" xmlns="http://kalio.net/empweb/schema/loan/v1">
+    <userId>6565</userId>
+    <userDb>usuarios</userDb>
+    <copyId>123123</copyId>
+    <recordId>2233</recordId>
+    <objectDb>objetos</objectDb>
+    <profile id="131231">
+      <userClass>AA</userClass>
+      <objectCategory>bb</objectCategory>
+    </profile>
+    <startDate>20050101031293</startDate>
+    <endDate>20050130031293</endDate>
+    <renew id="32131"</renew>
+    <operator id="pipo"/>
+    <location>ENG</location>
+  </loan>
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  January 2005
+
+  -->
+
+  <xsd:element name="loans">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="loan" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+
+  <xsd:element name="loan">
+    <xsd:complexType>
+      <xsd:all>
+        <xsd:element name="userId"   type="xsd:string" />
+        <xsd:element name="userDb"   type="xsd:string"/>
+        <xsd:element name="copyId"   type="xsd:string"/>
+        <xsd:element name="recordId" type="xsd:string"/>
+        <xsd:element name="objectDb" type="xsd:string"/>
+
+        <!-- The effective profile information, under which this loan was generated.
+             It includes information about the "base profile" and any differences that should
+             be applied to it. In particular, userClass and objectCategory should be the
+             calculated values at the moment of transaction and may differ from the userClass
+             and objectCategory of the profile (which might present default values).
+        -->
+        <xsd:element name="profile">
+          <xsd:complexType>
+            <xsd:all minOccurs="0">
+              <xsd:element name="userClass" />
+              <xsd:element name="objectCategory" />
+            </xsd:all>
+
+            <!-- Profile id for the "base profile" -->
+            <xsd:attribute name="id" type="xsd:string" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+
+
+        <xsd:element name="startDate" type="xsd:string"/>
+        <xsd:element name="endDate"   type="xsd:string"/>
+
+        <!-- when present indicates that this loan is a renewal of the indicated
+             loan id
+        -->
+        <xsd:element name="renew" minOccurs="0">
+          <xsd:complexType>
+            <xsd:attribute name="id"  type="xsd:string" use="required"/>
+           </xsd:complexType>
+        </xsd:element>
+
+        <!-- when present indicates that this loan was for the reservation
+             indicated by the id
+        -->
+        <xsd:element name="reservation" minOccurs="0">
+          <xsd:complexType>
+            <xsd:attribute name="id"  type="xsd:string" use="required"/>
+           </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="operator"  minOccurs="0">
+          <xsd:complexType>
+            <xsd:attribute name="id"  type="xsd:string" use="required"/>
+           </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="location"  type="xsd:string"/>
+
+      </xsd:all>
+      <xsd:attribute name="id" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

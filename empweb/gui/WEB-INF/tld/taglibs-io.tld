@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>io</shortname>
+  <uri>http://jakarta.apache.org/taglibs/io-1.0</uri>
+  <info>
+The IO library allows URLs and HTTP requests to be performed using JSP 
+custom tags. This allows JSP to be used to perform HTTP GETs or PUT 
+operations and to make XML-RPC and SOAP requests.
+Currently the IO library supports any protocols supported by the Java URL 
+class such asfile systemFTPHTTPHTTPSXML-RPCSOAP
+For example if you wanted to include the README from the GNU FTP site in
+your JSP output you could do:-
+
+&lt;io:request url="ftp://ftp.gnu.org/README"/&gt;
+
+More likely is you'll want to include the result of a HTTP request. For
+example to include the home page of the Jakarta project in your JSP output
+you could use:-
+
+&lt;io:request url="http://jakarta.apache.org"/&gt;
+
+This single tag is surprisingly useful. &lt;jsp:include&gt; is only capable of
+including a servlet that is in your current web application. The
+&lt;io:request&gt; can be used to make 'server side include' style calls to any
+web server anywhere for any resource.
+
+In the case of HTTP based calls, the default is to perform a HTTP GET. To
+make it easier to do other forms of HTTP requests such as POST and PUT there
+is another tag specialised for HTTP. The previous JSP could be replaced by
+the more verbose:-
+
+&lt;io:http url="http://jakarta.apache.org" action="GET"/&gt;
+
+To perform a HTTP POST we need to specify the data to be POSTED to the
+remote server.
+
+&lt;io:http url="something" action="POST"&gt;
+  &lt;io:body&gt;
+    data to be posted....
+  &lt;/io:body&gt;
+&lt;/io:xmlrpc&gt;
+
+We may also wish to specify some query parameters as well as some HTTP headers.
+
+&lt;io:http url="something" action="POST"&gt;
+  &lt;io:param name="foo" value="123"/&gt;
+  &lt;io:param name="bar"&gt;123&lt;/io:param&gt;
+  &lt;io:header name="Content-Type" value="text/xml"/&gt;
+  &lt;io:body&gt;
+    data to be posted....
+  &lt;/io:body&gt;
+&lt;/io:xmlrpc&gt;
+
+Here we use a nested &lt;io:body&gt; tag to capture its body content for the data
+to be posted. The IO tags can be "piped" together like unix processes such
+that the data to be posted can be specified using an inner &lt;io:request&gt; tag.
+For example the following example reads a file "foo.txt" and posts it to the
+"bar" web service and displays the result in your JSP output:-
+
+&lt;io:http url="bar" action="POST"&gt;
+  &lt;io:request url="file://somewhere/foo.txt"/&gt;
+&lt;/io:xmlrpc&gt;
+
+The pipelining of tags will be discussed in more detail below.
+The new wave of Web Services are based on XML and usually use HTTP POST to
+send a request to a web service and a response is returned as XML. Calling
+web services with the IO tags is easy.
+
+Here's an example of calling an XML-RPC web service using the &lt;io:http&gt;
+tag...
+
+&lt;io:http url="someXmlRpcUrl"&gt;
+ &lt;io:header name="Content-Type" value="text/xml"/&gt;
+ &lt;io:body&gt;
+  &lt;methodCall&gt;
+     &lt;methodName&gt;do.something&lt;/methodName&gt;
+     &lt;params&gt;
+        &lt;param&gt;
+           &lt;value&gt;&lt;i4&gt;1234&lt;/i4&gt;&lt;/value&gt;
+           &lt;/param&gt;
+        &lt;/params&gt;
+     &lt;/methodCall&gt;
+ &lt;/io:body&gt;
+&lt;/io:http&gt;
+
+Notice here that we've added an &lt;io:header&gt; tag to set the content type of
+the posted data to be the XML mime type.
+
+To make it easier when calling XML-RPC and SOAP based Web Services there are
+2 new tags to wrap up calling XML-RPC and SOAP protocols. They allow more
+brief JSP code hiding some of the HTTP detail of the protocols. For example
+here's the same request again using &lt;io:xmlrpc&gt; tag instead:-
+
+&lt;io:xmlrpc url="someXmlRpcUrl"&gt;
+ &lt;io:body&gt;
+  &lt;methodCall&gt;
+     &lt;methodName&gt;do.something&lt;/methodName&gt;
+     &lt;params&gt;
+        &lt;param&gt;
+           &lt;value&gt;&lt;i4&gt;1234&lt;/i4&gt;&lt;/value&gt;
+           &lt;/param&gt;
+        &lt;/params&gt;
+     &lt;/methodCall&gt;
+ &lt;/io:body&gt;
+&lt;/io:xmlrpc&gt;
+
+And here is a SOAP request using the &lt;io:soap&gt; to request a fortune cookie
+from a SOAP web service on the net:-
+
+&lt;io:soap
+    url="http://www.lemurlabs.com/rpcrouter"
+    SOAPAction="urn:lemurlabs-Fortune"&gt;
+ &lt;io:body&gt;
+  &lt;SOAP-ENV:Envelope
+    xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+    SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;
+    &lt;SOAP-ENV:Body&gt;
+      &lt;m:getAnyFortune xmlns:m="urn:lemurlabs-Fortune"/&gt;
+    &lt;/SOAP-ENV:Body&gt;
+  &lt;/SOAP-ENV:Envelope&gt;
+ &lt;/io:body&gt;
+&lt;/io:soap&gt;
+Pipelining
+You can nest JSP custom tags together so that the output of one tag serves
+as the input to another tag. For example:-
+
+&lt;foo:a&gt;
+    &lt;foo:b/&gt;
+&lt;/foo:a&gt;
+
+This is quite like the piping that is available on Unix platforms, the
+output of program "b" can be piped into the input of program "a" via the
+command line:-
+
+b | a
+
+To be able to process the output of &lt;foo:b&gt; the &lt;foo:a&gt; tag must be a
+BodyTag. A BodyContent object will be created and the content of the &lt;foo:a&gt;
+tag, including the output of the &lt;foo:b&gt; tag, will be written to the
+BodyContent object. This mechanism can cause unwanted double buffering. For
+example consider this pseudo JSP code:-
+
+&lt;foo:searchAndReplace from="Spain" to="London"&gt;
+    &lt;file:read filename="Spain.txt"/&gt;
+    &lt;file:write filename="London.txt"/&gt;
+&lt;/foo:searchAndReplace&gt;
+
+In the above example, all of the Spain.txt file will be read into memory
+into the BodyContent before the &lt;foo:searchAndReplace&gt; tag begins to process
+the file. This is unnecessary double buffering and a bad use of streams.
+Even worse is, if the file is big, you could run out of memory in a heavily
+loaded server.
+
+The IO tag library currently has a "tag pipelining" proposal integrated into it.
+This proposal is the work of from Pierre Delisle and James Strachan and is 
+intended to avoid this unnecessary double buffering. 
+Tag Pipelining Proposal
+The basic idea is that in the example below, the &lt;file:read&gt; tag should be
+able to pass a Reader object straight into the &lt;foo:searchAndReplace&gt; tag
+for it to use directly and thus avoiding unnecessary double buffering.
+
+&lt;foo:searchAndReplace from="foo" to="bar"&gt;
+    &lt;file:read file="foo.txt"/&gt;
+&lt;/foo:searchAndReplace&gt;
+
+Not only does this optimise away double buffering, but it allows any inner
+tag produce the Reader object used by the &lt;foo:searchAndReplace&gt; tag. This
+makes the &lt;foo:searchAndReplace&gt; really reusable as it can take any Reader,
+whether a local URI, a remote URL, a file, a socket, some text or whatever.
+It provides a clean separation of responsibility between "transformer" tags
+which process information and creators of Reader and Writer objects.
+
+How this Reader and Writer passing mechanism should work and what the API
+should look like is still an active area of discussion. A brief overview of
+my current proposal now follows. Please check out taglibs-dev for the latest
+developments ;-)
+
+A tag which can consume textual input should implement the following
+interface:-
+
+    public interface PipeConsumer {
+        public void setReader( Reader reader );
+    }
+
+A tag which can produce textual input should implement the following
+interface:-
+
+    public interface PipeProducer {
+        public void setWriter( Writer writer );
+    }
+
+These two interfaces allow "transformer" tags to be written such that their
+Reader and Writer objects can be configured in a flexible variety of ways.
+These "transformer" tags can also be pipelined together in an efficient
+manner similar to the pipelining of Unix processes.
+
+Examples of transformer tags could be to perform text based search and
+replace, screen scraping, styling of XML or the calling some external web
+service (via HTTP, XML-RPC, SOAP or whatever) and returning the results.
+
+A possible base class for a transformer tag could look something like the
+following:-
+
+public abstract class TransformerTagSupport
+        extends BodyTagSupport
+        implements PipeConsumer, PipeProducer {
+
+    private Reader reader;
+    private Writer writer;
+
+    // PipeConsumer interface
+    public void setReader(reader) {
+        this.reader = reader;
+    }
+
+    // PipeProducer interface
+    public void setWriter(writer) {
+        this.writer = writer;
+    }
+
+    // Tag interface
+    public int doEndTag() throws JspException {
+        if ( reader == null ) {
+            // a child tag has not set my input source
+            // so I'll read from my BodyContent
+            reader = bodyContent.getReader();
+        }
+        if ( writer == null ) {
+            // a child tag has not set my output destination
+            // so I'll write to my enclosing writer
+            writer = pageContent.getOut();
+        }
+        transform( reader, writer );
+        return EVAL_PAGE;
+    }
+
+    // actually do the transformation,
+    // reading from reader and writing to writer
+    protected abstract void transform( 
+        Reader reader, Writer writer 
+    ) throws JspException;
+}
+
+A transformer tag could have its reader and/or writer configured via scriptlet expressions in JSP.
+
+&lt;foo:myTransformer reader="&lt;%= new MyReader() %&gt;" writer="&lt;%= new MyWriter() %&gt;"/&gt;
+
+Or the transformer tag could have an inner tag set its Reader or Writer.  
+The inner tag could use the PipeConsumer or PipeProducer interfaces directly it 
+could use 
+Introspection to set the "reader" or "writer" properties.
+If no values are configured in the transformer tag then the natural JSP defaults 
+are used, the Reader from the tags BodyContent is used with the Writer 
+from the current PageContext.
+
+So the following would work without any direct pipelining:-
+
+&lt;foo:searchAndReplace from="Spain" to="London"&gt;
+    The rain in Spain
+&lt;/foo:searchAndReplace&gt;
+
+Or inner tags could provide the Reader and Writer:-
+
+&lt;foo:searchAndReplace from="Spain" to="London"&gt;
+    &lt;file:read filename="Spain.txt"/&gt;
+    &lt;file:write filename="London.txt"/&gt;
+&lt;/foo:searchAndReplace&gt;
+
+This pipelining proposal has been implemented in the IO tag library so
+that the IO tags can be pipelined together efficiently and flexibly
+without unnecessary double buffering.
+
+Here's an example of more intense pipelining,
+
+&lt;xsl:apply xsl="someStylesheet.xsl"&gt;
+  &lt;io:soap url="someSoapURL" SOAPAction="doSomething"&gt;
+    &lt;xsl:apply xsl="xmlRpcToSoap.xsl"&gt;
+      &lt;io:xmlrpc url="someXmlRpcUrl"&gt;
+        &lt;io:body&gt;
+          &lt;methodCall&gt;
+            &lt;methodName&gt;do.something&lt;/methodName&gt;
+              &lt;params&gt;
+                &lt;param&gt;
+                  &lt;value&gt;&lt;i4&gt;1234&lt;/i4&gt;&lt;/value&gt;
+                &lt;/param&gt;
+              &lt;/params&gt;
+          &lt;/methodCall&gt;
+        &lt;/io:body&gt;
+      &lt;/io:xmlrpc&gt;
+
+    &lt;/xsl:apply&gt;
+  &lt;/io:soap&gt;
+&lt;/io:xmlrpc&gt;
+
+The above example looks like a relatively small block of XML but its
+actually doing quite a lot. Reading from inside-out, its calling an XML-RPC
+service with some XML data then using XSLT to style the result into a SOAP
+request which is then HTTP POSTed into a SOAP service. The result of the
+SOAP request is then styled again using XSLT and output to the users
+browser.
+</info>
+  <tag>
+    <name>request</name>
+    <tagclass>org.apache.taglibs.io.URLTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>encoding</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>output</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>input</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>http</name>
+    <tagclass>org.apache.taglibs.io.HttpTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>action</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>encoding</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>output</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>input</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>header</name>
+    <tagclass>org.apache.taglibs.io.URLHeaderTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>param</name>
+    <tagclass>org.apache.taglibs.io.URLParameterTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>soap</name>
+    <tagclass>org.apache.taglibs.io.HttpSoapTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>SOAPAction</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>encoding</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>xmlrpc</name>
+    <tagclass>org.apache.taglibs.io.XmlRpcTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>userAgent</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>encoding</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>body</name>
+    <tagclass>org.apache.taglibs.io.PipeTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>reader</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>pipe</name>
+    <tagclass>org.apache.taglibs.io.PipeTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>reader</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>writer</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <name>get</name>
+    <tagclass>org.apache.taglibs.io.GetTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>property</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
+
+
+
+
+
+
+
+
+

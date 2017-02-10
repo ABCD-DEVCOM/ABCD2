@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<services>
+  <!--  When the Axis webapp starts, the net.kalio.empweb.ws.WSInit servlet will call the init operation
+        on each webservice defined below.
+  -->
+
+  <!--  This web service is implemented by the net.kalio.empweb.engine.WSBroker class and is the
+        starting point for the EmpWeb engine configuration.
+        The service uses an engine configuration file which is specified in the deployment of EngineInit
+        by the "configFile" parameter.
+  -->
+  <service>
+    <endPoint>http://127.0.0.1:8086/ewengine/services/EngineInit</endPoint>
+  </service>
+</services>

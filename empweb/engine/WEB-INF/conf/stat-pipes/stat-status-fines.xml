@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-status-fines" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+
+  <rule class="net.kalio.empweb.engine.rules.GetCurrentTransactionIds" name="GetCurrentTransactionIds">
+    <params>
+      <param name="useOperatorLocation">true</param>
+      <param name="transactionType">fine</param>
+    </params>
+  </rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListLoans"><params>
+    <param name="script">
+<![CDATA[
+
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras != null) {
+  location = transExtras.get("operatorLocation");
+}
+
+finesCount = 0;
+
+currentIdsFines = tc.get('currentIdsFines');
+if (currentIdsFines != null) finesCount = currentIdsFines.size();
+
+result.append("<values>");
+result.append("  <value name='location'>"+location+"</value>");
+result.append("  <value name='finesCount'>"+finesCount+"</value>");
+
+result.append("  <value name='finesIds'>");
+for (item in currentIdsFines) { result.append("  <id>"+item+"</id>");}
+result.append("  </value>");
+
+
+result.append("</values>");
+return true;
+]]>
+    </param>
+  </params></rule></transaction>
+

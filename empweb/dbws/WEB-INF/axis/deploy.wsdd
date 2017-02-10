@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+            xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+<!-- The WSDL's below are retrievable as Resources from the common/xml subtree which is included
+       in this webapp's classpath -->
+  <service name="PucvObjectsService" provider="java:RPC" style="wrapped" use="literal">
+    <wsdlFile>/dbws/objects/v1/empweb-objects-service-1-0.wsdl</wsdlFile>
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+    <parameter name="allowedMethods" value="*"/>
+    <parameter name="scope" value="application"/>
+    <parameter name="className" value="net.kalio.empweb.dbws.isis.EmpwebObjectsService"/>
+    <parameter name="configFile" value="/conf/isis-pucv_objectsconfig.xml"/>
+  </service>
+
+  <service name="PucvUsersService" provider="java:RPC" style="wrapped" use="literal">
+    <wsdlFile>/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile>
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+    <parameter name="allowedMethods" value="*"/>
+    <parameter name="scope" value="application"/>
+    <parameter name="className" value="net.kalio.empweb.dbws.isis.EmpwebUsersService"/>
+    <parameter name="configFile" value="/conf/isis-pucv_usersconfig.xml"/>
+  </service>
+
+  <service name="EmpObjectsService" provider="java:RPC" style="wrapped" use="literal">
+    <wsdlFile>/dbws/objects/v1/empweb-objects-service-1-0.wsdl</wsdlFile>
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+    <parameter name="allowedMethods" value="*"/>
+    <parameter name="scope" value="application"/>
+    <parameter name="className" value="net.kalio.empweb.dbws.isis.EmpwebObjectsService"/>
+    <parameter name="configFile" value="/conf/isis-emp_objectsconfig.xml"/>
+  </service>
+
+  <service name="EmpUsersService" provider="java:RPC" style="wrapped" use="literal">
+    <wsdlFile>/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile>
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+    <parameter name="allowedMethods" value="*"/>
+    <parameter name="scope" value="application"/>
+    <parameter name="className" value="net.kalio.empweb.dbws.isis.EmpwebUsersService"/>
+    <parameter name="configFile" value="/conf/isis-emp_usersconfig.xml"/>
+  </service>
+
+</deployment>

@@ -1,0 +1,42 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<queryResult mockup="true" xmlns="http://kalio.net/empweb/schema/queryresult/v1">
+
+  <databaseResult successful="false" name="objectmain">
+    <result>
+      <modsCollection version="3.0"  xmlns="http://www.loc.gov/mods/v3">
+        <mods>
+          <recordInfo>
+            <recordIdentifier>98765432-123</recordIdentifier>
+          </recordInfo>
+
+          <extension>
+            <holdingsInfo version="1.0" xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1">
+              <copies>
+                <copy>
+                  <copyId>AA528</copyId>
+                  <volumeId>2</volumeId>
+                  <objectCategory>S</objectCategory>
+                </copy>
+
+                <copy>
+                  <copyId>BB678</copyId>
+                  <objectCategory>NS</objectCategory>
+                </copy>
+              </copies>
+            </holdingsInfo>
+          </extension>
+
+          <titleInfo>
+            <title>Caperucita Roja</title>
+          </titleInfo>
+
+          <name type="personal">
+            <namePart>Mr. Lobo Feroz</namePart>
+            <role><roleTerm type="text">autor</roleTerm></role>
+          </name>
+        </mods>
+      </modsCollection>
+    </result>
+  </databaseResult>
+
+</queryResult>

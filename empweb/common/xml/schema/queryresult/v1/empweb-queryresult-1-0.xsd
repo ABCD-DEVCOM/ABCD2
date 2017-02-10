@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/queryresult/v1" elementFormDefault="qualified"
+    xmlns="http://kalio.net/empweb/schema/queryresult/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
+
+  xmlns:ewre="http://kalio.net/empweb/schema/engineresult/v1">
+
+  <xsd:import namespace="http://kalio.net/empweb/schema/engineresult/v1"
+              schemaLocation="../../engineresult/v1/empweb-engineresult-1-0.xsd" />
+  
+  <!-- 
+  Empweb queryResult Schema. Version 1 / August 2005
+  ============================================
+
+  Description: This schema specifies the XML elements that describe a queryResult.
+               It makes use of the MsgGroup from the Engine result schema.
+               This schema exists because we wanted the engine to perform the same query
+               on multiple databases and aggregate the results, including errors if any.
+   
+  Schema location
+  http://kalio.net/empweb/schema/queryresult/v1/empweb-queryresult-1-0.xsd
+
+  Example:
+
+  <queryResult xmlns="http://kalio.net/empweb/schema/queryresult/v1">
+    <databaseResult successful="false" name="objectmain">
+      <m:msg xmlns:m="http://kalio.net/empweb/schema/engineresult/v1">
+        <m:key bundle="core.engine">error_connecting_to_database</m:key>
+        <m:params>
+          <m:param>connection refused</m:param>
+          <m:param>objectmain</m:param>
+        </m:params>
+      </m:msg>
+    </databaseResult>
+
+    <databaseResult successful="true" name="objectother">
+      <result>
+        <mods:modsCollection>
+          <mods:mods>
+          ...
+          </mods:mods>
+        </mods:modsCollection>
+      </result>
+    </databaseResult>
+  </queryResult>
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  August 2005
+
+  -->
+
+  <!-- queryResult type -->
+  <xsd:element name="queryResult">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="databaseResult" type="ResultType" />
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <!-- Optional engine msg -->
+      <xsd:group ref="ewre:MsgGroup" minOccurs="0"/>
+
+      <!-- Optional result with any XML -->
+      <xsd:element name="result" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:any processContents="skip"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+
+    <xsd:attribute name="successful" type="xsd:boolean" use="required"/>
+    <!-- database name -->
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dbwsconf db="isis" type="objects">
+    <!--  "location" is the directory where the Isis database resides.
+          It may be an absolute path, or a path relative to the environment variable EMPWEB_HOME
+          or the Java property empweb.home
+  
+          "collection" is the base name of the Isis database
+          (the name of the .mst and all related files without the extension)
+    -->
+
+<!-- Windows BBB  version -->
+    <location>db/isis/objects</location>
+    <collection>UCV05</collection>
+
+<!-- Linux version
+    <location>/var/empweb/db/isis/objects</location>
+    <collection>ucv05</collection>
+-->
+    <!--  This is the character encoding in which the data is stored in Isis
+          Some useful encodings:
+          OLD IBM Extended/DOS (English):  cp437
+          OLD IBM Extended/DOS (Europe):   cp850
+          Western Latin-1:                 iso88591 
+    -->
+    <encoding></encoding>
+    <decoding>cp850</decoding>
+
+    <!-- The subfield delimiter in the Isis database. Circumflex is the default value. -->
+    <subfieldDelimiter>^</subfieldDelimiter>
+
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns="http://www.loc.gov/mods/v3"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd
+                                    http://kalio.net/empweb/schema/holdingsinfo/v1 ../../../common/xml/schema/holdingsinfo/v1/empweb-holdingsinfo-1-0.xsd">
+
+
+<!-- The output format is a modsCollection according to the Library of Congress' MODS, version 3.0.
+     Namespace: http://www.loc.gov/mods/v3
+     Schema location: http://www.loc.gov/standards/mods/v3/mods-3-0.xsd
+
+     The holdings information is an extension to MODS, according to the holdingsInfo schema, version 1.0.
+     Namespace: http://kalio.net/empweb/schema/holdingsinfo/v1
+     Schema location: empweb.home/common/xml/schema/holdingsinfo/v1/empweb-holdingsinfo-1-0.xsd
+-->
+
+  <!-- Use this <xsl:copy-of select="." />  instead of <xsl:apply-templates />
+       for debugging and to see the actual XML output
+  -->
+  <xsl:template match="/recordset" >
+      <modsCollection  xmlns="http://www.loc.gov/mods/v3">
+        <xsl:apply-templates />
+      </modsCollection>
+    </xsl:template>
+
+    <!-- para cada registro -->
+    <xsl:template match="record">
+      <mods version="3.0">
+
+        <!-- ================ Codigo de registro/obra ================ -->
+        <recordInfo>
+          <recordIdentifier><xsl:value-of select="substring(field[@tag='1']/occ/head, 1, 7)" /></recordIdentifier>
+        </recordInfo>
+
+        <!-- El v62 repetible contiene un codigo de 4 caracteres BBBC, donde BBB es el codigo de biblioteca
+             y C es la categoria a la que pertenecen las copias que pertenecen a dicha biblioteca.
+        -->
+<!-- Ahora se vuelve innecesario porque ya tenemos la categoria del objeto directamente
+     como un subcampo del v100. Ver mas abajo en holdingsInfo
+        <xsl:for-each select="field[@tag='62']/occ/head">
+          <accessCondition><xsl:value-of select="." /></accessCondition>
+        </xsl:for-each>
+-->
+        <!-- ================ EXISTENCIAS Y SU CATEGORIA ================ -->
+        <!-- NUEVA EXPLICACION NUEVA EXPLICACION NUEVA EXPLICACION NUEVA EXPLICACION
+             Noviembre 2005 Empweb 1.5  Noviembre 2005 Empweb 1.5  Noviembre 2005 Empweb 1.5
+
+             El campo v100 regenerado por Juan Urzua, esta ahora formateado con subcampos:
+              ^b Biblioteca
+              ^u Unidad Academica
+              ^i Intenvario (copyId)
+              ^c categoria del objeto (objectCategory)
+                 (ya viene precalculada a partir del mapeo de unidad-academica a Biblioteca
+                  y luego con el codigo de biblioteca se busca el v62 que comienza con ese
+                  codigo, entonces su cuarta letra es la categoria del objeto. ahroa este
+                  proceso se hace al generar la base y no dinamicamente en una regla de
+                  transaccion)
+        -->
+        <extension>
+          <holdingsInfo version="1.0" xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1">
+            <copies>
+              <xsl:for-each select="field[@tag='100']/occ">
+                <copy>
+                  <copyId><xsl:value-of select="subfield[@name='i']" /></copyId>
+                  <xsl:if test="subfield[@name='v']">
+                    <volumeId><xsl:value-of select="subfield[@name='v']" /></volumeId>
+                  </xsl:if>
+                  <copyLocation><xsl:value-of select="subfield[@name='b']" /></copyLocation>
+                  <subLocation><xsl:value-of select="subfield[@name='u']" /></subLocation>
+                  <objectCategory><xsl:value-of select="subfield[@name='c']" /></objectCategory>
+                </copy>
+              </xsl:for-each>
+            </copies>
+          </holdingsInfo>
+        </extension>
+
+        <!-- ================ TITULO ================ -->
+        <!-- campo 18 =  TITULO              - MONOGRAF
+             campo 30 =  TITULO              - SERIADA  -->
+        <xsl:for-each select="field[@tag='18']/occ/head | field[@tag='30']/occ/head">
+          <titleInfo>
+            <title><xsl:value-of select="." /></title>
+          </titleInfo>
+        </xsl:for-each>
+
+        <!-- ================ Informacion de origen ================ -->
+        <!-- campo 38 =  EDITORIAL
+             campo 41 =  EDICION
+             campo 44 =  FECHA NORMALIZADA  -->
+        <originInfo>
+          <publisher><xsl:value-of select="field[@tag='38']/occ/head" /></publisher>
+          <edition><xsl:value-of select="field[@tag='41']/occ/head" /></edition>
+          <dateIssued><xsl:value-of select="substring(field[@tag='44']/occ/head, 1, 4)" /></dateIssued>
+        </originInfo>
+
+        <!-- ================ AUTOR ================ -->
+        <!-- campo 16 =  AUTOR PERSONAL      - MONOGRAF -->
+        <xsl:for-each select="field[@tag='16']/occ">
+          <name type="personal">
+            <namePart><xsl:value-of select="head" /></namePart>
+            <role><roleTerm type="text">author</roleTerm></role>
+          </name>
+        </xsl:for-each>
+
+        <!-- campo 17 =  AUTOR INSTITUCIONAL - NONOGRAF -->
+        <xsl:for-each select="field[@tag='17']/occ">
+          <name type="institutional">
+            <namePart><xsl:value-of select="head" /></namePart>
+            <role><roleTerm type="text">author</roleTerm></role>
+          </name>
+        </xsl:for-each>
+
+<!-- VIEJA EXPLICACION OBSOLETA VIEJA EXPLICACION OBSOLETA VIEJA EXPLICACION OBSOLETA
+         - - VIEJA ================ EXISTENCIAS Y SU CATEGORIA ================ - -
+             VIEJA En los campos 100 estan los codigos de exitencia, en los 62 los permisos para
+             VIEJA las distintas bibliotecas. El resultado final de <objectCategory> habra que
+             VIEJA calcularlo con una regla en el engine, de acuerdo a la biblioteca donde este
+             VIEJA ocurriendo el prestamo, reserva, renovacion, etc.
+
+             VIEJA * El copyId sale de la parte numerica del v100.
+             VIEJA * Como forma tentativa, en copyLocation vamos a producir el codigo de unidad
+             VIEJA   academica a la que esta copia pertenece (tomado de los primeros 3 caracteres
+             VIEJA   del v100).
+             VIEJA   A partir de la UA, las reglas obtienen el codigo de biblioteca y luego buscan un
+             VIEJA   <accessCondition> que pertenezca a esa biblioteca, y toman el cuarto caracter para
+             VIEJA   resolver finalmente la <objectCategory>.
+
+        <extension>
+          <holdingsInfo version="1.0" xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1">
+            <copies>
+              <xsl:for-each select="field[@tag='100']/occ/head">
+                <copy>
+                  <copyId><xsl:value-of select="substring(., 4, 7)" /></copyId>
+                  <copyLocation><xsl:value-of select="substring(., 1, 3)" /></copyLocation>
+                  <objectCategory/>
+                  <xsl:if test="string-length(.) > 10">
+                    <volumeId><xsl:value-of select="substring(., 11)" /></volumeId>
+                  </xsl:if>
+                </copy>
+              </xsl:for-each>
+            </copies>
+          </holdingsInfo>
+        </extension>
+-->
+      </mods>
+
+    </xsl:template> <!-- record -->
+</xsl:stylesheet>
+
+  <!--
+    El orden no importa tanto, solo que los datos esten.
+    Acuerdate que ya estamos dentro de un template asi que yo arrancaria con el recordInfo
+    directamente y despues usaria xsl:value-of  (relativo a record que es donde estamos) y n te digo mas!
+    habria que colocar algo
+
+
+    Bueno para empezar el xsl:for-each es una estructura de loop asi que al menos que el campo 41 sea
+    repetible, no es necesario.  Alla arriba ya dice <dateIssued>2000>/dateIssued>
+    solo qu eel 2000 es literal y nosotros queremos "el valor de cierto elemento XML que esta en el
+    XML de entrada
+
+    2) lo mas importante es que lo que hay ahi es un "string literal, basura que el XSL no entiende
+    y va a escupir asi como esta"
+    Lo que el XSL procesa es cachos de XML que sean <xsl:tal-y-tal>
+    en este caso necesitas el xsl:value-of y en el atributo "select" le tenes que decir el XPAth para
+    seleccionar los datos que quieras mostrar ahi.
+
+    <title><xsl:value-of select="." /></title>
+  -->
+
+    <!-- Mapeo de campos Empweb a indices invertidos de Isis -->
+    <query>
+        <field name="copyId">992</field>
+        <field name="recordId">991</field>
+        <field name="author">916</field>
+        <field name="title">918</field>
+        <field name="year">944</field>
+    </query>
+
+</dbwsconf>

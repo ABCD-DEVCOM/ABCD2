@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/objectsquery/v1" xmlns="http://kalio.net/empweb/schema/objectsquery/v1"
+            elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+<!--
+Empweb Objects Query Schema Version 1 / January 2005
+======================================================
+Specifies the schema for the xml supplied to the searchObjects operation of the empweb dbws web services.
+
+Schema location:
+http://kalio.net/empweb/schema/objectsquery/v1/empweb-objects-query-1-0.xsd
+
+
+Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+January 2005
+-->
+
+    <!-- root element query -->
+    <xsd:element name="query">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:group ref="queryTerms"/>
+                <xsd:group ref="operators"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- simple term elements -->
+    <xsd:group name="queryTerms">
+        <xsd:choice>
+            <xsd:element name="copyId"    type="elementsType"/>
+            <xsd:element name="recordId"  type="elementsType"/>
+            <xsd:element name="title"     type="elementsType"/>
+            <xsd:element name="author"    type="elementsType"/>
+
+            <!-- Both attributes, from and to, are required and inclusive. If one of them is empty, the service should use the
+                 same value as the other attribute. If "to" is less than "from", or both are empty, the "year" element should
+                 be ignored.
+            -->
+            <xsd:element name="year">
+                <xsd:complexType>
+                    <xsd:attribute name="from" type="xsd:string" use="required"/>
+                    <xsd:attribute name="to"   type="xsd:string" use="required"/>
+                </xsd:complexType>
+           </xsd:element>
+        </xsd:choice>
+    </xsd:group>
+
+    <!-- elements type -->
+    <xsd:complexType name="elementsType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="type">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="trunc-right"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+
+    <!-- operator elements -->
+    <xsd:group name="operators">
+        <xsd:choice>
+            <xsd:element name="not" type="unaryOpType"/>
+            <xsd:element name="and" type="n-aryOpType"/>
+            <xsd:element name="or"  type="n-aryOpType"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:complexType name="unaryOpType">
+        <xsd:choice>
+            <xsd:group ref="queryTerms"/>
+            <xsd:group ref="operators"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <!-- usually "and" and "or" are binary ops but we admit many operands for them (at least 2) -->
+    <xsd:complexType name="n-aryOpType">
+        <xsd:choice minOccurs="2" maxOccurs="unbounded">
+            <xsd:group ref="queryTerms"/>
+            <xsd:group ref="operators"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+</xsd:schema>

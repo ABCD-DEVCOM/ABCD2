@@ -1,0 +1,673 @@
+/* #general styles */
+BODY {
+	background: #364c6c;
+}
+
+BODY, INPUT, SELECT, TEXTAREA {
+	font-family: "Trebuchet MS", Arial, Verdana, Helvetica;
+	font-size: 8pt;
+	color: #000;
+}
+
+A {
+	color: #708bb1;
+}
+
+A IMG {
+	border: 0px;
+}
+
+LABEL {
+	cursor: pointer;
+}
+
+/* #master classes */
+	/* #defaultButton classes */
+	A.defaultButton {
+		text-decoration: none;
+		color: #fff;
+	}
+
+	A.defaultButton:hover IMG {
+		background-color: #4E617C;
+	}
+
+
+	A.defaultButton SPAN {
+		cursor: pointer;
+		font-size: 90%;
+	}
+
+	A.defaultButton STRONG {
+		font-size: 110%;
+	}
+
+	.textEntry {
+		background: #f5f5f5;
+	}
+
+	INPUT.textEntry, TEXTAREA.textEntry {
+		border-top: 2px solid #a7a6aa;
+		border-left: 2px solid #a7a6aa;
+		border-bottom: 2px solid #dcdfe4;
+		border-right: 2px solid #dcdfe4;
+	}
+
+	INPUT.textEntryFocus, TEXTAREA.textEntryFocus {
+		border-color: #5e88b6;
+		background: #fff;
+	}
+
+	INPUT.superTextEntry,
+	TEXTAREA.superTextEntry {
+		font-size: 180%;
+	}
+
+	.inputAlert {
+		background: #f3eeb5 url('singleButton_alert.gif') no-repeat center right !important;
+	}
+
+	.helper {
+		background: url('helper_bg.png') no-repeat top left;
+		color: #646567
+	}
+
+	.helpersimg {
+		color: rgb(224,240,255)
+	}
+
+
+	.alert {
+		background-image: url('singleButton_alert.gif');
+		font-weight: bold;
+		color: #000
+	}
+
+	A.singleButton {
+		color: #fff;
+		text-decoration: none;
+		background: url('singleButton_bg.gif') repeat-x top left;
+	}
+
+	A.singleButton:hover, A.singleButtonSelected {
+		background-color: #4e617c;
+	}
+
+	A.singleButton .sb_lb {
+		background: url('singleButton_lb.gif') no-repeat top left;
+	}
+
+	A.singleButton .sb_rb {
+		background: url('singleButton_rb.gif') no-repeat top right;
+	}
+
+	/* #END #defaultButton classes */
+
+/* #specific classes */
+
+	/*#heading classes */
+	.heading {
+		background: #364c6c;
+		height: 95 px;
+	}
+
+	.institutionalInfo H1, .institutionalInfo H2 {
+		letter-spacing: -1px;
+	}
+
+	.institutionalInfo H1 {
+		font-size: 130%;
+		color: #fff;
+	}
+
+	.institutionalInfo H2 {
+		font-weight: normal;
+		font-size: 110%;
+		color: #c3d7f4;
+	}
+
+	.userInfo, .userInfo A, .language, .language A {
+		color: #fff;
+	}
+
+	.userInfo A.button_logout {
+		background: url('button_logout.gif') no-repeat center right;
+		text-decoration: none
+	}
+
+	.userInfo A.button_logout:hover SPAN {
+		text-decoration: underline;
+	}
+	/* #END #heading classes */
+
+	/*#sectionInfo classes */
+	.sectionInfo {
+		background: #708bb1;
+	}
+
+	.breadcrumb {
+		font-size: 150%;  //cambiado
+	}
+
+	.breadcrumb H3 {
+		font-size: 100%;
+		color: #fff;
+	}
+
+	.breadcrumb, .breadcrumb A {
+		color: #bcd1ef;
+	}
+
+	.breadcrumb SUP {
+		font-size: 45%;
+	}
+
+	.actions, .actions A {
+		color: #fff;
+		text-decoration: none;
+	}
+	
+	.misactions, .misactions A {
+		color: rgb(224,240,255);
+		text-decoration: none;
+	}
+	
+	/*#END #sectionInfo classes */
+
+	/*#middle classes */
+	.middle {
+		background: #fff;
+	}
+	/*#END #middle classes */
+
+	/*#footer classes */
+	.footer {
+		background: #364c6c;
+		color: #fff;
+	}
+
+	.footer A {
+		color: #cddef6;
+	}
+
+	.systemInfo STRONG {
+		font-size: 110%;
+	}
+
+	.distributorLogo A {
+		background: url('distributorLogo.gif') no-repeat top left;
+	}
+	/*#END #footer classes */
+
+	/*#homepage classes */
+	.homepage .mainBox {
+
+	}
+
+	.homepage .mainBox .boxTop {
+		background: url('mainBox_boxTop_bg.gif') repeat-x top left;
+	}
+
+	.homepage .mainBox .boxBottom {
+		background: url('mainBox_boxTop_bg.gif') repeat-x bottom left;
+	}
+
+	.homepage .mainBox .boxContent {
+		border-left: 1px solid #dbdee1;
+		border-right: 1px solid #dbdee1;
+		background: #fff;
+	}
+
+	.homepage .mainBox .boxTop .btLeft {
+		background: url('mainBox_btLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxTop .btRight {
+		background: url('mainBox_btRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxBottom .bbLeft {
+		background: url('mainBox_bbLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxBottom .bbRight {
+		background: url('mainBox_bbRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxContent {
+		background: #fff url('mainBox_boxContent_bg.gif') repeat-x bottom left;
+		border-color: #b2c2d4
+	}
+
+	.homepage .mainBoxHighlighted .boxTop {
+		background: url('mainBoxHighlighted_boxTop_bg.gif') repeat-x top left;
+	}
+
+	.homepage .mainBoxHighlighted .boxBottom {
+		background: #eff3f8 url('mainBoxHighlighted_boxTop_bg.gif') repeat-x bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxTop .btLeft {
+		background: url('mainBoxHighlighted_btLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxTop .btRight {
+		background: url('mainBoxHighlighted_btRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxBottom .bbLeft {
+		background: url('mainBoxHighlighted_bbLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxBottom .bbRight {
+		background: url('mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle H4 {
+		font-size: 100%;
+		font-weight: normal;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle H4 STRONG {
+		font-size: 210%;
+		color: #265182;
+		font-weight: normal;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle SPAN {
+		color: #4c4c4c;
+	}
+
+	.homepage .mainBox .titleSection .sectionIcon {
+		background: url('database.png') no-repeat center;
+	}
+
+	.homepage .mainBox .fascicleSection .sectionIcon {
+		background: url('mainBox_fascicleSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .maskSection .sectionIcon {
+		background: url('mainBox_maskSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .toolSection .sectionIcon {
+		background: url('mainBox_toolSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .loanSection .sectionIcon {
+		background: url('mainBox_loanSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .helpSection .sectionIcon {
+		background: url('mainBox_helpSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+		color: #000;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles .stInput LABEL {
+		color: #4c4c4c;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles .stInput INPUT.textEntry {
+		background: url('searchTitles_textEntry_bg.gif') no-repeat top left;
+		border: 0px none;
+	}
+
+	.homepage .mainBox A.defaultButton:hover IMG {
+		background-color: #fff;
+	}
+	/*#END #homepage classes */
+
+	/* #buttons background classes */
+	A.listButton IMG {
+		background: url('defaultButton_list.png') no-repeat center;
+	}
+
+	A.databaseButton IMG {
+		background: url('defaultButton_database.png') no-repeat center;
+	}
+
+	A.newButton IMG {
+		background: url('defaultButton_new.png') no-repeat center;
+	}
+
+    A.queryButton IMG {
+		background: url('query.png') no-repeat center;
+	}
+
+
+	A.importButton IMG {
+		background: url('defaultButton_import.png') no-repeat center;
+	}
+
+	A.exportButton IMG {
+		background: url('defaultButton_export.png') no-repeat center;
+	}
+
+	A.reportButton IMG {
+		background: url('defaultButton_report.png') no-repeat center;
+	}
+
+	A.toolsButton IMG {
+		background: url('tools.png') no-repeat center;
+	}
+	A.userButton IMG {
+		background: url('defaultButton_user.png') no-repeat center;
+	}
+
+	A.pdfButton IMG {
+		background: url('defaultButton_pdf.png') no-repeat center;
+	}
+
+	A.cancelButton IMG {
+		background: url('defaultButton_cancel.png') no-repeat center;
+	}
+
+	A.saveButton IMG {
+		background: url('defaultButton_save.png') no-repeat center;
+	}
+
+	A.nextButton IMG {
+		background: url('defaultButton_next.png') no-repeat center;
+	}
+
+	A.backButton IMG {
+		background: url('defaultButton_back.png') no-repeat center;
+	}
+
+	A.eraseButton IMG {
+		background: url('singleButton_erase.png') no-repeat center;
+	}
+
+	A.indexButton IMG {
+		background: url('singleButton_e.png') no-repeat center;
+	}
+	/*#END #buttons background classes */
+
+	/*#list classes */
+	.list {
+
+	}
+
+	.searchBox {
+		background: #d8dade;
+	}
+
+	.searchBox LABEL {
+		color: #848484;
+	}
+
+	.searchBox INPUT.submit {
+		border: 0px none;
+		background: url('searchBox_submit_bg.gif') no-repeat top left;
+		color: #848484
+	}
+
+	.searchBox INPUT.submitAdvanced {
+		border: 0px none;
+		background: url('searchBox_submitadvanced_bg.gif')  top left;
+		color: #848484
+	}
+
+
+	.listTable {
+		border-collapse: collapse;
+		border-spacing: 0px;
+	}
+
+	.listTable TH {
+		border-right: 1px solid #9d9d9d;
+		background: #848484;
+		border-bottom: 3px solid #848484;
+		color: #fff;
+		cursor: pointer;
+		border:1px solid #9d9d9d;
+	}
+
+	.listTable TH.checkboxes,
+	.listTable TH.action {
+		cursor: default;
+	}
+
+	.listTable TH.desc {
+		background-image: url('listTable_th_desc.gif');
+		background-repeat: no-repeat;
+		background-position:  right center;
+		border-bottom-color: #29a1c8
+	}
+
+	.listTable TH.asc {
+		background-image: url('listTable_th_asc.gif');
+		background-repeat: no-repeat;
+		background-position:  right center;
+		border-bottom-color: #29a1c8
+	}
+
+	.listTable TD {
+		border-bottom: 1px solid #e7e7e7;
+	}
+
+	.listTable .tButton {
+		background: #bdced3;
+		color: #000;
+		text-decoration: none;
+	}
+
+	.listTable .tErase {
+		background: #dfbfbf;
+	}
+
+	.listTable .rowOver TD {
+		background: #f4f4f4;
+		border-bottom-color: #ddd;
+	}
+
+	.listTable .rowOver .tButton:hover {
+		background: #88a6d3;
+		color: #fff;
+	}
+
+	.listTable .rowOver .tErase:hover {
+		background: #d36666;
+	}
+
+	/*
+	.listTable .rowOver .tButton {
+		background: #88a6d3;
+		color: #fff;
+	}
+
+	.listTable .rowOver .tErase {
+		background: #d36666;
+	}
+	*/
+	.tMacroActions {
+		background: #708bb1;
+	}
+
+	.tMacroActions .checkboxAction {
+		background: url('checkboxAction_bg.gif') no-repeat top left;
+	}
+	/*#END #list classes */
+
+	/*#form classes */
+	.form {
+
+	}
+
+	.formHead {
+		background: #d8dade;
+	}
+
+	.formHead H4 {
+		font-size: 160%;
+		color: #3d5d8a;
+	}
+
+	.formRow LABEL {
+		color: #000;
+	}
+
+	.formFoot {
+		background: #708bb1;
+	}
+
+	.formFoot .helper {
+		color: #fff;
+		border-right: 1px solid #8da2c1;
+	}
+	h4 {
+		color:#3D5D8A;
+		font-size:160%;
+	}
+	/*#END #form classes */
+
+	/* #Loading */
+	.loading {
+
+	}
+
+	.loading DIV {
+		background: url('loading.gif') no-repeat top center;
+	}
+	/* #END #Loading */
+
+	/* #colection Title loading */
+	TD.hideSTitle .showContent {
+
+	}
+
+	TD.showSTitle {
+		background: #f4f4f4 !important;
+	}
+
+	.rowOver TD.showSTitle {
+		background: #eaeaea !important;
+	}
+
+	TD.showSTitle .showContent {
+
+	}
+
+	TD.showSTitle .singleLoading {
+		border-top: 1px solid #dadfe7;
+		font-size: 90%;
+		color: #7a7a7a;
+	}
+
+	TD.showSTitle .singleLoading IMG {
+		background: url('singleLoading.gif') no-repeat top left;
+	}
+
+	TD.showSTitle .collectionInfo {
+		border-top: 1px solid #dadfe7;
+		font-size: 90%;
+	}
+
+	TD.showSTitle .collectionMode {
+		background: #fff;
+	}
+
+	.rowOver TD.showSTitle .collectionMode {
+		background: #f4f4f4;
+	}
+
+	TD.showSTitle .collectionMode A {
+		color: #708bb1;
+	}
+
+	TD.showSTitle .collectionMode A:hover {
+		color: #000;
+		text-decoration: underline;
+	}
+
+	TD.showSTitle .collectionMode A.selected {
+		background: #f4f4f4;
+		color: #000;
+		text-decoration: none;
+		font-weight: bold;
+	}
+
+	TD.showSTitle .collectionMode A.selected:hover {
+		text-decoration: none;
+	}
+
+	.rowOver TD.showSTitle .collectionMode A.selected {
+		background: #eaeaea;
+	}
+	/* #END #colection Title loading */
+
+	/* #Login */
+	.login .loginForm .boxContent {
+		background: #fff url('mainBox_boxContent_bg.gif') repeat-x bottom left;
+		border-left: 1px solid #b2c2d4;
+		border-right: 1px solid #b2c2d4
+	}
+
+	.login .loginForm .boxTop {
+		background: url('mainBoxHighlighted_boxTop_bg.gif') repeat-x top left;
+	}
+
+	.login .loginForm .boxBottom {
+		background: #eff3f8 url('mainBoxHighlighted_boxTop_bg.gif') repeat-x bottom left;
+	}
+
+	.login .loginForm .boxTop .btLeft {
+		background: url('mainBoxHighlighted_btLeft.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .boxTop .btRight {
+		background: url('mainBoxHighlighted_btRight.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .boxBottom .bbLeft {
+		background: url('mainBoxHighlighted_bbLeft.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .boxBottom .bbRight {
+		background: url('mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .submitRow A.defaultButton:hover IMG {
+		background-color: transparent;
+	}
+
+	.login .loginForm .submitRow A.defaultButton SPAN {
+		color: #708bb1;
+		font-size: 120%;
+	}
+
+	.login .loginForm .submitRow A.defaultButton:hover SPAN {
+		color: #000;
+	}
+	/* #END Login */
+
+
+	.institutionalInfo #parent 
+	{
+		float:left;
+		padding:2px 0 0 10px;
+
+	}
+
+	.institutionalInfo #identification 
+	{
+		float:left;
+		width:500px;
+        margin-top:20px;
+        margin-left:5px;
+
+	}
+
+    p.error
+    {
+
+    	font-family: "Trebuchet MS", Arial, Verdana, Helvetica;
+    	font-size: 9pt;
+        font-weight: bold;
+	    color: #0099CC;
+    }
+
+

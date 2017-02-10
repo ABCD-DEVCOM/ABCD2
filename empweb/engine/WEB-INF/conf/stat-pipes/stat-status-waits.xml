@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-status-waits" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+
+  <rule class="net.kalio.empweb.engine.rules.GetCurrentTransactionIds" name="GetCurrentTransactionIds">
+    <params>
+      <param name="useOperatorLocation">true</param>
+      <param name="transactionType">wait</param>
+    </params>
+  </rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListWaits">
+  <params>
+    <param name="script">
+<![CDATA[
+
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras != null) {
+  location = transExtras.get("operatorLocation");
+}
+
+loansCount = 0;
+
+currentIdsWaits = tc.get('currentIdsWaits');
+if (currentIdsWaits != null) waitsCount = currentIdsWaits.size();
+
+result.append("<values>");
+result.append("  <value name='location'>"+location+"</value>");
+result.append("  <value name='loansCount'>"+waitsCount+"</value>");
+
+result.append("  <value name='waitsIds'>");
+for (item in currentIdsWaits) { result.append("<id>"+item+"</id>");}
+result.append("  </value>");
+
+result.append("</values>");
+println result
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+<process class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="false" name="ContentGenerator"><params>
+  <param name="nombre">Cachito</param>
+
+  <param name="theContent">
+    <![CDATA[
+      <doc>
+      <section><head> Hola ${tc.getParameter('nombre')} </head>
+      <para> Las reservas al momento son: ${tc.get('currentIdsWaits')}
+      </para>
+      </section>
+      </doc>
+    ]]> 
+  </param>
+
+
+  <param name="script">
+    <![CDATA[
+      String theContent = "\"\"\"\n${tc.getParameter('theContent')}\n\"\"\""
+      evaluatedContent = evaluate(theContent)
+      if (tc.getParameter('debug')=='true') println evaluatedContent
+
+      tc.put("content",evaluatedContent.toString())
+      // println theContent
+    ]]>
+  </param>
+
+  <param name="debug">true</param>
+
+</params></process>
+
+
+<process class="net.kalio.empweb.engine.rules.ProcessFO" enabled="false" name="ProcessFO"><params>
+<param name="xsltTemplate">
+<![CDATA[
+
+<xsl:stylesheet version="1.0"
+     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+   <xsl:output method="xml"/>
+<xsl:template match="/">
+    <fo:root>
+      <fo:layout-master-set>
+      <fo:simple-page-master 
+        master-name="only">
+        <fo:region-body 
+           region-name="xsl-region-body" 
+           margin="0.7in" 
+            />
+        <fo:region-before 
+           region-name="xsl-region-before" 
+           extent="0.7in" 
+            display-align="before" />
+
+          <fo:region-after 
+           region-name="xsl-region-after" 
+           display-align="after"
+           extent="0.7in" 
+           />
+      </fo:simple-page-master>
+      </fo:layout-master-set>
+
+      <fo:page-sequence master-reference="only">
+        <fo:flow 
+           flow-name="xsl-region-body">
+         <xsl:apply-templates />
+        </fo:flow>
+      </fo:page-sequence>
+
+    </fo:root>
+</xsl:template>
+
+<xsl:template match="section">
+ <fo:block  id="{generate-id}">
+          <xsl:apply-templates/>
+    </fo:block>
+   </xsl:template>
+
+
+<xsl:template match="head">
+    <fo:block  
+      font-family="Times"
+      font-size="12pt"
+      font-weight="bold"
+      space-before="18pt"
+      space-after="12pt"
+      text-align="center">
+          <xsl:apply-templates/>
+    </fo:block>
+   </xsl:template>
+
+<xsl:template match="para">
+    <fo:block  
+      font-family="Times"
+      font-size="8pt"
+      space-before="12pt"
+      space-after="12pt"
+      text-align="justify">
+          <xsl:apply-templates/>
+    </fo:block>
+   </xsl:template>
+
+<xsl:template match="emphasis[@role='warning']">
+      <fo:inline 
+           color="red">Warning: </fo:inline>
+          <xsl:apply-templates/>
+   </xsl:template>
+
+
+</xsl:stylesheet>
+
+]]>
+</param>
+
+
+<param name="contentKey">content</param>
+
+<param name="content">
+<![CDATA[
+
+<doc>
+<section><head> Simple sectioned title </head>
+<para>Some base content, containing an inline warning,
+  <emphasis role="warning">Do not touch blue paper</emphasis>,
+  a fairly straightforward piece requiring emphasis
+  <emphasis>TEXT</emphasis>, and some instructions which
+  require presenting in a different way, such as
+  <instruction>Now light the blue paper</instruction>.
+</para>
+
+</section>
+</doc>
+
+
+]]>
+</param>
+
+</params>
+</process>
+
+<process class="net.kalio.empweb.engine.rules.FOToPDF" enabled="false" name="FOToPDF">
+<params>
+<param name="debug">true</param>
+</params>
+</process></transaction>

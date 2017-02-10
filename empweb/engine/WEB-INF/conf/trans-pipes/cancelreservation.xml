@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="cancelreservation" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+<!-- <param name="debug">true</param> -->
+</environment>
+
+  <!-- ====================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GetReservation" name="GetReservation">
+    <doc>Get Reservation DOM from User Status database using the reservationId from the TransactionContext</doc>
+    <params>
+      <param name="reservationKey">reservation</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUser" name="GetUser">
+    <doc>Get User DOM from (userId, userDb)</doc>
+    <params>
+      <!-- checks for expired or disabled user -->
+      <param name="checkValidity">false</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetObject" name="GetObject">
+    <doc>Get Object DOM (mods) from (recordId, objectDb), in recordId mode.</doc>
+    <params>
+      <param name="mode">recordId</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="Lock">
+    <doc>Logical lock of UserStatus and ObjectStatus</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.ExtractUserClass" name="ExtractUserClass">
+    <doc>Extract the user class from the user XML and store it in the TransactionContext.</doc>
+    <params>
+      <!-- If "useDefault" is true, it will return "*" when a user class can't be found -->
+      <!--<param name="useDefault">true</param>-->
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus"></rule>
+  <rule class="net.kalio.empweb.engine.rules.GetObjectStatus" name="GetObjectStatus"></rule>
+
+  <!-- ====================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="CheckReservationInUserStatus">
+    <params>
+      <param name="reservationKey">reservation</param>
+      <param name="script">
+<![CDATA[
+// Check if the reservation is in the status, so we dont cancel reservations that were already paid
+theReservation = tc.get(tc.getParameter("reservationKey","reservation"))
+UserStatus us = tc.get(TransactionContext.USER_STATUS)
+if (us.getTransaction(theReservation.getId()) == null)
+{
+	msg.addText("es","La reserva con ID:${theReservation.getId()} ya fue cancelada.")
+        msg.addText("en","The reservation with ID:${theReservation.getId()} was already cancelled.")
+    	return false
+}
+else
+  	return true
+]]>
+      </param>
+    </params>
+  </rule>
+
+  <!-- ====================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.pucv.PublishTimestampAdjustments"  name="PublishTimestampAdjustments">
+    <doc>Publica al TC horas de devolucion, de expiracion de reserva, de inicio de reserva, y excepciones
+      Obtiene los valores indicados en el pipeline globalenvironment.
+    </doc>
+    <params/>
+  </process>
+
+  <!-- ====================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.CreateCancelReservation" name="CreateCancelReservation">
+    <params>
+      <param name="cancelledReservationKey">reservation</param>
+      <param name="cancellationKey">cancelReservation</param>
+    </params>
+  </process>
+
+  <rule class="net.kalio.empweb.engine.rules.CheckExpiredReservation" name="CheckExpiredReservation">
+    <doc>Check whether this reservation is expired and possibly  generate a fine for the user.
+    </doc>
+    <params>
+      <param name="reservationKey">reservation</param>
+      <param name="exceptionDaysKey">exceptionDays</param>
+      <param name="graceMinutes">15</param>
+      <param name="daysOverdueKey">daysOverdue</param>
+      <!-- DEBUG  --> <param name="debug">true</param>
+    </params>
+  </rule>
+
+  <!-- ====================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.CreateFine" name="CreateFine">
+    <limits>
+      <limit name="createFineIfReservationExpired">true</limit> <!-- create a fine if the reservation expired -->
+      <limit name="fineAmountIfExpiredNormal">1</limit>         <!-- amount if expired object is not requested -->
+      <limit name="fineAmountIfExpiredReserved">2</limit>       <!-- amount if expired object has reservations/waits -->
+    </limits>
+    <params>
+      <param name="fineKey">fine</param>
+      <param name="normalType">N</param>   <!-- Type of fine for unrequested late objects -->
+      <param name="reservedType">R</param> <!-- Type of fine for requested late objects -->
+      <param name="daysOverdueKey">daysOverdue</param>
+      <!-- DEBUG --> <param name="debug">true</param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.CreateSuspension" name="CreateSuspension">
+    <limits>
+      <limit name="createSuspensionIfReservationExpired">true</limit>  <!-- create a suspension if the reservation expired -->
+      <limit name="suspensionDaysIfExpiredNormal">2</limit>            <!-- suspension days if expired  object is not requested -->
+      <limit name="suspensionDaysIfExpiredReserved">3</limit>          <!-- suspension days if expired object is not requested -->
+    </limits>
+    <params>
+      <!-- are suspension days multiplied? (suspensionDaysNormal*overdue = suspensionDays) -->
+      <param name="suspensionDaysMultiply">false</param>
+    </params>
+  </process>
+
+  <!-- ====================================================================== -->
+
+  <rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemoveReservationFromStatus">
+    <params>
+      <param name="transactionKey">reservation</param>
+    </params>
+  </rule>
+
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddFineToStatus">
+    <params>
+      <param name="transactionKey">fine</param>
+      <param name="toObjectStatus">false</param>
+      <!-- DEBUG --> <param name="debug">true</param>
+
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddSuspensionToStatus">
+     <params>
+      <param name="transactionKey">suspension</param>
+      <param name="toObjectStatus">false</param>
+      <!-- DEBUG --> <param name="debug">true</param>
+
+    </params>
+  </rule>
+
+
+  <process class="net.kalio.empweb.engine.rules.UpdateDb"  name="UpdateDb">
+    <doc>Updates User/Object Status databases, and stores the cancelled reservation to the transaction log.</doc>
+    <params>
+      <param name="transactionKeys">suspension,fine,cancelReservation</param>
+      <param name="ignoreTransactionNotFound">true</param>
+      <param name="storeUserStatus">false</param>
+      <param name="storeObjectStatus">true</param>
+    </params>
+  </process>
+
+  <!-- ====================================================================== -->
+
+  <process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+  <params>
+    <param name="resultKeys">suspension, fine, cancelReservation</param>
+  </params>
+</process>
+
+  <!-- ======================== FINALLY SECTION ====================== -->
+
+  <finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+    <doc>Release the logic locks done at the beginning.</doc>
+  </finally>
+
+</transaction>

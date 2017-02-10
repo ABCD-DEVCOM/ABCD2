@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<transactions mockup="true" xmlns="http://kalio.net/empweb/schema/transaction/v1">
+  <transaction name="prestamo" path="/var/empweb/empweb1i1/engine/conf/prestamo.xml" />
+  <transaction name="devo" path="/var/empweb/empweb1i1/engine/conf/devo.xml" />
+  <transaction name="reserva" path="/var/empweb/empweb1i1/engine/conf/reserva.xml" />
+</transactions>

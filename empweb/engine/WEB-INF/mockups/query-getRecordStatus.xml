@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<recordStatus mockup="true" objectId="6565" objectDb="usuarios"
+        xmlns="http://kalio.net/empweb/schema/objectstatus/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/objectstatus/v1 ../../../common/xml/schema/objectstatus/v1/empweb-objectstatus-1-0.xsd
+        http://kalio.net/empweb/schema/wait/v1 ../../wait/v1/empweb-wait-1-0.xsd
+        http://kalio.net/empweb/schema/reservation/v1 ../../reservation/v1/empweb-reservation-1-0.xsd
+        http://kalio.net/empweb/schema/fine/v1 ../../fine/v1/empweb-fine-1-0.xsd
+        http://kalio.net/empweb/schema/suspension/v1 ../../suspension/v1/empweb-suspension-1-0.xsd
+        http://kalio.net/empweb/schema/loan/v1 ../../loan/v1/empweb-loan-1-0.xsd">
+
+    <loans xmlns="http://kalio.net/empweb/schema/loan/v1">
+        <loan id="23231211111111111">
+            <userId>6565</userId>
+            <userDb>usuarios</userDb>
+            <copyId>123123</copyId>
+            <recordId>123123</recordId>
+            <objectDb>objetos</objectDb>
+            <profile id="131231"/>
+            <startDate>20050130031223</startDate>
+            <endDate>20050131010101</endDate>
+        </loan>
+    </loans>
+    <reservations xmlns="http://kalio.net/empweb/schema/reservation/v1">
+        <reservation id="232312">
+            <userId>6565</userId>
+            <userDb>usuarios</userDb>
+            <recordId>123123</recordId>
+            <objectDb>objetos</objectDb>
+            <date>20050130031223</date>
+            <cancelDate>20050131010101</cancelDate>
+            <profile id="131231"/>
+            <obs>This is a cancelled reservation</obs>
+        </reservation>
+        <reservation id="232315">
+            <userId>6565</userId>
+            <userDb>usuarios</userDb>
+            <recordId>777888</recordId>
+            <objectDb>objetos</objectDb>
+            <date>20050130031223</date>
+            <profile id="131231"/>
+            <obs>This is an active reservation</obs>
+        </reservation>
+    </reservations>
+    <waits xmlns="http://kalio.net/empweb/schema/wait/v1">
+        <wait>
+            <userId>6565</userId>
+            <userDb>usuarios</userDb>
+            <recordId>12399</recordId>
+            <objectDb>objetos</objectDb>
+            <date>20040302092312</date>
+            <cancelDate>20040302092312</cancelDate>
+            <obs>wait_cancellation_reason_key_to_i18n</obs>
+            <profile id="131231"/>
+        </wait>
+    </waits>
+</recordStatus>
+

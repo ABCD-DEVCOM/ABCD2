@@ -1,0 +1,103 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides: jetty_empweb
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start EmpWeb ab boot ot time
+# Description: Enable service provided by Jetty.
+### END INIT INFO
+# chkconfig: 333 91 35
+# description: Starts and stops Empweb
+#
+# CONFIGURATION START
+EMPWEB_HOME='/opt/ABCD/empweb'
+JETTY_HOME='/opt/ABCD/empweb/jetty'
+# CONFIGURATION END
+
+# Source function library.
+if [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+  . /etc/rc.d/init.d/functions
+else
+  exit 0
+fi
+
+# Avoid using root's TMPDIR
+unset TMPDIR
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+RETVAL=0
+
+start() {
+	KIND="Empweb"
+	echo -n $"Starting $KIND services: "
+        $EMPWEB_HOME/common/etc/empweb.sh start
+	RETVAL=$?
+	echo ""
+	return $RETVAL
+}	
+
+adminstart() {
+	KIND="Empweb"
+	echo -n $"Starting $KIND services: "
+	$EMPWEB_HOME/common/etc/empweb.sh start $JETTY_HOME/etc/admin.xml 
+	RETVAL=$?
+	echo ""
+	return $RETVAL
+}	
+
+stop() {
+        KIND="Empweb"
+	echo -n $"Shutting down $KIND services: "
+	$EMPWEB_HOME/common/etc/empweb.sh stop
+	RETVAL=$?
+	echo ""
+	return  $RETVAL
+}	
+
+restart() {
+	stop
+	start
+}	
+
+rhstatus() {
+	svstat /var/service/empweb
+}	
+
+# Allow status as non-root.
+if [ "$1" = status ]; then
+       rhstatus
+       exit $?
+fi
+
+case "$1" in
+  adminstart)
+	adminstart
+	;;
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+  	restart
+	;;
+  status)
+  	rhstatus
+	;;
+  *)
+	echo $"Usage: $0 {start|adminstart|stop|restart|status}"
+	exit 1
+esac
+
+exit $?

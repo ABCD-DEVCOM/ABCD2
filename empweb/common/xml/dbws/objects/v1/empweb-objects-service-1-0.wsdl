@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions name="empweb-objects-service"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+
+                  targetNamespace="http://kalio.net/empweb/dbws/objects/v1"
+                  xmlns:tns="http://kalio.net/empweb/dbws/objects/v1"
+
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+                  xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/
+                                      http://schemas.xmlsoap.org/wsdl/soap/ http://schemas.xmlsoap.org/wsdl/soap/
+                                      http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+
+<!--
+Empweb Objects Service WSDL - Version 1 beta / March 2004
+=========================================================
+This wsdl describes the services provided by the EmpwebObjectsService.
+
+Schema location
+http://kalio.net/empweb/dbws/objects/v1/empweb-objects-service-1-0.wsdl
+
+Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+All Rights Reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+March 2004
+
+-->
+
+    <!-- ======== types ======== -->
+    <wsdl:types>
+        <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                    targetNamespace="http://kalio.net/empweb/dbws/objects/v1"
+                    xmlns:mods="http://www.loc.gov/mods/v3"
+                    xmlns:ewoquery="http://kalio.net/empweb/schema/objectsquery/v1">
+
+            <xsd:import namespace="http://www.loc.gov/mods/v3" schemaLocation="../../../schema/mods/v3/mods-3-0.xsd" />
+            <xsd:import namespace="http://kalio.net/empweb/schema/objectsquery/v1"
+                        schemaLocation="../../../schema/objectsquery/v1/empweb-objects-query-1-0.xsd"/>
+
+            <!-- searchObjectsById types -->
+            <xsd:element name="searchObjectsById">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="searchObjectsByIdReturn">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="mods:modsCollection"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+
+            <!-- searchObjectsById types -->
+            <xsd:element name="searchObjectsByRecordId">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="searchObjectsByRecordIdReturn">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="mods:modsCollection"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+
+            <!-- searchUser types -->
+            <!-- name of the operation "wrapped style" -->
+            <xsd:element name="searchObjects">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- name of parameter to the operation "wrapped style" -->
+                        <xsd:element name="queryParam">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <!-- value of queryParam is an XML Element -->
+                                    <xsd:element ref="ewoquery:query"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+
+            <xsd:element name="searchObjectsReturn">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="mods:modsCollection"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <!-- ======== messages ======== -->
+    <wsdl:message name="searchObjectsByIdRequest">
+        <wsdl:part element="tns:searchObjectsById" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="searchObjectsByIdResponse">
+        <wsdl:part element="tns:searchObjectsByIdReturn" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="searchObjectsByRecordIdRequest">
+        <wsdl:part element="tns:searchObjectsByRecordId" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="searchObjectsByRecordIdResponse">
+        <wsdl:part element="tns:searchObjectsByRecordIdReturn" name="parameters"/>
+    </wsdl:message>
+
+
+    <wsdl:message name="searchObjectsRequest">
+        <wsdl:part element="tns:searchObjects" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="searchObjectsResponse">
+        <wsdl:part element="tns:searchObjectsReturn" name="parameters"/>
+    </wsdl:message>
+
+<!-- ======== portTypes ======== -->
+    <wsdl:portType name="EmpwebObjectsInterface">
+        <wsdl:operation name="searchObjectsById">
+            <wsdl:input message="tns:searchObjectsByIdRequest" name="searchObjectsByIdRequest"/>
+            <wsdl:output message="tns:searchObjectsByIdResponse" name="searchObjectsByIdResponse"/>
+        </wsdl:operation>
+
+	<wsdl:operation name="searchObjectsByRecordId">
+	         <wsdl:input message="tns:searchObjectsByRecordIdRequest" name="searchObjectsByRecordIdRequest"/>
+            <wsdl:output message="tns:searchObjectsByRecordIdResponse" name="searchObjectsByRecordIdResponse"/>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchObjects">
+            <wsdl:input message="tns:searchObjectsRequest" name="searchObjectsRequest"/>
+            <wsdl:output message="tns:searchObjectsResponse" name="searchObjectsResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+<!-- ======== bindings ======== -->
+    <wsdl:binding name="EmpwebObjectsServiceSoapBinding" type="tns:EmpwebObjectsInterface">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="searchObjectsById">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="searchObjectsByIdRequest">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/objects/v1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="searchObjectsByIdResponse">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/objects/v1" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchObjectsByRecordId">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="searchObjectsByRecordIdRequest">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/objects/v1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="searchObjectsByRecordIdResponse">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/objects/v1" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+
+        <wsdl:operation name="searchObjects">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="searchObjectsRequest">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/objects/v1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="searchObjectsResponse">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/objects/v1" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+<!-- ======== services ======== -->
+    <wsdl:service name="EmpwebObjectsService">
+        <wsdl:port binding="tns:EmpwebObjectsServiceSoapBinding" name="EmpwebObjectsServicePort">
+            <!-- the address must be replaced with the corresponding url for the service -->
+            <wsdlsoap:address location="http://kalio.net:8085/ewdbws/services/EmpwebObjectsService"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

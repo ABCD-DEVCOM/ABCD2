@@ -1,0 +1,52 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<queryResult mockup="true" xmlns="http://kalio.net/empweb/schema/queryresult/v1">
+
+  <databaseResult successful="false" name="usersmain">
+    <result>
+      <userCollection mockup="true" version="1.0"  xmlns="http://kalio.net/empweb/schema/users/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/users/v1  ../../../common/xml/schema/users/v1/empweb-users-1-0.xsd">
+        <user database="usuarios">
+          <id>163012294</id>
+          <name>KOPAITIC OTERO IVAN SIMON</name>
+          <userClass>A</userClass>
+          <expirationDate>20050707</expirationDate>
+        </user>
+
+        <user database="usuarios">
+          <id>163012333</id>
+          <name>JOHN DOE</name>
+          <userClass>A</userClass>
+          <expirationDate>20050707</expirationDate>
+        </user>
+
+      </userCollection>
+    </result>
+  </databaseResult>
+
+  <databaseResult successful="false" name="usersone">
+    <msg xmlns:m="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.engine">error_connecting_to_database</key>
+      <params>
+        <param>connection refused</param>
+        <param>usersone</param>
+      </params>
+    </msg>
+  </databaseResult>
+
+  <databaseResult successful="false" name="userstwo">
+    <result>
+      <userCollection mockup="true" version="1.0"  xmlns="http://kalio.net/empweb/schema/users/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/users/v1  ../../../common/xml/schema/users/v1/empweb-users-1-0.xsd">
+        <user database="usuarios">
+          <id>163012294</id>
+          <name>KOPAITIC OTERO IVAN SIMON</name>
+          <userClass>A</userClass>
+          <expirationDate>20050707</expirationDate>
+        </user>
+      </userCollection>
+    </result>
+  </databaseResult>
+
+</queryResult>

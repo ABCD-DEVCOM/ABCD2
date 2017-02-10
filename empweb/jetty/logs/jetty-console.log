@@ -1,0 +1,979 @@
+STARTED Jetty 2009/09/25,16:26:20:41 
+16:26:21.502 INFO   [main] org.mortbay.log.LogImpl.add(LogImpl.java:109) >16> added org.mortbay.log.OutputStreamLogSink@1f42b49
+16:26:21.455 INFO   [main] org.mortbay.util.FileResource.<clinit>(FileResource.java:60) >11> Checking Resource aliases
+16:26:22.141 INFO   [main] org.mortbay.log.LogImpl.reset(LogImpl.java:228) >22> reset
+=-=-=-=-=-=-= EmpWeb: Initializing all services =-=-=-=-=-=-= 
+25/09/2009 16:26:31 com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+25/09/2009 16:26:32 com.mchange.v2.c3p0.C3P0Registry banner
+INFO: Initializing c3p0-0.9.1-pre10 [built 24-October-2006 03:48:52; debug? true; trace: 10]
+=-=-=-=-=-=-= EmpWeb: Initialization completed =-=-=-=-=-=-= 
+join:/abcd/bases/loanobjects/data/loanobjects,959='MARC-',v1
+altjoin:/abcd/bases/marc/data/marc,1/958=v1
+Comando:\ABCD\cgi-bin\mx db=/abcd/bases/marc/data/marc uctab=ansi "bool=53/(903)" "join=/abcd/bases/loanobjects/data/loanobjects,959='MARC-',v1 " nowTransformacion total: 429
+25/09/2009 16:26:40 com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource getPoolManager
+INFO: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ java.beans.IntrospectionException: java.lang.reflect.InvocationTargetException [lastCheckinFailureDefaultUser] ]
+join:null
+altjoin:null
+ERROR in net.kalio.empweb.dbws.isis.EmpwebService
+Query received: 
+<query>
+  <login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:nil="true" />
+</query>
+
+
+
+java.lang.Exception: The 'login' operator needs at least 2 operands: <login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+	at net.kalio.empweb.dbws.mxisis.EmpwebService.evalExpression(EmpwebService.java:138)
+	at net.kalio.empweb.dbws.mxisis.EmpwebService.search(EmpwebService.java:269)
+	at net.kalio.empweb.dbws.mxisis.EmpwebUsersService.searchUsers(EmpwebUsersService.java:25)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+AxisFault
+ faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+ faultSubcode: 
+ faultString: java.lang.Exception: The 'login' operator needs at least 2 operands: &lt;login xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:nil=&quot;true&quot; /&gt;
+ faultActor: 
+ faultNode: 
+ faultDetail: 
+	{http://xml.apache.org/axis/}hostname:darksaj
+
+java.lang.Exception: The 'login' operator needs at least 2 operands: <login xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+	at org.apache.axis.message.SOAPFaultBuilder.createFault(SOAPFaultBuilder.java:221)
+	at org.apache.axis.message.SOAPFaultBuilder.endElement(SOAPFaultBuilder.java:128)
+	at org.apache.axis.encoding.DeserializationContext.endElement(DeserializationContext.java:1087)
+	at org.apache.xerces.parsers.AbstractSAXParser.endElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanEndElement(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsers(EmpwebQueryService.java:340)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+AxisFault
+ faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+ faultSubcode: 
+ faultString: org.xml.sax.SAXException: Bad envelope tag:  br
+ faultActor: 
+ faultNode: 
+ faultDetail: 
+	{http://xml.apache.org/axis/}stackTrace:org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsers(EmpwebQueryService.java:340)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+
+	{http://xml.apache.org/axis/}hostname:darksaj
+
+org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.AxisFault.makeFault(AxisFault.java:101)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:701)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsers(EmpwebQueryService.java:340)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+Caused by: org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	... 41 more
+Comando:\ABCD\cgi-bin\mx db=/abcd/bases/users/data/users uctab=ansi "bool=rosa/(600)" nowTransformacion total: 61
+AxisFault
+ faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+ faultSubcode: 
+ faultString: org.xml.sax.SAXException: Bad envelope tag:  br
+ faultActor: 
+ faultNode: 
+ faultDetail: 
+	{http://xml.apache.org/axis/}stackTrace:org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsers(EmpwebQueryService.java:340)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+
+	{http://xml.apache.org/axis/}hostname:darksaj
+
+org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.AxisFault.makeFault(AxisFault.java:101)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:701)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsers(EmpwebQueryService.java:340)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+Caused by: org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	... 41 more
+Total time for stats conf-getLibraries: 1390ms
+User hadn't been authenticated before...
+libsWithAccess :AGR,ARQ,ING,VET,
+library null accesible: false
+Total time for stats conf-getLibraries: 9ms
+User hadn't been authenticated before...
+libsWithAccess :
+library AGR accesible: true
+remoteAddr :127.0.0.1
+iplist     :,*
+addrAllowed:true
+nowH   :1627
+nowD   :6
+range    :0730-1900
+  startH :730
+  endH   :1900
+  startD :6
+  endD   :6
+Setting library to: AGR
+Permissions right after flushing ( there shouldn't be any! )...
+Done printing permissions after flushing
+25/09/2009 16:27:31 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 18ms
+Comando:\ABCD\cgi-bin\mx db=/abcd/bases/users/data/users uctab=ansi "bool=($/(350))" nowAxisFault
+ faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+ faultSubcode: 
+ faultString: org.xml.sax.SAXException: Bad envelope tag:  br
+ faultActor: 
+ faultNode: 
+ faultDetail: 
+	{http://xml.apache.org/axis/}stackTrace:org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsersById(EmpwebQueryService.java:331)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+
+	{http://xml.apache.org/axis/}hostname:darksaj
+
+org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.AxisFault.makeFault(AxisFault.java:101)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:701)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsersById(EmpwebQueryService.java:331)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+Caused by: org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	... 41 more
+Comando:\ABCD\cgi-bin\mx db=/abcd/bases/marc/data/marc uctab=ansi "bool=$/(903)" "join=/abcd/bases/loanobjects/data/loanobjects,959='MARC-',v1 " nowTransformacion total: 1174
+Comando:\ABCD\cgi-bin\mx db=/abcd/bases/marc/data/marc uctab=ansi "bool=$/(945)" "join=/abcd/bases/loanobjects/data/loanobjects,959='MARC-',v1 " nowTransformacion total: 651
+25/09/2009 16:31:55 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-trans-by-ids: 193ms
+AxisFault
+ faultCode: {http://schemas.xmlsoap.org/soap/envelope/}Server.userException
+ faultSubcode: 
+ faultString: org.xml.sax.SAXException: Bad envelope tag:  br
+ faultActor: 
+ faultNode: 
+ faultDetail: 
+	{http://xml.apache.org/axis/}stackTrace:org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsersById(EmpwebQueryService.java:331)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+
+	{http://xml.apache.org/axis/}hostname:darksaj
+
+org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.AxisFault.makeFault(AxisFault.java:101)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:701)
+	at org.apache.axis.Message.getSOAPEnvelope(Message.java:424)
+	at org.apache.axis.handlers.soap.MustUnderstandChecker.invoke(MustUnderstandChecker.java:62)
+	at org.apache.axis.client.AxisClient.invoke(AxisClient.java:206)
+	at org.apache.axis.client.Call.invokeEngine(Call.java:2765)
+	at org.apache.axis.client.Call.invoke(Call.java:2748)
+	at org.apache.axis.client.Call.invoke(Call.java:2424)
+	at org.apache.axis.client.Call.invoke(Call.java:2347)
+	at org.apache.axis.client.Call.invoke(Call.java:1804)
+	at net.kalio.empweb.engine.db.DBConfig.invokeService(DBConfig.java:221)
+	at net.kalio.empweb.engine.WSBroker.invokeService(WSBroker.java:409)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchConsolidatorDOM(EmpwebQueryService.java:182)
+	at net.kalio.empweb.engine.ws.EmpwebQueryService.searchUsersById(EmpwebQueryService.java:331)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:585)
+	at org.apache.axis.providers.java.RPCProvider.invokeMethod(RPCProvider.java:388)
+	at org.apache.axis.providers.java.RPCProvider.processMessage(RPCProvider.java:283)
+	at org.apache.axis.providers.java.JavaProvider.invoke(JavaProvider.java:323)
+	at org.apache.axis.strategies.InvocationStrategy.visit(InvocationStrategy.java:32)
+	at org.apache.axis.SimpleChain.doVisiting(SimpleChain.java:118)
+	at org.apache.axis.SimpleChain.invoke(SimpleChain.java:83)
+	at org.apache.axis.handlers.soap.SOAPService.invoke(SOAPService.java:453)
+	at org.apache.axis.server.AxisServer.invoke(AxisServer.java:281)
+	at org.apache.axis.transport.http.AxisServlet.doPost(AxisServlet.java:699)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:616)
+	at org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:689)
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:428)
+	at org.mortbay.jetty.servlet.WebApplicationHandler.dispatch(WebApplicationHandler.java:473)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:568)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1530)
+	at org.mortbay.jetty.servlet.WebApplicationContext.handle(WebApplicationContext.java:633)
+	at org.mortbay.http.HttpContext.handle(HttpContext.java:1482)
+	at org.mortbay.http.HttpServer.service(HttpServer.java:909)
+	at org.mortbay.http.HttpConnection.service(HttpConnection.java:820)
+	at org.mortbay.http.HttpConnection.handleNext(HttpConnection.java:986)
+	at org.mortbay.http.HttpConnection.handle(HttpConnection.java:837)
+	at org.mortbay.http.SocketListener.handleConnection(SocketListener.java:245)
+	at org.mortbay.util.ThreadedServer.handle(ThreadedServer.java:357)
+	at org.mortbay.util.ThreadPool$PoolThread.run(ThreadPool.java:534)
+Caused by: org.xml.sax.SAXException: Bad envelope tag:  br
+	at org.apache.axis.message.EnvelopeBuilder.startElement(EnvelopeBuilder.java:70)
+	at org.apache.axis.encoding.DeserializationContext.startElement(DeserializationContext.java:1048)
+	at org.apache.xerces.parsers.AbstractSAXParser.startElement(Unknown Source)
+	at org.apache.xerces.parsers.AbstractXMLDocumentParser.emptyElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl.scanStartElement(Unknown Source)
+	at org.apache.xerces.impl.XMLNSDocumentScannerImpl$NSContentDispatcher.scanRootElementHook(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl$FragmentContentDispatcher.dispatch(Unknown Source)
+	at org.apache.xerces.impl.XMLDocumentFragmentScannerImpl.scanDocument(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XML11Configuration.parse(Unknown Source)
+	at org.apache.xerces.parsers.XMLParser.parse(Unknown Source)
+	at org.apache.xerces.parsers.AbstractSAXParser.parse(Unknown Source)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:375)
+	at org.apache.axis.encoding.DeserializationContext.parse(DeserializationContext.java:227)
+	at org.apache.axis.SOAPPart.getAsSOAPEnvelope(SOAPPart.java:696)
+	... 41 more
+Total time for stats conf-getLibraries: 147ms
+User hadn't been authenticated before...
+libsWithAccess :AGR,ARQ,ING,VET,
+library null accesible: false
+Total time for stats conf-getLibraries: 9ms
+User hadn't been authenticated before...
+libsWithAccess :
+library AGR accesible: true
+remoteAddr :127.0.0.1
+iplist     :,*
+addrAllowed:true
+nowH   :1646
+nowD   :6
+range    :0730-1900
+  startH :730
+  endH   :1900
+  startD :6
+  endD   :6
+Setting library to: AGR
+Permissions right after flushing ( there shouldn't be any! )...
+Done printing permissions after flushing
+25/09/2009 16:46:07 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 11ms
+25/09/2009 16:59:46 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 16ms
+25/09/2009 16:59:46 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 26ms
+25/09/2009 16:59:47 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 11ms
+25/09/2009 17:16:09 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 13ms
+25/09/2009 17:16:10 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 14ms
+Total time for stats conf-getLibraries: 86ms
+User was already authenticated!
+libsWithAccess :AGR,ARQ,ING,VET,
+library null accesible: false
+Total time for stats conf-getLibraries: 10ms
+User was already authenticated!
+libsWithAccess :
+library AGR accesible: true
+remoteAddr :127.0.0.1
+iplist     :,*
+addrAllowed:true
+nowH   :1716
+nowD   :6
+range    :0730-1900
+  startH :730
+  endH   :1900
+  startD :6
+  endD   :6
+Setting library to: AGR
+Found existing permission : group-trans-return
+Found existing permission : group-trans-renewal
+Found existing permission : group-trans-suspension
+Found existing permission : group-stats-historic
+Found existing permission : group-admin-pipelines-languages
+Found existing permission : group-trans-wait-cancel
+Found existing permission : group-trans-reservation-create
+Found existing permission : group-trans-reservation
+Found existing permission : group-stats-status
+Found existing permission : group-trans-reservation-cancel
+Found existing permission : group-admin-bases
+Found existing permission : group-trans-loan
+Found existing permission : group-reports-status
+Found existing permission : group-trans-wait-create
+Found existing permission : group-admin-policies
+Found existing permission : group-admin-calendar
+Found existing permission : group-stats-globalstatus
+Found existing permission : group-admin-pipelines
+Found existing permission : group-trans-suspension-create
+Found existing permission : group-trans-fine-create
+Found existing permission : group-trans-fine-cancel
+Found existing permission : group-reports-hist
+Found existing permission : group-home
+Found existing permission : group-admin-pipelines-engines
+Found existing permission : group-admin-status
+Found existing permission : group-admin-operators
+Found existing permission : group-trans-fine-pay
+Found existing permission : group-stats
+Found existing permission : group-admin-exceptions
+Found existing permission : group-trans-fine
+Found existing permission : group-home-start
+Found existing permission : group-trans-query
+Found existing permission : group-trans-wait
+Found existing permission : group-trans-suspension-cancel
+Found existing permission : group-reports-letters
+Found existing permission : group-admin
+Found existing permission : group-trans
+Permissions right after flushing ( there shouldn't be any! )...
+Done printing permissions after flushing
+25/09/2009 17:16:30 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 26ms
+25/09/2009 17:28:40 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 63ms
+25/09/2009 17:29:53 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 13ms
+25/09/2009 17:29:54 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 16ms
+Total time for stats conf-getLibraries: 12ms
+User hadn't been authenticated before...
+libsWithAccess :AGR,ARQ,ING,VET,
+library null accesible: false
+Total time for stats conf-getLibraries: 9ms
+User hadn't been authenticated before...
+libsWithAccess :
+library AGR accesible: true
+remoteAddr :127.0.0.1
+iplist     :,*
+addrAllowed:true
+nowH   :1730
+nowD   :6
+range    :0730-1900
+  startH :730
+  endH   :1900
+  startD :6
+  endD   :6
+Setting library to: AGR
+Permissions right after flushing ( there shouldn't be any! )...
+Done printing permissions after flushing
+25/09/2009 17:30:03 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 11ms
+25/09/2009 17:44:44 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-trans-by-ids: 12ms
+25/09/2009 17:50:33 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-trans-by-ids: 13ms
+Total time for stats conf-getLibraries: 10ms
+User was already authenticated!
+libsWithAccess :AGR,ARQ,ING,VET,
+library null accesible: false
+Total time for stats conf-getLibraries: 14ms
+User was already authenticated!
+libsWithAccess :
+library AGR accesible: true
+remoteAddr :127.0.0.1
+iplist     :,*
+addrAllowed:true
+nowH   :1750
+nowD   :6
+range    :0730-1900
+  startH :730
+  endH   :1900
+  startD :6
+  endD   :6
+Setting library to: AGR
+Found existing permission : group-trans-return
+Found existing permission : group-trans-renewal
+Found existing permission : group-trans-suspension
+Found existing permission : group-stats-historic
+Found existing permission : group-admin-pipelines-languages
+Found existing permission : group-trans-wait-cancel
+Found existing permission : group-trans-reservation-create
+Found existing permission : group-trans-reservation
+Found existing permission : group-stats-status
+Found existing permission : group-trans-reservation-cancel
+Found existing permission : group-admin-bases
+Found existing permission : group-trans-loan
+Found existing permission : group-reports-status
+Found existing permission : group-trans-wait-create
+Found existing permission : group-admin-policies
+Found existing permission : group-admin-calendar
+Found existing permission : group-stats-globalstatus
+Found existing permission : group-admin-pipelines
+Found existing permission : group-trans-suspension-create
+Found existing permission : group-trans-fine-create
+Found existing permission : group-trans-fine-cancel
+Found existing permission : group-reports-hist
+Found existing permission : group-home
+Found existing permission : group-admin-pipelines-engines
+Found existing permission : group-admin-status
+Found existing permission : group-admin-operators
+Found existing permission : group-trans-fine-pay
+Found existing permission : group-stats
+Found existing permission : group-admin-exceptions
+Found existing permission : group-trans-fine
+Found existing permission : group-home-start
+Found existing permission : group-trans-query
+Found existing permission : group-trans-wait
+Found existing permission : group-trans-suspension-cancel
+Found existing permission : group-reports-letters
+Found existing permission : group-admin
+Found existing permission : group-trans
+Permissions right after flushing ( there shouldn't be any! )...
+Done printing permissions after flushing
+25/09/2009 17:50:55 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 18ms
+STARTED Jetty 2009/09/25,18:21:18:94 
+18:21:25.384 INFO   [main] org.mortbay.log.LogImpl.add(LogImpl.java:109) >16> added org.mortbay.log.OutputStreamLogSink@17e6a96
+18:21:25.197 INFO   [main] org.mortbay.util.FileResource.<clinit>(FileResource.java:60) >11> Checking Resource aliases
+18:21:26.086 INFO   [main] org.mortbay.log.LogImpl.reset(LogImpl.java:228) >22> reset
+=-=-=-=-=-=-= EmpWeb: Initializing all services =-=-=-=-=-=-= 
+25/09/2009 18:21:37 com.mchange.v2.log.MLog <clinit>
+INFO: MLog clients using java 1.4+ standard logging.
+25/09/2009 18:21:37 com.mchange.v2.c3p0.C3P0Registry banner
+INFO: Initializing c3p0-0.9.1-pre10 [built 24-October-2006 03:48:52; debug? true; trace: 10]
+=-=-=-=-=-=-= EmpWeb: Initialization completed =-=-=-=-=-=-= 
+Total time for stats conf-getLibraries: 1993ms
+User hadn't been authenticated before...
+libsWithAccess :AGR,ARQ,ING,VET,
+library null accesible: false
+Total time for stats conf-getLibraries: 16ms
+User hadn't been authenticated before...
+libsWithAccess :
+library AGR accesible: true
+remoteAddr :127.0.0.1
+iplist     :,*
+addrAllowed:true
+nowH   :1821
+nowD   :6
+range    :0730-1900
+  startH :730
+  endH   :1900
+  startD :6
+  endD   :6
+Setting library to: AGR
+Permissions right after flushing ( there shouldn't be any! )...
+Done printing permissions after flushing
+25/09/2009 18:21:56 com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource getPoolManager
+INFO: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ java.beans.IntrospectionException: java.lang.reflect.InvocationTargetException [lastCheckinFailureDefaultUser] ]
+25/09/2009 18:21:56 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 280ms
+25/09/2009 18:27:04 net.kalio.empweb.engine.ProcessDefinition invokeProcess
+FINE: engine exception:error_getting_connection_from_pool
+Total time for stats stat-status-counts: 19ms
+25/09/2009 18:27:19 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper initDatabases
+INFO: SQL DB creation statement executed : OK!
+25/09/2009 18:28:06 com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource getPoolManager
+INFO: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> ew_test_table, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1790ce9, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1790ce9, idleConnectionTestPeriod -> 30, initialPoolSize -> 3, jdbcUrl -> jdbc:mysql://127.0.0.1:3306/transa, lastCheckinFailureDefaultUser -> null, lastCheckoutFailureDefaultUser -> null, lastConnectionTestFailureDefaultUser -> null, lastIdleTestFailureDefaultUser -> null, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 30, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 20, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numFailedCheckinsDefaultUser -> 0, numFailedCheckoutsDefaultUser -> 0, numFailedIdleTestsDefaultUser -> 0, numHelperThreads -> 3, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, startTimeMillisDefaultUser -> 1253914086214, statementCacheNumCheckedOutDefaultUser -> 0, statementCacheNumCheckedOutStatementsAllUsers -> 0, statementCacheNumConnectionsWithCachedStatementsAllUsers -> 0, statementCacheNumConnectionsWithCachedStatementsDefaultUser -> 0, statementCacheNumStatementsAllUsers -> 0, statementCacheNumStatementsDefaultUser -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, upTimeMillisDefaultUser -> 3, usesTraditionalReflectiveProxies -> false ]
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:1, busy:1, idle:0)
+
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:28:06 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+Total time for stats stat-status-counts: 1151ms
+25/09/2009 18:28:33 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:28:33 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+Total time for stats stat-trans-by-ids: 275ms
+join:null
+altjoin:null
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.ConnectionPoolHelper getConnection
+FINER: POOL STATUS (total:3, busy:1, idle:2)
+
+25/09/2009 18:29:17 net.kalio.empweb.engine.db.ew15db.EwdbConnectionObjectImpl close
+FINER: connection closed
+Total time for stats stat-status-counts: 63ms

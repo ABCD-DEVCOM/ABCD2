@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<profile mockup="true" id="P_R_verano_2322"
+         xmlns="http://kalio.net/empweb/schema/profile/v1"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://kalio.net/empweb/schema/profile/v1 ../../../common/xml/schema/profile/v1/empweb-profile-1-0.xsd ">
+
+  <userClass>P</userClass>
+  <objectCategory>R</objectCategory>
+  <policy>verano2322</policy>
+  <timestamp>20041212</timestamp>
+  <limits>
+    <limit name="maxQuantitySameTitle">
+      <value>1</value>
+      <description>Maximum quantity of same titles</description>
+      <pipelines>
+        <pipeline>loan</pipeline>
+      </pipelines>
+    </limit>
+    <limit name="maxQuantityDifferentTitle">
+      <value>1</value>
+      <description>Maximum quantity of different titles</description>
+      <pipelines>
+        <pipeline>loan</pipeline>
+      </pipelines>
+    </limit>
+  </limits>
+</profile>

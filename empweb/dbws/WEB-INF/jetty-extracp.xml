@@ -1,0 +1,52 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure 1.2//EN" "http://jetty.mortbay.org/configure_1_2.dtd">
+
+<Configure class="org.mortbay.jetty.servlet.WebApplicationContext">
+
+  <!-- The following jars are needed by Axis -->
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/axis-1.2.1.jar</Arg>
+  </Call>
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/jaxrpc.jar</Arg>
+  </Call>
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/saaj.jar</Arg>
+  </Call>
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/wsdl4j-1.5.1.jar</Arg>
+  </Call>
+
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/commons-discovery-0.2.jar</Arg>
+  </Call>
+
+
+  <!-- JXPath Library -->
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/commons-jxpath-1.2-kalio.jar</Arg>
+  </Call>
+
+
+  <!-- I need to add this again in this classloader because the ReturnAnyTypeHanlder
+       descends from BasicHanlder in axis.jar
+       BBB Check whether this is needed with axis 1.2
+  -->
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/lib/classes/</Arg>
+  </Call>
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/lib/empweb-common-lib.jar</Arg>
+  </Call>
+
+  <!-- I put the xml documents in the classpath so the files can be found as a resource -->
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/common/xml/</Arg>
+  </Call>
+
+  <!-- I put dbws/WEB-INF directory in the classpath so the configurarion files can be found as a resource -->
+  <Call name="addClassPath">
+    <Arg><SystemProperty name="empweb.home"/>/dbws/WEB-INF/</Arg>
+  </Call>
+
+</Configure>

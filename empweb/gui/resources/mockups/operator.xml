@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<operator id="ciro">
+    <name>Ciro Mondueri</name>
+    <email>ciro@mondueri.com</email>
+    <groups>
+      <group id="home" active="true"/>
+      <group id="stats" />
+      <group id="trans" active="true"/>
+      <group id="trans-query" active="true"/>
+      <group id="trans-reservation" />
+      <group id="trans-loan" active="true"/>
+      <group id="trans-renewal" active="true"/>
+      <group id="trans-return" active="true"/>
+      <group id="admin" />
+      <group id="admin-policies" />
+      <group id="admin-exceptions" />
+      <group id="admin-calendar" />
+      <group id="admin-operator"/>
+    </groups>
+</operator>
+
+

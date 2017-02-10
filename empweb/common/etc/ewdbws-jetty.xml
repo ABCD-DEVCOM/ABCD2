@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure 1.2//EN" "http://jetty.mortbay.org/configure_1_2.dtd">
+
+<Configure class="org.mortbay.jetty.Server">
+
+  <Set name="requestsPerGC">50</Set>
+
+  <Call name="addListener">
+    <Arg>
+      <New class="org.mortbay.http.SocketListener">
+        <Set name="Port">8085</Set>
+<!--        <Set name="ConfidentialPort">8443</Set> -->
+<!--        <Set name="IntegralPort">8443</Set> -->
+        <Set name="MinThreads">5</Set>
+        <Set name="MaxThreads">30</Set>
+        <Set name="acceptQueueSize">5</Set>
+        <Set name="MaxIdleTimeMs">30000</Set>
+        <Set name="lowResources">8</Set>
+        <Set name="LowResourcePersistTimeMs">10000</Set>
+      </New>
+    </Arg>
+  </Call>
+
+
+  <Set name="WebApplicationConfigurationClassNames">
+    <Array type="java.lang.String">
+      <Item>org.mortbay.jetty.servlet.XMLConfiguration</Item>
+      <Item>org.mortbay.jetty.servlet.JettyWebConfiguration</Item>
+      <Item>net.kalio.utils.jetty.ClassPathConfiguration</Item>
+    </Array>
+  </Set>
+
+
+  <Call name="addWebApplication">
+    <Arg>/ewdbws</Arg>
+    <Arg><SystemProperty name="empweb.home"/>/dbws</Arg>
+
+    <Set name="extractWAR">false</Set>
+    <Set name="defaultsDescriptor">org/mortbay/jetty/servlet/webdefault.xml</Set>
+    <Set name="classLoaderJava2Compliant">false</Set>
+
+    <Set name="RequestLog">
+      <New class="org.mortbay.http.NCSARequestLog">
+        <Set name="filename"><SystemProperty name="empweb.home" default="."/>/logs/yyyy_mm_dd-dbws-access.log</Set>
+        <Set name="retainDays">90</Set>
+        <Set name="append">true</Set>
+        <Set name="extended">true</Set>
+        <Set name="LogTimeZone">GMT</Set>
+      </New>
+    </Set>
+  </Call>
+
+
+  <Call class="org.apache.commons.logging.LogFactory" name="getFactory">
+  <!--  <Call name="setAttribute">
+      <Arg>org.mortbay.jetty.context./dbws</Arg>
+    </Call> -->
+    <Call name="getInstance">
+      <Arg/>
+      <Call name="reset"/>
+      <Set name="verbose">0</Set>
+      <Call name="add">
+        <Arg>
+          <New class="org.mortbay.log.OutputStreamLogSink">
+            <Set name="filename"><SystemProperty name="empweb.home"/>/logs/yyyy_mm_dd-dbws-errors.log</Set>
+            <Set name="retainDays">90</Set>
+            <Set name="append">true</Set>
+            <Set name="logLabels">true</Set>
+            <Set name="logStackSize">true</Set>
+            <Set name="logStackTrace">false</Set>
+            <Set name="logOneLine">false</Set>
+            <Set name="suppressStack">false</Set>
+            <Set name="logTimeZone">GMT</Set>
+          </New>
+        </Arg>
+      </Call>
+    </Call> <!-- getInstance -->
+  </Call> <!-- getFactory -->
+
+</Configure>

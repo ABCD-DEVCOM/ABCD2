@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<error mockup="true" xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+  <msg>
+    <key>ewengine_policy_name_already_exists</key>
+    <params>
+      <param>whatever</param>
+    </params>
+  </msg>
+</error>

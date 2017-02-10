@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<engineconf>
+
+  <mockups enabled="false">
+    <mockupsDir>/engine/WEB-INF/mockups</mockupsDir>
+  </mockups>
+
+  <crons>
+    <!-- *** Syntax for Empweb cron elements ***
+         The format is:
+         <cron id="UNIQUE_ID">
+            <schedule type="cron">0 0 0 * * ?</schedule>
+            <task class="CLASS_NAME">
+              <params>
+                <param name="PARAM_NAME">PARAM_VALUE</param>       
+              </params>
+            </task>
+         </cron>
+
+         Where:
+         * UNIQUE_ID is a unique identifier for the cron entry
+         * CLASS_NAME is the class to be executed. It shall extend net.kalio.utils.cron.Task.
+         * PARAM_NAME and PARAM_VALUE are passed to the class to be executed. 
+
+         * The cron schedule is based on Quartz syntax, which has 6 fields plus an optional 7th
+            * seconds
+            * minutes
+            * hours
+            * day of month
+            * month
+            * day of week
+            * [optional] year
+         * All fields support:
+            * , : multiplie values separator. eg: 6,8,12
+            * - : for ranges. eg: 6-10
+            * * : any value
+            * / : means for every. eg: */5 = every 5.
+            * ? : used in day of month and day of week. Both cannot be specified at the same time.
+                  one must be defined with ? 
+    -->
+  </crons>
+
+  <transactions>
+    <!-- Standard transaction names: loan, reservation, renewal, return,
+                                     cancelReservation, cancelSuspension, cancelFine -->
+
+    <!-- The transaction path must be relative to empweb.home or must be a resource loadable from the classpath -->
+    <!-- The following examples are relative to empweb.home -->
+    <transaction name="loan"              path="/engine/WEB-INF/conf/trans-pipes/loan.xml" />
+    <transaction name="return"            path="/engine/WEB-INF/conf/trans-pipes/return.xml" />
+    <transaction name="renewal"           path="/engine/WEB-INF/conf/trans-pipes/renewal.xml" />
+    <transaction name="suspension"        path="/engine/WEB-INF/conf/trans-pipes/suspension.xml" />
+    <transaction name="fine"              path="/engine/WEB-INF/conf/trans-pipes/fine.xml" />
+    <transaction name="reservation"       path="/engine/WEB-INF/conf/trans-pipes/reservation.xml" />
+	  <transaction name="wait"       path="/engine/WEB-INF/conf/trans-pipes/wait.xml" />
+	<!--<transaction name="cancelreservation"       path="/engine/WEB-INF/conf/trans-pipes/cancelwait.xml" />-->
+	  <transaction name="cancelwait"       path="/engine/WEB-INF/conf/trans-pipes/cancelwait.xml" />
+    <transaction name="cancelsuspension"  path="/engine/WEB-INF/conf/trans-pipes/cancelsuspension.xml" />
+    <transaction name="cancelfine"        path="/engine/WEB-INF/conf/trans-pipes/cancelfine.xml" />
+    <transaction name="cancelreservation" path="/engine/WEB-INF/conf/trans-pipes/cancelreservation.xml" />
+
+    <!-- config pipelines -->
+    <transaction name="globalenvironment" path="/engine/WEB-INF/conf/conf-pipes/globalenvironment.xml" />
+    <transaction name="conf-getLibraries" path="/engine/WEB-INF/conf/conf-pipes/conf-getLibraries.xml" />
+
+    <!-- statistic pipelines -->
+    <transaction name="stat-status-counts" path="/engine/WEB-INF/conf/stat-pipes/stat-status-counts.xml" />
+    <transaction name="stat-trans-by-ids"  path="/engine/WEB-INF/conf/stat-pipes/stat-trans-by-ids.xml" />
+
+    <transaction name="stat-status-lateLoans"   path="/engine/WEB-INF/conf/stat-pipes/stat-status-lateLoans.xml" />
+    <transaction name="stat-status-loans"       path="/engine/WEB-INF/conf/stat-pipes/stat-status-loans.xml" />
+    <transaction name="stat-status-fines"       path="/engine/WEB-INF/conf/stat-pipes/stat-status-fines.xml" />
+	  <transaction name="stat-status-waits"       path="/engine/WEB-INF/conf/stat-pipes/stat-status-waits.xml" />
+	  <transaction name="stat-status-waits-assigned"       path="/engine/WEB-INF/conf/stat-pipes/stat-status-waits-assigned.xml" />
+    <transaction name="stat-status-suspensions" path="/engine/WEB-INF/conf/stat-pipes/stat-status-suspensions.xml" />
+
+    <transaction name="stat-record-availability"  path="/engine/WEB-INF/conf/stat-pipes/stat-record-availability.xml" />
+
+    <transaction name="stat-hist-user"        path="/engine/WEB-INF/conf/stat-pipes/stat-hist-user.xml" />
+    <transaction name="stat-hist-loans"       path="/engine/WEB-INF/conf/stat-pipes/stat-hist-loans.xml" />
+	<transaction name="stat-hist-return-single" path="/engine/WEB-INF/conf/stat-pipes/stat-hist-return-single.xml" />
+    <transaction name="stat-hist-suspensions" path="/engine/WEB-INF/conf/stat-pipes/stat-hist-suspensions.xml" />
+    <transaction name="stat-hist-fines"       path="/engine/WEB-INF/conf/stat-pipes/stat-hist-fines.xml" />
+
+
+  </transactions>
+
+
+  <bases>
+    <!--  *** Syntax for Empweb <base> elements ***
+
+          The general format is:
+          <base name="LOGIC_NAME" type="DB_TYPE">
+            <uri>scheme:scheme-specific-part</uri>
+            <wsdlFile>URI_TO_WSDL_FILE</wsdlFile>
+          </base>
+
+          Where:
+          * LOGIC_NAME is the logic name under which the database is known in the system.
+          * DB_TYPE can be "users" or "objects"
+          * The uri identifies the access method to the database.
+            * If the scheme is "http" or "https" then an Empweb web service is assumed.
+            * If the scheme is "isis" or "xisis" then local access, using the IsisWrapper
+              and XisisWrapper libraries, is assumed. For EmpWeb 1.0 these schemes, their
+              behaviour, and the libraries that implement them, are hard-coded.
+          * wsdlFile (optional) is an uri to get the WSDL of the web service, for databases
+            that are served through SOAP web services.
+
+            If the access uri is a web service and wsdlFile is not specified then the
+            WSDL is accessed by appending "?wsdl" to the uri.
+
+            If the wsdlFile is specified and it's a URI with a scheme (http[s], file:, etc) it's
+            loaded from there. If it does not have a scheme, then it's loaded from the classpath
+            as a resource, and if that fails it's loaded relative to empweb.home.
+    -->
+
+
+	<base name="corporate" type="users">
+      <uri>http://127.0.0.1:9090/central/bridge/endpointusers.php</uri>
+      <wsdlFile>/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile>
+    </base>
+
+    <base name="isis" type="users">
+      <uri>http://127.0.0.1:8085/ewdbws/services/ABCDUsersService</uri>
+      <wsdlFile>/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile>
+    </base>
+
+
+
+    <base name="objetos" type="objects">
+      <uri>http://127.0.0.1:8085/ewdbws/services/ABCDMarcObjectsService</uri>
+      <wsdlFile>/dbws/objects/v1/empweb-objects-service-1-0.wsdl</wsdlFile>
+    </base>
+
+
+    <!-- Dejar estas para mandar DEMOS -->
+<!--    <base name="bibusu" type="users">
+      <uri>http://127.0.0.1:8085/ewdbws/services/EmpUsersService</uri>
+      <wsdlFile>/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile>
+      <!- - Other examples - ->
+      <!- - <wsdlFile>file:///path/to/wsdl</wsdlFile> - ->
+      <!- - <wsdlFile>file:/D:/path/to/wsdl</wsdlFile>- ->
+      <!- - <wsdlFile>http://kalio.net/empweb/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile> - ->
+    </base>
+
+    <base name="bibliv" type="objects">
+      <uri>http://127.0.0.1:8085/ewdbws/services/EmpObjectsService</uri>
+      <wsdlFile>/dbws/objects/v1/empweb-objects-service-1-0.wsdl</wsdlFile>
+    </base>
+-->
+
+
+    <!-- The internal Empweb database implementation. The "class" attribute refers
+         to a class that descends from the abstract class net.kalio.empweb.engine.db.EmpwebDB
+         and implements its behavior. The contents of the <empweb> element is implementation dependant.
+    -->
+    <empweb class="net.kalio.empweb.engine.db.ew15db.Empweb15DB">
+
+      <base name="TRANSA" type="transa">
+        <uri>jdbc:mysql://127.0.0.1:3306/transa</uri>
+        <user>root</user>
+        <password>empweb</password>
+        <schema>ew15db-schema.sql</schema>    <!-- It's a resource inside ew15db.jar -->
+        <backupDir>/opt/ABCD/empweb/db</backupDir> <!-- Please check access rights!-->
+        <poolSettings>
+          <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+          <minPoolSize>3</minPoolSize>
+          <maxPoolSize>20</maxPoolSize>
+          <initialPoolSize>3</initialPoolSize>
+          <acquireIncrement>2</acquireIncrement>
+          <idleConnectionTestPeriod>30</idleConnectionTestPeriod>
+          <testConnectionOnCheckin>false</testConnectionOnCheckin>
+          <automaticTestTable>ew_test_table</automaticTestTable>
+          <maxIdleTime>30</maxIdleTime>
+        </poolSettings>
+        <collation></collation>
+      </base>
+
+      <!-- This version of Empweb15DB stores everything in the TRANSA database -->
+      <base name="EWDB" type="ewextra">
+        <!--    Exceptions are not yet implemented. -->
+        <!-- <collection type="exceptions"/> -->
+      </base>
+    </empweb>
+
+  </bases>
+</engineconf>

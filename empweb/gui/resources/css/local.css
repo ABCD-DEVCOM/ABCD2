@@ -1,0 +1,29 @@
+/* USE THIS CSS FILE TO STORE LOCAL CONFIGURATIONS OVERRIDING COMPOSITEPAGE.CSS */
+
+/* Sobreescribimos algunos valores del compositepage.css */
+
+body {
+   font-size: x-small/1.5em;
+   font-family: Helvetica,sans-serif;
+   voice-family: "\"}\""; voice-family: inherit;
+} html>body {font-size: small;}
+
+/* Tabla */
+#tabla{
+   width: 100%;
+   background: #ffffff;
+   line-height: normal;
+   margin: 0px;
+   padding: 0px;
+   left: 0px;
+   top: 0px;
+}
+
+
+
+/* BBB A ver si ahora con este color ven mejor el error! */
+#content p.error {
+  background: #FF3344;
+  color: #FFF;
+  font-size: 130%;
+}

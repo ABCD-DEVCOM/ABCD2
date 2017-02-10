@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<copyStatus mockup="true" objectId="6565" objectDb="usuarios"
+            xmlns="http://kalio.net/empweb/schema/objectstatus/v1"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://kalio.net/empweb/schema/objectstatus/v1  ../../../common/xml/schema/objectstatus/v1/empweb-objectstatus-1-0.xsd">
+
+  <loans xmlns="http://kalio.net/empweb/schema/loan/v1">
+        <loan id="232312">
+           <userId>6565</userId>
+           <userDb>usuarios</userDb>
+           <copyId>123123</copyId>
+           <objectDb>objetos</objectDb>
+           <profile id="131231"/>
+           <startDate>20050130031223</startDate>
+           <endDate>20050131010101</endDate>
+        </loan>
+  </loans>
+</copyStatus>

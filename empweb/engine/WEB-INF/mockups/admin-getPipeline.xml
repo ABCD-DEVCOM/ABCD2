@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<transaction  mockup="true" name="prestamo" evaluation="shortcut"
+              classpath="/var/empweb/empweb1i1/trans_rules/classes"
+              xmlns="http://kalio.net/empweb/schema/transaction/v1"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1 ../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd ">
+
+  <environment>
+    <param name="env1">env1_val</param>
+    <param name="env2">env2_val</param>
+  </environment>
+
+  <process name="p1prest" class="net.mongo.prestamo.uno">
+    <limits>
+      <limit name="lim1">12</limit>
+      <limit name="lim2"/>
+    </limits>
+
+    <params>
+      <param name="nombre">fulanito</param>
+    </params>
+  </process>
+
+  <rule name="r1prest" class="net.mongo.prestamo.dos" enabled="true">
+    <limits>
+      <limit name="limitedelrule">55</limit>
+    </limits>
+
+    <params>
+      <param name="nombre">fulanito</param>
+      <param name="apellido">fulanez</param>
+      <param name="edad">42</param>
+    </params>
+  </rule>
+</transaction>
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>CodePress - Real Time Syntax Highlighting Editor written in JavaScript</title>
+	<meta name="description" content="CodePress - source code editor window" />
+	
+	<script type="text/javascript">
+	var L=location.href;
+	var d=L.substring(L.indexOf("?")+1);
+	var c=v=new Array(); c=d.split("&");
+	for(i=0;i<c.length&&c.length>0;i++) {
+	v=c[i].split("="); if(v.length>1)
+	eval(v[0]+"=unescape('"+v[1].replace(/\+/g," ")+"')");} 
+	
+	if(language==null||language=='') language = 'generic';
+	
+	ts = (new Date).getTime(); // timestamp to avoid cache
+	document.write('<link type="text/css" href="codepress.css?ts='+ts+'" rel="stylesheet" />');
+	document.write('<link type="text/css" href="languages/'+language+'.css?ts='+ts+'" rel="stylesheet" id="cp-lang-style" />');
+	document.write('<scr'+'ipt type="text/javascript" src="engines/'+engine+'.js?ts='+ts+'"></scr'+'ipt>');
+	document.write('<scr'+'ipt type="text/javascript" src="languages/'+language+'.js?ts='+ts+'"></scr'+'ipt>');
+	</script>
+
+</head>
+
+<script type="text/javascript">
+if (engine == "gecko") document.write('<body> </body>');
+else if(engine == "msie") document.write('<body><pre></pre></body>');
+</script>
+
+</html>

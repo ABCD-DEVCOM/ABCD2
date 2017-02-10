@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<transactionResult mockup="true" xmlns="http://kalio.net/empweb/schema/transactionresult/v1"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://kalio.net/empweb/schema/transactionresult/v1 ../../../common/xml/schema/transactionresult/v1/empweb-transactionresult-1-0.xsd ">
+  <processResult successful="true" name="GetUser"/>
+  <processResult successful="true" name="GetObject"/>
+  <processResult successful="true" name="Lock">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.process">net.kalio.empweb.engine.rules.Lock_lock_ok</key>
+    </msg>
+  </processResult>
+  <processResult successful="true" name="GetUserStatus"/>
+  <processResult successful="true" name="GetObjectStatus"/>
+  <processResult successful="true" name="AcceptEndDate">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.process">net.kalio.empweb.engine.rules.ValidateAvailability_accept_loan_endDate</key>
+      <params>
+        <param>20070623120000</param>
+      </params>
+    </msg>
+    <result>
+      <acceptEndDate>20070623120000</acceptEndDate>
+    </result>
+  </processResult>
+  <processResult successful="true" name="StoreLoan">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="core.process">net.kalio.empweb.engine.rules.StoreLoan_loan_info</key>
+    </msg>
+    <result>
+      <loan id="232312" xmlns="http://kalio.net/empweb/schema/loan/v1">
+        <userId>6565</userId>
+        <userDb>usuarios</userDb>
+        <copyId>123123</copyId>
+        <objectDb>objetos</objectDb>
+        <profile id="131231"/>
+        <title>Caperucita Roja</title>
+        <startDate>20050101000000</startDate>
+        <endDate>20050131000000</endDate>
+      </loan>
+    </result>
+  </processResult>
+
+  <processResult successful="true" name="Unlock"/>
+</transactionResult>
+
+
+<!--
+  <error mockup="true" xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+    <msg>
+    <key bundle="core.engine">ewengine_error_in_engineconf_line</key>
+    <params>
+      <param>123</param>
+    </params>
+    </msg>
+  </error>
+-->

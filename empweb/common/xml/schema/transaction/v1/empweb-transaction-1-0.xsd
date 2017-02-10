@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/transaction/v1" elementFormDefault="qualified"
+    xmlns="http://kalio.net/empweb/schema/transaction/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+ <!--
+  Empweb Transaction Schema. Version 1 / January 2005
+  ===================================================
+
+  Description:
+  This schema specifies the XML elements that describe a transaction
+  pipeline configuration.
+
+
+  Schema location
+  http://kalio.net/empweb/schema/transaction/v1/empweb-transaction-1-0.xsd
+
+  Minimum valid XML example:
+
+  <transaction  name="prestamo" evaluation="shortcut" type="transaction"
+                classpath="/trans_rules/classes:/another/path/classes:/yet/another/path/classes"
+                xmlns="http://kalio.net/empweb/schema/transaction/v1">
+    <environment>
+      <param name="env1">env1_val</param>
+      <param name="env2">env2_val</param>
+    </environment>
+
+
+    <process name="GetObject" class="net.kalio.empweb.engine.rules.GetObject" enabled="true">
+      <doc>This is the documentation for this process</doc>
+      <params>
+        <param name="mode">copyId</param>
+      </params>
+    </process>
+
+
+    <!- - This example shows a custom scripted rule using a fictional EasyXMLInterpreter
+          which specifies a bundle for the interpreter's own messages, but the scripts'
+          messages are in their own bundle (local.mylibrary), or are of the "raw text" type.
+    - ->
+    <rule name="MyCustomRule" class="net.mongo.EasyXMLInterpreter" bundle="local.ezxml">
+      <limits>
+        <limit name="limitedelrule">55</limit>
+      </limits>
+
+      <params>
+        <param name="script">
+          <assertLimit  limit="maxBooks">
+            <if cond="gt" value="10">
+              <then successful="false">
+                <msg>
+                  <key bundle="local.mylibrary">too_many_books</key>
+                </msg>
+              </then>
+              <else>            <!- - else's success is opposite of then's - ->
+                <text>Cool, you got it!</text>
+              </else>
+            </if>
+          </assertLimit>
+        </param>
+      </params>
+    </rule>
+
+
+    <finally name="attheend" class="net.mongo.prestamo>
+      <params>
+        <param name="good">bye</param>
+      </params>
+    </finally>
+
+  </transaction>
+
+  Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  January 2005
+
+-->
+
+  <!-- TRANSACTIONS. A list of transaction pipelines files, with a name and a path. -->
+  <xsd:element name="transactions">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="transaction" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+            <xsd:attribute name="path" type="xsd:string" use="required"/>
+            <xsd:attribute name="type" default="transaction" use="optional">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="transaction"/>
+                  <xsd:enumeration value="statistic"/>
+                  <xsd:enumeration value="configuration"/>
+                  <xsd:enumeration value="test"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:attribute>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- TRANSACTION. A single transaction pipeline definition. -->
+  <xsd:element name="transaction">
+    <xsd:complexType>
+      <xsd:sequence>
+
+        <!-- the environment is an optional series of global parameters all process/rules can access -->
+        <xsd:element ref="environment" minOccurs="0"/>
+
+        <!-- many of these, in any order -->
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="process" type="PRType"/>
+          <xsd:element name="rule"    type="PRType"/>
+        </xsd:choice>
+
+        <!-- finally tags must occur after processes and rules. They always execute, even if a previous
+             one throws an unchecked exception -->
+        <xsd:element name="finally" type="PRType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+
+      <!-- transaction element attributes -->
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+
+      <!-- The classpath is a list of paths relative to the "empweb.home" system property.
+           The paths are separated by ":" (colon) or ";" semi-colon, indistinctly. -->
+      <xsd:attribute name="classpath" type="xsd:string" use="required"/>
+
+      <xsd:attribute name="evaluation" default="full" use="optional">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="shortcut"/>
+            <xsd:enumeration value="SHORTCUT"/>
+            <xsd:enumeration value="full"/>
+            <xsd:enumeration value="FULL"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+
+      <!-- The type represents which kind of transaction: an actual transaction,
+           a statistic result (can be a list or just a result), or a test -->
+      <xsd:attribute name="type" default="transaction" use="optional">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="transaction"/>
+            <xsd:enumeration value="statistic"/>
+            <xsd:enumeration value="configuration"/>
+            <xsd:enumeration value="test"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:attribute>
+
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <!-- the environment is an optional series of global parameters all process/rules can access -->
+  <xsd:element name="environment">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="param" type="simpleHasNameAttr"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+    <!-- The syntax of a process or rule. -->
+  <xsd:complexType name="PRType">
+    <xsd:sequence>
+
+      <!-- Try to avoid using XML-style comments for the documentation of a process or rule,
+         and use this element instead. This allows automatic tools to extract and manipulate
+         the documentation of a transaction pipeline.
+      -->
+      <xsd:element name="doc" type="xsd:string" minOccurs="0" />
+
+      <!-- If this process/rule uses any limits, they must be declared in this optional
+           element. A default value for the limit can be provided here, in case the used
+           Profile does not privde one.
+      -->
+      <xsd:element name="limits" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="limit" type="simpleHasNameAttr"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- optional parameters to the process/rule -->
+      <xsd:element name="params" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="param" type="simpleHasNameAttr"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+
+
+    <xsd:attribute name="name"    type="xsd:string"   use="required"/>
+    <xsd:attribute name="class"   type="xsd:string"   use="required"/>
+    <xsd:attribute name="enabled" type="xsd:boolean"  use="optional"/>
+
+    <!-- This instance of the process/rule may(should) specify the i18n bundle
+         from which the GUI should resolve its messages. If the process/rule
+         does not specify a bundle for the message keys, the Engine will use
+         the default for Empweb processes (usually, core.process)
+    -->
+    <xsd:attribute name="bundle"  type="xsd:string"   use="optional"/>
+  </xsd:complexType>
+
+
+
+  <!-- auxiliary type to define elements that have a name attribute and simple textual content -->
+  <xsd:complexType name="simpleHasNameAttr">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+</xsd:schema>

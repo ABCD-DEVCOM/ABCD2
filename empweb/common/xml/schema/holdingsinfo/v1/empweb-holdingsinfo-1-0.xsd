@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/holdingsinfo/v1" elementFormDefault="qualified"
+            xmlns="http://kalio.net/empweb/schema/holdingsinfo/v1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+<!--
+Empweb Holdings Information Schema. Version 1 beta / March 2004
+===============================================================
+
+This schema specifies the XML elements to be included in the extension element of MODS 3.0
+The information included here is used to decide if the book can be reserved, lent, etc.
+
+Description:
+copyId: item number that identifies the copy
+objectCategory: the category of the copy (loan permitted, etc.)
+
+The copy elemnt can contain other elemts. This allows for including copy specific information (like location, holding institution, etc.
+
+Example:
+<modsCollection xmlns="http://www.loc.gov/mods/v3">
+    <mods>
+        ...
+        <extension>
+            <ew:holdingsInfo version="1.0" xmlns:ew="http://kalio.net/empweb/schema/holdingsinfo/v1">
+                <ew:copies>
+                    <ew:copy>
+                        <ew:copyId>IEE-12312-123</ew:copyId>
+                        <ew:objectCategory>NP</ew:objectCategory>
+                        <ew:volumeId>1</ew:volumeId>
+                    </ew:copy>
+
+                    <ew:copy>
+                        <ew:copyId>IEE-12312-125</ew:copyId>
+                        <ew:copyLocation>SciLibrary</ew:copyLocation>
+                        <ew:subLocation>XZCollection</ew:subLocation>>
+                        <ew:volumeId>1</ew:volumeId>
+                    </ew:copy>
+
+                    <ew:copy>
+                        <ew:copyId>IEE-12312-126</ew:copyId>
+                        <ew:objectCategory>SALA</ew:objectCategory>
+                        <ew:volumeId>2</ew:volumeId>
+                    </ew:copy>
+                <ew:copies>
+            </ew:holdingsInfo>
+        </extension>
+    <mods>
+</modsCollection>
+
+Schema location
+http://kalio.net/empweb/schema/holdingsinfo/v1/empweb-holdingsinfo-1-0.xsd
+
+Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+March 2004
+-->
+
+    <!-- root element holdingsInfo -->
+    <xsd:element name="holdingsInfo">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="copies" type="copiesType"/>
+            </xsd:sequence>
+
+            <xsd:attribute name="version">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="1.0"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <!-- copies type -->
+    <xsd:complexType name="copiesType">
+        <xsd:sequence>
+            <xsd:element name="copy" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="copyId" type="xsd:string"/>
+                        <xsd:element name="copyLocation" type="xsd:string" minOccurs="0"/>
+                        <!-- subLocation inspired on MODS holdings proposal.-->
+                        <xsd:element name="subLocation" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="objectCategory" type="xsd:string" minOccurs="0" />
+                        <xsd:element name="volumeId" type="xsd:string" minOccurs="0"/>
+
+                        <!-- We allow free content from any other or no namespace after the standard
+                             holding tags.
+                             nanamespace ##other means any namespace that is not the targetNamespace,
+                             and is required to avoid Unique Particle Attribution ambiguity.
+                             namespace ##local allows tags without a namespace.
+                        -->
+                        <xsd:choice  minOccurs="0" maxOccurs="unbounded">
+                            <xsd:any namespace="##other" processContents="skip"/>
+                            <xsd:any namespace="##local" processContents="skip"/>
+                        </xsd:choice>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/transactionresult/v1" elementFormDefault="qualified"
+    xmlns="http://kalio.net/empweb/schema/transactionresult/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
+
+    xmlns:ewre="http://kalio.net/empweb/schema/engineresult/v1">
+
+  <xsd:import namespace="http://kalio.net/empweb/schema/engineresult/v1"
+              schemaLocation="../../engineresult/v1/empweb-engineresult-1-0.xsd" />
+
+  <!--
+  Empweb transactionResult Schema. Version 1 / January 2005
+  ============================================
+
+  Description: This schema specifies the XML elements that describe a transactionResult.
+               It makes use of the MsgGroup from the Engine result schema.
+
+  Schema location
+  http://kalio.net/empweb/schema/transactionresult/v1/empweb-transactionresult-1-0.xsd
+
+  Example:
+
+  <transactionResult xmlns="http://kalio.net/empweb/schema/transactionresult/v1">
+    <processResult successful="true" name="CustomRule">
+      <m:msg xmlns:m="http://kalio.net/empweb/schema/engineresult/v1">
+        <m:text>This is my custom message. I can say anything!</m:text>
+      </m:msg>
+
+      <result>
+        <any_XML_with_extra_information />
+      </result>
+    </processResult>
+
+    <processResult successful="false" name="getObject">
+      <m:msg xmlns:m="http://kalio.net/empweb/schema/engineresult/v1">
+        <m:key bundle="core.engine">cant_find_object</m:key>
+        <m:params>
+          <m:param>33232323</m:param>
+          <m:param>users</m:param>
+        </m:params>
+      <m:msg>
+    </processResult>
+  </transactionResult>
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  February 2005
+
+  -->
+
+  <!-- transactionResult type -->
+  <xsd:element name="transactionResult">
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="processResult" type="ResultType" />
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <!-- Optional engine msg -->
+      <xsd:group ref="ewre:MsgGroup" minOccurs="0" />
+
+      <!-- Optional result with any XML -->
+      <xsd:element name="result" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:any processContents="skip"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+
+    <xsd:attribute name="successful" type="xsd:boolean" use="required" />
+    <xsd:attribute name="name" type="xsd:string" use="required" />
+    <xsd:attribute name="millis" type="xsd:int" use="optional" />
+  </xsd:complexType>
+
+</xsd:schema>

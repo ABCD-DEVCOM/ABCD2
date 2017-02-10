@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/users/v1" xmlns="http://kalio.net/empweb/schema/users/v1"
+            elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+<!--
+Empweb Users Information Schema. Version 1 beta / March 2004
+============================================================
+
+Description: This schema specifies the XML elements that describe a user.
+
+
+Schema location
+http://kalio.net/empweb/schema/users/v1/empweb-users-1-0.xsd
+
+To Do:
+   * references between users? (parent user and child users?)
+
+Minimum valid XML example:
+<userCollection version="1.0" xmlns="http://kalio.net/empweb/schema/users/v1">
+    <user>
+        <id>12312312-1</id>
+        <name>John Doe</name>
+        <state>active</state>
+        <userClass>student</userClass>
+        <registrationDate>19980506</registrationDate>
+        <expirationDate>20080509</expirationDate>
+    </user>
+</userCollection>
+
+Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri All rights reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+March 2004
+
+-->
+    <!-- root element userCollection -->
+    <xsd:element name="userCollection">
+        <xsd:complexType>
+            <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="user" type="userType"/>
+            </xsd:sequence>
+            <!-- version info -->
+            <xsd:attribute name="version">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="1.0"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <!-- user type -->
+    <xsd:complexType name="userType">
+        <xsd:all>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="userClass" type="xsd:string"/>
+
+            <xsd:element name="registrationDate" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="expirationDate" type="xsd:string"  minOccurs="0"/>
+            <xsd:element name="notes" type="xsd:string" minOccurs="0"/>
+          
+            <xsd:element name="state" default="active" minOccurs="0">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="active"/>
+                  <xsd:enumeration value="inactive"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+
+
+            <!-- contacts -->
+            <xsd:element name="contacts" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                        <xsd:element name="contact">
+                            <xsd:complexType>
+                                <xsd:simpleContent>
+                                    <xsd:extension base="xsd:string">
+                                        <xsd:attribute name="type" type="xsd:string"/>
+                                    </xsd:extension>
+                                </xsd:simpleContent>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- addresses -->
+            <xsd:element name="addresses" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="address" minOccurs="0" maxOccurs="unbounded">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="street"  type="xsd:string" minOccurs="0"  maxOccurs="unbounded"/>
+                                    <xsd:element name="city"    type="xsd:string" minOccurs="0"/>
+                                    <xsd:element name="state"   type="xsd:string" minOccurs="0"/>
+                                    <xsd:element name="zip"     type="xsd:string" minOccurs="0"/>
+                                    <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+                                    <xsd:element name="tel"     type="xsd:string"/>
+                                    <xsd:element name="fax"     type="xsd:string"/>
+                                </xsd:sequence>
+                                <xsd:attribute name="type" type="xsd:string"/>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+
+            <!-- suspensions -->
+            <xsd:element name="suspensions" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+
+                        <xsd:element name="suspension">
+                            <xsd:complexType>
+                                <xsd:all>
+                                    <xsd:element name="startDate" type="xsd:string"/>
+                                    <xsd:element name="duration" type="xsd:duration"/>
+                                </xsd:all>
+                                <xsd:attribute name="type" type="xsd:string"/>
+                            </xsd:complexType>
+                        </xsd:element>
+
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+
+
+            <!-- extension, where any XML contents can be included -->
+            <xsd:element name="extension" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:choice>
+                        <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:all>
+
+        <!-- logic name of the database to which this user belongs -->
+        <xsd:attribute name="database" type="xsd:string"/>
+    </xsd:complexType>
+
+</xsd:schema>

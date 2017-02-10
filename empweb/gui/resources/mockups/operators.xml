@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<operators>
+
+  <operator id="ciro">
+    <operatorname>Ciro Mondueri</operatorname>
+    <email>ciro@mondueri.com</email>
+  </operator>
+
+  <operator id="ernesto">
+    <operatorname>Ernesto Spinak</operatorname>
+    <email>spinaker@adinet.com.uy</email>
+  </operator>
+
+</operators>
+
+

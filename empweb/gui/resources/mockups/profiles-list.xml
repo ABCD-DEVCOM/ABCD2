@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<result>
+  <profile>
+    <userClass>*</userClass>
+    <objectClass>*</objectClass>
+    <timestamp>20040302</timestamp>
+    <limits>
+      <limit name="maxQuantitySameTitle">
+	<value>1</value>
+	<description>Maximum quantity of same titles</description>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="maxQuantityTotal">
+	<description>Maximum quantity of total items</description>
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="renewWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>renewal</pipeline>
+	</pipelines>
+      </limit>
+
+      <limit name="maxQuantityObjectType">
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="lendWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+    </limits>
+  </profile>
+  <profile>
+    <userClass>Profesor</userClass>
+    <objectClass>*</objectClass>
+    <timestamp>20040302</timestamp>
+    <limits>
+      <limit name="maxQuantitySameTitle">
+	<value>1</value>
+	<description>Maximum quantity of same titles</description>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="maxQuantityTotal">
+	<description>Maximum quantity of total items</description>
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="renewWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>renewal</pipeline>
+	</pipelines>
+      </limit>
+
+      <limit name="maxQuantityObjectType">
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="lendWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+    </limits>
+  </profile>
+  <profile>
+    <userClass>Estudiante</userClass>
+    <objectClass>*</objectClass>
+    <timestamp>20040302</timestamp>
+    <limits>
+      <limit name="maxQuantitySameTitle">
+	<value>1</value>
+	<description>Maximum quantity of same titles</description>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="maxQuantityTotal">
+	<description>Maximum quantity of total items</description>
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="renewWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>renewal</pipeline>
+	</pipelines>
+      </limit>
+
+      <limit name="maxQuantityObjectType">
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="lendWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+    </limits>
+
+  </profile>
+  <profile>
+    <userClass>Profesor</userClass>
+    <objectClass>Revistas</objectClass>
+    <timestamp>20040302</timestamp>
+    <limits>
+      <limit name="maxQuantitySameTitle">
+	<value>1</value>
+	<description>Maximum quantity of same titles</description>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="maxQuantityTotal">
+	<description>Maximum quantity of total items</description>
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="renewWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>renewal</pipeline>
+	</pipelines>
+      </limit>
+
+      <limit name="maxQuantityObjectType">
+	<value>10</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+      <limit name="lendWithUserSuspended">
+	<value>1</value>
+	<pipelines>
+	  <pipeline>loan</pipeline>
+	</pipelines>
+      </limit>
+    </limits>
+
+  </profile>
+</result>
+

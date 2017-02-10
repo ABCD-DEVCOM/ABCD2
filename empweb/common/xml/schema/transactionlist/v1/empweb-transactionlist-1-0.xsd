@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/transactionlist/v1" elementFormDefault="qualified"
+        xmlns="http://kalio.net/empweb/schema/transactionlist/v1"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
+        xmlns:ewfin="http://kalio.net/empweb/schema/fine/v1"
+        xmlns:ewret="http://kalio.net/empweb/schema/return/v1"
+        xmlns:ewsus="http://kalio.net/empweb/schema/suspension/v1"
+        xmlns:ewwai="http://kalio.net/empweb/schema/wait/v1"
+        xmlns:ewloa="http://kalio.net/empweb/schema/loan/v1"
+        xmlns:ewres="http://kalio.net/empweb/schema/reservation/v1">
+
+    <xsd:import namespace="http://kalio.net/empweb/schema/fine/v1"
+                schemaLocation="../../fine/v1/empweb-fine-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/return/v1"
+                schemaLocation="../../return/v1/empweb-return-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/suspension/v1"
+                schemaLocation="../../suspension/v1/empweb-suspension-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/wait/v1"
+                schemaLocation="../../wait/v1/empweb-wait-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/loan/v1"
+                schemaLocation="../../loan/v1/empweb-loan-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/reservation/v1"
+                schemaLocation="../../reservation/v1/empweb-reservation-1-0.xsd"/>
+
+  <!-- 
+  Empweb Transaction List Schema. Version 1 / February 2006
+  ============================================
+
+  Description:
+  This schema specifies the XML elements that describe the a list of transactions. 
+
+  Schema location
+  http://kalio.net/empweb/schema/transactionlist/v1/empweb-transactionlist-1-0.xsd
+
+  Sample: 
+  <transactionList objectId="232312" objectDb="books" id="642" xmlns="http://kalio.net/empweb/schema/transactionlist/v1">
+      <loan>
+       ...
+      </loan>
+      <wait>
+       ...
+      </wait>
+      <loan>
+       ...
+      </loan>
+    ...
+  </transactionList>
+
+  Copyright 2004-2006 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@kalio.net>
+  Ciro Mondueri <ciro@kalio.net>
+  Feb 2006
+
+  === Feb 2006
+  * Added userStatusList
+
+  -->
+
+  <!-- transactionList -->
+  <xsd:element name="transactionList">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="ewloa:loan" minOccurs="0" />
+        <xsd:element ref="ewret:return" minOccurs="0" />
+        <xsd:element ref="ewres:reservation" minOccurs="0" />
+        <xsd:element ref="ewwai:wait" minOccurs="0" />
+        <xsd:element ref="ewfin:fine" minOccurs="0" />
+        <xsd:element ref="ewsus:suspension" minOccurs="0" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

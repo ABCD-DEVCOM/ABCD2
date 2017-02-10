@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="cancelfine" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+
+<environment>
+<!--    <param name="debug">true</param> -->
+</environment>
+
+  <rule class="net.kalio.empweb.engine.rules.GetFine" name="GetFine">
+    <doc>Get a Fine from the transaction log.
+         The Fine's transaction id is taken from the TransactionContext.FINE_ID key.
+         For convenience, it stores the Fine's userId and userDb taken from the Fine
+         into the TC under TransactionContext.USER_ID and TransactionContext.USER_DB
+         respectively.
+    </doc>
+    <params>
+      <param name="fineKey">lastFine</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUser" name="GetUser">
+    <doc>Get User DOM from (userId, userDb)</doc>
+    <params>
+      <param name="checkValidity">false</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="LockUserStatus">
+    <doc>Logical lock of UserStatus</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus" />
+
+
+  <rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="CheckFineInUserStatus"><params>
+ <param name="fineKey">lastFine</param>
+ <param name="script">
+<![CDATA[
+// Check if the fine is in the status, so we dont cancel fines that were already paid
+theFine = tc.get(tc.getParameter("fineKey","lastFine"))
+UserStatus us = tc.get(TransactionContext.USER_STATUS)
+if (us.getTransaction(theFine.getId()) == null)
+{
+	msg.addText("es","La multa ID:${theFine.getId()} ya fue pagada o cancelada.")
+        msg.addText("en","The fine with ID:${theFine.getId()} was already paid or cancelled.")
+    	return false
+}
+else
+  	return true
+]]>
+ </param>
+</params></rule>
+
+  <rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemoveFineFromStatus">
+    <params>
+      <param name="transactionKey">lastFine</param>
+
+      <!-- NECESSARY, as an ObjectStatus will not be present in the TransactionContext -->
+      <param name="fromObjectStatus">false</param>
+    </params>
+  </rule>
+
+  <process class="net.kalio.empweb.engine.rules.CreateCancelFine" name="CreateCancelFine">
+    <params>
+      <param name="fineKey">lastFine</param>
+      <param name="paymentFineKey">paymentFine</param>
+      <param name="pendingFineKey">pendingFine</param>
+      <param name="allowCancelPartiallyPaid">true</param>
+    </params>
+  </process>
+
+  <rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddPendingFineToStatus">
+    <params>
+      <param name="transactionKey">pendingFine</param>
+      <param name="toObjectStatus">false</param>
+    </params>
+  </rule>
+
+  <process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDb">
+    <doc>Updates User/Object Status databases, and stores Return to transaction log.</doc>
+    <params>
+      <param name="transactionKeys">paymentFine,pendingFine</param>
+      <param name="ignoreTransactionNotFound">true</param>
+      <param name="storeUserStatus">true</param>
+      <param name="storeObjectStatus">false</param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+    <params>
+      <param name="resultKeys">paymentFine,pendingFine</param>
+    </params>
+  </process>
+
+
+  <!-- ============== PDF GENERATION STARTS HERE ========================== -->
+
+  <process class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="true" name="SerializeTransactionData">
+    <doc>Create a summary of the transaction and serialize it so it can be signed later
+    </doc>
+    <params>
+      <param name="fineKey">lastFine</param>
+      <param name="paymentFineKey">paymentFine</param>
+      <param name="pendingFineKey">pendingFine</param>
+      <param name="transactionSummaryKey">transactionSummary</param>
+      <param name="serializedTransactionSummaryKey">serializedTransactionSummary</param>
+      <param name="script">
+        <![CDATA[
+                 // get the fine we want to cancel/pay
+                 lastFine = tc.get(tc.getParameter("lastFineKey","lastFine"))
+
+                 // get the fine objects recently created
+                 paymentFine = tc.get(tc.getParameter("paymentFineKey", "paymentFine"))
+                 pendingFine = tc.get(tc.getParameter("pendingFineKey", "pendingFine"))
+
+                 // get the keys for the output objects
+                 transactionSummaryKey = tc.getParameter("transactionSummaryKey", "transactionSummary")
+                 serializedTransactionSummaryKey = tc.getParameter("serializedTransactionSummaryKey","serializedTransactionSummary")
+
+                 // create a map with a summary of this transaction
+                 def summary = [:]
+                 summary['transactionId']  = paymentFine.id
+                 summary['date']           = paymentFine.date
+                 summary['refId']          = paymentFine.refId
+                 summary['originalAmount'] = lastFine.amount
+
+                 // if a pending fine was not generated, then the remaining amount is 0
+                 summary['remainingAmount'] =  (pendingFine==null)?0:pendingFine.amount
+
+                 summary['userId']     = paymentFine.userId
+                 summary['userDb']     = paymentFine.userDb
+                 summary['paidAmount'] = paymentFine.paid_amount
+                 println "SerializeTransactionData | fine cancellation transaction summary:  ${summary}"
+
+                 // serialize the transaction data
+                 //  REMINDER! REMINDER! REMINDER!
+                 //    * The serialization will convert all floating points values to integers, so there aren't any issues with locale formatting
+                 //    * Pipe (|) will be used as the separator character. Note that the last value is also trailed by a pipe character.
+
+                 def t = summary
+                 def serializedTransaction = "${t.transactionId}|${t.date}|${t.refId}|${t.userId}|" +
+                                             "${t.originalAmount.toFloat().intValue()}|" +
+                                             "${t.remainingAmount.toFloat().intValue()}|" +
+                                             "${t.paidAmount.toFloat().intValue()}|"
+
+                 println "SerializeTransactionData | serialized transaction: $serializedTransaction"
+
+                 // convert the serialized string to a byte array using UTF-8 encoding
+                 def serializedTransactionByteArray = serializedTransaction.getBytes('UTF-8')
+
+                 // store the output values to the TC
+                 tc.put(transactionSummaryKey, summary)
+                 tc.put(serializedTransactionSummaryKey, serializedTransactionByteArray)
+
+                 return true
+        ]]>
+
+      </param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.SignData" enabled="true" name="CreateTransactionSignature">
+    <doc>
+      Generate a digital signature of the transaction data
+    </doc>
+    <params>
+      <param name="debug">false</param>
+      <param name="generateKeys">false</param>
+      <param name="publicKeyFilename">public.key</param>
+      <param name="privateKeyFilename">private.key</param>
+      <param name="dataKey">serializedTransactionSummary</param>
+      <param name="signatureKey">transactionSignature</param>
+      <param name="signatureHexKey">transactionSignatureHex</param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="true" name="GenerateBarcodeStrings">
+    <doc>
+      Generate the strings that will be rendered to barcodes. Strings will be generated for both the transaction data and its signature.
+    </doc>
+    <params>
+      <param name="serializedTransactionKey">serializedTransactionSummary</param>
+      <param name="serializedTransactionSignatureKey">transactionSignature</param>
+      <param name="transactionDataPart1BarcodeKey">transactionDataPart1Barcode</param>
+      <param name="transactionDataPart2BarcodeKey">transactionDataPart2Barcode</param>
+      <param name="signaturePart1BarcodeKey">signaturePart1Barcode</param>
+      <param name="signaturePart2BarcodeKey">signaturePart2Barcode</param>
+      <param name="debug">false</param>
+      <param name="script">
+        <![CDATA[
+          // get the keys for input/output values
+          serializedTransactionSignatureKey = tc.getParameter("serializedTransactionSignatureKey","serializedTransactionSignature")
+          serializedTransactionKey = tc.getParameter("serializedTransactionKey","serializedTransaction")
+          transactionDataPart1BarcodeKey = tc.getParameter("transactionDataPart1BarcodeKey","transactionDataPart1Barcode")
+	  transactionDataPart2BarcodeKey = tc.getParameter("transactionDataPart2BarcodeKey","transactionDataPart2Barcode")
+          signaturePart1BarcodeKey = tc.getParameter("signaturePart1BarcodeKey", "signaturePart1Barcode")
+          signaturePart2BarcodeKey = tc.getParameter("signaturePart2BarcodeKey", "signaturePart2Barcode")
+
+          debug = tc.getParameter('debug')=='true'
+
+          // get the serialized transaction (byte array) from the TC
+          serializedTransaction = tc.get(serializedTransactionKey)
+          // we need the serialized transaction as a string, so we build it from the byte array
+          transactionData = new String(serializedTransaction, 'UTF-8')
+
+          // get the signature (byte array) from TC and encode it as Base64
+          def String signatureBase64 = tc.get(serializedTransactionSignatureKey).encodeBase64()
+          if (debug) println "GenerateBarcodeStrings | signature base64 encoded: ${signatureBase64}"
+
+          // def encoding = 'ISO-8859-1'
+
+          /*
+           The following function computes the checksum for the 'code128 B' barcode system and returns
+           the character representation of that checksum value according to the font being used.
+           Note that the mapping between the barcode characters and their string representation depends on the font being used!!!
+          */
+          def code128cksum(string){
+            def encoding = 'ISO-8859-1'
+            array = string.getBytes(encoding)
+            init = 104
+            i = 1
+
+            array.each{c -> init = init + (c-32)*(i++)}
+            cksum = init % 103
+            if (debug) println "GenerateBarcodeStrings | cksum: ${cksum}"
+
+            // now we find the ASCII code for the cksum value
+            if (cksum < 95)
+              cksumChar = cksum + 32
+            else
+              cksumChar = cksum + 100
+            if (debug) println "GenerateBarcodeStrings | cksum ASCII code: ${cksumChar}"
+            byte[] c = new byte[1]
+            c[0]=cksumChar
+            new String(c,encoding)
+          }
+
+
+          // Let the barcode strings generation begin...
+          // The code 128 B system requires both 'start' and 'stop' characters.
+          // Format for the code128 is:
+          //         |start|data|checksum|stop|
+
+          // For the font we're using, the start and stop barcode characters are respectively mapped to the unicode chars 204 and 206
+
+          /// first, we encode the transaction data splitting it into two barcodes.
+	  maxBarcodeChars = 40
+	  transactionDataPart1 = transactionData.substring(0,maxBarcodeChars)
+
+	  if (transactionData.length() > maxBarcodeChars)
+            transactionDataPart2 = transactionData.substring(maxBarcodeChars)
+          else
+            transactionDataPart2 = ''
+
+          println "transactionDataPart2: $transactionDataPart2"
+
+          transactionDataPart1Barcode = "${'\u00CC'}${transactionDataPart1}${code128cksum(transactionDataPart1)}${'\u00CE'}"
+	  transactionDataPart2Barcode = "${'\u00CC'}${transactionDataPart2}${code128cksum(transactionDataPart2)}${'\u00CE'}"
+
+          if (debug)
+            { println "GenerateBarcodeStrings | transactionDataPart1Barcode: $transactionDataPart1Barcode"
+              println "GenerateBarcodeStrings | transactionDataPart2Barcode: $transactionDataPart2Barcode"
+            }
+
+          // then, we encode the signature
+          // since the signature is rather long, we split in half and produce two barcodes.
+          sigPart1 = signatureBase64.substring(0, 32)
+          sigPart2 = signatureBase64.substring(32)
+
+          if (debug)
+            { println "GenerateBarcodeStrings | code128 cksum(${sigPart1}): ${code128cksum(sigPart1)}"
+              println "GenerateBarcodeStrings | code128 cksum(${sigPart2}): ${code128cksum(sigPart2)}"
+              println "GenerateBarcodeStrings | code128 cksum(${transactionDataPart1}): ${code128cksum(transactionDataPart1)}"
+              println "GenerateBarcodeStrings | code128 cksum(${transactionDataPart2}): ${code128cksum(transactionDataPart2)}"
+              println "GenerateBarcodeStrings | code128 cksum(${signatureBase64}): ${code128cksum(signatureBase64)}"
+            }
+          // generate the barcode strings for the two halves
+          sigPart1Barcode =  "\u00CC${sigPart1}${code128cksum(sigPart1)}\u00CE"
+          sigPart2Barcode =  "\u00CC${sigPart2}${code128cksum(sigPart2)}\u00CE"
+
+          if (debug)
+            { println "GenerateBarcodeStrings | sigPart1Barcode: $sigPart1Barcode"
+              println "GenerateBarcodeStrings | sigPart2Barcode: $sigPart2Barcode"
+            }
+          // store the barcode strings back into the TC
+          tc.put(transactionDataPart1BarcodeKey, transactionDataPart1Barcode)
+          tc.put(transactionDataPart2BarcodeKey, transactionDataPart2Barcode)
+          tc.put(signaturePart1BarcodeKey, sigPart1Barcode)
+          tc.put(signaturePart2BarcodeKey, sigPart2Barcode)
+
+          return true;
+        ]]>
+      </param>
+    </params>
+  </process>
+
+
+<process class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="true" name="CreateReceipt">
+    <doc>
+      Generate XHTML content for the receipt
+    </doc>
+    <params>
+      <param name="debug">false</param>
+      <param name="theContent">
+        <![CDATA[
+         <?xml version="1.0" encoding="UTF-8"?>
+         <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+           <body>
+             <h2></h2>
+             <br/>
+             <p/><p/>
+             <table>
+               <tr>
+                 <th align="right">Detalles de la transacción</th>
+                 <th/>
+               </tr>
+               <tr>
+                 <td>ID transaccion</td>
+                 <td>${tc.get('transactionSummary').transactionId}</td>
+               </tr>
+               <tr>
+                 <td>Fecha</td>
+                 <td>${tc.get('transactionSummary').date}</td>
+               </tr>
+               <tr>
+                 <td>Usuario</td>
+                 <td>${tc.get('transactionSummary').userId} (${tc.get('transactionSummary').userDb})</td>
+               </tr>
+               <tr>
+                 <td>Monto de la multa</td>
+                 <td>${tc.get('transactionSummary').originalAmount}</td>
+               </tr>
+               <tr>
+                 <td>Monto pagado</td>
+                 <td>${tc.get('transactionSummary').paidAmount}</td>
+               </tr>
+               <tr>
+                 <td>Monto pendiente</td>
+                 <td>${tc.get('transactionSummary').remainingAmount}</td>
+               </tr>
+
+
+             </table>
+
+
+             <p/><p/><p/><p/><p/><p/><p/><p/>
+
+             <table>
+               <tr>
+                 <th align="right">Detalles de la transacción</th>
+               </tr>
+               <tr>
+                 <td/><td/>
+               </tr>
+             </table>
+	      <div class="barcode">${'<'+'![CDATA['}${tc.get('transactionDataPart1Barcode')}${']]'+'>'}</div>
+              <div class="barcode">${'<'+'![CDATA['}${tc.get('transactionDataPart2Barcode')}${']]'+'>'}</div>
+             <p/><p/>
+             <table>
+               <tr>
+                 <th>Verificación</th>
+               </tr>
+               <tr>
+                 <td align="right">${tc.get('signatureBase64')}</td>
+               </tr>
+             </table>
+             <div class="barcode">${'<'+'![CDATA['}${tc.get('signaturePart1Barcode')}${']]'+'>'}</div>
+             <div class="barcode">${'<'+'![CDATA['}${tc.get('signaturePart2Barcode')}${']]'+'>'}</div>
+             <p/>
+
+           </body>
+         </html>
+        ]]>
+      </param>
+      <param name="script">
+        <![CDATA[
+          import groovy.xml.*
+
+          debug = tc.getParameter('debug')=='true'
+
+          String theContent = "\"\"\"\n${tc.getParameter('theContent')}\n\"\"\""
+          if (debug) println "CreateReceipt | template XHTML: $theContent"
+
+          evaluatedContent = evaluate(theContent)
+          if (debug) println "CreateRecepit | XHTML resultante: $evaluatedContent"
+
+          tc.put("content",evaluatedContent.toString().trim())
+          return true;
+        ]]>
+      </param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.XSLFOProcessor" enabled="true" name="XSLFOProcessor">
+  <doc>
+    Generate PDF from receipt XHTML
+  </doc>
+  <params>
+    <param name="debug">false</param>
+    <param name="outputMode">binary</param>
+    <param name="binaryOutputType" />
+    <param name="outputFile">test_output.pdf</param>
+    <param name="outputString">outputString</param>
+    <param name="outputStream">pdfByteArrayStream</param>
+    <param name="fopConfigFile">resources/fopconfig.xml</param>
+    <param name="inputContentKey">content</param>
+
+    <param name="inputTemplate">
+    <![CDATA[
+    <xsl:stylesheet version="1.0"
+      xmlns:xh="http://www.w3.org/1999/xhtml"
+      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+      xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+      <xsl:param name="pagesize" select="'a4'"/>
+      <xsl:param name="first-page-is-cover" select="'false'"/>
+      <xsl:param name="twikibaseurl"></xsl:param>
+      <xsl:param name="baseurl">http://www.pucv.cl/p4_extension/imag/menu/</xsl:param>
+
+      <!-- fonts -->
+      <xsl:param name="font.regular" select="'serif'"/>
+
+
+
+      <xsl:template match="xh:html">
+
+        <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+          <fo:layout-master-set>
+
+            <!-- PAGINA SIZE LETER -->
+            <xsl:if test="$pagesize = 'letter'">
+              <!-- primera pagina -->
+              <fo:simple-page-master master-name="first-page"
+                page-height="11in"
+                page-width="8.5in"
+                margin-top="9cm"
+                margin-bottom="2.2cm"
+                margin-left="3cm"
+                margin-right="1cm">
+                <fo:region-body margin-bottom="1cm" margin-top="6cm" margin-right="2cm"/>
+                <fo:region-before extent="6cm" region-name="first-page-before"/>
+                <fo:region-after extent="6cm" region-name="first-page-after" />
+                <fo:region-end extent="2cm"/>
+              </fo:simple-page-master>
+
+              <!-- otras paginas -->
+              <fo:simple-page-master master-name="page"
+                page-height="11in"
+                page-width="8.5in"
+                margin-top="2.6cm"
+                margin-bottom="2.2cm"
+                margin-left="3cm"
+                margin-right="1cm">
+                <fo:region-body margin-bottom="1cm" margin-top="1cm" margin-right="2cm"/>
+                <fo:region-before extent="1cm" region-name="page-region-before"/>
+                <fo:region-after extent="1cm" region-name="page-region-after" margin-right="0cm" precedence="true"/>
+                <fo:region-end extent="2cm" region-name="page-region-end"/>
+              </fo:simple-page-master>
+            </xsl:if>
+
+            <!-- PAGINA SIZE A4 -->
+            <xsl:if test="$pagesize = 'a4'">
+              <!-- primera pagina -->
+              <fo:simple-page-master master-name="first-page"
+                page-height="29.7cm"
+                page-width="21cm"
+                margin-top="9cm"
+                margin-bottom="2.2cm"
+                margin-left="3cm"
+                margin-right="1cm">
+                <fo:region-body margin-bottom="1cm" margin-top="8cm" margin-right="2cm"/>
+                <fo:region-before extent="8cm" region-name="first-page-before"/>
+                <fo:region-after extent="7cm" region-name="first-page-after"/>
+                <fo:region-end extent="2cm"/>
+              </fo:simple-page-master>
+
+              <!-- otras paginas -->
+              <fo:simple-page-master master-name="page"
+                page-height="29.7cm"
+                page-width="21cm"
+                margin-top="2.6cm"
+                margin-bottom="2.2cm"
+                margin-left="3cm"
+                margin-right="1cm">
+                <fo:region-body margin-bottom="1cm" margin-top="1cm" margin-right="2cm"/>
+                <fo:region-before extent="1cm" region-name="page-region-before"/>
+                <fo:region-after extent="1cm" region-name="page-region-after" precedence="true"/>
+                <fo:region-end extent="2cm" region-name="page-region-end"/>
+              </fo:simple-page-master>
+            </xsl:if>
+
+            <!-- secuencia de paginas -->
+            <fo:page-sequence-master master-name="all">
+              <fo:repeatable-page-master-alternatives>
+                <xsl:choose>
+                   <xsl:when test="$first-page-is-cover = 'true'">
+                     <fo:conditional-page-master-reference
+                       page-position="first" master-reference="first-page"/>
+                     <fo:conditional-page-master-reference
+                       page-position="rest"  master-reference="page"/>
+                   </xsl:when>
+                   <xsl:otherwise>
+                     <fo:conditional-page-master-reference
+                       page-position="any"  master-reference="page"/>
+                   </xsl:otherwise>
+                </xsl:choose>
+              </fo:repeatable-page-master-alternatives>
+            </fo:page-sequence-master>
+          </fo:layout-master-set>
+
+          <!-- page sequence -->
+          <fo:page-sequence master-reference="all">
+
+            <xsl:if test="$first-page-is-cover = 'true'">
+              <fo:static-content flow-name="first-page-before">
+                <!-- document title -->
+                <fo:block font-size="24pt" font-family="serif" space-before.optimum="16pt" text-align="right"><xsl:value-of select="xh:head/xh:title"/></fo:block>
+                <!-- logo pucv -->
+                <fo:block  text-align="right" margin-right="0cm">
+                  <fo:external-graphic width="2.0cm">
+                    <xsl:attribute name="src"><xsl:value-of select="$baseurl"/>logo3.gif</xsl:attribute>
+                  </fo:external-graphic>
+                </fo:block>
+              </fo:static-content>
+            </xsl:if>
+
+            <!-- Titulo del documento -->
+    <!--    <fo:static-content flow-name="first-page-after">
+              <fo:block font-size="24pt" font-family="serif" space-before.optimum="16pt" text-align="right"><xsl:value-of select="xh:head/xh:title"/></fo:block>
+            </fo:static-content> -->
+
+
+            <!-- paginas de contenido -->
+            <!-- header -->
+            <fo:static-content flow-name="page-region-before">
+              <fo:block  text-align="right" margin-right="0cm">
+                <fo:external-graphic width="2.0cm"
+                 content-width="scale-to-fit" content-height="scale-to-fit" scaling="uniform">
+                  <xsl:attribute name="src"><xsl:value-of select="$baseurl"/>logo3.gif</xsl:attribute>
+                </fo:external-graphic>
+              </fo:block>
+            </fo:static-content>
+
+            <!-- page number -->
+            <fo:static-content flow-name="page-region-after">
+              <fo:block text-align="end" margin-right="0.6cm" font-size="10pt" font-family="${font.regular}"><fo:page-number/></fo:block>
+            </fo:static-content>
+
+            <!-- contenido -->
+            <fo:flow flow-name="xsl-region-body">
+              <fo:block font-family="${font.regular}" font-size="10pt" space-before.optimum="18pt" line-height="20pt" text-align="justify">
+                <xsl:apply-templates select="xh:body"/>
+              </fo:block>
+            </fo:flow>
+
+          </fo:page-sequence>
+
+        </fo:root>
+      </xsl:template>
+
+      <!-- headers -->
+      <xsl:template match="xh:h1">
+        <fo:block font-size="20pt" font-family="${font.regular}" font-weight="bold" space-before.optimum="14pt" text-align="left" line-height="32pt">
+          <xsl:attribute name="break-before">page</xsl:attribute>
+          <xsl:attribute name="id"><xsl:value-of select="xh:a/attribute::name"/></xsl:attribute>
+          <xsl:value-of select="."/>
+        </fo:block>
+      </xsl:template>
+
+
+      <xsl:template match="xh:h2">
+        <fo:block font-size="20pt" font-family="${font.regular}" font-weight="bold" space-before.optimum="14pt" text-align="left" line-height="32pt" keep-with-next="always">
+    <!--      <xsl:attribute name="break-before">page</xsl:attribute> -->
+          <xsl:attribute name="id"><xsl:value-of select="xh:a/attribute::name"/></xsl:attribute>
+          <xsl:value-of select="."/>
+        </fo:block>
+      </xsl:template>
+
+
+      <xsl:template match="xh:h3">
+        <fo:block font-size="16pt" font-family="${font.regular}" font-weight="bold" space-before.optimum="16pt" text-align="left" line-height="28pt" keep-with-next="always">
+          <xsl:attribute name="id"><xsl:value-of select="xh:a/attribute::name"/></xsl:attribute>
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+      <xsl:template match="xh:h4">
+        <fo:block font-size="16pt" font-family="${font.regular}"  font-weight="bold" space-before.optimum="14pt" text-align="left" line-height="24pt" keep-with-next="always" >
+          <xsl:attribute name="id"><xsl:value-of select="xh:a/attribute::name"/></xsl:attribute>
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+      <xsl:template match="xh:h5">
+        <fo:block font-size="14pt" font-family="${font.regular}"  font-weight="bold" space-before.optimum="8pt" text-align="left" line-height="20pt" keep-with-next="always"  >
+          <xsl:attribute name="id"><xsl:value-of select="xh:a/attribute::name"/></xsl:attribute>
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+      <xsl:template match="xh:h6">
+        <fo:block font-size="12pt" font-family="${font.regular}"  font-weight="bold" space-before.optimum="8pt" text-align="left" line-height="18pt" keep-with-next="always"  >
+          <xsl:attribute name="id"><xsl:value-of select="xh:a/attribute::name"/></xsl:attribute>
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+      <!-- p -->
+      <xsl:template match="xh:p">
+        <fo:block  space-before.optimum="18pt">
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+      <!-- br -->
+      <xsl:template match="xh:br">
+        <fo:block/>
+      </xsl:template>
+
+      <!-- strong (bold) -->
+      <xsl:template match="xh:strong">
+        <fo:inline font-family="${font.regular}" font-weight="bold">
+          <xsl:apply-templates/>
+        </fo:inline>
+      </xsl:template>
+
+      <!-- em (italic) -->
+      <xsl:template match="xh:em">
+        <fo:inline  font-family="${font.regular}" font-style="italic">
+          <xsl:apply-templates/>
+        </fo:inline>
+      </xsl:template>
+
+
+      <!-- links -->
+      <xsl:template match="xh:a">
+          <xsl:value-of select="."/>
+      </xsl:template>
+
+      <!-- imagenes -->
+      <xsl:template match="xh:img">
+       <fo:block keep-with-previous="always" text-align="right">
+        <fo:external-graphic>
+          <xsl:attribute name="src"><xsl:value-of select="@src"/></xsl:attribute>
+          <xsl:attribute name="width"><xsl:value-of select="@width"/>pt</xsl:attribute>
+          </fo:external-graphic>
+       </fo:block>
+      </xsl:template>
+
+      <!-- listas -->
+      <xsl:template match="xh:ul">
+        <fo:list-block
+          provisional-distance-between-starts="8pt"
+          provisional-label-separation="4pt">
+          <xsl:apply-templates/>
+        </fo:list-block>
+      </xsl:template>
+
+      <xsl:template match="xh:ul/xh:li">
+        <fo:list-item>
+          <fo:list-item-label end-indent="label-end()">
+            <fo:block font-family="Symbol">&#xB0;</fo:block>
+          </fo:list-item-label>
+          <fo:list-item-body start-indent="body-start()">
+            <fo:block font-size="12pt" line-height="20pt">
+              <xsl:apply-templates/>
+            </fo:block>
+          </fo:list-item-body>
+        </fo:list-item>
+      </xsl:template>
+
+      <!-- lista numerada -->
+      <xsl:template match="xh:ol">
+        <fo:list-block
+          provisional-distance-between-starts="16pt"
+          provisional-label-separation="10pt">
+          <xsl:apply-templates/>
+        </fo:list-block>
+      </xsl:template>
+
+      <xsl:template match="xh:ol/xh:li">
+        <fo:list-item >  <!--      space-before.optimum="18pt"  -->
+          <fo:list-item-label end-indent="label-end()">
+            <fo:block ><xsl:value-of select="position()"/>. </fo:block>
+          </fo:list-item-label>
+          <fo:list-item-body start-indent="body-start()">
+            <fo:block  font-size="12pt" line-height="20pt">
+              <xsl:apply-templates/>
+            </fo:block>
+          </fo:list-item-body>
+        </fo:list-item>
+      </xsl:template>
+
+      <!-- cosas que no se quiere que salgan en el pdf -->
+      <xsl:template match="xh:nopdf">
+        <xsl:text/>
+      </xsl:template>
+
+
+      <!-- tablas -->
+      <xsl:template match="xh:table">
+        <!--  <xsl:text/> -->
+
+        <fo:table table-layout="fixed" space-before.optimum="14pt">
+          <xsl:variable name="tablewid"><xsl:if test="$pagesize = 'letter'">15.5</xsl:if>      <xsl:if test="$pagesize = 'a4'">15</xsl:if></xsl:variable>
+
+          <xsl:variable name="colcant"><xsl:value-of select="count(xh:tr[1]/xh:th)"/></xsl:variable>
+          <xsl:variable name="colwid"><xsl:value-of select="$tablewid div $colcant"/></xsl:variable>
+
+          <xsl:attribute name="width"><xsl:value-of select="$tablewid"/>cm</xsl:attribute>
+          <!-- anchos de las columnas -->
+          <xsl:for-each select="xh:tr[1]/xh:th">
+            <fo:table-column>
+              <xsl:attribute name="column-width"><xsl:value-of select="$colwid"/>cm</xsl:attribute>
+            </fo:table-column>
+          </xsl:for-each>
+
+          <!-- row de header -->
+          <fo:table-header>
+            <fo:table-row background-color="#AAAAAA">
+              <xsl:for-each select="xh:tr[1]/xh:th">
+                <fo:table-cell>
+                  <fo:block font-size="9pt" margin-left="0.2cm">
+                    <xsl:apply-templates />
+                  </fo:block>
+                </fo:table-cell>
+              </xsl:for-each>
+            </fo:table-row>
+          </fo:table-header>
+
+          <!-- rows de contenido -->
+          <fo:table-body>
+            <xsl:apply-templates/>
+          </fo:table-body>
+        </fo:table>
+      </xsl:template>
+
+      <xsl:template match="xh:tr[xh:td]">
+        <fo:table-row>
+          <xsl:apply-templates/>
+        </fo:table-row>
+      </xsl:template>
+
+      <xsl:template match="xh:th">
+        <xsl:text/>
+      </xsl:template>
+
+      <xsl:template match="xh:td">
+        <fo:table-cell border-bottom-color="black" border-bottom-style="solid" border-bottom-width="0.01cm">
+          <fo:block font-size="9pt" margin-left="0.2cm">
+            <xsl:apply-templates/>
+          </fo:block>
+        </fo:table-cell>
+      </xsl:template>
+
+
+      <!-- salto de pagina -->
+      <xsl:template match="xh:hr">
+        <fo:block  break-before="page"/>
+      </xsl:template>
+
+      <!-- barcodes -->
+      <xsl:template match="xh:div[@class='barcode']">
+        <fo:block font-size="30pt" margin-bottom="0.6cm" margin-top="1.0cm" font-family="Code128">
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+      <!-- cajitas de color -->
+      <xsl:template match="xh:div">
+        <xsl:variable name="boxstyle"><xsl:value-of select="@style"/></xsl:variable>
+        <xsl:variable name="boxstylebordert"><xsl:value-of select="substring-after($boxstyle,'border:')"/></xsl:variable>
+        <xsl:variable name="boxstyleborder"><xsl:value-of select="substring-before($boxstylebordert,';')"/></xsl:variable>
+        <xsl:variable name="boxstylebackgroundt"><xsl:value-of select="substring-after($boxstyle,'background-color:')"/></xsl:variable>
+        <xsl:variable name="boxstylebackground"><xsl:value-of select="substring-before($boxstylebackgroundt,';')"/></xsl:variable>
+
+
+        <fo:block font-size="10pt" line-height="14pt"  space-before.optimum="6pt" margin="0.5cm" padding="0.5cm">
+          <xsl:attribute name="background-color"><xsl:value-of select="$boxstylebackground"/></xsl:attribute>
+          <xsl:attribute name="border"><xsl:value-of select="$boxstyleborder"/></xsl:attribute>
+          <xsl:apply-templates/>
+        </fo:block>
+      </xsl:template>
+
+    </xsl:stylesheet>
+
+    ]]>
+    </param>
+ </params>
+</process>
+
+  <process class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="false" name="GetUserEmail">
+    <doc>Gets the user's email address  from the userDOM and puts it under the key 'userMailAddress'.
+
+    </doc>
+    <!-- todo: If the users has more than one email address, the resulting value stored under 'userEmailAddress' should be
+         a comma separated list of all the different addresses (ie, 'johndoe@acme.com, johndoe27@gmail.com' ) -->
+    <params>
+      <param name="emailns">http://biblioteca.ucv.cl/usuarios</param>
+      <param name="emailElement">email</param>
+
+      <param name="script">
+        <![CDATA[
+          import org.apache.commons.jxpath.*
+
+          emailns = tc.getParameter('emailns','')
+          emailElement = tc.getParameter('emailElement','email')
+
+          jxpc = tc.getJXPathContext(tc.USER_DOM)
+          jxpc.registerNamespace('ucv', emailns )
+          // println "GetUserEmail | email xpath: //ucv:${emailElement}"
+          email = jxpc.getValue("//ucv:$emailElement")
+          println "GetUserEmail | email: $email"
+          tc.put('userEmailAddress', email)
+          return true
+        ]]>
+      </param>
+    </params>
+  </process>
+
+
+  <process class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="false" name="SendMailNotification">
+    <doc>Creates and sends an email with the PDF receipt attached.
+    </doc>
+    <params>
+      <param name="host">mail.kalio.net</param>
+      <param name="smtpPass"></param>
+      <param name="smtpUser"></param>
+      <param name="from">Empweb mail notification service &lt;leo@kalio.net&gt;</param>
+      <param name="bcc"></param>
+      <param name="subject">Notificacion de pago/cancelacion de multa</param>
+      <param name="messageKey">message</param>
+      <param name="attachmentByteArrayStreamKey">pdfByteArrayStream</param>
+      <param name="attachmentMimeType">application/pdf</param>
+      <param name="attachmentFilename">pagoMulta.pdf</param>
+      <param name="stopPipelineOnError">false</param>
+      <param name="debug">false</param>
+      <param name="script">
+        <![CDATA[
+          import net.kalio.mail.Mailer
+
+           bcc  =       tc.getParameter('bcc','')
+           from =       tc.getParameter('from','Empweb mail notification service')
+
+           subject  =   tc.getParameter('subject','Notificacion de Empweb')
+           host     =   tc.getParameter('host','localhost')
+           smtpUser =   tc.getParameter('smtpUser',null)  // smtpUser==null means no auth
+           smtpPass =   tc.getParameter('smtpPass',null)
+
+           messageKey = tc.getParameter('messageKey','message')
+           filename   = tc.getParameter('attachmentFilename')
+           mimeType   = tc.getParameter('attachmentMimeType')
+           dataByteArrayKey = tc.getParameter('attachmentByteArrayStreamKey','byteArrayStream')
+
+           stopPipelineOnError = !(tc.getParameter('stopPipelineOnError')=='false')
+           debug               = tc.getParameter('debug','false')
+
+           // get the user email address
+           to = tc.get('userEmailAddress')
+
+//LLL !!!!! PARA NO ATOMIZAR A LA GENTE DE PUCV: NO BORRAR POR AHORA !!!!
+to = 'leo@kalio.net'
+
+           println "SendMailNotification | to address: $to"
+
+           // default to empty message
+           message = tc.get(messageKey)
+           if (message==null) message = 'Notificacion de Empweb.\n'
+
+           dataByteArray = tc.get(dataByteArrayKey)?.toByteArray()
+           attachmentInputStream = new ByteArrayInputStream(dataByteArray)
+
+           // prepare the map with all the data for this attachment
+           attach = [filename:filename, mimeType:mimeType, data:attachmentInputStream]
+           println "SendMailNotification | attachment: ${attach}"
+
+           // create the attachments list, and add the attachment to it
+           attachList = [attach]
+           println "SendMailNotification | attachment list: ${attachList}"
+
+           def mailer = new Mailer()
+           mailer.setDebug(debug=='true')
+           try {
+             mailer.sendMail(from, to, '', bcc, subject, message, attachList, host, smtpUser, smtpPass)
+            }
+           catch (Exception e)
+            { msg.addText('en','Error while sending mail notification to ' + to)
+              msg.addText('es','Error al enviar correo de notificación a ' + to)
+
+              // bail out on error if configured to do so
+              // LLL: WTF?!?! como corto la ejecucion de un pipe en un process (y no una rule)?
+              // I love the smell of a bug in the morning, smells like... victory
+              if (stopPipelineOnError)
+                return false
+            }
+
+          return true
+        ]]>
+      </param>
+    </params>
+  </process>
+
+  <!-- =========== PDF GENERATION ENDS HERE  ================================== -->
+
+
+  <finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+    <doc>Release the logic locks done at the beginning.</doc>
+  </finally>
+</transaction>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dbwsconf db="isis" type="users">
+    <!--  "location" is the directory where the Isis database resides.
+          It may be an absolute path, or a path relative to the environment variable EMPWEB_HOME
+          or the Java property empweb.home
+
+          "collection" is the base name of the Isis database
+          (the name of the .mst and all related files without the extension)
+    -->
+  
+<!-- Windows BBB  version -->
+    <location>db/isis/users</location>
+    <collection>USU</collection>
+
+<!-- Linux version
+    <location>/var/empweb/db/isis/users</location>
+    <collection>usu</collection>
+-->
+    <!--  This is the character encoding in which the data is stored in Isis
+          Some useful encodings:
+          OLD IBM Extended/DOS (English):  cp437
+          OLD IBM Extended/DOS (Europe):   cp850
+          Western Latin-1:                 iso88591 
+    -->
+    <encoding></encoding>
+    <decoding>iso88591</decoding>
+
+    <!-- The subfield delimiter in the Isis database. Circumflex is the default value. -->
+    <subfieldDelimiter>^</subfieldDelimiter>
+
+
+ <!-- This stylesheet transforms from "standard" Isis XML output, to Empweb's User XML data -->
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                              xmlns="http://kalio.net/empweb/schema/users/v1">
+
+<!-- The output format is a userCollection according to Empweb's User Schema, version 1.0.
+     Namespace: http://kalio.net/empweb/schema/users/v1
+     Schema location: empweb.home/common/xml/schema/users/v1/empweb-users-1-0.xsd
+-->
+
+      <!-- Use this <xsl:copy-of select="." />  instead of <xsl:apply-templates />
+         for debugging and to see the actual XML output
+      -->
+      <xsl:template match="/recordset" >
+          <userCollection>
+            <xsl:apply-templates />
+           </userCollection>
+      </xsl:template>
+
+
+
+      <!-- para cada registro -->
+      <xsl:template match="record" >
+        <user>
+          <xsl:variable name="idlength"><xsl:value-of select="string-length(field[@tag='351']/occ/head)-1"/></xsl:variable>
+          <id><xsl:value-of select="substring(field[@tag='351']/occ/head, 1, $idlength)" /></id>
+          <name><xsl:value-of select="field[@tag='300']/occ/head" /></name>
+          <userClass><xsl:value-of select="field[@tag='520']/occ/head" /></userClass>
+          <!-- The dates should have the YYYYMMDD format -->
+          <expirationDate><xsl:value-of select="field[@tag='321']/occ/head" /></expirationDate>
+
+          <!-- Suspensiones administrativas en el v312 con ^s de tipo  '99999999' quiere decir
+               suspendido permanentemente. (Solo me fijo que comience con '99 porque hay valores
+               mal ingresados con numero variable de nueves.)
+               En estos casos digo que el usario tiene state inactive.
+           -->
+          <xsl:if test="field[@tag='312']/occ/subfield[@name='s' and starts-with(., '99')]">
+            <state>inactive</state>
+          </xsl:if>
+
+          <!-- El v304 guarda un codigo de carrera (en el fdt aparece erroneamente como codigo de biblioteca)
+            El v302 es la descripcion de la carrera del codigo que esta en v304
+            <ucvu:dependencia code="022">PERIODISMO</ucvu:dependencia>
+
+            Suspensiones y multas que vienen en la base de usuarios.
+            Son ocurrencias del v312 con este fomrato: ^aDF^bEDU^u5^cA^f20050412
+            ^b: Código de Biblioteca
+            ^a: Tipo movimiento (DF: devolución fuera de plazo; MO: moroso; RO: robo; PN: préstamo no autorizado; AB: Abono a multa)
+            ^u: Unidades de multa
+            ^s: Suspensión
+            ^m: Material
+            ^c: Colección del material
+            ^f: Fecha del movimiento
+            ^r: Comprobante
+          -->
+          <extension xmlns:ucvu="http://biblioteca.ucv.cl/usuarios">
+            <ucvu:dependencia code="{field[@tag='304']/occ/head}"><xsl:value-of select="field[@tag='302']/occ/head"/></ucvu:dependencia>
+            <ucvu:email><xsl:value-of select="field[@tag='530']/occ/head"/></ucvu:email>
+            <suspensions xmlns="http://kalio.net/empweb/schema/suspension/v1">
+              <xsl:for-each select="field[@tag='312']/occ/subfield[@name='s']">
+                <suspension>
+                  <userId><xsl:value-of select="ancestor::record/field[@tag='351']/occ/head" /></userId>
+                  <userDb>USU</userDb>
+                  <obs>Tipo de mov: <xsl:value-of select="../subfield[@name='a']"/>, Biblioteca: <xsl:value-of select="../subfield[@name='b']"/></obs>
+                  <date><xsl:value-of select="../subfield[@name='f']"/></date>
+                  <startDate><xsl:value-of select="../subfield[@name='f']"/>000000</startDate>
+                  <endDate><xsl:value-of select="substring(../subfield[@name='s'], 1, 8)"/>000000</endDate>
+                  <object>
+                    <copyId><xsl:value-of select="../subfield[@name='m']"/></copyId>
+                    <objectDb>UCV05</objectDb>
+                    <profile id="00000">
+                      <userClass><xsl:value-of select="ancestor::record/field[@tag='520']/occ/head" /></userClass>
+                      <objectCategory><xsl:value-of select="../subfield[@name='c']"/></objectCategory>
+                    </profile>
+                  </object>
+                </suspension>
+              </xsl:for-each>
+            </suspensions>
+            <fines xmlns="http://kalio.net/empweb/schema/fine/v1">
+              <xsl:for-each select="field[@tag='312']/occ/subfield[@name='u']">
+                <fine>
+                  <userId><xsl:value-of select="ancestor::record/field[@tag='351']/occ/head" /></userId>
+                  <userDb>USU</userDb>
+                  <!-- Si el type es AB, es un pago de multa (parcial) y amount contiene cuanto pago, en unidades -->
+                  <type><xsl:value-of select="../subfield[@name='a']"/></type>
+                  <amount><xsl:value-of select="../subfield[@name='u']"/></amount>
+                  <obs>Tipo de mov: <xsl:value-of select="../subfield[@name='a']"/>, Biblioteca: <xsl:value-of select="../subfield[@name='b']"/></obs>
+                  <date><xsl:value-of select="../subfield[@name='f']"/>000000</date>
+                  <object>
+                    <copyId><xsl:value-of select="../subfield[@name='m']"/></copyId>
+                    <objectDb>UCV05</objectDb>
+                    <profile id="00000">
+                      <userClass><xsl:value-of select="ancestor::record/field[@tag='520']/occ/head" /></userClass>
+                      <objectCategory><xsl:value-of select="../subfield[@name='c']"/></objectCategory>
+                    </profile>
+                  </object>
+                </fine>
+              </xsl:for-each>
+            </fines>
+          </extension>
+        </user>
+      </xsl:template>
+</xsl:stylesheet>
+
+    <query>
+        <field name="id">351</field>
+        <field name="name">300</field>
+        <field name="userClass">520</field>
+    </query>
+
+</dbwsconf>

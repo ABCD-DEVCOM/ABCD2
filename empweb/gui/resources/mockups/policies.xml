@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<policies>
+   <policy id="verano23212">
+      <name>verano</name>
+   </policy>
+
+   <policy id="invierno22" active="true">
+      <name>invierno</name>
+   </policy>
+
+   <policy id="receso23123">
+      <name>receso</name>
+   </policy>
+
+
+</policies>
+

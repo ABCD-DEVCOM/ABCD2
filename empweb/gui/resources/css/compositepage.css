@@ -1,0 +1,387 @@
+/* ===================================== */ 
+/* =======  DO NOT TOUCH THIS FILE ===== */ 
+/* PUT LOCAL CONFIGURATIONS IN local.css */ 
+/* ===================================== */ 
+
+/* DEBUG CLASS */
+.debug {
+/*       display: none; */
+       }
+
+body {
+   background: #fff;
+   margin: 0;
+   padding: 0;
+   color: #000;
+   font: x-small/1.5em Georgia,Serif;
+   voice-family: "\"}\""; voice-family: inherit;
+   font-size: small;
+} html>body {font-size: small;}
+
+div.error
+{
+   padding: 0;
+   margin: 0;
+   background: #FAA;
+}
+
+div.success
+{
+   padding: 0;
+   margin: 0;
+   background: #AFA;
+}
+
+
+
+
+/* INSTITUTION */
+#institution {
+   width: 100%;
+   background: #FFF;
+   line-height: normal;
+}
+
+
+
+/* INFOBAR */
+#infobar {
+   width: 100%;
+   background: #AAB0A2;
+   font-size: 80%;
+   line-height: normal;
+}
+
+#infobar  a {
+   padding: 5px;
+   text-decoration: none;
+   color: #666;
+}
+
+#infobar  #operator {
+   width: 100%;
+   text-align: right;
+   color: #000;
+}
+#infobar  #operator a {
+   font-size: 80%;
+   padding: 5px;
+   color: #000;
+}
+
+
+
+/* WEBSBAR */
+#websbar {
+   width: 100%;
+   background: #AAB0A2;
+   font-size: 80%;
+   line-height: normal;
+}
+
+#websbar  a {
+   padding: 5px;
+   text-decoration: none;
+   color: #666;
+}
+
+#websbar ul {
+   margin: 0;
+   padding: 5px 0 2px 10px;
+   list-style: none;
+   border-bottom: solid 1px #987;
+}
+
+#websbar li {
+   margin: 0;
+   padding: 2px 5px 2px 5px;
+   display: inline;
+   border-left: solid 1px #987;
+   color: #666;
+}
+
+#websbar li.webs {
+   margin: 0;
+   padding: 2px 5px 2px 5px;
+   display: inline;
+   border-left: solid 1px #987;
+   background: #AAB0A2;
+}
+
+#websbar li.activeweb {
+   margin: 0;
+   padding: 2px 5px 3px 5px;
+   display: inline;
+   border-left: solid 1px #987;
+   border-right: solid 1px #987;
+   border-top: solid 1px #987;
+   border-bottom: solid 1px #CAD0C2;
+   background: #CAD0C2;
+   font-weight: bold;
+}
+
+
+#websbar  li.activeweb a {
+   color: #000;
+}
+
+
+
+
+/* NAVBAR */
+#navbar {
+   width: 100%;
+   background: #CAD0C2;
+   font-size: 80%;
+   line-height: normal;
+}
+
+
+#navbar  a {
+   padding: 5px;
+   text-decoration: none;
+   color: #666;
+}
+
+#navbar ul {
+   margin: 0;
+   padding: 10px 0 2px 10px;
+   list-style: none;
+   border-bottom: solid 1px #BA9;
+}
+
+#navbar li {
+   margin: 0;
+   padding: 2px 5px 2px 5px;
+   display: inline;
+   border-left: solid 1px #BA9;
+}
+
+#navbar #current {
+   margin: 0;
+   padding: 2px 5px 3px 5px;
+   display: inline;
+   border-left: solid 1px #BA9;
+   border-right: solid 1px #BA9;
+   border-top: solid 1px #BA9;
+   border-bottom: solid 1px #F1F0E9;
+   background: #F1F0E9;
+   font-weight: bold;
+   color: #000;
+}
+
+#navbar  #current a {
+   color: #000;
+}
+
+
+
+
+/* CONTENT */
+#content {
+   clear: both;
+}
+
+#content h1 {
+   display: none;
+}
+
+#content h2 {
+   background: #F1F0E9;
+   color: #765;
+   margin: 0;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   padding-left: 5px;
+   clear: both;
+}
+
+#content h3 {
+   background: #F9F8EF;
+   color: #765;
+   margin: 0;
+   margin-top: 10px;
+   padding-top: 5px;
+   padding-bottom: 3px;
+   padding-left: 5px;
+   clear: both;
+}
+
+#content h4 {
+   /* background: #D1D0C9; */
+   /*border-top: solid #D1D0C9 4px; */
+   color: #765;
+   margin: 0;
+   margin-top: 10px;
+   padding-top: 2px;
+   padding-bottom: 2px;
+   padding-left: 5px;
+   clear: both;
+}
+
+
+#content p {
+   padding-left: 10px;
+   }
+
+#content p.error {
+  background: #F74;
+  color: #FFF;
+  text-align: center;
+  margin: 10px 25px;
+  padding: 10px;
+  font-size: 1.5em;
+}
+
+#content p.warn {
+  background: #FF2;
+  color: #666;
+  text-align: center;
+  margin: 10px 25px;
+}
+
+#content p.pagenav {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#content form {
+   margin-top: 5px;
+   padding: 0 0px 0 0px;
+}
+
+#content .query {
+  background: #FF7;
+  color: #000;
+  text-align: center;
+  margin: 0.5em;
+  padding: 0.25em;
+}
+
+#content .demo {
+  background: #AFA;
+  color: #666;
+  font-size: 0.85em;
+}
+
+
+/* CONTENT STANDARD TABLES */
+#content th {
+   background: #F1F0E9;
+   color: #765;
+}
+
+#content td {
+   border-bottom: 1px solid #BA9;
+   padding-left: 5px;
+   padding-right: 5px;
+}
+
+#content td.marked {
+   background: #F1F0E9;
+}
+
+#content td.warn {
+   background: #FFA0A0;
+}
+
+
+
+/* CONTENT RESULT TABLE */
+#content #result {
+   margin: 10px;
+   padding: 5px;
+}
+
+#content #result th {
+   background: #F1F0E9;
+   color: #765;
+}
+
+#content #result td {
+   border-bottom: 1px solid #BA9;
+   padding-left: 5px;
+   padding-right: 5px;
+   vertical-align: top;
+}
+
+#content #result tr.strong {
+  font-weight: bold;
+}
+
+/* CONTENT TEXTAREAS */
+#content textarea.xmleditor {
+   font-size: 0.9em;
+   margin: 1em;
+   width: 95%;
+
+   /* xml editors should always be LTR */
+   direction: ltr;
+   unicode-bidi: bidi-override;
+}
+
+
+/* CONTENT MATRIX TABLE */
+#content table.matrix {
+   margin: 10px;
+   padding: 5px;
+   text-align: center;
+}
+#content td.axisname {
+   background: #F1F0E9;
+   border: 0;
+}
+
+#content td.axistitle {
+   background: #E1E0D9;
+   border: 0;
+}
+
+/* CONTENT RESERVATION STATUS TABLE */
+#content table.reservation {
+   float: left;
+   margin: 10px;
+   padding: 5px;
+   text-align: center;
+}
+
+#content table.reservation tr th.month {
+}
+#content table.reservation tr th.day {
+   font-size: 0.8em;
+}
+
+#content table.reservation tr td {
+   width: 1em;
+   height: 1em;
+   border: 1px solid #BA9;
+}
+
+#content table.reservation tr td.reserved {
+   background: #FFA0A0;
+   border: 1px solid #FFA0A0;
+}
+
+#content table.reservation tr td.notallowed {
+   background: #DDDDDD;
+   border: 1px solid #BBBBBB;
+   color: #AAAAAA;
+}
+
+#content table.reservation tr td.today {
+   border: 2px solid #0A0;
+}
+
+#content table.reservation tr td.empty {
+   border: 0px;
+}
+
+
+/* PLEASE WAIT */
+#pleasewait {
+   margin: 3em;
+   color: #765;
+   text-align: center;
+   font-size: 1.5em;
+}

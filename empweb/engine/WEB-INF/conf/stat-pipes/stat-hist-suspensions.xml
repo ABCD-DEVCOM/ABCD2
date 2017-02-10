@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-hist-suspensions" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+
+  
+
+<process class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="createQueryFilter"><params>
+    <param name="script">
+<![CDATA[
+
+te = tc.get(TransactionContext.TRANSACTION_EXTRAS);
+searchField = te.get("searchField");
+searchValue = te.get("searchValue");
+userDb = te.get("userDb");
+objectDb= te.get("objectDb");
+operatorLocation = te.get("operatorLocation");
+
+
+suspensionFilter = ewdb.getEwdbObjectFactory().createSuspension();
+
+switch (searchField)
+  {
+    case 'userId':
+      suspensionFilter.setUserId(searchValue);
+      suspensionFilter.setUserDb(userDb);
+      break;
+  }
+
+if (operatorLocation != null && operatorLocation != "")
+  suspensionFilter.setLocation(operatorLocation);
+
+tc.put('searchFilter',suspensionFilter);
+return true;
+
+]]>
+    </param>
+  </params></process><rule class="net.kalio.empweb.engine.rules.GetHistoricTransactionIds" name="GetHistoricTransactionIds" /><rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListLoans"><params>
+    <param name="script">
+<![CDATA[
+
+historicIds = tc.get('searchResult');
+
+result.append("<values>");
+result.append("  <value name='suspensionIds'>");
+for (item in historicIds) { result.append("  <id>"+item+"</id>");}
+result.append("  </value>");
+result.append("</values>");
+return true;
+]]>
+    </param>
+  </params></rule></transaction>

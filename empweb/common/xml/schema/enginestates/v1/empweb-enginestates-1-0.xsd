@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/engineresult/v1" elementFormDefault="qualified"
+    xmlns="http://kalio.net/empweb/schema/engineresult/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!-- 
+  Empweb Engine States Schema. Version 1 / July 2006
+  ==================================================
+
+  Description: This schema specifies the list of possible states for the engine.
+
+  Schema location
+  http://kalio.net/empweb/schema/enginestates/v1/empweb-enginestates-1-0.xsd
+
+  Examples:
+
+  <engineStates>
+    <state active="true">ewengine_engine_ready</state>
+    <state>ewengine_engine_transactions_off</state>
+  </engineStates>
+
+  Copyright 2004-2006 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@kalio.net>
+  Ciro Mondueri <ciro@kalio.net>
+  -->
+
+  <!-- engineStates -->
+  <xsd:element name="engineStates">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="state">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="xsd:string">
+                <xsd:attribute name="active" type="xsd:string" use="optional"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

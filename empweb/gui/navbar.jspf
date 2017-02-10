@@ -1,0 +1,47 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.regex.*" %>
+<%@ page import="java.util.Hashtable" %>
+<%@ page import="java.util.Enumeration" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+/*
+ * Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+ * All Rights Reserved
+ *
+ */
+--%>
+
+<div class="helpersimg">
+<%
+String[] tabs = (String[]) webs.get(activeweb);
+for (int i=0; i<tabs.length; i++) {
+    if (session.getAttribute("group-"+activeweb+"-"+tabs[i]) != null ) {
+        if (tabs[i].equals(activetab)) {
+%>
+    
+<%
+         } else {
+%>
+    
+<%
+         }
+%>
+      <a class="misactions" href="<c:url value="<%= "/" + activeweb + "/" + tabs[i] + "/index.jsp" %>"/>">
+        <fmt:message key="<%= tabs[i] %>"/> 
+      </a>
+    
+      <%
+      if (i+1<tabs.length)
+      {
+        %>
+        
+        |
+      
+<%
+     }
+   }
+} // for
+%>
+</div>

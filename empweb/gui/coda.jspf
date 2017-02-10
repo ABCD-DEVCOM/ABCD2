@@ -1,0 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="io" uri="http://jakarta.apache.org/taglibs/io-1.0" %>
+
+<%
+  request.setAttribute("abcd",System.getProperty("abcd.url", "/").concat("/what.php?action=getall"));    
+%> 
+
+<io:request url="${abcd}" />
+
+</body>
+</html>

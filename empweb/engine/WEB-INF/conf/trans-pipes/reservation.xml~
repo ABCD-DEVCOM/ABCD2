@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="reservation" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1  ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+
+<!-- REQUIRED PARAMETERS: userId/db, objectId/db, volumeId, objectCategory, startDate, minimumEndDate -->
+
+<environment>
+  <!-- <param name="debug">true</param> -->
+</environment>
+
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GetUser" name="GetUser">
+  <doc>Get User DOM from (userId, userDb)</doc>
+  <params>
+    <!-- checks for expired or disabled user -->
+    <param name="checkValidity">true</param>
+  </params>
+</rule>
+
+
+<rule class="net.kalio.empweb.engine.rules.ExtractUserClass" name="ExtractUserClass">
+  <doc>Extract the user class from the user XML and store it in the TransactionContext.</doc>
+  <params>
+    <!-- If "useDefault" is true, it will return "*" when a user class can't be found -->
+    <!--<param name="useDefault">true</param>-->
+  </params>
+</rule>
+
+ <!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GetObject" name="GetObject">
+  <doc>Get Object DOM (mods) from (recordId, objectDb), in recordId mode.</doc>
+  <params>
+    <param name="mode">recordId</param>
+  </params>
+</rule>
+
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GetProfile" name="GetProfile">
+  <doc>Gets a Profile for the userClass and objectCategory stored in the TransactionContext.
+       It does a strict match or it fails, unless the "priority" parameter is
+       passed in which case it will attempt to use wildcard "*" in the order determined by
+       the priority. Read the javadoc for more information.
+  </doc>
+  <params>
+    <!-- priority param may be "userClass" or "objectCategory" -->
+    <param name="priority">objectCategory</param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.AdjustProfileValues" name="AdjustProfileValues">
+  <doc>Adjusts some of the Profile's values to the calculated ones.
+       It takes a Profile that was previously stored in the TransactionContext under the
+       "profile" key and adjusts userClass and objectCategory to actual computed values.
+  </doc>
+  <params>
+    <param name="adjustUserClass">true</param>
+    <param name="adjustObjectCategory">true</param>
+  </params>
+</rule>
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.Lock" name="Lock">
+  <doc>Logical lock of UserStatus and ObjectStatus</doc>
+  <params>
+    <param name="timeoutMillis">25000</param>
+  </params>
+</rule>
+
+<!-- =========================================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus" />
+<rule class="net.kalio.empweb.engine.rules.GetObjectStatus" name="GetObjectStatus" />
+
+<!-- =========================================================================================== -->
+
+<process class="net.kalio.empweb.engine.rules.pucv.PublishTimestampAdjustments" name="PublishTimestampAdjustments">
+  <doc>Publica al TC horas de devolucion, de expiracion de reserva, de inicio de reserva, y excepciones
+    Obtiene los valores indicados en el pipeline globalenvironment.
+  </doc>
+  <params />
+</process>
+
+<!-- =========================================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.GetExistingReservation" name="GetExistingReservation">
+  <doc>Finds an existing Reservation for the user that matches the object we are lending.
+       In this pipeline, used only to fail when the user has expired reservations.
+  </doc>
+  <params>
+    <param name="prevReservationKey">prevReservation</param>
+    <param name="expiredReservationKey">expiredReservation</param>
+    <param name="exceptionDaysKey">exceptionDays</param>
+    <param name="failOnExpired">true</param>
+    <param name="failOnNonMatchingObjectCategory">false</param>
+    <param name="failOnNonMatchingCopyLocation">false</param>
+  </params>
+</rule>
+
+<!-- =============================== PUT CONDITION CHECKS HERE ================================= -->
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="false" name="CheckReservationDaysInAdvance">
+  <doc>Cheks if the selected date for the reservation is within the allowed range.
+  </doc>
+  <limits>
+    <limit name="maxReservationDaysInAdvance">30</limit>
+  </limits>
+  <params>
+    <param name="script">
+<![CDATA[
+int maxReservationDaysInAdvance= profile.getLimit('maxReservationDaysInAdvance', defaultLimits.get('maxReservationDaysInAdvance')).toInteger();
+
+GregorianCalendar gcNow   = new GregorianCalendar();
+GregorianCalendar gcStart = Calendars.parseTimestamp(startDate);
+GregorianCalendar gcMax   = Calendars.advanceDays(gcNow, maxReservationDaysInAdvance, false);
+
+if (gcStart.after(gcMax))
+  {
+    msg.addText("en", "This object cannot be reserved more than ${maxReservationDaysInAdvance} days in advance.");
+    msg.addText("es", "Este objeto no puede ser reservado con una antelación de más de ${maxReservationDaysInAdvance}. días");
+    return false;
+  }
+else
+  return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" enabled="true" name="PucvObjetoEsDeBiblioteca">
+  <doc>Si se habilita, impide la reserva de objetos que no pertenencen a la biblioteca donde se encuentra el operador.
+       Usa el "objectLocation" que viene en el TransactionContext y ve si coincide con el "operatorLocation"
+       que viene en el transactionExtras.
+  </doc>
+  <params>
+    <param name="script">
+<![CDATA[
+transExtras = tc.get(TransactionContext.TRANSACTION_EXTRAS);
+
+
+operatorLocation = transExtras != null ? transExtras.get("operatorLocation") : "";
+objectLocation = tc.get(TransactionContext.OBJECT_LOCATION);
+
+if (operatorLocation != objectLocation)
+  {
+    
+    msg.setText("Este objeto no pertenece a la biblioteca desde donde se está realizando la reserva."+transExtras.toMapString());
+    return false;
+  }
+else
+  return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+
+<rule class="net.kalio.empweb.engine.rules.HasFineOrSuspension" name="HasFineOrSuspension">
+  <doc>Verifica si el usuario tiene multa o suspension.
+       Usa los valores de los limites para ver si realiza la transaccion
+  </doc>
+<limits>
+  <limit name="maxReservationsIfFine">0</limit>
+  <limit name="maxReservationsIfSuspension">0</limit>
+  <limit name="maxFinesForReservation">0</limit>
+  <limit name="maxFineAmountForLoan">0</limit>
+</limits>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ReserveIfLate">
+  <doc>Can we reserve to a late user?</doc>
+  <limits>
+    <!-- Do we allow a reservation if the user is late (the user might be "virtually" suspended until s/he returns everything -->
+    <limit name="maxReservationsIfLate">0</limit>
+  </limits>
+  <params>
+    <param name="script">
+<![CDATA[
+
+String now= Calendars.getFullTimestamp();
+Profile profile = tc.get('profile');
+
+// Busca el limite maxReservationsIfLate en el perfil, y si no lo toma del defaultLimits de esta regla
+// Cuidado que los limites son String y hay que convertirlo a int para hacer calculos!!
+int maxReservationsIfLate= profile.getLimit('maxReservationsIfLate', defaultLimits.get('maxReservationsIfLate')).toInteger();
+
+UserStatus userStatus= tc.get('userStatus');
+int totalAtrasos= 0;
+int totalReservations= 0;
+
+// Primero iteramos los Loans y vemos si hay alguno atrasado
+// TODO: No ajusta la hora segun exceptionReturnHour, pero es un detalle.
+List loansList = userStatus.getLoans();
+for (loan in loansList)
+  {
+    // get list of general exceptionDays plus location-specific exceptionDays
+    String exceptionDays= tc.getEnvironmentValue("exceptionDays", "") +","+
+                          tc.getEnvironmentValue("exceptionDays."+loan.getLocation(), "");
+    exceptionDaysList= exceptionDays.split('[, ]+').toList().unique();
+
+    String returnDate = Calendars.adjTimestamp(loan.getEndDate(), true, exceptionDaysList, null, 0);
+    if (returnDate < now)
+      totalAtrasos++;            // Esta atrasado!!
+  }
+
+List reservationsList = userStatus.getReservations();
+for (reservation in reservationsList)
+  {
+    // get list of general exceptionDays plus location-specific exceptionDays
+    String exceptionDays= tc.getEnvironmentValue("exceptionDays", "") +","+
+                          tc.getEnvironmentValue("exceptionDays."+reservation.getObjectLocation(), "");
+    exceptionDaysList= exceptionDays.split('[, ]+').toList().unique();
+
+    String expDate = Calendars.adjTimestamp(reservation.getExpirationDate(), true, exceptionDaysList, null, 0);
+    if (expDate > now)
+       totalReservations++;      // Not expired reservation!!!!
+  }
+
+// Si tiene prestamos atrasados y la cantidad total de reservas que ya tiene, mas esta que
+// estamos por hacer supera el limite.... entonces no lo permitimos
+if ( totalAtrasos > 0 && ((totalReservations + 1) > maxReservationsIfLate) )
+  { msg.setText("Este usuario ya alcanzó el máximo de reservas ($totalReservations) para usuarios con objetos atrasados");
+    return false;
+  }
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="UserQuantities">
+  <limits>
+    <limit name="maxReservationsTotal">2</limit>
+    <limit name="maxReservationsSameRecord">1</limit>
+    <limit name="maxReservationsSameCategory">2</limit>
+  </limits>
+  <params>
+    <param name="script">
+<![CDATA[
+
+Profile profile= tc.get('profile');
+
+// First get the values as String
+String maxReservationsTotalStr=         profile.getLimit('maxReservationsTotal', defaultLimits.get('maxReservationsTotal'));
+String maxReservationsSameRecordStr=    profile.getLimit('maxReservationsSameRecord', defaultLimits.get('maxReservationsSameRecord'));
+String maxReservationsSameCategoryStr=  profile.getLimit('maxReservationsSameCategory', defaultLimits.get('maxReservationsSameCategory'));
+
+// Then convert them to int
+int maxReservationsTotal=         Integer.parseInt(maxReservationsTotalStr);
+int maxReservationsSameRecord=    Integer.parseInt(maxReservationsSameRecordStr);
+int maxReservationsSameCategory=  Integer.parseInt(maxReservationsSameCategoryStr);
+
+// Algunos valores para el objeto que estamos intentando reservar en esta transaccion
+String transObjectCategory= tc.get(TransactionContext.OBJECT_CATEGORY);
+String transRecordId=       tc.get(TransactionContext.RECORD_ID);
+String transVolumeId=       tc.get(TransactionContext.VOLUME_ID);
+transVolumeId= (transVolumeId == null) ? "" : transVolumeId.trim();   // fix transVolumeId
+
+// En el userStatus es donde estan guardadas las reservas que este usuario tiene (entre otras cosas)
+UserStatus userStatus= tc.get(TransactionContext.USER_STATUS);
+
+int reservationsTotal= 0;
+int reservationsSameRecord= 0;
+int reservationsSameCategory= 0;
+
+// Vamos a iterar por todos las reservas que este usuario tiene en su userStatus
+
+java.util.List reservationsList= userStatus.getReservations();
+for (reservation in reservationsList)
+  {
+    // 1) verificamos maxReservationsTotals, cualquier Reservation que tenga se cuenta contra su reservationsTotal
+    //
+    reservationsTotal++;
+
+
+    // 2) verificamos maxReservationsSameRecord. Dos volumenes/tomos del mismo registro
+    //    los consideramos como registros distintos, para poder hacer prestamo multi-volumen
+    //
+    if (transRecordId == reservation.getRecordId())    // El usyario ya tiene una copia de este registro
+      {
+        if (transVolumeId != "")                // Si la copia a prestar tiene info de volumen...
+          {                                     // ...buscamos si este reservation es del MISMO volumen
+            if (transVolumeId == reservation.getVolumeId())     // ya tiene una copia de este mismo volumen!!!!
+              {
+                reservationsSameRecord++;              // lo consideramos como una copia mas del registro
+              }
+          }
+        else                                    // no es una copia con info con volumen...
+          reservationsSameRecord++;                    // ... pero era del mismo registro
+
+      } // if same record
+
+
+    // 3) verificamos maxReservationsSameCategory
+    //    Obtenemos la categoria de cada Reservation del usuario usando la categoria del Profile
+    //    que se uso al prestarlo. Por eso es importante que en el Reservation se guarden las categorias
+    //    calculadas y no asteriscos.
+    //
+    if (reservation.getProfile().getObjectCategory() == transObjectCategory)
+      { // Tiene un reservation de la misma categoria que el objeto que intento prestar ahora!!
+        reservationsSameCategory++;
+      } // if same record
+
+  } // for iterator
+
+
+// Ahora comparamos los totales calculados con los valores que los limites del perfil permiten
+
+if (maxReservationsTotal <= reservationsTotal)
+  {
+    msg.addText("en", "The user already has ${reservationsTotal} reservations which is greater than "+
+                                   "than or equal to the maximum allowed for the profile (${maxReservationsTotal}).");
+
+    msg.addText("es", "El usuario ya posee ${reservationsTotal} reservas, lo cual es mayor que "+
+                                   "o igual al máximo permitido en su perfil (${maxReservationsTotal}).");
+    return false;
+  } // if max total
+
+
+if (maxReservationsSameRecord <= reservationsSameRecord)        // ...y no puede tener mas copias
+  {
+    msg.addText("en", "The user already has ${reservationsSameRecord} reservations for this record (${transRecordId}) "+
+                                    "which is greater than or equal to the maximum allowed for the profile (${maxReservationsSameRecord}).");
+
+    msg.addText("es", "El usuario ya posee ${reservationsSameRecord} reservas para este registro (${transRecordId}) "+
+                                   "lo cual es mayor que o igual al máximo permitido en su perfil (${maxReservationsSameRecord}).");
+
+    return false;
+  } // if same record
+
+
+if (maxReservationsSameCategory <= reservationsSameCategory)        // ya no puede tener mas objetos de esta categoria
+  {
+    msg.addText("en", "The user already has ${reservationsSameCategory} reservations for objects of this category "+
+                      "(${transObjectCategory}) which is greater than or equal to the maximum "+
+                      "allowed for the profile (${maxReservationsSameCategory}).");
+
+    msg.addText("es", "El usuario ya posee ${reservationsSameCategory} reservas para objetos de esta "+
+                      "categoría (${transObjectCategory}) lo cual es mayor que o igual al máximo "+
+                      "permitido en su perfil (${maxReservationsSameCategory}).");
+
+    return false;
+  } // if same record
+
+
+// If we reach this point, we passed all tests of quantities, and we return "true".
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+
+<!-- ========================================================================== -->
+
+<process class="net.kalio.empweb.engine.rules.CreateReservation" enabled="true" name="CreateReservation ">
+  <doc>Creates a Reservation object in the TransactionContext.
+    It stores it under the key given by the "reservationKey" param (or under "reservation" by default).
+    We separate the two actions (creation and storage) to give a chance to another process/rule
+    in between to modify/show/cancel the operation.
+  </doc>
+  <limits>
+    <limit name="loanDays">5</limit>
+    <limit name="expirationDays">1</limit>
+  </limits>
+  <params>
+    <!-- BBB --> <param name="log" />
+  </params>
+</process>
+
+
+<rule class="net.kalio.empweb.engine.rules.ValidateAvailability" name="ValidateAvailability">
+  <limits>
+    <limit name="minRemainingCopies">0</limit>
+  </limits>
+  <params>
+    <param name="transactionKey">reservation</param>
+    <param name="remainingSameLocation">true</param>
+  </params>
+</rule>
+
+
+<!-- ========================================================================== -->
+
+<rule class="net.kalio.empweb.engine.rules.AddTransactionToStatus" name="AddReservationToStatus">
+  <params>
+    <param name="transactionKey">reservation</param>  <!-- The TransactionContext key under which the Reservation was stored -->
+  </params>
+</rule>
+
+
+<process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDb">
+  <params>
+    <param name="transactionKeys">reservation</param>      <!-- The TransactionContext key under which the Reservation was stored -->
+    <param name="storeUserStatus">true</param>
+    <param name="storeObjectStatus">true</param>
+    <!-- <param name="debug" /> -->
+  </params>
+</process>
+
+  <!-- ====================================================================== -->
+
+<process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+  <params>
+    <param name="resultKeys">reservation</param>
+  </params>
+</process>
+
+<!-- ======================== FINALLY SECTION ====================== -->
+<finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+  <doc>Release the logic locks done at the beginning.</doc>
+</finally>
+</transaction>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="empweb-users-service"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+
+                  targetNamespace="http://kalio.net/empweb/dbws/users/v1"
+                  xmlns:tns="http://kalio.net/empweb/dbws/users/v1"
+
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/
+                                      http://schemas.xmlsoap.org/wsdl/soap/ http://schemas.xmlsoap.org/wsdl/soap/
+                                      http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+<!--
+Empweb Users Service WSDL - Version 1 beta / March 2004
+=========================================================
+This wsdl describes the services provided by the EmpwebUsersService.
+
+Schema location
+http://kalio.net/empweb/dbws/users/v1/empweb-users-service-1-0.wsdl
+
+
+Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+All Rights Reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+March 2004
+
+-->
+
+
+    <!-- ======== types ======== -->
+    <wsdl:types>
+        <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                    targetNamespace="http://kalio.net/empweb/dbws/users/v1"
+                    xmlns:ewuser="http://kalio.net/empweb/schema/users/v1"
+                    xmlns:ewuquery="http://kalio.net/empweb/schema/usersquery/v1">
+
+            <xsd:import namespace="http://kalio.net/empweb/schema/users/v1"
+                        schemaLocation="../../../schema/users/v1/empweb-users-1-0.xsd"/>
+            <xsd:import namespace="http://kalio.net/empweb/schema/usersquery/v1"
+                        schemaLocation="../../../schema/usersquery/v1/empweb-users-query-1-0.xsd"/>
+
+            <!-- searchUsersById types -->
+            <xsd:element name="searchUsersById">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="searchUsersByIdReturn">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="ewuser:userCollection"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- searchUser types -->
+            <!-- name of the operation "wrapped style" -->
+            <xsd:element name="searchUsers">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- name of parameter to the operation "wrapped style" -->
+                        <xsd:element name="queryParam">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <!-- value of queryParam is an XML Element -->
+                                    <xsd:element ref="ewuquery:query"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="searchUsersReturn">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="ewuser:userCollection"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+
+    <!-- ======== messages ======== -->
+    <wsdl:message name="searchUsersByIdRequest">
+        <wsdl:part element="tns:searchUsersById" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="searchUsersByIdResponse">
+        <wsdl:part element="tns:searchUsersByIdReturn" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="searchUsersRequest">
+        <wsdl:part element="tns:searchUsers" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="searchUsersResponse">
+        <wsdl:part element="tns:searchUsersReturn" name="parameters"/>
+    </wsdl:message>
+
+<!-- ======== portTypes ======== -->
+    <wsdl:portType name="EmpwebUsersServiceInterface">
+        <wsdl:operation name="searchUsersById">
+            <wsdl:input message="tns:searchUsersByIdRequest" name="searchUsersByIdRequest"/>
+            <wsdl:output message="tns:searchUsersByIdResponse" name="searchUsersByIdResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="searchUsers">
+            <wsdl:input message="tns:searchUsersRequest" name="searchUsersRequest"/>
+            <wsdl:output message="tns:searchUsersResponse" name="searchUsersResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+<!-- ======== bindings ======== -->
+    <wsdl:binding name="EmpwebUsersServiceSoapBinding" type="tns:EmpwebUsersServiceInterface">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="searchUsersById">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="searchUsersByIdRequest">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/users/v1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="searchUsersByIdResponse">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/users/v1" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="searchUsers">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="searchUsersRequest">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/users/v1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="searchUsersResponse">
+                <wsdlsoap:body namespace="http://kalio.net/empweb/dbws/users/v1" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+<!-- ======== services ======== -->
+    <wsdl:service name="EmpwebUsersService">
+        <wsdl:port binding="tns:EmpwebUsersServiceSoapBinding" name="EmpwebUsersServicePort">
+            <!-- the address must be replaced with the corresponding url for the service -->
+<!--            <wsdlsoap:address location="http://nueve:8080/axis/services/EmpwebUsersService"/>-->
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

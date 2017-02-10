@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/databases/v1"
+            elementFormDefault="qualified"
+            xmlns="http://kalio.net/empweb/schema/databases/v1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<!--
+Empweb Database Names Schema Version 1 January 2005
+======================================================
+Specifies the schema for the xml supplied to the getDatabaseNames operation of
+the empweb engine web service.
+
+Schema location:
+http://kalio.net/empweb/schema/databases/v1/empweb-databases-1-0.xsd
+
+Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+January 2004
+
+Example:
+  <databases xmlns="http://kalio.net/empweb/schema/databases/v1">
+      <database type="users">STUDENTS</database>
+      <database type="objects">LibraryOne</database>
+      <database type="objects">LibraryTwo</database>
+      <database type="other">SomeOTHER</database>
+  </databases>
+-->
+    <!-- root element databases -->
+  <xsd:element name="databases" >
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="database">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="xsd:string">
+                <xsd:attribute name="type" type="xsd:string" use="required"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

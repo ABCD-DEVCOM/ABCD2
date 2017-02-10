@@ -1,0 +1,42 @@
+<%@ page contentType="text/html; charset=UTF-8" %><%@
+    page import="java.util.regex.*" %><%@
+    taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><%--
+/*
+ * Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+ * All Rights Reserved
+ *
+ */
+--%><%
+/* get title from url */
+String path = (String) request.getServletPath();
+Pattern p = Pattern.compile("/([^/]+)/([^/]+)(/[^/]+)*");
+Matcher m = p.matcher(path);
+String activeweb = m.matches()?m.group(1):"";
+String activetab = m.matches()?m.group(2):"";
+
+
+String absoluteContext = request.getRequestURI();
+absoluteContext = absoluteContext.substring(0,absoluteContext.length()-path.length());
+/* these variables can be used to create absolute urls automatically */
+session.setAttribute("absoluteContext",absoluteContext);
+session.setAttribute("resources",absoluteContext+"/resources");
+%>
+  <fmt:setLocale value="${sessionScope.userLocale}" scope="request"/>
+  <fmt:setBundle basename="ewi18n.core.gui" scope="request"/>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><fmt:message key="<%= activeweb %>"/> &lt; <fmt:message key="empweb"/> | <fmt:message key="institution" /></title>
+    <!--<style type="text/css"media="all">@import "compositepage.css"; </style>
+    <style type="text/css"media="all">@import "local.css"; </style>-->
+    
+    <style type="text/css"media="all">@import "template.css"; </style>
+
+    <script language="Javascript" type="text/javascript" src="disableEnterInForms.js"></script>
+    <script language="Javascript" type="text/javascript">
+       // register disableEnterInForms patch.
+       window.onload = fixEnterKey;
+    </script>
+  </head>
+
+  <body>

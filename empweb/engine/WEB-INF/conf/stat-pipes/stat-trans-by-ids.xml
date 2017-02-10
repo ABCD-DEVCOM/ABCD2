@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-trans-by-ids" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="PutIdsInTC">
+  <params>
+    <param name="script">
+<![CDATA[
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras != null)
+  {
+    tids = transExtras.get("transactionIds");
+  }
+
+tc.put("transactionIds", tids);
+
+return true;
+
+]]>
+    </param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GetTransactionsById" name="GetTransactionsById" />
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListIds">
+  <params>
+    <param name="script">
+<![CDATA[
+
+tl = tc.get("transactionList");
+
+result.append("<transactionList xmlns=\"http://kalio.net/empweb/schema/transactionlist/v1\">");
+for (tr in tl)
+  {
+    result.append(tr.toXMLString());
+  }
+result.append("</transactionList>");
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+</transaction>

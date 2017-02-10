@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<transactionResult
+  mockup="true"
+  xmlns="http://kalio.net/empweb/schema/transactionresult/v1">
+
+  <processResult successful="true" name="checkThis" />
+
+  <processResult successful="true" name="checkThat">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="local.myproc">my.weird.class.GetFunky_get_funky</key>
+    </msg>
+  </processResult>
+
+  <processResult successful="true" name="whatHappened">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="local.myproc">my.weird.class.GetFunky_get_funky</key>
+    </msg>
+    <result>
+      <loan id="232312" xmlns="http://kalio.net/empweb/schema/loan/v1">
+  <userId>6565</userId>
+  <userDb>usuarios</userDb>
+  <copyId>123123</copyId>
+  <objectDb>objetos</objectDb>
+  <profile id="131231"/>
+  <title>Caperucita Roja</title>
+  <startDate>20050101000000</startDate>
+  <endDate>20050131000000</endDate>
+      </loan>
+    </result>
+  </processResult>
+
+  <processResult successful="true" name="checkIt">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="local.myproc">my.weird.class.GetFunky_get_funky</key>
+    </msg>
+  </processResult>
+
+  <processResult successful="true" name="andFinish" />
+
+</transactionResult>
+
+

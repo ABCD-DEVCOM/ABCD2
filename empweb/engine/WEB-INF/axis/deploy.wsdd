@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+            xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+
+  <!-- This service reads the configFile specified below, and starts all the configuration process for
+       the EmpWeb engine. The configFile must be retrievable as a Resource from the classpath.
+  -->
+  <service name="EngineInit" style="wrapped" use="literal">
+    <parameter name="className" value="net.kalio.empweb.engine.WSBroker"/>
+    <parameter name="scope" value="application" />
+    <parameter name="allowedMethods" value="init" />
+    <parameter name="configFile" value="/engineconf.xml" />
+  </service>
+
+
+  <!-- The WSDL's below are retrievable as Resources from the common/xml subtree which is included
+       in this webapp's classpath -->
+
+  <!-- The Query service for the engine. It provides users and objects queries -->
+  <service name="EmpwebQueryService" style="wrapped" use="literal">
+    <parameter name="className" value="net.kalio.empweb.engine.ws.EmpwebQueryService"/>
+    <parameter name="scope" value="application" />
+    <parameter name="allowedMethods" value="*" />
+    <wsdlFile>/engine/query/v1/empweb-engine-query-service-1-0.wsdl</wsdlFile>
+
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+  </service>
+
+  <!-- The Transaction service for the engine. It provides users and objects queries -->
+  <service name="EmpwebTransactionService" style="wrapped" use="literal">
+    <parameter name="className" value="net.kalio.empweb.engine.ws.EmpwebTransactionService"/>
+    <parameter name="scope" value="application" />
+    <parameter name="allowedMethods" value="*" />
+    <wsdlFile>/engine/trans/v1/empweb-engine-trans-service-1-0.wsdl</wsdlFile>
+
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+  </service>
+
+  <!-- The Admin service for the engine. It provides administrative services -->
+  <service name="EmpwebAdminService" style="wrapped" use="literal">
+    <parameter name="className" value="net.kalio.empweb.engine.ws.EmpwebAdminService"/>
+    <parameter name="scope" value="application" />
+    <parameter name="allowedMethods" value="*" />
+    <wsdlFile>/engine/admin/v1/empweb-engine-admin-service-1-0.wsdl</wsdlFile>
+
+    <responseFlow>
+      <handler type="java:net.kalio.empweb.ws.ReturnAnyTypeHandler"/>
+    </responseFlow>
+  </service>
+
+</deployment>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+
+  <description>Kalio JSP Expression Language functions</description>
+  <display-name>Kalio JSP-EL functions</display-name>
+  <tlib-version>1.1</tlib-version>
+  <short-name>kfn</short-name>
+  <uri>http://kalio.net/jsp/el-func-1.0</uri>
+
+  <function>
+    <description>
+      URL-encodes a String, using UTF-8 encoding.
+    </description>
+    <name>urlenc</name>
+    <function-class>net.kalio.jsptags.kfn.JSPELFunctions</function-class>
+    <function-signature>java.lang.String URLEncode(java.lang.String)</function-signature>
+    <example>
+      &lt;a href="${kfn:urlenc(name)}">click here&lt;/a>
+    </example>
+  </function>
+
+  <function>
+    <description>
+      Splits a string in its lines. 
+    </description>
+    <name>splitLines</name>
+    <function-class>net.kalio.jsptags.kfn.JSPELFunctions</function-class>
+    <function-signature>java.lang.String[] splitLines(java.lang.String)</function-signature>
+    <example>
+      ${kfn:splitLines(text)[0]}
+    </example>
+  </function>
+
+</taglib>

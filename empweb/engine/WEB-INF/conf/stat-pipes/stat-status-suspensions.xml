@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-status-suspensions" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+</environment>
+
+<rule class="net.kalio.empweb.engine.rules.GetCurrentTransactionIds" name="GetCurrentTransactionIds">
+  <params>
+    <param name="useOperatorLocation">true</param>
+    <param name="transactionType">suspension</param>
+  </params>
+</rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListSuspensions">
+  <params>
+    <param name="script">
+<![CDATA[
+
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras != null)
+{
+  location= transExtras.get("operatorLocation");
+}
+
+suspensionsCount = 0;
+
+currentIdsSuspensions = tc.get('currentIdsSuspensions');
+if (currentIdsSuspensions != null) suspensionsCount = currentIdsSuspensions.size();
+
+result << "<values>"
+result << "  <value name='location'>$location</value>"
+result << "  <value name='suspensionsCount'>$suspensionsCount</value>"
+result << "  <value name='suspensionsIds'>"
+
+for (item in currentIdsSuspensions)
+  result << "  <id>$item</id>"
+
+result << "  </value>"
+result << "</values>";
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+</transaction>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<transactionResult mockup="true" xmlns="http://kalio.net/empweb/schema/transactionresult/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/transactionresult/v1 ../../../common/xml/schema/transactionresult/v1/empweb-transactionresult-1-0.xsd ">
+  <processResult successful="true" name="checkThis"/>
+  <processResult successful="true" name="checkThat">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="local.myproc">my.weird.class.GetFunky_get_funky</key>
+    </msg>
+  </processResult>
+  <processResult successful="true" name="whatHappened">
+    <msg>reservation_info</msg>
+    <result>
+      <reservation xmlns="http://kalio.net/empweb/schema/reservation/v1" id="232312">
+        <userId>6565</userId>
+        <userDb>usuarios</userDb>
+        <recordId>123123</recordId>
+        <objectDb>objetos</objectDb>
+        <profile id="131231"/>
+        <title>Caperucita Roja</title>
+        <date>20050101000000</date>
+      </reservation>
+    </result>
+  </processResult>
+  <processResult successful="true" name="checkIt">
+    <msg xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+      <key bundle="local.myproc">my.weird.class.GetFunky_get_funky</key>
+    </msg>
+  </processResult>
+  <processResult successful="true" name="andFinish"/>
+</transactionResult>

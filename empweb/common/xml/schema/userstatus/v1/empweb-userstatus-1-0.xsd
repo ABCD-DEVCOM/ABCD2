@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/userstatus/v1" elementFormDefault="qualified"
+        xmlns="http://kalio.net/empweb/schema/userstatus/v1"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
+        xmlns:ewfin="http://kalio.net/empweb/schema/fine/v1"
+        xmlns:ewsus="http://kalio.net/empweb/schema/suspension/v1"
+        xmlns:ewwai="http://kalio.net/empweb/schema/wait/v1"
+        xmlns:ewloa="http://kalio.net/empweb/schema/loan/v1"
+        xmlns:ewres="http://kalio.net/empweb/schema/reservation/v1">
+
+    <xsd:import namespace="http://kalio.net/empweb/schema/fine/v1"
+                schemaLocation="../../fine/v1/empweb-fine-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/suspension/v1"
+                schemaLocation="../../suspension/v1/empweb-suspension-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/wait/v1"
+                schemaLocation="../../wait/v1/empweb-wait-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/loan/v1"
+                schemaLocation="../../loan/v1/empweb-loan-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/reservation/v1"
+                schemaLocation="../../reservation/v1/empweb-reservation-1-0.xsd"/>
+
+  <!-- 
+  Empweb User Status Schema. Version 1 / January 2005
+  ============================================
+
+  Description:
+  This schema specifies the XML elements that describe the status of the user.
+
+  Schema location
+  http://kalio.net/empweb/schema/userstatus/v1/empweb-userstatus-1-0.xsd
+
+  Sample: 
+  <userStatus userId="232312" userDb="usarios" id="523" xmlns="http://kalio.net/empweb/schema/userstatus/v1">
+    <loans>
+      <loan>
+       ...
+      </loan>
+    </loans>
+    ...
+  </userStatus>
+
+  Copyright 2004-2006 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  January 2005
+
+  === Feb 2006
+  * Added userStatusList
+
+  -->
+
+  <!-- userStatusList -->
+  <xsd:element name="userStatusList">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="userStatus" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- userStatus -->
+  <xsd:element name="userStatus">
+    <xsd:complexType>
+      <xsd:all>
+        <xsd:element ref="ewloa:loans" minOccurs="0"/>
+        <xsd:element ref="ewres:reservations" minOccurs="0"/>
+        <xsd:element ref="ewwai:waits" minOccurs="0"/>
+        <xsd:element ref="ewfin:fines" minOccurs="0"/>
+        <xsd:element ref="ewsus:suspensions" minOccurs="0"/>
+      </xsd:all>
+
+      <xsd:attribute name="userId" type="xsd:string" use="required"/>
+      <xsd:attribute name="userDb" type="xsd:string" use="required"/>
+
+      <!-- Optional id that helps resolve a user status (for example, an Isis MFN) -->
+      <xsd:attribute name="id"     type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

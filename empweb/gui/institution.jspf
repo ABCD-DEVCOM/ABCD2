@@ -1,0 +1,45 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+ <div class="heading">
+ 
+			<div class="institutionalInfo">
+			  <div id="parent">
+			  <img alt="ABCD" src="logoABCD.gif"/>
+			  </div>
+			  <div id="identification">
+				<h1>ABCD</h1>
+				<h2>Empweb Advanced Loans</h2>
+				</div>
+			</div>
+
+			<div class="userInfo">
+
+    <% 
+      if (session.getAttribute("library")!=null)
+      {
+      
+    %>
+
+    <strong><fmt:message key="library" />: </strong><%=session.getAttribute("library")%>
+    (<a href="<c:url value='/home/chooselibrary.jsp'/>"><fmt:message key="change"/></a>)  |  
+    <strong><fmt:message key="operator" />: </strong><%=session.getAttribute("username")%>
+    <a class="button_logout" href="<c:url value="/logout.jsp"/>">(<fmt:message key="logout"/>)</a>
+
+    <p>	
+	  
+    <c:if test="${not config['gui.hide_languages']}">
+      |<c:forEach items="${fn:split(config['gui.languages'], ',')}" var="langs">
+        <a href="<c:url value='/home/index.jsp?lang=${langs}'/>"><fmt:message key="${fn:substring(langs,0,2)}"/></a>|
+      </c:forEach>&nbsp;&nbsp;
+    </c:if>
+    
+    
+    <% } %>
+
+			</div>
+			<div class="spacer">&#160;</div>
+		</div>
+

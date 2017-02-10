@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="empweb-engine-query-service"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+
+  targetNamespace="http://kalio.net/empweb/engine/query/v1"
+  xmlns:tns="http://kalio.net/empweb/engine/query/v1"
+
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/
+  http://schemas.xmlsoap.org/wsdl/soap/ http://schemas.xmlsoap.org/wsdl/soap/
+  http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Engine Query Service WSDL - Version 1 beta / April 2004
+  ==============================================================
+  This wsdl describes the services provided by the EmpwebEngineQueryService.
+
+  Schema location
+  http://kalio.net/empweb/engine/query/v1/empweb-engine-query-service-1-0.wsdl
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All Rights Reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  March 2004
+
+  ==== January 2004 ==== ciro@mondueri.com
+  * Added extra functions: getUserStatus and getObjectStatus
+
+  ==== July 2005
+  * Added engine result types
+
+  ==== August 2005
+  * Added queryResult type for searches
+
+  -->
+
+
+  <!-- ======== types ======== -->
+  <wsdl:types>
+    <xsd:schema 
+        targetNamespace="http://kalio.net/empweb/engine/query/v1" elementFormDefault="qualified"
+        xmlns="http://kalio.net/empweb/engine/query/v1"
+
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+        xmlns:db="http://kalio.net/empweb/schema/databases/v1"
+        xmlns:ewoquery="http://kalio.net/empweb/schema/objectsquery/v1"
+        xmlns:ewuquery="http://kalio.net/empweb/schema/usersquery/v1"
+        xmlns:ewustat="http://kalio.net/empweb/schema/userstatus/v1"
+        xmlns:ewostat="http://kalio.net/empweb/schema/objectstatus/v1"
+        xmlns:ewer="http://kalio.net/empweb/schema/engineresult/v1"
+        xmlns:ewqr="http://kalio.net/empweb/schema/queryresult/v1">
+
+        <xsd:import namespace="http://kalio.net/empweb/schema/databases/v1"
+            schemaLocation="../../../schema/databases/v1/empweb-databases-1-0.xsd"/>
+        <xsd:import namespace="http://kalio.net/empweb/schema/objectsquery/v1"
+            schemaLocation="../../../schema/objectsquery/v1/empweb-objects-query-1-0.xsd"/>
+        <xsd:import namespace="http://kalio.net/empweb/schema/usersquery/v1"
+            schemaLocation="../../../schema/usersquery/v1/empweb-users-query-1-0.xsd"/>
+        <xsd:import namespace="http://kalio.net/empweb/schema/userstatus/v1"
+            schemaLocation="../../../schema/userstatus/v1/empweb-userstatus-1-0.xsd"/>
+        <xsd:import namespace="http://kalio.net/empweb/schema/objectstatus/v1"
+            schemaLocation="../../../schema/objectstatus/v1/empweb-objectstatus-1-0.xsd"/>
+        <xsd:import namespace="http://kalio.net/empweb/schema/engineresult/v1"
+            schemaLocation="../../../schema/engineresult/v1/empweb-engineresult-1-0.xsd"/>
+        <xsd:import namespace="http://kalio.net/empweb/schema/queryresult/v1"
+            schemaLocation="../../../schema/queryresult/v1/empweb-queryresult-1-0.xsd"/>
+
+
+      <!-- ============= Web Services Types ================ -->
+      <!-- getDatabaseNames types -->
+      <xsd:element name="getDatabaseNames">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="type" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getDatabaseNamesReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="db:databases" />
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- searchObjectsById types -->
+      <xsd:element name="searchObjectsById">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="database" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchObjectsByIdReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewqr:queryResult" />
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- searchUsersById types -->
+      <xsd:element name="searchUsersById">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="database" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchUsersByIdReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewqr:queryResult" />
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- searchObjects types -->
+      <!-- name of the operation "wrapped style" -->
+      <xsd:element name="searchObjects">
+        <xsd:complexType>
+          <xsd:sequence>
+            <!-- name of parameter to the operation "wrapped style" -->
+            <xsd:element name="queryParam">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <!-- value of queryParam is an XML Element -->
+                  <xsd:element ref="ewoquery:query"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="database" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchObjectsReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewqr:queryResult" />
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- searchUsers types -->
+      <!-- name of the operation "wrapped style" -->
+      <xsd:element name="searchUsers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <!-- name of parameter to the operation "wrapped style" -->
+            <xsd:element name="queryParam">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <!-- value of queryParam is an XML Element -->
+                  <xsd:element ref="ewuquery:query"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="database" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchUsersReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewqr:queryResult" />
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- getRecordStatus types -->
+      <xsd:element name="getRecordStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="database" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getRecordStatusReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewostat:recordStatus"/>
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- getCopyStatus types -->
+      <xsd:element name="getCopyStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="database" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getCopyStatusReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewostat:copyStatus"/>
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getUserStatus types -->
+      <xsd:element name="getUserStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="database" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getUserStatusReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewustat:userStatus" />
+            <xsd:element ref="ewer:error" />
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+
+  </wsdl:types>
+
+
+  <!-- ======== messages ======== -->
+  <wsdl:message name="getDatabaseNamesRequest">
+    <wsdl:part element="tns:getDatabaseNames" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getDatabaseNamesResponse">
+    <wsdl:part element="tns:getDatabaseNamesReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="searchObjectsByIdRequest">
+    <wsdl:part element="tns:searchObjectsById" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="searchObjectsByIdResponse">
+    <wsdl:part element="tns:searchObjectsByIdReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="searchUsersByIdRequest">
+    <wsdl:part element="tns:searchUsersById" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="searchUsersByIdResponse">
+    <wsdl:part element="tns:searchUsersByIdReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="searchObjectsRequest">
+    <wsdl:part element="tns:searchObjects" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="searchObjectsResponse">
+    <wsdl:part element="tns:searchObjectsReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="searchUsersRequest">
+    <wsdl:part element="tns:searchUsers" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="searchUsersResponse">
+    <wsdl:part element="tns:searchUsersReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getUserStatusRequest">
+    <wsdl:part element="tns:getUserStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getUserStatusResponse">
+    <wsdl:part element="tns:getUserStatusReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getRecordStatusRequest">
+    <wsdl:part element="tns:getRecordStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getRecordStatusResponse">
+    <wsdl:part element="tns:getRecordStatusReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getCopyStatusRequest">
+    <wsdl:part element="tns:getCopyStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getCopyStatusResponse">
+    <wsdl:part element="tns:getCopyStatusReturn" name="parameters"/>
+  </wsdl:message>
+
+  <!-- ======== portTypes ======== -->
+  <wsdl:portType name="EmpwebEngineQueryServiceInterface">
+    <wsdl:operation name="getDatabaseNames">
+      <wsdl:input message="tns:getDatabaseNamesRequest" name="getDatabaseNamesRequest"/>
+      <wsdl:output message="tns:getDatabaseNamesResponse" name="getDatabaseNamesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="searchObjectsById">
+      <wsdl:input message="tns:searchObjectsByIdRequest" name="searchObjectsByIdRequest"/>
+      <wsdl:output message="tns:searchObjectsByIdResponse" name="searchObjectsByIdResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="searchUsersById">
+      <wsdl:input message="tns:searchUsersByIdRequest" name="searchUsersByIdRequest"/>
+      <wsdl:output message="tns:searchUsersByIdResponse" name="searchUsersByIdResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="searchObjects">
+      <wsdl:input message="tns:searchObjectsRequest" name="searchObjectsRequest"/>
+      <wsdl:output message="tns:searchObjectsResponse" name="searchObjectsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="searchUsers">
+      <wsdl:input message="tns:searchUsersRequest" name="searchUsersRequest"/>
+      <wsdl:output message="tns:searchUsersResponse" name="searchUsersResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getUserStatus">
+      <wsdl:input message="tns:getUserStatusRequest" name="getUserStatusRequest"/>
+      <wsdl:output message="tns:getUserStatusResponse" name="getUserStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getRecordStatus">
+      <wsdl:input message="tns:getRecordStatusRequest" name="getRecordStatusRequest"/>
+      <wsdl:output message="tns:getRecordStatusResponse" name="getRecordStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCopyStatus">
+      <wsdl:input message="tns:getCopyStatusRequest" name="getCopyStatusRequest"/>
+      <wsdl:output message="tns:getCopyStatusResponse" name="getCopyStatusResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!-- ======== bindings ======== -->
+  <wsdl:binding name="EmpwebEngineQueryServiceSoapBinding" type="tns:EmpwebEngineQueryServiceInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getDatabaseNames">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDatabaseNamesRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDatabaseNamesResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="searchObjectsById">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="searchObjectsByIdRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchObjectsByIdResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="searchUsersById">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="searchUsersByIdRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchUsersByIdResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="searchObjects">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="searchObjectsRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchObjectsResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="searchUsers">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="searchUsersRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="searchUsersResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getUserStatus">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getUserStatusRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUserStatusResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getRecordStatus">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getRecordStatusRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRecordStatusResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getCopyStatus">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCopyStatusRequest">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCopyStatusResponse">
+	      <wsdlsoap:body namespace="http://kalio.net/empweb/engine/query/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <!-- ======== services ======== -->
+  <wsdl:service name="EmpwebEngineQueryService">
+    <wsdl:port binding="tns:EmpwebEngineQueryServiceSoapBinding" name="EmpwebEngineQueryServicePort">
+      <!-- the address must be replaced with the corresponding url for the service -->
+      <wsdlsoap:address location="http://www.kalio.net:8086/ewengine/services/EmpwebQueryService"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

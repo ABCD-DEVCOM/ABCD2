@@ -1,0 +1,14 @@
+/*
+General CSS for the demos of DHTMLSuite
+*/
+body{
+	font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+	font-size:0.8em;
+	margin:0px;
+}
+
+a{
+	color:red;
+	text-decoration:underline;
+}
+

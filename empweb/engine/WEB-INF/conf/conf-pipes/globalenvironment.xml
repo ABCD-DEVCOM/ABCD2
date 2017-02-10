@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="globalenvironment" type="configuration" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+
+  <environment>
+    <!-- =============================================================
+    // AJUSTE DE HORA DE DEVOLUCION EN HORARIO NORMAL
+    // Permite especificar la hora de devolucion permitida de un
+    // prestamo realizado, para que no se genere multa.
+    //
+    // El nombre del parametro se compone de las siguientes partes,
+    // separadas por punto:
+    //   * prefijo "returnHour"
+    //   * codigo de biblioteca (opcional), o asterisco (*)
+    //   * clase de usuario (opcional)
+    //   * codigo de carrera del usuario (opcional)
+    //
+    // El valor del parametro (2200) significa la hora de devolucion
+    // en formato HHMM
+    //
+    // Ejemplo asignacion de la returnHour de todas las bibliotecas:
+    //      <param name="returnHour">2200</param>
+    //
+    // Ejemplo de modificacion de hora de devolucion para las 22:00,
+    // para clase A, codigo de carrera 022 y biblioteca HIS:
+    //      <param name="returnHour.HIS.A.022">2200</param>
+    //
+    // __COMODIN PARA BIBLIOTECA__
+    // La sintaxis admite estos dos casos, usando asterisco en lugar
+    // de la biblioteca:
+    //     returnHour.*.userClass
+    //     returnHour.*.userClass.codigoCarrera
+    // El uso del asterisco en otros lugares no es valido, simplemente
+    // esa opcion sera ignorada.
+    //
+    // __PRECEDECENCIA__
+    // El orden de precedencia de las distintas opciones, desde el
+    // caso mas general al mas especifico es el siguiente:
+    //     returnHour
+    //     returnHour.BIB
+    //     returnHour.*.userClass
+    //     returnHour.BIB.userClass
+    //     returnHour.*.userClass.codigoCarrera
+    //     returnHour.BIB.userClass.codigoCarrera
+    //
+    // ========================================================= -->
+    <!-- valor por defecto para todas las bibliotecas -->
+    <param name="returnHour">1500</param>
+    
+    <!-- Descomentar, agregar y quitar a gusto            -->
+    <!-- <param name="returnHour.GIM">2000</param>        -->
+    <!-- <param name="returnHour.GIM.A">2000</param>      -->
+    <!-- <param name="returnHour.GIM.A.049">2000</param>  -->
+
+  <!-- =============================================================
+    // AJUSTE DE HORA DE INICIO DE PRESTAMO AL RESERVAR
+    // Permite especificar a partir de que hora se puede pasar a
+    // retirar una reserva realizada.
+    //
+    // El nombre del parametro se compone de las siguientes partes,
+    // separadas por punto:
+    //   * prefijo "reservationStartHour"
+    //   * codigo de biblioteca (opcional)
+    //   * clase de usuario (opcional)
+    //   * codigo de carrera del usuario (opcional)
+    //
+    // El valor del parametro (2200) significa la hora de expiracion
+    // de la reserva en formato HHMM.
+    //
+    // Ejemplo asignacion para todas las bibliotecas:
+    //      <param name="reservationStartHour">2200</param>
+    //
+    // Ejemplo de modificacion para las 22:00, para la biblioteca HIS,
+    // usuarios de clase A, codigo de carrera 022:
+    //      <param name="reservationStartHour.HIS.A.022">2200</param>
+    //
+    // __COMODIN PARA BIBLIOTECA y PRECEDENCIA__
+    // Misma sintaxis que para returnHour, mas arriba
+    //
+    // ========================================================= -->
+    <!-- valor por defecto para todas las bibliotecas -->
+    <param name="reservationStartHour">1600</param>
+
+    <!-- Descomentar, agregar y quitar a gusto -->
+    <!-- <param name="reservationStartHour.GIS">1600</param>       -->
+    <!-- <param name="reservationStartHour.GIS.A">1600</param>     -->
+    <!-- <param name="reservationStartHour.GIS.A.049">1600</param> -->
+
+
+    <!-- =============================================================
+    // AJUSTE DE HORA DE EXPIRACION DE RESERVA EN HORARIO NORMAL
+    // Permite ajustar la hora en la que expira una reserva realizada.
+    //
+    // El nombre del parametro se compone de las siguientes partes,
+    // separadas por punto:
+    //   * prefijo "reservationExpirationHour"
+    //   * codigo de biblioteca (opcional)
+    //   * clase de usuario (opcional)
+    //   * codigo de carrera del usuario (opcional)
+    //
+    // El valor del parametro (2200) significa la hora de expiracion
+    // de la reserva en formato HHMM
+    //
+    // Ejemplo asignacion para todas las bibliotecas:
+    //      <param name="reservationExpirationHour">2200</param>
+    //
+    // Ejemplo de modificacion de hora de expiracion para las 22:00,
+    // para la biblioteca HIS, usuarios de clase A, codigo de carrera 022:
+    //      <param name="reservationExpirationHour.HIS.A.022">2200</param>
+    //
+    // __COMODIN PARA BIBLIOTECA y PRECEDENCIA__
+    // Misma sintaxis que para returnHour, mas arriba
+    //
+    // ========================================================= -->
+    <!-- valor por defecto para todas las bibliotecas -->
+    <param name="reservationExpirationHour">1800</param>
+
+    <!-- Descomentar, agregar y quitar a gusto -->
+    <!-- <param name="reservationExpirationHour.GIS">1800</param>       -->
+    <!-- <param name="reservationExpirationHour.GIS.A">1800</param>     -->
+    <!-- <param name="reservationExpirationHour.GIS.A.049">1800</param> -->
+
+
+  <!-- =============================================================
+    // CASOS EXCEPCIONALES DE CAMBIO DE HORARIO O CIERRE
+    //
+    // Se utiliza para ingresar aquellos dias que la biblioteca,
+    // por alguna razon EXCEPCIONAL, cambio su horario de devolucion.
+    // Esto permite recibir libros hasta la nueva hora indicada, sin
+    // que el sistema considere la devolución como un atraso.
+    //
+    // Los casos 3 y 4 permiten indicar días que estuvieron cerradas
+    // las bibliotecas por casos excepcionales, no contemplados ya
+    // en el calendario.
+    // Los días marcados como exceptionDays no se toman en cunenta al
+    // momento de contabilizar los días de atraso para el cálculo de
+    // suspensión y multa.
+    //
+    // PRIMER CASO: HORARIO cambió para TODAS las bibliotecas, un cierto día.
+    //   Ejemplo:
+    //      <param name="exceptionReturnHour.20070620">1400</param>
+    //   El nombre del parametro se interpreta:
+    //     * prefijo: exceptionReturnHour
+    //     * separador: punto
+    //     * fecha en formato AAAAMMDD: 20070620
+    //   El valor del parametro (1400) significa la hora de devolucion
+    //   en formato HHMM
+    //
+    // SEGUNDO CASO: HORARIO cambió para UNA biblioteca, un cierto día
+    //   Ejemplo:
+    //      <param name="exceptionReturnHour.20070620.GIM">1400</param>
+    //   El nombre del parametro se interpreta:
+    //     * prefijo: exceptionReturnHour
+    //     * separador: punto
+    //     * fecha en formato AAAAMMDD: 20070620
+    //     * separador: punto
+    //     * codigo de biblioteca: GIM
+    //   El valor del parametro (1400) significa la hora de devolución
+    //   en formato HHMM
+    //
+    // TERCER CASO: lista de dias que TODAS las bibliotecas CERRARON.
+    //   Ejemplo:
+    //      <param name="exceptionDays">20070620,20070621</param>
+    //   El valor del parametro es la lista de dias, en formato AAAAMMDD,
+    //   que estuvieron cerradas todas las bibliotecas, separados
+    //   por comas.
+    //
+    // CUARTO CASO: lista de dias que UNA biblioteca estuvo CERRADA.
+    //   Ejemplo:
+    //      <param name="exceptionDays.GIM">20070620,20070621</param>
+    //   El nombre del parametro se interpreta:
+    //     * prefijo: exceptionDays
+    //     * separador: punto
+    //     * codigo de biblioteca: GIM
+    //   El valor del parametro es la lista de dias, en formato AAAAMMDD,
+    //   que estuvieron cerradas todas las bibliotecas, separados
+    //   por comas.
+    //
+    // ========================================================= -->
+    <!-- Descomentar, agregar y quitar a gusto -->
+    <!-- <param name="exceptionReturnHour.20070620">1400</param>     -->
+    <!-- <param name="exceptionReturnHour.20070628">1400</param>     -->
+    <!-- <param name="exceptionReturnHour.20070620.ARQ">1400</param> -->
+    <!-- <param name="exceptionReturnHour.20070620.GIM">1400</param> -->
+    <!-- <param name="exceptionDays">20070620, 20070521</param>      -->
+    <!-- <param name="exceptionDays.ARQ">20070620, 20070521</param>  -->
+    <param name="exceptionDays">20070816</param>
+    <param name="exceptionDays.ING">20070620, 20070806</param>
+    <param name="exceptionReturnHour.20070719">1900</param>
+
+  <!-- =============================================================
+       Mapeo de "codigo de unidad academica" a "codigo de biblioteca".
+       Por ejemplo, el param de nombre "pucvua.CIM" vale "RNT" lo cual quiere decir que
+       la unidad academica CIM pertenece a la biblioteca RNT.
+       Este listado fue generado con MX a partir de la base UCV02 con el comando:
+            mx UCV02 "pft='<param name=\"pucvua.'v1'\">'v2'</param>'/" -all now
+       Si la base UCV02 cambia, conviene generar el listado de nuevo y pegar aca.
+
+       NO DESHABILITAR: USADO POR CONF-GETLIBRARIES PARA PUBLICAR LISTA
+                        DE BIBLIOTECAS QUE USA EL GUI
+    -->
+    <param name="pucvua.ING">ING</param>
+    <param name="pucvua.ARQ">ARQ</param>
+    <param name="pucvua.AGR">AGR</param>
+    <param name="pucvua.VET">VET</param>
+
+   <param name="maxHourForLoanByHour_ING">1900</param>
+   <param name="maxHourForLoanByHour_ARQ">1700</param>
+   <param name="maxHourForLoanByHour_AGR">2359</param>
+   <param name="maxHourForLoanByHour_VET">1700</param>
+
+    <param name="typeOfObjectForbiddenToReservation">LBH</param>
+    
+  </environment>
+
+  <!-- ========================================================================== -->
+
+  <!--
+  <process name="Init" class="net.kalio.empweb.engine.rules.EnvironmentInit" enabled="true">
+  <doc>Could be used to read the Environment from a Database or similar.
+  Should only execute when the TransactionContext has the "init"/"true" mapping.
+  </doc>
+  </process>
+  -->
+
+  <process class="net.kalio.empweb.engine.rules.DumpEnvironment" name="DumpEnvironment">
+    <doc>Return this pipeline's environment section as XML</doc>
+  </process>
+
+  <!-- ======================== FINALLY SECTION ====================== -->
+</transaction>

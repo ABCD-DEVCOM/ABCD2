@@ -1,0 +1,44 @@
+BBBB Empweb 1.6
+BBBB
+BBBB Keep this list updated!!!
+BBBB
+
+List of needed libraries, their versions and filenames
+
+
+
+Axis, version 1.2.1:
+===================
+axis-1.2.1.jar
+commons-discovery-0.2.jar
+jaxrpc.jar                 (version distributed with Axis 1.2.1)
+saaj.jar                   (version distributed with Axis 1.2.1)
+wsdl4j-1.5.1.jar
+
+
+
+Apache Jakarta Commons JXPath 1.2
+==================================
+commons-jxpath-1.2-kalio.jar  (Kalio patch to handle substring)
+
+
+
+Groovy 1.0
+============================
+groovy-all.jar (rename it to exactly this name)
+
+
+
+ISIS DLL 7.0
+============
+isis32.dll               (479232 bytes, Windows)
+libisis32.so             (631667 bytes, Linux)
+ISISJAVA.jar             (  8101 bytes, Java)
+
+
+Others
+===========
+fop.jar
+avalon-framework-4.2.0.jar
+commons-io-1.1.jar
+xmlgraphics-commons-1.1.jar

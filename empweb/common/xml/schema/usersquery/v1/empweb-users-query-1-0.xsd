@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/usersquery/v1" xmlns="http://kalio.net/empweb/schema/usersquery/v1"
+            elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+<!--
+Empweb Users Query Schema Version 1 / January 2005
+======================================================
+Specifies the schema for the xml supplied to the searchUsers operation of the empweb dbws web services.
+
+Schema location:
+http://kalio.net/empweb/schema/usersquery/v1/empweb-users-query-1-0.xsd
+
+
+Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+Barzilai Spinak <barspi@internet.com.uy>
+Ciro Mondueri <ciro@mondueri.com>
+January 2005
+-->
+
+    <!-- root element query -->
+    <xsd:element name="query">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:group ref="queryTerms"/>
+                <xsd:group ref="operators"/>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- simple term elements -->
+    <xsd:group name="queryTerms">
+        <xsd:choice>
+            <xsd:element name="id"        type="elementsType"/>
+            <xsd:element name="name"      type="elementsType"/>
+            <xsd:element name="userClass" type="elementsType"/>
+            <xsd:element name="address"   type="elementsType"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <!-- elements type
+         As of this version, the elements may have a "type" attribute, which, if exists, may only have the
+        "trunc-right" value. This is used for wildcard searchs like "Port$",
+    -->
+    <xsd:complexType name="elementsType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="type">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="trunc-right"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+
+    <!-- operator elements -->
+    <xsd:group name="operators">
+        <xsd:choice>
+            <xsd:element name="not" type="unaryOpType"/>
+            <xsd:element name="and" type="n-aryOpType"/>
+            <xsd:element name="or"  type="n-aryOpType"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:complexType name="unaryOpType">
+        <xsd:choice>
+            <xsd:group ref="queryTerms"/>
+            <xsd:group ref="operators"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <!-- usually "and" and "or" are binary ops but we admit many operands for them (at least 2) -->
+    <xsd:complexType name="n-aryOpType">
+        <xsd:choice minOccurs="2" maxOccurs="unbounded">
+            <xsd:group ref="queryTerms"/>
+            <xsd:group ref="operators"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+</xsd:schema>

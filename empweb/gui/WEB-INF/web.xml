@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app
+   xmlns="http://java.sun.com/xml/ns/j2ee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+   version="2.4">
+
+  <display-name>Empweb GUI in JSP</display-name>
+
+<!--
+/*
+ * Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+ * All Rights Reserved
+ *
+ */
+-->
+
+  <context-param>
+    <!-- This value is relative to the empweb.home system property -->
+    <param-name>net.kalio.auth.location</param-name>
+    <param-value>/gui/WEB-INF/auth/</param-value>
+  </context-param>
+
+  <filter>
+    <filter-name>AccessControlFilter</filter-name>
+    <filter-class>net.kalio.empweb.gui.AccessControlFilter</filter-class>
+    <init-param>
+      <param-name>noAuthPage</param-name>
+      <param-value>/login.jsp</param-value>
+    </init-param>
+    <init-param>
+      <param-name>noAccessPage</param-name>
+      <param-value>/noaccess.jsp</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>AccessControlFilter</filter-name>
+    <url-pattern>/home/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AccessControlFilter</filter-name>
+    <url-pattern>/trans/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AccessControlFilter</filter-name>
+    <url-pattern>/stats/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AccessControlFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AccessControlFilter</filter-name>
+    <url-pattern>/reports/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AccessControlFilter</filter-name>
+    <url-pattern>/webproxy/*</url-pattern>
+  </filter-mapping>
+
+
+  <filter>
+    <filter-name>FileRedirectorFilter</filter-name>
+    <filter-class>net.kalio.empweb.gui.FileRedirectorFilter</filter-class>
+    <init-param>
+      <param-name>defaultDir</param-name>
+      <param-value>/resources</param-value>
+    </init-param>
+    <init-param>
+      <param-name>imagesDir</param-name>
+      <param-value>/resources/images</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cssDir</param-name>
+      <param-value>/resources/css</param-value>
+    </init-param>
+    <init-param>
+      <param-name>javascriptDir</param-name>
+      <param-value>/resources/javascript</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ignorePaths</param-name>
+      <param-value>/resources</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>FileRedirectorFilter</filter-name>
+    <url-pattern>*.jpg</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>FileRedirectorFilter</filter-name>
+    <url-pattern>*.png</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>FileRedirectorFilter</filter-name>
+    <url-pattern>*.gif</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>FileRedirectorFilter</filter-name>
+    <url-pattern>*.css</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>FileRedirectorFilter</filter-name>
+    <url-pattern>*.js</url-pattern>
+  </filter-mapping>
+
+
+  <servlet>
+    <servlet-name>Configurator</servlet-name>
+    <servlet-class>net.kalio.empweb.gui.Configurator</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>WebProxy</servlet-name>
+    <servlet-class>net.kalio.empweb.gui.WebProxy</servlet-class>
+    <init-param>
+      <param-name>urlMappings</param-name>
+      <param-value>/user_photo/ http://localhost/photoproxy.php?imgid=</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Dump</servlet-name>
+    <servlet-class>net.kalio.empweb.gui.DumpServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>WebProxy</servlet-name>
+    <url-pattern>/webproxy/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Dump</servlet-name>
+    <url-pattern>/dump/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Dump</servlet-name>
+    <url-pattern>*.dump</url-pattern>
+ </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/dump/ERROR</location>
+  </error-page>
+
+  <servlet-mapping>
+    <servlet-name>jsp</servlet-name>
+    <url-pattern>*.jsp</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jsp</servlet-name>
+    <url-pattern>*.jspf</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jsp</servlet-name>
+    <url-pattern>*.jspx</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jsp</servlet-name>
+    <url-pattern>*.xsp</url-pattern>
+  </servlet-mapping>
+
+
+  <jsp-config>
+<!--
+    <taglib>
+      <taglib-uri>http://jakarta.apache.org/taglibs/io-1.0</taglib-uri>
+      <taglib-location>/WEB-INF/tld/taglibs-io.tld</taglib-location>
+    </taglib>
+-->
+    <taglib>
+      <taglib-uri>http://kalio.net/jsp/el-func-1.0</taglib-uri>
+      <taglib-location>/WEB-INF/tld/kaliojsp-el-func-1.0.tld</taglib-location>
+    </taglib>
+
+    <jsp-property-group>
+      <url-pattern>*.jspx</url-pattern>
+      <is-xml>true</is-xml>
+    </jsp-property-group>
+    
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/doctype.jspf</include-prelude>
+      <include-prelude>/userlocale.jspf</include-prelude>
+    </jsp-property-group>
+  
+    <jsp-property-group>
+      <url-pattern>/home/*</url-pattern>
+      <include-prelude>/dochead.jspf</include-prelude>
+      <include-prelude>/institution.jspf</include-prelude>
+      <include-prelude>/infobar.jspf</include-prelude>
+      <include-prelude>/websbar.jspf</include-prelude>
+      <include-prelude>/navbar.jspf</include-prelude>
+      <include-coda>/coda.jspf</include-coda>
+    </jsp-property-group>
+    
+    <jsp-property-group>
+      <url-pattern>/trans/*</url-pattern>
+      <include-prelude>/dochead.jspf</include-prelude>
+      <include-prelude>/institution.jspf</include-prelude>
+      <include-prelude>/infobar.jspf</include-prelude>
+      <include-prelude>/websbar.jspf</include-prelude>
+      <include-prelude>/navbar.jspf</include-prelude>
+      <include-coda>/coda.jspf</include-coda>
+    </jsp-property-group>
+    
+    <jsp-property-group>
+      <url-pattern>/admin/*</url-pattern>
+      <include-prelude>/dochead.jspf</include-prelude>
+      <include-prelude>/institution.jspf</include-prelude>
+      <include-prelude>/infobar.jspf</include-prelude>
+      <include-prelude>/websbar.jspf</include-prelude>
+      <include-prelude>/navbar.jspf</include-prelude>
+      <include-coda>/coda.jspf</include-coda>
+    </jsp-property-group>
+    
+    <jsp-property-group>
+      <url-pattern>/stats/*</url-pattern>
+      <include-prelude>/dochead.jspf</include-prelude>
+      <include-prelude>/institution.jspf</include-prelude>
+      <include-prelude>/infobar.jspf</include-prelude>
+      <include-prelude>/websbar.jspf</include-prelude>
+      <include-prelude>/navbar.jspf</include-prelude>
+      <include-coda>/coda.jspf</include-coda>
+    </jsp-property-group>
+    
+    
+    
+    <jsp-property-group>
+      <url-pattern>/reports/*</url-pattern>
+      <include-prelude>/reports/dochead.jspf</include-prelude>
+      <include-prelude>/reports/institution.jspf</include-prelude>
+      <include-coda>/reports/coda.jspf</include-coda>
+    </jsp-property-group>
+    
+    
+  </jsp-config>
+
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+
+  <session-config>
+    <session-timeout>60</session-timeout>
+  </session-config>
+
+</web-app>

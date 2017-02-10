@@ -1,0 +1,54 @@
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.Properties" %>
+<%--
+/*
+ * Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+ * All Rights Reserved
+ *
+ */
+--%>
+<%
+String defaultLang = "es";
+String origLang = request.getParameter("origLang");
+String reqLang = request.getParameter("lang");
+Properties props = (Properties)getServletContext().getAttribute("config");
+Locale sessLocale= (Locale) session.getAttribute("userLocale");
+
+String lang;
+
+/* origLang: to return to the original language when a session times out */
+//System.err.println("\n\n\n\n\n============================= ");
+//System.err.println("origLang: #"+origLang+"#");
+//System.err.println("reqLang: #"+reqLang+"#");
+//System.err.println("props: #"+props+"#");
+//System.err.println("sessLocale: #"+sessLocale+"#");
+//System.err.println("=============================");
+
+if ( (origLang != null) && (origLang.length() > 0) ) {
+    lang = origLang;
+} else if ( (reqLang != null) && (reqLang.length() > 0) ) {
+    lang = reqLang;
+} else  if (sessLocale != null) {
+    lang = sessLocale.getLanguage();
+    if (sessLocale.getCountry() != null) { 
+      lang += "_"+sessLocale.getCountry();
+      if (sessLocale.getVariant() != null) {
+        lang += "_"+sessLocale.getVariant();
+      }
+    }
+} else if ( (props != null) && (props.getProperty("gui.default_locale") != null) ){
+    lang = (String)props.getProperty("gui.default_locale");
+} else {
+    lang = defaultLang;
+}
+
+String[] localeParams = lang.split("[-_]");
+if (localeParams.length == 3) 
+  session.setAttribute("userLocale", new Locale(localeParams[0],localeParams[1],localeParams[2]));
+else if (localeParams.length == 2) 
+  session.setAttribute("userLocale", new Locale(localeParams[0],localeParams[1]));
+else if (localeParams.length == 1) 
+  session.setAttribute("userLocale", new Locale(localeParams[0]));
+else 
+  session.setAttribute("userLocale", new Locale(lang));
+%>

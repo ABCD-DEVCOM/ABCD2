@@ -1,0 +1,67 @@
+body {
+   background:#fff;
+   margin:0;
+   padding:0;
+   color:#000;
+   font:x-small/1.5em Georgia,Serif;
+   voice-family: "\"}\""; voice-family:inherit;
+   font-size:small;
+   } html>body {font-size:small;}
+
+
+/* INSTITUTION */
+#institution {
+   width: 100%;
+   background: #FFF;
+   line-height: normal;
+}
+
+/* INFOBAR */
+#infobar {
+        display: none;
+   }
+
+/* WEBSBAR */
+#websbar {
+        display: none;
+}
+
+/* NAVBAR */ 
+#navbar {
+        display: none;
+}
+
+/* CONTENT */
+#content {
+   clear:both;
+}
+
+#content h1 {
+   display:none;
+}
+
+#content h2 {
+   background:#CCC;
+   color:black;   
+}
+
+#content h3 {
+   background:#CCC;
+   color:black;   
+}
+
+#content h4 {
+   background:#CCC;
+   color:black;   
+}
+
+
+#content p {
+   padding-left: 10px;
+   }
+
+
+/* FOOTBAR */
+#content .notprint {
+        display:none;
+}

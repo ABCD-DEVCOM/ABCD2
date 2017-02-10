@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="empweb-engine-admin-service"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+  targetNamespace="http://kalio.net/empweb/engine/admin/v1"
+  xmlns:tns="http://kalio.net/empweb/engine/admin/v1"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/ http://schemas.xmlsoap.org/wsdl/soap/ http://schemas.xmlsoap.org/wsdl/soap/ http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Engine Admin Service WSDL - Version 1 / Agosto 2005
+  ==============================================================
+  This wsdl describes the services provided by the EmpwebEngineAdminService.
+
+  Schema location
+  http://kalio.net/empweb/engine/admin/v1/empweb-engine-admin-service-1-0.wsdl
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All Rights Reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  March 2004
+
+
+  === TODO ==============
+  * result type: review!
+  * excetption services missing.
+  -->
+
+
+  <!-- ======== types ======== -->
+  <wsdl:types>
+    <xsd:schema 
+      targetNamespace="http://kalio.net/empweb/engine/admin/v1" elementFormDefault="qualified"
+      xmlns="http://kalio.net/empweb/engine/admin/v1"
+
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      
+      xmlns:ewpol="http://kalio.net/empweb/schema/policy/v1"
+      xmlns:ewprof="http://kalio.net/empweb/schema/profile/v1"
+      xmlns:ewcal="http://kalio.net/empweb/schema/calendar/v1"
+      xmlns:ewtrans="http://kalio.net/empweb/schema/transaction/v1"
+      xmlns:ewes="http://kalio.net/empweb/schema/enginestates/v1"
+      xmlns:ewer="http://kalio.net/empweb/schema/engineresult/v1">
+
+      <xsd:import namespace="http://kalio.net/empweb/schema/policy/v1"
+        schemaLocation="../../../schema/policy/v1/empweb-policy-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/profile/v1"
+        schemaLocation="../../../schema/profile/v1/empweb-profile-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/calendar/v1"
+        schemaLocation="../../../schema/calendar/v1/empweb-calendar-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/transaction/v1"
+        schemaLocation="../../../schema/transaction/v1/empweb-transaction-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/enginestates/v1"
+        schemaLocation="../../../schema/enginestates/v1/empweb-enginestates-1-0.xsd"/>
+      <xsd:import namespace="http://kalio.net/empweb/schema/engineresult/v1"
+        schemaLocation="../../../schema/engineresult/v1/empweb-engineresult-1-0.xsd"/>
+
+      <!--====== services types =================-->
+      
+      <!-- initDatabases types -->
+      <xsd:element name="initDatabases"/>
+
+      <xsd:element name="initDatabasesReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- checkEngine types -->
+      <xsd:element name="checkEngine"/>
+      
+      <xsd:element name="checkEnginesReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- setEngineState types -->
+      <xsd:element name="setEngineState"/>
+      
+      <xsd:element name="setEngineStateReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- getEngineStates types -->
+      <xsd:element name="getEngineStates"/>
+      
+      <xsd:element name="getEngineStatesReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewes:engineStates"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getPolicies types -->
+      <xsd:element name="getPolicies"/>
+
+      <xsd:element name="getPoliciesReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewpol:policies"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getPolicy types -->
+      <xsd:element name="getPolicy">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getPolicyReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewpol:policy"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- deletePolicy types -->
+      <xsd:element name="deletePolicy">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="deletePolicyReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- copyPolicy types -->
+      <xsd:element name="copyPolicy">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="sourceId" type="xsd:string"/>
+            <xsd:element name="destName" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="copyPolicyReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- newPolicy types -->
+      <xsd:element name="newPolicy">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="newPolicyReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getProfile types -->
+      <xsd:element name="getProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getProfileReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewprof:profile"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- saveProfile types -->
+      <xsd:element name="saveProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <!-- name of parameter to the operation "wrapped style" -->
+            <xsd:element name="profileParam">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <!-- value of profileParam is an XML Element -->
+                  <xsd:element ref="ewprof:profile"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="saveProfileReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- deleteProfile types -->
+      <xsd:element name="deleteProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="deleteProfileReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getCalendars types -->
+      <xsd:element name="getCalendars"/>
+
+      <xsd:element name="getCalendarsReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewcal:calendars"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getCalendar types -->
+      <xsd:element name="getCalendar">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="year" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getCalendarReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewcal:calendar"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- saveCalendar types -->
+      <xsd:element name="saveCalendar">
+        <xsd:complexType>
+          <xsd:sequence>
+            <!-- name of parameter to the operation "wrapped style" -->
+            <xsd:element name="calendarParam">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <!-- value of calendarParam is an XML Element -->
+                  <xsd:element ref="ewcal:calendar"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="saveCalendarReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getPipelines types -->
+      <xsd:element name="getPipelines" />
+
+      <xsd:element name="getPipelinesReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtrans:transactions"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- getPipeline types -->
+      <xsd:element name="getPipeline">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="getPipelineReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewtrans:transaction"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+
+      <!-- savePipelines types -->
+      <xsd:element name="savePipeline">
+        <xsd:complexType>
+          <xsd:sequence>
+            <!-- name of parameter to the operation "wrapped style" -->
+            <xsd:element name="PipelineParam">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <!-- value of pipelineParam is an XML Element -->
+                  <xsd:element ref="ewtrans:transaction"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="savePipelineReturn">
+        <xsd:complexType>
+          <xsd:choice>
+            <xsd:element ref="ewer:error"/>
+            <xsd:element ref="ewer:ok"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </wsdl:types>
+
+
+  <!-- ======== messages ======== -->
+  <wsdl:message name="initDatabasesRequest">
+    <wsdl:part element="tns:initDatabases" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="initDatabasesResponse">
+    <wsdl:part element="tns:initDatabasesReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="checkEngineRequest">
+    <wsdl:part element="tns:checkEngine" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="checkEngineResponse">
+    <wsdl:part element="tns:checkEngineReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="setEngineStateRequest">
+    <wsdl:part element="tns:setEngineState" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="setEngineStateResponse">
+    <wsdl:part element="tns:setEngineStateReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getEngineStatesRequest">
+    <wsdl:part element="tns:getEngineStates" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getEngineStatesResponse">
+    <wsdl:part element="tns:getEngineStatesReturn" name="parameters"/>
+  </wsdl:message>
+  
+  <wsdl:message name="getPoliciesRequest">
+    <wsdl:part element="tns:getPolicies" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPoliciesResponse">
+    <wsdl:part element="tns:getgetPoliciesReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getPolicyRequest">
+    <wsdl:part element="tns:getPolicy" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPolicyResponse">
+    <wsdl:part element="tns:getPolicyReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="deletePolicyRequest">
+    <wsdl:part element="tns:deletePolicy" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="deletePolicyResponse">
+    <wsdl:part element="tns:deletePolicyReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="copyPolicyRequest">
+    <wsdl:part element="tns:copyPolicy" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="copyPolicyResponse">
+    <wsdl:part element="tns:copyPolicyReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="newPolicyRequest">
+    <wsdl:part element="tns:newPolicy" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="newPolicyResponse">
+    <wsdl:part element="tns:newPolicyReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getProfileRequest">
+    <wsdl:part element="tns:getProfile" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getProfileResponse">
+    <wsdl:part element="tns:getProfileReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getCalendarsRequest">
+    <wsdl:part element="tns:getCalendars" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getCalendarsResponse">
+    <wsdl:part element="tns:getCalendarsReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getCalendarRequest">
+    <wsdl:part element="tns:getCalendar" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getCalendarResponse">
+    <wsdl:part element="tns:getCalendarReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="saveCalendarRequest">
+    <wsdl:part element="tns:saveCalendar" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="saveCalendarResponse">
+    <wsdl:part element="tns:saveCalendarReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getPipelinesRequest">
+    <wsdl:part element="tns:getPipelines" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPipelinesResponse">
+    <wsdl:part element="tns:getPipelinesReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="getPipelineRequest">
+    <wsdl:part element="tns:getPipeline" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getPipelineResponse">
+    <wsdl:part element="tns:getPipelineReturn" name="parameters"/>
+  </wsdl:message>
+
+  <wsdl:message name="savePipelineRequest">
+    <wsdl:part element="tns:savePipeline" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="savePipelineResponse">
+    <wsdl:part element="tns:savePipelineReturn" name="parameters"/>
+  </wsdl:message>
+
+  <!-- ======== portTypes ======== -->
+  <wsdl:portType name="EmpwebEngineAdminServiceInterface">
+    <wsdl:operation name="initDatabases">
+      <wsdl:input message="tns:initDatabasesRequest" name="initDatabases"/>
+      <wsdl:output message="tns:initDatabasesResponse" name="initDatabasesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="checkEngine">
+      <wsdl:input message="tns:checkEngineRequest" name="checkEngine"/>
+      <wsdl:output message="tns:checkEngineResponse" name="checkEngineResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setEngineState">
+      <wsdl:input message="tns:setEngineStateRequest" name="setEngineState"/>
+      <wsdl:output message="tns:setEngineStateResponse" name="setEngineStateResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getEngineStates">
+      <wsdl:input message="tns:getEngineStatesRequest" name="getEngineStates"/>
+      <wsdl:output message="tns:getEngineStatesResponse" name="getEngineStatesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPolicies">
+      <wsdl:input message="tns:getPoliciesRequest" name="getPoliciesRequest"/>
+      <wsdl:output message="tns:getPoliciesResponse" name="getPoliciesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPolicy">
+      <wsdl:input message="tns:getPolicyRequest" name="getPolicyRequest"/>
+      <wsdl:output message="tns:getPolicyResponse" name="getPolicyResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="deletePolicy">
+      <wsdl:input message="tns:deletePolicyRequest" name="deletePolicyRequest"/>
+      <wsdl:output message="tns:deletePolicyResponse" name="deletePolicyResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="copyPolicy">
+      <wsdl:input message="tns:copyPolicyRequest" name="copyPolicyRequest"/>
+      <wsdl:output message="tns:copyPolicyResponse" name="copyPolicyResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="newPolicy">
+      <wsdl:input message="tns:newPolicyRequest" name="newPolicyRequest"/>
+      <wsdl:output message="tns:newPolicyResponse" name="newPolicyResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProfile">
+      <wsdl:input message="tns:getProfileRequest" name="getProfileRequest"/>
+      <wsdl:output message="tns:getProfileResponse" name="getProfileResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="saveProfile">
+      <wsdl:input message="tns:saveProfileRequest" name="saveProfileRequest"/>
+      <wsdl:output message="tns:saveProfileResponse" name="saveProfileResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProfile">
+      <wsdl:input message="tns:deleteProfileRequest" name="deleteProfileRequest"/>
+      <wsdl:output message="tns:deleteProfileResponse" name="deleteProfileResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCalendars">
+      <wsdl:input message="tns:getCalendarsRequest" name="getCalendarsRequest"/>
+      <wsdl:output message="tns:getCalendarsResponse" name="getCalendarsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCalendar">
+      <wsdl:input message="tns:getCalendarRequest" name="getCalendarRequest"/>
+      <wsdl:output message="tns:getCalendarResponse" name="getCalendarResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="saveCalendar">
+      <wsdl:input message="tns:saveCalendarRequest" name="saveCalendarRequest"/>
+      <wsdl:output message="tns:saveCalendarResponse" name="saveCalendarResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPipelines">
+      <wsdl:input message="tns:getPipelinesRequest" name="getPipelinesRequest"/>
+      <wsdl:output message="tns:getPipelinesResponse" name="getPipelinesResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getPipeline">
+      <wsdl:input message="tns:getPipelineRequest" name="getPipelineRequest"/>
+      <wsdl:output message="tns:getPipelineResponse" name="getPipelineResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="savePipeline">
+      <wsdl:input message="tns:savePipelineRequest" name="savePipelineRequest"/>
+      <wsdl:output message="tns:savePipelineResponse" name="savePipelineResponse"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <!-- ======== bindings ======== -->
+  <wsdl:binding name="EmpwebEngineAdminServiceSoapBinding" type="tns:EmpwebEngineAdminServiceInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <wsdl:operation name="initDatabases">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="initDatabasesRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="initDatabasesResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="checkEngine">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="checkEngineRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkEngineResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="setEngineState">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setEngineStateRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setEngineStateResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getEngineStates">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getEngineStatesRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getEngineStatesResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getPolicies">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getPoliciesRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPoliciesResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getPolicy">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getPolicyRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPolicyResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="deletePolicy">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deletePolicyRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deletePolicyResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="copyPolicy">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="copyPolicyRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="copyPolicyResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="newPolicy">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="newPolicyRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="newPolicyResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getProfile">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProfileRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProfileResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="saveProfile">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="saveProfileRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="saveProfileResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="deleteProfile">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deleteProfileRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteProfileResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getCalendars">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCalendarsRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCalendarsResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getCalendar">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCalendarRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCalendarResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="saveCalendar">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="saveCalendarRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="saveCalendarResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getPipelines">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getPipelinesRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPipelinesResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="getPipeline">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getPipelineRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPipelineResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="savePipeline">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="savePipelineRequest">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="savePipelineResponse">
+        <wsdlsoap:body namespace="http://kalio.net/empweb/engine/admin/v1" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <!-- ======== services ======== -->
+  <wsdl:service name="EmpwebEngineAdminService">
+    <wsdl:port binding="tns:EmpwebEngineAdminServiceSoapBinding" name="EmpwebEngineAdminServicePort">
+      <!-- the address must be replaced with the corresponding url for the service -->
+      <wsdlsoap:address location="http://www.kalio.net:8086/ewengine/services/EmpwebAdminService"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

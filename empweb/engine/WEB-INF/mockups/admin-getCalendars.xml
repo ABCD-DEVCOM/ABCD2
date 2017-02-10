@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<calendars mockup="true"
+        xmlns="http://kalio.net/empweb/schema/calendar/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/calendar/v1 ../../../common/xml/schema/calendar/v1/empweb-calendar-1-0.xsd ">
+
+  <calendar name="general">
+    <year value="2001"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2002"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2003"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2004"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2005"/>
+  </calendar>
+</calendars>
+

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/objectstatus/v1" elementFormDefault="qualified"
+        xmlns="http://kalio.net/empweb/schema/objectstatus/v1"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd"
+        xmlns:ewwai="http://kalio.net/empweb/schema/wait/v1"
+        xmlns:ewloa="http://kalio.net/empweb/schema/loan/v1"
+        xmlns:ewres="http://kalio.net/empweb/schema/reservation/v1">
+
+    <xsd:import namespace="http://kalio.net/empweb/schema/wait/v1"
+            schemaLocation="../../wait/v1/empweb-wait-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/loan/v1"
+            schemaLocation="../../loan/v1/empweb-loan-1-0.xsd"/>
+    <xsd:import namespace="http://kalio.net/empweb/schema/reservation/v1"
+            schemaLocation="../../reservation/v1/empweb-reservation-1-0.xsd"/>
+
+  <!-- 
+  Empweb Object Status Schema. Version 1 / January 2005
+  ============================================
+
+  Description:
+  This schema specifies the XML elements that describe the status of the object.
+
+  Schema location
+  http://kalio.net/empweb/schema/objectstatus/v1/empweb-objectstatus-1-0.xsd
+
+  Sample: 
+  <recordStatus objectId="232312" objectDb="books" id="642" xmlns="http://kalio.net/empweb/schema/objectstatus/v1">
+    <loans>
+      <loan>
+       ...
+      </loan>
+    </loans>
+    ...
+  </recordStatus>
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  June 2005
+
+  === Feb 2006
+  * Added userStatusList
+
+  -->
+
+  <!-- objectStatusList -->
+  <xsd:element name="objectStatusList">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="copyStatus" minOccurs="0" />
+        <xsd:element ref="recordStatus" minOccurs="0" />  
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <!-- copyStatus -->
+  <xsd:element name="copyStatus" type="objectStatusType"/>
+
+  <!-- recordStatus -->
+  <xsd:element name="recordStatus" type="objectStatusType"/>
+
+
+  <!-- objectStatusType -->
+  <xsd:complexType name="objectStatusType">
+    <xsd:all>
+      <xsd:element ref="ewloa:loans" minOccurs="0"/>
+      <xsd:element ref="ewres:reservations" minOccurs="0"/>
+      <xsd:element ref="ewwai:waits" minOccurs="0"/>
+    </xsd:all>
+
+    <!-- object id -->
+    <xsd:attribute name="objectId" type="xsd:string" use="required"/>
+    <xsd:attribute name="objectDb" type="xsd:string" use="required"/>
+
+    <!-- Optional id that helps resolve an object status (for example, an Isis MFN) -->
+    <xsd:attribute name="id"     type="xsd:string" use="optional"/>
+  </xsd:complexType>
+
+</xsd:schema>

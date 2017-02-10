@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/profile/v1" elementFormDefault="qualified"
+            xmlns="http://kalio.net/empweb/schema/profile/v1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Profile Schema. Version 1 / January 2005
+  ===================================================
+
+  Description:
+  This schema specifies the XML elements that describe a profile.
+
+
+  Schema location
+  http://kalio.net/empweb/schema/profile/v1/empweb-profile-1-0.xsd
+
+  Minimum valid XML example:
+  <profile id="P_ast_verano_2342342"   xmlns="http://kalio.net/empweb/schema/profile/v1">
+    <userClass>*</userClass>
+    <objectCategory>*</objectCategory>
+    <policy>verano2132122</policy>
+    <timestamp>20050101031293</timestamp>
+    <limits>
+      <limit name="maxQuantitySameTitle">
+        <value>1</value>
+        <pipelines>
+          <pipeline>loan</pipeline>
+        </pipelines>
+      </limit>
+    </limits>
+  </profile>
+
+  Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  January 2005
+  -->
+
+  <xsd:element name="profile">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="userClass" type="xsd:string"/>
+        <xsd:element name="objectCategory" type="xsd:string"/>
+        <xsd:element name="policy" type="xsd:string"/>
+        <xsd:element name="timestamp" type="xsd:string"/>
+
+        <xsd:element name="limits">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="limit" type="limitType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="id" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:complexType name="limitType">
+    <xsd:sequence>
+      <xsd:element name="value" type="xsd:string"/>
+
+      <xsd:element name="pipelines" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="pipeline" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+</xsd:schema>

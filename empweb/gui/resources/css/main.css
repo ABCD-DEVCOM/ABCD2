@@ -1,0 +1,73 @@
+/* DEBUG CLASS */
+.debug { 
+/*       display:none; */
+       }
+
+
+/* STANDARD PAGE */
+body {
+     background:#fff;
+     margin:0;
+     padding:0;
+     color:#000;
+     font:x-small/1.5em Georgia,Serif;
+     voice-family: "\"}\""; voice-family:inherit;
+     font-size:small;
+} html>body {font-size:small;}
+
+h1 {
+   background:#F1F0E9;
+   color:#765;
+   text-align:center; 
+   padding:0.25em;
+}
+
+p {
+  margin:10px;
+  text-align:center;
+}
+
+.error {
+  background: #F74;
+  color: #FFF;
+  text-align:center;
+  padding:0.25em;
+}
+
+.warn {
+  background: #FF2;
+  color: #666;
+  text-align:center;
+  padding:0.25em;
+}
+
+.demo {
+  background: #AFA;
+  color: #666;
+  padding:0.25em;
+}
+
+div.centered
+ {
+   text-align: center;
+ }
+
+div.centered table
+ {
+   margin: 0 auto;
+   text-align: left;
+ }
+	
+div.centered table tr td {
+    padding: 0 5px 0 5px;
+}
+
+
+table {
+
+     }
+
+
+
+
+

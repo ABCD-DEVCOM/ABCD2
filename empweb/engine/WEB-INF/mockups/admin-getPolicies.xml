@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<policies mockup="true"
+        xmlns="http://kalio.net/empweb/schema/policy/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/policy/v1 ../../../common/xml/schema/policy/v1/empweb-policy-1-0.xsd ">
+
+   <policy id="verano11212" >
+      <name>veranillo</name>
+   </policy>
+
+   <policy id="invierno22" active="true">
+      <name>invierno</name>
+   </policy>
+
+   <policy id="receso23123">
+      <name>receso</name>
+   </policy>
+
+
+</policies>
+

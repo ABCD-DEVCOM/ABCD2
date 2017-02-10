@@ -1,0 +1,33 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<queryResult mockup="true" xmlns="http://kalio.net/empweb/schema/queryresult/v1">
+
+  <databaseResult successful="false" name="usersmain">
+    <result>
+      <userCollection mockup="true" version="1.0"  xmlns="http://kalio.net/empweb/schema/users/v1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://kalio.net/empweb/schema/users/v1  ../../../common/xml/schema/users/v1/empweb-users-1-0.xsd">
+        <user database="usuarios">
+          <id>163012294</id>
+          <name>KOPAITIC OTERO IVAN SIMON</name>
+          <userClass>A</userClass>
+          <expirationDate>20050707</expirationDate>
+          <suspensions>
+            <suspension type="J23">
+              <startDate>20050302</startDate>
+              <duration>23</duration>
+            </suspension>
+          </suspensions>
+        </user>
+
+        <user database="usuarios">
+          <id>163012333</id>
+          <name>JOHN DOE</name>
+          <userClass>A</userClass>
+          <expirationDate>20050707</expirationDate>
+        </user>
+
+      </userCollection>
+    </result>
+  </databaseResult>
+
+</queryResult>

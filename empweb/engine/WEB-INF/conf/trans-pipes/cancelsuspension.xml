@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="cancelsuspension" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+<!--    <param name="debug">true</param> -->
+</environment>
+  <rule class="net.kalio.empweb.engine.rules.GetSuspension" name="GetSuspension">
+    <doc>Get Suspension from the Empweb DB, using the suspensionId</doc>
+    <params>
+      <param name="suspensionKey">cancelledSuspension</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.Lock" name="LockUserStatus">
+    <doc>Logical lock of UserStatus</doc>
+    <params>
+      <param name="timeoutMillis">25000</param>
+    </params>
+  </rule>
+
+  <rule class="net.kalio.empweb.engine.rules.GetUserStatus" name="GetUserStatus" />
+
+
+  <rule class="net.kalio.empweb.engine.rules.RemoveTransactionFromStatus" name="RemoveSuspensionFromStatus">
+    <params>
+      <param name="transactionKey">cancelledSuspension</param>
+
+      <!-- NECESSARY, as an ObjectStatus will not be present in the TransactionContext -->
+      <param name="fromObjectStatus">false</param>
+    </params>
+  </rule>
+
+  <process class="net.kalio.empweb.engine.rules.CreateCancelSuspension" name="CreateCancelSuspension">
+    <doc>Creates a suspension cancellation for the given suspension</doc>
+    <params>
+      <param name="cancelledSuspensionKey">cancelledSuspension</param>
+      <param name="cancellationKey">suspensionCancellation</param>
+      <param name="operatorLocationExtrasKey">operatorLocation</param>
+    </params>
+  </process>
+
+  <process class="net.kalio.empweb.engine.rules.UpdateDb" name="UpdateDb">
+    <doc>Updates User/Object Status databases, and stores cancellation to transaction log.
+    </doc>
+    <params>
+      <param name="transactionKeys">suspensionCancellation</param>
+      <param name="storeUserStatus">true</param>
+      <param name="storeObjectStatus">false</param>
+    </params>
+  </process>
+
+   <process class="net.kalio.empweb.engine.rules.ReturnTransactionResults" name="ReturnTransactionResults">
+    <params>
+      <param name="resultKeys">suspensionCancellation</param>
+    </params>
+   </process>
+
+  <finally class="net.kalio.empweb.engine.rules.Unlock" name="Unlock">
+    <doc>Release the logic locks done at the beginning.</doc>
+  </finally>
+</transaction>

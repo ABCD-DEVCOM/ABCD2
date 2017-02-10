@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/engineresult/v1" elementFormDefault="qualified"
+    xmlns="http://kalio.net/empweb/schema/engineresult/v1"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!-- 
+  Empweb Engine Result Schema. Version 1 / January 2005
+  ============================================
+
+  Description: This schema specifies the XML elements that describe the possible engine results.
+               It also defines a MsgGroup that can be referred from other schemas.
+
+  Schema location
+  http://kalio.net/empweb/schema/engineresult/v1/empweb-engineresult-1-0.xsd
+
+  Examples:
+
+  <ok xmlns="http://kalio.net/empweb/schema/engineresult/v1" />
+
+   or
+
+  <error xmlns="http://kalio.net/empweb/schema/engineresult/v1">
+    <msg>
+      <key bundle="core.engine">cant_find_object</key>
+      <params>
+        <param>33232323</param>
+        <param>users</param>
+      </params>
+    </msg>
+  </error>
+
+  Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  February 2005
+
+  -->
+
+  <!-- An "ok" MAY or MAY NOT have a "msg" child from the MsgGroup -->
+  <xsd:element name="ok">
+    <xsd:complexType>
+      <xsd:group ref="MsgGroup" minOccurs="0" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- An "error" MUST have only one "msg" child from the MsgGroup -->
+  <xsd:element name="error">
+    <xsd:complexType>
+      <xsd:group ref="MsgGroup"/>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <!--  This group defines a single element "msg" represengint an engine message,
+        which can be:
+
+        1) An localizable string using a Java i18n resource bundle,
+           loadable from the classpath:
+
+          <msg>
+            <key bundle="resource.bundle.basename">an_i18n_key</key>
+            <params>
+              <param>first param</param>
+              <param>second param</param>
+            </params>
+          </msg>
+
+          Notes: The bundle attribute is optional. If absent, the GUI implementation
+          must resolve the i18n key in some way.
+          The params are optional. They may be needed to pass data to the key.
+
+        2) One or more instances of raw text which will be rendered verbatim by the GUI.
+           The text may have a language locale attribute as explained in
+           http://java.sun.com/j2se/1.4.2/docs/api/java/util/Locale.html
+           If there is more than one text instance, the one for the correct locale should
+           be chosen. If there is only one instance, the GUI should display that one.
+
+
+          2.1)
+          <msg>
+            <text>This is a natural language error message.</text>
+          </msg>
+
+          2.2)
+          <msg>
+            <text lang="en">This is a natural language error message.</text>
+            <text lang="es">Este es un mensaje de error en lenguaje natural.</text>
+          </msg>
+
+          Notes: Actually, the text element allows any kind of well-formed XML.
+          For example, xhtml could be sent within the text.
+  -->
+
+  <xsd:group name="MsgGroup">
+    <xsd:sequence>
+      <xsd:element name="msg">
+        <xsd:complexType>
+          <!-- choose ONE of raw text or i18n key format -->
+          <xsd:choice>
+
+            <xsd:element name="text" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:complexContent mixed="true">
+                  <xsd:restriction base="xsd:anyType" >
+                    <xsd:sequence>
+                      <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                    <xsd:attribute name="lang"/>
+                  </xsd:restriction>
+                </xsd:complexContent>
+              </xsd:complexType>
+            </xsd:element>
+
+            <xsd:sequence>
+              <xsd:element name="key">
+                <xsd:complexType>
+                  <xsd:simpleContent>
+                    <xsd:extension base="xsd:string">
+                      <xsd:attribute name="bundle" type="xsd:string" use="optional"/>
+                    </xsd:extension>
+                  </xsd:simpleContent>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="params" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element name="param" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element> <!-- msg -->
+    </xsd:sequence> 
+  </xsd:group> <!-- MsgGroup -->
+</xsd:schema>

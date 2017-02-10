@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-status-lateLoans" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+
+  <rule class="net.kalio.empweb.engine.rules.GetCurrentTransactionIds" name="GetCurrentTransactionIds">
+    <params>
+      <param name="useOperatorLocation">true</param>
+      <param name="transactionType">lateLoan</param>
+    </params>
+  </rule>
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListLoans"><params>
+    <param name="script">
+<![CDATA[
+
+transExtras= tc.get(TransactionContext.TRANSACTION_EXTRAS);
+if (transExtras != null) {
+  location = transExtras.get("operatorLocation");
+}
+
+lateLoansCount = 0;
+
+currentIdsLateLoans = tc.get('currentIdsLateLoans');
+if (currentIdsLateLoans != null) lateLoansCount = currentIdsLateLoans.size();
+
+result.append("<values>");
+result.append("  <value name='location'>"+location+"</value>");
+result.append("  <value name='lateLoansCount'>"+lateLoansCount+"</value>");
+
+result.append("  <value name='lateLoansIds'>");
+for (item in currentIdsLateLoans) {result.append("  <id>"+item+"</id>");}
+result.append("  </value>");
+
+result.append("</values>");
+return true;
+]]>
+    </param>
+  </params></rule></transaction>
+

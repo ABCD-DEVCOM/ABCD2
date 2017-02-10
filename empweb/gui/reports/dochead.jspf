@@ -1,0 +1,28 @@
+<?xml version="1.0"?><!--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%--
+/*
+ * Copyright 2004-2006 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+ * All Rights Reserved
+ *
+ */
+--%>
+-->
+<c:choose>
+  <c:when test="${(not empty param.printable) && (param.printable eq 'true')}">
+  <fmt:setLocale value="${sessionScope.userLocale}" scope="request"/>
+  <fmt:setBundle basename="ewi18n.core.gui" scope="request"/>
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><fmt:message key="empweb_reports" /></title>
+        <link rel="stylesheet" type="text/css" media="all" href="reports.css" />      
+        <link rel="stylesheet" type="text/css" media="all" href="local-reports.css" />
+      </head>
+      <body>
+  </c:when>
+  <c:otherwise>
+  </c:otherwise>
+</c:choose>
+

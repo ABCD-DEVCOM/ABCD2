@@ -1,0 +1,65 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
+<%--
+/*
+ * Copyright 2004-2005 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+ * All Rights Reserved
+ *
+ */
+--%>
+
+<%
+// NOTES:
+// activeweb and activetab are defined in dochead.jspf
+
+// tabs
+LinkedHashMap webs = new LinkedHashMap();
+webs.put("home",  new String[] {} );
+webs.put("trans", new String[] {"query", "wait","loan","renewal","return", "suspension", "fine"} );
+webs.put("admin", new String[] {"status","policies","exceptions","calendar","pipelines","operators","bases"} );
+webs.put("stats", new String[] {"status","globalstatus", "historic"} );
+
+%>
+
+<div class="sectionInfo">
+			<div class="breadcrumb">
+
+			</div>
+
+<div class="actions">
+<%
+  for (Iterator e = webs.keySet().iterator() ; e.hasNext() ; ) {
+    String thisWeb = (String) e.next();
+    if ( session.getAttribute("group-"+thisWeb) != null)  {
+      if (thisWeb.equals(activeweb)) {
+%>
+          <a href="<c:url value="<%= "/" + thisWeb + "/index.jsp" %>"/>">
+            <strong><fmt:message key="<%= thisWeb %>"/></strong>
+          </a>
+  <%
+      } else {
+  %>
+          <a href="<c:url value="<%= "/" + thisWeb + "/index.jsp" %>"/>">
+            <strong><fmt:message key="<%= thisWeb %>"/></strong>
+          </a>
+<%
+        }
+      } 
+      
+      if (e.hasNext())
+      {
+        %>
+        
+        |
+      
+    <%  }
+      
+  } // for
+%>
+<div class="spacer">&#160;</div>
+</div>
+<div class="spacer">&#160;</div>
+</div>
+

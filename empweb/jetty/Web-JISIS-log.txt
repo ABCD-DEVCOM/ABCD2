@@ -1,0 +1,201 @@
+2017-01-23 11:07:03,917 DEBUG [P1-19] j.BaseAction [BaseAction.java:44] myExecute returned - input
+2017-01-23 11:07:03,939 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,961 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,965 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,967 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,972 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,978 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,979 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:03,984 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,041 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,043 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,048 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,053 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,055 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,061 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,066 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:04,376 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:04,376 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:04,376 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:04,377 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","DL-example"]
+2017-01-23 11:07:04,398 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:04,398 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:04,398 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:04,399 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","DL-example"]
+2017-01-23 11:07:23,294 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:23,294 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:177] DatabaseSelectionAction getModel
+2017-01-23 11:07:23,294 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseSelectionAction method=execute
+2017-01-23 11:07:23,295 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:23,295 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:23,295 DEBUG [P1-19] j.BaseAction [BaseAction.java:36] in the BaseAction execute() method
+2017-01-23 11:07:23,295 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:47] Selecting a DB
+2017-01-23 11:07:23,295 DEBUG [P1-19] j.BaseAction [BaseAction.java:44] myExecute returned - success
+2017-01-23 11:07:23,562 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseSelectionAction method=doGetDbReferences
+2017-01-23 11:07:23,562 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:23,563 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:23,564 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:136] DatabaseServiceAction getSelectedDatabase: [{"dbHome":"DEF_HOME","dbName":"sandburg"},{"dbHome":"DEF_HOME","dbName":"zola-marc21"},{"dbHome":"DEF_HOME","dbName":"simpleDL"},{"dbHome":"DEF_HOME","dbName":"epidoc"},{"dbHome":"DEF_HOME","dbName":"tam"},{"dbHome":"DEF_HOME","dbName":"PATR"},{"dbHome":"DEF_HOME","dbName":"liteBibliographic"},{"dbHome":"DEF_HOME","dbName":"MarcTest"},{"dbHome":"DEF_HOME","dbName":"ASFAEX"},{"dbHome":"DEF_HOME","dbName":"authority"},{"dbHome":"DEF_HOME","dbName":"ISA"},{"dbHome":"DEF_HOME","dbName":"DL-example"},{"dbHome":"DEF_HOME","dbName":"CDS"},{"dbHome":"DEF_HOME","dbName":"ICOMOS"},{"dbHome":"DEF_HOME","dbName":"LIBCAT"},{"dbHome":"DEF_HOME","dbName":"AMJ_LOAN"},{"dbHome":"DEF_HOME","dbName":"AMJ_Member"},{"dbHome":"DEF_HOME","dbName":"AMJ_BOOKS"}]
+2017-01-23 11:07:23,578 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:23,578 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:23,579 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:23,579 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","DL-example"]
+2017-01-23 11:07:26,034 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseSelectionAction method=doSetSelectedDbReference
+2017-01-23 11:07:26,035 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:26,035 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:26,035 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:92] DatabaseSelectionAction doSetSelectedDbReference
+2017-01-23 11:07:26,036 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:26,039 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 3 milliseconds to get reply from server
+2017-01-23 11:07:26,039 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:26,040 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:112] setSelectedReference dbHome=DEF_HOME dbName=zola-marc21
+2017-01-23 11:07:26,069 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 29 milliseconds to get reply from server
+2017-01-23 11:07:26,075 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 6 milliseconds to get reply from server
+2017-01-23 11:07:26,079 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 4 milliseconds to get reply from server
+2017-01-23 11:07:26,084 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 4 milliseconds to get reply from server
+2017-01-23 11:07:26,086 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:26,088 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:26,090 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:26,094 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 4 milliseconds to get reply from server
+2017-01-23 11:07:26,097 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:26,099 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:26,235 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 136 milliseconds to get reply from server
+2017-01-23 11:07:26,321 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 86 milliseconds to get reply from server
+2017-01-23 11:07:26,354 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 33 milliseconds to get reply from server
+2017-01-23 11:07:26,371 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 17 milliseconds to get reply from server
+2017-01-23 11:07:26,397 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 26 milliseconds to get reply from server
+2017-01-23 11:07:26,417 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 20 milliseconds to get reply from server
+2017-01-23 11:07:26,437 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 19 milliseconds to get reply from server
+2017-01-23 11:07:26,438 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:26,438 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:26,470 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:26,470 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:26,470 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:26,471 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","zola-marc21"]
+2017-01-23 11:07:30,062 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.SearchAction method=execute
+2017-01-23 11:07:30,063 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:30,063 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:30,063 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:30,063 DEBUG [P1-19] j.BaseAction [BaseAction.java:36] in the BaseAction execute() method
+2017-01-23 11:07:30,063 DEBUG [P1-19] j.SearchAction [SearchAction.java:175] SearchAction - ****myExecute****
+2017-01-23 11:07:30,064 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:30,064 DEBUG [P1-19] j.BaseAction [BaseAction.java:44] myExecute returned - input
+2017-01-23 11:07:30,094 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,098 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,106 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,108 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,113 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,118 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,119 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,124 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,174 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,176 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,180 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,185 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,186 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,190 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,194 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:30,462 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:30,463 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:30,463 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:30,464 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","zola-marc21"]
+2017-01-23 11:07:30,482 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:30,482 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:30,483 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:30,483 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","zola-marc21"]
+2017-01-23 11:07:37,844 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:37,844 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:177] DatabaseSelectionAction getModel
+2017-01-23 11:07:37,844 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseSelectionAction method=execute
+2017-01-23 11:07:37,844 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:37,844 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:37,845 DEBUG [P1-19] j.BaseAction [BaseAction.java:36] in the BaseAction execute() method
+2017-01-23 11:07:37,845 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:47] Selecting a DB
+2017-01-23 11:07:37,845 DEBUG [P1-19] j.BaseAction [BaseAction.java:44] myExecute returned - success
+2017-01-23 11:07:38,104 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseSelectionAction method=doGetDbReferences
+2017-01-23 11:07:38,104 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:38,104 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:38,105 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:136] DatabaseServiceAction getSelectedDatabase: [{"dbHome":"DEF_HOME","dbName":"sandburg"},{"dbHome":"DEF_HOME","dbName":"zola-marc21"},{"dbHome":"DEF_HOME","dbName":"simpleDL"},{"dbHome":"DEF_HOME","dbName":"epidoc"},{"dbHome":"DEF_HOME","dbName":"tam"},{"dbHome":"DEF_HOME","dbName":"PATR"},{"dbHome":"DEF_HOME","dbName":"liteBibliographic"},{"dbHome":"DEF_HOME","dbName":"MarcTest"},{"dbHome":"DEF_HOME","dbName":"ASFAEX"},{"dbHome":"DEF_HOME","dbName":"authority"},{"dbHome":"DEF_HOME","dbName":"ISA"},{"dbHome":"DEF_HOME","dbName":"DL-example"},{"dbHome":"DEF_HOME","dbName":"CDS"},{"dbHome":"DEF_HOME","dbName":"ICOMOS"},{"dbHome":"DEF_HOME","dbName":"LIBCAT"},{"dbHome":"DEF_HOME","dbName":"AMJ_LOAN"},{"dbHome":"DEF_HOME","dbName":"AMJ_Member"},{"dbHome":"DEF_HOME","dbName":"AMJ_BOOKS"}]
+2017-01-23 11:07:38,118 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:38,119 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:38,119 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:38,119 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","zola-marc21"]
+2017-01-23 11:07:43,380 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseSelectionAction method=doSetSelectedDbReference
+2017-01-23 11:07:43,380 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:43,381 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:62] DatabaseSelectionAction prepare
+2017-01-23 11:07:43,381 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:92] DatabaseSelectionAction doSetSelectedDbReference
+2017-01-23 11:07:43,381 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:43,397 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 16 milliseconds to get reply from server
+2017-01-23 11:07:43,397 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:43,397 DEBUG [P1-19] j.DatabaseSelectionAction [DatabaseSelectionAction.java:112] setSelectedReference dbHome=DEF_HOME dbName=ASFAEX
+2017-01-23 11:07:43,433 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 36 milliseconds to get reply from server
+2017-01-23 11:07:43,435 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,437 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,440 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 3 milliseconds to get reply from server
+2017-01-23 11:07:43,442 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,444 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,447 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,449 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,450 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,452 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,454 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,456 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,458 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,460 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,462 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,464 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,466 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,468 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,470 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,472 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,474 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,476 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,479 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,481 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,483 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 1 milliseconds to get reply from server
+2017-01-23 11:07:43,487 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 4 milliseconds to get reply from server
+2017-01-23 11:07:43,490 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 3 milliseconds to get reply from server
+2017-01-23 11:07:43,492 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,494 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,501 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 7 milliseconds to get reply from server
+2017-01-23 11:07:43,511 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 10 milliseconds to get reply from server
+2017-01-23 11:07:43,515 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 4 milliseconds to get reply from server
+2017-01-23 11:07:43,519 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 3 milliseconds to get reply from server
+2017-01-23 11:07:43,521 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,524 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 2 milliseconds to get reply from server
+2017-01-23 11:07:43,533 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 9 milliseconds to get reply from server
+2017-01-23 11:07:43,542 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 9 milliseconds to get reply from server
+2017-01-23 11:07:43,547 DEBUG [P1-19] o.u.j.c.c.NioClient4 [NioClient4.java:120] CLIENT - NioClient4 4 milliseconds to get reply from server
+2017-01-23 11:07:43,547 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:43,547 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:43,606 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:43,607 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:43,607 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:43,607 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","ASFAEX"]
+2017-01-23 11:07:47,879 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.SearchAction method=execute
+2017-01-23 11:07:47,879 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:47,879 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:47,879 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:47,880 DEBUG [P1-19] j.BaseAction [BaseAction.java:36] in the BaseAction execute() method
+2017-01-23 11:07:47,880 DEBUG [P1-19] j.SearchAction [SearchAction.java:175] SearchAction - ****myExecute****
+2017-01-23 11:07:47,880 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:47,881 DEBUG [P1-19] j.BaseAction [BaseAction.java:44] myExecute returned - input
+2017-01-23 11:07:47,901 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:47,937 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:47,942 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:47,944 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:47,957 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,009 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,010 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,030 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,034 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,035 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,107 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,113 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,115 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,172 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,177 DEBUG [P1-19] j.SearchAction [SearchAction.java:154] SearchAction - getTermQueryList
+2017-01-23 11:07:48,889 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:48,889 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:48,889 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:48,889 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","ASFAEX"]
+2017-01-23 11:07:48,938 DEBUG [P1-19] j.l.LoginInterceptor [LoginInterceptor.java:42] STRUTS2 - INTERCEPT class=jisis.DatabaseServiceAction method=doGetSelectedDatabase
+2017-01-23 11:07:48,938 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:47] Call to setSession
+2017-01-23 11:07:48,938 DEBUG [P1-19] j.BaseActionWithSession [BaseActionWithSession.java:40] Call to getSession
+2017-01-23 11:07:48,939 DEBUG [P1-19] j.DatabaseServiceAction [DatabaseServiceAction.java:58] DatabaseServiceAction getSelectedDatabase: ["DEF_HOME","ASFAEX"]

@@ -1,0 +1,479 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure 1.2//EN" "http://jetty.mortbay.org/configure_1_2.dtd">
+
+<Configure class="org.mortbay.jetty.Server">
+
+  <!-- =============================================================== -->
+  <!-- Configure Logging                                               -->
+  <!-- =============================================================== -->
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Assume Commons logging is using Jetty log.  If not this section -->
+  <!-- needs to be removed. See demo.xml for a larger example          -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <Call class="org.mortbay.log.LogFactory" name="getFactory">
+    <Call name="setAttribute">
+      <Arg>it.colletta.*</Arg>
+      <Arg>
+       <New class="org.mortbay.log.LogImpl">        
+        <Call name="add">
+          <Arg>
+            <New class="org.mortbay.log.OutputStreamLogSink">
+              <Set name="filename"><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.colletta.log</Set>
+              <Set name="retainDays">90</Set>
+              <Set name="append">true</Set>
+              <Set name="logLabels">true</Set>
+              <Set name="logStackSize">true</Set>
+              <Set name="logStackTrace">false</Set>
+              <Set name="logOneLine">false</Set>
+              <Set name="suppressStack">false</Set>
+              <Set name="logTimeZone">GMT</Set>
+            </New>
+          </Arg>
+        </Call>
+       </New>
+      </Arg>
+    </Call>  
+      
+    <Call name="setAttribute">
+      <Arg>Colletta</Arg>
+      <Arg>it.colletta.*</Arg>
+    </Call>
+    
+    <Call name="getInstance">
+      <Arg/>
+      <Call name="reset"/>
+      <Call name="add">
+        <Arg>
+          <New class="org.mortbay.log.OutputStreamLogSink">
+            <Set name="filename"><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.jetty.log</Set>
+            <Set name="retainDays">90</Set>
+            <Set name="append">true</Set>
+            <Set name="logLabels">true</Set>
+            <Set name="logStackSize">true</Set>
+            <Set name="logStackTrace">false</Set>
+            <Set name="logOneLine">false</Set>
+            <Set name="logTimeZone">GMT</Set>
+          </New>
+        </Arg>
+      </Call>
+    </Call>
+  </Call>
+
+
+  <!-- Configure the listeners -->
+  <Call name="addListener">
+    <Arg>
+      <New class="org.mortbay.http.SocketListener">
+        <Set name="Port"><SystemProperty name="jetty.port" default="8080"/></Set>
+        <Set name="MinThreads">10</Set>
+        <Set name="MaxThreads">100</Set>
+        <Set name="MaxIdleTimeMs">10000</Set>
+        <Set name="PoolName">TP1</Set>
+        <Set name="LowResourcePersistTimeMs">500</Set>
+        <Set name="confidentialPort">443</Set>
+      </New>
+    </Arg>
+  </Call>
+
+  <Call name="addListener">
+    <Arg>
+      <New class="org.mortbay.http.SunJsseListener">
+        <Set name="Port">8443</Set>
+        <Set name="PoolName">TP1</Set>
+        <Set name="LowResourcePersistTimeMs">500</Set>
+        <Set name="Keystore">/service/jetty/jettyKeyStore</Set>
+	<Set name="Password">OBF:1wty1u9l1vo01y101zly1zlk1y0q1vn21u9x1wug</Set>
+	<Set name="KeyPassword">OBF:1wty1u9l1vo01y101zly1zlk1y0q1vn21u9x1wug</Set>
+      </New>
+    </Arg>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>www.mortbay.com</Arg>
+    <Arg>/mortbay/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/mortbay</Arg>
+    <Call name="addHandler">
+      <Arg type="int">0</Arg>
+      <Arg><New class="org.mortbay.http.handler.HTAccessHandler">
+            <Set name="AccessFile">.htaccess</Set></New>
+      </Arg>
+    </Call>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>www.mortbay.com</Arg>
+    <Arg>/images/holidays/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/holidays</Arg>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.holidays.request.log</Arg>
+      <Set name="retainDays">360</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>www.mortbay.com</Arg>
+    <Arg>/mos/*</Arg>
+    <Arg>/usr/home/mos/photos</Arg>
+  <!-- Server classes are hidden from a HttpContext or webapp -->
+  <Set name="serverClasses">
+    <Array type="java.lang.String">
+    </Array>
+  </Set>
+
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>www.mortbay.com</Arg>
+    <Arg>/MB/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/MB</Arg>
+  </Call>
+
+  <Call name="addContext">
+    <Arg>www.mortbay.com</Arg>
+    <Arg>/</Arg>
+    <Call name="addHandler">
+      <Arg type="int">0</Arg>
+      <Arg><New class="org.mortbay.http.handler.HTAccessHandler">
+            <Set name="AccessFile">.htaccess</Set></New>
+      </Arg>
+    </Call>
+    <Set name="ResourceBase"><SystemProperty name="jetty.home" default="."/>/webapps/mortbay</Set>
+    <Call name="addHandler">
+      <Arg><New class="org.mortbay.http.handler.ResourceHandler"/></Arg>
+    </Call>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/demo/webapps/root</Arg>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/jetty/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/demo/webapps/jetty</Arg>
+    <!-- uncomment this section to add a session manager with a SecureRandom generator
+    <Call name="getServletHandler">
+      <Set name="sessionManager">
+        <New class="org.mortbay.jetty.servlet.HashSessionManager">
+          <Arg><New class="java.security.SecureRandom"/></Arg>
+        </New>
+      </Set>
+    </Call>
+    -->
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/servlets-examples/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/demo/webapps/servlets-examples.war</Arg>
+    <Set name="extractWAR">false</Set>
+    <Call name="getServletHandler">
+      <Call name="getSessionManager">
+        <Call name="setUseRequestedId">
+          <Arg type="boolean">true</Arg>
+        </Call>
+      </Call>
+    </Call>
+  </Call>
+  <Call name="addWebApplication">
+    <Arg>/jsp-examples/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/demo/webapps/jsp-examples.war</Arg>
+    <Set name="extractWAR">true</Set>
+  </Call>
+
+  <Call name="addContext">
+    <Arg>/demo/*</Arg>
+
+    <Call name="addHandler">
+      <Arg><New class="org.mortbay.http.handler.ForwardHandler">
+        <Call name="addForward"><Arg>/forward/*</Arg><Arg>/dump</Arg></Call>
+        <!-- <Set name="rootForward">/dump/rootForward</Set> -->
+      </New></Arg>
+    </Call>
+
+    <Call name="addHandler">
+      <Arg><New class="org.mortbay.http.handler.HTAccessHandler">
+	    <Set name="AccessFile">.htaccess</Set>
+      </New></Arg>
+    </Call>
+
+    <Call name="addServlet">
+      <Arg>Invoker</Arg>
+      <Arg>/servlet/*</Arg>
+      <Arg>org.mortbay.jetty.servlet.Invoker</Arg>
+    </Call>
+    <Call name="addServlet">
+      <Arg>Dump</Arg>
+      <Arg>/dump/*:*.DUMP</Arg>
+      <Arg>org.mortbay.servlet.Dump</Arg>
+      <Put name="InitParam">Value</Put>
+    </Call>
+    <Call name="addServlet">
+      <Arg>Session</Arg>
+      <Arg>/session/*</Arg>
+      <Arg>org.mortbay.servlet.SessionDump</Arg>
+    </Call>
+    <Call name="addServlet">
+      <Arg>JSP</Arg>
+      <Arg>*.jsp:*.jsP:*.jSp:*.jSP:*.Jsp:*.JsP:*.JSp:*.JSP</Arg>
+      <Arg>org.apache.jasper.servlet.JspServlet</Arg>
+    </Call>   
+    <Call name="addServlet">
+      <Arg>SrcDefault</Arg>
+      <Arg>/src/*</Arg>
+      <Arg>org.mortbay.jetty.servlet.Default</Arg>
+      <Call name="setInitParameter"><Arg>dirAllowed</Arg><Arg>true</Arg></Call>
+      <Call name="setInitParameter">
+        <Arg>resourceBase</Arg>
+        <Arg><SystemProperty name="jetty.home" default="."/>/src/</Arg>
+      </Call>
+    </Call>
+
+    <Set name="ResourceBase"><SystemProperty name="jetty.home" default="."/>/demo/docroot/</Set>
+    <Call name="addHandler">
+      <Arg><New class="org.mortbay.http.handler.ResourceHandler"/></Arg>
+    </Call>
+
+    <Call name="addHandler">
+      <Arg><New class="org.mortbay.http.handler.DumpHandler"/></Arg>
+    </Call>
+
+    <Set name="ClassPath"><SystemProperty name="jetty.home" default="."/>/demo/servlets/</Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/javadoc/*</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/javadoc.war</Arg>
+  </Call>
+
+  <Call name="addContext">
+    <Arg>/cgi-bin/*</Arg>
+    <Set name="ResourceBase"><SystemProperty name="jetty.home" default="."/>/demo/cgi-bin/</Set>
+    <Call name="addServlet">
+      <Arg>Common Gateway Interface</Arg>
+      <Arg>/</Arg>
+      <Arg>org.mortbay.servlet.CGI</Arg>
+     <Put name="Path">/bin:/usr/bin:/usr/local/bin</Put>
+    </Call>
+  </Call>
+
+  <Call name="addRealm">
+    <Arg>
+      <New class="org.mortbay.http.HashUserRealm">
+        <Arg>Jetty Demo Realm</Arg>
+        <Arg><SystemProperty name="jetty.home" default="."/>/etc/demoRealm.properties</Arg>
+      </New>
+    </Arg>
+  </Call>
+
+  <Call name="addRealm">
+    <Arg>
+      <New class="org.mortbay.http.HashUserRealm">
+        <Arg>Example Form-Based Authentication Area</Arg>
+        <Arg><SystemProperty name="jetty.home" default="."/>/etc/examplesRealm.properties</Arg>
+      </New>
+    </Arg>
+  </Call>
+
+  <Set name="RequestLog">
+    <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.request.log</Arg>
+      <Set name="retainDays">360</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+    </New>
+  </Set>
+
+
+  <!-- ========================================================== -->
+  <Call name="addWebApplication">
+    <Arg>www.safari-afrika.com</Arg>
+    <Arg>/</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/sa</Arg>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.safari.request.log</Arg>
+      <Set name="retainDays">90</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/Colletta</Arg>
+    <Set name="virtualHosts">
+      <Array type="java.lang.String">
+        <Item>www.colletta.it</Item>
+        <Item>colletta.it</Item>
+        <Item>www.colletta-it.com</Item>
+        <Item>colletta-it.com</Item>
+        <Item>www.collettadicastelbianco.com</Item>
+        <Item>collettadicastelbianco.com</Item>
+        <Item>209.235.197.108</Item>
+      </Array>
+    </Set>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.colletta.request.log</Arg>
+      <Set name="retainDays">360</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/forums</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/forums</Arg>
+    <Set name="virtualHosts">
+      <Array type="java.lang.String">
+        <Item>www.colletta.it</Item>
+        <Item>colletta.it</Item>
+        <Item>www.colletta-it.com</Item>
+        <Item>www.collettadicastelbianco.com</Item>
+      </Array>
+    </Set>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.forums.request.log</Arg>
+      <Set name="retainDays">360</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/ncc</Arg>
+    <Set name="virtualHosts">
+      <Array type="java.lang.String">
+        <Item>209.235.197.110</Item>
+        <Item>www.ncc.com.au</Item>
+      </Array>
+    </Set>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.ncc.request.log</Arg>
+      <Set name="retainDays">360</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/</Arg>
+    <Arg><SystemProperty name="jetty.home" default="."/>/webapps/jsig</Arg>
+    <Set name="virtualHosts">
+      <Array type="java.lang.String">
+        <Item>209.235.197.109</Item>
+        <Item>www.jsig.com</Item>
+        <Item>www.jsig.net</Item>
+        <Item>www.jsig.org</Item>
+      </Array>
+    </Set>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.jsig.request.log</Arg>
+      <Set name="retainDays">90</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/</Arg>
+    <Arg>/usr/home/jules/www/gosnell.org.uk</Arg>
+    <Set name="virtualHosts">
+      <Array type="java.lang.String">
+        <Item>www.gosnell.org.uk</Item>
+        <Item>gosnell.org.uk</Item>
+        <Item>gosnell.co.uk</Item>
+        <Item>www.gosnell.co.uk</Item>
+      </Array>
+    </Set>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.gosnell.request.log</Arg>
+      <Set name="retainDays">90</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>/</Arg>
+    <Arg>/usr/home/jules/cvs/cdn/site</Arg>
+    <Set name="virtualHosts">
+      <Array type="java.lang.String">
+        <Item>209.235.197.107</Item>
+        <Item>coredevelopers.net</Item>
+        <Item>coredevelopers.us</Item>
+        <Item>coredevelopers.co.uk</Item>
+        <Item>coredevelopersnetwork.co.uk</Item>
+        <Item>www.coredevelopers.net</Item>
+        <Item>www.coredevelopers.us</Item>
+        <Item>www.coredevelopers.co.uk</Item>
+        <Item>www.coredevelopersnetwork.co.uk</Item>
+      </Array>
+    </Set>
+    <Set name="RequestLog">
+     <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.cdn.request.log</Arg>
+      <Set name="retainDays">90</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">true</Set>
+      <Set name="LogTimeZone">GMT</Set>
+     </New>
+    </Set>
+  </Call>
+
+  <Call name="addWebApplication">
+    <Arg>www.mortbay.org</Arg>
+    <Arg>/maven/*</Arg>
+    <Arg>/usr/home/ftp/pub/maven</Arg>
+  </Call>
+
+  <!-- System classes cannot be overriden by a HttpContext or webapp -->
+  <Set name="systemClasses">
+    <Array type="java.lang.String">
+      <Item>java.</Item>
+      <Item>javax.servlet.</Item>
+      <Item>javax.xml.</Item>
+      <Item>org.mortbay.</Item>
+      <Item>org.xml.</Item>
+      <Item>org.w3c.</Item>
+    </Array>
+  </Set>
+
+  <!-- Server classes are hidden from a HttpContext or webapp -->
+  <Set name="serverClasses">
+    <Array type="java.lang.String">
+      <Item>-org.mortbay.http.PathMap</Item>
+      <Item>-org.mortbay.</Item>
+      <Item>org.mortbay.start.</Item>
+      <Item>org.mortbay.stop.</Item>
+      <Item>org.mortbay.jetty.Server</Item>    
+    </Array>
+  </Set>
+
+
+</Configure>
+

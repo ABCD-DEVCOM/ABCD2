@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-hist-loans" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+
+
+
+<process class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="createQueryFilter">
+  <params>
+    <param name="script">
+<![CDATA[
+
+te = tc.get(TransactionContext.TRANSACTION_EXTRAS);
+searchField = te.get("searchField");
+searchValue = te.get("searchValue");
+userDb = te.get("userDb");
+objectDb= te.get("objectDb");
+operatorLocation=te.get("operatorLocation")
+
+loanFilter = ewdb.getEwdbObjectFactory().createLoan();
+
+switch (searchField)
+  {
+    case 'userId':
+      loanFilter.setUserId(searchValue);
+      loanFilter.setUserDb(userDb);
+      break;
+    case 'recordId':
+      loanFilter.setRecordId(searchValue);
+      loanFilter.setObjectDb(objectDb);
+      break;
+    case 'copyId':
+      loanFilter.setCopyId(searchValue);
+      loanFilter.setObjectDb(objectDb);
+      break;
+  }
+
+if (operatorLocation != null && operatorLocation != "")
+  loanFilter.setLocation(operatorLocation);
+
+tc.put('searchFilter', loanFilter);
+return true;
+
+]]>
+    </param>
+  </params>
+</process>
+
+<rule class="net.kalio.empweb.engine.rules.GetHistoricTransactionIds" name="GetHistoricTransactionIds" />
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListLoans">
+  <params>
+    <param name="script">
+<![CDATA[
+
+historicIdsLoans = tc.get('searchResult');
+
+result.append("<values>");
+result.append("  <value name='loansIds'>");
+for (item in historicIdsLoans) { result.append("  <id>"+item+"</id>");}
+result.append("  </value>");
+result.append("</values>");
+
+return true;
+]]>
+    </param>
+  </params>
+</rule>
+</transaction>

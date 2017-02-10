@@ -1,0 +1,50 @@
+# web service locations
+ewengine.query_service=http://localhost:8086/ewengine/services/EmpwebQueryService
+ewengine.admin_service=http://localhost:8086/ewengine/services/EmpwebAdminService
+ewengine.trans_service=http://localhost:8086/ewengine/services/EmpwebTransactionService
+
+# locales
+gui.default_locale=en_CL_UCV
+gui.languages=es_CL_UCV,en_CL_UCV
+gui.hide_languages=false
+
+# hide db selection (uses default defined in the user profile)
+ew.hide_user_db=false
+ew.hide_object_db=false
+
+# fixing stuff with regular expressions (use double backslash! when needed)
+#gui.fixUserId.pattern=^(?:001|0020|0030)?(\\d{8}).?(?:\\d{8,9})?$
+
+# debug
+gui.debug=true
+
+# demo
+gui.demo=false
+
+
+# picklists
+#     separate items with comma.
+#     spread over multiple lines escaping new-line character with backslash
+# cr = cancel reservations
+gui.picklist.cr=false
+gui.picklist.cr.items=Cancelado por el usuario,No lo quiere
+
+# cf = cancel fine
+gui.picklist.cf=true
+gui.picklist.cf.items=No corresponde,Error de operador
+
+# cs = cancel suspension
+gui.picklist.cs=true
+gui.picklist.cs.items=No corresponde,Error de operador
+
+# mf = manual fine
+gui.picklist.mf=false
+gui.picklist.mf.items=No corresponde,Error de operador
+
+# ms = manual suspension
+gui.picklist.ms=false
+gui.picklist.ms.items=No corresponde,Error de operador
+
+# pf = pay fine
+gui.picklist.pf=false
+gui.picklist.pf.items=No corresponde,Error de operador

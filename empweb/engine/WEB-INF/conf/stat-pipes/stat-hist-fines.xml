@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="stat-hist-fines" type="statistic" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+    <param name="env1">env1_value</param>
+</environment>
+
+<process class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="createQueryFilter"><params>
+    <param name="script">
+<![CDATA[
+
+te = tc.get(TransactionContext.TRANSACTION_EXTRAS);
+searchField = te.get("searchField");
+searchValue = te.get("searchValue");
+userDb = te.get("userDb");
+objectDb= te.get("objectDb");
+operatorLocation=te.get("operatorLocation")
+
+fineFilter = ewdb.getEwdbObjectFactory().createFine();
+
+switch (searchField)
+  {
+    case 'userId':
+      fineFilter.setUserId(searchValue);
+      fineFilter.setUserDb(userDb);
+      break
+    case 'refId' :
+      fineFilter.setRefId(searchValue);
+      break
+  }
+
+if (operatorLocation != null && operatorLocation != "")
+   fineFilter.setLocation(operatorLocation);
+
+tc.put('searchFilter',fineFilter);
+return true;
+
+]]>
+    </param>
+  </params>
+
+</process>
+
+<rule class="net.kalio.empweb.engine.rules.GetHistoricTransactions" name="GetHistoricTransactions" />
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="ListFines"><params>
+    <param name="script">
+<![CDATA[
+  te = tc.get(TransactionContext.TRANSACTION_EXTRAS)
+
+  historicFines = tc.get('searchResult')
+  searchedBy = te.get('searchField')
+  searchValue = te.get("searchValue")
+
+  double originalAmount = 0
+  double paymentsTotal = 0
+  double dueAmount = 0
+
+
+  List originalFines = new ArrayList()
+  List partialPaymentsFines = new ArrayList()
+
+  for (item in historicFines)
+    {
+      // if there's no reference to other fine, this is an original fine.
+      if (item.getRefId()==null && item.getAmount()?.toInteger()>0)
+        {
+          originalFines.add(item);
+        }
+
+      // if we searched by refId, we include only the fines that represent the partial payments
+      if (searchedBy=='refId' && item.getPaid_amount()?.toInteger()>0)
+        {
+          partialPaymentsFines.add(item);
+        }
+
+      // we also include cancellations
+      if (searchedBy=='refId' && item.getPaid_amount()?.toInteger()==0 && item.getAmount()?.toInteger()==0)
+        {
+          partialPaymentsFines.add(item);
+        }
+
+    }
+
+
+  ArrayList currentList
+
+  // if we explicitly searched by refId, then we always include the original fine whose id is equal to refId.
+  // This is a workaround for the original fine not having a refId to its own id.
+  // Show it even if there are no payments.
+  if (searchedBy=='refId')
+    {
+      searchFilter = [ searchValue ]
+      List ofList = ewdb.listTransactionLog( (String[])searchFilter.toArray() );
+
+      if (ofList.size()>0)
+        {
+          Fine theOriginalFine = ofList.get(0);
+          partialPaymentsFines.add(theOriginalFine);
+          originalAmount = Double.parseDouble(theOriginalFine.getAmount());
+        }
+
+      // also check which ones are current and active
+      EwdbObjectFactory obFact= ewdb.getEwdbObjectFactory();
+      Fine fineFilter  = obFact.createFine();
+      fineFilter.setRefId(searchValue)
+      currentList =  ewdb.listCurrentTransactionIds(fineFilter)
+      fineFilter = obFact.createFine();
+      fineFilter.setId(searchValue)
+      currentList.addAll(ewdb.listCurrentTransactionIds(fineFilter))
+    }
+
+
+  //
+  // now append the xml string with the involved fineIds to the result
+  //
+
+  result.append("<values>");
+  result.append("  <value name='finesIds'>");
+
+  paymentsTotal = 0;
+  cancelled = false;
+
+  if (searchedBy=='refId')
+    {
+      for (f in partialPaymentsFines)
+        {
+          result.append("  <id>"+f.getId()+"</id>");
+          if (f.getPaid_amount()!=null)
+            {
+              paymentsTotal = paymentsTotal + Double.parseDouble(f.getPaid_amount());
+            }
+          
+          if (f.getPaid_amount()?.toInteger()==0 && f.getAmount()?.toInteger()==0)
+            {
+              cancelled = true;
+            }
+        }
+    }
+  else
+    {
+      for (of in originalFines)
+        {
+          result.append("<id>"+of.getId()+"</id>");
+        }
+
+    }
+
+  dueAmount = originalAmount - paymentsTotal;
+
+  result.append("  </value>");
+
+  result.append(" <value><paymentsTotal>${paymentsTotal}</paymentsTotal></value> ");
+  result.append(" <value><originalAmount>${originalAmount}</originalAmount></value> ");
+  result.append(" <value><dueAmount>${dueAmount}</dueAmount></value>");
+  result.append(" <value><cancelled>${cancelled.toString()}</cancelled></value>");
+  result.append(" <value><active>${(currentList?.size()>0)}</active></value>");
+  result.append("</values>");
+  return true;
+]]>
+</param>
+</params></rule></transaction>

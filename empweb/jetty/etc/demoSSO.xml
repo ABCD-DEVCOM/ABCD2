@@ -1,0 +1,93 @@
+<?xml version="1.0"?> 
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+
+<!-- =============================================================== -->
+<!-- Configure the Jetty Server SSO demo                                    -->
+<!-- =============================================================== -->
+<Configure class="org.mortbay.jetty.Server">
+
+  <!-- =============================================================== -->
+  <!-- Configure the Request Listeners                                 -->
+  <!-- =============================================================== -->
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Add and configure a HTTP listener to port 8080                       -->
+  <!-- The default port can be changed using: java -Djetty.port=80     -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <Call name="addListener">
+    <Arg>
+      <New class="org.mortbay.http.SocketListener">
+        <Set name="Port"><SystemProperty name="jetty.port" default="8080"/></Set>
+        <Set name="MinThreads">10</Set>
+        <Set name="MaxThreads">100</Set>
+        <Set name="MaxIdleTimeMs">30000</Set>
+        <Set name="LowResourcePersistTimeMs">5000</Set>
+      </New>
+    </Arg>
+  </Call>
+
+
+  <!-- =============================================================== -->
+  <!-- Configure the Authentication Realm with SSORealm                       -->
+  <!-- =============================================================== -->
+  <Call name="addRealm">
+    <Arg>
+      <New class="org.mortbay.http.HashUserRealm">
+        <Arg>Jetty Demo Realm</Arg>
+        <Arg><SystemProperty name="jetty.home" default="."/>/etc/demoRealm.properties</Arg>
+        <Set name="SSORealm"><New class="org.mortbay.http.HashSSORealm"/></Set>
+      </New>
+    </Arg>
+  </Call>
+
+
+  <!-- =============================================================== -->
+  <!-- Configure the 2 demo Contexts                                          -->
+  <!-- =============================================================== -->
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <Call name="addWebApplication">
+    <Arg>/jetty0</Arg>
+    <Arg>./demo/webapps/jetty</Arg>
+    <Set name="extractWAR">false</Set> 
+  </Call>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <Call name="addWebApplication">
+    <Arg>/jetty1</Arg>
+    <Arg>./demo/webapps/jetty</Arg>
+    <Set name="extractWAR">false</Set> 
+  </Call>
+
+
+  <!-- =============================================================== -->
+  <!-- Configure the Request Log                                       -->
+  <!-- =============================================================== -->
+  <Set name="RequestLog">
+    <New class="org.mortbay.http.NCSARequestLog">
+      <Arg><SystemProperty name="jetty.home" default="."/>/logs/yyyy_mm_dd.request.log</Arg>
+      <Set name="retainDays">90</Set>
+      <Set name="append">true</Set>
+      <Set name="extended">false</Set>
+      <Set name="buffered">false</Set>
+      <Set name="LogTimeZone">GMT</Set>
+    </New>
+  </Set>
+
+  <!-- =============================================================== -->
+  <!-- Configure the Other Server Options                              -->
+  <!-- =============================================================== -->
+  <Set name="requestsPerGC">2000</Set>
+  <Set name="statsOn">false</Set>
+
+</Configure>
+
+
+
+
+
+
+
+
+

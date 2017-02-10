@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transaction classpath="/engine/WEB-INF/trans_rules/classes/" evaluation="shortcut" name="conf-getLibraries" type="configuration" xmlns="http://kalio.net/empweb/schema/transaction/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://kalio.net/empweb/schema/transaction/v1                                   ../../../../common/xml/schema/transaction/v1/empweb-transaction-1-0.xsd">
+<environment>
+   <param name="libraryIp_ING">*</param>
+   <param name="libraryIp_ARQ">*</param>
+   <param name="libraryIp_AGR">*</param>
+   <param name="libraryIp_VET" />
+
+
+   <param name="libraryHours_ING">08:00-18:00</param>
+   <param name="libraryHours_ARQ">09:00-17:00</param>
+   <param name="libraryHours_AGR">07:30-19:00</param>
+   <param name="libraryHours_VET">08:00-18:00</param>
+
+</environment>
+
+
+<rule class="net.kalio.empweb.engine.rules.GroovyInterpreter" name="GetLibrariesFromEnvironment">
+<doc>UCV - Obtiene la lista de bibliotecas del Global Environment y las IPs asignadas del local environment</doc>
+<params>
+    <param name="script">
+<![CDATA[
+
+lenv = tc.get("localEnvironment");
+genv = tc.get("globalEnvironment");
+libs = [:];
+
+
+for (v in genv) {
+   if (v.key.startsWith('pucvua'))
+      libs.put(v.value,v.value);
+}
+
+libNames = libs.keySet().sort();
+
+result.append("<libraries>");
+for (lib in libNames) {
+      result.append("  <library id='"+lib+"'>");
+   if (lenv["libraryIp_"+lib] != null)
+      result.append("    <ipMask>"+lenv["libraryIp_"+lib]+"</ipMask>");
+   if (lenv["libraryHours_"+lib] != null)
+      result.append("    <hours>"+lenv["libraryHours_"+lib]+"</hours>");
+   result.append("  </library>")
+}
+result.append("</libraries>");
+
+return true;
+
+]]>
+    </param>
+  </params></rule>
+
+</transaction>

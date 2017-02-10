@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<calendars>
+  <calendar name="general">
+    <year value="2001"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2002"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2003"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2004"/>
+  </calendar>
+  <calendar name="general">
+    <year value="2005"/>
+  </calendar>
+</calendars>  
+

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<transactions>
+  <transaction name="prestamo" path="/var/empweb/empweb1i1/engine/conf/prestamo.xml" />
+  <transaction name="devo" path="/var/empweb/empweb1i1/engine/conf/devo.xml" />
+</transactions>
+
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+  <user id="admin">
+    <username>Empweb Administrator</username>
+    <password encoding="raw">empweb</password>
+    <email>root@localhost</email>
+  </user>
+  <user id="ВПАДИМИР">
+    <username>Vladimir the Russian</username>
+    <password encoding="raw" />
+    <email />
+  </user>
+  <user id="شریف">
+    <username>Omar Sharif</username>
+    <password encoding="raw" />
+    <email />
+  </user>
+  <user id="abcd">
+    <username>Administrador ABCD</username>
+    <password encoding="raw">adm</password>
+    <email>abcd@abcd.org</email>
+  </user>
+  <user id="ernesto">
+    <username>Spinak, Ernesto</username>
+    <password encoding="raw">ernesto</password>
+    <email>spinaker@adinet.com.uy</email>
+  </user>
+  <user id="egbert">
+    <username>De Smet, Egbert</username>
+    <password encoding="raw">egbert</password>
+    <email>egbert@ac.be</email>
+  </user>
+  <user id="albertor">
+    <username>Rosemberg, Alberto Alejandro</username>
+    <password encoding="raw">albertor</password>
+    <email>arosemberg@gmail.com</email>
+  </user>
+</users>

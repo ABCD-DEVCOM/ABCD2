@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://kalio.net/empweb/schema/fine/v1"  elementFormDefault="qualified"
+            xmlns="http://kalio.net/empweb/schema/fine/v1"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
+
+  <!--
+  Empweb Fine Schema. Version 1 / January 2005
+  ===================================================
+
+  Description:
+  This schema specifies the XML elements that describe a fine.
+  The schema admits two top level elements: fines and fine
+
+  Schema location
+  http://kalio.net/empweb/schema/fine/v1/empweb-fine-1-0.xsd
+
+  Minimum valid XML example:
+  <fine id="232312" xmlns="http://kalio.net/empweb/schema/fine/v1">
+    <userId>13232</userId>
+    <userDb>usuarios</userDb>
+    <date>20050101031293</date>
+    <type>XXX</type>
+    <amount>123</amount>
+    <obs>fine reason in raw text</obs>
+    <object>
+      <copyId>123123</copyId>
+      <objectDb>objetos</objectDb>
+      <recordId>ABC33242<recordId>
+      <profile id="131231">
+        <userClass>AA</userClass>
+        <objectCategory>bb</objectCategory>
+      </profile>
+      <loanStartDate>20050101031293</loanStartDate>
+      <loanEndDate>20050130031293</loanEndDate>
+      <daysOverdue>5</daysOverdue>
+    </object>
+    <paid>
+      <date>20031223010101</date>
+      <amount>123</amount>
+    </paid>
+    <ref id="13123"/>
+    <location>ENG</location>
+    <operator id="ciro"/>
+  </fine>
+
+  Copyright 2004-2004 Kalio.Net - Barzilai Spinak - Ciro Mondueri
+  All rights reserved
+  Barzilai Spinak <barspi@internet.com.uy>
+  Ciro Mondueri <ciro@mondueri.com>
+  January 2005
+
+  -->
+
+  <xsd:element name="fines">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="fine" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+
+  <xsd:element name="fine">
+    <xsd:complexType>
+      <xsd:all>
+        <xsd:element name="userId" type="xsd:string" />
+        <xsd:element name="userDb" type="xsd:string" />
+
+        <!-- date is the timestamp of fine entry.
+            (if it's because of a late object, it's usually the date of return)
+        -->
+        <xsd:element name="date" type="xsd:string" />
+
+        <!-- The type of fine is *implementation dependant* but we provide a standard tag for it.
+             It may specify, for example, that a book was returned late while there was someone
+             waiting for it, or it was returned in bad condition, or it may be some kind of
+             administrative fine (the user broke a window or caused a fire!)
+        -->
+        <xsd:element name="type" type="xsd:string" minOccurs="0" />
+
+        <!-- The amount is calculated in the return transaction and it's value
+             is implementation dependant. For example, it could be in some kind of library units.
+        -->
+        <xsd:element name="amount" type="xsd:string" minOccurs="0" />
+
+        <xsd:element name="obs" type="xsd:string" minOccurs="0" />
+
+        <!-- optional element, used when the fine is related to a library object -->
+        <xsd:element name="object"  type="objectType" minOccurs="0" />
+
+        <!-- optional element that would appear only in historical listings/logs about a user -->
+        <xsd:element name="paid" minOccurs="0">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="date"       type="xsd:string" />
+              <!-- This is the actual amount paid to remove this fine -->
+              <xsd:element name="amount"     type="xsd:string" />
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+
+        <!-- ref: points to a previous transaction -->
+        <xsd:element name="ref" minOccurs="0">
+          <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+
+        <xsd:element name="location"   type="xsd:string"/>
+        <xsd:element name="operator"   minOccurs="0">
+          <xsd:complexType>
+            <xsd:attribute name="id"   type="xsd:string" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+
+      </xsd:all>
+
+      <xsd:attribute name="id" type="xsd:string" />
+    </xsd:complexType>
+  </xsd:element>
+
+
+
+  <!-- A fine MAY include an object element of the following form when the fine is related to
+       an object being returned late. (the most common case for fines in libraries)
+  -->
+  <xsd:complexType name="objectType">
+    <xsd:all>
+      <xsd:element name="copyId"   type="xsd:string" />
+      <xsd:element name="objectDb" type="xsd:string" />
+      <xsd:element name="recordId" type="xsd:string" />
+
+      <!-- The effective profile information under which the object was lent.
+           It includes information about the "base profile" and any differences that should
+           be applied to it. In particular, userClass and objectCategory should be the
+           calculated values at the moment of transaction and may differ from the userClass
+           and objectCategory of the profile (which might present default values).
+      -->
+      <xsd:element name="profile">
+        <xsd:complexType>
+          <xsd:all minOccurs="0">
+            <xsd:element name="userClass" />
+            <xsd:element name="objectCategory" />
+          </xsd:all>
+
+          <!-- Profile id for the "base profile" -->
+          <xsd:attribute name="id" type="xsd:string" use="required" />
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="loanStartDate" type="xsd:string" />
+      <xsd:element name="loanEndDate"   type="xsd:string" />
+      <xsd:element name="daysOverdue"   type="xsd:int" />
+    </xsd:all>
+  </xsd:complexType>
+
+</xsd:schema>

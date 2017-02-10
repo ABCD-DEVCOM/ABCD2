@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="webapps/template/src"/>
+	<classpathentry kind="src" path="test/src"/>
+	<classpathentry kind="src" path="demo/src"/>
+	<classpathentry kind="lib" path="ext/commons-el.jar"/>
+	<classpathentry kind="lib" path="ext/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="ext/xml-apis.jar"/>
+	<classpathentry kind="lib" path="ext/mx4j-tools.jar"/>
+	<classpathentry kind="lib" path="ext/mx4j.jar"/>
+	<classpathentry kind="lib" path="ext/mx4j-remote.jar"/>
+	<classpathentry kind="lib" path="ext/commons-logging.jar"/>
+	<classpathentry kind="lib" path="ext/ant.jar"/>
+	<classpathentry kind="lib" path="ext/jasper-compiler.jar"/>
+	<classpathentry kind="lib" path="ext/jasper-runtime.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar"/>
+	<classpathentry kind="var" path="JRE_LIB"/>
+	<classpathentry kind="var" path="JRE/jre/lib/charsets.jar"/>
+	<classpathentry kind="var" path="JRE/jre/lib/jce.jar"/>
+	<classpathentry kind="var" path="JRE/jre/lib/jsse.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>
