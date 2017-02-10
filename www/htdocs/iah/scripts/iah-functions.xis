@@ -1,0 +1,451 @@
+<function name="LoadCipar">
+
+	<field action="import" tag="list">5000,5003,5018,5021,6212</field>
+	<!-- atualiza var. de ambiente se for tarefa de save -->
+	<call name="UpdPATH_TRANSLATED"><pft>if v6212 : 'save' then 'Now' fi</pft></call>
+	<call name="FatalError"><pft>if a(v5021) then '^1parameter missing^2language^3Inform the parameter lang in the call to iAH' fi</pft></call>
+	
+	<!-- Defines base de dados -->	
+    	<field action="replace" tag="1" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),v5003^*,'.def')</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,( if v1 : 'FILE '  then '^n'v1*5/ fi ),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft><pft>'(v7998^n,v7998^'v5021'/)'</pft></pft></field>	
+
+	<!-- macro-substituicoes no def da base de dados	-->
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_database%',v5000^b[1]) /),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_cgi-bin%',v5000^c[1]) /),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%lang%',v5021[1])/),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'#',v5003^d[1]) /),</pft></field>
+
+	<!-- inclue arquivos cipar externos -->
+	<field action="replace" tag="7999" split="occ"><pft>(if v1 : 'INCLUDE CIPAR=' then mid(v1,instr(v1,'=')+1,size(v1)) fi/ )</pft></field>
+	<field action="replace" tag="7999" split="occ"><pft>if p(v7999) then (cat(getenv('PATH_TRANSLATED'),v7999)) fi</pft></field>
+
+	<field action="replace" tag="5021"><pft>s(mpu,v5021,mpl)</pft></field>
+	<!-- cipar -->			
+	<parm name="cipar"> 
+		<pft>				 
+			/* gizmo */	 
+			,"CI_TEMPDIR="v5000^t,/ 
+			,'ASC2ANS.*=',v5000^b,'gizmo/g850ans.*',/ 
+			,'MINUSC.*=',v5000^b,'gizmo/minusc.*',/		 
+			 
+			/* xml support */ 			 
+			,'GIZMO_XML.*=',v5000^b,'gizmo/gXML.*',/ 
+			,'PROLOG.I2X=',v5000^c,'prolog.i2x'/ 
+ 
+			/* database def files */ 
+			,(v7998/),   
+			/* include def files */			 
+			,(v7999/),			 				
+			,'QUERY.IAH=',v5000^c,v5021,'/query.pft',/
+		</pft>
+	</parm>
+
+</function>
+
+<function name="SetStat" action="replace" tag="1">
+	<field action="import" tag="5001">5001</field>
+	<field action="replace" tag="5001"><pft>v5001,'^s'v1</pft></field>
+	<field action="export" tag="5001">5001</field>
+</function>
+
+<function name="UpdPATH_TRANSLATED">	
+	<field action="replace" tag="1"><pft>getenv('PATH_TRANSLATED')</pft></field>
+	<field action="replace" tag="1"><pft>if v1 : 'list' then left(v1,instr(v1,'list')-1) fi</pft></field>
+	<!-- fix bug variable PATH_TRANSLATED  Windows NT com Apache Webserver-->
+	<field action="replace" tag="1"><pft>if right(replace(v1,'\','/'),1) <> '/' then s(v1,'/') fi</pft></field>
+	
+	<display><pft>putenv('PATH_TRANSLATED='v1)</pft></display>	
+</function>
+
+<function name="LoadIndexList" action="replace" tag="3">
+	<field action="import" tag="5003">5003</field>
+	<field action="replace" tag="1" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),v5003^*,'.def')</pft></field>
+		
+	<field action="replace" tag="2" split="occ"><pft>(if v1.6 = 'INDEX ' then '^n',replace(v1*6,'=','')/ fi),</pft></field>
+	<field action="replace" tag="2" split="occ">
+		<pft>(	if a(v2^x) then
+					if p(v2^s) then replace(v2,'^s','^x/') else v2,'^xALL ' fi,					
+				fi,
+				,if a(v2^y) then '^yDATABASE' fi, /)
+		</pft>			
+	</field>
+
+	<return action=replace tag="list"><pft>'[2:',v3,']'</pft></return>
+</function>
+
+<function name="NextAction">
+	<field action="import" tag="list">5000,5001,5015</field>
+
+	<field action="cgi" tag="2100">^n^v</field>
+	<field action="replace" tag="2200"><pft>(if v2100 : '.x^' then mid(v2100,1,instr(v2100,'.')-1),break fi)</pft></field>
+	<field action="replace" tag="2200"><pft>if a(v2200) then v5001 fi</pft></field>
+	<!--salta para pagina especifica no resultado-->
+	<field action="replace" tag="2200"><pft>if v2200^n*0.4 = 'Page' then '^nGO PAGE^p'v2200^n*4 fi</pft></field>
+	<!-- armazena informacao  photocopyMFN mfn, hit, page result-->
+	<field action="replace" tag="2200"><pft>if v2200^n.9 = 'photocopy' then '^n'v2200^n,"^m"v2200^m,"^i"v2200^i,'^h'v2200^h,'^p'v2200^p fi</pft></field>
+
+	<!--caminho direto ao indice de uma base de dados -->
+	<field action="replace" tag="2200"><pft>if a(v2200) and p(v5015) then 'getindex' fi</pft></field>	
+	<field action="export" tag="5001">2200</field>
+
+</function>
+
+<function name="SelectedIndex" action="replace" tag="1">
+	<field action="import" tag="list">6003</field>
+	<field action="replace" tag="6100"><pft>'^l',v1,(if iocc = val(v1[1]) then v6003,break fi)</pft></field>
+	<field action="export" tag="list">6100</field>
+</function>
+
+<function name="LoadBaseDef">
+	<field action="import" tag="list">5000,5003,5004,5009,5013,5018,5021,6000</field>	
+    <field action="replace" tag="1" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),v5003^*,'.def')</pft></field>
+	<call name="FatalError">
+		<pft>
+			if a(v5003) then '^1parameter missing^2database^3Inform the parameter base in the call to iAH' fi
+			if a(v1) then '^1database definition file^2unable to open ',getenv('PATH_TRANSLATED'),v5003^*'.def^3Check the instalation process and the call to iAH' fi
+		</pft>
+	</call>
+
+	<field action="replace" tag="2" split="occ">
+		<pft>
+			,(,
+				if v1 : 'GIZMO=' 		then '^g',mid(v1,instr(v1,'=')+1,size(v1))/ fi
+			    if v1 : 'DECOD=' 		then '^d',mid(v1,instr(v1,'=')+1,size(v1))/ fi
+			,),
+		</pft>
+	</field>
+	<field action="replace" tag="3" split="occ">
+		<pft>
+			,( if v1 : 'FORMAT ' then '^n',if v1 : 'DEFAULT' then 'DEFAULT^f' else replace(v1^**7,'=',''),fi, mid(v1,instr(v1,'=')+1,size(v1))/ fi ),
+		</pft>
+	</field>
+	<field action="add" tag="3"><pft>if v3 : '^nDEFAULT' then else '^nDEFAULT^f'v3^n[1] fi</pft></field>
+	
+	<field action="replace" tag="4" split="occ"><pft>,( if v1 : 'HELP ' or v1 : 'NOTE ' then '^n',replace(v1^*,'=','^v') fi/ ),</pft></field>
+	<field action="replace" tag="5"><pft>,(if v1 : 'RESUBMIT=' then replace(mid(v1,instr(v1,'=')+1,size(v1)),',',s(#))/,break, fi ),</pft></field>
+
+	<field action="replace" tag="5003"><pft>if p(v5003^n) then left(v5003,instr(v5003,'^n')-1) fi</pft></field>
+	<field action="replace" tag="5004" split="occ"><pft>if p(v5) then (v5/) fi</pft></field>
+	<field action="replace" tag="5005" split="occ"><pft>(v3/)</pft></field>		
+	<field action="replace" tag="5012" split="occ"><pft>(v2/)</pft></field>
+	<field action="replace" tag="5010" split="occ"><pft>(v4/)</pft></field>
+
+	<field action="replace" tag="5013"><pft>if a(v5013) then 'GUEST' fi</pft></field>
+	<field action="replace" tag="5014"><pft>,( if v1 : 'AVAILABLE FORMS=' then mid(v1,instr(v1,'=')+1,size(v1)) fi ),</pft></field>
+	<field action="replace" tag="5014"><pft>if a(v5014) then 'F,B,A' fi</pft></field>
+
+	<field action="replace" tag="5007"><pft>(if left(v1,instr(v1,'=')-1) : 'NAVIGATION BAR'  then mid(v1,instr(v1,'=')+1,size(v1)),break, fi)</pft></field>	
+	<field action="replace" tag="5007"><pft>if a(v5007) then 'ON' fi</pft></field>
+	<field action="replace" tag="5008"><pft>(if left(v1,instr(v1,'=')-1) : 'DOCUMENTS PER PAGE'  then mid(v1,instr(v1,'=')+1,size(v1)),break, fi)</pft></field>
+	<field action="replace" tag="5008"><pft>if a(v5008) then '10' fi</pft></field>
+	<field action="replace" tag="5009"><pft>if a(v5009) then  (if v5005^n = 'DEFAULT' then v5005^f fi) fi</pft></field>	
+	
+	<field action="replace" tag="5018">
+		<pft>(
+				if left(v1,instr(v1,'=')-1) : 'FEATURES'  then '^f',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'SEND RESULT BY EMAIL' then '^e',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'KEYRANGE SUFFIX' then '^k',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'SEARCH ACTAB' then '^a',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'SEARCH UCTAB' then '^u',mid(v1,instr(v1,'=')+1,size(v1))
+				if left(v1,instr(v1,'=')-1) : 'UNICODE' then '^w',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+ fi,					
+			)</pft>
+	</field>
+
+	<field action="replace" tag="6000"><pft>if a(v6000) then v5014.1 fi</pft></field>
+	
+	<field action="export" tag="list">5003/5005,5007/5010,5012/5014,5018,6000</field>
+</function>
+
+<function name="LoadAplDef">
+
+	<field action="import" tag="list">5000,5002,5018,5021</field>
+	<field action="cgi" tag="9990">IsisScript</field>
+	
+	<!-- Defines da aplicacao -->
+	<field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def')</pft></field>
+	<call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the instalation process and the call to iAH.' fi</pft></call>
+
+	<field action="replace" tag="5000">
+		<pft>
+			,(,			  
+	  		  ,if v7999 : 'PATH_DATABASE=' then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_CGI-BIN='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_DATA='     then '^d',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,  			  
+			  ,if v7999 : 'MAINTENANCE='   then '^m',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'TEMPDIR='   	   then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			,),  
+			,'^s',v9990,
+			,if p(v9991) then '^p'v9991 fi,			
+			,if p(v9992) then '^f'v9992 fi,			
+			,'^v2.5.3',
+		</pft>
+	</field>	
+	<field action="replace" tag="5000"><pft>replace(v5000,'\','/')</pft></field>
+	<field action="replace" tag="5006">
+		<pft>
+			,(,
+			  ,if v7999 : 'BODY BACKGROUND IMAGE='  then '^i',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+    	 	  ,if v7999 : 'BODY BACKGROUND COLOR='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+     	      ,if v7999 : 'BODY LINK COLOR='    	then '^l',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+    	      ,if v7999 : 'BODY TEXT COLOR='    	then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+      	      ,if v7999 : 'BAR BACKGROUND COLOR='   then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+      	      ,if v7999 : 'MANAGER E-MAIL='      	then '^e',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+			  ,if v7999 : 'MULTI-LANGUAGE='			then '^m',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+			  ,if v7999 : 'REVERSE MODE=' 			then '^r',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi 
+			,),
+		</pft>
+	</field>
+
+	<field action="replace" tag="5002"><pft>if a(v5002) then v5000^d,s(mpu,v5021,mpl),'/image/', fi</pft></field>
+	<field action="replace" tag="5020"><pft>( if v7999 : 'LOG DATABASE=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>			
+	<field action="replace" tag="5030"><pft>( if v7999 : 'LOGO IMAGE='   then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5031"><pft>( if v7999 : 'LOGO URL='     then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5040"><pft>( if v7999 : 'HEADER IMAGE=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5041"><pft>( if v7999 : 'HEADER URL='   then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="8002"><pft>( if v7999 : 'BVSLOG URL=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>	
+	
+	<field action="export" tag="list">5000,5002,5006,5018/5041,5220,8000/8999</field>
+</function>
+
+
+<function name="UpdEnvironment">
+	<!-- atualiza variavel de ambiente (link cdrom-server) -->
+	<field action="import" tag="list">5000,5002</field>
+	<field action="replace" tag="7999" split="occ"><pft>cat(s(getenv('PATH_TRANSLATED')'iah.def'))</pft></field>
+	<field action="replace" tag="5000">
+		<pft>
+			,(,			  
+	  		  ,if v7999 : 'PATH_DATABASE=' then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_CGI-BIN='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_DATA='     then '^d',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi, 
+			  ,if v7999 : 'TEMPDIR='   	   then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			,),
+			'^s'v5000^s,
+			if getenv('SERVER_NAME') <> 'localhost' then '^l'v5000^l fi			
+		</pft>
+	</field>
+	<field action="delete" tag="5002">1</field>
+	<field action="export" tag="5000">5000</field>
+</function>
+
+<function name="FieldDir" action="replace" tag="1">
+	<field action="cgi" tag="5012">gizmoDecod</field>
+	<do task="mfnrange">
+		<parm name="db">DATABASE</parm>
+		<parm name="from"><pft>v1^m</pft></parm>
+		<parm name="count">1</parm>		
+		<parm name="gizmo"><pft>(v5012^g/)</pft></parm>
+		<parm name="decod"><pft>v5012^d</pft></parm>
+		<loop>					
+			<!--proc><pft>'d87',( REF(['ZDECS']val(v87^d),'a87|^d',v1,'|') )</pft></proc-->			
+			<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>	
+			<field action="replace" tag="9999" split="flddir" type="list">ALL</field>
+			<return action="replace" tag="list"><pft>v9999</pft></return>
+		</loop>
+	</do>
+</function>
+
+<function name="firstHit">
+	<field action="import" tag="list">1002,1031,5001,5008</field>
+	<flow action="jump"><pft>mpu,v5001^*,mpl</pft></flow>
+
+	<label>FIRST PAGE</label>	
+	<return action="replace" tag="1031">1</return>
+		
+	<label>NEXT PAGE</label>	
+	<return action="replace" tag="1031"><pft>f(val(v1031)+val(v5008),1,0)</pft></return>
+		
+	<label>LAST PAGE</label>
+	<field action="replace" tag="1"><pft>f((val(v1002)-1)/val(v5008),1,2)</pft></field>
+	<return action="replace" tag="1031"><pft>f((val(left(v1,size(v1)-3)) * val(v5008))+1,1,0)</pft></return>
+	
+	<label>PREVIOUS PAGE</label>
+	<field action="replace" tag="1"><pft>f((val(v1031)-val(v5008))-1,1,0)</pft></field>
+	<return action="replace" tag="1031"><pft>if val(v1) > 0 then  f(val(v1)+1,1,0) else '1' fi</pft></return>
+	
+	<label>GO PAGE</label>
+	<return action="replace" tag="1031"><pft>if v5001^p = '1' then '1' else f(((val(v5001^p)*val(v5008))+1)-val(v5008),1,0) fi</pft></return>
+</function>	
+
+
+<function name="ResultPages">
+	<field action="import" tag="list">1002,1031,5008</field>
+	<field action="replace" tag="99"><pft>f(val(v1002)/val(v5008),1,5)</pft></field>
+	<!--current page-->		
+	<field action="replace" tag="1"><pft>left(f(val(v1031)/val(v5008),1,5),instr(f(val(v1031)/val(v5008),1,5),'.')-1)</pft></field>
+	<field action="replace" tag="1"><pft>f(val(v1)+1,1,0)</pft></field>
+	<!--last page-->		
+	<field action="replace" tag="2"><pft>left(v99,instr(v99,'.')-1)</pft></field>
+	<field action="replace" tag="2"><pft>if val(right(v99,size(v99)-instr(v99,'.'))) > 0 then f(val(v2)+1,1,0) fi</pft></field>
+	<field action="replace" tag="2"><pft>if val(v2) = 0 then '1' fi</pft></field>
+	<!--first range page-->
+	<field action="replace" tag="3"><pft>left(f((val(v1)-1)/10,1,5),instr(f((val(v1)-1)/10,1,5),'.')-1)</pft></field>
+	<field action="replace" tag="3"><pft>f((10*val(v3))+1,1,0)</pft></field>
+	<do>
+		<parm name="from"><pft>v3</pft></parm>
+		<parm name="to"><pft>if val(v2) < (val(v3)+9) then v2 else f(val(v3)+9,1,0) fi</pft></parm>
+		<field action="define" tag="1001">Isis_Current</field>
+		<loop>
+			<field action="import" tag="list">1/2,6205</field>
+			<field action="add" tag="6205"><pft>'^c'v1'^l'v2'^i',v1001,if v1 = v1001 then '^hred' fi</pft></field>
+			<field action="export" tag="6205">6205</field>
+		</loop>
+	</do>
+	<field action="export" tag="6205">6205</field>
+	
+</function>
+
+<function name="SendByEmail" action="replace" tag="1">
+	<field action="import" tag="list">5000/5003,5006,5021,5030/5041,6213,6214</field>
+	<flow action="jump"><pft>v1^*</pft></flow>
+
+	<label>OPEN</label>
+		<file action="create" type="tempfile">6214</file>
+		<file action="append" type="output"><pft>v6214</pft></file>
+		<return action="replace" tag="6214"><pft>v6214</pft></return>
+		
+	<label>SEND</label>	
+		<file action="close" type="output"><pft>v6214</pft></file>
+		<field action="replace" tag="6213"><pft>replace(v6213,'@bireme.br','@brm.bireme.br')</pft></field>
+		
+		<field action="replace" tag="9" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'sendmail.conf')</pft></field>
+		<field action="replace" tag="9"><pft>(if left(v9,instr(v9,'=')-1) : 'EXECUTE' then mid(v9,instr(v9,'=')+1,size(v9)) fi/)</pft></field>
+		<field action="replace" tag="9"><pft>replace(replace(v9,'<mailto>',v6213),'<file>',v6214)</pft></field>		
+		<display><pft>system(v9)</pft></display>
+		
+		<file action="delete" type="file"><pft>v6214</pft></file>
+		<display><pft>@AHEMAIL.PFT</pft></display>	
+	
+</function>
+<function name="SetHelp" action="replace" tag="1">
+	<field action="import" tag="list">5000,5021,5010</field>
+	<field action="replace" tag="5021"><pft>s(mpu,v5021,mpl)</pft></field>
+	
+	<field action="replace" tag="2">
+		<pft>'^h',v5000^d,v5021,'/help/','^n'getenv('PATH_TRANSLATED'),v5021'/help/'</pft>
+	</field>
+	
+	<!-- help especifico da pagina -->	
+	<field action="replace" tag="5011">
+		<pft>( if v5010^n = s('HELP ',v1^1[1],' ',v1^2[1]) then '^h'v2^h[1],v5010^v, break fi)</pft>
+	</field>
+	<!-- help generico da pagina -->
+	<field action="replace" tag="5011">
+		<pft>if a(v5011) then ( if v5010^n = s('HELP ',v1^1[1]) then '^h'v2^h[1],v5010^v, break fi) fi</pft>
+	</field>
+	<!-- nota especifica da pagina -->	
+	<field action="replace" tag="5011">
+		<pft>( if v5010^n = s('NOTE ',v1^1[1],' ',v1^2[1]) then v5011[1],'^n'v2^n[1],v5010^v, break fi)</pft>
+	</field>
+	<!-- nota generica da pagina -->
+	<field action="replace" tag="5011">
+		<pft>if a(v5011^n) then ( if v5010^n = s('NOTE ',v1^1[1]) then v5011[1],'^n'v2^n[1],v5010^v, break fi) fi</pft>
+	</field>
+	<field action="export" tag="5011">5011</field>
+	
+</function>
+<function name="GizmoIndex">
+	<field action="import" tag="list">1,6100</field>
+	<field action="replace" tag="6111" split="occ"><pft>REF([v6100^g]1,(v1/))</pft></field>
+	<field action="replace" tag="6112" split="occ"><pft>REF([v6100^g]1,(v2/))</pft></field>
+	
+	<flow action="jump"><pft>if nocc(v6111) > 1 then 'APLY' fi</pft></flow>
+	<label>LOAD GIZMO</label>
+	<do task="mfnrange">
+		<parm name="db"><pft>v6100^g</pft></parm>
+		<parm name="from">2</parm>
+		<loop>
+			<field action="export" tag="6111" previous="add">1</field>
+			<field action="export" tag="6112" previous="add">2</field>
+		</loop>	
+	</do>
+	
+	<label>APLY</label>
+		<field action="add" tag="10">
+			<pft>
+				v1[1]
+				if s(v6100^x.2) = 'MH' then 
+					(if right(v1^v[1],(size(v1^v[1])-instr(v1^v[1],'/')+1)) = v6111 then '^n'replace(v1^v[1],v6111,v6112),break fi)
+				else	
+					(if v1^v[1] = v6111 then '^n'replace(v1^v[1],v6111,v6112),break fi)
+				fi
+			</pft>
+		</field>
+		
+		<field action="delete" tag="1">1</field>
+		<flow action="jump"><pft>if p(v1) then 'APLY' fi</pft></flow>
+	<field action="replace" tag="1" split="occ"><pft>(v10/)</pft></field>		
+	<field action="export" tag="list">1</field>	
+</function>
+
+<function name="LogDatabase">
+	<field action="import" tag="list">1002,1031,1032,5000/7000</field>
+
+	<field action="statusdb" tag="1"><pft>v5020</pft></field>
+	<flow action="jump"><pft>if v1^s : 'm' then 'APPEND' fi</pft></flow>
+	
+	<label>CREATE DATABASE</label>
+		<file action="create" type="master"><pft>v5020</pft></file>
+		
+	<label>APPEND</label>
+		<do task="update">
+			<parm name="db"><pft>v5020</pft></parm>
+			<parm name="mfn">New</parm>
+			<field action="define" tag="1102">Isis_Status</field>
+			<update>
+				<field action="replace" tag="1"><pft>date</pft></field>
+				<field action="replace" tag="2"><pft>getenv('REMOTE_ADDR')</pft></field>
+				<field action="replace" tag="3"><pft>getenv('HTTP_USER_AGENT')</pft></field>
+				<field action="import" tag="list">1031,1032,1002,5001,5003,5007,5008,5009,5013,5018,5021,6000/6003,6100,6102,6211,6213</field>
+				<proc>
+					<pft>'d6001d6002d6003'(if p(v6002) then 'a6001~'v6001'~a6002~'v6002'~',|a6003~|v6003|~| fi/)</pft>
+				</proc>				
+				<write>Unlock</write>
+				<!--
+				<display><pft>'user:',v5013</pft></display>			
+				<display><pft>ALL</pft></display>
+				-->
+			</update>		
+		</do>
+	
+</function>
+
+<function name="BVSLog">
+	<field action="import" tag="list">1002,1031,1032,5000/9000</field>
+
+	<field action="replace" tag="9998"><pft>if s(mpu,v5021,mpl) = 'P' then 'pt' else if s(mpu,v5021,mpl) = 'E' then 'es' else 'en' fi,fi</pft></field>
+	<field action="replace" tag="9999"><pft>if p(v6002) then @QUERY.IAH else if p(v6100) then s(mpu,v6100^n,mpl) fi,fi</pft></field>
+	
+	<display><pft>'<img src="',v8002,'&fi=',v5003,'&appl=IAH&lang=',v9998,'&page=',v5001,'&search=',v9999,'" border="0" height="1" width="1"/>'</pft></display>
+</function>
+
+<function name="FatalError" action="replace" tag="1">	
+	<display><pft>
+		'Content-type: text/html'/#		
+		'<font face="arial" size="2"><b>iAH error | ',v1^1,' | 'v1^2,'<p>',v1^3,'</b></font>'
+	</pft></display>	
+	<flow action="exit">0</flow>	
+</function>
+
+<function name="RemoveExcessiveSpaces">
+	<field action="import"  tag="6002">6002</field>
+	
+	<field action="replace" tag="6002" split="occ"><pft>replace(v6002,' ',s(#))</pft></field>		
+	<field action="replace" tag="6002"><pft>(v6002 +| |)</pft></field>
+	<field action="export"  tag="6002">6002</field>
+</function>
+
+<function name="displayHeaderXML" action="replace" tag="1">
+<field action="import" tag="list">5018</field>
+	<display>
+		<pft>
+			'Content-type: text/xml'/#
+			if v1 <> 'omit-xml-declaration' then
+			  if val(v5018^w)>0 then '<?xml version="1.0" encoding="UTF-8"?>'/ 
+			  else 	'<?xml version="1.0" encoding="ISO-8859-1"?>'/ fi 
+			fi	
+		</pft>
+	</display>
+</function>

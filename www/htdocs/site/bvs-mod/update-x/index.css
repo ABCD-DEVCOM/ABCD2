@@ -1,0 +1,61 @@
+body
+{
+	font: 12px sans-serif;
+}
+
+table
+{
+	font: 12px sans-serif;
+}
+
+input
+{
+	font: 12px Courier New;
+}
+
+.language
+{
+	width : 100%;
+	text-align : right;
+}
+
+.pageTitle
+{
+	background-color : #CC9933;
+	width : 100%;
+	font-weight : bold;
+	padding-left : 10px;
+	border : thin outset Silver;
+}
+
+.captionFormXML
+{
+	background-color : #99CCFF;
+	width : 100%;
+	font-weight : bold;
+	padding-left : 10px;
+	border : thin outset Silver;
+}
+
+.captionFormXISIS
+{
+	background-color : #99CC66;
+	width : 100%;
+	font-weight : bold;
+	padding-left : 10px;
+	border : thin outset Silver;
+}
+
+.captionFormSchemaToStruct
+{
+	background-color : #CC99FF;
+	width : 100%;
+	font-weight : bold;
+	padding-left : 10px;
+	border : thin outset Silver;
+}
+
+.formBox
+{
+	border: 1px solid Gray;
+}

@@ -1,0 +1,5 @@
+FILE QUARANTINED
+
+Microsoft Forefront Protection for Exchange Server removed a file since it was found to be infected.
+File name: "FULL ODDS.rar->FULL ODDS\htdocs-central folder\odds\lib\blat.exe"
+Malware name: "not-a-virus:Client-SMTP.Win32.Blat.ca"

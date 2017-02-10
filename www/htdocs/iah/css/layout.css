@@ -1,0 +1,514 @@
+.container {
+	max-width: 980px;
+	min-width: 730px;	
+	margin: 6px auto;
+	padding: 0 12px;
+}
+
+.bar {
+	width: 30%;
+	float: right;
+}
+
+.top H1, .top H2 {
+	margin: 0px;
+}
+
+.top H1 A {
+	display: block;
+	float: left;
+}
+
+.top H1 SPAN {
+	display: none;
+}
+
+.top h2 {
+	float: left;
+	padding: 20px;
+}
+
+.middle {
+	clear: both;
+}
+
+.middle .formHead {
+	margin: 12px 0px 20px 0px;
+	height: 18px;
+	padding: 4px;
+}
+
+.middle .formHead H3 {
+	float: left;
+	margin-top: 0px;
+}
+
+.middle .formHead .help, .middle .formHead .changeForm {
+	padding: 1px 0px 0px 18px;
+}
+
+.middle .formHead .formOptions {
+	float: right;
+	margin-top: 2px;
+}
+
+.middle .formHead .formOptions A {
+	margin-left: 12px;
+}
+
+.middle .formFields {
+	clear: both;
+	margin: 0 auto;
+	width: 50%;
+}
+
+.middle .buttonSection {
+	margin: 12px auto;
+	width: 60%;
+}
+
+.defaultButton {
+	padding: 1px 5px;
+	font-size: 90%;
+	display: inline-block;
+}
+
+INPUT.submit, INPUT.button {
+	margin: 0px 20px 0 0;
+}
+
+
+A.defaultButton {
+	display: inline-block;
+	vertical-align: texttop;
+	padding: .15em 1em .2em 1em;
+	margin: 0px;
+}
+
+.formFields INPUT.fullSize, .formFields INPUT.fullSizeFocus {
+	width: 400px;
+}
+
+.formNotes, .footer {
+	width: 70%;
+	margin: 30px auto;
+}
+
+.footer P {
+	margin: 4px;
+}
+
+.spacer {
+	clear: both;
+	font-size: 1px;
+	height: 1px;
+}
+
+/* new - revised */
+
+.ruler {
+	width: 100%;
+}
+
+#content {
+	width: 780px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 100%;
+}
+
+#contentN {
+	width: 620px;
+	margin: 6px auto;
+	padding: 0;
+}
+
+#contentList {
+	width: 780px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	font-size: 110%;
+}
+
+.contain {
+	clear: both;
+}
+
+.containRec {
+	clear: both;
+	margin-bottom: 1.7em;
+}
+
+.lablSmall {
+	float: left;
+	text-align: left;
+	font-size: 80%;
+	color: #000000;
+	margin-left: 1em;
+}
+
+.labl {
+	text-align: left;
+	color: #000000;
+}
+
+.lablAlert {
+	text-align: center;
+	color: #FF0000;
+}
+
+.padout {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.containBord {
+	padding: .5em .3em 1em .3em;
+	border: 1px solid black;
+	text-align: center;
+	clear: both;
+}
+
+.midd {
+	/*position: relative;*/
+	padding: .3em;
+	margin-bottom: 1.2em;
+	clear: both;
+}
+
+
+div.firstCol {
+	float: left;
+	width: 20%;
+}
+
+div.secondCol {
+	float: left;
+	width: 56%;
+	margin-right: .3em;
+}
+
+div.thirdCol {
+	float: left;
+	width: 23%;
+}
+
+div.barNav {
+	clear: both;
+	background: #ccdbe5;
+	padding: 0.2em;
+	margin-top: 1.2em;
+	margin-bottom: 0.2em;
+	height: 1.2em;
+}
+
+div.barNavTop {
+	clear: both;
+	background: #ccdbe5;
+	padding: 0.2em;
+	margin-top: 1.2em;
+	margin-bottom: 0.3em;
+	min-height: 1.2em;
+}
+
+div.row {
+	clear: both;
+	padding: 0.2em;
+	margin: 0.2em;
+	height: 1.2em;
+}
+
+div.rowHigh {
+	clear: both;
+	padding: 0.2em;
+	margin: 0.2em;
+	height: 1.5em;
+}
+
+.rowCenter {
+	clear: both;
+	margin-bottom: .3em;
+	text-align: center;
+}
+
+div.rowAction {
+	clear: both;
+	padding: 0.2em;
+	margin: 1.5em 0.2em 0.2em 0.2em;
+	height: 1.2em;
+	text-align: center;
+}
+
+.leftCol {
+	float: left;
+	text-align: left;
+	width: 30%;
+}
+
+.centerCol {
+	float: left;
+	width: 46%;
+	text-align: left;
+}
+
+.rightCol {
+	float: left;
+	text-align: left;
+	width: 23%;
+}
+
+div.barNavTop input, select, textarea, a {
+
+}
+
+/* Search form layout */
+.cellOperate {
+	float: left;
+	text-align: left;
+	width: 12%;
+	margin-left: 50px;
+	margin-right: 15px;
+}
+
+.cellExpr {
+	float: left;
+	text-align: left;
+	width: 36%;
+	padding: 0;
+	margin: 0;
+	color: #000000;
+}
+
+.cellField {
+	float: left;
+	text-align: left;
+	width: 23%;
+	padding-left: 25px;
+	margin: 0;
+	color: #000000;
+}
+
+.cellIndx {
+	float: left;
+	text-align: left;
+	width: 11%;
+	margin: 0;
+	padding-left: 25px;
+}
+
+.cellExpr input {
+	float: left;
+	width: 95%;
+	padding-left: 3px;
+}
+
+.ExprFree input {
+	float: left;
+	text-align: left;
+	width: 95%;
+	padding-left: 3px;
+	margin: 0;
+}
+
+.cellOperate select {
+	width: 65%;
+	padding: 0;
+}
+
+.cellField select {
+	float: left;
+	width: 95%;
+	padding: 0;
+}
+/* end Search form layout */
+
+/* Results displays */
+.columnA {
+	float: left;
+	text-align: right;
+	width: 24%;
+}
+
+.columnB {
+	float: left;
+	text-align: left;
+	width: 72%;
+	margin-left: 1em;
+}
+
+.colPg {
+	float: left;
+	text-align: left;
+	width: 26%;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.colPgNav {
+	float: left;
+	text-align: right;
+	width: 72%;
+	font-weight: bold;
+	font-style: italic;
+	margin-left: 1em;
+	white-space: nowrap;
+}
+
+div.selectCol {
+	float: left;
+	width: 130px;
+}
+
+div.resultCol {
+	float: left;
+	width: 630px;
+	margin-left: .3em;
+}
+
+span.colMark {
+	float: left;
+	text-align: left;
+	width: 13%;
+	font-size: 80%;
+	font-style: italic;
+}
+
+.colFldLabl {
+	float: left;
+	text-align: right;
+	width: 21%;
+	font-weight: bold;
+}
+
+.colFldContent {
+	float: left;
+	text-align: left;
+	width: 75%;
+	margin-left: 1em;
+}
+
+div.rowResult {
+	clear: both;
+	margin-bottom: .3em;
+}
+
+.tableBord {
+	clear: both;
+	padding: 0;
+	margin-bottom: 1em;
+	border-bottom: 1px solid black;
+}
+
+.rowBord {
+	clear: both;
+	border-top: 1px solid black;
+}
+
+.lablBord {
+	float: left;
+	text-align: left;
+	width: 170px;
+	font-weight: bold;
+	padding: .3em;
+	margin: 0;
+}
+
+.contentBord {
+	float: right;
+	text-align: left;
+	width: 420px;
+	border-left: 1px solid black;
+	padding: .3em .3em .3em 1em;
+	margin: 0;
+}
+
+/* end Results displays */
+
+/* send result displays */
+.contBorder {
+	padding: .3em;
+	border: 1px solid black;
+	text-align: center;
+	clear: both;
+	height: 7em;
+}
+
+.celLeft {
+	float: left;
+	text-align: center;
+	width: 24%;
+}
+
+.celRight {
+	float: right;
+	text-align: left;
+	width: 72%;
+	margin-left: 1em;
+	border-left: 1px solid black;
+}
+/* end send result displays */
+
+/* journal details displays */
+#detail {
+	width: 620px;
+	padding-left: 2%;
+	padding-right: 2%;
+	background: #FFFFFF;
+	color: #000000;
+}
+
+.oddRowRight {
+	clear: both;
+	padding: .2em 0 .2em 0;
+	margin-bottom: .3em;
+	height: 1.2em;
+	text-align: right;
+	color: #708bb1;
+}
+
+div.rowJnlDetl {
+	clear: both;
+	margin-bottom: .3em;
+	text-align: left;
+	color: #94BDC6;
+}
+
+.oddRow {
+	clear: both;
+	padding: .2em 0 .2em 0;
+	margin: 0;
+	height: 1.2em;
+	color: #708bb1;
+}
+
+.evenRow {
+	clear: both;
+	padding: .2em 0 .2em 0;
+	margin: 0;
+	height: 1.2em;
+	color: #708bb1;
+	background: #e8e8e8;
+}
+
+.cellN {
+	float: left;
+	text-align: center;
+	width: 11%;
+	margin: 0;
+	padding: 2px;
+}
+
+.cellW {
+	float: left;
+	text-align: center;
+	width: 17%;
+	margin: 0;
+	padding: 2px;
+}
+
+.copyright {
+	text-align: center;
+}

@@ -1,0 +1,18 @@
+Tipo de registro
+Número de registro
+Volume
+Tomo
+Código de usuário
+Data de empréstimo
+Hora de empréstimo
+Fecha de devolución
+Hora de devolução
+Tipo de usuário
+Tipo de Objeto
+No. de classificação
+Nº de controle do objeto
+Base de dados
+Referência
+Operador e data de empréstimo
+Operador e data de devolução
+Renovações

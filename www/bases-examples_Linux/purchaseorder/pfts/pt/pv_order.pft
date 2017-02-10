@@ -1,0 +1,9 @@
+v5'|',f(mfn,1,0),'|'v1,'|'v2,'|<a href=show.php?base=providers&Expresion=NA_',replace(v5,' ','+'),' target=_blank>'v5,'</a>|'v450+|<br>|,
+	
+	('|',,if p(v50^a) then 
+			v50^a,`|<a href='javascript:Mostrar("`,v50^d,`")'>`,v50^d'</a>|'
+		else
+			v18" / ",v16,"; "v17,'| |'
+		fi
+		,v50^b,'|',v50^c ,,if iocc<>nocc(v360) then '<tr><td colspan=5></td>' fi), 
+/

@@ -1,0 +1,333 @@
+<xmeta content="text/html" http-equiv="Content-Type" charset="utf-8"></xmeta><xmeta content="text/html;" http-equiv="Content-Type" charset="iso-8859-1"></xmeta>
+<p>&nbsp;</p>
+<h3 style="COLOR: red"><font face="Arial" size="2"><strong><a name="top"></a>&nbsp;</strong><big><strong>Definição da estrutura da base de dados<br />
+</strong></big></font></h3>
+<p><font face="Arial" size="2"><strong><a href="#editor">Como usar o editor</a></strong></font></p>
+<p><font face="Arial" size="2"><strong><a href="#FDT">Tabela de definição de Campos</a><br />
+<br />
+<a href="#picklist">Como definir tabelas para captura de informação (picklists) ou acesso a ficheiros de autoridade</a></strong></font></p>
+<hr />
+<p><font face="Arial" size="2"><strong><a class="FCK__AnchorC FCK__AnchorC" name="FDT"><big>Tabela de definição de campos (FDT)</big></a><big> </big>Tabela de definição de campos (FDT)&nbsp; </strong></font></p>
+<p><font face="Arial" size="2">&nbsp;<font size="2">Contem a estrutura de campos da base de dados. </font></font></p>
+<p><font face="Arial" size="2"><font size="2">Adicionalmente, às definições do Winisis, são contemplados os parâmetros adicionais para elaboração das folhas de entrada segundo os tipos de campos estabelecidos em HTML, edição de sub-campos, normalização de terminología através dos ficheiros de autoridade, tesauros ou tabelas de valores (Pick lists), apresentação do campo na folha de entrada, etc. </font></font><font face="Arial" size="2">O formato é o seguinte: </font></p>
+<p><font size="2">
+<table cellspacing="5" cellpadding="1" width="100%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top"><font face="Arial" size="2"><strong>Etiqueta</strong></font></td>
+            <td>
+            <p><font face="Arial" size="2"><strong>Descrição</strong></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Características dos campos&nbsp; </strong></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2"><font face="Arial">Tipo de entrada</font></font></td>
+            <td>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Especifíca o tipo de componente da FDT que se está a descrever, com as seguintes possibilidades:</font></p>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="arial" size="2">Campo<br />
+            </font><font face="arial" size="2">Sub-campo<br />
+            Grupo (Campo repetivel con sub-campos)<br />
+            Cabeçalho do registo (formato MARC)<br />
+            Campo fixo (formato MARC)</font><font face="arial" size="2"><br />
+            Destacar documento e estabelecer relação<br />
+            Data, hora e operador que cria o registo<br />
+            Data, hora e operador que actualiza o registo<br />
+            Identificador único do registo</font><font face="arial" size="2"><br />
+            <font face="arial" size="2">Cabeçalho<br />
+            Linha</font></font></p>
+            </blockquote>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Campo (F)</strong><br />
+            Indica que a entrada corresponde a um campo da base de dados. </font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Sub-campo (S)</strong><br />
+            Esta entrada corresponde à descrição dos sub-campos do campo. Deve-se descrever cada um dos sub-campos que identificam o campo, com os atributos que lhe correspondem.&nbsp;Com esta informação abre-se, no procedimiento de entrada, uma nova janela com os sub-campos desagregados,&nbsp;evitando assim a entrada dos delimitadores que devem preceder cada sub-campo nas estruturas de dados CDS/Isis. Adicionalmente, permite-se o uso de sub-campos repetíveis podendo estes sub-campos deslocarem-se dentro da folha de entrada para que&nbsp;a ordem com que se armazenam&nbsp;facilite desde logo a aplicação da linguagem de formatação dos campos.&nbsp;</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Grupo (T)<br />
+            </strong>Este tipo de entrada é recomendado para facilitar a edição dos campos repetíveis que contêm sub-campos. <font face="Arial" size="2">Permite editar os sub-campos em forma de tabela apresentando separadamente uma folha de entrada para cada sub-campo.</font> Após uma entrada do tipo <strong>Grupo</strong> devem ser definidos os sub-campos que compõem o campo.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Etiqueta do registo - formato MARC (LDR)<br />
+            </strong>Este campo contem a informação do cabeçalho no formato Marc, segundo a seguinte especificação:</font></p>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font size="2">3005 Estado do registo<br />
+            3006 Tipo de registo<br />
+            3007 Nivel bibliográfico<br />
+            3017&nbsp;Nivel de codificação<br />
+            3018 Descrição da forma de catalogação</font></p>
+            </blockquote>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font size="2">O valor do campo 3006 indica o tipo de campo fixo associado ao registo.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font size="2">A estrutura do cabeçalho fica guardado num ficheiro como o nome <strong>leader.fdt</strong>, armazenado na directoria <strong>def</strong> da base de dados.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Campo Fixo - formato Marc (M)<br />
+            </strong></font><font face="Arial" size="2">Este tipo de campo indica ao gerador de folhas de entrada de dados que deverá inserir um campo fixo, dependente do tipo de&nbsp;registo seleccionado no <strong>Cabeçalho. </strong>A estrutura dos campos fixos construida segundo uma <strong>Tabela de Definição de campos (FDT), </strong>a que se acede através da opção <strong>Tipos de Registo (Marc) </strong>no menu correspondente a <strong>Actualizar Definições de Bases de Dados</strong>. A opção <strong>Tipos de Registo (Marc)</strong>&nbsp;aparece no menu de actualização quando é detectada a inserção do campo do tipo <strong>LDR</strong> na <strong>FDT</strong> da base de dados</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Cabeçalho&nbsp; (H)<br />
+            </strong>Use esta entrada para colocar os separadores de grupos de campos nos formatos de entrada e saída para facilitar a navegação dentro do formulário de entrada</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Linha (L)</strong><br />
+            Inclui&nbsp;uma linha de separação&nbsp;no formato de entrada. Poderá também conter um URL para fazer referência a uma página que seja necessário aceder no momento da apresentação dos dados.</font></p>
+            <p><font face="Arial"><font size="2"><strong>Copiar documento e estabelecer ligação (U)</strong><br />
+            Permite copiar um documento para o servidor e incluir uma referência no registo correspondente. Na versão actual de <strong>ABCD </strong>é obrigatório criar um directório denominado </font></font><font face="Arial" size="2"><em>&nbsp;</em><strong>bases</strong> na raiz de <strong>ABCD</strong>, contendo uma subdirectoria como o nome da base&nbsp;de dados onde ficam colocadas as imagens. Esta directoria deverá ter permissões de leitura. Outra forma de copiar os ficheiros pode ser através do protocolo FTP. O formato de apresentação dos registos deve conter o URL correspondente, para ser possivel aceder aos objectos referenciados no registo.</font></p>
+            <p><font size="2"><strong>Data, hora e operador que cria o registo<br />
+            </strong>Neste campo deve ser indicada a data, hora e nome de utilizador correspondente ao operador que cria o registo. Se não forem especificados os sub-campos serão utilizados <i>a,b,c</i> respectivamente</font></p>
+            <p><font size="2"><strong>Data, hora e operador que &nbsp;modifica o registo<br />
+            </strong>Neste campo deve ser indicada a data, hora e nome de utilizador correspondente ao operador que actualiza o registo. Se não forem especificados os sub-campos serão utilizados <i>a,b,c</i> respectivamente</font></p>
+            <p><font size="2"><strong>Identificador único do registo<br />
+            </strong>Corresponde a um valor numérico sequencial que <strong>ABCD</strong> afectará ao registo, de forma automática, no momento da sua criação.</font></p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Etiqueta</font></td>
+            <td valign="top">
+            <p><font size="2"><font face="Arial">Valor numérico que identifica cada campo do registro (tag). O seu valor pode ser desde 001 até 999, com excepção do tipo de campo <strong>Leader</strong> que&nbsp;aceita etiquetas até 4 dígitos de comprimento.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Título</font></td>
+            <td valign="top"><font face="Arial"><font size="2">Título ou descrição do campo tal como aparecerá&nbsp;nos formatos de entrada ou saída. </font></font></td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">I = Entrada principal</font></p>
+            </td>
+            <td valign="top">
+            <p><font size="2"><font face="Arial">Marque esta entrada se o campo for uma entrada principal do registo.&nbsp;</font></font><font size="2"><font face="Arial">Será mostrada na lista associada ao botão <img alt="" align="textTop" src="../../php/img/sort-01.gif" /> permitindo um acesso rápido a todos os registos.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">R = Repetível</font></p>
+            </td>
+            <td valign="top"><font face="Arial"><font size="2">Marque esta entrada se o campo for repetível</font></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Sub-campos</font></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">Indique nesta entrada os sub-campos que&nbsp;fazem parte do campo. Pode-se omitir o primeiro sub-campo, mas terá de ser colocado o caracter <strong>-</strong> (travessão) para indicar esta situação.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Pré-Literais</font></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">Caracteres de edição para utilizar como pre-literais nos campos da FST e nos formatos de saída.&nbsp;Se o primeiro sub-campo do campo não possue delimitador, deve-se colocar nesta posição o caracter <strong> - </strong> (travessão).</font></font></p>
+            <p><font face="Arial" size="2">Se este valor estiver presente, ABCD no procedimento de entrada de dados substituirá os delimitadores dos subcampos pelos pré-literais, ao apresentar o formulario de entrada de dados. Quando se guarda o registo os pré-literais serão substituidos de novo pelos delimitadores dos sub-campos.
+            Desta forma facilita-se  a entrada de dados no caso de campos com um número reduzido de sub-campos, por exemplo, um autor pode ser introduzido como Apelido, Nome e ser guardado como Apelido^nNome ou ^aApelido^nNome, consoante a informação fornecida pelos parâmetros de <strong>Sub-campos&nbsp;</strong>e<strong> Pre-literais</strong></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Entrada de dados</strong></font>&nbsp;&nbsp;&nbsp;&nbsp; <strong><font color="#800000"></font></strong></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Tipo de entrada</font></td>
+            <td valign="top">
+            <p><font size="2"><strong><font face="Arial"></font></strong><br />
+            <font face="Arial">Este valor é usado para criar o formulário de entrada de dados e colocar o&nbsp;comando HTML adequado para a captura do campo. Estão disponíveis as seguintes funcionalidades:</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Data (D): </strong>Activa a rotina em&nbsp;javascript para seleccionar a data a partir de um calendário.<br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Seleccionar várias&nbsp;Opções (C):</strong> Checkbox&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" checked="checked" value="on" /><br />
+            Se for pretendido, pode-se indicar&nbsp;em&nbsp;quantas&nbsp;colunas irão ser apresentadas as opções, colocando o valor correspondente abaixo de&nbsp;<strong>colunas</strong><br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Seleccionar uma Opção&nbsp;(O):</strong> Radio button&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" checked="checked" value="on" /><br />
+            Se for pretendido, pode-se indicar&nbsp;em&nbsp;quantas&nbsp;colunas irão ser apresentadas as opções, colocando o valor correspondente abaixo de<strong>&nbsp;colunas</strong></font></font><font face="Arial"><font size="2"><br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Selecção simples (S):</strong> Select (simple)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</font></font><select>
+            <option value="1" selected="selected">Opção 1</option>
+            </select>&nbsp; <font face="Arial" size="2"><br>Usar quando se pretenda seleccionar apenas uma opção entre as disponíveis.<br />
+            <br />
+            </font><font face="Arial"><font size="2"><strong>Selecção múltipla (M):</strong> Select (multiple)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</font></font><select multiple="multiple" size="2">
+            <option value="1">Opção 1</option>
+            <option value="2">Opção 2</option>
+            </select>&nbsp;<br />
+            <font face="Arial" size="2">Use esta opção quando for possivel seleccionar mais de um&nbsp;valor de entre os que estão disponíveis. neste caso, o campo deve estar definido como Repetivel</font></p>
+            <p><font face="Arial"><font size="2"><strong>Área HTML(A)</strong>: Insere um editor HTML para permitir a escrita de texto editado com as opções que são oferecidas pela linguagem HTML</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>HTML Externo (<font face="Arial"><font size="2"><strong>E):</strong>&nbsp;</font></font></strong> Insere um editor HTML, mas a informação não é guardada na base de dados mas sim num ficheiro externo indicado no registo (por implementar)&nbsp;</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Copiar ficheiro&nbsp;(U):</strong> Insere um elemento javascript que permite copiar ficheiros para o servidor e establecer a ligação correspondente</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Texto/área de texto&nbsp;(X):</strong> Text/Text area:&nbsp;</font></font><font face="Arial"><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></font><input /></p>
+            <p><strong>Texto/área de texto de comprimento fixo (XF):</strong>&nbsp; Apresenta um Text/Text area com um comprimento fixo do número de caracteres que se podem inserir. O número máximo de caracteres deve ser indicado abaixo de <strong>colunas</strong></p>
+            <p><strong>Tabela (TB): </strong>Facilita a edição de campos repetíveis contendo subcampos, apresentando-os em forma de tabela. Adicionalmente, pode-se limitar o número máximo de ocorrências, colocando o valor correspondente abaixo de <strong>linhas</strong></p>
+            <p><strong>Password (P)</strong>: Preenche o caixa de entrada com * para esconder o conteúdo do campo</p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><span class="t"><font face="Arial" size="2">Linhas</font></span></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">Se o tipo de entrada é <strong>T </strong>(Grupo), especifica o número máximo de linhas (ocorrências) permitidas para o&nbsp; campo. Se não for indicado este valor e o respectivo campo tiver zero ocorrências, são apresentadas 10 linhas. De outra forma, aparecem apenas as ocorrências já existentes mais 5 linhas adicionais.</font></font></p>
+            <p><font face="Arial" size="2">Se o tipo de entrada é <strong>X </strong>(Text area) ou <strong>A</strong> (Html area), específica o número máximo de linhas a apresentar na área de texto. Se o tipo de entrada for T, é apresentada uma TextBox. Se o tipo de entrada é T, mas o número de linhas é superior então é apresentada uma área de texto. Se o tipo de entrada é A (Html area), define o tamanho da janela onde aparece o editor HTML.</font></p>
+            <p><font face="Arial" size="2">Se o tipo de entrada é <strong>M</strong>&nbsp;(Select multiple), específica quantas opções aparecem em lista</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Colunas</font></td>
+            <td valign="top">
+            <p>&nbsp;</p>
+            <p><font face="Arial" size="2">Se o valor de <strong>Entrar como</strong>&nbsp;é <strong>X </strong>(Textbox/Text area) ou <strong>A</strong> (Html area), especifica o número máximo de colunas (caracteres) que aparecem nas linhas da área de texto</font></p>
+            <p><font face="Arial" size="2">Se o valor de <strong>Entrar como</strong> é&nbsp;<strong>T</strong> (campos repetíveis com sub-campos), o número de colunas determina a quantidade de sub-campos definidos.</font></p>
+            <p><font face="Arial" size="2">Se o valor de <strong>Entrar como</strong> é <strong>O </strong>(radio button) ou <strong>C</strong> (checkbox) especifica o número de opções a colocar en cada&nbsp;linha.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Lista de Selecção</strong></font>&nbsp;&nbsp; <font face="Arial"><font color="#800000"></font></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Tipo</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Lista controlada&nbsp;a utilizar para gestão da terminología do campo, segundo as seguintes opções:</font></p>
+            <p><font face="Arial"><font size="2"><strong>D</strong>&nbsp;= base de dados<br />
+            <strong>P</strong> = pick-list<br />
+            <strong>T</strong> = Tesauro</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Nome</font></td>
+            <td valign="top"><font face="Arial" size="2">Nome da base de dados a utilizar para o controlo de autoridades, ou do ficheiro das opções da pick-list</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Prefixo</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Se o <strong>Tipo de lista de selecção</strong>&nbsp; é&nbsp;<strong>D</strong>, ou <strong>T</strong>, indica o prefixo a utilizar para obter os termos da base de dados indicada em <strong>Nome</strong>. O prefixo aplica-se sobre o ficheiro inverso (índice) e através do posting obtem-se a informação directamente do campo que corresponde ao primeiro registo para o qual aponta o MFN (número interno do registo) do posting.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Formato de descrição</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Formato a utilizar para&nbsp;a lista&nbsp;de selecção do campo do ficheiro inverso (índice) através do prefixo indicado. Se a técnica de extracção contempla vários campos com etiquetas (tags) diferentes, pode indicar-se o nome do formato a utilizar tanto para a descrição como para a extracção. Este formato deve ser elaborado segundo um padrão definido para que seja interpretado correctamente. Veja o exemplo utilizado para a descrição das listas de autoridade da base de dados MARC: @autoridades.pft</font></p>
+            <p><font face="Arial" size="2">Este formato tem a seguinte estrutura:<br />
+            <br />
+            <font face="Courier New">select e3<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+            ...<br />
+            <br />
+            ...<br />
+            <br />
+            endsel</font></font></p>
+            <p><font face="Arial" size="2">A variavel associada à opção&nbsp;<strong>case </strong>do comando<strong>&nbsp;select</strong>&nbsp;identifica o <strong>Id</strong> atribuido ao campo na FST; logo especifica-se o formato a utilizar para a descrição do campo na lista de selecção e, de seguida, precedido por `$$$`, o formato a utilizar para apresentar o campo e transferir para folha de entrada de dados. Se for omitido o formato de extracção, é utilizado o formato de descrição como formato de extracção.</font></p>
+            <p><font face="Arial" size="2">Em resumo, o processo funciona da seguinte forma:</font></p>
+            <ol>
+                <li><font face="Arial" size="2">O prefixo fornecido para aceder ao ficheiro inverso (indice) e preencher  a <strong>select box</strong> en HTML. Na etiqueta <strong>&lt;option&gt;</strong> da select box é armazanada a informação do posting.</font> </li>
+                <li><font face="Arial" size="2">Quando o utilizador selecciona um termo, transfere-se a informação do posting: Mfn, Id, Número da ocorrência e número de sequência.</font> </li>
+                <li><font face="Arial" size="2">Com o Mfn acede-se ao registo que contem o termo e ao qual se aplica o formato de extracção utilizando o <strong>ID&nbsp; </strong>e o <strong>Número de ocorrência </strong>do posting para localizar no&nbsp;registo o termo solicitado. <strong><em>Nota importante: se o campo for repetível é imprescindivel utilizar na FST o post-literal&nbsp;&nbsp;% para assegurar que a soma das  ocurrencias seja guardada como parte do posting.</em></strong></font> </li>
+                <li><font face="Arial" size="2">O termo é extraído do registo, tal como foi introduzido na base de dados, e é colocado na janela correspondente da folha da entrada de dados.</font> </li>
+            </ol>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Extrair como</font></td>
+            <td valign="top"><font face="Arial" size="2">Formato a utilizar para extrair da base de dados, o campo localizado no ficheiro inverso (índice) através do prefixo fornecido. Se o formato de descrição é um formato predefinido (@xxxx) e cumpre com a regra establecida de separar o formato de descrição do formato de extracção com <strong>$$$, </strong>deve deixar esta entrada en branco</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Ajuda</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Seleccione esta opção se o campo tem uma folha de entrada HTML associada às mensagens de ajuda da entrada de dados. Para construir as mensagens de ajuda use a opção <strong>Ficheiros de ajuda para os campos da base de dados </strong>que faz parte do menu <strong>Actualizar a definição da base de dados.</strong></font></p>
+            <p><font size="2">As ajudas são guardadas na directoria <strong>bases/<em>dbn/</em>ajudas, </strong>onde <strong><em>dbn</em></strong> corresponde ao nome da base de dados</font></p>
+            <p>&nbsp;&nbsp;</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;<hr />
+</p>
+<p><font face="Arial" size="2"><strong><a name="editor"></a><big>Como usar o editor&nbsp;</big> </strong><a href="#top">(recuar)</a></font></p>
+<p><font face="Arial" size="2">Pode aumentar ou diminuir a dimensão das colunas colocando o curso, na área de títulos da tabela, sobre a linha divisória da coluna cuja dimensão pretende alterar e arrastando essa divisória para a direita ou para a esquerda de forma a ampliar ou reduzir a coluna</font></p>
+<p><font face="Arial" size="2">Use a tecla&nbsp;<em><strong>[Tab]</strong></em> para navegar através das células</font></p>
+<p><font face="Arial" size="2">Use as setas de direcção&nbsp;<strong><em>[Acima / Abaixo]&nbsp;</em></strong>para navegar através das linhas</font></p>
+<p><font face="Arial" size="2"><strong><em>Duplo_clic </em></strong>ou&nbsp;<strong><em>[F2]</em></strong> para activar a edição de uma célula</font></p>
+<p><em><strong>[Enter]</strong></em><font face="Arial" size="2">&nbsp;ou&nbsp;&nbsp;</font><em><strong><font face="Arial" size="2"> [Escape]&nbsp;&nbsp; </font></strong></em><font face="Arial" size="2">para sair da edição de uma célula</font></p>
+<p><font face="Arial" size="2"><strong><em>Adicionar uma linha antes&nbsp;&nbsp; </em></strong>permite adicionar uma linha antes da seleccionada</font></p>
+<p><font face="Arial" size="2"><strong><em>Remover linha seleccionada</em></strong>&nbsp;&nbsp; remove da tabela a linha seleccionada</font></p>
+<p><font face="Arial" size="2"><strong><em>Organizar FDT&nbsp;&nbsp; </em></strong>permite mover os campos definidos na estrutura (por implementar)</font></p>
+<p><font face="Arial" size="2"><strong><em>Testar</em></strong>&nbsp;&nbsp; apresenta um exemplo do formato de entrada que se obtem com a estrutura definida</font></p>
+<p><font face="Arial" size="2"><strong><em>Listar&nbsp;&nbsp;</em></strong> apresenta numa página a FDT em uso</font></p>
+<p><font face="Arial" size="2"><strong><em>Validar </em></strong>verifica a estrutura da FDT e apresenta uma lista dos erros encontrados</font></p>
+<p><font face="Arial" size="2"><em><strong>Actualizar</strong></em>&nbsp;&nbsp; valida e guarda a FDT (caso não existam erros)</font></p>
+<p><font face="Arial" size="2"><em><strong>Cancelar</strong></em>&nbsp;&nbsp; cancela as alterações efectuadas</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p><font face="Arial"><a name="picklist"></a><strong><big>Tabelas&nbsp;(picklists)&nbsp;e ficheiros de autoridades</big></strong></font><big>&nbsp;<strong><font face="Arial" size="2"> </font></strong><a href="#top"><font face="Arial" size="2">(recuar)</font></a></big></p>
+<p>&nbsp;</p>
+<p><font face="arial" size="2">Para definir as tabelas ou listas de autoridades associadas aos campos&nbsp;seleccione a coluna&nbsp;<strong>Lista de selecção-Tipo</strong>&nbsp;e tipo&nbsp;de ficheiro a utilizar para o controlo das autoridades.&nbsp;De seguida deverá clicar sobre&nbsp;<strong><em>browse</em></strong> a&nbsp;fim de obter as posibilidades previstas para cada caso&nbsp;&nbsp;</font></p>
+<p>
+<table cellspacing="5" cellpadding="0" width="100%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">Tipo</font></p>
+            </td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Lista controlada&nbsp;a utilizar para a manipulação da terminologia do campo, segundo as seguintes opções:</font></p>
+            <div><font face="Arial" size="2"><strong>D</strong></font><font face="Arial" size="2">&nbsp;= base de dados<br />
+            <strong><span>P</span></strong> = pick-list<br />
+            <strong>T</strong> = Tesauro</font></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Nome</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Nome da base de dados a utilizar para o controlo de autoridades, ou do ficheiro com as opções da pick-list</font></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Prefixo</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Se o&nbsp;<strong><span>tipo</span></strong>&nbsp;é&nbsp;<strong>D</strong>, ou <strong>T</strong>, indica o prefixo a utilizar para obter os termos da base de dados indicada no <strong>authority_name</strong>. O prefixo aplica-se sobre o ficheiro inverso e através do posting obtem-se a informação directamente do campo correspondente&nbsp;ao primeiro registo indicado pela&nbsp;componente MFN do posting.</font></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Formato de descrição</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Formato a utilizar para&nbsp;a descrição numa lista de selecção, do campo localizado no ficheiro inverso, através do prefixo fornecido. Se a técnica de extracção contempla vários campos diferentes, pode colocar-se nesta entrada o&nbsp; nome do formato a utilizar para criar tanto o formato de descrição como o formato de extracção. Este formato deve ser elaborado seguindo a regra estabelecida para que possa ser interpretado correctamente.</font></div>
+            <div><font face="Arial" size="2">Por exemplo, consideremos o formato construido para uma base de dados Marc:</font></div>
+            <div><font face="Arial" size="2"><br />
+            </font><font face="Arial" size="2"><span style="FONT-FAMILY: Courier New">select e3<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+            ...<br />
+            ...<br />
+            endsel<br />
+            </span></font></div><br>
+            <div><font face="Arial" size="2">A variavel associada à declaração <strong>case</strong>, identifica:<br />
+            </font>
+            <ul>
+                <li><font face="Arial" size="2">o Id atribuido ao campo na FST</font> </li>
+                <li><font face="Arial" size="2">o formato a utilizar para a descrição do campo na lista de selecção, e, <br />
+                </font></li>
+                <li><font face="Arial" size="2">precedido por `$$$`, o formato a utilizar para transferir o campo da folha de entrada. Desta forma pode-se optar por transferir o campo completo (tal como foi introduzido) ou&nbsp;fazer modificações ao nível do campo ou dos sub-campos. Se for omitido o formato de extracção, é usado o formato de descrição como formato de extracção </font></li>
+            </ul>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Extrair como</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2"><font size="2">Formato a utilizar para extrair da base de datos, o campo localizado no ficheiro inverso através do prefixo indicado. Se o formato de descrição é um formato predefinido (@xxxx), deve deixar-se esta entrada en branco</font></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<span id="1198937684424E" style="DISPLAY: none">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

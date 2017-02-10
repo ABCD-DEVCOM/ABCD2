@@ -1,0 +1,148 @@
+<IsisScript>
+
+
+ <section>
+ 	<parm name="buffersize">500000</parm>
+  	<!--parm name=MAX_TMP_STRING>400000</parm-->
+    <field action=cgi tag=5015>cipar</field>
+    <field action=cgi tag=5016>syspar</field>
+    <field action=cgi tag=5018>stw</field>
+  	<field action=cgi tag=5001>base</field>
+    <field action=cgi tag=9001>Opcion</field>
+    <field action=cgi tag=2000>Mfn</field>
+    <field action=cgi tag=9010>ValorCapturado</field>
+    <field action=cgi tag=9060>login</field>
+    <field action=cgi tag=3030>Formato</field>
+    <field action=cgi tag=1>path_db</field>
+    <field action=cgi tag=9088>cttype</field>
+	<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+	 <trace>Off</trace>
+    <parm name=cipar>
+        <pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+    </parm>
+	<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    <parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+    <parm name=stw><pft>v5018</pft></parm>
+    <flow action=jump>
+   		<pft>
+    		select s(v9001)
+     			case 'crear':   	'CREAR'
+     			case 'actualizar': 	'ACTUALIZAR'
+     			case 'addocc': 		'ACTUALIZAR'
+     			case 'eliminar': 	'ELIMINAR'
+     			case 'cancelar': 	'CANCELAR'
+     			case 'leer':  		'LEER'
+    		endsel
+   		</pft>
+   </flow>
+    <flow action="exit">1</flow>
+	<label>CREAR</label>
+			<do task="update">
+				<parm name="buffersize">800000</parm>
+                <!--parm name=MAX_TMP_STRING>800000</parm-->
+				<parm name="db"><pft>v5001</pft></parm>
+           		<parm name="mfn">New</parm>
+				<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+				<parm name=stw><pft>v5018</pft></parm>
+           		<field action=define tag=1102>Isis_Status</field>
+           		<update>
+           			<field action=import tag=9010>9010</field>
+           			<proc><pft>v9010</pft></proc>
+           			<proc><pft>'d9010'</pft></proc>
+
+                	<write>Unlock</write>
+					<display>
+						<pft>
+							#'MFN:'F(MFN,1,0)/
+						</pft>
+					</display>
+            	</update>
+         	</do>
+		<flow action="exit">1</flow>
+
+		<label>ELIMINAR</label>
+      		<field action="cgi" tag="2000">from</field>
+        	<do task="update">
+          		<parm name="db"><pft>v5001</pft></parm>
+           		<parm name="mfn"><pft>v2000</pft></parm>
+				<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+				<parm name=stw><pft>v5018</pft></parm>
+           		<parm name=lockid><pft>v9060</pft></parm>
+           		<field action=define tag=1101>Isis_Lock</field>
+           		<field action=define tag=1102>Isis_Status</field>
+           		<update>
+                   	<write>Delete</write>
+                    <display><pft>if v1102='0' then 'DELETED' else 'NOT DELETED' FI/</pft></display>
+           		</update>
+        	</do>
+        	<flow action="exit">1</flow>
+
+		<label>ACTUALIZAR</label>
+       		<do task="update">
+           		<parm name="db"><pft>v5001</pft></parm>
+           		<parm name="mfn"><pft>v2000</pft></parm>
+           		<parm name=lockid><pft>v9060</pft></parm>
+				<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+				<parm name=stw><pft>v5018</pft></parm>
+				<parm name="buffersize">800000</parm>
+                <!--parm name=MAX_TMP_STRING>800000</parm-->
+          		<field action=define tag=1101>Isis_Lock</field>
+           		<field action=define tag=1102>Isis_Status</field>
+           		<display><pft></pft></display>
+           		<update>
+           			<field action=import tag=9010>9010</field>
+           			<field action=import tag=3030>3030</field>
+           			<proc><pft>v9010</pft></proc>
+           			<proc><pft>'d9010'</pft></proc>
+                	<write>Unlock</write>
+					<display>
+						<pft>
+							#'MFN:'F(MFN,1,0)/
+						</pft>
+					</display>
+					<display><pft type=reload><pft>if p(v3030) then '@'v3030'.pft' fi</pft></pft></display>
+           		</update>
+        	</do>
+        <flow action="exit">1</flow>
+
+
+      <label>CANCELAR</label>
+                <trace>Off</trace>
+         		<field action="cgi" tag="2000">from</field>
+          		<do task="update">
+            		<parm name="db"><pft>v5001</pft></parm>
+            		<parm name="mfn"><pft>v2000</pft></parm>
+            		<parm name=lockid><pft>v9060</pft></parm>
+            		<parm name="buffersize">800000</parm>
+        			<!--parm name=MAX_TMP_STRING>800000</parm-->
+            		<field action=define tag=1101>Isis_Lock</field>
+            		<field action=define tag=1102>Isis_Status</field>
+            		<update>
+                    	<write>Unlock</write>
+		           </update>
+                </do>
+           <flow action="exit">1</flow>
+
+
+  <label>LEER</label>
+      <do task=mfnrange>
+    	<parm name=db><pft>v5001</pft></parm>
+		<field action="statusdb" tag="1091"><pft>v5001</pft></field>
+    	<parm name="buffersize">800000</parm>
+        <!--parm name=MAX_TMP_STRING>800000</parm-->
+    	<field action=define tag=1002>Isis_Total</field>
+        <field action=define tag=1102>Isis_Status</field>
+    	<field action=define tag=1199>Isis_RecordStatus</field>
+		<display><pft>'MAXMFN:'f(val(v1091^n)-1,1,0)' ## '</pft></display>
+
+		<parm name=from><pft>if val(v2000) >val(v1091^n)  then f(val(v1091^n)-1,1,0) else v2000 fi</pft></parm>
+		<parm name=to><pft>if val(v2000) >val(v1091^n)  then f(val(v1091^n)-1,1,0) else v2000 fi</pft></parm>
+    	<loop>
+     		<field action=import tag=5001>5001</field>
+     		<display><pft>ALL</pft></display>
+     		<label>ELIMINADO</label>
+    	</loop>
+   </do>
+   <flow action=exit>1</flow>
+ </section>
+</IsisScript>

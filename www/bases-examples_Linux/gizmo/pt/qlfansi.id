@@ -1,0 +1,249 @@
+!ID 000001
+!v001!^sadmin
+!v002!/administração & dosagem
+!ID 000002
+!v001!^sagon
+!v002!/agonistas
+!ID 000003
+!v001!^sanal
+!v002!/análise
+!ID 000004
+!v001!^sanalog
+!v002!/análogos & derivados
+!ID 000005
+!v001!^sanat
+!v002!/anatomia & histologia
+!ID 000006
+!v001!^sanorm
+!v002!/anormalidades
+!ID 000007
+!v001!^santag
+!v002!/antagonistas & inibidores
+!ID 000008
+!v001!^sbios
+!v002!/biossíntese
+!ID 000009
+!v001!^scint
+!v002!/cintilografia
+!ID 000010
+!v001!^scirurg
+!v002!/cirurgia
+!ID 000011
+!v001!^scitol
+!v002!/citologia
+!ID 000012
+!v001!^sclas
+!v002!/classificação
+!ID 000013
+!v001!^scompl
+!v002!/complicações
+!ID 000014
+!v001!^scongen
+!v002!/congênito
+!ID 000015
+!v001!^scontra
+!v002!/contra-indicações
+!ID 000016
+!v001!^scresc
+!v002!/crescimento & desenvolvimento
+!ID 000017
+!v001!^sdefic
+!v002!/deficiência
+!ID 000018
+!v001!^sdiag
+!v002!/diagnóstico
+!ID 000019
+!v001!^sdietoter
+!v002!/dietoterapia
+!ID 000020
+!v001!^secon
+!v002!/economia
+!ID 000021
+!v001!^seduc
+!v002!/educação
+!ID 000022
+!v001!^sef adv
+!v002!/efeitos adversos
+!ID 000023
+!v001!^sef drogas
+!v002!/efeitos de drogas
+!ID 000024
+!v001!^sef rad
+!v002!/efeitos de radiação
+!ID 000025
+!v001!^sembriol
+!v002!/embriologia
+!ID 000026
+!v001!^senf
+!v002!/enfermagem
+!ID 000027
+!v001!^senv
+!v002!/envenenamento
+!ID 000028
+!v001!^senzimol
+!v002!/enzimologia
+!ID 000029
+!v001!^sepidemiol
+!v002!/epidemiologia
+!ID 000030
+!v001!^sestatíst
+!v002!/estatística & dados numéricos
+!ID 000031
+!v001!^setiol
+!v002!/etiologia
+!ID 000032
+!v001!^setnol
+!v002!/etnologia
+!ID 000033
+!v001!^sfarmacocin
+!v002!/farmacocinética
+!ID 000034
+!v001!^sfarmacol
+!v002!/farmacologia
+!ID 000035
+!v001!^sfisiol
+!v002!/fisiologia
+!ID 000036
+!v001!^sfisiopatol
+!v002!/fisiopatologia
+!ID 000037
+!v001!^sgenet
+!v002!/genética
+!ID 000038
+!v001!^shist
+!v002!/hist¢ria
+!ID 000039
+!v001!^simunol
+!v002!/imunologia
+!ID 000040
+!v001!^sind quim
+!v002!/induzido quimicamente
+!ID 000041
+!v001!^sinerv
+!v002!/inervação
+!ID 000042
+!v001!^sinstrum
+!v002!/instrumentação
+!ID 000043
+!v001!^sirrig
+!v002!/irrigação sanguínea
+!ID 000044
+!v001!^sisol
+!v002!/isolamento & purificação
+!ID 000045
+!v001!^slcr
+!v002!/líquido céfalo-raquidiano
+!ID 000046
+!v001!^slegis
+!v002!/legislação & jurisprudência
+!ID 000047
+!v001!^sles
+!v002!/lesões
+!ID 000048
+!v001!^smetab
+!v002!/metabolismo
+!ID 000049
+!v001!^smicrobiol
+!v002!/microbiologia
+!ID 000050
+!v001!^smortal
+!v002!/mortalidade
+!ID 000051
+!v001!^smétodos
+!v002!/métodos
+!ID 000052
+!v001!^snormas
+!v002!/normas
+!ID 000053
+!v001!^sorg
+!v002!/organização & administração
+!ID 000054
+!v001!^sparasitol
+!v002!/parasitologia
+!ID 000055
+!v001!^spatogen
+!v002!/patogenicidade
+!ID 000056
+!v001!^spatol
+!v002!/patologia
+!ID 000057
+!v001!^spolíticas
+!v002!/políticas
+!ID 000058
+!v001!^sprev
+!v002!/prevenção & controle
+!ID 000059
+!v001!^sprovis
+!v002!/provisão & distribuição
+!ID 000060
+!v001!^spsicol
+!v002!/psicologia
+!ID 000061
+!v001!^squim
+!v002!/química
+!ID 000062
+!v001!^squimioter
+!v002!/quimioterapia
+!ID 000063
+!v001!^sradiogr
+!v002!/radiografia
+!ID 000064
+!v001!^sradioter
+!v002!/radioterapia
+!ID 000065
+!v001!^sreabil
+!v002!/reabilitação
+!ID 000066
+!v001!^srec hum
+!v002!/recursos humanos
+!ID 000067
+!v001!^ssangue
+!v002!/sangue
+!ID 000068
+!v001!^ssecr
+!v002!/secreção
+!ID 000069
+!v001!^ssecund
+!v002!/secundário
+!ID 000070
+!v001!^ssint quim
+!v002!/síntese química
+!ID 000071
+!v001!^stend
+!v002!/tendências
+!ID 000072
+!v001!^sterap
+!v002!/terapia
+!ID 000073
+!v001!^stox
+!v002!/toxicidade
+!ID 000074
+!v001!^stransm
+!v002!/transmissão
+!ID 000075
+!v001!^stranspl
+!v002!/transplante
+!ID 000076
+!v001!^sultraest
+!v002!/ultraestrutura
+!ID 000077
+!v001!^sultrasonogr
+!v002!/ultrasonografia
+!ID 000078
+!v001!^surina
+!v002!/urina
+!ID 000079
+!v001!^suso diag
+!v002!/uso diagnóstico
+!ID 000080
+!v001!^suso terap
+!v002!/uso terapêutico
+!ID 000081
+!v001!^sutil
+!v002!/utilização
+!ID 000082
+!v001!^svet
+!v002!/veterinária
+!ID 000083
+!v001!^svirol
+!v002!/virologia

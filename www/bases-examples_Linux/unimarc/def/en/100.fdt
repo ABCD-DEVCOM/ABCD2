@@ -1,0 +1,13 @@
+M|100|General Processing Data (100)|0|0||||||||||||1|
+D||00-07 Date entered on file|0|0|||D||8|||||||0|
+S||08-08 Type of Publication Date (Publication Dates 1 and 2)|0|0|||S||1|P|100_08.tab|||||||0|
+S||09-12 Publication Date 1|0|0|||X||4|||||||||0|
+S||13-16 Publication Date 1|0|0|||X||4|||||||||0|
+S||17-19 Target Audience Code|0|0|||S||3|P|100_17-19.tab|||||||0|
+S||20-20 Government Publication|0|0|||S||1|P|100_20.tab|||||||0|
+S||21-21 Modified Record Code|0|0|||S||1|P|100_21.tab|||||||0|
+S||22-24 Language of Cataloguing|0|0|||S||1|P|languages.tab|||||||0|
+S||25-25 Transliteration Code|0|0|||S||1|P|100_25.tab|||||||0|
+S||26-29 Character Sets|0|0|||S||4|P|charset.tab|||||||0|
+S||30-33 Additional Character Sets|0|0|||S||4|P|charset.tab||||||||0|
+S||34-35 Script of Title|0|0|||S||2|P|100_34-35.tab|||||||0|						

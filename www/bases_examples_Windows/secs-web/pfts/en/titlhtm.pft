@@ -1,0 +1,276 @@
+'<table width="100%" border="0">'/
+'<tr>'
+'<td valign=top width="29%"><font face="Verdana" size="1">'/,
+"[ "v30 "]",'&nbsp;', ,"<b>"v100"</b>  ", IF p(v110) THEN ": "v110 FI,mpl,
+IF P(v120) and P(v130) THEN ". "v120,", "v130 FI,
+IF P(v120) and A(v130) THEN ". "v120 FI,
+IF A(v120) and P(v130) THEN ", "v130 FI,
+" / "v140+|, |," = "v230,'.-- ', "Vol."v302,
+IF p(v302) and p(v303) THEN ', ' FI,
+|no.|v303,| (|v301|)|,
+IF p(v304) or p(v305) or p(v306) THEN '- ', |Vol.| v305,
+IF p(v305) and p(v306) THEN ', ' FI,     |no.|v306,   | (|v304|).|,
+ELSE '- .',FI,
+'-- 'v490,": "v480". ",/
+if p(v320) or p(v320) then v320,|, |v310,'. ' fi,
+'<br><br>' ,if p(v400) then, 
+	'<b>ISSN: &nbsp;</b>'v400'<br>'/,
+,fi,	
+
+,if p(v150) then, 
+	'<b>Abbreviated title: &nbsp;</b>'v150'<br><br>'/,
+,fi,
+
+,if p(v240) then, 
+	'<b>Added title: &nbsp;</b>'v240'<br>'/,
+,fi,	
+,if p(v149) then, 
+	'<b>Full key title: &nbsp;</b>'v149'<br>'/,
+,fi,	
+,if p(v610) then, 
+	'<b>Continues as: &nbsp;</b>'
+	(v610^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v610^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v610^x,mpl),'&indexSearch=IS">',v610^x,'</a>'
+		else 
+			v610^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v620) then, 
+	'<b>Continues in part as: &nbsp;</b>'
+	(v620^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v620^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v620^x,mpl),'&indexSearch=IS">',v620^x,'</a>'
+		else 
+			v620^x 
+		fi,
+	'<br>')/ 
+fi,	
+
+,if p(v650) then, 
+	'<b>Absorbed: &nbsp;</b>'
+	(v650^*,
+	    if p(v650^x) then 	' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v650^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v650^x,mpl),'&indexSearch=IS">',v650^x,'</a>'
+		else 
+			v650^x 
+		fi,
+	    fi,
+	'<br>')/ 
+fi,	
+
+,if p(v660) then, 
+	'<b>Absorbed in part: &nbsp;</b>'
+	(v660^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v660^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v660^x,mpl),'&indexSearch=IS">',v660^x,'</a>'
+		else 
+			v660^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v670) then, 
+	'<b>Formed by the splitting of: &nbsp;</b>'
+	(v670^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v670^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v670^x,mpl),'&indexSearch=IS">',v670^x,'</a>'
+		else 
+			v670^x 
+		fi,
+	'<br>')/ 
+fi,	
+
+,if p(v680) then, 
+	'<b>Formed by the union of... and: &nbsp;</b>'
+
+	(  v680^*,
+              if p(v680^x) then  ' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v680^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v680^x,mpl),'&indexSearch=IS">',v680^x,'</a>'
+		else 
+			v680^x 
+		fi,
+            fi,
+	'<br>')/ 
+fi,	
+
+
+,if p(v710) then, 
+	'<b>Continued by: &nbsp;</b>'
+	(v710^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v710^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v710^x,mpl),'&indexSearch=IS">',v710^x,'</a>'
+		else 
+			v710^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v720) then, 
+	'<b>Continued in part by: &nbsp;</b>'
+	(v720^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v720^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v720^x,mpl),'&indexSearch=IS">',v720^x,'</a>'
+		else 
+			v720^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v750) then, 
+	'<b>Absorbed by: &nbsp;</b>'
+	(v750^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v750^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v750^x,mpl),'&indexSearch=IS">',v750^x,'</a>'
+		else 
+			v750^x 
+		fi,
+	'<br>')/ 
+fi,
+	
+,if p(v760) then, 
+	'<b>Absorbed in part by: &nbsp;</b>'
+	(v760^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v760^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v760^x,mpl),'&indexSearch=IS">',v760^x,'</a>'
+		else 
+			v760^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v770) then, 
+	'<b>Split into...and..: &nbsp;</b>'
+	(v770^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v770^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v770^x,mpl),'&indexSearch=IS">',v770^x,'</a>'
+		else 
+			v770^x 
+		fi,
+	'<br>')/ 
+fi,
+,if p(v780) then, 
+	'<b>Merged wit: &nbsp;</b>'
+	(v780^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v780^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v780^x,mpl),'&indexSearch=IS">',v780^x,'</a>'
+		else 
+			v780^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v790) then, 
+	'<b>To form: &nbsp;</b>'
+	(v790^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v790^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v790^x,mpl),'&indexSearch=IS">',v790^x,'</a>'
+		else 
+			v790^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v510) then, 
+	'<b>Has other language editon: &nbsp;</b>'
+	(v510^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v510^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v510^x,mpl),'&indexSearch=IS">',v510^x,'</a>'
+		else 
+			v510^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v520) then, 
+	'<b>Is other language edition of: &nbsp;</b>'
+	(v520^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v520^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v520^x,mpl),'&indexSearch=IS">',v520^x,'</a>'
+		else 
+			v520^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v530) then, 
+	'<b>Has subseries: &nbsp;</b>'
+	(v530^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v530^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v530^x,mpl),'&indexSearch=IS">',v530^x,'</a>'
+		else 
+			v530^x 
+		fi,
+	'<br>')/ 
+fi,	
+,if p(v540) then, 
+	'<b>Is subseries of: &nbsp;</b>'
+	(v540^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v540^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v540^x,mpl),'&indexSearch=IS">',v540^x,'</a>'
+		else 
+			v540^x 
+		fi,
+	'<br>')/ 
+fi,
+	
+,if p(v550) then, 
+	'<b>Has suplement/insert: &nbsp;</b>'
+	(v550^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v550^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v550^x,mpl),'&indexSearch=IS">',v550^x,'</a>'
+		else 
+			v550^x 
+		fi,
+	'<br>')/ 
+fi,
+,if p(v560) then, 
+	'<b>Is suplement/insert of: &nbsp;</b>'
+	(v560^*,' <b>ISSN:</b> '
+		if npost->DATABASE('IS_'v560^x)>1 then 
+			'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&lang=',v5021[1],'&base=',v5003[1],'
+				&nextAction=lnk&exprSearch=',s(mpu,v560^x,mpl),'&indexSearch=IS">',v560^x,'</a>'
+		else 
+			v560^x 
+		fi,
+	'<br>')/ 
+fi,
+
+
+,if p(v430) then, 
+	'<b>Classification: &nbsp;</b>'(v430+|, |)'<br>'/,
+,fi,
+
+,if p(v421) then, 
+	'<b>UDC Classification: &nbsp;</b>'(v421+|, |)'<br>'/,
+,fi,
+
+,if p(v422) then, 
+	'<b>Dewey Classification: &nbsp;</b>'(v422+|, |)'<br>'/,
+,fi,
+
+,if p(v999^b) then, 
+	'<br><b>URL: &nbsp;</b>'
+(  |<a href="|v999^b|" target=_blank>|v999^b*0.30|</a>...<br>| ),'<br>'/,
+
+,fi,
+ '</font></td></tr>'/, ,if p(v98) then,
+	'<tr><td><font face="Verdana" size="1">'
+		'<b>Collection:</b><br>'/,	
+		v98 + |<br>|
+	'</font></tr></td>'
+,fi,				
+'</table><p>'/,

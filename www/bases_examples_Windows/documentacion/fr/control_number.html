@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <strong>Assignation du numéro de contrôle des enregistrements de la base de données</strong><br>
+    <br>
+    <strong><br></strong>Cette option permet l'assignation automatique d'un numéro
+    séquentiel aux enregistrements de la base de données.<br>
+    <br>
+    Dans la TDC, le champ de contrôle est défini avec le type "Autoincrement".
+    S'il doit être utilisé pour la gestion de l'inventaire dans un système 
+    d'acquisition, alors il devrait être indexé avec le préfixe <strong>CN_</strong>
+    dans la FST<br>
+    <br>
+    Les numéros sont enregistrés dans le fichier <strong>control_number.cn</strong>
+    qui se trouve dans le dossier <strong>data</strong> de la base de données 
+    correspondante. Le dernier numéro assigné à un enregistrement est stocké dans 
+    ce fichier. 
+    Pour modifier la séquence d'assignation de ce numéro, utilisez l'option
+    <strong>Rétablir le numéro d'inventaire ou de contrôle</strong> que vous 
+    trouverez sur la page d'accueil du module de catalogage.<br>
+    <br>
+    Quand l'assignation automatique d'un numéro de contrôle est demandé, une fenêtre
+    apparaît avec une série de MFN auxquels un numéro sera affecté.
+    Notez que si la série de MFN est trop importante, le temps pris pour assigner 
+    des numéros peut causer un "time out" sur le serveur et le processus sera alors 
+    interrompu.<br>
+    <br>
+    Dans ce cas, revoyez la sortie de l'action et le dernier MFN traité, et reprenez
+    le processus à partir du MFN suivant.<br>
+    <br>
+    Dans la mesure où ce processus met à jour tous les enregistrements dans une série
+    donnée, il est recommandé que la saisie et la modification d'enregistrements
+    soit suspendue jusqu'à ce que la mise à jour soit complète.<br>
+    <br>
+    Il est recommandé que la base de données soit restructurée après l'assignation 
+    de numéros de contrôle, la taille en octets ayant pu doubler durant le 
+    processus de mise à jour. En sus, il faut aussi générer le fichier inversé.<br>
+  </body>
+</html>

@@ -1,0 +1,235 @@
+ <IsisScript>
+	<trace>xOn</trace>
+	<section>
+
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+   		<field action=cgi tag=5001>base</field>
+   		<field action=cgi tag=4001>from</field>
+   		<field action=cgi tag=4002>to</field>
+ 		<field action=cgi tag=3000>Expresion</field>
+   		<field action=cgi tag=3030>Formato</field>
+  		<field action=cgi tag=2000>Mfn</field>
+  		<field action=cgi tag=2023>marc</field>
+  		<field action=cgi tag=9001>Opcion</field>
+    	<field action=cgi tag=8000>Path</field>
+   		<field action=cgi tag=3020>inven</field>
+   		<field action=cgi tag=9060>userid</field>
+  		<field action=cgi tag=3021>usuario</field>
+		<field action=replace tag=3000><pft>replace(v3000,'\"','"')</pft></field>
+		<field action=cgi tag=1>path_db</field>
+		<display><pft></pft></display>
+   		<parm name=cipar>
+    		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+    	</parm>
+
+		<flow action=jump>
+  			<pft>
+				select s(v9001)
+					case 'devolver': 'DEVOLVER'
+					case 'buscar_cipres':'BUSCARCIPRES'
+					case 'buscar_libro':'BUSCARLIBROS'
+					case 'modificar_busqueda':'BUSCARLIBROS'
+					case 'presentar_busqueda':'BUSCARLIBROS'
+					case 'libros_prestados':'LIBROSPRESTADOS'
+					case 'ver_prestamos':'LIBROSPRESTADOS'
+					case 'prestamousuario':'PRESTAMOUSUARIO'
+					case 'reservar':'PRESTAMOUSUARIO'
+					case 'ubicausuario':'UBICAUSUARIO'
+					case 'verusuario':'VERUSUARIO'
+
+				endsel
+			</pft>
+   		</flow>
+
+
+<!--   El órden de las siguientes etiquetas es importante ya que se ejecutan en esa secuencia -->
+
+		<label>UBICAUSUARIO</label>
+<!-- Se lee la base de datos presta para obtener el código del usuario y pasarlo al procedimiento PRESTAMOUSUARIO -->
+			<do task=search>
+				<parm name=db>presta</parm>
+				<parm name=from>1</parm>
+				<parm name=to>1</parm>
+				<parm name=expression><pft>v3000</pft></parm>
+             	<field action=define tag=1001>Isis_Current</field>
+             	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+				<loop>
+					<field action=import tag=3000>3000</field>
+					<field action=replace tag=3000><pft>v20</pft></field>
+					<field action=export tag=3000>3000</field>
+					<display><pft>'$$USUARIO:'V20/</pft></display>
+				</loop>
+
+			</do>
+			<flow action=exit>1</flow>
+<!-- con la clave del usuario exportada al campo 3000 se procede a leer users y luego presta -->
+
+		<label>PRESTAMOUSUARIO</label>
+      		<display><pft></pft></display>
+
+    	<label>BUSCARCIPRES</label>
+
+<!-- Aquí se ubica el usuario, se formatea y se prepara la clave de búsqueda en presta -->
+
+   			<do task=search>
+
+             	<parm name=db><pft>'users'</pft></parm>
+             	<parm name=from><pft>'1'</pft></parm>
+             	<parm name=to><pft>''</pft></parm>
+             	<parm name=expression><pft>"!C"v3000</pft></parm>
+             	<field action=define tag=1001>Isis_Current</field>
+             	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+
+             	<loop>
+                	<field action=import tag=5001>5001</field>
+                	<field action=import tag=5015>5015</field>
+                	<field action=import tag=3030>3030</field>
+                	<field action=import tag=3000>3000</field>
+                	<field action=import tag=8000>8000</field>
+					<field action=import tag=1091>1091</field>
+                	<display>
+						<pft>@busers.pft</pft>
+                	</display>
+
+                	<field action=export tag=3000>3000</field>
+             	</loop>
+             	<display><pft>if val(v1002)=0 then v3000 ' &nbsp;<font color=red><b>Usuario no existe</b></font>'/fi</pft></display>
+				<field action=replace tag=3000><pft>v3000"-P$"</pft></field>
+          	</do>
+			<flow action=exit>1</flow>
+		<label>LIBROSPRESTADOS</label>
+
+<!-- Se buscan los préstamos, bien sea por código de usuario o por signatura topográfica -->
+<!-- Si activa desde un usuario la expresión de búsqueda se genera en el paso anterior -->
+			<do task=search>
+             	<parm name=db><pft>'presta'</pft></parm>
+             	<parm name=from><pft>'1'</pft></parm>
+             	<parm name=to><pft>''</pft></parm>
+             	<parm name=expression><pft>v3000</pft></parm>
+	      		<field action=define tag=1001>Isis_Current</field>
+    	     	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+<!--       			<display><pft>if v9001='ver_prestamos' then 'Content-type:text/html',/# fi</pft></display> -->
+             	<loop>
+                	<field action=import tag=5001>5001</field>
+                	<field action=import tag=9001>9001</field>
+                	<field action=import tag=5015>5015</field>
+                	<field action=import tag=3030>3030</field>
+                	<field action=import tag=3000>3000</field>
+                	<field action=import tag=8000>8000</field>
+					<field action=import tag=1091>1091</field>
+					<field action=import tag=3020>3020</field>
+					<field action=import tag=3021>3021</field>
+					<field action=import tag=9060>9060</field>
+ 					<display>
+
+    					<pft type=reload>
+       						<pft>'@'v3030,'libros.pft'</pft>
+    				</pft>
+  					</display>
+
+
+                	<field action=export tag=3000>3000</field>
+                	<field action=export tag=9060>9060</field>
+             	</loop>
+			 	<display><pft>if v9001<>'libros_prestados' and v9001<>'ver_prestamos' and v9001<>'reservar' then @epresta.pft fi
+							if v9001='reservar' then @reserva.pft fi
+						</pft></display>
+          	</do>
+        	<flow action=exit>1</flow>
+
+
+       	<label>BUSCARLIBROS</label>
+          	<do task=search>
+             	<parm name=db><pft>v5001</pft></parm>
+             	<parm name=from><pft>'1'</pft></parm>
+             	<parm name=expression><pft>v3000</pft></parm>
+             	<field action=define tag=1001>Isis_Current</field>
+             	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+             	<loop>
+                	<field action=import tag=5001>5001</field>
+                	<field action=import tag=5015>5015</field>
+                	<field action=import tag=3030>3030</field>
+                	<field action=import tag=3000>3000</field>
+                	<field action=import tag=8000>8000</field>
+					<field action=import tag=1091>1091</field>
+					<field action=import tag=9001>9001</field>
+					<field action=import tag=2023>2023</field>
+					<display>
+    					<pft type=reload>
+       						<pft>'@'v3030,'.pft'</pft>
+    				</pft>
+                	</display>
+
+                	<field action=export tag=3000>3000</field>
+             	</loop>
+
+          	</do>
+        	<flow action=exit>1</flow>
+
+
+  		<label>DEVOLVER</label>
+			<do task=update>
+				<parm name=db>presta</parm>
+            	<parm name=mfn><pft>v2000</pft></parm>
+            	<parm name=lockid><pft>v9060</pft></parm>
+				<parm name=fst>
+					<pft>cat('presta.fst')</pft>
+				</parm>
+            	<field action=define tag=1101>Isis_Lock</field>
+            	<field action=define tag=1102>Isis_Status</field>
+            	<update>
+					<write>Lock</write>
+            		<proc><pft>'d1'/'a1~X~''a980~'v9060'^d'date'~'</pft></proc>
+                   	<write>Unlock</write>
+<!--					<display><pft>if val(v1102)=0 then
+ 							'<b>Préstamo devuelto!</b> 'v800'<b>' fi</pft>
+					</display> -->
+				</update>
+       		</do>
+       		<flow action=exit>1</flow>
+
+		<label>VERUSUARIO</label>
+<!-- Se lee la base de datos para desplegar los datos del usuario -->
+			<do task=search>
+				<parm name=db>users</parm>
+				<parm name=from>1</parm>
+				<parm name=to>1</parm>
+				<parm name=expression><pft>v3000</pft></parm>
+             	<field action=define tag=1001>Isis_Current</field>
+             	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+				<display><pft>
+'<html>'
+'<head>'
+'<Title>Datos del usuario</title>'/
+'<link rel=stylesheet href=/intranet/js/style01.css type=text/css>'/
+'</head>'/
+'<body>'
+						 </pft>
+				</display>
+				<loop>
+                	<display>
+						<pft>@busers.pft</pft>
+                	</display>
+				</loop>
+			</do>
+             	<field action=define tag=1032>Isis_To</field>
+				<display><pft>
+'</body></html>'
+						 </pft>
+				</display>
+       		<flow action="exit">1</flow>
+    </section>
+ </IsisScript>
+
+

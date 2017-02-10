@@ -1,0 +1,4 @@
+solicitudes.*=%path_database%solicitudes/data/solicitudes.*
+solicitudes.pft=%path_database%solicitudes/pfts/en/solicitudes.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

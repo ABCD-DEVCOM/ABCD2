@@ -1,0 +1,7 @@
+/iah/?base=DIGLIB&lang=en
+
+http://%HOST%/cgi-bin/ffi/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DIGLIB&nextAction=xml&count=1
+
+exprSearch=
+
+http://%HOST%/cgi-bin/ffi/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=EDSARTICLEX&nextAction=lnk

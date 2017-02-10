@@ -1,0 +1,4 @@
+researchproject.*=/var/opt/ABCD/bases/researchproject/data/researchproject.*
+researchproject.pft=//var/opt/ABCD/bases/researchproject/pfts/en/researchproject.pft
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft

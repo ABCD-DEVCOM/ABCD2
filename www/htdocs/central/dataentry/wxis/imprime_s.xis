@@ -1,0 +1,100 @@
+ <IsisScript>
+	<trace>xOn</trace>
+	<section>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=3000>Expresion</field>
+		<field action=cgi tag=3040>Formato</field>
+		<field action=cgi tag=3030>Pft</field>
+ 		<field action=cgi tag=3050>Sort</field>
+		<field action=cgi tag=9001>Opcion</field>
+		<field action=cgi tag=2000>from</field>
+		<field action=cgi tag=2001>to</field>
+		<field action=cgi tag=1>path_db</field>
+       	<parm name=cipar>
+          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+       	</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<parm name="buffersize">200000</parm>
+
+<display><pft></pft></display>
+		<flow action=jump>
+  			<pft>
+				select s(v9001)
+					case 'buscar':		'BUSCAR'
+					case 'rango':      'RANGO'
+				endsel
+			</pft>
+   		</flow>
+
+		<label>BUSCAR</label>
+			<do task=search>
+              	<parm name=db><pft>v5001</pft></parm>
+             	<parm name=from><pft>'1'</pft></parm>
+             	<parm name=expression>
+                	<pft>
+                     	v3000
+                 	</pft>
+             	</parm>
+ 				<loop>
+ 					<field action=import tag=3050>3050</field>
+			 		<list action=load type=sort>
+						<pft type=reload><pft>'mpu,'v3050'mpl,`^m`,f(mfn,1,0)'/</pft></pft>
+					</list>
+				</loop>
+				<do task=list>
+					<field action=define tag=1>Isis_Item</field>
+					<field action=define tag=1001>Isis_Current</field>
+					<field action=define tag=1002>Isis_Items</field>
+					<field action=define tag=1050>Isis_Value</field>
+					<loop>
+						<field action=import tag=5001>5001</field>
+						<field action=import tag=3030>3030</field>
+						<field action=import tag=3040>3040</field>
+						<display>
+							<pft type=reload><pft>'(ref([v5001]val(v1^m),',if p(v3030) then '@'v3030,'.pft,' else v3040/ fi '))'</pft></pft>
+						</display>
+					</loop>
+				</do>
+
+
+          </do>
+        <flow action=exit>1</flow>
+
+		<label>RANGO</label>
+			<do task=mfnrange>
+           		<parm name=db><pft>v5001</pft></parm>
+           		<parm name=from><pft>v2000</pft></parm>
+				<parm name=to><pft>v2001</pft></parm>
+				<parm name="buffersize">200000</parm>
+                <parm name=MAX_TMP_STRING>200000</parm>
+ 				<loop>
+ 					<field action=import tag=3050>3050</field>
+			 		<list action=load type=sort>
+						<pft type=reload><pft>'mpu,'v3050'mpl,`^m`,f(mfn,1,0)'/</pft></pft>
+					</list>
+				</loop>
+				<do task=list>
+					<field action=define tag=1000>Isis_Item</field>
+					<field action=define tag=1001>Isis_Current</field>
+					<field action=define tag=1002>Isis_Items</field>
+					<field action=define tag=1050>Isis_Value</field>
+					<loop>
+						<field action=import tag=5001>5001</field>
+						<field action=import tag=3030>3030</field>
+						<field action=import tag=3040>3040</field>
+						<display>
+							<pft type=reload><pft>'(ref([v5001[1]]val(v1000^m),',if p(v3030[1]) then '@'v3030[1]'.pft,' else v3040[1]/ fi /')/)'</pft></pft>
+						</display>
+					</loop>
+				</do>
+
+
+          </do>
+        <flow action=exit>1</flow>
+
+
+    </section>
+ </IsisScript>

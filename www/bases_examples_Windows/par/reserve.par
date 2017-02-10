@@ -1,0 +1,7 @@
+reserve.*=%path_database%reserve/data/reserve.*
+reserve.pft=%path_database%reserve/pfts/en/reserve.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+isisac.tab=%path_database%reserve/data/isisac.tab
+isisuc.tab=%path_database%reserve/data/isisuc.tab.tab
+STW=%path_database%reserve/data/reserve.stw

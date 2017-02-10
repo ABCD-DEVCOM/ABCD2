@@ -1,0 +1,13 @@
+VERSION=2.0b
+LEGEND1=2015
+LEGEND2=DEMO for testing
+URL1=http://www.abcdwiki.net
+URL2=http://www.iccisis.org
+wxisurl=http://127.0.0.1:9090/cgi-bin/
+diglib=ffi/
+dubcore=ffi/
+marcuni=ffiutf8/*
+#copies=ffiutf8/*
+#loanobjects=ffiutf8/*
+#marc=1660utf8/*
+

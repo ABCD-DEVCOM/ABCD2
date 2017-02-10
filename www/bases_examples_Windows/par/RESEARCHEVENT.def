@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%researchevent/data/researchevent.*
+FILE standard.pft=%path_database%researchevent/pfts/%lang%/researchevent.pft
+FILE SHORTCUT.IAH=%path_database%researchevent/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TW=^1Projectos^2Projectos^3Events^4Projets^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX EN=^1Project nombre^2Projecto nombre^3Event name^4Projets nombre^xEN ^yDATABASE^uEN_^mEN_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^3Default^4défault
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,B
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

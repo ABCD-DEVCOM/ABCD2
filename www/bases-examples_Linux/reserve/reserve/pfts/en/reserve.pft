@@ -1,0 +1,17 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top nowrap><font face=arial size=2><b>Situacion</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top nowrap><font face=arial size=2><b>Código de usuario</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de usuario</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Base de datos</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de control</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha reserva</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v31) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de reserva</b></td><td valign=top><font face=arial size=2>'v31+|<br>|,'</td>' fi/
+if p(v32) then '<tr><td width=20% valign=top><font face=arial size=2><b>Operador que reserva</b></td><td valign=top><font face=arial size=2>'v32+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Esperar hasta</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>No. de clasificación</b></td><td valign=top><font face=arial size=2>'v50+|<br>|,'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha asignación objeto</b></td><td valign=top><font face=arial size=2>'v60+|<br>|,'</td>' fi/
+if p(v130) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha cancelación de la reserva</b></td><td valign=top><font face=arial size=2>'v130+|<br>|,'</td>' fi/
+if p(v131) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora cancelación de la reserva</b></td><td valign=top><font face=arial size=2>'v131+|<br>|,'</td>' fi/
+if p(v132) then '<tr><td width=20% valign=top><font face=arial size=2><b>Operador cancelación reserva</b></td><td valign=top><font face=arial size=2>'v132+|<br>|,'</td>' fi/
+if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha préstamo</b></td><td valign=top><font face=arial size=2>'v200+|<br>|,'</td>' fi/
+'</table><p>'

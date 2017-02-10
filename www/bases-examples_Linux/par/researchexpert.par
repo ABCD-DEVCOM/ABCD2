@@ -1,0 +1,4 @@
+researchexpert.*=/var/opt/ABCD/bases/researchexpert/data/researchexpert.*
+researchexpert.pft=/var/opt//ABCD/bases/researchexpert/pfts/en/researchexpert.pft
+prologoact.pft=/var/opt//ABCD/bases/www/prologoact.pft
+epilogoact.pft=/var/ABCD/bases/www/epilogoact.pft

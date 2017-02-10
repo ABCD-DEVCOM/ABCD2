@@ -1,0 +1,19 @@
+
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Id Objeto</b></td><td valign=top><font face=arial size=2>'v1+|; |,
+
+'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Base de dados</b></td><td valign=top><font face=arial size=2>'v10+|; |,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Status</b></td><td valign=top><font face=arial size=2>'v20+|; |,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de inventário</b></td><td valign=top><font face=arial size=2>'v30+|; |,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de Objeto</b></td><td valign=top><font face=arial size=2>'v40+|; |,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tomo</b></td><td valign=top><font face=arial size=2>'v50+|; |,'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Volume</b></td><td valign=top><font face=arial size=2>'v60+|; |,'</td>' fi/
+if p(v80) then '<tr><td width=20% valign=top><font face=arial size=2><b>Data de aquisição</b></td><td valign=top><font face=arial size=2>'v80+|; |,'</td>' fi/
+if p(v90) then '<tr><td width=20% valign=top><font face=arial size=2><b>Preço</b></td><td valign=top><font face=arial size=2>'v90+|; |,'</td>' fi/
+if p(v100) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ordem de compra</b></td><td valign=top><font face=arial size=2>'v100+|; |,'</td>' fi/
+if p(v110) then '<tr><td width=20% valign=top><font face=arial size=2><b>Sugestões</b></td><td valign=top><font face=arial size=2>'v110+|; |,'</td>' fi/
+if p(v120) then '<tr><td width=20% valign=top><font face=arial size=2><b>Licitação</b></td><td valign=top><font face=arial size=2>'v120+|; |,'</td>' fi/
+'<tr><td colspan=2><hr></td>'/
+'</table>'
+

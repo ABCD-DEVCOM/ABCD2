@@ -1,0 +1,5 @@
+profilename=loanoper
+profiledesc=Loan Operator
+CIRC_LOAN=Y
+CIRC_RETURN=Y
+CIRC_RENEW=Y

@@ -1,0 +1,67 @@
+<p><font face="Arial" size="2"></font></p>
+<p>&nbsp;<font face="Arial" size="2"><strong>Creación de nuevos formatos de despliegue</strong></font></p>
+<p><font face="Arial" size="2">Este procedimiento le permite generar un formato de salida - o&nbsp;modificar&nbsp;uno previamente generado. Los formatos obtenidos pueden utiizarse para visualizar la información por pantala o &nbsp;para enviar información directamente a un procesador de palabras o a un procesador de hojas de cálculo.</font></p>
+<p><font face="Arial" size="2">Para <strong>seleccionar un formato ya existente</strong>, revise la lista que se muestra bajo <font color="#ff0000">Formatos:</font> y haga clic sobre el formato que desea utilizar. A continuación haga clic en&nbsp;<strong>Editar</strong> lo cual le presentará una ventana con el formato seleccionado. Si conoce las reglas para elaboración de formatos del <strong>Cds/isis</strong>, puede editar el formato para realizar cambios o ajustes; de otra forma, no modifique la salida ya que si genera errores no obtendrá ningún resultado al&nbsp;solicitar la emisión del listado.</font></p>
+<p><font size="2">&nbsp;<font face="Arial" size="2">En la ventana donde se despliega el formato, una vez&nbsp;realizadas las modificaciones, haga clic sobre <strong>enviar</strong> para mandar el formato a la hoja de generación de salida.&nbsp;</font></font></p>
+<p><font face="Arial" size="2">Para <strong>generar un nuevo formato</strong> haga clic sobre la sección <strong>Crear un formato </strong>y seleccione de la lista de campos aquellos que desea incluir en la salida. Para seleccionar los campos de doble click sobre el nombre o resáltelos con ayuda del "mouse" y de clic sobre las flechas correspondientes. Puede utilizar las teclas <strong><em>[Ctrl]</em></strong> y <strong><em>[Shift]</em></strong> para seleccionar los campos. Las flechas simples transfieren los campos seleccionados de una ventana a otra y las flechas dobles transfieren todos los campos.</font></p>
+<p><font face="Arial" size="2">Puede utilizar los botones <strong>subir </strong>o <strong>bajar </strong>para cambiar la posición de los campos seleccionados.</font></p>
+<p><font face="Arial" size="2">Al terminar la seleccion&nbsp;haga clic sobre una de las opciones identificadas bajo <strong>Generar formato</strong> y aparecerá en la ventana el formato generado. Si conoce el lenguaje de formateo de <strong>Cds/isis</strong>, puede editar el formato para realizar cambios o ajustes; de otra forma, no modifique la salida ya que si genera errores no obtendrá ningún resultado al ordenar la emisión del listado.</font></p>
+<p><font color="#000000" size="2"><font face="arial"><font face="arial">Existen las siguientes posibilidades para la generación de formatos:</font></font>&nbsp;</font></p>
+<ul>
+    <li><font color="#000000" size="2"><font face="arial">Tabla</font> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Párrafo</font> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Párrafo (con etiquetas)</font> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Columnas ( en tabla)</font> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Columnas (delimitadas)</font> </font></li>
+</ul>
+<p><font color="#000000"><strong><font face="arial" size="2">Tabla</font></strong></font></p>
+<p><font face="arial" color="#000000" size="2">Se crea un formato en forma de tabla, es decir, una primera columna con el rótulo del campo y una segunda columna con el contenido. Cada campo de la base de datos se coloca en una nueva fila, y cada registro constituye una tabla</font></p>
+<p><font face="arial" color="#000000" size="2"><strong>Párrafo</strong></font></p>
+<p><font face="arial" color="#000000" size="2">Se crea un formato donde se coloca cada campo en una nueva línea. No se colocan los rótulos de los campos. Los registros se separan con un salto de párrafo (&lt;P&gt;)</font></p>
+<p><font color="#000000"><strong><font face="arial" size="2">Párrafo (con etiquetas)</font></strong></font></p>
+<p><font face="arial" color="#000000" size="2">Igual que el caso anterior, pero se precede cada campo con la etiqueta del campo en negrilla.</font></p>
+<p><font color="#000000"><strong><font face="arial" size="2">Columnas (en tabla)</font></strong></font></p>
+<p><font face="arial" color="#000000" size="2">Se crea una tabla con todos los registros seleccionados. Cada registro constituye una fila de la tabla, y cada campo se ubica en una columna. En este tipo de formato se presenta una ventana de entrada para incluir los títulos de las columnas. Por defecto se coloca el nombre del campo en la FDT, pero puede ser modificada.</font></p>
+<p><font face="arial" color="#000000" size="2">Este formato es ideal para exportación a procesadores de hojas de cálculo y para ser utilizado como fuente de datos&nbsp;en procesos de combinación de correspondencia.</font></p>
+<p><font color="#000000"><strong><font face="arial" size="2">Columnas (delimitadas)</font></strong></font></p>
+<p><font face="arial" color="#000000" size="2">Se crea un archivo plano donde cada registro constituye una&nbsp;línea. Los campos seleccionados están separados con el delimitador <strong>|</strong>&nbsp;. Si un campo de datos está ausente, entonces, la posición correspondiente se presenta vacía, pero el delimitador está presente. Esto con el fin de no perder la alineación de las columnas. En este tipo de formato se presenta una ventana de entrada para incluir los títulos de las columnas. Por defecto se coloca el nombre del campo en la FDT, pero puede ser modificada.</font></p>
+<p><font face="arial" color="#000000" size="2">Los resultados de la aplicación de este formato pueden ser almacenados como un archivo TXT, el cual puede posteriormente ser procesado por un programa de edición para transformalo en tabla.</font></p>
+<p><font face="arial" color="#000000" size="2"><strong>Edición de los subcampos</strong></font></p>
+<p><font face="arial" color="#000000" size="2">En el proceso de generación de formatos se toman las siguientes medidas para el manejo de los subcampos.</font></p>
+<ul>
+    <li><font color="#000000" size="2"><font face="arial">Si al definir la Tabla de Definición de Campos no se aportó información en la columna 7 (pre-literales), entonces, los delimitadores de subcampo se eliminan y se inserta un espacio en blanco para separar los diferentes componentes del campo</font> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Si se aportó información de pre-literales, entonces cada subcampo será precedido por el pre-literal que le corresponda. Ejm.: si la FDT especifica como subcampos abc y en la columna pre-literales se especifica <strong>-,.</strong> (guión coma punto),&nbsp; ^a no se&nbsp;precede con&nbsp;ningún delimitador (esta es la función del guión,&nbsp;cuya presencia es obligatoria para mantener la correspondencia entre delimitadores y caracteres&nbsp;de edición. Desafortunadamente no se puede utilizar un espacio ya que el editor de FDT elimina los espacios al inico y al final de cada&nbsp;columna); ^b se&nbsp;precede con una coma y ^c se&nbsp;precede con un punto&nbsp;</font> </font></li>
+</ul>
+<p><font face="Arial" size="2">Una vez completada la selección/edición/generación de un formato puede pasar entonces a <strong>Generar la salida</strong> correspondiente</font></p>
+<p><font face="Arial" size="2">Los registros pueden ser seleccionados mediante dos vías</font></p>
+<ol>
+    <li><font face="Arial" size="2">A través de un rango de registros (desde - hasta)</font> </li>
+    <li><font face="Arial" size="2">Aplicando una expresión de búsqueda sobre la base de datos. Para ello haga clic sobre el ícono de búsqueda y construya la expresión correspondiente</font></li>
+</ol>
+<font face="arial" color="#000000" size="2">Para aplicar una búsqueda tiene las siguientes opciones&nbsp;:</font>
+<ol>
+    <li><font face="arial" color="#000000" size="2">Escribir su fórmula de búsqueda directamente en el recuadro </font></li>
+    <li><font face="arial" color="#000000" size="2">Solicitar el formulario de búsqueda avanzada para construir una expresión de búsqueda.&nbsp; Para ello haga clic sobre el vínculo <strong>Nuevo</strong> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Construir una expresión de búsqueda a partir de fórmulas previamente almacenadas, utilizando el menú que se presenta para tales efectos</font> </font></li>
+</ol>
+<p><font face="arial" color="#000000" size="2">Una vez que haya construído la expresión de búsqueda puede visualizar los resultados a través del enlace <strong>Vista previa</strong>, y si así lo considera conveniente, puede almacenarla utilizando el enlace <strong>Guardar expresión de búsqueda.</strong> La nueva búsqueda se almacena en el archivo search_expr.tab ubicado en la sub-carpeta <strong>pfts/<em>lenguaje-activo</em></strong><em> </em>de la base de datos seleccionada</font></p>
+<p><font face="arial" color="#000000" size="2"><strong>Clasificación de los resultados obtenidos</strong></font></p>
+<p><font face="arial" color="#000000" size="2">Previo al despliegue de los resultados puede proporcionar una clave de clasificación para presentar los registros en un órden definido. Para ello puede:</font></p>
+<ol>
+    <li><font color="#000000" size="2"><font face="arial">Suministrar una clave de búsqueda directamente</font> </font></li>
+    <li><font color="#000000" size="2"><font face="arial">Seleccionar una clave de búsqueda a partir de una lista de claves ya definidas</font> </font></li>
+</ol>
+<p><font face="arial" color="#000000" size="2">La claves se definen de la forma:&nbsp; MPU,v1,v2,MPL, o utilizando cualquier comando válido del lenguaje de formatos de CDS/Isis. Note que solo se prevé la asignación de una clave de búsqueda. Si se desea clasificar por varios campos, construya la clave contemplando los campos requeridos.</font></p>
+<p><font face="arial" color="#000000" size="2">Esta opción es un proceso adicional en el servidor y si se solicitan demasiados registros (dependiendo de la velocidad del servidor y configuración del tiempo límite de ejecución asignado a los procesos en el PHP), podría cancelarse el proceso por "tiempo límite excedido"</font></p>
+<p><font face="Arial" size="2"><font face="Arial" size="2">&nbsp;Una vez realizada la selección haga clic sobre&nbsp;<strong><em>Enviar a un&nbsp;procesador de palabras</em></strong>&nbsp;(para enviar la prueba obtenida a un procesador de palabras), <strong><em>Enviar a un&nbsp;procesador de&nbsp;hojas de cálculo,&nbsp;</em></strong>&nbsp;&nbsp; o sobre&nbsp;<strong><em>Vista previa</em></strong> para ver el resultado del formato a través de su despliegue por pantalla.</font></font></p>
+<font face="Arial" size="2">
+<p><font face="Arial" size="2">Para emitir la salida haga clic sobre la sección <strong>Generar salida</strong> y ahí coloque la información correspondiente de acuerdo al método que va a utilizar&nbsp;para la selección de los registros,&nbsp;<font face="Arial" size="2">&nbsp;bien sea por rango de Mfn o realizando una búsqueda sobre la base de datos. </font></font></p>
+<p><font face="Arial" size="2"><font face="Arial" size="2">Una vez realizada la selección haga clic sobre&nbsp;<strong><em>Enviar a un&nbsp;procesador de palabras</em></strong>&nbsp;(para enviar la prueba obtenida a un procesador de palabras), <strong><em>Enviar a un&nbsp;procesador de&nbsp;hojas de cálculo,&nbsp;</em></strong>&nbsp;&nbsp; o sobre&nbsp;<strong><em>Vista previa</em></strong> para ver el resultado del formato a través de su despliegue por pantalla.</font></font></p>
+<p><font face="Arial"><font size="2">Para guardar el formato haga clic sobre la sección <strong>Guardar formato</strong>&nbsp;y suministre un nombre (utilizando letras y números únicamente y sin espacios en blanco) y provea la descripción con la cual se presentará ese formato en la lista de <font color="#ff0000">formatos ya definidos.</font></font></font></p>
+<p>&nbsp;</p>
+<p><font face="Arial" size="2">Para más información acerca del lenguaje de formateo consulte:</font></p>
+<p><font face="Arial" size="2"><a href="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-LinguagemFormato4-en.pdf" target="_blank">Manual del lenguaje de formateo de CDS/Isis (Inglés)</a></font></p>
+<p><font face="Arial" size="2"><a href="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-LinguagemFormato4-es.pdf" target="_blank">Manual del lenguaje de formateo de CDS/Isis (español)</a></font></p>
+<p>&nbsp;</p>
+<p><font face="Arial"><font size="2"><font color="#ff0000"></font></font></font></p>
+</font>

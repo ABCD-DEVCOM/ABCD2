@@ -1,0 +1,83 @@
+'<table border=0 width=90%>'
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Datos generales</b></td>'/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de control</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de literatura</b></td><td valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>Nivel de registro</b></td><td valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+if p(v9) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de material</b></td><td valign=top><font face=arial size=2>'v9+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Sign. topográfica</b></td><td valign=top><font face=arial size=2>'(if p(v3) then | |v3^a,,| /|v3^b,,| /|v3^c,,| /|v3^d,,| /|v3^e, if iocc<>nocc(v3) then '<br>' fi fi/),'</td>' fi/
+if p(v104) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ubic. física</b></td><td valign=top><font face=arial size=2>'v104+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autores pers.(A)</b></td><td valign=top><font face=arial size=2>'(if p(v10) then | |v10^*,,| ,|v10^b,,| (|v10^r,,| *|v10^f,| |v10^h, if iocc<>nocc(v10) then '<br>' fi fi/),'</td>' fi/
+if p(v11) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autores inst.(A)</b></td><td valign=top><font face=arial size=2>'(if p(v11) then | |v11^*,| |v11^b, if iocc<>nocc(v11) then '<br>' fi fi/),'</td>' fi/
+if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título(A)</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título traducido (A)</b></td><td valign=top><font face=arial size=2>'v13+|<br>|,'</td>' fi/
+if p(v16) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autores pers.(M)</b></td><td valign=top><font face=arial size=2>'(if p(v16) then | |v16^*,,| ,|v16^b,,| (|v16^r,,| *|v16^f,| |v16^h, if iocc<>nocc(v16) then '<br>' fi fi/),'</td>' fi/
+if p(v17) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autores inst.(M)</b></td><td valign=top><font face=arial size=2>'(if p(v17) then | |v17^*,,| /|v17^b, if iocc<>nocc(v17) then '<br>' fi fi/),'</td>' fi/
+if p(v18) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título(M)</b></td><td valign=top><font face=arial size=2>'v18+|<br>|,'</td>' fi/
+if p(v19) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título traducido(M)</b></td><td valign=top><font face=arial size=2>'v19+|<br>|,'</td>' fi/
+if p(v23) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autores pers.(C)</b></td><td valign=top><font face=arial size=2>'(if p(v23) then | |v23^*,,| ,|v23^b,,| (|v23^r,,| *|v23^f,| |v23^h, if iocc<>nocc(v23) then '<br>' fi fi/),'</td>' fi/
+if p(v24) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autores inst.(C)</b></td><td valign=top><font face=arial size=2>'(if p(v24) then | |v24^*,| |v24^b, if iocc<>nocc(v24) then '<br>' fi fi/),'</td>' fi/
+if p(v25) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título(C)</b></td><td valign=top><font face=arial size=2>'v25+|<br>|,'</td>' fi/
+if p(v26) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título traducido(C)</b></td><td valign=top><font face=arial size=2>'v26+|<br>|,'</td>' fi/
+if p(v29) then '<tr><td width=20% valign=top><font face=arial size=2><b>Editor Institucional</b></td><td valign=top><font face=arial size=2>'v29+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Nombre de la revista</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2><b>ISSN</b></td><td valign=top><font face=arial size=2>'v35+|<br>|,'</td>' fi/
+if p(v160) then '<tr><td width=20% valign=top><font face=arial size=2><b>Asesor/Tutor(tesis)</b></td><td valign=top><font face=arial size=2>'(if p(v160) then | |v160^*,,| ,|v160^b,,| (|v160^r,,| *|v160^f,| |v160^h, if iocc<>nocc(v160) then '<br>' fi fi/),'</td>' fi/
+if p(v51) then '<tr><td width=20% valign=top><font face=arial size=2><b>Grado</b></td><td valign=top><font face=arial size=2>'v51+|<br>|,'</td>' fi/
+if p(v170) then '<tr><td width=20% valign=top><font face=arial size=2><b>Línea</b></td><td valign=top><font face=arial size=2>'v170+|<br>|,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Instituto</b></td><td valign=top><font face=arial size=2>'v50+|<br>|,'</td>' fi/
+if p(v150) then '<tr><td width=20% valign=top><font face=arial size=2><b>Facultad</b></td><td valign=top><font face=arial size=2>'v150+|<br>|,'</td>' fi/
+if p(v152) then '<tr><td width=20% valign=top><font face=arial size=2><b>Escuela</b></td><td valign=top><font face=arial size=2>'v152+|<br>|,'</td>' fi/
+if p(v38) then '<tr><td width=20% valign=top><font face=arial size=2><b>Editorial</b></td><td valign=top><font face=arial size=2>'v38+|<br>|,'</td>' fi/
+if p(v39) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ciudad</b></td><td valign=top><font face=arial size=2>'v39+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>País</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v41) then '<tr><td width=20% valign=top><font face=arial size=2><b>Edición</b></td><td valign=top><font face=arial size=2>'v41+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Páginas</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v43) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha</b></td><td valign=top><font face=arial size=2>'v43+|<br>|,'</td>' fi/
+if p(v44) then '<tr><td width=20% valign=top><font face=arial size=2><b>F/ISO</b></td><td valign=top><font face=arial size=2>'v44+|<br>|,'</td>' fi/
+if p(v22) then '<tr><td width=20% valign=top><font face=arial size=2><b>Serie</b></td><td valign=top><font face=arial size=2>'(if p(v22) then | |v22^n, if iocc<>nocc(v22) then '<br>' fi fi/),'</td>' fi/
+if p(v42) then '<tr><td width=20% valign=top><font face=arial size=2><b>Inf. descript.</b></td><td valign=top><font face=arial size=2>'v42+|<br>|,'</td>' fi/
+if p(v73) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ref. bib.</b></td><td valign=top><font face=arial size=2>'v73+|<br>|,'</td>' fi/
+if p(v47) then '<tr><td width=20% valign=top><font face=arial size=2><b>ISBN</b></td><td valign=top><font face=arial size=2>'v47+|<br>|,'</td>' fi/
+if p(v63) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de soporte</b></td><td valign=top><font face=arial size=2>'v63+|<br>|,'</td>' fi/
+if p(v21) then '<tr><td width=20% valign=top><font face=arial size=2><b>Total Ejem.</b></td><td valign=top><font face=arial size=2>'v21+|<br>|,'</td>' fi/
+if p(v62) then '<tr><td width=20% valign=top><font face=arial size=2><b>Diseminación</b></td><td valign=top><font face=arial size=2>'v62+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Contenido</b></td>'/
+if p(v64) then '<tr><td width=20% valign=top><font face=arial size=2><b>Idioma del texto</b></td><td valign=top><font face=arial size=2>'v64+|<br>|,'</td>' fi/
+if p(v66) then '<tr><td width=20% valign=top><font face=arial size=2><b>Otros idiomas</b></td><td valign=top><font face=arial size=2>'v66+|<br>|,'</td>' fi/
+if p(v74) then '<tr><td width=20% valign=top><font face=arial size=2><b>Alcance temporal:Desde</b></td><td valign=top><font face=arial size=2>'v74+|<br>|,'</td>' fi/
+if p(v75) then '<tr><td width=20% valign=top><font face=arial size=2><b>Alcance temporal:Hasta</b></td><td valign=top><font face=arial size=2>'v75+|<br>|,'</td>' fi/
+if p(v76) then '<tr><td width=20% valign=top><font face=arial size=2><b>Descriptores</b></td><td valign=top><font face=arial size=2>'v76+|<br>|,'</td>' fi/
+if p(v80) then '<tr><td width=20% valign=top><font face=arial size=2><b>Cat. tem. primaria</b></td><td valign=top><font face=arial size=2>'v80+|<br>|,'</td>' fi/
+if p(v81) then '<tr><td width=20% valign=top><font face=arial size=2><b>Cat. tem. secun.</b></td><td valign=top><font face=arial size=2>'v81+|<br>|,'</td>' fi/
+if p(v77) then '<tr><td width=20% valign=top><font face=arial size=2><b>Datos estad.</b></td><td valign=top><font face=arial size=2>'v77+|<br>|,'</td>' fi/
+if p(v82) then '<tr><td width=20% valign=top><font face=arial size=2><b>Descrip. geograf.</b></td><td valign=top><font face=arial size=2>'v82+|<br>|,'</td>' fi/
+if p(v85) then '<tr><td width=20% valign=top><font face=arial size=2><b>Div.Ad.y reg</b></td><td valign=top><font face=arial size=2>'v85+|<br>|,'</td>' fi/
+if p(v86) then '<tr><td width=20% valign=top><font face=arial size=2><b>Siglas</b></td><td valign=top><font face=arial size=2>'v86+|<br>|,'</td>' fi/
+if p(v87) then '<tr><td width=20% valign=top><font face=arial size=2><b>Otras ent.sec.</b></td><td valign=top><font face=arial size=2>'v87+|<br>|,'</td>' fi/
+if p(v37) then '<tr><td width=20% valign=top><font face=arial size=2><b>Notas de contenido</b></td><td valign=top><font face=arial size=2>'v37+|<br>|,'</td>' fi/
+if p(v68) then '<tr><td width=20% valign=top><font face=arial size=2><b>Notas administrativ.</b></td><td valign=top><font face=arial size=2>'v68+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Resumen</b></td>'/
+if p(v72) then '<tr><td width=20% valign=top><font face=arial size=2><b>Resumen</b></td><td valign=top><font face=arial size=2>'v72+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Tabla de contenido</b></td>'/
+if p(v36) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tabla de contenido</b></td><td valign=top><font face=arial size=2>'v36+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Proyecto</b></td>'/
+if p(v58) then '<tr><td width=20% valign=top><font face=arial size=2><b>Institucion patrocinante</b></td><td valign=top><font face=arial size=2>'v58+|<br>|,'</td>' fi/
+if p(v59) then '<tr><td width=20% valign=top><font face=arial size=2><b>Nombre del proyecto</b></td><td valign=top><font face=arial size=2>'(if p(v59) then | |v59^s, if iocc<>nocc(v59) then '<br>' fi fi/),'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Numero del proyecto</b></td><td valign=top><font face=arial size=2>'v60+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Eventos</b></td>'/
+if p(v52) then '<tr><td width=20% valign=top><font face=arial size=2><b>Institucion patrocinante</b></td><td valign=top><font face=arial size=2>'v52+|<br>|,'</td>' fi/
+if p(v53) then '<tr><td width=20% valign=top><font face=arial size=2><b>Nombre del evento</b></td><td valign=top><font face=arial size=2>'v53+|<br>|,'</td>' fi/
+if p(v54) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ciudad</b></td><td valign=top><font face=arial size=2>'v54+|<br>|,'</td>' fi/
+if p(v55) then '<tr><td width=20% valign=top><font face=arial size=2><b>Pais</b></td><td valign=top><font face=arial size=2>'v55+|<br>|,'</td>' fi/
+if p(v56) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha</b></td><td valign=top><font face=arial size=2>'v56+|<br>|,'</td>' fi/
+if p(v57) then '<tr><td width=20% valign=top><font face=arial size=2><b>F/ISO</b></td><td valign=top><font face=arial size=2>'v57+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Objetos</b></td>'/
+if p(v800) then '<tr><td width=20% valign=top><font face=arial size=2><b>Imagen</b></td><td valign=top><font face=arial size=2>'(if p(v800) then | |v800^d, if iocc<>nocc(v800) then '<br>' fi fi/),'</td>' fi/
+if p(v810) then '<tr><td width=20% valign=top><font face=arial size=2><b>Texto</b></td><td valign=top><font face=arial size=2>'(if p(v810) then | |v810^d, if iocc<>nocc(v810) then '<br>' fi fi/),'</td>' fi/
+if p(v820) then '<tr><td width=20% valign=top><font face=arial size=2><b>Sonido</b></td><td valign=top><font face=arial size=2>'(if p(v820) then | |v820^d, if iocc<>nocc(v820) then '<br>' fi fi/),'</td>' fi/
+if p(v830) then '<tr><td width=20% valign=top><font face=arial size=2><b>Video</b></td><td valign=top><font face=arial size=2>'(if p(v830) then | |v830^d, if iocc<>nocc(v830) then '<br>' fi fi/),'</td>' fi/
+if p(v840) then '<tr><td width=20% valign=top><font face=arial size=2><b>WWW</b></td><td valign=top><font face=arial size=2>'(if p(v840) then | |v840^d, if iocc<>nocc(v840) then '<br>' fi fi/),'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>Existencias</b></td>'/
+if p(v101) then '<tr><td width=20% valign=top><font face=arial size=2><b>Existencias</b></td><td valign=top><font face=arial size=2>'(if p(v101) then | |v101^n,| |v101^m,| |v101^l,| |v101^o,| |v101^f,| |v101^p,| |v101^r,| |v101^q,| |v101^y,| |v101^k,| |v101^w,| |v101^z, if iocc<>nocc(v101) then '<br>' fi fi/),'</td>' fi/
+if p(v980) then '<tr><td width=20% valign=top><font face=arial size=2><b>Operador y Fecha</b></td><td valign=top><font face=arial size=2>'v980+|<br>|,'</td>' fi/
+'</table><p>'

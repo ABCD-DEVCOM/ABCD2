@@ -1,0 +1,4 @@
+literacy.*=/var/opt/ABCD/bases/literacy/data/literacy.*
+literacy.pft=/var/opt/ABCD/bases/literacy/pfts/en/literacy.pft
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft

@@ -1,0 +1,31 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=/var/opt/ABCD/bases/projects/data/projects.*
+FILE standard.pft=/var/opt/ABCD/bases/projects/pfts/%lang%/projects.pft
+FILE SHORTCUT.IAH=/var/opt/ABCD/bases/projects/pfts/%lang%/shortcut.pft
+FILE GXML=/ABCD/www/bases/gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX FT=^1Projectos^2Projectos^3Projects^4Projets^d*^xFT ^yDATABASE^uFT_^mFT_
+INDEX PN=^1Project nombre^2Projecto nombre^3Project name^4Projets nombre^xPN ^yDATABASE^uPN_^mPN_
+INDEX ID=^1Proyecto ID^2Projecto ID^3Project ID^4Projets ID^xID ^yDATABASE^uID_^mID_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1por defecto^2defecto^3Default^4défault
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,B
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=

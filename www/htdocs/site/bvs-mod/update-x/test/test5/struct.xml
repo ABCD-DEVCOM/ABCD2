@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="product">
+  <edit name="@user"/>
+  <edit name="@available">
+    <input type="radio" value="yes"/>yes<input type="radio" value="no"/>no</edit>
+  <edit name="@language">
+    <select>
+      <option value="es">es</option>
+      <option value="pt">pt</option>
+      <option value="en">en</option>
+    </select>
+  </edit>
+  <edit name="@img"/>
+  <edit name="@id"/>
+  <edit name="@sourceType">
+    <select>
+      <option value="database">database</option>
+      <option value="publication">publication</option>
+      <option value="education">education</option>
+      <option value="push">push</option>
+      <option value="comunication">comunication</option>
+      <option value="integration">integration</option>
+      <option value="tools">tools</option>
+    </select>
+  </edit>
+  <edit name="@version"/>
+  <edit name="name"/>
+  <element name="description">
+    <element name="p" repeat="list">
+      <edit name="text()">
+        <textarea cols="70" rows="12"/>
+      </edit>
+    </element>
+  </element>
+  <element name="platform" repeat="select">
+    <input type="checkbox" value="Windows 9x"/>
+	<input type="checkbox" value="Windows 2000"/>
+	<input type="checkbox" value="Windows XP"/>
+	<input type="checkbox" value="Linux"/>
+  </element>
+  <element name="featureList">
+    <element name="feature" repeat="list">
+      <edit name="text()"/>
+    </element>
+  </element>
+  <element name="requirementList">
+    <element name="requirement" repeat="list">
+      <edit name="text()"/>
+    </element>
+  </element>
+  <element name="informList">
+    <element name="inform" repeat="list">
+      <edit name="text()"/>
+    </element>
+  </element>
+  <element name="suportList">
+    <element name="suport" repeat="list">
+      <edit name="text()"/>
+    </element>
+  </element>
+  <element name="docList">
+    <element name="doc" repeat="list">
+      <edit name="@href"/>
+      <edit name="text()"/>
+    </element>
+  </element>
+  <element name="month" repeat="select">
+    <select>
+      <option value="01">january</option>
+      <option value="02">february</option>
+      <option value="03">march</option>
+      <option value="04">april</option>
+      <option value="05">may</option>
+      <option value="06">june</option>
+      <option value="07">july</option>
+      <option value="08">august</option>
+      <option value="09">september</option>
+      <option value="10">october</option>
+      <option value="11">november</option>
+      <option value="12">december</option>
+    </select>
+  </element>
+  <edit name="number"/>
+</element>

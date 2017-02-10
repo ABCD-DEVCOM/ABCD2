@@ -1,0 +1,12 @@
+	if npost->facic(v30)>0 then
+		'<tr>'
+			'<td width="28%">'
+				'<font face="arial" size=2 >',
+				`<a href="javascript:onClick=OpenNewfacic('ID_`,v30`')">`,
+				'<img src="',v5002[1],'facic.gif" border="0" name="texto"></a>',
+			'</td>',
+                        '<td width="72%" nowspan>',
+                            '<font face=verdana size="1"><i>Coleção detalhada('f(npost->facic(v30),1,0)')</i></font>'
+                        '</td>',
+		'</tr>',
+	fi,

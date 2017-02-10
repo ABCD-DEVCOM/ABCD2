@@ -1,0 +1,3 @@
+if p(v40) then '<br><font face=arial size=2><b>Unit</b>: <font face=arial size=2>'v40+|; |, fi/
+if p(v20) then '<br><font face=arial size=2><b>User (bar)code</b>: <font face=arial size=2>'v20+|; |, fi/
+'<P>'/

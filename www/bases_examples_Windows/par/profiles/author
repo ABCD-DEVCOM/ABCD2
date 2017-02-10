@@ -1,0 +1,6 @@
+profilename=author
+profiledesc=Author auto-submission
+db_diglib=diglib
+CENTRAL_CREC=Y
+CENTRAL_EDREC=Y
+CENTRAL_DELREC=Y

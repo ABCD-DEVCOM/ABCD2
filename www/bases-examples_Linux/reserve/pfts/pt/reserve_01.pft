@@ -1,0 +1,10 @@
+v10,," ("v12")",'|'
+ref(['users']l(['users']'CO_'v10),v30,| <br><a href=mailto:|v160|>|v160|</a>)|),'|'  /*Nombre y correo*/
+v15,"-"v20,'|'
+'#REFER#|'
+v30*6.2,"-",v30*4.2,"-",v30.4 ,' ',v31'|'
+v60*6.2,"/"v60*4.2,"/"v60.4, " - "D40,if v1='0' or v1='3' then if p(v40) and v40<mid(date,0,8) then,'<font color=red>' fi,fi,v40*6.2,"/"v40*4.2,"/"v40.4'|', 
+v200*6.2,"-",v200*4.2,"-",v200.4 ,'|' 
+v1
+
+/

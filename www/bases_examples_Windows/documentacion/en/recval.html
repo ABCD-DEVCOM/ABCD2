@@ -1,0 +1,14 @@
+<p><strong><font face="Arial">Record validation </font></strong></p>
+<p><font face="Arial" size="2">The record validation feature allows a PFT file to be defined which will be used on demand to verify data entry accuracy for each field, for a new record as well as for an existing one. </font></p>
+<p><font face="Arial" size="2">In order to achieve this, a form containing all fields defined in the FDT file will be displayed along with  a text box to specify the validation format to be applied individually to each field. Next to this a checkbox is also displayed (
+    <input type="checkbox" value="on" />
+    ) which subjects record saving to a validation result: when a record is being entered or modified and the checkbox is ticked, it will not be saved if any of the checked fields do not meet the validation criteria.</font></p>
+<p><font face="Arial" size="2">When entering data, and using all this information, ABCD builds up a format where partial validations are consolidated. This format is applied to the record and displays messages in the form of inconditional literals, which will notify the operator about validation results.</font></p>
+<p><font face="Arial" size="2">When the validation form is built, the following options are displayed at the end of the page: </font></p>
+<p><font face="Arial" size="2"><strong>Apply to Mfn : </strong>applies the validation format on the requested MFN and shows the result. Enter the MFN of the requested record and click on <strong>Apply</strong>. </font></p>
+<p><font face="Arial" size="2"><strong>Update: </strong>this stores the developed validation format in the subfolder <strong>def </strong>of the corresponding database. This file is stored under the database name, with the extension .<strong>val</strong>, and it has the following format:  (example):</font></p>
+<p><font face="Courier New"><strong><font color="#800000">20:</font></strong>if a(v20) then `field 20 is missing` fi<br />
+<strong><font color="#800000">510:</font></strong>"Field 510 is missing "n510<br />
+<strong><font color="#800000">900:</font></strong>if a(v900) then `field 900 is missing` fi</font></p>
+<p><font face="Arial" size="2">The field number is placed in front of the validation format to make it easier to carry out any modification, if required. The format will prompt a literal, which will be displayed to the operator when record validation is required.</font></p>
+<p>&nbsp;</p>

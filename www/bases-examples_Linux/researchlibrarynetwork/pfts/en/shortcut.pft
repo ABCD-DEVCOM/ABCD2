@@ -1,0 +1,14 @@
+(
+	/* Como citar */
+        ,@CALL_CITE.PFT,
+
+	/* Export */
+        ,@call_export_BibTex.pft,
+        ,@call_export_ReferenceManager.pft,
+        ,@call_export_ProCite.pft,
+        ,@call_export_EndNote.pft,
+        ,@call_export_Refworks.pft,
+
+	/* Bookmark */
+        ,@BOOKMARK.PFT,
+)

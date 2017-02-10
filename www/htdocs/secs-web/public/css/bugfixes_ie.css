@@ -1,0 +1,39 @@
+A.singleButton {
+	padding-top: 0px;
+	margin-right: 3px;	
+}
+
+A.singleButton SPAN.sb_lb,
+A.singleButton SPAN.sb_rb {
+	margin-top: 0px; 
+}
+
+A.singleButton SPAN.sb_rb {
+	float: none;
+}
+
+.helper {
+	min-height: 1px;	
+}
+
+SPAN.sb_lb {
+	float: none;
+}
+
+.formHead, .formContent {
+	min-height: 1px;	
+}
+
+.helpArea h2 {
+	margin-top: 0px;
+	font-size: 120%;
+	padding: 0px;
+}
+
+.helpArea .help_message {
+}
+
+
+.formHead a.singleButton, .formContent a.singleButton {
+	clear: both;
+}

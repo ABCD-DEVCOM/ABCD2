@@ -1,0 +1,1984 @@
+LDR||Leader|0|0||||||||||||0||
+H||0-- Identification block|0|0||||||||||||0||
+AI|1|Record identifier|0|0|||X||80|||||||0||
+F|3|Persitent record identifier|0|0|||X||80|||||||0||
+M5|5|Version identifier|0|0||||||||||||0||
+T|10|International Standard Book Number|0|1|abdz6|||3||||||||0||
+S||Number (ISBN)|0|0|a||X|||||||||0||
+S||Qualification|0|1|b||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||Erroneous ISBN|0|0|z||X|||||||||0||
+S||Interfield Linking Data|0|0|6||X|||||||||0||
+T|11|International Standard Serial Number|0|1|1abdfgyz|||3||||||||0||
+S||Indicator l|0|0|1||S|||P|011-ind1.tab|||||0||
+S||Number (ISSN)|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||ISSN-L or linking ISSN|0|0|f||X|||||||||0||
+S||Cancelled ISSN-L|0|0|g||X|||||||||0||
+S||Cancelled ISSN|0|0|y||X|||||||||0||
+S||Erroneous ISSN or ISSN-L|0|0|z||X|||||||||0||
+T|12|Fingerprint Identifier|0|0|a25|||2||||||||0||
+S||Fingerprint|0|0|a||X|||||||||0||
+S||Fingerprint System Code|0|0|2||X|||||||||0||
+S||Institution and copy to which Field Applies|0|0|5||X|||||||||0||
+T|013|International Standard Music Number|0|1|abdz|||2||||||||0||
+S||Number (ISMN)|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||Erroneous ISMN|0|0|z||X|||||||||0||
+T|14|Article Identifier|0|0|az2|||2||||||||0||
+S||Article Identifier|0|1|a||X|||||||||0||
+S||Erroneous Article Identifier|0|0|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+T|15|International Standard Technical Report Number|0|1|abdz|||2||||||||0||
+S||Number (ISRN)|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||Cancelled/Invalid/Erroneous ISRN|0|0|z||X|||||||||0||
+T|16|International Standard Recording Code (ISRC)|0|1|abz|||2||||||||0||
+S||Number (ISRC)|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Erroneous ISRC|0|0|z||X|||||||||0||
+T|17|Other Standard Identifier|0|1|12abdz2|||2||||||||0||
+S||Indicator 1|0|0|1||S|||P|017-ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|017-ind2.tab|||||0||
+S||Standard Number|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||Erroneous Number or Code|0|0|z||X|||||||||0||
+S||Source of code|0|0|2||X|||||||||0||
+T|20|National Bibliography Number|0|1|abz|||||||||||0||
+S||Country Code|0|0|a||S|||P|countries.tab|||||0||
+S||Number|0|0|b||X|||||||||0||
+S||Erroneous number|0|0|z||X|||||||||0||
+T|21|Legal Deposit Number|0|1|abz|||||||||||0||
+S||Country Code|0|0|a||S|||P|countries.tab|||||0||
+S||Number|0|0|b||X|||||||||0||
+S||Erroneous Number|0|0|z||X|||||||||0||
+T|22|Government Publication Number|0|1|abz|||||||||||0||
+S||Country Code|0|0|a||S|||P|countries.tab|||||0||
+S||Number|0|0|b||X|||||||||0||
+S||Erroneous Number|0|0|z||X|||||||||0||
+T|35|Other System Control Numbers|0|1|az|||||||||||0||
+S||System Control Number|0|0|a||X|||||||||0||
+S||Cancelled or Invalid Control Number|0|0|z||X|||||||||0||
+T|36|Music Incipit|0|1|abcdefgmnopqrtuz2|||||||||||0||
+S||Number of work|0|0|a||X|1|2|||||||0||
+S||Number of movement|0|0|b||X|1|2|||||||0||
+S||Number of incipit|0|0|c||X|1|2|||||||0||
+S||Voice/instrument|0|0|d||X|||||||||0||
+S||Role|0|0|e||X|||||||||0||
+S||Movement caption/heading|0|0|f||X|||||||||0||
+S||Key or mode|0|0|g||X|||||||||0||
+S||Clef|0|0|m||X|1|3|||||||0||
+S||Key signature|0|0|n||X|||||||||0||
+S||Time signature|0|0|o||X|||||||||0||
+S||Musical notation|0|0|p||X|||||||||0||
+S||Comments (free text)|0|0|q||X|3||||||||0||
+S||Codified note|0|0|r||S|||P|036-r.tab|||||0||
+S||Text incipit|0|0|t||X|||||||||0||
+S||Uniform Resource Identifier|0|0|u||X|||||||||0||
+S||Language of text|0|0|z||S|||P|languages.tab|||||0||
+S||System code for musical notation|0|0|2||X|||||||||0||
+T|40|CODEN (Serials)|0|1|az|||||||||||0||
+S||CODEN|0|0|a||X|||||||||0||
+S||Erroneous CODEN|0|0|z||X|||||||||0||
+T|71|Publisher number|0|1|12abcdz|||||||||||0||
+S||Indicator l|0|0|1||S|||P|071-ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|071-Ind2.tab|||||0||
+S||Publisher's Number|0|0|a||X|||||||||0||
+S||Source|0|0|b||X|||||||||0||
+S||Qualification|0|0|c||X|||||||||0||
+S||Terms of availability and/or price|0|0|d||X|||||||||0||
+S||Erroneous publisher's number|0|0|z||X|||||||||0||
+T|72|Universal Product Code (UPC)|0|1|2abcdz||X|||||||||0||
+S||Indicator 2|0|0|2||S|||P|072-ind2.tab|||||0||
+S||Standard Number|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Additional codes following standard number or code|0|0|c||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||Erroneous Number or Code|0|0|z||X|||||||||0||
+T|73|International Article Number (EAN)|0|1|2abcdz|||||||||||0||
+S||Indicator 2|0|0|2||S|||||||||0||
+S||Standard Number|0|0|a||X|||||||||0||
+S||Qualification|0|0|b||X|||||||||0||
+S||Additional codes following standard number or code|0|0|c||X|||||||||0||
+S||Terms of Availability and/or Price|0|0|d||X|||||||||0||
+S||Erroneous Number or Code|0|0|z||X|||||||||0||
+H||1-- Coded Information Block|0|0||||||||||||0||
+M|100|General Processing Data|0|0||||||||||||0||
+T|101|Language of the Item|0|0|1abcdefghij|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|101-ind1.tab|||||0||
+S||Language of Text, Soundtrack etc.|0|1|a||S|||P|languages.tab|||||0||
+S||Language of Intermediate Text when Item is not Translated from Original|0|1|b||S|||P|languages.tab|||||0||
+S||Language of Original Work|0|1|c||S|||P|languages.tab|||||0||
+S||Language of Summary|0|1|d||S|||P|languages.tab|||||0||
+S||Language of Contents Page|0|1|e||S|||P|languages.tab|||||0||
+S||Language of Title Page if Different from Text|0|1|f||S|||P|languages.tab|||||0||
+S||Language of Title Proper if Not First Language of Text, Soundtrack, etc.|0|1|g||S|||P|languages.tab|||||0||
+S||Language of Libretto, etc.|0|1|h||S|||P|languages.tab|||||0||
+S||Language of Accompanying Material (Other than Summaries, Abstracts or Librettos)|0|1|i||S|||P|languages.tab|||||0||
+S||Language of Subtitles|0|1|j||S|||P|languages.tab|||||0||
+T|102|Country Of Publication Or Production|0|0|abc2||X|||||||||0||
+S||Country of publication|0|0|a||S|||P|countries.tab|||||0||
+S||Locality (non-ISO)|0|0|b||X|||||||||0||
+S||Locality (ISO)|0|0|c||X|||||||||0||
+S||Source of non-ISO code|0|0|2||X|||||||||0||
+F|105|Coded Data Field: Textual Material, Monographic|0|0|||I|||||||||0||
+F|106|Coded Data Field: Form of Item|0|0|||I|||||||||0||
+F|110|Coded Data Field: Continuing Resources|0|0|||I|||||||||0||
+F|115|Coded Data Fields: Visual Projections, Videorecordings and Motion Pictures|0|0|||I|||||||||0||
+F|116|Coded Data Field: Graphics|0|0|||I|||||||||0||
+F|117|Coded Data Field: Three-Dimensional Artefacts and Realia|0|0|||I|||||||||0||
+F|120|Coded Data Field: Cartographic Materials – General|0|0|||I|||||||||0||
+F|121|Coded Data Field: Cartographic Materials: Physical Attributes|0|0|||I|||||||||0||
+F|122|Coded Data Field: Time Period of Item Content|0|0|||I|||||||||0||
+F|123|Coded Data Field: Cartographic Materials Scale and Co-Ordinates|0|0|||I|||||||||0||
+F|124|Coded Data Field: Cartographic Materials - Specific Material Designation Analysis|0|0|||I|||||||||0||
+F|125|Coded Data Field: Sound Recordings and Printed Music|0|0|||I|||||||||0||
+F|126|Coded Data Field: Sound Recordings - Physical Attributes|0|0|||I|||||||||0||
+F|127|Coded Data Field: Duration Of Sound Recordings and Printed Music|0|0|||I|||||||||0||
+F|128|Coded Data Field: Form of Musical Work and Key or Mode|0|0|||I|||||||||0||
+F|130|Coded Data Field: Microforms - Physical Attributes|0|0|||I|||||||||0||
+F|131|Coded Data Field: Cartographic Materials: Geodetic, Grid and Vertical Measurement|0|0|||I|||||||||0||
+F|135|Coded Data Field: Electronic Resources|0|0|||I|||||||||0||
+F|140|Coded Data Field: Antiquarian – General|0|0|||I|||||||||0||
+F|141|Coded Data Field: Copy Specific Attributes|0|0|||I|||||||||0||
+F|145|Coded Data Field: Medium Of Performance|0|0|||I|||||||||0||
+H||2-- Descriptive Information Block|0|0||||||||||||0||
+T|200|Title and Statement of Responsibility|0|0|1abcdefghivz5|||||||||||0||
+S||Indicateur 1|0|0|1||S|||P|200-ind1.tab|||||0||
+S||Title Proper|0|1|a||X|||||||||0||
+S||General Material Designation|0|0|b||S|||P|doc_type.tab|||||0||
+S||Title Proper by Another Author|0|0|c||X|||||||||0||
+S||Parallel Title Proper|0|0|d||X|||||||||0||
+S||Other Title Information|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|0|g||X|||||||||0||
+S||Number of a Part|0|0|h||X|||||||||0||
+S||Name of a Part|0|0|i||X|||||||||0||
+S||Volume Designation|0|1|v||X|||||||||0||
+S||Language of Parallel Title Proper|0|0|z||S|||P|languages.tab|||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|205|Edition Statement|0|1|abdfg|||||||||||0||
+S||Edition Statement|0|0|a||X|||||||||0||
+S||Issue Statement|0|1|b||X|||||||||0||
+S||Parallel Edition Statement|0|1|d||X|||||||||0||
+S||Statement of Responsibility Relating to Edition|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+T|206|Material Specific Area: Cartographic Materials - Mathematical Data|0|0|1abcdef|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|206-ind1.tab|||||0||
+S||Mathematical Data Statement|0|0|a||X|||||||||0||
+S||Statement of scale|0|1|b||X|||||||||0||
+S||Statement of projection|0|0|c||X|||||||||0||
+S||Statement of coordinates|0|0|d||X|||||||||0||
+S||Statement of zone|0|0|e||X|||||||||0||
+S||Statement of equinox|0|0|f||X|||||||||0||
+T|207|Material Specific Area: Numbering of Continuing Resources|0|0|2az|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|207-ind2.tab|||||0||
+S||Numbering: Dates and Volume Designations|0|1|a||X|||||||||0||
+S||Source of Numbering Information|0|1|b||X|||||||||0||
+T|208|Material Specific Area: Printed Music Specific Statement|0|0|ad|||||||||||0||
+S||Printed Music Specific Statement|0|0|a||X|||||||||0||
+S||Parallel Printed Music Specific Statement(s)|0|0|d||X|||||||||0||
+T|210|Publication, Distribution, Etc.|0|1|12abcdefgh|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|210-ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|210-ind2.tab|||||0||
+S||Place of Publication, Distribution, etc|0|1|a||X|||||||||0||
+S||Address of Publisher, Distributor, etc.|0|1|b||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|c||X|||||||||0||
+S||Date of Publication, Distribution, etc.|0|1|d||X|||||||||0||
+S||Place of Manufacture|0|1|e||X|||||||||0||
+S||Address of Manufacturer|0|1|f||X|||||||||0||
+S||Name of Manufacturer|0|1|g||X|||||||||0||
+S||Date of Manufacture|0|1|h||X|||||||||0||
+T|211|Projected Publication Date|0|0|a|||||||||||0||
+S||Date (8 characters)|0|0|a||D|||||||||0||
+T|215|Physical Description|0|0|acde|||||||||||0||
+S||Specific Material Designation and Extent of Item|0|1|a||X|||||||||0||
+S||Other Physical Details|0|0|c||X|||||||||0||
+S||Dimensions|0|1|d||X|||||||||0||
+S||Accompanying Material|0|0|e||X|||||||||0||
+T|225|Series|0|1|1adefhivxz|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|225-ind1.tab|||||0||
+S||Series Title|0|0|a||X|||||||||0||
+S||Parallel Series Title|0|1|d||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+S||Statement of Responsibility|0|1|f||X|||||||||0||
+S||Number of a Part|0|1|h||X|||||||||0||
+S||Name of a Part|0|1|i||X|||||||||0||
+S||Volume Designation|0|1|v||X|||||||||0||
+S||ISSN of Series|0|1|x||X|||||||||0||
+S||Language of Parallel Title|0|1|z||S|||P|languages.tab|||||0||
+T|230|Material Specific Area: Electronic Resource Characteristics|0|1|a|||||||||||0||
+S||Designation and extent of file|0|0|a||X|||||||||0||
+H||3-- Notes Block|0|0||||||||||||0||
+T|300|General Notes|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|301|Notes Pertaining to Identification Numbers|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|302|Notes Pertaining to Coded Information|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|303|General Notes Pertaining to Descriptive Information|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|304|Notes Pertaining to Title and Statement of Responsibility|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|305|Notes Pertaining to Edition and Bibliographic History|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|306|Notes Pertaining to Publication, Distribution, Etc|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|307|Notes Pertaining to Physical Description|0|1|a|||||||||||0||
+S||Texte de la note|0|0|a||X|||||||||0||
+T|308|Notes Pertaining to Series|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|310|Notes Pertaining to Binding and Availability|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|311|Notes Pertaining to Linking Fields|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|312|Notes Pertaining to Related Titles|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|313|Notes Pertaining to Subject Access|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|314|Notes Pertaining to Responsibility|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|315|Notes Pertaining to Material (or Type of Publication) Specific Information|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|316|Note Relating to the Copy in Hand|0|1|au56|||||||||||0||
+S||Text of Note|0|1|a||X|||||||||0||
+S||URI (Uniform Resource Identifier)|0|1|u||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+S||Interfield Linking Data|0|0|6||X|||||||||0||
+T|317|Provenance Note|0|1|au56|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+S||Uniform Resource Identifier|0|1|u||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+S||Interfield Linking Data|0|0|6||X|||||||||0||
+T|318|Action Note|0|1|abcdefhijklnopru5|||||||||||0||
+S||Action|0|0|a||X|||||||||0||
+S||Action Identification|0|1|b||X|||||||||0||
+S||Time of Action|0|1|c||X|||||||||0||
+S||Action Interval|0|1|d||X|||||||||0||
+S||Contingency for Action|0|1|e||X|||||||||0||
+S||Authorisation|0|1|f||X|||||||||0||
+S||Jurisdiction|0|1|h||X|||||||||0||
+S||Method of Action|0|1|i||X|||||||||0||
+S||Site of Action|0|1|j||X|||||||||0||
+S||Action Agent|0|1|k||X|||||||||0||
+S||Status|0|1|l||X|||||||||0||
+S||Extent|0|1|n||X|||||||||0||
+S||Type of Unit|0|1|o||X|||||||||0||
+S||Non-public Note|0|1|p||X|||||||||0||
+S||Public Note|0|1|r||X|||||||||0||
+S||Uniform Resource Identifier|0|1|u||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|1|5||X|||||||||0||
+T|320|Internal Bibliographies/Indexes Note|0|1|au|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+S||Uniform Resource Identifier|0|1|u||X|||||||||0||
+T|321|External Indexes/Abstracts/References Note|0|1|1abcux56|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|321-ind1.tab|||||0||
+S||Name of source|0|0|a||X|||||||||0||
+S||Dates of Coverage|0|0|b||X|||||||||0||
+S||Location within source|0|0|c||X|||||||||0||
+S||Uniform Resource Identifier (URI)|0|0|u||X|||||||||0||
+S||International Standard Number|0|0|x||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+S||Interfield Linking Data|0|0|6||X|||||||||0||
+T|322|Credits Note (Projected and Video Material and Sound Recordings)|0|0|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|323|Cast Note (Projected and Video Material and Sound Recordings)|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|324|Original Version Note|0|0|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|325|Reproduction Note|0|1|1a|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|325-ind1.tab|||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|326|Frequency Statement Note (Continuing Resources)|0|1|ab|||||||||||0||
+S||Frequency|0|0|a||X|||||||||0||
+S||Dates of Frequency|0|0|b||X|||||||||0||
+T|327|Contents Note|0|1|12abcdefghipuz|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|327-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|327-Ind2.tab|||||0||
+S||Text of Note|0|1|a||X|||||||||0||
+S||Title of level 1 subdivision|0|1|b||X|||||||||0||
+S||Title of level 2 subdivision|0|1|c||X|||||||||0||
+S||Title of level 3 subdivision|0|1|d||X|||||||||0||
+S||Title of level 4 subdivision|0|1|e||X|||||||||0||
+S||Title of level 5 subdivision|0|1|f||X|||||||||0||
+S||Title of level 6 subdivision|0|1|g||X|||||||||0||
+S||Title of level 7 subdivision|0|1|h||X|||||||||0||
+S||Title of level 8 subdivision|0|1|i||X|||||||||0||
+S||Sequence of pages or first page of a subdivision|0|1|p||X|||||||||0||
+S||Uniform Resource Identifier (URI)|0|1|u||X|||||||||0||
+S||Other information concerning a subdivision|0|1|z||X|||||||||0||
+T|328|Dissertation (Thesis) Note|0|0|2abcdetz|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|328-ind2.tab|||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+S||Dissertation or thesis details and type of degree|0|0|b||X|||||||||0||
+S||Discipline of degree|0|0|c||X|||||||||0||
+S||Date of degree|0|0|d||X|||||||||0||
+S||Body granting the degree|0|0|e||X|||||||||0||
+S||Title of other edition of dissertation or thesis|0|0|t||X|||||||||0||
+S||Text preceding or following the note|0|0|z||X|||||||||0||
+T|330|Summary or Abstract|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|332|Preferred Citation of Described Materials|0|1|a|||||||||||0||
+S||Preferred Citation|0|0|a||X|||||||||0||
+T|333|Users/Intended Audience Note|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|334|Awards Note|0|1|abcdu|||||||||||0||
+S||Text of awards note|0|0|a||X|||||||||0||
+S||Name of award|0|0|b||X|||||||||0||
+S||Year of award|0|0|c||X|||||||||0||
+S||Country of award|0|0|d||X|||||||||0||
+S||Uniform Resource Identifier (URI)|0|1|u||X|||||||||0||
+T|336|Type of Electronic Resource Note|0|1|a|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+T|337|System Requirements Note (Electronic Resources)|0|1|au|||||||||||0||
+S||Text of Note|0|0|a||X|||||||||0||
+S||Uniform Resource Identifier (URI)|0|1|u||X|||||||||0||
+T|345|Acquisition Information Note|0|0|abcdu|||||||||||0||
+S||Source for Acquisition/Subscription Address|0|0|a||X|||||||||0||
+S||Stock Number|0|1|b||X|||||||||0||
+S||Medium|0|1|c||X|||||||||0||
+S||Terms of Availability|0|1|d||X|||||||||0||
+S||Uniform Resource Identifier (URI)|0|1|u||X|||||||||0||
+H||41-/42- Linking Entry Block : Series, supplements, etc.|0|0||||||||||||0||
+T|410|Series|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|411|Subseries|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|412|Source of excerpt or offprint|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|413|Excerpt or offprint|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|421|Supplement|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|422|Parent of Supplement|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|423|Issued with|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|424|Is updated by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|425|Updates|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+H||43- Linking Entry Block : Preceding entries|0|0||||||||||||0||
+T|430|Continued by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|431|Continues in Part|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|432|Supersedes|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|433|Supersedes in Part|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|434|Absorbed|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|435|Absorbed in Part|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|436|Formed by Merger of|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|437|Separated from|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+H||44- Linking Entry Block : Succeeding entries|0|0||||||||||||0||
+T|440|Continued by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|441|Continued in Part by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|442|Superseded by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|443|Superseded in Part by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|444|Absorbed by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|445|Absorbed in Part by|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|446|Split into|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|447|Merged with xxx to Form|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|448|Changed Back to|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+H||45- Linking Entry Block : Other editions|0|0||||||||||||0||
+T|451|Other Edition in the Same Medium|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|452|Other Edition in Another Medium|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|453|Translated as|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|454|Translation of|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|455|Other Edition, State or Impression in the Same Medium|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|456|Reproduced as|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+H||46- Linking Entry Block : Levels|0|0||||||||||||0||
+T|461|Set|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|462|Subset|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|463|Piece|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|464|Piece-Analytic|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+H||47-/48- Linking Entry Block : Other|0|0||||||||||||0||
+T|470|Item Reviewed|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|481|Also Bound With This Volume|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|482|Bound With|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|488|Other Related Works|0|1|21abcdefghilmnopstuvxyz035|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||
+S||Linking Data|0|1|1||X|||||||||0||
+S||Author|0|0|a||X|||||||||0||
+S||General Material Designation|0|0|b||X|||||||||0||
+S||Place of Publication|0|1|c||X|||||||||0||
+S||Date of Publication|0|0|d||X|||||||||0||
+S||Edition Statement|0|0|e||X|||||||||0||
+S||First Statement of Responsibility|0|1|f||X|||||||||0||
+S||Subsequent Statement of Responsibility|0|1|g||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Parallel title|0|1|l||X|||||||||0||
+S||International Standard Music Number|0|1|m||X|||||||||0||
+S||Name of Publisher, Distributor, etc.|0|1|n||X|||||||||0||
+S||Other title information.|0|1|o||X|||||||||0||
+S||Physical description|0|0|p||X|||||||||0||
+S||Series statement|0|1|s||X|||||||||0||
+S||Title|0|1|t||X|||||||||0||
+S||Uniform Resource Locator|0|0|u||X|||||||||0||
+S||Volume Number|0|0|v||X|||||||||0||
+S||International Standard Serial Number|0|1|x||X|||||||||0||
+S||International Standard Book Number|0|1|y||X|||||||||0||
+S||CODEN|0|0|z||X|||||||||0||
+S||Bibliographic Record Identifier|0|0|0||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+H||5-- Related Title Block|0|0||||||||||||0||
+T|500|Uniform Title|0|1|12abhijklmnqrsuvwxyz23|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|500-ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|500-ind2.tab|||||0||
+S||Uniform Title|0|0|a||X|||||||||0||
+S||General Material Designation|0|1|b||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Date of Publication|0|0|k||X|||||||||0||
+S||Form Subheading|0|1|l||X|||||||||0||
+S||Language (when part of a heading)|0|0|m||S|||P|languages.tab|||||0||
+S||Miscellaneous Information|0|1|n||X|||||||||0||
+S||Version (or Date of Version)|0|0|q||X|||||||||0||
+S||Medium of Performance (for Music)|0|1|r||X|||||||||0||
+S||Numeric Designation (for Music)|0|1|s||X|||||||||0||
+S||Key (for Music)|0|0|u||X|||||||||0||
+S||Volume Designation|0|0|v||X|||||||||0||
+S||Additional Elements|0|0|w||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|501|Collective Uniform Title|0|1|1abejkmrsuwxyz23|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|500-ind1.tab|||||0||
+S||Collective Uniform Title|0|0|a||X|||||||||0||
+S||General Material Designation|0|1|b||X|||||||||0||
+S||Collective Uniform Subtitle|0|0|e||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Date of Publication, etc.|0|0|k||X|||||||||0||
+S||Language (when part of heading)|0|0|m||X|||||||||0||
+S||Medium of performance|0|1|r||X|||||||||0||
+S||Numeric designation (for music)|0|1|s||X|||||||||0||
+S||Key (for music)|0|0|u||X|||||||||0||
+S||Arranged statement (for music)|0|0|w||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|503|Uniform Conventional Heading|0|1|12abdefghijklmno|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|503-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|503-Ind2.tab|||||0||
+S||Form Heading Proper|0|0|a||X|||||||||0||
+S||Form Subheading|0|0|b||X|||||||||0||
+S||Month and Day|0|1|d||X|||||||||0||
+S||Personal Name – Entry Element of Person|0|0|e||X|||||||||0||
+S||Personal Name – Part of Name Other than Entry Element - Forename|0|0|f||X|||||||||0||
+S||Personal Name – Dates|0|0|g||X|||||||||0||
+S||Personal Name Qualifier|0|0|h||X|||||||||0||
+S||Title of Part|0|0|i||X|||||||||0||
+S||Year|0|0|j||X|||||||||0||
+S||Numeration (Arabic)|0|0|k||X|||||||||0||
+S||Numeration (Roman)|0|0|l||X|||||||||0||
+S||Locality|0|0|m||X|||||||||0||
+S||Institution in Locality|0|0|n||X|||||||||0||
+S||Place in Locality|0|0|o||X|||||||||0||
+T|510|Parallel Title Proper|0|1|1aehijnz|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|510-Ind1.tab|||||0||
+S||Parallel Title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+S||Number of Part|0|1|h||X|||||||||0||
+S||Name of Part|0|1|i||X|||||||||0||
+S||Volume or Dates associated with Title|0|0|j||X|||||||||0||
+S||Miscellaneous Information|0|0|n||X|||||||||0||
+S||Language of Title|0|0|z||S|||||||||0||
+T|511|Half Title|0|1|1a|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|511-Ind1.tab|||||0||
+S||Half title|0|0|a||X|||||||||0||
+T|512|Cover Title|0|1|1ae|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|512-Ind1.tab|||||0||
+S||Cover Title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+T|513|Added Title-Page Title|0|1|1aehi|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|513-Ind1.tab|||||0||
+S||Added Title-page Title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+S||Number of Part|0|1|h||X|||||||||0||
+S||Name of Part|0|1|i||X|||||||||0||
+T|514|Caption Title|0|1|1ae|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|514-Ind1.tab|||||0||
+S||Caption Title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+T|515|Running Title|0|1|1a|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|515-Ind1.tab|||||0||
+S||Running Title|0|0|a||X|||||||||0||
+T|516|Spine Title|0|1|1ae|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|516-Ind1.tab|||||0||
+S||Spine Title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+T|517|Other Variant Titles|0|1|1ae|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|517-Ind1.tab|||||0||
+S||Variant Title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+T|518|Title in Standard Modern Spelling|0|1|1a|||||||||||0||
+S||Indicator 1|0|0|1||S|||||||||0||
+S||Title proper, variant title or uniform title in standard modern spelling|0|0|a||X|||P|518-Ind1.tab|||||0||
+T|520|Former Title (Continuing Resources)|0|0|1aehijnx|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|520-Ind1.tab|||||0||
+S||Former Title Proper|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+S||Number of Part|0|0|h||X|||||||||0||
+S||Name of Part|0|0|i||X|||||||||0||
+S||Volumes or Dates of Former Title|0|0|j||X|||||||||0||
+S||Miscellaneous Information|0|0|n||X|||||||||0||
+S||ISSN of Former Title|0|0|x||X|||||||||0||
+T|530|Key Title (Continuing Resources)|0|1|1abjv|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|530-Ind1.tab|||||0||
+S||Key Title|0|0|a||X|||||||||0||
+S||Qualifier|0|0|b||X|||||||||0||
+S||Volume or Dates Associated with Key Title|0|0|j||X|||||||||0||
+S||Volume Designation|0|0|v||X|||||||||0||
+T|531|Abbreviated Title (Continuing Resources)|0|1|abv|||||||||||0||
+S||Abbreviated Title|0|0|a||X|||||||||0||
+S||Qualifier|0|0|b||X|||||||||0||
+S||Volume Designation|0|0|v||X|||||||||0||
+T|532|Expanded Title|0|1|12az|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|532-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||M|||P|532-Ind1.tab|||||0||
+S||Expanded Title|0|0|a||X|||||||||0||
+S||Language of Title|0|0|z||S|||P|languages.tab|||||0||
+T|540|Additional Title Supplied by Cataloguer|0|0|1aehi|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|540-Ind1.tab|||||0||
+S||Additional Title|0|0|a||X|||||||||0||
+S||Other title information|0|0|e||X|||||||||0||
+S||Number of part|0|0|h||X|||||||||0||
+S||Name of part|0|0|i||X|||||||||0||
+T|541|Translated Title Supplied by Cataloguer|0|0|1aehiz|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|541-Ind1.tab|||||0||
+S||Translated Title|0|0|a||X|||||||||0||
+S||Other title information|0|0|e||X|||||||||0||
+S||Number of part|0|0|h||X|||||||||0||
+S||Name of part|0|0|i||X|||||||||0||
+S||Language of Title|0|0|z||S|||P|languages.tab|||||0||
+T|545|Section Title|0|0|1a|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|545-Ind1.tab|||||0||
+S||Section Title|0|0|a||X|||||||||0||
+T|560|Artifical Title|0|1|1ae5|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|560-ind1.tab|||||0||
+S||Artificial title|0|0|a||X|||||||||0||
+S||Other Title Information|0|1|e||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+H||6-- Subject Analysis and Bibliographic History Block|0|0||||||||||||0||
+T|600|Personal Name Used as Subject|0|1|2abcdfgjpxyz235|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|600-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Part of Name Other than Entry Element|0|0|b||X|||||||||0||
+S||Additions to Name Other than Dates|0|1|c||X|||||||||0||
+S||Roman Numerals|0|0|d||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Expansion of Initials of Forename|0|0|g||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+T|601|Corporate Body Name Used as Subject|0|1|12abcdefghjxyz235|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|601-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|601-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Number of Meeting and/or Number of Part of a Meeting|0|1|d||X|||||||||0||
+S||Location of Meeting|0|0|e||X|||||||||0||
+S||Date of Meeting|0|0|f||X|||||||||0||
+S||Inverted Element|0|0|g||X|||||||||0||
+S||Part of Name other than Entry Element and Inverted Element|0|0|h||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+T|602|Family Name Used as Subject|0|1|afjxyz235|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+T|604|Name and Title Used as Subject|0|1|1atjxyz3|||||||||||0||
+S||Linking data|0|1|1||X|||||||||0||
+S||Entry Element Name|0|0|a||X|||||||||0||
+S||Title|0|0|t||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|605|Title Used as Subject|0|1|ahijklmnqrsuwxyz23|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Number of Section or Part|0|1|h||X|||||||||0||
+S||Name of Section or Part|0|1|i||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Date of Publication|0|0|k||X|||||||||0||
+S||Form Subheading|0|0|l||X|||||||||0||
+S||Language (when part of heading)|0|0|m||X|||||||||0||
+S||Miscellaneous Information|0|1|n||X|||||||||0||
+S||Version (or Date of Version)|0|0|q||X|||||||||0||
+S||Medium of Performance|0|1|r||X|||||||||0||
+S||Numeric Designation (for Music)|0|1|s||X|||||||||0||
+S||Key (for Music)|0|0|u||X|||||||||0||
+S||Arranged Statement (for Music)|0|0|w||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|606|Topical Name Used as Subject|0|1|1ajxyz23|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|606-Ind1.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|607|Geographical Name Used as Subject|0|1|ajxyz23|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|608|Form, Genre or Physical Characteristics Heading|0|1|ajxyz235|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+T|610|Uncontrolled Subject Terms|0|1|1a5|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|610-Ind1.tab|||||0||
+S||Subject Term|0|1|a||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+T|615|Subject Category (Provisional)|0|1|axnm23|||||||||||0||
+S||Subject Category Entry Element Text|0|0|a||X|||||||||0||
+S||Subject Category Subdivision Text|0|1|x||X|||||||||0||
+S||Subject Category Code|0|1|n||X|||||||||0||
+S||Subject Category Subdivision Code|0|1|m||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|1|3||X|||||||||0||
+T|616|Trademark Used as Subject|0|1|afcjxyz23|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Qualification|0|1|c||X|||||||||0||
+S||Form Subdivision|0|1|j||X|||||||||0||
+S||Topical Subdivision|0|1|x||X|||||||||0||
+S||Geographical Subdivision|0|1|y||X|||||||||0||
+S||Chronological Subdivision|0|1|z||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|617|Hierarchical Geographical Name Used as Subject|0|1|abcdefghikmno23|||||||||||0||
+S||Country (Nation State)|0|0|a||X|||||||||0||
+S||State or Province, etc.|0|0|b||X|||||||||0||
+S||Intermediate Political Jurisdiction|0|1|c||X|||||||||0||
+S||City, etc.|0|0|d||X|||||||||0||
+S||Venue|0|1|e||X|||||||||0||
+S||Date|0|1|f||X|||||||||0||
+S||Season|0|0|g||X|||||||||0||
+S||Occasion|0|0|h||X|||||||||0||
+S||Final date|0|0|i||X|||||||||0||
+S||Subsection of City, etc.|0|1|k||X|||||||||0||
+S||Other Geographical Regions or Features|0|1|m||X|||||||||0||
+S||Extraterrestrial Areas|0|1|n||X|||||||||0||
+S||Geographical areas such as world, hemisphere, continent: larger area than country|0|1|o||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|620|Place and Date of Publication, Performance, etc.|0|1|12abcdefghikmno23|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|620-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|620-Ind2.tab|||||0||
+S||Country (Nation State)|0|0|a||X|||||||||0||
+S||State or Province, etc.|0|0|b||X|||||||||0||
+S||Intermediate Political Jurisdiction|0|1|c||X|||||||||0||
+S||City, etc.|0|0|d||X|||||||||0||
+S||Venue|0|1|e||X|||||||||0||
+S||Date|0|1|f||X|||||||||0||
+S||Season|0|0|g||X|||||||||0||
+S||Occasion|0|0|h||X|||||||||0||
+S||Final date|0|0|i||X|||||||||0||
+S||Subsection of City, etc.|0|1|k||X|||||||||0||
+S||Other Geographical Regions or Features|0|1|m||X|||||||||0||
+S||Extraterrestrial Areas|0|1|n||X|||||||||0||
+S||Geographical areas such as world, hemisphere, continent: larger area than country|0|1|o||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|621|Place and Date of Provenance|0|1|12abcdefghikmno235|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|621-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|621-Ind2.tab|||||0||
+S||Country (Nation State) or Larger Entity Country|0|0|a||X|||||||||0||
+S||State or Province, etc.|0|0|b||X|||||||||0||
+S||Intermediate Political Jurisdiction|0|1|c||X|||||||||0||
+S||City, etc.|0|0|d||X|||||||||0||
+S||Building, vehicle, etc.|0|1|e||X|||||||||0||
+S||Date 1|0|1|f||X|||||||||0||
+S||Season|0|0|g||X|||||||||0||
+S||Occasion|0|0|h||X|||||||||0||
+S||Date 2|0|0|i||X|||||||||0||
+S||Subsection of City, etc.|0|1|k||X|||||||||0||
+S||Other Geographical Regions or Features|0|1|m||X|||||||||0||
+S||Extraterrestrial Areas|0|1|n||X|||||||||0||
+S||Geographical areas such as world, hemisphere, continent: larger area than country|0|1|o||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Institution and Copy to which the Field Applies|0|0|5||X|||||||||0||
+T|660|Geographic Area Code|0|1|a|||||||||||0||
+S||Code|0|0|a||X|||||||||0||
+T|661|Time Period Code|0|1|a|||||||||||0||
+S||Time Period Code|0|0|a||X|||||||||0||
+T|670|Precis|0|1|bcez|||||||||||0||
+S||Subject Indicator Number|0|0|b||X|||||||||0||
+S||String|0|0|c||X|||||||||0||
+S||Reference Indicator Number|0|1|e||X|||||||||0||
+S||Language of Terms|0|0|z||X|||||||||0||
+T|675|Universal Decimal Classification (UDC)|0|1|avz3|||||||||||0||
+S||Number|0|0|a||X|||||||||0||
+S||Edition|0|0|v||X|||||||||0||
+S||Language of edition|0|0|z||X|||||||||0||
+S||Classification Record Number|0|0|3||X|||||||||0||
+T|676|Dewey Decimal Classification (DDC)|0|1|avz3|||||||||||0||
+S||Number|0|0|a||X|||||||||0||
+S||Edition|0|0|v||X|||||||||0||
+S||Language of edition|0|0|z||X|||||||||0||
+S||Classification Record Number|0|0|3||X|||||||||0||
+T|680|Library of Congress Classification|0|1|ab3|||||||||||0||
+S||Class number|0|0|a||X|||||||||0||
+S||Book number|0|0|b||X|||||||||0||
+S||Classification Record Number|0|0|3||X|||||||||0||
+T|686|Other Class Numbers|0|1|abcv23|||||||||||0||
+S||Class number|0|1|a||X|||||||||0||
+S||Book Number|0|1|b||X|||||||||0||
+S||Classification Subdivision|0|1|c||X|||||||||0||
+S||Edition|0|0|v||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+S||Classification Record Number|0|0|3||X|||||||||0||
+H||7-- Responsibility Block|0|0||||||||||||0||
+T|700|Personal Name - Primary Responsibility|0|0|2abcdfgp34|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|700-702-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Part of Name Other than Entry Element|0|0|b||X|||||||||0||
+S||Additions to Names Other than Dates|0|1|c||X|||||||||0||
+S||Roman Numerals|0|0|d||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Expansion of Initials of Forename|0|0|g||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|701|Personal Name - Alternative Responsibility|0|1|2abcdfgp34|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|700-702-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Part of Name Other than Entry Element|0|0|b||X|||||||||0||
+S||Additions to Names Other than Dates|0|1|c||X|||||||||0||
+S||Roman Numerals|0|0|d||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Expansion of Initials of Forename|0|0|g||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|702|Personal Name - Secondary Responsibility|0|1|2abcdfgp345|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|700-702-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Part of Name Other than Entry Element|0|0|b||X|||||||||0||
+S||Additions to Names Other than Dates|0|1|c||X|||||||||0||
+S||Roman Numerals|0|0|d||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Expansion of Initials of Forename|0|0|g||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|710|Corporate Body Name - Primary Responsibility|0|0|12abcdefghp34|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|710-712-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|710-712-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Number of Meeting and/or Number of Part of Meeting|0|0|d||X|||||||||0||
+S||Location of Meeting|0|0|e||X|||||||||0||
+S||Date of Meeting|0|0|f||X|||||||||0||
+S||Inverted Element|0|0|g||X|||||||||0||
+S||Part of Name Other than Entry Element and Inverted Element|0|0|h||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|711|Corporate Body Name - Alternative Responsibility|0|1|12abcdefghp34|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|710-712-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|710-712-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Number of Meeting and/or Number of Part of Meeting|0|0|d||X|||||||||0||
+S||Location of Meeting|0|0|e||X|||||||||0||
+S||Date of Meeting|0|0|f||X|||||||||0||
+S||Inverted Element|0|0|g||X|||||||||0||
+S||Part of Name Other than Entry Element and Inverted Element|0|0|h||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|712|Corporate Body Name - Alternative Responsibility|0|1|12abcdefghp345|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|710-712-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|710-712-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Number of Meeting and/or Number of Part of Meeting|0|0|d||X|||||||||0||
+S||Location of Meeting|0|0|e||X|||||||||0||
+S||Date of Meeting|0|0|f||X|||||||||0||
+S||Inverted Element|0|0|g||X|||||||||0||
+S||Part of Name Other than Entry Element and Inverted Element|0|0|h||X|||||||||0||
+S||Affiliation/address|0|0|p||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|716|Trademark|0|1|acf3|||||||||||0||
+S||Data Element|0|0|a||X|||||||||0||
+S||Qualifications|0|1|c||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|720|Family Name - Primary Responsibility|0|0|af34|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|721|Family Name - Alternative Responsibility|0|0|af34|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|722|Family Name - Secondary Responsibility|0|0|af345|||||||||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Dates|0|0|f||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||
+T|730|Name – Entity Responsible|0|1|1a4|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|730-Ind1.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Relator Code|0|1|4||S|||P|relator.tab|||||0||
+T|740|Uniform Conventional Heading for Legal and Religious Texts – Primary Responsibility|0|0|2abcefilnt3|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|740-742-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Name of the other party|0|0|e||X|||||||||0||
+S||Date of legal issue or version, or date of signing|0|1|f||X|||||||||0||
+S||Name of section or part|0|1|i||X|||||||||0||
+S||Form subheading|0|1|l||X|||||||||0||
+S||Miscellaneous information|0|1|n||X|||||||||0||
+S||Uniform title|0|0|t||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|741|Uniform Conventional Heading for Legal and Religious Texts – Alternative Responsibility|0|0|2abcefilnt3|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|740-742-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Name of the other party|0|0|e||X|||||||||0||
+S||Date of legal issue or version, or date of signing|0|1|f||X|||||||||0||
+S||Name of section or part|0|1|i||X|||||||||0||
+S||Form subheading|0|1|l||X|||||||||0||
+S||Miscellaneous information|0|1|n||X|||||||||0||
+S||Uniform title|0|0|t||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+T|742|Uniform Conventional Heading for Legal and Religious Texts – Secondary Responsibility|0|0|2abcefilnt3|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|740-742-Ind2.tab|||||0||
+S||Entry Element|0|0|a||X|||||||||0||
+S||Subdivision|0|1|b||X|||||||||0||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||
+S||Name of the other party|0|0|e||X|||||||||0||
+S||Date of legal issue or version, or date of signing|0|1|f||X|||||||||0||
+S||Name of section or part|0|1|i||X|||||||||0||
+S||Form subheading|0|1|l||X|||||||||0||
+S||Miscellaneous information|0|1|n||X|||||||||0||
+S||Uniform title|0|0|t||X|||||||||0||
+S||Authority Record Number|0|0|3||X|||||||||0||
+H||8-- International Use Block|0|0||||||||||||0||
+T|801|Originating Source|0|1|2abcgh2|||||||||||0||
+S||Indicator 2|0|0|2||S|||P|801-Ind2.tab|||||0||
+S||Country|0|0|a||S|||P|countries-2.tab|||||0||
+S||Agency|0|0|b||X|||||||||0||
+S||Date of Transaction|0|0|c||X|||||||||0||
+S||Cataloguing Rules (Descriptive Conventions)|0|1|g||S|||P|801-g.tab|||||0||
+S||Original Control Number|0|0|h||X|||||||||0||
+S||System Code|0|0|2||S|||P|801-2.tab|||||0||
+T|802|National ISSN Centre|0|0|a|||||||||||0||
+S||ISSN Centre Code|0|0|a||X|||||||||0||
+T|830|General Cataloguer's Note|0|0|a|||||||||||0||
+S||Text of note|0|0|a||X|||||||||0||
+T|850|Holding Institution|0|0|a|||||||||||0||
+S||Code of Institution|0|1|a||X|||||||||0||
+T|852|Location and Call Number|0|1|12abcdegjklmnptxy2|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|852-Ind1.tab|||||0||
+S||Indicator 2|0|0|2||S|||P|852-Ind2.tab|||||0||
+S||Institution Identifier|0|0|a||X|||||||||0||
+S||Sub-Location Identifier|0|1|b||X|||||||||0||
+S||Address|0|0|c||X|||||||||0||
+S||Coded Location Qualifier|0|0|d||X|||||||||0||
+S||Non-coded Location Qualifier|0|0|e||X|||||||||0||
+S||Call Number Prefix|0|0|g||X|||||||||0||
+S||Call Number|0|0|j||X|||||||||0||
+S||Shelving Form of Title, Author, Author/Title|0|0|k||X|||||||||0||
+S||Call Number Suffix|0|0|l||X|||||||||0||
+S||Item Identifier|0|0|m||X|||||||||0||
+S||Copy Identifier|0|0|n||X|||||||||0||
+S||Country|0|0|p||X|||||||||0||
+S||Copy Number|0|0|t||X|||||||||0||
+S||Non-public Note|0|0|x||X|||||||||0||
+S||Public Note|0|0|y||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+T|856|Electronic Location and Access|0|1|1abcdefhijklmnopqrstuvwxyz2|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|856-Ind1.tab|||||0||
+S||Host name|0|1|a||X|||||||||0||
+S||Access number|0|1|b||X|||||||||0||
+S||Compression information|0|1|c||X|||||||||0||
+S||Path|0|1|d||X|||||||||0||
+S||Date and Hour of Consultation and Access|0|0|e||X|||||||||0||
+S||Electronic name|0|1|f||X|||||||||0||
+S||Processor of request|0|0|h||X|||||||||0||
+S||Instruction|0|1|i||X|||||||||0||
+S||Bits per second|0|0|j||X|||||||||0||
+S||Password|0|0|k||X|||||||||0||
+S||Logon/login|0|0|l||X|||||||||0||
+S||Contact for access assistance|0|1|m||X|||||||||0||
+S||Name of location of host in subfield $a|0|0|n||X|||||||||0||
+S||Operating system|0|0|o||X|||||||||0||
+S||Port|0|0|p||X|||||||||0||
+S||Electronic Format|0|0|q||X|||||||||0||
+S||Settings|0|0|r||X|||||||||0||
+S||File size|0|1|s||X|||||||||0||
+S||Terminal emulation|0|1|t||X|||||||||0||
+S||Uniform Resource Identifier|0|0|u||X|||||||||0||
+S||Hours access method available|0|1|v||X|||||||||0||
+S||Record control number|0|1|w||X|||||||||0||
+S||Nonpublic note|0|1|x||X|||||||||0||
+S||Access method|0|0|y||X|||||||||0||
+S||Public note|0|1|z||X|||||||||0||
+S||Link text|0|1|2||X|||||||||0||
+T|886|Data not Converted from Source Format|0|1|1ab2|||||||||||0||
+S||Indicator 1|0|0|1||S|||P|886-Ind1.tab|||||0||
+S||Tag of the Source Format Field|0|1|a||X|||||||||0||
+S||Indicators and Subfields of the Source Format Field|0|1|b||X|||||||||0||
+S||System Code|0|0|2||X|||||||||0||
+H||9-- National Use Block|0|0||||||||||||0||

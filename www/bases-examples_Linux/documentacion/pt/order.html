@@ -1,0 +1,58 @@
+<h3><strong>Elabora&ccedil;&atilde;o da ordem de Compra</strong></h3>
+<font face="Arial" size="2">
+<p>Nesta lista s&atilde;o mostrados os fornecedores que foram aprovados para executar a compra dos objetos para os quais ainda n&atilde;o foi emitida a ordem decompra.</p>
+<p>Se uma sugest&atilde;o para a compra foi aprovada para mais de umfornecedor, s&atilde;o mostrados em linhas separadas os fornecedores selecionados. Isto &eacute; feito para facilitar a elabora&ccedil;&atilde;o da ordem de compra.</p>
+<p>Para saber se, para um fornecedor cuja cota&ccedil;&atilde;o foi aprovada, foi emitida a ordem de compra, ao formatar a requisi&ccedil;&atilde;o &eacute; utilizado o comando <strong>npost</strong> da linguagem deformata&ccedil;&atilde;o para localizar na base de dados de<strong> Ordens de Compra</strong>&nbsp; (purchaseorder) a chave composta pelo n&uacute;mero de requisi&ccedil;&atilde;o mais o n&uacute;mero de licita&ccedil;&atilde;o, precedido pelo prefixo RNBN.: <br />
+</p>
+<p><strong>if npost([`purchaseorder`],`RNBN_`,mpu,s(v1[1]),`_`v300^r)&lt;&gt;0 then `OK` fi</strong></p>
+<p>Ent&atilde;o, se ao formatar a requisi&ccedil;&atilde;o aparecer no formato o termo <strong>OK,</strong>&nbsp; n&atilde;o ser&aacute; mostrada a linha correspondente &agrave; cota&ccedil;&atilde;o aprovada de determinado&nbsp; fornecedor<br />
+</p>
+<p> </p>
+<p>A informa&ccedil;&atilde;o apresentada &eacute; a seguinte:</p>
+<ul>
+    <li>N&uacute;mero sequencial da sugest&atilde;o </li>
+    <li>Referencia do objeto </li>
+    <li>Fornecedor aprovado </li>
+    <li>Data de aprova&ccedil;&atilde;o da compra </li>
+    <li>N&uacute;mero de copias/exemplares aprovados </li>
+    <li>Pre&ccedil;o de cada exemplar</li>
+</ul>
+<p>Clique em&nbsp;<input type="checkbox" value="on" />para selecionar os itens que ser&atilde;o inclu&iacute;dos na ordem de compra em processo de elabora&ccedil;&atilde;o.</p>
+<p>Uma vez realizada sua sele&ccedil;&atilde;o, clique sobre <strong>Ordem de</strong> <strong>compra.</strong></p>
+<p>Para a sele&ccedil;&atilde;o dos registros &eacute; aplicada a f&oacute;rmula de busca <strong>STA_3</strong>, que&nbsp; corresponde &agrave; requisi&ccedil;&atilde;o da etapa de <strong>Sele&ccedil;&atilde;o de fornecedores</strong><br />
+</p>
+<p>A informa&ccedil;&atilde;o recuperada pode ser ordenada de 4 formas, e para cada forma existe um formato pr&eacute;-definido:</p>
+<p>
+<table width="400" cellspacing="1" cellpadding="1" border="1" summary="">
+    <tbody>
+        <tr>
+            <td bgcolor="#ffff99"><strong>Ordem de apresenta&ccedil;&atilde;o</strong></td>
+            <td bgcolor="#ffff99"><strong>Formato</strong></td>
+        </tr>
+        <tr>
+            <td>Fornecedor</td>
+            <td>
+            <p>pv_order.pft<br />
+            pv_order_tit.tab</p>
+            </td>
+        </tr>
+        <tr>
+            <td>T&iacute;tulo</td>
+            <td>ti_order.pft<br />
+            ti_order_tit.pft</td>
+        </tr>
+        <tr>
+            <td>Data de aprova&ccedil;&atilde;o </td>
+            <td>da_order.pft<br />
+            da_order_tit.pft</td>
+        </tr>
+        <tr>
+            <td> N&uacute;mero da sugest&atilde;o</td>
+            <td>sn_order.pft<br />
+            sn_order_tit.pft</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>Estes resultados&nbsp; podem ser enviados a um documento ou planilha eletr&ocirc;nica utilizando a op&ccedil;&atilde;o <strong>Enviar a</strong>.</p>
+</font>

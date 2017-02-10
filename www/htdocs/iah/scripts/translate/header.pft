@@ -1,0 +1,35 @@
+if p(v5030) or p(v5040) then
+
+    /* procedimento que marca o subcampo referente ao idioma corrente como ^L (label)  */
+    proc('d9021a9021!',replace(replace(v5006^a[1],' ',''),',','!a9021!')'!'),
+    proc('d9022a9022!',(if v9021 = v5021[1] then f(iocc,1,0) fi),'!'),
+
+    proc('d9031',('a9031!',replace(v5031,s('^'v9022[1]),'^L'),'!')),
+    proc('d9041',('a9041!',replace(v5041,s('^'v9022[1]),'^L'),'!')),
+    '<div class="bar">'
+        if v5006^m = 'ON' then
+                        ,(
+                            if v9021 <> v5021[1] then,
+                                '<a href="'getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&base=',v5003[1],'&lang=',v9021,'&form=',v6000[1],|&pathLibrary=|v5050[1],|&restriction1=|v7001[1],'">'
+                                    if v9021 = 'pt' then '{{pt}}' fi,
+                                    if v9021 = 'es' then '{{es}}' fi,
+                                    if v9021 = 'en' then '{{en}}' fi,
+                                    if v9021 = 'fr' then '{{fr}}' fi,
+                                 '</a>',
+
+                                if iocc < nocc(v9021) then,
+                                    ' | '
+                                fi,
+                            fi,
+                        ),
+        fi,
+      '</div>'
+
+    '<div class="top">
+        <h1><a href="',v9031^L,'"><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1>
+        <h2><a title="{{database_search}}" href="',v9041^L,'"><span>{{database_search}}</span></a></h2>
+            <div class="spacer"> </div>
+            <a name="top"></a>
+    </div>'
+
+fi

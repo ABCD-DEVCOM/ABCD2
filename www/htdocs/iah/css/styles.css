@@ -1,0 +1,71 @@
+.bar {
+	text-align: right;
+}
+
+.top h2 A {
+	color: #333;
+	text-decoration: none;
+}
+
+.top h2 A:hover {
+	border-bottom: 1px dotted #333;
+}
+
+.middle .formHead {
+	background: #ccdbe5;
+}
+
+.middle .formHead A {
+	text-decoration: none;
+	color: #333;
+}
+
+.middle .formHead A:hover {
+	text-decoration: underline;
+}
+
+.middle .formHead .help {
+	background: url(../image/common/help.gif) no-repeat;
+}
+
+.middle .formHead .changeForm {
+	background: url(../image/common/form.gif) no-repeat;
+}
+
+.formFields INPUT.fullSizeFocus {
+	border: 2px solid #036;
+}
+
+.middle .buttonSection {
+	text-align: center;
+}
+
+.defaultButton {
+	color: #036;
+	text-decoration: none;
+	border: 1px solid #1e5991;
+	background: #CCDBE5;
+	font-weight: bold;
+}
+
+.defaultButton:hover {
+	background: #e5f1f9;
+}
+
+.formFields LABEL {
+	font-size: 90%;
+}
+
+.formNotes {
+	border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+	font-size: 90%;
+}
+
+.formNotes H4 {
+	border-bottom: 1px solid #666;
+}
+
+.footer {
+	font-size: 85%;
+}

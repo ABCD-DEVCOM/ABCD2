@@ -1,0 +1,229 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<div class="page">
+<p/>
+<p>Installation of ABCD in WAMP
+</p>
+<p>Introduction
+This guide will illustrate and give instructions on how to install the ABCD software
+based on a WAMP installation. It is perfectly possible to integrate both types of
+applications and run both &lsquo;normal&rsquo; Apache/PHP-based applications (e.g.
+phpMyAdmin, Drupal,&hellip;) and ABCD at the same time with the same basic
+configuration.
+The only skill required really is to locate and edit text-files with a text-editor like
+Notepad.
+ABCD is the ISIS-based integrated library automation software which also allows
+automating documentation centres and other types of collections, due to its built-
+in flexibility and powerful functions. A standard installation of ABCD (mostly done
+by simply unpacking the installation package file) contains not only the ABCD-
+scripts and databases (in the www-folder) but also a folder for Apache and a
+folder for PHP. After configuring ABCD correctly as instructed here with WAMP,
+both the PHP and Apache folder in principle can be removed from the ABCD-
+installation.
+</p>
+<p>WAMP stands for &lsquo;Windows Apache MySQL and PHP), a very popular package of
+often combined softwares to run web-based applications. Apache is the web-
+server, MySQL the database in which values from which dynamic websites can be
+created are stored and PHP is the scripting language to create the web-pages.
+Normally WAMP comes with its own full installer executable (or .msi file) which
+indeed installs the Apache webserver, MySQL (server and client) and PHP. On top
+of that WAMP offers &ndash; and this is a major added-value &ndash; a &lsquo;WAMP-manager&rsquo; icon in
+the taskbar from where not only all the services can be (re-)started or stopped,
+but also the main settings for all three services can be accessed and managed.
+E.g. php.ini (PHP settings) and httpd.conf (Apache webserver configuration) and
+my.ini (settings for MySQL) are directly accessible, also version information for all
+three servers is available and direct access is given to phpMyAdmin.</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>Configuring Apache webserver with virtual hosts
+The main solution we propose is to configure Apache webserver, as part of
+WAMP, with virtual hosts settings.
+This requires two steps, supposing the installed Apache version is 2.2.17
+(change when appropriate to your actual version !) :
+1. Including the virtual-hosts settings file and moving the virtual host settings
+</p>
+<p>from the basic settings :
+a. open (with any text-editor, e.g. Notepad) the file
+</p>
+<p>\wamp\bin\apache\Apache2.2.17\conf\httpd.conf
+b. remove (or de-activate by putting the &lsquo;#&rsquo; comment sign in front)
+</p>
+<p>the following statements, since we don&rsquo;t want to keep them in the
+basic configuration for all applications :
+</p>
+<p>i. Listen 80
+ii. DocumentRoot "c:/wamp/www/"
+iii. ScriptAlias /cgi-bin/ "cgi-bin/"
+</p>
+<p>c. remove the &lsquo;#&rsquo; before the &lsquo;include&rsquo; statement in the following
+section towards the end, in order to activate the statement and
+make the virtual hosts configuration active :
+</p>
+<p># Virtual hosts
+Include conf/extra/httpd-vhosts.conf
+</p>
+<p>d. Save the file httpd.conf
+</p>
+<p>2. Edit the virtual hosts settings in the file extra\httpd-vhosts.conf (with any
+text-editor) in order to make it contain the following two sections, one for
+the default host with port 80, one for the ABCD-dedicated port 9090 :
+</p>
+<p>a. Create the two virtual hosts with their resp. &lsquo;listening port&rsquo; :
+NameVirtualHost *:80
+Listen 80
+NameVirtualHost *:9090
+Listen 9090
+</p>
+<p>b. Define the settings for default virtual host by adding the following
+lines :
+</p>
+<p>&lt;VirtualHost *:80&gt;
+ServerRoot "c:/wamp/bin/apache/apache2.2.17"
+DocumentRoot "/wamp/www/"
+&lt;Directory "c:/wamp/www/"&gt;
+</p>
+<p>Options Indexes FollowSymLinks MultiViews
+AllowOverride all
+</p>
+<p>Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+</p>
+<p>&lt;/Directory&gt;
+ScriptAlias /cgi-bin/ "cgi-bin/"
+</p>
+<p>&lt;Directory "cgi-bin"&gt;
+AllowOverride None</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>Options None
+Order allow,deny
+Allow from all
+</p>
+<p>&lt;/Directory&gt;
+PHPIniDir "c:/wamp/bin/php/php5.3.4"
+&lt;/VirtualHost&gt;
+</p>
+<p>c. Create a section for the ABCD-port 9090 virtual host, by adding the
+following lines :
+</p>
+<p>&lt;VirtualHost *:9090&gt;
+ServerRoot "c:/abcd/apache2.2"
+DocumentRoot "/ABCD/www/htdocs"
+&lt;Directory "c:/ABCD/www/htdocs/"&gt;
+</p>
+<p>Options Indexes FollowSymLinks MultiViews
+AllowOverride all
+</p>
+<p>Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+</p>
+<p>&lt;/Directory&gt;
+ScriptAlias /cgi-bin "/ABCD/www/cgi-bin/"
+&lt;Directory "/ABCD/www/cgi-bin/"&gt;
+</p>
+<p>AllowOverride None
+Options None
+Order allow,deny
+Allow from all
+</p>
+<p>&lt;/Directory&gt;
+#PHPIniDir "/ABCD/php"
+# next 2 lines are only for ABCD EmpWeb
+ProxyPass /empweb/ http://localhost:8080/empweb/
+ProxyPassReverse / http://localhost:8080/
+&lt;/VirtualHost&gt;
+</p>
+<p>d. Save the httpd-vhost.conf file and re-start your Apache service (the
+easiest way is to use the WAMP-manager icon and go to the Apache
+&lsquo;restart service&rsquo; option).
+</p>
+<p>Configuring PHP
+e. It is &ndash; most unfortunately &ndash; not possible to refer to 2 different PHP-
+</p>
+<p>settings by including the directive &lsquo;PHPIniDir&rsquo; twice (or more) in the
+virtual hosts settings. Apache will only observe the first one and
+report the second one as an error. So one can either leave that
+directive into the basic configuration file httdp.conf or put it into one
+(and only one) of the virtual hosts sections of the httpd-vhosts.conf
+file :
+</p>
+<p>PHPIniDir "c:/wamp/bin/php/php5.3.4"
+One could put such statement e.g. before closing the virtual-host
+section (&lt;/VirtualHost&gt;).
+</p>
+<p>f. Add the php-extensions which ABCD needs but are possibly not yet
+active in WAMP, by removing the leading &lsquo;;&rsquo; or adding if not yet</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>present in the section of the file &lsquo;php.ini&rsquo; (in WAMP with PHP5.3.4
+you will find this in C:\wamp\bin\php\php5.3.4) labeled as &lsquo;Dynamic
+Extensions&rsquo; :
+</p>
+<p>;;;;;;;;;;;;;;;;;;;;;;
+; Dynamic Extensions ;
+;;;;;;;;;;;;;;;;;;;;;;
+extension=php_gd2.dll
+extension=php_pdo.dll
+extension=php_pdo_mysql.dll
+extension=php_xsl.dll
+extension=php_yaz.dll
+</p>
+<p>g. Other php.ini settings could be slightly different in between WAMP
+and ABCD, but after some testing we didn&rsquo;t find them to be really
+important for either ABCD or WAMP, but rather &lsquo;fine-tuning&rsquo; settings.
+</p>
+<p>h. Copy the here added extension DLL&rsquo;s from your ABCD-php extension
+directory (folder) to the one of WAMP, probably being resp.
+\ABCD\php\ext and \WAMP\bin\php\php5.3.4\ext.
+Beware : don&rsquo;t copy existing ABCD-extensions over existing WAMP-
+extensions, only add non-existing ones !
+Warning : if the PHP version is indeed different, you will need to
+download the correct versions for the WAMP-PHP configuration. If e.g.
+your ABCD PHP is using version 5.2 but WAMP is using 5.3, you will
+have to load the correct versions for version 5.3, as that is the one
+we will be using.
+Since WAMP installs its own MySQL server (in the folder
+\WAMP\bin\mysql) with its data-folder inthere as a subfolder, you
+might &ndash; but only if you use MySQL for the ABCD EmpWeb Advanced
+Loans module &ndash; have to reconfigure your MySQL configuration, i.e.
+the following directives might need to be edited in order to refer to
+the MySQL-folder used when installing MySQL for EmpWeb :
+</p>
+<p>basedir=c:/wamp/bin/mysql/mysql5.1.53
+log-error=c:/wamp/logs/mysql.log
+datadir=c:/wamp/bin/mysql/mysql5.1.53/data
+</p>
+<p>This file &lsquo;my.ini&rsquo; also allows to set the port (default =3309) and
+password/login to access your MySQL.
+</p>
+<p>3. Restart all services to test the new set-up. If you have done all previous
+steps correctly, it should be possible to open both default port web-
+applications, e.g.
+</p>
+<p>http://localhost/phpMyAdmin
+and ABCD-port9090 applications :
+</p>
+<p>http://localhost:9090/</p>
+<p/>
+<div class="annotation">
+<a href="http://localhost/phpMyAdmin"/>
+</div>
+</div>
+<ul>	<li>Introduction</li>
+	<li>Configuring Apache webserver with virtual hosts</li>
+	<li>Configuring PHP</li>
+</ul>
+</body>
+</html>

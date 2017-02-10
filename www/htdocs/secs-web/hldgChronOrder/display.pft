@@ -1,0 +1,115 @@
+/*
+
+1        2        3        4    5            6        7
+,mfn,'|',v1,'|',v2,'|',v3,'|TYPE|RANGE_BEGIN|YB OU VB OU NB',#
+8        9        10   11    12        13            14
+,mfn,'|',v1,'|',v2,'|',v3,'|TYPE|RANGE_END|YE OU VE OU NE| COMPLETO OU INCOMPLETO ',#
+
+v1 e v8 = mfn
+v2 e v9 = ano
+v3 e v10 = vol
+v4 e v11 = num
+v5 e vDoze = TYPE
+v7 e v13 = range
+v7 e v14 = position in year
+
+*/
+
+/* ano 
+#,'<!-- ',v2,'-',v9,' ',v3,'(',v10,')','-',v11,'(',v12,')' ,'-->'/,
+*/
+
+,if p(v1) then
+
+    ,proc('a5555{',
+        ,if v2=v9 then            
+            ,if v3=v10 then
+                ,if v4=v11 then
+                    ,if v5=v12 then
+                        ,'RANGE_SAME',
+                    ,else
+                        ,'RANGE_DIFF_TYPE',    
+                    ,fi
+                ,else
+                    ,if v5<>v12 then
+                        ,'RANGE_DIFF_NMTYPE',
+                    ,else
+                        ,'RANGE_DIFF_NUM',
+                    ,fi
+                ,fi
+            ,else
+                ,'RANGE_DIFF_VOL',            
+            ,fi
+        ,else
+            ,'RANGE_DIFF_YEAR',
+        ,fi
+    ,'{'),
+
+    ,if ref(mfn-1,v9)<>v2 or (ref(mfn-1,v9)=v2 and v2<>v9) then
+        ,if mfn>1 then
+            '; ' /* SEPANO */
+        ,fi
+        v2
+    ,else
+        ,if ref(mfn-1,v10)<>v3 then
+            ',' /* SEPvol */
+        ,else
+            ',' /* SEPNUM */
+        ,fi
+    ,fi
+    ,if v5555:'RANGE_DIFF_YEAR' then
+		,if v2*0.2=v9*0.2 then 
+			'-',v9*2,
+		,else
+			'-'v9,
+		,fi
+        | |v3,|-|v10,
+    ,else
+        ,if v5555:'RANGE_DIFF_VOL' then
+            | |v3,|-|v10
+        ,else
+				,if ref(mfn-1,v9)<>v2 or (ref(mfn-1,v9)=v2 and ref(mfn-1,v10)<>v3) then
+					| |v3,
+				
+					,if v4<>'' or v5<>'' then
+						,if v15='VOL_COMPLETO' then
+						,else
+							'(',    
+						,fi
+					,fi
+				,fi
+				,if v5555:'RANGE_DIFF_NUM' then
+					,if v15='VOL_COMPLETO' then
+					,else
+						,v4,|-|v11,
+					,fi
+				,else
+					,if v5555:'RANGE_DIFF_TYPE' then
+						,v4,
+						,|(|v5|)|,
+						,',',
+						,v11,
+						,|(|v12|)|,                        
+					,else
+						,if v5555:'RANGE_DIFF_NMTYPE' then
+							,v4,
+							,',',
+							,v11,
+						,else
+							,v4,if v4='' and v5<>'' then v5 fi
+						,fi            
+					,fi
+				,fi
+
+				,if (ref(mfn+1,v2)=v9 and ref(mfn+1,v3)<>v10 ) or ref(mfn+1,v2)<>v9  then
+					  ,if v4<>'' or v11<>'' or v5<>'' then
+						,if v15='VOL_COMPLETO' then
+						,else
+							')',    
+						,fi
+					  ,fi
+				,fi
+
+        ,fi
+    ,fi
+,fi

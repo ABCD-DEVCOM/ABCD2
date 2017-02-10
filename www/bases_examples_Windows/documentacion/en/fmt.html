@@ -1,0 +1,48 @@
+<meta http-equiv="Content-Type" content="text/html;xcharset=utf-8" />
+<p><font face="Arial" size="2"></font></p>
+<p><font face="Arial"><H4><strong>Data entry forms</strong></H4></font></p>
+<p><font face="Arial" size="2">The system maintains a default data entry form, based on the  <strong>.FDT</strong>. Other forms can be produced in which only certain fields are included while the other properties of the form are taken directly from the <strong>FDT</strong></font></p>
+<p><span style="COLOR: #3366ff"><strong><font face="Arial" size="2">Creating the data entry form (FMT)</font></strong></span></p>
+<p><font face="Arial" size="2">Allows additional data-entry forms to be created which can be selected from the  &nbsp;Worksheet&nbsp; menu in the upper part of the ABCD window.</font></p>
+<p><font face="Arial"><font size="2"><strong>Creating a new &nbsp;data entry form:<br />
+</strong><br />
+Select from the list of fields those which will be part of the form. To select fields:</font></font></p>
+<ul>
+    <li><font face="Arial" size="2">Double-click on the field concerned</font> </li>
+    <li><font face="Arial" size="2">Click on a field then extend the selection with the keyboard keys &nbsp;[Shift]&nbsp;&nbsp;or&nbsp;&nbsp;[Ctrl-Shift]&nbsp; then click on the right pointing arrow</font> </li>
+    <li><font face="Arial" size="2">To copy all fields in the data entry form, click on &nbsp;the double right-pointing arrow</font>&nbsp; </li>
+</ul>
+<p><font face="Arial" size="2">To delete fields from the data-entry form :</font></p>
+<ul>
+    <li><font face="Arial" size="2">double click on &nbsp;the&nbsp;field concerned</font> </li>
+    <li><font face="Arial" size="2">Click on a field then extend the selection with the keyboard keys &nbsp;[Shift]&nbsp;&nbsp;or&nbsp;&nbsp;[Ctrl-Shift]&nbsp; then click on the left pointing arrow</font> </li>
+    <li><font face="Arial" size="2">To delete all fields in the data-entry form, click on the double left-pointing arrow</font>&nbsp; </li>
+</ul>
+<p><font face="Arial" size="2">The fields eliminated from the form will return to the list of fields</font></p>
+<p><font face="Arial" size="2">Use the buttons </font><input type="button" name="up" value="up" /><font face="Arial" size="2">&nbsp;or </font><input type="button" name="down" value="down" /><font face="Arial" size="2">&nbsp;to reposition the fields in the data-entry form.</font></p>
+<p><font face="Arial" size="2">Use the link<em> Preview</em> <img alt="" src="../../php/dataentry/img/preview.gif" /> to display the data-entry form in construction.</font></p>
+<p><font face="Arial" size="2">When finished, continue by saving the form after specifying the name of the file to save in the field &nbsp;name and put a brief description of the new format in the field &nbsp;description. The &nbsp;name of the format &nbsp; can only contain letters, numbers and the character _. It should always start with a letter. Spaces are not allowed nor special characters. The &nbsp;description should be reasonably short in order to be shown correctly in the &nbsp;Worksheet menu in the upper part of the &nbsp;ABCD window.</font></p>
+<p><font face="Arial" size="2"></font></p>
+<p><strong><font face="Arial" size="2">Modifying an existing data entry form</font></strong></p>
+<p><font face="Arial" size="2">Select the format which you want to edit from the list shown and then click on &nbsp;<strong><u>Edit</u></strong>. The window will be filled with the information of the form &nbsp;&nbsp;<strong>Selected fields. </strong>Follow the instructions mentioned earlier  to add or delete fields in the form.</font></p>
+<p><strong><font face="Arial" size="2">Delete an existing data-entry form</font></strong></p>
+<p><font face="Arial" size="2">Select the format which you want to delete from the menu shown and then click on &nbsp;<u><strong>Delete</strong></u>.</font></p>
+<font face="Arial" size="2"><hr />
+<p>&nbsp;</p>
+<p><font face="Arial" size="2">The edited formats are stored in the folder&nbsp;<strong>def </strong> of the database folder, with the extension <strong>.fmt</strong>. The list of available forms is kept in the file &nbsp;<strong>format.wks</strong> in which each form takes one line and the character &nbsp;<strong>|</strong> separates the name from the description.</font></p>
+<p><font face="Arial" size="2">Example of a data entry form file:</font></p>
+<p><font face="Courier New" size="2">H||Principal entries|0|0|||||||||||<br />
+100<br />
+110<br />
+111<br />
+240<br />
+242<br />
+245<br />
+246<br />
+250<br />
+260<br />
+300<br />
+310</font></p>
+<p><font face="Arial" size="2">As can be seen,&nbsp;the created data-entry form includes the lines of the FDT of the type <strong>H </strong>(heading) or <strong>L </strong>(Line divider) and the tags of the selected fields. This means that the changes made in the FDT &nbsp;after the creation of the data-entry form, will be present when the corresponding form is selected.</font></p>
+<p><font face="Arial"><font size="2">The file &nbsp;<strong>format.wks</strong>&nbsp;&nbsp; is read to re-fill the  &nbsp;<strong>Worksheet</strong>&nbsp;menu shown.</font></font><font face="Arial" size="2">&nbsp;When creating or deleting a form, the <strong>Worksheet </strong> menu in the upper part of the ABCD window will be updated automatically.</font></p>
+</font>

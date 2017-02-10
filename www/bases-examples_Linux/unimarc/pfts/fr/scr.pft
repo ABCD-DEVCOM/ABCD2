@@ -1,0 +1,46 @@
+e0:=instr(s0, s8)
+if e0 > 0 then
+	s1:=(mid(s0, e0+2, size(s0)))
+	e1:=instr(s1, s8)
+	if e1 > 0 then
+		s2:=(mid(s1, e1+2, size(s1)))
+		e2:=instr(s2, s8)
+		if e2 > 0 then
+			s3:=(mid(s2, e2+2, size(s2)))
+			e3:=instr(s3, s8)
+			if e3 > 0 then
+				s4:=(mid(s3, e3+2, size(s3)))
+				e4:=instr(s4, s8)
+				if e4 > 0 then
+					s5:=(mid(s4, e4+2, size(s4)))
+					e5:=instr(s5, s8)
+						if e6 > 0 then
+							s6:=(mid(s5, e5+2, size(s5)))
+							e6:=instr(s6, s8)
+						fi	
+				fi	
+			fi		
+		fi
+	fi
+fi
+
+
+if e0=0 then s9:=('')
+else	if e1=0 then e9:=instr(s1, '^'), if e9=0 then e9:=size(s1) else e9:=e9-1, fi, s9:=(mid(s0, e0+2, e9))     
+		else	if e2=0 then e9:=instr(s2, '^'), if e9=0 then e9:=size(s2) else e9:=e9-1, fi, s9:=(mid(s0, e0+2, e1+e9+1)) 
+				else	if e3=0 then e9:=instr(s3, '^'), if e9=0 then e9:=size(s3) else e9:=e9-1, fi, s9:=(mid(s0, e0+2, e1+e2+e9+2))
+						else 	if e4=0 then e9:=instr(s4, '^'), if e9=0 then e9:=size(s4) else e9:=e9-1, fi, s9:=(mid(s0, e0+2, e1+e2+e3+e9+2))
+								else	if e5=0 then e9:=instr(s5, '^'), if e9=0 then e9:=size(s5) else e9:=e9-1, fi, s9:=(mid(s0, e0+2, e1+e2+e3+e4+e9+2))
+										else 	if e6=0 then e9:=instr(s6, '^'), if e9=0 then e9:=size(s6) else e9:=e9-1, fi, s9:=(mid(s0, e0+2, e1+e2+e3+e4+e5+e9+2))
+												fi
+										fi
+								fi
+						fi
+				fi
+		fi
+fi
+
+
+replace(s9, s8, s7) 
+
+

@@ -1,0 +1,83 @@
+<html>
+
+    <head>
+
+        <title></title>
+
+    </head>
+
+    <body>
+
+        <p><font face="Arial" size="2"><strong>Configurar a base de dados de usuários</strong>.</font></p>
+
+        <p><font face="Arial" size="2">Esta opção permite configurar no sistema, a base de dados com os usuários que têm acesso ao serviço de empréstimo.</font></p>
+
+        <p><font face="Arial" size="2">Os parâmetros requeridos são:</font></p>
+
+        <p>
+
+        <table cellspacing="5" cellpadding="5" width="95%" summary="" border="0">
+
+            <tbody>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">Prefixo para obter o número de usuário</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Especifica o prefixo que se coloca antes do número do usuário introduzido para localizar a informação da base de dados de usuários. Fica armazenado no directório <strong>def</strong> da base de dados de usuários sob o nome<strong><font color="#ff0000"> loans_uskey.tab</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para extrair o número de usuário</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Depois de localizado o registo do usuário, aplica-se este formato de extração para obter o número do usuário. Fica armazenado no diretório <strong>def</strong> da base de dados de usuários sob o nome<strong><font color="#ff0000"> loans_uskey.pft</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para extrair o tipo de usuário</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">A aplicação das políticas de empréstimo depende do tipo de usuário e do tipo de item a emprestar. Este formato de extração permite extrair o tipo de usuário. Fica armazenado no directório <strong>def</strong> da base de dados de usuários sob o nome<strong><font color="#ff0000"> loans_ustype.tab</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para extrair a vigência do usuário</font></td>
+
+                    <td valign="top">
+
+                    <p><font face="Arial" size="2">Através deste formato define-se a vigência do usuário. Deve incluir uma mensagem e um código, separados ambos pelo caracter |.<br />
+
+                    Os códigos definidos são:</font></p>
+
+                    <p><font face="Arial" size="2">0=Usuário ativo<br />
+
+                    1=Usuário inativo</font></p>
+
+                    <p><font face="Arial"><font size="2">Fica armazenado no directório <strong>def</strong> da base de dados de usuários sob o nome<strong><font color="#ff0000"> loans_usvig.tab</font></strong></font></font></p>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para visualizar a informação do usuário</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Este formato de extração apresenta a informação do usuário para a emissão de pontos de situação da conta e outros relatórios relacionados com a gestão dos empréstimos. Fica armazenado no diretório <strong>def</strong> da base de dados de usuários sob o nome<strong><font color="#ff0000"> loans_usdisp.tab</font></strong></font></font></td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        </p>
+
+    </body>
+
+</html>

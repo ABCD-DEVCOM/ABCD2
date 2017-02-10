@@ -1,0 +1,67 @@
+
+if v1001 = '1' then 'Content-type: ', if v6212:'export' then 'bireme/application' else 'text/html' fi,/#,fi,
+'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+if v1001 = '1'  then
+'<html>
+<head>
+<title>',v5003^*,'- {{list}}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />
+
+<script type="text/javascript">
+    function showPrintDialog(){
+        var version = Math.round(parseFloat(navigator.appVersion) * 1000);
+        if (version >= 4000){
+            window.print();
+        }
+    }
+</script>
+</head>'
+if v6212 = 'print' then '<body style="background: #FFFFFF !important" onLoad="javascript:void(showPrintDialog())">' else '<body style="background: #FFFFFF !important">' fi,
+
+'<div id="contentList">
+    <div class="contain">
+    <div class="copyright">
+        {{institution}}
+        <hr class="ruler" />
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">{{database}}:</div>
+            <div class="columnB"><b>',v5003^*,'</b></div>
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">{{search}}:</div>
+            <div class="columnB"><b>'
+                    ,if p(v6102) then
+                         v6102 ' [',v6100^p,']'
+                    ,else,
+                        ,if v6000='F' then,
+                             replace(v6002,' ',s('&nbsp;'mpu,v6001,mpl'&nbsp;'))
+                        ,else,
+                            ,(if p(v6002) then if iocc > 1 then '&nbsp;'v6001'&nbsp;'fi,v6002,' [',v6003^p,']' fi),
+                        ,fi,
+                    ,fi,
+                    '</b>                                    
+            </div>
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">{{total_of_references}}:</div>
+            <div class="columnB"><b>',v1002,'</b></div>
+        </div>
+
+        <div class="row"><hr class="ruler" /></div>'
+    '</div>' 
+,fi,
+
+'<br />
+    <div class="midd">
+        <div class="row">
+            <span class="labl"><b>',v1001'/'v1002,'</b></span>
+        </div>
+        <div class="resultCol">'
+
+

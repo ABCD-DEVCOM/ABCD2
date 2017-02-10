@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bvs language="en" country="**" subject="BVS-Site" version="4">
+  <texts id="" available="">
+    <text id="button_moreInformation" available="yes" img="/image/common/info.gif">ተጨማሪ መረጃዎች</text>
+    <text id="default_print" available="yes">አትም</text>
+    <text id="default_close" available="yes">ዝጋ</text>
+    <text id="home" available="yes">መነሻ</text>
+    <text id="contact" available="yes">ያግኙን</text>
+    <text id="contact: subject" available="yes">ጉዳዩ</text>
+    <text id="contact: name" available="yes">ስም</text>
+    <text id="contact: email" available="yes">ኢሜይል</text>
+    <text id="contact: message" available="yes">መልዕክት</text>
+    <text id="contact: send" available="yes">ላክ</text>
+    <text id="contact: error" available="yes">እባክዎን መስኮቹን ይሙሉ።</text>
+    <text id="contact: response" available="yes">መልዕክቶት በትክክል ተልኳል።</text>
+    <text id="topic.expand" available="yes">ንኡስ ርዕሶች::</text>
+  </texts>
+  <parent id="" available="yes">
+    <item id="1" available="yes" img="/central/images/tools.png">ABCD<description>   </description><portal>   </portal></item>
+  </parent>
+  <identification id="" available="yes">
+    <item id="2" available="yes">ABCD ድረገጽ ቅንጭብ ማሳያ::<description>  </description><portal>  </portal></item>
+  </identification>
+  <contact id="" available="yes">
+    <item id="3" available="yes" href="egbert.desmet@uantwerpen.be">ABCDን በተመለከተ መረጃ ለማግኝት<description>     </description><portal>     </portal></item>
+    <item id="5" available="yes" href="egbert.desmet@uantwerpen.be">ABCD ን በተመለከተ ለማመላከት<description>     </description><portal>     </portal></item>
+    <item id="4" available="yes" href="egbert.desmet@uantwerpen.be">ABCD ን በተመለከተ ይግባኝ ለማለት<description>     </description><portal>     </portal></item>
+  </contact>
+  <other-versions id="" available="yes">
+    <item id="7" available="yes" href="../php/index.php?lang=pt">portugu�s<description>        </description><portal>        </portal></item>
+    <item id="8" available="yes" href="../php/index.php?lang=es">espa�ol<description>        </description><portal>        </portal></item>
+    <item id="38" available="yes" href="../php/index.php?lang=fr">fran�ais<description>       </description><portal>       </portal></item>
+    <item id="54" available="yes" href="../php/index.php?lang=en">English<description>     </description><portal>     </portal></item>
+  </other-versions>
+  <institution id="" available="no">
+    <item id="9" available="no">ድርጅቶች<description>  </description><portal>  </portal></item>
+    <item id="10" available="yes" img="%SKIN_IMAGE_DIR%logoOpas.gif">BIREME | PAHO | WHO logo<description>  </description><portal>  </portal></item>
+    <item id="11" available="yes" href="http://www.bireme.br/">BIREME<description>        </description><portal>        </portal></item>
+    <item id="12" available="yes" href="http://www.paho.org/">PAHO<description>  </description><portal>  </portal></item>
+    <item id="13" available="yes" href="http://www.who.int/">WHO<description>        </description><portal>        </portal></item>
+  </institution>
+  <collectionList id="" available="yes">
+    <item id="14" available="yes">First Column<item id="33" available="yes" type="portal" file="xml/am/33.xml">አያያዦች</item></item>
+    <item id="16" available="yes">Second column<item id="34" available="yes" type="collection" file="xml/am/34.xml">የመረጃ ምንጮች</item><item id="37" available="yes" type="collection" file="xml/am/37.xml">ሣይንሳዊ ሥነ-ጽሁፍ</item><item id="31" available="no" type="collection" file="xml/am/31.xml">ዲያሬክቶሬቶች ፣ፖርታሎች</item><item id="35" available="no" type="collection" file="xml/am/35.xml">ግልጋሎት</item><item id="53" available="yes" type="xhtml" file="xml/am/53.xml">GoScho</item></item>
+    <item id="20" available="yes">Third column<item id="47" available="yes" type="about" file="xml/am/47.xml">ስለ ABCD ድረ-ገጽ</item><item id="50" available="yes" href="http://127.0.0.1:9090/indexmysite.php" type="xhtml" file="xml/am/50.xml">ድረገፄ</item><item id="52" available="yes" type="rss" file="xml/am/52.xml">ለፍተሻ</item><item id="48" available="yes" type="xhtml" file="xml/am/48.xml">ጎግል ስኮላር</item><item id="43" available="yes" type="xhtml" file="xml/am/43.xml">ABCD/ISIS የውይይት ዝርዝር</item><item id="51" available="yes" type="rss" file="xml/am/51.xml">የአየር ትንበያ</item></item>
+  </collectionList>
+  <responsable>
+    <item id="26" available="yes" type="responsable" file="xml/en/responsable.xml"/>
+  </responsable>
+  <metasearch>
+    <item id="27" available="yes" type="metasearch" file="xml/en/metasearch.xml"/>
+  </metasearch>
+  <metainfo>
+    <item id="28" available="yes" type="metainfo" file="xml/en/metainfo.xml"/>
+  </metainfo>
+  <attachList available=""/>
+</bvs>

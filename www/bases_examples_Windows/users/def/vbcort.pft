@@ -1,0 +1,24 @@
+'\ATX {\fonttbl\f0\froman Times New Roman;} \li0\fi0 ',
+'\li1800\fi-1800\f0 ',
+
+if p(v90) 
+   then 
+  '\cf5\fs40\b Suspendido \b0\par ',
+fi,
+
+if a(v1)
+     then
+    '\f0\fs24\cf5\b ',
+     v30, ',  C.I.: 'v35,
+      "\par\fs22 Carnet \tab "v20,      
+     
+      '\b0\fs20\cf1 ', 
+       "\par Tipo de usuario \tab "v10,
+       "\par\ Teléfono \tab "v140+|; |,
+       "\par\ Inscripción: \tab "v15,
+       "\par\ Renovación: \tab "v16,
+       "\par\ Vencimiento: \tab "v17,
+       "\par\ Fax\i0\tab "v150+|; |,
+        "\par\ E-mail \tab "v160+|; |,
+fi,
+'\par '

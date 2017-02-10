@@ -1,0 +1,16 @@
+http://127.0.0.1:9090/cgi-bin/bigisis/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE&nextAction=xml&count=1&exprSearch=ABCD
+
+XML Parsing Error: no element found
+Location: http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE&nextAction=xml&count=1&exprSearch=ABCD
+Line Number 27, Column 1:
+
+
+Apache's acces.log : 
+
+127.0.0.1 - - [14/Dec/2014:11:32:32 +0100] "GET /cgi-bin/bigisis/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE&nextAction=xml&count=1&exprSearch=ABCD HTTP/1.1" 200 569 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"
+127.0.0.1 - - [14/Dec/2014:11:32:39 +0100] "GET /cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE&nextAction=xml&count=1&exprSearch=ABCD HTTP/1.1" 200 569 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"
+127.0.0.1 - - [14/Dec/2014:11:35:51 +0100] "GET /cgi-bin/bigisis/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE&nextAction=xml&count=1&exprSearch=ABCD HTTP/1.1" 200 569 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"
+127.0.0.1 - - [14/Dec/2014:11:36:00 +0100] "GET /cgi-bin/bigisis/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE HTTP/1.1" 200 1868 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"
+127.0.0.1 - - [14/Dec/2014:11:36:09 +0100] "POST /cgi-bin/bigisis/wxis.exe/iah/scripts/ HTTP/1.1" 200 88580 "http://127.0.0.1:9090/cgi-bin/bigisis/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=DUBCORE" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"
+127.0.0.1 - - [14/Dec/2014:11:36:27 +0100] "GET /bases/search%5EsSEARCH/collection/ABCD/special_features_of_the_advanced_loans_module_of_the_abcd_integrated_library_system578.docx HTTP/1.1" 404 618 "http://127.0.0.1:9090/cgi-bin/bigisis/wxis.exe/iah/scripts/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0"
+

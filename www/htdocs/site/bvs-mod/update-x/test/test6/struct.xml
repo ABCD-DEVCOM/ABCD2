@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="texts">
+  <element name="language" repeat="list">
+    <edit name="@id">
+	    <select>
+	      <option value="es">es</option>
+	      <option value="pt">pt</option>
+	      <option value="en">en</option>
+	    </select>
+    </edit>
+    <element name="text" repeat="list">
+      <edit name="find"/>
+      <edit name="replace">
+        <textarea cols="70" rows="12"/>
+      </edit>
+    </element>
+  </element>
+</element>

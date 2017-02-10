@@ -1,0 +1,578 @@
+'<br>'
+    '<table width="100%">',
+	,'<tr>',
+	,'<td width="16%">&nbsp;</td>',
+           '<td align=justify><font size=2 face=arial>',
+/* begin of generic format */
+,'<p><b>Tipo liter.</b>: ',v5,', <b>Nivel bibl.</b>: ',v6,' - <b>ID</b>: ',v2,'-',mfn,'</p>'/,
+/* ,('<p>',v10,'</p>'/),
+,('<p>',v16,'</p>'/),
+,('<p>',v23,'</p>'/),  */
+,'<p>',
+/* text documents, including music scores */
+,if a(v9) or v9='a' or v9='c' then
+	/* monography or monographic serie */
+	,if v5*0.1='M' or v5*0.2='MS' or v5*0.1='N' then
+		/* analytic level */
+		,if v6*0.1='a' then
+			/* personal author analytic level */
+			,if p(v10) then
+				,(|; |+v10^*,| (|v10^r|)|,if nocc(v10)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v10) then ,'.', fi),
+			,fi,
+			/* institutional author analytic level */
+			,if p(v11) then
+				,(|; |+v11^*,if nocc(v11)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v11) then ,'.', fi),
+			,fi,
+			/* title analytic level */
+			,if p(v12) then
+				,' ',(v12^*+| / |),". In: "d12,
+			,fi,
+		,fi,
+		/* monographic level */
+		,if v6*0.1='m' or v6*0.2='am' then
+			/* personal author monographic level */
+			,if p(v16) then
+				,(|; |+v16^*,| (|v16^r|)|,if nocc(v16)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v16) then ,'.', fi),
+			,fi,
+			/* institutional author monographic level */
+			,if p(v17) then
+				,(|; |+v17^*,if nocc(v17)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v17) then ,'.', fi),
+			,fi,
+			/* title monographic level */
+			,if p(v18) then
+				," <b>"d18,(v18^*+| / |),"</b>."d18,
+				,if v5:'C' then ' In: ' fi,
+			,fi,
+			/* conference data */
+			,if v5:'C' then
+				/* conference title */
+				,if p(v53) then
+					,v53,
+				,fi,
+				/* normalized date */
+				,if p(v55) then
+					,|, |v55*0.4,
+				,fi,
+				/* city */
+				,if p(v56) then
+					,|, |v56,
+				,fi,
+				/* country */
+				/* ,if p(v57) then
+					,|, |v57,
+				,fi, */
+				/* sponsor */
+				,if p(v52) then
+					,|, |v57,
+				,fi,
+				,'.',
+			,fi,
+			/* edition */
+			,if p(v63) then
+				,| |v63|.|,
+			,fi,
+			/* location - city, country */
+			,if p(v66) and v66<>'s.l' then
+				,if p(v67) then
+					,| |v66,|, |v67|:|,
+				,else
+					,| |v66|:|,
+				,fi,
+			,fi,
+			/* publisher */
+			,if p(v62) and v62<>'s.n' then
+				,if v9<>'c' then
+					,' ',(v62+|; |),
+				,else
+					,' ',(v62^f|; |),
+				,fi,
+				,if p(v64) then ,',', else ,'.', fi,
+			,fi,
+			/* publication date */
+			,if a(v64) then
+				,' s.d.',
+			,else
+				,| |v64,'.',
+			,fi,
+			/* indication of support quantity for music score */
+			/* eg: 1 music score */
+			/* disabled */
+			/* ,if v9='c' and p(v???) then
+				,v???,
+			,fi, */
+			/* number of pages */
+			/* only if it is not analytic */
+			,if p(v20) and v6*0.1<>'a' then
+				,| |v20,
+				,if not v20:'v' and not v20:'p' then
+					,' p.',
+				,fi,
+			,fi,
+			/* first and last number of pages */
+			,if p(v14) then
+				,| p. |v14^f,|-|v14^l|.|,
+			,fi,
+			/* descriptive information */
+			/* according to new field format */
+			,(if s(v38^a,v38^b,v38^c)<>'' then
+				,| |v38^a,
+				,if p(v38^b) and p(v38^a) then ,',', fi,
+				,| |v38^b,
+				,if p(v38^c) and s(v38^a,v38^b)<>'' then ,',', fi,
+				,| |v38^c,
+				,'.',
+			,fi),
+			/* according to old field format */
+			,if s(v38^a,v38^b,v38^c)='' and s(v38^*)<>'' then
+				,' ',(v38+|, |),'.',
+			,fi,
+			/* formatted content note - only if music score or audio record */
+			,if v9='c' and p(v505) then
+				,' ',(v505+|. |),
+			,fi,
+			/* info on reproduction and the original being reproduced - only if music score or audio record */
+			,if v9='c' and p(v533) then
+				,' ',(v533+|. |),
+			,fi,
+		,fi,
+		/* collection data */
+		,if v6:'c' then
+			/* if there is data to be presented, open parenthesis */
+			,if s(v23,v24,v25,v27)<>'' then
+				,' (',
+			,fi, 
+			/* personal author collection level */
+			,if p(v23) then
+				,(|; |+v23^*,| (|v23^r|)|,if nocc(v23)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v23) then ,'.', fi),
+			,fi,
+			/* institutional author collection level */
+			,if p(v24) then
+				,(|; |+v24^*,| (|v24^r|)|,if nocc(v24)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v24) then ,'.', fi),
+			,fi,
+			/* title collection level */
+			,if p(v25) then
+				,' ',(v25^*+| / |),
+			,fi,
+			/* number total of collection volumes */
+			,if p(v27) then
+				,', ',v27/
+			,fi,
+			/* if data has been presented, close parenthesis */
+ 			,if s(v23,v24,v25,v27)<>'' then
+				,').',
+			,fi, 
+		,fi
+		/* series data */
+		,if v6:'s' then
+			/* if there is data to be presented, open parenthesis */
+			,if s(v30,v31,v32,v35)<>'' then
+				,' (',
+			,fi, 
+			/* series title */
+			,if p(v30) then
+				,v30,
+			,fi,
+			/* volume */
+			,if p(v31) then
+				,|, v.|v31,
+			,fi,
+			/* number */
+			,if p(v32) then
+				,|, n.|v32,
+			,fi,
+			/* ISSN */
+			,if p(v35) then
+				,|, ISSN |v35,
+			,fi,
+			/* if data has been presented, close parenthesis */
+			,if s(v30,v31,v32,v35)<>'' then
+				,').',
+			,fi, 
+ 		,fi,
+		/* Project */
+		,if v5:'P' then
+			/* if there is data to be presented, open parenthesis */
+			,if s(v59,v58,v60)<>'' then
+				,' (',
+			,fi,
+			/* project name */
+			,if p(v59) then
+				,v59,
+			,fi,
+			/* number */
+			,if p(v60) then
+				,|, |v60,
+			,fi,
+			/* project sponsor */
+			,if p(v58) then
+				,|, |v58,
+			,fi,
+			/* if data has been presented, close parenthesis */
+			,if s(v59,v58,v60)<>'' then
+				,').',
+			,fi,
+		,fi,
+		/* ISBN */
+		,if p(v69) then
+			,| ISBN |v69|.|,
+		,fi,
+		/* Electronic access */
+		,if p(v8) then
+			,if v8^*='Internet' then
+				,| Disponible en: &lt;|v8^i|&gt;.|,
+				,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+			,else
+				,if p(v8^u) then
+					,| Disponible en: &lt;|v8^u|&gt;.|,
+					,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+				,fi,
+			,fi,
+		,fi,
+	,fi,
+	/* Serial publication */
+	,if v5*0.1='S' then
+		/* personal author analytic level */
+		,if p(v10) then
+			,(|; |+v10^*,| (|v10^r|)|,if nocc(v10)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v10) then ,'.', fi),
+		,fi,
+		/* institutional author analytic level */
+		,if p(v11) then
+			,(|; |+v11^*,if nocc(v11)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v11) then ,'.', fi),
+		,fi,
+		/* title analytic level */
+		,if p(v12) then
+			,' ',(v12^*+| / |),"."d12,
+		,fi,
+		/* conference data */
+		,if v5:'C' then
+			/* conference title */
+			,if p(v53) then
+				,v53,
+			,fi,
+			/* normalized date */
+			,if p(v55) then
+				,|, |v55*0.4,
+			,fi,
+			/* city */
+			,if p(v56) then
+				,|, |v56,
+			,fi,
+			/* country */
+			/* ,if p(v57) then
+				,|, |v57,
+			,fi, */
+			/* sponsor */
+			,if p(v52) then
+				,|, |v57,
+			,fi,
+			,'.',
+		,fi,
+		/* journal title */
+		,if p(v30) then
+			,| <b>|v30|</b>|,
+		,fi,
+		/* location - city, country */
+		,if p(v66) and v66<>'s.l' then
+			,|, |v66,
+		,fi,
+		/* volume */
+		,if p(v31) then
+			,|, v. |v31,
+		,fi,
+		/* number */
+		,if p(v32) then
+			,|, n. |v32,
+		,fi,
+		/* first and last number of pages */
+		,if p(v14) then
+			,|, p. |v14^f,|-|v14^l,
+		,fi,
+		/* mes */
+		,if p(v65) and v65*4.2<>'00' then
+			,', ',@mes.pft,
+		,fi,
+		/* year */
+		,if p(v65) then
+			,| |v65*0.4|.|,
+		,else
+			,'.',
+		,fi,
+		/* Project */
+		,if v5:'P' then
+			/* if there is data to be presented, open parenthesis */
+			,if s(v59,v58,v60)<>'' then
+				,' (',
+			,fi,
+			/* project name */
+			,if p(v59) then
+				,v59,
+			,fi,
+			/* number */
+			,if p(v60) then
+				,|, |v60,
+			,fi,
+			/* project sponsor */
+			,if p(v58) then
+				,|, |v58,
+			,fi,
+			/* if data has been presented, close parenthesis */
+			,if s(v59,v58,v60)<>'' then
+				,').',
+			,fi,
+		,fi,
+		/* ISSN */
+		,if p(v35) then
+			,| ISSN |v35|.|,
+		,fi,
+		/* Electronic access */
+		,if p(v8) then
+			,if v8^*='Internet' then
+				,| Disponible en: &lt;|v8^i|&gt;.|,
+				,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+			,else
+				,if p(v8^u) then
+					,| Disponible en: &lt;|v8^u|&gt;.|,
+					,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+				,fi,
+			,fi,
+		,fi,
+	,fi,
+	/* Thesis */
+	,if v5='T' then
+		/* analytic level */
+		,if v6*0.1='a' then
+			/* personal author analytic level */
+			,if p(v10) then
+				,(|; |+v10^*,| (|v10^r|)|,if nocc(v10)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v10) then ,'.', fi),
+			,fi,
+			/* institutional author analytic level */
+			,if p(v11) then
+				,(|; |+v11^*,if nocc(v11)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v11) then ,'.', fi),
+			,fi,
+			/* title analytic level */
+			,if p(v12) then
+				,' ',(v12^*+| / |),". In:"d12,
+			,fi,
+		,fi,
+		/* monographic level */
+		,if v6*0.1='m' or v6*0.2='am' then
+			/* personal author monographic level */
+			,if p(v16) then
+				,(|; |+v16^*,| (|v16^r|)|,if nocc(v16)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v16) then ,'.', fi),
+			,fi,
+			/* institutional author monographic level */
+			,if p(v17) then
+				,(|; |+v17^*,if nocc(v17)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v17) then ,'.', fi),
+			,fi,
+			/* title monographic level */
+			,if p(v18) then
+				," <b>"d18,(v18^*+| / |),"</b>."d18,
+			,fi,
+			/* registration year */
+			/* disabled it has no tag defined */
+			/* ,if p(v???) then
+				,v???,'. ',
+			,fi, */
+			/* number of pages */
+			/* only if it is not analytic */
+			,if p(v20) and v6*0.1<>'a' then
+				,| |v20,
+				,if not v20:'v' and not v20:'p' then
+					,' f.',
+				,fi,
+			,fi,
+			/* first and last number of pages */
+			,if p(v14) then
+				,| p. |v14^f,|-|v14^l|.|,
+			,fi,
+			/* dissertation degree/ these */
+			,if p(v51) then
+				,' Dissertación para el grado de ',v51,
+			,fi,
+			/* Presentation unit */
+			,if p(v50) then
+				,', ',v50,
+			,fi,
+			/* location - city, country */
+			,if p(v66) and v66<>'s.l' then
+				,if p(v50) or p(v51) then
+					,', ',
+				,fi,
+				,if p(v67) then
+					,v66,|, |v67|,|,
+				,else
+					,v66|,|,
+				,fi,
+			,fi,
+			/* presentation year */
+			/* it has no tag defined */
+			/* considered as publication year */
+			,if p(v64) then
+				,| |v64,'. ',
+			,fi,
+		,fi,
+		/* series data */
+		,if v6:'s' then
+			/* if there is data to be presented, open parenthesis */
+			,if s(v30,v31,v32,v35)<>'' then
+				,' (',
+			,fi, 
+			/* series title */
+			,if p(v30) then
+				,v30,
+			,fi,
+			/* volume */
+			,if p(v31) then
+				,|, v.|v31,
+			,fi,
+			/* number */
+			,if p(v32) then
+				,|, n.|v32,
+			,fi,
+			/* ISSN */
+			,if p(v35) then
+				,|, ISSN |v35,
+			,fi,
+			/* if data has been presented, close parenthesis */
+			,if s(v30,v31,v32,v35)<>'' then
+				,').',
+			,fi, 
+ 		,fi,
+		/* Electronic access */
+		,if p(v8) then
+			,if v8^*='Internet' then
+				,| Disponible en: &lt;|v8^i|&gt;.|,
+				,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+			,else
+				,if p(v8^u) then
+					,| Disponible en: &lt;|v8^u|&gt;.|,
+					,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+				,fi,
+			,fi,
+		,fi,
+	,fi,
+,fi,
+/* audio record*/ 
+,if v9='j' or v9='i' then
+	,if v5*0.1='N' or v5*0.1='M' then
+		/* analytic level */
+		,if v6*0.1='a' then
+			/* personal author analytic level */
+			,if p(v10) then
+				,(|; |+v10^*,| (|v10^r|)|,if nocc(v10)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v10) then ,'.', fi),
+			,fi,
+			/* institutional author analytic level */
+			,if p(v11) then
+				,(|; |+v11^*,if nocc(v11)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v11) then ,'.', fi),
+			,fi,
+			/* title analytic level */
+			,if p(v12) then
+				,' ',(v12^*+| / |),". In: "d12,
+			,fi,
+		,fi,
+		/* monographic level */
+		,if v6*0.1='m' or v6*0.2='am' then
+			/* personal author monographic level */
+			,if p(v16) then
+				,(|; |+v16^*,| (|v16^r|)|,if nocc(v16)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v16) then ,'.', fi),
+			,fi,
+			/* institutional author monographic level */
+			,if p(v17) then
+				,(|; |+v17^*,if nocc(v17)>3 and iocc=3 then ,' et al. ',break, fi,if iocc=nocc(v17) then ,'.', fi),
+			,fi,
+			/* title monographic level */
+			,if p(v18) then
+				," <b>"d18,(v18^*+| / |),"</b>."d18,
+			,fi,
+			/* indic. of volume monographic level */
+			,if p(v21) then
+				,| |v21|.|,
+			,fi,
+			/* location - city, country */
+			,if p(v66) and v66<>'s.l' then
+				,if p(v67) then
+					,| |v66,|, |v67|:|,
+				,else
+					,| |v66|:|,
+				,fi,
+			,fi,
+			/* publisher */
+			,if p(v62) and v62<>'s.n' then
+				,if v9<>'i' and v9<>'j' then
+					,' ',(v62+|; |),
+				,else
+					,' ',(v62^f+|; |),
+				,fi,
+				,if p(v64) then ,',', else ,'.', fi,
+			,fi,
+			/* publication date */
+			,if a(v64) then
+				,' s.d.',
+			,else
+				,| |v64,'.',
+			,fi,
+			/* descriptive information */
+			/* according to new field format */
+			,(if s(v38^a,v38^b,v38^c)<>'' then
+				,| |v38^a,
+				,if p(v38^b) and p(v38^a) then ,',', fi,
+				,| |v38^b,
+				,if p(v38^c) and s(v38^a,v38^b)<>'' then ,',', fi,
+				,| |v38^c,
+				,'.',
+			,fi),
+			/* according to old field format */
+			,if s(v38^a,v38^b,v38^c)='' and s(v38^*)<>'' then
+				,' ',(v38+|, |),'.',
+			,fi,
+			/* formatted content note - only if music score or audio record */
+			,if p(v505) then
+				,' ',(v505+|. |),
+			,fi,
+			/* info on reproduction and the original being reproduced - only if music score or audio record */
+			,if p(v533) then
+				,' ',(v533+|. |),
+			,fi,
+			/* tipo de registro musical */
+			,if p(v117) then
+				,' ',v117|. |,
+			,fi,
+		,fi,
+		/* collection data */
+		,if v6:'c' then
+			/* if there is data to be presented, open parenthesis */
+			,if s(v25,v27)<>'' then
+				,' (',
+			,fi, 
+			/* title collection level */
+			,if p(v25) then
+				,' ',(v25^*+| / |),
+			,fi,
+			/* number total of collection volumes */
+			,if p(v27) then
+				,', ',v27/
+			,fi,
+			/* if data has been presented, close parenthesis */
+ 			,if s(v25,v27)<>'' then
+				,').',
+			,fi, 
+		,fi
+		/* Electronic access */
+		,if p(v8) then
+			,if v8^*='Internet' then
+				,| Disponible en: &lt;|v8^i|&gt;.|,
+				,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+			,else
+				,if p(v8^u) then
+					,| Disponible en: &lt;|v8^u|&gt;.|,
+					,| Accessado el: |v91*6.2,|/|v91*4.2,|/|v91*0.4|.|,
+				,fi,
+			,fi,
+		,fi,
+	,fi,
+,fi,
+,'</p>'/,
+/* end of generic format */
+        '</font></td></tr>'
+   '</table>',
+'<p><br>',

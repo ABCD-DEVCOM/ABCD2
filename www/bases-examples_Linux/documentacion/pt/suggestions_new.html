@@ -1,0 +1,56 @@
+<h3><strong>Criar nova sugest&otilde;es</strong></h3>
+<p>Antes de inserir uma nova sugest&atilde;o na base de dados, deve-se verificar se trata da aquisi&ccedil;&atilde;o de um novo objeto ou de exemplares adicionais a um objeto j&aacute; existente.&nbsp; Neste caso deve informar a <strong>base de dados</strong> onde se encontra a informa&ccedil;&atilde;o catalogr&aacute;ficado objeto e o <strong>N&uacute;mero de identifica&ccedil;&atilde;o do objeto, </strong>tal como foi atribu&iacute;do na base de dados correspondente.</p>
+<p>No caso de se tratar de um novo objeto, tamb&eacute;m deve inserir o nome da base de dados onde ser&aacute; catalogado o objeto.</p>
+<p>Os dados obrigat&oacute;rios para adicionar s&atilde;o :</p>
+<p>
+<table width="500" cellspacing="1" cellpadding="1" border="1" summary="">
+    <tbody>
+        <tr>
+            <td>Etiqueta</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Estado da sugest&atilde;o</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Tipo de aquisi&ccedil;&atilde;o</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Base de dados onde ser&aacute; catalogado o objeto</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>N&uacute;mero de identifica&ccedil;&atilde;o do objeto (Obrigatorio se o tipo de aquisi&ccedil;&atilde;o selecionado&nbsp; for <strong>Exemplares adicionais</strong>)</td>
+        </tr>
+        <tr>
+            <td>16/17</td>
+            <td>Deve indicar o autor pessoal ou o autor corporativo</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>T&iacute;tulo</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>Nome da pessoa/departamento que sugeriu a compra do objeto</td>
+        </tr>
+        <tr>
+            <td>210</td>
+            <td>Data da sugest&atilde;o</td>
+        </tr>
+        <tr>
+            <td>211</td>
+            <td>data ISO da sugest&atilde;o</td>
+        </tr>
+        <tr>
+            <td>220</td>
+            <td>N&uacute;mero de exemplares solicitados</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>A informa&ccedil;&atilde;o inserida &eacute; armazenada na base de dados <strong>suggestions</strong> e aos novos registros &eacute; atribu&iacute;do automaticamente&nbsp; um n&uacute;mero sequencial que &eacute; utilizado como um elo no processo de monitoramento do estado da sugest&atilde;o..</p>
+<p>Para a inser&ccedil;&atilde;o do n&uacute;mero sequencial, &eacute; mantido na pasta <strong>data</strong> da base de dados <strong>suggestions</strong> um arquivo denominado <strong>control_number.cn</strong>  no qual &eacute; gravado o &uacute;ltimo n&uacute;mero inserido.</p>

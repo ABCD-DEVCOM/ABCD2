@@ -1,0 +1,114 @@
+/* ref: layout.css */
+.middle {
+	height: 200px;
+}
+
+.homepage .mainBox .boxContent {
+	height: 101px;	
+}
+
+A.singleButton SPAN.sb_rb {
+	right: -1px;	
+}
+
+.tMacroActions .checkboxAction {
+	margin-left: 12px;	
+}
+
+.formFoot .helper {
+	margin-left: 10px;	
+}
+
+/* ref: styles.css */
+.homepage .mainBox .titleSection .sectionIcon {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/mainBox_titleSection.png',sizingMethod='crop');	
+} 
+
+.homepage .mainBox .fascicleSection .sectionIcon {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/mainBox_fascicleSection.png',sizingMethod='crop');
+}
+
+.homepage .mainBox .maskSection .sectionIcon {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/mainBox_maskSection.png',sizingMethod='crop');
+}
+
+.homepage .mainBox .toolSection .sectionIcon {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/mainBox_toolSection.png',sizingMethod='crop');	
+}
+
+.homepage .mainBox .helpSection .sectionIcon {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/mainBox_helpSection.png',sizingMethod='crop');	
+}
+
+A.listButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_list.png',sizingMethod='crop');		
+}
+
+A.newButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_new.png',sizingMethod='crop');	
+}
+
+A.importButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_import.png',sizingMethod='crop');	
+}
+
+A.exportButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_export.png',sizingMethod='crop');	
+}
+
+A.reportButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_report.png',sizingMethod='crop');	
+}
+
+A.userButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_user.png',sizingMethod='crop');	
+}
+
+A.pdfButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_pdf.png',sizingMethod='crop');	
+}
+
+A.cancelButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_cancel.png',sizingMethod='crop');	
+}
+
+A.saveButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_save.png',sizingMethod='crop');	
+}
+
+A.nextButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/defaultButton_next.png',sizingMethod='crop');	
+}
+
+A.eraseButton IMG {
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/singleButton_erase.png',sizingMethod='crop');	
+}
+
+.helper {
+	display: inline-block;
+	vertical-align: middle;
+	background: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon/helper_bg.png',sizingMethod='crop');
+}
+
+.alert {
+	filter: none;
+	background: url(../images/icon/singleButton_alert.gif) top left no-repeat;
+		
+}

@@ -1,0 +1,53 @@
+<IsisScript name="fullinv">
+<section name="fullinversion">
+
+<function name="status" action="replace" tag="2001">
+	<field action="statusdb" tag="1091"><pft>v2001</pft></field>
+	<field action="replace" tag="1092">
+				<pft>
+					'STATUS'/'BD:',if v1091^s : 'm' then 'Y' else 'N' fi/
+					'IF:',if v1091^s : 'i' then 'Y' else 'N' fi/
+					if p(v1091^n) then 'MAXMFN:',f(val(v1091^n) - 1,1,0)  fi/
+					'DENTRYLOCK:'v1091^d,/
+					'EXCLUSIVEWRITELOCK:'v1091^e,/
+				</pft>
+	</field>
+	<display>
+		<pft>v1092/</pft>
+	</display>
+ </function>
+
+    <!--display><pft>'Content-type: text/html'/#</pft></display-->
+
+
+	<field action="cgi" tag="5001">base</field>
+	<field action="cgi" tag="5015">cipar</field>
+	<field action=cgi tag=5016>syspar</field>
+	<field action=cgi tag=9088>cttype</field>
+	<field action=cgi tag=1>path_db</field>
+	<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+ 	<trace>xOn</trace>
+<display><pft></pft></display>
+    <parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+    </parm>
+    <parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    <parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+	<do task="fullinvertion">
+		<parm name="db"><pft>v5001</pft></parm>
+		<field action="replace" tag="2004"><pft>v5001,'.fst'</pft></field>
+		<parm name="fst"><pft>cat(v2004)</pft></parm>
+		<field action="define" tag="1102">Isis_Status</field>
+		<display><pft>'Full invertion: ',v5001/</pft></display>
+		<loop>
+		</loop>
+	     <display><pft>'Finished.'/</pft></display>
+    	 <display><pft>'Lock status = 'v1102'<br>' if v1102='8' then ' No se ejecutó la actualización. Debe desbloquear la base de datos' fi/</pft></display>
+  </do>
+
+
+
+</section>
+
+</IsisScript>
+

@@ -1,0 +1,15 @@
+F|1|Status|0|0|||R|||P|situacion.tab|||||0||0|
+F|10|User code|0|0|||X|||||||||0||0|
+F|12|User type|0|0|||S|||P|%path_database%circulation/def/en/typeofusers.tab|||||0||0|
+F|15|Catalog database|0|0|||X|||||||||0||0|
+F|20|Control number|0|0|||X|||||||||0||0|
+F|30|Date of reservation|0|0|||ISO||8|||||||0||0|
+F|31|Time of reservation|0|0|||X||20|||||||0||0|
+F|32|Reservation operator|0|0|||X||20|||||||0||0|
+F|40|Waiting days|0|0|||X|||||||||0||0|
+F|50|Classification no.|0|0|||X|||||||||0||0|
+F|60|Date object assigned|0|0|||X|||||||||0||0|
+F|130|Date reservation canceled|0|0|||ISO||8|||||||0||0|
+F|131|Time reservatoin canceled|0|0|||X||20|||||||0||0|
+F|132|Operator who canceled|0|0|||X||20|||||||0||0|
+F|200|Date of loan|0|0|||ISO||8|||||||0||0|

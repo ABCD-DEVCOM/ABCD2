@@ -1,0 +1,26 @@
+CISIS
+
+- 'to'-parameter in UTF8 version is not working correctly
+
+
+Central
+
+- special cisis_ver database cannot be selected as first database to open in main central menu, but can be opened well from next screen.
+
+
+iAh
+
+- 'to'-parameter in iax.xis avoided and replaced by count=100
+-
+
+
+Site
+
+-
+
+Secs-Web
+
+- indexing FST for TitlePlus needs checked for searching
+- 'actions on issues' : always no issues found for the library
+
+EmpWeb

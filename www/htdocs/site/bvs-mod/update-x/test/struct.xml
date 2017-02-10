@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<element name="root">
+	<edit name="@aqua">
+		<input type="password"/>
+	</edit>
+	<edit name="@beige"/>
+	<edit name="@coral"/>
+	<edit name="@aquamarine">
+		<input type="hidden"/>
+	</edit>
+	<element name="black">
+		<edit name="chocolate"/>
+		<edit name="olive">
+			<input type="radio" value="yes">yes</input>
+			<input type="radio" value="no">no</input>
+		</edit>
+	</element>
+	<element name="yellow" repeat="select">
+		<select>
+			<option value="one yellow">one yellow</option>
+			<option value="two yellow">two yellow</option>
+			<option value="three yellow">three yellow</option>
+			<option value="four yellow">four yellow</option>
+			<option value="five yellow">five yellow</option>
+		</select>
+	</element>
+	<edit name="red"/>
+	<element name="green">
+		<element name="gray">
+			<element name="khaki">
+				<edit name="@cyan"/>
+				<edit name="lime"/>
+			</element>
+		</element>
+	</element>
+	<element name="blue" repeat="list">
+		<edit name="@azure">
+			<input type="hidden" value="novo"/>
+		</edit>
+		<edit name="@silver">
+			<input value="0 prata"/>
+		</edit>
+		<element name="white">
+			<edit name="@pink"/>
+		</element>
+		<edit name="violet"/>
+		<element name="brown" repeat="select">
+			<input type="checkbox" value="1 brown">1 brown</input>
+			<input type="checkbox" value="2 brown">2 brown</input>
+			<input type="checkbox" value="3 brown">3 brown</input>
+			<input type="checkbox" value="4 brown">4 brown</input>
+		</element>
+		<element name="teal" repeat="select">
+			<select>
+				<option value="1">one teal</option>
+				<option value="2">two teal</option>
+				<option value="3">three teal</option>
+			</select>
+		</element>
+		<edit name="salmon">
+			<textarea cols="70" rows="12">0 salmon<b>bold</b> e <i>itÃ¡lico</i> e
+nova linha</textarea>
+		</edit>
+	</element>
+	<element name="tan-list">
+		<element name="tan" repeat="list">
+			<edit name="@silver"/>
+			<element name="white" repeat="list">
+				<edit name="@pink">
+					<select>
+						<option value="01">1 rose</option>
+						<option value="02">2 rose</option>
+						<option value="03">3 rose</option>
+						<option value="04">4 rose</option>
+						<option value="05">5 rose</option>
+					</select>
+				</edit>
+				<edit name="tomato"/>
+				<element name="link" repeat="list">
+					<edit name="@href"/>
+					<edit name="text()">
+						<textarea cols="50" rows="5"></textarea>
+					</edit>
+				</element>
+			</element>
+		</element>
+	</element>
+</element>

@@ -1,0 +1,48 @@
+!ID 000001
+!v001!S
+!v002!Documento publicado en una serie periódica
+!ID 000002
+!v001!SC
+!v002!Documento de conferencia en una serie periódica
+!ID 000003
+!v001!SCP
+!v002!Documento de proyecto y conferencia en una serie periódica
+!ID 000004
+!v001!SP
+!v002!Documento de proyecto en una serie periódica
+!ID 000005
+!v001!M
+!v002!Documento publicado en una monografía
+!ID 000006
+!v001!MC
+!v002!Documento de conferencia en una monografía
+!ID 000007
+!v001!MCP
+!v002!Documento de proyecto y conferencia en una monografía
+!ID 000008
+!v001!MP
+!v002!Documento de proyecto en una monografía
+!ID 000009
+!v001!MS
+!v002!Documento publicado en una serie monográfica
+!ID 000010
+!v001!MSC
+!v002!Documento de conferencia en una serie monográfica
+!ID 000011
+!v001!MSP
+!v002!Documento de proyecto en una serie monográfica
+!ID 000012
+!v001!T
+!v002!Tesis
+!ID 000013
+!v001!TS
+!v002!Tesis que pertenece a una serie monográfica
+!ID 000014
+!v001!N
+!v002!Documento no convencional
+!ID 000015
+!v001!NC
+!v002!Documento de conferencia en forma no convencional
+!ID 000016
+!v001!NP
+!v002!Documento de proyecto en forma no convencional

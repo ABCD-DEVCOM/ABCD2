@@ -1,0 +1,12 @@
+10:if a(v10) then 'Falta nome de usuário' fi
+$$|$$true
+###
+20:if a(v20) then 'Falta entrada' fi
+$$|$$true
+###
+30:if a(v30) then 'falta senha' fi
+$$|$$true
+###
+40:if a(v40) then 'Falta grupo' fi
+$$|$$true
+

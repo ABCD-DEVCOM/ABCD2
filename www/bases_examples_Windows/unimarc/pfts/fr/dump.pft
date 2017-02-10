@@ -1,0 +1,226 @@
+
+/***********************************************************************************/
+/* Format produisant des données sous forme de DUMP	 pour les bases de données MARC*/
+/***********************************************************************************/
+
+
+/* Le blanc des indicateurs sera remplacé par (s1) et l'indicateur de sous-champs par (s2) */
+
+s1:=('#'), s2:=('$'),
+
+
+ /* Génération des indicateurs - s3 est le contenu du champ en cours*/
+ 
+
+'<table border=1>'
+
+
+/* Leader */
+	'<tr><td>LDR</td><td>IND</td><td>'
+		/* LDR 0-4 */		'-----'
+		/* LDR 5 */			if p(v3005) then v3005 else '&nbsp;' fi
+		/* LDR 6 */			if p(v3006) then v3006 else '&nbsp;' fi
+		/* LDR 7 */			if p(v3007) then v3007 else '&nbsp;' fi
+		/* LDR 8 */			if p(v3008) then v3008 else '&nbsp;' fi
+		/* LDR 9 */			'#', /* if p(v3009) then v3009 else '&nbsp;' fi */
+		/* LDR 10 */		'2'
+		/* LDR 11 */		'2'	
+		/* LDR 12-16 */		'-----'
+		/* LDR 17 */		if p(v3017) then v3017 else '&nbsp;' fi
+		/* LDR 18 */		if p(v3018) then v3018 else '&nbsp;' fi
+		/* LDR 19 */		if p(v3019) then v3019 else '&nbsp;' fi
+		/* LDR 20-23 */		'450&nbsp;', 
+	'</td></tr>'
+/* FIN Leader */
+
+
+
+if p(v1) then '<tr><td>001</td><td></td><td>', v1, '</td></tr>' fi
+if p(v3) then '<tr><td>003</td><td></td><td>', v3, '</td></tr>' fi
+if p(v5) then '<tr><td>005</td><td></td><td>', v5, '</td></tr>' fi
+(if p(v10) then '<tr><td>010</td><td>', s1, s1, '</td><td>', replace(v10, '^', s2), '</td></tr>' fi)
+(if p(v11) then s3:=(v11), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>011</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v12) then '<tr><td>012</td><td>', s1, s1, '</td><td>', replace(v12, '^', s2), '</td></tr>' fi)
+(if p(v13) then '<tr><td>013</td><td>', s1, s1, '</td><td>', replace(v13, '^', s2), '</td></tr>' fi)
+(if p(v14) then '<tr><td>014</td><td>', s1, s1, '</td><td>', replace(v14, '^', s2), '</td></tr>' fi)
+(if p(v15) then '<tr><td>015</td><td>', s1, s1, '</td><td>', replace(v15, '^', s2), '</td></tr>' fi)
+(if p(v16) then '<tr><td>016</td><td>', s1, s1, '</td><td>', replace(v16, '^', s2), '</td></tr>' fi)
+(if p(v17) then s3:=(v17), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>017</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v20) then '<tr><td>020</td><td>', s1, s1, '</td><td>', replace(v20, '^', s2), '</td></tr>' fi)
+(if p(v21) then '<tr><td>021</td><td>', s1, s1, '</td><td>', replace(v21, '^', s2), '</td></tr>' fi)
+(if p(v22) then '<tr><td>022</td><td>', s1, s1, '</td><td>', replace(v22, '^', s2), '</td></tr>' fi)
+(if p(v35) then '<tr><td>035</td><td>', s1, s1, '</td><td>', replace(v35, '^', s2), '</td></tr>' fi)
+(if p(v36) then '<tr><td>036</td><td>', s1, s1, '</td><td>', replace(v36, '^', s2), '</td></tr>' fi)
+(if p(v40) then '<tr><td>040</td><td>', s1, s1, '</td><td>', replace(v40, '^', s2), '</td></tr>' fi)
+(if p(v71) then s3:=(v71), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>071</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v72) then s3:=(v72), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>072</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v73) then s3:=(v73), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>073</td><td>', s1, replace(s5, ' ', s1), if size(s5)=1 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+
+
+if p(v100) then '<tr><td>100</td><td>', s1, s1, '</td><td>', s2, 'a', replace(v100, ' ', '&nbsp;'), '</td></tr>' fi
+if p(v101) then s3:=(v101), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>101</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi
+if p(v102) then '<tr><td>102</td><td>', s1, s1, '</td><td>', replace(v102, '^', s2), '</td></tr>' fi
+
+
+(if p(v200) then s3:=(v200), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>200</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v205) then '<tr><td>205</td><td>', s1, s1, '</td><td>', replace(v205, '^', s2), '</td></tr>' fi)
+(if p(v206) then s3:=(v206), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>206</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+if p(v207) then s3:=(v207), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>207</td><td>', s1, replace(s5, ' ', s1), if size(s5)=1 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi
+if p(v208) then '<tr><td>208</td><td>', s1, s1, '</td><td>', replace(v208, '^', s2), '</td></tr>' fi
+(if p(v210) then s3:=(v210), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>210</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+if p(v211) then '<tr><td>211</td><td>', s1, s1, '</td><td>', replace(v211, '^', s2), '</td></tr>' fi
+(if p(v215) then '<tr><td>215</td><td>', s1, s1, '</td><td>', replace(v215, '^', s2), '</td></tr>' fi)
+(if p(v225) then s3:=(v225), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>225</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v230) then '<tr><td>230</td><td>', s1, s1, '</td><td>', replace(v230, '^', s2), '</td></tr>' fi)
+
+
+(if p(v300) then '<tr><td>300</td><td>', s1, s1, '</td><td>', replace(v300, '^', s2), '</td></tr>' fi)
+(if p(v301) then '<tr><td>301</td><td>', s1, s1, '</td><td>', replace(v301, '^', s2), '</td></tr>' fi) 
+(if p(v302) then '<tr><td>302</td><td>', s1, s1, '</td><td>', replace(v302, '^', s2), '</td></tr>' fi) 
+(if p(v303) then '<tr><td>303</td><td>', s1, s1, '</td><td>', replace(v303, '^', s2), '</td></tr>' fi) 
+(if p(v304) then '<tr><td>304</td><td>', s1, s1, '</td><td>', replace(v304, '^', s2), '</td></tr>' fi) 
+(if p(v305) then '<tr><td>305</td><td>', s1, s1, '</td><td>', replace(v305, '^', s2), '</td></tr>' fi) 
+(if p(v306) then '<tr><td>306</td><td>', s1, s1, '</td><td>', replace(v306, '^', s2), '</td></tr>' fi) 
+(if p(v307) then '<tr><td>307</td><td>', s1, s1, '</td><td>', replace(v307, '^', s2), '</td></tr>' fi) 
+(if p(v308) then '<tr><td>308</td><td>', s1, s1, '</td><td>', replace(v308, '^', s2), '</td></tr>' fi) 
+(if p(v310) then '<tr><td>310</td><td>', s1, s1, '</td><td>', replace(v310, '^', s2), '</td></tr>' fi) 
+(if p(v311) then '<tr><td>311</td><td>', s1, s1, '</td><td>', replace(v311, '^', s2), '</td></tr>' fi) 
+(if p(v312) then '<tr><td>312</td><td>', s1, s1, '</td><td>', replace(v312, '^', s2), '</td></tr>' fi) 
+(if p(v313) then '<tr><td>313</td><td>', s1, s1, '</td><td>', replace(v313, '^', s2), '</td></tr>' fi) 
+(if p(v314) then '<tr><td>314</td><td>', s1, s1, '</td><td>', replace(v314, '^', s2), '</td></tr>' fi) 
+(if p(v315) then '<tr><td>315</td><td>', s1, s1, '</td><td>', replace(v315, '^', s2), '</td></tr>' fi) 
+(if p(v316) then '<tr><td>316</td><td>', s1, s1, '</td><td>', replace(v316, '^', s2), '</td></tr>' fi) 
+(if p(v317) then '<tr><td>317</td><td>', s1, s1, '</td><td>', replace(v317, '^', s2), '</td></tr>' fi)
+(if p(v318) then '<tr><td>318</td><td>', s1, s1, '</td><td>', replace(v318, '^', s2), '</td></tr>' fi) 
+(if p(v320) then '<tr><td>320</td><td>', s1, s1, '</td><td>', replace(v320, '^', s2), '</td></tr>' fi) 
+(if p(v321) then '<tr><td>321</td><td>', s1, s1, '</td><td>', replace(v321, '^', s2), '</td></tr>' fi) 
+(if p(v322) then '<tr><td>322</td><td>', s1, s1, '</td><td>', replace(v322, '^', s2), '</td></tr>' fi) 
+(if p(v323) then '<tr><td>323</td><td>', s1, s1, '</td><td>', replace(v323, '^', s2), '</td></tr>' fi) 
+(if p(v324) then '<tr><td>324</td><td>', s1, s1, '</td><td>', replace(v324, '^', s2), '</td></tr>' fi) 
+(if p(v325) then '<tr><td>325</td><td>', s1, s1, '</td><td>', replace(v325, '^', s2), '</td></tr>' fi) 
+(if p(v326) then '<tr><td>326</td><td>', s1, s1, '</td><td>', replace(v326, '^', s2), '</td></tr>' fi) 
+(if p(v327) then '<tr><td>327</td><td>', s1, s1, '</td><td>', replace(v327, '^', s2), '</td></tr>' fi) 
+(if p(v328) then '<tr><td>328</td><td>', s1, s1, '</td><td>', replace(v328, '^', s2), '</td></tr>' fi) 
+(if p(v330) then '<tr><td>330</td><td>', s1, s1, '</td><td>', replace(v330, '^', s2), '</td></tr>' fi) 
+(if p(v331) then '<tr><td>331</td><td>', s1, s1, '</td><td>', replace(v331, '^', s2), '</td></tr>' fi) 
+(if p(v332) then '<tr><td>332</td><td>', s1, s1, '</td><td>', replace(v332, '^', s2), '</td></tr>' fi) 
+(if p(v333) then '<tr><td>333</td><td>', s1, s1, '</td><td>', replace(v333, '^', s2), '</td></tr>' fi) 
+(if p(v334) then '<tr><td>334</td><td>', s1, s1, '</td><td>', replace(v334, '^', s2), '</td></tr>' fi) 
+(if p(v336) then '<tr><td>335</td><td>', s1, s1, '</td><td>', replace(v336, '^', s2), '</td></tr>' fi) 
+(if p(v337) then '<tr><td>337</td><td>', s1, s1, '</td><td>', replace(v337, '^', s2), '</td></tr>' fi) 
+if p(v345) then '<tr><td>345</td><td>', s1, s1, '</td><td>', replace(v345, '^', s2), '</td></tr>' fi 
+
+
+(if p(v410) then s3:=(v410), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>410</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v411) then s3:=(v411), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>411</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v412) then s3:=(v412), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>412</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v413) then s3:=(v413), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>413</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v421) then s3:=(v421), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>421</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v422) then s3:=(v422), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>422</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v423) then s3:=(v423), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>423</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v424) then s3:=(v424), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>424</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v425) then s3:=(v425), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>425</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v430) then s3:=(v430), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>430</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v431) then s3:=(v431), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>431</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v432) then s3:=(v432), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>432</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v433) then s3:=(v432), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>433</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v434) then s3:=(v434), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>434</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v435) then s3:=(v435), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>435</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v436) then s3:=(v436), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>436</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v437) then s3:=(v437), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>437</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v440) then s3:=(v440), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>440</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v441) then s3:=(v411), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>441</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v442) then s3:=(v442), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>442</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v443) then s3:=(v443), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>443</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v444) then s3:=(v444), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>444</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v445) then s3:=(v445), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>445</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v446) then s3:=(v446), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>446</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v447) then s3:=(v447), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>447</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v448) then s3:=(v448), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>448</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v451) then s3:=(v451), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>451</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v452) then s3:=(v452), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>452</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v453) then s3:=(v453), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>453</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v454) then s3:=(v454), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>454</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v455) then s3:=(v455), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>455</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v456) then s3:=(v456), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>456</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v461) then s3:=(v461), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>461</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v462) then s3:=(v462), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>462</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v463) then s3:=(v463), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>463</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v464) then s3:=(v464), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>464</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v470) then s3:=(v470), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>470</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v481) then s3:=(v481), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>481</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v482) then s3:=(v482), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>482</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v488) then s3:=(v488), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))) s5:=(mid(s3, 1, e1-1)), '<tr><td>488</td><td>', replace(s5, ' ', s1), if size(s5)=1 then s1 else if size(s5)=0 then s1, s1, fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+
+
+(if p(v500) then s3:=(v500), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>500</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v501) then s3:=(v501), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>501</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v503) then s3:=(v503), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>503</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v510) then s3:=(v510), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>510</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v511) then s3:=(v511), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>511</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v512) then s3:=(v512), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>512</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v513) then s3:=(v513), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>513</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v514) then s3:=(v514), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>514</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v515) then s3:=(v515), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>515</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v516) then s3:=(v516), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>516</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v517) then s3:=(v517), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>517</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v518) then s3:=(v518), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>518</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v520) then s3:=(v520), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>520</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v530) then s3:=(v530), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>530</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v531) then '<tr><td>531</td><td>', s1, s1, '</td><td>', replace(v531, '^', s2), '</td></tr>' fi)
+(if p(v532) then s3:=(v532), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>532</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v540) then s3:=(v540), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>540</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v541) then s3:=(v541), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>541</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v545) then s3:=(v545), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>545</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v560) then s3:=(v560), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>560</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+
+
+(if p(v600) then s3:=(v600), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>600</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v601) then '<tr><td>601</td><td>', s1, s1, '</td><td>', replace(v601, '^', s2), '</td></tr>' fi)
+(if p(v602) then '<tr><td>602</td><td>', s1, s1, '</td><td>', replace(v602, '^', s2), '</td></tr>' fi)
+(if p(v604) then '<tr><td>604</td><td>', s1, s1, '</td><td>', replace(v604, '^', s2), '</td></tr>' fi)
+(if p(v605) then '<tr><td>605</td><td>', s1, s1, '</td><td>', replace(v605, '^', s2), '</td></tr>' fi)
+(if p(v606) then s3:=(v606), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>606</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v607) then '<tr><td>607</td><td>', s1, s1, '</td><td>', replace(v607, '^', s2), '</td></tr>' fi)
+(if p(v608) then '<tr><td>608</td><td>', s1, s1, '</td><td>', replace(v608, '^', s2), '</td></tr>' fi)
+(if p(v610) then s3:=(v610), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>610</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v615) then '<tr><td>615</td><td>', s1, s1, '</td><td>', replace(v615, '^', s2), '</td></tr>' fi)
+(if p(v616) then '<tr><td>616</td><td>', s1, s1, '</td><td>', replace(v616, '^', s2), '</td></tr>' fi)
+(if p(v617) then '<tr><td>617</td><td>', s1, s1, '</td><td>', replace(v617, '^', s2), '</td></tr>' fi)
+(if p(v620) then s3:=(v620), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>620</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v621) then s3:=(v621), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>621</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v660) then '<tr><td>660</td><td>', s1, s1, '</td><td>', replace(v660, '^', s2), '</td></tr>' fi)
+(if p(v661) then '<tr><td>661</td><td>', s1, s1, '</td><td>', replace(v661, '^', s2), '</td></tr>' fi)
+(if p(v670) then '<tr><td>670</td><td>', s1, s1, '</td><td>', replace(v670, '^', s2), '</td></tr>' fi)
+(if p(v675) then '<tr><td>675</td><td>', s1, s1, '</td><td>', replace(v675, '^', s2), '</td></tr>' fi)
+(if p(v676) then '<tr><td>676</td><td>', s1, s1, '</td><td>', replace(v676, '^', s2), '</td></tr>' fi)
+(if p(v680) then '<tr><td>680</td><td>', s1, s1, '</td><td>', replace(v680, '^', s2), '</td></tr>' fi)
+(if p(v686) then '<tr><td>660</td><td>', s1, s1, '</td><td>', replace(v686, '^', s2), '</td></tr>' fi)
+
+
+if p(v700) then s3:=(v700), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>700</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi
+(if p(v701) then s3:=(v701), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>701</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v702) then s3:=(v702), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>702</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+if p(v710) then s3:=(v710), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>710</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi
+(if p(v711) then s3:=(v711), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>711</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v712) then s3:=(v712), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>712</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v716) then '<tr><td>716</td><td>', s1, s1, '</td><td>', replace(v716, '^', s2), '</td></tr>' fi)
+(if p(v720) then '<tr><td>720</td><td>', s1, s1, '</td><td>', replace(v720, '^', s2), '</td></tr>' fi)
+(if p(v721) then '<tr><td>721</td><td>', s1, s1, '</td><td>', replace(v721, '^', s2), '</td></tr>' fi)
+(if p(v722) then '<tr><td>722</td><td>', s1, s1, '</td><td>', replace(v722, '^', s2), '</td></tr>' fi)
+(if p(v730) then s3:=(v730), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>730</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+if p(v740) then s3:=(v740), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>740</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi
+(if p(v741) then s3:=(v741), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>741</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v742) then s3:=(v742), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>742</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+
+
+(if p(v801) then s3:=(v801), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>801</td><td>', s1, replace(s5, ' ', s1), if size(s5)=0 then s1 fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+if p(v802) then '<tr><td>802</td><td>', s1, s1, '</td><td>', replace(v802, '^', s2), '</td></tr>' fi
+(if p(v830) then '<tr><td>830</td><td>', s1, s1, '</td><td>', replace(v830, '^', s2), '</td></tr>' fi)
+if p(v850) then '<tr><td>850</td><td>', s1, s1, '</td><td>', replace(v850, '^', s2), '</td></tr>' fi
+(if p(v852) then s3:=(v852), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>852</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi '</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v856) then s3:=(v856), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>856</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+(if p(v886) then s3:=(v886), e1:=instr(s3, '^'), s4:=(mid(s3, e1, size(s3))), s5:=(mid(s3, 1, e1-1)), '<tr><td>886</td><td>', replace(s5, ' ', s1), if(size(s5))=1 then s1 else if size(s5)=0 then s1, s1 fi fi	'</td><td>', replace(s4, '^', s2) '</td></tr>' fi)
+
+
+'</table>'

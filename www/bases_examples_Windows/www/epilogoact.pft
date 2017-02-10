@@ -1,0 +1,16 @@
+'<script>
+	if (top.frames.length>0){
+			if  (top.Capturando=="" && top.ModuloActivo=="catalog"){
+				top.mfn='v1001'
+				top.maxmfn='v1002'
+				top.menu.forma1.ir_a.value="'v1001'/'v1002'"
+			}
+		}
+</script>'
+if p(v3000) then s0:=(v3000*4+| |) fi,
+s0:=(replace(s0,'"','')),
+'<SCRIPT LANGUAGE="JavaScript">highlightSearchTerms("',s(s0),'");</SCRIPT>'
+'</form>
+</body>
+</html>'
+

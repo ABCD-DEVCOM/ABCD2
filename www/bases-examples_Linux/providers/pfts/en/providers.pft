@@ -1,0 +1,16 @@
+
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Type of provider</b></td><td valign=top><font face=arial size=2>'v1+|; |,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Name</b></td><td valign=top><font face=arial size=2>'v10+|; |,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Web page</b></td><td valign=top><font face=arial size=2>'v20+|; |,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>E-mail</b></td><td valign=top><font face=arial size=2>'v30+|; |,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Contact person</b></td><td valign=top><font face=arial size=2>'v40+|; |,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Telephone</b></td><td valign=top><font face=arial size=2>'v50+|; |,'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fax</b></td><td valign=top><font face=arial size=2>'v60+|; |,'</td>' fi/
+if p(v70) then '<tr><td width=20% valign=top><font face=arial size=2><b>Address</b></td><td valign=top><font face=arial size=2>'v70+|; |,'</td>' fi/
+if p(v80) then '<tr><td width=20% valign=top><font face=arial size=2><b>City</b></td><td valign=top><font face=arial size=2>'v80+|; |,'</td>' fi/
+if p(v90) then '<tr><td width=20% valign=top><font face=arial size=2><b>Country</b></td><td valign=top><font face=arial size=2>'v90+|; |,'</td>' fi/
+if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2><b>Items</b></td><td valign=top><font face=arial size=2>'v200+|; |,'</td>' fi/
+'<tr><td colspan=2><hr></td>'/
+'</table>'
+

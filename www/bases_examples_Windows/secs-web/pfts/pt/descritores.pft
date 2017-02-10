@@ -1,0 +1,13 @@
+,(if p(v87^d) then
+     ,'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'wxis/?IsisScript=',v5000^s[1],'&lang=P&base=',v5003[1],'&nextAction=lnk&exprSearch=',s(mpu,v87^d,|/|v87^s,mpl),'&indexSearch=MH">',v87^d,|/|v87^s,'</a>',
+,else
+     ,'<a href="',getenv('SCRIPT_NAME')v5000^d[1],'wxis/?IsisScript=',v5000^s[1],'&lang=P&base=',v5003[1],'&nextAction=lnk&exprSearch=',s(mpu,v87^*,mpl),'&indexSearch=MH">',v87^*,'</a>',
+fi,'<br>'),
+,if p(v88) then
+    ,'-',
+,(if p(v88^d) then
+     ,'&nbsp;<a href="',getenv('SCRIPT_NAME')v5000^d[1],'wxis/?IsisScript=',v5000^s[1],'&lang=P&base=',v5003[1],'&nextAction=lnk&exprSearch=',s(mpu,v88^d,|/|v88^s,mpl),'&indexSearch=MH">',v88^d,|/|v88^s,'</a>',
+,else
+     ,'&nbsp;<a href="',getenv('SCRIPT_NAME')v5000^d[1],'wxis/?IsisScript=',v5000^s[1],'&lang=P&base=',v5003[1],'&nextAction=lnk&exprSearch=',s(mpu,v88^*,mpl),'&indexSearch=MH">',v88^*,'</a>',
+fi,'<br>'),
+,fi,

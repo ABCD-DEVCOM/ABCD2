@@ -1,0 +1,65 @@
+<p><font face="Arial"><strong>Tipos de registo</strong></font></p>
+<p>Se a estrutura da base de dados inclui diferentes tipos de registo, esta situação deve ser estruturada no ABCD.</p>
+<p>O ABCD define duas formas diferentes de funcionamento com os tipos de registo:</p>
+<ol>
+    <li>Para estruturas MARC</li>
+    <li>Para estruturas diferentes de MARC</li>
+</ol>
+<p><font face="Arial"><strong>Tipos de Registo (estruturas Marc)</strong></font></p>
+<p><font face="Arial" size="2">Esta opção ajuda a definir os tipos de registo que vão funcionar na base de dados quando a mesma utiliza o formato MARC. O ABCD identifica que uma base de dados está estruturada no formato MARC quando na tabela de definição de campos foi incluído o campo tipo LEADER (LDR). A estrutura do campo Leader encontra-se num ficheiro denominado leader.fdt, situado no directório def da base de dados, e que identifica os seguintes campos:</font></p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font size="2">3005 Estado do registo<br />
+3006 Tipo de registo<br />
+3007 Nivel bibliográfico<br />
+3017&nbsp;Nivel de codificação<br />
+3018 Descrição da forma de catalogação</font></p>
+</blockquote>
+<p><font face="Arial"></font></p>
+<p><font size="2"></font></p>
+<p><font face="Arial" size="2">O tipo de registo obtém-se a partir do campo <strong>3006 </strong>do Leader e ajuda a identificar o formato do campo fixo a ser utilizado na descrição bibliográfica do título.</font></p>
+<p><font size="2">O formato do campo fixo associado a cada tipo de registo&nbsp;fica armazenado numa estrutura similar à da FDT e aparece no procedimento de entrada dependendo do tipo de registo seleccionado no Leader.</font></p>
+<p><font size="2">Para definir tipos de registo nas estruturas MARC, proceda como se segue:</font></p>
+<ol>
+    <li><font size="2">Active a opção <strong>Tipos de registo: marc</strong> no módulo de actualização das definições de bases de dados</font></li>
+    <li><font size="2"><font size="2">Coloque na caixa identificada como <strong>etiqueta1&nbsp;</strong>a etiqueta do campo do Leader no qual se armazena o tipo de registo (3006). Deixe a caixa correspondente à&nbsp;<strong>etiqueta2</strong> em branco</font></font></li>
+    <li><font size="2">Na coluna&nbsp;<strong>Folha de recolha de dados</strong>&nbsp;coloque o nome da estrutura que contém a descrição do campo correspondente ao tipo de registo que está a descrever. Use o link edit para editar ou criar a estrutura correspondente. Este link abrirá o editor de FDT dado que o campo fixo se mantém numa estrutura similar à da Tabela de Definição de Campos da base de dados</font></li>
+    <li><font size="2">Coloque na coluna correspondente à <strong>Etiqueta 1 Valor</strong> o valor que pode ter o campo 3006<strong>&nbsp;</strong>para lhe associar esse tipo de registo. Deixe a coluna <strong>Etiqueta 2 Valor </strong>em branco</font></li>
+    <li><font size="2"><font size="2">Coloque na coluna <strong>Tipo de registo, Descrição</strong> a descrição do tipo de registo, tal como aparecerá no momento de criação para selecção do tipo correspondente</font>&nbsp;</font></li>
+    <li><font size="2">Repita os pasos 2-6 até esgotar os tipos de registo que deseja definir</font></li>
+</ol>
+<p><font size="2">Quando terminar clique no botão <strong>Actualizar</strong></font></p>
+<p><font size="2">Os tipos de registo definidos serão armazenados no directório <strong>def</strong> da base de dados, sob o idioma activo no momento da criação, com o nome <font face="Arial"><strong>typeofrecord.tab</strong></font></font></p>
+<p><hr />
+</p>
+<p><strong><font face="Arial"></font></strong></p>
+<p><strong><font face="Arial" size="3">Tipos de registo (estruturas diferentes de&nbsp;MARC)</font></strong></p>
+<p><font face="Arial" size="2">Esta opção ajuda a definir os tipos de registo que vão funcionar na base de dados quando a mesma não utiliza o formato MARC.</font></p>
+<p><font face="Arial" size="2">Para esse efeito é preciso definir o tipo de registo e atribuir que campos da base de dados (máximo dois) armazenam os valores a ser utilizados&nbsp;para identificar o tipo que corresponde ao registo em processo de criação ou edição.</font></p>
+<p><font face="Arial" size="2">Para definir os tipos de registo é necessário 2 componentes:</font></p>
+<ol>
+    <li><font face="Arial" size="2">Identificar o campo (etiqueta)&nbsp;da base de dados a partir da qual se vai obter (ou armazenar no caso de um novo registo) o tipo de registo correspondente à informação que se está registando. A versão actual do ABCD permite definir até dois campos a partir de cujo contéudo se determinará o tipo de registos e, consequentemente, a&nbsp; folha de recolha a ser utilizada para a entrada ou edição do registo</font> </li>
+    <li><font face="Arial" size="2">Descrever os tipos de registo tendo em conta os seguintes parâmetros:</font>
+    <ul>
+        <li><font face="Arial" size="2">Nome da tabela de definição (FMT) que contém os elementos a ser utilizados para construir o formulário de entrada para recolha dos dados</font></li>
+        <li><font face="Arial" size="2">Valor que têm os campos identificados em (1)&nbsp;para que sejam considerados pertencentes a esse tipo de registo</font> </li>
+        <li><font face="Arial" size="2">Descrição do tipo de registo, a qual aparecerá ao operador no momento de entrada para que proceda à selecção do tipo correspondente</font> </li>
+    </ul>
+    </li>
+</ol>
+<p><font face="Arial" size="2">A fim de manter a consistência na parametrização do ABCD, os campos fixos definem-se através de uma&nbsp;<strong>FMT</strong> que contém a lista dos campos (etiquetas) da&nbsp; <strong>FDT </strong>da base de dados que são necessários para construir o formato de entrada. Como só se mantém a etiqueta dos campos, estes herdam automaticamente as características definidas na <strong>FDT </strong>da base de dados.</font></p>
+<p><font face="Arial" size="2">Para atribuir os tipos de registo é preciso definir previamente as folhas de recolha que estarão vinculadas a cada tipo (ver Folhas de Recolha&nbsp;de Datos&nbsp;(FMT).</font></p>
+<p><font size="2">Se vai definir tipos de registo para uma base de dados que não segue a norma MARC, faça o seguinte:</font></p>
+<ol>
+    <li><font size="2">Coloque nas caixas identificadas como <strong>etiqueta1 </strong>e <strong>etiqueta2</strong> as etiquetas dos campos que vão ser utilizados para identificar o tipo de registo. A segunda etiqueta é opcional</font></li>
+    <li><font size="2">Seleccione na coluna <strong>Folha de recolha</strong> a folha de recolha que vai utilizar para entrar o tipo de registo. Esta folha de recolha deve definir-se previamente&nbsp;com a opção <strong>Criar/Editar folhas de recolha</strong></font></li>
+    <li><font size="2">Coloque o valor que terá o campo identificado em <strong>etiqueta1 valor </strong>para identificar o tipo de registo</font></li>
+    <li><font size="2"><font size="2">Coloque o valor que terá o campo identificado na <strong>etiqueta2 valor </strong>para identificar o tipo de registo (opcional)</font></font></li>
+    <li><font size="2">Coloque na coluna <strong>Tipo de registo, Descrição </strong>a descrição do tipo de registo, tal como aparecerá no momento de criação para selecção do tipo correspondente</font></li>
+    <li><font size="2">Repita os passos 2-5 tantas vezes quantos os tipos de registo que existirem na base de dados</font></li>
+    <li><font size="2">Quando terminar, clique em <strong>Actualizar</strong></font></li>
+</ol>
+<p><font size="2">Os tipos de registo definidos ficarão guardados no directório <strong>def</strong> da base de dados, sob o idioma activo no momento da criação, com o nome <font face="Arial"><strong>typeofrecord.tab</strong></font></font></p>
+<p>&nbsp;</p>
+<p><font face="Arial" size="2"></font></p>
+&nbsp;
+<p>&nbsp;</p>

@@ -1,0 +1,5 @@
+select db
+	case 'america': @autorbase.pft
+	case 'afro': @autorbase.pft
+	case 'temas': @autortemas.pft
+endsel

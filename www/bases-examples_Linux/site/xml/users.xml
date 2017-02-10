@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<users id="" available="">
+  <user name="adm" type="adm" password="9dd4e461268c8034f5c8564e155c67a6"/>
+  <user name="doc" type="content" password="9dd4e461268c8034f5c8564e155c67a6"/>
+  <user name="admbvs" available="yes" type="adm" password="55c6c655fd9212a36ef528553f8f8a9f"/>
+</users>

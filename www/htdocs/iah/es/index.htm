@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+	<script language="JavaScript" src="../action.js"></script>
+    <TITLE>IAH - Interface de Búsqueda</TITLE>
+	<script language="JavaScript">
+		function startIAH(base){
+            var aux="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=es&base=" + base;
+			this.location=aux;
+		}
+	</script>
+	<style>
+		BODY, TD{
+			font-family: verdana;
+			font-size: 70%;
+		}
+	</style>
+</HEAD>
+
+  <BODY BGCOLOR="#eoebeb" link="green" vlink="green">
+
+   	<div align="right">
+		[ <a href="../pt/index.htm">português</a> | español | <A HREF="../en/index.htm">english</A> ]
+	</div>
+
+    <TABLE WIDTH="550" HEIGHT="410" BORDER="0" ALIGN="center" cellspacing="8">
+      <TR>
+        <TD VALIGN="top" colspan="2" align="center">
+
+			<img src="image/head2.gif">
+			<P align="center"><b>Seleccione la Base de Datos</b></P>
+		</TD>
+	  </TR>
+	  <TR>
+	    <TD VALIGN="top">
+			<a href="javascript:startIAH('DBLIL')">DBLIL</a>
+		</TD>
+		<TD VALIGN="top" align="justify">
+			Base de ejemplo del sistema iAH (compatible con la metodología LILACS)
+		</TD>
+	  </TR>
+	  <TR>
+	    <TD VALIGN="top">
+			<a href="javascript:startIAH('DBSECS')">DBSECS</a>
+		</TD>
+		<TD VALIGN="top" align="justify">
+			Base de ejemplo del sistema iAH (compatible con la metodología SeCS de control de colecciones)
+		</TD>
+	  </TR>
+  	  <TR>
+		<TD valign="bottom" align="center" colspan="2">
+			<P><hr>Search engine: <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=es&component=28&item=5">iAH</a> by BIREME/PAHO/WHO<br>
+			<a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=es&component=28&item=2"><img src="image/powered.gif" border="0" alt="WWWISIS 4.0"></a>
+		</TD>
+	  </TR>
+
+	</TABLE>
+
+  </BODY>
+</HTML>
+
+
+

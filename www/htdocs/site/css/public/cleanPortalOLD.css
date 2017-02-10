@@ -1,0 +1,24 @@
+.portal {
+
+}
+
+.portal H3 {
+    background: transparent;
+    border: 0px;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.portal A {
+    text-decoration: underline;
+    border: 0px;
+    background: transparent;
+}
+
+.portal UL LI {
+    list-style: disk;
+}
+
+.portal OL LI {
+    list-style: decimal;
+}

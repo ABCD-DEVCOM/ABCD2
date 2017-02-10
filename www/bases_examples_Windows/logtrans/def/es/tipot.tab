@@ -1,0 +1,18 @@
+A|Préstamo
+B|Devolución
+C|Renovación
+D|Reserva registrada
+E|Reserva en espera
+F|Reserva atendida
+G|Cancelación reserva por operador
+H|Cancelación reserva por usuario
+I|Multa por atraso
+J|Multa por penalización
+K|Cancelación de multa
+L|Pago de multa
+M|Suspensión por atraso
+N|Suspensión por penalización
+O|Cancelación suspensión
+P|Entrada operador
+Q|Salida operador
+R|Eliminacion de multa por operador

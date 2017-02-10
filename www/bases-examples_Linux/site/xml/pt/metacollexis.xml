@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<metaiah>
+	<sourceList>
+		<group label="Ciências da Saúde em Geral" base-search-url="http://collexis2.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_Overall02&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_Overall02&amp;thesaurus=decs2005_pt">
+			<item id="1" label="LILACS - Literatura Latino-Americana e do Caribe em Ciências da Saúde" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_Lilacs&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_Lilacs&amp;thesaurus=decs2005_pt"/>
+			<item id="2" label="MEDLINE - Literatura Internacional em Ciências da Saúde" base-search-url="http://collexis2.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=Medline 1995-2005&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=Medline 1995-2005&amp;thesaurus=decs2005_pt"/>
+		</group>
+		<group label="Áreas Especializadas" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS Overall&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS Overall&amp;thesaurus=decs2005_pt">
+			<item id="3" label="ADOLEC - Saúde na Adolescência" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_Adolec&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_Adolec&amp;thesaurus=decs2005_pt"/>
+			<item id="4" label="BBO - Bibliografia Brasileira de Odontologia" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_BBO&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_BBO&amp;thesaurus=decs2005_pt"/>
+			<item id="5" label="BDENF - Base de Dados de Enfermagem" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_BDENF&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_BDENF&amp;thesaurus=decs2005_pt"/>
+			<item id="6" label="DESASTRES - Acervo do Centro de Documentação de Desastres" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_DESASTRES&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_DESASTRES&amp;thesaurus=decs2005_pt"/>
+			<item id="7" label="HOMEOINDEX - Bibliografia Brasileira de Homeopatia" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_Homeopatia&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_Homeopatia&amp;thesaurus=decs2005_pt"/>
+			<item id="8" label="LEYES - Legislação Básica de Saúde da América Latina e Caribe" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_LEYES&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_LEYES&amp;thesaurus=decs2005_pt"/>
+			<item id="9" label="MEDCARIB - Literatura do Caribe em Ciências da Saúde" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_MEDCARIB&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_MEDCARIB&amp;thesaurus=decs2005_pt"/>
+			<item id="10" label="REPIDISCA - Literatura em Engenharia Sanitária e Ciências do Ambiente" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_REPIDISCA&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_REPIDISCA&amp;thesaurus=decs2005_pt"/>
+		</group>
+		<group label="OPAS / OMS" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_Overall_PAHO-WHO&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_Overall_PAHO-WHO&amp;thesaurus=decs2005_pt">
+			<item id="11" label="PAHO - Acervo da Biblioteca da Organização Pan-Americana da Saúde" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_Paho&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_Paho&amp;thesaurus=decs2005_pt"/>
+			<item id="12" label="WHOLIS - Sistema de Informação da Biblioteca da OMS" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_WHO&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_WHO&amp;thesaurus=decs2005_pt"/>
+		</group>
+		<group label="Integradoras">
+			<item id="13" label="LIS - Localizador de informação em saúde" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_LIS&amp;thesaurus=decs2005_pt&amp;count=1" base-browse-url="http://collexis.bvsalud.org/regional/index.php?task=search&amp;collection=BVS_LIS&amp;thesaurus=decs2005_pt"/>
+		</group>
+		<!--
+		<group label="Diretórios">
+			<item id="14" label="Diretório de Eventos"/>
+		</group>
+		<group label="Evidências em Saúde">
+			<item id="15" label="Biblioteca Cochrane"/>
+		</group>
+		<group label="Texto completo">
+			<item id="16" label="SciELO" base-search-url="http://collexis1.bireme.br/webservices/collexis-modules.php?task=search&amp;collection=BVS_SciELO&amp;thesaurus=decs2005_pt&amp;count=1"/>
+		</group>
+		-->
+	</sourceList>
+	<search>
+		<item source="1" search-parameters="expression="/>
+		<item source="2" search-parameters="expression="/>
+		<item source="3" search-parameters="expression="/>
+		<item source="4" search-parameters="expression="/>
+		<item source="5" search-parameters="expression="/>
+		<item source="6" search-parameters="expression="/>
+		<item source="7" search-parameters="expression="/>
+		<item source="8" search-parameters="expression="/>
+		<item source="9" search-parameters="expression="/>
+		<item source="10" search-parameters="expression="/>
+		<item source="11" search-parameters="expression="/>
+		<item source="12" search-parameters="expression="/>
+		<item source="13" search-parameters="expression="/>
+	</search>
+</metaiah>

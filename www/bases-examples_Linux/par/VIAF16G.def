@@ -1,0 +1,31 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%viaf16g/data/viaf16g.*
+FILE standard.pft=%path_database%viaf16g/pfts/%lang%/viaf16g.pft
+FILE SHORTCUT.IAH=%path_database%viaf16g/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TW^1base^2based^3Basic^4Base^d*^xTW_ ^yDATABASE^uTW_^mTW_
+INDEX AU=^1Autor^2Autor^3Author^4Auteur^xAU_ ^yDATABASE^uAU_^mAU_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1defecto^2defecto^3default^4défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=A,F
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=
+UNICODE=1

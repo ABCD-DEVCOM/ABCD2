@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<texts>
+    <admin>
+        <text id="PT">Portugu&#234;s</text>
+        <text id="ES">Espa&#241;ol</text>
+        <text id="EN">English</text>
+        <text id="FR">French</text>
+        <text id="AM">Amharic</text>
+        <text id="SI">Sinhalese</text>
+        <text id="ADMINISTRATION">VHL-Site Administration</text>
+        <text id="USER">User</text>
+        <text id="PASSWORD">Password</text>
+        <text id="TIMEOUT">Connection timeout, please login again.</text>
+        <text id="INSTALL_ERROR">Installation error.</text>
+        <text id="INVALID_PERM">Invalid permissions.</text>
+        <text id="INVALID_USER">Invalid username or password.</text>
+        <text id="INVALID_USER_FILE">The users XML file was not found.</text>
+        <text id="CHECK_DEF">Please, check settings in bvs-site-conf.php</text>
+        <text id="CHECK_PERM">Check directories permissions</text>
+        <text id="POPUP_BLOCKER">Check your popup options.</text>
+    </admin>
+</texts>

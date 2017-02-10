@@ -1,0 +1,4 @@
+ROOT=/opt/ABCD/www/htdocs/bases/dubcore/
+IMPORTPDF=Y
+COLLECTION=/var/opt/ABCD/bases/dubcore/collection/
+CISIS_VERSION=bigisis

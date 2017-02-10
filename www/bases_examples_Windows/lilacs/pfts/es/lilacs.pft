@@ -1,0 +1,3 @@
+'<table border=0 width=90%>'
+if p(v999) then '<tr><td width=20% valign=top><font face=arial size=2><b>campo trucho</b></td><td valign=top><font face=arial size=2>'v999+|<br>|,'</td>' fi/
+'</table><p>'

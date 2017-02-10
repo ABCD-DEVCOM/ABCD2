@@ -1,0 +1,4 @@
+nonunicode.*=/var/opt/ABCD/bases/nonunicode/data/nonunicode.*
+nonunicode.pft=/var/opt/ABCD/bases/nonunicode/pfts/en/nonunicode.pft
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft

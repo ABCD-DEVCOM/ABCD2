@@ -1,0 +1,6 @@
+104:'ubicacion fisica'$$|$$
+###
+18:if p(v104) then 'esta el 104' else 'no está el 104' fi$$|$$
+###
+:
+###

@@ -1,0 +1,16 @@
+<strong>Asignación de un número de control a los registros de una base de datos</strong><br />
+<br />
+<strong><br />
+</strong>Esta opción permite asignar en forma automática un número secuencial consecutivo, a los registros de una base de datos.<br />
+<br />
+En la FDT debe define el campo de control,&nbsp;como tipo de campo "Autoincrement". Si va a ser utilizado para el proceso de manejo de inventario a través del sistema de adquisiciones, debe indizarse con el prefijo <strong>CN_ </strong>en la FST <br />
+<br />
+La numeración se lleva en el archivo <strong>control_number.cn</strong> el cual se almacena en la carpeta <strong>data</strong> de la base de datos correspondiente. En ese archivo se almacena el último número asignado en el proceso de ingreso de registros. Para modificar la secuencia de asignación de este número, use la opción <strong>Restablecer número de inventario o número de control</strong> contenida en la página de inicio del módulo de catalogación.<br />
+<br />
+Cuando se solicita la asignación automática del número de control se presenta una ventana donde se coloca el rango de Mfns a los cuales se les va a asignar dicho número. Tenga en cuenta que si coloca un rango de mfn's demasiado amplio, el tiempo empleado para la asignación de los números puede causar una condición de "time out" en el servidor y el proceso puede&nbsp; verse interrumpido.<br />
+<br />
+En este caso, revise la hoja de salida desplegada, revise el último mfn procesado y reinicie el proceso a partir del próximo MFN.<br />
+<br />
+Dado que este proceso actualiza todos los registros del rango solicitado, se recomienda suspender todos los procesos de ingreso y edición de registros hasta que el mismo no haya sido completado.<br />
+<br />
+Se recomienda reorganizar la base de datos luego de la asignación ya que el tamaño en bytes de la misma puede haberse duplicado producto de la actualización de los registros. Igualmente, debe generarse la lista invertida.<br />

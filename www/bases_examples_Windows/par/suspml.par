@@ -1,0 +1,7 @@
+suspml.*=%path_database%suspml/data/suspml.*
+suspml.pft=%path_database%suspml/pfts/ensuspml.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+isisac.tab=%path_database%suspml/data/isisac.tab
+isisuc.tab=%path_database%suspml/data/isisuc.tab.tab
+STW=%path_database%suspml/data/suspml.stw

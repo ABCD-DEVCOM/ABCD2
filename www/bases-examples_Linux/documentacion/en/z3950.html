@@ -1,0 +1,34 @@
+<p><font size="2" face="Arial, Helvetica, sans-serif"><strong>Copying records from remote servers using the  Z39.50 protocol</strong><br />
+  <br />
+This option in  ABCD  permits cataloguing directly from other sources available through the Z39.50 protocol.<br />
+<br />
+Under the menu&nbsp; <strong>Conectar a:&nbsp;</strong> a list of servers which are available by the location of servers is shown. This list is maintained through the option <strong>Configure Z39.50 client </strong>available (to the administrator) in the principal menu of  ABCD.<br />
+<br />
+The menu <strong>Conversion Table</strong>&nbsp;contains the schemes which have been defined for converting records from the MARC format&nbsp; to the field definitions in the local database that will receive the data. This list is maintained through the option <strong>Configure Z39.50 client </strong>available (to the administrator) in the principal menu of  ABCD. If no conversion scheme is selected, the FDT of the database is used to determine the fields to copy from the remote database.<br />
+<br />
+Use the search options to establish the criteria to apply for customizing the information that you want to  catalogue.<br />
+<br /> 
+In the box <strong>Show</strong>&nbsp;indicate how many criteria are to be considered for configuring the pages showing the results obtained.
+<br />
+<br />
+  <b>Try xx times to connect </b> </strong>specifies how many times the system attempts to make a connection when the server cannot be reached.<br />
+  <br />
+  In normal conditions, the records transferred create new records in the local database that receives the data.&nbsp; To transfer the data to a record that already exists, follow the procedure below:<br />
+
+</font>
+<ol>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">In the local database locate the existing record that should receive the catalogue data through Z39.50. <br />
+  </font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">After locating the record, click the button <strong>edit</strong> on the toolbar.&nbsp;</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">When the form for editing the record is displayed,  click the button that calls the Z39.50 client. If the record is being modified, you should save the record before calling the Z39.50 client since the other form will lose the modifications made.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Next select the database from which to catalogue, the conversion format (if necessary) and formulate the search.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">In the results presented, locate the record you wish to capture.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Click on the Capture icon. The data retrieved from the Z39.50 server is copied into the selected record:
+      </font>
+      <ul>
+        <li><font size="2" face="Arial, Helvetica, sans-serif">Converting the data by applying the conversion format (if selected)</font></li>
+        <li><font size="2" face="Arial, Helvetica, sans-serif">Transferring the data to the  fields of the local database, <b>only </b><strong>when the corresponding ones are empty</strong>, i.e. the action of copying does not replace data already existing in the record.</font></li>
+    </ul>
+  </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Save the record in the local database.</font></li>
+</ol>

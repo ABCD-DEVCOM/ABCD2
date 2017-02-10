@@ -1,0 +1,17 @@
+<p><font size="2"><font face="Arial"><strong>Adicionar copias a um objeto<br />
+  <br />
+</strong>Os objetos cujas c&oacute;pias ser&atilde;o inventariadas, <strong>devem possuir um campo denominado &quot;N&uacute;mero de controle&quot;</strong>, que deve estar definido na FDT como tipo &quot;autoincrement&quot; e estar indexado na FST com o prefixo &quot;NC_. Este campo da FDT &eacute; utilizado como campo de rela&ccedil;&atilde;o entre o objeto e suas c&oacute;pias.</font></font></p>
+<p><font size="2"><font face="Arial">As c&oacute;pias dos objetos das bases de dados confluem para uma base de dados denominada <strong>copies</strong> e ser&aacute; mantido um &uacute;nico n&uacute;mero de invent&aacute;rio para cada c&oacute;pia.<br />
+      <br />
+Para atribui&ccedil;&atilde;o sequencial do n&uacute;mero de controle em cada registro, &eacute; usado o arquivo <strong>control_number.cn</strong> localizado na pasta <strong>data</strong> da base de dados correspondente. Cada base de dados bibliogr&aacute;fica possui sua pr&oacute;pria sequ&ecirc;ncia de n&uacute;mero de controle. Por esta raz&atilde;o, na base de dados <strong>copies</strong> &eacute; armazenado o nome da&nbsp; base de dados relacionada com a c&oacute;pia para garantir a correta recupera&ccedil;&atilde;o da informa&ccedil;&atilde;o bibliogr&aacute;fica, quando for necess&aacute;rio.<br />
+<br />
+Quando &eacute; solicitada a inser&ccedil;&atilde;o de novas c&oacute;pias, &eacute; exibido um formul&aacute;rio para entrada da informa&ccedil;&atilde;o correspondente.<br />
+<br />
+Coloque na caixa do campo o n&uacute;mero de c&oacute;pias que deseja adicionar ao  objeto selecionado. Use o link <strong>Ver todas as c&oacute;pias</strong> para exibir todas as c&oacute;pias j&aacute; adicionadas  para este objeto.<br />
+<br />
+Preencha todos os dados correspondentes e quando terminar clique em <strong>Atualizar</strong>.<br />
+<br />
+Ser&atilde;o criados na  base de dados <strong>copies</strong> os n&uacute;meros de registros solicitados, de acordo com o valor do <strong>N&uacute;mero de c&oacute;pias</strong>. A informa&ccedil;&atilde;o dos registros criados ser&aacute; tirada da planilha de entrada. O n&uacute;mero de invent&aacute;rio ser&aacute; adicionado  automaticamente tomando como ponto de partida o valor armazenado no arquivo <strong>control_number.cn</strong>, armazenado na pasta <strong>bases/copies/data</strong>.</font></font><br />
+<br />
+Use a op&ccedil;&atilde;o &quot;Restabecer o n&uacute;mero de controle de invent&aacute;rio&quot; do menu principal de cataloga&ccedil;&atilde;o, se por alguma raz&atilde;o se necessita restaurar o pr&oacute;ximo n&uacute;mero de invent&aacute;rio a ser atribu&iacute;do &agrave;s c&oacute;pias, ou aos objetos de uma base de dados em particular.<br />
+</p>

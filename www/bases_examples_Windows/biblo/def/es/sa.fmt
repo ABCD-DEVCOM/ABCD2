@@ -1,0 +1,66 @@
+H||Datos generales|0|0||||||||||||0||
+AI|2|Número de control|0|0|||X||10|||CN_|v2|v2||0||
+F|4|Tipo de literatura|0|0|||X||2|P|tag4.tab|||||1||
+F|6|Nivel de registro|0|0|||X||4|||||||1||
+F|9|Tipo de material|0|1|||X||30|D||TM_|@autoridades.pft|||0||
+F|3|Sign. topográfica|0|0|abcde|/////|X|||D||ST_|@autoridades.pft|||1||
+F|104|Ubic. física|0|1|||X|||D|biblo|UB_|@autoridades.pft|||0||
+F|10|Autores pers.(A)|0|1|-brfh|-,(*|X|||D||AU_|@autoridades.pft|||1||
+F|11|Autores inst.(A)|0|1|-b|/|X|||D||AI_|@autoridades.pft|||1||
+F|12|Título(A)|1|0|||X|||D||TI_|@autoridades.pft|||1||
+F|13|Título traducido (A)|0|0|||X|||||||||0||
+F|30|Nombre de la revista|0|0|||X||D||TA_|@autoridades.pft||||1||
+F|29|Editor Institucional|0|0|||X||D||CD_|@autoridades.pft||||1||
+F|35|ISSN|0|0|||X||D||ISSN_|@autoridades.pft||||1||
+F|38|Editorial|0|1|||X|||D||ED_|@autoridades.pft|||1||
+F|39|Ciudad|0|0|||X||30|D||CD_|@autoridades.pft|||1||
+F|40|País|0|0|||X||20|D||PA_|@autoridades.pft|||0||
+F|41|Edición|0|0|||X|||||||||1||
+F|20|Páginas|0|0|||X||30|||||||1||
+F|43|Fecha|0|0|||X||20|||||||1||
+F|44|F/ISO|0|0|||X|||||||||1||
+F|22|Serie|0|1|n|,|X|||D||SE_|@autoridades.pft|||0||
+F|42|Inf. descript.|0|0|||X||30|||||||1||
+F|73|Ref. bib.|0|0|||X|||||||||1||
+F|47|ISBN|0|1|||X||30|||||||1||
+F|63|Tipo de soporte|0|0|||X|||||||||1||
+F|21|Total Ejem.|0|0|||X|||||||||0||
+F|62|Diseminación|0|0|||X|||||||||0||
+H||Contenido|0|0||||||||||||1||
+F|64|Idioma del texto|0|0|||X||30|D||LA_|@autoridades.pft|||1||
+F|66|Otros idiomas|0|1|||X|||D||LA_|@autoridades.pft|||0||
+F|74|Alcance temporal:Desde|0|0|||X|1.5|30|||||||0||
+F|75|Alcance temporal:Hasta|0|0|||X|1.5||||||||0||
+F|76|Descriptores|0|1|||X|1.5||D||MA_|@autoridades.pft|||1||
+F|80|Cat. tem. primaria|0|1|||X|||D||CP_|@autoridades.pft|||1||
+F|81|Cat. tem. secun.|0|1|||X|||D||CS_|@autoridades.pft|||1||
+F|77|Datos estad.|0|1|||X|||D||DE_|@autoridades.pft|||1||
+F|82|Descrip. geograf.|0|1|||X|||D|biblo|DG_|@autoridades.pft|||0||
+F|85|Div.Ad.y reg|0|1|||X|||D||DA_|@autoridades.pft|||0||
+F|86|Siglas|0|1|||X|||D|biblo|SG_|@autoridades.pft|||0||
+F|87|Otras ent.sec.|0|1|||X|||D|biblo|OES_|@autoridades.pft|||0||
+F|37|Notas de contenido|0|1|||X|2||||||||0||
+F|68|Notas administrativ.|0|1|||X|2||||||||1||
+H||Resumen|0|0||||||||||||0||
+F|72|Resumen|0|1|||A|10|200|||||||1||
+H||Objetos|0|0||||||||||||0||
+F|800|Imagen|0|1|d||U|||||||||0||
+F|810|Texto|0|1|d||U|||||||||0||
+F|820|Sonido|0|1|d||U|||||||||0||
+F|830|Video|0|1|d||U|||||||||0||
+F|840|WWW|0|1|d||X|||||||||0||
+H||Existencias|0|0||||||||||||0||
+T|101|Existencias|0|1|nmlofprqykwz||X|||||||||0||
+S||No.Inventario ^n|0|0|||X|||||||||0||
+S||Volumen|0|0|||X|||||||||0||
+S||Ejemplar|0|0|||X|||||||||0||
+S||Ubicacion física|0|0|||X|||D||!L|@autoridades.pft|||0||
+S||Forma Adquisición|0|0|||X|||D||!X|@autoridades.pft|||0||
+S||Fecha de Adquisición|0|0|||X|||||||||0||
+S||Proveedor|0|0|||X|||D||!Y|@autoridades.pft|||0||
+S||Moneda nacional|0|0|||X|||||||||0||
+S||Moneda extranjera|0|0|||X|||||||||0||
+S||Notas|0|0|||X|||||||||0||
+S||Fecha de ingreso|0|0|||X|||||||||0||
+S||Documentalista|0|0|||X|||||||||0||
+OD|980|Operador y Fecha|0|0||||||||||||0||

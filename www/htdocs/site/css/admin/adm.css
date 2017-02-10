@@ -1,0 +1,287 @@
+body {
+    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+    font-size: 11px;
+	background: #F9F9F9;
+	margin: 0px;
+	color: #333333;
+}
+a {
+	color: #333333;
+}
+h1{
+	font-size: 1.5em;
+}
+h3 {
+	font: italic 24px/35px Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	margin: 20px 0px 0px 50px;
+}
+ul.left-options {
+	margin: 7px 0px 0px 0px; 
+}
+ul.left-options li {
+	float: left;
+	margin-right: 10px;
+}
+ul.left-optionsX li a {
+	background: #2683AE;
+	color: #FFF;
+	border: 1px solid;
+	border-color: #3ba0ce #0e3a4e #0e3a4e #3ba0ce;
+	font-weight: bold;
+	padding: 5px 8px;
+	margin: 0px 10px;
+	text-decoration: none;
+	display: block;
+}
+ul.left-options li a:hover {
+}
+ul.right-options {
+	width: 470px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+ul.right-options li {
+	float: right;
+}
+ul.right-options li a {
+	margin: 10px;
+	color: #FFF;
+}
+ul li {
+    list-style-type: none;
+}
+
+.barLang {
+	width: 100%;
+	background: #464646;
+	height: 30px;
+}
+.barLang a {
+	color: #FFF;
+}
+.barLang ul.lang {
+	margin: 0px;
+}
+
+.barLang ul.lang li {
+	float: left;
+	margin: 5px;
+}
+
+.login {
+	margin: 10em auto;
+	margin-bottom: 10px;
+	width: 320px;
+}
+.login h1 {
+	text-align: center;
+}
+
+.login form {
+	-moz-border-radius:11px 11px 11px 11px;
+	-moz-box-shadow:0 4px 18px #C8C8C8;
+	background:none repeat scroll 0 0 #FFFFFF;
+	border:1px solid #E5E5E5;
+	font-weight:normal;
+	margin-left:8px;
+	padding:16px 16px 40px;
+}
+
+form ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+label {
+	color: #777777;
+	font-size: 13px;
+}
+.login form input#username, .login form input#password {
+	border:1px solid #E5E5E5;
+	font-size:24px;
+	margin-bottom:16px;
+	margin-right:6px;
+	margin-top:2px;
+	padding:3px;
+	width:97%;
+	background: #FFF;
+}
+.login ul {
+	margin: 0px;
+	padding: 0px;
+}
+.login #submit {
+	background: #2683AE;
+	color: #FFF;
+	border: 1px solid #2683AE;
+	font-weight: bold;
+	padding: 3px;
+	float: right;
+}
+
+.copyright {
+	text-align: center;
+}
+
+.barLang, .top {
+	width: 100%;
+	background: #464646;
+	padding: 8px 0px;
+	height: 35px;
+}
+
+.top h1 {
+	margin: 0px;
+	color: #FFF;
+	padding: 4px;
+	float: left;
+}
+.top a {
+	color: #FFF;
+}
+
+.top ul.left-options {
+	float: left;
+	margin: 0px;
+	padding: 0px;
+}
+.top li {
+	float: left;
+	padding: 8px;
+}
+.top ul.right-options {
+	float: right;
+	margin: 0px;
+}
+.middle .column {
+	-moz-border-radius: 6px 6px 6px 6px;
+	border: 1px solid #DFDFDF;
+	float: left;
+	width: 20%;
+	margin: 2.5%;
+	background: #FFF;
+}
+
+.middle {
+	clear: both;
+}
+.middle .column a {
+	color: #21759B;
+	text-decoration: none;
+}
+.middle .column ul {
+	margin: 0px;
+	padding: 0px;
+}
+.middle .column li {
+	padding: 7px;
+	font-size: 12px;
+	border-bottom: 1px solid #ececec;
+}
+.middle .column li ul {
+	margin-left: -7px;
+}
+.middle .column li ul li {
+	padding-left: 30px;
+}
+.middle .column li ul li:last-child {
+	border: none;
+	padding-bottom: 0px;
+}
+.middle .column li {
+	font-weight: bold;
+}
+.middle .column li a {
+	font-weight: normal;
+}
+.middle #column2 {
+	width: 42%;
+} 
+.middle .column h2 {
+	margin: 0px;
+	padding: 7px;
+	background: #E8E8E8;
+	font-size: 13px;
+}
+
+.tree-edit  {
+	clear: both;
+}
+.button-list1 {
+	margin-bottom: 10px;
+	float: left;
+}
+.button-list1 li{
+	float: left;
+}
+.button-list1 li a {
+	border-left: 1px solid #000;
+	padding: 3px 10px;
+	text-decoration: none;
+}
+.button-list1 li:first-child a {
+	border: none;
+}
+.button-list1 li a:hover {
+	color: #0C76B2;
+}
+.button-list1 li a img {
+	margin: 0px 0px -5px 0px;
+}
+
+.button-list2 {
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+.button-list2 li img {
+    display: block;
+    margin-left: 3em;
+}
+.button-list2 li {
+    float: left;
+    width: 11em;
+}
+
+#formPage {
+	padding-left: 50px;
+        margin: 1em 2em 2em 0;
+	clear: both;
+}
+#formPage #tree {
+	width: 500px;
+}
+#formPage ul {
+	padding: 0px;
+}
+#formPage ul li{
+        margin-top: 1em;
+}
+#formPage label {
+    margin: 0.5em 0;
+	display: block;
+}
+
+#formPage div.change input,
+#formPage div textarea {
+    width: 100%;
+}
+
+#formPage div textarea {
+    margin: 1em 0;
+}
+
+select#tree option {
+	padding: 3px 7px;
+	color: #21759B;
+	font-size: 12px;
+	border-bottom: 1px solid #ececec;
+}
+select#tree option:hover {
+	background: #efefef;
+}
+.change {
+	clear: both;
+}

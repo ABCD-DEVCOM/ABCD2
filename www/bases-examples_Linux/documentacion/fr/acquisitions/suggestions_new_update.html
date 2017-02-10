@@ -1,0 +1,19 @@
+<p><b>Création d'une nouvelle recommandation</b></p>
+<p>Les recomendacions qui entrent dans la base sont numérotés par séquence pour affecter la créating des relations avec un autre module d'acquisition de la base de donées. Cette numérotation est faite à travers le fichier <b>control_number.cn</b> situé dans le dossier <b>bases/suggestions/data</b><strong>.</strong></p>
+<p>Si vous travaillez dans un système de plusieurs usagers, il faut éviter que deux postes de travail génèrent le même numéro. Pour ce faire, faites procédez de la façon suivante : </p>
+<ol>
+    <li>Vérifiez si le fichier <b>control_number.cn</b> dispose ou pas&nbsp;la <b>propriété lecture     seule</b></li>
+    <li>S'il ne dispose pas de <b>la propriété lecture seule</b> alors : 
+    <ul>
+        <li>le fichier est protégé de sorte qu'un autre poste de travail ne peut le lire </li>
+        <li>le dernier numéro séquentiel attribué est lu et ajouté 1</li>
+        <li>une copie du fichier <b>control_number.cn</b> est faite (&nbsp;<b>control_number.bak</b>)</li>
+        <li>le numéro séquentiel est ajouté au&nbsp; numéro du champ du         contrôle de l'enregistrement </li>
+        <li>le dernier numéro suéquentiel attribué         est enregistré dans le fichier <b>control_number.cn</b> &nbsp; </li>
+        <li><b>control_number.cn&nbsp; le fichier </b>est débloqué de sorte qu'un autre poste de travail         peut créer un nouvel enregistrement</li>
+    </ul>
+    </li>
+    <li>Si le fichier <b>control_number.cn</b> possède la <b>propriété lecture seule</b>&nbsp;cette     situation est signalée à l'opérateur et un lien est fourni pour essayer à nouveau l'attribution     d'un numéro séquentiel</li>
+</ol>
+<p>Si après plusieurs tentatives il n'est pas possible d'attribuer le numéro séquentiel, l'Adminsitrateur du Système doit vérifier l'autorisation du fichier <b>control_number.cn</b> et, si nécessaire, modifier les autorisations pour donner les accès.</p>
+<p>&nbsp;</p>

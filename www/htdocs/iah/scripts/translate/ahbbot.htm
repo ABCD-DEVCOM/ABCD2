@@ -1,0 +1,25 @@
+[pft]if val(v1002) > 0 then[/pft]
+
+    <br />
+    <div class="row"><hr class="ruler" /></div>
+
+    <!-- monta navegacao entre as paginas do resultado -->
+    [pft]@NAVPAGE.PFT[/pft]
+    <a name="bottom"></a>
+
+        <div class="barNavTop">
+                [pft]if val(v1002) > 0 then[/pft]
+                    <input type="button" class="defaultButton submit" value="{{your_selection}}" name="yselect" onclick="javascript:void(AnySelected())" />
+                [pft]fi[/pft]
+                    <input type="button" class="defaultButton submit" onclick=window.location="#top" value="{{top_of_page}}" />
+        </div>
+[pft]fi[/pft]
+<br />
+
+    <div class="contain">
+        <div class="rowHigh">
+            <span class="colPg"><a name="refine">{{refine}}</a></span>
+            <span class="colPgNav">&nbsp;</span>
+        </div>
+    </div>
+

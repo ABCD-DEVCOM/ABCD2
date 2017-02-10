@@ -1,0 +1,254 @@
+
+'<table width="100%" border="1">'/,
+if p(v20) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>SIPS Code</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v20(25,25)+|<br>|,'</td></tr>',
+fi,
+if v30<>v20 then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>SeCS Code</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v30(25,25)+|<br>|'</td></tr>',
+fi,
+if p(v50) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Publication status</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v50(25,25)+|<br>|'</td></tr>',
+fi,
+if p(v100) then     
+      ,'<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>TITLE</td>',
+      ,'<td valign="top" align="left" width="70%"><font face="arial" size=2><b>',v100'</b></td>',    
+fi,
+if p(v110) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Subtitle</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v110(25,25)+|<br>|'</td></tr>',    
+fi,
+if p(v120) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Section or part designation</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v120(25,25)+|<br>|'</td></tr>',    
+fi,
+if p(v130) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Section or part title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v130(25,25)+|<br>|'</td></tr>',                                           
+fi,
+if p(v140) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Name of issuing body</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v140(25,25)+|<br>|'</td></tr>',    
+fi,
+if p(v150) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Abbreviated title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v150(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v200) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Expanded form title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v200(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v210) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Cover title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v210(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v230) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Parellel title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v230(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v240) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Added title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v240(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v301) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Initial of date</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v301(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v302) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Initial of volume</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v302(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v303) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Initial of number</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v303(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v304) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>End date</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v304(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v305) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>End volume</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v305(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v306) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>End number</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v306(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v310) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Country of publication</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v310(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v320) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>State</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v320(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v330) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Publication level</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v330(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v340) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Alphabet of title</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v340(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v350) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Language of publication</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v350(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v380) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Frequency</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v380(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v400) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>ISSN</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v400(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v410) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>CODEN</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v410(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if v20<>v30 then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Code Medline</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v420(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v430) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Classification</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v430(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v440) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Subject headings</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v440(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v450) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Indexed in</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v450(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v480) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Publisher</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v480(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v490) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Place of publication</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v490(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v510) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Has other language editon</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v510(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v520) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Is other language edition of</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v520(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v530) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Has subseries</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v530(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v540) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Is subseries of</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v540(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v550) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Has suplement/insert</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v550(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v560) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Is suplement/insert of</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v560(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v610) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Continues as</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v610(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v620) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Continues in part as</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v620(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v650) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbed</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v650(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v660) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbed in part</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v660(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v670) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Formed by the splitting of</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v670(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v680) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Formed by the union of... and</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v680(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v710) then                             
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Continued by</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v710(25,25)+|<br>|'</td></tr>',                                             
+fi,
+if p(v720) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Continued in part by</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v720(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v750) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbed by</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v750(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v760) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbed in part by</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v760(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v770) then                                     
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Split into...and...</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v770(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v780) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>Merged with</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v780(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v790) then 
+   '<tr><td align="right" width="30%" valign="top" ><font size=2 face="Arial"><b>To form</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v790(25,25)+|<br>|'</td></tr>',    
+fi,
+'</table>'/,
+'<p>'/,

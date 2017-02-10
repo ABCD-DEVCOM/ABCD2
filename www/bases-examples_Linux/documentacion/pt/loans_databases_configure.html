@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <strong><font face="Arial" size="3">Par&acirc;metros necess&aacute;rios para configurar
+        a base de dados de objetos para empr&eacute;stimo</font></strong><br />
+        <br />
+        <table cellspacing="1" cellpadding="1" width="90%" summary="" border="1">
+            <tbody>
+                <tr>
+                    <td><font face="Arial" size="2">1.</font></td>
+                    <td><font face="Arial" size="2">Prefixo para localizar o N&uacute;mero de
+                      Registro</font></td>
+                    <td>
+                    <p><font face="Arial" size="2">Este prefixo &eacute; acrescentado
+                    ao n&uacute;mero de registro/c&oacute;digo de barras fornecido pelo operador de
+                    empr&eacute;stimos a fim de localizar o titulo correspondente.&nbsp;&nbsp;É
+                    armazenado na pasta <strong>def</strong>  da base de dados
+                    selecionada, com o nome de<strong><font face="Arial"  size="2"><span style="background-color: #e6ecf9; color: #000" title closure_uid_y9zt34="23" pc="Este prefio se agrega al n&uacute;mero de inventario suministrado por el operador de pr&eacute;stamos, a fin de localizar el titulo correspondiente. Se almacena en la carpeta def de la base de datos seleccionada, bajo el nombre" qc="Os prefixos s&atilde;o adicionados ao n&uacute;mero de invent&aacute;rio fornecido pelo operador dos empr&eacute;stimos, a fim de localizar o t&iacute;tulo apropriado. Ele &eacute; armazenado na pasta selecionada def banco de dados com o nome" id="result_box" class="medium_text">
+                    </span>loans_conf.tab</font></strong></font></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">2.</font></td>
+                    <td><font face="Arial" size="2">Prefixo para localizar o n&uacute;mero de
+                      classifica&ccedil;&atilde;o</font></td>
+                    <td><font face="Arial" size="2">Este prefixo &eacute; acrescentado
+                      ao n&uacute;mero de&nbsp;classifica&ccedil;&atilde;o informado pelo operador
+                      de empr&eacute;stimo, a fim de localizar o titulo
+                      correspondente.&nbsp;&nbsp;É armazenado na pasta <strong>def</strong> 
+                      da base de dados selecionada e no mesmo arquivo&nbsp;<strong><font face="Arial"  size="2">loans_conf.tab</font></strong>&nbsp;</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">3.</font></td>
+                    <td><font face="Arial" size="2">PFT para calcular o total de
+                      exemplares do t&iacute;tulo</font></td>
+                    <td><font face="Arial" size="2">Uma vez localizado o item objeto de
+                      empr&eacute;stimo, &eacute; aplicado este formato sobre o registro localizado por
+                      um dos dois&nbsp;m&eacute;todos anteriores para obter
+                      o total de exemplares do t&iacute;tulo.&nbsp;É armazenado
+                      na pasta <strong>def</strong>  da base de dados
+                      selecionada, com o nome&nbsp;<strong><font face="Arial"  size="2">loans_totalitems.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">4.</font></td>
+                    <td><font face="Arial" size="2">PFT para extrair o N&uacute;mero de
+                      Registro</font></td>
+                    <td><font face="Arial" size="2">Este formato &eacute; aplicado sobre
+                      o item objeto de empr&eacute;stimo a fim de extrair os n&uacute;meros de
+                      registro do t&iacute;tulo e identificar o exemplar solicitado.
+                      É armazenado na pasta <strong>def</strong>  da base de
+                      daos selecionada, com o nome <strong><font face="Arial"  size="2">loans_inventorynumber.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">5.</font></td>
+                    <td><font face="Arial" size="2">PFT para extrair o n&uacute;mero de
+                      classifica&ccedil;&atilde;o</font></td>
+                    <td><font face="Arial" size="2"></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">6.</font></td>
+                    <td><font face="Arial" size="2">PFT para exibir o registro objeto
+                      de empr&eacute;stimo</font></td>
+                    <td><font face="Arial" size="2">Este formato &eacute; aplicado sobre
+                      o registro localizado na base de dados de objetos para empr&eacute;stimo
+                      para efeitos de visualizar o registro. É armazenado na
+                      pasta <strong>def</strong>  da base de dados selecionada,
+                      com o nome <strong><font face="Arial"  size="2">loans_display.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">7.</font></td>
+                    <td><font face="Arial" size="2">&nbsp;PFT para obter o tipo de registro
+                      da base de dados de objetos para empr&eacute;stimo</font></td>
+                    <td><font face="Arial" size="2">Este formato &eacute; aplicado sobre
+                      o registro localizado na base de dados de objetos para empr&eacute;stimo
+                      para obter o tipo de registro do exemplar solicitado. Este tipo de registro
+                      &eacute; combinado com o tipo de usu&aacute;rio para determinar a pol&iacute;tica de
+                      empr&eacute;stimo do exemplar solicitado.É armazenado na pasta <strong>def</strong> 
+                      da base de dados selecionada, com o nome de&nbsp;<strong><font face="Arial"  size="2">loans_typeofobject.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">8.</font></td>
+                    <td><font face="Arial" size="2">PFT para guardar o registro
+                      na base de dados de empr&eacute;stimos</font></td>
+                    <td><font face="Arial" size="2">Este formato &eacute; aplicado sobre
+                      o registro localizado na base de dados de empr&eacute;stimos e
+                      &eacute; utilizado para guardar a informa&ccedil;&atilde;o catalogr&aacute;fica do
+                      exemplar emprestado ao usu&aacute;rio. É armazenado na pasta <strong>def</strong> 
+                      da base de dados selecionada, com o nome de&nbsp;<strong><font face="Arial"  size="2">loans_store.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">9.</font></td>
+                    <td valign="top"><font face="Arial" size="2">PFT a ser
+                      utilizada para exibir o objeto a partir da base de dados
+                      de empr&eacute;stimos</font></td>
+                    <td><font face="Arial"><font size="2">Este formato &eacute;
+                      utilizado poder exibir a informa&ccedil;&atilde;o dos empr&eacute;stimos
+                      pendentes a partir da base de dados de <b>empr&eacute;stimos</b><strong>.</strong>
+                      É armazenado na pasta <b> def</b> da base de dados
+                      selecionada, com o nome de&nbsp;<font face="Arial"  size="2"><strong>loans_show.pft</strong></font></font></font></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p><font face="Arial" size="2">Pode-se usar o v&iacute;nculo <strong>Testar</strong>
+        e informar um MFN para aplicar os formatos fornecidos sobre a base de dados
+        de objetos para empr&eacute;stimo. </font></p>
+        <p><font face="Arial" size="2">Para salvar os formatos, d&ecirc; um clique sobre
+        <strong>Atualizar.</strong></font></p>
+    </body>
+</html>

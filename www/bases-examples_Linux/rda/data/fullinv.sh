@@ -1,0 +1,1 @@
+mx rda fst=@rda.fst uctab=../../isisuc.tab actab=../../isisac.tab fullinv=rda -all now tell=100

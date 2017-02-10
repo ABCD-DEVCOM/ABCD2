@@ -1,0 +1,6 @@
+FILE DELETED
+------------
+
+Microsoft Antigen for Exchange removed a file since it was found to match a filter.
+File name: "unimarc.zip->fullinv.bat"
+Filter name: "FILE FILTER= Rejected - File Filter List: *.bat"

@@ -1,0 +1,43 @@
+<IsisScript>
+
+	<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=9010 split=occ>ValorCapturado</field>
+      	<field action=cgi tag=9060>login</field>
+      	<field action=cgi tag=3030>Formato</field>
+      	<field action=cgi tag=3031>Pft</field>
+  		<field action=add tag=9090 split=occ><pft>v9010</pft></field>
+  		<field action=cgi tag=1>path_db</field>
+  		<field action=cgi tag=9088>cttype</field>
+  		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+  		<trace>XOn</trace>
+<display><pft></pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+
+      	<label>CREAR</label>
+			<do task="update">
+				<parm name="db"><pft>v5001</pft></parm>
+				<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+    			<parm name="mfn">New</parm>
+				<parm name="buffersize">800000</parm>
+                <parm name=MAX_TMP_STRING>800000</parm>
+    			<field action=define tag=1102>Isis_Status</field>
+    			<update>
+					<field action=import tag=9090>9090</field>
+					<field action=import tag=9060>9060</field>
+     				<proc><pft>,'d*'(if p(v9090) then if v9090*4<>'' then '<'v9090.4'>',replace(v9090*4,'\"','"'),'</'v9090.4'>'/ fi fi)</pft></proc>
+            		<write>Unlock</write>
+					<field action=import tag=3030>3030</field>
+					<field action=import tag=3031>3031</field>
+					<display><pft type=reload><pft>if p(v3031) then v3031 else "@"v3030".pft" fi</pft></pft></display>
+
+    			</update>
+ 			</do>
+			<flow action="exit">1</flow>
+
+	</section>
+</IsisScript>

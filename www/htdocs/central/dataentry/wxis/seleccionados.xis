@@ -1,0 +1,74 @@
+<label>YOUR_SELECTION</label>
+<trace>ON</trace>
+		<list action="load" type="list"><pft>(if val(v6210^m) > 0 then f(val(v6210^m),10,0) fi/)</pft></list>
+
+		<!--flow action="jump"><pft>if v6212 = 'save-iso' then 'EXPORT_MFN' fi</pft></flow-->
+		<flow action="jump"><pft>if v6212.6 = 'export' then 'EXPORT_MFN' fi</pft></flow>
+		<do task="list">
+			<field action="define" tag="2001">Isis_Item</field>
+			<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Items</field>
+			<loop>
+
+				<field action="import" tag="list">5003,5006,5009,5012,5021,5050,6000/6003,6210,6212,7001/7005,8000,8001,8002</field>
+
+				<do task="mfnrange">
+			   		<parm name="db">DATABASE</parm>
+					<parm name="from"><pft>v2001</pft></parm>
+			    	<parm name="count">1</parm>
+
+					<loop>
+						<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+							<display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+							<display><htmlpft><pft>if s(mpu,v5009,mpl) : '.HTM' then cat(v5009) fi</pft></htmlpft></display>
+							<display></div></div></display>
+							<flow action="skip">Next</flow>
+					</loop>
+				</do>
+			</loop>
+		</do>
+		
+	<label>EXPORT_MFN</label>
+		<field action="replace" tag="9000">list</field>
+		<flow action="jump">EXPORT</flow>
+		
+	<label>EXPORT</label>
+		<display><pft>'Content-type: bireme/application'/</pft></display>
+        <display><pft>'Content-Disposition: inline; filename="resultado.',v6212*7,'"'/#</pft></display>
+		<do>
+			<parm name="task"><pft>v9000</pft></parm>
+			<parm name="db">DATABASE</parm>
+			<parm name="from"><pft>v9001</pft></parm>
+	    	<parm name="to"><pft>v9002</pft></parm>
+			<parm name="expression"><pft>v9003</pft></parm>
+			<parm name="reverse"><pft>if s(mpu,v5006^r,mpl) = 'ON' and v9000 <> 'list' then 'On' fi</pft></parm>
+			<parm name="indexlist">
+				<pft>(if p(v6099^d) then '^p*^y'v6099^y,|^u|v6099^u,|^m|v6099^m/ fi,'^p'v6099^x'^y'v6099^y,|^u|v6099^u,|^m|v6099^m/)</pft>
+			</parm>
+			<!-- envia ISO direto para standard output com CRLF -->
+			<parm name="file">STDOUT</parm>
+			<parm name="type"><pft>if v6212 = 'export-iso' then 'ISO2709_CRLF' fi</pft></parm>
+
+			<field action="define" tag="1000">Isis_Current</field>
+			<field action="define" tag="1001">Isis_Item</field>
+			<loop>
+				<field action="import" tag="list">6212</field>
+				<!-- caso seja lista de selecionados executa PROC somente na fun��o fielddir -->
+				<flow action="jump"><pft>if val(v1001) > 0 then 'PASS_PROC' fi</pft></flow>
+				<!-- ordena tags para exporta��o do iso-->
+				<proc>s</proc>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+
+				<label>PASS_PROC</label>
+				<call name="FieldDir"><pft>if val(v1001) > 0 then '^m'v1001,'^i'v1000 fi</pft></call>
+				<flow action="jump"><pft>if v6212 <> 'export-iso' then 'EXPORT_USERFORMAT' fi</pft></flow>
+
+				<label>EXPORT_ISO</label>
+				<field action="delete" tag="list">1000,1001,6212</field>
+				<export>Now</export>
+				<flow action="skip">Next</flow>
+
+
+			</loop>
+		</do>
+		<flow action="jump">DONE</flow>

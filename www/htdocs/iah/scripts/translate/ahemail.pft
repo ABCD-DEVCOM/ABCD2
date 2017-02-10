@@ -1,0 +1,25 @@
+,if v1 = 'SEND' then,
+    ,@AHHEAD.PFT,
+
+	'<div class="rowHigh">&nbsp;</div>
+
+         <div class="containBord">
+	    <div class="middle">
+
+	          {{result_sent}}: <b>',v6213,'</b>
+                  <div class="rowHigh">&nbsp;</div>
+	          [ <a href="javascript:history.go(-2)">{{back}}</a> ]
+
+            </div>
+	</div>
+</div>    <!-- end content -->
+</body>
+</html>'
+,fi,
+
+,if v1 = 'OPEN' then,
+    'From: online@brm.bireme.br'/
+    'To: ',replace(v6213,'@bireme.br','@brm.bireme.br')/
+    'Subject: {{references_found}}'/
+    'Mime-Version: 1.0'/'Content-Type: text/html'/
+,fi,

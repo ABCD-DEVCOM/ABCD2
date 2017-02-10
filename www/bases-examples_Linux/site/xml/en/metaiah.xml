@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<define>
+  <sourceList>
+    <group label="Local databases">
+      <item id="34-1" label="Library catalog" href="/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=MARC" base-search-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=MARC&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=MARC&amp;nextAction=lnk"/>
+      <item id="34-2" label="Documentation Centre" href="/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=BIBLO" base-search-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=BIBLO&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=BIBLO&amp;nextAction=lnk"/>
+      <item id="34-5" label="Open Access Journals" href="/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAJ" base-search-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAJ&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAJ&amp;nextAction=lnk"/>
+      <item id="34-14" label="Experts" href="/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=EXPERTS" base-search-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=EXPERTS&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=EXPERTS&amp;nextAction=lnk"/>
+      <item id="34-11" label="Projects" href="/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=PROJECTS" base-search-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=PROJECTS&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=PROJECTS&amp;nextAction=lnk"/>
+      <item id="34-13" label="Dublin Core Collection" href="/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DUBCORE" base-search-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DUBCORE&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/ansi/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DUBCORE&amp;nextAction=lnk"/>
+    </group>
+    <group label="Open Access Journals"/>
+    <group label="Events directory"/>
+    <group label="LIS- Health Information Locator"/>
+  </sourceList>
+  <search>
+    <item source="34-1" search-parameters="exprSearch="/>
+    <item source="34-2" search-parameters="exprSearch="/>
+    <item source="34-5" search-parameters="exprSearch="/>
+    <item source="34-14" search-parameters="exprSearch="/>
+    <item source="34-11" search-parameters="exprSearch="/>
+    <item source="34-13" search-parameters="exprSearch="/>
+  </search>
+</define>

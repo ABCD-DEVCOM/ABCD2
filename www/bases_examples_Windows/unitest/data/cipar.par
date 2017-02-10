@@ -1,0 +1,3 @@
+unitest.*=./unitest.*
+isisac.tab=unicode.actab
+isisuc.tab=unicode.uctab

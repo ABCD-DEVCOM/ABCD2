@@ -1,0 +1,55 @@
+.tda {  font-family:  Arial, Helvetica, sans-serif; font-size: 9pt; color: #00626C }
+.td {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #00626C }
+.tdS {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #666666 }
+.td_N {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color:#333366 }
+.td_C {  font-family: Courier; font-size: 8pt; color: black }
+.td2 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; color: #666666; text-align: justify}
+.td2a { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; color: #666666;}
+a:hover {  color: #FF6600}
+.td3 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11pt; color: #663399; font-weight: bold; line-height: 15pt}
+.td4 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; color: #EF4A09;  }
+.td4_S { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #EF4A09; }
+
+.td5 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #000000; background-color: #FFCC00; font-weight: bold; border-style: none;}
+.td5p { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; color: #000000; background-color: #FFCC00; font-weight: bold; border-style: none;}
+.td5r { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; color: #FFFFFF; background-color: #FFCC00; font-weight: bold; border-style: none;}
+.td5g { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 7pt; color: #000000; background-color: #CCcc99; font-weight: bold; border-style: none;}
+
+.td6 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #666666; text-align: justify; font-style: italic; font-weight: bold}
+.td5a { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; color: #FFFFFF; background-color: #07399C; font-weight: bold; border-style: none; }
+.td5b { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #000000; background-color: #CCCCCC; font-weight: bold; border-style: none; }
+.purpre { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #663399}
+.td2_G { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #666666 }
+.mmed0 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #008080 ; }
+.mmed_T { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 20pt; color: #FF0000 ; }
+.tit { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt; color: #FF0000 ; }
+.SubC { font-family: Arial; font-size: 10pt; color: #666666;  height=18 }
+.tSel { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #666666; }
+.diccio { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #666666;}
+.tSelB { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #666666;}
+.libre { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #666666; }
+.textbi	{BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; FONT-SIZE: 18pt; BORDER-BOTTOM-WIDTH: 0px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 0px;font-weight: bold}
+
+
+BODY {
+	FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 9pt 
+}
+
+
+input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+text	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+
+checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+
+.altn  {font-family : verdana,arial,helvetica; font-size : 10pt; color: #ffffff; background-color: #7C7C7C;}
+.tit2  {font-family : verdana,arial,helvetica; font-size : 10pt; color: #ffffff; background-color: #016DFF; font-weight: bold;}
+
+.initial {font-family:tahoma,arial,helvetica; font-size:10pt; font-color=#2C5C8B; 
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:white; color:#2C5C8B;width=250px; background-image:url(/intranet/img/fondo_boton.gif)}
+
+.boton {font-family:verdana,helvetica; font-size:8pt; font-color=#2C5C8B; 
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:white; color:#2C5C8B;}

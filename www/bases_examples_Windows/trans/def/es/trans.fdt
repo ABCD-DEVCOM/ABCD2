@@ -1,0 +1,23 @@
+F|1|Tipo de registro|0|0|||X|||||||||0||
+F|10|Número de inventario|0|0|||X|||||||||0||
+F|12|Volumen|0|0|||X|||||||||0||
+F|15|Tomo|0|0|||X|||||||||0||
+F|20|Código de usuario|0|0|||X|||||||||0||
+F|30|Fecha de préstamo|0|0|||X|||||||||0||
+F|35|Hora de préstamo|0|0|||X|||||||||0||
+F|40|Fecha de devolución|0|0|||X|||||||||0||
+F|45|Hora de devolución|0|0|||X|||||||||0||
+F|70|Tipo de usuario|0|0|||X|||||||||0||
+F|80|Tipo de Objeto|0|0|||X|||||||||0||
+F|90|No. de Clasificación|0|0|||X|||||||||0||
+F|95|Número de control del objeto|0|0|||X|||||||||0||
+F|98|Base de datos|0|0|||X|||||||||0||
+F|100|Referencia|0|0|||X|||||||||0||
+F|120|Operador y fecha de préstamo|0|0||||||||||||0||
+F|130|Operador y fecha devolución|0|0||||||||||||0||
+T|200|Renovaciones|0|1|abcde||TB|||||||||0||
+S||Fecha préstamo|0|0|||||10|||||||0||
+S||Hora préstamo|0|0|||||10|||||||0||
+S||Fecha de devolución|0|0|||||10|||||||0||
+S||Hora de devolución|0|0|||||10|||||||0||
+S||Operador que renovó|0|0|||||20|||||||0||

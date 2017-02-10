@@ -1,0 +1,32 @@
+welcome = ¡Bienvenido! [day] de [month] de [year].
+title = Electronic Document Delivery Service
+subtitle = Fields marked with * are mandatory
+id = Cédula de Identidad * 
+name = Name *
+category = Category 
+email = E-mail *
+email_apoderado = Copy to agent
+phone = Tel.no. of contact
+comments = Remarks
+subtitle_request = Request data
+subtitle_request_minimal = Select type of material wanted in request
+level = Type of bibl. document
+selectlevel = Select
+help_select =  Click here to select
+send_button = Send
+clean_button = Clean
+cancel_button = Close
+comments = Comments
+error_sar = You have to enter article title or first page
+HEADER_MESSAGES
+module_name = DOCUMENT DELIVERY REQUEST
+help = help
+edit_help_file = edit help file
+lang = Language
+REQUEST_MESSAGES
+notice_success = The request is accepted in our system. \nThe document will arrive on your account within 24 hours during working days. 
+cancel_button = Close
+notice_error = The request could not be accepted in our system.\nIn case of any question : contact us at pir email: biblioteca@aeu.org.uy.
+notice_reload = The request has been finalised.\nIn case of any question, contact us at our email: biblioteca@aeu.org.uy.
+notice_back = For new request click here.
+cancel_button = Close

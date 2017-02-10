@@ -1,0 +1,265 @@
+
+'<table width="100%" border="1">'/,
+
+if p(v30) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Código SIPS</td>'
+   ,'<td valign="top" align="left" width="70%" width="70%" ><font face="arial" size=2>'v30(25,25)+|<br>|,'</td></tr>',
+    
+fi,
+if v30<>v30 then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Código SeCS</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v30(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v50) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Situación de la publicación</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v50(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v100) then
+      ,'<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>TITULO</td>',
+      ,'<td valign="top" align="left" width="70%"><font face="arial" size=2><b>',v100'</b></td>',
+fi,
+if p(v110) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Subtítulo</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v110(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v130) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Sección/parte</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v130(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v300) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Tít. sección/parte</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v300(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v140) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Mención responsabilidad</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v140(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v150) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Título abreviado</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v150(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v300) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Título por extenso</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v300(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v210) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Título de cobiertura</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v210(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v230) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Título paralelo</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v230(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v240) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Otras variantes</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v240(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v301) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Fecha inicio</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v301(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v302) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Volumen inicio</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v302(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v303) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Numero de inicio</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v303(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v304) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Fecha final</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v304(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v305) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Volumen final</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v305(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v306) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Numero final</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v306(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v310) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Código pais de public.</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v310(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v330) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Estado/Província</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v330(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v330) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Nível de publicación</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v330(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v340) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Alfabeto del título</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v340(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v350) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Idiomas del texto</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v350(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v370) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Frecuencia actual</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v370(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v400) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>ISSN</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v400(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v410) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>CODEN</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v410(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if v30<>v30 then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Código Medline</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v430(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v430) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Clasificación</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v430(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v440) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Descriptores</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v440(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v450) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Cobertura de la indización</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v450(25,25)+|; |'</td></tr>',
+    
+fi,
+if p(v470) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Editor</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v470(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v490) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Ciudad</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v490(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v510) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Tiene ed. en otro idioma</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v510(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v530) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Es ed. en otro idioma</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v530(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v530) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Tiene subserie</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v530(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v540) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Es subserie</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v540(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v550) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Tiene supl./inserción</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v550(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v560) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Es suplemento/inseción</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v560(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v610) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Continuación de</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v610(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v630) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Cont. parcial de</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v630(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v650) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbio la</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v650(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v660) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbio en parte la</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v660(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v670) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Formado por la subdiv. de</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v670(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v670) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Fusión de ... con ...</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v670(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v710) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Continuado por</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v710(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v730) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Cont. en parte por</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v730(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v750) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbido por</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v750(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v760) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Absorbido en parte por</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v760(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v770) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Subdividido en</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v770(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v770) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Fusionado con  ...</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v770(25,25)+|<br>|'</td></tr>',
+    
+fi,
+if p(v790) then 
+   '<tr><td align="left" width="30%" valign="top" ><font size=2 face="Arial"><b>Para formar ...</td>'
+   ,'<td valign="top" align="left" width="70%"><font face="arial" size=2>'v790(25,25)+|<br>|'</td></tr>',
+    
+fi,
+'</table>'/,
+
+'<p>'/,

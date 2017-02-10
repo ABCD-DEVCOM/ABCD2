@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<metasearch id="" lang="fr" available="">
+  <text id="search_title" available="yes">ABCD Consultation</text>
+  <text id="search_entryWords" available="yes">Entrez un ou plusieurs mots</text>
+  <text id="search_submit" available="yes">Cherchez</text>
+  <text id="search_howToSearch" available="yes">comment faire une recherche?</text>
+  <text id="search_allWords" available="yes">Tous les mots</text>
+  <text id="search_anyWord" available="yes">Acun mot</text>
+  <text id="search_error" available="yes">Mettez expression de recherche s.v.p.</text>
+  <text id="search_advancedSearch" available="yes"></text>
+  <text id="search_freeSearch" available="yes">par mot</text>
+  <text id="search_results" available="yes">R&eacute;sultat</text>
+  <text id="search_method">m&eacute;thode</text>
+  <text id="search_demo">d&eacute;mo</text>
+  <text id="conceptSearch_title" available="yes">par relevance</text>
+  <text id="conceptSearch_entryWords" available="yes">Cherchez document plus proche aux concepts</text>
+  <text id="decs_mesh" available="yes">Chercher par vocabulaire DeCS/MeSH</text>
+</metasearch>

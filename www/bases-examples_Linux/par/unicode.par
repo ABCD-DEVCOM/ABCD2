@@ -1,0 +1,6 @@
+unicode.*=/var/opt/ABCD/bases/unicode/data/unicode.*
+unicode.pft=/var/opt/ABCD/bases/unicode/pfts/en/unicode.pft
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft
+actab=/var/opt/ABCD/bases/unicode/data/isisactab_utf8.tab
+uctab=/var/opt/ABCD/bases/unicode/data/isisuctab_utf8.tab

@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <strong><font face="Arial" size="2">Parámetros requeridos para configurar la base de datos con los objetos de préstaqmo</font></strong><br />
+        <br />
+        <table cellspacing="1" cellpadding="1" width="90%" summary="" border="1">
+            <tbody>
+                <tr>
+                    <td><font face="Arial" size="2">1.</font></td>
+                    <td><font face="Arial" size="2">Prefijo para localizar el número de inventario</font></td>
+                    <td>
+                    <p><font face="Arial" size="2">Este prefijo se&nbsp;agrega al número de inventario suministrado por el operador de préstamos, a fin de localizar el titulo correspondiente.&nbsp;&nbsp;Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada, bajo el nombre&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_conf.tab</font></strong></font></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">2.</font></td>
+                    <td><font face="Arial" size="2">Prefijo para localizar el número de clasificación</font></td>
+                    <td><font face="Arial" size="2">Este prefijo se&nbsp;agrega al número de&nbsp;clasificación suministrado por el operador de préstamos, a fin de localizar el titulo correspondiente.&nbsp;&nbsp;Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada en el mismo archivo&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_conf.tab</font></strong>&nbsp;</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">3.</font></td>
+                    <td><font face="Arial" size="2">Pft para calcular el total de ejemplares del título</font></td>
+                    <td><font face="Arial" size="2">Una vez localizado el ítem objeto de préstamo, se aplica este formato sobre el registro localizado por uno de los dos&nbsp;métodos anteriores y con el mismo obtiene el total de ejemplares del título.&nbsp;&nbsp;Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada, bajo el nombre&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_totalitems.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">4.</font></td>
+                    <td><font face="Arial" size="2">PFT para extraer el número de inventario</font></td>
+                    <td><font face="Arial" size="2">Este formato se aplica sobre el ítem objeto de préstamo a fin de extraer los números de inventario del título e identificar el ejemplar solicitado. Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada, bajo el nombre&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_inventorynumber.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">5.</font></td>
+                    <td><font face="Arial" size="2">PFT para extraer el número de clasificación</font></td>
+                    <td><font face="Arial" size="2"></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">6.</font></td>
+                    <td><font face="Arial" size="2">PFT para desplegar el registro objeto del préstamo</font></td>
+                    <td><font face="Arial" size="2">Este formato se aplica sobre el registro localizado en la base de datos con los objetos de préstamo, a efectos de visualizar el registro.Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada, bajo el nombre&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_display.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">7.</font></td>
+                    <td><font face="Arial" size="2">&nbsp;PFT para obtener el tipo de registro de la base de datos con los objetos de préstamo</font></td>
+                    <td><font face="Arial" size="2">Este formato se aplica sobre el registro localizado en la base de datos con los objetos de prestamo a fin de obtener el tipo de registro del ejemplar solicitado. Este tipo de registro se combina con el tipo de usuario para determinar la política de préstamo del ejemplar solicitado.Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada, bajo el nombre&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_typeofobject.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">8.</font></td>
+                    <td><font face="Arial" size="2">PFT para guardar el registro en la base de datos de préstamos</font></td>
+                    <td><font face="Arial" size="2">Este formato se aplica sobre el registro localizado en la&nbsp; base de datos de préstamos y se utiliza para guardar la información catalográfica del ejemplar prestado al usuario. Se almacena en la carpeta <strong>def</strong> de la base de datos seleccionada, bajo el nombre&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_store.pft</font></strong></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">9.</font></td>
+                    <td valign="top"><font face="Arial" size="2">PFT a utilizar para desplegar el objeto desde la base de datos de préstamos</font></td>
+                    <td><font face="Arial"><font size="2">Este formato se utiliza para poder desplegar la información de los prestamos pendientes desde la base de datos de <strong>préstamos.</strong> Se almacena en la carpeta def de la base de datos seleccionada, bajo el nombre&nbsp;<font face="Arial" color="#ff6600" size="2"><strong>loans_show.pft</strong></font></font></font></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p><font face="Arial" size="2">Puede usar el enlace <strong>Probar</strong> y suministrar un Mfn para aplicar los formatos suministrados sobre la base de datos con los objetos de préstamo. </font></p>
+        <p><font face="Arial" size="2">Para almacenar los formatos, haga clic sobre <strong>Guardar.</strong></font></p>
+    </body>
+</html>

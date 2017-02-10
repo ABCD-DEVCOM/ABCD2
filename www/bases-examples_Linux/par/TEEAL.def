@@ -1,0 +1,35 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%teeal/data/teeal.*
+FILE standard.pft=%path_database%teeal/pfts/%lang%/teeal.pft
+FILE SHORTCUT.IAH=%path_database%teeal/pfts/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+FILE short.pft=%path_database%teeal/pfts/%lang%/short.pft
+
+[INDEX_DEFINITION]
+
+INDEX AB=^1Palabras^2Palabras^3Text words^4Mots texte^d*^xAB ^yDATABASE^uAB_^mAB_
+INDEX TI=^1Titulo^2Titulo^3Titles^4Titre^xTI ^yDATABASE^uTI_^mTI_
+INDEX TW=^1Palabras titulo^2Palabras titulo^3Title words^4Mots titre^xTW ^yDATABASE^uTW_^mTW_
+INDEX DE=^1Descriptores^2Descriptores^3Descriptors^4Déscripteurs^xDE ^yDATABASE^uDE_^mDE_
+INDEX LA=^1Idioma^2Idioma^3Language^4Langue^xLA ^yDATABASE^uLA_^mLA_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Normal^2Normal^3Default^4Défaut
+FORMAT DEFAULT=standard.pft
+FORMAT short.pft=^1Brieve^2Brieve^3shortt^4court
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

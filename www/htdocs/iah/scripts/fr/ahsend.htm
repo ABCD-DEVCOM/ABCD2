@@ -1,0 +1,171 @@
+[pft]@AHHEAD.PFT[/pft]
+<script type="text/javascript">
+
+    function validForm(){
+
+        document.Option.action = "[pft]getenv('SCRIPT_NAME')v5000^d,'scripts/'[/pft]";
+
+        if (document.Option.listOption[1].checked == true){ // hit range option
+            var ref0 = parseFloat(document.Option.listHit[0].value);
+            var ref1 = parseFloat(document.Option.listHit[1].value);
+
+            if(document.Option.listHit[0].value.length == 0 || document.Option.listHit[1].value.length == 0 ) {
+                alert("Entrez le début et la fin des valeurs de la gamme d&lsquo;impression");
+                return false;
+            }
+            if((ref0 > ref1) || isNaN(ref0) || isNaN(ref1) || ref0 <= 0 || ref1 <= 0) {
+                alert("Invalid gamme de l&lsquo;impression des valeurs. S&lsquo;il vous plaît vérifier");
+                return false;
+            }
+
+            if(eval(document.Option.listHit[0].value) > [pft]v1002[/pft] || eval(document.Option.listHit[1].value) > [pft]v1002[/pft]) {
+                alert("Le nombre maximum de références pour cette option: [pft]v1002[/pft]");
+                return false;
+            }
+        }
+        if (document.Option.sendOption[1].checked == true){ // save option
+            var ind  = document.Option.saveFileType.selectedIndex;
+            var type = document.Option.saveFileType[ind].value;
+            document.Option.sendOption[1].value = type;
+
+            //document.Option.action += "list.";
+
+            if (type == "iso" || type == "xml"){
+                if (document.Option.listOption[0].checked == true){ // list_all
+                    if ([pft]v1002[/pft] > 1000) {
+                        alert("Le nombre maximum de références pour cette option: 1000");
+                        return false;
+                    }
+                }
+
+                if (document.Option.listOption[1].checked == true){ // list_hits
+                    if ((document.Option.listHit[1].value - document.Option.listHit[0].value) > 1000) {
+                        alert("Le nombre maximum de références pour cette option: 1000");
+                        return false;
+                    }
+                }
+             }
+             /*
+             if (navigator.appName.indexOf("Microsoft") == -1) {
+                 // se nao eh browser Microsoft adiciona extensao
+                    document.Option.action += type;
+             }
+             */
+        }
+        if (document.Option.sendOption[2].checked == true){ // email option
+            email = document.Option.sendToEmail.value
+            if (email.length == 0){
+                alert("envoyer par l&lsquo;adresse électronique");
+                return false;
+            }
+            isGood = (email.indexOf("@")  != "-1") &&
+                     (email.indexOf(".")  != "-1") &&
+                     (email.indexOf("@.") == "-1") &&
+                     (email.indexOf(" ")  == "-1") &&
+                     (email.indexOf(";")  == "-1") &&
+                     (email.indexOf(",")  == "-1") &&
+                     (email.indexOf("?")  == "-1") &&
+                     (email.length > 5);
+
+            if (!isGood) {
+                alert("L&lsquo;adresse e-mail est incorrect. S&lsquo;il vous plaît vérifier")
+                return false;
+            }
+        }
+    }
+</script>
+<form action="[pft]getenv('SCRIPT_NAME')v5000^d,'scripts/'[/pft]" method="POST" name="Option" onSubmit="return validForm()">
+    [pft]@AHHIDD.PFT[/pft]
+
+    <input type="hidden" name="nextAction" value="list" />
+    <!--
+    [pft]'5018=',v5018[/pft]
+    -->
+
+        <div class="barNav">
+            <div class="leftCol">&nbsp;</div>
+            <div class="centerCol"><b>envoyez résultat</b></div>
+            <div class="rightCol">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+
+    <div class="contBorder">
+
+        <div class="celLeft"><b>Quelles références?</b></div>
+
+        <div class="celRight">
+            <div class="rowHigh">
+                    <input type="Radio" name="listOption" value="list_all" [pft]if a(v6210) then 'checked' fi[/pft] />
+                Toutes les références ([pft]v1002[/pft])
+            </div>
+            <div class="rowHigh">
+                    <input type="Radio" name="listOption" value="list_hits" />
+                Série de références de
+                    <input type="text" name="listHit" maxlength="6" size="4" onFocus="document.Option.listOption[1].checked = true" />
+                <span class="labl">&nbsp;-&nbsp;</span>
+                <input type="text" name="listHit" maxlength="6" size="4" onFocus="document.Option.listOption[1].checked = true" />
+            </div>
+            <div class="rowHigh">
+                    [pft]if p(v6210) then[/pft]
+                        <input type="Radio" name="listOption" value="list_selected" checked />
+                    [pft]else[/pft]
+                        &nbsp;<img src="[pft]v5002[/pft]radio.gif" border="0" />
+                    [pft]fi[/pft]
+                Références sélectionnées [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
+            </div>
+        </div>
+
+    </div>
+
+    <div class="rowHigh">&nbsp;</div>
+
+    <div class="contBorder">
+
+        <div class="celLeft"><b>Options d&lsquo;envoi</b></div>
+
+        <div class="celRight">
+            <div class="rowHigh">
+                <input type="Radio" name="sendOption" value="print" checked />&nbsp;envoyer à l&lsquo;impression
+            </div>
+            <div class="rowHigh">
+                <input type="Radio" name="sendOption" value="save" />&nbsp;envoyer à l&lsquo;ordinateur le format&nbsp;
+            <select name="saveFileType" onFocus="document.Option.sendOption[1].checked = true">
+            [pft]if v5018^f : 'XML' then[/pft]
+                    <option value="save-xml">XML</option>
+            [pft]fi[/pft]
+            <option value="save-html">HTML</option>
+            <option value="export-iso">ISO 2709 (MicroIsis)</option>
+            [pft]
+                (if v5005^t = 'EXPORT' then '<option value="export-',v5005^n,'">',v5005^p,'</option>/' fi)
+            [/pft]
+                </select>
+            </div>
+
+            [pft]if v5018^e = 'ON' then[/pft]
+            <div class="rowHigh">
+                <input type="Radio" name="sendOption" value="e-mail" />&nbsp;envoyer par l&lsquo;adresse électronique:&nbsp;&nbsp;
+                <input type="text" name="sendToEmail" size="35" onFocus="document.Option.sendOption[2].checked = true" />
+            </div>
+            [pft]else[/pft]
+            <div class="rowHigh">&nbsp;</div>
+            [pft]fi[/pft]
+        </div>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+            <div class="rowAction">
+                <div class="leftCol">&nbsp;</div>
+                <div class="centerCol">
+                    <input type="button" class="defaultButton submit" value="annuler" name="cancel" onclick="javascript:history.back()" />
+
+                    <input type="submit" class="defaultButton submit" value="envoyer" />
+            </div>
+                <div class="rightCol">&nbsp;</div>                
+            </div>
+
+</form>
+</div>      <!-- content end -->
+</body>
+</html>

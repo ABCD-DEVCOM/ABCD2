@@ -1,0 +1,56 @@
+<p><b>Créer une nouvelle recommandation</b></p>
+<p>Avant cela insérez dans la base de données une nouvelle recommandation, verifiez si elle est une nouvelle acquisition complémentaire d'un objet. Dans ce cas, il est nécessaire de donner la<b>base de données</b> où l'information de catalogage de l'objet et <b>le numéro d'identification de l'objet</b>, telle qu'elle a été attribuée dans la base de données correspondante.</p>
+<p>Si c'est un nouvel objet, vous pouvez aussi donner le nom de la base de données où l'objet sera classé.</p>
+<p>Les données obligatoires sont : </p>
+<p>
+<table cellspacing="1" cellpadding="1" width="500" summary="" border="1">
+    <tbody>
+        <tr>
+            <td>Etiquette&nbsp; </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Etat de la</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Type d'acquisition</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Base de données ou l'objet est classé</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Numéro d'identification de l'objet (Obligatoire si&nbsp; le type d'identification sélectionnée             est <strong>Copies complémentaires</strong>)</td>
+        </tr>
+        <tr>
+            <td>16/17</td>
+            <td>Indiquez l'auteur personne ou l'auteur organisme</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>Titre</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>Nom de la personne ou du département qui a suggéré le bon de commande</td>
+        </tr>
+        <tr>
+            <td>210</td>
+            <td>Date de suggestion</td>
+        </tr>
+        <tr>
+            <td>211</td>
+            <td>Date ISO de suggestion</td>
+        </tr>
+        <tr>
+            <td>220</td>
+            <td>Nombre de copiés suggéré</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>L'information entrée est sauvegardée dans <b>suggestions</b> base de données&nbsp; et aux nouveaux enregistrements sont attribués dans un formulaire automatique un numéro séquentiel qui est utilisé comme un champ relationnel dans le processus de suivi de l'état de la recommandation.</p>
+<p>Pour l'attribution de numéro séquentiel, retez dans le dossier <b>données</b> des <b>suggestions</b> de base de données un <b>control_number.cn</b> dénommé fichier qui a gravé le dernier numéro attribué.</p>

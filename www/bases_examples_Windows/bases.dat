@@ -1,0 +1,21 @@
+rda|RDA
+unicode|UNICODE
+marc|MARC|Y
+marcuni|MARCUNI|Y
+dcdspace|DCdSpace
+biblo|Cepal|Y
+copies|Acquisitions, Copies
+providers|Providers
+suggestions|Suggestions (Acquisitions)
+purchaseorder|Purchase Orders
+users|Patrons
+loanobjects|Loanobjects
+trans|Transactions Loans
+suspml|Suspensions and fines
+reserve|Loan reservations
+dubcore|DublinCore Repository
+projects|Projects
+experts|Experts
+doaj|DOAJ
+agrovoc|Agrovoc Thesaurus
+acces|Operators

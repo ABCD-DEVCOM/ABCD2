@@ -1,0 +1,297 @@
+/* realiza o replace dos caracteres invalidos vindos do DECOD */
+proc(
+	'd71d76d87d88'
+	('a71!',replace(replace(v71,'"','&quot;'),'&','&amp;'),'!')
+	('a76!',replace(replace(v76,'"','&quot;'),'&','&amp;'),'!')
+	('a87!',replace(replace(v87,'"','&quot;'),'&','&amp;'),'!')
+	('a88!',replace(replace(v88,'"','&quot;'),'&','&amp;'),'!')
+
+)
+
+if v1001='1' then /*
+ 'Content-type: text/xml'/#
+ '<?xml version="1.0" encoding="ISO-8859-1"?>'/,
+ '<!DOCTYPE LilacsCitationSet SYSTEM "C:\DTDLilacs\Lilacs.dtd">'/#, 
+*/
+ '<LilacsCitationSet>'/,
+fi,
+
+' <LilacsCitation Type="'v5'" Level="'v6'">'/
+'  <GeneralInfo>'/,
+"   <LilacsID>"v2"</LilacsID>"/,
+
+(if p(v3^a) or p(v3^b) or p(v3^c) 
+   then '   <CallNumber>'/,
+        |    <Localization>|v777|</Localization>|/,
+        |    <ClassificationNumber>|v3^a|</ClassificationNumber>|/,
+        |    <AuthorCutter>|v3^b|</AuthorCutter>|/,
+        |    <VolumeInfo>|v3^c|</VolumeInfo>|/,
+        '   </CallNumber>'/ fi),
+
+'   <DataBaseList>'/,(|    <DataBase>|v4|</DataBase>|/),'   </DataBaseList>'/
+
+(if p(v8) 
+   then '   <Medium>'/,
+        |    <MediumType>|v8^*|</MediumType>|/,
+        |    <MediumInfo>|v8^i|</MediumInfo>|/,
+        '   </Medium>'/ fi),
+'  </GeneralInfo>'/
+
+select v5*0.1
+ case 'S': '  <PeriodicalSeries>',
+ case 'M': '  <Monograph>',
+ case 'T': '  <Thesis>',
+ case 'N': '  <NonConventional>',
+endsel,/,
+
+(|   <InventoryNumber>|v7|</InventoryNumber>|/),
+
+if p(v23) or p(v24)
+  then '   <CollectionInfo>'/,
+       '    <AuthorList>'/,
+       (if p(v23) 
+          then '     <Author>',
+		       if p(v23^r) then ' Role="'v23^r'"' fi,'>'/,
+               |      <Name>|v23^*|</Name>|/,
+               if p(v23^1) or p(v23^a)
+                then '      <Affiliation>'/,
+                     if p(v23^1) 
+                       then |       <OrgName>|v23^1|</OrgName>|/
+                            |       <OrgDiv1>|v23^2|</OrgDiv1>|/,
+                            |       <OrgDiv2>|v23^3|</OrgDiv2>|/,
+                            |       <Country>|v23^p|</Country>|/,
+                            |       <City>|v23^c|</City>|/,
+                       else |       <OrgName>|v23^a|</OrgName>|/
+                     fi,
+                     '      </Affiliation>'/
+               fi,
+               '     </Author>'/
+        fi),
+       (if p(v24) 
+          then '     <CorpAuthor',
+               if p(v24^r) then ' Role="'v24^r'"' fi,'>'v24^*'</CorpAuthor>'/ 
+        fi),                
+       '    </AuthorList>'/,
+       (|    <Title>|v25|</Title>|/),
+	   "    <NumberOfVolumes>"v27"</NumberOfVolumes>"/,
+       '   </CollectionInfo>'/ 
+fi,
+
+if p(v30) 
+  then '   <',if v5*0.1='M' then 'Monog' fi,'SerialInfo>'/,
+       "    <Title>"v30"</Title>"/,
+	   "    <ISSN>"v35"</ISSN>"/,
+       if p(v31) or p(v32) 
+         then '    <JournalIssue>'/,
+		      "     <Volume>"v31"</Volume>"/,
+              "     <Issue>"v32"</Issue>"/,
+			  '    </JournalIssue>'/ 
+       fi,
+       '   </',if v5*0.1='M' then 'Monog' fi,'SerialInfo>'/ 
+fi,
+
+if p(v16) or p(v17)
+  then '   <',if v5*0.1='T' then 'Thesis' fi,'MonogInfo>'/,
+       '    <',if v5*0.1='T' then 'Thesis' fi,'AuthorList>'/,
+       (if p(v16) 
+          then '     <',if v5[1]*0.1='T' then 'Thesis' fi,'Author', 
+		       if p(v16^r) then ' Role="'v16^r'"' fi,'>'/,
+               |      <Name>|v16^*|</Name>|/,
+               if (p(v16^1) or p(v16^a)) and v5[1]*0.1<>'T' 
+                then '      <Affiliation>'/,
+                     if p(v16^1) 
+                       then |       <OrgName>|v16^1|</OrgName>|/
+                            |       <OrgDiv1>|v16^2|</OrgDiv1>|/,
+                            |       <OrgDiv2>|v16^3|</OrgDiv2>|/,
+                            |       <Country>|v16^p|</Country>|/,
+                            |       <City>|v16^c|</City>|/,
+                       else |       <OrgName>|v16^a|</OrgName>|/
+                     fi,
+                     '      </Affiliation>'/
+               fi,     
+ 	           '     </', if v5[1]*0.1='T' then 'Thesis' fi,'Author>'/ 
+        fi),
+       (if p(v17) 
+          then '     <CorpAuthor',
+               if p(v17^r) then ' Role="'v17^r'"' fi,'>'v17^*'</CorpAuthor>'/ 
+        fi),                
+       if v5*0.1='T' then '    </ThesisAuthorList>' else '    </AuthorList>' fi/, 
+       (|    <Title>|v18|</Title>|/),
+       "    <TitleInEnglish>"v19"</TitleInEnglish>"/,
+       "    <NumberOfPages>"v20"</NumberOfPages>"/,
+       "    <MonogVolume>"v21"</MonogVolume>"/,
+       '   </',if v5*0.1='T' then 'Thesis' fi,'MonogInfo>'/ 
+fi,
+
+if p(v10) or p(v11)
+  then '   <',if v5*0.1='T' then 'Thesis' else if v5*0.1='S' then 'Serial' fi fi,'AnalyticalInfo>'/,
+       '    <',if v5*0.1='T' then 'Thesis' else if v5*0.1='S' then 'Serial' fi fi,'AuthorList>'/,  
+	   (if p(v10) 
+          then '     <',if v5[1]*0.1='T' then 'Thesis' else if v5[1]*0.1='S' then 'Serial' fi fi,'Author',
+		       if p(v10^r) then ' Role="'v10^r'"' fi,'>'/,
+               |      <Name>|v10^*|</Name>|/,
+               if (p(v10^1) or p(v10^a)) and v5[1]*0.1<>'T'
+                then '      <Affiliation>'/,
+                     if p(v10^1) 
+                       then |       <OrgName>|v10^1|</OrgName>|/
+                            |       <OrgDiv1>|v10^2|</OrgDiv1>|/,
+                            |       <OrgDiv2>|v10^3|</OrgDiv2>|/,
+                            |       <Country>|v10^p|</Country>|/,
+                            |       <City>|v10^c|</City>|/,
+                       else |       <OrgName>|v10^a|</OrgName>|/
+                     fi,
+                     '      </Affiliation>'/
+               fi,
+               '     </', if v5[1]*0.1='T' then 'Thesis' else if v5[1]*0.1='S' then 'Serial' fi fi,'Author>'/ 
+        fi),
+       (if p(v11) 
+          then '     <CorpAuthor',
+               if p(v11^r) then ' Role="'v11^r'"' fi,'>'v11^*'</CorpAuthor>'/ 
+        fi),                
+       '    </',if v5[1]*0.1='T' then 'Thesis' else if v5*0.1='S' then 'Serial' fi fi,'AuthorList>'/,
+       (|    <Title>|v12|</Title>|/),
+       "    <TitleInEnglish>"v13"</TitleInEnglish>"/,
+       if p(v14)
+		 then ('    <Pagination>',if p(v14^f) and p(v14^l)
+			                   then
+							    "<StartPage>"v14^f"</StartPage>",
+								"<EndPage>"v14^l"</EndPage>"
+							   else
+							    '<Range>'v14'</Range>',
+							  fi,
+			  '</Pagination>'/),
+       fi,
+       '   </',if v5*0.1='T' then 'Thesis' else if v5*0.1='S' then 'Serial' fi fi,'AnalyticalInfo>'/ 
+fi,
+
+if p(v40) 
+  then '   <ComplementaryInfo>'/,
+       (|    <DescriptiveInfo>|v38|</DescriptiveInfo>|/),
+       (|    <TextLanguage>|v40|</TextLanguage>|/),
+       (|    <AbstractLanguage>|v41|</AbstractLanguage>|/),
+       '   </ComplementaryInfo>'/
+fi,
+
+if p(v50) or p(v51)
+  then '   <ThesisNotes>'/,
+       "    <Institution>"v50"</Institution>"/,
+	   "    <Degree>"v51"</Degree>"/,
+       '   </ThesisNotes>'/,
+fi,
+
+"   <Notes>"v61"</Notes>"/,
+
+if p(v62) or p(v64)
+  then select v5*0.1
+        case 'S': '   <SerialImprint>',       
+        case 'T': '   <ThesisImprint>',
+        elsecase  '   <Imprint>',
+       endsel,/,
+       "    <Publisher>"v62"</Publisher>"/,
+	   "    <Edition>"v63"</Edition>"/,
+	   '    <PubDate',if p(v65) then ' ISODate="'v65'"' fi,'>'v64'</PubDate>'/,
+	   "    <City>"v66"</City>"/,
+	   "    <Country>"v67"</Country>"/,
+	   (|    <PubCode>|v68|</PubCode>|/),
+	   "    <ISBN>"v69"</ISBN>"/,
+       select v5*0.1
+        case 'S': '   </SerialImprint>',       
+        case 'T': '   </ThesisImprint>',
+        elsecase  '   </Imprint>',
+       endsel,/,
+fi,
+
+"   <NumberOfReferences>"v72"</NumberOfReferences>"/,
+"   <Abstract>"v83"</Abstract>"/,
+
+if p(v53)
+  then '   <Conference>'/,
+       (|    <Sponsor>|v52|</Sponsor>|/),
+	   '    <ConfName>'v53'</ConfName>'/,
+	   '    <Date',if p(v55) then ' ISODate="'v55'"' fi,'>'v54'</Date>'/,
+   	   "    <City>"v56"</City>"/,
+	   "    <Country>"v57"</Country>"/,
+       '   </Conference>'/
+fi,
+
+if p(v59)
+  then '   <Project>'/,
+       (|    <Sponsor>|v58|</Sponsor>|/),
+	   "    <ProjectName>"v59"</ProjectName>"/,
+	   "    <ProjectNumber>"v60"</ProjectNumber>"/,
+       '   </Project>'/
+fi,
+
+select v5*0.1
+ case 'S': '  </PeriodicalSeries>',
+ case 'M': '  </Monograph>',
+ case 'T': '  </Thesis>',
+ case 'N': '  </NonConventional>',
+endsel,/,
+
+'  <ContentInfo>'/,
+if p(v71)
+  then 
+   '   <PublicationTypeList>'/,
+   (|    <PublicationType>|v71|</PublicationType>|/)
+   '   </PublicationTypeList>'/,
+fi,
+'   <DecsHeadingList>'/,
+if p(v76)
+  then 
+   '    <CheckTagList>'/,
+   (|     <CheckTag>|v76|</CheckTag>|/)
+   '    </CheckTagList>'/,
+fi,
+if p(v87)
+  then 
+   '    <MajorHeadingList>'/,
+   (if p(v87^d) or p(v87^s) 
+      then '     <MajorHeading>'/,
+           if p(v87^d) then '      <Descriptor>'v87^d'</Descriptor>'/ fi,
+           if p(v87^s) then '      <SubHeading>'v87^s'</SubHeading>'/ fi,
+           '     </MajorHeading>'/ fi),
+   '    </MajorHeadingList>'/,
+fi,
+
+if p(v88)
+  then 
+   '    <MinorHeadingList>'/,
+   (if p(v88^d) or p(v88^s) 
+      then '     <MinorHeading>'/,
+           if p(v88^d) then '      <Descriptor>'v88^d'</Descriptor>'/ fi,
+           if p(v88^s) then '      <SubHeading>'v88^s'</SubHeading>'/ fi,
+           '     </MinorHeading>'/ fi),
+   '    </MinorHeadingList>'/,
+fi,
+
+'   </DecsHeadingList>'/,
+if p(v74) or p(v75)
+  then '   <TimeScope>'/,
+       "    <StartYear>"v74"</StartYear>"/,
+	   "    <EndYear>"v75"</EndYear>"/,
+	   '   </TimeScope>'/,
+fi,	
+   
+if p(v78)
+  then '   <PersonalNameSubjectList>'/,
+       (|    <PersonalNameSubject><Name>|v78|</Name></PersonalNameSubject>|/),
+       '   </PersonalNameSubjectList>'/
+fi,
+
+if p(v82)
+  then '   <GeographicSubjectList>'/,
+       (|    <GeographicSubject>|v82|</GeographicSubject>|/),
+       '   </GeographicSubjectList>'/
+fi,
+'  </ContentInfo>'/,
+
+(|  <Documentalist>|v92|</Documentalist>|/),
+"  <CreationDate>"v91"</CreationDate>"/,
+"  <InstitutionCode>"v1"</InstitutionCode>"/,
+'  <InclusionDate>'v84'</InclusionDate>'/,
+' </LilacsCitation>'/#
+
+if v1001=v1002 then
+ '</LilacsCitationSet>'/
+fi

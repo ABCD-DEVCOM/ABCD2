@@ -1,0 +1,23 @@
+if v6:'a' then           
+     if p(v10) then '^a'v10[1]^*,"^b"v10[1]^b,
+       else
+       if p(v11) then '^a'v11[1] fi 
+  	fi
+    if p(v12) then '^t'v12 fi,
+fi,
+   
+if v6:'m' then
+	if p(v16) then '^a'v16[1]^*,"^b"v16[1]^b,
+    	else
+          	if p(v17) then '^a'v17[1] fi 
+    fi,
+fi,
+if p(v18) then '^t'v18 fi,
+
+if v6='s' or v6='k' then
+     if p(v30) then '^t'v30 fi,
+fi,
+
+"^e"v38,
+"^y"v43,
+"^k"v9,

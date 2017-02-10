@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <p><font face="Arial"><strong>Tipos de Registro (Formato Marc)</strong></font></p>
+        <p><font face="Arial" size="2">Esta opción ayuda a definir los tipos de registro que van a ser manejador por la base de datos cuando la misma utiliza el formato MARC.</font></p>
+        <p><font face="Arial" size="2">El tipo de registro se obtiene del campo <strong>3006 </strong>del Leader y ayuda a identificar el formato del campo fijo (008) a ser utilizado en la descripción bibliográfica del título.</font></p>
+        <p><font face="Arial" size="2">Para definir los tipos de registro se requieren 2 componentes:</font></p>
+        <ol>
+            <li><font face="Arial" size="2">Identificar el campo (tag)&nbsp;de la base de datos del cual se va a obtener (o a almacenar en caso de un nuevo registro) el tipo de registro correspondiente al título. La versión actual de ABCD permite definir hasta dos campos de cuyo valor dependerá el&nbsp;formato del campo fijo (008) a presentar en el formulario de ingreso</font></li>
+            <li><font face="Arial" size="2">Describir los tipos de registro teniendo en cuenta los siguientes parámetros:</font>
+            <ul>
+                <li><font face="Arial" size="2">Nombre de la tabla de definición (FDT) que contiene los elementos a ser utilizador para construir el formulario de ingreso que servirá de entrada al campo fijo relacionado con el tipo de registro</font></li>
+                <li><font face="Arial" size="2">Valor que tienen los campos identificados en (1) para que sean considerados pertenecientes a ese tipo de registro</font></li>
+                <li><font face="Arial" size="2">Descripción del tipo de registro, la cual se presentará al operador al momento de ingreso para que proceda a la selección del tipo correspondiente</font></li>
+            </ul>
+            </li>
+        </ol>
+        <p><font face="Arial" size="2">A fin de mantener la consistencia en la parametrización de ABCD, los campos fijos se definen a través de una <strong>FDT</strong> que contiene la descripción de los elementos de datos asociados al tipo de registro y con todas las características definidas en el procedimiento de creación de la FDT de la base de datos. Para editar la <strong>FDT </strong>asociada al campo fijo de un tipo de registro haga clic sobre el enlace <strong>editar</strong>. Como resultado se abrirá una nueva ventana&nbsp;donde se darán las características de los elementos de datos que componen el campo fijo. </font></p>
+    </body>
+</html>

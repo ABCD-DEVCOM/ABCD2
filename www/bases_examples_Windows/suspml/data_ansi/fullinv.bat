@@ -1,0 +1,1 @@
+mx suspml fst=@suspml.fst uctab=isisuc actab=isisac fullinv=suspml -all now tell=100

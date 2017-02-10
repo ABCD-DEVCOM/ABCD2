@@ -1,0 +1,58 @@
+
+[pft]if s(mpu,v5007,mpl) = 'ON' then[/pft]
+        <div class="barNav">
+            <div class="leftCol">&nbsp;
+            [pft]if val(v1001) = val(v1002) or val(v1001) = val(v1032) then[/pft]
+                 <a name="last"></a>
+            [pft]fi[/pft]
+            [pft]if val(v1001) = val(v1031) then[/pft]
+                <a name="first"></a>
+            [pft]fi[/pft]
+            <a name="[pft]v1001[/pft]"><b>[pft]v1001' / 'v1002[/pft]</b></a>
+            &nbsp;&nbsp;<span class="labl">similaridade:
+                        [pft]f(val(v2001^s)*100,1,1)[/pft]
+                    %</span>
+            </div>
+            <div class="centerCol">[pft]v5003^*[/pft]</div>
+            <div class="rightCol">
+                    <!--img src="[pft]v5002[/pft]help.gif" border="0"-->
+                    [pft]if val(v1001) <> val(v1031) then[/pft]
+                          <a href="#first"><img src="[pft]v5002[/pft]top.gif" border="0" /></a>
+                    [pft]fi[/pft]
+                    [pft]if val(v1001) <> val(v1031) then[/pft]
+                          <a href="#[pft]f(val(v1001)-1,1,0)[/pft]"><img src="[pft]v5002[/pft]prev.gif" border="0" /></a>
+                    [pft]fi[/pft]
+                    [pft]if (val(v1001) <> val(v1002)) and (val(v1001) <> val(v1032)) then[/pft]
+                          <a href="#[pft]f(val(v1001)+1,1,0)[/pft]"><img src="[pft]v5002[/pft]next.gif" border="0" /></a>
+                    [pft]fi[/pft]
+                    [pft]if (val(v1001) <> val(v1002)) and  (val(v1001) <> val(v1032)) then[/pft]
+                          <a href="#last"><img src="[pft]v5002[/pft]bott.gif" border="0" /></a>
+                    [pft]fi[/pft]
+            </div>
+        </div>
+[pft]else[/pft]
+        <br />
+        <div class="row"><hr class="ruler" /></div>
+        <div class="row">
+            <span class="labl"><b>[pft]v1001' / 'v1002[/pft]</b></span>
+        </div>
+[pft]fi[/pft]
+
+    <!-- begin display of record -->
+
+    <div class="contain">
+        <div class="selectCol">
+            <div class="rowHigh">
+                <span class="colMark"><input type="checkbox" name="listChecked" value="[pft]'^m'mfn(1)'^h'v1001[/pft]" [pft](if v6210^m = f(mfn(1),2,0) then 'checked' break fi)[/pft] /></span>
+                <span class="lablSmall"><i>selecionar</i></span>
+            </div>
+            <div class="rowHigh">
+                <span class="colMark"><input type="image" name="toprint^m[pft]mfn(1)[/pft]" src="[pft]v5002[/pft]toprint.gif" border="0" /></span>
+                <span class="lablSmall"><i>imprimir</i></span>
+            </div>
+            [pft]@SHORTCUT.IAH[/pft]
+        </div>
+        <div class="resultCol">
+
+        <!-- formato de apresentacao da base -->
+

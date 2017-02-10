@@ -1,0 +1,10 @@
+root=prolog
+5003 base
+6000 form
+6001 conector
+6002 expression
+6003 index
+1031 from-hit
+1032 to-hit
+1002 total-hits
+5008 hits-per-page

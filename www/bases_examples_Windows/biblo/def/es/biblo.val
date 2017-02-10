@@ -1,0 +1,3 @@
+2:if a(v2) then 'missing control  number' fi$$|$$on
+3:if a(v3) then 'missing clasification number' fi$$|$$on
+101:'faltan existencias'$$|$$

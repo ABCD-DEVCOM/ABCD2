@@ -1,0 +1,118 @@
+'<table border=0 width=100%>'
+if p(v1) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de transação</b></td>
+   <td valign=top><font face=arial size=2>'
+   if v1:'P' then 
+      'Emprestado'
+   else
+      if v1:'X' then 
+         'Devolvido'
+      else
+         v1+|; |,
+      fi,
+   fi,'</td>' 
+fi/
+if p(v10) then 
+  '<tr><td width=20% valign=top><font face=arial size=2><b>Número de registro</b></td>
+       <td valign=top><font face=arial size=2>'v10+|; |,'</td>' 
+fi/
+if p(v20) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Código de usuário</b></td>
+        <td valign=top><font face=arial size=2>'v20+|; |,'</td>' 
+fi/
+'<tr>
+   <td align="left" width="20%" valign="top" ><font face="arial" size=2>Nome do usuário:</td>
+   <td valign="top" align="left" ><font face="arial" size=2>',ref(['users'] l(['users'],v20),v30),'</td>
+</tr>'
+if p(v30) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Data de empréstimo</b></td>
+        <td valign=top><font face=arial size=2>'v30+|; |,'</td>' 
+fi/
+if p(v35) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de empréstimo</b></td>
+        <td valign=top><font face=arial size=2>'v35+|; |,'</td>' 
+fi/
+if p(v40) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Data de devolução</b></td>
+        <td valign=top><font face=arial size=2>'v40+|; |,'</td>' 
+fi/
+if p(v45) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de devolução</b></td>
+        <td valign=top><font face=arial size=2>'v45+|; |,'</td>' 
+fi/
+if p(v50) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Data de devolução (programada)</b></td>
+        <td valign=top><font face=arial size=2>'v50+|; |,'</td>' 
+fi/
+if p(v55) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de devolução (programada)</b></td>
+        <td valign=top><font face=arial size=2>'v55+|; |,'</td>' 
+fi/
+if p(v60) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Data de devolução (real)</b></td>
+        <td valign=top><font face=arial size=2>'v60+|; |,'</td>' 
+fi/
+if p(v65) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de devolução (real)</b></td>
+        <td valign=top><font face=arial size=2>'v65+|; |,'</td>' 
+fi/
+if p(v70) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de usuário</b></td>
+        <td valign=top><font face=arial size=2>'
+            if v70:'fu' then 'Funcionário'
+            else 
+               if v70:'bo' then 'Bolsista'
+               else
+                  if v70:'al' then 'Aluno'
+                  else
+                     if v70:'vo' then 'Voluntário'
+                     else
+                        v70
+                     fi,
+                  fi,
+               fi,
+            fi,
+       '</td>
+   </tr>' 
+fi/
+if p(v80) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de material</b></td>
+        <td valign=top><font face=arial size=2>'
+   if v80:'LIV' then
+      'Livro','^'
+   else
+      if v80:'CAT' then
+         'Catálogo','^'
+      else
+         if v80:'CON' then
+            'Convite'
+         else
+            if v80:'CDR' then
+               'CD-Rom'
+            else
+               if v80:'CDS' then
+                  'CD sonoro'
+               else
+                  if v80:'FOL' then
+                     'Folder'
+                  else
+                     if v80:'PER' then
+                        'Periódico'
+                     else
+                        if v80:'PEE' then
+                           'Periódico Eletrônico'
+                        else
+                           v80,'^'
+                        fi,
+     fi, 
+   fi,'</td>' 
+fi/
+if p(v100) then 
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Referência</b></td><td valign=top><font face=arial size=2>'v100+|; |,'</td>'
+else
+   '<tr><td width=20% valign=top><font face=arial size=2><b>Referência</b></td><td valign=top><font face=arial size=2>',ref->blipjb(l->blipjb("NC_"v95),"autor: "v100^a|<br>|,
+            "Título: "v245^a|<br>|,'Nº chamada: ',v90^d,if p(v90^d) then "/"v90^a,else v90^a,fi,"/"v90^b,"/"v90^c),'</td>'
+fi/
+'<tr><td colspan=2><hr></td>'/
+'</table>'
+

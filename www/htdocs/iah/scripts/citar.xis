@@ -1,0 +1,216 @@
+<IsisScript name="citar">
+
+<function name="LoadCipar">
+
+	<field action="import" tag="list">5000,5001,5003,5009,5021,6212</field>
+
+	<!-- atualiza var. de ambiente se for tarefa de save -->
+	<call name="UpdPATH_TRANSLATED"><pft>if v6212 : 'save' then 'Now' fi</pft></call>
+	<call name="FatalError"><pft>if a(v5021) then '^1parameter missing^2language^3Inform the parameter lang in the call to iAH' fi</pft></call>
+
+	<!-- Defines base de dados -->
+        <field action="replace" tag="1" split="occ"><pft>cat(v5000^b,'par/',v5003^*,'.def')</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,( if v1 : 'FILE '  then '^n'v1*5/ fi ),</pft></field>
+	<field action="replace" tag="7997" split="occ"><pft>,( if v1 : 'FORMAT TITLE'  then '^n'v1*13/ fi ),</pft></field>
+
+        <!-- macro-substituicoes no def da base de dados	-->
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_database%',v5000^b[1]) /),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_cgi-bin%',v5000^c[1]) /),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%lang%',v5021[1])/),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'#',v5003^d[1]) /),</pft></field>
+
+	<!-- inclue arquivos cipar externos -->
+	<field action="replace" tag="7999" split="occ"><pft>(if v1 : 'INCLUDE CIPAR=' then mid(v1,instr(v1,'=')+1,size(v1)) fi/ )</pft></field>
+	<field action="replace" tag="7999" split="occ"><pft>if p(v7999) then (cat(getenv('PATH_TRANSLATED'),v7999)) fi</pft></field>
+	<!--field action="replace" tag="5021"><pft>s(mpu,v5021,mpl)</pft></field-->
+
+        <!-- cipar -->
+	<parm name="cipar"><pft>
+
+	 'HEADER.PFT=',v5000^c,v5021'/headerfacic.pft',/
+	 'CABEC.HTM=',v5000^c,v5021'/cabec.htm',/
+
+ 	/* database def files */
+	,(v7998^n/#),
+
+	/* include def files */
+	,(v7999/#),
+
+	</pft></parm>
+	<field action="export" tag=7997>7997</field>
+
+</function>
+
+<function name="NextAction">
+	<field action="import" tag="list">5000,5001,5015</field>
+
+	<field action="cgi" tag="2100">^n^v</field>
+	<field action="replace" tag="2200"><pft>(if v2100 : '.x^' then mid(v2100,1,instr(v2100,'.')-1),break fi)</pft></field>
+	<field action="replace" tag="2200"><pft>if a(v2200) then v5001 fi</pft></field>
+
+	<!--salta para pagina especifica no resultado-->
+	<field action="replace" tag="2200"><pft>if v2200^n*0.4 = 'Page' then '^nGO PAGE^p'v2200^n*4 fi</pft></field>
+
+	<!--caminho direto ao indice de uma base de dados -->
+	<field action="replace" tag="2200"><pft>if a(v2200) and p(v5015) then 'getindex' fi</pft></field>
+	<field action="export" tag="5001">2200</field>
+
+</function>
+
+<function name="UpdPATH_TRANSLATED">
+	<field action="replace" tag="1"><pft>getenv('PATH_TRANSLATED')</pft></field>
+	<field action="replace" tag="1"><pft>if v1 : 'list' then left(v1,instr(v1,'list')-1) fi</pft></field>
+	<!-- fix bug variable PATH_TRANSLATED  Windows NT com Apache Webserver-->
+	<field action="replace" tag="1"><pft>if right(replace(v1,'\','/'),1) <> '/' then s(v1,'/') fi</pft></field>
+
+	<display><pft>putenv('PATH_TRANSLATED='v1)</pft></display>
+</function>
+<function name="FatalError" action="replace" tag="1">
+<!--display><pft>'<b>v2: </b>'v2</pft></display>
+<display><pft>'<b>v1: </b>'v1</pft></display-->
+	<display><pft>
+		'Content-type: text/html'/#
+		'<font face="arial" size="2"><b>Cite error | ',v1^1,' | 'v1^2,'<p>',v1^3,'</b></font>'
+	</pft></display>
+	<flow action="exit">0</flow>
+</function>
+
+<function name="LoadAplDef">
+
+        <field action="import" tag="list">5000,5021</field>
+        <field action="cgi" tag="9990">IsisScript</field>
+
+        <!-- Defines da aplicacao -->
+        <field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def.php')</pft></field>
+        <call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the instalation process and the call to iAH.' fi</pft></call>
+
+        <field action="replace" tag="5000">
+                <pft>
+                        ,(,
+                          ,if v7999 : 'PATH_DATABASE=' then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                          ,if v7999 : 'PATH_CGI-BIN='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                          ,if v7999 : 'PATH_DATA='     then '^d',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                          ,if v7999 : 'MAINTENANCE='   then '^m',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                          ,if v7999 : 'TEMPDIR='           then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                        ,),
+                        ,'^s',v9990,
+                        ,if p(v9991) then '^p'v9991 fi,
+                    ,if p(v9992) then '^f'v9992 fi,
+                        ,'^v2.7',
+                </pft>
+        </field>
+        <field action="replace" tag="5000"><pft>replace(v5000,'\','/')</pft></field>
+        <field action="replace" tag="5006">
+                <pft>
+                        ,(,
+                ,if v7999 : 'BODY BACKGROUND IMAGE='  then '^i',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'BODY BACKGROUND COLOR='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'BODY LINK COLOR='            then '^l',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'BODY TEXT COLOR='            then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'BAR BACKGROUND COLOR='   then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'MANAGER E-MAIL='             then '^e',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'MULTI-LANGUAGE='                 then '^m',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'REVERSE MODE='                   then '^r',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+                ,if v7999 : 'AVAILABLE LANGUAGES='    then '^a',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                        ,),
+                </pft>
+        </field>
+        <field action="replace" tag="5020"><pft>( if v7999 : 'LOG DATABASE=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+        <field action="replace" tag="5030"><pft>( if v7999 : 'LOGO IMAGE='   then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+        <field action="replace" tag="5031"><pft>( if v7999 : 'LOGO URL='     then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+        <field action="replace" tag="5040"><pft>( if v7999 : 'HEADER IMAGE=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+        <field action="replace" tag="5041"><pft>( if v7999 : 'HEADER URL='   then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+        <field action="replace" tag="8002"><pft>( if v7999 : 'BVSLOG URL=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+
+        <field action="export" tag="list">5000,5006,5020/5041,5220,8002</field>
+</function>
+
+<section>
+
+  <display><pft>'Content-type: text/html'/#</pft></display>
+   <trace><pft>'Off'</pft></trace>
+
+     <call name="LoadAplDef"><pft>if a(v5000) then 'Now' fi</pft></call>
+   	<field action="replace" tag="5999">
+	<pft>
+		'5000 environment'/
+		'5001 nextAction'/
+		'5002 pathImages'/
+		'5003 base'/
+		'5004 arqdef'/
+		'5005 avaibleFormats'/
+		'5006 apperance'/
+		'5007 navBar'/
+		'5008 hits'/
+		'5009 format'/
+		'5010 prefixo'/
+		'5011 id'/
+		'5012 gizmo'/
+		'5013 user'/
+		'5014 field'/
+		'5015 index'/
+		'5016 title'/
+		'5017 from'/
+		'5018 baseFeatures'/
+		'5019 to'/
+		'5020 logDatabase'/
+		'5021 lang'/
+		'5030 logoImage'/
+		'5031 logoURL'/
+		'5040 headerImage'/
+		'5041 headerURL'/
+		'5100 infoTitle'/
+		'5111 mfn'/
+		'5113 userPassword'/
+	</pft>
+	</field>
+
+	<cgitable><pft>v5999</pft></cgitable>
+	<field action="cgi" tag="prefix">tag</field>
+	<display><pft>if v5013^* = 'DEBUG' then 'Content-type: text/html'/# fi</pft></display>
+	<trace><pft>if v5013^* = 'DEBUG' then 'On' fi</pft></trace>
+	<parm name="buffersize">200000</parm>
+
+	<call name="NextAction">now</call>
+	<call name="UpdPATH_TRANSLATED"><pft>if right(replace(getenv('PATH_TRANSLATED'),'\','/'),1) <> '/' then 'Now' fi</pft></call>
+
+	<call name="LoadCipar">now</call>
+        <field action="replace" tag="5002"><pft>if a(v5002) then v5000^d,s(mpl,v5021,mpl),'/image/', fi</pft></field>
+	<flow action="jump"><pft>if p(v5001) then v5001^* fi</pft></flow>
+
+        <label>CITE</label>
+            <do task=mfnrange>
+
+                <parm name=db>DATABASE</parm>
+                <parm name=from><pft>v5111</pft></parm>
+                <parm name=count>1</parm>
+                <display><htmlpft><pft>cat('CABEC.HTM')</pft></htmlpft></display>
+
+                <loop>
+                    <field action="import" tag="list">5009,5111</field>
+                    <display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+                </loop>
+
+                <display><pft>'</table></div></html>'</pft></display>
+
+              </do>
+	  <flow action="exit">0</flow>
+
+        <label>EXPORTACAO</label>
+
+            <do task=mfnrange>
+
+                <parm name=db>DATABASE</parm>
+                <parm name=from><pft>v5111</pft></parm>
+                <parm name=count>1</parm>
+
+                <loop>
+                    <field action="import" tag="list">5009,5111</field>
+                    <display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+                </loop>
+
+              </do>
+	  <flow action="exit">0</flow>
+
+  </section>
+</IsisScript>

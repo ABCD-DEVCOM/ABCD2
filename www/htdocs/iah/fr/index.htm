@@ -1,0 +1,59 @@
+<HTML>  
+<HEAD>	
+	<script language="JavaScript" src="../action.js"></script>
+    <TITLE>IAH</TITLE>
+	<script language="JavaScript">	
+		function startIAH(base){
+			
+			var aux=action + path_data + "?IsisScript=iah/iah.xis&lang=I&base=" + base;
+			this.location=aux;	
+		}			
+	</script>
+	<style>
+		BODY, TD{
+			font-family: verdana;
+			font-size: 70%;
+		}
+	</style>	
+</HEAD>  
+
+  <BODY BGCOLOR="#eoebeb" link="green" vlink="green">
+
+   	<div align="right">
+		[ <a href="../P/index.htm">português</a> | <a href="../E/index.htm">español</a> | english ]
+	</div>
+  	
+    <TABLE WIDTH="550" HEIGHT="410" BORDER="0" ALIGN="center" cellspacing="8">
+      <TR>
+        <TD VALIGN="top" colspan="2" align="center">			
+			<img src="image/head2.gif"> 
+			<P align="center"><b>Select the Database</b></P>
+		</TD>
+	  </TR>
+	  <TR>
+	    <TD VALIGN="top">			
+			<a href="javascript:startIAH('dblil')">DBLIL</a>		
+		</TD>
+		<TD VALIGN="top" align="justify">	
+			Example database of the system iAH (compatible with the metodology LILACS)
+		</TD>
+	  </TR>
+	  <TR>
+	    <TD VALIGN="top">
+			<a href="javascript:startIAH('dbsecs')">DBSECS</a>
+		</TD>
+		<TD VALIGN="top" align="justify">	
+			Example database of the system iAH (compatible with the metodology SeCS)
+		</TD>
+	  </TR>
+  	  <TR>
+		<TD valign="bottom" align="center" colspan="2">
+			<P><hr>Search engine: <a href="http://productos.bvsalud.org/product.php?id=iah&lang=en">iAH</a> by BIREME/PAHO/WHO<br>
+			<a href="http://productos.bvsalud.org/product.php?id=wwwisis&lang=pt"><img src="image/powered.gif" border="0" alt="WWWISIS 4.0"></a>
+		</TD>
+	  </TR>
+		
+	</TABLE>
+	
+  </BODY>
+</HTML>

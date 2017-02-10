@@ -1,0 +1,5 @@
+odds.*=/var/opt/ABCD/bases/odds/data/odds.*
+odds.pft=/var/opt/ABCD/bases/odds/pfts/es/odds.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+users.*=/var/opt/ABCD/bases/users/data/users.*

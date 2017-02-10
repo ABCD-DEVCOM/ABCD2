@@ -1,0 +1,13 @@
+if v1*0.1='R' then
+	,if s(mpu,v4,mpl):'PT' OR s(mpu,v4,mpl):'BI' OR s(mpu,v4,mpl):'AN' OR s(mpu,v4,mpl):'IN' OR s(mpu,v4,mpl):'S' OR s(mpu,v4,mpl):'EN' then
+		,',`a300{','^a',v2,'^v',v3,'^n',v4,|^t|v6,'^ev916_W_1{`,'
+	,fi
+,else
+	if v1*0.1='S' then
+		,if a(v4) or v4='' then 
+			,',`a300{','^a',v2,'^v',v3,'^n',v4,,|^t|v6,'^ev913_W_1{`,'
+		,fi
+	,fi
+,fi
+
+	

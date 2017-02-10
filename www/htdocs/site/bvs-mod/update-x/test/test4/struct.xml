@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<element name="Catalog">
+  <element name="Book" repeat="list">
+    <edit name="@id"/>
+    <edit name="@lang">
+      <select>
+        <option value="es">es</option>
+        <option value="pt">pt</option>
+        <option value="en">en</option>
+      </select>
+    </edit>
+    <edit name="Title"/>
+    <element name="Authors">
+      <element name="Author" repeat="list">
+        <edit name="text()"/>
+      </element>
+    </element>
+    <edit name="Publisher"/>
+    <edit name="PubDate"/>
+    <edit name="Abstract">
+      <textarea cols="70" rows="12"/>
+    </edit>
+    <edit name="Pages"/>
+    <edit name="ISBN"/>
+    <element name="RecSubjCategories">
+      <element name="Category" repeat="list">
+        <edit name="text()"/>
+      </element>
+    </element>
+    <edit name="Price"/>
+    <edit name="CoverImage"/>
+    <element name="indicated" repeat="select">
+      <select>
+        <option value="child">child</option>
+        <option value="teen">teen</option>
+        <option value="adult">adult</option>
+        <option value="older">older</option>
+        <option value="men">men</option>
+        <option value="women">women</option>
+      </select>
+    </element>
+  </element>
+</element>

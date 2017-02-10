@@ -1,0 +1,9 @@
+profilename=copias
+profiledesc=Administrador de copias
+db_marc=marc
+marc_pft_admarc=admarc
+db_copies=copies
+copies_pft_ALL=on
+copies_fmt_ALL=on
+CENTRAL_ADDCOP=Y
+CENTRAL_ADDLO=Y

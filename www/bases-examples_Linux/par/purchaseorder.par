@@ -1,0 +1,9 @@
+purchaseorder.*=%path_database%purchaseorder/data/purchaseorder.*
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+suggestions.*=%path_database%suggestions/data/suggestions.*
+biblo.*=%path_database%biblo/data/biblo.*
+marc.*=%path_database%marc/data/marc.*
+isisac.tab=%path_database%purchaseorder/data/isisac.tab
+isisuc.tab=%path_database%purchaseorder/data/isisuc.tab.tab
+STW=%path_database%purchaseorder/data/purchaseorder.stw

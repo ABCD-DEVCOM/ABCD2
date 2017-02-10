@@ -1,0 +1,73 @@
+<font size="2"><font face="Arial">Ce module fonctionne avec les bases de données suivantes:<br />
+<br />
+<strong>utilisateurs <br />
+</strong></font></font><blockquote><font size="2"><font face="Arial">Base de données utilisateurs</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>loanobjects <br />
+</strong></font></font><blockquote><font size="2"><font face="Arial">Base de données avec différentes copies d'objets sont disponibles pour emprunt. <br />
+<br />
+Il y a une seue base de données loanobjects qui reflète le stock de tous les catalogues définis à l' ABCD</font>. </font><font face="Arial" size="2">Chaque exemplaire est identifié par un numéro unique ou numéro d'inventaire. </font><font size="2">Aussi le numéro de contrôle de l'objet, </font><font size="2">le volume et le tome de la copie aux fins d'établir les différences entre les copies d'un même objet;&nbsp;</font><font size="2"> le nom de la base de données est cataloguée à des fins d'identification de la copie;&nbsp; et le type de l'objet assigné à la copie aux fins de la politique de prêts. <br />
+
+<br />
+Chaque objet représente une ligne dans la base de données <strong>loanobjects</strong> et les copies de ce loanobjects peuvent être stockées en tant que les occurrences d'un champ répétitif.<br />
+<br />
+Cette base de données est mise à jour du processus de catalogage qui permet de transférer des registres d'inventaire de la base de données <strong>copies</strong> à la base de données <strong>loanobjects</strong><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>Base de données du catalogue (cepal, marc, etc)</strong> <br />
+</font></font><blockquote><font size="2"><font face="Arial">Description bibliographique des ouvrages disponibles pour emprunt. Le lien entre le catalogue et ses existences se fait par le numéro de contrôle de l'objet</font><br />
+
+</font></blockquote><font size="2"><font face="Arial"><strong>trans </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Opérations de prêt, les renouvellements et les retours</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>suspml </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Suspensions et amendes pour les utilisateurs enregistrés</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>réserve&nbsp; </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Réservations</font><br />
+</font></blockquote><font size="2"><font face="Arial"><br />
+Le menu principal du menu du module contient la circulation et les prêts suivants:<br />
+<br />
+
+<strong>Transactions<br />
+<br />
+</strong>Ce chapitre définit les opérations disponibles:<br />
+<br />
+</font></font>
+<ul>
+    <li><font size="2"><strong>Le prêt</strong><br />
+    A travers le code de l'utilisateur et le numéro d'inventaire de l'objet sont accessibles les bases de données <strong>utilisateurs </strong>et <strong>loanobjects</strong> pour déterminer le type d'utilisateur et le type d'objet. Il vérifie également si l'utilisateur a des aamendes et/ou suspensions par la base de données <strong>suspml</strong>, ou si vous avez des prêts, par la recherche de la base de données <strong>trans</strong>. Ces valeurs déterminent la politique de prêts à mettre en oeuvre et on estime la date de retour<br />
+
+    </font></li>
+    <li><font size="2"><strong>Retour</strong><br />
+    Nous utilisons le numéro d'inventaire pour localiser dans la base de données <strong>trans</strong> l'exemplaire à retourner. S'il y a du retard dans la date de retour de la peine est calculée à indiquer la politique et il est stocké dans la base de données <strong>suspml<br />
+    </strong></font></li>
+    <li><font size="2"><strong>Renouveler</strong><br />
+
+    Nous utilisons le numéro d'inventaire pour localiser dans la base de données <strong>trans </strong>l'exemplaire que vous souhaitez renouveler. </font><font size="2"> Il vérifie également si l'utilisateur a des amendes et/ou de suspensions faisant une recherche dans la base de données  <strong>suspml</strong>, ou si vous avez d'autres que des prêts, par la recherche de la base de données  <strong>trans</strong>. Ces valeurs déterminent la politique de renouvellement et de mettre en oeuvre la nouvelle date de retour estimé<br />
+    <strong></strong></font></li>
+    <li><font size="2"><strong>Suspends/Amendes</strong><br />
+    Il prévoit le code de l'utilisateur soit que vous voulez suspendre/ou mettre en amende ainsi que les données correspondants.<br />
+
+    </font></li>
+    <li><font size="2"><strong>Etat de comptes des utilisateurs</strong><br />
+    La liste des suspensions de prêt et/ou des amendes non payées d'un utilisateur<br />
+    </font></li>
+    <li><font size="2"><strong>Location d'un objet</strong><br />
+    Présente tous les exemplaires d'un objet, en précisant ceux qui sont détenus par un utilisateur </font></li>
+</ul>
+
+<font size="2"><font face="Arial"><strong><br />
+Bases de données<br />
+<br />
+</strong>Cette section, d'utiliser l' Administrateur des  prêts,&nbsp; vous permet un accès direct aux bases de données supportées par le module de circulation (mouvements de prêt)<br />
+<strong><br />
+<br />
+Administration<br />
+<br />
+</strong></font></font>
+<ul>
+    <li><font size="2">Rapports<br />
+
+    </font></li>
+    <li><font size="2">Statistiques</font></li>
+    <li><font size="2">Configuration<br />
+    </font></li>
+</ul>
+<font size="2"><font face="Arial"><strong><br />
+</strong></font></font>

@@ -1,0 +1,96 @@
+W:MARC  LDR   
+F:MARC  TEST  RECALLLOANS LOANS2BOOKS LOANSDLOANIDLOANS3BITTD 
+S:MARC 
+***
+Control Number                                    1 1000 0 0
+Control Number Identifier                         3 1000 0 0
+Date/time last transaction                        5 1000 0 0
+Fixed data elements                               8 1000 0 0
+LC control number             a                   10 1000 0 0
+National bibliography number  a                   15 1000 0 0
+Copyright registration number ab                  17 1000 0 1
+ISBN                          acz                 20 1000 0 1
+ISSN                          ayz                 22 1000 0 1
+Other standard identifier     acdz2               24 1000 0 1
+Publisher number (music)      ab                  28 1000 0 1
+System alt/control number     az                  35 1000 0 1
+Source of acquisiiton         abcfgn              37 1000 0 1
+Cataloging source             abcde               40 1000 0 0
+Language code                 ah                  41 1000 0 1
+Geographic area code          ab                  43 1000 0 0
+LC call number                ab                  50 1000 0 1
+NLM call number               ab                  60 1000 0 1
+Character sets present        abc                 66 1000 0 0
+Subject category code         ax2                 72 1000 0 1
+Universal Decimal Classificat abx2                80 1000 0 1
+Dewey Decimal call number     ab2                 82 1000 0 1
+Other call number             ab2                 84 1000 0 1
+Government document call numb az2                 86 1000 0 1
+Main entry - Personal name    abcdequ4            100 1000 0 0
+Main entry - Corporate name   abeu4               110 1000 0 0
+Main entry - meeting name     acdenu4             111 1000 0 0
+Abreviated title              ab2                 210 1000 0 1
+Key title                     ab                  222 1000 0 1
+Uniform title                 adfghklmnoprs       240 1000 0 0
+Translation title catal/agencyabchnpy             242 1000 0 1
+Tite statement                abchnp              245 1000 0 0
+Varying form of title         abfghinp            246 1000 0 1
+Edition statement             ab                  250 1000 0 0
+Imprint                       abc                 260 1000 0 0
+Physical description          abce                300 1000 0 1
+Current publication frequency ab                  310 1000 0 0
+dates public/seq designation  az                  362 1000 0 1
+Series statement/added entry  anpvx               440 1000 0 1
+General note                  a                   500 1000 0 1
+Bibliographic note            ab                  504 1000 0 1
+Formatted content note        a                   505 1000 0 1
+Summary, etc.                 a                   520 1000 0 1
+Target audience note          a                   521 1000 0 1
+Reproduction note             abcdefmn            533 1000 0 1
+Original version note         abcept              534 1000 0 1
+System details note           a                   538 1000 0 1
+Language note                 ab                  546 1000 0 1
+Awards note                   a                   586 1000 0 1
+Personal name-Subj-add-entry  abcdeqtuvxyz24      600 1000 0 1
+Corporate name-Subj-add-ent   abetuvxyz24         610 1000 0 1
+Meeting name-Subj-add-entry   acdentuvxyz24       611 1000 0 1
+Uniform title-Subj-add-entry  anpvxyz2            630 1000 0 1
+Topical term-Subj-add-entry   aevxyz2             650 1000 0 1
+Geogr-name-Subj-add-entry     avxyz2              651 1000 0 1
+Index term - uncontrolled     a                   653 1000 0 1
+Index term - genre/form       avxyz2              655 1000 0 1
+Personal name - added entry   abcdequ4            700 1000 0 1
+Corporate name - added entry  abetu4              710 1000 0 1
+Meeting name - added entry    acdentu4            711 1000 0 1
+Uncontrolled name - add-entr  ae4                 720 1000 0 1
+Uniform title - added entry   anp                 730 1000 0 1
+Related title - added entry   a                   740 1000 0 1
+Hierarc place name-added en   abcd                752 1000 0 1
+Main series entry             abdghinotwx         760 1000 0 1
+Subseries entry               abdghinotwx         762 1000 0 1
+Original language entry       abdghinotwxz        765 1000 0 1
+Translation entry             abdghinotwxz        767 1000 0 1
+Suppl/special issue entry     abdghinotwxz        770 1000 0 1
+Supplement parent entry       abdghinotwxz        772 1000 0 1
+Host item entry               abdghinotwxz        773 1000 0 1
+Constituent unit entry        abdghinotwxz        774 1000 0 1
+Other edition entry           abdefghinotwxyz     775 1000 0 1
+Additional physical form entryabdghinotwxz        776 1000 0 1
+Issued with entry             abdghinotwx         777 1000 0 1
+Preceding entry               abdghinotwxz        780 1000 0 1
+Succeeding entry              abdghinotwxz        785 1000 0 1
+Nonspecific relationship entryabdghinotwxz        787 1000 0 1
+Holding institution           a                   850 1000 0 1
+Location                      abchijtxz2          852 1000 0 1
+Electronic location & access  uxz                 856 1000 0 1
+Textual holding-basic bibliog axz                 866 1000 0 1
+Textual holding-supplementary axz                 867 1000 0 1
+Textual holding - indexes     axz                 868 1000 0 1
+Ldr/05 - record status                            3005 1000 1 0
+Ldr/06 - type of record                           3006 1000 1 0
+Ldr/07 - bibliographic record                     3007 1000 1 0
+Ldr/08 - type of control                          3008 1000 0 0
+Ldr/09 - char code scheme                         3009 1000 0 0
+Ldr/17 - encoding level                           3017 1000 0 0
+Ldr/18 - Cataloging form                          3018 1000 1 0
+Ldr/19 - linked requirement                       3019 1000 0 0

@@ -1,0 +1,183 @@
+<html>
+<head>
+	<title>Teste dos mÃ³dulos do WXIS</title>
+	<style>
+		body {
+			font-family : "Microsoft Sans Serif";
+			font-size : smaller;
+			font-weight : bold;
+		}
+	</style>
+</head>
+
+<body>
+
+<fieldset>
+	<legend>wxis_list</legend>
+	<form action="/bvs-lib/common/scripts/php/call.php" method="post">
+		<ul>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <gizmo></gizmo>
+   <from>1</from>
+   <to></to>
+   <count>20</count>
+   <reverse>Off</reverse>
+</parameters></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" list ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>wxis_search</legend>
+	<form action="/cgi-bin/wxis.exe/bvs-lib/common/scripts/wxis/" method="post">
+		<ul>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <gizmo></gizmo>
+   <search></search>
+   <from>1</from>
+   <to></to>
+   <count>20</count>
+   <reverse>Off</reverse>
+</parameters></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" search ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>wxis_index</legend>
+	<form action="/cgi-bin/wxis.exe/bvs-lib/common/scripts/wxis/" method="post">
+		<ul>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <from>A</from>
+   <to>ZZZZZZ</to>
+   <posting></posting>
+   <count>20</count>
+   <reverse>Off</reverse>
+</parameters></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" index ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>wxis_edit</legend>
+	<form action="/cgi-bin/wxis.exe/bvs-lib/common/scripts/wxis/" method="post">
+		<ul>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <gizmo></gizmo>
+   <mfn></mfn>
+   <lockid></lockid>
+   <expire>18000</expire>
+</parameters></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" edit ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>wxis_write</legend>
+	<form action="/cgi-bin/wxis.exe/bvs-lib/common/scripts/wxis/" method="post">
+		<ul>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <gizmo></gizmo>
+   <mfn></mfn>
+   <lockid></lockid>
+   <expire>18000</expire>
+   <!-- <type>xisis</type> -->
+</parameters></textarea>
+			</li>
+			<li>
+				content<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_write_content"><field tag="1">
+   <occ>A</occ>
+   <occ>B</occ>
+   <occ>C</occ>
+   <occ>D</occ>
+</field>
+<field tag="2">
+   <occ a="subcampo a" b="subcampo b" c="subcampo c" d="subcampo d">campo 2</occ>
+</field></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" write ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>wxis_delete</legend>
+	<form action="/cgi-bin/wxis.exe/bvs-lib/common/scripts/wxis/" method="post">
+		<ul>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <gizmo></gizmo>
+   <mfn></mfn>
+   <lockid></lockid>
+   <expire>18000</expire>
+</parameters></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" delete ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<script language="JavaScript">
+	var statusParameters = "<parameters>\n   <database></database>\n   <function>stauts</function>\n</parameters>\n";
+	var unlockParameters = "<parameters>\n   <database></database>\n   <function>unlock</function>\n   <unlock>database</unlock>\n</parameters>\n";
+	var invertParameters = "<parameters>\n   <database></database>\n   <function>invert</function>\n</parameters>\n";
+	var createParameters = "<parameters>\n   <database></database>\n   <function>create</function>\n   <create>database</create>\n</parameters>\n";
+</script>
+<fieldset>
+	<legend>wxis_control</legend>
+	<form action="/cgi-bin/wxis.exe/bvs-lib/common/scripts/wxis/" method="post">
+		<ul>
+			<li>
+				funÃ§Ã£o<br>
+				<input type="radio" name="function" value="status" checked onclick="javascript:this.form.wxis_parameters.value = statusParameters;">status da base de dados<br>
+				<input type="radio" name="function" value="unlock" onclick="javascript:this.form.wxis_parameters.value = unlockParameters;">desbloqueio de base de dados<br>
+				<input type="radio" name="function" value="invert" onclick="javascript:this.form.wxis_parameters.value = invertParameters;">geraÃ§Ã£o do arquivo invertido (Ã­ndices)<br>
+				<input type="radio" name="function" value="create" onclick="javascript:this.form.wxis_parameters.value = createParameters;">criaÃ§Ã£o de base de dados vazia
+			</li>
+			<li>
+				parameters<br>
+				<textarea cols="60" rows="10" wrap="off" name="wxis_parameters"><parameters>
+   <database></database>
+   <function>status</function>
+</parameters></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" control ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+</body>
+</html>

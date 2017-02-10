@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<element name="user">
+	<edit name="@code"/>
+	<edit name="@name"/>
+	<edit name="@password">
+		<input type="password"/>
+	</edit>
+	<edit name="@type">
+		<input type="radio" value="documentalist" checked="">documentalist</input>
+		<input type="radio" value="editor">editor</input>
+		<input type="radio" value="administrator">administrator</input>
+	</edit>
+</element>

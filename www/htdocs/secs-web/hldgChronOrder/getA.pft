@@ -1,0 +1,240 @@
+/*  #,'----'/,v1,' ',v2,' ',v3,' ',v4,' ',v5,' ',v6,/ */
+/*
+v1 = order
+v2 = ano
+v3 = vol
+v4 = num
+v5 = status
+v6 = tipo
+v7 = mask
+v8 = S or R
+*/
+
+/*
+ ESTE FORMATO EH APLICADO A REGISTROS QUE INDICAM UM BREAK, 
+ QUEBRA DE INTERVALO, ou melhor, fim e inicio de um intervalo, que 
+ ocorre quando ocorrem um dos casos:
+
+ 1. CUJO STATUS = A
+ 2. mudanca de ano
+ 3. mudanca de volume, no mesmo ano
+ 4. mudanca de tipo de numero
+
+ Resulta uma linha de que indica os dados de inicio e fim de um candidato a período
+
+ mfn inicio | ano inicio | vol inicio | num inicio | tipo inicio | RANGE_BEGIN | FIRST_OF_THE_YEAR |
+ mfn fim  | ano fim  | vol fim  | num fim  | tipo fim  | RANGE_END | LAST_OF_THE_YEAR
+
+*/
+,proc('d5555a5555{',
+,if mfn=1 then
+    ,if v5='P' then
+        ,'CURR_YEAR_RANGE_BEGIN', /* o proprio registro, abre intervalo */
+    ,else
+        ,if v5='A' then
+            ,'NEXT_YEAR_RANGE_BEGIN', /* o registro seguinte, abre intervalo */
+        ,fi
+    ,fi
+,else 
+    ,if v1='LAST' then
+        ,if ref(mfn-1,v5)='P' then
+            ,'PREVIOUS_VOL_RANGE_END',
+        ,fi
+    ,else
+        ,if v5='P' then
+        /* mudanca de ano, ou vol, ou reg-espec, ou espec-reg */
+            ,if ref(mfn-1,v5)<>'P' then
+                /* ANTERIOR AUSENTE, ATUAL PRESENTE */
+                /* NADA, POIS JA FOI FEITO */                
+            ,else
+                /* ANTERIOR PRESENTE, ATUAL PRESENTE */
+                ,if ref(mfn-1,v2)<>v2 then
+                    /* MUDANCA DE ANO, caso 2 */
+                        ,'PREVIOUS_YEAR_RANGE_END',                        
+                        ,'CURR_YEAR_RANGE_BEGIN', 
+                ,else
+                    /* MESMO ANO */
+                    /* verificar mudanca de volumes */
+                    ,if ref(mfn-1,v3)<>v3 then
+                        /* mesmo ano, volumes diferentes, caso 3 */
+
+                        ,if l(ref(mfn-1,s('VOL_INCOMPLETO_'v2,v3)))=0 and  l(s('VOL_INCOMPLETO_'v2,v3))=0  then
+								/* anterior e atual tem volumes completo */
+                        ,else
+							,'PREVIOUS_VOL_RANGE_END',                        
+                            ,'CURR_VOL_RANGE_BEGIN', 
+
+                        ,fi
+                    ,else
+                        /* mesmo ano, volumes iguais */
+
+                        /* os numeros sempre serao diferentes, supoe-se */
+                        ,if ref(mfn-1,v6)<>v6 then
+                            /* mudanca de num espec x num regular, caso 4 */
+                            ,'PREVIOUS_NUM_RANGE_END',                        
+                            ,'CURR_NUM_RANGE_BEGIN', 
+
+                        ,else
+                            /* os numeros sempre serao diferentes, supoe-se,
+                                desnecssario marcar intervalo
+                            */
+                            
+
+                        ,fi
+
+                    ,fi
+                ,fi
+            ,fi
+        ,else
+            /* indica ausencia, CASO 1 */
+            ,if v5='A' then
+                /* verifica previous and next */
+                ,if ref(mfn-1,v5)='P' then
+                    /* o registro anterior, fecha intervalo */
+                    ,if ref(mfn-1,v2)<>v2 then
+
+                        ,'PREVIOUS_YEAR_RANGE_END',
+                    ,else
+                        ,if ref(mfn-1,v3)<>v3 then
+                            ,'PREVIOUS_VOL_RANGE_END',
+                        ,else
+                            ,if ref(mfn-1,v6)<>v6 then
+                                ,'PREVIOUS_NUM_RANGE_END',
+                            ,else
+     ,'PREVIOUS_NUM_RANGE_END',
+                           
+                            ,fi
+                        ,fi
+                    ,fi
+                ,fi
+                ,if ref(mfn+1,v5)='P' then
+                    ,if ref(mfn+1,v2)<>v2 then
+                        ,'NEXT_YEAR_RANGE_BEGIN',
+                    ,else
+                        ,if ref(mfn+1,v3)<>v3 then
+                            ,'NEXT_VOL_RANGE_BEGIN',
+                        ,else
+                            ,if ref(mfn+1,v6)<>v6 then
+                                ,'NEXT_NUM_RANGE_BEGIN',
+                            ,else
+                          ,'NEXT_NUM_RANGE_BEGIN',
+      
+                            ,fi
+                        ,fi
+                    ,fi
+                ,fi                
+            ,fi
+        ,fi
+    ,fi
+,fi
+
+,'{'),
+
+/* FECHA INTERVALO */
+,if v5555:'_YEAR_RANGE_BEGIN' then
+    /* indica se o ano anterior esta completo ou nao */
+    ,proc('a5001{',        
+        if mfn>1 then
+        ,if l(ref(mfn-1,|INCOMPLETO_|v2))=0 then
+            ,'COMPLETO',
+        ,else
+            ,'INCOMPLETO',
+        ,fi
+        ,fi
+    ,'{'),    
+    ,proc('a5002{',        
+        ,if v5555:'CURR' then
+            ,if l(|INCOMPLETO_|v2)=0 then
+                ,'COMPLETO',
+            ,else
+                ,'INCOMPLETO',
+            ,fi
+        ,else
+            ,if v5555:'NEXT' then
+                ,if l(ref(mfn+1,|INCOMPLETO_|v2))=0 then
+                    ,'COMPLETO',
+                ,else
+                    ,'INCOMPLETO',
+                ,fi
+            ,else
+
+            ,fi
+        ,fi
+    ,'{'),    
+,fi,
+/*
+ #,
+ v5555/
+ ,if v5555:'PREVIOUS' then
+	'YEAR PREV: ',ref(mfn-1,v2)/
+ ,fi
+ ,if v5555:'CURR' then
+	'YEAR CURR: ',v2/
+ ,fi
+ ,if v5555:'NEXT' then
+	'YEAR NEXT: ',ref(mfn+1,v2)/
+ ,fi
+ v5001,' ',v5002/
+ #
+*/
+,if v5001='COMPLETO' and v5002='COMPLETO' then
+    
+,else
+    ,if v5555:'PREVIOUS' then
+        ,'|',
+
+        ,ref(mfn-1,
+        ,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',
+        ,),
+
+        ,if v5555:'YEAR_RANGE_END' then
+            ,'YE',
+        ,else
+            ,if v5555:'VOL_RANGE_END' then
+                ,'VE',
+            ,else
+                ,if v5555:'NUM_RANGE_END' then
+                    ,'NE',
+                ,else
+                ,fi
+            ,fi
+        ,fi
+		
+		,ref(mfn-1,
+			,if l('VOL_INCOMPLETO_',v2,v3)=0 then
+				,'|VOL_COMPLETO',        
+             
+			,fi
+		,),
+        #
+    ,fi
+
+    ,if v5555:'CURR' or v5555:'NEXT' then
+        ,if v5555:'CURR' then
+            ,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_BEGIN|',
+        
+        ,else
+            ,if v5555:'NEXT' then
+                ,ref(mfn+1,
+                ,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_BEGIN|',
+                ,),
+
+            ,fi
+        ,fi
+        ,if v5555:'YEAR_RANGE_BEGIN' then
+            ,'YB',
+        ,else
+            ,if v5555:'VOL_RANGE_BEGIN' then
+                ,'VB',
+            ,else
+                ,if v5555:'NUM_RANGE_BEGIN' then
+                    ,'NB',
+                ,else
+                ,fi
+            ,fi
+        ,fi
+
+    ,fi
+
+,fi
+

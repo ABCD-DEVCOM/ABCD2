@@ -1,0 +1,56 @@
+/*
+    This file replace some HTML styles descriptions,
+    you will find here used fonts, background and others replaced definitions.
+*/
+
+BODY {
+    margin: 0px;
+    background: #ECF3F3 url(../../../../../image/public/skins/regional/common/topBackground.jpg) top left repeat-x;    ;
+    color: #555;
+}
+
+BODY, INPUT, TEXTAREA, SELECT {
+    font-family: Arial, Verdana;
+    font-size: 75%;
+}
+
+TEXTAREA, SELECT {
+    font-size: 90%;
+}
+
+INPUT {
+    font-size: 100%;
+}
+
+H1, H2, H3 {
+    font-family: Trebuchet MS, Arial;
+}
+
+A {
+    color: #555;
+}
+
+A:hover {
+
+}
+
+A IMG {
+    border: 0px;
+}
+
+UL LI {
+    list-style: square;
+}
+
+FORM {
+    margin: 0px;
+    padding: 0px;
+}
+
+HTML>BODY H4 {
+    font-size: 130%;
+}
+
+HTML>BODY H5 {
+    font-size: 100%;
+}

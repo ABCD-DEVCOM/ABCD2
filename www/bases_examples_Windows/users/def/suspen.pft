@@ -1,0 +1,24 @@
+'{\fonttbl \f0\froman Times New Roman; \f1\fswiss Arial; \f3\fswiss Verdana;}'
+'\li1800\fi-1800\f3 ',
+
+if p(v90) 
+   then 
+  '\cf5\fs18\b Suspendido \b0\par ',
+fi,
+
+if a(v1)
+     then
+    '\fs18\b ',
+     v30, ',  C.I.: 'v35,
+      '\b0\fs18 ', 
+       "\par Tipo de usuario \tab "v10,
+       "\par Ubicación: \tab "v45,      
+       "\par Teléfono \tab "v140+|; |,
+       "\par Inscripción: \tab "v15,
+       "\par Renovación: \tab "v16,
+       "\par Vencimiento: \tab "v17,
+       "\par Fax\i0\tab "v150+|; |,
+        "\par E-mail \tab "v160+|; |,
+'\par '
+fi,
+'\par '

@@ -1,0 +1,60 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%biblo/data/biblo.*
+FILE DATABASE.XML=%path_database%biblo/pfts/lilXML.pft
+FILE standard.pft=%path_database%biblo/pfts/%lang%/abiblo.pft
+FILE detailed.pft=%path_database%biblo/pfts/%lang%/bbiblo.pft
+FILE descritores.pft=%path_database%biblo/pfts/%lang%/descritores.pft
+FILE SHORTCUT.IAH=%path_database%biblo/pfts/shortcut.pft
+FILE BOOKMARK.PFT=%path_database%biblo/pfts/%lang%/bookmark.pft
+FILE DBLIL_LINK.PFT=%path_database%biblo/pfts/%lang%/biblo_link.pft
+FILE CITE.PFT=%path_database%biblo/pfts/%lang%/cite.pft
+FILE CALL_CITE.PFT=%path_database%biblo/pfts/%lang%/call_cite.pft
+FILE call_export_BibTex.pft=%path_database%biblo/pfts/%lang%/call_export_BibTex.pft
+FILE call_export_EndNote.pft=%path_database%biblo/pfts/%lang%/call_export_EndNote.pft
+FILE call_export_ProCite.pft=%path_database%biblo/pfts/%lang%/call_export_ProCite.pft
+FILE call_export_ReferenceManager.pft=%path_database%biblo/pfts/%lang%/call_export_ReferenceManager.pft
+FILE call_export_Refworks.pft=%path_database%biblo/pfts/%lang%/call_export_Refworks.pft
+FILE export_BibTex.pft=%path_database%biblo/pfts/export_BibTex.pft
+FILE export_EndNote.pft=%path_database%biblo/pfts/export_EndNote.pft
+FILE export_ProCite.pft=%path_database%biblo/pfts/export_ProCite.pft
+FILE export_ReferenceManager.pft=%path_database%biblo/pfts/export_ReferenceManager.pft
+FILE export_Refworks.pft=%path_database%biblo/pfts/export_Refworks.pft
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^d*^xTW ^uTW_^yDATABASE^mTW_
+INDEX Ti=^1Palavras do título^2Palabras del título3iTitle words^4Mots du titre^xTX ^uTx_^yDATABASE^mTX_
+INDEX Tt=^1Título^2Título^3Title^4Titre^xTI ^uTI_^yDATABASE^mTI_
+INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Résumé mots^xAB ^uAB_^yDATABASE^mAB_
+INDEX Au=^1Autor^2Autor^3Author^4Auteur^xAU ^uAU_^yDATABASE^mAU_
+INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^xAI ^uAI_^yDATABASE^mAI_
+INDEX Ma=^1Descritor de assunto^2Descriptor de asunto^3Subject descriptor^4Sujet Descripteur^xMA ^uMA_^yDATABASE^mMA_
+INDEX Pa=^1País^2País^3Country^4Pays^xPA ^uPA_^yDATABASE^mPA_^tshort
+INDEX Ta=^1Revista^2Revista^3Journal^4Journal^xTA ^uTA_^yDATABASE^mTA_
+INDEX Se=^1Monografia em série^2Monografía en serie^3Monography in series^4Monographie de la série^xSE ^uSE_^yDATABASE^mSE_^fA
+INDEX Tm=^1Tipo de publicação^2Tipo de publicación^3Publication type^4Type de publication^xTM ^uTM_^yDATABASE^mTM_
+INDEX Cf=^1Conferência^2Conferencia^3Conference^4Conférence^xCF ^uCF_^yDATABASE^mCF_^fA
+INDEX Dt=^1Data de entrada^2Fecha de entrada^3Entry date^4Date d'entrée^xDT ^uDT_^yDATABASE^mDT_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Longo^2Largo^3Large^4Grand
+FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée
+FORMAT DEFAULT=detailed.pft
+
+[HELP_FORM]
+
+HELP FORM=help_form_lilacs.htm
+NOTE FORM F=note_form1_lilacs.htm
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

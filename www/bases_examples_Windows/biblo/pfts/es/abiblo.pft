@@ -1,0 +1,251 @@
+'<table width=98% border=0 cellpadding=0 cellspacing=0 class=td>'/
+'<tr>'/
+'<td>Control number</td>'
+'<td  valign=top>'v2'</td>'/
+'<td class=textbody03 colspan=3 >'
+'<font face=verdana color=red size=-1><b>Registro: ',f(mfn,1,0)'</a>',"    ("v1001" / "v1002")" '</b></td>'/
+'<tr>'
+'<td valign=top  class=td colspan=2>',/
+'<br>'/ 
+ (if p(v800) then '<img src="../../bases/biblo/imagen/'v800^*'"  width=150><br>' else '<ximg src=../imagenes/blank.gif width=150>' / fi/)
+'</td>'
+'<td width=1%  align=center> </td>'
+'<td   align=left valign=top width=84% class=td>'/
+'<p>'/
+if p(v12) then '<b> ' mhl,V12," = "v13,mpl '</b> ' else 
+    mhl, "<b>"v18,"="v19, '</b>' ,mpl, 
+
+
+ fi,
+  if p(v10) or p(v11) then '  /  '     fi,
+  (if p(v10) then  v10^b,| |v10^*,|, |v10^r if iocc<>nocc(v10) then '; ' fi fi)
+
+  if p(v10) and p(v11) then '; ' fi,
+
+  (if p(v11) then v11^b|. |,v11^*+|</a>; |,if iocc=nocc(v11) then '; ' fi, fi)
+
+if p(v16) or p(v17) then '  /  '     fi,
+    (if p(v16) then  v16^b,| |v16^*,|, |v16^r if iocc<>nocc(v16) then '; ' fi fi)
+
+   if p(v16) and p(v17) then '; ' fi,
+
+    (if p(v17) then v17^b|. |,v17^*+|</a>; |,if iocc=nocc(v17) then '; ' fi, fi)
+
+   if p(v12) and p(v30) then 
+
+       ".-- "v14,'.--  <b>  En: </b> ' mhl,v30,mpl," /  "d29,(V29^b|. |,|; |+v29^*),".-- "v39+|, |," : "v38,".-- "v31,", "v32," ("v43")" 
+
+   fi,
+
+   if p(v12) and p(v18)  then 
+
+       '. -- <b> En : </b> ' mhl,v18,mpl," / "d16,(|; |+v16^b,| |v16^*), |. -- |v41,|-- |v39,|: |V38|, |,V43,".-- "V20,". Serie: "V22^*,", "v22^n   
+
+   fi /
+
+
+/
+
+if v4='K' or v6='s' then 
+
+      '<b>',mhl,v30,mpl,"</b>"d30,,
+
+      " / "D29,(V29^b|. |,v29^*+|; |),".-- "v39+|, |," : "v38,".--  "v31,", "v32," ("v43")" ,
+
+      "<br><b> Situación </b> "v300,
+
+    fi/ 
+
+
+
+
+
+    if p(v160) then,
+
+      '; Tutor: '
+
+    (if p(v160) then v160^b,| |v160^* , |, |v160^r if iocc<>nocc(v160) then '; ' fi fi)
+
+    fi
+
+
+
+
+    " .-- "v41," .--"v39+|; |," : "v38+|; |,", "v43,".-- "v20," : "v42,".-- "v73,".- Serie: "V22^*,", "v22^n,
+
+
+
+
+if (v6='c' or v6='mc') and v4='M'  then 
+
+    ".--  <b> En : </b> "v25," / "d23,(|; |+v23^b,| |v23^*), |. -- |v41,|-- |v39,|: |V38|, |,V43,".-- "V27,".-- Serie: "V22^*,", "v22^n,
+
+fi, 
+
+
+
+if V4='C'  then,
+
+   if v6='c' or v6='mc' then,
+
+      mhl,"<b>"v25,"="v26,'</b>',mpl,
+
+      if p(v23) or p(v24) then  ' / '     fi,
+
+      (|; |+v23^b,| |v23^*,|, |v23^r),
+
+      if p(v23) and p(v24) then  '; '   fi,
+
+      (v24^b|. |,v24^*+|; |),
+
+      ".-- "v39+|, |," : "v38+|; |," .-- "v42,".-- "v73 ,
+
+      "<br>Años en existencia "v43+|; |,
+
+      "<br>Volumenes  "v27+|; |,
+
+   fi,  
+
+fi/
+
+
+
+if v4='V' then
+
+     if p(v410)then
+
+        (v410),'/ '(|; |+v400^b,| |v400^*,|, |v400^r),
+
+        " .-- "v41," .--"v39+|; |," : "v38+|; |,", "v43," : "v42,
+
+        ".-- "v415," ("v420")"," ("v422")"," ,"v421,
+
+      fi
+
+       
+
+        "<b> Distribuidor: </b> "d430,(v430^*,| /  |v430^p+|; |),
+
+       "<b> Dirigido a: </b> "d440,(v440+|; |),
+
+fi  
+
+
+
+if p(v53)  then,  
+
+ "<br><b> Evento: </b> "v53," ("v56," : "v54+|. |") ",".- "v52+|; |    fi,
+
+
+
+if p(v59)  then,
+
+ "<br><b> Proyecto: </b> "v59^*," / "v59^s,", "v60," /  "v58+|; |  fi,
+
+
+
+if p(v50)  then/
+
+  if v153:'A' then,
+
+    "<br> Trabajo de Ascenso presentado ante "v50,". "V150,". "V152,
+
+    ", para ascender a la categoría de "V51      fi,
+
+  if v153:'T' then  "<br> Tesis presentada ante "v50,". "V150,". "V152,
+
+   ", para obtener el grado de "V51     fi,
+
+  if v153:'I'  then  "<br> Informe de Pasantía presentado ante "v50,". "V150,". "V152,
+
+    ", para obtener el grado de "V51   fi,
+
+fi,
+
+
+("<br> ISBN  "v47+|; |),
+
+
+
+/
+
+if p(v76)  or p(v79) then '<br><i>Descrpiptores:</i> ',
+
+    (v76+|;   |/)
+    (if p(v79) then |;   |+v79^*,|--|v79^w,|--|v79^x,|--|v79^y,|--|v79^z  fi )/,,
+
+    if p(v80) or p(v81) then
+
+       '<br><i>Categoría temática:</i>'/
+
+    fi/
+
+    (v80+|;   |)/    
+
+    (v81+|;   |),/ 
+
+    /
+
+fi,
+
+
+
+if p(v77)  then '<br>Datos estadísticos: ',    
+
+    (v77+|;   |/),/
+
+fi/
+
+ 
+
+
+
+if p(v82) or p(v85) then  
+      '<br>Categoría geográfica: '
+      (v82+|;   |/)
+      (v85+|;   |/)
+fi/
+
+if p(v104) then  
+ '<br><b> Ubicación: </b> ',(v104^*+|; |)/ '  'fi,
+if p(v3) then,
+ '<br><b> Solicite el material por este código: 'v3^*,"."v3^b,"."v3^c,"."v3^d'</b>' fi,
+   
+
+if  p(v72) then
+      '<p align=justify>  '
+      (|    |v72+|<br>|/)
+fi/ 
+
+  
+
+  if  p(v36)  then
+ 	'<p>Tabla de contenido:'	
+      '<ul>'/
+
+      (if p(v36) then '<li>' fi, v36^*,| //  |v36^b ,|  |v36^c,|  |v36^d,| |v36^e,|; |v36^f,|  |v36^g,|  |v36^l, |  |v36^m,|  |v36^n),
+     '</ul>'/ 
+     
+   fi/
+'<p>'
+/*	if p(v800) or p(v810) or p(v840) or (v4='K'  or p(v750)) and v3030<>'w' then '<p>' fi */
+	(if p(v810) then '<a href="../../bases/biblo/texto/'v810^*'" target=top>'/if p(v810^d) then v810^d else v810^* fi'</a><br>' fi/)/
+	(if p(v800) then '<a href="../../bases/biblo/imagen/'v800^*'" target=top>'/if p(v800^d) then v800^d else v800^* fi'</a><br>' fi/)/
+	(if p(v840) then '<a href="'v840^*'" target=top>'/if p(v840^d) then v840^d else v840^* fi'</a><br>' fi/)/
+	if (v4='K'  or p(v7500))  and val(v1002)>1 then 
+	  if v4<>'K' then '<b>'v30'</b>  ' fi
+	  |<a href='javascript:AbrirKardex("existencias.php?base=kardex&cipar=biblo.par&epilogo=&Formato=a&Opcion=existencias&Expresion=NI=|v750|")'>Existencias</a>| 
+	  	  '</center><br>'/
+	else
+		'<center>'
+	  fi,
+
+'</center>'
+
+	  '</td>'
+
+'</tr>'
+'</table>'/ 
+'</span>'/
+'<br><br>'/            
+

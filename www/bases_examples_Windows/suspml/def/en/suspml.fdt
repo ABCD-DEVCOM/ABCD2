@@ -1,0 +1,9 @@
+F|1|Record type|0|0|||R||1|P|sanctions.tab|||||0||
+F|10|Status|0|0|||R||2|P|status.tab|||||0||
+F|20|User code|0|0|||X|||||||||0||
+F|30|Date|0|0|||X|||||||||0||
+F|40|Concept|0|0|||X|||||||||0||
+F|50|Amount|0|0|||X|||||||||0||
+F|60|Expiry|0|0|||X|||||||||0||
+F|100|Observations|0|0|||X|||||||||0||
+F|110|Operator and date of cancellation|0|0|||X|||||||||0||

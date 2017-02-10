@@ -1,0 +1,14 @@
+Tipo de usuario                        10 [10] [mpu,v10] 
+Apellidos y nombres                    30 [30] [mpu,v30] 
+Lugar de trabajo                       30 [40] [mpu,v40]
+Ubicacion                              30 [45] [mpu,v45]
+Areas de interes                       30 [210] [mpu,v210]
+Cargo                                  30 [47] [mpu,v47]
+Palabras claves                        30 [300] [mpu,v300]
+
+
+[Estilos]
+\plain\pard\par\cf5\fs30\b | \pard\plain
+\plain\pard\cf6\tab\tab\fs30\b  | \pard\plain
+\plain\pard\cf7\tab\tab\tab\fs20\b | \pard\plain
+\plain\pard\cf8\tab\tab\tab\fs20\b | \pard\plain

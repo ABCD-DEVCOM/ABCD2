@@ -1,0 +1,42 @@
+v10,'^'
+v90'^',
+mdl,v100,mpl,'^'
+v80,'^' 
+v30*6.2,'-',v30*4.2,'-',v30.4," "v35,'^', 
+v40*6.2,'-',v40*4.2,'-',v40.4," "v45,'^',
+v70,'^',
+f(mfn,1,0),'^'
+v30,'^'
+v40,'^'
+v20,,'^',
+f(nocc(v200),1,0),,'^'
+v95,'^'
+v98,'^'
+v12,'^'
+v15,'^'
+v1,'^'
+v400'^' 
+v500*6.2,'-',v500*4.2,'-',v500.4/
+
+/* 0  Número de inventario
+   1  Número de  clasificación
+   2  Descripción del objeto
+   3  Tipo de Objeto
+   4  Fecha y hora del préstamo
+   5  Fecha y hora de devolución
+   6  Tipo de usuario
+   7  Mfn del registro
+   8  Fecha del préstamo en formato ISO
+   9  Fecha de devolución en formato ISO
+   10 Código de usuario
+   11 Número de renovaciones
+   12 Número de control del objeto
+   13 Base de datos
+   14 Volumen
+   15 Tomo
+   16 Tipo de movimiento: P=préstamo X=devolución
+   17 Política de préstamos
+   18 Fecha real de devolución
+   
+*/
+

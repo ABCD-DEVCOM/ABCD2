@@ -1,0 +1,45 @@
+'<table border=0 width=90%>'
+'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred>Identificação do Objeto</td>'/
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2>Sugestão No.</td><td valign=top><font face=arial size=2>'v1+|; |,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2>Status</td><td valign=top><font face=arial size=2>'v2+|; |,'</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2>Tipo de Objeto</td><td valign=top><font face=arial size=2>'v4+|; |,'</td>' fi/
+if p(v16) then '<tr><td width=20% valign=top><font face=arial size=2>Autor pessoa</td><td valign=top><font face=arial size=2>'v16+|; |,'</td>' fi/
+if p(v17) then '<tr><td width=20% valign=top><font face=arial size=2>Autor instituição</td><td valign=top><font face=arial size=2>'v17+|; |,'</td>' fi/
+if p(v18) then '<tr><td width=20% valign=top><font face=arial size=2>Título</td><td valign=top><font face=arial size=2>'v18+|; |,'</td>' fi/
+if p(v21) then '<tr><td width=20% valign=top><font face=arial size=2>Volume</td><td valign=top><font face=arial size=2>'v21+|; |,'</td>' fi/
+if p(v29) then '<tr><td width=20% valign=top><font face=arial size=2>Editor</td><td valign=top><font face=arial size=2>'v29+|; |,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Série</td>'/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2>Título</td><td valign=top><font face=arial size=2>'v30+|; |,'</td>' fi/
+if p(v31) then '<tr><td width=20% valign=top><font face=arial size=2>Volume</td><td valign=top><font face=arial size=2>'v31+|; |,'</td>' fi/
+if p(v32) then '<tr><td width=20% valign=top><font face=arial size=2>Número</td><td valign=top><font face=arial size=2>'v32+|; |,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Outros dados</td>'/
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2>ISSN</td><td valign=top><font face=arial size=2>'v35+|; |,'</td>' fi/
+if p(v47) then '<tr><td width=20% valign=top><font face=arial size=2>ISBN</td><td valign=top><font face=arial size=2>'v47+|; |,'</td>' fi/
+if p(v38) then '<tr><td width=20% valign=top><font face=arial size=2>Editor</td><td valign=top><font face=arial size=2>'v38+|; |,'</td>' fi/
+if p(v39) then '<tr><td width=20% valign=top><font face=arial size=2>Cidade</td><td valign=top><font face=arial size=2>'v39+|; |,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2>País</td><td valign=top><font face=arial size=2>'v40+|; |,'</td>' fi/
+if p(v41) then '<tr><td width=20% valign=top><font face=arial size=2>Edition</td><td valign=top><font face=arial size=2>'v41+|; |,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Recomendado por</td>'/
+if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2>Pessoa/Departamento</td><td valign=top><font face=arial size=2>'v200+|; |,'</td>' fi/
+if p(v210) then '<tr><td width=20% valign=top><font face=arial size=2>Data</td><td valign=top><font face=arial size=2>'v210+|; |,'</td>' fi/
+if p(v211) then '<tr><td width=20% valign=top><font face=arial size=2>Data ISO</td><td valign=top><font face=arial size=2>'v211+|; |,'</td>' fi/
+if p(v220) then '<tr><td width=20% valign=top><font face=arial size=2>No. de cópias</td><td valign=top><font face=arial size=2>'v220+|; |,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Aproção / Rejeição</td>'/
+if p(v230) then '<tr><td width=20% valign=top><font face=arial size=2>Data de aprovação ou rejeição</td><td valign=top><font face=arial size=2>'v230+|; |,'</td>' fi/
+if p(v231) then '<tr><td width=20% valign=top><font face=arial size=2>Data de aprovação ou rejeição ISO</td><td valign=top><font face=arial size=2>'v231+|; |,'</td>' fi/
+if p(v240) then '<tr><td width=20% valign=top><font face=arial size=2>Number of copies approved</td><td valign=top><font face=arial size=2>'v240+|; |,'</td>' fi/
+if p(v250) then '<tr><td width=20% valign=top><font face=arial size=2>Razão da rejeição</td><td valign=top><font face=arial size=2>'v250+|; |,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Cotação</td>'/
+if p(v300) then '<tr><td width=20% valign=top><font face=arial size=2>Fornecedor</td><td valign=top><font face=arial size=2>'v300+|; |,'</td>' fi/
+if p(v330) then '<tr><td width=20% valign=top><font face=arial size=2>Data do início de cotação</td><td valign=top><font face=arial size=2>'v330+|; |,'</td>' fi/
+if p(v331) then '<tr><td width=20% valign=top><font face=arial size=2>Data de cotação ISO</td><td valign=top><font face=arial size=2>'v331+|; |,'</td>' fi/
+if p(v360) then 
+	'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Decisão de cotação</td>'/
+	'<tr><td width=20% valign=top><font face=arial size=2>Decisão</td><td valign=top><font face=arial size=2>'v360+|; |,'</td>' /
+fi,
+if p(v380) then 
+	'<tr><td colspan=2 valign=top><font face=arial size=2 color=darkred><br>Ordem de compra</td>'/
+	'<tr><td width=20% valign=top><font face=arial size=2> </td><td valign=top><font face=arial size=2>'v380+|; |,'</td>' /
+fi,
+'<tr><td colspan=2><hr></td>'/
+'</table>'

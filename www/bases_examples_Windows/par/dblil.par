@@ -1,0 +1,9 @@
+dblil.*=%path_database%dblil/data/dblil.*
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+autoridades.pft=%path_database%dblil/pfts/en/autoridades.pft
+descritores.pft=%path_database%dblil/pfts/es/descritores.pft
+mes.pft=%path_database%dblil/pfts/es/mes.pft
+isisac.tab=%path_database%dblil/data/isisac.tab
+isisuc.tab=%path_database%dblil/data/isisuc.tab.tab
+STW=%path_database%dblil/data/dblil.stw

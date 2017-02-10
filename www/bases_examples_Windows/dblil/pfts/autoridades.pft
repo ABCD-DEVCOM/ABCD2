@@ -1,0 +1,33 @@
+select e3
+                case 3: v3^a,"/"v3^b,"/"v3^c,"/"v3^d,"/"v3^e,"/"v3^f
+                case 9: v9
+                case 10: v10^*,", "v10^b,"("V10^r")","*"V10^f
+		case 12: V12,'$$$'f(mfn,1,0)
+                case 11: v11
+                case 16: v16^*,", "v16^b,"("V16^r")","*"V16^f
+                case 17: v17
+                case 18: v18,'$$$'f(mfn,1,0)
+                case 22: v22
+                case 29: v29
+                case 30: v30'$$$'f(mfn,1,0)
+                case 38: v38
+                case 39: v39
+                case 40: v40
+                case 52: v52
+                case 54: v54
+                case 55: v55
+                case 58: v58
+                case 64: v64
+                case 66: v66
+                case 76: v76
+                case 77: v77
+                case 79: v79
+                case 80: v80
+                case 81: v81
+                case 82: v82
+                case 85: v85
+                case 86: v86
+                case 87: v87^*,", "v87^b,"("V87^r")","*"V87^f
+                case 104: v104 
+
+endsel

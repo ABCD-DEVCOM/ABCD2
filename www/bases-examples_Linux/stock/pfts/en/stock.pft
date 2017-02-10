@@ -1,0 +1,4 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Barcode</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Date of checking</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+'</table><p>'

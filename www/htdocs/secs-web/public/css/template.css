@@ -1,0 +1,13 @@
+@import url(layout.css);
+@import url(styles.css);
+
+/* style rule: para correcao de erros para float */
+DIV.spacer {
+	font-size: 1px !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	float: none !important;
+	clear: both !important;
+	width: 100% !important;
+	height: 1px !important;
+}

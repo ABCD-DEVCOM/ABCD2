@@ -1,0 +1,24 @@
+`<table border=0 width=90%>`
+'<td rowspan=21 valign=top width=150><img src=../common/show_image.php?image='v620'&base=users></td>'
+if p(v10) then `<tr><td width=20% valign=top><font face=arial size=2><b>Type utilisateur</b></td><td valign=top><font face=arial size=2>`,v10^*,". "v10^b,,`</td>` fi/
+if p(v12) then `<tr><td width=20% valign=top><font face=arial size=2><b>Sexe</b></td><td valign=top><font face=arial size=2>`,v12^*,". "v12^b,,`</td>` fi/
+if p(v15) then `<tr><td width=20% valign=top><font face=arial size=2><b>Date limite de validité de la carte</b></td><td valign=top><font face=arial size=2>`v15+|<br>|,`</td>` fi/
+if p(v18) then `<tr><td width=20% valign=top><font face=arial size=2><b>Date ISO de validité de la carte</b></td><td valign=top><font face=arial size=2>`v18+|<br>|,`</td>` fi/
+if p(v20) then `<tr><td width=20% valign=top><font face=arial size=2><b>Code utilisateur</b></td><td valign=top><font face=arial size=2>`v20+|<br>|,`</td>` fi/
+if p(v30) then `<tr><td width=20% valign=top><font face=arial size=2><b>Nom et prénoms</b></td><td valign=top><font face=arial size=2>`v30+|<br>|,`</td>` fi/
+if p(v35) then `<tr><td width=20% valign=top><font face=arial size=2><b>Carte d'identité</b></td><td valign=top><font face=arial size=2>`v35+|<br>|,`</td>` fi/
+if p(v40) then `<tr><td width=20% valign=top><font face=arial size=2><b>employeur</b></td><td valign=top><font face=arial size=2>`v40+|<br>|,`</td>` fi/
+if p(v45) then `<tr><td width=20% valign=top><font face=arial size=2><b>Localisation</b></td><td valign=top><font face=arial size=2>`v45+|<br>|,`</td>` fi/
+if p(v47) then `<tr><td width=20% valign=top><font face=arial size=2><b>Niveau Adm. 1</b></td><td valign=top><font face=arial size=2>`v47+|<br>|,`</td>` fi/
+if p(v49) then `<tr><td width=20% valign=top><font face=arial size=2><b>Niveau Adm. 2</b></td><td valign=top><font face=arial size=2>`v49+|<br>|,`</td>` fi/
+if p(v100) then `<tr><td width=20% valign=top><font face=arial size=2><b>Adresse physique</b></td><td valign=top><font face=arial size=2>`v100+|<br>|,`</td>` fi/
+if p(v110) then `<tr><td width=20% valign=top><font face=arial size=2><b>Adresse postale</b></td><td valign=top><font face=arial size=2>`v110+|<br>|,`</td>` fi/
+if p(v120) then `<tr><td width=20% valign=top><font face=arial size=2><b>Ville</b></td><td valign=top><font face=arial size=2>`v120+|<br>|,`</td>` fi/
+if p(v130) then `<tr><td width=20% valign=top><font face=arial size=2><b>Pays</b></td><td valign=top><font face=arial size=2>`v130+|<br>|,`</td>` fi/
+if p(v140) then `<tr><td width=20% valign=top><font face=arial size=2><b>Téléphone</b></td><td valign=top><font face=arial size=2>`v140+|<br>|,`</td>` fi/
+if p(v150) then `<tr><td width=20% valign=top><font face=arial size=2><b>Fax</b></td><td valign=top><font face=arial size=2>`v150+|<br>|,`</td>` fi/
+if p(v160) then `<tr><td width=20% valign=top><font face=arial size=2><b>Courrier électronique</b></td><td valign=top><font face=arial size=2>`v160+|<br>|,`</td>` fi/
+if p(v600) then `<tr><td width=20% valign=top><font face=arial size=2><b>Identifiant</b></td><td valign=top><font face=arial size=2>`v600+|<br>|,`</td>` fi/
+if p(v610) then `<tr><td width=20% valign=top><font face=arial size=2><b>Mot de passe</b></td><td valign=top><font face=arial size=2>`v610+|<br>|,`</td>` fi/
+if p(v620) then `<tr><td width=20% valign=top><font face=arial size=2><b>Photo</b></td><td valign=top><font face=arial size=2>`v620+|<br>|,`</td>` fi/
+`</table><p>`

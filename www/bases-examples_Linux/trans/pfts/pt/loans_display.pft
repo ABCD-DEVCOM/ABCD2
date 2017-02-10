@@ -1,0 +1,20 @@
+v10,'^'v90'^',mdl,v100,mpl,'^'v80,'^' v30*6.2,'-',v30*4.2,'-',v30.4," "v35,'^', v40*6.2,'-',v40*4.2,'-',v40.4," "v45,'^',v70,'^',f(mfn,1,0),'^'v30,'^'v40,'^'v20,,'^',f(nocc(v200),1,0),,'^'v95,'^'v98,'^'v12,'^'v15,'^'v1/
+
+/* 0  Número de registro
+   1  Número de chamada
+   2  Descrição do objeto
+   3  Tipo de Objeto
+   4  Data e hora do empréstimo
+   5  Data e hora de devolução
+   6  Tipo de usuário
+   7  MFN do registro
+   8  Data do empréstimo em formato ISO
+   9  Data de devolução em formato ISO
+   10 Código de usuário
+   11 Número de renovações
+   12 Número de controle do objeto
+   13 Base de dados
+   14 Volume
+   15 Tomo
+   16 Tipo de movimento: P=empréstimo X=devolução
+*/

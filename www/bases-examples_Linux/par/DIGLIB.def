@@ -1,0 +1,34 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%diglib/data/diglib.*
+FILE standard.pft=%path_database%diglib/pfts/%lang%/diglib.pft
+FILE SHORTCUT.IAH=%path_database%diglib/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+FILE metadata.pft=%path_database%diglib/pfts/%lang%/metadata.pft
+
+[INDEX_DEFINITION]
+
+INDEX FT=^1^2^3Text words^4^d*^xFT ^yDATABASE^uFT_^mFT_
+INDEX Ti=^1^2^3Titles^4^xTI ^yDATABASE^uTI_^mTI_
+INDEX DE=^1^2^3Descriptors^4^xDE ^yDATABASE^uDE_^mDE_
+INDEX UR=^1URL^2URL^3URL^4URL^xUR ^yDATABASE^uUR_^mUR_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1^2^3Default^4
+FORMAT DEFAULT=metadata.pft
+FORMAT metadata.pft=^1^2^3metadata^4
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

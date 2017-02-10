@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bvs language="es" country="**" subject="BVS-Site" version="4">
+  <texts id="" lang="pt" available="">
+    <text id="button_moreInformation" available="yes" img="/image/es/info.gif">Más informaciones</text>
+    <text id="default_print" available="yes">imprimir</text>
+    <text id="default_close" available="yes">cerrar</text>
+    <text id="home" available="yes">inicio</text>
+    <text id="contact" available="yes">Contacto</text>
+    <text id="contact: subject" available="yes">Asunto</text>
+    <text id="contact: name" available="yes">Nombre</text>
+    <text id="contact: email" available="yes">Email</text>
+    <text id="contact: message" available="yes">Mensaje</text>
+    <text id="contact: send" available="yes">Enviar</text>
+    <text id="contact: error" available="yes">Por favor llené los campos:</text>
+    <text id="contact: response" available="yes">Su mensaje fue enviada con éxito.</text>
+    <text id="topic.expand" available="yes">mostrar subtemas</text>
+  </texts>
+  <parent id="" lang="es" available="yes">
+    <item id="1" available="yes" img="/site/image/common/logoABCD.gif">ABCD</item>
+  </parent>
+  <identification id="" lang="es" available="yes">
+    <item id="2" available="yes">Sistema de Automación de Bibliotecas y Centro de Documentación<description> </description><portal> </portal></item>
+  </identification>
+  <contact id="" lang="es" available="yes">
+    <item id="3" available="yes" href="online@abcd.org">Contacto ABCD</item>
+    <item id="4" available="yes" href="online@abcd.org">Reclamaciones ABCD</item>
+    <item id="5" available="yes" href="online@abcd.org">Sugerencias ABCD</item>
+  </contact>
+  <other-versions id="" lang="es" available="yes">
+    <item id="7" available="yes" href="../php/index.php?lang=pt">português<description> </description><portal> </portal></item>
+    <item id="8" available="yes" href="../php/index.php?lang=en">english</item>
+    <item id="39" available="yes" href="../php/index.php?lang=fr">français</item>
+  </other-versions>
+  <institution id="" lang="es" available="yes">
+    <item id="9" available="no">Instituições<description>  </description><portal>  </portal></item>
+    <item id="10" available="yes" img="%SKIN_IMAGE_DIR%logoOpas.gif">BIREME | OPS | OMS logo<description>  </description><portal>  </portal></item>
+    <item id="11" available="yes" href="http://www.bireme.br/">BIREME<description>  </description><portal>  </portal></item>
+    <item id="12" available="yes" href="http://www.paho.org/">OPS<description>  </description><portal>  </portal></item>
+    <item id="13" available="yes" href="http://www.who.int/">OMS<description>  </description><portal>  </portal></item>
+  </institution>
+  <collectionList id="" lang="es" available="yes">
+    <item id="14" available="yes">Primera columna<item id="36" available="yes" type="portal" file="xml/es/36.xml">Red</item></item>
+    <item id="16" available="yes">Segunda columna<item id="38" available="yes" type="collection" file="xml/es/38.xml">Fuentes de información</item><item id="17" available="yes" type="collection" file="xml/es/17.xml">Literatura Cientifica</item><item id="37" available="yes" type="collection" file="xml/es/37.xml">Servicios</item><item id="31" available="yes" type="collection" file="xml/es/31.xml">Directorios, Portales</item></item>
+    <item id="23" available="yes">Tercera columna<item id="24" available="yes" type="calls" file="xml/es/24.xml">Destacados</item></item>
+  </collectionList>
+  <responsable>
+    <item id="26" available="yes" type="responsable" file="xml/es/responsable.xml"/>
+  </responsable>
+  <metasearch>
+    <item id="27" available="yes" type="metasearch" file="xml/es/metasearch.xml"/>
+  </metasearch>
+  <metainfo>
+    <item id="28" available="yes" type="metainfo" file="xml/es/metainfo.xml"/>
+  </metainfo>
+  <attachList available=""/>
+</bvs>

@@ -1,0 +1,35 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%/var/opt/ABCD/bases/unicode/data/unicode.*
+FILE standard.pft=%path_database%/var/opt/ABCD/bases/unicode/pfts/%lang%/unicode.pft
+FILE SHORTCUT.IAH=%path_database%/var/opt/ABCD/bases/unicode/pfts/%lang%/shortcut.pft
+FILE isisac.tab=%path_database%/var/opt/ABCD/bases/unicode/data/isisactab_utf8.tab
+FILE isisuc.tab=%path_database%/var/opt/ABCD/bases/unicode/data/isisuctab_utf8.tab
+FILE GXML=%path_database%/var/opt/ABCD/bases/gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX AL=^1palabras^2palabras^3all words^4mots^d*^xAL ^yDATABASE^uAL_^mAL_
+INDEX SA=^1Devanagari^2Devanagari^3Devanagari^4Devanagari^xSA ^yDATABASE^uSA_^mSA_
+INDEX AM=^1Amharic^2Amharic^3Amharic^4Amharic^xAM ^yDATABASE^uAM_^mAM_
+INDEX AR=^1Arabic^2Arabic^3Arabic^4Arabic^xAR ^yDATABASE^uAR_^mAR_
+INDEX CY=^1Cyrllic^2Cyrillic^3Cyrillic^4Cyrillic^xCY ^yDATABASE^uCY_^mCY_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1normal^2normal^3default^4normal
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

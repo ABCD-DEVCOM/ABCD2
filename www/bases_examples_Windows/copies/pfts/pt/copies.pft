@@ -1,0 +1,25 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Id Objeto</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Base de dados</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de chamada</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Numero de inventário</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2><b>Status</b></td><td valign=top><font face=arial size=2>'(if p(v200) then v200^a,| = |v200^b, if iocc<>nocc(v200) then '<br>' fi fi/),'</td>' fi/
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2><b>Biblioteca Central</b></td><td valign=top><font face=arial size=2>'v35+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Biblioteca Setorial</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tomo</b></td><td valign=top><font face=arial size=2>'v50+|<br>|,'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Volume/Parte</b></td><td valign=top><font face=arial size=2>'v60+|<br>|,'</td>' fi/
+if p(v63) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número da cópia</b></td><td valign=top><font face=arial size=2>'v63+|<br>|,'</td>' fi/
+if p(v68) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de aquisição</b></td><td valign=top><font face=arial size=2>'(if p(v68) then v68^a,| = |v68^b, if iocc<>nocc(v68) then '<br>' fi fi/),'</td>' fi/
+if p(v70) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fornecedor/Doador/Instituição</b></td><td valign=top><font face=arial size=2>'v70+|<br>|,'</td>' fi/
+if p(v80) then '<tr><td width=20% valign=top><font face=arial size=2><b>Data de chegada</b></td><td valign=top><font face=arial size=2>'v80+|<br>|,'</td>' fi/
+if p(v85) then '<tr><td width=20% valign=top><font face=arial size=2><b>Data de chegada ISO</b></td><td valign=top><font face=arial size=2>'v85+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>COMPRA:</b></td>'/
+if p(v90) then '<tr><td width=20% valign=top><font face=arial size=2><b>Preço</b></td><td valign=top><font face=arial size=2>'v90+|<br>|,'</td>' fi/
+if p(v95) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fornecedor</b></td><td valign=top><font face=arial size=2>'v95+|<br>|,'</td>' fi/
+if p(v100) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ordem de compra</b></td><td valign=top><font face=arial size=2>'v100+|<br>|,'</td>' fi/
+if p(v110) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número da sugestão</b></td><td valign=top><font face=arial size=2>'v110+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>DOAÇÃO:</b></td>'/
+if p(v300) then '<tr><td width=20% valign=top><font face=arial size=2><b>Condições</b></td><td valign=top><font face=arial size=2>'v300+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=arial size=2><b>PERMUTA</b></td>'/
+if p(v400) then '<tr><td width=20% valign=top><font face=arial size=2><b>Em troca de</b></td><td valign=top><font face=arial size=2>'v400+|<br>|,'</td>' fi/
+'</table><p>'

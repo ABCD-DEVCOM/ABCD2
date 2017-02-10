@@ -1,0 +1,3 @@
+unitest.*=./unitest.*
+isisac.tab=/var/opt/ABCD/bases/unitest/isisactab_utf8.tab
+isisuc.tab=/var/opt/ABCD/bases/unitest/isisuctab_utf8.tab

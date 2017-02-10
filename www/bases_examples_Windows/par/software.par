@@ -1,0 +1,4 @@
+software.*=%path_database%software/data/software.*
+software.pft=%path_database%software/pfts/en/software.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

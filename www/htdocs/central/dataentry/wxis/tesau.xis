@@ -1,0 +1,140 @@
+ <IsisScript>
+	<trace>xOn</trace>
+    <section>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=2001>count</field>
+		<field action=cgi tag=2050>LastKey</field>
+		<field action=cgi tag=2020>prefijo</field>
+		<field action=cgi tag=2019>pref</field>
+		<field action=cgi tag=2021>tagfst</field>
+		<field action=cgi tag=2024>postings</field>
+		<field action=cgi tag=3033>formato_e</field>
+		<field action=cgi tag=9001>Opcion</field>
+		<field action=cgi tag=9088>cttype</field>
+		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+<display><pft></pft></display>
+       	<parm name=cipar>
+          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+       	</parm>
+		<flow action=jump>
+  			<pft>
+				select s(v9001)
+					case 'autoridades': 		'LISTA_AUTORIDADES'
+					case 'diccionario': 		'PRESENTAR_DICCIONARIO'
+					case 'mas_terminos':        'PRESENTAR_DICCIONARIO'
+					case 'localiza_usuario': 	'LISTA_USUARIOS'
+					case 'localiza_titulo': 	'LISTA_USUARIOS'
+					case 'buscar':				'BUSCAR'
+				endsel
+			</pft>
+   		</flow>
+
+
+       	<label>LISTA_USUARIOS</label>
+       	<do task=keyrange>
+    		<parm name=db><pft>v5001</pft></parm>
+           	<parm name=from><pft>v2020</pft></parm>
+           	<parm name=count><pft>'100'</pft></parm>
+           	<parm name=posttag><pft>v2021</pft></parm>
+			<field action=define tag=1090>Isis_Key</field>
+			<field action=define tag=3>Isis_Posting</field>
+			<display><pft>if v5001<>'users' then '<table>' fi </pft></display>
+           	<loop>
+			    <field action=import tag=5001>5001</field>
+				<field action=import tag=2021>2021</field>
+				<field action=import tag=2020>2020</field>
+				<field action=import tag=1090>1090</field>
+
+				<display><pft>/
+							if v5001='users' then
+								,ref([v5001]val(v3^m),'<font color=black>'
+									'<a href=javascript:LeerUsuario("'if p(v20) then v20 else v35 fi'")><span class=td2>'v30'</a><br>')
+							else
+								if v2020.3='NI=' then
+									,ref([v5001]val(v3^m),if v1='P' then
+										'<tr><td class=td2 bgcolor=white><font color=black>',,
+										'<a href=javascript:LeerUsuario("'if p(v20) then v20 else v35 fi'")><span class=td2>'
+										v800^n'</a></td><td class=td2  bgcolor=white>'v800^c" - ",,v800^t.35' </td>' fi)
+								else
+									,ref([v5001]val(v3^m),if v1='P' then
+										'<tr><td class=td2 bgcolor=white><font color=black>'
+										'<a href=javascript:LeerUsuario("'if p(v20) then v20 else v35 fi'")>'
+										'<span class=td2>'v800^c'</a></td><td class=td2 bgcolor=white>'
+										'<a href=javascript:LeerUsuario("'if p(v20) then v20 else v35 fi'")><span class=td2> ('v800^n') </a>',,v800^t.45' </td>' fi)
+								fi
+							fi
+							'</span>'/
+						   </pft>
+
+				</display>
+				<field action=export tag=1090>1090</field>
+           	</loop>
+
+			<display><pft>
+
+					 </pft>
+			</display>
+       	</do>
+		<flow action=exit>1</flow>
+
+       	<label>LISTA_AUTORIDADES</label>
+       	<do task=keyrange>
+    		<parm name=db><pft>v5001</pft></parm>
+           	<parm name=from><pft>v2020</pft></parm>
+           	<parm name=to><pft></pft></parm>
+			<parm name=count><pft>"100"n2001,v2001</pft></parm>
+            <parm name=posting><pft type=reload><pft>if a(v2024) then 'ALL' else "'"v2024"'" fi</pft></pft></parm>
+		    <field action=define tag=3>Isis_Posting</field>
+		    <field action=define tag=4>Isis_Postings</field>
+			<field action=define tag=2010>Isis_Key</field>
+           	<loop>
+			    <field action=import tag=5001>5001</field>
+			     <field action=import tag=3033>3033</field>
+				 <field action=import tag=2021>2021</field>
+				 <field action=import tag=2019>2019</field>
+				 <display><pft>if mid(v2010,0,size(v2019))<>v2019 then break fi</pft></display>
+
+				<list action=load type=list>
+						<pft type=reload><pft>
+							'if mid(v2010,0,size(v2019))<>v2019 then break fi, /'
+							`e1:=val(v3^o),
+							e2:=val(v3^t),
+							e3:=val(v3^t),
+
+                            ,ref([v5001]val(v3^m),,
+									proc('a1999~'f(e1,1,0)'~')
+									proc('a2999~'f(e2,1,0)'~')
+									(if iocc=val(v1999[1]) then `v3033` fi/)
+								 ),/`
+						</pft></pft>
+				</list>
+           	</loop>
+			<do task=list>
+					<field action=define tag=1>Isis_Item</field>
+					<loop>
+						<display><pft>v1/</pft></display>
+					</loop>
+			</do>
+
+       	</do>
+		<flow action=exit>1</flow>
+
+       	<label>PRESENTAR_DICCIONARIO</label>
+ 			<do task=keyrange>
+           		<parm name=db><pft>v5001</pft></parm>
+           		<parm name=from><pft>if p(v2050) then v2050 else if v2020='' then 'A' else v2020 fi fi</pft></parm>
+           		<parm name=to><pft>if p(v2020) then v2020'ZZZZZ'  fi</pft></parm>
+           		<parm name=count>500</parm>
+           		<field action=define tag=2010>Isis_Key</field>
+           		<field action=define tag=2011>Isis_Postings</field>
+           		<loop>
+               		<display><pft>v2010,'|',v2011/</pft></display>
+           		</loop>
+       		</do>
+		<flow action=exit>1</flow>
+
+    </section>
+ </IsisScript>

@@ -1,0 +1,33 @@
+'<table width="100%" border="0">'/
+'<tr>'
+'<td valign=top width="29%"><font face="Courier New" size="2">'/,
+"[ "v30 "]",'&nbsp;',
+
+,"<b>"v100"</b>  ",
+ 
+IF p(v110) THEN ": "v110 FI,mpl,
+IF P(v120) and P(v130) THEN ". "v120,", "v130 FI,
+IF P(v120) and A(v130) THEN ". "v120 FI,
+IF A(v120) and P(v130) THEN ", "v130 FI,
+" / "v140+|, |," = "v230,'.-- ', "Vol."v302,
+IF p(v302) and p(v303) THEN ', ' FI,
+|no.|v303,| (|v301|)|,
+IF p(v304) or p(v305) or p(v306) THEN '- ', |Vol.| v305,
+IF p(v305) and p(v306) THEN ', ' FI,     |no.|v306,   | (|v304|).|,
+ELSE '- .',FI,
+'-- 'v490,": "v480". ",/
+'<br><br>'
+
+,if p(v400) then, 
+	'<b>ISSN: &nbsp;</b>'v400'<br>'/,
+,fi,	
+'<b>Título abreviado: &nbsp;</b>'v150'<br><br>'/,
+'</font></td></tr>'/,
+
+,if p(v98) then,
+	'<tr><td><font face="courier new" size="2">'
+		'<b>Colección:</b><br>'/,	
+		v98 + |<br>|
+	'</font></tr></td>'
+,fi,				
+'</table><p>'/,

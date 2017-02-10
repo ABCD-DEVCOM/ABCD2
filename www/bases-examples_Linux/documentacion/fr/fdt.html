@@ -1,0 +1,385 @@
+<xmeta content="text/html" http-equiv="Content-Type" charset="utf-8"></xmeta><xmeta content="text/html;" http-equiv="Content-Type" charset="iso-8859-1"></xmeta>
+<p>&nbsp;</p>
+<h3 style="COLOR: red"><font face="Arial" size="2"><strong><a name="top"></a>&nbsp;</strong><big><strong>Définition de la structure d'une base de données<br />
+</strong></big></font></h3>
+<p><font face="Arial" size="2"><strong><a href="#editor">Comment utiliser l'éditeur</a> </strong></font></p>
+<p><font face="Arial" size="2"><strong><a href="#FDT">La Table de Définition des Champs</a><br />
+<br />
+<a href="#picklist">Comment établir une liste de valeurs pré-définies (picklists) ou comment accéder à des fichiers d'autorité</a> </strong></font></p>
+<hr />
+<p><font face="Arial" size="2"><strong><a class="FCK__AnchorC FCK__AnchorC" name="FDT"><big>La Table de Définition des Champs (TDC)</big></a><big> </big>&nbsp; </strong></font></p>
+
+<p><font face="Arial" size="2">&nbsp;<font size="2">La TDC contient la structure de la base de données ; Avec ABCD elle contient aussi des éléments supplémentaires pour le formulaire de saisie. </font></font></p>
+<p><font face="Arial" size="2"><font size="2">En plus de la définition standard des éléments fournis par ISIS / DOS et WinISIS, des éléments supplémentaires sont inclus - sur la base de codes HTML - pour le formulaire de saisie des données. Ils concernent le type de champ, l'édition de sous-champs, le contrôle de terminologie par des listes d’autorité, thésaurus ou de simples menus (Picklists ou listes de sélection), la présentation du champ dans le bordereau de saisie, etc.   </font></font><font face="Arial" size="2">Son format est le suivant : </font></p>
+<p><font size="2">
+<table cellspacing="5" cellpadding="1" width="100%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top"><font face="Arial" size="2"><strong>Etiquette</strong></font></td>
+            <td>
+            <p><font face="Arial" size="2"><strong>Description</strong></font></p>
+
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Propriétés des champs&nbsp; </strong></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2"><font face="Arial">Type de saisie</font></font></td>
+
+            <td>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Spécifie le type de la composante de la TDC qui va être décrite, avec les options suivantes : </font></p>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="arial" size="2">Champ<br />
+            </font><font face="arial" size="2">Sous-champ<br />
+            Groupe (champ répétitif avec sous-champs)<br />
+            Guide ou Leader (MARC)<br />
+
+            Champ fixe (MARC)</font><font face="arial" size="2"><br />
+            Charger un document avec un lien<br />
+            Date, heure et opérateur créant l'enregistrement<br />
+            Date, heure et opérateur faisant la mise à jour de l'enregistrement<br />
+            Identifiant unique de l'enregistrement</font><font face="arial" size="2"><br />
+            <font face="arial" size="2">Intitulé<br />
+
+            Ligne</font></font></p>
+            </blockquote>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Champ (F)</strong><br />
+            Cette rubrique traite d'un champ de la base de données ; </font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Sous-champ (S)</strong><br />
+            Cette rubrique traite de la description d'un sous-champ. Tous les sous-champs définis pour un champ doivent être décrits ici avec leurs détails.&nbsp;Avec cette information, une nouvelle fenêtre s'ouvrira pendant la saisie avec les sous-champs présentés séparément, en évitant la nécessité d'entrer dans le sous-champ des délimiteurs comme c'était le cas avec CDS / ISIS. En outre, le recours répété à des sous-champs est autorisé et les sous-champs peuvent être déplacés à l'intérieur du bordereau pour facilité l'application du language de formatage.&nbsp;</font></p>
+
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Groupe (T)<br />
+            </strong>Ce type d'entrée est recommandé pour l'édition de champs répétitifs avec sous-champs. <font face="Arial" size="2">Il permet d'éditer des sous-champs, avec une place pour chaque sous-champs séparé.</font> A la suite d'une entrée dans ce <strong>Groupe</strong> les sous-champs contenus dans le champ doivent être définis.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Leader de notice du format MARC (LDR)<br />
+            </strong>Ce champ contient les informations du "leader" MARC, défini comme suit :</font></p>
+
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font size="2">3005 Statut de la notice<br />
+            3006 Type de notice<br />
+            3007 Niveau bibliographique<br />
+            3017&nbsp;Niveau d'encodage<br />
+            3018 Description du format de catalogage</font></p>
+
+            </blockquote>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font size="2">La vealeur du champ 3006 définit le type de champ fixe assiocié à la notice.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font size="2">La structure du Leader est stockée dans un fichier nommé <strong>leader.fdt</strong>, situé dans le dossier <strong>def</strong> du site web.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Champ Fixe - Marc (M)<br />
+            </strong></font><font face="Arial" size="2">Ce type de champ indique qu'un champ fixe peut être inséré dans le formulaire de saisie, en fonction du type de notice sélectionné dans le <strong>Leader. </strong>La structure d'un champ fixe est basé sur une <strong>Table de Définition des Champs (TDC), </strong>accessible par l'option <strong>Types de notice (Marc) </strong>dans le menu <strong>Mise à jour de la définition de la base de données</strong>. L'option  <strong>Types de notice (Marc)</strong>&nbsp;est présentée dans le menu mise à jour quand la présence d'un champ de type <strong>LDR</strong> est détecté dans la <strong>TDC</strong> de la base de données.</font></p>
+
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Intitulé&nbsp; (H)<br />
+            </strong>Utilisez cette entrée pour insérer des séparateurs entre des groupes de champs dans les formats de saisie et de présentation, et pour permettre la navigation dans le bordereau de saisie des données.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Ligne (L)</strong><br />
+            Cela ajoute une ligne de séparation dans le formulaire de saisie. Cela inclut également une URL pour se référer à une page qui devrait être présente lors de l'affichage des données.</font></p>
+            <p><font face="Arial"><font size="2"><strong>Charger un document avec un lien. (U)</strong><br />
+
+            Permet de charger un document par le serveur et de le lier à l'enregistrement actuel. Dans la version actuelle de <strong>ABCD </strong>il est nécessaire de définir un dossier nommé </font></font><font face="Arial" size="2"><em>&nbsp;</em><strong>bases</strong> dans le chemin de <strong>ABCD</strong>, avec un sous répertoire en rapport avec la Base de données où les images/documents seront stockés. Ce dossier devra avoir des droits d'accès en écriture. Une autre façon de charger des fichiers est par FTP. Le format de présentation des notices devra contenir l'URL de ces fichiers pour les inclure dans la présentation.</font></p>
+            <p><font size="2"><strong>Date, heure et opérateur créant l'enregistrement<br />
+            </strong>Dans ce champ seront stockés la date, l'heure et l'identifiant de l'opérateur créant la notice. Si aucun sous-champ n'est spécifié, a, b, et c seront respectivement utilisés.</font></p>
+            <p><font size="2"><strong>Date, heure et opérateur mettant à jour l'enregistrement<br />
+
+            </strong>Dans ce champ seront stockés la date, l'heure et l'identifiant de l'opérateur mettant à jour la notice. Si aucun sous-champ n'est spécifié, a, b, et c seront respectivement utilisés.</font></p>
+            <p><font size="2"><strong>Identifiant unique de l'enregistrement<br />
+            </strong>Un numéro séquentiel unique sera automatiquement attribué par <strong>ABCD</strong> lors du stockage de l'enregistrement.</font></p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Etiquette</font></td>
+            <td valign="top">
+            <p><font size="2"><font face="Arial">Valeur numérique identifiant le champ dans la notice. Ces valeurs vont de 1 à 999, sauf pour le champ <strong>Guide</strong> qui&nbsp;accepte des étiquettes de plus de 4 chiffres.</font></font></p>
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Titre</font></td>
+            <td valign="top"><font face="Arial"><font size="2">Titre ou description du champ tel qu'il apparaîtra lors de la saisie ou les formats de sortie.</font></font></td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">I = Entrée principale</font></p>
+
+            </td>
+            <td valign="top">
+            <p><font size="2"><font face="Arial">Marque si ce champ est l'entrée principale de la notice.&nbsp;</font></font><font size="2"><font face="Arial">Ce champ sera alors affiché dans la liste associée au bouton <img alt="" align="textTop" src="../../php/img/sort-01.gif" /> pour l'identification rapide d'un enregistrement.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+
+            <p><font face="Arial" size="2">R = Répétitif</font></p>
+            </td>
+            <td valign="top"><font face="Arial"><font size="2">Indique si ce champ est répétitif.</font></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Sous-champs</font></td>
+            <td valign="top">
+
+            <p><font face="Arial"><font size="2">Mettez ici les sous-champs (par leur identifiant) du champ correspondant. Le premier peut être omis, mais alors insérez le caractère  <strong>-</strong> (tiret) pour l'indiquer.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Pré-littéraux</font></td>
+            <td valign="top">
+
+            <p><font face="Arial"><font size="2">Caractères spéciaux à utiliser comme pré-littéraux dans les sous-champs de la TDC et les formats de sortie.&nbsp;Si le premier sous-champ n' a pas d'identifiant le caractère <strong> - </strong>(tiret) peut être utilisé.</font></font></p>
+            <p><font face="Arial" size="2">Si cette valeur est donnée, ABCD remplacera lors de la saisie les délimiteurs du sous-champ avec ces prélittéraux pour afficher le champ dans le bordereau de saisie. Quand la notice est établie, les pré-littéraux seront remplacés par les délimiteurs de sous-champs. De cette manière la saisie pour les champs comprenant quelques sous-champs peut être facilitée. Par exemple &nbsp; le nom d'un expert Nom, Prénom mais peut aussi être stocké comme &nbsp; Nom^nPrénom ou ^aNom^nPrénom, en fonction des données spécifiées dans les paramètres pour <strong>Sous-champs&nbsp;</strong>et<strong> Pré-littéraux</strong></font></p>
+
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Saisie des données</strong></font>&nbsp;&nbsp;&nbsp;&nbsp; <strong><font color="#800000"></font></strong></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Type de saisie</font></td>
+
+            <td valign="top">
+            <p><font size="2"><strong><font face="Arial"></font></strong><br />
+            <font face="Arial">Cette valeur est utilisée pour générer une boîte de saisie avec le codage HTML. Les possibilités suivantes sont acceptées :</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Date (D): </strong>Active un contrôle JavaScript qui propose de sélectionner une date à partir d'un calendrier.<br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Sélection de plusieurs options (C):</strong> Case à cocher&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" checked="checked" value="on" /><br />
+
+            Si souhaité, le nombre de colonnes pour présenter les options peut être défini en mettant la valeur correspondante aux <strong>colonnes</strong><br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Sélection d'une option&nbsp;(O):</strong> Bouton radio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" checked="checked" value="on" /><br />
+            Si souhaité, le nombre de colonnes pour présenter les options peut être défini en mettant la valeur correspondante aux  <strong>colonnes</strong></font></font><font face="Arial"><font size="2"><br />
+            <br />
+
+            </font></font><font face="Arial"><font size="2"><strong>Sélection simple (S):</strong> Sélection simple&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</font></font><select>
+            <option value="1" selected="selected">Option 1</option></select>&nbsp; <br /><font face="Arial" size="2">A utiliser pour sélectionner une seule option dans une liste.<br />
+            <br />
+            </font><font face="Arial"><font size="2"><strong>Sélection multiple (M):</strong> Sélection multiple&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</font></font><select multiple="multiple" size="2">
+
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            </select>&nbsp;<br />
+            <font face="Arial" size="2">A utiliser pour sélectionner plus qu'une valeur dans une liste. Dans ce cas le champ doit être identifié comme répétitif.</font></p>
+            <p><font face="Arial"><font size="2"><strong>Zone Html (A)</strong>: Insère un éditeur HTML pour permettre l'édition d'un texte avec un codage HTML.</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>HTML externe (<font face="Arial"><font size="2"><strong>E):</strong>&nbsp;</font></font></strong> Insère un éditeur HTML. Dans ce cas les données ne seront pas stockées dans la base mais dans un fichier externe qui sera lié à l'enregistrement (à mettre en oeuvre)&nbsp;</font></font></p>
+
+            <p><font face="Arial"><font size="2"><strong>Télécharger un fichier&nbsp;(U):</strong> Affiche un contrôle JavaScript permettant de charger des fichiers du serveur et créant un lien en rapport</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Zone de texte &nbsp;(X):</strong> Texte/Zone de texte :&nbsp;</font></font><font face="Arial"><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></font><input /></p>
+            <p><strong>Zone de texte à longueur fixe (XF):</strong>&nbsp; Présente un zone de texte avec un nombre limité de caractère à saisir dans le champ. Le nombre de caractères peut être entré dans une zone <strong>colonnes</strong></p>
+
+            <p><strong>Tableau (TB): </strong>Permet l'édition de champs répétitifs avec sous-champs présentés en tableau. En outre, le nombre d'occurences peut être défini en mettant ce nombre dans une zone <strong>lignes</strong></p>
+            <p><strong>Mot de passe (P)</strong>: La zone de saisie affichera des * pour masquer le contenu de ce champ particulier.</p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+
+            <td valign="top"><span class="t"><font face="Arial" size="2">Lignes</font></span></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">Le type d'entrée <strong>T </strong>(Groupe), spécifie le nombre de lignes (occurrences) permises pour ce champ. S'il est absent et que le champ contient 0 occurence, 10 lignes seront affichées. S'il existe des occurrences, elles seront affichées avec 5 lignes supplémentaires.</font></font></p>
+            <p><font face="Arial" size="2">Le type d'entrée <strong>X </strong>(Zone de texte) ou <strong>A</strong> (Zone Html), précise le nombre maximum de lignes à afficher. Si le type est T (group), une &nbsp;Zone de texte &nbsp; est affichée. De même avec le type T, quand le nombre de ligne est supérieur à 1 une zone de texte est affichée. Le type A (Zone HTML) définit la taille de la fenêtre de présentation de l'éditeur HTML.</font></p>
+
+            <p><font face="Arial" size="2">Le type <strong>M</strong>&nbsp;(Sélection multiple) spécifie le nombre d'options proposé par la liste.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Colonnes</font></td>
+            <td valign="top">
+            <p>&nbsp;</p>
+
+            <p><font face="Arial" size="2">Si la valeur de <strong>Entrer comme</strong>&nbsp;est <strong>X </strong>(Texte/Zone de texte) ou <strong>A</strong> (Zone HTML), on définit le nombre maximum de colonnes (caractères) présentes dans les lignes de la zone de texte.</font></p>
+            <p><font face="Arial" size="2">Si la valeur de <strong>Entrer comme</strong> est&nbsp;<strong>T</strong> (Champ répétitif avec sous-champs), le nombre de colonnes définira le nombre de sous-champs souhaités.</font></p>
+
+            <p><font face="Arial" size="2">Si la valeur de <strong>Entrer comme</strong> est <strong>O </strong>(radio button) ou <strong>C</strong> (checkbox), on définit le nombre d'options à mettre dans chaque ligne</font></p>
+            </td>
+        </tr>
+        <tr>
+
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Liste de sélection</strong></font>&nbsp;&nbsp; <font face="Arial"><font color="#800000"></font></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Type</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Liste de contrôle à utiliser pour gérer la terminologie du champ, avec les options suivantes :</font></p>
+            <p><font face="Arial"><font size="2"><strong>D</strong>&nbsp;= Base de données<br />
+
+            <strong>P</strong> = picklist (ou liste de sélection)<br />
+            <strong>T</strong> = Thésaurus</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Nom</font></td>
+
+            <td valign="top"><font face="Arial" size="2">Nom de la base de données à utiliser pour offrir les valeurs autorisées, ou le fichier avec les options de la liste</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Préfixe</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Si le <strong>Type de liste de sélection</strong>&nbsp; est&nbsp;<strong>D</strong>, ou <strong>T</strong>, alors, le préfixe est spécifié pour permettre l'utilisation des termes de la base définie dans <strong>Nom</strong>. Le préfixe sera utilisé dans le Fichier Inversé (dictionnaire) et en utilisant le pointeur, l'information sur le champ, sera récupéré et référencé pour le premier enregistrement pointé par le NFM du pointeur.</font></p>
+
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Formats d'affichage</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Format à utiliser pour afficher le champ pointé par le Fichier Inversé dans la liste de sélection. Si le format d'extraction inclut des champs variables avec des étiquettes différentes, le nom du format à utiliser ou le format lui même peut être placé ici. Ce format doit être écrit après un délimiteur pré-défini pour être correctement interprété. Voyez l'exemple suivant utilisé pour les fichiers d'autorité de la base MARC : @autorités.pft</font></p>
+            <p><font face="Arial" size="2">Ce format a la structure suivante :<br />
+
+            <br />
+            <font face="Courier New">select e3<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b<br />
+
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+            ...<br />
+            <br />
+            ...<br />
+
+            <br />
+            endsel</font></font></p>
+            <p><font face="Arial" size="2">La 'variable' utilisée dans ce&nbsp;<strong>cas </strong>-construction de la commande<strong>&nbsp;select</strong>&nbsp;identifie le <strong>ID</strong> assigné au champ dans la TSC; Ensuite le format est défini pour permettre l'affichage du champ dans la liste de sélection. on trouve enfin, préfixé par `$$$`, le format pour présenter le champ et le transférer au formulaire de saisie. S'il manque, le format d'affichage sera utilisé comme format d'extraction.</font></p>
+            <p><font face="Arial" size="2">En résumé, la procédure fonctionne comme suit :
+            <ol>
+
+                <li><font face="Arial" size="2">Le préfixe donné est utilisé pour accéder au fichier inversé et pour remplir la <strong>boîte de sélection</strong> en HTML. L'affectation est donnée dans l'étiquette <strong>&lt;option&gt;</strong> de la liste de sélection de l'affichage.</font> </li>
+                <li><font face="Arial" size="2">Lorsque l'utilisateur sélectionne un terme, les informations sur: NFM, ID, occurrence et position sont notées.</font> </li>
+                <li><font face="Arial" size="2">Avec le NFM la notice dans laquelle le terme apparaît et le format d'extraction appliqué suivant le <strong>ID&nbsp; </strong> et l'<strong>Occurrence </strong>de l'affectation est utilisé pour localisé le terme recherché dans la notice. <strong><em>Note : Si le champ est répétitif, il est obligatoire d'utiliser un post-littéral&nbsp;&nbsp;% dans la TSC pour s'assurer que les occurrences sont comptées dans l'affectation.</em></strong></font> </li>
+
+                <li><font face="Arial" size="2">Le terme est extrait de la notice comme entré dans la base&nbsp;et est mis dans la fenêtre du formulaire de saisie.</font> </li>
+            </ol>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Extraction</font></td>
+            <td valign="top"><font face="Arial" size="2">Format à utiliser pour extraire des valeurs de la base de données et sur le champ situé dans le fichier inversé en utilisant le préfixe donné. Si le format d'affichage est un format prédéfini (@xxxx) et suit l'instruction de séparer le format d'affichage du format d'extraction par <strong>$$$, </strong> cette partie devrait être laissée vide.</font></td>
+
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Messages d'aide</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Cochez cette case si le champ a une page d'aide. Pour écrire des messages d'aide, utilisez l'option <strong>Pages d'aide pour les champs de la base de données </strong>dans le menu <strong>Mise à jour des définitions de la Base</strong></font></p>
+            <p><font size="2">Les pages d'aide sont stockées dans le dossier <strong>bases/<em>dbn/</em>aide </strong>où <strong><em>dbn</em></strong> est le nom de la base de données.</font></p>
+
+            <p>&nbsp;&nbsp;</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;<hr />
+</p>
+<p><font face="Arial" size="2"><strong><a name="editor"></a><big>Comment utiliser l'éditeur&nbsp;</big> </strong><a href="#top">(TOP)</a></font></p>
+
+<p><font face="Arial" size="2">Il est possible d'augmenter ou de diminuer le nombre de colonnes en mettant le curseur sur le titre du tableau, sur la ligne de séparation de la colonne dont vous souhaitez modifier la largeur, en faisant glisser la barre transversale vers la gauche ou la droite pour élargir ou rétrécir la colonne.</font></p>
+<p><font face="Arial" size="2">Utilisez la touche&nbsp;<em><strong>[Tab]</strong></em> pour naviguer dans les cellules.</font></p>
+<p><font face="Arial" size="2">Utilisez les flèches&nbsp;<strong><em>[HAUT / BAS]&nbsp;</em></strong>pour naviguer dans les lignes.</font></p>
+<p><font face="Arial" size="2"><strong><em>Double-clic </em></strong>ou&nbsp;<strong><em>[F2]</em></strong> pour activer l'édition d'une cellule</font></p>
+
+<p><em><strong>[Entrer]</strong></em><font face="Arial" size="2">&nbsp;ou&nbsp;&nbsp;</font><em><strong><font face="Arial" size="2"> [Echap.]&nbsp;&nbsp; </font></strong></em><font face="Arial" size="2">pour quitter l'édition d'une cellule.</font></p>
+<p><font face="Arial" size="2"><strong><em>Ajouter une ligne avant&nbsp;&nbsp; </em></strong>permet d'ajouter une ligne avant la sélection.</font></p>
+<p><font face="Arial" size="2"><strong><em>Supprimer la ligne</em></strong>&nbsp;&nbsp; enlève la ligne sélectionnée.</font></p>
+<p><font face="Arial" size="2"><strong><em>Organiser la TDC&nbsp;&nbsp; </em></strong>permet de changer la place des champs définis dans la table (à mettre en œuvre)</font></p>
+
+<p><font face="Arial" size="2"><strong><em>Test</em></strong>&nbsp;&nbsp; présente un exemple de formulaire basé sur les éléments définis.</font></p>
+<p><font face="Arial" size="2"><strong><em>Liste&nbsp;&nbsp;</em></strong> présente dans une nouvelle fenêtre la TDC en cours d'édition.</font></p>
+<p><font face="Arial" size="2"><strong><em>Validation </em></strong>Vérifie la structure de la TDC et présente une liste d'erreurs (le cas échéant)</font></p>
+<p><font face="Arial" size="2"><em><strong>Mise à jour</strong></em>&nbsp;&nbsp; valide et enregistre la TDC (s'il n'y a pas d'erreurs !)</font></p>
+<p><font face="Arial" size="2"><em><strong>Annule</strong></em>&nbsp;&nbsp; annule tous les changements réalisés.</font></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p><font face="Arial"><a name="picklist"></a><strong><big>Tables&nbsp;(picklists)&nbsp;et fichiers d'autorité</big></strong></font><big>&nbsp;<strong><font face="Arial" size="2"> </font></strong><a href="#top"><font face="Arial" size="2">(TOP)</font></a></big></p>
+<p>&nbsp;</p>
+<p><font face="arial" size="2">Pour définir des tables ou listes d'autorité associées à des champs, sélectionnez dans la colonne &nbsp;<strong>'Sélection de type de listes'</strong>&nbsp;le type &nbsp;de fichier à utiliser avec le contrôle d'autorité.&nbsp; Pour continuer, cliquez sur &nbsp;<strong><em>parcourir</em></strong> pour obtenir les possibilités prévues pour chaque cas&nbsp;&nbsp;</font></p>
+
+<p>
+<table cellspacing="5" cellpadding="0" width="100%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">Type</font></p>
+            </td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Liste de contrôle&nbsp; à utiliser pour gérer la terminologie du champ, avec les options suivantes :</font></p>
+
+            <div><font face="Arial" size="2"><strong>D</strong></font><font face="Arial" size="2">&nbsp;= Base de données<br />
+            <strong><span>P</span></strong> = picklist (ou liste de sélection)<br />
+            <strong>T</strong> = Thésaurus</font></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Nom</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Nom de la base de données à utiliser pour offrir les valeurs autorisées, ou le fichier avec les options de la liste</font></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Préfixe</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Si le <strong><span>type</span></strong>&nbsp; est&nbsp;<strong>D</strong>, ou <strong>T</strong>, donne le préfix à utiliser pour obtenir les conditions de la base de données figurant dans le <strong>authority_name</strong>. Le préfix est appliqué à la IF et de l'affichage prend l'information directement sur le champ correspondant de la première recordpointed par la NPF de  l'affichage.</font></div>
+
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Format d'affichage</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Format à utiliser pour afficher le champ pointé par le IF (avec le préfixe donné) dans la liste de sélection. Si le format d'extraction comprend différents domaines avec différentes marques, le nom du format d'être utilisé ou le format lui-même peut être mis ici. Ce format doit être rédigé après une pré-défini, afin d'être correctement interprétées. </font></div>
+
+            <div><font face="Arial" size="2">Voir le exemple utilisé ici pour les archives d'autoritées de la base de donné MARC: @autoridades.pft:</font></div>
+            <div><font face="Arial" size="2"><br />
+            </font><font face="Arial" size="2"><span style="FONT-FAMILY: Courier New">select e3<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b<br />
+
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+            ...<br />
+            ...<br />
+            endsel<br />
+
+            </span></font></div>
+            <div><font face="Arial" size="2">La 'variable' utilisée dans ce &nbsp;<strong>cas- </strong>-construction de la commande  <strong>&nbsp;select</strong>&nbsp;identifie l'   <strong>Id</strong> affecté aux champ de la FST; <strong>case</strong>, identification:<br />
+            </font>
+            <ul>
+
+                <li><font face="Arial" size="2">Prochain est specifié le format à utiliser pour afficher le champ dans la liste de sélection</font> </li>
+                <li><font face="Arial" size="2">le format, le préfixe `$$$`, être utilisé pour présenter le domaine et le transfert au formulaire d'entrée des données. Si omis, le format d'affichage sera utilisé comme format d'extraction.</font></li>
+            </ul>
+            </div>
+            </td>
+        </tr>
+        <tr>
+
+            <td valign="top">
+            <div><font face="Arial" size="2">Extraction</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2"><font size="2">Format à utiliser pour extraire des valeurs de la base de données et sur le champ situé dans le fichier inversé en utilisant le préfixe donné. Si le format d'affichage est un format prédéfini (@xxxx) et suit l'instruction de séparer le format d'affichage du format d'extraction par <strong>$$$, </strong> cette partie devrait être laissée vide.</font></font></div>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+<span id="1198937684424E" style="VISUALISER: none">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

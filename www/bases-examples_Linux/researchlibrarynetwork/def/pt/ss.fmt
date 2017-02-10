@@ -1,0 +1,33 @@
+H||Dados gerais|0|0||||||||||||0|
+F|9|Tipo de material|0|1|||X||30|D||TM_|@autoridades.pft|||0|
+F|104|Localização|0|1|||X|||D|biblo|UB_|@autoridades.pft|||0|
+F|35|ISSN|0|0|||X||D||ISSN_|@autoridades.pft||||0|
+F|30|Título (seriado)|0|0|||X||D||TA_|@autoridades.pft||||0|
+F|38|Editora|0|1|||X|||D||ED_|@autoridades.pft|||0|
+F|39|Cidade|0|0|||X||30|D||CD_|@autoridades.pft|||0|
+F|40|País|0|0|||X||20|D||PA_|@autoridades.pft|||0|
+F|43|Data de publicação|0|0|||X||20|||||||0|
+H||Conteúdo|0|0||||||||||||0|
+F|64|Idioma do texto|0|0|||X||30|D||LA_|@autoridades.pft|||0|
+F|66|Outros idiomas|0|1|||X|||D||LA_|@autoridades.pft|||0|
+F|76|Descritores|0|1|||X|1.5||D||MA_|@autoridades.pft|||0|
+F|160|Orientador (tese)|0|1|-brfh|-,(*|X|||D||AU_|@autoridades.pft|||0|
+F|80|Cat. temática primaria|0|1|||X|||D||CP_|@autoridades.pft|||0|
+F|81|Cat. temática secundária|0|1|||X|||D||CS_|@autoridades.pft|||0|
+F|77|Dados estatísticos|0|1|||X|||D||DE_|@autoridades.pft|||0|
+F|82|Descrit. geográficos|0|1|||X|||D|biblo|DG_|@autoridades.pft|||0|
+F|85|Div.Adm.e reg.|0|1|||X|||D||DA_|@autoridades.pft|||0|
+F|86|Siglas|0|1|||X|||D|biblo|SG_|@autoridades.pft|||0|
+F|87|Outras ent.sec.|0|1|||X|||D|biblo|OES_|@autoridades.pft|||0|
+F|37|Notas de conteúdo|0|1|||X|2||||||||0|
+F|68|Notas administrativas|0|1|||X|2||||||||0|
+H||Resumo|0|0||||||||||||0|
+F|72|Resumo|0|1|||A|10|200|||||||1|
+H||Tabela de conteúdo|0|0||||||||||||0|
+F|36|Tabela de conteúdo|0|1|bcdefnopq|/////@@@@|X|10||||||||0|
+H||Documentos vinculados|0|0||||||||||||0|
+F|800|Imagen|0|1|d||U|||||||||0|
+F|810|Texto|0|1|d||U|||||||||0|
+F|820|Som|0|1|d||U|||||||||0|
+F|830|Vídeo|0|1|d||U|||||||||0|
+F|840|WWW|0|1|d||X|||||||||0|

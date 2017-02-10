@@ -1,0 +1,100 @@
+<font face="arial">
+<p><strong><font size="2">Introduction</font></strong></p>
+<p><font size="2">ABCD contains &nbsp;6 modules:</font></p>
+<ul>
+    <li><font size="2">Database Administration </font></li>
+    <li><font size="2">Cataloguing </font></li>
+    <li><font size="2">Loans </font></li>
+    <li><font size="2">Statistics </font></li>
+    <li><font size="2">Acquisitions </font></li>
+    <li><font size="2">Thesaurus </font></li>
+</ul>
+<p><font size="2">Which are activated according to the rights assigned to users.</font></p>
+<p><strong><font size="2">Installation:</font></strong></p>
+<p><font size="2">The system installation consults two directories:</font></p>
+<p><font size="2"><strong>ABCD</strong>: which contains the scripts and other necessary resources for the program's operation and  system pages presentation.</font></p>
+<p><font size="2"><strong>BASES: </strong>which contains the resources that the user generates or modifies in the databases during the ABCD operation (databases, messages files, help files, etc).</font></p>
+<p><font size="2">The database engine is Bireme WXIS which can be invoked in the different scripts through two methods: </font></p>
+<p><font size="2"><strong>Exec</strong>: acts invoking WXIS in a similar way to the commands line. </font></p>
+<p><font size="2"><strong>Http</strong>: acts invoking WXIS through a CGI. It is the system administrator´s responsibility  to define the virtual directory CGI from which the wxis will be invoked.</font></p>
+</font>
+<p><font size="2" face="arial">The way to invoke WXIS is defined by the system administrator at the time of the installation and is registered in ABCD through the corresponding parameters in the configuration file.</font></p>
+<font face="arial"><p><strong><font size="2">ABCD configuration file</font></strong></p>
+<p><font size="2">This is located in the directory <strong>/abcd/php </strong>under the name <strong>config.php</strong> and has the following parameters:</font></p>
+<p>
+<table cellspacing="3" cellpadding="1" width="90%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top"><font size="2">$db_path</font></td>
+            <td valign="top">
+            <p><font size="2">Path to directory which contains the database.<br />
+            E.g.:&nbsp;&nbsp; $db_path="/abcd/www/bases/";</font></p>
+            <p><font size="2">Notice that the path must finish with /. It should also keep the parameter syntax in order to avoid errors when scripts are executed.</font></p>
+            <p><font size="2">The databases can be located in any directory in the system hard disk. Then this parameter is used for their localization. ABCD will create a subdirectory for each database in this directory. </font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2">$Wxis</font></td>
+            <td valign="top">
+            <p><font size="2">Path where executable wxis.exe will locate, if this is the method selected for scripts execution. If CGI method is used, leave this parameter blank.</font></p>
+            <p><font size="2">E.g.: $Wxis="/abcd/www/cgi-bin/wxis.exe";</font></p>
+            <p><font size="2">This indicates that the executable name is wxis.exe and is located in the directory /abcd/www/cgi-bin/</font></p>
+            <p><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $Wxis="";</font></p>
+            <p><font size="2">This indicates that the method of WXIS execution will be through a CGI</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2">$wxisUrl</font></td>
+            <td valign="top">
+            <p><font size="2">Specifies the URL used to invoke WXIS, when the selected method is through a CGI. </font></p>
+            <p><font size="2">E.g.: $wxisUrl=</font><a href="http://localhost/wxis/wxis.exe"><font size="2">http://localhost:9090/cgi-bin/wxis.exe</font></a><font size="2">;</font></p>
+            <p><font size="2">In this case the parameter $Wxis will be blank ($Wxis="";). However, if both parameters have a value assigned, ABCD takes the url defined in $wxisUrl for the Wxis execution.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2">$lang</font></td>
+            <td valign="top">
+            <p><font size="2">This specifies the default dialogue language to be used.<br />
+            E.g.: $lang="es";&nbsp; for spanish<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$lang="en";&nbsp; for english</font></p>
+            <p><font size="2">The available languages are stored in the directory <strong>bases</strong> in a file named <strong>lang.tab</strong></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2">$lang_db</font></td>
+            <td valign="top"><font size="2">This specifies the dialogue language to be used in order to locate the database structures (FDT, FMT, PFT) when they are not located in the active language.</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2">$institution_name</font></td>
+            <td valign="top"><font size="2">Institution name</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2">$FCKConfigurationsPath</font></td>
+            <td valign="top"><font size="2">Path to FCK Editor´s configuration file.</font></td>
+        </tr>
+    </tbody>
+</table>
+</p>
+</font>
+<p><font size="2" face="arial">Notice that these parameters are part of a programming script. Therefore, you cannot change their names or the shown syntax. Only  what is in quotes ("....") can be changed  to place the proper values. </font></p>
+<font face="arial">
+<p><strong><font size="2">User Verification</font></strong></p>
+</font>
+<p><font size="2" face="arial">There is a subdirectory named <strong>access</strong> in the directory <strong>bases</strong> where the users who have access to ABCD are stored. They are 8 defined user types at the time of installation:</font></p>
+<font face="arial"><ul>
+    <li><font size="2">System Administrator </font></li>
+    <li><font size="2">Database Administrator </font></li>
+    <li><font size="2">Database Operator </font></li>
+    <li><font size="2">Loans Administrator </font></li>
+    <li><font size="2">Loans Operator </font></li>
+    <li><font size="2">Acquisitions Administrator</font></li>
+    <li><font size="2">Acquisitions Operator </font></li>
+    <li><font size="2">Thesaurus Administrator </font></li>
+</ul>
+<p><font size="2">ABCD is dynamically configured according to the rights previously established for each role.</font></p>
+<p><strong><font size="2">Verification of ABCD installation </font></strong></p>
+<p><font size="2">To verify if the wxis is properly installed you can run the following url: </font><font face="Arial"><a href="http://localhost:9090/cgi-bin/wxis.exe?IsisScript=hello"><font size="2">http://localhost:9090/cgi-bin/wxis.exe?IsisScript=hello</font></a><font size="2">. If you receive the reply below:</font></font></p>
+<font size="2">WXIS|file error|file open|Isis_Script|</font>
+<p><font size="2" face="arial">To verify if the wxis is properly installed you can run the following url: <a href="http://localhost:9090/php/test/test.php">http://localhost:9090/php/test/test.php</a>. In the resulting page click on the second link, which will show if there is any configuration error.</font></p>
+<font face="arial"><font face="arial" size="2"><p>&nbsp;</p>
+</font></font><font face="Arial" size="2">Then, the wxis is properly installed.</font>

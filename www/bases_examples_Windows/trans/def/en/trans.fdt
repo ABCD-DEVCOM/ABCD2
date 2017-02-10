@@ -1,0 +1,25 @@
+F|1|Record type|0|0|||X|||||||||0||
+F|10|Inventory number|0|0|||X|||||||||0||
+F|12|Volume|0|0|||X|||||||||0||
+F|15|Part|0|0|||X|||||||||0||
+F|20|User code|0|0|||X|||||||||0||
+F|30|Date of loan|0|0|||X|||||||||0||
+F|35|Time of loan|0|0|||X|||||||||0||
+F|40|Dater of return|0|0|||X|||||||||0||
+F|45|Time of return|0|0|||X|||||||||0||
+F|60|Date of return (actual)|0|0|||X|||||||||0||
+F|65|Time of return (actual)|0|0|||X|||||||||0||
+F|70|User type|0|0|||X|||||||||0||
+F|80|Object type|0|0|||X|||||||||0||
+F|90|Classification no.|0|0|||X|||||||||0||
+F|95|Control number of object|0|0|||X|||||||||0||
+F|98|Database|0|0|||X|||||||||0||
+F|100|Reference|0|0|||X|||||||||0||
+OD|120|Operator and date of loan|0|0||||||||||||0||
+OD|130|Operator and date of return|0|0||||||||||||0||
+T|200|Renewals|0|1|abcde||TB|||||||||0||
+S||Date of loan|0|0|||||10|||||||0||
+S||Time of loan|0|0|||||10|||||||0||
+S||Date of return|0|0|||||10|||||||0||
+S||Time of return|0|0|||||10|||||||0||
+S||Operator of renewal|0|0|||||20|||||||0||

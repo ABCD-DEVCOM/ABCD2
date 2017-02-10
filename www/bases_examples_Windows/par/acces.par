@@ -1,0 +1,8 @@
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+prologo.pft=%path_database%www/prologo.pft
+epilogo.pft=%path_database%www/epilogo.pft
+acces.*=%path_database%acces/data/acces.*
+isisac.tab=%path_database%access/data/isisac.tab
+isisuc.tab=%path_database%access/data/isisuc.tab
+STW=%path_database%access/data/access.stw

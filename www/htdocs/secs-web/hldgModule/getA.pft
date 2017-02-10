@@ -1,0 +1,173 @@
+/*  #,'----'/,v1,' ',v2,' ',v3,' ',v4,' ',v5,' ',v6,/ */
+
+,if v1*0.1='S' then 
+	/* NUMEROS ESPECIAIS */
+	,if ref(mfn-1,v1*0.1)='R' then 
+		,if ref(mfn-1,v5)='P' then
+			ref(mfn-1,,
+				,'|',
+				,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',						
+				,if instr(v7,s(v4,'F'))>0  then ,'LAST_OF_THE_YEAR', fi
+				'|',
+				#
+			),
+		,fi
+	# 
+	fi
+	,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_BEGIN|',
+	,'|',
+	,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END||SPECIALS',
+	#
+,else
+,if v1*0.1='R' or (v1*0.1='L' and ref(mfn-1,v1*0.1)='R') then 
+	/* NUMEROS REGULARES */
+	,if mfn=1 and v5='P' then
+		,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|','RANGE_BEGIN','|FIRST_OF_THE_YEAR',
+	,else
+		,if v5='A' or v1='LAST' then
+			/* NUMERO AUSENTE */
+
+			/* VERIFICA SE NUMERO ANTERIOR ESTA PRESENTE */
+			,if ref(mfn-1,v5)='P' then
+				,ref(mfn-1,,
+					,'|',
+					,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',						
+				,),
+				,if ref(mfn-1,v2)<>v2 then 
+					if v1<>'LAST' then ,'LAST_OF_THE_YEAR', fi,
+				,else
+					,if ref(mfn-1,v3)<>v3 then
+						,'CHANGE_NUMBER_END',
+					,fi
+				,fi
+				'|',
+				#,
+			,fi
+			/* VERIFICA SE NUMERO POSTERIOR ESTA PRESENTE */
+			,if ref(mfn+1,v5)='P' and ref(mfn+1,v1*0.1)<>'S' then
+				,ref(mfn+1,
+					,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+					,'RANGE_BEGIN'
+					,'|',
+				),
+				,if ref(mfn+1,v2)<>v2 then
+					'FIRST_OF_THE_YEAR',
+				,else
+					,if ref(mfn+1,v3)<>v3 then
+						,'CHANGE_NUMBER_START',
+					,fi
+				,fi
+			,fi
+
+		,else			
+			,if v5='P' then
+				/* NUMERO PRESENTE E PRIMEIRO NO INTERVALO DO ANO OU NO INTERVALO DO VOLUME */
+				/* V9000 = STATUS DO ANO ANTERIOR */
+				,proc('a9000{',
+
+					,if l(s('YS=P',ref(mfn-1,v2)))>0 then
+						,if l(s('YS=A',ref(mfn-1,v2)))>0 then
+							/* neste ano, há numeros ausentes */
+							,'X',
+						,else
+							,if l(s('YEAR_INC',f(val(v2)-1,1,0)))>0  then
+								,'X',
+							,else
+								/*  neste ano, todos numeros presentes */
+								,'P',
+							,fi
+						,fi			
+					,else
+						/*  neste ano, todos numeros ausentes */
+						,'A',
+					,fi
+				,'{'),
+				/* V9001 = STATUS DO ANO ANTERIOR */
+				,proc('a9001{',
+					,if l(s('YS=P',v2))>0 then
+						,if l(s('YS=A',v2))>0 then
+							/*  neste ano,há numeros ausentes */
+							,'X',
+						,else
+							/*  neste ano,todos numeros presentes */
+							,if l(s('YEAR_INC',v2))>0  then
+								,'X',
+							,else
+								/*  neste ano, todos numeros presentes */
+								,'P',
+							,fi
+						,fi			
+					,else
+						/*  neste ano,todos numeros ausentes */
+						,'A',
+					,fi
+				,'{'),
+				,if  v9000='X' or v9001='X' then
+					/* UM DOS ANOS ESTA INCOMPLETO, MARCAR FIM E INICIO DE INTERVALO */
+					,if ref(mfn-1,v2)<>v2 then	
+						/* ANO COM TODOS OS VOLUMES IGUAIS */
+						,ref(mfn-1,
+							,if v5='P' then
+								,'|',
+								,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',						
+								if v1<>'LAST' then ,'LAST_OF_THE_YEAR', fi,
+								'|',
+								#
+							,fi
+						,),
+						,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+						,'RANGE_BEGIN'
+						,'|FIRST_OF_THE_YEAR',	
+					,else
+						/* ANO COM VOLUMES DIFERENTES */
+						,if ref(mfn-1,v3)<>v3 then
+							/* volume completo ou nao */
+							,proc('a8000{',
+								,if l(s('YSN=P',ref(mfn-1,s(v2,v3))))>0 then
+									,if l(s('YSN=A',ref(mfn-1,s(v2,v3))))>0 then
+										/* há numeros ausentes */
+										,'X',
+									,else
+										/* todos numeros presentes */
+										,'P',
+									,fi			
+								,else
+									/* todos numeros ausentes */
+									,'A',
+								,fi
+							,'{'),
+							,proc('a8001{',
+								,if l(s('YSN=P',v2,v3))>0 then
+									,if l(s('YSN=A',v2,v3))>0 then
+										/* há numeros ausentes */
+										,'X',
+									,else
+										/* todos numeros presentes */
+										,'P',
+									,fi			
+								,else
+									/* todos numeros ausentes */
+									,'A',
+								,fi
+							,'{'),
+							,if v8000='X' or v8001='X' then
+								/* volume anterior completo, volume atual incompleto */
+								ref(mfn-1,
+										,'|',
+										,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',						
+										,'CHANGE_NUMBER_END',
+										'|',
+										#
+									,),				
+								,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+								,'RANGE_BEGIN'
+								,'|CHANGE_NUMBER_START',
+							,fi,
+						,fi
+					,fi
+				,fi	
+			,fi
+		,fi
+	,fi		
+,fi
+,fi

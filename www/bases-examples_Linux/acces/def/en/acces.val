@@ -1,0 +1,12 @@
+10:if a(v10) then 'Missing user name' fi
+$$|$$true
+###
+20:if a(v20) then 'Missing login' fi
+$$|$$true
+###
+30:if a(v30) then 'Missing password' fi
+$$|$$true
+###
+40:if a(v40) then 'Missing profile' fi
+$$|$$false
+

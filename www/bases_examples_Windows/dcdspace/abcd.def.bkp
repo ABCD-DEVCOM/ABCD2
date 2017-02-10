@@ -1,0 +1,8 @@
+VERSION=2.0b
+LEGEND1=2015
+LEGEND2=ONLY FOR TESTING - NOT FOR DISTRIBUTION
+URL1=http://www.abcdwiki.net
+URL2=http://www.iccisis.org
+diglib=ffi/
+dubcore=ffi/
+

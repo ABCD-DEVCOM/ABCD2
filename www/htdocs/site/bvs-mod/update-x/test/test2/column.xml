@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<document-line>
+	<column path="/user/@code" sort="code"/>
+	<column path="/user/@name" sort="name"/>
+	<column path="/user/@type" sort="type"/>
+</document-line>

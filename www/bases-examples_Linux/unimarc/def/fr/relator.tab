@@ -1,0 +1,232 @@
+|Accessoiriste ==> EMPLOYER : Membre de l’équipe de production (633)
+005|Acteur
+010|Adaptateur
+390|Ancien possesseur
+020|Annotateur
+100|Antécédent bibliographique
+360|Aquafortiste
+030|Arrangeur
+202|Artiste de cirque
+|Artiste de mime ==> EMPLOYER : Mime (535)
+040|Artiste
+070|Auteur
+018|Auteur de l’animation
+450|Auteur de l’envoi
+|Auteur de l’hommage ==> EMPLOYER : Auteur de l’envoi (450)
+|Auteur de l’interview ==> EMPLOYER : Intervieweur (470)
+075|Auteur de la postface, du colophon, etc.
+|Auteur de la préface, etc. ==> EMPLOYER : Préfacier, etc. (080)
+|Auteur de la recension ==> EMPLOYER : Critique (675)
+|Auteur de la réduction musicale ==> EMPLOYER : Arrangeur (030)
+072|Auteur des citations ou des fragments textuels
+|Auteur des dialogues ==> EMPLOYER : Dialoguiste (090)
+|Auteur des lyrics ==> EMPLOYER : Parolier (520)
+212|Auteur du commentaire
+|Auteur du compliment ==> EMPLOYER : Auteur de l’envoi (450)
+|Auteur du compte rendu ==> EMPLOYER : Secrétaire (710)
+|Auteur du livret d’un opéra, d’une comédie musicale ou d’un ballet ==> EMPLOYER : Librettiste (480)
+770|Auteur du matériel d’accompagnement
+|Auteur du scénario ==> EMPLOYER : Scénariste (690)
+330|Auteur présumé
+570|Autre
+|[400 Bailleur de fonds] code obsolète ==> EMPLOYER : Parraineur (723)
+|Basse continue, réalisation de la ==> EMPLOYER : Arrangeur (030)
+|Bois, graveur sur ==>EMPLOYER : Graveur sur bois (760)
+|Brevet, demandeur de ==> EMPLOYER : Demandeur de brevet (582)
+|Brevet, inventeur de ==> EMPLOYER : Inventeur de brevet (584)
+|Brevet, titulaire de ==> EMPLOYER : Titulaire de brevet (587)
+170|Calligraphe
+305|Candidat
+|Caractères, concepteur des ==> EMPLOYER : Concepteur de caractères (740)
+180|Cartographe
+|Cartooniste ==> EMPLOYER : Artiste (040)
+726|Cascadeur
+190|Censeur
+721|Chanteur
+|Chef costumier ==> EMPLOYER : Membre de l’équipe de production (633)
+250|Chef d’orchestre
+195|Chef de choeur
+|Chef éclairagiste ==> EMPLOYER : Membre de l’équipe de production (633)
+|Chef maquilleur == > EMPLOYER : Membre de l’équipe de production (633)
+|Chef monteur ==> EMPLOYER : Monteur (370)
+200|Chorégraphe
+|Coauteur ==> EMPLOYER Auteur (070)
+205|Collaborateur
+|Collection, directeur de == > EMPLOYER : Directeur de publication (651)
+475|Collectivité éditrice
+|Coloriste == > EMPLOYER : Technicien graphique (410)
+|Comique == > EMPLOYER : Humoriste (207)
+210|Commentateur
+273|Commissaire d’exposition
+065|Commissaire-priseur
+220|Compilateur
+|Compliment, auteur du ==> EMPLOYER : Auteur de l’envoi (450)
+240|Compositeur d’imprimerie
+230|Compositeur
+500|Concédant de licence
+740|Concepteur de caractères
+150|Concepteur de l’ex-libris
+140|Concepteur de la jaquette
+|Concepteur de la maquette ==> EMPLOYER : Maquettiste (130)
+|Concepteur de la reliure ==> EMPLOYER : Maquettiste de la reliure (120)
+|Concepteur des éclairages ==> EMPLOYER : Membre de l’équipe de production (633)
+|Concepteur des masques ==> EMPLOYER : Membre de l’équipe de production (633)
+245|Concepteur
+695|Conseiller scientifique
+255|Consultant de projet
+257|Continuateur
+|Contrefacteur ==> EMPLOYER : Faussaire (380)
+700|Copiste
+640|Correcteur sur épreuves
+270|Correcteur
+|Costumier ==> EMPLOYER : Membre de l’équipe de production (633)
+|Créateur de slogan ==> EMPLOYER : Concepteur (245)
+|Créateur des effets sonores ==> EMPLOYER : Membre de l’équipe de production (633)
+|Créateur des effets spéciaux == > EMPLOYER : Membre de l’équipe de production (633)
+|Critique ==> EMPLOYER : Responsable du compte-rendu critique (675)
+275|Danseur
+|Décorateur ==> EMPLOYER : Directeur artistique (632)
+280|Dédicataire
+290|Dédicateur
+582|Demandeur de brevet
+660|Destinataire de lettres
+050|Détenteur de l’autorisation d’imprimer ou de publier
+490|Détenteur de licence
+260|Détenteur du copyright
+090|Dialoguiste
+|Diffuseur ==> EMPLOYER : Distributeur (310)
+632|Directeur artistique
+|Directeur de choeur ==> EMPLOYER : Chef de choeur (195)
+|Directeur de collection ==> EMPLOYER : Directeur de publication (651)
+|Directeur de la photographie ==> EMPLOYER : Photographe (600)
+651|Directeur de publication
+595|Directeur de la recherche
+727|Directeur de thèse
+310|Distributeur
+|Doctorant ==> EMPLOYER : Candidat (305)
+320|Donateur
+|Éclairagiste ==> EMPLOYER : Membre de l’équipe de production (633)
+650|Éditeur commercial
+|Éditeur intellectuel == > EMPLOYER : Éditeur scientifique (340)
+340|Éditeur scientifique
+|Effets sonores, créateur des ==> EMPLOYER : Membre de l’équipe de production (633)
+|Effets spéciaux, créateur des == >  EMPLOYER : Membre de l’équipe de production (633)
+430|Enlumineur
+|Ensemblier ==> EMPLOYER : Directeur artistique (632)
+|Envoi, auteur de l’ ==> EMPLOYER : Auteur de l’envoi (450)
+|Équipe de recherche, membre de la ==> EMPLOYER : Membre de l’équipe de recherche (677)
+|Équipe de recherche, responsable de la ==> EMPLOYER : Responsable de l’équipe de recherche (673)
+|Ex-libris, concepteur de l’ ==> EMPLOYER : Concepteur de l’ex-libris (150)
+755|Exécutant vocal
+365|Expert
+580|Fabricant du papier
+380|Faussaire
+000|Fonction indéterminée
+395|Fondateur
+637|Gestionnaire de projet
+350|Graveur
+|Graveur de musique == > EMPLOYER : Graveur (350)
+|Graveur en lettres == > EMPLOYER : Graveur (350)
+760|Graveur sur bois
+530|Graveur sur métal
+|Harmonisateur == > EMPLOYER : Arrangeur (030)
+|Hommage, auteur de l’ ==> EMPLOYER : Auteur de l’envoi (450)
+207|Humoriste
+440|Illustrateur
+|Imprimatur ==> EMPLOYER : Concédant de licence (500)
+620|Imprimeur de gravures
+610|Imprimeur
+|Infographiste ==> EMPLOYER : Technicien graphique (410) et/ou Illustrateur (440)
+670|Ingénieur du son
+560|Instigateur
+590|Interprète
+|Interviewé ==> EMPLOYER : Personne interviewée (470)
+470|Intervieweur
+584|Inventeur de brevet
+|Investigateur principal ==> EMPLOYER : Instigateur (560)
+|Investigateur ==> EMPLOYER : Instigateur (560)
+|Jaquette, concepteur de la ==> EMPLOYER : Concepteur de la jaquette (140)
+|Jaquette, concepteur de la ==> EMPLOYER : Concepteur de la jaquette (140)
+|Lettres, destinataire de ==> EMPLOYER : Destinataire de lettres (660)
+|Lettres, graveur en ==> EMPLOYER : Graveur (350)
+160|Libraire
+480|Librettiste
+|Licence, concédant de ==> EMPLOYER : Concédant de licence (500)
+|Licence, détenteur de ==> EMPLOYER : Détenteur de licence (490)
+510|Lithographe
+|Lyriciste == > EMPLOYER : Parolier (520)
+|Lyrics, auteur des == > EMPLOYER : Parolier (520)
+|Maquette, concepteur de la == > EMPLOYER : Maquettiste (130)
+120|Maquettiste de la reliure
+130|Maquettiste
+|Maquilleur == > EMPLOYER Membre de l’équipe de production (633)
+655|Marionnettiste
+|Marqueur de rubriques ==> EMPLOYER : Rubricateur (680)
+|Masques, concepteur des ==> EMPLOYER : Membre de l’équipe de production (633)
+|Matériel d’accompagnement, auteur du ==> EMPLOYER : Auteur du matériel d’accompagnement (770)
+633|Membre de l’équipe de production
+677|Membre de l’équipe de recherche
+|Métal, graveur sur ==> EMPLOYER : Graveur sur métal (530)
+|Metteur en scène ==> EMPLOYER : Metteur en scène ou réalisateur (300)
+300|Metteur en scène ou réalisateur
+535|Mime
+540|Moniteur
+370|Monteur
+545|Musicien
+|Musique, graveur de ==> EMPLOYER : Graveur (350)
+550|Narrateur
+060|Nom associé
+555|Opposant
+|Orchestrateur ==> EMPLOYER : Arrangeur (030)
+|Orchestre, chef d’ ==> EMPLOYER : Chef d’orchestre (250)
+557|Organisateur de réunion
+725|Organisme de normalisation
+295|Organisme de soutenance
+520|Parolier
+723|Parraineur
+|Participant ==> EMPLOYER : Personne interviewée (460)
+420|Personne honorée
+460|Personne interviewée
+600|Photographe
+|Photographie, directeur de la ==> EMPLOYER : Photographe (600)
+|Planches, imprimeur de ==> EMPLOYER : Imprimeur de planches (620)
+080|Préfacier, etc.
+|Preneur de son ==> EMPLOYER : Ingénieur du son (670)
+605|Présentateur
+630|Producteur
+635|Programmeur
+|Projet, gestionnaire de == > EMPLOYER : Gestionnaire de projet (637)
+|Publication, directeur de == > EMPLOYER : Directeur de publication (651)
+|Rapporteur == > EMPLOYER : Secrétaire (710)
+|Réalisateur == > EMPLOYER : Metteur en scène ou réalisateur (300)
+|Réalisation de la basse continue == W EMPLOYER : Arrangeur (030)
+|Recension, auteur de la == >|EMPLOYER : Critique (675)
+|Rédacteur en chef == > EMPLOYER : Directeur de publication (651)
+|Rédacteur == > EMPLOYER : Secrétaire (710)
+|Réduction musicale, auteur de la == > EMPLOYER : Arrangeur (030)
+|Régisseur == >EMPLOYER : Directeur artistique (632)
+110|Relieur
+|Reliure, maquettiste de la == > EMPLOYER : Maquettiste de la reliure (120)
+673|Responsable de l’équipe de recherche
+|Responsable du montage cinématographique ou vidéo ==> EMPLOYER : Monteur (370)
+675|Responsable du compte-rendu critique
+|Réunion, organisateur de == >EMPLOYER : Organisateur de réunion (557)
+680|Rubricateur
+690|Scénariste
+|Scribe == >EMPLOYER : Copiste (700)
+|Scripte ==> EMPLOYER : Membre de l’équipe de production (633)
+705|Sculpteur
+710|Secrétaire
+720|Signataire
+|Slogan, créateur de == > EMPLOYER : Concepteur (245)
+|Son, ingénieur du == > EMPLOYER : Ingénieur du son (670)
+|Son, preneur de == > EMPLOYER : Ingénieur du son (670)
+|Sponsor == > EMPLOYER : Parraineur (723)
+410|Technicien graphique
+|Thésard ==> EMPLOYER : Candidat (305)
+|Thèse, directeur de == > EMPLOYER : Directeur de thèse (727)
+|Tireur de photographies == > EMPLOYER Technicien graphique (410)
+587|Titulaire de brevet
+730|Traducteur
+750|Typographe
+753|Vendeur

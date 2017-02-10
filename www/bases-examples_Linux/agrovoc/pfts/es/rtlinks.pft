@@ -1,0 +1,42 @@
+'<table border=0 width=90%>'
+if p(v094) then '<tr><td width=20% valign=top><font face=arial size=2><i>ID</i></td><td valign=top><font face=arial size=2>'v094+|<br>|,'</td>' fi/
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><i>DE (EN)</i></td><td valign=top><font face=arial size=2><b>'v001+|<br>|,'</b></td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><i>SN (EN)</i></td><td valign=top><font face=arial size=2>'v002+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><i>USE (EN)</i></td>
+<td valign=top><font face=arial size=2>',
+(if npost(|DE_|V3) >0 then
+/'$$REF:agrovoc,rt,DE_'v3/
+   fi,),
+fi,
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><i>UF (EN)</i></td>
+<td valign=top><font face=arial size=2>',
+(if npost(|ND_|V4) >0 then
+/'$$REF:agrovoc,rt,ND_'v4/
+   fi,/),
+fi,
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><i>BT (EN)</i></td>
+<td valign=top><font face=arial size=2>',
+(if npost(|DE_|V5) >0 then
+/'$$REF:agrovoc,rt,DE_'v5/
+   fi/),
+fi,
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><i>NT (EN)</i></td>
+<td valign=top><font face=arial size=2>',
+(if npost(|DE_|V6) >0 then
+/'$$REF:agrovoc,rt,DE_'v6/
+   fi/),
+fi,
+if p(v7) then '<tr><td width=20% valign=top><font face=arial size=2><i>RT (EN)</i></td>
+<td valign=top><font face=arial size=2>',
+(if npost(|RT_|V7) >0 then
+/'$$REF:agrovoc,rt,RT_'v7/
+   fi/),
+fi,
+if p(v8) then '<tr><td width=20% valign=top><font face=arial size=2><i>ND (EN)</i></td>
+<td valign=top><font face=arial size=2>',
+(if npost(|ND_|V8) >0 then
+/'$$REF:agrovoc,rt,ND_'v8/
+   fi/),
+fi,
+'</td>'
+'</table><p>'

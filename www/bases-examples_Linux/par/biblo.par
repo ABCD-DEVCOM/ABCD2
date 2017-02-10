@@ -1,0 +1,10 @@
+biblo.*=%path_database%biblo/data/biblo.*
+biblo.pft=c%path_database%biblo/www/biblo.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+autoridades.pft=%path_database%biblo/pfts/en/autoridades.pft
+
+marc.*=%path_database%marc/data/marc.*
+
+
+

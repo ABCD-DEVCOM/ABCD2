@@ -1,0 +1,30 @@
+H||Object identificacion|0|0||||||||||||0||
+F|10|Acquisition method|0|0|ab||R||5|P|%path_database%copies/def/en/acquiredby.tab||||^apr^bPurchase|0||
+AI|1|Suggestions No.|0|0|||X||20|||CN_|V1|v1||0||
+F|2|Status|0|0|||R||4|P|status.tab||||0|0||
+L|||0|0||||||||||||0||
+F|3|Type of acquisition|0|0|||R||1|P|typeacquisition.tab|||||0||
+F|5|Data base|0|0|||S||20|P|%path_database%acquisitions.dat|||||0||
+F|6|Control number|0|0|||X||20|||||||0||
+F|16|Personal Author|0|0|||X|||||||||0||
+F|17|Corporate Author|0|0|||X|||||||||0||
+F|18|Title|0|0|||X|||||||||0||
+F|21|Volume|0|0|||X||30|||||||0||
+F|22|Tome|0|0|||X||30|||||||0||
+F|29|Editor|0|0|||X|||||||||0||
+H||Monograph Series|0|0||||||||||||0||
+F|30|Title|0|0|||X|||||||||0||
+F|31|Volume|0|0|||X|||||||||0||
+F|32|Number|0|0|||X|||||||||0||
+H||Other data|0|0||||||||||||0||
+F|35|ISSN|0|0|||X|||||||||0||
+F|47|ISBN|0|0|||X|||||||||0||
+F|38|Publisher|0|0|||X|||||||||0||
+F|39|City|0|0|||X|||||||||0||
+F|40|Country|0|0|||X|||||||||0||
+F|41|Edition|0|0|||X|||||||||0||
+H||Recommended by|0|0||||||||||||0||
+F|200|Person/Departament|0|0|||X|||||||||0||
+F|210|Date|0|0|||D||10|||||||0||
+F|211|ISO date|0|0|||ISO||10|||||||0||
+F|220|No. of copies|0|0|||X||5|||||||0||

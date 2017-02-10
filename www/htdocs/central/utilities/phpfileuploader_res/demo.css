@@ -1,0 +1,39 @@
+body { 
+text-align: center; 
+margin-top:20px;
+} 
+
+button {font-family:Arial,Verdana;}
+.demo { 
+text-align: left; 
+width: 650px;
+border:solid 5px #CBCAC6;
+background-color:#f9f9f9;
+padding: 10px 20px 20px 20px; 
+font-family:Segoe UI, Arial,Verdana,Helvetica,sans-serif;
+font-size: 80%;
+margin: 0 auto; 
+} 
+table.Grid
+{
+	border-width: 5px;
+	border-style: none;
+	background-color: White;
+	border-color: gray;
+	font-family:Segoe UI, Arial,Verdana,Helvetica,sans-serif;
+	font-size: 90%;
+}
+
+table.Grid TD, table.Grid TH
+{
+	padding: 4px 6px 4px 6px;
+	border: solid 1px #E1E1E1;
+	vertical-align: top;
+}
+
+table.Grid TH
+{
+	background-color: #E1E1E1;
+	font-weight: normal;
+	color: #505050;
+}

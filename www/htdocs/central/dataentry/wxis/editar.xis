@@ -1,0 +1,46 @@
+<IsisScript>
+	<trace>xOn</trace>
+
+	<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=2000>Mfn</field>
+      	<field action=cgi tag=9060>userid</field>
+      	<field action=cgi tag=1>path_db</field>
+      	<field action=cgi tag=9088>cttype</field>
+  		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+
+    	<do task="update">
+       		<parm name="db"><pft>v5001</pft></parm>
+       		<parm name="mfn"><pft>v2000</pft></parm>
+			<parm name="expire">3600</parm>
+       		<parm name=lockid><pft>v9060</pft></parm>
+			<parm name="buffersize">800000</parm>
+   			<parm name=MAX_TMP_STRING>800000</parm>
+       		<field action=define tag=1002>Isis_Total</field>
+       		<field action=define tag=1101>Isis_Lock</field>
+       		<field action=define tag=1102>Isis_Status</field>
+			<field action=define tag=1199>Isis_RecordStatus</field>
+
+       		<update>
+       			 <display><pft>ALL</pft></display>
+          		<write>Lock</write>
+				<display><pft>ALL</pft></display>
+				<flow action=jump><pft>if val(v1102[1]) <> 0 then  'ERROR' fi</pft></flow>
+				<flow action=exit>1</flow>
+				<label>ERROR</label>
+       			<display><pft>
+          						'<dd><h4>Error - ' | (|v1102|) |,'El registro no se puede editar en este momento</h4>'
+       					  </pft></display>
+       		</update>
+    	</do>
+     	<flow action="exit">1</flow>
+
+
+	</section>
+
+</IsisScript>

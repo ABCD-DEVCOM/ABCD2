@@ -1,0 +1,93 @@
+body, table {
+    font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: Black;
+}
+
+.identification {
+    border: solid 1px #999999;
+    background-color: #ddffdd;
+    height: 30px;
+}
+
+.directoryList {
+}
+
+a {
+    color: Black;
+    text-decoration: none;
+    font-weight : bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.current {
+    font-weight: bold;
+}
+
+.caption {
+    border-top : thin groove;
+    border-bottom : thin groove;
+    background-color : #EEEEEE;
+    font-weight : bold;
+    font-size : 11px;
+}
+
+.column {
+    border-top : thin groove;
+    border-bottom : thin groove;
+    background-color : #EEEEEE;
+    color: Navy;
+    font-weight : bold;
+    font-size : 12px;
+}
+
+.action {
+}
+
+.line {
+}
+
+.separator {
+}
+
+.permission {
+    font-weight : normal;
+    color: Navy;
+}
+
+.inputText {
+    font-family : Verdana;
+    border : thin groove Silver;
+    font-weight : normal;
+    font-size : 12px;
+}
+
+.inputButton {
+    font-family : Verdana;
+    border : thin groove black;
+    font-weight : normal;
+    font-size : 11px;
+}
+
+.inputPermission {
+    font-family : Verdana;
+    border : 0px groove Silver;
+    color: Red;
+    font-weight : bold;
+    font-size : 12px;
+}
+
+.error {
+    color: Red;
+    border-right: 1px solid Silver;
+    border-bottom : 1px solid Silver;
+}
+
+.success {
+    color: Green;
+    border-right: 1px solid Silver;
+    border-bottom : 1px solid Silver;
+}

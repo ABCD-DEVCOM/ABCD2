@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<texts>
+
+	<!--
+		<text><find></find><replace></replace></text>
+	-->
+
+	<language id="es">
+		<text><find>UPDATE-X project</find><replace>proyecto: </replace></text>
+		<text><find>UPDATE-X user</find><replace>usuario: </replace></text>
+		<text><find>UPDATE-X list documents</find><replace> listar documentos </replace></text>
+		<text><find>UPDATE-X new document</find><replace> entrar nuevo </replace></text>
+		<text><find>UPDATE-X delete document</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X edit</find><replace> modificar </replace></text>
+		<text><find>UPDATE-X save</find><replace> grabar </replace></text>
+		<text><find>UPDATE-X cancel</find><replace> cancelar </replace></text>
+		<text><find>UPDATE-X continue</find><replace> continuar </replace></text>
+		<text><find>UPDATE-X exit</find><replace> salir </replace></text>
+		<text><find>UPDATE-X id</find><replace>id</replace></text>
+		<text><find>UPDATE-X first</find><replace> seleccionar el primero </replace></text>
+		<text><find>UPDATE-X previous</find><replace> seleccionar el anterior </replace></text>
+		<text><find>UPDATE-X next</find><replace> seleccionar el prÃ³ximo </replace></text>
+		<text><find>UPDATE-X last</find><replace> seleccionar el Ãºltimo </replace></text>
+		<text><find>UPDATE-X add</find><replace> adiccionar </replace></text>
+		<text><find>UPDATE-X delete</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X top</find><replace> mover para primero </replace></text>
+		<text><find>UPDATE-X up</find><replace> mover para cima </replace></text>
+		<text><find>UPDATE-X down</find><replace> mover para bajo </replace></text>
+		<text><find>UPDATE-X botton</find><replace> mover para Ãºltimo </replace></text>
+		<text><find>UPDATE-X delete confirm</find><replace>Â¿Deseas eliminar el documento "[UPDATE-X id]"?</replace></text>
+		<text><find>UPDATE-X locked document</find><replace>Este documento estÃ¡ siendo modificado por otro usuario.<br/>Por favor, intente nuevamente mÃ¡s tarde!</replace></text>
+		<text><find>UPDATE-X locked error code</find><replace>cÃ³digo del error: </replace></text>
+		<text><find>UPDATE-X could not save</find><replace>No fue posible grabar este documento.<br/>Por favor, intente nuevamente mÃ¡s tarde!</replace></text>
+
+		<text><find>/Catalog</find><replace>CatÃ¡logo</replace></text>
+		<text><find>/Catalog/Book</find><replace>Libro</replace></text>
+		<text><find>/Catalog/Book/@id</find><replace>IdentificaciÃ³n</replace></text>
+		<text><find>/Catalog/Book/@lang</find><replace>Idioma</replace></text>
+		<text><find>/Catalog/Book/@lang.es</find><replace>espaÃ±ol</replace></text>
+		<text><find>/Catalog/Book/@lang.pt</find><replace>portuguÃ©s</replace></text>
+		<text><find>/Catalog/Book/@lang.en</find><replace>inglÃ©s</replace></text>
+		<text><find>/Catalog/Book/Title</find><replace>TÃ­tulo</replace></text>
+		<text><find>/Catalog/Book/Authors</find><replace>Autores</replace></text>
+		<text><find>/Catalog/Book/Authors/Author</find><replace>Autor</replace></text>
+		<text><find>/Catalog/Book/Authors/Author/text()</find><replace>Autor</replace></text>
+		<text><find>/Catalog/Book/Publisher</find><replace>Editora</replace></text>
+		<text><find>/Catalog/Book/PubDate</find><replace>Data de publicaciÃ³n</replace></text>
+		<text><find>/Catalog/Book/Abstract</find><replace>Resumen</replace></text>
+		<text><find>/Catalog/Book/Pages</find><replace>PÃ¡ginas</replace></text>
+		<text><find>/Catalog/Book/ISBN</find><replace>ISBN</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories</find><replace>CategorÃ­as</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories/Category</find><replace>CategorÃ­a</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories/Category/text()</find><replace>CategorÃ­a</replace></text>
+		<text><find>/Catalog/Book/Price</find><replace>Precio</replace></text>
+		<text><find>/Catalog/Book/CoverImage</find><replace>Imagen de la tapa</replace></text>
+		<text><find>/Catalog/Book/indicated</find><replace>indicado para</replace></text>
+		<text><find>/Catalog/Book/indicated.child</find><replace>niÃ±o</replace></text>
+		<text><find>/Catalog/Book/indicated.teen</find><replace>adolescente</replace></text>
+		<text><find>/Catalog/Book/indicated.adult</find><replace>adulto</replace></text>
+		<text><find>/Catalog/Book/indicated.older</find><replace>idoso</replace></text>
+		<text><find>/Catalog/Book/indicated.men</find><replace>hombre</replace></text>
+		<text><find>/Catalog/Book/indicated.women</find><replace>mujer</replace></text>
+
+		<text><find>VALIDATE: 1</find><replace>La \"IdentificaciÃ³n\" es obligatoria!\nPor favor, llene el campo \"IdentificaciÃ³n\".</replace></text>
+		<text><find>VALIDATE: 2</find><replace>El campo \"PÃ¡ginas\" solamente puede contener nÃºmeros!\nPor favor, llene el campo \"PÃ¡ginas\" correctamente.</replace></text>
+	</language>
+
+	<language id="pt">
+		<text><find>UPDATE-X project</find><replace>projeto: </replace></text>
+		<text><find>UPDATE-X user</find><replace>usuÃ¡rio: </replace></text>
+		<text><find>UPDATE-X list documents</find><replace> listar documentos </replace></text>
+		<text><find>UPDATE-X new document</find><replace> entrar novo </replace></text>
+		<text><find>UPDATE-X delete document</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X edit</find><replace> modificar </replace></text>
+		<text><find>UPDATE-X save</find><replace> gravar </replace></text>
+		<text><find>UPDATE-X cancel</find><replace> cancelar </replace></text>
+		<text><find>UPDATE-X continue</find><replace> continuar </replace></text>
+		<text><find>UPDATE-X exit</find><replace> sair </replace></text>
+		<text><find>UPDATE-X id</find><replace>id</replace></text>
+		<text><find>UPDATE-X first</find><replace> selecionar o primeiro </replace></text>
+		<text><find>UPDATE-X previous</find><replace> selecionar o anterior </replace></text>
+		<text><find>UPDATE-X next</find><replace> selecionar o prÃ³ximo </replace></text>
+		<text><find>UPDATE-X last</find><replace> selecionar o Ãºltimo </replace></text>
+		<text><find>UPDATE-X add</find><replace> adicionar </replace></text>
+		<text><find>UPDATE-X delete</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X top</find><replace> mover para primeiro </replace></text>
+		<text><find>UPDATE-X up</find><replace> mover para cima </replace></text>
+		<text><find>UPDATE-X down</find><replace> mover para baixo </replace></text>
+		<text><find>UPDATE-X botton</find><replace> mover para Ãºltimo </replace></text>
+		<text><find>UPDATE-X delete confirm</find><replace>Deseja eliminar o documento "[UPDATE-X id]"?</replace></text>
+		<text><find>UPDATE-X locked document</find><replace>Este documento estÃ¡ sendo modificado por outro usuÃ¡rio.<br/>Por favor, tente acessÃ¡-lo novamente mais tarde!</replace></text>
+		<text><find>UPDATE-X locked error code</find><replace>cÃ³digo do erro: </replace></text>
+		<text><find>UPDATE-X could not save</find><replace>NÃ£o foi possÃ­vel gravar este documento.<br/>Por favor, tente gravÃ¡-lo novamente mais tarde!</replace></text>
+
+		<text><find>/Catalog</find><replace>CatÃ¡logo</replace></text>
+		<text><find>/Catalog/Book</find><replace>Livro</replace></text>
+		<text><find>/Catalog/Book/@id</find><replace>IdentificaÃ§Ã£o</replace></text>
+		<text><find>/Catalog/Book/@lang</find><replace>Idioma</replace></text>
+		<text><find>/Catalog/Book/@lang.es</find><replace>espanhol</replace></text>
+		<text><find>/Catalog/Book/@lang.pt</find><replace>portuguÃªs</replace></text>
+		<text><find>/Catalog/Book/@lang.en</find><replace>inglÃªs</replace></text>
+		<text><find>/Catalog/Book/Title</find><replace>TÃ­tulo</replace></text>
+		<text><find>/Catalog/Book/Authors</find><replace>Autores</replace></text>
+		<text><find>/Catalog/Book/Authors/Author</find><replace>Autor</replace></text>
+		<text><find>/Catalog/Book/Authors/Author/text()</find><replace>Autor</replace></text>
+		<text><find>/Catalog/Book/Publisher</find><replace>Editora</replace></text>
+		<text><find>/Catalog/Book/PubDate</find><replace>Data de publicaÃ§Ã£o</replace></text>
+		<text><find>/Catalog/Book/Abstract</find><replace>Resumo</replace></text>
+		<text><find>/Catalog/Book/Pages</find><replace>PÃ¡ginas</replace></text>
+		<text><find>/Catalog/Book/ISBN</find><replace>ISBN</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories</find><replace>Categorias</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories/Category</find><replace>Categoria</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories/Category/text()</find><replace>Categoria</replace></text>
+		<text><find>/Catalog/Book/Price</find><replace>PreÃ§o</replace></text>
+		<text><find>/Catalog/Book/CoverImage</find><replace>Imagem da capa</replace></text>
+		<text><find>/Catalog/Book/indicated</find><replace>indicado para</replace></text>
+		<text><find>/Catalog/Book/indicated.child</find><replace>crianÃ§a</replace></text>
+		<text><find>/Catalog/Book/indicated.teen</find><replace>adolescente</replace></text>
+		<text><find>/Catalog/Book/indicated.adult</find><replace>adulto</replace></text>
+		<text><find>/Catalog/Book/indicated.older</find><replace>idoso</replace></text>
+		<text><find>/Catalog/Book/indicated.men</find><replace>homem</replace></text>
+		<text><find>/Catalog/Book/indicated.women</find><replace>mulher</replace></text>
+
+		<text><find>VALIDATE: 1</find><replace>A \"IdentificaÃ§Ã£o\" Ã© obrigatÃ³ria!\nPor favor, preencha o campo \"IdentificaÃ§Ã£o\".</replace></text>
+		<text><find>VALIDATE: 2</find><replace>O campo \"PÃ¡ginas\" sÃ³ pode conter nÃºmeros!\nPor favor, preencha o campo \"PÃ¡ginas\" corretamente.</replace></text>
+	</language>
+
+	<language id="en">
+		<text><find>UPDATE-X project</find><replace>project: </replace></text>
+		<text><find>UPDATE-X user</find><replace>user: </replace></text>
+		<text><find>UPDATE-X list documents</find><replace> list documents </replace></text>
+		<text><find>UPDATE-X new document</find><replace> new </replace></text>
+		<text><find>UPDATE-X delete document</find><replace> delete </replace></text>
+		<text><find>UPDATE-X edit</find><replace> edit </replace></text>
+		<text><find>UPDATE-X save</find><replace> save </replace></text>
+		<text><find>UPDATE-X cancel</find><replace> cancel </replace></text>
+		<text><find>UPDATE-X continue</find><replace> continue </replace></text>
+		<text><find>UPDATE-X exit</find><replace> exit </replace></text>
+		<text><find>UPDATE-X id</find><replace>id</replace></text>
+		<text><find>UPDATE-X first</find><replace> first </replace></text>
+		<text><find>UPDATE-X previous</find><replace> previous </replace></text>
+		<text><find>UPDATE-X next</find><replace> next </replace></text>
+		<text><find>UPDATE-X last</find><replace> last </replace></text>
+		<text><find>UPDATE-X add</find><replace> add </replace></text>
+		<text><find>UPDATE-X delete</find><replace> delete </replace></text>
+		<text><find>UPDATE-X top</find><replace> top </replace></text>
+		<text><find>UPDATE-X up</find><replace> up </replace></text>
+		<text><find>UPDATE-X down</find><replace> down </replace></text>
+		<text><find>UPDATE-X botton</find><replace> botton </replace></text>
+		<text><find>UPDATE-X delete confirm</find><replace>Delete document "[UPDATE-X id]"?</replace></text>
+		<text><find>UPDATE-X locked document</find><replace>This document is currently being modified by another user.<br/>Please, try again later!</replace></text>
+		<text><find>UPDATE-X locked error code</find><replace>error code: </replace></text>
+		<text><find>UPDATE-X could not save</find><replace>It was not possible to save these document.<br/>Please, try again later!</replace></text>
+
+		<text><find>/Catalog</find><replace>Catalog</replace></text>
+		<text><find>/Catalog/Book</find><replace>Book</replace></text>
+		<text><find>/Catalog/Book/@id</find><replace>Identification</replace></text>
+		<text><find>/Catalog/Book/@lang</find><replace>Language</replace></text>
+		<text><find>/Catalog/Book/@lang.es</find><replace>spaniish</replace></text>
+		<text><find>/Catalog/Book/@lang.pt</find><replace>portuguese</replace></text>
+		<text><find>/Catalog/Book/@lang.en</find><replace>english</replace></text>
+		<text><find>/Catalog/Book/Title</find><replace>Title</replace></text>
+		<text><find>/Catalog/Book/Authors</find><replace>Authors</replace></text>
+		<text><find>/Catalog/Book/Authors/Author</find><replace>Author</replace></text>
+		<text><find>/Catalog/Book/Authors/Author/text()</find><replace>Author</replace></text>
+		<text><find>/Catalog/Book/Publisher</find><replace>Publisher</replace></text>
+		<text><find>/Catalog/Book/PubDate</find><replace>Publication date</replace></text>
+		<text><find>/Catalog/Book/Abstract</find><replace>Abstract</replace></text>
+		<text><find>/Catalog/Book/Pages</find><replace>Pages</replace></text>
+		<text><find>/Catalog/Book/ISBN</find><replace>ISBN</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories</find><replace>Categories</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories/Category</find><replace>Category</replace></text>
+		<text><find>/Catalog/Book/RecSubjCategories/Category/text()</find><replace>Category</replace></text>
+		<text><find>/Catalog/Book/Price</find><replace>Price</replace></text>
+		<text><find>/Catalog/Book/CoverImage</find><replace>Cover image</replace></text>
+		<text><find>/Catalog/Book/indicated</find><replace>indicated to</replace></text>
+		<text><find>/Catalog/Book/indicated.child</find><replace>child</replace></text>
+		<text><find>/Catalog/Book/indicated.teen</find><replace>adolescent</replace></text>
+		<text><find>/Catalog/Book/indicated.adult</find><replace>adult</replace></text>
+		<text><find>/Catalog/Book/indicated.older</find><replace>older</replace></text>
+		<text><find>/Catalog/Book/indicated.men</find><replace>men</replace></text>
+		<text><find>/Catalog/Book/indicated.women</find><replace>women</replace></text>
+
+		<text><find>VALIDATE: 1</find><replace>The \"id\" is mandatory!\nPlease, fill it.</replace></text>
+		<text><find>VALIDATE: 2</find><replace>The field \"Pages\" may contains only numbers!\nPlease, fill it correctly.</replace></text>
+	</language>
+
+</texts>

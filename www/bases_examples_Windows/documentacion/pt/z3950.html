@@ -1,0 +1,32 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<strong>Copiar registros a partir de servidores remotos utilizando o protocolo Z39.50.</strong><br />
+<br />
+Esta opção do ABCD permite catalogar de forma direta registros provenientes de outras fontes disponíveis através do protocolo Z39.50.<br />
+<br />
+No menu&nbsp; <strong>Conectar a:&nbsp; </strong>é apresentada a lista de servidores que estão disponíveis para a localização de bases de dados. Esta lista é mantida através da opção <strong>Configurar cliente Z39.50 </strong>disponível (para o administrador) no menu principal do ABCD.<br />
+<br />
+O menu <strong>Tabela de conversão </strong>contem os esquemas que foram definidos para converter os registros a partir do formato MARC&nbsp; para a definição de campos da base local que vai receber a informação. Esta lista é mantida através da opção <strong>Configurar cliente Z39.50 </strong>disponível (para o administrador) no menu principal do ABCD. Se não for selecionado nenhum esquema de conversão é utilizada a FDT da base de datos local para determinar os campos que serão copiados a partir da base de dados remota.<br />
+<br />
+Utilize as opções de pesquisa para establecer os critérios a serem aplicados para localizar a informação que deseja catalogar.<br />
+<br />
+Na caixa <strong>Mostrar </strong>indique quantos registros devem ser usados para configurar as páginas com os resultados obtidos<br />
+<strong><br />
+Tentar a conexão xx vezes </strong>estabelece quantas vezes o sistema tetará establecer uma conexão no caso de o servidor não puder ser localizado.<br />
+<br />
+Em condições normais, os registros transferidos criam novos registros na base de dados local que recebe a informação.&nbsp; Para transferir a informação a um registro já existente siga o siguinte procedimento:<br />
+<br />
+<ol>
+    <li>Localize na base local o registro já existente que pretende preencher com dados da catalogação z39.50. <br />
+    </li>
+    <li>Depois de ter encontrado o registo, clique no botão <strong>editar</strong> na barra de ferramentas.&nbsp;</li>
+    <li>Quando é exibido o formato para a edição do registo, clique no botão que chama o cliente z39.50. Se fizer alterações no registro, deve salvá-lo antes de chamar o cliente catalogação Z39.50 já que de outra forma as alterações realizadas serão perdidas</li>
+    <li>Em seguida, selecione a base de dados a partir da qual irá catalogar, o formato de conversão (se necessário) e faça a busca</li>
+    <li>Nos resultados apresentados localize o registo que deseja capturar.</li>
+    <li>Clique no ícone de captura. As informações obtidas a partir do servidor Z39.50 são copiadas para o registo selecionado:
+    <ul>
+        <li>Convertendo os dados aplicando o formato de conversão (se houver)</li>
+        <li>Transferindo os dados para os campos da base de dados local, <strong>sempre e quando estes estiverem vazios</strong>, ou seja, esta ação de cópia não substitui as informações existentes no registo</li>
+    </ul>
+    </li>
+    <li>Salve o registro da base de dados local</li>
+</ol>

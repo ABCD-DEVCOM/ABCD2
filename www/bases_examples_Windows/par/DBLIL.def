@@ -1,0 +1,88 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%dblil/data/dblil.*
+FILE DATABASE.XML=%path_database%dblil/pfts/lilXML.pft
+FILE standard.pft=%path_database%dblil/pfts/%lang%/lillhtm.pft
+FILE detailed.pft=%path_database%dblil/pfts/%lang%/lildhtm.pft
+FILE citation.pft=%path_database%dblil/pfts/%lang%/lilchtm.pft
+FILE mes.pft=%path_database%dblil/pfts/%lang%/mes.pft
+FILE citation.xml=%path_database%dblil/pfts/lilCitationXML.pft
+FILE title.pft=%path_database%dblil/pfts/%lang%/lilthtm.pft
+FILE descritores.pft=%path_database%dblil/pfts/%lang%/descritores.pft
+FILE SHORTCUT.IAH=%path_database%dblil/pfts/shortcut.pft
+FILE GIZMOTL.*=%path_database%gizmo/%lang%/gizmotl.*
+FILE GIZMONB.*=%path_database%gizmo/%lang%/gizmonb.*
+FILE LANGS.*=%path_database%gizmo/%lang%/lang.*
+FILE G850ANS.*=%path_database%gizmo/g850ans.*
+FILE GANS850.*=%path_database%gizmo/gans850.*
+FILE QLFANS.*=%path_database%gizmo/%lang%/qlfansi.*
+FILE QLF850.*=%path_database%gizmo/%lang%/qlf850.*
+FILE BOOKMARK.PFT=%path_database%dblil/pfts/%lang%/bookmark.pft
+FILE DBLIL_LINK.PFT=%path_database%dblil/pfts/%lang%/dblil_link.pft
+FILE CITE.PFT=%path_database%dblil/pfts/%lang%/cite.pft
+FILE CALL_CITE.PFT=%path_database%dblil/pfts/%lang%/call_cite.pft
+FILE call_export_BibTex.pft=%path_database%dblil/pfts/%lang%/call_export_BibTex.pft
+FILE call_export_EndNote.pft=%path_database%dblil/pfts/%lang%/call_export_EndNote.pft
+FILE call_export_ProCite.pft=%path_database%dblil/pfts/%lang%/call_export_ProCite.pft
+FILE call_export_ReferenceManager.pft=%path_database%dblil/pfts/%lang%/call_export_ReferenceManager.pft
+FILE call_export_Refworks.pft=%path_database%dblil/pfts/%lang%/call_export_Refworks.pft
+FILE export_BibTex.pft=%path_database%dblil/pfts/export_BibTex.pft
+FILE export_EndNote.pft=%path_database%dblil/pfts/export_EndNote.pft
+FILE export_ProCite.pft=%path_database%dblil/pfts/export_ProCite.pft
+FILE export_ReferenceManager.pft=%path_database%dblil/pfts/export_ReferenceManager.pft
+FILE export_Refworks.pft=%path_database%dblil/pfts/export_Refworks.pft
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^d*^xTW ^uTW_^yDATABASE^mTW_
+INDEX Ti=^1Palavras do título^2Palabras del título^3Title words^4Mots du titre^xTI ^uTI_^yDATABASE^mTI_
+INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Résumé mots^xAB ^uAB_^yDATABASE^mAB_
+INDEX Au=^1Autor^2Autor^3Author^4Auteur^xAU ^uAU_^yDATABASE^mAU_
+INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^xAI ^uAI_^yDATABASE^mAI_
+INDEX Mh=^1Descritor de assunto^2Descriptor de asunto^3Subject descriptor^4Sujet descripteur^xMH ^uMH_^yDATABASE^mMH_
+INDEX Ct=^1Limites^2Limites^3Limits^4Limites^xCT ^uCT_^yDATABASE^mCT_
+INDEX La=^1Idioma^2Idioma^3Language^4Langue^xLA ^uLA_^yDATABASE^mLA_^tshort^gLANGS
+INDEX Pd=^1País, ano de publicação^2País, año de publicación^3Country, year publication^4Pays, l'année de publication^xPD ^uPD_^yDATABASE^mPD_^tshort
+INDEX Ta=^1Revista^2Revista^3Journal^4Journal^xTA ^uTA_^yDATABASE^mTA_
+INDEX Tl=^1Tipo de literatura^2Tipo de literatura^3Type of literature^4Type de la littérature^xTL ^uTL_^yDATABASE^mTL_^tshort^fA^gGIZMOTL
+INDEX Nb=^1Nível bibliográfico^2Nivel bibliográfico^3Bibliographic level^4Niveau bibliographique^xNB ^uNB_^yDATABASE^mNB_^tshort^fA^gGIZMONB
+INDEX Ms=^1Monografia em série^2Monografía en serie^3Monography in series^4Monographie de la série^xMS ^uMS_^yDATABASE^mMS_^fA
+INDEX Pt=^1Tipo de publicação^2Tipo de publicación^3Publication type^4Type de publication^xPW ^uPT_^yDATABASE^mPT_
+INDEX Cf=^1Conferência^2Conferencia^3Conference^4Conférence^xCF ^uCF_^yDATABASE^mCF_^fA
+INDEX Id=^1Identificador único^2Identificador único^3Unique identifier^4Identificateur unique^xID ^uID_^yDATABASE^mID_
+INDEX Lo=^1Localização^2Situación^3Location^4Emplacement^xLO ^uLO_^yDATABASE^mLO_
+INDEX Fe=^1Suporte eletrônico^2Apoyo electrónico^3Electronic support^4Support électronique^xFE ^uFE_^yDATABASE^mFE_
+INDEX Dt=^1Data de entrada^2Fecha de entrada^3Entry date^4Date d'entrée^xDT ^uDT_^yDATABASE^mDT_
+
+
+[APPLY_GIZMO]
+
+GIZMO=QLFANS
+G_IZMO=QLF850
+G_IZMO=G850ANS
+G_IZMO=GANS850
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Longo^2Largo^3Large^4Grand
+FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée
+FORMAT citation.pft=^1Citação^2Citación^3Citation^4Citation
+FORMAT title.pft=^1Título^2Título^3Title^4Titre
+
+FORMAT DEFAULT=detailed.pft
+
+[HELP_FORM]
+
+HELP FORM=help_form_lilacs.htm
+NOTE FORM F=note_form_lilacs.htm
+NOTE INDEX TW=note_index_word.html
+HELP INDEX TW=help_index_word.html
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

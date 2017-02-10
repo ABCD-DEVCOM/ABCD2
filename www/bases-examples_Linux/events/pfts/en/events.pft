@@ -1,0 +1,8 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>ID</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Name of event</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Type of event</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Venue/place</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Date</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Description</b></td><td valign=top><font face=arial size=2>'v50+|<br>|,'</td>' fi/
+'</table><p>'

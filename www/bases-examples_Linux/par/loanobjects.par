@@ -1,0 +1,5 @@
+loanobjects.*=%path_database%loanobjects/data/loanobjects.*
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+
+marc.*=%path_database%marc/data/marc.*

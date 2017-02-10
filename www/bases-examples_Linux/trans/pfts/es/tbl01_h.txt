@@ -1,0 +1,9 @@
+Número de inventario
+Volumen
+Tomo
+Código de usuario
+Tipo de usuario
+Fecha de préstamo
+Fecha de devolución
+Tipo de Objeto
+Referencia

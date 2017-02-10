@@ -1,0 +1,34 @@
+'<table border=1 width=120% cellpadding=2 cellspacing=2 class=td>'/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>1 ÁREA DE IDENTIFICACIÓN</b></td>'/
+if p(v11) then '<tr><td width=30% valign=top><font face=verdana size=1><b>1.1 Código(s) de Referencia</b></td><td valign=top><font face=arial size=1>'v11+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td width=30% valign=top><font face=verdana size=1><b>1.2 Título</b></td><td valign=top><font face=arial size=1>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=30% valign=top><font face=verdana size=1><b>1.3 Fecha(s)</b></td><td valign=top><font face=arial size=1>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td width=30% valign=top><font face=verdana size=1><b>1.4 Nivel de Descripción</b></td><td valign=top><font face=arial size=1>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=30% valign=top><font face=verdana size=1><b>1.5 Unidad de Descripción</b></td><td valign=top><font face=arial size=1>'v15+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>2 ÁREA DE CONTEXTO</b></td>'/
+if p(v21) then '<tr><td width=30% valign=top><font face=verdana size=1><b>2.1 Nombre del Productor</b></td><td valign=top><font face=arial size=1>'v21+|<br>|,'</td>' fi/
+if p(v22) then '<tr><td width=30% valign=top><font face=verdana size=1><b>2.2 Historia Institucional</b></td><td valign=top><font face=arial size=1>'v22+|<br>|,'</td>' fi/
+if p(v24) then '<tr><td width=30% valign=top><font face=verdana size=1><b>2.4 Forma de Ingreso</b></td><td valign=top><font face=arial size=1>'v24+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>3 ÁREA DE CONTENIDO Y ESTRUCTURA</b></td>'/
+if p(v31) then '<tr><td width=30% valign=top><font face=verdana size=1><b>3.1 Alcance y Contenido</b></td><td valign=top><font face=arial size=1>'v31+|<br>|,'</td>' fi/
+if p(v33) then '<tr><td width=30% valign=top><font face=verdana size=1><b>3.3 Nuevos Ingresos</b></td><td valign=top><font face=arial size=1>'v33+|<br>|,'</td>' fi/
+if p(v34) then '<tr><td width=30% valign=top><font face=verdana size=1><b>3.4 Organización</b></td><td valign=top><font face=arial size=1>'v34+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>4 ÁREA DE CONDICIONES DE ACCESO Y USO</b></td>'/
+if p(v41) then '<tr><td width=30% valign=top><font face=verdana size=1><b>4.1 Condiciones de Acceso</b></td><td valign=top><font face=arial size=1>'v41+|<br>|,'</td>' fi/
+if p(v42) then '<tr><td width=30% valign=top><font face=verdana size=1><b>4.2 Condiciones de Reprod.</b></td><td valign=top><font face=arial size=1>'v42+|<br>|,'</td>' fi/
+if p(v43) then '<tr><td width=30% valign=top><font face=verdana size=1><b>4.3 Lengua de la Document.</b></td><td valign=top><font face=arial size=1>'v43+|<br>|,'</td>' fi/
+if p(v44) then '<tr><td width=30% valign=top><font face=verdana size=1><b>4.4 Caract. Físicas y Técnicas</b></td><td valign=top><font face=arial size=1>'v44+|<br>|,'</td>' fi/
+if p(v45) then '<tr><td width=30% valign=top><font face=verdana size=1><b>4.5 Instrumento de Descripción</b></td><td valign=top><font face=arial size=1>'v45+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>5 ÁREA DE DOCUMENTACIÓN ASOCIADA</b></td>'/
+if p(v52) then '<tr><td width=30% valign=top><font face=verdana size=1><b>5.2 Existencia de Copias</b></td><td valign=top><font face=arial size=1>'v52+|<br>|,'</td>' fi/
+if p(v53) then '<tr><td width=30% valign=top><font face=verdana size=1><b>5.3 Unidades de Descri. Relac.</b></td><td valign=top><font face=arial size=1>'v53+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>6 ÁREA DE NOTAS</b></td>'/
+if p(v61) then '<tr><td width=30% valign=top><font face=verdana size=1><b>6.1 Notas</b></td><td valign=top><font face=arial size=1>'v61+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><font face=verdana color=blue size=2><b>7 Área de Control de la Decripción</b></td>'/
+if p(v71) then '<tr><td width=30% valign=top><font face=verdana size=1><b>7.1 Nota del Archivero</b></td><td valign=top><font face=arial size=1>'v71+|<br>|,'</td>' fi/
+if p(v72) then '<tr><td width=30% valign=top><font face=verdana size=1><b>7.2 Reglas o Normas</b></td><td valign=top><font face=arial size=1>'v72+|<br>|,'</td>' fi/
+if p(v73) then '<tr><td width=30% valign=top><font face=verdana size=1><b>7.3 Fecha(s) de la Descrip.</b></td><td valign=top><font face=arial size=1>'v73+|<br>|,'</td>' fi/
+(if p(v80) then '<tr><td width=30% valign=top><font face=verdana size=1><b>Expediente Digital</b></td>
+   <td valign=top><font face=arial size=1><a href="../../../../bases/isadg/'v80^*'" target=top>'/
+   if p(v80^d) then v80^d else "Visualizar Documento " v80^* fi'</a><br>' fi/)
+'</table><p>'

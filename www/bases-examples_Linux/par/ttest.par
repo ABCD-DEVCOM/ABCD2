@@ -1,0 +1,4 @@
+ttest.*=%path_database%ttest/data/ttest.*
+ttest.pft=%path_database%ttest/pfts/en/ttest.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

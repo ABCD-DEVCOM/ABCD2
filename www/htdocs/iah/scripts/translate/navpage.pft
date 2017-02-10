@@ -1,0 +1,30 @@
+       '<div class="rowResult">
+            <div class="colPg"><sup>{{page}} ',v6205^c[1],' {{of}} ',v6205^l[1],'</sup></div>
+            <div class="colPgNav">',
+                ,if val(v6205^l[1]) > 1 then,
+                    '<sup>{{go_page}} &nbsp;&nbsp;&nbsp;</sup>'
+                    ,if val(v6205^i[1]) > 10 then,
+                        '<input type="image" name="Page1" src="',v5002,'first.gif" border="0" />&nbsp;',
+                        '<input type="image" name="Page',f(val(v6205^i[1])-1,2,0),'" src="',v5002,'left.gif" border="0" />&nbsp;'
+
+                    ,fi,
+                    (
+                        '<input type="image" name="Page',v6205^i,'" src="',v5002[1],v6205^i*0.1,v6205^h,'.gif" border="0" />',
+                        if  size(v6205^i) > 1 then '<input type="image" name="Page',v6205^i,'" src="',v5002[1],v6205^i*1.1,v6205^h,'.gif" border="0" />' fi,
+                        if  size(v6205^i) > 2 then '<input type="image" name="Page',v6205^i,'" src="',v5002[1],v6205^i*2.1,v6205^h,'.gif" border="0" />' fi,
+                        if  size(v6205^i) > 3 then '<input type="image" name="Page',v6205^i,'" src="',v5002[1],v6205^i*3.1,v6205^h,'.gif" border="0" />' fi,
+                        if  size(v6205^i) > 4 then '<input type="image" name="Page',v6205^i,'" src="',v5002[1],v6205^i*4.1,v6205^h,'.gif" border="0" />' fi,
+                        '&nbsp;&nbsp;'
+                    )
+                    ,if val(v6205^i[LAST]) < val(v6205^l[1]) then,
+                        '<input type="image" name="Page',f(val(v6205^i[LAST])+1,2,0),'" src="',v5002,'right.gif" border="0" />&nbsp;'
+                    ,fi,
+                    ,if val(v6205^i[LAST]) < val(v6205^l[1]) then,
+                        '<input type="image" name="Page',f(val(v6205^l[1]),2,0),'" src="',v5002,'last.gif" border="0" />'
+                    ,fi,
+                ,fi,
+
+            '</div>
+        </div>'
+
+

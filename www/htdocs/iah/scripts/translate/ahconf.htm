@@ -1,0 +1,129 @@
+[pft]@AHHEAD.PFT[/pft]
+[pft]
+    proc('d9021a9021!',replace(replace(v5006^a[1],' ',''),',','!a9021!')'!'),
+    proc('d9022a9022!',(if v9021 = v5021[1] then f(iocc,1,0) fi),'!'),
+[/pft]
+
+
+<form action="[pft]getenv('SCRIPT_NAME')v5000^d,'scripts/'[/pft]" method="POST">
+    [pft]@AHHIDD.PFT[/pft]
+
+    <input type="hidden" name="nextAction" value="[pft]if p(v1002) then 'search' else 'form' fi[/pft]" />
+
+    <div class="middle">
+        <div class="formHead">   <!-- info bar -->
+            <h3 class="context">
+                {{database}}&nbsp;[pft]v5003^*[/pft]
+                : {{config}}
+            </h3>
+            <div class="formOptions">
+                [pft]
+                    if p(v5011^h) then
+                        '<a class="help" href="',v5011^h,'"><span>{{help}}</span></a>' else '&nbsp;'
+                    fi
+                 [/pft]
+            </div>
+            <div class="spacer"> </div>
+        </div>
+    </div>
+
+    <div class="midd">
+
+    [pft]if s(mpu,v5006^m,mpl) = 'ON' then[/pft]
+        <div class="barNav">   <!-- language -->
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB"><b>{{interface_lang}}</b></div>
+        </div>
+
+        <div class="row">
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB">
+                    <select name="lang">
+                    [pft]
+                        ,(
+                            '<option value="',v9021,'" ', if v9021 = v5021[1] then 'selected="true"', fi,'>'
+                                if v9021 = 'pt' then '{{pt}}' fi,
+                                if v9021 = 'es' then '{{es}}' fi,
+                                if v9021 = 'en' then '{{en}}' fi,
+                                if v9021 = 'fr' then '{{fr}}' fi,
+                            '</option>'/
+                        ),
+                    [/pft]
+                </select>
+            </div>
+        </div>
+    [pft]else[/pft]
+          <input type="hidden" name="lang" value="[pft]v5021[/pft]" />
+    [pft]fi[/pft]
+
+        <div class="barNav">   <!-- Navigation -->
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB"><b>{{navigation_bar}}</b></div>
+        </div>
+
+        <div class="row">
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB">
+            <input type="radio" name="navBar" value="ON"  [pft]if s(mpu,v5007,mpl) = 'ON'  then 'checked' fi[/pft] />{{yes}}&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="navBar" value="OFF" [pft]if s(mpu,v5007,mpl) = 'OFF' then 'checked' fi[/pft] />{{no}}
+            </div>
+        </div>
+
+        <div class="barNav">   <!-- Result display -->
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB"><b>{{result_display}}</b></div>
+        </div>
+
+            [pft]if a(v1002) then[/pft]<!-- se nao esta na navegacao do resultado -->
+        <div class="row">
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB">
+                {{show_up}}&nbsp;<select name="hits" size="1">
+                    <option value="10" [pft]if v5008 = '10' then 'selected' fi[/pft]> 10</option>
+                    <option value="20" [pft]if v5008 = '20' then 'selected' fi[/pft]> 20</option>
+                    <option value="40" [pft]if v5008 = '40' then 'selected' fi[/pft]> 40</option>
+                    <option value="60" [pft]if v5008 = '60' then 'selected' fi[/pft]> 60</option>
+                </select>&nbsp;{{records_per_page}}      
+            </div>
+        </div>
+            [pft]else[/pft]
+                <input type="hidden" name="hits" value="[pft]v5008[/pft]" />
+            [pft]fi[/pft]
+            [pft]if nocc(v5005) > 2 then[/pft]
+
+                [pft]
+                    /* procedimento que marca o texto a ser apresentado como label ^L para as opções de formato de apresentação  */
+                    proc('d5005',('a5005!',replace(v5005,s('^'v9022[1]),'^L'),'!')),
+                [/pft]
+
+        <div class="row">
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB">
+                {{presentation_format}}&nbsp;&nbsp;<select name="format" size="1">
+                [pft],(,[/pft]
+                      [pft]if v5005^n <> 'DEFAULT' and v5005^t <> 'EXPORT' then[/pft]
+                        <option value="[pft]v5005^n[/pft]" [pft]if v5009[1] = v5005^n then 'selected' fi[/pft]>[pft]v5005^L[/pft]</option>
+                    [pft]fi[/pft]
+                
+                [pft],),[/pft]
+                </select>&nbsp;&nbsp;
+            [pft]else[/pft]
+                    [pft]v5005^p[/pft]
+                    <input type="hidden" name="format" value="[pft]v5009[/pft]" />
+            [pft]fi[/pft]
+            </div>
+        </div>            
+
+        <div class="row">&nbsp;</div>
+        
+        <div class="rowAction">   <!-- action -->
+                <input type="button" class="defaultButton submit" value="{{cancel}}" name="cancel" onclick="javascript:history.back()" />
+
+                <input type="submit" class="defaultButton submit" value="{{apply}}" name="aplica" />
+        </div>
+
+    </div>
+</form>
+</div>
+</body>
+</html>

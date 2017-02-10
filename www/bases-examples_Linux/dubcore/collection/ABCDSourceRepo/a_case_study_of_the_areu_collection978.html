@@ -1,0 +1,1796 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<div class="page">
+<p/>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan
+</p>
+<p>A&nbsp;Case&nbsp;Study&nbsp;of&nbsp;the&nbsp;AREU&nbsp;Collection,&nbsp; by&nbsp;Graeme&nbsp;Foster
+</p>
+<p>1 Abstract
+This&nbsp;article&nbsp;summaries&nbsp;the&nbsp;process&nbsp;of&nbsp;implementing&nbsp;a&nbsp;Greenstone&nbsp;digital&nbsp;library&nbsp;in&nbsp;Afghanistan,&nbsp;the&nbsp;
+work&nbsp;was&nbsp;initiated&nbsp;in&nbsp;the&nbsp;summer&nbsp;of&nbsp;2006&nbsp;and&nbsp;completed&nbsp;early&nbsp;in&nbsp;2007.&nbsp;The&nbsp;article&nbsp;looks&nbsp;at&nbsp;some&nbsp;of&nbsp;
+the&nbsp;decisions&nbsp;that&nbsp;were&nbsp;made&nbsp;and&nbsp;hopes&nbsp;to&nbsp;provide&nbsp;some&nbsp;assistance&nbsp;to&nbsp;anyone&nbsp;who&nbsp;is&nbsp;evaluating&nbsp;or&nbsp;
+looking&nbsp;to&nbsp;configure&nbsp;their&nbsp;own&nbsp;Greenstone&nbsp;collection.
+</p>
+<p>2 Introduction
+The&nbsp;Afghanistan&nbsp;Research&nbsp;and&nbsp;Evaluation&nbsp;Unit&nbsp;(AREU)&nbsp;is&nbsp;an&nbsp;independent&nbsp;research&nbsp;organisation&nbsp;
+based&nbsp;in&nbsp;Kabul.&nbsp;AREU's&nbsp;mission&nbsp;is&nbsp;to&nbsp;conduct&nbsp;high&shy;quality&nbsp;research&nbsp;that&nbsp;informs&nbsp;and&nbsp;influences&nbsp;
+policy&nbsp;and&nbsp;practice.&nbsp;Since&nbsp;2002,&nbsp;the&nbsp;Afghanistan&nbsp;Research&nbsp;and&nbsp;Evaluation&nbsp;Unit&nbsp;has&nbsp;maintained&nbsp;a&nbsp;
+library&nbsp;of&nbsp;Afghanistan&shy;specific&nbsp;materials&nbsp;to&nbsp;support&nbsp;its&nbsp;own&nbsp;research.&nbsp;The&nbsp;collection&nbsp;currently&nbsp;has&nbsp;
+more&nbsp;than&nbsp;6,500&nbsp;catalogued&nbsp;items,&nbsp;primarily&nbsp;in&nbsp;English,&nbsp;Dari&nbsp;and&nbsp;Pashto&nbsp;as&nbsp;well&nbsp;as&nbsp;in&nbsp;other&nbsp;
+languages&nbsp;(French,&nbsp;German,&nbsp;Italian&nbsp;and&nbsp;Russian).&nbsp;The&nbsp;AREU&nbsp;library&rsquo;s&nbsp;main&nbsp;aim&nbsp;is&nbsp;not&nbsp;to&nbsp;compete&nbsp;
+with&nbsp;international&nbsp;collections,&nbsp;but&nbsp;rather&nbsp;to&nbsp;gather&nbsp;and&nbsp;preserve&nbsp;relevant&nbsp;materials&nbsp;available&nbsp;both&nbsp;
+within&nbsp;Afghanistan&nbsp;and&nbsp;abroad&nbsp;for&nbsp;use&nbsp;by&nbsp;national&nbsp;and&nbsp;international&nbsp;researchers.
+</p>
+<p>The&nbsp;AREU&nbsp;digital&nbsp;catalogue&nbsp;is&nbsp;not&nbsp;a&nbsp;typical&nbsp;Greenstone&nbsp;collection&nbsp;it&nbsp;is&nbsp;not&nbsp;being&nbsp;used&nbsp;as&nbsp;a&nbsp;true&nbsp;
+digital&nbsp;library,&nbsp;in&nbsp;that&nbsp;items&nbsp;of&nbsp;the&nbsp;collection&nbsp;that&nbsp;have&nbsp;been&nbsp;digitised&nbsp;are&nbsp;not&nbsp;integrated&nbsp;into&nbsp;the&nbsp;
+collection.&nbsp;Rather&nbsp;the&nbsp;collection&nbsp;is&nbsp;a&nbsp;comprehensive&nbsp;bibliographic&nbsp;database&nbsp;of&nbsp;the&nbsp;library's&nbsp;holdings&nbsp;
+with&nbsp;links&nbsp;to&nbsp;the&nbsp;digitised&nbsp;data&nbsp;and&nbsp;where&nbsp;possible&nbsp;these&nbsp;links&nbsp;will&nbsp;be&nbsp;to&nbsp;the&nbsp;original&nbsp;material&nbsp;when&nbsp;it&nbsp;
+is&nbsp;available&nbsp;on&nbsp;the&nbsp;Internet&nbsp;(i.e.&nbsp;By&nbsp;citing&nbsp;of&nbsp;the&nbsp;URL).
+</p>
+<p>However,&nbsp;despite&nbsp;the&nbsp;fact&nbsp;that&nbsp;the&nbsp;collection&nbsp;was&nbsp;not&nbsp;implementing&nbsp;the&nbsp;digital&nbsp;library&nbsp;features&nbsp;of&nbsp;
+Greenstone&nbsp;there&nbsp;were&nbsp;still&nbsp;compelling&nbsp;reasons&nbsp;for&nbsp;using&nbsp;Greenstone.
+</p>
+<p>2.1 Why&nbsp;was&nbsp;Greenstone&nbsp;chosen?
+The&nbsp;support&nbsp;and&nbsp;use&nbsp;of&nbsp;open&nbsp;standards&nbsp;is&nbsp;a&nbsp;contemporary&nbsp;battle&nbsp;cry&nbsp;and&nbsp;it&nbsp;is&nbsp;easy&nbsp;to&nbsp;get&nbsp;drawn&nbsp;into&nbsp;
+such&nbsp;a&nbsp;furore&nbsp;but&nbsp;it&nbsp;did&nbsp;have&nbsp;some&nbsp;pertinence&nbsp;with&nbsp;the&nbsp;AREU&nbsp;collection.&nbsp;Much&nbsp;of&nbsp;the&nbsp;information&nbsp;
+already&nbsp;existed&nbsp;on&nbsp;an&nbsp;existing&nbsp;database,&nbsp;however&nbsp;there&nbsp;was&nbsp;no&nbsp;support&nbsp;for&nbsp;the&nbsp;database&nbsp;it&nbsp;was&nbsp;fixed&nbsp;
+to&nbsp;a&nbsp;single&nbsp;client&nbsp;and&nbsp;the&nbsp;character&nbsp;set&nbsp;for&nbsp;the&nbsp;Arabic&nbsp;scripts&nbsp;was&nbsp;non&shy;standard.&nbsp;These&nbsp;were&nbsp;all&nbsp;
+surmountable&nbsp;issues&nbsp;but&nbsp;it&nbsp;was&nbsp;clear&nbsp;that&nbsp;there&nbsp;was&nbsp;a&nbsp;danger&nbsp;of&nbsp;being&nbsp;locked&nbsp;into&nbsp;a&nbsp;proprietary&nbsp;
+standard.
+</p>
+<p>One&nbsp;of&nbsp;the&nbsp;open&nbsp;standards&nbsp;that&nbsp;was&nbsp;identified&nbsp;early&nbsp;one&nbsp;as&nbsp;a&nbsp;must&nbsp;support&nbsp;was&nbsp;UNICODE.&nbsp;It&nbsp;has&nbsp;
+become&nbsp;the&nbsp;standard&nbsp;for&nbsp;the&nbsp;support&nbsp;of&nbsp;international&nbsp;scripts,&nbsp;and&nbsp;its&nbsp;adoption&nbsp;at&nbsp;the&nbsp;core&nbsp;level&nbsp;by&nbsp;
+operating&nbsp;systems&nbsp;and&nbsp;programming&nbsp;languages&nbsp;only&nbsp;confirms&nbsp;its&nbsp;dominance&nbsp;in&nbsp;this&nbsp;arena.&nbsp;The&nbsp;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 1&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>AREU&nbsp;collection&nbsp;supports&nbsp;three&nbsp;languages,&nbsp;English&nbsp;and&nbsp;the&nbsp;two&nbsp;main&nbsp;Afghan&nbsp;languages&nbsp;of&nbsp;Pushto&nbsp;
+and&nbsp;Dari.
+</p>
+<p>A&nbsp;second&nbsp;requirement&nbsp;of&nbsp;the&nbsp;collection&nbsp;was&nbsp;to&nbsp;be&nbsp;able&nbsp;to&nbsp;put&nbsp;the&nbsp;collection&nbsp;on&nbsp;the&nbsp;web&nbsp;so&nbsp;that&nbsp;
+scholars&nbsp;from&nbsp;around&nbsp;the&nbsp;globe&nbsp;can&nbsp;access&nbsp;the&nbsp;collection&nbsp;and&nbsp;where&nbsp;available&nbsp;immediately&nbsp;get&nbsp;their&nbsp;
+hands&nbsp;on&nbsp;the&nbsp;soft&nbsp;copy.
+</p>
+<p>A&nbsp;third&nbsp;requirement&nbsp;was&nbsp;that&nbsp;the&nbsp;software&nbsp;must&nbsp;be&nbsp;easy&nbsp;to&nbsp;manage.&nbsp;The&nbsp;technical&nbsp;support&nbsp;staff&nbsp;were&nbsp;
+already&nbsp;overworked&nbsp;and&nbsp;so&nbsp;managing&nbsp;the&nbsp;new&nbsp;service&nbsp;should&nbsp;not&nbsp;add&nbsp;significantly&nbsp;to&nbsp;their&nbsp;
+workload.&nbsp;Obviously,&nbsp;this&nbsp;is&nbsp;a&nbsp;difficult&nbsp;parameter&nbsp;to&nbsp;access&nbsp;until&nbsp;the&nbsp;product&nbsp;is&nbsp;up&nbsp;and&nbsp;running&nbsp;and&nbsp;
+people&nbsp;are&nbsp;using&nbsp;it.&nbsp;Using&nbsp;it&nbsp;on&nbsp;a&nbsp;test&nbsp;machine&nbsp;looked&nbsp;as&nbsp;if&nbsp;it&nbsp;would&nbsp;be&nbsp;easy&nbsp;to&nbsp;manage&nbsp;and&nbsp;
+thankfully,&nbsp;when&nbsp;the&nbsp;product&nbsp;went&nbsp;live&nbsp;it&nbsp;ran&nbsp;smoothly&nbsp;and&nbsp;with&nbsp;very&nbsp;little&nbsp;demand&nbsp;on&nbsp;the&nbsp;technical&nbsp;
+staff.
+</p>
+<p>A&nbsp;final&nbsp;requirement&nbsp;of&nbsp;the&nbsp;organisation&nbsp;was&nbsp;that&nbsp;backups&nbsp;were&nbsp;easy&nbsp;to&nbsp;create.&nbsp;The&nbsp;situation&nbsp;in&nbsp;
+Afghanistan&nbsp;is&nbsp;uncertain,&nbsp;it&nbsp;is&nbsp;experiencing&nbsp;a&nbsp;fine&nbsp;balance&nbsp;of&nbsp;normality&nbsp;after&nbsp;many&nbsp;years&nbsp;of&nbsp;
+instability,&nbsp;but&nbsp;this&nbsp;could&nbsp;deteriorate.&nbsp;Having&nbsp;a&nbsp;backup&nbsp;of&nbsp;all&nbsp;the&nbsp;data&nbsp;was&nbsp;considered&nbsp;a&nbsp;non&shy;
+negotiable&nbsp;requirement.&nbsp;This&nbsp;was&nbsp;addressed&nbsp;in&nbsp;several&nbsp;ways.&nbsp;First&nbsp;the&nbsp;whole&nbsp;server&nbsp;up&nbsp;is&nbsp;mirrored&nbsp;
+and&nbsp;the&nbsp;library&nbsp;is&nbsp;physically&nbsp;backed&nbsp;up&nbsp;on&nbsp;a&nbsp;monthly&nbsp;basis.&nbsp;Secondly&nbsp;the&nbsp;whole&nbsp;digital&nbsp;library&nbsp;is&nbsp;
+hosted&nbsp;on&nbsp;a&nbsp;server&nbsp;outside&nbsp;of&nbsp;Afghanistan.&nbsp;The&nbsp;real&nbsp;feature&nbsp;that&nbsp;got&nbsp;people&nbsp;excited,&nbsp;and&nbsp;let's&nbsp;face&nbsp;it&nbsp;
+when&nbsp;talking&nbsp;about&nbsp;backups&nbsp;it&nbsp;is&nbsp;hard&nbsp;to&nbsp;get&nbsp;people&nbsp;excited,&nbsp;was&nbsp;Greenstone's&nbsp;ability&nbsp;to&nbsp;create&nbsp;a&nbsp;live&nbsp;
+CD&nbsp;of&nbsp;the&nbsp;collection.&nbsp;This&nbsp;would&nbsp;not&nbsp;only&nbsp;act&nbsp;as&nbsp;a&nbsp;backup&nbsp;but&nbsp;it&nbsp;could&nbsp;be&nbsp;made&nbsp;available&nbsp;to&nbsp;
+organisations&nbsp;who&nbsp;had&nbsp;no,&nbsp;or&nbsp;limited,&nbsp;access&nbsp;to&nbsp;the&nbsp;Internet,&nbsp;a&nbsp;all&nbsp;too&nbsp;common&nbsp;situation&nbsp;in&nbsp;
+Afghanistan.
+</p>
+<p>From&nbsp;a&nbsp;technical&nbsp;perspective&nbsp;it&nbsp;was&nbsp;good&nbsp;that&nbsp;Greenstone&nbsp;was&nbsp;an&nbsp;open&nbsp;source&nbsp;product.&nbsp;This&nbsp;meant&nbsp;
+that&nbsp;if&nbsp;necessary&nbsp;the&nbsp;code&nbsp;could&nbsp;be&nbsp;changed&nbsp;to&nbsp;meet&nbsp;the&nbsp;specific&nbsp;needs&nbsp;of&nbsp;the&nbsp;collection.&nbsp;Such&nbsp;power&nbsp;
+is&nbsp;of&nbsp;course&nbsp;a&nbsp;double&nbsp;edged&nbsp;sword.&nbsp;Any&nbsp;change&nbsp;to&nbsp;the&nbsp;code&nbsp;to&nbsp;ensure&nbsp;that&nbsp;the&nbsp;specific&nbsp;requirements&nbsp;
+are&nbsp;met&nbsp;means&nbsp;that&nbsp;it&nbsp;breaks&nbsp;any&nbsp;upgrade&nbsp;path.&nbsp;So&nbsp;it's&nbsp;a&nbsp;feature&nbsp;that&nbsp;is&nbsp;great&nbsp;to&nbsp;have,&nbsp;but&nbsp;you&nbsp;just&nbsp;
+hope&nbsp;that&nbsp;you&nbsp;never&nbsp;need&nbsp;to&nbsp;use&nbsp;it.&nbsp;As&nbsp;it&nbsp;turned&nbsp;out&nbsp;it&nbsp;was&nbsp;needed&nbsp;but&nbsp;only&nbsp;in&nbsp;one&nbsp;small&nbsp;area&nbsp;
+requiring&nbsp;the&nbsp;change&nbsp;in&nbsp;a&nbsp;single&nbsp;file.&nbsp;This&nbsp;sort&nbsp;of&nbsp;change&nbsp;is&nbsp;acceptable&nbsp;and&nbsp;that&nbsp;fact&nbsp;that&nbsp;the&nbsp;
+collection&nbsp;was&nbsp;a&nbsp;huge&nbsp;deviation&nbsp;from&nbsp;a&nbsp;typical&nbsp;digital&nbsp;library&nbsp;is&nbsp;testament&nbsp;to&nbsp;the&nbsp;configurability&nbsp;of&nbsp;
+Greenstone.&nbsp;The&nbsp;fact&nbsp;that&nbsp;Greenstone&nbsp;is&nbsp;highly&nbsp;configurable&nbsp;meant&nbsp;that&nbsp;we&nbsp;were&nbsp;able&nbsp;to&nbsp;make&nbsp;the&nbsp;
+collection&nbsp;look&nbsp;the&nbsp;way&nbsp;we&nbsp;wanted&nbsp;it&nbsp;to&nbsp;look.&nbsp;However,&nbsp;it&nbsp;would&nbsp;only&nbsp;be&nbsp;fair&nbsp;to&nbsp;say&nbsp;that&nbsp;it&nbsp;was&nbsp;a&nbsp;
+feature&nbsp;that&nbsp;was&nbsp;not&nbsp;fully&nbsp;appreciated&nbsp;until&nbsp;after&nbsp;it&nbsp;had&nbsp;been&nbsp;configured!
+</p>
+<p>3 The&nbsp;Structure&nbsp;of&nbsp;the&nbsp;Collection
+</p>
+<p>3.1 Look&nbsp;of&nbsp;the&nbsp;collection
+The&nbsp;general&nbsp;requirement&nbsp;was&nbsp;for&nbsp;the&nbsp;collection&nbsp;to&nbsp;reflect&nbsp;the&nbsp;professional&nbsp;image&nbsp;of&nbsp;the&nbsp;organisation&nbsp;
+that&nbsp;the&nbsp;web&nbsp;site&nbsp;has&nbsp;helped&nbsp;to&nbsp;enhance.&nbsp;For&nbsp;individual&nbsp;data&nbsp;items&nbsp;it&nbsp;was&nbsp;thought&nbsp;that&nbsp;the&nbsp;familiar&nbsp;
+library&nbsp;catalogue&nbsp;cards&nbsp;would&nbsp;be&nbsp;a&nbsp;model&nbsp;that&nbsp;users&nbsp;would&nbsp;be&nbsp;comfortable&nbsp;with.&nbsp;From&nbsp;a&nbsp;
+representation&nbsp;perspective&nbsp;only&nbsp;data&nbsp;that&nbsp;exists&nbsp;should&nbsp;be&nbsp;displayed,&nbsp;that&nbsp;is&nbsp;if&nbsp;a&nbsp;publication&nbsp;doesn't&nbsp;
+</p>
+<p>2&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>have&nbsp;an&nbsp;author&nbsp;then&nbsp;it&nbsp;shouldn't&nbsp;display&nbsp;an&nbsp;Author&nbsp;title&nbsp;with&nbsp;a&nbsp;blank&nbsp;value.
+</p>
+<p>Illustration&nbsp;1&nbsp;shows&nbsp;the&nbsp;headings,&nbsp;in&nbsp;English&nbsp;and&nbsp;the&nbsp;data&nbsp;of&nbsp;a&nbsp;sample&nbsp;catalogue&nbsp;card.&nbsp;It&nbsp;also&nbsp;shows&nbsp;
+the&nbsp;link&nbsp;to&nbsp;the&nbsp;soft&nbsp;copy&nbsp;of&nbsp;the&nbsp;document,&nbsp;in&nbsp;this&nbsp;case&nbsp;a&nbsp;word&nbsp;document&nbsp;of&nbsp;the&nbsp;text.
+</p>
+<p>3.2 Indices&nbsp;and&nbsp;searching
+There&nbsp;was&nbsp;a&nbsp;strong&nbsp;feeling&nbsp;that&nbsp;the&nbsp;elements&nbsp;that&nbsp;comprised&nbsp;the&nbsp;search&nbsp;indices&nbsp;should&nbsp;only&nbsp;come&nbsp;
+from&nbsp;the&nbsp;meta&shy;data&nbsp;of&nbsp;the&nbsp;collection.&nbsp;The&nbsp;collection&nbsp;consists&nbsp;of&nbsp;several&nbsp;thousand&nbsp;items&nbsp;with&nbsp;a&nbsp;small&nbsp;
+proportion&nbsp;being&nbsp;available&nbsp;electronically.&nbsp;If&nbsp;the&nbsp;contents&nbsp;of&nbsp;those&nbsp;for&nbsp;which&nbsp;soft&nbsp;copies&nbsp;existed&nbsp;were&nbsp;
+indexed&nbsp;then&nbsp;the&nbsp;search&nbsp;results&nbsp;would&nbsp;be&nbsp;skewed&nbsp;in&nbsp;favour&nbsp;of&nbsp;this&nbsp;subset&nbsp;of&nbsp;documents.
+</p>
+<p>The&nbsp;browse&nbsp;feature&nbsp;had&nbsp;great&nbsp;potential&nbsp;in&nbsp;assisting&nbsp;researchers&nbsp;find&nbsp;documents&nbsp;that&nbsp;they&nbsp;might&nbsp;not&nbsp;
+otherwise&nbsp;find&nbsp;and&nbsp;so&nbsp;browse&nbsp;categories&nbsp;were&nbsp;added&nbsp;for,&nbsp;the&nbsp;author,&nbsp;title,&nbsp;corporate&nbsp;body,&nbsp;subject&nbsp;
+headings&nbsp;and&nbsp;language.
+</p>
+<p>As&nbsp;it&nbsp;turned&nbsp;out&nbsp;the&nbsp;browse&nbsp;categories&nbsp;proved&nbsp;to&nbsp;be&nbsp;an&nbsp;excellent&nbsp;way&nbsp;of&nbsp;validating&nbsp;the&nbsp;uniformity&nbsp;of&nbsp;
+the&nbsp;data.&nbsp;Inconsistencies&nbsp;in&nbsp;spelling,&nbsp;punctuation&nbsp;or&nbsp;letter&shy;case&nbsp;of&nbsp;the&nbsp;meta&shy;data&nbsp;were&nbsp;easily&nbsp;
+identified&nbsp;because&nbsp;they&nbsp;would&nbsp;generate&nbsp;an&nbsp;extra&nbsp;entry&nbsp;in&nbsp;the&nbsp;browse&nbsp;category.&nbsp;This&nbsp;turns&nbsp;out&nbsp;to&nbsp;be&nbsp;a&nbsp;
+quicker&nbsp;and&nbsp;more&nbsp;reliable&nbsp;method&nbsp;than&nbsp;checking&nbsp;each&nbsp;entry&nbsp;manually.
+</p>
+<p>As&nbsp;shown&nbsp;in&nbsp;Illustration&nbsp;2&nbsp;the&nbsp;browse&nbsp;
+categories&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;identify&nbsp;
+inconsistencies&nbsp;in&nbsp;the&nbsp;data.&nbsp;The&nbsp;
+illustration&nbsp;shows&nbsp;three&nbsp;subject&nbsp;headings&nbsp;
+with&nbsp;almost&nbsp;identical&nbsp;value&nbsp;but&nbsp;because&nbsp;
+of&nbsp;slight&nbsp;variations&nbsp;in&nbsp;data&nbsp;entry,&nbsp;as&nbsp;
+shown&nbsp;with&nbsp;a&nbsp;red&nbsp;underline,&nbsp;they&nbsp;become&nbsp;
+separate&nbsp;entities.&nbsp;By&nbsp;browsing&nbsp;through&nbsp;all&nbsp;
+</p>
+<p>the&nbsp;possible&nbsp;values&nbsp;it&nbsp;is&nbsp;easy&nbsp;to&nbsp;spot&nbsp;such&nbsp;issues&nbsp;with&nbsp;the&nbsp;existing&nbsp;data.
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 3&nbsp;of&nbsp;31
+</p>
+<p>Illustration&nbsp;2:&nbsp;A&nbsp;selection&nbsp;of&nbsp;subject&nbsp;headings
+</p>
+<p>Illustration&nbsp;1:&nbsp;A&nbsp;example&nbsp;of&nbsp;the&nbsp;catalogue&nbsp;card</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>3.3 File&nbsp;structure
+The&nbsp;catalogue&nbsp;cards&nbsp;are&nbsp;represented&nbsp;by&nbsp;a&nbsp;simple&nbsp;HTML&nbsp;file.&nbsp;It&nbsp;is&nbsp;this&nbsp;file&nbsp;that&nbsp;is&nbsp;displayed&nbsp;by&nbsp;
+Greenstone.&nbsp;Each&nbsp;HTML&nbsp;file&nbsp;is&nbsp;associated&nbsp;with&nbsp;an&nbsp;XML&nbsp;file&nbsp;that&nbsp;contains&nbsp;the&nbsp;meta&shy;data&nbsp;that&nbsp;
+Greenstone&nbsp;will&nbsp;be&nbsp;using&nbsp;in&nbsp;its&nbsp;indexing.&nbsp;The&nbsp;details&nbsp;of&nbsp;the&nbsp;HTML&nbsp;file&nbsp;of&nbsp;Illustration&nbsp;1&nbsp;is&nbsp;given&nbsp;in&nbsp;
+the&nbsp;appendix&nbsp;and&nbsp;it&nbsp;can&nbsp;be&nbsp;seen&nbsp;that&nbsp;the&nbsp;html&nbsp;is&nbsp;laid&nbsp;out&nbsp;using&nbsp;extensive&nbsp;use&nbsp;of&nbsp;HTML&nbsp;tables.&nbsp;The&nbsp;
+style&nbsp;sheet&nbsp;referred&nbsp;to&nbsp;in&nbsp;this&nbsp;HTML&nbsp;is&nbsp;not&nbsp;used&nbsp;by&nbsp;Greenstone&nbsp;but&nbsp;by&nbsp;the&nbsp;Data&nbsp;Entry&nbsp;system&nbsp;
+described&nbsp;later.
+</p>
+<p>Each&nbsp;HTML,&nbsp;XML&nbsp;file&nbsp;pair&nbsp;is&nbsp;placed&nbsp;in&nbsp;its&nbsp;own&nbsp;directory,&nbsp;whilst&nbsp;this&nbsp;helps&nbsp;to&nbsp;manage&nbsp;the&nbsp;data&nbsp;this&nbsp;
+was&nbsp;mainly&nbsp;done&nbsp;because&nbsp;Greenstone&nbsp;requires&nbsp;the&nbsp;meta&nbsp;data&nbsp;to&nbsp;have&nbsp;a&nbsp;specific&nbsp;file&nbsp;name,&nbsp;and&nbsp;for&nbsp;
+ease&nbsp;of&nbsp;managing&nbsp;this&nbsp;file&nbsp;it&nbsp;was&nbsp;decided&nbsp;to&nbsp;have&nbsp;one&nbsp;entry&nbsp;per&nbsp;meta&shy;data&nbsp;file.
+</p>
+<p>The&nbsp;directories&nbsp;of&nbsp;the&nbsp;catalogue&nbsp;cards&nbsp;were&nbsp;broken&nbsp;down&nbsp;into&nbsp;four&nbsp;language&nbsp;groups,&nbsp;Dari,&nbsp;Pushto,&nbsp;
+English&nbsp;and&nbsp;Misc.&nbsp;Technically&nbsp;English&nbsp;and&nbsp;Misc&nbsp;are&nbsp;interchangeable&nbsp;the&nbsp;others&nbsp;are&nbsp;distinct&nbsp;in&nbsp;that&nbsp;
+the&nbsp;titles&nbsp;for&nbsp;the&nbsp;catalogue&nbsp;card&nbsp;will&nbsp;be&nbsp;translated&nbsp;into&nbsp;the&nbsp;appropriate&nbsp;language.&nbsp;The&nbsp;translation&nbsp;of&nbsp;
+each&nbsp;catalogue&nbsp;card&nbsp;is&nbsp;managed&nbsp;by&nbsp;the&nbsp;Data&nbsp;Entry&nbsp;program,&nbsp;and&nbsp;a&nbsp;catalogue&nbsp;card&nbsp;is&nbsp;presented&nbsp;in&nbsp;the&nbsp;
+primary&nbsp;language&nbsp;of&nbsp;the&nbsp;text.
+</p>
+<p>4 Data&nbsp;Entry
+A&nbsp;small&nbsp;system&nbsp;was&nbsp;written&nbsp;to&nbsp;ease&nbsp;the&nbsp;data&nbsp;entry&nbsp;of&nbsp;each&nbsp;catalogue&nbsp;card&nbsp;and&nbsp;the&nbsp;editing&nbsp;of&nbsp;existing&nbsp;
+entries.&nbsp;This&nbsp;system&nbsp;would&nbsp;automatically&nbsp;generate&nbsp;the&nbsp;files&nbsp;for&nbsp;each&nbsp;system&nbsp;and&nbsp;it&nbsp;would&nbsp;include&nbsp;
+some&nbsp;validation&nbsp;of&nbsp;the&nbsp;data.&nbsp;It&nbsp;also&nbsp;allows&nbsp;for&nbsp;the&nbsp;simultaneous&nbsp;creation&nbsp;and&nbsp;editing&nbsp;of&nbsp;the&nbsp;catalogue&nbsp;
+cards.&nbsp;This&nbsp;system&nbsp;would&nbsp;run&nbsp;independent&nbsp;of&nbsp;Greenstone&nbsp;but&nbsp;would&nbsp;honour&nbsp;the&nbsp;file&nbsp;system&nbsp;that&nbsp;had&nbsp;
+been&nbsp;designed,&nbsp;this&nbsp;meant&nbsp;that&nbsp;it&nbsp;doesn't&nbsp;need&nbsp;to&nbsp;be&nbsp;hosted&nbsp;on&nbsp;a&nbsp;computer&nbsp;that&nbsp;supports&nbsp;Greenstone&nbsp;
+and&nbsp;it&nbsp;was&nbsp;easy&nbsp;to&nbsp;move&nbsp;it&nbsp;to&nbsp;a&nbsp;computer&nbsp;that&nbsp;had&nbsp;the&nbsp;Greenstone&nbsp;system,&nbsp;such&nbsp;as&nbsp;a&nbsp;backup&nbsp;server.
+</p>
+<p>This&nbsp;system&nbsp;is&nbsp;still&nbsp;being&nbsp;developed&nbsp;and&nbsp;enhanced&nbsp;and&nbsp;it&nbsp;is&nbsp;planned&nbsp;to&nbsp;be&nbsp;released&nbsp;to&nbsp;the&nbsp;community&nbsp;
+under&nbsp;the&nbsp;GPL.
+</p>
+<p>5 Configuring&nbsp;the&nbsp;collection
+There&nbsp;are&nbsp;two&nbsp;broad&nbsp;areas&nbsp;of&nbsp;collection&nbsp;configuration&nbsp;these&nbsp;have&nbsp;been&nbsp;divided&nbsp;into&nbsp;collection&nbsp;
+description,&nbsp;and&nbsp;collection&nbsp;style.
+</p>
+<p>5.1 Collection&nbsp;description
+The&nbsp;file&nbsp;that&nbsp;describes&nbsp;the&nbsp;collection&nbsp;is&nbsp;the&nbsp;collect.cfg&nbsp;file&nbsp;and&nbsp;is&nbsp;located&nbsp;in&nbsp;the&nbsp;etc&nbsp;directory&nbsp;of&nbsp;the&nbsp;
+collection&nbsp;folder.&nbsp;This&nbsp;file&nbsp;is&nbsp;included&nbsp;in&nbsp;the&nbsp;Appendix.
+</p>
+<p>For&nbsp;the&nbsp;purpose&nbsp;of&nbsp;this&nbsp;collection&nbsp;the&nbsp;important&nbsp;elements&nbsp;of&nbsp;this&nbsp;file&nbsp;is&nbsp;the&nbsp;meta&shy;data&nbsp;that&nbsp;is&nbsp;used,&nbsp;the&nbsp;
+browse&nbsp;categories&nbsp;and&nbsp;what&nbsp;should&nbsp;be&nbsp;displayed&nbsp;in&nbsp;the&nbsp;search&nbsp;and&nbsp;browse&nbsp;results.&nbsp;Additionally&nbsp;this&nbsp;
+file&nbsp;includes&nbsp;the&nbsp;plug&shy;ins&nbsp;that&nbsp;are&nbsp;used&nbsp;and&nbsp;the&nbsp;location&nbsp;of&nbsp;the&nbsp;icons&nbsp;that&nbsp;are&nbsp;to&nbsp;be&nbsp;used&nbsp;for&nbsp;this&nbsp;
+collection.
+</p>
+<p>4&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>5.1.1 Meta&shy;data,&nbsp;selecting,&nbsp;translating&nbsp;and&nbsp;using
+Whilst&nbsp;the&nbsp;collection&nbsp;was&nbsp;being&nbsp;designed&nbsp;different&nbsp;meta&shy;data&nbsp;sets&nbsp;were&nbsp;used&nbsp;in&nbsp;the&nbsp;end&nbsp;we&nbsp;decided&nbsp;
+to&nbsp;use&nbsp;the&nbsp;rfc1807&nbsp;collection,&nbsp;because&nbsp;it&nbsp;was&nbsp;the&nbsp;best&nbsp;fit&nbsp;for&nbsp;our&nbsp;requirements.&nbsp;It&nbsp;still&nbsp;meant&nbsp;that&nbsp;
+some&nbsp;fields&nbsp;were&nbsp;not&nbsp;quite&nbsp;right&nbsp;and&nbsp;so&nbsp;we&nbsp;wanted&nbsp;to&nbsp;change&nbsp;the&nbsp;name&nbsp;of&nbsp;some&nbsp;meta&nbsp;data&nbsp;items.&nbsp;
+Because&nbsp;this&nbsp;collection&nbsp;was&nbsp;introducing&nbsp;two&nbsp;new&nbsp;languages&nbsp;to&nbsp;Greenstone&nbsp;it&nbsp;was&nbsp;also&nbsp;necessary&nbsp;to&nbsp;
+add&nbsp;the&nbsp;translations&nbsp;for&nbsp;the&nbsp;meta&nbsp;data&nbsp;entities&nbsp;being&nbsp;used.
+</p>
+<p>Adding&nbsp;a&nbsp;translation&nbsp;to&nbsp;a&nbsp;meta&shy;data&nbsp;element&nbsp;turns&nbsp;out&nbsp;to&nbsp;be&nbsp;a&nbsp;trivial&nbsp;exercise.&nbsp;The&nbsp;following&nbsp;snippet&nbsp;
+shows&nbsp;the&nbsp;translation&nbsp;that&nbsp;were&nbsp;required&nbsp;for&nbsp;the&nbsp;author&nbsp;meta&shy;data.
+</p>
+<p>#&nbsp;meta&nbsp;data&nbsp;translation
+collectionmeta .document:rfc1807.author&nbsp;[l=en]&nbsp;"Author"
+collectionmeta .document:rfc1807.author&nbsp;[l=prs]&nbsp;"فلءوم"
+collectionmeta .document:rfc1807.author&nbsp;[l=ps]&nbsp;"لاوكيل"
+</p>
+<p>For&nbsp;each&nbsp;meta&shy;data&nbsp;element&nbsp;there&nbsp;are&nbsp;three&nbsp;translations&nbsp;one&nbsp;for&nbsp;each&nbsp;of&nbsp;the&nbsp;three&nbsp;languages&nbsp;that&nbsp;are&nbsp;
+supported&nbsp;by&nbsp;the&nbsp;collection.&nbsp;The&nbsp;[l=en]&nbsp;is&nbsp;language&nbsp;English,&nbsp;[l=prs]&nbsp;is&nbsp;for&nbsp;Dari,&nbsp;Persian &nbsp;
+Southern,&nbsp;and&nbsp;[l=ps]&nbsp;is&nbsp;for&nbsp;Pushto.&nbsp;For&nbsp;each&nbsp;of&nbsp;the&nbsp;meta&shy;data&nbsp;elements&nbsp;that&nbsp;is&nbsp;being&nbsp;used&nbsp;a&nbsp;
+translation&nbsp;was&nbsp;provided&nbsp;and&nbsp;put&nbsp;into&nbsp;this&nbsp;file.
+</p>
+<p>The&nbsp;main&nbsp;problem&nbsp;that&nbsp;was&nbsp;encountered&nbsp;with&nbsp;this&nbsp;process&nbsp;stems&nbsp;from&nbsp;the&nbsp;fact&nbsp;that&nbsp;we&nbsp;started&nbsp;with&nbsp;a&nbsp;
+different&nbsp;meta&shy;data&nbsp;set.&nbsp;In&nbsp;fact&nbsp;we&nbsp;selected&nbsp;different&nbsp;elements&nbsp;from&nbsp;different&nbsp;meta&shy;data&nbsp;sets,&nbsp;picking&nbsp;
+and&nbsp;choosing&nbsp;the&nbsp;element&nbsp;that&nbsp;appeared&nbsp;to&nbsp;be&nbsp;the&nbsp;most&nbsp;appropriate.&nbsp;As&nbsp;the&nbsp;development&nbsp;process&nbsp;
+progressed&nbsp;it&nbsp;was&nbsp;clear&nbsp;that&nbsp;this&nbsp;happy&nbsp;go&nbsp;lucky&nbsp;approach&nbsp;was&nbsp;going&nbsp;to&nbsp;be&nbsp;confusing&nbsp;at&nbsp;a&nbsp;later&nbsp;date&nbsp;
+and&nbsp;so&nbsp;we&nbsp;decided&nbsp;to&nbsp;select&nbsp;a&nbsp;single&nbsp;meta&shy;data&nbsp;set&nbsp;and&nbsp;modify&nbsp;the&nbsp;elements&nbsp;when&nbsp;there&nbsp;wasn't&nbsp;an&nbsp;
+exact&nbsp;match,&nbsp;for&nbsp;example&nbsp;we&nbsp;use&nbsp;the&nbsp;rfc1807.id&nbsp;for&nbsp;the&nbsp;Accession&nbsp;Number,&nbsp;and&nbsp;
+rfc1807.keywords&nbsp;is&nbsp;really&nbsp;Subject&nbsp;Headings.&nbsp;A&nbsp;script&nbsp;was&nbsp;written&nbsp;to&nbsp;implement&nbsp;the&nbsp;agreed&nbsp;upon&nbsp;
+change&nbsp;in&nbsp;all&nbsp;the&nbsp;records&nbsp;and&nbsp;the&nbsp;collection&nbsp;was&nbsp;rebuilt.&nbsp;When&nbsp;the&nbsp;collection&nbsp;was&nbsp;viewed,&nbsp;sadness&nbsp;all&nbsp;
+around&nbsp;because,&nbsp;the&nbsp;old&nbsp;meta&shy;data&nbsp;elements&nbsp;were&nbsp;still&nbsp;being&nbsp;used.&nbsp;The&nbsp;problem&nbsp;was&nbsp;obscured&nbsp;by&nbsp;the&nbsp;
+fact&nbsp;that&nbsp;the&nbsp;English&nbsp;translations&nbsp;were&nbsp;consistent&nbsp;and&nbsp;so&nbsp;at&nbsp;first&nbsp;it&nbsp;appeared&nbsp;as&nbsp;if&nbsp;it&nbsp;had&nbsp;picked&nbsp;up&nbsp;the&nbsp;
+change&nbsp;but&nbsp;not&nbsp;the&nbsp;new&nbsp;translations.&nbsp;However,&nbsp;once&nbsp;on&nbsp;the&nbsp;right&nbsp;track&nbsp;it&nbsp;was&nbsp;clear&nbsp;to&nbsp;see&nbsp;what&nbsp;was&nbsp;
+happening&nbsp;by&nbsp;looking&nbsp;at&nbsp;the&nbsp;output&nbsp;generated&nbsp;by&nbsp;the&nbsp;build.&nbsp;Some&nbsp;of&nbsp;the&nbsp;records&nbsp;still&nbsp;had&nbsp;the&nbsp;old&nbsp;
+meta&shy;data.&nbsp;The&nbsp;conversion&nbsp;script&nbsp;had&nbsp;failed&nbsp;on&nbsp;a&nbsp;few&nbsp;records&nbsp;which&nbsp;was&nbsp;why&nbsp;they&nbsp;were&nbsp;still&nbsp;using&nbsp;
+the&nbsp;old&nbsp;meta&shy;data.&nbsp;Once&nbsp;these&nbsp;records&nbsp;were&nbsp;fixed&nbsp;then&nbsp;the&nbsp;new&nbsp;meta&shy;data&nbsp;was&nbsp;picked&nbsp;up&nbsp;and&nbsp;the&nbsp;
+browse&nbsp;buttons&nbsp;displayed&nbsp;their&nbsp;translated&nbsp;values,&nbsp;happiness&nbsp;restored.
+</p>
+<p>5.1.2 Browse&nbsp;categories
+When&nbsp;the&nbsp;browse&nbsp;categories&nbsp;were&nbsp;added&nbsp;it&nbsp;was&nbsp;clear&nbsp;that&nbsp;it&nbsp;was&nbsp;important&nbsp;to&nbsp;select&nbsp;the&nbsp;best&nbsp;way&nbsp;to&nbsp;
+display&nbsp;the&nbsp;data.&nbsp;This&nbsp;is&nbsp;still&nbsp;an&nbsp;area&nbsp;for&nbsp;debate&nbsp;and&nbsp;hasn't&nbsp;proved&nbsp;to&nbsp;be&nbsp;as&nbsp;popular&nbsp;as&nbsp;the&nbsp;search&nbsp;
+which,&nbsp;with&nbsp;the&nbsp;ascendency&nbsp;of&nbsp;search&nbsp;engines&nbsp;on&nbsp;the&nbsp;Internet,&nbsp;&nbsp;has&nbsp;become&nbsp;a&nbsp;pervasive&nbsp;technique&nbsp;in&nbsp;
+the&nbsp;researcher's&nbsp;toolbox.&nbsp;The&nbsp;problem&nbsp;lies&nbsp;with&nbsp;the&nbsp;fact&nbsp;that&nbsp;much&nbsp;of&nbsp;the&nbsp;meta&nbsp;data&nbsp;is&nbsp;unique&nbsp;and&nbsp;so&nbsp;
+the&nbsp;results&nbsp;do&nbsp;not&nbsp;necessarily&nbsp;cluster&nbsp;well.&nbsp;The&nbsp;clear&nbsp;exception&nbsp;to&nbsp;that&nbsp;is&nbsp;the&nbsp;meta&nbsp;data&nbsp;language&nbsp;
+which&nbsp;is&nbsp;limited&nbsp;and&nbsp;an&nbsp;ideal&nbsp;candidate&nbsp;for&nbsp;the&nbsp;browse&nbsp;categories,&nbsp;unfortunately&nbsp;for&nbsp;the&nbsp;researchers&nbsp;
+it&nbsp;is&nbsp;not&nbsp;as&nbsp;useful&nbsp;as&nbsp;the&nbsp;other&nbsp;categories.
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 5&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>One&nbsp;of&nbsp;the&nbsp;difficulties&nbsp;that&nbsp;we&nbsp;faced&nbsp;was&nbsp;that&nbsp;some&nbsp;of&nbsp;the&nbsp;specific&nbsp;browses&nbsp;classifiers&nbsp;didn't&nbsp;work&nbsp;
+properly&nbsp;(or&nbsp;at&nbsp;all)&nbsp;with&nbsp;the&nbsp;mixed&nbsp;scripts&nbsp;that&nbsp;we&nbsp;were&nbsp;using&nbsp;so&nbsp;to&nbsp;overcome&nbsp;that&nbsp;we&nbsp;decided&nbsp;to&nbsp;
+classify&nbsp;them&nbsp;using&nbsp;the&nbsp;GenericList&nbsp;and&nbsp;then&nbsp;partition&nbsp;the&nbsp;result&nbsp;in&nbsp;blocks&nbsp;of&nbsp;50.&nbsp;This&nbsp;provides&nbsp;a&nbsp;
+manageable&nbsp;browse&nbsp;list&nbsp;although&nbsp;it&nbsp;does&nbsp;lead&nbsp;to&nbsp;an&nbsp;excessively&nbsp;long&nbsp;list&nbsp;of&nbsp;classifiers&nbsp;along&nbsp;the&nbsp;top.&nbsp;
+This&nbsp;can&nbsp;be&nbsp;seen&nbsp;in&nbsp;Illustration&nbsp;3&nbsp;below
+</p>
+<p>Another&nbsp;problem&nbsp;is&nbsp;that&nbsp;when&nbsp;the&nbsp;script&nbsp;switches&nbsp;from&nbsp;the&nbsp;Roman&nbsp;to&nbsp;the&nbsp;Arabic&nbsp;script&nbsp;the&nbsp;direction&nbsp;
+of&nbsp;reading&nbsp;changes&nbsp;so&nbsp;(the&nbsp;left&nbsp;to&nbsp;right)&nbsp;Z&nbsp;is&nbsp;associated&nbsp;with&nbsp;the&nbsp;rightmost&nbsp;Arabic&nbsp;(right&nbsp;to&nbsp;left)&nbsp;
+character&nbsp;on&nbsp;the&nbsp;same&nbsp;line.&nbsp;Th&zwnj; at&nbsp;is,&nbsp;from&nbsp;Illustration&nbsp;3&nbsp;the&nbsp;Z&nbsp;and&nbsp;the&nbsp;ﺍ are&nbsp;associated&nbsp;and&nbsp;not&nbsp;the&nbsp;Z&nbsp;
+and&nbsp;the&nbsp;ﻝﺏ characters.&nbsp;This&nbsp;abrupt&nbsp;change&nbsp;in&nbsp;presentation&nbsp;can&nbsp;be&nbsp;confusing&nbsp;and&nbsp;it&nbsp;would&nbsp;be&nbsp;better&nbsp;if&nbsp;
+the&nbsp;meta&nbsp;data&nbsp;in&nbsp;the&nbsp;Roman&nbsp;script&nbsp;and&nbsp;the&nbsp;Arabic&nbsp;script&nbsp;were&nbsp;further&nbsp;divided&nbsp;by&nbsp;a&nbsp;new&nbsp;line.
+</p>
+<p>One&nbsp;feature&nbsp;that&nbsp;helped&nbsp;was&nbsp;to&nbsp;have&nbsp;the&nbsp;number&nbsp;of&nbsp;documents&nbsp;under&nbsp;each&nbsp;category.&nbsp;However&nbsp;since&nbsp;
+a&nbsp;large&nbsp;number&nbsp;of&nbsp;categories&nbsp;had&nbsp;a&nbsp;single&nbsp;document&nbsp;the&nbsp;value&nbsp;of&nbsp;including&nbsp;a&nbsp;number&nbsp;was&nbsp;
+diminished.&nbsp;So&nbsp;a&nbsp;slight&nbsp;modification&nbsp;of&nbsp;the&nbsp;format&nbsp;string&nbsp;was&nbsp;done&nbsp;so&nbsp;that&nbsp;the&nbsp;number&nbsp;of&nbsp;documents&nbsp;
+was&nbsp;displayed&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;more&nbsp;than&nbsp;one&nbsp;document.&nbsp;This&nbsp;was&nbsp;done&nbsp;as&nbsp;follows:
+</p>
+<p>{if}{[numleafdocs]&nbsp;gt&nbsp;1,&nbsp;([numleafdocs])}
+</p>
+<p>This&nbsp;worked&nbsp;well&nbsp;for&nbsp;most&nbsp;browse&nbsp;categories,&nbsp;but&nbsp;there&nbsp;were&nbsp;some&nbsp;formatting&nbsp;problems&nbsp;with&nbsp;the&nbsp;
+title&nbsp;where&nbsp;a&nbsp;long&nbsp;title&nbsp;sometimes&nbsp;meant&nbsp;that&nbsp;the&nbsp;cell&nbsp;that&nbsp;contained&nbsp;this&nbsp;value&nbsp;wrapped&nbsp;to&nbsp;the&nbsp;next&nbsp;
+line,&nbsp;this&nbsp;meant&nbsp;that&nbsp;the&nbsp;browser&nbsp;would&nbsp;then&nbsp;maximise&nbsp;the&nbsp;space&nbsp;available&nbsp;for&nbsp;the&nbsp;title&nbsp;and&nbsp;wrap&nbsp;the&nbsp;
+bookshelf&nbsp;icon&nbsp;and&nbsp;the&nbsp;number&nbsp;of&nbsp;books&nbsp;onto&nbsp;two&nbsp;lines.&nbsp;The&nbsp;solution&nbsp;to&nbsp;ensure&nbsp;that&nbsp;this&nbsp;appeared&nbsp;on&nbsp;
+a&nbsp;single&nbsp;line&nbsp;came&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;the&nbsp;non&shy;standard&nbsp;html&nbsp;tag&nbsp;&lt;nobr&gt;.
+</p>
+<p>format&nbsp;VList&nbsp;"&lt;td&nbsp;valign=top&gt;&lt;nobr&gt;[link][icon][/link]&nbsp;
+{if}{[numleafdocs]&nbsp;gt&nbsp;1,&nbsp;([numleafdocs])}&lt;/nobr&gt;&lt;/td&gt;
+</p>
+<p>The&nbsp;rest&nbsp;of&nbsp;the&nbsp;format&nbsp;string&nbsp;was&nbsp;the&nbsp;standard&nbsp;entry&nbsp;for&nbsp;the&nbsp;title.
+</p>
+<p>5.1.3 Search&nbsp;results
+The&nbsp;search&nbsp;feature&nbsp;was&nbsp;identified&nbsp;as&nbsp;being&nbsp;the&nbsp;main&nbsp;interaction&nbsp;with&nbsp;the&nbsp;collection&nbsp;and&nbsp;it&nbsp;was&nbsp;
+</p>
+<p>6&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan
+</p>
+<p>Illustration&nbsp;3:&nbsp;The&nbsp;(rather&nbsp;long)&nbsp;list&nbsp;of&nbsp;Subject&nbsp;Heading&nbsp;Classifiers</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>expected&nbsp;that&nbsp;researchers&nbsp;would&nbsp;feel&nbsp;comfortable&nbsp;with&nbsp;this&nbsp;so&nbsp;long&nbsp;as&nbsp;it&nbsp;mirrored&nbsp;the&nbsp;plain&nbsp;features&nbsp;
+of&nbsp;a&nbsp;typical&nbsp;Internet&nbsp;search&nbsp;site.&nbsp;This&nbsp;requires&nbsp;the&nbsp;indexes&nbsp;to&nbsp;be&nbsp;set&nbsp;up&nbsp;and&nbsp;to&nbsp;ensure&nbsp;that&nbsp;the&nbsp;search&nbsp;
+results&nbsp;were&nbsp;comprehensive&nbsp;and&nbsp;clear.
+</p>
+<p>5.1.3.1 Indexes
+</p>
+<p>The&nbsp;indexes&nbsp;are&nbsp;set&nbsp;up&nbsp;within&nbsp;the&nbsp;collect.cfg&nbsp;file&nbsp;as&nbsp;follows:
+indexes document:text&nbsp;document:rfc1807.author&nbsp;
+</p>
+<p>document:rfc1807.title&nbsp;document:rfc1807.keyword&nbsp;
+document:rfc1807.series&nbsp;document:rfc1807.id
+</p>
+<p>This&nbsp;creates&nbsp;six&nbsp;indices&nbsp;that&nbsp;are&nbsp;automatically&nbsp;incorporated&nbsp;into&nbsp;the&nbsp;search&nbsp;feature.
+</p>
+<p>5.1.3.2 Results
+</p>
+<p>By&nbsp;using&nbsp;the&nbsp;defaults&nbsp;the&nbsp;search&nbsp;results&nbsp;are&nbsp;acceptable&nbsp;and&nbsp;provide&nbsp;a&nbsp;comfortable&nbsp;representation&nbsp;of&nbsp;
+the&nbsp;matches&nbsp;found.
+</p>
+<p>The&nbsp;search&nbsp;box&nbsp;has&nbsp;been&nbsp;
+modified&nbsp;slightly&nbsp;to&nbsp;meet&nbsp;the&nbsp;
+specific&nbsp;needs&nbsp;that&nbsp;we&nbsp;had.&nbsp;
+We&nbsp;wanted&nbsp;to&nbsp;simplify&nbsp;the&nbsp;
+search&nbsp;process&nbsp;by&nbsp;removing&nbsp;
+the&nbsp;ability&nbsp;to&nbsp;change&nbsp;the&nbsp;
+search&nbsp;features&nbsp;in&nbsp;a&nbsp;separate&nbsp;
+preferences&nbsp;page&nbsp;and&nbsp;placing&nbsp;
+the&nbsp;most&nbsp;common&nbsp;search&nbsp;
+preferences&nbsp;on&nbsp;the&nbsp;search&nbsp;
+dialogue.&nbsp;The&nbsp;changes&nbsp;that&nbsp;
+were&nbsp;required&nbsp;are&nbsp;described&nbsp;
+later.
+</p>
+<p>The&nbsp;results&nbsp;are&nbsp;displayed&nbsp;in&nbsp;a&nbsp;format&nbsp;that&nbsp;we&nbsp;were&nbsp;happy&nbsp;with&nbsp;and&nbsp;so&nbsp;this&nbsp;didn't&nbsp;require&nbsp;any&nbsp;
+changes.
+</p>
+<p>5.2 Collection&nbsp;style
+The&nbsp;primary&nbsp;requirement&nbsp;of&nbsp;the&nbsp;collection&nbsp;style&nbsp;was&nbsp;for&nbsp;it&nbsp;to&nbsp;mirror&nbsp;the&nbsp;organisations&nbsp;web&nbsp;site&nbsp;as&nbsp;
+closely&nbsp;as&nbsp;possible.&nbsp;This&nbsp;required&nbsp;extensive&nbsp;changes&nbsp;to&nbsp;the&nbsp;macros&nbsp;that&nbsp;define&nbsp;how&nbsp;a&nbsp;Greenstone&nbsp;
+collection&nbsp;is&nbsp;displayed&nbsp;and&nbsp;the&nbsp;addition&nbsp;of&nbsp;collection&nbsp;specific&nbsp;style&nbsp;sheets.
+</p>
+<p>The&nbsp;most&nbsp;important&nbsp;constraint&nbsp;was&nbsp;that&nbsp;we&nbsp;didn't&nbsp;want&nbsp;to&nbsp;change&nbsp;the&nbsp;core&nbsp;Greenstone&nbsp;macros.&nbsp;Any&nbsp;
+changes&nbsp;to&nbsp;core&nbsp;macro&nbsp;files&nbsp;would&nbsp;lead&nbsp;the&nbsp;complications&nbsp;when&nbsp;upgrading&nbsp;and&nbsp;we&nbsp;had&nbsp;reached&nbsp;
+agreement&nbsp;that&nbsp;the&nbsp;collection&nbsp;would&nbsp;be&nbsp;hosted&nbsp;on&nbsp;the&nbsp;examples&nbsp;page&nbsp;of&nbsp;the&nbsp;Greenstone&nbsp;Digital&nbsp;
+Library&nbsp;www.greenstone.org/examples.&nbsp;Thankfully,&nbsp;whilst&nbsp;tempting&nbsp;it&nbsp;is&nbsp;not&nbsp;necessary,&nbsp;to&nbsp;change&nbsp;
+the&nbsp;core&nbsp;macros.&nbsp;Instead&nbsp;a&nbsp;collection&nbsp;specific&nbsp;macro&nbsp;can&nbsp;be&nbsp;created.&nbsp;The&nbsp;collection&nbsp;specific&nbsp;macro&nbsp;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 7&nbsp;of&nbsp;31
+</p>
+<p>Illustration&nbsp;4:&nbsp;Search&nbsp;Results</p>
+<p/>
+<div class="annotation">
+<a href="http://www.greenstone.org/examples"/>
+</div>
+<div class="annotation">
+<a href="http://www.greenstone.org/examples"/>
+</div>
+<div class="annotation">
+<a href="http://www.greenstone.org/examples"/>
+</div>
+</div>
+<div class="page">
+<p/>
+<p>should&nbsp;be&nbsp;called&nbsp;extra.dm&nbsp;and&nbsp;will&nbsp;reside&nbsp;in&nbsp;the&nbsp;macros&nbsp;directory&nbsp;of&nbsp;the&nbsp;collection.
+</p>
+<p>5.2.1 Language&nbsp;Selection
+The&nbsp;organisation's&nbsp;web&nbsp;site&nbsp;allows&nbsp;the&nbsp;user&nbsp;to&nbsp;select&nbsp;the&nbsp;language&nbsp;that&nbsp;they&nbsp;would&nbsp;like&nbsp;to&nbsp;view&nbsp;the&nbsp;
+web&nbsp;site&nbsp;in.&nbsp;This&nbsp;facility&nbsp;is&nbsp;available&nbsp;on&nbsp;any&nbsp;page&nbsp;that&nbsp;the&nbsp;user&nbsp;might&nbsp;be&nbsp;visiting.&nbsp;The&nbsp;languages&nbsp;are&nbsp;
+limited&nbsp;to&nbsp;English,&nbsp;Dari&nbsp;and&nbsp;Pushto.&nbsp;Whereas&nbsp;to&nbsp;select&nbsp;the&nbsp;language&nbsp;in&nbsp;Greenstone&nbsp;requires&nbsp;
+navigating&nbsp;to&nbsp;the&nbsp;Preferences&nbsp;page&nbsp;and&nbsp;then&nbsp;all&nbsp;the&nbsp;languages&nbsp;that&nbsp;are&nbsp;available&nbsp;to&nbsp;Greenstone&nbsp;are&nbsp;
+displayed.&nbsp;This&nbsp;didn't&nbsp;make&nbsp;sense&nbsp;in&nbsp;our&nbsp;context&nbsp;and&nbsp;so&nbsp;the&nbsp;extra.dm&nbsp;macro&nbsp;was&nbsp;changed,&nbsp;the&nbsp;
+complete&nbsp;changes&nbsp;can&nbsp;be&nbsp;seen&nbsp;in&nbsp;the&nbsp;appendix&nbsp;and&nbsp;appear&nbsp;at&nbsp;the&nbsp;start&nbsp;of&nbsp;this&nbsp;file.
+</p>
+<p>The&nbsp;first&nbsp;important&nbsp;point&nbsp;with&nbsp;this&nbsp;piece&nbsp;of&nbsp;code&nbsp;is&nbsp;that&nbsp;we&nbsp;created&nbsp;some&nbsp;new&nbsp;macros.&nbsp;We&nbsp;decided&nbsp;
+that&nbsp;all&nbsp;new&nbsp;macros&nbsp;will&nbsp;be&nbsp;prefixed&nbsp;with&nbsp;the&nbsp;collection&nbsp;name,&nbsp;hence&nbsp;_AREULang_&nbsp;is&nbsp;a&nbsp;new&nbsp;macro&nbsp;
+which&nbsp;will&nbsp;hold&nbsp;the&nbsp;drop&shy;down&nbsp;list&nbsp;of&nbsp;available&nbsp;languages.&nbsp;The&nbsp;macro&nbsp;itself&nbsp;is&nbsp;quite&nbsp;simple,&nbsp;it&nbsp;is&nbsp;
+repeated&nbsp;for&nbsp;each&nbsp;language,&nbsp;thus&nbsp;_AREULang_&nbsp;[l=prs]&nbsp;{}&nbsp;is&nbsp;the&nbsp;macro&nbsp;defined&nbsp;for&nbsp;Dari.&nbsp;The&nbsp;macro&nbsp;
+defines&nbsp;an&nbsp;HTML&nbsp;selection&nbsp;box&nbsp;and&nbsp;depending&nbsp;upon&nbsp;the&nbsp;language&nbsp;the&nbsp;appropriate&nbsp;option&nbsp;is&nbsp;selected&nbsp;
+within&nbsp;the&nbsp;HTML.&nbsp;Hence&nbsp;when&nbsp;the&nbsp;Dari&nbsp;language&nbsp;has&nbsp;been&nbsp;selected&nbsp;the&nbsp;macro&nbsp;is&nbsp;as&nbsp;follows:
+</p>
+<p>_AREULang_&nbsp;[l=prs]&nbsp;{
+&nbsp;&nbsp;&lt;option&nbsp;value="prs"&nbsp;selected&gt;
+&nbsp;یر د
+</p>
+<p>&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="en"&gt;
+English
+&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="ps"&gt;
+وتښپ
+&nbsp;&nbsp;&lt;/option&gt;
+}
+</p>
+<p>Next&nbsp;comes&nbsp;two&nbsp;more&nbsp;collection&nbsp;specific&nbsp;macros.&nbsp;These&nbsp;are&nbsp;used&nbsp;to&nbsp;define&nbsp;cascading&nbsp;style&nbsp;classes&nbsp;
+that&nbsp;ensure&nbsp;that&nbsp;the&nbsp;drop&shy;down&nbsp;box&nbsp;appears&nbsp;correctly&nbsp;in&nbsp;the&nbsp;rendered&nbsp;HTML&nbsp;page.&nbsp;These&nbsp;are&nbsp;
+_AREULangCSS_&nbsp;and&nbsp;_AREUBarCSS_&nbsp;and&nbsp;they&nbsp;just&nbsp;set&nbsp;up&nbsp;the&nbsp;name&nbsp;of&nbsp;CSS&nbsp;class&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;used.&nbsp;
+The&nbsp;drop&shy;down&nbsp;list&nbsp;is&nbsp;created&nbsp;as&nbsp;follows,&nbsp;again&nbsp;in&nbsp;a&nbsp;collection&nbsp;specific&nbsp;macro.
+</p>
+<p>_AREULangOptions_&nbsp;{
+&lt;div&nbsp;class=_AREULangCSS_&gt;
+&nbsp;&lt;form&nbsp;name="PrefForm"&nbsp;method="get"&nbsp;action="/gsdl/cgi&shy;bin/library"&gt;
+&nbsp;&nbsp;&lt;select&nbsp;name="l"&nbsp;onchange="updatel();"&gt;
+&nbsp;&nbsp;&nbsp;_AREULang_
+&nbsp;&nbsp;&lt;/select&gt;
+&nbsp;&lt;/form&gt;
+&lt;/div&gt;
+}
+</p>
+<p>The&nbsp;drop&shy;down&nbsp;list&nbsp;is&nbsp;placed&nbsp;in&nbsp;a&nbsp;form,&nbsp;this&nbsp;is&nbsp;an&nbsp;existing&nbsp;form&nbsp;used&nbsp;by&nbsp;the&nbsp;preference&nbsp;page&nbsp;and&nbsp;a&nbsp;
+javascript&nbsp;macro&nbsp;is&nbsp;triggered&nbsp;if&nbsp;a&nbsp;new&nbsp;element&nbsp;is&nbsp;selected,&nbsp;onchange.&nbsp;The&nbsp;form&nbsp;is&nbsp;then&nbsp;wrapped&nbsp;in&nbsp;a&nbsp;
+division&nbsp;tag,&nbsp;which&nbsp;allows&nbsp;the&nbsp;CSS&nbsp;class&nbsp;to&nbsp;be&nbsp;applied&nbsp;to&nbsp;the&nbsp;whole&nbsp;list.&nbsp;In&nbsp;the&nbsp;case&nbsp;of&nbsp;Dari,&nbsp;the&nbsp;style&nbsp;
+class&nbsp;will&nbsp;be&nbsp;as&nbsp;follows:
+</p>
+<p>span.langrtl
+{
+</p>
+<p>8&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;&nbsp;float:&nbsp;left;
+&nbsp;&nbsp;&nbsp;margin&shy;top:&nbsp;&shy;22px;
+&nbsp;&nbsp;&nbsp;margin&shy;left:&nbsp;5px;
+}
+</p>
+<p>This&nbsp;only&nbsp;differs&nbsp;from&nbsp;the&nbsp;style&nbsp;class&nbsp;used&nbsp;for&nbsp;the&nbsp;English&nbsp;drop&shy;down&nbsp;in&nbsp;that&nbsp;the&nbsp;float&nbsp;directive&nbsp;is&nbsp;
+left,&nbsp;on&nbsp;the&nbsp;English&nbsp;version&nbsp;the&nbsp;float&nbsp;is&nbsp;to&nbsp;the&nbsp;right.
+</p>
+<p>Finally&nbsp;the&nbsp;language&nbsp;selection&nbsp;box&nbsp;needs&nbsp;to&nbsp;be&nbsp;placed&nbsp;on&nbsp;the&nbsp;page.&nbsp;That&nbsp;is&nbsp;done&nbsp;by&nbsp;using&nbsp;the&nbsp;
+existing&nbsp;macro&nbsp;_optnavigationbar_&nbsp;which&nbsp;defines&nbsp;the&nbsp;navigation&nbsp;bar&nbsp;that&nbsp;appears&nbsp;on&nbsp;every&nbsp;page.
+</p>
+<p>_optnavigationbar_{
+&lt;div&nbsp;class="navbar"&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="_AREUBarCSS_"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_navigationbar_
+&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;_AREULangOptions_
+&lt;/div&gt;
+}
+</p>
+<p>This&nbsp;places&nbsp;the&nbsp;_navigationbar_&nbsp;macro&nbsp;and&nbsp;our&nbsp;new&nbsp;_AREULangOptions_&nbsp;macro&nbsp;into&nbsp;a&nbsp;couple&nbsp;of&nbsp;
+HTML&nbsp;division&nbsp;tags&nbsp;which&nbsp;are&nbsp;formatted&nbsp;using&nbsp;CSS&nbsp;classes,&nbsp;navbar&nbsp;and&nbsp;the&nbsp;language&nbsp;specific&nbsp;class,&nbsp;
+which&nbsp;for&nbsp;Dari&nbsp;will&nbsp;be&nbsp;&nbsp;barrtl.&nbsp;The&nbsp;final&nbsp;rendering&nbsp;of&nbsp;the&nbsp;navigation&nbsp;bar&nbsp;can&nbsp;be&nbsp;seen&nbsp;in&nbsp;Illustration
+6.
+</p>
+<p>There&nbsp;is&nbsp;just&nbsp;one&nbsp;last&nbsp;area&nbsp;to&nbsp;cover.&nbsp;In&nbsp;Greenstone&nbsp;the&nbsp;macros&nbsp;are&nbsp;broken&nbsp;down&nbsp;into&nbsp;packages&nbsp;and&nbsp;
+since&nbsp;this&nbsp;uses&nbsp;a&nbsp;Greenstone&nbsp;macro,&nbsp;_optnavigationbar_&nbsp;it&nbsp;is&nbsp;important&nbsp;to&nbsp;define&nbsp;it&nbsp;in&nbsp;the&nbsp;correct&nbsp;
+macro.&nbsp;This&nbsp;can&nbsp;be&nbsp;done&nbsp;by&nbsp;finding&nbsp;where&nbsp;the&nbsp;macro&nbsp;is&nbsp;originally&nbsp;defined,&nbsp;unfortunately&nbsp;this&nbsp;is&nbsp;a&nbsp;
+task&nbsp;of&nbsp;scouring&nbsp;the&nbsp;macro&nbsp;files.&nbsp;The&nbsp;nav_css.dm&nbsp;defines&nbsp;this&nbsp;macro&nbsp;and&nbsp;from&nbsp;this&nbsp;file&nbsp;it&nbsp;is&nbsp;clear&nbsp;that&nbsp;
+the&nbsp;macro&nbsp;belongs&nbsp;to&nbsp;the&nbsp;Global&nbsp;package,&nbsp;this&nbsp;means&nbsp;that&nbsp;in&nbsp;the&nbsp;extra.dm&nbsp;file&nbsp;the&nbsp;line&nbsp;package&nbsp;
+global&nbsp;should&nbsp;appear&nbsp;before&nbsp;these&nbsp;definitions.
+</p>
+<p>5.2.2 Query
+The&nbsp;default&nbsp;simple&nbsp;query&nbsp;that&nbsp;Greenstone&nbsp;generates&nbsp;has&nbsp;two&nbsp;drop&nbsp;down&shy;list&nbsp;that&nbsp;allow&nbsp;the&nbsp;user&nbsp;to&nbsp;
+select&nbsp;what&nbsp;part&nbsp;of&nbsp;the&nbsp;document&nbsp;gets&nbsp;searched,&nbsp;and&nbsp;how&nbsp;the&nbsp;words&nbsp;are&nbsp;incorporated&nbsp;into&nbsp;the&nbsp;search,&nbsp;
+which&nbsp;is&nbsp;either&nbsp;all&nbsp;of&nbsp;the&nbsp;words&nbsp;or&nbsp;some&nbsp;of&nbsp;the&nbsp;words.&nbsp;Finally,&nbsp;of&nbsp;course,&nbsp;&nbsp;there&nbsp;is&nbsp;the&nbsp;text&nbsp;entry&nbsp;area&nbsp;
+and&nbsp;a&nbsp;search&nbsp;button.&nbsp;Very&nbsp;simple&nbsp;and&nbsp;efficient,&nbsp;however&nbsp;because&nbsp;we&nbsp;are&nbsp;blocking&nbsp;access&nbsp;to&nbsp;the&nbsp;
+preferences&nbsp;page&nbsp;the&nbsp;query&nbsp;area&nbsp;requires&nbsp;a&nbsp;little&nbsp;more,&nbsp;as&nbsp;shown&nbsp;in&nbsp;Illustration&nbsp;4&nbsp;Search&nbsp;Results.&nbsp;We&nbsp;
+have&nbsp;added&nbsp;two&nbsp;&nbsp;drop&shy;down&nbsp;menus&nbsp;from&nbsp;the&nbsp;preferences&nbsp;page.&nbsp;These&nbsp;allow&nbsp;the&nbsp;user&nbsp;to&nbsp;select&nbsp;how&nbsp;
+many&nbsp;items&nbsp;are&nbsp;returned&nbsp;in&nbsp;the&nbsp;entire&nbsp;search&nbsp;and&nbsp;how&nbsp;many&nbsp;are&nbsp;returned&nbsp;on&nbsp;each&nbsp;page.&nbsp;This&nbsp;is&nbsp;done&nbsp;
+with&nbsp;the&nbsp;following&nbsp;code&nbsp;added&nbsp;to&nbsp;the&nbsp;extra.dm&nbsp;file.
+</p>
+<p>_smallquerybox_
+{
+&nbsp;&nbsp;&lt;br&nbsp;/&gt;&lt;input&nbsp;type="text"&nbsp;name="q"&nbsp;value="_cgiargq_"&nbsp;size="50"&gt;&lt;br&nbsp;/&gt;
+&nbsp;&nbsp;_preferences:textprefop_
+&nbsp;&nbsp;&lt;input&nbsp;type="submit"&nbsp;value="_textbeginsearch_"&gt;
+}
+</p>
+<p>The&nbsp;original&nbsp;_smallquerybox_&nbsp;is&nbsp;defined&nbsp;in&nbsp;the&nbsp;query.dm&nbsp;file&nbsp;and&nbsp;belongs&nbsp;to&nbsp;the&nbsp;query&nbsp;package.&nbsp;It&nbsp;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 9&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>has&nbsp;the&nbsp;text&nbsp;box&nbsp;and&nbsp;the&nbsp;button&nbsp;on&nbsp;the&nbsp;same&nbsp;line.&nbsp;This&nbsp;is&nbsp;slightly&nbsp;modified&nbsp;by&nbsp;having&nbsp;the&nbsp;text&nbsp;box&nbsp;
+then&nbsp;on&nbsp;a&nbsp;new&nbsp;line&nbsp;the&nbsp;two&nbsp;new&nbsp;drop&shy;down&nbsp;list&nbsp;followed&nbsp;by&nbsp;the&nbsp;search&nbsp;button.&nbsp;The&nbsp;two&nbsp;drop&shy;down&nbsp;
+lists&nbsp;are&nbsp;defined&nbsp;in&nbsp;the&nbsp;_textprefop_&nbsp;macro,&nbsp;however&nbsp;this&nbsp;macro&nbsp;is&nbsp;defined&nbsp;in&nbsp;a&nbsp;different&nbsp;package,&nbsp;
+the&nbsp;preferences&nbsp;package,&nbsp;it&nbsp;is&nbsp;used&nbsp;in&nbsp;pref.dm,&nbsp;and&nbsp;so&nbsp;this&nbsp;can&nbsp;be&nbsp;inserted&nbsp;using&nbsp;the&nbsp;syntax,&nbsp;
+_package:macro_&nbsp;as&nbsp;follows,&nbsp;_preferences:textprefop_
+</p>
+<p>We&nbsp;wanted&nbsp;to&nbsp;set&nbsp;the&nbsp;default&nbsp;values&nbsp;so&nbsp;that&nbsp;from&nbsp;over&nbsp;the&nbsp;LAN&nbsp;the&nbsp;maximum&nbsp;results&nbsp;were&nbsp;returned&nbsp;
+whilst&nbsp;over&nbsp;the&nbsp;Internet&nbsp;the&nbsp;number&nbsp;of&nbsp;results&nbsp;returned&nbsp;per&nbsp;page&nbsp;were&nbsp;limited.&nbsp;This&nbsp;is&nbsp;done&nbsp;by&nbsp;
+initially&nbsp;passing&nbsp;the&nbsp;values&nbsp;in&nbsp;through&nbsp;the&nbsp;URL.&nbsp;The&nbsp;value&nbsp;of&nbsp;the&nbsp;number&nbsp;of&nbsp;item&nbsp;returned&nbsp;is&nbsp;held&nbsp;in&nbsp;
+the&nbsp;variable&nbsp;called&nbsp;m,&nbsp;whilst&nbsp;the&nbsp;number&nbsp;returned&nbsp;per&nbsp;page&nbsp;is&nbsp;held&nbsp;in&nbsp;the&nbsp;variable&nbsp;called&nbsp;o,&nbsp;so&nbsp;the&nbsp;
+URL&nbsp;to&nbsp;the&nbsp;collection&nbsp;is&nbsp;modified&nbsp;with&nbsp;the&nbsp;following&nbsp;appended&nbsp;to&nbsp;it,&nbsp;&amp;m=&shy;1&amp;o=50.
+</p>
+<p>5.2.3 About&nbsp;Page
+We&nbsp;are&nbsp;using&nbsp;the&nbsp;about&nbsp;page&nbsp;as&nbsp;the&nbsp;front&nbsp;page&nbsp;to&nbsp;the&nbsp;collection&nbsp;from&nbsp;the&nbsp;web&nbsp;site&nbsp;and&nbsp;it&nbsp;needed&nbsp;to&nbsp;be&nbsp;
+significantly&nbsp;modified&nbsp;so&nbsp;that&nbsp;it&nbsp;closely&nbsp;mirrored&nbsp;the&nbsp;look&nbsp;of&nbsp;the&nbsp;organisations&nbsp;web&nbsp;site.&nbsp;The&nbsp;
+organisations&nbsp;web&nbsp;page&nbsp;is&nbsp;shown&nbsp;in&nbsp;Illustration&nbsp;5&nbsp;and&nbsp;the&nbsp;about&nbsp;page&nbsp;is&nbsp;shown&nbsp;in&nbsp;Illustration&nbsp;6.
+</p>
+<p>As&nbsp;can&nbsp;be&nbsp;seen&nbsp;there&nbsp;is&nbsp;a&nbsp;clear&nbsp;distinction&nbsp;between&nbsp;the&nbsp;two&nbsp;but&nbsp;there&nbsp;is&nbsp;also&nbsp;a&nbsp;familiar&nbsp;theme&nbsp;running&nbsp;
+through&nbsp;the&nbsp;two&nbsp;sites.&nbsp;The&nbsp;difference&nbsp;is&nbsp;just&nbsp;to&nbsp;emphasis&nbsp;that&nbsp;the&nbsp;user&nbsp;has&nbsp;moved&nbsp;to&nbsp;a&nbsp;different&nbsp;site&nbsp;
+but&nbsp;it&nbsp;is&nbsp;important&nbsp;to&nbsp;keep&nbsp;the&nbsp;look&nbsp;so&nbsp;that&nbsp;organisational&nbsp;image&nbsp;is&nbsp;maintained,&nbsp;and&nbsp;emphasised.
+</p>
+<p>10&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan
+</p>
+<p>Illustration&nbsp;5:&nbsp;The&nbsp;Organisation's&nbsp;web&nbsp;page
+</p>
+<p>Illustration&nbsp;6:&nbsp;The&nbsp;About&nbsp;Page</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>The&nbsp;Greenstone&nbsp;page&nbsp;is&nbsp;built&nbsp;up&nbsp;in&nbsp;parts&nbsp;using&nbsp;macros&nbsp;to&nbsp;define&nbsp;each&nbsp;part&nbsp;of&nbsp;the&nbsp;page.&nbsp;To&nbsp;achieve&nbsp;
+our&nbsp;aims&nbsp;of&nbsp;the&nbsp;page&nbsp;layout&nbsp;we&nbsp;rewrote&nbsp;the&nbsp;header&nbsp;and&nbsp;footer&nbsp;sections.
+</p>
+<p>5.2.3.1 Header
+</p>
+<p>The&nbsp;header&nbsp;sections&nbsp;before&nbsp;and&nbsp;after&nbsp;the&nbsp;rewrite&nbsp;can&nbsp;be&nbsp;seen&nbsp;in&nbsp;the&nbsp;following&nbsp;table.&nbsp;Both&nbsp;versions&nbsp;
+have&nbsp;a&nbsp;banner&nbsp;section&nbsp;whilst&nbsp;the&nbsp;original&nbsp;version&nbsp;has&nbsp;an&nbsp;additional&nbsp;bannerextra&nbsp;section.&nbsp;In&nbsp;the&nbsp;
+revised&nbsp;version&nbsp;the&nbsp;bannerextra&nbsp;section&nbsp;is&nbsp;incorporated&nbsp;within&nbsp;the&nbsp;banner&nbsp;section,&nbsp;this&nbsp;is&nbsp;because&nbsp;we&nbsp;
+don't&nbsp;need&nbsp;the&nbsp;flexibility&nbsp;of&nbsp;the&nbsp;original&nbsp;version.
+</p>
+<p>As&nbsp;can&nbsp;be&nbsp;seen&nbsp;this&nbsp;macro&nbsp;uses&nbsp;three&nbsp;other&nbsp;macros,&nbsp;_imagecollection_,&nbsp;_pagebannerextra_&nbsp;and&nbsp;
+_AREUHome_.&nbsp;The&nbsp;location&nbsp;of&nbsp;these&nbsp;are&nbsp;shown&nbsp;in&nbsp;Illustration&nbsp;7.
+</p>
+<p>Original&nbsp;version&nbsp;in&nbsp;style.dm Modified&nbsp;version&nbsp;in&nbsp;extra.dm
+_pagebanner_&nbsp;{
+&lt;!&shy;&shy;&nbsp;page&nbsp;banner&nbsp;(\_style:pagebanner\_)&nbsp;&shy;&shy;&gt;
+&lt;div&nbsp;id="banner"&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="pageinfo"&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&nbsp;class="bannerlinks"&gt;_globallinks_&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_bannertitle_
+&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="collectimage"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_imagecollection_
+&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&nbsp;class="bannerextra"&gt;
+&nbsp;&nbsp;_pagebannerextra_
+&lt;/div&gt;
+&lt;!&shy;&shy;&nbsp;end&nbsp;of&nbsp;page&nbsp;banner&nbsp;&shy;&shy;&gt;
+}
+</p>
+<p>_pagebanner_&nbsp;{
+</p>
+<p>&lt;div&nbsp;id="banner"&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="collectimage"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_imagecollection_
+&nbsp;&nbsp;&nbsp;&nbsp;_pagebannerextra_
+&nbsp;&nbsp;&nbsp;&nbsp;_AREUHome_
+&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&nbsp;&nbsp;
+</p>
+<p>&lt;!&shy;&shy;&nbsp;end&nbsp;of&nbsp;page&nbsp;banner&nbsp;&shy;&shy;&gt;
+}
+</p>
+<p>The&nbsp;details&nbsp;of&nbsp;these&nbsp;three&nbsp;macros&nbsp;is&nbsp;shown&nbsp;later.&nbsp;This&nbsp;leaves&nbsp;the&nbsp;navigation&nbsp;bar&nbsp;which&nbsp;is&nbsp;defined&nbsp;as&nbsp;
+follows:
+</p>
+<p>Original&nbsp;version&nbsp;in&nbsp;nav_css.dm Modified&nbsp;version&nbsp;in&nbsp;extra.dm
+_optnavigationbar_{
+&lt;div&nbsp;class="navbar"&gt;
+&nbsp;&nbsp;&lt;p&nbsp;class="navbar"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_navigationbar_
+&nbsp;&nbsp;&lt;/p&gt;
+&lt;/div&gt;
+</p>
+<p>_optnavigationbar_{
+&lt;div&nbsp;class="navbar"&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="_AREUBarCSS_"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_navigationbar_
+&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;_AREULangOptions_
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 11&nbsp;of&nbsp;31
+</p>
+<p>Illustration&nbsp;7:&nbsp;The&nbsp;Heading&nbsp;section&nbsp;of&nbsp;each&nbsp;Greenstone&nbsp;page</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>}&nbsp; &lt;/div&gt;
+}
+</p>
+<p>The&nbsp;original&nbsp;version&nbsp;wrapped&nbsp;the&nbsp;navigationbar&nbsp;in&nbsp;a&nbsp;paragraph&nbsp;which&nbsp;seemed&nbsp;to&nbsp;complicate&nbsp;the&nbsp;
+layout&nbsp;of&nbsp;the&nbsp;navigation&nbsp;bar&nbsp;and&nbsp;the&nbsp;language&nbsp;options,&nbsp;so&nbsp;the&nbsp;revised&nbsp;version&nbsp;used&nbsp;HTML&nbsp;divisions&nbsp;
+to&nbsp;separate&nbsp;them,&nbsp;this&nbsp;is&nbsp;covered&nbsp;in&nbsp;greater&nbsp;detail&nbsp;in&nbsp;the&nbsp;earlier&nbsp;section&nbsp;on&nbsp;the&nbsp;Language&nbsp;Selection.
+</p>
+<p>5.2.3.2 Footer
+</p>
+<p>The&nbsp;footer&nbsp;of&nbsp;each&nbsp;page&nbsp;is&nbsp;as&nbsp;follows:
+</p>
+<p>This&nbsp;is&nbsp;set&nbsp;up&nbsp;by&nbsp;redefining&nbsp;the&nbsp;footer&nbsp;macro&nbsp;as&nbsp;shown&nbsp;below:
+_footer_&nbsp;{
+_pagefooterextra_
+&lt;/div&gt;
+&lt;div&nbsp;class="footer"&gt;
+</p>
+<p>&lt;hr&nbsp;width=600px&nbsp;color=#234F33&gt;
+&nbsp;&nbsp;&nbsp;_AREUFullName1_
+&nbsp;&nbsp;&nbsp;&lt;script&nbsp;language="javascript"&nbsp;type="text/javascript"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;curdate&nbsp;=&nbsp;new&nbsp;Date()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;year&nbsp;=&nbsp;curdate.getFullYear()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.write("&amp;copy;&nbsp;"&nbsp;+&nbsp;year)
+&nbsp;&nbsp;&nbsp;&lt;/script&gt;
+&nbsp;&nbsp;&nbsp;_AREUFullName2_
+&lt;/div&gt;
+}
+</p>
+<p>This&nbsp;defines&nbsp;a&nbsp;simple&nbsp;javascript&nbsp;macro&nbsp;to&nbsp;garner&nbsp;and&nbsp;then&nbsp;print&nbsp;out&nbsp;the&nbsp;current&nbsp;year,&nbsp;with&nbsp;a&nbsp;
+copyright&nbsp;symbol.&nbsp;The&nbsp;organisational&nbsp;name&nbsp;is&nbsp;either&nbsp;set&nbsp;up&nbsp;in&nbsp;the&nbsp;macro&nbsp;_AREUFullName1_&nbsp;or&nbsp;
+_AREUFullName2_,&nbsp;depending&nbsp;upon&nbsp;whether&nbsp;the&nbsp;name&nbsp;should&nbsp;appear&nbsp;before&nbsp;or&nbsp;after&nbsp;the&nbsp;date,&nbsp;
+depending&nbsp;upon&nbsp;the&nbsp;language&nbsp;used,&nbsp;as&nbsp;shown&nbsp;below.
+</p>
+<p>_AREUFullName1_&nbsp;{}
+_AREUFullName2_&nbsp;{Afghanistan&nbsp;Research&nbsp;and&nbsp;Evaluation&nbsp;Unit}
+_AREUFullName1_&nbsp;[l=ps]&nbsp;{ &nbsp; &nbsp; &nbsp;هرادا ینوځراوا ینړيڅد ناتسناغفاد،}
+_AREUFullName2_&nbsp;[l=ps]&nbsp;{}
+</p>
+<p>5.2.3.3 Details
+</p>
+<p>The&nbsp;image&nbsp;icon&nbsp;includes&nbsp;both&nbsp;the&nbsp;logo&nbsp;and&nbsp;the&nbsp;text,&nbsp;this&nbsp;ensures&nbsp;that&nbsp;the&nbsp;text&nbsp;appears&nbsp;in&nbsp;the&nbsp;correct&nbsp;
+font&nbsp;and&nbsp;is&nbsp;correctly&nbsp;positioned&nbsp;across&nbsp;all&nbsp;browsers,&nbsp;on&nbsp;all&nbsp;systems&nbsp;and&nbsp;most&nbsp;importantly&nbsp;in&nbsp;all&nbsp;three&nbsp;
+languages.&nbsp;Each&nbsp;logo&nbsp;has&nbsp;been&nbsp;translated&nbsp;and&nbsp;stored&nbsp;in&nbsp;a&nbsp;folder&nbsp;related&nbsp;to&nbsp;the&nbsp;language.&nbsp;The&nbsp;logo&nbsp;is&nbsp;
+set&nbsp;up&nbsp;in&nbsp;the&nbsp;collect.cfg&nbsp;file&nbsp;and&nbsp;is&nbsp;done&nbsp;as&nbsp;follows:
+</p>
+<p>#&nbsp;Location&nbsp;of&nbsp;Collection&nbsp;Icons
+collectionmeta iconcollectionsmall&nbsp;[l=en]&nbsp;"_httpprefix_/collect/areu/images/en/areusm.png"
+collectionmeta iconcollection&nbsp;[l=en]&nbsp;"_httpprefix_/collect/areu/images/en/areu.png"
+</p>
+<p>collectionmeta iconcollectionsmall&nbsp;[l=prs]&nbsp;"_httpprefix_/collect/areu/images/prs/areusm.png"
+collectionmeta iconcollection&nbsp;[l=prs]&nbsp;"_httpprefix_/collect/areu/images/prs/areu.png"
+</p>
+<p>collectionmeta iconcollectionsmall&nbsp;[l=ps]&nbsp;"_httpprefix_/collect/areu/images/ps/areusm.png"
+collectionmeta iconcollection&nbsp;[l=ps]&nbsp;"_httpprefix_/collect/areu/images/ps/areu.png"
+</p>
+<p>This&nbsp;sets&nbsp;up&nbsp;the&nbsp;macro&nbsp;called&nbsp;_iconcollection_&nbsp;and&nbsp;this&nbsp;is&nbsp;set&nbsp;up&nbsp;to&nbsp;proper&nbsp;HTML&nbsp;in&nbsp;the&nbsp;base.dm&nbsp;
+</p>
+<p>12&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>file&nbsp;in&nbsp;the&nbsp;macro&nbsp;called&nbsp;_imagecollection_,&nbsp;which&nbsp;is&nbsp;then&nbsp;used&nbsp;by&nbsp;the&nbsp;_pagebanner_&nbsp;macro,&nbsp;as&nbsp;
+shown&nbsp;in&nbsp;the&nbsp;section&nbsp;called&nbsp;Header,&nbsp;above.
+</p>
+<p>_imagecollection_
+{
+&nbsp;&nbsp;_If_("_iconcollection_"&nbsp;ne&nbsp;""
+&nbsp;&nbsp;,
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;a&nbsp;href="_httppageabout_"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img&nbsp;class="icon"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src="_iconcollection_"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alt="_collectionname_"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="_collectionname_"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/a&gt;
+&nbsp;&nbsp;,
+&nbsp;&nbsp;&nbsp;&nbsp;_imagecollectionv_
+&nbsp;&nbsp;)
+}
+</p>
+<p>The&nbsp;_pagebannerextra_&nbsp;macro&nbsp;very&nbsp;simply&nbsp;sets&nbsp;up&nbsp;the&nbsp;organisation&nbsp;name&nbsp;and&nbsp;has&nbsp;been&nbsp;set&nbsp;up&nbsp;as&nbsp;
+follows:
+</p>
+<p>_pagebannerextra_&nbsp;{&lt;span&nbsp;class="titleltr"&gt;AREU&nbsp;Library&nbsp;Catalogue&lt;/span&gt;}
+_pagebannerextra_&nbsp;[l=prs]&nbsp;{&lt;span&nbsp;class="titlertl"&gt; &nbsp; &nbsp;هناخباتک یدنب هدر&nbsp;AREU&lt;/span&gt;}
+_pagebannerextra_&nbsp;[l=ps]&nbsp;{&lt;span&nbsp;class="titlertl"&gt;دAREU &nbsp; &nbsp;یدنب هدر نوتباتکد&lt;/span&gt;}
+</p>
+<p>The&nbsp;_AREUHome_&nbsp;macro&nbsp;is&nbsp;a&nbsp;link&nbsp;to&nbsp;the&nbsp;organisations&nbsp;website,&nbsp;it&nbsp;ensures&nbsp;that&nbsp;it&nbsp;is&nbsp;consistent&nbsp;in&nbsp;the&nbsp;
+language&nbsp;that&nbsp;is&nbsp;displayed,&nbsp;that&nbsp;is&nbsp;if&nbsp;in&nbsp;Greenstone&nbsp;it&nbsp;is&nbsp;currently&nbsp;displaying&nbsp;Dari&nbsp;then&nbsp;the&nbsp;web&nbsp;site&nbsp;
+link&nbsp;will&nbsp;display&nbsp;the&nbsp;Dari&nbsp;version&nbsp;of&nbsp;the&nbsp;web&nbsp;site.&nbsp;It&nbsp;has&nbsp;been&nbsp;set&nbsp;up&nbsp;as&nbsp;follows:
+</p>
+<p>_AREUText_&nbsp;{AREU&nbsp;website}
+_AREUText_&nbsp;[l=prs]&nbsp;{ &nbsp;تیاس بیو&nbsp;AREU}
+_AREUText_&nbsp;[l=ps]&nbsp;{دAREU &nbsp;هڼاپ بیو}
+</p>
+<p>_AREUDiv_&nbsp;&nbsp;{titlertl}
+_AREUDiv_&nbsp;&nbsp;[l=prs]&nbsp;{titleltr}
+_AREUDiv_&nbsp;&nbsp;[l=ps]&nbsp;{titleltr}
+</p>
+<p>_AREULang_&nbsp;{&amp;lang=en}
+_AREULang_&nbsp;[l=prs]&nbsp;{&amp;lang=prs}
+_AREULang_&nbsp;[l=ps]&nbsp;{&amp;lang=ps}
+</p>
+<p>_AREUHome_&nbsp;{&lt;span&nbsp;class="_AREUDiv_"&gt;&lt;a&nbsp;
+href="http://www.areu.org.af/index.php?option=com_content&amp;task=view&amp;
+id=11&amp;Itemid=15_AREULang_"&gt;_AREUText_&lt;/a&gt;&lt;/span&gt;}
+</p>
+<p>5.2.4 Display&nbsp;Details
+The&nbsp;details&nbsp;of&nbsp;each&nbsp;record&nbsp;is&nbsp;laid&nbsp;out&nbsp;as&nbsp;shown&nbsp;in&nbsp;Illustration&nbsp;8,&nbsp;the&nbsp;intended&nbsp;impression&nbsp;is&nbsp;for&nbsp;it&nbsp;to&nbsp;
+have&nbsp;look&nbsp;of&nbsp;a&nbsp;classical&nbsp;catalogue&nbsp;card.&nbsp;The&nbsp;screen&nbsp;will&nbsp;display&nbsp;the&nbsp;details&nbsp;in&nbsp;the&nbsp;language&nbsp;of&nbsp;the&nbsp;
+text,&nbsp;hence&nbsp;if&nbsp;the&nbsp;text&nbsp;is&nbsp;available&nbsp;in&nbsp;English&nbsp;then&nbsp;the&nbsp;details&nbsp;will&nbsp;be&nbsp;written&nbsp;up&nbsp;in&nbsp;English,&nbsp;
+conversely&nbsp;if&nbsp;the&nbsp;text&nbsp;is&nbsp;published&nbsp;in&nbsp;Dari&nbsp;then&nbsp;the&nbsp;details&nbsp;will&nbsp;be&nbsp;presented&nbsp;in&nbsp;Dari.&nbsp;This&nbsp;ensures&nbsp;
+that&nbsp;the&nbsp;researcher&nbsp;can&nbsp;search&nbsp;in&nbsp;their&nbsp;own&nbsp;language&nbsp;and&nbsp;find&nbsp;texts&nbsp;that&nbsp;will&nbsp;interest&nbsp;them.&nbsp;However,&nbsp;
+it&nbsp;was&nbsp;also&nbsp;agreed&nbsp;that&nbsp;it&nbsp;would&nbsp;be&nbsp;useful&nbsp;for&nbsp;international&nbsp;researcher&nbsp;to&nbsp;know&nbsp;what&nbsp;is&nbsp;available&nbsp;in&nbsp;
+the&nbsp;local&nbsp;languages,&nbsp;to&nbsp;assist&nbsp;with&nbsp;this&nbsp;notes&nbsp;can&nbsp;be&nbsp;added&nbsp;to&nbsp;provide&nbsp;a&nbsp;summary&nbsp;in&nbsp;English&nbsp;of&nbsp;Dari&nbsp;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 13&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>and&nbsp;Pushto&nbsp;texts.
+</p>
+<p>All&nbsp;of&nbsp;the&nbsp;details&nbsp;that&nbsp;appear&nbsp;are&nbsp;created&nbsp;and&nbsp;managed&nbsp;by&nbsp;the&nbsp;separate&nbsp;program&nbsp;mentioned&nbsp;in&nbsp;section&nbsp;
+4&nbsp;that&nbsp;enables&nbsp;multiple&nbsp;librarians&nbsp;to&nbsp;manage&nbsp;the&nbsp;data&nbsp;simultaneously.
+</p>
+<p>6 Burning&nbsp;CD's&nbsp;and&nbsp;back&shy;ups
+When&nbsp;we&nbsp;started&nbsp;work&nbsp;on&nbsp;this&nbsp;collection&nbsp;access&nbsp;to&nbsp;the&nbsp;Internet&nbsp;in&nbsp;Afghanistan&nbsp;was&nbsp;limited&nbsp;and&nbsp;so&nbsp;it&nbsp;
+was&nbsp;important&nbsp;to&nbsp;be&nbsp;able&nbsp;to&nbsp;use&nbsp;other&nbsp;mechanisms&nbsp;to&nbsp;distribute&nbsp;the&nbsp;collection.&nbsp;This&nbsp;is&nbsp;where&nbsp;the&nbsp;
+ability&nbsp;to&nbsp;export&nbsp;the&nbsp;collection&nbsp;to&nbsp;a&nbsp;CD&nbsp;or&nbsp;DVD&nbsp;was&nbsp;very&nbsp;attractive.&nbsp;By&nbsp;the&nbsp;time&nbsp;that&nbsp;this&nbsp;was&nbsp;tested&nbsp;
+we&nbsp;had&nbsp;already&nbsp;made&nbsp;some&nbsp;design&nbsp;decisions&nbsp;which&nbsp;meant&nbsp;that&nbsp;this&nbsp;process&nbsp;didn't&nbsp;completely&nbsp;work.&nbsp;
+Essentially&nbsp;we&nbsp;had&nbsp;a&nbsp;couple&nbsp;of&nbsp;directories&nbsp;that&nbsp;were&nbsp;holding&nbsp;collection&nbsp;data&nbsp;but&nbsp;were&nbsp;not&nbsp;standard&nbsp;
+Greenstone&nbsp;directories&nbsp;and&nbsp;so&nbsp;these&nbsp;were&nbsp;not&nbsp;picked&nbsp;up&nbsp;by&nbsp;the&nbsp;export&nbsp;process.&nbsp;One&nbsp;directory&nbsp;was&nbsp;
+called&nbsp;styles&nbsp;where&nbsp;the&nbsp;css&nbsp;sheets&nbsp;were&nbsp;stored,&nbsp;further&nbsp;investigation&nbsp;showed&nbsp;that&nbsp;the&nbsp;Greenstone&nbsp;
+standard&nbsp;was&nbsp;to&nbsp;hold&nbsp;the&nbsp;style&nbsp;sheets&nbsp;in&nbsp;the&nbsp;images&nbsp;directory.&nbsp;The&nbsp;other&nbsp;directory&nbsp;held&nbsp;the&nbsp;uploaded&nbsp;
+documents&nbsp;that&nbsp;were&nbsp;not&nbsp;being&nbsp;integrated&nbsp;into&nbsp;the&nbsp;Greenstone&nbsp;indexing&nbsp;process&nbsp;and&nbsp;they&nbsp;were&nbsp;
+stored&nbsp;in&nbsp;a&nbsp;separate&nbsp;directory&nbsp;at&nbsp;the&nbsp;collection&nbsp;level&nbsp;called&nbsp;Upload.
+</p>
+<p>This&nbsp;required&nbsp;a&nbsp;change&nbsp;to&nbsp;the&nbsp;exportcol.pl&nbsp;file.&nbsp;It&nbsp;needed&nbsp;to&nbsp;be&nbsp;modified&nbsp;in&nbsp;three&nbsp;separate&nbsp;areas,&nbsp;
+thankfully&nbsp;though&nbsp;the&nbsp;changes&nbsp;were&nbsp;relatively&nbsp;simple.&nbsp;The&nbsp;first&nbsp;change&nbsp;was&nbsp;to&nbsp;be&nbsp;used&nbsp;when&nbsp;when&nbsp;
+saving&nbsp;the&nbsp;collection&nbsp;on&nbsp;the&nbsp;CD,&nbsp;for&nbsp;the&nbsp;links&nbsp;to&nbsp;work&nbsp;in&nbsp;the&nbsp;documents&nbsp;that&nbsp;were&nbsp;part&nbsp;of&nbsp;the&nbsp;
+collection&nbsp;it&nbsp;is&nbsp;necessary&nbsp;&nbsp;to&nbsp;mirror&nbsp;the&nbsp;file&nbsp;structure&nbsp;from&nbsp;the&nbsp;gsdl&nbsp;directory.&nbsp;This&nbsp;meant&nbsp;that&nbsp;an&nbsp;
+extra&nbsp;directory&nbsp;was&nbsp;required,&nbsp;gsdl/collect.&nbsp;This&nbsp;code,&nbsp;shown&nbsp;below,&nbsp;creates&nbsp;the&nbsp;directory&nbsp;and&nbsp;a&nbsp;
+variable,&nbsp;$colgsdldir,&nbsp;that&nbsp;can&nbsp;refer&nbsp;to&nbsp;this&nbsp;directory.
+</p>
+<p>my&nbsp;$collectdir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($gsdldir,&nbsp;"collect");
+#&nbsp;A&nbsp;fix&nbsp;for&nbsp;AREU&nbsp;&amp;&nbsp;ACKU&nbsp;collections&nbsp;***&nbsp;Graeme&nbsp;April&nbsp;2007
+my&nbsp;$colgsdldir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($gsdldir,&nbsp;"gsdl",&nbsp;"collect");
+&amp;util::mk_all_dir&nbsp;($colgsdldir);
+#&nbsp;End&nbsp;of&nbsp;a&nbsp;fix&nbsp;for&nbsp;AREU&nbsp;&amp;&nbsp;ACKU&nbsp;collections&nbsp;***&nbsp;Graeme&nbsp;April&nbsp;2007
+</p>
+<p>14&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan
+</p>
+<p>Illustration&nbsp;8:&nbsp;Details&nbsp;of&nbsp;a&nbsp;catalogue&nbsp;entry</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>The&nbsp;next&nbsp;change&nbsp;determines&nbsp;the&nbsp;data&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;copied&nbsp;from&nbsp;the&nbsp;collection&nbsp;onto&nbsp;the&nbsp;CD.&nbsp;As&nbsp;
+already&nbsp;stated&nbsp;there&nbsp;are&nbsp;two&nbsp;extra&nbsp;directories&nbsp;that&nbsp;need&nbsp;to&nbsp;be&nbsp;added&nbsp;to&nbsp;the&nbsp;CD,&nbsp;styles&nbsp;and&nbsp;Upload,&nbsp;
+which&nbsp;are&nbsp;both&nbsp;held&nbsp;at&nbsp;the&nbsp;root&nbsp;level&nbsp;of&nbsp;the&nbsp;collect&nbsp;directory.
+</p>
+<p>#old&nbsp;directories
+my&nbsp;$colldir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($ENV{'GSDLHOME'},&nbsp;"collect",&nbsp;$c);
+my&nbsp;$colindexdir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colldir,&nbsp;"index");
+my&nbsp;$coletcdir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colldir,&nbsp;"etc");
+my&nbsp;$colimagesdir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colldir,&nbsp;"images");
+my&nbsp;$colmacrosdir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colldir,&nbsp;"macros");
+#&nbsp;new&nbsp;coll&nbsp;directory
+my&nbsp;$newcoldir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($collectdir,&nbsp;$c);
+#&nbsp;A&nbsp;fix&nbsp;for&nbsp;AREU&nbsp;&amp;&nbsp;ACKU&nbsp;collections&nbsp;***&nbsp;Graeme&nbsp;April&nbsp;2007
+my&nbsp;$colstyledir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colldir,&nbsp;"styles");
+my&nbsp;$coluploaddir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colldir,&nbsp;"Upload");
+my&nbsp;$coltargetuploaddir&nbsp;=&nbsp;&amp;util::filename_cat&nbsp;($colgsdldir,&nbsp;$c);
+&amp;util::mk_all_dir&nbsp;($coltargetuploaddir);
+#&nbsp;End&nbsp;of&nbsp;a&nbsp;fix&nbsp;for&nbsp;AREU&nbsp;&amp;&nbsp;ACKU&nbsp;collections&nbsp;***&nbsp;Graeme&nbsp;April&nbsp;2007
+</p>
+<p>The&nbsp;final&nbsp;addition&nbsp;of&nbsp;code&nbsp;copies&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;style&nbsp;and&nbsp;Upload&nbsp;directories&nbsp;onto&nbsp;the&nbsp;CD.
+&amp;util::mk_all_dir&nbsp;($newcoldir);
+&amp;util::cp_r&nbsp;($colindexdir,&nbsp;$newcoldir);
+&amp;util::cp_r&nbsp;($coletcdir,&nbsp;$newcoldir);
+&amp;util::cp_r&nbsp;($colimagesdir,&nbsp;$newcoldir)&nbsp;if&nbsp;(&shy;e&nbsp;$colimagesdir);
+&amp;util::cp_r&nbsp;($colmacrosdir,&nbsp;$newcoldir)&nbsp;if&nbsp;(&shy;e&nbsp;$colmacrosdir);
+#&nbsp;A&nbsp;fix&nbsp;for&nbsp;AREU&nbsp;&amp;&nbsp;ACKU&nbsp;collections&nbsp;***&nbsp;Graeme&nbsp;April&nbsp;2007
+&amp;util::cp_r&nbsp;($colstyledir,&nbsp;$newcoldir)&nbsp;if&nbsp;(&shy;e&nbsp;$colstyledir);
+&amp;util::cp_r&nbsp;($coluploaddir,&nbsp;$coltargetuploaddir)&nbsp;if&nbsp;(&shy;e&nbsp;
+$coluploaddir);
+#&nbsp;End&nbsp;of&nbsp;a&nbsp;fix&nbsp;for&nbsp;AREU&nbsp;&amp;&nbsp;ACKU&nbsp;collections&nbsp;***&nbsp;Graeme&nbsp;April&nbsp;2007
+</p>
+<p>Despite&nbsp;having&nbsp;limited&nbsp;Perl&nbsp;experience&nbsp;testing&nbsp;showed&nbsp;that&nbsp;these&nbsp;changes&nbsp;worked&nbsp;and&nbsp;now&nbsp;we&nbsp;have&nbsp;
+the&nbsp;means&nbsp;to&nbsp;making&nbsp;the&nbsp;collection&nbsp;available&nbsp;throughout&nbsp;Afghanistan.
+</p>
+<p>7 Conclusion
+The&nbsp;aim&nbsp;of&nbsp;the&nbsp;AREU&nbsp;library,&nbsp;to&nbsp;gather&nbsp;and&nbsp;preserve&nbsp;relevant&nbsp;materials&nbsp;available&nbsp;both&nbsp;within &nbsp;
+Afghanistan&nbsp;and&nbsp;abroad&nbsp;for&nbsp;use&nbsp;by&nbsp;national&nbsp;and&nbsp;international&nbsp;researchers,&nbsp;has&nbsp;been&nbsp;enhanced&nbsp;by&nbsp;its&nbsp;
+adoption&nbsp;of&nbsp;Greenstone.&nbsp;It&nbsp;is&nbsp;a&nbsp;testament&nbsp;to&nbsp;this&nbsp;open&nbsp;source&nbsp;project&nbsp;that&nbsp;we&nbsp;were&nbsp;successfully&nbsp;able&nbsp;
+to&nbsp;adapt&nbsp;it&nbsp;to&nbsp;our&nbsp;specific&nbsp;needs&nbsp;and&nbsp;to&nbsp;maintain&nbsp;the&nbsp;integrity&nbsp;of&nbsp;the&nbsp;organisation's&nbsp;image.
+</p>
+<p>The&nbsp;data&nbsp;entry&nbsp;system&nbsp;that&nbsp;was&nbsp;developed&nbsp;for&nbsp;this&nbsp;implementation&nbsp;of&nbsp;Greenstone&nbsp;is&nbsp;a&nbsp;work&nbsp;in&nbsp;
+progress&nbsp;and&nbsp;will&nbsp;be&nbsp;released&nbsp;to&nbsp;the&nbsp;community.&nbsp;With&nbsp;the&nbsp;conversion&nbsp;of&nbsp;the&nbsp;AREU&nbsp;catalogue&nbsp;to&nbsp;
+Greenstone,&nbsp;it&nbsp;has&nbsp;made&nbsp;the&nbsp;diversity&nbsp;of&nbsp;Afghan&nbsp;works&nbsp;accessible&nbsp;to&nbsp;everyone.
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 15&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>8 Appendix
+</p>
+<p>Table&nbsp;of&nbsp;Appendices
+</p>
+<p>8.1&nbsp;collect.cfg.................................................................................................................................16
+8.2&nbsp;extra.dm...................................................................................................................................18
+8.3&nbsp;areu.css.....................................................................................................................................23
+8.4&nbsp;areu.en.css................................................................................................................................28
+8.5&nbsp;areu.prs.css...............................................................................................................................29
+8.6&nbsp;areu.ps.css................................................................................................................................29
+8.7&nbsp;HTML&nbsp;file&nbsp;856.html.................................................................................................................29
+8.8&nbsp;Metadata.xml&nbsp;file&nbsp;associated&nbsp;with&nbsp;856.html............................................................................30
+</p>
+<p>8.1 collect.cfg
+creator foster.graeme@gmail.com
+maintainer foster.graeme@gmail.com
+public true
+</p>
+<p>buildtype mg
+</p>
+<p>beta&nbsp;false
+</p>
+<p>indexes document:text&nbsp;document:rfc1807.author&nbsp;document:rfc1807.title&nbsp;
+document:rfc1807.keyword&nbsp;document:rfc1807.series&nbsp;document:rfc1807.id
+</p>
+<p>indexoptions casefold&nbsp;stem
+</p>
+<p>#levels document
+</p>
+<p>#defaultlevel document
+</p>
+<p>defaultindex document:text
+</p>
+<p>plugin GAPlug
+plugin HTMLPlug&nbsp;&shy;metadata_fields&nbsp;Title&nbsp;&shy;nolinks
+plugin MetadataXMLPlug
+plugin ArcPlug
+plugin RecPlug
+</p>
+<p>classify GenericList&nbsp;&shy;metadata&nbsp;rfc1807.author&nbsp;&shy;always_bookshelf_last_level&nbsp;
+&shy;sort_leaf_nodes_using&nbsp;rfc1807.title&nbsp;&shy;partition_type_within_level&nbsp;constant_size&nbsp;
+&shy;partition_size_within_level&nbsp;50&nbsp;&shy;sort_using_unicode_collation&nbsp;
+classify GenericList&nbsp;&shy;metadata&nbsp;rfc1807.title&nbsp;&shy;always_bookshelf_last_level&nbsp;
+&shy;partition_type_within_level&nbsp;constant_size&nbsp;&shy;partition_size_within_level&nbsp;50&nbsp;
+&shy;sort_using_unicode_collation&nbsp;
+classify GenericList&nbsp;&shy;metadata&nbsp;rfc1807.corp&shy;author&nbsp;
+&shy;always_bookshelf_last_level&nbsp;&nbsp;&shy;sort_leaf_nodes_using&nbsp;rfc1807.title&nbsp;
+&shy;partition_type_within_level&nbsp;constant_size&nbsp;&shy;partition_size_within_level&nbsp;50&nbsp;
+</p>
+<p>16&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&shy;sort_using_unicode_collation&nbsp;
+classify GenericList&nbsp;&shy;metadata&nbsp;rfc1807.keyword&nbsp;&shy;always_bookshelf_last_level&nbsp;
+&shy;sort_leaf_nodes_using&nbsp;rfc1807.title&nbsp;&shy;partition_type_within_level&nbsp;constant_size&nbsp;
+&shy;partition_size_within_level&nbsp;50&nbsp;&shy;sort_using_unicode_collation&nbsp;
+classify Hierarchy&nbsp;&shy;metadata&nbsp;rfc1807.language
+</p>
+<p>format&nbsp;SearchVList&nbsp;"&lt;td&nbsp;
+valign=top&gt;[link][icon][/link]&lt;/td&gt;&lt;td&gt;{If}{[parent(All\':&nbsp;
+\'):Title],[parent(All\':&nbsp;\'):Title]:}[link][Title][/link]&lt;/td&gt;"
+format&nbsp;VList&nbsp;"&lt;td&nbsp;valign=top&gt;&lt;nobr&gt;[link][icon][/link]{if}{[numleafdocs]&nbsp;gt&nbsp;1,&nbsp;
+([numleafdocs])}&lt;/nobr&gt;&lt;/td&gt;&lt;td&nbsp;
+valign=top&gt;[highlight]{Or}{[Title],Untitled}[/highlight]&lt;i&gt;&lt;small&gt;{If}{[Date],&lt;b
+r&gt;_textdate_[Date]}{If}{[NumPages],&lt;br&gt;_textnumpages_[NumPages]}{If}{[Source],&lt;b
+r&gt;_textsource_[Source]}&lt;/small&gt;&lt;/i&gt;&lt;/td&gt;"
+</p>
+<p>format&nbsp;DocumentText&nbsp;"&lt;h3&gt;[Title]&lt;/h3&gt;\\n\\n&lt;p&gt;[Text]"
+format&nbsp;DocumentImages&nbsp;true
+</p>
+<p>format&nbsp;DateList&nbsp;
+"&lt;td&gt;[link][icon][/link]&lt;/td&gt;&lt;td&gt;[highlight]{Or}{[dls.Title],[dc.Title],[Title],
+Untitled}[/highlight]&lt;/td&gt;&lt;td&gt;[Date]&lt;/td&gt;"
+</p>
+<p>format&nbsp;HList&nbsp;"[link][highlight][Title][/highlight][/link]"
+</p>
+<p>format&nbsp;DocumentHeading&nbsp;"{Or}{[parent(Top):Title],[Title],untitled}"
+</p>
+<p>format&nbsp;DocumentButtons&nbsp;"Detach|Highlight"
+</p>
+<p>#&nbsp;Location&nbsp;of&nbsp;Collection&nbsp;Icons
+collectionmeta iconcollectionsmall&nbsp;[l=en]&nbsp;
+"_httpprefix_/collect/areu/images/en/areusm.png"
+collectionmeta iconcollection&nbsp;[l=en]&nbsp;
+"_httpprefix_/collect/areu/images/en/areu.png"
+</p>
+<p>collectionmeta iconcollectionsmall&nbsp;[l=prs]&nbsp;
+"_httpprefix_/collect/areu/images/prs/areusm.png"
+collectionmeta iconcollection&nbsp;[l=prs]&nbsp;
+"_httpprefix_/collect/areu/images/prs/areu.png"
+</p>
+<p>collectionmeta iconcollectionsmall&nbsp;[l=ps]&nbsp;
+"_httpprefix_/collect/areu/images/ps/areusm.png"
+collectionmeta iconcollection&nbsp;[l=ps]&nbsp;
+"_httpprefix_/collect/areu/images/ps/areu.png"
+</p>
+<p>collectionmeta collectionname&nbsp;[l=en]&nbsp;"AREU&nbsp;Library&nbsp;Catalogue"
+</p>
+<p>collectionmeta .document:text&nbsp;[l=en]&nbsp;"Keywords"
+collectionmeta .document:text&nbsp;[l=prs]&nbsp;" &nbsp;يديلک تاملک"
+collectionmeta .document:text&nbsp;[l=ps]&nbsp;" &nbsp;یكټ ینټلپد"
+</p>
+<p>#&nbsp;Browse&nbsp;Categories&nbsp;translation
+collectionmeta .document:rfc1807.author&nbsp;[l=en]&nbsp;"Author"
+collectionmeta .document:rfc1807.author&nbsp;[l=prs]&nbsp;"فلءوم"
+collectionmeta .document:rfc1807.author&nbsp;[l=ps]&nbsp;"لاوكيل"
+</p>
+<p>collectionmeta .document:rfc1807.title&nbsp;[l=en]&nbsp;"Title"
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 17&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>collectionmeta .document:rfc1807.title&nbsp;[l=prs]&nbsp;"ناونع"
+collectionmeta .document:rfc1807.title&nbsp;[l=ps]&nbsp;"كيلرس"
+</p>
+<p>collectionmeta .document:rfc1807.keyword&nbsp;[l=en]&nbsp;"Subject&nbsp;Headings"
+collectionmeta .document:rfc1807.keyword&nbsp;[l=prs]&nbsp;" &nbsp;يعوضوم ناونعرس"
+collectionmeta .document:rfc1807.keyword&nbsp;[l=ps]&nbsp;" &nbsp;هنوكيلرس يعرف"
+</p>
+<p>collectionmeta .document:rfc1807.series&nbsp;[l=en]&nbsp;"Series"
+collectionmeta .document:rfc1807.series&nbsp;[l=prs]&nbsp;"هلسلس"
+collectionmeta .document:rfc1807.series&nbsp;[l=ps]&nbsp;"هلسلس"
+</p>
+<p>collectionmeta .document:rfc1807.id&nbsp;[l=en]&nbsp;"Accession&nbsp;Number"
+collectionmeta .document:rfc1807.id&nbsp;[l=prs]&nbsp;" &nbsp;لسلسم هرامش"
+collectionmeta .document:rfc1807.id&nbsp;[l=ps]&nbsp;" &nbsp; &nbsp;هريمش يسپ هلرپ"
+</p>
+<p>collectionmeta .document:rfc1807.corp&shy;author&nbsp;[l=en]&nbsp;"Corporate&nbsp;Body"
+collectionmeta .document:rfc1807.corp&shy;author&nbsp;[l=prs]&nbsp;" &nbsp;يقوقح صخش"
+collectionmeta .document:rfc1807.corp&shy;author&nbsp;[l=ps]&nbsp;" &nbsp;تيصخش يقوقح"
+collectionmeta .document&nbsp;[l=en]&nbsp;"document"
+</p>
+<p>receptionist&nbsp;"_gwcgi_?a=p&amp;p=about&amp;c=areu&amp;m=&shy;1&amp;o=20"
+</p>
+<p>8.2 extra.dm
+###############################################################################
+####&nbsp;&nbsp;package&nbsp;Global&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####
+###############################################################################
+package&nbsp;Global
+_bannertitle_{}
+</p>
+<p>_navbarspacer_
+{
+&nbsp;&nbsp;&lt;span&nbsp;style="margin&shy;left:&nbsp;_widthtspace_px;"&gt;&amp;nbsp;&lt;/span&gt;
+}
+</p>
+<p>_AREULang_&nbsp;[l=prs]&nbsp;{
+&nbsp;&nbsp;&lt;option&nbsp;value="prs"&nbsp;selected&gt;
+&nbsp;یر د
+</p>
+<p>&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="en"&gt;
+English
+&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="ps"&gt;
+وتښپ
+&nbsp;&nbsp;&lt;/option&gt;
+}
+</p>
+<p>_AREULang_&nbsp;{
+&nbsp;&nbsp;&lt;option&nbsp;value="prs"&gt;
+&nbsp;یر د
+</p>
+<p>&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="en"&nbsp;selected&gt;
+English
+&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="ps"&gt;
+وتښپ
+&nbsp;&nbsp;&lt;/option&gt;
+}
+</p>
+<p>18&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>_AREULang_&nbsp;[l=ps]&nbsp;{
+&nbsp;&nbsp;&lt;option&nbsp;value="prs"&gt;
+&nbsp;یر د
+</p>
+<p>&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="en"&gt;
+English
+&nbsp;&nbsp;&lt;/option&gt;
+&nbsp;&nbsp;&lt;option&nbsp;value="ps"&nbsp;selected&gt;
+وتښپ
+&nbsp;&nbsp;&lt;/option&gt;
+}
+</p>
+<p>_AREULangCSS_&nbsp;[l=prs]&nbsp;{langrtl}
+_AREULangCSS_&nbsp;[l=ps]&nbsp;{langrtl}
+_AREULangCSS_&nbsp;{langltr}
+</p>
+<p>_AREUBarCSS_&nbsp;[l=prs]&nbsp;{barrtl}
+_AREUBarCSS_&nbsp;[l=ps]&nbsp;{barrtl}
+_AREUBarCSS_&nbsp;{barltr}
+</p>
+<p>_AREULangOptions_&nbsp;{
+&lt;div&nbsp;class=_AREULangCSS_&gt;
+&nbsp;&lt;form&nbsp;name="PrefForm"&nbsp;method="get"&nbsp;action="/gsdl/cgi&shy;bin/library"&gt;
+&nbsp;&nbsp;&lt;select&nbsp;name="l"&nbsp;onchange="updatel();"&gt;
+&nbsp;&nbsp;&nbsp;_AREULang_
+&nbsp;&nbsp;&lt;/select&gt;
+&nbsp;&lt;/form&gt;
+&lt;/div&gt;
+}
+</p>
+<p>_optnavigationbar_{
+&lt;div&nbsp;class="navbar"&gt;
+&nbsp;&lt;div&nbsp;class="_AREUBarCSS_"&gt;
+&nbsp;&nbsp;_navigationbar_
+&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;_AREULangOptions_
+&lt;/div&gt;
+}
+</p>
+<p>_labeltitle_&nbsp;[l=en]&nbsp;{Title}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labeltitle_&nbsp;[l=prs]&nbsp;{ناونع}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labeltitle_&nbsp;[l=ps]&nbsp;{كيلرس}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_texttitle_&nbsp;[l=en]&nbsp;{Title}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_texttitle_&nbsp;[l=prs]&nbsp;{ناونع}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_texttitle_&nbsp;[l=ps]&nbsp;{كيلرس}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+</p>
+<p>_labelauthor_&nbsp;[l=en]&nbsp;{Author}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labelauthor_&nbsp;[l=prs]&nbsp;{فلءوم}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labelauthor_&nbsp;[l=ps]&nbsp;{لاوكيل}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textauthor_&nbsp;[l=en]&nbsp;{Author}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textauthor_&nbsp;[l=prs]&nbsp;{فلءوم}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textauthor_&nbsp;[l=ps]&nbsp;{لاوكيل}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+</p>
+<p>_labelcorp&shy;author_&nbsp;[l=en]&nbsp;{Corporate&nbsp;Body}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labelcorp&shy;author_&nbsp;[l=prs]&nbsp;{ &nbsp;يقوقح صخش}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labelcorp&shy;author_&nbsp;[l=ps]&nbsp;{ &nbsp;تيصخش يقوقح}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textcorp&shy;author_&nbsp;[l=en]&nbsp;{Corporate&nbsp;Body}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textcorp&shy;author_&nbsp;[l=prs]&nbsp;{ &nbsp;يقوقح صخش}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textcorp&shy;author_&nbsp;[l=ps]&nbsp;{ &nbsp;تيصخش يقوقح}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+</p>
+<p>_labelkeyword_&nbsp;[l=en]&nbsp;{Subject&nbsp;Headings}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labelkeyword_&nbsp;[l=prs]&nbsp;{ &nbsp;يعوضوم ناونعرس}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 19&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>_labelkeyword_&nbsp;[l=ps]&nbsp;{ &nbsp;هنوكيلرس يعرف}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textkeyword_&nbsp;[l=en]&nbsp;{Subject&nbsp;Headings}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textkeyword_&nbsp;[l=prs]&nbsp;{ &nbsp;يعوضوم ناونعرس}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textkeyword_&nbsp;[l=ps]&nbsp;{ &nbsp;هنوكيلرس يعرف}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+</p>
+<p>_labellanguage_&nbsp;[l=en]&nbsp;{Language}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labellanguage_&nbsp;[l=prs]&nbsp;{ناسل}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_labellanguage_&nbsp;[l=ps]&nbsp;{هبژ}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textlanguage_&nbsp;[l=en]&nbsp;{Language}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textlanguage_&nbsp;[l=prs]&nbsp;{ناسل}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+_textlanguage_&nbsp;[l=ps]&nbsp;{هبژ}&nbsp;&nbsp;#&nbsp;Updated&nbsp;14&shy;Mar&shy;2007&nbsp;by&nbsp;graeme
+</p>
+<p>&nbsp;
+###############################################################################
+####&nbsp;&nbsp;package&nbsp;about&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####
+###############################################################################
+_AREUEmail_&nbsp;{&lt;a&nbsp;href="mailto:library@areu.org.af"&gt;library@areu.org.af&lt;/a&gt;}
+_AREUAboutText_&nbsp;{This&nbsp;on&shy;line&nbsp;bibliographic&nbsp;catalogue&nbsp;lists&nbsp;materials&nbsp;held&nbsp;in&nbsp;hardcopy&nbsp;in&nbsp;
+AREU&rsquo;s&nbsp;research&nbsp;library&nbsp;in&nbsp;Kabul,&nbsp;Afghanistan.&nbsp;AREU&rsquo;s&nbsp;collection&nbsp;includes&nbsp;books,&nbsp;
+pamphlets,&nbsp;government&nbsp;publications,&nbsp;periodicals,&nbsp;maps,&nbsp;CDs,&nbsp;DVDs,&nbsp;etc.&nbsp;in&nbsp;English,&nbsp;Dari,&nbsp;
+Pashto&nbsp;and&nbsp;other&nbsp;languages.&nbsp;When&nbsp;we&nbsp;know&nbsp;these&nbsp;materials&nbsp;are&nbsp;available&nbsp;for&nbsp;download&nbsp;on&nbsp;
+the&nbsp;internet&nbsp;we&nbsp;provide&nbsp;a&nbsp;URL&nbsp;link&nbsp;in&nbsp;the&nbsp;bibliographic&nbsp;record.&nbsp;Some&nbsp;important&nbsp;materials&nbsp;
+not&nbsp;available&nbsp;elsewhere&nbsp;are&nbsp;made&nbsp;available&nbsp;here&nbsp;for&nbsp;download.&nbsp;_Global:collectionextra_&nbsp;If&nbsp;
+you&nbsp;see&nbsp;any&nbsp;entries&nbsp;that&nbsp;need&nbsp;correcting&nbsp;or&nbsp;find&nbsp;that&nbsp;URLs&nbsp;no&nbsp;longer&nbsp;work&nbsp;please&nbsp;
+email:_AREUEmail_.}
+_AREUAboutText_&nbsp;[l=prs]&nbsp;{
+</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;تارشن ،یتلود تارشن ،هلاسر ،باتک لكش هب هكیداوم همه ،دراد تيعقوم ناتسناغفا ،لباکرد هک ناتسناغفا یبایزراو قيقحت دحاو هناخباتکرد&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;رد اهنآ یدنب هدر تسل ،تسا هديسر رشن هب هريغو یسيلگنا ،وتشپ ،یرد یاهناسل هب هک هريغو ،ید یو ید ،ید یس ،اه هشقن ،لسلسم&nbsp;
+</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;. &nbsp; &nbsp; &nbsp; &nbsp;ندروآ تسدب یارب ام سپ تسا دوجوم ندومن دول نوواد یارب تیاس بیو رد داوم نیا هک ميناديم هكيتقو دشابيم دوجوم تیاس بیو نیا&nbsp;
+&nbsp; &nbsp;هطبار کی اهنآ&nbsp;URL&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;. &nbsp;اجب اج اجنیارد ندومن دول نوواد یارب ميناوتيمن هدروآ تسدب رگید یاهاج زا هكیا مهم داوم یضعبو میدومن هيهت&nbsp;
+&nbsp;میا هدرک.
+</p>
+<p>_Global:collectionextra_
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;هطبار ایو دشاب یطلغ مادک اه دراكیر زا یكیرد رگا&nbsp;URL&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ديتسرفب ليمیا سردآ نیا هب افطل دنک یمن راک.
+_AREUEmail_&nbsp;
+}
+</p>
+<p>_AREUAboutText_&nbsp;[l=ps]&nbsp;{
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;یتلود ،یلاسر ،هنوباتک هكل داوم هغه لوټ ،یرل تيعقوم یک ناتسناغفا ،لباک هپ یچ یک نوتباتک هپ یرادا د ینوځراوا ینړيڅد ناتسناغفاد&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;یوغهد یوش هراپخ وبژ ورون وا یزیرګنا ،یرد ،وتښپ هپ یچ رون یساد وا ینایډ یو یډ ،ینایډ یس ،یشخن ،ینورپخ یتبون ،ینورپخ&nbsp;
+</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;،ید دوجوم یک هڼاپ بیو هپ هراپل ولوک هتروپد داوماد یچ وږيهوپ ږنوم یچ هلک یش یلديل یک هڼاپ بیو یدپ یدنب هدر یرادباتکد&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;د هوی وم هراپل یوغهدون&nbsp;URL&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;هخڅ یاځ لبد یچ داوم مهم ینيځ وا ینیوو دنس هغامه وڅرت هد یړک هړوج یک یدنب هدر هپ هكیړا&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ید یړک یاځ هپ یاځ هتلد هراپل ولوک هتروپد ږنوم ،یاديک هسلرت یشن.
+</p>
+<p>_Global:collectionextra_
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;د ای وا ،ینیوو یطلغ هموک یک ډراكیر موک هپ وسات هک&nbsp;URL&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;یوتساوار کيلانښیرب هتپ یدپ یړکو ینابرهم یړكنو راک هكیړا:
+_AREUEmail_&nbsp;
+}
+package&nbsp;about
+_bannertitle_{}
+</p>
+<p>_textabout_&nbsp;{
+&lt;div&nbsp;class="section"&gt;
+&lt;h3&gt;_textabcol_&lt;/h3&gt;
+_AREUAboutText_&lt;/div&gt;
+}
+###############################################################################
+####&nbsp;&nbsp;package&nbsp;query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####
+###############################################################################
+package&nbsp;query
+_bannertitle_{}
+</p>
+<p>_smallquerybox_
+{
+</p>
+<p>20&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&nbsp;&nbsp;&lt;br&nbsp;/&gt;&lt;input&nbsp;type="text"&nbsp;name="q"&nbsp;value="_cgiargq_"&nbsp;size="50"&gt;&lt;br&nbsp;/&gt;
+&nbsp;&nbsp;_preferences:textprefop_
+&nbsp;&nbsp;&lt;input&nbsp;type="submit"&nbsp;value="_textbeginsearch_"&gt;
+}
+</p>
+<p>###############################################################################
+####&nbsp;&nbsp;package&nbsp;preferences&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####
+###############################################################################
+package&nbsp;preferences
+_bannertitle_{}
+</p>
+<p>###############################################################################
+####&nbsp;&nbsp;package&nbsp;Style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####
+###############################################################################
+package&nbsp;Style
+</p>
+<p>_globalscripts_
+{
+&nbsp;&nbsp;&lt;script&nbsp;language="javascript"&nbsp;type="text/javascript"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_If_(_pagescriptextra_,_pagescriptextra_)
+&nbsp;&nbsp;&nbsp;&nbsp;_preferences:pagescriptextra_
+&nbsp;&nbsp;&lt;/script&gt;
+}
+</p>
+<p>_AREUFullName1_&nbsp;{}
+_AREUFullName2_&nbsp;{Afghanistan&nbsp;Research&nbsp;and&nbsp;Evaluation&nbsp;Unit}
+_AREUFullName1_&nbsp;[l=ps]&nbsp;{ &nbsp; &nbsp; &nbsp;هرادا ینوځراوا ینړيڅد ناتسناغفاد،}
+_AREUFullName2_&nbsp;[l=ps]&nbsp;{}
+</p>
+<p>_footer_&nbsp;{
+_pagefooterextra_
+&lt;/div&gt;
+&lt;div&nbsp;class="footer"&gt;
+</p>
+<p>&lt;hr&nbsp;width=600px&nbsp;color=#234F33&gt;
+&nbsp;&nbsp;&nbsp;_AREUFullName1_
+&nbsp;&nbsp;&nbsp;&lt;script&nbsp;language="javascript"&nbsp;type="text/javascript"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;curdate&nbsp;=&nbsp;new&nbsp;Date()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;year&nbsp;=&nbsp;curdate.getFullYear()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.write("&amp;copy;&nbsp;"&nbsp;+&nbsp;year)
+&nbsp;&nbsp;&nbsp;&lt;/script&gt;
+&nbsp;&nbsp;&nbsp;_AREUFullName2_
+&lt;/div&gt;
+}
+</p>
+<p>_AREUcss_
+{
+&lt;link&nbsp;rel="stylesheet"&nbsp;href="_httpcollection_/styles/areu.en.css"
+type="text/css"&nbsp;charset="UTF&shy;8"&nbsp;media="screen"&gt;
+}
+_AREUcss_&nbsp;[l=prs]
+{&lt;link&nbsp;rel="stylesheet"&nbsp;href="_httpcollection_/styles/areu.prs.css"
+type="text/css"&nbsp;charset="UTF&shy;8"&nbsp;media="screen"&gt;
+}
+_AREUcss_&nbsp;[l=ps]
+{&lt;link&nbsp;rel="stylesheet"&nbsp;href="_httpcollection_/styles/areu.ps.css"
+type="text/css"&nbsp;charset="UTF&shy;8"&nbsp;media="screen"&gt;
+}
+</p>
+<p>_csslink_
+{
+_AREUcss_
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 21&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&lt;link&nbsp;rel="stylesheet"&nbsp;href="_httpcollection_/styles/areu.css"
+type="text/css"&nbsp;charset="UTF&shy;8"&nbsp;media="screen"&gt;
+}
+</p>
+<p>_cssfilelink_
+{
+&lt;style&nbsp;type="text/css"&gt;
+div.pageinfo&nbsp;\{&nbsp;background&shy;image:&nbsp;url("_httpcollection_/images/en/back_all.png");\}
+div.collectimage&nbsp;\{&nbsp;background&shy;image:&nbsp;url("_httpcollection_/images/en/back_all.png");\}
+&lt;/style&gt;
+}
+</p>
+<p>_cssfilelink_&nbsp;[l=prs]
+{
+&lt;style&nbsp;type="text/css"&gt;
+div.pageinfo&nbsp;\{&nbsp;background&shy;image:&nbsp;url("_httpcollection_/images/prs/back_all.png");\}
+div.collectimage&nbsp;\{&nbsp;background&shy;image:&nbsp;url("_httpcollection_/images/prs/back_all.png");\}
+&lt;/style&gt;
+}
+</p>
+<p>_cssfilelink_&nbsp;[l=ps]
+{
+&lt;style&nbsp;type="text/css"&gt;
+div.pageinfo&nbsp;\{&nbsp;background&shy;image:&nbsp;url("_httpcollection_/images/ps/back_all.png");\}
+div.collectimage&nbsp;\{&nbsp;background&shy;image:&nbsp;url("_httpcollection_/images/ps/back_all.png");\}
+&lt;/style&gt;
+}
+</p>
+<p>_cssheader_
+{
+_csslink_
+_cssfilelink_
+}
+</p>
+<p>&nbsp;
+_AREUText_&nbsp;{AREU&nbsp;website}
+_AREUText_&nbsp;[l=prs]&nbsp;{ &nbsp;تیاس بیو&nbsp;AREU}
+_AREUText_&nbsp;[l=ps]&nbsp;{دAREU &nbsp;هڼاپ بیو}
+</p>
+<p>_AREUDiv_&nbsp;&nbsp;{titlertl}
+_AREUDiv_&nbsp;&nbsp;[l=prs]&nbsp;{titleltr}
+_AREUDiv_&nbsp;&nbsp;[l=ps]&nbsp;{titleltr}
+</p>
+<p>_AREULang_&nbsp;{&amp;lang=en}
+_AREULang_&nbsp;[l=prs]&nbsp;{&amp;lang=prs}
+_AREULang_&nbsp;[l=ps]&nbsp;{&amp;lang=ps}
+</p>
+<p>_AREUHome_&nbsp;{&lt;span&nbsp;class="_AREUDiv_"&gt;&lt;a&nbsp;
+href="http://www.areu.org.af/index.php?option=com_content&amp;task=view&amp;id=11&amp;Itemid=15_AREUL
+ang_"&gt;_AREUText_&lt;/a&gt;&lt;/span&gt;}
+</p>
+<p>_pagebanner_&nbsp;{
+&lt;div&nbsp;id="banner"&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="collectimage"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_imagecollection_
+&nbsp;&nbsp;&nbsp;&nbsp;_pagebannerextra_
+&nbsp;&nbsp;&nbsp;&nbsp;_AREUHome_
+&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="bannerextra"&gt;
+&nbsp;&nbsp;&lt;/div&gt;
+&lt;!&shy;&shy;&nbsp;end&nbsp;of&nbsp;page&nbsp;banner&nbsp;&shy;&shy;&gt;
+</p>
+<p>22&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>}</p>
+<p>_pagebannerextra_&nbsp;{&lt;span&nbsp;class="titleltr"&gt;AREU&nbsp;Library&nbsp;Catalogue&lt;/span&gt;}
+_pagebannerextra_&nbsp;[l=prs]&nbsp;{&lt;span&nbsp;class="titlertl"&gt; &nbsp; &nbsp;هناخباتک یدنب هدر&nbsp;AREU&lt;/span&gt;}
+_pagebannerextra_&nbsp;[l=ps]&nbsp;{&lt;span&nbsp;class="titlertl"&gt;دAREU &nbsp; &nbsp;یدنب هدر نوتباتکد&lt;/span&gt;}
+</p>
+<p>###############################################################################
+####&nbsp;&nbsp;package&nbsp;document&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####
+###############################################################################
+package&nbsp;document
+_globallinks_{}
+</p>
+<p>_textheader_&nbsp;{
+_cgihead_
+_htmlhead_
+&lt;div&nbsp;id="page"&gt;
+&lt;div&nbsp;id="banner"&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="collectimage"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;_imagecollection_
+&nbsp;&nbsp;&nbsp;&nbsp;_pagebannerextra_
+&nbsp;&nbsp;&nbsp;&nbsp;_Style:AREUHome_
+&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&nbsp;&nbsp;&lt;div&nbsp;class="bannerextra"&gt;
+&nbsp;&nbsp;&lt;/div&gt;
+&lt;!&shy;&shy;&nbsp;end&nbsp;of&nbsp;page&nbsp;banner&nbsp;&shy;&shy;&gt;
+}
+</p>
+<p>8.3 areu.css
+/*&nbsp;default&nbsp;stylesheet&nbsp;for&nbsp;greenstone.&nbsp;*/
+</p>
+<p>#page&nbsp;{
+&nbsp;&nbsp;width:770px;
+&nbsp;&nbsp;margin&shy;left:auto;
+&nbsp;&nbsp;margin&shy;right:auto;
+}
+</p>
+<p>#banner&nbsp;{
+&nbsp;&nbsp;margin:&nbsp;0;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;width:&nbsp;100%;
+}
+</p>
+<p>/*&nbsp;this&nbsp;div&nbsp;contains&nbsp;the&nbsp;bannerlinks&nbsp;and&nbsp;bannertitle&nbsp;paragraphs&nbsp;*/
+div.pageinfo&nbsp;{
+&nbsp;&nbsp;float:&nbsp;right;
+&nbsp;&nbsp;text&shy;align:&nbsp;right;
+&nbsp;&nbsp;padding:&nbsp;0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;width:&nbsp;100%;
+}
+</p>
+<p>/*&nbsp;home,&nbsp;help,&nbsp;preferences&nbsp;links&nbsp;*/
+p.bannerlinks&nbsp;{
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;padding:0;
+}
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 23&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>span.titleltr
+{
+&nbsp;&nbsp;padding:&nbsp;0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;font&shy;size:&nbsp;30px;
+&nbsp;&nbsp;float:&nbsp;left;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;text&shy;align:&nbsp;bottom;
+}
+</p>
+<p>span.titlertl
+{
+&nbsp;&nbsp;padding:&nbsp;0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;font&shy;size:&nbsp;30px;
+&nbsp;&nbsp;float:&nbsp;right;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;text&shy;align:&nbsp;bottom;
+}
+</p>
+<p>span.titleltr&nbsp;a
+{
+&nbsp;&nbsp;font&shy;size:&nbsp;20px;
+}
+</p>
+<p>span.titlertl&nbsp;a
+{
+&nbsp;&nbsp;font&shy;size:&nbsp;20px;
+}
+</p>
+<p>/*&nbsp;make&nbsp;sure&nbsp;this&nbsp;is&nbsp;shown&nbsp;under&nbsp;the&nbsp;other&nbsp;divs&nbsp;(which&nbsp;may&nbsp;be&nbsp;floating)&nbsp;*/
+div.bannerextra
+{
+&nbsp;&nbsp;&nbsp;clear:&nbsp;both;
+}
+</p>
+<p>/*&nbsp;the&nbsp;image&nbsp;for&nbsp;the&nbsp;collection,&nbsp;shown&nbsp;in&nbsp;the&nbsp;banner&nbsp;*/
+div.collectimage&nbsp;{
+&nbsp;&nbsp;float:&nbsp;left;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;border:0;
+}
+</p>
+<p>img
+{
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;border:&nbsp;0;
+}
+</p>
+<p>span.langltr
+{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+</p>
+<p>24&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&nbsp;&nbsp;&nbsp;float:&nbsp;right;
+&nbsp;&nbsp;&nbsp;margin&shy;top:&nbsp;&shy;22px;
+&nbsp;&nbsp;&nbsp;margin&shy;right:&nbsp;5px;
+}
+</p>
+<p>span.langrtl
+{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;&nbsp;float:&nbsp;left;
+&nbsp;&nbsp;&nbsp;margin&shy;top:&nbsp;&shy;22px;
+&nbsp;&nbsp;&nbsp;margin&shy;left:&nbsp;5px;
+}
+</p>
+<p>/*&nbsp;bg&nbsp;image&nbsp;set&nbsp;in&nbsp;style&nbsp;macro&nbsp;*/
+div.navbar&nbsp;{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;width:&nbsp;770px;
+&nbsp;&nbsp;white&shy;space:&nbsp;nowrap;
+&nbsp;&nbsp;font&shy;weight:&nbsp;bold;
+&nbsp;&nbsp;text&shy;transform:&nbsp;capitalize;
+&nbsp;&nbsp;padding:&nbsp;5px&nbsp;0;
+&nbsp;&nbsp;margin:&nbsp;0;
+&nbsp;&nbsp;height:&nbsp;22px;
+}
+</p>
+<p>div.barltr&nbsp;{&nbsp;/*&nbsp;opt&nbsp;navbar&nbsp;text&nbsp;inside&nbsp;a&nbsp;divbar&nbsp;div&nbsp;*/
+&nbsp;&nbsp;float:&nbsp;left;
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;text&shy;align:&nbsp;left;&nbsp;
+&nbsp;&nbsp;height:&nbsp;22px;
+&nbsp;&nbsp;width:&nbsp;700;
+}
+</p>
+<p>div.barrtl&nbsp;{&nbsp;/*&nbsp;opt&nbsp;navbar&nbsp;text&nbsp;inside&nbsp;a&nbsp;divbar&nbsp;div&nbsp;*/
+&nbsp;&nbsp;float:&nbsp;right;
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;text&shy;align:&nbsp;right;&nbsp;
+&nbsp;&nbsp;width:&nbsp;700;
+}
+</p>
+<p>div.langltr
+{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;&nbsp;float:&nbsp;right;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;&nbsp;margin&shy;right:&nbsp;5px;
+&nbsp;&nbsp;width:&nbsp;70;
+&nbsp;&nbsp;margin&shy;top:&nbsp;&shy;3px;
+}
+</p>
+<p>div.langrtl
+{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;&nbsp;float:&nbsp;left;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 25&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;margin:0;
+&nbsp;&nbsp;&nbsp;margin&shy;left:&nbsp;5px;
+&nbsp;&nbsp;width:&nbsp;70;
+&nbsp;&nbsp;margin&shy;top:&nbsp;&shy;3px;
+}
+</p>
+<p>div.langltr&nbsp;form
+{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;margin:0;
+}
+</p>
+<p>div.langrtl&nbsp;form
+{
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;margin:0;
+}
+</p>
+<p>/*&nbsp;anchors&nbsp;*/
+a&nbsp;{
+margin:&nbsp;0px;
+padding:&nbsp;0px;
+font&shy;weight:&nbsp;400;
+line&shy;height:&nbsp;20px;
+text&shy;decoration:&nbsp;&nbsp;none;&nbsp;
+color:&nbsp;#234F33;
+border:&nbsp;none;
+&nbsp;}
+</p>
+<p>a:hover&nbsp;{
+text&shy;decoration:&nbsp;&nbsp;underline;
+&nbsp;}
+</p>
+<p>/*&nbsp;bg&nbsp;image&nbsp;set&nbsp;in&nbsp;style&nbsp;macro&nbsp;*/
+a.navlink&nbsp;{
+&nbsp;&nbsp;vertical&shy;align:&nbsp;top;&nbsp;
+&nbsp;&nbsp;padding:&nbsp;0&nbsp;5px&nbsp;0&nbsp;5px;&nbsp;
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;color:&nbsp;#234F33;
+&nbsp;&nbsp;font&shy;weight:&nbsp;bold;
+}
+</p>
+<p>/*&nbsp;bg&nbsp;image&nbsp;set&nbsp;in&nbsp;style&nbsp;macro&nbsp;*/
+a.navlink_sel&nbsp;{
+&nbsp;&nbsp;vertical&shy;align:&nbsp;top;
+&nbsp;&nbsp;padding:&nbsp;0&nbsp;5px&nbsp;0&nbsp;5px;&nbsp;
+&nbsp;&nbsp;background&shy;color:&nbsp;#b0cab0;
+&nbsp;&nbsp;color:&nbsp;#FFFFFF;
+&nbsp;&nbsp;font&shy;weight:&nbsp;bold;
+}
+</p>
+<p>a.navlink_sel:hover&nbsp;{
+</p>
+<p>26&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>text&shy;decoration:&nbsp;&nbsp;none;
+&nbsp;}
+</p>
+<p>/*&nbsp;for&nbsp;the&nbsp;nav_ns4.dm&nbsp;macro&nbsp;only&nbsp;(for&nbsp;netscape4&nbsp;support)&nbsp;*/
+a.navlink_ns4&nbsp;{
+&nbsp;&nbsp;background&shy;color:&nbsp;#FFFFFF;
+}
+</p>
+<p>a.navlink_sel_ns4&nbsp;{
+&nbsp;&nbsp;background&shy;color:&nbsp;#FFFFFF;
+}
+</p>
+<p>span.button
+{
+&nbsp;&nbsp;margin:0&nbsp;0&nbsp;0&nbsp;5px;
+&nbsp;&nbsp;white&shy;space:&nbsp;nowrap;
+&nbsp;&nbsp;vertical&shy;align:&nbsp;top;&nbsp;
+&nbsp;&nbsp;padding:&nbsp;0&nbsp;5px&nbsp;0&nbsp;5px;&nbsp;
+&nbsp;&nbsp;background&shy;color:&nbsp;#234F33;
+&nbsp;&nbsp;float:right;
+&nbsp;&nbsp;text&shy;transform:&nbsp;lowercase;
+}
+</p>
+<p>span.button&nbsp;a{
+&nbsp;&nbsp;color:&nbsp;#FFFFFF;
+&nbsp;&nbsp;font&shy;weight:&nbsp;bold;
+}
+</p>
+<p>div.footer
+{
+&nbsp;&nbsp;height:&nbsp;40px;&nbsp;
+&nbsp;&nbsp;width:100%;&nbsp;
+&nbsp;&nbsp;font&shy;size:&nbsp;10px;
+&nbsp;&nbsp;text&shy;align:&nbsp;center;
+}
+</p>
+<p>div.rtl&nbsp;{background&shy;color:&nbsp;transparent;&nbsp;color:&nbsp;#234F33;&nbsp;direction:&nbsp;rtl;}
+div.ltr&nbsp;{background&shy;color:&nbsp;transparent;&nbsp;color:&nbsp;#234F33;&nbsp;direction:&nbsp;ltr;}
+table.bdr&nbsp;{border&shy;width:&nbsp;2px;&nbsp;border&shy;style:&nbsp;solid;}
+table.bdr&nbsp;td&nbsp;{border&shy;width:&nbsp;1px;border&shy;style:&nbsp;none;&nbsp;text&shy;align:&nbsp;center;}
+table.nobdr&nbsp;{border&shy;width:&nbsp;1px;&nbsp;border&shy;style:&nbsp;none;}
+td.head&nbsp;{font&shy;weight:&nbsp;bolder;&nbsp;vertical&shy;align:&nbsp;top;&nbsp;border&shy;width:&nbsp;1px;&nbsp;border&shy;
+style:&nbsp;solid&nbsp;none&nbsp;none&nbsp;none;}
+td.body&nbsp;{border&shy;width:&nbsp;1px;&nbsp;border&shy;style:&nbsp;solid&nbsp;none&nbsp;none&nbsp;none;}
+</p>
+<p>/*&nbsp;this&nbsp;contains&nbsp;everything&nbsp;&shy;&nbsp;all&nbsp;the&nbsp;other&nbsp;divs&nbsp;*/
+/*&nbsp;blankiconbar&nbsp;*/
+div.section&nbsp;p.bar&nbsp;{
+&nbsp;&nbsp;text&shy;align:&nbsp;center;
+}
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 27&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>/*&nbsp;bg&nbsp;image&nbsp;set&nbsp;in&nbsp;style&nbsp;macro&nbsp;*/
+div.divbar&nbsp;{&nbsp;/*&nbsp;for&nbsp;"select&nbsp;a&nbsp;collection"&nbsp;*/
+&nbsp;&nbsp;font&shy;family:&nbsp;arial;
+&nbsp;&nbsp;font&shy;size:&nbsp;10pt;
+&nbsp;&nbsp;font&shy;weight:&nbsp;bold;
+&nbsp;&nbsp;border:&nbsp;0;
+&nbsp;&nbsp;width:&nbsp;100%;&nbsp;/*&nbsp;for&nbsp;ns4&nbsp;*/
+}
+</p>
+<p>span.highlight&nbsp;{
+&nbsp;&nbsp;background:&nbsp;#ffff77;
+}
+</p>
+<p>span.textselect&nbsp;{&nbsp;white&shy;space:&nbsp;nowrap;&nbsp;}
+</p>
+<p>div.document&nbsp;{
+&nbsp;padding:&nbsp;.2em&nbsp;0&nbsp;0&nbsp;0;
+&nbsp;clear:&nbsp;both;
+&nbsp;background&shy;color:&nbsp;transparent;
+}
+</p>
+<p>div.documenttext&nbsp;{&nbsp;clear:&nbsp;both;}&nbsp;/*&nbsp;come&nbsp;after&nbsp;any&nbsp;floating&nbsp;divs&nbsp;*/
+</p>
+<p>div.searchresults{
+&nbsp;&nbsp;padding:&nbsp;0;
+&nbsp;&nbsp;margin:&nbsp;.2em&nbsp;0&nbsp;.2em&nbsp;0;
+&nbsp;&nbsp;background&shy;color:&nbsp;transparent;
+}
+</p>
+<p>div.nextresult{
+&nbsp;&nbsp;display:&nbsp;inline;
+&nbsp;&nbsp;text&shy;align:right;
+&nbsp;&nbsp;float:right;
+&nbsp;&nbsp;width:50%
+}
+</p>
+<p>div.prevresult{
+&nbsp;&nbsp;&nbsp;display:inline;
+&nbsp;&nbsp;&nbsp;float:left;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;width:50%;&nbsp;
+}
+</p>
+<p>div.heading_image&nbsp;{
+&nbsp;&nbsp;padding:&nbsp;0;
+&nbsp;&nbsp;margin:0;
+&nbsp;float:&nbsp;left;
+&nbsp;}&nbsp;/*&nbsp;optional&nbsp;cover&nbsp;image&nbsp;*/
+</p>
+<p>8.4 areu.en.css
+body
+{
+</p>
+<p>28&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&nbsp;&nbsp;margin:&nbsp;0;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;background&shy;color:&nbsp;#FFFFFF;
+&nbsp;&nbsp;font&shy;family:&nbsp;"Trebuchet&nbsp;MS",&nbsp;sans&shy;serif;
+&nbsp;&nbsp;font&shy;size:&nbsp;13px;
+&nbsp;&nbsp;color:&nbsp;#234F33;
+}
+</p>
+<p>8.5 areu.prs.css
+body
+{
+&nbsp;&nbsp;margin:&nbsp;0;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;background&shy;color:&nbsp;#FFFFFF;
+&nbsp;&nbsp;font&shy;family:&nbsp;"Trebuchet&nbsp;MS",&nbsp;sans&shy;serif;
+&nbsp;&nbsp;font&shy;size:&nbsp;14px;
+&nbsp;&nbsp;color:&nbsp;#234F33;
+}
+</p>
+<p>8.6 areu.ps.css
+body
+{
+&nbsp;&nbsp;margin:&nbsp;0;
+&nbsp;&nbsp;padding:0;
+&nbsp;&nbsp;background&shy;color:&nbsp;#FFFFFF;
+&nbsp;&nbsp;font&shy;family:&nbsp;"Trebuchet&nbsp;MS",&nbsp;sans&shy;serif;
+&nbsp;&nbsp;font&shy;size:&nbsp;14px;
+&nbsp;&nbsp;color:&nbsp;#234F33;
+}
+</p>
+<p>8.7 HTML&nbsp;file&nbsp;856.html
+&lt;!DOCTYPE&nbsp;HTML&nbsp;PUBLIC&nbsp;"&shy;//W3C//DTD&nbsp;HTML&nbsp;4.01&nbsp;Transitional//EN"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta&nbsp;http&shy;equiv="content&shy;type"&nbsp;content="text/html;&nbsp;charset=UTF&shy;8"&gt;
+&lt;title&gt;Pain&nbsp;&shy;&shy;&nbsp;The&nbsp;unromantic&nbsp;carpet&nbsp;bazaar&nbsp;of&nbsp;Andkhoy&nbsp;/&nbsp;Adam...&nbsp;&shy;&shy;&nbsp;2002?]&lt;/title&gt;
+&lt;link&nbsp;rel="stylesheet"&nbsp;type="text/css"&nbsp;href="css/areu.css"&gt;
+</p>
+<p>&lt;/head&gt;
+&lt;body&gt;
+&lt;div&nbsp;class="ltr"&gt;
+&lt;table&nbsp;class="nobdr"&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&gt;
+</p>
+<p>&lt;table&nbsp;class="bdr"&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Call&nbsp;Number&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="body"&gt;p381.09581
+</p>
+<p>&lt;br&nbsp;/&gt;(1812)
+&lt;br&nbsp;/&gt;P144
+&lt;br&nbsp;/&gt;[2002?]
+&lt;br&nbsp;/&gt;+&nbsp;
+&lt;br&nbsp;/&gt;PDF
+&lt;br&nbsp;/&gt;(38&nbsp;KB)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&nbsp;class="file"&gt;&lt;a&nbsp;href="/gsdl/collect/areu/import/../Upload/856/Pain_The&nbsp;Unromantic&nbsp;Carpet&nbsp;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 29&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>Bazaar&nbsp;of&nbsp;Andkhoy.doc"&nbsp;&nbsp;target="_blank"&gt;&lt;img&nbsp;src="/gsdl/images/imsword.gif"&nbsp;alt=icon&gt;&lt;br&nbsp;/&gt;&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+</p>
+<p>&lt;/table&gt;&lt;/td&gt;
+&lt;td&gt;
+</p>
+<p>&lt;table&nbsp;class="nobdr"&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Author&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;Pain,&nbsp;Adam.
+</p>
+<p>&lt;br&nbsp;/&gt;Moharram&nbsp;Ali.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Title&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;The&nbsp;unromantic&nbsp;carpet&nbsp;bazaar&nbsp;of&nbsp;Andkhoy&nbsp;/&nbsp;Adam&nbsp;Pain&nbsp;and&nbsp;Moharram&nbsp;Ali.&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Imprint&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;[Kabul&nbsp;:&nbsp;Afghanistan&nbsp;Research&nbsp;and&nbsp;Evaluation&nbsp;Unit,&nbsp;Save&nbsp;the&nbsp;Children&nbsp;(US),&nbsp;
+</p>
+<p>2002?].&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Physical&nbsp;Description&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;4&nbsp;p.&nbsp;;&nbsp;30&nbsp;cm.&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Subject&nbsp;Headings&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;Rug&nbsp;and&nbsp;carpet&nbsp;industry&nbsp;&ndash;&nbsp;Afghanistan&nbsp;&ndash;&nbsp;Faryab&nbsp;(Province)&nbsp;&ndash;&nbsp;Andhkoy.
+</p>
+<p>&lt;br&nbsp;/&gt;Bazaars&nbsp;(Markets)&nbsp;&ndash;&nbsp;Afghanistan&nbsp;&ndash;&nbsp;Faryab&nbsp;(Province)&nbsp;&ndash;&nbsp;Andhkoy.
+&lt;br&nbsp;/&gt;Afghanistan&nbsp;&ndash;&nbsp;Faryab&nbsp;(Province)&nbsp;&ndash;&nbsp;Andhkoy&nbsp;&ndash;&nbsp;Economic&nbsp;conditions.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Accession&nbsp;Number&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;0735&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Language&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;English&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Copies&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;1&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;tr&nbsp;valign="top"&gt;
+&lt;td&nbsp;class="head"&gt;Record&nbsp;Number&lt;/td&gt;
+&lt;td&nbsp;class="body"&gt;856&lt;/td&gt;
+</p>
+<p>&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;
+&lt;/tr&gt;
+</p>
+<p>&lt;/table&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</p>
+<p>8.8 Metadata.xml&nbsp;file&nbsp;associated&nbsp;with&nbsp;856.html
+The&nbsp;XML&nbsp;file&nbsp;of&nbsp;the&nbsp;meta&nbsp;data&nbsp;extracts&nbsp;certain&nbsp;elements&nbsp;of&nbsp;the&nbsp;HTML&nbsp;file&nbsp;which&nbsp;
+is&nbsp;used&nbsp;to&nbsp;create&nbsp;the&nbsp;search&nbsp;indices.
+&lt;?xml&nbsp;version="1.0"&nbsp;encoding="UTF&shy;8"?&gt;
+&lt;!DOCTYPE&nbsp;DirectoryMetadata&nbsp;SYSTEM&nbsp;
+"http://greenstone.org/dtd/DirectoryMetadata/1.0/DirectoryMetadata.dtd"&gt;
+&lt;DirectoryMetadata&gt;
+&lt;FileSet&gt;
+&lt;Description&gt;
+&lt;Metadata&nbsp;name="rfc1807.author"&nbsp;mode="accumulate"&gt;Pain,&nbsp;Adam.&lt;/Metadata&gt;
+&lt;Metadata&nbsp;name="rfc1807.author"&nbsp;mode="accumulate"&gt;Moharram&nbsp;Ali.&lt;/Metadata&gt;
+&lt;Metadata&nbsp;name="rfc1807.title"&nbsp;mode="accumulate"&gt;The&nbsp;unromantic&nbsp;carpet&nbsp;bazaar&nbsp;of&nbsp;Andkhoy&nbsp;/&nbsp;Adam&nbsp;
+</p>
+<p>Pain&nbsp;and&nbsp;Moharram&nbsp;Ali.&lt;/Metadata&gt;
+&lt;Metadata&nbsp;name="rfc1807.keyword"&nbsp;mode="accumulate"&gt;Rug&nbsp;and&nbsp;carpet&nbsp;industry&nbsp;&ndash;&nbsp;Afghanistan&nbsp;&ndash;&nbsp;
+</p>
+<p>Faryab&nbsp;(Province)&nbsp;&ndash;&nbsp;Andhkoy.&lt;/Metadata&gt;
+&lt;Metadata&nbsp;name="rfc1807.keyword"&nbsp;mode="accumulate"&gt;Bazaars&nbsp;(Markets)&nbsp;&ndash;&nbsp;Afghanistan&nbsp;&ndash;&nbsp;Faryab&nbsp;
+</p>
+<p>(Province)&nbsp;&ndash;&nbsp;Andhkoy.&lt;/Metadata&gt;
+</p>
+<p>30&nbsp;of&nbsp;31 Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>&lt;Metadata&nbsp;name="rfc1807.keyword"&nbsp;mode="accumulate"&gt;Afghanistan&nbsp;&ndash;&nbsp;Faryab&nbsp;(Province)&nbsp;&ndash;&nbsp;Andhkoy&nbsp;&ndash;&nbsp;
+Economic&nbsp;conditions.&lt;/Metadata&gt;
+</p>
+<p>&lt;Metadata&nbsp;name="rfc1807.id"&nbsp;mode="accumulate"&gt;0735&lt;/Metadata&gt;
+&lt;Metadata&nbsp;name="rfc1807.language"&nbsp;mode="accumulate"&gt;English&lt;/Metadata&gt;
+</p>
+<p>&lt;/Description&gt;
+&lt;FileName&gt;.*&lt;/FileName&gt;
+</p>
+<p>&lt;/FileSet&gt;
+&lt;/DirectoryMetadata&gt;
+</p>
+<p>Greenstone,&nbsp;an&nbsp;Implementation&nbsp;in&nbsp;Afghanistan 31&nbsp;of&nbsp;31</p>
+<p/>
+</div>
+<ul>	<li>1Abstract</li>
+	<li>2Introduction</li>
+<ul>	<li>2.1Why was Greenstone chosen?</li>
+</ul>
+	<li>3The Structure of the Collection</li>
+<ul>	<li>3.1Look of the collection</li>
+	<li>3.2Indices and searching</li>
+	<li>3.3File structure</li>
+</ul>
+	<li>4Data Entry</li>
+	<li>5Configuring the collection</li>
+<ul>	<li>5.1Collection description</li>
+<ul>	<li>5.1.1Meta-data, selecting, translating and using</li>
+	<li>5.1.2Browse categories</li>
+	<li>5.1.3Search results</li>
+<ul>	<li>5.1.3.1Indexes</li>
+	<li>5.1.3.2Results</li>
+</ul>
+</ul>
+	<li>5.2Collection style</li>
+<ul>	<li>5.2.1Language Selection</li>
+	<li>5.2.2Query</li>
+	<li>5.2.3About Page</li>
+<ul>	<li>5.2.3.1Header</li>
+	<li>5.2.3.2Footer</li>
+	<li>5.2.3.3Details</li>
+</ul>
+	<li>5.2.4Display Details</li>
+</ul>
+</ul>
+	<li>6Burning CD's and back-ups</li>
+	<li>7Conclusion</li>
+	<li>8Appendix</li>
+<ul>	<li>8.1collect.cfg</li>
+	<li>8.2extra.dm</li>
+	<li>8.3areu.css</li>
+	<li>8.4areu.en.css</li>
+	<li>8.5areu.prs.css</li>
+	<li>8.6areu.ps.css</li>
+	<li>8.7HTML file 856.html</li>
+	<li>8.8Metadata.xml file associated with 856.html</li>
+</ul>
+</ul>
+</body>
+</html>

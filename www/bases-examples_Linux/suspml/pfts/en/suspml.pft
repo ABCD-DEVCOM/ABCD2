@@ -1,0 +1,12 @@
+
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Record type</b></td><td valign=top><font face=arial size=2>'v1+|; |,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Status</b></td><td valign=top><font face=arial size=2>'v10+|; |,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>User code</b></td><td valign=top><font face=arial size=2>'v20+|; |,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Date</b></td><td valign=top><font face=arial size=2>'v30+|; |,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Concept</b></td><td valign=top><font face=arial size=2>'v40+|; |,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Amount</b></td><td valign=top><font face=arial size=2>'v50+|; |,'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Period</b></td><td valign=top><font face=arial size=2>'v60+|; |,'</td>' fi/
+'<tr><td colspan=2><hr></td>'/
+'</table>'
+

@@ -1,0 +1,26 @@
+<p><strong>Archivo dbn.par</strong></p>
+<p>El archivo <strong>dbn.par</strong> es un recurso propio de las estructuras <strong>CDS/Isis</strong> que indica la localización de los recursos de una base de datos.</p>
+<p>En la versión actual de <strong>ABCD</strong> este archivo contiene:</p>
+<ol>
+    <li>La dirección hacia la carpeta donde se encuentra la base de datos</li>
+    <li>La dirección hacia el formato que construye el prólogo en el proceso de actualización de un registro</li>
+    <li>La direccón hacia el formato que construye el epílogo del proceso de actualización de un registro</li>
+</ol>
+<p>Ejm:</p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font face="Arial">biblo.*=%path_database%biblo/data/biblo.*<br />
+<font face="Arial">prologoact.pft=%path_database%www/prologoact.pft<br />
+epilogoact.pft=%path_database%www/epilogoact.pft</font></font></p>
+</blockquote>
+<p dir="ltr"><font face="Arial"><font face="Arial">Los formatos de salida no se incluyen en este archivo ya que ABCD construye la ruta directamente en base a los parámetros de configuración.</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial">El nombre&nbsp;<strong>%path_database% </strong>es sustituído en el archivo .par por la dirección actual de la carpeta <strong>bases</strong>, tal como se especifica en la variable <strong>$db_path </strong>del script <strong>config.php</strong>. Esto permite movilizar la carpeta <strong>bases</strong> sin causar impacto en las direcciones de los recursos de las bases de datos.</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial">Si desea colocar los archivos de una base de datos fuera de la carpeta base, indique en el archivo dbn.par su dirección absoluta.</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial">Si un formato de despliegue hace referencia a otro formato o se usa la sentencia <strong>REF</strong>&nbsp;para relacionar bases de datos, tanto los formatos llamados, como las bases de datos relacionadas deben ser agregadas al archivo dbn.par correspondiente</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial"><br />
+</font></font>
+<p>&nbsp;</p>
+</p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px"></blockquote>
+<p dir="ltr">&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

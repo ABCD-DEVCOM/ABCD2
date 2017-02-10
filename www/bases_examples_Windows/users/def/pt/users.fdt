@@ -1,0 +1,21 @@
+F|10|Tipo de usuário|0|0|ab||S|||P|%path_database%circulation/def/pt/typeofusers.tab|||||0||
+F|12|Sexo|0|0|ab||R|||P|sexo.tab|||||0||
+F|15|Data límite validade cartão|0|0|||D|||||||||0||
+F|18|Data ISO validade cartão|0|0|||ISO|||||||||0||
+F|20|Código usuário|0|0|||X||20|||||||0||
+F|30|Sobrenomes e nomes|1|0|||X|||||NO_|v30|v30||0||
+F|35|Cédula de identidade|0|0|||X||20|||||||0||
+F|40|Empresa/instituição de trabalho|0|0|||X|||||||||0||
+F|45|Local|0|0|||X|||||||||0||
+F|47|Nível Adm. 1|0|0|||X|||||||||0||
+F|49|Nível Adm. 2|0|0|||X|||||||||0||
+F|100|Endereço|0|0|||X|||||||||0||
+F|110|Caixa postal|0|0|||X|||||||||0||
+F|120|Cidade|0|0|||X|||||||||0||
+F|130|País|0|0|||X||30|||||||0||
+F|140|Telefone|0|0|||X|||||||||0||
+F|150|Fax|0|0|||X|||||||||0||
+F|160|E-mail|0|1|||X|||||||||0||
+F|600|Login|0|0|||XF||10|||||||0||
+F|610|Senha|0|0|||P||10|||||||0||
+F|620|Foto|0|0|||U|||||||||0||

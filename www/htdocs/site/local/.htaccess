@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^([a-zA-Z0-9\ \.\/\-\,\_]*)$ /php/getLocalFile.php?f=$1

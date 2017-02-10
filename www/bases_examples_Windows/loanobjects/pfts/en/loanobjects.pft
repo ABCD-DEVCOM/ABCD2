@@ -1,0 +1,30 @@
+'<font face=arial size=2><b>Object Id: </b>'v1'<br>'/,
+'<font face=arial size=2><b>Title : </b>',
+select v10
+case 'marc' : 
+ref->marc(l->marc("CN_"v1),v245^a,'</b><br>'
+'<font face=arial size=2><b>Callno.: </b>',v50,'</b><br>')
+case 'biblo' :
+ref->biblo(l->biblo("CN_"v1),v18,'</b><br>'
+'<font face=arial size=2><b>Callno.: </b>',v86,'</b><br>')
+endsel,
+
+'<b>Database: </b>'v10,/
+'<table border=1 cellspacing=5>'
+'<tr>'
+'<th><font face=arial size=2>Inventory number</th>
+<th><font face=arial size=2>Main Library</th>
+<th><font face=arial size=2>Branch Library</th>
+<th><font face=arial size=2>Type of object</th>
+<th><font face=arial size=2>Volume</th>
+<th><font face=arial size=2>Tome</th>'
+
+('<tr>',
+'<td valign=top><font face=arial size=2>'v959^i,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^l,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^b,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^o,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^v,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^t,' </td>'/)
+'</table>'
+'<hr>'/

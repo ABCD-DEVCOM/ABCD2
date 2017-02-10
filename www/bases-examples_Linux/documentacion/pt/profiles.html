@@ -1,0 +1,396 @@
+<p><font size="2" face="Arial">As permições de ABCD se agrupam abaixo das categorias:</font></p>
+<p><font size="2" face="Arial">1. Permições sobre as bases de dados e formatos de entrada e saída definidas</font></p>
+<p><font size="2" face="Arial">2. Permições sobre as funcionalidades do ABCD.</font></p>
+<p><font size="2" face="Arial">Para proporcionar permições aos usuários se definem <strong>perfis </strong>que fazem referência tanto as bases de dados como as funcionalidades às cuais tem acesso os usuários pertencentes a cada perfil.</font></p>
+<p><font size="2" face="Arial">&nbsp;<strong>Criação de perfis<br />
+</strong></font></p>
+<p><font size="2" face="Arial">Use a opção <strong>Criar/editar perfis</strong> para definir as permissões a atribuir aos usuários que se agrupam 
+esse perfil.</font></p>
+<p><font size="2" face="Arial">Se presenta uma folha de entrada onde se solicita a seguinte informação:</font></p>
+<p>
+<table width="90%" cellspacing="1" cellpadding="1" border="1" align="" summary="">
+    <tbody>
+        <tr>
+            <td><font size="2" face="Arial">Nome do perfil</font></td>
+            <td colspan="57"><font size="2" face="Arial">Nome com  o qual se identifica a permissões a atribuir</font></td>
+            <td><font size="2" face="Arial">&nbsp;profilename</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Descrição do perfil</font></td>
+            <td colspan="57"><font size="2" face="Arial">Breve descrição do alcance do perfil<br />
+            </font></td>
+            <td><font size="2" face="Arial">&nbsp;profiledesc</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial"><strong>Bases de dados</strong></font></td>
+            <td colspan="57"><font size="2" face="Arial">Bases de dados às quais pode ter acesso o usuário. Selecione <strong>Todas</strong> para o administrador do sistema que sempre terá acesso às bases de dados que se definam sem necesidade de atribuir-las no perfil<br />
+            </font></td>
+            <td><font size="2" face="Arial">&nbsp;db_<em>nombre-base<br />
+            </em></font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Formatos de saída</font></td>
+            <td colspan="57"><font size="2" face="Arial">Formatos de saída aos quais têm acesso o perfil. Selecione <strong>Todos</strong> para dar-lhe acesso a todos os formatos definidos e por definir</font></td>
+            <td><font size="2" face="Arial">Acesso a todas as pft`s:<br />
+            </font><font size="2" face="Arial" color="#339966"><em>Nome-base<strong>_</strong></em>pft_ALL </font><font size="2" face="Arial"><br />
+            Acesso à pft xx:<br />
+            </font><font size="2" face="Arial" color="#339966"><em>Nome-base<strong>_</strong></em>pft_<em>xx</em></font><font size="2" face="Arial"><br />
+            &nbsp;<br />
+            </font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Folhas de entrada</font></td>
+            <td colspan="57"><font size="2" face="Arial">Folhas de entrada que pode utilizar os usuários para a edição de registros. Selecione <strong>Todas</strong> para prover acesso a todos às folhas de entrada definidas e por definir</font></td>
+            <td><font size="2" face="Arial">Acesso a todas as fmt`s:<br />
+            </font><font size="2" face="Arial" color="#339966"><em>Nome-base<strong>_</strong></em>fmt_ALL </font><font size="2" face="Arial"><br />
+            Acesso à fmt xx:<br />
+            </font><font size="2" face="Arial" color="#339966"><em>Nome-base<strong>_</strong></em>fmt_<em>xx</em></font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial"><strong>Permições para o módulo de catalogação</strong></font></td>
+            <td colspan="57"><font size="2" face="Arial">Nesta seção se definem os permições que têm o perfil a algumas das funcionalidades do módulo de catalogação, tal como se explica a continuação:</font></td>
+            <td><font size="2" face="Arial">&nbsp;</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Todos</font></td>
+            <td colspan="57"><font size="2" face="Arial">Acesso a todas as funcionalidades do módulo de catalogação <br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_ALL</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Criar bases de dados</font></td>
+            <td colspan="57"><font size="2" face="Arial">Criar&nbsp; bases de dados</font></td>
+            <td><font size="2" face="Arial">CENTRAL_CRDB</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Criar registros</font></td>
+            <td colspan="57"><font size="2" face="Arial">Criar novos registros</font></td>
+            <td><font size="2" face="Arial">CENTRAL_CREC</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Editar registros</font></td>
+            <td colspan="57"><font size="2" face="Arial">Modificar registros já ingressados, utilizando as folhas de entrada que lhes foram adicionadas na seção <strong>Bases de dados</strong></font></td>
+            <td><font size="2" face="Arial">CENTRAL_EDREC</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Excluir registros</font></td>
+            <td colspan="57"><font size="2" face="Arial">Excluir registros existentes</font></td>
+            <td><font size="2" face="Arial">CENTRAL_DELREC</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Ativar registros</font></td>
+            <td colspan="57"><font size="2" face="Arial">Ativar registros previamente eliminados (sempre e quando não havia se reorganizado a base de dados)</font></td>
+            <td><font size="2" face="Arial">CENTRAL_UDELREC</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Capturar registros desde outras bases de dados</font></td>
+            <td colspan="57"><font size="2" face="Arial">Criar novos registros capturando a informação das bases de dados que haviam sido adicionadas ao grupo na seção <strong>Bases de dados</strong></font></td>
+            <td><font size="2" face="Arial">CENTRAL_CAPTURE</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Criar/editar valores por padrão</font></td>
+            <td colspan="57"><font size="2" face="Arial">Permitir definir valores por padrão para a criação de registros</font></td>
+            <td><font size="2" face="Arial">CENTRAL_VALDEF</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Catalogação Z39.50</font></td>
+            <td colspan="57"><font size="2" face="Arial">Permite criar registros mediante a copia de informação desde servidores Z39.50</font></td>
+            <td><font size="2" face="Arial">CENTRAL_Z3950CAT</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Adicionar, editar e Excluir copias</font></td>
+            <td colspan="57"><font size="2" face="Arial">Para alimentar o inventário dos títulos, agregando registros à base de dados <strong>copies</strong></font></td>
+            <td><font size="2" face="Arial">CENTRAL_ADDCOP</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Adicionar a loanobjects</font></td>
+            <td colspan="57"><font size="2" face="Arial">Permite executar os processos que&nbsp; disponibilizam as copias de um título não emprestados</font></td>
+            <td><font size="2" face="Arial">CENTRAL_ADDLO</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Imprimir registros</font></td>
+            <td colspan="57"><font size="2" face="Arial">Para obter Relatórios utilizando os formatos que lhes haviam sido atribuídos na seção <strong>Bases de dados</strong></font></td>
+            <td><font size="2" face="Arial">CENTRAL_PREC</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Armazenar expreções de pesquisa</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;As pesquisas realizadas na seção podem armazenar-se em um arquivo identificado com  o nome <strong>search_expr.tab</strong> localizado na pasta <strong>pfts/<em>idioma-ativo</em></strong><br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_SAVEXPR</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Criar/editar/armazenar formatos de saída</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Permite criar novos formatos de saída e/ou editar ou Excluir os formatos já existentes<br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_EDPFT</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Criar/editar/armazenar chaves de classificação</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Permite criar chaves de classificação para a apresentação dos registros e/ou editar as chaves de classificação já existentes. O arquivo com  as chaves de classificação geradas se denomina <strong>sort.tab</strong> e se armazena na pasta&nbsp;<strong>def/<em>idioma-ativo</em></strong></font></td>
+            <td><font size="2" face="Arial">CENTRAL_ED_SORT</font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial">Importar/Exportar</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Provê acesso às funções de exportação/importação tanto em formato TXT como em formato ISO<br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_IMPEXP</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Modificar definição de bases de dados</font></td>
+            <td colspan="57"><font size="2" face="Arial">Permite realizar alterações sobre os seguintes componentes da estrutura de uma base de dados: <br />
+            </font>
+            <ul>
+                <li><font size="2" face="Arial">Tabela de definição de campos</font></li>
+                <li><font size="2" face="Arial">Formatos de entrada</font></li>
+                <li><font size="2" face="Arial">Formatos de saída</font></li>
+                <li><font size="2" face="Arial">Tabela de extração de campos para a construção de índices</font></li>
+                <li><font size="2" face="Arial">Formulário de pesquisa avançada</font></li>
+                <li><font size="2" face="Arial">Tipos de registro</font></li>
+                <li><font size="2" face="Arial">Formatos de validação</font></li>
+                <li><font size="2" face="Arial">Formatos de inicio/fim de edição de registros</font></li>
+                <li><font size="2" face="Arial">Configuração da base de dados não IAH</font></li>
+                <li><font size="2" face="Arial">Configuração de estatísticas<br />
+                </font></li>
+            </ul>
+            <font size="2" face="Arial"><br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_MODIFYDEF</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Utilitários </font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Provê acesso aos utilitários que operam sobre as bases de dados:<br />
+            </font>
+            <ul>
+                <li><font size="2" face="Arial">Listar registros bloqueados</font></li>
+                <li><font size="2" face="Arial">Desbloquear registros</font></li>
+                <li><font size="2" face="Arial">Desbloquear base de dados</font></li>
+                <li><font size="2" face="Arial">Inicializar a base de dados</font></li>
+                <li><font size="2" face="Arial">Excluir uma base de dados</font></li>
+                <li><font size="2" face="Arial">Gerar a lista invertida</font></li>
+                <li><font size="2" face="Arial">Habilitar/desabilitar uma base de dados<br />
+                </font></li>
+            </ul>
+            </td>
+            <td><font size="2" face="Arial">CENTRAL_DBUTILS</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Alterações globais</font></td>
+            <td colspan="57"><font size="2" face="Arial">Provê acesso aos processos de alterações globais<br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_GLOBC</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Configurar clientes Z39.50</font></td>
+            <td colspan="57"><font size="2" face="Arial">Permite criar/editar/Excluir servidores Z3950, definir tabelas de versão e adicionar caracteres à tabela de versão de diacríticos <br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_Z3950CONF</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Gerar estatísticas</font></td>
+            <td colspan="57"><font size="2" face="Arial">Provê acesso às estatísticas sobre a base de dados <br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_STATGEN</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Configurar estatísticas</font></td>
+            <td colspan="57"><font size="2" face="Arial">Permite configurar as estatísticas a obter desde uma base de dados</font></td>
+            <td><font size="2" face="Arial">CENTRAL_STATCONF</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Administração de usuários</font></td>
+            <td colspan="57"><font size="2" face="Arial">Para adicionar novos perfis e/ou usuários</font></td>
+            <td><font size="2" face="Arial">CENTRAL_USRADM</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Restaurar o último número de inventário</font></td>
+            <td colspan="57"><font size="2" face="Arial">Mudar o próximo número a atribuir às copias do inventário <br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_RESETLIN</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Restaurar o último número de controle</font></td>
+            <td colspan="57"><font size="2" face="Arial">Mudar o próximo número de controle a atribuir aos títulos da base de dados</font></td>
+            <td><font size="2" face="Arial">CENTRAL_RESETLCN</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Traduzir os mensagens do sistema</font></td>
+            <td colspan="57"><font size="2" face="Arial">Dá acesso às tabelas de mensagens do idioma ativo a efeitos de sua tradução </font></td>
+            <td><font size="2" face="Arial">CENTRAL_TRANSLATE</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Editar as ajudas acerca dos campos da base de dados</font></td>
+            <td colspan="57"><font size="2" face="Arial">Construir os arquivos de ajuda sobre os campos de uma base de dados (normas de ingresso e edição de registros)</font></td>
+            <td><font size="2" face="Arial">CENTRAL_EDHLPDB</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Editar as páginas de ajuda do sistema</font></td>
+            <td colspan="57"><font size="2" face="Arial">Realizar alterações sobre as páginas de ajuda do sistema onde se explica a funcionalidade das diferentes opções</font></td>
+            <td><font size="2" face="Arial">CENTRAL_EDHLPSYS</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Explorar a pasta <strong>bases</strong> onde se armazenam as bases de dados de ABCD</font></td>
+            <td colspan="57"><font size="2" face="Arial">Explorar a pasta <strong>Bases</strong> para modificar arquivos em formato TXT, modificar ou baixar os arquivos relacionados com  as bases de dados. Este parâmetro se usa em conjunto com o parâmetro <strong>$dirtree </strong>localizado não script <strong>config.central</strong><br />
+            </font></td>
+            <td><font size="2" face="Arial">CENTRAL_EXDBDIR</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">&nbsp;</font></td>
+            <td colspan="58"><font size="2" face="Arial">&nbsp;</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial"><strong>Circulação e empréstimo</strong></font></td>
+            <td colspan="58"><font size="2" face="Arial">&nbsp;</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Todos</font></td>
+            <td colspan="57"><font size="2" face="Arial">Acesso a todas as funcionalidades do módulo de Circulação e empréstimos</font></td>
+            <td><font size="2" face="Arial">CIRC_CIRCALL</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Configuração</font></td>
+            <td colspan="57"><font size="2" face="Arial">Configurar as políticas de empréstimos e os formatos de saída a utilizar para apresentar a informação das bases de dados utilizadas não módulares</font><font size="2" face="Arial">. Configurar os Relatórios e estatísticas</font></td>
+            <td><font size="2" face="Arial">CIRC_CIRCFG</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Emprestar </font></td>
+            <td colspan="57"><font size="2" face="Arial">Outorgar empréstimos</font></td>
+            <td><font size="2" face="Arial">CIRC_LOAN</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Devolver</font></td>
+            <td colspan="57"><font size="2" face="Arial">Descarregar ao usuário os objetos emprestados</font></td>
+            <td><font size="2" face="Arial">CIRC_RETURN</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Renovar</font></td>
+            <td colspan="57"><font size="2" face="Arial">Renovar empréstimos, sempre e quando a política o permita</font></td>
+            <td><font size="2" face="Arial">CIRC_RENEW</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Suspender</font></td>
+            <td colspan="57"><font size="2" face="Arial">Suspender os usuários por outra razão não especificada nas políticas</font></td>
+            <td><font size="2" face="Arial">CIRC_SUSPEND</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Excluir multas</font></td>
+            <td colspan="57"><font size="2" face="Arial">Excluir as multas gravadas aos usuários por razão de atraso em as datas de devolução</font></td>
+            <td><font size="2" face="Arial">CIRC_DELFINE</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Excluir suspenções</font></td>
+            <td colspan="57"><font size="2" face="Arial">Excluir as suspensões ainda quando não se tenha vencido a data da sanção</font></td>
+            <td><font size="2" face="Arial">CIRC_DELSUS</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Administrar as bases de dados de empréstimo (transações, suspensões e multas)</font></td>
+            <td colspan="57"><font size="2" face="Arial">Criar/editar/Excluir registros das bases de dados do módulo de circulação (usuários, transações, suspensões e multas)</font></td>
+            <td><font size="2" face="Arial">CIRC_CIRCDATABASES</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Relatórios</font></td>
+            <td colspan="57"><font size="2" face="Arial">Produzir os Relatórios definidos no módulo</font></td>
+            <td><font size="2" face="Arial">CIRC_CIRCREPORTS</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Emissão de estatísticas</font></td>
+            <td colspan="57"><font size="2" face="Arial">Produzir as estatísticas definidas no módulo</font></td>
+            <td><font size="2" face="Arial">CIRC_CIRCSTAT</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">&nbsp;</font></td>
+            <td colspan="58"><font size="2" face="Arial">&nbsp;</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial"><strong>Aquisições</strong></font></td>
+            <td colspan="58"><font size="2" face="Arial">&nbsp;</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Todo</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Acesso a todas as funcionalidades do módulo de aquisições<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_ACQALL</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Criar solicitações</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Criar solicitações de compra<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_NEWSUGGESTIONS</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Aprovar/recusar solicitações</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Aceitar/recusar as solicitações, de acordo à decisão tomada sobre as mesmas<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_APPROVREJECT</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Processo de cotização</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Registrar as ofertas dos provedores<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_BIDDING</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Decisão de compra</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Registrar os provedores que enviarão os itens a ser adquiridos<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_DECISION</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Criação de ordens de compra</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Criar diretamente uma ordem de compra, sem passar por todo o processo cotação</font></td>
+            <td><font size="2" face="Arial">ACQ_CREATEORDER</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Geração de ordens de compra</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Gerar as ordens de compra a enviar aos provedores selecionados<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_GENERATEORDER</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Registro das copias recebidas</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Registrar na base de dados <strong>copies</strong> as copias adquiridas por doação, compra ou troca<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_RECEIVING</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Administração das bases de dados do módulo de aquisições</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Administrar diretamente as bases de dados do módulo de aquisições: sugestões, ordens de compra, provedores<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_ACQDATABASES</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Restaurar o número de controle a atribuir às solicitações</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Modificar o próximo número de controle a atribuir quando se cria uma solicitação de compra<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_RESETCN</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font size="2" face="Arial">Relatórios</font></td>
+            <td colspan="57"><font size="2" face="Arial">&nbsp;Emitir os Relatórios de aquisições<br />
+            </font></td>
+            <td><font size="2" face="Arial">ACQ_ACQREPORTS</font></td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p><font size="2" face="Arial">Um perfil pode conter tantas bases de dados como seja necessário e possuir acesso a um ou mais módulos.&nbsp; nste último caso se apresentará no menu principal um menu para que o operador possa mover-se através dos módulos selecionados.</font></p>
+<p><font size="2" face="Arial">Uma vez que construir perfis, deve ingressar os usuários e lhes atribuir o perfil corresponde.</font></p>
+<p><font size="2" face="Arial">Os perfis podem editar-se ou eliminar-se uma vez que hajam sido criados. No entanto, se um perfil está atribuído a um usuário o mesmo não poderá eliminar-se até que exclua as relações dos usuários que se faziam a este esse perfil.</font></p>
+<p><font size="2" face="Arial">ABCD possui um grupo denominado <strong>adm</strong> o qual corresponde ao administrador do sistema. Não é permitido editar ou excluir o perfil deste grupo e pelo menos um usuário deve estar atribuído ao mesmo. De outra forma ocorre o risco de desabilitar o acesso funções críticas do sistema.</font></p>
+<p><font size="2" face="Arial"><strong>Se por engano o administrador do sistemafor removido, siga o seguinte procedimento para atribuir um administrador provisório para entrar a ABCD e definir o novo administrador</strong>:</font></p>
+<ol>
+    <li>
+    <p><font size="2" face="Arial">Edite o arquivo <strong>config.central</strong> presente na pasta <strong>central </strong>e coloque um valor provisório nos parâmetros <strong> $adm_login</strong> e&nbsp; <strong>$adm_password</strong>. Este valor provisório não deve corresponder a nenhuma das identificações de usuário já existentes na base de dados de controle de acesso</font></p>
+    </li>
+    <li>
+    <p><font size="2" face="Arial">Entre a ABCD e utilize como identificação do usuário e palavra chave os valores inseridos em <strong>$adm_login</strong> e&nbsp; <strong>$adm_password</strong>, respectivamente</font></p>
+    </li>
+    <li>
+    <p><font size="2" face="Arial">ABCD lhe proverá acesso com  o perfil do administrador do sistema. Veja então à opção <strong>Administração de usuários</strong> e restituía ao administrador do sistema.</font></p>
+    </li>
+    <li>
+    <p><font size="2" face="Arial">Apague config.central</strong></font></p>
+    </li>
+</ol>
+<p><font size="2" face="Arial">Os perfis de usuário se armazenam na pasta <strong>par/profiles</strong>. Nela existe um arquivo para cada perfil criado. O arquivo <strong>profiles.tab&nbsp; </strong>é  interno a ABCD e provê os parâmetros que podem utilizar-se para restringir/acessar as funcionalidades do <strong>ABCD</strong>. Não deve apagar já que é a matriz utilizada para a criação/edição de perfiles.</font></p>
+<p><font size="2" face="Arial"><br />
+O arquivo <strong>adm</strong> contém o perfil do administrador do sistema e não pode editar-se nem apagar-se. Por esta razão não se apresenta na lista de perfis ativos.</font></p>

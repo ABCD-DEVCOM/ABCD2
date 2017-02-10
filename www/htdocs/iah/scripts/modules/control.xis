@@ -1,0 +1,77 @@
+<IsisScript name="iah-services">
+
+<include>iah/iah-functions.xis</include>
+
+<section name="control">
+
+	<!-- CGI environment -->	
+	<field action="replace" tag="1">
+		<pft>			
+			'5003 base'/
+			'5021 lang'/		
+		</pft>
+	</field>
+
+	<cgitable><pft>v1</pft></cgitable>
+	<field action="cgi" tag="prefix">tag</field>
+	
+	<field action="replace" tag="3"><pft>date</pft></field>
+	<field action="replace" tag="4"><pft>'^d',v3.8,'^t',v3*9.6</pft></field>
+
+	<!-- if not present set default language -->
+	<field action="replace" tag="5021"><pft>"p"n5021</pft></field>
+
+	<parm name="buffersize">200000</parm>
+	<call name="LoadAplDef">*</call>
+	<call name="LoadBaseDef">*</pft></call>
+	<call name="LoadCipar">*</call>
+	<call name="displayHeaderXML"><pft>if s(mpu,v3001,mpl) = 'OFF' then 'omit-xml-declaration' else '*' fi</pft></call>
+	
+	<field action="replace" tag="3001"><pft>if a(v3001) then 'ON' else s(mpu,v3001,mpl) fi</pft></field>		
+	<field action="replace" tag="3003"><pft>if a(v3003) then v5008 fi</pft></field>
+	<field action="replace" tag="3005"><pft>if p(v3005) then s(v3005,'.xml') else if v5018: 'XML' then 'DATABASE.XML' fi,fi</pft></field>
+			
+	<field action="replace" tag="3300"><pft>"^h"v3001,"^s"v3002,"^c"v3003,"^f"v3005,</pft></field>
+	
+	<!-- redefine valores de from, count e expressao -->	
+	<field action="replace" tag="5008"><pft>v3300^c</pft></field>
+	<field action="replace" tag="1031"><pft>if p(v3300^p) then f(((val(v3300^p)*val(v5008))+1)-val(v5008),1,0) else v3300^s fi</pft></field>
+	<!--	
+	<display><pft>'Content-type: text/plain'/#</pft></display>
+	<trace>On</trace>
+	-->
+
+	<display><pft>'<iah service="status" version="0.1">'/</pft></display>		
+	
+	<field action="cgi" tag="1090">last_update</field>
+	
+	<field action="statusdb" tag="1091">DATABASE</field>	
+	<field action="replace" tag="1092">
+		<pft>		
+		'^m',if v1091^s : 'm' then 'exist' else 'not found' fi
+		'^i',if v1091^s : 'i' then 'exist' else 'not found' fi
+		if p(v1091^n) then '^t',f(val(v1091^n) - 1,1,0) fi
+		"^d"v1091^d,
+		"^e"v1091^e,
+		"^u"v1090,
+		</pft>
+	</field>
+	<parm name="isisxml table">
+		<pft>
+			'record=database'/
+			'style=fixed'/
+			'1092 status'/
+			'1092^t total'/
+			'1092^u last_update'/
+			'1092^m master'/
+			'1092^i inverted'/			
+			'1092^d data_entry_lock'/
+			'1092^e exclusive_write_lock'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+	
+	<display></iah></display>	
+	
+</section>
+</IsisScript>

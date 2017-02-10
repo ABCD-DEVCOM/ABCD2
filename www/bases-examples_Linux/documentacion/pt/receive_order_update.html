@@ -1,0 +1,172 @@
+O processamento distingue entre um novo objeto e inserir exemplares a um objeto 
+existente:<br />
+
+<br />
+<strong>Novo objeto:<br />
+
+</strong>
+
+<ol>
+
+    
+  <li>Determina qual o campo em que &eacute; armazenado o n&uacute;mero de identifica&ccedil;&atilde;o 
+    do objeto na base de dados catalogr&aacute;fica. Para isso &eacute; lida a FDT&nbsp; e
+    verificado se tem 
+    um campo tipo <strong>AI</strong>   (Autoincrementar). A tag associada a este tipo 
+    de campo &eacute; aquela em que &eacute; colocado o n&uacute;mero de identifica&ccedil;&atilde;o 
+    do objeto e o prefixo da lista invertida &eacute; o prefixo utilizado para 
+    construir a express&atilde;o de pesquisa quando se deseja localizar um n&uacute;mero 
+    de identifica&ccedil;&atilde;o espec&iacute;fico. O processo &eacute; suspenso se n&atilde;o
+    for localizado um campo tipo <strong>AI</strong> na FDT ou se sua defini&ccedil;&atilde;o 
+    n&atilde;o especifica o prefixo utilizado na sua indexa&ccedil;&atilde;o.</li>
+
+    
+  <li>Localiza na base de dados de sugest&otilde;es (suggestions) a 
+    informa&ccedil;&atilde;o catalogr&aacute;fica do objeto. Para isso faz uma 
+    busca utilizando o n&uacute;mero da sugest&atilde;o, precedida com o 
+    prefixo NC_</li>
+
+    
+  <li>A informa&ccedil;&atilde;o catalogr&aacute;fica &eacute; extra&iacute;da, utilizando o formato 
+    <strong>acquisitions.pft</strong> que deve existir na pasta pfts/<em>[lang]</em> 
+    da base de dados na qual vai ser catalogado o objeto. Este formato &eacute; o
+    seguinte:<br />
+
+    <br />
+
+    Formato Cepal:<br />
+
+
+    <font face="Courier New">"1:"v1/<br />
+
+    "16:"v16/<br />
+
+    "17:"v17/<br />
+
+    "18:"v18/<br />
+
+    "21:"v21/<br />
+
+    "29:"v29/<br />
+
+    "30:"v30/<br />
+
+    "31:"v31/<br />
+
+    "32:"v32/<br />
+
+    "35:"v35/<br />
+
+    "47:"v47/<br />
+
+    "38:"v38/<br />
+
+    "39:"v39/<br />
+
+    "40:"v40/<br />
+
+    "41:"v41/</font><br />
+
+    <br />
+
+    Formato Marc:<br />
+
+    <font face="Courier New">"100:^a"v16/<br />
+
+    "110:^a"v17/<br />
+
+    "245:^a"v18,if s(v16,v17)&lt;&gt;`` then ` / ` v16," "v17 fi/<br />
+
+    "21:"v21/<br />
+
+    "29:"v29/<br />
+
+    "30:"v30/<br />
+
+    "31:"v31/<br />
+
+    "32:"v32/<br />
+
+    "35:"v35/<br />
+
+    "47:"v47/<br />
+
+    "38:"v38/<br />
+
+    "39:"v39/<br />
+
+    "40:"v40/<br />
+
+    "41:"v41/</font><br />
+
+    <br />
+
+    Quer dizer, para cada campo existente na base de dados <strong>suggestions</strong>,
+    atribuir a tag do campo que vai receber a informa&ccedil;&atilde;o na base 
+    de dados catalogr&aacute;fica. Se o campo que recebe a informa&ccedil;&atilde;o
+    possui 
+    subcampos ou &eacute; composto de v&aacute;rios campos da base de dados de sugest&otilde;es 
+    (<strong>suggestions</strong>), esta situa&ccedil;&atilde;o deve estar convenientemente 
+    refletida neste formato.</li>
+
+    
+  <li>Se n&atilde;o for localizado o registro na base de dados de sugest&otilde;es, o processo
+    &eacute; suspenso</li>
+
+    
+  <li>Insere o n&uacute;mero de identifica&ccedil;&atilde;o do objeto, utilizando 
+    o arquivo <strong>control_number.cn</strong> localizado na pasta data da base 
+    de dados catalogr&aacute;fica.&nbsp;</li>
+  <li>&eacute; atualizado na base de dados de ordem de compra (<strong>purchaseorder</strong>) 
+    o n&uacute;mero de identifica&ccedil;&atilde;o inserido no novo objeto (campo 500).
+    Isto com o objetivo de evitar duplica&ccedil;&atilde;o j&aacute; que no caso 
+    de perda da conex&atilde;o o processo pode ser repetido,&nbsp; utilizando o 
+    n&uacute;mero de identifica&ccedil;&atilde;o j&aacute; inserido ao objeto<br />
+
+    </li>
+
+    
+  <li>Com o resultado da aplica&ccedil;&atilde;o do formato de sa&iacute;da sobre 
+    a base de dados de sugest&otilde;es, &agrave; qual &eacute; acrescentado o n&uacute;mero de identifica&ccedil;&atilde;o 
+    do objeto, &eacute; constru&iacute;do o valor que que &eacute; enviado ao procedimento de criar 
+    novos objetos<br />
+
+    </li>
+
+    
+  <li>Clique sobre <strong>criar objeto</strong> para criar o registro na&nbsp; 
+    base de dados catalogr&aacute;fica&nbsp;</li>
+
+</ol>
+
+<strong><strong>Considera&ccedil;&otilde;es tomadas em conta para evitar inconsist&ecirc;ncias 
+no processo ou duplica&ccedil;&atilde;o de registros</strong><br />
+
+<br />
+</strong>Como neste processo &eacute; gerado o n&uacute;mero de identifica&ccedil;&atilde;o do 
+objeto e &eacute; imediatamente gravado na base de dados de ordem &eacute; de compra, 
+se voc&ecirc; recarregar a p&aacute;gina pode fazer com que o n&uacute;mero de 
+identifica&ccedil;&atilde;o atribu&iacute;do ao objeto seja incrementado
+desnecessariamente e produzir uma inconsist&ecirc;ncia na base de dados de pedidos de compra. Para que isto n&atilde;o ocorra,
+no inicio 
+do script &eacute; lida a ordem de compra a partir da base de dados <strong>purchaseorder</strong> para verificar 
+se o objeto no processo de cria&ccedil;&atilde;o j&aacute; tem um n&uacute;mero de identifica&ccedil;&atilde;o 
+inserido. No caso afirmativo, toma o valor correspondente, atribui o mesmo ao objeto 
+e habilita o bot&atilde;o para a cria&ccedil;&atilde;o de novos objetos.<br />
+
+<br />
+De qualquer maneira, antes de habilitar a cria&ccedil;&atilde;o do objeto, l&ecirc; a base de dados catalogr&aacute;fica correspondente e
+verifica se o n&uacute;mero de identifica&ccedil;&atilde;o 
+j&aacute; existe. Em caso afirmativo, apresenta a mensagem pertinente e&nbsp; habilita 
+a cria&ccedil;&atilde;o de copias, evitando a cria&ccedil;&atilde;o do objeto.<br />
+
+<br />
+Cria&ccedil;&atilde;o de exemplares</strong> para um objeto existente</strong><br />
+Se o objeto adquirido j&aacute; existe na base de dados catalogr&aacute;fica, passe a criar as copiasexemplares
+dando um clique sobre o bot&atilde;o <strong>criar copias</strong><br />
+
+<strong><br />
+</strong><strong>Nota importante: No arquivo <strong>purchaseorder.par</strong> tem que inserir 
+o caminho de acesso a cada uma das bases catalogr&aacute;ficas que interv&eacute;m no 
+processo de aquisi&ccedil;&atilde;o a fim de que se possa localizar a informa&ccedil;&atilde;o 
+catalogr&aacute;fica do objeto.</strong>

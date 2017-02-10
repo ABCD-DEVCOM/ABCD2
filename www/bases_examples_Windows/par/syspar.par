@@ -1,0 +1,9 @@
+marc.*=%path_database%marc/data/marc.*
+biblo.*=%path_database%biblo/data/biblo.*
+copies.*=%path_database%copies/data/copies.*
+loanobjects.*=%path_database%loanobjects/data/loanobjects.*
+users.*=%path_database%users/data/users.*
+trans.*=%path_database%trans/data/trans.*
+logtrans.*=%path_database%logtrans/data/logtrans.*
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

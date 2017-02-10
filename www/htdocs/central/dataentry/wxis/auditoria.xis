@@ -1,0 +1,330 @@
+<IsisScript name=Auditoria>
+	<trace>xOn</trace>
+
+	<section name=soporte>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+       	<field action=cgi tag=5001>base</field>
+       	<field action=cgi tag=4001>from</field>
+       	<field action=cgi tag=4002>to</field>
+       	<field action=cgi tag=3000>Expresion</field>
+      	<field action=cgi tag=2000>Mfn</field>
+      	<field action=cgi tag=9060>userid</field>
+		<field action=cgi tag=3030>formato</field>
+ 		<field action=cgi tag=9001>Opcion</field>
+ 		<field action=cgi tag=9002>crearautoridades</field>
+		<field action=cgi tag=2041>iso</field>
+		<field action=cgi tag=2042>pathiso</field>
+        <field action=cgi tag=8000>Path</field>
+      	<field action=cgi tag=9010 split=occ>ValorCapturado</field>
+		<field action=cgi tag=2010>desde</field>
+		<field action=cgi tag=2011>prefijo</field>
+  		<field action=add tag=9090 split=occ><pft>v9010</pft></field>
+	    <field action=cgi tag=1>path_db</field>
+
+       	<parm name=cipar>
+          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+       	</parm>
+
+
+
+		<flow action=jump>
+  			<pft>select s(v9001)
+					case 'mfnrange': 		'MFNRANGE'
+					case 'listadecampos':	'LISTASDECAMPOS'
+					case 'limpieza':		'LIMPIEZA'
+					case 'leertodo':		'LEERTODO'
+					case 'inicializar':		'INICIALIZAR_BD'
+					case 'exportar':		'EXPORTAR'
+					case 'importar':		'IMPORTAR'
+               		case 'buscar': 			'BUSCAR'
+					case 'permutada':		'LISTA_AP'
+					case 'alfabetica':		'LISTA_AP'
+					case 'mod_termino':		'MODIFICAR_TERMINO'
+					elsecase
+											'ERROR_P'
+				endsel,
+			</pft>
+   		</flow>
+
+		<label>ERROR_P</label>
+
+			<display><pft>'Código de acción inválido: 'v9001/
+					 </pft></display>
+			<flow action=exit>1</flow>
+
+
+		<label>LISTA_AP</label>
+       		<do task=keyrange>
+    			<parm name=db><pft>v5001</pft></parm>
+           		<parm name=from><pft>v2011,v2010</pft></parm>
+<!--           		<parm name=to><pft>v2020'ZZZ'</pft></parm>  -->
+				<parm name=count>100</parm>
+ 				<parm name=posting>All</parm>
+    			<field action=define tag=1000>Isis_Key</field>
+    			<field action=define tag=2000>Isis_Postings</field>
+    			<field action=define tag=3000>Isis_Posting</field>
+      			<display><pft>@tesauropro.pft</pft></display>
+
+    			<loop>
+					<field action=import tag=9001>9001</field>
+					<field action=import tag=8000>8000</field>
+      				<display><pft>@tesauro.pft</pft></display>
+					<field action=export tag=1000>1000</field>
+    			</loop>
+
+
+       		</do>
+				<display><pft>@tesauroepil.pft</pft></display>
+			<flow action=exit>1</flow>
+
+
+		<label>MODIFICAR_TERMINO</label>
+  			<do task=mfnrange>
+				<parm name=db><pft>v5001</pft></parm>
+				<parm name=from><pft>v4001</pft></parm>
+           		<parm name=to><pft>v4001</pft></parm>
+     			<field action=define tag=1001>Isis_Current</field>
+     			<field action=define tag=1002>Isis_Items</field>
+				<field action=define tag=1050>Isis_Value</field>
+				<loop>
+					<field action=import tag=8000>8000</field>
+					<display><pft>@650.pft</pft></display>
+				</loop>
+			</do>
+			<flow action=exit>1</flow>
+
+		<label>INICIALIZAR_BD</label>
+
+			<file action=create type=database><pft>v5001</pft></file>
+			<display><pft>'<p><Center><br><br>La base de datos 'v5001' ha sido inicializada<b>'
+							'<p><a href=javascript:history.back()>Regresar</a>'/
+					 </pft></display>
+			<flow action=exit>1</flow>
+
+
+		<label>LEERTODO</label>
+  			<do task=mfnrange>
+				<parm name=db><pft>v5001</pft></parm>
+				<parm name=from><pft>v4001</pft></parm>
+            	<parm name=to><pft>v4002</pft></parm>
+				<loop>
+					<display><pft>ALL</pft></display>
+				</loop>
+			</do>
+			<flow action=exit>1</flow>
+
+		<label>LISTASDECAMPOS</label>
+
+			<do task=mfnrange>
+				<parm name=db><pft>v5001</pft></parm>
+				<parm name=from><pft>'1'</pft></parm>
+            	<parm name=to><pft>'1'</pft></parm>
+				<field action=define tag=1002>Isis_Total</field>
+				<loop>
+					<field action=import tag=5001>5001</field>
+					<display><pft>'Base de datos: 'v5001'<br>Total registros:'v1002</pft></display>
+					<field action=export tag=1002>1002</field>
+				</loop>
+			</do>
+
+  			<do task=mfnrange>
+				<parm name=db><pft>v5001</pft></parm>
+				<parm name=from><pft>'1'</pft></parm>
+           		<parm name=to><pft>v1002</pft></parm>
+     			<field action=define tag=1001>Isis_Current</field>
+     			<field action=define tag=1002>Isis_Items</field>
+				<field action=define tag=1050>Isis_Value</field>
+
+     			<loop>
+					<field action=import tag=3030>3030</field>
+					<list action=load type=freq><pft type=reload><pft>v3030</pft></pft></list>
+     			</loop>
+			</do>
+			<do task=list>
+				<field action=define tag=1>Isis_Item</field>
+     			<field action=define tag=1001>Isis_Current</field>
+     			<field action=define tag=1002>Isis_Items</field>
+				<field action=define tag=1050>Isis_Value</field>
+				<display><pft>'<center><table width=80% border=1>'</pft></display>
+				<loop>
+					<field action=import tag=9002>9002</field>
+					<display>
+            			<pft>'<tr><td width=90%><font face=tahoma size=2>',
+												|<a href="javascript:Buscar('|v1|')">|v1'</a>','</td><td>'v1050'</td></tr>'</pft>
+         			</display>
+					<flow action=jump>
+						<pft>if v9002<>'S' then 'CONTINUAR' fi</pft>
+					</flow>
+					<do task="update">
+						<parm name="db"><pft>'650'</pft></parm>
+            			<parm name="mfn">New</parm>
+            			<field action=define tag=1102>Isis_Status</field>
+            			<update>
+						<field action=import tag=1>1</field>
+             				<proc><pft>,'d*'(if p(v1) then 'a1~',v1,'~'/ fi)</pft></proc>
+                    		<write>Unlock</write>
+							<proc><pft>'d1102'</pft></proc>
+            			</update>
+         			</do>
+				<label>CONTINUAR</label>
+				</loop>
+				<display><pft>'</table>'</pft></display>
+ 			</do>
+
+			<flow action=exit>1</flow>
+
+      	<label>MFNRANGE</label>
+     		<do task=mfnrange>
+        		<parm name=db><pft>v5001</pft></parm>
+            	<parm name=from><pft>V4001</pft></parm>
+            	<parm name=to><pft>V4002</pft></parm>
+            	<field action=define tag=1001>Isis_Current</field>
+            	<field action=define tag=1002>Isis_Total</field>
+            	<field action=define tag=1031>Isis_From</field>
+            	<field action=define tag=1032>Isis_To</field>
+            	<loop>
+               		<field action=import tag=5001>5001</field>
+               		<field action=import tag=5015>5015</field>
+               		<field action=import tag=3030>3030</field>
+               		<display>
+          				<pft>(v650/)</pft>
+               		</display>
+            	</loop>
+			</do>
+			<flow action=exit>1</flow>
+
+
+<!-- Para crear en la base temp los registros con los cambios a la base de datos luego de la auditoría -->
+
+      		<label>LIMPIEZA</label>
+				<do task="update">
+					<parm name="db"><pft>'temp'</pft></parm>
+            		<parm name="mfn">New</parm>
+            		<field action=define tag=1102>Isis_Status</field>
+
+            		<update>
+						<field action=import tag=9090>9090</field>
+             			<proc><pft>,'d*'(if p(v9090) then if v9090*3<>'' then 'a'v9090.3'~',v9090*3,'~'/ fi fi) 'a980~'v9060,'^d'date'~'</pft></proc>
+                    	<write>Unlock</write>
+						<proc><pft>'d1102'</pft></proc>
+               			<display><pft>ALL</pft>
+						</display>
+
+            		</update>
+         		</do>
+				<flow action="exit">1</flow>
+
+<!-- Buscar los registros presentados en la lista de autoridade -->
+
+      		<label>BUSCAR</label>
+				<do task=search>
+					<parm name=db><pft>v5001</pft></parm>
+					<parm name=from>1</parm>
+					<parm name=expression><pft>v3000</pft></parm>
+             		<field action=define tag=1001>Isis_Current</field>
+             		<field action=define tag=1002>Isis_Total</field>
+             		<field action=define tag=1031>Isis_From</field>
+             		<field action=define tag=1032>Isis_To</field>
+					<display><pft>'Content-type:text/html',/#</pft></display>
+					<display><pft>'<html>'/'<head><title>Registros encontrados con la búsqueda: 'v3000'</title>'/
+								  '<link rel=stylesheet href='v8000'js/style01.css type=text/css>'/
+								  '</head><body>'/
+							 </pft>
+					</display>
+					<loop>
+						<display><pft>@registro.pft</pft></display>
+					</loop>
+				</do>
+				<flow action="exit">1</flow>
+
+
+		<label>ACTUALIZAR</label>
+
+         	<field action="cgi" tag="2000">mfn</field>
+          	<do task="update">
+            	<parm name="db"><pft>v5001</pft></parm>
+            	<parm name="mfn"><pft>v2000</pft></parm>
+            	<parm name=lockid><pft>v9060</pft></parm>
+            	<field action=define tag=1101>Isis_Lock</field>
+           		<field action=define tag=1102>Isis_Status</field>
+           		<update>
+                    <field action=cgi tag=5001>base</field>
+                    <field action=cgi tag=5015>cipar</field>
+					<field action=import tag=9090>9090</field>
+                    <field action=import tag=5001>5001</field>
+                    <field action=import tag=5015>5015</field>
+					<proc><pft>'d650'</pft></proc>
+             		<proc><pft>'d'v9090.3/(if p(v9090) then 'a'v9090.3'~',v9090*3,'~'/ fi)/</pft></proc>
+					<proc><pft>'d9090'</pft></proc>
+                    <write>Unlock</write>
+
+               		<display><pft>@dbiblo.pft</pft></display>
+            	</update>
+         	</do>
+         	<flow action="exit">1</flow>
+
+
+    	<label>IMPORTAR</label>
+			<display><pft>'base: 'v5001</pft></display>
+<!--			<file action="create" type="database"><pft>v5001</pft></file> -->
+            <display><pft>'Base de Datos: 'v5001'<br>Archivo Iso: 'v2041'<p>'</pft></display>
+			<do task="import">
+     			<parm name="file"><pft>v2042,v2041</pft></parm>
+				<parm name="type">ISO2709</parm>
+				<loop>
+					<field action="import" tag=32011>5001</field>
+					<do task="update">
+   						<parm name="db"><pft>v32011</pft></parm>
+   						<parm name="mfn">GetNew</parm>
+   						<field action="define" tag="1102">Isis_Status</field>
+						<update>
+         					<field action="delete" tag="32011">All</field>
+   							<write>Unlock</write>
+						</update>
+					</do>
+					<display><pft>mfn' Importado<br>'</pft></display>
+
+				</loop>
+  			</do>
+            <display><pft>'<h4>Fin del proceso</h4>'
+							'<p><a href=javascript:history.back()>Regresar</a>'/
+					</pft></display>
+			<flow action=exit>1</flow>
+
+
+		<label>EXPORTAR</label>
+            <display><pft>'Base de Datos: 'v5001'<br>Archivo Iso: 'v2041'<p>'</pft></display>
+			<parm name=from>1</parm>
+    		<parm name=count>50</parm>
+			<do task=mfnrange>
+    			<parm name=db><pft>v5001</pft></parm>
+    			<parm name=file><pft>v2042,v2041</pft></parm>
+				<parm name="type">ISO2709</parm>
+    			<loop>
+					<display><pft>f(mfn,10,0),' Exportado<br>'/</pft></display>
+      				<export>this</export>
+    			</loop>
+  			</do>
+            <display><pft>'<h4>Fin del proceso de exportación</h4>'
+							'<p><a href=javascript:history.back()>Regresar</a>'/
+					</pft></display>
+			<flow action=exit>1</flow>
+
+
+		<label>FULLINV</label>
+  			<do task=fullinvertion>
+     			<parm name=db><pft>v5001</pft></parm>
+     			<parm name="fst"><pft>cat(v5005)</pft></parm>
+     			<field action=define tag=1102>Isis_Status</field>
+     			<display><pft>'Full invertion: ',v2001/</pft></display>
+     			<loop></loop>
+     			<display><pft>'Fin de la Generación'/</pft></display>
+     			<display><pft>'Lock status = 'v1102/</pft></display>
+  			</do>
+			<flow action=exit>1</flow>
+
+	</section>
+</IsisScript>
+
+

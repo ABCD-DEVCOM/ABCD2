@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>HTMLArea v3.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <script type="text/javascript">
+      _editor_url = "../";
+      _editor_lang = opener.HTMLDefaultLanguage;
+    </script>
+
+    <!-- load the main HTMLArea file -->
+    <script type="text/javascript" src="../htmlarea.js"></script>
+	
+    <script type="text/javascript">
+      HTMLArea.loadPlugin("ContextMenu");
+      HTMLArea.loadPlugin("TableOperations");
+
+      var editor = new HTMLArea("editor");
+      function initDocument() {
+        editor.registerPlugin(ContextMenu);
+        editor.registerPlugin(TableOperations);
+        editor.generate();
+      }
+	  
+	  function sendValue() {
+	    var xhtml = editor.getHTML();		
+		if ( xhtml.indexOf('<![CDATA[') == -1 ){		
+			opener.HTMLAreaElement.value = "<![CDATA[" + xhtml  + "]]>";			
+		}else{
+			opener.HTMLAreaElement.value = xhtml;
+		}	
+		window.close();
+	  }
+	  
+    </script>
+	
+  </head>
+
+  <body onload="initDocument();">
+  		<script>
+		  alert(HTMLDefaultLanguage);
+		</script>
+		<script language="JavaScript">
+			document.write('<textarea id="editor" style="height: 30em; width: 100%;">');
+			document.write(opener.HTMLAreaElement.value);
+			document.write('</textarea>');
+		</script>
+		
+	<script language="JavaScript">
+		var message1 = opener.HTMLAreaModifyButtonLabel;
+		var	message2 = opener.HTMLAreaCancelButtonLabel;
+	
+		document.write('<p align="center">');
+		document.write('<input type="button" name="ok" value="' + message1 + '" onclick="javascript: sendValue();"/>');
+		document.write('<input type="button" name="cancel" value="' + message2 + '" onclick="javascript: window.close();"/>');
+		document.write('</p>');
+
+	//	document.write('<a class="UPDATE_X-submit" href=" " onclick="javascript: opener.HTMLAreaElement.value = editor.getHTML(); window.close();"><img src="/bvs-mod/update-x/image/save.gif" alt="" border="0"> ' + message1 + '</a>&nbsp;&nbsp;');
+	//	document.write('<a class="UPDATE_X-submit" href=" " onclick="javascript: window.close();"><img src="/bvs-mod/update-x/image/cancel.gif" alt="" border="0"> ' + message2 + '</a>');
+	</script>	
+  </body>
+</html>
+

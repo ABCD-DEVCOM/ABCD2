@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<BODY LANG="en-US" DIR="LTR">
+<H2 STYLE="background: #cccccc"><FONT FACE="Arial"><FONT SIZE=4>Basic
+Concepts of the CDS/Isis structures (</FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>See:
+<A HREF="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-ConceitosBasicos-en.pdf" TARGET="_blank">http://bvsmodelo.bvsalud.org/download/cisis/CISIS-ConceitosBasicos-en.pdf</A></FONT></FONT><FONT FACE="Arial"><FONT SIZE=4>)</FONT></FONT></H2>
+<P STYLE="background: #cccccc"><FONT FACE="Arial"><FONT SIZE=4>Creating
+a database</FONT></FONT></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>This </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>ABCD
+</FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>option allows
+new databases to be defined. These will be created in the folder
+identified with the parameter </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>$db_path</FONT></FONT></STRONG><STRONG>
+</STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">which
+is set up in the script </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2>config.php</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">,
+stored in the folder </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>php</B></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">.
+The folder indicated by the parameter </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2>$db_path
+</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">must
+be editable for updating the files.</SPAN></FONT></FONT></STRONG> 
+</P>
+<P><FONT FACE="Arial"><FONT SIZE=2>The subfolder has the same name as the database created in the
+process. Under this subfolder, four new additional subfolders are
+created:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2>data</FONT></FONT></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>with the master file and the
+	inverted files, and the .fst for updating the inverted file</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2>def
+	</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">with
+	the additional entry formats</SPAN></FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>,
+	tables (picklists) and the other files required for entering
+	information</FONT></FONT> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2>pfts</FONT></FONT></STRONG>&nbsp;<FONT FACE="Arial"><FONT SIZE=2>with
+	the display formats and the files required for searching and
+	information display configuration</FONT></FONT> 
+	</P>
+	<LI><P><STRONG><FONT FACE="Arial"><FONT SIZE=2>cnv </FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">with
+	the conversion tables and the other files required for exchange of
+	information between databases </SPAN></FONT></FONT></STRONG>
+	</P>
+</UL>
+<P><FONT FACE="Arial"><FONT SIZE=2>There are 4 essential files which
+define a database in </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>ABCD</B></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>:</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><EM><FONT FACE="Arial"><FONT SIZE=2>dbn.fdt</FONT></FONT></EM></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>which contains field structure
+	and the other necessary parameters for the process of entering information (see Structure of the FDT </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="background: #ffff00"><A HREF="fdt.html#FDT" TARGET="_blank">Estructura
+	de la FDT</A>)</SPAN></FONT></FONT> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><EM><FONT FACE="Arial"><FONT SIZE=2>dbn.fst
+	</FONT></FONT></EM></STRONG><FONT FACE="Arial"><FONT SIZE=2>which
+	contains the extraction format table to create the inverted files</FONT></FONT>
+		</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><EM><FONT FACE="Arial"><FONT SIZE=2>dbn.pft</FONT></FONT></EM></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>with the default display format for
+	the records in the database</FONT></FONT> 
+	</P>
+	<LI><P><EM><STRONG><FONT FACE="Arial"><FONT SIZE=2>camposbusqueda.tab
+	</FONT></FONT></STRONG></EM><FONT FACE="Arial"><FONT SIZE=2>(fieldsearch.tab) which
+	contains the parameters used to prepare the advanced search window.</FONT></FONT>
+		</P>
+</UL>
+<P><FONT FACE="Arial"><FONT SIZE=2>A default entry sheet is used for
+the process of entering information, which is built directly according
+to the structure defined in the FDT. Other additional data entry
+sheets can be defined using the procedure defined in the section
+</FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><I><B>Updating the
+database definition</B></I></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><I><SPAN STYLE="font-weight: normal">.
+</SPAN></I></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">T</SPAN></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>hese
+additional sheets will appear in the menu </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><I><B>Entry
+sheets </B></I></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">located</SPAN></SPAN></FONT></FONT>
+<FONT FACE="Arial"><FONT SIZE=2>in the upper frame of the </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>ABCD
+</B></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>database
+manager.<BR><BR>A default format is used for the process of
+information display which is built directly according to the
+structure defined in the FDT. Additional display formats can be
+created using the procedures defined in the section </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><I><B>Updating
+the database definition.</B></I></FONT></FONT> <FONT FACE="Arial"><FONT SIZE=2>These
+additional formats will appear in the menu </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><I><B>Display
+Formats </B></I></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">located
+in the upper frame of the </SPAN></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><B>ABCD
+</B></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">database
+manager</SPAN></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>.</FONT></FONT><BR><FONT FACE="Arial"><FONT SIZE=2><BR>One
+of the main characteristics of the data entry in </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>ABCD</FONT></FONT></STRONG>
+<FONT FACE="Arial"><FONT SIZE=2>is the facility for entering the
+subfields in Marc format, which allows the user to open an additional
+window with the details of the subfields of each field, allowing the
+insertion of information. To enable this option you should read the
+documentation about the </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><B>Field
+Definition Table (FDT)</B></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>.
+<BR><BR>If the structure of the database includes different types of
+records, </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>ABCD</B></FONT></FONT>
+<FONT FACE="Arial"><FONT SIZE=2>can also manage this. In this case you
+have to assign the field tags (two maximum) indicating where the type of
+record is stored, and the values that these fields can have for
+each type. With this information it will be possible to assign a
+special data entry sheet for each type of record, which will be
+automatically activated in the process of editing the records.</FONT></FONT></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>For databases in the Marc format,
+it is possible to define the format of the Leader and the fixed
+fields, using the options in </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>Types
+of record (Marc)</B></FONT></FONT> <FONT FACE="Arial"><FONT SIZE=2>in
+the menu for </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><B>Updating
+the databases' definition</B></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">.
+It is important to take into account that the fields of the Leader
+have 4 digit tags. Because of that, it is recommended that you take
+precautions when exporting databases which have the </SPAN></SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><B>Leader</B></SPAN></FONT></FONT>
+<FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-style: normal"><SPAN STYLE="font-weight: normal">in
+their structure.</SPAN></SPAN></FONT></FONT><STRONG> </STRONG>
+</P>
+<P><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">The
+option </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>Types
+of record (Marc)</B></FONT></FONT></STRONG><STRONG> </STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">appears
+automatically when the presence of the field </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>Leader
+</B></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">is
+detected in the FDT. The types of records defined are stored in a
+structure similar to the FDT and will be presented in the data entry
+process depending on the type of record selected in the </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>Leader</B></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">.</SPAN></FONT></FONT></STRONG></P>
+<P><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">There
+are different ways to create a new database:</SPAN></FONT></FONT></STRONG></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2>New
+	data base</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">:
+	to define a new database</SPAN></FONT></FONT></STRONG></P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>WinIsis</B></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">:
+	allows to copy the already extant definitions of a database created
+	using WinIsis (fdt, fst, pft). Then, through record
+	exporting-importing it is possible to transfer information to the
+	newly created database. It is important to take into account that in
+	most of the cases, the databases created with WinIsis keep the </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>ASCII</B></FONT></FONT></STRONG><STRONG>
+	</STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">character
+	sets. Because of this, it is important to take precautions in the
+	conversion to </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>ANSI</B></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">,
+	which is the character set used in </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>ABCD</B></FONT></FONT></STRONG></P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2><B>Create
+	a new database from the structures of an existing database</B></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">.
+	In this case, you need to select the name of the database to
+	replicate and the process will end up in a new database with the
+	same structures defined for the source database.</SPAN></FONT></FONT></STRONG></P>
+</UL>
+<P><FONT FACE="Arial"><FONT SIZE=2>When a new database is defined,
+the following files are also created/modified: </FONT></FONT>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2>bases.dat</FONT></FONT></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>with the name and description of the
+	available databases. This file can be read in all the </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="background: #ffff00">screens</SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>
+	that need to present a database menu, and it is located in the root
+	directory where the databases are stored (parameter </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>$db_path
+	</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">of
+	the script </SPAN></FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2>config.php</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">)</SPAN></FONT></FONT></STRONG>
+		</P>
+	<LI><P><STRONG><FONT FACE="Arial"><FONT SIZE=2>dbn.par</FONT></FONT></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>with the path to the database and
+	other elements required by </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>ABCD.
+	</FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>The files
+	</FONT></FONT><STRONG><EM><FONT FACE="Arial"><FONT SIZE=2>dbn.par</FONT></FONT></EM></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>are stored in the subfolder </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>par</FONT></FONT></STRONG>
+	<FONT FACE="Arial"><FONT SIZE=2>of the folder where the databases
+	are stored.</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Arial"><FONT SIZE=2>Once
+the database has been defined, it won't be active until you have
+assigned the corresponding access permissions to the users who have
+access to it. (See Assign permissions <A HREF="assign_operators.html" TARGET="_blank">Asignar
+permisos</A>)</FONT></FONT></P>
+<HR SIZE=1>
+<H4><FONT FACE="Arial">Fields required to start the database creation</FONT></H4>
+<P><STRONG><FONT FACE="Arial"><FONT SIZE=2>Name of the database</FONT></FONT></STRONG><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">:
+internal name of the database. Use only numeric or alphabetic
+characters, starting always with an alphabetic one. The high hyphen
+(-) and low hyphen (_) are also allowed. Don't use question marks,
+blank spaces or stressed characters.</SPAN></FONT></FONT></STRONG></P>
+<P><STRONG><FONT FACE="Arial"><FONT SIZE=2>Description of the
+database: </FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>Name
+of the database to be displayed in the different menus of </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>ABCD</B></FONT></FONT></P>
+<P><STRONG><FONT FACE="Arial"><FONT SIZE=2>Copy definition from:
+</FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>Select from
+the list the option to use to create the new database: </FONT></FONT>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Arial"><FONT SIZE=2>New
+	database</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Arial"><FONT SIZE=2>WinIsis
+	</FONT></FONT>
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial"><FONT SIZE=2><SPAN STYLE="font-weight: normal">Create
+	a new database from the structures of an existing database</SPAN></FONT></FONT></STRONG></P>
+</UL>
+<P><FONT FACE="Arial"><FONT SIZE=2>Once you have given all the
+required information, click </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>Continue
+</B></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>to move to the
+creation of the </FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><B>Field
+Definition Table</B></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2>. </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0in">&nbsp;</P>
+<HR>
+<P>&nbsp;<STRONG><FONT FACE="Arial"><FONT SIZE=3>Management of
+multilingual structures</FONT></FONT></STRONG></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>With ABCD, it is possible to keep the
+definition files (FDT, FMT, PFT) in any of the dialogue
+languages managed by the system. For that purpose, there is a
+subfolder for each defined language under the folders </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>def&nbsp;
+</FONT></FONT></STRONG>and &nbsp;<STRONG><FONT FACE="Arial"><FONT SIZE=2>pft&nbsp;.</FONT></FONT></STRONG></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>When you create the database, its
+definition files are created in the folder corresponding to the
+active dialog language, which must coincide with the dialogue language
+indicated by the parameter </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>$lang_db</FONT></FONT></STRONG>
+<FONT FACE="Arial"><FONT SIZE=2>of the configuration file </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>config.php</FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>.</FONT></FONT></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>Afterwards, when the structures of
+an extant database are called, they try to be located in the folder
+which corresponds to the active dialogue language. If they don't exist
+there, then the language indicated in the parameter </FONT></FONT><STRONG><FONT FACE="Arial"><FONT SIZE=2>$lang_db
+</FONT></FONT></STRONG><FONT FACE="Arial"><FONT SIZE=2>is used to
+build the paths to the database structures.</FONT></FONT></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>If the accessed file is stored,
+then it is saved in the folder which corresponds to the active dialogue
+language.</FONT></FONT></P>
+<P><FONT FACE="Arial"><FONT SIZE=2>The ability to locate the FDT
+and the formats of a database in a default folder, facilitates the
+translation of these resources and at the same time prevents the
+system collapsing if there is a lack of database resources defined in
+the active language.</FONT></FONT></P>
+</BODY>
+</HTML>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<metasearch id="" lang="en" available="">
+  <text id="search_title" available="yes">ABCD Search</text>
+  <text id="search_entryWords" available="yes">Entry one or more words</text>
+  <text id="search_submit" available="yes">Search</text>
+  <text id="search_howToSearch" available="yes">how to search?</text>
+  <text id="search_allWords" available="yes">All words</text>
+  <text id="search_anyWord" available="yes">Any word</text>
+  <text id="search_error" available="yes">Please use a search expression.</text>
+  <text id="search_advancedSearch" available="yes">search filter</text>
+  <text id="search_freeSearch" available="yes">by words</text>
+  <text id="search_results" available="yes">Result</text>
+  <text id="search_method">method</text>
+  <text id="search_demo">demo</text>
+  <text id="conceptSearch_title" available="yes">by relevance</text>
+  <text id="conceptSearch_entryWords" available="yes">Search documents more related to the concepts</text>
+  <text id="decs_mesh" available="yes">Search by DeCS/MeSH terminology</text>
+</metasearch>

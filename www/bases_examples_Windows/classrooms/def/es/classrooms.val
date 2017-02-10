@@ -1,0 +1,8 @@
+2:if a(v2^a) or a(v2^n) then '<b><font size=3 color=red>Field 2 - Name -  is incomplete, please provide the name</font></b>' fi$$|$$true
+###
+3:if a(v3^n) then '<b><font size=3 color=red>Field 3 - Capacity -  is incomplete, please provide the classroom capacity</font></b>' fi$$|$$true
+###
+4:if a(v4) then '<b><font size=3 color=red>Field 4 - Items -  is incomplete, please provide the classroom items</font></b>' fi$$|$$true
+###
+:
+###

@@ -1,0 +1,4 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL</b></td><td valign=top><font face=arial size=2><A HREF="',v1,'" target=new>',v1+|<br>|,'</A></td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Text</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+'</table><p>'

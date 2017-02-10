@@ -1,0 +1,42 @@
+(
+	,if s(mpu,v8^*,mpl) = 'INTERNET' then,
+		 '<tr>'/
+	       	 '<td width="28%"><a href="'v8^i'"><img src="',v5002[1],'fulltxt.gif" border="0" name="full text"></a></td>'/			 
+    	     '<td width="72%">'
+			 	'<font face=verdana size="1"><i>'
+			 	if s(mpu,v8^i,mpl) : '.PDF' then 
+					'Text in PDF' 
+				else 
+					if s(mpu,v8^i,mpl) : '.HTM' then  
+						'Text in HTML' 
+					else
+						'Full text'	
+					fi,
+				fi				
+			'</i></font></td>'/	
+		'</tr>'/	  
+	,fi,	
+		/* modificado por Katia, 26/08/08 */
+	if npost->facic(v30)>0 then
+		'<tr>'
+			'<td width="28%">'
+				'<font face="arial" size=2 >',
+				`<a href="javascript:onClick=OpenNewfacic('ID_`,v30`')">`,
+					'<img src="',v5002[1],'fulltxt.gif" border="0" name="texto"></a>',
+			'</td>',
+			  '<td width="72%">',
+			   '<font face=verdana size="1" color="red"><i>Details ('f(npost->facic(v30),1,0)')</i></font>'
+			  '</td>',
+			'</td>',
+		'</tr>',
+	fi,
+	/* adicionado por Bruno, 13/02/09 */
+			'<td colspan="2">'
+				`<a href="http://www.addthis.com/bookmark.php?v=20" onmouseover="return addthis_open(this, '', 'http://`getenv('HTTP_HOST')getenv('SCRIPT_NAME')v5000^d`scripts/?IsisScript=iah.xis&base=TITLE&lang=en&form=F&nextAction=lnk&indexSearch=Kw&exprSearch=`v6002`' , 'ABCD - iAH search engine')" onmouseout="addthis_close()" onclick="return addthis_sendto()">`
+				'<img src="http://s7.addthis.com/static/btn/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/>'
+				'</a>'
+				'<script type="text/javascript" src="http://s7.addthis.com/js/200/addthis_widget.js"></script>'
+			'</td>',
+		'</tr>',
+
+)

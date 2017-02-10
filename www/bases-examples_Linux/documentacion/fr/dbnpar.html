@@ -1,0 +1,32 @@
+Le fichier dbn.par
+
+Le fichier dbn.par est un des fichiers de configuration caractéristiques de CDS/Isis, qui indique la localisation des différentes parties de la base de données.
+
+Dans la version actuelle de ABCD ce fichier spécifie :
+
+   1. le chemin du dossier où réside la base de données elle-même
+   2. le chemin vers le format qui produit le prologue de la page pour la mise à jour d'un enregistrement
+   3. le chemin vers le format qui produit l'épilogue de la page pour la mise à jour d'un enregistrement
+
+Par exemple :
+
+    biblo.*=%path_database%biblo/data/biblo.*
+    prologoact.pft=%path_database%www/prologoact.pft
+    epilogoact.pft=%path_database%www/epilogoact.pft
+
+Les formats d'impression ne sont pas inclus dans ce fichier depuis qu' ABCD crée le chemin directement sur la base des paramètres de configuration.
+
+Le nom  %path_database% dans le fichier .par est remplacé par le véritable chemin dans le fichier de configuration principal config.php. Cela permet de déplacer le répertoire bases sans incidence sur les répertoires des autres parties de la base de données.
+
+Si pour une raison quelconque les fichiers de la base de données doivent être placés ailleurs du dossier base, spécifier les chemins absolus (et non relatifs) dans le fichier dbn.par
+
+Si un format fait référence à un autre, ou si REF est utilisé comme relation à une autre base de données, les deux bases doivent être incluses dans les dbn.par correspondants.
+
+
+ 
+
+ 
+
+ 
+
+ 

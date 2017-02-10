@@ -1,0 +1,20 @@
+v10,'^'v90'^',mdl,v100,mpl,'^'v80,'^' v30*6.2,'-',v30*4.2,'-',v30.4," "v35,'^', v40*6.2,'-',v40*4.2,'-',v40.4," "v45,'^',v70,'^',f(mfn,1,0),'^'v30,'^'v40,'^'v20,,'^',f(nocc(v200),1,0),,'^'v95,'^'v98,'^'v12,'^'v15,'^'v1/
+
+/* 0  Inventory number
+   1  Classification number
+   2  Description of object
+   3  Object type
+   4  Date and time of loan
+   5  Date and time of return
+   6  User type
+   7  Record number
+   8  Loan date in ISO-format
+   9  Date of return in ISO-format
+   10 User code
+   11 Number of renewals
+   12 Control number of object
+   13 Database
+   14 Volume
+   15 Part
+   16 Transaction type: P=loan X=return
+*/

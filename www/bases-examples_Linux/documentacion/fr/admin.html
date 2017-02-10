@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 15 August 2007), see www.w3.org">
+    <title></title>
+  </head>
+  <body lang="fr-FR" dir="ltr">
+    <h2 style="background: #cccccc">
+      <font face="Arial"><font size="4">Concepts de base des structures
+      CDS/Isis (</font></font><font face="Arial"><font size="2">Voir : <a href=
+      "http://bvsmodelo.bvsalud.org/download/cisis/CISIS-ConceitosBasicos-frn.pdf"
+      target=
+      "_blank">http://bvsmodelo.bvsalud.org/download/cisis/CISIS-ConceitosBasicos-fr.pdf</a></font></font><font face="Arial"><font size="4">)</font></font>
+    </h2>
+    <h3 style="background: #cccccc">
+      <font face="Arial">Créer une base de données</font>
+    </h3>
+    <p>
+      <font face="Arial"><font size="2">Cette option d'<strong>ABCD</strong>
+      permet de définir de nouvelles bases de données. Celles-ci seront créées
+      dans le répertoire donné par le paramètre <strong>$db_path</strong>,
+      défini dans le script <strong>config.php</strong>, enregistré dans le
+      répertoire <strong>php</strong>. Le répertoire indiqué par le paramètre
+      <strong>$db_path</strong> doit être modifiable pour mettre à jour les
+      fichiers.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">Le sous-répertoire où est stocké la
+      base de données est désigné par le nom de la base de données créée. A
+      l'intérieur de ce dossier, quatre nouveaux sous-répertoires sont
+      créés :</font></font>
+    </p>
+    <ul>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>data</strong> avec le
+          fichier maître et les fichiers inversés, ainsi que la TSC(.fst)
+          utilisée pour la mise à jour du fichier inversé</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>def</strong> avec les
+          formats de saisie additionnels, les tables (picklists) et les autres
+          fichiers requis pour la saisie</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>pfts</strong> avec les
+          formats d'affichage et les fichiers requis pour la recherche et
+          l'affichage des informations</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>cnv</strong> avec les
+          tables de conversion tables et les autres fichiers requis pour
+          l'échange d'information entre les bases de données</font></font>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <font face="Arial"><font size="2">Il y a 4 fichiers essentiels à la
+      définition d'une base de données sous
+      <strong>ABCD</strong> :</font></font>
+    </p>
+    <ul>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong><em>dbn.fdt</em></strong>
+          qui contient la structure des champs et les autres paramètres
+          nécessaires à la saisie des données (voir <a href="fdt.html#FDT"
+          target="_blank">Structure de la TDC(FDT)</a> )</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong><em>dbn.fst</em></strong>
+          qui contient le format de la table d'extraction pour créer les
+          fichiers inversés</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong><em>dbn.pft</em></strong>
+          avec le format d'affichage par défaut pour les enregistrements de la
+          base de données</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size=
+          "2"><strong><em>camposbusqueda.tab</em></strong> qui contient les
+          paramètres utilisés pour définir la fenêtre de recherche
+          avancée.</font></font>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <font face="Arial"><font size="2">Un bordereau de saisie par défaut,
+      utilisé pour le processus de saisie des données, est construit à partir
+      de la structure définie dans la TDC(FDT). D'autres bordereaux de saisie
+      peuvent être définis en utilisant la procédure définie dans la
+      section <strong><em>Mise à jour de la définition des bases de
+      données</em></strong>. Ces bordereaux additionnels apparaitront dans le
+      menu <strong><em>Bordereaux de saisie</em></strong> situé dans le cadre
+      supérieur du gestionnaire de bases de données <strong>ABCD</strong>.<br>
+      <br>
+      Un format par défaut, utlisé lors de l'affichage des informations, est
+      directement généré à partir de la structure définie dans la TDC(FDT). Des
+      formats additionnels peuvent être créés en utilisant les procédures
+      définies dans la section <strong><em>Mise à jour de la définition des
+      bases de données.</em></strong> Ces formats additionnels apparaitront
+      dans le menu <strong><em>Formats d'affichage</em></strong> situé dans le
+      cadre supérieur du gestionnaire de bases de données
+      <strong>ABCD</strong>.<br>
+      <br>
+      Une des principales caractéristiques de la saisie de données sous
+      <strong>ABCD</strong> est la facilité pour l'entrée des sous-champs dans
+      les formats Marc, qui permet à l'utilisateur d'ouvrir une fenêtre
+      additionnelle avec les détails des sous-champs de chaque champ,
+      permettant l'ajout d'information. Pour activer cette option, vous devez
+      lire la documentation concernant la <strong>Table de définition des
+      champs (FDT)</strong>.<br>
+      <br>
+      Si la structure de la base de données inclut différents types
+      d'enregistrements, <strong>ABCD</strong> peut aussi le gérer. Dans ce
+      cas, vous devez définir les étiquettes des champs (deux maximum) dans
+      lesquels le type d'enregistrement est stocké, ainsi que les valeurs
+      que ces champs peuvent prendre pour chaque type d'enregistrement. Avec
+      ces informations, il est possible d'affecter un bordereau de saisie
+      spécial à chaque type d'enregistrement qui sera automatiquement activé
+      lors de l'édition d'enregistrements.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">Pour les bases de données au format
+      Marc, il est possible de définir le format du guide et les champs fixes,
+      en utilisant les options de <strong>Types d'enregistrements
+      (MARC)</strong> dans le menu <strong>Mise à jour de la définition des
+      bases de données</strong>. Il est important de tenir compte du fait que
+      les champs du guide comportent 4 chiffres. A cause de cela, il est
+      recommandé de prendre des précautions lors de l'export de bases de
+      données comprenant le <strong>guide</strong> dans leur
+      structure.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">L'option <strong>Types
+      d'enregistrements (MARC)</strong> apparaît automatiquement quand la
+      présence du champ <strong>Guide</strong> est détectée dans la TDC(FDT).
+      Les types d'enregistrements définis sont stockés dans une structure
+      similaire à la TDC(FDT) et seront présentés lors de la saisie de données
+      en fonction du type d'enregistrement sélectionné dans le
+      <strong>Guide</strong>.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2"><strong>Il existe différents moyens de
+      créer une nouvelle base de données :</strong></font></font>
+    </p>
+    <ul>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>Nouvelle base de
+          données</strong> : pour définir une nouvelle base de
+          données</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>WinIsis</strong> : permet
+          de copier les fichiers de définition existants d'une base de données
+          créée avec WinIsis (fdt, fst, pft). Ensuite, par l'export-import des
+          enregistrements, il est possible de transférer les données dans la
+          base nouvellement créée. Il est important de prendre en compte le
+          fait que, dans la plupart des cas, les bases de données créées avec
+          WinISIS conservent le jeu de caractères <strong>ASCII</strong>. A
+          cause de cela, il est important de faire attention lors de la
+          conversion en <strong>ANSI</strong> qui est le jeu de caractères
+          utilisé par <strong>ABCD</strong>.</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong>Créer une nouvelle base de
+          données à partir d'une base existante</strong> : dans ce cas, vous
+          devez sélectionner le nom de la base de données à dupliquer et le
+          processus se terminera par la création d'une nouvelle base de données
+          avec les mêmes structures que celles de la base de données
+          source.</font></font>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <font face="Arial"><font size="2">Quand une nouvelle base de données est
+      créée, les fichiers suivant sont créés/modifiés :</font></font>
+    </p>
+    <ul>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong><em>bases.dat</em></strong>
+          avec le nom et la description des bases de données disponibles. Ce
+          fichier peut être lu dans tous les écrans qui présentent un menu des
+          bases de données, et est localisé dans le répertoire racine où sont
+          stockées les bases de données (paramètre <strong>$db_path</strong> du
+          script <strong>config.php</strong>.</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2"><strong><em>dbn.par</em></strong>
+          avec le chemin de la base de données et des autres éléments requis
+          par <strong>ABCD</strong>. Les fichiers
+          <strong><em>dbn.par</em></strong> sont stockés dans le
+          sous-répertoire <strong>par</strong> du répertoire des bases de
+          données.</font></font>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <font face="Arial"><font size="2">Une fois la base de données définie,
+      elle ne sera pas activée tant que vous n'aurez pas affecté les
+      permissions d'accès aux utilisateurs qui doivent y accéder (voir <a href=
+      "assign_operators.html" target="_blank">Affecter les
+      permissions</a>).</font></font>
+    </p>
+    <hr>
+    <h4>
+      <font face="Arial">Champs requis pour commencer la création d'une base de
+      données</font>
+    </h4>
+    <p>
+      <font face="Arial"><font size="2"><strong>Nom de la base de
+      données</strong> : nom interne de la base de données. Utilisez uniquement
+      des caractères alphanumériques, et commencez toujours avec un caractère
+      alphabétique. Les tirets haut(-) et bas(_) sont aussi autorisés.
+      N'utilisez pas de point d'interrogation, d'espace ou de caractères
+      accentués.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2"><strong>Description de la base de
+      données</strong> : nom de la base de données tel qu'affiché dans les
+      différents menus d' <strong>ABCD</strong></font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2"><strong>Copier la définition
+      depuis</strong> : sélectionner dans la liste l'option utilisée pour créer
+      la nouvelle base de données</font></font>
+    </p>
+    <ul>
+      <li>
+        <p>
+          <font face="Arial"><font size="2">Nouvelle base de
+          données</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2">WinIsis</font></font>
+        </p>
+      </li>
+      <li>
+        <p>
+          <font face="Arial"><font size="2">Créer une nouvelle base de données
+          à partir d'une base existante</font></font>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <font face="Arial"><font size="2">Une fois que vous avez renseigné les
+      informations requises, cliquez sur <strong>Continuer</strong> pour
+      entamer la création de la <strong>Table de définition des
+      champs</strong>.</font></font>
+    </p>
+    <hr>
+    <h4>
+      <font face="Arial">Gérer les structures multilingues</font>
+    </h4>
+    <p>
+      <font face="Arial"><font size="2">Avec <strong>ABCD</strong>, il est
+      possible de conserver les fichiers de définition (FDT, FMT, PFT) dans
+      chacune des langues gérées par le système. Pour cela, il existe un
+      sous-répertoire pour chaque langue définie dans les répertoires
+      <strong>def</strong> et <strong>pft</strong>.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">Quand vous créez la base de données,
+      ses fichiers de définition sont créés dans le dossier correspondant à la
+      langue active, qui doit correspondre avec la langue indiquée par le
+      paramètre <strong>$lang_db</strong> du fichier de configuration
+      <strong>config.php</strong>.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">Ensuite, lorsque les structures d'une
+      base de données existante sont chargées, elles sont d'abord recherchées
+      dans le répertoire correspond au langage actif. Si elles n'existent pas,
+      alors la langue indiquée par le paramètre <strong>$lang_db</strong> est
+      utilisé afin de créer les chemins vers les structures de la base de
+      données.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">Si le fichier consulté est disponible,
+      alors il est enregistré dans le dossier correspondant à la langue
+      active.</font></font>
+    </p>
+    <p>
+      <font face="Arial"><font size="2">Cette possibilité de localiser la
+      TDC(FDT) et les formats d'une base de données dans un répertoire par
+      défaut facilite la traduction de ces ressources, et évite le plantage en
+      cas d'absence de ressources de la base de données dans la langue
+      active.</font></font>
+    </p>
+  </body>
+</html>

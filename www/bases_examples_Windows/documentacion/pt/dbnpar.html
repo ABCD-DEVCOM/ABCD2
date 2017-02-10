@@ -1,0 +1,26 @@
+<p><strong>Archivo dbn.par</strong></p>
+<p>O ficheiro <strong>dbn.par</strong> é um recurso próprio da estrutura <strong>CDS/Isis</strong> que indica a localização dos recursos de cada base de dados.</p>
+<p>Na actual versão do <strong>ABCD</strong> este ficheiro contem:</p>
+<ol>
+    <li>O caminho para a directoria onde se encontra a base de dados</li>
+    <li>O caminho para o formato de início no processo de actualização de cada registo</li>
+    <li>O caminho para o formato do final do processo de actualização de cada registo</li>
+</ol>
+<p>Exemplo:</p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font face="Arial">biblo.*=%path_database%biblo/data/biblo.*<br />
+<font face="Arial">prologoact.pft=%path_database%www/prologoact.pft<br />
+epilogoact.pft=%path_database%www/epilogoact.pft</font></font></p>
+</blockquote>
+<p dir="ltr"><font face="Arial"><font face="Arial">Os formatos de visualização não estão incluidos pois o ABCD gera o caminho a partir dos parâmetros de configuração.</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial">O nome&nbsp;<strong>%path_database% </strong>é substituido no ficheiro dbn.par pelo caminho actual do separador <strong>bases</strong>,&nbsp;tal como se especifica na variavel <strong>$db_path </strong>do script <strong>config.php</strong>. Este, permite usar a directoria <strong>bases</strong> sem qualquer impacto nos caminhos dos recursos das bases de dados.</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial">Se pretender colocar os ficheiros da base de dados fora da directoria definida por defeito, altere o ficheiro dbn.par para indicar o caminho absoluto.</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial">Se um formato incluir uma referência a outro formato ou se usa o comando <strong>REF</strong>&nbsp;para relacionar bases de dados, tanto os formatos que são chamados como as bases de dados relacionadas devem ser indicadas no correspondente ficheiro dbn.par</font></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial"><br />
+</font></font>
+<p>&nbsp;</p>
+</p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px"></blockquote>
+<p dir="ltr">&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

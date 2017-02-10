@@ -1,0 +1,49 @@
+ <IsisScript>
+	<trace>xOn</trace>
+	<section>
+
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+   		<field action=cgi tag=5001>base</field>
+   		<field action=cgi tag=4001>from</field>
+   		<field action=cgi tag=4002>to</field>
+ 		<field action=cgi tag=3000>Expresion</field>
+   		<field action=cgi tag=3030>Formato</field>
+   		<field action=cgi tag=3031>Pft</field>
+  		<field action=cgi tag=2000>Mfn</field>
+  		<field action=cgi tag=1>path_db</field>
+  		<field action=cgi tag=9088>cttype</field>
+  		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+		<display><pft></pft></display>
+   		<parm name=cipar>
+    		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+    	</parm>
+			<do task=search>
+             	<parm name=db><pft>v5001</pft></parm>
+             	<parm name=from><pft>v4001</pft></parm>
+             	<parm name=to><pft>v4002</pft></parm>
+             	<parm name=expression><pft>v3000</pft></parm>
+             	<field action=define tag=1001>Isis_Current</field>
+             	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+
+             	<loop>
+                	<field action=import tag=5001>5001</field>
+                	<field action=import tag=5015>5015</field>
+                	<field action=import tag=3030>3030</field>
+                	<field action=import tag=3031>3031</field>
+                	<field action=import tag=3000>3000</field>
+                	<field action=import tag=8000>8000</field>
+					<field action=import tag=1091>1091</field>
+                	<display>
+						<pft type=reload><pft>if p(v3030) then '@'v3030 else v3031 fi</pft></pft>
+                	</display>
+
+             	</loop>
+          	</do>
+			<flow action=exit>1</flow>
+    </section>
+ </IsisScript>
+
+

@@ -1,0 +1,17 @@
+<IsisScript>
+	<section>
+	    <trace>xOn</trace>
+		<do task=import>
+			<field action=cgi tag=5015>iso_file</field>
+			<parm name=file><pft>v5015</pft></parm>
+			<field action=cgi tag=9088>cttype</field>
+			<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+			<loop>
+				<flow action=jump><pft>if mfn<101 then 'CONTINUE' fi</pft></flow>
+				<flow action=exit>1</flow>
+				<label>CONTINUE</label
+				<display><pft>ALL</pft></display>
+			</loop>
+		</do>
+	</section>
+</IsisScript>

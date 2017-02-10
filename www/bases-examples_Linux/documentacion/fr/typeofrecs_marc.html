@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <p>
+      <font face="Arial"><strong>Types d'enregistrements (Format
+      MARC)</strong></font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Cette option permet de définir les types
+      d'enregistrements qui seront gérés par la base de données lorsque le
+      système utilise le format MARC.</font>
+    </p>
+    <p>
+      <font face="Arial, Helvetica, sans-serif" size="2">The type
+      d'enregistrement se trouve dans le champ <strong>3006</strong> de
+      l'en-tête et permet d'identifier le format du champ fixe (008) à utiliser
+      dans la description bibliographique du document.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Définir le type d'enregistrement requiert
+      deux paramètres :</font>
+    </p>
+    <ol>
+      <li>
+        <font face="Arial" size="2">Identifier le champ (étiquette) de la base
+        de données dans laquelle on trouvera (ou sera entré dans le cas d'un
+        nouvel enregistrement) l'enregistrement correspondant au document. La
+        version actuelle d'ABCD permet la définition de deux champs dont les
+        valeurs détermineront le format du champ fixe (008) à afficher dans le
+        formulaire de saisie des données.</font>
+      </li>
+      <li>
+        <font face="Arial" size="2">Décrire le type d'enregistrement avec les
+        paramètres suivants </font>
+        <ul>
+          <li>
+            <font face="Arial" size="2">Nom de la table de définition des
+            champs (TDC) qui contient les éléments utilisés pour générer le
+            formulaire de saisie des données.</font>
+          </li>
+          <li>
+            <font face="Arial" size="2">Valeur des champs identifiés en (1) qui
+            sont considérés comme appartenant à ce type d'enregistrement</font>
+          </li>
+          <li>
+            <font face="Arial" size="2">Description du type d'enregistrement
+            qui sera affiché à l'utilisateur lors de la saisie de données avant
+            de sélectionner le type correspondant</font>
+          </li>
+        </ul>
+      </li>
+    </ol>
+    <p>
+      <font size="2" face="Arial, Helvetica, sans-serif">Afin de maintenir la
+      cohérence dans les définitions d'ABCD, les champs fixes sont définis par
+      une <strong>TDC</strong> qui contient la description des éléments de
+      données associés à un type d'enregistrement et avec toutes les
+      caractéristiques définies lors du processus de création de la TDC de la
+      base de données. Pour éditer la <strong>FDT</strong> associée aux champs
+      fixes pour type d'enregistrement, cliquer sur le lien <b>Editer</b>. Cela
+      ouvrira une nouvelle fenêtre où les caractéristiques des éléments de
+      données, y compris les champs fixes, seront affichés.</font>
+    </p>
+  </body>
+</html>

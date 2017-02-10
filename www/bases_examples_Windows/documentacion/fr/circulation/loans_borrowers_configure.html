@@ -1,0 +1,83 @@
+<html>
+
+    <head>
+
+        <title></title>
+
+    </head>
+
+    <body>
+
+        <p><font face="Arial" size="2"><strong>Configuration de la base de données des usagers</strong></font></p>
+
+        <p><font face="Arial" size="2">Cette option est utilisée pour configurer le système de base de données avec les usagers habilités à accéder au service de prêt </font></p>
+
+        <p><font face="Arial" size="2">Paramètres requis </font></p>
+
+        <p>
+
+        <table cellspacing="5" cellpadding="5" width="95%" summary="" border="0">
+
+            <tbody>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">Préfixe pour obtenir le numéro de l'usager</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Il indique le préfixe à mettre devant le numéro de l'usager pour localiser l'information appropriée dans la base de données des usagers. Il est stocké dans le dossier de la base de données des usagers <strong>def</strong> sous le nom.<strong><font color="#ff0000"> loans_uskey.tab</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT pour extraire le numéro de l'usager</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Ce format d'extraction est appliqué pour obtenir le numéro de l'usager une fois le registre des usagers a été trouvée.<font face="Arial"> Il est stocké dans le dossier de la base de données des usagers <strong>def</strong> sous le nom</font><strong><font color="#ff0000"> loans_uskey.pft</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT pour extraire le type d'utilisateur </font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Les politiques de prêt sont appliquées selon le type d'usager et le type d'article à emprunter. Ce format d'extraction est appliqué pour extraire le type d'usager.<font face="Arial"><font size="2"> Il est stocké dans le dossier de la base de données des usagers <font face="Arial"><strong>def</strong></font> sous le nom</font></font><strong> <font color="#ff0000">loans_ustype.tab</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT pour extraire la validité de l'usager</font></td>
+
+                    <td valign="top">
+
+                    <p><font face="Arial" size="2">La validité de l'usager peut être <font color="#000000">configurée</font> en appliquant ce format.Il doit contenir un message et un code séparé par le caractère.. | <br />
+
+                    Les codes suivants ont été établis : </font></p>
+
+                    <p><font face="Arial" size="2">0=Usager valide <br />
+
+                    1=Usager non valide </font></p>
+
+                    <p><font face="Arial"><font face="Arial"><font size="2"> Il est stocké dans le dossier de la base de données </font><font face="Arial"><font size="2"><font face="Arial"><font size="2"><font face="Arial"><strong>def</strong></font></font></font></font></font><font size="2"> sous le nom</font></font><font size="2"><strong><font color="#ff0000"> loans_usvig.tab</font></strong></font></font></p>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT pour montrer l'information de l'usager</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Ce format d'extraction format montre l'information de l'usager afin de forunir l'état des comptes et d'autres rapports relatifs à la gestion des prêts. </font><font face="Arial"><font size="2"> Il est stocké dans le dossier de la base de données des usagers </font><font face="Arial"><font size="2"><font face="Arial"><font size="2"><font face="Arial"><strong>def</strong></font></font></font></font></font><font size="2"> sous le nom</font></font><font face="Arial"><font size="2"></font></font><font size="2"><strong> loans_usdisp.tab</strong></font><font size="2"><strong><font color="#ff0000"></font></strong></font></font></td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        </p>
+
+    </body>
+
+</html>

@@ -1,0 +1,24 @@
+<p><strong>Resultado de la creación de una nueva base de datos</strong></p>
+<p>Al llegar a este procedimiento se crea la estructura para almacenar la nueva base de datos en la carpeta<strong> bases. </strong></p>
+<p>Las carpetas que se crean en este proceso son las siguientes:</p>
+<ul>
+    <li>bases/<em>dbn</em>/ayudas </li>
+    <li>bases/<em>dbn</em>/data</li>
+    <li>bases/<em>dbn</em>/def</li>
+    <li>bases/<em>dbn</em>/pfts</li>
+    <li>bases<em>/dbn</em>/cnv</li>
+</ul>
+<p>Bajo cada una de estas carpetas, exceptuando las carpetas data y cnv, se crean tantas subcarpetas como lenguajes estén habilitados. La lista de lenguajes se obtiene del archivo&nbsp; <strong>lang.tab</strong> ubicado en la carpeta <strong>bases</strong>.</p>
+<p>Adicionalmente se crea el archivo <em>dbn.par</em> en la carpeta <strong>bases/par </strong>y se actualiza el archivo <strong>bases.dat</strong> agregando la base de datos ya creada.</p>
+<p>Una vez finalizado el proceso de creación, debe asignar los operadores que pueden gestionar la nueva base de datos, ya que otra forma sólo estará disponible para el Administrador del sistema</p>
+<p>Para llenar la base de datos debe obtener un archivo ISO con los datos para importarlo en la nueva estructura.</p>
+<p>Si el archivo viene de WinIsis o de IsisDos, será necesario convertir el juego de caracteres de ASCII a ANSI. Esta tarea puede ser completada fácilmente utilizando el programa MX de la librería de funciones CISIS.</p>
+<p>Para ello,&nbsp; en una ventana DOS, ejecute el MX desde la carpeta donde está ubicada la base de datos que desea convertir utilizando la siguiente línea de comandos:</p>
+<p>mx&nbsp;<em>dbn&nbsp; </em>iso=<em>dbn.iso</em> convert=ansi -all now tell=100</p>
+<p>El archivo iso obtenido debe ser subido al servidor a la carpeta data de la base de datos en proceso de creación. Para incorporar los registros use también el programa MX, con la siguiente línea de comandos:</p>
+<p>mx iso=<em>dbn.iso</em> create=<em>dbn</em> -all now tell=100.</p>
+<p>Luego de creada la base de datos, ejecute el MX nuevamente para generar la lista invertida, utilizando para ello la siguiente línea de comandos:</p>
+<p>mx <em>dbn </em><a href="mailto:fst=@dbn.fst">fst=<em>@dbn.fst</em> uctab=ansi actab=ansi fullinv=<em>dbn</em>&nbsp; -all now tell=100</a></p>
+<p><em><strong>Nota: Los comandos del mx suministrados aquí se dan como orientación. Para mayor información debe consultar el manual de referencia de la librería CISIS</strong>.</em></p>
+<p>Si la cantidad de registros a importar no es muy grande (por ejemplo, menos de 2000 registros)&nbsp; puede utilizar las opciones <strong>Utilitarios</strong> de la barra de herramientas del procedimiento de <strong>Entrada de datos</strong> para importar registros y generar la lista invertida.</p>
+<p>Como el tiempo asignado por el servidor Web a cada proceso depende de cada instalación, el número de registros aquí mencionado puede variar, por lo que se recomienda, en lo posible usar el MX para estos propósitos</p>

@@ -1,0 +1,34 @@
+<p><font size="2" face="Arial, Helvetica, sans-serif"><strong>Copier des enregistrements de serveurs distants en utilisant le protocole Z39.50</strong><br />
+  <br />
+Cette option permet dans ABCD  de catalogaguer directement à partir d'autres sources disponibles à travers le protocole Z39.50.<br />
+<br />
+Sous le menu&nbsp; <strong>Connecter à : &nbsp;</strong> est affichée une liste de serveurs qui sont disponibles par la localisation des serveurs. Cette liste est maintenue à travers l'option <strong>Configurer le client Z39.50 </strong>disponible (à l'administrateur) dans le menu principal de ABCD.<br />
+<br />
+Le menu <strong>Table de conversion </strong>contient les systèmes qui ont été définis pour convertir les enregistrements du format MARC&nbsp; vers la définition des champs dans la base de données locale qui recevra les données. Cette liste est mainttenue à travers l'option <strong>Configurer le client Z39.50 </strong>accessible (à l'admiistrateur) dans le menu principal de ABCD. Si aucun système de conversion n'est sélectionné, la FDT  de la base de données est utilisée pour déterminer les champs à copier de la base de données à distance.<br />
+<br />
+Utilisez les options de recherche pour établir les critères à appliquer pour personnaliser les informations que vous voulez cataloguer.<br />
+<br /> 
+Dans la boîte<strong>Montrer </strong>indiquez combien seront pris en compte pour configurer les pages avec les résultats obtenus.
+<br />
+<br />
+  <b>Essayez xx fois la connexion</b> </strong>spécifies le nombre de fois que le système ressaye de se connecter quand le serveur ne peut être trouvé.<br />
+  <br />
+  Dans les conditions normales, les enregistrements transférés créent de nouveaux enregistrements dans la base de données locale qui reçoit les données.&nbsp; Pour transférer les données à un enregistrement déjà existant, suivez la procédure ci-dessous : <br />
+
+</font>
+<ol>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Localisez dans la base de données locale l'enregistrement existant qui doit recevoir les données du catalogue à travers Z39.50. <br />
+  </font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Après avoir localisé l'enregistrement, cliquez sur le bouton <strong>éditer</strong> sur la barre d'outils.&nbsp;</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Quand le formulaire pour éditer l'enregistrement est montré,  cliquez sur le bouton qui appelle le client Z39.50. Si l'enregistrement est en cours de modification, vous devez sauvegarder l'enregistrement avant d'appeller le client Z39.50 puisque l'autre formulaire perdra les modifications effectuées.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Sélectionnez la base de données suivante à partir de laquelle vous allez cataloguer, le format de conversion (si nécessaire) et formulez la recherche.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">In the results presented, locate the record you wish to capture.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Cliquez sur l'icône de Capture. Les données extraites du serveur Z39.50 sont copiées dans l'enregistrement sélectionné : 
+      </font>
+      <ul>
+        <li><font size="2" face="Arial, Helvetica, sans-serif">Convertissez les données en appliquant le format de conversion (s'il est sélectionné)</font></li>
+        <li><font size="2" face="Arial, Helvetica, sans-serif">Transférez les données aux champs de la base de données locale, <b>seulement </b><strong>si les mêmes sont vides</strong>, c'est-à-dire que cette opération de copie n'a pas remplacé les données déjà existantes dans l'enregistrement.</font></li>
+    </ul>
+  </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Sauvegardez l'enregistrement dans la base de données locale.</font></li>
+</ol>

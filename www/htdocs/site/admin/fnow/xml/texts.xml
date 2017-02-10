@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<texts>
+	<language id="pt">
+		<labels>
+			<text>
+				<find>title</find>
+				<replace>Gerenciador de arquivos locais</replace>
+			</text>
+			<text>
+				<find>number</find>
+				<replace>número</replace>
+			</text>
+			<text>
+				<find>text</find>
+				<replace>text</replace>
+			</text>
+			<text>
+				<find>modified</find>
+				<replace>modificado</replace>
+			</text>
+			<text>
+				<find>name</find>
+				<replace>nome</replace>
+			</text>
+			<text>
+				<find>permission</find>
+				<replace>permissão</replace>
+			</text>
+			<text>
+				<find>type</find>
+				<replace>tipo</replace>
+			</text>
+			<text>
+				<find>size</find>
+				<replace>tamanho</replace>
+			</text>
+			<text>
+				<find>upload</find>
+				<replace>transferir</replace>
+			</text>
+			<text>
+				<find>new</find>
+				<replace>novo arquivo</replace>
+			</text>		
+		</labels>
+	</language>
+	<language id="en">	
+		<labels>
+			<text>
+				<find>title</find>
+				<replace>Local files manager</replace>
+			</text>		
+			<text>
+				<find>number</find>
+				<replace>number</replace>
+			</text>
+			<text>
+				<find>text</find>
+				<replace>text</replace>
+			</text>
+			<text>
+				<find>modified</find>
+				<replace>modified</replace>
+			</text>
+			<text>
+				<find>name</find>
+				<replace>name</replace>
+			</text>
+			<text>
+				<find>permission</find>
+				<replace>permission</replace>
+			</text>
+			<text>
+				<find>type</find>
+				<replace>type</replace>
+			</text>
+			<text>
+				<find>size</find>
+				<replace>size</replace>
+			</text>
+			<text>
+				<find>upload</find>
+				<replace>upload</replace>
+			</text>
+			<text>
+				<find>new</find>
+				<replace>new file</replace>
+			</text>		
+		</labels>
+	</language>
+	<language id="es">
+		<labels>
+			<text>
+				<find>title</find>
+				<replace>Gerenciador de archivos locales</replace>
+			</text>				
+			<text>
+				<find>number</find>
+				<replace>número</replace>
+			</text>
+			<text>
+				<find>text</find>
+				<replace>text</replace>
+			</text>
+			<text>
+				<find>modified</find>
+				<replace>modificado</replace>
+			</text>
+			<text>
+				<find>name</find>
+				<replace>nombre</replace>
+			</text>
+			<text>
+				<find>permission</find>
+				<replace>permiso</replace>
+			</text>
+			<text>
+				<find>type</find>
+				<replace>tipo</replace>
+			</text>
+			<text>
+				<find>size</find>
+				<replace>tamaño</replace>
+			</text>
+			<text>
+				<find>upload</find>
+				<replace>cargar</replace>
+			</text>
+			<text>
+				<find>new</find>
+				<replace>nuevo archivo</replace>
+			</text>		
+		</labels>
+	</language>
+</texts>

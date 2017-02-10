@@ -1,0 +1,34 @@
+<IsisScript>
+	<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=2000>Mfn</field>
+      	<field action=cgi tag=9060>login</field>
+  		<field action=cgi tag=9088>cttype</field>
+  		<field action=cgi tag=9099>lock</field>
+  		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+		<trace>xOn</trace>
+		<display><pft></pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+
+		<do task="update">
+	   		<parm name="db"><pft>v5001</pft></parm>
+   			<parm name="mfn"><pft>v2000</pft></parm>
+   			<parm name=lockid><pft>v9060</pft></parm>
+   			<parm name=expire>0</parm>
+   			<field action=define tag=1101>Isis_Lock</field>
+   			<field action=define tag=1102>Isis_Status</field>
+   			<update>
+      			<write>Unlock</write>
+                 <display><pft>if val(v1102)=0 then 'UNLOCKGRANTED' else 'UNLOCKREJECTED' fi</pft></display>
+
+   			</update>
+		</do>
+     </section>
+</IsisScript>

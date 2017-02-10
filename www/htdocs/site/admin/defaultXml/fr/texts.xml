@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<texts>
+    <admin>
+        <text id="PT">Portugu&#234;s</text>
+        <text id="ES">Espa&#241;ol</text>
+        <text id="EN">English</text>
+        <text id="ADMINISTRATION">Administraci&#243;n del BVS-Site</text>
+        <text id="USER">Usuario</text>
+        <text id="PASSWORD">Contrase&#241;a</text>
+        <text id="TIMEOUT">Tiempo de conexi&#243;n encerrado, por favor efect&#250;e nuevamente el login.</text>
+        <text id="INSTALL_ERROR">Erro de instala&#231;&#227;o.</text>
+        <text id="INVALID_PERM">Permiss&#227;o inv&#225;lida.</text>
+        <text id="INVALID_USER">Usuario o contrase&#241;a inv&#225;lidos.</text>
+        <text id="INVALID_USER_FILE">Causa: n&#227;o foi possivel localizar o arquivo de usu&#225;rios do sistema.</text>
+        <text id="CHECK_DEF">Possivel solu&#231;&#227;o: verificar os caminhos indicados no arquivo de configura&#231;&#227;o bvs-site-conf.php</text>
+        <text id="CHECK_PERM">Possivel solu&#231;&#227;o: ajustar as permiss&#245;es para este diret&#243;rio</text>
+        <text id="POPUP_BLOCKER">Aten&#231;&#227;o: Antes de prosseguir &#233; necess&#225;rio configurar seu navegador para permitir a abertura de janelas popup neste site.</text>
+    </admin>
+</texts>

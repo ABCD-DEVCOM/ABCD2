@@ -1,0 +1,6 @@
+marc.*=%path_database%marc/data/marc.*
+prologoact.pft=%path_database%www/prologoact.pft
+prologo.pft=%path_database%www/prologo.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+epilogo.pft=%path_database%www/epilogo.pft
+autoridades.pft=%path_database%marc_1/pfts/en/autoridades.pft 

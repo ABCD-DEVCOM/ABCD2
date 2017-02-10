@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<div class="page">
+<p/>
+<p>ABCD Workshop
+</p>
+<p>Dates : 1 &ndash; 5 December 2014, AM 9:30-12:30 PM 13:30 &ndash; 16:30
+VENUE : Room D017/D019, Antwerp University City Campus, Prinsstraat 13, 2000 Antwerpen
+</p>
+<p>Participants : 
+1. Anselmo Matavele, UEM Mozambique  : anselmomatavele@gmail.com; 
+2. Asaye Birhanu, Jimma Ethiopia : asayebr@gmail.com; 
+3. Bert Alikromo, AdeKUS Suriname : bert.alikromo@uvs.edu; 
+4. Daniel Deogratus, Mzumbe Tanzania : ddeogratus@gmail.com; 
+5. Stephano John, SUA Tanzania : mgayas@gmail.com; 
+6. Orlando Dorwart, AdeKUS, Suriname, orlando.dorwart@uvs.edu; 
+7. Sila Too, Moi University Kenya : sktoo@mu.ac.ke; 
+8. Tadele Mulat, Jimma University, Ethiopia : tadele.66@gmail.com; 
+9. Tewelde Haile, Mekelle University Ethiopia : teweahm@gmail.com 
+</p>
+<p>Co-facilitators : 
+10. Marcos Mirab&aacute;l (MM), UPR Cuba : marcos.clary@gmail.com; 
+11. Marino S&aacute;nchez (MBS), UO Cuba : marino@vlir.uo.edu.cu; 
+12. Mauricio Brito (MB), Ucuenca Ecuador : mauricio.brito@ucuenca.edu.ec; 
+13. Piet De Keyser (PDK) : Piet.de.Keyser@  ucll  .be
+14. Egbert de Smet (EdS) : Egbert.deSmet@uantwerpen.be
+</p>
+<p>Main Program and Topics : 
+Proposal, to be complemented by issues raised by participants. For each topic the leading 
+facilitator is mentioned in parentheses.</p>
+<p/>
+<div class="annotation">
+<a href="mailto:Piet.de.Keyser@khleuven.be"/>
+</div>
+<div class="annotation">
+<a href="mailto:Piet.de.Keyser@khleuven.be"/>
+</div>
+<div class="annotation">
+<a href="mailto:Piet.de.Keyser@khleuven.be"/>
+</div>
+</div>
+<div class="page">
+<p/>
+<p>Day 1 : Monday
+      0. Welcome and short introduction/presentation by the participants about their background 
+</p>
+<p>ABCD-experiences and ABCD-related problems. (EdS)
+</p>
+<p>1. Installation issues : installation wizards for both Windows and Linux (MBS)
+2. Remote management of ABCD-systems through ssh and sftp (EdS)
+3. Migration issues for existing catalogs/systems, e.g. CEPAL-&gt;MARC21 (MM), KOHA-
+</p>
+<p>&gt;ABCD (EdS) 
+4. Upgrading ABCD from older to newer version, using export/import (EdS)
+5. Basic use of ABCD-interface in creating fields, adapting PFT's, iAH and Site configuration 
+</p>
+<p>(EdS)
+6. New features of 1.4 : reservations (EdS), consistency checks during copy-creation, new 
+</p>
+<p>utilities : creating loanobjects etc. (MM), thesaurus (EdS)
+</p>
+<p>Day 2 : Tuesday
+</p>
+<p>7. The ISIS Formatting Language : review of the basic elements (PDK)
+8. Embedding HTML in PFT's (PDK)
+9. The use of REF(L()), e.g. to show loanobjects-availability e.g. (EdS)
+10. PFT's with through-linking (new search) and record-navigation (EdS) 
+</p>
+<p>Day 3 : Wednesday
+</p>
+<p>11. Continuation of day 1 topics : advanced use of the ABCD-interface (EdS)
+12. Migration in between Linux-Windows (crunchmf, crunchif) (EdS)
+</p>
+<p>13. Creating a new ABCD Site design (MBS)
+</p>
+<p>14. From MARC21 to RDA (PDK)
+</p>
+<p>15. Continuation of day 2 topics : the ISIS Formatting Language (PDK), e.g. format to export to
+comma-delimited/CSV (PDK)
+</p>
+<p>Day 4 : Using command-line CISIS utilities 
+</p>
+<p>16. Using CISIS with mx, e.g. for quality control, joining databases, special activities e.g. stock-
+taking (EdS)
+</p>
+<p>17. Using proc='Gsplit' for cleaning/splitting fields (example : conversion of DOAJ) (EdS)
+18. Basic introduction to ABCD coding/programming (MBS)
+19. ABCD for non-library applications : classrooms (MM), AVM, documents-repository 
+</p>
+<p>(converted from WebBiblio), staff-management (MBS)
+</p>
+<p>Day 5 : EmpWeb, upcoming features : RFID, LDAP, V2.0
+</p>
+<p>20. EmpWeb : introduction and review of the (new) manual (EdS)
+21. ABCD and RFID/SIP2 (MB)
+22. ABCD and LDAP (MM)
+23. About version 2.0 with the use of different CISIS-versions (e.g. Digital Library) (EdS)
+24. Wrapping up/conclusions/continued communication (EdS)</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>Example applications
+</p>
+<p>1. adding a new field (e.g. LC Classification) in FDT, FST, PFT, Search form, iAH index
+</p>
+<p>2. adding another database in Site with IAH-configuration
+</p>
+<p>3. creating navigation-links to other records in a PFT : example agrovoc thesaurus
+(if&nbsp;npost(|ND_|V4)&nbsp;&gt;0&nbsp;then&nbsp;/&nbsp;'$$REF:agrovoc,rt,ND_'v4/&nbsp;&nbsp;fi,/),
+</p>
+<p>4. adding Loanobjects to catalog-display with REF((L))
+REF&shy;&gt;loanobjects(L&shy;&gt;loanobjects('CN_MARC_'v1),'LOAN&nbsp;INFO&nbsp;:&nbsp;'&nbsp;('&lt;TR&gt;&lt;TD&nbsp;
+valign=top&nbsp;&nbsp;align=right&nbsp;width=40%&gt;&lt;font&nbsp;face=arial&nbsp;size=2&gt;',|copy&nbsp;with&nbsp;ID&nbsp;
+|v959^i,|&nbsp;&shy;&nbsp;Location:&nbsp;|v959^l,|/|v959^b,&nbsp;'&lt;TD&nbsp;width=40%&gt;',
+if&nbsp;REF&shy;&gt;trans(L&shy;&gt;trans('TR_P_'v959^i),v1)='P'&nbsp;&nbsp;then&nbsp;
+&nbsp;REF&shy;&gt;trans(L&shy;&gt;trans('TR_P_'v959^i),'&lt;span&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p>style="color:#990000"&gt;On&nbsp;loan&nbsp;&shy;&nbsp;return&nbsp;date&nbsp;:&nbsp;'v40'&nbsp; 'v45'&lt;/span&gt;'),
+else&nbsp;
+</p>
+<p>'&lt;span&nbsp;style="color:#767777"&gt;Is&nbsp;available&nbsp;for&nbsp; lending&lt;/span&gt;'
+fi/
+'&lt;br&nbsp;/&gt;'
+))
+</p>
+<p>5. creating a list of titles from the barcodes (COPY) using mx with 'join'
+</p>
+<p>./mx&nbsp;marc&nbsp;cipar=cipar.par&nbsp;"join=copies,30='CN_MARC_'v1"&nbsp;pft=@stock.pft&nbsp;&nbsp;
+&shy;now&nbsp;&nbsp;&shy;all&nbsp;&gt;stock.txt
+</p>
+<p>6. creating Control_Number in a database without CN :
+</p>
+<p>mx&nbsp;marc&nbsp;&ldquo;proc='d1',&nbsp;'&lt;1&gt;'&nbsp;f(val(MFN)+x),0,0)&nbsp;)'&lt;/1&gt;'&rdquo;&nbsp;copy=marc&nbsp;now&nbsp;&shy;all</p>
+<p/>
+<div class="annotation">
+<a href="mailto:pft%3D@stock.pft"/>
+</div>
+</div>
+<ul>	<li>Main Program and Topics :</li>
+<ul>	<li>Day 1 : Monday</li>
+</ul>
+</ul>
+</body>
+</html>

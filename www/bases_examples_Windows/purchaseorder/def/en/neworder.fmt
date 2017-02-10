@@ -1,0 +1,26 @@
+F|1|Order number|0|0|||X||10|||||||0||
+F|2|Date of Order|0|0|||D||10|||||||0||
+F|3|ISO date of Order|0|0|||ISO||10|||||||0||
+F|5|Provider|0|0|||X|||||||||0||
+F|16|Personal Author|0|0|||X|||||||||0||
+F|17|Corporate Author|0|0|||X|||||||||0||
+F|18|Title|0|0|||X|||||||||0||
+F|21|Volume|0|0|||X|||||||||0||
+F|29|Editor|0|0|||X|||||||||0||
+H||Monograph Series|0|0||||||||||||0||
+F|30|Title|0|0|||X|||||||||0||
+F|31|Volume|0|0|||X|||||||||0||
+F|32|Number|0|0|||X|||||||||0||
+H||Other data|0|0||||||||||||0||
+F|35|ISSN|0|0|||X|||||||||0||
+F|47|ISBN|0|0|||X|||||||||0||
+F|38|Publisher|0|0|||X|||||||||0||
+F|39|City|0|0|||X|||||||||0||
+F|40|Country|0|0|||X|||||||||0||
+F|41|Edition|0|0|||X|||||||||0||
+T|50| |0|1|bcghi||TB|1||||||||0||
+S||Quantity|0|0|||X||5|||||||0||
+S||Price|0|0|||X||10|||||||0||
+S||Type of acquisition|0|0|||S||5|P|typeofacquisition.tab|||||0||
+S||Database|0|0|||S|||P|%path_database%bases.dat|||||0||
+S||Control number|0|0|||X||10|||||||0||

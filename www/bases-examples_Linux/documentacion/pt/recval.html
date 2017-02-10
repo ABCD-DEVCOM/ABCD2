@@ -1,0 +1,23 @@
+<p><strong><font face="Arial">Validação de registros</font></strong></p>
+
+<p><font face="Arial" size="2">A validação de registros permite&nbsp;definir, para cada campo da base de dados, um formato (PFT) que poderá usar para verificar a consistência da entrada de dados de um registro novo ou de um já existente na base de dados.</font></p>
+
+<p><font face="Arial" size="2">Para isso se apresenta um formulário com todos os campos definidos na FDT e uma janela de texto para colocar o formato de validação a ser aplicado individualmente sobre cada campo.&nbsp; Além disso, se apresenta uma caixa de seleção (<input type="checkbox" value="on" />) que permite condicionar a gravação do registro ao resultado da validação: se a caixa está marcada e se está inserindo dados ou modificando um registro, então o registro não será gravado se algum dos campos marcados não respeitar a condição de validação.</font></p>
+
+<p><font face="Arial" size="2">Com esta informação, no momento da entrada de dados, o ABCD constrói um formato onde se consolidam as validações parciais. Este&nbsp;formato&nbsp;se aplica sobre o registro e exibe as mensagens que, na forma de literais incondicionais, avisam ao operador o resultado da validação.</font></p>
+
+<p><font face="Arial" size="2">Ao contruir-se o formulário de validação, são exibidas no final da página as seguintes opções:</font></p>
+
+<p><font face="Arial" size="2"><strong>Testar com o Mfn: </strong>Aplica o formato de validação sobre o MFN solicitado e exibe o resultado. Digite na caixa correspondente o MFN do registro solicitado e clique em <strong>Testar</strong></font></p>
+
+<p><font face="Arial" size="2"><strong>Atualizar: </strong>Armazena na subpasta <strong>def </strong>da pasta da base de dados, o formato de validação criado. Este formato é gravado com o nome da base de dados e a extensão <strong>.val </strong> e tem o seguinte formato (exemplo):</font></p>
+
+<p><font face="Courier New"><strong><font color="#800000">20:</font></strong>if a(v20) then 'falta o campo 20' fi<br />
+
+<strong><font color="#800000">510:</font></strong>"Falta o campo 510"n510<br />
+
+<strong><font color="#800000">900:</font></strong>if a(v900) then 'falta o campo 900' fi</font></p>
+
+<p><font face="Arial" size="2">Isto significa que cada formato de validação vem precedido pelo campo que representa para desta forma facilitar a modificação do mesmo quando for necessário. O literal produzido pelo formato será mostrado ao operador quando este solicitar a validação do registro</font></p>
+
+<p>&nbsp;</p>

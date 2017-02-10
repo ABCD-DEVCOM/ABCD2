@@ -1,0 +1,75 @@
+<IsisScript>
+ <trace>xOn</trace>
+<!-- se actualiza la base de datos de órdenes de compra y se coloca la información de la órden en la base de datos de recomendaciones -->
+ <section>
+    <field action=cgi tag=5015>cipar</field>
+    <field action=cgi tag=5016>syspar</field>
+  	<field action=cgi tag=5001>base</field>
+    <field action=cgi tag=9001>Opcion</field>
+    <field action=cgi tag=2000>Mfn</field>
+    <field action=cgi tag=9010 split=occ>ValorCapturado</field>
+    <field action=cgi tag=9060>login</field>
+    <field action=cgi tag=3030>Formato_o</field>     <!-- Formato para desplegar la órden de compra -->
+    <field action=cgi tag=3031>Formato_s</field>
+    <field action=cgi tag=4000>Mfnsuggestion</field>
+    <field action=cgi tag=4010>order_no</field>
+    <field action=cgi tag=4020>order_date</field>
+    <field action=add tag=9090 split=occ><pft>v9010</pft></field>
+    <field action=cgi tag=9088>cttype</field>
+    <field action=cgi tag=1>path_db</field>
+	<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+<display><pft></pft></display>
+    <parm name=cipar>
+        <pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/replace(s(cat(v5015)),'%path_database%',v1)/</pft>
+    </parm>
+	<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    <parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+
+	<do task="update">
+		<parm name="db"><pft>v5001</pft></parm>
+		<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+    	<parm name="mfn">New</parm>
+    	<field action=define tag=1102>Isis_Status</field>
+    	<update>
+			<field action=import tag=9090>9090</field>
+       		<proc><pft>(if p(v9090) then 'd'v9090.4/fi),(if p(v9090) then if v9090*4<>'' then 'a'v9090.4'²',replace(v9090*4,'\"','"'),'²'/ fi fi)</pft></proc>
+				<proc><pft>'d9090'/'d5001'/'d5015'/</pft></proc>
+           	<write>Unlock</write>
+           	<field action=import tag=3030>3030</field>
+      		<display><pft type=reload><pft>v3030</pft></pft></display>
+       	</update>
+
+<!--       	<parm name="db">suggestions</parm>
+		<parm name="fst"><pft>cat('suggestions.fst')</pft></parm>
+		<parm name=lockid><pft>v9060</pft></parm>
+    	<parm name="mfn"><pft>v4000</pft></parm>
+    	<field action=define tag=1101>Isis_Lock</field>
+     	<field action=define tag=1102>Isis_Status</field>
+    	<update>
+    		<field action=import tag=4010>4010</field>
+    		<field action=import tag=4020>4020</field>
+    		<proc><pft>'d2','a2~5~','a380~^a'v4010,'^b',v4020,'~'</pft></proc>
+    		<proc><pft>'d4010'/'d4020'/'d5015'/</pft></proc>
+    		<write>Unlock</write>
+            <field action=import tag=3030>3030</field>
+    		<display><pft>ALL</pft></display>
+    	</update>  -->
+
+	</do>
+<!--	<do task=mfnrange>
+    	<parm name=db><pft>'suggestions'</pft></parm>
+    	<parm name="buffersize">200000</parm>
+        <parm name=MAX_TMP_STRING>200000</parm>
+    	<field action=define tag=1002>Isis_Total</field>
+        <field action=define tag=1102>Isis_Status</field>
+    	<field action=define tag=1199>Isis_RecordStatus</field>
+		<parm name=from><pft>v4000</pft></parm>
+		<parm name=to><pft>v4000</pft></parm>
+    	<loop>
+     		<field action=import tag=3031>3031</field>
+     		<display><pft type=reload><pft>v3031</pft></pft></display>
+    	</loop>
+   </do>       -->
+ <flow action="exit">1</flow>
+ </section>
+</IsisScript>

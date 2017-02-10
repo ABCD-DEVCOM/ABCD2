@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xhtml id="48" lang="en" available="yes">
+  <content><p><b>Google Scholar</b></p>
+<!--� Google Scholar �-->
+<form action="http://scholar.google.com/scholar" method="get">
+    <table bgcolor="�#FFFFFF�">
+        <tbody>
+            <tr>
+                <td><a href="http://scholar.google.com/" target="new"> <img width="105" height="40" align="absmiddle" border="0" alt="Google" src="http://scholar.google.com/scholar/scholar_sm.gif"/></a> <input type="hidden" value="nl" name="hl"/> <input type="text" value="" maxlength="255" size="25" name="q"/> <input type="submit" value="Search" name="btnG"/></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!--� Google Scholar �--></content>
+</xhtml>

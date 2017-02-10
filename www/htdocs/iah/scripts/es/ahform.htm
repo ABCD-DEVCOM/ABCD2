@@ -1,0 +1,324 @@
+[pft]if v5001^s = 'FORM' then @AHHEAD.PFT fi[/pft]
+
+<script type="text/javascript">
+function changeForm(valor)
+{
+    document.forms[0].form.value=valor;
+    document.forms[0].nextAction.value="CHANGE FORM";
+    document.forms[0].submit();
+}
+</script>
+
+[pft]if v5001^s = 'FORM' then[/pft]
+
+    <form action="[pft]getenv('SCRIPT_NAME')v5000^d,'scripts/'[/pft]" method="POST" name="search">
+    [pft]@AHHIDD.PFT[/pft]
+    <input type="hidden" name="nextAction" value="search" />    
+    
+[pft]fi[/pft]
+
+[pft]if v6000 = 'F' then[/pft]
+    <!-- FORMULARIO FREE -->
+    <div class="middle">
+      <div class="formHead">
+            <h3 class="context">
+                Base de datos&nbsp;
+            [pft]
+                ,if p(v5004) then,                    
+                    '<select name="base" size="1">'
+                    /* agrega informacao ^nNew para executar LoadBaseDef */
+                            ('<option value="',v5004,if v5004 <> v5003[1] then '^nNew"' else '" selected' fi,'>'v5004^*,'</option>')
+                    '</select>'
+                ,else,
+                        '<input type="hidden" name="base" value="',v5003,'" />'v5003^*
+                ,fi,    
+                [/pft]
+                : Formulario libre
+            </h3>
+            <div class="formOptions">
+                [pft]
+                    if p(v5011^h) then
+                        '<a class="help" href="',v5011^h,'"><span>ayuda</span></a>'
+                    fi
+                 [/pft]
+
+                 [pft]
+
+                    if size(v5014) > 2 then
+                        if v5014 : 'B' then
+                            `<a class="changeForm" href="javascript:void(changeForm('B'))">Formulario básico</a>`
+                        fi
+                        if v5014 : 'A' then
+                            `<a class="changeForm" href="javascript:void(changeForm('A'))">Formulario avanzado</a>`
+                        fi
+                    fi
+       
+                 [/pft]
+            </div>
+            <div class="spacer"> </div>
+        </div>
+    </div>
+
+    <div class="midd">
+        <div class="row">   <!--row 0-->
+            <div class="firstCol">&nbsp;&nbsp;&nbsp;</div>
+                <div class="secondCol"><span>Ingrese una o más palabras</span></div>
+        </div>
+
+        <div class="row">   <!--row 1-->
+            <div class="firstCol">&nbsp;&nbsp;&nbsp;</div>
+                <div class="secondCol">
+                    <div class="ExprFree">
+                    <input type="text" name="exprSearch" value=[pft]`'`(replace(v6002,'"','&quot;'))`'`[/pft] onKeyDown="if(event.keyCode==13) document.search.submit();" />
+                    </div>
+                </div>
+        </div>
+
+        <div class="row">   <!--row 2-->
+            <div class="firstCol">&nbsp;&nbsp;&nbsp;</div>
+                <div class="secondCol">
+                    <span class="labl">
+                    <input type="radio" name="conectSearch" value="and" [pft]if s(mpu,v6001[1],mpl) = 'AND' or a(v6001) then 'checked' fi [/pft] />Todas las palabras <b>(AND)</b>&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="conectSearch" value="or"  [pft]if s(mpu,v6001[1],mpl) = 'OR' then 'checked' fi [/pft] />Cualquier palabra <b>(OR)</b>
+                    </span>
+                </div>
+    [pft]
+        /* especifica o indexSearch caso exista um indice default usando o search por tag */
+        if p(v6099^d) then, 
+            (if p(v6099^d) and p(v6099^s) then '<input type="hidden" name="indexSearch" value="',v6099,'" />' fi)
+        fi,
+    [/pft]
+        </div>
+
+        <div class="rowAction">
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB">
+                <input type="submit" class="defaultButton submit" value="configurar" name="config.x" />
+                <input type="submit" class="defaultButton submit" value="Buscar" />
+            </div>
+        </div>
+
+    </div>
+[pft]fi[/pft]
+
+
+[pft]if v6000 = 'B' then [/pft]
+    <!-- FORMULARIO BASICO -->
+    <div class="middle">
+      <div class="formHead">
+            <h3 class="context">
+                Base de datos&nbsp;
+            [pft]
+                ,if p(v5004) then,                    
+                    '<select name="base" size="1">'
+                    /* agrega informacao ^nNew para executar LoadBaseDef */
+                            ('<option value="',v5004,if v5004 <> v5003[1] then '^nNew"' else '" selected' fi,'>'v5004^*,'</option>')
+                    '</select>'
+                ,else,
+                        '<input type="hidden" name="base" value="',v5003,'" />'v5003^*
+                ,fi,    
+                [/pft]
+                : Formulario básico
+            </h3>
+            <div class="formOptions">
+                [pft]
+                    if p(v5011^h) then
+                        '<a class="help" href=",'v5011^h,'"><span>ayuda</span></a>'
+                    fi
+                 [/pft]
+
+                 [pft]
+
+                    if size(v5014) > 2 then
+                        if v5014 : 'F' then
+                            `<a class="changeForm" href="javascript:void(changeForm('F'))">Formulario libre</a>`
+                        fi
+                        if v5014 : 'A' then
+                            `<a class="changeForm" href="javascript:void(changeForm('A'))">Formulario avanzado</a>`
+                        fi
+                    fi
+       
+                 [/pft]
+            </div>
+            <div class="spacer"> </div>
+        </div>
+    </div>
+
+    <div class="midd">
+        <div class="row">   <!--row 0-->
+            <div class="cellOperate">&nbsp;&nbsp;&nbsp;</div>
+                <div class="cellExpr">Buscar:</div>
+                    <div class="cellField">en el campo:</div>
+                        <div class="cellIndx">&nbsp;</div>
+        </div>
+
+    [pft]@LIST6003.PFT[/pft] 
+    [pft],(,[/pft]
+        [pft]if iocc <= 3 then[/pft]    
+
+        <div class="row">   <!--row 1-->
+            <div class="cellOperate">
+                <b>[pft]f(iocc,1,0)[/pft]</b>&nbsp;&nbsp;&nbsp;
+                    [pft],if iocc > 1 then,[/pft]
+                         <select name="conectSearch" size="1">
+                               <option value="and" [pft]if s(mpu,v6001,mpl) ='AND' then 'selected' fi[/pft]>and </option>
+                            <option value="or"  [pft]if s(mpu,v6001,mpl) ='OR' then 'selected' fi[/pft]>or </option>
+                            <option value="and not" [pft]if s(mpu,v6001,mpl) ='AND NOT' then 'selected' fi [/pft]>and not </option>
+                        </select>
+                    [pft]else[/pft]
+                           <input type="hidden" name="conectSearch" value="init">&nbsp;
+                    [pft]fi[/pft]
+            </div>
+            <div class="cellExpr">
+                    [pft]
+                        `<input type="text" name="exprSearch" value='`
+                        ,if iocc = val(v6100^l[1]) then,
+                               ,if p(v6002) then,
+                              ,`( `,replace(v6002,'"','&quot;'),` ) or `,
+                               ,fi,
+                            ,replace(replace(v6102[1],`'`,'&rsquo;'),'&quot;','"'),
+                        ,else,
+                            ,replace(replace(v6002,`'`,'&rsquo;'),'&quot;','"'),
+                        ,fi,
+                        `' onKeyDown="if(event.keyCode==13){ document.search.submit(); return false; }" />`
+                    [/pft]
+            </div>
+            <div class="cellField">
+                <select name="indexSearch" size="1">[pft]v6099[/pft]</select>
+            </div>
+            <div class="cellIndx">
+                <input type="image" src="[pft]v5002[1][/pft]indice.gif" name="index[pft]f(iocc,1,0)[/pft]" border="0" />
+            </div>
+        </div>
+        [pft]fi[/pft]
+    [pft],),[/pft]
+
+        <div class="rowAction">
+                <input type="submit" class="defaultButton submit" value="configurar" name="config.x" />
+                <input type="submit" class="defaultButton submit" value="nueva búsqueda" name="new search.x" />
+                <input type="submit" class="defaultButton submit" value="Buscar" />
+        </div>
+
+    </div>
+[pft]fi[/pft]
+
+
+[pft]if v6000 = 'A' then [/pft]
+    <!-- FORMULARIO AVANCADO -->
+    <div class="middle">
+      <div class="formHead">
+            <h3 class="context">
+                Base de datos&nbsp;
+            [pft]
+                ,if p(v5004) then,                    
+                    '<select name="base" size="1">'
+                    /* agrega informacao ^nNew para executar LoadBaseDef */
+                            ('<option value="',v5004,if v5004 <> v5003[1] then '^nNew"' else '" selected' fi,'>'v5004^*,'</option>')
+                    '</select>'
+                ,else,
+                        '<input type="hidden" name="base" value="',v5003,'" />'v5003^*
+                ,fi,    
+                [/pft]
+                : Formulario avanzado
+            </h3>
+            <div class="formOptions">
+                [pft]
+                    if p(v5011^h) then
+                        '<a class="help" href="',v5011^h,'"><span>ayuda</span></a>'
+                    fi
+                 [/pft]
+
+                 [pft]
+
+                    if size(v5014) > 2 then
+                        if v5014 : 'F' then
+                            `<a class="changeForm" href="javascript:void(changeForm('F'))">Formulario libre</a>`
+                        fi
+                        if v5014 : 'B' then
+                            `<a class="changeForm" href="javascript:void(changeForm('B'))">Formulario básico</a>`
+                        fi
+                    fi
+       
+                 [/pft]
+            </div>
+            <div class="spacer"> </div>
+        </div>
+    </div>
+
+    <div class="midd">
+        <div class="row">   <!--row 0-->
+            <div class="cellOperate">&nbsp;&nbsp;&nbsp;</div>
+                <div class="cellExpr">Buscar:</div>
+                    <div class="cellField">en el campo:</div>
+                        <div class="cellIndx">&nbsp;</div>
+        </div>
+
+    [pft]@LIST6003.PFT[/pft] 
+    [pft],(,[/pft]
+        [pft]if iocc <= 3 then[/pft]    
+
+        <div class="row">   <!--row 1-->
+            <div class="cellOperate">
+                <b>[pft]f(iocc,1,0)[/pft]</b>&nbsp;&nbsp;&nbsp;
+                    [pft],if iocc > 1 then,[/pft]
+                         <select name="conectSearch" size="1">
+                               <option value="and" [pft]if s(mpu,v6001,mpl) ='AND' then 'selected' fi[/pft]>and </option>
+                            <option value="or"  [pft]if s(mpu,v6001,mpl) ='OR' then 'selected' fi[/pft]>or </option>
+                            <option value="and not" [pft]if s(mpu,v6001,mpl) ='AND NOT' then 'selected' fi [/pft]>and not </option>
+                        </select>
+                    [pft]else[/pft]
+                           <input type="hidden" name="conectSearch" value="init" />&nbsp;
+                    [pft]fi[/pft]
+            </div>
+            <div class="cellExpr">
+                    [pft]
+                        `<input type="text" name="exprSearch" value='`
+                        ,if iocc = val(v6100^l[1]) then,
+                               ,if p(v6002) then,
+                              ,`( `,replace(v6002,'"','&quot;'),` ) or `,
+                               ,fi,
+                            ,replace(replace(v6102[1],`'`,'&rsquo;'),'&quot;','"'),
+                        ,else,
+                            ,replace(replace(v6002,`'`,'&rsquo;'),'&quot;','"'),
+                        ,fi,
+                        `' onKeyDown="if(event.keyCode==13){ document.search.submit(); return false; }" />`
+                    [/pft]
+            </div>
+            <div class="cellField">
+                <select name="indexSearch" size="1">[pft]v6099[/pft]</select>
+            </div>
+            <div class="cellIndx">
+                <input type="image" src="[pft]v5002[1][/pft]indice.gif" name="index[pft]f(iocc,1,0)[/pft]" border="0" />
+            </div>
+        </div>
+        [pft]fi[/pft]
+    [pft],),[/pft]
+
+        <div class="rowAction">
+            <div class="columnA">&nbsp;</div>
+            <div class="columnB">
+                <input type="submit" class="defaultButton submit" value="configurar" name="config.x" />
+
+                <input type="submit" class="defaultButton submit" value="nueva búsqueda" name="new search.x" />
+
+                <input type="submit" class="defaultButton submit" value="Buscar" />
+            </div>
+        </div>
+
+    </div>
+[pft]fi[/pft]
+
+
+</form>
+
+
+[pft]if p(v5011^n) then[/pft]
+        <div class="formNotes">[pft]cat(v5011^n)[/pft]</div>
+[pft]fi[/pft]
+
+</div>      <!-- end content -->
+
+[pft]@AHFOOT.PFT[/pft]
+
+</body>
+</html>

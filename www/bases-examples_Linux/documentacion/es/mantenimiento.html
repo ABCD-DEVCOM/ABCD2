@@ -1,0 +1,28 @@
+<p><font size="2"><strong>Utilitarios para el mantenimiento de la base de datos</strong></font></p>
+<ol>
+    <li><strong><font size="2">Desbloquear base de datos</font></strong> </li>
+    <li><strong><font size="2">Listar registros bloqueados</font></strong> </li>
+    <li><strong><font size="2">Desbloquear registros</font></strong> </li>
+    <li><strong><font size="2">Generación de la lista invertida</font></strong> </li>
+    <li><strong><font size="2">Cambios globales</font></strong></li>
+</ol>
+<p><strong><font size="2">Desbloquear base de datos.</font></strong></p>
+<p><font size="2">Si en algún momento se observa que la base de datos o la lista invertida no pueden ser actualizadas, podemos estar ante una situación de bloqueo de la base de datos. Esto suele ocurrir después de una caída del sistema,&nbsp;o por la&nbsp;cancelación de un proceso de generación de la lista invertida, bien sea por terminación abrupta o por algún error en la fst.</font></p>
+<p><font size="2">Use esta opción desbloquear la base de datos, quedando de nuevo habilitada la actualización del archivo maestro y/o del archivo invertido. Si además no puede acceder al diccionario de términos, o los mismos se muestran incompletos o mal organizados, proceda a generar de nuevo la lista invertida o si la FST ha sufrido cambios, verifique la sintaxis de los mismos.</font></p>
+<p><font size="2">Antes de proceder al desbloqueo asegurese que ningún usuario esté realizando ingresos o modificaciones en los registros.</font></p>
+<p><strong>Listar registros bloqueados</strong></p>
+<p>Se recomienda ejecutar este proceso como parte de la rutina de mantenimiento de una base de datos. Si la salida se muestran registros bloqueados, debe desbloquearlos utilizando el procedimiento de desbloqueo de registros</p>
+<p><strong>Desbloquear registros</strong></p>
+<p>El bloqueo de los registros se realiza comunmente dentro del procedimiento de ingreso, como parte del mecanismo de protección de la actualización de los datos. Esto es: cuando un usuario solicita modificar un registro, el mismo se bloquea para que no pueda ser modificado simultáneamente por otro usuario. Cuando el registro se actualiza, se desbloquea, y se pone disponible para el resto de los usuarios.</p>
+<p>Si el ciclo de actualización no se cumple, esto es, el registro no se escribe o se cancela la actualización (botones guardar o cancelar de la barra de herramientas), el registro permanece bloqueado por un tiempo (4 horas) para el resto de los usuarios.</p>
+<p>Existen dos formas para eliminar el bloqueo antes de que se cumpla el período antes mencionado:</p>
+<ol>
+    <li>Si el mismo operador que bloqueó el registro, solicita de nuevo su edición, entonces, se le concede el derecho a actualizar el registro, pudiendo actualizar o cancelar la edición para liberar el registro </li>
+    <li>Ejecutando el procedimiento de desbloquear registros, el cual revisa la base de datos y procede a desbloquear todos los registros que estén bloqueados.</li>
+</ol>
+<p>Se recomienda&nbsp;antes de realiza este procedimiento, verificar que no se estén realizando procesos de ingreso o modificación de registros</p>
+<p><strong>Generación de la lista invertida</strong></p>
+<p>Este proceso genera la lista invertida, pero solo puede utilizarse en bases de datos con pocos registros, por ejemplo, menos de 2000. Para bases de datos mayores debe utilizar el utilitario MX.</p>
+<p>La lista invertida (índices) se actualiza en forma automática en los procesos de creación, edición o eliminación de registros. Sin embargo, si se detecta algún error al acceder el dicionario de términos se debe generar de nuevo la lista invertida para corregir cualquier anomalía o corrupción que pudiera presentarse.</p>
+<p><strong>Cambios globales</strong></p>
+<p>&nbsp;Ver la hoja de trabajo del procedimiento de Cambios Globales</p>

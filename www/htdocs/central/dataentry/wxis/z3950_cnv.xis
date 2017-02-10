@@ -1,0 +1,27 @@
+<IsisScript>
+
+
+ <section>
+    <field action=cgi tag=5015>cipar</field>
+    <field action=cgi tag=5016>syspar</field>
+  	<field action=cgi tag=5001>base</field>
+    <field action=cgi tag=9090>ValorCapturado</field>
+    <field action=cgi tag=3030>Pft</field>
+    <field action=cgi tag=9088>cttype</field>
+    <field action=cgi tag=9988>path_db</field>
+
+    <display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+    <display><pft></pft></display>
+    <trace>xOn</trace>
+    <parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',V9988),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v9988)/ fi</pft>
+    </parm>
+    <display><pft></pft></display>
+
+<display><pft>#/</pft></display>
+<proc><pft>v9090</pft></proc>
+<proc><pft>'d9090'</pft></proc>
+<display><pft type=reload><pft>v3030</pft></pft></display>
+
+ </section>
+</IsisScript>

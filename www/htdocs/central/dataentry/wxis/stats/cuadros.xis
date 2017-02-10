@@ -1,0 +1,167 @@
+ <IsisScript>
+	<trace>xOn</trace>
+    <section>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=9001>Opcion</field>
+		<field action=cgi tag=9005>Word</field>
+		<field action=cgi tag=3000>Expresion</field>
+		<field action=cgi tag=3030>Tag</field>
+		<field action=cgi tag=3031>Formato</field>
+		<field action=cgi tag=2050>LastKey</field>
+		<field action=cgi tag=2020>prefijo</field>
+		<field action=cgi tag=2025>letra</field>
+		<field action=cgi tag=2026>posttag</field>
+		<field action=cgi tag=2027>posting</field>
+		<field action=cgi tag=2028>count</field>
+       	<parm name=cipar>
+          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+       	</parm>
+	<display><pft>ALL</pft></display>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<flow action=jump>
+  			<pft>
+				select s(v9001)
+					case 'buscar': 		'BUSCAR'
+					case 'presentar': 	'PRESENTAR'
+					case 'expresion':   'EXPRESION'
+				endsel
+			</pft>
+   		</flow>
+
+       	<do task=keyrange>
+    		<parm name=db><pft>v5001</pft></parm>
+           	<parm name=from><pft>v2020</pft></parm>
+			<parm name=to><pft>if p(v2050) then v2050 else v2020,'ZZZZZZZZ' fi</pft></parm>
+			<parm name=count><pft>if a(v2028) then '' else v2028 fi</pft></parm>
+            <parm name=posting><pft>if a(v2027) then '180' else v2027 fi</pft></parm>
+			<parm name=posttag></parm>
+
+		    <field action=define tag=3>Isis_Posting</field>
+			<field action=define tag=2021>Isis_Key</field>
+			<field action=define tag=2011>Isis_Postings</field>
+
+           	<loop>
+
+			    <field action=import tag=5001>5001</field>
+
+
+				<list action=load type=list>
+					<pft>
+							e1:=val(v3^o),
+							e3:=val(v3^t),
+							v2011'$$$'
+                            ,ref([v5001]val(v3^m),
+									proc('a1999~'f(e1,1,0)'~')
+									proc('a2999~'f(e3,1,0)'~')
+
+									(if iocc=val(v1999[1]) then ,
+										select e3
+											case 9:    if p(v9) then mpu,v9,'$$$!K'mpu,v9,mpl,else fi/
+											case 40:   if p(v40) then mpu,v40,'$$$!Q'mpu,v40.28,mpl,else  'Sin pais$$$!QSin pais' fi/
+											case 43:   v43.4,'$$$!F'mpu,v43.4,mpl/
+											case 37:   v37,'$$$?A'mpu,v37,mpl,/
+											case 39:   v39,'$$$!G'mpu,v39,mpl,/
+											case 205:  v205.4'$$${F'mpu,v205.4,mpl,/
+										endsel
+        							, fi)
+
+								 ),
+
+						   </pft>
+
+				</list>
+           	</loop>
+
+       	</do>
+		<do task=list>
+     		<field action=define tag=1001>Isis_Current</field>
+     		<field action=define tag=1002>Isis_Items</field>
+     		<field action=define tag=1>Isis_Item</field>
+			<field action=import tag=2020>2020</field>
+     		<loop>
+				<field action=import tag=2020>2020</field>
+				<display><pft></pft></display>
+        		<display>
+        			<pft>(v1/)</pft>
+        		</display>
+     		</loop>
+  		</do>
+
+		<flow action=exit>1</flow>
+
+		<label>EXPRESION</label>
+          <do task=search>
+             <parm name=db><pft>v5001</pft></parm>
+             <parm name=expression>
+                 <pft>
+                    mpu,v3000
+                 </pft>
+             </parm>
+             <field action=define tag=1001>Isis_Current</field>
+             <field action=define tag=1002>Isis_Total</field>
+             <field action=define tag=1031>Isis_From</field>
+             <field action=define tag=1032>Isis_To</field>
+			 <field action=define tag=1091>Isis_Status</field>
+			 <display><pft></pft></display>
+			 <loop>
+			 </loop>
+			 <display><pft>v1002</pft></display>
+          </do>
+        <flow action=exit>1</flow>
+
+
+		<label>BUSCAR</label>
+          <do task=search>
+             <parm name=db><pft>v5001</pft></parm>
+             <parm name=expression>
+                 <pft>
+                    mpu,v3000
+                 </pft>
+             </parm>
+             <field action=define tag=1001>Isis_Current</field>
+             <field action=define tag=1002>Isis_Total</field>
+             <field action=define tag=1031>Isis_From</field>
+             <field action=define tag=1032>Isis_To</field>
+			 <field action=define tag=1091>Isis_Status</field>
+			 <loop>
+			 	<field action=import tag=3030>3030</field>
+				<field action=import tag=3000>3000</field>
+				<display>
+					<pft type=reload><pft>'mpu,'v3030/</pft></pft>
+				</display>
+				<display><pft>#</pft></display>
+			</loop>
+          </do>
+        <flow action=exit>1</flow>
+
+		<label>PRESENTAR</label>
+          <do task=search>
+             <parm name=db><pft>v5001</pft></parm>
+             <parm name=expression>
+                 <pft>
+                     v3000
+                 </pft>
+             </parm>
+             <field action=define tag=1001>Isis_Current</field>
+             <field action=define tag=1002>Isis_Total</field>
+             <field action=define tag=1031>Isis_From</field>
+             <field action=define tag=1032>Isis_To</field>
+			 <field action=define tag=1091>Isis_Status</field>
+			<display><pft>if a(v9005) then @prologo.pft fi</pft></display>
+			 <loop>
+			 	<field action=import tag=3030>3030</field>
+				<field action=import tag=3000>3000</field>
+				<field action=import tag=3031>3031</field>
+				<field action=import tag=9005>9005</field>
+				<display>
+					<pft type=reload><pft>'@'v3031'.pft'</pft></pft>
+				</display>
+				<display><pft>#</pft></display>
+			</loop>
+          </do>
+        <flow action=exit>1</flow>
+    </section>
+ </IsisScript>

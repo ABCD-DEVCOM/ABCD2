@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <p><font face="Arial"><strong>Tipos de material</strong></font></p>
+        <p><font face="Arial" size="2">Esta tabla describe las políticas a aplicar para los diferentes tipos de material existentes en la base de datos. El tipo de material&nbsp; referenciado en la tabla debe ser generado por el formato de extracción que se aplica sobre la base de datos con los materiales objeto de préstamo;&nbsp;esta salida, entre otros datos, deberá contener el tipo de material a ubicar en la tabla para asignarle la pólítica respectiva.</font></p>
+        <p><font face="Arial" size="2">Si el formato de extracción no genera ninguna salida, entonces, el operador de préstamo decidirá el tipo de préstamo a aplicar seleccionando una de las opciones de la tabla <strong>Tipos de Préstamo.</strong></font></p>
+        <p><font face="Arial" size="2">Cuando se graba el registro de préstamo, se almacena el tipo de material o de préstamo que le ha sido asignado a efectos de aplicar correctamente las políticas de devolución/multa/suspensión</font></p>
+        <p><font face="Arial" size="2"><strong>Descripción de la tabla</strong></font></p>
+        <p>
+        <table cellspacing="1" cellpadding="1" width="80%" summary="" border="1">
+            <tbody>
+                <tr>
+                    <td bgcolor="#99ccff"><font face="Arial" size="2"><strong>Campo</strong></font></td>
+                    <td bgcolor="#99ccff"><font face="Arial"><font size="2"><strong>Utilización en la aplicación de la política</strong> </font></font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Tipo de material</font></td>
+                    <td><font face="Arial" size="2">Valor que devuelve el formato de extracción aplicado sobre la base de datos documental. </font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Descripción</font></td>
+                    <td><font face="Arial" size="2">Denominación del tipo de material</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Tipo de usuario</font></td>
+                    <td><font face="Arial" size="2">Seleccione el tipo de usuario para el cual se aplica la política del tipo de material. Si no selecciona ningún usuario, la política se aplicará a todos los usuarios</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Lapso de préstamo</font></td>
+                    <td><font face="Arial" size="2">Número de dias/horas para el cálculo de la fecha de devolución</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Unidad</font></td>
+                    <td><font face="Arial" size="2">Unidad de media del lapso de préstamo (Días/Horas)</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">No. de renovaciones</font></td>
+                    <td><font face="Arial" size="2">Número de renovaciones permitidas</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Multa por día de atraso</font></td>
+                    <td><font face="Arial" size="2">Monto de la multa a cobrar por cada día/hora de atraso en la devolución del préstamo&nbsp;</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">Días de suspensión por día de atraso</font></td>
+                    <td><font face="Arial" size="2">Indica cuantos días se debe suspender el usuario por cada día/hora de atraso en la devolución</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">En reserva. Multa por día de atraso</font></td>
+                    <td><font face="Arial" size="2">Si el material está reservado, especifica la multa que hay que aplicar por cada día de atraso en la devolución</font></td>
+                </tr>
+                <tr>
+                    <td><font face="Arial" size="2">En reserva.&nbsp;Suspensión por día de atraso</font></td>
+                    <td><font face="Arial" size="2">Si el material está reservado, especifica los días de suspensión que se aplican&nbsp; por cada&nbsp;día de atraso en la devolución</font></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        </p>
+    </body>
+</html>

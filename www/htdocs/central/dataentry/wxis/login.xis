@@ -1,0 +1,44 @@
+<IsisScript>
+
+
+	<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=9060>login</field>
+      	<field action=cgi tag=9061>password</field>
+		<field action=cgi tag=9088>cttype</field>
+		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+		<trace>xOn</trace>
+<display><pft></pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+        <parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+
+      	<label>LOGIN</label>
+         		<do task=mfnrange>
+            		<field action=define tag=1002>Isis_Total</field>
+            		<parm name=db><pft>'acces'</pft></parm>
+                   	<parm name=from><pft>'1'</pft></parm>
+                   	<parm name=to><pft>v1002</pft></parm>
+            	<loop>
+               		<field action=import tag=9060>9060</field>
+			<field action=import tag=9061>9061</field>
+               		<display><pft>(if v20=v9060 and v30=v9061 then proc('a999~'v30,'~'), fi,/)</pft></display>
+               		<flow action=jump><pft>if a(v999) then 'CONTINUAR_LOGIN' fi</pft></flow>
+               		<display><pft>'##LLAVE='v30'|',f(mfn,1,0),'|'v10,'|'v60,'##'/</pft></display>
+					<display><pft>ALL</pft></display>
+               		<flow action=exit>1</flow>
+
+  		<label>CONTINUAR_LOGIN</label>
+				</loop>
+ 				<display><pft>'ERRORID'</pft></display>
+            		<flow action=exit>1</flow>
+            	</do>
+
+
+	</section>
+</IsisScript>

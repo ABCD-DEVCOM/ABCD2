@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <font face="Arial" size="2"> 
+    <p>
+      <strong>Génération automatique des numéros de contrôle des enregistrements
+      de la base de données</strong><br>
+      <br>Cette option active l'affectation automatique d'un numéro séquentiel
+      aux enregistrements de la base de données.<br>
+      <br>
+      Dans la TDC, le champ de contrôle est défini avec le type "auto-incrément". 
+      Dans la définition du champ, le code qui doit être inclus est indiqué dans 
+      la liste inversée ainsi que les formats de présentation et d'extraction
+      correspondants.<br>
+      <br>
+      Le numéro est issu du fichier <strong>control_number.cn</strong>
+      enregistré dans le dossier <strong>data</strong> de la base de données
+      correspondante. Le dernier numéro assigné à un enregistrement est stocké dans
+      ce fichier.
+    </p>
+    <p>
+      L'information dans le champ du numéro de contrôle ne peut être insérée
+      directement, le numéro d'enregistrement est attribué par une des méthodes 
+      suivantes&nbsp;:
+    </p>
+    <ol>
+      <li>Si le champ si est laissé vide lors de la sauvegarde de l'enregistrement, 
+      le numéro suivant sera attribué et sauvegardé dans le champ correspondant
+      </li>
+      <li>Si vous souhaitez attribuer directement un numéro de contrôle, suivez 
+      cette procédure&nbsp;:
+        <ul>
+          <li>Cliquez sur le lien <strong>Attribuer</strong> à côté de la zone 
+          de texte du champ du numéro de contrôle.
+          </li>
+          <li>Une nouvelle fenêtre sera ouverte qui permettra l'attribution du 
+          numéro de contrôle
+          </li>
+          <li>Cliquez sur<strong>Valider</strong> pour vérifier si le numéro de 
+          contrôle existe ou pas.
+          </li>
+          <li>Si la vérification est positive (càd que le numéro de contrôle 
+          n'existe pas), la valeur est affectée au formulaire de saisie.
+          </li>
+          <li>Si la vérification n'est pas positive (càd que le numéro de contrôle existe déjà),
+          l'enregistrement confirme que le numéro existe déjà. Cliquez sur 
+          <strong>Retour</strong> pour attribuer un autre numéro ou sur 
+          <strong>Fermer</strong> pour fermer la fenêtre.
+          </li>
+        </ul>
+      </li>
+      <li>Pour effacer le numéro de contrôle, cliquer sur 
+      <strong>Attribuer</strong> ce qui laisse le numéro de contrôle en place,
+      puis, cliquez sur <strong>Envoyer</strong>
+      </li>
+    </ol>
+   </font> 
+  </body>
+</html>

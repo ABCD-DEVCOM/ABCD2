@@ -1,0 +1,310 @@
+Content-type: text/html
+
+<html>
+<head>
+<title>IAH-SCAD-login</title>
+<link rel="stylesheet" href="http://www.bireme.br/bvs/estilo.css">
+<link rel="stylesheet" href="http://scad.bvs.br/bvs_graphic.css">
+</head>
+<body>
+<form action="[pft]replace(getenv('SCRIPT_NAME'),'wxislind','wxis')v5000^d[/pft]" method="POST">
+
+	[pft]@AHHIDD.PFT[/pft]
+
+	<input type=hidden name="nextAction" value="access scad">
+
+	<center>
+
+    <table border="0" width="650" cellspacing="0" cellpadding="0">
+
+        <tr>
+
+
+
+          <td width="97%" valign="top"> 
+
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+
+              <tr> 
+
+                <td width="100%" bgcolor="#A5A9CA" align="left">                 
+				  <img src="[pft]v5002[/pft]newscad.gif" alt="SCAD" align="bottom" border="0">				
+				</td>  
+ 			  <tr>
+			  	<td>
+
+
+                  </div>
+
+                </td>
+
+              </tr>
+			  <tr>
+			  	<td>
+				[pft]
+				if s(v5013) <> 'GUEST' then
+				   '<font face="arial" size="2" color="red">'
+
+					if p(v5013^b) then							
+						ref(['MSGS_3']l(['MSGS_3']'MENU'),v3[20])  /* usuario bloqueado */
+					else	
+						'<center><b>Código ou senha inválida!</b></center>'
+					fi
+				fi	
+				[/pft] 
+
+				
+				</td>		  
+			  </tr>		  
+
+              <tr> 
+
+                <td> 
+
+                    <div align="center"> 
+
+                      <center>
+                        <div align="left">
+<!--
+                          <table border="0" style="font-family: Arial" cellspacing="0" class="middle_free-search"  cellpadding="0" width="100%">
+
+                            <tr> 
+
+                              <td align="right" style="font-family: Arial" width="23%"><small><font face="Arial">Código:</font></small></td>
+
+                              <td width="28%"> 
+
+                                <input type="text" size="17" name="user">
+
+                              </td>
+
+                              <td width="49%">&nbsp; </td>
+
+                            </tr>
+
+                            <tr> 
+
+                              <td align="right" style="font-family: Arial" width="23%"><small><font face="Arial">Senha:</font></small></td>
+
+                              <td width="28%"> 
+
+                               <input type="password" size="17" name="userPassword">
+
+                              </td>
+
+                              <td width="49%"> 
+
+                                <div align="center"> 
+
+                                  <input src="/bvs/P/images/pentra.gif" type="image" border="0" value="Entra" width="77" height="22">
+
+                                </div>
+
+                              </td>
+
+                            </tr>
+
+                          </table>
+
+                          
+-->
+							<table border="0" cellspacing="0" cellpadding="0" width="100%" class="middle_free-search">
+								<tr>
+									<td width="70%">
+										<b><text id="code" available="yes">Código</text></b>
+										<input type="text" size="10" name="user" class="text">                           				
+							   			<b><text id="pass" available="yes">Senha</text></b>
+										<input type="password" size="10" name="userPassword" class="text">
+										<input type="submit" name="submit" value="Entra" class="input_submit">
+									</td>
+									<td width="30%">
+										 <a class="top_menu" href="http://scad.bvs.br/docs/level2.php?id=029&graphic=yes&lang=pt"><text id="newuser" available="yes">Novo Usuário</text></a><br>
+										 <a class="top_menu" href="http://scad.bvs.br/docs/level2.php?id=056&graphic=yes&lang=pt"><text id="altuser" available="yes">Atualização de cadastro</text></a><br>
+										 <a class="top_menu" href="#;return%20false" onClick="window.open('http://scad.bvs.br/mailto.php?lang=pt','forget','width=200,height=170')"><text id="forgotpass" available="yes">Esqueci meu código/senha</text></a>
+									</td>
+								</tr>
+							</table>
+                        </div>
+
+                      </center>
+
+                    </div>
+
+                  </form>
+
+                </td>
+
+              </tr>
+
+              <tr> 
+			  	  [pft]cat(v5000^c,'/styles/online/',v5021,'/scad-page.htm')[/pft]			  
+              </tr>
+
+              <tr> 
+
+                <td rowspan="3"> 
+
+                  <p align="left">&nbsp; </p>
+
+                  <p>
+
+                </td>
+
+              </tr>
+
+              <tr> </tr>
+
+              <tr> </tr>
+
+            </table>
+
+          </td>
+
+        </tr>
+
+      </table>
+
+	
+
+	
+
+<!--	
+
+	<font face="verdana" size="2">	
+
+	<b>Serviço Cooperativo de Acesso a Documentos</b><br><br>
+
+	<font color="red">Atenção:</font> Antes de entrar no SCAD veja a <a href="http://www.bireme.br/bvs/P/pcusto.htm">tabela de preços</a> e as <a href="http://www.bireme.br/bvs/P/pnorm.htm">normas e procedimentos</a> do serviço.
+
+	</font>	
+
+	</center>
+
+	<br>
+
+	[pft]
+
+		if s(v5013) <> 'GUEST' then
+
+			'<table width="630" align="center">'
+
+			'<tr><td>'
+
+			    '<font face="arial" size="2" color="red">'
+
+				if p(v5013^b) then					
+
+					ref(['MSGS_3']l(['MSGS_3']'MENU'),v3[20])  /* usuario bloqueado */
+
+				else	
+
+					'<center><b>Código ou senha inválida!</b></center>'
+
+				fi
+
+			'</td></tr>'
+
+			'</table>'
+
+		fi	
+
+	[/pft] 
+
+	<center>
+
+	<table cellspacing="1" cellpadding="1" border="0">
+
+		<tr>
+
+			<td align="left">
+
+				<font face="verdana" size="2">Código:</font>
+
+			</td>					
+
+			<td align="left">
+
+				<input type="text" size="17" name="user">
+
+			</td>
+
+		</tr>
+
+		<tr>
+
+			<td>
+
+				<font face="verdana" size="2">Senha:</font>
+
+			</td>
+
+			<td>
+
+				<input type="password" size="17" name="userPassword">
+
+			</td>
+
+		</tr>
+
+	</table>
+
+	</center>
+
+	<center><input type="submit" value="Entrar"></center>
+
+	<br><br>
+
+	<center>
+
+	<table width="97%" cellpadding="0" cellspacing="0" border="0">
+
+	<tr>
+
+		<td colspan="3"><font face="verdana" size="2">
+
+			<b>Usuário NÃO cadastrado:</b> para ter acesso ao serviço de fotocópias preencha o <a href="http://www.bireme.br/bvs/P/pcada.htm">Formulário de cadastramento</a> de usuário ou contate-nos:
+
+		</font></td>		
+
+	</tr>
+
+	<tr>
+
+		<td width="15%">&nbsp;</td>
+
+		<td><br><font face="verdana" size="2">
+
+			Tel.: (011) 576-9854 / 576-9839<br>
+
+			Fax : (011) 571-1919<br>
+
+			E-mail: <a href="mailto:scad@bireme.br">scad@bireme.br</a><br><br>
+
+		</font></td>
+
+		<td align="right">
+
+			<a href="http://www.bireme.br/bvs/P/psobre.htm"><img src="[pft]v5002[/pft]scadhlp.gif" border=0></a>
+
+		</td>
+
+	</tr>
+
+	</table>
+
+	</center>
+
+-->	
+
+</form>
+
+<!-- google analytics -->
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+  _uacct = "UA-624952-2";
+  urchinTracker();
+</script>
+
+</body>
+
+</html>

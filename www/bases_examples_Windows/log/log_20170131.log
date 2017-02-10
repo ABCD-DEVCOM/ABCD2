@@ -1,0 +1,13 @@
+20170131 12:36:04 PM	abcd	/central/dataentry/inicio_main.php	/ABCD/www/htdocs/central/dataentry/wxis/login.xis	&base=acces&cipar=/ABCD/www/bases/par/acces.par&login=abcd&password=adm&path_db=/ABCD/www/bases/
+20170131 12:36:05 PM	abcd	/central/dataentry/inicio_base.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=unicode&cipar=/ABCD/www/bases/par/unicode.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:36:12 PM	abcd	/central/dataentry/inicio_base.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=rda&cipar=/ABCD/www/bases/par/rda.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:45:38 PM	abcd	/central/dbadmin/crearbd_ex_copy.php	/ABCD/www/htdocs/central/dataentry/wxis/inicializar_bd.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&path_db=/ABCD/www/bases/
+20170131 12:48:19 PM	abcd	/central/dbadmin/administrar_ex.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:48:35 PM	abcd	/central/dbadmin/administrar_ex.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:48:45 PM	abcd	/central/dbadmin/administrar_ex.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:49:13 PM	abcd	/central/dbadmin/administrar_ex.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:49:26 PM	abcd	/central/dataentry/inicio_main.php	/ABCD/www/htdocs/central/dataentry/wxis/login.xis	&base=acces&cipar=/ABCD/www/bases/par/acces.par&login=abcd&password=adm&path_db=/ABCD/www/bases/
+20170131 12:49:43 PM	abcd	/central/dataentry/inicio_base.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=biblo&cipar=/ABCD/www/bases/par/biblo.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:49:59 PM	abcd	/central/dataentry/inicio_main.php	/ABCD/www/htdocs/central/dataentry/wxis/login.xis	&base=acces&cipar=/ABCD/www/bases/par/acces.par&login=abcd&password=adm&path_db=/ABCD/www/bases/
+20170131 12:49:59 PM	abcd	/central/dataentry/inicio_base.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&Opcion=status&path_db=/ABCD/www/bases/
+20170131 12:59:53 PM	abcd	/central/dbadmin/dcdspace.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=dcdspace&cipar=/ABCD/www/bases/par/dcdspace.par&Opcion=status&path_db=/ABCD/www/bases/&syspar=/ABCD/www/bases/par/syspar.par

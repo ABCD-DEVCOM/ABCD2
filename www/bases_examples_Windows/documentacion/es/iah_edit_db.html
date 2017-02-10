@@ -1,0 +1,44 @@
+<p><font face="Tahoma"><font size="2"><strong>Editar el archivo DBN.def para configurar una base de datos bajo el IAH</strong>&nbsp;</font></font></p>
+<p><font face="Tahoma" size="2">Esta página de configuración consta de las 4 secciones requeridas por el IAH para configurar una base de datos:</font></p>
+<ul>
+    <li><font face="Tahoma"><font size="2"><strong>FILE_LOCATION</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>INDEX_DEFINITON</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>APPLY_GIZMO</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>FORMAT_NAME</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>HELP_FORM</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>PREFERENCES</strong> </font></font></li>
+</ul>
+<p><font face="Tahoma" size="2">Para información relativa a las secciones como tal, consulte el <strong>Manual del Usuario del IAH</strong>. En esta página se suministra ayudas acerca de cómo utilizar la herramienta de configuración provista en ABCD y no sobre el contenido de las secciones.</font></p>
+<p><font face="Tahoma" size="2">Para editar el archivo de configuración Ud. tiene 2 opciones:</font></p>
+<ol>
+    <li><font face="Tahoma" size="2">Usar el editor TXT para modificar directamente el archivo de configuración. Para ello haga clic sobre el vínculo <strong>Editar en formato TXT </strong>que se presenta al inicio de la página. </font></li>
+    <li><font face="Tahoma" size="2">Usar el asistente provisto por ABCD para facilitar el llenado de las secciones. </font></li>
+</ol>
+<p><font face="Tahoma" size="2">El asistente está dividido en las 6 secciones requeridas. Cada una posee al final un vínculo <strong>agregar</strong>&nbsp; para permitir adicionar un nuevo elemento a la sección en cuestión.</font></p>
+<p><font face="Tahoma" size="2">La sección&nbsp; <strong>INDEX_DEFINITON </strong>permite editar cada línea con el fin de facilitar el llenado de la información. Para ello haga clic sobre el vínculo <strong>editar</strong> que acompaña a la definición de cada índice y en el formulario presentado suministre la información correspondiente. Una vez llenado el formulario, haga clic sobre <strong>Aceptar </strong>para transferir las casillas a la línea correspondiente de la sección <strong>INDEX_DEFINITION</strong>.</font></p>
+<p><font face="Tahoma" size="2">La sección <strong>FORMAT_NAME</strong>&nbsp; le facilita el acceso al editor de formatos de despliegue (PFT`s) de ABCD para que pueda crear o editar el formato correspondiente.&nbsp; Este acceso se logra a través del vínculo <strong>Crear/editar formato</strong> incluído al inicio de la sección. Si se creó un nuevo formato, debe agregarlo a la sección suministrando la información en las casillas que se presentan luego de hacer clic sobre <strong>Agregar</strong>.</font></p>
+<p><font face="Tahoma" size="2">Una vez suministrada toda la información en el formulario, haga clic sobre <strong>Validar</strong> a fin de verificar la consistencia de la información suministrada y luego sobre <strong>Actualizar</strong> para almacenar el archivo creado.</font></p>
+<p><font face="Tahoma" size="2">Los criterios de validación que se utilizan son los siguientes:</font></p>
+<p><strong><font face="Tahoma" size="2">FILE_LOCATION</font></strong></p>
+<ol>
+    <li><font face="Tahoma" size="2">Verificar que todos los nombres lógicos estén precedidos por el literal <strong>FILE</strong>. Si falta el literal, se agrega</font></li>
+    <li><font face="Tahoma" size="2">Verificar que todas las rutas estén precedidas por el literal %path_database%. Si falta el literal, se agrega</font></li>
+</ol>
+<p><font face="Tahoma" size="2"><strong>INDEX_DEFINITION</strong></font></p>
+<ol>
+    <li><font face="Tahoma" size="2">Verificar que todos los nombres lógicos estén precedidos por el literal <strong>INDEX</strong>. Si falta el literal, se agrega</font></li>
+    <li><font face="Tahoma" size="2">Verificar que al menos esté presente un subcampo de nombre del índice</font></li>
+    <li><font face="Tahoma" size="2">Verificar que los nombres lógicos de bases de datos de índices (^y) tengan su entrada correspondiente en la sección <strong>FILE_LOCATION</strong></font></li>
+</ol>
+<p><strong><font face="Tahoma" size="2">APPLY_GIZMO</font></strong></p>
+<ol>
+    <li><font face="Tahoma" size="2">Verificar que nombres de los gizmo suministrados tengan su entrada correspondiente en la sección <strong>FILE_LOCATION</strong></font></li>
+</ol>
+<p><strong><font face="Tahoma" size="2">PREFERENCES</font></strong></p>
+<ol>
+    <li><font face="Tahoma" size="2">Verificar que al menos esté activado un formulario de búsqueda.</font></li>
+    <li><font face="Tahoma" size="2">Verificar que el número de documentos por página sea un valor numérico</font></li>
+</ol>
+<p>&nbsp;</p>
+<p><font face="Tahoma" size="2"></font></p>
+<p>&nbsp;</p>

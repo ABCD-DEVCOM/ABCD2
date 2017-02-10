@@ -1,0 +1,9 @@
+F|1|Tipo de registro|0|0|||R||1|P|sanctions.tab|||||0||
+F|10|Status|0|0|||R||2|P|status.tab|||||0||
+F|20|Código do usuário|0|0|||X|||||||||0||
+F|30|Data|0|0|||X|||||||||0||
+F|40|Conceito|0|0|||X|||||||||0||
+F|50|Valor|0|0|||X|||||||||0||
+F|60|Vencimento|0|0|||X|||||||||0||
+F|100|Observações|0|0|||X|||||||||0||
+F|110|Operador e data de cancelamento|0|0|||X|||||||||0||

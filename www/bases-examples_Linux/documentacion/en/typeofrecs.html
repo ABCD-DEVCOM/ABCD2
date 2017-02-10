@@ -1,0 +1,64 @@
+<p><b><font face="Arial"> <font face="Arial, Helvetica, sans-serif">Record</font></font><font face="Arial, Helvetica, sans-serif"> Types </font></b></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">If the  database accommodates different types of record, ABCD has to reflect this in its structure.</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">ABCD defines two different formats to manage record types:</font></p>
+<ol>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">MARC format</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Non-MARC format </font></li>
+</ol>
+<p><font face="Arial"><strong>Record Types (MARC format)</strong></font></p>
+<p><font face="Arial" size="2">This option helps to define the record types which will be managed by the database when the system uses the MARC format. ABCD identifies that a database is structured according to the MARC format by including in the field definition table the field type LEADER (LDR). The structure of the field Leader is described in the file <strong>leader.fdt</strong>, located in the folder <strong>def</strong> within the database. It identifies the following fields:</font></p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font size="2" face="Arial, Helvetica, sans-serif">3005 Record Status<br />
+3006 Record Type<br />
+3007 Bibliographic Level<br />
+3017&nbsp;Level of Coding<br />
+3018 Form of Cataloguing</font></p>
+</blockquote>
+<p><font size="2" face="Arial, Helvetica, sans-serif">The </font><font face="Arial, Helvetica, sans-serif"><font size="2"> record type is found in field <strong>3006 </strong>of the Leader and assists in identifying the format of the fixed field (008) to be used in the bibliographic description of the document.</font></font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">The format of the fixed field associated with each record&nbsp;type is stored in a structure similar to the FDT and accordingly the data entry procedure depends on the record type selected in the Leader.</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">To define record types in the MARC format, proceed as follows:</font></p>
+<ol>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Select the option <strong>MARC Record Type</strong> in the module database definition.</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter into the box <strong>label 1&nbsp;</strong>the tag of the Leader field where the Record Type is entered (3006). Leave the corresponding box &nbsp;<strong>label 2</strong> blank.</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Below the column&nbsp;<strong>Data Entry sheet</strong>&nbsp;enter the name of the structure which contains the description of the fixed field containing the type of record being described. Use the link <strong>Edit</strong> to edit or create the corresponding structure. This will open the FDT editor so that the fixed field retains a structure similar to the Field Definition Table in the database.</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter into the column corresponding to <strong>Label 1 Value</strong> the value which will associate the field 3006 with the record type. Leave column <strong>Label 2 Value </strong>blank.</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter into the column below <strong>Type of Record, Description</strong> the description of the record type; this will be displayed at record creation for the selection of the corresponding type.&nbsp;</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Repeat  steps 2-6 until all the types of record have been defined.</font></li>
+</ol>
+<p><font size="2" face="Arial, Helvetica, sans-serif">To finish click the&nbsp;<strong>Update </strong>button. </font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">The defined record types will be saved in the file <strong>def</strong> of the database, below the language active during record creation, with the name <strong>typeofrecord.tab</strong></font></p>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p><strong><font face="Arial"></font></strong></p>
+<p><strong><font face="Arial" size="3">Types of record (non-MARC formats)</font></strong></p>
+<p><font face="Arial" size="2">This option helps to define the types of record which are going to be managed by the database when the database itself does not use the MARC format.</font></p>
+<p><font face="Arial" size="2">To implement these it is necessary to define the type of record and assign which fields of the database (maximum two) hold the values to be used&nbsp; to identify the type which correponds to the record being created or edited.</font></p>
+<p><font face="Arial" size="2">To define the types of record two components are needed:</font></p>
+<ol>
+    <li><font face="Arial" size="2">Identify the field (tag)&nbsp;of the database from which the type of record corresponding to the document is going to be obtained (or to be entered in the case of a new record). The current version of ABCD allows the definition of up to two fields whose contents will determine the type of record and, in consequence, the entry worksheet which will be used when the record is entered or edited.</font></li>
+    <li><font face="Arial" size="2">Describe the types of record with the following parameters:</font>
+      <ul>
+        <li><font face="Arial" size="2">Name of the field definition table (FDT) which holds the elements used to construct the data entry worksheet to capture the data</font> </li>
+        <li><font face="Arial" size="2">Value of the fields identified in (1)&nbsp;which are regarded as belonging to that type of record</font> </li>
+        <li><font face="Arial" size="2">Description of the type of record which will be displayed to the user at the time of data entry which precedes the selection of the corresponding type</font> </li>
+    </ul>
+    </li>
+</ol>
+<p><font size="2" face="Arial, Helvetica, sans-serif">To maintain consistency in the definitions of ABCD, the formats defined are stored with the same structure as the Field Definition Table (FDT). This permits changes in the presentation of data entry forms. The background changes - adding fields or adding subfields - should have been made already in FDT of the database which is used in the different processes of ABCD that generate display formats, conversion tables and other necessary components for the management of the information. </font></p>
+<p><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">After a format has been created, select the option <strong>Edit</strong> to make changes to the labels, entry forms, help, etc.</font></p>
+<p><font size="2" face="Arial, Helvetica, sans-serif">If you are going to define types of record for a database which does not conform to the MARC standard, do the following:</font></p>
+<ol>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter in the boxes identified as <strong>label 1 </strong>and <strong>label 2</strong> the tags of the fields which are going to be used to identify the type of record. The second tag is optional</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Select from the column <strong>Data entry worksheet</strong> the worksheet which will be used for entering the type of record. This data entry worksheet must be defined previously&nbsp;with the option <strong>Create/Modify Worksheets</strong></font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter the value which will be held by the field identified in <strong>label 1 value</strong>&nbsp;for identifying the type of record</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter the value which the field identified in <strong>label 2 value</strong>&nbsp;will hold for identifying the type of record (optional)</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Enter below the column <strong>Type of Record, Description </strong>the description of the record type;  this will be displayed at record creation for the selection of the corresponding type.</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Repeat steps 2-5 as many times as there are different types of record in the database</font> </li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">To finish, click on <strong>Update</strong></font></li>
+</ol>
+<p><font size="2" face="Arial, Helvetica, sans-serif">The types of record defined are stored in the file <strong>def</strong> of the database, below the language active in record creation with the name <strong>typeofrecord.tab</strong></font></p>
+<p>&nbsp;</p>
+<p><font face="Arial" size="2"></font></p>
+ 
+<p>&nbsp;</p>

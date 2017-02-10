@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=/ABCD/www/bases/doaj/data/doaj.*
+FILE standard.pft=/ABCD/www/bases/doaj/pfts/%lang%/doaj.pft
+FILE SHORTCUT.IAH=/ABCD/www/bases/doaj/pfts/%lang%/shortcut.pft
+FILE GXML=/ABCD_/www/bases/gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TW=^1Palabras^2Palabras^3Full text^4Mots texte^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX TI=^1^2^3Title^4^xTI ^yDATABASE^uTI_^mTI_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1por defecto^2por defecto^3Standard^4default
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

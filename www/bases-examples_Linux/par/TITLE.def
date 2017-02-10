@@ -1,0 +1,43 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%secs-web/title.*
+FILE USERS.*=%path_database%secs-web/users.*
+FILE facic.*=%path_database%secs-web/%pathLibrary%/facic.*
+FILE holdings.*=%path_database%secs-web/%pathLibrary%/holdings.*
+FILE standard.pft=%path_database%secs-web/pfts/%lang%/titlhtm.pft
+FILE detailed.pft=%path_database%secs-web/pfts/%lang%/titdhtm.pft
+FILE LANGS.*=%path_database%gizmo/%lang%/lang.*
+FILE SITUACAO.*=%path_database%gizmo/%lang%/situacao.*
+FILE NIVEL.*=%path_database%gizmo/%lang%/nivel.*
+FILE FACIC.PFT=%path_database%secs-web/pfts/%lang%/facic.pft
+FILE BOOKMARK.PFT=%path_database%secs-web/pfts/%lang%/bookmark.pft
+FILE SHORTCUT.IAH=%path_database%secs-web/pfts/shortcut.pft
+
+[INDEX_DEFINITION]
+
+INDEX Ti=^1Palavras do título^2Palabras del título^3Title Words^4Mots du titre^d*^xTI ^uTI_^yDATABASE^mTI_
+INDEX Ta=^1Título abreviado^2Título abreviado^3Abridged title^4Titre abrégé^xTA ^uTA_^yDATABASE^mTA_
+INDEX Mh=^1Assunto^2Asunto^3Subject^4Sujet^xMH ^uMH_^yDATABASE^mMH_
+INDEX La=^1Idioma^2Idioma^3Language^4Langue^xLA ^uLA_^yDATABASE^mLA_^gLANGS
+INDEX Is=^1ISSN^2ISSN^3ISSN^4ISSN^xIS ^uIS_^yDATABASE^mIS_
+INDEX Li=^1Library^2Library^3Biblioteca^4Library^xLI ^uLI_^yDATABASE^mLI_
+
+[APPLY_GIZMO]
+
+G_IZMO=ASC2ANS
+GIZMO=SITUACAO,50
+GIZMO=NIVEL,330
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Longo^2Largo^3Large^4Grand
+FORMAT detailed.pft=^1Detallhado^2Detallado^3Detailed^4Détaillée
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+HELP FORM=help_form_secs.htm
+
+[DISPLAY_FORM]
+
+AVAILABLE FORMS=F,B

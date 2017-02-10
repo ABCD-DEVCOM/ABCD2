@@ -1,0 +1,6 @@
+<IsisScript>
+	<trace>on</trace>
+	<section>
+		<display><pft>'<h1>Hello</h1>'</pft></display>
+	</section>
+</IsisScript>

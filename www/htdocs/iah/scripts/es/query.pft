@@ -1,0 +1,71 @@
+if v6003^x:'/' then
+
+ '('
+	if p(v6102) then
+		if v6100^x='ALL ' then '(',v6102,')' else v6102,replace(v6100^x,'/','/('),')' fi,
+	else
+		if v6000 = 'F' then
+			if v6003^x='ALL ' then ,, else |[|v6003^x|] | fi,
+			replace(v6002,' ',s(' 'v6001' ')),
+		else
+			if nocc(v6002) = 3 then
+				/* tratamento para prioridade dos operadores booleanos */
+				(
+					if iocc=1 then '( ' fi,
+					if p(v6002) then
+						if iocc>1 then | |v6001| | fi,
+						if v6003^x='ALL ' then '(',v6002,')' else v6002,replace(v6003^x,'/','/('),')' fi,
+					fi
+					if iocc=2 then ' )' fi
+				)
+			else
+				(
+					if p(v6002) then
+						if iocc>1 then | |v6001| | fi,
+						if v6003^x='ALL ' then '(',v6002,')' else v6002,replace(v6003^x,'/','/('),')' fi,
+					fi
+				)
+			fi,
+		fi,
+	fi,
+ ')',/
+
+else
+
+ '('
+	if p(v6102) then
+		'['v6100^x'] (',v6102,')'
+	else
+		if v6000 = 'F' then
+			|[|v6003^x|] |,
+			replace(v6002,' ',s(' 'v6001' ')),
+		else
+			if nocc(v6002) = 3 then
+				/* tratamento para prioridade dos operadores booleanos */
+				(
+					if iocc=1 then '( ' fi,
+					if p(v6002) then
+						if iocc>1 then ,| |v6001| | fi,
+						' ['v6003^x'] (',v6002,')',
+					fi
+					if iocc=2 then ' )' fi
+				)
+			else
+				(
+					if p(v6002) then
+						if iocc > 1 then ,| |v6001| | fi,
+						'['v6003^x'] (',v6002,')',
+					fi
+				),
+			fi,
+		fi,
+	fi,
+ ')',/
+
+ if p(v7001) then ' AND [',v7001^i[1],'] ( ',(v7001^s[1] + | OR |),' )' fi,
+ if p(v7002) then ' AND [',v7002^i[1],'] ( ',(v7002^s[1] + | OR |),' )' fi,
+ if p(v7003) then ' AND [',v7003^i[1],'] ( ',(v7003^s[1] + | OR |),' )' fi,
+ if p(v7004) then ' AND [',v7004^i[1],'] ( ',(v7004^s[1] + | OR |),' )' fi,
+ if p(v7005) then ' AND [',v7005^i[1],'] ( ',(v7005^s[1] + | OR |),' )' fi,
+
+fi

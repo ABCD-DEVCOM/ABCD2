@@ -1,0 +1,58 @@
+'<style type="text/css">
+#i_division {
+    text-align:left;
+    margin:0 auto;
+    width:100%;
+    padding:0px;
+}
+</style>'/
+'<script type="text/javascript" src="/iah/js/highlight.js"></script>'
+'<script>
+    function CruzarABCD(Termino,Prefijo){
+        top.browseby="search"
+        top.Expresion="\""+Prefijo+Termino+"\""
+        top.mfn=1
+        top.Menu("ejecutarbusqueda");
+    }
+</script>'/
+
+'<script>
+function Colapsar(obj) {      
+     var el = document.getElementById(obj);
+     if ( el.style.display != "none" ) {
+          el.style.display = "none";
+     }else {
+          el.style.display = "";
+     }
+}
+</script>'/
+
+'<script>
+
+function FormatearSubcamposRepetibles(campo,sep_sc,sep_occ){
+
+     resultado="" 
+     occ=campo.split("$$$")
+     limite=occ.length
+
+     for (ix_occ=0;ix_occ<limite;ix_occ++){
+         campo=occ[ix_occ]
+         c=campo.split("^")
+         total=c.length-1
+         for (ix=0;ix<=total;ix++){
+             if (c[ix]!=""){
+                 resultado+=c[ix].substr(1)
+                 if (ix!=total)
+                     resultado+=sep_sc
+             }
+         }
+         resultado+=sep_occ
+     }
+	return resultado
+
+}
+</script>
+'/
+
+
+

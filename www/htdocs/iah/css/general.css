@@ -1,0 +1,40 @@
+BODY {
+	margin: 0px;
+	color: #333;
+}
+
+BODY, INPUT, TEXTAREA, SELECT {
+	font-family: Arial, Verdana;
+	font-size: 75%;
+}
+
+TEXTAREA, SELECT {
+	font-size: 90%;
+}
+
+INPUT {
+	font-size: 100%;	
+}
+
+H1, H2, H3, H4 {
+	font-family: Trebuchet MS, Arial;
+}
+
+A {
+}
+
+A:hover {
+}
+
+A IMG {
+	border: 0px;
+}
+
+UL LI {
+
+}
+
+FORM {
+	margin: 0px;
+	padding: 0px;
+}

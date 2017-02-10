@@ -1,0 +1,5 @@
+'<table border=0 width=90%>'
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Inventory number</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v120) then '<tr><td width=20% valign=top><font face=arial size=2><b>Operator and date of loan</b></td><td valign=top><font face=arial size=2>'v120+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Date of loan</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+'</table><p>'

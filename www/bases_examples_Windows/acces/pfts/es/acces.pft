@@ -1,0 +1,15 @@
+'<strong>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
+'<table   class=td2 border=0>'/
+'	<td valign=top>Nombre del usuario</td>'/
+'	<td>'v10'</td>'/
+'	<tr>'/
+'	<td valign=top>Identificación</td>'/
+'	<td>'v20'</td>'/
+'	<tr>'/
+'	<td>Clave</td>'/
+'	<td>'v30'</td>'/
+'   <tr>'/
+'	<td>Perfil</td>'/
+'	<td valign=top>'(|<br>|+v40^a,| (|v40^b|)|)'</td>'/
+
+'</table>'/

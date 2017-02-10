@@ -1,0 +1,25 @@
+F|1|Type d'enregistrement|0|0|||X|||||||||0||
+F|10|Numéro d'inventaire|0|0|||X|||||||||0||
+F|12|Volume|0|0|||X|||||||||0||
+F|15|Tome|0|0|||X|||||||||0||
+F|20|Code d'utilisateur|0|0|||X|||||||||0||
+F|30|Date de prêt|0|0|||X|||||||||0||
+F|35|Heure de prêt|0|0|||X|||||||||0||
+F|40|Date de retour|0|0|||X|||||||||0||
+F|45|Heure de retour|0|0|||X|||||||||0||
+F|60|Date de retour (effective)|0|0|||X|||||||||0||
+F|65|Heure de retour (effective)|0|0|||X|||||||||0||
+F|70|Type d'utilisateur|0|0|||X|||||||||0||
+F|80|Type d'objeto|0|0|||X|||||||||0||
+F|90|No. de classiffication|0|0|||X|||||||||0||
+F|95|Numéro de control de l'objet|0|0|||X|||||||||0||
+F|98|Base de données|0|0|||X|||||||||0||
+F|100|Référence|0|0|||X|||||||||0||
+OD|120|Opérateur et date de prêt|0|0||||||||||||0||
+OD|130|Opérateur et date de retour|0|0||||||||||||0||
+T|200|Renouvellement|0|1|abcde||TB|||||||||0||
+S||Date de prêt|0|0|||||10|||||||0||
+S||Heure de prêt|0|0|||||10|||||||0||
+S||Date de retour|0|0|||||10|||||||0||
+S||Heure de retour|0|0|||||10|||||||0||
+S||Opérateur ayant renouvellé|0|0|||||20|||||||0||

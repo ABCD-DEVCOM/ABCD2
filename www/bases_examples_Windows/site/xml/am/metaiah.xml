@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<define>
+  <sourceList>
+    <group label="በሰርቨሩ ላይ ያሉ ውሂብ ጎታዎች">
+      <item id="34-1" label="Library catalog Unicode" href="/cgi-bin/1660utf8/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=MARCUNI" base-search-url="http://127.0.0.1:9090/cgi-bin/1660utf8/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=MARCUNI&amp;nextAction=xml&amp;count=1" base-browse-url="http://127.0.0.1:9090/cgi-bin/1660utf8/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=MARCUNI&amp;nextAction=lnk"/>
+      <item id="34-2" label="Centre of Documentation" href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=BIBLO" base-search-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=BIBLO&amp;nextAction=xml&amp;count=1" base-browse-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=BIBLO&amp;nextAction=lnk"/>
+      <item id="34-5" label="Open Access Journals" href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAJ" base-search-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAJ&amp;nextAction=xml&amp;count=1" base-browse-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAJ&amp;nextAction=lnk"/>
+      <item id="34-14" label="Open Access Repositories" href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAR" base-search-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAR&amp;nextAction=xml&amp;count=1" base-browse-url="http://127.0.0.1:9090/cgi-bin/wxis/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DOAR&amp;nextAction=lnk1"/>
+      <item id="34-16" label="Researchers" href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=EXPERTS" base-search-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=EXPERTS&amp;nextAction=xml&amp;count=1" base-browse-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=EXPERTS&amp;nextAction=lnk"/>
+      <item id="34-11" label="PROJECTS" href="/iah/?base=PROJECTS&amp;lang=en" base-search-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=PROJECTS&amp;nextAction=xml&amp;count=1" base-browse-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=PROJECTS&amp;nextAction=lnk"/>
+      <item id="34-13" label="Dublin Core Repository" href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DUBCORE" base-search-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DUBCORE&amp;nextAction=xml&amp;count=0" base-browse-url="http://127.0.0.1:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=en&amp;base=DUBCORE&amp;nextAction=lnk"/>
+    </group>
+    <group label="Open Access Journals">
+      <item id="37-1" label="SciELO - Scientific Electronic Library Online" href="http://www.scielo.org" base-search-url="http://search.scielo.org/?output=metasearch" base-browse-url="http://search.scielo.org/?output=html"/>
+    </group>
+    <group label="Events directory"/>
+    <group label="LIS- Health Information Locator"/>
+  </sourceList>
+  <search>
+    <item source="34-1" search-parameters="exprSearch="/>
+    <item source="34-2" search-parameters="exprSearch="/>
+    <item source="34-5" search-parameters="exprSearch="/>
+    <item source="34-14" search-parameters="exprSearch="/>
+    <item source="34-16" search-parameters="exprSearch="/>
+    <item source="34-11" search-parameters="exprSearch="/>
+    <item source="34-13" search-parameters="exprSearch="/>
+    <item source="37-1" search-parameters="q="/>
+  </search>
+</define>

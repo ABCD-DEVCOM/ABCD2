@@ -1,0 +1,68 @@
+<h2 style="BACKGROUND-COLOR: #cccccc"><font face="Arial"><font face="Arial" size="4">Conceptos básicos de las estructuras CDS/Isis (<font size="2">Ver: </font><a target="_blank" href="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-ConceitosBasicos-en.pdf"><font size="2">http://bvsmodelo.bvsalud.org/download/cisis/CISIS-ConceitosBasicos-en.pdf</font></a>)</font></font></h2>
+<p style="BACKGROUND-COLOR: #cccccc"><font face="Arial" size="4">Crear una base de datos</font></p>
+<p><font face="Arial" size="2">Esta opción de<strong> ABCD</strong> le permite definir nuevas bases de datos, las cuales se&nbsp;crearán en la carpeta identificada bajo el parámetro <strong>$db_path</strong> establecido en el script <strong>config.php</strong> almacenado en la carpeta <strong>php</strong>.&nbsp;La carpeta a la cual apunta el parámetro <strong>$db_path</strong>&nbsp;debe poseer derechos de escritura para la actualización de los archivos<br />
+</font></p>
+<p><font face="Arial" size="2">La subcarpeta para alojar la base de datos se denomina con el nombre de la base de datos creada en este proceso. Bajo la misma se crean cuatro subcarpetas adicionales:<br />
+</font></p>
+<ul>
+    <li><font face="Arial" size="2"><strong>data</strong> con los archivos maestro y listas invertidas y&nbsp; la .fst para actualización de la lista invertida</font> </li>
+    <li><font size="2"><font face="Arial"><strong>def </strong>con los formatos de entrada adicionales, tablas (picklists) y otros archivos requeridos para captura de información</font></font> </li>
+    <li><font face="Arial" size="2"><strong>pfts</strong>&nbsp;con los formatos de salida y otros archivos requeridos para la configuración de la búsqueda y despliegue de información</font> </li>
+    <li><font face="Arial" size="2"><strong>cnv </strong>con las tablas de conversión y otros archivos requeridos para el intercambio de información entre bases de datos</font> </li>
+</ul>
+<font face="Arial" size="2">Existen&nbsp;4 archivos indispensables en la definición de una base de datos bajo <strong>ABCD</strong>:<br />
+</font>
+<ul>
+    <li><strong><em><font size="2"><font face="Arial">dbn.fdt</font></font></em></strong><font size="2"><font face="Arial"> el cual contiene la estructura de campos y otros parámetros necesarios para el proceso de ingreso de información (ver <a target="_blank" href="fdt.html#FDT">Estructura de la FDT</a>)</font></font> </li>
+    <li><font size="2"><font face="Arial"><strong><em>dbn.fst </em></strong>con la tabla de extracción de campos para la generación de listas invertidas</font></font> </li>
+    <li><font face="Arial" size="2"><strong><em>dbn.pft</em></strong> con el formato de despliegue por defecto para los registros de la base de datos</font> </li>
+    <li><font size="2"><font face="Arial"><em><strong>camposbusqueda.tab </strong></em>el cual contiene los parámetros a utilizar para preparar la ventana de búsqueda avanzada.</font></font> </li>
+</ul>
+<p><font size="2"><font face="Arial">Para el proceso de ingreso de información se utiliza, en principio, una hoja de entrada por defecto, la cual se construye directamente de acuerdo a la estructura definida en la FDT. Pueden definirse hojas de entrada adicionales utilizando el procedimiento definido bajo la sección <em><strong>Actualización de las definiciones de las bases de datos</strong></em>. Estas hojas de entrada adicionales se reflejarán en el menú <strong><em>Hojas de entrada</em></strong> localizado en el marco superior del administrador de&nbsp;bases de datos de &nbsp;<strong>ABCD</strong>.<br />
+<br />
+Para el proceso de despliegue de información se utiliza, en principio un formato por defecto, el cual se construye directamente de acuerdo a la estructura definida en la FDT. Pueden definirse formatos de salida adicionales utilizando </font></font><font size="2"><font face="Arial">el procedimiento definido bajo la sección <em><strong>Actualización de las definiciones de las bases de datos</strong></em>. Estas hojas de entrada adicionales se reflejarán en el menú <em><strong>Formatos de Salida</strong></em> localizado en el marco superior del administrador de bases de datos&nbsp;de<strong> ABCD</strong>.</font></font><br />
+<font face="Arial" size="2"><br />
+Una de las características del ingreso bajo <strong>ABCD</strong> es las facilidades que ofrece para el ingreso de los subcampos en formato MARC, que permite al usuario abrir una ventana adicional con el detalle de los subcampos del campos, facilitando así la inserción de la información. Para habilitar esta opcion debe consultar la documentación de la <strong>Tabla de definición de campos (FDT).</strong><br />
+</font><font face="Arial" size="2"><br />
+Si la estructura de base de datos contempla diferentes tipos de registro, esta situación también puede ser manejada por <strong>ABCD</strong>. En este caso se necesita </font><font face="Arial" size="2">asignar la etiqueta de los campos (máximo dos) donde se almacena el tipo de registro y los valores que pueden tomar estos campos para cada&nbsp;tipo. Con esta información se podrá asignar una&nbsp;hoja de entrada especial para cada tipo de registro, la cual se activará en forma automática en el proceso de edición de los registros.</font></p>
+<p><font face="Arial" size="2">En el caso de bases de datos en formato Marc, es posible definir el formato del Leader y de los campos fijos del formato Marc, utilizando las opciones de&nbsp; <strong>Tipos de registro (Marc)</strong>&nbsp;del menú de <strong>Actualización de las definiciones de las bases de datos. </strong>Hay que tener muy en cuenta que los campos del Leader poseen tags de 4 dígitos. Por lo tanto, es necesario tomar previsiones especiales para la exportación de bases de datos cuya estructura contemple el <strong>Leader</strong>.</font></p>
+<p><font size="2">La opción <strong>Tipos de registro (Marc) </strong>se presenta en forma automática cuando en la FDT se detecta la presencia del campo <strong>Leader</strong>. Los tipos de registro definidos se almacenan en una estructura similar a la FDT y se presentan en el procedimiento de ingreso dependiendo del tipo de registro seleccionado en el Leader</font></p>
+<p><font face="Arial" size="2">La creación de una base de datos puede realizarse por una de las siguientes vías:<br />
+</font></p>
+<ul>
+    <li><font face="Arial" size="2"><strong>Nueva base de datos</strong>: para definir una base de datos nueva</font> <br />
+    </li>
+    <li><font face="Arial" size="2"><strong>WinIsis</strong>: permite copiar las definiciones ya existentes en una base de datos definida bajo WinIsis (fdt, fst, pft). Luego, mediante exportación-importación de registros se puede transferir la información a la base de datos creada. Es importante tomar en cuenta que en la mayoría de los casos las bases de datos definidas bajo WinIsis se mantienen con el juego de caracteres <strong>ASCII</strong>. Por lo tanto, deberán tomarse las previsiones necesarias para la conversión a <strong>ANSI</strong>, el cual constituye el juego de caracteres utilizado en <strong>ABCD</strong><br />
+    </font></li>
+    <li><strong><font face="Arial" size="2">Crear una nueva base de datos a partir de las estructuras de otra base de datos ya existente</font></strong><font face="Arial" size="2">. En este caso, se selecciona el nombre de la base de datos a replicar y el proceso generará una nueva base de datos con las mismas estructuras definidas para la base de datos fuente.</font> </li>
+</ul>
+<font size="2"><font face="Arial">Cuando se define una nueva base de datos </font></font><font size="2"><font face="Arial">adicionalmente</font></font><font size="2"><font face="Arial"> se crean/modifican los siguientes archivos:<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2"><strong>bases.dat</strong></font> <font face="Arial" size="2">con el nombre y descripción de las base de datos disponibles. Este archivo se lee en todos los procesos que necesiten presentar un menu de bases de datos y está localizado en la &nbsp;raiz de la carpeta donde se alojan las bases de datos (parámetro <strong>$db_path</strong> del script <strong>config.php</strong>)<br />
+    </font></li>
+    <li><font face="Arial" size="2"><strong>dbn.par</strong> con la ruta hacia la base de datos y otros elementos requeridos por <strong>ABCD. </strong>Los archivos <strong><em>dbn.par</em></strong> se almacenan en la sub-carpeta <strong>par</strong> de la carpeta donde están almacenadas las bases de datos.</font></li>
+</ul>
+<font size="2"><font face="Arial">Una vez que la base de datos haya sido definida, la misma no estará activa hasta tanto no se asignen los operadores que tienen acceso a la misma (ver <a target="_blank" href="assign_operators.html">Asignar permisos</a>)<br />
+</font></font><hr width="100%" size="2" />
+<font size="2"></font>
+<h4><font face="Arial">Campos requeridos&nbsp;comenzar la creación de bases de datos</font></h4>
+<p><font face="Arial" size="2"><strong>Nombre de la base de datos:</strong> Nombre interno de la base de datos. Use solo caracteres numéricos o alfabéticos, comenzando siempre con un caracter alfabético. También se permiten&nbsp;los guiones alto (-) y bajo (_). No use signos de puntuación, espacios en blanco o caracteres acentuados</font></p>
+<p><font face="Arial" size="2"><strong>Descripción de la base de datos: </strong>Nombre de la base de datos a ser desplegado en los diferentes menues de ABCD</font></p>
+<p><font face="Arial" size="2"><strong>Copiar definición desde: </strong>Seleccione de la lista la opción a utilizar para generar la nueva base de datos:</font></p>
+<font face="Arial" size="2">
+<ul>
+    <li>Nueva base de datos </li>
+    <li>WinIsis </li>
+    <li>Nueva base de datos a partir de la estructura de otra ya existente</li>
+</ul>
+<p>Una vez suministrada toda la información solicitada, haga clic sobre <strong>Continuar </strong>para proceder a definir la <strong>Tabla de definición de campos</strong></p>
+<p>&nbsp;<hr />
+</p>
+<p>&nbsp;<strong><font size="3">Manejo de las estructuras multilingües</font></strong></p>
+<p>ABCD permite que los archivos de definición (FDT, FMT, PFT) puedan mantenerse en cualquiera de los lenguajes de diálogo manejados por el sistema. Para ello bajo las carpetas<strong> def&nbsp; </strong>y<strong>&nbsp;pft&nbsp;</strong>existe una subcarpeta por cada lenguaje de diálogo definido.</p>
+<p>Cuando se crea una base de datos, los archivos de definición se crean en la carpeta correspondiente al lenguaje de diálogo activo, el cual debe coincidir con el lenguaje de diálogo referenciado por el parámetro <strong>$lang_db </strong>del archivo de configuración <strong>config.php</strong>.</p>
+<p>Posteriormente, cuando se invocan las estructuras de una base de datos ya existente, se intenta localizarlas en la carpeta correspondiente al lenguaje de diálogo activo. Si no existen, entonces se utiliza el lenguaje mencionado en el parámetro <strong>$lang_db</strong> para construir las rutas a las estructuras de la base de datos.</p>
+<p>Si el archivo accedido se almacena, entonces el mismo se guarda en la carpeta correspondiente al lenguaje de diálogo activo.</p>
+<p>Esta posibilidad de localizar la FDT y formatos de una base de datos en una carpeta por defecto facilita la traducción de estos recursos a la vez que impide que el sistema colapse por no estar los recursos de la base de datos definidos en el lenguaje activo</p>
+</font>

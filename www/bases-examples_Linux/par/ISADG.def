@@ -1,0 +1,40 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%isadg/data/isadg.*
+
+FILE standard.pft=%path_database%isadg/pfts/%lang%/isadg.pft
+FILE detailed.pft=%path_database%isadg/pfts/%lang%/publico.pft
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^2Palabras^d*^xTW ^uTW_^yDATABASE^mTW_
+INDEX Ti=^2Título^xTI ^yDATABASE^uTI_^mTI_
+INDEX Fe=^2Fecha^xFE ^yDATABASE^uFE_^mFE_
+INDEX Np=^2Nombre del Productor^xNP ^yDATABASE^uNP_^mNP_
+INDEX Ac=^2Alcance y Contenido^xAC ^yDATABASE^uAC_^mAC_
+INDEX Vs=^2Valor/Selecc/Eliminación^xVS ^yDATABASE^uVS_^mVS_
+INDEX Pn=^2Notas de Publicaciones^xPN ^yDATABASE^uPN_^mPN_
+INDEX No=^2Notas^xNO ^yDATABASE^uNO_^mNO_
+INDEX Na=^2Nota del Archivero^xNA ^yDATABASE^uNA_^mNA_
+INDEX Fd=^2Nota del Archivero^xFD ^yDATABASE^uFD_^mFD_
+
+[APPLY_GIZMO]
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Longo^2Largo^3Large^4Grand
+FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée
+FORMAT DEFAULT=detailed.pft
+
+[HELP_FORM]
+
+HELP FORM=help_form_lilacs.htm
+NOTE FORM F=note_form1_lilacs.htm
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,B,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

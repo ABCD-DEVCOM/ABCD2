@@ -1,0 +1,38 @@
+<IsisScript>
+	<trace>xOn</trace>
+	<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=2000>Mfn</field>
+      	<field action=cgi tag=3000>Tag</field>
+      	<field action=cgi tag=9010 split=occ>ValorCapturado</field>
+      	<field action=cgi tag=9060>login</field>
+  		<field action=cgi tag=3030>Formato</field>
+  		<field action=cgi tag=9088>cttype</field>
+  		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+<display><pft></pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+
+       	<do task="update">
+       		<parm name="db"><pft>v5001</pft></parm>
+       		<parm name="mfn"><pft>v2000</pft></parm>
+       		<parm name=lockid><pft>v9060</pft></parm>
+			<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+        	<field action=define tag=1101>Isis_Lock</field>
+        	<field action=define tag=1102>Isis_Status</field>
+       		<update>
+				<field action=import tag=9010>9010</field>
+               	<field action=import tag=3000>3000</field>
+        		<proc><pft>if p(v9010) then v9010  fi </pft></proc>
+        		<proc><pft>'d9010'/'d3000'/'d5001'/'d5015'/'d9060'</pft></proc>
+               	<write>Unlock</write>
+               	<display><pft></pft></display>
+<!--				<display><pft>if val(v1102)<>0 then 'RECHAZADA' else 'CONCEDIDA' fi/</pft></display> -->
+       		</update>
+   		</do>
+	</section>
+</IsisScript>

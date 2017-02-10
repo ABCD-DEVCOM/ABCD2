@@ -1,0 +1,139 @@
+<html><body>
+<p><strong>Elabora&ccedil;&atilde;o da ordem de Compra</strong></p>
+
+<p>Nesta lista s&atilde;o mostrados os fornecedores que foram aprovados para executar 
+  a compra dos objetose que ainda n&atilde;o emitiu nota de encomenda.</p>
+
+<p>Se uma sugest&atilde;o para a compra foi aprovada por mais de um 
+  fornecedor, ent&atilde;o mostrados em faixas separadas cada fornecedor selecionado. 
+  Isto para facilitar a elabora&ccedil;&atilde;o de nota de encomenda.</p>
+
+<p>Para saber se a um fornecedor cuja licita&ccedil;&atilde;o foi aprovada, se 
+  emite a ordem de compra, ao formalizar a requisi&ccedil;&atilde;o se utiliza 
+  o comando <strong>npost</strong> da linguagem de formato, para localizar na 
+  base de dados de<strong> Ordens de Compra</strong>&nbsp; (purchaseorder) uma 
+  chave composta por um número de requisi&ccedil;&atilde;o mais o número de licita&ccedil;&atilde;o, 
+  precedido por o prefixo RNBN.: <br />
+
+</p>
+
+<p><strong>if npost(['purchaseorder'],'RNBN_',mpu,s(v1[1]),'_'v300^r)&lt;&gt;0 then 'OK' fi</strong></p>
+
+<p>ent&atilde;o, se ao formatar a requisi&ccedil;&atilde;o no formato aparece 
+  terminado <strong>OK</strong>&nbsp; n&atilde;o se mostra a linha correspondente 
+  a licita&ccedil;&atilde;o aprovada de determinado&nbsp; fornecedor<br />
+
+</p>
+
+<p> </p>
+
+<p>A informa&ccedil;&atilde;o apresentada &eacute; a seguinte:</p>
+
+<ul>
+
+    <li>Número sequencial da sugest&atilde;o </li>
+
+    <li>Referencia do objeto </li>
+
+    
+  <li>Fornecedor aprovado </li>
+
+    
+  <li>Data de aprova&ccedil;&atilde;o da compra </li>
+
+    <li>Número de copias aprovadas </li>
+
+    
+  <li>Pre&ccedil;o de cada exemplar</li>
+
+</ul>
+
+<p>Clique em&nbsp; 
+  <input type="checkbox" value="on" />
+  para selecionar os itens que ser&atilde;o incluídos na ordem de compra em processo 
+  de elabora&ccedil;&atilde;o.</p>
+
+<p>uma vez realizada sua sele&ccedil;&atilde;o, clique sobre ordem <strong> de 
+  compra.</strong></p>
+
+<p>Para a sele&ccedil;&atilde;o dos registros se aplica a fórmula de busca <strong>STA_3</strong>, 
+  noqual corresponde a requisi&ccedil;&atilde;o na etapa de <strong>"Sele&ccedil;&atilde;o 
+  de fornecedores"</strong><br />
+
+</p>
+
+<p>A informa&ccedil;&atilde;o recuperada pode ordenar-se de 4 formas, e para cada 
+  forma existe um formato pr&eacute;-definido:</p>
+
+<p>
+
+<table width="400" cellspacing="1" cellpadding="1" border="1" summary="">
+
+    <tbody>
+
+        <tr>
+
+            
+      <td bgcolor="#ffff99"><strong>Ordem de apresenta&ccedil;&atilde;o</strong></td>
+
+            <td bgcolor="#ffff99"><strong>Formato</strong></td>
+
+        </tr>
+
+        <tr>
+
+            
+      <td>Fornecedor</td>
+
+            <td>
+
+            <p>pv_order.pft<br />
+
+            pv_order_tit.tab</p>
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td>Título</td>
+
+            <td>ti_order.pft<br />
+
+            ti_order_tit.pft</td>
+
+        </tr>
+
+        <tr>
+
+            
+      <td>Data de aprova&ccedil;&atilde;o </td>
+
+            <td>da_order.pft<br />
+
+            da_order_tit.pft</td>
+
+        </tr>
+
+        <tr>
+
+            
+      <td> N&uacute;mero da sugest&atilde;o</td>
+
+            <td>sn_order.pft<br />
+
+            sn_order_tit.pft</td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+</p>
+
+<p>pode enviar estos resultados a um documento ou planilha eletr&ocirc;nica utilizando 
+  a op&ccedil;&atilde;o <strong>Enviar a</strong>.</p>
+
+</body></html>

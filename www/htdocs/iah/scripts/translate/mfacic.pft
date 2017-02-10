@@ -1,0 +1,36 @@
+ if v1001='1' or v1001=v5017 then,
+    '<div class="contain">
+        <div class="oddRowRight"><a href="javascript:CloseNewfacic();"><b>{{close}}</b></a></div>
+        <div class="rowJnlDetl"><b>'v5100'</b></div>',
+        '<div class="barNav">
+            <div class="cellN"><b>{{year}}</b></div>
+            <div class="cellN"><b>{{volume}}</b></div>
+            <div class="cellN"><b>{{issue}}</b></div>
+            <div class="cellN"><b>{{status}}</b></div>
+            <div class="cellN"><b>{{copies}}</b></div>
+            <div class="cellN"><b>{{inventory}}</b></div>
+            <div class="cellN"><b>URL</b></div>
+            <div class="cellW"><b>{{note}}</b></div>
+        </div>
+    </div>
+    <div class="contain">
+       <table class="ruler"><tbody>',
+ fi,
+    if right(f(val(v1001)/2,1,2),2)=s('00') then,
+        '<div class="evenRow">' else '<div class="oddRow">' fi,
+            '<div class="cellN">'v911'</div>
+            <div class="cellN">'v912'</div>
+            <div class="cellN">'v913'</div>
+            <div class="cellN">'v914'</div>
+            <div class="cellN">'v915'</div>
+            <div class="cellN">'v917'</div>
+            <div class="cellN">'if p(v918) then '<a href="',if not v918:'http' then 'http://'  fi,v918,'" target="_blank" title="',v918,'">Link</a>' fi,'</div>
+            <div class="cellW">'v900'</div>
+        </div>'
+ if v1001=v1002 or v1001=v5019 then,
+        '</tbody></table>
+    </div>
+</div>
+</body></html>',
+ fi,
+

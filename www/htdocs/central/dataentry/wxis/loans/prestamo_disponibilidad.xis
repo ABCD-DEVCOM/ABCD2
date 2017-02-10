@@ -1,0 +1,126 @@
+ <IsisScript>
+
+	<section>
+
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+   		<field action=cgi tag=5001>base</field>
+ 		<field action=cgi tag=3000>Expresion</field>
+   		<field action=cgi tag=3030>Formato</field>
+   		<field action=cgi tag=3031>Pft</field>
+   		<field action=cgi tag=4000>desde</field>
+   		<field action=cgi tag=4001>cuenta</field>
+		<field action=cgi tag=9001>Opcion</field>
+		<field action=cgi tag=1>path_db</field>
+		<field action=cgi tag=9088>cttype</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+        <trace>XOn</trace>
+<display><pft></pft></display>
+   		<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+
+		<flow action=jump>
+  			<pft>
+				select s(v9001)
+					case 'libros_prestados':'LIBROSPRESTADOS'
+					case 'disponibilidad':'DISPONIBILIDAD'
+				endsel
+			</pft>
+   		</flow>
+
+
+			<do task=search>
+             	<parm name=db><pft>v5001</pft></parm>
+             	<parm name=from><pft>v4000,"1"n4000</pft></parm>
+             	<parm name=count><pft>v4001</pft></parm>
+             	<parm name=expression><pft>v3000</pft></parm>
+	      		<field action=define tag=1001>Isis_Current</field>
+    	     	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+             	<loop>
+					<field action=import tag=3000>3000</field>
+					<field action=import tag=3031>3031</field>
+ 					<display>
+    					<pft type=reload><pft>v3031</pft></pft>
+  					</display>
+             	</loop>
+               <display><pft>/'$$TOTAL:' v1002/</pft></display>
+          	</do>
+        	<flow action=exit>1</flow>
+
+
+       	<label>DISPONIBILIDAD</label>
+          	<do task=search>
+             	<parm name=db><pft>v5001</pft></parm>
+             	<parm name=from><pft>'1'</pft></parm>
+             	<parm name=expression><pft>v3000</pft></parm>
+             	<parm name=from><pft>v4000,"1"n4000</pft></parm>
+             	<parm name=count><pft>v4001</pft></parm>
+             	<field action=define tag=1001>Isis_Current</field>
+             	<field action=define tag=1002>Isis_Total</field>
+             	<field action=define tag=1031>Isis_From</field>
+             	<field action=define tag=1032>Isis_To</field>
+
+             	<loop>
+					<field action=import tag=3000>3000</field>
+					<field action=import tag=3030>3030</field>
+					<field action=import tag=3031>3031</field>
+					<display>
+    						<pft type=reload><pft>if p(v3030) then '@'v3030 else v3031 fi/</pft></pft>
+                	</display>
+             	</loop>
+				<display><pft>/#'$$TOTAL:' v1002/</pft></display>
+          	</do>
+        	<flow action=exit>1</flow>
+
+
+  		<label>DEVOLVER</label>
+
+			<do task=update>
+				<parm name=db>presta</parm>
+            	<parm name=mfn><pft>v2000</pft></parm>
+            	<parm name=lockid><pft>v9060</pft></parm>
+				<parm name=fst>
+					<pft>cat('presta.fst')</pft>
+				</parm>
+            	<field action=define tag=1101>Isis_Lock</field>
+            	<field action=define tag=1102>Isis_Status</field>
+            	<update>
+					<write>Lock</write>
+            		<proc><pft>'d1'/'a1~X~''a980~'v9060'^d'date'~'</pft></proc>
+                   	<write>Unlock</write>
+<!--					<display><pft>if val(v1102)=0 then
+ 							'<b>Préstamo devuelto!</b> 'v800'<b>' fi</pft>
+					</display> -->
+				</update>
+       		</do>
+       		<flow action=exit>1</flow>
+
+  		<label>RENOVAR</label>
+			<do task=update>
+				<parm name=db>presta</parm>
+            	<parm name=mfn><pft>v2000</pft></parm>
+            	<parm name=lockid><pft>v9060</pft></parm>
+				<parm name=fst>
+					<pft>cat('presta.fst')</pft>
+				</parm>
+            	<field action=define tag=1101>Isis_Lock</field>
+            	<field action=define tag=1102>Isis_Status</field>
+            	<update>
+					<write>Lock</write>
+            		<proc><pft>'a980~'v9060'^d'date'~'</pft></proc>
+                   	<write>Unlock</write>
+<!--					<display><pft>if val(v1102)=0 then
+ 							'<b>Préstamo devuelto!</b> 'v800'<b>' fi</pft>
+					</display> -->
+				</update>
+       		</do>
+       		<flow action=exit>1</flow>
+
+
+    </section>
+ </IsisScript>
+
+

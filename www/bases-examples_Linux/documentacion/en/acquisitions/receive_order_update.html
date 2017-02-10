@@ -1,0 +1,70 @@
+El procesamiento distingue entre un nuevo objeto o agregar copias a un objeto existente:<br />
+<br />
+<strong>Nuevo objeto:<br />
+</strong>
+<ol>
+    <li>Se determina cuál el el campo donde se almacena el número de identificacion del objeto en la base de datos catalográfica. Para ello se lee su FDT&nbsp; y se localiza un campo cuyo tipo sea <strong>AI</strong> (auto increment). El tag asociado a este tipo de campo es aquel en el cual se colocará el número de identificacion del objeto y el prefijo de la lista invertida es el prefijo a utilizar para construir la expresión de búsqueda cuando se desee localizar un número de identificacion específico. Se suspende el proceso si no localiza un campo tipo <strong>AI</strong> en la FDT o si su definición no especifica el prefijo utilizado en su indización .</li>
+    <li>Se localiza en la base de datos de recomendaciones (suggestions) la información catalográfica del objeto. Para ello se aplica una búsqueda utilizando el número de la recomendación, precedida con el prefijo NC_</li>
+    <li>La información catalográfica se extrae utilizando el formato <strong>acquisitions.pft</strong> el cual debe existir en la carpeta pft/<em>lenguaje-activo</em> de la base de datos en la cual se va a catalogar el objeto. Este formato es de la forma:<br />
+    <br />
+    Formato Cepal:<br />
+    <br />
+    <br />
+    <br />
+    <font face="Courier New">"1:"v1/<br />
+    "16:"v16/<br />
+    "17:"v17/<br />
+    "18:"v18/<br />
+    "21:"v21/<br />
+    "29:"v29/<br />
+    "30:"v30/<br />
+    "31:"v31/<br />
+    "32:"v32/<br />
+    "35:"v35/<br />
+    "47:"v47/<br />
+    "38:"v38/<br />
+    "39:"v39/<br />
+    "40:"v40/<br />
+    "41:"v41/</font><br />
+    <br />
+    Formato Marc:<br />
+    <font face="Courier New">"100:^a"v16/<br />
+    "110:^a"v17/<br />
+    "245:^a"v18,if s(v16,v17)&lt;&gt;`` then ` / ` v16," "v17 fi/<br />
+    "21:"v21/<br />
+    "29:"v29/<br />
+    "30:"v30/<br />
+    "31:"v31/<br />
+    "32:"v32/<br />
+    "35:"v35/<br />
+    "47:"v47/<br />
+    "38:"v38/<br />
+    "39:"v39/<br />
+    "40:"v40/<br />
+    "41:"v41/</font><br />
+    <br />
+    <br />
+    <br />
+    <br />
+    Es decir, a cada campo existente en la base de datos <strong>suggestions</strong>, se le asigna el tag del campo que va a recibir la información en la base de datos catalográfica. Si el campo que recibe la informacion posee subcampos o se compone de varios campos de la base de datos de recomendaciones (<strong>suggestions</strong>), esta situación debe estar convenientemente reflejada en este formato.</li>
+    <li>Si no se localiza el registro en la base de datos de recomendaciones se suspende el proceso</li>
+    <li>Se asigna el número de identificación del objeto, utilizando el archivo <strong>control_number.cn</strong> localizado en la carpeta data de la base de datos catalográfica.&nbsp;</li>
+    <li>Se actualiza en la base de datos de órdenes de compra (<strong>purchaseorder</strong>) el número de identificación asignado al nuevo objeto (campo 500). Esto con el objeto de evitar duplicaciones ya que en caso de pérdida de la conexión se puede repetir el proceso utilizando el número de identificación ya asignado al objeto<br />
+    </li>
+    <li>Con el resultado de aplicar el formato de extracción sobre la base de datos de recomendaciones, al cual se le agrega el número de identicación del objeto, se construye el valor que se enviará al procedimiento de crear nuevos objetos<br />
+    </li>
+    <li>Haga clic sobre <strong>Crear objeto</strong> para crear el registro en la&nbsp; base de datos catalográfica&nbsp;</li>
+</ol>
+<strong><strong>Consideraciones tomadas en cuenta para evitar inconsistencias en el proceso o duplicaciones de registros</strong><br />
+<br />
+</strong>Como en este proceso se genera el número de identificacion del objeto e inmediatamente se graba en la base de datos de órdenes de compra, si se recarga la página podría incrementarse innecesariamente el número de identificación asignado al objeto&nbsp; y producir una inconsistencia en la base de datos de órdenes de compra. Para que ésto no ocurra, al inicio del script se lee la órden de compra desde la base de datos purchaseorder para verificar si el objeto en proceso de creación ya tiene un número de identificación asignado. En caso afirmativo, se toma el valor correspondiente, se le asigna al objeto y se habilita el botón para la creación de nuevos objetos..<br />
+<br />
+De igual manera, antes de habilitar la creación del objeto se lee la base de datos catalográfica correspondiente y se verifica si el número de identificación ya existe. En caso afirmativo se presenta el mensaje pertinente y se habilita la creación de copias, obviando la creación del objeto.<strong><strong><br />
+<br />
+Creacion de copias</strong> para un objeto existente</strong><br />
+<br />
+Si el objeto adquirido ya existe en la base de datos catalográfica, proceda a crear las copias haciendo clic sobre el botón <strong>Crear copias</strong><br />
+<strong><br />
+</strong><strong>Nota importante: En el archivo purchaseorder.par se tiene que agregar el camino de acceso a cada una de las bases catalográficas que intervienen en el proceso de adquisiciones a fin de que se pueda localizar la información catalográfica del objeto</strong> <br />
+<strong><strong><br />
+</strong></strong>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<portal id="36" lang="es" available="yes">
+  <item id="1" available="yes" href="http://www.bireme.br" img="http://regional.bvsalud.org/image/common/net/icon_bvs.gif">BVS</item>
+  <item id="2" available="yes" href="http://www.scielo.br" img="http://regional.bvsalud.org/image/common/net/icon_scielo.gif">SciELO</item>
+</portal>

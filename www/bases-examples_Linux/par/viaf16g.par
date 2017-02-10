@@ -1,0 +1,17 @@
+viaf16g.*=%path_database%viaf16g/data/viaf16g.*
+viaf16g.pft=%path_database%viaf16g/pfts/%lang%/viaf16g.pft
+prologoact.pft=%path_database%www/prologoact.pft
+prologo.pft=%path_database%www/prologo.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+epilogo.pft=%path_database%www/epilogo.pft
+autoridades.pft=%path_database%viaf16g/pfts/pt/autoridades.pft 
+isisac.tab=%path_database%viaf16g/data/isisactab_utf8.tab
+isisuc.tab=%path_database%viaf16g/data/isisuctab_utf8.tab
+STW=%path_database%viaf16g/data/viaf16g.stw
+copies.*=/opt/ABCD/www/bases-examples/copies/data/copies.*
+copies.pft=%path_database%copies/pfts/pt/copies.pft
+inven.pft=%path_database%copies/pfts/pt/inven.pft
+loanobject.*=%path_database%loanobjects/data/loanobjects.*
+loan.pft=%path_database%loanobjects/pfts/pt/loan.pft
+trans.*=%path_database%trans/data/trans.*
+

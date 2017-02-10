@@ -1,0 +1,1 @@
+mx unimarc fst=@ fullinv/ansi=unimarc now -all

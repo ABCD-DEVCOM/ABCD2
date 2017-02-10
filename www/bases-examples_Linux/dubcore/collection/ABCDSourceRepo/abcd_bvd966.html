@@ -1,0 +1,199 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<p>Automatisering van Bibliotheken en Centra voor Documentatie : het ABCD systeem voor bibliotheek-automatisering en document management.</p>
+<p>
+Egbert de Smet,</p>
+<p>project-co&ouml;rdinator,</p>
+<p>Universiteit Antwerpen</p>
+<p>Gratiekapelstraat 10, 2000 Antwerpen</p>
+<p>e-mail : egbert.desmet@ua.ac.be</p>
+<p>website : http://www.ua.ac.be/main.aspx?c=egbert.desmet</p>
+<p/>
+<p>
+<i>Abstract</i>
+</p>
+<p>
+<i>De ABCD-software voor automatisering van bibliotheken en documentatie-centra is inmiddels 3 jaar uit en staat kort voor de publicatie van versie 2.0, de eerste 'major' upgrade. De belangrijkste elementen van de achtergrond van de software (geschiedenis en technologie) worden besproken met een verwijzing naar de weinig bekende maar betekenisvolle bijdrage vanuit de Belgisch-Vlaamse bibliotheek-ontwikkelingssamenwerking.</i>
+</p>
+<p>
+<i>Tevens wordt ge&iuml;llustreerd hoe de ABCD als 'software-suite' meer is dan enkel bibliotheek-automatisering want ook kan ingezet worden voor documentaire automatisering in het algemeen, op basis van de structurele openheid t.a.v.  database-schema's van het systeem en de rijke functionaliteit die naast de klassieke bibliotheekautomatisering (catalogus, acquisitie, uitleen...) ook bijv. een CMS voor de creatie van een bibliotheek-portaal aanbiedt en in de 'Site'-module een ge&iuml;ntegreerde aanbieding van uiteenlopende al-dan-niet bibliografische databases mogelijk maakt.</i>
+</p>
+<p>
+<i>M.b.t. de nieuwe versie 2.0 worden de belangrijkste vernieuwingen besproken : nieuwe onderliggende ISIS-versies, Unicode en de 'digitale bibliotheek'-optie.  Tenslotte worden nog enkele uitdagingen en plannen voor verbeterde community-ondersteuning en distributie van de software geopperd met het oog op een betere levensvatbaarheid van dergelijk maar als bewezen erg nuttig FOSS-project.</i>
+</p>
+<p/>
+<p>Contents
+Inleiding : historiek van de software en de Vlaamse input	1
+Functionaliteit van de ABCD-Suite	3
+Nieuwe functies in versie 2.0	8
+Gebruik van verschillende CISIS-implementaties	8
+ABCD Unicode	8
+ABCD Digital Library	9
+Implementatie en evaluatie	11
+Besluit	13
+</p>
+<p/>
+<h1>
+<a name="_Toc355083535"/>Inleiding : historiek van de software en de Vlaamse input</h1>
+<p/>
+<p>Terwijl automatisering van bibliotheken in het noordelijke halfrond gaandeweg meer en meer als 'pass&eacute;' wordt beschouwd, een probleem dat nl. grotendeels is opgelost en wordt weggedrongen door nieuwere, mogelijk zelfs interessantere uitdagingen zoals repositories en digitale bibliotheken, blijft het een moeizame opdracht die met veel vallen en opstaan wordt aangegaan in de bibliotheken in het Zuiden. In India bijv. - toch een land met een zekere ontwikkeling en zelfs faam inzake ontwikkeling en gebruik van IT - blijven er nog steeds duizenden kleinere bibliotheken die nog hun eerste stappen terzake moeten zetten, met name in de sfeer van schoolbibliotheken en lokale 'openbare' bibliotheken. Terwijl in academische bibliotheken in 1997 nog gold dat minder dan de helft geautomatiseerd was  [Ravichandra Rao, 1997] mag men stellen dat de situatie inmiddels fel verbeterd is, zie bijv. de lijst van meer dan 3000 geautomatiseerde bibliotheken in India (bron : <a href="https://docs.google.com/spreadsheet/pub?key=0Au8dWcSWVfUddHJfWDFEdjBhU25wcDl5THktcEpUdWc&amp;output=html">https://docs.google.com/spreadsheet/pub?key=0Au8dWcSWVfUddHJfWDFEdjBhU25wcDl5THktcEpUdWc&amp;output=html</a>), maar toch ook vandaag nog problematisch blijft qua beschikbare deskundigheid en implementatie [P.S. Rajput &amp; J.N Gautam, 2010].</p>
+<p>In de universitaire bibliotheken in het Zuiden, zoals de afdeling 'Universitaire Ontwikkelingssamenwerking' van de VLIR (VLIR/UOS) die aantreft in een 20-tal partner-instellingen voor haar werking in zowel Africa, Latijns-America als Zuid-Oost Azi&euml;, is er meestal wel al ervaring met automatisering maar lang niet altijd met succes. Veelal wordt met een eenmalige project-ondersteuning een dure software aangekocht (d.w.z. een licentie tot gebruik ervan) die enkele jaren later moeilijk onderhoudbaar blijkt, al was het maar vanwege de jaarlijkse onderhoudskost die typisch ong. 15% van de aankoopprijs bedraagt. Als men weet dat sommige systemen tienduizenden euro's kosten en bovendien vaststelt dat de bedrijven die zulke software 'commercialiseren' meestal in Africa e.d. nauwelijks re&euml;le ondersteuning kunnen geven aan overigens ook gemiddeld gebrekkig gekwalificeerde bibliotheek-ITers wordt het probleem duidelijk : er is nauwelijks sprake van duurzame oplossingen en het blijft achternahinken op een in onze contreien steeds gesofisticeerder wordende en impressionante technologische ontwikkeling waarin web-integratie met LDAP (voor gebruikerstoegang), allerlei webservices (niet eens merkbaar vanwege de enorme snelheid van de internet-verbindingen)  en full-text toepassingen quasi gemeengoed zijn geworden.</p>
+<p>Enkele jaren geleden, in 2008, boog de 'expertengroep Bibliotheekontwikkeling' van de VLIR/UOS zich over deze problematiek, vanuit de vaststelling dat ook in de eigen projecten de problematiek een meer consistente aanpak verdient en dient vermeden te worden dat oplossingen al te zeer 'ac hoc', vanwege bindingen met eigen systemen (bijv. VUBIS voor de VUB) of toevallige promotor-gebonden beleidskeuze's , worden aangeboden. Aan ondergetekende, lid van die expertengroep, werd gevraagd via een project en in de meer en meer aanvaardbaar geworden traditie van 'vrije en open software ' (FOSS) een meer geco&ouml;rdineerde oplossing uit te werken.</p>
+<p>Vanuit de vaststelling dat heel veel bibliotheken (en documentatiecentra) in het Zuiden werken met de toen nog door UNESCO ontwikkelde en ondersteunde 'ISIS'-technologie en de ruime ervaring daarin van ondergetekende, werd geopteerd voor deze technologie als basis, en aldus ontstond het project 'DOCBIBLAS' (Development Of and Capacity Building in Isis-Based Library Automation Systems). Na een openbare aanbesteding waarin de toen drie belangrijkste ISIS-ontwikkelomgevingen, nl. de Poolse groep die voor FAO WEBLIS en WebAGRIS ontwikkelde, een Duits initiatief 'Open-ISIS' en het Braziliaanse BIREME instituut als onderdeel van WHO, actief werden betrokken, werd gekozen voor de al bij al rijpere BIREME-technologie. In Latijns-America vertegenwoordigen de BIREME-systemen zoals de 'Virtual Health Library' en SciELO zowat de grootste documentaire informatie-systemen, alle gebaseerd op de ISIS-technologie zoals uitgewerkt door BIREME. Dezelfde technologie wordt ook gebruikt voor het beheer van expertise, projecten en professionele 'events'. De toen al bestaande technologie&euml;n voor web-gebaseerde publieke zoekinterfaces (iAH), management van seri&euml;le publicaties (Secs-Web) en website-creatie waarmee alle in de VHL betrokken landen hun portal aanbieden werden in een 'suite' gebundeld en extern configureerbaar gemaakt, zodat enkel nog een centrale administratie-module met gegevens-invoer ('catalogisering') en uitleen-functies ontbraken om een volledige bibliotheek-automatisering te kunnen opzetten. Met de VLIR/UOS financiering en de BIREME-expertise werd aldus de 'suite' ABCD geboren, waarbij in de naamgeving zelf (Automatisaci&oacute;n de Bibliot&eacute;cas y Centros de Documentaci&oacute;n[footnoteRef:2]) al gerefereerd wordt naar een wat ruimere doelstelling dan de strikt genomen bibliotheek-automatisering : zoals het in de ISIS-traditie gebruikelijk is zou de voor documentatie-centra typische aanpak van sterker ontwikkelde inhoudelijke ontsluiting met abstracts e.d. deel uitmaken van de objectieven. Zo bood ISIS al 'full-text' indexering en -retrieval aan lang voor het via het WWW en Google zo populair werd en inmiddels bijna als evident wordt beschouwd waardoor ook populaire databases als MySQL die functionaliteit zij het wat artificieel overnamen. Het mag ook gezegd dat ISIS met haar eigen database-model al heel lang het 'No-SQL' model [REF], dat de laatste jaren met nieuwe producten zoals Google BigTable, Apache Cassandra, Mongo-DB, Berkeley DB en Couch-DB duidelijk aan belangstelling heeft gewonnen en nu ook door SQL-databases wordt geadopteerd (zie bijv. 'hstore' in PostGreSQL : <a href="http://www.postgresql.org/docs/9.0/static/hstore.html">http://www.postgresql.org/docs/9.0/static/hstore.html</a>), 'avant-la-lettre' dus, heeft uitgevonden en ge&iuml;mplementeerd. [2:  in een aantal landen in Latijds-America verkiezen ook 'bibliotheken' de benaming 'documentatie-centrum' om een of andere reden] 
+</p>
+<p>De Vlaamse inbreng bleef niet beperkt tot de VLIR/UOS financiering en de projectleider : via de stuurgroep DOCBIBLAS, waarin een aantal Vlaamse experten zetelden, werd de ontwikkeling 'gestuurd' bijv. op basis van een aantal professionele criteria zoals compatibiliteit met MARC, OAI, MODS, Z39.50 en Unicode.</p>
+<p>Al bij een eerste voorstelling van de software op een workshop in Brussel (maart 2009) bleek de belangstelling bij de VLIR/UOS partner-bibliotheken groot : 10 van de toen 14 partners bleken ge&iuml;nteresseerd. Na de offici&euml;le lancering van de software in Brazili&euml; einde 2009 vervoegden nog enkele nieuwe partners de groep en heeft het project zodus impact gehad op 14 partners in zowel Africa (Mozambique, Tanzania, Kenya, Ethiopia) als Latijns-America (Cuba, Ecuador, Bolivia en Peru), dit ondermeer ook via een resem workshops en bezoeken ter plekke door de leden van de stuurgroep en de project-promotor. Daarbuiten heeft de ABCD software inmiddels ook grote delen van de vele bestaande 'WinISIS'-gebruikers de overstap naar het volledig WWW-gebaseerde ABCD-systeem doen wagen, zodat de betekenisvolle bijdrage vanuit Vlaanderen ook ruimer kan worden erkend.</p>
+<p>Momenteel, voorjaar 2013, wordt de laatste hand gelegd aan een tweede 'major' upgrade : versie 2.0. In wat volgt zullen we enkele aspecten van zowel de bestaande als de nieuwe functies belichten.</p>
+<p/>
+<h1>
+<a name="_Toc355083536"/>Functionaliteit van de ABCD-Suite</h1>
+<p/>
+<p>Zoals al uit de inleiding blijkt is de ABCD-software gebaseerd op de volgende basis-technologie&euml;n :</p>
+<p>- ISIS als 'No-SQL' database omgeving, wat een grote flexibiliteit laat combineren met krachtige indexeer- en formatteer-functies (met enkel voor de leentransacties mogelijk gebruik ook van SQL-varianten als MySQL, PostGreSQL...)</p>
+<p>- WWW : alle modules zijn volledig web-browser gebaseerd zodat de software overal kan worden gebruikt</p>
+<p>- PHP als programmeertaal met onderdelen Java voor de speciale ('geavanceerde') uitleen-module.</p>
+<p>Anders dan bijv. de succesvolle 'KOHA'-software voor open-source bibliotheek-automatisering, blijft ABCD de Windows-optie aanbieden naast de Linux optie. Het gebruik van Linux in vele kleinere bibliotheken waar de desbetreffende Linux-kennis simpelweg ontbreekt is nu eenmaal nog erg problematisch en ondanks de hoge extra druk op de ontwikkeling (er zijn nl. ook nog zowel 32- als 64-bits versies van zowel Linux als Windows) blijft dit een belangrijke positiebepaling voor ABCD. Daardoor kan ABCD zowel in grotere server-omgevingen als in heel eenvoudige locale PC-toepassingen (met 'localhost' in Windows) gebruikt worden.</p>
+<p>Het 'suite'-karakter betekent dat elk van de suite-onderdelen los van de andere kan gebruikt worden (bijv. ook haar zijn eigen configuratie heeft) maar een meerwaarde kennen indien gecombineerd met andere onderdelen, net zoals dit het geval is voor Microsoft Office of LibreOffice als bekende voorbeelden van software-suites. Zo kan men stellen dat het hele netwerk van de Virtuele Gezondheidsbibliotheek (bijv. <a href="http://bvs.bireme.br">http://bvs.bireme.br</a>) de modules 'Site' en 'OPAC' gebruiken zonder voor het beheer van de databases ABCD Central te hanteren, terwijl er ook voorbeelden zijn van gebruikers van enkel de Secs-Web module voor tijdschriftenbeheer en van de EmpWeb-uitleenmodule.</p>
+<p>Een plaatje kan verduidelijken hoe de 'Central' module dan weer op zich, naast de andere, voldoende is voor een kleine bibliotheek met daarin immers de belangrijkste functies als sub-modules :</p>
+<p>
+<img src="embedded:image1.jpeg" alt=""/>
+</p>
+<p class="caption">Figure 1 De ISIS software famillie</p>
+<p>Een speciale vermelding verdient de dubbele implementatie van de uitleen-module : terwijl de 'standaard'-module als onderdeel van de centrale weliswaar alle uitleen-functies aanbiedt (lenen, verlengen, reserveren, terugnemen, boetes, regelgeving...) en dit ook kan voor verschillend gestructureerde catalogi en gebruikers-bestanden, biedt EmpWeb daarenboven de mogelijkheden tot directe (web-service) links met externe databases in SQL-formaat, gebruikers en transacties ook in SQL-formaat opgeslagen en meervoudige uitleen-regelsystemen, georganiseerd als 'beslissingen' netjes op een (editeerbare) 'rij' gezet in zgn. 'pijplijnen' met als uiteindelijke resultaat, na toepassingen van alle regels, het al dan niet uitvoeren van de transactie. </p>
+<p>Het dient wel gezegd dat momenteel ABCD &eacute;&eacute;n generatie achterloopt inzake de information retrieval van de BVS, waar nu nl. onderdelen worden ge&iuml;ndexeerd met Lucene i.p.v. met ISIS zelf, zodat ook ranking (vooral zinnig in full-text systemen) en clustering toelaat. </p>
+<p>Voor wat betreft de catalogiserings-functie merken we op dat door de 'neutraliteit' van ISIS t.a.v. bibliografische (en andere documentaire) structuren - het 'scheme-less' niet-relationele database gegeven dus - behalve MARC21 en UNIMARC ook andere demo-structuren worden meegegeven met de software : bijv. CEPAL (populair formaat in Latijns-America voor documentatiecentra) en sinds kort ook standaarden van buiten de bibliotheekwereld, bijv. ISADG voor archieven.</p>
+<p>Het belangrijkste kenmerk is evenwel dat systeem-beheerders relatief makkelijk zelf eender welke structuur kunnen aanmaken, gaande van dood-eenvoudige 'huis'-bibliotheek structeren (met enkel titel, auteur, trefwoorden bijv.) tot eender welke ingewikkelde structuur waarvan een voorbeeld verderop volgt. Dit, opnieuw, als gevolg van de niet-relationele structuur van de databases in ISIS[footnoteRef:3], die immers voor web-toepassingen lang niet altijd is aangewezen. Zo hebben studenten van ondergetekende bijv. als oefening databases gemaakt over de Olympische Spelen 2012, familie-stambomen en andere niet-bibliografische toepassingen. We kennen deze mogelijkheid in de commerci&euml;le software overigens enkel van bijv. VUBIS-Smart, niet toevallig ook gebaseerd op een niet-relationele aanpak. [3:  ISIS laat evenwel ook 'relaties' tussen databases toe, die in 'run-time' worden uitgevoerd in de parser die de uitvoer (printing, sortering, indexering) bepaalt en gegevens van andere databases kan ophalen met de 'REF'-functie.] 
+</p>
+<p>De ervaring leert dat in bijv. Africa, met gemiddeld genomen veel zwakkere 'catalografie'-niveaus, vooral de mogelijkheid records te copi&euml;ren van (meestal) Library of Congress via de Z39.50 'shared-cataloging' optie een belangrijke troef is. In Jimma University, Ethiopi&euml;,  bijv., waar door de totaal verschillende taal- en zelfs alfabet-context sommige catalografen nauwelijke Engelstalige boeken aankunnen, heeft dit een geslaagde inhaalbeweging (retro-catalografie) mogelijk gemaakt waarin op korte tijd van een jaar bijna 20.000 titels konden worden ingevoerd, weliswaar door een ploeg catalografen.</p>
+<p>De catalograaf beschikt in zijn browser voor haar/zijn dagelijkse werk over een 'toolbar' op 2 niveau's : dat van de databases (bijv. copieren van een record uit een andere database) en dat van de records (bijv. copieren van actuele record achteraan de database als nieuw record).</p>
+<p>
+<img src="embedded:image2.jpeg" alt=""/>
+</p>
+<p class="caption">Figure 2 De database toolbar</p>
+<p>
+<img src="embedded:image3.jpeg" alt=""/>
+</p>
+<p class="caption">Figure 3 De record-toolbar</p>
+<p>Daarnaast geeft de toolbar ook toegang tot nagenoeg alle functies die een kleine bibliotheek wil hebben, de noodzaak voor andere modules daarmee grotendeels uitschakelend : (van links naar rechts) bladeren en zoeken in de database, lijsten, records aanmaken en documenten importeren, copi&euml;ren en shared cataloging, rapporten en utilities, statistieken en tenslotte terug naar het hoofdmenu waar o.m. kan gewisseld worden naar de uitleen- of aankoop-module en ook het gebruikersbeheer en beheer van de databases (met veld-, indexeer- en formatteer-definities) terug te vinden is behalve een vertaalmodule voor zowel schermen als help-teksten.</p>
+<p>Voor de 'serials control' module (Secs-Web) kunnen als belangrijkste kenmerken worden naar voor geschoven : </p>
+<p class="list_Paragraph">de ingebouwde ISSN-structuur - als uitzondering op de regel hanteert ABCD hier dus wel een 'gesloten' aanpak met enkel die structuur</p>
+<p class="list_Paragraph">het beheer ervan in grotere netwerken van bibliotheken</p>
+<p class="list_Paragraph">de integratie, indien gewenst, van de tijdschriften in de online-publiekszoekmodule.</p>
+<p>Over de 'geavanceerde' uitleenmodule hebben we elders apart gepubliceerd [de Smet, 2011], maar samenvattend komt het er op neer dat t.a.v. de 'standaard' uitleenmodule de volgende extra's worden geboden :</p>
+<p class="list_Paragraph">integratie als 'MyLibrary' in de OPAC voor consultatie beschikbaarheid en reservatie van een gevonden werk, een functie die weliswaar vanaf v2.0 ook in de standaarduitleen zal opgenomen zijn;</p>
+<p class="list_Paragraph">mogelijk het gebruik van externe SQL-databases voor de gebruikers (voor de documenten blijft ISIS voorop staan);</p>
+<p class="list_Paragraph">meer geavanceerde mogelijkheden tot het bepalen en activeren van verschillende uitleen-regelsets voor bijv. verschillende jaarperiodes of afdelingen.</p>
+<p>Deze module maakt echter gebruik van Java en servlets (jsp) en een daarvoor gespecialiseerde server (Jetty maar ook Tomcat is mogelijk) en een JDBC-compatibele SQL-database voor de transacties zelf, zodat het enkel aanbevolen wordt in grotere organisaties vanwege de extra complexiteit.</p>
+<p>Meldenswaard m.b.t. resp. de OPAC (iAH of 'interface for advanced harvesting') en de 'Site' zijn enerzijds de directe toegang tot de 'OPAC' voor iedere aparte database vanuit de Site en anderzijds de 'meta-search' mogelijkheid om in alle zowel intern als  extern beschikbare databases ge&iuml;ntegreerd te zoeken. Vooral de mogelijkheid om in die set beschikbare databases ook repositories en lokale digitale bibliotheken (zie verder) op te nemen biedt interessante perspectieven voor een ge&iuml;ntegreerd informatie-aanbod.</p>
+<p>Het ingebouwde 'Content Management System' geeft de mogelijkheid om zelfs zonder echte HTML- of WWW-kennis een mooie portal op te zetten met centraal daarin de metazoek-optie over de beschikbare (ISIS-)databases en resp. links en rechts daarvan de externe relevante URL-links en de communicatie met en voor de gebruikers (met bijv. de obligate Facebook en Twitter-icoontjes). Ook hierover werd apart gepubliceerd [de Smet, 2012a].</p>
+<p>Een o.i. cruciale 'kwaliteit' van ABCD is dat de software meer is dan een software voor 'bibliotheek-automatisering'. Wij spreken liever over een 'document manager' waarmee allerlei soorten documentaire informatie kan worden beheerd en online aangeboden. Ter illustratie daarvan vermelden we bijv. het gebruik van ABCD in Uruguay als software voor het archief van de medische vereniging, maarmee al hun offici&euml;le en interne documenten worden beheerd. De illustratie toont resp. links een werkblad voor de beheerder en rechts een eind-gebruikers zoekresultaat. Een heel ander voorbeeld is het gebruik van ISIS door een arts in Irak voor zijn eigen 'patientendossiers' beheer !</p>
+<p>
+<img src="embedded:image4.png" alt=""/>
+</p>
+<p class="caption">Figure 4 Werkblad administratief archief</p>
+<p>
+<img src="embedded:image5.jpeg" alt="D:\EdS_Files\ISIS\ABCD\Med_Union_Uruguay.jpg"/>
+</p>
+<p class="caption">Figure 5 Weergave administratief archief-record</p>
+<h1>
+<a name="_Toc355083537"/>Nieuwe functies in versie 2.0</h1>
+<p/>
+<p>Op het moment van schrijven van dit artikel wordt de 'laatste hand' gelegd aan een nieuwe versie van de software, de eerste 'major' upgrade sinds de initi&euml;le publicatie van versie 1.0 in december 2009. Deze 'versie 2.0' zal als belangrijkste extra-functionaliteiten de volgende mogelijkheden bieden : het gebruik van verschillende CISIS-implementaties en als gevolg daarvan het gebruik van Unicode en Digitale Bibliotheek-versies. We bespreken kort elk van deze elementen hieronder.</p>
+<h2>
+<a name="_Toc355083538"/>Gebruik van verschillende CISIS-implementaties</h2>
+<p/>
+<p>De onderliggende 'CISIS'-bibliotheek is de eigen BIREME-implementatie van ISIS, geschreven in de C-taal (C en C++) en daarom 'CISIS' gedoopt ter onderscheid van de oorspronkelijke op Pascal gebaseerde en nieuwere op Java gebaseerde versies.</p>
+<p>Tengevolge van de eigen noden, vooral betrekking hebbend op nieuwe full-text toepassingen, heeft BIREME in verschillende stappen 'uitbreidingen' van de basis-technologie geproduceerd, met name inzake de volgende technische kenmerken van de database-technologie :</p>
+<p/>
+<p class="list_Paragraph">langere indexeersleutels (ABCD gebruikt standaard 60 tekens, een uitbreiding van de klassieke '30 tekens' van ISIS, maar nu kunnen ook sleutels tot 256 tekens worden aangemaakt;</p>
+<p class="list_Paragraph">grotere capaciteit per record : van de oorspronkelijke 8Kb over de typische 'WinISIS' records van 32Kb bestaan er nu versies tot 1Mb per record;</p>
+<p class="list_Paragraph">grotere database-capaciteit : omdat ISIS - anders dan bijv. de nieuwere databases - nog steeds alles opslaat in &eacute;&eacute;n 'Master'-bestand is de traditionele bovengrens van een bestand in een 16-bits omgeving van 512Mb onvoldoende voor nieuwe toepassingen en zodus werd die capaciteit momenteel uitgebreid tot resp. 4Gb en 512Gb., wat normaliter moet volstaan voor een hele poos.</p>
+<p class="list_Paragraph">verschillende indexeer-technieken : gezien de onpopulariteit van 'proximity'-operatoren wordt deze geslachtofferd voor een veel snellere en compactere indexeer-methode die meer gepast is voor full-text grotere bestanden.</p>
+<p>Voor gebruik van deze verschillende versies in ABCD biedt versie 2.0 de mogelijkheid aan per database een 'subfolder' van de cgi-bin (waarin alle executables van de software worden bewaard) te defini&euml;ren zodat voor elke database een gespecialiseerde versie kan worden aangesproken. Het is op deze techniek dat de volgende twee nieuwe mogelijkheden zijn gebaseerd.</p>
+<h2>
+<a name="_Toc355083539"/>ABCD Unicode</h2>
+<p/>
+<p>E&eacute;n van de totnogtoe onvervulde specificaties van het oorspronkelijke 'lastenboek' door de VLIR/UOS experten-groep opgezet betreft Unicode, waardoor ook niet-'Latin' tekensets kunnen worden gebruikt, zoals nodig voor toepassingen waarin naast de Europese talen ook bijv. Arabisch, Chinees maar bijv. ook het 'Ethiopische' alfabet (Amharic of Ge'ez) gehanteerd worden. Deze (enorme) uitbreiding van de oorspronkelijke 'ASCII/ANSI' tekensets van max. 256 tekens werd eigenaardig genoeg nooit door UNESCO zelf - met toch een wereldwijd mandaat - bewerkstelligd maar is nu een feit dankzij het DOCBIBLAS-project. Via gebruik van nieuwe 'alfanumerieke' tabellen -in ISIS bestond al vanaf het begin de mogelijkheid in de zng. 'ACTAB' zelf de numerieke waarden te defini&euml;ren -  kunnen nu ook multi-bits tekensets worden opgenomen en gehanteerd, zodat niet langer de onhandige en omslachtige omweg via de HTML-encodering van zulke vreemde tekensets dient te worden gewerkt. Een plaatje van een record met verschillende tekensets en een zoek-index idem dito ilustreert dit gegeven.</p>
+<p>
+<img src="embedded:image6.jpeg" alt=""/>
+</p>
+<p class="caption">Figure 6 ABCD Unicode record</p>
+<p>
+<img src="embedded:image7.png" alt=""/>
+</p>
+<p class="caption">Figure 7 ABCD Unicode zoeklijst</p>
+<p>Het nut hiervan is evident eens men de klassieke Europese maar ook (Latijns-)Americaanse omgeving verlaat. Recent heeft bijv. het 'Energy Charger Secretariat' met veel niet-Europese, bijv. Russische input dankzij de Unicode-optie nu beschikbaar in ABCD belangstelling getoond voor het gebruik ervan, maar ook in Ethiopi&euml; en India wordt deze optie met open armen onthaald, sterker zelfs : was zonder deze optie de toekomst van ABCD heel erg gehypotheceerd.</p>
+<p/>
+<h2>
+<a name="_Toc355083540"/>ABCD Digital Library</h2>
+<p/>
+<p>Een laatste maar ongetwijfeld zeker ook op grote belangstelling rekenende nieuwigheid is de optie om de inhoud van documenten in de database op te slaan, te indexeren (full-text) en aldus opzoekbaar te maken. Dit is de 'information retrieval' die overal ter wereld onder de indrukwekkende technologische push van Google zo populair is geworden, overigens gedeeltelijk tot spijt en nijd van heel wat bibliothecarissen, die het gebrek aan 'precisie' en de oppervlakkigheid als een verlies beschouwen.</p>
+<p>Eerder al betoogden we in een publicatie elders [de Smet, 2012b] dat ISIS en ABCD feitelijk alle elementen voor deze digitale bibliotheek-toepassingen in huis had :</p>
+<p class="list_Paragraph">door de flexibiliteit in structuren kunnen relatief gemakkelijk allerlei verschillende databases worden beheerd in &eacute;&eacute;n omgeving, zodat een 'digitale bibliotheek' werkelijk een bibliotheek kan blijven eerder dan - wat meestal het geval is - een 'digitale collectie';</p>
+<p class="list_Paragraph">relatief grote records en herhaalbare velden in ISIS laten opslag van grotere teksten toe : abstracts-toepassingen en records met bijv. inhoudstafels behoren al sinds het begin tot de ISIS-mogelijkheden</p>
+<p class="list_Paragraph">full-text indexering : de 'elk-woord' indexeer-techniek van ISIS als &eacute;&eacute;n van de feitelijk 4 verschillende bestaat ook al sinds het begin van ISIS en is daarom al decennia oud. Het gebruik van stopwoordenlijsten daarenboven maar ook 'gemarkeerde' woorden bestaat ook al even lang al is dit veel minder gebruikelijk (want bijv. heel arbeidsintensief) gebleven.</p>
+<p>Met behulp van een externe 'PFD-to-HTML' convertor, die deze job blijkens onze testen beter aankan dan de eigen interne PHP-implementatie, zal ABCD een door de bibliothecaris geselecteerd (vooralsnog dus niet door auteurs voor auto-submissie van documenten) bestand omzetten naar tekst en in &eacute;&eacute;n of meer records opslaan en vervolgens na full-text indexering opzoekbaar maken in de 'gewone' OPAC-omgeving, zie de illustratie verder op. Voor de niet PDF-documentformaten gebruikt ABCD de Apache-Java extensie 'Tika', die met een weliswaar veel hogere geheugen-footprint alle mogelijke documentformaten aankan en, een optie voor toekomstige ontwikkelingen in ABCD, ook de metadata kan ophalen uit de documenten. 
+Hoewel tekst-inhouden, d.w.z. na uitfilteren van alle niet-tekst zoals afbeeldingen die meestal een veelvoud aan opslagruimte innemen, niet frequent boven de 1Mb per document uitkomen - we spreken dan van 'boeken' van honderden pagina's die sowieso beter in stukken kunnen worden behandeld - biedt ABCD toch de mogelijkheid om in het PHP-script de opsplits-grootte van een record te bepalen. Als de tekstinhoud daarboven komt wordt die vervolgens opgesplitst in verschillende records met verwijzing naar het eerste 'moederrecord'. Door deze maximale tekst-omvang heel laag te zetten kunnen eventueel ook toepassingen met een grotere 'granulariteit' worden opgezet.</p>
+<p>Dit opent ook, in principe, de deur naar 'repository'-toepassingen, d.w.z. dat documenten - meestal wetenschappelijke - die binnen een instituut worden geproduceerd kunnen beheerd worden in ABCD, zonder dat daarvoor een gespecialiseerde andere software (dSpace, Greenstone...) moet worden aangeleerd en onderhouden. Dit is opnieuw een mogelijke troef voor kleinere bibliotheken waar dergelijke gespecialiseerde IT-kennis nu eenmaal ontbreekt, zeker ook als men weet dat dergelijke repositories ge&iuml;ntegreerd met de catalogus en andere databases kunnen worden ondervraagd in de ABCD-Site (de 'meta-search' functie). Auto-submissie door auteurs is (nog) niet aan de orde maar zou eventueel gezien de beschikbaarheid van 'forms' voor editeren van ABCD-records ook met relatier weinig extra moeite kunnen gerealiseerd worden.</p>
+<p>In de 'librarian's interface' kan de bibliothecaris documenten importeren, metadata editeren, de tekstinhoud bekijken (bijv. op relevantie) en opzoekingen doen, in de OPAC kan net als in andere databases online gezocht worden met eveneens directe toegang tot het oorspronkelijke document, metadata- en full-text opzoekingen en relevantie-beoordeling door weergave van de 'kale' tekst (zoals in Greenstone). Voor 'batch'-creatie van zulke collecties biedt ABCD een eenvoudig script dat PDF-bestanden in een folder omzet naar een ISIS-database.</p>
+<p>
+<img src="embedded:image8.png" alt=""/>
+</p>
+<p class="caption">Figure 8 ABCD digitale bibliotheek : voorbeeld</p>
+<h1>
+<a name="_Toc355083541"/>Implementatie en evaluatie</h1>
+<p/>
+<p>Na goed drie jaren ingebruikname van ABCD v1.0 en net v&oacute;&oacute;r de lancering van versie 2.0 kan een tussentijdse balans worden opgemaakt. Een enorm probleem doet zich evenwel voor dat altijd al gewogen heeft op de verspreiding van ISIS-gebaseerde software en de monitoring daarvan : de meeste ISIS-gebruikers zijn 'silent partners' met dikwijls nog slechte internet-connectiviteit, typisch voor helaas nog vele Zuiderse landen, zwakke professionalisering en deels daardoor weinig participatie in professionele activiteiten en fora. De 'continue' statistieken bijv. van het bewonderingswaardige initiatief van Marshall Breeding in zijn website <a href="http://www.librarytechnology.org/libwebcats/%20">http://www.librarytechnology.org/libwebcats/</a> geven een fel naar onderen vertekend beeld, simpelweg omdat vele ISIS-gebruikers, en bij uitbreiding dus nu ook ABCD-gebruikers, in alle stilte hun ding doen met de software, passief de ruime 'ISIS-discussielijst' volgen (waarop nog steeds ruim 1500 intekenaars zijn) maar dikwijls mooie dingen bereiken hoewel te bescheiden of te 'professioneel onzeker' blijven om het aan de buitenwereld te tonen of zelfs nog maar te rapporteren.</p>
+<p>Binnen de universitaire bibliotheek-context, nochtans niet de 'habitat' van de duizenden ISIS-gebruikende instituten, kunnen we wijzen op het feit dat in sommige landen ABCD een vooraanstaande rol speeld : in Cuba bijv. werd de software geselecteerd voor zowel het netwerk van Hoger Onderwijs instituten als Gezondheidszorg-instituten, in Mozambique, de Cara&iuml;ben en Kenya onstaan netwerken op basis van ABCD, om er maar enkele te noemen. </p>
+<p>
+Figure 
+9
+ Suite Saber (ABCD kloon)<img src="embedded:image9.png" alt=""/>In Brazili&euml; is ondertussen de eerste 'variant', nl. een qua CSS-styling geheel herwerkte maar functioneel grotendeels gelijkwaardige implementatie van ABCD onder de naam 'SuiteSaber' gepubliceerd. </p>
+<p/>
+<p/>
+<p/>
+<p>In Bolivia en Brazili&euml; wordt onze handleiding 'ABC of ABCD' uitgegeven als handboek voor de opleidingen bibliotheekwetenschap (zie illustratie), een mooiere erkenning is nauwelijks denkbaar.</p>
+<p>
+<img src="embedded:image10.jpeg" alt=""/>
+</p>
+<p class="caption">Figure 10 ABCD Manual Spaans</p>
+<p> 	<img src="embedded:image11.jpeg" alt=""/>
+</p>
+<p class="caption">Figure 11 ABCD Manual Engels</p>
+<p>Zoals eerder in de inleiding al aangegeven is het ABCD-initiatief binnen de (Vlaamse) VLIR/UOS context een succes : meer dan de helft van de partner-bibliotheken hebben ervoor geopteerd, soms ook commerci&euml;le software daarvoor opzij zettend. Dit is evenwel een erg breekbaar succes want door de onvermijdelijk trage ontwikkeling - volledig op vrijwilligheid gebaseerd nu na de stopzetting van de VLIR/UOS financiering en door o.m. de defensieve rol die BIREME binnen de UN is moeten gaan opnemen met fel gereduceerde budgetten - kunnen er evengoed afhakers komen. Nog te weinig blijkbaar zijn bibliothecarissen ervan overtuigd dat zij behalve hun boeken-collectie (die bijv. evengoed perfect kan worden beheerd met iets als KOHA) ook als 'informatie-managers' andere databases zouden moeten kunnen beheren, bijv. inzake projecten, expertise, onderwerpsgerelateerde websites, activiteiten..., en die zo mogelijk ge&iuml;ntegreerd met de eigen (boeken-)collectie aan hun gebruikers moeten aanbieden. Binnen de institutionele context wordt er ook nog te weinig van uitgegaan dat ook het archief en zelfs het museum  in dezelfde software-omgeving kan worden beheerd en geautomatiseerd, waarvoor schotten tussen institutionele afdelingen en diensten moeten worden afgebroken.</p>
+<p>Een andere les die we geleerd hebben en nog steeds leren is dat het opleiden van bibliothecarissen tot systeem-beheerders een zeer moeizame taak blijft. In grotere instituties waar men over echte IT-ers beschikt stoten we dikwijls op onbegrip vanwege de hen onbekende database-omgeving (in IT-opleidingen wordt nog steeds qua databases nauwelijks iets anders vermeld dan SQL) of denken ze - een fout die we ook in Europa decennia gelden maakten - dat ze de bibliotheek er wel snel eventjes konden bijnemen, het 'is tenslotte maar een simpele database'... terwijl in kleine organisaties teveel dagelijks werk opleiding en bijscholing in de weg staat. Desondanks is er veel meer vraag naar opleiding dan wat we momenteel kunnen aanbieden.</p>
+<p>Nieuwe distributie-technieken (bijv. via mirror-servers in verschillende continenten), een interactieve WIKI-omgeving voor Q&amp;A en hulp aan gebruikers zijn de belangrijkste ingredi&euml;nten van de nieuwe planning qua ABCD-management waarmee we momenteel bezig zijn. Alle kleine beetjes, en van veel meer kan een software als ABCD enkel dromen, kunnen en zullen helpen vanuit de overtuiging dat het hoedanook de moeite loont.</p>
+<h1>
+<a name="_Toc355083542"/>Besluit</h1>
+<p/>
+<p>Als besluit willen we graag stellen dat de indien niet overheersende, dan toch in ieder geval cruciale rol die vanuit Vlaanderen dankzij VLIR/UOS is gespeeld met betrekking tot de ontwikkeling en promotie van de ABCD-software,  zondermeer mag aanleiding geven tot enige fierheid.  Terwijl ook andere - mogelijk veel belangrijkere - (FOSS-) initiatieven in Vlaanderen werden 'geboren' (Drupal CMS, de OpenURL implementaties SFX en V-Link, ...) maken we ook significant deel uit van de geschiedenis van ABCD en hebben we er dus alle belang bij de software een voorspoedige toekomst te blijven wensen.</p>
+<p/>
+<p>Referenties
+
+- de Smet, E. (2011) : <i>Special features of the advanced loans module of the ABCD integrated library system</i>, 2011,  in:  Program: electronic library and information systems, Vol. 45 Iss: 3, pp.323 - 332	
+- de Smet Egbert &amp; Dhamdhere Sangeeta N. (2012a) : <i>Publishing and sharing library resources with the ABCD Site</i>, in : Information development - ISSN 0266-6669 - (2012a), "<a href="http://dx.doi.org/doi:10.1177/0266666912451187">http://dx.doi.org/doi:10.1177/0266666912451187</a>" </p>
+<p>- de Smet Egbert (2012b) : <i>ABCD as a digital library tool</i>, in : Advances in digital library development / Jose, Antony [edit.] - ISBN 978-935-059-077-5 - MacMillan, New Delhi, 2012, p. 135-145
+</p>
+<p>- Rajput P.S. &amp; J.N. Gautam, 2010 : Automation and problems in their implementation, an investigation of special libraries in Indore, India, in : International Journal of Library and Information Science, Vol. 2(7), pp. 143-147, October 2010</p>
+<p>- Ravichandra Rao, 1997 : <i>Automation of Academic Libraries in India: Status, Problems and Future</i>, in : CALIBER-97, 6-8, March 1997, Patiala, pp. 1-4, INFLIBNET Centre, Ahmedabad, India</p>
+<p/>
+<p>Online bronnen :</p>
+<p>
+<a href="http://www.librarytechnology.org/libwebcats/%20">http://www.librarytechnology.org/libwebcats/</a>
+</p>
+<p>
+<a href="https://docs.google.com/spreadsheet/pub?key=0Au8dWcSWVfUddHJfWDFEdjBhU25wcDl5THktcEpUdWc&amp;output=html">https://docs.google.com/spreadsheet/pub?key=0Au8dWcSWVfUddHJfWDFEdjBhU25wcDl5THktcEpUdWc&amp;output=html</a>
+</p>
+<p>
+<a href="http://www.postgresql.org/docs/9.0/static/hstore.html">http://www.postgresql.org/docs/9.0/static/hstore.html</a>
+</p>
+<p>
+<a href="http://bvs.bireme.br">http://bvs.bireme.br</a>
+</p>
+<p/>
+</body>
+</html>

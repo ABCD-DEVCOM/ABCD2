@@ -1,0 +1,83 @@
+<font face="Arial" size="2"><strong>Prêts</strong><br />
+<br />
+Indiquez le code d'utilisateur et le numéro d'inventaire de l'objet que vous souhaitez localiser. Vous pouvez utiliser la <strong>Liste</strong> pour obtenir une liste alphabétique des utilisateurs ou le nombre de stocks dans la base de données  <strong>loanobjects</strong>. Cliquez sur <strong>Prêt</strong> pour activer le processus de prêt. <br />
+<br />
+Avec l'aide du nom d'utilisateur:<br />
+</font>
+<ol>
+
+    <li><font face="Arial" size="2">On peut consulter la base de données des utilisateurs (utilisateurs) et pour le format spécifié dans la configuration pour en extraire les données (loans_usdisp.pft). En outre, les états: le type d'utilisateur et la durée,&nbsp; si ce dernier paramètre a été défini dans la configuration des politiques.<br />
+    </font></li>
+    <li><font face="Arial" size="2">Il lit la base de données des suspensions et les amendes (suspml) pour vérifier l'utilisateur.</font></li>
+    <li><font face="Arial" size="2">Il lit la base de données de transactions pour déterminer les prêts détenus par l'utilisateur s'il est en retard et la date de retour<br />
+    </font></li>
+    <li><font face="Arial" size="2">Il lit la base de données des réserves afin de déterminer si l'utilisateur dispose d'une copie réservée <br />
+
+    </font></li>
+</ol>
+<font face="Arial" size="2">Avec le numéro d'inventaire:<br />
+</font>
+<ol>
+    <li><font face="Arial" size="2">Il lit les objets de base de données de l'emprunt (loanobjects) afin de déterminer les caractéristiques de l'objet de fournir le numéro de contrôle et le titre de la base de données où l'objet est catalogué.&nbsp; Avec ces deux valeurs on lit la base de donnée catalographique pour obtenir l'information du titre dont une copie est en cours de traitement</font></li>
+    <li><font face="Arial" size="2">Il lit la base de données afin de déterminer le statut de réserve du copie en demande<br />
+    </font></li>
+
+    <li><font face="Arial" size="2">Détermine si l'utilisateur a donné une autre copie du même nom en passant en revue l'inventaire du titre en loanobjects contre l'information obtenue de la base de données de transactions</font></li>
+</ol>
+<font face="Arial" size="2">Il est situé à la mise en oeuvre des politiques fondées sur un type d'utilisateur et le type d'objet qui est fourni.</font> <font size="2"><font face="Arial">Les règles sont appliquées en tenant compte des paramètres suivants:<br />
+</font></font>
+<ol>
+    <li><font face="Arial" size="2">La date effective de l'utilisateur</font></li>
+    <li><font face="Arial" size="2">Si vous avez des amendes ou d'une suspension</font></li>
+
+    <li><font face="Arial" size="2">Le nombre de prêts par l'utilisateur</font></li>
+
+    <li><font face="Arial" size="2">Si vous avez des prêts en retard</font></li>
+    <li><font face="Arial" size="2">Si l'utilisateur dispose déjà d'un autre exemplaire du même titre</font></li>
+    <li><font face="Arial" size="2">La date effective de l'objet</font></li>
+</ol>
+<font size="2"><font face="Arial">Si toutes les règles de la politique, il est estimé sur la date d'échéance du calendrier des jours fériés et le prêt est attribué à l'utilisateur, en faisant un enregistrement dans la base de données des transactions (trans).<br />
+<br />
+
+Le non-respect des règles de la politique alors est délivré le message correspondant et ne sera pas attribué à l'utilisateur la demande de copie.<br />
+<br />
+<br />
+
+<strong>Renouvellements<br />
+<br />
+</strong>Le renouvellement d'un prêt peut être faite &nbsp;lors du déploiement de l'état d'esprit de l'utilisateur ou de l'utilisation de l'option prévue à cet effet dans le menu module mouvement.<br />
+<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2">Grâce à l'état de compte d'utilisateur<br />
+
+    Sélectionnez le prêt que vous souhaitez renouveler et cliques sur <strong>Renouveler.</strong> ABCD va examiner si la politique accepte les renouvellements (sur la base du type d'utilisateur et le type d'objet) et, si oui, combien sont admis. Si l'essai est de changer les dates de prêt et de rembourser le prêt. Dans la base de données des transactions on passe au champ 200 les dates actuels du prêt et du remboursement, afin de maintenir l'histoire de l'emprunt et pour la compilation de statistiques</font></li>
+
+</ul>
+<ul>
+    <li><font face="Arial" size="2">Utilisation de l'option de <strong>Renouvellement<br />
+    </strong>Indiquez le numéro de l'inventaire que vous souhaitez renouveler le prêt. Avec cette information  ABCD effectue une recherche sur la base des transactions pour obtenir les données du prêt,&nbsp; le code de l'utilisateur, et choisir la politique à appliquer pour le processus de renouvellement. Une fois ces valeurs obtenues on fait la même chose que dans l'étape précédente.</font></li>
+
+</ul>
+<br />
+<font size="2"><font face="Arial"><strong>Retours</strong><br />
+<br />
+Le remboursement d'un prêt peut être effectué par l'utilisateur du compte ou en utilisant l'option à cet effect dans les menus présentés dans le module de circulation (mouvement des prêts)<br />
+
+<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2">Grâce à l'état de compte d' utilisateur<br />
+    Sélectionnez le ñrêt que vous souhaitez restaurer et cliquez sur <strong>Restaurer.</strong> Avec des informations pour l'utilisateur, le type d'utilisateur et le type d'objet, ABCD détermine la politique de l'objet et s'il y a retard dans le retour. Si c'est le cas pourrait apporter une amende ou de suspendre l'utilisateur, comme prévu dans les reglaments. Les suspensions et les amendes sont stockées dans la base de données <strong>suspml</strong>.</font></li>
+
+</ul>
+<font face="Arial" size="2"></font>
+<ul>
+
+    <li><font face="Arial" size="2">Utilisation de l'option <strong>Retourner</strong></font><br />
+    <font face="Arial" size="2">Indiquez le numéro d'inventaire de l'emprunt à rembourser. Avec cette information ABCD effectue une recherche sur la base de transactions pour obtenir les données du prêt, le code de l'utilisateur et de choisir la politique à appliquer pour le processus de retour. Une fois ces valeurs obtenues, on fait la même chose que dans l'étape précédente.</font></li>
+</ul>
+<font size="2"><font face="Arial"><br />
+<br />
+<br />
+</font></font>

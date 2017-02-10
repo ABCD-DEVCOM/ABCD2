@@ -1,0 +1,18 @@
+Tipo de registro
+Número de inventario
+Volumen
+Tomo
+Código de usuario
+Fecha de préstamo
+Hora de préstamo
+Fecha de devolución
+Hora de devolución
+Tipo de usuario
+Tipo de Objeto
+No. de Clasificación
+Número de control del objeto
+Base de datos
+Referencia
+Operador y fecha de préstamo
+Operador y fecha devolución
+Renovaciones

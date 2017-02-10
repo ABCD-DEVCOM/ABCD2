@@ -1,0 +1,848 @@
+/* #general styles */
+BODY {
+	background: #E2E2E2;
+}
+
+BODY, INPUT, SELECT, TEXTAREA {
+	font-family: "Trebuchet MS", Arial, Verdana, Helvetica;
+	font-size: 10pt;
+	color: #000;
+	BORDER-TOP-COLOR: #000000;
+	BORDER-LEFT-COLOR: #000000;
+	BORDER-RIGHT-COLOR: #000000;
+	BORDER-BOTTOM-COLOR: #000000;
+	BORDER-TOP-WIDTH: 1px;
+	BORDER-LEFT-WIDTH: 1px;
+	FONT-SIZE: 12px;
+	BORDER-BOTTOM-WIDTH: 1px;
+	FONT-FAMILY: Arial,Helvetica;
+	BORDER-RIGHT-WIDTH: 1px
+}
+
+A {
+	color: #708bb1;
+}
+
+A IMG {
+	border: 0px;
+}
+
+LABEL {
+	cursor: pointer;
+}
+
+/* #master classes */
+
+/* ABCD ADDED*/
+
+	.helper A{
+		color:#cddef6
+	}
+/*   */
+
+	/* #defaultButton classes */
+	A.defaultButton {
+		text-decoration: none;
+		color: #fff;
+	}
+
+	A.defaultButton:hover IMG {
+		background-color: #4E617C;
+	}
+
+
+	A.defaultButton SPAN {
+		cursor: pointer;
+		font-size: 90%;
+	}
+
+	A.defaultButton STRONG {
+		font-size: 110%;
+	}
+
+	/* #menuButton classes */
+	A.menuButton {
+		text-decoration: none;
+		color: #fff;
+	}
+
+	A.menuButton:hover IMG {
+		background-color: #4E617C;
+	}
+
+
+	A.menuButton SPAN {
+		cursor: pointer;
+		font-size: 90%;
+	}
+
+	A.menuButton STRONG {
+		font-size: 110%;
+	}
+
+	.textEntry {
+		background: #f5f5f5;
+	}
+
+	INPUT.textEntry, TEXTAREA.textEntry {
+		border-top: 2px solid #a7a6aa;
+		border-left: 2px solid #a7a6aa;
+		border-bottom: 2px solid #a7a6aa;
+		border-right: 2px solid #a7a6aa;
+	}
+
+	INPUT.textEntryFocus, TEXTAREA.textEntryFocus {
+		border-color: #5e88b6;
+		background: #fff;
+	}
+
+	INPUT.superTextEntry,
+	TEXTAREA.superTextEntry {
+		font-size: 180%;
+	}
+
+	.inputAlert {
+		background: #f3eeb5 url('../../images/icon/singleButton_alert.gif') no-repeat center right !important;
+	}
+
+	.helper {
+		background: url('../../images/icon/helper_bg.png') no-repeat top left;
+		color: #646567;
+		background-color: #87B783;
+	}
+
+	.alert {
+		background-image: url('../../images/icon/singleButton_alert.gif');
+		font-weight: bold;
+		color: #000
+	}
+
+	A.singleButton {
+		color: #fff;
+		text-decoration: none;
+		background: url('../../images/singleButton_bg.gif') repeat-x top left;
+	}
+
+	A.singleButton:hover, A.singleButtonSelected {
+		background-color: #4e617c;
+	}
+
+	A.singleButton .sb_lb {
+		background: url('../../images/singleButton_lb.gif') no-repeat top left;
+	}
+
+	A.singleButton .sb_rb {
+		background: url('../../images/singleButton_rb.gif') no-repeat top right;
+	}
+
+	/* #END #defaultButton classes */
+
+/* #specific classes */
+
+	/*#heading classes */
+	.heading {
+		background-color: #E2E2E2;
+	}
+
+	.institutionalInfo H1, .institutionalInfo H2 {
+		letter-spacing: -1px;
+	}
+
+	.institutionalInfo H1 {
+		font-size: 110%;
+		color: #fff;
+	}
+
+	.institutionalInfo H2 {
+		font-weight: normal;
+		font-size: 100%;
+		color: #c3d7f4;
+	}
+
+	.userInfo, .userInfo A, .language, .language A {
+		color: #000000;
+	}
+
+	.userInfo A.button_logout {
+		background: url('../../images/button_logout.gif') no-repeat center right;
+		text-decoration: none
+	}
+
+	.userInfo A.button_logout:hover SPAN {
+		text-decoration: underline;
+	}
+	/* #END #heading classes */
+
+	/*#sectionInfo classes */
+	.sectionInfo {
+		background: #0A4E90;
+	}
+
+	.breadcrumb {
+		font-size: 110%;  /*cambiado */
+	}
+
+	.breadcrumb H3 {
+		font-size: 100%;
+		color: #fff;
+	}
+
+	.breadcrumb, .breadcrumb A {
+		color: #bcd1ef;
+	}
+
+	.breadcrumb SUP {
+		font-size: 45%;
+	}
+
+	.actions, .actions A {
+		color: #fff;
+		text-decoration: none;
+	}
+	/*#END #sectionInfo classes */
+
+	/*#middle classes */
+	.middle {
+		background: #fff;
+	}
+	/*#END #middle classes */
+
+	/*#footer classes */
+	.footer {
+		background: #0A4E90;
+		color: #fff;
+	}
+
+	.footer A {
+		color: #cddef6;
+	}
+
+	.systemInfo STRONG {
+		font-size: 110%;
+	}
+
+	.distributorLogo A {
+		background: url('../../images/distributorLogo.gif') no-repeat top left;
+	}
+	/*#END #footer classes */
+
+	/*#homepage classes */
+	.homepage .mainBox {
+
+	}
+
+	.homepage .mainBox .boxTop {
+		background: url('../../images/mainBox_boxTop_bg.gif') repeat-x top left;
+	}
+
+	.homepage .mainBox .boxBottom {
+		background: url('../../images/mainBox_boxTop_bg.gif') repeat-x bottom left;
+	}
+
+	.homepage .mainBox .boxContent {
+		border-left: 1px solid #dbdee1;
+		border-right: 1px solid #dbdee1;
+		background: #fff;
+	}
+
+	.homepage .mainBox .boxTop .btLeft {
+		background: url('../../images/mainBox_btLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxTop .btRight {
+		background: url('../../images/mainBox_btRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxBottom .bbLeft {
+		background: url('../../images/mainBox_bbLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxBottom .bbRight {
+		background: url('../../images/mainBox_bbRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxContent {
+		background: #fff url('../../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
+		border-color: #b2c2d4
+	}
+
+	.homepage .mainBoxHighlighted .boxTop {
+		background: url('../../images/mainBoxHighlighted_boxTop_bg.gif') repeat-x top left;
+	}
+
+	.homepage .mainBoxHighlighted .boxBottom {
+		background: #eff3f8 url('../../images/mainBoxHighlighted_boxTop_bg.gif') repeat-x bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxTop .btLeft {
+		background: url('../../images/mainBoxHighlighted_btLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxTop .btRight {
+		background: url('../../images/mainBoxHighlighted_btRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxBottom .bbLeft {
+		background: url('../../images/mainBoxHighlighted_bbLeft.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBoxHighlighted .boxBottom .bbRight {
+		background: url('../../images/mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle H4 {
+		font-size: 100%;
+		font-weight: normal;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle H4 STRONG {
+		font-size: 210%;
+		color: #265182;
+		font-weight: normal;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle SPAN {
+		color: #4c4c4c;
+	}
+
+	.homepage .mainBox .titleSection .sectionIcon {
+		background: url('../../images/database.png') no-repeat center;
+	}
+
+	.homepage .mainBox .dbSection .sectionIcon {
+		background: url('../../images/database.png') no-repeat center;
+	}
+
+	.homepage .mainBox .searchSection .sectionIcon {
+		background: url('../../images/search.png') no-repeat center;
+	}
+
+	.homepage .mainBox .orderSection .sectionIcon {
+		background: url('../../images/icon/mainBox_titleSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .fascicleSection .sectionIcon {
+		background: url('../../images/icon/mainBox_fascicleSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .maskSection .sectionIcon {
+		background: url('../../images/icon/mainBox_maskSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .toolSection .sectionIcon {
+		background: url('../../images/icon/mainBox_toolSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .loanSection .sectionIcon {
+		background: url('../../images/icon/mainBox_loanSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .helpSection .sectionIcon {
+		background: url('../../images/icon/mainBox_helpSection.png') no-repeat center;
+	}
+
+	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+		color: #000;
+	}
+
+
+	.homepage .mainBox .boxContent .sectionButtons A.menuButton {
+		color: #000;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles .stInput LABEL {
+		color: #4c4c4c;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles .stInput INPUT.textEntry {
+		background: url('../../images/searchTitles_textEntry_bg.gif') no-repeat top left;
+		border: 0px none;
+	}
+
+	.homepage .mainBox A.defaultButton:hover IMG {
+		background-color: #fff;
+	}
+
+	.homepage .mainBox A.menuButton:hover IMG {
+		background-color: #fff;
+	}
+	/*#END #homepage classes */
+
+	/* #buttons background classes */
+	A.listButton IMG {
+		background: url('../../images/icon/defaultButton_list.png') no-repeat center;
+	}
+
+	A.databaseButton IMG {
+		background: url('../../images/icon/database.png') no-repeat center;
+	}
+
+	A.update_databaseButton IMG {
+		background: url('../../images/icon/kexi.png') no-repeat center;
+	}
+	A.utilsButton IMG {
+		background: url('../../images/icon/agt_utilities.png') no-repeat center;
+	}
+	A.exploreButton IMG {
+		background: url('../../images/icon/kdisknav.png') no-repeat center;
+	}
+	A.newButton IMG {
+		background: url('../../images/icon/ascii.png') no-repeat center;
+	}
+
+	A.importButton IMG {
+		background: url('../../images/icon/defaultButton_import.png') no-repeat center;
+	}
+
+	A.exportButton IMG {
+		background: url('../../images/icon/defaultButton_export.png') no-repeat center;
+	}
+
+	A.reportButton IMG {
+		background: url('../../images/icon/defaultButton_report.png') no-repeat center;
+	}
+
+	A.toolsButton IMG {
+		background: url('../../images/icon/tools.png') no-repeat center;
+	}
+	A.userButton IMG {
+		background: url('../../images/icon/defaultButton_user.png') no-repeat center;
+	}
+
+	A.pdfButton IMG {
+		background: url('../../images/icon/defaultButton_pdf.png') no-repeat center;
+	}
+
+	A.cancelButton IMG {
+		background: url('../../images/icon/defaultButton_cancel.png') no-repeat center;
+	}
+
+	A.saveButton IMG {
+		background: url('../../images/icon/defaultButton_save.png') no-repeat center;
+	}
+
+	A.nextButton IMG {
+		background: url('../../images/icon/defaultButton_next.png') no-repeat center;
+	}
+
+	A.backButton IMG {
+		background: url('../../images/icon/defaultButton_back.png') no-repeat center;
+	}
+
+	A.eraseButton IMG {
+		background: url('../../images/icon/singleButton_erase.png') no-repeat center;
+	}
+
+	A.indexButton IMG {
+		background: url('../../images/icon/singleButton_e.png') no-repeat center;
+	}
+
+	A.statButton IMG {
+		background: url('../../images/icon/kchart.png') no-repeat center;
+	}
+	A.suggestButton IMG {
+		background: url('../../images/icon/suggestions.jpg') no-repeat center;
+	}
+	A.requisitionButton IMG {
+		background: url('../../images/icon/requisition.png') no-repeat center;
+	}
+	A.receivingButton IMG {
+		background: url('../../images/icon/kword.png') no-repeat center;
+	}
+	A.biddingButton IMG {
+		background: url('../../images/icon/bidding.png') no-repeat center;
+	}
+	A.checkButton IMG {
+		background: url('../../images/icon/clean.png') no-repeat center;
+	}
+	A.discardButton IMG {
+		background: url('../../images/icon/trashcan_full.png') no-repeat center;
+	}
+	A.copiesdbButton IMG {
+		background: url('../../images/icon/kmultiple.png') no-repeat center;
+	}
+	A.decisionButton IMG {
+		background: url('../../images/icon/kexi_kexi.png') no-repeat center;
+	}
+	A.resumeButton IMG {
+		background: url('../../images/icon/spreadsheet.png') no-repeat center;
+	}
+	A.pendingButton IMG {
+		background: url('../../images/icon/file-manager.png') no-repeat center;
+	}
+
+	A.resetButton IMG {
+		background: url('../../images/icon/agt_reload.png') no-repeat center;
+	}
+	A.z3950Button IMG {
+		background: url('../../images/icon/defaultButton_import.png') no-repeat center;
+	}
+	A.copiesdbaddButton IMG {
+		background: url('../../images/icon/db_update.png') no-repeat center;
+	}
+	A.loanButton IMG{		background: url('../../images/icon/loan.png') no-repeat center;	}
+	A.returnButton IMG{
+		background: url('../../images/icon/return.png') no-repeat center;
+	}
+	A.renewButton IMG{
+		background: url('../../images/icon/renew.png') no-repeat center;
+	}
+	A.sanctionsButton IMG{
+		background: url('../../images/icon/sanctions.png') no-repeat center;
+	}
+	A.statusitemButton IMG{
+	 	background: url('../../images/icon/statusitem.png') no-repeat center;
+	}
+	A.userstatmentButton IMG{
+	 	background: url('../../images/icon/userstatment.png') no-repeat center;
+	}
+	A.userhistoryButton IMG{
+	 	background: url('../../images/icon/userhistory.png') no-repeat center;
+	}
+	A.transactionsButton IMG{
+	 	background: url('../../images/icon/transactions.png') no-repeat center;
+	}
+	A.statisticsusersButton IMG{
+	 	background: url('../../images/icon/statisticsusers.png') no-repeat center;
+	}
+
+	A.statisticsanctionsButton IMG{
+	 	background: url('../../images/icon/statisticsanctions.png') no-repeat center;
+	}
+
+	A.newsuggestionButton IMG{
+	 	background: url('../../images/icon/newsuggestion.png') no-repeat center;
+	}
+	A.providersButton IMG{
+	 	background: url('../../images/icon/providers.png') no-repeat center;
+	}
+	A.purchaseorderButton IMG{
+	 	background: url('../../images/icon/purchaseorder.png') no-repeat center;
+	}
+	A.createpurchaseorderButton IMG{
+	 	background: url('../../images/icon/createpurchaseorder.jpg') no-repeat center;
+	}
+	A.approvedsuggestionsButton IMG{
+	 	background: url('../../images/icon/approvedsuggestions.png') no-repeat center;
+	}
+    A.origendatabaseButton IMG{
+	 	background: url('../../images/icon/basededatosorigen.png') no-repeat center;
+	}
+	A.usersconfigureButton IMG{
+	 	background: url('../../images/icon/usersconfigure.png') no-repeat center;
+	}
+	A.userstypeButton IMG{
+	 	background: url('../../images/icon/userstype.png') no-repeat center;
+	}
+	A.itemstypeButton IMG{
+	 	background: url('../../images/icon/itemstype.png') no-repeat center;
+	}
+	A.loanpolicyButton IMG{
+	 	background: url('../../images/icon/loanpolicy.png') no-repeat center;
+	}
+	A.currency_daysButton IMG{
+	 	background: url('../../images/icon/currency_days.png') no-repeat center;
+	}
+	A.calendarButton IMG{
+	 	background: url('../../images/icon/calendar.png') no-repeat center;
+	}
+	A.receiptsButton IMG{
+	 	background: url('../../images/icon/receipts.png') no-repeat center;
+	}
+	A.reportsButton IMG{
+	 	background: url('../../images/icon/reports.png') no-repeat center;
+	}
+	A.reserveButton IMG{
+	 	background: url('../../images/icon/reservar.png') no-repeat center;
+	}
+	A.cursosButton IMG{
+	 	background: url('../../images/icon/cursos.png') no-repeat center;
+	}
+	A.homeButton IMG{
+	 	background: url('../../images/icon/home.png') no-repeat center;
+	}
+	/*#END #buttons background classes */
+
+	/*#list classes */
+	.list {
+
+	}
+
+	.searchBox {
+		background: #d8dade;
+	}
+
+	.searchBox LABEL {
+		color: #848484;
+	}
+
+	.searchBox INPUT.submit {
+		border: 0px none;
+		background: url('../../images/searchBox_submit_bg.gif') no-repeat top left;
+		color: #848484
+	}
+
+	.searchBox INPUT.submitAdvanced {
+		border: 0px none;
+		background: url('../../images/searchBox_submitadvanced_bg.gif')  top left;
+		color: #848484
+	}
+
+
+	.statTable {
+		border-collapse: collapse;
+		border-spacing: 0px;
+	}
+
+	.statTable TH {
+		border-right: 1px solid #9d9d9d;
+		background: #848484;
+		border-bottom: 3px solid #848484;
+		color: #fff;
+		cursor: pointer;
+		border:1px solid #9d9d9d;
+	}
+
+
+	.listTable {
+		border-collapse: collapse;
+		border-spacing: 0px;
+	}
+
+
+	.listTable TH {
+		border-right: 1px solid #9d9d9d;
+		background: #848484;
+		border-bottom: 3px solid #848484;
+		color: #fff;
+		cursor: pointer;
+		border:1px solid #9d9d9d;
+	}
+
+	.listTable TH.checkboxes,
+	.listTable TH.action {
+		cursor: default;
+	}
+
+	.listTable TH.desc {
+		background-image: url('../../images/listTable_th_desc.gif');
+		background-repeat: no-repeat;
+		background-position:  right center;
+		border-bottom-color: #29a1c8
+	}
+
+	.listTable TH.asc {
+		background-image: url('../../images/listTable_th_asc.gif');
+		background-repeat: no-repeat;
+		background-position:  right center;
+		border-bottom-color: #29a1c8
+	}
+
+	.listTable TD {
+		border-bottom: 1px solid #e7e7e7;
+	}
+
+	.listTable .tButton {
+		background: #bdced3;
+		color: #000;
+		text-decoration: none;
+	}
+
+	.listTable .tErase {
+		background: #dfbfbf;
+	}
+
+	.listTable .rowOver TD {
+		background: #f4f4f4;
+		border-bottom-color: #ddd;
+	}
+
+	.listTable .rowOver .tButton:hover {
+		background: #88a6d3;
+		color: #fff;
+	}
+
+	.listTable .rowOver .tErase:hover {
+		background: #d36666;
+	}
+
+	/*
+	.listTable .rowOver .tButton {
+		background: #88a6d3;
+		color: #fff;
+	}
+
+	.listTable .rowOver .tErase {
+		background: #d36666;
+	}
+	*/
+	.tMacroActions {
+		background: #708bb1;
+	}
+
+	.tMacroActions .checkboxAction {
+		background: url('../../images/checkboxAction_bg.gif') no-repeat top left;
+	}
+	/*#END #list classes */
+
+	/*#form classes */
+	.form {
+
+	}
+
+
+	.formHead {
+		background: #d8dade;
+	}
+/* ABCD ADDED*/
+	.formContent .helper A{
+		color:#646567;
+	}
+
+	td{
+		font-family:arial;
+		font-size:10px;
+	}
+/*   */
+	.formHead H4 {
+		font-size: 160%;
+		color: #3d5d8a;
+	}
+
+	.formRow LABEL {
+		color: #000;
+	}
+
+	.formFoot {
+		background: #708bb1;
+	}
+
+	.formFoot .helper {
+		color: #fff;
+		border-right: 1px solid #8da2c1;
+	}
+	h4 {
+		color:#3D5D8A;
+		font-size:160%;
+	}
+	/*#END #form classes */
+
+	/* #Loading */
+	.loading {
+
+	}
+
+	.loading DIV {
+		background: url('../../images/loading.gif') no-repeat top center;
+	}
+	/* #END #Loading */
+
+	/* #colection Title loading */
+	TD.hideSTitle .showContent {
+
+	}
+
+	TD.showSTitle {
+		background: #f4f4f4 !important;
+	}
+
+	.rowOver TD.showSTitle {
+		background: #eaeaea !important;
+	}
+
+	TD.showSTitle .showContent {
+
+	}
+
+	TD.showSTitle .singleLoading {
+		border-top: 1px solid #dadfe7;
+		font-size: 90%;
+		color: #7a7a7a;
+	}
+
+	TD.showSTitle .singleLoading IMG {
+		background: url('../../images/singleLoading.gif') no-repeat top left;
+	}
+
+	TD.showSTitle .collectionInfo {
+		border-top: 1px solid #dadfe7;
+		font-size: 90%;
+	}
+
+	TD.showSTitle .collectionMode {
+		background: #fff;
+	}
+
+	.rowOver TD.showSTitle .collectionMode {
+		background: #f4f4f4;
+	}
+
+	TD.showSTitle .collectionMode A {
+		color: #708bb1;
+	}
+
+	TD.showSTitle .collectionMode A:hover {
+		color: #000;
+		text-decoration: underline;
+	}
+
+	TD.showSTitle .collectionMode A.selected {
+		background: #f4f4f4;
+		color: #000;
+		text-decoration: none;
+		font-weight: bold;
+	}
+
+	TD.showSTitle .collectionMode A.selected:hover {
+		text-decoration: none;
+	}
+
+	.rowOver TD.showSTitle .collectionMode A.selected {
+		background: #eaeaea;
+	}
+	/* #END #colection Title loading */
+
+	/* #Login */
+	.login .loginForm .boxContent {
+		background: #fff url('../../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
+		border-left: 1px solid #b2c2d4;
+		border-right: 1px solid #b2c2d4
+	}
+
+	.login .loginForm .boxTop {
+		background: url('../../images/mainBoxHighlighted_boxTop_bg.gif') repeat-x top left;
+	}
+
+	.login .loginForm .boxBottom {
+		background: #eff3f8 url('../../images/mainBoxHighlighted_boxTop_bg.gif') repeat-x bottom left;
+	}
+
+	.login .loginForm .boxTop .btLeft {
+		background: url('../../images/mainBoxHighlighted_btLeft.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .boxTop .btRight {
+		background: url('../../images/mainBoxHighlighted_btRight.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .boxBottom .bbLeft {
+		background: url('../../images/mainBoxHighlighted_bbLeft.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .boxBottom .bbRight {
+		background: url('../../images/mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
+	}
+
+	.login .loginForm .submitRow A.defaultButton:hover IMG {
+		background-color: transparent;
+	}
+
+	.login .loginForm .submitRow A.defaultButton SPAN {
+		color: #708bb1;
+		font-size: 120%;
+	}
+
+	.login .loginForm .submitRow A.defaultButton:hover SPAN {
+		color: #000;
+	}
+	/* #END Login */

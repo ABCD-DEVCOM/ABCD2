@@ -1,0 +1,6 @@
+10:if a(v10) then 'Sorry, the resource itself is a mandatory field !' fi$$|$$true
+###
+20:if p(v20) then else 'Please  add some description on the resource here' fi$$|$$false
+###
+:
+###

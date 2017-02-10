@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%testdl/data/testdl.*
+FILE standard.pft=%path_database%testdl/pfts/%lang%/testdl.pft
+FILE SHORTCUT.IAH=%path_database%testdl/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Palabras^2Palabras^3Words^4Mots^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX Ti=^1Títulos^2Títulos^3Titles^4Titres^xTI ^yDATABASE^uTI_^mTI_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1por defecto^2por defecto^3default^4default
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

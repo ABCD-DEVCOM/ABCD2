@@ -1,0 +1,143 @@
+/********************************************
+ Variables déjà utilisées
+  ==== Portée générale
+ s0 : contenu d'un champ avec des sous champs répétitifs. Utilisé dans le format @scr.pft séparé, mais appelé dans le present,  
+ s6 : châine de controle de caractère de fin de zone 
+ s7 : ponctuation ISBD prescrite pour introduire chaque sous champs identifié
+ s8 : identifiant du sous champ à sélectionner par le format @scr.pft
+ s9 : sortie produite par le format @scr.pft
+******************************************** */
+ 
+ 
+ 
+/* Titre et mention de responsablité */
+
+/* contrôle du caractere de fin de zone*/
+
+
+
+if p(v200^a) then '<b>', v200^a  '</b>' fi
+if p(v200^b) then ' [', v200^b, '] ', fi
+if p(v200^d) then ' = ', v200^d fi
+if p(v200^e) then ' : ', s0:=(v200), s8:=('^e'), s7:=(' : '), @scr.pft,  fi
+if p(v200^f) then ' / ' v200^f fi
+if p(v200^g) then ' ; ', s0:=(v200), s8:=('^g'), s7:=('; '), @scr.pft,  fi
+
+
+
+
+
+/* Mention d'edition */
+
+if p(v205) then '. - '
+	if p(v205^a) then
+		v205^a
+		if p(v205^d) then ' = ', v205^d fi
+		if p(v205^f) then ' / ', v205^f fi
+		if p(v205^g) then '; ', v205^g fi
+		if p(v205^b) then ', ', v205^b fi
+	else
+		if p(v205^d) then
+			v205^d
+			if p(v205^f) then ' / ', v205^f fi
+			if p(v205^g) then '; ', v205^g fi
+			if p(v205^b) then ', ', v205^b fi
+		fi
+		
+	fi
+fi
+
+
+	
+/* Adresse */
+if p(v210) then 
+	if s2='.' then ' - ' else '. - ' fi
+	if p(v210^a) then v210^a fi
+	if p(v210^b) then ' (', v210^b, ')' fi
+	if p(v210^c) then ' : ' v210^c fi
+	if p(v210^d) then ', ', v210^d fi
+
+fi
+
+/* Collation */
+
+if p(v215) then '. - '
+	if p(v215^a) then v215^a fi
+	if p(v215^c) then ' : ' v215^c fi
+	if p(v215^d) then '; ' v215^d fi
+	if p(v215^e) then ' + ' v215^e fi
+	
+
+fi
+
+/* Collection */
+
+if p(v225) then '. - ('
+	if p(v225^a) then v225^a fi
+	if p(v225^d) then ' = ' v225^d fi
+	if p(v225^e) then ' : ' v225^d fi
+	if p(v215^f) then ' / ' v225^f fi
+	
+')'
+fi
+	/* point final de fin de zone avant la zone des notes */	if p(v200) then '.' fi
+
+'<p>'
+
+/* Notes */
+
+
+if p(v300) then v300^a+|. - | if s(v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v301) then v301^a+|. - | if s(v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v302) then v302^a+|. - | if s(v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v303) then v303^a+|. - | if s(v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v304) then v304^a+|. - | if s(v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then  '. - ' fi fi 
+if p(v305) then v305^a+|. - | if s(v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v306) then v306^a+|. - | if s(v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v307) then v307^a+|. - | if s(v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v308) then v308^a+|. - | if s(v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v310) then v310^a+|. - | if s(v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v311) then v311^a+|. - | if s(v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v312) then v312^a+|. - | if s(v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v313) then v313^a+|. - | if s(v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v314) then v314^a+|. - | if s(v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v315) then v315^a+|. - | if s(v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v316) then v316^a+|. - | if s(v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v317) then v317^a+|. - | if s(v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v318) then v318^a+|. - | if s(v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v320) then v320^a+|. - | if s(v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v321) then v321^a+|. - | if s(v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v322) then v322^a+|. - | if s(v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v323) then v323^a+|. - | if s(v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v324) then v324^a+|. - | if s(v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v325) then v325^a+|. - | if s(v326, v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v326) then v326^a+|. - | if s(v327, v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v327) then v327^a+|. - | if s(v328, v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v328) then v328^a+|. - | if s(v330, v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v330) then v330^a+|. - | if s(v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v332) then v331^a+|. - | if s(v332, v333, v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v333) then v333^a+|. - | if s(v334, v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v334) then v334^a+|. - | if s(v336, v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v336) then v336^a+|. - | if s(v337, v345) >'' or p(v10) then '. - ' fi fi 
+if p(v337) then v337^a+|. - | if s(v345) >'' or p(v10) then '. - ' fi fi 
+if p(v345) then v335^a+|. - | if p(v10) then '. - ' fi fi 
+
+
+
+/* ISBN 
+Sélectionn entière des champs du bloc des notes comme un seul champ (commande S), en vue du controle de l'existence d'une note, pour générer  la chaine '. - ' devant séparer la zone des notes avec celle de l'ISBD
+*/
+if p(v10) then 'ISBN ', v10^a fi
+
+
+'<br>'
+
+if p(v600) then '<br>' (v600^a, ', ', v600^b, ' ' v600^c, ', 'v600^f, '<br>') fi
+
+if p(v700) then v700^a, ', ', v700^b / fi 
+if p(v701) then '<br>' (v701^a, ', ', v701^b '<br>') fi
+if p(v702) then '<br>' (v702^a, ', ', v702^b '<br>') fi 
+if p(v710) then v710^a,  v710^b / fi 
+(if p(v711) then v711^a,  v711^b '<br>' fi )
+(if p(v712) then v712^a, v712^b '<br>' fi / )
+

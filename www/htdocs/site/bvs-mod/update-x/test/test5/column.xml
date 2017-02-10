@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<document-line>
+	<column path="/product/name" sort="name"/>
+	<column path="/product/@id" sort="id"/>
+	<column path="/product/@sourceType" sort="sourceType"/>
+	<column path="/product/@version" sort="version"/>
+	<column path="/product/@language" sort="language"/>
+	<column path="/product/@available" sort="available"/>
+</document-line>

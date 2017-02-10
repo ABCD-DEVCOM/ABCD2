@@ -1,0 +1,570 @@
+!ID 000001
+!v001!128
+!v002!199
+!v011!asc
+!v021!asc
+!v050!ma Ccedil
+!ID 000002
+!v001!129
+!v002!252
+!v011!asc
+!v021!asc
+!v050!mi utrema
+!ID 000003
+!v001!130
+!v002!233
+!v011!asc
+!v021!asc
+!v050!mi eagudo
+!ID 000004
+!v001!131
+!v002!226
+!v011!asc
+!v021!asc
+!v050!mi acircu
+!ID 000005
+!v001!132
+!v002!228
+!v011!asc
+!v021!asc
+!v050!mi atrema
+!ID 000006
+!v001!133
+!v002!224
+!v011!asc
+!v021!asc
+!v050!mi agrave
+!ID 000007
+!v001!134
+!v002!229
+!v011!asc
+!v021!asc
+!v050!mi abola
+!ID 000008
+!v001!135
+!v002!231
+!v011!asc
+!v021!asc
+!v050!mi ccedil
+!ID 000009
+!v001!136
+!v002!234
+!v011!asc
+!v021!asc
+!v050!mi ecircu
+!ID 000010
+!v001!137
+!v002!235
+!v011!asc
+!v021!asc
+!v050!mi etrema
+!ID 000011
+!v001!138
+!v002!232
+!v011!asc
+!v021!asc
+!v050!mi egrave
+!ID 000012
+!v001!139
+!v002!239
+!v011!asc
+!v021!asc
+!v050!mi itrema
+!ID 000013
+!v001!140
+!v002!238
+!v011!asc
+!v021!asc
+!v050!mi icircu
+!ID 000014
+!v001!141
+!v002!236
+!v011!asc
+!v021!asc
+!v050!mi igrave
+!ID 000015
+!v001!142
+!v002!196
+!v011!asc
+!v021!asc
+!v050!ma Atrema
+!ID 000016
+!v001!143
+!v002!197
+!v011!asc
+!v021!asc
+!v050!ma Abola
+!ID 000017
+!v001!144
+!v002!201
+!v011!asc
+!v021!asc
+!v050!ma Eagudo
+!ID 000018
+!v001!145
+!v002!230
+!v011!asc
+!v021!asc
+!v050!mi ae
+!ID 000019
+!v001!146
+!v002!198
+!v011!asc
+!v021!asc
+!v050!ma AE
+!ID 000020
+!v001!147
+!v002!244
+!v011!asc
+!v021!asc
+!v050!mi ocircu
+!ID 000021
+!v001!148
+!v002!246
+!v011!asc
+!v021!asc
+!v050!mi otrema
+!ID 000022
+!v001!149
+!v002!242
+!v011!asc
+!v021!asc
+!v050!mi ograve
+!ID 000023
+!v001!150
+!v002!251
+!v011!asc
+!v021!asc
+!v050!mi ucircu
+!ID 000024
+!v001!151
+!v002!249
+!v011!asc
+!v021!asc
+!v050!mi ugrave
+!ID 000025
+!v001!152
+!v002!255
+!v011!asc
+!v021!asc
+!v050!mi ytrema
+!ID 000026
+!v001!153
+!v002!214
+!v011!asc
+!v021!asc
+!v050!ma Otrema
+!ID 000027
+!v001!154
+!v002!220
+!v011!asc
+!v021!asc
+!v050!ma Utrema
+!ID 000028
+!v001!155
+!v002!248
+!v011!asc
+!v021!asc
+!v050!mi fi
+!ID 000029
+!v001!156
+!v002!163
+!v011!asc
+!v021!asc
+!v050!libra
+!ID 000030
+!v001!157
+!v002!216
+!v011!asc
+!v021!asc
+!v050!ma FI
+!ID 000031
+!v001!158
+!v002!215
+!v011!asc
+!v021!asc
+!v050!versus
+!ID 000032
+!v001!160
+!v002!225
+!v011!asc
+!v021!asc
+!v050!mi aagudo
+!ID 000033
+!v001!161
+!v002!237
+!v011!asc
+!v021!asc
+!v050!mi iagudo
+!ID 000034
+!v001!162
+!v002!243
+!v011!asc
+!v021!asc
+!v050!mi oagudo
+!ID 000035
+!v001!163
+!v002!250
+!v011!asc
+!v021!asc
+!v050!mi uagudo
+!ID 000036
+!v001!164
+!v002!241
+!v011!asc
+!v021!asc
+!v050!mi ntil
+!ID 000037
+!v001!165
+!v002!209
+!v011!asc
+!v021!asc
+!v050!ma Ntil
+!ID 000038
+!v001!166
+!v002!170
+!v011!asc
+!v021!asc
+!v050!ord fe
+!ID 000039
+!v001!167
+!v002!186
+!v011!asc
+!v021!asc
+!v050!ord ma
+!ID 000040
+!v001!168
+!v002!191
+!v011!asc
+!v021!asc
+!v050!inte i
+!ID 000041
+!v001!169
+!v002!174
+!v011!asc
+!v021!asc
+!v050!regist
+!ID 000042
+!v001!170
+!v002!172
+!v011!asc
+!v021!asc
+!v050!not
+!ID 000043
+!v001!171
+!v002!189
+!v011!asc
+!v021!asc
+!v050!meio
+!ID 000044
+!v001!172
+!v002!188
+!v011!asc
+!v021!asc
+!v050!1quart
+!ID 000045
+!v001!173
+!v002!161
+!v011!asc
+!v021!asc
+!v050!excl i
+!ID 000046
+!v001!174
+!v002!171
+!v011!asc
+!v021!asc
+!v050!a marc
+!ID 000047
+!v001!175
+!v002!187
+!v011!asc
+!v021!asc
+!v050!f marc
+!ID 000048
+!v001!181
+!v002!193
+!v011!asc
+!v021!asc
+!v050!ma Aagudo
+!ID 000049
+!v001!182
+!v002!194
+!v011!asc
+!v021!asc
+!v050!ma Acircu
+!ID 000050
+!v001!183
+!v002!192
+!v011!asc
+!v021!asc
+!v050!ma Agrave
+!ID 000051
+!v001!184
+!v002!169
+!v011!asc
+!v021!asc
+!v050!copyri
+!ID 000052
+!v001!189
+!v002!162
+!v011!asc
+!v021!asc
+!v050!cents
+!ID 000053
+!v001!190
+!v002!165
+!v011!asc
+!v021!asc
+!v050!yene
+!ID 000054
+!v001!198
+!v002!227
+!v011!asc
+!v021!asc
+!v050!mi atil
+!ID 000055
+!v001!199
+!v002!195
+!v011!asc
+!v021!asc
+!v050!ma Atil
+!ID 000056
+!v001!207
+!v002!164
+!v011!asc
+!v021!asc
+!v050!qcross
+!ID 000057
+!v001!208
+!v002!240
+!v011!asc
+!v021!asc
+!v050!mi dcort
+!ID 000058
+!v001!209
+!v002!208
+!v011!asc
+!v021!asc
+!v050!ma dcort
+!ID 000059
+!v001!210
+!v002!202
+!v011!asc
+!v021!asc
+!v050!ma Ecircu
+!ID 000060
+!v001!211
+!v002!203
+!v011!asc
+!v021!asc
+!v050!ma Etrema
+!ID 000061
+!v001!212
+!v002!200
+!v011!asc
+!v021!asc
+!v050!ma Egrave
+!ID 000062
+!v001!213
+!v002!185
+!v011!asc
+!v021!asc
+!v050!primei
+!ID 000063
+!v001!214
+!v002!205
+!v011!asc
+!v021!asc
+!v050!ma Iagudo
+!ID 000064
+!v001!215
+!v002!206
+!v011!asc
+!v021!asc
+!v050!ma Icircu
+!ID 000065
+!v001!216
+!v002!207
+!v011!asc
+!v021!asc
+!v050!ma Itrema
+!ID 000066
+!v001!221
+!v002!166
+!v011!asc
+!v021!asc
+!v050!pipe
+!ID 000067
+!v001!222
+!v002!204
+!v011!asc
+!v021!asc
+!v050!ma Igrave
+!ID 000068
+!v001!224
+!v002!211
+!v011!asc
+!v021!asc
+!v050!ma Oagudo
+!ID 000069
+!v001!225
+!v002!223
+!v011!asc
+!v021!asc
+!v050!beta
+!ID 000070
+!v001!226
+!v002!212
+!v011!asc
+!v021!asc
+!v050!ma Ocircu
+!ID 000071
+!v001!227
+!v002!210
+!v011!asc
+!v021!asc
+!v050!ma Ograve
+!ID 000072
+!v001!228
+!v002!245
+!v011!asc
+!v021!asc
+!v050!mi otil
+!ID 000073
+!v001!229
+!v002!213
+!v011!asc
+!v021!asc
+!v050!ma Otil
+!ID 000074
+!v001!230
+!v002!181
+!v011!asc
+!v021!asc
+!v050!micro
+!ID 000075
+!v001!231
+!v002!254
+!v011!asc
+!v021!asc
+!v050!mi btr
+!ID 000076
+!v001!232
+!v002!222
+!v011!asc
+!v021!asc
+!v050!ma btr
+!ID 000077
+!v001!233
+!v002!218
+!v011!asc
+!v021!asc
+!v050!ma Uagudo
+!ID 000078
+!v001!234
+!v002!219
+!v011!asc
+!v021!asc
+!v050!ma Ucircu
+!ID 000079
+!v001!235
+!v002!217
+!v011!asc
+!v021!asc
+!v050!ma Ugrave
+!ID 000080
+!v001!236
+!v002!253
+!v011!asc
+!v021!asc
+!v050!mi yagudo
+!ID 000081
+!v001!237
+!v002!221
+!v011!asc
+!v021!asc
+!v050!ma Yagudo
+!ID 000082
+!v001!238
+!v002!175
+!v011!asc
+!v021!asc
+!v050!sobrel
+!ID 000083
+!v001!239
+!v002!180
+!v011!asc
+!v021!asc
+!v050!agudo
+!ID 000084
+!v001!240
+!v002!173
+!v011!asc
+!v021!asc
+!v050!hifen
+!ID 000085
+!v001!241
+!v002!177
+!v011!asc
+!v021!asc
+!v050!maisme
+!ID 000086
+!v001!243
+!v002!190
+!v011!asc
+!v021!asc
+!v050!3quart
+!ID 000087
+!v001!244
+!v002!182
+!v011!asc
+!v021!asc
+!v050!brk ln
+!ID 000088
+!v001!245
+!v002!167
+!v011!asc
+!v021!asc
+!v050!paragr
+!ID 000089
+!v001!246
+!v002!247
+!v011!asc
+!v021!asc
+!v050!dividi
+!ID 000090
+!v001!247
+!v002!184
+!v011!asc
+!v021!asc
+!v050!cedilh
+!ID 000091
+!v001!248
+!v002!176
+!v011!asc
+!v021!asc
+!v050!grau
+!ID 000092
+!v001!249
+!v002!168
+!v011!asc
+!v021!asc
+!v050!trema
+!ID 000093
+!v001!251
+!v002!185
+!v011!asc
+!v021!asc
+!v050!primei
+!ID 000094
+!v001!252
+!v002!179
+!v011!asc
+!v021!asc
+!v050!cubo
+!ID 000095
+!v001!253
+!v002!178
+!v011!asc
+!v021!asc
+!v050!a segu

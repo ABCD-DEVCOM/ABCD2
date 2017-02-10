@@ -1,0 +1,110 @@
+<center>
+
+<table width="90%">
+
+    <tbody>
+
+        <tr>
+
+            <td><font face="arial"><font size="4"><strong>Convers&atilde;o de um arquivo TXT para CDS/ISIS</strong></font>
+
+                </font>
+              <p><font face="arial"><font size="2">O processo de convers&atilde;o de um arquivo TXT para uma base de dados CDS/ISIS, tem como entrada um arquivo TXT em que os campos a serem transferidos podem estar delimitados de duas maneiras:<br />
+
+            <strong><br />
+
+            </strong></font></font></p>
+
+            
+
+            <ul>
+
+                <li><font face="arial"><font size="2"><strong>Com etiquetas</strong></font></font> </li>
+
+                <li><font face="arial"><font size="2"><strong>Com tabuladores </strong>(por exemplo, obtido de uma planilha eletr&ocirc;nica, onde os resultados foram salvos em formato TXT delimitados com tabuladores).</font></font> </li>
+
+            </ul>
+
+            <font face="arial">
+
+            <p><font face="arial" color="#800000" size="3"><strong>Arquivo TXT com Etiquetas:</strong></font></p>
+
+            <p><font size="2">Neste caso, cada elemento de dados &eacute; identificado com uma etiqueta e cada etiqueta &eacute; atribu&iacute;da a um campo da base de dados.<br />
+
+            </font><br />
+
+            Estas etiquetas sempre come&ccedil;am com <strong><font color="#ff0000">$$</font></strong> e terminam com <strong><font color="#ff0000">:</font></strong> para assegurar que as mesmas n&atilde;o sejam confundidas com o conte&uacute;do a ser convertido. Alem disto, todos os registros devem ser separados por meio de uma cadeia de caracteres que tamb&eacute;m n&atilde;o podem ocorrer no conte&uacute;do. Recomenda-se usar <strong><font color="#ff0000">##</font></strong> como separador de registros.</p>
+
+            <p><font size="2"><strong><font color="#800000" size="3">Arquivo TXT com Tabuladores:</font><br />
+
+            </strong></font></p>
+
+            <p><font size="2">Neste caso cada linha do arquivo TXT corresponde a um registro e, dentro de cada registro, os campos est&atilde;o separados por tabuladores (TAB). Na tabela de convers&atilde;o, na coluna correspondente à <strong>Etiqueta</strong> &eacute; colocado o n&uacute;mero da c&eacute;lula (coluna) que o campo correspondente ocupa no arquivo TXT a ser convertido.<br />
+
+            </font></p>
+
+            <p><font size="2"><font color="#800000" size="3"><strong>Procedimento de convers&atilde;o:</strong></font><br />
+
+            </font></p>
+
+            <p><font size="2">O procedimento de convers&atilde;o consta de tr&ecirc;s passos:</font></p>
+
+            <ol>
+
+                <li><font size="2">Sele&ccedil;&atilde;o/Defini&ccedil;&atilde;o da tabela de convers&atilde;o</font> </li>
+
+                <li><font size="2">Valida&ccedil;&atilde;o do arquivo de entrada contra a tabela de convers&atilde;o</font> </li>
+
+                <li><font size="2">Convers&atilde;o e importa&ccedil;&atilde;o&nbsp; na base de dados</font> </li>
+
+            </ol>
+
+            <font size="2">Para executar uma convers&atilde;o siga os seguintes passos:</font>
+
+            <ol>
+
+                <li><font size="2">Do menu de administra&ccedil;&atilde;o selecione a op&ccedil;&atilde;o <strong>Importar arquivo TXT</strong></font> </li>
+
+                <li><font size="2">Selecione, edite ou crie a<a target="_blank" href="tabladeconversion.html"> tabela de convers&atilde;o</a></font> </li>
+
+                <li><font size="2">Ao selecionar a tabela de convers&atilde;o &eacute; apresentada uma janela com uma &aacute;rea de texto para onde deve ser copiado o arquivo TXT que se deseja converter. Apresenta ainda as seguintes op&ccedil;&otilde;es:</font>
+
+                <ul>
+
+                    <li><font size="2"><strong>Ver etiquetas definidas</strong>: Apresenta as etiquetas presentes na tabela de convers&atilde;o selecionada</font> </li>
+
+                    <li><font size="2"><strong>Validar etiquetas</strong>: Examina o arquivo TXT contra a tabela de convers&atilde;o e emite um relat&oacute;rio com as etiquetas encontradas e as etiquetas n&atilde;o localizadas.</font> </li>
+
+                    <li><font size="2"><strong>Processar</strong>: Executa a convers&atilde;o e faz a importa&ccedil;&atilde;o na&nbsp; base de dados</font> </li>
+
+                </ul>
+
+                </li>
+
+            </ol>
+
+            <p><strong><font size="2">Convers&atilde;o e importa&ccedil;&atilde;o na base de dados</font></strong></p>
+
+            <p><font size="2">Este passo re-executa a valida&ccedil;&atilde;o do arquivo TXT contra a tabela de convers&atilde;o e emite um novo relat&oacute;rio informando os erros encontrados. Ao final mostra o bot&atilde;o </font><input type="submit" value="Atualizar" /><font size="2">, que cria os novos registros na base de dados. A informa&ccedil;&atilde;o identificada como <strong><font color="#ff0000">Etiquetas n&atilde;o localizadas </font></strong></font><font color="#000000"><font size="2">n&atilde;o ser&aacute; transferida para a base de dados.<br />
+
+            </font></font></p>
+
+            <p><font color="#000000"><font size="2"></font></font></p>
+
+            <ol><font size="2"></font></ol>
+
+          </font></td>
+
+      </tr>
+
+        </tbody>
+
+    </table>
+
+    </center>
+
+    <p>&nbsp;</p>
+
+    <p>&nbsp;</p>
+
+    <p>&nbsp;</p>

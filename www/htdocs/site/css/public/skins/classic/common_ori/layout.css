@@ -1,0 +1,258 @@
+/*
+    This file describes the where any information will be disposed
+    on the VHL website.
+*/
+
+.container {
+    position: relative;
+    _width: 780px;
+    min-width: 780px;
+    max-width: 1004px;
+    margin: 0px auto;
+    background: #FFF;
+
+}
+
+.bar {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 50%;
+    padding-top: 2px;
+}
+
+.bar #otherVersions, .bar #contact {
+    display: inline;
+    margin-right: 10px;
+}
+
+#contact A {
+    padding-left: 20px;
+}
+
+.top {
+    height: 110px;
+    clear: both;
+}
+
+.top #parent {
+    float: left;
+    padding: 18px 0px 0px 20px;
+    width: 12%;
+}
+
+.top #identification {
+    float: left;
+    width: 60%;
+    height: 110px;
+}
+
+.top #identification H1 {
+    margin: 0px;
+    margin-top: 75px;
+    margin-left: 100px;
+}
+
+.top #institutionList {
+    float: right;
+    margin-top: 15px;
+    width: 20%;
+}
+
+.top #institutionList UL {
+    padding: 0px;
+    margin: 10px 20px 0px 15px;
+    width: 119px;
+}
+
+.top #institutionList LI {
+    display: inline;
+    margin-right: 5px;
+}
+
+
+.middle {
+    position: relative;
+    padding: .3em;
+    clear: both;
+}
+
+.middle .firstColumn {
+    float: left;
+    width: 18.5%;
+}
+
+.middle .secondColumn {
+    float: left;
+    width: 58%;
+    margin-left: .3em;
+    margin-right: .3em;
+    _margin-right: 0px;
+}
+
+.middle .thirdColumn {
+    float: left;
+    width: 22.4%;
+}
+
+.middle .centerLeftColumn {
+    float: left;
+    width: 100%;
+    margin-right: .3em;
+}
+
+.middle .centerRightColumn {
+    float: right;
+    width: 46%;
+}
+
+.middle .secondColumn #search {
+    width: 100%;
+}
+
+.bottom {
+    clear: both;
+    width: 100%;
+}
+
+/* Cascading definitions #Start */
+.firstColumn DIV, .secondColumn .centerLeftColumn DIV, .secondColumn .centerRightColumn DIV, .thirdColumn DIV, #search, #searchConcepts, .level2 .middle DIV {
+    padding-bottom: 10px;
+    margin-bottom: .3em;
+}
+
+.firstColumn DIV H3, .secondColumn DIV H3, .thirdColumn DIV H3, #search H3, #searchConcepts H3, .level2 .middle DIV H3 {
+    margin: 0px;
+    padding: 5px;
+}
+
+.firstColumn DIV H3 SPAN, .secondColumn DIV H3 SPAN, .thirdColumn DIV H3 SPAN, #search H3 SPAN, #searchConcepts H3 SPAN, .level2 .middle DIV H3 SPAN {
+    display: block;
+    padding-left: 3px;
+}
+
+.firstColumn DIV UL, .secondColumn DIV UL, .thirdColumn DIV UL {
+    margin: 8px;
+    padding: 8px;
+}
+
+.firstColumn DIV UL UL, .secondColumn DIV UL UL, .thirdColumn DIV UL UL {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+
+.generic DIV {
+    padding: 5px 10px 10px 15px;
+}
+/* Cascading definitions #End */
+
+#search FORM {
+    padding: 10px;
+}
+
+HTML>BODY #search { /* Mozilla exclusive definitions */
+    height: 7.5em;
+}
+
+HTML>BODY .level2 #search { /* Mozilla exclusive definitions */
+    height: auto;
+}
+
+#search .expression {
+    width: 70%;
+}
+
+#search .searchItens {
+    float: left;
+    width: 90%;
+}
+
+.level2 #search .searchItens {
+    float: none;
+}
+
+.level2 #search UL {
+    margin: 10px 0px 0px 10px;
+    padding: 0px;
+}
+
+.level2 #search LI {
+    margin-bottom: 10px;
+}
+
+.level2 #search LI LI {
+    width: 80%;
+    margin-bottom: 5px;
+}
+
+#search .searchFeatures {
+    float: right;
+    width: 30%;
+}
+
+#search .searchFeatures UL {
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 10px;
+}
+
+.bottom #footNotes {
+    padding: 8px;
+}
+
+.bottom #footNotes P {
+    margin: 0px;
+}
+
+.level2 .middle #contact A {
+    padding: 0px;
+}
+
+.level2 #contact .name, .level2 #contact .from, .level2 #contact .message {
+    width: 200px;
+}
+
+.level2 #contact .message {
+    height: 50px;
+}
+
+.level2 .content {
+    padding: 5px 5px 5px 15px;
+    max-width: 800px;
+}
+
+.level2 H4  {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.level2 H5 {
+    margin: 0px;
+}
+
+.level2 #breadCrumb {
+    padding: 5px 5px 5px 15px;
+    clear: both;
+}
+
+.level2 .description, .level2 .portal {
+    display: inline;
+}
+
+.level2 .content UL LI {
+    list-style: square;
+    margin-bottom: 8px;
+}
+
+/* MetaIAH Pop-up styles */
+#popUp {
+    margin: 20px 5px 5px 5px;
+}
+
+#popUp .bottom {
+    margin-top: 20px;
+    padding: 3px;
+}
+
+.copyright{
+    padding: 5px;
+}

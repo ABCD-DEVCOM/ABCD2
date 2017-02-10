@@ -1,0 +1,19 @@
+marc|MARC|Y
+marcuni|MARCUNI|Y
+dubcore|DublinCore Repository
+rda|RDA|Y
+biblo|CEPAL|Y
+copies|Acquisitions, Copies
+providers|Providers
+suggestions|Suggestions (Acquisitions)
+purchaseorder|Purchase Orders
+users|patrons
+loanobjects|Loan objects
+trans|Loan transactions
+suspml|Suspensions and fines
+reserve|Loan reservations
+isadg|ISAD/G
+projects|Projects
+experts|Experts
+doaj|DOAJ
+agrovoc|Agrovoc Thesaurus

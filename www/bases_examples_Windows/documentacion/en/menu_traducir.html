@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><STRONG>Translation of messages and help pages</STRONG></P>
+<P>ABCD uses two types of components for bilingual treatment:</P>
+<P><STRONG>Messages and tags</STRONG></P>
+<P>Contains a table of the tags used for communication with the user, as
+well as the warning messages, error messages, and others used for communication with the user.</P>
+<P>These tables are stored in the folders <STRONG>bases/lang/xx</STRONG>
+where<STRONG> xx</STRONG> corresponds to the language code.
+In addition the language code <STRONG>00 </STRONG><STRONG><SPAN STYLE="font-weight: normal">has
+been created, and corresponds to a table with the messages used
+during the execution of the processes. When a communication language is
+selected, the first thing to read is the table of the selected language,
+and then the table of the language </SPAN></STRONG><STRONG>00</STRONG>
+to complete the messages that are not described in the selected
+language. This way, the modules can generate new messages without
+modifying the tables with messages updated by the users, and without
+showing that there is a lack of messages during the execution of the processes.</P>
+<P>When you request the modification of a table of messages in a particular
+language, this will be complemented with the table in the
+language <STRONG>00</STRONG> to allow the user to translate the new
+messages incorporated in ABCD.</P>
+<P><STRONG>Help pages</STRONG></P>
+<P>This option allows the user to translate the help pages that exist in the
+different modules of ABCD. To facilitate the translation a list of
+the pages displayed in each module is presented, and the user can
+choose:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">To present a previous view of the
+	corresponding page</P>
+	<LI><P>To edit the help page</P>
+</UL>
+</BODY>
+</HTML>

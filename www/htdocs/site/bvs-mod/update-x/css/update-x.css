@@ -1,0 +1,56 @@
+.UPDATE_X-edit-version
+{
+	border : 1px solid Navy;
+	background-color : Navy;
+	font-weight : bold;
+	color : White;
+}
+
+.UPDATE_X-edit-vars
+{
+	border : 1px solid Navy;
+}
+
+.UPDATE_X-project
+{
+	border : 1px solid Navy;
+	background-color : Silver;
+	font-weight : bold;
+}
+
+.UPDATE_X-show-label
+{
+}
+
+.UPDATE_X-show-content
+{
+	font-weight: bold;
+}
+
+.UPDATE_X-input-element-repeat-unknown
+{
+	border : 1px dashed Red;
+	background-color : Yellow;
+	font-weight : bold;
+}
+
+.UPDATE_X-edit-formTextarea
+{
+	visibility : hidden;
+}
+
+.UPDATE_X_lockError
+{
+	color : Red;
+	font-weight : bold;
+}
+
+.UPDATE_X_lockError-continue
+{
+}
+
+.UPDATE_X_lockError-code
+{
+	color : Silver;
+	font-size : 11px;
+}

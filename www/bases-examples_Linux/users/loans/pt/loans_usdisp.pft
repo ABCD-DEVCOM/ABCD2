@@ -1,0 +1,11 @@
+'<table>
+<td width=150><img src=../common/show_image.php?image='v620'&base=users></td><td>'
+"<strong>"v30,'</strong><br>'
+'Tipo de usuário: 'v10^*," - "v10^b
+'<br>No.cartão:'v20,
+"<br>No.Identidade:"d35, v34"-",v35,
+"<input type=hidden name=usuario value="v20">"/
+"<br>Local:"v45,
+"<br>Cidade:"v120,
+'<br>E-mail:<br>Telefone: '
+'</td></table>',

@@ -1,0 +1,113 @@
+[pft]@AHHEAD.PFT[/pft]
+
+<script type="text/javascript">
+    function AnySelected(){            
+        var any = false;
+        var count = 0;        
+
+        while(!any && count < document.forms[0].listChecked.length) {            
+            any = (document.forms[0].listChecked[count].checked || document.forms[0].listChecked[count].type == "hidden");
+            count++;
+        }
+        if (!any)
+        {
+            alert("No reference was selected");
+            return false;
+        }    
+        else{
+            document.forms[0].nextAction.value="your_selection";            
+            document.forms[0].submit();            
+            return true;
+        }        
+    }
+
+
+    //ebsco functions 
+    
+    function goEbscoOnline(parametros)
+    {
+        var str_aux = "http://www-us.ebsco.com/online/direct.asp?"+parametros;
+        janela = window.open(str_aux,"EBSCO_Online","width=640,height=480,resizable=yes,toolbar=no,location=no,menubar=no,scrollbars=yes,status=yes");
+        janela.focus();    
+    
+    }
+    //CVLACS functions 
+    
+    function goCVLACS1(parametros)
+    {
+        var str_aux = "http://genos.cnpq.br:12010/dwlattes/owa/prc_imp_cv_int?"+parametros;
+        janela = window.open(str_aux,"CVLACS","width=640,height=480,resizable=yes,toolbar=no,location=no,menubar=no,scrollbars=yes,status=yes");
+        janela.focus();    
+    
+    }
+
+    //MDL_COC functions 
+    
+    function goMdlCochrane(parametros)
+      {
+              var str_aux = "/cgi-bin/wxislind.exe/iah-cochrane/?IsisScript=/users/www/cgi-bin/iah-cochrane/fulltext.xis&"+parametros;
+        janela = window.open(str_aux,"FullText","width=640,height=480,resizable=yes,toolbar=no,location=no,menubar=no,scrollbars=yes,status=yes");
+        janela.focus();  
+        
+       }
+
+    function relatedDocs(mfn)
+    {
+        form = document.forms[0];
+        form.related.value = mfn;
+        form.nextAction.value = "list_related";
+        form.submit();        
+        return;
+    
+    } 
+</script>
+
+<form action="[pft]getenv('SCRIPT_NAME')v5000^d,'wxis/'[/pft]" method="POST">
+    [pft]@AHHIDD.PFT[/pft]
+
+    
+    <input type="hidden" name="nextAction" value="refine/resubmit" />    
+
+    <div class="contain">
+        <div class="barNavTop">
+            [pft]if val(v1002) = 0 then[/pft]
+                &nbsp;
+            [pft]else[/pft]
+                    <input type="button" class="defaultButton submit" value="your selection" name="yselect" onclick="javascript:void(AnySelected())" />
+                    <!--input type="submit" class="defaultButton submit" name="list.x" value="send result" /-->
+                    <!--input type="submit" class="defaultButton submit" name="new search.x" value="new search" /-->
+                    <!--input type="submit" class="defaultButton submit" name="config.x" value="configure" /-->
+                    <input type="button" class="defaultButton submit" onclick=window.location="#bottom" value="page bottom" />
+            [pft]fi[/pft]            
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">Database:</div>
+            <div class="columnB"><b>[pft]v5003^*[/pft]</b></div>
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">Search:</div>
+            <div class="columnB"><b>
+                        [pft]
+                            @title.pft                            
+                        [/pft]
+                        </b>(related documents)                                    
+            </div>
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">References found:</div>
+            <div class="columnB"><b>[pft]v1002[/pft]</b></div>
+        </div>
+
+                [pft]if val(v1002) > 0 then[/pft]
+        <div class="rowResult">
+            <div class="columnA">Showing:</div>
+            <div class="columnB">
+                        <b>[pft]'1 .. ',v1002[/pft]</b>&nbsp;&nbsp;
+                        in format [pft]'[<b>'(if  v5009[1] = v5005^n then v5005^p fi)'</b>]'[/pft]
+            </div>
+        </div>
+                [pft]fi[/pft]
+    </div>                    

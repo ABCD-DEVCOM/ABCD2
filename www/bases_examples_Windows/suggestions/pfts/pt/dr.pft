@@ -1,0 +1,1 @@
+v211,,"--------"n211,'|',f(mfn,1,0),'|',v1,'|',v210,'|',v18,'|',v16," "v17,'|',v200,'|'v220'|' if v2='1' then 'Aprovada' else if v2='2' then 'Rejeitada' else 'Pendente' fi fi//

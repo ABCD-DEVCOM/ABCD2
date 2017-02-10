@@ -1,0 +1,9 @@
+root=oai-dc
+
+001 dc:title
+002 dc:creator
+003 dc:description
+004 dc:subject
+007 dc:date
+098 dc:identifier
+099 dc:text

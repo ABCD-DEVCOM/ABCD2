@@ -1,0 +1,559 @@
+/*
+    This file describes all the components boxes styles,
+    like "about this site", "search box", and etc.
+
+    List of Replaced HTML itens:
+
+        H3 = box title area
+        H3 SPAN = box title text
+        H4 = box sub-title area
+        H4 SPAN = box sub-title text
+        UL = box list area
+        LI = box list item
+        A = box link
+*/
+
+/* Search Box Cascading Styles */
+#search H3 {
+    border-color: #91BFD9;
+}
+
+#search H3 SPAN  {
+    border-color: #6188A0;
+}
+
+#search .expression {     /* = input to write a search expression */
+    background: white;
+}
+
+#searchResult {
+    background: #F2F9F9 url(../../../../../image/public/skins/classic/common/searchResultBackground.jpg) top left repeat-x;
+    margin-bottom: .3em;
+    margin-top: -0.3em;
+}
+
+#searchResult H3 {
+    border-top: 1px solid #D4E7E7;
+}
+
+#searchResult #result {
+    padding: 10px;
+}
+
+#searchResult .portletTools {
+  float: right;
+  padding: 6px 4px;
+  margin-top: 1px;
+  color: #666;
+  font: bold 8pt Arial;
+  cursor: pointer;
+}
+
+#searchResult .portletTools IMG {
+  border-left: 1px solid #666;
+  padding: 0px 3px;
+  cursor: pointer;
+}
+
+#searchResult #result LI {
+    list-style: none;
+    font-size: 98%;
+    font-weight: bold;
+}
+
+#searchResult #result LI LI {
+    font-weight: normal;
+    font-size: 100%;
+}
+
+
+#searchResult #result UL {
+    margin-bottom: 7px;
+    padding: 0px;
+}
+
+#searchResult #result UL UL {
+    margin: 0px 0px 5px 5px;
+}
+
+#search #searchDecs {
+    padding:  8px 0px 5px 10px;
+    font-size: 80%;
+    float: left;
+}
+
+#search #searchDecs A {
+    text-decoration: none;
+}
+
+#search #searchDecs A:hover {
+    text-decoration: underline;
+    color: #803E12;
+}
+
+	
+/* Network Boxes Styles */
+.firstColumn div ul .network {
+	margin-left: 5px;
+}
+.firstColumn div ul .network ul {
+	padding: 0px;
+	margin: 4px;
+}
+.firstColumn div ul .level ul li {
+	margin: 5px 0px 10px 0px;
+}
+.firstColumn div ul .level {
+	font-weight: bold;
+}
+.firstColumn div ul .level li{
+	font-weight: normal;
+}
+
+/* Information sources Boxes Styles */
+.collection H3 {
+    border-color: #DBC6B7;
+}
+
+.collection H3 SPAN {
+    border-color: #BF8660;
+}
+
+.collection UL {
+    padding: 0px;
+    margin-left: 15px;
+}
+
+.collection UL UL {
+    margin: 0px 0px 8px 0px;
+}
+
+.collection LI {
+    list-style: none;
+    margin: 0px;
+    margin-top: 8px;
+}
+
+.collection LI IMG {
+    float: left;
+    margin-right: 4px;
+}
+
+.collection LI LI {
+    margin-top: 0px;
+    font-size: 90%;
+}
+
+.collection LI SPAN {
+    display: block;
+    font-size: 95%;
+}
+
+.collection LI SPAN SPAN, .collection LI A SPAN {
+    display: inline;
+}
+
+.collection LI A {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.collection LI LI A, .collection LI SPAN A {
+    font-weight: normal;
+}
+
+.collection LI A:hover {
+    color: #803E12;
+    text-decoration: underline;
+}
+
+/* Community Boxes Styles */
+.community H3 {
+    border-color: #F3E8C0;
+}
+
+.community H3 SPAN {
+    border-color: #E3C65F;
+}
+
+.community UL {
+    padding: 0px;
+    margin-left: 15px;
+}
+
+.community LI {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.community LI LI {
+    font-weight: normal;
+}
+
+.community LI A {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.community LI LI A {
+    font-weight: normal;
+}
+
+.community LI A:hover {
+    color: #803E12;
+    text-decoration: underline;
+}
+
+.topic LI {
+    list-style: none;
+    margin: 0px;
+    margin-bottom: 0px;
+}
+
+
+/* Decs Styles */
+#decs{
+
+}
+#decs H3 {
+    border-color: #F3DE92;
+}
+
+#decs H3 SPAN {
+    border-color: #F3BE00;
+}
+
+#decs H4 SPAN {
+    margin-left: 20px;
+    font-size: 10px;
+}
+
+#decs UL {
+    padding: 0px;
+    margin: 5px 0px 0px 15px;
+}
+
+#decs UL LI {
+    margin-bottom: 10px;
+    list-style: none;
+    text-transform: lowercase;
+}
+
+#decs .label {
+    margin: 5px 0px 0px 15px;
+    padding: 2px;
+    font-weight: bold;
+}
+
+#decs LI A {
+    text-decoration: none;
+}
+
+#decs LI A:hover {
+    color: #803E12;
+    text-decoration: underline;
+}
+
+#decs H4 SPAN {
+    margin-left: 20px;
+    font-size: 10px;
+}
+
+#decs #help {
+    background: white;
+    margin: 20px;
+    padding: 5px;
+    border: 1px dashed #CCC;
+}
+
+#decs #help OL {
+
+}
+
+#decs #details .label {
+    vertical-align: top;
+}
+
+.level2 #decs {
+    width: 49%;
+    margin-right: .5em;
+    float: left;
+
+}
+
+.level2 #decs #title {
+    font-size: 125%;
+    font-weight: bold;
+    margin: 10px 10px 10px 0px;
+}
+
+.level2 #decs #boxContent{
+    padding-left: 10px;
+    font-size: 80%;
+}
+
+.level2 #decs OL{
+    margin-left: 6px;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.level2 #decs UL{
+    margin-left: 1px;
+}
+
+.level2 #decs UL LI {
+    text-transform: none;
+    margin-top: 10px;
+}
+
+
+.level2 #decs UL UL {
+    margin-left: 15px;
+}
+
+.level2 #decs #boxContentScroll{
+    margin-top: 5px;
+    height:230px;
+    overflow:auto;
+    border: solid 1px #c6dae1;
+}
+
+#decsBase {
+    float: left;
+    width: 100%;
+    height: 20px;
+}
+#decsBase #logo {
+    float: left;
+}
+#decsBase SPAN {
+    margin-left: 80px;
+}
+
+#decsBase A {
+    text-decoration: none;
+}
+
+/* Decs selection area */
+
+.selectionArea{
+    margin-left:15px;
+    width:100%;
+}
+
+.termList LI{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0px !important;
+}
+.evenLine SPAN, .oddLine SPAN{
+    padding: 3px;
+}
+
+/* Decs AutoComplete */
+
+#decsAutocomplete #terminput {
+    margin-left: 15px;
+    width: 120px;
+}
+
+#decsAutocomplete #container .ac_bd{
+    margin-left: 15px;
+    border: solid 1px #cccccc;
+    width: 170px;
+    height: 200px;
+    overflow: auto;
+    background: #fff;
+    padding: 0px;
+}
+
+#decsAutocomplete #container UL {
+    margin: 0px;
+    padding: 0px;
+    background: #fff;
+}
+#decsAutocomplete #container UL LI {
+    list-style: none;
+    cursor: pointer;
+}
+#decsAutocomplete #container LI.highlight {
+     background:#B2D1D1;
+}
+#decsAutocomplete #container LI.prehighlight {
+     background:#ffff99;
+}
+
+
+/* Warning Box Styles */
+#warnings H3 {
+    border-color: #E59696;
+}
+
+#warnings H3 SPAN {
+    border-color: red;
+}
+
+#warnings UL {
+    padding: 0px;
+    margin: 5px 10px 10px 15px;
+}
+
+#warnings LI {
+    list-style: none;
+}
+
+/* About BVS Box Styles */
+.about H3 {
+    border-color: #F0C29D;
+}
+
+.about H3 SPAN {
+    border-color: #F47B20;
+}
+
+.about UL {
+    margin: 0px 15px 0px 15px;
+    padding: 0px;
+}
+
+.about LI {
+    border-bottom: 1px solid #BEE0E0;
+    list-style: none;
+    padding: 3px;
+}
+
+.level2 .about LI {
+    border-bottom: 0px;
+}
+
+.about LI A {
+    text-decoration: none;
+}
+
+.about LI A:hover {
+    text-decoration: underline;
+}
+
+/* Highlights Box Styles */
+.calls H3 {
+    border-color: #E8B49A;
+}
+
+.calls H3 SPAN {
+    border-color: #DF5917;
+}
+
+.calls LI {
+    clear: both;
+    width: 100%;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.calls LI A {
+    float: left;
+    margin-right: 5px;
+    text-decoration: none;
+}
+
+.calls LI A:hover {
+    text-decoration: underline;
+}
+
+HTML>BODY .calls LI A { /* Mozilla exclusive definitions */
+    float: none;
+}
+
+HTML>BODY .calls LI IMG { /* Mozilla exclusive definitions */
+
+    margin-right: 5px;
+	max-width:198px;
+}
+
+.calls LI IMG { /* Mozilla exclusive definitions */
+
+    margin-right: 5px;
+	max-width:198px;
+}
+.calls A:hover {
+
+}
+
+/* Related Portals Box Styles */
+#portal {
+    
+}
+
+#portal H3 {
+
+}
+
+#portal H3 SPAN {
+
+}
+
+#portal UL {
+    padding: 0px;
+    margin-left: 10px;
+}
+
+.portal UL UL {
+    margin-left: 0px;
+}
+
+.portal UL UL UL {
+    margin-left: 10px;
+}
+
+.portal LI {
+    font-weight: bold;
+}
+
+.portal LI LI {
+    list-style: none;
+    margin-bottom: 3px;
+    font-weight: normal;
+}
+
+/* RSS Newsfeed Boxes Styles */
+.RSS H3 {
+    border-color: #E5E4AC;
+}
+
+.RSS H3 SPAN {
+    border-color: #CCCA25;
+}
+
+
+.RSS LI {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.RSS LI A {
+    text-decoration: none;
+}
+
+.RSS LI A:hover {
+    text-decoration: underline;
+}
+
+.RSS #channel{
+    padding-left: 18px;
+    display: block;
+    font-weight: bold;
+}
+.RSS .logo{
+    margin-left: 20px;
+}
+
+#portal li a.closed {
+background:url("../../../../../image/public/skins/regional/common/icon_plus.gif") no-repeat scroll 0 2px transparent;
+padding-left:14px;
+}
+
+#portal li a.opened {
+background:url("../../../../../image/public/skins/regional/common/icon_minus.gif") no-repeat scroll 0 2px transparent;
+padding-left:14px;
+}

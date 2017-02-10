@@ -1,0 +1,7 @@
+root=oai-dc
+
+501 dc:title
+900 dc:description
+610 dc:subject
+505 dc:identifier
+507 dc:date

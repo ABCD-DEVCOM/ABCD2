@@ -1,0 +1,27 @@
+'<table border=0 width=90%>'
+if p(v094) then '<tr><td width=20% valign=top><font face=arial size=2><b>ID</b></td><td valign=top><font face=arial size=2>'v094+|<br>|,'</td>' fi/
+if p(v001) then '<tr><td width=20% valign=top><font face=arial size=2><b>Descriptor (EN)</b></td><td valign=top><font face=arial size=2>'v001+|<br>|,'</td>' fi/
+if p(v002) then '<tr><td width=20% valign=top><font face=arial size=2><b>SN (EN)</b></td><td valign=top><font face=arial size=2>'v002+|<br>|,'</td>' fi/
+if p(v003) then '<tr><td width=20% valign=top><font face=arial size=2><b>USE (EN)</b></td><td valign=top><font face=arial size=2>'v003+|<br>|,'</td>' fi/
+if p(v004) then '<tr><td width=20% valign=top><font face=arial size=2><b>UF (EN)</b></td><td valign=top><font face=arial size=2>'v004+|<br>|,'</td>' fi/
+if p(v005) then '<tr><td width=20% valign=top><font face=arial size=2><b>BT (EN)</b></td><td valign=top><font face=arial size=2>'v005+|<br>|,'</td>' fi/
+if p(v006) then '<tr><td width=20% valign=top><font face=arial size=2><b>NT (EN)</b></td><td valign=top><font face=arial size=2>'v006+|<br>|,'</td>' fi/
+if p(v007) then '<tr><td width=20% valign=top><font face=arial size=2><b>RT (EN)</b></td><td valign=top><font face=arial size=2>'v007+|<br>|,'</td>' fi/
+if p(v008) then '<tr><td width=20% valign=top><font face=arial size=2><b>ND (EN)</b></td><td valign=top><font face=arial size=2>'v008+|<br>|,'</td>' fi/
+if p(v101) then '<tr><td width=20% valign=top><font face=arial size=2><b>DE (FR)</b></td><td valign=top><font face=arial size=2>'v101+|<br>|,'</td>' fi/
+if p(v102) then '<tr><td width=20% valign=top><font face=arial size=2><b>SN (FR)</b></td><td valign=top><font face=arial size=2>'v102+|<br>|,'</td>' fi/
+if p(v103) then '<tr><td width=20% valign=top><font face=arial size=2><b>USE (FR)</b></td><td valign=top><font face=arial size=2>'v103+|<br>|,'</td>' fi/
+if p(v104) then '<tr><td width=20% valign=top><font face=arial size=2><b>UF (FR)</b></td><td valign=top><font face=arial size=2>'v104+|<br>|,'</td>' fi/
+if p(v105) then '<tr><td width=20% valign=top><font face=arial size=2><b>BT (FR)</b></td><td valign=top><font face=arial size=2>'v105+|<br>|,'</td>' fi/
+if p(v106) then '<tr><td width=20% valign=top><font face=arial size=2><b>NT (FR)</b></td><td valign=top><font face=arial size=2>'v106+|<br>|,'</td>' fi/
+if p(v107) then '<tr><td width=20% valign=top><font face=arial size=2><b>RT (FR)</b></td><td valign=top><font face=arial size=2>'v107+|<br>|,'</td>' fi/
+if p(v108) then '<tr><td width=20% valign=top><font face=arial size=2><b>ND (FR)</b></td><td valign=top><font face=arial size=2>'v108+|<br>|,'</td>' fi/
+if p(v201) then '<tr><td width=20% valign=top><font face=arial size=2><b>DE (ES)</b></td><td valign=top><font face=arial size=2>'v201+|<br>|,'</td>' fi/
+if p(v202) then '<tr><td width=20% valign=top><font face=arial size=2><b>SN (ES)</b></td><td valign=top><font face=arial size=2>'v202+|<br>|,'</td>' fi/
+if p(v203) then '<tr><td width=20% valign=top><font face=arial size=2><b>USE (ES)</b></td><td valign=top><font face=arial size=2>'v203+|<br>|,'</td>' fi/
+if p(v204) then '<tr><td width=20% valign=top><font face=arial size=2><b>UF (ES)</b></td><td valign=top><font face=arial size=2>'v204+|<br>|,'</td>' fi/
+if p(v205) then '<tr><td width=20% valign=top><font face=arial size=2><b>BT (ES)</b></td><td valign=top><font face=arial size=2>'v205+|<br>|,'</td>' fi/
+if p(v206) then '<tr><td width=20% valign=top><font face=arial size=2><b>NT (ES)</b></td><td valign=top><font face=arial size=2>'v206+|<br>|,'</td>' fi/
+if p(v207) then '<tr><td width=20% valign=top><font face=arial size=2><b>RT (ES)</b></td><td valign=top><font face=arial size=2>'v207+|<br>|,'</td>' fi/
+if p(v208) then '<tr><td width=20% valign=top><font face=arial size=2><b>ND (ES)</b></td><td valign=top><font face=arial size=2>'v208+|<br>|,'</td>' fi/
+'</table><p>'

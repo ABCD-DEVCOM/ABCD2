@@ -1,0 +1,16 @@
+if p(v30) then,
+ 
+('\li\fi0\ATX {\fonttbl\f0\fswiss Arial Narrow; \f1\fswiss Bar Code 39 e HR;}'
+ '\f0\fs16\qc ' 
+    
+   if p(v20) then v20 else v35 fi, 
+
+  '\par\f1\fs44\qc ',
+   
+   if p(v20) then |*|v20|*| else |*|v35|*| fi,  
+   
+   '\par ' /) 
+
+      
+fi,
+

@@ -1,0 +1,184 @@
+/*
+    This file describes general styles all over the site,
+    like "top banner", "footer", and general styles about the component boxes.
+*/
+
+/* Page Body Styles */
+.top {
+    background: #7A98A9 url(../../../../../image/public/skins/classic/common/banner.jpg) top right no-repeat;
+}
+
+.top #parent {
+    text-align: right;
+}
+
+.top #identification {
+
+}
+
+.top #identification H1 {
+    color: white;
+    font-size: 180%;
+}
+
+.top #institutionList {
+    text-align: right;
+}
+
+.top #institutionList LI {
+    list-style: none;
+    font-size: 90%;
+}
+
+HTML>BODY .top #institutionList LI {
+    font-size: 85%;
+}
+
+.top #institutionList LI A {
+    text-decoration: none;
+    color: #FFF;
+}
+
+
+.bar {
+    text-align: right;
+    font-weight: bold;
+    font-size: 75%;
+}
+
+.bar, .bar A {
+    color: white;
+}
+
+.bar #contact A {
+    background: url(../../../../../image/public/skins/classic/common/bt_contact.gif) no-repeat;
+}
+
+.bottom #footNotes {
+    border-left: 50px solid #33617B;
+    background: #67A0C1;
+}
+
+.bottom #footNotes {
+    font-size: 85%;
+}
+
+.bottom #footNotes, .bottom #footNotes A {
+    color: #DFEBF2;
+}
+
+
+/* Cascading definitions #Start */
+.firstColumn DIV, .secondColumn .centerLeftColumn DIV, .secondColumn .centerRightColumn DIV, .thirdColumn DIV, #search, #searchConcepts, .level2 .middle DIV {
+    background: #DDEEFF;
+}
+
+.firstColumn DIV H3, .secondColumn DIV H3, .thirdColumn DIV H3, #search H3, #searchConcepts H3, .level2 .middle DIV H3 {
+    border-top: 2px solid #B1C1C1;
+    /*background: #EEF1F1;*/
+     background: #DDCBAA;
+}
+
+.firstColumn DIV H3 SPAN, .secondColumn DIV H3 SPAN, .thirdColumn DIV H3 SPAN, #search H3 SPAN, #searchConcepts H3 SPAN, .level2 .middle DIV H3 SPAN {
+    border-left: 6px solid #567A7A;
+    font-size: 80%;
+}
+
+.firstColumn DIV H3 SPAN A, .secondColumn DIV H3 SPAN A, .thirdColumn DIV H3 SPAN A, #search H3 SPAN A, #searchConcepts H3 SPAN A, .level2 .middle DIV H3 SPAN A {
+    text-decoration: none;
+}
+
+.firstColumn DIV H3 SPAN A:hover, .secondColumn DIV H3 SPAN A:hover, .thirdColumn DIV H3 SPAN A:hover, #search H3 SPAN A:hover, #searchConcepts H3 SPAN A:hover, .level2 .middle DIV H3 SPAN A:hover {
+    text-decoration: underline;
+}
+
+html>body .firstColumn DIV H3 SPAN, html>body .secondColumn DIV H3 SPAN, html>body .thirdColumn DIV H3 SPAN, html>body #search H3 SPAN, html>body #searchConcepts H3 SPAN, html>body .level2 .middle DIV H3 SPAN {
+    font-size: 85%;
+}
+
+/* Cascading definitions #End */
+
+
+/* Second pages Styles */
+.level2 .middle #contact A {
+    background: none;
+}
+
+.level2 H4 {
+    border-bottom: 1px solid #B6CDCD;
+}
+
+.level2 #search UL LI {
+    list-style: none;
+}
+
+.level2 #search LI {
+    font-weight: bold;
+    list-style: none;
+}
+
+.level2 #search LI LI {
+    font-weight: normal;
+}
+
+/* MetaIAH Pop-up styles */
+#popUp {
+    background: #EEF1F1;
+}
+
+#popUp TD {
+    font-size: 80%;
+}
+
+#popUp .bottom {
+    border-top: 1px solid #CCC;
+}
+
+.copyright {
+    font-size: 8pt;
+    text-align: center;
+}
+
+/* General Styles */
+.info {
+    border: 0px;
+    height: 17px;
+    width: 18px;
+    background: url(../../../../../image/public/skins/classic/common/buttonInfo.gif) top left no-repeat;
+}
+
+.expand-retract {
+
+}
+
+/* selection area decs */
+.selectionArea TABLE{
+    border:1px solid #888c8f;
+}
+
+.evenLine{
+    background: #f7f7f7;
+}
+.oddLine{
+    background: #e8e8e8;
+}
+.termList LI {
+    list-style: none;
+}
+
+.evenLine A, .oddLine A {
+    color:#b7535f;
+    font-weight:bold;
+    text-decoration: none;
+}
+
+
+.actions A img {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+.actions A:hover img {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}

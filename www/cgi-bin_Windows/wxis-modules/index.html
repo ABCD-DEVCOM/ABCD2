@@ -1,0 +1,296 @@
+<html>
+<head>
+	<title>Wxis-modules PHP</title>
+	<style>
+		body {
+			font-family : "Microsoft Sans Serif";
+			font-size : smaller;
+			font-weight : bold;
+		}	
+		.box_label {
+			color: black;
+			font-weight: normal;
+			background-color: #B5BDC5;
+		}	
+	</style>
+</head>
+
+<body>
+<div align="right">
+<a href="index_es.html">español</a> | <a href="index_en.html">english</a>
+</div>
+
+<fieldset>
+	<legend>list.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="get">
+		<input type="hidden" name="IsisScript" value="list.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50"><br>
+				lista de gizmo<br>
+				<textarea name="gizmo" cols="40" rows="1">GIZMO_XML</textarea>
+			</li>
+			<li>
+				mfn inicial<br>
+				<input type="text" name="from" size="10" value="1">
+			</li>
+			<li>
+				mfn final<br>
+				<input type="text" name="to" size="10" value="999999">
+			</li>
+			<li>
+				quantidade<br>
+				<input type="text" name="count" size="10" value="20">
+			</li>
+			<li>
+				ordem dos registros<br>
+				<input type="radio" name="reverse" value="Off" checked>mfn
+				<input type="radio" name="reverse" value="On">inversa<br>
+				<br>
+				<input type="submit" name="task" value=" list ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>search.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="get">
+		<input type="hidden" name="IsisScript" value="search.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50"><br>
+				lista de gizmo<br>
+				<textarea name="gizmo" cols="40" rows="1">GIZMO_XML</textarea>
+			</li>
+			<li>
+				pesquisa<br>
+				<input type="text" name="search" size="40">
+			</li>
+			<li>
+				hit inicial<br>
+				<input type="text" name="from" size="10" value="1">
+			</li>
+			<li>
+				hit final<br>
+				<input type="text" name="to" size="10" value="999999">
+			</li>
+			<li>
+				quantidade<br>
+				<input type="text" name="count" size="10" value="20">
+			</li>
+			<li>
+				ordem dos hits<br>
+				<input type="radio" name="reverse" value="Off" checked>mfn
+				<input type="radio" name="reverse" value="On">inversa<br>
+<!--
+			</li>
+			<li>
+				prefixo para destacar texto encontrada<br>
+				<input type="text" name="hlprefix" size="30" value="[wxis-hl]">
+			</li>
+			<li>
+				sufixo para destacar texto encontrada<br>
+				<input type="text" name="hlsuffix" size="30" value="[/wxis-hl]">
+-->
+				<br>
+				<input type="submit" name="task" value=" search ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>index.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="get">
+		<input type="hidden" name="IsisScript" value="index.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50">
+			</li>
+			<li>
+				chave inicial<br>
+				<input type="text" name="from" size="30">
+			</li>
+			<li>
+				chave final<br>
+				<input type="text" name="to" size="30">
+			</li>
+			<li>
+				lista de tags (chaves específicas)<br>
+				<input type="text" name="posttag" size="20" value="">
+			</li>
+			<li>
+				quantidade de postings<br>
+				<input type="text" name="posting" size="10" value="All">
+			</li>
+			<li>
+				quantidade<br>
+				<input type="text" name="count" size="10" value="20">
+			</li>
+			<li>
+				ordem das chaves<br>
+				<input type="radio" name="reverse" value="Off" checked>crescente
+				<input type="radio" name="reverse" value="On">inversa<br>
+				<br>
+				<input type="submit" name="task" value=" index ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>edit.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="get">
+		<input type="hidden" name="IsisScript" value="edit.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50"><br>
+				lista de gizmo<br>
+				<textarea name="gizmo" cols="40" rows="1">GIZMO_XML</textarea>
+			</li>
+			<li>
+				mfn<br>
+				<input type="text" name="mfn" size="10">
+			</li>
+			<li>
+				identificação de bloqueio<br>
+				<input type="text" name="lockid" size="20">
+			</li>
+			<li>
+				quantidade de segundos para expirar o bloqueio<br>
+				<input type="text" name="expire" size="10" value="18000"><br>
+				<br>
+				<input type="submit" name="task" value=" edit ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>write.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="post">
+		<input type="hidden" name="IsisScript" value="write.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50"><br>
+				lista de gizmo<br>
+				<textarea name="gizmo" cols="40" rows="1">GIZMO_XML</textarea>
+			</li>
+			<li>
+				mfn<br>
+				<input type="text" name="mfn" size="10">
+			</li>
+			<li>
+				identificação de bloqueio<br>
+				<input type="text" name="lockid" size="20">
+			</li>
+			<li>
+				quantidade de segundos para expirar o bloqueio<br>
+				<input type="text" name="expire" size="10" value="18000">
+			</li>
+			<li>
+				conteúdo<br>
+				<textarea cols="60" rows="12" name="content"></textarea><br>
+				<br>
+				<input type="submit" name="task" value=" write ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>delete.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="get">
+		<input type="hidden" name="IsisScript" value="delete.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50"><br>
+				lista de gizmo<br>
+				<textarea name="gizmo" cols="40" rows="1">GIZMO_XML</textarea>
+			</li>
+			<li>
+				mfn<br>
+				<input type="text" name="mfn" size="10">
+			</li>
+			<li>
+				identificação de bloqueio<br>
+				<input type="text" name="lockid" size="20">
+			</li>
+			<li>
+				quantidade de segundos para expirar o bloqueio<br>
+				<input type="text" name="expire" size="10" value="18000"><br>
+				<br>
+				<input type="submit" name="task" value=" delete ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+<fieldset>
+	<legend>control.xis</legend>
+	<form action="/cgi-bin/wxis.exe/wxis-modules/" method="get">
+		<input type="hidden" name="IsisScript" value="control.xis">
+		<ul>
+			<li>
+				base de dados<br>
+				<input type="text" name="database" size="50"><br>
+			</li>
+			<li>
+				função<br>
+				<fieldset>
+					<legend><input type="radio" name="function" value="status" checked>status da base de dados</legend>
+					<ul>
+					</ul>
+				</fieldset>
+				<fieldset>
+					<legend><input type="radio" name="function" value="unlock" checked>desbloqueia de base de dados</legend>
+					<ul>
+						<li>
+							parte<br>
+							<select name="unlock" size="1">
+								<option value="database" SELECTED>toda a base de dados</option>
+								<option value="control">só o registro de controle</option>
+							</select>
+						</li>
+					</ul>
+				</fieldset>
+				<fieldset>
+					<legend><input type="radio" name="function" value="invert">geração do arquivo invertido (índices)</legend>
+					<ul>
+					<!--
+						<li>
+							arquivo: tabela de seleção de campos (FST)<br>
+							<input type="text" name="fst" size="50">
+						</li>
+					-->
+					</ul>
+				</fieldset>
+				<fieldset>
+					<legend><input type="radio" name="function" value="create">criação de base de dados vazia</legend>
+					<ul>
+						<li>
+							parte<br>
+							<select name="create" size="1">
+								<option value="database" SELECTED>base de dados</option>
+								<option value="master">só o arquivo mestre (registros)</option>
+								<option value="inverted">só o arquivo invertido (índice)</option>
+							</select>
+						</li>
+					</ul>
+				</fieldset>
+				<br>
+				<input type="submit" name="task" value=" control ">
+			</li>
+		</ul>
+	</form>
+</fieldset>
+
+</body>
+</html>

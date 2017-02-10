@@ -1,0 +1,9 @@
+F|1|Número de control|0|0|||X||10|||||||0||
+F|10|Base de datos|0|0|||S||||%path_database%acquisitions.dat|||||0||
+T|959|Copias|0|0|ilbovt||TB|||||||||0||
+S||Número de inventario|0|0|||X||10|||||||0||
+S||Biblioteca principal|0|0|||X||20|||||||0||
+S||Biblioteca secundaria|0|0|||X||20|||||||0||
+S||Tipo de objeto|0|0|||S|||P|%path_database%circulation/def/en/items.tab|||||0||
+S||Volumen|0|0|||X||10|||||||0||
+S||Tomo|0|0|||X||10|||||||0||

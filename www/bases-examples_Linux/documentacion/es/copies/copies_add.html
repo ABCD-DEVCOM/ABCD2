@@ -1,0 +1,23 @@
+<font size="2"><font face="Arial"><strong>Agregar copias a un objeto<br />
+<br />
+</strong></font></font><font size="2"><font face="Arial">Los objetos a los cuales se le inventarían las copias <strong>deben poseer un campo denominado "Número de control"</strong> el cual debe estar definido en la FDT con el tipo "autoincrement" y estar indizado en la FST con el prefijo "NC_".&nbsp; Este campo de la FDT se utiliza como campo de relación entre un objeto y sus copias.</font></font><br />
+<font size="2"><font face="Arial"><br />
+Las copias de los objetos todas las bases de datos confluyen en una base de datos denominada <strong>copies</strong> y se mantiene un único número de inventario para cada copia.<br />
+<br />
+Para la asignación secuencial del número de control en cada registro, se utiliza el archivo <strong>control_number.cn</strong> ubicado en la carpeta <strong>data</strong> de la base de datos correspondiente. Cada base de datos bibliográfica posee su propia secuencia del número de control. Por esta razón, en la base de datos <strong>copies</strong> se almacena el nombre de la&nbsp; base de datos relacionada con la copia para garantizar la correcta recuperación de la información bibliográfica, cuando ello sea necesario.<br />
+<br />
+Cuando se solicita el<strong> ingreso</strong> de nuevas copias, se presenta un formulario para ingreso de la información correspondiente.<br />
+<br />
+</font></font><font size="2"><font face="Arial">Coloque en el recuadro el número de copias que desea agregar al objeto seleccionado. Use el vínculo <strong>Ver todas las copias</strong> para desplegar todas las copias ya ingresadas para ese objeto.<br />
+<br />
+Rellene los datos correspondientes y cuando termine haga clic sobre <strong>Actualizar</strong>.<br />
+<br />
+Se creará en la base de datos <strong>copies</strong> el número de registros solicitados, de acuerdo al valor <strong>Número de copias</strong>. La información de los registros creados se tomará del formulario de ingreso. El número de inventario se incrementará automáticamente tomando como punto de partida el valor almacenado en al archivos <strong>control_number.cn </strong>almacenado en la carpeta <strong>bases/copies/data</strong>.</font></font><br />
+<br />
+Use la opción "Restablecer el número de control o de inventario" del menú principal de catalogación, si por alguna razón se necesita restaurar el próximo número de inventario a asignar a las copias, o a los objetos de una base de datos en particular.<br />
+<br />
+<br />
+<font size="2"><font face="Arial"><br />
+<br />
+<br />
+</font></font>

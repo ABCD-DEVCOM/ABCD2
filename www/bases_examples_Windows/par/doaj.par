@@ -1,0 +1,6 @@
+doaj.*=/ABCD/www/bases/doaj/data/doaj.*
+prologoact.pft=%path_database%www/prologoact.pft
+prologo.pft=%path_database%www/prologo.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+epilogo.pft=%path_database%www/epilogo.pft
+autoridades.pft=%path_database%doaj/pfts/en/autoridades.pft 

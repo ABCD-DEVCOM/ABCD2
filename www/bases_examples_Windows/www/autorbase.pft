@@ -1,0 +1,12 @@
+select e3
+		case 3:   v3/
+		case 4:   v4/
+		
+		case 603: v603/
+        case 604: v604/
+		case 607: v607,'-',v611^a,", "v612^a,' ('f(mfn,1,0)') ' ,'$$$'f(mfn,1,0)
+		case 611: v611^a,' ('v607')','$$$'v611,'^c',v607/
+		case 612: v612^a/
+		case 613: v613^a/
+		case 614: v614^a/
+endsel

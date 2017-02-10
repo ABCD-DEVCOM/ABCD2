@@ -1,0 +1,359 @@
+<IsisScript name="Administrar">
+
+<function name="error" action="replace" tag="1">
+	<parm name="isisxml table">
+		<pft>
+			'record=error'/
+			'style=fixed'/
+			'1 message'/
+		</pft>
+	</parm>
+	<flow action="exit">0</flow>
+</function>
+
+<function name="status" action="replace" tag="2001">
+	<field action="statusdb" tag="1091"><pft>v2001</pft></field>
+	<field action="replace" tag="1092">
+				<pft>
+					'STATUS'/'BD:',if v1091^s : 'm' then 'Y' else 'N' fi/
+					'IF:',if v1091^s : 'i' then 'Y' else 'N' fi/
+					if p(v1091^n) then 'MAXMFN:',f(val(v1091^n) - 1,1,0)  fi/
+					'DENTRYLOCK:'v1091^d,/
+					'EXCLUSIVEWRITELOCK:'v1091^e,/
+				</pft>
+	</field>
+	<display>
+		<pft>v1092/</pft>
+	</display>
+ </function>
+
+<!-- Presenta el diccionario de términos -->
+
+<function name="diccionario" action="replace" tag="2001">
+
+	<field action=cgi tag=3001>termino</field>
+ 	<do task=keyrange>
+		<parm name=db><pft>v2001</pft></parm>
+      	<parm name=from><pft>v3001</pft></parm>
+      	<parm name=count>1000</parm>
+      	<field action=define tag=2010>Isis_Key</field>
+      	<field action=define tag=2011>Isis_Postings</field>
+		<display><pft>'DICCIONARIO<p>'##</pft></display>
+
+        	<loop>
+				<field action=import tag=2001>2001</field>
+				<field action=import tag=9006>9005</field>
+				<field action=import tag=9006>9006</field>
+           		<display><pft>'<a href=soporte.php?Opcion=postings&base='v2001'&cipar='v2001[1]'.par&login='v9005'&password='v9006'&termino='replace(v2010,' ','+')' target=_new>'v2010'</a> ('v2011')<br>'/</pft></display>
+        	</loop>
+	</do>
+	<field action=export tag=2010>2010</field>
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<!-- Presenta los postings de un término -->
+
+<function name="postings" action="replace" tag="2001">
+
+	<field action=cgi tag=3001>termino</field>
+ 	<do task=keyrange>
+		<parm name=db><pft>v2001</pft></parm>
+      	<parm name=from><pft>v3001</pft></parm>
+		<parm name=to><pft>v3001'ZZZZZZZZZZ'</pft></parm>
+		<parm name=posting>ALL</parm>
+		<field action=define tag=1001>Isis_Current</field>
+      	<field action=define tag=1>Isis_Key</field>
+      	<field action=define tag=2>Isis_Postings</field>
+		<field action=define tag=3>Isis_Posting</field>
+
+		<display><pft>'POSTINGS<p>'##</pft></display>
+       	<loop>
+			<field action=import tag=2001>2001</field>
+			<field action=import tag=3001>3001</field>
+			<field action=import tag=9006>9005</field>
+			<field action=import tag=9006>9006</field>
+       		<display><pft>
+				if v3001=v1 then
+					if val(v3^i)=1 then V1'<p>'
+						'<table border=0 cellpadding=0 cellspacing=0>
+							<TR>
+								<TD width=60>Mfn</TD>
+								<TD width=40>Tag</TD>
+								<td width=40>Occ</td>
+								<td width=40>Seq</td>
+							</TR>'
+					fi,
+							'<tr>
+								<TD>
+									<a href=soporte.php?Opcion=mfn&from='v3^m'&base='v2001[1]'&cipar='v2001[1]'.par target=m'v3^m'>'v3^m,'</a>'
+								'</TD>'
+								'<TD>'v3^t'</TD><TD>'v3^o'<TD>'v3^c'</TD>'
+							'</tr>'
+				fi,
+			</pft></display>
+        </loop>
+	</do>
+	<display><pft>'</table>'</pft></display>
+	<field action=export tag=2010>2010</field>
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<!-- Muestra un registro en formato ALLL -->
+
+<function name="mfn" action="replace" tag="2001">
+
+	<field action=cgi tag=3001>from</field>
+    <field action=cgi tag=3002>count</field>
+
+	<do task="mfnrange">
+		<parm name=db><pft>v2001</pft></parm>
+        <parm name=from><pft>v3001</pft></parm>
+        <parm name=count>1</parm>
+		<field action="define" tag="1091">Isis_Status</field>
+		<field action="define" tag="1092">Isis_RecordStatus</field>
+		<field action=define tag=3005>Isis_Total</field>
+		<loop>
+			<display><pft>'<br>'</pft></display>
+			<display><pft>ALL</pft></display>
+		</loop>
+
+	</do>
+	<field action=export tag=3005>3005</field>
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<function name="busquedalibre" action="replace" tag="2001">
+<trace>XOn</trace>
+    <field action=cgi tag=3030>Formato</field>
+	<field action=cgi tag=2004>count</field>
+<display><pft></pft></display>
+	<do task="mfnrange">
+		<parm name=db><pft>v2001</pft></parm>
+        <parm name=from>1</parm>
+		<parm name=count><pft>v2004</pft></parm>
+		<field action="define" tag="1091">Isis_Status</field>
+		<field action="define" tag="1092">Isis_RecordStatus</field>
+		<field action=define tag=3005>Isis_Total</field>
+		<loop>
+			<field action=import tag=3030>3030</field>
+			<display><pft type=reload><pft>V3030,</pft></pft></display>
+			<display><pft></pft></display>
+		</loop>
+
+	</do>
+	<field action=export tag=3005>3005</field>
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<!-- Despliega los registros con formato ALL -->
+
+<function name="desplegar" action="replace" tag="2001">
+
+	<field action=cgi tag=3001>from</field>
+    <field action=cgi tag=3002>count</field>
+
+	<do task="mfnrange">
+		<parm name=db><pft>v2001</pft></parm>
+        <parm name=from><pft>v3001</pft></parm>
+        <parm name=count><pft>v3002</pft></parm>
+		<field action="define" tag="1091">Isis_Status</field>
+		<field action=define tag=1099>Isis_RecordStatus</field>
+		<field action=define tag=3005>Isis_Total</field>
+		<display><pft>'Lista de registros<p>'##</pft></display>
+		<loop>
+			<display><pft>'<br>'</pft></display>
+			<display><pft>if v1091='1' then 'Registro Eliminado<br>' fi</pft></display>
+			<display><pft>ALL</pft></display>
+		</loop>
+
+	</do>
+	<field action=export tag=3005>3005</field>
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+
+
+<!-- Lista registros bloqueados -->
+
+<function name="listar" action="replace" tag="2001">
+
+	<field action=cgi tag=3001>from</field>
+    <field action=cgi tag=3002>count</field>
+
+	<do task="mfnrange">
+		<parm name=db><pft>v2001</pft></parm>
+        <parm name=from><pft>v3001</pft></parm>
+        <parm name=count><pft>v3002</pft></parm>
+		<field action="define" tag="1091">Isis_Status</field>
+		<loop>
+			<display><pft>f(mfn,10,0),'|'if v1091='1' then  'DELETED' '|'/ else if p(v1101) or v1091='-2' then 'LOCKED' v1101,'|' v1091 else '|'/ fi, fi/</pft></display>
+		</loop>
+
+	</do>
+
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<!-- Desbloquea Base de datos -->
+<function name="unlockbd" action="replace" tag="2001">
+	<file action="unlock" type="database"><pft>v2001</pft></file>
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<!-- Desbloquea registros -->
+
+<function name="unlock" action="replace" tag="2001">
+	<file action="unlock" type="database"><pft>v2001</pft></file>
+	<field action="replace" tag="2011">unlocked</field>
+	<field action="cgi" tag="2003">unlock</field>
+   <field action=cgi tag=3001>from</field>
+    <field action=cgi tag=3002>count</field>
+	<return action="replace" tag="2003"><pft>if v2003 = 'control' then v2003 fi</pft></return>
+
+	<do task="mfnrange">
+		<parm name=db><pft>v2001</pft></parm>
+        <parm name=from><pft>v3001</pft></parm>
+        <parm name=count><pft>v3002</pft></parm>
+		<field action="define" tag="1091">Isis_Status</field>
+		<loop>
+			<display><pft>,if v1091='1' then f(mfn,1,0),'|DELETED' /fi </pft></display>
+			<flow action="skip"><pft>if   v1091='-2'  or p(v1101) then  else 'Next' fi </pft></flow>
+			<field action="import" tag="list">2001</field>
+			<do task="update">
+
+				<parm name=db><pft>v2001</pft></parm>
+				<parm name="mfn"><pft>mfn(1)</pft></parm>
+				<parm name="expire">0</parm>
+				<parm name="lockid"><pft>'control.xis: ',getenv('REMOTE_ADDR')</pft></parm>
+				<field action="define" tag="1101">Isis_Lock</field>
+				<field action="define" tag="1102">Isis_Status</field>
+				<update>
+					<write>Unlock</write>
+					<display><pft>f(mfn,1,0),'|UNLOCKED'/</pft></display>
+				</update>
+
+			</do>
+		</loop>
+
+	</do>
+
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+
+
+<function name="invert" action="replace" tag="2001">
+	<do task="fullinvertion">
+
+		<parm name="db"><pft>v2001</pft></parm>
+		<field action="replace" tag="2004"><pft>v2001,'.fst'</pft></field>
+		<parm name="fst"><pft>cat(v2004)</pft></parm>
+
+		<field action="define" tag="1102">Isis_Status</field>
+
+		<loop>
+            <display><pft>mfn/</pft></display>
+		</loop>
+
+		<field action="replace" tag="2011">inverted</field>
+
+	</do>
+
+	<return action="replace" tag="2004"><pft>v2004</pft></return>
+</function>
+
+<function name=inicializar action="replace" tag="5001">
+
+		<file action=create type=database><pft>v5001</pft></file>
+		<display><pft>'OK'</pft></display>
+		<flow action=exit>1</flow>
+</function>
+
+<section name="control">
+	<trace>xOn</trace>
+
+	<field action="cgi" tag="5015">cipar</field>
+	<field action="cgi" tag="5016">syspar</field>
+	<field action="cgi" tag="3001">from</field>
+	<field action="cgi" tag="3002">count</field>
+	<field action="cgi" tag="9005">login</field>
+	<field action="cgi" tag="9006">password</field>
+	<field action="cgi" tag="3030">Formato</field>
+	<field action="cgi" tag="2001">base</field>
+	<field action="cgi" tag="2002">Opcion</field>
+	<field action="cgi" tag="9088">cttype</field>
+	<field action="cgi" tag="1">path_db</field>
+
+
+
+<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+<display><pft></pft></display>
+
+    <parm name=cipar>
+      		<pft> if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi
+    		</pft>
+    </parm>
+	<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    <parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+
+	<flow action="jump"><pft>v2002</pft></flow>
+	<flow action="jump">FIN</flow>
+
+	<label>status</label>
+	<call name="status"><pft>v2001</pft></call>
+	<flow action="jump">FIN</flow>
+
+	<label>listar</label>
+	<call name="listar"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>diccionario</label>
+	<call name="diccionario"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>desplegar</label>
+	<call name="desplegar"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>unlock</label>
+	<call name="unlock"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>unlockbd</label>
+	<call name="unlockbd"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>invert</label>
+	<call name="invert"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>import</label>
+	<call name="import"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>postings</label>
+	<call name="postings"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>inicializar</label>
+	<call name="inicializar"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>mfn</label>
+	<call name="mfn"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+
+	<label>busquedalibre</label>
+	<call name=busquedalibre><pft>v2001</pft></call>
+
+
+
+	<label>END</label>
+
+
+	<label>FIN</label>
+</section>
+
+</IsisScript>
+

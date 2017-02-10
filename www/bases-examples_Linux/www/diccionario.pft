@@ -1,0 +1,45 @@
+select e3
+		case 1:   v1
+		case 100: v100^a,'$$$'v100^a
+		case 110: v110^a,'$$$'v110
+		case 111: v111^a,'$$$'v111
+        case 245: v245^a,'$$$'f(mfn,1,0)
+        case 260: v260^a," : "v260^b
+		case 270: v270
+        case 340: v340
+		case 600: if v600*2.1='^' then mhl,v600*4 else v600 fi,mpl,'$$$'v600
+		case 610: if v610*2.1='^' then mhl,v610*4 else v610 fi,mpl,'$$$'v610
+		case 650: if v650*2.1='^' then mhl,v650*4 else v650 fi,,mpl,'$$$'v650
+		case 651: if v651*2.1='^' then mhl,v651*4 else v651 fi,,mpl,'$$$'v651
+		case 653: if v653*2.1='^' then mhl,v653*4 else v653 fi,mpl,'$$$'v653
+		case 700: if v700*2.1='^' then mhl,v700*4 else V700 fi,mpl,'$$$'v700
+		case 710: if v710*2.1='^' then mhl,v710*4 else v710 fi,mpl,'$$$'v710
+		case 711: if v711*2.1='^' then mhl,v711*4 else v711 fi,mpl,'$$$'v711
+        case 842: v842
+        case 852: v852
+        case 773: v773
+        case 440: v440
+        case 502: v502^a
+        case 1503: v502^b
+        case 1504: v502^c
+        case 1505: v502^d
+        case 1506: v502^e
+        case 1507: v502^f
+        case 1508: v502^g
+        case 1509: v502^h
+        case 1510: v502^i
+        case 591: v591
+        case 901: v900^o
+        case 902: v900^r
+        case 903: v900^t
+        case 852: v852
+		case 41: v41
+		case 44: v44
+		case 50: v50
+		case 84: v84
+		case 91: v91
+		case 92: v92
+		case 94: v94
+		case 95: v95
+		case 96: v96
+endsel

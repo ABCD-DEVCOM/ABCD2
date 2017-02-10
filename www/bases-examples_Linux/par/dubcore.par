@@ -1,0 +1,11 @@
+dubcore.*=/var/opt/ABCD/bases/dubcore/data/dubcore.*
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+prologo.pft=/var/opt/ABCD/bases/www/prologo.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft
+epilogo.pft=/var/opt/ABCD/bases/www/epilogo.pft
+autoridades.pft=/var/opt/ABCD/bases/dubcore/pfts/en/autoridades.pft 
+isisac.tab=/var/opt/ABCD/bases/dubcore/data/isisactab_utf8.tab
+isisuc.tab=/var/opt/ABCD/bases/dubcore/data/isisuctab_utf8.tab
+STW=/var/opt/ABCD/bases/dubcore/data/dubcore.stw
+extfile.pft=/var/opt/ABCD/bases/dubcore/pfts/%lang%/extfile.pft
+exttext.pft=/var/opt/ABCD/bases/dubcore/pfts/%lang%/exttext.pft

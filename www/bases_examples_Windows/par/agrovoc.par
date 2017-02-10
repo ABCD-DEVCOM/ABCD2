@@ -1,0 +1,4 @@
+agrovoc.*=%path_database%agrovoc/data/agrovoc.*
+agrovoc.pft=%path_database%agrovoc/pfts/en/agrovoc.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

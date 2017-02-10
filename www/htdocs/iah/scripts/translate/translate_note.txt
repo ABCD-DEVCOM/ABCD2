@@ -1,0 +1,32 @@
+NOTE!!!!
+
+Backup all files before translating!!
+
+The current *.bat files (for Windows OS) for translating to other languages do not work correctly.
+Certain characters eg { } and | cause parts of the files to be omitted, or premature end of the translation.
+Repeatable groups ( ... ) may also end the process prematurely. Many of the processing pft's (eg ahhidd.pft)
+which do not contain words needing translation, become corrupted by the translation process, and therefore 
+need to be restored from originals.
+
+The delimiters for the words in the translation tables have been changed from {..} to {{..}}, this fixes 
+the conflict caused by { } which appear in Javascript.
+
+The *.bat files have been changed accordingly, and also changed to mx2.exe (mx is not a Windows program), 
+and explicit paths inserted.
+
+The translation tables (es.txt etc) as supplied, had become corrupted, using the wrong end-of-line 
+character (ASCII 13, which is visible in Notepad, but many other editors eg MS Word, will render this
+character on screen differently). This caused replacements to be skipped. It is important to verify that 
+the correct end-of-line character is used, by viewing in Notepad or an old-fasihioned DOS editor.
+
+Be sure to compare the results with the originals intended!!
+Restore the sections of which are deleted after the process comes to a vertical bar |  !!
+
+The language translation files have been expanded with additional phrases.
+
+Ben Winnubst
+17 June 2009
+
+
+
+

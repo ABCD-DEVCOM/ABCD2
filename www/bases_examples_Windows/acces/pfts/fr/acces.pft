@@ -1,0 +1,18 @@
+'<strong>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
+'<table   class=td2 border=0>'/
+'	<td valign=top>Nom d'utilisateur</td>'/
+'	<td>'v10'</td>'/
+'	<tr>'/
+'	<td valign=top>Identifiant</td>'/
+'	<td>'v20'</td>'/
+'	<tr>'/
+'	<td>Mot de passe</td>'/
+'	<td>'v30'</td>'/
+'   <tr>'/
+'	<td>Privilèges</td>'/
+'	<td valign=top>'(|<br>|+v40^a,| (|v40^b|)|)'</td>'/
+'	<tr>
+	<td>Validité jusqu'à le</td>
+	<td>'v50'</td>'
+
+'</table>'/

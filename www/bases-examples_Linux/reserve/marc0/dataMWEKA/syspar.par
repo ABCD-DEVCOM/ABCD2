@@ -1,0 +1,8 @@
+marc.*=/var/opt/ABCD/bases/marc/data/marc.*
+biblo.*=/var/opt/ABCD/bases/biblo/data/biblo.*
+users.*=/var/opt/ABCD/bases/users/data/users.*
+copies.*=/var/opt/ABCD/bases/copies/data/copies.*
+loanobjects.*=/var/opt/ABCD/bases/loanobjects/data/loanobjects.*
+trans.*=/var/opt/ABCD/bases/trans/data/trans.*
+suspml.*=/var/opt/ABCD/bases/suspml/data/suspml.*
+logtrans.*=/var/opt/ABCD/bases/logtrans/data/logtrans.(*

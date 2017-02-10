@@ -1,0 +1,8 @@
+profilename=cepalmono
+profiledesc=Monografías Cepal
+db_marc=marc
+marc_pft_ALL=on
+db_biblo=biblo
+biblo_pft_ALL=on
+biblo_fmt_mm=mm
+CENTRAL_EDREC=Y

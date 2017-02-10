@@ -1,0 +1,1328 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<adm language="es" version="3.1">
+	<message-list>
+		<message name="msgSelect" text="Por favor, seleccione un item!"/>
+		<message name="msgFirstLevel" text="Ya está en el primer nivel!"/>
+		<message name="msgBreakLevel" text="Quiebra de nivel jerárquico!"/>
+		<message name="msgFirstItem" text="Ya es el primer item!"/>
+		<message name="msgLastItem" text="Ya es el último item!"/>
+	</message-list>
+	<page id="menu" title="Administración de la BVS" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item href="javascript:preview();">Visualizar</item>
+			<item align="right" href="../admin/admFrames.php?lang=en">English</item>
+			<item align="right" href="../admin/admFrames.php?lang=pt">Português</item>
+                        <item align="right" href="../admin/admFrames.php?lang=fr">Français</item>
+			<item align="right" href="../admin/logout.php">Salir</item>
+		</bar>
+		<menu>
+			<block title="Estructura" level="adm">
+				<item page="parent">ABCD logotipo</item>
+				<item page="identification">Identificación</item>		
+				<item page="contact">Contacto</item>		
+				<item page="other-versions">Versiones</item>	
+				<item page="institution">Instituciones</item>
+				<item page="metasearch" xsl="tree-collection.xsl">Meta búsqueda</item>			
+				<line/>
+				<item page="collectionList">Componentes</item>
+				<line/>
+				<item page="responsable" xsl="tree-collection.xsl">Institución responsable</item>
+				<item page="metainfo" xsl="tree-collection.xsl">Meta información del sitio</item>
+				<item page="texts">Textos</item>
+				<line/>				
+				<item href="javascript:fnow('/site/admin/fnow/index.php?lang=es')">Gerenciador de archivos del sitio</item>				
+			</block>
+			<block title="Componentes" level="adm,content">
+				<doc-list element="collectionList"/>
+			</block>
+			<block title="Acceso" level="adm">
+				<item page="users" xsl="tree-user.xsl">Usuarios</item>
+			</block>		
+		</menu>
+	</page>
+
+	<page id="invalid-entry" title="Administración de la BVS" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item align="right" href="javascript:back();">Volver</item>
+		</bar>
+		<error>
+			Identificación inválida!<br/>
+			Por favor verifique su usuario/contraseña y intente nuevamente.<br/>
+		</error>
+	</page>
+	
+	<page id="identification" title="Informaciones para identificación de la BVS" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Identificación</item>
+			<flag element="identification" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_identification');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_identification');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="identification"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+				<separator/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_identification" title="Añadir identificación" css="css/admin/adm.css">
+		<bar>
+			<item>Identificación</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<!--item edit="text" name="href">Enlace (href)</item-->
+		</change>
+	</page>
+	<page id="change_identification" title="Modificar identificación" css="css/admin/adm.css">
+		<bar>
+			<item>Identificación</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<!--item edit="text" name="href">Enlace (href)</item-->
+		</change>
+	</page>
+	<page id="parent" title="Conexão com a BVS pai" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>BVS padre</item>
+			<flag element="parent" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_parent');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_parent');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="parent"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_parent" title="Añadir item padre" css="css/admin/adm.css">
+		<bar>
+			<item>BVS padre</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="change_parent" title="Modificar item padre" css="css/admin/adm.css">
+		<bar>
+			<item>BVS padre</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="institution" title="Lista de instituciones" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Instituciones</item>
+			<flag element="institutionList" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_institution');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_institution');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="institution"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_institution" title="Añadir institución" css="css/admin/adm.css">
+		<bar>
+			<item>Institución</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="change_institution" title="Modificar institutição" css="css/admin/adm.css">
+		<bar>
+			<item>Institución</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	
+	<page id="contact" title="Lista de contactos" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Contacto</item>
+			<flag element="contact" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_contact');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_contact');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="contact"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_contact" title="Añadir contacto" css="css/admin/adm.css">
+		<bar>
+			<item>Contacto</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Asunto del email</item>
+			<item edit="text" name="href">Email</item>
+		</change>
+	</page>
+	<page id="change_contact" title="Modificar contacto" css="css/admin/adm.css">
+		<bar>
+			<item>Contacto</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Disponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" />
+			<item edit="text" name="name">Asunto del email</item>
+			<item edit="text" name="href">Email</item>
+		</change>
+	</page>
+	<page id="portal" title="Conexión con otros sitios (portales)" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Conexión con otros sitios</item>
+			<flag element="portalList" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_portal');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_portal');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_portal" title="Añadir conexión con otros sitios" css="css/admin/adm.css">
+		<bar>
+			<item>Conexión con otros sitios</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="change_portal" title="Modificar conexión con otros sitios" css="css/admin/adm.css">
+		<bar>
+			<item>Conexión con otros sitios</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="about" title="Lista de informaciones acerca de esta BVS" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Informaciones acerca de esta BVS</item>
+			<flag element="about" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_about');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_about');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_about" title="Añadir item acerca de la BVS" css="css/admin/adm.css">
+		<bar>
+			<item>Informaciones acerca de esta BVS</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="htmlarea" name="portal" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Página del Portal (XHTML)</item>
+		</change>
+	</page>
+	<page id="change_about" title="Modificar item acerca de la BVS" css="css/admin/adm.css">
+		<bar>
+			<item>Informaciones acerca de esta BVS</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" />
+			<item edit="text" name="name">Etiqueta</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="htmlarea" name="portal" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Página del Portal (XHTML)</item>
+		</change>
+	</page>
+	<page id="collectionList" title="Lista de componentes" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Componentes</item>
+			<flag element="collectionList" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item-component')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_collectionList');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_collectionList');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:delComponent(document.formPage.tree);" img="del.gif" alt=" elimina "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_collectionList" title="Añadir componente" css="css/admin/adm.css">
+		<bar>
+			<item>Componente</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addComponent('name')">Adiciona</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Titulo</item>
+			<item edit="text" name="href">Enlace (optativo)</item>
+			<item edit="select" name="type">
+			Tipo
+			<option value="">-------</option>			
+			<option value="warning">aviso</option>
+			<option value="collection">colección de fuentes</option>
+			<option value="community">comunidades</option>			
+			<option value="calls">destacado</option>			
+			<option value="portal">portales</option>
+			<option value="about">acerca</option>
+			<option value="topic">temas</option>	
+			<option value="xhtml">HTML</option>
+			<option value="rss">RSS</option>		
+			</item>			
+		</change>
+	</page>
+	<page id="change_collectionList" title="Modificar componente" css="css/admin/adm.css">
+		<bar>
+			<item>Componente</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>			
+			<item edit="text" name="name">Titulo</item>
+			<item edit="text" name="href">Enlace (optativo)</item>
+			<item edit="readonly" name="type">Tipo</item>
+		</change>
+	</page>
+
+	<page id="collection" title="Lista de fuentes de información" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Fuentes de información</item>
+			<item href="javascript:save('item-collection')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_collection');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_collection');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_collection" title="Añadir fuente de información" css="css/admin/adm.css">
+		<bar>
+			<item>Fuente de información</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="htmlarea" name="portal" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Página del Portal (XHTML)</item>
+			<item edit="group">
+				Meta búsqueda
+				<item edit="text" name="base-search-url">Parte fija del enlace de la búsqueda</item>
+				<item edit="text" name="search-parameters">Parámetros para búsqueda libre</item>
+				<item edit="text" name="base-browse-url">Parte fija del enlace de la muestra del resultado</item>
+			</item>
+		</change>
+	</page>
+	<page id="change_collection" title="Modificar fuente de información" css="css/admin/adm.css">
+		<bar>
+			<item>Fuente de información</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="htmlarea" name="portal" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Página del Portal (XHTML)</item>
+			<item edit="group">
+				Meta búsqueda
+				<item edit="text" name="base-search-url">Parte fija del enlace de la búsqueda</item>
+				<item edit="text" name="search-parameters">Parámetros para búsqueda libre</item>
+				<item edit="text" name="base-browse-url">Parte fija del enlace de la muestra del resultado</item>
+			</item>
+		</change>
+	</page>
+	
+	<page id="community" title="Lista de espacios" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Espacios</item>
+			<item href="javascript:save('item-community')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_community');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_community');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanvar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_community" title="Añadir espacio" css="css/admin/adm.css">
+		<bar>
+			<item>Espacio</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="htmlarea" name="portal" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Página del Portal (XHTML)</item>
+		</change>
+	</page>
+	<page id="change_community" title="Modificar espacio" css="css/admin/adm.css">
+		<bar>
+			<item>Espacio</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="htmlarea" name="portal" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Página del Portal (XHTML)</item>
+		</change>
+	</page>
+	<page id="topic" title="Lista de temas" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Temas</item>
+			<item href="javascript:save('item-topic')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_topic');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_topic');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_topic" title="Añadir tema" css="css/admin/adm.css">
+		<bar>
+			<item>Tema</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="group">
+				Meta búsqueda
+				<item edit="group-id" type="collection" name="meta-search"/>				
+			</item>
+		</change>
+	</page>
+	<page id="change_topic" title="Modificar tema" css="css/admin/adm.css">
+		<bar>
+			<item>Tema</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descripción (XHTML)</item>
+			<item edit="group">
+				Meta búsqueda
+				<item edit="group-id" file="xml/es/collection.xml" name="meta-search"/>
+			</item>
+		</change>
+	</page>
+	
+<!-- decs -->
+	<page id="decs" title="Lista de categorías" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Categorías</item>
+			<item href="javascript:save('item-decs')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_decs');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_decs');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<!--
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				-->
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_decs" title="Añadir tema" css="css/admin/adm.css">
+		<bar>
+			<item>Categoría</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name')">Adicionar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="category">Categoría</item>
+		</change>
+	</page>
+	<page id="change_decs" title="Modificar categoría" css="css/admin/adm.css">
+		<bar>
+			<item>Categoría</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="category">Categoría</item>
+		</change>
+	</page>
+
+<!-- /decs -->
+	
+	<page id="attachList" title="Lista de anexos" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Anexos</item>
+			<item href="javascript:save('attach')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_attachList');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_attachList');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="attachList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button img="left-unavailable.gif" alt=" retroceder nivel jerárquico "/>
+				<button img="right-unavailable.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_attachList" title="Añadir anexo" css="css/admin/adm.css">
+		<bar>
+			<item>Anexo</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,type')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="type">Identificación</item>
+			<item edit="text" name="file">Fichero XML</item>
+			<item edit="text" name="adm">Enlace para el módulo de administración</item>
+		</change>
+	</page>
+	<page id="change_attachList" title="Modificar anexo" css="css/admin/adm.css">
+		<bar>
+			<item>Anexo</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,type');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" />
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="type">Identificación</item>
+			<item edit="text" name="file">Fichero XML</item>
+			<item edit="text" name="adm">Enlace para el módulo de administración</item>
+		</change>
+	</page>
+	<page id="calls" title="Lista de destaques" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Destaques</item>
+			<flag element="calls" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item align="right" href="javascript:history.back();">Salir</item>
+			<item href="javascript:save('item')">Grabar</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_call');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_call');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<!--
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				-->
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_call" title="Añadir destaque" css="css/admin/adm.css">
+		<bar>
+			<item>Destaque</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="change_call" title="Modificar destaque" css="css/admin/adm.css">
+		<bar>
+			<item>Destaque</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" />
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="img">Imagen</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="warning" title="Lista de avisos" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Avisos</item>
+			<flag element="warning" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('warning')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_warning');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_warning');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="collectionList"/>
+			<buttons>				
+				<separator/>
+				<separator/>
+				<!--
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>				
+				<separator/>
+				-->
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_warning" title="Añadir aviso" css="css/admin/adm.css">
+		<bar>
+			<item>Aviso</item>
+			<flag element="warning" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Mensaje (XHTML)</item>
+		</change>
+	</page>
+	<page id="change_warning" title="Modificar aviso" css="css/admin/adm.css">
+		<bar>
+			<item>Aviso</item>
+			<flag element="warning" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Mensaje (XHTML)</item>
+		</change>
+	</page>
+	<page id="texts" title="Lista de textos" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Textos</item>
+			<item href="javascript:save('text')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_text');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_text');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="texts"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button img="left-unavailable.gif" alt=" retroceder nivel jerárquico "/>
+				<button img="right-unavailable.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_text" title="Añadir texto" css="css/admin/adm.css">
+		<bar>
+			<item>Texto</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('id,id')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="id">Identificación</item>
+			<item edit="htmlarea" name="text_content" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Texto (XHTML)</item>
+			<item edit="text" name="img">Imagen</item>
+		</change>
+	</page>
+	<page id="change_text" title="Modificar texto" css="css/admin/adm.css">
+		<bar>
+			<item>Texto</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('id,id');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="id">Identificación</item>
+			<item edit="htmlarea" name="text_content" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Texto (XHTML)</item>
+			<item edit="text" name="img">Imagen</item>
+		</change>
+	</page>
+	<page id="other-versions" title="Lista de versiones" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Versiones</item>
+			<flag element="other-versions" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:save('item')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_other-version');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_other-version');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="other-versions"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:left(document.formPage.tree);" img="left.gif" alt=" retroceder nivel jerárquico "/>
+				<button href="javascript:right(document.formPage.tree);" img="right.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_other-version" title="Añadir item otra version" css="css/admin/adm.css">
+		<bar>
+			<item>Version</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" value="New"/>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	<page id="change_other-version" title="Modificar item otra version" css="css/admin/adm.css">
+		<bar>
+			<item>Version</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id" />
+			<item edit="text" name="name">Nombre</item>
+			<item edit="text" name="href">Enlace (href)</item>
+		</change>
+	</page>
+	
+	<page id="responsable" title="Institución responsable" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Institución</item>
+			<flag element="responsable" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			
+			<item href="javascript:save('item-responsable')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>				
+				<separator/>				
+				<button href="javascript:changeItem(document.formPage.tree,'change_responsable');" img="change.gif" alt=" modifica "/>
+				<separator/>				
+			</buttons>
+			<tree-edit element="responsable"/>
+		</edit>
+	</page>
+	<page id="change_responsable" title="Modifica institución responsable" css="css/admin/adm.css">
+		<bar>
+			<item>Institución</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name');">Modifica</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>			
+			<item edit="htmlarea" name="description" label-edit="clique aquí para usar el editor XHTML" label-modify=" modificar " label-cancel=" cancelar ">Descrição (XHTML)</item>			
+		</change>
+	</page>
+	
+	<page id="metasearch" title="Meta búsqueda" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Textos</item>
+			<item href="javascript:save('text')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>				
+				<separator/>				
+				<button href="javascript:changeItem(document.formPage.tree,'change_metasearch');" img="change.gif" alt=" modifica "/>
+				<separator/>				
+			</buttons>
+			<tree-edit element="metasearch"/>
+		</edit>
+	</page>
+	<page id="change_metasearch" title="Modifica meta búsqueda" css="css/admin/adm.css">
+		<bar>
+			<item>Textos</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponível</option>
+				<option value="no">Indisponível</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('id');">Modifica</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="hidden" name="id"/>			
+			<item edit="text" name="text_content">Texto</item>
+		</change>
+	</page>
+
+
+	
+	<page id="users" title="Lista de usuarios" css="css/admin/adm.css">
+		<identification title="Administración: "/>
+		<bar>
+			<item>Usuarios</item>
+			<item href="javascript:save('user')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_user');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_user');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit xml="xml/users.xml" element="users"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button img="left-unavailable.gif" alt=" retroceder nivel jerárquico "/>
+				<button img="right-unavailable.gif" alt=" avanzar nivel jerárquico "/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_user" title="Añadir usuario" css="css/admin/adm.css">
+		<bar>
+			<item>Usuarios</item>
+			<flag element="user" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('name,img')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="select" name="type">
+				Tipo
+				<option value="content">Contenido</option>
+				<option value="adm">Administrador</option>
+			</item>
+			<item edit="password" name="password">contraseña</item>
+		</change>
+	</page>
+	<page id="change_user" title="Modificar usuario" css="css/admin/adm.css">
+		<bar>
+			<item>Usuarios</item>
+			<flag element="user" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('name,img');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="name">Nombre</item>
+			<item edit="select" name="type">
+				Tipo
+				<option value="content">Contenido</option>
+				<option value="adm">Administrador</option>
+			</item>
+			<item edit="password" name="password">contraseña</item>
+		</change>
+	</page>
+	<page id="metainfo" title="Lista de meta información" css="css/admin/adm.css">
+		<identification title="Administracíon: "/>
+		<bar>
+			<item>Meta información</item>
+			<item href="javascript:save('item-metainfo')">Grabar</item>
+			<item align="right" href="javascript:history.back();">Salir</item>
+		</bar>
+		<edit>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:newItem('new_metainfo');" img="new.gif" alt=" añadir "/>
+				<button href="javascript:changeItem(document.formPage.tree,'change_metainfo');" img="change.gif" alt=" modificar "/>
+				<separator/>
+				<button href="javascript:del(document.formPage.tree);" img="del.gif" alt=" eliminar "/>
+			</buttons>
+			<tree-edit element="metainfo"/>
+			<buttons>
+				<separator/>
+				<separator/>
+				<button href="javascript:up(document.formPage.tree);" img="up.gif" alt=" subir "/>
+				<button href="javascript:down(document.formPage.tree);" img="down.gif" alt=" bajar "/>
+			</buttons>
+		</edit>
+	</page>
+	<page id="new_metainfo" title="Añadir meta información" css="css/admin/adm.css">
+		<bar>
+			<item>Meta información</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.addItem('id,tag_content')">Añadir</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="id">Elemento</item>
+			<item edit="textarea" name="tag_content"  label-modify=" modificar " label-cancel=" cancelar ">Contenido</item>
+		</change>
+	</page>
+	<page id="change_metainfo" title="Modifica meta información" css="css/admin/adm.css">
+		<bar>
+			<item>Meta información</item>
+			<flag element="item" name="available">
+				<option value="yes">Disponible</option>
+				<option value="no">Indisponible</option>
+			</flag>
+			<item href="javascript:opener.modifyItem('id,text_content');">Modificar</item>
+			<item align="right" href="javascript:opener.close_and_focus();">Salir</item>
+		</bar>
+		<change>
+			<item edit="text" name="id">Elemento</item>
+			<item edit="textarea" name="tag_content"  label-modify=" modificar " label-cancel=" cancelar ">Contenido</item>
+		</change>
+	</page>
+</adm>

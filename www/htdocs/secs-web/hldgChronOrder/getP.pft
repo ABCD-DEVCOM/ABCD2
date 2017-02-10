@@ -1,0 +1,180 @@
+,if v1*0.1='S' then 
+
+	,if ref(mfn-1,v1*0.1)='R' then # fi
+	/* ESPECIAIS */
+	,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_BEGIN|',
+	,'|',
+	,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END||SPECIALS',
+	#
+,else
+	/* REGULAR */
+/* #,'----'/,v1,' ',v2,' ',v3,' ',v4,' ',v5,' ',v6,/ */
+	,proc('a9000{',
+		,if l(s('YS=P',v2))>0 then
+			,if l(s('YS=A',v2))>0 then
+				/* há numeros ausentes */
+				,'X',
+			,else
+				/* todos numeros presentes */
+				,'P',
+			,fi			
+		,fi
+	,'{'),
+	,proc('a9001{',
+		
+		/* verificar o ano anterior e o próximo */
+		
+			,if l(s('YS=P',f(val(v2)-1,1,0)))>0 then
+				,if l(s('YS=A',f(val(v2)-1,1,0)))>0 then
+					/* há numeros ausentes */
+					,'X',
+				,else
+					/* todos numeros presentes */
+					,'P',
+				,fi			
+			,else
+				/* todos numeros ausentes */
+				,'A',
+			,fi
+			,if l(s('YS=P',f(val(v2)+1,1,0)))>0 then
+				,if l(s('YS=A',f(val(v2)+1,1,0)))>0 then
+					/* há numeros ausentes */
+					,'X',
+				,else
+					/* todos numeros presentes */
+					,'P',
+				,fi			
+			,else
+				/* todos numeros ausentes */
+				,'A',
+			,fi		
+		
+	,'{'),
+	,proc('a9999{',replace(s('[',ref(mfn-1,v5),'|',v5,'|',ref(mfn+1,v5),']'),'A',''),'{'),
+/* v9000,' ',v9001,' ',v9002,' ',v9999/,'---',# */
+	,if s(v9000,v9001)<>'PPP' then
+		,if v9999='[P|P|P]' then
+			,if ref(mfn+1,v2)<>v2 and ref(mfn-1,v2)<>v2 then 
+				/* primeiro e ultimo do ano*/
+				
+				,if v9000='P' then
+					,if v9001*0.1<>'P' then
+						,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+						,'RANGE_BEGIN'
+						,'|FIRST_OF_THE_YEAR',
+					,fi
+					,if v9001*1.1<>'P' then
+						,'|',
+						,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+						,'RANGE_END'
+						,'|', /* last */
+					,fi
+				,else
+					,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+					,'RANGE_BEGIN'
+					,'|FIRST_OF_THE_YEAR',
+					,'|',
+					,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+					,'RANGE_END'
+					,'|', /* last */
+				,fi
+				#
+			,else
+				,if ref(mfn+1,v2)<>v2 then
+					/* ultimo do ano */
+					
+					,if v9000='P' then
+						,if v9001*1.1<>'P' then
+							,'|',mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+							,'RANGE_END'
+							,'|', /* last */#
+						,fi
+					,else
+						,'|',mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+						,'RANGE_END'
+						,'|', /* last */#
+					,fi
+
+				,else
+					,if ref(mfn-1,v2)<>v2 then
+						/* primeiro do ano */
+						
+						,if v9000='P' then
+							,if v9001*0.1<>'P' then
+								,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+								,'RANGE_BEGIN'
+								,'|FIRST_OF_THE_YEAR',
+							,fi
+						,else
+							,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+							,'RANGE_BEGIN'
+							,'|FIRST_OF_THE_YEAR',
+						,fi
+						
+					,fi
+				,fi
+			,fi		
+		,else 
+			,if v9999='[P|P|]' then
+				,if ref(mfn-1,v2)<>v2 then 
+					
+					,if v9000='P' then
+						,if v9001*0.1<>'P' then
+							,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+							,'RANGE_BEGIN'
+							,'|FIRST_OF_THE_YEAR',
+						,fi
+					,else
+						,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+						,'RANGE_BEGIN'
+						,'|FIRST_OF_THE_YEAR',
+					,fi
+					
+				,fi,
+				,'|',
+				,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',
+				,if ref(mfn+1,v2)<>v2 then 
+					,'LAST_OF_THE_YEAR',
+				,fi,
+						'|',
+				#
+			,else
+				,if v9999:'[|P|' then
+					,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_BEGIN|',
+					,if ref(mfn-1,v2)<>v2 then 
+						,'FIRST_OF_THE_YEAR',
+					,fi,
+					,if v9999='[|P|]' then
+						,'|',
+						,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|RANGE_END|',
+						,if ref(mfn+1,v2)<>v2 then 
+							,'LAST_OF_THE_YEAR',
+						,fi,
+						'|',
+						#,
+					,else
+						,if v9999='[|P|P]' then				
+						,if ref(mfn+1,v2)<>v2 then 
+
+							,if v9000='P' then
+								,if v9001*1.1<>'P' then
+									,'|',
+									,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+									,'RANGE_END'
+									,'|', /* last */
+								,fi
+							,else
+								,'|',
+								,mfn,'|',v2,'|',v3,'|',v4,'|',v6,'|',
+								,'RANGE_END'
+								,'|', /* last */
+							,fi
+							#
+						,fi,
+						,fi,
+					,fi
+				,fi
+			,fi
+		,fi
+	,fi
+,fi

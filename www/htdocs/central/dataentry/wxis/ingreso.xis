@@ -1,0 +1,246 @@
+<IsisScript>
+	<trace>xOn</trace>
+
+	<function name=BloquearRegistro action=replace tag=1 split=occ>
+
+		<field action=cgi tag=5001>base</field>
+ 		<field action=cgi tag=5015>cipar</field
+
+	   	<field action=replace tag=9060><pft>v1[2]</pft></field>
+		<do task="update">
+   		<parm name="db"><pft>v5001</pft></parm>
+   		<parm name="mfn"><pft>V1[1]</pft></parm>
+   		<parm name=lockid><pft>V1[2]</pft></parm>
+   		<field action=define tag=1101>Isis_Lock</field>
+   		<field action=define tag=1102>Isis_Status</field>
+   		<update>
+      		<write>Lock</write>
+			<field action=cgi tag=5001>base</field>
+            <field action=cgi tag=5015>cipar</field
+      		<field action="cgi" tag="2000">Mfn</field>
+      		<field action="import" tag="2000">2000</field>
+      		<field action=import tag=1101>1101</field>
+      		<field action=import tag=5001>5001</field>
+      		<field action=import tag=5015>5015</field>
+      		<field action=import tag=9060>9060</field>
+   			<display><pft>if val(v1102) > 0 then
+      						'<dd><h4>Error - ' | (|v1102|) |,'El registro no se puede editar en este momento</h4>'
+   					  else
+      						,@mm.pft,/
+   					  fi </pft></display>
+   		</update>
+		</do>
+  	</function>
+
+
+	<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=9002>Desplegar</field>
+      	<field action=cgi tag=9001>Opcion</field>
+        <field action=cgi tag=9066>permiso</field>
+		<field action=cgi tag=9008>Nuevo</field>
+      	<field action=cgi tag=2000>Mfn</field>
+      	<field action=cgi tag=3000>Expresion</field>
+      	<field action=cgi tag=9010 split=occ>ValorCapturado</field>
+      	<field action=cgi tag=9080>Secuencia</field>
+      	<field action=cgi tag=9070>Identificacion</field>
+      	<field action=cgi tag=9060>login</field>
+      	<field action=cgi tag=9061>password</field>
+      	<field action=cgi tag=3030>Formato</field>
+      	<field action=cgi tag=9045>Capturado</field>
+  		<field action=add tag=9090 split=occ><pft>v9010</pft></field>
+  		<field action=cgi tag=9088>cttype</field>
+  		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+<display><pft></pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+     	<flow action=jump>
+  			<pft>if v9001='Identificacion' then 'LOGIN' else
+               		if v9001='crear' or v9001='nuevoregistro' or v9001='nuevoregistrousuario' then 'CREAR' else
+					if v9001='eliminar' then 'ELIMINAR' else
+					if v9001='iniciacaptura' then 'INICIACAPTURA' else
+            		if v9001='capturar' then 'CAPTURAR' else
+					if v9001='iniciacapturademo' then 'INICIACAPTURADEMO' else
+					if v9001='iniciacapturamanual' then 'INICIACAPTURAMANUAL' else
+               		if v9001='leer' then 'LEERREGISTRO' else
+               		if v9001='editar' then 'EDITAR' else
+               		if v9001='actualizar' or v9001='actualizarregistrousuario' then 'ACTUALIZAR' else
+               		if v9001='buscar' then 'BUSCAR' else
+					if v9001='cancelar' then 'CANCELAR' else
+               		if v9001='presentar' then 'LEER'
+               	fi fi fi fi fi fi fi fi fi fi fi fi fi
+			</pft>
+   		</flow>
+        <flow action=exit>1</flow>
+
+      	<label>LOGIN</label>
+
+         		<do task=mfnrange>
+            		<field action=define tag=1002>Isis_Total</field>
+            		<parm name=db><pft>'acces'</pft></parm>
+                   	<parm name=from><pft>'1'</pft></parm>
+                   	<parm name=to><pft>v1002</pft></parm>
+
+            	<loop>
+
+               		<field action=import tag=9060>9060</field>
+					<field action=import tag=9061>9061</field>
+               		<field action=import tag=9001>9001</field>
+               		<field action=import tag=5001>5001</field>
+               		<field action=import tag=5015>5015</field>
+               		<field action=import tag=8000>8000</field>
+               		<field action=import tag=8001>8001</field>
+               		<display><pft>(if v20=v9060 and v30=v9061 then proc('a999~'v30,'~'), fi,/)</pft></display>
+               		<flow action=jump><pft>if a(v999) then 'CONTINUAR_LOGIN' fi</pft></flow>
+               		<display><pft>'##LLAVE='v30'|',f(mfn,1,0)'|'v40,'|'v10'##'/</pft></display>
+					<display><pft>ALL</pft></display>
+               		<flow action=exit>1</flow>
+
+  		<label>CONTINUAR_LOGIN</label>
+				</loop>
+ 				<display><pft>@errorid.pft</pft></display>
+            		<flow action=exit>1</flow>
+            	</do>
+
+
+		<label>LEERREGISTRO</label>
+  			<do task=mfnrange>
+				<parm name=db><pft>v5001</pft></parm>
+				<parm name=from><pft>v2000</pft></parm>
+				<parm name=to><pft>v2000</pft></parm>
+				<parm name="buffersize">200000</parm>
+                <parm name=MAX_TMP_STRING>200000</parm>
+				<field action=define tag=1002>Isis_Total</field>
+            	<field action=define tag=1102>Isis_Status</field>
+				<field action=define tag=1199>Isis_RecordStatus</field>
+
+				<loop>
+					<field action=import tag=5001>5001</field>
+					<display><pft>ALL</pft></display>
+
+
+					<label>ELIMINADO</label>
+				</loop>
+			</do>
+			<flow action=exit>1</flow>
+
+
+		<label>INICIACAPTURA</label>
+				<display><pft>'Content-type:text/html',/#</pft></display>
+            	<display><pft>@capturaregistro.pft</pft></display>
+             	<flow action=exit>1</flow>
+
+      <label>ELIMINAR</label>
+
+         		<field action="cgi" tag="2000">from</field>
+          		<do task="update">
+            		<parm name="db"><pft>v5001</pft></parm>
+            		<parm name="mfn"><pft>v2000</pft></parm>
+					<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+            		<parm name=lockid><pft>v9060</pft></parm>
+            		<field action=define tag=1101>Isis_Lock</field>
+            		<field action=define tag=1102>Isis_Status</field>
+            		<update>
+                     	<field action=delete tag=list>ALL</field>
+                    	<write>Delete</write>
+
+						<display><pft>mfn(0)'<p><center><span class=td2><font color=red>El registro ha sido eliminado!!!<span>'/  </pft></display>
+            		</update>
+         		</do>
+         		<flow action="exit">0</flow>
+
+
+      <label>ACTUALIZAR</label>
+          		<do task="update">
+            		<parm name="db"><pft>v5001</pft></parm>
+            		<parm name="mfn"><pft>v2000</pft></parm>
+            		<parm name=lockid><pft>v9060</pft></parm>
+					<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+					<parm name="buffersize">200000</parm>
+                    <parm name=MAX_TMP_STRING>200000</parm>
+            		<field action=define tag=1101>Isis_Lock</field>
+            		<field action=define tag=1102>Isis_Status</field>
+            		<field action=define tag=1103>Isis_RecordStatus</field>
+					<display><pft>@prologoact.pft</pft></display>
+            		<update>
+                     	<field action=cgi tag=5001>base</field>
+                     	<field action=cgi tag=5015>cipar</field>
+						<field action=import tag=9090>9090</field>
+                     	<field action=import tag=5001>5001</field>
+                     	<field action=import tag=5015>5015</field>
+						<field action=import tag=9060>9060</field>
+             				<proc><pft>'d980'/
+									(if p(v9090) then 'd'v9090.3/fi)/,
+										(if p(v9090) then if v9090*3<>'' then 'a'v9090.3'²',replace(v9090*3,'\"','"'),'²'/ fi fi)/,
+										'a980²'v9060,'^d'date'²'
+								</pft>
+							</proc>
+							<proc><pft>'d9090'/'d5001'/'d5015'/'d9060'</pft></proc>
+                    	<write>Unlock</write>
+                    	<display><pft></pft></display>
+                     	<field action=import tag=5001>5001</field>
+						<field action=import tag=9001>9001</field>
+						<field action=import tag=3030>3030</field>
+						<display><pft type=reload><pft>if v3030='ALL' or v3030='' then 'ALL' else '@../../bases/'v5001'/www/'v3030  '.pft' fi </pft></pft></display>
+						<display><pft>/
+								if v9001='actualizarregistrousuario'  then
+									'<p><a href=javascript:self.close()>Cerrar</a>'
+								else
+									/'<script>'/'top.maxmfn='f(maxmfn-1,1,0)/'</script>'/
+								fi
+
+						 </pft></display>
+            		</update>
+         		</do>
+         		<flow action="exit">1</flow>
+
+
+      <label>CANCELAR</label>
+
+         		<field action="cgi" tag="2000">from</field>
+          		<do task="update">
+            		<parm name="db"><pft>v5001</pft></parm>
+            		<parm name="mfn"><pft>v2000</pft></parm>
+            		<parm name=lockid><pft>v9060</pft></parm>
+            		<field action=define tag=1101>Isis_Lock</field>
+            		<field action=define tag=1102>Isis_Status</field>
+            		<update>
+                    	<write>Unlock</write>
+               			<display><pft>@actualizado.pft</pft></display>
+            		</update>
+         		</do>
+         		<flow action="exit">1</flow>
+
+
+     	<label>LEER</label>
+
+         		<do task=mfnrange>
+                   	<parm name=db><pft>v5001</pft></parm>
+            		<parm name=from><pft>v2000</pft></parm>
+                   	<parm name=to><pft>v2000</pft></parm>
+                   	<field action=define tag=1001>Isis_Current</field>
+                   	<field action=define tag=1002>Isis_Total</field>
+                   	<field action=define tag=1031>Isis_From</field>
+                   	<field action=define tag=1032>Isis_To</field>
+            		<field action=define tag=1102>Isis_Status</field>
+                   	<loop>
+               			<field action=import tag=1102>1102</field>
+                        <field action=import tag=5001>5001</field>
+                        <field action=import tag=5015>5015</field>
+                        <field action=import tag=3030>3030</field>
+                        <field action=import tag=9002>9002</field>
+                		<field action=import tag=2000>2000</field>
+               			<field action=import tag=3030>3030</field>
+               			<field action=import tag=9060>9060</field>
+						<field action=import tag=9001>9001</field>
+						<display><pft type=reload><pft>if v3030='ALL' then v3030 else '@'v3030'.pft' fi</pft></pft></display>
+                   	</loop>
+          		</do>
+	</section>
+</IsisScript>

@@ -1,0 +1,4 @@
+unitest.*=/var/opt/ABCD/bases/unitest/data/unitest.*
+unitest.pft=/var/opt/ABCD/bases/unitest/pfts/en/unitest.pft
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft

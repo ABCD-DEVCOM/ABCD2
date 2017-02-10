@@ -1,0 +1,306 @@
+a {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000}
+a:active {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000}
+a:hover {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000}
+.td {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #00626C }
+.rotuloIng {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333366;
+
+	font-weight: normal;
+	text-decoration: none;
+}
+A.rotuloIng {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333366;
+
+	font-weight: normal;
+	text-decoration: underline;
+}
+A.rotuloIng:hover {
+	COLOR: #FF3300;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+A.rotuloIng:visited {
+	COLOR: #333366;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.menumain {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #3333FF;
+	
+	font-weight: bold;
+	text-decoration: none;
+}
+A.menumain:hover {
+	COLOR: #CCCCCC;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.menusec1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333366;
+
+	font-weight: bold;
+	text-decoration: none;
+}
+A.menusec1:hover {
+	COLOR: #FF3300;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.menusec2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #333366;
+	font-weight: bold;
+	text-decoration: none;
+}
+a.menusec2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #333366;
+	font-weight: bold;
+	text-decoration: none;
+}
+a.menusec2:hover {
+	COLOR: #cc0000;
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration: none;
+}
+a.menusec2:visited {
+	COLOR: #333366;
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration: none;
+}
+.menusec3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	
+	font-weight: bold;
+	text-decoration: none;
+}
+A.menusec3:hover {
+	COLOR: #CCCCCC;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.home {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000066;
+	
+	font-weight: bold;
+	text-decoration: none;
+}
+A.home:hover {
+	COLOR: #CCCCCC;
+	font-size: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.titulo1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #999999;
+	font-weight: bold;
+}
+.basic {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+}
+.textform01 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.titleform {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.textform02 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+}
+.mainarea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #6666CC;
+}
+.subtitlearea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #333366;
+	font-weight: bold;
+}
+.textbody01 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	line-height: 17px;
+}
+.subtitlebody {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #FF3300;
+}
+.TMenuPrincipal {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #333333;
+}
+.Tfinanciam {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #FF3300;
+}
+.textboby02 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #666666;
+}
+.textbody03 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333366;
+	line-height: 17px;
+}
+.Tsubsec {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #333366;
+	font-weight: bold;
+}
+.Tprevious {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #FFFFFF;
+}
+.textResal {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 26px;
+	color: #333366;
+}
+.formmenues {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #333366;
+}
+.textbody04 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FFFFFF;
+	line-height: 14px;
+}
+.mainareahome {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #3333FF;
+	line-height: 10px;
+}
+
+.title {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #003333;
+}
+.bodytext1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #003333;
+}
+.smalltext {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #999999;
+}
+
+.botones {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #FFFFFF;
+}
+
+.boton {font-family:verdana,helvetica; font-size:8pt; font-color:#2C5C8B; font-decoration:none;font-underline:none;
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:white; color:#2C5C8B;font-weight: bold;}
+.boton.link {font-family:verdana,helvetica; font-size:8pt; font-color=:#2C5C8B; font-decoration:none;font-underline:none;
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:white; color:#2C5C8B;font-weight: bold;}
+.boton:active {font-family:verdana,helvetica; font-size:8pt; font-color:#2C5C8B; font-decoration:none;font-underline:none;
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:white; color:#2C5C8B;font-weight: bold;} 
+.boton:visited {font-family:verdana,helvetica; font-size:8pt; font-color:#2C5C8B; font-decoration:none;font-underline:none;
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:white; color:#2C5C8B;font-weight: bold;}	
+.boton:hover {font-family:verdana,helvetica; font-size:8pt; font-color:#2C5C8B; font-decoration:none;font-underline:none;
+    BORDER-BOTTOM: #2C5C8B 2px solid; BORDER-LEFT: #2C5C8B 2px solid; BORDER-RIGHT: #2C5C8B 2px solid; BORDER-TOP: #2C5C8B 2px solid;
+    background:#cccccc; color:#2C5C8B;font-weight: bold;}	
+	   
+.documanager {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #999999;
+	font-style: italic;
+}
+.usuario {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	color: #FF3300;
+}
+
+
+input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+text	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+
+checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 8pt; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Verdana,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+
+#dhtmltooltip{
+	position: absolute;
+	width: 150px;
+	border: 2px solid black;
+	padding: 2px;
+	background-color: lightyellow;
+	visibility: hidden;
+	z-index: 100;
+/*Remove below line to remove shadow. Below line should always appear last within this CSS*/
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=gray,direction=135);
+}
+
+div#noPermu
+{
+	display: none;
+	margin: 0px 20px 0px 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+
+}

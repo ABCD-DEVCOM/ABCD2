@@ -1,0 +1,1 @@
+mx loanobjects fst=@loanobjects.fst uctab=..\..\isisuc.tab actab=..\..\isisac.tab fullinv=loanobjects -all now tell=1

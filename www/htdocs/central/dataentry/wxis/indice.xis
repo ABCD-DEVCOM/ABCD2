@@ -1,0 +1,33 @@
+ <IsisScript>
+	<trace>XOn</trace>
+    <section>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5082>campo</field>
+		<field action=cgi tag=2020>prefijo</field>
+		<field action=cgi tag=3031>Pft</field>
+		<field action=cgi tag=2021>hasta</field>
+		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+       	<parm name=cipar>
+          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+       	</parm>
+        <display><pft></pft></display>
+    	<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<do task=keyrange>
+       		<parm name=db><pft>v5001</pft></parm>
+       		<parm name=from><pft>mpu,v2020</pft></parm>
+			<parm name=to><pft>mpu,v2021'ZZ'</pft></parm>
+			<parm name=posting><pft>'ALL'</pft></parm>
+           	<field action=define tag=2010>Isis_Key</field>
+           	<field action=define tag=3>Isis_Posting</field>
+           	<loop>
+           		<field action=import tag=5001>5001</field>
+           		<field action=import tag=3031>3031</field>
+           		<display><pft type=reload><pft>'ref([v5001]val(v3^m),'v3031'/)'</pft></pft></display>
+           	</loop>
+       	</do>
+    </section>
+ </IsisScript>

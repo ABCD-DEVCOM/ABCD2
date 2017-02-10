@@ -1,0 +1,27 @@
+if val(v1001) = val(v1031) then,
+
+'<rss version="2.0">'/
+	'<channel>'/
+		'<title>',v5003,' search on ',v6005'</title>'/
+		'<link>/cgi-bin/wxis.exe/iah/?IsisScript=iah/iah.xis&amp;base=',v5003,'&amp;nextAction=search&amp;exprSearch=',v6005,'&amp;label=',v8000,'&amp;lang=',v5021,'</link>'/
+fi,		
+
+'<item>'/
+  '<title>',  
+        v12,v18
+  '</title>'/
+  '<link>'
+       '/cgi-bin/wxis.exe/iah/?IsisScript=iah/iah.xis&amp;base=',v5003,'&amp;nextAction=lnk&amp;lang=',v5021,'&amp;exprSearch=',v2[1],'&amp;indexSearch=Id'
+  '</link>'/
+  '<description>',
+  		(v83/)
+  '</description>'/
+'</item>' /
+ 
+if val(v1001) = val(v1032) then
+
+  '</channel>'/
+'</rss>'/
+
+fi
+

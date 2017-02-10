@@ -1,0 +1,1005 @@
+/* #general styles */
+BODY {
+	background: #364c6c;
+}
+
+BODY, INPUT, SELECT, TEXTAREA {
+	font-family: "Trebuchet MS", Arial, Verdana, Helvetica;
+	font-size: 8pt;
+	color: #000;	
+}
+
+A {
+	color: #708bb1;
+}
+
+A IMG {
+	border: 0px;	
+}
+
+LABEL {
+	cursor: pointer;	
+}
+/* identification classes */
+	.institutionalInfo H1.logo A {
+		/* Logo do topo
+		 */
+        background: url(../../public/images/common/ABCDlogo.gif) no-repeat;
+	}
+
+
+/* #master classes */
+	/* #defaultButton classes */
+	A.defaultButton {
+		text-decoration: none;
+		color: #fff;
+	}
+	
+	A.defaultButton:hover IMG {
+		background-color: #4E617C;	
+	}
+	
+	
+	A.defaultButton SPAN {
+		cursor: pointer;
+		font-size: 95%;
+	}
+	
+	A.defaultButton STRONG {
+		font-size: 110%;
+	}
+	
+	.textEntry {
+		background: #f5f5f5;		
+	}
+	
+	INPUT.textEntry, TEXTAREA.textEntry {
+		border-top: 2px solid #a7a6aa;
+		border-left: 2px solid #a7a6aa;
+		border-bottom: 2px solid #dcdfe4;
+		border-right: 2px solid #dcdfe4;
+	}
+	
+	INPUT.textEntryFocus, TEXTAREA.textEntryFocus {
+		border-color: #5e88b6;
+		background: #fff;
+	}
+	
+	INPUT.superTextEntry, 
+	TEXTAREA.superTextEntry {
+		font-size: 180%;
+		float: left;	
+	}
+	
+	.changedTextEntry {
+		background: #faf4c4;	
+	}
+	
+	.inputAlert {
+		/*background: #f3eeb5 url(../images/common/icon/singleButton_alert.gif) center right no-repeat !important;*/
+		background: #FFFFF0 url(../images/common/icon/singleButton_alert.gif) center right no-repeat !important;
+	}
+	
+	.helper {
+		background: url(../images/common/icon/messagebox_warning.png) top left no-repeat;
+		color: #646567;
+	}
+	
+	.alert {
+		/*background-image: url(../images/common/icon/singleButton_alert.gif);*/
+		font-weight: bold;
+		color: #000;	
+	}
+	
+	.required {
+		background: #FFF url(../images/common/icon/singleButton_alert.gif) no-repeat right;
+		/*font-weight: bold;
+		color: #000;*/	
+	}
+	
+	.singleButton {
+            color: #fff;
+            text-decoration: none;
+            background: url(../images/common/singleButton_bg.gif) top left repeat-x;
+	}
+	
+	.singleButton:hover {
+            background-color: #4e617c;
+	}
+
+        A.singleButtonSelected {
+            background-color: #4e617c;
+        }
+
+        A.singleButtonSelected:hover {
+            background-color: #fff;
+            color: #4e617c;
+        }
+
+        A.selectedBlock {
+            background-color: #fff;
+            color: #4e617c;
+        }
+
+        A.selectedBlock:hover {
+            background-color: #fff;
+            color: #4e617c;
+        }
+
+        .singleButton .sb_lb {
+            background: url(../images/common/singleButton_lb.gif) top left no-repeat;
+	}
+	
+	.singleButton .sb_rb {
+            background: url(../images/common/singleButton_rb.gif) top right no-repeat;
+	}
+	
+	.helpText {
+		cursor: help;
+	}
+	
+	.helpText SPAN {
+		border-bottom: 1px dashed #708bb1;
+	}
+	
+	.helpText IMG {
+		background: url(../images/common/icon/helper_bg.png) center center no-repeat;
+	}
+	
+	/* #END #defaultButton classes */
+
+/* #specific classes */
+
+	/*#heading classes */
+	.heading {
+		background: #364c6c;	
+	}
+	
+	.institutionalInfo H1, .institutionalInfo H2 {
+		letter-spacing: -1px;	
+	}
+	
+	.institutionalInfo H1 {
+		font-size: 130%;
+		color: #fff;	
+	}
+	
+	.institutionalInfo H2 {
+		font-weight: normal;
+		font-size: 110%;
+		color: #c3d7f4;	
+	}
+	
+	.userInfo, .userInfo A {
+		color: #fff;	
+	}
+	
+	.userInfo A.button_logout {
+		background: url(../images/common/button_logout.gif) center right no-repeat;
+		text-decoration: none;	
+	}
+	
+	.userInfo A.button_logout:hover SPAN {
+		text-decoration: underline;	
+	}
+	/* #END #heading classes */
+	
+	/*#sectionInfo classes */
+	.sectionInfo {
+		background: #708bb1;	
+	}
+	
+	.breadcrumb {
+		font-size: 150%;
+	}
+	
+	.breadcrumb H3 {
+		font-size: 120%;
+		color: #fff;
+	}
+	
+	.breadcrumb, .breadcrumb A {
+		color: #bcd1ef;
+	}
+	
+	.breadcrumb SUP {
+		font-size: 75%;	
+	} 
+	
+	.actions, .actions A {
+		color: #fff;
+		text-decoration: none;	
+	}
+	/*#END #sectionInfo classes */
+	
+	/*#middle classes */
+	.middle {
+		background: #fff;
+	}
+	/*#END #middle classes */
+	
+	/*#footer classes */
+	.footer {
+		background: #364c6c;
+		color: #fff;
+	}
+	
+	.footer A {
+		color: #cddef6;			
+	}
+	
+	.systemInfo STRONG {
+		font-size: 110%;	
+	}
+	
+	.distributorLogo A {
+		/* Logo do rodape
+		 * 
+		 * background: url(../images/common/distributorLogo.gif) top left no-repeat; 
+		 * 
+		 */
+	}
+	/*#END #footer classes */
+	
+	/*#homepage classes */
+	.homepage .mainBox {
+		
+	}
+	
+	.homepage .mainBox .boxTop {
+		background: url(../images/common/mainBox_boxTop_bg.gif) top left repeat-x;
+	}
+	
+	.homepage .mainBox .boxBottom {
+		background: url(../images/common/mainBox_boxTop_bg.gif) bottom left repeat-x;
+	}
+	
+	.homepage .mainBox .boxContent {
+		border-left: 1px solid #dbdee1;
+		border-right: 1px solid #dbdee1;
+		background: #fff;
+	}
+	
+	.homepage .mainBox .boxTop .btLeft {
+		background: url(../images/common/mainBox_btLeft.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBox .boxTop .btRight {
+		background: url(../images/common/mainBox_btRight.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBox .boxBottom .bbLeft {
+		background: url(../images/common/mainBox_bbLeft.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBox .boxBottom .bbRight {
+		background: url(../images/common/mainBox_bbRight.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBoxHighlighted .boxContent {
+		background: #fff url(../images/common/mainBox_boxContent_bg.gif) bottom left repeat-x;
+		border-color: #b2c2d4;
+	}
+	
+	.homepage .mainBoxHighlighted .boxTop {
+		background: url(../images/common/mainBoxHighlighted_boxTop_bg.gif) top left repeat-x;
+	}
+	
+	.homepage .mainBoxHighlighted .boxBottom {
+		background: #eff3f8 url(../images/common/mainBoxHighlighted_boxTop_bg.gif) bottom left repeat-x;
+	}
+	
+	.homepage .mainBoxHighlighted .boxTop .btLeft {
+		background: url(../images/common/mainBoxHighlighted_btLeft.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBoxHighlighted .boxTop .btRight {
+		background: url(../images/common/mainBoxHighlighted_btRight.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBoxHighlighted .boxBottom .bbLeft {
+		background: url(../images/common/mainBoxHighlighted_bbLeft.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBoxHighlighted .boxBottom .bbRight {
+		background: url(../images/common/mainBoxHighlighted_bbRight.gif) bottom left no-repeat;
+	}
+	
+	.homepage .mainBox .boxContent .sectionTitle H4 {
+		font-size: 100%;
+		font-weight: normal;
+	}
+	
+	.homepage .mainBox .boxContent .sectionTitle H4 STRONG {
+		font-size: 210%;
+		color: #265182;
+		font-weight: normal;	
+	}
+	
+	.homepage .mainBox .boxContent .sectionTitle SPAN {
+		color: #4c4c4c;	
+	}
+	
+	.homepage .mainBox .importTitle .sectionIcon {
+		background: url(../images/common/icon/mainBox_importTitle.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .importFacic .sectionIcon {
+		background: url(../images/common/icon/mainBox_importTitle.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .unlockDatabase .sectionIcon {
+		background: url(../images/common/icon/mainBox_unlockDatabase.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .invertDatabase .sectionIcon {
+		background: url(../images/common/icon/mainBox_invertDatabase.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .titleSection .sectionIcon {
+		background: url(../images/common/icon/mainBox_titleSection.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .titlePlusSection .sectionIcon {
+		background: url(../images/common/icon/mainBox_titlePlus.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .reportLibrary .sectionIcon {
+		background: url(../images/common/icon/mainBox_reportLibrary.png) center center no-repeat;	
+	} 
+	.homepage .mainBox .reportDatabase .sectionIcon {
+		background: url(../images/common/icon/mainBox_reportdatabase.png) center center no-repeat;	
+	} 
+	
+	.homepage .mainBox .fascicleSection .sectionIcon {
+		background: url(../images/common/icon/mainBox_fascicleSection.png) center center no-repeat;	
+	}
+	
+	.homepage .mainBox .maskSection .sectionIcon {
+		background: url(../images/common/icon/mainBox_maskSection.png) center center no-repeat;	
+	}
+	
+	.homepage .mainBox .toolSection .sectionIcon {
+		background: url(../images/common/icon/mainBox_toolSection.png) center center no-repeat;	
+	}
+	
+	.homepage .mainBox .helpSection .sectionIcon {
+		background: url(../images/common/icon/mainBox_helpSection.png) center center no-repeat;	
+	}
+	
+	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+		color: #000;	
+	}
+	
+	.homepage .mainBox .boxContent .searchTitles .stInput LABEL {
+		color: #4c4c4c;	
+	}
+	
+	.homepage .mainBox .boxContent .searchTitles .stInput INPUT.textEntry {
+		background: url(../images/common/searchTitles_textEntry_bg.gif) top left no-repeat;
+		border: 0px;	
+	}
+	
+	.homepage .mainBox A.defaultButton:hover IMG {
+		background-color: #fff;	
+	}
+	/*#END #homepage classes */
+	
+	/* #buttons background classes */
+	A.listButton IMG {
+		background: url(../images/common/icon/defaultButton_list.png) center center no-repeat;	
+	}
+	
+	A.searchButton IMG {
+		background: url(../images/common/icon/defaultButton_search.png) center center no-repeat;	
+	}
+	
+	A.newButton IMG {
+		background: url(../images/common/icon/defaultButton_new.png) center center no-repeat;	
+	}
+	
+	A.importButton IMG {
+		background: url(../images/common/icon/defaultButton_import.png) center center no-repeat;	
+	}
+	
+	A.exportCatalogButton IMG {
+		background: url(../images/common/icon/defaultButton_exportCatalog.png) center center no-repeat;	
+	}
+	
+	A.exportTitleButton IMG {
+		background: url(../images/common/icon/defaultButton_exportTitle.png) center center no-repeat;	
+	}
+	
+	A.exportButton IMG {
+		background: url(../images/common/icon/defaultButton_export.png) center center no-repeat;	
+	}
+	
+	A.reportButton IMG {
+		background: url(../images/common/icon/defaultButton_report.png) center center no-repeat;	
+	}
+	
+	A.userButton IMG {
+		background: url(../images/common/icon/defaultButton_user.png) center center no-repeat;
+	}
+	
+	A.libraryButton IMG {
+		background: url(../images/common/icon/defaultButton_library.png) center center no-repeat;
+	}
+	A.databaseMaintenceButton IMG {
+		background: url(../images/common/icon/defaultButton_database.png) center center no-repeat;
+	}
+
+    A.pdfButton IMG {
+		background: url(../images/common/icon/defaultButton_pdf.png) center center no-repeat;	
+	}
+	
+	A.cancelButton IMG {
+		background: url(../images/common/icon/defaultButton_cancel.png) center center no-repeat;	
+	}
+	
+	A.saveButton IMG {
+		background: url(../images/common/icon/defaultButton_save.png) center center no-repeat;	
+	}
+	
+	A.nextButton IMG {
+		background: url(../images/common/icon/defaultButton_next.png) center center no-repeat;	
+	}
+	
+	A.backButton IMG {
+		background: url(../images/common/icon/defaultButton_back.png) center center no-repeat;
+	}
+	
+	A.goButton IMG {
+		background: url(../images/common/icon/defaultButton_go.png) center center no-repeat;
+	}
+	
+	A.eraseButton IMG {
+		background: url(../images/common/icon/singleButton_erase.png) center center no-repeat;
+	}
+	
+	A.okButton IMG {
+		background: url(../images/common/icon/singleButton_ok.png) center center no-repeat;
+	}
+	
+	A.helpButton IMG {
+		background: url(../images/common/icon/helper_bg.png) center center no-repeat;
+	}
+	
+	A.addSubField IMG {
+		background: url(../images/common/icon/singleButton_addSubField.png) center center no-repeat;
+	}
+
+	A.importTitleButton IMG {
+		background: url(../images/common/icon/importTitleButton.png) center center no-repeat;	
+	}
+	A.importFacicButton IMG {
+		background: url(../images/common/icon/importTitleButton.png) center center no-repeat;	
+	}
+	A.unlockButton IMG {
+		background: url(../images/common/icon/unlockButton.png) center center no-repeat;	
+	}
+	A.invertButton IMG {
+		background: url(../images/common/icon/invertButton.png) center center no-repeat;	
+	}
+	/*#END #buttons background classes */
+	
+	/*#list classes */
+	.list {
+		
+	}
+	
+	.searchBox {
+		background: #d8dade;
+	}
+	
+	.searchBox LABEL {
+		color: #848484;
+	}
+	
+	.searchBox INPUT.submit {
+		border: 0px;
+		background: url(../images/common/searchBox_submit_bg.gif) top left no-repeat;
+		color: #848484;		
+	}
+	
+	.listTable {
+		border-collapse: collapse;
+		border-spacing: 0px;	
+	}
+	
+	.listTable TH {
+		border-right: 1px solid #9d9d9d;
+		background: #848484;
+		border-bottom: 3px solid #848484;
+		color: #fff;
+		cursor: pointer;	
+	}
+	
+	.listTable TH.checkboxes,
+	.listTable TH.action {
+		cursor: default;	
+	}
+	
+	.listTable TH.desc {
+		background-image: url(../images/common/listTable_th_desc.gif);
+		background-repeat: no-repeat;
+		background-position: center right;
+		border-bottom-color: #29a1c8;
+	}
+	
+	.listTable TH.asc {
+		background-image: url(../images/common/listTable_th_asc.gif);
+		background-repeat: no-repeat;
+		background-position: center right;
+		border-bottom-color: #29a1c8;
+	}
+	
+	.listTable TH .textEntry, .listTable TH A {
+		background: #848484;
+		color: #fff;
+	}
+	
+	.listTable TD {
+		border-bottom: 1px solid #e7e7e7;	
+	}
+	
+	.listTable .tButton {
+		background: #bdced3;
+		color: #000;
+		text-decoration: none;
+	}
+	
+	.listTable .tErase {
+		background: #dfbfbf;
+	}
+	
+	.listTable .rowOver TD {
+		background-color: #f4f4f4;
+		border-bottom-color: #ddd;	
+	}
+	
+	.listTable .rowOver .tButton:hover {
+		background: #88a6d3;
+		color: #fff;
+	}
+	
+	.listTable .rowOver .tErase:hover {
+		background: #d36666;
+	}
+	 
+	/*
+	.listTable .rowOver .tButton {
+		background: #88a6d3;
+		color: #fff;
+	}
+	
+	.listTable .rowOver .tErase {
+		background: #d36666;
+	}
+	*/
+	
+	.lastInsertedRow {
+		background-image: url(../images/common/report_insertRow_bg.gif);
+		background-position: center right;
+		background-repeat: no-repeat;
+	}
+	
+	.tMacroActions {
+		background: #708bb1;	
+	}
+	
+	.tMacroActions .mainAction {
+		color: #fff;	
+	}
+	
+	.tMacroActions .checkboxAction {
+		background: url(../images/common/checkboxAction_bg.gif) top left no-repeat;	
+	}
+	/*#END #list classes */
+	
+	/*#form classes */
+	.form {
+		
+	}
+	
+	.formHead {
+		background: #d8dade;	
+	}
+	
+	.formHead H4 {
+		font-size: 160%;
+		color: #3d5d8a;	
+	}
+	
+	.formRow LABEL {
+		color: #000;
+	}
+	
+	.formRow .subFields {
+		background: #CCC;
+		border: 1px solid #999;
+	}
+	
+	.formRow .subFields H5 {
+		color: #3D5D8A;
+		font-size: 160%;
+	}
+	
+	.formRow .subFields H5 SPAN {
+		color: #333;
+		font-size: 70%;
+	}
+	
+	.formHead A.singleButton,
+	.formContent A.singleButton {
+		background-image: url(../images/common/formContent_singleButton_bg.gif);
+		color: #000;	
+	}
+	
+	.formHead A.singleButton:hover,
+	.formContent A.singleButton:hover {
+		background-color: #e0e0e0;
+	}
+
+	.formHead A.singleButton .sb_lb {
+		background-image: url(../images/common/formHead_singleButton_lb.gif);	
+	}
+	
+	.formHead A.singleButton .sb_rb {
+		background-image: url(../images/common/formHead_singleButton_rb.gif);	
+	}
+	
+	.formContent A.singleButton .sb_lb {
+		background-image: url(../images/common/formContent_singleButton_lb.gif);	
+	}
+	
+	.formContent A.singleButton .sb_rb {
+		background-image: url(../images/common/formContent_singleButton_rb.gif);	
+	}
+	
+	.formFoot {
+		background: #708bb1;	
+	}
+	
+	.formFoot .helper {
+		color: #fff;
+		border-right: 1px solid #8da2c1;	
+	}
+	/*#END #form classes */
+	
+	/* #Loading */
+	.loading {
+		
+	}
+	
+	.loading DIV {
+		background: url(../images/common/loading.gif) top center no-repeat;
+	}
+	/* #END #Loading */
+	
+	/* #colection Title loading */
+	TD.hideSTitle .showContent {
+		
+	}
+	
+	TD.showSTitle {
+		background: #f4f4f4 !important;	
+	}
+	
+	.rowOver TD.showSTitle {
+		background: #eaeaea !important;	
+	}
+	
+	TD.showSTitle .showContent {
+		
+	}
+	
+	TD.showSTitle .singleLoading {
+		border-top: 1px solid #dadfe7;
+		font-size: 90%;
+		color: #7a7a7a;
+	}
+	
+	TD.showSTitle .singleLoading IMG {
+		background: url(../images/common/singleLoading.gif) top left no-repeat;
+	}
+	
+	TD.showSTitle .collectionInfo {
+		border-top: 1px solid #dadfe7;
+		font-size: 90%;
+	}
+	
+	TD.showSTitle .collectionMode {
+		background: #fff;
+	}
+	
+	.rowOver TD.showSTitle .collectionMode {
+		background: #f4f4f4;
+	}
+	
+	TD.showSTitle .collectionMode A {
+		color: #708bb1;
+	}
+	
+	TD.showSTitle .collectionMode A:hover {
+		color: #000;
+		text-decoration: underline;		
+	}
+	
+	TD.showSTitle .collectionMode A.selected {
+		background: #f4f4f4;
+		color: #000;
+		text-decoration: none;
+		font-weight: bold;
+	}
+	
+	TD.showSTitle .collectionMode A.selected:hover {
+		text-decoration: none;
+	}
+	
+	.rowOver TD.showSTitle .collectionMode A.selected {
+		background: #eaeaea;
+	}
+	/* #END #colection Title loading */
+	
+	/* #messages */
+	.mContent H4 {
+		font-size: 220%;	
+	}
+	
+	.mContent DIV UL LI {
+		list-style: none;	
+	}
+	
+	.mSuccess IMG {
+		background: url(../images/common/icon/message_success.png) center center no-repeat;
+	}
+	
+	.mAlert IMG {
+		background: url(../images/common/icon/message_alert.png) center center no-repeat;
+	}
+	
+	.mError IMG {
+		background: url(../images/common/icon/message_error.png) center center no-repeat;
+	}
+	
+	.mCollection IMG {
+		background: url(../images/common/icon/message_showCollection.png) center center no-repeat;
+	}
+	
+	/* #END #messages */
+	
+	/* #Login */
+	.login .loginForm .boxContent {
+		background: #fff url(../images/common/mainBox_boxContent_bg.gif) bottom left repeat-x;
+		border-left: 1px solid #b2c2d4;
+		border-right: 1px solid #b2c2d4;
+	}
+	
+	.login .loginForm .boxTop {
+		background: url(../images/common/mainBoxHighlighted_boxTop_bg.gif) top left repeat-x;
+	}
+	
+	.login .loginForm .boxBottom {
+		background: #eff3f8 url(../images/common/mainBoxHighlighted_boxTop_bg.gif) bottom left repeat-x;
+	}
+	
+	.login .loginForm .boxTop .btLeft {
+		background: url(../images/common/mainBoxHighlighted_btLeft.gif) bottom left no-repeat;
+	}
+	
+	.login .loginForm .boxTop .btRight {
+		background: url(../images/common/mainBoxHighlighted_btRight.gif) bottom left no-repeat;
+	}
+	
+	.login .loginForm .boxBottom .bbLeft {
+		background: url(../images/common/mainBoxHighlighted_bbLeft.gif) bottom left no-repeat;
+	}
+	
+	.login .loginForm .boxBottom .bbRight {
+		background: url(../images/common/mainBoxHighlighted_bbRight.gif) bottom left no-repeat;
+	}
+	
+	.login .loginForm .submitRow A.defaultButton:hover IMG {
+		background-color: transparent;
+	}
+	
+	.login .loginForm .submitRow A.defaultButton SPAN {
+		color: #708bb1;
+		font-size: 120%;
+	}
+	
+	.login .loginForm .submitRow A.defaultButton:hover SPAN {
+		color: #000;	
+	}
+	/* #END Login */
+	
+
+
+/* HELP BOX */
+
+.helpBG {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: url(../images/common/helpBG.png);
+}
+
+.helpBG .helpArea {
+	position: fixed;
+	background: #DADADA;
+	width: 550px;
+	left: 27%;
+	top: 100px;
+        
+}
+
+.helpArea span.exit, .subFields span.exit {
+	float: right;
+	margin-right: -20px;
+	margin-top: -20px;
+        
+}
+
+.subFields span.exit {
+	float: right;
+	margin: -25px -30px 0px  0px;
+}
+
+.helpArea h2 {
+	width: 350px;
+	margin-left: 25px;
+	*margin-top: -28px;
+}
+
+
+.helpArea .help_message {
+	margin: 25px;
+        _overflow:auto;
+}
+
+#vizForm{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    left: 49px;
+    position: absolute;
+    top: 215x;
+    line-height: 20px;
+}
+
+#menuView{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    left: 805px;
+    position: absolute;
+    top: 225px;
+    line-height: 20px;
+}
+
+.bd yui-calcontainer single{
+    position: absolute;
+    top: 215x;
+}
+
+#exportForm{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 49px;
+    position: absolute;
+    top: 215x;
+    line-height: 20px;
+}
+
+#menuExport{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 130px;
+    position: absolute;
+    top: 125px;
+    line-height: 20px;
+    color: black;
+}
+#menuExport .exit {
+	position: absolute;
+	right: -5px;
+	top: -5px;
+	
+}
+
+#formatMenuOneRegister{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 33px;
+    position: absolute;
+    top: 158px;
+    line-height: 20px;
+    color: black;
+}
+
+#formatMenuAllRegisters{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 33px;
+    position: absolute;
+    top: 158px;
+    line-height: 20px;
+    color: black;
+}
+
+#collectionMenuSeCSFormat{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 0px;
+    position: absolute;
+    top: 210px;
+    line-height: 20px;
+    color: black;
+}
+
+#collectionMenuMarcFormat{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 0px;
+    position: absolute;
+    top: 210px;
+    line-height: 20px;
+    color: black;
+}
+
+#catalogExport{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    right: 136px;
+    position: absolute;
+    top: 125px;
+    line-height: 20px;
+}
+#catalogExport .exit {
+	position: absolute;
+	right: -5px;
+	top: -5px;
+	
+}
+
+
+#nextStepExport{
+ /*  
+*/
+    right: 36px;
+    position: absolute;
+    top: 125px;
+}
+
+#exportID{
+    background-color: #FFFFFF;
+    border: 1px solid #cecece;
+    padding: 3px 20px;
+    text-decoration: none;
+    line-height: 20px;
+    right: 0px;
+    position: absolute;
+    top: 171px;
+}
+/* helpISBD.html */
+.helpISBD {
+    background: none repeat scroll 0 0 #D8DADE;
+    font-size: 90%;
+}
+
+.helpISBD h1{
+    color:#3D5D8A;
+}

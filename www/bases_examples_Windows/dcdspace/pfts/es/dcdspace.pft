@@ -1,0 +1,25 @@
+'<table border=0 width=90%>'
+if p(v111) then '<tr><td width=20% valign=top><font face=arial size=2><b>ID</b></td><td valign=top><font face=arial size=2>'v111+|<br>|,'</td>' fi/
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Title</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Creator</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Subject</b></td><td valign=top><font face=arial size=2>'v3+|<br>|,'</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>Description</b></td><td valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Publisher</b></td><td valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>Contributors</b></td><td valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+if p(v7) then '<tr><td width=20% valign=top><font face=arial size=2><b>Date</b></td><td valign=top><font face=arial size=2>'v7+|<br>|,'</td>' fi/
+if p(v8) then '<tr><td width=20% valign=top><font face=arial size=2><b>Type</b></td><td valign=top><font face=arial size=2>'v8+|<br>|,'</td>' fi/
+if p(v9) then '<tr><td width=20% valign=top><font face=arial size=2><b>Format</b></td><td valign=top><font face=arial size=2>'v9+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Identifier</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v11) then '<tr><td width=20% valign=top><font face=arial size=2><b>Source</b></td><td valign=top><font face=arial size=2>'v11+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Language</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=20% valign=top><font face=arial size=2><b>Relation</b></td><td valign=top><font face=arial size=2>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td width=20% valign=top><font face=arial size=2><b>Coverage</b></td><td valign=top><font face=arial size=2>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Rights Management</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
+if p(v97) and v97<>'collection' then '<tr><td width=20% valign=top><font face=arial size=2><b>Sections</b></td><td valign=top><font face=arial size=2>'replace(v97,'/',' , '),'</td>' fi/
+if p(v98) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL</b></td><td valign=top><font face=arial size=2><A HREF="/bases/dubcore/collection/',v98'" target=new>'v98+|<br>|,'</A></td>' fi/
+
+if p(v112) then '<tr><td width=20% valign=top><font face=arial size=2><b>Date added</b></td><td valign=top><font face=arial size=2>'v112+|<br>|,'</td>' fi/
+if p(v99) then '<tr><td width=20% valign=top><font face=arial size=2><b>DocText</b></td><td valign=top bgcolor="antiquewhite"><font face=arial size=2>'v99+|<br>|,'</td>' fi/
+if p(v777) then '<tr><td width=20% valign=top><font face=arial size=2><b>RPC</b></td><td valign=top><font face=arial size=2>'v777+|<br>|,'</td>' fi
+
+'</table><p>'

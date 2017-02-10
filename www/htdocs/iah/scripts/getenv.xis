@@ -1,0 +1,33 @@
+<IsisScript>
+  <section>
+    <display><pft>'Content-type: text/html'/#</pft></display>
+	<display><pft>
+	   '<h3>CGI Environment Variables</h3>'/,
+	   '<pre>'/,
+	   'AUTH_TYPE=',getenv('AUTH_TYPE'),/,
+	   'CONTENT_LENGTH=',getenv('CONTENT_LENGTH'),/,
+	   'CONTENT_TYPE=',getenv('CONTENT_TYPE'),/,
+	   'GATEWAY_INTERFACE=',getenv('GATEWAY_INTERFACE'),/,
+	   'HTTP_ACCEPT=',getenv('HTTP_ACCEPT'),/,
+	   'HTTP_USER_AGENT=',getenv('HTTP_USER_AGENT'),/,
+	   'PATH_INFO=',getenv('PATH_INFO'),/,
+	   'PATH_TRANSLATED=',getenv('PATH_TRANSLATED'),/,
+	   'QUERY_STRING=',getenv('QUERY_STRING'),/,
+	   'REMOTE_HOST=',getenv('REMOTE_HOST'),/,
+	   'REMOTE_ADDR=',getenv('REMOTE_ADDR'),/,
+	   'REMOTE_IDENT=',getenv('REMOTE_IDENT'),/,
+	   'REQUEST_METHOD=',getenv('REQUEST_METHOD'),/,
+	   'REMOTE_USER=',getenv('REMOTE_USER'),/,
+	   'SERVER_NAME=',getenv('SERVER_NAME'),/,
+	   'SERVER_SOFTWARE=',getenv('SERVER_SOFTWARE'),/,
+	   'SERVER_PORT=',getenv('SERVER_PORT'),/,
+	   'SERVER_PROTOCOL=',getenv('SERVER_PROTOCOL'),/,
+	   'SCRIPT_NAME=',getenv('SCRIPT_NAME'),/,
+	   ,'</pre>'
+	   '<h3>IsisScript Environment Variables</h3>'/,
+	   '<pre>'/,
+	   'PATH_WXIS=',getenv('PATH_WXIS'),/,
+	   '</pre>'
+	</pft></display>
+  </section>
+</IsisScript>

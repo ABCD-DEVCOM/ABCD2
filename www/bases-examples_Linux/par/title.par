@@ -1,0 +1,7 @@
+title.*=%path_database%secs-web/data/title.*
+title.pft=%path_database%secs-web/pfts/%lang%/title.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+
+
+

@@ -1,0 +1,5 @@
+ROOT=\ABCD\www\bases\dubcore\
+IMPORTPDF=Y
+COLLECTION=/ABCD/www/bases/dubcore/collection/
+UNICODE=utf8
+#CISIS_VERSION=ffi

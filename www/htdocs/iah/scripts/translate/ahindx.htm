@@ -1,0 +1,159 @@
+[pft]@AHHEAD.PFT[/pft]
+
+<form action="[pft]getenv('SCRIPT_NAME')v5000^d,'scripts/'[/pft]" method="POST" name="index">
+
+    [pft]@AHHIDD.PFT[/pft]
+
+    <input type="hidden" name="nextAction" value="show index" />
+
+    <div class="middle">
+        <div class="formHead">   <!-- info bar -->
+            <h3 class="context">
+                {{database}}&nbsp;[pft]v5003^*[/pft]
+                : {{index}}
+            </h3>
+            <div class="formOptions">
+                        [pft]
+                if p(v5011^h) then
+                        '<a class="help" href="',v5011^h,'"><span>{{help}}</span></a>' else '&nbsp;'
+                fi
+            [/pft]
+            </div>
+            <div class="spacer"> </div>
+        </div>
+    </div>
+
+    [pft]if p(v1) then[/pft]
+    <div class="containBord">
+        <div class="row">
+            <span class="labl"><b>{{select_terms}}:</b></span>
+        </div>
+            <select name="termsFromIndex" size="10" multiple="multiple">
+                [pft]( `<option value='"`replace(v1^v,`'`,'&rsquo;')`"'>`,if p(v2) then '['v2'] ' fi,if p(v1^n) then v1^n*0.90 else v1^v*0.90 fi,'</option>')[/pft]
+            </select>
+
+        <div class="rowAction">
+
+            [pft]if nocc(v1) = 100 then[/pft]
+                <input type="submit" class="defaultButton submit" value="{{next}}" name="more terms.x^" />
+            [pft]fi[/pft]
+
+                <input type="submit" class="defaultButton submit" value="{{add_terms}}" name="add terms.x^" />
+                <input type="submit" class="defaultButton submit" value="{{search_terms}}" name="search terms.x^" />
+
+            [pft]
+
+                if v5001^s = 'INDEX_KWIC' then,
+
+                    if s(v6100^x.2) = 'MH' then,
+
+                        '&nbsp;&nbsp;<input type="image" src="',v5002,'aspect.gif" name="aspects" border="0" />'
+
+                    else
+
+                        '&nbsp;&nbsp;<input type="image" src="',v5002,'fascic.gif" name="fascicles" border="0" />'
+
+                    fi
+
+                fi
+
+            [/pft]
+
+        </div>
+    
+    </div>
+    [pft]fi[/pft]
+
+    <div class="midd">
+    [pft]if s(mpu,v6100^t,mpl) <> 'SHORT' and v5001^s <> 'INDEX_ASPECTS/FASCICLES' then[/pft]
+
+            [pft]if a(v1) and p(v6122) then[/pft]
+        <div class="rowHigh">
+            <div class="lablAlert"><b>{{no_terms_found}}</b></div>
+        </div>
+        <div class="rowHigh">
+            <div class="cellN">&nbsp;</div><span class="labl"><b>{{new_index_search}}</b></span>
+        </div>
+
+            [pft]fi[/pft]
+
+            [pft]if p(v1) then[/pft]
+                [pft]if p(v6102) then[/pft]
+                <div class="rowResult">
+                    <div class="cellN">&nbsp;</div><span class="labl"><b><sup>{{selected_terms}}&nbsp;</sup></b></span>
+                    <textarea name="mostra" wrap="virtual" cols="40" rows="2">[pft](replace(v6102,'"','&quot;')/)[/pft]</textarea>
+                </div>
+                <br />
+                [pft]fi[/pft]
+                <div class="row">
+                    <div class="cellN">&nbsp;</div><span class="labl"><b>{{new_index_search}}</b></span>
+                </div>
+        <br />
+            [pft]fi[/pft]
+
+        <div class="row">
+            <div class="cellN">&nbsp;</div>{{index_search_words}}:
+        </div>
+
+        <div class="row">
+            <div class="cellN">&nbsp;</div><input maxlength="40" size="35" name="indexRoot" type="text">&nbsp;&nbsp;&nbsp;
+            <input type="submit" class="defaultButton submit" value="{{show_index}}" name="show_index" />
+        </div>
+        <br />
+
+        <div class="rowHigh">
+            <div class="cellN">&nbsp;</div>{{select_initial_word}}:
+        </div>
+        
+        <div class="rowCenter">
+<input value="012..." name="indexRoot" type="submit">&nbsp;<input value=" A" name="indexRoot" type="submit"><input value=" B" name="indexRoot" type="submit"><input value=" C" name="indexRoot" type="submit"><input value=" D" name="indexRoot" type="submit"><input value=" E" name="indexRoot" type="submit"><input value=" F" name="indexRoot" type="submit"><input value=" G" name="indexRoot" type="submit"><input value=" H" name="indexRoot" type="submit"><input value=" I" name="indexRoot" type="submit"><input value=" J" name="indexRoot" type="submit"><input value=" K" name="indexRoot" type="submit"><input value=" L" name="indexRoot" type="submit"><input value=" M" name="indexRoot" type="submit"><input value=" N" name="indexRoot" type="submit"><input value=" O" name="indexRoot" type="submit"><input value=" P" name="indexRoot" type="submit"><input value=" Q" name="indexRoot" type="submit"><input value=" R" name="indexRoot" type="submit"><input value=" S" name="indexRoot" type="submit"><input value=" T" name="indexRoot" type="submit"><input value=" U" name="indexRoot" type="submit"><input value=" V" name="indexRoot" type="submit"><input value=" W" name="indexRoot" type="submit"><input value=" X" name="indexRoot" type="submit"><input value=" Y" name="indexRoot" type="submit"><input value=" Z" name="indexRoot" type="submit" />
+        </div>
+        <br />
+
+            [pft]if s(mpu,v6100^t,mpl) = 'KWIC' then[/pft]
+        <div class="row">
+            <div class="cellN">&nbsp;</div>{{index_access}}:&nbsp;<input type="radio" name="kwicMode" value="On" [pft]if v6121 = 'On' or a(v6121) then 'checked' fi[/pft] /> {{permuted_index}}&nbsp;&nbsp;<input type="radio" name="kwicMode" value="Off" [pft]if v6121 = 'Off' then 'checked' fi[/pft] /> {{alphabetic_index}}&nbsp;&nbsp;&nbsp;
+        </div>
+        <br />
+            [pft]fi[/pft]
+
+        <input name="indexRoot" type="hidden" value="[pft]if v6121 = 'On' then '^r'v6122^*,'^m'v1^m[LAST] else v1^v[LAST] fi[/pft]" />
+
+    [pft]fi[/pft]
+    
+    [pft]if a(v1) and v5001^s = 'INDEX_ASPECTS/FASCICLES' then[/pft]
+
+        <div class="rowHigh">
+            <div class="lablAlert"><b>
+            [pft]
+                if v6100^x.2 = 'MH' then,
+                    '{{select_one_descriptor}}'
+                else
+                    '{{select_one_journal}}'
+                fi
+            [/pft]
+            </b>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="lablAlert"><a href="#" onClick="history.back()">{{back}}</a></div>
+        </div>
+
+    [pft]fi[/pft]
+
+        <div class="rowAction">   <!-- bottom bar -->
+            <input type="button" onclick="javascript:history.back()" name="cancel" value="{{cancel}}" class="defaultButton submit" />
+        </div>
+    </div>
+</form>
+
+
+[pft]if p(v5011^n) then[/pft]
+        <div class="formNotes">[pft]cat(v5011^n)[/pft]</div>
+[pft]fi[/pft]
+
+</div>      <!-- end content -->
+
+</body></html>
+

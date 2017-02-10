@@ -1,0 +1,9 @@
+if p(v30) then 
+	v30," ("v35")",
+else
+	v20,
+fi,
+'\par Tipo de usuario: 'v10
+if p(v40) or p(v45) then '\par ' fi,
+v40". ",v45
+

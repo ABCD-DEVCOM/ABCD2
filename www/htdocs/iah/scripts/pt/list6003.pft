@@ -1,0 +1,15 @@
+,proc('d6099',
+		'a6099~'
+			,(if (v6000[1]='A' or a(v6099^f)) and v6099^t <> 'hidden' then
+				'<option value="'v6099'" ' if v6003^x[1] = v6099^x then 'selected' fi'>'v6099^L'</option>'
+			,fi)'~'
+		'a6099~'
+			,(if (v6000[1]='A' or a(v6099^f)) and v6099^t <> 'hidden' then
+				'<option value="'v6099'" ' if v6003^x[2] = v6099^x then 'selected' fi'>'v6099^L'</option>'
+			,fi)'~'
+		'a6099~'
+			,(if (v6000[1]='A' or a(v6099^f)) and v6099^t <> 'hidden' then
+				'<option value="'v6099'" ' if v6003^x[3] = v6099^x then 'selected' fi'>'v6099^L'</option>'
+			,fi)'~'
+,),
+

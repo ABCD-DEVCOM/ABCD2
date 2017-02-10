@@ -1,0 +1,18 @@
+<IsisScript>
+ <trace>On</trace>
+
+ <section>
+ 	<parm name="buffersize">500000</parm>
+  	<parm name=MAX_TMP_STRING>400000</parm>
+    <field action=cgi tag=5015>cipar</field>
+  	<field action=cgi tag=5001>base</field>
+    <field action=cgi tag=9001>Opcion</field>
+    <field action=cgi tag=2000>Mfn</field>
+    <field action=cgi tag=9010>ValorCapturado</field>
+    <field action=cgi tag=9060>login</field>
+    <field action=cgi tag=3030>Formato</field>
+
+    <display><pft>ALL</pft></display>
+
+ </section>
+</IsisScript>

@@ -1,0 +1,6 @@
+s1:=(s(getenv('FRBRKEY'))),
+if v911 = s1 then 
+ else @rda_opac.pft, 
+fi,
+ putenv('FRBRKEY='v911)/
+

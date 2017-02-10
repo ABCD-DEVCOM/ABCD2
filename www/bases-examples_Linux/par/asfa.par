@@ -1,0 +1,4 @@
+asfa.*=%path_database%asfa/data/asfa.*
+asfa.pft=%path_database%asfa/pfts/en/asfa.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

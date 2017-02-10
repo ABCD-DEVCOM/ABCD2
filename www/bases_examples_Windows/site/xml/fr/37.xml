@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<collection id="37" available="">
+  <item id="2" available="yes">Journaux Accès Ouvert<description><p>Journaux Acc&amp;egrave;s Ouvert</p>  </description><portal>              </portal><meta-search/><item id="1" available="no" href="http://www.scielo.org">SciELO - Scientific Electronic Library Online<description>                 </description><portal>                 </portal><meta-search base-search-url="http://search.scielo.org/?output=metasearch" search-parameters="q=" base-browse-url="http://search.scielo.org/?output=html"/></item></item>
+</collection>

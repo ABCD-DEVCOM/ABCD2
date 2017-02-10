@@ -1,0 +1,64 @@
+<p><font face="Arial"><strong>Types d´enregistrement</strong></font></p>
+<p>Si la structure d´une base de données dispose de différents types d´enregistrement, ils doivent être structurés sous ABCD.<p> 
+ABCD définit deux façons de faire face aux différents types d'enregistrement:</p>
+<ol>
+    <li>Pour les structures MARC</li>
+    <li>Pour les structures no MARC</li>
+</ol>
+<p><font face="Arial"><strong>Types d´enregistrement (structures Marc)</strong></font></p>
+<p><font face="Arial" size="2">Cette option permet de définir les types de documents qui seront gérés par la base de données quand il utilise le format MARC. ABCD qui désigne una base de données est structurée en format MARC lorsque la définition de la table de données y compris un champ LEADER (LDR). La structure d´un champ LEADER est dans un fichier appelé leader.fdt, celui-ci situé dans le dossier def de la base de données, qui identifie les domaines suivants:</font></p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font size="2">3005 Etat de l´enregistrement<br />
+3006 Type d´enregistrement<br />
+3007 Niveau bibliographique<br />
+3017&nbsp;Niveau de codage<br />
+3018 Description du catalogage</font></p>
+</blockquote>
+<p><font face="Arial"></font></p>
+<p><font size="2"></font></p>
+<p><font face="Arial" size="2">Le type d´enregistrement est obtenu à partir du champ <strong>3006 </strong>du Leader et il aide à identifier le format du champ fixe destiné à être utilisé pour la description bibliographique du titre.</font></p>
+<p><font size="2">Le format du champ fixe associé à chaque type d´enregistrement est stocké dans une structure similaire au FDT et sont  presentes dans le processus de saisie des données selon le type de dossier sélectionné dans le Leader.</font></p>
+<p><font size="2">Pour définir les types de structures dans les notices MARC, procédez comme suit:</font></p>
+<ol>
+    <li><font size="2">Vérifier l´option <strong>Type d´enregistrement: marc</strong> dans le module de mise à jour les définitions de base de données</font></li>
+    <li><font size="2"><font size="2">Mettez dans les cases marqués <strong>etiquette1;</strong>identifié comme l´etiquette du champ Leader qui stocke le type d´enregistrement (3006). Laissez la case vide pour <strong>l´etiquette2</strong></font></font></li>
+    <li><font size="2">Dans la colonne<strong>Fichier de saisie de données</strong>&nbsp;placez le nom de la structure qui contient la description du champ fixe correspondant au type d´enregistrement qu´on est en train de décrire. Utilisez le lien modifier á modifier ou créer la structure en question. Ce lien ouvrira l´éditeur du FDT fixe comme champ est gardé dans une structure similaire á la Définition des champs de la Table de la base de données</font></li>
+    <li><font size="2">Placez dans l´<strong>Etiquette 1 Valeur</strong> la valeur que peut prendre le champ 3006<strong>&nbsp;</strong>pour y associer ce type d´enregistrement. Laissez la colonne <strong>Etiquette 2 Valeur </strong>vide</font></li>
+    <li><font size="2"><font size="2">Placez dans la colonne<strong> Type d´enregistrement,Description</strong> la description du type de dossier, sera le moment de la création de la sélection du type </font>&nbsp;</font></li>
+    <li><font size="2">Répétez les étapes 2-6 jusqu´à ce que les types de documents que vous souhaitez définir</font></li>
+</ol>
+<p><font size="2">À la fin, cliquez sur le bouton <strong>Mettre à jour </strong></font></p>
+<p><font size="2">Les types d´enregistrement sont définies dans le dossier <strong>def</strong> stockés dans la base de données, dans le cadre de la langue active à la création, sous le nom de <font face="Arial"><strong>typeofrecord.tab</strong></font></font></p>
+<p><hr />
+</p>
+<p><strong><font face="Arial"></font></strong></p>
+
+<p><strong><font face="Arial" size="3">Types d´enregistrment (structures no&nbsp;MARC)</font></strong></p>
+<p><font face="Arial" size="2">Cette option permet de définir les types de documents qui seront gérés par la base de données quand il n'utilise pas le format MARC.</font></p>
+<p><font face="Arial" size="2">À ces fins, il est nécessaire pour définir le type de dossier et d'attribuer des champs de la base de données (maximum deux) sauvent des valeurs à être utilisées&nbsp; pour identifier le type qui correspond à la procédure d'enregistrement de la création ou l'édition.</font></p>
+<p><font face="Arial" size="2">Pour définir le type d´enregistrement 2 composants:</font></p>
+<ol>
+    <li><font face="Arial" size="2">Identifier le champ (tag)&nbsp;de la base de données est en cours pour obtenir (ou stockée dans le cas d'un nouveau record) le type d'enregistrement de l'information enregistrée. La version actuelle de ABCD permet de mettre en place deux champs dont le contenu va déterminer le type de documents et donc la feuille d'entrée de données à utiliser pour l'entrée ou la modification des enregistrements</font> </li>
+    <li><font face="Arial" size="2">2. Décrire les types de documents sur la base des paramètres suivants: Nom de la table de définition (FMT) qui contient les éléments devant être utilisés pour construire le formulaire d'inscription à la saisie de données</font></li>
+    <li><font face="Arial" size="2">De la valeur des domaines identifiés au paragraphe (1) d'être considérés comme appartenant à ce type de fichier</font> </li>
+    <li><font face="Arial" size="2">De la description du type d'enregistrement, qui sera présenté à l'opérateur au moment de l'admission de procéder à la sélection du type correspondant</font> </li>
+    <ul>
+    </li>
+</ol>
+<p><font face="Arial" size="2">Pour maintenir la cohérence dans les paramètres de l'ABCD, les champs fixe sont définis par moyen d'un mécanisme qui contient la liste des champs (tags) de la FDT de la base de données qui sont nécessaires pour construire la forme de revenu. Tout comme le tag reste dans les champs, ils héritent automatiquement les caractéristiques décrites dans la base de données FDT.une&nbsp;<strong>FMT</strong> qui contient la liste des champs (tags) de la&nbsp; <strong>FDT </strong>du base de données que sont nécessaires pour construire le format d´entrée. Étant donnée qu´il ne reste que le tag des champs, ceux-ci héritent automatiquement les caractéristiques décrites dans la <strong>FDT </strong>de la base de données.</font></p>
+<p><font face="Arial" size="2">Pour assigner les types d´enregistrement il faut définir les fiches d´entrée qui sont liés à chaque enregistrement (voir le format d´entrée&nbsp;de données&nbsp;(FMT).</font></p>
+<p><font size="2">Si vous définissez un type d´enregistrement pour une base de données qui ne répondent pas à la norme MARC, procédez comme suit:</font></p>
+<ol>
+    <li><font size="2">Mettez dans les cases identifiés comme <strong>etiquette1 </strong>et <strong>etiquette2</strong> les etiquettes des champs à utiliser pour identifier le type d´enregistrement. La deuxième etiquette est facultative</font></li>
+    <li><font size="2">Sélectionnez la colonne <strong>Format d´entrée de données</strong> que vous utilisez pour entrer dans le type d´enregistrement. Cette fiche d´entrée de données doit être définit à l´avance &nbsp;avec l´option <strong>Créér/ Modifier les fiches d´entrée</strong></font></li>
+    <li><font size="2">Placez la valeur dans le champ <strong>etiquette1 valeur </strong>pour identifier le type d´enregistrement</font></li>
+    <li><font size="2"><font size="2">Placez la valeur dans le champ <strong>etiquette2 valeur</strong>pour identifier le type d´enregistrement (optionel)</font></font></li>
+    <li><font size="2">Placez dans la colonne <strong>Type d´enregistrement, Description </strong>la description du type d´enregistrement, tel qu´il sera au moment de la création pour la selection du type correspondante</font></li>
+    <li><font size="2">Répétez les étapes 2-5 autant de fois qu´il y ait de types d´enregistrement dans la base de données</font></li>
+    <li><font size="2">À la fin, cliquez sur le bouton <strong>Mettre à jour</strong></font></li>
+</ol>
+<p><font size="2">Les types d´enregistrement sont définies dans le dossier <strong>def</strong> de la base de données, dans le cadre de la langue active à la création, sous le nom <font face="Arial"><strong>typeofrecord.tab</strong></font></font></p>
+<p>&nbsp;</p>
+<p><font face="Arial" size="2"></font></p>
+&nbsp;
+<p>&nbsp;</p>

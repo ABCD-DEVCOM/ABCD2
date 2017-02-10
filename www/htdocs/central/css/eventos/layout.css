@@ -1,0 +1,700 @@
+/* general styles */
+BODY {
+	margin: 0px;
+}
+
+FORM {
+	margin: 0px;
+	padding: 0px;
+}
+
+/* #master classes */
+	/* #defaultButton classes */
+	A.defaultButton {
+		display: block;
+		float: left;
+		width: 200px;  /*cambiado*/
+		height: 32px;
+		margin-right: 1px;
+		text-align: left;
+	}
+
+	A.defaultButton IMG {
+		width: 32px;
+		height: 32px;
+		vertical-align: middle;
+		margin-right: 7px;
+		float: left;
+	}
+
+	A.defaultButton SPAN {
+		/*display: -moz-inline-block; */
+		display: inline-block;
+		vertical-align: middle;
+		width: 150px;
+		padding: 0px 0px 0px 0px;
+		float: left;
+	}
+
+
+A.menuButton {
+		display: block;
+		float: left;
+		width: 280px;  /*cambiado*/
+		height: 50px;
+		margin-right: 1px;
+		text-align: left;
+	}
+
+	A.menuButton IMG {
+		width: 40px;
+		height: 40px;
+		vertical-align: middle;
+		margin-right: 7px;
+		float: left;
+	}
+
+	A.menuButton SPAN {
+		/*display: -moz-inline-block; */
+		display: inline-block;
+		vertical-align: middle;
+		width: 190px;
+		padding: 12px 0px 0px 0px;
+		float: left;
+	}
+
+
+
+	A.multiLine SPAN {
+		padding-top: 5px;
+	}
+
+	BODY:first-of-type A.multiLine SPAN {
+		padding-top: 10px;
+	}
+
+	A.defaultButton STRONG{
+		display: block;
+	}
+
+	.textEntry, .submit {
+		vertical-align: middle;
+	}
+
+	.textEntry {
+		width: 180px;
+	}
+
+	INPUT.textEntry, TEXTAREA.textEntry {
+		padding: 2px;
+	}
+
+	INPUT.superTextEntry,
+	TEXTAREA.superTextEntry,
+	SELECT.superTextEntry,
+	INPUT.singleTextEntry,
+	TEXTAREA.singleTextEntry,
+	SELECT.singleTextEntry {
+		width: 90%;
+	}
+
+	TEXTAREA.textEntry {
+		height: 70px;
+	}
+
+	INPUT.smallTextEntry,
+	TEXTAREA.smallTextEntry {
+		width: 100px;
+	}
+
+	SELECT.smallTextEntry {
+		width: 120px;
+	}
+
+	.helper {
+		padding: 0px 3px 3px 20px;
+	}
+
+	A.singleButton {
+		display: block;
+		float: left;
+		padding: 2px 5px;
+		height: 18px;
+		position: relative;
+		vertical-align: middle;
+		margin-right: 3px;
+	}
+
+	BODY:first-of-type A.singleButton {
+		height: 16px;
+		padding-top: 4px;
+	}
+
+	A.singleButton IMG {
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+		margin-right: 2px;
+	}
+
+	A.singleButton SPAN.sb_lb,
+	A.singleButton SPAN.sb_rb {
+		position: absolute;
+		top: 0px;
+		width: 2px;
+		height: 22px;
+	}
+
+	A.singleButton SPAN.sb_lb {
+		left: 0px;
+	}
+
+	A.singleButton SPAN.sb_rb {
+		right: 0px;
+	}
+
+	/* #END #defaultButton classes */
+
+/* #specific classes */
+
+	/* #heading classes */
+	.heading {
+
+	}
+
+	.institutionalInfo {
+		float: left;
+		width: 60%;
+		padding: 15px 0px 14px 15px;
+	}
+
+	.institutionalInfo H1, .institutionalInfo H2 {
+		margin: 0px 0px 0px 0px;
+	}
+
+	.userInfo {
+		float: right;
+		width: 30%;
+		text-align: right;
+		white-space: nowrap;
+		padding: 15px 15px 0px 0px;
+	}
+
+	.language {
+		float: right;
+		width: 30%;
+		text-align: right;
+		white-space: nowrap;
+		padding: 0px 47px 0px 0px;
+	}
+	.userInfo A.button_logout {
+		display: -moz-inline-box;
+		display: inline-block;
+		padding: 6px 32px 6px 0px;
+		vertical-align: middle;
+	}
+	/* #END #heading classes */
+
+	/*#sectionInfo classes */
+	.sectionInfo {
+
+	}
+
+	.breadcrumb {
+		float: left;
+		width: 45%;
+		padding: 11px 0px 11px 15px;
+	}
+
+	.breadcrumb H3 {
+		display: inline;
+	}
+
+	.actions {
+		float: right;
+		width: 50%;
+		text-align: right;
+		white-space: nowrap;
+		padding: 2px 0px 5px 0px;
+	}
+
+	.actions A.defaultButton {
+		float: right;
+		margin-top: 3px;
+	}
+	/*#END #sectionInfo classes */
+
+	/*#middle classes */
+	.middle {
+		min-height: 230px;
+	}
+	/*#END #middle classes */
+
+	/*#footer classes */
+	.footer {
+
+	}
+
+	.systemInfo {
+		float: left;
+		width: 70%;
+		padding: 11px 0px 11px 15px;
+	}
+
+	.systemInfo STRONG, .systemInfo SPAN, .systemInfo A {
+		display: block;
+	}
+
+	.distributorLogo {
+		float: right;
+		width: 25%;
+		text-align: right;
+		padding: 11px 15px 11px 0px;
+	}
+
+	.distributorLogo A {
+		display: -moz-inline-box;
+		display: inline-block;
+		width: 96px;
+		height: 52px;
+	}
+
+	.distributorLogo A SPAN {
+		display: none;
+	}
+	/*#END #footer classes */
+
+	/*#homepage classes */
+	.homepage {
+		padding: 15px 15px 1px 15px;
+	}
+
+	.homepage .mainBox {
+		position: relative;
+		margin-bottom: 15px;
+	}
+
+	.homepage .mainBox .boxTop,
+	.homepage .mainBox .boxBottom {
+		height: 2px;
+		clear: both;
+	}
+
+	.homepage .mainBox .boxTop .btLeft,
+	.homepage .mainBox .boxTop .btRight,
+	.homepage .mainBox .boxBottom .bbLeft,
+	.homepage .mainBox .boxBottom .bbRight {
+		width: 2px;
+		height: 2px;
+		font-size: 1px;
+		background: red;
+	}
+
+	.homepage .mainBox .boxTop .btLeft,
+	.homepage .mainBox .boxBottom .bbLeft {
+		float: left;
+	}
+
+	.homepage .mainBox .boxTop .btRight,
+	.homepage .mainBox .boxBottom .bbRight {
+		float: right;
+	}
+
+	.homepage .mainBox .boxContent {
+		min-height: 101px;
+		padding: 10px 10px 5px 10px;
+	}
+
+	.homepage .mainBox .boxContent .sectionIcon {
+		float: left;
+		width: 100px;
+		height: 95px;
+		margin-right: 5px;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle {
+		float: left;
+		width: 170px;
+		margin-right: 30px;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle H4 {
+		margin: 15px 0px 5px 0px;
+	}
+
+	.homepage .mainBox .boxContent .sectionTitle H4 STRONG {
+		display: block;
+	}
+
+	.homepage .mainBox .boxContent .sectionButtons {
+		margin: 27px 0px 0px 0px;
+		float: left;
+		width: 60%;
+	}
+
+	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+		margin-top: 3px;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles {
+		width: 600px;
+		clear: both;
+		float: left;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles .stInput {
+		width: 280px;
+		float: left;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles .stInput INPUT.textEntry {
+		width: 269px;
+		padding: 6px;
+	}
+
+	BODY:first-of-type .homepage .mainBox .boxContent .searchTitles .stInput INPUT.textEntry {
+		margin-top: 5px;
+		width: 269px;
+		padding: 8px 6px;
+	}
+
+	.homepage .mainBox .boxContent .searchTitles A.defaultButton {
+		margin-top: 4px;
+	}
+	/*#END #homepage classes */
+
+	/*#list classes */
+	.list {
+
+	}
+
+	.searchBox {
+		padding: 5px 15px;
+		position: relative;
+	}
+
+	.searchBox LABEL {
+		margin-right: 4px;
+	}
+
+	.searchBox INPUT.textEntry {
+		width: 30%;
+		padding: 4px;
+	}
+
+	.searchBox INPUT.submit {
+		width: 81px;
+		height: 26px;
+		padding-left: 26px;
+	}
+
+	.searchBox INPUT.submitAdvanced {
+		width: 126px;
+		height: 26px;
+		position: absolute;
+		top: 7px;
+		padding-left: 6px;
+	}
+
+
+	.searchBox INPUT.submitButton {
+		width: 81px;
+		height: 26px;
+		padding-left: 6px;
+	}
+
+	.searchBox .helper {
+		position: absolute;
+		top: 11px;
+		right: 15px;
+	}
+
+
+	.listTable {
+		width: 100%;
+	}
+
+	.listTable TD,
+	.listTable TH {
+		padding: 5px 5px;
+	}
+
+	.listTable TD {
+		vertical-align: top;
+		text-align: left;
+	}
+
+	.listTable TH {
+		text-align: center;
+	}
+
+	.listTable TH.asc,
+	.listTable TH.desc {
+		padding-right: 22px;
+	}
+
+	.listTable .checkboxes {
+		padding-left: 15px;
+	}
+
+	.listTable .action {
+		padding-right: 15px;
+		white-space: nowrap;
+	}
+	.listTable .action a img{
+		margin-right:5px;
+	}
+	.listTable TD A {
+		white-space: nowrap;
+	}
+
+	.listTable .tButton {
+		display: -moz-inline-box;
+		display: inline-block;
+		padding: 1px 3px;
+		white-space: nowrap;
+	}
+
+	.tMacroActions {
+
+	}
+
+	.tMacroActions .checkboxAction {
+		float: left;
+		margin-top: 10px;
+		margin-left: 25px;
+		padding: 0px 0px 10px 20px;
+		width: 30%;
+	}
+
+	.tMacroActions .pagination {
+		float: right;
+		width: 30%;
+		margin: 10px 15px 0px 0px;
+	}
+	/*#END #list classes */
+
+	/*#form classes */
+	.form {
+
+	}
+
+	.formHead, .formContent {
+		padding: 15px;
+	}
+
+	.formHead H4 {
+		margin: 0px 0px 15px 0px;
+	}
+
+	.formRow {
+		width: 80%;
+		margin-bottom: 10px;
+	}
+
+	.formRow LABEL {
+		display: block;
+		float: left;
+		width: 30%;
+	}
+
+	.formRow LABEL.inline {
+		display: inline;
+		float: none;
+		width: auto;
+	}
+
+	.formRow .frDataFields {
+		float: right;
+		width: 67%;
+	}
+
+	.formRow .frDataFields .helper {
+		margin-top: 10px;
+		visibility: hidden;
+	}
+
+	.formRowFocus .frDataFields .helper {
+		visibility: visible;
+	}
+
+	.formRow .fieldBlock {
+		float: left;
+		width: 33.3%;
+	}
+
+	.formFoot {
+
+	}
+
+	.formFoot .helper {
+		float: left;
+		margin-top: 10px;
+		margin-left: 25px;
+		margin-bottom: 10px;
+		padding: 0px 10px 0px 20px;
+		width: 45%;
+	}
+
+	.formFoot .pagination {
+		float: right;
+		width: 40%;
+		margin: 10px 15px 0px 0px;
+	}
+	.formHead h4 {
+		margin:0px 0px 15px;
+	}
+	/*#END #form classes */
+
+	/* #Loading */
+	.loading {
+		padding: 5px;
+	}
+
+	.loading DIV {
+		width: 280px;
+		margin: 14% auto 14% auto;
+		padding-top: 24px;
+		text-align: center;
+	}
+	/* #END #Loading */
+
+	/* #colection Title loading */
+	TD.hideSTitle,
+	TD.showSTitle {
+		width: 40%;
+	}
+
+	TD.hideSTitle .showContent {
+		display: none;
+	}
+
+	TD.showSTitle {
+		padding: 0px;
+	}
+
+	TD.showSTitle .showContent {
+		padding: 5px 5px 0px 5px;
+	}
+
+	TD.showSTitle .hideContent {
+		display: none;
+	}
+
+	TD.showSTitle .singleLoading {
+		padding: 30px 0px;
+		text-align: center;
+		margin-top: 8px;
+	}
+
+	TD.showSTitle .singleLoading IMG {
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+	}
+
+	TD.showSTitle .collectionInfo {
+		margin-top: 8px;
+		padding: 8px 3px 3px 3px;
+	}
+
+	TD.showSTitle .collectionMode {
+		text-align: right;
+		margin: 0px -5px;
+	}
+
+	TD.showSTitle .collectionMode SPAN,
+	TD.showSTitle .collectionMode A {
+		display: -moz-inline-box;
+		display: inline-block;
+		padding: 3px 5px;
+	}
+
+	/* #END #colection Title loading */
+
+	/* #Login */
+	.login {
+		padding: 2.6% 20px;
+	}
+
+	.login .loginForm {
+		margin: 0px auto;
+		width: 400px;
+	}
+
+	.login .loginForm {
+		position: relative;
+	}
+
+	.login .loginForm .boxTop,
+	.login .loginForm .boxBottom {
+		height: 2px;
+		clear: both;
+	}
+
+	.login .loginForm .boxTop .btLeft,
+	.login .loginForm .boxTop .btRight,
+	.login .loginForm .boxBottom .bbLeft,
+	.login .loginForm .boxBottom .bbRight {
+		width: 2px;
+		height: 2px;
+		font-size: 1px;
+		background: red;
+	}
+
+	.login .loginForm .boxTop .btLeft,
+	.login .loginForm .boxBottom .bbLeft {
+		float: left;
+	}
+
+	.login .loginForm .boxTop .btRight,
+	.login .loginForm .boxBottom .bbRight {
+		float: right;
+	}
+
+	.login .loginForm .boxContent {
+		padding: 20px;
+	}
+
+	.login .loginForm .formRow {
+		width: 100%;
+	}
+
+	.login .loginForm .formRow LABEL {
+		margin-bottom: 3px;
+	}
+
+	.login .loginForm .textEntry {
+		width: 95%;
+	}
+
+	.login .loginForm .submitRow .frLeftColumn {
+		width: 40%;
+		float: left;
+		padding: 13px 0px;
+	}
+
+	.login .loginForm .submitRow .frRightColumn {
+		width: 40%;
+		float: right;
+		text-align: right;
+	}
+
+	.login .loginForm .alert {
+		margin-bottom: 10px;
+	}
+
+	.login .loginForm .submitRow A.defaultButton {
+		margin-right: 0px;
+		float: right;
+		width: 100px;
+	}
+
+	.login .loginForm .submitRow A.defaultButton IMG {
+		float: right;
+	}
+
+	.login .loginForm .submitRow A.defaultButton SPAN {
+		width: 40px;
+	}
+	/* #END #Login */

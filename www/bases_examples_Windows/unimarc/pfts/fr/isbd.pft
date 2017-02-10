@@ -1,0 +1,598 @@
+/********************************************
+ Variables déjà utilisées
+  ==== Portée générale
+ s0 : contenu d'un champ avec des sous champs répétitifs. Utilisé dans le format @scr.pft séparé, mais appelé dans le present,  
+ s6 : châine de controle de caractère de fin de zone 
+ s7 : ponctuation ISBD prescrite pour introduire chaque sous champs identifié
+ s8 : identifiant du sous champ à sélectionner par le format @scr.pft
+ s9 : sortie produite par le format @scr.pft
+******************************************** */
+ 
+ 
+ 
+/* Titre et mention de responsablité */
+
+
+if p(v200^a) then '<b>', v200^a  '</b>' fi
+if p(v200^b) then ' [', v200^b, '] ', fi
+
+if p(v200^d) then ' = ', s0:=(v200), s8:=('^d'), s7:=(' = ') ,@scr.pft, fi
+
+if p(v200^d) then ' = ', s0:=(v200), s8:=('^d'), s7:=(' = ') ,@scr.pft,  fi
+if p(v200^e) then ' : ', s0:=(v200), s8:=('^e'), s7:=(' : ') ,@scr.pft,  fi
+if p(v200^f) then ' / ' v200^f fi
+if p(v200^g) then ' ; ', s0:=(v200), s8:=('^g'), s7:=('; ') ,@scr.pft,  fi
+
+
+
+
+/* Mention d'edition */
+
+if p(v200) then s6:=(v200) fi 
+if p(v205) then if right(s6, 1)='.' then ' - ' else '. - ' fi fi 
+
+if p(v205^a) then
+		v205^a
+		if p(v205^d) then ' = ', v205^d fi
+		if p(v205^f) then ' / ', v205^f fi
+		if p(v205^g) then '; ', v205^g fi
+		if p(v205^b) then ', ', v205^b fi
+	else
+		if p(v205^d) then
+			v205^d
+			if p(v205^f) then ' / ', v205^f fi
+			if p(v205^g) then '; ', v205^g fi
+			if p(v205^b) then ', ', v205^b fi
+		fi
+fi
+
+	
+/* Adresse */
+
+
+if p(v205) then s6:=(v205) else if p(v200) then s6:=(v200) fi fi 
+if p(v210) then if right(s6, 1)='.' then ' - ' else '. - ' fi fi
+if p(v210^a) then v210^a
+	if p(v210^b) then ' (', v210^b, ')' fi 
+	if p(v210^c) then ' : ' s0:=(v210), s8:=('^c'), s7:=(' : '), @scr.pft, fi 
+	if p(v210^d) then ', ', v210^d fi 
+else
+	if p(v210^c) then 	
+		v210^c
+		if p(v210^d) then ', ', v210^d fi 
+	else if p(v210^d) then v210^d fi
+	fi
+fi	
+
+
+
+/* Collation */
+
+if p(v210) then s6:=(v210) else if p(v205) then s6:=(v205) else if p(v200) then s6:=(v200) fi fi fi 
+if p(v215) then if right(s6, 1)='.' then ' - ' else '. - ' fi fi 
+
+if p(v215^a) then v215^a 
+	if p(v215^c) then ' : ' v215^c fi
+	if p(v215^d) then '; ' v215^d fi
+	if p(v215^e) then ' + ' v215^e fi
+else
+	if p(v215^c) then
+		v215^c
+		if p(v215^d) then '; ' v215^d fi
+		if p(v215^e) then ' + ' v215^e fi
+	else
+		if p(v215^d) then
+			v215^d
+			if p(v215^e) then ' + ' v215^e fi
+		else if p(v215^e) then v215^e fi
+		fi
+	fi
+fi
+
+
+
+/* Collection */
+
+if p(v215) then s6:=(v215) else if p(v210) then s6:=(v210) else if p(v205) then s6:=(v205) else if p(v200) then s6:=(v200) fi fi fi fi 
+if p(v225) then if right(s6, 1)='.' then ' - ' else '. - ' fi fi 
+
+(if p(v225) then ' (' 
+	if p(v225^a) then 
+		v225^a
+		if p(v225^d) then ' = ' v225^d fi
+		if p(v225^e) then ' : ' v225^e fi
+		if p(v225^f) then ' / ' v225^f fi
+		if p(v225^x) then ', ' v225^x fi
+		
+		'<font color=red>'
+		if p(v225^h) then ' : ' v225^h fi
+		if p(v225^i) then '. ' v225^i fi
+		if p(v225^v) then ', ' v225^v fi
+		'</font>'
+')'
+fi
+
+fi )
+
+
+	/* point final de fin de zone avant la zone des notes */	
+
+s6:=(s(v200, v205, v210, v215, |(|v225|)|, ))
+if right(s6, 1) <> '.' then '.' fi 
+
+'<p>'
+
+
+/* Notes */
+
+(if p(v300) then v300^a+|. - |
+
+
+	s6:=(s(v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi)
+
+if p(v301) then v301^a+|. - | 
+	s6:=(s(v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v302) then v302^a+|. - | 
+	s6:=(s(v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v303) then v303^a+|. - | 
+	s6:=(s(v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v304) then v304^a+|. - | 
+	s6:=(s(v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v305) then v305^a+|. - | 
+	s6:=(s(v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v306) then v306^a+|. - | 
+	s6:=(s(v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v307) then v307^a+|. - | 
+	s6:=(s(v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v308) then v308^a+|. - | 
+	s6:=(s(v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v310) then v310^a+|. - | 
+	s6:=(s(v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v311) then v311^a+|. - | 
+	s6:=(s(v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v312) then v312^a+|. - | 
+	s6:=(s(v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v313) then v313^a+|. - | 
+	s6:=(s(v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v314) then v314^a+|. - | 
+	s6:=(s(v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v315) then v315^a+|. - | 
+	s6:=(s(v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v316) then v316^a+|. - | 
+	s6:=(s(v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v317) then v317^a+|. - | 
+	s6:=(s(v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v318) then v318^a+|. - | 
+	s6:=(s(v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v320) then v320^a+|. - | 
+	s6:=(s(v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v321) then v321^a+|. - | 
+	s6:=(s(v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v322) then v322^a+|. - | 
+	s6:=(s(v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v323) then v323^a+|. - | 
+	s6:=(s(v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v324) then v324^a+|. - | 
+	s6:=(s(v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+
+if p(v325) then v325^a+|. - | 
+	s6:=(s(v326, v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v326) then v326^a+|. - | 
+	s6:=(s(v327, v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v327) then v327^a+|. - | 
+	s6:=(s(v328, v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v328) then 
+	if p(v328^a) then v328^a fi
+	if p(v328^b) then v328^b fi
+	if p(v328^c) then ' : 'v328^c fi
+	if p(v328^e) then ' : 'v328^e fi
+	if p(v328^d) then ' : 'v328^d fi
+	s6:=(s(v330, v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v330) then v330^a+|. - | 
+	s6:=(s(v332, v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v332) then v332^a+|. - | 
+	s6:=(s(v333, v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v333) then v333^a+|. - | 
+	s6:=(s(v334, v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v334) then v334^a+|. - | 
+	s6:=(s(v336, v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v336) then v336^a+|. - | 
+	s6:=(s(v337, v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v337) then v337^a+|. - | 
+	s6:=(s(v345))
+	if s6>'' then 
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	else 
+		if p(v10) then 
+			s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337)
+			if right(s6,1) = '.' then ' - ' else '. - ' fi 
+		fi
+	fi 
+fi
+
+if p(v345) then v345^a+|. - | 
+	if p(v10) then 
+		s6:=(v300, v301, v302, v303, v304, v305, v306, v307, v308, v310, v311, v312, v313, v314, v315, v316, v317, v318, v320, v321, v322, v323, v324, v325, v326, v327, v328, v330, v332, v333, v334, v336, v337, v345)
+		if right(s6,1) = '.' then ' - ' else '. - ' fi 
+	fi
+fi 
+
+
+/* ISBN */
+
+(
+if p(v10) then 
+	if p(v10^b) then
+		|ISBN |, v10^a ' (', v10^b, ')'  
+		if p(v10^d) then ' : ', v10^d fi
+	else
+	|ISBN | v10^a, if p(v10^d) then ' : ', v10^d fi
+	fi 	
+if iocc<nocc(v10) then '. - ' fi 
+	fi
+)
+
+
+/* Indexation responsabilit */
+
+'<p>'
+
+if p(v600) then '<br>' (v600^a, ', ', v600^b, ' ' v600^c, ', 'v600^f, '<br>') fi
+if p(v700) then v700^a, ', ', v700^b / fi 
+if p(v701^a) then '<br>' (v701^a, ', ', v701^b '<br>') fi
+if p(v702^a) then '<br>' (v702^a, ', ', v702^b '<br>') fi 
+if p(v710) then v710^a,  ' ' v710^b / fi 
+(if p(v711) then v711^a,  ' ' v711^b '<br>' fi )
+(if p(v712) then v712^a, ' ' v712^b '<br>' fi / )
+
+
+/* Indexation matière */
+
+
+/* indexation matière */
+
+'<p>'
+
+'<font color=blue><b>'
+
+(
+if p(v606) then 
+	replace(v606^a, '.', '')
+	if p(v606^j) then '--' replace(v606^j, '.', '') fi 
+	if p(v606^x) then '--' replace(v606^x, '.', '') fi 
+	if p(v606^y) then '--' replace(v606^y, '.', '') fi 
+	if p(v606^z) then '--' replace(v606^z, '.', '') fi 
+	
+	'<br>' 
+fi
+) 
+
+'</b></font>'
+
+
+

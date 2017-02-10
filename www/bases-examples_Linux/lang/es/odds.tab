@@ -1,0 +1,32 @@
+welcome = ¡Bienvenido! [day] de [month] de [year].
+title = Servicio Electrónico Envío Documentos
+subtitle = Los campos marcados con * son obligatorios
+id = Cédula de Identidad * 
+name = Nombre *
+category = Categoría 
+email = Correo electrónico *
+email_apoderado = ¿Con copia al email del apoderado?
+phone = Teléfono de contacto (uno)
+comments = Observaciones
+subtitle_request = Datos de la solicitud
+subtitle_request_minimal = Seleccione el tipo de material que desea para ingresar su solicitud
+level = Tipo de documento bibliográfico
+selectlevel = Seleccionar
+help_select =  Clickee aquí para desplegar
+send_button = Enviar
+clean_button = Limpiar
+cancel_button = Cerrar
+comments = Comentarios
+error_sar = Debe completar el título del artículo ó la página inicial
+HEADER_MESSAGES
+module_name = SOLICITUD DE ENVIO DE DOCUMENTOS
+help = ayuda
+edit_help_file = editar archivo de ayuda
+lang = Lenguaje
+REQUEST_MESSAGES
+notice_success = La solicitud ha sido ingresada a nuestro sistema.\nEl material le llegará a su cuenta en un plazo no mayor a 24 horas (días hábiles).
+cancel_button = Cerrar
+notice_error = La solicitud no ha podido ser ingresada a nuestro sistema.\nAnte cualquier dudas, comuníquese a nuestro email: biblioteca@aeu.org.uy.
+notice_reload = La solicitud ya ha sido efectuada.\nAnte cualquier dudas, comuníquese a nuestro email: biblioteca@aeu.org.uy.
+notice_back = Nueva solicitud pulse aquí
+cancel_button = Cerrar

@@ -1,0 +1,4 @@
+2:if a(v1) then 'falta campo 1 ' fi,if a(v2) then 'missing control  number'  else e0:=l(['biblo']'NC_'v2)  f(e0,1,0) fi$$|$$false
+###
+:
+###

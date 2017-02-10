@@ -1,0 +1,1 @@
+v231,'|',f(mfn,1,0),'|',v1,'|',v18 if p(v16) or p(v17) then ' / ',v16," "v17,fi,'|',v230,'|',v240,(if v300^f='1' then '|',v300^a'|',v300^r,'|'v300^b'|',v300^c,' ',v300^d,'|',v300^g, if iocc<>nocc(v300) then '<tr><td colspan=5></td>' fi fi)/

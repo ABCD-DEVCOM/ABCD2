@@ -1,0 +1,81 @@
+'<!-- v5001=',v5001,'-->',
+
+ '<input type="hidden" name="IsisScript" value="',v5000^s,'">'/
+ '<input type="hidden" name="environment" value="',v5000,'">'/
+(|<input type="hidden" name="baseResubmit" value="|v5004|">|/)
+('<input type="hidden" name="avaibleFormats" value="',v5005,'">'/)
+ '<input type="hidden" name="apperance" value="',v5006,'">'/
+('<input type="hidden" name="helpInfo" value="',v5010,'">'/)
+('<input type="hidden" name="gizmoDecod" value="',v5012,'">'/)
+ '<input type="hidden" name="avaibleForms" value="',v5014,'">'/
+ '<input type="hidden" name="logoImage" value="',v5030,'">'/
+ '<input type="hidden" name="logoURL" value="',v5031,'">'/
+ '<input type="hidden" name="headerImage" value="',v5040,'">'/
+ '<input type="hidden" name="headerURL" value="',v5041,'">'/
+ '<input type="hidden" name="form" value="',v6000,'">'/
+ |<input type="hidden" name="restriction1" value="|v7001|">|
+ |<input type="hidden" name="restriction2" value="|v7002|">|
+ |<input type="hidden" name="restriction3" value="|v7003|">|
+ |<input type="hidden" name="restriction4" value="|v7004|">|
+ |<input type="hidden" name="restriction4" value="|v7005|">|
+
+
+,if v5001^s <> 'CONFIG' then,
+    '<input type="hidden" name="pathImages" value="',v5002,'">'/
+    '<input type="hidden" name="navBar" value="',v5007,'">'/
+    '<input type="hidden" name="hits" value="',v5008,'">'/
+    '<input type="hidden" name="format" value="',v5009,'">'/
+    '<input type="hidden" name="lang" value="',v5021,'">'/
+,fi,
+
+
+,if v5001^s <> 'FORM' and v5001^s <> 'SEARCH' then,
+     '<input type="hidden" name="base" value="',v5003,'">'/
+    (|<input type="hidden" name="conectSearch" value="|v6001|">|/),
+    (`<input type="hidden" name="exprSearch"   value="`replace(v6002,'"','&quot;')`">`/),
+    (|<input type="hidden" name="indexSearch"  value="|v6003|">|/),
+,fi,
+
+,if v5001^s.5 = 'INDEX' then,
+     (`<input type="hidden" name="termsFromIndex" value='`replace(v6102,'"','&quot;')`'>`/)
+     |<input type="hidden" name="selectedIndex" value="|v6100|">|/
+,fi,
+
+,if v5001^s = 'SEARCH' or v5001^s = 'CONFIG' then,
+     |<input type="hidden" name="isisTotal" value="|v1002|">|/
+     |<input type="hidden" name="isisFrom" value="|v1031|">|/
+,fi,
+
+,if v5001^s <> 'SCAD' then,
+     '<input type="hidden" name="user" value="',v5013,'">'/
+,fi,
+
+,if v5001^s = 'SEARCH' then,
+    (
+        if val(v6210^h) < val(v1031[1]) or val(v6210^h) > val(v1032[1]) then
+            |<input type="hidden" name="listChecked" value="|v6210|">|/
+        fi
+    ),
+,else,
+    (|<input type="hidden" name="listChecked" value="|v6210|">|/),
+,fi,
+
+,if p(v8000) and v5001^* <>  'refine/resubmit' then,
+    proc('d8000a8000!',replace(v8000,'"','&quot;'),'!')
+    |<input type="hidden" name="label" value="|v8000|">|/
+,fi,
+
+
+ |<input type="hidden" name="apldef" value="|v5000^f|">|/
+ |<input type="hidden" name="limit" value="|v7000|">|/
+ |<input type="hidden" name="index" value="|v5015|">|/
+ |<input type="hidden" name="baseFeatures" value="|v5018|">|/
+ |<input type="hidden" name="stopword" value="|v5019|">|/
+ |<input type="hidden" name="photocopy" value="|v5114|">|/
+ |<input type="hidden" name="logDatabase" value="|v5020|">|/
+ |<input type="hidden" name="showheader" value="|v8001|">|/
+ |<input type="hidden" name="bvslog" value="|v8002|">|/
+ |<input type="hidden" name="pathLibrary" value="|v5050|">|/
+ |<input type="hidden" name="restriction1" value="|v7001|">|
+ '<input type="hidden" name="related" value="">'/
+

@@ -1,0 +1,40 @@
+<strong><font size="2" face="Arial, Helvetica, sans-serif">Configuration of the options for applying the Z39.50 protocol to the processes of data capture<br />
+<br />
+</font></strong><font size="2" face="Arial, Helvetica, sans-serif">Three options are presented:<br />
+<br />
+<strong>Servers<br />
+</strong>Defines the list of servers that is presented in the selection menu on the page of searching for  information. The following fields  should be provided:<br />
+<br />
+</font>
+<ul>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Name of the server, which is presented in the menu of selection of  Z39.50 servers </font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">URL to use for its location</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Port that is enabled for access to the server by Z39.50 protocol </font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">Name of the database that is to be accessed on the remote server</font></li>
+</ul>
+<font size="2" face="Arial, Helvetica, sans-serif">The database of servers is stored in the folder <strong>bases </strong>under the name <strong>servers</strong><br />
+<br />
+<strong>Conversion format<br />
+<br />
+</strong>The data from Z39.50 servers is always presented in  MARC format. This option allows the definition of a conversion format by mapping between the MARC fields of the  Z39.50 database and the corresponding fields in the local database.<br />
+<br />
+The conversion table comprises two columns:<br />
+</font>
+<ul>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">The first column contains the label of the field that will receive the data in the local database</font></li>
+    <li><font size="2" face="Arial, Helvetica, sans-serif">The second column contains the field in the MARC record for transferring the data to the local database</font></li>
+</ul>
+<font size="2" face="Arial, Helvetica, sans-serif">The conversion happens at the time of transferring a record to the local database.<br />
+<br />
+The conversion formats are stored in the folder <strong>/bases/cnv/</strong>. The list of existing formats is called <strong>z3950.cnv</strong><br />
+<br /> 
+<b>Conversion table for characters from  MARC-8 to ANSI</b><br />
+<br />
+Z39.50 servers represent special  characters using  MARC-8 coding, which uses two positions for each diacritic. This table transforms the MARC-8 coding (two characters for each diacritic) to ANSI (one charater for each diacritic).<br />
+<br />
+If in a later  search against a Z39.50 server combinations of characters appear which do not match the corresponding language, it is necessary to include that combination in the conversion table so that the corresponding character will be represented correctly.&nbsp; <br />
+<br />
+The conversion table for diacritics is stored in the folder <strong>bases</strong> under the name <strong>marc8-to-ansi.tab</strong><br />
+<br />
+<br />
+</font>

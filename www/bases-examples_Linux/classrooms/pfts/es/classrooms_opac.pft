@@ -1,0 +1,25 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>ControlNumber</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Name</b></td><td valign=top><font face=arial size=2>'(if p(v2) then | |v2^a,| |v2^n, if iocc<>nocc(v2) then '<br>' fi fi/),'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Capacity</b></td><td valign=top><font face=arial size=2>'(if p(v3) then | |v3^n, if iocc<>nocc(v3) then '<br>' fi fi/),'</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>Items</b></td><td valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Location</b></td><td valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>Image</b></td><td valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Availability</b></td><td valign=top><font face=arial size=2>'
+
+if REF->copies(L->copies('CN_CLASSROOMS_'v1),v1)='' then 'There are no copies available'
+else
+if npost(['copies'],'CN_CLASSROOMS_'v1)>1 then 'There are 'f(npost(['copies'],'CN_CLASSROOMS_'v1),1,0)' copies' else 'There is one copy' fi/
+'<br />'
+fi/
+
+REF->loanobjects(L->loanobjects('CN_CLASSROOMS_'v1),
+ (v959^i'-'
+if REF->trans(L->trans('TR_P_'v959^i),v1)='P'
+ then REF->trans(L->trans('TR_P_'v959^i),'<span style="color:#990000">Is Lent until 'v40' 'v45'</span>')
+ else '<span style=color:#006600>Is available for lending</span>'
+ fi/
+ '<br />')
+)
+'</td>' fi/
+'</table><p>'

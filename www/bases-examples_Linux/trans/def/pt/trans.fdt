@@ -1,0 +1,25 @@
+F|1|Tipo de registro|0|0|||X|||||||||0||
+F|10|Número de registro|0|0|||X|||||||||0||
+F|12|Volume|0|0|||X|||||||||0||
+F|15|Tomo|0|0|||X|||||||||0||
+F|20|Código de usuário|0|0|||X|||||||||0||
+F|30|Data de empréstimo|0|0|||X|||||||||0||
+F|35|Hora de empréstimo|0|0|||X|||||||||0||
+F|40|Data de devolução|0|0|||X|||||||||0||
+F|45|Hora de devolução|0|0|||X|||||||||0||
+F|60|Data de devolução (real)|0|0|||X|||||||||0||
+F|65|Hora de devolução (real)|0|0|||X|||||||||0||
+F|70|Tipo de usuário|0|0|||X|||||||||0||
+F|80|Tipo de Objeto|0|0|||X|||||||||0||
+F|90|No. de Classificação|0|0|||X|||||||||0||
+F|95|Número de controle do objeto|0|0|||X|||||||||0||
+F|98|Base de dados|0|0|||X|||||||||0||
+F|100|Referência|0|0|||X|||||||||0||
+OD|120|Operador e data de empréstimo|0|0||||||||||||0||
+OD|130|Operador e data devolução|0|0||||||||||||0||
+T|200|Renovações|0|1|abcde||TB|||||||||0||
+S||Data empréstimo|0|0|||||10|||||||0||
+S||Hora empréstimo|0|0|||||10|||||||0||
+S||Data de devolução|0|0|||||10|||||||0||
+S||Hora de devolução|0|0|||||10|||||||0||
+S||Operador que renovou|0|0|||||20|||||||0||

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<texts>
+
+	<!--
+		<text><find></find><replace></replace></text>
+	-->
+
+	<language id="es">
+		<text><find>UPDATE-X project</find><replace>proyecto: </replace></text>
+		<text><find>UPDATE-X user</find><replace>usuario: </replace></text>
+		<text><find>UPDATE-X list documents</find><replace> listar documentos </replace></text>
+		<text><find>UPDATE-X new document</find><replace> entrar nuevo </replace></text>
+		<text><find>UPDATE-X delete document</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X edit</find><replace> modificar </replace></text>
+		<text><find>UPDATE-X save</find><replace> grabar </replace></text>
+		<text><find>UPDATE-X cancel</find><replace> cancelar </replace></text>
+		<text><find>UPDATE-X continue</find><replace> continuar </replace></text>
+		<text><find>UPDATE-X exit</find><replace> salir </replace></text>
+		<text><find>UPDATE-X id</find><replace>id</replace></text>
+		<text><find>UPDATE-X first</find><replace> seleccionar el primero </replace></text>
+		<text><find>UPDATE-X previous</find><replace> seleccionar el anterior </replace></text>
+		<text><find>UPDATE-X next</find><replace> seleccionar el prÃ³ximo </replace></text>
+		<text><find>UPDATE-X last</find><replace> seleccionar el Ãºltimo </replace></text>
+		<text><find>UPDATE-X add</find><replace> adiccionar </replace></text>
+		<text><find>UPDATE-X delete</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X top</find><replace> mover para primero </replace></text>
+		<text><find>UPDATE-X up</find><replace> mover para cima </replace></text>
+		<text><find>UPDATE-X down</find><replace> mover para bajo </replace></text>
+		<text><find>UPDATE-X botton</find><replace> mover para Ãºltimo </replace></text>
+		<text><find>UPDATE-X delete confirm</find><replace>Â¿Deseas eliminar el documento "[UPDATE-X id]"?</replace></text>
+		<text><find>UPDATE-X locked document</find><replace>Este documento estÃ¡ siendo modificado por otro usuario.<br/>Por favor, intente nuevamente mÃ¡s tarde!</replace></text>
+		<text><find>UPDATE-X locked error code</find><replace>cÃ³digo del error: </replace></text>
+		<text><find>UPDATE-X could not save</find><replace>No fue posible grabar este documento.<br/>Por favor, intente nuevamente mÃ¡s tarde!</replace></text>
+
+		<text><find>/user</find><replace>usuario</replace></text>
+		<text><find>/user/@code</find><replace>cÃ³digo</replace></text>
+		<text><find>/user/@name</find><replace>nombre</replace></text>
+		<text><find>/user/@password</find><replace>contraseÃ±a</replace></text>
+		<text><find>/user/@type</find><replace>tipo</replace></text>
+		<text><find>/user/@type.documentalist</find><replace>documentalista</replace></text>
+		<text><find>/user/@type.editor</find><replace>editor</replace></text>
+		<text><find>/user/@type.administrator</find><replace>administrador</replace></text>
+
+		<text><find>VALIDATE: 1</find><replace>El \"cÃ³digo\" es obligatorio!\nPor favor, llene el \"cÃ³digo\".</replace></text>
+	</language>
+
+	<language id="pt">
+		<text><find>UPDATE-X project</find><replace>projeto: </replace></text>
+		<text><find>UPDATE-X user</find><replace>usuÃ¡rio: </replace></text>
+		<text><find>UPDATE-X list documents</find><replace> listar documentos </replace></text>
+		<text><find>UPDATE-X new document</find><replace> entrar novo </replace></text>
+		<text><find>UPDATE-X delete document</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X edit</find><replace> modificar </replace></text>
+		<text><find>UPDATE-X save</find><replace> gravar </replace></text>
+		<text><find>UPDATE-X cancel</find><replace> cancelar </replace></text>
+		<text><find>UPDATE-X continue</find><replace> continuar </replace></text>
+		<text><find>UPDATE-X exit</find><replace> sair </replace></text>
+		<text><find>UPDATE-X id</find><replace>id</replace></text>
+		<text><find>UPDATE-X first</find><replace> selecionar o primeiro </replace></text>
+		<text><find>UPDATE-X previous</find><replace> selecionar o anterior </replace></text>
+		<text><find>UPDATE-X next</find><replace> selecionar o prÃ³ximo </replace></text>
+		<text><find>UPDATE-X last</find><replace> selecionar o Ãºltimo </replace></text>
+		<text><find>UPDATE-X add</find><replace> adicionar </replace></text>
+		<text><find>UPDATE-X delete</find><replace> eliminar </replace></text>
+		<text><find>UPDATE-X top</find><replace> mover para primeiro </replace></text>
+		<text><find>UPDATE-X up</find><replace> mover para cima </replace></text>
+		<text><find>UPDATE-X down</find><replace> mover para baixo </replace></text>
+		<text><find>UPDATE-X botton</find><replace> mover para Ãºltimo </replace></text>
+		<text><find>UPDATE-X delete confirm</find><replace>Deseja eliminar o documento "[UPDATE-X id]"?</replace></text>
+		<text><find>UPDATE-X locked document</find><replace>Este documento estÃ¡ sendo modificado por outro usuÃ¡rio.<br/>Por favor, tente acessÃ¡-lo novamente mais tarde!</replace></text>
+		<text><find>UPDATE-X locked error code</find><replace>cÃ³digo do erro: </replace></text>
+		<text><find>UPDATE-X could not save</find><replace>NÃ£o foi possÃ­vel gravar este documento.<br/>Por favor, tente gravÃ¡-lo novamente mais tarde!</replace></text>
+		
+		<text><find>/user</find><replace>usuÃ¡rio</replace></text>
+		<text><find>/user/@code</find><replace>cÃ³digo</replace></text>
+		<text><find>/user/@name</find><replace>nome</replace></text>
+		<text><find>/user/@password</find><replace>senha</replace></text>
+		<text><find>/user/@type</find><replace>tipo</replace></text>
+		<text><find>/user/@type.documentalist</find><replace>documentalista</replace></text>
+		<text><find>/user/@type.editor</find><replace>editor</replace></text>
+		<text><find>/user/@type.administrator</find><replace>administrador</replace></text>
+
+		<text><find>VALIDATE: 1</find><replace>O \"cÃ³digo\" Ã© obrigatÃ³rio!\nPor favor, informe o \"cÃ³digo\".</replace></text>
+	</language>
+
+	<language id="en">
+		<text><find>UPDATE-X project</find><replace>project: </replace></text>
+		<text><find>UPDATE-X user</find><replace>user: </replace></text>
+		<text><find>UPDATE-X list documents</find><replace> list documents </replace></text>
+		<text><find>UPDATE-X new document</find><replace> new </replace></text>
+		<text><find>UPDATE-X delete document</find><replace> delete </replace></text>
+		<text><find>UPDATE-X edit</find><replace> edit </replace></text>
+		<text><find>UPDATE-X save</find><replace> save </replace></text>
+		<text><find>UPDATE-X cancel</find><replace> cancel </replace></text>
+		<text><find>UPDATE-X continue</find><replace> continue </replace></text>
+		<text><find>UPDATE-X exit</find><replace> exit </replace></text>
+		<text><find>UPDATE-X id</find><replace>id</replace></text>
+		<text><find>UPDATE-X first</find><replace> first </replace></text>
+		<text><find>UPDATE-X previous</find><replace> previous </replace></text>
+		<text><find>UPDATE-X next</find><replace> next </replace></text>
+		<text><find>UPDATE-X last</find><replace> last </replace></text>
+		<text><find>UPDATE-X add</find><replace> add </replace></text>
+		<text><find>UPDATE-X delete</find><replace> delete </replace></text>
+		<text><find>UPDATE-X top</find><replace> top </replace></text>
+		<text><find>UPDATE-X up</find><replace> up </replace></text>
+		<text><find>UPDATE-X down</find><replace> down </replace></text>
+		<text><find>UPDATE-X botton</find><replace> botton </replace></text>
+		<text><find>UPDATE-X delete confirm</find><replace>Delete document "[UPDATE-X id]"?</replace></text>
+		<text><find>UPDATE-X locked document</find><replace>This document is currently being modified by another user.<br/>Please, try again later!</replace></text>
+		<text><find>UPDATE-X locked error code</find><replace>error code: </replace></text>
+		<text><find>UPDATE-X could not save</find><replace>It was not possible to save these document.<br/>Please, try again later!</replace></text>
+
+		<text><find>/user</find><replace>user</replace></text>
+		<text><find>/user/@code</find><replace>code</replace></text>
+		<text><find>/user/@name</find><replace>name</replace></text>
+		<text><find>/user/@password</find><replace>password</replace></text>
+		<text><find>/user/@type</find><replace>type</replace></text>
+		<text><find>/user/@type.documentalist</find><replace>documentalist</replace></text>
+		<text><find>/user/@type.editor</find><replace>editor</replace></text>
+		<text><find>/user/@type.administrator</find><replace>administrator</replace></text>
+
+		<text><find>VALIDATE: 1</find><replace>The \"code\" is mandatory!\nPlease, inform it.</replace></text>
+	</language>
+
+</texts>

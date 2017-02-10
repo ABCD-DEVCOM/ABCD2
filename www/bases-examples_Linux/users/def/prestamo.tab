@@ -1,0 +1,6 @@
+Tipos de Prestamo
+05 05 Tipo Prestamo|20 20 Descripcion|04 02 Unidad D/H/M|04 02 Lapso|04 03 Libros perm.|04 02 Renov.perm.|04 02 Lapso susp.|04 02 Unidad D/M/I
+C|Corto Plazo|7|D|2|1000| 
+L|Largo Plazo|10|D|3|400| 
+M|Mediano Plazo|5|D|2|400| 
+H|Reserva|2|H|2|1000| 

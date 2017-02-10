@@ -1,0 +1,5 @@
+projects.*=/ABCD/www/bases/projects/data/projects.*
+
+projects.pft=/ABCD/www/bases/projects/pfts/en/projects.pft
+prologoact.pft=/ABCD/www/bases/www/prologoact.pft
+epilogoact.pft=/ABCD/www/bases/www/epilogoact.pft

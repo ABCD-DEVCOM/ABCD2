@@ -1,0 +1,127 @@
+body
+{
+	border: medium outset #FFFF33;
+	font: 12px sans-serif;
+	margin : 0 0 0 0;
+}
+
+table
+{
+	font: 12px sans-serif;
+}
+
+input, textarea, select
+{
+	font-family : Verdana;
+	font-size: 12px;
+	vertical-align : top;	
+}
+
+.UPDATE_X-submit
+{
+	border : thin outset Silver;
+	text-decoration: none;
+	color : Black;
+	background-color : #C9C9C9;
+	font-weight : bold;
+}
+
+.UPDATE_X-submit:hover
+{
+	background-color : LightSlateGray;
+}
+
+.PROJECT_LINE
+{
+}
+
+.PROJECT_LINE_update_x
+{
+	border : thin outset Silver;
+	background-color : #FFCC66;
+	font-weight : bold;
+}
+
+.PROJECT_LINE_project_name, .PROJECT_LINE_user
+{
+	border : thin outset #999933;
+	background-color : #CCCC99;
+}
+
+.PROJECT_LINE_filler
+{
+	border : thin outset #999933;
+	background-color : #CCCC99;
+	width: 100%
+}
+
+.PROJECT_LINE_info
+{
+	font-weight : bold;
+}
+
+.UPDATE_X-inform-selectedId
+{
+	background-color : #F7F7F7;
+	color : Maroon;
+}
+
+.ROOT
+{
+	border : thin groove Olive;
+	background-color : #F7F7F7;
+}
+
+.GROUP_BOX
+{
+	width: 90%;
+	padding: 2px;
+	border : thin groove Olive;
+}
+
+
+.STYLE1_elementLabel
+{
+	color : Maroon;
+	font-weight : bold;
+}
+
+.STYLE1_editLabel
+{
+	color : Maroon;
+	text-align : right;
+}
+
+.UPDATE_X-input-repeat-list
+{
+	vertical-align : top;
+	font-size: 12px;
+	font-weight : bold;
+	color : Olive;
+	background-color : #E6E6E6;
+	font-family : monospace;
+}
+
+.DOCUMENTS_listHeader
+{
+	border : thin groove;
+	background-color : Silver;
+	font-weight : bold;
+	padding-top : 1px;
+	padding-bottom : 1px;
+}
+
+.DOCUMENTS_line1
+{
+	background-color : #EEEEDD;
+}
+
+.DOCUMENTS_line2
+{
+	background-color : #EEEEDD;
+}
+
+.DOCUMENTS_column
+{
+	border-bottom: 1px solid #C0C0A3;
+}

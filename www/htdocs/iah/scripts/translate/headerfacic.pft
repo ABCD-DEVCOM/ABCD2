@@ -1,0 +1,28 @@
+'<script type="text/javascript">
+    function Open_Facic(from,to) {
+        var theURL = "/cgi-bin/wxis.exe/iah/scripts/?IsisScript=busca_facic.xis&base=FACIC&nextAction=MOSTRA_FACIC&id=',v5011,'&lang=',v5021,'&from=" + from + "&to=" + to;
+           janela = window.open(theURL,"mostra50","left=240,top=225,width=670,height=550,toolbar=no,resizable=yes,menubar=no,scrollbars=yes");
+           janela.moveTo(0,0);
+           janela.focus();
+           return;
+        }
+
+        function CloseNewfacic() {
+           self.opener.focus();
+           self.close();
+        }
+</script>
+    <link rel="stylesheet" href="/site/css/public/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="',v5000^d,'css/stylesheet.css" type="text/css" media="screen" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body style="background: #FFFFFF !important">
+<div id="detail">',
+    '<div class="top">
+                <h1><a title="ABCD"><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1>
+            <h2><a title="ABCD - SeCS-Web"><span>ABCD - SeCS-Web</span></a></h2>
+            <div class="spacer"> </div>
+
+            </div>'
+
+

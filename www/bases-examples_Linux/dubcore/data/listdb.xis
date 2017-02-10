@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE IsisScript SYSTEM "wxis.dtd">
+
+<!-- ==========================================
+ LISTDB.XIS
+ ------------
+========================================== -->
+<IsisScript>
+<section>
+
+   <display>
+ 	LISTDB.XIS
+   ------------
+   </display>
+   <display><pft>#</pft></display>
+   <field action="cgi" tag="5000">db</field>
+   <field action="cgi" tag="5001">from</field>
+   <field action="cgi" tag="5002">to</field>
+
+   <do task="mfnrange">
+      <!-- <parm name="db">binonuni</parm> -->
+      <parm name="db"><pft>v5000</pft></parm>
+      <parm name="from"><pft>v5001</pft></parm>
+      <parm name="to"><pft>v5002</pft></parm>
+	<!--	<field action="define" tag="1091">Isis_Status</field> -->
+      <loop>
+         <display><pft>ALL</pft></display>
+         <!--<display><pft>#</pft></display>  -->
+      </loop>
+   </do>
+
+</section>
+</IsisScript>

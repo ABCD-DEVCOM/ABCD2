@@ -1,0 +1,163 @@
+<IsisScript name="iah-services">
+
+<include>iah/iah-functions.xis</include>
+
+<section name="iah-services">
+
+	<!-- CGI environment -->	
+	<field action="replace" tag="1">
+		<pft>			
+			'5003 base'/
+			'5021 lang'/			
+			
+			'3001 header'/
+			'3002 from'/
+			'3003 count'/
+			'3004 page'/			
+			'3005 fmt'/
+			'3006 to'/
+			'3010 index'/	
+			
+			'6000 form'/
+			'6001 conectSearch'/
+			'6002 exprSearch'/
+			'6003 indexSearch'/
+		</pft>
+	</field>
+
+	<cgitable><pft>v1</pft></cgitable>
+	<field action="cgi" tag="prefix">tag</field>
+	
+	<field action="replace" tag="3"><pft>date</pft></field>
+	<field action="replace" tag="4"><pft>'^d',v3.8,'^t',v3*9.6</pft></field>
+
+	<!-- if not present set default language -->
+	<field action="replace" tag="5021"><pft>"p"n5021</pft></field>
+
+	<parm name="buffersize">200000</parm>
+	<call name="LoadAplDef">*</call>
+	<call name="LoadBaseDef">*</pft></call>
+	<call name="LoadCipar">*</call>
+	<call name="displayHeaderXML"><pft>if s(mpu,v3001,mpl) = 'OFF' then 'omit-xml-declaration' else '*' fi</pft></call>
+	
+	<field action="replace" tag="3001"><pft>if a(v3001) then 'ON' else s(mpu,v3001,mpl) fi</pft></field>		
+	<field action="replace" tag="3003"><pft>if a(v3003) then v5008 fi</pft></field>
+	<field action="replace" tag="3005"><pft>if p(v3005) then s(v3005,'.xml') else if v5018: 'XML' then 'DATABASE.XML' fi,fi</pft></field>
+			
+	<field action="replace" tag="3300"><pft>"^h"v3001,"^s"v3002,"^c"v3003,"^f"v3005,</pft></field>
+	
+	<!-- redefine valores de from, count e expressao -->	
+	<field action="replace" tag="5008"><pft>v3300^c</pft></field>
+	<field action="replace" tag="1031"><pft>if p(v3300^p) then f(((val(v3300^p)*val(v5008))+1)-val(v5008),1,0) else v3300^s fi</pft></field>
+	
+	<!--
+	<display><pft>'Content-type: text/plain'/#</pft></display>
+	<trace>On</trace>
+	-->
+	<display><pft>'<iah service="search" version="0.1">'/</pft></display>		
+	
+	<call name="LoadIndexList">6099</call>		
+	<label>INDEX TRANSLATE</label>
+		<field action="add" tag="9999"><pft>(if s(mpu,v6003[1],mpl) = s(mpu,v6099^n,mpl) then v6099,break fi)</pft></field>
+		<field action="delete" tag="6003">1</field>
+		<flow action="jump"><pft>if p(v6003) then 'INDEX TRANSLATE' fi</pft></flow>	
+			
+	<field action="replace" tag="6000">A</field>
+	<field action="replace" tag="6001" split="occ"><pft>'init'/(v6001/)</pft></field>
+	<field action="replace" tag="6003" split="occ">
+			<pft>if a(v9999) then (if p(v6099^d) then v6099,break fi) else (v9999/) fi</pft>
+	</field>
+
+	<do task="search">
+   		<parm name="db">DATABASE</parm>
+		<parm name="reverse"><pft>if s(mpu,v5006^r,mpl) = 'ON' then 'On' fi</pft></parm>
+		<parm name="indexlist">
+			<pft>
+				(if p(v6099^d) and p(v6099^y) then,
+				   '^p*^y',v6099^y,|^u|v6099^u,|^m|v6099^m,/
+				fi),
+				(if p(v6099^x) and p(v6099^y) then,
+				   '^p',v6099^x,'^y',v6099^y,|^u|v6099^u,|^m|v6099^m,/
+				fi),
+			</pft>
+		</parm>
+		<parm name="expression"><pft>@QUERY.IAH</pft></parm>
+		<parm name="from"><pft>v1031</pft></parm>
+		<parm name="to"><pft>v3006</pft></parm>
+	   	<parm name="count">1</parm>
+
+		
+
+	        <field action="define" tag="1001">Isis_Current</field>
+   		<field action="define" tag="1002">Isis_Total</field>
+		<field action="define" tag="1031">Isis_From</field>
+
+		<loop><!-- Set 1002--></loop>
+		
+		<field action="replace" tag="1032"><pft>f(val(v1031)+val(v5008)-1,1,0)</pft></field>
+		<field action="replace" tag="1032"><pft>if val(v1002) < val(v1032) then v1002 else v1032 fi</pft></field>
+		
+		<flow action="jump"><pft>if v5008 = '0' then 'PROLOG' fi</pft></flow>
+	
+		<parm name="count"><pft>v5008</pft></parm>
+                <parm name="decod"><pft>v5012^d</pft></parm>
+                <parm name="gizmo"><pft>(v5012^g/),'GIZMO_XML'/</pft></parm>
+                <parm name="actab"><pft>if p(v5018^a) then cat(v5018^a) fi</pft></parm>
+                <parm name="uctab"><pft>if p(v5018^u) then cat(v5018^u) fi</pft></parm>
+
+		<parm name="isisxml style">0</pft></parm>				
+		<parm name="isisxml table"><pft>'1001 Isis_Current'/'1002 Isis_Total'/</pft></parm>
+
+		<loop>	
+			<field action="import" tag="list">1031,1032,3300,5003,5018</field>			
+			<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+	
+			<!-- apply isisxml -->		
+			<display><isisxml><pft>if a(v3300^f) then '*' fi</pft></isisxml></display>
+			<flow action="skip"><pft>if a(v3300^f) then 'Next' fi</pft></flow>
+	
+			<!-- apply database xml format -->			
+			<display><pft><pft>'@',v3300^f</pft></pft></display>
+		</loop>		
+
+		<label>PROLOG</label>
+		
+		<!-- wxis-modules compatible -->	
+		<field action="replace" tag="2006"><pft>v5006^r</pft></field>
+	
+		<field action="replace" tag="2103"><pft>if val(v2003) > 1 then v2003 else v1001 fi</pft></field>
+		<field action="replace" tag="2104"><pft>if val(v2004) > 1 then v2004 else f(val(v2103) - val(v2002) + 1,1,0) fi</pft></field>
+		<field action="replace" tag="2011"><pft>if val(v2002) > 1 then f(val(v2002) - val(v2104),1,0) fi</pft></field>
+		<field action="replace" tag="2011"><pft>if val(v2002) > 1 and val(v2011) < 1 then '1' fi</pft></field>
+		<field action="replace" tag="2012"><pft>if val(v1001) < val(v1002) then f(val(v1001) + 1,1,0) fi</pft></field>
+	
+		<parm name="isisxml style">2</parm>
+		<parm name="isisxml table">
+			<pft>
+				'record=search'/
+				'style=fixed'/
+				'4 server'/
+				'4^d date'/
+				'4^t time'/
+				'5003 database'/
+				'6001 conectSearch'/
+				'6002 exprSearch'/
+				'6003 indexSearch'/
+				'3002 from'/
+				'3006 to'/
+				'5008 count'/
+				'2006 reverse'/
+				'1001 Isis_Current'/
+				'1002 Isis_Total'/
+				'2011 previous'/
+				'2012 next'/
+			</pft>
+		</parm>
+		<display><isisxml>*</isisxml></display>
+							
+			
+	</do>		
+	<display></iah></display>	
+	
+</section>
+</IsisScript>

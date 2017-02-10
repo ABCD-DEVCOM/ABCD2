@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topic id="21" lang="en" available="">
+  <item available="yes" id="1">Public Health                  <description>Branch of medicine concerned with the prevention and control of disease and disability, and the promotion of physical and mental health of the population on the international, national, state, or municipal level.   </description>
+    <meta-search/>
+    <item available="no" id="2">Primary Health Care            <description>Care which provides integrated, accessible health care services by clinicians who are accountable for addressing a large majority of personal health care needs, developing a sustained partnership with patients, and practicing in the context of family and community. (JAMA 1995;273(3):192)   </description>
+      <meta-search>
+        <info-source id="17-87" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-88" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-94" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-95" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-96" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-104" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-98" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-99" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-100" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-101" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-102" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+        <info-source id="17-103" search-parameters="expression=.CUIDADOS PRIMARIOS DE SAUDE or (((ti atenção or ti atencion or ti care) and (ti primari$ or ti basic$ or ti primary)) and (ti saude or ti salud or ti health))&amp;index=MH"/>
+      </meta-search>
+    </item>
+    <item available="yes" id="4">Health Services            <description>Services for the diagnosis and treatment of disease and the maintenance of health.   </description>
+      <meta-search>
+        <info-source id="17-87" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-88" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-72" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-94" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-95" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-96" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-104" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-98" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-99" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-100" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-101" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-102" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+        <info-source id="17-103" search-parameters="expression=.SERVICOS DE SAUDE or ((ti servicios or ti servicos or ti services) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      </meta-search>
+    </item>
+  </item>
+  <item available="yes" id="3">Health Communication        <description>The exchange or transmission of health ideas, attitudes, or beliefs between individuals or groups.    </description>
+    <meta-search>
+      <info-source id="17-87" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-88" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-94" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-95" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-96" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-104" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-98" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-99" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-100" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-101" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-102" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+      <info-source id="17-103" search-parameters="expression=.COMUNICACION EN SALUD or ((ti comunicacion or ti comunicacao or ti communication) and (ti salud or ti saude or ti health))&amp;index=MH"/>
+    </meta-search>
+  </item>
+</topic>

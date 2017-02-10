@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- updated with update-x 0.6 on Friday 11 July 2003 16:52 by -unknown- -->
+<root aqua="atributo agua" beige="atributo bege" coral="atributo coral" aquamarine="Ã¡gua marinha">
+  <black>
+    <chocolate>chocolate</chocolate>
+    <olive>yes</olive>
+  </black>
+  <yellow>one yellow</yellow>
+  <yellow>two yellow</yellow>
+  <yellow>four yellow</yellow>
+  <red>vermelho</red>
+  <green>
+    <gray>
+      <khaki cyan="atributo cianeto">
+        <lime>lima"</lime>
+      </khaki>
+    </gray>
+  </green>
+  <blue azure="1" silver="um atributo prata">
+    <white pink="um atributo rosa"/>
+    <violet>um violeta</violet>
+    <brown>1 brown</brown>
+    <brown>4 brown</brown>
+    <teal>1</teal>
+    <teal>2</teal>
+    <salmon>         1 salmÃ£o, teste com textarea
+pode ter nova linha e textos XHTML
+como 
+         <b>bold</b>
+          <i>por exemplo</i>
+<br/>
+viu, uÃ©, 
+
+<hr/>
+      </salmon>
+  </blue>
+  <blue azure="2" silver="dois atributo prata">
+    <white pink="dois atributo rosa"/>
+    <violet>dois violeta</violet>
+    <brown>2 brown</brown>
+    <brown>3 brown</brown>
+    <teal>2</teal>
+    <teal>3</teal>
+    <salmon>         2 salmÃ£o, textos XHTML como 
+         <a href="http://www.bireme.br">BIREME</a>
+          por exemplo e 
+         <br/>
+          tambÃ©m
+     
+
+ <hr/>
+    </salmon>
+  </blue>
+  <tan-list>
+    <tan silver="um tan atributo prata">
+      <white pink="01">
+        <tomato>um,um tomate</tomato>
+        <link href="http://www.bireme.br">BIREME</link>
+        <link href="http://productos.bvsalud.org/html/pt/home.html">catÃ¡logo de produtos</link>
+        <link href="http://tamar.bireme.br">tamar</link>
+      </white>
+      <white pink="02">
+        <tomato>um,dois tomate</tomato>
+        <link href="localizador de informaÃ§Ã£o em saÃºde">LIS</link>
+      </white>
+      <white pink="03">
+        <tomato>um,trÃªs tomate</tomato>
+        <link href="1-3">1,3</link>
+      </white>
+      <white pink="04">
+        <tomato>um,quatro tomate</tomato>
+        <link href="1-4">1,4</link>
+      </white>
+    </tan>
+    <tan silver="dois tan atributo prata">
+      <white pink="01">
+        <tomato>dois,um tomate</tomato>
+        <link href="2-1">2,1</link>
+      </white>
+      <white pink="02">
+        <tomato>dois,dois tomate</tomato>
+        <link href="2-2">2,2</link>
+      </white>
+      <white pink="03">
+        <tomato>dois,trÃªs tomate</tomato>
+        <link href="2-3">2,3</link>
+      </white>
+    </tan>
+  </tan-list>
+</root>

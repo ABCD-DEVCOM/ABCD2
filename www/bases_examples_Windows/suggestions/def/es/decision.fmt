@@ -1,0 +1,14 @@
+T|300|Proveedor|0|1|arbcdijefgh||TB|||||||||0||
+S||Nombre|0|0|||X||20|D|providers|NA_|v10|v10||0||
+S||Ref.|0|0|||X||6|||||||0||
+S||N. copias|0|0|||X||5|||||||0||
+S||Precio|0|0|||X||8|||||||0||
+S||Moneda|0|0|||X||5|||||||0||
+S||Copias aprob.|0|0|||X||5|||||||0||
+S||Precio aprob.|0|0|||X||8|||||||0||
+S||Coment.|0|0|||X||12|||||||0||
+S||Selec.?|0|0|||S|||P|selected.tab|||||0||
+S||Fecha sel.|0|0|||D||8|||||||0||
+S||Fecha ISO|0|0|||ISO||8|||||||0||
+F|330|Fecha licitación|0|0|||D||8|||||||0||
+F|331|Fecha ISO|0|0|||ISO||8|||||||0||

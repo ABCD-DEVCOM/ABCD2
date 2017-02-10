@@ -1,0 +1,17 @@
+<IsisScript name="inicializar_bd">
+
+<section name="control">
+	<trace>xOn</trace>
+	<field action="cgi" tag="5015">cipar</field>
+	<field action=cgi tag=5016>syspar</field>
+	<field action="cgi" tag="5001">base</field>
+	<field action=cgi tag=1>path_db</field>
+    <parm name=cipar>
+      		<pft> if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi
+    		</pft>
+    </parm>
+	<file action=create type=database><pft>v5001</pft></file>
+</section>
+
+</IsisScript>
+

@@ -1,0 +1,21 @@
+F|10|User type|0|0|ab||S|||P|%path_database%circulation/def/en/typeofusers.tab|||||0||
+F|12|Sex|0|0|ab||R|||P|sexo.tab|||||0||
+F|15|Expiration date|0|0|||D|||||||||0||
+F|18|ISO expiration date|0|0|||ISO|||||||||0||
+F|30|Name|1|0|||X|||||NO_|v30|v30||0||
+F|35|ID no.|0|0|||X||20|||||||0||
+F|20|User (bar)code|0|0|||X||20|||||||0||
+F|40|Unit|0|0|||X|||||||||0||
+F|45|Address|0|0|||X|||||||||0||
+F|47|Adm. level 1|0|0|||X|||||||||0||
+F|49|Adm. level 2|0|0|||X|||||||||0||
+F|100|Phys. address|0|0|||X|||||||||0||
+F|110|Postal address|0|0|||X|||||||||0||
+F|120|City|0|0|||X|||||||||0||
+F|130|Country|0|0|||X||30|||||||0||
+F|140|Tel.|0|0|||X|||||||||0||
+F|150|Fax|0|0|||X|||||||||0||
+F|160|E-mail|0|1|||X|||||||||0||
+F|600|Login|0|0|||XF||10|||||||0||
+F|610|Password|0|0|||P||10|||||||0||
+F|620|Photo|0|0|||U|||||||||0||

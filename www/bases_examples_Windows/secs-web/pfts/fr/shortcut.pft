@@ -1,0 +1,35 @@
+(
+	,if s(mpu,v8^*,mpl) = 'INTERNET' then,
+		 '<tr>'/
+	       	 '<td width="28%"><a href="'v8^i'"><img src="',v5002[1],'fulltxt.gif" border="0" name="full text"></a></td>'/			 
+    	     '<td width="72%">'
+			 	'<font face=verdana size="1"><i>'
+			 	if s(mpu,v8^i,mpl) : '.PDF' then 
+					'Text in PDF' 
+				else 
+					if s(mpu,v8^i,mpl) : '.HTM' then  
+						'Text in HTML' 
+					else
+						'Full text'	
+					fi,
+				fi				
+			'</i></font></td>'/	
+		'</tr>'/	  
+	,fi,	
+
+                /* modificado por Katia, 26/08/08 */
+        if npost->facic(v30)>0 then
+                '<tr>'
+                        '<td width="28%">'
+                                '<font face="arial" size=2 >',
+                                `<a href="javascript:onClick=OpenNewfacic('ID_`,v30`')">`,
+                                        '<img src="',v5002[1],'fulltxt.gif" border="0" name="texto"></a>',
+                        '</td>',
+                          '<td width="72%">',
+                           '<font face=verdana size="1" color="red"><i>Details ('f(npost->facic(v30),1,0)')</i></font>'
+                          '</td>',
+                        '</td>',
+                '</tr>',
+        fi,
+
+)

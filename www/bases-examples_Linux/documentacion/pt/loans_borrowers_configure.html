@@ -1,0 +1,94 @@
+<html>
+
+    <head>
+
+        <title></title>
+
+    </head>
+
+    <body>
+
+        <p><font face="Arial" size="3"><strong>Configurar a base de dados de usu&aacute;rios</strong>.</font></p>
+
+        <p><font face="Arial" size="2">Esta op&ccedil;&atilde;o permite configurar no sistema a base de dados de usu&aacute;rios que poder&atilde;o usar o servi&ccedil;o de empr&eacute;stimo.</font></p>
+
+        <p><font face="Arial" size="2">Os par&acirc;metros requeridos s&atilde;o:</font></p>
+
+        <p>
+
+        <table cellspacing="5" cellpadding="5" width="95%" summary="" border="1">
+
+            <tbody>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">Prefixo para obter o n&uacute;mero de usu&aacute;rio</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Especifica o prefixo que &eacute; colocado antes do n&uacute;mero do usu&aacute;rio
+                      para localizar a informa&ccedil;&atilde;o na base de dados de usu&aacute;rios. Fica armazenado
+                      na pasta <strong>def</strong> da base de dados de usu&aacute;rios
+                      (users) sob o nome<strong> loans_uskey.tab</strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para extrair o n&uacute;mero de usu&aacute;rio</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Depois de localizado o
+                      registro do usu&aacute;rio, &eacute; aplicado este formato de extra&ccedil;&atilde;o para obter o n&uacute;mero do usu&aacute;rio. Fica armazenado
+                      na pasta <strong>def</strong> da base de dados de usu&aacute;rios
+                      (users) sob o nome<strong> loans_uskey.pft</strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para extrair o tipo de usu&aacute;rio</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">A aplica&ccedil;&atilde;o das pol&iacute;ticas de empr&eacute;stimo depende do tipo de usu&aacute;rio e do tipo de item a emprestar. Este formato de extra&ccedil;&atilde;o permite extrair o tipo de
+                      usu&aacute;rio que fica armazenado na pasta <strong>def</strong> da base de dados de usu&aacute;rios
+                      (users) sob o nome<strong> loans_ustype.tab</font></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para extrair a vig&ecirc;ncia do usu&aacute;rio</font></td>
+
+                    <td valign="top">
+
+                    <p><font face="Arial" size="2">Atrav&eacute;s deste formato &eacute; definida a vig&ecirc;ncia do usu&aacute;rio. Deve incluir uma mensagem e um c&oacute;digo, separados pelo caracter |.<br />
+
+                    Os c&oacute;digos definidos s&atilde;o:</font></p>
+
+                    <p><font face="Arial" size="2">0=Usu&aacute;rio ativo<br />
+
+                    1=Usu&aacute;rio inativo</font></p>
+
+                    <p><font face="Arial"><font size="2">Fica armazenado na
+                    pasta <strong>def</strong> da base de dados de usu&aacute;rios (users)
+                    sob o nome<strong> loans_usvig.tab</strong></font></font></p>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT para exibir a informa&ccedil;&atilde;o do usu&aacute;rio</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Este formato de extra&ccedil;&atilde;o apresenta a informa&ccedil;&atilde;o do usu&aacute;rio para a emiss&atilde;o de
+                      status da conta e outros relat&oacute;rios relacionados com a gest&atilde;o
+                      de empr&eacute;stimos. Fica armazenado na pasta <strong>def</strong> da base de dados de usu&aacute;rios
+                      (users) sob o nome<strong> loans_usdisp.tab</strong></font></font></td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </body>
+
+</html>

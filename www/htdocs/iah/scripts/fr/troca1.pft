@@ -1,0 +1,3 @@
+(if s(v2000^o)=s(if v2005^t[1]:' ' then left(v2005^t[1],size(v2005^t[1])-(size(v2005^t[1])-instr(v2005^t[1],' '))-1) else v2005^t[1] fi) 
+    then |^f|v2005^f[1],|^t|v2005^t[1],|^a|v2000^a,|^v|v2000^v,|^n|v2000^n, break 
+fi)

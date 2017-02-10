@@ -1,0 +1,65 @@
+<IsisScript>
+	<trace>XOn</trace>
+
+		<section>
+   		<field action=cgi tag=5015>cipar</field>
+   		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5001>base</field>
+      	<field action=cgi tag=2000>Mfn</field>
+      	<field action=cgi tag=9060>login</field>
+      	<field action=cgi tag=9088>cttype</field>
+      	<field action=cgi tag=3030>Formato</field>
+      	<field action=cgi tag=1>path_db</field>
+      	<field action=cgi tag=4200>logtrans</field
+	<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+<display><pft></pft></display>
+     	<parm name=cipar>
+      		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+      	</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+
+
+
+      <label>ELIMINAR</label>
+      		<do task="update">
+        		<parm name="db"><pft>v5001</pft></parm>
+        		<parm name="mfn"><pft>v2000</pft></parm>
+				<parm name="fst"><pft>cat(v5001'.fst')</pft></parm>
+        		<parm name=lockid><pft>v9060</pft></parm>
+        		<field action=define tag=1101>Isis_Lock</field>
+        		<field action=define tag=1102>Isis_Status</field>
+        		<update>
+<!--                 	<field action=delete tag=list>ALL</field>     -->
+					<write>Unlock</write>
+                	<write>Delete</write>
+        		</update>
+     		</do>
+
+     		<!-- ACTUALIZAR EL LOG DE TRANSACCIONES (1) -->
+ 			<flow action="jump"><pft>if a(v4200)then 'EXIT' fi </pft></flow>
+ 			<label>LOG_DE_TRANSACCIONES</label>
+ 			<do task="update">
+				<parm name="db">logtrans</parm>
+				<parm name="fst"><pft>cat('logtrans.fst')</pft></parm>
+    			<parm name="mfn">New</parm>
+				<parm name="buffersize">200000</parm>
+                <parm name=MAX_TMP_STRING>200000</parm>
+                <parm name=lockid><pft>v9060</pft></parm>
+    			<field action=define tag=1101>Isis_Lock</field>
+				<field action=define tag=1102>Isis_Status</field>
+    			<update>
+					<field action=import tag=9010>4200</field>
+           			<proc><pft>v9010</pft></proc>
+           			<proc><pft>'d9010'</pft></proc>
+            		<write>Unlock</write>
+    			</update>
+ 			</do>
+
+			<label>EXIT</label>
+			<flow action="exit">1</flow>
+
+     		<flow action="exit">0</flow>
+
+	</section>
+</IsisScript>

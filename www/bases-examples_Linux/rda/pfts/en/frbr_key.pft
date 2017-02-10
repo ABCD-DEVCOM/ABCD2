@@ -1,0 +1,27 @@
+proc(  'd911',     /* define the field to receive the FRBR key */
+
+     s1:=( s(replace( s(mhu,v100^a,v245^a,v245^b,mpl),' ','') )*0.100 ),  /* you define the source data for indexing */
+                                                                                                /* 100 chars is about the max of recursions pft admits */ 
+     e1:=size(s1),  
+     e2:=1,
+     e3:=1,
+     s2:=(''),
+
+     while e2<=e1
+(e3:=instr(' ',s1),
+s2:=s2,mid(s1,e2,e3),
+s1:=mid(s1,e2,e1-e2),
+e2:=e3+1)
+
+/* Spinak method
+     while e2<=e1
+          (  if s('ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789'):mid(s1,e2,1)   /
+                 then s2:=(s2, mid(s1,e2,1) )
+             fi,
+          e2:=e2+1,
+         )
+*/
+      '<911>', s2, '</911>',
+   ),
+
+  v911  

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<users id="" lang="en" available="">
+  <user name="adm" type="adm" password="9dd4e461268c8034f5c8564e155c67a6"/>
+  <user name="doc" type="content" password="9dd4e461268c8034f5c8564e155c67a6"/>
+</users>

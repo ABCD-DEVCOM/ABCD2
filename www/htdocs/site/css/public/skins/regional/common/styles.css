@@ -1,0 +1,149 @@
+/*
+    This file describes general styles all over the site,
+    like "top banner", "footer", and general styles about the component boxes.
+*/
+
+/* Page Body Styles */
+.top {
+    background: #ECF3F3 url(../../../../../image/public/skins/regional/common/topBackground.jpg) top left repeat-x;
+}
+
+.top #parent {
+    background: url(../../../../../image/public/skins/regional/common/parentBackground.jpg) top left repeat-x;
+    text-align: center;
+}
+
+.top #identification {
+    background: url(../../../../../image/public/skins/regional/common/banner.jpg) top left no-repeat;
+}
+
+.top #identification H1 {
+    color: #22268E;
+    font-size: 130%;
+}
+
+.top #institutionList {
+    text-align: right;
+}
+
+.top #institutionList LI {
+    list-style: none;
+    font-size: 90%;
+}
+
+HTML>BODY .top #institutionList LI {
+    font-size: 85%;
+}
+
+.top #institutionList LI A {
+    text-decoration: none;
+    color: #1F5284;
+}
+
+
+.bar {
+    text-align: right;
+    font-weight: bold;
+    font-size: 75%;
+}
+
+.bar, .bar A {
+    color: white;
+}
+
+.bar #contact A {
+    background: url(../../../../../image/public/skins/regional/common/bt_contact.gif) no-repeat;
+}
+
+
+.bottom #footNotes {
+    border-left: 50px solid #33617B;
+    background: #67A0C1;
+}
+
+.bottom #footNotes {
+    font-size: 85%;
+}
+
+.bottom #footNotes, .bottom #footNotes A {
+    color: #DFEBF2;
+}
+
+
+/* Cascading definitions #Start */
+.firstColumn DIV, .secondColumn .centerLeftColumn DIV, .secondColumn .centerRightColumn DIV, .thirdColumn DIV, #search, #searchConcepts, .level2 .middle DIV {
+    background: #E4EDED;
+}
+
+.firstColumn DIV H3, .secondColumn DIV H3, .thirdColumn DIV H3, #search H3, #searchConcepts H3, .level2 .middle DIV H3 {
+    border-top: 1px solid #B1C1C1;
+}
+
+.firstColumn DIV H3 SPAN, .secondColumn DIV H3 SPAN, .thirdColumn DIV H3 SPAN, #search H3 SPAN, #searchConcepts H3 SPAN, .level2 .middle DIV H3 SPAN {
+/*    padding-top: 3px; */
+    padding-left: 15px;
+    background: url(../../../../../image/public/skins/regional/common/bullet.gif) no-repeat;
+/*    border-left: 6px solid #567A7A; */
+    font-size: 80%;
+    color: #555;
+}
+
+html>body .firstColumn DIV H3 SPAN, html>body .secondColumn DIV H3 SPAN, html>body .thirdColumn DIV H3 SPAN, html>body #search H3 SPAN, html>body #searchConcepts H3 SPAN, html>body .level2 .middle DIV H3 SPAN {
+    font-size: 85%;
+}
+
+/* Cascading definitions #End */
+
+
+/* Second pages Styles */
+.level2 .middle #contact A {
+    background: none;
+}
+
+.level2 H4 {
+    border-bottom: 1px solid #B6CDCD;
+}
+
+.level2 #search UL LI {
+    list-style: none;
+}
+
+.level2 #search LI {
+    font-weight: bold;
+    list-style: none;
+}
+
+.level2 #search LI LI {
+    font-weight: normal;
+}
+
+/* MetaIAH Pop-up styles */
+#popUp {
+    background: #ECF3F3 url(../../../../../image/public/skins/regional/common/topBackground.jpg) top left repeat-x;
+}
+
+#popUp TD {
+    font-size: 80%;
+}
+
+.copyright {
+    font-size: 75%;
+}
+
+/* General Styles */
+.submit {
+    background: #6188A0;
+    border-top: 1px solid #B0C3CF;
+    border-left: 1px solid #B0C3CF;
+    border-right: 1px solid #314450;
+    border-bottom: 1px solid #314450;
+    color: white;
+}
+
+.info {
+    border: 0px;
+    height: 17px;
+    width: 18px;
+    background: url(../../../../../image/public/skins/regional/common/buttonInfo.gif) top left no-repeat;
+}
+

@@ -1,0 +1,4 @@
+researchinstitutes.*=%path_database%researchinstitutes/data/researchinstitutes.*
+researchinstitutes.pft=%path_database%researchinstitutes/pfts/en/researchinstitutes.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

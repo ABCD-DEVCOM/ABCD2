@@ -1,0 +1,24 @@
+'<table border=0 width=90%>'
+'<td rowspan=21 valign=top width=150><img src=../common/show_image.php?image='v620'&base=users></td>'
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de usuário</b></td><td valign=top><font face=arial size=2>',v10^*,". "v10^b,,'</td>' fi/
+if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Sexo</b></td><td valign=top><font face=arial size=2>',v12^*,". "v12^b,mpl,'</td>' fi/
+if p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Data limite validade cartão</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
+if p(v18) then '<tr><td width=20% valign=top><font face=arial size=2><b>Data ISO validade cartão</b></td><td valign=top><font face=arial size=2>'v18+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Código usuário</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Sobrenomes e nomes</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2><b>Cédula de identidade</b></td><td valign=top><font face=arial size=2>'v35+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Empresa/instituição de trabalho</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v45) then '<tr><td width=20% valign=top><font face=arial size=2><b>Local</b></td><td valign=top><font face=arial size=2>'v45+|<br>|,'</td>' fi/
+if p(v47) then '<tr><td width=20% valign=top><font face=arial size=2><b>Nível Adm. 1</b></td><td valign=top><font face=arial size=2>'v47+|<br>|,'</td>' fi/
+if p(v49) then '<tr><td width=20% valign=top><font face=arial size=2><b>Nível Adm. 2</b></td><td valign=top><font face=arial size=2>'v49+|<br>|,'</td>' fi/
+if p(v100) then '<tr><td width=20% valign=top><font face=arial size=2><b>Endereço</b></td><td valign=top><font face=arial size=2>'v100+|<br>|,'</td>' fi/
+if p(v110) then '<tr><td width=20% valign=top><font face=arial size=2><b>Caixa postal</b></td><td valign=top><font face=arial size=2>'v110+|<br>|,'</td>' fi/
+if p(v120) then '<tr><td width=20% valign=top><font face=arial size=2><b>Cidade</b></td><td valign=top><font face=arial size=2>'v120+|<br>|,'</td>' fi/
+if p(v130) then '<tr><td width=20% valign=top><font face=arial size=2><b>País</b></td><td valign=top><font face=arial size=2>'v130+|<br>|,'</td>' fi/
+if p(v140) then '<tr><td width=20% valign=top><font face=arial size=2><b>Telefone</b></td><td valign=top><font face=arial size=2>'v140+|<br>|,'</td>' fi/
+if p(v150) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fax</b></td><td valign=top><font face=arial size=2>'v150+|<br>|,'</td>' fi/
+if p(v160) then '<tr><td width=20% valign=top><font face=arial size=2><b>E-mail</b></td><td valign=top><font face=arial size=2>'v160+|<br>|,'</td>' fi/
+if p(v600) then '<tr><td width=20% valign=top><font face=arial size=2><b>Login</b></td><td valign=top><font face=arial size=2>'v600+|<br>|,'</td>' fi/
+if p(v610) then '<tr><td width=20% valign=top><font face=arial size=2><b>Senha</b></td><td valign=top><font face=arial size=2>'v610+|<br>|,'</td>' fi/
+if p(v620) then '<tr><td width=20% valign=top><font face=arial size=2><b>Foto</b></td><td valign=top><font face=arial size=2>'v620+|<br>|,'</td>' fi/
+'</table><p>'

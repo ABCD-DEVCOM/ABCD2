@@ -1,0 +1,23 @@
+##0 SS00  Datos generales[Datos básicos]
+   Tipo de usuario               040              10                                     usuarios.tab
+   Fecha/ingreso             -05 018              15 
+   Código usuario                             !C  20 
+   Nombre del usuario                002      !B  30 
+   C.Identidad                   030              35 
+   Sexo                      -01 005              12
+   Lugar de trabajo                  002      !T  40 
+   Ubicación                         002      !K  45 
+   Nivel Adm. 1                      002      !E  47 
+   Nivel Adm. 2                      002      !F  49
+##1 SS01  Otros datos[Otros datos]
+   Dir. física                   032 005          100 R;
+   Dir. postal               -03 032 005          110 R;  
+   Ciudad                        032 001      !G  120 R;
+   País                      -08 032 001      !Q  130 R;
+   Teléfono                          001          140 
+   Fax                               001          150
+   C. electrónico                    001          160 
+   Servicios que accesa              002          200 R;
+   Areas de interés                  002      !I  210 R;
+   Palabras claves                   002      !Z  300 R;
+                                                  **

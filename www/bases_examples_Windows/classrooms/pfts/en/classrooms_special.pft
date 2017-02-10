@@ -1,0 +1,198 @@
+'<link rel="stylesheet" type="text/css" href="http://192.168.42.129/central/_css/index.css" media="screen">'
+'<script id="load_jquery" src="http://192.168.42.129/central/_js/jquery.js"></script>'
+'<script>
+
+if(typeof(DocumentReady)!= "function" || jQuery(".grid_row").length == 0)
+{	
+
+	function DocumentReady()
+	{		
+		jQuery(document).ready(function(){	
+			
+			
+			jQuery(".barNav").each(function(){
+				var temp = jQuery(this).html();
+				
+				var leftCol = jQuery(this).find(".leftCol").html();
+				var rightCol = jQuery(this).find(".rightCol").html();
+				
+				var html = ""
++"					<div class=\"grid_headings\">"
++"						 <div class=\"spiffyContainer\">"
++"								<b class=\"spiffy\">"
++"								<b class=\"spiffy1\"></b>"
++"								<b class=\"spiffy2\"></b>"
++"								<b class=\"spiffy3\"></b>"
++"								<b class=\"spiffy4\"></b>"
++"								<b class=\"spiffy5\"></b>"
++"								</b>"
++"								<div class=\"spiffyfg\">"
++"								<table width=\"100%\">"
++"									<tr>"
++"										<td style=\"text-align:left !important;\">"+leftCol+"</td>"
++"										<td></td>"
++"										<td width=\"200px\" style=\"text-align:left !important;\">"+rightCol+"</td>"
++"									</tr>"
++"								</table>"
++"								</div>"
++"								<b class=\"spiffy\">"
++"								<b class=\"spiffy5\"></b>"
++"								<b class=\"spiffy4\"></b>"
++"								<b class=\"spiffy3\"></b>"
++"								<b class=\"spiffy2\"></b>"
++"								<b class=\"spiffy1\"></b>"
++"								</b>"
++"						 </div>"
++"					</div>"
++"";				
+
+
+				jQuery(this).html(html);				
+			});
+			
+			jQuery(".grid_row_spand").hover(
+				function(){
+					jQuery(this).addClass("grid_row_focus");
+				},
+				function(){
+					jQuery(this).removeClass("grid_row_focus");
+				}
+			);
+			
+			jQuery(".grid_row_spand").toggle(
+				function(){
+					jQuery(this).find(".spand_close").show();
+					jQuery(this).find(".spand_open").hide();			
+					var contentId = jQuery(this).parent().parent().parent().attr("contentid");
+					jQuery(".grid_file[contentid="+contentId+"]").show();					
+					jQuery(this).find(".state_close").addClass("state_open");
+					var titlem = jQuery(this).parent().parent().parent().find("#v2").html();								
+				},
+				function(){
+					jQuery(this).find(".spand_open").show();
+					jQuery(this).find(".spand_close").hide();
+					var contentId = jQuery(this).parent().parent().parent().attr("contentid");
+					jQuery(".grid_file[contentid="+contentId+"]").hide();
+					jQuery(this).find(".state_close").removeClass("state_open");					
+				}
+			);
+			
+	
+		});
+	}
+	
+	DocumentReady();
+	
+	
+
+	
+}
+</script>'
+
+'<div contentid="',mfn,'" class="grid_row grid_row_alter open_file">'
+'        <div class="spiffyContainer">'
+'               <b class="spiffy">'
+'                <b class="spiffy1"></b>'
+'                <b class="spiffy2"></b>'
+'                <b class="spiffy3"></b>'
+'                <b class="spiffy4"></b>'
+'                <b class="spiffy5"></b>'
+'                </b>'
+'                <div class="spiffyfg">'
+'<table width="100%">'
+'<tr><td colspan="2" width="10%">MFN</td><td colspan="3" id="mfn">'mfn'</td></tr>'
+if p(v1) then '<tr><td colspan="2">CONTROL NUMBER:</td><td colspan="3" id="v1">'v1+|<br>|,'</td></tr>' fi/
+if p(v2) then '<tr><td colspan="2">NAME:</td><td colspan="3" id="v2">'(if p(v2) then | |v2^a,| |v2^n, if iocc<>nocc(v2) then '<br>' fi fi/),'</td></tr>' fi/
+if p(v3) then '<tr><td colspan="2">CAPACITY:</td><td colspan="3" id="v3">'(if p(v3) then | |v3^n, if iocc<>nocc(v3) then '<br>' fi fi/),'</td></tr>' fi/
+if p(v4) then '<tr><td colspan="2">ITEMS:</td><td colspan="3" id="v4">'v4+|<br>|,'</td></tr>' fi/
+if p(v5) then '<tr><td colspan="2">LOCATION:</td><td colspan="3" id="v5">'v5+|<br>|,'</td></tr>' fi/
+if p(v6^d) then '<tr><td colspan="2">DESCRIPTION:</td><td colspan="3" id="v61">'v6^d+|<br>|,'</td></tr>' fi/
+if p(v1) then '<tr><td colspan="2">AVAILABILITY:</td><td colspan="3" id="v61">'
+if REF->copies(L->copies('CN_CLASSROOMS_'v1),v1)='' then 'There are no copies available'
+else
+if npost(['copies'],'CN_CLASSROOMS_'v1)>1 then 'There are 'f(npost(['copies'],'CN_CLASSROOMS_'v1),1,0)' copies' else 'There is one copy' fi/
+'<br />'
+fi/
+
+REF->loanobjects(L->loanobjects('CN_CLASSROOMS_'v1),
+ (v959^i'-'
+if REF->trans(L->trans('TR_P_'v959^i),v1)='P'
+ then REF->trans(L->trans('TR_P_'v959^i),'<span style="color:#990000">Is a Lend until 'v40' 'v45'</span>')
+ else '<span style=color:#006600>Is available for lending</span>'
+ fi/
+ '<br />')
+)
+'</td></tr>' fi/
+
+'</table>'
+
+'
+<div class="grid_row grid_row_spand">
+         <div class="spiffyContainer">
+                <b class="spiffy">
+                <b class="spiffy1"></b>
+                <b class="spiffy2"></b>
+                <b class="spiffy3"></b>
+                <b class="spiffy4"></b>
+                <b class="spiffy5"></b>
+                </b>
+                <div class="spiffyfg"> 
+					<table border="0" width="99%" align="center">
+						<tr>
+							<td class="state_close" width="30px">							
+							<td style="text-align: left !important;">								
+								<label class="spand_open" style="cursor:inherit"><b>Show Image</b></label>
+								<label class="spand_close" style="display:none;cursor:inherit;"><b>Hide Image</b></label>
+							</td>
+							<td width="100px"></td>
+							
+							</td>
+						</tr>
+					</table>					
+                </div>
+                <b class="spiffy">
+                <b class="spiffy5"></b>
+                <b class="spiffy4"></b>
+                <b class="spiffy3"></b>
+                <b class="spiffy2"></b>
+                <b class="spiffy1"></b>
+                </b>
+         </div>
+    </div>
+'
+
+'							
+                </div>
+                <b class="spiffy">
+                <b class="spiffy5"></b>
+                <b class="spiffy4"></b>
+                <b class="spiffy3"></b>
+                <b class="spiffy2"></b>
+                <b class="spiffy1"></b>
+                </b>
+         </div>
+    </div>
+'
+'
+<div class="grid_file" contentid="',mfn,'" style="display: none;">
+        <div class="spiffyContainer">                       
+            <div class="spiffyfg">
+'
+'<table width="100%" border="0">'
+if p(v6) then '<tr><td width="20%" align="center">&nbsp;</td><td width="80%" align="left" id="v6"><img src="../../../../bases/classrooms/'v6^*,'"/></td></tr>' fi/
+
+
+'</table>'
+' 
+            </div>
+            <b class="spiffy">
+            <b class="spiffy5"></b> 
+            <b class="spiffy4"></b>
+            <b class="spiffy3"></b>
+            <b class="spiffy2"></b>
+            <b class="spiffy1"></b>
+            </b>
+        </div>
+ </div> 
+'
+

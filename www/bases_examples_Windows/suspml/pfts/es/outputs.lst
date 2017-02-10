@@ -1,0 +1,9 @@
+SP01|tbsusp.pft|Estatus#Código de usuario#Fecha#Vencimiento#Concepto#Observaciones||RE_S and ST_0|Suspensiones vigentes||
+SP02|tbsusp.pft|Estatus#Código de usuario#Fecha#Vencimiento#Concepto#Observaciones|ref(['users']l(['users']'CO_'v20),v30)|RE_S and ST_0|Suspensiones vigentes (clasificadas por usuario)
+ML01|tbml.pft|Estatus#Código de usuario#Fecha#Concepto#Monto#Observaciones||RE_M and ST_0|Multas vigentes||
+ML03|tbml.pft|Estatus#Código de usuario#Fecha#Concepto#Monto#Observaciones||RE_M and ST_2|Multas pagadas el|DATEQUAL|60
+ML04|tbml.pft|Estatus#Código de usuario#Fecha#Concepto#Monto#Observaciones||RE_M and ST_2|Multas pagadas después del |DATE|110
+ML05|tbml.pft|Estatus#Código de usuario#Fecha#Concepto#Monto#Observaciones||RE_M and ST_1|Multas canceladas el|DATEQUAL|60
+ML06|tbml.pft|Estatus#Código de usuario#Fecha#Concepto#Monto#Observaciones||RE_M and ST_1|Multas canceladas después del |DATE|110
+SP03|tbsusp.pft|Estatus#Código de usuario#Fecha#Vencimiento#Concepto#Observaciones||RE_S and ST_1|Suspensiones canceladas el|DATEQUAL|110
+SP04|tbsusp.pft|Estatus#Código de usuario#Fecha#Vencimiento#Concepto#Observaciones||RE_S and ST_1|Suspensiones canceladas después del |DATE|110

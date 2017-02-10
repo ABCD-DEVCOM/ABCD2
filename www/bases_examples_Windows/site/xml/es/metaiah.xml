@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<define>
+  <sourceList>
+    <group label="Bases de datos de la institución">
+      <item id="38-1" label="MARC" href="/iah/?base=MARC&amp;lang=es" base-search-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=MARC&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=MARC&amp;nextAction=lnk"/>
+      <item id="38-2" label="CEPAL" href="/iah/?base=BIBLO&amp;lang=es" base-search-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=BIBLO&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=BIBLO&amp;nextAction=lnk"/>
+      <item id="38-3" label="REVISTAS" href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=TITLE&amp;pathLibrary=MAIN" base-search-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=TITLE&amp;count=1&amp;nextAction=xml&amp;pathLibrary=MAIN" base-browse-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=TITLE&amp;nextAction=lnk&amp;pathLibrary=MAIN"/>
+      <item id="38-4" label="DBLIL" href="/iah/?base=DBLIL&amp;lang=es" base-search-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=DBLIL&amp;nextAction=xml&amp;count=1" base-browse-url="http://localhost:9090/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=es&amp;base=DBLIL&amp;nextAction=lnk"/>
+    </group>
+    <group label="Revistas científicas de acceso libre">
+      <item id="17-36" label="SciELO - Scientific Electronic Library Online" href="http://www.scielo.org/index_e.html" base-search-url="http://www.scielo.br/webservices/?service=search&amp;count=1" base-browse-url="http://www.scielo.br/webservices/?service=search&amp;output=html&amp;lang=es"/>
+    </group>
+  </sourceList>
+  <search>
+    <item source="38-1" search-parameters="exprSearch="/>
+    <item source="38-2" search-parameters="exprSearch="/>
+    <item source="38-3" search-parameters="exprSearch="/>
+    <item source="38-4" search-parameters="exprSearch="/>
+    <item source="17-36" search-parameters="expression="/>
+  </search>
+</define>

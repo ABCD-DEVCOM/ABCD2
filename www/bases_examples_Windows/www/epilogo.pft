@@ -1,0 +1,111 @@
+"3000="V300/
+"3030="V3030/
+"3033="V3033/
+"1001="V1001/
+"1031="V1031/
+"1033="V1033/
+"1032="V1032/
+"1002="V1002/
+
+/
+'<input type=hidden name=tag3048 value="'v3048'">'/
+'<A Name=final>'/
+'<hr size=1>'/
+'<center>'/
+'<font class=menu>',v1002,' Registros recuperados '
+'<br>'
+if a(v3333) then 
+    if p(v1021) then 
+       '<font class=td6>'
+       '<script>'
+			if p(v3048) then
+				'a="'v3048'"'/,
+			else
+    	       	'a=',|'|v1021|'|/,
+            fi
+           'i=999'/
+           'while (i>=0) {'/
+              'i=a.indexOf("/(",0)'/
+              'if (i>=0) {'
+                  'j=a.indexOf(")",i)'/
+                  'if (j>0) {'/
+                      'a=a.substring(0,i)+a.substring(j+1,a.length)'/
+                  '}'/
+              '}'/
+           '}'/
+           'i=999'/
+           'while (i>=0) {'/
+              'i=a.indexOf("(F)",0)'/
+              'if (i>=0) {'
+                  'a=a.substring(0,i)+" "+a.substring(i+3,a.length)'/
+              '}'/
+           '}'/
+           'i=999'/
+           'while (i>=0) {'/
+              'i=a.indexOf(":M",0)'/
+              'if (i>=0) {'
+                  'a=a.substring(0,i)+" "+a.substring(i+2,a.length)'/
+              '}'/
+           '}'/
+           'document.write("<center>"+a)'/
+       '</script>'/
+       '</font>',
+    fi,
+fi,
+
+if val(v1091) = 3 then,
+   '<center><h4>Error de sintáxis.</h4></center>'/,
+   else,
+      if val(v1091) = 4 then,
+         '<center><h4>Error de ejecución en
+         b&uacute;squeda.</h4></center>'/,
+      fi,
+fi,
+'<center>'/
+if val(v1002)>0 then,
+
+  '<input type=hidden name=tag4999 value='v1031'>'/
+  '<center>'/
+  '<font class=menu>'/
+  if (val(v1032)<>0) and 
+    (val(v1002)>val(v1032)-val(v1031)+1) then 
+    
+     'Presentados en esta página: del '
+	if v1081='reverse' then
+       v1002 ' al '  f(val(v1002)-val(v1032)+1,1,0)
+    else 
+		v1031' al ' if val(v1032)>val(v1002) then v1002 else  v1032 fi 
+    fi,
+     '<center>'/
+     '<span class=menu>'
+     'Ir al registro no. <input type=text class=td2 name=from size=5 value=',
+     if v1081='reverse' then
+         f(val(v1002)-val(v1032),1,0) '>'
+     else
+     	if val(v1032)<val(v1002) then f(val(v1032)+1,1,0),else '1' fi '>', 
+	 fi,
+       '         Presentar ',
+        '<input class=td2 type=text name=to size=5 value=',f(val(v1032)-val(v1031)+1,1,0),'>'  /, ' registros    
+         m&aacute;s  '/
+  else,
+     '<input type=hidden name=from value=1>'/
+  fi/
+fi,
+
+
+if val(v1002)>0 then,
+  '<p><center>'
+  if (val(v1032)<>0) and 
+    (val(v1002)>val(v1032)-val(v1031)+1) then 
+  '<input type=image border=0 src=../imagenes/continuar.gif align="absmiddle"   NAME="Continuar^t4003" >'/
+  fi,
+fi,
+
+'<br><br>'/
+
+'</form>'/
+
+
+'</body>'
+'</html>'
+

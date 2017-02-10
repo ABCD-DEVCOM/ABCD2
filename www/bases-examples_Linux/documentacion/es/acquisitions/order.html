@@ -1,0 +1,58 @@
+<p><strong>Elaboración de la Órden de Compra</strong></p>
+<p>En este listado se muestran los proveedores que han sido aprobados para ejecutar la compra de los objetos y a los cuales aún no se les ha emitido órden de compra.</p>
+<p>Si para una recomendación ha sido aprobada la compra a través de más de un proveedor, entonces se muestra en filas separadas cada uno de los proveedores seleccionados. Ésto con el fin de facilitar la elaboración de la Órden de Compra</p>
+<p>Para saber si a un proveedor cuya cotización ha sido aprobada, se le ha emitido la órden de compra, al formatear la requisición se utiliza el comando <strong>npost</strong> del lenguaje de formateo, para localizar en la base de datos de <strong>Órdenes de Compra</strong>&nbsp; (purchaseorder) una clave compuesta por el número de requisición más el número de cotizacion, precedido por el prefijo RNBN.: <br />
+</p>
+<p><strong>if npost(['purchaseorder'],'RNBN_',mpu,s(v1[1]),'_'v300^r)&lt;&gt;0 then 'OK' fi</strong></p>
+<p>Entonces, si  al formatear la requisición en el formato aparece el término <strong>OK</strong>&nbsp; no se muestra la línea correspondiente a la cotización aprobada de determinado&nbsp; proveedor<br />
+</p>
+<p> </p>
+<p>La información que se presenta es la siguiente:</p>
+<ul>
+    <li>Número secuencial de la recomendación </li>
+    <li>Referencia del objeto </li>
+    <li>Proveedor aprobado </li>
+    <li>Fecha de aprobación de la compra </li>
+    <li>Número de copias aprobadas </li>
+    <li>Precio de cada copia </li>
+</ul>
+<p>Haga clic en &nbsp;<input type="checkbox" value="on" /> para seleccionar los items que van a ser incluídos en la órden de compra en proceso de elaboración.</p>
+<p>Una vez realizada su selección, haga clic sobre <strong>Órden de compra.</strong></p>
+<p>Para la selección de los registros se aplica la fórmula de búsqueda <strong>STA_3</strong>, el cual corresponde a las requisiciones en la etapa de <strong>"Selección de proveedores"</strong><br />
+</p>
+<p>La información recuperada puede ordenarse de 4 formas, y para cada forma existe un formato predefinido:</p>
+<p>
+<table width="400" cellspacing="1" cellpadding="1" border="1" summary="">
+    <tbody>
+        <tr>
+            <td bgcolor="#ffff99"><strong>Órden de presentación</strong></td>
+            <td bgcolor="#ffff99"><strong>Formato</strong></td>
+        </tr>
+        <tr>
+            <td>Proveedor</td>
+            <td>
+            <p>pv_order.pft<br />
+            pv_order_tit.tab</p>
+            </td>
+        </tr>
+        <tr>
+            <td>Título</td>
+            <td>ti_order.pft<br />
+            ti_order_tit.pft</td>
+        </tr>
+        <tr>
+            <td>Fecha de aprobación </td>
+            <td>da_order.pft<br />
+            da_order_tit.pft</td>
+        </tr>
+        <tr>
+            <td>No. de la recomendación</td>
+            <td>sn_order.pft<br />
+            sn_order_tit.pft</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>Puede enviar estos resultados a un documento u hoja de cálculo utilizando las opciones previstas bajo <strong>Enviar a</strong>.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

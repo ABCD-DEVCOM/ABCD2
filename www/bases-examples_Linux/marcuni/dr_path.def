@@ -1,0 +1,4 @@
+ROOT=/var/opt/ABCD/bases/marc/dr/
+tesaurus=agrovoc
+prefix_search_tesaurus=MA_
+barcode=Y

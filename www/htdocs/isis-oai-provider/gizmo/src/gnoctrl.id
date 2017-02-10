@@ -1,0 +1,240 @@
+!ID 0
+!v001!01
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-A - START OF HEADING
+!v051!A transmission control character used as the first character of a heading of an information message.
+!v052! - 
+!v059!versao 1.0a^d20131122
+!ID 0
+!v001!02
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-B - START OF TEXT
+!v051!A transmission control character which precedes a text and which is used to terminate a heading.
+!v052! - 
+!ID 0
+!v001!03
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-C - END OF TEXT
+!v051!A transmission control character which terminates a text.
+!v052! - 
+!ID 0
+!v001!04
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-D - END OF TRANSMISSION
+!v051!A transmission control character used to indicate the conclusion of the transmission of one or more texts..
+!v052! - 
+!ID 0
+!v001!05
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-E - ENQUIRY
+!v051!A transmission control character used as a request for a response from a remote station; the response may include station identification and/or station status. When a "Who are you" function is required on the general switched transmission network, the first use of ENQ after the connection is established shall have the meaning "Who are you" (station identification). Subsequent use of ENQ may, or may not, include the function "Who are you", as determined by agreement.
+!v052! - 
+!ID 0
+!v001!06
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-F - ACKNOWLEDGE
+!v051!A transmission control character transmitted by a receiver as an affirmative response to the sender.
+!v052! - 
+!ID 0
+!v001!07
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-G - BELL
+!v051!A control character that is used when there is a need to call for attention; it may control alarm or attention devices.
+!v052! - 
+!ID 0
+!v001!08
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-H - BACKSPACE
+!v051!A format effector which moves the active position one character position backwards on the same line.
+!v052! - 
+!ID 0
+!v001!09
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-I - HORIZONTAL TABULATION
+!v051!A format effector which advances the active position to the next pre-determined character position on the same line.
+!v052! - 
+!ID 0
+!v001!0B
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-K - VERTICAL TABULATION
+!v051!A format effector which advances the active position to the same character position on the next pre-determined line.
+!v052! - 
+!ID 0
+!v001!0C
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-L - FORM FEED
+!v051!A format effector which advances the active position to the same character position on a pre-determined line of the next form or page.
+!v052! - 
+!ID 0
+!v001!0E
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-N - SHIFT OUT
+!v051!A control character which is used in conjunction with SHIFT IN and ESCAPE to extend the graphic character set of the code. It may alter the meaning of octets 33 - 126 (dec.). The effect of this character when using code extension techniques is described in International Standard ISO 2022.
+!v052! - 
+!ID 0
+!v001!0F
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-O - SHIFT IN
+!v051!A control character which is used in conjunction with SHIFT OUT and ESCAPE to extend the graphic character set of the code. It may reinstate the standard meanings of the octets which follow it. The effect of this character when using code extension techniques is described in International Standard ISO 2022.
+!v052! - 
+!ID 0
+!v001!10
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-P - DATA LINK ESCAPE
+!v051!A transmission control character which will change the meaning of a limited number of contiguously following characters. Its is used exclusively to provide supplementary data transmission control functions. Only graphic characters and transmission control characters can be used in DLE sequences.
+!v052! - 
+!ID 0
+!v001!11
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-Q - DEVICE CONTROL ONE
+!v051!A device control character which is primarily intended for turning on or starting an ancillary device. If it is not required for this purpose, it may be used to restore a device to the basic mode of operation (see also DC2 and DC3), or for any other device control function not provided by other DCs.
+!v052! - 
+!ID 0
+!v001!12
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-R - DEVICE CONTROL TWO
+!v051!A device control character which is primarily intended for turning on or starting an ancillary device. If it is not required for this purpose, it may be used to set a device to a special mode of operation (in which case DC1 is used to restore normal operation), or for any other device control function not provided by other DCs.
+!v052! - 
+!ID 0
+!v001!13
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-S - DEVICE CONTROL THREE
+!v051!A device control character which is primarily intended for turning off or stopping an ancillary device. This function may be a secondary level stop, for example, wait, pause, stand-by or halt (in which case DC1 is used to restore normal operation). If it is not required for this purpose, it may be used for any other device control function not provided by other DCs.
+!v052! - 
+!ID 0
+!v001!14
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-T - DEVICE CONTROL FOUR
+!v051!A device control character which is primarily intended for turning off, stopping or interrupting an ancillary device. If it is not required for this purpose, it may be used for any other device control function not provided by other DCs.
+!v052! - 
+!ID 0
+!v001!15
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-U - NEGATIVE ACKNOWLEDGE
+!v051!A transmission control character transmitted by a receiver as a negative response to the sender.
+!v052! - 
+!ID 0
+!v001!16
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-V - SYNCHRONOUS IDLE
+!v051!A transmission control character used by a synchronous transmission system in the absence of any other character (idle condition) to provide a signal from which synchronism may be achieved or retained between data terminal equipment.
+!v052! - 
+!ID 0
+!v001!17
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-W - END OF TRANSMISSION BLOCK
+!v051!A transmission control character used to indicate the end of a transmission block of data where data is divided into such blocks for transmission purposes.
+!v052! - 
+!ID 0
+!v001!18
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-X - CANCEL
+!v051!A character, or the first character of a sequence, indicating that the data preceding it is in error. As a result, this data is to be ignored. The specific meaning of this character must be defined for each application and/or between sender and recipient.
+!v052! - 
+!ID 0
+!v001!19
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-Y - END OF MEDIUM
+!v051!A control character that may be used to identify the physical end of a medium, or the end of the used portion of a medium, or the end of the wanted portion of data recorded on a medium. The position of this character does not necessarily correspond to the physical end of the medium.
+!v052! - 
+!ID 0
+!v001!1A
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-Z - SUBSTITUTE
+!v051!A control character used in the place of a character that has been found to be invalid or in error. SUB is intended to be introduced by automatic means.
+!v052! - 
+!ID 0
+!v001!1B
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-[ - ESCAPE
+!v051!A control character which is used to provide additional control functions. It alters the meaning of a limited number of contiguously following bit combinations. The use of this character is specified in International Standard ISO 2022.
+!v052! - 
+!ID 0
+!v001!1C
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-\ - FILE SEPARATOR
+!v051!A control character used to separate and qualify data logically; its specific meaning has to be specified for each application. If this character is used in hierarchical order, it delimits a data item called a file.
+!v052! - 
+!ID 0
+!v001!1D
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-] - GROUP SEPARATOR
+!v051!A control character used to separate and qualify data logically; its specific meaning has to be specified for each application. If this character is used in hierarchical order, it delimits a data item called a group.
+!v052! - 
+!ID 0
+!v001!1E
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-^ - RECORD SEPARATOR
+!v051!A control character used to separate and qualify data logically; its specific meaning has to be specified for each application. If this character is used in hierarchical order, it delimits a data item called a record.
+!v052! - 
+!ID 0
+!v001!1F
+!v002!032
+!v011!hex
+!v021!asc
+!v050!ctl-_ - UNIT SEPARATOR
+!v051!A control character used to separate and qualify data logically; its specific meaning has to be specified for each application. If this character is used in hierarchical order, it delimits a data item called a unit.
+!v052! - 
+!ID 0
+!v001!7F
+!v011!hex
+!v050! - DELETE
+!v051!(not defined)
+!v052! - 
+

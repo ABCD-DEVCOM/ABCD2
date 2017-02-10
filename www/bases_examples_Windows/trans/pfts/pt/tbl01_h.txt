@@ -1,0 +1,9 @@
+Número de registro
+Volume
+Tomo
+Código de usuário
+Tipo de usuário
+Data de empréstimo
+Data de devolução
+Tipo de Objeto
+Referência

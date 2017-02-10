@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 15 August 2007), see www.w3.org">
+    <meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252">
+    <title></title>
+  </head>
+  <body lang="fr-FR" dir="ltr">
+    <p>
+
+      <strong>Résultats de la création d'une nouvelle base de données</strong>
+    </p>
+    <p>
+      La structure pour stocker la nouvelle base de données est créée dans le
+      répertoire <strong>bases</strong>.
+    </p>
+    <p>
+      Les répertoires créés sont les suivants :
+    </p>
+
+    <ul>
+      <li>
+        <p>
+          bases/<em>dbn</em>/<span style="background: #ffff00">aides</span>
+        </p>
+      </li>
+      <li>
+
+        <p>
+          bases/<em>dbn</em>/data
+        </p>
+      </li>
+      <li>
+        <p>
+          bases/<em>dbn</em>/def
+        </p>
+
+      </li>
+      <li>
+        <p>
+          bases/<em>dbn</em>/pfts
+        </p>
+      </li>
+      <li>
+        <p>
+
+          bases/<em>dbn</em>/cnv
+        </p>
+      </li>
+    </ul>
+    <p>
+      A l'intérieur de chacun de ces répertoires, exceptés les dossiers
+      <strong>data</strong> et <strong>cnv</strong>, il a été créé le même
+      nombre de sous-dossiers qu'il y a de langues choisies ou sélectionnées.
+      La liste des langues peut être obtenue grâce au fichier
+      <strong><em>lang.tab</em></strong> située dans le répertoire
+      <strong>bases</strong>.
+    </p>
+
+    <p>
+      Le fichier <strong><em>dbn.par</em></strong> est créé dans le répertoire
+      <strong>bases/par</strong> et le fichier <strong><em>bases.dat</em></strong>
+      est mis à jour, ajoutant la base nouvellement créée.
+    </p>
+    <p>
+
+      Une fois le processus de création terminé, vous devez assigner les
+      permissions pour les utlisateurs qui administreront la base de données.
+      Sans cela, elle sera uniquement accessible à l'administrateur système.
+    </p>
+    <p>
+      Pour remplir la base de données, vous devez disposez d'un fichier ISO
+      avec les données à importer dans la nouvelle structure.
+    </p>
+    <p>
+      Si le fichier provient de WinIsis or d'IsisDos, il sera nécessaire de
+      convertir le jeu de caractères d'ASCII en ANSI. Cette tâche peut être
+      facilement réalisée par le programme MX disponible dans la bibliothèque
+      de fonctions de CISIS.
+    </p>
+    <p>
+      Pour cela, lancez MX dans une fenêtre DOS depuis le dossier où se trouve
+      la base de données que vous souhaitez convertir. Utilisez la ligne de
+      commande suivante :
+    </p>
+
+    <p>
+      mx <em>dbn</em> iso=<em>dbn.iso</em> convert=ansi -all now tell=100
+    </p>
+    <p>
+      Le fichier ISO obtenu doit être téléchargé dans le dossier
+      <strong>data</strong> de la base de données qui vient d'être créée. Pour
+      ajouter les enregistrements, utilisez de nouveau le programme MX, avec la
+      ligne de commande suivante :
+    </p>
+
+    <p>
+      mx iso=<em>dbn.iso</em> create=<em>dbn</em> -all now tell=100.
+    </p>
+    <p>
+      Après avoir créé la base de données, exécuter à nouveau MX afin de
+      générer le fichier inversé, en utilisation la ligne de commande
+      suivante :
+    </p>
+    <p>
+
+      mx <em>dbn</em> fst=<em>@dbn.fst</em> uctab=ansi actab=ansi
+      fullinv=<em>dbn</em> -all now tell=100
+    </p>
+    <p>
+      <strong><em>Note : les commandes de MX sont montrées ici à des
+      fins d'exemple. Vous devriez consulter le manuel de référence de la
+      bibliothèque CISIS.</em></strong>
+    </p>
+
+    <p>
+      Si le nombre d'enregistrement à importer n'est pas très élevé (par
+      exemple moins de 2000 enregistrements) vous pouvez utilisez l'option
+      <strong>Utilitaires</strong> de la barre d'outils de l'écran <strong>Saisie de
+      données</strong> afin d'importer les enregistrements et de générer le fichier
+      inversé.
+    </p>
+    <p>
+      Dans la mesure où le temps alloué par le serveur Web à chaque processus
+      dépend de chaque installation, le nombre d'enregistrements mentionné
+      précédemment peut varier. Pour cette raison, il est recommandé d'utiliser
+      MX pour ces tâches.
+    </p>
+  </body>
+
+</html>

@@ -1,0 +1,6 @@
+F|10|Nome de usuário|0|0|||X|||||||||0||
+F|20|Entrada|0|0|||X||10|||||||0||
+F|30|Senha|0|0|||P||10|||||||0||
+F|40|Perfil|0|0|ab||R|||P|%path_database%par/profiles/profiles.lst|||||0||
+F|50|Data límite|0|0|||D|||||||||0||
+F|60|Data ISO|0|0|||ISO|||||||||0||

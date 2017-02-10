@@ -1,0 +1,168 @@
+[pft]@AHHEAD.PFT[/pft]
+
+<script type="text/javascript">
+    function AnySelected(){
+        var any = false;
+        var count = 0;
+
+        while(!any && count < document.forms[0].listChecked.length) {
+            any = (document.forms[0].listChecked[count].checked || document.forms[0].listChecked[count].type == "hidden");
+            count++;
+        }
+        if (!any)
+        {
+            alert("{{no_ref_select}}");
+            return false;
+        }
+        else{
+            document.forms[0].nextAction.value="your_selection";
+            document.forms[0].submit();
+            return true;
+        }
+    }
+
+
+    //CVLACS functions
+    function goCVLACS1(parametros)
+    {
+        //var str_aux = "http://genos.cnpq.br:12010/dwlattes/owa/prc_imp_cv_int?"+parametros;
+        var str_aux = "http://buscatextual.cnpq.br/buscatextual/visualizacv.jsp?id=" + parametros;
+        janela = window.open(str_aux,"CVLACS","width=640,height=480,resizable=yes,toolbar=no,location=no,menubar=no,scrollbars=yes,status=yes");
+        janela.focus();
+
+    }
+
+    function relatedDocs(mfn)
+    {
+        targetId = "related";
+        form = document.forms[0];
+        form.related.value = mfn;
+        form.nextAction.value = "list_related";
+
+        form.target = targetId;
+        relatedWindow = window.open("",targetId, "scrollbars=yes,toolbar=yes,top=2,left=160,width=638");
+        relatedWindow.focus();
+        form.submit();
+        form.target = "";
+        return;
+    }
+
+    function isFormComplete()
+    {
+        // somente pode realizar o submit caso todo o formulario tenha sido carregado (campo de exprSearch presente)
+        if (document.search.exprSearch != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function showDecsDetail(term){
+        term = term.replace(/&/g,"&amp;");
+        var decsHref   = "http://decs.bvs.br/cgi-bin/wxis1660.exe/decsserver/?IsisScript=../cgi-bin/decsserver/decsserver.xis&task=exact_term&previous_page=homepage&interface_language=p&search_language=p&search_exp=" + term + "&show_tree_number=T";
+        decsWindow = window.open(decsHref,"descritor");
+        decsWindow.focus();
+        return false;
+    }
+    function OpenNewfacic(id) {
+        var theURL = "/cgi-bin/wxis.exe/iah/scripts/?IsisScript=busca_facic.xis&base=FACIC&id=" + id + "&lang=[pft]v5021[/pft]";
+        janela=window.open(theURL,"facic","left=240,top=225,width=670,height=550,toolbar=no,resizable=yes,menubar=no,scrollbars=yes");
+        janela.moveTo(0,0);
+        janela.focus();
+        return;
+    }
+    // for empweb application
+	function checkAvaibility(inventario)
+	{
+		var str_aux = "/central/empwebavaibility.php?copyId="+inventario+"&lang=en";
+        janela = window.open(str_aux,"EMPWeb","width=600,height=300,resizable=yes,toolbar=no,location=no,menubar=no,scrollbars=yes,status=no");
+        janela.focus()
+
+	}
+</script>
+
+<form action="[pft]getenv('SCRIPT_NAME')v5000^d,'scripts/'[/pft]" method="POST" name="search" onsubmit="return isFormComplete()">
+    [pft]@AHHIDD.PFT[/pft]
+
+
+    <input type="hidden" name="nextAction" value="refine/resubmit" />
+
+    <div class="contain">
+        <div class="barNavTop">
+            [pft]if val(v1002) = 0 then[/pft]
+                &nbsp;
+            [pft]else[/pft]
+                    <input type="button" class="defaultButton submit" value="{{your_selection}}" name="yselect" onclick="javascript:void(AnySelected())" />
+                    <input type="submit" class="defaultButton submit" name="list.x" value="{{send_result}}" />
+                    <input type="submit" class="defaultButton submit" name="new search.x" value="{{new_search}}" />
+                    <input type="submit" class="defaultButton submit" name="config.x" value="{{config}}" />
+                    <input type="button" class="defaultButton submit" onclick=window.location="#bottom" value="{{end_of_page}}" />
+
+            [pft]fi[/pft]            
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">{{database}}:</div>
+            <div class="columnB"><b>[pft]v5003^*[/pft]</b></div>
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">{{search}}:</div>
+            <div class="columnB"><b>
+                        [pft]
+                        if p(v8000) and v5001^* <>  'refine/resubmit' then,
+                            v8000,
+                        else,
+                            ,if p(v6102) then
+                                 v6102 ' [',v6100^p,']'
+                            ,else,
+                                ,if v6000='F' then,
+                                     replace(v6002,' ',s('&nbsp;'mpu,v6001,mpl'&nbsp;'))
+                                ,else,
+                                    ,(if p(v6002) then if iocc > 1 then '&nbsp;'v6001'&nbsp;'fi,v6002,' [',v6003^p,']' fi),
+                                ,fi,
+                            ,fi,
+                        fi,
+                        [/pft]
+                        </b>
+                        [pft]
+                            if v5018 : 'RSS' then
+                                '<a href="/webservices/rss.php?collection='v5003'&expression='replace(v6010,' ','+')'&label='v8000'">'
+                                    '<img src="'v5002'rss.gif" border="0" class="padout" />'
+                                '</a>'
+                            fi
+                        [/pft]                                    
+            </div>
+        </div>
+
+        <div class="rowResult">
+            <div class="columnA">{{references_found}}:</div>
+            <div class="columnB">
+                        <b>[pft]v1002[/pft]</b>&nbsp;&nbsp;
+                        [pft]if val(v1002) > 0 then '[<a href="#refine">{{refine}}</a>]' fi[/pft]
+            </div>
+        </div>
+
+                [pft]if val(v1002) > 0 then[/pft]
+        <div class="rowResult">
+            <div class="columnA">{{showing}}:</div>
+            <div class="columnB">
+                        <b>[pft]v1031,' .. ',v1032[/pft]</b>&nbsp;&nbsp;
+
+                        [pft]
+                            /* procedimento que marca o texto a ser apresentado como label ^L para as opções de formato de apresentação   */
+                            proc('a9021!',replace(replace(v5006^a[1],' ',''),',','!a9021!')'!'),
+                            proc('a9022!',(if v9021 = v5021[1] then f(iocc,1,0) fi),'!'),
+
+                            proc('d5005',('a5005!',replace(v5005,s('^'v9022[1]),'^L'),'!')),
+                        [/pft]
+
+                        {{in_format}} [pft]'[<b>'(if  v5009[1] = v5005^n then v5005^L fi)'</b>]'[/pft]
+            </div>
+        </div>
+                [pft]fi[/pft]
+    </div>
+
+    <!-- monta navegacao entre as paginas do resultado -->
+    [pft]if val(v1002) > 0 then @NAVPAGE.PFT fi[/pft]
+

@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<div class="page">
+<p/>
+<p>Installing ABCD in Debian Linux
+</p>
+<p>1. install Apache2 and PHP5 modules
+apt-get install apache2 libapache2-mod-php5 libxml2-dev
+libapache2-mod-proxy-html libpng12-dev libjpeg62-dev zlib1g-dev libtidy-dev
+libxslt1-dev curl php5-dev php-pear libyaz-dev php5-gd php5-xmlrpc php5-xsl
+</p>
+<p>2. Download/copy ABCD-installation file, e.g. ABCD12t.tar.gz to your home folder
+and unpack it to create a folder /home/ABCD in a terminal with the command :
+sudo tar -xvf ABCD12t.tar.gz .
+</p>
+<p>3. copy the file 'abcd' in the Apache subfolder to the folder
+/etc/apache2/sites-available with the command :
+sudo cp /home/ABCD/apache/abcd /etc/apache2/sites-available</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>4. create a symbolic link for this file to the sites-enabled folder with the
+commands :
+cd /etc/apache2/sites-enabled
+sudo ln -s ../sites-available/abcd .]
+</p>
+<p>5. change the port for the default website from 80 to e.g. 88 with the command :
+sudo nano /etc/apache2/sites-available/default
+and in that editor change the line
+&lt;VirtualHost *.80&gt;
+to
+&lt;VirtualHost *.88&gt;
+and press Ctrl-x, then press Enter to confirm saving the changes.
+</p>
+<p>6. restart Apache2 with the command :
+sudo /etc/init.d/apache2 restart</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>7. test your ABCD configuration now : open your browser (e,g, Firefox) and enter
+the URL 'localhost'
+If everything was o.k., you will get the ABCD login screen.
+</p>
+<p>Important notice : download the 64-bits version of the executables of CISIS to put
+in the cgi-bin folder !</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>Installation of YAZ :
+Installation for UBUNTU / DEBIAN
+tested for v.12.04 Server LTS but supposedly o.k. for all versions
+------------------------------------------------------------------------------
+</p>
+<p>Installing the Yaz PHP plugin and dependencies.
+</p>
+<p>Debian/Ubuntu
+apt-get install yaz libyaz4-dev php5-dev php-pear php5-xsl make
+</p>
+<p>pecl install yaz
+</p>
+<p>create : /etc/php5/conf.d/yaz.ini con el contenido extension=yaz.so
+apache2ctl restart
+You'll also need File_MARC:
+pear install Structures_LinkedList
+pear install File_MARC
+</p>
+<p>You may need to specify versions if pear fails with 'beta channel' messages:
+pear install Structures_LinkedList-0.2.0
+pear install File_MARC-0.4.2
+</p>
+<p>Fine-tuning
+Depending on your local conditions, e.g. using 32-bits or 64-bits Linux, there are
+some more small things to do :
+- if using 32-bits : rename /opt/ABCD/www/cgi-bin to cgi-bin64
+and rename /opt/ABCD/www/cgi-bin32 to cgi-bin
+(this will activate the 32-bits version of CISIS and set the 64-bits version aside).</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>EMPWEB
+EmpWeb (ABCD Advanced Loans), if used (since there is already a built-in
+'standard' Loans module in ABCD Central), needs quite some extra configuration
+actions :
+- download and install the latest Java JDK, either OpenJDK or Sun-Java-JDK, e.g. with
+the command
+apt-get install openjdk-7-jdk
+and find out where it was installed exactly, e.g. with the command
+find / -iname=javac
+which will list all folders where the executable 'javac' is found. Note the one you
+have installed (as there might be others which were already installed before).
+Put the path to the java-folder into empweb.sh in the folder /opt/ABCD/empweb
+where the JAVA_HOME and JAVA variables are defined, e.g. :
+JAVA_HOME="/usr/lib/jvm/java-1.7.0-sun-1.7.0.16/bin"
+JAVA="$JAVA_HOME/java"
+but often (in the case of OpenJDK) the java-executable itself is not in the same
+folder as javac, in that case create a symbolic link to java in the folder where you
+found javac, or put the full correct path in the 2nd variable 'JAVA', e.g.
+JAVA="/usr/lib/jvm/java-1.7.0-sun-17.0.16/jre/bin/java".
+The first parameter $JAVA_HOME points to the FOLDER where you found javac.
+The second parameter $JAVA points to the executable file 'java' itself.
+</p>
+<p>- if using Empweb ABCD Advanced Loans in Linux 64-bits version : EmpWeb
+supposes the 'mx' executable to be in /cgi-bin/ as defined by Apache ScriptAlias.
+There is a problem when this executable itself is 64-bits due to incompatibilities
+with Java. The solution is to use the 32-bits version of CISIS in
+/opt/ABCD/www/cgi-bin, but since then iAH will have problems running in 64-bits,
+you have to copy the 64-bits version of wxis.exe into the cgi-bin folder and rename
+it (in order to not overwrite wxis.exe 32-bits version !) as 'wxis64.exe'.
+Finally change the URL in index.php of the folder /opt/ABCD/www/htdocs/iah, to
+point to the 64-bits version of wxis.exe in the cgi-bin folder as follows :
+header("Location: /cgi-bin/wxis64.exe/iah/scripts/?IsisScript=iah.xis&amp;lang=" .
+$lang . "&amp;base=" . $base);
+- change coda.jspf to avoid the &lt;io Request(...)</p>
+<p/>
+</div>
+<div class="page">
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>TO DO in deb package :
+change EMPWEB_HOME and JETTY_HOME in
+empweb/common/etc/init.d/empweb :OK
+add reservation and cancelreservation in /engine/WEB-INF-conf/enginconf.xml :OK
+change backup dir in /opt/ABCD/htdocs/central/bridge/config.inc.php :OK
+change %EMPWEB_HOME to $EMPWEB_HOME in empweb.sh :OK
+</p>
+<p>gui\WEB_INF\web.xml : line 121 URL+path to user_photo ! also : line 77 of user.tag
+in gui\WEB-INF\tags\display ??
+change dr_path for users and biblo
+in empweb.sh : set CISIS_HOME and MX variables (CISIS-Wrapper)</p>
+<p/>
+</div>
+</body>
+</html>

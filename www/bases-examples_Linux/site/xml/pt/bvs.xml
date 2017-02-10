@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bvs language="pt" country="**" subject="BVS-Site" version="4">
+  <texts id="" lang="pt" available="">
+    <text id="button_moreInformation" available="yes" img="/image/common/info.gif">Mais informações</text>
+    <text id="default_print" available="yes">imprimir</text>
+    <text id="default_close" available="yes">fechar</text>
+    <text id="home" available="yes">home</text>
+    <text id="contact" available="yes">Contato</text>
+    <text id="contact: subject" available="yes">Assunto</text>
+    <text id="contact: name" available="yes">Nome</text>
+    <text id="contact: email" available="yes">Email</text>
+    <text id="contact: message" available="yes">Mensagem</text>
+    <text id="contact: send" available="yes">Enviar</text>
+    <text id="contact: error" available="yes">Favor preencher os campos:</text>
+    <text id="contact: response" available="yes">Sua mensagem foi enviada com êxito.</text>
+    <text id="topic.expand" available="yes">mostrar subtemas</text>
+  </texts>
+  <parent id="" lang="pt" available="yes">
+    <item id="1" available="yes" img="/site/image/common/logoABCD.gif">ABCD<description>  </description><portal>  </portal></item>
+  </parent>
+  <identification id="" lang="pt" available="yes">
+    <item id="2" available="yes">Sistema de Automação de Bibliotecas e Centros de Documentação<description> </description><portal> </portal></item>
+  </identification>
+  <contact id="" lang="pt" available="yes">
+    <item id="3" available="yes" href="online@abcd.org">Contato ABCD<description> </description><portal> </portal></item>
+    <item id="4" available="yes" href="online@abcd.org">Reclamações ABCD<description> </description><portal> </portal></item>
+    <item id="5" available="yes" href="online@abcd.org">Sugestões ABCD<description> </description><portal> </portal></item>
+  </contact>
+  <other-versions id="" lang="pt" available="yes">
+    <item id="7" available="yes" href="../php/index.php?lang=es">español<description>   </description><portal>   </portal></item>
+    <item id="8" available="yes" href="../php/index.php?lang=en">english<description>   </description><portal>   </portal></item>
+    <item id="41" available="yes" href="../php/index.php?lang=fr">français<description>  </description><portal>  </portal></item>
+  </other-versions>
+  <institution id="" lang="pt" available="yes">
+    <item id="9" available="no">Instituições<description>       </description><portal>       </portal></item>
+    <item id="10" available="yes" img="%SKIN_IMAGE_DIR%logoOpas.gif">BIREME | OPAS | OMS logo</item>
+    <item id="11" available="yes" href="http://www.bireme.br/">BIREME<description>       </description><portal>       </portal></item>
+    <item id="12" available="yes" href="http://www.paho.org/">OPAS<description>       </description><portal>       </portal></item>
+    <item id="13" available="yes" href="http://www.who.int/">OMS<description>       </description><portal>       </portal></item>
+  </institution>
+  <collectionList id="" lang="pt" available="yes">
+    <item id="14" available="yes">Primeira coluna<item id="32" available="yes" type="portal" file="xml/pt/32.xml">Rede</item></item>
+    <item id="16" available="yes">Segunda coluna<item id="40" available="yes" type="collection" file="xml/pt/40.xml">Fontes de Informações</item><item id="17" available="yes" type="collection" file="xml/pt/17.xml">Literatura Científica</item><item id="38" available="yes" type="collection" file="xml/pt/38.xml">Serviços</item><item id="31" available="yes" type="collection" file="xml/pt/31.xml">Diretórios, Portais</item></item>
+    <item id="23" available="yes">Terceira coluna<item id="43" available="yes" type="calls" file="xml/pt/43.xml">Destaques</item></item>
+  </collectionList>
+  <responsable>
+    <item id="26" available="yes" type="responsable" file="xml/pt/responsable.xml"/>
+  </responsable>
+  <metasearch>
+    <item id="27" available="yes" type="metasearch" file="xml/pt/metasearch.xml"/>
+  </metasearch>
+  <metainfo>
+    <item id="28" available="yes" type="metainfo" file="xml/pt/metainfo.xml"/>
+  </metainfo>
+  <attachList available=""/>
+</bvs>

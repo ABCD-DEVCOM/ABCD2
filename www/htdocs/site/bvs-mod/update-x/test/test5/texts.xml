@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- updated with update-x 0.3 on Tuesday 01 July 2003 19:11 by user6 -->
+<texts>
+  <language id="es">
+    <text>
+      <find>UPDATE-X project</find>
+      <replace>proyecto: </replace>
+    </text>
+		<text><find>UPDATE-X user</find><replace>usuario: </replace></text>
+    <text>
+      <find>UPDATE-X list documents</find>
+      <replace> listar documentos </replace>
+    </text>
+    <text>
+      <find>UPDATE-X new document</find>
+      <replace> entrar nuevo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete document</find>
+      <replace> eliminar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X edit</find>
+      <replace> modificar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X save</find>
+      <replace> grabar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X cancel</find>
+      <replace> cancelar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X continue</find>
+      <replace> continuar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X exit</find>
+      <replace> salir </replace>
+    </text>
+    <text>
+      <find>UPDATE-X id</find>
+      <replace>id</replace>
+    </text>
+    <text>
+      <find>UPDATE-X first</find>
+      <replace> seleccionar el primero </replace>
+    </text>
+    <text>
+      <find>UPDATE-X previous</find>
+      <replace> seleccionar el anterior </replace>
+    </text>
+    <text>
+      <find>UPDATE-X next</find>
+      <replace> seleccionar el prÃ³ximo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X last</find>
+      <replace> seleccionar el Ãºltimo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X add</find>
+      <replace> adiccionar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete</find>
+      <replace> eliminar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X top</find>
+      <replace> mover para primero </replace>
+    </text>
+    <text>
+      <find>UPDATE-X up</find>
+      <replace> mover para cima </replace>
+    </text>
+    <text>
+      <find>UPDATE-X down</find>
+      <replace> mover para bajo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X botton</find>
+      <replace> mover para Ãºltimo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete confirm</find>
+      <replace>Â¿Deseas eliminar el documento "[UPDATE-X id]"?</replace>
+    </text>
+    <text>
+      <find>UPDATE-X locked document</find>
+      <replace>Este documento estÃ¡ siendo modificado por otro usuario.<br/>Por favor, intente nuevamente mÃ¡s tarde!</replace>
+    </text>
+    <text>
+      <find>UPDATE-X locked error code</find>
+      <replace>cÃ³digo del error: </replace>
+    </text>
+		<text><find>UPDATE-X could not save</find><replace>No fue posible grabar este documento.<br/>Por favor, intente nuevamente mÃ¡s tarde!</replace></text>
+    <text>
+      <find>/product</find>
+      <replace>Producto</replace>
+    </text>
+    <text>
+      <find>/product/@user</find>
+      <replace>Usuario</replace>
+    </text>
+    <text>
+      <find>/product/@available</find>
+      <replace>Disponible</replace>
+    </text>
+    <text>
+      <find>/product/@available.yes</find>
+      <replace>sÃ­</replace>
+    </text>
+    <text>
+      <find>/product/@available.no</find>
+      <replace>no</replace>
+    </text>
+    <text>
+      <find>/product/@language</find>
+      <replace>Idioma de la descripciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/@language.es</find>
+      <replace>espaÃ±ol</replace>
+    </text>
+    <text>
+      <find>/product/@language.pt</find>
+      <replace>portuguÃ©s</replace>
+    </text>
+    <text>
+      <find>/product/@language.en</find>
+      <replace>inglÃ©s</replace>
+    </text>
+    <text>
+      <find>/product/@img</find>
+      <replace>Imagen</replace>
+    </text>
+    <text>
+      <find>/product/@id</find>
+      <replace>IdentificaciÃ³n de referencia</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType</find>
+      <replace>Tipo de fuente</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.database</find>
+      <replace>base de datos</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.publication</find>
+      <replace>publicaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.education</find>
+      <replace>educaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.push</find>
+      <replace>dissiminaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.comunication</find>
+      <replace>comunicaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.integration</find>
+      <replace>integraciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.tools</find>
+      <replace>herramienta</replace>
+    </text>
+    <text>
+      <find>/product/@version</find>
+      <replace>VersiÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/name</find>
+      <replace>Nombre</replace>
+    </text>
+    <text>
+      <find>/product/description</find>
+      <replace>DescripciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/description/p</find>
+      <replace>pÃ¡rrafo</replace>
+    </text>
+    <text>
+      <find>/product/description/p/text()</find>
+      <replace>pÃ¡rrafo</replace>
+    </text>
+    <text>
+      <find>/product/platform</find>
+      <replace>Plataforma</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows 9x</find>
+      <replace>Windows 9x</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows 2000</find>
+      <replace>Windows 2000</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows XP</find>
+      <replace>Windows XP</replace>
+    </text>
+    <text>
+      <find>/product/platform.Linux</find>
+      <replace>Linux</replace>
+    </text>
+    <text>
+      <find>/product/featureList</find>
+      <replace>CaracterÃ­sticas</replace>
+    </text>
+    <text>
+      <find>/product/featureList/feature</find>
+      <replace>caracterÃ­stica</replace>
+    </text>
+    <text>
+      <find>/product/featureList/feature/text()</find>
+      <replace>caracterÃ­stica</replace>
+    </text>
+    <text>
+      <find>/product/requirementList</find>
+      <replace>Requisitos</replace>
+    </text>
+    <text>
+      <find>/product/requirementList/requirement</find>
+      <replace>requisito</replace>
+    </text>
+    <text>
+      <find>/product/requirementList/requirement/text()</find>
+      <replace>requisito</replace>
+    </text>
+    <text>
+      <find>/product/informList</find>
+      <replace>Otras informaciones</replace>
+    </text>
+    <text>
+      <find>/product/informList/inform</find>
+      <replace>informaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/informList/inform/text()</find>
+      <replace>informaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/suportList</find>
+      <replace>Soportes disponibles</replace>
+    </text>
+    <text>
+      <find>/product/suportList/suport</find>
+      <replace>soporte</replace>
+    </text>
+    <text>
+      <find>/product/suportList/suport/text()</find>
+      <replace>soporte</replace>
+    </text>
+    <text>
+      <find>/product/docList</find>
+      <replace>DocumentaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc</find>
+      <replace>documentaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc/@href</find>
+      <replace>direcciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc/text()</find>
+      <replace>documentaciÃ³n</replace>
+    </text>
+    <text>
+      <find>/product/month</find>
+      <replace>mes</replace>
+    </text>
+    <text>
+      <find>/product/month.01</find>
+      <replace>enero</replace>
+    </text>
+    <text>
+      <find>/product/month.02</find>
+      <replace>febrero</replace>
+    </text>
+    <text>
+      <find>/product/month.03</find>
+      <replace>marzo</replace>
+    </text>
+    <text>
+      <find>/product/month.04</find>
+      <replace>abril</replace>
+    </text>
+    <text>
+      <find>/product/month.05</find>
+      <replace>mayo</replace>
+    </text>
+    <text>
+      <find>/product/month.06</find>
+      <replace>junio</replace>
+    </text>
+    <text>
+      <find>/product/month.07</find>
+      <replace>julio</replace>
+    </text>
+    <text>
+      <find>/product/month.08</find>
+      <replace>agosto</replace>
+    </text>
+    <text>
+      <find>/product/month.09</find>
+      <replace>septiembre</replace>
+    </text>
+    <text>
+      <find>/product/month.10</find>
+      <replace>octubre</replace>
+    </text>
+    <text>
+      <find>/product/month.11</find>
+      <replace>noviembre</replace>
+    </text>
+    <text>
+      <find>/product/month.12</find>
+      <replace>deciembre</replace>
+    </text>
+    <text>
+      <find>/product/number</find>
+      <replace>nÃºmero</replace>
+    </text>
+  </language>
+  <language id="pt">
+    <text>
+      <find>UPDATE-X project</find>
+      <replace>projeto: </replace>
+    </text>
+		<text><find>UPDATE-X user</find><replace>usuÃ¡rio: </replace></text>
+    <text>
+      <find>UPDATE-X list documents</find>
+      <replace> listar documentos </replace>
+    </text>
+    <text>
+      <find>UPDATE-X new document</find>
+      <replace> entrar novo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete document</find>
+      <replace> eliminar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X edit</find>
+      <replace> modificar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X save</find>
+      <replace> gravar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X cancel</find>
+      <replace> cancelar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X continue</find>
+      <replace> continuar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X exit</find>
+      <replace> sair </replace>
+    </text>
+    <text>
+      <find>UPDATE-X id</find>
+      <replace>id</replace>
+    </text>
+    <text>
+      <find>UPDATE-X first</find>
+      <replace> selecionar o primeiro </replace>
+    </text>
+    <text>
+      <find>UPDATE-X previous</find>
+      <replace> selecionar o anterior </replace>
+    </text>
+    <text>
+      <find>UPDATE-X next</find>
+      <replace> selecionar o prÃ³ximo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X last</find>
+      <replace> selecionar o Ãºltimo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X add</find>
+      <replace> adicionar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete</find>
+      <replace> eliminar </replace>
+    </text>
+    <text>
+      <find>UPDATE-X top</find>
+      <replace> mover para primeiro </replace>
+    </text>
+    <text>
+      <find>UPDATE-X up</find>
+      <replace> mover para cima </replace>
+    </text>
+    <text>
+      <find>UPDATE-X down</find>
+      <replace> mover para baixo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X botton</find>
+      <replace> mover para Ãºltimo </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete confirm</find>
+      <replace>Deseja eliminar o documento "[UPDATE-X id]"?</replace>
+    </text>
+    <text>
+      <find>UPDATE-X locked document</find>
+      <replace>Este documento estÃ¡ sendo modificado por outro usuÃ¡rio.<br/>Por favor, tente acessÃ¡-lo novamente mais tarde!</replace>
+    </text>
+    <text>
+      <find>UPDATE-X locked error code</find>
+      <replace>cÃ³digo do erro: </replace>
+    </text>
+		<text><find>UPDATE-X could not save</find><replace>NÃ£o foi possÃ­vel gravar este documento.<br/>Por favor, tente gravÃ¡-lo novamente mais tarde!</replace></text>
+    <text>
+      <find>/product</find>
+      <replace>Produto</replace>
+    </text>
+    <text>
+      <find>/product/@user</find>
+      <replace>UsuÃ¡rio</replace>
+    </text>
+    <text>
+      <find>/product/@available</find>
+      <replace>DisponÃ­vel</replace>
+    </text>
+    <text>
+      <find>/product/@available.yes</find>
+      <replace>sim</replace>
+    </text>
+    <text>
+      <find>/product/@available.no</find>
+      <replace>nÃ£o</replace>
+    </text>
+    <text>
+      <find>/product/@language</find>
+      <replace>Idioma da descriÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@language.es</find>
+      <replace>espanhol</replace>
+    </text>
+    <text>
+      <find>/product/@language.pt</find>
+      <replace>portuguÃªs</replace>
+    </text>
+    <text>
+      <find>/product/@language.en</find>
+      <replace>inglÃªs</replace>
+    </text>
+    <text>
+      <find>/product/@img</find>
+      <replace>Imagem</replace>
+    </text>
+    <text>
+      <find>/product/@id</find>
+      <replace>IdentificaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType</find>
+      <replace>Tipo de fonte</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.database</find>
+      <replace>base de dados</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.publication</find>
+      <replace>publicaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.education</find>
+      <replace>educaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.push</find>
+      <replace>dissiminaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.comunication</find>
+      <replace>comunicaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.integration</find>
+      <replace>integraÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.tools</find>
+      <replace>ferramenta</replace>
+    </text>
+    <text>
+      <find>/product/@version</find>
+      <replace>versÃ£o</replace>
+    </text>
+    <text>
+      <find>/product/name</find>
+      <replace>Nome</replace>
+    </text>
+    <text>
+      <find>/product/description</find>
+      <replace>DescriÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/description/p</find>
+      <replace>parÃ¡grafo</replace>
+    </text>
+    <text>
+      <find>/product/description/p/text()</find>
+      <replace>parÃ¡grafo</replace>
+    </text>
+    <text>
+      <find>/product/platform</find>
+      <replace>Plataforma</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows 9x</find>
+      <replace>Windows 9x</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows 2000</find>
+      <replace>Windows 2000</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows XP</find>
+      <replace>Windows XP</replace>
+    </text>
+    <text>
+      <find>/product/platform.Linux</find>
+      <replace>Linux</replace>
+    </text>
+    <text>
+      <find>/product/featureList</find>
+      <replace>CaracterÃ­sticas</replace>
+    </text>
+    <text>
+      <find>/product/featureList/feature</find>
+      <replace>caracterÃ­stica</replace>
+    </text>
+    <text>
+      <find>/product/featureList/feature/text()</find>
+      <replace>caracterÃ­stica</replace>
+    </text>
+    <text>
+      <find>/product/requirementList</find>
+      <replace>Requisitos</replace>
+    </text>
+    <text>
+      <find>/product/requirementList/requirement</find>
+      <replace>requisito</replace>
+    </text>
+    <text>
+      <find>/product/requirementList/requirement/text()</find>
+      <replace>requisito</replace>
+    </text>
+    <text>
+      <find>/product/informList</find>
+      <replace>Outras informaÃ§Ãµes</replace>
+    </text>
+    <text>
+      <find>/product/informList/inform</find>
+      <replace>informaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/informList/inform/text()</find>
+      <replace>informaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/suportList</find>
+      <replace>Suportes disponÃ­veis</replace>
+    </text>
+    <text>
+      <find>/product/suportList/suport</find>
+      <replace>suporte disponÃ­vel</replace>
+    </text>
+    <text>
+      <find>/product/suportList/suport/text()</find>
+      <replace>suporte disponÃ­vel</replace>
+    </text>
+    <text>
+      <find>/product/docList</find>
+      <replace>DocumentaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc</find>
+      <replace>documentaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc/@href</find>
+      <replace>endereÃ§o</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc/text()</find>
+      <replace>documentaÃ§Ã£o</replace>
+    </text>
+    <text>
+      <find>/product/month</find>
+      <replace>mÃªs</replace>
+    </text>
+    <text>
+      <find>/product/month.01</find>
+      <replace>janeiro</replace>
+    </text>
+    <text>
+      <find>/product/month.02</find>
+      <replace>fevereiro</replace>
+    </text>
+    <text>
+      <find>/product/month.03</find>
+      <replace>marÃ§o</replace>
+    </text>
+    <text>
+      <find>/product/month.04</find>
+      <replace>abril</replace>
+    </text>
+    <text>
+      <find>/product/month.05</find>
+      <replace>maio</replace>
+    </text>
+    <text>
+      <find>/product/month.06</find>
+      <replace>junho</replace>
+    </text>
+    <text>
+      <find>/product/month.07</find>
+      <replace>julho</replace>
+    </text>
+    <text>
+      <find>/product/month.08</find>
+      <replace>agosto</replace>
+    </text>
+    <text>
+      <find>/product/month.09</find>
+      <replace>setembro</replace>
+    </text>
+    <text>
+      <find>/product/month.10</find>
+      <replace>outubro</replace>
+    </text>
+    <text>
+      <find>/product/month.11</find>
+      <replace>novembro</replace>
+    </text>
+    <text>
+      <find>/product/month.12</find>
+      <replace>dezembro</replace>
+    </text>
+    <text>
+      <find>/product/number</find>
+      <replace>nÃºmero</replace>
+    </text>
+  </language>
+  <language id="en">
+    <text>
+      <find>UPDATE-X project</find>
+      <replace>project: </replace>
+    </text>
+		<text><find>UPDATE-X user</find><replace>user: </replace></text>
+    <text>
+      <find>UPDATE-X list documents</find>
+      <replace> list documents </replace>
+    </text>
+    <text>
+      <find>UPDATE-X new document</find>
+      <replace> new </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete document</find>
+      <replace> delete </replace>
+    </text>
+    <text>
+      <find>UPDATE-X edit</find>
+      <replace> edit </replace>
+    </text>
+    <text>
+      <find>UPDATE-X save</find>
+      <replace> save </replace>
+    </text>
+    <text>
+      <find>UPDATE-X cancel</find>
+      <replace> cancel </replace>
+    </text>
+    <text>
+      <find>UPDATE-X continue</find>
+      <replace> continue </replace>
+    </text>
+    <text>
+      <find>UPDATE-X exit</find>
+      <replace> exit </replace>
+    </text>
+    <text>
+      <find>UPDATE-X id</find>
+      <replace>id</replace>
+    </text>
+    <text>
+      <find>UPDATE-X first</find>
+      <replace> first </replace>
+    </text>
+    <text>
+      <find>UPDATE-X previous</find>
+      <replace> previous </replace>
+    </text>
+    <text>
+      <find>UPDATE-X next</find>
+      <replace> next </replace>
+    </text>
+    <text>
+      <find>UPDATE-X last</find>
+      <replace> last </replace>
+    </text>
+    <text>
+      <find>UPDATE-X add</find>
+      <replace> add </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete</find>
+      <replace> delete </replace>
+    </text>
+    <text>
+      <find>UPDATE-X top</find>
+      <replace> top </replace>
+    </text>
+    <text>
+      <find>UPDATE-X up</find>
+      <replace> up </replace>
+    </text>
+    <text>
+      <find>UPDATE-X down</find>
+      <replace> down </replace>
+    </text>
+    <text>
+      <find>UPDATE-X botton</find>
+      <replace> botton </replace>
+    </text>
+    <text>
+      <find>UPDATE-X delete confirm</find>
+      <replace>Delete document "[UPDATE-X id]"?</replace>
+    </text>
+    <text>
+      <find>UPDATE-X locked document</find>
+      <replace>This document is currently being modified by another user.<br/>Please, try again later!</replace>
+    </text>
+    <text>
+      <find>UPDATE-X locked error code</find>
+      <replace>error code: </replace>
+    </text>
+		<text><find>UPDATE-X could not save</find><replace>It was not possible to save these document.<br/>Please, try again later!</replace></text>
+    <text>
+      <find>/product</find>
+      <replace>Product</replace>
+    </text>
+    <text>
+      <find>/product/@user</find>
+      <replace>User</replace>
+    </text>
+    <text>
+      <find>/product/@available</find>
+      <replace>DisponÃ­vel</replace>
+    </text>
+    <text>
+      <find>/product/@available.yes</find>
+      <replace>yes</replace>
+    </text>
+    <text>
+      <find>/product/@available.no</find>
+      <replace>no</replace>
+    </text>
+    <text>
+      <find>/product/@language</find>
+      <replace>Document language</replace>
+    </text>
+    <text>
+      <find>/product/@language.es</find>
+      <replace>spanish</replace>
+    </text>
+    <text>
+      <find>/product/@language.pt</find>
+      <replace>portuguese</replace>
+    </text>
+    <text>
+      <find>/product/@language.en</find>
+      <replace>english</replace>
+    </text>
+    <text>
+      <find>/product/@img</find>
+      <replace>Image</replace>
+    </text>
+    <text>
+      <find>/product/@id</find>
+      <replace>Reference identification</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType</find>
+      <replace>Source type</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.database</find>
+      <replace>database</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.publication</find>
+      <replace>publication</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.education</find>
+      <replace>education</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.push</find>
+      <replace>push</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.comunication</find>
+      <replace>comunication</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.integration</find>
+      <replace>integration</replace>
+    </text>
+    <text>
+      <find>/product/@sourceType.tools</find>
+      <replace>tool</replace>
+    </text>
+    <text>
+      <find>/product/@version</find>
+      <replace>Version</replace>
+    </text>
+    <text>
+      <find>/product/name</find>
+      <replace>Name</replace>
+    </text>
+    <text>
+      <find>/product/description</find>
+      <replace>Description</replace>
+    </text>
+    <text>
+      <find>/product/description/p</find>
+      <replace>paragraph</replace>
+    </text>
+    <text>
+      <find>/product/description/p/text()</find>
+      <replace>paragraph</replace>
+    </text>
+    <text>
+      <find>/product/platform</find>
+      <replace>Platform</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows 9x</find>
+      <replace>Windows 9x</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows 2000</find>
+      <replace>Windows 2000</replace>
+    </text>
+    <text>
+      <find>/product/platform.Windows XP</find>
+      <replace>Windows XP</replace>
+    </text>
+    <text>
+      <find>/product/platform.Linux</find>
+      <replace>Linux</replace>
+    </text>
+    <text>
+      <find>/product/featureList</find>
+      <replace>Features</replace>
+    </text>
+    <text>
+      <find>/product/featureList/feature</find>
+      <replace>feature</replace>
+    </text>
+    <text>
+      <find>/product/featureList/feature/text()</find>
+      <replace>feature</replace>
+    </text>
+    <text>
+      <find>/product/requirementList</find>
+      <replace>Requirements</replace>
+    </text>
+    <text>
+      <find>/product/requirementList/requirement</find>
+      <replace>requirement</replace>
+    </text>
+    <text>
+      <find>/product/requirementList/requirement/text()</find>
+      <replace>requirement</replace>
+    </text>
+    <text>
+      <find>/product/informList</find>
+      <replace>More information</replace>
+    </text>
+    <text>
+      <find>/product/informList/inform</find>
+      <replace>information</replace>
+    </text>
+    <text>
+      <find>/product/informList/inform/text()</find>
+      <replace>information</replace>
+    </text>
+    <text>
+      <find>/product/suportList</find>
+      <replace>Available support</replace>
+    </text>
+    <text>
+      <find>/product/suportList/suport</find>
+      <replace>support</replace>
+    </text>
+    <text>
+      <find>/product/suportList/suport/text()</find>
+      <replace>support</replace>
+    </text>
+    <text>
+      <find>/product/docList</find>
+      <replace>Documentation</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc</find>
+      <replace>documentation</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc/@href</find>
+      <replace>address</replace>
+    </text>
+    <text>
+      <find>/product/docList/doc/text()</find>
+      <replace>documentation</replace>
+    </text>
+    <text>
+      <find>/product/month</find>
+      <replace>month</replace>
+    </text>
+    <text>
+      <find>/product/month.01</find>
+      <replace>january</replace>
+    </text>
+    <text>
+      <find>/product/month.02</find>
+      <replace>february</replace>
+    </text>
+    <text>
+      <find>/product/month.03</find>
+      <replace>march</replace>
+    </text>
+    <text>
+      <find>/product/month.04</find>
+      <replace>april</replace>
+    </text>
+    <text>
+      <find>/product/month.05</find>
+      <replace>may</replace>
+    </text>
+    <text>
+      <find>/product/month.06</find>
+      <replace>june</replace>
+    </text>
+    <text>
+      <find>/product/month.07</find>
+      <replace>july</replace>
+    </text>
+    <text>
+      <find>/product/month.08</find>
+      <replace>august</replace>
+    </text>
+    <text>
+      <find>/product/month.09</find>
+      <replace>september</replace>
+    </text>
+    <text>
+      <find>/product/month.10</find>
+      <replace>actober</replace>
+    </text>
+    <text>
+      <find>/product/month.11</find>
+      <replace>november</replace>
+    </text>
+    <text>
+      <find>/product/month.12</find>
+      <replace>december</replace>
+    </text>
+    <text>
+      <find>/product/number</find>
+      <replace>number</replace>
+    </text>
+  </language>
+</texts>

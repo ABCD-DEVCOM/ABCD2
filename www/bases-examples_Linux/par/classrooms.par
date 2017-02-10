@@ -1,0 +1,14 @@
+classrooms.*=%path_database%classrooms/data/classrooms.*
+
+classrooms.pft=%path_database%classrooms/pfts/en/classrooms.pft
+prologoact.pft=%path_database%www/prologoact.pft
+
+epilogoact.pft=%path_database%www/epilogoact.pft
+
+isisac.tab=%path_database%classrooms/data/isisac.tab
+
+isisuc.tab=%path_database%classrooms/data/isisuc.tab
+
+STW=%path_database%classrooms/data/classrooms.stw
+
+trans.*=%path_database%trans/data/trans.*

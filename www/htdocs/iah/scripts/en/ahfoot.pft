@@ -1,0 +1,43 @@
+
+
+'   <div class="footer">
+        <div class="copyright">
+        <p>'
+        if v5001^s : 'LIST' and v6212 = 'print' then
+            '[ '
+           '<a href="javascript:history.go('
+           if v5001^s <> 'LIST_ONE' and v5001^s <> 'LIST_YOUR_SELECTION' then '-2' else '-1' fi')">Back</a>'
+           ' ]'
+        fi,
+'        </p>
+        <p>Search engine: <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=pt&component=28&item=3"><b>iAH</b></a> v',v5000^v,' powered by <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=pt&component=28&item=2">WWWISIS</a>
+        </p>
+        <p>ABCD iAH by BIREME, PAHO/OPS</p>
+        </div>
+    </div>
+'/
+
+if p(v6002) then,
+     '<SCRIPT LANGUAGE="JavaScript">highlightSearchTerms("',replace(s(v6002+| |),'"',''),'");</SCRIPT>'/
+else if p(v6102) then
+     '<SCRIPT LANGUAGE="JavaScript">highlightSearchTerms("',replace(s(v6102+| |),'"',''),'");</SCRIPT>'/
+fi fi,
+ 
+
+'
+    <form name=cruzar action=/cgi-bin/wxis.exe/iah/scripts/ method=post>
+        <input type=hidden name=IsisScript value=iah.xis>
+        <input type=hidden name=lang value=es>
+        <input type=hidden name=base>
+        <input type=hidden name=nextAction value=lnk>
+        <input type=hidden name=exprSearch>
+        <input type=hidden name=indexSearch>
+     </form>
+'
+' <!-- Esta forma se envÃ­a para solicitar la clave para ver un documento -->
+<form name=verdocumento action="http://biblioteca3.aeu.org.uy/central/iah/ver_documento.php" method=post target="AEUDOC">
+<input type=hidden name=mfn>
+<input type=hidden name=lang>
+<input type=hidden name=occ>
+<input type=hidden name=base>
+</form>'

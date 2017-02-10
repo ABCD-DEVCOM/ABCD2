@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/abcd/!svn/ver/1022/tags/1.0.6-beta/bases/cnv
+END
+z3950.cnv
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/abcd/!svn/ver/1022/tags/1.0.6-beta/bases/cnv/z3950.cnv
+END
+marc_to_cepal.z3950
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/abcd/!svn/ver/1022/tags/1.0.6-beta/bases/cnv/marc_to_cepal.z3950
+END
+marc-8_to_ansi.tab
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/abcd/!svn/ver/1022/tags/1.0.6-beta/bases/cnv/marc-8_to_ansi.tab
+END
