@@ -81,7 +81,7 @@ unset($fp);
 <script>
 //NUMBER OF LANGUAGES DEFINED IN IAH.DEF.PHP
 n_lang=<?php echo count($lan_iah)."\n"?>
-<?
+<?php
 $ix=0;
 $rotulo_lan="";
 foreach ($lan_iah as $lan){
