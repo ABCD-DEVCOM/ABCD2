@@ -32,32 +32,32 @@ FILE GXML=%path_database%gizmo/gXML.*
 
 [INDEX_DEFINITION]
 
-INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^d*^xBI ^uBI_^yDATABASE^mBI_
-INDEX Tt=^1Palavras do t�tulo^2Palabras del t�tulo^3Title words^4Mots du titre^xTW ^uTW_^yDATABASE^mTW_
-INDEX Ti=^1T�tulo^2T�tulo^3Title^4Titre^xTI ^uTI_^yDATABASE^mTI_
-INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4R�sum� mots^xAB ^uAB_^yDATABASE^mAB_
-INDEX Au=^1Autor^2Autor^3Author^4Auteur^xAU ^uAU_^yDATABASE^mAU_
-INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^xAI ^uAI_^yDATABASE^mAI_
-INDEX Ma=^1Assunto t�pico^2Descriptor^3Subject^4Sujet^xDE ^uDE_^yDATABASE^mDE_
-INDEX Dg=^1Nome geogr�fico^2Descriptor geogr�fico^3Subject geographic^4Sujet g�ographique^xGD ^uGD_^yDATABASE^mGD_
-INDEX KEY=^1Clave^2Clave^3KEY^4Clé^xKEY ^uKEY_^yDATABASE^mKEY_
+INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^5Woorden^d*^xBI ^uBI_^yDATABASE^mBI_
+INDEX Tt=^1Palavras do título^2Palabras del título^3Title words^4Mots du titre^5Titelwoorden^xTW ^uTW_^yDATABASE^mTW_
+INDEX Ti=^1Título^2Título^3Title^4Titre^5Titel^xTI ^uTI_^yDATABASE^mTI_
+INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Résumé mots^5Woorden uit abstract^xAB ^uAB_^yDATABASE^mAB_
+INDEX Au=^1Autor^2Autor^3Author^4Auteur^5Auteurs^xAU ^uAU_^yDATABASE^mAU_
+INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^5Institutionele auteur^xAI ^uAI_^yDATABASE^mAI_
+INDEX Ma=^1Assunto típico^2Descriptor^3Subject^4Sujet^5Onderwerp^xDE ^uDE_^yDATABASE^mDE_
+INDEX Dg=^1Nome geográfico^2Descriptor geográfico^3Subject geographic^4Sujet géographique^5Geografisch onderwerp^xGD ^uGD_^yDATABASE^mGD_
+INDEX KEY=^1Clave^2Clave^3KEY^4Clé^5Sleutel^xKEY ^uKEY_^yDATABASE^mKEY_
 
 [APPLY_GIZMO]
 
 
 [FORMAT_NAME]
 
-FORMAT normal.pft=^1Normal^2Normal^3Normal^4Normal
-FORMAT standard.pft=^1Padr�o^2Largo^3Large^4Grand
-FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4D�taill�e
-FORMAT rda_opac.pft=^1rda_opac^2rda_opac^3rda_opac^4rda_opac
-FORMAT frbrbase.pft=^1FRBRbase^2FRBRbase^3FRBRbase^4FRBRbase
-FORMAT DEFAULT=frbrbase.pft
+FORMAT normal.pft=^1Normal^2Normal^3Normal^4Normal^5Normaal
+FORMAT standard.pft=^1Padrão^2Largo^3Large^4Grand^5Groot
+FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée^5Gedetailleerd
+FORMAT rda_opac.pft=^1rda_opac^2rda_opac^3rda_opac^4rda_opac^5OPAC RDA
+FORMAT frbrbase.pft=^1FRBRbase^2FRBRbase^3FRBRbase^4FRBRbase^5FRBRbase
+FORMAT DEFAULT=normal.pft
 
 [HELP_FORM]
 
 HELP FORM=help_form_lilacs.htm
-NOTE FORM=note_form1_lilacs.htm
+NOTE FORM=note_form_lilacs.htm
 
 [PREFERENCES]
 
@@ -66,3 +66,4 @@ SEND RESULT BY EMAIL=OFF
 NAVIGATION BAR=OFF
 DOCUMENTS PER PAGE=20
 FEATURES=XML
+UNICODE=0

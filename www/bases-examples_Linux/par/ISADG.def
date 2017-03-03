@@ -29,7 +29,7 @@ FORMAT DEFAULT=detailed.pft
 [HELP_FORM]
 
 HELP FORM=help_form_lilacs.htm
-NOTE FORM F=note_form1_lilacs.htm
+NOTE FORM F=note_form_lilacs.htm
 
 [PREFERENCES]
 

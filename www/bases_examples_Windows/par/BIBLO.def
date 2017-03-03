@@ -20,6 +20,9 @@ FILE export_EndNote.pft=%path_database%biblo/pfts/export_EndNote.pft
 FILE export_ProCite.pft=%path_database%biblo/pfts/export_ProCite.pft
 FILE export_ReferenceManager.pft=%path_database%biblo/pfts/export_ReferenceManager.pft
 FILE export_Refworks.pft=%path_database%biblo/pfts/export_Refworks.pft
+FILE GXML=%path_database%gizmo/gXML.*
+FILE loanobjects.*=%path_database%loanobjects/data/loanobjects.*
+FILE trans.*=%path_database%trans/data/trans.*
 
 [INDEX_DEFINITION]
 
@@ -44,17 +47,17 @@ INDEX Dt=^1Data de entrada^2Fecha de entrada^3Entry date^4Date d'entrée^xDT ^uDT
 
 FORMAT standard.pft=^1Longo^2Largo^3Large^4Grand
 FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée
-FORMAT DEFAULT=detailed.pft
+FORMAT DEFAULT=standard.pft
 
 [HELP_FORM]
 
 HELP FORM=help_form_lilacs.htm
-NOTE FORM F=note_form1_lilacs.htm
+NOTE FORM=note_form_lilacs.htm
 
 [PREFERENCES]
 
 AVAILABLE FORMS=F,A
 SEND RESULT BY EMAIL=OFF
-NAVIGATION BAR=ON
-DOCUMENTS PER PAGE=20
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=10
 FEATURES=XML

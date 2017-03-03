@@ -1,0 +1,8 @@
+CHANGES applied into ABCD 2.0f since 31/1/2017
+
+
+- include setting for Unicode : added in htdocs/central/dbadmin/iah_edit_db.php :
+echo "<tr><td valign=top>UNICODE</td><td><input type=checkbox name=UNICODE value=\"ON\" ";
+				if ($unicode!="")  echo " checked";
+				echo "> ON</td>";
+- changed <? into <?php on line 84 of htdocs/central/dbadmin/iah_edit_db.php because short_open_tag is now OFF and this caused JavaScripts no longer to work.

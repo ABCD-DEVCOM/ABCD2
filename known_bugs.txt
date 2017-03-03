@@ -6,7 +6,7 @@ CISIS
 Central
 
 - special cisis_ver database cannot be selected as first database to open in main central menu, but can be opened well from next screen.
-
+- iah_edit_db.php javascript-functions (e.g. edit index) not always working  => solved by <?php on line 84
 
 iAh
 
