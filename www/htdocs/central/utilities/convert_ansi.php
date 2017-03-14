@@ -51,7 +51,7 @@ echo "
 
 	";
 
-	echo "<a href=\"../dbadmin/menu_mx_based.php?base=".$_GET['selected_base']."&encabezado=S\" class=\"defaultButton backButton\">";
+	echo "<a href=\"menu_mx_based.php?base=".$_GET['selected_base']."&encabezado=S\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 
@@ -211,7 +211,7 @@ Extensions<hr/>
 </tr>
 </table>
 <br/>
-<input type="submit" value="Acept" onclick="javascript:show_proc();"/>
+<input type="submit" value="Convert" onclick="javascript:show_proc();"/>
 </form>
 </div>
 </div>
