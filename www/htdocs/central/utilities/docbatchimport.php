@@ -6,8 +6,8 @@
  * @desc:      Script to automaticly extract the metadata from the documents and create full text indexed DB
  * @author:    Marcos Mirabal - marcos.clary@gmail.com
  * @since:     20141203
- * @version:   2.7
- * @updated:   20161127
+ * @version:   2.8.1
+ * @updated:   20170323
  *
  * == BEGIN LICENSE ==
  *
@@ -39,20 +39,21 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 $base_ant=$arrHttp["base"];
 //Adjusting Tika path
-$tikapath=$cisis_path;
-if ($cisis_ver!="")  $tikapath=str_replace($cisis_ver,'',$cisis_path);
+$tikapath=$cgibin_path;
+//if ($cisis_ver!="")  $tikapath=str_replace($cisis_ver,'',$cisis_path);
 //Setting the path to mx
 $converter_path=$cisis_path."mx";
 
 $OS=strtoupper(PHP_OS);
-if (strpos($OS,"WIN")=== false) 
-{
-$tikacommands='java -jar '.$tikapath.'tika-server.jar --host=127.0.0.1 --port=9998 > '.$db_path."wrk/TikaTemp.txt".' &';
-exec($tikacommands,$outcms,$banderacms);
-}
+//if (strpos($OS,"WIN")=== false) 
+//{
+//$tikacommands='java -jar '.$tikapath.'tika-server.jar --host=127.0.0.1 --port=9998 > '.$db_path."wrk/TikaTemp.txt".' &';
+//exec($tikacommands,$outcms,$banderacms);
+//}
 $maxfilezise=26214400;//25 MB
-if (strpos($OS,"WIN")=== false) $fp=file("/etc/php5/apache2/php.ini");
-else $fp=file("/ABCD/php/php.ini");
+
+$inipath = php_ini_loaded_file();
+$fp=file($inipath);
 
 foreach($fp as $avalue)
 {
@@ -72,20 +73,46 @@ foreach($fp as $avalue)
 }
 $maxfilezise=((int)$maxfilezise)*1048576;
 //Get the path of the collection folder
-$fp=file($db_path.$base_ant."/dr_path.def");
-foreach($fp as $avalue)
-{
-	$pos = strpos($avalue, "COLLECTION");
-	if ($pos !== false)
-	 {
-		$cadmax=explode("=",$avalue);		
-		$truepathcol=$cadmax[1];		
-	 }	 
-}
-if (strpos($OS,"WIN")=== false) $truepathcol=substr($truepathcol,0,-2);
-echo $truepathcol;
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+$def = parse_ini_file($db_path.$base_ant."/dr_path.def");
+	if (isset($def["COLLECTION"])){
+        $truepathcol=trim($def["COLLECTION"]);
+        }
+        else echo "Collection path not set in dr_path.def !";
+//$fp=file($db_path.$base_ant."/dr_path.def");
+//foreach($fp as $avalue)
+//{
+//	$pos = strpos($avalue, "COLLECTION");
+//	if ($pos !== false)
+//	 {
+//		$cadmax=explode("=",$avalue);
+//                $cmlen=strlen($cadmax);
+//echo "CADMAX=$cadmax[1] with size of $cmlen <BR>";
+//	if (!feof()) {$truepathcol=$cadmax[1]}
+//$truepathcol=$cadmax[1] ;
+//        else
+//        $truepathcol=substr($cadmax,0,strlen($cadmax)-1);
+//	 }	 
+//}
+//Fixing the last line problem
+//$truepathcol=substr($truepathcol,0,(strrpos($truepathcol,'/')+1));
+//echo "DR_PATHDEF=" .$db_path.$base_ant."/dr_path.def<BR>";
+//echo "TRUEPATHCOL=$truepathcol<BR>";
+
 echo "<body onunload=win.close()>\n";
+
+if (is_writable($truepathcol))
+{
+ if (is_writable($truepathcol."ABCDImportRepo"))
+ {
+ echo $truepathcol . "ABCDImportRepo is writable<BR>";
+ }
+ else   // ImportRepo not writable
+ echo "$truepathcol is writable but not ABCDImportRepo<BR>";
+}
+else             // truepathcol not writable
+ echo "The collection folder $truepathcol does not exist or is write-protected";
+
+
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";	
@@ -105,7 +132,7 @@ echo "</div>
 ?>
 	<script language="javascript">
     
-var seconds = 7;
+var seconds = 1;
 function secondPassed() {
     var minutes = Math.round((seconds - 30)/60);
     var remainingSeconds = seconds % 60;
@@ -147,7 +174,7 @@ echo '</br></br></br>';
 <table width="750px" border="0">
   <tr>
      <td width="10">&nbsp;</td>
-    <td colspan="10" style="font-size:14px">Match your fields with the Dublin Core metadata format.</td>
+    <td colspan="10" style="font-size:14px">Match your fields with the (Dublin Core) metadata format.</td>
 	  <tr>
     <td width="10">&nbsp;</td>
     <td width="59" align="left" style="font-size:14px"><label>DC:Title</label></td>
@@ -233,12 +260,13 @@ echo '</br></br></br>';
   <tr>
      <td width="10">&nbsp;</td>
     <td><?php 
-	if (strpos($OS,"WIN")=== false) 
-{
+//	if (strpos($OS,"WIN")=== false) 
+//{
 //Linux
-echo '<span id="countdown" class="timer" style="font-size:14px"></span>';
-}
-else echo "<input type=submit name=submit value=".$msgstr["update"].">"; 
+//echo '<span id="countdown" class="timer" style="font-size:14px"></span>';
+//}
+//else 
+echo "<input type=submit name=submit value=".$msgstr["update"].">"; 
   if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";
  ?></td>
     </tr>
@@ -360,7 +388,9 @@ $vdocsource=RemoveV($_POST["docsource"]);
 if (strpos($OS,"WIN")=== false)
 {
 //Linux
-$tikacommand='curl -T '.$truepathcol.$fixpath.$newdocname.$total.".".$ext.' http://127.0.0.1:9998/tika --header "Accept: text/html" >'.$db_path."wrk/".$newdocname.$total.'.html';
+//$tikacommand='curl -T '.$truepathcol.$fixpath.$newdocname.$total.".".$ext.' http://127.0.0.1:9998/tika --header "Accept: text/html" >'.$db_path."wrk/".$newdocname.$total.'.html';
+$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$truepathcol.$fixpath.$newdocname.$total.".".$ext.' >'.$db_path."wrk/".$newdocname.$total.'.html';
+//echo "TIKACMD=$tikacommand<BR>";
 exec($tikacommand,$outcm,$banderacm);
 }
 else
@@ -498,10 +528,8 @@ function time_diff($s) {
     return $td; 
 } 
 //Comprobamos si la carpeta de la coleccion existe
-$truepathcol=$truepathcol . '/';
-//echo "truepathcol=" . substr($truepathcol,0)."<BR>";
-//if ((is_dir($truepathcol)) && (is_writable(substr($truepathcol,0,-1))))
-if ((is_dir($truepathcol)) && (is_writable($truepathcol)))
+//if ((is_dir($truepathcol)) &&
+if (is_writable(substr($truepathcol,0,-1)))
 {
 //Comprobamos si la carpeta de la ABCDImportRepo existe
 if ((is_dir($truepathcol."ABCDImportRepo/")) && (is_writable($truepathcol."ABCDImportRepo")))
@@ -545,12 +573,12 @@ rename($truepathcol."ImportError",$truepathcol."ABCDImportRepo");
 }//if (is_dir($img_path.$base_ant."/collection/ABCDImportRepo/"))
 else
 {
-echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<label style="font-weight:bold;color:red">Fatal Error</label></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspThe ABCDImportRepo folder does not exists or is write protected';	
+echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<label style="font-weight:bold;color:red">Fatal Error</label></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspThe ABCDImportRepo folder does not exist or has no write-access';
 }//end else if (is_dir($img_path.$base_ant."/collection/ABCDImportRepo/"))
 }//end if (is_dir($img_path.$base_ant."/collection/"))
 else
 {
-echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<label style="font-weight:bold;color:red">Fatal Error</label></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspThe collection folder does not exists or is write protected';	
+echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<label style="font-weight:bold;color:red">Fatal Error</label></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspThe collection folder does not exist or is write-protected';
 }//end else if (is_dir($img_path.$base_ant."/collection/ABCDImportRepo/"))
 
 }//if ($_POST["submit"])

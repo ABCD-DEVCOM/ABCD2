@@ -2,8 +2,8 @@ LDR||Leader|0|0||||||||||||1|http://www.loc.gov/marc/bibliographic/bdleader.html
 H||00X: Control fields|0|0||||||||||||0||0|0|||
 F|1|Control number|0|0|||AI||20|||||||1|http://www.loc.gov/marc/bibliographic/bd001.html|0|0|||
 F|3|Control number identifier|0|0|||X||20|||||||1|http://www.loc.gov/marc/bibliographic/bd003.html|0|0|||
-M5|5|Date and Time of Latest Transaction|0|0|||X||20|||||||1||
-M|8|Fixed-Length (08)|0|0|||||||||||yymmdds                r     001 0 eng d|1|http://www.loc.gov/marc/bibliographic/bd008.html|0|0|||
+M5|5|Date and Time of Latest Transaction|0|0|||X||20|||||||1||0|0|||
+M|8|Fixed-Length (08)|0|0|||||||||||      s                r     001 0 dut d|1|http://www.loc.gov/marc/bibliographic/bd008.html|0|0|||
 H||01X-09X: Numbers and code fields|0|0||||||||||||0||0|0|||
 T|17|Copyr. or dep. number|0|1|12abdiz2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd017.html|0|0|||
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
@@ -21,7 +21,7 @@ S||International Standard Book Number|0|0|a||X|||||||||0||0|0|||
 S||Terms of availability|0|0|c||X|||||||||0||0|0|||
 S||Qualifying information|0|0|q||X|||||||||0||0|0|||
 S||Canceled/invalid ISBN|0|0|z||X|||||||||0||0|0|||
-T|40|Cataloguing source|0|0|12abcde||X||||||||  ^beng^erda|1|http://www.loc.gov/marc/bibliographic/bd040.html|0|0|||
+T|40|Cataloguing source|0|0|12abcde||X||||||||  ^bdut^erda|1|http://www.loc.gov/marc/bibliographic/bd040.html|0|0|||
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Original cataloging agency|0|0|a||X|||||||||0||0|0|||
@@ -44,7 +44,7 @@ S||Language code of intermediate translations|0|0|k||X|||||||||0||0|0|||
 S||Language code of original accompanying materials other than librettos|0|0|m||X|||||||||0||0|0|||
 S||Language code of original libretto|0|0|n||X|||||||||0||0|0|||
 S||Source of code|0|0|2||X|||||||||0||0|0|||
-T|80|Universal Decimal Classification number|0|1|12abx2||X|1||D||CU_|@cdu.pft|||1|http://www.loc.gov/marc/bibliographic/bd80.html|0|0|||
+T|80|Universal Decimal Classification number|0|1|12abx2||X|1||D||CU_|@cdu.pft|||1|http://www.loc.gov/marc/bibliographic/bd080.html|0|0|||
 S||Indicator 1 (Type of edition)|0|0|1||X||1|P|080-ind1.tab|||||0||0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Universal Decimal Classification number|0|0|a||X|||D||CU_|@cdu.pft|||0||0|0|||
@@ -77,7 +77,7 @@ S||Item number|0|0|b||X|||||||||0||0|0|||
 S||Assigning agency|0|0|q||X|||||||||0||0|0|||
 S||Source of number|0|0|2||X|||||||||0||0|0|||
 T|85|Synthesized Classification Number Components|0|1|12abcfrstuvwyz|||||||||||0||0|0|||
-S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||1|http://www.loc.gov/marc/bibliographic/bd85.html|0|0|||
+S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||1|http://www.loc.gov/marc/bibliographic/bd085.html|0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Number where instructions are found-single number or beginning number of span|0|0|a||X|||||||||0||0|0|||
 S||Base number|0|0|b||X|||||||||0||0|0|||
@@ -225,7 +225,7 @@ T|263|Projected Publication Date|0|0|12a|||||||||||1|http://www.loc.gov/marc/bib
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Projected publication date|0|0|a||X|||||||||0||0|0|||
-T|264|Production, Publication, Distribution, Manufacture, and Copyright Notice|0|1|12abc|||||||||||1|http://www.loc.gov/marc/bibliographic/bd264.html|0|0|||
+T|264|Production, Publication, Distribution, Manufacture, and Copyright Notice|0|1|12abc|||||||||| 1^a|1|http://www.loc.gov/marc/bibliographic/bd264.html|0|0|||
 S||Indicator 1 (Sequence of statements)|0|0|1||X||2|P|264-ind1.tab|||||0||0|0|||
 S||Indicator 2 (Function of entity)|0|0|2||X||2|P|264-ind2.tab|||||0||0|0|||
 S||Place of production, publication, distribution, manufacture|0|0|a||X|||||||||0||0|0|||
@@ -236,7 +236,7 @@ T|300|Physical description, etc. fields|0|1|12abce|||||||||||1|http://www.loc.go
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Extent|0|0|a||X|||||||||0||0|0|||
-S||Other physical details|0|0|b||X||1|P|300b.tab|||||0||0|0|||
+S||Other physical details|0|0|b||X||1|P||||||0||0|0|||
 S||Dimensions|0|0|c||X|||||||||0||0|0|||
 S||Accompanying material|0|0|e||X|||||||||0||0|0|||
 T|336|Content Type|0|1|12ab023||||||||||  ^atext^2rdacontent|1|http://www.loc.gov/marc/bibliographic/bd336.html|0|0|||
@@ -527,7 +527,7 @@ S||Source of term|0|0|2||X|||||||||0||0|0|||
 S||Materials specified|0|0|3||X|||||||||0||0|0|||
 S||Institution to which field applies|0|0|5||X|||||||||0||0|0|||
 H||7XX-75XX: Added entry fields|0|0||||||||||||0||0|0|||
-T|700|Personal Name|0|0|12abcdequ04||X|1||D||AU_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd700.html|0|0|||
+T|700|Personal Name|0|1|12abcdequ04||X|1||D||AU_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd700.html|0|0|||
 S||Indicator 1 (Type of personal name entry element)|0|0|1||X||1|P|100-ind1.tab|||||0||0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Personal name|0|0|a||X|||D||AU_|@autoridades.pft|||0||0|0|||
@@ -539,7 +539,7 @@ S||Fuller form of name|0|0|q||X|||||||||0||0|0|||
 S||Affiliation|0|0|u||X|||||||||0||0|0|||
 S||Authority record control number or standard number|0|0|0||X|||||||||0||0|0|||
 S||Relator code|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
-T|710|Corporate name|0|1|12abcdefghiklmnoprstux0345|||1||||AI_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd710.html|0|0|||
+T|710|Corporate name|0|1|12abcdefghiklmnoprstux0345||X|1||||AI_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd710.html|0|0|||
 S||Indicator 1 (Type of corporate name entry element)|0|0|1||X||1|P|110-ind1.tab|||||0||0|0|||
 S||Indicator 2 (Type of added entry)|0|0|2||X||1|P|700-ind2.tab|||||0||0|0|||
 S||Corporate name|0|0|a||X|||D||AI_|@autoridades.pft|||0||0|0|||

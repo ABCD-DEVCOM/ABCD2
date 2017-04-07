@@ -1195,7 +1195,7 @@ border-radius: 15px;padding: 10px 10px 5px 10px;\">";
 						$t[0]="F";
 				    	$t[7]="AI";
 			}
-  			$tag=$t[1];
+  			$tag=intval($t[1]);
   			$subc=rtrim($t[5]);
   			$edit_subc=rtrim($t[6]);
 			$nsc=strlen(rtrim($t[5]));

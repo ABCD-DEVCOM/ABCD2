@@ -3,7 +3,7 @@ H||00X: Control fields|0|0||||||||||||0||0|0|||
 F|1|Control number|0|0|||AI||20|||||||1|http://www.loc.gov/marc/bibliographic/bd001.html|0|0|||
 F|3|Control number identifier|0|0|||X||20|||||||1|http://www.loc.gov/marc/bibliographic/bd003.html|0|0|||
 M5|5|Date and Time of Latest Transaction|0|0|||X||20|||||||1||
-M|8|Fixed-Length (08)|0|0|||||||||||mmyydds                                            eng d|1|http://www.loc.gov/marc/bibliographic/bd008.html|0|0|||
+M|8|Fixed-Length (08)|0|0|||||||||||yymmdds                                            eng d|1|http://www.loc.gov/marc/bibliographic/bd008.html|0|0|||
 H||01X-09X: Numbers and code fields|0|0||||||||||||0||0|0|||
 T|17|Copyr. or dep. number|0|1|12abdiz2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd017.html|0|0|||
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
@@ -58,7 +58,7 @@ S||Language code of intermediate translations|0|0|k||X|||||||||0||0|0|||
 S||Language code of original accompanying materials other than librettos|0|0|m||X|||||||||0||0|0|||
 S||Language code of original libretto|0|0|n||X|||||||||0||0|0|||
 S||Source of code|0|0|2||X|||||||||0||0|0|||
-T|80|Universal Decimal Classification number|0|1|12abx2||X|1||D||CU_|@cdu.pft|||1|http://www.loc.gov/marc/bibliographic/bd80.html|0|0|||
+T|80|Universal Decimal Classification number|0|1|12abx2||X|1||D||CU_|@cdu.pft|||1|http://www.loc.gov/marc/bibliographic/bd080.html|0|0|||
 S||Indicator 1 (Type of edition)|0|0|1||X||1|P|080-ind1.tab|||||0||0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Universal Decimal Classification number|0|0|a||X|||D||CU_|@cdu.pft|||0||0|0|||
@@ -91,7 +91,7 @@ S||Item number|0|0|b||X|||||||||0||0|0|||
 S||Assigning agency|0|0|q||X|||||||||0||0|0|||
 S||Source of number|0|0|2||X|||||||||0||0|0|||
 T|85|Synthesized Classification Number Components|0|1|12abcfrstuvwyz|||||||||||0||0|0|||
-S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||1|http://www.loc.gov/marc/bibliographic/bd85.html|0|0|||
+S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||1|http://www.loc.gov/marc/bibliographic/bd085.html|0|0|||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Number where instructions are found-single number or beginning number of span|0|0|a||X|||||||||0||0|0|||
 S||Base number|0|0|b||X|||||||||0||0|0|||
@@ -594,7 +594,7 @@ S||Fuller form of name|0|0|q||X|||||||||0||0|0|||
 S||Affiliation|0|0|u||X|||||||||0||0|0|||
 S||Authority record control number or standard number|0|0|0||X|||||||||0||0|0|||
 S||Relator code|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
-T|710|Corporate name|0|1|12abcdefghiklmnoprstux0345|||1||||AI_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd710.html|0|0|||
+T|710|Corporate name|0|1|12abcdefghiklmnoprstux0345||X|1||||AI_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd710.html|0|0|||
 S||Indicator 1 (Type of corporate name entry element)|0|0|1||X||1|P|110-ind1.tab|||||0||0|0|||
 S||Indicator 2 (Type of added entry)|0|0|2||X||1|P|700-ind2.tab|||||0||0|0|||
 S||Corporate name|0|0|a||X|||D||AI_|@autoridades.pft|||0||0|0|||

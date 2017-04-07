@@ -1,0 +1,13 @@
+T|16|National Bibliographic Agency Control Number|0|1|12az2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd016.html|0|0|||
+S||Indicator 1 (National bibliographic agency)|0|0|1||X||1|P|016-ind1.tab|||||0||0|0|||
+S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Record control number|0|0|a||X|||||||||0||0|0|||
+S||Canceled/invalid control number|0|0|z||X|||||||||0||0|0|||
+S||Source|0|0|2||X|||||||||0||0|0|||
+T|20|ISBN|0|1|12acqz|||||||||||1|http://www.loc.gov/marc/bibliographic/bd020.html|0|0|||
+S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||International Standard Book Number|0|0|a||X|||||||||0||0|0|||
+S||Terms of availability|0|0|c||X|||||||||0||0|0|||
+S||Qualifying information|0|0|q||X|||||||||0||0|0|||
+S||Canceled/invalid ISBN|0|0|z||X|||||||||0||0|0|||

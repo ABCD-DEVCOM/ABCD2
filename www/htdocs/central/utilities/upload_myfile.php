@@ -5,9 +5,19 @@
  <?php 
 include("../common/get_post.php");
 include("../config.php");
-include("../common/get_post.php");
+include("../common/header.php");
+echo '<div class="helper">';
+
+if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
+ 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_docbatchimport.html target=_blank>".$msgstr["edhlp"]."</a>";
+echo "<font color=white>&nbsp; &nbsp; Script: upload_myfile.php</font>";
+echo '</div>		
+<div class="middle form">
+	<div class="formContent">';
 $base=$arrHttp['base'];
+$arrHttp['encabezado']="s";
 $fn="";
+
  # si hay algun archivo que subir 
  if($_FILES["archivo"]["name"][0]) 
  { 
@@ -46,24 +56,52 @@ $fn.=$_FILES["archivo"]["name"][$i]."&*";
  }
 if($fn!="")
 {
-echo "<br><br><form name='import' method='post' action='../utilities/interactive_import.php'>
+	$arrHttp['base']=$base;
+	echo "<br><br><form name='import' method='post' action='../utilities/docbatchimport.php'>
 <input type='hidden' name=fn>
 <input type='hidden' name='base' value='$base'>
 <input type='hidden' name='cd'>
-Please <input type='submit' value='Configure Doc Import'>
+<input type='hidden' name='arrHttp' value='".$arrHttp."'>
+CONTINUE <input type='submit' value='Configure Doc Import'>
 </form>";
 //echo "<a href='javascript:send();'><br><img src='../images/importDatabase.png'><br>Start Import</a><br>"; 
-
+echo "<script>
+document.getElementById('form_file').style.display='none';
+</script>
+";
 }
+//tomando valor de dr_path
+//$fp=file($db_path.$base."/dr_path.def");
+//foreach($fp as $line)
+//{
+//	$pos = strpos($line, "COLLECTION");
+//	if ($pos !== false)
+//	 {
+//		$str_line=explode("=",$line);		
+//		$collection=$str_line[1];
+//	 }	$collection=trim($collection); 
+//}
+//echo "drpath=".$db_path.$base."/dr_path.def<BR>";
+$def = parse_ini_file($db_path.$base."/dr_path.def");
+	if (isset($def["COLLECTION"])){
+        $collection=trim($def["COLLECTION"]);
+        }
+        else echo "Collection path not set in dr_path.def !";
+if($collection=="")
+{
+$collection=$db_path."collections/".$base."/ABCDImportRepo/";
+}
+//end
  ?>
+ <div id="form_file" style="display:block;">
 <h3> Digital document import</h3>
  <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data" name="inscripcion" target="_self" onsubmit="OpenWindows();"> 
-Upload location <br><input type="text" name=cd size=75 value='C:\ABCD\www\bases\collections\dubcore\ABCDImportRepo\'><br><br>
+Upload destination on server <br><input type="text" name=cd size=75 value='<?php echo $collection; ?>'><br><br>
  Select one or more files<br><input type="file" size=40 name="archivo[]" multiple="multiple"> 
 <input type="hidden" name=base value="<?php echo $base;?>">
  <input type="submit" value="Send" class="trig"> 
- </form> 
-
+ </form></div> 
+</div></div></div>
 <script>
 var win;
 function send()
@@ -87,4 +125,8 @@ else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPositio
 settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
 win=window.open(mypage,myname,settings);}
  </script>
- </body> </html>
+ </body> 
+ <?php
+include("../common/footer.php");
+?>
+ </html>

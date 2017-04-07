@@ -1,4 +1,4 @@
-#|Not speciffied
+ |Not speciffied
 a|Abstracts/Summaries
 b|Bibliographies
 c|Catalogs
@@ -6,7 +6,6 @@ d|Dictionaries
 e|Encyclopedias
 f|Handbooks
 g|Legal articles
-h|Biography
 i|Indexes
 k|Discographies
 j|Patent document
@@ -22,5 +21,8 @@ t|Technical reports
 u|Standards/Specifications
 v|Legal cases and case notes
 w|Law reports and digests
+y|Yearbooks
 z|Treaties
+5|Calendars
+6|Comics/graphic novels
  |No attempt to code

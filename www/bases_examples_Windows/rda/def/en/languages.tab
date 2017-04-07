@@ -1,43 +1,45 @@
-aar|Afar
 abk|Abkhaz
 ace|Achinese
 ach|Acoli
 ada|Adangme
-afa|Afroasiatic, Mada (Cameroon), Tupuri (Other)
+aar|Afar
 afh|Afrihili (Artificial language)
 afr|Afrikaans
+afa|Afroasiatic, Mada (Cameroon), Tupuri (Other)
 aka|Akan
 akk|Akkadian
 alb|Albanian
 ale|Aleut
 alg|Algonquian (Other)
+tut|Altaic (Other)
 amh|Amharic
-ang|English, Old (ca. 450-1100)
 apa|Apache languages
 ara|Arabic
 arc|Aramaic
-arm|Armenian
-arn|Mapuche
 arp|Arapaho
-art|Artificial (Other)
 arw|Arawak
+arm|Armenian
+art|Artificial (Other)
 asm|Assamese
 ath|Athapascan (Other)
 aus|Australian languages, Kitja
+map|Austronesian (Other)
 ava|Avaric
 ave|Avestan
 awa|Awadhi
 aym|Aymara
 aze|Azerbaijani
-bad|Banda
-bai|Bamileke languages
-bak|Bashkir
+ban|Balinese
+bat|Baltic (Other)
 bal|Baluchi
 bam|Bambara
-ban|Balinese
-baq|Basque
+bai|Bamileke languages
+bad|Banda
+bnt|Bantu (Other)
 bas|Basa
-bat|Baltic (Other)
+bak|Bashkir
+baq|Basque
+btk|Batak
 bej|Beja
 bel|Belarusian
 bem|Bemba
@@ -48,61 +50,58 @@ bih|Bihari
 bik|Bikol
 bin|Bini
 bis|Bislama
-bla|Siksika
-bnt|Bantu (Other)
 bos|Bosnian
 bra|Braj
 bre|Breton
-btk|Batak
-bua|Buriat
 bug|Bugis
 bul|Bulgarian
+bua|Buriat
 bur|Burmese
 cad|Caddo
-cai|Central American Indian, Amuzgo (Other)
+rom|Cal¢ (Romani)
 car|Carib
 cat|Catalan
 cau|Caucasian, Dido (Other)
 ceb|Cebuano
 cel|Celtic (Other)
-cha|Chamorro
-chb|Chibcha
-che|Chechen
+cai|Central American Indian, Amuzgo (Other)
 chg|Chagatai
-chi|Chinese
-chk|Truk
-chm|Mari
-chn|Chinook jargon
-cho|Choctaw
-chp|Chipewyan
+cmc|Chamic languages
+cha|Chamorro
+che|Chechen
 chr|Cherokee
+chy|Cheyenne
+chb|Chibcha
+chi|Chinese
+chn|Chinook jargon
+chp|Chipewyan
+cho|Choctaw
 chu|Church Slavic
 chv|Chuvash
-chy|Cheyenne
-cmc|Chamic languages
 cop|Coptic
 cor|Cornish
 cos|Corsican
+cre|Cree
+mus|Creek
+crp|Creoles and Pidgins (Other)
 cpe|Creoles and Pidgins, English-based (Other)
 cpf|Creoles and Pidgins, Micif,French-based (Other)
 cpp|Creoles and Pidgins, Portuguese-based (Other)
-cre|Cree
-crp|Creoles and Pidgins (Other)
+scr|Croatian
 cus|Cushitic (Other)
 cze|Czech
 dak|Dakota
 dan|Danish
 day|Dayak
 del|Delaware
-den|Slave
-dgr|Dogrib
 din|Dinka
 div|Divehi
 doi|Dogri
+dgr|Dogrib
 dra|Dravidian (Other)
 dua|Duala
-dum|Dutch, Middle (ca. 1050-1350)
 dut|Dutch
+dum|Dutch, Middle (ca. 1050-1350)
 dyu|Dyula
 dzo|Dzongkha
 efi|Efik
@@ -111,13 +110,15 @@ eka|Ekajuk
 elx|Elamite
 eng|English
 enm|English, Middle (1100-1500)
+ang|English, Old (ca. 450-1100)
 epo|Esperanto
 est|Estonian
+gez|Ethiopic
 ewe|Ewe
 ewo|Ewondo
 fan|Fang
-fao|Faroese
 fat|Fanti
+fao|Faroese
 fij|Fijian
 fin|Finnish
 fiu|Finno-Ugrian (Other)
@@ -126,21 +127,18 @@ fre|French
 frm|French, Middle (ca. 1400-1600)
 fro|French, Old (ca. 842-1400)
 fry|Frisian
-ful|Fula
 fur|Friulian
-gaa|G“
+ful|Fula
+gaa|G∆
+glg|Galician
+lug|Ganda
 gay|Gayo
 gba|Gbaya
 geo|Georgian
 ger|German
-gez|Ethiopic
-gil|Gilbertese
-gla|Scottish Gaelic
-gle|Irish
-glg|Galician
-glv|Manx
 gmh|German, Middle High (ca. 1050-1500)
 goh|German, Old High (ca. 750-1050)
+gil|Gilbertese
 gon|Gondi
 gor|Gorontalo
 got|Gothic
@@ -149,6 +147,7 @@ grc|Greek, Ancient (to 1453)
 gre|Greek, Modern (1453- )
 grn|Guarani
 guj|Gujarati
+sem|Gurage languages
 gwi|Gwich'in
 hai|Haida
 hau|Hausa
@@ -158,251 +157,252 @@ her|Herero
 hil|Hiligaynon
 him|Himachali
 hin|Hindi
+hmo|Hiri Motu
 hit|Hittite
 hmn|Hmong
-hmo|Hiri Motu
 hun|Hungarian
 hup|Hupa
 iba|Iban
-ibo|Igbo
 ice|Icelandic
+ibo|Igbo
 ijo|Ijo
-iku|Inuktitut
-ile|Interlingue
 ilo|Iloko
-ina|Interlingua (International Auxiliary Language Association)
 inc|Indic, Suriname Hindustani (Other)
-ind|Indonesian
 ine|Indo-European (Other)
+ind|Indonesian
+ina|Interlingua (International Auxiliary Language Association)
+ile|Interlingue
+iku|Inuktitut
 ipk|Inupiaq
 ira|Iranian (Other)
+gle|Irish
+mga|Irish, Middle (ca. 1100-1550)
+sga|Irish, Old (to 1100)
 iro|Iroquoian (Other)
 ita|Italian
-jav|Javanese
 jpn|Japanese
-jpr|Judeo-Persian
+jav|Javanese
 jrb|Judeo-Arabic
-kaa|Kara-Kalpak
+jpr|Judeo-Persian
 kab|Kabyle
 kac|Kachin, Achang
-kal|Kal‘tdlisut
+kal|Kal‚tdlisut
 kam|Kamba
 kan|Kannada
+kau|Kanuri
+kaa|Kara-Kalpak
 kar|Karen
 kas|Kashmiri
-kau|Kanuri
 kaw|Kawi
 kaz|Kazakh
 kha|Khasi
-khi|Khoisan (Other)
 khm|Khmer
+khi|Khoisan (Other)
 kho|Khotanese
 kik|Kikuyu
-kin|Kinyarwanda
-kir|Kyrgyz
 kmb|Kimbundu
-kok|Konkani
+kin|Kinyarwanda
 kom|Komi
 kon|Kongo
+kok|Konkani
 kor|Korean
-kos|Kusaie
 kpe|Kpelle
 kro|Kru
-kru|Kurukh
 kua|Kuanyama
 kum|Kumyk
 kur|Kurdish
+kru|Kurukh
+kos|Kusaie
 kut|Kutenai
+kir|Kyrgyz
 lad|Ladino
 lah|Lahnda
 lam|Lamba
 lao|Lao
 lat|Latin
 lav|Latvian
+ltz|Letzeburgesch
 lez|Lezgian
 lin|Lingala
 lit|Lithuanian
-lol|Mongo-Nkundu
+nds|Low German
 loz|Lozi
-ltz|Letzeburgesch
-lua|Luba-Lulua
 lub|Luba-Katanga
-lug|Ganda
-lui|LuiseÒo
+lua|Luba-Lulua
+lui|Luise§o
 lun|Lunda
 luo|Luo (Kenya and Tanzania)
 lus|Lushai
 mac|Macedonian
 mad|Madurese
 mag|Magahi
-mah|Marshallese
 mai|Maithili
 mak|Makasar
-mal|Malayalam
-man|Mandingo
-mao|Maori
-map|Austronesian (Other)
-mar|Marathi
-mas|Masai
+mlg|Malagasy
 may|Malay
+mal|Malayalam
+mlt|Maltese
+mnc|Manchu
 mdr|Mandar
+man|Mandingo
+mni|Manipuri
+mno|Manobo languages
+glv|Manx
+mao|Maori
+arn|Mapuche
+mar|Marathi
+chm|Mari
+mah|Marshallese
+mwr|Marwari
+mas|Masai
+myn|Mayan languages
 men|Mende
-mga|Irish, Middle (ca. 1100-1550)
 mic|Micmac
 min|Minangkabau
 mis|Miscellaneous languages
-mkh|Mon-Khmer (Other)
-mlg|Malagasy
-mlt|Maltese
-mnc|Manchu
-mni|Manipuri
-mno|Manobo languages
 moh|Mohawk
 mol|Moldavian
 mon|Mongolian
-mos|Moor˙
+lol|Mongo-Nkundu
+mkh|Mon-Khmer (Other)
+mos|Moor£
 mul|Multiple languages
 mun|Munda (Other)
-mus|Creek
-mwr|Marwari
-myn|Mayan languages
 nah|Nahuatl
-nai|North American Indian (Other)
 nau|Nauru
 nav|Navajo
 nbl|Ndebele (South Africa)
 nde|Ndebele (Zimbabwe)
 ndo|Ndonga
-nds|Low German
 nep|Nepali
 new|Newari
 nia|Nias
 nic|Niger-Kordofanian, Bafut, Kagoro, Ligbi, Noon (Other)
+ssa|Nilo-Saharan (Other)
 niu|Niuean
-non|Old Norse
-nor|Norwegian
+nai|North American Indian (Other)
+sme|Northern Sami
 nso|Northern Sotho
+nor|Norwegian
 nub|Nubian languages,Midob
-nya|Nyanja
 nym|Nyamwezi
+nya|Nyanja
 nyn|Nyankole
 nyo|Nyoro
 nzi|Nzima
 oci|Occitan (post-1500)
 oji|Ojibwa
+non|Old Norse
+peo|Old Persian (ca. 600-400 B.C.)
 ori|Oriya
 orm|Oromo
 osa|Osage
 oss|Ossetic
-ota|Turkish, Ottoman
 oto|Otomian languages
-paa|Papuan (Other)
-pag|Pangasinan
 pal|Pahlavi
+pau|Palauan
+pli|Pali
 pam|Pampanga
+pag|Pangasinan
 pan|Panjabi
 pap|Papiamento
-pau|Palauan
-peo|Old Persian (ca. 600-400 B.C.)
+paa|Papuan (Other)
 per|Persian
 phi|Philippine (Other)
 phn|Phoenician
-pli|Pali
 pol|Polish
 pon|Ponape
 por|Portuguese
 pra|Prakrit languages
-pro|ProvenÁal (to 1500)
+pro|Provenáal (to 1500)
 pus|Pushto
 que|Quechua
+roh|Raeto-Romance
 raj|Rajasthani
 rap|Rapanui
 rar|Rarotongan
 roa|Romance (Other)
-roh|Raeto-Romance
-rom|CalÛ (Romani)
-rom|Romany
 rum|Romanian
+rom|Romany
 run|Rundi
 rus|Russian
-sad|Sandawe
-sag|Sango (Ubangi Creole)
-sah|Yakut
-sai|South American Indian, Cauqui, Wayampi (Other)
 sal|Salishan languages
 sam|Samaritan Aramaic
+smi|Sami
+smo|Samoan
+sad|Sandawe
+sag|Sango (Ubangi Creole)
 san|Sanskrit
-sas|Sasak
 sat|Santali
-scc|Serbian
+srd|Sardinian
+sas|Sasak
 sco|Scots
-scr|Croatian
+gla|Scottish Gaelic
 sel|Selkup
-sem|Gurage languages
 sem|Semitic, Mahri (Other)
-sga|Irish, Old (to 1100)
-sgn|Sign languages
+scc|Serbian
+srr|Serer
 shn|Shan
+sna|Shona
 sid|Sidamo
+sgn|Sign languages
+bla|Siksika
+snd|Sindhi
 sin|Sinhalese
-sio|Siouan (Other)
 sit|Sino-Tibetan (Other)
+sio|Siouan (Other)
+den|Slave
 sla|Slavic (Other)
 slo|Slovak
 slv|Slovenian
-sme|Northern Sami
-smi|Sami
-smo|Samoan
-sna|Shona
-snd|Sindhi
-snk|Soninke
 sog|Sogdian
 som|Somali
 son|Songhai
+snk|Soninke
+wen|Sorbian languages
 sot|Sotho
+sai|South American Indian, Cauqui, Wayampi (Other)
 spa|Spanish
-srd|Sardinian
-srr|Serer
-ssa|Nilo-Saharan (Other)
-ssw|Swazi
 suk|Sukuma
+sux|Sumerian
 sun|Sundanese
 sus|Susu
-sux|Sumerian
 swa|Swahili
+ssw|Swazi
 swe|Swedish
 syr|Syriac
+tgl|Tagalog
 tah|Tahitian
 tai|Tai (Other)
+tgk|Tajik
+tmh|Tamashek
 tam|Tamil
 tat|Tatar
 tel|Telugu
 tem|Temne
 ter|Terena
 tet|Tetum
-tgk|Tajik
-tgl|Tagalog
 tha|Thai
 tib|Tibetan
-tig|TigrÈ
+tig|TigrÇ
 tir|Tigrinya
 tiv|Tiv
-tkl|Tokelauan
 tli|Tlingit
-tmh|Tamashek
+tpi|Tok Pisin
+tkl|Tokelauan
 tog|Tonga (Nyasa)
 ton|Tongan
-tpi|Tok Pisin
+chk|Truk
 tsi|Tsimshian
-tsn|Tswana
 tso|Tsonga
-tuk|Turkmen
+tsn|Tswana
 tum|Tumbuka
 tur|Turkish
-tut|Altaic (Other)
+ota|Turkish, Ottoman
+tuk|Turkmen
 tvl|Tuvaluan
-twi|Twi
 tyv|Tuvinian
+twi|Twi
 uga|Ugaritic
 uig|Uighur
 ukr|Ukrainian
@@ -413,24 +413,24 @@ uzb|Uzbek
 vai|Vai
 ven|Venda
 vie|Vietnamese
-vol|Volap¸k
+vol|VolapÅk
 vot|Votic
 wak|Wakashan languages
 wal|Walamo
 war|Waray
 was|Washo
 wel|Welsh
-wen|Sorbian languages
 wol|Wolof
 xho|Xhosa
+sah|Yakut
 yao|Yao (Africa)
 yap|Yapese
 yid|Yiddish
 yor|Yoruba
 ypk|Yupik, Sirinek languages
+znd|Zande
 zap|Zapotec
 zen|Zenaga
 zha|Zhuang
-znd|Zande
 zul|Zulu
 zun|Zuni

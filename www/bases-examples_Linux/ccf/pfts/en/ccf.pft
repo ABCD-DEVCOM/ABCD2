@@ -1,0 +1,14 @@
+'<table border=0 width=90%>'
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Bibl.level</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Language</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v190) then '<tr><td width=20% valign=top><font face=arial size=2><b>Main Entry</b></td><td valign=top><font face=arial size=2>'v190+|<br>|,'</td>' fi/
+if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2><b>Title</b></td><td valign=top><font face=arial size=2>'v200+|<br>|,'</td>' fi/
+if p(v300) then '<tr><td width=20% valign=top><font face=arial size=2><b>Author</b></td><td valign=top><font face=arial size=2>'mhl,v300+|<br>|,'</td>' fi/
+if p(v450) then '<tr><td width=20% valign=top><font face=arial size=2><b>Imprint </b></td><td valign=top><font face=arial size=2>'v450+|<br>|,'</td>' fi/
+if p(v400) then '<tr><td width=20% valign=top><font face=arial size=2><b>Publisher</b></td><td valign=top><font face=arial size=2>'v400+|<br>|,'</td>' fi/
+if p(v610) then '<tr><td width=20% valign=top><font face=arial size=2><b>Call no. </b></td><td valign=top><font face=arial size=2>'v610+|<br>|,'</td>' fi/
+if p(v440) then '<tr><td width=20% valign=top><font face=arial size=2><b>Year of publ.</b></td><td valign=top><font face=arial size=2>'v440+|<br>|,'</td>' fi/
+if p(v620) then '<tr><td width=20% valign=top><font face=arial size=2><b>Keywords</b></td><td valign=top><font face=arial size=2>'v620+|<br>|,'</td>' fi/
+if p(v500) then '<tr><td width=20% valign=top><font face=arial size=2><b>Notes</b></td><td valign=top><font face=arial size=2>'v500+|<br>|,'</td>' fi/
+if p(v820) then '<tr><td width=20% valign=top><font face=arial size=2><b>Barcodes</b></td><td valign=top><font face=arial size=2>'v820+|<br>|,'</td>' fi/
+'</table><p>'

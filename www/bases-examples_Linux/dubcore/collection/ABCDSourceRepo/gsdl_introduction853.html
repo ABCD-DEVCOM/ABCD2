@@ -1,0 +1,326 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The GREENSTONE digital library software</title>
+</head>
+<body><div class="slideShow"><div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>The GREENSTONE digital library software</p>
+<p>An introduction</p>
+<p>By Egbert de Smet <br/>
+(Univ. of Antwerp)</p>
+<p/>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Overview</p>
+<ul>	<li>Digital libraries : the concept</li>
+	<li>Introduction : some background info on GSDL</li>
+	<li>Installation of GSDL</li>
+	<li>The stages of building a simple application with the Librarian interface</li>
+	<li>Some more advanced features</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Digital Libraries : the concept</p>
+<ul>	<li>A digital library, like a normal library, contains documents, catalogues and avails them to users.</li>
+	<li>But : documents are electronic (digital) files and availability is online</li>
+	<li>Cataloguing is called &lsquo;adding metadata&rsquo;&hellip;</li>
+	<li>So a digital library &gt;&lt; a database, but an indexed set of documents and a retrieval tool (similar to &lsquo;Indexing software&rsquo; like e.g. Google Desktop)</li>
+	<li>Acquisition/Circulation functions are not covered for obvious reasons</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Greenstone background info</p>
+<ul>	<li>See : <a href="http://www.greenstone.org/">http://www.greenstone.org</a></li>
+	<li>Developed by Waikatu university (New-Zealand) and supported by UNESCO and the Human Info NGO (Antwerp!)</li>
+	<li>Adopted by UNESCO in 2005 for distribution</li>
+	<li>Free and Open Source software (GNU GPL), running under both UNIX/Linux and Windows</li>
+	<li>Full Unicode support, fully multi-lingual</li>
+	<li>Almost no limits in size and capacity (in theory)</li>
+	<li>Current &lsquo;stable&rsquo; version : 2.83 with a fully new JAVA-based version 3 developed in parallel <a href="http://wiki.greenstone.org/index.php/Greenstone3_for_Greenstone2_Users">(http://wiki.greenstone.org/index.php/Greenstone3_for_Greenstone2_Users)</a></li>
+</ul>
+<p>- Advantages : XML/XSLT interface definition (no more Perl), distributed, multiple collections and interfaces</p>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Greenstone features</p>
+<ul>	<li>FOSS (active community !) &amp; Multi-platform</li>
+	<li>Proven technology : Perl-scripting, MG(PP) or Lucene indexing, Apache (or built-in webserver), XML</li>
+	<li>UNICODE</li>
+	<li>Separate modules :</li>
+	<li>JAVA-based interface for management</li>
+	<li>Web-browser based access to collections</li>
+	<li>CLI client : remote collection building</li>
+	<li>Multi-metadata (with editor)</li>
+	<li>Practical GLI interface for editing/managing GSDL</li>
+	<li>Lots of 'plug-ins' for most document formats, also  ISIS, Dspace, e-mails, MARC, MARCXML...</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Greenstone vs. DSpace</p>
+<ul>	<li>Less aiming at 'repositories' with end-user based submission of content (but still possible)</li>
+	<li>Less aiming at long-time preservation</li>
+	<li>Less capable with large numbers or documents</li>
+	<li>Easier to install/run in Windows</li>
+	<li>More oriented to digital library collections (cultural heritage etc.)</li>
+	<li>More flexible on meta-data sets</li>
+	<li>Much easier to implement and use (also as stand-alone), easy installer</li>
+	<li>Aiming at librarians rather than IT-ers</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Greenstone Technical Concepts 1</p>
+<ul>	<li>Technical concepts : </li>
+	<li>A server (library.exe) uses (lots of) PERL-scripts to create web-pages and forms to deal with the library of documents and its indexes</li>
+	<li>The documents are stored as such (PDF, DOC, HTML, XML&hellip;)  &aacute;nd converted (&lsquo;imported&rsquo;) as XML in a collection with their text-only content</li>
+	<li>&lsquo;Plug-ins&rsquo; for each type of content extract words from the documents and pass them onto the indexing engine</li>
+	<li>Metadata on the documents are also stored in XML</li>
+	<li>A web-interface allows searching, browsing results and opening full-text documents either in original or converted format.</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Greenstone Technical Concepts 2</p>
+<ul>	<li>3 possible indexers :</li>
+	<li>MG (&lsquo;Managing Gigabytes&rsquo;) : at section level (=~field), Boolean or ranked (not both!)</li>
+	<li>MGPP : word level indexing (field, phrase + proximity) with Boolean+ranking</li>
+	<li>Lucene (from the Apache SF) : field+proximity indexing but either on whole document or section, Boolean+ranking plus : single-character wildcards and range-searching; allows incremental collection buidling (not possible with MG(PP))</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Greenstone Technical Concepts 3</p>
+<ul>	<li>Metadata : </li>
+	<li>Greenstone allows (unlike e.g. DSpace) several sets of metadata, including locally produced ones, even merged</li>
+	<li>Dublin Core (v.1.1) is provided together with e.g. RFC 1807, Development Library Subset, others (e.g. LOM) are available</li>
+	<li>All metadata are stored in XML-format with the documents</li>
+	<li>Metadata can also be extracted from XML-statements within the documents</li>
+	<li>Metadata can be assigned easily through the GSDL Librarian interface</li>
+	<li>Since GSDL does not use a DB for handling its XML-data, this imposes real limitations on speed</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>the Greenstone Librarian Interface </p>
+<ul>	<li>A JAVA-PERL applet (gliserver.pl) provides an interactive graphical interface &ndash; the &lsquo;Greenstone Librarian&rsquo; &ndash; with the main functions :</li>
+	<li>1. &lsquo;Gathering&rsquo; (or Downloading from OIA, WWW, Z39.50..) documents into a collection</li>
+	<li>2. &lsquo;Enriching&rsquo; with metadata (incl. a metadata set editor)</li>
+	<li>3. Design (search/browse) and formatting</li>
+	<li>4. Create : building the collection</li>
+	<li>5. if build succesful : link to previewing the collection</li>
+	<li>(6. Format of output adjustments)</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>GLI : collecting documents</p>
+<ul>	<li>Dowloading using protocols :</li>
+	<li>WWW </li>
+	<li>OAI (Open Archives Initiative)</li>
+	<li>Z39.50</li>
+	<li>SRW (Search and Retrieve Web service)</li>
+	<li>MediaWiki</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>GLI : Gathering collection</p>
+<ul>	<li>Gathering :</li>
+	<li>Selecting files from &lsquo;local filespace&rsquo; or Local Network</li>
+	<li>Simple dragging to collection area</li>
+	<li>Hint : use hierarchy with &lsquo;folders&rsquo; as metadata of folder-level are &lsquo;inherited&rsquo; by subfolders/files </li>
+</ul>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>GLI : Enriching documents</p>
+<ul>	<li>Enriching = cataloguing with metadata, i.e. assign values to metadata-fields</li>
+	<li>Dublin Core and/or others or local sets</li>
+	<li>Metadata editor allows creating/changing sets</li>
+	<li>Assigning values :</li>
+	<li>Automatic inheriting for lower levels</li>
+	<li>Multiple values</li>
+	<li>Picklists</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>GLI : Design phase</p>
+<ul>	<li>Selection of plugins (e.g. GA, TEXT, PPT, Word, PDF, RTF, e-mail, XLS, Fox, DB, but also : ISIS, DSpace, MARC, ProCite&hellip;)</li>
+	<li>Search index definition</li>
+	<li>Partitioning (= subcollections)</li>
+	<li>Browsing classifiers, a.o. hierarchical, A-Z</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>GLI : Create</p>
+<ul>	<li>The actual work of : </li>
+	<li>Importing (converting into text-only), using different &lsquo;plug-ins&rsquo; (filters)</li>
+	<li>Indexing the documents</li>
+	<li>Complete rebuild : from scratch incl. import</li>
+	<li>Minimal : only new documents and indexing</li>
+	<li>Preview : direct access to webpage with search-interface produced by GLI</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>GLI : Output formatting</p>
+<ul>	<li>General : owners, images for home-pages, title, public or not</li>
+	<li>Search : names of search indexes</li>
+	<li>Format of results, e.g. [link][highlight][ex.Title][/highlight][/link]</li>
+	<li>Text translations</li>
+	<li>Cross-collection search : identify collections</li>
+	<li>Collection specific macros (e.g. adding links to new searches, see infra)</li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>Preview the GSDL website</p>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>ISIS to Greenstone</p>
+<ul>	<li>2 methods : </li>
+	<li>&lsquo;as is&rsquo; : links are just copied from ISIS-databases with embedded links (mere &lsquo;conversion&rsquo;), the fields are entered as metadata</li>
+	<li>Full-text : the referenced documents are imported into a GSDL collection</li>
+	<li>Conversion &lsquo;as is&rsquo; with ISISPlug: the ISIS-records become GSDL-records and can be searched/ displayed as such</li>
+	<li>&lsquo;Explode database&rsquo; : the ISIS-fields become &lsquo;ex&rsquo;(tracted) GSDL-metadata and the documents themselves are stored as Full Text (referenced to in ISIS-record)</li>
+	<li>More info : </li>
+	<li>portal.unesco.org/ci/en/ev.php-URL_ID=21746&amp;URL_DO=DO_TOPIC&amp;URL_SECTION=201.html </li>
+	<li>or : greenstonesupport.iimk.ac.in/Documents/CDS-ISIS_to_DL.pdf </li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+<div class="slide"><div class="slide-master-content"/>
+<div class="slide-content"><p>More technical info on :</p>
+<ul>	<li><a href="http://greenstonewiki.cs.waikato.ac.nz/wiki/index.php/Greenstone_FAQ">http://greenstonewiki.cs.waikato.ac.nz/wiki/index.php/Greenstone_FAQ</a></li>
+	<li>Users discussion list : see <a href="https://list.scms.waikato.ac.nz/mailman/listinfo/greenstone-users">https://list.scms.waikato.ac.nz/mailman/listinfo/greenstone-users</a></li>
+</ul>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+</div>
+</div>
+</div>
+<div class="slide-notes"><p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+<p>*</p>
+<p/>
+<p/>
+</div>
+</body></html>

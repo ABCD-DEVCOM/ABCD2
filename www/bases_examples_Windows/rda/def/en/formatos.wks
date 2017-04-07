@@ -1,9 +1,15 @@
-BK_a_LI|Textual material (Book)
-BK_a_TE|Thesis/Dissertation
-VM_g_MP|Projected material
-CF_m_AC|Electronic Resource (Computer file)
+BK_a_LI|Textual material (book)
+BK_t_TE|Thesis / Dissertation
+MS_j_CD|Audio-CD
+PM_g_DVD|DVD-video
+PM_g_PM|Other projected material
+CF_m_AC|Electronic resource (computer file)
 MP_e_MC|Cartographic material
-SE_s_PE|Continuos resource (Journal)
-SE_s_AP|Continuos resource (Journal article)
-VM_o_KI|Kit - Two or more types published together)
-VM_p_MM|Mixed Material - Various types
+NM_c_MN|Notated music
+GR_k_PO|Two-dimensional graphical resource
+GR_r_OB|Three-dimensional graphical resource
+VM_o_KI|Kit - Two or more types published together
+MM_p_MM|Mixed Material - Various types
+SE_s_PE|Continuous resource (journal)
+SE_s_AP|Continuous resource (journal article)
+BC_a_LC|Book chapter
