@@ -95,8 +95,8 @@ require_once(BVS_COMMON_DIR . "/class/hldgModule.class.php");
 require_once(BVS_COMMON_DIR . "/ini/bases.conf.php");
 require_once(BVS_COMMON_DIR . "/ini/language.ini.php"); 
 require_once(BVS_COMMON_DIR . "/ini/library.ini.php");
-require_once(BVS_DIR. "\\htdocs\\isisws\\directIsis.php");
-
+//require_once(BVS_DIR. "\\htdocs\\isisws\\directIsis.php");
+require_once(BVS_DIR. "/htdocs/isisws/directIsis.php");
 //Instaced the primitive class
 $configurator = new Configurator();
 $isisBroker = new IsisBroker();

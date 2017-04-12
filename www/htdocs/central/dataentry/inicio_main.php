@@ -115,6 +115,7 @@ if (isset($arrHttp["base"])){
     		break;
     	}
     }
+//echo "bases=$bases<BR>";
 	$arrHttp["base"]=$bases;
 	$arrHttp["cipar"]=$arrHttp["base"].".par";
 	$NombreBase="";

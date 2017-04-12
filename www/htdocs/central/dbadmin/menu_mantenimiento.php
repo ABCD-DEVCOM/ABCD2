@@ -62,7 +62,8 @@ foreach ($fp as $value){
 	$value=trim($value);
 	$x=explode("|",$value);
 	if ($x[0]==$arrHttp["base"]){
-		if (isset($x[2]) and $x[2]=="Y"){			$copies="Y";
+		if (isset($x[2]) and $x[2]=="Y"){
+			$copies="Y";
 		}
 		break;
 	}
@@ -105,10 +106,11 @@ function EnviarForma(Opcion,Mensaje){
 	switch (Opcion){
 		case "DCDspace":
 		       	document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="dcdspace.php"
-				document.admin.target=""
-				break;		case "dbcp":
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/dcdspace.php"
+			document.admin.target=""
+			break;
+		case "dbcp":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/copy_db.php"
@@ -149,8 +151,8 @@ function EnviarForma(Opcion,Mensaje){
 			document.admin.base.value=base
 			document.admin.target=""
 			break;
-        case "cn":  //assign control number
-          	document.admin.base.value=base
+                case "cn":  //assign control number
+          	        document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="assign_control_number.php"
 			document.admin.target=""
@@ -204,7 +206,7 @@ function EnviarForma(Opcion,Mensaje){
 			document.admin.action="../utilities/vmxISO_load.php"
 			document.admin.target=""
 			break;
-case "isoexport":    //Marino ISO export
+                case "isoexport":    //Marino ISO export
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -212,7 +214,7 @@ case "isoexport":    //Marino ISO export
 				document.admin.target=""
 				
 				break;
-case "importdoc":    //Marino doc import
+                case "importdoc":    //Marino doc import
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -220,7 +222,7 @@ case "importdoc":    //Marino doc import
 				document.admin.target=""
 				
 				break;
-case "cleandb":    //Marino clean DB
+                case "cleandb":    //Marino clean DB
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -228,7 +230,7 @@ case "cleandb":    //Marino clean DB
 				document.admin.target=""
 				
 				break;
-				case "unlock":    //Marino Vretag
+		case "unlock":    //Marino Vretag
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -244,7 +246,7 @@ case "cleandb":    //Marino clean DB
 				
 				break;
 				
-				case "barcode":    //Marino barcode search
+		case "barcode":    //Marino barcode search
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -259,7 +261,7 @@ case "cleandb":    //Marino clean DB
 				document.admin.action="../utilities/docbatchimport.php"
 				document.admin.target=""
 				break;
-			case "dirtree": //EXPLORE DATABASE DIRECTORY
+		case "dirtree": //EXPLORE DATABASE DIRECTORY
 				switch (Mensaje){
 					case "par":
 					case "www":
@@ -274,11 +276,11 @@ case "cleandb":    //Marino clean DB
 				document.admin.action="dirtree.php";
 				document.admin.target=""
 				break;
-				case "mx_based_utils":    //Marino addloanobj
+		case "menu_extra":    //extra utilities sub-menu
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/menu_mx_based.php"
+				document.admin.action="../utilities/menu_extra.php"
 				document.admin.target=""
 				
 				break;
@@ -353,7 +355,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 <!--			<li><a href='Javascript:EnviarForma("readiso","<?php echo "ReadISO  MX"?>")'><?php echo $msgstr["readiso_mx"]?></a></li> -->
 			<li><a href='javascript:EnviarForma("cn","<?php echo $msgstr["assigncn"]?>")'><?php echo $msgstr["assigncn"]?></a></li>
 <!--			<li><a href='javascript:EnviarForma("linkcopies","<?php echo $msgstr["linkcopies"]?>")'><?php echo $msgstr["linkcopies"]?></a></li> -->
-			<?php if (($arrHttp["base"]!="copies") and ($arrHttp["base"]!="providers") and ($arrHttp["base"]!="suggestions") and ($arrHttp["base"]!="purchaseorder") and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {				if ($copies=="Y"){
+			<?php if (($arrHttp["base"]!="copies") and ($arrHttp["base"]!="providers") and ($arrHttp["base"]!="suggestions") and ($arrHttp["base"]!="purchaseorder") and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {
+				if ($copies=="Y"){
 			?>
 
 			<?php }}
@@ -380,7 +383,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 	if (($_SESSION["profile"]=="adm" or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
 		isset($_SESSION["permiso"]["CENTRAL_EXDBDIR"]) or
         isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EXDBDIR"]))
-        and isset($dirtree) and $dirtree=="Y"
+        and isset($dirtree) and $dirtree=="1"
     ){
 
     ?>
@@ -391,7 +394,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 			<li><a href='Javascript:EnviarForma("dirtree","www")'><?php echo "www"?></a></li>
 			<li><a href='Javascript:EnviarForma("dirtree","wrk")'><?php echo "wrk"?></a></li>
 	        </ul>
-			<li><a style="color:green;" href='Javascript:EnviarForma("mx_based_utils","<?php echo "mx_based_utils"?>")'><?php echo "EXTRA UTILITIES"?></a></li>
+
+		<li><a style="color:green;" href='Javascript:EnviarForma("menu_extra","<?php echo "menu_extra"?>")'><?php echo "EXTRA UTILITIES"?></a></li>
 	<?php }?>
 <!--	<li><a href='javascript:EnviarForma("more_utils","<?php echo $msgstr["more_utils"]?>")'><?php echo $msgstr["more_utils"]?></a></li>  -->
 			</ul>

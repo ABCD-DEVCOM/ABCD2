@@ -1,8 +1,17 @@
 <?php
-$base = ($_REQUEST['base'] != '' ?  $_REQUEST['base'] : 'marcuni');
+$base = ($_REQUEST['base'] != '' ?  $_REQUEST['base'] : 'RDA');
 $lang = ($_REQUEST['lang'] != '' ?  $_REQUEST['lang'] : 'en');
 $form = $_REQUEST['form'];
+
+
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0) {
+    //Windows path variables
+$db_path="/ABCD/www/bases/";                   //path where the bases are to be located
+}else{
+    //Linux path variables
 $db_path="/var/opt/ABCD/bases/";
+}
+
 //buscando cisis_ver en dr_path.def de la BD
 $drpathtext=$fp=file($db_path.$base."/dr_path.def");
 foreach($fp as $line)
@@ -18,8 +27,9 @@ if($CISIS_VERSION!="")
 {
 	$CISIS_VERSION=trim($CISIS_VERSION);
 	}
-//READING DBN.def to find unicode-setting
-$fp=file($db_path."par/".strtoupper($base).".def");
+//READING abcd.def to find unicode-setting
+//$fp=file($db_path."par/".strtoupper($base).".def");
+$fp=file($db_path."abcd.def");
 $unicode="ansi";
 foreach($fp as $line)
 {
@@ -33,8 +43,9 @@ foreach($fp as $line)
 	$unicode="utf8";
 }
 else $unicode="ansi";
-	 }
 }
+}
+//echo "ENCODING=$unicode<BR>";
 if($CISIS_VERSION!="")
 $cisis_ver=$unicode."/".$CISIS_VERSION."/";
 else $cisis_ver=$unicode."/";

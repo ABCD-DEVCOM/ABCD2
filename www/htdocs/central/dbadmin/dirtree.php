@@ -187,7 +187,8 @@ if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
     (isset($_SESSION["permiso"][$_SESSION["dir_base"]."_CENTRAL_ALL"]) or
     isset($_SESSION["permiso"][$_SESSION["dir_base"]."CENTRAL_EXDBDIR"]))
     )
-{}else{
+{
+}else{
 	header("Location: ../common/error_page.php") ;
 }
 if (isset($arrHttp["base"]))
@@ -213,13 +214,15 @@ $encabezado="";
 if ($_REQUEST["ACTION"]!="downloadfile1"){
 	include("../common/header.php");
 	if (isset($arrHttp["encabezado"])){
-		$encabezado="&encabezado=s";	}
+		$encabezado="&encabezado=s";
+	}
 	EncabezadoPagina();
 	echo "<link rel=\"STYLESHEET\" type=\"text/css\" href=\"../css/".$css_name."template.css\">";
 }
 
 function EncabezadoPagina(){
-global $arrHttp,$msgstr,$institution_name,$logo;	echo "<Body>";
+global $arrHttp,$msgstr,$institution_name,$logo;
+	echo "<Body>";
     //if (isset($arrHttp["encabezado"]))
     	include("../common/institutional_info.php");
      echo "
@@ -245,7 +248,8 @@ global $arrHttp,$msgstr,$institution_name,$logo;	echo "<Body>";
     echo "<font color=white>&nbsp; &nbsp; Script: dirtree.php</font></div>";
 
      echo "<div class=\"middle form\">
-			<div class=\"formContent\">";}
+			<div class=\"formContent\">";
+}
 
 Function BUILD_DIRECTORY_TREE($SOURCE, $PREVIOUS) {
 /*
@@ -393,20 +397,20 @@ the second phase.
 
             </Td>
         </Tr>
-            <tr><td><center><H3>Maximo tamaño de fichero=<?= $_SESSION['Size_Bytes'];?></H3></center></td></tr>
+            <tr><td><center><H3>Maximo tamaño de fichero=<?php  $_SESSION['Size_Bytes'];?></H3></center></td></tr>
         <Tr>
             <Td>
             <Center>
             <Font FACE='tahoma'>
             <H3> Choose a the file to upload</H3>
-            <Form NAME='FormUploadFile' METHOD='post' ENCTYPE='multipart/form-data' ACTION='<?= $_SERVER['PHP_SELF'];?>'>
+            <Form NAME='FormUploadFile' METHOD='post' ENCTYPE='multipart/form-data' ACTION='<?php  $_SERVER['PHP_SELF'];?>'>
                 <Table ALIGN='center' BORDER='0' class=td>
-                    <Input TYPE='hidden' NAME='MAX_FILE_SIZE' VALUE='<?= $_SESSION['Size_Bytes'];?>'>
+                    <Input TYPE='hidden' NAME='MAX_FILE_SIZE' VALUE='<?php  $_SESSION['Size_Bytes'];?>'>
                     <Tr>
                         <Td></Td><Td VALIGN='baseline'><Input TYPE='file' NAME='filetoupload' SIZE='50'></Td>
                     </Tr>
-                    <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                    <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                    <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                    <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                     <Input TYPE='hidden' NAME='ACTION' VALUE='upload2'>
                     <Tr></Tr>
                     <Tr>
@@ -513,11 +517,11 @@ If the things go bad the process is aborted and the uploaded file is erased.
             <Td>
             <Center>
             <Font FACE=tahoma>
-           <Form NAME="FormUploadFile2" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+           <Form NAME="FormUploadFile2" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                 <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
-                        <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                        <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                        <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                        <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
                         <Input TYPE="hidden" NAME="ACTION" VALUE="upload3">
 	<?php
     If ($ERROR_FUNCTION) {
@@ -560,11 +564,11 @@ confirm the operation.
             <Td>
                 <Center>
                 <Font FACE=tahoma>
-                <H3> File to DOWNLOAD: <?= $CURRENT_FILE;?></H3>
-                <Form NAME='downloadfile' METHOD='post' ENCTYPE='multipart/form-data' ACTION='<?= $_SERVER['PHP_SELF'];?>'>
+                <H3> File to DOWNLOAD: <?php  $CURRENT_FILE;?></H3>
+                <Form NAME='downloadfile' METHOD='post' ENCTYPE='multipart/form-data' ACTION='<?php  $_SERVER['PHP_SELF'];?>'>
                     <Table ALIGN=center BORDER=0 class=td>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='downloadfile1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    BACK   " ONCLICK="javascript:history.back()"></Td>
@@ -638,11 +642,11 @@ structure from the server to the client computer , can be opened or saved.
             </Tr>
             <Tr>
                 <Td>
-                <Form NAME="downloadfile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="downloadfile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr>
-                            <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                            <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                            <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                            <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
                             <Input TYPE="hidden" NAME="ACTION" VALUE="">
         <?php If ($ERROR_FUNCTION) {
             ECHO $ERROR_TEXT;
@@ -754,13 +758,13 @@ Set nothing is like no filter as "*.*".
                 <H3> The special characters (*) and (?) are not evaluated.</H3>
                 <H3> Set Sample for image filter: *.gif,*.jpg,*.jpeg,*.tiff,</H3>
                 </Font>
-                <Form NAME="FORMFILEFILTER" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="FORMFILEFILTER" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr>
                             <Td VALIGN=baseline><H2>Extensions :</H2></Td>
-                            <Td VALIGN=top><H2><Input TYPE='text' NAME='FILE_EXTENSION' SIZE=50 VALUE='<?= $_SESSION['File_Extension'];?>'></H2></Td>
+                            <Td VALIGN=top><H2><Input TYPE='text' NAME='FILE_EXTENSION' SIZE=50 VALUE='<?php  $_SESSION['File_Extension'];?>'></H2></Td>
                         </Tr>
-                        <Input TYPE="hidden" NAME="NODE" VALUE="<?= $_SESSION['Node'];?>">
+                        <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $_SESSION['Node'];?>">
                         <Input TYPE="hidden" NAME="ACTION" VALUE="filter2">
                         <Tr></Tr>
                         <Tr></Tr>
@@ -819,7 +823,7 @@ different button options.
     $CURRENT_FILE = BUILD_PATH($NODE);
     Echo $CURRENT_FILE . "</h3>";
     ?>
-                <Form NAME="FILEFUNCTIONS" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="FILEFUNCTIONS" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr>
                             <Td></Td><Td ALIGN=left VALIGN=top><P><Input TYPE="radio" VALUE="downloadfile" CHECKED NAME="ACTION"> Download</P></Td>
@@ -849,8 +853,8 @@ different button options.
     <?php
     }
     ?>
-                        <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                        <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                        <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                        <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    Cancel   " ONCLICK="javascript:history.back()"></Td>
                             <Td></Td>
@@ -887,7 +891,7 @@ between a different button options.
     $CURRENT_DIR = BUILD_PATH($NODE);
     Echo $CURRENT_DIR . "</h3>";
     ?>
-                <Form NAME="MAKEDIR" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="MAKEDIR" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=menusec3>
                         <Tr>
                             <Td></Td><Td ALIGN=left VALIGN=top><P><Input TYPE="radio" VALUE="upload" CHECKED NAME="ACTION"> Upload a File</P></Td>
@@ -914,8 +918,8 @@ between a different button options.
     <?php
     }
     ?>
-                        <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                        <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                        <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                        <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
                         <Tr>
                             <Td><Input TYPE="button" VALUE="   Cancel   " ONCLICK="javascript:history.back()"></Td>
                             <Td></Td>
@@ -957,12 +961,12 @@ operation.
             <Td>
                 <Center>
                 <Font FACE=tahoma>
-                <H3> Directory to TURN in the ROOT of the Treeview: <?= $CURRENT_DIR;?></H3>
+                <H3> Directory to TURN in the ROOT of the Treeview: <?php  $CURRENT_DIR;?></H3>
                 <H3> Are you SURE ?</H3>
-                <Form NAME="makerootdir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="makerootdir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='makeroot1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="   NO   " ONCLICK="javascript:history.back()"></Td>
@@ -1006,14 +1010,14 @@ the name of the new directory with a form.
                 <Center>
                 <Font FACE=tahoma>
                 <H3> Choose a name for the new Sub-Directory Folder</H3>
-                <Form NAME="makedir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="makedir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr>
                             <Td VALIGN=baseline><H3>New Sub-Directory :<H3></Td>
                             <Td VALIGN=top><Input TYPE="text" NAME="MAKE_DIR" SIZE=50 VALUE=""></Td>
                         </Tr>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='makedir1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    Cancel   " ONCLICK="javascript:history.back()"></Td>
@@ -1056,7 +1060,7 @@ phase. The client must confirm the operation.
         </Tr>
         <Tr>
             <Td>
-            <Form NAME="makedir1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+            <Form NAME="makedir1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
     <?php
@@ -1080,8 +1084,8 @@ phase. The client must confirm the operation.
     }
     ?>
                     </Tr>
-                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                    <Input TYPE="hidden" NAME="NODE" VALUE="<?= $_SESSION['Node'];?>">
+                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                    <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $_SESSION['Node'];?>">
     <?php If ($ERROR_FUNCTION) {
         ?>
                     <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -1128,13 +1132,13 @@ confirm the operation.
             <Td>
                 <Center>
                 <Font FACE=tahoma>
-                <H3> Directory to REMOVE: <?= $CURRENT_DIR;
+                <H3> Directory to REMOVE: <?php  $CURRENT_DIR;
     ?></H3>
                 <H3> Are you SURE ?</H3>
-                <Form NAME="removedir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="removedir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='removedir1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="   NO   " ONCLICK="javascript:history.back()"></Td>
@@ -1205,10 +1209,10 @@ to refresh the tree when the process is finished.
                 <H3> Dir function REMOVE DIRECTORY has been executed </H3>
                 <H3> Click on the CONTINUE button to REFRESH the DIRECTORY TREEVIEW.</H3>
                 </Font>
-                <Form NAME="REMOVEDIR" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="REMOVEDIR" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                          <Tr>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
                         <Input TYPE='hidden' NAME='NODE' VALUE=0>
                         <Input TYPE='hidden' NAME='ACTION' VALUE=''>
                         </Tr>
@@ -1250,14 +1254,14 @@ the new name for the selected directory with a form.
                 <Center>
                 <Font FACE=tahoma>
                 <H3> Choose a new name for this directory</H3>
-                <Form NAME="renamedir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="renamedir" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr>
                             <Td VALIGN=baseline><H3>New name for this Directory :<H3></Td>
-                            <Td VALIGN=top><Input TYPE="text" NAME="RENAME_DIR" SIZE=50 VALUE='<?= $_SESSION['Folder_Name'] [$NODE];?>'</Td>
+                            <Td VALIGN=top><Input TYPE="text" NAME="RENAME_DIR" SIZE=50 VALUE='<?php  $_SESSION['Folder_Name'] [$NODE];?>'</Td>
                         </Tr>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='renamedir1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    Cancel   " ONCLICK="javascript:history.back()"></Td>
@@ -1306,7 +1310,7 @@ checking phase.
         </Tr>
         <Tr>
             <Td>
-            <Form NAME="renamedir1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+            <Form NAME="renamedir1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
     <?php
@@ -1333,8 +1337,8 @@ checking phase.
     }
     ?>
                     </Tr>
-                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                    <Input TYPE="hidden" NAME="NODE" VALUE="<?= $_SESSION['Node'];?>">
+                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                    <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $_SESSION['Node'];?>">
     <?php If ($ERROR_FUNCTION) {
         ?>
                     <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -1382,12 +1386,12 @@ confirm the operation.
             <Td>
                 <Center>
                 <Font FACE=tahoma>
-                <H3> File to ERASE: <?= $CURRENT_FILE;?></H3>
+                <H3> File to ERASE: <?php  $CURRENT_FILE;?></H3>
                 <H3> Are you SURE ?</H3>
-                <Form NAME="erasefile" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="erasefile" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='erasefile1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    NO   " ONCLICK="javascript:history.back()"></Td>
@@ -1429,7 +1433,7 @@ checking phase.
         </Tr>
         <Tr>
             <Td>
-            <Form NAME="erasefile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+            <Form NAME="erasefile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
     <?php
@@ -1449,8 +1453,8 @@ checking phase.
     }
     ?>
                     </Tr>
-                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                    <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                    <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
     <?php If ($ERROR_FUNCTION) {
         ?>
                     <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -1497,12 +1501,12 @@ must confirm the operation.
             <Td>
                 <Center>
                 <Font FACE=tahoma>
-                <H3> File to COMPRESS ( ZIP ): <?= $CURRENT_FILE;?></H3>
+                <H3> File to COMPRESS ( ZIP ): <?php  $CURRENT_FILE;?></H3>
                 <H3> Are you SURE ?</H3>
-                <Form NAME="compressfile" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="compressfile" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='compressfile1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    NO   " ONCLICK="javascript:history.back()"></Td>
@@ -1544,7 +1548,7 @@ the checking phase.
         </Tr>
         <Tr>
             <Td>
-            <Form NAME="compressfile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+            <Form NAME="compressfile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
     <?php
@@ -1576,8 +1580,8 @@ the checking phase.
     }
     ?>
                     </Tr>
-                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                    <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                    <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
     <?php If ($ERROR_FUNCTION) {
         ?>
                     <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -1625,14 +1629,14 @@ the new name for the selected file with a form
                 <Center>
                 <Font FACE=tahoma>
                 <H3> Choose a new name for this file</H3>
-                <Form NAME="renamefile" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="renamefile" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr>
                             <Td VALIGN=baseline><H3>New name for this File :<H3></Td>
-                            <Td VALIGN=top><Input TYPE="text" NAME="RENAME_FILE" SIZE=50 VALUE='<?= $_SESSION['Folder_Name'] [$NODE];?>'></Td>
+                            <Td VALIGN=top><Input TYPE="text" NAME="RENAME_FILE" SIZE=50 VALUE='<?php  $_SESSION['Folder_Name'] [$NODE];?>'></Td>
                         </Tr>
-                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?= $_SESSION['File_Extension'];?>'>
-                        <Input TYPE='hidden' NAME='NODE' VALUE='<?= $NODE;?>'>
+                        <Input TYPE='hidden' NAME='FILE_EXTENSION' VALUE='<?php  $_SESSION['File_Extension'];?>'>
+                        <Input TYPE='hidden' NAME='NODE' VALUE='<?php  $NODE;?>'>
                         <Input TYPE='hidden' NAME='ACTION' VALUE='renamefile1'>
                         <Tr>
                             <Td><Input TYPE="button" VALUE="    Cancel   " ONCLICK="javascript:history.back()"></Td>
@@ -1678,7 +1682,7 @@ checking phase.
         </Tr>
         <Tr>
             <Td>
-            <Form NAME="renamefile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];
+            <Form NAME="renamefile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];
     ?>">
                <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
@@ -1707,8 +1711,8 @@ checking phase.
     }
     ?>
                     </Tr>
-                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                    <Input TYPE="hidden" NAME="NODE" VALUE="<?= $_SESSION['Node'];?>">
+                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                    <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $_SESSION['Node'];?>">
     <?php If ($ERROR_FUNCTION) {
         ?>
                     <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -1754,15 +1758,15 @@ sendmail_from = address@your_ip_server.com
     $bodycolor = "CYAN";
     PAGEMAIL_HEADER("FILE MANAGER - DIRTREEVIEW", "EMAIL FUNCTION", "BLUE", "WHITE");
     ?>
-<TABLE bgcolor=<?=$bodycolor;
+<TABLE bgcolor=<?php $bodycolor;
     ?> WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0 class=td>
   <tr>
     <TD>
         <center>
-        <FONT COLOR='<?=$bordercolor;?>'>
+        <FONT COLOR='<?php $bordercolor;?>'>
         <H3>
             SEND THE ARCHIVE <br>
-            "<?=STRTOUPPER($CURRENT_FILE);?>" <br>
+            "<?php STRTOUPPER($CURRENT_FILE);?>" <br>
             AS EMAIL ATTACHED FILE<br>
         </H3>
         <BR>
@@ -1777,8 +1781,8 @@ sendmail_from = address@your_ip_server.com
   <tr>
     <td>
     <center>
-    <form name="emailform" method="post" ACTION="<?= $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
-        <table width=100% border="<?=$borde;?>" bordercolor="<?=$bordercolor;?>" cellpadding="0" cellspacing="0" bgcolor="<?=$bodycolor;?>" class=td>
+    <form name="emailform" method="post" ACTION="<?php  $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
+        <table width=100% border="<?php $borde;?>" bordercolor="<?php $bordercolor;?>" cellpadding="0" cellspacing="0" bgcolor="<?php $bodycolor;?>" class=td>
            <tr>
                 <td>&nbsp</td>
 
@@ -1831,9 +1835,9 @@ sendmail_from = address@your_ip_server.com
                 </td>
                 <td>&nbsp</td>
             </TR>
-            <input type="hidden" name="attached" value="<?=$REALFILE?>">
-            <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-            <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+            <input type="hidden" name="attached" value="<?php $REALFILE?>">
+            <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+            <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
             <Input TYPE="hidden" NAME="ACTION" VALUE="emailfile1">
             <tr></tr>
             <tr></tr>
@@ -1895,7 +1899,7 @@ smtp server something like "smtp.your_ip_server.com"
         </Tr>
         <Tr>
             <Td>
-            <Form NAME="emailfile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+            <Form NAME="emailfile1" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                <Table ALIGN=center BORDER=0 class=td>
                     <Tr>
     <?php
@@ -2014,8 +2018,8 @@ smtp server something like "smtp.your_ip_server.com"
     }
     ?>
                     </Tr>
-                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?= $_SESSION['File_Extension'];?>">
-                    <Input TYPE="hidden" NAME="NODE" VALUE="<?= $NODE;?>">
+                    <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php  $_SESSION['File_Extension'];?>">
+                    <Input TYPE="hidden" NAME="NODE" VALUE="<?php  $NODE;?>">
     <?php If ($ERROR_FUNCTION) {
     ?>
                     <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -2349,7 +2353,7 @@ This function write the header of the email form web html page.
     <Html>
         <Head>
             <Title>
-                <?=$TITLE;?>
+                <?php $TITLE;?>
             </Title>
             <script type="text/javascript">
                 function switchvalue(one,two) {
@@ -2367,8 +2371,8 @@ This function write the header of the email form web html page.
         </Head>
         <Body >
             <Table WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0" class=td>
-                <Tr ALIGN="center" BGCOLOR="<?=$BGC;?>" class=td>
-                    <Td HEIGHT="30" VALIGN="middle" ><B><Font FACE="tahoma" COLOR="<?=$FGC;?>"><?=$SUBTITLE;?></Font></B></Td>
+                <Tr ALIGN="center" BGCOLOR="<?php $BGC;?>" class=td>
+                    <Td HEIGHT="30" VALIGN="middle" ><B><Font FACE="tahoma" COLOR="<?php $FGC;?>"><?php $SUBTITLE;?></Font></B></Td>
                 </Tr>
             </Table>
      <?php
@@ -2391,7 +2395,7 @@ This function write the header of the any form web html page.
     <Html>
         <Head>
             <Title>
-                <?=$TITLE;?>
+                <?php $TITLE;?>
             </Title>
             <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
             <meta name="author" content="Dirtreeview - www.euskalnet.net/aitor-solozabal">
@@ -2400,8 +2404,8 @@ This function write the header of the any form web html page.
 
             <Table WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0" class=td>
                 <Tr ALIGN="center">
-                    <Td HEIGHT="30" VALIGN="middle" BGCOLOR="<?=$BGC;?>">
-                    <B><Font FACE="tahoma" COLOR="<?=$FGC;?>"><?=$SUBTITLE;?></Font></B>
+                    <Td HEIGHT="30" VALIGN="middle" BGCOLOR="<?php $BGC;?>">
+                    <B><Font FACE="tahoma" COLOR="<?php $FGC;?>"><?php $SUBTITLE;?></Font></B>
                     </Td>
                 </Tr>
             </Table>
@@ -2436,7 +2440,7 @@ This function write the header of the dirtreeview table inside the web html page
     ?>
 
     <Table width="100%" ALIGN="center" CELLPADDING="0" CELLSPACING="0"  class=td >
-        <Tr BGCOLOR="<?=$BGC;?>">
+        <Tr BGCOLOR="<?php $BGC;?>">
             <Td><Img SRC="img/dirtree/tree_space.gif"></Td>
             <Td VALIGN=middle>
                 <Img SRC="img/dirtree/tree_space.gif">
@@ -2449,14 +2453,14 @@ This function write the header of the dirtreeview table inside the web html page
             <Td Align='center'>Max File Size<br><?php echo NUMBER_FORMAT($_SESSION['Maxfilesize'], 0, ',', '.');?></Td>
             <Td><Img SRC="img/dirtree/tree_space.gif"></Td>
             <Td>
-                <Font SIZE="2" COLOR="<?=$FGC;?>"><B>DIRECTORY TREEVIEW</B></Font>
+                <Font SIZE="2" COLOR="<?php $FGC;?>"><B>DIRECTORY TREEVIEW</B></Font>
                 <Br>
-                <font color="<?=$FGC;?>">User: <?=$_SESSION['login'];?> --> Privileges: <?= $_SESSION['privileges'];?></Font>
+                <font color="<?php $FGC;?>">User: <?php $_SESSION['login'];?> --> Privileges: <?php  $_SESSION['privileges'];?></Font>
             </td>
             <td valign="middle">
-              <!--  <A HREF=<?=$_SERVER['PHP_SELF'];?>?ACTION=logout>
+              <!--  <A HREF=<?php $_SERVER['PHP_SELF'];?>?ACTION=logout>
                 <Img SRC="img/dirtree/tree_refresh1.gif" alt="Exit - Logout" BORDER="0" height="40">
-                <font color="<?=$FGC;?>"> LOGOUT </A>] -->
+                <font color="<?php $FGC;?>"> LOGOUT </A>] -->
             </Td>
             <Td><Img SRC="img/dirtree/tree_space.gif"></Td>
         </Tr>
@@ -2464,12 +2468,12 @@ This function write the header of the dirtreeview table inside the web html page
     <Table ALIGN="center" CELLPADDING="0" CELLSPACING="0" BGCOLOR="<?php $BGC;?>" class=td>
         <Tr>
             <Td VALIGN="top"><font size=1>
-                <A HREF=<?=$_SERVER['PHP_SELF'];?>?ACTION=refresh&NODE=<?= $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?= $_SESSION['File_Extension'].$encabezado;?>>
+                <A HREF=<?php $_SERVER['PHP_SELF'];?>?ACTION=refresh&NODE=<?php  $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?php  $_SESSION['File_Extension'].$encabezado;?>>
                 <Img SRC="img/dirtree/tree_refresh0.gif" alt="Rebuild the Treeview" BORDER=0>
-                <Font SIZE="1" COLOR="<?=$FGC;?>"><B>Refresh</A>
-                <A HREF=<?= $_SERVER['PHP_SELF'];?>?ACTION=filter&NODE=<?= $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?= $_SESSION['File_Extension'].$encabezado;?>>
+                <Font SIZE="1" COLOR="<?php $FGC;?>"><B>Refresh</A>
+                <A HREF=<?php  $_SERVER['PHP_SELF'];?>?ACTION=filter&NODE=<?php  $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?php  $_SESSION['File_Extension'].$encabezado;?>>
                 <Img SRC="img/dirtree/tree_filter.gif" alt="File Filter Extension Criteria" BORDER=0>
-                <Font SIZE="1" COLOR="<?=$FGC;  ?>"><B>File Filter =</A>
+                <Font SIZE="1" COLOR="<?php $FGC;  ?>"><B>File Filter =</A>
     <?php
     If ($_SESSION['File_Extension'] == "") {
         Echo "*.*";
@@ -2496,17 +2500,17 @@ This function write the subheader of the dirtreeview table in the web html page.
     }
     ?>
     <Table ALIGN="center" CELLSPACING="0" CELLPADDING="0" class=td border=0>
-        <Tr BGCOLOR="<?=$BGC;?>" ALIGN="center" VALIGN="top">
-            <Td><B><I><Font COLOR="<?=$FGC;?>">FOLDERS</Td>
+        <Tr BGCOLOR="<?php $BGC;?>" ALIGN="center" VALIGN="top">
+            <Td><B><I><Font COLOR="<?php $FGC;?>">FOLDERS</Td>
             <Td>&nbsp</Td>
-            <Td><B><I><Font COLOR="<?=$FGC;?>">FILES</Td>
+            <Td><B><I><Font COLOR="<?php $FGC;?>">FILES</Td>
             <Td>&nbsp</Td>
-            <Td><B><I><Font COLOR="<?=$FGC;?>">FILENAMES</Td>
+            <Td><B><I><Font COLOR="<?php $FGC;?>">FILENAMES</Td>
             <Td>&nbsp</Td>
-            <Td COLSPAN=4><a alt="Show Bytes, Kbytes, Mbytes" href=<?=$_SERVER['PHP_SELF'].$encabezado;?>&ACTION=size><B><I><Font COLOR="<?=$FGC;?>">SIZE</a></Td>
+            <Td COLSPAN=4><a alt="Show Bytes, Kbytes, Mbytes" href=<?php $_SERVER['PHP_SELF'].$encabezado;?>&ACTION=size><B><I><Font COLOR="<?php $FGC;?>">SIZE</a></Td>
             <Td>&nbsp</Td>
             <Td>&nbsp</Td>
-            <Td><B><I><Font COLOR="<?=$FGC;?>">LAST DATE</Td>
+            <Td><B><I><Font COLOR="<?php $FGC;?>">LAST DATE</Td>
             <Td>&nbsp</Td>
         </Tr>
         <Br>
@@ -2525,7 +2529,7 @@ This function write the data in the column folder of the dirtreeview table.
     }
     ?>
     <Tr>
-        <Td BGCOLOR="<?=$BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?=$FGC;?>">
+        <Td BGCOLOR="<?php $BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?php $FGC;?>">
     <?php
     If ($_SESSION['Children_Subdirs'][$NODE] != 0) {
         // number of subdirs
@@ -2535,7 +2539,7 @@ This function write the data in the column folder of the dirtreeview table.
     }
     ?>
         </Td>
-        <Td BGCOLOR="<?=$BGC;
+        <Td BGCOLOR="<?php $BGC;
     ?>">&nbsp</Td>
     <?php
 } //end function
@@ -2551,7 +2555,7 @@ This function write the data in the column files of the dirtreeview table.
         $FGC = "BLUE";
     }
     ?>
-   <Td BGCOLOR="<?=$BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?=$FGC;?>">
+   <Td BGCOLOR="<?php $BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?php $FGC;?>">
    <?php
     If ($_SESSION['Children_Files'] [$NODE] != 0) {
         // number of files
@@ -2561,11 +2565,12 @@ This function write the data in the column files of the dirtreeview table.
     }
     ?>
    </Td>
-   <Td BGCOLOR="<?=$BGC;?>">&nbsp</Td>
+   <Td BGCOLOR="<?php $BGC;?>">&nbsp</Td>
    <?php
 } //end function
 
-Function COLUMN_FILENAMES_ROOT($BGC, $FGC) {global $encabezado;
+Function COLUMN_FILENAMES_ROOT($BGC, $FGC) {
+global $encabezado;
 /*
 This function write the data in the column filenames exclusively for the first
 row of the dirtreeview table. (root dir).
@@ -2577,17 +2582,17 @@ row of the dirtreeview table. (root dir).
         $FGC = "BLUE";
     }
     ?>
-    <Td BGCOLOR="<?=$BGC;
-    ?>" NOWRAP><Font COLOR="<?=$FGC;?>">
-    <A HREF=<?= $_SERVER['PHP_SELF'];?>?ACTION=collapseall&NODE=0&FILE_EXTENSION=<?= $_SESSION['File_Extension'].$encabezado;?>>
+    <Td BGCOLOR="<?php $BGC;
+    ?>" NOWRAP><Font COLOR="<?php $FGC;?>">
+    <A HREF=<?php  $_SERVER['PHP_SELF'];?>?ACTION=collapseall&NODE=0&FILE_EXTENSION=<?php  $_SESSION['File_Extension'].$encabezado;?>>
     <Img SRC="img/dirtree/tree_minus_end.gif" alt="Collapse All" HEIGHT="18" WIDTH="18" BORDER="0" VSPACE="0" HSPACE="0" ALIGN="left"></A>
-    <A HREF=<?= $_SERVER['PHP_SELF'];?>?ACTION=dirfunction&NODE=0&FILE_EXTENSION=<?= $_SESSION['File_Extension'].$encabezado;?>>
+    <A HREF=<?php  $_SERVER['PHP_SELF'];?>?ACTION=dirfunction&NODE=0&FILE_EXTENSION=<?php  $_SESSION['File_Extension'].$encabezado;?>>
     <Img SRC="img/dirtree/tree_upload.gif" alt="Directory Functions" HEIGHT="18" WIDTH="18" BORDER="0" VSPACE="0" HSPACE="0" ALIGN="left"></A>
-    <A HREF=<?= $_SERVER['PHP_SELF'];?>?ACTION=expandall&NODE=0&FILE_EXTENSION=<?= $_SESSION['File_Extension'].$encabezado;?>>
+    <A HREF=<?php  $_SERVER['PHP_SELF'];?>?ACTION=expandall&NODE=0&FILE_EXTENSION=<?php  $_SESSION['File_Extension'].$encabezado;?>>
     <Img SRC="img/dirtree/tree_root.gif" alt="Expand All" BORDER="0" HEIGHT="20" WIDTH="20" VSPACE="0" HSPACE="0" ALIGN="left">
-    <b><?= BASENAME($_SESSION['Server_Path']);?></b></A>
+    <b><?php  BASENAME($_SESSION['Server_Path']);?></b></A>
     </Td>
-    <Td BGCOLOR="<?=$BGC;?>">&nbsp</Td>
+    <Td BGCOLOR="<?php $BGC;?>">&nbsp</Td>
     <?php
 } //end function
 
@@ -2760,8 +2765,8 @@ variable $_SESSION['Display_Size']
         $FGC = "BLUE";
     }
     ?>
-   <Td BGCOLOR="<?=$BGC;?>">&nbsp</Td>
-   <Td BGCOLOR="<?=$BGC;?>" ALIGN="right" VALIGN="top" valign=center><Font COLOR="<?=$FGC;?>">
+   <Td BGCOLOR="<?php $BGC;?>">&nbsp</Td>
+   <Td BGCOLOR="<?php $BGC;?>" ALIGN="right" VALIGN="top" valign=center><Font COLOR="<?php $FGC;?>">
    <?php
     // filesize
     $DATO=$_SESSION['Numbytes'][$NODE];
@@ -2819,10 +2824,10 @@ variable $_SESSION['Display_Size']
     }
     ?>
    </Td>
-   <Td BGCOLOR="<?=$BGC;
+   <Td BGCOLOR="<?php $BGC;
     ?>">&nbsp</Td>
-   <Td BGCOLOR="<?=$BGC;?>" ALIGN="left" valign=top><Font COLOR="<?=$FGC;?>"><?=$DES_BYTES;?></Td>
-   <Td BGCOLOR="<?=$BGC;?>" ALIGN="right"><Font COLOR="<?=$FGC;?>">&nbsp</Td>
+   <Td BGCOLOR="<?php $BGC;?>" ALIGN="left" valign=top><Font COLOR="<?php $FGC;?>"><?php $DES_BYTES;?></Td>
+   <Td BGCOLOR="<?php $BGC;?>" ALIGN="right"><Font COLOR="<?php $FGC;?>">&nbsp</Td>
    <?php
 } //end function
 
@@ -2837,8 +2842,8 @@ This function write the data in the column filedate of the dirtreeview table.
         $FGC = "RED";
     }
     ?>
-        <Td BGCOLOR="<?=$BGC;?>">&nbsp</Td>
-        <Td BGCOLOR="<?=$BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?=$FGC;?>">
+        <Td BGCOLOR="<?php $BGC;?>">&nbsp</Td>
+        <Td BGCOLOR="<?php $BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?php $FGC;?>">
    <?php
     If ($NODE != 0 ) {
         //file date
@@ -2849,7 +2854,7 @@ This function write the data in the column filedate of the dirtreeview table.
     }
     ?>
         </Td>
-        <Td BGCOLOR="<?=$BGC;
+        <Td BGCOLOR="<?php $BGC;
     ?>">&nbsp</Td>
    </Tr>
    <?php
@@ -2866,8 +2871,8 @@ This function write the data in the footer of the dirtreeview table.
         $FGC = "WHITE";
     }
     ?>
-        <Tr BGCOLOR="<?=$BGC;?>" ALIGN="center" VALIGN="top">
-            <Td COLSPAN="14"><B><I><Font COLOR="<?=$FGC;?>">This page has been created in <?= NUMBER_FORMAT($_SESSION['Total_Time'], 2, ',', '.');?> seconds</Td>
+        <Tr BGCOLOR="<?php $BGC;?>" ALIGN="center" VALIGN="top">
+            <Td COLSPAN="14"><B><I><Font COLOR="<?php $FGC;?>">This page has been created in <?php  NUMBER_FORMAT($_SESSION['Total_Time'], 2, ',', '.');?> seconds</Td>
         </Tr>
     </Table>
     <Br>
@@ -2907,8 +2912,8 @@ This function build the form to capture the data for the user access.
             <Td VALIGN="top" ALIGN="left">
                 <Center>
                 <Font FACE="tahoma">
-                <H3><?= $TEXTO ?></H3>
-                <Form METHOD="post" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <H3><?php  $TEXTO ?></H3>
+                <Form METHOD="post" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN="center" BORDER="0" class=td>
                         <Tr>
                             <Td align="left" VALIGN="baseline"><H3>Username :</H3></Td>
@@ -2947,7 +2952,7 @@ This function build the form to logout of the session "autentified".
                 <H2> ! IMPORTANT ¡</H2>
                 <H3> The current session has been Cancelled </H3>
                 <H3> Click on the LOGOUT button to CONTINUE and start a new session.</H3>
-                <Form NAME="LOGOUT" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form NAME="LOGOUT" METHOD="post" ENCTYPE="multipart/form-data" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                 <?php //SESSION_DESTROY();?>
                     <Table ALIGN="center" BORDER="0" class=td>
                          <Tr></Tr>
@@ -3156,11 +3161,11 @@ If (($ACTION == "") || ($ACTION == "filter2") || ($ACTION == "renamefile2") || (
     If (!IS_DIR($_SESSION['Server_Path'])) {
         PAGE_HEADER("DIRECTORY TREEVIEW", "ERROR BUSCANDO DIRECTORIO", "", "");
         ?>
-                <Form METHOD='post' ACTION='<?= $_SERVER['PHP_SELF'];?>' >
+                <Form METHOD='post' ACTION='<?php  $_SERVER['PHP_SELF'];?>' >
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr></Tr>
                         <Tr>
-                            <Td><Center><H3>Server Path Directory (' <?=$_SESSION['Server_Path'];Unset($_SESSION['Server_Path']);?> ') not exist or not valid, please check </Td>
+                            <Td><Center><H3>Server Path Directory (' <?php $_SESSION['Server_Path'];Unset($_SESSION['Server_Path']);?> ') not exist or not valid, please check </Td>
                         </Tr>
                         <Tr>
                             <Input TYPE="hidden" NAME="ACTION" VALUE="">
@@ -3224,11 +3229,11 @@ If (($ACTION == "") || ($ACTION == "filter2") || ($ACTION == "renamefile2") || (
         Unset($_SESSION['Server_Path']);
         PAGE_HEADER("DIRECTORY TREEVIEW", "ERROR BUSCANDO DIRECTORIO", "", "");
         ?>
-                <Form METHOD="post" ACTION="<?= $_SERVER['PHP_SELF'];?>">
+                <Form METHOD="post" ACTION="<?php  $_SERVER['PHP_SELF'];?>">
                     <Table ALIGN=center BORDER=0 class=td>
                         <Tr></Tr>
                         <Tr>
-                            <Td><Center><H3>Server Path Directory ("<?= $_SESSION['Server_Path'];?> ") not exist or not valid, please check </Td>>
+                            <Td><Center><H3>Server Path Directory ("<?php  $_SESSION['Server_Path'];?> ") not exist or not valid, please check </Td>>
                         </Tr>
                         <Tr>
                             <Td><Center><Input TYPE="Submit" NAME="INIDIR" VALUE="   Accept  "></Td>
@@ -3265,7 +3270,7 @@ function VerArchivo(Arch){
 	msgwin.focus()
 }
 </script>
-<?
+<?php
 }
 Switch ($ACTION) {
     Case "expand"       : EXPAND($_SESSION['Node']); Break;
