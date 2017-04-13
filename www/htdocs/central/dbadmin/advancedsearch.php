@@ -11,13 +11,16 @@ include("../lang/dbadmin.php");;
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
-if (isset($arrHttp["modulo"])){	switch ($arrHttp["modulo"]){		case "catalogacion":
+if (isset($arrHttp["modulo"])){
+	switch ($arrHttp["modulo"]){
+		case "catalogacion":
 			$file="camposbusqueda.tab";
 			break;
 		case "prestamo":
 			$file="busquedaprestamo.tab";
 			break;
-	}}
+	}
+}
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$file;
 if (!file_exists($archivo)) $archivo= $db_path.$arrHttp["base"]."/pfts/".$lang_db."/camposbusqueda.tab";
 if (file_exists($archivo)){
@@ -31,10 +34,10 @@ include("../common/header.php");
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlxcommon.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlxgrid.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlxgridCell.js"></script-->
-	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+	<!--script  src="../dataentry/js/dhtml_grid/dhtmlXcommon.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlXgrid.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlXgridCell.js"></script-->
+	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 	<script languaje=javascript>
 		pl_type=""
@@ -113,7 +116,9 @@ include("../common/header.php");
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -189,13 +194,15 @@ echo "<font color=white>&nbsp; &nbsp; Script: advancedsearch.php";
 	mygrid.enableMultiselect(true);
 
 	mygrid.init();
-	if (Opcion=="new")  {		for (i=0;i<30;i++){
+	if (Opcion=="new")  {
+		for (i=0;i<30;i++){
 			id=(new Date()).valueOf()
 			mygrid.addRow(id,['','',''],i)
         }
 
 	}else{
-<?php
+
+<?php
 	if ($arrHttp["Opcion"]=="update"){
 		$fp=file($archivo);
 		$i=-1;
@@ -208,7 +215,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: advancedsearch.php";
 				id=(new Date()).valueOf()
 				mygrid.addRow(id,['".trim($t[0])."','".trim($t[1])."','".trim($t[2])."'],i)\n
 				mygrid.setRowTextStyle( id,\"font-family:courier new;font-size:12px;\")\n ";
-			}		}
+			}
+		}
    }
 ?> }
 /*

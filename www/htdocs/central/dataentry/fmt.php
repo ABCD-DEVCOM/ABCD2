@@ -326,14 +326,14 @@ global $valortag,$variables;
        }
 	}
 	//COPY THE CAPTURED RECORD TO THE EMPTY FIELDS
-echo "<pre>",var_dump($valorcap); echo "</pre>";
+//echo "<pre>",var_dump($valorcap); echo "</pre>";
 
 	foreach ($valorcap as $tag=>$value){
 		if (!isset($valortag["$tag"])) $valortag[$tag]=$value;
 		$variables["tag$tag"]=$value;
 	}
-echo "Valortag:<pre>",var_dump($valortag); echo "</pre>";
-echo "Variables:<pre>",var_dump($variables); echo "</pre>";
+//echo "Valortag:<pre>",var_dump($valortag); echo "</pre>";
+//echo "Variables:<pre>",var_dump($variables); echo "</pre>";
 }
 
 function ColocarMfn(){

@@ -26,10 +26,10 @@ if (!isset($arrHttp["Subc"])){
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlxcommon.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlxgrid.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlxgridCell.js"></script-->
-	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+	<!--script  src="../dataentry/js/dhtml_grid/dhtmlXcommon.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlXgrid.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlXgridCell.js"></script-->
+	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 
 	<script languaje=javascript>
@@ -82,11 +82,13 @@ if (!isset($arrHttp["Subc"])){
 	}
 
 
-	function Asignar(){		mygrid.cells2(fila,columna).setValue(valor)
+	function Asignar(){
+		mygrid.cells2(fila,columna).setValue(valor)
 		mygrid.cells2(fila,13).setValue(prefix)
 		mygrid.cells2(fila,15).setValue(list)
 		mygrid.cells2(fila,16).setValue(extract)
-	//	closeit()	}
+	//	closeit()
+	}
 
 	function switchDiv(div_id)
 {
@@ -187,9 +189,12 @@ function Picklist(name,row,base){
 	fila=mygrid.getRowIndex(mygrid.getSelectedId())
 	pl_type=mygrid.cells2(fila,11).getValue()
 	pl_name=mygrid.cells2(fila,12).getValue()
-	if (pl_type==""){		alert("<?php echo $msgstr["selpltype"]?>")
-		return	}
-	switch (pl_type){		case "P":
+	if (pl_type==""){
+		alert("<?php echo $msgstr["selpltype"]?>")
+		return
+	}
+	switch (pl_type){
+		case "P":
 			Url=""
 			document.edit_picklist.base.value="<?php echo $arrHttp["base"]?>"
 			document.edit_picklist.pl_type.value="<?php if(isset($arrHttp["type"])) echo $arrHttp["type"]?>"
@@ -207,7 +212,8 @@ function Picklist(name,row,base){
 			Url="picklist_db.php?base=<?php echo $arrHttp["base"]?>&picklist="+name+"&row="+fila+"&dbsel="+dbsel+"&prefix="+prefix+"&list="+list+"&extract="+extract
 			break
 		case "T":
-  			break	}
+  			break
+	}
 	if (Url!="") Url+="&type="+pl_type
 	msgwin=window.open(Url,"PL","menu=0,scrollbars,resizable")
 	if (Url=="") document.edit_picklist.submit()
@@ -250,11 +256,14 @@ function Picklist(name,row,base){
 			return
 		}
 
-function Test(){	msgwin=window.open("","Test")
-	msgwin.document.close()	document.forma1.action="../dataentry/fdt_test.php";
+function Test(){
+	msgwin=window.open("","Test")
+	msgwin.document.close()
+	document.forma1.action="../dataentry/fdt_test.php";
 	document.forma1.target="Test";
 	msgwin.focus()
-	Actualizar()}
+	Actualizar()
+}
 
 function IsNumeric(sText){
    var ValidChars = "0123456789";
@@ -284,7 +293,8 @@ function EncabezarFilas(Rows){
 	msgwin.document.writeln("<td bgcolor=white><?php echo $msgstr["listas"]?></td><td bgcolor=white><?php echo $msgstr["extractas"]?></td>")
 }
 
-function Validate(Opcion){	var width = screen.availWidth;
+function Validate(Opcion){
+	var width = screen.availWidth;
     var height = screen.availHeight
 	msgwin=window.open("","Fdt","width="+width+", height="+height+" resizable=yes, scrollbars=yes, menu=yes")
     msgwin.document.writeln("<html>")
@@ -320,7 +330,8 @@ function Validate(Opcion){	var width = screen.availWidth;
 		if (Trim(fila)!=""){
 			msgwin.document.writeln("<tr><td>"+irow+"</td>")
 			for (j=1;j<cols;j++){
-				if (j!=14){
+				if (j!=14){
+
         			cell=Trim(mygrid.cells2(i,j).getValue())
                 	if (cell=="undefined") cell=""
 					switch (j){
@@ -514,19 +525,23 @@ function Validate(Opcion){	var width = screen.availWidth;
 		}
 	}
 	msgwin.document.writeln("</table>")
-	if (mainentry>1){		msg+="<?php echo $msgstr["errmainentry"]?>"	}
+	if (mainentry>1){
+		msg+="<?php echo $msgstr["errmainentry"]?>"
+	}
 	if (msg!=""){
 		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>&nbsp &nbsp;')
     	msgwin.document.writeln('<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank>edit help file</a>')
 		msgwin.document.writeln("<p>"+msg)
 		msgwin.focus()
-	}else{		msgwin.document.writeln("<p><?php echo $msgstr["noerrors"]?>")
+	}else{
+		msgwin.document.writeln("<p><?php echo $msgstr["noerrors"]?>")
 		msgwin.focus()
 	}
 
 	if (Opcion=="Actualizar"){
 		if (msg=="") {
-			msgwin.close()			return true
+			msgwin.close()
+			return true
         }else{
 			msgwin.document.writeln("<h4><?php echo $msgstr["fdterr"]?></h4>")
 			msgwin.focus()
@@ -534,7 +549,8 @@ function Validate(Opcion){	var width = screen.availWidth;
 		}
 	}
 	msgwin.document.writeln("</body></html>")
-	msgwin.focus()}
+	msgwin.focus()
+}
 
 function List(){
 	var width = screen.availWidth;
@@ -557,7 +573,8 @@ function List(){
 			for (j=1;j<cols;j++){
 				if (j!=14){
 					cell=mygrid.cells2(i,j).getValue()
-					switch (j){						case 1:
+					switch (j){
+						case 1:
 							if (Trim(cell)!="") cell=field_type[cell]+" ("+cell+")"
 							break
 						case 4:
@@ -615,7 +632,8 @@ function List(){
 
 function Enviar(){
 	ret=Validate("Actualizar")
-	if (ret){		<?php if ($arrHttp["Opcion"]=="new")
+	if (ret){
+		<?php if ($arrHttp["Opcion"]=="new")
 			echo  "document.forma1.action=\"fdt_new.php\"\n";
 		else
 		    echo  "document.forma1.action=\"fdt_update.php\"\n";
@@ -696,7 +714,8 @@ function doOnCellEdit(stage,rowId,cellInd){
 
 <body>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 }?>
 
 <form>
@@ -705,7 +724,8 @@ if (!isset($arrHttp["Subc"])){
 	unset($fp);
 	$link_fdt="";
 	$link_fdt="S";
-	if ($arrHttp["Opcion"]=="new"){
+	if ($arrHttp["Opcion"]=="new"){
+
 		if (!isset($_SESSION["FDT"])){
 			$fp=array();
 			for ($i=0;$i<20;$i++){
@@ -726,19 +746,24 @@ if (!isset($arrHttp["Subc"])){
         	$xarch=$arrHttp["base"].".fdt";
 
 		}else{
-			if (isset($arrHttp["fmt_name"])) {				$arrHttp["type"]=$arrHttp["fmt_name"].".fmt"; //EDIT A DATAENTRY WORKSHEET, ELSE EDIT A MARC FIXED FIELD FDT
-				$link_fdt="S";			}
+			if (isset($arrHttp["fmt_name"])) {
+				$arrHttp["type"]=$arrHttp["fmt_name"].".fmt"; //EDIT A DATAENTRY WORKSHEET, ELSE EDIT A MARC FIXED FIELD FDT
+				$link_fdt="S";
+			}
 			if (isset($arrHttp["Fixed_field"])){
-				$arrHttp["type"]=$arrHttp["fdt_name"];			}
+				$arrHttp["type"]=$arrHttp["fdt_name"];
+			}
 			if (isset($arrHttp["type"])){
 	            $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["type"];
 				if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["type"];
 				$xarch=$arrHttp["type"];
 			}
-		}		unset($fp);
+		}
+		unset($fp);
 		if (file_exists($archivo))	$fp=file($archivo);
  		//echo "tope=20\n";
-	}	echo "<div class=\"sectionInfo\">
+	}
+	echo "<div class=\"sectionInfo\">
 		<div class=\"breadcrumb\">";
   //	echo $msgstr["bd"].": ". $arrHttp["base"]."<br>";
 	if (isset($arrHttp["fmt_desc"])) {
@@ -751,13 +776,20 @@ if (!isset($arrHttp["Subc"])){
 	if (isset($arrHttp["fmt_desc"])) echo " (".$arrHttp["fmt_desc"].")";
 
 	echo "</div><div class=\"actions\">";
-	if ($arrHttp["Opcion"]=="new"){		if (isset($arrHttp["encabezado"])){
+	if ($arrHttp["Opcion"]=="new"){
+		if (isset($arrHttp["encabezado"])){
 			echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
-		}else{			 echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";		}	}else{		if (isset($arrHttp["encabezado"]))
+		}else{
+			 echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";
+		}
+	}else{
+		if (isset($arrHttp["encabezado"]))
 			$encabezado="&encabezado=s";
 		else
 			$encabezado="";
-		if (isset($arrHttp["Fixed_field"])){			echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";		}else{
+		if (isset($arrHttp["Fixed_field"])){
+			echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";
+		}else{
 			if (!isset($arrHttp["ventana"]))
 				echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";
 			else
@@ -791,12 +823,14 @@ echo "<font color=white>&nbsp; &nbsp; Script: fdt_short_a.php";
 			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
 			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
  &nbsp; &nbsp; <font color=darkred size=1><strong><?php echo $msgstr['double_click']?></strong></font>
-	<table  style="width:100%; height:200" id=tblToGrid class="dhtmlxGrid">
+	<table  style="width:100%; height:200" id=tblToGrid class="dhtmlXgrid">
 <?php
 echo "<tr>";
 $tope=0;
-foreach ($rows_title as $cell){	echo "<td>$cell</td>\n";
-	$tope=$tope+1;}
+foreach ($rows_title as $cell){
+	echo "<td>$cell</td>\n";
+	$tope=$tope+1;
+}
 echo "</tr>";
 
 
@@ -804,8 +838,10 @@ $nfilas=0;
 $i=-1;
 if (isset($fp)){
 	$t=array();
-	foreach ($fp as $value){		$value=trim($value);
-		if (trim($value)!=""){
+	foreach ($fp as $value){
+		$value=trim($value);
+		if (trim($value)!=""){
+
 
 			$value.="|||||||||||||||||||||" ;
 			$t=explode("|",$value);
@@ -1032,9 +1068,11 @@ var mygrid = new dhtmlXGridFromTable('tblToGrid');
 <br><br>
 </form>
 <form name=forma1 action=fdt_update.php method=post>
-<?php if (isset($arrHttp["fmt_name"])){	echo "<input type=hidden name=fmt_name value=".$arrHttp["fmt_name"].">\n";
+<?php if (isset($arrHttp["fmt_name"])){
+	echo "<input type=hidden name=fmt_name value=".$arrHttp["fmt_name"].">\n";
 }
-	if (isset($arrHttp["fmt_desc"])) echo "<input type=hidden name=fmt_desc value=".$arrHttp["fmt_desc"].">\n";
+	if (isset($arrHttp["fmt_desc"])) echo "<input type=hidden name=fmt_desc value=".$arrHttp["fmt_desc"].">\n";
+
 ?>
 <input type=hidden name=ValorCapturado>
 <input type=hidden name=desc>

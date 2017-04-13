@@ -2987,7 +2987,7 @@ This function build the form to choose the root dir for the treeview process.
                     <Table ALIGN="center" BORDER="0" class=td>
                         <Tr>
                             <Td align="left" VALIGN="baseline"><H3>Directory :</H3></Td>
-                            <Td align="left" VALIGN="top"><Input TYPE="text" NAME="Server_Path" SIZE="50" VALUE=$db_path."bases"></Td>
+                            <Td align="left" VALIGN="top"><Input TYPE="text" NAME="Server_Path" SIZE="50" VALUE=$db_path/*."bases"*/></Td>
                         </Tr>
                         <Tr>
                             <Td></Td><Td><Center><Input TYPE="Submit" NAME="INIDIR" VALUE="   Accept  "></Td>

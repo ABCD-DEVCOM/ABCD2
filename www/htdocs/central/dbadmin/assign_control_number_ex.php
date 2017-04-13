@@ -35,6 +35,7 @@ if (isset($arrHttp["encabezado"]))
 	$encabezado="&encabezado=S";
 else
 	$encabezado="";
+
 LeerFdt($arrHttp["base"]);
 $db_addto=$arrHttp["base"];
 include("../common/header.php");
@@ -73,16 +74,18 @@ if (isset($arrHttp["encabezado"])){
 </div>
 <div class="middle form">
 	<div class="formContent">
-<?
+<?php
 //se lee la FDT de la base de datos para determinar el campo donde se almacena el número de control
 
 $Formato=$tag_ctl;
 if ($tag_ctl==""){
-	echo "<h4>".$msgstr["missingctl"]."</h4>";}else{
+	echo "<h4>".$msgstr["missingctl"]."</h4>";
+}else{
 	echo "Tag for the control number: $tag_ctl<br>";
 	echo "<table>";
 	echo "<th>Mfn</th><th>".$msgstr["cn"]."</th>";
-	for ($Mfn=$arrHttp["Mfn"];$Mfn<=$arrHttp["to"];$Mfn++){		$control=ProximoNumero($arrHttp["base"]);
+	for ($Mfn=$arrHttp["Mfn"];$Mfn<=$arrHttp["to"];$Mfn++){
+		$control=ProximoNumero($arrHttp["base"]);
 		$tag_ctl=trim($tag_ctl);
 		$ValorCapturado="d".$tag_ctl."<".$tag_ctl." 0>".$control."</".$tag_ctl.">";
 		$ValorCapturado=urlencode($ValorCapturado);
@@ -91,12 +94,14 @@ if ($tag_ctl==""){
 		include("../common/wxis_llamar.php");
 		echo "<tr><td>$Mfn</td><td>$control</td>" ;
 		echo "<td>";
-		//foreach ($contenido as $value) {		//	if (trim($value)!="")
+		//foreach ($contenido as $value) {
+		//	if (trim($value)!="")
 		//		echo "---$value<br>";
 		//}
 		echo "</td>";
 		flush();
-    	ob_flush();	}
+    	ob_flush();
+	}
 
 	echo "<form name=forma1 action=assign_control_number.php method=post>
 	<input type=hidden name=base value=".$arrHttp["base"].">
@@ -112,7 +117,6 @@ if ($tag_ctl==""){
 function LeerFdt($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$msgstr;
 // se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática y el prefijo con el cual se indiza el número de control
-
 	$archivo=$db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
 	if (file_exists($archivo)){
 		$fp=file($archivo);
@@ -137,7 +141,6 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$msgstr;
 	}
 	// Si no se ha definido el tag para el número de control en la fdt, se produce un error
 }
-
 
 function ProximoNumero($base){
 global $db_path,$max_cn_length;
