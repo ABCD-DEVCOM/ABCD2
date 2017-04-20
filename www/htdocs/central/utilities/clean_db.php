@@ -20,7 +20,7 @@ $converter_path=$cisis_path;
 
 include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-echo "<div style='float:right;'> <a href=\"../dbadmin/menu_mx_based.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<div style='float:right;'> <a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\"/>
 					<span><strong> back </strong></span>
 				</a></div>";

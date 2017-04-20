@@ -37,6 +37,7 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 $base=$arrHttp["base"];
+//echo "base=$base<BR>";
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">Import DOC: " . $base."
 			</div>
@@ -49,10 +50,12 @@ echo "</div>
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_import_doc.html target=_blank>".$msgstr["edhlp"]."</a>";
+//echo  "drpathdef=".$db_path.$arrHttp["base"]."/dr_path.def<BR>";
+//die;
 if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
 	$def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
-	if (isset($def["ROOT"])){
-		$dr_path=trim($def["ROOT"]);
+	if (isset($def["COLLECTION"])){
+		$dr_path=trim($def["COLLECTION"]);
 		$ix=strrpos($dr_path,"/");
         $dr_path_rel=substr($dr_path,0,$ix-1);
         $ix=strrpos($dr_path_rel,"/");
@@ -91,7 +94,7 @@ if(isset($fn))
 $fn=explode("&*",$fn);
 for($i=0;$i<count($fn)-1;$i++)
 {
-$mx_path=$cisis_ver."mx";
+//$mx_path=$cisis_ver."mx";
 $base=$_POST["base"];
 $bd=$db_path.$base;
 $nombre=$fn[$i];
@@ -100,8 +103,10 @@ $textv99=$_POST["textv99"];
 $nombrese=str_replace(" ","_",$nombre);
 rename($dirc.$nombre,$dirc.$nombrese);
 $nombre=$nombrese;
-$tika_path=str_replace($cisis_ver,"",$cisis_path);
-$cmdconvert= "java -jar ".$tika_path."tika.jar -h ".$dirc."/".$nombre." > ".$img_path.$base."/collection/ABCDSourceRepo/".$nombre.".html";
+//$tika_path=str_replace($cisis_ver,"",$cisis_path);
+$tika_path=$cgibin_path;
+$cmdconvert= "java -jar ".$tika_path."tika.jar -h ".$dirc."/".$nombre." > ".$dr_path."/ABCDSourceRepo/".$nombre.".html";
+echo "command=$cmdconvert<BR>";
 exec($cmdconvert,$out,$b);
 if($b==1)
 {
@@ -110,9 +115,9 @@ echo "<br><font color='red'>Error occurred converting to HTML $nombre </font>";
 else
 {
 $bdp=$_POST['base'];
-rename($img_path.$base."/collection/ABCDSourceRepo/".$nombre.".html",$img_path.$base."/collection/ABCDSourceRepo/".$nombrese.".html");
+rename($dr_path."/ABCDSourceRepo/".$nombre.".html",$dr_path."/ABCDSourceRepo/".$nombrese.".html");
 $nombre=$nombrese.".html";
-$fp=file($img_path.$base."/collection/ABCDSourceRepo/".$nombre);
+$fp=file($dr_path."/ABCDSourceRepo/".$nombre);
 $IsisScript="$Wxis"." IsisScript=".$db_path."wrk/hi.xis";
 $strNro="";
 foreach ($fp as $Nro){
@@ -160,8 +165,9 @@ echo "<br><font color='red'>Error creating ISIS record $nombre</font><br>";
 }
 }
 }
-echo "<br><font color='green'>$count Registries created!</font><br>";
-$mxindex=$cisis_path."mx ".$db_path.$bdp."/data/".$bdp." fst=@ ifupd=$db_path$bdp/data/$bdp";
+echo "<br><font color='green'>$count Records created!</font><br>";
+$mxindex=$mx_exec." ".$db_path.$bdp."/data/".$bdp." fst=@ ifupd=$db_path$bdp/data/$bdp";
+echo "mxindexcmd=$mxindex<BR>";
 exec($mxindex,$salida,$b);
 if($b==0)
 echo "<br> Index created OK<br>";

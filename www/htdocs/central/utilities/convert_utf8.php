@@ -51,7 +51,7 @@ echo "
 
 	";
 
-	echo "<a href=\"menu_mx_based.php?base=".$_GET['selected_base']."&encabezado=S\" class=\"defaultButton backButton\">";
+	echo "<a href=\"menu_extra.php?base=".$_GET['selected_base']."&encabezado=S\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 

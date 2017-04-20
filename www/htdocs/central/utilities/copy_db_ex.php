@@ -44,18 +44,21 @@ include("../common/header.php");
 include("../common/institutional_info.php");
 
 function Confirmar(){
-global $msgstr;	echo "<h4>".$msgstr["confirm_copydb"]."</h4>";
+global $msgstr;
+	echo "<h4>".$msgstr["confirm_copydb"]."</h4>";
 	echo "<input type=button name=continuar value=\"".$msgstr["continuar"]."\" onclick=Confirmar()>";
 	echo "&nbsp; &nbsp;<input type=button name=cancelar value=\"".$msgstr["cancelar"]."\" onclick=Regresar()>";
 	echo "</body></html>";
-}
+
+}
 
 ?>
 <script>
 function Confirmar(){
 	document.continuar.confirmar.value="OK";
 	document.getElementById('loading').style.display='block';
-	document.continuar.submit()}
+	document.continuar.submit()
+}
 
 
 function Regresar(){
@@ -118,17 +121,14 @@ $OS=PHP_OS;
 
 echo "<H4>" . $from ." => $to</H4>";
 if (isset($arrHttp["reorganize"])){
-	if (!isset($mx_path)){
-		echo $msgstr["mis_mx_path"];
-	    die;
-	}
-	$mx_path=trim($mx_path);
-    $ix=strrpos($mx_path,'/');
-    $mx_path=substr($mx_path,0,$ix);
-    $mxcp_path=$mx_path."/mxcp.exe";
-    if (!file_exists($mxcp_path)){    	$mxcp_path=$mx_path."/mxcp";
-    	if (!file_exists($mxcp_path)){    		echo $msgstr["mis_mx_path"];
-	    	die;    	}    }
+    $mxcp_path=$cisis_path."mxcp".$exe_ext;
+   if (!file_exists($mxcp_path)){
+    	$mxcp_path=$cgibin_path."/mxcp";
+    	if (!file_exists($mxcp_path)){
+    		echo $msgstr["mis_mx_path"];
+	    	die;
+    	}
+    }
     echo "<font face='courier new'>Command line: ".$mxcp_path." $from create=$to</font><br> ";
  }
 if (!isset($arrHttp["confirmar"]) or (isset($arrHttp["confirmar"]) and $arrHttp["confirmar"]!="OK")){
@@ -137,8 +137,13 @@ if (!isset($arrHttp["confirmar"]) or (isset($arrHttp["confirmar"]) and $arrHttp[
 }
 if (isset($arrHttp["reorganize"])){
 	$res=exec($mxcp_path." $from create=$to tell=1 log=$to-res",$contenido,$resultado);
-	if ($resultado==0){		echo $from.".mst ".$msgstr["reorganized"]."<p>";
-	}else{		$err="Y";	}}else{	$res=copy($from.".mst",$to.".mst");
+	if ($resultado==0){
+		echo $from.".mst ".$msgstr["reorganized"]."<p>";
+	}else{
+		$err="Y";
+	}
+}else{
+	$res=copy($from.".mst",$to.".mst");
 	if ($res==1){
 		echo $from.".mst => ".$to.".mst ".$msgstr["copied"]."<br>";
 		$res=copy($from.".xrf",$to.".xrf");
@@ -146,8 +151,13 @@ if (isset($arrHttp["reorganize"])){
 			echo $from.".xrf => ".$to.".xrf  ".$msgstr["copied"]."<P>";
 		}else
 			$err="Y";
-	}else{		$err="Y";	}}
-if ($err==""){	echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>\n";}
+	}else{
+		$err="Y";
+	}
+}
+if ($err==""){
+	echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>\n";
+}
 
 ?>
 </div>

@@ -21,21 +21,21 @@ if (isset($arrHttp["encabezado"])) {
 }
 
 
-echo "<div style='float:right;'> <a href=\"menu_mx_based.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<div style='float:right;'> <a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a></div>";
 
 
-$OS=strtoupper(PHP_OS);
+//$OS=strtoupper(PHP_OS);
 $converter_path=$mx_path;
-if (strpos($OS,"WIN")=== false)
-{
-$converter_path=str_replace('mx.exe','',$converter_path);
-$converter_path.=$cisis_ver."mx";
-}
-else
-$converter_path=$mx_path.$cisis_ver."mx.exe";
+//if (strpos($OS,"WIN")=== false)
+//{
+//$converter_path=str_replace('mx.exe','',$converter_path);
+//$converter_path.=$cisis_ver."mx";
+//}
+//else
+//$converter_path=$mx_path.$cisis_ver."mx.exe";
 $retag_path=$converter_path;
 $base=$arrHttp["base"];
 $bd=$db_path.$base;

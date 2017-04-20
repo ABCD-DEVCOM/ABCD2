@@ -45,13 +45,13 @@ $bd=$db_path.$base;
 echo "
 	<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".
-				$msgstr["maintenance"]. ": " . $arrHttp["base"]."
+				$msgstr["maintenance"]. ": " . $base ."
 			</div>
 			<div class=\"actions\">
 
 	";
 
-	echo "<a href=\"menu_mx_based.php?base=".$_GET['selected_base']."&encabezado=S\" class=\"defaultButton backButton\">";
+	echo "<a href=\"menu_extra.php?base=".$_GET['selected_base']."&encabezado=S\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 
@@ -64,7 +64,7 @@ echo "</div>
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: utilities/convert_utf8.php";
+echo "<font color=white>&nbsp; &nbsp; Script: utilities/convert_ansi.php";
 
 ?>
 </font>

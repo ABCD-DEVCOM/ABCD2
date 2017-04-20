@@ -36,7 +36,7 @@ if (isset($arrHttp["encabezado"])) {
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"../dbadmin/menu_mx_based.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -75,29 +75,34 @@ echo $base;
   <input type="text" name="to" id="to" value="9999" />
   </td>
   <td>
-  last MFN=<?php 
+  last MFN=
+<?php
   include("../common/get_post.php");
 $base=$_POST['base'];
-$OS=strtoupper(PHP_OS);
-$converter_path=$mx_path;
-if (strpos($OS,"WIN")=== false) 
-{
-$converter_path=str_replace('mx.exe','',$converter_path);
-$converter_path.=$cisis_ver."mx";
-
-}
-else
-$converter_path.=$cisis_ver."mx.exe";
-$mx_path=$converter_path;
-  $mx_max_mfn="$mx_path"." ".$db_path.$base."/data/".$base;
-exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
-for($i=0;$i<count($outmx_max_mfn);$i++)
-{
-$datosMFN.=$outmx_max_mfn[$i];
-}
-$split_mfn=explode("mfn=",$datosMFN);
-$max_mfn=count($split_mfn);
-  echo $max_mfn-1;?>
+//$OS=strtoupper(PHP_OS);
+//$converter_path=$mx_path;
+//if (strpos($OS,"WIN")=== false) 
+//{
+//$converter_path=str_replace('mx.exe','',$converter_path);
+//$converter_path.=$cisis_ver."mx";
+//}
+//else
+//$converter_path.=$cisis_ver."mx";
+//$mx_path=$converter_path;
+  $mx_max_mfn="$mx_path $db_path$base/data/$base count=1 " . ' "pft=f(maxmfn-1,0,0)"';
+  exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
+//echo "cmd=$mx_max_mfn<BR>";
+//var_dump($outmx_max_mfn);
+//die;
+//for($i=0;$i<count($outmx_max_mfn);$i++)
+//{
+//$datosMFN.=$outmx_max_mfn[$i];
+//}
+//$split_mfn=explode("mfn=",$datosMFN);
+//$max_mfn=count($split_mfn);
+ $max_mfn  = $outmx_max_mfn[0];
+  echo $max_mfn;
+?>
   </td>
   </tr>
   <tr>
@@ -198,7 +203,9 @@ while(!feof($fp))
 <?php
 include("../common/get_post.php");
 $base=$_POST['base'];
-$IsisScript=$Wxis." IsisScript=hi.xis";
+// calling wxis with IsisScript hi.xis in $db_path
+$IsisScript=$Wxis." IsisScript=".$db_path."hi.xis";
+//echo "hixis=$IsisScript<BR>";
 $from=$_POST['from'];
 $to=$_POST['to'];
 $bprinc=$_POST['ml'];;
@@ -207,17 +214,17 @@ $campo=$_POST['field'];
 $tag=$_POST['tag'];
 $bdp="loanobjects";
 $CNF=$_POST['cnf'];
-$OS=strtoupper(PHP_OS);
-$converter_path=$mx_path;
-if (strpos($OS,"WIN")=== false) 
-{
-$converter_path=str_replace('mx.exe','',$converter_path);
-$converter_path.=$cisis_ver."mx";
+//$OS=strtoupper(PHP_OS);
+//$converter_path=$mx_path;
+//if (strpos($OS,"WIN")=== false) 
+//{
+//$converter_path=str_replace('mx.exe','',$converter_path);
+//$converter_path.=$cisis_ver."mx";
+//}
+//else
+//$converter_path.=$cisis_ver."mx.exe";
+//$mx_path=$converter_path;
 
-}
-else
-$converter_path.=$cisis_ver."mx.exe";
-$mx_path=$converter_path;
 $mx="$mx_path"." $db_path".$base."/data/".$base." from=$from to=$to pft=v".$campo;
 $queryNro="$mx_path"." $db_path".$base."/data/".$base." from=$from to=$to pft=v".$CNF;
 $cantCopias=$_POST['nc'];
@@ -304,13 +311,14 @@ $str="<IsisScript name=hi>
 </update>
 </do>
 </IsisScript>";
-@ $fp = fopen("hi.xis", "w");
+// hi.xis script will be temporarily written to bases-directory as defined in $db_path
+@ $fp = fopen($db_path . "hi.xis", "w");
 
 @  flock($fp, 2);
 
   if (!$fp)
   {
-    echo "<p><strong> Error ocurred in ISIS Script."
+    echo "<p><strong> Error occurred in creating ISISScript. "
          ."Please try again.</strong></p></body></html>";
     exit;
   }
@@ -325,9 +333,9 @@ $cantReg++;
 }
 }
 if($cantReg>=1)
-echo "$cantReg registries created!";
+echo "$cantReg loanobject records created!";
 else
-echo "NO registries created!";
+echo "NO loanobject records created!";
 }
 
 ?>
