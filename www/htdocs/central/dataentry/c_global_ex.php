@@ -28,20 +28,29 @@ global $xWxis,$db_path,$Wxis,$arrHttp,$wxisUrl;
 
 }
 
-function EliminarListaCampos(){global $arrHttp,$ValorCapturado,$Cambiado;
+function EliminarListaCampos(){
+global $arrHttp,$ValorCapturado,$Cambiado;
 	$tag=explode(" ",$arrHttp["listdel"]);
 	$proc="";
 	foreach ($tag as $value){
-		$value=trim($value);		if ($value!=""){			while (strlen($value)<3) $value="0".$value;			if ($proc=="")
+		$value=trim($value);
+		if ($value!=""){
+			while (strlen($value)<3) $value="0".$value;
+			if ($proc=="")
 				$proc='d'.$value;
 			else
-				$proc.="\nd$value";		}	}
+				$proc.="\nd$value";
+		}
+	}
 	$ValorCapturado=$proc;
-	$Cambiado="N";}
+	$Cambiado="N";
+}
 
-function EjecutarCambio($cont,$Anterior,$Tag,$Actual){
+function EjecutarCambio($cont,$Anterior,$Tag,$Actual){
+
 global $arrHttp,$ValorCapturado,$Cambiado;
-	switch ($arrHttp["tipoc"]){		case "agregar":
+	switch ($arrHttp["tipoc"]){
+		case "agregar":
 		case "agregarocc":
 			$Cambiado="S";
 			if ($Anterior!=""){
@@ -95,13 +104,17 @@ global $arrHttp,$ValorCapturado,$Cambiado;
 		case "modificar":
 		case "modificarocc":
 			if ($arrHttp["tipoa"]=="cadena"){
-				if (stripos($Actual,$Anterior)===false){				}else{
+				if (stripos($Actual,$Anterior)===false){
+				}else{
 					$NuevoValor=str_replace($Anterior,$arrHttp["nuevo"],$Actual);
 					$ValorCapturado.="a".$Tag."×".$NuevoValor."×\n";
 					$Cambiado="S";
 				}
-			}else{				if ($Anterior==""){					$ValorCapturado.="a".$Tag."×".$arrHttp["nuevo"]."×\n";
-					$Cambiado="S";				}else{
+			}else{
+				if ($Anterior==""){
+					$ValorCapturado.="a".$Tag."×".$arrHttp["nuevo"]."×\n";
+					$Cambiado="S";
+				}else{
 					if (strcasecmp(trim($Actual), trim($Anterior)) == 0){
 						$ValorCapturado.="a".$Tag."×".$arrHttp["nuevo"]."×\n";
 						$Cambiado="S";
@@ -131,7 +144,8 @@ global $arrHttp,$ValorCapturado,$Cambiado;
 					$ValorCapturado.="a".$Tag."×".$resto."×\n";
 					$Cambiado="S";
 				}
-				if ($amover!=""){					if (isset($arrHttp["nuevotag"])){
+				if ($amover!=""){
+					if (isset($arrHttp["nuevotag"])){
 						$T=explode('|',$arrHttp["nuevotag"]);
 						$Tag_n=$T[0];
 						if ($Tag_n!="")
@@ -145,7 +159,7 @@ global $arrHttp,$ValorCapturado,$Cambiado;
 			$T=explode('|',$arrHttp["nuevotag"]);
 			$Tag_n=$T[0];
 			$act=explode('$$',$Actual);
-			var_dump($act);
+//??			var_dump($act);
 			$ValorCapturado.="a".$Tag_n."×".$Actual."×\n";
 			$Cambiado="S";
 
@@ -178,9 +192,11 @@ var xleft = (screen.width/2)-(w/2);
 var xtop = (screen.height/2)-(h/2);
 waitwin=window.open("../common/wait.html"," ","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width="+w+", height="+h+", top="+xtop+", left="+xleft)
 waitwin.focus()
-function Presentar(Mfn){	url="leer_all.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&count=1"
+function Presentar(Mfn){
+	url="leer_all.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&count=1"
 	msgwin=window.open(url,"SEE","width=400,height=400,resizable,scrollbars")
-	msgwin.focus()}
+	msgwin.focus()
+}
 </script>
 <body>
 <div class="sectionInfo">
@@ -242,9 +258,11 @@ echo "
 	    $tx=explode('|',$tit);
 		echo "<strong>(".$T[0].") ".$tx[1]."</strong>";
 		$Tag=$T[0];
-		while (strlen($Tag)<3) $Tag="0".$Tag;	}
+		while (strlen($Tag)<3) $Tag="0".$Tag;
+	}
 	echo "<center><div style=\"width:700px;border-style:solid;border-width:1px; \">";
-	switch ($arrHttp["tipoc"]){		case "agregar":
+	switch ($arrHttp["tipoc"]){
+		case "agregar":
 	  		$msg_accion=$msgstr["cg_add"];
 	  		break;
 	  	case "agregarocc":
@@ -267,13 +285,19 @@ echo "
 	  		break;
 	 	case "eliminarocc":
 	 		$msg_accion= $msgstr["cg_deleteocc"];
-	 		break;	}
-	if (isset($arrHttp["tipoa"])){		$msg_accion.=". ".$msgstr["cg_scope"].": ";		switch ($arrHttp["tipoa"]){			case "frase":
+	 		break;
+	}
+	if (isset($arrHttp["tipoa"])){
+		$msg_accion.=". ".$msgstr["cg_scope"].": ";
+		switch ($arrHttp["tipoa"]){
+			case "frase":
 				$msg_accion.=$msgstr["cg_field"];
 				break;
 			case "cadena":
 				$msg_accion.=$msgstr["cg_part"];
-				break;		}	}
+				break;
+		}
+	}
 	echo "<strong>$msg_accion</strong><br>";
 	if (isset($ValorAnterior)){
 
@@ -301,7 +325,9 @@ if (!isset($arrHttp["count"])) $arrHttp["count"]=100;
 if ($arrHttp["Opcion"]=="rango"){						//se construye el rango de Mfn's a procesar
 	$tope=$arrHttp["from"]+$arrHttp["count"]-1;
 	if ($tope>=$arrHttp["to"]) $tope=$arrHttp["to"];
-	for ($ix=$arrHttp["from"];$ix<=$tope;$ix++){		$arr_mfn[$ix]=$ix;	}
+	for ($ix=$arrHttp["from"];$ix<=$tope;$ix++){
+		$arr_mfn[$ix]=$ix;
+	}
 	$hasta=$arrHttp["to"];
 	$ixMfn=0;
 }else{
@@ -313,11 +339,14 @@ if ($arrHttp["Opcion"]=="rango"){						//se construye el rango de Mfn's a proces
 	foreach ($contenido as $value){
 		if (trim($value)!="") {
 			$ix++;
-			$val=explode('|',$value);			$arr_mfn[$ix]=$val[1];
-		}	}
+			$val=explode('|',$value);
+			$arr_mfn[$ix]=$val[1];
+		}
+	}
 	$arrHttp["from"]=1;
 	$tope=100;
-}
+}
+
 
 foreach ($arr_mfn as $Mfn){
  	$IxMfn=$IxMfn+1;
@@ -331,7 +360,9 @@ foreach ($arr_mfn as $Mfn){
 	if ($arrHttp["tipoc"]!="agregarocc" and !isset($arrHttp["listdel"]))
 		$ValorCapturado="d".$Tag."\n";
 	$Actualizar="";
-	foreach ($contenido as $linea){		if (trim($linea)=="") continue;		$xcampos=explode('|',$linea);
+	foreach ($contenido as $linea){
+		if (trim($linea)=="") continue;
+		$xcampos=explode('|',$linea);
    		$linea=$xcampos[0];
 		$posicion=trim(substr($linea,11));
 		$ipos=strpos($posicion,'$$');
@@ -349,19 +380,25 @@ foreach ($arr_mfn as $Mfn){
 			$seq="($Mfn)";
 		//	$Nreg=1;
 		}
-        if ($arrHttp["tipoc"]=="mover"){        	$ValorCapturado="d".$Tag."\n";
+        if ($arrHttp["tipoc"]=="mover"){
+        	$ValorCapturado="d".$Tag."\n";
         	$T=explode('|',$arrHttp["nuevotag"]);
 			$Tag_n=$T[0];
 			$Actualizar="";
-        	foreach ($contenido_c as $cont){        		if (trim($cont)!=""){        			$ValorCapturado.="a".$Tag_n."×".$cont."×\n";
+        	foreach ($contenido_c as $cont){
+        		if (trim($cont)!=""){
+        			$ValorCapturado.="a".$Tag_n."×".$cont."×\n";
         			$Actualizar="S";
             	}
         	}
         	echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2></td>\n<td bgcolor=white>";
-			if ($Actualizar=="S"){				echo " <b>OK!!!</b>";
-				CambiarCampo($Nreg,$ValorCapturado,$Tag);			}
+			if ($Actualizar=="S"){
+				echo " <b>OK!!!</b>";
+				CambiarCampo($Nreg,$ValorCapturado,$Tag);
+			}
 			echo "</td>";
-			continue;		}
+			continue;
+		}
 		foreach($contenido_c as $cont){
   			$Cambiado="";
   			if (isset($ValorAnterior)){
@@ -369,19 +406,23 @@ foreach ($arr_mfn as $Mfn){
 				foreach ($ValorAnterior as $Anterior){
 					//$Anterior=trim($Anterior);
 					if (strtoupper($cont)==strtoupper($Anterior) or
-					    (isset($arrHttp["tipoa"]) and ($arrHttp["tipoa"] =="cadena" and stripos($cont,$Anterior)!==false))){						$verifica="S";
+					    (isset($arrHttp["tipoa"]) and ($arrHttp["tipoa"] =="cadena" and stripos($cont,$Anterior)!==false))){
+						$verifica="S";
 						EjecutarCambio($Mfn,$Anterior,$Tag,$cont);
 						if ($Cambiado==""){
 							if ($cont!="")
 	  							$ValorCapturado.="a".$Tag."²" .$cont."²\n";
 						}else{
-							echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2>".$cont."</td>\n<td bgcolor=white>";							echo " <b>OK!!!</b>";
+							echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2>".$cont."</td>\n<td bgcolor=white>";
+							echo " <b>OK!!!</b>";
 							$Actualizar="S";
 							break;
 						}
 					}
-					if ($verifica=="")	$ValorCapturado.="a".$Tag."²" .$cont."²\n";				}
-			}else{				$Cambiado="";
+					if ($verifica=="")	$ValorCapturado.="a".$Tag."²" .$cont."²\n";
+				}
+			}else{
+				$Cambiado="";
 				if (isset($arrHttp["lisdel"]))
 					$Tag="";
 				if (!isset($Tag)) $Tag="";
@@ -398,9 +439,12 @@ foreach ($arr_mfn as $Mfn){
 			echo "</td>\n";
 			}
 		}
-		if ($Actualizar=="S"){			CambiarCampo($Nreg,$ValorCapturado,$Tag);
+		if ($Actualizar=="S"){
+			CambiarCampo($Nreg,$ValorCapturado,$Tag);
 		}else{
-			echo "<tr><td bgcolor=white>$Nreg</td>";			echo "<td bgcolor=white>No se pudo realizar el cambio</td>" ;		}
+			echo "<tr><td bgcolor=white>$Nreg</td>";
+			echo "<td bgcolor=white>No se pudo realizar el cambio</td>" ;
+		}
 		//if ($arrHttp["Opcion"]=='buscar') $tope=$hasta;
 		flush();
     	ob_flush();

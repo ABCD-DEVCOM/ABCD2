@@ -1,29 +1,55 @@
 <?php
+/**
+ * @program:   ABCD - ABCD-Central-Utility - http://abcd.netcat.be/
+ * @copyright:  Copyright (C) 2015 BIREME/PAHO/WHO - VLIR/UOS
+ * @file:      addcopiesdatabase.php
+ * @desc:      Script to automaticly add the copies stored in the catalog database and create full text indexed DB
+ * @author:    Marcos Mirabal - marcos.clary@gmail.com
+ * @since:     20131203
+ * @version:   2
+ * @updated:   20170420
+ *
+ * == BEGIN LICENSE ==
+ *
+ *    This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as
+ *    published by the Free Software Foundation, either version 3 of the
+ *    License, or (at your option) any later version.
+ *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * == END LICENSE ==
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-set_time_limit(0);
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../common/header.php");
-$converter_path=$cisis_path."mx";
+$converter_path=$mx_path;
 $base_ant=$arrHttp["base"];
 echo "<script src=../dataentry/js/lr_trim.js></script>";
 echo "<body onunload=win.close()>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";	
+	$encabezado="&encabezado=s";
 }
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".$msgstr["addCPfromDB_mx"].": " . $base_ant."
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_mx_based.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"menu_extra.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -147,7 +173,7 @@ else
 {
 document.getElementById("provider").innerHTML='';
 document.getElementById("provider").style.display='none';
-}	
+}
 //Date of arraival
 if (value=="date")
 if (opcion==1)
@@ -162,7 +188,7 @@ else
 {
 document.getElementById("date").innerHTML='';
 document.getElementById("date").style.display='none';
-}	
+}
 //Price
 if (value=="price")
 if (opcion==1)
@@ -177,7 +203,7 @@ else
 {
 document.getElementById("price").innerHTML='';
 document.getElementById("price").style.display='none';
-}	
+}
 //Purchase order
 if (value=="po")
 if (opcion==1)
@@ -252,7 +278,7 @@ if (isNaN(numero)==true)
 }
 function ChangeOption(option)
 {
-if (option==1) 
+if (option==1)
 {
 document.getElementById("systype").style.display="block";
 document.getElementById("fieldsel").style.display="none";
@@ -264,16 +290,16 @@ document.getElementById("fieldsel").style.display="block";
 document.form1.typef.focus();
 }
 }
-</script>	
-</div>		
+</script>
+</div>
 <div class="middle form">
 	<div class="formContent">
 <form action="" method="post" name="form1" target="_self" id="form1" onsubmit="OpenWindows();">
 <?php
-echo "<p>".$msgstr["addcopiesdatabase"]."</p>";   
+echo "<p>".$msgstr["addcopiesdatabase"]."</p>";
   echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
   echo "<h3>".$msgstr["database"]." ".$base_ant."<p>";
-  ?>  
+  ?>
   <table width="750" border="0">
   <tr>
     <td width="202" align="right"> <label>From
@@ -287,10 +313,10 @@ echo "<p>".$msgstr["addcopiesdatabase"]."</p>";
 	<script language="javascript">//estableciendo el foco en el 2do textbox
    document.form1.from.value="1";
   document.form1.to.focus();
-     function OpenWindows() {      
+     function OpenWindows() {
 NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 win.focus()
-    }	
+    }
 function NewWindow(mypage,myname,w,h,scroll,pos){
 if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
 if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
@@ -300,22 +326,10 @@ win=window.open(mypage,myname,settings);}
 
   </script>
     Last MFN=
-<?php 
-$IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
-include("../common/wxis_llamar.php");
-$ix=-1;
-foreach($contenido as $linea) {
-	//echo "$linea<br>";
-	$ix=$ix+1;
-	if ($ix>0) {
-		if (trim($linea)!=""){
-	   		$a=explode(":",$linea);
-	   		if (isset($a[1])) $tag[$a[0]]=$a[1];
-	  	}
-	}
-}
-$total=(int) $tag["MAXMFN"];
+<?php
+$mx_max_mfn="$mx_path $db_path$base_ant/data/$base_ant count=1 " . ' "pft=f(maxmfn-1,0,0)"';
+exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
+$total  = $outmx_max_mfn[0];
 echo '<script language="javascript">
    document.form1.to.value="'.$total.'";
    </script>';
@@ -339,7 +353,7 @@ echo $total;
     <td align="center">-</td>
     <td align="left"><label>SubField
   <input name="cnsf" type="text" id="cnsf" value="<?php if ($_POST["cnsf"]!="") echo $_POST["cnsf"];?>" size="5"/>
-  </label></td>    
+  </label></td>
     <td align="left"><select name=agregar id=atunique onChange=AlterEntry(1) style=width:165px>
 	<option value=''>add</option>
 	<option value="ml">Main Library</option>
@@ -355,7 +369,7 @@ echo $total;
 	<option value="sn">Suggestion number</option>
 	<option value="cond">Conditions</option>
 	<option value="exchange">In exchange of</option>
-	</select>&nbsp;<a href=javascript:AlterEntry(0)><img src=../dataentry/img/delete_occ.gif border=0 ></a>	
+	</select>&nbsp;<a href=javascript:AlterEntry(0)><img src=../dataentry/img/delete_occ.gif border=0 ></a>
 	</td>
 	<td align="left"></td>
   </tr>
@@ -385,71 +399,71 @@ echo $total;
     <td align="left">&nbsp;</td>
 	<td align="left">&nbsp;</td>
   </tr>
-</table> 
-<?php 
+</table>
+<?php
 if ($_POST["mlf"]!="")
-echo '<div id="ml" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Main Library Field&nbsp;<input name="mlf" type="text" id="mlf" value="'.$_POST["mlf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="mlsf" type="text" id="mlsf" value="'.$_POST["mlsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="ml" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Main Library Field&nbsp;<input name="mlf" type="text" id="mlf" value="'.$_POST["mlf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="mlsf" type="text" id="mlsf" value="'.$_POST["mlsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="ml" style="display:none"></div>';
 
 if ($_POST["blf"]!="")
-echo '<div id="bl" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Branch Library Field&nbsp;<input name="blf" type="text" id="blf" value="'.$_POST["blf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="blsf" type="text" id="blsf" value="'.$_POST["blsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="bl" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Branch Library Field&nbsp;<input name="blf" type="text" id="blf" value="'.$_POST["blf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="blsf" type="text" id="blsf" value="'.$_POST["blsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="bl" style="display:none"></div>';
 
 if ($_POST["tomef"]!="")
-echo '<div id="tome" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Tome Field&nbsp;<input name="tomef" type="text" id="tomef" value="'.$_POST["tomef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="tomesf" type="text" id="tomesf" value="'.$_POST["tomesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="tome" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Tome Field&nbsp;<input name="tomef" type="text" id="tomef" value="'.$_POST["tomef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="tomesf" type="text" id="tomesf" value="'.$_POST["tomesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="tome" style="display:none"></div>';
 
 if ($_POST["volumef"]!="")
-echo '<div id="volume" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Volume Field&nbsp;<input name="volumef" type="text" id="volumef" value="'.$_POST["volumef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="volumesf" type="text" id="volumesf" value="'.$_POST["volumesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="volume" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Volume Field&nbsp;<input name="volumef" type="text" id="volumef" value="'.$_POST["volumef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="volumesf" type="text" id="volumesf" value="'.$_POST["volumesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="volume" style="display:none"></div>';
 
 if ($_POST["cpnumf"]!="")
-echo '<div id="cpnum" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Copy Number Field&nbsp;<input name="cpnumf" type="text" id="cpnumf" value="'.$_POST["cpnumf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="cpnumsf" type="text" id="cpnumsf" value="'.$_POST["cpnumsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="cpnum" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Copy Number Field&nbsp;<input name="cpnumf" type="text" id="cpnumf" value="'.$_POST["cpnumf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="cpnumsf" type="text" id="cpnumsf" value="'.$_POST["cpnumsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="cpnum" style="display:none"></div>';
 
 if ($_POST["adf"]!="")
-echo '<div id="ad" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Acquisition Field&nbsp;<input name="adf" type="text" id="adf" value="'.$_POST["adf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="adsf" type="text" id="adsf" value="'.$_POST["adsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="ad" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Acquisition Field&nbsp;<input name="adf" type="text" id="adf" value="'.$_POST["adf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="adsf" type="text" id="adsf" value="'.$_POST["adsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="ad" style="display:none"></div>';
 
 if ($_POST["providerf"]!="")
-echo '<div id="provider" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Provider Field&nbsp;<input name="providerf" type="text" id="providerf" value="'.$_POST["providerf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="providersf" type="text" id="providersf" value="'.$_POST["providersf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="provider" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Provider Field&nbsp;<input name="providerf" type="text" id="providerf" value="'.$_POST["providerf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="providersf" type="text" id="providersf" value="'.$_POST["providersf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="provider" style="display:none"></div>';
 
 if ($_POST["datef"]!="")
-echo '<div id="date" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Date Field&nbsp;<input name="datef" type="text" id="datef" value="'.$_POST["datef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="datesf" type="text" id="datesf" value="'.$_POST["datesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="date" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Date Field&nbsp;<input name="datef" type="text" id="datef" value="'.$_POST["datef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="datesf" type="text" id="datesf" value="'.$_POST["datesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="date" style="display:none"></div>';
 
 if ($_POST["pricef"]!="")
-echo '<div id="price" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Price Field&nbsp;<input name="pricef" type="text" id="pricef" value="'.$_POST["pricef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="pricesf" type="text" id="pricesf" value="'.$_POST["pricesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="price" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Price Field&nbsp;<input name="pricef" type="text" id="pricef" value="'.$_POST["pricef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="pricesf" type="text" id="pricesf" value="'.$_POST["pricesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="price" style="display:none"></div>';
 
 if ($_POST["pof"]!="")
-echo '<div id="po" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Purchase order Field&nbsp;<input name="pof" type="text" id="pof" value="'.$_POST["pof"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="posf" type="text" id="posf" value="'.$_POST["posf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="po" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Purchase order Field&nbsp;<input name="pof" type="text" id="pof" value="'.$_POST["pof"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="posf" type="text" id="posf" value="'.$_POST["posf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="po" style="display:none"></div>';
 
 if ($_POST["snf"]!="")
-echo '<div id="sn" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Suggestion number Field&nbsp;<input name="snf" type="text" id="snf" value="'.$_POST["snf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="snsf" type="text" id="snsf" value="'.$_POST["snsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="sn" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Suggestion number Field&nbsp;<input name="snf" type="text" id="snf" value="'.$_POST["snf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="snsf" type="text" id="snsf" value="'.$_POST["snsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="sn" style="display:none"></div>';
 
 if ($_POST["condf"]!="")
-echo '<div id="cond" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Conditions Field&nbsp;<input name="condf" type="text" id="condf" value="'.$_POST["condf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="condsf" type="text" id="condsf" value="'.$_POST["condsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="cond" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Conditions Field&nbsp;<input name="condf" type="text" id="condf" value="'.$_POST["condf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="condsf" type="text" id="condsf" value="'.$_POST["condsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="cond" style="display:none"></div>';
 
 if ($_POST["exchangef"]!="")
-echo '<div id="exchange" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>In exchange of Field&nbsp;<input name="exchangef" type="text" id="exchangef" value="'.$_POST["exchangef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="exchangesf" type="text" id="exchangesf" value="'.$_POST["exchangesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="exchange" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>In exchange of Field&nbsp;<input name="exchangef" type="text" id="exchangef" value="'.$_POST["exchangef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="exchangesf" type="text" id="exchangesf" value="'.$_POST["exchangesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="exchange" style="display:none"></div>';
 ?>
 <table width="750" border="0">
@@ -466,9 +480,9 @@ echo '<div id="exchange" style="display:none"></div>';
  flock($fp, 1);
  if (!$fp)
    {
-     echo "Unable to open file circulation/def/$lang/items.tab.</strong></p></body></html>";         
+     echo "Unable to open file circulation/def/$lang/items.tab.</strong></p></body></html>";
      exit;
-   }   
+   }
 while(!feof($fp))
 {
  $order= fgets($fp, 100);
@@ -479,7 +493,7 @@ while(!feof($fp))
   fclose($fp);
    ?>
     </select>
-    </label>	
+    </label>
 	</div></td>
 <td width="121" align="left"></td>
 <td width="200" align="left">&nbsp;</td>
@@ -524,12 +538,12 @@ while(!feof($fp))
 <table width="750px" border="0">
   <tr>
      <td width="22">&nbsp;</td>
-    <td><?php 
-  echo "<input type=submit name=submit value=".$msgstr["update"].">"; 
+    <td><?php
+  echo "<input type=submit name=submit value=".$msgstr["update"].">";
   if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";
  ?></td>
     </tr>
-</table> 
+</table>
 </form>
 </div>
 <?php
@@ -671,7 +685,7 @@ foreach ($fp as $value){
 @ $fp = fopen($db_path."wrk/cp_create.pft", "w");
 if (!$fp)
  {
-   echo "Unable to write the file ".$db_path."/wrk/cp_create.pft";         
+   echo "Unable to write the file ".$db_path."/wrk/cp_create.pft";
    exit;
  }
 $savestring="mpl,
@@ -684,92 +698,92 @@ $savestring.="'".$base_ant."|',
 
 if ($mlfent!="")
 {
- if ($mlf!=$inf) $savestring.=$mlfent."[1],'|',\n"; 
- else $savestring.=$mlfent.",'|',\n"; 
+ if ($mlf!=$inf) $savestring.=$mlfent."[1],'|',\n";
+ else $savestring.=$mlfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($blfent!="")
 {
- if ($blf!=$inf) $savestring.=$blfent."[1],'|',\n"; 
- else $savestring.=$blfent.",'|',\n"; 
+ if ($blf!=$inf) $savestring.=$blfent."[1],'|',\n";
+ else $savestring.=$blfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($tomefent!="")
 {
- if ($tomef!=$inf) $savestring.=$tomefent."[1],'|',\n"; 
- else $savestring.=$tomefent.",'|',\n"; 
+ if ($tomef!=$inf) $savestring.=$tomefent."[1],'|',\n";
+ else $savestring.=$tomefent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($volumefent!="")
 {
- if ($volumef!=$inf) $savestring.=$volumefent."[1],'|',\n"; 
- else $savestring.=$volumefent.",'|',\n"; 
+ if ($volumef!=$inf) $savestring.=$volumefent."[1],'|',\n";
+ else $savestring.=$volumefent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($cpnumfent!="")
 {
- if ($cpnumf!=$inf) $savestring.=$cpnumfent."[1],'|',\n"; 
- else $savestring.=$cpnumfent.",'|',\n"; 
+ if ($cpnumf!=$inf) $savestring.=$cpnumfent."[1],'|',\n";
+ else $savestring.=$cpnumfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($adfent!="")
 {
- if ($adf!=$inf) $savestring.=$adfent."[1],'|',\n"; 
- else $savestring.=$adfent.",'|',\n"; 
+ if ($adf!=$inf) $savestring.=$adfent."[1],'|',\n";
+ else $savestring.=$adfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($providerfent!="")
 {
- if ($providerf!=$inf) $savestring.=$providerfent."[1],'|',\n"; 
- else $savestring.=$providerfent.",'|',\n"; 
+ if ($providerf!=$inf) $savestring.=$providerfent."[1],'|',\n";
+ else $savestring.=$providerfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($datefent!="")
 {
- if ($datef!=$inf) $savestring.=$datefent."[1],'|',\n"; 
- else $savestring.=$datefent.",'|',\n"; 
+ if ($datef!=$inf) $savestring.=$datefent."[1],'|',\n";
+ else $savestring.=$datefent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($pricefent!="")
 {
- if ($pricef!=$inf) $savestring.=$pricefent."[1],'|',\n"; 
- else $savestring.=$pricefent.",'|',\n"; 
+ if ($pricef!=$inf) $savestring.=$pricefent."[1],'|',\n";
+ else $savestring.=$pricefent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($pofent!="")
 {
- if ($pof!=$inf) $savestring.=$pofent."[1],'|',\n"; 
- else $savestring.=$pofent.",'|',\n"; 
+ if ($pof!=$inf) $savestring.=$pofent."[1],'|',\n";
+ else $savestring.=$pofent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($snfent!="")
 {
- if ($snf!=$inf) $savestring.=$snfent."[1],'|',\n"; 
- else $savestring.=$snfent.",'|',\n"; 
+ if ($snf!=$inf) $savestring.=$snfent."[1],'|',\n";
+ else $savestring.=$snfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($condfent!="")
 {
- if ($condf!=$inf) $savestring.=$condfent."[1],'|',\n"; 
- else $savestring.=$condfent.",'|',\n"; 
+ if ($condf!=$inf) $savestring.=$condfent."[1],'|',\n";
+ else $savestring.=$condfent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
 if ($exchangefent!="")
 {
- if ($exchangef!=$inf) $savestring.=$exchangefent."[1],'|',\n"; 
- else $savestring.=$exchangefent.",'|',\n"; 
+ if ($exchangef!=$inf) $savestring.=$exchangefent."[1],'|',\n";
+ else $savestring.=$exchangefent.",'|',\n";
 }
 else $savestring.="'|',\n";
 
@@ -781,27 +795,27 @@ fclose($fp);
 @ $fp = fopen($db_path."wrk/cp_create.prc", "w");
 if (!$fp)
  {
-   echo "Unable to write the file ".$db_path."/wrk/cp_create.prc";         
+   echo "Unable to write the file ".$db_path."/wrk/cp_create.prc";
    exit;
  }
 $savestring="'d*',
-if v1<>'' then '<1>'v1'</1>',fi,
-if v2<>'' then '<10>'v2'</10>',fi,
-if v3<>'' then '<30>'v3'</30>',fi,
-if v4<>'' then '<200>'v4'</200>',fi,
-if v5<>'' then '<35>'v5'</35>',fi,
-if v6<>'' then '<40>'v6'</40>',fi,
-if v7<>'' then '<50>'v7'</50>',fi,
-if v8<>'' then '<60>'v8'</60>',fi,
-if v9<>'' then '<63>'v9'</63>',fi,
-if v10<>'' then '<68>'v10'</68>',fi,
-if v11<>'' then '<70>'v11'</70>',fi,
-if v12<>'' then '<80>'v12'</80>',fi,
-if v13<>'' then '<90>'v13'</90>',fi,
-if v14<>'' then '<100>'v14'</100>',fi,
-if v15<>'' then '<110>'v15'</110>',fi,
-if v16<>'' then '<300>'v16'</300>',fi,
-if v17<>'' then '<400>'v17'</400>',fi,
+'<1>'v1'</1>',
+'<10>'v2'</10>',
+'<30>'v3'</30>',
+'<200>'v4'</200>',
+'<35>'v5'</35>',
+'<40>'v6'</40>',
+'<50>'v7'</50>',
+'<60>'v8'</60>',
+'<63>'v9'</63>',
+'<68>'v10'</68>',
+'<70>'v11'</70>',
+'<80>'v12'</80>',
+'<90>'v13'</90>',
+'<100>'v14'</100>',
+'<110>'v15'</110>',
+'<300>'v16'</300>',
+'<400>'v17'</400>',
 ";
 fwrite($fp,$savestring);
 fclose($fp);
@@ -817,7 +831,7 @@ exec($mxinv, $outputmxinv,$banderamxinv);
 @ $fp = fopen($db_path."wrk/lo_create.prc", "w");
 if (!$fp)
  {
-   echo "Unable to write the file ".$db_path."wrk/lo_create.prc";         
+   echo "Unable to write the file ".$db_path."wrk/lo_create.prc";
    exit;
  }
 $savestring="'d*',
@@ -827,18 +841,15 @@ if p(v3330) then
 ('<959>',
 '^i'v3330,
 '^l'v3335,
-'^b'v3340,
-'^v'v3360,
-'^t'v3350,\n";
-if ($_POST["radiobutton"]=="systype") $savestring.="'^o".$_POST['type']."',\n"; 
+'^b'v3340,\n";
+if ($_POST["radiobutton"]=="systype") $savestring.="'^o".$_POST['type']."',\n";
 else $savestring.="'^o'".Vfield(strtolower($_POST['typef']))."^".RemovePico(strtolower($_POST['typesf'])).",\n";
-
 $savestring.="'</959>',),
 fi,
 ";
 fwrite($fp,$savestring);
 fclose($fp);
-$mx=$converter_path." $db_path".$base_ant."/data/".$base_ant." \"join=".$db_path."copies/data/copies,3330:30,3335:35,3320:200,3340:40,3310:10,3350:50,3360:60=mpu,'CN_".$base_ant."_'$cnfent\" \"proc=@".$db_path."wrk/lo_create.prc\" append=".$db_path."loanobjects/data/loanobjects ";
+$mx=$converter_path." $db_path".$base_ant."/data/".$base_ant." \"join=".$db_path."copies/data/copies,3330:30,3335:35,3320:200,3340:40,3310:10=mpu,'CN_".$base_ant."_'$cnfent\" \"proc=@".$db_path."wrk/lo_create.prc\" append=".$db_path."loanobjects/data/loanobjects ";
 if ($inf!="") $mx.="from=$from to=$to ";
 $mx.="now -all";
 exec($mx,$outmx,$banderamx);
@@ -907,7 +918,7 @@ echo '<br /><span style="color: blue"><b>&nbsp;&nbsp;'.$cantadd.' loanobjects re
 		$value=trim($value);
 		$val=explode('|',$value);
 		if (trim($val[0])==trim($arrHttp["base"])){
-			$value=$val[0].'|'.$val[1]."|".'Y';							
+			$value=$val[0].'|'.$val[1]."|".'Y';
 		}
 		fwrite($new,$value."\n");
 	}

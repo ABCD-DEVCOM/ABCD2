@@ -1,4 +1,31 @@
 <?php
+/**
+ * @program:   ABCD - ABCD-Central-Utility - http://abcd.netcat.be/
+ * @copyright:  Copyright (C) 2015 BIREME/PAHO/WHO - VLIR/UOS
+ * @file:      addcopiesdatabase.php
+ * @desc:      Script to automaticly add the copies to the loanobjects database and create full text indexed DB
+ * @author:    Marcos Mirabal - marcos.clary@gmail.com
+ * @since:     20131203
+ * @version:   2
+ * @updated:   20170420
+ *
+ * == BEGIN LICENSE ==
+ *
+ *    This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as
+ *    published by the Free Software Foundation, either version 3 of the
+ *    License, or (at your option) any later version.
+ *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * == END LICENSE ==
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -10,7 +37,7 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../common/header.php");
-$converter_path=$cisis_path."mx";
+$converter_path=$mx_path;
 $base_ant=$arrHttp["base"];
 echo "<script src=../dataentry/js/lr_trim.js></script>";
 echo "<body onunload=win.close()>\n";
@@ -23,7 +50,7 @@ echo "<div class=\"sectionInfo\">
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_mx_based.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"menu_extra.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -166,21 +193,9 @@ win=window.open(mypage,myname,settings);}
   </script>
     Last MFN=
 <?php 
-$IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
-include("../common/wxis_llamar.php");
-$ix=-1;
-foreach($contenido as $linea) {
-	//echo "$linea<br>";
-	$ix=$ix+1;
-	if ($ix>0) {
-		if (trim($linea)!=""){
-	   		$a=explode(":",$linea);
-	   		if (isset($a[1])) $tag[$a[0]]=$a[1];
-	  	}
-	}
-}
-$total=(int) $tag["MAXMFN"];
+$mx_max_mfn="$mx_path $db_path$base_ant/data/$base_ant count=1 " . ' "pft=f(maxmfn-1,0,0)"';
+exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
+$total  = $outmx_max_mfn[0];
 echo '<script language="javascript">
    document.form1.to.value="'.$total.'";
    </script>';
