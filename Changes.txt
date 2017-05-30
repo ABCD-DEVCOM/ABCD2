@@ -6,3 +6,4 @@ echo "<tr><td valign=top>UNICODE</td><td><input type=checkbox name=UNICODE value
 				if ($unicode!="")  echo " checked";
 				echo "> ON</td>";
 - changed <? into <?php on line 84 of htdocs/central/dbadmin/iah_edit_db.php because short_open_tag is now OFF and this caused JavaScripts no longer to work.
+- in wxis_llamar.php and directIsis.php : POST method replaced by "$result=file_get_contents($url);"

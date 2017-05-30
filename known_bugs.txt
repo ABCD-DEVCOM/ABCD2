@@ -7,6 +7,7 @@ Central
 
 - special cisis_ver database cannot be selected as first database to open in main central menu, but can be opened well from next screen.
 - iah_edit_db.php javascript-functions (e.g. edit index) not always working  => solved by <?php on line 84
+- POST method in wxis_llamar.php replaced by $result=file_get_contents($url); because other method no longer working in recent versions of Linux
 
 iAh
 
@@ -22,5 +23,6 @@ Secs-Web
 
 - indexing FST for TitlePlus needs checked for searching
 - 'actions on issues' : always no issues found for the library
+- POST method in 'directIsis.php' replaced since no longer working in recent versions of Linux with '$result=file_get_contents($url);'
 
 EmpWeb

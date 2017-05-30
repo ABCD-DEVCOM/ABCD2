@@ -5,6 +5,7 @@
 
 'Descriptive cataloging form: 'v3018,'<br>'
 'Fixed Field 'v8'</br>'/
+'Control Number : 'v1'<br>'/
 '<table width=90% border=0>'
 '<td width=10></td>'/
 '<td class=textbody03 colspan=3 >'
@@ -86,9 +87,9 @@ if p(v650) then
 
      '      '
 
-     (if p(v650) then proc('a1650š',mhl,v650*2,'š')/fi),mpl/
+     (if p(v650) then proc('<1650>',mhl,v650*2,'</1650>')/fi),mpl/
 
-	 (if p(v1650) then proc('a2650š',replace(v1650,'. ','--'),'š')/ fi)
+	 (if p(v1650) then proc('<2650>',replace(v1650,'. ','--'),'</2650>')/ fi)
 
 	 (if p(v2650) then replace(v2650,'; ','--'),if iocc<>nocc(v2650) then ';  '  fi fi) 
 

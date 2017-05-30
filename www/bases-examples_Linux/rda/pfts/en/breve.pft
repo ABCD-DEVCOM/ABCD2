@@ -75,9 +75,9 @@ if p(v650) then
 
      '      '
 
-     (if p(v650) then proc('a1650Ø',mhl,v650*2,'Ø')/fi),mpl/
+     (if p(v650) then proc('<1650>',mhl,v650*2,'</1650>')/fi),mpl/
 
-	 (if p(v1650) then proc('a2650Ø',replace(v1650,'. ','--'),'Ø')/ fi)
+	 (if p(v1650) then proc('<2650>',replace(v1650,'. ','--'),'</2650>')/ fi)
 
 	 (if p(v2650) then replace(v2650,'; ','--'),if iocc<>nocc(v2650) then ';  '  fi fi) 
 
@@ -87,9 +87,9 @@ if p(v651) then
 
      '      '
 
-     (if p(v651) then proc('a1651Ø',mhl,v651*2,'Ø')/fi),mpl/
+     (if p(v651) then proc('<1651>',mhl,v651*2,'</1651>')/fi),mpl/
 
-	 (if p(v1651) then proc('a2651Ø',replace(v1651,'. ','--'),'Ø')/ fi)
+	 (if p(v1651) then proc('<2651>',replace(v1651,'. ','--'),'<2651>')/ fi)
 
 	 (if p(v2651) then replace(v2651,'; ','--'),if iocc<>nocc(v2651) then ';  '  fi fi) 
 
@@ -133,7 +133,7 @@ if p(v111) then
 fi,/
 '<br>'
 '<br>'
-if p(v852) then '<b> Ubicación: </b> ',
+if p(v852) then '<b> Location: </b> ',
    (v852^a+|; |)/ fi,
 
 '<br>'

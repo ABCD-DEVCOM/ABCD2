@@ -80,7 +80,7 @@ echo "
 </font></div>
 <form method=post name=Lista onSubmit="javascript:return false">
 	<table width=100%>
-		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>ABC..</strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Permuted</strong></font></a></td>
+		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Alphabetical</strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Permuted</strong></font></a></td>
     </table>
  <div class="middle form">
 			<div class="formContent">
@@ -107,7 +107,7 @@ echo "
 	</td>
 
 	</table>
-	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong>Alfabético</a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Permutado</a></strong><br>
+	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong>Alphabetical</a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Permuted</a></strong><br>
 	</form>
 	</div>
 	</div>
