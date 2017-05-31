@@ -395,8 +395,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 			<li><a href='Javascript:EnviarForma("dirtree","wrk")'><?php echo "wrk"?></a></li>
 	        </ul>
 
-		<li><a style="color:green;" href='Javascript:EnviarForma("menu_extra","<?php echo "menu_extra"?>")'><?php echo "EXTRA UTILITIES"?></a></li>
 	<?php }?>
+        		<li><a style="color:green;" href='Javascript:EnviarForma("menu_extra","<?php echo "menu_extra"?>")'><?php echo "EXTRA UTILITIES"?></a></li>
+
 <!--	<li><a href='javascript:EnviarForma("more_utils","<?php echo $msgstr["more_utils"]?>")'><?php echo $msgstr["more_utils"]?></a></li>  -->
 			</ul>
 

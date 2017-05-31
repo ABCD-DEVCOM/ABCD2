@@ -1,6 +1,6 @@
 <?php
 if (isset($def["MULTIPLE_DB_FORMATS"]) and $def["MULTIPLE_DB_FORMATS"]=="Y")
-   if (isset($_SESSION))$_SESSION["MULTIPLE_DB_FORMATS"]="Y";
+   if (isset($_SESSION)) $_SESSION["MULTIPLE_DB_FORMATS"]="Y";
 if (!isset($dirtree)) $dirtree=0;
 if (isset($def["DIRTREE"]))
  	$dirtree=$def["DIRTREE"];
