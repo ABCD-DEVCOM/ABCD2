@@ -1,5 +1,5 @@
 <?php
-$base = ($_REQUEST['base'] != '' ?  $_REQUEST['base'] : 'RDA');
+$base = ($_REQUEST['base'] != '' ?  $_REQUEST['base'] : 'rda');
 $lang = ($_REQUEST['lang'] != '' ?  $_REQUEST['lang'] : 'en');
 $form = $_REQUEST['form'];
 
