@@ -1,0 +1,125 @@
+Please read the following instructons carefully in order to get a working version of ABCD.
+
+
+ABCD is no longer distributed in a self-installable package which includes Apache and PHP.
+There are several problems with this approach :
+- legal : whereas both Apache and PHP are FOSS, distribution of these packages can better be left to their own communities
+and/or the specialized packages such as WAMP, XAMP and EASYPHP.
+- size : the ABCD packages for downloading are much smaller without Apache and PHP included.
+- technical : esp. in Windows there are compatibility issues in between Apache, PHP and PHP-libraries (eg. php_yaz).
+Apache itself has two different communities for compiling/maintaining the Windows version (Bauhaus and Apache Lounge (https://www.apachelounge.com)
+Compilation for Windows can have been done with several versions of MS VC : 9. 10, 14 and also VC15 is now available.
+Also PHP comes in several flavors : 32- or 64-bits, multi-threaded or not, several VC versions ...
+and in reality whenever one of these doesn't match your system 'it won't work'... with only cryptic error messages at best available,
+e.g. stating that the file php_yaz.dll does not exist (whereas it does, in a path-included folder) or cannot be loaded.
+
+By leaving all these potential problems to the more specialized packages we hope to offer a better solution :
+- Apache and PHP (and MySQL in case of EmpWeb usage) are installed by the specialized packages, which (should) take care of all compatibility
+issues in between Apache and PHP(-modules);
+- ABCD is installed by copying its directories in a separate folder, e.g. simply in the root, and referring to it (or linking it)
+into these Apache-installers by a 'virtual host' file.
+
+With this new approach we can also better maintain one single installation for both Windows and Linux :
+- the htdocs-folder contains PHP-scripts and text-files; PHP scripts run the same in both Linux and Windows
+  and text-files can be read by both; we try to ensure compatibility also in the configuration files but these need to be manually checked
+  anyway by the system managers, mostly to ensure correct paths are given to the individual ABCD modules.
+- the cgi-bin executables are not compatible in between Linux and Windows, so they are distributed as two different folders :
+   * cgi-bin_Windows
+   * cgi-bin_Linux
+- the databases are not compatible in between Linux and Windows, so they are distributed as two different folder :
+   * bases-examples_Windows
+   * bases-examples_Linux
+
+CONCRETE STEPS TO INSTALL ABCD :
+
+1. download or 'pull' the packages of ABCD 2.0 from the GitHub server (https://www.github.com/ABCD-DEVCOM), i.e.
+   * the EMPWEB folder only if you want to use EmpWeb (which comes with its own manual to explain its meaning, installation and use)
+   * the www-folder which contains the 5 above mentioned folders for htdocs, bases (Windows and Linux) and cgi-bin (Windows and Linux).
+
+2. unzip the archives into a folder/directory 'ABCD', preferably :
+   * for Windows : in the root of your harddisk (e.g. C:\ABCD)
+   * for Linux : in your opt-folder : /opt/ABCD
+You need to end up with your ABCD-directory having one or two sub-directories :
+   * www
+   * only if you use EmpWeb : empweb
+   (* an optional folder 'installation' containing the Apache virtual hosts files as examples)
+The 'www'-directory needs the following sub-directories :
+   * htdocs (with all the scripts for ABCD modules, e.g. central, iah, site, isis-oai-provider, secs-web, isiws)
+   * cgi-bin
+   * bases
+So rename the downloaded cgi-bin and bases-folders (according to your operating system) to these simple names 'cgi-bin' and 'bases'.
+
+3. Create (or copy/edit from the provided examples) a virtual host file for Apache to link to your ABCD.
+Such text-file needs to be put in a folder which is 'included' into the main Apache configuration file 'httpd.conf'.
+In essence it needs to define two main directories :
+   * DocumentRoot : the directory with your PHP-scripts, in case of Windows : \ABCD\www\htdocs, for Linux : /opt/ABCD/www/htdocs
+   * Alias cgi-bin : the directory with your ISIS-executables, in Windows : \ABCD\www\cgi-bin, in Linux : /opt/ABCD/www/cgi-bin
+   * optionally : one or more other aliases pointing to directories which you want to use for documents linked to records, e.g. PDF's;
+     one such alias is already provided in the example virtual-hosts files : 'docs' (e.g. /var/opt/ABCD/bases for Linux).
+
+4. Put the virtual host file for ABCD into the dedicated folder of your Apache, e.g.
+   * in wamp : wamp\alias
+   * in xamp : the 'extra' subfolder of apache\conf
+   * in easy-php :  he 'extra' subfolder of apache\conf
+
+5. restart your Apache and if no errors issued, your ABCD should work at the URL 'http://127.0.0.1:9090' given that you use that URL for your ABCD,
+with real servers (with servernames) please adjust your URL to open ABCD, also change the port if you don't use port 9090.
+(Re-)starting Apache can be done as follows :
+   * for Windows : first create a 'service' by typing into a CMD-terminal window :
+      * cd \[path_to_your_Apache_bin-folder]
+      * type the command : httpd -k install, then : httpd -k start
+OR    * when using WAMP, XAMP or EASY-PHP : use the launchers coming with these packages and their installers, much easier and in fact
+        one of the reasons we prefer this method now.
+OR alternatively, once the 'service' for Apache is running in Windows, one can stop/start/restart :
+      * open 'services' (from the START option), search for 'apache' and use the (right-click) (re-)start option
+   * for Linux : open a terminal, become administrator (e.g. by using 'sudo' or 'su') and type 'service apache2 restart'
+
+6. Check and if necessary adjust each of the configuration files for the ABCD-modules by opening them with a text-editor,
+   * in Windows : with e.g. Notepad (by default available in Windows)
+   * in Linux : gedit (graphical) or nano or vi(m) (in terminal)
+   The following paths need to be set correctly, reflecting your installation :
+   * Central : in config.php the variables '$server_url', $ABCD_path and "$db_path' need to be defined with correct path.
+   For $db_path use the correct segment according to your OS : for Windows before, for Linux after the 'else' statement
+   All other parameters don't need to be adjusted except for functional reasons (see the manual).
+   * IAh :
+        * in the file index.php you need to define $base (the name of your default search database, if not 'rda' (lower case !)
+          and $db_path (in Windows the section before 'else', in Linux the section after 'else')
+        * iah.def.php  :  all paths in the [PATH]  section, different for Windows and Linux, e.g. for Linux :
+        PATH_DATA=/iah/
+        PATH_CGI-BIN=/opt/ABCD/www/htdocs/iah/scripts/
+        PATH_DATABASE=/var/opt/ABCD/bases/
+        PATH_DEF=/var/opt/ABCD/bases/par/
+   for Windows (note the use of Linux slashes however) :
+        PATH_DATA=/iah/
+        PATH_CGI-BIN=/ABCD/www/htdocs/iah/scripts/
+        PATH_DATABASE=/ABCD/www/bases/
+        PATH_DEF=/ABCD/www/bases/par/
+   * SITE :
+   Only the file 'bvs-site-conf.php' needs to be checked for the section [ENVIRONMENT] which looks like :
+   [ENVIRONMENT]
+                DIRECTORY=/site/
+                SITE_PATH=C:/ABCD/www/htdocs/site/
+                DATABASE_PATH=C:/ABCD/www/bases/site/
+                SERVERNAME=localhost
+                LETTER_UNIT=C:\
+                {this last line only used in Windows !)
+
+   * Secs-Web :
+   No need to adjust paths in the configuration, BUT : make sure you have a directory 'temp' in the dedicated 'bases'-subdirectory
+   secs-web of your bases-folder, since the temporary (sessions-) files will need to be written there.
+   * remark for EmpWeb : since EmpWeb has a completely different technology, it is put OUTSIDE the ABCD-www folder and needs to be
+   configured according to the instructions in its own manual.
+
+7. Opening the resp. ABCD-modules in your browser, using the following URL's :
+   * Central :  http://localhost:9090
+   * iAH : http://localhost:9090/iah  (demo-login : username 'abcd', password 'adm')
+   * SITE : http://localhost:9090/site  (no login)
+   * SITE-admin : http://localhost:9090/site/admin  (username 'adm', password 'x')
+   * Secs-Web : http://localhost:9090/secs-web (username 'admsecs', password 'admsecs')
+
+
+Additional help can be obtained by joining and using the e-mail based 'ISIS-users discussion list',
+   * registering: http://lists.iccisis.org/listinfo/isis-users
+   * using : mail to 'isis-users@iccisis.org'
+
+Wishing you good luck in using ABCD !
