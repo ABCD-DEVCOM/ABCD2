@@ -7,7 +7,8 @@ There are several problems with this approach :
 and/or the specialized packages such as WAMP, XAMP and EASYPHP.
 - size : the ABCD packages for downloading are much smaller without Apache and PHP included.
 - technical : esp. in Windows there are compatibility issues in between Apache, PHP and PHP-libraries (eg. php_yaz).
-Apache itself has two different communities for compiling/maintaining the Windows version (Bauhaus and Apache Lounge (https://www.apachelounge.com)
+Apache itself has different communities for compiling/maintaining the Windows version, e.g Apache Haus (http://www.apachehaus.com)
+and Apache Lounge (https://www.apachelounge.com).
 Compilation for Windows can have been done with several versions of MS VC : 9. 10, 14 and also VC15 is now available.
 Also PHP comes in several flavors : 32- or 64-bits, multi-threaded or not, several VC versions ...
 and in reality whenever one of these doesn't match your system 'it won't work'... with only cryptic error messages at best available,
