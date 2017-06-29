@@ -1,0 +1,18 @@
+
+'   <div class="footer">
+        <div class="copyright">
+        <p>'
+        if v5001^s : 'LIST' and v6212 = 'print' then
+            '[ '
+           '<a href="javascript:history.go('
+           if v5001^s <> 'LIST_ONE' and v5001^s <> 'LIST_YOUR_SELECTION' then '-2' else '-1' fi')">Back</a>'
+           ' ]'
+        fi,
+'        </p>
+        <p>Search engine: <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=pt&component=28&item=3"><b>iAH</b></a> v',v5000^v,' powered by <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=pt&component=28&item=2">WWWISIS</a>
+        </p>
+        <p>BIREME/PAHO/WHO - Latin American and Caribbean Center on Health Sciences</p>
+        </div>
+    </div>
+'
+

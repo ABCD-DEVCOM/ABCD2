@@ -110,11 +110,12 @@
 				,if a(v2^y) then '^yDATABASE' fi, /)
 		</pft>
 	</field>
-    <!-- percorre par?metro AVAILABLE LANGUAGES e monta sequencia de idiomas disponiveis -->
+
+    <!-- percorre parï¿½metro AVAILABLE LANGUAGES e monta sequencia de idiomas disponiveis -->
     <field action="replace" tag="9021" split="occ"><pft>replace(replace(v5006^a[1],' ',''),',',s(#))</pft></field>
-    <!-- verifica qual ? o numero da sequencia correpondente ao idioma atual de navega??o -->
+    <!-- verifica qual ï¿½ o numero da sequencia correpondente ao idioma atual de navegaï¿½ï¿½o -->
     <field action="replace" tag="9022"><pft>(if v9021 = v5021[1] then f(iocc,1,0) fi)</pft></field>
-    <!-- troca na lista de ?ndices o subcampo correspondente ao idioma atual pelo subcampo ^L (label)  -->
+    <!-- troca na lista de ï¿½ndices o subcampo correspondente ao idioma atual pelo subcampo ^L (label)  -->
     <field action="replace" tag="2" split="occ"><pft><pft>`(replace(v2,'^`,v9022,`','^L')/)`</pft></pft></field>
 
 	<return action=replace tag="list"><pft>'[2:',v3,']'</pft></return>
@@ -149,7 +150,7 @@
 	<call name="FatalError">
 		<pft>
 			if a(v5003) then '^1parameter missing^2database^3Inform the parameter base in the call to iAH' fi
-			if a(v1) then '^1database definition file^2unable to open ',v5000^b,'par/',v5003^*'.def^3Check the installation process and the call to iAH' fi
+			if a(v1) then '^1database definition file^2unable to open ',v5000^b,'par/',v5003^*'.def^3Check the instalation process and the call to iAH' fi
 		</pft>
 	</call>
 
@@ -211,7 +212,7 @@
 
 	<!-- Defines da aplicacao -->
 	<field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def.php')</pft></field>
-	<call name="FatalError"><pft>if a(v7999) then '^1application definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the installation process and the call to iAH.' fi</pft></call>
+	<call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the instalation process and the call to iAH.' fi</pft></call>
 
 	<field action="replace" tag="5000">
 		<pft>
@@ -291,7 +292,7 @@
 
 		<loop>
 			<field action="delete" tag="list">1000,1001,6212</field>
-			<!-- ordena tags para exporta??o do iso-->
+			<!-- ordena tags para exportação do iso-->
 			<proc>s</proc>
 			<!--proc><pft>'d87',( REF(['ZDECS']val(v87^d),'a87|^d',v1,'|') )</pft></proc-->
 			<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
@@ -598,6 +599,7 @@
 	<label>NEW SEARCH</label>
 	    <field action="delete" tag="list">6001,6002,6003,6102,6210</field>
 	<label>ADD TERMS</label>
+        <!-- <display><pft>v6102^*</pft></display>  -->
 		<field action="replace" tag="6102"><pft>v6102^* + | or |</pft></field>
 	<label>FORM</label>
 		<call name="SetStat">FORM</call>
@@ -664,8 +666,7 @@
 			 <parm name="to">
 				<pft>
 				if p(v6100^u) then v6100^u fi,
-				, if val(v5018^w)>0 then '᎙᎙᎙' 
-				else 'ZZZ' fi
+				, if val(v5018^w)>0 then '᎙᎙᎙' else 'ZZZ' fi
 				</pft>  	
 			</parm>   
 
@@ -683,7 +684,7 @@
 			<parm name="posting">1</parm>
 			<field action="define" tag="11">Isis_Key</field>
 
-			<!-- <call name="GizmoIndex"><pft>if p(v6100^g) then 'Now' fi</pft></call> -->
+			<!--  <call name="GizmoIndex"><pft>if p(v6100^g) then 'Now' fi</pft></call> -->
 			<loop>
 				<field action="import" tag="list">1,2,6100,6111,6112</field>
 				<field action="replace" tag="11"><pft>if p(v6100^u) then v11*3 else v11 fi</pft></field>
@@ -709,7 +710,7 @@
 		<do task="keyrange">
 			<parm name="db"><pft>'KWIC'v6100^y</pft></parm>
 			<parm name="from"><pft>s(mpu,v6122^*,mpl)</pft></parm>
-			<parm name="to"><pft>s(mpu,v6122^*'ZZZZZZZ',mpl)</pft></parm>
+			<parm name="to"><pft>s(mpu,v6122^*'ZZZZZZZZZZZZZZZZZ',mpl)</pft></parm>
 			<parm name="count">1</parm>
 			<parm name="posting">1</parm>
 
@@ -828,9 +829,9 @@
 		<label>INDEX TRANSLATE</label>
 		<!-- probem in UTF8 next line ?? -->
 			<field action="add" tag="1"><pft>
-			<!-- (if s(mpu,v6003[1],mpl) = s(mpu,v6099^n,mpl) then v6099,break else v6099, break  
-			 fi) -->
-			 v6099, break 
+			(if s(mpu,v6003[1],mpl) = s(mpu,v6099^n,mpl) then 
+			/* v6099,break else v6099, break   fi) */
+			 v6099, break fi)
 			 </pft></field>
 			<field action="delete" tag="6003">1</field>
 			<flow action="jump"><pft>if p(v6003) then 'INDEX TRANSLATE' fi</pft></flow>
@@ -1112,9 +1113,9 @@
 			<field action="define" tag="1001">Isis_Item</field>
 			<loop>
 				<field action="import" tag="list">6212</field>
-				<!-- caso seja lista de selecionados executa PROC somente na fun??o fielddir -->
+				<!-- caso seja lista de selecionados executa PROC somente na funï¿½ï¿½o fielddir -->
 				<flow action="jump"><pft>if val(v1001) > 0 then 'PASS_PROC' fi</pft></flow>
-				<!-- ordena tags para exporta??o do iso-->
+				<!-- ordena tags para exportaï¿½ï¿½o do iso-->
 				<proc>s</proc>
 				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
 
@@ -1128,7 +1129,7 @@
 				<flow action="skip">Next</flow>
 
 				<label>EXPORT_USERFORMAT</label>
-				<!-- variavel temp contendo o nome do formato que deve ser executado (user format) na exporta??o do dado -->
+				<!-- variavel temp contendo o nome do formato que deve ser executado (user format) na exportaï¿½ï¿½o do dado -->
 				<field action="replace" tag="9999"><pft>mid(v6212,instr(v6212,'-')+1,size(v6212))</pft></field>
 				<display><pft><pft>'@',v9999</pft></pft></display>
 
@@ -1240,7 +1241,7 @@
 				<list action="load" type="list"><pft>(if val(v1^*) > 0 then v1 fi/)</pft></list>
 			</loop>
 		</do>
-		<!-- seta os valores de 1001/1002 da lista para apresenta??o do cabe?alho da pagina -->
+		<!-- seta os valores de 1001/1002 da lista para apresentaï¿½ï¿½o do cabeï¿½alho da pagina -->
 		<do task="list">
 			<field action="define" tag="2001">Isis_Item</field>
 			<field action="define" tag="1001">Isis_Current</field>

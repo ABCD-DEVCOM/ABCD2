@@ -99,8 +99,8 @@ echo "
 				if (Var.type=="textarea") {
 					b=a.split("\n")
 					if(b.length>Var.rows) Var.rows=b.length
+				}else{					self.close()				}
 
-				}
 			}
 		}
 
@@ -193,9 +193,9 @@ echo "function AbrirIndice(Termino){\n";
         				$w2=substr($termino,$ix+strlen($word));        			}
         		}
         	}        }
-        if ($use!=""){        	echo "<tr height=18px><td align=right valign=top nowrap bgcolor=#cccccc>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a>";
+        if ($use!=""){        	echo "<tr height=18px><td align=right valign=top nowrap bgcolor=#FFFFFF>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a>";
         	echo "<font color=black> USE $use</td>";        }else{
-			echo "<tr height=18px><td align=right valign=top bgcolor=#cccccc nowrap>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a></td>";
+			echo "<tr height=18px><td align=right valign=top bgcolor=#FFFFFF nowrap>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a></td>";
 		}
 		$last=$word;	}
 

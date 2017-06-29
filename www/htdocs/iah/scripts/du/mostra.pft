@@ -1,0 +1,10 @@
+    '<div class="midd">
+        <div class="oddRowRight"><a href="javascript:CloseNewfacic();"><b>Close</b></a></div>
+        <div class="rowJnlDetl"><b>[',v5011*3,'] ',v5100,'</b></div>
+        <div class="barNav"><b>Select a period for more details of the issues</b></div>',
+        ('<div class="rowJnlDetl"><a href="javascript:onClick=Open_Facic(',v2007^f,',',v2007^t,')"><img src="',v5002[1],'arrow.gif" border="0"></a>',
+         v2007^a,| vol.|v2007^v,| no.|v2007^n,| - |v2007^b,| vol.|v2007^r,| no.|v2007^m,'</div>
+        <div class="row"><hr class="ruler" /></div>'),
+    '</div>
+</div>
+</body></html>'

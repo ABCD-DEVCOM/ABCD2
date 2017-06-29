@@ -1,0 +1,29 @@
+'Content-type: text/html'/#
+'
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>',v5003^*,
+        select s(mpu,v5001^s,mpl)
+            case 'SEARCH'   : ' - Results ',v6205^c[1],
+            case 'INDEX'    : ' - Index 'v6100^p,
+            case 'CONFIG'   : ' - configure',
+            case 'LIST'     : ' - List',
+            case 'SCAD'     : ' - Copy request',
+            case 'ISO-8859-1' : ,
+        endsel
+'   </title>'
+if v5003='DUBCORE' then 
+'    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
+else
+'    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"; />'
+fi,
+'    <link rel="stylesheet" href="',v5000^d,'css/stylesheet.css" type="text/css" media="screen" />
+</head>
+<body>',
+if v5001^s : 'CONFIG' then,
+'<div id="contentN">' else, '<div class="container">' fi,
+if a(v8001) or v8001 <> 'false' then,
+    ,@HEADER.IAH,
+fi

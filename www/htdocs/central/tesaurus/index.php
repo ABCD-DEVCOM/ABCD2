@@ -81,7 +81,8 @@ echo "
 		$Tag=$arrHttp["Tag"];
 	}
 ?>
-	function ObtenerTerminos(){		Seleccion=""
+	function ObtenerTerminos(){
+		Seleccion=""
 		i=document.Lista.autoridades.selectedIndex
 		for (i=0;i<document.Lista.autoridades.options.length; i++){
 			if (document.Lista.autoridades.options[i].selected){
@@ -114,7 +115,7 @@ echo "
 					b=a.split("\n")
 					if(b.length>Var.rows) Var.rows=b.length
 
-				}			}
+				}else{					self.close()				}			}
 		}
 	}
 
