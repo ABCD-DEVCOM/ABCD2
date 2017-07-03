@@ -1,7 +1,7 @@
 <?php
 // Main server configuration
 $server_url="http://127.0.0.1:9090";    // URL with port (if not 80)
-$postMethod=0;                          // if set to '1' (or true) ABCD will use POST-method; use with caution
+$postMethod=1;                          // if set to '1' (or true) ABCD will use POST-method; use with caution
 $dirtree=1;                             // SE THIS PARAMETER TO SHOW THE ICON THAT ALLOWS THE BASES FOLDER EXPLORATION
 $MD5=0;                                 // USE THIS PARAMETER TO ENABLE/DISABLE THE MD5 PASSWORD ENCRIPTYON (0=OFF 1=ON)
 $EmpWeb=false;                          // use EmpWeb or not
@@ -40,12 +40,12 @@ $mx_exec="mx".$exe_ext;                    // name and extension of mx executabl
 $msg_path=$db_path;                        // path to the folder where the uploaded images are to be stored (the database name will be added to this path)
 $img_path=$ABCD_path."www/htdocs/bases/";  // path to the mx program (include the name of the program) and cisis-utilities (no name of program)
 $cgibin_path=$ABCD_path."www/cgi-bin/";    // path to the basic directory for CISIS-utilities
-$xWxis=$ABCD_path."/www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
+$xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
 
 if (isset($_SESSION["BASES_DIR"]))
 	$db_path=$_SESSION["BASES_DIR"];
 else {
-$unicode="0";
+$unicode="";
 $institution_name="";
 if (isset($arrHttp["base"]))    {
 if (!file_exists($db_path."abcd.def")){
@@ -56,24 +56,28 @@ $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abc
 //}
 $institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
 $unicode="ansi";                          // Unicode setting read from abcd.def, with default = ANSI
-if (isset($def["UNICODE"]))  {            // If unicode is defined in abcd.def
+//if (isset($def["UNICODE"]))  {            // If unicode is defined in abcd.def
+if (intval($def["UNICODE"])>0)
 $unicode=$def["UNICODE"];                 // set unicode to value in abcd.def
-}
+else $unicode='';
 
-if (isset($arrHttp["base"]) and isset($def[strtoupper($arrHttp["base"])]))
+if (isset($arrHttp["base"]) and isset($def[$arrHttp["base"]]))
 //if (isset($def[strtoupper($arrHttp["base"])]))   // if database named in abcd.def
- $cisis_ver=$def[strtoupper($arrHttp["base"])] ; // use the CISIS-version defined for that database
-// else $arrHttp["base"] = "acces";
+ $cisis_ver=$def[$arrHttp["base"]] ; // use the CISIS-version defined for that database
 } // end (isset($arrHttp["base"]))
 }
 if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php")){
 	include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
 }
-
-if ($unicode!="0") {                      // if unicode not specified as OFF
- if (strtoupper($unicode)!="ANSI")        // if unicode not yet specified as ANSI
-  $unicode="utf8";  }                     // then set unicode to UTF8
- else $unicode="ansi";
+//echo "unicode after extended_php : " . intval($unicode);
+//if (intval($unicode)!==0) {                 // if unicode not specified as OFF
+ if (strtoupper($unicode)!="ANSI"  OR intval($unicode)>0) {      // if unicode not yet specified as ANSI
+  $unicode="utf8";
+  //echo " unicode set to utf8";
+  }                     // then set unicode to UTF8
+ else {$unicode="ansi";
+ //echo "unicode set to ansi";
+ }
 //echo "unicode config2=$unicode<BR>";
 $cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
 $mx_path=$cisis_path.$mx_exec;                      // path to mx-executable
@@ -89,6 +93,8 @@ else $wxisUrl="";                                                     // GET met
 //echo "bases_path=$db_path<BR>";
 //echo "msg_path=$msg_path<BR>";
 //echo "wxisUrl=$wxisUrl<BR>";
+//print "wxis=$Wxis<BR>";    // sleep(1);
+
 
 $FCKConfigurationsPath="/".$app_path."/dataentry/fckconfig.js";  // path to CKeditor configuration
 $FCKEditorPath="/site/bvs-mod/FCKeditor/";                       // path to CKEditor

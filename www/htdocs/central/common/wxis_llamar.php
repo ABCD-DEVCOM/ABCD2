@@ -1,4 +1,6 @@
 <?php
+global $server_url, $wxis_exec, $wxisUrl, $unicode;
+//include ("../config.php");
 //CHANGED
 	if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
 		$query.="&lock=S";
@@ -37,12 +39,16 @@
     		}
     	}
     }
+// next line to make sure password is checked with ANSI-database acces
+if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
+
 	if (isset($wxisUrl) and $wxisUrl!=""){
+//echo "wxisUrl in wxis_llamar=$wxisUrl<BR>";  sleep(1);
 		$query.="&path_db=".$db_path;
 		$url="$wxisUrl?IsisScript=$IsisScript$query&cttype=s";
 		if (file_exists($db_path."par/syspar.par"))
         	$url.="&syspar=$db_path"."par/syspar.par";
-		$url_parts = parse_url($url);
+/*		$url_parts = parse_url($url);
 		$host = $url_parts["host"];
 		$port = ($url_parts["port"]) ? $url_parts["port"] : 80;
 		$path = $url_parts["path"];
@@ -78,8 +84,9 @@
 				}
 			}
 		}
-
-/*		$result=file_get_contents($url);*/        //ESTA FORMA DE LEER NO SE USA PORQUE DA MUCHOS PROBLEMAS CON EL URL
+*/
+		$result=file_get_contents($url);        //ESTA FORMA DE LEER NO SE USA PORQUE DA MUCHOS PROBLEMAS CON EL URL
+//var_dump($result); die;
         $con=explode("\n",$result);
         $ix=0;
         $contenido=array();
@@ -92,7 +99,7 @@
         }
        if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
   }else{
-//GET-method
+
       	$query.="&path_db=".$db_path;
 		putenv('REQUEST_METHOD=GET');
 		$q=explode("&",$query);

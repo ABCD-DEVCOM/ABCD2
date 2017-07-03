@@ -1,6 +1,6 @@
 <?php
 if (isset($def["MULTIPLE_DB_FORMATS"]) and $def["MULTIPLE_DB_FORMATS"]=="Y")
-   if (isset($_SESSION)) $_SESSION["MULTIPLE_DB_FORMATS"]="Y";
+   if (isset($_SESSION))$_SESSION["MULTIPLE_DB_FORMATS"]="Y";
 if (!isset($dirtree)) $dirtree=0;
 if (isset($def["DIRTREE"]))
  	$dirtree=$def["DIRTREE"];
@@ -18,7 +18,7 @@ if (isset($def["CSS_NAME"])){
 
 //set the charset of all the databases
 if (isset($def["UNICODE"])){
-	$UNICODE=$def["UNICODE"];
+	if (intval($UNICODE)>0) $UNICODE=$def["UNICODE"];
 }
 //Pedir lapso del préstamo
 if (isset($def["ASK_LPN"])){
@@ -85,7 +85,7 @@ $db_name=$check[0];
 		if (isset($def_db["barcode1reg"]))              $barcode1reg=$def_db["barcode1reg"];
                 if (isset($def_db["tesaurus"]))                 $tesaurus=$def_db["tesaurus"];
                 if (isset($def_db["prefix_search_tesaurus"]))   $prefix_search_tesaurus=$def_db["prefix_search_tesaurus"];
-		if (isset($def_db["UNICODE"]))  	    	$unicode=$def_db["UNICODE"];
+		if (isset($def_db["UNICODE"]))  	        $unicode=$def_db["UNICODE"];
 		if (isset($def_db["CISIS_VERSION"]))         	$cisis_ver=$def_db["CISIS_VERSION"]."/";
 		if (isset($def_db["wxis_get"]))                 $Wxis=$def_db["wxis_get"];	//Path to the wxis.exe when using get;
                 if (isset($def_db["wxis_post"]))                $wxisUrl=$def_db["wxis_post"];  //Url for the execution of WXis, when using POST
