@@ -78,7 +78,14 @@ function IsisSearchSort($parametros)
  * file with the data you ask.
  * @param $url is mounted by wxis_url function
  */
+
 function wxis_document_post( $url, $content = "" )
+{
+$result=file_get_contents($url);
+     return strstr($result,"<");
+}
+
+function wxis_document_post2( $url, $content = "" )
 {
     $content = str_replace("\\\"","\"",$content);
     $content = str_replace("\n","",$content);
