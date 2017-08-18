@@ -313,7 +313,7 @@ echo "
 <table bgcolor=#cccccc cellspacing=1 border=0 cellpadding=5>
 <tr><td bgcolor=white align=center>Mfn</td><td bgcolor=white align=center>
     </td><td bgcolor=white align=center></td>
-<?
+<?php
 if (isset($T[0]))
 	$Formato="(V".$T[0].'+|$$|)';
 else
@@ -477,7 +477,7 @@ switch ($arrHttp["Opcion"]){
 <input type=hidden name=nuevotag value="<?php if (isset($arrHttp["nuevotag"])) echo $arrHttp["nuevotag"]?>">
 <input type=hidden name=separar value="<?php if (isset($arrHttp["separar"])) echo $arrHttp["separar"]?>">
 <input type=hidden name=listdel value="<?php if (isset($arrHttp["listdel"])) echo $arrHttp["listdel"]?>">
-<?
+<?php
 if ($arrHttp["Opcion"]=='buscar') {
 	$arrHttp["from"]=1;
 	$Mfn=1;

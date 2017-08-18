@@ -11,7 +11,7 @@ include("../lang/acquisitions.php");
 
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
-$sep='^';
+$sep='|';
 $b=explode('|',$arrHttp["base"]);
 if (!isset($b[2])) $b[2]="";
 $flag=$b[2];   // Y= the dababase can manage copies
@@ -19,15 +19,28 @@ $base=$b[0];
 $cn_val="";
 $inv_val="";
 $file_cn=$db_path.$base."/data/control_number.cn";
-if (file_exists($file_cn)){	$fp=file($file_cn);
-	$cn_val=implode("",$fp);}
+if (file_exists($file_cn)){
+	$fp=file($file_cn);
+	$cn_val=implode("",$fp);
+}
 include("../common/header.php");
 echo "<script src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
-function Enviar(){	control=Trim(document.forma1.control_n.value)
-	if (control=="" || control=="0"){		if (confirm("The control number of the database will be restored to 0 \n\n Is that correct? ")){			if (confirm("are you sure?")){			}else{				return			}		}else{			return		}	}
-	document.forma1.submit()}
+function Enviar(){
+	control=Trim(document.forma1.control_n.value)
+	if (control=="" || control=="0"){
+		if (confirm("The control number of the database will be restored to 0 \n\n Is that correct? ")){
+			if (confirm("are you sure?")){
+			}else{
+				return
+			}
+		}else{
+			return
+		}
+	}
+	document.forma1.submit()
+}
 
 </script>
 <?php

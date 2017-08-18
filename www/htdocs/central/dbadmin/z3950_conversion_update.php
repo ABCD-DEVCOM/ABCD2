@@ -42,29 +42,55 @@ else
 $lang=$_SESSION["lang"];
 $tag=array();
 $pft=array();
-foreach ($arrHttp as $var=>$value) {	$value=trim($value);	if (substr($var,0,3)=="tag") {		$ix=substr($var,3);
+foreach ($arrHttp as $var=>$value) {
+	$value=trim($value);
+	if (substr($var,0,3)=="tag") {
+		$ix=substr($var,3);
 		if (isset($arrHttp["formato".$ix]))
 			if (trim($arrHttp["formato".$ix])!="") $pft[$value]=stripslashes($arrHttp["formato".$ix]);
-	}}
-$file=$db_path.$arrHttp["base"]."/def/".$arrHttp["namecnvtb"];
+
+	}
+}
+$sep='|';
+$db=explode($sep,$arrHttp["base"]);
+// next line different from original : substr($db[1],1)
+$db=substr($db[0],0);
+//echo "base=$db<BR>";
+//die;
+//$file=$db_path.$arrHttp["base"]."/def/".$arrHttp["namecnvtb"];
+$file=$db_path.$db."/def/".$arrHttp["namecnvtb"];
+//echo "file=$file<BR>";
 $fp=fopen($file,"w");
 if (!$fp){
-	echo $arrHttp["namecnvtb"];	echo $msgstr["nopudoseractualizado"];
-	die;}
-foreach ($pft as $tag=>$value){	fwrite($fp,$tag.":".$value."\n");
+	echo $arrHttp["namecnvtb"];
+	echo $msgstr["nopudoseractualizado"];
+	die;
+}
+foreach ($pft as $tag=>$value){
+	fwrite($fp,$tag.":".$value."\n");
 }
 fclose($fp);
 $add="Y";
 $fp=array();
-if (file_exists($db_path.$arrHttp["base"]."/def/z3950.cnv")){	$fp=file($db_path.$arrHttp["base"]."/def/z3950.cnv");
-	foreach ($fp as $value){		$t=explode('|',$value);
-		if ($t[0]==$arrHttp["namecnvtb"]){			$add="N";
-			break;		}	}}
+if (file_exists($db_path.$arrHttp["base"]."/def/z3950.cnv")){
+	$fp=file($db_path.$arrHttp["base"]."/def/z3950.cnv");
+	foreach ($fp as $value){
+		$t=explode('|',$value);
+		if ($t[0]==$arrHttp["namecnvtb"]){
+			$add="N";
+			break;
+		}
+	}
+}
 
 if ($add=="Y"){
-	$out=fopen($db_path.$arrHttp["base"]."/def/z3950.cnv","w");	foreach ($fp as $value){		$res=fwrite($out,$value);	}
+	$out=fopen($db_path.$arrHttp["base"]."/def/z3950.cnv","w");
+	foreach ($fp as $value){
+		$res=fwrite($out,$value);
+	}
 	$res=fwrite($out,$arrHttp["namecnvtb"].'|'.$arrHttp["descr"]."\n");
-	fclose($out);}
+	fclose($out);
+}
 
 include("../common/header.php");
 echo "<body>";
