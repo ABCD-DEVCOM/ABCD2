@@ -13,7 +13,6 @@ include("../lang/soporte.php");
 
 function MostrarPft(){
 global $arrHttp,$xWxis,$Wxis,$db_path,$wxisUrl;
-
 	$IsisScript=$xWxis.$arrHttp["IsisScript"];
 	if (!isset($arrHttp["from"])) $arrHttp["from"]="";
 	if (!isset($arrHttp["count"])) $arrHttp["count"]="";
@@ -51,6 +50,9 @@ switch ($arrHttp["Opcion"]){	case "fullinv":
 		break;
 	case "listar":
 		echo $msgstr["mnt_rlb"];
+		break;
+	case "lisdelrec":
+		echo $msgstr["mnt_lisdr"];
 		break;}
 echo ": ".$arrHttp["base"];
 echo "</div>
@@ -171,6 +173,7 @@ switch ($arrHttp["Opcion"]) {
 		break;
 	case "listar":
 	case "unlock":
+	case "lisdelrec":
 		$contenido=VerStatus();
 		foreach ($contenido as $linea){			if (substr($linea,0,7)=='MAXMFN:'){				$maxmfn=trim(substr($linea,7));
 				break;
@@ -192,10 +195,16 @@ switch ($arrHttp["Opcion"]) {
 				break;
 			case "listar":
 				echo "<th>Mfn</th><th>Locked by</th><th>Isis Status</th>";
+				break;
+			case "lisdelrec":
+				echo "<th>Mfn</th><th></th>";
+				$opc_ant=$arrHttp["Opcion"];
+				$arrHttp["Opcion"]="listar";
 				break;		}
 		$arrHttp["IsisScript"]="administrar.xis";
 		$contenido=MostrarPft();
         $nb=0;
+        if (isset($opc_ant)) $arrHttp["Opcion"]=$opc_ant;
 		foreach ($contenido as $value) {
 			$value=trim($value);
 			if ($value!=""){				switch ($arrHttp["Opcion"]){					case "unlock":
@@ -209,10 +218,18 @@ switch ($arrHttp["Opcion"]) {
 							$nb++;
 							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td><td>".$t[2]."</td>\n";
 						}
+						break;
+					case "lisdelrec":
+						$t=explode('|',$value);
+						if (trim($t[1])=="DELETED") {							$nb++;
+							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td>\n";
+						}
 						break;				}
 			}		}
 		echo "</table>";
-        if ($nb==0){        	echo "<strong>".$msgstr["noblockedrecs"]."</strong>";        }else{        	echo $nb." ".$msgstr["blockedrecs"];        }
+		if ($arrHttp["Opcion"]!="lisdelrec"){
+	        if ($nb==0){	        	echo "<strong>".$msgstr["noblockedrecs"]."</strong>";	        }else{	        	echo $nb." ".$msgstr["blockedrecs"];	        }
+		}
 		if ($arrHttp["to"]<$maxmfn){			echo "<p><input type=submit value=".$msgstr["continuar"].">";		}
 		echo "</form>";
 		break;

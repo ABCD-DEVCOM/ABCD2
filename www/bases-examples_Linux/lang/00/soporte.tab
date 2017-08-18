@@ -38,6 +38,7 @@ mnt_espere=Wait, please
 mnt_globalc=Global changes
 mnt_lock=Lock database
 mnt_unlock=Unlock database
+mnt_lisdr=List deleted records
 exp_selreg=Please select the records to be exported
 exp_archivo=Your must supply the file name
 conf_import=Start importing

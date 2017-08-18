@@ -78,6 +78,7 @@ function EnviarForma(Opcion,Mensaje){
 					break;
 				case "listar":
 				case "unlock":
+				case "lisdelrec":
 					document.admin.action="mfn_ask_range.php";
 					document.admin.target=""
 					break;
@@ -261,6 +262,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
     ){
 ?>
 					<a href='javascript:EnviarForma("unlock","<?php echo $msgstr["mnt_dr"]?>")'><?php echo $msgstr["mnt_dr"]?></a><br>
+					<a href='javascript:EnviarForma("lisdelrec","<?php echo $msgstr["mnt_lisdr"]?>")'><?php echo $msgstr["mnt_lisdr"]?></a><br>
 <?php }
 
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
