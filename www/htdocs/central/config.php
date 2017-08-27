@@ -51,35 +51,18 @@ if (isset($arrHttp["base"]))    {
 if (!file_exists($db_path."abcd.def")){
 	echo "Missing abcd.def in the database folder"; die;
 }
-//}
 $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
-//}
 $institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
-$unicode="ansi";                          // Unicode setting read from abcd.def, with default = ANSI
-//if (isset($def["UNICODE"]))  {            // If unicode is defined in abcd.def
-if (intval($def["UNICODE"])>0)
-$unicode=$def["UNICODE"];                 // set unicode to value in abcd.def
-else $unicode='';
-
+if ($def["UNICODE"] == "ansi" || $def["UNICODE"] == '0') $unicode="ansi"; else $unicode='utf8';
 if (isset($arrHttp["base"]) and isset($def[$arrHttp["base"]]))
-//if (isset($def[strtoupper($arrHttp["base"])]))   // if database named in abcd.def
  $cisis_ver=$def[$arrHttp["base"]] ; // use the CISIS-version defined for that database
-} // end (isset($arrHttp["base"]))
+}
 }
 if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php")){
 	include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
 }
-//echo "unicode after extended_php : " . intval($unicode);
-//if (intval($unicode)!==0) {                 // if unicode not specified as OFF
- if (strtoupper($unicode)!="ANSI"  OR intval($unicode)>0) {      // if unicode not yet specified as ANSI
-  $unicode="utf8";
-  //echo " unicode set to utf8";
-  }                     // then set unicode to UTF8
- else {$unicode="ansi";
- //echo "unicode set to ansi";
- }
-//echo "unicode config2=$unicode<BR>";
-$cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
+if ($unicode == "ansi" || $unicode == '0') $unicode="ansi"; else $unicode='utf8';
+cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
 $mx_path=$cisis_path.$mx_exec;                      // path to mx-executable
 $Wxis=$cisis_path.$wxis_exec;             // path to the wwwisis executable (include the name of the program, with extension if present)
 if ($postMethod)

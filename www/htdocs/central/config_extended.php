@@ -69,7 +69,7 @@ if (isset($arrHttp["base"])){
 $selected_base= $arrHttp["base"];
 $check=explode('|',$selected_base);
 $db_name=$check[0];
-//echo "dr_path=".$db_path.$arrHttp["base"]."/dr_path.def"."<BR>";
+//echo "dr_path=".$db_path.$db_name."/dr_path.def"."<BR>";
 	if (file_exists($db_path.$db_name."/dr_path.def")){
 		$def_db = parse_ini_file($db_path.$db_name."/dr_path.def");
        		//SE REDEFINEN LOS SIGUIENTES PARÁMETROS DEL CONFIG.PHP
