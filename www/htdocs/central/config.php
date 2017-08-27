@@ -4,8 +4,8 @@ $server_url="http://127.0.0.1:9090";    // URL with port (if not 80)
 $postMethod=1;                          // if set to '1' (or true) ABCD will use POST-method; use with caution
 $dirtree=1;                             // SE THIS PARAMETER TO SHOW THE ICON THAT ALLOWS THE BASES FOLDER EXPLORATION
 $MD5=0;                                 // USE THIS PARAMETER TO ENABLE/DISABLE THE MD5 PASSWORD ENCRIPTYON (0=OFF 1=ON)
-$EmpWeb=false;                          // use EmpWeb or not
-$use_ldap=false;                        // use LDAP or not
+$EmpWeb=0;                              // use EmpWeb or not
+$use_ldap=0;                            // use LDAP or not
 
 //************************************* Set operation system depending variables
 if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0) {  //Windows path variables
