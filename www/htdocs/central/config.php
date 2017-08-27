@@ -7,15 +7,15 @@ $MD5=0;                                 // USE THIS PARAMETER TO ENABLE/DISABLE 
 $EmpWeb=0;                              // use EmpWeb or not
 $use_ldap=0;                            // use LDAP or not
 
-//************************************* Set operation system depending variables
+// Set operation system depending variables
 if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0) {  //Windows path variables
-$ABCD_path="/ABCD/";                    // base path to ABCD-installation
-$db_path="/ABCD/www/bases/";            // path where the databases are to be located
-$exe_ext=".exe";                        // extension for executables
-}else{                                  // Linux path variables
-$ABCD_path="/opt/ABCD/";
-$db_path="/var/opt/ABCD/bases/";
-$exe_ext="";
+ $ABCD_path="/ABCD/";                    // base path to ABCD-installation
+ $db_path="/ABCD/www/bases/";            // path where the databases are to be located
+ $exe_ext=".exe";                        // extension for executables
+}else{                                   // Linux path variables
+ $ABCD_path="/opt/ABCD/";
+ $db_path="/var/opt/ABCD/bases/";
+ $exe_ext="";
 }
 
 // Other local settings to be configured
@@ -29,8 +29,8 @@ $max_cn_length=1;                       // Add Zeroes to the left for reaching t
 $log="Y";                               // switch on logging of the actions, a subfolder 'log' needs to exist in database-directory
 $lang="en";                             // default language
 $lang_db="en";                          // Default langue for the databases definition
-$ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extension allowed for uploading files (used in dataentry/)
 $change_password="Y";                   //allow change password
+$ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
 
 // *** NO CHANGES NEEDED BELOW HERE
 // Construction of executable path and URL
@@ -42,32 +42,35 @@ $img_path=$ABCD_path."www/htdocs/bases/";  // path to the mx program (include th
 $cgibin_path=$ABCD_path."www/cgi-bin/";    // path to the basic directory for CISIS-utilities
 $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
 
-if (isset($_SESSION["BASES_DIR"]))
-	$db_path=$_SESSION["BASES_DIR"];
+if ( isset($_SESSION["BASES_DIR"]) )
+ $db_path=$_SESSION["BASES_DIR"];
 else {
-$unicode="";
-$institution_name="";
-if (isset($arrHttp["base"]))    {
-if (!file_exists($db_path."abcd.def")){
+ $unicode="";
+ $institution_name="";
+ if (isset($arrHttp["base"])) {
+  if (!file_exists($db_path."abcd.def")){
 	echo "Missing abcd.def in the database folder"; die;
+  }
+  $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
+  $institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
+  if ( $def["UNICODE"] == "ansi" || $def["UNICODE"] == '0' ) $unicode='ansi'; else $unicode='utf8';
+  if (  isset($arrHttp["base"]) && isset($def[$arrHttp["base"]])  )
+  $cisis_ver=$def[$arrHttp["base"]] ; // use the CISIS-version defined for that database
+ }
 }
-$def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
-$institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
-if ($def["UNICODE"] == "ansi" || $def["UNICODE"] == '0') $unicode="ansi"; else $unicode='utf8';
-if (isset($arrHttp["base"]) and isset($def[$arrHttp["base"]]))
- $cisis_ver=$def[$arrHttp["base"]] ; // use the CISIS-version defined for that database
-}
-}
+
 if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php")){
-	include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
+ include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
 }
 if ($unicode == "ansi" || $unicode == '0') $unicode="ansi"; else $unicode='utf8';
-cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
+
+$cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
 $mx_path=$cisis_path.$mx_exec;                      // path to mx-executable
 $Wxis=$cisis_path.$wxis_exec;             // path to the wwwisis executable (include the name of the program, with extension if present)
 if ($postMethod)
 $wxisUrl=$server_url."/cgi-bin/".$unicode."/".$cisis_ver.$wxis_exec;  // POST method used
 else $wxisUrl="";                                                     // GET method used
+
 //echo "cisis_path=$cisis_path<BR>";
 //echo "cisis_ver=$cisis_ver<BR>";
 //echo "mx=$mx_path<BR>";
