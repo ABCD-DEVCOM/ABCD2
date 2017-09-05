@@ -34,8 +34,8 @@ S||Indicator 2|0|0|2||X||1|P|245-ind2.tab|||||0||
 S||Title|0|0|a||X|||||||||0||
 S||Remainder of title|0|0|b||X|||||||||0||
 S||Statement of responsibility|0|0|c||X|||||||||0||
-S||Medium |0|0|h||X|||||||||0||
-S||Form |0|0|k||X|||||||||0||
+S||MediumÂ |0|0|h||X|||||||||0||
+S||FormÂ |0|0|k||X|||||||||0||
 S||Number of part/section of a work|0|1|n||X|||||||||0||
 S||Name of part/section of a work|0|1|p||X|||||||||0||
 T|250|Edition Statement|0|0|12ab||X||100|||||||1||
@@ -52,8 +52,8 @@ S||Date of meeting|0|1|c||X|||||||||0||
 T|300|Physical Description|0|1|12abce||X||100|||||||1||
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Extent |0|1|a||X|||||||||0||
-S||Outras desc.. físicas|0|0|b||X|||||||||0||
+S||ExtentÂ |0|1|a||X|||||||||0||
+S||Outras desc.. fÃ­sicas|0|0|b||X|||||||||0||
 S||Dimensions|0|1|c||X|||||||||0||
 S||Accompanying material|0|0|e||X|||||||||0||
 H||Series Statements and Notes|0|0||||||||||||0||
@@ -77,7 +77,7 @@ S||Type of computer file or data note|0|0|a||X|||||||||0||
 T|520|Summary, Etc.|0|1|12a||X|5|100|||||||1||
 S||Indicator 1|0|0|1||X||1|P|520-ind1.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Summary, etc. |0|0|a||X|||||||||0||
+S||Summary, etc.Â |0|0|a||X|||||||||0||
 T|538|System Details Note|0|1|12aiu3||X|2|100|||||||1||
 S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||

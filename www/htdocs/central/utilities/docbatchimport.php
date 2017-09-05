@@ -611,6 +611,6 @@ document.getElementById("loader").style.display='none';
 </script>
 </br>
 </div>
-<?
+<?php
 include("../common/footer.php");
 ?>

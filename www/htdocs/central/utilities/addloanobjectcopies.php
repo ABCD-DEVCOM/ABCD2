@@ -493,6 +493,6 @@ echo '<br /><span style="color: blue"><b>&nbsp;&nbsp;'.$cantadd.' loanobjects re
 }//if ($_POST["submit"])
 ?>
 </div>
-<?
+<?php
 include("../common/footer.php");
 ?>

@@ -28,7 +28,7 @@ function EjecutarBusqueda(F,desde){
 			document.forma1.Expresion.value=TerminosSeleccionados
 
 			document.forma1.action="buscar.php"
-<?
+<?php
 
 	if (isset($arrHttp["Tabla"])){
   		if ($arrHttp["Tabla"]=="cGlobal")
@@ -67,9 +67,11 @@ function EjecutarBusqueda(F,desde){
 					}
 				}
 			}
-			if  (Tabla=="browse_search" || Tabla=="browse"){				window.opener.document.forma1.expre.value=TerminosSeleccionados
+			if  (Tabla=="browse_search" || Tabla=="browse"){
+				window.opener.document.forma1.expre.value=TerminosSeleccionados
 				self.close()
-				break;			}
+				break;
+			}
 			a=window.opener.document.forma1.expre[document.forma1.Diccio.value].value
 			if (a==""){
 				window.opener.document.forma1.expre[document.forma1.Diccio.value].value=TerminosSeleccionados

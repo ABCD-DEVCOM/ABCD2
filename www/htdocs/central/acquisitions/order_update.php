@@ -10,9 +10,11 @@ include("../common/get_post.php");
 $ValorCapturado="";
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 //die;
-foreach ($arrHttp as $var=>$value){	$k=explode('_',$var);
+foreach ($arrHttp as $var=>$value){
+	$k=explode('_',$var);
 	if (count($k)>2) $linea[$k[1]][$k[2]][$k[0]]=$value;
-}
+
+}
 $ValorCapturado="0001".$arrHttp["order_no"]."\n";
 $ValorCapturado.="0002".$arrHttp["order_date"]."\n";
 $ValorCapturado.="0005".$arrHttp["provider"]."\n";
@@ -22,7 +24,9 @@ foreach ($linea as $i=>$value){
 		$campo="";
 		foreach  ($val as $l=>$linea){
 			$l=trim($l);
-			$subc="";			switch ($l){				case "object":
+			$subc="";
+			switch ($l){
+				case "object":
 					$subc="^a";      		//OBJECT
 					break;
 				case "cant":         		//QUANTITY
@@ -45,7 +49,8 @@ foreach ($linea as $i=>$value){
 					$subc="^g";
 					break;
 				case "acqtype":         	// TYPE OF ACQUISITION (PURCHASE, EXCHANGE, DONATION)
-					if ($ix==0){						$ix=1;
+					if ($ix==0){
+						$ix=1;
 						$ValorCapturado.="0010".$linea."\n";
 					}
 					break;
@@ -66,7 +71,8 @@ foreach ($linea as $i=>$value){
 		}
 		$ValorCapturado.=  "0050".$campo."\n";
 	}
-}
+
+}
 //echo "<xmp>$ValorCapturado</xmp>";
 //die;
 include("../common/header.php");
@@ -94,7 +100,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	</div>
 <div class="middle form">
 	<div class="formContent">
-<?
+<?php
 $key="ON_".trim($arrHttp["order_no"]);
 //if (isset($arrHttp["suggestion"])) $key.='RNBN_'.$arrHttp["suggestion"];
 //if (isset($arrHttp["bidding"])) $key.='_'.$arrHttp["bidding"];
@@ -121,15 +127,18 @@ if ($npost==0){
 			if (trim($linea!="")) echo $linea."\n";
 		}
 	}
-}else{	echo "<h4>".$arrHttp["order_no"].": ".$msgstr["orderexist"]."</h4>";
-	echo "<br><br><br><br><br>";}
+}else{
+	echo "<h4>".$arrHttp["order_no"].": ".$msgstr["orderexist"]."</h4>";
+	echo "<br><br><br><br><br>";
+}
 echo "<a href=javascript:self.close()>".$msgstr["close"]."</a>";
 echo "</div></div>";
 include("../common/footer.php");
 die;
 //------------------------------------------------------
 
-function SearchOrder($order){//SEE IS THE ORDER ALREADY EXISTS
+function SearchOrder($order){
+//SEE IS THE ORDER ALREADY EXISTS
 global $xWxis,$db_path,$wxisUrl,$Wxis;
 	$Prefijo=$order;
 	$IsisScript= $xWxis."ifp.xis";

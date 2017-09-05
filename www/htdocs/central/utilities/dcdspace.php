@@ -67,7 +67,7 @@ function ListElemt(porc,cantR,cantM){
 function F5(cantElemnt){ 
 
 	if(cantElemnt == -1)
-	   $('#cant').html("<? echo TotalItems()?>");
+	   $('#cant').html("<?php echo TotalItems()?>");
 	else
 	   $('#cant').replaceWith(cantElemnt);  
 

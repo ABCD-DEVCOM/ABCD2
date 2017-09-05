@@ -201,7 +201,7 @@ if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="Importar"){
   <input type="submit" value="<?php echo $msgstr["send"]?>"/>
   <input type="hidden" name=Opcion value=importado>
   </form>
-<?
+<?php
 	die;
 	}else{
 		$nombre = $_FILES['archivo']['name'];

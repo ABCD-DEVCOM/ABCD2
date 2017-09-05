@@ -19,10 +19,12 @@ include ('../dataentry/leerregistroisis.php');
 include("../common/header.php");
 ?>
 <script>
-function Call_Z3950(){	msgwin=window.open("../dataentry/z3950.php?desde=acquisitions","","width=700, height=600, resizable, scrollbars")
-	magwin.focus()}
+function Call_Z3950(){
+	msgwin=window.open("../dataentry/z3950.php?desde=acquisitions","","width=700, height=600, resizable, scrollbars")
+	magwin.focus()
+}
 </script>
-<?
+<?php
 $encabezado="";
 echo "<body>\n";
 include("../common/institutional_info.php");
@@ -78,23 +80,28 @@ if ($arrHttp["typeofobj"]=="N"){   // si el objeto es nuevo y el número de objet
 			die;
 		}
 	}else{
-//IF THERE IS NO SUGGESTION GET THE DATA FROM THE PURCHASEORDER DATABASE        $res=EjecutarBusqueda("ON_".$arrHttp["order"],"purchaseorder");     // se localiza la recomendación para sacar los datos de pre-catalogacion
+//IF THERE IS NO SUGGESTION GET THE DATA FROM THE PURCHASEORDER DATABASE
+        $res=EjecutarBusqueda("ON_".$arrHttp["order"],"purchaseorder");     // se localiza la recomendación para sacar los datos de pre-catalogacion
 		if ($res==0){
 			echo "<h4>".$msgstr["purchaseorder"].": ".$arrHttp["suggestion"]." ".$msgstr["notfound"]."</h4>";
 			die;
-		}	}
+		}
+	}
 	foreach  ($valortag as $tag=>$value){
 		echo "<input type=hidden name=tag$tag value=\"$value\">\n";
 		echo "$tag=$value<br>";
 	}
-	foreach ($arrHttp as $var=>$value){		echo "<input type=hidden name=$var value=\"$value\">\n";	}
+	foreach ($arrHttp as $var=>$value){
+		echo "<input type=hidden name=$var value=\"$value\">\n";
+	}
    	echo "<p><input type=submit value=' &nbsp; &nbsp; &nbsp; ".$msgstr["create"]." &nbsp; &nbsp; &nbsp; ' onclick=document.catalog.submit()> &nbsp; &nbsp; &nbsp;
    	   <!-- <input type=submit value=' &nbsp; &nbsp; &nbsp; Z39.50 &nbsp; &nbsp; &nbsp; ' onclick=javascript:Call_Z3950()>-->
    		</form>" ;
 }
 
 //NEW COPIES TO AN EXISTENT OBJECTS. SHOW THE RECORD
-if ($arrHttp["typeofobj"]=="C"){	if ($arrHttp["postings"]==0){
+if ($arrHttp["typeofobj"]=="C"){
+	if ($arrHttp["postings"]==0){
 		echo "<h4>".$arrHttp["objectid"].": ".$msgstr["objectexist"];
 		echo "</h4>";
 	}else{
@@ -176,9 +183,12 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 }
 
 function ProximoNumero($base){
-global $db_path;	$archivo=$db_path.$base."/data/control_number.cn";
-	if (!file_exists($archivo)){		echo "<h2>Missing file $base/data/control_number.cn</h2>";
-		return 0;	}
+global $db_path;
+	$archivo=$db_path.$base."/data/control_number.cn";
+	if (!file_exists($archivo)){
+		echo "<h2>Missing file $base/data/control_number.cn</h2>";
+		return 0;
+	}
 	$perms=fileperms($archivo);
 	if (is_writable($archivo)){
 	//se protege el archivo con el número secuencial
@@ -196,7 +206,8 @@ global $db_path;	$archivo=$db_path.$base."/data/control_number.cn";
 	    fwrite($fp,$cn);
 	    fclose($fp);
 	    chmod($archivo,0666);
-	    return $cn;	}
+	    return $cn;
+	}
 }
 
 

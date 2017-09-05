@@ -42,26 +42,28 @@ $img_path=$ABCD_path."www/htdocs/bases/";  // path to the mx program (include th
 $cgibin_path=$ABCD_path."www/cgi-bin/";    // path to the basic directory for CISIS-utilities
 $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
 
-if ( isset($_SESSION["BASES_DIR"]) )
- $db_path=$_SESSION["BASES_DIR"];
+if ( isset($_SESSION["BASES_DIR"]) )  {
+ $db_path=$_SESSION["BASES_DIR"];     }
 else {
  $unicode="";
  $institution_name="";
- if (isset($arrHttp["base"])) {
+// if (isset($arrHttp["base"])) {
   if (!file_exists($db_path."abcd.def")){
 	echo "Missing abcd.def in the database folder"; die;
   }
   $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
   $institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
+//echo "institution=$institution_name<BR>";
   if ( $def["UNICODE"] == "ansi" || $def["UNICODE"] == '0' ) $unicode='ansi'; else $unicode='utf8';
   if (  isset($arrHttp["base"]) && isset($def[$arrHttp["base"]])  )
   $cisis_ver=$def[$arrHttp["base"]] ; // use the CISIS-version defined for that database
- }
+// }
 }
 
 if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php")){
  include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
 }
+
 if ($unicode == "ansi" || $unicode == '0') $unicode="ansi"; else $unicode='utf8';
 
 $cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables

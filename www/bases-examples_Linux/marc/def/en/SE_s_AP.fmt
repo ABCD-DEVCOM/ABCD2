@@ -23,8 +23,8 @@ S||Indicator 2|0|0|2||X||1|P|245-ind2.tab|||||0||
 S||Title|0|0|a||X|||||||||0||
 S||Remainder of title|0|0|b||X|||||||||0||
 S||Statement of responsibility|0|0|c||X|||||||||0||
-S||Medium |0|0|h||X|||||||||0||
-S||Form |0|0|k||X|||||||||0||
+S||MediumÂ |0|0|h||X|||||||||0||
+S||FormÂ |0|0|k||X|||||||||0||
 S||Number of part/section of a work|0|1|n||X|||||||||0||
 S||Name of part/section of a work|0|1|p||X|||||||||0||
 T|246|Varying Form of Title|0|0|12abcnp||X||100|||||||1||
@@ -47,7 +47,7 @@ S||Formatted contents note|0|0|a||X|||||||||0||
 T|520|Summary, Etc.|0|1|12a||X|5|100|||||||1||
 S||Indicator 1|0|0|1||X||1|P|520-ind1.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Summary, etc. |0|0|a||X|||||||||0||
+S||Summary, etc.Â |0|0|a||X|||||||||0||
 H||Secundary entries|0|0||||||||||||0||
 T|600|Personal Name|0|1|12abcdqvxy||X|2|100|D||AU_|@autoridades.pft|||1||
 S||Indicator 1|0|0|1||X||1|P|600-ind1.tab|||||0||
@@ -110,7 +110,7 @@ S||Place, publisher, and date of publication|0|0|d||X|||||||||0||
 S||Related parts|0|1|g||X|||||||||0||
 S||International Standard Serial Number|0|0|x||X|||||||||0||
 S||Record control number|0|0|w||X|||||||||0||
-H||END. ELETRÔNICO|0|0|||X|||||||||0||
+H||END. ELETRÃ”NICO|0|0|||X|||||||||0||
 T|856|Electronic Location and Access|0|1|12auyzq||X|2|100|||||||1||
 S||Indicator 1|0|0|1||X||1|P|856-ind1.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|856-ind2.tab|||||0||

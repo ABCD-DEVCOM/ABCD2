@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 if (!isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) and !isset($_SESSION["permiso"]["CENTRAL_ALL"])){
 	header("Location: ../common/error_page.php") ;
@@ -10,7 +10,7 @@ include("../lang/dbadmin.php");
 
 include("../lang/admin.php");
 
-//foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
+//foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";     die;
 $encabezado="";
 if (isset($arrHttp["encabezado"])) $encabezado="&encabezado=s";
 include("../common/header.php");
@@ -58,7 +58,8 @@ $componente=$arrHttp["componente"];
 echo "<h2>$lang/$componente</h2><p>";
 $mensajes="";
 
-foreach ($arrHttp as $var=>$value) {	if (substr($var,0,4)=="msg_"){
+foreach ($arrHttp as $var=>$value) {
+	if (substr($var,0,4)=="msg_"){
 		$var=substr($var,4);
 		$mensajes.=$var."=".$value."\n";
 	}
@@ -70,8 +71,10 @@ else
 	$a=$db_path."lang/".$_SESSION["lang"]."/$componente";
 
 $fp=fopen($a,"w");
-if (!$fp) {	echo "no pudo ser actualizado";
-	die;}
+if (!$fp) {
+	echo "could not be updated";
+	die;
+}
 $res=fwrite($fp,stripslashes($mensajes)."\n");
 fclose($fp);
 echo "<h3>".$msgstr["actualizados"]."</h3> ";

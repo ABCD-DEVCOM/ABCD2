@@ -67,16 +67,14 @@ S||Indicator 1|0|0|1||X||1|P|240-ind1.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|240-ind2.tab|||||0||
 S||Uniform title|0|0|a||X|||||||||0||
 S||Medium of performance for music|0|1|m||X|||||||||0||
-T|245|Title Statement|1|0|12abchknp||X||100|||TI_|v245^a,\" \"v245^b,`(` f(mfn,1,0),`)`|f(mfn,1,0)||1||
-S||Indicator 1|0|0|1||X||1|P|245-ind1.tab|||||0||
-S||Indicator 2|0|0|2||X||1|P|245-ind2.tab|||||0||
-S||Title|0|0|a||X|||||||||0||
-S||Remainder of title|0|0|b||X|||||||||0||
-S||Statement of responsibility|0|0|c||X|||||||||0||
-S||Medium |0|0|h||X|||||||||0||
-S||Form |0|0|k||X|||||||||0||
-S||Number of part/section of a work|0|1|n||X|||||||||0||
-S||Name of part/section of a work|0|1|p||X|||||||||0||
+T|245|Title statement|1|1|12abchp|||1||||TI_||||1|http://www.loc.gov/marc/bibliographic/bd245.html|0|0|||
+S||Indicator 1|0|0|1||X||2|P|245-ind1.tab|||||0||0|0|||
+S||Indicator 2 (number of non-filing characters, 0-9)|0|0|2||X||2|P|245-ind2.tab|||||0||0|0|||
+S||Title|0|0|a||X|||||||||0||0|0|||
+S||Remainder of title|0|0|b||X|||||||||0||0|0|||
+S||Statement of responsibility|0|0|c||X|||||||||0||0|0|||
+S||Medium|0|0|h||X|||||||||0||0|0|||
+S||Name of part/section|0|0|p||X|||||||||0||0|0|||
 T|246|Varying Form of Title|0|0|12abcnp||X||100|||||||1||
 S||Indicator 1|0|0|1||X||1|P|246-ind1.tab|||||0||
 S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||

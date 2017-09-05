@@ -1,12 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION["login"])){	echo "La sesión expiró o Ud. no tiene permiso para entrar en este módulo";
-	die;}
+if (!isset($_SESSION["login"])){
+	echo "La sesión expiró o Ud. no tiene permiso para entrar en este módulo";
+	die;
+}
 include("../common/get_post.php");
 include("../config.php");
 $materiales_re=Array();
-if (file_exists($db_path."/reserva/tablas/materiales.tab")){	$fp=file($db_path."/reserva/tablas/materiales.tab");
-	foreach ($fp as $linea){		$materiales_re[]=$linea;	}}
+if (file_exists($db_path."/reserva/tablas/materiales.tab")){
+	$fp=file($db_path."/reserva/tablas/materiales.tab");
+	foreach ($fp as $linea){
+		$materiales_re[]=$linea;
+	}
+}
 $i=0;
 $ixFdt=-1;
 ?>
@@ -49,7 +55,8 @@ function getElement(psID) {
 	}
 }
 
-function DrawElement(ixE,val_cod,val_desc){
+function DrawElement(ixE,val_cod,val_desc){
+
 	xhtml="<tr><td bgcolor=white align=center valign=top>"
 	xhtml+="<span class=etiqueta>Código:</span> <input type=text name=codigo size=20 value=\""+val_cod+"\">"
 	xhtml+=" <span class=etiqueta>Descripción:</span> <input type=text name=descripcion size=50 value=\""+val_desc+"\">"
@@ -115,21 +122,30 @@ function AddElement(){
 function Guardar(){
 	ValorCapturado=""
 	total=document.stats.codigo.length
-	for (i=0;i<total;i++){		val_cod=Trim(document.stats.codigo[i].value)
+	for (i=0;i<total;i++){
+		val_cod=Trim(document.stats.codigo[i].value)
 		val_desc=Trim(document.stats.descripcion[i].value)
-		if (val_cod=="" && val_desc==""){			continue		}else{			if (val_cod=="" || val_desc==""){				alert("Debe indicar el tipo de material y la descripción")
-				return			}		}
-		ValorCapturado+=val_cod+"|"+val_desc+"\n"	}
+		if (val_cod=="" && val_desc==""){
+			continue
+		}else{
+			if (val_cod=="" || val_desc==""){
+				alert("Debe indicar el tipo de material y la descripción")
+				return
+			}
+		}
+		ValorCapturado+=val_cod+"|"+val_desc+"\n"
+	}
 	document.enviar.ValorCapturado.value=ValorCapturado
 	document.enviar.submit()
 }
 
 </script>
-<?
+<?php
 //SE FORMA LA LISTA CON LOS TIPOS DE USUARIO
 echo "<script>\n";
 $fields="";
-foreach ($materiales_re as $linea){	$x=explode('|',$linea);
+foreach ($materiales_re as $linea){
+	$x=explode('|',$linea);
 	$fields.=trim($x[0])."|".trim($x[1])."||";
 }
 echo "fields=\"$fields\"\n";
@@ -143,7 +159,8 @@ echo "<div id=rows>";
 echo "<table>";
 $ix=-1;
 if (count($materiales_re)>0){
-	foreach ($materiales_re as $value) {		$value=trim($value);
+	foreach ($materiales_re as $value) {
+		$value=trim($value);
 		if ($value!=""){
 			$ix++;
 			$total=$ix;

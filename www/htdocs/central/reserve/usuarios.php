@@ -1,15 +1,22 @@
 <?php
 session_start();
-if (!isset($_SESSION["login"])){	echo "La sesión expiró o Ud. no tiene permiso para entrar en este módulo";
-	die;}
+if (!isset($_SESSION["login"])){
+	echo "La sesión expiró o Ud. no tiene permiso para entrar en este módulo";
+	die;
+}
 include("../common/get_post.php");
 include("../config.php");
 $usuarios_re=Array();
 echo $db_path."  ".$_SESSION["lang"];
 $archivo=$db_path."circulation/def/".$_SESSION["lang"]."/typeofusers.tab";
 $ixusers_re=-1;
-if (file_exists($archivo)){	$fp=file($archivo);
-	foreach ($fp as $linea){		$ixusers_re++;		$usuarios_re[]=$linea;	}}
+if (file_exists($archivo)){
+	$fp=file($archivo);
+	foreach ($fp as $linea){
+		$ixusers_re++;
+		$usuarios_re[]=$linea;
+	}
+}
 $users_tab=array();
 $col_size=array();
 $i=0;
@@ -43,14 +50,18 @@ function getElement(psID) {
 	}
 }
 
-function DrawElement(ixE,sel_ind){
+function DrawElement(ixE,sel_ind){
+
 	xhtml="<tr><td bgcolor=white align=center valign=top><select name=sel_text style='width:150px'>\n<option></option>"
 	option=fields.split('||')
 	ixact=0
-	for (var opt in option){		ixact++
+	for (var opt in option){
+		ixact++
 		o=option[opt].split('$$$')
 		xhtml+="<option value=\""+o[0]+"\""
-		if (sel_ind>-1){			if (ixact==sel_ind) xhtml+=" selected"		}
+		if (sel_ind>-1){
+			if (ixact==sel_ind) xhtml+=" selected"
+		}
 		xhtml+=">"+o[1]+"</option>\n";
 	}
 	xhtml+="</select>";
@@ -112,20 +123,27 @@ function AddElement(){
 function Guardar(){
 	ValorCapturado=""
 	total=document.stats.sel_text.length
-	for (i=0;i<total;i++){		ix_sel=document.stats.sel_text[i].selectedIndex
-		if (ix_sel>0){			op_1=document.stats.sel_text[i].options[ix_sel].value
-			ValorCapturado+=op_1+"\n"		}
+	for (i=0;i<total;i++){
+		ix_sel=document.stats.sel_text[i].selectedIndex
+		if (ix_sel>0){
+			op_1=document.stats.sel_text[i].options[ix_sel].value
+			ValorCapturado+=op_1+"\n"
+		}
 	}
 	document.enviar.ValorCapturado.value=ValorCapturado
 	document.enviar.submit()
 }
 
 </script>
-<?
+<?php
 //SE FORMA LA LISTA CON LOS TIPOS DE USUARIO
 echo "<script>\n";
 $fields="";
-foreach ($usuarios_re as $linea){	if (trim($linea)!=""){		$fields.=trim($linea)."||";	}}
+foreach ($usuarios_re as $linea){
+	if (trim($linea)!=""){
+		$fields.=trim($linea)."||";
+	}
+}
 echo "fields=\"$fields\"\n";
 echo "</script>\n</head>\n";
 echo "<body>";
@@ -141,7 +159,9 @@ $ix=-1;
 if (count($usuarios_re)>0){
 	for ($i=0;$i<=$ixusers_re;$i++) {
 		reset($usuarios_re);
-		echo "<tr><td bgcolor=white align=center valign=top><select name=sel_text style='width:150px'><option></option>\n";		foreach ($usuarios_re as $value) {			$value=trim($value);
+		echo "<tr><td bgcolor=white align=center valign=top><select name=sel_text style='width:150px'><option></option>\n";
+		foreach ($usuarios_re as $value) {
+			$value=trim($value);
 			if ($value!=""){
 				$ix++;
 				$total=$ix;
