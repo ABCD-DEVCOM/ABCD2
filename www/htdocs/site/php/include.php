@@ -23,7 +23,12 @@ if (USE_SERVER_PATH == true){
 }else{
     $sitePath = realpath($DirNameLocal . "..");
 }
-$def = @parse_ini_file($sitePath ."/bvs-site-conf.php");
+
+
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0)
+$def = @parse_ini_file("../ABCD-site-win.conf");
+else
+$def = @parse_ini_file("../ABCD-site-lin.conf");
 
 if( isset($def["SHOW_ERRORS"]) && $def["SHOW_ERRORS"] == true ){
     error_reporting( E_ALL ^E_NOTICE );
@@ -75,7 +80,6 @@ else
 
 //$checked['lang'] = 'en';
 $checked['lang'] = $lang;
-
 
 $def['DEFAULT_DATA_PATH'] = $def['DATABASE_PATH'];
 if ( isset($_REQUEST['portal']) && preg_match('/^[a-zA-Z0-9_]+$/', $_REQUEST['portal'])){
