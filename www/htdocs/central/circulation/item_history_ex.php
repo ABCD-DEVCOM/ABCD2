@@ -1,9 +1,11 @@
 <?php
 session_start();
 // Situación de un objeto
-if (!isset($_SESSION["login"])){	echo "Session expired" ;
+if (!isset($_SESSION["login"])){
+	echo "Session expired" ;
 //	die;
-}if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
+}
+if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 include("../config_loans.php");
@@ -37,6 +39,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$cn,$db,$item,$multa;
 	$formato_obj="";
 	$formato_obj.=urlencode($formato_ex);
 	$query = "&Opcion=disponibilidad&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Expresion=".$Expresion."&Pft=$formato_ex";
+//echo "query=$query<BR>";die;
 	include("../common/wxis_llamar.php");
 	$total=0;
 	$tit_cat=array();
@@ -46,15 +49,19 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$cn,$db,$item,$multa;
 	$cn=$s[0];                       //CONTROL NUMBER
 	$db=$s[1];                       //DATABASE
 	$contenido=explode('###',$s[2]);
-	foreach ($contenido as $linea){		echo "$linea<br>";
+	foreach ($contenido as $linea){
+		echo "$linea<br>";
 		if (substr($linea,0,8)=='$$TOTAL:')
 			$total=trim(substr($linea,8));
 		else
 			$l=explode('###',$linea);
 			foreach ($l as $it){
 				$i=explode('$$$',$it);
-//				echo "--".$i[0]."=".$inventory."<br>";				if ($i[0]==$inventory)  {					$item=$it;
-					break;				}
+//				echo "--".$i[0]."=".$inventory."<br>";
+				if ($i[0]==$inventory)  {
+					$item=$it;
+					break;
+				}
 			}
 
 
@@ -93,7 +100,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_in,$pft_nc,$
 
 
 function ListarPrestamo($Expresion){
-//se ubican todas las copias disponibles para verificar si están prestadasglobal $xWxis,$arrHttp,$db_path,$wxisUrl,$Wxis;
+//se ubican todas las copias disponibles para verificar si están prestadas
+global $xWxis,$arrHttp,$db_path,$wxisUrl,$Wxis;
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 	$Expresion=urlencode($Expresion);
 	$formato_obj="v20'$$$'v30,'###'" ;
@@ -111,12 +119,27 @@ include("../common/header.php");
 include("../common/institutional_info.php");
 ?>
 <script>
-function EnviarForma(Opcion){	eliminar=""	if (Opcion==0){		document.continuar.submit()	}else{		for (i=0; i<document.objeto.elements.length;i++){			if (document.objeto.elements[i].type=="checkbox"){				if (document.objeto.elements[i].checked) eliminar+=document.objeto.elements[i].value+"|"			}		}
-		if (eliminar==""){			alert("debe seleccionar las reservas que va a eliminar")
-			return		}else{
-			alert(eliminar)			document.continuar.action="reservas_eliminar_ex.php"
+function EnviarForma(Opcion){
+	eliminar=""
+	if (Opcion==0){
+		document.continuar.submit()
+	}else{
+		for (i=0; i<document.objeto.elements.length;i++){
+			if (document.objeto.elements[i].type=="checkbox"){
+				if (document.objeto.elements[i].checked) eliminar+=document.objeto.elements[i].value+"|"
+			}
+		}
+		if (eliminar==""){
+			alert("debe seleccionar las reservas que va a eliminar")
+			return
+		}else{
+			alert(eliminar)
+			document.continuar.action="reservas_eliminar_ex.php"
 			document.continuar.reservas.value=eliminar
-			document.continuar.submit()		}	}}
+			document.continuar.submit()
+		}
+	}
+}
 </script>
 <body>
 <div class="sectionInfo">
@@ -161,13 +184,17 @@ $disp=0;
 // se busca el título para ver el total de ejemplares y los ejemplares prestados
 $arrHttp["Opcion"]="disponibilidad";
 $total=LocalizarInventario($arrHttp["inventory"]);
-if ($total==0){	echo $msgstr["copynoexists"];
-	die;}
+if ($total==0){
+	echo $msgstr["copynoexists"];
+	die;
+}
 $arrHttp["db"]=$db;
 $arrHttp["code"]=$cn;
 require_once("databases_configure_read.php");
 $total=ReadCatalographicRecord($arrHttp["code"],$catalog_db);
-if ($total>1){	echo "<font color=red>".$msgstr["dupctrl"]."</font><p>";}
+if ($total>1){
+	echo "<font color=red>".$msgstr["dupctrl"]."</font><p>";
+}
 echo '<font color=darkblue><strong>'.$msgstr["bd"].": ". $catalog_db.". ".$msgstr["control_n"].": ".$arrHttp["code"]."</strong></font><br>";
 echo $titulo;
 echo "<table bgcolor=#dddddd cellpadding=5>
@@ -178,7 +205,8 @@ echo "<table bgcolor=#dddddd cellpadding=5>
 	<th>".$msgstr["typeofitems"]."</th>
 	<th>".$msgstr["usercode"]."</th>
 	<th>".$msgstr["devdate"]."</th>";
-if (trim($val)!="") ShowItems($item);echo "</table>";
+if (trim($val)!="") ShowItems($item);
+echo "</table>";
 $Expresion="CN_".$arrHttp["code"];
 echo "<p>";
 
@@ -197,13 +225,19 @@ Function ShowItems($item){
     	$cont=explode('###',$cont);
     	$c=explode('$$$',$cont[0]);
     	echo "<td bgcolor=white>".$c[0]."</td><td bgcolor=white>".$c[1]."</td>";
-    }else{    	echo "<td bgcolor=white>&nbsp;</td><td bgcolor=white>&nbsp;</td>";    }
+    }else{
+    	echo "<td bgcolor=white>&nbsp;</td><td bgcolor=white>&nbsp;</td>";
+    }
 
 }
 $hasta=$arrHttp["desde"]+10;
 echo "<form name=continuar action=situacion_de_un_objeto_ex.php onsubmit='return false'>\n";
-if (isset($arrHttp["Expresion"])){	echo "<input type=hidden name=Expresion value=\"".$arrHttp["Expresion"]."\">";
-}else{	echo "<input type=hidden name=code value=\"".$arrHttp["code"]."\">";}echo "<input type=hidden name=Opcion value=".$Opcion_leida.">
+if (isset($arrHttp["Expresion"])){
+	echo "<input type=hidden name=Expresion value=\"".$arrHttp["Expresion"]."\">";
+}else{
+	echo "<input type=hidden name=code value=\"".$arrHttp["code"]."\">";
+}
+echo "<input type=hidden name=Opcion value=".$Opcion_leida.">
 <input type=hidden name=base value=".$arrHttp["base"].">
 <input type=hidden name=reservas>
 <input type=hidden name=desde value=";
@@ -216,7 +250,9 @@ echo "</div></div>";
 include("../common/footer.php");
 echo "</body></html>";
 
-function Reservas($signatura){global $db_path,$Wxis,$xWxis,$wxisUrl,$msgstr;
+function Reservas($signatura){
+global $db_path,$Wxis,$xWxis,$wxisUrl,$msgstr;
+
 // se presenta la lista de reserva
 	$reserva=array();
 	$query = "&Expresion=TR_".$signatura."&base=reserva&cipar=$db_path"."par/reserva.par&Pft=v10'|'v20'|'v30'|'v40'|'v50'|'v60'|'f(mfn,1,0)/";
@@ -229,10 +265,12 @@ function Reservas($signatura){global $db_path,$Wxis,$xWxis,$wxisUrl,$msgstr;
 			$reserva[]=$linea;
 		}
 	}
- 	if (count($reserva)>0){ 		echo "<h5>".$msgstr["reservas"]."</h5>";
+ 	if (count($reserva)>0){
+ 		echo "<h5>".$msgstr["reservas"]."</h5>";
 		echo "<table class=\"listTable\">";
 		echo "<tr><th>Eliminar</th><th>".$msgstr["users"]."</th><th>".$msgstr["signature"]."</th><th>".$msgstr["r_date"]."</th><th>".$msgstr["typeofitems"]  ."</th>";
-		foreach ($reserva as $linea){			$t=explode('|',$linea);
+		foreach ($reserva as $linea){
+			$t=explode('|',$linea);
 			$dif= compareDate ($t[3]);
 			$fuente="";
 			$mora="0";
@@ -254,7 +292,8 @@ function Reservas($signatura){global $db_path,$Wxis,$xWxis,$wxisUrl,$msgstr;
 
 
 function EjemplaresPrestados($inventory){
-global $db_path,$Wxis,$wxisUrl,$xWxis;	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
+global $db_path,$Wxis,$wxisUrl,$xWxis;
+	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
     if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
    	$query = "&Expresion=TR_P_".$inventory."&base=trans&cipar=$db_path"."par/trans.par&Formato=".$formato_obj;
 	$IsisScript=$xWxis."cipres_usuario.xis";

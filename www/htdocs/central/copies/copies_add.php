@@ -62,6 +62,7 @@ function Validar(){
 	}
 invdup=0;
 invnumbers=document.getElementById("INVA").value;
+/*alert(invnumbers);*/
 if (invnumbers!="~"){
 mydiv.innerHTML='</br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $msgstr["errEXCopyS"];?></br></br></br>';
 mydiv.style.display='block';

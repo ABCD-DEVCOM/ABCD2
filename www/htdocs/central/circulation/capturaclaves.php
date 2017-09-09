@@ -49,12 +49,20 @@ if (!isset($arrHttp["separa"])) $arrHttp["separa"]="";
 if (!isset($arrHttp["postings"])) $arrHttp["postings"]="ALL";
 if (!isset($arrHttp["Tag"]))$arrHttp["Tag"]="";
 if (!isset($arrHttp["Repetible"]))$arrHttp["Repetible"]="";
-if ($arrHttp["Formato"]=="ifp"){	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"]);}else{
+if ($arrHttp["Formato"]=="ifp"){
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"]);
+}else{
 	$arrHttp["Formato"]=stripslashes($arrHttp["Formato"]);
-	if (substr($arrHttp["Formato"],0,1)=="@"){		$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($arrHttp["Formato"],1);
+	if (substr($arrHttp["Formato"],0,1)=="@"){
+		$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($arrHttp["Formato"],1);
 		if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".substr($arrHttp["Formato"],1);
-		$Formato="@".$Formato;	}else{		$Formato=$arrHttp["Formato"];	}
+		$Formato="@".$Formato;
+	}else{
+		$Formato=$arrHttp["Formato"];
+	}
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"])."&postings=".$arrHttp["postings"]."&formato_e=".$Formato;
+//        echo "query=$query<BR>";
+//        die;
 }
 $IsisScript=$xWxis."ifp.xis";
 include("../common/wxis_llamar.php");
@@ -83,7 +91,9 @@ else
 		term=document.Lista.autoridades.options[document.Lista.autoridades.selectedIndex].value
 		if (Repetible==0){
         	window.opener.Ctrl_activo.value=term
-        }else{        	window.opener.Ctrl_activo.value=window.opener.Ctrl_activo.value+term+"\n"        }
+        }else{
+        	window.opener.Ctrl_activo.value=window.opener.Ctrl_activo.value+term+"\n"
+        }
         //window.opener.Ctrl_activo.focus()
         if (Repetible==0)self.close()
 	}
@@ -132,14 +142,21 @@ echo "function AbrirIndice(Termino){
 	<option></option>
 <?php
 
-	foreach ($contenido as $linea){		if (trim($linea)!=""){
-	       	if ($arrHttp["Formato"]=="ifp"){	       		if (substr($linea,0,strtoupper(strlen($arrHttp["pref"])))!=strtoupper($arrHttp["pref"])){	       			break;	       		}else{	       			$p=explode("|",$linea);
+	foreach ($contenido as $linea){
+		if (trim($linea)!=""){
+	       	if ($arrHttp["Formato"]=="ifp"){
+	       		if (substr($linea,0,strtoupper(strlen($arrHttp["pref"])))!=strtoupper($arrHttp["pref"])){
+	       			break;
+	       		}else{
+	       			$p=explode("|",$linea);
 	       			echo "<option value=\"";
 	       			$l=strlen($arrHttp["pref"]);
 	       			$ter=substr($p[0],$l);
 					echo $ter;
 					echo "\">";
-			        echo $ter;	       		}	       	}else{
+			        echo $ter;
+	       		}
+	       	}else{
 				$f=explode('$$$',$linea);
 				if (!isset($f[1])) $f[1]=$f[0];
 				if (trim($f[1])!=""){
