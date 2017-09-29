@@ -18,7 +18,7 @@ if (isset($def["CSS_NAME"])){
 
 //set the charset of all the databases
 if (isset($def["UNICODE"])){
-	if (intval($UNICODE)>0) $UNICODE=$def["UNICODE"];
+	if (intval($unicode)>0) $unicode=$def["UNICODE"];
 }
 //Pedir lapso del préstamo
 if (isset($def["ASK_LPN"])){

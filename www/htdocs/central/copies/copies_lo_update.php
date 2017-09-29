@@ -46,7 +46,7 @@ $listmyrecord=explode("|",$MyRecord);
 for($i=0; $i<count($listmyrecord); $i++) 
 if ($listmyrecord[$i]!="") $MyNewRecord.="<959>".$listmyrecord[$i]."<~959>";
 $MyRecord=str_replace ("~", '/', $MyNewRecord);
-$mx=$converter_path." ".$db_path."loanobjects/data/loanobjects \"proc=if mfn=".$Mfn." then  'd959', '".$MyRecord."',fi,\" copy=".$db_path."loanobjects/data/loanobjects now -all";
+$mx=$converter_path." ".$db_path."loanobjects/data/loanobjects \"proc='d959', '".$MyRecord."'\" from=".$mfnc." count=1 copy=".$db_path."loanobjects/data/loanobjects now -all";
 exec($mx,$outmx,$banderamx);
 $mxinv=$converter_path." ".$db_path."loanobjects/data/loanobjects fst=@".$db_path."loanobjects/data/loanobjects.fst fullinv=".$db_path."loanobjects/data/loanobjects now -all";
 exec($mxinv, $outputmxinv,$banderamxinv);

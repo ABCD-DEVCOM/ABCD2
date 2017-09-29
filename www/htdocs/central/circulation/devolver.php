@@ -197,8 +197,8 @@ if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp
 	$lista_mfn=explode(';',$arrHttp["resultado"]);
 	foreach ($lista_mfn as $Mfn){
 		if (trim($Mfn)!=""){
-			echo "<p><font color=red>".$msgstr["returned"]." ".$msgstr["item"].":  </font>";
-			$Formato="v10,' ',mdl,v100'<br>'";
+			echo "<p><font color=red>".$msgstr["returned"]." ".$msgstr["item"]." :  </font>";
+			$Formato="v10,x3,mdl,v100'<br>'";
 			$Formato="&Pft=$Formato";
 			$IsisScript=$xWxis."leer_mfnrange.xis";
 			$query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn&to=$Mfn$Formato";
