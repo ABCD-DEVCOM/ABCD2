@@ -1,6 +1,5 @@
 <?php
 global $server_url, $wxis_exec, $wxisUrl, $unicode;
-//include ("../config.php");
 //CHANGED
 	if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
 		$query.="&lock=S";
@@ -39,54 +38,27 @@ global $server_url, $wxis_exec, $wxisUrl, $unicode;
     		}
     	}
     }
+	
 // next line to make sure password is checked with ANSI-database acces
 if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
 
 	if (isset($wxisUrl) and $wxisUrl!=""){
-//echo "wxisUrl in wxis_llamar=$wxisUrl<BR>";  sleep(1);
 		$query.="&path_db=".$db_path;
-		$url="$wxisUrl?IsisScript=$IsisScript$query&cttype=s";
+		$url="IsisScript=$IsisScript$query&cttype=s";
 		if (file_exists($db_path."par/syspar.par"))
         	$url.="&syspar=$db_path"."par/syspar.par";
-/*		$url_parts = parse_url($url);
-		$host = $url_parts["host"];
-		$port = ($url_parts["port"]) ? $url_parts["port"] : 80;
-		$path = $url_parts["path"];
-		$query = $url_parts["query"];
-		$timeout = 10;
-		$contentLength = strlen($url_parts["query"]);
-	// Generate the request header
-    	$ReqHeader =
-      		"POST $path HTTP/1.0\n".
-      		"Host: $host\n".
-      		"User-Agent: PostIt\n".
-      		"Content-Type: application/x-www-form-urlencoded\n".
-      		"Content-Length: $contentLength\n\n".
-      		"$query\n";
-	// Open the connection to the host
-		$fp = fsockopen($host, $port, $errno, $errstr, $timeout);
-		//ECHO $host;
-	    $result="";
-		fputs( $fp, $ReqHeader );
-        $inicio_content="";
-		if ($fp) {
-			while (!feof($fp)){
-        	    $a=fgets($fp, 4096);
-                //ECho "$a<br>";
-                $content.=$a;
-                if (trim($a)=="Content-Type: text/html"){
-                  	$inicio_content="SI";
-                   	continue;
-                }
-                if ($inicio_content=="SI"){
-                  	if (trim($a)!="")
-						$result .=$a ;
-				}
-			}
-		}
-*/
-		$result=file_get_contents($url);        //ESTA FORMA DE LEER NO SE USA PORQUE DA MUCHOS PROBLEMAS CON EL URL
-//var_dump($result); die;
+		parse_str($url, $arr_url);
+		$postdata = http_build_query($arr_url);
+		$opts = array('http' =>
+    				array(
+        					'method'  => 'POST',
+        					'header'  => 'Content-type: application/x-www-form-urlencoded',
+        					'content' => $postdata
+
+    				     )
+					);
+		$context = stream_context_create($opts);
+		$result=file_get_contents($wxisUrl,false, $context);
         $con=explode("\n",$result);
         $ix=0;
         $contenido=array();
@@ -94,11 +66,11 @@ if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
            	if (substr($value,0,4)=="WXIS"){
            		$err_wxis.=$value."<br>";
            	}
-           	//echo "***$value<br>";
+          // 	echo "***$value<br>";
         	$contenido[]=$value;
         }
        if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
-  }else{
+  }else{                      // GET-method used
 
       	$query.="&path_db=".$db_path;
 		putenv('REQUEST_METHOD=GET');

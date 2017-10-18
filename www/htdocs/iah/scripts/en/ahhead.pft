@@ -61,7 +61,7 @@ fi,
 	   s.writeln('<html>');
 	   s.writeln('  <head>');
 	   s.writeln('    <title>Document consultation</title>');
-	   s.writeln('   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">');
+	   s.writeln('   <meta http-equiv="Content-Type" content="text/html; charset=windows-8859-1">');
 	   s.writeln('  </head>');
 	   s.writeln('		<frameset rows="40,*">');
 	   s.writeln('			<frame name="frameWarning" rows="2,*" src="/iah/scripts/disclaimer.htm" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" noresize="noresize">');

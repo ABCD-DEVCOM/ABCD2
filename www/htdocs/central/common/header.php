@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
-	<head>
+<head profile="http://www.w3.org/2005/10/profile">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
 		<title>ABCD<?php if (isset($subtitle))  echo $subtitle?></title>
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
@@ -17,8 +18,9 @@
 		$css_name="";
 	else
 		$css_name.="/";
+
 ?>
-		<meta name="robots" CONTENT="NONE" />
+                <meta name="robots" CONTENT="NONE" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
 		<!-- Stylesheets -->
