@@ -12,7 +12,7 @@ class OAIServer {
     # ---- PUBLIC INTERFACE --------------------------------------------------
 
     # object constructor
-    function OAIServer($RepDescr, &$ItemFactory, $SetsSupported = FALSE, $OaisqSupported = FALSE)
+    function __construct($RepDescr, $ItemFactory, $SetsSupported = TRUE, $OaisqSupported = FALSE)
     {
         # save repository description
         $this->RepDescr = $RepDescr;
@@ -26,7 +26,8 @@ class OAIServer {
                     preg_replace("/[^0-9a-z]/i", "", $this->RepDescr["IDPrefix"]);
 
         # save item factory
-        $this->ItemFactory =& $ItemFactory;
+//        $this->ItemFactory =& $ItemFactory;
+        $this->ItemFactory = $ItemFactory;
 
         # load OAI request type and arguments
         $this->LoadArguments();
@@ -36,6 +37,10 @@ class OAIServer {
 
         # start with empty list of formats
         $this->FormatDescrs = array();
+    }
+    function OAIServer($RepDescr, $ItemFactory, $SetsSupported = TRUE, $OaisqSupported = FALSE)
+    {
+    self:: __construct($RepDescr, $ItemFactory, $SetsSupported = TRUE, $OaisqSupported = FALSE);
     }
 
     # add metadata format to export
@@ -407,8 +412,11 @@ class OAIServer {
         {
             # add request info tag
             $Response .= $this->GetRequestTag($Request, $ReqArgList, $OptArgList);
-
+#echo "args = ";
+#var_dump($Args);
+#die;
             # if set requested and we do not support sets
+#            echo "SetsSupported=$this->SetsSupported<BR>"; die;
             if (isset($Args["set"]) && ($this->SetsSupported != TRUE))
             {
                 # add error tag indicating that we don't support sets
@@ -450,6 +458,7 @@ class OAIServer {
                     else
                     {
                         # get list of items in set that matches incoming criteria
+#                        echo "ArgsSet=". $Args["set"]; die;
                         $ItemIds = $this->ItemFactory->GetItemsInSet(
                             $Args["set"],
                             (isset($Args["from"]) ? $Args["from"] : NULL),
@@ -466,7 +475,7 @@ class OAIServer {
                         (isset($Args["ListStartPoint"]) ? $Args["ListStartPoint"] : NULL));
 
                 }
-
+//                   echo "ItemIds=";var_dump($ItemIds);die;
                 # if no items found
                 if (count($ItemIds) == 0)
                 {
@@ -593,7 +602,7 @@ class OAIServer {
     private function ProcessListSets()
     {
         global $databases;
-
+//echo "databaseSetSpec=".$databases[$SetSpec]; die;
         # initialize response
         $Response = $this->GetResponseBeginTags();
 
@@ -842,6 +851,7 @@ class OAIServer {
         $Id = NULL;
 
         # split ID into component pieces
+//        echo "identifier=$Identifier<BR>";    die;
         $Pieces = explode(":", $Identifier);
 
         # if pieces look okay
@@ -860,6 +870,7 @@ class OAIServer {
                 # decoded value is final piece  (database_name + id + datestamp)
                 //$IdDB = $Pieces[1]."@".$Pieces[2] . '^' . date("Y-m-d") ;
                 $IdDB = $database_name."@". $id_value . '^' . date("Y-m-d") ;
+//                echo "IdDB=$IdDB<BR>";die;
             }
         }
 

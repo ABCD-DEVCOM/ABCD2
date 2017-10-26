@@ -11,31 +11,31 @@ class ISISItemFactory implements OAIItemFactory {
     private $SearchScores;
     private $SearchScoreScale;
     private $Databases;
+//echo "databases in ISISItemfactory = $Databases<BR>"; die;
 
     # object constructor
-    function ISISItemFactory($Databases, $RetrievalSearchParameters = NULL)
+    function __construct($Databases, $RetrievalSearchParameters = NULL )
     {
         # save any supplied retrieval parameters
         $this->RetrievalSearchParameters = $RetrievalSearchParameters;
-
         $this->Databases = $Databases;
     }
 
+    function __ISISItemFactory($Databases, $RetrievalSearchParameters = NULL )
+    {
+      self:: __construct($Databases, $RetrievalSearchParameters = NULL );
+    }
 
-    function GetItem($ItemId) 
+    function GetItem($ItemId)
 	{
-
         $ItemId = explode("^",$ItemId);
-        
         $isis_item = new ISISItem($ItemId[0], $datestamp = $ItemId[1]);
         return $isis_item;
-		
 	}
 	   
     function GetItems($StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0){
         global $CONFIG;
-
-        $db = new ISISDb($this->DBName);
+    	$db = new ISISDb($setSpec);
         $ItemIds = '';
         $ItemsPerPage = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
 
@@ -48,23 +48,21 @@ class ISISItemFactory implements OAIItemFactory {
             $date_range_exp = '';
         }
         $ListStartPoint += 1;
-        
-        foreach ($this->Databases as $database) { 
+        foreach ($this->Databases as $database) {
             $params = array('expression' => $date_range_exp, 
                 'database' => $database['database'],
-                'setSpec' => $database['setSpec'],
+                'setspec' => $database['setspec'],
                 'date_prefix' => $database['prefix'],
                 'id_field' => $database['identifier_field'],
+                'isis_key_length' => $database['isis_key_length'],
                 'date_field' => $database['datestamp_field'],
                 'from' => $ListStartPoint,
                 'count' => $ItemsPerPage,
             );
             $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
-
             $curItemIds = array_filter(explode("|", $ItemIds));
             $total = $db->gettotal($params, $database['isis_key_length']);
             $totalFound = count($curItemIds);
-
             if($total < $ListStartPoint) {
                 $ListStartPoint = $ListStartPoint - $total;
             } else {
@@ -79,13 +77,11 @@ class ISISItemFactory implements OAIItemFactory {
     }
 
     # retrieve IDs of items that matches set spec (only needed if sets supported)
-    function GetItemsInSet($SetSpec, $StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0)
+    function GetItemsInSet($setSpec, $StartingDate = NULL, $EndingDate = NULL, $ListStartPoint=0)
     {
         global $CONFIG;
-
-    	$db = new ISISDb($this->DBName);
+     	$db = new ISISDb($setSpec);
         $ItemsPerPage = $CONFIG['INFORMATION']['MAX_ITEMS_PER_PASS'];
-
         if ($StartingDate !== NULL){
             if ($EndingDate == NULL){
                 $EndingDate = date("Y-m-d");
@@ -96,7 +92,7 @@ class ISISItemFactory implements OAIItemFactory {
         }
         $ListStartPoint += 1;
         foreach ($this->Databases as $database) {
-            if ($database['setSpec'] == $SetSpec){
+            if ($database['setSpec'] == $setSpec){
                 $params = array('expression' => $date_range_exp, 
                   'database' => $database['database'],
                   'setSpec' => $database['setSpec'],
@@ -105,7 +101,8 @@ class ISISItemFactory implements OAIItemFactory {
                   'date_field' => $database['datestamp_field'],
                   'from' => $ListStartPoint,
                   'count' => $ItemsPerPage,                  
-                );                
+                  'isis_key_length' => $database['isis_key_length'],
+                );
                 $ItemIds = $db->getidentifiers($params, $database['isis_key_length']);
             }     
         } 
@@ -128,7 +125,6 @@ class ISISItemFactory implements OAIItemFactory {
     	}
 
     	return $setList;
-
     }
 
     # retrieve IDs of items that match search parameters (only used if OAI-SQ supported)

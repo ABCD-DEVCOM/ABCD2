@@ -21,8 +21,6 @@
 
             <!-- apply character control gizmo to avoid conversion errors -->
             <!-- next line includes gizmo-db, so make sure special wxis-versions have correct gizmo-db ! -->
-<!--            <parm name="gizmo"><pft>v5000,'/gizmo/',if v6001 : 'dubcore' then 'bi/' fi, 'gnoctrl'</pft></parm>  -->
-
 
 			<field action="replace" tag="6002" split="occ"><pft>proc('Gsplit/clean=6002=@')</pft></field>
 			<field action="replace" tag="6022"><pft>left(v6002[2],instr(v6002[2],'/')-1)</pft></field>

@@ -1,0 +1,149 @@
+'          <oai_dc:dc  
+                xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" 
+                xmlns:dc="http://purl.org/dc/elements/1.1/" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ 
+                http://www.openarchives.org/OAI/2.0/oai_dc.xsd">'/
+'		<dc:format>'select s(mpu,v9,mpl)
+                           case 'A':'text',if p(v8^q) then '/'v8[1]^q fi,
+                           case 'MATERIAL TEXTUAL':'text',
+                           case 'G':'video',
+                           case 'I':'audio',
+                           elsecase if a(v9) then 'text',if p(v8^q) then '/'v8[1]^q fi, else 'other' fi 
+                           endsel,
+'</dc:format>'/,
+'                <dc:type>'select s(v5.1)
+                          case 'S':'jornal article',
+                          case 'T':'thesis',
+                          case 'M':'monograph',
+                          case 'N':'non conventional',
+                          endsel,
+'</dc:type>'/,
+
+if p(v35) or p(v69) then
+'		<dc:source>'if p(v35) then v35 else v69 fi'</dc:source>'/,
+else
+'                <dc:source/>'/,
+fi,
+
+if p(v8) then
+	(if p(v8^u) then 
+|		<dc:identifier><![CDATA[|v8^u|]]></dc:identifier>|/,
+	else
+|		<dc:identifier><![CDATA[|v8^i|]]></dc:identifier>|/,
+	fi,)
+else
+'                <dc:identifier/>'/,
+fi,
+
+if p(v10) or p(v11) then
+   (if p(v10) then
+|		<dc:creator><![CDATA[|v10^*|]]></dc:creator>|/,
+   else
+|		<dc:creator><![CDATA[|v11^*|]]></dc:creator>|/,
+   fi),
+else
+   if p(v16) or p(v17) then
+      (if p(v16) then
+|		<dc:creator><![CDATA[|v16^*|]]></dc:creator>|/,
+       else
+|		<dc:creator><![CDATA[|v17^*|]]></dc:creator>|/,
+      fi),
+   else
+      if p(v23) or p(v24) then
+         (if p(v23) then
+|		<dc:creator><![CDATA[|v23^*|]]></dc:creator>|/,
+         else
+|		<dc:creator><![CDATA[|v24^*|]]></dc:creator>|/,
+         fi),
+      else
+'                <dc:creator/>'/,
+      fi,
+   fi,
+fi,
+
+if p(v12) then
+(|		<dc:title><![CDATA[|v12^*|]]></dc:title>|/),
+|		<dc:title><![CDATA[|v13^*|]]></dc:title>|/,
+else
+   if p(v18) then
+(|		<dc:title><![CDATA[|v18^*|]]></dc:title>|/),
+|		<dc:title><![CDATA[|v19^*|]]></dc:title>|/,
+   else
+      if p(v25) then
+(|		<dc:title><![CDATA[|v25^*|]]></dc:title>|/),
+|		<dc:title><![CDATA[|v26^*|]]></dc:title>|/,
+      else
+'                <dc:title/>'/,
+      fi,
+   fi,
+fi,
+
+select s(v6)
+   case 'as':
+'                <dc:relation><![CDATA['
+if p(v30) then,
+   if v113='u' then
+      v30|;|,v31,|(|v32|)|,|: |v14^f|-|v14^l|, |,if a(v14^f) or a(v14^l) then |: |v14^*|, | fi,v64|. |,v38^b+|, |,if a(v38^b) then v38^*+|, | fi,". - SEPARATA",
+   else
+       v30|;|,v31,|(|v32|)|,|: |v14^f|-|v14^l|, |,if a(v14^f) or a(v14^l) then |: |v14^*|, | fi,v64|. |,v38^b+|, |,if a(v38^b) then v38^*+|, |, fi,if p(v38) then '.' fi,
+   fi,
+fi,
+']]></dc:relation>'/,
+   case 'am':
+'                <dc:relation><![CDATA['
+if p(v16^*) then,
+   (v16^*+|; |". "),
+fi,
+if p(v17) then
+    (v17^*+|; |"*. "),
+fi,
+if p(v16) or p(v17) then
+    v18^*|. |,v66|, |,v62|, |,v63|, |,v64|. |,if p(v14) then if p(v14^f) then 'p.'(v14^f'-'v14^l+|, |'. ') else 'p.'(v14^*+|, |'. ') fi,fi,if p(v38) then if p(v38^b) then (v38^b+|, |'. ') else (v38^*+|, |'. ') fi,fi,|(|v30,|, |v31,|, |v32, if p(v30) then ').' fi, | (|v68|)|,
+fi,
+']]></dc:relation>'/,
+   case 'm':
+if p(v66) then
+'                <dc:relation><![CDATA['v66,'; 'v62,'; 'v63,'; 'v64,'. 'v20| p. |,v38^b|, |".",|(|v30,   |, |v31,   |, |v32, if p(v30) then ').' fi,| (|v68|).|,
+']]></dc:relation>'/,
+fi,
+   case 'c':
+if p(v66) then
+'                <dc:relation><![CDATA['v66'; ',v62'; ',v63'; 'v64'. ',v20| p. |,v38|.|,
+']]></dc:relation>'/,
+fi,
+   endsel,
+
+
+(if p(v40) then
+|		<dc:language>|v40^*|</dc:language>|/,
+  else
+  	if p(v12^i) then
+|		<dc:language>|v12^i|</dc:language>|/,
+    else
+	  	if p(v18^i) then
+|		<dc:language>|v18^i|</dc:language>|/,
+		fi,
+	fi,
+fi,)
+
+if p(v62) and not s(mpu,v62,mpl):'S.N' then
+'		<dc:publisher>'v62^*'</dc:publisher>'/,
+else
+'                <dc:publisher/>'/,
+fi,
+|		<dc:date>|v65.4'-'v65*4.2'-'v65*6.2|</dc:date>|/,
+
+(|		<dc:subject><![CDATA[|v71^*|]]></dc:subject>|/,)
+(|		<dc:subject><![CDATA[|v76^*|]]></dc:subject>|/,)
+
+if p(v87) and not s(mpu,v87,mpl):'BIREME' then 
+('		<dc:subject><![CDATA['v87^*,|/|v87^s']]></dc:subject>'/,)
+fi,
+
+if p(v88) then 
+('		<dc:subject><![CDATA['v88^*,|/|v88^s']]></dc:subject>'/,)
+fi,
+
+(|		<dc:description><![CDATA[|v83^*|]]></dc:description>|/,)
+'          </oai_dc:dc>'/

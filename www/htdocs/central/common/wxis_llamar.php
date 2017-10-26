@@ -43,13 +43,16 @@ global $server_url, $wxis_exec, $wxisUrl, $unicode;
 if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
 
 	if (isset($wxisUrl) and $wxisUrl!=""){
-		$query.="&path_db=".$db_path;
-		$url="IsisScript=$IsisScript$query&cttype=s";
+        	$query.="&path_db=".$db_path;
+	echo "query1=$query<BR>";
+        	$url="IsisScript=$IsisScript$query&cttype=s";
 		if (file_exists($db_path."par/syspar.par"))
         	$url.="&syspar=$db_path"."par/syspar.par";
-		parse_str($url, $arr_url);
+        echo "url1=$url<BR>";
+        	parse_str($url, $arr_url);
 		$postdata = http_build_query($arr_url);
-		$opts = array('http' =>
+        echo "postdata1=$postdata<BR>";
+        	$opts = array('http' =>
     				array(
         					'method'  => 'POST',
         					'header'  => 'Content-type: application/x-www-form-urlencoded',

@@ -1,0 +1,195 @@
+<?php
+
+class ISISDb{
+
+
+  var $dbname;
+  var $wxis_host;
+  var $wxis_action;
+
+  function __construct($dbname) {
+    global $CONFIG, $DATABASES;
+    $this->wxis_host = $_SERVER['HTTP_HOST'];
+    $this->dbname = $dbname;
+//    $this->setSpec = $dbname;
+    $this->dbpath = $DATABASES[$dbname]['path'];
+    $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . $DATABASES[$dbname]['isis_key_length'] . '/wxis' . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'];
+    $this->wxis_action=$this->wxis_action. $CONFIG['ENVIRONMENT']['DIRECTORY'] . '/wxis/';
+//echo "wxis_action in function ISISDb =" . $this->wxis_action . "<BR>"; die;
+  }
+  
+ function ISISDb($dbname) {
+  self:: __construct($dbname);
+ }
+
+  function get_list($params){
+    return wxis_list($params);
+  }
+  
+  function getrecord($params, $key_length){
+      global $CONFIG, $DATABASES;
+//      echo "function getrecord ";
+//var_dump($DATABASES);
+//var_dump($params);die;
+//    echo "this-url getrecord=". $this->wxis_url . "<BR>"; die;
+//    $wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] .
+//     $DATABASES[$params['setSpec']]['isis_key_length'] . '/wxis' . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'] .
+//     '/isis-oai-provider/wxis/';
+//echo "wxis_action in wxis_urlgetrecord =". $this->wxis_action . "<BR>";//die;
+
+    return utf8_encode($this->wxis_document_get($this->wxis_url("getrecord.xis", $params) ));
+  }
+
+  function getidentifiers($params, $key_length){
+//      echo "function getidentifiers ";
+//var_dump($params);die;
+//echo "key_length=".$key_length;die;
+//$thiswxisurl=$this->wxis_url
+//echo $this->wxis_url."getidentifiers.xis";
+//$params, $key_length) );
+//die;
+    return $this->wxis_document_post( $this->wxis_url("getidentifiers.xis",$params, $key_length) );
+  }
+
+  function gettotal($params, $key_length){
+    return $this->wxis_document_post( $this->wxis_url("gettotal.xis",$params, $key_length) );
+  }
+  
+  function index($params){
+    return wxis_index($params);
+  }
+  
+  function wxis_document_get($url){
+//  echo "url in wxis_document_get=". $url . "<BR>"; die;
+    return file_get_contents($url);
+  }
+
+  function wxis_url($IsisScript, $params, $key_length) {
+      global $CONFIG, $DATABASES;
+//echo "params in wxis_url ";
+//      var_dump($params); die;
+//    if ($key_length = '1030'){
+//      $wxis_action = str_replace('wxis.exe', 'wxis'.$key_length .'.exe', $this->wxis_action);
+//    }else{
+//      $wxis_action = $this->wxis_action;
+//echo "key_length in wxis_url =". $DATABASES[$setSpec]['isis_key_length'] . "<BR>";
+//echo "this->wxis_action in wxis_url =". $this->wxis_action . "<BR>";
+//      $wxis_action = str_replace('wxis', $key_length . 'wxis' . $exe_extension , $this->wxis_action);
+//      echo "wxis_action in wxis_url =". $wxis_action . "<BR>"; die;
+//    }
+//echo "cisis_ver=". $DATABASES[$params['setSpec']]['isis_key_length']; die;
+//echo "key_length in wxis_url=".$key_length; //die;
+    $wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . $key_length . '/wxis' . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'] . '/isis-oai-provider/wxis/';
+//if ($IsisScript == "getrecord.xis")  { echo "getrecord.xis ";   var_dump($params);die;  }
+//echo "wxis_action in wxis_url =". $wxis_action;die;
+//echo "ISISScript=". $IsisScript . "<BR>"; // die;
+    $request = "http://" . $this->wxis_host . $wxis_action . "?" . "IsisScript=" . $IsisScript ;
+    // . "&app_path=" . $this->app_path;
+    foreach ($params as $key => $value){
+        $request .= "&" . $key . "=" . $value;
+    }
+//if ($IsisScript == "getrecord.xis")
+//echo "request in wxis_url =". $request . "<BR>";die;
+//    $url = $request;
+    return $request;
+ 
+ }
+
+  function debug_url($var_name, $debug_var); {
+global $debug;
+$debug = 1;
+echo "debug=$debug<BR>";  die;
+
+if ($debug) {
+echo "now debugging";die;
+	 	$fp=fopen("/var/opt/ABCD/bases/log/debug_".date("Ymd").".log","a");
+	 	$out=date('Ymd h:i:s A')."\t"."$var_name =$debug_var"."\n";
+		fwrite($fp,$out);
+		fclose($fp);
+	}
+}
+
+  function wxis_document_post($url, $content = "" ){
+    $content = str_replace("\\\"","\"",$content);
+    $content = str_replace("\n","",$content);
+    $content = str_replace("\r","",$content);
+    $content = str_replace("\\\\","\\",$content);
+echo "url1=$url<BR>";
+//echo "content=$content<BR>";
+debug_url("url",$url);
+
+    // Strip URL  
+    $url_parts = parse_url($url);
+    $host = $url_parts["host"];
+    $port = ($url_parts["port"]) ? $url_parts["port"] : 80;
+    $path = $url_parts["path"];
+    $query = $url_parts["query"];
+    if ( $content != "" )
+    {
+      $query .= "&content=" . urlencode($content);
+    }
+    $timeout = 10;
+    $contentLength = strlen($query);
+//echo "query=$query<BR>";
+//echo "URL2=$url<BR>"; die;
+// next line old main connection command
+//    $result=file_get_contents($url);
+
+		parse_str($query, $arr_url);
+		$postdata = http_build_query($arr_url);
+//echo "postdata2=$postdata<BR>"; die;
+		$opts = array('http' =>
+    				array(
+        					'method'  => 'POST',
+        					'header'  => 'Content-type: application/x-www-form-urlencoded',
+        					'content' => $postdata
+    				     )
+					);
+		$context = stream_context_create($opts);
+//$wxis_cmd = wxis_url('IsisScript=getidentifiers.xis', $query, 'ansi');
+
+    $result=file_get_contents($url, false, $context);
+
+    $response = strstr($result,"\n\r");
+    $response = trim($response);
+    return $response;
+  }
+
+    Function wxis_document_post_new( $url, $content = "" ){
+
+//  		$query.="&path_db=".$db_path;
+//		$url="IsisScript=$IsisScript$query&cttype=s";
+//		if (file_exists($db_path."par/syspar.par"))
+//        	$url.="&syspar=$db_path"."par/syspar.par";
+
+		parse_str($url, $arr_url);
+		$postdata = http_build_query($arr_url);
+		$opts = array('http' =>
+    				array(
+        					'method'  => 'POST',
+        					'header'  => 'Content-type: application/x-www-form-urlencoded',
+        					'content' => $postdata
+
+    				     )
+					);
+		$context = stream_context_create(
+                );
+		$result=file_get_contents($wxisUrl,false, $context);
+
+        $con=explode("\n",$result);
+        $ix=0;
+        $contenido=array();
+        foreach ($con as $value) {
+           	if (substr($value,0,4)=="WXIS"){
+           		$err_wxis.=$value."<br>";
+           	}
+          // 	echo "***$value<br>";
+        	$contenido[]=$value;
+        }
+       if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
+ }
+
+
+}
+
+?>

@@ -24,7 +24,7 @@ class Log
     /**
      * @desc constructor
      */
-    function log()
+    function __construct()
     {
         $this->setDirectory();
         if (defined('LOG_FILE')) {
