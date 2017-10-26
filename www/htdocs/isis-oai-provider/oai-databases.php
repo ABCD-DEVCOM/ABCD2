@@ -17,31 +17,36 @@
 ;prefix=oai_date_
 ; Specifies the minimum and maximum key length used to invert data. Pay attention to the version according to the database source (e.g.. LILACS is 1660, IAH is 1030)
 ;isis_key_length=1660
+; Specifies which CISIS_version (ansi/utf8 and/or 1660, bigisis, ffi...) of wxis needs to be used
+;cisis_version=ansi/1660
 ; Field in database that contains identifier information of register.
 ;identifier_field=2
 ; Field in database that contains datestamp information of register.
 ;datestamp_field=93
 
+
 [marc]
 name=marc
 description="MARC"
-path=/ABCD/www/bases/marc/data
-database=/ABCD/www/bases/marc/data/marc
+path=/var/opt/ABCD/bases/marc/data
+database=/var/opt/ABCD/bases/marc/data/marc
 mapping=marc.i2x
 prefix=oai_date_
-isis_key_length=1660
+isis_key_length=ansi
+;cisis_version=ansi/
 identifier_field=1
 datestamp_field=980
 
-
 [dubcore]
 name=dubcore
-description="DublinCore repo"
-path=/ABCD/www/bases/dubcore/data
-database=/ABCD/www/bases/dubcore/data/dubcore
+description="DublinCore repository"
+path=/var/opt/ABCD/bases/dubcore/data
+database=/var/opt/ABCD/bases/dubcore/data/dubcore
 mapping=dubcore.i2x
 prefix=oai_date_
-isis_key_length=ffi
+isis_key_length=utf8/bigisis
+;cisis_version=utf8/bigisis
 identifier_field=111
-datestamp_field=112
+datestamp_field=507
+
 ;*/ ?>

@@ -4,19 +4,19 @@ $startdate = time();
 
 require_once(APPLICATION_PATH . '/lib/parse_config.php');
 require_once(APPLICATION_PATH . '/oai-metadataformats.php');
-require_once(APPLICATION_PATH . '/lib/parse_databases.php');
+require(APPLICATION_PATH . '/lib/parse_databases.php');
 require_once(APPLICATION_PATH . '/lib/functions.php');
 require_once(APPLICATION_PATH . '/lib/OAIServer.php');
-require_once(APPLICATION_PATH . '/lib/ISISItemFactory.php');
-require_once(APPLICATION_PATH . '/lib/ISISItem.php');
-require_once(APPLICATION_PATH . '/lib/ISISDb.php');
+require(APPLICATION_PATH . '/lib/ISISItemFactory.php');
+require(APPLICATION_PATH . '/lib/ISISItem.php');
+require(APPLICATION_PATH . '/lib/ISISDb.php');
 require_once(APPLICATION_PATH . '/lib/app_version.php');
 
 // default verb: Identify
 $verb = ($_REQUEST['verb'] == "")? "Identify" : $_REQUEST['verb'];
 
 // usado no lugar de ITem Factory, pois necessita se passado por referencia.
-$item_factory = new ISISItemFactory($databases);
+$item_factory = new ISISItemFactory($databases, NULL);
 
 $repository_description = array(
     "Name" => $CONFIG['INFORMATION']['NAME'], // nome da bvs

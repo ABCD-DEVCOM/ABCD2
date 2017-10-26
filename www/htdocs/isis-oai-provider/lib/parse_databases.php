@@ -39,8 +39,6 @@ foreach($DATABASES as $database) {
 }
 
 $databases = array();
-#$mapdir =   $mapping_dir . '/' . $database['mapping'] ;
-#error_log("mapping_dir = $mapdir \n\r",3,'/opt/ABCD/www/bases/log/error.log');
 
 foreach($DATABASES as $key => $database) {
 	$databases[$key] = array();
@@ -55,9 +53,5 @@ foreach($DATABASES as $key => $database) {
 	$databases[$key]['datestamp_field'] = $database['datestamp_field'];
 	$databases[$key]['isis_key_length'] = $database['isis_key_length'];
 }
-//echo "databaseskeys=";        var_dump($databases[$key]);die;
-#$marcmapdir =   $databases['marc']['mapping'];
-#error_log("mapping_dirMARC =  $marcmapdir \n\r",3,'/opt/ABCD/www/bases/log/error.log');
-#var_dump($DATABASES);die;
 
 ?>

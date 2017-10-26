@@ -21,7 +21,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-	<title>ISIS-OAI-PROVIDER Harvesting Interface</title>
+	<title>ABCD ISIS-OAI-PROVIDER Harvesting Interface</title>
 	<link rel="stylesheet" type="text/css" href="css/layout.css">	
 	<link rel="shortcut icon" href="images/favicon.ico"/>
 </head>
@@ -29,7 +29,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body marginheight="0" topmargin="0" leftmargin="0">
 <div id="header">
 	<div id="title">
-		ISIS-OAI-PROVIDER Harvesting Interface
+		ISIS-OAI-PROVIDER Harvesting Interface for ABCD
 	</div>
 </div>
 <FORM name="sendQuery" method="post" action="#">
@@ -217,4 +217,5 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </body>
 </html>
 
-<?php } // END IF verb ?>
+<?php } // END IF verb
+?>

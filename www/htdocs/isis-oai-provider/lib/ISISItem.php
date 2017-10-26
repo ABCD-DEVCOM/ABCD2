@@ -1,8 +1,4 @@
 <?PHP
-$myDBArray = $DATABASES ; //new EdS
-#echo "dbarray ISISItem init<BR>";
-#var_dump($DATABASES);//die;
-
 
 class ISISItem implements OAIItem {
 
@@ -45,10 +41,10 @@ class ISISItem implements OAIItem {
     global $DATABASES;
     global $DBName;
        $mapping_file = $DATABASES[$this->DBName]['mapping'];
-        $key_length = $DATABASES[$this->DBName]['isis_key_length'];
-        $id_field = $DATABASES[$this->DBName]['identifier_field'];
+       $key_length = $DATABASES[$this->DBName]['isis_key_length'];
+       $id_field = $DATABASES[$this->DBName]['identifier_field'];
        $record_xml = $this->Resource->getrecord(
-                array('database' => $DATABASES[$this->DBName]['database'], 'expression' => $this->Id . "/($id_field)", 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file), $key_length);
+      array('database' => $DATABASES[$this->DBName]['database'], 'expression' => $this->Id . "/($id_field)", 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file), $key_length);
        // add CDATA to elements when work with isisxml style=1
         if ($MetadataFormat == 'isis') {
             $record_xml = preg_replace("/<v([0-9]+)>/","<v$1><![CDATA[",$record_xml);
