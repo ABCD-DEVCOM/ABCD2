@@ -231,6 +231,7 @@ LABEL {
 		border-left: 1px solid #dbdee1;
 		border-right: 1px solid #dbdee1;
 		background: #fff;
+		height:100%;
 	}
 
 	.homepage .mainBox .boxTop .btLeft {

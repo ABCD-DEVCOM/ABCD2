@@ -698,17 +698,3 @@ A.menuButton {
 		width: 40px;
 	}
 	/* #END #Login */
-	.dl-horizontal {
-    float: left;	
-    width: 45px;
-    overflow: hidden;
-    clear: left;
-    text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;	
-    border-radius:150px;
-	display: block; 
-	margin: 0 auto;
-	margin-left: -50px;	 
-	
-  }
