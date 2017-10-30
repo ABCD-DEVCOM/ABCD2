@@ -51,7 +51,7 @@ foreach($DATABASES as $key => $database) {
 	$databases[$key]['prefix'] = $database['prefix'];	
 	$databases[$key]['identifier_field'] = $database['identifier_field'];
 	$databases[$key]['datestamp_field'] = $database['datestamp_field'];
-	$databases[$key]['isis_key_length'] = $database['isis_key_length'];
+	$databases[$key]['cisis_version'] = $database['cisis_version'];
 }
 
 ?>

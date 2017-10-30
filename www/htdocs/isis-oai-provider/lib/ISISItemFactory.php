@@ -54,14 +54,14 @@ class ISISItemFactory implements OAIItemFactory {
                 'setspec' => $database['setspec'],
                 'date_prefix' => $database['prefix'],
                 'id_field' => $database['identifier_field'],
-                'isis_key_length' => $database['isis_key_length'],
+                'cisis_version' => $database['cisis_version'],
                 'date_field' => $database['datestamp_field'],
                 'from' => $ListStartPoint,
                 'count' => $ItemsPerPage,
             );
-            $ItemIds .= $db->getidentifiers($params, $database['isis_key_length']);
+            $ItemIds .= $db->getidentifiers($params, $database['cisis_version']);
             $curItemIds = array_filter(explode("|", $ItemIds));
-            $total = $db->gettotal($params, $database['isis_key_length']);
+            $total = $db->gettotal($params, $database['cisis_version']);
             $totalFound = count($curItemIds);
             if($total < $ListStartPoint) {
                 $ListStartPoint = $ListStartPoint - $total;
@@ -101,9 +101,9 @@ class ISISItemFactory implements OAIItemFactory {
                   'date_field' => $database['datestamp_field'],
                   'from' => $ListStartPoint,
                   'count' => $ItemsPerPage,                  
-                  'isis_key_length' => $database['isis_key_length'],
+                  'cisis_version' => $database['cisis_version'],
                 );
-                $ItemIds = $db->getidentifiers($params, $database['isis_key_length']);
+                $ItemIds = $db->getidentifiers($params, $database['cisis_version']);
             }     
         } 
         $ItemIds = substr($ItemIds, 0, strlen($ItemIds)-1);

@@ -13,7 +13,7 @@ class ISISDb{
     $this->dbname = $dbname;
     $this->dbpath = $DATABASES[$dbname]['path'];
     $this->wxis_action = $CONFIG['ENVIRONMENT']['CGI-BIN_DIRECTORY'] . 
-     $DATABASES[$dbname]['isis_key_length'] . 'wxis' . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'] . '/wxis/';
+     $DATABASES[$dbname]['cisis_version'] . 'wxis' . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'] . '/wxis/';
     $this->app_path = APPLICATION_PATH;
     $this->wxis_action=$wxis_action.$this->app_path;
   }
@@ -48,8 +48,9 @@ class ISISDb{
   }
 
   function wxis_url ( $IsisScript, $params, $key_length ) {
+  global $CONFIG;
      if ($key_length <> '') $key_length .= '/';
-     $wxis_action = "/cgi-bin/" . $key_length . "wxis" . $exe_extension;
+     $wxis_action = "/cgi-bin/" . $key_length . "wxis" . $exe_extension . $CONFIG['ENVIRONMENT']['EXE_EXTENSION'];
     $request = "http://" . $this->wxis_host . $wxis_action . "?" . "IsisScript=" . $this->app_path . "/wxis/" . $IsisScript   ;
     foreach ($params as $key => $value){
         $request .= "&" . $key . "=" . $value;
@@ -88,7 +89,7 @@ class ISISDb{
 					);
 		$context = stream_context_create($opts);
     $result=file_get_contents($url, false, $context);
-#error_log("url=$url\n\r", 3 , "/var/opt/ABCD/bases/log/error.log");
+#error_log("url=$url\n\r", 3 , "/ABCD/www/bases/log/OAIError.log");
     $response = trim($result);
     return $response;
   }

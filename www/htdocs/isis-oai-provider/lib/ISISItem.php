@@ -41,7 +41,7 @@ class ISISItem implements OAIItem {
     global $DATABASES;
     global $DBName;
        $mapping_file = $DATABASES[$this->DBName]['mapping'];
-       $key_length = $DATABASES[$this->DBName]['isis_key_length'];
+       $key_length = $DATABASES[$this->DBName]['cisis_version'];
        $id_field = $DATABASES[$this->DBName]['identifier_field'];
        $record_xml = $this->Resource->getrecord(
       array('database' => $DATABASES[$this->DBName]['database'], 'expression' => $this->Id . "/($id_field)", 'metadata_format' => $MetadataFormat, 'mapping_file' => $mapping_file), $key_length);
