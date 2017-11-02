@@ -9,7 +9,7 @@ $lang=$_SESSION["lang"];
 
 require_once ("../lang/admin.php");
 require_once ("../lang/msgusr.php");
-
+include ("verificar_eliminacion.php");
 
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 //die;
@@ -35,7 +35,9 @@ if ($res==""){
 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=" . $arrHttp["Mfn"]."&Opcion=eliminar";
 	$IsisScript=$xWxis."eliminarregistro.xis";
 	include("../common/wxis_llamar.php");
-}else{	$err_del="&error="."$res";}
+}else{
+	$err_del="&error="."$res";
+}
 $encabezado="";
 if (isset($arrHttp["encabezado"]))
 	$encabezado="?encabezado=s";
@@ -53,5 +55,5 @@ if (isset($arrHttp["retorno"])){
 	header("Location:$retorno$encabezado"."&base=".$arrHttp["base"]."&return=".$arrHttp["return"]."&from=".$arrHttp["from"].$err_del);
 }
 
-include ("verificar_eliminacion.php");
+
 ?>
