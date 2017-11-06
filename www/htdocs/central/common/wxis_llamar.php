@@ -44,15 +44,15 @@ if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
 
 	if (isset($wxisUrl) and $wxisUrl!=""){
         	$query.="&path_db=".$db_path;
-	echo "query1=$query<BR>";
+// 	echo "query1=$query<BR>";
         	$url="IsisScript=$IsisScript$query&cttype=s";
 		if (file_exists($db_path."par/syspar.par"))
         	$url.="&syspar=$db_path"."par/syspar.par";
-        echo "url1=$url<BR>";
+//        echo "url1=$url<BR>";
         	parse_str($url, $arr_url);
 		$postdata = http_build_query($arr_url);
-        echo "postdata1=$postdata<BR>";
-        	$opts = array('http' =>
+//        echo "postdata1=$postdata<BR>";
+		$opts = array('http' =>
     				array(
         					'method'  => 'POST',
         					'header'  => 'Content-type: application/x-www-form-urlencoded',
@@ -61,7 +61,11 @@ if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
     				     )
 					);
 		$context = stream_context_create($opts);
+//error_log("wxisUrl = $wxisUrl \n\r",3,'/opt/ABCD/www/bases/log/error.log');
+
+// MAIN POST CONNECTION in following line
 		$result=file_get_contents($wxisUrl,false, $context);
+
         $con=explode("\n",$result);
         $ix=0;
         $contenido=array();
