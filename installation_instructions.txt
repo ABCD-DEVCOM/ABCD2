@@ -2,7 +2,7 @@ Please read the following instructons carefully in order to get a working versio
 
 
 ABCD is no longer distributed in a self-installable package which includes Apache and PHP.
-There are several problems with this approach :
+There were several problems with this approach :
 - legal : whereas both Apache and PHP are FOSS, distribution of these packages can better be left to their own communities
 and/or the specialized packages such as WAMP, XAMP and EASYPHP.
 - size : the ABCD packages for downloading are much smaller without Apache and PHP included.
@@ -27,7 +27,7 @@ With this new approach we can also better maintain one single installation for b
 - the cgi-bin executables are not compatible in between Linux and Windows, so they are distributed as two different folders :
    * cgi-bin_Windows
    * cgi-bin_Linux
-- the databases are not compatible in between Linux and Windows, so they are distributed as two different folder :
+- the databases are not compatible in between Linux and Windows, so they are distributed as two different folders :
    * bases-examples_Windows
    * bases-examples_Linux
 
@@ -61,7 +61,7 @@ In essence it needs to define two main directories :
 4. Put the virtual host file for ABCD into the dedicated folder of your Apache, e.g.
    * in wamp : wamp\alias
    * in xamp : the 'extra' subfolder of apache\conf
-   * in easy-php :  he 'extra' subfolder of apache\conf
+   * in easy-php : the 'extra' subfolder of apache\conf
 
 5. restart your Apache and if no errors issued, your ABCD should work at the URL 'http://127.0.0.1:9090' given that you use that URL for your ABCD,
 with real servers (with servernames) please adjust your URL to open ABCD, also change the port if you don't use port 9090.
@@ -82,21 +82,28 @@ OR alternatively, once the 'service' for Apache is running in Windows, one can s
    * Central : in config.php the variables '$server_url', $ABCD_path and "$db_path' need to be defined with correct path.
    For $db_path use the correct segment according to your OS : for Windows before, for Linux after the 'else' statement
    All other parameters don't need to be adjusted except for functional reasons (see the manual).
-   * IAh :
-        * in the file index.php you need to define $base (the name of your default search database, if not 'rda' (lower case !)
-          and $db_path (in Windows the section before 'else', in Linux the section after 'else')
-        * iah.def.php  :  all paths in the [PATH]  section, different for Windows and Linux, e.g. for Linux :
+   * IAh : the new 'index.php' sets some variables according to OS (win or lin) and calls accordingly a different version of iah.xis, i.e.
+   respectively iah-win.xis for Windows or iah-lin.xis for Linux.
+   The versions differ ONLY re the iah.def.php parsed to define the paths :
+   in Linux :
+   iah-def-lin.php, with the following default paths :
         PATH_DATA=/iah/
         PATH_CGI-BIN=/opt/ABCD/www/htdocs/iah/scripts/
         PATH_DATABASE=/var/opt/ABCD/bases/
         PATH_DEF=/var/opt/ABCD/bases/par/
-   for Windows (note the use of Linux slashes however) :
+   in Windows (note the use of Linux slashes however) :
         PATH_DATA=/iah/
         PATH_CGI-BIN=/ABCD/www/htdocs/iah/scripts/
         PATH_DATABASE=/ABCD/www/bases/
         PATH_DEF=/ABCD/www/bases/par/
-   * SITE :
-   Only the file 'bvs-site-conf.php' needs to be checked for the section [ENVIRONMENT] which looks like :
+   * SITE : a new version of the script PHP/include.php now contains the following added code :
+              if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0)
+                 $def = @parse_ini_file("../ABCD-site-win.conf");
+              else
+                  $def = @parse_ini_file("../ABCD-site-lin.conf");
+   so as to parse indeed different configuration files ofr Windows and Linux instead of the original and legacy-named 'bvs-site-conf.php'.
+   As for the iAH module the default-paths are different in between Windows and Linux but both cases use the 'Unix-style' slashes,
+   e.g. Windows :
    [ENVIRONMENT]
                 DIRECTORY=/site/
                 SITE_PATH=C:/ABCD/www/htdocs/site/
@@ -104,6 +111,12 @@ OR alternatively, once the 'service' for Apache is running in Windows, one can s
                 SERVERNAME=localhost
                 LETTER_UNIT=C:\
                 {this last line only used in Windows !)
+   and for Linux :
+   [ENVIRONMENT]
+   DIRECTORY=/site/
+   SITE_PATH=/opt/ABCD/www/htdocs/site/
+   DATABASE_PATH=/opt/ABCD/www/bases/site/
+   SERVERNAME=localhost
 
    * Secs-Web :
    No need to adjust paths in the configuration, BUT : make sure you have a directory 'temp' in the dedicated 'bases'-subdirectory
@@ -118,6 +131,32 @@ OR alternatively, once the 'service' for Apache is running in Windows, one can s
    * SITE-admin : http://localhost:9090/site/admin  (username 'adm', password 'x')
    * Secs-Web : http://localhost:9090/secs-web (username 'admsecs', password 'admsecs')
 
+8. Note on updating ABCD instead of installing it :
+When updating an existing version of ABCD instead of just installing it, some special precautions need to be taken.
+In general there are 2 alternative ways of dealing with it :
+I. method I : 'outside' existing installation
+A. Rename the current ABCD-directory (after e.g. closing Apache if it runs from within that directory as is the case in the original Windows
+installation for ABCD)
+B. Install ABCD as a new installation
+C. Copy the databases from the old installation to the new one; the new package however might contain interesting new databases or models,
+which then can be added into the bases-folder along with their 'par' and 'DEF' files in the par-subdirectory.
+D. If special settings were used, also transfer these to the new configuration files,
+e.g. if you use 'MD5' encryption, change the variable in the new config.php of Central.
+     if you use several database-directories, copy/change the file htdocs/dbpath.dat !
+[E. After having checked that all works well (restart Apache !), one might delete the 'old' installation, in order to save space.]
+
+II. method II : 'inside' existing installation
+A. rename, one-by-one, existing folders, e.g. to [name-of-folder].old, e.g. central becomes central.old
+B. copy the new folder in the same location next to the renamed folder, e.g. central inside 'htdocs' etc.
+C. in principle your local databases can be kept unaltered, but the directory 'bases-examples', coming with the new package, contain possibly
+several new relevant databases or models, which you then can simply add into the bases-folder (and to the par-subfolder : each database needs
+its own .par and .DEF files but these can be copied from the package par-folder).
+D. A bit tricker part : adapt your configuration files with the new ones, which will need to be manual work. E.g. the central/config.php
+is fully re-vamped but the existing variables in your old config.php will need to be implemented in the new one (to be copied from the package).
+In iAH and Site also new files are to be copied, so check these carefully, e.g. iah-def-win.php for iAH and ABCD-site-win.conf for Site.
+[E. After having checked that all works well, one might delete all folders with '.old' extension, in order to save space.]
+
+The recommended method is the first one ('outside') since it ensures all new configurations are in place, only need to be checked/adjusted.
 
 Additional help can be obtained by joining and using the e-mail based 'ISIS-users discussion list',
    * registering: http://lists.iccisis.org/listinfo/isis-users

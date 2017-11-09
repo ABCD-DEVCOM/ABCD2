@@ -5,8 +5,12 @@ if v1001 = '1' then 'Content-type: ', if v6212:'export' then 'bireme/application
 if v1001 = '1'  then
 '<html>
 <head>
-<title>',v5003^*,'- à¶½à·à¶ºà·à·à·à¶­à·à·</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>',v5003^*,'- ලැයිස්තුව</title> ',
+if v5018^w='Y' then
+'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
+else
+'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> '
+fi,  '
 <link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />
 
 <script type="text/javascript">
@@ -23,17 +27,17 @@ if v6212 = 'print' then '<body style="background: #FFFFFF !important" onLoad="ja
 '<div id="contentList">
     <div class="contain">
     <div class="copyright">
-        BIREME/PAHO/WHO - à·à·à¶à·âà¶ºà¶º à¶´à·à·à·à¶¶à¶³ à¶½à¶­à·à¶±à· à¶à¶¸à¶»à·à¶à·à¶±à· à·à· à¶à·à¶»à·à¶¶à·à¶ºà·à¶±à· à¶à¶ºà¶­à¶±à¶º
+        BIREME/PAHO/WHO - සෞඛ්‍යය පිළිබඳ ලතින් ඇමරිකානු හා කැරිබියානු ආයතනය
         <hr class="ruler" />
         </div>
 
         <div class="rowResult">
-            <div class="columnA">à¶¯à¶­à·à¶­ à¶´à¶¯à¶±à¶¸à·:</div>
+            <div class="columnA">දත්ත පදනම්:</div>
             <div class="columnB"><b>',v5003^*,'</b></div>
         </div>
 
         <div class="rowResult">
-            <div class="columnA">à¶à·à·à·à¶«à¶º:</div>
+            <div class="columnA">ගවේෂණය:</div>
             <div class="columnB"><b>'
                     ,if p(v6102) then
                          v6102 ' [',v6100^p,']'
@@ -49,7 +53,7 @@ if v6212 = 'print' then '<body style="background: #FFFFFF !important" onLoad="ja
         </div>
 
         <div class="rowResult">
-            <div class="columnA">à¶­à·à¶»à·à¶à¶­à· à·à·à¶¸à¶»à·à·à¶±:</div>
+            <div class="columnA">තෝරාගත් විමර්ශන:</div>
             <div class="columnB"><b>',v1002,'</b></div>
         </div>
 

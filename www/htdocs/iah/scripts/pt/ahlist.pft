@@ -5,8 +5,12 @@ if v1001 = '1' then 'Content-type: ', if v6212:'export' then 'bireme/application
 if v1001 = '1'  then
 '<html>
 <head>
-<title>',v5003^*,'- Lista</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>',v5003^*,'- Lista</title>',
+if v5018^w='Y' then
+'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
+else
+'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> '
+fi,  '
 <link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />
 
 <script type="text/javascript">

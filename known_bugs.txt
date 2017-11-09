@@ -8,6 +8,7 @@ Central
 - special cisis_ver database cannot be selected as first database to open in main central menu, but can be opened well from next screen.
 - iah_edit_db.php javascript-functions (e.g. edit index) not always working  => solved by <?php on line 84
 - POST method in wxis_llamar.php replaced by $result=file_get_contents($url); because other method no longer working in recent versions of Linux
+  new : file_get_contents now uses 'context' variables passed, seems to work well.
 
 iAh
 

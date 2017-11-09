@@ -1,0 +1,1545 @@
+<IsisScript name="iAH! v3.1.1">
+
+<function name="LoadCipar">
+
+	<field action="import" tag="list">5000,5003,5018,5021,5050,7001,6212</field>
+	<!-- atualiza var. de ambiente se for tarefa de save -->
+	<call name="UpdPATH_TRANSLATED"><pft>if v6212 : 'save' then 'Now' fi</pft></call>
+	<call name="FatalError"><pft>if a(v5021) then '^1parameter missing^2language^3Inform the parameter lang in the call to iAH' fi</pft></call>
+	<!-- Defines base de dados -->
+    <field action="replace" tag="1" split="occ"><pft>cat(v5000^p,v5003^*,'.def')</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,( if v1 : 'FILE '  then '^n'v1*5/ fi ),</pft></field>
+
+    <!-- FIX:lang
+	<field action="replace" tag="7998" split="occ"><pft><pft>'(v7998^n,v7998^'v5021'/)'</pft></pft></field>
+    -->
+    <field action="replace" tag="7998" split="occ"><pft><pft>'(v7998^n/)'</pft></pft></field>
+	<field action="replace" tag="5050" split="occ"><pft>,if p(v5050) then v5050 else 'main' fi,</pft></field>
+
+	<!-- macro-substituicoes no def da base de dados	-->
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_database%',v5000^b[1]) /),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_cgi-bin%',v5000^c[1]) /),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%lang%',v5021[1])/),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%pathLibrary%',v5050[1])/),</pft></field>
+	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'#',v5003^d[1]) /),</pft></field>
+	<!-- inclue arquivos cipar externos -->
+	<field action="replace" tag="7999" split="occ"><pft>(if v1 : 'INCLUDE CIPAR=' then mid(v1,instr(v1,'=')+1,size(v1)) fi/ )</pft></field>
+	<field action="replace" tag="7999" split="occ"><pft>if p(v7999) then (cat(getenv('PATH_TRANSLATED'),v7999)) fi</pft></field>
+
+	<!-- cipar -->
+	<parm name="cipar">
+		<pft>
+			/* gizmo */
+			,"CI_TEMPDIR="v5000^t,/
+			,'ASC2ANS.*=',v5000^b,'gizmo/g850ans.*',/
+			,'MINUSC.*=',v5000^b,'gizmo/minusc.*',/
+
+			/* xml support */
+			if a(v5018^g) then,'GIZMO_XML.*=',v5000^b,'gizmo/gXML.*',/  
+			else ,'GIZMO_XML.*=',v5000^b,'gizmo/'v5018^g'.*',/
+			fi 
+			,'PROLOG.I2X=',v5000^c,'prolog.i2x'/
+
+			/* database def files */
+			,(v7998/),
+			/* include def files */
+			,(v7999/),
+
+			/* iah format */
+			,'AHFORM.HTM=',v5000^c,v5021,'/ahform.htm'/
+			,'AHCONF.HTM=',v5000^c,v5021,'/ahconf.htm'/
+			,'AHHEAD.PFT=',v5000^c,v5021,'/ahhead.pft'/
+			,'AHFOOT.PFT=',v5000^c,v5021,'/ahfoot.pft'/
+			,'AHHIDD.PFT=',v5000^c,v5021,'/ahhidd.pft'/
+			,'AHMANU.PFT=',v5000^c,'pfts/ahmanu.pft'/
+
+			,'AHBBOT.HTM=',v5000^c,v5021,'/ahbbot.htm'/
+			,'AHINDX.HTM=',v5000^c,v5021,'/ahindx',v5018^w,'.htm'/
+			,'AHSEND.HTM=',v5000^c,v5021,'/ahsend.htm'/
+			,'AHLIST.PFT=',v5000^c,v5021,'/ahlist.pft'/
+			,'NAVPAGE.PFT=',v5000^c,v5021,'/navpage.pft',/
+			,'AHEMAIL.PFT=',v5000^c,v5021,'/ahemail.pft',/
+			,'LIST6003.PFT=',v5000^c,v5021,'/list6003.pft'/
+
+			,'AHSCAD.HTM=',v5000^c,v5021,'/ahscad.htm'/
+			,'CDSCAD.HTM=',v5000^c,v5021,'/cdscad.htm'/
+			,'SCAD.PRC=',v5000^c,'scad.prc'/
+
+			,'AHRTOP.HTM=',v5000^c,v5021,'/ahrtop.htm'/
+			,'AHRBOT.HTM=',v5000^c,v5021,'/ahrbot.htm'/
+			,'AHRNAV.HTM=',v5000^c,v5021,'/ahrnav.htm'/
+
+			,'AHBTOP.HTM=',v5000^c,v5021,'/ahbtop.htm'/
+			,'SHORTCUT.IAH=',v5000^c,v5021,'/dumy.pft',/
+			,'QUERY.IAH=',v5000^c,v5021,'/query.pft',/
+			,'HEADER.IAH=',v5000^c,v5021,'/header.pft',/
+			,'AHBNAV.HTM=',v5000^c,v5021,'/ahbnav.htm'/
+		</pft>
+	</parm>
+  
+
+</function>
+
+<function name="SetStat" action="replace" tag="1">
+	<field action="import" tag="5001">5001</field>
+	<field action="replace" tag="5001"><pft>v5001,'^s'v1</pft></field>
+	<field action="export" tag="5001">5001</field>
+</function>
+
+<function name="UpdPATH_TRANSLATED">
+	<field action="replace" tag="1"><pft>getenv('PATH_TRANSLATED')</pft></field>
+	<field action="replace" tag="1"><pft>if v1 : 'list' then left(v1,instr(v1,'list')-1) fi</pft></field>
+	<!-- fix bug variable PATH_TRANSLATED  Windows NT com Apache Webserver-->
+	<field action="replace" tag="1"><pft>if right(replace(v1,'\','/'),1) <> '/' then s(v1,'/') fi</pft></field>
+
+	 <!-- apache 2 AcceptPathInfo On  -->
+	<field action="replace" tag="1"><pft>replace(v1,'index.htm','')</pft></field>
+
+	<display><pft>putenv('PATH_TRANSLATED='v1)</pft></display>
+</function>
+
+<function name="LoadIndexList" action="replace" tag="3">
+	<field action="import" tag="list">5000,5006,5003,5018,5021</field>
+	<field action="replace" tag="1" split="occ"><pft>cat(v5000^p,v5003^*,'.def')</pft></field>
+
+	<field action="replace" tag="2" split="occ"><pft>(if v1.6 = 'INDEX ' then '^n',replace(v1*6,'=','')/ fi),</pft></field>
+	<field action="replace" tag="2" split="occ">
+		<pft>(	if a(v2^x) then
+					if p(v2^s) then replace(v2,'^s','^x/') else v2,'^xALL ' fi,
+				fi,
+				,if a(v2^y) then '^yDATABASE' fi, /)
+		</pft>
+	</field>
+
+    <!-- percorre parï¿½metro AVAILABLE LANGUAGES e monta sequencia de idiomas disponiveis -->
+    <field action="replace" tag="9021" split="occ"><pft>replace(replace(v5006^a[1],' ',''),',',s(#))</pft></field>
+    <!-- verifica qual ï¿½ o numero da sequencia correpondente ao idioma atual de navegaï¿½ï¿½o -->
+    <field action="replace" tag="9022"><pft>(if v9021 = v5021[1] then f(iocc,1,0) fi)</pft></field>
+    <!-- troca na lista de ï¿½ndices o subcampo correspondente ao idioma atual pelo subcampo ^L (label)  -->
+    <field action="replace" tag="2" split="occ"><pft><pft>`(replace(v2,'^`,v9022,`','^L')/)`</pft></pft></field>
+
+	<return action=replace tag="list"><pft>'[2:',v3,']'</pft></return>
+</function>
+
+<function name="NextAction">
+	<field action="import" tag="list">5000,5001,5015,5018</field>
+
+	<field action="cgi" tag="2100">^n^v</field>
+	<field action="replace" tag="2200"><pft>(if v2100 : '.x^' then mid(v2100,1,instr(v2100,'.')-1),break fi)</pft></field>
+	<field action="replace" tag="2200"><pft>if a(v2200) then v5001 fi</pft></field>
+	<!--salta para pagina especifica no resultado-->
+	<field action="replace" tag="2200"><pft>if v2200^n*0.4 = 'Page' then '^nGO PAGE^p'v2200^n*4 fi</pft></field>
+	<!-- armazena informacao  photocopyMFN mfn, hit, page result-->
+	<field action="replace" tag="2200"><pft>if v2200^n.9 = 'photocopy' then '^n'v2200^n,"^m"v2200^m,"^i"v2200^i,'^h'v2200^h,'^p'v2200^p fi</pft></field>
+
+	<!--caminho direto ao indice de uma base de dados -->
+	<field action="replace" tag="2200"><pft>if a(v2200) and p(v5015) then 'getindex' fi</pft></field>
+	<field action="export" tag="5001">2200</field>
+
+</function>
+
+<function name="SelectedIndex" action="replace" tag="1">
+	<field action="import" tag="list">6003</field>
+	<field action="replace" tag="6100"><pft>'^l',v1,(if iocc = val(v1[1]) then v6003,break fi)</pft></field>
+	<field action="export" tag="list">6100</field>
+</function>
+
+<function name="LoadBaseDef">
+	<field action="import" tag="list">5000,5003,5004,5009,5013,5018,5021,6000</field>
+    <field action="replace" tag="1" split="occ"><pft>cat(v5000^b,'par/'v5003^*,'.def')</pft></field>
+	<call name="FatalError">
+		<pft>
+			if a(v5003) then '^1parameter missing^2database^3Inform the parameter base in the call to iAH' fi
+			if a(v1) then '^1database definition file^2unable to open ',v5000^b,'par/',v5003^*'.def^3Check the instalation process and the call to iAH' fi
+		</pft>
+	</call>
+
+	<field action="replace" tag="2" split="occ">
+		<pft>
+			,(,
+				if v1 : 'GIZMO=' 		then '^g',mid(v1,instr(v1,'=')+1,size(v1))/ fi
+			    if v1 : 'DECOD=' 		then '^d',mid(v1,instr(v1,'=')+1,size(v1))/ fi
+			,),
+		</pft>
+	</field>
+	<field action="replace" tag="3" split="occ">
+		<pft>
+			,( if v1 : 'FORMAT ' then '^n',if v1 : 'DEFAULT' then 'DEFAULT^f' else replace(v1^**7,'=',''),fi, mid(v1,instr(v1,'=')+1,size(v1))/ fi ),
+		</pft>
+	</field>
+	<field action="add" tag="3"><pft>if v3 : '^nDEFAULT' then else '^nDEFAULT^f'v3^n[1] fi</pft></field>
+
+	<field action="replace" tag="4" split="occ"><pft>,( if v1 : 'HELP ' or v1 : 'NOTE ' then '^n',replace(v1^*,'=','^v') fi/ ),</pft></field>
+	<field action="replace" tag="5"><pft>,(if v1 : 'RESUBMIT=' then replace(mid(v1,instr(v1,'=')+1,size(v1)),',',s(#))/,break, fi ),</pft></field>
+
+	<field action="replace" tag="5003"><pft>if p(v5003^n) then left(v5003,instr(v5003,'^n')-1) fi</pft></field>
+	<field action="replace" tag="5004" split="occ"><pft>if p(v5) then (v5/) fi</pft></field>
+	<field action="replace" tag="5005" split="occ"><pft>(v3/)</pft></field>
+	<field action="replace" tag="5012" split="occ"><pft>(v2/)</pft></field>
+	<field action="replace" tag="5010" split="occ"><pft>(v4/)</pft></field>
+
+	<field action="replace" tag="5013"><pft>if a(v5013) then 'GUEST' fi</pft></field>
+	<field action="replace" tag="5014"><pft>,( if v1 : 'AVAILABLE FORMS=' then mid(v1,instr(v1,'=')+1,size(v1)) fi ),</pft></field>
+	<field action="replace" tag="5014"><pft>if a(v5014) then 'F,B,A' fi</pft></field>
+
+	<field action="replace" tag="5007"><pft>(if left(v1,instr(v1,'=')-1) : 'NAVIGATION BAR'  then mid(v1,instr(v1,'=')+1,size(v1)),break, fi)</pft></field>
+	<field action="replace" tag="5007"><pft>if a(v5007) then 'ON' fi</pft></field>
+	<field action="replace" tag="5008"><pft>(if left(v1,instr(v1,'=')-1) : 'DOCUMENTS PER PAGE'  then mid(v1,instr(v1,'=')+1,size(v1)),break, fi)</pft></field>
+	<field action="replace" tag="5008"><pft>if a(v5008) then '10' fi</pft></field>
+	<field action="replace" tag="5009"><pft>if a(v5009) then  (if v5005^n = 'DEFAULT' then v5005^f fi) fi</pft></field>
+
+	<field action="replace" tag="5018">
+		<pft>(
+				if left(v1,instr(v1,'=')-1) : 'FEATURES'  then '^f',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'SEND RESULT BY EMAIL' then '^e',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'KEYRANGE SUFFIX' then '^k',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'SEARCH ACTAB' then '^a',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'SEARCH UCTAB' then '^u',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'UNICODE' then '^w',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+				if left(v1,instr(v1,'=')-1) : 'DBGIZMO' then '^g',mid(v1,instr(v1,'=')+1,size(v1)) fi,
+			)</pft>
+	</field>
+
+	<field action="replace" tag="6000"><pft>if a(v6000) then v5014.1 fi</pft></field>
+
+	<field action="export" tag="list">5003/5005,5007/5010,5012/5014,5018,6000</field>
+</function>
+
+<function name="LoadAplDef">
+
+	<field action="import" tag="list">5000,5018,5021</field>
+	<field action="cgi" tag="9990">IsisScript</field>
+
+	<!-- Defines da aplicacao -->
+	<field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def.php')</pft></field>
+	<call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the installation process and the call to iAH.' fi</pft></call>
+
+	<field action="replace" tag="5000">
+		<pft>
+			,(,
+	  		  ,if v7999 : 'PATH_DATABASE=' then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_CGI-BIN='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_DATA='     then '^d',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+                          ,if v7999 : 'PATH_DEF='      then '^p',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'MAINTENANCE='   then '^m',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'TEMPDIR='       then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			,),
+			,'^s',v9990,
+			,if p(v9991) then '^p'v9991 fi,
+			,if p(v9992) then '^f'v9992 fi,
+			,'^v3.1.1',
+		</pft>
+	</field>
+
+	<field action="replace" tag="5000"><pft>replace(v5000,'\','/')</pft></field>
+    <!-- caso nao seja definido path_def assume o diretorio par abaixo do diretorio de bases -->
+    <field action="replace" tag="5000"><pft>if a(v5000^p) then v5000,'^p',v5000^b,'par/' fi</pft></field>
+
+	<field action="replace" tag="5006">
+		<pft>
+			,(,
+			  ,if v7999 : 'BODY BACKGROUND IMAGE='  then '^i',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+    	 	  ,if v7999 : 'BODY BACKGROUND COLOR='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+     	      ,if v7999 : 'BODY LINK COLOR='    	then '^l',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+    	      ,if v7999 : 'BODY TEXT COLOR='    	then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+      	      ,if v7999 : 'BAR BACKGROUND COLOR='   then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+      	      ,if v7999 : 'MANAGER E-MAIL='      	then '^e',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+			  ,if v7999 : 'MULTI-LANGUAGE='			then '^m',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+			  ,if v7999 : 'REVERSE MODE=' 			then '^r',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi
+              ,if v7999 : 'AVAILABLE LANGUAGES='    then '^a',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			,),
+		</pft>
+	</field>
+	<field action="replace" tag="5020"><pft>( if v7999 : 'LOG DATABASE=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5030"><pft>( if v7999 : 'LOGO IMAGE='   then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5031"><pft>( if v7999 : 'LOGO URL='     then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5040"><pft>( if v7999 : 'HEADER IMAGE=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="5041"><pft>( if v7999 : 'HEADER URL='   then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+	<field action="replace" tag="8002"><pft>( if v7999 : 'BVSLOG URL=' then mid(v7999,instr(v7999,'=')+1,size(v7999)) fi )</pft></field>
+
+	<field action="export" tag="list">5000,5006,5020/5041,5220,8002</field>
+</function>
+
+
+<function name="UpdEnvironment">
+	<!-- atualiza variavel de ambiente (link cdrom-server) -->
+	<field action="import" tag="list">5000,5002</field>
+	<field action="replace" tag="7999" split="occ"><pft>cat(s(getenv('PATH_TRANSLATED')'iah.def.lin'))</pft></field>
+	<field action="replace" tag="5000">
+		<pft>
+			,(,
+	  		  ,if v7999 : 'PATH_DATABASE=' then '^b',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_CGI-BIN='  then '^c',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'PATH_DATA='     then '^d',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			  ,if v7999 : 'TEMPDIR='   	   then '^t',mid(v7999,instr(v7999,'=')+1,size(v7999)) fi,
+			,),
+			'^s'v5000^s,
+			if getenv('SERVER_NAME') <> 'localhost' then '^l'v5000^l fi
+		</pft>
+	</field>
+	<field action="delete" tag="5002">1</field>
+	<field action="export" tag="5000">5000</field>
+</function>
+
+<function name="FieldDir" action="replace" tag="800">
+	<field action="cgi" tag="5012">gizmoDecod</field>
+	<do task="mfnrange">
+		<parm name="db">DATABASE</parm>
+		<parm name="from"><pft>v800^m</pft></parm>
+		<parm name="count">1</parm>
+		<parm name="gizmo"><pft>if v800^i = '1' then (v5012^g/) fi</pft></parm>
+		<parm name="decod"><pft>if v800^i = '1' then v5012^d fi</pft></parm>
+
+		<loop>
+			<field action="delete" tag="list">1000,1001,6212</field>
+			<!-- ordena tags para exportação do iso-->
+			<proc>s</proc>
+			<!--proc><pft>'d87',( REF(['ZDECS']val(v87^d),'a87|^d',v1,'|') )</pft></proc-->
+			<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+			<field action="replace" tag="9999" split="flddir" type="list">ALL</field>
+			<return action="replace" tag="list"><pft>v9999</pft></return>
+		</loop>
+	</do>
+</function>
+
+<function name="firstHit">
+	<field action="import" tag="list">1002,1031,5001,5008,5018</field>
+	<flow action="jump"><pft>mpu,v5001^*,mpl</pft></flow>
+
+	<label>FIRST PAGE</label>
+	<return action="replace" tag="1031">1</return>
+
+	<label>NEXT PAGE</label>
+	<return action="replace" tag="1031"><pft>f(val(v1031)+val(v5008),1,0)</pft></return>
+
+	<label>LAST PAGE</label>
+	<field action="replace" tag="1"><pft>f((val(v1002)-1)/val(v5008),1,2)</pft></field>
+	<return action="replace" tag="1031"><pft>f((val(left(v1,size(v1)-3)) * val(v5008))+1,1,0)</pft></return>
+
+	<label>PREVIOUS PAGE</label>
+	<field action="replace" tag="1"><pft>f((val(v1031)-val(v5008))-1,1,0)</pft></field>
+	<return action="replace" tag="1031"><pft>if val(v1) > 0 then  f(val(v1)+1,1,0) else '1' fi</pft></return>
+
+	<label>GO PAGE</label>
+	<return action="replace" tag="1031"><pft>if v5001^p = '1' then '1' else f(((val(v5001^p)*val(v5008))+1)-val(v5008),1,0) fi</pft></return>
+</function>
+
+
+<function name="ResultPages">
+	<field action="import" tag="list">1002,1031,5008,5018</field>
+	<field action="replace" tag="99"><pft>f(val(v1002)/val(v5008),1,5)</pft></field>
+	<!--current page-->
+	<field action="replace" tag="1"><pft>left(f(val(v1031)/val(v5008),1,5),instr(f(val(v1031)/val(v5008),1,5),'.')-1)</pft></field>
+	<field action="replace" tag="1"><pft>f(val(v1)+1,1,0)</pft></field>
+	<!--last page-->
+	<field action="replace" tag="2"><pft>left(v99,instr(v99,'.')-1)</pft></field>
+	<field action="replace" tag="2"><pft>if val(right(v99,size(v99)-instr(v99,'.'))) > 0 then f(val(v2)+1,1,0) fi</pft></field>
+	<field action="replace" tag="2"><pft>if val(v2) = 0 then '1' fi</pft></field>
+	<!--first range page-->
+	<field action="replace" tag="3"><pft>left(f((val(v1)-1)/10,1,5),instr(f((val(v1)-1)/10,1,5),'.')-1)</pft></field>
+	<field action="replace" tag="3"><pft>f((10*val(v3))+1,1,0)</pft></field>
+	<do>
+		<parm name="from"><pft>v3</pft></parm>
+		<parm name="to"><pft>if val(v2) < (val(v3)+9) then v2 else f(val(v3)+9,1,0) fi</pft></parm>
+		<field action="define" tag="1001">Isis_Current</field>
+		<loop>
+			<field action="import" tag="list">1/2,6205</field>
+			<field action="add" tag="6205"><pft>'^c'v1'^l'v2'^i',v1001,if v1 = v1001 then '^hred' fi</pft></field>
+			<field action="export" tag="6205">6205</field>
+		</loop>
+	</do>
+	<field action="export" tag="6205">6205</field>
+
+</function>
+
+<function name="SendByEmail" action="replace" tag="1">
+	<field action="import" tag="list">5000/5003,5006,5018,5021,5030/5041,6213,6214</field>
+	<flow action="jump"><pft>v1^*</pft></flow>
+
+	<label>OPEN</label>
+		<file action="create" type="tempfile">6214</file>
+		<file action="append" type="output"><pft>v6214</pft></file>
+		<return action="replace" tag="6214"><pft>v6214</pft></return>
+
+	<label>SEND</label>
+		<file action="close" type="output"><pft>v6214</pft></file>
+		<field action="replace" tag="6213"><pft>replace(v6213,'@bireme.br','@brm.bireme.br')</pft></field>
+
+		<field action="replace" tag="9" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'sendmail.conf')</pft></field>
+		<field action="replace" tag="9"><pft>(if left(v9,instr(v9,'=')-1) : 'EXECUTE' then mid(v9,instr(v9,'=')+1,size(v9)) fi/)</pft></field>
+		<field action="replace" tag="9"><pft>replace(replace(v9,'<mailto>',v6213),'<file>',v6214)</pft></field>
+		<display><pft>system(v9)</pft></display>
+
+		<file action="delete" type="file"><pft>v6214</pft></file>
+		<display><pft>@AHEMAIL.PFT</pft></display>
+
+</function>
+<function name="SetHelp" action="replace" tag="1">
+	<field action="import" tag="list">5000,5018,5021,5010</field>
+    <!-- FIX:lang
+	<field action="replace" tag="5021"><pft>s(mpu,v5021,mpl)</pft></field>
+    -->
+    <!-- absolute path to help datafiles -->
+    <field action="replace" tag="9002"><pft>replace(getenv('PATH_TRANSLATED'),'\','/')</pft></field>
+    <field action="replace" tag="9002"><pft>replace(v9002,'/iah/scripts/','/iah/')</pft></field>
+
+	<field action="replace" tag="2">
+		<pft>'^h',v5000^d,v5021,'/help/','^n',v9002,v5021'/help/'</pft>
+	</field>
+
+	<!-- help especifico da pagina -->
+	<field action="replace" tag="5011">
+		<pft>( if v5010^n = s('HELP ',v1^1[1],' ',v1^2[1]) then '^h'v2^h[1],v5010^v, break fi)</pft>
+	</field>
+	<!-- help generico da pagina -->
+	<field action="replace" tag="5011">
+		<pft>if a(v5011) then ( if v5010^n = s('HELP ',v1^1[1]) then '^h'v2^h[1],v5010^v, break fi) fi</pft>
+	</field>
+	<!-- nota especifica da pagina -->
+	<field action="replace" tag="5011">
+		<pft>( if v5010^n = s('NOTE ',v1^1[1],' ',v1^2[1]) then v5011[1],'^n'v2^n[1],v5010^v, break fi)</pft>
+	</field>
+	<!-- nota generica da pagina -->
+	<field action="replace" tag="5011">
+		<pft>if a(v5011^n) then ( if v5010^n = s('NOTE ',v1^1[1]) then v5011[1],'^n'v2^n[1],v5010^v, break fi) fi</pft>
+	</field>
+	<field action="export" tag="5011">5011</field>
+</function>
+
+<function name="GizmoIndex">
+	<field action="import" tag="list">1,6100</field>
+	<field action="replace" tag="6111" split="occ"><pft>REF([v6100^g]1,(v1/))</pft></field>
+	<field action="replace" tag="6112" split="occ"><pft>REF([v6100^g]1,(v2/))</pft></field>
+
+	<flow action="jump"><pft>if nocc(v6111) > 1 then 'APLY' fi</pft></flow>
+	<label>LOAD GIZMO</label>
+	<do task="mfnrange">
+		<parm name="db"><pft>v6100^g</pft></parm>
+		<parm name="from">2</parm>
+		<loop>
+			<field action="export" tag="6111" previous="add">1</field>
+			<field action="export" tag="6112" previous="add">2</field>
+		</loop>
+	</do>
+
+	<label>APLY</label>
+		<field action="add" tag="10">
+			<pft>
+				v1[1]
+				if s(v6100^x.2) = 'MH' then
+					(if right(v1^v[1],(size(v1^v[1])-instr(v1^v[1],'/')+1)) = v6111 then '^n'replace(v1^v[1],v6111,v6112),break fi)
+				else
+					(if v1^v[1] = v6111 then '^n'replace(v1^v[1],v6111,v6112),break fi)
+				fi
+			</pft>
+		</field>
+
+		<field action="delete" tag="1">1</field>
+		<flow action="jump"><pft>if p(v1) then 'APLY' fi</pft></flow>
+	<field action="replace" tag="1" split="occ"><pft>(v10/)</pft></field>
+	<field action="export" tag="list">1</field>
+</function>
+
+<function name="LogDatabase">
+	<field action="import" tag="list">1002,1031,1032,5000/7000</field>
+
+	<field action="statusdb" tag="1"><pft>v5020</pft></field>
+	<flow action="jump"><pft>if v1^s : 'm' then 'APPEND' fi</pft></flow>
+
+	<label>CREATE DATABASE</label>
+		<file action="create" type="master"><pft>v5020</pft></file>
+
+	<label>APPEND</label>
+		<do task="update">
+			<parm name="db"><pft>v5020</pft></parm>
+			<parm name="mfn">New</parm>
+			<field action="define" tag="1102">Isis_Status</field>
+			<update>
+				<field action="replace" tag="1"><pft>date</pft></field>
+				<field action="replace" tag="2"><pft>getenv('REMOTE_ADDR')</pft></field>
+				<field action="replace" tag="3"><pft>getenv('HTTP_USER_AGENT')</pft></field>
+				<field action="import" tag="list">1031,1032,1002,5001,5003,5007,5008,5009,5013,5018,5021,5050,6000,6001,6002,6003,6100,6102,6211,6213</field>
+				<proc>
+					<pft>'d6001d6002d6003'(if p(v6002) then 'a6001~'v6001'~a6002~'v6002'~',|a6003~|v6003|~| fi/)</pft>
+				</proc>
+				<write>Unlock</write>
+				<!--
+				<display><pft>'user:',v5013</pft></display>
+				<display><pft>ALL</pft></display>
+				-->
+			</update>
+		</do>
+
+</function>
+
+<function name="BVSLog">
+	<field action="import" tag="list">1002,1031,1032,5000/9000</field>
+    <!-- FIX:lang
+	<field action="replace" tag="9998"><pft>if s(mpu,v5021,mpl) = 'P' then 'pt' else if s(mpu,v5021,mpl) = 'E' then 'es' else 'en' fi,fi</pft></field>
+    -->
+
+	<field action="replace" tag="9999"><pft>if p(v6002) then @QUERY.IAH else if p(v6100) then s(mpu,v6100^n,mpl) fi,fi</pft></field>
+
+	<display><pft>'<img src="',v8002,'&fi=',v5003,'&appl=IAH&lang=',v9998,'&page=',v5001,'&search=',v9999,'" border="0" height="1" width="1"/>'</pft></display>
+</function>
+
+<function name="FatalError" action="replace" tag="1">
+	<display><pft>
+		'Content-type: text/html'/#
+		'<font face="arial" size="2"><b>iAH error | ',v1^1,' | 'v1^2,'<p>',v1^3,'</b></font>'
+	</pft></display>
+	<flow action="exit">0</flow>
+</function>
+
+<function name="RemoveExcessiveSpaces">
+	<field action="import"  tag="6002">6002</field>
+
+	<field action="replace" tag="6002" split="occ"><pft>replace(v6002,' ',s(#))</pft></field>
+	<field action="replace" tag="6002"><pft>(v6002 +| |)</pft></field>
+	<field action="export"  tag="6002">6002</field>
+</function>
+
+<function name="displayHeaderXML" action="replace" tag="1">
+	<display>
+		<pft>
+			'Content-type: text/xml'/#
+			if v1 <> 'omit-xml-declaration' then
+				if val(v5018^w)=0 then  
+				'<?xml version="1.0" encoding="ISO-8859-1"?>'/
+				else 
+				'<?xml version="1.0" encoding="utf-8"?>'/
+				fi
+			fi
+		</pft>
+	</display>
+</function>
+
+<!------------------------------------------------------------------------------------------------------------------>
+
+<section name="IAH">
+
+<!-- CGI environment -->
+	<field action="replace" tag="5999">
+		<pft>
+			'1002 isisTotal'/
+			'1031 isisFrom'/
+			'5000 environment'/
+			'5001 nextAction'/
+			'5002 pathImages'/
+			'5003 base'/
+			'5004 baseResubmit'/
+			'5005 avaibleFormats'/
+			'5006 apperance'/
+			'5007 navBar'/
+			'5008 hits'/
+			'5009 format'/
+			'5010 helpInfo'/
+			'5012 gizmoDecod'/
+			'5013 user'/
+			'5113 userPassword'/
+			'5114 photocopy'/
+			'5014 avaibleForms'/
+			'5015 index'/
+			'5018 baseFeatures'/
+			'5020 logDatabase'/
+			'5021 lang'/
+			'5030 logoImage'/
+			'5031 logoURL'/
+			'5040 headerImage'/
+			'5041 headerURL'/
+                        '5050 pathLibrary'/
+			'6000 form'/
+			'6001 conectSearch'/
+			'6002 exprSearch'/
+			'6003 indexSearch'/
+			'6100 selectedIndex'/
+			'6102 termsFromIndex'/
+			'6121 kwicMode'/
+			'6122 indexRoot'/
+			'6205 resultPages'/
+			'6209 listOption'/
+			'6210 listChecked'/
+			'6211 listHit'/
+			'6212 sendOption'/
+			'6213 sendToEmail'/
+			'6400 related'/
+			'7000 limit'/
+			'7001 restriction1'/
+			'7002 restriction2'/
+			'7003 restriction3'/
+			'7004 restriction4'/
+			'7005 restriction5'/
+			'8000 label'/
+			'8001 showheader'/
+			'8002 bvslog'/
+		</pft>
+	</field>
+
+	<cgitable><pft>v5999</pft></cgitable>
+	<field action="cgi" tag="prefix">tag</field>
+	<display><pft>if v5013^* = 'DEBUG' then 'Content-type: text/html'/# fi</pft></display>
+	<trace><pft>if v5013^* = 'DEBUG' then 'On' fi</pft></trace>
+	<parm name="buffersize">800000</parm>
+
+
+	<call name="NextAction">now</call>
+	<call name="UpdPATH_TRANSLATED"><pft>if right(replace(getenv('PATH_TRANSLATED'),'\','/'),1) <> '/' then 'Now' fi</pft></call>
+	<call name="LoadAplDef"><pft>if a(v5000) then 'Now' fi</pft></call>
+	<call name="UpdEnvironment"><pft>if p(v5000^l) then 'Now' fi</pft></call>
+	<call name="LoadBaseDef"><pft>if a(v5005) or p(v5003^n) then 'Now' fi</pft></call>
+	<call name="LoadCipar">now</call>
+	<field action="replace" tag="5002"><pft>if a(v5002) then v5000^d,v5021,'/image/', fi</pft></field>
+
+	<flow action="jump"><pft>mpu,v5001^*,mpl</pft></flow>
+
+	<label>CHECK INSTALL</label>
+		<field action="statusfile" tag="1"><pft>v5000^c,v5021,'/ahform.htm'</pft></field>
+		<call name="FatalError"><pft>if a(v1^s) then '^1application files^2unable to open application files in: ',v5000^c,'^3Check the [PATH] section in system definition file iah.def' fi</pft></call>
+	<label>CHANGE FORM</label>
+	<label>NEW SEARCH</label>
+	    <field action="delete" tag="list">6001,6002,6003,6102,6210</field>
+	<label>ADD TERMS</label>
+        <!-- <display><pft>v6102^*</pft></display>  -->
+		<field action="replace" tag="6102"><pft>v6102^* + | or |</pft></field>
+	<label>FORM</label>
+		<call name="SetStat">FORM</call>
+		<call name="SetHelp"><pft>'^1FORM^2'v6000</pft></call>
+		<call name="LoadIndexList">6099</call>
+		<display><htmlpft><pft>cat('AHFORM.HTM')</pft></htmlpft></display>
+		<flow action="jump">DONE</flow>
+
+	<label>GETINDEX</label>
+		<call name="LoadIndexList">6003</call>
+		<field action="replace" tag="6003"><pft>(if s(mpu,v6003^n,mpl) = s(mpu,v5015[1],mpl) then v6003,break fi)</pft></field>
+		<field action="replace" tag="6000">A</field>
+		<call name="FatalError"><pft>if nocc(v6003) > 1 then '^1index^2unable to show index ',v5015,'^3Please verify if the index is avaible' fi</pft></call>
+
+	<label>INDEX1</label>
+		<call name="SelectedIndex">1</call>
+		<flow action="jump"><pft>if v6100^t = 'short' then 'SHOW INDEX' else 'INDEX FORM' fi</pft></flow>
+	<label>INDEX2</label>
+		<call name="SelectedIndex">2</call>
+		<flow action="jump"><pft>if v6100^t = 'short' then 'SHOW INDEX' else 'INDEX FORM' fi</pft></flow>
+	<label>INDEX3</label>
+		<call name="SelectedIndex">3</call>
+		<flow action="jump"><pft>if v6100^t = 'short' then 'SHOW INDEX' else 'INDEX FORM' fi</pft></flow>
+
+	<label>INDEX FORM</label>
+		<call name="SetStat">INDEX</call>
+		<call name="SetHelp"><pft>'^1INDEX^2'v6100^x.2</pft></call>
+		<display><htmlpft><pft>cat('AHINDX.HTM')</pft></htmlpft></display>
+		<flow action="jump">DONE</flow>
+
+	<label>MORE TERMS</label>
+		<field action="replace" tag="6122"><pft>v6122[3]</pft></field>
+	<label>SHOW INDEX</label>
+		<call name="SetHelp"><pft>'^1INDEX^2'v6100^x.2</pft></call>
+		<call name="SelectedIndex"><pft>v6100^l</pft></call>
+		<flow action="jump"><pft>if v6121 = 'On' then 'SHOW INDEX KWIC' fi</pft></flow>
+
+		<call name="SetStat">INDEX_ALPHA</call>
+		<field action="replace" tag="6122"><pft>if v6122[1]*0.1 = ' ' then v6122[1]*1.1 else v6122[1] fi</pft></field>
+
+		<field action="replace" tag="6122"><pft>if v6122 = '012...' then '0' fi</pft></field>
+
+
+<field action="replace" tag="6665"><pft>
+					,if p(v6100^u) then v6100^u fi,
+					,if v6100^t <> 'short' then v6122 fi,
+				</pft>
+</field>
+<field action="replace" tag="6666"><pft>
+				if p(v6100^u) then v6100^u fi,
+				, if val(v5018^w)>0 then 'ፐፐፐ' 
+				else 'ZZZ' fi
+				</pft>  	
+</field>
+
+		<do task="keyrange">
+			<parm name="db"><pft>if p(v6100^y) then v6100^y else 'DATABASE' fi,v5018^k</pft></parm>
+			<parm name="from">
+					<pft>
+					,if p(v6100^u) then v6100^u fi,
+					,if v6100^t <> 'short' then v6122 fi,
+					</pft>
+			</parm>
+			 <parm name="to">
+				<pft>
+				if p(v6100^u) then v6100^u fi,
+				, if val(v5018^w)>0 then '᎙᎙᎙' else 'ZZZ' fi
+				</pft>  	
+			</parm>   
+
+<!-- cat('LASTCHAR.HTM') */ /*'\u+139x\u+139x\u+139x'  '&#4944'  'ZZZ' */ /* cat('geez.txt') --> 
+<!--	,'ZZZZZZZ'  -->	<!-- last latin char in ISO-8859-1 -->
+<!-- ,'\xe1\x8e\x8f' --> <!-- last amharic char in UTF-8 in Perl quoted string-->
+<!-- , '???' "&#4944" -->   <!--  htmlcode for last alphanumerical char in Amharic alphabet  -->
+			
+
+			<parm name="count"><pft>if v6100^t <> 'short' then '30' fi</pft></parm>
+			<!--  monta posttag com lista de tags por occ  -->
+			<field action="replace" tag="1099" split="occ"><pft>if v6100^x.1 = '/' then replace(v6100^x*1,',',s(#)) fi</pft></field>
+			<parm name="posttag"><pft>(v1099/)</pft></parm>
+			<!-- -->
+			<parm name="posting">1</parm>
+			<field action="define" tag="11">Isis_Key</field>
+
+			<!--  <call name="GizmoIndex"><pft>if p(v6100^g) then 'Now' fi</pft></call> -->
+			<loop>
+				<field action="import" tag="list">1,2,6100,6111,6112</field>
+				<field action="replace" tag="11"><pft>if p(v6100^u) then v11*3 else v11 fi</pft></field>
+
+				<field action="add" tag="1"><pft>'^v',v11</pft></field>
+				<field action="add" tag="2"><pft>if p(v12) then v12 fi</pft></field>
+				<field action="export" tag="list">1,2</field>
+			</loop>
+		<call name="GizmoIndex"><pft>if p(v6100^g) and p(v1) then 'Now' fi</pft></call>
+
+			<display><htmlpft><pft>cat('AHINDX.HTM')</pft></htmlpft></display>
+
+<!--display><htmlpft><pft>'FROM='v6665 '|<BR>TO='v6666'|' </pft></htmlpft></display-->
+<!--'<BR>PREFIX='v6100^u '<BR>v1099='v1099 -->
+		</do>
+		<flow action="jump">DONE</flow>
+
+	<label>SHOW INDEX KWIC</label>
+
+		<call name="SetStat">INDEX_KWIC</call>
+		<field action="replace" tag="6122"><pft>if v6122[1]*0.1 = ' ' then v6122[1]*1.1 else v6122[1] fi</pft></field>
+		<field action="replace" tag="6122"><pft>if v6122 = '012...' then '0' fi</pft></field>
+		<do task="keyrange">
+			<parm name="db"><pft>'KWIC'v6100^y</pft></parm>
+			<parm name="from"><pft>s(mpu,v6122^*,mpl)</pft></parm>
+			<parm name="to"><pft>s(mpu,v6122^*'ZZZZZZZZZZZZZZZZZ',mpl)</pft></parm>
+			<parm name="count">1</parm>
+			<parm name="posting">1</parm>
+
+			<field action="define" tag="11">Isis_Key</field>
+			<field action="define" tag="13">Isis_Posting</field>
+			<loop><!-- descobre primeiro mfn--></loop>
+			<field action="replace" tag="13"><pft>if p(v6122^m) then '^m'v6122^m fi</pft></field>
+
+			<do task="mfnrange">
+				<parm name="db"><pft>'KWIC'v6100^y</pft></parm>
+				<parm name="from"><pft>v13^m</pft></parm>
+				<parm name="count">100</parm>
+				<parm name="gizmo"><pft>(v5012^g/),'MINUSC'/</pft></parm>
+				<loop>
+					<field action="import" tag="list">10,6122,6100</field>
+					<flow action="skip"><pft>if s(mpu,v1^l,mpl) : s(mpu,v6122^*,mpl) then else 'Quit' fi</pft></flow>
+					<field action="add" tag="10">
+						<pft>
+							'^n',v1^f,replace(v1^l,v6122^*,s(mpu,v6122^*,mpl)),
+							'^v',if p(v2) then v2 else v1^f,replace(v1^l,v6122^*,s(mpu,v6122^*,mpl)) fi,
+							'^m',mfn
+						</pft>
+					</field>
+					<field action="export" tag="list">10</field>
+				</loop>
+				<field action="replace" tag="1" split="occ"><pft>(v10/)</pft></field>
+				<display><htmlpft><pft>cat('AHINDX.HTM')</pft></htmlpft></display>
+			</do>
+		</do>
+		<flow action="jump">DONE</flow>
+
+	<label>ASPECTS</label>
+	<label>FASCICLES</label>
+
+		<call name="SetStat">INDEX_ASPECTS/FASCICLES</call>
+		<call name="SetHelp"><pft>'^1ASPECTS/FASCICLES^2'v6100^x.2</pft></call>
+		<list action="load" type="list"><pft>(replace(v6102,'"','')/)</pft></list>
+
+		<do task="list">
+			<field action="define" tag="100">Isis_Item</field>
+			<loop>
+				<field action="import" tag="list">1,2,6100,6111,6112</field>
+				<do task="keyrange">
+					<parm name="db"><pft>if p(v6100^y) then v6100^y else 'DATABASE' fi</pft></parm>
+					<parm name="from"><pft>if p(v6100^u) then v6100^u fi,s(mpu,v100,mpl)'/'</pft></parm>
+                                        <! ZZZ to be changed in case of UTF-8 -->
+					<parm name="to"><pft>if p(v6100^u) then v6100^u fi,s(mpu,v100,mpl), if val(v5018^w)>0 then, '/ZZZZZZ'fi, </pft></parm>
+					<!-- lista de tags por occ para parametro posttag -->
+					<field action="replace" tag="1099" split="occ"><pft>if v6100^x.1 = '/' then replace(v6100^x*1,',',s(#)) fi</pft></field>
+					<parm name="posttag"><pft>(v1099/)</pft></parm>
+					<!-- -->
+					<parm name="posting">1</parm>
+
+					<field action="define" tag="11">Isis_Key</field>
+					<!-- resolve primeira chave do indice -->
+					<field action="add" tag="1"><pft>'^v',s(mpu,v100,mpl)</pft></field>
+					<loop>
+						<field action="import" tag="list">1,2,6100,6111,6112</field>
+						<field action="replace" tag="11"><pft>if p(v6100^u) then v11*3 else v11 fi</pft></field>
+
+						<field action="add" tag="1"><pft>'^v',v11</pft></field>
+						<field action="add" tag="2"><pft>if p(v12) then v12 fi</pft></field>
+						<field action="export" tag="list">1,2</field>
+					</loop>
+				</do>
+				<field action="export" tag="list">1,2</field>
+			</loop>
+		</do>
+		<call name="GizmoIndex"><pft>if p(v6100^g) and p(v1) then 'Now' fi</pft></call>
+		<field action="delete" tag="6102">ALL</field><!-- apaga termos selecionados do indice kwic -->
+		<display><htmlpft><pft>cat('AHINDX.HTM')</pft></htmlpft></display>
+		<flow action="jump">DONE</flow>
+
+	<label>CONFIG</label>
+		<call name="SetStat">CONFIG</call>
+		<display><htmlpft><pft>cat('AHCONF.HTM')</pft></htmlpft></display>
+		<flow action="jump">DONE</flow>
+
+	<label>XML</label>
+		<!-- parametros especificos para xml -->
+		<field action="cgi" tag="11">header</field>
+		<field action="cgi" tag="12">start</field>
+		<field action="cgi" tag="13">count</field>
+		<field action="cgi" tag="14">page</field>
+		<field action="cgi" tag="15">fmt</field>
+
+		<field action="replace" tag="11"><pft>if a(v11) then 'ON' else s(mpu,v11,mpl) fi</pft></field>
+		<field action="replace" tag="12"><pft>if val(v12) < 1 then '1' fi</pft></field>
+		<field action="replace" tag="13"><pft>if a(v13) then v5008 fi</pft></field>
+
+		<field action="replace" tag="6300"><pft>"^h"v11,"^c"v13,"^f"v15,</pft></field>
+
+		<!-- monta tag com isisxml table ou pft que gera xml-->
+		<!-- comentado em 16.02.2005 para nao executar o formato atraves de cat mas sim por '@' no loop e aplicar gizmo_xml
+		<field action="replace" tag="6301" split="occ"><pft>if p(v6300^f) then cat(v6300^f,'.xml') fi</pft></field>
+		<field action="replace" tag="6301" split="occ"><pft>if a(v6301) then cat(replace(v5009,'.pft','.xml')) fi</pft></field>
+		<proc><pft>if p(v6301) and v6301[1].5 <> 'root=' then 'd6301a6302!',(v6301/),'!' fi</pft></proc>
+		-->
+		<field action="replace" tag="6302" split="occ"><pft>if p(v6300^f) then v6300^f,'.xml' fi</pft></field>
+
+		<!-- redefine valores de from, count e expressao -->
+		<field action="replace" tag="5008"><pft>v6300^c</pft></field>
+		<field action="replace" tag="1031"><pft>if p(v6300^p) then f(((val(v6300^p)*val(v5008))+1)-val(v5008),1,0) else v6300^s fi</pft></field>
+
+		<!-- caso nao seja free search realiza index translate -->
+		<field action="delete" tag="6000">1</field>
+		<field action="cgi" tag="6000">form</field>
+
+		<call name="displayHeaderXML"><pft>if s(mpu,v6300^h,mpl) = 'OFF' then 'omit-xml-declaration' else '*' fi</pft></call>
+		<flow action="jump"><pft>if v6000 = 'F' then 'SEARCH' fi</pft></flow>
+
+
+	<label>LNK</label>
+		<!-- pesquisa via link externo -->
+		<call name="LoadIndexList">6099</call>
+		<label>INDEX TRANSLATE</label>
+		<!-- probem in UTF8 next line ?? -->
+			<field action="add" tag="1"><pft>
+			(if s(mpu,v6003[1],mpl) = s(mpu,v6099^n,mpl) then 
+			/* v6099,break else v6099, break   fi) */
+			 v6099, break fi)
+			 </pft></field>
+			<field action="delete" tag="6003">1</field>
+			<flow action="jump"><pft>if p(v6003) then 'INDEX TRANSLATE' fi</pft></flow>
+
+		<field action="replace" tag="6000">A</field>
+		<field action="replace" tag="6001" split="occ"><pft>'init'/(v6001/)</pft></field>
+		<field action="replace" tag="6003" split="occ">
+				<pft>if a(v1) then (if p(v6099^d) then v6099,break fi) else (v1/) fi</pft>
+		</field>
+		<flow action="jump">SEARCH</flow>
+
+	<label>SEARCH TERMS</label>
+		<field action="replace" tag="6100"><pft>'^l1',v6100*3</pft></field>
+		<field action="replace" tag="6102"><pft>v6102^* + | OR |</pft></field>
+		<field action="delete"  tag="6002">ALL</field>
+		<field action="replace" tag="6003"><pft>v6100*3</pft></field>
+		<flow action="jump">SEARCH</flow>
+
+	<label>REFINE/RESUBMIT</label>
+		<!--deleta listChecked e isisFrom -->
+		<field action="delete" tag="6210">ALL</field>
+		<field action="delete" tag="1031">ALL</field>
+		<flow action="jump">SEARCH</flow>
+
+	<label>FIRST PAGE</label>
+	<label>LAST PAGE</label>
+	<label>GO PAGE</label>
+	<call name="firstHit">now</call>
+
+	<label>EXTSEARCH</label>
+		<!-- pesquisas enviadas via formulario externo -->
+	<label>SEARCH</label>
+		<call name="SetStat">SEARCH</call>
+		<call name="LoadIndexList">6099</call>
+		<call name="RemoveExcessiveSpaces"><pft>if v6000 = 'F' and v6002 : ' ' then 'now' fi</pft></call>
+
+		<do task="search">
+    		<parm name="db">DATABASE</parm>
+			<parm name="reverse"><pft>if s(mpu,v5006^r,mpl) = 'ON' then 'On' fi</pft></parm>
+			<parm name="indexlist">
+				<pft>
+					(if p(v6099^d) and p(v6099^y) then,
+					   '^p*^y',v6099^y,|^u|v6099^u,|^m|v6099^m,/
+					fi),
+					(if p(v6099^x) and p(v6099^y) then,
+					   '^p',v6099^x,'^y',v6099^y,|^u|v6099^u,|^m|v6099^m,/
+					fi),
+				</pft>
+			</parm>
+
+			<!-- query -->
+			<field action="replace" tag="6010"><pft>@QUERY.IAH</pft></field>
+			<parm name="expression"><pft>v6010</pft></parm>
+			<parm name="from"><pft>v1031</pft></parm>
+
+	    	<parm name="count">1</parm>
+			<parm name="actab"><pft>if p(v5018^a) then cat(v5018^a) fi</pft></parm>
+			<parm name="uctab"><pft>if p(v5018^u) then cat(v5018^u) fi</pft></parm>
+
+		    <field action="define" tag="1001">Isis_Current</field>
+    		<field action="define" tag="1002">Isis_Total</field>
+			<field action="define" tag="1031">Isis_From</field>
+		    <field action="define" tag="1091">Isis_Status</field>
+		    <field action="define" tag="1092">Isis_ErrorInfo</field>
+			<loop><!-- Set 1002--></loop>
+			<parm name="count"><pft>v5008</pft></parm>
+			<parm name="gizmo"><pft>(v5012^g/)</pft></parm>
+			<parm name="decod"><pft>v5012^d</pft></parm>
+
+			<call name="ResultPages">now</call>
+
+			<field action="replace" tag="1032"><pft>f(val(v1031)+val(v5008)-1,1,0)</pft></field>
+			<!-- in UTF8 following line produces 0 ?? -->
+			<!-- field action="replace" tag="1032"><pft>if val(v1002) < val(v1032) then v1002 else v1032 fi</pft></field> -->
+
+			<!-- monta prolog html/xml -->
+			<display><htmlpft><pft>if v5001^* = 'xml' then else cat('AHBTOP.HTM') fi</pft></htmlpft></display>
+
+			<flow action="jump"><pft>if v5001^* = 'xml' then else 'SKIP_PROLOG' fi</pft></flow>
+				<parm name="isisxml style">2</parm>
+				<parm name="isisxml table"><pft>cat('PROLOG.I2X')</pft></parm>
+				<display><pft>'<iah version="',v5000^v,'">'/</pft></display>
+				<display><isisxml>*</isisxml></display>
+				<flow action="jump"><pft>if val(v5008) = 0 then 'SKIP_OUTPUT_XML' else 'OUTPUT XML' fi</pft></flow>
+
+			<label>SKIP_PROLOG</label>
+			<parm name="decod"><pft>v5012^d</pft></parm>
+			<parm name="gizmo"><pft>(v5012^g/)</pft></parm>
+
+			<loop>
+				<field action="import" tag="list">1032,5000/5009,5013,5018,5021,5050,6000,6001,6002,6003,6010,6102,6205,6210,7001,7002,7003,7004,7005,8000,8001,8002</field>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+				<display><htmlpft><pft>cat('AHBNAV.HTM')</pft></htmlpft></display>
+
+				<display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+				<display><htmlpft><pft>if s(mpu,v5009,mpl) : '.HTM' then cat(v5009) fi</pft></htmlpft></display>
+				<display><pft>'</div></div>'</pft></display>
+
+
+			</loop>
+			<display><htmlpft><pft>cat('AHBBOT.HTM'),cat('AHFORM.HTM')</pft></htmlpft></display>
+			<flow action="skip">Next</flow>
+
+			<label>OUTPUT XML</label>
+
+				<parm name="gizmo"><pft>(v5012^g/),'GIZMO_XML'/</pft></parm>
+				<parm name="isisxml style"><pft>if p(v6301) then '2' else '0' fi</pft></parm>
+				<parm name="isisxml table"><pft>if p(v6301) then '1001 current-hit'/'1002 total-hits'/(v6301/) fi</pft></parm>
+
+				<loop>
+					<field action="import" tag="list">1031,6300,6301,6302,5003,5018</field>
+					<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+					<display><isisxml><pft>if a(v6302) then '*' fi</pft></isisxml></display>
+					<flow action="skip"><pft>if a(v6302) then 'Next' fi</pft></flow>
+
+					<display><pft>'<document mfn="',mfn(1),'">'</pft></display>
+						<display><pft><pft>'@',v6302</pft></pft></display>
+					<display><pft>'</document>'</pft></display>
+
+				</loop>
+
+				<label>SKIP_OUTPUT_XML</label>
+ 				<display><pft>'</iah>'/</pft></display>
+
+		</do>
+		<flow action="jump">DONE</flow>
+
+	<label>CHECK_MAINTANCE</label>
+
+		<display><pft>@AHHEAD.PFT</pft></display>
+		<display><pft>@AHMANU.PFT</pft></display>
+		<flow action="jump">DONE</flow>
+
+	<label>LIST</label>
+		<flow action="jump"><pft>s(mpu,v6209,mpl)</pft></flow>
+		<call name="SetStat">LIST</call>
+		<display><htmlpft><pft>cat('AHSEND.HTM')</pft></htmlpft></display>
+		<flow action="jump">DONE</flow>
+
+	<label>TOPRINT</label>
+		<field action="replace" tag="6210"><pft>'^m'v5001^m</pft></field>
+		<field action="replace" tag="6212">print</field>
+		<call name="SetStat">LIST_ONE</call>
+
+	<label>YOUR_SELECTION</label>
+		<field action="replace" tag="6212">print</field>
+		<call name="SetStat">LIST_YOUR_SELECTION</call>
+	<label>LIST_SELECTED</label>
+		<call name="SetStat"><pft>if a(v5001^s) then 'LIST_SELECTED' fi</pft></call>
+		<call name="SendByEmail"><pft>if v6212 = 'e-mail' then 'OPEN' fi</pft></call>
+		<call name="displayHeaderXML"><pft>if v6212 = 'save-xml' then '*' fi</pft></call>
+		<list action="load" type="list"><pft>(if val(v6210^m) > 0 then f(val(v6210^m),10,0) fi/)</pft></list>
+
+		<!--flow action="jump"><pft>if v6212 = 'save-iso' then 'EXPORT_MFN' fi</pft></flow-->
+		<flow action="jump"><pft>if v6212.6 = 'export' then 'EXPORT_MFN' fi</pft></flow>
+		<do task="list">
+			<field action="define" tag="2001">Isis_Item</field>
+			<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Itens</field>
+			<loop>
+
+				<field action="import" tag="list">5003,5006,5009,5012,5018,5021,5050,6000/6003,6210,6212,7001/7005,8000,8001,8002</field>
+				<display><pft>if v6212 <> 'save-xml' then @AHLIST.PFT fi</pft></display>
+
+				<do task="mfnrange">
+			   		<parm name="db">DATABASE</parm>
+					<parm name="gizmo">
+						<pft>if val(v1001) = 1 then (v5012^g/),if v6212 = 'save-xml' then 'GIZMO_XML'/ fi, fi,</pft>
+					</parm>
+					<parm name="decod"><pft>if val(v1001) = 1 then v5012^d fi</pft></parm>
+
+					<parm name="from"><pft>v2001</pft></parm>
+			    	<parm name="count">1</parm>
+
+					<loop>
+						<field action="import" tag="list">1001,1002,5000/5009,5018,5021,6212</field>
+
+						<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+						<flow action="jump"><pft>if v6212 = 'save-xml' then 'DISPLAY_XML' fi</pft></flow>
+							<display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+							<display><htmlpft><pft>if s(mpu,v5009,mpl) : '.HTM' then cat(v5009) fi</pft></htmlpft></display>
+							<display></div></div></display>
+							<flow action="skip">Next</flow>
+						<label>DISPLAY_XML</label>
+							<display><pft>@DATABASE.XML</pft></display>
+					</loop>
+				</do>
+			</loop>
+			<display><pft>if v6212 <> 'save-xml' then @AHFOOT.PFT fi</pft></display>
+		</do>
+		<call name="SendByEmail"><pft>if v6212='e-mail' then 'SEND' fi</pft></call>
+		<flow action="jump">DONE</flow>
+
+	<label>LIST_ALL</label>
+		<field action="delete" tag="6211">ALL</field>
+		<call name="SetStat"><pft>if a(v5001^s) then 'LIST_ALL' fi</pft></call>
+	<label>LIST_HITS</label>
+		<call name="SetStat"><pft>if a(v5001^s) then 'LIST_HITS' fi</pft></call>
+		<call name="SendByEmail"><pft>if v6212='e-mail' then 'OPEN' fi</pft></call>
+		<call name="displayHeaderXML"><pft>if v6212 = 'save-xml' then '*' fi</pft></call>
+		<call name="LoadIndexList">6099</call>
+
+		<!--flow action="jump"><pft>if v6212 = 'save-iso' then 'EXPORT_HIT' fi</pft></flow-->
+		<flow action="jump"><pft>if v6212.6 = 'export' then 'EXPORT_HIT' fi</pft></flow>
+		<do task="search">
+    		<parm name="db">DATABASE</parm>
+			<parm name="reverse"><pft>if s(mpu,v5006^r,mpl) = 'ON' then 'On' fi</pft></parm>
+			<parm name="indexlist">
+				<pft>
+					(if p(v6099^d) and p(v6099^y) then,
+					   '^p*^y',v6099^y,|^u|v6099^u,|^m|v6099^m,/
+					fi),
+					(if p(v6099^x) and p(v6099^y) then,
+					   '^p',v6099^x,'^y',v6099^y,|^u|v6099^u,|^m|v6099^m,/
+					fi),
+				</pft>
+			</parm>
+			<parm name="expression"><pft>@QUERY.IAH</pft></parm>
+			<parm name="from"><pft>v6211[1]</pft></parm>
+                        <parm name="to"><pft>v6211[2]</pft></parm>
+			<parm name="gizmo"><pft>(v5012^g/),if v6212 = 'save-xml' then 'GIZMO_XML'/ fi,</pft></parm>
+			<parm name="decod"><pft>v5012^d</pft></parm>
+			<parm name="actab"><pft>if p(v5018^a) then cat(v5018^a) fi</pft></parm>
+			<parm name="uctab"><pft>if p(v5018^u) then cat(v5018^u) fi</pft></parm>
+
+		    <field action="replace" tag="1001">0</field>
+    		<field action="define"  tag="1002">Isis_Total</field>
+			<loop>
+				<field action="import" tag="list">1001,5003,5006,5009,5012,5018,5021,5050,6000,6001,6002,6003,6210,6211,6212,7001/7005,8000,8001,8002</field>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+				<field action="replace" tag="1001"><pft>f(val(v1001)+1,1,0)</pft></field>
+				<field action="replace" tag="1002"><pft>if p(v6211) then f(val(v6211[2])-val(v6211[1])+1,1,0) fi</pft></field>
+
+				<flow action="jump"><pft>if v6212 = 'save-xml' then 'DISPLAY_XML' fi</pft></flow>
+					<display><pft>@AHLIST.PFT</pft></display>
+					<display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+					<display><htmlpft><pft>if s(mpu,v5009,mpl) : '.HTM' then cat(v5009) fi</pft></htmlpft></display>
+					<display><pft>'</div></div>'</pft></display>
+					<field action="export" tag="list">1001</field>
+					<flow action="skip">Next</flow>
+
+				<label>DISPLAY_XML</label>
+					<display><pft>@DATABASE.XML</pft></display>
+					<field action="export" tag="list">1001</field>
+			</loop>
+			<display><pft>if v6212 <> 'save-xml' then @AHFOOT.PFT fi</pft></display>
+		</do>
+		<call name="SendByEmail"><pft>if v6212='e-mail' then 'SEND' fi</pft></call>
+		<flow action="jump">DONE</flow>
+
+	<label>EXPORT_MFN</label>
+		<field action="replace" tag="9000">list</field>
+		<flow action="jump">EXPORT</flow>
+	<label>EXPORT_HIT</label>
+		<field action="replace" tag="9000">search</field>
+		<field action="replace" tag="9001"><pft>v6211[1]</pft></field>
+		<field action="replace" tag="9002"><pft>v6211[2]</pft></field>
+		<field action="replace" tag="9003"><pft>@QUERY.IAH</pft></field>
+	<label>EXPORT</label>
+		<display><pft>'Content-type: bireme/application'/</pft></display>
+        <display><pft>'Content-Disposition: inline; filename="resultado.',v6212*7,'"'/#</pft></display>
+		<do>
+			<parm name="task"><pft>v9000</pft></parm>
+			<parm name="db">DATABASE</parm>
+			<parm name="from"><pft>v9001</pft></parm>
+	    	<parm name="to"><pft>v9002</pft></parm>
+			<parm name="expression"><pft>v9003</pft></parm>
+			<parm name="reverse"><pft>if s(mpu,v5006^r,mpl) = 'ON' and v9000 <> 'list' then 'On' fi</pft></parm>
+			<parm name="indexlist">
+				<pft>(if p(v6099^d) then '^p*^y'v6099^y,|^u|v6099^u,|^m|v6099^m/ fi,'^p'v6099^x'^y'v6099^y,|^u|v6099^u,|^m|v6099^m/)</pft>
+			</parm>
+			<parm name="gizmo"><pft>(v5012^g/)</pft></parm>
+			<parm name="decod"><pft>v5012^d</pft></parm>
+			<!-- envia ISO direto para standard output com CRLF -->
+			<parm name="file">STDOUT</parm>
+			<parm name="type"><pft>if v6212 = 'export-iso' then 'ISO2709_CRLF' fi</pft></parm>
+
+			<field action="define" tag="1000">Isis_Current</field>
+			<field action="define" tag="1001">Isis_Item</field>
+			<loop>
+				<field action="import" tag="list">6212</field>
+				<!-- caso seja lista de selecionados executa PROC somente na funï¿½ï¿½o fielddir -->
+				<flow action="jump"><pft>if val(v1001) > 0 then 'PASS_PROC' fi</pft></flow>
+				<!-- ordena tags para exportaï¿½ï¿½o do iso-->
+				<proc>s</proc>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+
+				<label>PASS_PROC</label>
+				<call name="FieldDir"><pft>if val(v1001) > 0 then '^m'v1001,'^i'v1000 fi</pft></call>
+				<flow action="jump"><pft>if v6212 <> 'export-iso' then 'EXPORT_USERFORMAT' fi</pft></flow>
+
+				<label>EXPORT_ISO</label>
+				<field action="delete" tag="list">1000,1001,6212</field>
+				<export>Now</export>
+				<flow action="skip">Next</flow>
+
+				<label>EXPORT_USERFORMAT</label>
+				<!-- variavel temp contendo o nome do formato que deve ser executado (user format) na exportaï¿½ï¿½o do dado -->
+				<field action="replace" tag="9999"><pft>mid(v6212,instr(v6212,'-')+1,size(v6212))</pft></field>
+				<display><pft><pft>'@',v9999</pft></pft></display>
+
+			</loop>
+		</do>
+		<flow action="jump">DONE</flow>
+
+	<label>PHOTOCOPY REQUEST</label>
+		<call name="SetStat">SCAD</call>
+
+		<!-- monta arquivo de parametros in a partir da lista de variaves de memoria 5999 -->
+			<file action="create" type="tempfile">9010</file>
+			<file action="append" type="output"><pft>v9010</pft></file>
+			<field action="replace" tag="9001" split="occ"><pft>(v5999/)</pft></field>
+			<field action="replace" tag="9001" split="occ"><pft>(if v9001 : 'nextAction' then else v9001/, fi)</pft></field>
+
+			<display><pft>
+				'IsisScript=',v5000^s,/
+				'nextAction=ACCESS SCAD'/
+				"photocopy=^m"v5001^m,"^h"v5001^h,"^p"v5001^p/
+			</pft></display>
+			<display><pft><pft>(`(|`v9001*5`=|v`v9001.4`/),`)</pft></pft></display>
+			<file action="close" type="output"><pft>v9010</pft></file>
+
+		<!-- system para wxis normal -->
+		<field action="replace" tag="9005">
+			<pft>
+				,if size(getenv('PATH_WXIS')) > 0 then getenv('PATH_WXIS') else left(v5000^c,instr(v5000^c,'/iah')) fi,
+				,'wxis',
+			</pft>
+		</field>
+
+		<display><pft>system(putenv('REQUEST_METHOD=POST'),putenv('CONTENT_LENGTH=0'),v9005,' in='v9010,)</pft></display>
+
+		<file action="delete" type="file"><pft>v9010</pft></file>
+		<flow action="jump">DONE</flow>
+
+	<label>ACCESS SCAD</label>
+		<call name="SetStat">SCAD</call>
+
+		<flow action="jump"><pft>if p(v5013^m) then 'MOUNT REQUEST' fi</pft></flow>
+		<flow action="jump"><pft>if a(v5013) or a(v5113) or s(v5013) = 'GUEST' then 'LOGIN SCAD' fi</pft></flow>
+		<flow action="jump"><pft>if p(v5113) and ref(['USER']l(['USER']'CODE='v5013),s(mpu,v697,mpl)) <> s(mpu,v5113,mpl) then 'LOGIN SCAD' fi</pft></flow>
+		<field action="replace" tag="5013"><pft>v5013,ref(['USER']l(['USER']s('CODE=',v5013)),'^m',mfn(1),"^b"v90)</pft></field>
+		<flow action="jump"><pft>if p(v5013^b) then 'LOGIN SCAD' fi</pft></flow>
+
+	<label>MOUNT REQUEST</label>
+		<field action="replace" tag="5703" split="occ"><pft>(v5999/)</pft></field>
+		<field action="replace" tag="5703" split="occ"><pft><pft>(`(|`v5703*5`=|v`v5703.4`/),`/)</pft></pft></field>
+		<field action="replace" tag="5703" split="occ"><pft>(if right(v5703,1) <> '=' then v5703 fi/)</pft></field>
+
+		<do task="mfnrange">
+	   		<parm name="db">DATABASE</parm>
+			<parm name="gizmo"><pft>(v5012^g/)</pft></parm>
+			<parm name="decod"><pft>v5012^d</pft></parm>
+			<parm name="from"><pft>v5114^m</pft></parm>
+    		<parm name="count">1</parm>
+			<loop>
+				<field action="import" tag="list">5000/5021,5050,5114,5703</field>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+
+				<flow action="jump"><pft>if v5003^*.7 <> 'MEDLINE' and s(v5.1) <> 'S' then 'CONTINUE' fi</pft></flow>
+
+					<!-- monta lista com codigo das biblioteca que possuem documento -->
+					<do task="search">
+						<parm name="db">FA</parm>
+						<parm name="expression">
+							<pft>
+							if v5003^*.7 <> 'MEDLINE' and s(v5.1) = 'S' then
+								'"'v30'"',| AND |v65*0.4,| AND |v31,| AND |v32
+							else
+								v999^4,|@|v999^q*0.4,|@|v999^w,|@|v999^t
+							fi
+							</pft>
+						</parm>
+						<parm name="count">1</parm>
+						<field action="define" tag="1002">Isis_Total</field>
+						<field action="define" tag="1001">Isis_Current</field>
+						<loop>
+							<field action="replace" tag="9000" split="occ"><pft>(v800^a/)</pft></field>
+							<field action="export" tag="9000">9000</field>
+						</loop>
+					</do>
+					<!-- done -->
+
+				<label>CONTINUE</label>
+				<proc><pft>@SCAD.PRC</pft></proc>
+				<display><pft>'Content-type:text/html',/#,</pft></display>
+				<display><pft>,@USER.PFT,@REQFORM.PFT,@BOTTOM.PFT,</pft></display>
+			</loop>
+		</do>
+		<flow action="jump">DONE</flow>
+
+
+	<label>LOGIN SCAD</label>
+		<display><htmlpft><pft>cat('AHSCAD.HTM')</pft></htmlpft></display>
+		<flow action="jump">DONE</flow>
+
+
+	<label>LIST_RELATED</label>
+		<call name="SetStat"><pft>if a(v5001^s) then 'LIST_RELATED' fi</pft></call>
+
+		<!-- carrega lista interna com os mfns dos documentos relacionados -->
+		<do task="mfnrange">
+	   		<parm name="db">RELATED</parm>
+			<parm name="from"><pft>v6400</pft></parm>
+	    	<parm name="count">1</parm>
+			<loop>
+				<list action="load" type="list"><pft>(if val(v1^*) > 0 then v1 fi/)</pft></list>
+			</loop>
+		</do>
+		<!-- seta os valores de 1001/1002 da lista para apresentaï¿½ï¿½o do cabeï¿½alho da pagina -->
+		<do task="list">
+			<field action="define" tag="2001">Isis_Item</field>
+			<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Itens</field>
+			<loop></loop>
+		</do>
+		<!-- monta cabecalho com a referencia do documento original -->
+		<do task="mfnrange">
+	   		<parm name="db">DATABASE</parm>
+			<parm name="from"><pft>v6400</pft></parm>
+	    	<parm name="count">1</parm>
+			<parm name="gizmo"><pft>(v5012^g/)</pft></parm>
+			<parm name="decod"><pft>v5012^d</pft></parm>
+
+			<loop>
+				<field action="import" tag="list">1001,1002,1032,5000/8000</field>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+				<display><htmlpft><pft>cat('AHRTOP.HTM')</pft></htmlpft></display>
+			</loop>
+		</do>
+
+		<!-- percorre a lista e mostra os documentos relacionados -->
+		<do task="list">
+			<field action="define" tag="2001">Isis_Item</field>
+			<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Itens</field>
+
+			<loop>
+				<field action="import" tag="list">1032,5000/5009,5012,5013,5018,5021,5050,6000/6003,6102,6205,6210,6400,7001/7005,8000</field>
+
+				<do task="mfnrange">
+			   		<parm name="db">DATABASE</parm>
+					<parm name="from"><pft>v2001^*</pft></parm>
+			    	<parm name="count">1</parm>
+
+					<loop>
+						<field action="import" tag="list">1001,1002,1032,2001,5000/5009,5013,5018,5021,5050,6000,6001,6002,6003,6102,6205,6210,6400,7001/7005,8000</field>
+						<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+						<display><htmlpft><pft>cat('AHRNAV.HTM')</pft></htmlpft></display>
+
+						<display><pft><pft>if s(mpu,v5009,mpl) : '.PFT' then '@',v5009 fi</pft></pft></display>
+						<display><htmlpft><pft>if s(mpu,v5009,mpl) : '.HTM' then cat(v5009) fi</pft></htmlpft></display>
+						<display><pft>'</div></div>'</pft></display>
+					</loop>
+
+
+				</do>
+			</loop>
+			<display><htmlpft><pft>cat('AHRBOT.HTM')</pft></htmlpft></display>
+		</do>
+		<flow action="jump">DONE</flow>
+
+	<label>ROBOTS</label>
+		<display>
+	   	  <pft>
+			  'Content-type: text/html'/#
+			  '<html>
+			    <head>
+				 <META NAME="robots" CONTENT="NOINDEX,FOLLOW">
+				 <title>',v5003,'</title>
+			    </head>
+			    <body leftmargin="30">
+			 	  <h2>',v5003,'</h2>'
+	   	  </pft>
+		</display>
+
+		<field action="cgi" tag="9000">redirect</field>
+		<field action="cgi" tag="9001">page</field>
+
+		<!-- url to iah -->
+		<field action="replace" tag="9002">
+			<pft>
+				if p(v9000) then
+					'http://',v9000,'/?base='v5003'&lang='v5021
+				else
+					'http://',getenv('HTTP_HOST'),getenv('SCRIPT_NAME'),v5000^d,'?IsisScript='v5000^s'&base='v5003'&lang='v5021'&pathLibrary='v5050
+				fi
+			</pft>
+		</field>
+		<!-- max of result set pages (limited for google suggestion) -->
+		<field action="replace" tag="9003">600</field>
+		<!-- initial number of records per page -->
+		<field action="replace" tag="9008"><pft>f(val(v5008)*10,1,0)</pft></field>
+
+		<!-- set total mfn's -->
+		<do task="mfnrange">
+		  	<parm name="db">DATABASE</parm>
+			<parm name="from">1</parm>
+			<parm name="count">1</parm>
+
+		   	<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Total</field>
+			<loop><!-- set total --></loop>
+		</do>
+		<!--
+		adjust count value for browse database
+		based on total of records adjust the total of records by page
+		-->
+		<field action="replace" tag="9008"><pft>if (val(v1002)/val(v9003)) < val(v9008) then v9008 else f(val(v1002)/val(v9003),1,0) fi</pft></field>
+		<field action="replace" tag="9009"><pft>f(val(v1002)/val(v9008),1,5)</pft></field>
+		<flow action="jump"><pft>if p(v9001) then 'ROBOTS.PAGE' fi</pft></flow>
+
+		<label>ROBOTS.TOC</label>
+
+			<!--calculate last page-->
+			<field action="replace" tag="9010"><pft>left(v9009,instr(v9009,'.')-1)</pft></field>
+			<field action="replace" tag="9010"><pft>if val(right(v9009,size(v9009)-instr(v9009,'.'))) > 0 then f(val(v9010)+1,1,0) fi</pft></field>
+			<field action="replace" tag="9010"><pft>if val(v9010) = 0 then '1' fi</pft></field>
+
+			<do>
+				<parm name="from">1</parm>
+				<parm name="to"><pft>v9010</pft></parm>
+				<field action="define" tag="1001">Isis_Current</field>
+				<display><pft>'<ul>'/</pft></display>
+				<loop>
+					<field action="import" tag="list">9002</field>
+					<display><pft>'<li><a href="',v9002,'&nextAction=robots&page=',v1001,'">result set ',v1001,'</a></li>'/</pft></display>
+				</loop>
+				<display><pft>'</ul>'/</pft></display>
+			</do>
+			<flow action="jump">DONE</flow>
+
+		<label>ROBOTS.PAGE</label>
+		<field action="replace" tag="1031"><pft>f(((val(v9001)*val(v9008))+1)-val(v9008),1,0)</pft></field>
+
+		<do task="mfnrange">
+		  	<parm name="db">DATABASE</parm>
+			<parm name="from"><pft>v1031</pft></parm>
+			<parm name="count"><pft>v9008</pft></parm>
+
+	    	<field action="define" tag="1001">Isis_Current</field>
+			<field action="define" tag="1002">Isis_Total</field>
+
+			<display><pft>'<ol start="',v1031,'">'/</pft></display>
+
+			<loop>
+				<field action="import" tag="list">1031,1032,5003,5009,5018,9002</field>
+				<display><pft><pft>cat('PROC.PFT'),','</pft></pft></display>
+
+				<field action="replace" tag="9090">
+					<pft>
+						if p(v999^3) then v999^3 fi,			/* MEDLINE */
+						if p(v2) then v2 else mfn(0) fi, 		/* LILACS  */
+					</pft>
+				</field>
+				<display>
+					<pft>
+						'<li>'
+							'<a href="',v9002,'&nextAction=lnk&exprSearch=',v9090,'&indexSearch=',if p(v999^3) then 'UI' else 'ID' fi,'">document id:',v9090,'</a>'
+						'</li>'/
+					</pft>
+				</display>
+			</loop>
+			<display></ol></display>
+
+			<display></body></html></display>
+
+		</do>
+	<flow action="jump">DONE</flow>
+
+
+	<label>DONE</label>
+		<!--finaliza a aplicacacao realizando append na base de log se parametro logDatabase estiver presente -->
+		<call name="LogDatabase"><pft>if p(v5020) then 'Now' fi</pft></call>
+		<!-- inclui no final da pagina img com link para bvslog, exceto para output xml (chamadas do metaiah) -->
+		<call name="BVSLog"><pft>if p(v8002) and v5001^* <> 'xml' then 'Now' fi</pft></call>
+
+</section>
+</IsisScript>
+
+<!--
+	5000 environment
+		^a action
+		^b path_database
+		^c path_cgi-bin
+		^d path_data
+		^s script name
+		^p alternate path for database definition files
+		^l localserver info
+		^t tempdir
+
+
+	5001 nextAction
+		^s state
+
+	5002 pathImages
+
+	5003 base
+		^* arquivo define
+		^d drive para cipchange
+		^n New - base atual alterada executar funcao LoadBaseDef
+
+	5004 baseResubmit
+
+	5005 availableFormats
+		^n nome logico
+		^p nome por
+		^e nome esp
+		^i nome ing
+
+	5006 apperance
+		^c body background color
+		^i body background image
+		^t body text color
+		^l body link color
+		^b bar color
+		^e administrator email
+		^m multi-language ON/OFF
+		^r display results in reverse mode ON/OFF
+		^v body vlink color
+
+	5007 navBar
+	5008 hits
+	5009 format
+	5010 helpInfo
+		^n identificacao do help/nota explicativa
+		^v nome do arquivo html
+
+	5011 helpSensitive
+		^h help para state atual do sistema
+		^n nota para state atual do sistema
+
+	5012 gizmoDecod
+		^g gizmo
+		^d decod
+	5013 user
+		^* codigo user
+		^m mfn na base de user
+
+	5014 availableForms
+	   F,B,A - Free, Basic, Advanced
+
+	5015 acesso direto a um determinado indice Ex. index=AU
+
+	5018 baseFeatures
+
+	5020 logDatabase
+	5021 lang
+
+	5030 logoImage
+	5031 logoURL
+	5040 headerImage
+	5041 headerURL
+
+	6000 form
+	6001 conectSearch
+	6002 exprSearch
+	6003 indexSearch
+		^l linha do form
+		^n nome
+		^x prefixo
+		^y invertido
+		^u prefixo no invertido
+		^t tipo (kwic,short)
+		^g gizmo (aplica gizmo nos termos do indice)
+		^s search tags
+	6099 indexList
+	6100 selectedIndex
+		^l linha do form
+		^n nome
+		^x prefixo
+		^y invertido
+		^u prefixo no invertido
+		^t tipo (kwic,short)
+		^g gizmo (aplica gizmo nos termos do indice)
+		^s lista de tags para search
+
+	6111 gizmoIndex tag 1
+	6112 gizmoIndex tag 2
+
+	6102 termsFromIndex
+	6121 kwicMode
+	6122 indexRoot
+
+	6205 pagesRange
+
+	6209 listOption
+	6210 listChecked
+			^m mfn
+	6211 listHit
+    6211 listHit
+    6300 xmlOptions
+    6301 xmlTable
+    6302 xmlPFT
+
+	6400 related
+		^m mfn
+
+	7000 - limite da pesquisa (restricao do expression)
+
+	8000 label
+	8001 showheader
+	8002 bvslog
+
+	#macro-substituicoes aplicados no def da base
+		#
+		%path_database%
+		%path_cgi-bin%
+		%lang%
+                %pathLibrary%
+-->
