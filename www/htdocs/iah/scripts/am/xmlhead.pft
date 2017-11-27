@@ -1,0 +1,19 @@
+'Content-type: text/xml'##
+if v6300^h = 'ON' then, 
+	'<?xml version="1.0" encoding="iso-8859-1"?>'/
+fi	
+
+'<searchResult>'/
+	'<searchInfo>'/				
+		'<base>',v5003,'</base>'/
+		'<expression>',
+			if v6000='F' then,
+				replace(v6002,' ',s(' 'mpu,v6001,mpl' '))
+			else,	 
+				(if p(v6002) then if iocc > 1 then ' ',v6001,' 'fi,v6002,' [',v6003^p,']' fi),
+			fi,								
+		'</expression>',/
+		|<total>|v1002|</total>|/
+		|<start>|v1031|</start>|/
+		|<count>|v5008|</count>|/									
+	'</searchInfo>'/

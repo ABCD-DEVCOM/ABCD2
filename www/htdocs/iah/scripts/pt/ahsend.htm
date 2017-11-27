@@ -10,16 +10,16 @@
             var ref1 = parseFloat(document.Option.listHit[1].value);
 
             if(document.Option.listHit[0].value.length == 0 || document.Option.listHit[1].value.length == 0 ) {
-                alert("Informe os valores de início e fim da faixa de impressão");
+                alert("Informe os valores de inÃ­cio e fim da faixa de impressÃ£o");
                 return false;
             }
             if((ref0 > ref1) || isNaN(ref0) || isNaN(ref1) || ref0 <= 0 || ref1 <= 0) {
-                alert("Valores da faixa de impressão inválidos");
+                alert("Valores da faixa de impressÃ£o invÃ¡lidos");
                 return false;
             }
 
             if(eval(document.Option.listHit[0].value) > [pft]v1002[/pft] || eval(document.Option.listHit[1].value) > [pft]v1002[/pft]) {
-                alert("Valor máximo de referência para esta opção: [pft]v1002[/pft]");
+                alert("Valor mÃ¡ximo de referÃªncia para esta opÃ§Ã£o: [pft]v1002[/pft]");
                 return false;
             }
         }
@@ -33,14 +33,14 @@
             if (type == "iso" || type == "xml"){
                 if (document.Option.listOption[0].checked == true){ // list_all
                     if ([pft]v1002[/pft] > 1000) {
-                        alert("Valor máximo de referência para esta opção: 1000");
+                        alert("Valor mÃ¡ximo de referÃªncia para esta opÃ§Ã£o: 1000");
                         return false;
                     }
                 }
 
                 if (document.Option.listOption[1].checked == true){ // list_hits
                     if ((document.Option.listHit[1].value - document.Option.listHit[0].value) > 1000) {
-                        alert("Valor máximo de referência para esta opção: 1000");
+                        alert("Valor mÃ¡ximo de referÃªncia para esta opÃ§Ã£o: 1000");
                         return false;
                     }
                 }
@@ -68,7 +68,7 @@
                      (email.length > 5);
 
             if (!isGood) {
-                alert("O endereço de e-mail está incorreto")
+                alert("O endereÃ§o de e-mail estÃ¡ incorreto")
                 return false;
             }
         }
@@ -91,16 +91,16 @@
 
     <div class="contBorder">
 
-        <div class="celLeft"><b>Quais referências?</b></div>
+        <div class="celLeft"><b>Quais referÃªncias?</b></div>
 
         <div class="celRight">
             <div class="rowHigh">
                     <input type="Radio" name="listOption" value="list_all" [pft]if a(v6210) then 'checked' fi[/pft] />
-                Todas as referências ([pft]v1002[/pft])
+                Todas as referÃªncias ([pft]v1002[/pft])
             </div>
             <div class="rowHigh">
                     <input type="Radio" name="listOption" value="list_hits" />
-                Intervalo de referências de
+                Intervalo de referÃªncias de
                     <input type="text" name="listHit" maxlength="6" size="4" onFocus="document.Option.listOption[1].checked = true" />
                 <span class="labl">&nbsp;-&nbsp;</span>
                 <input type="text" name="listHit" maxlength="6" size="4" onFocus="document.Option.listOption[1].checked = true" />
@@ -111,7 +111,7 @@
                     [pft]else[/pft]
                         &nbsp;<img src="[pft]v5002[/pft]radio.gif" border="0" />
                     [pft]fi[/pft]
-                Referências selecionadas [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
+                ReferÃªncias selecionadas [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
             </div>
         </div>
 
@@ -121,11 +121,11 @@
 
     <div class="contBorder">
 
-        <div class="celLeft"><b>Opções de envio</b></div>
+        <div class="celLeft"><b>OpÃ§Ãµes de envio</b></div>
 
         <div class="celRight">
             <div class="rowHigh">
-                <input type="Radio" name="sendOption" value="print" checked />&nbsp;enviar para impressão
+                <input type="Radio" name="sendOption" value="print" checked />&nbsp;enviar para impressÃ£o
             </div>
             <div class="rowHigh">
                 <input type="Radio" name="sendOption" value="save" />&nbsp;enviar para seu computador no formato&nbsp;

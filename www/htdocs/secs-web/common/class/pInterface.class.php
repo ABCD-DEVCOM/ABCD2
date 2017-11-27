@@ -17,6 +17,11 @@ class pInterface
     	$smarty->assign("totalTitleRecords",pInterface::totalTitle());
     	$smarty->assign("totalMyTitleRecords",pInterface::totalMyTitle());
     }
+
+ function __construct()
+    {
+    self:: pInterface();
+    }
     function totalMask()
     {       
 		global $BVS_CONF, $configurator, $isisBroker, $MASK_TAG_NAME;

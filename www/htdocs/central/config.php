@@ -37,13 +37,15 @@ $ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    
 $cisis_ver="";                             // initialisation of $cisis_ver as empty = default standard CISIS-version
 $wxis_exec="wxis".$exe_ext;                // name and extension of wxis executable
 $mx_exec="mx".$exe_ext;                    // name and extension of mx executable
-$msg_path=$db_path;                        // path to the folder where the uploaded images are to be stored (the database name will be added to this path)
-$img_path=$ABCD_path."www/htdocs/bases/";  // path to the mx program (include the name of the program) and cisis-utilities (no name of program)
+$msg_path=$db_path;                        // path where the message-files are stored, typciall the database-directory
+$img_path=$ABCD_path."www/htdocs/bases/";  // legacy path to the folder where the uploaded images are to be stored (the database name will be added to this path)
 $cgibin_path=$ABCD_path."www/cgi-bin/";    // path to the basic directory for CISIS-utilities
 $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
 
+//$unicode="";
+
 if ( isset($_SESSION["BASES_DIR"]) )  {
- $db_path=$_SESSION["BASES_DIR"];     }
+ $db_path=$_SESSION["BASES_DIR"];  }
 else {
  $unicode="";
  $institution_name="";
@@ -69,9 +71,11 @@ if ($unicode == "ansi" || $unicode == '0') $unicode="ansi"; else $unicode='utf8'
 $cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
 $mx_path=$cisis_path.$mx_exec;                      // path to mx-executable
 $Wxis=$cisis_path.$wxis_exec;             // path to the wwwisis executable (include the name of the program, with extension if present)
-if ($postMethod)
+if ($postMethod == '1')
 $wxisUrl=$server_url."/cgi-bin/".$unicode."/".$cisis_ver.$wxis_exec;  // POST method used
-else $wxisUrl="";                                                     // GET method used
+else { $wxisUrl="";
+// echo "GET METHOD USED <BR>";
+}                                                // GET method used
 
 //echo "cisis_path=$cisis_path<BR>";
 //echo "cisis_ver=$cisis_ver<BR>";

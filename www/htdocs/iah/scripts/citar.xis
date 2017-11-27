@@ -12,6 +12,7 @@
         <field action="replace" tag="1" split="occ"><pft>cat(v5000^b,'par/',v5003^*,'.def')</pft></field>
 	<field action="replace" tag="7998" split="occ"><pft>,( if v1 : 'FILE '  then '^n'v1*5/ fi ),</pft></field>
 	<field action="replace" tag="7997" split="occ"><pft>,( if v1 : 'FORMAT TITLE'  then '^n'v1*13/ fi ),</pft></field>
+ 	<field action="replace" tag="7666" split="occ"><pft>getenv('OS')</pft></field>
 
         <!-- macro-substituicoes no def da base de dados	-->
 	<field action="replace" tag="7998" split="occ"><pft>,(replace(v7998,'%path_database%',v5000^b[1]) /),</pft></field>
@@ -81,8 +82,9 @@
         <field action="cgi" tag="9990">IsisScript</field>
 
         <!-- Defines da aplicacao -->
-        <field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def.php')</pft></field>
-        <call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the instalation process and the call to iAH.' fi</pft></call>
+        <field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),
+        if v7666 : 'Win' then 'iah-def-win.php' else 'iah-def-lin.php' fi)</pft></field>
+        <call name="FatalError"><pft>if a(v7999) then '^1application definition file^2unable to open ',getenv('PATH_TRANSLATED'),v7999, '^3Check the instalation process and the call to iAH.' fi</pft></call>
 
         <field action="replace" tag="5000">
                 <pft>

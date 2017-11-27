@@ -2,9 +2,9 @@
 
 [PATH]
 PATH_DATA=/iah/
-PATH_CGI-BIN=/ABCD/www/htdocs/iah/scripts/
-PATH_DATABASE=/ABCD/www/bases/
-PATH_DEF=/ABCD/www/bases/par/
+PATH_CGI-BIN=/opt/ABCD/www/htdocs/iah/scripts/
+PATH_DATABASE=/var/opt/ABCD/bases/
+PATH_DEF=/var/opt/ABCD/bases/par/
 
 [APPEARANCE]
 /* Please adjust /css/stylesheet.css */
@@ -19,5 +19,5 @@ HEADER URL=^1/iah/pt/index.htm^2/iah/es/index.htm^3/iah/en/index.htm^4/iah/fr/in
 MANAGER E-MAIL=ia@hmy-server.domain
 REVERSE MODE=ON
 MULTI-LANGUAGE=ON
-AVAILABLE LANGUAGES=pt, es, en, fr
+AVAILABLE LANGUAGES=pt, es, en, fr , du
 ?>

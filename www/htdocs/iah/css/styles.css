@@ -12,12 +12,14 @@
 }
 
 .middle .formHead {
-	background: #ccdbe5;
+/*	background: #ccdbe5;     */
+        background: #CFEACB;    /* light-green/gray */
 }
 
 .middle .formHead A {
 	text-decoration: none;
 	color: #333;
+        background: #CFEACB;
 }
 
 .middle .formHead A:hover {
@@ -68,4 +70,5 @@
 
 .footer {
 	font-size: 85%;
+        background: #CFEACB;
 }

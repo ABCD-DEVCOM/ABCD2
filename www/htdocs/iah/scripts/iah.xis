@@ -1,6 +1,7 @@
 <IsisScript name="iAH! v3.1.1">
 
 <function name="LoadCipar">
+	<field action="replace" tag="7666" split="occ"><pft>getenv('OS')</pft></field>
 
 	<field action="import" tag="list">5000,5003,5018,5021,5050,7001,6212</field>
 	<!-- atualiza var. de ambiente se for tarefa de save -->
@@ -211,8 +212,8 @@
 	<field action="cgi" tag="9990">IsisScript</field>
 
 	<!-- Defines da aplicacao -->
-	<field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def.php')</pft></field>
-	<call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the instalation process and the call to iAH.' fi</pft></call>
+	<!--field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),'iah.def.php')</pft></field-->
+	<field action="replace" tag="7999" split="occ"><pft>cat(getenv('PATH_TRANSLATED'),if v7666:'Win' then 'iah-def-win.php' else 'iah-def-lin.php' fi)</pft></field>	<call name="FatalError"><pft>if a(v7999) then '^1aplication definition file^2unable to open ',getenv('PATH_TRANSLATED'),'iah.def^3Check the instalation process and the call to iAH.' fi</pft></call>
 
 	<field action="replace" tag="5000">
 		<pft>

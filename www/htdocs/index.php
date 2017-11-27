@@ -19,8 +19,8 @@ include ("$app_path/lang/lang.php");
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
-	<head>
-		<title>ABCD</title>
+
+<head profile="http://www.w3.org/2005/10/profile">
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
 		<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -28,6 +28,9 @@ include ("$app_path/lang/lang.php");
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" sizes="16x16">
+
+		<title>ABCD</title>
 		<!-- Stylesheets -->
 		<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/template.css" type="text/css" media="screen"/>
 		<!--[if IE]>
@@ -86,8 +89,13 @@ function Enviar(){
 <body>
 	<div class="heading">
 		<div class="institutionalInfo">
-			<h1><img src=central/images/logoabcd.jpg >
-			<?php echo $institution_name?></h1>
+		<img src=<?php //echo "LOGO=$logo<BR>"; die;
+                                   if (isset($logo))
+								echo "central/".substr($logo,3);
+							else
+								echo "central/images/logoabcd.jpg";
+					  ?>
+					  ><h1><?php echo $institution_name?></h1>
 		</div>
 		<div class="userInfo"></div>
 		<div class="spacer">&#160;</div>

@@ -351,7 +351,7 @@
 	<field action="replace" tag="6111" split="occ"><pft>REF([v6100^g]1,(v1/))</pft></field>
 	<field action="replace" tag="6112" split="occ"><pft>REF([v6100^g]1,(v2/))</pft></field>
 	
-	<flow action="jump"><pft>if nocc(v6111) > 1 then 'APLY' fi</pft></flow>
+	<flow action="jump"><pft>if nocc(v6111) > 1 then 'APPLY' fi</pft></flow>
 	<label>LOAD GIZMO</label>
 	<do task="mfnrange">
 		<parm name="db"><pft>v6100^g</pft></parm>

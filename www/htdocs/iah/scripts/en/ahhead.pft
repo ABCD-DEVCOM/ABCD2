@@ -3,7 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
+
 <head>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" sizes="16x16">
     <title>',v5003^*,
         select s(mpu,v5001^s,mpl)
             case 'SEARCH'   : ' - Results page ',v6205^c[1],
@@ -18,12 +20,13 @@ if val(v5018^w)>0 then
 else 
 '    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> '
 fi, 
-'    <link rel="stylesheet" href="',v5000^d,'css/stylesheet.css" type="text/css" media="screen" /> 
-<script type="text/javascript" src="'v5000^d,'js/highlight.js"></script>
+'    <link rel="stylesheet" href="',v5000^d,'css/stylesheet.css" type="text/css" media="screen" />
+
+ <script type="text/javascript" src="'v5000^d,'js/highlight.js"></script>
 '
   
 
-' <!-- InteracciÃ³n con el sistema de prÃ©stamos -->
+' <!-- Interacción con el sistema de préstamos -->
    <script language="JavaScript" type="text/javascript">
      function EstadoDeCuenta() {
         action_search=document.search.action
@@ -61,7 +64,7 @@ fi,
 	   s.writeln('<html>');
 	   s.writeln('  <head>');
 	   s.writeln('    <title>Document consultation</title>');
-	   s.writeln('   <meta http-equiv="Content-Type" content="text/html; charset=windows-8859-1">');
+	   s.writeln('   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">');
 	   s.writeln('  </head>');
 	   s.writeln('		<frameset rows="40,*">');
 	   s.writeln('			<frame name="frameWarning" rows="2,*" src="/iah/scripts/disclaimer.htm" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" noresize="noresize">');
@@ -75,7 +78,7 @@ fi,
 	}
 
 
-        	<!-- funciÃ³n agregada por guilda para acceder a los documentos protegidos -->
+        	<!-- función agregada por guilda para acceder a los documentos protegidos -->
 function VerDocumento(Mfn,Base,Lang,Occ,Action,Parameters){
 	Base = Base.toLowerCase();
 	msgwin=window.open("","DATABASE","width=550,height=400,resizable")
@@ -103,9 +106,27 @@ function VerDocumento(Mfn,Base,Lang,Occ,Action,Parameters){
 
 
 '   </script>
-  <!-- Fin de la interacciÃ³n con el sistema de prÃ©stamos -->
+  <!-- Fin de la interacción con el sistema de préstamos -->
+',
 
-</head>
+`
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  // tracker methods like "setCustomDimension" should be called before "trackPageView"
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//127.0.0.1/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+`
+'</head>
 <body>',
 if v5001^s : 'CONFIG' then,
 '<div id="contentN">' else, '<div class="container">' fi,

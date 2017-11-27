@@ -1,0 +1,6 @@
+'%0 Book<br>'
+|%A |v100^a"<br>"
+(|%E |v700^a|<br>|)
+if p(v260^a) then '%C ', replace(v260^a,':',''), '<br>', fi
+if p(v260^b) then '%I ', replace(v260^b,',',''), '<br>', fi
+if p(v260^c) then '%D ', replace(v260^c,'.',''), '<br>', fi

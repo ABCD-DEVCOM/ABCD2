@@ -3,7 +3,7 @@
 
 //include("common/header.php");
 require_once ("config.php");
-
+require_once("lang/lang.php");
 
 $query="";
 include("common/get_post.php");
@@ -16,6 +16,7 @@ include("common/get_post.php");
 
 function fechaAsString($fecha)
 {
+global $msgstr;
   if (strlen($fecha)>=8)
   {
       $tp = mktime(intval(substr($fecha,8,2)),intval(substr($fecha,10,2)),intval(substr($fecha,12,2)),intval(substr($fecha,4,2)),intval(substr($fecha,6,2)),intval(substr($fecha,0,4)));
@@ -31,7 +32,7 @@ function getUserStatus()
 {
     global $empwebservicequerylocation,$empwebserviceusersdb,$userid,$EmpWeb,$converter_path,$db_path,$vectorAbrev,$lang;
 
-if ($EmpWeb=="Y")
+if ($EmpWeb=="1")
 {
 //USING the Emweb Module 
 	  $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
@@ -310,7 +311,7 @@ if ($EmpWeb=="Y")
         $vectorAbrev["copies"]["info"] = sizeof($resumen["extension"]["holdingsInfo"]["copies"]["copy"]);
 
         $opciones = array();
-        foreach ($resumen["extension"]["holdingsInfo"]["copies"]["copy"] as $elemento)
+        foreach ((array) $resumen["extension"]["holdingsInfo"]["copies"]["copy"] as $elemento)
         {
           if ($elemento["volumeId"])
               array_push($opciones,$elemento["volumeId"]);
@@ -1113,12 +1114,12 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
 
                     <div class="sectionButtons">
 
-                        <h3><?php echo $msgstr["activesuspensions"]; ?> <?php echo sizeof($dataarr["suspensions"]); ?></h3>
+                        <h3><?php echo $msgstr["activesuspensions"]; ?> <?php if (!empty($dataarr["suspensions"])) echo sizeof($dataarr["suspensions"]); ?></h3>
 						<input type="hidden" id="suspensionst" name="suspensionst" value="<?php echo sizeof($dataarr["suspensions"]);?>"/>
 
 
                          <?php
-                         if (sizeof($dataarr["suspensions"])>0)
+                         if (!empty($dataarr["suspensions"]))
                          {
                          ?>
 
@@ -1160,11 +1161,11 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
 
 
                          <span>
-                         <h3><?php echo $msgstr["actualloans"]; ?> <?php echo sizeof($dataarr["loans"]); ?></h3>
+                         <h3><?php echo $msgstr["actualloans"]; ?> <?php if (!empty($dataaar["loans"])) echo sizeof($dataarr["loans"]); ?></h3>
 
                          <?php
 
-                          if (sizeof($dataarr["loans"])>0)
+                          if (!empty($dataarr["loans"]))
                           {
 
                           ?>
@@ -1205,12 +1206,12 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
                          ?>
 
                          <span>
-                         <h3><?php echo $msgstr["actualreserves"]; ?> <?php echo sizeof($dataarr["waits"]); ?></h3>
+                         <h3><?php echo $msgstr["actualreserves"]; ?> <?php if (!empty($dataarr["waits"])) echo sizeof($dataarr["waits"]); ?></h3>
 
 
                          <?php
 
-                         if (sizeof($dataarr["waits"])>0)
+                         if (!empty($dataarr["waits"]))
                          {
 
                          ?>
@@ -1254,11 +1255,11 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
 
 
                          <span>
-                         <h3><?php echo $msgstr["fines"]; ?> <?php echo sizeof($dataarr["fines"]); ?></h3>
+                         <h3><?php echo $msgstr["fines"]; ?> <?php if (!empty($dataarr["fines"])) echo sizeof($dataarr["fines"]); ?></h3>
 						 <input type="hidden" id="finest" name="finest" value="<?php echo sizeof($dataarr["fines"]);?>"/>
                          <?php
 
-                         if (sizeof($dataarr["fines"])>0)
+                         if (!empty($dataarr["fines"]))
                          {
 
                          ?>
@@ -1349,7 +1350,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
 
 function MenuReserves($vector)
 {
-global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
+global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr,$EmpWeb;
 ?>
 
 <div id="firstBox" style="height:520px">
@@ -1441,7 +1442,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
 
                             <?php
 
-                                if ($vector["copies"]["options"])
+                                if (!empty($vector["copies"]["options"]))
                                 {
                             ?>
 														<tr>
@@ -1472,7 +1473,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
                             </tr>
                             <tr>
                                 <td><?php echo $msgstr["librarylegend"]; ?></td>
-                                <td><?php echo $vector["library"] ?></td>
+                                <td><?php if (!empty($vector["library"])) echo $vector["library"] ?></td>
                             </tr>
 
 
@@ -1480,7 +1481,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
                         </h3>
 
                      <?php
-                        if ($vector["objectType"]!="" && $vector["objectType"]!="")
+                        if (!empty($vector["objectType"]) && !empty($vector["objectType"]))
                         {
                       ?>
                      <input type="button" value="<?php echo $msgstr["makereservation"]; ?>" OnClick="javascript:PlaceReserve(<?php echo "'".$vector["id"]."','".$vector["objectType"]."','".$vector["library"]."'" ?>);" />
@@ -1531,7 +1532,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
                         <div id="myanswer">
                             <img src="images/loading.gif" />
                         </div>
-                        <input type="button" value="<?php echo $msgstr["gomysite"]; ?>" OnClick="<?php if ($EmpWeb=="Y") echo 'javascript:clearOperation();'; else echo 'javascript:GoToSite()';?>" />
+                        <input type="button" value="<?php echo $msgstr["gomysite"]; ?>" OnClick="<?php if ($EmpWeb=="1") echo 'javascript:clearOperation();'; else echo 'javascript:GoToSite()';?>" />
                     </div>
 
                  </div>

@@ -42,10 +42,13 @@
                     [pft]
                         ,(
                             '<option value="',v9021,'" ', if v9021 = v5021[1] then 'selected="true"', fi,'>'
-                                if v9021 = 'pt' then 'português' fi,
-                                if v9021 = 'es' then 'español' fi,
+                                if v9021 = 'pt' then 'portuguÃªs' fi,
+                                if v9021 = 'es' then 'espaÃ±ol' fi,
                                 if v9021 = 'en' then 'english' fi,
-                                if v9021 = 'fr' then 'français' fi,
+                                if v9021 = 'fr' then 'franÃ§ais' fi,
+                                if v9021 = 'du' then 'dutch' fi,
+                                if v9021 = 'am' then 'amharic' fi,
+
                             '</option>'/
                         ),
                     [/pft]
@@ -92,7 +95,7 @@
             [pft]if nocc(v5005) > 2 then[/pft]
 
                 [pft]
-                    /* procedimento que marca o texto a ser apresentado como label ^L para as opções de formato de apresentação  */
+                    /* procedimento que marca o texto a ser apresentado como label ^L para as opÃ§Ãµes de formato de apresentaÃ§Ã£o  */
                     proc('d5005',('a5005!',replace(v5005,s('^'v9022[1]),'^L'),'!')),
                 [/pft]
 

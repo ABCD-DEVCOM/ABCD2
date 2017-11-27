@@ -6,12 +6,10 @@ $form = $_REQUEST['form'];
 //define database path according to OS
 if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0)    {
  $db_path="/ABCD/www/bases/" ;
- $iah_ver="-win";
  $ext_exec=".exe";
  }
 else {
  $db_path="/var/opt/ABCD/bases/";
- $iah_ver="-lin";
  $ext_exec="";
  }
 //unicode defined in abcd.def
@@ -42,6 +40,6 @@ else $cisis_ver=$unicode."/";
 
 //Path to the wwwisis executable (include the name of the program, in Windows add .exe)
 $Wxis=$cisis_ver."wxis" . $ext_exec;
-$hdr = "Location: /cgi-bin/". $Wxis . "/iah/scripts/?IsisScript=iah". $iah_ver . ".xis&lang=" . $lang . "&base=" . strtoupper($base);
+$hdr = "Location: /cgi-bin/". $Wxis . "/iah/scripts/?IsisScript=iah.xis&lang=" . $lang . "&base=" . strtoupper($base);
 header($hdr);
 ?>

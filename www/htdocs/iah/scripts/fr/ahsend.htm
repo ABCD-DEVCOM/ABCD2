@@ -10,16 +10,16 @@
             var ref1 = parseFloat(document.Option.listHit[1].value);
 
             if(document.Option.listHit[0].value.length == 0 || document.Option.listHit[1].value.length == 0 ) {
-                alert("Entrez le début et la fin des valeurs de la gamme d&lsquo;impression");
+                alert("Entrez le dÃ©but et la fin des valeurs de la gamme d&lsquo;impression");
                 return false;
             }
             if((ref0 > ref1) || isNaN(ref0) || isNaN(ref1) || ref0 <= 0 || ref1 <= 0) {
-                alert("Invalid gamme de l&lsquo;impression des valeurs. S&lsquo;il vous plaît vérifier");
+                alert("Invalid gamme de l&lsquo;impression des valeurs. S&lsquo;il vous plaÃ®t vÃ©rifier");
                 return false;
             }
 
             if(eval(document.Option.listHit[0].value) > [pft]v1002[/pft] || eval(document.Option.listHit[1].value) > [pft]v1002[/pft]) {
-                alert("Le nombre maximum de références pour cette option: [pft]v1002[/pft]");
+                alert("Le nombre maximum de rÃ©fÃ©rences pour cette option: [pft]v1002[/pft]");
                 return false;
             }
         }
@@ -33,14 +33,14 @@
             if (type == "iso" || type == "xml"){
                 if (document.Option.listOption[0].checked == true){ // list_all
                     if ([pft]v1002[/pft] > 1000) {
-                        alert("Le nombre maximum de références pour cette option: 1000");
+                        alert("Le nombre maximum de rÃ©fÃ©rences pour cette option: 1000");
                         return false;
                     }
                 }
 
                 if (document.Option.listOption[1].checked == true){ // list_hits
                     if ((document.Option.listHit[1].value - document.Option.listHit[0].value) > 1000) {
-                        alert("Le nombre maximum de références pour cette option: 1000");
+                        alert("Le nombre maximum de rÃ©fÃ©rences pour cette option: 1000");
                         return false;
                     }
                 }
@@ -55,7 +55,7 @@
         if (document.Option.sendOption[2].checked == true){ // email option
             email = document.Option.sendToEmail.value
             if (email.length == 0){
-                alert("envoyer par l&lsquo;adresse électronique");
+                alert("envoyer par l&lsquo;adresse Ã©lectronique");
                 return false;
             }
             isGood = (email.indexOf("@")  != "-1") &&
@@ -68,7 +68,7 @@
                      (email.length > 5);
 
             if (!isGood) {
-                alert("L&lsquo;adresse e-mail est incorrect. S&lsquo;il vous plaît vérifier")
+                alert("L&lsquo;adresse e-mail est incorrect. S&lsquo;il vous plaÃ®t vÃ©rifier")
                 return false;
             }
         }
@@ -84,23 +84,23 @@
 
         <div class="barNav">
             <div class="leftCol">&nbsp;</div>
-            <div class="centerCol"><b>envoyez résultat</b></div>
+            <div class="centerCol"><b>envoyez rÃ©sultat</b></div>
             <div class="rightCol">&nbsp;</div>
         </div>
         <div class="row">&nbsp;</div>
 
     <div class="contBorder">
 
-        <div class="celLeft"><b>Quelles références?</b></div>
+        <div class="celLeft"><b>Quelles rÃ©fÃ©rences?</b></div>
 
         <div class="celRight">
             <div class="rowHigh">
                     <input type="Radio" name="listOption" value="list_all" [pft]if a(v6210) then 'checked' fi[/pft] />
-                Toutes les références ([pft]v1002[/pft])
+                Toutes les rÃ©fÃ©rences ([pft]v1002[/pft])
             </div>
             <div class="rowHigh">
                     <input type="Radio" name="listOption" value="list_hits" />
-                Série de références de
+                SÃ©rie de rÃ©fÃ©rences de
                     <input type="text" name="listHit" maxlength="6" size="4" onFocus="document.Option.listOption[1].checked = true" />
                 <span class="labl">&nbsp;-&nbsp;</span>
                 <input type="text" name="listHit" maxlength="6" size="4" onFocus="document.Option.listOption[1].checked = true" />
@@ -111,7 +111,7 @@
                     [pft]else[/pft]
                         &nbsp;<img src="[pft]v5002[/pft]radio.gif" border="0" />
                     [pft]fi[/pft]
-                Références sélectionnées [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
+                RÃ©fÃ©rences sÃ©lectionnÃ©es [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
             </div>
         </div>
 
@@ -125,10 +125,10 @@
 
         <div class="celRight">
             <div class="rowHigh">
-                <input type="Radio" name="sendOption" value="print" checked />&nbsp;envoyer à l&lsquo;impression
+                <input type="Radio" name="sendOption" value="print" checked />&nbsp;envoyer Ã  l&lsquo;impression
             </div>
             <div class="rowHigh">
-                <input type="Radio" name="sendOption" value="save" />&nbsp;envoyer à l&lsquo;ordinateur le format&nbsp;
+                <input type="Radio" name="sendOption" value="save" />&nbsp;envoyer Ã  l&lsquo;ordinateur le format&nbsp;
             <select name="saveFileType" onFocus="document.Option.sendOption[1].checked = true">
             [pft]if v5018^f : 'XML' then[/pft]
                     <option value="save-xml">XML</option>
@@ -143,7 +143,7 @@
 
             [pft]if v5018^e = 'ON' then[/pft]
             <div class="rowHigh">
-                <input type="Radio" name="sendOption" value="e-mail" />&nbsp;envoyer par l&lsquo;adresse électronique:&nbsp;&nbsp;
+                <input type="Radio" name="sendOption" value="e-mail" />&nbsp;envoyer par l&lsquo;adresse Ã©lectronique:&nbsp;&nbsp;
                 <input type="text" name="sendToEmail" size="35" onFocus="document.Option.sendOption[2].checked = true" />
             </div>
             [pft]else[/pft]

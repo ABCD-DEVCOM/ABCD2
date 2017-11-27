@@ -4,7 +4,7 @@ global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
 session_start();
 require_once ("config.php");
-//require_once('../isisws/nusoap.php');
+require_once('../isisws/nusoap.php');
 require_once ("common/ldap.php");
 $converter_path=$cisis_path."mx";
 //echo "converter_path=".$converter_path."<BR>";
@@ -30,7 +30,7 @@ function LeerRegistro() {
 $llave_pft="";
 $myllave ="";
 global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$empwebservicequerylocation,$empwebserviceusersdb,$db,$EmpWeb,$MD5,$converter_path,$vectorAbrev;
-if ($EmpWeb=="Y")
+if ($EmpWeb=="1")
 {
 //USING the Emweb Module to login to MySite module
       $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
@@ -97,9 +97,10 @@ if ($EmpWeb=="Y")
 
 
       }
-}//if ($EmpWeb=="Y")
+}//if ($EmpWeb=="1")
 else
 {
+//echo "Central Loans used<BR>";  die;
 //USING the Central Module to login to MySite module
 //Get the user and pass
 $checkuser=$arrHttp["login"];
@@ -108,7 +109,7 @@ else
 $checkpass=md5($arrHttp["password"]);
 //Search the users database
 $mx=$converter_path." ".$db_path."users/data/users \"pft=if v600='".$checkuser."' then if v610='".$checkpass."' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
-//echo "mx=$mx<BR>";die;
+//echo "mxcommand=$mx<BR>";//die;
 $outmx=array();
 exec($mx,$outmx,$banderamx);
 $textoutmx="";
@@ -117,7 +118,6 @@ $textoutmx.=substr($outmx[$i], 0);
 }
 if ($textoutmx!="")
 {
-//echo "mxout=$textoutmx<BR>";
 $splittxt=explode("|",$textoutmx);
 $myuser = $checkuser;
 $db = "users";
@@ -132,19 +132,19 @@ $vectorAbrev['expirationDate']=$splittxt[5];
 $vectorAbrev['photo']=$splittxt[6];
 $currentdatem=date("Ymd");
 if ($splittxt[5]!="") if ($currentdatem>$splittxt[5]) $myllave="";
-
 }
 }
+//echo "myllave=$myllave<BR>";
 	  return $myllave;
+
 }
 
 function VerificarUsuario(){
 Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
-
  	$llave=LeerRegistro();
+//echo "llave=$llave<BR>";
  	if ($llave!=""){
-
-  		$res=explode('|',$llave);
+  		$res=preg_split("~|~",$llave);
   		$userid=$res[0];
   		$_SESSION["mfn_admin"]=$res[1];
   		$mfn=$res[1];
@@ -152,12 +152,10 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
 		$arrHttp["Mfn"]=$mfn;
   		$Permiso="|";
   		$P=explode("\n",$valortag[40]);
-
   		foreach ($P as $value){
   			$value=substr($value,2);
   			$ix=strpos($value,'^');
     		$Permiso.=substr($value,0,$ix)."|";
-
     	}		
  	}else{ 
 		if ($arrHttp["id"]!="") echo "<script>
@@ -277,7 +275,7 @@ function Session($llave){
  Global $arrHttp,$valortag,$Path,$xWxis,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
  
        
-        $res=explode("\|",$llave);
+        $res=split("\|",$llave);
 		$mfn=$res[2];
 		$userid=$res[1];
   		$_SESSION["mfn_admin"]=$res[2];
@@ -462,19 +460,18 @@ if (isset($arrHttp["action"]))
       		$arrHttp["password"]=$_SESSION["password"];
       		$arrHttp["startas"]=$_SESSION["permiso"];
       		$arrHttp["lang"]=$_SESSION["lang"];
-                $arrHttp["db"]=$_SESSION["db"];
+            $arrHttp["db"]=$_SESSION["db"];
 
       	}	
-
-
-
-        if($use_ldap)
-	    VerificarUsuarioLDAP();
+		
+        if($use_ldap)		
+		    VerificarUsuarioLDAP();
 		else	
-      	    VerificarUsuario();
+      	    VerificarUsuario();		
+      
 
       	$_SESSION["lang"]=$arrHttp["lang"];
-		if ($arrHttp["id"]!="") 
+		if (!empty($arrHttp["id"]))
 		{
 		$_SESSION["action"]='reserve';
 		$_SESSION["recordId"]=$arrHttp["id"];

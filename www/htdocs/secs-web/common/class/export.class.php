@@ -53,7 +53,7 @@ function displayExport(){
 }
 
 
-function exportTitle($exportType, $ibictID, $numberRegisters ,$formatType, $registerID, $searchExpr, $indexes){
+function exportTitle($exportType =null, $ibictID=null, $numberRegisters=null ,$formatType=null, $registerID=null, $searchExpr=null, $indexes=null){
 
         $strInitialPosition = stripos($_SERVER["SERVER_SOFTWARE"],"Win32");
         $serverOS = substr($_SERVER["SERVER_SOFTWARE"], $strInitialPosition, "5");

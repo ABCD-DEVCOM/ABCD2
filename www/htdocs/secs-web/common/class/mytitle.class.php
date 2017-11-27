@@ -9,18 +9,17 @@ class mytitle
 	var $registro;
 	var $totalRecords = 0;
 	
-	function __construct()
+	function mytitle()
 	{
 		global $configurator;
 		global $isisBroker;
 		$this->registro = new Record();
 	}
 
-	function mytitle()
-	{
-		return $this->__construct();
-	}
-	
+    function __construct() {
+    self:: mytitle();
+    }
+
 	function setRecordByMFN($mfn)
 	{
 		global $configurator, $isisBroker, $MYTITLE_TAG_NAME;

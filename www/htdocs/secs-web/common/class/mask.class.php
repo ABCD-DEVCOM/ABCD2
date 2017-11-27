@@ -14,7 +14,7 @@ class mask
 	var $registro;
 	var $totalRecords = 0;
 
-	function __construct()
+	function mask()
 	{
 		global $configurator;
 		global $isisBroker;
@@ -23,7 +23,11 @@ class mask
 
 	}
 
-        function returnRecordByKEY_ByKeyrange($key)
+    function __construct() {
+    self:: mask();
+    }
+
+       function returnRecordByKEY_ByKeyrange($key)
 	{
 		global $configurator, $isisBroker, $MASK_TAG_NAME;
 

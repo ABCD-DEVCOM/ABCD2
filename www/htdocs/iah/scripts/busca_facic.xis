@@ -154,13 +154,13 @@
                 </pft>
         </field-->
 
-    <!-- percorre parâmetro AVAILABLE LANGUAGES e monta sequencia de idiomas disponiveis -->
+    <!-- percorre parÃ¢metro AVAILABLE LANGUAGES e monta sequencia de idiomas disponiveis -->
     <field action="replace" tag="9021" split="occ"><pft>replace(replace(v5006^a[1],' ',''),',',s(#))</pft></field>
  
-   <!-- verifica qual é o numero da sequencia correpondente ao idioma atual de navegação -->
+   <!-- verifica qual Ã© o numero da sequencia correpondente ao idioma atual de navegaÃ§Ã£o -->
     <field action="replace" tag="9022"><pft>(if v9021 = v5021[1] then f(iocc,1,0) fi)</pft></field>
 
-    <!-- troca na lista de índices o subcampo correspondente ao idioma atual pelo subcampo ^L (label)  -->
+    <!-- troca na lista de Ã­ndices o subcampo correspondente ao idioma atual pelo subcampo ^L (label)  -->
     <field action="replace" tag="2" split="occ"><pft><pft>`(replace(v2,'^`,v9022,`','^L')/)`</pft></pft></field>
 
         <return action=replace tag="list"><pft>'[2:',v3,']'</pft></return>

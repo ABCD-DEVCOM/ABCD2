@@ -13,7 +13,7 @@
     <div class="middle">
         <div class="formHead">   <!-- info bar -->
             <h3 class="context">
-                Base de données&nbsp;[pft]v5003^*[/pft]
+                Base de donnÃ©es&nbsp;[pft]v5003^*[/pft]
                 : configurer
             </h3>
             <div class="formOptions">
@@ -42,10 +42,10 @@
                     [pft]
                         ,(
                             '<option value="',v9021,'" ', if v9021 = v5021[1] then 'selected="true"', fi,'>'
-                                if v9021 = 'pt' then 'português' fi,
-                                if v9021 = 'es' then 'español' fi,
+                                if v9021 = 'pt' then 'portuguÃªs' fi,
+                                if v9021 = 'es' then 'espaÃ±ol' fi,
                                 if v9021 = 'en' then 'english' fi,
-                                if v9021 = 'fr' then 'français' fi,
+                                if v9021 = 'fr' then 'franÃ§ais' fi,
                             '</option>'/
                         ),
                     [/pft]
@@ -71,7 +71,7 @@
 
         <div class="barNav">   <!-- Result display -->
             <div class="columnA">&nbsp;</div>
-            <div class="columnB"><b>Affichage des résultats</b></div>
+            <div class="columnB"><b>Affichage des rÃ©sultats</b></div>
         </div>
 
             [pft]if a(v1002) then[/pft]<!-- se nao esta na navegacao do resultado -->
@@ -83,7 +83,7 @@
                     <option value="20" [pft]if v5008 = '20' then 'selected' fi[/pft]> 20</option>
                     <option value="40" [pft]if v5008 = '40' then 'selected' fi[/pft]> 40</option>
                     <option value="60" [pft]if v5008 = '60' then 'selected' fi[/pft]> 60</option>
-                </select>&nbsp;références par page      
+                </select>&nbsp;rÃ©fÃ©rences par page      
             </div>
         </div>
             [pft]else[/pft]
@@ -92,14 +92,14 @@
             [pft]if nocc(v5005) > 2 then[/pft]
 
                 [pft]
-                    /* procedimento que marca o texto a ser apresentado como label ^L para as opções de formato de apresentação  */
+                    /* procedimento que marca o texto a ser apresentado como label ^L para as opÃ§Ãµes de formato de apresentaÃ§Ã£o  */
                     proc('d5005',('a5005!',replace(v5005,s('^'v9022[1]),'^L'),'!')),
                 [/pft]
 
         <div class="row">
             <div class="columnA">&nbsp;</div>
             <div class="columnB">
-                Format de présentation&nbsp;&nbsp;<select name="format" size="1">
+                Format de prÃ©sentation&nbsp;&nbsp;<select name="format" size="1">
                 [pft],(,[/pft]
                       [pft]if v5005^n <> 'DEFAULT' and v5005^t <> 'EXPORT' then[/pft]
                         <option value="[pft]v5005^n[/pft]" [pft]if v5009[1] = v5005^n then 'selected' fi[/pft]>[pft]v5005^L[/pft]</option>

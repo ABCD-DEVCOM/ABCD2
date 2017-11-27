@@ -14,13 +14,17 @@ class title
 	var $registro;
 	var $totalRecords = 0;
 
-	function __construct()
+	function title()
 	{
 		global $configurator;
 		global $isisBroker;
 		$this->registro = new Record();
 	}
-	
+
+        function __construct() {
+         self:: title();
+        }
+
 	function setRecordByMFN($mfn)
 	{
 		global $configurator, $isisBroker, $TITLE_TAG_NAME, $smarty;

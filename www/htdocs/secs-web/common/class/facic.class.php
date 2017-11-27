@@ -14,13 +14,19 @@ class facic
 	var $registro;
 	var $totalRecords = 0;
 
-	function __construct()
+	function facic()
 	{
 		global $configurator;
 		global $isisBroker;	
 		$this->registro = new Record();	
 	}
-	function setRecordByMFN($mfn)
+
+     function __construct() {
+    self:: facic();
+    }
+
+
+     function setRecordByMFN($mfn)
 	{
 		global $configurator, $isisBroker, $FACIC_TAG_NAME;
 

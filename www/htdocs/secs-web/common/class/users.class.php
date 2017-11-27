@@ -26,12 +26,15 @@ class user
          * @author  Bruno Neofiti de Andrade <bruno.neofiti@bireme.org>
          * @desc    Constructor
          */
-        function __construct()
+        function user()
 	{
 		global $configurator;
 		global $isisBroker;
 		$this->registro = new Record();
 	}
+    function __construct() {
+    self:: user();
+    }
 
         /**
          * 

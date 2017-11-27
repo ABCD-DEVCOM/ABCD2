@@ -1,19 +1,42 @@
 '<script type="text/javascript">
     function OpenNewExportEN(mfn) {
-        var theURL = "/cgi-bin/wxis.exe/iah/scripts/?IsisScript=citar.xis&base=MARC&mfn=" + mfn + "&lang=en&format=export_EndNote.pft&nextAction=EXPORTACAO";
-        janela=window.open(theURL,"facic","left=240,top=225,width=670,height=550,toolbar=no,resizable=yes,menubar=no,scrollbars=yes");
+        var theURL1 = "/cgi-bin/ansi/wxis/iah/scripts/?IsisScript=citar.xis&base=MARC&mfn=" + mfn + "&lang=en&format=export_EndNote.pft&nextAction=EXPORTACAO";
+        janela=window.open(theURL1,"facic","left=240,top=225,width=670,height=550,toolbar=no,resizable=yes,menubar=no,scrollbars=yes");
         janela.moveTo(0,0);
         janela.focus();
         return;
     }
 </script>'
+
+
 '<tr>'
         '<td width="28%">'
                 '<font face="arial" size=2 ><br>',
                 `<a href="javascript:onClick=OpenNewExportEN('`f((mfn),1,0)`')">`,
-                '<img src="',v5002[1],'arrow.gif" border="0" name="texto"></a>',
+                '<img src="',v5002[1],'arrow.gif" border="0" name="texto1"></a>',
         '</td>',
         '<td width="72%" nowspan valign=middle>',
             '<font face=verdana size="1"><i>Export to End Note</i></font>'
         '</td>',
 '</tr>',
+
+'<tr>'
+        '<td width="28%">'
+                '<font face="arial" size=2 ><br>',
+                `<a href="http://127.0.0.1:9090/cgi-bin/ansi/mx MARC from=', mfn, ' count=1 pft=@export_EndNote.pft now -all > /var/opt/ABCD/bases/wrk/endnote.ewl">`,
+                '<img src="',v5002[1],'arrow.gif" border="0" name="texto2"></a>',
+        '</td>',
+        '<td width="72%" nowspan valign=middle>',
+            '<font face=verdana size="1"><i>Write to End Note output file</i></font>'
+        '</td>',
+'</tr>',
+
+'<script type="text/javascript">
+    function OpenNewExportRw(mfn) {
+        var theURL = "/cgi-bin/wxis.exe/iah/scripts/?IsisScript=citar.xis&base=$
+        janela=window.open(theURL,"facic","left=240,top=225,width=670,height=55$
+        janela.moveTo(0,0);
+        janela.focus();
+        return;
+    }
+</script>'

@@ -2,16 +2,22 @@
 
 class sessionManager
 {
-   	
-    function _construct()
-    {
-    }
 
     function sessionManager()
     {
             session_start();
     }
-   		
+
+    function __construct() {
+    self:: sessionManager();
+    }
+
+
+//    function _construct()
+//    {
+//    }
+
+
     function checkLogin($milogin, $password, $selLibrary)
     {
 

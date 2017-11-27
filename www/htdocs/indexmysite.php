@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 
 include("central/config.php");
@@ -24,7 +24,6 @@ else
 if (!isset($_SESSION["lang"])) $_SESSION["lang"]=$lang;
 
 include ("central/lang/admin.php");
-include ("central/lang/mysite.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -62,12 +61,6 @@ document.onkeypress =
 
 function UsuarioNoAutorizado(){
 	alert("<?php echo $msgstr["menu_noau"]?>")
-}
-
-function CambiarClave(){
-	document.cambiarPass.login.value=Trim(document.administra.login.value)
-	document.cambiarPass.password.value=Trim(document.administra.password.value)
-	document.cambiarPass.submit()
 }
 
 function Enviar(){
@@ -108,7 +101,7 @@ function Enviar(){
 <input type=hidden name=Opcion value=admin>
 <input type=hidden name=cipar value=acces.par>
 <input type=hidden name=lang value="<?php echo $arrHttp["lang"];?>">
-<input type=hidden name=id value="<?php echo $_GET['id'];?>">
+<input type=hidden name=id value="<?php if (!empty($_GET['id'])) echo $_GET['id'];?>">
 <input type=hidden name=cdb value="<?php echo $_GET['cdb'];?>">
 		<div class="middle login">
 			<div class="loginForm">
@@ -120,14 +113,8 @@ function Enviar(){
 <?php
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		echo "
-			<div class=\"helper alert\">".$msgstr["menu_noau"]."
-			</div>
-		";
-}
-if ($_GET["login"]=="P"){
-		echo "
-			<div class=\"helper alert\">".$msgstr["pswchanged"]."
-			</div>
+					<div class=\"helper alert\">".$msgstr["menu_noau"]."
+					</div>
 		";
 }
 ?>
@@ -146,7 +133,6 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 					<div class="formRow">
 						<label for="pwd"><?php echo $msgstr["password"]?></label>
 						<input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
-						<?php if (isset($change_password) and $change_password=="Y") echo "<br><a href=javascript:CambiarClave()>". $msgstr["chgpass"]."</a>\n";?>
 					</div>
 					<div id="formRow3" class="formRow formRowFocus">
 
@@ -176,11 +162,6 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 				</div>
 			</div>
 		</div>
-</form>
-<form name=cambiarPass action="<?php echo $app_path?>/mysite_change_password.php" method=post>
-<input type=hidden name=login>
-<input type=hidden name=password>
-<input type=hidden name=Opcion value=chgpsw>
 </form>
 <?php include ("central/common/footermysite.php");?>
 	</body>

@@ -1,6 +1,7 @@
 BODY {
 	margin: 0px;
-	color: #333;
+        color: #333;
+        background: #CFEACB;
 }
 
 BODY, INPUT, TEXTAREA, SELECT {

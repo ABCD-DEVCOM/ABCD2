@@ -1,0 +1,17 @@
+<?php
+
+$base = ($_REQUEST['base'] != '' ?  $_REQUEST['base'] : 'MARC');
+$lang = ($_REQUEST['lang'] != '' ?  $_REQUEST['lang'] : 'en');
+$form = $_REQUEST['form'];
+
+//$db_path="/ABCD/www/bases/";
+$cisis_ver="";
+$def = parse_ini_file($db_path."abcd.def");
+if (isset($base)){
+if (isset($def[$base])) $cisis_ver=$def[$base]."/";
+}
+$hdr = "Location: /cgi-bin/" . $cisis_ver . "wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=" . $lang . "&base=" . $base;
+header($hdr);
+
+?>
+

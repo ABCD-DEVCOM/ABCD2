@@ -3,6 +3,7 @@
 	min-width: 730px;	
 	margin: 6px auto;
 	padding: 0 12px;
+        background: #CFEACB;
 }
 
 .bar {
@@ -96,6 +97,7 @@ A.defaultButton {
 
 .footer P {
 	margin: 4px;
+        background: #CFEACB;
 }
 
 .spacer {

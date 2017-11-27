@@ -17,13 +17,17 @@ class titleplus
 	var $registro;
 	var $totalRecords = 0;
 	
-	function __construct()
+	function titleplus()
 	{
 		global $configurator;
 		global $isisBroker;
 		$this->registro = new Record();
 	}
-	
+
+    function __construct() {
+    self:: titleplus();
+    }
+
 	function setRecordByMFN($mfn)
 	{
 		global $configurator, $isisBroker, $TITLEPLUS_TAG_NAME;

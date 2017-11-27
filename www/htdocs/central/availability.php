@@ -13,7 +13,7 @@ if (isset($arrHttp["lang"])){
 }
 require_once ("lang/mysite.php");
 require_once("lang/lang.php");
-if ($EmpWeb == 'N') {                            //Central Loans
+if ($EmpWeb == '0') {                            //Central Loans
 ?>
 
 <html>

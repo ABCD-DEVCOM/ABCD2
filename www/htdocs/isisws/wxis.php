@@ -1,7 +1,11 @@
 <?php
 
 $wxis_host = $_SERVER['HTTP_HOST'];
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win")>0) {
 $wxis_action = "/cgi-bin/ansi/wxis.exe";
+}else{
+$wxis_action = "/cgi-bin/ansi/wxis";
+}
 
 function wxis_document_post( $url, $content = "" )
 { 

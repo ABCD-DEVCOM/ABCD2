@@ -32,8 +32,8 @@ path=/var/opt/ABCD/bases/marc/data
 database=/var/opt/ABCD/bases/marc/data/marc
 mapping=marc.i2x
 prefix=oai_date_
-isis_key_length=ansi
-;cisis_version=ansi/
+;isis_key_length=ansi
+cisis_version=ansi/
 identifier_field=1
 datestamp_field=980
 
@@ -44,8 +44,8 @@ path=/var/opt/ABCD/bases/dubcore/data
 database=/var/opt/ABCD/bases/dubcore/data/dubcore
 mapping=dubcore.i2x
 prefix=oai_date_
-isis_key_length=utf8/bigisis
-;cisis_version=utf8/bigisis
+;isis_key_length=utf8/bigisis
+cisis_version=utf8/bigisis
 identifier_field=111
 datestamp_field=507
 

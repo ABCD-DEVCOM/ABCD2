@@ -14,12 +14,19 @@ class library
 	var $registro;
 	var $totalRecords = 0;
 
-	function __construct()
+	function library()
 	{
 		//global $configurator, $isisBroker;
 		$this->registro = new Record();
 
 	}
+
+    function __construct() {
+    self:: library();
+    }
+
+
+
 	function setRecordByMFN($mfn)
 	{
 		global $configurator, $isisBroker, $LIBRARY_TAG_NAME;
