@@ -5,13 +5,13 @@ if v1001 = '1' then 'Content-type: ', if v6212:'export' then 'bireme/application
 if v1001 = '1'  then
 '<html>
 <head>
-<title>',v5003^*,'- Liste</title> ',
-if v5018^w='Y' then
+<title>',v5003^*,'- Liste</title> '
+if val(v5018^w)>0 then
 '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
 else
 '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> '
-fi,  '
-<link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />
+fi,
+'<link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />
 
 <script type="text/javascript">
     function showPrintDialog(){
@@ -27,12 +27,12 @@ if v6212 = 'print' then '<body style="background: #FFFFFF !important" onLoad="ja
 '<div id="contentList">
     <div class="contain">
     <div class="copyright">
-        BIREME/PAHO/WHO - Centre d&lsquo;Information sur les Sciences de la SantÃ© pour l&lsquo;AmÃ©rique Latine et les CaraÃ¯bes
+        ABCD iAH Search Interface
         <hr class="ruler" />
         </div>
 
         <div class="rowResult">
-            <div class="columnA">Base de donnÃ©es:</div>
+            <div class="columnA">Base de données:</div>
             <div class="columnB"><b>',v5003^*,'</b></div>
         </div>
 
@@ -53,7 +53,7 @@ if v6212 = 'print' then '<body style="background: #FFFFFF !important" onLoad="ja
         </div>
 
         <div class="rowResult">
-            <div class="columnA">Nombre total de rÃ©fÃ©rences:</div>
+            <div class="columnA">Nombre total de références:</div>
             <div class="columnB"><b>',v1002,'</b></div>
         </div>
 

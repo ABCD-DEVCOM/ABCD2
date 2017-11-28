@@ -6,14 +6,14 @@ if v1001 = '1'  then
 '<html>
 <head>
 <title>',v5003^*,'- Lista</title>',
-if v5018^w='Y' then
+if val(v5018^w)>0 then
 '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
 else
 '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> '
-fi,  '
-<link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />
+fi,
+'<link rel="stylesheet" href="/iah/css/stylesheet.css" type="text/css" />'
 
-<script type="text/javascript">
+'<script type="text/javascript">
     function showPrintDialog(){
         var version = Math.round(parseFloat(navigator.appVersion) * 1000);
         if (version >= 4000){
