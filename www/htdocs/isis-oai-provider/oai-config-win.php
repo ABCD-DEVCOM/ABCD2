@@ -4,7 +4,7 @@
 DIRECTORY=/isis-oai-provider
 ; Full path to folder 'site' in folder bases. Windows users must NOT put letter unit in path
 ;DATABASE_PATH=/var/opt/ABCD/bases/
-DATABASE_PATH=/ABCD/www/bases/
+DATABASE_PATH=\ABCD\www\bases\
 ;EXE_EXTENSION=
 EXE_EXTENSION=.exe
 ; Set the directory configured to execute cgi-bin applications.

@@ -2,8 +2,11 @@
 
 require_once(dirname(__FILE__) . '/Log.php');
 
+if (strpos($_SERVER["SERVER_SOFTWARE"],"Win")>0)
+$config_file = APPLICATION_PATH . "/oai-config-win.php";
+else
+$config_file = APPLICATION_PATH . "/oai-config-lin.php";
 
-$config_file = APPLICATION_PATH . "/oai-config.php";
 if(!file_exists($config_file)) {
 	die("ERROR: config file does not exists!");
 }
