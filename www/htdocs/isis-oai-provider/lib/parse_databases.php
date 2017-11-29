@@ -3,7 +3,12 @@ global $DATABASES ; //new EdS
 require_once(dirname(__FILE__) . "/parse_config.php");
 
 $mapping_dir = APPLICATION_PATH . '/map';
-$databases_file = APPLICATION_PATH . '/oai-databases.php';
+if (strpos($_SERVER["SERVER_SOFTWARE"],"Win")>0)
+$databases_file = APPLICATION_PATH . '/oai-databases-win.php';
+else
+$databases_file = APPLICATION_PATH . '/oai-databases-lin.php';
+
+
 
 if(!is_dir($mapping_dir)) {
 	$error = "mapping directory does not exist! ($mapping_dir)";
@@ -34,6 +39,7 @@ foreach($DATABASES as $database) {
 	//$database_cnt = $database['path'] . '/' . $database['name'] . '.cnt';
 	
 	if(!(file_exists($database_xrf) && file_exists($database_mst))) {
+        echo "database_mst=$database_mst<BR>";
 		die("Databases not available");
 	}
 }
