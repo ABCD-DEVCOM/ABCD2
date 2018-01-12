@@ -12,8 +12,10 @@ include ("configure.php");
 $db_path=$config["DB_PATH"];
 $dbn=$arrHttp["base"];
 $IsisScript=$xWxis."leer_mfnrange.xis";
+//echo "xwxis=$xWxis<BR>";
 $Pft=urlencode($config["DOCUMENT_DISPLAY"]);
 $query="&base=$dbn&cipar=".$db_path."par/$dbn.par&from=".$arrHttp["mfn"]."&to=".$arrHttp["mfn"]."&Pft=$Pft";
+//echo "query=$query<BR>";
 include("../common/wxis_llamar.php");
 ?>
 <font face="arial" size="2">

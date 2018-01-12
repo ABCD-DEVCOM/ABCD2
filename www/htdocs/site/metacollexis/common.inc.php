@@ -24,7 +24,7 @@ function readData($readFrom, $removeHeader = true)
 	$e = error_reporting(); 
 	error_reporting($e & (E_ALL-E_WARNING)); 
 	
-    if (eregi("swish", $readFrom)) {
+    if (preg_match("~swish~", $readFrom)) {
 	
 		$swishStr = split("&",trim($readFrom));
 		
@@ -183,7 +183,7 @@ function inprocess($label, $status = "run") {
 			var state;			
 			state = window.open('','inprocess','left=240,top=225,width=320,height=150,toolbar=no,resize=false,menubar=no');
 		</script>
-		<?php
+		<?
 		
 	}elseif ($status == "end"){
 	
@@ -191,7 +191,7 @@ function inprocess($label, $status = "run") {
 			<script language='javascript'>
 				state.close();
 			</script>
-		<?php
+		<?
 		
 	}else {
 	
@@ -203,19 +203,19 @@ function inprocess($label, $status = "run") {
 					s.writeln('<html>');
 					s.writeln('  <head>');
 					s.writeln('    <title>meta-Collexis</title>');
-					s.writeln('    <link rel="stylesheet" href="../css/public/skins/regional/style-<?php echo $_POST["lang"];?>.css"/>');
+					s.writeln('    <link rel="stylesheet" href="../css/public/skins/regional/style-<?=$_POST["lang"];?>.css"/>');
 					s.writeln('  </head>');
 					s.writeln('  <body id="popUp">');
 					s.writeln('  <table width="320" height="120">');
 					s.writeln('   <tr valign="middle">');
-					s.writeln('  	<td>Consultando <b><?php echo $label; ?></b> </td>');
+					s.writeln('  	<td>Consultando <b><? echo $label ?></b> </td>');
 					s.writeln('   </tr>');			
 					s.writeln('  </table>');			
 					s.writeln('  </body>');	
 					s.writeln('</html>');
 					s.close();					
 			</script>
-		<?php
+		<?
 		flush();
 	}
   return;	

@@ -34,7 +34,7 @@ function uploadFile ( $upLoaded, $directory )
     $fileName = $upLoaded["name"];
     $to = $directory . "/" . $fileName;
 
-    if (!eregi("\." . $cfg['allowed_extensions'] . "$", $fileName))
+    if (!preg_match("~\." . $cfg['allowed_extensions'] . "$~", $fileName))
     {
         return "<message file=\"" . $fileName . "\" error=\"can not upload file\" why=\"not allowed extenstion\"/>";
     }

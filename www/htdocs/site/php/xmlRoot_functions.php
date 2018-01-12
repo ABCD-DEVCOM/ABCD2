@@ -231,9 +231,9 @@ function processTransformation( $xml, $xsl, $params=0){
     $proc = new XSLTProcessor();
     $proc->importStylesheet($domXsl);
     $proc->setParameter('','xml-path',$def['DATABASE_PATH'] . "xml/");
-    if($params){	
+    if($params){
         foreach($params as $key => $value){
-				$proc->setParameter('',$key,$value);
+            $proc->setParameter('',$key,$value);
         }
     }
 
@@ -267,7 +267,7 @@ function xmlWrite ( $xmlContent, $xsl, $xml, $xsl_params = null )
 {
     global $debug;
     $sucessWriteXml = "";
-  
+
     $text = processTransformation($xmlContent,$xsl,$xsl_params);
     $find = array("UTF-8","&amp;lt;","&amp;gt;","&amp;#160;","&amp;nbsp;","&amp;#9001;");
     $replace = array("ISO-8859-1","&lt;","&gt;","&#160;","&#160;","&amp;lang");
@@ -371,8 +371,7 @@ function defineMetaIAHWrite ($xsl_params=null)
     $text = processTransformation($xml,$xsl,$xsl_params);
 
     // permite usar relative meta search parameters using %HOST%
-//    if (eregi('%HOST%', $text)) {
-      if (preg_match('%HOST%', $text)) {
+    if (preg_match('~%HOST%~', $text)) {
         $thisHOST = $_SERVER['HTTP_HOST'];
         $text = str_replace("%HOST%",$thisHOST,$text);
     }

@@ -68,6 +68,9 @@ class Erro
         //$this->logErro();        
         $this->fluxoNavegacao();
     }
+    function __construct($nErro,$msgErro,$nomeArquivo,$numLinha, $vars) {
+    self:: Erro($nErro,$msgErro,$nomeArquivo,$numLinha, $vars);
+    }
 
     /**
     * @return int

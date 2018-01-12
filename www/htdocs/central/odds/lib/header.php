@@ -7,7 +7,8 @@
 		}	
 	</script>	
 <?php
-include_once("lib/library.php");
+//include_once("lib/library.php");
+include_once("library.php");
 $header_messages = load_header_messages($lang);
 $a = explode( "/", $_SERVER['PHP_SELF']);
 $filename = $a[count($a)-1];

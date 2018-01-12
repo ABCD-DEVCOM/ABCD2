@@ -1,4 +1,4 @@
-<?php
+<?
 
 //==============================================================================
 function GoSearch($target_node, $sourceList_node, $expression = ""){
@@ -71,7 +71,7 @@ function GoSearch($target_node, $sourceList_node, $expression = ""){
 			$sourceBaseSearchUrl= $current_source["base-search-url"];
 				
 			// caso seja o swish precisa ativar a consulta para o grupo e item atual no browseUrl
-			if (eregi("swish", $sourceBaseSearchUrl)) {
+			if (preg_match("~swish~", $sourceBaseSearchUrl)) {
 				$sourceBaseBrowseUrl .= $sourceLabel . "=true|" . $groupName . "=true|" ;
 			}	
 

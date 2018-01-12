@@ -2,7 +2,7 @@
 
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
-session_start();
+//session_start();
 
 require_once(dirname(__FILE__)."/../config.php");
 $converter_path=$cisis_path."mx";
@@ -14,7 +14,7 @@ if (isset($_REQUEST['GET']))
 else
 	if (isset($_REQUEST['POST'])) $page = $_REQUEST['POST'];
 
-if (!(eregi("^[a-z_./]*$", $page) && !eregi("\\.\\.", $page))) {
+if (!(preg_match("|^[a-z_./]*$|", $page) && !preg_match("|\\.\\.|", $page))) {
 	// Abort the script
 	die("Invalid request");
 
@@ -57,7 +57,7 @@ class Repository_api
 	
 	// REST
     function call_api($metodo, $endpoint, $data = array(),$cant = -1){
-	
+//global $_POST;
 	   
         $resultado = array();
         $request_url =  $this->rest_url. $endpoint;
@@ -79,7 +79,7 @@ class Repository_api
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
              				
 		if(isset($_POST['proxy'])){	   
-		
+//var_dump($_POST);die;
 			 curl_setopt($ch, CURLOPT_PROXY, $_POST['proxyhttp']);
 		     curl_setopt($ch, CURLOPT_PROXYPORT,$_POST['puerto']);	
              							                          
@@ -130,7 +130,7 @@ class Repository_api
             $url = "communities?expand=all";
 			
 			 $results = $this->call_api("GET", $url);
-						
+//echo "results=$results from URL $url<BR>";
 			if($results == -1)	return -1;	
 					   
 			foreach ($results as $var => $value)  
@@ -151,16 +151,20 @@ class Repository_api
       	$cantItem = $this->get_TotalItems();
 		$listItemsRepo = $cantItem;
 		
-		?><script language=javascript>ListElemt("<?php echo round(($listItemsReal/$listItemsRepo)*100,1)."%"?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")</script><?php;
+		?>
+                <script language=javascript>
+                ListElemt("<?php echo round(($listItemsReal/$listItemsRepo)*100,1)."%"?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")
+                </script>
+                <?php ;
 		
 		 if($cantItem == -1)	
 		    return -1;			
 		
 		$cantIt = $cantItem/$rang;
 		if($cantIt != intval($cantIt))
-           $cantIt = intval( $cantIt + 1 );		   
+                $cantIt = intval( $cantIt + 1 );
 			
-		
+	  
 		for($i = 0;$i < $cantIt;$i++){
 		
 			$results = $this->call_api("GET", "items?expand=bitstreams&limit=$rang&offset=$ini");
@@ -175,7 +179,10 @@ class Repository_api
 			
 			foreach ($results as $var => $item) {
 			
-					$idItem = $item['id'];				
+			        $auxidItem = "";
+					$auxidItem = $item['id'];
+					if($auxidItem == "") $auxidItem = $item['uuid'];
+					$idItem = $auxidItem;				
 					$creator = "";
 					$contributor = "";
 					$subject = "";
@@ -283,8 +290,10 @@ class Repository_api
 					}
 				
 				foreach ($itemAll['bitstreams'] as $bitstreams) {
-						
-						$url = $this->rest_url."bitstreams/".$bitstreams['id']."/retrieve" ;
+						$aux = "";
+						$aux = $bitstreams['id'];
+						if($aux == "") $aux = $bitstreams['uuid'];
+						$url = $this->rest_url."bitstreams/".$aux."/retrieve" ;
 					
 					}
 					
@@ -572,7 +581,11 @@ class Repository_api
             echo $listItems;
 	        ob_flush();
             flush();
-			?><script language=javascript>ListElemt("<?php echo round(($listItemsReal/$listItemsRepo)*100,1)."%"?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")</script><?php;
+			?>
+                        <script language=javascript>
+                        ListElemt("<?php echo round(($listItemsReal/$listItemsRepo)*100,1)."%"?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")
+                        </script>
+                        <?php ;
 			
 			$valc=explode("\n",$ValorCapturado);
 			
@@ -626,33 +639,35 @@ class Repository_api
 			
 		   	}
   
-	}
+}        //end of class Repository_api
 
 /*
 -Primer parametro URL
 -Segundo parametro nombre de la base dato
--tercer parametro nombre del 
+-tercer parametro nombre del ???
 */
 
-      
-	    ob_flush();
-           flush();
-	  $repo = new Repository_api($_POST["url"],$base_ant);
+     
+ob_flush();
+flush();
+$repo = new Repository_api($_POST["url"],$base_ant);
 	  
 	  if(isset($_POST['eliminRegist']))
 		$repo->InitializeBD();
 	
 	   
-	  //echo $repo->get_TotalItems(); 
+	//echo $repo->get_TotalItems(); 
 	  
 	$test = $repo->get_listing();   
 			  
 	 if($test == -1)
           echo "The handler was NOT successfully created";
      else{
-	       if($repo->getCantElemntAg() != 0)
-		       $cantItems = "Total de Items:<label style=\"color: #FF0000\"> ". $repo->getCantElemntAg()." </label>";
-		   ?><script language=javascript>ListElemt("<?php echo -1?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")</script><?php;
-		  
-		  }
-
+     if($repo->getCantElemntAg() != 0)
+     $cantItems = "Total de Items:<label style=\"color: #FF0000\"> ". $repo->getCantElemntAg()." </label>";
+     ?>
+     <script language=javascript>
+     ListElemt("<?php echo -1 ?>","<?php echo $listItemsReal ?>","<?php echo $listItemsRepo ?>")
+     </script>
+     <?php ;
+}     ?>

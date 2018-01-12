@@ -34,7 +34,7 @@ if (isset ($_GET['lang'])) {
 
 $_SESSION["lang"] = $lang;
 include_once("lib/library.php");
-include_once("lib/decoding_urls.php");
+//include_once("lib/decoding_urls.php");
 
 $combos = load_combos($lang);
 

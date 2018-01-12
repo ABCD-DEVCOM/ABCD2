@@ -47,7 +47,7 @@ class soap_server extends nusoap_base {
     * @param mixed $wsdl file path or URL (string), or wsdl instance (object)
 	* @access   public
 	*/
-	 public function __construct($wsdl=false){
+	function soap_server($wsdl=false){
 
 		// turn on debugging?
 		global $debug;
@@ -170,7 +170,7 @@ class soap_server extends nusoap_base {
 			// get the character encoding of the incoming request
 			if(strpos($this->headers['Content-Type'],'=')){
 				$enc = str_replace('"','',substr(strstr($this->headers["Content-Type"],'='),1));
-				if(eregi('^(ISO-8859-1|US-ASCII|UTF-8)$',$enc)){
+				if(preg_match('~^(ISO-8859-1|US-ASCII|UTF-8)$~',$enc)){
 					$this->xml_encoding = strtoupper($enc);
 				} else {
 					$this->xml_encoding = 'US-ASCII';
@@ -198,7 +198,7 @@ class soap_server extends nusoap_base {
 						$enc = substr(strstr($v, '='), 1);
 						$enc = str_replace('"', '', $enc);
 						$enc = str_replace('\\', '', $enc);
-						if (eregi('^(ISO-8859-1|US-ASCII|UTF-8)$', $enc)) {
+						if (preg_match('~^(ISO-8859-1|US-ASCII|UTF-8)$~', $enc)) {
 							$this->xml_encoding = strtoupper($enc);
 						} else {
 							$this->xml_encoding = 'US-ASCII';
@@ -228,7 +228,7 @@ class soap_server extends nusoap_base {
 							$enc = substr(strstr($v, '='), 1);
 							$enc = str_replace('"', '', $enc);
 							$enc = str_replace('\\', '', $enc);
-							if (eregi('^(ISO-8859-1|US-ASCII|UTF-8)$', $enc)) {
+							if (preg_match('~^(ISO-8859-1|US-ASCII|UTF-8)$~', $enc)) {
 								$this->xml_encoding = strtoupper($enc);
 							} else {
 								$this->xml_encoding = 'US-ASCII';

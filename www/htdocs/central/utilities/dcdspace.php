@@ -1,7 +1,5 @@
 <?php
 session_start();
-echo "START";
-die;
 
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -16,19 +14,20 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
-echo "<script src=../_js/jquery.js></script>";
+//echo "<script src=../_js/jquery.js></script>";
+echo "<script src=../dbadmin/jquery.js></script>";
 echo "<script src=../dataentry/js/lr_trim.js></script>";
 echo "<body onunload=win.close()>\n";
 
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";	
+include("../common/institutional_info.php");
+$encabezado="&encabezado=s";
 
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">API/REST-Dspace: " . $base_ant."
 			</div>
 			<div class=\"actions\">";
 
-echo "<a href=\"menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 
@@ -37,11 +36,12 @@ echo "</div>
 	</div>";
 ?>
 <div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addloanobjectcopies.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addloanobjectcopies.html target=_blank>
+        <?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addloanobjectcopies.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: apirest.php</font>";
+echo "<font color=white>&nbsp; &nbsp; Script: dcdspace.php</font>";
 ?>
 
 
@@ -59,8 +59,25 @@ function ListElemt(porc,cantR,cantM){
          $("#inner").html(" "+porc); 		 
 	 }
 
-
- $("#info").html(cantR+" <?php echo $msgstr["de"]?> "+cantM);
+	 calporc = (cantR*100)/cantM;
+   
+   if(calporc > 10.0 && calporc < 30.0)
+      $("#inner").css("background-color", "#80CBC4");
+      else
+	    if(calporc > 30.0 && calporc < 50.0)
+		    $("#inner").css("background-color", "#4DB6AC");
+			else
+	       if(calporc > 50.0 && calporc < 70.0)
+		      $("#inner").css("background-color", "#26A69A");
+			  else
+	         if(calporc > 70.0 && calporc < 90.0)
+		        $("#inner").css("background-color", "#00897B");
+				else
+	         if(calporc > 90.0)
+		        $("#inner").css("background-color", "#00695C");
+  
+ $("#info").html(cantR+" <?php echo $msgstr["de"] ?> "+cantM);
+ 
 	 
 } 
  
@@ -99,7 +116,6 @@ $(document).ready(function()
 	
 	
 	$("#bstt").click(function () {
-		
 		return false;
     });
 		
@@ -110,7 +126,6 @@ $(document).ready(function()
         if($("#proxy").is(':checked') ){
 		   if($("#proxyhttp").val() == "" ){
                 alert("<?php echo $msgstr["errproxy"]?>");
-				
 			    $("#proxyhttp").focus();
 			return false;
            }
@@ -146,14 +161,11 @@ $(document).ready(function()
 					{				
 					 if($(value).val() == $(value1).val() && $(value).val() != "")
 					  {
-					    		
 						 alert("<?php echo $msgstr["errdcigual"]?>, "+$(value).val()+"-"+$(value1).val());
-						
 						 $(value).val("");
 						 $(value1).val("");
 						 $(value1).focus();
 						   aux = -1;	 
-					  
 					  }
 					}
 			    });
@@ -191,11 +203,7 @@ $(document).ready(function()
 		 }        
 
 	});
-	
-	
- 
-	
-	
+
 });
 
 </script>	
@@ -208,17 +216,18 @@ $(document).ready(function()
   echo "<p>".$msgstr["apires"]."</p>";   
   echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
   echo "<h3>".$msgstr["cantdatabase"]." ".$base_ant." ";
- 
-  ?> 
+  echo " from URL ". $_POST["url"] ;
+?>
 
- <?php
+<?php
 function TotalItems(){
  global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr,$base_ant;
  
 $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
-include("../common/wxis_llamar.php"); 
-
+//echo "IsisScript = $IsisScript<BR>";
+include("../common/wxis_llamar.php");
+//echo "CONTENIDO="; var_dump($contenido);//die;
 	$ix=-1;
 	foreach($contenido as $linea) {
 		$ix=$ix+1;
@@ -239,7 +248,7 @@ include("../common/wxis_llamar.php");
   <p><p/>
   <table name="admin" id="admin" border="0" >
     <tr>
-	   <?php  if (!$_POST["submit"]){	 ?> 
+	   <?php  if (!$_POST["submit"]){ ?>
 	  <td>
       	<table  size="100">
 	    <tr><td>
@@ -283,7 +292,7 @@ include("../common/wxis_llamar.php");
 		  <tr>
 			<td  align="right"> 
 			  <label><?php echo $msgstr["proxyhttp"]; ?>
-				 <input  size="30" type="text" placeholder="https://proxy.com" name="proxyhttp" id="proxyhttp" value="http://proxy.com" disabled>
+			 <input  size="30" type="text" placeholder="https://proxy.com" name="proxyhttp" id="proxyhttp" value="http://proxy.com" disabled>
 			  </label>  
 		   </td>
 		  </tr>
@@ -305,7 +314,9 @@ include("../common/wxis_llamar.php");
 	    
 	     <?php  if ($_POST["submit"]){	 ?>	
                    <h3><label id="info"></label></h3>		 
-                   <div id="outter" style="heigt:25px;width:615px;border:solid 1px #000"><div id="inner" style="heigt:25px;width:0%;border-right:solid 1px #000;background-color:lightblue">&nbsp;</div></div>
+                   <div id="outter" style="heigt:25px;width:615px;border:solid 1px #000">
+                   <div id="inner" style="heigt:25px;width:0%;border-right:solid 1px #000;background-color:lightblue">&nbsp;
+                   </div></div>
 	               <button id="bstt" class="b"><?php echo $msgstr["detener"]; ?></button>
 		 <?php 	 } ?> 	
 				
@@ -316,11 +327,14 @@ include("../common/wxis_llamar.php");
 				   <div id="content" >					  
 					 <div style="overflow-y: auto; height:200px; width:600px;">
 					 <?php 
-						if ($_POST["submit"]){
-							 include("dcrest.php");
-                             ?><script language=javascript>F5(<?php echo TotalItems(); ?>)</script><?php;							 
-						   }
-					 ?> 
+					 if ($_POST["submit"]){
+//                                         var_dump($_POST);die;
+					 include("dcrest.php");
+                                         ?>
+                                         <script language=javascript>F5(<?php echo " / " . TotalItems(); ?>)</script>
+                                         <?php
+				         }
+			                 ?>
 					
 					 </div>
 				   </div>

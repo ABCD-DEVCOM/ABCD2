@@ -1,4 +1,4 @@
-0|0 - Pending
-1|1 - Processing
-2|2 - Served
-3|3 - Cancelled
+0|Pending
+1|In process
+2|Served
+3|Cancelled

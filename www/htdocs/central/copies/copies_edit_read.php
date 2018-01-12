@@ -27,16 +27,20 @@ if ($res=="LOCKREJECTED") {
 	alert('".$arrHttp["Mfn"].": ".$msgstr["reclocked"]."')
 	</script>";
 	die;
-	break;
+//	break;
 }
 ?>
 <script language=javascript>
 top.toolbarEnabled="N"
-function Validar(){
-}
-function EnviarForma(){	ret=Validar()
+function Validar(){
+
+
+}
+function EnviarForma(){
+	ret=Validar()
 	if (ret=="N") return
-	document.forma1.submit()}
+	document.forma1.submit()
+}
 
 
 function RefrescarPicklist(tabla,Ctrl,valor){

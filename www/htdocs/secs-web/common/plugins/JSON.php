@@ -136,6 +136,9 @@ class Services_JSON
     {
         $this->use = $use;
     }
+    function __construct() {
+    self:: Services_JSON();
+    }
 
    /**
     * convert a string from one UTF-16 char to one UTF-8 char
@@ -787,7 +790,10 @@ if (class_exists('PEAR_Error')) {
         {
             parent::PEAR_Error($message, $code, $mode, $options, $userinfo);
         }
+    function __construct() {
+    self:: Services_JSON_Error();
     }
+     }
 
 } else {
 
@@ -801,6 +807,10 @@ if (class_exists('PEAR_Error')) {
         {
 
         }
+    function __construct() {
+    self:: Services_JSON_Error();
+    }
+
     }
 
 }

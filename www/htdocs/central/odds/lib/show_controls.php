@@ -1,6 +1,5 @@
 <?php
 
-// 
 function _remove_comments($text) {
     //Old way 
     //$string = preg_replace("%(#|;|(//)).*%","",$string);
@@ -149,6 +148,7 @@ function read_config($value, $lang_param, $data_passed=array()) {
     if (trim($lang_param) == "") {
         $lang_param = $lang;
     }
+    echo "read_config";//die;
     $file_contents = trim(file_get_contents($db_path ."/odds/def/$lang_param/odds_show_controls.tab"));
 
     $file_contents = _remove_comments($file_contents);
@@ -168,9 +168,11 @@ function read_config($value, $lang_param, $data_passed=array()) {
     }       
     return $inputs;
 }
+
 $value = $_POST['content'];
 $lang = $_POST['lang'];
 $data_passed = $_POST['jsdata'];
+//echo "before read_config";
 $inputs = read_config($value, $lang, $data_passed);
 $labels = array ('html' => $inputs);
 $encoded_labels = array_map("utf8_encode", $labels);

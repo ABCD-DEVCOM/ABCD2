@@ -30,7 +30,7 @@ switch ($arrHttp["desde"]){
 		if (isset($def["LOGO"]))echo "<img src=".$def["LOGO"]."><BR>";
 		break;
 	case "IAH_ECTA":
-		$action="../circulation/opac_statment_ex.php";
+		$action="../circulation/opac_statement_ex.php";
 	    break;
 }
 //include ("header.php")
@@ -54,27 +54,32 @@ $db_path=$arrHttp["DB_PATH"];
 
 <?php
 $msg="";
-switch ($arrHttp["desde"]){	case "IAH_RESERVA":
+switch ($arrHttp["desde"]){
+	case "IAH_RESERVA":
 		$msg=$msgstr["iah_usuario_reserva"];
 		break;
 	case "IAH_ECTA":
 		$msg=$msgstr["iah_usuario_ecta"];
 	    break;
-}
+
+}
 echo $msg;
 ?>
 
 
 </b>
 	<br><br>
-
+
+
 <?php
 echo "<br><br>";
 echo "Código de usuario: ";
 echo "<input type=text name=usuario size=10>\n";
 echo "<input type=submit value=\"".$msgstr["continue"]."\" >\n";
 echo "&nbsp; &nbsp;<input type=button name=cerrar value=\"".$msgstr["close"]."\"  onclick=\"self.close()\">";
-foreach ($arrHttp as $var=>$value){	echo "<input type=hidden name=$var value=\"$value\">\n";}
+foreach ($arrHttp as $var=>$value){
+	echo "<input type=hidden name=$var value=\"$value\">\n";
+}
 
 
 
@@ -82,7 +87,8 @@ foreach ($arrHttp as $var=>$value){	echo "<input type=hidden name=$var value=\"
 ?>
 </form>
 <br><br>
-
+
+
 </body>
 
 </html>

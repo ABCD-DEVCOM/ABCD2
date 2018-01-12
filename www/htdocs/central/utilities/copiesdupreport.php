@@ -48,7 +48,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: copiesdupreport.php</font>";
 function Save(file)
 {
 
-window.open('download.php?file='+file,'_self');
+window.open('download_CopDupReport.php?file='+file,'_self');
 }
 </SCRIPT>	
 <div class="middle form">

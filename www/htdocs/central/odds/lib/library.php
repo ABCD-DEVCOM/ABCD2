@@ -55,7 +55,8 @@ function load_labels($lang_param = '', $id, $name, $email, $phone) {
 	if ($lang_param != "") { 
 		$lang = $lang_param;
 	}		
-	$labels = "";
+	$labels = array();
+        //"";
 	$file_contents = trim(file_get_contents($db_path."lang/$lang/odds.tab"));	
 	//var_dump($db_path."lang/$lang/odds.tab");	
 	//var_dump($file_contents);die();
@@ -67,7 +68,7 @@ function load_labels($lang_param = '', $id, $name, $email, $phone) {
 		if (trim($v) == 'HEADER_MESSAGES') {
 			$end = true;
 		} else {
-			$a = explode("=", $v);			
+			$a = explode("=", $v);
 			$value = trim($a[1]);			
 			if (trim($a[0]) == 'welcome') {
 				$value = str_replace("[year]", date("Y"), $value);				
@@ -164,7 +165,7 @@ function load_combos($lang_param = '') {
 							$lineas = explode("\n", $file_contents);												
 							foreach ($lineas as $linea) {
 								$key_value = explode("|", $linea);															
-								$combos[$name_tab][trim($key_value[0])] =  trim($key_value[1]);
+								$combos[$name_tab][trim($key_value[0])] =  trim($key_value[0]);
 							}
 						}
 					}

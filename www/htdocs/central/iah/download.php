@@ -1,6 +1,7 @@
 <?php
+global $arrHttp;
 include("configure.php");
-if (!isset($arrHttp["base"]))  die;
+if (!isset($arrHttp["base"])) { echo "NO DATABASE DEFINED"; die; }
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 $dbn=$arrHttp["base"];
 $db_path=$config["DB_PATH"];
@@ -11,8 +12,10 @@ include("../common/wxis_llamar.php");
 $occ=$arrHttp["occ"]-1;
 $document=$contenido[$occ];
 if (isset($config["HTTP_ACCESS"]) and trim($config["HTTP_ACCESS"])!=""){
-    header("Location: ".$config["HTTP_ACCESS"].$document);}else{
-	$document=trim($document);	$filename=$document;
+    header("Location: ".$config["HTTP_ACCESS"].$document);
+}else{
+	$document=trim($document);
+	$filename=$document;
     $f_ext = pathinfo($filename, PATHINFO_EXTENSION); //gets extension of file
 	switch ($f_ext) //known file types
 	 {
@@ -55,7 +58,8 @@ if (isset($config["HTTP_ACCESS"]) and trim($config["HTTP_ACCESS"])!=""){
 	header('Content-Disposition: inline; filename="'.$document.'"');
 
 	@readfile($file);
-}
+
+}
 
 
 ?>

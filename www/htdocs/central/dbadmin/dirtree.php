@@ -1871,7 +1871,7 @@ function IS_VALID_EMAIL($mail) {
 /*
 This function validate the characters in the contents of the email message.
 */
-    return eregi('^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+' . '@' . '[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.' . '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$', $mail);
+    return preg_match('~^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+' . '@' . '[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.' . '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$~', $mail);
 } //END FUNCTION
 
 Function EMAILFILE1($NODE) {

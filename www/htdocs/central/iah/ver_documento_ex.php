@@ -2,19 +2,23 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-  <title>Solicitud de documento</title>
+  <title>Document request</title>
   <script>
-  	  function PresentarDocumento(){  	  	msgwin=window.open("","PDFDOC","width=800,height=800,scrollbars,resizable")
-  	  	msgwin.document.title="Pdf"  	  	document.solicitud.submit()
+  	  function PresentarDocumento(){
+  	  	msgwin=window.open("","PDFDOC","width=800,height=800,scrollbars,resizable")
+  	  	msgwin.document.title="Pdf"
+  	  	document.solicitud.submit()
 
   	  	msgwin.focus()
-  	  	self.close()  	  }
+  	  	self.close()
+  	  }
   </script>
 </head>
 <?php include('header.php');?>
 
 <?php
-function LeerUsuario($usuario,$prefix,$Pft,$db_path){global $xWxis,$wxisUrl,$Wxis;
+function LeerUsuario($usuario,$prefix,$Pft,$db_path){
+global $xWxis,$wxisUrl,$Wxis;
 	$IsisScript=$xWxis."buscar.xis";
 	$formato=$Pft;
 	$formato=urlencode($formato);
@@ -28,9 +32,11 @@ include ("configure.php");
 $error="";
 $resultado=LeerUsuario($arrHttp["usuario"],$config["USER_SEARCH"],$config["USER_DISPLAY"],$config["DB_PATH"]);
 if (count($resultado)==0 or trim($resultado[0])==""){
-	$error="S";	echo "<font color=darkred><P>".$arrHttp["usuario"].": "."No está registrado como socio de la AEU ";
-	echo "<p><a href=javascript:history.back()>Regresar</a>";
-	die;}
+	$error="S";
+	echo "<font color=darkred><P>".$arrHttp["usuario"].": "."Not registered as member ";
+	echo "<p><a href=javascript:history.back()>Back</a>";
+	die;
+}
 echo "<form name=solicitud action=download.php method=post target=PDFDOC onsubmit=javascript:'return false'>";
 foreach ($arrHttp as $var=>$value){
 	echo "<input type=hidden name=$var value=\"$value\">\n";
@@ -47,7 +53,7 @@ if ($error=""){
 	foreach ($contenido as $value) echo "<b>$value</b><br>";
 }
 ?>
-<p><a href=javascript:PresentarDocumento()>Ver el documento</a>
+<p><a href=javascript:PresentarDocumento()>Show document</a>
 </form>
 </body>
 </html>

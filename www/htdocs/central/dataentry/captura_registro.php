@@ -7,7 +7,7 @@ if (isset($_REQUEST['GET']))
 else
 	if (isset($_REQUEST['POST'])) $page = $_REQUEST['POST'];
 
-if (!(eregi("^[a-z_./]*$", $page) && !eregi("\\.\\.", $page))) {
+if (!(preg_match("~^[a-z_./]*$~", $page) && !preg_match("~\\.\\.~", $page))) {
 	// Abort the script
 	die("Invalid request");
 
@@ -25,17 +25,23 @@ include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
 include("../common/get_post.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
 	$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt");
 else
 	$fp=file($db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt");
-foreach($fp as $value) {	$f=explode('|',$value);
-	if ($f[3]==1){		if (substr($f[13],0,1)!="@")
-		    if (trim($f[13])!="")    // si no se especificó el formato para extraer la entrada principal se toma el tag del campo				$arrHttp["formato_e"]=$f[13]."'$$$'f(mfn,1,0)";
+foreach($fp as $value) {
+	$f=explode('|',$value);
+	if ($f[3]==1){
+		if (substr($f[13],0,1)!="@")
+		    if (trim($f[13])!="")    // si no se especificó el formato para extraer la entrada principal se toma el tag del campo
+				$arrHttp["formato_e"]=$f[13]."'$$$'f(mfn,1,0)";
 			else
 				$arrHttp["formato_e"]="mhl,v".$f[1]."'$$$'f(mfn,1,0)";
 		else
-			$arrHttp["formato_e"]=$f[13];	}}
+			$arrHttp["formato_e"]=$f[13];
+	}
+}
 $arrHttp["formato_e"]=stripslashes($arrHttp["formato_e"]);
 
 
@@ -101,7 +107,8 @@ echo "
 	  	i=document.Lista.baseSel.selectedIndex
 	   	if (i==-1) i=0
 	  	abd=document.Lista.baseSel.options[i].value
-		if (i==-1 || i==0){			return
+		if (i==-1 || i==0){
+			return
 		}
 		a=abd.split("|")
 		basecap=a[0]
@@ -116,14 +123,18 @@ echo "
 
 		}
 	}
-	function ObtenerTerminos(){//conversion table
+	function ObtenerTerminos(){
+//conversion table
 
-		if (cnv=="S"){			if (document.Lista.cnvtab.selectedIndex>0){
+		if (cnv=="S"){
+			if (document.Lista.cnvtab.selectedIndex>0){
         		cnvtabsel="&cnvtabsel="+document.Lista.cnvtab.options[document.Lista.cnvtab.selectedIndex].value
         	}else{
         		cnvtabsel=""
         	}
-        }else{        	cnvtabsel=""        }
+        }else{
+        	cnvtabsel=""
+        }
         basecap=""
         if (bsel=="S"){
         	if (document.Lista.baseSel.selectedIndex>0){
@@ -132,7 +143,9 @@ echo "
         	top.basecap=basecap
         	top.ciparcap=basecap+".par"
         	top.cnvtabsel=cnvtabsel
-        }else{        	basecap="<?php echo $arrHttp["base"]?>"        }
+        }else{
+        	basecap="<?php echo $arrHttp["base"]?>"
+        }
 		Seleccion=""
 		icuenta=0
 		i=document.Lista.autoridades.selectedIndex
@@ -158,10 +171,12 @@ echo "
 			pref="<?php echo $arrHttp["pref"]?>"
     		cipar="<?php echo $arrHttp["cipar"]?>"
  <?php
- 			if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]!=""){ 				echo "top.xeditar=\"S\"\n";
+ 			if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]!=""){
+ 				echo "top.xeditar=\"S\"\n";
 
 				echo 'parent.main.location="fmt.php?xx=xx&base="+db+"&cipar="+db+".par&basecap="+basecap+"&ciparcap="+basecap+".par&Mfn="+Seleccion+"&Opcion=captura_bd&ver=S&capturar=S"+cnvtabsel+"&Formato="+basecap'."\n";
-			}else{				if (isset($arrHttp["Formato"]))
+			}else{
+				if (isset($arrHttp["Formato"]))
  					echo "Formato='&Formato=".$arrHttp["Formato"]."'\n";
  				else
  					echo "Formato=''\n";
@@ -237,7 +252,8 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 	echo "<font color=white>&nbsp; &nbsp; Script: alfa.php</font>";
 // read conversion tables
 	$archivo=$db_path."/cnv/z3950.cnv";
-	if (file_exists($archivo)){		echo "\n<script>cnv=\"S\"</script>\n";
+	if (file_exists($archivo)){
+		echo "\n<script>cnv=\"S\"</script>\n";
 		echo "<br>".$msgstr["z3950_tab"].": ";
 		echo "<select name=cnvtab>";
 		echo "<option></option>";
@@ -245,7 +261,9 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 		foreach ($fp as $value){
 			$v=explode('|',$value);
 			$xsel="";
-			if (isset($arrHttp["cnvtabsel"])){				if ($v[0]==$arrHttp["cnvtabsel"]) $xsel=" selected";			}
+			if (isset($arrHttp["cnvtabsel"])){
+				if ($v[0]==$arrHttp["cnvtabsel"]) $xsel=" selected";
+			}
 			echo "<option value='".$v[0]."'$xsel>".$v[1]."\n";
 		}
 		echo "</select>";
