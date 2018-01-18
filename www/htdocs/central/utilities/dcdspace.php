@@ -1,6 +1,10 @@
 <?php
 session_start();
-
+//$_POST["submit"]=false;
+//$_POST["cantItems"]=0;
+//$_POST = array_merge(array($key=>false),$_POST);
+//return $_POST[$key];
+// var_dump($_POST);
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -92,8 +96,8 @@ function F5(cantElemnt){
   
 $(document).ready(function()
 {
-    
-    F5(-1);     
+    F5(-1);
+
    $("#proxy").click(function () {
 	
 	   if( $(this).is(':checked') ){
@@ -215,8 +219,9 @@ $(document).ready(function()
 <?php
   echo "<p>".$msgstr["apires"]."</p>";   
   echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
-  echo "<h3>".$msgstr["cantdatabase"]." ".$base_ant." ";
-  echo " from URL ". $_POST["url"] ;
+  echo "<i>".$msgstr["cantdatabase"]." ".$base_ant."</i> ";
+//if(isset($_POST['url']))
+//  echo " from URL ". $_POST["url"] ;
 ?>
 
 <?php
@@ -239,7 +244,7 @@ include("../common/wxis_llamar.php");
 		}
 	}
 	$total=(int) $tag["MAXMFN"];
-
+//        echo "Total =" . $total . "<BR>"; die;
 	return  $total;
 
 }
@@ -248,7 +253,7 @@ include("../common/wxis_llamar.php");
   <p><p/>
   <table name="admin" id="admin" border="0" >
     <tr>
-	   <?php  if (!$_POST["submit"]){ ?>
+	   <?php  if (isset($_POST['submit']) AND $_POST["submit"]) {} else { ?>
 	  <td>
       	<table  size="100">
 	    <tr><td>
@@ -268,7 +273,7 @@ include("../common/wxis_llamar.php");
 	  <tr>
 	   <td  align="right"> 
 		  <label><?php echo $msgstr["url"]; ?>
-			 <input  size="30" type="text" placeholder="https://dspace.com/rest/" name="url" id="url" value="">
+			 <input  size="30" type="text" placeholder="https://wedocs.unep.org/rest/" name="url" id="url" value="">
 		  </label>  
 	   </td>
 	  </tr>
@@ -309,10 +314,11 @@ include("../common/wxis_llamar.php");
 	 </td> 
 	  
 	  
-	     <?php }  ?> 
+	     <?php //$_POST["submit"]=true;
+             }  ?>
 	  <td>
 	    
-	     <?php  if ($_POST["submit"]){	 ?>	
+	     <?php  if (isset($_POST["submit"])){	 ?>
                    <h3><label id="info"></label></h3>		 
                    <div id="outter" style="heigt:25px;width:615px;border:solid 1px #000">
                    <div id="inner" style="heigt:25px;width:0%;border-right:solid 1px #000;background-color:lightblue">&nbsp;
@@ -327,7 +333,7 @@ include("../common/wxis_llamar.php");
 				   <div id="content" >					  
 					 <div style="overflow-y: auto; height:200px; width:600px;">
 					 <?php 
-					 if ($_POST["submit"]){
+					 if (isset($_POST["submit"])) {
 //                                         var_dump($_POST);die;
 					 include("dcrest.php");
                                          ?>
@@ -347,7 +353,10 @@ include("../common/wxis_llamar.php");
   </table > 
 <tr><td align="right">&nbsp;</td></tr>  
 
- <?php  if (!$_POST["submit"]){	 ?>  
+ <?php
+// echo "postsubmit=" . $_POST["submit"]. "<BR>";
+if (isset($_POST["submit"]) AND $_POST["submit"]) { }  else { ?>
+
 <table >
   <tr>
      <td width="10">&nbsp;</td>
@@ -435,10 +444,11 @@ include("../common/wxis_llamar.php");
 <table width="750px" border="0">
   <tr>
 	    <td width="22">&nbsp;</td>
-		<td><?php echo "<input type=submit name=submit id=submit value=".$msgstr["ejecutar"].">"; 
-		    if (isset($arrHttp["encabezado"])) 
+		<td><?php echo "<input type=submit name=submit id=submit value=".$msgstr["ejecutar"].">";
+
+		    if (isset($arrHttp["encabezado"])) {
 		          echo "<input type=hidden name=encabezado value=s>";
-			?>
+		}	?>
 		</td>     
   </tr>
   <tr><td >&nbsp;</td></tr>
@@ -447,8 +457,8 @@ include("../common/wxis_llamar.php");
  <?php  }	 ?> 
 
     <?php 
-		if ($_POST["submit"]){
-			echo $cantItems;
+		if (isset($_POST["submit"])) {
+			if ($cantItems>0) echo $cantItems;
 			}
 	?>
 	   

@@ -122,7 +122,7 @@ echo "<div class=\"sectionInfo\">
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"../dbadmin/menu_mx_based.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"menu_mx_based.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -275,7 +275,7 @@ echo "<input type=submit name=submit value=".$msgstr["update"].">";
 </form>
 </div>
 <?php
-if ($_POST["submit"])
+if (isset($_POST["submit"]) and $_POST["submit"])
 {
 $procstartedat=date("Y-m-d H:i:s");
 $procstartedatN=date("Ymd H:i:s");

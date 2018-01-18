@@ -23,7 +23,7 @@ $valortag = Array();
 $listItems = "";
 $listItemsRepo = 0;
 $listItemsReal = 0;
-$cantItems;
+$cantItems = 0;
 
  
 class Repository_api
@@ -665,6 +665,8 @@ $repo = new Repository_api($_POST["url"],$base_ant);
      else{
      if($repo->getCantElemntAg() != 0)
      $cantItems = "Total de Items:<label style=\"color: #FF0000\"> ". $repo->getCantElemntAg()." </label>";
+     else
+     $cantItems = 0;
      ?>
      <script language=javascript>
      ListElemt("<?php echo -1 ?>","<?php echo $listItemsReal ?>","<?php echo $listItemsRepo ?>")

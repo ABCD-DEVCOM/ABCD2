@@ -25,8 +25,10 @@ include("leer_fdt.php");
 
 $Fdt_unsorted=LeerFdt($base);
 $Fdt=array();
-foreach ($Fdt_unsorted as $value){	$f=explode('|',$value);
-	$Fdt[$f[1]]=$value;}
+foreach ($Fdt_unsorted as $value){
+	$f=explode('|',$value);
+	$Fdt[$f[1]]=$value;
+}
 
 ksort($Fdt);
 
@@ -42,34 +44,55 @@ include("../common/header.php");
 <script language="javascript1.2" src="js/lr_trim.js"></script>
 <script languaje=javascript>
 
-function EnviarForma(){	buscar=""	if (document.forma1.tipob[0].checked)
+function EnviarForma(){
+	buscar=""
+	if (document.forma1.tipob[0].checked)
 		buscar="valor"
 	if (document.forma1.tipob[1].checked)
 		buscar="pft"
-	if (buscar==""){		alert("<?php echo $msgstr["cg_txtpft"]?>")
-		return  false	}
+	if (buscar==""){
+		alert("<?php echo $msgstr["cg_txtpft"]?>")
+		return  false
+	}
     if ((Trim(document.forma1.from.value)=="" || Trim(document.forma1.to.value)=="") && Trim(document.forma1.Expresion.value)=="" && Trim(document.forma1.seleccionados.value)==""){
 		alert("<?php echo $msgstr["cg_selrecords"]?>")
 		return  false
 	}
-	if (Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") {		if (Trim(document.forma1.from.value)=="" || (document.forma1.to.value)==""){			alert("<?php echo $msgstr["cg_selrecords"]?>")
-			return false		}
+	if (Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") {
+		if (Trim(document.forma1.from.value)=="" || (document.forma1.to.value)==""){
+			alert("<?php echo $msgstr["cg_selrecords"]?>")
+			return false
+		}
 		if (document.forma1.to.value>top.maxmfn || document.forma1.from.value>top.maxmfn || document.forma1.to.value<=0
-		    || document.forma1.from.value<=0 ||  document.forma1.from.value>document.forma1.to.value ){			alert("<?php echo $msgstr["numfr"]?>")
-			return false		}	}
-	if ((Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") && Trim(document.forma1.Expresion.value)!=""){		alert("<?php echo $msgstr["cg_selrecords"]?>")
-		return false	}
+		    || document.forma1.from.value<=0 ||  document.forma1.from.value>document.forma1.to.value ){
+			alert("<?php echo $msgstr["numfr"]?>")
+			return false
+		}
+	}
+	if ((Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") && Trim(document.forma1.Expresion.value)!=""){
+		alert("<?php echo $msgstr["cg_selrecords"]?>")
+		return false
+	}
 	fields=""
 	ALL=""
 	if (buscar=="valor"){
-		for (i=0;i<document.forma1.free_C.options.length;i++){			if (document.forma1.free_C.options[i].selected){				if (i==0) ALL="Y"				tag=document.forma1.free_C.options[i].value
+		for (i=0;i<document.forma1.free_C.options.length;i++){
+			if (document.forma1.free_C.options[i].selected){
+				if (i==0) ALL="Y"
+				tag=document.forma1.free_C.options[i].value
 				t=tag.split('|')
-				fields=fields+t[0]+";"			}		}
-		if (ALL=="Y" && fields!="ALL;"){			alert("<?php echo $msgstr["err_all"]?>")
-			return		}
+				fields=fields+t[0]+";"
+			}
+		}
+		if (ALL=="Y" && fields!="ALL;"){
+			alert("<?php echo $msgstr["err_all"]?>")
+			return
+		}
 	}
-	if (fields=="" && buscar=="valor") {		alert("<?php echo $msgstr["freesearch_3"]?>")
-		return	}
+	if (fields=="" && buscar=="valor") {
+		alert("<?php echo $msgstr["freesearch_3"]?>")
+		return
+	}
 	if (Trim(document.forma1.search.value)==""){
 		alert("<?php echo $msgstr["err_search"]?>")
 		return
@@ -150,7 +173,8 @@ echo "
 	<tr>
 		<td  align=left valign=top><a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle border=0><?php echo $msgstr["cg_search"]?> </a></td>
         <TD colspan=2 align=left><?php echo $msgstr["expresion"]?><br>
-		<textarea rows=1 cols=80 name=Expresion><?
+		<textarea rows=1 cols=80 name=Expresion>
+        <?php
 	if (isset($arrHttp["Expresion"])){
 	  	echo $Expresion;
 	}
