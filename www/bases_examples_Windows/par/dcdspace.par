@@ -1,0 +1,11 @@
+dcdspace.*=/ABCD/www/bases/dcdspace/data/dcdspace.*
+prologoact.pft=/ABCD/www/bases/www/prologoact.pft
+prologo.pft=/ABCD/www/bases/www/prologo.pft
+epilogoact.pft=/ABCD/www/bases/www/epilogoact.pft
+epilogo.pft=/ABCD/www/bases/www/epilogo.pft
+autoridades.pft=/ABCD/www/bases/dcdspace/pfts/en/autoridades.pft 
+;isisac.tab=/ABCD/www/bases/dcdspace/data/isisactab_utf8.tab
+;isisuc.tab=/ABCD/www/bases/dcdspace/data/isisuctab_utf8.tab
+STW=/ABCD/www/bases/dcdspace/data/dcdspace.stw
+extfile.pft=/ABCD/www/bases/dcdspace/pfts/%lang%/extfile.pft
+exttext.pft=/ABCD/www/bases/dcdspace/pfts/%lang%/exttext.pft

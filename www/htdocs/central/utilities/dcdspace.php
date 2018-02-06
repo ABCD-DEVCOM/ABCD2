@@ -80,11 +80,11 @@ function ListElemt(porc,cantR,cantM){
 	         if(calporc > 90.0)
 		        $("#inner").css("background-color", "#00695C");
   
- $("#info").html(cantR+" <?php echo $msgstr["de"] ?> "+cantM);
+ $("#info").html(cantR+" <?php echo $msgstr["de"]." / " ?> "+cantM);
  
 	 
 } 
- 
+
 function F5(cantElemnt){ 
 
 	if(cantElemnt == -1)
@@ -92,12 +92,26 @@ function F5(cantElemnt){
 	else
 	   $('#cant').replaceWith(cantElemnt);  
 
-}    
+} 
+
+function OnlyNum(e){
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    //Tecla de retroceso para borrar, siempre la permite
+    if (tecla==8){
+        return true;
+    }
+        
+    // Patron de entrada, en este caso solo acepta numeros
+    patron =/[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}   
   
 $(document).ready(function()
 {
     F5(-1);
-
+   
    $("#proxy").click(function () {
 	
 	   if( $(this).is(':checked') ){
@@ -115,7 +129,7 @@ $(document).ready(function()
 		$("#proxyhttp").val('');
 	    $("#puerto").val('');
 		
-	});
+	});	
 	
 	
 	
@@ -123,7 +137,7 @@ $(document).ready(function()
 		return false;
     });
 		
-	
+		
 	$("#submit").click(function () {
 	      
 	   	
@@ -230,7 +244,7 @@ function TotalItems(){
  
 $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
-//echo "IsisScript = $IsisScript<BR>";
+//echo "IsisScript = $IsisScript<BR> Query=$query";
 include("../common/wxis_llamar.php");
 //echo "CONTENIDO="; var_dump($contenido);//die;
 	$ix=-1;
@@ -243,17 +257,18 @@ include("../common/wxis_llamar.php");
 			}
 		}
 	}
-	$total=(int) $tag["MAXMFN"];
-//        echo "Total =" . $total . "<BR>"; die;
-	return  $total;
+if (!isset($tag["MAXMFN"])) 
+	$tag["MAXMFN"]=0;	
+//echo  'maxMFN='.$tag["MAXMFN"]." <BR>";
+	return  (int) $tag["MAXMFN"];
 
 }
 ?>  
  <label id="cant"></label>
-  <p><p/>
+  <p><p/>   
   <table name="admin" id="admin" border="0" >
     <tr>
-	   <?php  if (isset($_POST['submit']) AND $_POST["submit"]) {} else { ?>
+	   <?php  if(!(isset($_POST["submit"]) && $_POST["submit"])){  ?>
 	  <td>
       	<table  size="100">
 	    <tr><td>
@@ -273,7 +288,15 @@ include("../common/wxis_llamar.php");
 	  <tr>
 	   <td  align="right"> 
 		  <label><?php echo $msgstr["url"]; ?>
-			 <input  size="30" type="text" placeholder="https://wedocs.unep.org/rest/" name="url" id="url" value="">
+			 <input  size="35" type="text" placeholder="https://wedocs.unep.org/rest/" name="url" id="url" value="">
+		  </label>  
+	   </td>
+	  </tr>
+	  <tr><td align="right">&nbsp;</td></tr>
+	  <tr>
+	   <td  align="right"> 
+		  <label><?php echo $msgstr["count"]; ?>
+			 <input  size="35" type="text" name="count" id="count" value="" onkeypress="return OnlyNum(event)">
 		  </label>  
 	   </td>
 	  </tr>
@@ -297,7 +320,7 @@ include("../common/wxis_llamar.php");
 		  <tr>
 			<td  align="right"> 
 			  <label><?php echo $msgstr["proxyhttp"]; ?>
-			 <input  size="30" type="text" placeholder="https://proxy.com" name="proxyhttp" id="proxyhttp" value="http://proxy.com" disabled>
+			 <input  size="35" type="text" placeholder="https://proxy.com" name="proxyhttp" id="proxyhttp" value="http://proxy.com" disabled>
 			  </label>  
 		   </td>
 		  </tr>
@@ -305,24 +328,24 @@ include("../common/wxis_llamar.php");
 		  <tr>
 			<td  align="right"> 
 			  <label><?php echo $msgstr["puerto"]; ?>
-				 <input  size="30" type="text" placeholder="8080" name="puerto" id="puerto" value="8080" disabled>
+				 <input  size="35" type="text" placeholder="8080" name="puerto" id="puerto" value="8080" disabled>
 			  </label>  
 		   </td>
 		  </tr>
 		 
 	   </table>	 
 	 </td> 
-	  
+	   
 	  
 	     <?php //$_POST["submit"]=true;
-             }  ?>
+		     }  ?> 
 	  <td>
 	    
-	     <?php  if (isset($_POST["submit"])){	 ?>
+	     <?php  if (isset($_POST["submit"])){	 ?>	
                    <h3><label id="info"></label></h3>		 
                    <div id="outter" style="heigt:25px;width:615px;border:solid 1px #000">
-                   <div id="inner" style="heigt:25px;width:0%;border-right:solid 1px #000;background-color:lightblue">&nbsp;
-                   </div></div>
+				   <div id="inner" style="heigt:25px;width:0%;border-right:solid 1px #000;background-color:lightblue">&nbsp;
+				   </div></div>
 	               <button id="bstt" class="b"><?php echo $msgstr["detener"]; ?></button>
 		 <?php 	 } ?> 	
 				
@@ -333,15 +356,15 @@ include("../common/wxis_llamar.php");
 				   <div id="content" >					  
 					 <div style="overflow-y: auto; height:200px; width:600px;">
 					 <?php 
-					 if (isset($_POST["submit"])) {
-//                                         var_dump($_POST);die;
-					 include("dcrest.php");
-                                         ?>
-                                         <script language=javascript>F5(<?php echo " / " . TotalItems(); ?>)</script>
-                                         <?php
-				         }
-			                 ?>
-					
+					 if (isset($_POST["submit"])) {   
+//                                         var_dump($_POST);die;					 
+					 include("dcrest.php"); 
+					                     ?>
+                                         <script language=javascript>F5(<?php echo TotalItems(); ?>)</script>
+                                         <?php 
+						 }
+						     ?>	
+							 
 					 </div>
 				   </div>
 				</td>
@@ -349,14 +372,14 @@ include("../common/wxis_llamar.php");
 		  </table> 
 	  </td>
 	</tr> 
-   
+	
   </table > 
 <tr><td align="right">&nbsp;</td></tr>  
 
- <?php
-// echo "postsubmit=" . $_POST["submit"]. "<BR>";
-if (isset($_POST["submit"]) AND $_POST["submit"]) { }  else { ?>
-
+ <?php   
+// echo "postsubmit=" . $_POST["submit"]. "<BR>"; 
+if (!(isset($_POST["submit"]) && $_POST["submit"])) { ?> 
+ 
 <table >
   <tr>
      <td width="10">&nbsp;</td>
@@ -444,11 +467,11 @@ if (isset($_POST["submit"]) AND $_POST["submit"]) { }  else { ?>
 <table width="750px" border="0">
   <tr>
 	    <td width="22">&nbsp;</td>
-		<td><?php echo "<input type=submit name=submit id=submit value=".$msgstr["ejecutar"].">";
-
+		<td><?php echo "<input type=submit name=submit id=submit value=".$msgstr["ejecutar"].">"; 
+		   
 		    if (isset($arrHttp["encabezado"])) {
 		          echo "<input type=hidden name=encabezado value=s>";
-		}	?>
+        }	?>
 		</td>     
   </tr>
   <tr><td >&nbsp;</td></tr>
@@ -458,7 +481,7 @@ if (isset($_POST["submit"]) AND $_POST["submit"]) { }  else { ?>
 
     <?php 
 		if (isset($_POST["submit"])) {
-			if ($cantItems>0) echo $cantItems;
+			 echo $cantItems;
 			}
 	?>
 	   

@@ -3,7 +3,7 @@
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
 //session_start();
-
+error_reporting(E_ALL);
 require_once(dirname(__FILE__)."/../config.php");
 $converter_path=$cisis_path."mx";
 
@@ -32,15 +32,16 @@ class Repository_api
     public $rest_url;    
 	public $bd_abcd;
 	public $cant_elem;	
+	public $count_records;
 	
-
     
-	public function __construct($rest_url,$bd_abcd)
+	public function __construct($rest_url,$bd_abcd,$count_records)
     {      		   		 
 		 			 
          $this->rest_url = $this->urlComplit($rest_url);
  		 $this->bd_abcd = $bd_abcd;
-		 $this->cant_elem = 0;	 
+		 $this->cant_elem = 0;
+		 $this->count_records = $count_records;
 		 
     }
     
@@ -96,8 +97,8 @@ class Repository_api
 		 /* $info = curl_getinfo($ch);
 		  foreach ($info as $var => $value)	{
 		    		    echo $var."=>".$value."</br>";
-		  }*/		  
-	     
+		  }*/
+		
        if (curl_errno($ch)) {
 
             $fp = fopen("Mylog.txt", "a+");
@@ -141,193 +142,205 @@ class Repository_api
 	
 	function get_listing($path = "/", $page = ""){
        
-        global $listItemsRepo,$listItemsReal;
+        global $listItemsRepo,$listItemsReal,$msgstr;
 		$list = array();
         $list['list'] = array();
 		$rang = 1;
 		$ini = 0;
 		$pivo = TotalItems();
 		
-      	$cantItem = $this->get_TotalItems();
-		$listItemsRepo = $cantItem;
+      	$cantItem = $this->get_TotalItems();		
 		
-		?>
-                <script language=javascript>
-                ListElemt("<?php echo round(($listItemsReal/$listItemsRepo)*100,1)."%"?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")
+		if($this->count_records != 0 && $this->count_records <= $cantItem)
+		  $cantItem = $this->count_records;
+		
+	    if($this->count_records > $cantItem){
+		   ?>
+				<script type="text/javascript">
+                    alert("<?php echo $msgstr["errorcant"]?>");
+                    window.location.href = "dcdspace.php?base="+"<?php echo $this->bd_abcd?>";					  
                 </script>
-                <?php ;
-		
-		 if($cantItem == -1)	
-		    return -1;			
-		
-		$cantIt = $cantItem/$rang;
-		if($cantIt != intval($cantIt))
-                $cantIt = intval( $cantIt + 1 );
-			
-	  
-		for($i = 0;$i < $cantIt;$i++){
-		
-			$results = $this->call_api("GET", "items?expand=bitstreams&limit=$rang&offset=$ini");
-			
-			$z = 0;
-			while($results == null && $z < 3){
-			  $results = $this->call_api("GET", "items?expand=bitstreams&limit=$rang&offset=$ini");
-			  $z += $z + 1;
-			}
-			   
-			$listItemsReal += count($results);
-			
-			foreach ($results as $var => $item) {
-			
-			        $auxidItem = "";
-					$auxidItem = $item['id'];
-					if($auxidItem == "") $auxidItem = $item['uuid'];
-					$idItem = $auxidItem;				
-					$creator = "";
-					$contributor = "";
-					$subject = "";
-					$description = "";
-					$publisher = "";					
-					$date = "";					
-					$type = "";
-					$format = "";
-					$identifier = "";
-					$source = "";
-					$language =  "";
-					$relation = "";
-					$coverage = "";
-					$rights = "";					
-					$url = "";	
-					
-									
-		
-				$itemAll = $this->call_api("GET", "items/$idItem?expand=metadata,bitstreams");			
-				 
-				foreach ($itemAll['metadata'] as $metadata) {
-						
-						if ($metadata['key'] == "dc.contributor.author") {
-								
-								 if($creator != "")
-									 $creator .="; ".$metadata['value'];
-									else
-										$creator = $metadata['value'];
-							   
-							
-						}
-						
-						if ($metadata['key'] == "dc.subject") {
-						   
-								   if($subject != "")
-									  $subject .="; ".$metadata['value'];
-									else
-									  $subject = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.description" || $metadata['key'] == "dc.description.abstract") {
-						   	  $description = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.publisher") {
-							$publisher = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.contributor.advisor") {
-								
-								 if($contributor != "")
-									 $contributor .="; ".$metadata['value'];
-									else
-										$contributor = $metadata['value'];
-							   
-							
-						}
-											
-						if ($metadata['key'] == "dc.date.issued") {
-							$date = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.type") {
-							$type = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.format") {
-							$format = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.identifier.uri") {
-							$identifier = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.source") {
-							$source = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.language") {
-							$language = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.relation") {
-							$relation = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.coverage") {
-							$coverage = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.coverage") {
-							$coverage = $metadata['value'];
-						}
-						
-						if ($metadata['key'] == "dc.rights") {
-							$rights = $metadata['value'];
-						}
-																
-						if ($metadata['key'] == "dc.relation") {
-							$url = $metadata['value'];
-						}					
-						
-											
-						
-					}
-				
-				foreach ($itemAll['bitstreams'] as $bitstreams) {
-						$aux = "";
-						$aux = $bitstreams['id'];
-						if($aux == "") $aux = $bitstreams['uuid'];
-						$url = $this->rest_url."bitstreams/".$aux."/retrieve" ;
-					
-					}
-					
-					
-					 $list['list'][] = array(
-					   'id' => $idItem,
-					   'title' => str_replace( "?", "'", mb_convert_encoding($itemAll['name'], "latin1", "utf-8") ),
-						'creator' => mb_convert_encoding($creator, "latin1", "utf-8"),
-						'subject' =>  strtoupper( mb_convert_encoding($subject, "latin1", "utf-8")),
-                        'description' =>  strtoupper( mb_convert_encoding($description, "latin1", "utf-8")),						
-						'publisher' => mb_convert_encoding($publisher, "latin1", "utf-8"),
-						'contributor' => mb_convert_encoding($contributor, "latin1", "utf-8"),
-						'date' => mb_convert_encoding($date, "latin1", "utf-8"),
-						'type' => mb_convert_encoding($type, "latin1", "utf-8"),
-						'format' => mb_convert_encoding($format, "latin1", "utf-8"),
-						'identifier' => mb_convert_encoding($identifier, "latin1", "utf-8"),
-						'source' => mb_convert_encoding($source, "latin1", "utf-8"),
-						'language' => mb_convert_encoding($language, "latin1", "utf-8"),
-						'relation' => mb_convert_encoding($relation, "latin1", "utf-8"),
-						'coverage' => mb_convert_encoding($coverage, "latin1", "utf-8"),
-						'rights' => mb_convert_encoding($rights, "latin1", "utf-8"),
-						'url' => $url,
-						'dateadd' => date("Ymd H:i:s"));
-											  
-			}
-			  
-			  $this->Catalog($list,$pivo+1);
-			  $list = array();
-			  $pivo = $pivo + $rang;
-			  $ini = $ini + $rang;
+		    <?php ;		
 		}
+		else{
 		
+			$listItemsRepo = $cantItem;
+			
+					?>
+					<script language=javascript>
+					ListElemt("<?php echo round(($listItemsReal/$listItemsRepo)*100,1)."%"?>","<?php echo $listItemsReal?>","<?php echo $listItemsRepo?>")
+					</script>
+					<?php ;
+			
+			 if($cantItem == -1)	
+				return -1;			
+			
+			$cantIt = $cantItem/$rang;
+			if($cantIt != intval($cantIt))
+					$cantIt = intval( $cantIt + 1 );
+				
+		  
+			for($i = 0;$i < $cantIt;$i++){
+			
+				$results = $this->call_api("GET", "items?expand=bitstreams&limit=$rang&offset=$ini");
+				
+				$z = 0;
+				while($results == null && $z < 3){
+				  $results = $this->call_api("GET", "items?expand=bitstreams&limit=$rang&offset=$ini");
+				  $z += $z + 1;
+				}
+				   
+				$listItemsReal += count($results);
+				
+				foreach ($results as $var => $item) {
+				
+						$auxidItem = "";
+						  if(isset($item['id'])) $auxidItem = $item['id'];
+						else
+						  if(isset($item['uuid'])) $auxidItem = $item['uuid'];						
+						$idItem = $auxidItem;				
+						$creator = "";
+						$contributor = "";
+						$subject = "";
+						$description = "";
+						$publisher = "";					
+						$date = "";					
+						$type = "";
+						$format = "";
+						$identifier = "";
+						$source = "";
+						$language =  "";
+						$relation = "";
+						$coverage = "";
+						$rights = "";					
+						$url = "";	
+						
+										
+			
+					$itemAll = $this->call_api("GET", "items/$idItem?expand=metadata,bitstreams");			
+					 
+					foreach ($itemAll['metadata'] as $metadata) {
+							
+							if ($metadata['key'] == "dc.contributor.author") {
+									
+									 if($creator != "")
+										 $creator .="; ".$metadata['value'];
+										else
+											$creator = $metadata['value'];
+								   
+								
+							}
+							
+							if ($metadata['key'] == "dc.subject") {
+							   
+									   if($subject != "")
+										  $subject .="; ".$metadata['value'];
+										else
+										  $subject = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.description" || $metadata['key'] == "dc.description.abstract") {
+								  $description = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.publisher") {
+								$publisher = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.contributor.advisor") {
+									
+									 if($contributor != "")
+										 $contributor .="; ".$metadata['value'];
+										else
+											$contributor = $metadata['value'];
+								   
+								
+							}
+												
+							if ($metadata['key'] == "dc.date.issued") {
+								$date = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.type") {
+								$type = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.format") {
+								$format = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.identifier.uri") {
+								$identifier = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.source") {
+								$source = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.language") {
+								$language = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.relation") {
+								$relation = $metadata['value'];
+							}
+							
+							if ($metadata['key'] == "dc.coverage") {
+								$coverage = $metadata['value'];
+							}
+							
+														
+							if ($metadata['key'] == "dc.rights") {
+								$rights = $metadata['value'];
+							}
+																	
+							if ($metadata['key'] == "dc.relation") {
+								$url = $metadata['value'];
+							}					
+							
+												
+							
+						}
+					
+					foreach ($itemAll['bitstreams'] as $bitstreams) {
+							$aux = "";							
+							if(isset($bitstreams['id'])) $aux = $bitstreams['id'];
+							 else
+							if(isset($bitstreams['uuid'])) $aux = $bitstreams['uuid'];							
+							$url = $this->rest_url."bitstreams/".$aux."/retrieve" ;
+						
+						}
+						
+						
+						 $list['list'][] = array(
+						   'id' => $idItem,
+						   'title' => str_replace( "?", "'", mb_convert_encoding($itemAll['name'], "latin1", "utf-8") ),
+							'creator' => mb_convert_encoding($creator, "latin1", "utf-8"),
+							'subject' =>  strtoupper( mb_convert_encoding($subject, "latin1", "utf-8")),
+							'description' =>  strtoupper( mb_convert_encoding($description, "latin1", "utf-8")),						
+							'publisher' => mb_convert_encoding($publisher, "latin1", "utf-8"),
+							'contributor' => mb_convert_encoding($contributor, "latin1", "utf-8"),
+							'date' => mb_convert_encoding($date, "latin1", "utf-8"),
+							'type' => mb_convert_encoding($type, "latin1", "utf-8"),
+							'format' => mb_convert_encoding($format, "latin1", "utf-8"),
+							'identifier' => mb_convert_encoding($identifier, "latin1", "utf-8"),
+							'source' => mb_convert_encoding($source, "latin1", "utf-8"),
+							'language' => mb_convert_encoding($language, "latin1", "utf-8"),
+							'relation' => mb_convert_encoding($relation, "latin1", "utf-8"),
+							'coverage' => mb_convert_encoding($coverage, "latin1", "utf-8"),
+							'rights' => mb_convert_encoding($rights, "latin1", "utf-8"),
+							'url' => $url,
+							'dateadd' => date("Ymd H:i:s"));
+												  
+				}
+				  
+				  $this->Catalog($list,$pivo+1);
+				  $list = array();
+				  $pivo = $pivo + $rang;
+				  $ini = $ini + $rang;
+			}
 		
-        
+        }
     }
 
     function Catalog($items,$numbCont){
@@ -485,12 +498,12 @@ class Repository_api
 		    $variablesD["tag112"]= $value['dateadd'];
 		}		
 		
-		
-		/*foreach ($variablesD as $var => $value)		    
+				
+        /*foreach ($variablesD as $var => $value)		    
 		       $listItems =  $listItems.str_replace("tag", "v", $var)." = $value<br>";               			   
        		   $listItems = $listItems."<br>";	   
-	     */
-			   
+	     */	
+		 
         $this->AddItemsBD($variablesD,"crear","New");
 		
 	   }	     
@@ -650,26 +663,35 @@ class Repository_api
      
 ob_flush();
 flush();
-$repo = new Repository_api($_POST["url"],$base_ant);
-	  
-	  if(isset($_POST['eliminRegist']))
+
+$count_records = 0;
+ if(isset($_POST['count']))
+  if($_POST['count'] != "")
+   {
+     $count_records = $_POST['count'];
+   }
+
+     $repo = new Repository_api($_POST["url"],$base_ant,$count_records);
+
+    
+	 if(isset($_POST['eliminRegist']))
 		$repo->InitializeBD();
-	
-	   
-	//echo $repo->get_TotalItems(); 
-	  
-	$test = $repo->get_listing();   
-			  
-	 if($test == -1)
-          echo "The handler was NOT successfully created";
-     else{
-     if($repo->getCantElemntAg() != 0)
-     $cantItems = "Total de Items:<label style=\"color: #FF0000\"> ". $repo->getCantElemntAg()." </label>";
-     else
-     $cantItems = 0;
-     ?>
-     <script language=javascript>
-     ListElemt("<?php echo -1 ?>","<?php echo $listItemsReal ?>","<?php echo $listItemsRepo ?>")
-     </script>
-     <?php ;
-}     ?>
+		
+		   
+		//echo $repo->get_TotalItems(); 
+		  
+		$test = $repo->get_listing();   
+				  
+		 if($test == -1)
+			  echo "The handler was NOT successfully created";
+		 else{
+		 if($repo->getCantElemntAg() != 0)
+		 $cantItems = "Items retrieved : <label style=\"color: #FF0000\"> ". $repo->getCantElemntAg()." </label>";
+	     else
+         $cantItems = 0;
+		 ?>
+		 <script language=javascript>
+		 ListElemt("<?php echo -1 ?>","<?php echo $listItemsReal ?>","<?php echo $listItemsRepo ?>")
+		 </script>
+		 <?php ;
+	     }?>
