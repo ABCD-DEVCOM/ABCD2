@@ -58,7 +58,9 @@ function Seleccionar(iso){
 	}
 	if (document.explora.toansi.checked){
 		toansi=true
-	}else{		toansi=false	}
+	}else{
+		toansi=false
+	}
 	if (document.explora.tolinux.checked){
 		tolinux=true
 	}else{
@@ -75,8 +77,10 @@ function Seleccionar(iso){
 	if (toansi==true) url+="&toansi="+toansi
 	if (tolinux==true) url+="&tolinux="+tolinux
 	if (usemx==true) url+="&usemx="+usemx
-	if (confirm("<?php echo $msgstr["conf_import"]?> ??")==true) {		NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
-		self.location=url	}
+	if (confirm("<?php echo $msgstr["conf_import"]?> ??")==true) {
+		NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
+		self.location=url
+	}
 }
 
 function Eliminar(Archivo){
@@ -151,7 +155,7 @@ $handle = opendir($Dir);
 		   			<td bgcolor=white></td>
 		   			<td bgcolor=white></td>
 		   			<td bgcolor=white></td>";
-		while (list ($key, $val) = each ($the_array)) {
+		foreach ($the_array as $key=>$val)  {
 
 		   echo "<tr>
 
