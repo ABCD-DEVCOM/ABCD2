@@ -94,7 +94,7 @@ if (!isset($_SESSION["FST"])){
 	if ($files['userfile']['size']) {
       // clean up file name
       	$name=$files['userfile']['name'];
-		$name = ereg_replace("[^a-z0-9._]", "",
+		$name = preg_replace("[^a-z0-9._]", "",
   			str_replace(" ", "_",
   			str_replace("%20", "_", strtolower($name)
 		)
@@ -106,7 +106,9 @@ if (!isset($_SESSION["FST"])){
 		CrearFst($Fst);
 		$_SESSION["FST"]=$Fst;
 	}
-}else{	CrearFst($_SESSION["FST"]);}
+}else{
+	CrearFst($_SESSION["FST"]);
+}
 echo "
 <form name=winisis action=winisis_upload_pft.php method=POST enctype=multipart/form-data onsubmit='javascript:EnviarForma();return false'>
 <input type=hidden name=Opcion value=PFT>
