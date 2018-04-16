@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 /**
  * @file:	index.php
  * @desc:	Main file, System Controller 
@@ -10,263 +9,11 @@
  * @copyright:  (c) 2008 BIREME/PAHO/WHO - PFI
  ******************************************************************************/
 
- $ver= phpversion();
-$ver=explode('.',$ver);
-$vp=intval($ver[0],10);
-
-	if($vp>5){
-	if((isset($_GET["m"]) && $_GET["m"]=="title") && (isset($_GET["edit"]) && $_GET["edit"]=="validation") && isset($_POST["gravar"]) && !isset($_POST["mfn"])){
-	include("../central/config.php");
-	$mx=$mx_path."mx ".$db_path."secs-web/title from=1 to=9999 pft=v30";
-        //$mx=$mx_path . " ".$db_path."secs-web/title +control";
-	exec($mx,$out,$f);
-        // var_dump($out);
-$maxmfn=explode(" RC ",$out[2]);
-//var_dump($maxmfn);
-$maxmfn=explode(" ",$maxmfn[0]);
-// var_dump($maxmfn);
-$v30=intval($maxmfn[3]);
-// echo "v30=$v30<BR>"; die;
-	
-//$dospuntos=explode("..",$out[0]);
-//$arr_v30=array();
-//for($i=0;$i<count($dospuntos);$i++)
-//{
-//	if($dospuntos[$i] !="" && $dospuntos[$i]!=" ")
-//	{
-//		$arr_v30[]=$dospuntos[$i];
-//	}
-//}
-//$last_v30= intval($arr_v30[count($arr_v30)-1],10);
-//$v30=$last_v30+1;
-
-$arr= $_POST["field"];
-$Nro=1234;
-$str="<IsisScript name=new>
-<parm name=cipar><pft>'title.*=".$db_path."secs-web/title.*',/
-'htm.pft=title\data\title.pft'</pft></parm>
-<do task=update>
-<parm name=db>title</parm>
-<parm name=fst><pft>cat('title.fst')</pft></parm>
-<parm name=mfn>New</parm>
-<field action=define tag=1102>Isis_Status</field>
-<update>
-<field action=add tag=1>".$Nro."</field>
-<field action=add tag=3>LOCAL</field>
-<field action=add tag=5>S</field>
-<field action=add tag=6>s</field>
-<field action=add tag=10>MAIN</field>
-<field action=add tag=20>".$arr['nationalCode']."</field>
-<field action=add tag=30>".$v30."</field>
-<field action=add tag=37>".$arr['recordIdentification']."</field>
-<field action=add tag=40>SECS</field>
-<field action=add tag=50>".$arr['publicationStatus']."</field>
-<field action=add tag=99>75</field>
-<field action=add tag=100>".$arr['publicationTitle']."</field>
-<field action=add tag=140>".$arr['nameOfIssuingBody'][0]."</field>
-<field action=add tag=150>".$arr['abbreviatedTitle']."</field>
-<field action=add tag=180>".$arr['abbreviatedTitleMedline'][0]."</field>
-<field action=add tag=301>".$arr['initialDate']."</field>
-<field action=add tag=302>".$arr['initialVolume']."</field>
-<field action=add tag=303>".$arr['initialNumber']."</field>
-<field action=add tag=310>".$arr['country']."</field>
-<field action=add tag=330>".$arr['publicationLevel']."</field>
-<field action=add tag=340>B</field>
-<field action=add tag=350>".$arr['languageAbstract'][0]."</field>
-<field action=add tag=360>".$arr['languageText'][0]."</field>
-<field action=add tag=380>".$arr['frequency']."</field>
-<field action=add tag=400>".$arr['issn'][0]."</field>
-<field action=add tag=445>".$arr['languageText'][0]."</field>
-<field action=add tag=445>".$arr['userVHL'][0]."</field>
-<field action=add tag=450>".$arr['indexingCoverage'][0]."</field>
-<field action=add tag=460>1A</field>
-<field action=add tag=480>".$arr['publisher']."</field>
-<field action=add tag=490>".$arr['place']."</field>
-<field action=add tag=610>".$arr['titleContinuationOf']."</field>
-<field action=add tag=800>".$arr['1A']."</field>
-<field action=add tag=840>".$arr['descriptors'][0]."</field>
-<field action=add tag=888>".$arr['abbreviatedTitleMedline'][0]."</field>
-<field action=add tag=910>".$arr['notesBVS']."</field>
-<field action=add tag=999>".$arr['urlPortal'][0]."</field>
-<field action=replace tag=100 split=occ><pft>(v100/)</pft></field>
-<write>Unlock</write>
-<display>
-<pft>if val(v1102) = 0 then '<b>Created!</b><hr>' fi </pft>
-<pft>if val(v1102) = 1 then '<b>Sorry, no registries created!</b><hr>' fi </pft>
-</display>
-</update>
-</do>
-</IsisScript>";
-$new_name="new_".time().".xis";
-$IsisScript=$Wxis." IsisScript=".$db_path."secs-web/$new_name";
-@ $fp = fopen($db_path."secs-web/$new_name", "w");
-
-@  flock($fp, 2);
-
-   fwrite($fp, $str);
-  flock($fp, 3);
-  fclose($fp);
-exec($IsisScript,$salida,$bandera);
-$url=explode("cgi-bin",$wxisUrl);
-$url=$url[0]."secs-web/?m=title";
-unlink($db_path."secs-web/$new_name");
-echo "<script>document.location.href='".$url."'</script>";
-exit;
-
-
-	}
-	else if(isset($_POST["mfn"]))//means user is editing
-	{
-		include("../central/config.php");
-	$mfn=$_POST["mfn"];
-	$edit_name="edit_".time().".xis";
-    $IsisScript=$Wxis." IsisScript=".$db_path."secs-web/$edit_name";
-	$arr= $_POST["field"];
-	$Nro=1234;
-	$mx=$mx_path."mx ".$db_path."secs-web/title from=1 to=9999 pft=v30";
-	
-	exec($mx,$out,$f);
-
-	
-	
-$dospuntos=explode("..",$out[0]);
-$arr_v30=array();
-for($i=0;$i<count($dospuntos);$i++)
-{
-	if($dospuntos[$i] !="" && $dospuntos[$i]!=" ")
-	{
-		$arr_v30[]=$dospuntos[$i];
-	}
-}
-$last_v30= intval($arr_v30[count($arr_v30)-1],10);
-$v30=$last_v30+1;
-			
-			$str="<IsisScript name=edit>
-			<parm name=cipar><pft>'title.*=".$db_path."secs-web/title.*',/
-'htm.pft=title\data\title.pft'</pft></parm>
-			<do task=update>
-<parm name=db>".$db_path."secs-web/title</parm>
-<parm name=lockid>abcd</parm>
-<parm name=mfn>".$mfn."</parm>
-<parm name=fst><pft>cat('".$db_path."secs-web/title.fst')</pft></parm>
-<field action=define tag=1101>Isis_Lock</field>
-<field action=define tag=1102>Isis_Status</field>
-<update>
-<write>Lock</write>
-<field action=delete tag=1>all</field>
-<field action=delete tag=3>all</field>
-<field action=delete tag=5>all</field>
-<field action=delete tag=6>all</field>
-<field action=delete tag=10>all</field>
-<field action=delete tag=20>all</field>
-<field action=delete tag=30>all</field>
-<field action=delete tag=37>all</field>
-<field action=delete tag=40>all</field>
-<field action=delete tag=50>all</field>
-<field action=delete tag=99>all</field>
-<field action=delete tag=140>all</field>
-<field action=delete tag=100>all</field>
-<field action=delete tag=150>all</field>
-<field action=delete tag=180>all</field>
-<field action=delete tag=301>all</field>
-<field action=delete tag=302>all</field>
-<field action=delete tag=303>all</field>
-<field action=delete tag=310>all</field>
-<field action=delete tag=330>all</field>
-<field action=delete tag=340>all</field>
-<field action=delete tag=350>all</field>
-<field action=delete tag=360>all</field>
-<field action=delete tag=380>all</field>
-<field action=delete tag=400>all</field>
-<field action=delete tag=445>all</field>
-<field action=delete tag=450>all</field>
-<field action=delete tag=460>all</field>
-<field action=delete tag=480>all</field>
-<field action=delete tag=490>all</field>
-<field action=delete tag=610>all</field>
-<field action=delete tag=800>all</field>
-<field action=delete tag=840>all</field>
-<field action=delete tag=888>all</field>
-<field action=delete tag=910>all</field>
-<field action=delete tag=999>all</field>
-<field action=add tag=1>".$Nro."</field>
-<field action=add tag=3>LOCAL</field>
-<field action=add tag=5>S</field>
-<field action=add tag=6>s</field>
-<field action=add tag=10>MAIN</field>
-<field action=add tag=20>".$arr['nationalCode']."</field>
-<field action=add tag=30>".$v30."</field>
-<field action=add tag=37>".$arr['recordIdentification']."</field>
-<field action=add tag=40>SECS</field>
-<field action=add tag=50>".$arr['publicationStatus']."</field>
-<field action=add tag=99>75</field>
-<field action=add tag=100>".$arr['publicationTitle']."</field>
-<field action=add tag=140>".$arr['nameOfIssuingBody'][0]."</field>
-<field action=add tag=150>".$arr['abbreviatedTitle']."</field>
-<field action=add tag=180>".$arr['abbreviatedTitleMedline'][0]."</field>
-<field action=add tag=301>".$arr['initialDate']."</field>
-<field action=add tag=302>".$arr['initialVolume']."</field>
-<field action=add tag=303>".$arr['initialNumber']."</field>
-<field action=add tag=310>".$arr['country']."</field>
-<field action=add tag=330>".$arr['publicationLevel']."</field>
-<field action=add tag=340>B</field>
-<field action=add tag=350>".$arr['languageAbstract'][0]."</field>
-<field action=add tag=360>".$arr['languageText'][0]."</field>
-<field action=add tag=380>".$arr['frequency']."</field>
-<field action=add tag=400>".$arr['issn'][0]."</field>
-<field action=add tag=445>".$arr['languageText'][0]."</field>
-<field action=add tag=445>".$arr['userVHL'][0]."</field>
-<field action=add tag=450>".$arr['indexingCoverage'][0]."</field>
-<field action=add tag=460>1A</field>
-<field action=add tag=480>".$arr['publisher']."</field>
-<field action=add tag=490>".$arr['place']."</field>
-<field action=add tag=610>".$arr['titleContinuationOf']."</field>
-<field action=add tag=800>".$arr['1A']."</field>
-<field action=add tag=840>".$arr['descriptors'][0]."</field>
-<field action=add tag=888>".$arr['abbreviatedTitleMedline'][0]."</field>
-<field action=add tag=910>".$arr['notesBVS']."</field>
-<field action=add tag=999>".$arr['urlPortal'][0]."</field>
-
-
-
-
-
-<write>Unlock</write>
-<display><pft>if val(v1102)=0 then
-'<b>Update successful!</b>' fi</pft></display>
-</update>
-</do>
-</IsisScript>
-";
-
-@ $fp = fopen($db_path."secs-web/$edit_name", "w");
-
-@  flock($fp, 2);
-
-   fwrite($fp, $str);
-  flock($fp, 3);
-  fclose($fp);
-exec($IsisScript,$salida,$bandera);
-$url=explode("cgi-bin",$wxisUrl);
-$url=$url[0]."secs-web/?m=title";
-unlink($db_path."secs-web/$edit_name");
-echo "<script>document.location.href='".$url."'</script>";
-exit;
-
-		
-		
-	}
-}
-
-
 /**
  * Main include file of the system, it contains all the parameters required for
  * the operation of this system..
  */
- require_once("./common/ini/config.ini.php");
- /**
-	* this code creates a registry with mx if its > PHP5 @author Marino Borrero <marinoborrero@gmail.com>
- */
+require_once("./common/ini/config.ini.php");
 
 //User not logged in System
 if(!isset($_SESSION["identified"]) || $_SESSION["identified"]!=1 ) 
@@ -274,7 +21,7 @@ if(!isset($_SESSION["identified"]) || $_SESSION["identified"]!=1 )
     list($libraryName, $libraryCode) = getAllLibraries();
     $smarty->assign("collectionLibrary",$libraryName);
     $smarty->assign("codesLibrary",$libraryCode);
-
+  
     //User trying to log-in
     if($_SERVER['REQUEST_METHOD'] == "POST"){
     if(isset($_GET["action"]) && !preg_match("=/=",$_GET["action"]) ) {
@@ -321,6 +68,7 @@ if(!isset($_SESSION["identified"]) || $_SESSION["identified"]!=1 )
 
 //User doing logoff
 if ($_GET['action'] == "signoff") {
+	
     unset($_SESSION);
     session_destroy();
     $page = 'index';
@@ -555,6 +303,7 @@ if ($_GET['action'] == "signoff") {
             }
             $smarty->assign("formRequest",$listRequest);
             $smarty->assign("dataRecord",array());
+            //echo "NEW "; die;
             break;
 
         case 'list':
@@ -791,6 +540,9 @@ if ($_GET['action'] == "signoff") {
 }
 
 // Register main Smarty Template variables, $smartyTemplate and $listRequest
+
+
+
 $smarty->assign("smartyTemplate",$smartyTemplate);
 $smarty->assign("listRequest",$listRequest);
 $vars = array();

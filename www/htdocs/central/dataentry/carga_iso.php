@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -58,7 +58,9 @@ function Seleccionar(iso){
 	}
 	if (document.explora.toansi.checked){
 		toansi=true
-	}else{		toansi=false	}
+	}else{
+		toansi=false
+	}
 	if (document.explora.tolinux.checked){
 		tolinux=true
 	}else{
@@ -75,8 +77,10 @@ function Seleccionar(iso){
 	if (toansi==true) url+="&toansi="+toansi
 	if (tolinux==true) url+="&tolinux="+tolinux
 	if (usemx==true) url+="&usemx="+usemx
-	if (confirm("<?php echo $msgstr["conf_import"]?> ??")==true) {		NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
-		self.location=url	}
+	if (confirm("<?php echo $msgstr["conf_import"]?> ??")==true) {
+		NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
+		self.location=url
+	}
 }
 
 function Eliminar(Archivo){
@@ -117,7 +121,7 @@ echo "
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=tipo value=<?php echo $arrHttp["tipo"]?>>
 <input type=hidden name=tablacnv value="">
-<?
+<?php
 $Dir=$db_path."wrk";
 $the_array = Array();
 

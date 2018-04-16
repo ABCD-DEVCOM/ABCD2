@@ -17,6 +17,8 @@ $wxis_action = "/cgi-bin/ansi/wxis";
 
 function IsisWrite($parametros, $contenido)
 {
+//$contentutf=utf8_decode($contenido);
+//echo "content_wxis_write=$contentutf<BR>";//die;
 	return wxis_write($parametros,utf8_decode($contenido));
 }
 function IsisIndex($parametros){
@@ -81,11 +83,19 @@ function IsisSearchSort($parametros)
 
 function wxis_document_post( $url, $content = "" )
 {
+//echo "URL=$url<BR>";
+//echo "content=$content<BR>";
+//die;
+//foreach($_POST as $aux => $array){
+//                foreach($array as $campo => $valor)
+//                   echo "$campo -> $valor <br>";
+//              }
+//              die;
 $result=file_get_contents($url);
      return strstr($result,"<");
 }
 
-function wxis_document_post2( $url, $content = "" )
+function wxis_document_post2( $url, $content )
 {
     $content = str_replace("\\\"","\"",$content);
     $content = str_replace("\n","",$content);

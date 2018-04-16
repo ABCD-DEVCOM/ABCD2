@@ -16,8 +16,12 @@ include ("../lang/statistics.php");
 if (strpos($arrHttp["base"],"|")===false){
 
 }   else{
-		$ix=strpos($arrHttp["base"],'^b');
-		$arrHttp["base"]=substr($arrHttp["base"],2,$ix-2);
+//		$ix=strpos($arrHttp["base"],'|');
+$dbase=explode("|",$arrHttp["base"]);
+$arrHttp["base"]=$dbase[0];
+//		$arrHttp["base"]=substr($arrHttp["base"],2,$ix-2);
+//                echo "base=". $dbasename. "<BR>";
+//$arrHttp["base"] = $dbasename;
 }
 if (!isset($arrHttp["Opcion"]))$arrHttp["Opcion"]="";
 
@@ -28,7 +32,9 @@ else
 
 // SE LEE EL MÁXIMO MFN DE LA BASE DE DATOS
 $IsisScript=$xWxis."administrar.xis";
+//echo "IsisScript=$IsisScript<BR>";
 $query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+//$query = "&base=".$dbasename . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -48,8 +54,10 @@ include("../common/header.php");
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
 <style type=text/css>
 
-td{	font-size:12px;
-	font-family:Arial;}
+td{
+	font-size:12px;
+	font-family:Arial;
+}
 
 div#useextable{
 
@@ -60,7 +68,8 @@ div#useextable{
 	color: #000000;
 }
 
-div#createtable{<?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
+div#createtable{
+<?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
 
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -105,7 +114,8 @@ function AbrirVentana(Archivo){
 	msgwin.focus()
 }
 
-function EsconderVentana( whichLayer ){var elem, vis;
+function EsconderVentana( whichLayer ){
+var elem, vis;
 	if( document.getElementById ) // this is the way the standards work
 		elem = document.getElementById( whichLayer );
 	else if( document.all ) // this is the way old msie versions work
@@ -122,8 +132,10 @@ function EsconderVentana( whichLayer ){var elem, vis;
 function toggleLayer( whichLayer ){
 	var elem, vis;
 
-	switch (whichLayer){		case "createtable":
-<?php		echo '
+	switch (whichLayer){
+		case "createtable":
+<?php
+		echo '
 			EsconderVentana("useextable")
 			break
 			';
@@ -195,8 +207,11 @@ function EnviarForma(){
 		alert("<?php echo $msgstr["selreg"]?>")
 		return
 	}
-	if (document.forma1.tables.selectedIndex>0 ){		if (document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){			alert("<?php echo $msgstr["seltab"]?>")
-			return		}
+	if (document.forma1.tables.selectedIndex>0 ){
+		if (document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){
+			alert("<?php echo $msgstr["seltab"]?>")
+			return
+		}
 	}
 	if (document.forma1.tables.selectedIndex || document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){
 	  	document.forma1.submit()
@@ -231,13 +246,15 @@ function Configure(Option){
 </script>
 <body>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
+//<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
+<?php echo $msgstr["stats"].": ".$dbasename?>
 	</div>
 
 	<div class="actions">
@@ -399,7 +416,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 </div>
 </td>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){?>
+if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+?>
 <tr>
 	<td align=left   valign=center bgcolor=#ffffff><p>
     	&nbsp; <A HREF="javascript:toggleLayer('configure')"> <u><strong><?php echo $msgstr["stats_conf"]?></strong></u></a>
