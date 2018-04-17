@@ -17,15 +17,15 @@ $vp=intval($ver[0],10);
 	if($vp>5){
 	if((isset($_GET["m"]) && $_GET["m"]=="title") && (isset($_GET["edit"]) && $_GET["edit"]=="validation") && isset($_POST["gravar"]) && !isset($_POST["mfn"])){
 	include("../central/config.php");
-	$mx=$mx_path."mx ".$db_path."secs-web/title from=1 to=9999 pft=v30";
-        //$mx=$mx_path . " ".$db_path."secs-web/title +control";
+//	$mx=$mx_path."mx ".$db_path."secs-web/title from=1 to=9999 pft=v30";
+        $mx=$mx_path . " ".$db_path."secs-web/title +control";
 	exec($mx,$out,$f);
         // var_dump($out);
-$maxmfn=explode(" RC ",$out[2]);
-//var_dump($maxmfn);
-$maxmfn=explode(" ",$maxmfn[0]);
+ $maxmfn=explode(" RC ",$out[2]);
 // var_dump($maxmfn);
-$v30=intval($maxmfn[3]);
+ $maxmfn=explode(" ",$maxmfn[0]);
+// var_dump($maxmfn);
+ $v30=intval($maxmfn[3])-1;
 // echo "v30=$v30<BR>"; die;
 	
 //$dospuntos=explode("..",$out[0]);
@@ -115,7 +115,7 @@ exit;
 
 
 	}
-	else if(isset($_POST["mfn"]))//means user is editing
+	else if(isset($_POST["mfn"]) && $_GET["m"]=="title")//means user is editing
 	{
 		include("../central/config.php");
 	$mfn=$_POST["mfn"];
@@ -124,23 +124,12 @@ exit;
 	$arr= $_POST["field"];
 	$Nro=1234;
 	$mx=$mx_path."mx ".$db_path."secs-web/title from=1 to=9999 pft=v30";
-	
+        $mx=$mx_path . " ".$db_path."secs-web/title +control";
 	exec($mx,$out,$f);
+ $maxmfn=explode(" RC ",$out[2]);
+ $maxmfn=explode(" ",$maxmfn[0]);
+ $v30=intval($maxmfn[3])-1;
 
-	
-	
-$dospuntos=explode("..",$out[0]);
-$arr_v30=array();
-for($i=0;$i<count($dospuntos);$i++)
-{
-	if($dospuntos[$i] !="" && $dospuntos[$i]!=" ")
-	{
-		$arr_v30[]=$dospuntos[$i];
-	}
-}
-$last_v30= intval($arr_v30[count($arr_v30)-1],10);
-$v30=$last_v30+1;
-			
 			$str="<IsisScript name=edit>
 			<parm name=cipar><pft>'title.*=".$db_path."secs-web/title.*',/
 'htm.pft=title\data\title.pft'</pft></parm>
@@ -226,11 +215,6 @@ $v30=$last_v30+1;
 <field action=add tag=888>".$arr['abbreviatedTitleMedline'][0]."</field>
 <field action=add tag=910>".$arr['notesBVS']."</field>
 <field action=add tag=999>".$arr['urlPortal'][0]."</field>
-
-
-
-
-
 <write>Unlock</write>
 <display><pft>if val(v1102)=0 then
 '<b>Update successful!</b>' fi</pft></display>
@@ -252,11 +236,246 @@ $url=$url[0]."secs-web/?m=title";
 unlink($db_path."secs-web/$edit_name");
 echo "<script>document.location.href='".$url."'</script>";
 exit;
-
-		
-		
+	
 	}
+	//start mask 
+	
+	if(isset($_GET["m"]) && $_GET["m"]=="mask" && $_GET["edit"]=="save" && !isset($_POST["mfn"]))
+	{
+	include("../central/config.php");
+		$field=$_POST["field"];
+		$volumeType=$field["volumeType"];
+		$strvolumeType="";
+		foreach($volumeType as $vt)
+		{
+			$strvolumeType.="<field action=add tag=841>".$vt."</field>";
+		}
+		$notes=$field["notes"];
+		$strnotes="";
+		foreach($notes as $note)
+		{
+			$strnotes.="<field action=add tag=900>".$note."</field>";
+		}	
+	$str_new_mask="<IsisScript name=newmask>
+<parm name=cipar><pft>'mask.*=".$db_path."secs-web/mask.*',/
+'htm.pft=mask\data\mask.pft'</pft></parm>
+<do task=update>
+<parm name=db>mask</parm>
+<parm name=fst><pft>cat('mask.fst')</pft></parm>
+<parm name=mfn>New</parm>
+<field action=define tag=1102>Isis_Status</field>
+<update>
+<field action=add tag=1>".$field["database"]."</field>
+<field action=add tag=5>".$field["typeLiterature"]."</field>
+<field action=add tag=6>".$field["levelTreatment"]."</field>
+<field action=add tag=10>".$field["codeCenter"]."</field>
+<field action=add tag=801>".$field["nameMask"]."</field>".
+$strvolumeType."
+<field action=add tag=940>".$field['creationDate']."</field>
+<field action=add tag=950>".$field['documentalistCreation']."</field>
+".$strnotes."
+<write>Unlock</write>
+<display>
+<pft>if val(v1102) = 0 then '<b>Created!</b><hr>' fi </pft>
+<pft>if val(v1102) = 1 then '<b>Sorry, no registries created!</b><hr>' fi </pft>
+</display>
+</update>
+</do>
+</IsisScript>";
+	$new_mask_name="new_mask_".time().".xis";
+    $IsisScriptNewMask=$Wxis." IsisScript=".$db_path."secs-web/$new_mask_name";
+	@ $fp = fopen($db_path."secs-web/$new_mask_name", "w");
+
+@  flock($fp, 2);
+
+   fwrite($fp, $str_new_mask);
+  flock($fp, 3);
+  fclose($fp);
+exec($IsisScriptNewMask,$salida,$bandera);
+$url=explode("cgi-bin",$wxisUrl);
+$url=$url[0]."secs-web/?m=mask";
+unlink($db_path."secs-web/$new_mask_name");
+echo "<script>document.location.href='".$url."'</script>";
+exit;
+	
+	}
+ if(isset($_GET["m"]) && $_GET["m"]=="mask" && $_GET["edit"]=="save" && isset($_POST["mfn"]))//means user us editing a mask
+{
+	
+	include("../central/config.php");
+		$field=$_POST["field"];
+		$volumeType=$field["volumeType"];
+		$strvolumeType="";
+		foreach($volumeType as $vt)
+		{
+			$strvolumeType.="<field action=add tag=841>".$vt."</field>";
+		}
+		$notes=$field["notes"];
+		$strnotes="";
+		foreach($notes as $note)
+		{
+			$strnotes.="<field action=add tag=900>".$note."</field>";
+		}
+		$mfn=$_POST["mfn"];
+$str_edit_mask="<IsisScript name=edit_mask>
+			<parm name=cipar><pft>'mask.*=".$db_path."secs-web/mask.*',/
+'htm.pft=mask\data\mask.pft'</pft></parm>
+			<do task=update>
+<parm name=db>".$db_path."secs-web/mask</parm>
+<parm name=lockid>abcd</parm>
+<parm name=mfn>".$mfn."</parm>
+<parm name=fst><pft>cat('".$db_path."secs-web/mask.fst')</pft></parm>
+<field action=define tag=1101>Isis_Lock</field>
+<field action=define tag=1102>Isis_Status</field>
+<update>
+<write>Lock</write>
+<field action=delete tag=1>all</field>
+<field action=delete tag=5>all</field>
+<field action=delete tag=6>all</field>
+<field action=delete tag=10>all</field>
+<field action=delete tag=801>all</field>
+<field action=delete tag=940>all</field>
+<field action=delete tag=950>all</field>
+<field action=delete tag=900>all</field>
+<field action=add tag=1>".$field["database"]."</field>
+<field action=add tag=5>".$field["typeLiterature"]."</field>
+<field action=add tag=6>".$field["levelTreatment"]."</field>
+<field action=add tag=10>".$field["codeCenter"]."</field>
+<field action=add tag=801>".$field["nameMask"]."</field>"."
+<field action=add tag=940>".$field['creationDate']."</field>
+<field action=add tag=950>".$field['documentalistCreation']."</field>
+".$strnotes."
+<write>Unlock</write>
+<display><pft>if val(v1102)=0 then
+'<b>Update successful!</b>' fi</pft></display>
+</update>
+</do>
+</IsisScript>
+";
+	$edit_mask_name="edit_mask_".time().".xis";
+    $IsisScriptEditMask=$Wxis." IsisScript=".$db_path."secs-web/$edit_mask_name";
+	@ $fp = fopen($db_path."secs-web/$edit_mask_name", "w");
+
+@  flock($fp, 2);
+
+   fwrite($fp, $str_edit_mask);
+  flock($fp, 3);
+  fclose($fp);
+exec($IsisScriptEditMask,$salida,$bandera);
+$url=explode("cgi-bin",$wxisUrl);
+$url=$url[0]."secs-web/?m=mask";
+unlink($db_path."secs-web/$edit_mask_name");
+echo "<script>document.location.href='".$url."'</script>";
+exit;	
+}	
+	
+	//end mask
 }
+//start titlePlus
+if(isset($_GET["m"]) && $_GET["m"]=="titleplus" && isset($_GET["title"])&& $_GET["edit"]="save" && isset($_POST["mfn"]))//user is editing titlePlus
+{
+	include("../central/config.php");
+	$mfn=$_POST["mfn"];
+	$lib="main";
+	$field=$_POST["field"];
+	$v907=$field["locationRoom"];
+		$str907="";
+		foreach($v907 as $vt)
+		{
+			$str907.="<field action=add tag=907>".$vt."</field>";
+		}
+		
+	$v908=$field["estMap"];
+		$str908="";
+		foreach($v908 as $vt)
+		{
+			$str908.="<field action=add tag=908>".$vt."</field>";
+		}	
+		
+	$str_edit_titleplus="<IsisScript name=edit_title_plus>
+			<parm name=cipar><pft>'titlePlus.*=".$db_path."secs-web/$lib/titlePlus.*',/
+'htm.pft=v100'</pft></parm>
+			<do task=update>
+<parm name=db>".$db_path."secs-web/$lib/titlePlus</parm>
+<parm name=lockid>abcd</parm>
+<parm name=mfn>".$mfn."</parm>
+<parm name=fst><pft>cat('".$db_path."secs-web/$lib/titlePlus.fst')</pft></parm>
+<field action=define tag=1101>Isis_Lock</field>
+<field action=define tag=1102>Isis_Status</field>
+<update>
+<write>Lock</write>
+<field action=delete tag=10>all</field>
+<field action=delete tag=301>all</field>
+<field action=delete tag=302>all</field>
+<field action=delete tag=303>all</field>
+<field action=delete tag=901>all</field>
+<field action=delete tag=902>all</field>
+<field action=delete tag=903>all</field>
+<field action=delete tag=906>all</field>
+<field action=delete tag=946>all</field>
+<field action=delete tag=904>all</field>
+<field action=delete tag=906>all</field>
+<field action=delete tag=905>all</field>
+<field action=delete tag=907>all</field>
+<field action=delete tag=908>all</field>
+<field action=delete tag=909>all</field>
+<field action=delete tag=910>all</field>
+<field action=delete tag=911>all</field>
+<field action=delete tag=912>all</field>
+<field action=delete tag=940>all</field>
+<field action=delete tag=941>all</field>
+<field action=delete tag=950>all</field>
+<field action=delete tag=951>all</field>
+
+<field action=add tag=10>".$field["centerCode"]."</field>
+<field action=add tag=901>".$field["acquisitionMethod"]."</field>"."
+<field action=add tag=902>".$field['acquisitionControl']."</field>
+<field action=add tag=903>".$field['receivedExchange']."</field>
+<field action=add tag=904>".$field['providerNotes']."</field>
+<field action=add tag=946>".$field['acquisitionPriority']."</field>
+".$str907.
+$str908."
+<field action=add tag=905>".$field['provider']."</field>
+<field action=add tag=906>".$_POST['expirationSubs']."</field>
+<field action=add tag=909>".$_POST['ownClassif']."</field>
+<field action=add tag=910>".$_POST['ownDesc']."</field>
+<field action=add tag=911>".$_POST['admNotes']."</field>
+<field action=add tag=912>".$_POST['donorNotes']."</field>
+<field action=add tag=913>".$_POST['acquisitionHistory'][0]."</field>
+<field action=add tag=940>".$_POST['creatDate']."</field>
+<field action=add tag=941>".$_POST['initialDate']."</field>
+<field action=add tag=950>admsecs</field>
+<field action=add tag=951>admsecs</field>
+<write>Unlock</write>
+<display><pft>if val(v1102)=0 then
+'<b>Update successful!</b>' fi</pft></display>
+</update>
+</do>
+</IsisScript>
+";
+$edit_titleplus_name="edit_titleplus_".time().".xis";
+    $IsisScriptEditTitleplus=$Wxis." IsisScript=".$db_path."secs-web/$lib/$edit_titleplus_name";
+	@ $fp = fopen($db_path."secs-web/$lib/$edit_titleplus_name", "w");
+
+@  flock($fp, 2);
+
+   fwrite($fp, $str_edit_titleplus);
+  flock($fp, 3);
+  fclose($fp);
+exec($IsisScriptEditTitleplus,$salida,$bandera);
+$url=explode("cgi-bin",$wxisUrl);
+$url=$url[0]."secs-web/?m=titleplus";
+unlink($db_path."secs-web/$lib/$edit_titleplus_name");
+echo "<script>document.location.href='".$url."'</script>";
+exit;	
+	
+}
+
+
+
+//end titlePlus
+
+
 
 
 /**
