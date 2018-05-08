@@ -182,7 +182,7 @@ function IsisSearchSort($parametros)
 // --- Funciones privadas de ejecuci�n del webservice
 
 $wxis_host = $_SERVER['HTTP_HOST'];
-$wxis_action = "/cgi-bin/ansi/wxis.exe";
+$wxis_action = "/cgi-bin/wxis.exe";
 
 function wxis_document_post( $url, $content = "" )
 { 
@@ -246,13 +246,21 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace(">", "=", $param);
 	$paramSplited = split("<",$param);
 	reset($paramSplited);
-	while ( list($key, $value) = each($paramSplited) )
+	/*while ( list($key, $value) = each($paramSplited) )
 	{
 		if ( trim($value) != "" && substr($value,0,1) != "/" )
 		{
 			$request .= "&" . $value;
 		}
-	}	
+	}
+*/
+foreach($paramSplited as $value)
+{
+if ( trim($value) != "" && substr($value,0,1) != "/" )
+		{
+			$request .= "&" . $value;
+		}	
+}	
 	return $request;
 }
 

@@ -1,0 +1,134 @@
+'Content-type: text/html'/#
+'
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" sizes="16x16">
+    <title>',v5003^*,
+        select s(mpu,v5001^s,mpl)
+            case 'SEARCH'   : ' - Results page ',v6205^c[1],
+            case 'INDEX'    : ' - Index 'v6100^p,
+            case 'CONFIG'   : ' - configure',
+            case 'LIST'     : ' - List',
+            case 'SCAD'     : ' - Copy request',
+        endsel
+'   </title>',
+if val(v5018^w)>0 then 
+'    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> '
+else 
+'    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> '
+fi, 
+'    <link rel="stylesheet" href="',v5000^d,'css/stylesheet.css" type="text/css" media="screen" />
+
+ <script type="text/javascript" src="'v5000^d,'js/highlight.js"></script> '
+
+
+' <!-- Interacción con el sistema de préstamos -->
+   <script language="JavaScript" type="text/javascript">
+     function EstadoDeCuenta() {
+        action_search=document.search.action
+        document.search.action="/central/circulation/opac_statement.php"
+        document.search.target="statement"
+        janela=window.open("","statement","left=0,top=0,width=400,height=200,toolbar=no,resizable=yes,menubar=no,scrollbars=yes");
+        janela.focus()
+        document.search.submit();
+        document.search.action=action_search
+        document.search.target=""
+     }
+       function Reservar(cn,base,copies){
+          DB_PATH="'V5000^b'"
+          lang="'V5021'"
+          url="/central/iah/usuario_prestamo.php?Expresion=CN_"+cn+"&base="+base+"&cipar="+base+".par&copies="+copies+"&desde=IAH_RESERVA&Opcion=IAH&DB_PATH="+DB_PATH+"&lang="+lang
+          msgwin=window.open(url,"Reserve","width=400,height=250,scrollbars,resizable");
+          msgwin.focus()
+       }
+
+       	   function ReservarMySite(cn,base,copies){
+          DB_PATH="'V5000^b'"
+          lang="'V5021'"
+          url="/../indexmysite.php?id="+cn+"&cdb="+base;
+          msgwin=window.open(url,"Reserve","toolbar=1,scrollbars=1,location=1,statusbar=1,menubar=1,resizable=1");
+          msgwin.focus()
+       } '
+
+
+       	`function openWindow(url){
+	   state = window.open('','inprocess','left=240,top=225,width=620,height=550,toolbar=false,resize=false,menubar=false');
+
+	   state.document.open('text/html');
+	   s = state.document;
+
+	   s.writeln('<html>');
+	   s.writeln('  <head>');
+	   s.writeln('    <title>Document consultation</title>');
+	   s.writeln('   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">');
+	   s.writeln('  </head>');
+	   s.writeln('		<frameset rows="40,*">');
+	   s.writeln('			<frame name="frameWarning" rows="2,*" src="/iah/scripts/disclaimer.htm" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" noresize="noresize">');
+	   s.writeln('			<frame name="frameContent" src="' + url + '" scrolling="auto" frameborder="0" marginheight="0" marginwidth="0" noresize="noresize" >');
+	   s.writeln('		</frameset>');
+	   s.writeln('  <body>');
+	   s.writeln('  </body>');
+	   s.writeln('</html>');
+	   s.close();
+	   return;
+	}
+
+
+        	<!-- función agregada por guilda para acceder a los documentos protegidos -->
+function VerDocumento(Mfn,Base,Lang,Occ,Action,Parameters){
+	Base = Base.toLowerCase();
+	msgwin=window.open("","DATABASE","width=550,height=400,resizable")
+	msgwin.focus()
+	document.verdocumento.mfn.value=Mfn
+	document.verdocumento.lang.value=Lang
+	document.verdocumento.occ.value=Occ
+	/* agregado por Gustavo */
+	Action || ( Action = '')
+	if (Action != '') {
+		Base = Base.concat("|");
+		Base = Base.concat(Action);
+	}
+	Parameters || (Parameters = '')
+	if (Parameters != '') {
+		Base = Base.concat("|");
+		Base = Base.concat(Parameters);
+	}
+	document.verdocumento.base.value=Base
+	document.verdocumento.submit()
+}`
+
+
+
+
+
+'   </script>
+  <!-- Fin de la interacción con el sistema de préstamos -->
+',
+
+`
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  // tracker methods like "setCustomDimension" should be called before "trackPageView"
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//127.0.0.1/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+`
+'</head>
+<body>',
+if v5001^s : 'CONFIG' then,
+'<div id="contentN">' else, '<div class="container">' fi,
+if a(v8001) or v8001 <> 'false' then,
+    ,@HEADER.IAH,
+fi

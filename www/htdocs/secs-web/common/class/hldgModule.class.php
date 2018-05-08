@@ -173,13 +173,13 @@ class holding
 		 */
 		if(is_array($fieldsList))
 		{
-			while (list($key, $val) = each($fieldsList))
+			foreach($fieldsList as $key=>$val)
 			{
 				if($val != "") {
 					//Se o campo corrente for um array, extraimos seus dados
 					if(is_array($fieldsList[$key]))
 					{
-						while (list($keyf, $valf) = each($fieldsList[$key]))
+						foreach($fieldsList[$key] as $keyf=>$valf)
 						{
 							$this->defineField($_fields_tags[$key],$valf);
 						}
@@ -246,7 +246,7 @@ class holding
 			$record->unserializeFromString($elemento);
 			$tempField = $record->campos;
 			$tempRecord = array();
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -295,7 +295,7 @@ class holding
                     $tempField = $record->campos;
                     $tempRecord = array();
 
-                    while (list($key,$val) = each($tempField)) {
+                    foreach($tempField as $key=>$val) {
                             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                                     $varTemp = $tempRecord[$tempField[$key]->tag];
                                     $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);

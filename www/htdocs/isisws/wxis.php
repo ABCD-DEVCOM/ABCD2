@@ -63,13 +63,21 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace(">", "=", $param);
 	$paramSplited = split("<",$param);
 	reset($paramSplited);
-	while ( list($key, $value) = each($paramSplited) )
+	/*while ( list($key, $value) = each($paramSplited) )
 	{
 		if ( trim($value) != "" && substr($value,0,1) != "/" )
 		{
 			$request .= "&" . $value;
 		}
 	}
+	*/
+	foreach($paramSplited as $value)
+{
+if ( trim($value) != "" && substr($value,0,1) != "/" )
+		{
+			$request .= "&" . $value;
+		}	
+}
 	//die($request);
 	
 	return $request;

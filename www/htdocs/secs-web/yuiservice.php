@@ -286,7 +286,7 @@ function makeRecords()
                 var_dump($tempField);
             }
                 
-            while (list($key,$val) = each($tempField)) {
+           foreach($tempField as $key=>$val) {
                 if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                         $varTemp = $tempRecord[$tempField[$key]->tag];
                         if (is_array($varTemp)){
@@ -336,7 +336,7 @@ function arrayToFacic($dataCollection)
             var_dump($dataCollection);
         }
 
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
                 $INV = implode('; ',$dataCollection[$key]["917"]);
 
                 $data[] = array(
@@ -374,7 +374,7 @@ function futureIssuesToFacic($issues)
 		reset($issues);
 		//$i = count($issues);
 		$data = array();
-		while (list($key, $issue) = each($issues)) {
+		foreach($issues as $key=>$issue) {
 			$data[] = array(
 			"MFN" => $issue->get_mfn(),
 			"SEQN" => $issue->getData('sequentialNumber'),
@@ -406,7 +406,7 @@ function arrayToTitle($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             $data[] = array(
                 "MFN" => $dataCollection[$key]["mfn"],
                 "TITLE" => $dataCollection[$key]["100"],
@@ -442,7 +442,7 @@ function arrayToUsers($dataCollection){
     if(is_array($dataCollection)) {
             reset($dataCollection);
             $data = array();
-            while (list($key, $val) = each($dataCollection)) {
+            foreach($dataCollection as $key=>$val) {
                 $data[] = array(
                                 "MFN" => $dataCollection[$key]["mfn"],
                                 "user" => $dataCollection[$key]["1"],
@@ -472,7 +472,7 @@ function arrayToMask($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
 
             switch ($_SESSION["lang"]) {
                 case 'pt':
@@ -514,7 +514,7 @@ function arrayToTitlePlus($dataCollection) {
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+       foreach($dataCollection as $key=>$val) {
             $cdAcqMet = $dataCollection[$key]["901"];
             $cdAcqCon = $dataCollection[$key]["902"];
             $data[] = array(
@@ -582,7 +582,7 @@ function arrayToLibrary($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
                 $data[] = array(
                                 "MFN" => $dataCollection[$key]["mfn"],
                                 "fullname" => $dataCollection[$key]["2"],
@@ -611,7 +611,7 @@ function arrayToReport($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             $data[] = array(
                 "MFN" => $dataCollection[$key]["mfn"],
                 "TITLE" => $dataCollection[$key]["100"],

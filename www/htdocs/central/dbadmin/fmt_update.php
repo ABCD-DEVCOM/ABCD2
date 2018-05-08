@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -62,15 +62,12 @@ if ($fex=="N"){
 	if (isset($arrHttp["sel_oper"])) $wks.=$arrHttp["sel_oper"];
 	$salida[]=$wks;
 }
-//echo "before writing !<BR>";
 $fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks","w");
 foreach ($salida as $arch) $res=fwrite($fp,$arch."\n");
 fclose($fp);
-//echo "success !<BR>";die;
 include("../common/header.php");
 
-echo '<body>\n';
-
+echo "<body>\n";
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";

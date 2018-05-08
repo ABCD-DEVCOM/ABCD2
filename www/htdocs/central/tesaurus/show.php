@@ -28,9 +28,9 @@ foreach($fp as $value) {
 }
 
 //foreach ($contenido as $var=>$value) echo "$var=$value<br>";
-$subtitle= " Tesaurus";
+$subtitle= " Thesaurus";
 include("../common/header.php");
-echo "<h3>Tesaurus ($tesaurus)</h3>\n";
+echo "<h3>Thesaurus ($tesaurus)</h3>\n";
 echo "<script language=Javascript src=../dataentry/js/lr_trim.js></script>\n";
 $Tag="";
 echo "
@@ -107,7 +107,7 @@ echo "
 	</td>
 
 	</table>
-	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong>Alphabetical</a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Permuted</a></strong><br>
+	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong>Alfabético</a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Permuted</a></strong><br>
 	</form>
 	</div>
 	</div>

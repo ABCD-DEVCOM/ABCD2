@@ -152,7 +152,7 @@ fi,
 '<table width=90%>',
 '<tr><td width=10% valign=top><font face=arial size=2><b>Copies info : </b></td><td width=90% valign=top> <font face=arial size=2>', 
 REF->loanobjects(
-L->loanobjects('CN_MARC_'v1), 
+L->loanobjects('CN_',mpu,v5001,'_'v1,mpl),
            'No. of copies : ',f(nocc(v959),1,0), '<br/>',
  (if p(v959^i) then 
     'Barcode:'v959^i' - Shelf-mark:'v959^b,

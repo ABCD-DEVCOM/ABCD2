@@ -19,5 +19,5 @@ HEADER URL=^1/iah/pt/index.htm^2/iah/es/index.htm^3/iah/en/index.htm^4/iah/fr/in
 MANAGER E-MAIL=ia@hmy-server.domain
 REVERSE MODE=ON
 MULTI-LANGUAGE=ON
-AVAILABLE LANGUAGES=pt, es, en, fr
+AVAILABLE LANGUAGES=pt, es, en, fr, ma, si
 ?>

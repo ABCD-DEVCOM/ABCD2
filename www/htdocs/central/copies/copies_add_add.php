@@ -49,11 +49,18 @@ LeerFst($arrHttp["database"]);
 // Se lee la base de datos catalográfica para determinar si el objeto ha sido ingresado
 $Formato=$db_path.$arrHttp["database"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["database"].".pft" ;
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["database"]."/pfts/".$lang_db."/".$arrHttp["database"].".pft" ;
-$Formato="@$Formato,/";
+$Formato="@$Formato ";
 $Expresion="$pref_ctl".$arrHttp["objectid"];
-$query = "&base=".$arrHttp["database"]."&cipar=$db_path"."par/".$arrHttp["database"].".par"."&Expresion=$Expresion&Formato=$Formato&Opcion=buscar";
+//$query = "&base=".$arrHttp["database"]."&cipar=$db_path"."par/".$arrHttp["database"].".par"."&Expresion=$Expresion&Formato=$Formato&Opcion=buscar";
 $IsisScript=$xWxis."imprime.xis";
-include("../common/wxis_llamar.php");
+//include("../common/wxis_llamar.php");
+$mx=$mx_path . " " . $arrHttp["database"] . " bool=$Expresion pft=$Formato now " ;
+// pft="; .$Formato;
+echo "$mx<BR>"; //die;
+exec($mx,$mxout,$flagmx);
+var_dump($mxout);//die;
+$contenido=$mxout;
+//echo "bandera=$banderamx" ;
 $cont_database=implode('',$contenido);
 if (trim($cont_database)=="") {
 	echo "<h4>".$arrHttp["objectid"].": ".$msgstr["objnoex"]."</h4>";
@@ -64,12 +71,17 @@ if (trim($cont_database)=="") {
 if (isset($arrHttp["copies"])) echo "<br>".$msgstr["copies_no"].": ".$arrHttp["copies"];
 
 $Mfn="";
-if (isset($arrHttp["tag30"])){	$inven=explode("\n",$arrHttp["tag30"]);
+if (isset($arrHttp["tag30"])){
+	$inven=explode("\n",$arrHttp["tag30"]);
 	unset($arrHttp["tag30"]);
-	foreach ($inven as $cn) {		if (trim($cn)!="")
-			CrearCopia(trim($cn),$max_inventory_length);	}}else{
+	foreach ($inven as $cn) {
+		if (trim($cn)!="")
+			CrearCopia(trim($cn),$max_inventory_length);
+	}
+}else{
 	for ($ix=1;$ix<=$arrHttp["copies"];$ix++ ){
-		echo "<hr>";		$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
+		echo "<hr>";
+		$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
 		CrearCopia($cn,$max_inventory_length);
 	}
 }
@@ -148,7 +160,10 @@ global $db_path;
 
 function BuscarCopias($inventario){
 global $xWxis,$db_path,$wxisUrl,$Wxis;
-	if ($inventario!=""){		$Prefijo="IN_".$inventario;	}else{		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
+	if ($inventario!=""){
+		$Prefijo="IN_".$inventario;
+	}else{
+		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
 	}
 	$IsisScript= $xWxis."ifp.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=diccionario&prefijo=$Prefijo&campo=1";
@@ -164,7 +179,8 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			}
 		}
 	}
-	return 0;}
+	return 0;
+}
 
 function LeerFst($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;

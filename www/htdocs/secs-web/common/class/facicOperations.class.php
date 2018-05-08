@@ -201,7 +201,7 @@ class facicOperations extends facic {
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -261,7 +261,7 @@ class facicOperations extends facic {
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -322,7 +322,7 @@ function hasFacic(){
 
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -374,7 +374,7 @@ function hasFacic(){
 
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -782,7 +782,7 @@ function hasFacic(){
 		$faultNumber = false;
 		if(is_array($maskVolume)) {
 			reset($maskVolume);
-			while (list($key, $val) = each($maskVolume)) {
+			foreach($maskVolume as $key=>$val) {
 				if($val == "" || $val == 0) {
 					$faultVolume = true;
 				}
@@ -790,7 +790,7 @@ function hasFacic(){
 		}
 		if(is_array($maskNumber)) {
 			reset($maskNumber);
-			while (list($key, $val) = each($maskNumber)) {
+			foreach($maskNumber as $key=>$val) {
 				if($val == "" || $val == 0) {
 					$faultNumber = true;
 				}
@@ -900,7 +900,7 @@ function hasFacic(){
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -918,7 +918,7 @@ function hasFacic(){
 
 		}
 		$tempList = array();
-		while (list($key,$val) = each($recordList)) {			
+		foreach($recordList as $key=>$val) {			
 			$tempList[] = $recordList[$key][920];			
 		}
 
@@ -958,7 +958,7 @@ function hasFacic(){
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -978,7 +978,7 @@ function hasFacic(){
 		}
 		$tempList = array();
 		$lastRecord = array();		
-		while (list($key,$val) = each($recordList)) {
+		foreach($recordList as $key=>$val) {
 			if($recordList[$key][920] >= prev($recordList[$key][920])) {
 				$lastRecord = $recordList[$key];
 			}
@@ -1008,7 +1008,7 @@ function hasFacic(){
 			reset($dataCollection);
 			
 			$data = array();
-			while (list($key, $val) = each($dataCollection)) {
+			foreach($dataCollection as $key=>$val) {
 
 				$issue = new facicData();
 				$issue->set_mfn($dataCollection[$key]["mfn"]);
@@ -1150,7 +1150,7 @@ function hasFacic(){
 			$record->unserializeFromString($elemento);
 			$tempField = $record->campos;
 			$tempRecord = array();
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -1167,7 +1167,7 @@ function hasFacic(){
 			$posicion2 = strpos($rawxml,"</record>");
 
 		}
-		while (list($key,$val) = each($recordList)) {			
+		foreach($recordList as $key=>$valb) {			
 			$r .= '<p/>'.$recordList[$key][970];			
 		}
 

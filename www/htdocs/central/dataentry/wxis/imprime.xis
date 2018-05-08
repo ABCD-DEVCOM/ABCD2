@@ -20,7 +20,7 @@
           	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
        	</parm>
 		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
-    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+                <parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
 		<flow action=jump>
   			<pft>
 				select s(v9001)
@@ -43,8 +43,9 @@
                      	(v3000)
                  	</pft>
              	</parm>
-				<parm name="buffersize">200000</parm>
-                <parm name=MAX_TMP_STRING>200000</parm>
+                <!--next 2 lines commented out because not working in UTF8 Windows wxis.exe-->
+		<!--parm name="buffersize">200000</parm-->
+                <!--parm name=MAX_TMP_STRING>200000</parm-->
                 <field action=define tag=1002>Isis_Total</field>
 				<loop>
 					<field action=import tag=5001>5001</field>
@@ -65,8 +66,8 @@
            		<parm name=db><pft>v5001</pft></parm>
            		<parm name=from><pft>v2000</pft></parm>
 				<parm name=to><pft>v2001</pft></parm>
-				<parm name="buffersize">200000</parm>
-                <parm name=MAX_TMP_STRING>200000</parm>
+				<!--parm name="buffersize">200000</parm-->
+                                <!--parm name=MAX_TMP_STRING>200000</parm-->
  				<loop>
 					<field action=import tag=5001>5001</field>
 					<field action=import tag=3030>3030</field>

@@ -346,7 +346,7 @@ function makeRecords($database)
                 var_dump($tempField);
             }
 
-            while (list($key,$val) = each($tempField)) {
+            foreach($tempField as $key=>$val) {
                 if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                         $varTemp = $tempRecord[$tempField[$key]->tag];
                         if (is_array($varTemp)){
@@ -392,7 +392,7 @@ function titCurrColect($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             if($dataCollection[$key]["50"] == "C"){
                     $data[] = array(
                         "MFN" => $dataCollection[$key]["mfn"],
@@ -422,7 +422,7 @@ function titCurrColectHolding($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             if($dataCollection[$key]["50"] == "C"){
                     $data[] = array(
                         "MFN" => $dataCollection[$key]["mfn"],
@@ -451,7 +451,7 @@ function titWCurrColect($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+       foreach($dataCollection as $key=>$val) {
             if($dataCollection[$key]["50"] == "C"){
                     $data[] = array(
                         "MFN" => $dataCollection[$key]["mfn"],
@@ -480,7 +480,7 @@ function titFinishColect($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             if($dataCollection[$key]["50"] == "D"){
                     $data[] = array(
                         "MFN" => $dataCollection[$key]["mfn"],
@@ -509,7 +509,7 @@ function titWithoutColect($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             if($dataCollection[$key]["50"] == "D"){
                     $data[] = array(
                         "MFN" => $dataCollection[$key]["mfn"],
@@ -538,7 +538,7 @@ function totIssRegLib($dataCollection){
     if(is_array($dataCollection)) {
         reset($dataCollection);
         $data = array();
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
             /*if($dataCollection[$key]["50"] == "D"){
                     $data[] = array(
                         "MFN" => $dataCollection[$key]["mfn"],
@@ -565,7 +565,7 @@ function arrayToFacic($dataCollection)
             var_dump($dataCollection);
         }
 
-        while (list($key, $val) = each($dataCollection)) {
+        foreach($dataCollection as $key=>$val) {
                 $INV = implode('; ',$dataCollection[$key]["917"]);
 
                 $data[] = array(

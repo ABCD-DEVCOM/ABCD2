@@ -6,19 +6,8 @@
  */
 
 // Define the method as a PHP function
-
-// --- Funciones privadas de ejecucion del webservice
-$wxis_host = $_SERVER['HTTP_HOST'];
-if (stripos($_SERVER["SERVER_SOFTWARE"],"Win")>0) {
-$wxis_action = "/cgi-bin/ansi/wxis.exe";
-}else{
-$wxis_action = "/cgi-bin/ansi/wxis";
-}
-
 function IsisWrite($parametros, $contenido)
 {
-//$contentutf=utf8_decode($contenido);
-//echo "content_wxis_write=$contentutf<BR>";//die;
 	return wxis_write($parametros,utf8_decode($contenido));
 }
 function IsisIndex($parametros){
@@ -74,29 +63,34 @@ function IsisSearchSort($parametros)
 	return wxis_sort ( $parametros );
 }
 
-
+// --- Funciones privadas de ejecucion del webservice
+$wxis_host = $_SERVER['HTTP_HOST'];
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win")>0) {
+$wxis_action = "/cgi-bin/ansi/wxis.exe";
+}else{
+$wxis_action = "/cgi-bin/ansi/wxis";
+}
 /*
  * This function call through fsockopen function an host that return the xml
  * file with the data you ask.
  * @param $url is mounted by wxis_url function
+ 
  */
-
-function wxis_document_post( $url, $content = "" )
+ function wxis_document_post( $url, $content = "" )
 {
-//echo "URL=$url<BR>";
-//echo "content=$content<BR>";
-//die;
-//foreach($_POST as $aux => $array){
-//                foreach($array as $campo => $valor)
-//                   echo "$campo -> $valor <br>";
-//              }
-//              die;
-$result=file_get_contents($url);
-     return strstr($result,"<");
-}
-
-function wxis_document_post2( $url, $content )
+// echo "URL=$url<BR>";
+// echo "content=$content<BR>";
+// die;
+// foreach($_POST as $aux => $array){
+               // foreach($array as $campo => $valor)
+                  // echo "$campo -> $valor <br>";
+             // }
+             // d
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") == 0)    //Linux
 {
+  $result=file_get_contents($url);
+//  return strstr($result,"<");
+} else { //Windows
     $content = str_replace("\\\"","\"",$content);
     $content = str_replace("\n","",$content);
     $content = str_replace("\r","",$content);
@@ -127,7 +121,7 @@ function wxis_document_post2( $url, $content )
     if(function_exists("fsockopen")){
         $fp = fsockopen($host, $port, $errno, $errstr, $timeout);
     }else{
-        print "Function fsockopen must be enable in file PHP.INI, set allow_url_fopen = On\n";
+        print "Function fsockopen must be enabled in file PHP.INI, therefore set allow_url_fopen = On\n";
     }
     // Open the connection to the host, using socket
     //$fp = fopen($url, "r");
@@ -145,6 +139,7 @@ function wxis_document_post2( $url, $content )
                 $result .= fgets($fp, 4096);
         }
     }
+   }
     return strstr($result,"<");
 }
 
@@ -165,14 +160,21 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace(">", "=", $param);
 	$paramSplited = explode("<",$param);
 	reset($paramSplited);
-	while ( list($key, $value) = each($paramSplited) )
+	/*while ( list($key, $value) = each($paramSplited) )
 	{
 		if ( trim($value) != "" && substr($value,0,1) != "/" )
 		{
 			$request .= "&" . $value;
 		}
+	}*/
+	foreach($paramSplited as $value)
+	{
+	if ( trim($value) != "" && substr($value,0,1) != "/" )
+		{
+			$request .= "&" . $value;
+		}	
 	}
-//echo "request=$request<BR>";
+	
 	return $request;
 }
 
@@ -198,6 +200,7 @@ function wxis_edit ( $param )
 
 function wxis_write ( $param, $content )
 {
+		
         return wxis_document_post(wxis_url("write.xis",$param),$content);
 }
 

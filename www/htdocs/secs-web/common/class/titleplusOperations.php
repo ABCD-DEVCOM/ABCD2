@@ -199,7 +199,7 @@ class titleplusOperations extends titleplus {
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -259,7 +259,7 @@ class titleplusOperations extends titleplus {
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -320,7 +320,7 @@ function hasTitlePlus(){
 
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -372,7 +372,7 @@ function hasTitlePlus(){
 
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -768,7 +768,7 @@ function hasTitlePlus(){
 		$faultNumber = false;
 		if(is_array($maskVolume)) {
 			reset($maskVolume);
-			while (list($key, $val) = each($maskVolume)) {
+			 foreach($maskVolume as $key=>$val) {
 				if($val == "" || $val == 0) {
 					$faultVolume = true;
 				}
@@ -776,7 +776,7 @@ function hasTitlePlus(){
 		}
 		if(is_array($maskNumber)) {
 			reset($maskNumber);
-			while (list($key, $val) = each($maskNumber)) {
+			foreach($maskNumber as $key=>$val) {
 				if($val == "" || $val == 0) {
 					$faultNumber = true;
 				}
@@ -886,7 +886,7 @@ function hasTitlePlus(){
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -904,7 +904,7 @@ function hasTitlePlus(){
 
 		}
 		$tempList = array();
-		while (list($key,$val) = each($recordList)) {
+		foreach($recordList as $key=>$val) {
 			$tempList[] = $recordList[$key][920];
 		}
 
@@ -944,7 +944,7 @@ function hasTitlePlus(){
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -964,7 +964,7 @@ function hasTitlePlus(){
 		}
 		$tempList = array();
 		$lastRecord = array();
-		while (list($key,$val) = each($recordList)) {
+		foreach($recordList as $key=>$val) {
 			if($recordList[$key][920] >= prev($recordList[$key][920])) {
 				$lastRecord = $recordList[$key];
 			}
