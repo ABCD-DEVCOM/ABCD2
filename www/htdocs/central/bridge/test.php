@@ -16,11 +16,13 @@ if ($err) {
 $result = $client->call(
     'searchUsersById',                    // method name
     array('id' =>'ABX-6272,ABX-6362,')
+//        array('id' =>'ABX-6362')
+
 );
 
 echo 'Request='. $client->request;
 echo '<br>response=' . $client->response;
-echo '<p>result=';
+echo '<p>Endpointusers_Result=';
 print_r($result);
 
 
