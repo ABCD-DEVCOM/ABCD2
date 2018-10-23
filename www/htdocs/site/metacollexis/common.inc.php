@@ -203,7 +203,7 @@ function inprocess($label, $status = "run") {
 					s.writeln('<html>');
 					s.writeln('  <head>');
 					s.writeln('    <title>meta-Collexis</title>');
-					s.writeln('    <link rel="stylesheet" href="../css/public/skins/regional/style-<?=$_POST["lang"];?>.css"/>');
+					s.writeln('    <link rel="stylesheet" href="../css/public/skins/regional/style-<?php=$_POST["lang"];?>.css"/>');
 					s.writeln('  </head>');
 					s.writeln('  <body id="popUp">');
 					s.writeln('  <table width="320" height="120">');

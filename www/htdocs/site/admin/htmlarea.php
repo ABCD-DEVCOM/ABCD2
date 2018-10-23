@@ -108,12 +108,12 @@ $message = $messageArray[$lang];
         editor.Config["ProcessHTMLEntities"] = false;
         editor.Config["DefaultLanguage"] = "<?if ($lang =='pt') echo 'pt-br'; else $lang;?>" ;
 
-        editor.Config["LinkBrowserURL"] = "<?=$admPath?>editor/filemanager/browser/browser.html?Connector=connectors/php/connector.php";
-        editor.Config["LinkUploadURL"]  = "<?=$admPath?>editor/filemanager/upload/php/upload.php?Type=File";
-        editor.Config["ImageBrowserURL"]= "<?=$admPath?>editor/filemanager/browser/browser.html?Type=Image&Connector=connectors/php/connector.php";
-        editor.Config["ImageUploadURL"] = "<?=$admPath?>editor/filemanager/upload/php/upload.php?Type=Image";
-        editor.Config["FlashBrowserURL"]= "<?=$admPath?>editor/filemanager/browser/browser.html?Type=Flash&Connector=connectors/php/connector.php";
-        editor.Config["FlashUploadURL"] = "<?=$admPath?>editor/filemanager/upload/php/upload.php?Type=Flash";
+        editor.Config["LinkBrowserURL"] = "<?php echo $admPath?>editor/filemanager/browser/browser.html?Connector=connectors/php/connector.php";
+        editor.Config["LinkUploadURL"]  = "<?php echo $admPath?>editor/filemanager/upload/php/upload.php?Type=File";
+        editor.Config["ImageBrowserURL"]= "<?php echo $admPath?>editor/filemanager/browser/browser.html?Type=Image&Connector=connectors/php/connector.php";
+        editor.Config["ImageUploadURL"] = "<?php echo $admPath?>editor/filemanager/upload/php/upload.php?Type=Image";
+        editor.Config["FlashBrowserURL"]= "<?php echo $admPath?>editor/filemanager/browser/browser.html?Type=Flash&Connector=connectors/php/connector.php";
+        editor.Config["FlashUploadURL"] = "<?php echo $admPath?>editor/filemanager/upload/php/upload.php?Type=Flash";
 
         editor.ReplaceTextarea() ;
       }
@@ -128,32 +128,32 @@ $message = $messageArray[$lang];
 
   <body>
         <form name="formPage" action="../php/xmlRoot.php" method="post">
-            <input type="hidden" name="xml" value="xml/<?=$checked["lang"]?>/adm.xml" />
+            <input type="hidden" name="xml" value="xml/<?php echo $checked["lang"]?>/adm.xml" />
             <input type="hidden" name="xsl" value="xsl/adm/menu.xsl" />
-            <input type="hidden" name="lang" value="<?=$checked["lang"]?>" />
-            <input type="hidden" name="id" value="<?=$checked["id"]?>" />
-            <input type="hidden" name="xmlSave" value="<?=$xmlSave?>" />
+            <input type="hidden" name="lang" value="<?php echo $checked["lang"]?>" />
+            <input type="hidden" name="id" value="<?php echo $checked["id"]?>" />
+            <input type="hidden" name="xmlSave" value="<?php echo $xmlSave?>" />
             <input type="hidden" name="xslSave" value="xsl/adm/save-xhtml.xsl" />
-            <input type="hidden" name="portal" value="<?=$checked["portal"]?>" />
+            <input type="hidden" name="portal" value="<?php echo $checked["portal"]?>" />
 
             <span class="identification">
-                <center><?=$message["title"]?></center>
+                <center><?php echo $message["title"]?></center>
             </span>
             <hr size="1" noshade="" />
             <table width="100%" border="0" cellpadding="4" cellspacing="0" class="bar">
                 <tr valign="top">
-                    <td align="left" valign="middle"><?=$page?> <b>|</b>
+                    <td align="left" valign="middle"><?php echo $page?> <b>|</b>
                         <select name="available" size="1">
-                            <option value="yes"><?=$message["available"]?></option>
-                            <option value="no"><?=$message["unavailable"]?></option>
+                            <option value="yes"><?php echo $message["available"]?></option>
+                            <option value="no"><?php echo $message["unavailable"]?></option>
                         </select>
                         <b>|</b>
                         <a href="javascript:formPage.submit();">
-                            <?=$message["save"]?>
+                            <?php echo $message["save"]?>
                         </a>
                     </td>
                     <td align="right" valign="middle">
-                        <a href="../php/xmlRoot.php?xml=xml/<?=$lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?=$lang?>" target="_top"><?=$message["exit"]?></a>
+                        <a href="../php/xmlRoot.php?xml=xml/<?php echo $lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?php echo $lang?>" target="_top"><?php echo $message["exit"]?></a>
                     </td>
                 </tr>
             </table>
@@ -173,7 +173,7 @@ $message = $messageArray[$lang];
             <table width="100%" class="tree-edit">
                 <tr valign="top">
                     <td>
-                       <textarea id="buffer" name="buffer" rows="20" cols="80"><?=trim($textarea)?></textarea>
+                       <textarea id="buffer" name="buffer" rows="20" cols="80"><?php echo trim($textarea)?></textarea>
                       <br/>
                       </td>
                 </tr>

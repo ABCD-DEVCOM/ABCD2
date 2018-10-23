@@ -939,7 +939,7 @@ $vectorAbrev["database"]=$_SESSION["cdb"];
 		<div class="helpermysite">
            &nbsp &nbsp &nbsp;
            <a href=documentacion/ayuda.php?help=
-           <?php if ($_SESSION["action"]=='reserve') echo $_SESSION["lang"]."/mysite_reserve.html";
+           <?php if (isset($_SESSION["action"]) AND $_SESSION["action"]=='reserve') echo $_SESSION["lang"]."/mysite_reserve.html";
            else echo $_SESSION["lang"]."/mysite.html";?> target=_blank>
            <?php echo $msgstr["help"]?></a>&nbsp &nbsp;
         		</div>
@@ -1006,7 +1006,7 @@ $vectorAbrev["database"]=$_SESSION["cdb"];
 <?php
 
            // Llamado ppal
-           if ($_SESSION["action"]=='reserve')
+           if (isset($_SESSION["action"]) AND $_SESSION["action"]=='reserve')
            {
               MenuReserves(getRecordStatus());
            }

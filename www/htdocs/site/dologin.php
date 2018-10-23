@@ -1,4 +1,4 @@
-<?php 
+<?php
 //echo 'dologin !<p>';
 include("../central/config.php");
 $response="";

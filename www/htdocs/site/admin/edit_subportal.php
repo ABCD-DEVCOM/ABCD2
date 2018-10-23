@@ -53,7 +53,7 @@ $message = $messageArray[$lang];
         <meta http-equiv="Expires" content="-1"/>
         <meta http-equiv="pragma" content="no-cache"/>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-        <title><?=$message['title']?></title>
+        <title><?php echo $message['title']?></title>
         <link rel="stylesheet" href="../css/admin/adm.css" type="text/css"/>
 
         <style type="text/css">
@@ -64,14 +64,14 @@ $message = $messageArray[$lang];
     </head>
     <body>
         <span class="identification">
-            <center><?=$message['title']?></center>
+            <center><?php echo$message['title']?></center>
         </span>
         <hr size="1" noshade=""/>
         <table width="100%" border="0" cellpadding="4" cellspacing="0" class="bar">
             <tr valign="top">
-                <td align="left" valign="middle"><?=$message['subportals']?></td>
+                <td align="left" valign="middle"><?php echo$message['subportals']?></td>
                 <td align="right" valign="middle">
-                    <a href="../php/xmlRoot.php?xml=xml/<?=$lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?=$lang?>" target="_top"><?=$message["exit"]?></a>
+                    <a href="../php/xmlRoot.php?xml=xml/<?php echo$lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?php echo$lang?>" target="_top"><?php echo$message["exit"]?></a>
                 </td>
             </tr>
         </table>
@@ -79,13 +79,13 @@ $message = $messageArray[$lang];
         <br/>
 
         <form name="newSubportal" action="manage_subportal.php" method="POST">
-            <input type="hidden" name="lang" value="<?=$checked['lang']?>"/>
+            <input type="hidden" name="lang" value="<?php echo$checked['lang']?>"/>
             <table width="100%" class="tree-edit">
                 <tr valign="top">
                     <td>
                         <br/>
                         <ul>
-                            <li><?=$message['add'].' '.$message['subportal']?><br/>
+                            <li><?php echo$message['add'].' '.$message['subportal']?><br/>
                                 <input type="text" name="addname" style="width:250px" id="newsubportal"/>
                                 <button type="submit" name="action" value="add">+</button>
                             </li>
@@ -96,22 +96,22 @@ $message = $messageArray[$lang];
                     <td>
                         <br/>
                         <ul>
-                            <li><?=$message['subportals list']?><br/>
+                            <li><?php echo$message['subportals list']?><br/>
                                 <select name="subportal" size="15" style="width:325px">
                                     <?for ($i = 0; $i < $items; $i++){?>
-                                    <option value="<?=(String) $xml->item[$i]['id']?>">
-                                        <?= utf8_decode( (String) $xml->item[$i] )?>
+                                    <option value="<?php echo(String) $xml->item[$i]['id']?>">
+                                        <?php echo utf8_decode( (String) $xml->item[$i] )?>
                                     </option>
                                     <?}?>
                                 </select>
                             </li>
                             <li>
-                                <span style="width:11em; display:block; float:left"><?=$message['rename']?> <?=$message['selected']?></span>
+                                <span style="width:11em; display:block; float:left"><?php echo$message['rename']?> <?php echo$message['selected']?></span>
                                 <input type="text" name="rename" value="" id="rensubportal"/>
                                 <button type="submit" name="action" value="ren">ok</button>
                             </li>
                             <li>
-                                <span style="width: 11em; display:block;float:left"><?=$message['remove']?> <?=$message['selected']?></span>
+                                <span style="width: 11em; display:block;float:left"><?php echo $message['remove']?> $message['selected']?></span>
                                 <button type="submit" name="action" value="del">-</button>
                             </li>
                         </ul>

@@ -9,10 +9,10 @@ session_start();
 if ($_SESSION['auth_id'] != "BVS@BIREME") {
     ?>
     <script language="JavaScript">
-        top.opener.location.href = "http://<?= SERVERNAME . DIRECTORY?>/site/admin/index.php?lang=<?=$lang?>&timeout=session";
+        top.opener.location.href = "http://<?php echo  SERVERNAME . DIRECTORY?>/site/admin/index.php?lang=<?php echo $lang?>&timeout=session";
         this.window.close();
     </script>
-    <?
+    <?php
     die();
 }
 
@@ -24,7 +24,7 @@ $fileXml  = $localPath["xml"] . $id . ".xml";
 $messageArray = array (
     "es" =>
         array (
-            "title" => "AdministraciÃ³n: ABCD Site",
+            "title" => "Administración: ABCD Site",
             "exist" => "Error de sistema. El archivo del componente ya existe: ",
             "fail"  => "Error de sistema. No fue posible grabar en el archivo: ",
             "param" => "Error de sistema. Parametros insuficientes.",
@@ -33,11 +33,11 @@ $messageArray = array (
         ),
     "pt" =>
         array (
-            "title" => "AdministraÃ§Ã£o: ABCD Site",
-            "exist" => "Erro de sistema. O arquivo do componente jÃ¡ existe: ",
-            "fail"  => "Erro de sistema. NÃ£o foi possivel gravar no arquivo:",
+            "title" => "Administração: ABCD Site",
+            "exist" => "Erro de sistema. O arquivo do componente já existe: ",
+            "fail"  => "Erro de sistema. Não foi possivel gravar no arquivo:",
             "param" => "Erro de sistema. Parametros insuficientes.",
-            "decs_connection" => "NÃ£o foi possivel conectar-se com o serviÃ§o decs para gerar automaticamente a lista de categorias. VocÃª pode tentar criar novamente o componente mais tarde ou incluir manualmente as categorias.",
+            "decs_connection" => "Não foi possivel conectar-se com o serviço decs para gerar automaticamente a lista de categorias. Você pode tentar criar novamente o componente mais tarde ou incluir manualmente as categorias.",
             "decs_wait" => "Aguarde ... tentando conectar com servidor decs",
         ),
     "en" =>
@@ -53,9 +53,9 @@ $messageArray = array (
     "fr" =>
         array (
             "title" => "Administration: ABCD Site",
-            "exist" => "System error. Fichier existe dÃ©jÃ : ",
+            "exist" => "System error. Fichier existe déjà: ",
             "fail"  => "System error. Impossible de sauvegarder: ",
-            "param" => "System error. ParamÃ¨tres manquants.",
+            "param" => "System error. Paramètres manquants.",
             "decs_connection" => "It was not possible to connect with the service decs in order to generate automatically the list of categories. You can try to create again the component later or include manually the categories.",
             "decs_wait" => "Wait ... trying to connect with decs server",
         ),
@@ -100,7 +100,7 @@ if ($id == "" || $lang == "" || $type == ""){
 ?>
 <html>
     <head>
-        <title><?=$messages["title"]?></title>
+        <title><?php=$messages["title"]?></title>
         <link rel="stylesheet" href="../css/public/components-pt.css" type="text/css" media="screen"/>
         <style>
             .confirm { margin: 10px; padding: 10px; background-color: #ddffdd;}
@@ -111,38 +111,38 @@ if ($id == "" || $lang == "" || $type == ""){
             var listValues = opener.listValues;
 
             function removeFromList() {
-                listValues[<?=$id?>] = null;
+                listValues[<?php=$id?>] = null;
                 listValues.length--;
                 opener.document.formPage.tree.length--;
                 top.close();
             }
 
             function initialCheck(){
-                <? if ( $error != '' || $warning != '' ) {?>
+                <?php if ( $error != '' || $warning != '' ) {?>
                     if (parseInt(navigator.appVersion)>3){
                           top.resizeTo(360,165);
                         top.moveTo(350,100);
                     }
-                <? } else {?>
+                <?php } else {?>
                     top.close();
-                <? } ?>
+                <?php } ?>
             }
         </script>
 
     </head>
     <body onload="javascript:initialCheck();">
         <div class="confirm">
-            <? if ($error != '') {?>
-                <b><?=$error?></b>
+            <?php if ($error != '') {?>
+                <b><?php=$error?></b>
                 <div align="center">
                     <input type="button" value="cancelar"  onclick="javascript:removeFromList();" class="submit"/>
                 </div>
-            <? }else{ ?>
-                <b><?=$warning?></b>
+            <?php }else{ ?>
+                <b><?php=$warning?></b>
                 <div align="center">
                     <input type="button" value="OK"  onclick="javascript:top.close();" class="submit"/>
                 </div>
-            <? } ?>
+            <?php } ?>
         </div>
     </body>
 </html>

@@ -105,6 +105,7 @@ if (isset($_GET['level'])) {
         }
       }
     }
+//    var_dump($variable_fields); die;
     $referer = $variable_fields['referer'];     
   }
 }
@@ -148,10 +149,12 @@ if (isset($_GET['level'])) {
           if (document.getElementById("level").selectedIndex == 0) {
             document.getElementById("button_submit").disabled=true;    
           }
-
-
+//alert('function showControls'+object+lang_param + <?php echo $variable_fields ?> );
+<?php //echo json_encode($variable_fields); die;
+?>;
             var jsdata = <?php echo json_encode($variable_fields); ?>;
-            if (object.value == "") {                  
+//alert('jsdata='+jsdata);
+            if (object.value == "") {
                 
                 $('[id^="jv_error"]').hide();
                 $('#optionals').html('');
@@ -357,7 +360,8 @@ if (isset($_GET['level'])) {
               }
               ?>
               <script type='text/javascript'>
-                show_controls(document.getElementById("level"), '<?php echo $lang; ?>')
+/* alert('before showcontrols '+   document.getElementById("level") )  ; */
+                show_controls(document.getElementById("level"), '<?php echo $lang; ?>');
                 //document.getElementById("button_submit").disabled = false;
               </script>
               <?php            

@@ -95,10 +95,8 @@ include("/opt/ABCD/www/htdocs/central/config.php");
         return $data;
     }
  function wxis_document_post( $url, $content = "" )
-
 {
 global $wxis_action, $db_path, $Wxis;
-
 $tmp=explode("&gizmo",$url);
 $url=$tmp[0];
 if(strpos($url,"write.xis"))
@@ -116,7 +114,8 @@ if($db=="") $db=$_GET["m"];
 if($db=="titleplus" || $db=="holdings" || $db=="facic")
 {
 	if($db=="titleplus") $db="titlePlus";
-	$center="main/";
+	session_start();
+	$center=$_SESSION['libraryDir']."/";//selected library when user login
 	$db=$center.$db;
 }
 $mfn=$_POST["mfn"];
@@ -133,7 +132,7 @@ $str1="<IsisScript name=new>
 $str2="<write>Unlock</write>
 <display>
 <pft>if val(v1102) = 0 then '<b>Created!</b><hr>' fi </pft>
-<pft>if val(v1102) = 1 then '<b>Sorry, no registries created!</b><hr>' fi </pft>
+<pft>if val(v1102) = 1 then '<b>Sorry, no records created!</b><hr>' fi </pft>
 </display>
 </update>
 </do>
@@ -226,7 +225,7 @@ $url=$tmp[0];
     if(function_exists("fsockopen")){
         $fp = fsockopen($host, $port, $errno, $errstr, $timeout);
     }else{
-        print "Function fsockopen must be enable in file PHP.INI, set allow_url_fopen = On\n";
+        print "Function fsockopen must be enabled in file PHP.INI, set allow_url_fopen = On\n";
     }
     // Open the connection to the host, using socket
     //$fp = fopen($url, "r");

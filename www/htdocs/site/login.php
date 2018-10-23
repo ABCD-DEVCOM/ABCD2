@@ -3,7 +3,7 @@ session_start();
 //$_SESSION=array();
 include("../central/config.php");
 include("../central/common/get_post.php");
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
@@ -36,7 +36,7 @@ include ("../central/lang/lang.php");
 			<link rel="stylesheet" rev="stylesheet" href="../central/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
 <script src=../central/dataentry/js/lr_trim.js></script>
-<script languaje=javascript>
+<script language=javascript>
 
 document.onkeypress =
 	function (evt) {
@@ -86,13 +86,19 @@ return req;
  
  function DoLogIn(user,pass,id)
  {
+
  if (http.readyState == 4 || http.readyState == 0)
   	{
-	ix=document.administra.db_path.selectedIndex;
-	var mydbaccess=document.administra.db_path.options[ix].value;
+//        alert('dologin2'+ user+ pass+ id + http.readyState);
+//	ix=document.administra.db_path.selectedIndex;
+//	var mydbaccess=document.administra.db_path.options[ix].value;
+//        alert ('dbpath='+ix+mydbaccess);
+//  var mydbaccess="/var/opt/ABCD/bases/";
+        mydbaccess="<?php echo $db_path ?>";
   var myurl = 'dologin.php';//define la url
   myRand = parseInt(Math.random()*999999999999999);// es para que la info no vaya a la cache sino al servidor  
   var modurl = myurl+"?user="+user+"&pass="+pass+"&path="+mydbaccess+"&rand="+myRand;//crea la nueva url
+//  alert('modurl='+modurl);
 	http.open("GET", modurl);//define tipo de convercion
   http.onreadystatechange = function(){ResponseDoLogin(id);}//es lo que queremos q se ejecute
   http.send(null);//se ejecuta la funcion
@@ -103,6 +109,7 @@ return req;
  }
  function ResponseDoLogin(id)
 {
+//alert('readyState='+http.readyState+' status='+http.status+' response='+http.responseText);
 if (http.readyState == 4)
 	  if(http.status == 200)
 	{
@@ -175,9 +182,8 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		<div class="formRow">
 			<label for="pwd"><?php echo $msgstr["password"]?></label>
 			<input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
-		   
 		</div>
-		
+<!--		
 		<div class="formRow"><br>
 <?php
 if (file_exists("../dbpath.dat")){
@@ -189,12 +195,11 @@ if (file_exists("../dbpath.dat")){
 			$v[0]=trim($v[0]);
 			echo "<Option value=".trim($v[0]).">".$v[1]."\n";
 		}
-
 	}
 	echo "</select><p>";
 }
 ?>
-		</div>
+		</div-->
 		<div class="submitRow">
 			<div class="frLeftColumn"></div>
 			<div class="frRightColumn">

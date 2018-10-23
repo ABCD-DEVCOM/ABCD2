@@ -85,28 +85,28 @@ $message = $messageArray[$lang];
 
             <input type="hidden" name="xml" value="xml/pt/adm.xml" />
             <input type="hidden" name="xsl" value="xsl/adm/menu.xsl" />
-            <input type="hidden" name="lang" value="<?=$lang?>" />
-            <input type="hidden" name="id" value="<?=$id?>" />
-            <input type="hidden" name="xmlSave" value="<?=$xmlSave?>" />
+            <input type="hidden" name="lang" value="<?php echo $lang?>" />
+            <input type="hidden" name="id" value="<?php echo $id?>" />
+            <input type="hidden" name="xmlSave" value="<?php echo $xmlSave?>" />
             <input type="hidden" name="xslSave" value="xsl/adm/save-service.xsl" />
             <span class="identification">
-                <center><?=$message["title"]?></center>
+                <center><?php echo $message["title"]?></center>
             </span>
             <hr size="1" noshade="" />
             <table width="100%" border="0" cellpadding="4" cellspacing="0" class="bar">
                 <tr valign="top">
-                    <td align="left" valign="middle"><?=$page?> <b>|</b>
+                    <td align="left" valign="middle"><?php echo $page?> <b>|</b>
                         <select name="available" size="1">
-                            <option value="yes"><?=$message["available"]?></option>
-                            <option value="no"><?=$message["unavailable"]?></option>
+                            <option value="yes"><?php echo $message["available"]?></option>
+                            <option value="no"><?php echo $message["unavailable"]?></option>
                         </select>
                         <b>|</b>
                         <a href="javascript: formPage.submit()">
-                            <?=$message["save"]?>
+                            <?php echo $message["save"]?>
                         </a>
                     </td>
                     <td align="right" valign="middle">
-                        <a href="../php/xmlRoot.php?xml=xml/<?=$lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?=$lang?>" target="_top"><?=$message["exit"]?></a>
+                        <a href="../php/xmlRoot.php?xml=xml/<?php echo $lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?php echo $lang?>" target="_top"><?php echo $message["exit"]?></a>
                     </td>
                 </tr>
             </table>
@@ -126,8 +126,8 @@ $message = $messageArray[$lang];
             <table width="100%" class="tree-edit">
                 <tr valign="top">
                     <td>
-                      <?=$message["url"]?>
-                       <input type="text" name="buffer" size="70" value="<?=$buffer?>">
+                      <?php echo $message["url"]?>
+                       <input type="text" name="buffer" size="70" value="<?php echo $buffer?>">
                       <input type="button" value="verificar" onclick="javascript: rss_preview.location= formPage.buffer.value"/>
                       </td>
                 </tr>
@@ -138,7 +138,7 @@ $message = $messageArray[$lang];
                     <td>
                         <table cellpadding="0" cellspacing="0" width="100%">
                             <tr>
-                                <td valign="middle" width="140"><?=$message["service"]?></td>
+                                <td valign="middle" width="140"><?php echo $message["service"]?></td>
                                 <td>
                                 <iframe src="" name="rss_preview" style="background-color: #ffffff; width: 700px; height: 220px"/>
                                 </td>
