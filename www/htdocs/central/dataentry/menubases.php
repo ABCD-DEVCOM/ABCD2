@@ -17,7 +17,7 @@ include ("../lang/lang.php");
 include("leerregistroisispft.php");
 
 $arrHttp["IsisScript"]="ingreso.xis";
-$arrHttp["Mfn"]=$_SESSION["mfn_admin"];
+if (isset($_SESSION["mfn_admin"])) $arrHttp["Mfn"]=$_SESSION["mfn_admin"];
 
 $fp = file($db_path."bases.dat");
 if (!$fp){

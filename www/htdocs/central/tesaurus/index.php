@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 
@@ -46,10 +47,11 @@ $query ="&base=$tesaurus&cipar=$db_path"."par/$tesaurus".".par&Opcion=autoridade
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);
 $subtitle= " Tesaurus";
-//foreach ($contenido as $var=>$value) echo "$var=$value<br>";
+//echo $Formato;
+//foreach ($contenido as $var=>$value) echo "$var=$value<br>";die;
 include("../common/header.php");
 echo "<h3>Tesaurus ($tesaurus)</h3>\n";
-echo "<script language=Javascript src=../dataentry/js/lr_trim.js></script>\n";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>\n";
 echo "
 		<script languaje=Javascript>
 		document.onkeypress =
@@ -84,6 +86,7 @@ echo "
 	}
 ?>
 	function ObtenerTerminos(){
+
 		Seleccion=""
 		i=document.Lista.autoridades.selectedIndex
 		for (i=0;i<document.Lista.autoridades.options.length; i++){
@@ -118,6 +121,8 @@ echo "
 					b=a.split("\n")
 					if(b.length>Var.rows) Var.rows=b.length
 
+				}else{
+					self.close()
 				}
 			}
 		}
@@ -149,12 +154,18 @@ echo "function AbrirIndice(Termino){\n";
 	<div class="helper">
 	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/alfa.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/alfa.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: alfa.php" ?>
+	echo "<font color=white>&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
+	echo "<font color=white>&nbsp; &nbsp; Script: tesaurus/index.php" ?>
 </font></div>
 <form method=post name=Lista onSubmit="javascript:return false">
 	<table width=100%>
-		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Alphabetical</strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Permuted</strong></font></a></td>
-    	<td width=50% align=right><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
+		<td width=50%>
+                <img src=../dataentry/img/toolbarSearch.png>
+                <a href=index.php?base=<?php echo $arrHttp["base"];
+                if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp;
+                 <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];
+                 if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
+    	<td width=50% align=right><font color=white><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
     </table>
 
  <div class="middle form">
@@ -182,7 +193,7 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/ayuda_captura.html target=_blank>".$msgstr["edhlp"]."</a>";
 	echo "<font color=white>&nbsp; &nbsp; Script: alfa.php</font>";
 }
-	$xwidth="350";
+	$xwidth="400";
 ?>
 	<table cellpadding=0 cellspacing=0 border=0  height=80%>
 
@@ -195,9 +206,14 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 	foreach ($contenido as $linea){
 		$linea=trim($linea);
 		if (trim($linea)!=""){
-
+            $l=explode('|',$linea);
 		//	if (substr($i,0,strlen($arrHttp["pref"]))!=$arrHttp["pref"]) break;
-			echo "<option value=\"".$linea."\" title='".$linea."' alt='".$linea."'>".$linea;
+			if (isset($l[1])){
+				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";
+				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
+			}else{
+				echo "<option value=\"".$l[0]."\" title='".$l[0]."' alt='".$l[0]."'>".$l[0];
+			}
 
 
 		}
@@ -207,7 +223,7 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 	</select></td>
 
 	</table>
-	<a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Alphabetical</a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Permuted</a><br>
+	<a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><?php echo $msgstr["tes_alphabetic"]?></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><?php echo $msgstr["tes_permuted"]?></a><br>
 	<table cellpadding=0 cellspacing=0 border=0 width=100%  height=20% bgcolor=#4E617C>
 		<td valign=top width=100%><a href=Javascript:Continuar() class="defaultButton backButton">
 		<img src="img/arrowRightTwo.png" alt="" title="" />

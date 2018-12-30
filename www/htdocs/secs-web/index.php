@@ -276,7 +276,7 @@ if ($_GET['action'] == "signoff") {
             if ($listRequest == "facic"){
                 if ($_REQUEST["recid"]){
                     echo "<!-- [request]";
-                    var_dump($_REQUEST);
+//                    var_dump($_REQUEST);
                     echo "[/request] -->";
                     echo "<!-- [recid]".$_REQUEST["recid"]."[/recid] -->";
                     echo "<!-- [mfn]".$thisMfn."[/mfn] -->";

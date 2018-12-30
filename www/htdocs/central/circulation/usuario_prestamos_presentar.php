@@ -26,6 +26,7 @@
  * == END LICENSE ==
 */
 include("../common/get_post.php");
+include("../config.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";die;
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -577,14 +578,16 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 			}else{
 				$t=explode('||',$linea);
 				if ($t[0]!="" ) $cno=$t[0];
-				if ($t[5]!="")  $tto=$t[5];
+//				if ($t[5]!="")  $tto=$t[5];
+                                if (isset($t[5])) $tto=$t[5];
 				if ($t[0]=="" ) $t[0]=$cno;
-				if ($t[5]=="")  $t[5]=$tto;
+//				if ($t[5]=="")  $t[5]=$tto;
+                                if (!isset($t[5])) $t[5]=$tto;
 				$linea="";
 				foreach ($t as $value){
 					$linea.=trim($value)."||";
 				}
-				if (strtoupper($inventory)==strtoupper(trim($t[2]))) $item=$linea;
+				if (isset($t[2]) AND strtoupper($inventory)==strtoupper(trim($t[2]))) $item=$linea;
 				$copies_title[]=$linea;
 			}
 		}
@@ -836,7 +839,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 				}
 			}
 			$obj=explode('|',$ppres);
-			if ($obj[11]=="")
+			if (isset($obj[11]) AND $obj[11]=="")
 				$allow_reservation="N";
 			else
 				$allow_reservation="Y";
@@ -897,13 +900,15 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	 			}
 	 			if ($cont=="Y"){
 		 			$tt=explode('###',trim($titulo));
-		    		$obj_store=$tt[1];
+		    		if (isset($tt[1])) {
+                                        $obj_store=$tt[1];
 					$tt=explode('||',$tt[0]);
 					$titulo=$tt[0];
 					if (isset($arrHttp["comments"]))
 		    			$titulo.=" <font color=darkred>".$arrHttp["comments"]."</font>";
-					$signatura=$tt[1];     //signatura topográfica
-		    		$este_prestamo.= "<td bgcolor=white valign=top>$titulo</td>";
+					if (isset($tt[1])) $signatura=$tt[1];     //signatura topográfica
+		    		}
+                                $este_prestamo.= "<td bgcolor=white valign=top>$titulo</td>";
 		    		$este_prestamo.= "<td bgcolor=white valign=top>";
 		    		if (trim($ppres)==""){
 						//$debug="Y";
@@ -920,8 +925,8 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 					$Opcion="";
 					$msg="";
 					$msg_1="";
-					$lapso=$obj[3];
-					if (trim($lapso)=="0"){
+					if (isset($obj[3]) AND isset($lapso)) $lapso=$obj[3];
+					if (isset($lapso) AND trim($lapso)=="0"){
 						$msg=$msgstr["not_avail_loan"];
 						$msg.= "<font color=red>".$msgstr["not_avail_loan"]."</font><br>";
 						$cont="N";

@@ -999,7 +999,11 @@ class facicOperations extends facic {
         $newValue = null;
 
         if ($isLastValue && $previousValue == "") {
+        //next line results in extremely high values in larger databases...
             $newValue = (int) $currentValue + 1000;
+            //echo "newValue v920 = $newValue\n !!!";
+            $message = "newValue v920 = $newValue\n !!!";
+            echo "<script type='text/javascript'>alert('$message');</script>";
         } else {
             $newValue = (((int) $currentValue + (int) $previousValue) / 2);
         }

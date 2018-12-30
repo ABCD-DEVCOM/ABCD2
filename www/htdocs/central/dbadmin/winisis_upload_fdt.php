@@ -119,7 +119,7 @@ $files = $_FILES;
 if ($files["userfile"]['size']) {
       // clean up file name
 	$name=$files["userfile"]['name'];
-   	$name = ereg_replace("[^a-z0-9._]", "",
+   	$name = preg_replace("/[^a-z0-9._]/", "",
     str_replace(" ", "_",
        	str_replace("%20", "_", strtolower($name)
 					)
@@ -131,7 +131,9 @@ if ($files["userfile"]['size']) {
   	$Fdt_conv=CrearFdt($Fdt);
    	$_SESSION["FDT"]=$Fdt_conv;
     MostrarFdt($_SESSION["FDT"]);
-}else{	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);}
+}else{
+	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);
+}
 $_SESSION["DESC"]=$arrHttp["desc"];
 unset ($_SESSION["FST"]);
 unset ($_SESSION["PFT"]);

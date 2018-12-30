@@ -1,4 +1,4 @@
-<?
+<?php
 //Procesa el archivo TXT y lo carga en base de datos
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -47,7 +47,8 @@ include ("rotulos2tags.php");
 
 function Delimited($rotulos,$registro){
 	$salida=array();
-	if (trim($registro!="")){		$t=explode("\t",$registro);
+	if (trim($registro!="")){
+		$t=explode("\t",$registro);
 		foreach ($rotulos as $value){
 	 		if (trim($value[1])!=""){
 	 			$tag[$value[0]]=$value[1];
@@ -55,12 +56,14 @@ function Delimited($rotulos,$registro){
 	 		}
 	 	}
 	 	$ix=0;
-	 	foreach ($t as $val) {
+	 	foreach ($t as $val) {
+
 	 		$ix=$ix+1;
 	 		if (trim($val)!="")
 	 			if (isset($tag[$ix]))
 	 				$salida[$tag[$ix]]=str_replace("\n"," ",$val);
-	 				$salida[$tag[$ix]]=str_replace("\r"," ",$val);	 	}
+	 				$salida[$tag[$ix]]=str_replace("\r"," ",$val);
+	 	}
 	}
  	return $salida;
 }
@@ -102,7 +105,8 @@ global $arrHttp;
 			$delim="";
 		if (isset($rotulo[$key][4])) $rep=$rotulo[$key][4];
 		if (isset($rotulo[$key][5])) $formato=$rotulo[$key][5];
-		foreach ($linea as $value){			if (trim($value)!=""){
+		foreach ($linea as $value){
+			if (trim($value)!=""){
 				if (trim($rep)!=""){
 					$sal=explode($rep,$value);
 					foreach ($sal as $campo){
@@ -205,17 +209,26 @@ if (trim($value)!="") {
 	//echo urldecode($HTTP_POST_VARS[$var]);
 	if ($separador!='[TABS]'){
 		$variables=explode($separador,$value);
-	}else{		$variables=explode("\n",$value);	}
-	foreach($variables as $registro){		$noLocalizados="";
-		if ($separador=='[TABS]'){        	$salida=Delimited($rotulo,$registro);		}else{
+	}else{
+		$variables=explode("\n",$value);
+	}
+	foreach($variables as $registro){
+		$noLocalizados="";
+		if ($separador=='[TABS]'){
+        	$salida=Delimited($rotulo,$registro);
+		}else{
 			$salida=Rotulos2Tags($rotulo,$registro);
 		}
 		if (count($salida)>0){
 			echo "<p><b>--------</b> <br>";
 			if (!isset($arrHttp["Actualizar"])) {
 				echo "<br>";
-				foreach ($salida as $key=>$value){					 foreach ($value as $campo){					 	 echo $rotulo[$key][0]." ".$campo."<br>";					 }
-				}			}
+				foreach ($salida as $key=>$value){
+					 foreach ($value as $campo){
+					 	 echo $rotulo[$key][0]." ".$campo."<br>";
+					 }
+				}
+			}
 			if (isset($arrHttp["Actualizar"])) ProcesarBD($arrHttp["base"],$salida,$rotulo);
 		}
 		if (trim($noLocalizados)!="") {
@@ -227,8 +240,10 @@ if (trim($value)!="") {
 
 if (!isset($arrHttp["Actualizar"])){
 	echo "<p><strong>".$msgstr["bd"].": ".$arrHttp["base"]."</strong> <input type=submit value=".$msgstr["actualizar"].">";
-} else{	echo "<P><a href=javascript:self.close()>".$msgstr["cerrar"]."</a> &nbsp; &nbsp;";
-	echo "<a href=javascript:RefreshDB()>".$msgstr["reopendb"]."</a>";}
+} else{
+	echo "<P><a href=javascript:self.close()>".$msgstr["cerrar"]."</a> &nbsp; &nbsp;";
+	echo "<a href=javascript:RefreshDB()>".$msgstr["reopendb"]."</a>";
+}
 echo "</form>
 </div>
 </div>

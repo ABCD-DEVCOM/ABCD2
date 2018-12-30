@@ -42,15 +42,19 @@ include("../lang/admin.php");
 //foreach ($arrHttp as $var => $value )	echo "$var = $value<br>";
 //die;
 if (!isset($arrHttp["subc"])) $arrHttp["subc"]="";
-if (!isset($arrHttp["pref"])) $arrHttp["pref"]=$arrHttp["prefijo"];
+if (!isset($arrHttp["pref"]) AND isset($arrHttp["prefijo"])) $arrHttp["pref"]=$arrHttp["prefijo"];
 if (!isset($arrHttp["tagfst"])) $arrHttp["tagfst"]="";
 if (!isset($arrHttp["delimitador"])) $arrHttp["delimitador"]="";
 if (!isset($arrHttp["separa"])) $arrHttp["separa"]="";
 if (!isset($arrHttp["postings"])) $arrHttp["postings"]="ALL";
 if (!isset($arrHttp["Tag"]))$arrHttp["Tag"]="";
 if (!isset($arrHttp["Repetible"]))$arrHttp["Repetible"]="";
+if (isset($arrHttp["prefijo"])) $prefix=$arrHttp["prefijo"]; else $prefix="";
+if (!isset($arrHttp["pref"])) $pref=""; else $pref=$arrHttp["pref"];
 if ($arrHttp["Formato"]=="ifp"){
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"]);
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario"."&tagfst=".substr($arrHttp["tagfst"],3);
+        if ($prefix<>"") $query=$query ."&prefijo=".strtoupper($prefix);
+        if ($pref<>"") $query=$query ."&pref=".strtoupper($pref);
 }else{
 	$arrHttp["Formato"]=stripslashes($arrHttp["Formato"]);
 	if (substr($arrHttp["Formato"],0,1)=="@"){
@@ -60,7 +64,7 @@ if ($arrHttp["Formato"]=="ifp"){
 	}else{
 		$Formato=$arrHttp["Formato"];
 	}
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"])."&postings=".$arrHttp["postings"]."&formato_e=".$Formato;
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($prefix)."&pref=".strtoupper($pref)."&postings=".$arrHttp["postings"]."&formato_e=".$Formato;
 //        echo "query=$query<BR>";
 //        die;
 }
@@ -77,7 +81,7 @@ echo "subC=\"".$arrHttp["subc"]."\"\n";
 echo "Repetible=\""; if (!isset($arrHttp["repetible"])) echo "0"; else echo $arrHttp["repetible"]; echo "\"\n";
 echo "Tag=\"".$arrHttp["Tag"]."\"\n";
 echo "Delimitador=\"".$arrHttp["delimitador"]."\"\n";
-echo "Prefijo=\"".$arrHttp["prefijo"]."\"\n";
+echo "Prefijo=\"".$prefix."\"\n";
 echo "Separa=\"".$arrHttp["separa"]."\"\n";
 if (isset($arrHttp["indice"]))
 	echo "Indice=\"".$arrHttp["indice"]."\"\n";
@@ -115,8 +119,8 @@ echo "function AbrirIndice(Termino){
     	cipar='".$arrHttp["cipar"]."'
     	Separa='".$arrHttp["separa"]."'
 		Tag='".$arrHttp["Tag"]."'
-		Prefijo='".$arrHttp["pref"]."'+Termino
-		Pref='".$arrHttp["pref"]."'
+		Prefijo='".$pref."'+Termino
+		Pref='".$pref."'
 		Subc='". $arrHttp["subc"]."'
 		lang='".$arrHttp["lang"]."'
 		Postings='".$arrHttp["postings"]."'
@@ -145,12 +149,12 @@ echo "function AbrirIndice(Termino){
 	foreach ($contenido as $linea){
 		if (trim($linea)!=""){
 	       	if ($arrHttp["Formato"]=="ifp"){
-	       		if (substr($linea,0,strtoupper(strlen($arrHttp["pref"])))!=strtoupper($arrHttp["pref"])){
+	       		if (substr($linea,0,strtoupper(strlen($pref)))!=strtoupper($pref)){
 	       			break;
 	       		}else{
 	       			$p=explode("|",$linea);
 	       			echo "<option value=\"";
-	       			$l=strlen($arrHttp["pref"]);
+	       			$l=strlen($pref);
 	       			$ter=substr($p[0],$l);
 					echo $ter;
 					echo "\">";
