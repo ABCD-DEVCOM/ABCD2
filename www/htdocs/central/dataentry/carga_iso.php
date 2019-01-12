@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -121,7 +121,7 @@ echo "
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=tipo value=<?php echo $arrHttp["tipo"]?>>
 <input type=hidden name=tablacnv value="">
-<?
+<?php
 $Dir=$db_path."wrk";
 $the_array = Array();
 
