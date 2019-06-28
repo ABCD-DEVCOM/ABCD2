@@ -90,6 +90,7 @@ function wxis_list ( $param )
 
 function wxis_sort ( $param )
 {
+            error_log("sortparams in wxis.php = $param --- \n\r",3,'/var/opt/ABCD/bases/log/error.log');
 	return wxis_document_post(wxis_url("sort.xis",$param));
 }
 

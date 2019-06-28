@@ -10,7 +10,7 @@ include("../lang/acquisitions.php");
 include("../lang/admin.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
-$base_ant=$arrHttp["base"];
+$base_ant=strtoUpper($arrHttp["base"]);
 $arrHttp["db_addto"]=$base_ant;
 $arrHttp["base"]="loanobjects";
 $xtl="";
@@ -41,10 +41,12 @@ if (trim($c)==""){
 	foreach ($contenido as $value){
 		$value=trim($value);
 		if ($value!=""){
-			if ($ixc==0){				$ixc=1;
+			if ($ixc==0){
+				$ixc=1;
 				$v=explode('$$$',$value);
 				$arrHttp["Mfn"]=$v[0];
-				$value=$v[1];			}
+				$value=$v[1];
+			}
 			$inv=explode('|',$value);
 			$dup[$inv[2]]="Y";
 		}
@@ -61,21 +63,31 @@ foreach ($vc as $value){
 		$ix1=strpos($value,'^',$ix);
 		$inv=substr($value,$ix,$ix1-$ix);
 
-		if (!isset($dup[$inv])) {			if ($variables["tag959"]=="")
+		if (!isset($dup[$inv])) {
+			if ($variables["tag959"]=="")
 				$variables["tag959"]=$value;
 			else
 				$variables["tag959"].="\n".$value;
-	       $inventarios.="|".$inv;		};
+	       $inventarios.="|".$inv;
+		};
 	}
-}
+}
+
 Print_page();
 $base="loanobjects";
 $cipar="$base.par";
-if ($variables["tag959"]!="") {	ActualizarRegistro();
+if ($variables["tag959"]!="") {
+	ActualizarRegistro();
 
-	if ($inventarios!=""){		$inven=explode('|',$inventarios);
-		foreach ($inven as $value){			$value=trim($value);
-			if ($value!=""){				$actualizar[$value]=CambiarStatusCopia($arrHttp["base"],$arrHttp["cn"],$value,$arrHttp["copy_status"]);			}		}	}
+	if ($inventarios!=""){
+		$inven=explode('|',$inventarios);
+		foreach ($inven as $value){
+			$value=trim($value);
+			if ($value!=""){
+				$actualizar[$value]=CambiarStatusCopia($arrHttp["base"],$arrHttp["cn"],$value,$arrHttp["copy_status"]);
+			}
+		}
+	}
 }
 
 //GET THE RECORD FROM LOANOBJECTS USING THE CONTROL NUMBER
@@ -88,7 +100,8 @@ include("../common/wxis_llamar.php");
 $old_c=$contenido;
 $ix=0;
 foreach ($old_c as $value){
-    if ($ix==0){    	$t=explode('$$$',$value);
+    if ($ix==0){
+    	$t=explode('$$$',$value);
     	$value=$t[1];
     	$t=explode('|',$value);
     	$ix=1;
@@ -110,10 +123,12 @@ foreach ($fp as $linea) {
 		if (trim($lx)!="")echo "<th>$lx</th>";
 	break;
 }
-foreach ($old_c as $value){	if (trim($value)!=""){
+foreach ($old_c as $value){
+	if (trim($value)!=""){
 		$t=explode("|",$value);
 		echo "<tr><td align=center>";
-		if (isset($t[2])){			 echo $t[2];
+		if (isset($t[2])){
+			 echo $t[2];
 			 //if (isset($dup[$t[2]]))
 			 //	echo "**";
 		}
@@ -139,7 +154,8 @@ echo "</table>
 include("../common/footer.php");
 //=====================================
 
-function CambiarStatusCopia($base,$cn,$inven,$status){global $msgstr,$arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
+function CambiarStatusCopia($base,$cn,$inven,$status){
+global $msgstr,$arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
 	$Expresion="IN_".$inven;
 	$IsisScript= $xWxis."buscar_ingreso.xis";
 	$Pft="v1'|',v10'|',v20/";
@@ -147,7 +163,8 @@ function CambiarStatusCopia($base,$cn,$inven,$status){global $msgstr,$arrHttp,$
 	include("../common/wxis_llamar.php");
 	$Mfn="";
 	foreach ($contenido as $linea){
-		if (trim($linea)!=""){			if (substr($linea,0,6)=="[MFN:]"){
+		if (trim($linea)!=""){
+			if (substr($linea,0,6)=="[MFN:]"){
 				$Mfn=substr($linea,6);
 				break;
             }
@@ -159,7 +176,8 @@ function CambiarStatusCopia($base,$cn,$inven,$status){global $msgstr,$arrHttp,$
 	$IsisScript=$xWxis."actualizar.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&login=".$_SESSION["login"]."&Mfn=$Mfn&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
 	include("../common/wxis_llamar.php");
-	//foreach ($contenido as $value) echo "???$value<br>";}
+	//foreach ($contenido as $value) echo "???$value<br>";
+}
 
 function Print_page(){
 Global $arrHttp,$msgstr,$cn,$db;

@@ -1,0 +1,194 @@
+<IsisScript name="write">
+
+<function name="content">
+	<field action="cgi" tag="32198">type</field>
+	<field action="cgi" tag="32199">content</field>
+	<flow action="jump"><pft>if v32198 <> 'xisis' then 'CONTENT' fi</pft></flow>
+	<field action="export" tag="list" previous="add"><pft>'[32199:1]'</pft></field>
+	<return>*</return>
+	
+	<label>CONTENT</label>
+	<field action="replace" tag="32199"><pft>replace(v32199,'<',s(#,'<'))</pft></field>
+	<field action="replace" tag="32199"><pft>replace(v32199,'>',s('>',#))</pft></field>
+	<field action="replace" tag="32199" split="occ"><pft>v32199</pft></field>
+	
+	<label>AGAIN</label>
+	<field action="delete" tag="list">32201</field>
+	<field action="replace" tag="32201"><pft>v32199[1]</pft></field>
+
+	<flow action="jump"><pft>if size(v32201) = 0 then 'NEXT LINE' fi</pft></flow>
+	<flow action="jump"><pft>if v32201.7 = '<field ' then 'NEW FIELD' fi</pft></flow>
+	<flow action="jump"><pft>if v32201 = '</field>' then 'NEXT LINE' fi</pft></flow>
+	<flow action="jump"><pft>if v32201.5 = '<occ ' then 'SUBFIELD' fi</pft></flow>
+	<flow action="jump"><pft>if v32201 = '<occ>' then 'CONTENT COMING' fi</pft></flow>
+	<flow action="jump"><pft>if a(v32204) then 'NEXT LINE' fi</pft></flow>
+	<flow action="jump"><pft>if v32201 = '</occ>' then 'ADD FIELD' fi</pft></flow>
+
+	<!-- content -->
+	<field action="replace" tag="32203"><pft>v32203,v32201</pft></field>
+	<flow action="jump">NEXT LINE</flow>	
+	
+	<label>NEW FIELD</label>
+	<field action="replace" tag="32202"><pft>f(val(v32201),1,0)</pft></field>
+	<flow action="jump">NEXT LINE</flow>
+	
+	<label>CONTENT COMING</label>
+	<field action="replace" tag="32204">occ</field>
+	<flow action="jump">NEXT LINE</flow>
+
+	<label>ADD FIELD</label>
+	<field action="replace" tag="32221"><pft>v32203,v32211</pft></field>
+	<field action="export" tag="list" previous="add"><pft>'[32221:',v32202,']'</pft></field>
+	<field action="delete" tag="list">32203,32204,32211</field>
+	<flow action="jump">NEXT LINE</flow>
+
+	<label>SUBFIELD</label>
+	<field action="replace" tag="32201"><pft>replace(v32201,'<occ ','')</pft></field>
+	<field action="replace" tag="32201"><pft>replace(v32201,'</occ>','')</pft></field>
+	<field action="replace" tag="32211"><pft>replace(v32201,'" ','^')</pft></field>
+	<field action="replace" tag="32211"><pft>'^',replace(v32211,'="','')</pft></field>
+	<field action="replace" tag="32211"><pft>if right(v32211,1) = '>' then left(v32211,size(v32211) - 1) fi</pft></field>
+	<field action="replace" tag="32212">NEXT LINE</field>
+	<field action="replace" tag="32212"><pft>if right(v32211,1) = '/' then 'ADD FIELD' fi</pft></field>
+	<field action="replace" tag="32211"><pft>if right(v32211,1) = '/' then left(v32211,size(v32211) - 1) fi</pft></field>
+	<field action="replace" tag="32211"><pft>if right(v32211,1) = '^' then left(v32211,size(v32211) - 1) fi</pft></field>
+	<field action="replace" tag="32211"><pft>if right(v32211,1) = '"' then left(v32211,size(v32211) - 1) fi</pft></field>
+	<field action="replace" tag="32204"><pft>if v32212 <> 'ADD FIELD' then 'occ' fi</pft></field>
+	<flow action="jump"><pft>v32212</pft></flow>
+
+	<label>NEXT LINE</label>
+	<field action="delete" tag="32199">1</field>
+	<flow action="jump"><pft>if p(v32199) then 'AGAIN' fi</pft></flow>
+</function>
+
+<function name="error" action="replace" tag="1">
+	<parm name="isisxml table">
+		<pft>
+			'record=error'/
+			'style=fixed'/
+			'1 message'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+	<display></wxis-modules></display>
+	<flow action="exit">0</flow>
+</function>
+
+<section name="write">
+
+	<field action="cgi" tag="5">xml_header</field>
+	<display>
+		<pft>
+			if v5 = 'no' then
+				'Content-type:text/plain'##
+			else
+				'Content-type:text/xml'##
+				'<?xml version="1.0" encoding="ISO-8859-1"?>'/
+			fi
+		</pft>
+	</display>
+
+	<trace>xOn</trace>
+
+	<!--
+	<field action="replace" tag="1"><pft>getenv('PATH_TRANSLATED')</pft></field>
+	<parm name="cipar">
+		<pft>
+			'GIZMO_XML.*=',v1,'gizmo/gizmoXML.*'/
+		</pft>
+	</parm>
+	-->
+	
+	<field action="cgi" tag="2">IsisScript</field>
+	<field action="replace" tag="3"><pft>date</pft></field>
+	<field action="replace" tag="4"><pft>'^d',v3.8,'^t',v3*9.6</pft></field>
+	<display><pft>'<wxis-modules IsisScript="',v2,'" version="0.2">'/</pft></display>
+
+	<do task="update">
+
+		<field action="cgi" tag="2001">database</field>
+		<call name="error"><pft>"missing parameter: database"n2001</pft></call>
+		<parm name="db"><pft>v2001</pft></parm>
+		<parm name="fst"><pft>cat(v2001,'.fst')</pft></parm>
+
+		<field action="cgi" tag="2002">mfn</field>
+		<call name="error"><pft>"missing parameter: mfn"n2002</pft></call>
+		<parm name="mfn"><pft>v2002</pft></parm>
+
+		<field action="cgi" tag="2003">lockid</field>
+		<call name="error"><pft>"missing parameter: lockid"n2003</pft></call>
+		<parm name="lockid"><pft>v2003</pft></parm>
+
+		<field action="cgi" tag="2004">expire</field>
+		<field action="replace" tag="2004"><pft>"18000"n2004</pft></field>
+		<parm name="expire"><pft>v2004</pft></parm>
+
+		<field action="cgi" tag="2029">maxlk</field>
+		<parm name="maxlk"><pft>v2029</pft></parm>
+
+		<field action="define" tag="1101">Isis_Lock</field>
+		<field action="define" tag="1102">Isis_Status</field>
+
+		<parm name="isisxml table">
+			<pft>
+				'1101 Isis_Lock'/
+				'1102 Isis_Status'/
+			</pft>
+		</parm>
+
+		<field action="cgi" tag="2005">content</field>
+		<flow action="jump"><pft>"CANCEL"n2005</pft></flow>
+
+		<update>
+			<proc>d*</proc>
+			<call name="content">*</call>
+			<write>Unlock</write>
+			<field action="replace" tag="2006"><pft>mfn(1)</pft></field>
+			<field action="export" tag="list">1102,2006</field>
+		</update>
+		<flow action="jump">SHOW</flow>
+
+		<label>CANCEL</label>
+		<update>
+			<write>Unlock</write>
+			<field action="replace" tag="2006"><pft>mfn(1)</pft></field>
+			<field action="export" tag="list">1102,2006</field>
+		</update>
+		<flow action="jump">SHOW</flow>
+
+		<label>SHOW</label>
+		<file action="close" type="database"><pft>v2001</pft></file>
+		<parm name="db"><pft>v2001</pft></parm>
+		<field action="cgi" tag="2007">gizmo</field>
+		<field action="replace" tag="2007" split="occ"><pft>(v2007/)</pft></field>
+		<parm name="gizmo"><pft>(v2007/)</pft></parm>
+		<parm name="mfn"><pft>v2006</pft></parm>
+		
+		<update>
+			<display><isisxml>*</isisxml></display>
+		</update>
+
+		<parm name="isisxml table">
+			<pft>
+				'record=write'/
+				'style=fixed'/
+				'4 server'/
+				'4^d date'/
+				'4^t time'/
+				'2001 database'/
+				'2002 mfn'/
+				'2003 lockid'/
+				'2004 expire'/
+				'1102 Isis_Status'/
+			</pft>
+		</parm>
+		<display><isisxml>*</isisxml></display>
+
+	</do>
+
+	<display></wxis-modules></display>
+	
+</section>
+
+</IsisScript>
+

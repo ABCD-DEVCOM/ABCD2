@@ -20,10 +20,19 @@ require_once("./common/ini/config.ini.php");
 //User not logged in System
 if(!isset($_SESSION["identified"]) || $_SESSION["identified"]!=1 ) 
 {
+		if(isset($_POST["field"])){
+	 $p=$_POST["field"];
+	 if(isset($p["selLibrary"])){
+	 $_SESSION["libraryCode"]=$p["selLibrary"];
+	 $_REQUEST["libraryCode"]=$p["selLibrary"];
+	 $_SESSION['centerCode']= $p["selLibrary"];
+	 }
+		}
+
     list($libraryName, $libraryCode) = getAllLibraries();
     $smarty->assign("collectionLibrary",$libraryName);
     $smarty->assign("codesLibrary",$libraryCode);
-  
+	
     //User trying to log-in
     if($_SERVER['REQUEST_METHOD'] == "POST"){
     if(isset($_GET["action"]) && !preg_match("=/=",$_GET["action"]) ) {
@@ -66,6 +75,12 @@ if(!isset($_SESSION["identified"]) || $_SESSION["identified"]!=1 )
         $listRequest = "login";
     }
 }else{
+if(isset($_GET["library"])){
+	 $_SESSION["libraryCode"]=$_GET["library"];
+	 $_REQUEST["libraryCode"]=$_GET["library"];	
+	 $_SESSION['centerCode']= $_GET["library"];
+	}	
+	
 //From here users logged in the system
 
 //User doing logoff
@@ -276,7 +291,7 @@ if ($_GET['action'] == "signoff") {
             if ($listRequest == "facic"){
                 if ($_REQUEST["recid"]){
                     echo "<!-- [request]";
-//                    var_dump($_REQUEST);
+                    var_dump($_REQUEST);
                     echo "[/request] -->";
                     echo "<!-- [recid]".$_REQUEST["recid"]."[/recid] -->";
                     echo "<!-- [mfn]".$thisMfn."[/mfn] -->";
@@ -316,9 +331,9 @@ if ($_GET['action'] == "signoff") {
             }
             if($dataModel != false){
                 //search in Database to show a List(YUI datatable)
-                $smarty->assign("dataSource", $dataModel->getRecords());
+				$smarty->assign("dataSource", $dataModel->getRecords());
                 $smarty->assign("totalRecords", $dataModel->getTotalRecords());
-            }
+			}
             exportTitle($_GET["export"]);
 
             //FACIC
@@ -395,6 +410,7 @@ if ($_GET['action'] == "signoff") {
                     echo "<!-- [mfn]deleted[/mfn] -->";
                     echo '<!-- [action]delete[/action] -->';
                 }
+				
                 if ($_REQUEST["title"] && $_REQUEST['hldg']=='execute'){
                     $hldgModule = new hldgModule($_SESSION['centerCode'],BVS_ROOT_DIR."/".HLDGMODULE, $configurator->getPath2Facic(), $configurator->getPath2Holdings(), $configurator->getPath2Title(), HLDGMODULE_TAG, BVS_DIR."/cgi-bin/", BVS_TEMP_DIR);
                     $call = $hldgModule->execute($_REQUEST["title"], HLDGMODULE_DEBUG);

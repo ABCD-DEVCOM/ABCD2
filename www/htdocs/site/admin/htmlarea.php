@@ -46,7 +46,7 @@ if ( file_exists($xml) ){
 $messageArray = array (
 "es" =>
     array (
-        "title" => "AdministraciÃ³n: ABCD Site",
+        "title" => "Administración: ABCD Site",
         "available" => "Disponible",
         "unavailable" => "Indisponible",
         "exit" => "Salir",
@@ -54,9 +54,9 @@ $messageArray = array (
     ),
 "pt" =>
     array (
-        "title" => "AdministraÃ§Ã£o: ABCD Site",
-        "available" => "DisponÃ­vel",
-        "unavailable" => "IndisponÃ­vel",
+        "title" => "Administração: ABCD Site",
+        "available" => "Disponível",
+        "unavailable" => "Indisponível",
         "exit" => "Sai",
         "save" => "Grava",
     ),
@@ -106,7 +106,7 @@ $message = $messageArray[$lang];
            editor.Height = "400";
         editor.Config["AutoDetectLanguage"] = false ;
         editor.Config["ProcessHTMLEntities"] = false;
-        editor.Config["DefaultLanguage"] = "<?if ($lang =='pt') echo 'pt-br'; else $lang;?>" ;
+        editor.Config["DefaultLanguage"] = "<?php if ($lang =='pt') echo 'pt-br'; else $lang;?>" ;
 
         editor.Config["LinkBrowserURL"] = "<?php echo $admPath?>editor/filemanager/browser/browser.html?Connector=connectors/php/connector.php";
         editor.Config["LinkUploadURL"]  = "<?php echo $admPath?>editor/filemanager/upload/php/upload.php?Type=File";
@@ -142,14 +142,14 @@ $message = $messageArray[$lang];
             <hr size="1" noshade="" />
             <table width="100%" border="0" cellpadding="4" cellspacing="0" class="bar">
                 <tr valign="top">
-                    <td align="left" valign="middle"><?php echo $page?> <b>|</b>
+                    <td align="left" valign="middle"><?php echo $page; ?> <b>|</b>
                         <select name="available" size="1">
-                            <option value="yes"><?php echo $message["available"]?></option>
-                            <option value="no"><?php echo $message["unavailable"]?></option>
+                            <option value="yes"><?php echo $message["available"]; ?></option>
+                            <option value="no"><?php echo $message["unavailable"]; ?></option>
                         </select>
                         <b>|</b>
                         <a href="javascript:formPage.submit();">
-                            <?php echo $message["save"]?>
+                            <?php echo $message["save"]; ?>
                         </a>
                     </td>
                     <td align="right" valign="middle">

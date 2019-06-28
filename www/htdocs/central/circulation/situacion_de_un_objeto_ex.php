@@ -61,8 +61,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$config_date_format;
     	foreach ($fp as $value) $Pft.=$value." ";
     }
     if ($Pft==""){
-    	$Pft="(if P(v959) then v1[1]'|'v10[1]'|'v959^i,'|',v959^l,'|',v959^b,'|',v959^v,'|',v959^t,'|',v959^o,'| ',ref(['trans']l(['trans'],'TR_P_'v959^i),v20, ref(['users']l(['users']'CO_'v20),' - 'v30),'|',";
-//    	$Pft="(v959";
+    	$Pft="(if P(v959) then v1[1]'|'v10[1]'|'v959^i,'|',v959^l,'|',v959^b,'|',v959^v,'|',v959^t,'|',v959^o,'| ',
+        ref(['trans']l(['trans'],'TR_P_'v959^i),v20, ref(['users']l(['users']'CO_'v20),' - 'v30),'|',";
+//    	//$Pft="(v959";
 
     	switch (substr($config_date_format,0,2)){
 		    case "DD":

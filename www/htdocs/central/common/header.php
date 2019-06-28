@@ -9,7 +9,6 @@
 		<meta http-equiv="pragma" content="no-cache" />
 <?php
 	if (isset($unicode) and $unicode=="utf8"){
-		//echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1256\" />";
 		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
 	}else{
 		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />";

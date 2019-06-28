@@ -158,7 +158,7 @@
 				<td></td>
 			</tr>
 			<xsl:apply-templates select="directory">
-				<xsl:sort select="@*[name() = $column]" data-type="{$data-type}" order="{$order}"/>
+<!--				<xsl:sort select="@*[name() = $column]" data-type="{$data-type}" order="{$order}"/-->
 			</xsl:apply-templates>
 			<xsl:apply-templates select="file">
 				<xsl:sort select="@*[name() = $column]" data-type="{$data-type}" order="{$order}"/>

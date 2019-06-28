@@ -1,0 +1,180 @@
+/*
+
+RANGE_BEGIN = ano corrente nao completo E anterior completo
+RANGE_END = ano corrente nao completo E proximo completo
+1		2		3		4	5			6		7
+,mfn,'|',v1,'|',v2,'|',v3,'|tipo|RANGE_BEGIN|FIRST_OF_THE_YEAR',#
+8		9		10		11	12		13		14
+,mfn,'|',v1,'|',v2,'|',v3,'|tipo|RANGE_END|LAST_OF_THE_YEAR',#
+
+v1 e v8 = mfn
+v2 e v9 = ano
+v3 e v10 = vol
+v4 e v11 = num
+v5 e vDoze = tipo
+v6 e v13 = range
+v7 e v14 = position in year
+
+*/
+
+/* ano 
+#,'<!-- ',v2,'-',v9,' ',v3,'(',v10,')','-',v11,'(',v12,')' ,'-->'/,
+*/
+
+,if size(v5)>0 then 
+	,if ref(mfn-1,v15)<>'SPECIALS' then '{a',v9970,'{',    fi
+	,if ref(mfn-1,v5)<>'' then '; ', fi
+	
+	v2,' ',v3,| (|v4|)|,| |v5,
+,else 
+	,if size(v1)>0 then
+		,if v1='' and ref(mfn+1,v15)='SPECIALS' then
+			'{a',v9970,'{',  
+		,else
+
+			/* ano */
+			,if mfn=1 then
+				,v2,if v2<>v9 then |-|v9 fi
+			,else
+				,if s(v2)<>ref(mfn-1,s(v9))then
+					if ref(mfn-1,v1)<>'' then '; ',fi,
+					v2,if v2<>v9 then |-|v9 fi
+				,else
+					
+				,fi
+			,fi,
+
+			/* VOLUME 1 */
+			,proc('a5001{',
+			,if mfn=1 or s(v2)<>ref(mfn-1,s(v9)) then
+				,| |v3,
+			,else
+				/* anos anteior e corrente sao diferentes */
+				,if  s(v2)=ref(mfn-1,s(v9)) then
+					,if s(v3)<>ref(mfn-1,s(v10)) then
+						/* volumes anteior e corrente sao diferentes */
+						,if ref(mfn-1,v7)<>'' and ref(mfn-1,v14)<>'' then
+							,if v7<>'' and v14<>'' then
+								,'-',/* volumes completos */
+							,else
+								'; '
+							,fi
+						,else
+							,if v7<>'' and v14<>'' then
+								,',',/* volumes completos */
+							,else
+								'; '
+							,fi
+						,fi
+						v3
+					,fi
+				,fi
+			,fi,
+			,'{'),
+			v5001
+			,proc('a5012{',
+			
+				/* NUMERO */
+				,if s(v2,v3)=s(v9,v10) then
+					
+				,else
+					,if v2=v9 then
+
+						,if v3<>v10 then
+							,if v7<>'' and v14<>'' then
+								,,/* volumes completos */
+							,else
+								if v7<>'' then
+									 /* primeiro completo */
+								,else
+									,'(',v7,')', /* segundo completo */
+								,fi
+							,fi
+						,fi
+					,fi
+				,fi
+
+				
+			,'{'),
+			,v5012,
+			if p(v5001) and size(v5001)>0 then
+				/* VOLUME 2 */
+				,if v2=v9 then 
+					,if v3<>v10 then
+
+						,if v7<>'' and v14<>'' then
+							,'-',/* volumes completos */
+						,else
+							if v7<>'' then
+								'; ' /* primeiro completo */
+							,else
+								',' /* segundo completo */
+							,fi
+						,fi
+						,v10,		
+
+					,fi			
+				,else
+					,if v3<>v10 then
+						,if v7<>'' and v14<>'' then
+							,'-',/* volumes completos */
+						,else
+							if v7<>'' then
+								'; ' /* primeiro completo */
+							,else
+								',' /* segundo completo */
+							,fi
+						,fi
+						,v10,		
+
+					,fi		
+				,fi,
+			,fi
+			,proc('a5002{',
+			
+				/* NUMERO */
+				,if s(v2,v3)=s(v9,v10) then
+					,if v7<>'' and v14<>'' then
+
+					,else
+						,if s(v2,v3)=ref(mfn-1,s(v9,v10)) then
+							',',
+
+						,else
+							,'(',
+						,fi
+						,v4,
+						,if v4<>v11 and v11<>'' then |-|v11 fi,
+						,if s(v2,v3)=ref(mfn+1,s(v9,v10)) then
+						,else
+							,')',
+						,fi
+					,fi
+				,else
+					,if v2=v9 then
+
+						,if v3<>v10 then
+							,if v7<>'' and v14<>'' then
+								,,/* volumes completos */
+							,else
+								if v7<>'' then
+									'(',v11,')' /* primeiro completo */
+								,else
+									,'', /* segundo completo */
+								,fi
+							,fi
+						,fi
+					,else
+						
+					,fi
+				,fi
+
+				
+			,'{'),
+			v5002
+			,if a(v5002) then 
+				,| |v12
+			,fi
+		,fi
+	,fi
+,fi

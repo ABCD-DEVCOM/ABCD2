@@ -60,14 +60,15 @@
 			<parm name="reverse"><pft>v2006</pft></parm>
 			
 			<field action="cgi" tag="2008">fieldsort</field>		
-						
 			<field action=define tag=1001>Isis_Current</field>
 			<field action=define tag=1002>Isis_Total</field>
 			<field action=define tag=1022>Isis_Keys</field>
 						
 			<loop>
 				<field action=import tag="list">2001,2002,2003,2004,2005,2008</field>
-				<list action="load" type="sort"><pft>f(val(v920),10,0),'^n',mfn(0)</pft></list>	
+				<list action="load" type="sort"><pft>f(val(v920),10,0),'^n',mfn(0)</pft></list>
+            			<!--display><pft>'FIELDSORT='v2008</pft></display-->
+
 				<!--display><pft>v`,f(val(v2008),1,0),`,'^n',mfn(0)</pft></display-->
 			</loop>
 			<field action=export tag="list">2001,2002,2003,2004,2005,2008</field>

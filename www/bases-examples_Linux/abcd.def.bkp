@@ -1,0 +1,8 @@
+LEGEND1=2016
+LEGEND2=ONLY FOR TESTING - NOT FOR DISTRIBUTION
+URL1=http://www.abcdwiki.net
+URL2=http://www.icci.org
+UNICODE=1
+DIRTREE_EXT=*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,
+MULTIPLE_DB_FORMATS=Y
+VERSION=2.0f

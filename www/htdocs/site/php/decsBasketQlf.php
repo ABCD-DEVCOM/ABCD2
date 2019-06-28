@@ -4,7 +4,7 @@ session_start();
 $termId = $_POST['term'];
 $qualifierList = implode(",",$_POST['ql']);
 
-$sessionTerm = split("\|\|\|",$_SESSION["terms"][$termId]);
+$sessionTerm = explode("\",$_SESSION["terms"][$termId]);
 
 /* partes do termo armazenados na sessao */
 $id = $sessionTerm[0];

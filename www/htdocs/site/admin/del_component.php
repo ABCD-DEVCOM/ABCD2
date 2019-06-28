@@ -15,16 +15,16 @@ $fileHtml= $localPath["html"] . $checked['id'] . ".html";
 $messageArray = array (
     "es" =>
         array (
-            "title" => "AdministraciÃ³n: Biblioteca Virtual en Salud",
-            "exist" => "AtenciÃ³n esta operaciÃ³n irÃ¡ borrar el contenido deste componente de laa BVS.",
+            "title" => "Administración: Biblioteca Virtual en Salud",
+            "exist" => "Atención esta operación irá borrar el contenido deste componente de laa BVS.",
             "fail"  => "No fue posible borrar el componente, verifique los permisos del archivo: ",
 
         ),
     "pt" =>
         array (
-            "title" => "AdministraÃ§Ã£o: Biblioteca Virtual em SaÃºde",
-            "exist" => "AtenÃ§Ã£o esta operaÃ§Ã£o irÃ¡ apagar o conteÃºdo deste componente da BVS.",
-            "fail"  => "NÃ£o foi possivel apagar o componente, verifique as permissÃµes do arquivo: ",
+            "title" => "Administração: Biblioteca Virtual em Saúde",
+            "exist" => "Atenção esta operação irá apagar o conteúdo deste componente da BVS.",
+            "fail"  => "Não foi possivel apagar o componente, verifique as permissões do arquivo: ",
         ),
     "en" =>
         array (
@@ -60,15 +60,15 @@ if ( $action == "delete" ) {
         <script language="JavaScript">
             var listValues = opener.listValues;
             function initialCheck(){
-                <? if ( $fileXml != "" && file_exists($fileXml) ) {?>
+                <?php if ( $fileXml != "" && file_exists($fileXml) ) {?>
                     if (parseInt(navigator.appVersion)>3){
                           top.resizeTo(470,510);
                         top.moveTo(350,100);
                     }
-                <? } else {?>
+                <?php } else {?>
                     del( opener.document.formPage.tree );
                     top.close();
-                <? } ?>
+                <?php } ?>
             }
         </script>
 
@@ -82,7 +82,7 @@ if ( $action == "delete" ) {
         </form>
 
         <div class="container">
-            <? if ( file_exists($fileXml) ){ ?>
+            <?php if ( file_exists($fileXml) ){ ?>
                 <div class="confirm">
                     <b><?php echo $messages["exist"]?></b><br/>
                     <div align="center">
@@ -92,14 +92,14 @@ if ( $action == "delete" ) {
                 </div>
                 <div class="middle">
                     <div class="secondColumn">
-                        <?
+                        <?php
                             if ( file_exists($fileHtml) ){
                                 print getDoc($fileHtml);
                             }
                         ?>
                     </div>
                 </div>
-            <? } ?>
+            <?php } ?>
         </div>
 
     </body>

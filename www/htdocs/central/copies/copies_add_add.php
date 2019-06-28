@@ -116,6 +116,7 @@ global $msgstr,$arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
 		$ValorCapturado=urlencode($ValorCapturado);
 		$IsisScript=$xWxis."actualizar.xis";
 		$query = "&base=copies&cipar=$db_path"."par/copies.par&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado;
+
 		include("../common/wxis_llamar.php");
 		foreach ($contenido as $linea){
 			if (substr($linea,0,4)=="MFN:") {

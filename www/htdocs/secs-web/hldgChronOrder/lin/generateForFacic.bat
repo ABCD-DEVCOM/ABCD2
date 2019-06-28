@@ -31,7 +31,7 @@ then
 
 	$THIS_PATH/lin/registerTime.bat KEY generateForFacic_CHECK
 	$THIS_CISIS/mx $DB lw=9999 "pft=@$THIS_PATH/checkv913.pft" now >> $PROC_FILE_CHECK
-	if [ "@$DEBUG" == "@yes" ]
+	if [ "@$DEBUG" = "@yes" ]
 	then
 		$THIS_PATH/lin/registerTime.bat KEY generateForFacic_DEBUG
 		$THIS_CISIS/mx $DB lw=9999 "pft=@$THIS_PATH/present.pft" now >> $PROC_FILE_CHECK

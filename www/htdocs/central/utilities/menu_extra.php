@@ -3,8 +3,16 @@ session_start();
 $Permiso=$_SESSION["permiso"];
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
-$db=$arrHttp["base"];
+if (!isset($arrHttp["base"])) $arrHttp["base"]="";
 
+if (strpos($arrHttp["base"],"|")===false){
+
+}   else{
+		$ix=explode('|',$arrHttp["base"]);
+		$arrHttp["base"]=$ix[0];
+}
+$db=$arrHttp["base"];
+echo "base=$db<BR>";
 
 include ("../config.php");
 $lang=$_SESSION["lang"];
@@ -95,7 +103,7 @@ function EnviarForma(Opcion,Mensaje){
 				document.admin.target=""				
 				break;				
 				
-				case "advanced2":    //Marino ISO load
+			case "isoimport":    //Marino ISO load
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -103,7 +111,7 @@ function EnviarForma(Opcion,Mensaje){
 				document.admin.target=""
 				
 				break;
-case "isoexport":    //Marino ISO export
+                        case "isoexport":    //Marino ISO export
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -111,7 +119,7 @@ case "isoexport":    //Marino ISO export
 				document.admin.target=""
 				
 				break;
-case "importdoc":    //Marino doc import
+                        case "importdoc":    //Marino doc import
 				
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -166,7 +174,7 @@ case "cleandb":    //Marino clean DB
 				document.admin.target=""
 				
 				break;
-				case "docbatchimport":     //Marcos docbatchimport
+				case "docbatchimport":     //EdS docbatchimport
 				//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
@@ -174,6 +182,14 @@ case "cleandb":    //Marino clean DB
 				document.admin.target=""
 				break;
 				
+				case "msrt":     //sort database
+				//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
+				document.admin.base.value=base
+				document.admin.cipar.value=base+".par"
+				document.admin.action="../utilities/msrt.php"
+				document.admin.target=""
+				break;
+
 				case "dirtree": //EXPLORE DATABASE DIRECTORY
 				switch (Mensaje){
 					case "par":
@@ -249,13 +265,15 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mx_based.php";
                         and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {
                         ?>
 			<li><a href='Javascript:EnviarForma("docbatchimport","<?php echo $msgstr["docbatchimport_mx"]?>")'><?php echo $msgstr["docbatchimport_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("msrt","<?php echo 'msrt'?>")'><?php echo 'sort database'?></a></li>
+
 			<li><a href='Javascript:EnviarForma("importdoc","<?php echo "Import Document"?>")'><?php echo "Upload/Import Document"?></a></li>
                         <?php }?>
 			<li><a href='Javascript:EnviarForma("addloanobj","<?php echo $msgstr["addLOfromDB_mx"]?>")'><?php echo $msgstr["addLOfromDB_mx"]?></a></li>
 			<li><a href='Javascript:EnviarForma("addloanobjectcopies","<?php echo $msgstr["addLOwithoCP_mx"]?>")'><?php echo $msgstr["addLOwithoCP_mx"]?></a></li>          
 			<li><a href='Javascript:EnviarForma("addcopiesdatabase","<?php echo $msgstr["addCPfromDB_mx"]?>")'><?php echo $msgstr["addCPfromDB_mx"]?></a></li> 			
-			<li><a href='Javascript:EnviarForma("advanced2","<?php echo "ImportISO MX"?>")'><?php echo "Import ISO with Visual MX"?></a></li>
-			<li><a href='Javascript:EnviarForma("isoexport","<?php echo "ExportISO MX"?>")'><?php echo "Export ISO with Visual MX"?></a></li>
+			<li><a href='Javascript:EnviarForma("isoimport","<?php echo "ImportISO with mx"?>")'><?php echo "Import ISO with Visual MX"?></a></li>
+			<li><a href='Javascript:EnviarForma("isoexport","<?php echo "ExportISO with mx"?>")'><?php echo "Export ISO with Visual MX"?></a></li>
 			<li><a href='Javascript:EnviarForma("cleandb","<?php echo "Clean DB"?>")'><?php echo "Clean/Compact DB"?></a></li>
                         <?php
 			if ($arrHttp["base"]=="loanobjects"){

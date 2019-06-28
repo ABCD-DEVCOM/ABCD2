@@ -1,0 +1,1 @@
+mx dcdspace fst=@dcdspace.fst uctab=../../isisuc.tab actab=../../isisac.tab fullinv=dcdspace -all now tell=100

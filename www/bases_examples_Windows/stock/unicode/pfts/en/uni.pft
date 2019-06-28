@@ -1,0 +1,8 @@
+'<table border=0 width=100%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>EN</b></td><td width=80% valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>AM</b></td><td width=80% valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>AR_EN</b></td><td width=80% valign=top><font face=arial size=2>'v3+|<br>|,'</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>AR</b></td><td width=80% valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>CY</b></td><td width=80% valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>SA</b></td><td width=80% valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+'</table><p>'

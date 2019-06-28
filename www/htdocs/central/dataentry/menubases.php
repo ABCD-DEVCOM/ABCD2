@@ -164,22 +164,31 @@ function CambiarLenguaje(){
 </script>
 </head>
 <body>
+<?php //echo "Session=" ; var_dump($_SESSION);
+?>
 <form name=OpcionesMenu>
 <input type=hidden name=base value="">
 <input type=hidden name=cipar value="">
 <input type=hidden name=marc value="">
 <input type=hidden name=tlit value="">
 <input type=hidden name=nreg value="">
+
 <div class="heading"> &nbsp;
-	<div class="institutionalInfo">
-		<h1><img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../images/logoabcd.jpg";
-					  ?>
-					  ><?php echo $institution_name?></h1>
+<?php include("../common/institutional_info.php"); ?>
+<!--	<div class="institutionalInfo">
+		<h1>
+                <img src=
+                <?php
+                if (isset($logo))
+		   echo $logo;
+		else
+		    echo "../images/logoabcd.jpg";
+		?>
+		> &nbsp; &nbsp;
+                <?php echo $institution_name?>
+                </h1>
 	</div>
-	<div class="userInfo">
+-->	<div class="userInfo">
 		<span><?php echo $_SESSION["nombre"]?></span>,
 		<?php  $dd=explode("/",$db_path);
                if (isset($dd[count($dd)-2])){

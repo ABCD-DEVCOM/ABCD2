@@ -2,7 +2,6 @@
 
   //SOAP request as RAW data
 //  $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
-//  $HTTP_RAW_POST_DATA = $server->service(file_get_contents("php://input") ) ;
 //echo "HTTP_RAW_POST =". $HTTP_RAW_POST_DATA. "<BR>";
   //Parse SOAP request using normal PHP parser.
   $post_data = trim(file_get_contents("php://input"));

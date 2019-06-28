@@ -393,7 +393,7 @@ foreach ($arr_mfn as $Mfn){
         	}
         	echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2></td>\n<td bgcolor=white>";
 			if ($Actualizar=="S"){
-				echo " <b>OK!</b>";
+				echo " <b>OK!!!</b>";
 				CambiarCampo($Nreg,$ValorCapturado,$Tag);
 			}
 			echo "</td>";
@@ -414,7 +414,7 @@ foreach ($arr_mfn as $Mfn){
 	  							$ValorCapturado.="a".$Tag."²" .$cont."²\n";
 						}else{
 							echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2>".$cont."</td>\n<td bgcolor=white>";
-							echo " <b>OK!</b>";
+							echo " <b>OK!!!</b>";
 							$Actualizar="S";
 							break;
 						}
@@ -432,7 +432,7 @@ foreach ($arr_mfn as $Mfn){
 					$ValorCapturado.="a".$Tag."²" .$cont."²\n";
 				}else{
 					echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2>".$cont."</td>\n<td bgcolor=white>";
-					echo " <b>OK!</b>";
+					echo " <b>OK!!!</b>";
 					$Actualizar="S";
 					break;
 				}
@@ -443,7 +443,7 @@ foreach ($arr_mfn as $Mfn){
 			CambiarCampo($Nreg,$ValorCapturado,$Tag);
 		}else{
 			echo "<tr><td bgcolor=white>$Nreg</td>";
-			echo "<td bgcolor=white>No change applied</td>" ;
+			echo "<td bgcolor=white>No se pudo realizar el cambio</td>" ;
 		}
 		//if ($arrHttp["Opcion"]=='buscar') $tope=$hasta;
 		flush();

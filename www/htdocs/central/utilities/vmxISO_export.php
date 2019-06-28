@@ -12,8 +12,10 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
-
+echo "arrHttp=";
+var_dump($arrHttp);
 $base=$arrHttp["base"];
+if ($base=="") echo "base not defined !<BR>";
 $converter_path=$cisis_path;
 
 include("../common/institutional_info.php");

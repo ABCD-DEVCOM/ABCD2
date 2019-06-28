@@ -28,8 +28,10 @@ if ( $check_login ){
 }
 
 $xmlContent = BVSDocXml("root",$checked['xml']);
-
+//$_REQUEST['debug']=1;
 if ( isset($_REQUEST['debug']) ){
+//echo ' debug !';
+//var_dump($xsl_params);
     debug($_REQUEST['debug']);
 }
 
@@ -81,11 +83,12 @@ if ( isset($xslSave) )
 
 $xslTransform = SITE_PATH . $checked['xsl'];
 
-
 if ( $debug == "XSL" ) { die($xslContent); }
+if ( $debug == "XML" ) { die($xmlContent); }
 
 if ( isset($checked['xsl']) ){
     print(processTransformation($xmlContent,$xslTransform,$xsl_params) );
+//echo "xmlRoot ok!"; var_dump($xsl_params); die;
 } else {
     print($xmlContent);
 }

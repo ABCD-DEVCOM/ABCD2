@@ -16,12 +16,12 @@ include ("../lang/statistics.php");
 if (strpos($arrHttp["base"],"|")===false){
 
 }   else{
-//		$ix=strpos($arrHttp["base"],'|');
-$dbase=explode("|",$arrHttp["base"]);
-$arrHttp["base"]=$dbase[0];
+//		$ix=strpos($arrHttp["base"],'^b');
 //		$arrHttp["base"]=substr($arrHttp["base"],2,$ix-2);
-//                echo "base=". $dbasename. "<BR>";
-//$arrHttp["base"] = $dbasename;
+                $basename=explode('|',$arrHttp["base"]);
+//                vardump($basename); die;
+                $arrHttp["base"] = $basename[0];
+                echo "base=". $arrHttp["base"]. "<BR>"; // die;
 }
 if (!isset($arrHttp["Opcion"]))$arrHttp["Opcion"]="";
 
@@ -32,9 +32,7 @@ else
 
 // SE LEE EL MÁXIMO MFN DE LA BASE DE DATOS
 $IsisScript=$xWxis."administrar.xis";
-//echo "IsisScript=$IsisScript<BR>";
 $query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
-//$query = "&base=".$dbasename . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -253,8 +251,7 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-//<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
-<?php echo $msgstr["stats"].": ".$dbasename?>
+<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
 	</div>
 
 	<div class="actions">

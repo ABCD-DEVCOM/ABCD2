@@ -9,7 +9,7 @@ if ( isset($HTTP_HOST) )
 
 
 $wxis_host = $_SERVER["HTTP_HOST"];
-$wxis_action = "/cgi-bin/ansi/wxis.exe/bvs-mod/wxis-modules/";
+$wxis_action = "/cgi-bin/ansi/wxis/bvs-mod/wxis-modules/";
 
 
 function wxis_document_post( $url, $content = "" )
@@ -64,7 +64,7 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace("<parameters>", "", $param);
 	$param = str_replace("</parameters>", "", $param);
 	$param = str_replace(">", "=", $param);
-	$paramSplited = split("<",$param);
+	$paramSplited = explode("<",$param);
 	reset($paramSplited);
 	while ( list($key, $value) = each($paramSplited) )
 	{

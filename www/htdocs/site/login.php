@@ -131,7 +131,7 @@ if (http.readyState == 4)
 <body>
 	<div class="heading">
 		<div class="institutionalInfo">
-			<h1><img src=../central/images/logoabcd.jpg >
+			<h1><img src=../central/images/logoabcd.jpg height=33 width=22>      &nbsp; &nbsp;
 			<?php echo $institution_name?></h1>
 		</div>
 		<div class="userInfo"></div>

@@ -3,6 +3,7 @@ global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
 session_start();
 include("get_post.php");
+//echo "arrHttp_dbpath=". $arrHttp["db_path"]."<BR>";
 if (isset($arrHttp["db_path"]))
 	$_SESSION["DATABASE_DIR"]=$arrHttp["db_path"];
 require_once ("../config.php");
@@ -36,8 +37,9 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 		$pass=md5($pass);
 	}
 	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
+//        echo "query=$query<BR>";die;
 	include("wxis_llamar.php");
-
+//echo " contenido=" ; var_dump($contenido);
 	 foreach ($contenido as $linea){
 
 	 	if ($ic==-1){
@@ -62,6 +64,7 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 		}
 
 	}
+//echo " llavepft=$llave_pft<BR>" ; die;
 	return $llave_pft;
 
 }
@@ -71,6 +74,8 @@ function VerificarUsuario(){
 	
   Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password;
  	$llave=LeerRegistro();
+//echo " llave=" ; var_dump($llave); //die;
+
  	if ($llave!=""){
   		$res=explode('|',$llave);
   		$userid=$res[0];
@@ -343,11 +348,12 @@ $query="";
 
 
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>";
-
-if (isset($arrHttp["newindow"]))
-	$_SESSION["newindow"]="Y";
-else
-	if (!isset($arrHttp["reinicio"])) unset($_SESSION["newindow"]);
+if (isset($arrHttp["base"]))
+  $_SESSION["base"]=$arrHttp["base"] ;
+else $_SESSION["base"]="acces";
+$base=$_SESSION["base"];
+//echo 'base='.$base;
+//die;
 if (isset($arrHttp["lang"])){
 //if substr($arrHttp["lang"],1,9)="%EF%BB%BF" {$arrHttp["lang"]=substr($arrHttp["lang"],10,2);}
 
@@ -376,6 +382,7 @@ include("../lang/acquisitions.php");
 		$_SESSION["login"]=$arrHttp["login"];
 		$_SESSION["password"]=$arrHttp["password"];
 		$_SESSION["nombre"]=$nombre;
+//echo "Session=" ; var_dump($_SESSION); die;
 
 	}
 	if (!isset($_SESSION["permiso"])){

@@ -141,7 +141,7 @@ include("../common/get_post.php");
 					putenv('QUERY_STRING='.$query);
 					$contenido="";
 					if (stristr($OS,"win")==false){
-						exec("./wxis.exe IsisScript=".$script,$contenido);
+						exec("./wxis IsisScript=".$script,$contenido);
 					}else{
 						exec("wxis.exe IsisScript=".$script,$contenido);
 					}

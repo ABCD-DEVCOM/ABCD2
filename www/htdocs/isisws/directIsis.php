@@ -60,6 +60,8 @@ function IsisObtainUniqueId($parametros)
 }
 function IsisSearchSort($parametros)
 {
+            error_log("sortparams in directIsis.php = $parametros --- \n\r",3,'/var/opt/ABCD/bases/log/error.log');
+
 	return wxis_sort ( $parametros );
 }
 

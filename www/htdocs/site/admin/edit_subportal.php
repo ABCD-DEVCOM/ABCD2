@@ -10,8 +10,8 @@ $items = count($xml->item);
 $messageArray = array (
 "es" =>
     array (
-        "title" => "AdministraciÃ³n: Biblioteca Virtual en Salud",
-        "add" => "AÃ±adir",
+        "title" => "Administración: Biblioteca Virtual en Salud",
+        "add" => "Añadir",
         "exit" => "Salir",
         "remove" => "Borrar",
         "rename" => "Renomear",
@@ -22,7 +22,7 @@ $messageArray = array (
     ),
 "pt" =>
     array (
-        "title" => "AdministraÃ§Ã£o: Biblioteca Virtual em SaÃºde",
+        "title" => "Administração: Biblioteca Virtual em Saúde",
         "add" => "Adicionar",
         "exit" => "Sair",
         "remove" => "Remover",
@@ -64,14 +64,14 @@ $message = $messageArray[$lang];
     </head>
     <body>
         <span class="identification">
-            <center><?php echo$message['title']?></center>
+            <center><?php echo $message['title']?></center>
         </span>
         <hr size="1" noshade=""/>
         <table width="100%" border="0" cellpadding="4" cellspacing="0" class="bar">
             <tr valign="top">
-                <td align="left" valign="middle"><?php echo$message['subportals']?></td>
+                <td align="left" valign="middle"><?php echo $message['subportals']?></td>
                 <td align="right" valign="middle">
-                    <a href="../php/xmlRoot.php?xml=xml/<?php echo$lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?php echo$lang?>" target="_top"><?php echo$message["exit"]?></a>
+                    <a href="../php/xmlRoot.php?xml=xml/<?php echo $lang?>/adm.xml&xsl=xsl/adm/menu.xsl&lang=<?php echo $lang?>" target="_top"><?php echo $message["exit"]?></a>
                 </td>
             </tr>
         </table>
@@ -79,13 +79,13 @@ $message = $messageArray[$lang];
         <br/>
 
         <form name="newSubportal" action="manage_subportal.php" method="POST">
-            <input type="hidden" name="lang" value="<?php echo$checked['lang']?>"/>
+            <input type="hidden" name="lang" value="<?php echo $checked['lang']?>"/>
             <table width="100%" class="tree-edit">
                 <tr valign="top">
                     <td>
                         <br/>
                         <ul>
-                            <li><?php echo$message['add'].' '.$message['subportal']?><br/>
+                            <li><?php echo $message['add'].' '.$message['subportal']?><br/>
                                 <input type="text" name="addname" style="width:250px" id="newsubportal"/>
                                 <button type="submit" name="action" value="add">+</button>
                             </li>
@@ -96,22 +96,22 @@ $message = $messageArray[$lang];
                     <td>
                         <br/>
                         <ul>
-                            <li><?php echo$message['subportals list']?><br/>
+                            <li><?php echo $message['subportals list']?><br/>
                                 <select name="subportal" size="15" style="width:325px">
-                                    <?for ($i = 0; $i < $items; $i++){?>
-                                    <option value="<?php echo(String) $xml->item[$i]['id']?>">
-                                        <?php echo utf8_decode( (String) $xml->item[$i] )?>
+                                    <?php for ($i = 0; $i < $items; $i++){ ?>
+                                    <option value="<?php echo (String) $xml->item[$i]['id']; ?>">
+                                        <?php echo  utf8_decode( (String) $xml->item[$i] ); ?>
                                     </option>
-                                    <?}?>
+                                    <?php } ?>
                                 </select>
                             </li>
                             <li>
-                                <span style="width:11em; display:block; float:left"><?php echo$message['rename']?> <?php echo$message['selected']?></span>
+                                <span style="width:11em; display:block; float:left"><?php echo $message['rename']?> <?php echo $message['selected']?></span>
                                 <input type="text" name="rename" value="" id="rensubportal"/>
                                 <button type="submit" name="action" value="ren">ok</button>
                             </li>
                             <li>
-                                <span style="width: 11em; display:block;float:left"><?php echo $message['remove']?> $message['selected']?></span>
+                                <span style="width: 11em; display:block;float:left"><?php echo $message['remove']?> <?php echo $message['selected']?></span>
                                 <button type="submit" name="action" value="del">-</button>
                             </li>
                         </ul>

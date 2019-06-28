@@ -1,6 +1,6 @@
-<?php echo '<?xml version="1.0" encoding="iso-8859-1"?>'?>
+<?php echo '<?xml version="1.0" encoding="iso-8859-1"?>';?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo $lang?>" xml:lang="<?php echo $lang?>">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo $lang; ?>" xml:lang="<?php echo $lang; ?>">
     <head>
         <title>BVS-Site Admin</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
@@ -8,7 +8,7 @@
         <script language="javascript">
             function updateView(){
                 var url = document.getElementById("buffer").value;
-                url = url.replace(/%HTTP_HOST%/,"<?php echo $_SERVER["HTTP_HOST"]?>");
+                url = url.replace(/%HTTP_HOST%/,"<?php echo $_SERVER["HTTP_HOST"]; ?>");
                 window.status = url;
                 rss_preview.location = url;
             }
@@ -22,7 +22,7 @@
             <br/>
             <div class="bar">
                 <h3>Error</h3>
-                <div class="error"><?php echo  $php_errormsg?></div>
+                <div class="error"><?php echo  $php_errormsg; ?></div>
                 <br/>
                 <input type="button" value="Back" onclick="javascript:history.back()"/>
             </div>

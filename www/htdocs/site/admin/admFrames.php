@@ -11,9 +11,15 @@
 
 	$href = $def['DIRECTORY'] . "php/xmlRoot.php?" . $cgiText;
 ?>
-
-<html>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="<?php echo isset($lang) ? $lang : 'en'; ?>" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="<?php echo isset($lang) ? $lang : 'en'; ?>" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="<?php echo isset($lang) ? $lang : 'en'; ?>">
+<!--<![endif]-->
+<!-- Head BEGIN -->
 <head>
+	<meta charset="utf-8">
 	<title>ABCD-Site Admin</title>
 </head>
 <!-- frames -->

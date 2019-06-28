@@ -1,0 +1,115 @@
+<IsisScript name="delete">
+
+<function name="error" action="replace" tag="1">
+	<parm name="isisxml table">
+		<pft>
+			'record=error'/
+			'style=fixed'/
+			'1 message'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+	<display></wxis-modules></display>
+	<flow action="exit">0</flow>
+</function>
+
+<section name="delete">
+
+	<field action="cgi" tag="5">xml_header</field>
+	<display>
+		<pft>
+			if v5 = 'no' then
+				'Content-type:text/plain'##
+			else
+				'Content-type:text/xml'##
+				'<?xml version="1.0" encoding="ISO-8859-1"?>'/
+			fi
+		</pft>
+	</display>
+	<trace>xOn</trace>
+
+	<!--
+	<field action="replace" tag="1"><pft>getenv('PATH_TRANSLATED')</pft></field>
+	<parm name="cipar">
+		<pft>
+			'GIZMO_XML.*=',v1,'gizmo/gizmoXML.*'/
+		</pft>
+	</parm>
+	-->
+
+	<field action="cgi" tag="2">IsisScript</field>
+	<field action="replace" tag="3"><pft>date</pft></field>
+	<field action="replace" tag="4"><pft>'^d',v3.8,'^t',v3*9.6</pft></field>
+	<display><pft>'<wxis-modules IsisScript="',v2,'" version="0.1">'/</pft></display>
+
+	<do task="update">
+
+		<field action="cgi" tag="2001">database</field>
+		<call name="error"><pft>"missing parameter: database"n2001</pft></call>
+		<parm name="db"><pft>v2001</pft></parm>
+		<parm name="fst"><pft>cat(v2001,'.fst')</pft></parm>
+
+		<field action="cgi" tag="2002">mfn</field>
+		<call name="error"><pft>"missing parameter: mfn"n2002</pft></call>
+		<parm name="mfn"><pft>v2002</pft></parm>
+
+		<field action="cgi" tag="2003">lockid</field>
+		<call name="error"><pft>"missing parameter: lockid"n2003</pft></call>
+		<parm name="lockid"><pft>v2003</pft></parm>
+
+		<field action="cgi" tag="2004">expire</field>
+		<field action="replace" tag="2004"><pft>"18000"n2004</pft></field>
+		<parm name="expire"><pft>v2004</pft></parm>
+
+		<field action="cgi" tag="2029">maxlk</field>
+		<parm name="maxlk"><pft>v2029</pft></parm>
+
+		<field action="define" tag="1101">Isis_Lock</field>
+		<field action="define" tag="1102">Isis_Status</field>
+
+		<parm name="isisxml table">
+			<pft>
+				'1101 Isis_Lock'/
+				'1102 Isis_Status'/
+			</pft>
+		</parm>
+
+		<update>
+			<write>Delete</write>
+			<field action="export" tag="list">1102</field>
+		</update>
+
+		<file action="close" type="database"><pft>v2001</pft></file>
+		<parm name="db"><pft>v2001</pft></parm>
+		<field action="cgi" tag="2007">gizmo</field>
+		<field action="replace" tag="2007" split="occ"><pft>(v2007/)</pft></field>
+		<parm name="gizmo"><pft>(v2007/)</pft></parm>
+		
+		<update>
+			<display><isisxml>*</isisxml></display>
+		</update>
+
+		<parm name="isisxml table">
+			<pft>
+				'record=delete'/
+				'style=fixed'/
+				'4 server'/
+				'4^d date'/
+				'4^t time'/
+				'2001 database'/
+				'2002 mfn'/
+				'2003 lockid'/
+				'2004 expire'/
+				'1102 Isis_Status'/
+			</pft>
+		</parm>
+		<display><isisxml>*</isisxml></display>
+
+	</do>
+
+	<display></wxis-modules></display>
+	
+</section>
+
+</IsisScript>
+
