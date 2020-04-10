@@ -155,7 +155,7 @@ $handle = opendir($Dir);
 		   			<td bgcolor=white></td>
 		   			<td bgcolor=white></td>
 		   			<td bgcolor=white></td>";
-		while (list ($key, $val) = each ($the_array)) {
+		foreach ($the_array as $key=>$val)  {
 
 		   echo "<tr>
 
