@@ -1,6 +1,6 @@
 <?php
 $wxis_host = $_SERVER['HTTP_HOST'];
-$wxis_action = "/cgi-bin/ansi/wxis.exe/bvs-lib/common/scripts/wxis/";
+$wxis_action = "/cgi-bin/ansi/wxis/bvs-lib/common/scripts/wxis/";
 function wxis_document_post( $url, $content = "" )
 { 
 	$content = str_replace("\\\"","\"",$content);
@@ -52,7 +52,7 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace("<parameters>", "", $param);
 	$param = str_replace("</parameters>", "", $param);
 	$param = str_replace(">", "=", $param);
-	$paramSplited = split("<",$param);
+	$paramSplited = explode("<",$param);
 	reset($paramSplited);
 	while ( list($key, $value) = each($paramSplited) )
 	{

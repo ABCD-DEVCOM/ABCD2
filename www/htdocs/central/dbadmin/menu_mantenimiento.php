@@ -24,7 +24,7 @@ unset($_SESSION["Server_Path"]);
 
 //echo "<pre>"; print_r($_SESSION); ECHO "</pre>";
 
-$Permiso=$_SESSION["permiso"];
+if (isset($_SESSION["permiso"])) $Permiso=$_SESSION["permiso"];
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 if (!isset($arrHttp["base"])) $arrHttp["base"]="";

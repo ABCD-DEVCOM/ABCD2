@@ -1,3 +1,5 @@
+tes_permuted=permuted
+tes_alphabetic=alphabetical
 dcdspace=DSpace bridge : downloading records from repository to ABCD
 proxyhttp=HTTP Proxy
 puerto=Port
@@ -577,6 +579,4 @@ docbatchimport_filezise=Max. size of file to import :
 protect_db=Protect database from initialization or deletion
 unprotect_db=Unprotect database from initialization or deletion
 select_action=Please, select the action to be performed
-import_ods=Import from ODS file
-tes_permutado=permuted
-tes_alphabetical=alphabetical
+import_ods=Import from ODDS file

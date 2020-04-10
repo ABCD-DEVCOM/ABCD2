@@ -11,11 +11,13 @@ if p(v5030) or p(v5040) then
                         ,(
                             if v9021 <> v5021[1] then,
                                 '<a href="'getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&base=',v5003[1],'&lang=',v9021,'&form=',v6000[1],|&pathLibrary=|v5050[1],|&restriction1=|v7001[1],'">'
-                                    if v9021 = 'pt' then '{{pt}}' fi,
-                                    if v9021 = 'es' then 'à·à·à¶´à·à¶¤à·à¶¤' fi,
-                                    if v9021 = 'en' then 'à¶à¶à¶à·âà¶»à·à·à·' fi,
-                                    if v9021 = 'fr' then 'à¶´à·âà¶»à¶à·' fi,
-                                 '</a>',
+
+                                    if v9021 = 'en' then 'english' fi,
+                                    if v9021 = 'fr' then 'français' fi,
+                                    if v9021 = 'am' then 'amharic' fi,
+                                    if v9021 = 'ma' then 'मराठी' fi,
+                                    if v9021 = 'si' then 'sinhala' fi,
+                                  '</a>',
 
                                 if iocc < nocc(v9021) then,
                                     ' | '
@@ -27,7 +29,7 @@ if p(v5030) or p(v5040) then
 
     '<div class="top">
         <h1><a href="',v9031^L,'"><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1>
-        <h2><a title="à¶¯à¶­à·à¶­ à¶´à¶¯à¶±à¶¸à· à¶à·à·à·à¶«à¶º" href="',v9041^L,'"><span>à¶¯à¶­à·à¶­ à¶´à¶¯à¶±à¶¸à· à¶à·à·à·à¶«à¶º</span></a></h2>
+        <h2><a title="Database search" href="',v9041^L,'"><span>Database search</span></a></h2>
             <div class="spacer"> </div>
             <a name="top"></a>
     </div>'

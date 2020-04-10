@@ -67,7 +67,7 @@ $files = $_FILES;
 if ($files['userfile']['size']) {
       // clean up file name
       	$name=$files['userfile']["size"];
-   		$name = preg_replace("[^a-z0-9._]", "",
+   		$name = preg_replace("/[^a-z0-9._]/", "",
        	str_replace(" ", "_",
        	str_replace("%20", "_", strtolower($name)
    			)

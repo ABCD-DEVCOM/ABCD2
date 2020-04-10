@@ -1,6 +1,7 @@
 if v6003^x:'/' then
 
  '('
+ 'v6102='v6102,
 	if p(v6102) then
 		if v6100^x='ALL ' then '(',v6102,')' else v6102,replace(v6100^x,'/','/('),')' fi,
 	else

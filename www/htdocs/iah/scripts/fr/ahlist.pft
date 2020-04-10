@@ -53,7 +53,7 @@ if v6212 = 'print' then '<body style="background: #FFFFFF !important" onLoad="ja
         </div>
 
         <div class="rowResult">
-            <div class="columnA">Nombre total de références:</div>
+            <div class="columnA">Nombre total d`enregistrements:</div>
             <div class="columnB"><b>',v1002,'</b></div>
         </div>
 

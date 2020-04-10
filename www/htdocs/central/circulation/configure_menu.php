@@ -105,7 +105,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: configure_menu.php" ?></font>
 
            		<a href="sala_configure.php" class="menuButton multiLine loanpolicyButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["sala"]?></strong></span>
+					<span><strong><?php if (isset($msgstr["sala"])) echo $msgstr["sala"]; else echo "Internal loan"; ?></strong></span>
 				</a>
 
 			</div>

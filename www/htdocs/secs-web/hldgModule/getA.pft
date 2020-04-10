@@ -67,7 +67,7 @@
 
 					,if l(s('YS=P',ref(mfn-1,v2)))>0 then
 						,if l(s('YS=A',ref(mfn-1,v2)))>0 then
-							/* neste ano, há numeros ausentes */
+							/* neste ano, h? numeros ausentes */
 							,'X',
 						,else
 							,if l(s('YEAR_INC',f(val(v2)-1,1,0)))>0  then
@@ -86,7 +86,7 @@
 				,proc('a9001{',
 					,if l(s('YS=P',v2))>0 then
 						,if l(s('YS=A',v2))>0 then
-							/*  neste ano,há numeros ausentes */
+							/*  neste ano,h? numeros ausentes */
 							,'X',
 						,else
 							/*  neste ano,todos numeros presentes */
@@ -125,7 +125,7 @@
 							,proc('a8000{',
 								,if l(s('YSN=P',ref(mfn-1,s(v2,v3))))>0 then
 									,if l(s('YSN=A',ref(mfn-1,s(v2,v3))))>0 then
-										/* há numeros ausentes */
+										/* h? numeros ausentes */
 										,'X',
 									,else
 										/* todos numeros presentes */
@@ -139,7 +139,7 @@
 							,proc('a8001{',
 								,if l(s('YSN=P',v2,v3))>0 then
 									,if l(s('YSN=A',v2,v3))>0 then
-										/* há numeros ausentes */
+										/* h? numeros ausentes */
 										,'X',
 									,else
 										/* todos numeros presentes */

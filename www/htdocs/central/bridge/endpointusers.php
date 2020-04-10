@@ -1,14 +1,18 @@
 <?php
 
   //SOAP request as RAW data
-  $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
-
+//  $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+//echo "HTTP_RAW_POST =". $HTTP_RAW_POST_DATA. "<BR>";
   //Parse SOAP request using normal PHP parser.
+  $post_data = trim(file_get_contents("php://input"));
+//  echo "<BR>POSTDATA=$post_data<BR>";
   $parser = xml_parser_create('');
   xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, 'UTF-8');
   xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
   xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-  xml_parse_into_struct($parser, trim($HTTP_RAW_POST_DATA), $xml_values);
+//  xml_parse_into_struct($parser, trim($HTTP_RAW_POST_DATA), $xml_values);
+  xml_parse_into_struct($parser, $post_data , $xml_values);
+//  echo "<BR>xmlvalues="; var_dump($xml_values); echo "<BR>";
   xml_parser_free($parser);
 
   //Read ini file to start mysql connection
@@ -23,8 +27,10 @@
   }
 
   //Connect with mysql
-  $link = mysql_connect($vectorini['HOST'].":".$vectorini['PORT'], $vectorini['USER'], $vectorini['PASSWD']);
-  mysql_select_db($vectorini['DATABASE']);
+//  $link = mysql_connect($vectorini['HOST'].":".$vectorini['PORT'], $vectorini['USER'], $vectorini['PASSWD']);
+  $link = mysqli_connect($vectorini['HOST'].":".$vectorini['PORT'], $vectorini['USER'], $vectorini['PASSWD'],$vectorini['DATABASE']);
+//echo "connection = " . $vectorini['HOST'] . $vectorini['PORT'] . $vectorini['USER'] . $vectorini['PASSWD'] . $vectorini['DATABASE'] . "<BR>";
+//  mysql_select_db($vectorini['DATABASE']);
 
 
   // Error case
@@ -38,15 +44,17 @@
       die('Could not connect: ' . mysql_error());
   }
 
-
-
+//    echo "<BR>IDvalue= "; var_dump($xml_values[3]['value']); echo "<BR>";
+//var_dump($xml_values); die;
   // Determine SOAP service
-  if (strpos($xml_values[2]['tag'],'searchUsersById')!==false)
+//  if (strpos($xml_values[2]['tag'],'searchUsersById')!==false)
+  if (isset($xml_values[2]) AND strpos($xml_values[2]['tag'],'searchUsersById')!==false)
   {
     // Search users by id
+
     createResponseForUserById($xml_values[3]['value'],$link,$handle,$vectorini);
   }
-  else if (strpos($xml_values[2]['tag'],'searchUsers')!==false)
+  else if (strpos(isset($xml_value[2]) AND $xml_values[2]['tag'],'searchUsers')!==false)
   {
     // Search users by name
     if ($xml_values[5]['tag']!='login')
@@ -66,7 +74,7 @@
  {
   fclose($handle);
  }
- mysql_close($link);
+ mysqli_close($link);
 
 
 
@@ -82,7 +90,7 @@ function createResponseForUserById ($id, $link, $log, $vectorini)
  if (strpos($id,",")!==false)
  {
     //Hay mas de un ID, vamos a aplicar el OR
-    $vectorids=split(",",$id);
+    $vectorids=explode(",",$id);
     $myquery = $vectorini["QUERYBYID"];
     $myquery = str_replace("<id>",$vectorids[0],$myquery);
 
@@ -117,12 +125,19 @@ function createResponseForUserById ($id, $link, $log, $vectorini)
    logline($log,'Mysql statement:'.$myquery);
  }
 
- $result = mysql_query($myquery);
+ $result = mysqli_query($link, $myquery);
+
+ //if ($result = mysqli_query($link, $myquery)) {
+ //   printf("Select returned %d rows.\n", mysqli_num_rows($result));
+ //}
+ //echo "<BR>resULT=";
+ //var_dump($result);
+ //echo "end of result<BR>";
   if (!$result)
   {
      if ($vectorini['DEBUG'])
      {
-       logline($log,'Mysql error:'.mysql_error());
+       logline($log,'Mysql error:'.mysqli_error());
      }
   }
 
@@ -206,10 +221,12 @@ function logline ($log,$content)
 
 function createSOAPResponseId($result,$vectorini)
 {
+//echo "result at end = ";
+//var_dump($result);
      header('content-type:text/xml');
      include_once('headersoap.php');
      include_once('headerusersbyid.php');
-     while ($row = mysql_fetch_array($result)) { include('userrow.php'); }
+     while ($row = mysqli_fetch_array($result)) { include('userrow.php'); }
      include_once ('footeruserbyid.php');
      include_once ('footersoap.php');
 

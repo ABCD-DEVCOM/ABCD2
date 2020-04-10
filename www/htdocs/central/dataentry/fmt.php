@@ -398,7 +398,8 @@ global $arrHttp,$variables;
 				$arrHttp[$var]=$value;
 			}
 		}
-
+//echo "arrHttpVardeAmbiente=";
+//var_dump(arrHttp);//die;
 }
 
 function GetRecordType(){
@@ -692,7 +693,7 @@ switch ($arrHttp["Opcion"]) {
 		include("scripts_dataentry.php");
         $resultado=EjecutarBusqueda();
         $_SESSION["Expresion"]=$arrHttp["Expresion"];
-    	$ix=count($_SESSION["history"]);
+    	if (isset($_SESSION["history"])) $ix=count($_SESSION["history"]);
     	$found="N";
     	$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
     	foreach ($_SESSION["history"] as $history){
@@ -707,8 +708,8 @@ switch ($arrHttp["Opcion"]) {
     	if ($found=="N")
     		$_SESSION["history"][$ix]=$arrHttp["base"].'$$|$$'.$arrHttp["Expresion"].'$$|$$'.$Total_Search;
         $_SESSION["refinar"]=$arrHttp["Expresion"];
-        if (!isset($_SESSION["expresion"][$arrHttp["base"]][$arrHttp["expresion"]]))
-        	$_SESSION["expresion"][$arrHttp["base"]][$arrHttp["expresion"]]=$resultado;
+        if (!isset($_SESSION["expresion"][$arrHttp["base"]][$arrHttp["Expresion"]]))
+        	$_SESSION["expresion"][$arrHttp["base"]][$arrHttp["Expresion"]]=$resultado;
         if ($resultado=="0"){
         	$arrHttp["Opcion"]=="ninguna";
         	echo "	<div class=\"middle form\">

@@ -179,8 +179,9 @@ function Modulo(){
 	    		break;
 	    	case "toolbar":
 	    		document.admin.action="../dataentry/inicio_main.php";
+                        //echo "query_homepage=$query<BR>";
 	    		break;
-			case "utilitarios":
+		case "utilitarios":
 
 				if (db+"_CENTRAL_DBUTILS" in perms || "CENTRAL_DBUTILS" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms ){
 					document.admin.action="../dbadmin/menu_mantenimiento.php";
@@ -188,8 +189,8 @@ function Modulo(){
 	    			alert("<?php echo $msgstr["invalidright"];?>")
 	    			return;
 	    		}
-                break;
-   			case "estructuras":
+                        break;
+   		case "estructuras":
    				if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
 					document.admin.action="../dbadmin/menu_modificardb.php";
 				}else{
@@ -236,16 +237,28 @@ function Modulo(){
 	</script>
 
 <body>
+<?php //echo "Session=" ; var_dump($_SESSION);
+?>
+
 <div class=heading>
-	<div class="institutionalInfo">
-		<h1><img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../images/logoabcd.jpg";
-					  ?>><?php echo $institution_name?> </h1>
-    </div>
+<!--		<div class="institutionalInfo">
+                 <h1>
+ 		     <img src=
+                     <?php
+                     if (isset($logo))
+		        echo $logo;
+		     else
+		         echo "central/images/logoabcd.jpg";
+		     ?>
+		     height=44 width=33> &nbsp; &nbsp;
+                     <?php echo $institution_name?>
+                 </h1>
+		</div>
+-->
+               <?php include("institutional_info.php"); ?>
+
 	<div class="userInfo">
-		<span><?php echo $_SESSION["nombre"]?></span>,
+		<span><?php echo $_SESSION["nombre"];?></span>,
 		<?php echo $_SESSION["profile"]?> |
 		<?php  $dd=explode("/",$db_path);
                if (isset($dd[count($dd)-2])){

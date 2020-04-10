@@ -26,11 +26,11 @@ function readData($readFrom, $removeHeader = true)
 	
     if (preg_match("~swish~", $readFrom)) {
 	
-		$swishStr = split("&",trim($readFrom));
+		$swishStr = explode("&",trim($readFrom));
 		
 		// indexa o vetor pelo valor que estiver antes do sinal de "="
 		foreach($swishStr as $i){
-			$i_split = split("=",$i);
+			$i_split = explode("=",$i);
 			$swishArg[$i_split[0]] = $i_split[1];
 		}
 		
@@ -134,7 +134,7 @@ function encodeValues( $docURL )
 		return $docURL;
 	}	
 	
-	$splited2 = split( "&", $splited1[1] );
+	$splited2 = explode( "&", $splited1[1] );
 
 	if ( count($splited2) < 2 )
 	{
@@ -152,7 +152,7 @@ function encodeValues( $docURL )
 		{
 			$docURL .= "&";
 		}
-		$splited3 = split("=",$value);
+		$splited3 = explode("=",$value);
 
 		$docURL .= $splited3[0];
 		/*
@@ -203,7 +203,7 @@ function inprocess($label, $status = "run") {
 					s.writeln('<html>');
 					s.writeln('  <head>');
 					s.writeln('    <title>meta-Collexis</title>');
-					s.writeln('    <link rel="stylesheet" href="../css/public/skins/regional/style-<?=$_POST["lang"];?>.css"/>');
+					s.writeln('    <link rel="stylesheet" href="../css/public/skins/regional/style-<?php echo $_POST["lang"];?>.css"/>');
 					s.writeln('  </head>');
 					s.writeln('  <body id="popUp">');
 					s.writeln('  <table width="320" height="120">');

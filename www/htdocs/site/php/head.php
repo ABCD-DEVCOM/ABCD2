@@ -6,7 +6,7 @@
 
 <meta name="robots" content="all" />
 <meta name="MSSmartTagsPreventParsing" content="true" />
-<meta name="generator" content="BVS-Site <?php echo VERSION; ?>" />
+<meta name="generator" content="ABCD-Site <?php echo VERSION; ?>" />
 
 <script type="text/javascript">var lang = '<?php echo $checked['lang'];?>';</script>
 <script type="text/javascript" src="<?php echo $def['DIRECTORY'];?>js/functions.js"></script>

@@ -200,7 +200,7 @@ function getElement(psID) {
 }
 
 function EditIndex(Id){
-alert('EditIndex!')
+//alert('EditIndex!')
 	IndexId=Id
     idEl="index_tag_"+Id
     etq=returnObjById(idEl)

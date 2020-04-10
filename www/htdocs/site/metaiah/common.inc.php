@@ -21,11 +21,11 @@ function getElementValue ($xml, $element, $attributes = '')
 function readData($readFrom, $removeHeader = true) {
     if (preg_match("/swish/i", $readFrom)) {
 
-        $swishStr = split("&",trim($readFrom));
+        $swishStr = explode("&",trim($readFrom));
 
         // indexa o vetor pelo valor que estiver antes do sinal de "="
         foreach($swishStr as $i) {
-            $i_split = split("=",$i);
+            $i_split = explode("=",$i);
             $swishArg[$i_split[0]] = $i_split[1];
         }
 
@@ -117,11 +117,10 @@ function PostIt($url) {
       "POST $path HTTP/1.0\n".
       "Host: $host\n".
       "User-Agent: PostIt\n".
-      "Content-Type: application/x-www-form-urlencoded; charset=iso-8859-1\n".
-//      "Content-Type: application/x-www-form-urlencoded; charset=utf-8\n".
+//      "Content-Type: application/x-www-form-urlencoded; charset=iso-8859-1\n".
+      "Content-Type: application/x-www-form-urlencoded; charset=utf-8\n".
       "Content-Length: $contentLength\n\n".
       "$query\n";
-	 
 
     // Open the connection to the host
     $fp = fsockopen($host, $port, $errno, $errstr, $timeout);

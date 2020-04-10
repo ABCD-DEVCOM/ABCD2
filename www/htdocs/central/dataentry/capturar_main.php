@@ -19,10 +19,10 @@ require_once ('leerregistroisispft.php');
 $prefijo="";
 if (isset($arrHttp["prefijo"])) $prefijo=$arrHttp["prefijo"];
 		$arrHttp["Opcion"]="STATUS";
-		$arrHttp["IsisScript"]="control.xis";
-		$llave=LeerRegistro();
-		$stat=explode('|',$llave);
-		$llave=substr($stat[2],7);
+		$arrHttp["IsisScript"]="control.xis";    // echo "isisScript=".$arrHttp["IsisScript"]."<BR>";
+		$llave=LeerRegistro();  //echo "llave=$llave<BR>";
+		if (isset($$lave)) {$stat=explode('|',$llave);
+		$llave=substr($stat[2],7);}
 ?>
 		<HTML>
 				<Title>Capturar</title>
@@ -48,7 +48,7 @@ if (isset($arrHttp["prefijo"])) $prefijo=$arrHttp["prefijo"];
 				ConFormato=true
 				function ActivarFormato(Ctrl){
 					if (xeditar=='S'){
-						alert('Debe actualizar o cancelar la edición del registro')
+						alert('Save or cancel')
 						Ctrl.checked=!Ctrl.checked
 						return
 					}else{
@@ -81,7 +81,14 @@ if (isset($arrHttp["prefijo"])) $prefijo=$arrHttp["prefijo"];
 </script>
 </head>
 <frameset cols=410,* border=yes>
-	<frame name=indice src=alfa.php?<?php echo "capturar=S&base=".$arrHttp["base"]."&cipar=".$arrHttp["cipar"]."&prefijo=".urlencode($arrHttp["prefijo"])."&formato_e=".urlencode(stripslashes($arrHttp["formato_e"]))."&fc=".$arrHttp["fc"]."&html=ayuda_captura.html"?> scrolling=no frameborder=no  marginheight=0   MARGINWIDTH=0 >
+	<frame name=indice src=alfa.php?
+        <!--?php var_dump($arrHttp)?-->
+        <?php echo "?IsisScript=".$arrHttp["IsisScript"]. "&capturar=S&base=".$arrHttp["base"]."&cipar=".$arrHttp["cipar"]."&prefijo=";
+           if (isset($arrHttp["prefijo"])) echo urlencode($arrHttp["prefijo"]);
+           echo
+        "&formato_e=".urlencode(stripslashes($arrHttp["formato_e"]))."&fc=".$arrHttp["fc"]."&html=ayuda_captura.html"
+        ?>
+        scrolling=no frameborder=no  marginheight=0   MARGINWIDTH=0 >
 	<frame name=main src="" scrolling=yes frameborder=yes marginheight=2   MARGINWIDTH=0 >
 
 </frameset>

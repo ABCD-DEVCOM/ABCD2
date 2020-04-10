@@ -63,10 +63,14 @@ function alphanumeric(inputtxt) {
   }
 }
 
-function Enviar(){	res=VerificarPassword("pwd")
-	if (!res && secure_password_level!="" && secure_password_length!=""){		alert('<?php echo $msgstr["pass_error"]." ".$msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
+function Enviar(){
+	res=VerificarPassword("pwd")
+	if (!res && secure_password_level!="" && secure_password_length!=""){
+		alert('<?php echo $msgstr["pass_error"]." ".$msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
 		if ($SECURE_PASSWORD_LENGTH>0) echo ". ". $msgstr["pass_format_1"]. " ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"];?>')
-		return	}	login=Trim(document.administra.login.value)
+		return
+	}
+	login=Trim(document.administra.login.value)
 	password=Trim(document.administra.password.value)
 	new_password=Trim(document.administra.new_password.value)
 	confirm_password=Trim(document.administra.confirm_password.value)
@@ -74,26 +78,37 @@ function Enviar(){	res=VerificarPassword("pwd")
 	if (login=="" || password=="" || new_password=="" || confirm_password==""){
 		alert("<?php echo $msgstr["datosidentificacion"]?>")
 		return
-	}else{		if (new_password != confirm_password){			alert("<?php echo $msgstr["passconfirm"]?>")
-			return		}
+	}else{
+		if (new_password != confirm_password){
+			alert("<?php echo $msgstr["passconfirm"]?>")
+			return
+		}
 		txt=login+password+new_password+confirm_password
-		if (alphanumeric(txt)){			document.administra.submit()		}else{			alert("<?php echo $msgstr["valchars"]?>")		}
-	}}
+		if (alphanumeric(txt)){
+			document.administra.submit()
+		}else{
+			alert("<?php echo $msgstr["valchars"]?>")
+		}
+	}
+}
 </script>
 </head>
 <body>
 	<div class="heading">
-		<div class="institutionalInfo">
-			<h1><img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../images/logoabcd.jpg";
-					  ?>>
-			<?php echo $institution_name?></h1>
-		</div>
-		<div class="userInfo"></div>
-		<div class="spacer">&#160;</div>
+        	<div class="institutionalInfo">
+		<h1>
+                <img src=
+                <?php
+                if (isset($logo))
+		   echo $logo;
+		else
+		    echo "../images/logoabcd.jpg";
+		?>
+		> &nbsp; &nbsp;
+                <?php echo $institution_name?>
+                </h1>
 	</div>
+
 	<div class="sectionInfo">
 		<div class="breadcrumb"></div>
 		<div class="actions"></div>
@@ -125,11 +140,14 @@ function Enviar(){	res=VerificarPassword("pwd")
 				 	onblur="this.className = 'textEntry superTextEntry';<?php if (isset($SECURE_PASSWORD_LEVEL)  or isset($SECURE_PASSWORD_LENGTH)) echo "pwd_Validation('pwd')";?> " />
                     <a href=javascript:DisplayPassword('pwd')><?php echo $msgstr["ver"]?></a>
 				<?php
-					if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="") or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="")) {						echo "<br><FONT COLOR=DARKRED>";						if ($SECURE_PASSWORD_LENGTH>0)
+					if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="") or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="")) {
+						echo "<br><FONT COLOR=DARKRED>";
+						if ($SECURE_PASSWORD_LENGTH>0)
 							echo $msgstr["pass_format_1"]." ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"]."<br>";
 						if ($SECURE_PASSWORD_LEVEL>1)
 							echo "<FONT COLOR=DARKRED>".$msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
-						echo "</font>". ' &nbsp;<span id="spnPwd" class="pwd_Strength" ></span> &nbsp;';					}
+						echo "</font>". ' &nbsp;<span id="spnPwd" class="pwd_Strength" ></span> &nbsp;';
+					}
 
 				?>
 				</div>

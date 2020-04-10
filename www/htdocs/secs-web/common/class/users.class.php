@@ -122,7 +122,7 @@ class user
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,utf8_decode($tempField[$key]->contenido));
@@ -159,6 +159,7 @@ class user
 
 	function defineField($tag,$content)
 	{
+        echo "content=$content<BR>";die;
 		$field = new Field();
 		if($content == "") {
 			$content == "vazio";
@@ -182,20 +183,20 @@ class user
 	
 	function createRecord($fieldsList)
 	{
-		//print_r($fieldsList);
+		echo "<BR>fieldslist="; print_r($fieldsList);
 		$_fields_tags = $GLOBALS['USERS_NAME_TAG'];
 		/** Verifica se os dados estao formatados como array
 		 *  extraimos os dados do array, se houver ocorrencias de arrays nos campos, teremos subcampos
 		 */		
 		if(is_array($fieldsList))
 		{
-			while (list($key, $val) = each($fieldsList))
+			foreach($fieldsList as $key=>$val)
 			{
 				if($val != "") {
 					//Se o campo corrente for um array, extraimos seus dados
 					if(is_array($fieldsList[$key]))
 					{
-						while (list($keyf, $valf) = each($fieldsList[$key]))
+						foreach($fieldsList[$key] as $keyf=>$valf)
 						{
 							$this->defineField($_fields_tags[$key],$valf);
 						}
@@ -280,7 +281,10 @@ class user
 	
 	function getCenterCode()
 	{
-		$name = $this->registro->select_fields("6");
+		$name = $this->registro->select_fields("6");  //6
+//echo "<BR>name in usersclass =". $name[0]. "<BR>"; //["centerCode"]
+var_dump($name[0]);
+//die;
 		return $name[0]->getContent();
 	}
 

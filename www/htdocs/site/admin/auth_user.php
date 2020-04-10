@@ -1,5 +1,4 @@
 <?php
-echo "HERE<BR>";
 require("../php/include.php");
 
 $lang = $_POST["lang"];

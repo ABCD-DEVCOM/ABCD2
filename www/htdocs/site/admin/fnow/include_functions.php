@@ -34,7 +34,7 @@ function uploadFile ( $upLoaded, $directory )
     $fileName = $upLoaded["name"];
     $to = $directory . "/" . $fileName;
 
-    if (!preg_match("~\." . $cfg['allowed_extensions'] . "$~", $fileName))
+    if (!preg_match("\." . $cfg['allowed_extensions'] . "$", $fileName))
     {
         return "<message file=\"" . $fileName . "\" error=\"can not upload file\" why=\"not allowed extenstion\"/>";
     }
@@ -121,7 +121,7 @@ function getFilePermissions ( $fileName )
 
 function getPreviousDir ( $directory )
 {
-    $splited = split("/",$directory);
+    $splited = explode("/",$directory);
     $splited = array_slice($splited,0,-1);
 
     return join("/",$splited);

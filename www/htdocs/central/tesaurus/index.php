@@ -13,12 +13,15 @@ include ("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
 	$fp=file($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat");
 else
 	$fp=file($db_path.$tesaurus."/def/".$lang_db."/".$tesaurus.".dat");
-foreach($fp as $value) {	$f=explode('=',$value);
-	switch($f[0]){		case "alpha_prefix":
+foreach($fp as $value) {
+	$f=explode('=',$value);
+	switch($f[0]){
+		case "alpha_prefix":
 			$prefijo=trim($f[1]);
 			break;
 		case "perm_prefix":
@@ -27,7 +30,8 @@ foreach($fp as $value) {	$f=explode('=',$value);
 		case "alpha_pft":
 			$Formato=trim($f[1]);
 			break;
-	}}
+	}
+}
 if (isset($arrHttp["perm"])) $prefijo=$perm_prefix;
 $delimitador="";
 $pref=$prefijo;
@@ -81,7 +85,8 @@ echo "
 		$Tag=$arrHttp["Tag"];
 	}
 ?>
-	function ObtenerTerminos(){
+	function ObtenerTerminos(){
+
 		Seleccion=""
 		i=document.Lista.autoridades.selectedIndex
 		for (i=0;i<document.Lista.autoridades.options.length; i++){
@@ -98,7 +103,8 @@ echo "
 			if (Tag==""){
 				window.opener.top.Expresion="<?php echo $prefix_search_tesaurus?>"+Seleccion
 				window.opener.top.Menu("ejecutarbusqueda")
-			}else{				Var=eval("window.opener.document.forma1."+Tag)
+			}else{
+				Var=eval("window.opener.document.forma1."+Tag)
 				if (Var.type=="text")
 					Separa=";"
 				else
@@ -115,7 +121,10 @@ echo "
 					b=a.split("\n")
 					if(b.length>Var.rows) Var.rows=b.length
 
-				}else{					self.close()				}			}
+				}else{
+					self.close()
+				}
+			}
 		}
 	}
 
@@ -150,7 +159,12 @@ echo "function AbrirIndice(Termino){\n";
 </font></div>
 <form method=post name=Lista onSubmit="javascript:return false">
 	<table width=100%>
-		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
+		<td width=50%>
+                <img src=../dataentry/img/toolbarSearch.png>
+                <a href=index.php?base=<?php echo $arrHttp["base"];
+                if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp;
+                 <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];
+                 if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
     	<td width=50% align=right><font color=white><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
     </table>
 
@@ -189,11 +203,14 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 	<Select name=autoridades multiple size=28 style="width:<?php echo $xwidth?>px; xheight=300px" onchange=ObtenerTerminos()>
 <?php
 
-	foreach ($contenido as $linea){		$linea=trim($linea);
+	foreach ($contenido as $linea){
+		$linea=trim($linea);
 		if (trim($linea)!=""){
             $l=explode('|',$linea);
 		//	if (substr($i,0,strlen($arrHttp["pref"]))!=$arrHttp["pref"]) break;
-			if (isset($l[1])){				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
+			if (isset($l[1])){
+				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";
+				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
 			}else{
 				echo "<option value=\"".$l[0]."\" title='".$l[0]."' alt='".$l[0]."'>".$l[0];
 			}

@@ -104,7 +104,7 @@ if (is_writable($truepathcol))
 {
  if (is_writable($truepathcol."ABCDImportRepo"))
  {
- echo $truepathcol . "ABCDImportRepo is writable<BR>";
+// echo $truepathcol . "ABCDImportRepo is writable<BR>";
  }
  else   // ImportRepo not writable
  echo "$truepathcol is writable but not ABCDImportRepo<BR>";
@@ -122,7 +122,7 @@ echo "<div class=\"sectionInfo\">
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_mx_based.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"menu_extra.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -239,8 +239,15 @@ echo '</br></br></br>';
 	    <td align="left" style="font-size:14px"><input type="text" name="dated" size="2" value="v112"/></td>
 	    <td align="left" style="font-size:14px"><label>Doc Source</label></td>
 	    <td align="left" style="font-size:14px"><input type="text" name="docsource" size="2" value="v96"/></td>
-	    </tr>	
-		<tr>
+	    </tr>
+       <tr>
+	    <td>&nbsp;</td>
+            <td align="left" style="font-size:14px"><label>Tagslevel</label></td>
+	    <td align="left" style="font-size:14px"><input type="text" name="level" size="1" value="0"/></td>
+            <td align="left" style="font-size:14px"><label>Filenames charset to convert</label></td>
+	    <td align="left" style="font-size:14px"><input type="text" name="charsetcv" size="4" value="0"/></td>
+       </tr>
+	<tr>
 	    <td>&nbsp;</td>
 	    <td align="left" style="font-size:14px">&nbsp;</td>
 	    <td align="left" style="font-size:14px">&nbsp;</td>
@@ -289,7 +296,7 @@ ob_flush();flush();
 $doctotal=0;
 $docerror=0;
 $total=mt_rand(1, 1000);
-
+//$sep="";
 function ProximoNumero($base){
 global $db_path,$max_cn_length;
 	$archivo=$db_path.$base."/data/control_number.cn";
@@ -350,57 +357,120 @@ $directorio -> close();
 
 function get_infoFile($path,$archivo)
 { 
-global $total,$tikapath,$converter_path,$db_path,$base_ant,$cisis_ver,$Wxis,$doctotal,$img_path,$OS,$procstartedatN,$docerror,$maxfilezise,$truepathcol;
+global $total,$tikapath,$converter_path,$db_path,$base_ant,$cisis_ver,$Wxis,$doctotal,$img_path,$OS,$procstartedatN,$docerror,$maxfilezise,$truepathcol,$charsetcv,$level;
 if(!is_dir($path.$archivo)){ 
 //Get the file info
 $originalFileName=$archivo;
 $info = pathinfo($path.$archivo);
-$ext = $info['extension'];
+$ext = ".".$info['extension'];
+$sep="__";
+$htmlfilesize="0";
+
+//Get the fields tags
+$level=intval($_POST["level"])*100;  // define level of tags
+$vid=intval(RemoveV($_POST["id"]))+$level;
+$vtitle=intval(RemoveV($_POST["title"]))+$level;
+$vcreator=intval(RemoveV($_POST["creator"]))+$level;
+$vsubject=intval(RemoveV($_POST["subject"]))+$level;
+$vdescription=intval(RemoveV($_POST["description"]))+$level;
+$vpublisher=intval(RemoveV($_POST["publisher"]))+$level;
+$vdate=intval(RemoveV($_POST["date"]))+$level;
+$vtype=intval(RemoveV($_POST["type"]))+$level;
+$vformat=intval(RemoveV($_POST["format"]))+$level;
+$vsource=intval(RemoveV($_POST["source"]))+$level;
+$vsections=intval(RemoveV($_POST["sections"]))+$level;
+$vurl=intval(RemoveV($_POST["url"]))+$level;
+$vdoctext=intval(RemoveV($_POST["doctext"]))+$level;
+$vdated=intval(RemoveV($_POST["dated"]))+$level;
+$vdocsource=RemoveV($_POST["docsource"]);
+$vhtmlfilesize=intval("997");   //hardcoded, can be moved to interface to make it defined by user
+if (isset($vdocsource)) $vdocsource=intval(RemoveV($_POST["docsource"]))+$level;
+$charsetcv = $_POST["charsetcv"];
+
+
 // clean up file name to make it easy to process
-$newdocname= preg_replace("/[^a-z0-9._]/", "",str_replace(" ", "_", str_replace("%20", "_", strtolower($archivo)))); 
-$newdocname=str_replace(".".$ext,"",$newdocname);
+///$newdocname= preg_replace("/[^a-z0-9._]/", "",str_replace(" ", "_", str_replace("%20", "_", strtolower($archivo)))); 
+///$newdocname=str_replace(".".$ext,"",$newdocname);
+if (strval($charsetcv)>0) {
+   if ($unicode=0) $tocharset = "windows-8859-1"; else $tocharset = "utf-8//TRANSLIT//IGNORE";
+   $fromcharset="windows-".$charsetcv;
+   $newdocname=iconv($fromcharset, $tocharset, $archivo) ;        //actual conversion of filename
+//echo "from=$fromcharset to=$tocharset charsetcv=$charsetcv<BR>newname=$newdocname<BR>"; die;
+}     else {$newdocname=$archivo;}
+//echo "newdocname1=$newdocname<BR>";
+//$newdocname=str_replace(" ","_",$newdocname);
+$newdocname=str_replace("%20","_", $newdocname);
+//   echo "newdocname2=$newdocname<BR>";
+$newdocname=str_replace($ext,$sep.$total,$newdocname);        // remove extension and add sep and number
+//   echo "newdocname3=$newdocname<BR>"; //die;
+
 if (filesize($path.$archivo)<$maxfilezise)
 {//If File is less than 25 MB
 //build the text to display
-$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue">Processing</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. Renaming to <label style="font-weight:bold;color:blue">'.$newdocname.$total.".".$ext."</label> .Creating records...";ob_flush();flush(); 
+$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue">Processing</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. Renaming to <label style="font-weight:bold;color:blue">'.$newdocname.$ext."</label> .Creating records...";ob_flush();flush();
 //rename the file before proccessing
 $temppath=substr($path,strpos($path,'ABCDImportRepo'));
-$fixpath=substr($temppath,(strpos($temppath,'/')+1));
+$fixpath=substr($temppath,(strpos($temppath,'/')+1));      //if subfolders in ABCDImportRepo : create them in collection
 createPath($truepathcol.$fixpath);
-rename($path.$archivo, $truepathcol.$fixpath.$newdocname.$total.".".$ext);
-//Get the fields tags
-$vid=RemoveV($_POST["id"]);
-$vtitle=RemoveV($_POST["title"]);
-$vcreator=RemoveV($_POST["creator"]);
-$vsubject=RemoveV($_POST["subject"]);
-$vdescription=RemoveV($_POST["description"]);
-$vpublisher=RemoveV($_POST["publisher"]);
-$vdate=RemoveV($_POST["date"]);
-$vtype=RemoveV($_POST["type"]);
-$vformat=RemoveV($_POST["format"]);
-$vsource=RemoveV($_POST["source"]);
-$vsections=RemoveV($_POST["sections"]);
-$vurl=RemoveV($_POST["url"]);
-$vdoctext=RemoveV($_POST["doctext"]);
-$vdated=RemoveV($_POST["dated"]);
-$vdocsource=RemoveV($_POST["docsource"]);
+$newdocname=str_replace(" ","",$newdocname);
+//   echo "newdocname4=$newdocname<BR>"; //die;
+//echo "temppath=$temppath fixpath=$fixpath trupathcol=$truepathcol<BR>";
+//rename($path.$archivo, $truepathcol.$fixpath.$newdocname.$sep.$total.".".$ext);
+//copy('"'.$path.$archivo.'"','"'.$truepathcol.$fixpath.$newdocname.$sep.$total.".".$ext.'"');
+//echo "copycmd=cp ".'"'.$path.$archivo.'"'." ".'"'.$truepathcol.$fixpath.$newdocname.$sep.$total.".".$ext.'"'."<BR>";
+$copycmd="cp ".'"'.$path.$archivo.'"'." ".'"'.$truepathcol.$fixpath.$newdocname.$ext.'"';
+//echo "copycmd=$copycmd<BR>";
+exec($copycmd);
+$unicodename=0;
+if(preg_match('/[^\x20-\x7e]/', $newdocname)) $unicodename=1;
+//for($i=0;$i<strlen($newdocname);$i++) {if(ord($newdocname[$i])>127) $unicodename=1;}
+//echo "unicodename=$unicodename<BR>";die;
+//$asciifilename=$truepathcol.$fixpath.iconv('UTF-8', 'ASCII//TRANSLIT',$newdocname).$ext.'"' ;
+if ($unicodename==1){
+$asciifilename=base64_encode($newdocname).$ext ;
+$copycmd2="cp ".'"'.$truepathcol.$fixpath.$newdocname.$ext.'" "'.$truepathcol.$fixpath.$asciifilename.'"';
+exec($copycmd2);
+//echo "copycmd2=$copycmd2<BR>";    die;
+}
 //Extract the HTML
+//   echo "newdocname2= $newdocname<BR>";
+$htmlfile='"'.$db_path."wrk/".$newdocname.'.html"';
+$fixfilename=$db_path."wrk/"."fixfilename".$ext;
+$copycmd="cp ".'"'.$path.$archivo.'"'." ".$fixfilename;
+//echo "copycmd=$copycmd<BR>";
+exec($copycmd);
+
+//echo "archivo=".$path.$archivo."<BR>";
+//echo "copiedTo=".$truepathcol.$fixpath.$newdocname.".".$ext."<BR>";
+//echo "htmlfile=$htmlfile<BR>";//die;
 if (strpos($OS,"WIN")=== false)
 {
 //Linux
-//$tikacommand='curl -T '.$truepathcol.$fixpath.$newdocname.$total.".".$ext.' http://127.0.0.1:9998/tika --header "Accept: text/html" >'.$db_path."wrk/".$newdocname.$total.'.html';
-$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$truepathcol.$fixpath.$newdocname.$total.".".$ext.' >'.$db_path."wrk/".$newdocname.$total.'.html';
+//$tikacommand='curl -T '.$truepathcol.$fixpath.$newdocname.$sep.$total.$ext.' http://127.0.0.1:9998/tika --header "Accept: text/html" >'.$db_path."wrk/".$newdocname.$sep.$total.'.html';
+//$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$truepathcol.$fixpath.$newdocname.$sep.$total.$ext.' >'.$db_path."wrk/".$newdocname.$sep.$total.'.html';
+//$tikacommand='java -jar '.$tikapath.'tika.jar -h '.'"'.$truepathcol.$fixpath.$newdocname.$ext.'"'.' >'.$htmlfile;
+$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$fixfilename.' >'.$htmlfile;
 //echo "TIKACMD=$tikacommand<BR>";
 exec($tikacommand,$outcm,$banderacm);
+//unlink($fixfilename);
+//$htmlfilesize = strval(filesize($fixfilename));
 }
 else
 {
 //Windows
-$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$truepathcol.$fixpath.$newdocname.$total.".".$ext.' >'.$db_path."wrk/".$newdocname.$total.'.html';
+//$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$truepathcol.$fixpath.$newdocname.$sep.$total.$ext.' >'.$htmlfile;
+$tikacommand='java -jar '.$tikapath.'tika.jar -h '.$fixfilename.' >'.$htmlfile;
 exec($tikacommand,$outcm,$banderacm);
 }
-$creator=$fotmat=$subject=$title=$created=$publisher=$description=$str="";
-$fp=file($db_path."wrk/".$newdocname.$total.'.html');
+//$handle = fopen($htmlfile, "r");
+//fclose($htmlfile);
+//clearstatcache($htmlfile);
+//$htmlfilesize=strval(filesize('"'.$db_path."wrk/".$newdocname.$sep . $total.'.html"'));
+//$htmlfile = str_replace('"',"",$htmlfile);
+
+$creator=$format=$subject=$title=$created=$publisher=$description=$str="";
+$fp=file($db_path."wrk/".$newdocname.'.html');
+
 foreach ($fp as $value){
 if ($value!="") 
 {
@@ -421,26 +491,36 @@ $currentID=ProximoNumero($base_ant);
 //Create the fields proc
 $fieldspart="\"proc='";
 $vspath=$base_ant;
-$docsourcepath=$truepathcol."ABCDSourceRepo/".$newdocname.$total.".html";
-if (($fixpath!="") and ($fixpath!="ABCDImportRepo/")) $vspath=substr($fixpath,0,-1);
-if (($currentID!="") and ($vid!="")) $fieldspart.="<".$vid.">".$currentID."</".$vid.">";
+//$docsourcepath=$truepathcol."ABCDSourceRepo/$newdocname.html";
+$docsourcepath=$truepathcol."ABCDSourceRepo/$newdocname.html";
+//echo "docsourcepath=$docsourcepath<BR>";    die;
+//echo "truepath=$truepathcol<BR>"; //   die;
+
+if (($currentID!="") and ($vid!="")) $fieldspart.="<$vid>".$currentID."</".$vid.">";
+//echo "fieldspart=$fieldspart<BR>";die;
 if (($title!="") and ($vtitle!="")) $fieldspart.="<".$vtitle.">".$title."</".$vtitle.">";
 if (($creator!="") and ($vcreator!="")) $fieldspart.="<".$vcreator.">".$creator."</".$vcreator.">";
 if (($subject!="") and ($vsubject!="")) $fieldspart.="<".$vsubject.">".$subject."</".$vsubject.">";
 if (($description!="") and ($vdescription!="")) $fieldspart.="<".$vdescription.">".$description."</".$vdescription.">";
 if (($publisher!="") and ($vpublisher!="")) $fieldspart.="<".$vpublisher.">".$publisher."</".$vpublisher.">";
 if (($created!="") and ($vdate!="")) $fieldspart.="<".$vdate.">".$created."</".$vdate.">";
-if (($ext!="") and ($vtype!="")) $fieldspart.="<".$vtype.">".$ext."</".$vtype.">";
+if (($ext!="") and ($vtype!="")) $fieldspart.="<".$vtype.">".str_replace(".","",$ext)."</".$vtype.">";
 if (($format!="") and ($vformat!="")) $fieldspart.="<".$vformat.">".$format."</".$vformat.">";
 if (($archivo!="") and ($vsource!="")) $fieldspart.="<".$vsource.">".$archivo."</".$vsource.">";
-if ($vsections!="") $fieldspart.="<".$vsections.">".$vspath."</".$vsections.">"; 
-if (($fixpath.$newdocname.$total.".".$ext!="") and ($vurl!="")) $fieldspart.="<".$vurl.">".$fixpath.$newdocname.$total.".".$ext."</".$vurl.">"; 
+if ($vsections!="") $fieldspart.="<".$vsections.">".$vspath."</".$vsections.">";
+//if (($fixpath.$newdocname.$total.".".$ext!="") and
+if ($vurl!="") $fieldspart.="<".$vurl.">".$fixpath.$newdocname.$ext."</".$vurl.">";
+//if ($vurl!="") $fieldspart.="<9978>".$fixpath.iconv('UTF-8', 'ASCII//TRANSLIT',$asciifilename.$ext)."</9978>";
+if (($vurl!="") and ($unicodename==1)) $fieldspart.="<998>".$fixpath.$asciifilename."</998>";
 $fieldspart.="<112>".$procstartedatN."</112>";
-if (($vdocsource!="") and ($vurl!="")) $fieldspart.="<".$vdocsource.">".$docsourcepath."</".$vdocsource.">"; 
+// dropped from next line : str_replace($truepathcol."ABCDSourceRepo/",'',$docsourcepath) since we want the full path to remain stored inthe field
+if (($vdocsource!="") and ($vurl!="")) $fieldspart.="<".$vdocsource.">".$docsourcepath."</".$vdocsource.">";
+$htmlfilesize = strval(filesize($fixfilename));
+if ($htmlfilesize>0) $fieldspart.="<$vhtmlfilesize>$htmlfilesize</$vhtmlfilesize>";
 $fieldspart.="'\"";
+//echo "fieldspart=$fieldspart<BR>";die;
 
-
-//Save the file and import the content into a record if allow
+//Save the file and import the content into a record if allowed
 $gloadproc="";
 if (($vdoctext!="") and ($str!=""))
 {
@@ -458,14 +538,19 @@ else
 createPath($truepathcol."ABCDSourceRepo/");
 @ $fp = fopen($docsourcepath, "w");
 fwrite($fp,$str);
-fclose($fp); 
+//echo "fp=$fp  str=$str<BR>";die;
+
+fclose($fp);
 $mx = $converter_path." null ".$fieldspart." append=".$db_path.$base_ant."/data/".$base_ant." count=1 now -all";
+//echo "mxcmd=$mx<BR>";die;
 exec($mx,$outmx,$banderamx);
 } 
 
+//echo "htmlfilesize=$htmlfilesize<BR>";die;
+unlink($fixfilename);
 @unlink($db_path."wrk/TikaTemp.txt");
 @unlink($db_path."wrk/DocImportFullTxTv99.txt");
-@unlink($db_path."wrk/".$newdocname.$total.'.html');
+@unlink($db_path."wrk/".$newdocname.$sep.$total.'.html');
 $total++;
 $doctotal++;
 $cadena.=' <label style="font-weight:bold">Done</label></br>'; ob_flush();flush(); 
@@ -479,7 +564,7 @@ $temppath=substr($path,strpos($path,'ABCDImportRepo'));
 $fixpath=substr($temppath,(strpos($temppath,'/')+1));
 createPath($truepathcol."ImportError/");
 createPath($truepathcol."ImportError/".$fixpath);
-rename($path.$archivo, $truepathcol."ImportError/".$fixpath.$newdocname.$total.".".$ext);
+rename($path.$archivo, $truepathcol."ImportError/".$fixpath.$newdocname.$sep.$total.$ext);
 }
 
 }
@@ -489,8 +574,10 @@ return $cadena;
 function RemoveV($field)
 {
 $field=trim($field);
-if (($field[0]=='v') or ($field[0]=='V')) return str_replace( 'v','',strtolower($field));
-return $field;
+if (isset($field[0])) {
+ if (($field[0]=='v') or ($field[0]=='V')) return str_replace( 'v','',strtolower($field));
+ return $field;
+}
 }
 function time_diff($s) { 
     $m = 0; $hr = 0; $d = 0; $td = "now";
@@ -540,7 +627,8 @@ if ((is_dir($truepathcol."ABCDImportRepo/")) && (is_writable($truepathcol."ABCDI
 showFiles($truepathcol."ABCDImportRepo/");
 //Realizamos el fullinvert de la base de datos
 $mxinv="";
-if ($vdoctext!="") $mxinv=$converter_path." cipar=".$db_path."par/".$base_ant.".par ".$db_path.$base_ant."/data/".$base_ant." fst=@".$db_path.$base_ant."/data/".$base_ant.".fst uctab=uctab.tab actab=actab.tab fullinv/m=".$db_path.$base_ant."/data/".$base_ant." now -all";
+if (isset($vdoctext) AND ($vdoctext!=""))
+$mxinv=$converter_path." cipar=".$db_path."par/".$base_ant.".par ".$db_path.$base_ant."/data/".$base_ant." fst=@".$db_path.$base_ant."/data/".$base_ant.".fst uctab=uctab.tab actab=actab.tab fullinv/m=".$db_path.$base_ant."/data/".$base_ant." now -all";
 else
 $mxinv=$converter_path." cipar=".$db_path."par/".$base_ant.".par ".$db_path.$base_ant."/data/".$base_ant." fst=@".$db_path.$base_ant."/data/fulltext.fst uctab=uctab.tab actab=actab.tab fullinv/m=".$db_path.$base_ant."/data/".$base_ant." now -all";
 
@@ -568,6 +656,8 @@ if (is_dir($truepathcol."ImportError"))
 rmdir($truepathcol."ABCDImportRepo");
 rename($truepathcol."ImportError",$truepathcol."ABCDImportRepo");
 }
+echo '<BR></BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<label style="font-weight:bold;color:blue">To continue with full index generation of the database, <A HREF="vmx_fullinv.php?base='.$base_ant.'"> click here   </a> </label></br>';//die;
+
 //----------------------------------------------------------------------------------------------------
 
 }//if (is_dir($img_path.$base_ant."/collection/ABCDImportRepo/"))

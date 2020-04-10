@@ -182,7 +182,7 @@ function IsisSearchSort($parametros)
 // --- Funciones privadas de ejecuci�n del webservice
 
 $wxis_host = $_SERVER['HTTP_HOST'];
-$wxis_action = "/cgi-bin/ansi/wxis.exe";
+$wxis_action = "/cgi-bin/wxis.exe";
 
 function wxis_document_post( $url, $content = "" )
 { 
@@ -246,13 +246,21 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace(">", "=", $param);
 	$paramSplited = split("<",$param);
 	reset($paramSplited);
-	while ( list($key, $value) = each($paramSplited) )
+	/*while ( list($key, $value) = each($paramSplited) )
 	{
 		if ( trim($value) != "" && substr($value,0,1) != "/" )
 		{
 			$request .= "&" . $value;
 		}
-	}	
+	}
+*/
+foreach($paramSplited as $value)
+{
+if ( trim($value) != "" && substr($value,0,1) != "/" )
+		{
+			$request .= "&" . $value;
+		}	
+}	
 	return $request;
 }
 
@@ -324,5 +332,6 @@ function wxis_sort ( $param )
 // Use the request to (try to) invoke the service
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
 $server->service($HTTP_RAW_POST_DATA);
-
+// alternative past php5.6 : php://input
+//$server->service(file_get_contents('php://input');
 ?>

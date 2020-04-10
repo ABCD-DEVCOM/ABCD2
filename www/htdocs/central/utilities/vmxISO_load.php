@@ -11,18 +11,12 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
-
 $base=$arrHttp["base"];
-$OS=strtoupper(PHP_OS);
-$converter_path=$mx_path;
-if (strpos($OS,"WIN")=== false) 
+if($base=="")
 {
-$converter_path=str_replace('mx.exe','',$converter_path);
-$converter_path.=$cisis_ver."mx";
+echo"<br>NO database selected";
 }
-else
-$converter_path.=$cisis_ver."mx.exe";
-$mx_path=$converter_path;
+
 include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 echo "<div style='float:right;'> <a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
@@ -51,7 +45,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: vmxISO_load.php</font>";
 <div class="middle form">
 <form action="" method="post" enctype="multipart/form-data">
  <br> <label for="archivo">Choose File:</label>
-  <input type="file" name="archivo" id="archivo" />
+  <input type="file" name="archivo[]" multiple="multiple" id="archivo" />
   <br><br>
   <label>Select the operation</label>
   <select name="OpISO">
@@ -70,18 +64,36 @@ echo "<font color=white>&nbsp; &nbsp; Script: vmxISO_load.php</font>";
   </form>
 
 <?php
-include("phpfileuploader/form-simple-upload.php");
-		
+	
 $bd=$db_path.$base;
-	$op=$_POST['OpISO'];  
+$op=$_POST['OpISO'];
   if(isset($op))
   {
   $nombre=$_POST["fn"];
-  echo "<h3>Process information</h3>";
-echo "File upload OK, importing ".$nombre."...";
-	 $op=$_POST['OpISO'];
+  # si hay algun archivo que subir 
+        if ($_FILES["archivo"]["name"][0]) {
+            $fn = "";
+            # definimos la carpeta destino 
+            $carpetaDestino = $db_path."wrk/";
+            # recorremos todos los arhivos que se han subido
+            for ($i = 0; $i < count($_FILES["archivo"]["name"]); $i++) {
 
-	 $strINV=$mx_path." "."iso=".$db_path."wrk/".$nombre." ".$op."=".$bd."/data/".$base." -all now";
+                # si exsite la carpeta o se ha creado 
+                if (file_exists($carpetaDestino) || @mkdir($carpetaDestino)) {
+                    $origen = $_FILES["archivo"]["tmp_name"][$i];
+                    $destino = $carpetaDestino . $_FILES["archivo"]["name"][$i];
+                    # movemos el archivo 
+                    if (@move_uploaded_file($origen, $destino)) {
+                        $fn .= $_FILES["archivo"]["name"][$i];
+                    echo "<h3>Process information</h3>";
+					echo "File upload OK, importing ".$carpetaDestino.$fn."...";
+					}
+                }
+            }
+            
+        }
+	 $op=$_POST['OpISO'];
+	 $strINV=$mx_path." "."iso=".$db_path."wrk/".$fn." ".$op."=".$bd."/data/".$base." -all now";
 	 exec($strINV, $output,$t);
 	 $straux="";
 for($i=0;$i<count($output);$i++)
@@ -100,6 +112,7 @@ echo"<br>NO database selected";
 }
 }
 //echo "<br>"."<a href='../dbadmin/menu_mantenimiento.php?base=&encabezado=s'>Maintenance Menu</a>"."<br>";
+echo '<BR></BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<label style="font-weight:bold;color:blue">To continue with full index generation of the database, <A HREF="vmx_fullinv.php?base='.$base.'"> click here   </a> </label></br>';
 ?>
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
 </form>

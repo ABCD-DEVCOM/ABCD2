@@ -72,10 +72,14 @@ if(!(function_exists("array_combine"))) {
     function array_combine($a, $b)
     {
         $result = array();
-        while(($key = each($a)) && ($val = each($b)))
+        /*while(($key = each($a)) && ($val = each($b)))
         {
             $result[$key[1]] = $val[1];
-        }
+        }*/
+		for($i=0;$i<count($a);$i++)
+		{
+			$result[$a[$i]]=$b[$i];
+		}
 
         return($result);
     }
@@ -120,7 +124,7 @@ function facicAllTitle($titleID,$fieldName)
         $tempField = $record->campos;
         $tempRecord = array();
 
-        while (list($key,$val) = each($tempField)) {
+        foreach($tempField as $key=>$val) {
             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                 $varTemp = $tempRecord[$tempField[$key]->tag];
                 $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -184,7 +188,7 @@ function titPlus2Title($titleID)
         $tempField = $record->campos;
         $tempRecord = array();
 
-        while (list($key,$val) = each($tempField)) {
+        foreach($tempField as $key=>$val) {
             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                 $varTemp = $tempRecord[$tempField[$key]->tag];
                 $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -246,7 +250,7 @@ function facicTitle($titleID)
         $tempField = $record->campos;
         $tempRecord = array();
 
-        while (list($key,$val) = each($tempField)) {
+        foreach($tempField as $key=>$val) {
             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                 $varTemp = $tempRecord[$tempField[$key]->tag];
                 $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -387,7 +391,7 @@ function totalDB($database)
         $tempField = $record->campos;
         $tempRecord = array();
 
-        while (list($key,$val) = each($tempField)) {
+        foreach($tempField as $key=>$val) {
             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                 $varTemp = $tempRecord[$tempField[$key]->tag];
                 $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,utf8_decode($tempField[$key]->contenido));

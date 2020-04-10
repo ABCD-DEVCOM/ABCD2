@@ -65,13 +65,13 @@ class library
 		 */
 		if(is_array($fieldsList))
 		{
-			while (list($key, $val) = each($fieldsList))
+			foreach($fieldsList as $key=>$val)
 			{
 				if($val != "") {
 					//Se o campo corrente for um array, extraimos seus dados
 					if(is_array($fieldsList[$key]))
 					{
-						while (list($keyf, $valf) = each($fieldsList[$key]))
+						foreach($fieldsList[$key] as $keyf=>$valf)
 						{
 							$this->defineField($_fields_tags[$key],$valf);
 						}
@@ -95,7 +95,7 @@ class library
         $recordList = $this->setAllRecords();
 		reset($recordList);
 		$collectionLibrary = array();
-		 while (list($key, $val) = each($recordList)) {
+		foreach($recordList as $key=>$val) {
 			$collectionLibrary += array($recordList[$key]["mfn"] => $recordList[$key]["mfn"]);
 		}
 
@@ -156,7 +156,7 @@ class library
 			$tempField = $record->campos;
             $tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,utf8_decode($tempField[$key]->contenido));
@@ -206,7 +206,7 @@ class library
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,utf8_decode($tempField[$key]->contenido));
@@ -268,7 +268,7 @@ class library
 			$tempField = $record->campos;
 			$tempRecord = array();
 
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -441,7 +441,7 @@ class library
                     $tempField = $record->campos;
                     $tempRecord = array();
 
-                    while (list($key,$val) = each($tempField)) {
+                    foreach($tempField as $key=>$val) {
                             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                                     $varTemp = $tempRecord[$tempField[$key]->tag];
                                     $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -489,7 +489,7 @@ class library
                     $tempField = $record->campos;
                     $tempRecord = array();
 
-                    while (list($key,$val) = each($tempField)) {
+                    foreach($tempField as $key=>$val) {
                             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                                     $varTemp = $tempRecord[$tempField[$key]->tag];
                                     $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -507,7 +507,7 @@ class library
             }
             $collectionLibrary = array();
             reset($recordList);
-            while (list($key, $val) = each($recordList)) {
+            foreach($recordList as $key=>$val) {
                     $collectionLibrary += array($recordList[$key]["2"] => $recordList[$key]["2"]);
             }
             sort($collectionLibrary);
@@ -545,7 +545,7 @@ class library
                     $tempField = $record->campos;
                     $tempRecord = array();
 
-                    while (list($key,$val) = each($tempField)) {
+                    foreach($tempField as $key=>$val) {
                             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                                     $varTemp = $tempRecord[$tempField[$key]->tag];
                                     $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -563,7 +563,7 @@ class library
             }
             $collectionLibrary = array();
             reset($recordList);
-            while (list($key, $val) = each($recordList)) {
+            foreach($recordList as $key=>$val) {
                     $collectionLibrary += array($recordList[$key]["1"] => $recordList[$key]["1"]);
             }
             sort($collectionLibrary);

@@ -398,7 +398,7 @@ var resize = new YAHOO.util.Resize('resizablepanel');
 		var r = thisTable.getRecord(recordId);
 		var i = thisTable.getRecordIndex(thisTable.getTrEl(r));
                 //alert(recordId);
-
+ 
 		if (i == 0){
                     if (!futureIssues){
                         loadFutureIssues('addRow');
@@ -413,9 +413,10 @@ var resize = new YAHOO.util.Resize('resizablepanel');
                     
                     YAHOO.util.Dom.addClass(thisTable.getPreviousTrEl(r),"rowOver");
 		}else{
-                    YAHOO.util.Dom.addClass(thisTable.getTrEl(r),"rowOver");
-                    var data = {MFN:'New', YEAR: r.getData('YEAR'), VOLU: '', FASC: '', STAT: 'P', QTD: 1, TYPE: '', NOTE: '', MASK: r.getData('MASK'), SEQN: r.getData('SEQN') + 100, FORMERSTAT: 'P', FORMERQTD: 'P', MODIFIED: 'M', IDMFN:'',INVENTORY:'',DATEISO:'',EADDR:'',DESIGN:''};
-                    thisTable.addRow(data, i);
+                    YAHOO.util.Dom.addClass(thisTable.getPreviousTrEl(r),"rowOver");
+					var fasc_val=parseInt(r.getData('FASC'))+1;
+                    var data = {MFN:'New', YEAR: r.getData('YEAR'), VOLU: r.getData('VOLU'), FASC:  fasc_val, STAT: 'P', QTD: 1, TYPE: '', NOTE: '', MASK: r.getData('MASK'), SEQN: r.getData('SEQN') + 100, FORMERSTAT: 'P', FORMERQTD: 'P', MODIFIED: 'M', IDMFN:'',INVENTORY:'',DATEISO:'',EADDR:'',DESIGN:''};
+                    thisTable.addRow(data, i+1);
                     thisTable.render();
 		}
 	}

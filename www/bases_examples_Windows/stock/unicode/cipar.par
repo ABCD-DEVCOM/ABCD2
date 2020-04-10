@@ -1,0 +1,5 @@
+unicode.*=./unicode.*
+isisac.tab=ethiopic_utf8.actab
+isisuc.tab=ethiopic_utf8.uctab  
+//isisactab_utf8.tab
+//isisuc.tab=isisuctab_utf8.tab

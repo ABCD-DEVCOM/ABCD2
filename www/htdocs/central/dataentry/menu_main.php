@@ -8,7 +8,6 @@ include("../common/get_post.php");
 include("../config.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
-
 echo "<script>permiso='".implode('',$_SESSION["permiso"])."'</script>";
 #print_r("<script>permiso='".$_SESSION["permiso"]."'</script>");
 include("../common/header.php");

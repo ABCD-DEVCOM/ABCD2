@@ -26,7 +26,8 @@ if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["C
 			<?php echo $msgstr["reserve"]?></strong></a> |
 
 <?php } }
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SALA"])){?>     <a href=../circulation/sala.php><strong><?php echo $msgstr["sala"]?></a><strong> |
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SALA"])){
+?>     <a href=../circulation/sala.php><strong><?php if (isset($msgstr["sala"])) echo $msgstr["sala"]?></a><strong> |
 <?php }
 if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SUSPEND"])){
 ?>

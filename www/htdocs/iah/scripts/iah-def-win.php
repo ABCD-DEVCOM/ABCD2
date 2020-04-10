@@ -11,9 +11,9 @@ PATH_DEF=/ABCD/www/bases/par/
 
 [HEADER]
 LOGO IMAGE=logoabcd.jpg
-LOGO URL=^1/site/php/index.php^2/site/php/index.php^3/site/php/index.php^4/site/php/index.php
+LOGO URL="^1/site/php/index.php^2/site/php/index.php^3/site/php/index.php^4/site/php/index.php"
 HEADER IMAGE=online.gif
-HEADER URL=^1/iah/pt/index.htm^2/iah/es/index.htm^3/iah/en/index.htm^4/iah/fr/index.htm
+HEADER URL="^1/iah/pt/index.htm^2/iah/es/index.htm^3/iah/en/index.htm^4/iah/fr/index.htm"
 
 [IAH]
 MANAGER E-MAIL=ia@hmy-server.domain

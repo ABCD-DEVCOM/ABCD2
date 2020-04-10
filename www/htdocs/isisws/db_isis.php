@@ -13,12 +13,20 @@ class DB_ISIS
 		$param = "<parameters>\n";
 		$param .= "   <xml_header>no</xml_header>\n";
 		reset($list);
-		while (list($key, $value) = each($list))
+		/*while (list($key, $value) = each($list))
 		{
 			if ($value != "")
 			{
 				$param .= "   <" . $key . ">" . $value . "</" . $key . ">\n";
 			}
+		}
+		*/
+		foreach($list as $key=>$value)
+		{
+		if ($value != "")
+			{
+				$param .= "   <" . $key . ">" . $value . "</" . $key . ">\n";
+			}	
 		}
 		$param .= "</parameters>\n";
 		return $param;

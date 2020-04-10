@@ -155,11 +155,11 @@ fi,
 
 '</table>'
 '<br>'
-ref(['loanobjects']l(['loanobjects'],'CN_marc_'v1),
+ref(['loanobjects']l(['loanobjects'],'CN_',mpu,v5001,'_'v1),mpl,
            '<p><table border=0 bgcolor=#cccccc>'
            '<td colspan=4 bgcolor=white><b>Available for loans</b>: 'f(nocc(v959),1,0)' copies </td>'
            '<tr><td>No.inv.</td><td>Library</td><td>Type of material</td><td>Return date</td>'
-           (if p(v959) then '<tr><td align=center bgcolor=white>'v959^i'</td>
+	   (if p(v959) then '<tr><td align=center bgcolor=white>'v959^i'</td>
            <td align=center bgcolor=white>'v959^l'</td><td align=center bgcolor=white>'v959^o'<td bgcolor=white>'
 
            ref(['trans']l(['trans'],'TR_P_'v959^i),v40,e1:=e1+1) '</td>' fi/)

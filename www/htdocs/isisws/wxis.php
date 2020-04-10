@@ -63,13 +63,21 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace(">", "=", $param);
 	$paramSplited = split("<",$param);
 	reset($paramSplited);
-	while ( list($key, $value) = each($paramSplited) )
+	/*while ( list($key, $value) = each($paramSplited) )
 	{
 		if ( trim($value) != "" && substr($value,0,1) != "/" )
 		{
 			$request .= "&" . $value;
 		}
 	}
+	*/
+	foreach($paramSplited as $value)
+{
+if ( trim($value) != "" && substr($value,0,1) != "/" )
+		{
+			$request .= "&" . $value;
+		}	
+}
 	//die($request);
 	
 	return $request;
@@ -82,6 +90,7 @@ function wxis_list ( $param )
 
 function wxis_sort ( $param )
 {
+            error_log("sortparams in wxis.php = $param --- \n\r",3,'/var/opt/ABCD/bases/log/error.log');
 	return wxis_document_post(wxis_url("sort.xis",$param));
 }
 

@@ -317,4 +317,5 @@ no_sel_records=You must select the records to be displayed
 record_protected=Record protected. Insert password
 invalid_password=Invalid password
 undo_selected=Undo selection
-
+tes_permuted=permuted
+tes_alphabetic=alphabetical

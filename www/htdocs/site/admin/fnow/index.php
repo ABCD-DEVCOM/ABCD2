@@ -1,4 +1,4 @@
-<?
+<?php
 require_once("include_config_system.php");
 
 session_start();
@@ -16,20 +16,20 @@ $newFolder  = $_POST['newFolder'];
 $renameFrom =  $_POST['renameFrom'];
 $renameTo =  $_POST['renameTo'];
 
-if ( $lang != '' and  !preg_match("~^(pt|es|en)$~",$lang) ){
+if ( $lang != '' and  !preg_match("^(pt|es|en)$",$lang) ){
     die("invalid language");
 }
-if ( $relativeDirectory != '' and preg_match("~\.[/\/]~",$relativeDirectory) ) {
+if ( $relativeDirectory != '' and preg_match("\.[/\/]",$relativeDirectory) ) {
     die("404 - page not found");
 }
-if ( $task == "removeFile" and preg_match("~[\/\\]~",$deleteFile) ) {
+if ( $task == "removeFile" and preg_match("[\/\\]",$deleteFile) ) {
     die("404 - page not found");
 }
-if ( $task == "newFolder" and !preg_match("~[A-Za-z_]" .strlen($newFolder) . "}~",$newFolder) ){
+if ( $task == "newFolder" and !preg_match("[A-Za-z_]{" .strlen($newFolder) . "}",$newFolder) ){
     die("invalid folder name");
 }
 if ( $task == "renameFile" ){
-    if ( preg_match("~[\/\\]~",$renameFrom) or preg_match("~[\/\\]~",$renameTo) ){
+    if ( preg_match("[\/\\]",$renameFrom) or preg_match("[\/\\]",$renameTo) ){
         die("invalid name");
     }
 }

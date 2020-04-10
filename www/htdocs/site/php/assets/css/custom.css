@@ -1,0 +1,354 @@
+.search_form{
+	width:80%;
+	margin-left:5%;
+	position:relative;
+	top: -235px;
+	z-index:1000;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius:4px;
+}
+/*
+Hide default ABCD Logo and search results titles
+*/
+.top,
+.bar{
+	display:none !important;
+}
+.footer{
+	margin-top:20px;
+}
+/*Search Results Summary Customization */
+#result ul > li{
+	margin-bottom:15px;
+}
+#result ul{
+	padding-left:10px;
+	margin-top:25px;
+}
+#result ul > li > ul{
+	margin-top:0 !important;
+}
+#result ul > li > ul > li{
+	display:block;
+	margin-bottom:7px;
+}
+.level2,
+.search_results_show{
+	display:block;
+	float:left;
+}
+.level2{
+	width:20%;
+}
+.level2 ul > li > ul > li{
+	padding: 5px 6px;
+}
+.level2 ul > li > ul > li a:active{
+	background:#cfcfcf;
+}
+.search_results_show{
+	width:78%;
+}
+.expression{
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	color: #777;
+	font: 14px Arial, sans-serif;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+
+.search_form input[type="text"]{
+	height:45px !important;
+	border:4px solid rgba(110,110,110,0.7);
+}
+.search_form input[type="text"]:focus{
+	border:4px solid #333;
+}
+.search_form button,
+.search_form  a{
+	height:45px !important;
+	border:1px solid #666;
+}
+.search_form  a{
+	padding-top: 12px;
+}
+.ecommerce .site-logo {
+    padding-top: 20px !important;
+    padding-bottom: 1px !important;
+}
+.ecommerce .site-logo img{
+    width:65px !important;
+	margin-bottom:5px;
+}
+/*Colors*/
+.fg-color-blue {
+  color: #2d89ef !important;
+}
+.fg-color-blueLight {
+  color: #eff4ff !important;
+}
+.fg-color-blueDark {
+  color: #2b5797 !important;
+}
+.fg-color-green {
+  color: #00a300 !important;
+}
+.fg-color-greenLight {
+  color: #99b433 !important;
+}
+.fg-color-greenDark {
+  color: #1e7145 !important;
+}
+.fg-color-red {
+  color: #b91d47 !important;
+}
+.fg-color-yellow {
+  color: #ffc40d !important;
+}
+.fg-color-orange {
+  color: #e3a21a !important;
+}
+.fg-color-orangeDark {
+  color: #da532c !important;
+}
+.fg-color-pink {
+  color: #9f00a7 !important;
+}
+.fg-color-pinkDark {
+  color: #7e3878 !important;
+}
+.fg-color-purple {
+  color: #603cba !important;
+}
+.fg-color-darken {
+  color: #1d1d1d !important;
+}
+.fg-color-lighten {
+  color: #d5e7ec !important;
+}
+.fg-color-white {
+  color: #ffffff !important;
+}
+.fg-color-grayDark {
+  color: #525252 !important;
+}
+.fg-color-magenta {
+  color: #ff0097 !important;
+}
+.fg-color-teal {
+  color: #00aba9 !important;
+}
+.fg-color-redLight {
+  color: #ee1111 !important;
+}
+.fg-color-cawm{
+	color:#864e04 !important;
+}
+.bg-color-cawm{
+	background-color:#864e04 !important;
+}
+.bg-color-blue {
+  background-color: #2d89ef !important;
+}
+.bg-color-blueLight {
+  background-color: #eff4ff !important;
+}
+.bg-color-blueDark {
+  background-color: #2b5797 !important;
+}
+.bg-color-green {
+  background-color: #00a300 !important;
+}
+.bg-color-greenLight {
+  background-color: #99b433 !important;
+}
+.bg-color-greenDark {
+  background-color: #1e7145 !important;
+}
+.bg-color-red {
+  background-color: #b91d47 !important;
+}
+.bg-color-yellow {
+  background-color: #ffc40d !important;
+}
+.bg-color-orange {
+  background-color: #e3a21a !important;
+}
+.bg-color-orangeDark {
+  background-color: #da532c !important;
+}
+.bg-color-pink {
+  background-color: #9f00a7 !important;
+}
+.bg-color-pinkDark {
+  background-color: #7e3878 !important;
+}
+.bg-color-purple {
+  background-color: #603cba !important;
+}
+.bg-color-darken {
+  background-color: #1d1d1d !important;
+}
+.bg-color-lighten {
+  background-color: #d5e7ec !important;
+}
+.bg-color-white {
+  background-color: #ffffff !important;
+}
+.bg-color-grayDark {
+  background-color: #525252 !important;
+}
+.bg-color-magenta {
+  background-color: #ff0097 !important;
+}
+.bg-color-teal {
+  background-color: #00aba9 !important;
+}
+.bg-color-redLight {
+  background-color: #ee1111 !important;
+}
+[class*=border-color] {
+  border: 1px solid;
+}
+.border-color-blue {
+  border-color: #2d89ef !important;
+}
+.border-color-blueLight {
+  border-color: #eff4ff !important;
+}
+.border-color-blueDark {
+  border-color: #2b5797 !important;
+}
+.border-color-green {
+  border-color: #00a300 !important;
+}
+.border-color-greenLight {
+  border-color: #99b433 !important;
+}
+.border-color-greenDark {
+  border-color: #1e7145 !important;
+}
+.border-color-red {
+  border-color: #b91d47 !important;
+}
+.border-color-yellow {
+  border-color: #ffc40d !important;
+}
+.border-color-orange {
+  border-color: #e3a21a !important;
+}
+.border-color-orangeDark {
+  border-color: #da532c !important;
+}
+.border-color-pink {
+  border-color: #9f00a7 !important;
+}
+.border-color-pinkDark {
+  border-color: #7e3878 !important;
+}
+.border-color-purple {
+  border-color: #603cba !important;
+}
+.border-color-darken {
+  border-color: #1d1d1d !important;
+}
+.border-color-lighten {
+  border-color: #d5e7ec !important;
+}
+.border-color-white {
+  border-color: #ffffff !important;
+}
+.border-color-grayDark {
+  border-color: #525252 !important;
+}
+.border-color-magenta {
+  border-color: #ff0097 !important;
+}
+.border-color-teal {
+  border-color: #00aba9 !important;
+}
+.border-color-redLight {
+  border-color: #ee1111 !important;
+}
+*:hover[class=outline-color] {
+  outline: 1px solid;
+}
+.outline-color-blue {
+  outline-color: #2d89ef !important;
+}
+.outline-color-blueLight {
+  outline-color: #eff4ff !important;
+}
+.outline-color-blueDark {
+  outline-color: #2b5797 !important;
+}
+.outline-color-green {
+  outline-color: #00a300 !important;
+}
+.outline-color-greenLight {
+  outline-color: #99b433 !important;
+}
+.outline-color-greenDark {
+  outline-color: #1e7145 !important;
+}
+.outline-color-red {
+  outline-color: #b91d47 !important;
+}
+.outline-color-yellow {
+  outline-color: #ffc40d !important;
+}
+.outline-color-orange {
+  outline-color: #e3a21a !important;
+}
+.outline-color-orangeDark {
+  outline-color: #da532c !important;
+}
+.outline-color-pink {
+  outline-color: #9f00a7 !important;
+}
+.outline-color-pinkDark {
+  outline-color: #7e3878 !important;
+}
+.outline-color-purple {
+  outline-color: #603cba !important;
+}
+.outline-color-darken {
+  outline-color: #1d1d1d !important;
+}
+.outline-color-lighten {
+  outline-color: #d5e7ec !important;
+}
+.outline-color-white {
+  outline-color: #ffffff !important;
+}
+.outline-color-grayDark {
+  outline-color: #525252 !important;
+}
+.outline-color-magenta {
+  outline-color: #ff0097 !important;
+}
+.outline-color-teal {
+  outline-color: #00aba9 !important;
+}
+.outline-color-redLight {
+  outline-color: #ee1111 !important;
+}
+/*
+Custom CSS by
+Nsajigwa A Mwaipopo
+Phone: +256 758 415 805
+Skyoe: nsajigwa.mwaipopo
+*/

@@ -196,7 +196,7 @@ class TestSuite /* implements Test */ {
       if (floor(phpversion()) >= 4) {
 	// PHP4 introspection, submitted by Dylan Kuhn
 	$names = get_class_methods($classname);
-	while (list($key, $method) = each($names)) {
+	foreach($names as $key=>$method) {
 	  if (preg_match('/^test/', $method) && $method != "testcase") {  
 	    $this->addTest(new $classname($method));
 	  }
@@ -205,7 +205,7 @@ class TestSuite /* implements Test */ {
       else {
 	$dummy = new $classname("dummy");
 	$names = (array) $dummy;
-	while (list($key, $value) = each($names)) {
+	foreach($names as $key=>$value) {
 	  $type = gettype($value);
 	  if ($type == "user function" && preg_match('/^test/', $key)
 	  && $key != "testcase") {  
@@ -225,7 +225,7 @@ class TestSuite /* implements Test */ {
     /* Run all TestCases and TestSuites comprising this TestSuite,
        accumulating results in the given TestResult object. */
     reset($this->fTests);
-    while (list($na, $test) = each($this->fTests)) {
+    foreach($this->fTests as $na=>$test) {
       if ($testResult->shouldStop())
 	break;
       $test->run(&$testResult);
@@ -237,7 +237,7 @@ class TestSuite /* implements Test */ {
        in any constituent TestSuites) */
     $count = 0;
     reset($fTests);
-    while (list($na, $test_case) = each($this->fTests)) {
+    foreach($this->fTests as $na=>$test_case) {
       $count += $test_case->countTestCases();
     }
     return $count;
@@ -336,13 +336,13 @@ class TextTestResult extends TestResult {
 
     print("<ol>\n");
     $failures = $this->getFailures();
-    while (list($i, $failure) = each($failures)) {
+    foreach($failures as $i=>$failure) {
       $failedTestName = $failure->getTestName();
       printf("<li>%s\n", $failedTestName);
 
       $exceptions = $failure->getExceptions();
       print("<ul>");
-      while (list($na, $exception) = each($exceptions))
+     foreach($exceptions as $na=>$exception)
 	printf("<li>%s\n", $exception->getMessage());
       print("</ul>");
     }

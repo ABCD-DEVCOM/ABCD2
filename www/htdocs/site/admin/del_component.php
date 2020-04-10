@@ -15,16 +15,16 @@ $fileHtml= $localPath["html"] . $checked['id'] . ".html";
 $messageArray = array (
     "es" =>
         array (
-            "title" => "AdministraciÃ³n: Biblioteca Virtual en Salud",
-            "exist" => "AtenciÃ³n esta operaciÃ³n irÃ¡ borrar el contenido deste componente de laa BVS.",
+            "title" => "Administración: Biblioteca Virtual en Salud",
+            "exist" => "Atención esta operación irá borrar el contenido deste componente de laa BVS.",
             "fail"  => "No fue posible borrar el componente, verifique los permisos del archivo: ",
 
         ),
     "pt" =>
         array (
-            "title" => "AdministraÃ§Ã£o: Biblioteca Virtual em SaÃºde",
-            "exist" => "AtenÃ§Ã£o esta operaÃ§Ã£o irÃ¡ apagar o conteÃºdo deste componente da BVS.",
-            "fail"  => "NÃ£o foi possivel apagar o componente, verifique as permissÃµes do arquivo: ",
+            "title" => "Administração: Biblioteca Virtual em Saúde",
+            "exist" => "Atenção esta operação irá apagar o conteúdo deste componente da BVS.",
+            "fail"  => "Não foi possivel apagar o componente, verifique as permissões do arquivo: ",
         ),
     "en" =>
         array (
@@ -50,8 +50,8 @@ if ( $action == "delete" ) {
 ?>
 <html>
     <head>
-        <title><?=$messages["title"]?></title>
-        <link rel="stylesheet" href="../css/public/skins/<?=$def['SKIN_NAME']?>/style-<?=$lang?>.css" type="text/css" media="screen"/>
+        <title><?php echo $messages["title"]?></title>
+        <link rel="stylesheet" href="../css/public/skins/<?php echo $def['SKIN_NAME']?>/style-<?php echo $lang?>.css" type="text/css" media="screen"/>
         <style>
             .confirm { margin: 10px; padding: 10px; background-color: #ddffdd;}
         </style>
@@ -60,31 +60,31 @@ if ( $action == "delete" ) {
         <script language="JavaScript">
             var listValues = opener.listValues;
             function initialCheck(){
-                <? if ( $fileXml != "" && file_exists($fileXml) ) {?>
+                <?php if ( $fileXml != "" && file_exists($fileXml) ) {?>
                     if (parseInt(navigator.appVersion)>3){
                           top.resizeTo(470,510);
                         top.moveTo(350,100);
                     }
-                <? } else {?>
+                <?php } else {?>
                     del( opener.document.formPage.tree );
                     top.close();
-                <? } ?>
+                <?php } ?>
             }
         </script>
 
     </head>
     <body onload="javascript:initialCheck();">
-        <form action="<?=$_SERVER["PHP_SELF"]?>" name="formPage" method="GET">
-            <input type="hidden" name="portal" value="<?=$checked['portal']?>"/>
+        <form action="<?php echo $_SERVER["PHP_SELF"]?>" name="formPage" method="GET">
+            <input type="hidden" name="portal" value="<?php echo $checked['portal']?>"/>
             <input type="hidden" name="action" value="delete"/>
-            <input type="hidden" name="id" value="<?=$checked['id']?>"/>
-            <input type="hidden" name="lang" value="<?=$checked['lang']?>"/>
+            <input type="hidden" name="id" value="<?php echo $checked['id']?>"/>
+            <input type="hidden" name="lang" value="<?php echo $checked['lang']?>"/>
         </form>
 
         <div class="container">
-            <? if ( file_exists($fileXml) ){ ?>
+            <?php if ( file_exists($fileXml) ){ ?>
                 <div class="confirm">
-                    <b><?=$messages["exist"]?></b><br/>
+                    <b><?php echo $messages["exist"]?></b><br/>
                     <div align="center">
                         <input type="button" value="confirmar" onclick="javascript:document.formPage.submit();" class="submit"/>
                         <input type="button" value="cancelar"  onclick="javascript:window.close();" class="submit"/>
@@ -92,14 +92,14 @@ if ( $action == "delete" ) {
                 </div>
                 <div class="middle">
                     <div class="secondColumn">
-                        <?
+                        <?php
                             if ( file_exists($fileHtml) ){
                                 print getDoc($fileHtml);
                             }
                         ?>
                     </div>
                 </div>
-            <? } ?>
+            <?php } ?>
         </div>
 
     </body>

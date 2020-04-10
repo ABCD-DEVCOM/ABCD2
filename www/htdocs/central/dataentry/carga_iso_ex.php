@@ -1,4 +1,4 @@
-<?
+<?php
 set_time_limit(0);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -27,18 +27,24 @@ if ($arrHttp["accion"]=="eliminar"){
 
 include("../common/header.php");
 
-function UseMx($db_path,$mx_path,$Dir){global $arrHttp,$msgstr;
+function UseMx($db_path,$mx_path,$Dir){
+global $arrHttp,$msgstr;
 	$base=$arrHttp["base"];
 	$iso=$Dir."/".$arrHttp["cnv"];
-	if (isset($arrHttp["tolinux"])){		echo $msgstr["tolinux"];
-		echo "<xmp>tr -d \"\\015\" < ".$iso." > ".$Dir."/tmp.iso</xmp>";		exec("tr -d \"\\015\" < ".$iso." > ".$Dir."/tmp.iso");
-		$iso=$Dir."/tmp.iso";	}
+	if (isset($arrHttp["tolinux"])){
+		echo $msgstr["tolinux"];
+		echo "<xmp>tr -d \"\\015\" < ".$iso." > ".$Dir."/tmp.iso</xmp>";
+		exec("tr -d \"\\015\" < ".$iso." > ".$Dir."/tmp.iso");
+		$iso=$Dir."/tmp.iso";
+	}
 	if (isset($arrHttp["borrar"]))
 		$accion=" create";
 	else
 		$accion=" append";
-	if (isset($arrHttp["toansi"])){		$toansi=" convert=ansi";
-		echo $msgstr["toansi"];	}else{
+	if (isset($arrHttp["toansi"])){
+		$toansi=" convert=ansi";
+		echo $msgstr["toansi"];
+	}else{
 		$toansi="";
 	}
 	echo "<p>".$msgstr["importiso_mx"];
@@ -50,7 +56,8 @@ function UseMx($db_path,$mx_path,$Dir){global $arrHttp,$msgstr;
 	if (isset($arrHttp["tolinux"]))
 		$r=unlink($iso);
 	$straux="";
-	for($i=0;$i<count($output);$i++){		$straux.=$output[$i]."<br>";
+	for($i=0;$i<count($output);$i++){
+		$straux.=$output[$i]."<br>";
 	}
 	if ($t==0)
 		$straux="<h3>process Output: ".$straux."<br>process Finished OK</h3><br>";
@@ -90,21 +97,24 @@ echo "
 <form name=explora>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=tablacnv value="">
-<?
+<?php
 $Dir=$db_path."wrk";
 if (isset($arrHttp["accion"])){
 	switch ($arrHttp["accion"]){
 		case "importar":
-			if (isset($arrHttp["toansi"]) or isset($arrHttp["usemx"]) ){				$cont=UseMx($db_path,$mx_path,$Dir);
+			if (isset($arrHttp["toansi"]) or isset($arrHttp["usemx"]) ){
+				$cont=UseMx($db_path,$mx_path,$Dir);
 				echo $cont;
-				break;			}
+				break;
+			}
 			echo "<dd><table><td>";
 			$IsisScript=$xWxis."export_txt.xis";
 			$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=importar&archivo=$Dir/".$arrHttp["cnv"]."&borrar=".$arrHttp["borrar"];
 			if (isset($arrHttp["fullinv"]))
 				$query.="&fullinv=".$arrHttp["fullinv"];
 			include("../common/wxis_llamar.php");
-			foreach($contenido as $linea) {				$linea=trim($linea);
+			foreach($contenido as $linea) {
+				$linea=trim($linea);
 				$ix=strpos($linea,'[');
 				if ($ix===false){
 					echo "$linea<br>";

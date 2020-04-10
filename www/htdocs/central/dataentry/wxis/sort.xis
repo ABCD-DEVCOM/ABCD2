@@ -15,7 +15,7 @@
 		<field action=cgi tag=1>path_db</field>
 		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
 		<trace>xOn</trace>
-<display><pft></pft></display>
+<!--display><pft>'sortkey='v3035</pft></display-->
        	<parm name=cipar>
           	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
        	</parm>

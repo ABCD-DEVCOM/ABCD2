@@ -40,7 +40,12 @@ global $server_url, $wxis_exec, $wxisUrl, $unicode;
     }
 	
 // next line to make sure password is checked with ANSI-database acces
-if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
+if ($actual_db == "acces")
+//OR $actual_db== "loanobjects" OR $actual_db= "trans")
+{
+$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec;
+//$cisis_ver="";
+}
 
 	if (isset($wxisUrl) and $wxisUrl!=""){
         	$query.="&path_db=".$db_path;
@@ -61,11 +66,12 @@ if ($actual_db == "acces") {$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec; }
     				     )
 					);
 		$context = stream_context_create($opts);
-//error_log("wxisUrl = $wxisUrl \n\r",3,'/opt/ABCD/www/bases/log/error.log');
+error_log("wxisUrl = $wxisUrl \n\r",3,'/opt/ABCD/www/bases/log/error.log');
+error_log("postdata = $postdata \n\r",3,'/opt/ABCD/www/bases/log/error.log');
 
 // MAIN POST CONNECTION in following line
-		$result=file_get_contents($wxisUrl,false, $context);
-
+        $result=file_get_contents($wxisUrl,false, $context);
+        //$result=file_get_contents('php://input',false, $context);
         $con=explode("\n",$result);
         $ix=0;
         $contenido=array();

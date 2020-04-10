@@ -88,14 +88,15 @@ function Enviar(){
 </head>
 <body>
 	<div class="heading">
-		<div class="institutionalInfo">
+		<div class="institutionalInfo"><h1>
 		<img src=<?php //echo "LOGO=$logo<BR>"; die;
                                    if (isset($logo))
-								echo "central/".substr($logo,3);
+								echo $logo;
 							else
 								echo "central/images/logoabcd.jpg";
 					  ?>
-					  ><h1><?php echo $institution_name?></h1>
+					  > &nbsp; &nbsp;
+                                          <?php echo $institution_name?></h1>
 		</div>
 		<div class="userInfo"></div>
 		<div class="spacer">&#160;</div>

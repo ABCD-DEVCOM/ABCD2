@@ -27,7 +27,7 @@ $newXml = '';
 
 if( $_REQUEST['action'] === 'add' && isset($_REQUEST['addname']) ){
     $add_name = preg_replace(
-        '/[^Ã€-Ã–Ã˜-Ã¶Ã¸-Ã¿\w\-_\(\)\[\] ]+/',
+        '/[^À-ÖØ-öø-ÿ\w\-_\(\)\[\] ]+/',
         ' ', $_REQUEST['addname']
     );
     $dir_name = normalize_xml_id( $add_name );
@@ -45,7 +45,7 @@ if( $_REQUEST['action'] === 'add' && isset($_REQUEST['addname']) ){
     unset($del_name);
 } else if( $_REQUEST['action'] === 'ren'){
     $new_name = preg_replace(
-        '/[^Ã€-Ã–Ã˜-Ã¶Ã¸-Ã¿\w\-_\(\)\[\] ]+/',
+        '/[^À-ÖØ-öø-ÿ\w\-_\(\)\[\] ]+/',
         ' ',
         $_REQUEST['rename']
     );

@@ -11,7 +11,7 @@
 		var $my_tempIssues = array();
 		var $sep = '_';
 		var $displayRule = 'chron|type';
-        var $my_ccode = '';
+                var $my_ccode = '';
 
 		function __construct($ccode, $modPath, $facicDB, $hldgDB, $titleDB, $tag, $mxPath, $tempPath, $displayRule='type')
 		{
@@ -25,7 +25,7 @@
 			$this->my_mxPath = $mxPath;
 			$this->my_tempPath = $tempPath;
 			$this->displayRule = $displayRule;
-            $this->my_ccode = $ccode;
+                        $this->my_ccode = $ccode;
 		}
 		
 		function getSep() {
@@ -39,13 +39,16 @@
 		function execute($titleId, $debug) {
             //centerCode
 			if ($this->my_path &&  $titleId &&  $this->my_facicDB &&  $this->my_hldgDB &&  $this->my_titleDB &&  $this->my_ccode &&  $this->my_mxPath &&  $this->my_tempPath &&  $debug){
+//                        echo "executing holdingGenerate...<BR>";
 				$call = $this->my_path.'/win/generateForJournal.bat '.$titleId.' '.$this->my_facicDB.' '.$this->my_hldgDB.' '.$this->my_titleDB.' '.$this->my_ccode.' '.$this->my_mxPath.' '.$this->my_path. ' '.$this->my_tempPath.' '.$debug;
 				if (strpos($call , chr(92) )>0){
 					$call = str_replace( chr(47), chr(92), $call);
 				} else {
 					$call = str_replace('/win/', '/lin/', $call);
+//                                        $call = str_replace('.bat','.sh', $call);
+//                                        $call = str_replace('proc=','"proc=',$call);
+//                                        $call = str_replace('~\'','~\'\"',$call);
 				}
-
 				$file = $this->my_tempPath.'/'.$titleId.'.temp.txt';
 				if ($this->my_tempIssues){
 					if (strpos($file,chr(92))>0){
@@ -55,7 +58,9 @@
 					fwrite($fp, $this->my_tempIssues);
 					fclose($fp);
 				}
+                                echo $call."<BR>";
 				exec($call);
+//echo "file=$file.result<BR>";die;
 				//$r = $call;
 				if (file_exists($file.'.result')){
 					$fp = fopen($file.'.result', "r");
@@ -173,13 +178,13 @@ class holding
 		 */
 		if(is_array($fieldsList))
 		{
-			while (list($key, $val) = each($fieldsList))
+			foreach($fieldsList as $key=>$val)
 			{
 				if($val != "") {
 					//Se o campo corrente for um array, extraimos seus dados
 					if(is_array($fieldsList[$key]))
 					{
-						while (list($keyf, $valf) = each($fieldsList[$key]))
+						foreach($fieldsList[$key] as $keyf=>$valf)
 						{
 							$this->defineField($_fields_tags[$key],$valf);
 						}
@@ -189,7 +194,7 @@ class holding
 				}
 			}
 		}
-		//print_r($this->registro);
+		print_r($this->registro);   die;
 		return $this->registro;
 	}
 	function setRecords()
@@ -203,7 +208,7 @@ class holding
 		}elseif(isset($_REQUEST["searchExpr"]) && $_REQUEST["searchExpr"] != "") {
 			$xmlparameters .= "<search>{$_GET["indexes"]}{$_REQUEST["searchExpr"]}</search>\n";
 		}else {
-			user_error("Para esta pesquisa, informe um termo!",E_USER_ERROR);
+			user_error("For this search, enter a term!",E_USER_ERROR);
 		}
 
 		if(isset($_GET['startIndex']) && $_GET['startIndex'] > 0) {
@@ -232,7 +237,7 @@ class holding
 		if(isset($_REQUEST['title']) && $_REQUEST['title'] != "") {
 			$rawxml = $isisBroker->IsisSearchSort($xmlparameters);
 		}else{
-			user_error("Selecione um título para ver seus Fasciculos",E_USER_ERROR);
+			user_error("Select a title to see its issues",E_USER_ERROR);
 		}
 		$posicion1 = strpos($rawxml,"<record");
 		$posicion2 = strpos($rawxml,"</record>");
@@ -246,7 +251,7 @@ class holding
 			$record->unserializeFromString($elemento);
 			$tempField = $record->campos;
 			$tempRecord = array();
-			while (list($key,$val) = each($tempField)) {
+			foreach($tempField as $key=>$val) {
 				if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
 					$varTemp = $tempRecord[$tempField[$key]->tag];
 					$tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);
@@ -295,7 +300,7 @@ class holding
                     $tempField = $record->campos;
                     $tempRecord = array();
 
-                    while (list($key,$val) = each($tempField)) {
+                    foreach($tempField as $key=>$val) {
                             if(array_key_exists($tempField[$key]->tag,$tempRecord)) {
                                     $varTemp = $tempRecord[$tempField[$key]->tag];
                                     $tempRecord[$tempField[$key]->tag] = array_merge($varTemp,$tempField[$key]->contenido);

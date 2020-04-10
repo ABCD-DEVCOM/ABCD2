@@ -1,0 +1,217 @@
+<IsisScript name="control">
+
+<function name="error" action="replace" tag="1">
+	<parm name="isisxml table">
+		<pft>
+			'record=error'/
+			'style=fixed'/
+			'1 message'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+	<display></wxis-modules></display>
+	<flow action="exit">0</flow>
+</function>
+
+<function name="status" action="replace" tag="2001">
+	<field action="statusdb" tag="1091"><pft>v2001</pft></field>
+	<field action="replace" tag="1092">
+		<pft>
+		'^m',if v1091^s : 'm' then 'exist' else 'not found' fi
+		'^i',if v1091^s : 'i' then 'exist' else 'not found' fi
+		if p(v1091^n) then '^t',f(val(v1091^n) - 1,1,0) fi
+		"^d"v1091^d,
+		"^e"v1091^e,
+		</pft>
+	</field>
+	<parm name="isisxml table">
+		<pft>
+			'record=database'/
+			'style=fixed'/
+			'1092 status'/
+			'1092^m master'/
+			'1092^i inverted'/
+			'1092^t total'/
+			'1092^d data_entry_lock'/
+			'1092^e exclusive_write_lock'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+ </function>
+
+<function name="unlock" action="replace" tag="2001">
+	<file action="unlock" type="database"><pft>v2001</pft></file>
+	<field action="replace" tag="2011">unlocked</field>
+	<parm name="isisxml table">
+		<pft>
+			'record=database'/
+			'style=fixed'/
+			'2011 status'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+
+	<field action="cgi" tag="2003">unlock</field>
+	<return action="replace" tag="2003"><pft>if v2003 = 'control' then v2003 fi</pft></return>
+
+	<do task="mfnrange">
+
+		<parm name="db"><pft>v2001</pft></parm>
+
+		<field action="define" tag="1091">Isis_Status</field>
+
+		<loop>
+			<flow action="skip"><pft>if v1091 <> '-2' then 'Next' fi</pft></flow>
+			<field action="import" tag="list">2001</field>
+
+			<do task="update">
+
+				<parm name="db"><pft>v2001</pft></parm>
+				<parm name="mfn"><pft>mfn(1)</pft></parm>
+				<parm name="expire">0</parm>
+				<parm name="lockid"><pft>'control.xis: ',getenv('REMOTE_ADDR')</pft></parm>
+
+				<field action="define" tag="1101">Isis_Lock</field>
+				<field action="define" tag="1102">Isis_Status</field>
+
+				<parm name="isisxml table">
+					<pft>
+						'style=fixed'/
+						'1102 Isis_Status'/
+					</pft>
+				</parm>
+
+				<update>
+					<write>Unlock</write>
+					<display><isisxml>*</isisxml></display>
+				</update>
+
+			</do>
+		</loop>
+
+	</do>	
+
+	<return action="replace" tag="2003"><pft>v2003</pft></return>
+</function>
+
+<function name="invert" action="replace" tag="2001">
+	<do task="fullinvertion">
+
+		<parm name="db"><pft>v2001</pft></parm>
+		<field action="replace" tag="2004"><pft>v2001,'.fst'</pft></field>
+		<parm name="fst"><pft>cat(v2004)</pft></parm>
+
+		<field action="define" tag="1102">Isis_Status</field>
+
+		<loop>
+		</loop>
+
+		<parm name="isisxml table">
+			<pft>
+				'record=database'/
+				'style=fixed'/
+				'2011 status'/
+			</pft>
+		</parm>
+		<field action="replace" tag="2011">inverted</field>
+		<display><isisxml>*</isisxml></display>
+
+	</do>
+
+	<return action="replace" tag="2004"><pft>v2004</pft></return>
+</function>
+
+<function name="create" action="replace" tag="2001">
+	<field action="cgi" tag="2005">create</field>
+	<flow action="jump"><pft>v2005</pft></flow>
+	<call name="error">wrong parameter: create</pft></call>
+
+	<label>database</label>
+	<file action="create" type="database"><pft>v2001</pft></file>
+	<flow action="jump">DONE</flow>
+
+	<label>master</label>
+	<file action="create" type="master"><pft>v2001</pft></file>
+	<flow action="jump">DONE</flow>
+
+	<label>inverted</label>
+	<file action="create" type="inverted"><pft>v2001</pft></file>
+	<flow action="jump">DONE</flow>
+
+	<label>DONE</label>
+	<parm name="isisxml table">
+		<pft>
+			'record=database'/
+			'style=fixed'/
+			'2005 created'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+	<return action="replace" tag="2005"><pft>v2005</pft></return>
+</function>
+
+<section name="control">
+
+	<field action="cgi" tag="5">xml_header</field>
+	<display>
+		<pft>
+			if v5 = 'no' then
+				'Content-type:text/plain'##
+			else
+				'Content-type:text/xml'##
+				'<?xml version="1.0" encoding="ISO-8859-1"?>'/
+			fi
+		</pft>
+	</display>
+	<trace>xOn</trace>
+
+	<field action="cgi" tag="2">IsisScript</field>
+	<field action="replace" tag="3"><pft>date</pft></field>
+	<field action="replace" tag="4"><pft>'^d',v3.8,'^t',v3*9.6</pft></field>
+	<display><pft>'<wxis-modules IsisScript="',v2,'" version="0.1">'/</pft></display>
+
+	<field action="cgi" tag="2001">database</field>
+	<call name="error"><pft>"missing parameter: database"n2001</pft></call>
+
+	<field action="cgi" tag="2002">function</field>
+	<flow action="jump"><pft>v2002</pft></flow>
+	<call name="error">missing parameter: function</pft></call>
+	
+	<label>status</label>
+	<call name="status"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>unlock</label>
+	<call name="unlock"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>invert</label>
+	<call name="invert"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>create</label>
+	<call name="create"><pft>v2001</pft></call>
+	<flow action="jump">END</flow>
+
+	<label>END</label>
+	<parm name="isisxml table">
+		<pft>
+			'record=control'/
+			'style=fixed'/
+			'4 server'/
+			'4^d date'/
+			'4^t time'/
+			'2001 database'/
+			'2002 function'/
+			'2003 unlock'/
+			'2004 fst'/
+			'2005 create'/
+		</pft>
+	</parm>
+	<display><isisxml>*</isisxml></display>
+	<display></wxis-modules></display>
+
+</section>
+
+</IsisScript>
+

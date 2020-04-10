@@ -1,6 +1,8 @@
-trans.*=%path_database%trans/data/trans.*
-suspml.*=%path_database%suspml/data/suspml.*
-
+trans.*=/var/opt/ABCD/bases/trans/data/trans.*
+suspml.*=/var/opt/ABCD/bases/suspml/data/suspml.*
+logtrans.*=/var/opt/ABCD/bases/logtrans/data/logtrans.*
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
 
 
 

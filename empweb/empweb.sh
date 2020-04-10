@@ -60,7 +60,10 @@ JETTY_CONSOLE="$EMPWEB_HOME/logs/jetty-console.log"
 
 # Java variables.
 #JAVA_HOME="/usr/lib/jvm/jdk1.7.0_60/bin"
-JAVA_HOME="/opt/jdk1.7.0_60/bin"
+#JAVA_HOME="/opt/jdk1.8.0_181/bin"
+#JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/bin"
+#JAVA_HOME="/usr/lib/jvm/java-8-oracle/bin"
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/bin"
 JAVA="$JAVA_HOME/java"
 
 
@@ -75,13 +78,14 @@ OS=linux
 LOGGING_CONF=$EMPWEB_HOME/common/etc/logging.properties
 
 # For large memory machines, dedicated to Empweb, -Xms = initial heap size, -Xmx = maximum heap size
-#JAVA_OPTIONS="-server -DSTART=$JETTY_START  -Djetty.home=$JETTY_HOME -Dempweb.home=$EMPWEB_HOME -Djava.util.logging.config.file=$LOGGING_CONF -Daxis.xml.reuseParsers=true -Xms128M -Xmx512M -Xincgc"
+#JAVA_OPTIONS="-server -DSTART=$JETTY_START  -Djetty.home=$JETTY_HOME -Dempweb.home=$EMPWEB_HOME -Djava.util.logging.config.file=$LOGGING_CONF -Daxis.xml.reuseParsers=true -Xms128M -Xmx512M"
+#-Xincgc
 
 # Or use less memory in smaller machines running other programs
-# JAVA_OPTIONS="-server -DSTART=$JETTY_START  -Djetty.home=$JETTY_HOME -Dempweb.home=$EMPWEB_HOME -Djava.util.logging.config.file=$LOGGING_CONF -Daxis.xml.reuseParsers=true -Xms64M -Xmx192M  -Xincgc"
+# JAVA_OPTIONS="-server -DSTART=$JETTY_START  -Djetty.home=$JETTY_HOME -Dempweb.home=$EMPWEB_HOME -Djava.util.logging.config.file=$LOGGING_CONF -Daxis.xml.reuseParsers=true -Xms64M -Xmx192M"
 
 # Or let its inner strength decide:
-JAVA_OPTIONS="-server -DSTART=$JETTY_START  -Djetty.home=$JETTY_HOME -Dempweb.home=$EMPWEB_HOME -Djava.util.logging.config.file=$LOGGING_CONF -Daxis.xml.reuseParsers=true -Dsun.net.client.defaultConnectTimeout=10000 -Dcisis.location=$CISIS_LOCATION -Dcisis.command=$CISIS_COMMAND -Dabcd.url=$ABCD_URL -Dcisis.platform=$OS -Xms128M -Xmx128M -Xincgc"
+JAVA_OPTIONS="-server -DSTART=$JETTY_START  -Djetty.home=$JETTY_HOME -Dempweb.home=$EMPWEB_HOME -Djava.util.logging.config.file=$LOGGING_CONF -Daxis.xml.reuseParsers=true -Dsun.net.client.defaultConnectTimeout=10000 -Dcisis.location=$CISIS_LOCATION -Dcisis.command=$CISIS_COMMAND -Dabcd.url=$ABCD_URL -Dcisis.platform=$OS -Xms128M -Xmx128M"
 
 ############################################################################
 #### You shouldn't change anything below unless you know what you're doing!

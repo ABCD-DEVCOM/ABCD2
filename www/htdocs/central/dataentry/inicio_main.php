@@ -123,7 +123,7 @@ if (isset($arrHttp["base"])){
 	$arrHttp["IsisScript"]="control.xis";
 	$llave=LeerRegistro();
 	$stat=explode('|',$llave);
-	$llave=substr($stat[2],7);
+	if (isset($stat[2])) $llave=substr($stat[2],7);
 	echo "<HTML><title>ABCD</title>
 				<head>
 				<script language=javascript src=js/lr_trim.js></script>

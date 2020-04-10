@@ -1,4 +1,5 @@
 <?php
+ini_set('error_reporting', E_ALL);
 // Main server configuration
 $server_url="http://127.0.0.1:9090";    // URL with port (if not 80)
 $postMethod=1;                          // if set to '1' (or true) ABCD will use POST-method; use with caution

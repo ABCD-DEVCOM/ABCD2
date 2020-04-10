@@ -91,7 +91,7 @@ class iniFile
 	function recursiveXML($arr)
 	{
 		$xml = "";
-		while (list($key, $value) = each($arr))
+		foreach($arr as $key=>$value)
 		{
 			if (is_array($value))
 			{

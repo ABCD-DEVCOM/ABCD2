@@ -10,7 +10,7 @@ $expression = "";
 if ($def['IAHX_SEARCH_URL'] != ''){     // use lucene query language and send request to iAHx
 
     foreach ($termList as $id=>$term){
-        $termPeaces = split("\|\|\|",$term);
+        $termPeaces = explode("\|\|\|",$term);
 
         $termName = trim($termPeaces[1]);
         $options = $termPeacesm[2];
@@ -40,7 +40,7 @@ if ($def['IAHX_SEARCH_URL'] != ''){     // use lucene query language and send re
 }else{      // use isis query language and send request to metaIAH
 
     foreach ($termList as $id=>$term){
-        $termPeaces = split("\|\|\|",$term);
+        $termPeaces = explode("\|\|\|",$term);
 
         $termName = trim($termPeaces[1]);
         $options = $termPeacesm[2];
@@ -73,7 +73,7 @@ if ($def['IAHX_SEARCH_URL'] != ''){     // use lucene query language and send re
 //================================================================================================================================
 function qualiferExp($qualifierList, $termName = ""){
 
-    $qualifierListArray = split(",",$qualifierList);
+    $qualifierListArray = explode(",",$qualifierList);
     $qlfExp .= "(";
     $totalQlf = count($qualifierListArray);
     for ($i = 0; $i < $totalQlf; $i++){

@@ -3,10 +3,10 @@
 DEFAULT_LANGUAGE=en
 [ENVIRONMENT]
 DIRECTORY=/site/
-SITE_PATH=C:/ABCD/www/htdocs/site/
-DATABASE_PATH=C:/ABCD/www/bases/site/
+SITE_PATH=C:\ABCD\www\htdocs\site\
+DATABASE_PATH=C:\ABCD\www\bases\site\
 SERVERNAME=localhost
-;LETTER_UNIT=D:\
+LETTER_UNIT=C:\
 [SKIN]
 SKIN_NAME=classic
 [METASEARCH]

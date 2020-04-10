@@ -118,6 +118,12 @@ OR alternatively, once the 'service' for Apache is running in Windows, one can s
    DATABASE_PATH=/opt/ABCD/www/bases/site/
    SERVERNAME=localhost
 
+   * Site : the demo-Site needs still to be re-configured for your local situation :
+       ** which databases are there,
+       ** which versions of wxis do they use (ansi/utf8 and default or ffi/bigisis etc.),
+       ** if in Windows : use 'wxis.exe', but if in Linux : use 'wxis' (without extension) in the URL
+       so please use the Site/Admin CMS to edit the correct URL's for each database !
+
    * Secs-Web :
    No need to adjust paths in the configuration, BUT : make sure you have a directory 'temp' in the dedicated 'bases'-subdirectory
    secs-web of your bases-folder, since the temporary (sessions-) files will need to be written there.
