@@ -8,7 +8,7 @@
 		     else
 		         echo "central/images/logoabcd.jpg";
 		     ?>
-		     height=55 width=55> &nbsp; &nbsp;
+		     height=44 width=33> &nbsp; &nbsp;
                      <?php echo $institution_name?>
                  </h1>
 		</div>

@@ -1,4 +1,4 @@
-[FILE_LOCATION]
+﻿[FILE_LOCATION]
 
 FILE DATABASE.*=%path_database%marcuni/data/marcuni.*
 FILE loanobjects.*=%path_database%loanobjects/data/loanobjects.*
@@ -25,27 +25,28 @@ FILE export_ProCite.pft=%path_database%marcuni/pfts/export_ProCite.pft
 FILE export_ReferenceManager.pft=%path_database%marcuni/pfts/export_ReferenceManager.pft
 FILE export_Refworks.pft=%path_database%marcuni/pfts/export_Refworks.pft
 FILE GXML=%path_database%gizmo/gXML.*
+FILE GZAMH=%path_database%gizmo/am/gzamh.*
 
 [INDEX_DEFINITION]
 
-INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^d*^xTW ^uTW_^yDATABASE^mTW_
-INDEX Tt=^1Palavras do título^2Palabras del título^3Title words^4Mots du titre^xTI ^uTT_^yDATABASE^mTT_
-INDEX Ti=^1Título^2Título^3Title^4Titre^xTI ^uTI_^yDATABASE^mTI_
-INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Résumé mots^xAB ^uAB_^yDATABASE^mAB_
-INDEX Au=^1Autor^2Autor^3Author^4Auteur^xAU ^uAU_^yDATABASE^mAU_
-INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^xAI ^uAI_^yDATABASE^mAI_
-INDEX Ma=^1Assunto tópico^2Descriptor^3Subject^4Sujet^xMA ^uMA_^yDATABASE^mMA_
-INDEX Dg=^1Nome geográfico^2Descriptor geográfico^3Subject geographic^4Sujet géographique^xGF ^uGF_^yDATABASE^mGF_
-INDEX Gf=^1Gênero/Forma^2Género/Forma^3Genre/Form^4Genre/Forme^xDG ^uDG_^yDATABASE^mDG_
-INDEX Pa=^1País^2País^3Country^4Pays^xPA ^uPA_^yDATABASE^mPA_^tshort
+INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^5ቃላት^d*^xTW ^uTW_^yDATABASE^mTW_
+INDEX Tt=^1Palavras do título^2Palabras del título^3Title words^4Mots du titre^5ርእስ-ቃላት^xTI ^uTT_^yDATABASE^mTT_
+INDEX Ti=^1Título^2Título^3Title^4Titre^5ርእስ^xTI ^uTI_^yDATABASE^mTI_
+INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Résumé mots^5ረቂቅ-ቃላት^xAB ^uAB_^yDATABASE^mAB_
+INDEX Au=^1Autor^2Autor^3Author^4Auteur^5ደራሲ^xAU ^uAU_^yDATABASE^mAU_
+INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^5Inst.ደራሲ^xAI ^uAI_^yDATABASE^mAI_
+INDEX Ma=^1Assunto tópico^2Descriptor^3Subject^4Sujet^5ጉዳዩ^xMA ^uMA_^yDATABASE^mMA_
+INDEX Dg=^1Nome geográfico^2Descriptor geográfico^3Subject geographic^4Sujet géographique^5ጂኦ-ርእስ^xGF ^uGF_^yDATABASE^mGF_
+INDEX Gf=^1Género/Forma^2Género/Forma^3Genre/Form^4Genre/Forme^5ጀነሪ^xDG ^uDG_^yDATABASE^mDG_
+INDEX Pa=^1País^2País^3Country^4Pays^5ሀገር^xPA ^uPA_^yDATABASE^mPA_^tshort
 
 [APPLY_GIZMO]
-
+GIZMO GZAMH
 
 [FORMAT_NAME]
 
-FORMAT standard.pft=^1Padrão^2Largo^3Large^4Grand
-FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée
+FORMAT standard.pft=^1Padrão^2Largo^3Large^4Grand^5ትልቅA
+FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée^5በዝርዝርA
 FORMAT DEFAULT=standard.pft
 
 [HELP_FORM]
@@ -60,4 +61,4 @@ SEND RESULT BY EMAIL=OFF
 NAVIGATION BAR=OFF
 DOCUMENTS PER PAGE=20
 FEATURES=XML
-UNICODE=2
+UNICODE=1

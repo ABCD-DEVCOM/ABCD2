@@ -105,7 +105,7 @@ S||Nombre de la parte/sección|0|0|p||X|||||||||0||
 S||Armonia o clave para musica|0|1|r||X|||||||||0||
 S||Version|0|0|s||X|||||||||0||
 S||Vinculación|0|1|6||X|||||||||0||
-T|245|Título Prop.dicho|1|0|12abcfknps6|||1||||TI_|v245^a," "v245^b,`(` f(mfn,1,0),`)`|f(mfn,1,0)||1|http://www.loc.gov/marc/bibliographic/litespa/elbdtitu.htm#mrcb245|
+T|245|Título Prop.dicho|1|0|12abcfknps6|||1||||TI_||||1|http://www.loc.gov/marc/bibliographic/litespa/elbdtitu.htm#mrcb245|
 S||Indicador 1|0|0|1||X||2|P|245-ind1.tab|||||0||
 S||Indicador 2|0|0|2||X||2|||||||0||
 S||Título prop. dicho|0|0|a||X|||D||TI_|@titulos.pft|||0||

@@ -53,7 +53,7 @@ switch ($type){
 $messageArray = array (
 "es" =>
     array (
-        "title" => "Administración: Biblioteca Virtual en Salud",
+        "title" => "AdministraciÃ³n: Biblioteca Virtual en Salud",
         "available" => "Disponible",
         "unavailable" => "Indisponible",
         "exit" => "Salir",
@@ -62,9 +62,9 @@ $messageArray = array (
     ),
 "pt" =>
     array (
-        "title" => "Administração: Biblioteca Virtual em Saúde",
-        "available" => "Disponível",
-        "unavailable" => "Indisponível",
+        "title" => "AdministraÃ§Ã£o: Biblioteca Virtual em SaÃºde",
+        "available" => "DisponÃ­vel",
+        "unavailable" => "IndisponÃ­vel",
         "exit" => "Sai",
         "save" => "Grava",
         "url"  => "Link para o arquivo RSS ",

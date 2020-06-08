@@ -27,11 +27,9 @@
 */
 session_start();
 // Situación de un objeto
-if (!isset($_SESSION["permiso"])){
-	header("Location: ../common/error_page.php") ;
+if (!isset($_SESSION["permiso"])){	header("Location: ../common/error_page.php") ;
 }
-$script_php="../circulation/situacion_de_un_objeto_db_ex.php";
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
+$script_php="../circulation/situacion_de_un_objeto_db_ex.php";if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 $arrHttp["ecta"]="Y";
 include("../config.php");
@@ -45,10 +43,8 @@ include("../reserve/reserves_read.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
-if (isset($arrHttp["db"])){
-	$b=explode("|",$arrHttp["db"]);
-	$arrHttp["base"]=$b[0];
-}
+if (isset($arrHttp["db"])){	$b=explode("|",$arrHttp["db"]);
+	$arrHttp["base"]=$b[0];}
 if (isset($arrHttp["inventory_sel"]))
 	$Opcion="inventario";
 else
@@ -78,10 +74,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$lang_db,$msgstr;
 		if ($linea!=""){
 			if (substr($linea,0,8)=='$$TOTAL:'){
 				$total=substr($linea,8);
-			}else{
-				return $linea;
-				break;
-			}
+			}else{				return $linea;
+				break;			}
 		}
 	}
 }
@@ -110,16 +104,11 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$lang_db,$pft_in,$msgstr,$config_date_form
 		}
 
 	}
-	if ($total==0){
-		echo "<font color=darkred>$control_number ".$msgstr["catalognotfound"]."</font><p>";
-		return;
-	}
+	if ($total==0){		echo "<font color=darkred>$control_number ".$msgstr["catalognotfound"]."</font><p>";
+		return;	}
 	//SE LEEN LOS ITEMS
-	if ($kardex=="S"){
-		//$Pft_Kardex="v1,|_A:|v17,|V:|v18,|N:|v19";
-		$Expresion='KARDEX_P_'.$control_number;
-		$query="&Opcion=disponibilidad&base=trans&cipar=$db_path"."par/trans.par&Expresion=".$Expresion."&Pft=$Pft";
-	}else{
+	if ($kardex=="S"){		//$Pft_Kardex="v1,|_A:|v17,|V:|v18,|N:|v19";
+		$Expresion='KARDEX_P_'.$control_number;		$query="&Opcion=disponibilidad&base=trans&cipar=$db_path"."par/trans.par&Expresion=".$Expresion."&Pft=$Pft";	}else{
 		$query = "&Opcion=disponibilidad&base=$db&cipar=$db_path"."par/$db.par&Expresion=".$Expresion."&Pft=$Pft";
 	}
 	include("../common/wxis_llamar.php");
@@ -130,8 +119,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$lang_db,$pft_in,$msgstr,$config_date_form
 	$cols=count($tit_tabla);
 	foreach ($contenido as $linea){
 		$linea=trim($linea);
-		if (trim($linea)!=""){
-			if (substr($linea,0,8)=='$$TOTAL:'){
+		if (trim($linea)!=""){			if (substr($linea,0,8)=='$$TOTAL:'){
 				$total=trim(substr($linea,8));
 			}else{
 				$lista_control_no=ShowItems($linea,$lista_control_no,$Opcion,$cols);
@@ -148,8 +136,7 @@ global $config_date_format;
 	$it=explode('|',$item);
 	$ixt=0;
 	$inv=$it[0];
-	foreach ($it as $val){
-		$ixt=$ixt+1;
+	foreach ($it as $val){		$ixt=$ixt+1;
 		echo "<td bgcolor=white>";
 		echo $val;
 		echo "</td>";
@@ -204,19 +191,15 @@ $pref_in=$b[2];
 $pft_in=$b[3];
 $pref_cn=$b[4];
 $kardex="";
-if (isset($b[6])){
-	$b[6]=trim(strtoupper($b[6]));
-	if ($b[6]=="KARDEX") $kardex="S";
-}
+if (isset($b[6])){	$b[6]=trim(strtoupper($b[6]));
+	if ($b[6]=="KARDEX") $kardex="S";}
 $arrHttp["db"]=$catalog_db;
 require_once("databases_configure_read.php");
 $pft_in=str_replace("/"," ",$pft_in);
 $pft_in=str_replace("\n"," ",$pft_in);
 if (isset($_SESSION["library"])) $pft_in=str_replace('#library#',$_SESSION['library'],$pft_in);
-if (isset($arrHttp["inventory_sel"])){
-	$arrHttp["inventory"]=urldecode($arrHttp["inventory_sel"]);
-	$Opc="INV";
-}else{
+if (isset($arrHttp["inventory_sel"])){	$arrHttp["inventory"]=urldecode($arrHttp["inventory_sel"]);
+	$Opc="INV";}else{
 	$arrHttp["inventory"]=$arrHttp["control"];
 	$Opc="CTRL";
 }
@@ -246,11 +229,7 @@ if (file_exists($archivo)){
 }
 
 if ($Pft==""){
-	if ($kardex=="S"){
-		$Pft="(v95,| Year:|v17,| Volume:|v18,| No.:|v19,'|', v20,ref(['users']l(['users']'$uskey'v20 ),' - 'v30),'|',";
-	}else{
-		$Pft="($pft_in,'|',ref(['trans']l(['trans'],'TR_P_'$pft_in),v20, ref(['users']l(['users']'$uskey'v20 ),' - 'v30),'|',";
-	}
+	if ($kardex=="S"){		$Pft="(v95,| Año:|v17,| Volumen:|v18,| Número:|v19,'|', v20,ref(['users']l(['users']'$uskey'v20 ),' - 'v30),'|',";	}else{		$Pft="($pft_in,'|',ref(['trans']l(['trans'],'TR_P_'$pft_in),v20, ref(['users']l(['users']'$uskey'v20 ),' - 'v30),'|',";	}
 
 
    	switch (substr($config_date_format,0,2)){
@@ -261,11 +240,7 @@ if ($Pft==""){
 	    	$Pft.= "v40*4.2,'/',v40*6.2,'/',v40.4";
 	    	break;
 	}
-	if ($kardex=="S"){
-		$Pft.= ",/)" ;
-	}else{
-		$Pft.= "),/)" ;
-	}
+	if ($kardex=="S"){		$Pft.= ",/)" ;	}else{		$Pft.= "),/)" ;	}
 
 }
 $Pft=urlencode($Pft);
@@ -275,18 +250,13 @@ $codigos=explode("\n",$arrHttp["inventory"]);
 foreach ($codigos as $cod_inv){
 	$cod_inv=trim($cod_inv);
 	if ($cod_inv=="")continue;
-	if ($Opc=="INV"){
-		if (isset($_SESSION["library"])) $cod_inv=$_SESSION["library"]."_".$cod_inv;
-	}
+	if ($Opc=="INV"){		if (isset($_SESSION["library"])) $cod_inv=$_SESSION["library"]."_".$cod_inv;	}
 	if (strpos($lista_control_no,";".$cod_inv.";")!==false)
 		continue;
-	if ($Opcion=="inventario"){
-		$ejemp=ReadCatalographicRecord($cod_inv,$Opcion,$catalog_db,$pref_in,$tit_tabla,$Pft,$kardex);
+	if ($Opcion=="inventario"){		$ejemp=ReadCatalographicRecord($cod_inv,$Opcion,$catalog_db,$pref_in,$tit_tabla,$Pft,$kardex);
 		$pref=$pref_in;
-	}else{
-		$ejemp=ReadCatalographicRecord($cod_inv,$Opcion,$catalog_db,$pref_cn,$tit_tabla,$Pft,$kardex);
-		$pref=$pref_cn;
-	}
+	}else{		$ejemp=ReadCatalographicRecord($cod_inv,$Opcion,$catalog_db,$pref_cn,$tit_tabla,$Pft,$kardex);
+		$pref=$pref_cn;	}
 	echo "</table>";
 	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
 		$control_no=ReadControlNumber($cod_inv,$Opcion,$catalog_db,$pref,$pft_nc);

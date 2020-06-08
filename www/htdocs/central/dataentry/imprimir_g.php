@@ -8,16 +8,14 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include("../config.php");
 include ("../lang/admin.php");
-$Expresion="";
-$data="";
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; //die;
-if (isset($arrHttp["Expresion"])){
-	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
+
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; die;
+
+if (isset($arrHttp["Expresion"])){	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
 	if (strpos('"',$arrHttp["Expresion"])==0) {
     	$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
 	}
-	$Expresion=urlencode($arrHttp["Expresion"]);
-}
+	$Expresion=urlencode($arrHttp["Expresion"]);}
 if (isset($arrHttp["pft"])) $arrHttp["pft"]=stripslashes($arrHttp["pft"]);
 
 
@@ -33,22 +31,16 @@ if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
 			$arrHttp["tipof"]="";
 		if (strpos($arrHttp["fgen"],'.pft')===false) $arrHttp["fgen"].=".pft";
 	    $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fgen"];
-	    if (!file_exists($Formato)){
-	    	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["fgen"];
-	    }
+	    if (!file_exists($Formato)){	    	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["fgen"];	    }
 	    if (file_exists($Formato)) $Formato="@".$Formato;
 // READ THE HEADINGS, IF ANY
-	    if ($arrHttp["tipof"]!=""){
-	    	$head=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$pft_name[0]."_h.txt";
+	    if ($arrHttp["tipof"]!=""){	    	$head=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$pft_name[0]."_h.txt";
 	    	if (!file_exists($head)){
 	    		$head=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$pft_name[0]."_h.txt";
 	    	}
-	    	if (file_exists($head)){
-	    		$fp=file($head);
+	    	if (file_exists($head)){	    		$fp=file($head);
 	    		$arrHttp["headings"]="";
-	    		foreach ($fp as $value) {
-	    			$arrHttp["headings"].=trim($value)."\r";
-	    		}
+	    		foreach ($fp as $value) {	    			$arrHttp["headings"].=trim($value)."\r";	    		}
 	    	}
 	    }
 	}
@@ -74,25 +66,15 @@ if (isset($arrHttp["guardarformato"])){
 }
 
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".$Expresion."&Opcion=$Opcion&Word=S&Formato=".$Formato;
-
-if (isset($arrHttp["seleccionados"])){
-	$seleccion="";
-	$mfn_sel=explode(',',$arrHttp["seleccionados"]);
-	foreach ($mfn_sel as $sel){
-		if ($seleccion==""){
-			$seleccion="'$sel'";
-		}else{
-			$seleccion.="/,'$sel'";
-		}
-	}
-	$query.="&Mfn=$seleccion";
-//        echo "query=$query<BR>";
-}else
+if (isset($arrHttp["seleccionados"]))
+	$query.="&Mfn=".str_replace(",","&Mfn=",$arrHttp["seleccionados"]);
+else
 	$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
+//echo $query;
 if (!isset($arrHttp["sortkey"])){
 	$IsisScript=$xWxis."imprime.xis";
 }else{
-	$query.='&sortkey='.urlencode($arrHttp["sortkey"]).",";
+	$query.='&sortkey='.urlencode($arrHttp["sortkey"]);
 	$IsisScript=$xWxis."sort.xis";
 }
 include("../common/wxis_llamar.php");
@@ -104,29 +86,20 @@ switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
 		break;
 	case "CT": //COLUMNS (TABLE)
 		$data="<table border=1>";
-		if (isset($arrHttp["headings"])){
-			$h=explode("\r",$arrHttp["headings"]);
-			foreach ($h as $value){
-				$data.="<th>$value</th>";
-			}
-		}
+		if (isset($arrHttp["headings"])){			$h=explode("\r",$arrHttp["headings"]);
+			foreach ($h as $value){				$data.="<th>$value</th>";			}		}
 		break;
 	case "CD":
 		if (isset($arrHttp["headings"])){
 			$h=explode("\r",$arrHttp["headings"]);
 			foreach ($h as $value){
 				if (trim($value)!=""){
-					if ($data==""){
-						$data=$value;
-					}else{
-						$data.="|$value";
-					}
+					if ($data==""){						$data=$value;					}else{						$data.="|$value";					}
                }
 			}
 			$data.="\n";
 		}
-		break;
-}
+		break;}
 foreach ($ficha as $linea){
 	if (substr($linea,0,6)=='$$REF:'){
 	 			$ref=substr($linea,6);
@@ -134,17 +107,14 @@ foreach ($ficha as $linea){
 	 			$bd_ref=$f[0];
 	 			$pft_ref=$f[1];
 	 			$expr_ref=$f[2];
-	 			$IsisScript=$xWxis."imprime.xis";
- 				$query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
+	 			$IsisScript=$xWxis."buscar.xis";
+ 				$query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=$pft_ref";
 				include("../common/wxis_llamar.php");
 				foreach($contenido as $linea) $data.= "$linea\n";
-	}else{
-		$data.= $linea."\n" ;
-	}
+	}else{		$data.= $linea."\n" ;	}
 
 }
-switch ($arrHttp["vp"]){
-	case "WP":
+switch ($arrHttp["vp"]){	case "WP":
     	$filename=$arrHttp["base"].".doc";
 		header('Content-Type: application/msword; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");

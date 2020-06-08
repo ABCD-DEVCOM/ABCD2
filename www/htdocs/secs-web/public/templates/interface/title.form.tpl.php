@@ -173,7 +173,7 @@
     <input type="hidden" name="field[dataBase]" value="TITLE"/>
     <input type="hidden" name="field[literatureType]" value="S"/>
     <input type="hidden" name="field[treatmentLevel]" value="s"/>
-    <input type="hidden" name="field[centerCode]" value="main"/>    <!--main-->
+    <input type="hidden" name="field[centerCode]" value="main"/>
     <input type="hidden" name="field[creationDate]" value="{$smarty.now|date_format:"%Y%m%d"}"/>
 		{if $edit}
            <input type="hidden" name="field[changeDate]" value="{$smarty.now|date_format:"%Y%m%d"}"/>
@@ -2414,7 +2414,7 @@
                 <div id="frDataFieldsotherDescriptors" style="display:block!important">&#160;</div>
                 <div class="spacer">&#160;</div>
             </div>
-            <!-->Inicio campo v450<-->
+            <!--Inicio campo v450<-->
             <div id="formRow54" class="formRow formRowFocus">
                 <label>{$BVS_LANG.lblindexingCoverage}</label>
                 <div class="frDataFields">
@@ -2443,7 +2443,7 @@
                         {$BVS_LANG.btSubField}
                         <span class="sb_rb">&#160;</span>
                     </a>
-                    <!começo da parte de inserir linha-->
+                    <!--começo da parte de inserir linha<-->
                     {section name=iten loop=$title450}
                     <div id="frDataFieldsindexingCoverage{$smarty.section.iten.index}" class="frDataFields">
                         <input type="text" name="field[indexingCoverage][]" 
@@ -2475,12 +2475,12 @@
                         </div>
                     {/if}
                 {/section}
-                    <!--fim da parte de inserir linha-->
+                    <!--fim da parte de inserir linha<-->
                 </div>
                 <div id="frDataFieldsindexingCoverage" style="display:block!important">&#160;</div>
                 <div class="spacer">&#160;</div>
             </div>
-            <!-->Fim do campo v450<-->
+            <!--Fim do campo v450<-->
 
         </div>
         <div class="formHead">

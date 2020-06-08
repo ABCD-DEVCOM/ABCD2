@@ -1,0 +1,466 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ABCD : a new FOSS library automation solution based on ISIS</title>
+</head>
+<body>
+<div class="page">
+<p/>
+<p>ABCD : a new FOSS library automation 
+solution based on ISIS12. 
+ 
+Egbert de Smet, University of Antwerp (Belgium) 
+ 
+ 
+Abstract : The new ABCD software for free and open library automation with ISIS is 
+presented with its technological and practical characteristics. As a web-based integrated 
+solution it combines most (if not all) functions of other systems such as KOHA with the 
+flexibility of the (Win)ISIS software to create and handle databases of any structure. The 
+main technical characteristics as well as some managerial issues are briefly presented. 
+The planning on the further work is discussed along with some challenges related to the 
+specific nature of the ISIS users community. 
+ 
+ 
+ 
+</p>
+<p>Introduction 
+ 
+The CDS/ISIS software, initially developed and supported by UNESCO since decades, 
+has developed into a &lsquo;family&rsquo; with many sister-softwares using the same database 
+technology for text-retrieval, and evolved from main-frame to PC-DOS, PC-Windows 
+now into web-based technology on various platforms. The main actor nowadays is 
+BIREME (PAHO/WHO, Brazil) where the software is used in very advanced ways to run 
+online databases (bibliographical and full-text) of millions of mostly medical documents. 
+ 
+For many people CDS/ISIS always has been a &lsquo;library software&rsquo;, which in essence is 
+wrong since the software only provided a general-purpose text-retrieval database 
+solution. It was and still is mainly used in libraries, and library automation indeed can be 
+done nicely but with major development efforts to this needing added, as shown by e.g. 
+the WEBLIS software with web-based integrated library functions. 
+Also BIREME has been developing specific library functions based on ISIS, such as a 
+&lsquo;Serials Control System&rsquo; (SeCS), a web-based OPAC (iAH) and advanced loan 
+management (EMP). Based on modern web-technology possibilities, such as AJAX, 
+PHP-scripting etc&hellip;, the idea has grown to produce a full-blown library automation 
+system combining the available ISIS-technology into one all-encompassing software to 
+finally provide the ISIS users with a real library system indeed. 
+With the (financial) support of the Flemish Interuniversity Council (Development Co-
+operation section) (VLIR/UOS), BIREME (OPS/WHO, Brazil) is now presenting the 
+results of a major development effort on the &lsquo;Automatisaci&oacute;n de Bibliot&eacute;cas y Centros de 
+Documentaci&oacute;n&rsquo; or ABCD software -  the credit for the name goes to Abel Packer, 
+BIREME director and long-time ISIS aficionado. 
+</p>
+<p>                                                
+1  This article is based on the presentation on ABCD held by the author at the 3rd 
+International Conference on ISIS, Rio de Janeiro (Brazil), 14-16 September 2008. 
+2  ISIS refers, as a more generic name, to the CDS/ISIS software standard, see a.o. its 
+home page http://www.unesco.org/isis </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>ABCD also marks the shift &ndash; both by UNESCO and BIREME &ndash; towards full &lsquo;Free and 
+Open Source Software (FOSS)&rsquo; and builds on the free availability of both the sources of 
+the codes and a &lsquo;developers community&rsquo; (web-based) environment. The GNU Public 
+License (GPL) is chosen as the most appropriate model. 
+ 
+The support of the Belgian VLIR/UOS is based on the need to offer such free software to 
+its university library partners, many of them already using ISIS but in need of more 
+advanced tools with respect for established standards or protocols such as MARC, 
+METS, OAI/HP, Z39.50. Also full UNICODE-support is required (to allow usage of 
+different scripts, e.g. Amharic language in Ethiopia); this technology allowing 
+simultaneous use of quite different scripts is important in view of the international and 
+multicultural mandate held by UNESCO. 
+ 
+</p>
+<p>ABCD technology overview 
+ 
+</p>
+<p>Basic technological features 
+ 
+ABCD uses the following technologies : 
+ 
+</p>
+<p>A. Multi platform : it will run on Windows, UNIX/Linux and OS/X. 
+B. Multi-lingual : it will run independent from the language and many language 
+</p>
+<p>versions can and will be produced. 
+C. ISIS databases : all data are stored in ISIS-databases, using current but 
+</p>
+<p>extended capacity (1 Mb record limit, 4 Gb database limit, 60-character inverted 
+file keys). However as soon as available, the new &lsquo;Network Based Platform&rsquo; of 
+ISIS will substitute for this older technology and take away all sexisting limitations 
+and add full UNICODE functionality. 
+</p>
+<p>D. ISIS-Script : for flexible retrieval and formatting of ISIS-records, the ISIS-Script 
+language is used, of course &ndash; as this is the nucleus of ISIS &ndash; combined with the 
+power of the Formatting Language to &lsquo;mould&rsquo; data from the records. 
+</p>
+<p>E. PHP : this very widely used FOSS software for web-pages scripting (currently in 
+its 5.2 version), adds lots of existing functions, controls and tools to ISIS. For 
+advanced interactivity in a web-environment AJAX-technology is used, 
+emphasizing local &lsquo;client-based&rsquo; processing to minimize of limited internet 
+bandwidth usage, which is a typical problem of the mainly &lsquo;developing world&rsquo; 
+characteristics of the ISIS-users community. 
+</p>
+<p>F. JavaScript : again very widely used, this technology adds possibilities to have 
+information locally processed within web-pages and to make these pages more 
+flexible/interactive. 
+</p>
+<p>G. Client-Server : the meanwhile familiar web-browser (in principle any of the known 
+ones : MS IE, Firefox, Opera, Chrome, Safari&hellip;) acts as the client whereas the 
+server has a web-server (e.g. Apache) forwarding all page creation requests to 
+an ISIS web-server executable (currently WXIS, to be replaced by the NBP 
+version soon). ABCD will both provide classic CGI-based interaction (where all 
+pages are requested through the http-protocol with web-server based security) 
+and direct calling of the ISIS-server executable (faster in a well-protected 
+&lsquo;localhost&rsquo; environment). 
+</p>
+<p> </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>The installation of the software therefore requires some carefully taken steps :  
+A. installation of a web-server (the free Apache seems to be most the most likely 
+</p>
+<p>candidate) with proper access rights given through &lsquo;aliases&rsquo; (or virtual directories) 
+to allow writing to the databases; 
+</p>
+<p>B. installation of PHP with some advanced add-ons such as XSLT support and YAZ 
+(for the Z39.50 client built into ABCD); 
+</p>
+<p>C. installation/copying of the demo databases, the many scripts with help pages 
+etc.; 
+</p>
+<p>D. editing of the correct file system paths to system parts and variables, e.g. the 
+responsible institute&rsquo;s name, in a simple text file &lsquo;CONFIG.PHP&rsquo;. 
+</p>
+<p>Of course, after its current &lsquo;alpha&rsquo; and soon upcoming &lsquo;beta&rsquo; test versions the software 
+will be presented with a full installation package, avoiding most of these far-from-obvious 
+technical challenges. However being a sophisticated web-based software, simplicity 
+cannot be fully reached, but examples of e.g. &lsquo;WAMP&rsquo; or &lsquo;EasyPHP&rsquo; are already showing 
+the way in this respect. 
+</p>
+<p>Functionality and modules 
+ 
+ABCD is an integrated library automation software, which means that it offers all main 
+functions in a library system. Some major bibliographic standards are offered by default : 
+MARC, CEPAL, AGRIS. But, and this is special we think (and is reflected by the addition 
+&lsquo;CD&rsquo; for &lsquo;documentation centers&rsquo; in the name), the system will also offer a very flexible 
+environment for web-based management of all sorts of documents and textual 
+databases, including full-text without pre-defined structures. 
+ 
+</p>
+<p>&lsquo;AB&rsquo; : modules for automation of libraries 
+The classic library automation (automatisaci&oacute;n de bibiliot&eacute;cas) modules are presented 
+as follows : 
+</p>
+<p>A. Users management and access control : a database is maintained with user-
+names and passwords and access control to an unlimited number of databases 
+in 4 authorization levels (system administrator, database administrator, database 
+operator, loans operator). 
+</p>
+<p> 
+B. Cataloging : one or more catalog databases in any of the defined bibliographic 
+</p>
+<p>formats (MARC, CEPAL and AGRIS having been pre-defined) can be browsed, 
+searched and edited. Records can be created, modified, copied, deleted, 
+imported and exported (from ISO2709, TXT and XML input). A Z39.50 client can 
+download MARC-records from existing online catalogs with, if defined, on-the-fly 
+conversion (also applicable to exported records). The display formats (selectable 
+from a menu) are based on the ISIS Formatting Language (meaning any number 
+of formats can be used), editing forms and both field- and record-validation all 
+are externally definable with access to thesauri, pick-lists from authority 
+databases etc&hellip; with all values produced by the powerful Formatting Language.  
+Two highlights in the cataloging module are : </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>a. the &lsquo;toolbar&rsquo; : giving the interface more of a &lsquo;local software&rsquo; looks-and-feel 
+</p>
+<p> 
+b. the A-&gt;Z list browser for quick location of records. 
+</p>
+<p> 
+ 
+</p>
+<p>Needless to say that all ISIS-fields and subfields (as intensively used in MARC) 
+can be edited individually without a need to know the internal coding, repeatable 
+occurrences of fields can be easily added and all elements have help-pages 
+documenting their meaning. In the MARC structure separate interaction with the 
+so-called &lsquo;fixed-field&rsquo; values is provided. 
+ 
+</p>
+<p> 
+ 
+</p>
+<p>A. Site with OPAC : a &lsquo;home page&rsquo; integrating the end-user search (basic, with 
+advanced as an option) with a CMS-editable environment page (for links with 
+information resources, partners, news items etc&hellip; is based on the iAH software 
+which BIREME uses for its main information products. This search-interface 
+allows searching (and merging results) from several databases or individual 
+databases, and ranked and cluster-based presentation of search results (based </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>on Lucene indexing, another novelty within the new ISIS developments). 
+</p>
+<p> 
+ 
+</p>
+<p>A. Serials Control System : a separate module allows management of a database of 
+serial publications along with individual editing of all issues. 
+</p>
+<p> 
+ 
+</p>
+<p>A. Loans management and Statistics : the loans implementation is fully rules-based, 
+meaning that any number of rules (regulations) can be defined on any number of 
+object types for any number of users for reservations, loaning out and returning 
+library objects. Book items can be either retrieved from a separate database of 
+items or, alternatively (for simpler systems) from a repeated field in the catalog. 
+</p>
+<p> 
+</p>
+<p>  
+ 
+The Statistics module works in 2 steps :  
+a. Definition of data to be table in a numerical table (from any field in any 
+</p>
+<p>database) 
+b. Graphical presentation of the tables based on existing advanced PHP 
+</p>
+<p>graphing controls. </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>This means that not only the circulation system can be monitored, but analysis 
+can be performed on any ISIS database in fact. 
+</p>
+<p> 
+ 
+</p>
+<p>A. Acquisition module : as this is probably the least important feature certainly in the 
+Developing World (where acquisitions mostly are confined to gifts and 
+exchange), this module will come last and only in a rather limited implementation, 
+combining &lsquo;pre-cataloging&rsquo; functions with the management of a providers&rsquo; 
+database. 
+</p>
+<p>&lsquo;CD&rsquo; for Documentation Centres 
+ 
+ABCD wants to be more than just a library automation software. (CDS/)ISIS always has 
+been much more, i.e. a general-purpose tool for management of textual databases. This 
+capacity has been, and still is, widely used throughout the world, both in the South and 
+the North, by thousands of information and documentation centers where no pre-defined 
+structures or standards were or are available. 
+ISIS-users used to use CDS/ISIS for DOS or WinISIS to define their own structures (with 
+Field Definition, Field Selection, Print Formats and Worksheets) for any kind of data. 
+Due to the built-in feature of ISIS to easily handle repeatable fields with variable number 
+of occurrences and length, no relational capabilities are required for the designer &ndash; 
+although by linking databases a semi-relational structure can also be used with the 
+advantage that relations are only used &lsquo;as-needed&rsquo; (run-time). 
+All this is now available also in the ABCD web-environment, with some additional 
+capabilities based on the rich web-environment : 
+</p>
+<p>A. full text documents : text-content from documents can be inserted in the rich-text 
+editor provided by PHP (FCKeditor is used); current record limitation is 1 Mb but 
+this limit will be dropped with the adoption of NBP in the ISIS Software Family 
+soon; 
+</p>
+<p>B. links : html-links (&lsquo;&lt;A HREF=&rdquo;..&rdquo;&gt;) can easily be embedded to call upon the 
+&lsquo;hypertext&rsquo; navigation features of the web 
+</p>
+<p>C. multimedia : the WWW is multimedia, so ABCD gives easy access to such 
+multimedia documents. </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 
+ABCD therefore has been tested with databases on factual information (such as 
+contacts databases, laws/regulation sets) and multimedia applications as well (image 
+databases, museum catalogs &ndash; where ISIS is increasingly used - etc.). 
+The software provides full interfaces to create and manipulate database structures : 
+</p>
+<p>A. field definitions, editing workheets, print formats, field indexing tables 
+B. validations on both field- and record-level 
+C. copy structures from existing ones 
+D. importing/exporting from existing databases or TXT (CSV), ISO2709 and XML-
+</p>
+<p>data 
+</p>
+<p>E. lock/unlock, initializing and deleting of databases.  
+ 
+</p>
+<p>As with the library automation part on cataloging, all fields can be entered using any 
+HTML-Form element (textarea, select list, radio-button) and based on any authority 
+database. To this end the &lsquo;classic&rsquo; ISIS Field Definition Table was largely extended with 
+new columns, e.g. name of authority database, validation formats,  help-pages etc. 
+</p>
+<p> 
+ 
+The ABCD resource people think this feature of flexible, multi-purpose but relatively easy 
+database creation differentiates ABCD from most other library automation solutions, </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>preparing the libraries for much more information provision roles than just their own 
+catalog.  
+As all this is offered in a multi-lingual tool, with full UNICODE-support upcoming, it is 
+argued that such initiative fully supports the ambitious aims of the &lsquo;IFLA Multicultural 
+Library Manifesto&rsquo;3 (see : 
+http://www.ifla.org/VII/s32/pub/MulticulturalLibraryManifesto.pdf) , which a.o. should  
+&ldquo;develop culturally diverse and multilingual collections and services, including digital and 
+multimedia resources; allocate resources for the preservation of cultural expression and 
+heritage, paying particular attention to oral, indigenous and intangible cultural heritage;&rdquo;.  
+  
+</p>
+<p>                                                
+3  This Manifesto was approved by the Governing Board of IFLA in August 2006 
+and endorsed in April 2008 by the Intergovernmental Council for UNESCO&rsquo;s Information 
+for All Programme with the recommendation that it be submitted to the 35th session of 
+the General Conference of UNESCO for consideration. 
+ </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>ABCD further development planning 
+ 
+</p>
+<p>Timing 
+At the Rio Conference (September 2008) a first test version of the ABCD software was 
+distributed, mainly to allow people to get a sense and feeling of the software and to 
+consider participation in the major translation efforts (of not only the software, but also 
+documentation and training materials). 
+A real, full-fledged beta-release of the software is envisaged to be ready by the end of 
+2008. This version will then also contain the full Loans module (with statistics) which was 
+only demonstrated at the Conference, and a rather basic Acquisition module. The project 
+&lsquo;Development Of and Capacity Building in ISIS Based Library Automation Systems&rsquo; 
+(DOCBIBLAS) of VLIR/UOS needs a first release by mid March 2009 for its first pilot 
+workshop on the software (for its own partner university libraries). Also this version for 
+VLIR/UOS needs to become available in three languages : English, Spanish and French. 
+BIREME of course will have added a Portuguese version as well, but more language 
+versions are most welcome and for this the world-wide ISIS users community will have 
+to be engaged, which requires good co-ordination and management efforts (see infra). 
+ 
+</p>
+<p>Migration to the new Network Based Platform of ISIS 
+Another major planning element is the migration of ABCD to NBP, the new underlying 
+ISIS technology being developed currently by BIREME. This will provide full UNICODE 
+support, database capacities only limited by hardware (not software) and technological 
+co-operation schemes based on the  &lsquo;ISIS-cell&rsquo; philosophy, in which all different ISIS-
+implementations present themselves as independent but communicating units 
+encompassing both the data, a command-line tool to manipulate the data and a gateway 
+for allowing other protocols (e.g. http, cgi) to interact with the cell. 
+This migration in principle will be &lsquo;seamless&rsquo;, i.e. transparent to end-users but also 
+system managers, as only the most basic layer of the system will be substituted (e.g. 
+with another cgi-server in ABCD). Since NBP also, like J-ISIS, relies on Lucene 
+indexing, full-text searching and ranked/clustered presentation of search results will 
+become normal practice with ABCD in the course of 2009. 
+</p>
+<p> 
+</p>
+<p>ABCD management issues 
+</p>
+<p>More and different co-ordination efforts needed 
+ 
+With the shift towards FOSS a new model of technical support and management of the 
+software is needed. While ISIS always has been &lsquo;free&rsquo; (no payment), the software 
+development was rather well controlled : mostly within UNESCO, later within BIREME 
+under quite strict &lsquo;closed&rsquo; supervision. The basic software structures were published, 
+allowing others to program their own solutions based on the same standard &ndash; which has 
+been done indeed all over the world and a project &lsquo;OpenISIS&rsquo; had run on SourceForge in </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>the years 2003-2006 &ndash; and the software itself had a very open architecture also 
+promoting the production of diverse applications 4. 
+ 
+</p>
+<p>Building on the United Nations mandate 
+The limited resources of UNESCO to deal with these developments now require new 
+management structures to be set up. At the 3rd International Conference on ISIS (Rio de 
+Janeiro, Brazil, 14-16 September 2008) it was decided to establish therefore an &lsquo;ISIS 
+International Steering Committee&rsquo; whose main goal is to promote, through lobbying, co-
+operation in between UNESCO and BIREME (based on a Memory of Understanding) 
+and organize the users&rsquo; input into the development and documentation processes. One 
+central idea is that UNESCO should not only welcome and fully adopt BIREME&rsquo;s 
+technological achievements but also help in making these available to all partner 
+countries (not only the Latin-American ones directly served by BIREME).  
+Two or three other UN-related organizations c/should also join this effort : FAO (Rome, 
+Italy) has been using ISIS technology for more than 15 years in its world-wide &lsquo;AGRIS&rsquo; 
+and &lsquo;ASFISIS&rsquo; systems and libraries, and also UNEP (Nairobi, Kenya) uses ISIS for its 
+libraries and bibliographic projects.  
+More joint efforts could reinforce the ISIS developments, now with even more focus on 
+training and capacity building on the new ISIS-products presented in Rio. Training and 
+capacity building are at the core of both the UN&rsquo;s development philosophy and the ISIS 
+project to promote sustainability and self-sufficiency in the participation by the South in 
+the global Information/Knowledge Society, esp. with the &lsquo;Information for All Programme&rsquo; 
+(IFAP) 5. 
+ 
+</p>
+<p>Working together to secure compatibility and preserve the ISIS 
+identity 
+Co-ordination will also be needed to secure compatibility in between the new BIREME-
+based ISIS software products, for which the FOSS support is using a developers&rsquo; 
+environment at BIREME itself (reddes.bireme.br) and the new UNESCO-based J-ISIS (a 
+client-server JAVA implementation of the software, using Sun&rsquo;s java.org platform for 
+open source development). Again co-ordination here requires both technical co-
+ordination (J-ISIS uses Berkeley DB as a storage engine, while BIREME&rsquo;s NBP is still 
+identifying the best choice but taking Berkely DB as an excellent candidate), but also 
+working together at the more practical levels, e.g. using different developers&rsquo; 
+communities tools adds complexity into this big challenge. 
+The main challenge however will be the preservation of the identity of ISIS as a software 
+family, with its own medium-level application development tool (mainly the ISIS 
+Formatting Language) allowing local system managers to fully manipulate the software 
+to a locally owned tool &ndash; &lsquo;ownership&rsquo; in this case again requiring capacity building for 
+self-sufficient control of the software. Through avoiding the &ndash; for documentary 
+applications &ndash; unnecessary complexity of relational systems, while still using excellent 
+document handling technology, ISIS provides such possibility more than most other 
+solutions, at least in principle.  
+</p>
+<p>                                                
+4  See : de Smet, E. 'The ISIS-software family : from 'Free and Open' to 'Free and Open Source 
+Software'. Innovation, Journal of Appropriate Librarianship and Information Work, June 2008 
+5  See UNESCO&rsquo;s website, esp. http://portal.unesco.org/ci  </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p>ABCD aims at proving this point too, but will have to cope with the specific nature of 
+most of ISIS&rsquo; user communities : highly dedicated and motivated but with quite poor 
+resources (in many cases even to connect with other users !) and relatively low levels of 
+capacity and skills. 
+ 
+</p>
+<p>Final observation 
+This finally brings us to the core questions at stake, whose answers will get &ndash; hopefully &ndash; 
+a catalyst factor from the ABCD project : 
+</p>
+<p>A. Is library automation, at an advanced level incorporating currently available state-
+of-the-art software technology (such as WWW &ndash; even WEB2.0 -, full-text 
+documents and ranked retrieval), omitting unnecessary complexity since such 
+basic complexity is unavoidable in a complex environment, viable in developing 
+environments, even if given for free ? 
+</p>
+<p>B. Is international co-operation, lead by some major UN-bodies (UNESCO, WHO, 
+FAO&hellip;), capable of indeed promoting this ? 
+</p>
+<p>C. Is Open Source collaboration, not only in the software coding but also, perhaps 
+more importantly, in the production of help pages, documentation and training 
+materials, a suitable model, if properly set up, to reach such high goals ? 
+</p>
+<p> 
+This article, which only aimed at initially presenting ABCD, will not give these answers of 
+course. But we hope, by putting the questions clearly on the table, that efforts can be 
+more focused towards reaching these goals, and that answers therefore not only will 
+come well delineated but also more positive. </p>
+<p/>
+</div>
+</body>
+</html>

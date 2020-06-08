@@ -18,7 +18,6 @@ function EjecutarBusqueda(F,desde){
 			if (document.forma1.terminos.options[i].selected==true){
 				Termino=document.forma1.terminos.options[i].value;
 				var index=Termino.indexOf(String.fromCharCode("65533"));
-//				    alert ('index ='+index);
 				if(index>=0){
 					Termino=Termino.substring(0,index-1);
 					Termino+="$";

@@ -25,13 +25,13 @@ if($serverOS == "Win"){
     //echo "WINDOWS<BR>";
     $BVS_CONF['PATHMX'] = BVS_DIR."\\cgi-bin\\ansi\\mx.exe";
     $BVS_CONF['PATHMXTB'] = BVS_DIR."\\cgi-bin\\ansi\\mxtb.exe";
-    define("BVS_DATABASE_DIR",BVS_DIR."\\bases\\secs-web\\"); //Databases directory from symbolic link to bases-folder
+    define("BVS_DATABASE_DIR",BVS_DIR."\\bases\\secs-web\\"); //Databases directory
 }else{
     //Linux variables
     //echo "LINUX<BR>";
     $BVS_CONF['PATHMX'] = BVS_DIR."/cgi-bin/ansi/mx";
     $BVS_CONF['PATHMXTB'] = BVS_DIR."/cgi-bin/ansi/mxtb";
-    define("BVS_DATABASE_DIR",BVS_DIR."/bases/secs-web/"); //Databases directory from symbolic link to bases-folder
+    define("BVS_DATABASE_DIR",BVS_DIR."/bases/secs-web/"); //Databases directory
 }
 
 //Defines a named constant used in the system, defines initial configuration
@@ -45,7 +45,7 @@ define("BVS_PUBLIC_DIR",BVS_ROOT_DIR . "/public");
 define("BVS_LANG_DIR",BVS_ROOT_DIR . "/lang");
 define("BVS_TPL_DIR",BVS_PUBLIC_DIR . "/templates");
 define("INIFILE",BVS_COMMON_DIR ."/ini/bases.conf.php");
-define("DEBUG",true);
+define("DEBUG",false);
 define("HLDGMODULE","hldgChronOrder"); # hldgModule(old) or hldgChronOrder
 define("HLDGMODULE_DEBUG","no"); # yes or no
 define("HLDGMODULE_TAG","970"); # yes or no
@@ -62,7 +62,7 @@ define('CREATE_LOCK_ERROR', -2);
 define('FILE_READ_ERROR', -3);
 
 //Set initial variables
-date_default_timezone_set("Europe/Paris");
+date_default_timezone_set("America/Sao_Paulo"); 
 $BVS_CONF["metaAuthor"] = "BIREME|OPAS|OMS";
 $BVS_CONF["authorURI"] = "http://www.bireme.org/";
 $BVS_CONF["copyright"] = date("Y");

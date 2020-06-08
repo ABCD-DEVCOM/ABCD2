@@ -1,4 +1,5 @@
 <?php
+
 require("../php/include.php");
 
 $lang = $_POST["lang"];

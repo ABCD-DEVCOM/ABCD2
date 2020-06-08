@@ -5,7 +5,7 @@ id = Cédula de Identidad *
 name = Name *
 category = Category 
 email = E-mail *
-email_apoderado = Copy to agent
+email_apoderado = Copy to agent ?
 phone = Tel.no. of contact
 comments = Remarks
 subtitle_request = Request data
@@ -16,7 +16,7 @@ help_select =  Click here to select
 send_button = Send
 clean_button = Clean
 cancel_button = Close
-comments = Comments
+comments = Comements
 error_sar = You have to enter article title or first page
 HEADER_MESSAGES
 module_name = DOCUMENT DELIVERY REQUEST

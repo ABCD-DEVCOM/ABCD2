@@ -240,7 +240,7 @@ function init() {
                     {$BVS_LANG.btSubField}
                     <span class="sb_rb">&#160;</span>
                 </a>
-                <!--começo da parte de inserir linha-->
+                <!-->começo da parte de inserir linha<-->
                 {section name=iten loop=$titplus450}
                 <div id="frDataFieldsacquisitionHistory{$smarty.section.iten.index}" class="frDataFields">
                     <input type="text" name="field[acquisitionHistory][]" id="acquisitionHistory{$smarty.section.iten.index}" value="{$titplus913[iten]}" class="textEntry singleTextEntry" onfocus="this.className = 'textEntry singleTextEntry textEntryFocus';document.getElementById('formRow54').className = 'formRow formRowFocus';" onblur="this.className = 'textEntry singleTextEntry';document.getElementById('formRow54').className = 'formRow';" />
@@ -264,7 +264,7 @@ function init() {
                 </div>
                 {/if}
                 {/section}
-                <!--fim da parte de inserir linha-->
+                <!-->fim da parte de inserir linha<-->
             </div>
             <div id="frDataFieldsacquisitionHistory" style="display:block!important">&#160;</div>
             <div class="spacer">&#160;</div>

@@ -12,17 +12,16 @@ CONTROL_FILE=$HLDG.INVERTING
 $THIS_PATH/lin/registerTime.bat $KEY $0_inicio
 
 echo Executing of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9>> $LOG_FILE
-echo "operation= " $APPEND_OR_CREATE_OR_COPY
-#read -n1 -r -p "Press any key to continue..." key
-echo "Press enter to continue;" read dummy;
-if [ "$APPEND_OR_CREATE_OR_COPY" = "copy" ]
+# echo $APPEND_OR_CREATE_OR_COPY
+
+if [ "@$APPEND_OR_CREATE_OR_COPY" == "@copy" ]
 then
 $THIS_PATH/lin/registerTime.bat $KEY $0_1
 	# echo copying
 	$THIS_CISIS/mx $HLDG btell=0 "TIT=$KEY" count=1 "proc='d*','a30{',v30,'{','a10{',v10,'{','a$TAG_RESUMIDO{converting{'" $APPEND_OR_CREATE_OR_COPY=$HLDG now -all
 else
 $THIS_PATH/lin/registerTime.bat $KEY $0_2
-	if [ "$APPEND_OR_CREATE_OR_COPY" = "append" ]
+	if [ "@$APPEND_OR_CREATE_OR_COPY" == "@append" ]
 	then
 	$THIS_PATH/lin/registerTime.bat $KEY $0_3
 	# echo appending

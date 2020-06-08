@@ -9,8 +9,7 @@ $mfnc=$_GET["mfn"];
 //Update copy status to removed
 $MyNewRecord="<200>^a4^bRemoved<~200>";
 $MyRecord=str_replace ("~", '/', $MyNewRecord);
-$mx1=$converter_path." ".$db_path."copies/data/copies from=$mfnc count=1 \"proc=if mfn=".$mfnc." then  'd200', '".$MyRecord."',fi,
-\" copy=".$db_path."copies/data/copies now -all";
+$mx1=$converter_path." ".$db_path."copies/data/copies \"proc=if mfn=".$mfnc." then  'd200', '".$MyRecord."',fi,\" copy=".$db_path."copies/data/copies now -all";
 exec($mx1,$outmx1,$banderamx1);
 //End of Update copy status to removed
 

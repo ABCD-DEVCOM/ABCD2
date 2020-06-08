@@ -1,8 +1,7 @@
 <?php
 
-//echo $arrHttp["ventana"];
-if (!isset($fmt_test) and !isset($arrHttp["ventana"])){
-	echo "<div class=\"helper\" style=\"height:23px\">\n" ;
+echo $arrHttp["ventana"];
+if (!isset($fmt_test) and !isset($arrHttp["ventana"])){	echo "<div class=\"helper\" style=\"height:23px\">\n" ;
 	if (isset($default_values)){
 		echo "<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/valdef.html target=_blank>".$msgstr["m_ayuda"]."</a>&nbsp &nbsp;";
 	    if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/valdef.html target=_blank>". $msgstr["edhlp"]."</a>";
@@ -24,9 +23,7 @@ if (!isset($fmt_test) and !isset($arrHttp["ventana"])){
 	<div class="middle form">
 		<div class="formContent">
 
-<?php if (!isset($arrHttp["ventana"])){
-?>
-<script language ="javascript" type="text/javascript">
+<?php if (!isset($arrHttp["ventana"])){?><script language ="javascript" type="text/javascript">
 
 
 function scrollingDetector(){
@@ -83,8 +80,7 @@ startScrollingDetector()
 		$rec_validation="S";
 	}
 	$db=$arrHttp["base"];
-    if (!isset($arrHttp["encabezado"])){
-        if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N") $_SESSION["TOOLBAR_RECORD"]="N";
+    if (!isset($arrHttp["encabezado"])){        if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N") $_SESSION["TOOLBAR_RECORD"]="N";
 	 	switch ($arrHttp["Opcion"]){
 			case "ver":
 			case "leer":
@@ -93,22 +89,17 @@ startScrollingDetector()
 			case "buscar":
 			case "presentar_captura":
 			case "dup_record":
-				if (isset($_SESSION["TOOLBAR_RECORD"]) and $_SESSION["TOOLBAR_RECORD"]=="N"){
-					unset( $_SESSION["TOOLBAR_RECORD"]);
-					break;
-				}
-				echo "
-				<input type=checkbox name=sel_mfn id=sel_mfn onclick=top.SeleccionarRegistro(this) value=".$arrHttp["Mfn"].">";
-				if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
-					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src=img/toolbarEdit.png alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
+				if ($_SESSION["TOOLBAR_RECORD"]=="N"){					unset( $_SESSION["TOOLBAR_RECORD"]);
+					break;				}
+				echo "				<input type=checkbox name=sel_mfn id=sel_mfn onclick=top.SeleccionarRegistro(this) value=".$arrHttp["Mfn"].">";
+				if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src=img/toolbarEdit.png alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
 				    if ($pdf=="Y") {
 				    	echo " &nbsp;<a href=\"javascript:top.Menu('editar_HTML')\" title=\"IMPORT DOC\">";
 				    	echo "<img src=img/import.gif alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>";
 				    	echo "  &nbsp;\n";
 					}
 				}
-				if (isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
-					echo " &nbsp;<a href=\"javascript:top.Menu('dup_record')\" title=\"".$msgstr["m_copyrec"]."\"><img src=img/toolbarCopy.png alt=\"".$msgstr["m_copyrec"]."\" style=\"border:0;\"></a>  &nbsp;\n";
+				if (isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {					echo " &nbsp;<a href=\"javascript:top.Menu('dup_record')\" title=\"".$msgstr["m_copyrec"]."\"><img src=img/toolbarCopy.png alt=\"".$msgstr["m_copyrec"]."\" style=\"border:0;\"></a>  &nbsp;\n";
 				}
 				echo " &nbsp;<a href=\"javascript:top.Menu('same')\" title=\"".$msgstr["refresh_db"]."\"><img src=img/refresh0.gif alt=\"".$msgstr["refresh_record"]."\" title=\"".$msgstr["refresh_record"]."\" style=\"border:0;\"></a>  &nbsp;\n";
 
@@ -116,11 +107,9 @@ startScrollingDetector()
 				if (isset($_SESSION["permiso"]["CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"][$db."_CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) echo "<a href=\"javascript:top.Menu('edit_Z3950')\" title=\"Z39.50\"><img src=img/z3950.png alt=\"Z39.50\" style=\"border:0;\"></a>\n";
 				if (isset($_SESSION["permiso"]["CENTRAL_EDREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 					if (isset($rec_validation)) echo "<a href='javascript:top.Menu(\"recvalidation\")' title=\"".$msgstr["rval"]."\"><img src=img/recordvalidation_p.gif alt=\"".$msgstr["rval"]."\" style=\"border:0;\"></a> &nbsp;\n";
-				if (isset($arrHttp["db_copies"])){
-					if (isset($_SESSION["permiso"]["CENTRAL_ADDCOP"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDCOP"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){  //THE DATABASES HAS COPIES DATABASE
+				if (isset($arrHttp["db_copies"])){					if (isset($_SESSION["permiso"]["CENTRAL_ADDCOP"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDCOP"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){  //THE DATABASES HAS COPIES DATABASE
 						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addcopies\")' title='".$msgstr["m_addcopies"]."'><img src=img/db_add.png alt='".$msgstr["m_addcopies"]."' border=0></a> &nbsp;\n";
-						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"editdelcopies\")' title='".$msgstr["m_editdelcopies"]."'><img src=img/database_edit.png alt='".$msgstr["m_editdelcopies"]."' border=0></a> &nbsp;\n";
-				    }
+						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"editdelcopies\")' title='".$msgstr["m_editdelcopies"]."'><img src=img/database_edit.png alt='".$msgstr["m_editdelcopies"]."' border=0></a> &nbsp;\n";				    }
 					if (isset($_SESSION["permiso"]["CENTRAL_ADDLO"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDLO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]))
 						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addloanobjects\")' title='".$msgstr["addloansdb"]."'><img src=img/add.gif alt='".$msgstr["addloansdb"]."' border=0></a> \n";
 				}
@@ -135,10 +124,7 @@ startScrollingDetector()
 			case "capturar":
 			case "crear":
 			case "reintentar":
-				if ($OpcionDeEntrada!="captura_bd"){
-					if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N"){
-                        echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src=img/toolbarCancelEdit.png alt='".$msgstr["m_cancelar"]."' border=1><a> &nbsp; \n";
-					}else{
+				if ($OpcionDeEntrada!="captura_bd"){					if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N"){                        echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src=img/toolbarCancelEdit.png alt='".$msgstr["m_cancelar"]."' border=1><a> &nbsp; \n";					}else{
 				   		echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src=img/toolbarCancelEdit.png alt='".$msgstr["m_cancelar"]."' border=1><a> &nbsp; \n";
 					}
 					echo "<a href='javascript:EnviarForma()' title=\"".$msgstr["m_guardar"]."\"><img src=img/toolbarSave.png alt=\"".$msgstr["m_guardar"]."\"><a> &nbsp; \n";
@@ -168,9 +154,7 @@ startScrollingDetector()
 			</div></div>
 			</div>
  <?php
- 		}else{
- 			echo "</div><p>";
- 		}
+ 		}else{ 			echo "</div><p>"; 		}
  		echo "</font>";
     }
 
@@ -181,8 +165,7 @@ startScrollingDetector()
 		select_Mfn='_'+top.Mfn_Search+'_'
 	else
 		select_Mfn='_'+top.mfn+'_'
-	if (top.RegistrosSeleccionados.indexOf(select_Mfn)!=-1){
-		Ctrl=top.main.document.getElementById("sel_mfn")
+	if (top.RegistrosSeleccionados.indexOf(select_Mfn)!=-1){		Ctrl=top.main.document.getElementById("sel_mfn")
 		if (Ctrl.checked)
 			Ctrl.checked=false
 		else

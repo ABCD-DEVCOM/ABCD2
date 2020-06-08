@@ -125,15 +125,13 @@ class Record
 	function select_fields($tag)
 	{
 		$resultado = array();
-//var_dump($this->campos);
+
 		for ($i=0;$i<sizeof($this->campos);$i++)
 		{
 		   $campo = $this->campos[$i];
 		   if ($campo->getTag() == $tag)
 		   {
 		   	array_push($resultado,$campo);
-                echo "<BR>tag=$tag<BR>";
-//var_dump($resultado);
 
 		   }
 		}
@@ -166,10 +164,6 @@ class Record
 		   print $this->campos[$i]->getTag()."\n";
 		   	$i++;
 		}
-	}
-	function getCampos()
-	{
-		return $this->campos;
 	}
 }
 
@@ -221,7 +215,7 @@ class Field
 			$buffer .= $this->subcampos[$j]->asIsis();
 		}
 		$buffer.="</occ></field>";
-		
+	    
 		return $buffer;
 	}
 	

@@ -57,7 +57,7 @@ function wxis_url ( $IsisScript, $param )
 	$param = str_replace("<parameters>", "", $param);
 	$param = str_replace("</parameters>", "", $param);
 	$param = str_replace(">", "=", $param);
-	$paramSplited = explode("<",$param);
+	$paramSplited = split("<",$param);
 	reset($paramSplited);
 	foreach($paramSplited as $key=>$value )
 	{

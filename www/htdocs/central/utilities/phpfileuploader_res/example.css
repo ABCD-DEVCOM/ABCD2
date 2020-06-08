@@ -1,0 +1,36 @@
+body,p,div,span,table{ font: 12px Arial, Helvetica, sans-serif; }
+form { padding: 0px; margin: 0px; border: 0px; }
+table { border: 0;}
+td{vertical-align:top}
+h1 { font:bold 17px verdana; margin-bottom:10px; color: #224488;}
+h5{font-size:13px;}
+a:link {color: #234B7B; text-decoration: underline}
+a:visited {	color: #234B7B; text-decoration: underline}
+a:active { color: #234B7B; text-decoration: underline}
+a:hover { text-decoration: none}
+img{border:0;}
+.topmenu
+{	
+	background-color: #234B7B;
+	border-color: #cccccc;
+	color: #fff;
+	height:24px;
+	vertical-align:middle;
+	padding-left:15px;
+}
+a.menu:link,a.menu:visited,a.menu:active {
+	font:bold 10px verdana;
+	color:White;
+	padding:4px 3px 2px 3px;
+	text-decoration:none;
+}
+#footer { clear: both;	padding: 1em;	text-align: center;	border-top:solid 1px #ECECF6; width:750; }	
+.box{
+	border:1px solid #cccccc;
+	margin-bottom:10px;
+	padding:5px;
+}
+.f4
+{
+	background-color: #f4f4f4;
+}

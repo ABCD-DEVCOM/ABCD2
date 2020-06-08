@@ -51,7 +51,7 @@ include("../lang/admin.php");
 include("../lang/prestamo.php");
 //
 //
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; die;
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; //die;
 
 //Calendario de días feriados
 include("../circulation/calendario_read.php");
@@ -83,9 +83,11 @@ if ($Formato!=""){
 
 function ReservesAssign($key,$espera){
 global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
-	$Expresion=$key." and (ST_0 or ST_3)";
+	$Expresion=$key." and ST_0 or ST_3";
 	$IsisScript=$xWxis."cipres_usuario.xis";
-	$Pft="f(mfn,1,0),'|',v10,'|'v60,'|',v40,'|',v130,'|',v200,'|'v30,'|',v31,'|'v12,'|'v15,'|'v20/";
+//	$Pft="f(mfn,1,0),'|',v10,'|'v60,'|',v40,'|',v130,'|',v200,'|'v30,'|',v31,'|'v12,'|'v15,'|'v20/";
+$Pft=$ABCD_path."www/htdocs/central/circulation/devolver_exReservar.pft";
+
 	                                                //v10:  Código del usuario
 	                                               //v60:  Fecha en la cual se asignó el objeto al usuario de la reserva
 	                                               //v40:  Fecha hasta la cual es válida la reserve
@@ -96,7 +98,7 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 	                                               //v12 : Tipo de usuario
 	                                               //v15 : Base de datos
 	                                               //v20 : Número de control
-	$query="&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Pft=$Pft";
+	$query="&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Pft=@$Pft";
 	include("../common/wxis_llamar.php");
 	$Usuario="";
 	$tipo_usuario="";
@@ -109,7 +111,8 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 	$asignadas=0;
 	foreach ($contenido as $value) {
 		$value=trim($value);
-		if (trim($value)!=""){			$r=explode('|',$value);
+		if (trim($value)!=""){
+			$r=explode('|',$value);
 			$fecha_asignacion=$r[2];     //fecha en la cual se asignó el objeto a un usuario de reserva
 			$fecha_validez=$r[3];        //fecha hasta la cual se espera la reserva
 			$fecha_cancelacion=$r[4];    //fecha en la cual un operador anuló una reserva
@@ -117,12 +120,15 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 
 			$Mfn=$r[0];
 			$Usuario=$r[1];
-			if ($fecha_asignacion!=""){				if ($fecha_validez>=$hoy){
+			if ($fecha_asignacion!=""){
+				if ($fecha_validez>=$hoy){
 					$asignadas=$asignadas+1;
 					continue;
 				}
 			}
-			if (($fecha_asignacion!="" and $fecha_validez<=$hoy) or $fecha_cancelacion!="" or $fecha_prestamo!=""){				continue;			}
+			if (($fecha_asignacion!="" and $fecha_validez<=$hoy) or $fecha_cancelacion!="" or $fecha_prestamo!=""){
+				continue;
+			}
 			$por_asignar[$r[6]." ".$r[7]]=$value;
 		}
 	}
@@ -150,8 +156,10 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 		$ValorCapturado=urlencode($ValorCapturado);
   		$string_act=$ValorCapturado;
   		return array($Usuario,$string_act,$Mfn,$fecha_anulacion,$tipo_usuario,$base_datos,$ncontrol,$asignadas);
-  	}else{  		if ($asignadas>0)
-  			return array($Usuario,$string_act,$Mfn,$fecha_anulacion,$tipo_usuario,$base_datos,$ncontrol,$asignadas);  	}
+  	}else{
+  		if ($asignadas>0)
+  			return array($Usuario,$string_act,$Mfn,$fecha_anulacion,$tipo_usuario,$base_datos,$ncontrol,$asignadas);
+  	}
 
 }
 
@@ -160,7 +168,9 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 include("sanctions_inc.php");
 
 ///////////
-if (isset($arrHttp["vienede"])){   // viene del estado de cuenta	$items=explode('$$',trim(urldecode($arrHttp["searchExpr"])));}else{
+if (isset($arrHttp["vienede"])){   // viene del estado de cuenta
+	$items=explode('$$',trim(urldecode($arrHttp["searchExpr"])));
+}else{
 	$items=explode("\n",trim(urldecode($arrHttp["searchExpr"])));
 }
 $resultado="";
@@ -179,16 +189,30 @@ foreach ($items as $num_inv){
 		$num_inv="TR_P_".$num_inv;
 		if (!isset($arrHttp["base"])) $arrHttp["base"]="trans";
 		//EL CAMPO 81 TIENE EL TIPO DE OBJETO DE LA CONVERSIÓN DESDE PRESTA
-		$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$',v40,'|$'v400,'|$'v500,'|$',v95,'|$',v98/";
-		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&count=1&Expresion=".$num_inv."&Pft=$Formato";
+//$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$',v40,'|$'v400,'|$'v500,'|$',v95,'|$',v98/";
+$Formato=$ABCD_path."www/htdocs/central/circulation/devolver_ex.pft";
+
+//     $Formato="v20";
+		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&count=1&Expresion=".$num_inv."&Pft=@$Formato";
+//echo "query=$query<BR>";die;
 		$contenido="";
 		$IsisScript=$xWxis."buscar_ingreso.xis";
 		include("../common/wxis_llamar.php");
 		$Total=0;
-		foreach ($contenido as $linea){			$linea=trim($linea);
+//                echo "contenido=$contenido"; var_dump($contenido);die;
+		foreach ($contenido as $linea){
+			$linea=trim($linea);
 			if ($linea!="") {
 				$l=explode('|$',$linea);
-				if (substr($linea,0,6)=="[MFN:]"){					$Mfn=trim(substr($linea,6));				}else{					if (substr($linea,0,8)=="[TOTAL:]"){						$Total=trim(substr($linea,8));					}else{						$prestamo=$linea;					}
+				if (substr($linea,0,6)=="[MFN:]"){
+					$Mfn=trim(substr($linea,6));
+				}else{
+					if (substr($linea,0,8)=="[TOTAL:]"){
+						$Total=trim(substr($linea,8));
+//                                                echo "Total found =$Total<BR>";die;
+					}else{
+						$prestamo=$linea;
+					}
 				}
 			}
 		}
@@ -222,7 +246,8 @@ foreach ($items as $num_inv){
 			include_once("locales_read.php");
 
 			//se determina la política a aplicar
-			if ($ppres==""){				if (isset($politica[strtoupper($tipo_objeto)][strtoupper($tipo_usuario)])){
+			if ($ppres==""){
+				if (isset($politica[strtoupper($tipo_objeto)][strtoupper($tipo_usuario)])){
 	    			$ppres=$politica[strtoupper($tipo_objeto)][strtoupper($tipo_usuario)];
 				}
 				if (trim($ppres)==""){
@@ -254,7 +279,7 @@ foreach ($items as $num_inv){
 			$u_suspension=$p[9];  //unidades de suspensión
 			$u_suspension_r=$p[10];  //unidades de suspensión si el libro está reservado
 			//echo $u_multa_r." ".$u_suspension_r;die;
-		    $devolucion=date("Ymd");
+		        $devolucion=date("Ymd");
 			$ValorCapturado="d1<1 0>X</1><500 0>$devolucion</500>";
 			$ValorCapturado.="<130 0>^a".$_SESSION["login"]."^b".date("Ymd h:i A")."</130>";
 			$ValorCapturado=urlencode($ValorCapturado);
@@ -269,7 +294,8 @@ foreach ($items as $num_inv){
 						$Formato=$db_path."trans/pfts/".$lang_db."/r_return";
 					}
 				}
-				if ($Formato!="") {	                $Formato="&Formato=$Formato";
+				if ($Formato!="") {
+	                $Formato="&Formato=$Formato";
 				}
 			}
 			$query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&ValorCapturado=".$ValorCapturado."$Formato";
@@ -287,7 +313,8 @@ foreach ($items as $num_inv){
 			//echo "$bd $ncontrol $allow_reservation";
 			$user_reserved[1]="";
             if ($allow_reservation=="Y"){
-	            if (!isset($reserve_active) or (isset($reserve_active) and $reserve_active!="N") ){						$user_reserved=ReservesAssign("CN_".$bd."_".$ncontrol,$espera_renovacion);
+	            if (!isset($reserve_active) or (isset($reserve_active) and $reserve_active!="N") ){
+						$user_reserved=ReservesAssign("CN_".$bd."_".$ncontrol,$espera_renovacion);
 						$reservas_activadas.=$user_reserved[0].";";
 						if ($user_reserved[2]!="")  {
 							$query.="&reserva=".$user_reserved[1]."&Mfn_reserva=".$user_reserved[2];
@@ -300,27 +327,31 @@ foreach ($items as $num_inv){
 
 			$atraso=compareDate ($fecha_d);
 
-			if ($politica==""){				$error="&error=".$msgstr["nopolicy"]." $tipo_usuario / $tipo_objeto";			}else{
-				if ($Mfn_reserva!="" or (isset($user_reserved[7]) and $user_reserved[7]!="")){					if ($u_suspension_r>0)
+			if ($politica==""){
+				$error="&error=".$msgstr["nopolicy"]." $tipo_usuario / $tipo_objeto";
+			}else{
+				if ($Mfn_reserva!="" or (isset($user_reserved[7]) and $user_reserved[7]!="")){
+					if ($u_suspension_r>0)
 						$u_suspension=$u_suspension_r;
 					else
 						if ($u_multa_r>0)
-							$u_multa=$u_multa_r;				}
-				if ($u_multa>0 or $u_suspension>0){					if ($atraso<0){
-						if ($u_multa>0){							//Se determina si la multa es por días calendario o se toman en cuenta los feriados
+							$u_multa=$u_multa_r;
+				}
+
+				if ($u_multa>0 or $u_suspension>0){
+					if ($atraso<0){
+						if ($u_multa>0){
+							//Se determina si la multa es por días calendario o se toman en cuenta los feriados
 							$atraso=DiasVencimiento($fecha_d);
 							if ($CALENDAR_S=="Y"){
 								$now = date("Ymd"); // or your date as well
 								$your_date = $fecha_d;
 								$datediff = strtotime($now) - strtotime($your_date);
 								$atraso= floor($datediff/(60*60*24));
-							}						}
-						if (isset($user_reserved[7]))
-							$ur_7=$user_reserved[7];
-						else
-							$ur_7="";
+							}
+						}
 						//echo " $fecha_d ,$atraso,".$arrHttp["usuario"].",$inventario,$ppres,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$referencia,$Mfn_reserva,".$user_reserved[7];die;
-						Sanciones($fecha_d,$atraso,$arrHttp["usuario"],$inventario,$ppres,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$referencia,$Mfn_reserva,$ur_7);
+						Sanciones($fecha_d,$atraso,$arrHttp["usuario"],$inventario,$ppres,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$referencia,$Mfn_reserva,$user_reserved[7]);
 						$resultado.=" ".$msgstr["overdue"];
 					}
 				}
@@ -372,7 +403,9 @@ if (isset($arrHttp["reserve"])){
 	$reserve="";
 }
 if (isset($arrHttp["vienede"]) or isset($arrHtp["reserve"])){
-	header("Location: usuario_prestamos_presentar.php?devuelto=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);}else{
+	header("Location: usuario_prestamos_presentar.php?devuelto=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);
+}else{
+
 	header("Location: devolver.php?devuelto=S&encabezado=s$error$cu&rec_dev=$Mfn_rec&resultado=$resultado&errores=$errores"."&lista_control=".$cn_l."&reservas=".$reservas_activadas);
 }
 die;

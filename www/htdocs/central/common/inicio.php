@@ -74,7 +74,7 @@ function VerificarUsuario(){
 	
   Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password;
  	$llave=LeerRegistro();
-//echo " llave=" ; var_dump($llave); //die;
+echo " llave=" ; var_dump($llave); //die;
 
  	if ($llave!=""){
   		$res=explode('|',$llave);

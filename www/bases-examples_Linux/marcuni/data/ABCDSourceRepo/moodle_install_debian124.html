@@ -1,0 +1,156 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<h1/>
+<h1/>
+<h1/>
+<h1/>
+<h2>Installing Moodle as a Debian package</h2>
+<p>Moodle used to be included as a Debian package. However, it has not been included in recent releases. There is talk of it being included again in the Jesse release but now, follow the instructions below to install Moodle on Debian. </p>
+<h2>Installing moodle from .tgz(.tar.gz) or .zip file</h2>
+<h3>Step 1: Install required packages</h3>
+<p>After installing your Debian distro, install these packages (if you've not already done so). See <a href="https://docs.moodle.org/31/en/Installing_Apache,_MySQL_and_PHP">Installing Apache, MySQL and PHP</a> or refer to the respective user manuals. Using apt-get, aptitude or synaptic you can install these very easily. </p>
+<ul>	<li>
+<p>Web Server (Apache highly recommended) </p>
+</li>
+	<li>
+<p>Database Server (MySQL or PostgreSQL recommended) </p>
+</li>
+	<li>
+<p>PHP, PHP-MySQL mod (or mod for your database) </p>
+</li>
+	<li>
+<p>Various PHP modules necessary for Moodle</p>
+</li>
+</ul>
+<p>
+<b>LAMP in Debian</b> </p>
+<p>Setting up a LAMP in Debian is very easy. Once you get used to Debian administration including installation and configuration are much simpler compared to other linux distros. The following describes how to install apache, php and mysql on the Debian distribution. </p>
+<p>For installation of the necessary packages the easiest option to use apt-get through the command line interface. Debian has easy access to a Root Terminal </p>
+<p>Use the following command to install apache2, php5 and mysql </p>
+<p>apt-get install apache2 php5 mysql-server php5-mysql libapache2-mod-php5 php5-gd php5-curl php5-xmlrpc php5-intl </p>
+<p>The mentioned packages are installed along with the dependencies depending on what was already installed on your Debian system. </p>
+<p>Now you may fire up a browser and type localhost to check whether the apache2 default page is shown, </p>
+<p>If you are familiar with apache settings, you can edit the apache configuration files using the text editor gedit or nano by typing: </p>
+<p>gedit /etc/apache2/apache2.conf</p>
+<p>or </p>
+<p>nano /etc/apache2/apache2.conf</p>
+<p>However, for a basic install, you should not need to mess with this file. </p>
+<p>Now we must make a few changes in the php5 configuration file. Open it using </p>
+<p>gedit /etc/php5/apache2/php.ini</p>
+<p>or </p>
+<p>nano /etc/php5/apache2/php.ini</p>
+<p>add the entries </p>
+<p>extension=mysql.so </p>
+<p>extension=gd.so</p>
+<p>Sometimes these entries are provided as example lines being commented out . You can remove the commenting to activate the entries. Then make the following changes (adjust to your preference) This will allocated more memory and allow files to be uploaded up to 80MB. This should be enough for most multi-media files. Hard drive space is cheap and the default is only 2MB. It is recommended that you change the settings to the following values: </p>
+<p>memory_limit = 40M</p>
+<p>post_max_size = 80M</p>
+<p>upload_max_filesize = 80M</p>
+<p>To test the php installation, you can create a text file named phpinfo.php with the contents &lt;?phpinfo()?&gt; and save it at /var/www. Restart apache with the command below. Now access this file through the browser localhost/phpinfo to check the installation of php. </p>
+<p>You can restart apache 2 by </p>
+<p>/etc/init.d/apache2 restart</p>
+<h3>Step 2: Setup MySQL Database</h3>
+<p>Set a secure root password for the database (you might have already done this in the initial install process) </p>
+<p>mysqladmin -u root password "mySecurePassword"</p>
+<p>Note that on a secure production server, you will want to create a different user than root to access the database. </p>
+<p>Now log in </p>
+<p>mysql -u root -p</p>
+<p>Enter your password </p>
+<p>Create the Moodle database </p>
+<p>mysql&gt; CREATE DATABASE moodle;</p>
+<p>Then ensure that the database is set to UTF8 which is required by later distributions of Moodle </p>
+<p>mysql&gt; ALTER DATABASE moodle charset=utf8;</p>
+<p>Then exit the database </p>
+<p>mysql&gt; exit;</p>
+<p>You can restart mysql by </p>
+<p>/etc/init.d/mysql restart</p>
+<h3>Step 3: Download moodle</h3>
+<p>Download moodle from <a href="http://download.moodle.org/?lang=en">http://download.moodle.org/?lang=en</a>. </p>
+<h3>Step 4: Unpack file</h3>
+<ul>	<li>
+<p>For zip file, use <b>unzip &lt;your_file&gt;</b>. For tgz(tar.gz), use <b>tar -zxvf &lt;your-file&gt;</b>. You can also use any of the GUI front-ends such as file-roller or ark or just let Debian unzip it with Archive Manager. You will get a folder moodle (or moodle-2.8.1 or something similar). It will probably be located in your Downloads folder unless you told the Archive Manager or the Download utility to save it somewhere else. We will presume it is in your Download folder.</p>
+</li>
+</ul>
+<p>From terminal type </p>
+<p>cd /home/YourUSERNAME/Downloads</p>
+<p>mv moodle /var/www</p>
+<p>You can also copy instead of moving it in case you want a backup of the code on your machine. </p>
+<p>cp -R moodle /var/www</p>
+<p>You will probably need to do this as root (no problem if you are using the Root Terminal!) </p>
+<h3>Step 5: Create a data directory and set Moodle directory permissions</h3>
+<p>Switch to the correct directory </p>
+<p>cd /var/www</p>
+<p>Create a directory for user and course files </p>
+<p>mkdir moodledata</p>
+<p>Set ownership and permissions so that Apache can access the files </p>
+<p>chown -R www-data:www-data moodle</p>
+<p>chown -R www-data:www-data moodledata</p>
+<p/>
+<p>chmod -R 755 moodle</p>
+<p/>
+<p>chmod -R 755 moodledata</p>
+<p>On a production server, you may want to tighten up privileges. </p>
+<h3>Step 6: Change Apache to use Moodle as the web site</h3>
+<p>Note that the server comes with Apache running and looking at the /var/www directory. But there is nothing in that folder, so one just gets a redirect. Edit as follows to have it point at Moodle instead: </p>
+<p>gedit /etc/apache2/sites-available/default or </p>
+<p>nano /etc/apache2/sites-available/default</p>
+<p>On about line 4, change DocumentRoot "/var/www" to </p>
+<p>DocumentRoot "/var/www/moodle"</p>
+<p>On about line 10, change &lt;Directory "/var/www/"&gt; to </p>
+<p>&lt;Directory "/var/www/moodle/"&gt;</p>
+<p>Around line 17, comment out the line for the default page: </p>
+<p># RedirectMatch ^/$ /apache2-default/</p>
+<p>You can change other values like ServerAdmin if appropriate. For all changes, you should restart Apache for the new settings to take effect. </p>
+<p>/etc/init.d/apache2 restart</p>
+<ul>	<li>
+<p/>
+</li>
+</ul>
+<h3>Step 7: Finally install</h3>
+<ul>	<li>
+<p>Go to <a href="http://localhost/moodle">http://localhost/moodle</a> and follow the instructions.</p>
+</li>
+</ul>
+<p/>
+<h3>Step 8: Setup Moodle</h3>
+<p>If you are only going to test Moodle on your internal network, just enter the local IP address as the web address. You can find the local IP address under DHCP by typing </p>
+<p>ifconfig eth0</p>
+<p>
+<br/>
+If you have a web address that points to your server, use that instead. </p>
+<p>From a browser on another machine, enter </p>
+<p>http:// ----- your web address -----</p>
+<ul>	<li>
+<p>For the database user, enter root</p>
+</li>
+</ul>
+<ul>	<li>
+<p>For Password, enter the password for the database that you created earlier</p>
+</li>
+</ul>
+<p>Continue through the dialogs until installed. </p>
+<h3>Install cron</h3>
+<p>Moodle needs a periodic call to do maintenance work like sending out emails, cleaning up the database, updating feeds, etc. To run the cron every 10 minutes, do the following </p>
+<p>crontab -u www-data -e</p>
+<p>Add this line and save. </p>
+<p>*/10 * * * * /usr/bin/php /var/www/moodle/admin/cli/cron.php  &gt;/dev/null</p>
+<p>
+<br/>
+Use CNTL-X to save </p>
+<p/>
+<h1>error/admin/installhijacked</h1>
+<p/>
+<p/>
+<p>This error compares $adminuser-&gt;lastip with the users current IP address. </p>
+<p>It will occur if a site has been installed on a server via the cli scripts in admin/cli (install_database.php or install.php). After installing the site remotely, visiting the site via a web browser (a different IP) will trigger the error message. </p>
+<p>Workaround: </p>
+<p>Update the database directly with your current IP address (table: mdl_user, field: lastip, SQL: UPDATE mdl_user set lastip='159.245.48.2' where username='admin';). </p>
+<p/>
+<p/>
+<p/>
+</body>
+</html>

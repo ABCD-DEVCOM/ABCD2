@@ -1,0 +1,113 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<p>
+<b>Tagging document files</b>
+</p>
+<p>Source documents often need to be structured into sections and subsections, and this information needs to be communicated to Greenstone so that it can preserve the hierarchical structure. Also, metadata - typically the title - might be associated with each section and subsection.</p>
+<p>The source documents from an OCR process are typically a set of word processor files, including images. If these are represented as MicrosoftWord files, they can be input into Greenstone using the Word plugin. Alternatively, they can be converted to HTML and input using the HTML plugin.</p>
+<p>In either case, the hierarchical structure of a document may be indicated by inserting tags in the text as follows:</p>
+<p>&lt;!--</p>
+<p>&lt;Section&gt;</p>
+<p>&lt;Description&gt;</p>
+<p>&lt;Metadata name="Title"&gt;Realizing human rights for poor people: Strategies for achieving the international development targets&lt;/Metadata&gt;</p>
+<p>&lt;/Description&gt;</p>
+<p>--&gt;</p>
+<p>
+<i>(text of section goes here)</i> </p>
+<p>&lt;!--</p>
+<p>&lt;/Section&gt;</p>
+<p>--&gt;</p>
+<p>The &lt;!-- ... --&gt; markers are used because they indicate comments in HTML; thus these section tags will not affect document formatting. You must include these markers around your section tags, even if the document you are working with is not HTML (e.g. if it's a Microsoft Word file).</p>
+<p>In the Description part (between the &lt;Description&gt; and &lt;/Description&gt; tags) other kinds of metadata can be specified, but this is not done for the style of collections we are describing here.</p>
+<p>It is important to remember that you are creating a hierarchical table of contents when you insert section tags into your document. This means that sections can be nested within other sections. In fact, all sections must be nested within a single enclosing section that encompasses the entire document.</p>
+<p>The following example demonstrates a document with two chapters, the second of which contains two subsections. For real examples of sourcedocuments tagged in this way, look at the source documents for the Demo or DLS collections.</p>
+<p>&lt;!--</p>
+<p>&lt;Section&gt;</p>
+<p>&lt;Description&gt;</p>
+<p>&lt;Metadata name="Title"&gt;My Document&lt;/Metadata&gt;</p>
+<p>&lt;/Description&gt;</p>
+<p>&lt;Section&gt;</p>
+<p>&lt;Description&gt;</p>
+<p>&lt;Metadata name="Title"&gt;Chapter 1&lt;/Metadata&gt;</p>
+<p>&lt;/Description&gt;</p>
+<p>--&gt;</p>
+<p>(text of chapter 1 goes here)</p>
+<p>&lt;!--</p>
+<p>&lt;/Section&gt;</p>
+<p>&lt;Section&gt;</p>
+<p>&lt;Description&gt;</p>
+<p>&lt;Metadata name="Title"&gt;Chapter 2&lt;/Metadata&gt;</p>
+<p>&lt;/Description&gt;</p>
+<p>&lt;Section&gt;</p>
+<p>&lt;Description&gt;</p>
+<p>&lt;Metadata name="Title"&gt;Subsection 1&lt;/Metadata&gt;</p>
+<p>&lt;/Description&gt;</p>
+<p>--&gt;</p>
+<p>(text of sub-section 1 goes here)</p>
+<p>&lt;!--</p>
+<p>&lt;/Section&gt;</p>
+<p>&lt;Section&gt;</p>
+<p>&lt;Description&gt;</p>
+<p>&lt;Metadata name="Title"&gt;Subsection 2&lt;/Metadata&gt;</p>
+<p>&lt;/Description&gt;</p>
+<p>--&gt;</p>
+<p>(text of sub-section 2 goes here)</p>
+<p>&lt;!--</p>
+<p>&lt;/Section&gt;</p>
+<p>&lt;/Section&gt;</p>
+<p>&lt;/Section&gt;</p>
+<p>--&gt;</p>
+<p>Note that metadata assigned from within a section tag in a source document takes precedence over that assigned to the document as a whole. This means that you should not explicitly specify Title metadata for the top-level section within a source document unless you want it to override the title you gave it when specifying metadata. In the above example, unless you want to override the document's existing title you should omit the line that reads:</p>
+<p>&lt;Metadata name="Title"&gt;My Document&lt;/Metadata&gt;</p>
+<p>
+</p>
+<h1>Greenstone tutorial exercise</h1>
+<p>Back to wiki 
+Back to index 
+Devised for Greenstone version: 2.70w
+Modified for Greenstone version: 2.82</p>
+<h2>
+<a name="section_tagging"/>Section tagging for HTML documents</h2>
+<p>In a browser, take a look at the Greenstone demo collection. Browse to one of the documents. This collection is based on HTML files, but they appear structured in the collection. This is because these HTML files were tagged by hand into sections.</p>
+<p>Using a text editor (e.g. WordPad) open up one of the HTML files from the demo collection: <i>Greenstone &rarr; collect &rarr; demo &rarr; import &rarr; fb33fe &rarr;fb33fe.htm</i>. You will see some HTML comments which contain section information for Greenstone. They look like:</p>
+<p>&lt;!--
+&lt;Section&gt;
+&nbsp;&nbsp;&lt;Description&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Metadata name="Title"&gt;Farming snails 1: Learning about snails;
+&nbsp;&nbsp;&nbsp;&nbsp;Building a pen; Food and shelter plants&lt;/Metadata&gt;
+&nbsp;&nbsp;&lt;/Description&gt;
+--&gt;
+
+&lt;!--
+&lt;/Section&gt;
+&lt;Section&gt;
+&nbsp;&nbsp;&lt;Description&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Metadata name="Title"&gt;Dew and rain&lt;/Metadata&gt;
+&nbsp;&nbsp;&lt;/Description&gt;
+--&gt; </p>
+<p>When Greenstone encounters a &lt;Section&gt; tag in one of these comments, it will start a new subsection of the document. This will be closed when a &lt;/Section&gt; tag is encountered. Metadata can also be added for each section&mdash;in this case, <b>Title</b> metadata has been added for each section. In the browser, find the <b>Farming snails 1</b> document in the demo collection (through the <i>Titles</i> browser). Look at its table of contents and compare it to the &lt;Section&gt; tags in the HTML document.</p>
+<p>Add a new Section into this document. For example, lets add a new subsection into the <b>Introduction</b> chapter. In the text editor, add the following just after the Section tag for the <b>Introduction</b> section:</p>
+<p>&lt;!--
+&lt;Section&gt;
+&nbsp;&nbsp;&lt;Description&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Metadata name="Title"&gt;Snails are good to eat.&lt;/Metadata&gt;
+&nbsp;&nbsp;&lt;/Description&gt;
+--&gt; </p>
+<p>Then just before the next section tag (<b>What do you need to start?</b>), add the following:</p>
+<p>&lt;!--
+&lt;/Section&gt;
+--&gt; </p>
+<p>The effect of these changes is to make a new subsection inside the <b>Introduction</b> chapter.</p>
+<p>Open the Greenstone demo collection in the Librarian Interface. In the <b>Document Plugins</b> section of the <b>Design</b> panel, note that <b>HTMLPlugin</b> has the <b>description_tags</b> option set. This option is needed when &lt;Section&gt; tags are used in the source documents.</p>
+<p>
+<b>Build</b> and <b>preview</b> the collection. Look at the <b>Farming snails 1</b> document again and check that your new section has been added.</p>
+<p/>
+<p>Copyright &copy; 2005 2006 2007 2008 2009 2010 by the <a href="http://www.nzdl.org">New Zealand Digital Library Project</a> at <a href="http://www.waikato.ac.nz">the University of Waikato</a>, New Zealand
+Permission is granted to copy, distribute and/or modify this document under the terms of the <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled <a href="http://greenstonewiki.cs.waikato.ac.nz/wiki/gsdoc/GNUFDL.html">&ldquo;GNU Free Documentation License.&rdquo;</a> </p>
+<p/>
+</body>
+</html>

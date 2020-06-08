@@ -1,5 +1,5 @@
 if p(v5030) or p(v5040) then
-/*'logo='v5002,v5030'<BR>'*/ ,
+
     /* procedimento que marca o subcampo referente ao idioma corrente como ^L (label)  */
     proc('d9021a9021!',replace(replace(v5006^a[1],' ',''),',','!a9021!')'!'),
     proc('d9022a9022!',(if v9021 = v5021[1] then f(iocc,1,0) fi),'!'),
@@ -11,12 +11,10 @@ if p(v5030) or p(v5040) then
                         ,(
                             if v9021 <> v5021[1] then,
                                 '<a href="'getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&base=',v5003[1],'&lang=',v9021,'&form=',v6000[1],|&pathLibrary=|v5050[1],|&restriction1=|v7001[1],'">'
-                                    /* if v9021 = 'pt' then 'portugues' fi,
-                                    if v9021 = 'es' then 'espanol' fi, */
+                                    if v9021 = 'pt' then 'portuguÃªs' fi,
+                                    if v9021 = 'es' then 'espaÃ±ol' fi,
                                     if v9021 = 'en' then 'english' fi,
-                                    if v9021 = 'fr' then 'francais' fi,
-                                    /*if v9021 = 'am' then 'amharic' fi, */
-                                    if v9021 = 'ar' then 'عربي' fi,
+                                    if v9021 = 'fr' then 'franÃ§ais' fi,
                                  '</a>',
 
                                 if iocc < nocc(v9021) then,
@@ -28,8 +26,8 @@ if p(v5030) or p(v5040) then
       '</div>'
 
     '<div class="top">
-        <h1><a href="',v9031^L,'"><img src="',v5002,v5030,'" border="0" alt="logo" height=55 width=55 /></a>&nbsp;Biblioth&egrave;que Municipale de Mascara Mustapha Ben &nbsp;Touhami</h1>
-        <h2><a title="Recherche dans les bases de donn&eacute;es" href="',v9041^L,'"><span>Recherche dans la base de donn&eacute;es</span></a></h2>
+        <h1><a href="',v9031^L,'"><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1>
+        <h2><a title="Recherche dans les bases de donnÃ©es" href="',v9041^L,'"><span>Recherche dans les bases de donnÃ©es</span></a></h2>
             <div class="spacer"> </div>
             <a name="top"></a>
     </div>'

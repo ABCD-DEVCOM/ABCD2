@@ -1,0 +1,140 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+</title>
+</head>
+<body>
+<p>Doing Digital Library with J-ISIS : preliminary account on the possibilities and performance.</p>
+<p>
+<i>Abstract</i>
+</p>
+<p>
+<i>Although the new J-ISIS software from UNESCO, based on Berkeley DB and Lucene technology, complies with some of the technical requirements as seen necessary for digital library applications, an easy way of building collections so far was not available. In this short paper a preliminary report is given on testing some technical characteristics of J-ISIS, such as the capability to deal with any metadata structure and alphabets, and full-text indexing of documents of any length.  A preliminary description is given on the production of the Digital Library interface to build collections of documents based on Tika technology. 
+</i>
+</p>
+<p>
+<i>A brief comparison is made with a well established DL software, i.e. Greenstone Digital Library, regarding the concepts and performance. While using a quite different architecture and approach, the test shows that J-ISIS can process the documents faster and with more economical storage efficiency, inviting UNESCO to invest more into it in order to allow incorporation of some more advanced features like Greenstone&rsquo;s capability to process intra-document segments and images, but also new exciting features for digital libraries such as interactivity.
+</i>
+</p>
+<h1>Introduction
+</h1>
+<p>J-ISIS (or : Java- ISIS), see :  <a href="http://www.kenai.com/projects/j-isis">http://www.kenai.com/projects/j-isis</a>,  claims to replicate the full functionality of WinISIS, a very successful text-retrieval software developed and supported by UNESCO and used in thousands of mostly Southern libraries and information centers,  but at the same time taking away its technological limitations, such as :
+</p>
+<p class="list_Paragraph">Windows only, by using the Java-platform which is known for its radical platform independency;
+</p>
+<p class="list_Paragraph">Database and record-size, by substituting the proper ISIS storage technology of the MST/XRF-files completed by a B-Tree indexing engine with the technology of 
+</p>
+<p class="list_Paragraph">the embedded no-SQL database &lsquo;Berkely DB&rsquo; (at this moment owned by Oracle but maintained as FOSS) with limitations only defined by hardware;
+</p>
+<p class="list_Paragraph">Lucene-based full-text indexing and searching;
+</p>
+<p class="list_Paragraph">ASCII/ANSI coding, now replaced by the UNICODE capability of Java.
+</p>
+<p>However, in order to maintain the &lsquo;core&rsquo; of the ISIS-technology, the following concepts are still fully present in J-ISIS :
+</p>
+<p class="list_Paragraph">Schema-less records, i.e. the field-structure remains individually assigned to each record, therefore representing the &lsquo;documentary&rsquo; approach of a database : each record can be a document with its own structure.
+</p>
+<p class="list_Paragraph">Variable length fields, subfields and occurrences of fields : as a consequence of the previously mentioned feature records store mostly textual values of any length in fields and subfields and can have 0, 1 or more occurrences, reflecting the original ISO-2709 standard on which e.g. MARC as a bibliographical format is based. </p>
+<p class="list_Paragraph">The &lsquo;Formatting Language&rsquo; : a powerful &lsquo;parser&rsquo; to mould, format and extract values from the database; this language acts as an intermediary layer to allow the system managers (mostly the librarians themselves, often working in a context &ndash; typical for Southern developmental conditions &ndash; of very low IT-support) to define to a large extent how their application will look like (appearance) and will work (functionality). 
+</p>
+<h1>Some Digital Library technological requirements
+</h1>
+<p>When looking at the needs of digital library applications, esp. as a means to avail electronic documents of all sorts in a specific, often local context &ndash; we forego here the very big Digital Library initiatives such as Google Books or the EU&rsquo;s &lsquo;Europeana&rsquo; - we note the following basic technical requirements being present in J-ISIS :
+</p>
+<p class="list_Paragraph">Independency from fixed metadata formats : while &ndash; as is the case with the growing &lsquo;Semantic Web&rsquo; &ndash; most information structures are based on XML and Dublin Core, for many reasons still many additions are made to the standard, resulting in a multitude of metadata sets which allow locally adapted and specific structures; in our view this requires a database-setup which is not imposing its built-in schema onto the applications.
+</p>
+<p class="list_Paragraph">Independency from specific scripts and alphabets : again due to the nature of often local projects and collections, digital libraries &ndash; esp. the ones in the Eastern part of the world - have to deal with several scripts/alphabets and not only the Latin one.
+</p>
+<p class="list_Paragraph">Independency from document length/size and format limitations  : electronic documents come in many varieties : PDF, MS Office formats (old and new), Open Document Formats, RTF, XLS, email-formats etc., varying from short notes (e.g. e-mails) over typical professional and academic documents (articles, papers) to full books and theses. All of these need to be dealt with by the Digital Library technology chosen for the purpose.
+</p>
+<p class="list_Paragraph">Full-text indexing, ranking and searching : different from classic traditional libraries, digital libraries not only use the added-value &lsquo;metadata&rsquo;, which describe the documents in several ways (contents, preservation, digital rights&hellip;), but also retrieval based on the full text of the documents themselves. 
+</p>
+<p class="list_Paragraph">OAI-compatibility : in order to promote inter-operability of collections &ndash; each of these using their own formats, software&hellip; - the Open Archives Initiative provides a protocol for application-independent metadata-harvesting (PMH), allowing information seekers to retrieve from a world-wide network of &lsquo;repositories&rsquo; the metadata of digital library documents.
+</p>
+<p class="list_Paragraph">Interactivity  : this is a new dimension made possible by the relatively new web-based interactivity which makes the WWW so popular nowadays. The idea here is to elevate &lsquo;passive&rsquo; readers of documents to active contributors, adding value to other readers with their own comments and additions into the documents but preserving  their authenticity.
+</p>
+<p>In the remaining part of this paper we briefly review how J-ISIS already provides the necessary technology and we will describe a new feature, which we added to facilitate creation of Digital Library collections with J-ISIS.</p>
+<h1>Testing J-ISIS technology for Digital Library applications</h1>
+<h2>Independency from metadata structure
+</h2>
+<p>J-ISIS is a full member of the ISIS-database philosophy, which always &ndash; long before this idea became more accepted in  so-called &lsquo;No-SQL&rsquo; databases (MongoDB, Cassandra&hellip;) has maintained the &lsquo;schema-less&rsquo; approach of using records without pre-defined structure,  In ISIS he structure instead is described in a very efficient and concise way in the ISO-2709 header of each record. Librarians and information managers using ISIS can easily define their own structure, even without any stress on efficiency or consistency. ISIS can use, with its &lsquo;REF&rsquo; and &lsquo;L&rsquo; functions in the Formatting Language - fully implemented in J-ISIS, a so-called &lsquo;run-time relational capability&rsquo; : data from other databases can be very efficiently retrieved and produced at any stage (displaying records, indexing them, exporting&hellip;) .</p>
+<p>In other words : it is relatively easy in an ISIS-based approach to allow managers to define and alter their own metadata sets, e.g. starting from Dublin Core and adding elements as necessary at any time.
+</p>
+<h2>Independency from document formats and size
+</h2>
+<p>The classic ISIS-technology, i.e. ISIS before J-ISIS, has used the concept of variable length fields since its origins but of course with limitations imposed by the technology of the time. Most documents after text-extraction (performed by a tool like PDF2HTML or Tika) will still fit within this limit, esp. when using the &lsquo;extended&rsquo; version of ISIS (with up to 1Mb records).
+</p>
+<p>With the use of Berkeley DB as a storage engine in J-ISIS, these limits are now dropped and we consider this as a major step forward for ISIS, esp. looking at the potential to act in Digital Library applications. 
+</p>
+<p>We tested J-ISIS for this purpose and can report that indeed all documents of the test-collection were successfully converted and stored, including documents of over 210 Mb and text-only sizes of over 2 Mb  &ndash; and they were processed in fact in a remarkable fast way, meaning in reality any document was processed just after a few seconds.
+</p>
+<h2>Unicode compatibility</h2>
+<p>As we claimed before : our interest is mostly into the many smaller, often local initiatives of digital libraries, certainly within the focus and interest of UNESCO. Many of these use non-Latin alphabets in their &lsquo;cultural heritage&rsquo; literature, which requires Unicode.
+</p>
+<p>J-ISIS is fully Unicode, based on Java. Our tests of searching and displaying documents in mixed scripts (i.e. Amharic and English, but also Arabic, Chinese), were positive, as illustrated infra.</p>
+<h2>Full-text indexing, ranking and searching
+</h2>
+<p>One aspect in which Digital Library by far exceed the capabilities of normal, traditional libraries, is the capability of dealing with the full contents of the documents provided for retrieval.
+</p>
+<p>In J-ISIS this is covered by the use of Lucene, which is a well-known (Apache Foundation) engine used in many applications and products. So, this capability was already fully present in J-ISIS and in fact triggered our idea to use J-ISIS for digital library applications.</p>
+<p>The (default) ranking feature of Lucene indeed is used in J-ISIS, as we tested it successfully. We kept this as the default sorting mechanism,  dropping the WinISIS approach of sorting by record-number.
+</p>
+<h2>OAI and interactivity : two more features on our &lsquo;wish-list&rsquo;
+</h2>
+<p>Full <i>OAI-PMH compatibility</i> is to be offered by J-ISIS as such, i.e. not only for digital library applications. Therefore OAI-compatibility is or should be part of the general J-ISIS development plan. We only emphasize this, by repeating the need for inter-operability, allowing non-ISIS users to also have access to records in J-ISIS collections using one or more of the (limited set of) basic OAI-operators ([to be listed here]).
+</p>
+<p>
+<i>Interactivity</i> as a Digital Library feature means allowing readers of documents to add their own comments, additions and opinions to existing documents, as nowadays is practiced in the &lsquo;social media&rsquo; interactivity of the modern Web 2.0. While traditional libraries also and since longer practice such &lsquo;community&rsquo; ideas, e.g. by organizing readers&rsquo; evenings where certain books were discussed, the idea is not even that much revolutionary, except for the extent to which this can be practiced now, using current interactive WWW-technology. 
+</p>
+<p>Since J-ISIS is fully database-based, and with the features of repeated variable-length fields being already available, adding such functionality into J-ISIS should not even impose a major challenge, in  our view.  E.g. the WWW interface of J-ISIS, using JSP with Struts-support to make it quite interactive (e.g. when typing search keywords a list is dynamically provided), only needs some worksheets allowing end-users to add contents and store it with the original documents for viewing them on request. 
+</p>
+<h1>Production of a new Digital Library collection building feature
+</h1>
+<p>We wanted, and this is a crucial concept of our implementation, to preserve the qualities of J-ISIS as an ISIS-based software by allowing system managers to create a digital library, or add digital library features into any database structure.  The mechanism goes as follows : the system manager introduces 2 special field types (URL and DOC) in the database Field Definition Table and these fields now get a special &lsquo;upload&rsquo; icon in their worksheet(s). Creating a collection entity (a record in J-ISIS) means clicking that icon and navigating to the original document, after which the feature creates the URL and loads the text-contents of the document (extracted with Tika) into the field, after which Lucene makes the full text searchable. Two screenshots  illustrate the interface : </p>
+<p>
+<img src="embedded:image1.png" alt="image1.png"/>
+</p>
+<p>
+<i>Figure 1 : Digital Library fields with special icon in J-ISIS Worksheet
+</i>
+</p>
+<p>
+<img src="embedded:image2.png" alt="image2.png"/>
+</p>
+<p>
+<i>Figure 2 : Search result display of Chinese document in Web-JISIS
+</i>
+</p>
+<p>While coding this new feature into J-ISIS, it was found out that some special care had to be taken when doing such coding in order to cope with the challenges of quite big strings. We had to avoid the default limit of Tika (100Kb) and &lsquo;out-of-memory&rsquo; and other problems of Java (e.g. a hidden 64Kb limit in one of Java&rsquo;s libraries), but succeeded well in the end.
+</p>
+<p>Our tests showed that adding a new document into a collection this way only takes a few seconds, mostly depending on the speed of navigating into the file-system to identify the document. This brings us to the next chapter where some comparison is made with the Greenstone Digital Library technology re architecture and performance.
+</p>
+<h1>Comparison of concept and performance with GSDL
+</h1>
+<p>From the well-known and widely used &lsquo;Greenstone Digital Library&rsquo; software we adopted the concepts of multi-metadata set capability and previewing the (text-contents of) the document along with the URL-link for the original documents.</p>
+<p>Different from GSDL however are the following technical ideas in J-ISIS as as Digital Library tool :
+</p>
+<p class="list_Paragraph">Whereas GSDL uses the file-system as a &lsquo;database&rsquo; environment to keep track of the documents (with an organization in a hierarchy of folders with hashed names), J-ISIS is fully database-oriented, which we claim would yield into better performance esp. at higher levels of document numbers.
+</p>
+<p class="list_Paragraph">GSDL stores the documents in XML-files whereas J-ISIS in our implementation stores the original document in the &lsquo;idocs&rsquo; sub-folder of the database and the text-contents only once within the database, from where it can be loaded using the Formatting Language of ISIS.
+</p>
+<p class="list_Paragraph">GSDL allows for simply adding folders of (multiple) documents into the collection whereas J-ISIS uses a one-by-one approach, but then does this (much) faster than GSDL.
+</p>
+<p>As a rather simple but useful first test, we built a collection of 200 documents, a typical mix of mostly PDF with some .doc, docx, .xls, .htm(l) etc. The size of the documents varies from the typical minimum sizes for HTML-document of about 20Kb to one very large PDF of more than 200 Mb. J-ISIS could deal with all documents (including .docx and latest versions of PDF); adding one document typically would take a few seconds (not including navigating to the file in the file-browser) and re-indexing the whole collection took only 9 seconds (25 in GSDL). The test collection took 626 Mb in GSDL and 204 Mb in J-ISIS. This difference is linear and will become more important when larger collections are to be dealt with. 
+</p>
+<p>Our preliminary performance tests therefore show that  : 
+</p>
+<p class="list_Paragraph">J-ISIS is certainly as fast, if not faster, in processing documents in comparison with GSDL
+</p>
+<p class="list_Paragraph">J-ISIS is certainly (much) more efficient in the necessary storage for collections. </p>
+<p>This comparison for sure does not full right to the GSDL software, as it provides more advanced features such as &lsquo;section&rsquo; based indexing (taking into account intra-document boundaries) and &lsquo;classifiers&rsquo; for browsing (which in J-ISIS should be done by the use of different sorting mechanisms of search results) or specific nice features such as the &lsquo;PagedImagePlugin&rsquo;, which allows paging through a collection with mutual links in between images and texts of documents.
+</p>
+<p>On the other hand, using more advanced techniques of ISIS, esp. its Formatting Language, one could imagine also nice more advanced Digital Library features to be already &ndash; in principal &ndash; available for further development and testing.
+</p>
+<h1>Conclusions and recommendations
+</h1>
+<p>With the new Digital Library feature for easy building collections now being available in J-ISIS, along with the presence of well-proven and positively tested features like structural independency, capacity of dealing with any document sizes and formats, UNICODE and Lucene-based full-text indexing, we believe that J-ISIS could be a strong new addition to the market for Digital Library solutions, esp. where existing ISIS- data and skills are available. 
+</p>
+<p>We strongly recommend UNESCO, in view of its mandate to support such information management initiatives esp. in the South, to re-activate its support for J-ISIS in view of its potential.</p>
+</body>
+</html>

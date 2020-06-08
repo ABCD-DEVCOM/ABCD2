@@ -62,7 +62,7 @@ S||Indicateur 1|0|0|1||X||1|P|240-ind1.tab|||||0||
 S||Indicateur 2|0|0|2||X||1|P|240-ind2.tab|||||0||
 S||Titre uniforme|0|0|a||X|||||||||0||
 S||Médium d'exécution pour la musique|0|1|m||X|||||||||0||
-T|245|Mention du titre|1|0|12abchknp||X||100|||TI_|v245^a,\" \"v245^b,`(` f(mfn,1,0),`)`|f(mfn,1,0)||1||
+T|245|Mention du titre|1|0|12abchknp||X||100||||||1||
 S||Indicateur 1|0|0|1||X||1|P|245-ind1.tab|||||0||
 S||Indicateur 2|0|0|2||X||1|P|245-ind2.tab|||||0||
 S||Titre|0|0|a||X|||||||||0||

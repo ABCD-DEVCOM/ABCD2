@@ -22,7 +22,7 @@ function changeForm(valor)
     <div class="middle">
       <div class="formHead">
             <h3 class="context">
-                Base de donn&eacute;es&nbsp;
+                Base de données&nbsp;
             [pft]
                 ,if p(v5004) then,                    
                     '<select name="base" size="1">'
@@ -33,7 +33,7 @@ function changeForm(valor)
                         '<input type="hidden" name="base" value="',v5003,'" />'v5003^*
                 ,fi,    
                 [/pft]
-                : Recherche simple
+                : Formulaire libre
             </h3>
             <div class="formOptions">
                 [pft]
@@ -46,10 +46,10 @@ function changeForm(valor)
 
                     if size(v5014) > 2 then
                         if v5014 : 'B' then
-                            `<a class="changeForm" href="javascript:void(changeForm('B'))">Recherche simple</a>`
+                            `<a class="changeForm" href="javascript:void(changeForm('B'))">Formulaire de base</a>`
                         fi
                         if v5014 : 'A' then
-                            `<a class="changeForm" href="javascript:void(changeForm('A'))">Recherche avancée</a>`
+                            `<a class="changeForm" href="javascript:void(changeForm('A'))">Formulaire avancé</a>`
                         fi
                     fi
        
@@ -118,7 +118,7 @@ function changeForm(valor)
                         '<input type="hidden" name="base" value="',v5003,'" />'v5003^*
                 ,fi,    
                 [/pft]
-                : Recherche simple
+                : Formulaire de base
             </h3>
             <div class="formOptions">
                 [pft]
@@ -131,10 +131,10 @@ function changeForm(valor)
 
                     if size(v5014) > 2 then
                         if v5014 : 'F' then
-                            `<a class="changeForm" href="javascript:void(changeForm('F'))">Recherche simple</a>`
+                            `<a class="changeForm" href="javascript:void(changeForm('F'))">Formulaire libre</a>`
                         fi
                         if v5014 : 'A' then
-                            `<a class="changeForm" href="javascript:void(changeForm('A'))">Recherche avancée</a>`
+                            `<a class="changeForm" href="javascript:void(changeForm('A'))">Formulaire avancé</a>`
                         fi
                     fi
        
@@ -232,10 +232,10 @@ function changeForm(valor)
 
                     if size(v5014) > 2 then
                         if v5014 : 'F' then
-                            `<a class="changeForm" href="javascript:void(changeForm('F'))">Recherche simple</a>`
+                            `<a class="changeForm" href="javascript:void(changeForm('F'))">Formulaire libre</a>`
                         fi
                         if v5014 : 'B' then
-                            `<a class="changeForm" href="javascript:void(changeForm('B'))">Recherche avancée</a>`
+                            `<a class="changeForm" href="javascript:void(changeForm('B'))">Formulaire de base</a>`
                         fi
                     fi
        

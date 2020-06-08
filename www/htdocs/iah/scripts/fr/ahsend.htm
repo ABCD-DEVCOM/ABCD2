@@ -19,7 +19,7 @@
             }
 
             if(eval(document.Option.listHit[0].value) > [pft]v1002[/pft] || eval(document.Option.listHit[1].value) > [pft]v1002[/pft]) {
-                alert("Le nombre maximum d'enregistrements pour cette option: [pft]v1002[/pft]");
+                alert("Le nombre maximum de références pour cette option: [pft]v1002[/pft]");
                 return false;
             }
         }
@@ -33,14 +33,14 @@
             if (type == "iso" || type == "xml"){
                 if (document.Option.listOption[0].checked == true){ // list_all
                     if ([pft]v1002[/pft] > 1000) {
-                        alert("Le nombre maximum d'enregistrements pour cette option: 1000");
+                        alert("Le nombre maximum de références pour cette option: 1000");
                         return false;
                     }
                 }
 
                 if (document.Option.listOption[1].checked == true){ // list_hits
                     if ((document.Option.listHit[1].value - document.Option.listHit[0].value) > 1000) {
-                        alert("Le nombre maximum d'enregistrements pour cette option: 1000");
+                        alert("Le nombre maximum de références pour cette option: 1000");
                         return false;
                     }
                 }
@@ -91,12 +91,12 @@
 
     <div class="contBorder">
 
-        <div class="celLeft"><b>Quels enregistrements?</b></div>
+        <div class="celLeft"><b>Quelles références?</b></div>
 
         <div class="celRight">
             <div class="rowHigh">
                     <input type="Radio" name="listOption" value="list_all" [pft]if a(v6210) then 'checked' fi[/pft] />
-                Toutes les enregistrements ([pft]v1002[/pft])
+                Toutes les références ([pft]v1002[/pft])
             </div>
             <div class="rowHigh">
                     <input type="Radio" name="listOption" value="list_hits" />
@@ -111,7 +111,7 @@
                     [pft]else[/pft]
                         &nbsp;<img src="[pft]v5002[/pft]radio.gif" border="0" />
                     [pft]fi[/pft]
-                enregistrements sélectionnés [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
+                Références sélectionnées [pft]if p(v6210) then '('f(nocc(v6210),1,0)')' fi[/pft]
             </div>
         </div>
 
@@ -134,7 +134,7 @@
                     <option value="save-xml">XML</option>
             [pft]fi[/pft]
             <option value="save-html">HTML</option>
-            <option value="export-iso">ISO 2709 (Isis)</option>
+            <option value="export-iso">ISO 2709 (MicroIsis)</option>
             [pft]
                 (if v5005^t = 'EXPORT' then '<option value="export-',v5005^n,'">',v5005^p,'</option>/' fi)
             [/pft]

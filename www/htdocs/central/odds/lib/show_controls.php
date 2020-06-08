@@ -148,7 +148,7 @@ function read_config($value, $lang_param, $data_passed=array()) {
     if (trim($lang_param) == "") {
         $lang_param = $lang;
     }
-//    echo "read_config";//die;
+    echo "read_config";//die;
     $file_contents = trim(file_get_contents($db_path ."/odds/def/$lang_param/odds_show_controls.tab"));
 
     $file_contents = _remove_comments($file_contents);
@@ -174,7 +174,6 @@ $lang = $_POST['lang'];
 $data_passed = $_POST['jsdata'];
 //echo "before read_config";
 $inputs = read_config($value, $lang, $data_passed);
-//var_dump($inputs);
 $labels = array ('html' => $inputs);
 $encoded_labels = array_map("utf8_encode", $labels);
 echo json_encode($encoded_labels);
@@ -183,10 +182,9 @@ echo json_encode($encoded_labels);
 // DEBUG 
 /*
 $value = "as";
-$lang = "en";
+$lang = "es";
 $inputs = read_config($value, $lang);
 var_dump($inputs);
-//die;
 */
 
 ?>

@@ -39,16 +39,16 @@ class sessionManager
                 for ($i=1; $i<count($allRoles); $i++) {
                     array_push($userRole, $allRoles[$i]->contenido);
                 }
-
+                
                 list($allAvailableLibrariesName, $allAvailableLibrariesDir) = getAllLibraries();
 
                 if ($allRoles[0]->contenido == "Administrator"){
 
                     $_SESSION["optLibrary"] = $allAvailableLibrariesName;
                     $_SESSION["optLibraryDir"] = $allAvailableLibrariesDir;
-
+                    
                 }else{
-
+                    
                     $allLibraryDir = $usuario->getLibDir();
                     $allLibrariesDir = array($allLibraryDir[0]->contenido);
                     for ($i=1; $i<count($allLibraryDir); $i++){
@@ -62,19 +62,19 @@ class sessionManager
                          $keyName = array_search($allLibrariesDir[$i], $allAvailableLibrariesDir);
                          array_push($allLibrariesName, $allAvailableLibrariesName[$keyName]);
                     }
-
+                    
                     switch (is_numeric($key)) {
                         case true:
-                            $_SESSION["optLibrary"] = $allLibrariesName;
+                            $_SESSION["optLibrary"] = $allLibrariesName; 
                             $_SESSION["optLibraryDir"] = $allLibrariesDir;
                             break;
                         case false:
                             return "Error2";
                             break;
                     }
-
+                    
                 }
-
+                
                 $_SESSION["library"] = $libraryName; //nome da biblioteca em uso
                 $_SESSION["libraryDir"] = $selLibrary; //diretorio em uso, e´ a sigla da biblioteca
                 $_SESSION["role"] = $allRoles[0]->contenido; //perfil do usuario
@@ -82,8 +82,7 @@ class sessionManager
                 $_SESSION["identified"] = "1";
                 $_SESSION["logged"] = $usuario->getuserName();
                 $_SESSION["mfn"] = $usuario->getuserId();
-                //$_SESSION["centerCode"] = $usuario->getCenterCode();
-                $_SESSION["centerCode"] = $_SESSION["libraryCode"];
+                $_SESSION["centerCode"] = $usuario->getCenterCode();
                 $_SESSION["ticket"] = time();
                 //die;
                 if($_GET["lang"]){
@@ -98,7 +97,7 @@ class sessionManager
             }
         }
     }
-
+   		
     function destroySession()
     {
             session_start();
@@ -121,7 +120,7 @@ class sessionManager
         else
             return false;
     }
-
+   	
 }
 
 ?>

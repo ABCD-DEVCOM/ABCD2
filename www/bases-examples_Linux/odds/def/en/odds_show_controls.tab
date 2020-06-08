@@ -8,7 +8,7 @@ Example:
 <tagXXX> | <label_to_show> | <text|textarea> | <positive integer number> | <validate_method_1 validate_method_2 ...>
 ----------------------------------------------------------------------------------------------------------- */
 
-"journal article"   /* artículo de revista */
+"as"   /* artículo de revista */
 tag010 | Article author  | text | 60
 tag012 | Article title: | text | 60 
 tag030 | Title of journal: | text | 60
@@ -20,7 +20,7 @@ tag064 | Publication year: * | text | 4 | required  uint  year  years_validate_m
 /* Next field is a combo that displays a text field when "others" option is selected */
 tag900 | Reference source: | text | 35
 
-"book chapter"   /* capítulo de libro */
+"am"   /* capítulo de libro */
 tag010 | Chapter author: | text | 60
 tag012 | Chapter title: | text | 60 
 tag016 | Book author: * | text | 60 | required 

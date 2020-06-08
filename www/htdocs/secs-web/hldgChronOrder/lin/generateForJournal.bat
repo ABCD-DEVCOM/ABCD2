@@ -8,11 +8,11 @@ TAG_RESUMIDO=970
 THIS_CISIS=$6
 THIS_PATH=$7
 
-MY_TMP_PATH=$8/HldgCompacted
+MY_TMP_PATH=$8/geraCompactado
 
 DEBUG=$9
 
-LOG_FILE=$8/HldgCompacted_logs/$KEY.log
+LOG_FILE=$8/geraCompactado_logs/$KEY.log
 
 
 TAG_ID=30
@@ -30,7 +30,7 @@ then
 	rm -rf $THIS_PROC_TMP_PATH
 fi
 mkdir -p $THIS_PROC_TMP_PATH 
-mkdir -p $8/HldgCompacted_logs
+mkdir -p $8/geraCompactado_logs
 
 chmod -R 775 $THIS_PATH/lin/*.bat
 

@@ -1,0 +1,223 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Open Source in the Cloud - E. de Smet</title>
+</head>
+<body>
+<p>Open Source in the Cloud - E. de Smet</p>
+<p class="header"/>
+<p>
+<b>Open Source in the Cloud</b>
+</p>
+<p/>
+<p>dr. Egbert de Smet,</p>
+<p>Univ. of Antwerp, Belgium</p>
+<p/>
+<p>Table of Contents
+Introduction : the Cloud	1
+FOSS	2
+Advantages of Open Source for Cloud	3
+The main contenders : CloudStack, OpenStack and OpenShift	3
+CloudStack	4
+OPENSTACK	6
+OpenShift	8
+Distributed storage technology : CEPH	9
+Summary and conclusions	9
+Online References used	10
+</p>
+<p>
+<i>Abstract</i>
+</p>
+<p>
+<i>Whereas 'Open Source' in software is still gaining momentum in many fields of applications, it is even more present in the 'behind the curtains' scene of the Cloud. 'Behind the scene' because Cloud tools are only operated by Cloud providers creating their infrastructure, not by (end-)users. But as that infrastructure is going to be a crucial part of the IT-environment of the future, like water and power supply have become for the wider living environments, it is good to note that this infrastructure is not limited to (commercial) proprietary technology and standards, but rather is subject to input from the major Open Source players.</i>
+</p>
+<p>
+<i>This paper reviews the main technologies of this moment in Cloud software : CloudStack of Citrix and Apache, OpenStack of Suse and Openshift from RedHat. Also the CEPH-technology for distributed storage is added in this overview due to its obvious relevance for the Cloud. </i>
+</p>
+<p>
+<i>The brief review of these products confirms that FOSS indeed plays a major role in the Cloud, opening up that technology for open standards and 'public' ownership of this soon-to-be an essential part of our (IT-)environment.</i>
+</p>
+<h1>
+<a name="_Toc347998413"/>Introduction : the Cloud</h1>
+<p/>
+<p>For a recent seminar on 'Cloud and Open Source' (in Belgium, February 5, 2013, see : <a href="http://www.opensourcecloudday.be">http://www.opensourcecloudday.be</a>) the following picture was used in the invitation and promotion publications : </p>
+<p>
+<img src="embedded:image1.png" alt=""/>
+</p>
+<p class="caption">Figure 1 The Cloud scene</p>
+<p>The picture nicely shows the main application fields for Cloud : music, air-tickets, shopping, newspapers, e-mail, financial markets, business analysis etc...  No books or libraries, indeed. Maybe the feasibility, esp. the financial one, is still not clear enough for libraries ? Hopefully the papers in this book shed some light on whether this is indeed the case and/or encourage libraries at least to consider their options.</p>
+<p>The basics of Cloud, as should always be emphasized, are the three types of service (Infrastructure, Platform and Software), as shown in the picture below, also giving some examples :</p>
+<p>
+<img src="embedded:image2.emf" alt=""/>
+</p>
+<p class="caption">Figure 2 The three Clould types of service</p>
+<p>The following figure (also taken from a Suse presentation on Cloud) presents nicely the respective degrees of coverage by either the provider or the customer for each of these 3 approaches, the green area representing the areas covered by the Cloud provider :</p>
+<p>
+<img src="embedded:image3.emf" alt=""/>
+</p>
+<p class="caption">Figure 3 The three Cloud services coverage</p>
+<p>In any of these 3 types the acclaimed advantages of Cloud are always : lower costs (in principle reduced upfront capital investment and reduced administration costs), more dynamic configuration, self-service provisioning and greater control and security (standard enterprise security inside a firewall).</p>
+<p>The aim of this paper however is to look at the role of Open Source in the Cloud. The answer to the above mentioned questions on financial viability for libraries might be different when Open Source solutions come into the picture. We will resp. comment on the concepts of FOSS, its advantages for the Cloud and the main contenders and offerings in this area, before finally adding some conclusions on the relevance of Open Source for Cloud and libraries.</p>
+<h1>
+<a name="_Toc347998414"/>FOSS</h1>
+<p/>
+<p>Open Source software is gaining grounds in many fields, even in its 'free' version (FOSS) which means that not only the source codes are available for scrutinization/improvements/study, but also the software itself is available for free, which means that the software is free in two meanings : free to use in all its aspects and non-paid. Well known examples of FOSS are Linux as an Operating System (with somehow popular versions like Ubuntu or strong contenders in the business market like Suse and RedHat), the Mozilla Firefox web-browser, LibreOffice (a free replacement for Microsoft Office), Apache web-server, Java/Ruby/Python programming, PHP web-scripting and MySQL or PostgreSQL databases. </p>
+<p>In the library and information field FOSS also is getting more attention : some of the best known tools for digital libraries and repositories (e.g. Greenstone and dSpace) are indeed FOSS, while even traditionally 'commercial market' software like for library automation has some serious players in FOSS, with KOHA, PMB, Evergreen and (in the developing countries of the South) ABCD being the leaders, in many cases replacing commercial solutions. The 'place to be' for this topic is the URL : <a href="http://foss4lib.org">http://foss4lib.org</a>, which lists 18 different software for library automation.</p>
+<p>As a matter of fact, Open Source is also very strong in the Cloud technology, despite the fact that Cloud is characterized by spear-heading complex technologies with high reliability and security requirements, two elements for which Open Source is generally not highly considered. In addition, since Cloud is all over about 'virtualisation' of everything, meaning the users are kept far away from issues like which hardware, which operating system, which software platform their application is running on, who cares about whether there is FOSS involved ? Users, or organisations offering applications to users, no longer 'pay' for all that, they only pay for the service and its secured stable delivery. Moreover, as we will see the FOSS products for cloud will never be 'seen' by even the paying organisations or their users, as they are tools for the Cloud-providers to which the organisations subscribe. Only in cases where the subscribers wish to build their own cloud, there will be contact with the FOSS offerings described below. For the users only which applications the Cloud offers them is relevant, but this paper is not about which applications, whether or not FOSS, are running in the Cloud. In principle all applications (end-user software) can run and indeed run in the Cloud.</p>
+<p>The purpose of the next chapters of this paper is to give a brief overview of the main players in the field from the Open Source scene with their main offerings. But let's first discuss some advantages of FOSS for the Cloud.</p>
+<h1>
+<a name="_Toc347998415"/>Advantages of Open Source for Cloud</h1>
+<p/>
+<p>While the biggest companies in IT all have their own offering nowadays in Cloud-technology, one can still defend the position that all large scale cloud services are built on open source technology. The well-known argument defending OS as avoiding 'vendor lock-in', meaning that in many commercial solutions the customer has to tie in with the solution-provider up to the degree of getting stuck when the provider stops providing for whatever reason, e.g. when their services become unavailable or too expensive, is without doubt the most convincing argument also in Cloud.  Organizations don't want to entrust all their data and information, esp. not when this represents the main asset of the organization like in the case of libraries, to a third party which uses its own but non-standard technology, risking to lose it all by events out of control to the organization itself, like going bankrupt or being 'reorganized' and stopping activities in the given market.</p>
+<p>One way to ensure sustainability and endurance is the use of standards, meaning that when a given solution is no longer appropriate, one can use another using the same formats and standards for the data/information. In the Cloud technology e.g. Amazon has set standards de facto by its dominant position esp. in the early stages of Cloud.</p>
+<p>What it means in reality is that Cloud-hosted data and information can be relatively easily transferred from one platform to another, resulting in the possibility to change providers without major efforts, time gaps or investments.</p>
+<p>Since Cloud is mainly about 'services', we are not talking a 'free' (as in non-paid) environment. Also in FOSS mostly services (e.g. expert advice, consultancy, tailor-made configurations and localizations) have to be paid and this for sure is not different in the Open Source world. One could even reason that since no profit can be made on the software side and the Cloud service is not a way to promote other products of their line, Open Source providers need to ensure their business model by realistic, or even : higher prices.</p>
+<p>Still, in view of the concept of Cloud itself, i.e. in essence the network, storage and processing hard- and software being abstracted from the customer, even to the extent that customers don't even need to know which software is running, the fact whether the software used is Open Source or not is irrelevant. More than anywhere else Open Source can compete with commercial offerings strictly based on performance and features, not price or name and fame.</p>
+<p>In the next part we look at such offerings and deal with the question on whether Open Source is indeed ready to take the challenge to compete with commercial offerings in the Cloud.</p>
+<p/>
+<h1>
+<a name="_Toc347998416"/>The main contenders : CloudStack, OpenStack and OpenShift</h1>
+<p/>
+<p>Not surprisingly, some of the big names in Open Source are active in the Cloud market : Citrix and Apache with CloudStack, Suse with OpenStack and Redhat with Openshift. What these have in common is that they offer all the necessary Cloud technology to build concrete Cloud applications. In this sense end-customers, like e.g. libraries, don't  'see' this technology except at the stage of setting up their Cloud application, often done by 'brokers' and intermediary service providers. </p>
+<p>In the same vein, the technology itself is to be situated at the less-visible underlying layers of the systems : this is about software which manages large clusters of storage (hard-disks and file-systems) and computing devices (CPU's, RAM) in order to keep them co-ordinated and monitored. The co-ordination involves not only constant monitoring (on failing devices, re-scaling according to needs...) but also automatic creation of redundancy and replication and - the only 'visible' layer' - the management software for configuring the many parameters of such systems : the 'dashboard' and configuration panels.</p>
+<p>All this is done regardless of whether the operating system and applications used on the 'virtual machines' (the Cloud is all about virtualisation, both of hardware and software, infrastructure and services) are commercial or not. Running commercial systems on an Open Cloud platform is perfectly possible.</p>
+<p>Based on our own checks on the promotion and documentation materials we claim that probably the most 'mature' (not necessarily 'best', which we cannot evaluate) solution is the one offered by the consortium (with Citrix playing a leading role) around 'CloudStack', while the most 'pure' Open Source, community driven solution is the one of OpenStack (by Suse) with OpenShift (RedHat) combining a mix of the other two.</p>
+<p>Let's briefly review each of these, describing their characteristics and development status.</p>
+<h2>
+<a name="_Toc347998417"/>CloudStack</h2>
+<p/>
+<p>CloudStack is the technology developed mainly by Citrix, in itself not an 'Open Source' player however with large and appreciated input in several Open Source projects (comparable in this sense to e.g. IBM). The technology was handed over, together with its development control, to the Apache Software Foundation, one of the most widely acknowledged organisations for Open Source, so currently CloudStack is one of the impressively many Apache activities. They claim to 'power the largest clouds in the world' for It-companies, telecom and broadcasting, more than 210 customers with together over 20.000 downloads per month, creating 1 billion USD in revenues. They further claim  to have :</p>
+<p class="list_Paragraph">8x more paying customers deployments than VMWare</p>
+<p class="list_Paragraph">15x more paying customers deployments than OpenStack</p>
+<p class="list_Paragraph">the only Cloudplatform proven at large scale deployments (thousands of hosts).</p>
+<p>They run both private and public clouds, but not the mixed type. However for public clouds two types are distinguished : hosted enterprise clouds and multi-tenant public clouds.</p>
+<p>
+<img src="embedded:image4.emf" alt=""/>
+</p>
+<p class="caption">Figure 4 Private and public Clouds</p>
+<p>On top of the CloudStack technology a non-free Management Interface is offered under the name of CloudPortal, which is facilitating deployment of a concrete Cloud almost to the extent of being indispensable. With CloudPortal deployment is claimed to be a matter of a few hours, not days. However there is also an API, which allows customers to produce their own management software, an option still used by about half of the customers. This could be a viable solution for larger library consortia with the necessary manpower and skills to define and create their own interfaces. </p>
+<p>The CloudStack and CloudPortal system is 'aligned' along the Amazon Web Services standard (ensuring interoperability) and comprises the whole series of functions a customer might need : </p>
+<p>
+<img src="embedded:image5.emf" alt=""/>
+</p>
+<p class="caption">Figure 5 Citrix CloudPortal</p>
+<p>All three types of Cloud services (Infrastructure, Platform and Storage) are supported. One strong asset to be mentioned is the tight quality control applied by Citrix using its own standards, ensuring no lower-reliability parts get through into the final system.</p>
+<p>The functions of CloudPortal are the classic ones for Cloud : </p>
+<p class="list_Paragraph">for the storage service : creating/scaling (up or down) volumes of storage and computing power, schedule snapshots and keeping their history, </p>
+<p class="list_Paragraph">for the networking service : creating networks and filling them with VM's, IP assignment and load balancing</p>
+<p class="list_Paragraph">setting rules for the previous task</p>
+<p class="list_Paragraph">controlling traffic to VM's based on rules and firewalls.</p>
+<p>The overall architecture picture nicely shows the multitude of Cloud actions to be taken in any system (the 3 arrows to the left are where external interfaces can 'hook' into the system) :</p>
+<p>
+<img src="embedded:image6.emf" alt=""/>
+</p>
+<p class="caption">Figure 6 The Cloud internal architecture</p>
+<p/>
+<p>The 'openness' of CloudStack is built on guaranteed operational compatibility to :</p>
+<p class="list_Paragraph">when it comes to storage : any technology (local disks, iSCSI, FiberChannel, NFS, Swift)\</p>
+<p class="list_Paragraph">for computing services : any hypervisor (VMWare, XenServer, Oracle VM, KVM, Bare Metal)</p>
+<p class="list_Paragraph">for networking : network types, isolation, firewall protection, Load balancer and VPN.</p>
+<p>Basically the setup is a hierarchy of a domain (customer, business, reseller) with subdomains where each subdomain has 'accounts', the basic unit of isolation. Resources can be limited at both domain or account levels. One host runs a hypervisor (VM manager) and the hosts with a common hypervisor constitute a 'cluster' having access to shared primary storage. Several clusters constitute a Pod (a rack with an L2 switch), several Pods create a Zone (accessing shared secondary storage), while finally several zones create a cloud, in which firewalls and load balancers separate private from public clouds.</p>
+<p>Primary storage is the storage hardware (local disks, iSCSI, NFS...) put close to the hosts, configured at cluster-level. Secondary storage is configured at zone-level to keep the snapshots, templates and ISO's, using NFS or the OpenStack implementation of Swift (another interoperability de facto standard).</p>
+<p>Testing and learning about CloudStack can be done through accessing <a href="http://bit.ly/OHhO08">http://bit.ly/OHhO08</a>. A 90-days free trial is available at <a href="http://www.citrix.com/products/cloudplatform/try%20">http://www.citrix.com/products/cloudplatform/try</a> .</p>
+<p>The Apache development community for CloudStack can be found at <a href="http://www.cloudstack.org">http://www.cloudstack.org</a> .</p>
+<p/>
+<h2>
+<a name="_Toc347998418"/>OPENSTACK</h2>
+<p/>
+<p>OpenStack is the Cloud solution offered by Suse, one of the main Linux providers with a strong hold in the larger enterprise market. As with CloudPortal for Citrix, they also offer their own OpenStack implementation on top of the basic system. Cloud Computing is defined as "On-demand access to a shared pool of computing resources or services that can be rapidly provisioned and released".</p>
+<p>On-demand self-service, fast network-access and internet, resource pooling, rapid elasticity and  measure resource usage are the main characteristics (see : <a href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf">http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf</a>)</p>
+<p/>
+<p>OpenStack claims as their 'mission' is to produce the ubiquitous open source cloud computing platform that will meet the needs of the public and private cloud providers, regardless of size, by being simple to implement while at the same time massively scalable. It is a relatively young endeavour, started by NASA and Rackspace in 2010 with about 6 releases (about one every 6 months) used by about 200 organisation, Suse being one of them. The project principles are really typical for pure Open Source development : open development (Apache 2.0 license), open design (with blueprints and half-year summits to define specifications for each next release). The whole 'ecosystem' is ran by an 'open community', meaning anybody interested, capable and willing to respect the philosophy can join. </p>
+<p>Basically OpenStack exists of a series of standard functions (compute, imaging, object storage using Swift standard, identity control with Keystone, measurement and orchestration tools). The architecture, with on top the WWW-user and at the bottom the physical infrastructure (storage) is shown in the following figure : </p>
+<p>
+<img src="embedded:image7.emf" alt=""/>
+</p>
+<p class="caption">Figure 7 Suse OpenStack</p>
+<p>The storage is based on two models : object storage and block storage. Amazon S3 and 'Machine Image' standards are used for imaging. The main hypervisors[footnoteRef:2] (Xen, VMWare, KVM...) are supported as well as the main block devices with one specific type emphasized : RADOS[footnoteRef:3] Block Devices (RBD). [2:  a hypervisor is a 'supervisor' software to manage (create, maintain) virtual machines (VM's)]  [3:  RADOS : reliable, autonomous, distributed object store] 
+</p>
+<p>Suse has its own implementation of OpenStack with Suse Cloud, offering public, private and mixed clouds, with an added management tool 'Crowbar', more or less comparable to the Citrix CloudPortal product, together : Suse CloudPlatform.</p>
+<p>The Crowbar add-on for cloud-creation is characterized by :</p>
+<p>‒ its mission as &ldquo;A Zero Touch Cloud Installer&rdquo; </p>
+<p>‒ delivering servers in boxes to full function cloud in under two hours</p>
+<p>‒ allowing also 'bare metal' installations including BIOS and RAID configurations</p>
+<p>‒ allowing users to choose how their system is to be configured (by &ldquo;barclamps&rdquo;)</p>
+<p>‒ Being not specific to OpenStack</p>
+<p>The 'Chef' add-on is Suse's version of CloudPortal, which serves as an 'Orchestration framework' to simplify installation and configuration.</p>
+<p>OpenStack is especially proud of their wide and lively community (the 'Linux of the Cloud') and the OpenStack foundation, guaranteeing long-term viability and benefits to the whole sector, not a single vendor.</p>
+<p>Giving honour to whom deserves it, Suse (of Suse Linux) is the main driving force behind OpenStack, integrating it into their larger Cloud offering as shown in the illustration under here : </p>
+<p>
+<img src="embedded:image8.emf" alt=""/>
+</p>
+<p class="caption">Figure 8 Suse Cloud 'ecologic system'</p>
+<p>Suse's administration server provides all functions (user dashboard, user instances views with easy-to-build instances (configurations of memory, storage, CPU).`</p>
+<p>Their documentation can be further explored at <a href="http://www.suse.com/documentation/suse_cloud10/">http://www.suse.com/documentation/suse_cloud10/</a>
+</p>
+<p/>
+<h2>
+<a name="_Toc347998419"/>OpenShift</h2>
+<p>Next to Suse in the Linux enterprise-market stands, still quite long, RedHat. Also RedHat is developing their own Open Source Cloud platform : OpenShift. </p>
+<p>OpenShift is mainly a Platform-as-a-Service (PaaS) Cloud service. This means all levels of service (storage, hardware, virtualization, operating system and application platform) but NOT the application itself are 'outsourced' to the Cloud. </p>
+<p>A special feature of Redhat's OpenShift, making it really 'open', is the concept of 'cartridges', i.e. plug-ins for tasks, produced by anyone capable and willing to do so sticking to the protocol for cartridges and offered on the 'RedHat Marketplace'. RedHat itself has a full roadmap for J-Boss cartridges, showing they are serious about this possibility in OpenShift. </p>
+<p>In OpenShift vocabulary a 'broker' manages OpenShift 'nodes'. 'Gears' represent secure containers in RHEL (e.g. the smallest coming with 512Mb RAM/1,5Gb HD).</p>
+<p>However such 'gears' are subject to automatic up- and down-scaling based on observed needs, meaning flexibility and scalability along with standards.</p>
+<p>An OpenShift Source or Live-CD can be downloaded for testing. See <a href="http://openshift.redhat.com">http://</a>
+<a href="http://openshift.redhat.com">openshift</a>
+<a href="http://openshift.redhat.com">.redhat.com</a>
+</p>
+<p>There are currently two versions under development : </p>
+<p class="list_Paragraph">OpenShift Online : only the application level remains for the customer, RH will run it for 18 months guaranteed (Public Cloud Service, only e-mail address to be provided), can actually be checked out (Techpreview status), a supported version comes out soon;</p>
+<p class="list_Paragraph">OpenShift Enterprise : this version leaves more control for IT (Private Cloud Software), is for sale today since December 2012. Already a new version 1.1 was released on month later (31/1/2013), the service is subscription based (no matter which version you want) and 'feedback-driven'. </p>
+<h2>
+<a name="_Toc347998420"/>Distributed storage technology : CEPH</h2>
+<p/>
+<p>A special category of Open Source technology for Cloud focuses on storage. The main player here is CEPH. CEPH is a 'distributed object store', running on commodity hardware, fully securing functionality by automated replica's and easy up- or down-scaling.</p>
+<p>The automated replica method means that a (meta-data based) management software keeps track of where all objects (data/information/files) are stored. Using constant monitoring any failure is noted and automatically followed by creating a new replica on another storage unit.</p>
+<p>Object storage devices are combined into a 'cluster' serving objects to clients, intelligently peering to perform replication tasks. Monitors only maintain maps of clusters and provide consensus for 'distributed decision making'.</p>
+<p>The RADOS Block Device (or RBD) is basically storage of virtual disks in RADOS, allowing decoupling of VMs and containers, live migration (quite important in critical systems !), with images striped across the cluster, with boot support in QEMU, KVM, and OpenStack Nova. Finally it has mount support in the Linux kernel. The combination with OpenStack of course means an enormous powerful platform, with Ceph adding live migration, snapshotting, copy-on-write cloning and a publicly available AMI.</p>
+<p>Their CRUSH algorithm CRUSH is a pseudo-random placement algorithm, that ensures even distribution, is repeatable and deterministic, with a rule-based configuration and covering replica count, infrastructure topology and weighting.</p>
+<p>The CEPH Metadata Server manages metadata for a POSIXcompliant shared filesystem, a directory hierarchy and its file metadata (owner, timestamps, mode, etc.). This way they claim to be capable to always find your data when your cluster is infinitely big and always changing.  </p>
+<p>CEPH uses the Open Source GPL2 license : each contributor owns his own code. Like the other Open Source providers they claim a 'dynamic community' of developers. See <a href="http://www.ceph.com">http://www.ceph.com</a>.</p>
+<p>A company building on Ceph services is e.g. InkTank (<a href="http://www.inktank.com">http://www.inktank.com</a>).</p>
+<h1>
+<a name="_Toc347998421"/>Summary and conclusions</h1>
+<p/>
+<p>Let's summarize the hopefully not-too-much-advertisement-like descriptions of the main FOSS offerings for the Cloud, given above.</p>
+<p>CloudStack, OpenStack and OpenShift are all three principally equivalent developments of a Cloud-platform, which Cloud providers can use to run their business. All three have big FOSS-players backing them, all three claim to adhere to de facto standards (Amazon, Swift...) and being open to any 'hypervisor' for virtualisation and standard storage technology.  Since they are FOSS, all three - along with the narrower-aiming (storage only) CEPH project - claim to have dynamic and large developers communities.</p>
+<p>It is simply too early in the Cloud history to evaluate whether there indeed would be performance and or reliability issues. Where CloudStack at this early moment seems to be a bit more 'mature' (with many real-world but high-scale operational applications running), one could be attracted by the more FOSS-philosophy driven approach of CloudStack or OpenShift, but both these also can refer to running larger-scale implementations. It is simply <i>l'embarras du choix</i> : selecting one is the challenge. But it is a challenge preferable to not having any choice or not being allowed to chose.</p>
+<p>So there is in fact only good news : Open Source has a strong position in the Cloud and for a good reason, discussed above : avoidance of vendor lock-in, which might be more of an issue than anywhere else in IT. This means that commercial providers of Cloud will have to adhere to the same standards, while hoping to add their strong 'warranty-based' service and reputation, an aspect in which Open Source still seems to lag a bit behind, at least in customer's perception.</p>
+<p>It is almost impossible to make any claim on the effect on pricing of the availability of FOSS in the Cloud. When looking for prices you will mostly get a response : 'e-mail us' as the providers will want to assess your needs and financial capabilities before sticking out their neck. The only 'figure' we found was an example of '50USD/user/month' subscription - it is all about subscribing to a service, not 'purchase' of software, lowering significantly the financial impact of FOSS - which unfortunately does not say much about the real costs : if a user is a subscribing organisation (a 'customer') this seems very low, if it would be an end-user it would be potentially a lot, certainly for libraries.</p>
+<p>What is the meaning for libraries of all this ? As explained above, libraries themselves will not directly 'use' the Cloud platforms, they simply would continue using their applications, the main difference being that their infrastructure is totally abstracted into nodes/clusters/zones/domains (or whatever IT-slang the providers use) with auto-balancing traffic, auto-replicating and secured access-everywhere (that is : where there is internet connectivity). </p>
+<p>Libraries might feel that the old adagio of the 'Personal Computer' (PC), i.e. human beings owning and being in control of their own IT which has become an everyday's tool to survive (economically, commercially, administratively or even socially/culturally), has been thrown upside-down in the Cloud, and therefore the Cloud deviates too much from their own mandate and philosophy. It will take a lot of positive experiences, amongst others proving the economical superior model (running in the Cloud being cheaper indeed in a longer term when all costs are counted) of the Cloud. IT becomes a resource like the electricity power (or water) grids - libraries usually don't complain about not being in control of these essential resources - which ideally should be taken 'for granted' (not still always the case e.g. in the South), allowing libraries to shift their focus more on what is the real essence : their services themselves and their quality (monitoring), not the underlying infrastructure offered by society.</p>
+<p>If libraries need more 'control' over their Cloud-environments, they can still go for the options - available in all FOSS-products described - to build their own Cloud. This is the only approach in which libraries would get in touch with the platforms themselves. Especially larger library consortia and networks could be capable of maintaining the needed human resources capacity for doing this, running their own Clouds. We tend to think that such perspective, esp. in combination with the strong presence and claims of Open Source in the Cloud as described above, should encourage the library and information services field to embrace the Cloud fully.</p>
+<p/>
+<p>
+<a name="_Toc347998422"/>
+</p>
+<h1>Online References used</h1>
+<p/>
+<p>
+<a href="http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf">http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf</a>
+</p>
+<p>
+<a href="http://openshift.redhat.com">http://</a>
+<a href="http://openshift.redhat.com">openshift</a>
+<a href="http://openshift.redhat.com">.redhat.com</a>
+</p>
+<p>
+<a href="http://www.ceph.com">http://www.ceph.com</a>
+</p>
+<p>
+<a href="http://www.citrix.com/products/cloudplatform/try%20">http://www.citrix.com/products/cloudplatform/try</a>
+</p>
+<p>
+<a href="http://www.inktank.com">http://www.inktank.com</a>
+</p>
+<p>
+<a href="http://www.opensourcecloudday.be">http://www.opensourcecloudday.be</a>
+</p>
+<p>
+<a href="http://www.suse.com/documentation/suse_cloud10/">http://www.suse.com/documentation/suse_cloud10/</a>
+</p>
+<p/>
+</body>
+</html>

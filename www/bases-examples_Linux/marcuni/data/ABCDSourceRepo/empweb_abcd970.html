@@ -1,0 +1,482 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Special features of the advanced loans module of the ABCD integrated library system.</title>
+</head>
+<body>
+<div class="page">
+<p/>
+<p> 1
+</p>
+<p>Special features of the advanced loans module of 
+the ABCD integrated library system. 
+Egbert de Smet 
+</p>
+<p> 
+</p>
+<p>Author: Egbert de Smet is Professor of Information and Library Science, Antwerp University, Belgium. 
+E-mail: egbert.desmet@ua.ac.be  
+</p>
+<p>Abstract :  
+</p>
+<p>Purpose : The &lsquo;advanced loans&rsquo; module of the relatively new library software, ABCD,  is presented by 
+explaining why it is there in the first place (on top of the normal loans module) and  the special extra 
+functionalities it offers as a &lsquo;generic transaction decision-making engine&rsquo;. The module requires extra 
+installation effort and parameterisation, so this article tries to explain to the many potentially 
+interested libraries, especially from the target-group of ABCD users,   why (or why not) and how to 
+use the module in comparison with the basic loans module.  
+</p>
+<p>Approach :  After some brief history the technical concepts of the software and the required 
+technical skills to use them are described. 
+</p>
+<p>Findings : The article concludes that libraries with specific conditions (external user registration, high 
+transactional volumes, multi-policy) the extra burden of installing the software might be worth the 
+effort. 
+</p>
+<p>Practical implications : The installation and configuration of the software are briefly described and 
+the possible gains offered by the software are highlighted. 
+</p>
+<p>Originality/value : Potential users of the ABCD software will get useful information for helping to 
+decide on whether or not to use the additional Advanced Loans module. 
+</p>
+<p> 
+</p>
+<p>Keywords : Library automation; CDS/ISIS software; Circulation systems; Free and Open Source 
+Software (FOSS); Integrated library systems; Library management systems; Third World libraries 
+</p>
+<p> 
+</p>
+<p>Category : General review 
+</p>
+<p>Word length: 3,398 
+</p>
+<p> 
+</p>
+<p>1. About the ABCD software 
+ </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 2
+</p>
+<p>At the end of 2009 the ABCD software was officially presented in its first release (1.0) in Sao Paulo, 
+Brazil after an intensive two-year development phase led by BIREME (the health information branch 
+of the World Health Organization in Latin America) and the DOCBIBLAS project  at the  Flemish 
+Interuniversity Council in Belgium. 
+</p>
+<p>ABCD stands for &lsquo;Automatisaci&oacute;n de Bibliot&eacute;cas y Centros de Documentaci&oacute;n&rsquo; or equivalents in other 
+European languages, e.g. in English, Automation of liBraries and Centres for Documentation, and in 
+Spanish, Automatizaci&oacute;n de Bibliotecas y Centros de Documentaci&oacute;n. It is actually a suite of relatively 
+independent, but co-operating, modules dealing with database administration (catalogues, users, 
+loan objects and so on), acquisition, cataloguing (in any bibliographic format but MARC and CEPAL 
+are pre-defined), loans, serials management, OPAC and  a web portal. For the housekeeping of the 
+data the UNESCO text-retrieval software CDS/ISIS is used. Some modules, e.g. the OPAC , Portal and 
+Serials Management, have been developed and used for some time by BIREME in its large 
+bibliographic applications like the Scientific Electronic Library Online - SciELO (http://www.scielo.br), 
+LILDB, LILACS and most of the Virtual Health Library( Biblioteca Virtual em Sa&uacute;de &ndash; BVS). So these are 
+solid proven technologies. To make it a complete library management package the ABCD &lsquo;Central&rsquo; 
+suite member was produced, allowing all CDS/ISIS for Windows functionalities to create, edit and 
+maintain ISIS databases in a web environment and adding specific library management functions like 
+acquisitions, loans and statistics within the same integrated environment. 
+</p>
+<p>ABCD is now being implemented in  small as well as large university libraries, mostly in Latin America 
+but also East Africa. For instance,  in Cuba both the ministries of Higher Education and Health have 
+selected ABCD to run in their institutions. ABCD is described more detail by de Smet (2009). 
+</p>
+<p>2. EmpWeb : the advanced loans module of ABCD 
+</p>
+<p> 2.1 Some history 
+ 
+</p>
+<p>During the development phase of ABCD at the end of 2008 the development leaders discussed some 
+technical limitations of the CDS/ISIS database technology in view of the transactional characteristics 
+of the loans function. Whereas CDS/ISIS is very powerful for text retrieval and semi-structured data 
+manipulation, especially through its Formatting Language, which allows librarians to take full control 
+of most functions of their data without having to program, the software lacks, by definition, some 
+virtues of transactional (relational) databases. Advantages and disadvantages of both relational and 
+non-relational databases have been discussed more in-depth since the so-called &lsquo;No-SQL&rsquo; movement 
+gained grounds in computer science (see amongst many others : http://nosql.mypopescu.com). 
+</p>
+<p>The technical concepts of CDS/ISIS ,  although being old as they stem from the 1970s (which can be 
+thought of as pre-history in Computer Science terms!), are still very healthy and advanced, but have 
+drawbacks when it comes to relatively simple but high volume and dynamic transactional data. So we 
+came to the conclusion that for larger organisations, with higher and more critical-mission circulation 
+needs, additional technology would be preferable for the loans module of ABCD. 
+</p>
+<p>ABCD also faces another major challenge : how to combine the needs of  small libraries, with very 
+limited financial resources as well as limited  manpower and technical skills resources, with the aim </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 3
+</p>
+<p>of ABCD being advanced and also powerful enough to serve big institutional libraries like university 
+libraries (the target group of the Flemish Interuniversity Council) ? De Smet (2010) explores this 
+theme further. The &lsquo;normal&rsquo; built-in loans system of ABCD would try to make it as easy as possible for 
+small libraries and documentation centres to automate their limited circulation administration, but 
+would be considered insufficient for the larger more complex organisations. For example,  the basic 
+loans module allows, next to the use of a dedicated loan-objects database, the copy-information to 
+be included in the catalogue records (as repeated fields) as is still the practice in many small libraries, 
+but not advisable in more developed circulation environments. 
+</p>
+<p>Based on this reasoning it was decided to add an &lsquo;advanced&rsquo; loans module to the basic one in order 
+to cope with the sometimes conflicting technical and user characteristics. 
+</p>
+<p>A small company (Kalio from Uruguay) with &lsquo;inherited&rsquo; interest in CDS/ISIS technology meanwhile 
+had already produced a solution for the Catholic University of Chile combining ISIS with other 
+technologies. The original software, known as EMP, was produced in a DOS environment, and the 
+web version was known as EmpWeb.  After some negotiations, based on goodwill, it was decided to 
+free the software as open source and to incorporate EmpWeb into ABCD as a suite-member and hire 
+some expertise to re-vamp the software to the ABCD-style and formats (for example using the same 
+user-database and catalogues). 
+</p>
+<p>2.2 Technical background 
+ 
+</p>
+<p>From a technical point of view EmpWeb is rather complicated as it involves the following 
+technologies :  
+</p>
+<p> ISIS-databases for the catalogues and loan-objects 
+ ISIS-databases for the patrons (loan system users) 
+ SQL-databases for the patrons running in parallel with the ISIS users-database 
+ SQL-databases for the transactions 
+ JAVA as the programming language, involving JDK, a java-servlet server Jetty and a scripting 
+</p>
+<p>language GROOVY for definition of the circulation regulations, rules and policies 
+ Web-services technology to link up the above mentioned parts 
+ The MODS standard to create and exchange bibliographic data in between the different 
+</p>
+<p>parts. 
+</p>
+<p>A basic concept of EmpWeb is the &lsquo;pipeline&rsquo; : all transactions are the result of a series of conditions 
+(rules, parameters defined by the loans policies) which are queued for checking and, if accepted, for 
+passing on to the next stage in the pipeline, until either the pipeline is prematurely exited due to a 
+condition not being met, or a transaction finally is granted at the end of the pipeline. 
+</p>
+<p>This concept allows EmpWeb to present itself as an &lsquo;agnostic&rsquo; general-purpose transactional engine: 
+feed the engine with whatever type of parameters and actions, it will process all parameters and 
+decide on granting the transaction (storing its data in the transactions database) or not.  
+</p>
+<p>In the case of ABCD the parameters are characteristics of users, loan-objects, rules (how many books 
+can be taken for how long by a user of type X ?) and policies (which can be different for each </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 4
+</p>
+<p>substituent part of the circulation system, for the season and so on) and of course the transactions 
+are the typical library loan-transactions : issuing, returning, reservations, renewals. 
+</p>
+<p>2.3 Differences with the ABCD central loans module 
+ 
+</p>
+<p>In addition to the obvious and typical loan-system functionalities like issuing, extending and returning 
+objects, management of objects (taken from different catalogues) and users, definition of the 
+circulation parameters and reports,  all of these being present in the basic ABCD Central loans 
+module, EmpWeb offers the following extra features : 
+</p>
+<p> Reservation of objects (with the possibility to define pre-emptive reservations) from the web-
+based OPAC 
+</p>
+<p> The &lsquo;MyLibrary&rsquo; function : users can check their user status online 
+ User data can be obtained from external SQL-based databases in addition to the built-in ISIS-
+</p>
+<p>users database 
+ Distributed servers can be combined into the system 
+ Policies can be distributed as well, i.e. be different for different members of the circulation 
+</p>
+<p>system (libraries or branches) 
+ Rules can be added and positioned anywhere in the pipelines applied, to give full control of 
+</p>
+<p>the logical checks leading to a transaction. 
+</p>
+<p>As an example for this last feature we can point to the possibility of adding a third dimension on top 
+of the classical two-dimensional space where loan transactions are defined by object-categories (e.g. 
+books can be loaned for a longer period than, say, videos) and user-categories (e.g. professors can 
+take more books than undergraduate students). Such a third dimension could also be the &lsquo;season&rsquo;, 
+i.e. during examination period  the parameters can be different from summer-time vacation 
+conditions and so on.  
+</p>
+<p>2.4 Installation and configuration issues 
+ 
+</p>
+<p>From the previous description it might have become clear that all this doesn&rsquo;t come for free, but as 
+should be the case in the Free and Open Source Software (FOSS) philosophy to which ABCD fully 
+adheres, the costs are related to skills and time for implementation, not finances. 
+</p>
+<p>While the installation of ABCD, which comes as either an installer or a package to be simply unzipped 
+with its own PHP and Apache folders and configurations, involves the installation of ISIS (currently 
+the wxis and CISIS utilities of BIREME), PHP (version 5) and Apache (version 2), the EmpWeb module 
+adds, as explained above, some extra software like Java and MySQL (or other SQL environments 
+supported by Java JDBC like PosGreSQL and Oracle). 
+</p>
+<p>In reality the Java  Development Kit (JDK) has to be installed on the computer system on which ABCD 
+is running. . Since Java servlets are compiled at their first run, existing installations cannot be mixed 
+with different JDK versions, and the correct version has to be referenced to in the launching script 
+(empweb.bat in Windows and empweb.sh in Linux) in the variable &lsquo;JAVA_HOME&rsquo;. Also the Jetty-
+servlet server  comes with the EmpWeb package and for database management, MySQL server (or </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 5
+</p>
+<p>another similar SQL-server like PosGreSQL) has  to be installed, preferably along with a graphical 
+MySQL-interface like phpMyAdmin. 
+</p>
+<p>Installation of the Java components, although being large files (and therefore not that obvious for 
+many typical CDS/ISIS users in remote areas with limited Internet bandwidth), is mostly 
+straightforward and doesn&rsquo;t require any special skills. 
+</p>
+<p>Installation of the MySQL server can be cumbersome at times despite the availability of &lsquo;meant-to-
+be-easy&rsquo; installers, especially when something  goes wrong ( such as in the definition of the paths, or 
+the password) and all kinds of traces hidden deep into the Operating System need to be removed for 
+re-installation. Some courage and skill will be necessary here. But MySQL is of course used on many 
+computers, often also in pre-combined packages with Apache and PHP like EasyPHP or WAMP (for 
+Windows) or XAMP for Linux, so in the end it  should work. ABCD can be installed into such combined 
+packages because all paths and parameters are definable in text-files, but good knowledge of Apache 
+configuration with virtual servers  and so on will be needed. 
+</p>
+<p>After installation of the MySQL server, a  demonstration transactions and users database structure is 
+to be dropped into MySQL  using an SQL-file which defines all structures (tables, fields) and some 
+demonstration data. The command &lsquo;source&rsquo;  can be used with the command-line MySQL client or 
+using phpMyAdmin also allows running such a SQL-script for creation and filling of tables. 
+</p>
+<p>Another complication of EmpWeb, as far as installation is concerned, is related to the use of several 
+ports for the different web services in addition to the application port itself for Jetty (which by 
+default would be port 8080).  The default port for ABCD is 9090, so we use tricks like &lsquo;ProxyPass&rsquo; 
+parameters in Apache to call EmpWeb from port 9090. But other ports are also used and all of these 
+of course should be available for use by EmpWeb. All of these are defined in XML-structured files of 
+the EmpWeb system and some deep-digging into the EmpWeb folders and files will be needed. At a 
+later stage simplification at the installation stage is envisaged. 
+</p>
+<p>Language versions for EmpWeb can be added/removed/re-sequenced in the file &lsquo;gui.properties&rsquo; in 
+the EmpWeb folder \ABCD\empweb\gui\WEB-INF\conf\ewi18n\core\. 
+</p>
+<p>The ports used by EmpWeb mostly are defined in the three Jetty-related  XML-files in the folder 
+\ABCD\empweb\common\etc\. 
+</p>
+<p>A successful installation of EmpWeb, whether in Windows or Linux, can be tested in the following 
+steps :  
+</p>
+<p> Testing the EmpWeb URL : http://127.0.0.1:8080/empweb/ : this should display the welcome 
+page in the typical ABCD-style 
+</p>
+<p> Testing the ProxyPass with port 9090 : http://127.0.0.1:9090/empweb/ : if working the same 
+page will be displayed as in the first step, if not this option can be dropped as it is only for 
+convenience. 
+</p>
+<p> Initialising the transaction database : in the &lsquo;Administration&rsquo; part of EmpWeb there is an 
+option &lsquo;databases&rsquo; which allows initialising the transa-database (re-setting all data to 0, so 
+deleting all existing transactions); if successful , the link to MySQL from EmpWeb works well 
+&ndash; if not : all settings in the XML-files referring to the MySQL environment (e.g. </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 6
+</p>
+<p>user/password, name and path of the transa-tables, ports used&hellip;) need to be checked and 
+corrected. 
+</p>
+<p> Doing a query on users : the EmpWeb installation comes with four demonstration users in 
+the MySQL table whereas the ABCD-installation comes with three  ISIS users predefined for 
+demonstration purposes. If successful, seven users, combining the results of both different 
+user databases (ISIS and MySQL) will be listed. If the ISIS users are missing the references to 
+the ISIS database has to be checked both in the EmpWeb installation folders (e.g. 
+isis_ABCD_usersconfig.xml in /ABCD/empweb/dbws/WEBINF/conf) and if the MySQL-users 
+are missing other references need to be checked, e.g. also  in the ABCD Central subfolder 
+&lsquo;bridge&rsquo;  (config.inc.php) where a bridge is laid in between the ABCD-PHP environment and 
+MySQL. 
+</p>
+<p> Doing a query on objects : the EmpWeb system uses exactly the same ISIS database as the 
+Central Loans module, i.e. the database &lsquo;loanobjects&rsquo; of ABCD, where for each bibliographic 
+entity in any of the defined catalogues the unique identifier (referring to the catalogue as 
+&lsquo;control number&rsquo;) is given and for each copy of the document in a repeatable subfielded field 
+: the identifier (barcode), location (library and shelf) and possibly other identifier (volume, 
+copy). So when running a &lsquo;query&rsquo; in EmpWeb actually an ISIS search is performed since 
+EmpWeb uses an ISIS-DLL (or SO for Linux) derived solution which is compatible with ISIS. 
+Therefore the results should be the same as for running the same search in ISIS (or ABCD 
+Central). If not again the parameters in the EmpWeb XML-configuration files (e.g. 
+isis_ABCDmarc_objectsconfig.xml) should be corrected. 
+</p>
+<p>Once EmpWeb is running well, the proper localisation of EmpWeb (in the &lsquo;administration&rsquo; part of the 
+software)  involves the following steps : 
+</p>
+<p> Definition of the libraries in the system with their opening hours (and making sure the 
+libraries are defined with the same identifiers as used in the loan-objects database ) 
+</p>
+<p> Definition of operator-profiles with connection parameters (IP-addresses limited or not, 
+time-table limited or not, library limited or not etc.) and functional authorisations to define 
+which operations a member of this profile is allowed to do or not 
+</p>
+<p> Definition of the profiles and policies : a profile is a combination of an object - with a user-
+category (e.g. books for undergraduate students) for which each time lots of parameters can 
+be defined : e.g.  &lsquo;Fine amount for an expired reservation when the object has no 
+reservations&rsquo;. The set of profiles is a &lsquo;policy&rsquo; and different policies can be defined, e.g. for 
+different libraries or periods. This involves a lot of work, both in designing good policies and 
+profiles, and in implementing them into the system. 
+</p>
+<p> Calendars should be defined along with opening hours for each library. 
+ Pipelines : the rules and their sequence (which can be re-ordered) available in the pool can 
+</p>
+<p>be created/edited. EmpWeb comes with a large set of pre-defined rules, e.g. &lsquo;is the user 
+active or not at this moment ?&rsquo; or : &lsquo;are all conditions met for renewal of a loan?&rsquo;. 
+</p>
+<p>As can be seen from the above, installing EmpWeb is not obvious and since every transaction 
+involves ALL conditions to be met (the URL to be correct, Jetty working at the defined port, the 
+web-services ports to be available, the data being available in both ISIS and MySQL, and then all 
+&lsquo;pipe-lined&rsquo; conditions to be fulfilled), many hurdles need to be overcome. But once a transaction </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 7
+</p>
+<p>is granted, one can be sure of fast and secure handling with many possibilities and built-in 
+flexibility. 
+</p>
+<p>3. Use of EmpWeb 
+ 
+</p>
+<p>The actual use of EmpWeb, as should be the case with any high-frequency daily-use software, is a 
+&lsquo;piece of cake&rsquo;.  Figure 1 provides a screenshot of the transactions menu page. 
+</p>
+<p>Take in Figure 1 
+</p>
+<p>Figure 1 Transactions menu page 
+</p>
+<p> 
+</p>
+<p>Creating a loan involves scanning the identifiers (barcodes) of a user and one or more objects as 
+shown in Figure 2.  
+</p>
+<p>Take in Figure 2 
+</p>
+<p>Figure 2 Screen for creating a loan 
+</p>
+<p>  
+</p>
+<p>The resulting screen is shown in Figure 3 ,with all details. 
+</p>
+<p>Take in Figure 3  </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 8
+</p>
+<p>Figure 3 Loan details 
+</p>
+<p> 
+</p>
+<p>When checking the book in the circulation system, the data are displayed as shown in Figure 4. 
+</p>
+<p>Take in Figure 4 
+</p>
+<p>Figure 4.  Details from circulation system  </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 9
+</p>
+<p> 
+</p>
+<p> 
+</p>
+<p>An interesting and less-obvious feature is the end-user facility to reserve books from the OPAC or 
+check the user-status by clicking on the &lsquo;availability&rsquo; button in an ABCD OPAC search result  as shown 
+in Figure 5.  
+</p>
+<p>Take in Figure 5 
+</p>
+<p>Figure 5 OPAC search result  
+</p>
+<p> 
+</p>
+<p> 
+</p>
+<p>This would give in a separate window the copy information as shown in Figure 6. 
+</p>
+<p>Take in Figure 6 
+</p>
+<p>Figure 6 Copy information for a given title </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 10
+</p>
+<p> 
+</p>
+<p>As can be seen one copy is on loan. When clicking on &lsquo;reservation&rsquo; (at the end of the list, not shown 
+here) the user can login into his/her own page and reserve the book (if no copies are available) or 
+check her/his status  as shown in Figure 7. 
+</p>
+<p>Take in Figure 7 
+</p>
+<p>Figure 7. User account  
+</p>
+<p> 
+</p>
+<p>4. Conclusions 
+ 
+</p>
+<p>The EmpWeb Advanced Loans module of ABCD  offers interesting added value to the basic loans 
+module, but at a price. The price is to be paid in installation of additional but free software (Java and 
+an SQL-database) and acquiring quite some additional skills, and a lot of effort in implementing the 
+many customisation features of EmpWeb. 
+</p>
+<p>In return one gets a very powerful circulation module which can connect to databases of the more 
+traditional type (SQL) most probably used  already by other administrations within the institute or 
+organisation like Registrar&rsquo;s Office for students&rsquo; registration.  Transactions volume and speed, even if 
+not really a problem when using the basic loans module in smaller organisations, will be on par with 
+any current standards of performance (e.g. MySQL has many flaws as a &lsquo;relational&rsquo; system but is very 
+fast and efficient for simple setups like in a loans system). 
+</p>
+<p>EmpWeb therefore is advised for use for ABCD-users where one or more of the following conditions 
+is met : </p>
+<p/>
+</div>
+<div class="page">
+<p/>
+<p> 11
+</p>
+<p> Users-data exist in external SQL-tables 
+ High transaction volumes are expected 
+ Distributed hardware setup with several servers 
+ Good skills are available to write (Groovy-)scripts for defining additional transaction rules and 
+</p>
+<p>logics. 
+</p>
+<p>Unfortunately the ABCD system manager has to make a choice  between the Central (basic) loans 
+module and EmpWeb : even if both use the same ISIS-users and loanobjects databases, the 
+transactions are stored in a completely different way and this, unless sophisticated synchronisation 
+would be applied e.g. overnight (which in itself is not impossible),  makes them mutually exclusive. 
+Therefore the manager has to take a well-founded decision at an early stage and this article 
+hopefully has brought some useful and necessary elements for such strategic decision. 
+</p>
+<p> 
+</p>
+<p> 
+</p>
+<p> 
+</p>
+<p>References 
+</p>
+<p>de Smet,  Egbert (2009), &ldquo;ABCD : a new FOSS library automation solution based on ISIS&rdquo;, 
+</p>
+<p>Information Development, Vol. 25 No.1, pp 61-67. 
+</p>
+<p>de Smet, Egbert (2010), &ldquo;Some ISIS- software history and technical background on the new FOSS 
+integrated library system ABCD&rdquo;, Liber quarterly: the journal of European Research Libraries / 
+European Research Libraries , Vol. 19 Nos 3/4,pp. 324-335 
+</p>
+<p> </p>
+<p/>
+</div>
+</body>
+</html>

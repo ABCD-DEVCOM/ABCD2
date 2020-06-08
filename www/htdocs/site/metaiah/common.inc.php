@@ -23,6 +23,7 @@ function readData($readFrom, $removeHeader = true) {
 
         $swishStr = explode("&",trim($readFrom));
 
+
         // indexa o vetor pelo valor que estiver antes do sinal de "="
         foreach($swishStr as $i) {
             $i_split = explode("=",$i);
@@ -117,10 +118,11 @@ function PostIt($url) {
       "POST $path HTTP/1.0\n".
       "Host: $host\n".
       "User-Agent: PostIt\n".
-//      "Content-Type: application/x-www-form-urlencoded; charset=iso-8859-1\n".
-      "Content-Type: application/x-www-form-urlencoded; charset=utf-8\n".
+      "Content-Type: application/x-www-form-urlencoded; charset=iso-8859-1\n".
+//      "Content-Type: application/x-www-form-urlencoded; charset=utf-8\n".
       "Content-Length: $contentLength\n\n".
       "$query\n";
+	 
 
     // Open the connection to the host
     $fp = fsockopen($host, $port, $errno, $errstr, $timeout);
