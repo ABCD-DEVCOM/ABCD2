@@ -6,6 +6,13 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include ("../config.php");
+if (isset($_SESSION["UNICODE"])) {
+	IF ($_SESSION["UNICODE"]==1)
+		$meta_encoding="UTF-8";
+	else
+		$meta_encoding="ISO-8859-1";
+}
+
 $lang=$_SESSION["lang"];
 
 include("../lang/dbadmin.php");
@@ -26,19 +33,17 @@ if ($arrHttp["Opcion"]!="new"){
 		die;
 	}
 }
-if (isset($arrHttp["encabezado"]))
-	$encabezado="&encabezado=S";
+if (isset($arrHttp["encabezado"]))	$encabezado="&encabezado=S";
 else
-	$encabezado="";
-include("../common/header.php");
+	$encabezado="";include("../common/header.php");
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlXcommon.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgrid.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgridCell.js"></script-->
-	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
-<script  src="../dataentry/js/lr_trim.js"></script>
+	<!--script  src="../dataentry/js/dhtml_grid/dhtmlxcommon.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlxgrid.js"></script>
+	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlxgridCell.js"></script-->
+	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+    <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script languaje=javascript>
 		pl_type=""
 		Opcion="<?php echo $arrHttp["Opcion"]?>"
@@ -69,13 +74,10 @@ include("../common/header.php");
 
 		}
 
-		function Asignar(){
-			mygrid.cells2(fila,columna).setValue(valor)
+		function Asignar(){			mygrid.cells2(fila,columna).setValue(valor)
 			mygrid.cells2(fila,12).setValue(prefix)
-			closeit()
-		}
-		function Capturar_Grid(){
-			cols=mygrid.getColumnCount()
+			closeit()		}
+		function Capturar_Grid(){			cols=mygrid.getColumnCount()
 			rows=mygrid.getRowsNum()
 			VC=""
 			for (i=0;i<rows;i++){
@@ -88,8 +90,7 @@ include("../common/header.php");
 				}
 			}
 			return VC
-
-		}
+		}
 
 
 		function Enviar(){
@@ -99,23 +100,18 @@ include("../common/header.php");
 		}
 
 		function Test(){
-			if (Trim(document.fst.Mfn.value)==""){
-				alert("<?php echo $msgstr["mismfn"]?>")
-				return
-			}
+			if (Trim(document.fst.Mfn.value)==""){				alert("<?php echo $msgstr["mismfn"]?>")
+				return			}
 			msgwin=window.open("","FST_Test")
 			msgwin.document.close()
 			msgwin.focus()
-			document.test.Mfn.value=document.fst.Mfn.value
-			document.test.ValorCapturado.value=Capturar_Grid()
+			document.test.Mfn.value=document.fst.Mfn.value			document.test.ValorCapturado.value=Capturar_Grid()
 			document.test.submit()
-
-		}
+		}
 	</script>
 <body>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
@@ -127,12 +123,9 @@ echo "<div class=\"sectionInfo\">
 if ($arrHttp["Opcion"]=="new"){
 	if (isset($arrHttp["encabezado"])){
 		echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
-	}else{
-		echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";
-	}
+	}else{		echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";	}
 
-}else{
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
+}else{	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
 }
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>";
@@ -175,8 +168,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fst.php";
 			</tr>
 			<tr>
 				<td>
-					<?php if ($arrHttp["Opcion"]!="new"){
-						echo $msgstr["testmfn"];
+					<?php if ($arrHttp["Opcion"]!="new"){						echo $msgstr["testmfn"];
 						echo "<input type=text size=5 name=Mfn><a href=javascript:Test()>".$msgstr["test"]."</a>  &nbsp; &nbsp;";
 						}
 
@@ -229,18 +221,14 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fst.php";
 
 	mygrid.init();
     i=-0
-
-<?php  $i=-1;
+<?php  $i=-1;
 	unset($fp);
 	if ($arrHttp["Opcion"]=="update"){
 		$fp=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
 		$t=array();
-	}else{
-		if (isset($_SESSION["FST"])){
-            $_SESSION["FST"].="\n";
-			$fp=explode("\n",$_SESSION["FST"]);
-		}
-	}
+	}else{		if (isset($_SESSION["FST"])){
+            $_SESSION["FST"].="\n";			$fp=explode("\n",$_SESSION["FST"]);
+		}	}
 	if (isset($fp)){
 		foreach ($fp as $value){
 			if (trim($value)!=""){
@@ -256,8 +244,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fst.php";
 				id=(new Date()).valueOf()
 				mygrid.addRow(id,['".trim($t[0])."','".trim($t[1])."','".trim($t[2])."'],i)\n
 				mygrid.setRowTextStyle( id,\"font-family:courier new;font-size:12px;\")\n ";
-			}
-		}
+			}		}
    }
 ?>
 /*

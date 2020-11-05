@@ -1,0 +1,72 @@
+<IsisScript>
+	<trace>XOn</trace>
+	<section>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=2001>count</field>
+		<field action=cgi tag=2020>from</field>
+		<field action=cgi tag=2025>to</field>
+		<field action=cgi tag=2026>posting</field>
+		<field action=cgi tag=1>path_db</field>
+		<field action=cgi tag=3000>Expresion</field>
+		<field action=cgi tag=9001>Opcion</field>
+		<field action=cgi tag=9088>cttype</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+		<display><pft></pft></display>
+       	<parm name=cipar>
+          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+       	</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<parm name="buffersize">200000</parm>
+
+		<flow action=jump>
+  			<pft>
+				select s(v9001)
+					case 'buscar':			'BUSCAR'
+					case 'diccionario':     'DICCIONARIO'
+				endsel
+			</pft>
+   		</flow>
+        <flow action=exit>1</flow>
+
+		<label>DICCIONARIO</label>
+ 			<do task=keyrange>
+           		<parm name=db><pft>v5001</pft></parm>
+           		<parm name=from><pft>v2020</pft></parm>
+           		<parm name=to><pft>v2025</pft></parm>
+           		<parm name=count><pft>if a(v2025) then '1' fi</pft></parm>
+           		<field action=define tag=1>Isis_Key</field>
+      			<field action=define tag=2>Isis_Postings</field>
+				<field action=define tag=3>Isis_Posting</field>
+				<parm name=posting><pft>if P(v2026) then v2026 else '1' fi</pft></parm>
+       			<loop>
+                <display>
+
+       				<pft>
+						v1'$|$'v2,'$|$'v3^m,'$|$'v3^c,'$|$',ref(['pdf']val(v3^m),v20,v10)/
+					</pft></display>
+        		</loop>
+       		</do>
+		<flow action=exit>1</flow>
+
+		<label>BUSCAR</label>
+			<do task=search>
+            	<parm name=db><pft>v5001</pft></parm>
+             	<parm name=from><pft>'1'</pft></parm>
+             	<parm name=to><pft>'1'</pft></parm>
+             	<parm name=expression>
+                	<pft>
+                     	(v3000)
+                 	</pft>
+             	</parm>
+				<parm name="buffersize">200000</parm>
+                <parm name=MAX_TMP_STRING>200000</parm>
+                <field action=define tag=1002>Isis_Total</field>
+                <loop></loop>
+                <display><pft>'TOTAL: ',V1002</pft></display>
+    		</do>
+    	<flow action=exit>1</flow>
+	</section>
+</IsisScript

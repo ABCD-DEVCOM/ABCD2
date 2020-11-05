@@ -1,6 +1,6 @@
 <?php
 
-function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$password,$Formato,$allow="") {global $OS,$valortag,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion;
+function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$password,$Formato,$allow="") {global $OS,$valortag,$lang_db,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion,$def;
 global $record_protection,$password_protection;
 	$query="";
 	if (isset($arrHttp["lock"])){    	$IsisScript=$xWxis."lock.xis";
@@ -11,7 +11,6 @@ global $record_protection,$password_protection;
     	$res=trim($res[0]);
     	if ($res!="LOCKGRANTED") {    		return $res;    	}
     }
-
     $query="";
     if (isset($arrHttp["unlock"])){
     	$IsisScript=$xWxis."unlock.xis";
@@ -21,7 +20,8 @@ global $record_protection,$password_protection;
     	$res=trim($res);
     	return $res;
     }
-
+    unset($arrHttp["lock"]);
+    unset($arrHttp["unlock"]);
     //SE LEE LA FDT DE LA BASE DE DATOS PARA EXTRAER TODOS LOS CAMPOS
     $archivo="$db_path$base/def/".$_SESSION["lang"]."/$base.fdt";
 	if (file_exists($archivo))
@@ -57,6 +57,7 @@ global $record_protection,$password_protection;
   			if ($t[0]!="S" and $t[0]!="H" and $t[0]!="L" and $t[0]!="LDR"){  				if (trim($t[1])!="")
   					$Pft.="(if p(v".$t[1].") then '".$t[1]." 'v".$t[1]."'____$$$' fi),";  			}
   		}
+
   	}
   	if ($protect_record!="")
   		$Pft.='"$$_$$"V'.$protect_record;
@@ -69,15 +70,15 @@ global $record_protection,$password_protection;
 		$query.="&Formato=".$arrHttp["Formato"];
 	else
 		if ($Pft!="") $query.="&Pft=".urlencode($Pft);
+	unset($contenido);
 	include("../common/wxis_llamar.php");
+	unset($cont);
     $cont=implode("",$contenido);
     $cont=trim($cont);
     if (substr($cont,0,7)=="MAXMFN:"){    	$ix=strpos($cont,'##');
     	$maxmfn=substr($cont,7,$ix-7);
-    	//echo "************$maxmfn<p>";
 		$arrHttp["Maxmfn"]=$maxmfn;
     	$cont=substr($cont,$ix+2);    }
-
     $c=explode('$$_$$',$cont);
     if (isset($c[1])){    	$clave_proteccion=$c[1];
     }else{    	$clave_proteccion="";    }
@@ -112,8 +113,6 @@ global $record_protection,$password_protection;
 				     	 			$valortag[$tag]=$valortag[$tag]."\n".$linea;
 				     			}
 				    		}
-						}else{
-							$valortag[$tag].="\n".$linea;
 						}
 		   			}else{
 
@@ -136,7 +135,7 @@ global $record_protection,$password_protection;
 
 function LeerRegistroFormateado($Formato) {
 
-global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$MaxMfn,$record_deleted;
+global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$MaxMfn,$record_deleted,$def;
 	if (!isset($arrHttp["Formato"])) $arrHttp["Formato"]="";
  	if ($Formato=="" or (isset($arrHttp["Formato"]) and $arrHttp["Formato"]=="ALL")) { 		$Formato="ALL";
  		$arrHttp["Formato"]="ALL";
@@ -167,11 +166,22 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
 		$salida.= "</xmp></font>";
 	 }else{        $cont=$contenido;
 	  	foreach ($contenido as $linea) {
-	  		$lines=trim($linea);	  		if (substr($linea,0,6)=='$$REF:'){	 			$ref=substr($linea,6);
+	  		$lines=trim($linea);	  		if (substr($linea,0,6)=='$$REF:'){
+	 			$ref=substr($linea,6);
 	 			$f=explode(",",$ref);
 	 			$bd_ref=trim($f[0]);
 	 			$pft_ref=trim($f[1]);
 	 			$expr_ref=trim($f[2]);
+	 			$ixp=strpos($expr_ref,'_');
+
+	 			if ($ixp>0){
+	 			    $pref_rel=trim(substr($expr_ref,0,$ixp+1));
+	 				$expr_ref=trim(substr($expr_ref,$ixp+1));
+	 				$b_rel=explode('$$',$expr_ref);
+	 				$expr_ref="";
+	 				foreach ($b_rel as $xx){	 					$xxy=$pref_rel.$xx;
+	 					if ($expr_ref==""){	 						$expr_ref=$xxy;	 					}else{	 						$expr_ref.=' or '.$xxy;	 					}
+	 				}	 			}
 	 			$reverse="";
 	 			if (isset($f[3]) and $f[3]=="reverse")
 	 				$reverse="ON";
@@ -181,11 +191,27 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
  				}else{
  					$pft_ref=$db_path.$bd_ref."/pfts/".$lang_db."/" .$pft_ref;
         		}
- 				$query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
+ 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
 				if ($reverse!=""){					$query.="&reverse=On";				}
+				$debug_x=1;
 				include("../common/wxis_llamar.php");
-				foreach($contenido as $linea) $salida.= "$linea\n";
-	  		}else{
+				$ixcuenta=0;
+				foreach($contenido as $linea_alt) {
+					if (trim($linea_alt)!=""){
+						$ll=explode('|^',$linea_alt);
+						if (isset($ll[1])){
+							$ixcuenta=$ixcuenta+1;
+							$SS[trim($ll[1])."-$ixcuenta"]=$ll[0];
+						}else{
+							$salida.= "$linea_alt\n";
+						}
+					}
+				}
+				if (isset($SS) and count($SS)>0){
+					ksort($SS);
+					foreach ($SS as $linea_alt)
+						$salida.= "$linea_alt\n";
+				}	  		}else{
 	  			if (strpos($linea,'$$DELETED')===false){
 			 		$salida.= $linea."\n";
 		 		}else{

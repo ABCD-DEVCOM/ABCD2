@@ -19,7 +19,7 @@ $arrHttp['encabezado']="s";
 $fn="";
 
  # si hay algun archivo que subir 
- if($_FILES["archivo"]["name"][0]) 
+ if (isset($_FILES["archivo"]["name"][0])) if($_FILES["archivo"]["name"][0]) 
  { 
 $base=$_POST['base'];
  # definimos la carpeta destino 
@@ -61,7 +61,7 @@ if($fn!="")
 <input type='hidden' name=fn>
 <input type='hidden' name='base' value='$base'>
 <input type='hidden' name='cd'>
-<input type='hidden' name='arrHttp' value='".$arrHttp."'>
+<input type='hidden' name='base' value='".$arrHttp['base']."'>
 CONTINUE <input type='submit' value='Configure Doc Import'>
 </form>";
 //echo "<a href='javascript:send();'><br><img src='../images/importDatabase.png'><br>Start Import</a><br>"; 
@@ -91,11 +91,15 @@ if($collection=="")
 {
 $collection=$db_path."collections/".$base."/ABCDImportRepo/";
 }
+else 
+{
+$collection.="ABCDImportRepo/";
+}
 //end
  ?>
  <div id="form_file" style="display:block;">
 <h3> Digital document import</h3>
- <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data" name="inscripcion" target="_self" onsubmit="OpenWindows();"> 
+ <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data" name="inscripcion" target="_self" onSubmit="OpenWindows();"> 
 Upload destination on server <br><input type="text" name=cd size=75 value='<?php echo $collection; ?>'><br><br>
  Select one or more files<br><input type="file" size=40 name="archivo[]" multiple="multiple"> 
 <input type="hidden" name=base value="<?php echo $base;?>">

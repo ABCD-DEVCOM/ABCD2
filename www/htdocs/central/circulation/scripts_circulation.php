@@ -1,4 +1,4 @@
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <script>
 function SendMail(code,Mfn){
 	msgwin=window.open("../reserve/mail.php?code="+code+"&Mfn="+Mfn,"MAIL","width=400,height=600,resizable,scrollbars")
@@ -39,7 +39,7 @@ function EvaluarRenovacion(p,atraso,fecha_d,nMultas,item){
 		return false
 	}
    	if (atraso!=0){
-		if (p[13]!="Y"){
+		if (p[13]!="Y" ){
 			alert(item+". <?php echo $msgstr["loanoverdued"]?>")
 			return false
 		}

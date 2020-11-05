@@ -62,8 +62,10 @@ function Campos(Tag,i,Formato,Repetible,Url_help,Wks) {
 	TagCampo=Eti.substr(3)
 	Eti="eti"+TagCampo
 	s=eval(Tag).value
+	s=s.replace(/\"/g, '&quot;')
 	Etq=eval("document.forma1."+Eti)
 	NombreC=Etq[0].value
+
     document.forma1.valor.value=s
     document.forma1.occur.value=1
 	document.forma1.conte.value=Tag.value   /*Valores[i]*/

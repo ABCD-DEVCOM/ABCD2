@@ -17,6 +17,7 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../lang/iah_conf.php");
 include("../lang/profile.php");
+if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
 include("../common/header.php");
 $encabezado="";
 echo "<body>\n";
@@ -48,7 +49,7 @@ echo "</div>
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/menu_traducir.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: menu_traducir.php";
+echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_traducir.php";
 ?>
 </font>
 	</div>
@@ -61,6 +62,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: menu_traducir.php";
 		<div class="boxContent titleSection">
 			<div class="sectionTitle">
 				<h4><strong><?php echo $msgstr["traducir"]?></strong></h4>
+				<?php echo $msgstr["lang"].": ".$_SESSION["lang"]."<br>";?>
+				<h3><a href="convert_utf8.php"><?php echo $msgstr["convert_utf8"]?></a></h3>
 			</div>
 			<div class="sectionButtons">
 				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=admin.tab<?php echo $encabezado?>" class="menuButton  listButton">
@@ -166,42 +169,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: menu_traducir.php";
 	</div>
 
 
-	<!--div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-		<div class="boxTop">
-			<div class="btLeft">&#160;</div>
-			<div class="btRight">&#160;</div>
-		</div>
-		<div class="boxContent titleSection">
-			<div class="sectionTitle">
-				<h4><strong><?php echo $msgstr["tradyudas"]?></strong></h4>
-			</div>
-			<div class="sectionButtons">
-				<a href="trad_ayudas_dataentry.php?><?php echo $encabezado?>" class="menuButton  listButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["catalogacion"]?></strong></span>
-				</a>
-
-				<a href="trad_ayudas_adm.php?<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["dbadmin"]?></strong></span>
-				</a>
-    			<a href="trad_ayudas_loan.php?lang=<?php echo $_SESSION["lang"]?>&componente=prestamo.php<?php echo $encabezado?>" class="menuButton  importButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" /
-					<span><strong><?php echo $msgstr["prestamo"]?></strong></span>
-				</a>
-				<a href="trad_ayudas_statistics.php?lang=<?php echo $_SESSION["lang"]?>&componente=estadisticas.php<?php echo $encabezado?>" class="menuButton  statButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" /
-					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
-				</a>
-
-			</div>
-			<div class="spacer">&#160;</div>
-		</div>
-		<div class="boxBottom">
-			<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
-		</div>
-	</div -->
 <form name=admin method=post action=administrar_ex.php onSubmit="Javascript:return false">
 <input type=hidden name=base>
 <input type=hidden name=cipar>

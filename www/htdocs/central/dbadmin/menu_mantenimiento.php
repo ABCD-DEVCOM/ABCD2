@@ -24,7 +24,7 @@ unset($_SESSION["Server_Path"]);
 
 //echo "<pre>"; print_r($_SESSION); ECHO "</pre>";
 
-if (isset($_SESSION["permiso"])) $Permiso=$_SESSION["permiso"];
+$Permiso=$_SESSION["permiso"];
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 if (!isset($arrHttp["base"])) $arrHttp["base"]="";
@@ -62,8 +62,7 @@ foreach ($fp as $value){
 	$value=trim($value);
 	$x=explode("|",$value);
 	if ($x[0]==$arrHttp["base"]){
-		if (isset($x[2]) and $x[2]=="Y"){
-			$copies="Y";
+		if (isset($x[2]) and $x[2]=="Y"){			$copies="Y";
 		}
 		break;
 	}
@@ -72,26 +71,10 @@ foreach ($fp as $value){
 include("../common/header.php");
 ?>
 
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 
 
 <script language="javascript" type="text/javascript">
-<!--
-/****************************************************
-     Author: Eric King
-     Url: http://redrival.com/eak/index.shtml
-     This script is free to use as long as this info is left in
-     Featured on Dynamic Drive script library (http://www.dynamicdrive.com)
-****************************************************/
-var win=null;
-function NewWindow(mypage,myname,w,h,scroll,pos){
-if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
-if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
-else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
-settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
-win=window.open(mypage,myname,settings);}
-win.focus()
-// -->
 
 function EnviarForma(Opcion,Mensaje){
 
@@ -103,14 +86,7 @@ function EnviarForma(Opcion,Mensaje){
 		}
 
 	}
-	switch (Opcion){
-		case "DCDspace":
-		       	document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/dcdspace.php"
-			document.admin.target=""
-			break;
-		case "dbcp":
+	switch (Opcion){		case "dbcp":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/copy_db.php"
@@ -122,13 +98,13 @@ function EnviarForma(Opcion,Mensaje){
 			document.admin.action="../utilities/mx_dbread.php"
 			document.admin.target=""
 			break;
-//		case "readiso":
-//			document.admin.base.value=base
-//			document.admin.cipar.value=base+".par"
-//			document.admin.action="../utilities/mx_dbread.php"
-//			document.admin.iso="Y"
-//			document.admin.target=""
-//			break;
+		case "readiso":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/mx_dbread.php"
+			document.admin.iso="Y"
+			document.admin.target=""
+			break;
 		case "dbrestore":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -151,8 +127,8 @@ function EnviarForma(Opcion,Mensaje){
 			document.admin.base.value=base
 			document.admin.target=""
 			break;
-                case "cn":  //assign control number
-          	        document.admin.base.value=base
+        case "cn":  //assign control number
+          	document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="assign_control_number.php"
 			document.admin.target=""
@@ -172,29 +148,28 @@ function EnviarForma(Opcion,Mensaje){
 		case "addcopiesdatabase":    //Marcos Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/addcopiesdatabase.php"
+			document.admin.action="addcopiesdatabase.php"
 			document.admin.target=""
 			break;
 		case "copiesocurrenciesreport":    //Marcos Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/copiesdupreport.php"
+			document.admin.action="copiesdupreport.php"
 			document.admin.target=""
 			break;
 		case "addloanobjectcopies":    //Marcos Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/addloanobjectcopies.php"
+			document.admin.action="addloanobjectcopies.php"
 			document.admin.target=""
 			break;
 		case "addloanobj":    //Marino Vretag
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/addloanobject.php"
+			document.admin.action="addloanobject.php"
 			document.admin.target=""
 			break;
 		case "fullinv":     //INVERTED FILE GENERATION WITH MX
-				NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/vmx_fullinv.php"
@@ -206,103 +181,74 @@ function EnviarForma(Opcion,Mensaje){
 			document.admin.action="../utilities/vmxISO_load.php"
 			document.admin.target=""
 			break;
-                case "isoexport":    //Marino ISO export
-				
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/vmxISO_export.php"
-				document.admin.target=""
-				
-				break;
-                case "importdoc":    //Marino doc import
-				
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/import_doc.php"
-				document.admin.target=""
-				
-				break;
-                case "cleandb":    //Marino clean DB
-				
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/clean_db.php"
-				document.admin.target=""
-				
-				break;
+		case "exportiso":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/iso_export.php"
+			document.admin.target=""
+			break;
 		case "unlock":    //Marino Vretag
-				
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/unlock_db_retag_check.php"
-				document.admin.target=""
-				break;
-				case "addloanobj":    //Marino addloanobj
-				
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action=",,/utilities/addloanobject.php"
-				document.admin.target=""
-				
-				break;
-				
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="unlock_db_retag_check.php"
+			document.admin.target=""
+			break;
+		case "addloanobj":    //Marino addloanobj
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="addloanobject.php"
+			document.admin.target=""
+			break;
 		case "barcode":    //Marino barcode search
-				
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/barcode.php"
-				document.admin.target=""
-				
-								break;
-								case "docbatchimport":     //Marcos docbatchimport
-				//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/docbatchimport.php"
-				document.admin.target=""
-				break;
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/barcode.php"
+			document.admin.target=""
+			break;
 		case "dirtree": //EXPLORE DATABASE DIRECTORY
-				switch (Mensaje){
-					case "par":
-					case "www":
-					case "wrk":
-						document.admin.base.value=Mensaje
-						break;
-					default:
-						document.admin.base.value=base
-						break;
-				}
-
-				document.admin.action="dirtree.php";
-				document.admin.target=""
-				break;
+			switch (Mensaje){
+				case "par":
+				case "www":
+				case "wrk":
+					document.admin.folder.value=Mensaje
+					document.admin.base.value=base
+					break;
+				default:
+					document.admin.base.value=base
+					break;
+			}
+			document.admin.action="dirtree.php";
+			document.admin.target=""
+			break;
+		case "more_utils":    //More utils
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/more_utils.php"
+			document.admin.target=""
+			break;
 		case "menu_extra":    //extra utilities sub-menu
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/menu_extra.php"
 				document.admin.target=""
-				
+
 				break;
-			default:
-				alert("")
-				return;
-
-		}
-		document.admin.Opcion.value=Opcion
-		document.admin.cipar.value=base+".par"
-		document.admin.submit()
-//	}
-
+		default:
+			alert("")
+			return;
+	}
+	document.admin.Opcion.value=Opcion
+	document.admin.cipar.value=base+".par"
+	document.admin.submit()
 }
 
 </script>
 <body onunload=win.close()>
 <?php
-if (isset($arrHttp["encabezado"])) {
+
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}
 echo "
 	<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".
@@ -311,11 +257,10 @@ echo "
 			<div class=\"actions\">
 
 	";
-if (isset($arrHttp["encabezado"])){
+
 	echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
-}
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";
@@ -350,55 +295,49 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 			<li><a href='javascript:EnviarForma("eliminarbd","<?php echo $msgstr["mnt_ebd"]?>")'><?php echo $msgstr["mnt_ebd"]?></a></li>
 			<li><a href='javascript:EnviarForma("lock","<?php echo $msgstr["protect_db"]?>")'><?php echo $msgstr["protect_db"]?></a></li>
 			<li><a href='javascript:EnviarForma("unlock","<?php echo $msgstr["mnt_unlock"]?>")'><?php echo $msgstr["mnt_unlock"]?></a></li>
-<!--			<li><a href='Javascript:EnviarForma("exportiso","<?php echo "ExportISO MX"?>")'><?php echo $msgstr["exportiso_mx"]?></a></li>  -->
-<!--			<li><a href='Javascript:EnviarForma("importiso","<?php echo "ImportISO MX"?>")'><?php echo $msgstr["importiso_mx"]?></a></li>  -->
-<!--			<li><a href='Javascript:EnviarForma("readiso","<?php echo "ReadISO  MX"?>")'><?php echo $msgstr["readiso_mx"]?></a></li> -->
+			<li><a href='Javascript:EnviarForma("exportiso","<?php echo "ExportISO MX"?>")'><?php echo $msgstr["exportiso_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("importiso","<?php echo "ImportISO MX"?>")'><?php echo $msgstr["importiso_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("readiso","<?php echo "ReadISO  MX"?>")'><?php echo $msgstr["readiso_mx"]?></a></li>
 			<li><a href='javascript:EnviarForma("cn","<?php echo $msgstr["assigncn"]?>")'><?php echo $msgstr["assigncn"]?></a></li>
-<!--			<li><a href='javascript:EnviarForma("linkcopies","<?php echo $msgstr["linkcopies"]?>")'><?php echo $msgstr["linkcopies"]?></a></li> -->
-			<?php if (($arrHttp["base"]!="copies") and ($arrHttp["base"]!="providers") and ($arrHttp["base"]!="suggestions") and ($arrHttp["base"]!="purchaseorder") and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {
-				if ($copies=="Y"){
+			<li><a href='javascript:EnviarForma("linkcopies","<?php echo $msgstr["linkcopies"]?>")'><?php echo $msgstr["linkcopies"]?></a></li>
+			<?php if (($arrHttp["base"]!="copies") and ($arrHttp["base"]!="providers") and ($arrHttp["base"]!="suggestions") and ($arrHttp["base"]!="purchaseorder") and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {				if ($copies=="Y"){
 			?>
 
 			<?php }}
-			if (($arrHttp["base"]!="copies") and ($arrHttp["base"]!="providers") and ($arrHttp["base"]!="suggestions") and ($arrHttp["base"]!="purchaseorder") and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {
+			if ($arrHttp["base"]!="providers" and $arrHttp["base"]!="suggestions" and $arrHttp["base"]!="purchaseorder" and $arrHttp["base"]!="users" and $arrHttp["base"]!="loanobjects" and $arrHttp["base"]!="trans" and $arrHttp["base"]!="suspml") {
 				if ($copies=="Y" or $arrHttp["base"]=="copies" or $arrHttp["base"]=="loanobjects"){
             ?>
-    			<li><a href='javascript:EnviarForma("linkcopies","<?php echo $msgstr["linkcopies"]?>")'><?php echo $msgstr["linkcopies"]?></a></li>
-<!-- 			<li><a href='Javascript:EnviarForma("addloanobj","<?php echo $msgstr["addLOfromDB_mx"]?>")'><?php echo $msgstr["addLOfromDB_mx"]?></a></li> -->
-<!--			<li><a href='Javascript:EnviarForma("addloanobjectcopies","<?php echo $msgstr["addLOwithoCP_mx"]?>")'><?php echo $msgstr["addLOwithoCP_mx"]?></a></li> -->
-<!--			<li><a href='Javascript:EnviarForma("addcopiesdatabase","<?php echo $msgstr["addCPfromDB_mx"]?>")'><?php echo $msgstr["addCPfromDB_mx"]?></a></li> -->
+			<li><a href='Javascript:EnviarForma("addloanobj","<?php echo $msgstr["addLOfromDB_mx"]?>")'><?php echo $msgstr["addLOfromDB_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("addloanobjectcopies","<?php echo $msgstr["addLOwithoCP_mx"]?>")'><?php echo $msgstr["addLOwithoCP_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("addcopiesdatabase","<?php echo $msgstr["addCPfromDB_mx"]?>")'><?php echo $msgstr["addCPfromDB_mx"]?></a></li>
             <?php }?>
-<!--             		<li><a href='Javascript:EnviarForma("barcode","<?php echo "Barcode search"?>")'><?php echo "Barcode search"?></a></li> -->
+             <li><a href='Javascript:EnviarForma("barcode","<?php echo "Barcode search"?>")'><?php echo "Barcode search"?></a></li>
 			<?php
 			}
-			if ($arrHttp["base"]=="copies") {?>
+			if ($arrHttp["base"]=="copies") {
+			?>
 			<li><a href='Javascript:EnviarForma("copiesocurrenciesreport","<?php echo $msgstr["CPdupreport_mx"]?>")'><?php echo $msgstr["CPdupreport_mx"]?></a></li>
 			<?php }?>
-			
-           <?php if ($arrHttp["base"]=="dcdspace") { ?>
-			 <li><a href='Javascript:EnviarForma("DCDspace","<?php echo $msgstr["dcdspace"]?>")'><?php echo $msgstr["dcdspace"]?></a></li>
-			<?php }	?>
-		   
+			<li><a style="color:green;" href='Javascript:EnviarForma("menu_extra","<?php echo "menu_extra"?>")'><?php echo "EXTRA UTILITIES"?></a></li>
+
 	<?php
 	if (($_SESSION["profile"]=="adm" or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
 		isset($_SESSION["permiso"]["CENTRAL_EXDBDIR"]) or
         isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EXDBDIR"]))
-        and isset($dirtree) and $dirtree=="1"
+        and isset($dirtree) and $dirtree=="Y"
     ){
 
     ?>
     		<li><a href='Javascript:EnviarForma("dirtree","<?php echo $msgstr["expbases"]?>")'><?php echo $msgstr["expbases"]?></a></li>
-	        <?php echo $msgstr["explore_sys_folders"]?>
+	        <li><?php echo $msgstr["explore_sys_folders"]?></li>
 	        <ul>
 			<li><a href='Javascript:EnviarForma("dirtree","par")'><?php echo "par"?></a></li>
 			<li><a href='Javascript:EnviarForma("dirtree","www")'><?php echo "www"?></a></li>
 			<li><a href='Javascript:EnviarForma("dirtree","wrk")'><?php echo "wrk"?></a></li>
 	        </ul>
-
 	<?php }?>
-        		<li><a style="color:green;" href='Javascript:EnviarForma("menu_extra","<?php echo "menu_extra"?>")'><?php echo "EXTRA UTILITIES"?></a></li>
 
-<!--	<li><a href='javascript:EnviarForma("more_utils","<?php echo $msgstr["more_utils"]?>")'><?php echo $msgstr["more_utils"]?></a></li>  -->
+	<!--li><a href='javascript:EnviarForma("more_utils","<?php echo $msgstr["more_utils"]?>")'><?php echo $msgstr["more_utils"]?></a></li-->
 			</ul>
 
 		</td>
@@ -411,7 +350,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 <input type=hidden name=folder>
 <input type=hidden name=iso>
 <input type=hidden name=activa value=<?php echo $_REQUEST["base"]?>>
-<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
 </form>
 </div>
 </div>

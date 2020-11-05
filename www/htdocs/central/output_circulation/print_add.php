@@ -24,7 +24,7 @@ include("../common/header.php");
 
 include("../common/institutional_info.php");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 	function LeerFst(base){		msgwin=window.open("../dbadmin/fst_leer.php?base="+base,"fst","width=400,height=400,resizable,scrollbars=yes")
 		msgwin.focus()	}
@@ -102,6 +102,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: output_circulation/print_add.php";
 	$ask_itemtype="";
 	$tag_itemtype="80";
 	$tag="";
+	$bd="";
 	if (isset($arrHttp["base"]) and isset($arrHttp["codigo"])){
 		$bd=$arrHttp["base"];
 		if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){			$fp=file($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst");

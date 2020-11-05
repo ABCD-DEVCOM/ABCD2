@@ -19,10 +19,11 @@ $t=explode("\n",$arrHttp["ValorCapturado"]);
 $ix=-1;
 global $vars;
 foreach ($t as $value){
-
-	$ix=$ix+1;
-	$fdt[$t[1]]=$value;
-	$vars[$ix]=$value;
+    if (trim($value)!=""){
+		$ix=$ix+1;
+		//$fdt[$t[1]]=$value;
+		$vars[$ix]=$value;
+	}
 	//echo "$value<br>";
 }
 $fmt_test="S";

@@ -12,6 +12,7 @@ include("../lang/acquisitions.php");
 include("../lang/admin.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 //die;
+include("../common/abcd_ref.php");
 include("../common/header.php");
 echo "<body>\n";
 
@@ -49,44 +50,48 @@ LeerFst($arrHttp["database"]);
 // Se lee la base de datos catalográfica para determinar si el objeto ha sido ingresado
 $Formato=$db_path.$arrHttp["database"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["database"].".pft" ;
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["database"]."/pfts/".$lang_db."/".$arrHttp["database"].".pft" ;
-$Formato="@$Formato ";
+$Formato="@$Formato,/";
 $Expresion="$pref_ctl".$arrHttp["objectid"];
-//$query = "&base=".$arrHttp["database"]."&cipar=$db_path"."par/".$arrHttp["database"].".par"."&Expresion=$Expresion&Formato=$Formato&Opcion=buscar";
+$query = "&base=".$arrHttp["database"]."&cipar=$db_path"."par/".$arrHttp["database"].".par"."&Expresion=$Expresion&Formato=$Formato&Opcion=buscar";
 $IsisScript=$xWxis."imprime.xis";
-//include("../common/wxis_llamar.php");
-$mx=$mx_path . " " . $arrHttp["database"] . " bool=$Expresion pft=$Formato now " ;
-// pft="; .$Formato;
-echo "$mx<BR>"; //die;
-exec($mx,$mxout,$flagmx);
-var_dump($mxout);//die;
-$contenido=$mxout;
-//echo "bandera=$banderamx" ;
+include("../common/wxis_llamar.php");
 $cont_database=implode('',$contenido);
 if (trim($cont_database)=="") {
 	echo "<h4>".$arrHttp["objectid"].": ".$msgstr["objnoex"]."</h4>";
 	echo "\n<script>top.toolbarEnabled=\"\"</script>\n";
 	die;
 }
-
+$cont_database=$contenido;
 if (isset($arrHttp["copies"])) echo "<br>".$msgstr["copies_no"].": ".$arrHttp["copies"];
 
 $Mfn="";
-if (isset($arrHttp["tag30"])){
-	$inven=explode("\n",$arrHttp["tag30"]);
+if (isset($arrHttp["tag30"])  and !isset($arrHttp["copies"])){	$inven=explode("\n",$arrHttp["tag30"]);
 	unset($arrHttp["tag30"]);
-	foreach ($inven as $cn) {
-		if (trim($cn)!="")
-			CrearCopia(trim($cn),$max_inventory_length);
-	}
-}else{
+	foreach ($inven as $cn) {		if (trim($cn)!="")
+			CrearCopia(trim($cn),$max_inventory_length);	}}else{
 	for ($ix=1;$ix<=$arrHttp["copies"];$ix++ ){
 		echo "<hr>";
-		$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
+		if (isset($arrHttp["tag30"])){			if ($ix==1)
+				$cn=$arrHttp["tag30"];
+			else
+				$cn=$cn+1;		}else{			$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
+		}
 		CrearCopia($cn,$max_inventory_length);
 	}
 }
-echo "<p>".$cont_database;
 
+echo "<p>";
+/*foreach ($cont_database as $value){
+	$value=trim($value);
+	if (trim($value)!=""){
+		if (substr($value,0,6)=='$$REF:'){
+			   echo ABCD_Ref($value,"");
+		}else{
+			echo $value;
+		}
+	}
+}
+*/
 echo "</div></div>";
 include("../common/footer.php");
 echo "</body></html>";
@@ -109,14 +114,13 @@ global $msgstr,$arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
 		foreach ($arrHttp as $var=>$value){
 			if (substr($var,0,3)=="tag"){
 				$tag=trim(substr($var,3));
-				$ValorCapturado.="<".$tag." 0>".$value."</".$tag.">";
+				if ($tag!=30) $ValorCapturado.="<".$tag." 0>".$value."</".$tag.">";
 			}
 		}
 		$ValorCapturado.="<30 0>".$cn."</30>";
 		$ValorCapturado=urlencode($ValorCapturado);
 		$IsisScript=$xWxis."actualizar.xis";
 		$query = "&base=copies&cipar=$db_path"."par/copies.par&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado;
-
 		include("../common/wxis_llamar.php");
 		foreach ($contenido as $linea){
 			if (substr($linea,0,4)=="MFN:") {
@@ -161,10 +165,7 @@ global $db_path;
 
 function BuscarCopias($inventario){
 global $xWxis,$db_path,$wxisUrl,$Wxis;
-	if ($inventario!=""){
-		$Prefijo="IN_".$inventario;
-	}else{
-		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
+	if ($inventario!=""){		$Prefijo="IN_".$inventario;	}else{		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
 	}
 	$IsisScript= $xWxis."ifp.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=diccionario&prefijo=$Prefijo&campo=1";
@@ -180,8 +181,7 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			}
 		}
 	}
-	return 0;
-}
+	return 0;}
 
 function LeerFst($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;

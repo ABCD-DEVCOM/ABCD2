@@ -13,7 +13,6 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 $lang=$_SESSION["lang"];
 include("../common/get_post.php");
 include("../config.php");
-
 // ARCHIVOS DE LENGUAJE
 include("../lang/admin.php");
 include("../lang/soporte.php");
@@ -38,7 +37,7 @@ include("../common/header.php");
 
 // INCLUSION DE LOS SCRIPTS
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script languaje=javascript>
 
 function Update(Option){
@@ -46,7 +45,10 @@ function Update(Option){
 		alert("<?php echo $msgstr["seldb"]?>")
 		return
 	}
-	switch (Option){		case "fdt":
+	switch (Option){
+		case "tes_config":
+			document.update_base.action="tes_config.php"
+			break		case "fdt":
 			document.getElementById('loading').style.display='block';
 			document.update_base.action="fdt.php"
 			document.update_base.type.value="bd"
@@ -97,6 +99,10 @@ function Update(Option){
 		case "recval":
 			document.update_base.action="typeofrecs.php"
 			break;
+		case "delval":
+			document.update_base.action="recdel_val.php"
+			document.update_base.format.value="recdel_val"
+			break;
 		case "bases":
 			document.update_base.action="databases_list.php"
 			break;
@@ -130,6 +136,13 @@ function Update(Option){
 			break
         case "help":
         	document.update_base.action="help_ed.php"
+        	break
+        case "tes_config":
+        	document.update_base.action="tes_config.php"
+        	break
+        case "chk_dbdef":
+        	document.update_base.action="chk_dbdef.php"
+        	break
 	}
 	document.update_base.submit()
 }
@@ -198,6 +211,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
 			<input type=hidden name=Opcion value=update>
 			<input type=hidden name=type value="">
 			<input type=hidden name=modulo>
+			<input type=hidden name=format>
 			<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 			<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
             <br>
@@ -227,9 +241,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
             <li><a href=javascript:Update("help")><?php echo $msgstr["helpdatabasefields"]?></a></li>
             <li><a href=javascript:Update("tooltips")><?php echo $msgstr["database_tooltips"]?></a></li>
             <li><a href=javascript:Update("IAH")><?php echo $msgstr["iah-conf"]?></a></li>
-            <li><a href=javascript:Update("stats_var")><?php echo $msgstr["estadisticas"]." - ".$msgstr["var_list"]?></a></li>
-            <li><a href=javascript:Update("stats_tab")><?php echo $msgstr["estadisticas"]." - ".$msgstr["tab_list"]?></a></li>
+            <li><a href=javascript:Update("tes_config")><?php echo $msgstr["tes_config"]?></a></li>
             <?php if ($_SESSION["profile"]=="adm"){
+            	echo "<li><a href=javascript:Update(\"chk_dbdef\")>".$msgstr["chk_dbdef"]."</a></li>";
 				echo "<li><a href=javascript:Update(\"dr_path\")>dr_path.def</a></li>";
 			}
 			?>

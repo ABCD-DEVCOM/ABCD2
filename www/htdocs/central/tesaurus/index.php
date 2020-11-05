@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -9,19 +8,19 @@ if (!isset($_SESSION["permiso"])){
 
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
+//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
+
+if (!isset($tesaurus)) $tesaurus=$_REQUEST["base"];
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
 	$fp=file($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat");
 else
 	$fp=file($db_path.$tesaurus."/def/".$lang_db."/".$tesaurus.".dat");
-foreach($fp as $value) {
-	$f=explode('=',$value);
-	switch($f[0]){
-		case "alpha_prefix":
+foreach($fp as $value) {	$f=explode('=',$value);
+	switch($f[0]){		case "alpha_prefix":
 			$prefijo=trim($f[1]);
 			break;
 		case "perm_prefix":
@@ -30,8 +29,7 @@ foreach($fp as $value) {
 		case "alpha_pft":
 			$Formato=trim($f[1]);
 			break;
-	}
-}
+	}}
 if (isset($arrHttp["perm"])) $prefijo=$perm_prefix;
 $delimitador="";
 $pref=$prefijo;
@@ -50,7 +48,7 @@ $subtitle= " Tesaurus";
 //echo $Formato;
 //foreach ($contenido as $var=>$value) echo "$var=$value<br>";die;
 include("../common/header.php");
-echo "<h3>Tesaurus ($tesaurus)</h3>\n";
+
 echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>\n";
 echo "
 		<script languaje=Javascript>
@@ -85,8 +83,7 @@ echo "
 		$Tag=$arrHttp["Tag"];
 	}
 ?>
-	function ObtenerTerminos(){
-
+	function ObtenerTerminos(){
 		Seleccion=""
 		i=document.Lista.autoridades.selectedIndex
 		for (i=0;i<document.Lista.autoridades.options.length; i++){
@@ -101,10 +98,9 @@ echo "
         }
 		if (Seleccion!=""){
 			if (Tag==""){
-				window.opener.top.Expresion="<?php echo $prefix_search_tesaurus?>"+Seleccion
+				window.opener.top.Expresion='"'+"<?php echo $prefix_search_tesaurus?>"+Seleccion+'"'
 				window.opener.top.Menu("ejecutarbusqueda")
-			}else{
-				Var=eval("window.opener.document.forma1."+Tag)
+			}else{				Var=eval("window.opener.document.forma1."+Tag)
 				if (Var.type=="text")
 					Separa=";"
 				else
@@ -121,10 +117,7 @@ echo "
 					b=a.split("\n")
 					if(b.length>Var.rows) Var.rows=b.length
 
-				}else{
-					self.close()
-				}
-			}
+				}else{					self.close()				}			}
 		}
 	}
 
@@ -151,25 +144,20 @@ echo "function AbrirIndice(Termino){\n";
 </script>\n";
 ?>
 	<body>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/alfa.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/alfa.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: tesaurus/index.php" ?>
-</font></div>
-<form method=post name=Lista onSubmit="javascript:return false">
-	<table width=100%>
-		<td width=50%>
-                <img src=../dataentry/img/toolbarSearch.png>
-                <a href=index.php?base=<?php echo $arrHttp["base"];
-                if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp;
-                 <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];
-                 if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
-    	<td width=50% align=right><font color=white><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
-    </table>
-
  <div class="middle form">
 			<div class="formContent">
+	<?php
+		echo "<h3>Tesaurus ($tesaurus)</h3>\n";
+	echo "<font color=#000000>&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
+	echo "<font color=#000000>&nbsp; &nbsp; Script: tesaurus/index.php" ?>
+</font>
+<form method=post name=Lista onSubmit="javascript:return false">
+	<table width=100%  style="background:#EEEEEE">
+		<td width=50% bgcolor=#EEEEEE><font color=#000000><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=#000000><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=#000000><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
+    	<td width=50% align=right><font color=#000000><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
+    </table>
+
+
 
 <?php
 // si viene de la opción de capturar de otra base de datos se presenta la lista de bases de datos disponibles
@@ -203,14 +191,11 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 	<Select name=autoridades multiple size=28 style="width:<?php echo $xwidth?>px; xheight=300px" onchange=ObtenerTerminos()>
 <?php
 
-	foreach ($contenido as $linea){
-		$linea=trim($linea);
+	foreach ($contenido as $linea){		$linea=trim($linea);
 		if (trim($linea)!=""){
             $l=explode('|',$linea);
 		//	if (substr($i,0,strlen($arrHttp["pref"]))!=$arrHttp["pref"]) break;
-			if (isset($l[1])){
-				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";
-				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
+			if (isset($l[1])){				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
 			}else{
 				echo "<option value=\"".$l[0]."\" title='".$l[0]."' alt='".$l[0]."'>".$l[0];
 			}

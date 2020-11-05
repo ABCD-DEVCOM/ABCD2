@@ -43,8 +43,8 @@ include("../common/header.php");
 .myLayersClass { position: absolute; visibility: hidden; xdisplay:none }
 .Botones { position: relative; visibility: hidden; xdisplay:none }
 </style>
-<script language="javascript1.2" src="js/lr_trim.js"></script>
-<script language=Javascript src=js/windowdhtml.js></script>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src=js/windowdhtml.js></script>
 <script languaje=javascript>
 
 function toggleLayer(whichLayer)
@@ -355,12 +355,7 @@ echo "
 	<tr>
 		<td  align=left valign=top><a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle border=0><?php echo $msgstr["cg_search"]?> </a></td>
         <TD colspan=2 align=left><?php echo $msgstr["expresion"]?><br>
-		<textarea rows=1 cols=80 name=Expresion>
-		<?php
-	if (isset($arrHttp["Expresion"])){
-	  	echo $Expresion;
-	}
-?></textarea>
+		<textarea rows=1 cols=80 name=Expresion><?php  	if (isset($arrHttp["Expresion"]))echo $Expresion;?></textarea>
 		</td>
 
 	<tr>

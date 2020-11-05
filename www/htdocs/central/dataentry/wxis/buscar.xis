@@ -86,7 +86,7 @@
 		<label>LEERREGISTRO</label>
 			<do task=mfnrange>
 				<parm name="buffersize">800000</parm>
-                <parm name=MAX_TMP_STRING>800000</parm>
+                <!--parm name=MAX_TMP_STRING>800000</parm-->
            		<parm name=db><pft>v5001</pft></parm>
            		<parm name=from><pft>v2000</pft></parm>
            		<parm name=to><pft>v2000</pft></parm>
@@ -135,7 +135,7 @@
        <label>BUSCAR</label>
           <do task=search>
           	 <parm name="buffersize">800000</parm>
-           	 <parm name=MAX_TMP_STRING>800000</parm>
+           	 <!--parm name=MAX_TMP_STRING>800000</parm-->
              <parm name=db><pft>v5001</pft></parm>
              <parm name=from><pft>v2000</pft></parm>
 			 <parm name=count><pft>if a(v2001) then '25' else v2001 fi</pft></parm>

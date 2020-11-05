@@ -5,6 +5,12 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include ("../config.php");
+if (isset($_SESSION["UNICODE"])) {
+	IF ($_SESSION["UNICODE"]==1)
+		$meta_encoding="UTF-8";
+	else
+		$meta_encoding="ISO-8859-1";
+}
 $lang=$_SESSION["lang"];
 
 include("../lang/dbadmin.php");
@@ -12,6 +18,7 @@ include("../lang/dbadmin.php");
 if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
 ?>
 <html>
+<?php echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$meta_encoding\" />\n";?>
 <link rel="STYLESHEET" type="text/css" href="../css/styles.css">
 <style>
 	td{		font-family:arial;

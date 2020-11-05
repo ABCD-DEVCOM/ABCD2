@@ -6,15 +6,24 @@ if (!isset($_SESSION["permiso"])){
 }
 if (!isset($_SESSION['lang'])) $_SESSION["lang"]="es";
 include("../common/get_post.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
 
+if (isset($_SESSION["UNICODE"])) {
+	IF ($_SESSION["UNICODE"]==1)
+		$meta_encoding="UTF-8";
+	else
+		$meta_encoding="ISO-8859-1";
+}
 include("../lang/dbadmin.php");
 
-if (isset($_SESSION["CISIS"]))
-	$_POST['cisis']=$_SESSION["CISIS"];
+if (isset($_SESSION["CISIS_VERSION"]))
+	$_POST['CISIS_VERSION']=$_SESSION["CISIS_VERSION"];
 else
-	$_POST['cisis']="";
+	$_POST['CISIS_VERSION']="";
+if (isset($_SESSION["UNICODE"]))
+	$_POST['UNICODE']=$_SESSION["UNICODE"];
+else
+	$_POST['UNICODE']="";
 if (isset($_SESSION["DCIMPORT"]))
 	$_POST['dcimport']=$_SESSION["DCIMPORT"];
 else
@@ -22,25 +31,17 @@ else
 
 function MostrarPft(){
 global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
-
-	if($_POST['cisis']!=''){
+/*
+	if($_POST['CISIS_VERSION']!=''){
 		$OS=strtoupper(PHP_OS);
 		$converter_path=$Wxis;
 		$converter_path=str_replace('wxis.exe','',$converter_path);
 		$converter_path.=$_POST['cisis']."/wxis.exe";
 		$Wxis=$converter_path;
 	}
+
 	echo "<p><font color=red>".$Wxis."</p>";
-	//checking the cisis_version
-$cisis_version=$_POST['cisis_version'];
-$use_unicode=$_POST['use_unicode'];
-if($use_unicode=="yes")
-	$str_use_unicode="UNICODE=1";
-else $str_use_unicode="UNICODE=0";
-$str_cisis_version="CISIS_VERSION=".$cisis_version;
-//creating a shortcut.pft
-fopen($db_path.$arrHttp['base']."/"."pfts/shortcut.pft","w");
-//end checking cisis_version
+*/
   	@ $fp = fopen($db_path.$arrHttp['base'].'/dr_path.def', "w");
 	@  flock($fp, 2);
   	if (!$fp){
@@ -49,33 +50,33 @@ fopen($db_path.$arrHttp['base']."/"."pfts/shortcut.pft","w");
     	exit;
   	}
   	if($_POST['dcimport']=='yes'){
-   		$str="ROOT=".$db_path.$arrHttp['base']."/\nIMPORTPDF=Y\n".$str_cisis_version."\n".$str_use_unicode."\n";
+   		$str="ROOT=".$db_path.$arrHttp['base']."/\nIMPORTPDF=Y\n";
  	}else
- 		$str="ROOT=".$db_path.$arrHttp['base']."/\n".$str_cisis_version."\n";
+ 		$str="ROOT=".$db_path.$arrHttp['base']."/\n";
  	fwrite($fp, $str);
 
- 	if ($_POST['cisis']!='default' and $_POST['cisis']!=""){
-   		$str="cisis_ver=".$_POST['cisis']."\n";
-   		fwrite($fp, $str);
- 	}
-	
+ 	$str="CISIS_VERSION=".$_POST['CISIS_VERSION']."\n";
+   	fwrite($fp, $str);
+   	$str="UNICODE=".$_POST['UNICODE']."\n";
+   	fwrite($fp, $str);
   	flock($fp, 3);
   	fclose($fp);
 
-  	if($_POST['cisis']=='unicode'){
-  		@ $fp = fopen($db_path.'par/'.$arrHttp['base'].".par", "a");
-		@  flock($fp, 2);
-  		if (!$fp){
-    		echo "<p><strong> Error ocurred in ISIS Script."
-         		."Please try again.</strong></p></body></html>";
-    		exit;
-  		}
-
-  		$str="isisac.tab=%path_database%".$db_path."www/isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."www/isisuctab_utf8.tab\n";
- 		fwrite($fp, $str);
-  		flock($fp, 3);
-  		fclose($fp);
+  	@ $fp = fopen($db_path.'par/'.$arrHttp['base'].".par", "a");
+	@  flock($fp, 2);
+  	if (!$fp){
+    	echo "<p><strong> Error ocurred in ISIS Script."
+       		."Please try again.</strong></p></body></html>";
+    	exit;
   	}
+    if($_POST['UNICODE']=='1')
+  		$str="isisac.tab=%path_database%"."isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."isisuctab_utf8.tab\n";
+  	else
+  		$str="isisac.tab=%path_database%"."isisac.tab\n"."isisuc.tab=%path_database%"."isisuc.tab\n";
+ 	fwrite($fp, $str);
+  	flock($fp, 3);
+  	fclose($fp);
+
  	$IsisScript=$xWxis."inicializar_bd.xis";
  	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
  	include("../common/wxis_llamar.php");
@@ -268,9 +269,9 @@ if (!file_exists($Dir."$bd")){
 		die;
 	}
 }
-if (file_exists($img_path)){
-	if (!file_exists($img_path."$bd")) mkdir($img_path."$bd");
-}
+//if (file_exists($img_path)){
+//	if (!file_exists($img_path."$bd")) mkdir($img_path."$bd");
+//}
 if (!file_exists($Dir."$bd"."/data")) mkdir($Dir."$bd"."/data");
 if (!file_exists($Dir."$bd"."/pfts")) mkdir($Dir."$bd"."/pfts");
 if (!file_exists($Dir."$bd"."/def")) mkdir($Dir."$bd"."/def");
@@ -292,7 +293,7 @@ chmod($Dir."$bd"."/pfts",0777);
 chmod($Dir."$bd"."/cnv",0777);
 chmod($Dir."$bd"."/def",0777);
 chmod($Dir."$bd"."/ayudas",0777);
-chmod($img_path."$bd",0777);
+//chmod($img_path."$bd",0777);
 
 //Bases.dat
 $filename= $db_path."bases.dat";
@@ -395,6 +396,5 @@ include("../common/footer.php");
 echo "</body></html>";
 unset($_SESSION["CISIS"]);
 unset($_SESSION["dc_import"]);
-
 die;
 ?>

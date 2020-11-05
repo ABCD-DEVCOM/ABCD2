@@ -5,7 +5,7 @@ $maxmfn=0;
 $valortag = Array();
 
 function MostrarPft(){
-global $arrHttp,$OS,$Wxis,$wxisUrl,$xWxis;
+global $arrHttp,$OS,$Wxis,$wxisUrl,$xWxis,$def;
  	$IsisScript=$xWxis.$arrHttp["IsisScript"];
  	$tags=array_keys($arrHttp);
  	$query = "?xx=&";
@@ -32,20 +32,20 @@ function LeerRegistro() {
 
 // la variable $llave permite retornar alguna marca que esté en el formato de salida
 // identificada entre $$LLAVE= .....$$
-
  $llave_pft="";
- global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl;
+ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$lang_db,$def;
  $IsisScript=$xWxis.$arrHttp["IsisScript"];
  $tags=array_keys($arrHttp);
  $query = "";
  foreach ($tags as $linea){
   if ($linea!="IsisScript"){
   	if ($linea=="cipar")
-  		$query.= $linea."=$db_path"."par/". $arrHttp[$linea]."&";
+  		$query.= '&'.$linea."=$db_path"."par/". $arrHttp[$linea];
   	else
-   		$query.=$linea."=". $arrHttp[$linea]."&";
+   		$query.='&'.$linea."=". $arrHttp[$linea];
   }
  }
+ if (substr($query,0,1)!='&') $query='&'.$query;
  include("../common/wxis_llamar.php");
  $ic=-1;
     $tag= "";
@@ -94,7 +94,7 @@ function LeerRegistro() {
 
 function LeerRegistroMfn($base,$cipar,$from,$maxmfn,$Opcion,$userid,$pathwxis,$IsisScript) {
 
-global $valortag,$OS,$xWxis,$arrHttp,$db_path,$Wxis,$wxisUrl;
+global $valortag,$OS,$xWxis,$arrHttp,$db_path,$Wxis,$wxisUrl,$def;
 	if (!isset($arrHttp["Formato"]))  $arrHttp["Formato"]="";
 	if (!isset($arrHttp["prologo"]))  $arrHttp["prologo"]="";
 	if (!isset($arrHttp["epilogo"]))  $arrHttp["epilogo"]="";

@@ -81,8 +81,12 @@ if ($tor!=""){
 
 	}
 }
-if ($tl!="") $tl=strtolower($valortag[$tl]);
-if ($nr!="") $nr=strtolower($valortag[$nr]);
+if (isset($valortag[$tl])){
+	if ($tl!="") $tl=strtolower($valortag[$tl]);
+}
+if (isset($valortag[$nr])){
+	if ($nr!="") $nr=strtolower($valortag[$nr]);
+}
 if ($tl!="") {	$pftval=$tl."_".$nr."_".$arrHttp["base"].".val";
 	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
 	if (!file_exists($archivo))		$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
@@ -138,7 +142,7 @@ include("../common/wxis_llamar.php");
 <title><?php echo $msgstr["rval"]?></title>
 
 <body>
-<?
+<?php
 
 echo "<span class=title>".$msgstr["rval"]." ($pftval)</span>";
 echo " <font size=1 face=arial> &nbsp; &nbsp; Script: dataentry/recval_display.php</font>";

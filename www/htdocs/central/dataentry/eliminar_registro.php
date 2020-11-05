@@ -8,13 +8,15 @@ require_once("../config.php");
 $lang=$_SESSION["lang"];
 
 require_once ("../lang/admin.php");
-require_once ("../lang/msgusr.php");
-include ("verificar_eliminacion.php");
+if (file_exists("../lang/msgusr.php"))
+	require_once ("../lang/msgusr.php");
 
+include ("verificar_eliminacion.php");
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 //die;
 //SE VERIFICA SI HAY FORMATO DE VALIDACION DE LA ELIMINACION
 $archivo=$db_path.$arrHttp["base"]."/pfts/recdel_val";
+
 $verify="";
 if (file_exists($archivo.".pft")){
 	$verify="Y";
@@ -35,9 +37,7 @@ if ($res==""){
 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=" . $arrHttp["Mfn"]."&Opcion=eliminar";
 	$IsisScript=$xWxis."eliminarregistro.xis";
 	include("../common/wxis_llamar.php");
-}else{
-	$err_del="&error="."$res";
-}
+}else{	$err_del="&error="."$res";}
 $encabezado="";
 if (isset($arrHttp["encabezado"]))
 	$encabezado="?encabezado=s";

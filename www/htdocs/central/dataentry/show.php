@@ -42,12 +42,12 @@ if (isset($arrHttp["vienede"])) {	$lang=$arrHttp["lang"];
 include("../lang/acquisitions.php");
 include("../lang/admin.php");
 
-
+include("../common/abcd_ref.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 if (!isset($arrHttp["Expresion"])) $arrHttp["Expresion"]="";
 if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
-//include("../common/header.php");
+include("../common/header_display.php");
 echo "<body>
 
 <form name=forma1 method=post action=show.php>
@@ -77,8 +77,9 @@ foreach ($contenido as $value){	$value=trim($value);	if (trim($value)!=""){
 		if (substr($value,0,9)=="[RECORD:]") {			$rec=substr($value,9);
 			echo "<font color=darkred>".$rec."</font>";		}else{			if (substr($value,0,8)=="[TOTAL:]") {
 				$total=substr($value,9);
-			}else{
-				echo  "$value";
+			}else{				if (substr($value,0,6)=='$$REF:'){
+				   echo ABCD_Ref($value,"");
+				}else{					echo $value;				}
 			}
 		}
 	}

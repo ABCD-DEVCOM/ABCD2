@@ -77,7 +77,7 @@
 									proc('a1999~'f(e1,1,0)'~')
 									proc('a2999~'f(e2,1,0)'~')
 									proc('a2030~'v2030'~')
-									(if iocc=val(v1999[1]) then `v3033` if s7='S' then '###'s5,'%%%',s4 fi fi/)
+									(if iocc=val(v1999[1]) then `v3033` if s6='S' then '###'s5,'%%%',s4 fi fi/)
 								 ),/`
 
 						</pft></pft>

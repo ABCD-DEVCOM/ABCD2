@@ -1,0 +1,24 @@
+ <IsisScript>
+
+	<section>
+		<field action=cgi tag=5001>base</field>
+
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5017>lang</field>
+		<field action=cgi tag=2000>from</field>
+		<field action=cgi tag=2001>count</field>
+		<field action=cgi tag=3000>Expresion</field>
+		<field action=cgi tag=3030>Formato</field>
+		<field action=cgi tag=4000>Existencias</field>
+		<field action=cgi tag=3031>Pft</field>
+		<field action=cgi tag=9088>cttype</field>
+        <field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+         <trace></trace>
+		<display><pft>ALL</pft></display>
+
+
+
+    </section>
+ </IsisScript>

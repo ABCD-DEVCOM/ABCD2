@@ -15,18 +15,20 @@ global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path;
 	$IsisScript=$xWxis."ifp.xis";
 	include("../common/wxis_llamar.php");
 	$cont = array_unique ($contenido);
-	foreach ($cont as $linea ){		$ll=explode('###',$linea);
-		$f=explode('$$$',$ll[0]);
-		if (isset($f[2])) $f[1]=$f[2];
-		if (!isset($f[1])) $f[1]=$f[0];
-		if (substr($f[0],0,1)=="^") $f[0]=substr($f[0],2);
-		echo "<option value=\"";
-		echo $f[1];
-		echo "\"";
-		echo " title=\"".$f[1]."\"";
-		echo ">";
-        echo $f[0];
-        echo "</option>";	}}
+	foreach ($cont as $linea ){
+		if (trim($linea)!=""){			$ll=explode('###',$linea);
+			$f=explode('$$$',$ll[0]);
+			if (isset($f[2])) $f[1]=$f[2];
+			if (!isset($f[1])) $f[1]=$f[0];
+			if (substr($f[0],0,1)=="^") $f[0]=substr($f[0],2);
+			echo "<option value=\"";
+			echo $f[1];
+			echo "\"";
+			echo " title=\"".$f[1]."\"";
+			echo ">";
+			echo $f[0];
+			echo "</option>";
+		}	}}
 
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -96,7 +98,7 @@ if (isset($arrHttp["tesauro"])){	$arrHttp["base"]=$arrHttp["tesauro"];
 	$IsisScript=$xWxis."ifp.xis";
 	include("../common/wxis_llamar.php");
 	$contenido = array_unique ($contenido);
-	//foreach ($contenido as $value) echo $value."<br>";  //DIE;
+	//foreach ($contenido as $value) echo $value."<br>";  DIE;
 	include ("../common/header_display.php");
 	echo "<script>
 msg_pv=\"\"\n";
@@ -398,7 +400,7 @@ switch($arrHttp["index"]){
 				if (isset($f[2])) $f[1]=$f[2];
 				if (!isset($f[1])) $f[1]=$f[0];
 				if (substr($f[0],0,1)=="^") $f[0]=substr($f[0],2);
-				if (strlen($f[0])>58 and $pp[1]>1){					BuscarClavesLargas($ll[1]);
+				if (strlen($f[0])>60-strlen($arrHttp["prefijo"]) and $pp[1]>1){					BuscarClavesLargas($ll[1]);
 				}else{					echo "<option value=\"";
 					echo trim($f[1]);
 					echo "\"";

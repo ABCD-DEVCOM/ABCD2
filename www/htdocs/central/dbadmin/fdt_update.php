@@ -14,24 +14,20 @@ if (isset($_SESSION["UNICODE"])) {
 $lang=$_SESSION["lang"];
 
 include("../lang/dbadmin.php");
-//foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";die;
+//foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";//die;
 $archivo=$arrHttp["archivo"];
 $t=explode("\n",$arrHttp["ValorCapturado"]);
 $fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$archivo,"w");
-if (!$fp){
-	echo $arrHttp["base"]."/def/".$_SESSION["lang"]."/".$archivo." cannot be opened for writing";
-	die;
-}
+if (!$fp){	echo $arrHttp["base"]."/def/".$_SESSION["lang"]."/".$archivo." cannot be opened for writing";
+	die;}
 
 foreach ($t as $value){
 	$val=trim(str_replace('|','',$value));
 	if ($val=="00") $val="";
 	if ($val!="") fwrite($fp,stripslashes($value)."\n");
-	//echo "$value<br>";
-}
+	//echo "$value<br>";}
 // IF THE FDT IS A FORMAT UPDATE THE FILE FORMATOS.DAT
-if (isset($arrHttp["fmt_name"])){
-	if (file_exists(($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks"))){
+if (isset($arrHttp["fmt_name"])){	if (file_exists(($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks"))){
 		$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks");
 	}else{
 		if (file_exists(($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks")))
@@ -60,8 +56,7 @@ if (isset($arrHttp["fmt_name"])){
 		$res=fwrite($fp,$arrHttp["fmt_name"].'|'.$arrHttp["fmt_desc"]);
 		fclose($fp); #close the file
 	}
-
-}
+}
 include("../common/header.php");
 ?>
 <body>
@@ -83,9 +78,7 @@ if (isset($arrHttp["encabezado"]))
 		$encabezado="&encabezado=s";
 else
 	$encabezado="";
-if (isset($arrHttp["Fixed_field"])) {
-	echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
-}else{
+if (isset($arrHttp["Fixed_field"])) {	echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";}else{
 	if (!isset($arrHttp["ventana"]))
 		echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
 	else

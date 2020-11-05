@@ -1,11 +1,13 @@
 <?php
-include("../config.php");
+include_once("../config.php");
+/*echo "$db_path";
 if (file_exists($db_path."logtrans/data/logtrans.mst") and $_SESSION["MODULO"]!="loan"){
 	include("../circulation/grabar_log.php");
 	$datos_trans["operador"]=$_SESSION["login"];
 	GrabarLog("P",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path);
 
 }
+*/
 $_SESSION["MODULO"]="loan";
 global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases;
 ?>
@@ -31,14 +33,22 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 							<span><strong><?php echo $msgstr["loan"]?></strong></span>
 						</a>
 <?php
+	if (isset($ILL) and $ILL!="") {?>
+						<a href="../circulation/interbib.php?encabezado=s" class="menuButton providersButton">
+							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+							<span><strong><?php echo $msgstr["r_ill"]?></strong></span>
+						</a>
+<?php	}
 }
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_RESERVE"])){
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_LOAN"])){
+	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
 ?>
 						<a href="../circulation/estado_de_cuenta.php?encabezado=s&reserve=S" class="menuButton reserveButton">
 							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["reserve"]?></strong></span>
 						</a>
 <?php
+	}
 }
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_RETURN"])){
 ?>
@@ -56,6 +66,13 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 						</a>
 <?php
 }
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SALA"])){
+?>
+						<a href="../circulation/sala.php?encabezado=s" class="menuButton exploreButton">
+							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+							<span><strong><?php echo $msgstr["sala"]?></strong></span>
+						</a>
+<?php }
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SUSPEND"])){
 ?>
 						<a href="../circulation/sanctions.php?encabezado=s" class="menuButton sanctionsButton">
@@ -75,10 +92,10 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["bo_history"]?></strong></span>
 						</a>
-				<!--		<a href="circulation/item_history.php?encabezado=s" class="menuButton newButton">
-							<img src="images/mainBox_iconBorder.gif" alt="" title="" />
-							<span><strong><?php echo $msgstr["co_history"]?></strong></span>
-						</a>  -->
+						<a href="../circulation/item_history.php?encabezado=s" class="menuButton receivingButton">
+							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+							<span><strong><?php echo $msgstr["item_history"]?></strong></span>
+						</a>
 						<a href="../output_circulation/menu.php" class="menuButton reportsButton">
 							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["reports"]?></strong></span>
@@ -119,10 +136,13 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["suspen"]."/".$msgstr["multas"]?></strong></span>
 						</a>
+<?php
+	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){?>
 						<a href="../dataentry/browse.php?base=reserve&modulo=loan" class="menuButton reserveButton">
 							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["reservas"]?></strong></span>
 						</a>
+<?php } ?>
 					</div>
 					<div class="spacer">&#160;</div>
 				</div>
@@ -152,11 +172,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 					<div class="sectionButtons">
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_CIRADMIN"])){
-?>                      <!--a href="javascript:VerificarInicializacion()" class="menuButton databaseButton" on -->
+?>                      <!--a href="javascript:VerificarInicializacion()" class="menuButton databaseButton" on>
 						<a href="../circulation/menu_mantenimiento.php" class="menuButton databaseButton" on>
 							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["basedatos"]?></strong></span>
-						</a>
+						</a-->
 <?php
 }
 
@@ -183,6 +203,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 				<span><strong><?php echo $msgstr["stat_suspml"]?></strong></span>
 			</a>
 <?php
+
 }
 ?>
 				</div>

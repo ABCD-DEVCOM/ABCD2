@@ -1,5 +1,5 @@
 <?php
-#error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+//error_reporting(E_ALL);
 session_start();
 unset( $_SESSION["TOOLBAR_RECORD"]);
 if (!isset($_SESSION["permiso"])){
@@ -10,18 +10,17 @@ $valortag = Array();
 $arrHttp=array();
 global $arrHttp,$xFormato,$valortag,$nombre;
 include("../common/get_post.php");
-$SW=1200;
-$Menu_H=45;
+require_once ("../config.php");
+$SW=1366;
+$Menu_H=85;
+if (isset($_SESSION["screen_width"])) $arrHttp["screen_width"]=$_SESSION["screen_width"];
 if (isset($arrHttp["screen_width"])){
 	$_SESSION["screen_width"]=$arrHttp["screen_width"];
 	$SW=$arrHttp["screen_width"];
 }
-if ($SW<1200)
-	$Menu_H=65;
-require_once ("../config.php");
 
-if (!isset($_SESSION["lang"])) {
-	$_SESSION["lang"]= $lang;
+
+if (!isset($_SESSION["lang"])) {	$_SESSION["lang"]= $lang;
 }
 include ("../lang/admin.php");
 include ("../lang/soporte.php");
@@ -29,6 +28,7 @@ include ("../lang/lang.php");
 
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+//echo "<pre>";print_r($_SESSION);echo "</pre>";
 //die;
 if (isset($arrHttp["newindow"]))
 	$_SESSION["newindow"]="Y";
@@ -55,10 +55,7 @@ function LeerRegistro() {
 	include("../common/wxis_llamar.php");
  	$ic=-1;
  	$tag= "";
- 	foreach ($contenido as $linea){
-
- 		if ($ic==-1){
-    		$ic=1;
+ 	foreach ($contenido as $linea){ 		if ($ic==-1){    		$ic=1;
     		$pos=strpos($linea, '##LLAVE=');
     		if (is_integer($pos)) {
      			$llave_pft=substr($linea,$pos+8);
@@ -94,28 +91,17 @@ if (isset($arrHttp["base"])){
     if (isset($base_x[3]) and $base_x[3]=="Y") $db_copies="Y";
 	$bd=$base_x[0];
 	$bdright= $base_x[1];
-	$bddesc=$base_x[2];
-}
-	if (isset($arrHttp["lang"])){
-		 $_SESSION["lang"]=$arrHttp["lang"];
-	}else{
-		$arrHttp["lang"]=$_SESSION['lang'];
-	}
+	$bddesc=$base_x[2];}
+	if (isset($arrHttp["lang"])){		 $_SESSION["lang"]=$arrHttp["lang"];
+	}else{		$arrHttp["lang"]=$_SESSION['lang'];	}
 	include ("../lang/admin.php");
 	if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
 	$Permiso=$_SESSION["permiso"];
-	if (!isset($_SESSION["permiso"])){
-		echo "Missing user rights";
+	if (!isset($_SESSION["permiso"])){		echo "Missing user rights";
 		session_destroy();
-		die;
-	}
-    foreach ($Permiso as $key=>$value){
-    	if (substr($key,0,3)=="db_"){
-    		$bases=substr($key,3);
-    		break;
-    	}
-    }
-//echo "bases=$bases<BR>";
+		die;	}
+    foreach ($Permiso as $key=>$value){    	if (substr($key,0,3)=="db_"){    		$bases=substr($key,3);
+    		break;    	}    }
 	$arrHttp["base"]=$bases;
 	$arrHttp["cipar"]=$arrHttp["base"].".par";
 	$NombreBase="";
@@ -123,10 +109,14 @@ if (isset($arrHttp["base"])){
 	$arrHttp["IsisScript"]="control.xis";
 	$llave=LeerRegistro();
 	$stat=explode('|',$llave);
-	if (isset($stat[2])) $llave=substr($stat[2],7);
+	$llave=substr($stat[2],7);
+	if (!isset($bdright)) $bdright="";
+	if (!isset($db_copies)) $db_copies="";
+	if (!isset($bddesc)) $bddesc="";
+	if (!isset($bd)) $bd="";
 	echo "<HTML><title>ABCD</title>
 				<head>
-				<script language=javascript src=js/lr_trim.js></script>
+				<script language=\"JavaScript\" type=\"text/javascript\" src=\"js/lr_trim.js\"></script>
 				<script languaje=javascript>
 				self.resizeTo(screen.availWidth,screen.availHeight)
 				self.moveTo(0,0)
@@ -193,9 +183,9 @@ if (isset($arrHttp["base"])){
 
 ?>
 
-function SearchHistory(){
-	top.main.location.href="search_history.php?base="+base;
-}
+function Mail(){	top.main.location.href="../mail/index.php?base="+base;}
+
+function SearchHistory(){	top.main.location.href="search_history.php?base="+base;}
 
 function ApagarEdicion(){
      return
@@ -221,8 +211,7 @@ function TipoDeRegistro(){
 		}
 	}
 	top.main.document.writeln("</table></body></html>")
-	top.main.document.close()
-}
+	top.main.document.close()}
 
 function AddCopies(){
 if (db_copies=="Y")
@@ -233,8 +222,7 @@ if (db_copies=="Y")
 		Mfn_copy=Mfn_Search
 	else
 		Mfn_copy=mfn
-    url='../copies/copies_add.php?base='+base+'&Mfn='+Mfn_copy+'&Formato='+Formato+urlcopies
-<?php
+    url='../copies/copies_add.php?base='+base+'&Mfn='+Mfn_copy+'&Formato='+Formato+urlcopies<?php
 //READ THE TYPES OF ACQUISITIONS
  $file=$db_path."copies/def/".$_SESSION["lang"]."/acquiredby.tab";
  if (!file_exists($file)) $file=$db_path."copies/def/".$lang_db."/acquiredby.tab";
@@ -248,9 +236,7 @@ if (db_copies=="Y")
 if (isset($tacq)){
 	foreach ($tacq as $value){
 		$value=trim($value);
-		$t=explode('|',$value);
-		echo "parent.main.document.writeln('<tr><td><a href=\"'+url+'&wks=".$t[0]."\">".$t[1]."</a></td>')\n";
-	}
+		$t=explode('|',$value);		echo "parent.main.document.writeln('<tr><td><a href=\"'+url+'&wks=".$t[0]."\">".$t[1]."</a></td>')\n";	}
 }
 ?>
 	parent.main.document.writeln("</table></body></html>")
@@ -258,23 +244,20 @@ if (isset($tacq)){
 
 }
 
-function Tesaurus(){
-	left=screen.width-450
+function Tesaurus(){	left=screen.width-450
   	msgwintesau=window.open("../tesaurus/index.php?base="+base,"tesaurus","width=450,height=600, top=0,left="+left+" menubar=yes, scrollbars=yes, resizable=yes")
   	msgwintesau.document.close()
   	msgwintesau.focus()
 }
 
-function BarcodeThis(){
-	if (browseby=="search")
+function BarcodeThis(){	if (browseby=="search")
   		mfn_edit=Mfn_Search
   	else
   		mfn_edit=mfn
   	top.main.location.href="../barcode/barcode.php?base="+base+"&Mfn="+mfn+"&tipo=barcode"
   	//msgwin=window.open("../barcode/barcode.php?base="+base+"&print=Y&Mfn="+mfn,"barcode","width=400,height=400,menubar=yes, scrollbars=yes, resizable=yes")
   	//msgwin.document.close()
-  	//msgwin.focus()
-}
+  	//msgwin.focus()}
 
 function ValidarIrA(){
   	xmfn=top.menu.document.forma1.ir_a.value
@@ -303,8 +286,7 @@ function ValidarIrA(){
 	return xmfn
 }
 
-function SeleccionarRegistro(Ctrl){
-	chk_mfn=Ctrl.value
+function SeleccionarRegistro(Ctrl){	chk_mfn=Ctrl.value
 	select_Mfn='_'+chk_mfn+'_'
 	if (Ctrl.checked){
 		if (RegistrosSeleccionados.indexOf(select_Mfn)==-1)
@@ -315,11 +297,8 @@ function SeleccionarRegistro(Ctrl){
 }
 
 
-function Menu(Opcion){
-    if (toolbarEnabled=="N")  {
-    	alert("<?php echo $msgstr["cancelcopy"]?>")
-    	return
-    }
+function Menu(Opcion){    if (toolbarEnabled=="N")  {    	alert("<?php echo $msgstr["cancelcopy"]?>")
+    	return    }
 	if (db_copies=="Y")
 		urlcopies="&db_copies=Y"
 	else
@@ -376,8 +355,7 @@ function Menu(Opcion){
 		tope=maxmfn
 	}
 
-	switch (Opcion) {
-
+	switch (Opcion) {
 		case "editar_HTML":
 		case "importarHTML":
 			Tag=HTML
@@ -386,7 +364,7 @@ function Menu(Opcion){
 				Mfn="New"
 			else
 				Mfn=mfn
-			top.main.location.href="import_doc_mnu.php?base="+base+"&Mfn="+Mfn+"&fURL="+URL+"&Tag="+HTML+"&Tipo="+Tipo+"&fURL="+URL
+			top.main.location.href="../utilities/upload_myfile.php?base="+base+"&Mfn="+Mfn+"&fURL="+URL+"&Tag="+HTML+"&Tipo="+Tipo+"&fURL="+URL
 			break
 		case "edit_Z3950":
 			Desplegar="N"
@@ -424,8 +402,7 @@ function Menu(Opcion){
 			break
 		case 'stats':
 			top.main.location.href="../statistics/tables_generate.php?base="+base+"&cipar="+base+".par"
-			break
-		case "editdv":
+			break		case "editdv":
 			top.main.location.href="default_edit.php?Opcion=valdef&ver=N&Mfn=0&base="+top.base
 			top.xeditar="valdef"
 			break
@@ -444,10 +421,10 @@ function Menu(Opcion){
   			url="recval_display.php?&base="+base+"&cipar="+cipar+"&Mfn="+mfn_edit
   			recvalwin=window.open(url,"recval","width=550,height=300,resizable,scrollbars")
   			recvalwin.focus()
-			break;
-		case "ejecutarbusqueda":
+			break;		case "ejecutarbusqueda":
 			Mfn_Search=1
 			mfn=1
+			//Expresion='"'+Expresion+'"'
 			top.main.document.location="../dataentry/fmt.php?Opcion=buscar&Expresion="+Expresion+"&base="+base+"&cipar="+cipar+"&from=1&ver=N"+FormatoActual+works+urlcopies
 			break;
 		case "busquedalibre":
@@ -465,11 +442,7 @@ function Menu(Opcion){
 			top.main.location="administrar.php?base="+base+"&cipar="+cipar+seleccion
 			break;
 		case "barcode":
-			<?php if (isset($_SESSION["BARCODE_SIMPLE"])){
-			    echo "top.main.location=\"../barcode_font/barcode_menu.php?base=\"+base+\"&cipar=\"+cipar";
-			} else{
-				echo "top.main.location=\"../barcode/menu.php?base=\"+base+\"&cipar=\"+cipar";
-			}
+			<?php if (isset($_SESSION["BARCODE_SIMPLE"])){			    echo "top.main.location=\"../barcode_font/barcode_menu.php?base=\"+base+\"&cipar=\"+cipar";			} else{				echo "top.main.location=\"../barcode/menu.php?base=\"+base+\"&cipar=\"+cipar";			}
 			echo "\n";
 			?>
 			break;
@@ -520,8 +493,7 @@ function Menu(Opcion){
 			else
 				Mfn_p=mfn
             if (xeditar=="S"){
-            	top.main.location.href="z3950.php?Mfn="+Mfn_p+"&Opcion=edit&base="+base+"&cipar="+cipar+FormatoActual
-            }else{
+            	top.main.location.href="z3950.php?Mfn="+Mfn_p+"&Opcion=edit&base="+base+"&cipar="+cipar+FormatoActual            }else{
             	top.main.location.href="z3950.php?Opcion=new&base="+base+"&cipar="+cipar+FormatoActual
             }
             break
@@ -558,8 +530,7 @@ function Menu(Opcion){
   					if (mfn<=0) mfn=0
    					mfn++
    					if (mfn>tope) mfn=tope
-  					break
-
+  					break
   				case 'selected_records':
   					if (Trim(RegistrosSeleccionados)=="")
   						return
@@ -571,8 +542,7 @@ function Menu(Opcion){
   					if (RegSel.substr(SelLen-1,1)=="_")
   						RegSel=RegSel.substr(0,SelLen-1)
   					ss=RegSel.split("_")
-  					if (Listar_pos>=ss.length){
-  						Listar_pos=ss.length-1
+  					if (Listar_pos>=ss.length){  						Listar_pos=ss.length-1
   					}
   					mfn=ss[Listar_pos]
    					tope=ss.length
@@ -657,8 +627,7 @@ function Menu(Opcion){
    			mfn=tope
    			Opcion="leer"
    			buscar=""
-   			switch (browseby){
-   				case 'search':
+   			switch (browseby){   				case 'search':
    					Search_pos=mfn
    					break
    				case 'selected_records':
@@ -674,8 +643,7 @@ function Menu(Opcion){
   					Listar_pos=ss.length-1
   					mfn=ss[ss.length-1]
    					tope=ss.length-1
-   					break
-   			}
+   					break   			}
    			top.menu.document.forma1.ir_a.value=mfn+"/"+tope
    			break
    		case "same":
@@ -744,10 +712,7 @@ function Menu(Opcion){
   				return
   			}
   			ix=top.menu.document.forma1.wks.selectedIndex
-  			if (ix==-1){
-  			}else{
-  				works="&wks="+top.menu.document.forma1.wks.options[ix].value
-  			}
+  			if (ix==-1){  			}else{  				works="&wks="+top.menu.document.forma1.wks.options[ix].value  			}
 
   			xeditar="S"
   			if (browseby=="search")
@@ -775,13 +740,11 @@ function Menu(Opcion){
   		 		top.main.document.location.href="../dataentry/fmt.php?Opcion="+Opcion+"&base="+base+"&cipar="+cipar+"&Mfn="+mfn+"&ver=S"+FormatoActual+works+urlcopies
   			}else{
   				url="../dataentry/fmt.php?Opcion=buscar&Expresion="+Expresion+"&base="+base+"&cipar="+cipar+"&from="+Search_pos+FormatoActual+"&Mfn="+Mfn_Search+urlcopies
-  				top.main.document.location.href=url
-  			}
+  				top.main.document.location.href=url  			}
   			return
   		}
 
-        if (Opcion=="cancelar") {
-        	if (mfn<=0) mfn=1
+        if (Opcion=="cancelar") {        	if (mfn<=0) mfn=1
             if (browseby=="mfn"){
   		 		top.main.document.location.href="../dataentry/fmt.php?Opcion="+Opcion+"&base="+base+"&cipar="+cipar+"&Mfn="+mfn+"&ver=S"+FormatoActual+works+"&unlock=S"+urlcopies
   			}else{
@@ -789,16 +752,13 @@ function Menu(Opcion){
   				url+="&unlock=S";
   				top.main.document.location.href=url
   			}
-  			return
-        }
+  			return        }
   		if (Opcion=="nuevo" || Opcion=="crear"){
 			tipom=""
 			works="";
 
-			if (typeofrecord!="" && Opcion=="nuevo"){
-				top.main.document.close()
-				TipoDeRegistro()
-			}else{
+			if (typeofrecord!="" && Opcion=="nuevo"){				top.main.document.close()
+				TipoDeRegistro()			}else{
 				ix=top.menu.document.forma1.wks.selectedIndex
 	  			if (ix==-1){
 	  			}else{
@@ -851,18 +811,14 @@ function Unload(){
 
 </head>
 
-<frameset rows=<?php if (isset($FRAME_1H) and trim($FRAME_1H)!="") echo $FRAME_1H; else echo '90';?>,<?php if (isset($FRAME_2H) and trim($FRAME_2H)!="") echo $FRAME_2H; else echo $Menu_H; ?>,* cols=* border=0>
+<frameset rows=<?php if (isset($FRAME_1H) and trim($FRAME_1H)!="") echo $FRAME_1H; else echo '80';?>,<?php if (isset($FRAME_2H) and trim($FRAME_2H)!="") echo $FRAME_2H; else echo '50'; ?>,* cols=* border=0>
 <?php
 if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
-    echo "<frame name=encabezado src=menubases.php?inicio=s&Opcion=Menu_o&base=$bd&cipar=$bd.par&Mfn=".$arrHttp["Mfn"]."&base_activa=$bd&per=$bdright MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";
-	echo "<frame name=menu  src=\"\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-	echo "<frame name=main  src=\"\" scrolling=yes frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-}else{
-	echo "<frame name=encabezado src=menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=".$arrHttp["Mfn"]." MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";
-	echo "<frame name=menu  src=\"blank.html\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-	echo "<frame name=main src=\"homepage.htm\" scrolling=yes frameborder=no marginheight=2   MARGINWIDTH=0 >";
-}
+    echo "<frame name=encabezado src=menubases.php?inicio=s&Opcion=Menu_o&base=$bd&cipar=$bd.par&Mfn=".$arrHttp["Mfn"]."&base_activa=$bd&per=$bdright MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";	echo "<frame name=menu  src=\"\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
+	echo "<frame name=main  src=\"\" scrolling=yes frameborder=NO  marginheight=0   MARGINWIDTH=0 >";}else{
+	echo "<frame name=encabezado src=menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=".$arrHttp["Mfn"]." MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";	echo "<frame name=menu  src=\"blank.html\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
+	echo "<frame name=main src=\"homepage.htm\" scrolling=yes frameborder=no marginheight=2   MARGINWIDTH=0 >";}
 ?>
 
 </frameset>

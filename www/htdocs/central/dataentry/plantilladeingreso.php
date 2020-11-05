@@ -2,6 +2,7 @@
 function ConstruyeWorksheetFMT(){
 global $arrHttp,$vars,$db_path,$lang_db,$base_fdt,$wks_avail,$msgstr;
 	$base=$arrHttp["base"];
+	//echo $db_path.$base."/def/".$_SESSION["lang"]."/"."$base.fdt";
 	$fpDb_fdt = $db_path.$base."/def/".$_SESSION["lang"]."/"."$base.fdt";
 	if (!file_exists($fpDb_fdt)) {
 		$fpDb_fdt = $db_path.$base."/def/".$lang_db."/"."$base.fdt";
@@ -99,7 +100,7 @@ function ConstruyeWorksheetFMT(){
 
 
 function ConstruyeWorksheetFDT($tm){
-global $arrHttp,$vars,$db_path,$lang_db;
+global $arrHttp,$vars,$db_path,$lang_db,$msgstr;
 	if (!isset($arrHttp["base"])){		$base=$arrHttp["db"];	}else{		$base=$arrHttp["base"];	}
 
 	$fpDb_fdt = $db_path.$base."/def/".$_SESSION["lang"]."/"."$base.fdt";

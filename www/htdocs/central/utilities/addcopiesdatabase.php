@@ -348,11 +348,11 @@ echo $total;
   <tr>
   <tr>
     <td align="right"><label>Control Number Field
-  <input name="cnf" type="text" id="cnf" value="<?php if ($_POST["cnf"]!="") echo $_POST["cnf"]; else echo "v1";?>" size="5"/>
+  <input name="cnf" type="text" id="cnf" value="<?php if (isset($_POST["cnf"])) echo $_POST["cnf"]; else echo "v1";?>" size="5"/>
   </label></td>
     <td align="center">-</td>
     <td align="left"><label>SubField
-  <input name="cnsf" type="text" id="cnsf" value="<?php if ($_POST["cnsf"]!="") echo $_POST["cnsf"];?>" size="5"/>
+  <input name="cnsf" type="text" id="cnsf" value="<?php if (isset($_POST["cnsf"])) echo $_POST["cnsf"];?>" size="5"/>
   </label></td>
     <td align="left"><select name=agregar id=atunique onChange=AlterEntry(1) style=width:165px>
 	<option value=''>add</option>
@@ -382,11 +382,11 @@ echo $total;
   </tr>
   <tr>
     <td align="right"><label>Inventory Number Field
-  <input name="inf" type="text" id="inf" value="<?php if ($_POST["inf"]!="") echo $_POST["inf"];?>" size="5"/>
+  <input name="inf" type="text" id="inf" value="<?php if (isset($_POST["inf"])) echo $_POST["inf"];?>" size="5"/>
   </label></td>
     <td align="center">-</td>
     <td align="left"><label>SubField
-  <input name="insf" type="text" id="insf" value="<?php if ($_POST["insf"]!="") echo $_POST["insf"];?>" size="5"/>
+  <input name="insf" type="text" id="insf" value="<?php if (isset($_POST["insf"])) echo $_POST["insf"];?>" size="5"/>
   </label></td>
     <td align="left"></td>
 	<td align="left">&nbsp;</td>
@@ -401,67 +401,67 @@ echo $total;
   </tr>
 </table>
 <?php
-if ($_POST["mlf"]!="")
+if (isset($_POST["mlf"]))
 echo '<div id="ml" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Main Library Field&nbsp;<input name="mlf" type="text" id="mlf" value="'.$_POST["mlf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="mlsf" type="text" id="mlsf" value="'.$_POST["mlsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="ml" style="display:none"></div>';
 
-if ($_POST["blf"]!="")
+if (isset($_POST["blf"]))
 echo '<div id="bl" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Branch Library Field&nbsp;<input name="blf" type="text" id="blf" value="'.$_POST["blf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="blsf" type="text" id="blsf" value="'.$_POST["blsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="bl" style="display:none"></div>';
 
-if ($_POST["tomef"]!="")
+if (isset($_POST["tomef"]))
 echo '<div id="tome" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Tome Field&nbsp;<input name="tomef" type="text" id="tomef" value="'.$_POST["tomef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="tomesf" type="text" id="tomesf" value="'.$_POST["tomesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="tome" style="display:none"></div>';
 
-if ($_POST["volumef"]!="")
+if (isset($_POST["volumef"]))
 echo '<div id="volume" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Volume Field&nbsp;<input name="volumef" type="text" id="volumef" value="'.$_POST["volumef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="volumesf" type="text" id="volumesf" value="'.$_POST["volumesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="volume" style="display:none"></div>';
 
-if ($_POST["cpnumf"]!="")
+if (isset($_POST["cpnumf"]))
 echo '<div id="cpnum" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Copy Number Field&nbsp;<input name="cpnumf" type="text" id="cpnumf" value="'.$_POST["cpnumf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="cpnumsf" type="text" id="cpnumsf" value="'.$_POST["cpnumsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="cpnum" style="display:none"></div>';
 
-if ($_POST["adf"]!="")
+if (isset($_POST["adf"]))
 echo '<div id="ad" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Acquisition Field&nbsp;<input name="adf" type="text" id="adf" value="'.$_POST["adf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="adsf" type="text" id="adsf" value="'.$_POST["adsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="ad" style="display:none"></div>';
 
-if ($_POST["providerf"]!="")
+if (isset($_POST["providerf"]))
 echo '<div id="provider" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Provider Field&nbsp;<input name="providerf" type="text" id="providerf" value="'.$_POST["providerf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="providersf" type="text" id="providersf" value="'.$_POST["providersf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="provider" style="display:none"></div>';
 
-if ($_POST["datef"]!="")
+if (isset($_POST["datef"]))
 echo '<div id="date" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Date Field&nbsp;<input name="datef" type="text" id="datef" value="'.$_POST["datef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="datesf" type="text" id="datesf" value="'.$_POST["datesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="date" style="display:none"></div>';
 
-if ($_POST["pricef"]!="")
+if (isset($_POST["pricef"]))
 echo '<div id="price" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Price Field&nbsp;<input name="pricef" type="text" id="pricef" value="'.$_POST["pricef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="pricesf" type="text" id="pricesf" value="'.$_POST["pricesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="price" style="display:none"></div>';
 
-if ($_POST["pof"]!="")
+if (isset($_POST["pof"]))
 echo '<div id="po" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Purchase order Field&nbsp;<input name="pof" type="text" id="pof" value="'.$_POST["pof"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="posf" type="text" id="posf" value="'.$_POST["posf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="po" style="display:none"></div>';
 
-if ($_POST["snf"]!="")
+if (isset($_POST["snf"]))
 echo '<div id="sn" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Suggestion number Field&nbsp;<input name="snf" type="text" id="snf" value="'.$_POST["snf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="snsf" type="text" id="snsf" value="'.$_POST["snsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="sn" style="display:none"></div>';
 
-if ($_POST["condf"]!="")
+if (isset($_POST["condf"]))
 echo '<div id="cond" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Conditions Field&nbsp;<input name="condf" type="text" id="condf" value="'.$_POST["condf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="condsf" type="text" id="condsf" value="'.$_POST["condsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="cond" style="display:none"></div>';
 
-if ($_POST["exchangef"]!="")
+if (isset($_POST["exchangef"]))
 echo '<div id="exchange" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>In exchange of Field&nbsp;<input name="exchangef" type="text" id="exchangef" value="'.$_POST["exchangef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="exchangesf" type="text" id="exchangesf" value="'.$_POST["exchangesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
 else
 echo '<div id="exchange" style="display:none"></div>';
@@ -469,10 +469,10 @@ echo '<div id="exchange" style="display:none"></div>';
 <table width="750" border="0">
 <tr>
 <td width="202" align="right"><label>Use the system types
-      <input name="radiobutton" type="radio" value="systype" <?php if ($_POST["radiobutton"]=="systype") echo 'checked="checked"'; else if (!$_POST["submit"]) echo 'checked="checked"'; ?> onchange="ChangeOption(1)"/>
+      <input name="radiobutton" type="radio" value="systype" checked="checked" onchange="ChangeOption(1)"/>
       </label></td>
 <td width="22" align="center">&nbsp;</td>
-<td width="187"align="left"><div id="systype" style="display:<?php if ($_POST["radiobutton"]=="systype") echo "block"; else if (!$_POST["submit"]) echo "block"; else echo "none"; ?>">
+<td width="187"align="left"><div id="systype" style="display:block">
 	    <label>Type of object
 <select name="type" id="type">
    <?php
@@ -507,18 +507,18 @@ while(!feof($fp))
 </tr>
 <tr>
 <td align="right"><label>Use a field-subfield combination
-      <input name="radiobutton" type="radio" value="fieldsel" <?php if ($_POST["radiobutton"]=="fieldsel") echo 'checked="checked"'; ?> onchange="ChangeOption(2)"/>
+      <input name="radiobutton" type="radio" value="fieldsel" onchange="ChangeOption(2)"/>
       </label></td>
 <td>&nbsp;</td>
-    <td colspan="3" align="left"><div id="fieldsel" style="display:<?php if ($_POST["radiobutton"]=="fieldsel") echo "block"; else echo "none"; ?>">
+    <td colspan="3" align="left"><div id="fieldsel" style="display:none">
       <table width="280px" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <th width="40%" scope="col"><label>Type Field
-  <input name="typef" type="text" id="typef" value="<?php if ($_POST["typef"]!="") echo $_POST["typef"];?>" size="5"/>
+  <input name="typef" type="text" id="typef" value="<?php if (isset($_POST["typef"])) echo $_POST["typef"];?>" size="5"/>
   </label></th>
           <th width="20%" scope="col" align="center">-</th>
           <th width="40%" scope="col"><label>SubField
-  <input name="typesf" type="text" id="typesf" value="<?php if ($_POST["typesf"]!="") echo $_POST["typesf"];?>" size="5"/>
+  <input name="typesf" type="text" id="typesf" value="<?php if (isset($_POST["typesf"])) echo $_POST["typesf"];?>" size="5"/>
   </label></th>
         </tr>
       </table>
@@ -559,7 +559,7 @@ $field=trim($field);
 if ($field[0]=='^') return str_replace( '^','',$field);
 return $field;
 }
-if ($_POST["submit"])
+if (isset($_POST["submit"]))
 {
 $from=$_POST['from'];
 $to=$_POST['to'];

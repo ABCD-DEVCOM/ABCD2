@@ -1,7 +1,6 @@
 <?php
 
-function LeerFdt($base){global $lang_db;	include ("../config.php");
-// se lee el archivo dbn.fdt
+function LeerFdt($base){global $lang_db,$db_path;// se lee el archivo dbn.fdt
 	$archivo="$db_path$base/def/".$_SESSION["lang"]."/$base.fdt";
 	if (file_exists($archivo))
 		$fpTm = file($archivo);

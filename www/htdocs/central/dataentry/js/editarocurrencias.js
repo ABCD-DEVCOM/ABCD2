@@ -62,8 +62,10 @@
        document.write("   <option  ")
        if (j==0) {document.write(" selected ")}
 		cc=""
+		valores=""
 		if (Trim(valoresCampo[j])!="")
-       document.write(" value=\""+valoresCampo[j]+"\">"+valoresCampo[j])
+			valores=valoresCampo[j].replace(/\"/g, "&quot;")
+       	document.write(" value=\""+valores+"\">"+valores)
    }
    document.writeln('</select></td></table><br>')
 
@@ -210,6 +212,10 @@ function Redraw(xsalida,newSc,add_name){
            	if (db_link=="") db_link=base
            	cipar_link=db_link+".par"
 	   		link=" &nbsp;<a href='javascript:AbrirIndiceAlfabetico(\"t"+C_Sc+"_"+M+"\",\""+prefijo+"\",\""+iSc+"\",\"S\""+",\""+db_link+"\""+",\""+cipar_link+"\""+",\""+TagCampo+"\""+",\""+Formato+"\")'><img src=img/setsearch.gif border=0 align=center></a><font color=red>"
+
+			if (sc[7]!="I" && sc[10]=="T") {
+				link+="&nbsp;<a href='javascript:AbrirTesauro(\"t"+C_Sc+"_"+M+"\",\""+db_link+"\",\"0\")'><img src=../dataentry/img/toolbarTesaurus.gif></a>&nbsp;";
+							}
 		}else{                                                                                                                                                                                  		link=""
 		}
 		if (link!="") html+="<font color=darkblue>"+link+"</a>"
@@ -251,7 +257,10 @@ function Redraw(xsalida,newSc,add_name){
        				html+=" <a href='javascript:msgwin=window.open(\"dirs_explorer.php?Opcion=seleccionar&tag="+NombreCampo+"&base="+base+"\",\"Explore\",\"width=300,height=500,left=500,scrollbars,resizable,toolbar=yes\");msgwin.focus()'><img src=../dataentry/img/item_chk1.gif border=0 alt=\""+msgseleccionar+"\" title=\"".msgseleccionar+"\" align=top></a>&nbsp;"
        				break
        			default:
-       				html+="<input type=text class=SubC  size="+xsize+" name="+TagCampo+" id=t"+C_Sc+"_"+M+" value='"+valor+"' >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"       		}
+       				if (valor.indexOf("'")==-1)
+	       				html+="<input type=text class=SubC  size="+xsize+" name="+TagCampo+" id=t"+C_Sc+"_"+M+" value='"+valor+"' >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+	       			else
+	       				html+="<input type=text class=SubC  size="+xsize+" name="+TagCampo+" id=t"+C_Sc+"_"+M+" value=\""+valor+"\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+valor       		}
        	}
         subc_r="S"
        	if (subc_r!="S" || (i>2 || C_Sc!=1 && C_Sc!=2 && subc_r=="S")){       		//html+="at"+C_Sc+"_"+M	    	if (subc_r=="S"){	    		html+="<select name=agregar id=at"+C_Sc+"_"+M+" onChange=AgregarSubcampo(this,"+j+") style=width:100px>"

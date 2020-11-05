@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
+
+}
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
@@ -36,8 +40,7 @@ $texto=str_replace("'","`",$texto)
 		<title>Archivos de Ayuda</title>
 	</head>
 
-		<!--script type="text/javascript" src="fckeditor.js"></script -->
-		<script type="text/javascript" src="../ckeditor/ckeditor.js"></script -->
+		<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 		<script type="text/javascript">
 // FCKeditor_OnComplete is a special function that is called when an editor
 // instance is loaded ad available to the API. It must be named exactly in
@@ -133,21 +136,6 @@ function GetLength()
     <a href=http://docs.fckeditor.net/FCKeditor_2.x/Users_Guide/Quick_Reference target=_blank><?php echo $msgstr["fckeditor"]?></a>
 		<form action="procesar.php" method="post"  name=FCKfrm onSubmit="Enviar();return false">
 		<?php echo $msgstr["edhlp"]?>:<input type=hidden name=archivo value='<?php echo $arrHttp["archivo"]. "'>".$arrHttp["archivo"]?>
-			<!--script type="text/javascript">
-var sBasePath = '<?php echo $FCKEditorPath?>' ;
-var oFCKeditor = new FCKeditor( 'FCK','100%','500' ) ;
-oFCKeditor.BasePath	= sBasePath ;
-oFCKeditor.Config["CustomConfigurationsPath"] = "<?php echo $FCKConfigurationsPath?>"
-oFCKeditor.Config["DefaultLanguage"]		= "<?php echo $_SESSION["lang"]?>" ;
-//oFCKeditor.Config["DocType"] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' ;
-
-//$FCK_UserFilesPath="/abcd/php/img/";   //Este parámetro lo usa el FCKEditor para el path hacia los archivos de imágenes
-//$FCK_UserFilesAbsolutePath="c:\\inetpub\\wwwroot\\abcd\\php\\img\\";   //este parámetro es la ruta real hacia los archivos de imágenes
-//	$UPGRADE="N";
-oFCKeditor.Value	= '<?php echo str_replace('php',$app_path,$texto)?>' ;
-oFCKeditor.Create() ;
-
-			</script-->
 			<textarea cols="100%" id="editor1" name=FCK rows="20" ><?php echo str_replace('php',$app_path,$texto)?></textarea>
 			<input type=hidden name=Opcion>
 			<input type=hidden name=archivo_o value="<?php echo $arrHttp["archivo"]?>">

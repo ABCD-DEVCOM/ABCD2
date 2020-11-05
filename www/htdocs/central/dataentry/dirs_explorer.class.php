@@ -71,6 +71,7 @@ function get_file_type($filename) {
        case "mpg": $cont_type="video/mpeg";break;
        case "mpe": $cont_type="video/mpeg";break;
        case "avi": $cont_type="video/x-msvideo";break;
+       case "mst": $cont_type="text/plain";break;
 
 	 }
 
@@ -109,7 +110,8 @@ global $arrHttp,$img_path,$msgstr;
 		$cont_type="";
 	$source=stripslashes($source);
 	$path=stripslashes($path);
-	if ($arrHttp["Opcion"]!="mostrar"){		if ($source!="..")
+	if ($arrHttp["Opcion"]!="mostrar"){
+		if ($source!="..")
 			echo "<strong>".$path.$source."</strong><br>";
 		echo "<a href=javascript:CrearCarpeta()>".$msgstr["new_folder"]."</a>";
 		echo "&nbsp; <a href='http://isisabcd.pbworks.com/w/page/Explorar-carpeta' target=_blank>".$msgstr["online_help"]."</a><p>";
@@ -150,15 +152,18 @@ global $arrHttp,$img_path,$msgstr;
 	        elseif($kryptis=="atgal") //(direction == "back") clicked on ..
 			  {
 	            preg_match_all("/^\/(.+)/", $path, $out);// strips first char "/"
-	            $path=$out[1][0];
+	           if (isset($out[1][0])) $path=$out[1][0]; else {$path="/";$root=true;}
 	            preg_match_all("/(.+)\/.+\/$/", $path, $out);// strips from the path the last directory
-	            if ($out[1][0]!="")
+				
+	            if (isset($out[1][0])) {
+				if ($out[1][0]!="")
 	              {$path="/".$out[1][0]."/";}
 	            else
 	              {
 				   $path="/".$out[1][0];
 	  			   $root=true;
 				  }
+				 } 
 			  }
 	      }
 	  }

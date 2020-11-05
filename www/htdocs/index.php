@@ -1,6 +1,7 @@
 <?php
 session_start();
 $_SESSION=array();
+unset($_SESSION["db_path"]);
 include("central/config.php");
 include("$app_path/common/get_post.php");
 $new_window=time();
@@ -8,6 +9,7 @@ $new_window=time();
 
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
+	$lang=$_SESSION["lang"];
 }else{
 	$arrHttp["lang"]=$lang;
 	$_SESSION["lang"]=$lang;
@@ -23,7 +25,7 @@ include ("$app_path/lang/lang.php");
 <head profile="http://www.w3.org/2005/10/profile">
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
-		<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<META http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
 		<meta http-equiv="Content-Language" content="pt-br" />
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
@@ -40,6 +42,7 @@ include ("$app_path/lang/lang.php");
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
 <script src=<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
+<script src=<?php echo $app_path?>/dataentry/js/crypto-js.js></script>
 <script languaje=javascript>
 
 document.onkeypress =
@@ -80,6 +83,8 @@ function Enviar(){
 		} else{
 			document.administra.target=""
 		}
+		 var hash = CryptoJS.MD5(password);
+		 document.administra.password.value=hash
 		document.administra.submit()
 	}
 }
@@ -88,17 +93,17 @@ function Enviar(){
 </head>
 <body>
 	<div class="heading">
-		<div class="institutionalInfo"><h1>
+		<div class="institutionalInfo">
 		<img src=<?php //echo "LOGO=$logo<BR>"; die;
                                    if (isset($logo))
-								echo $logo;
+								echo "central/".substr($logo,3);
 							else
 								echo "central/images/logoabcd.jpg";
 					  ?>
-					  > &nbsp; &nbsp;
-                                          <?php echo $institution_name?></h1>
+					  ><h1><?php echo $institution_name?></h1>
 		</div>
-		<div class="userInfo"></div>
+		<div class="userInfo"><?php echo $meta_encoding?></div>
+
 		<div class="spacer">&#160;</div>
 	</div>
 	<div class="sectionInfo">
@@ -151,7 +156,8 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 			<label ><?php echo $msgstr["lang"]?></label> <select name=lang class="textEntry singleTextEntry">
 <?php
 
- 	$a=$db_path."lang.tab";
+ 	$a=$msg_path."lang/$lang/lang.tab";
+
  	if (file_exists($a)){
 		$fp=file($a);
 		$selected="";

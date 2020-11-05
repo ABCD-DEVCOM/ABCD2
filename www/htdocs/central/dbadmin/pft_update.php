@@ -25,7 +25,7 @@
  *
  * == END LICENSE ==
 */
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -36,6 +36,7 @@ include("../config.php");
 
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
+
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 //die;
 if (!isset($arrHttp["Modulo"])) $arrHttp["Modulo"]="";
@@ -100,51 +101,38 @@ if (!isset($arrHttp["pftname"])){
 				self.close()
 			 </script>
 			 </body>
-			 </html>";
-    	die;
-    }
+			 </html>";    	die;    }
 	if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat")){
 		$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
-	}else{
-		if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat")){
+	}else{		if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat")){
 			$fp=file($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat");
-		}
-	}
+		}	}
 	$flag="";
 	// IF THERE IS A HEADING FOR THE FORMAT
 	$head="";
 	$tipof="|";
 	if (isset($arrHttp["headings"])) {
 		$head="Y";
-		$tipof="|".$arrHttp["tipof"];
-	}
+		$tipof="|".$arrHttp["tipof"];	}
 	// DELETE THE FILE FORMAT NAME FROM THE DESCRIPTION OF THE FORMAT
 	$desc=str_replace("(".$arrHttp["nombre"].")","",$arrHttp["descripcion"]);
 	$dat=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat";
 	$fp_out=fopen($dat,"w");
 	if (isset($fp)){
-		foreach ($fp as $value){
-			if (trim($value)!=""){
+		foreach ($fp as $value){			if (trim($value)!=""){
 				$f=explode('|',$value);
-				if ($f[0]==$arrHttp["nombre"]) {
-					fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipof."\n");
-					$flag="S";
-				}else{
-					fputs($fp_out,trim($value)."\n");
-				}
-			}
+				if ($f[0]==$arrHttp["nombre"]) {					fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipof."\n");
+					$flag="S";				}else{					fputs($fp_out,trim($value)."\n");
+				}			}
 		}
 	}
 	fclose($fp_out);
-	if ($flag!="S"){
-		$fp_out=fopen($dat,"a");
+	if ($flag!="S"){		$fp_out=fopen($dat,"a");
 		fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipof."\n");
-		fclose($fp_out);
-	}
+		fclose($fp_out);	}
 
 
-}else{
-// SAVE OPERATORS ASSIGNED TO THE PFT
+}else{// SAVE OPERATORS ASSIGNED TO THE PFT
 	if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat")){
 		$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
 	}else{
@@ -154,23 +142,13 @@ if (!isset($arrHttp["pftname"])){
 	}
 	$p=explode('|',$arrHttp["pftname"]);
 	$pname=$p[0];
-	foreach ($fp as $value){
-		$value=trim($value);
-		$l=explode('|',$value);
+	foreach ($fp as $value){		$value=trim($value);		$l=explode('|',$value);
 		if (!isset($l[2])) $l[2]="";
-		if ($l[0]==$pname){
-			$salida[]=$l[0]."|".$l[1]."|".$l[2];
-		}else{
-			$salida[]=$value;
-		}
-	}
+		if ($l[0]==$pname){			$salida[]=$l[0]."|".$l[1]."|".$l[2];		}else{			$salida[]=$value;		}	}
 	$dat=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat";
 	$fp_out=fopen($dat,"w");
-	foreach ($salida as $value) {
-		fputs($fp_out,$value."\n");
-	}
-	fclose($fp_out);
-}
+	foreach ($salida as $value) {		fputs($fp_out,$value."\n");	}
+	fclose($fp_out);}
 
 if (isset($archivo))
 	echo "<center><h3>$archivo ".$msgstr["updated"]."</h3></center>";
@@ -216,8 +194,7 @@ if (!isset($arrHttp["encabezado"])){
 }
 echo "</div></div>";
 include("../common/footer.php");
-if (isset($arrHttp['desde']) and ($arrHttp['desde']=="dataentry" or $arrHttp["desde"]=="recibos" )){
-?>
+if (isset($arrHttp['desde']) and ($arrHttp['desde']=="dataentry" or $arrHttp["desde"]=="recibos" )){?>
 <script>
 	self.close()
 </script>

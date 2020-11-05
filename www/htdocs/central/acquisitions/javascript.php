@@ -156,7 +156,7 @@ function CheckInventoryDup(invnumber,type){
   if (http.readyState == 4 || http.readyState == 0)
   	{
   var myurl = 'check_dup_copies.php';//define la url
-  myRand = parseInt(Math.random()*999999999999999);// es para que la info no vaya a la cache sino al servidor  
+  myRand = parseInt(Math.random()*999999999999999);// es para que la info no vaya a la cache sino al servidor
   var modurl = myurl+"?invnum="+invnumber+"&rand="+myRand;//crea la nueva url
   http.open("GET", modurl);//define tipo de convercion
   http.onreadystatechange = function(){ResponseCheckInventoryDup(type);}//es lo que queremos q se ejecute
@@ -170,35 +170,36 @@ function ResponseCheckInventoryDup(type)
 {
 if (http.readyState == 4)
 	  if(http.status == 200)
-	    {          
-		  if (http.responseText!="") {	
+	    {
+		  if (http.responseText!="") {
 		   if (type==2)
 		   {
-		    document.getElementById("INVA").value=http.responseText;		  
+		    document.getElementById("INVA").value=http.responseText;
+
 		    if (http.responseText==(document.forma1.Mfn.value+'~') || http.responseText=="~")
 			 {
 		       document.getElementById("INE").style.display='none';
 		     }
 		     else
-		     {		  
+		     {
 		       document.getElementById("INE").innerHTML='</br>    <?php echo $msgstr["errSCopy"];?></br></br></br>';
 		       document.getElementById("INE").style.display='block';
 		     }
-		   }		   
+		   }
 		   else
 		   {
-		     if (http.responseText=="~") 
+		     if (http.responseText=="~")
 			 {
 			 document.getElementById("INE").style.display='none';
 			 document.getElementById("INVA").value=http.responseText;
 			 }
 			 else
-			 {		  
+			 {
 		       document.getElementById("INE").innerHTML='</br>    <?php echo $msgstr["errSCopy"];?></br></br></br>';
 			   document.getElementById("INVA").value=http.responseText;
 		       document.getElementById("INE").style.display='block';
 		     }
-		   }		  
+		   }
 	      }
 		  else
 		  {
@@ -211,7 +212,7 @@ function DoRemoveFromLoUpdatingStatus(Db,Cn,Inv,Mfn){
  if (http.readyState == 4 || http.readyState == 0)
   	{
   var myurl = 'copies_lo_update.php';//define la url
-  myRand = parseInt(Math.random()*999999999999999);// es para que la info no vaya a la cache sino al servidor  
+  myRand = parseInt(Math.random()*999999999999999);// es para que la info no vaya a la cache sino al servidor
   var modurl = myurl+"?db="+Db+"&cn="+Cn+"&in="+Inv+"&mfn="+Mfn+"&rand="+myRand;//crea la nueva url
   http.open("GET", modurl);//define tipo de convercion
   http.onreadystatechange = function(){ResponseDoRemoveFromLoUpdatingStatus(Mfn);}//es lo que queremos q se ejecute
@@ -225,8 +226,8 @@ function ResponseDoRemoveFromLoUpdatingStatus(Mfn)
 {
 if (http.readyState == 4)
 	  if(http.status == 200)
-	    {      
-		  if (http.responseText=="") {	
+	    {
+		  if (http.responseText=="") {
 		   DoRemove(Mfn);
 		  }
 		  else

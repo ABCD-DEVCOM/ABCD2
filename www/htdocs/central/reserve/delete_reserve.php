@@ -39,7 +39,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;	$query = "&base=reserve&cipar=$
 	$IsisScript=$xWxis."eliminarregistro.xis";
 	include("../common/wxis_llamar.php");}
 
-/* Verificar si esta función se puede eliminar. pienso que si
+// Verificar si esta función se puede eliminar. pienso que si
 function AssignReserve($Mfn){global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;	$fecha=date("Ymd");
 	$hora=date("H:i:s");
 	$f_asignacion=$fecha;
@@ -48,14 +48,14 @@ function AssignReserve($Mfn){global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;	$
 	$fecha_anulacion=FechaDevolucion($lapso,$unidad,$f_asignacion);
 	$fecha_anulacion=substr($fecha_anulacion,0,8);
 	$ValorCapturado="d1d40d60d61d62<1 0>3</1>";
-	$ValorCapturado.="<60 0>$f_asignacion</60><61 0>$hora</61><62 0>".$_SESSION["login"]"</62><40 0>$fecha_anulacion</40>";
+	$ValorCapturado.="<60 0>$f_asignacion</60><61 0>$hora</61><62 0>".$_SESSION["login"]."</62><40 0>$fecha_anulacion</40>";
 	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."actualizar_registro.xis";
 	$query = "&base=reserve&cipar=$db_path"."par/reserve.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&ValorCapturado=".$ValorCapturado;
 	//echo $query;
 	include("../common/wxis_llamar.php");
 	//foreach ($contenido as $value) echo "$value<br>";  die;}
-*/
+
 
 //---------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------
@@ -66,8 +66,8 @@ switch ($arrHttp["Accion"]){	case "delete":
 		break;
 	case "cancel":
 		CancelReserve($arrHttp["Mfn_reserve"]);
-		if (isset($arrHttp["base_reserve"]) and (!isset($arrHttp["desde"]) or (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva")))
-			$arrHttp["retorno"]="../output_circulation/rs01.php";
+		//if (isset($arrHttp["base_reserve"]) and (!isset($arrHttp["desde"]) or (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva")))
+		//	$arrHttp["retorno"]="../output_circulation/rs01.php";
 
 		break;
 	case "assign":
@@ -76,6 +76,9 @@ switch ($arrHttp["Accion"]){	case "delete":
 		$arrHttp["code"]="assigned";
 		break;}
 
+
+if (substr($arrHttp["retorno"],0,3)!="../"){	echo "form action is invalid: ".$arrHttp["retorno"];
+	die;}
 ?>
 <form name=enviar method=post action="<?php echo $arrHttp["retorno"]?>">
 <?php foreach ($arrHttp as $var=>$value){	echo "<input type=hidden name=$var value=\"$value\">\n";

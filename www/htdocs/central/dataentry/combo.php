@@ -1,5 +1,8 @@
 <?php
 include("../config.php");
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
+}
 $arrHttp["base"]="biblo";
 $arrHttp["cipar"]="biblo.par";
 $_SESSION["lang"]="es";

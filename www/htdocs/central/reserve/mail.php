@@ -40,6 +40,23 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/prestamo.php");
 
+$msgstr["from"]="de";
+$msgstr["to"]="a";
+$msgstr["mail_error"]="Error al enviar el correo";
+$msgstr["mail_sent"]="Su solicitud ha sido enviada";
+
+$fp=file("correo.ini");
+foreach ($fp as $key=>$value){
+	$value=trim($value);
+	if ($value!=""){
+		$x=explode('=',$value);
+		$ini[$x[0]]=$x[1];
+	}
+}
+include("../circulation/calendario_read.php");
+include("../circulation/fecha_de_devolucion.php");
+include("../circulation/locales_read.php");
+
 function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
 	return $contenido;}
@@ -76,6 +93,65 @@ global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
 	return $salida;
 }
 
+function SendPhpMail($to,$name,$body,$ini){
+global $enviados,$msgstr;
+	$subject = $ini["SUBJECT"];
+// NOT SUGGESTED TO CHANGE THESE VALUES
+	$headers = 'From: ' . $ini[ "FROM" ] . PHP_EOL ;
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+	$resultado=mail ( $to, $subject,$body, $headers ) ;
+	echo "<p><font face=arial> ".$msgstr["from"].": ".$ini["FROM"]."  ".$_REQUEST["nombre"];
+	if ($resultado)
+		return "Y";
+	else
+		return "N";
+
+}
+
+function SendMail($mail,$to,$name,$body,$ini){
+global $enviados,$msgstr;
+	//CUERPO DEL MENSAJE
+  //  $mail= new PHPMailer();
+	$mail->IsSMTP();
+	$mail->SMTPAuth   = true;                  	// enable SMTP authentication
+	$mail->SMTPSecure = "ssl";                 	// sets the prefix to the servier
+	$mail->Host       = $ini["HOST"];      		// sets the SMTP server
+	$mail->Port       = $ini["PORT"];           // set the SMTP port
+
+	if (isset($ini["USERNAME"])) $mail->Username   = $ini["USERNAME"];  // GMAIL username
+	if (isset($ini["PASSWORD"]))  $mail->Password   = $ini["PASSWORD"];       // GMAIL password
+
+	$mail->From       = $ini["FROM"];
+	$mail->FromName   = $ini["FROMNAME"];
+	$mail->Subject    = $ini["SUBJECT"];
+	$mail->ContentType= "text/html";
+	$mail->AltBody    = "Debe habilitar el modo HTML para visualizar el resultado de la consulta"; //Text Body
+	$mail->WordWrap   = 200; // set word wrap
+	$mail->MsgHTML($body);
+
+    if (isset($ini["CC"]))
+    	$mail->addCC($ini["CC"]);
+	$mail->AddAddress($to,$name);
+    $mail->SMTPDebug  = 1;
+	$mail->IsHTML(true); // send as HTML
+    //echo "<META HTTP-EQUIV=Content-Type; CONTENT=text/html; charset=ISO-8859-1>";
+  	echo "<p><font face=arial>".$msgstr["from"].": ".$ini["FROM"].". ".$ini["FROMNAME"];
+	echo "<br>".$msgstr["to"].": ".$to."  ".$_REQUEST["nombre"];
+	if (isset($ini["CC"]))
+		echo "<br>CC: ".$ini["CC"];
+
+	if(!$mail->Send()) {
+  		echo "<BR> ".$msgstr["mail_error"].": " . $mail->ErrorInfo;
+  		$res="N";
+	} else {
+
+		echo "<br><STRONG> ".$msgstr["mail_sent"]."</strong>";
+		$res="Y";
+	}
+	//echo $res;
+}
+
 
 
 switch ($arrHttp["code"]){
@@ -83,8 +159,16 @@ switch ($arrHttp["code"]){
 		$Pft=$db_path."reserve/pfts/".$_SESSION["lang"]."/".$Disp_format;
 		if (!file_exists($Pft)){
 			$Pft=$db_path."reserve/pfts/".$lang_db."/".$Disp_format;
-		}        break;
+		}
+		$fecha_inicio=date("Ymd");
+
+		$config_date_format="DD/MM/YY";
+        $fdev=FechaDevolucion(2,"D",$fecha_inicio);
+        break;
+
 }
+
+
 if (!file_exists($Pft)){
 	echo $Disp_format. " ** ".$msgstr["falta"];
 	die;
@@ -95,10 +179,19 @@ $Pft="v15`$$$`V20`$$$`V10, `$$$`V30,`$$$`V40,`$$$`V1".'`$$$`f(mfn,1,0)`$$$`,@'.$
 //v30: Fecha de reserva
 //v40: Esperar hasta
 //v1:  Situacion
+//Se calcula la fecha de vigencia de la reserva (2 días)
+$ValorCapturado ="d1d60d40<1 0>3</1>";
+$ValorCapturado.="<60 0>$fecha_inicio</60><40 0>$fdev</40>";
+$ValorCapturado=urlencode($ValorCapturado);
+$query="&base=reserve&cipar=$db_path"."par/reserve.par&ValorCapturado=$ValorCapturado&Opcion=actualizar&Mfn=".$arrHttp["Mfn"]."&login=".$_SESSION["login"];
+$IsisScript=$xWxis."actualizar.xis";
+$contenido=LlamarWxis($IsisScript,$query);
+//foreach($contenido as $value) echo "$value<br>";
+
 $query = "&base=reserve&cipar=$db_path"."par/reserve.par&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Pft=".$Pft;
 $IsisScript=$xWxis."leer_mfnrange.xis";
 $contenido=LlamarWxis($IsisScript,$query);
-
+//foreach($contenido as $value) echo "$value<br>";
 $key_comp="";
 $value=implode("\n",$contenido);
 $v=explode('$$$',$value);
@@ -144,23 +237,34 @@ $emailSubject=substr($emailSubject,$ix1+1);
 $Referencia=MostrarRegistroCatalografico($v[0],$v[1]);
 $body=str_replace("#REFER#",$Referencia,$body);
 
-//Se arma el correo
 
-$body = <<<EOD
-<br><hr><br>
-$body
-EOD;
+include("class.phpmailer.php");
+$mail= new PHPMailer();
+//foreach ($_REQUEST as $key=>$value)  echo "$key=$value<br>";//die;
 
-$headers = "From: $mail_from\r\n"; // This takes the email and displays it as who this email is from.
-$headers .= "Content-type: text/html\r\n"; // This tells the server to turn the coding into the text.
-$success = mail($mailto, $emailSubject, $body, $headers); // This tells the server what to send.
-echo "<p>";
-echo $msgstr["mail_from"].": ".$mail_from."<br>";
-echo $msgstr["mail_to"].": ".$mailto."<br>";
-echo $msgstr["mail_subject"].": ".$emailSubject."<br>";
-echo $body;
-echo "<p><font color=red face=tahoma><b>";
-if ($success){	echo $msgstr["mail_sent"];}else{	echo $msgstr["mail_fail"];}
-echo "</b>";
+//if (!isset($ini["FROM"]) or trim($ini["FROM"])=="")
+//   $ini["FROM"]=trim($_REQUEST["email"]);
+
+if (isset($ini["TEST"])){
+	$to=$ini["TEST"];
+}else{
+	$to=$mailto;
+}
+
+echo "Para: ".$to."<br>";
+if (isset($ini["CC"]))
+	echo "cc:".$ini["CC"]."<p>";
+echo "<br>".$body."<p>";
+
+$_REQUEST["nombre"]="";
+$name="Usuario Web";
+if (isset($ini["PHPMAILER"]) and $ini["PHPMAILER"]=="phpmailer"){
+	$mail_sent=SendMail($mail,$to,$name,$body,$ini);
+}else{
+	$mail_sent=SendPhpMail($to,$name,$body,$ini);
+}
+flush();
+ob_flush();
+
 ?>
 

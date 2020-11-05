@@ -22,7 +22,7 @@ include("../lang/dbadmin.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php")
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script languaje=javascript>
 
 function VerificarTipo(){
@@ -37,6 +37,22 @@ function VerificarTipo(){
 }
 
 function Validar(){
+	cisisv=""
+	ix=document.forma1.CISIS_VERSION.length
+	for (i=0;i<ix;i++){		if (document.forma1.CISIS_VERSION[i].checked) cisisv=document.forma1.CISIS_VERSION[i].value	}
+	if (cisisv==""){
+		alert("<?php echo $msgstr["falta"]." CISIS VERSION"?>")
+		return
+	}
+	unicode=""
+	ix=document.forma1.UNICODE.length
+	for (i=0;i<ix;i++){
+		if (document.forma1.UNICODE[i].checked) unicode=document.forma1.UNICODE[i].value
+	}
+	if (unicode==""){
+		alert("<?php echo $msgstr["falta"]." UNICODE"?>")
+		return
+	}
 	dbn=Trim(document.forma1.nombre.value)
 	if (dbn==""){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["dbn"]?>")
@@ -129,7 +145,29 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_creardb.php</font>";
 		<div class="middle form">
 			<div class="formContent">
 	<!--			<h4>New Database</h4>-->
+                <div id="formRow01" class="formRow">
+                	<label for="field01"><strong>CISIS VERSION</strong></label>
+                	<div class="frDataFields">
 
+
+ <?php
+ 	$CIV=explode(";",$cisis_versions_allowed);
+ 	foreach ($CIV as $v){ 		echo "<input type=radio name=\"CISIS_VERSION\" value=\"$v\">$v &nbsp; &nbsp;"; 	}
+ ?>
+                		<p>
+                	</div>
+					<div class="spacer">&#160;</div>
+				</div>
+                <div id="formRow01" class="formRow">
+                	<label for="field01"><strong>UNICODE</strong></label>
+                	<div class="frDataFields">
+                    	<input type=radio name="UNICODE" value=0>No &nbsp; &nbsp;
+                    	<input type=radio name="UNICODE" value=1>Yes
+
+                		<p>
+                	</div>
+					<div class="spacer">&#160;</div>
+				</div>
 				<div id="formRow01" class="formRow">
 					<label for="field01"><strong><?php echo $msgstr["dbn"]?></strong></label>
 					<div class="frDataFields">

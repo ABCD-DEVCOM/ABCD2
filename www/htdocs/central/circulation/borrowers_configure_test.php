@@ -79,6 +79,11 @@ $Pft=stripslashes($arrHttp["pft_usdisp"]);
 $Pft=urlencode($Pft);
 LeerRegistro($Pft,$object_db);
 
+echo "<h5><font color=darkred>". $msgstr["pft_usmore"]."</font></H5>";
+$Pft=stripslashes($arrHttp["pft_usmore"]);
+$Pft=urlencode($Pft);
+LeerRegistro($Pft,$object_db);
+
 ?>
 </div></div>
 <?php include("../common/footer.php")?>;

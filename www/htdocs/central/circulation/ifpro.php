@@ -1,4 +1,8 @@
-<?php include ("../common/header.php");?>
+<?php
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
+}
+include ("../common/header.php");?>
 
 <script language=javascript>
 

@@ -18,16 +18,13 @@ unset($_SESSION["Maxfoldersize"]);
 unset($_SESSION["Last_Level_Node"]);
 unset($_SESSION["Total_Time"]);
 unset($_SESSION["Server_Path"]);
-
 $Permiso=$_SESSION["permiso"];
 $modulo_anterior="";
 if (isset($_SESSION["MODULO"]))
 	$modulo_anterior=$_SESSION["MODULO"];
 
-if (isset($arrHttp["modulo"])) {
-	$_SESSION["MODULO"]=$arrHttp["modulo"];
-
-}
+if (isset($arrHttp["modulo"])) {	$_SESSION["MODULO"]=$arrHttp["modulo"];
+}
 $lista_bases=array();
 if (file_exists($db_path."bases.dat")){
 	$fp = file($db_path."bases.dat");
@@ -44,40 +41,20 @@ $central="";
 $circulation="";
 $acquisitions="";
 $ixcentral=0;
-foreach ($_SESSION["permiso"] as $key=>$value){
-	$p=explode("_",$key);
-	if (isset($p[1]) and $p[1]=="CENTRAL"){
-		$central="Y";
-		$ixcentral=$ixcentral+1;
-	}
-	if (substr($key,0,8)=="CENTRAL_")  	{
-		$central="Y";
-		$ixcentral=$ixcentral+1;
-	}
-	if (substr($key,0,4)=="ADM_"){
-		$central="Y";
-		$ixcentral=$ixcentral+1;
-	}
+foreach ($_SESSION["permiso"] as $key=>$value){	$p=explode("_",$key);
+	if (isset($p[1]) and $p[1]=="CENTRAL"){		$central="Y";
+		$ixcentral=$ixcentral+1;	}
+	if (substr($key,0,8)=="CENTRAL_")  	{		$central="Y";
+		$ixcentral=$ixcentral+1;	}
+	if (substr($key,0,4)=="ADM_"){		$central="Y";
+		$ixcentral=$ixcentral+1;	}
 	if (substr($key,0,5)=="CIRC_")  	$circulation="Y";
 	if (substr($key,0,4)=="ACQ_")  		$acquisitions="Y";
 
 }
 // Se determina el nombre de la página de ayuda a mostrar
-if (!isset($_SESSION["MODULO"])) {
-	if ($central=="Y" and $ixcentral>0) {
-		$arrHttp["modulo"]="catalog";
-	}else{
-		if ($circulation=="Y"){
-			$arrHttp["modulo"]="loan";
-		}else{
-			$arrHttp["modulo"]="acquisitions";
-		}
-	}
-}else{
-	$arrHttp["modulo"]=$_SESSION["MODULO"];
-}
-switch ($arrHttp["modulo"]){
-	case "catalog":
+if (!isset($_SESSION["MODULO"])) {	if ($central=="Y" and $ixcentral>0) {		$arrHttp["modulo"]="catalog";	}else{		if ($circulation=="Y"){			$arrHttp["modulo"]="loan";		}else{			$arrHttp["modulo"]="acquisitions";		}	}}else{	$arrHttp["modulo"]=$_SESSION["MODULO"];}
+switch ($arrHttp["modulo"]){	case "catalog":
 		$ayuda="homepage.html";
 		$module_name=$msgstr["catalogacion"];
 		$_SESSION["MODULO"]="catalog";
@@ -90,28 +67,23 @@ switch ($arrHttp["modulo"]){
 	case "loan":
 		$ayuda="circulation/homepage.html";
 		$module_name=$msgstr["loantit"];
-		$_SESSION["MODULO"]="loan";
-}
+		$_SESSION["MODULO"]="loan";}
 if (file_exists($db_path."logtrans/data/logtrans.mst")){
 	if ($_SESSION["MODULO"]!="loan" and $modulo_anterior=="loan"){
 		include("../circulation/grabar_log.php");
 		$datos_trans["operador"]=$_SESSION["login"];
 		GrabarLog("Q",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path);
-	}else{
-		if ($_SESSION["MODULO"]=="loan" and $modulo_anterior!="loan"){
+	}else{		if ($_SESSION["MODULO"]=="loan" and $modulo_anterior!="loan"){
 			include("../circulation/grabar_log.php");
 			$datos_trans["operador"]=$_SESSION["login"];
 			GrabarLog("P",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path);
-		}
-	}
+		}	}
 }
 include("header.php");
 ?>
 <script>
 
-function ActivarModulo(Url,base){
-	if (base=="Y"){
-		ix=document.admin.base.selectedIndex
+function ActivarModulo(Url,base){	if (base=="Y"){		ix=document.admin.base.selectedIndex
 		if (ix<1){
 		  	alert("<?php echo $msgstr["seldb"]?>")
 		   	return
@@ -120,14 +92,9 @@ function ActivarModulo(Url,base){
 		b=base.split('|')
 		base=b[0]
 		base="?base="+base;
-
-	}else{
-		base="";
-	}
+	}else{		base="";	}
 	Url="../"+Url+base
-	top.location.href=Url
-
-}
+	top.location.href=Url}
 function Modulo(){
 	Opcion=document.cambiolang.modulo.options[document.cambiolang.modulo.selectedIndex].value
 	switch (Opcion){
@@ -165,23 +132,19 @@ function Modulo(){
 		    b=db.split('|')
 		    db=b[0]
 		}
-	    switch(Modulo){
-			case 'table':
+	    switch(Modulo){			case 'table':
 				document.admin.action="../dataentry/browse.php"
 				break
 	    	case "resetautoinc":
 	    		if (db+"_CENTRAL_RESETLCN" in perms || "CENTRAL_RESETLCN" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
 	    	   		document.admin.action="../dbadmin/resetautoinc.php";
-	    		}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
+	    		}else{	    			alert("<?php echo $msgstr["invalidright"];?>")
+	    			return;	    		}
 	    		break;
 	    	case "toolbar":
 	    		document.admin.action="../dataentry/inicio_main.php";
-                        //echo "query_homepage=$query<BR>";
 	    		break;
-		case "utilitarios":
+			case "utilitarios":
 
 				if (db+"_CENTRAL_DBUTILS" in perms || "CENTRAL_DBUTILS" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms ){
 					document.admin.action="../dbadmin/menu_mantenimiento.php";
@@ -189,10 +152,9 @@ function Modulo(){
 	    			alert("<?php echo $msgstr["invalidright"];?>")
 	    			return;
 	    		}
-                        break;
-   		case "estructuras":
-   				if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
-					document.admin.action="../dbadmin/menu_modificardb.php";
+                break;
+   			case "estructuras":
+   				if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){					document.admin.action="../dbadmin/menu_modificardb.php";
 				}else{
 	    			alert("<?php echo $msgstr["invalidright"];?>")
 	    			return;
@@ -234,37 +196,56 @@ function Modulo(){
 		document.admin.submit();
 	}
 
+	function FuncionesAdministracion(Accion){
+		switch (Accion){			case "CBD":
+				document.admFrm.action="../dbadmin/menu_creardb.php"
+				document.admFrm.encabezado.value="s"
+				break;
+           	case "AUSR":
+				document.admFrm.action="../dbadmin/users_adm.php"
+				document.admFrm.encabezado.value="s"
+				document.admFrm.base.value="acces"
+				document.admFrm.cipar.value="acces.par"
+				break;
+			case "RNU":
+				document.admFrm.action="../dbadmin/reset_inventory_number.php"
+				document.admFrm.encabezado.value="s"
+				break;
+   			case "CABCD":
+				document.admFrm.action="../dbadmin/conf_abcd.php"
+				document.admFrm.Opcion.value="abcd_def"
+				break;
+			case "DIRTREE":
+				document.admFrm.action="../dbadmin/dirtree.php"
+				document.admFrm.encabezado.value="s"
+				document.admFrm.retorno.value="inicio"
+				break;
+
+
+		}
+		document.admFrm.submit()	}
+
+
 	</script>
 
 <body>
-<?php //echo "Session=" ; var_dump($_SESSION);
-?>
-
 <div class=heading>
-<!--		<div class="institutionalInfo">
-                 <h1>
- 		     <img src=
-                     <?php
-                     if (isset($logo))
-		        echo $logo;
-		     else
-		         echo "central/images/logoabcd.jpg";
-		     ?>
-		     height=44 width=33> &nbsp; &nbsp;
-                     <?php echo $institution_name?>
-                 </h1>
-		</div>
--->
-               <?php include("institutional_info.php"); ?>
-
+	<div class="institutionalInfo">
+		<h1><img src=<?php if (isset($logo))
+								echo $logo;
+							else
+								echo "../images/logoabcd.jpg";
+					  ?>><?php echo $institution_name?> </h1>
+    </div>
 	<div class="userInfo">
-		<span><?php echo $_SESSION["nombre"];?></span>,
+		<span><?php echo $_SESSION["nombre"]?></span>,
 		<?php echo $_SESSION["profile"]?> |
 		<?php  $dd=explode("/",$db_path);
-               if (isset($dd[count($dd)-2])){
+               if (isset($dd[count($dd)-2]) and $dd[count($dd)-2]!=""){
 			   		$da=$dd[count($dd)-2];
 			   		echo " (".$da.") ";
-				}
+				}else{					echo " (".$db_path.") ";				}
+				echo " | $meta_encoding";
 		?> |
 		<a href="../dataentry/logout.php" xclass="button_logout"><span>[logout]</span></a><br>
 <?php
@@ -342,48 +323,7 @@ if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
   		if ($_SESSION["MODULO"]=="acquisitions") echo " selected";
   		echo ">".$msgstr["acquisitions"];
   	}
-	//READING abcd.def to find unicode
-$fp=file($db_path."abcd.def");
-$unicode="ansi";
-foreach($fp as $line)
-{
-	$pos = strpos($line, "UNICODE");
-	if ($pos !== false)
-	 {
-		$str_line=explode("=",$line);		
-		$use_unicode=$str_line[1];
-		if($use_unicode!=0)
-{
-	$unicode="utf8";
-	
-}
-else {
-	$unicode="ansi";
-	
-}	
-	 }	 
-}
-	
-  	echo "</select></td><tr>";
-	if($unicode=="ansi")
-	{
-	echo "
-	<td>Encoding:</td> <td><select style='width:90px;font-size:10pt;font-family:arial narrow' name='encoding' id='encoding' onchange='javascript:cambiar_encoding();'>
-	<option value='unicode'>unicode</option>
-	<option value='ansi' selected>ansi</option>
-	</select></td>
-	</table>";
-	}
-	else
-	{
-	echo "
-	<td>Encoding:</td> <td><select style='width:90px;font-size:10pt;font-family:arial narrow' name='encoding' id='encoding' onchange='javascript:cambiar_encoding();'>
-	<option value='unicode' selected>unicode</option>
-	<option value='ansi'>ansi</option>
-	</select></td>
-	";	
-	}
-	echo "</tr></table>";
+  	echo "</select></td></table>";
 }
 ?>
     </form>
@@ -410,15 +350,14 @@ else {
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])){
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/$ayuda target=_blank>".$msgstr["edhlp"];
 	echo "</a>
-		<font color=white>&nbsp; &nbsp; Script: homepage.php </font>";
+		&nbsp; &nbsp; Script: homepage.php";
 }
 ?>
 </div>
 <div class="middle homepage">
 <?php
 $Permiso=$_SESSION["permiso"];
-switch ($_SESSION["MODULO"]){
-	case "catalog":
+switch ($_SESSION["MODULO"]){	case "catalog":
 		AdministratorMenu();
 		break;
 	case "loan":
@@ -426,11 +365,17 @@ switch ($_SESSION["MODULO"]){
 		break;
 	case "acquisitions":
 		MenuAcquisitionsAdministrator();
-		break;
-}
+		break;}
 echo "		</div>
 	</div>";
 include("footer.php");
+echo "<form name=admFrm method=post>
+<input type=hidden name=Opcion>
+<input type=hidden name=encabezado>
+<input type=hidden name=base>
+<input type=hidden name=retorno>
+<input type=hidden name=cipar>
+</form>";
 echo "	</body>
 </html>";
 
@@ -489,18 +434,12 @@ foreach ($lista_bases as $key => $value) {
 					&nbsp;
 <?php
 if (isset($def["MODULOS"])){
-	if (isset($def["MODULOS"]["SELBASE"])){
-		$base_sel="Y";
-	}else{
-		$base_sel="";
-	}
-?>
+	if (isset($def["MODULOS"]["SELBASE"])  ){		$base_sel=$def["MODULOS"]["SELBASE"];	}else{		$base_sel="";	}?>
 	<a href="javascript:ActivarModulo('<?php echo $def["MODULOS"]["SCRIPT"]."','$base_sel";?>')" class="menuButton <?php echo $def["MODULOS"]["BUTTON"]?>">
 		<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $def["MODULOS"]["TITLE"]?></strong></span>
 	</a>
-<?php
-}
+<?php}
 ?>
 				<a href="javascript:CambiarBaseAdministrador('stats')" class="menuButton statButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
@@ -554,16 +493,15 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"])  or isset
 					</div>
 					<div class="sectionButtons">
 <?Php
-if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset($Permiso["ADM_CRDB"])){
-?>
-                    <a href="../dbadmin/menu_creardb.php?encabezado=S" class="menuButton databaseButton">
+if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset($Permiso["ADM_CRDB"])){?>
+                    <a href="javascript:FuncionesAdministracion('CBD')" class="menuButton databaseButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["createdb"]?></strong></span></a>
 <?Php
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isset($Permiso["ADM_USRADM"])){
 ?>
-				<a href="../dbadmin/users_adm.php?encabezado=s&base=acces&cipar=acces.par" class="menuButton userButton">
+				<a href="javascript:FuncionesAdministracion('AUSR')" class="menuButton userButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["usuarios"]?></strong></span>
 				</a>
@@ -571,7 +509,7 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isse
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_RESETLIN"])){
 ?>
-				<a href="../dbadmin/reset_inventory_number.php?encabezado=s" class="menuButton resetButton">
+				<a href="javascript:FuncionesAdministracion('RNU')" class="menuButton resetButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["resetinv"]?></strong></span>
 				</a>
@@ -585,19 +523,14 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_TRANSLATE"])){
 				</a>
 <?Php
 }
-if ($_SESSION["profile"]=="adm"){
-?>
-				<a href="../dbadmin/conf_abcd.php?Opcion=abcd_def" class="menuButton utilsButton">
+if ($_SESSION["profile"]=="adm"){?>				<a href="javascript:FuncionesAdministracion('CABCD')" class="menuButton utilsButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["configure"]. " ABCD"?></strong></span>
-				</a>
-<?php
-}
+				</a><?php}
 
-if ($dirtree==1 or $dirtree=="Y"){
-	if ($_SESSION["profile"]=="adm"){
+if ($dirtree==1 or $dirtree=="Y"){	if ($_SESSION["profile"]=="adm"){
 ?>
-				<a href="../dbadmin/dirtree.php?encabezado=s&retorno=inicio" class="menuButton exploreButton">
+				<a href="javascript:FuncionesAdministracion('DIRTREE')" class="menuButton exploreButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["expbases"]?></strong></span>
 				</a>
@@ -637,11 +570,4 @@ echo "</script>\n";
 <script>
 screen_width=window.screen.availWidth
 document.admin.screen_width.value=screen_width
-function cambiar_encoding()
-{
-	var encoding=document.getElementById('encoding').value;
-	document.getElementById('change_encoding').src="change_encoding.php?encoding="+encoding;
-	}
 </script>
-<iframe style="display:none;" id="change_encoding" src="">
-</iframe>

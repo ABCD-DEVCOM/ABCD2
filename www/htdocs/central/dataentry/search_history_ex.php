@@ -31,6 +31,6 @@ $base=$h[0];
 
 <script>
 
-		top.Expresion="<?php echo $h[1]?>"
+		top.Expresion="<?php echo urlencode($h[1])?>"
 		top.Menu("ejecutarbusqueda")
 </script>

@@ -3,6 +3,7 @@ set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 error_reporting(E_ALL);
 session_start();
+
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -67,14 +68,23 @@ switch($arrHttp["output"]){
    		header("Expires: 0");
    		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
    		header("Pragma: public");
-   		break;	default:
-		break;}
+   		break;
+   	case "txt_print":
+   	   	header('Content-Type: text/html;  charset=windows-1252');
+   		header("Expires: 0");
+   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+   		header("Pragma: public");
+   		break;
+	default:
+		break;
+}
 
 function MostrarSalida($contenido,$medio="",$bar_c){
 global $arrHttp;
 	if ($medio=="display" or $medio=="doc"){
 		$table_width=$bar_c["cols"]*$bar_c["width"];
-		if (isset($bar_c["cols"]) and $bar_c["cols"]>0){			echo "<style>
+		if (isset($bar_c["cols"]) and $bar_c["cols"]>0){
+			echo "<style>
 			.columna{
     			border: 0px;
     			table-layout: fixed;
@@ -87,33 +97,73 @@ global $arrHttp;
     			width: ".$bar_c["width"]."em;
     			height: ".$bar_c["height"]."em;
 			}
-			</style>\n";			echo "\n<table class=columna>\n<tr>";		}else{			$bar_c["cols"]=0;		}
+			</style>\n";
+			echo "\n<table class=columna>\n<tr>";
+		}else{
+			$bar_c["cols"]=0;
+		}
 	}
-	$ncols=0;	foreach ($contenido as $value){
+	$ncols=0;
+	$print="";
+	foreach ($contenido as $value){
 		$value=trim($value);
-		if ($value!=""){			$ix=strpos($value,"*INV*");
-			if ($ix!=-1){
-				$ix1=strpos($value,"*INV*",$ix+1);
-				if ($ix1!=-1)
+		if ($value!=""){
+			$ix=strpos($value,"*INV*");
+			if ($ix!==false){
+				$ix1=strpos($value,"*INV*",$ix+2);
+				if ($ix1!==false)
 					$value=substr($value,0,$ix).substr($value,$ix1+5);
 			}
 			$salida=str_replace('!!!',PHP_EOL,$value);
 			switch ($medio){
 				case "txt":
+					//echo utf8_encode($salida);
 					echo $salida;
 					break;
+				case "txt_print":
+					$print.=$salida;
+					break;
+
 				default:
 					$ncols=$ncols+1;
-					if ($ncols>$bar_c["cols"] and $bar_c["cols"]!=0){						echo "</tr>\n<tr>";
-						$ncols=1;					}
+					if ($ncols>$bar_c["cols"] and $bar_c["cols"]!=0){
+						echo "</tr>\n<tr>";
+						$ncols=1;
+					}
 					if ($bar_c["cols"]>0){
 						$width=$bar_c["width"];
-						$height=$bar_c["height"];						echo "<td class=td1>$salida</td>\n";					}else{						echo $salida."<p>";                    }			}
+						$height=$bar_c["height"];
+						echo "<td class=td1>$salida</td>\n";
+					}else{
+						echo $salida."<p>";
+                    }
+			}
 		}
 	}
-	if (isset($bar_c["cols"]) and $bar_c["cols"]>0 and $medio!="txt"){
+	if (isset($bar_c["cols"]) and $bar_c["cols"]>0 and $medio!="txt" and $medio!="txt_print"){
 		echo "</tr></table>";
-	}}
+	}
+	if ($medio=="txt_print"){
+	$salida=explode(PHP_EOL,$print);
+	echo "<script>lineas=Array();i=-1;\n";
+	foreach ($salida as $linea){
+		echo "i=i+1\n";
+		echo "lineas[i]=\"$linea\"\n";
+	}
+		?>
+	msgwin=window.open("","recibo","width=400, height=300, scrollbars, resizable")
+	for (j=0;j<=i;j++){
+		msgwin.document.writeln(lineas[j])
+	}
+	msgwin.document.close()
+	msgwin.focus()
+	msgwin.print()
+	msgwin.close()
+	self.close();
+</script>
+<?php
+	}
+}
 
 
 function MfnBarCode($base,$from,$to,$bar_c,$Pft){
@@ -127,31 +177,45 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
  	$query = "&base=$base&cipar=$db_path"."par/".$cipar. "&from=" . $from."&to=$to&Pft=$Pft";
  	//echo $Pft;
 	include("../common/wxis_llamar.php");
-    foreach ($contenido as $value){    	// echo "***".$value;    }
+   // foreach ($contenido as $value){
+   // 	 echo "***".$value;
+    //}
+    //die;
     $contenido=implode("!!!",$contenido);
 	$contenido=explode('%%%',$contenido);
 	MostrarSalida($contenido,$arrHttp["output"],$bar_c);
 
 }
-function InventarioLista($base,$lista,$bar_c,$Pft){global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
+function InventarioLista($base,$lista,$bar_c,$Pft){
+global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 	$Expresion="";
 	$inv=explode(",",$lista);
     $comp=array();
-	foreach ($inv as $value){		$value=trim($value);		if ($value!=""){			$comp[$value]=$value;			if($Expresion==""){				$Expresion=$bar_c["inventory_number_pref_list"].$value;
+	foreach ($inv as $value){
+		$value=trim($value);
+		if ($value!=""){
+			$comp[$value]=$value;
+			if($Expresion==""){
+				$Expresion=$bar_c["inventory_number_pref_list"].$value;
 			}else{
-				$Expresion.=" or ".$bar_c["inventory_number_pref_list"].$value;			}		}	}
+				$Expresion.=" or ".$bar_c["inventory_number_pref_list"].$value;
+			}
+		}
+	}
 	$IsisScript=$xWxis."imprime.xis";
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
 	include("../common/wxis_llamar.php");
 	$inventario=array();
 	$array_c=array();
 	$contenido=implode("!!!",$contenido);
 	$contenido=explode('%%%',$contenido);
-	foreach ($contenido as $value) {		if (trim($value)!=""){
+	foreach ($contenido as $value) {
+		if (trim($value)!=""){
 			foreach ($inv as $ni) {
 				$ni=trim($ni);
 				if (strpos($value,'*INV*'.$ni.'*INV')!==FALSE){
-					if (!isset($inventario[$ni])){						$inventario[$ni]=$ni;
+					if (!isset($inventario[$ni])){
+						$inventario[$ni]=$ni;
 						$array_c[]=$value;
 					}else{
 
@@ -167,13 +231,13 @@ function ClasificacionBarCode($base,$from,$to,$bar_c,$Pft){
 global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
     $Prefijo=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_from"]);
     $to=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_to"]);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario&prefijo=".urlencode($Prefijo)."&hasta=".urlencode($to)."&Pft=".urlencode($Pft);
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario&prefijo=".$Prefijo."&hasta=".$to."&Pft=".$Pft;
 	$IsisScript=$xWxis."indice.xis";
 	include("../common/wxis_llamar.php");
-	//foreach ($contenido as $value) echo "$value<br>";
 	$contenido=implode("!!!",$contenido);
 	$contenido=explode('%%%',$contenido);
-	MostrarSalida($contenido,$arrHttp["output"],$bar_c);}
+	MostrarSalida($contenido,$arrHttp["output"],$bar_c);
+}
 
 function InventarioBarCode($base,$from,$to,$bar_c,$Pft){
 global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
@@ -192,10 +256,13 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
 			$ix1=strpos($value,"*INV*",$ix+1);
 			$ni=substr($value,$ix+5,$ix1-$ix-5);
 			if ($ni>=trim($arrHttp["inventory_from"]) and $ni<=trim($arrHttp["inventory_to"])){
-				if (!isset($inventario[$ni])){					$array_c[]=$value;
+				if (!isset($inventario[$ni])){
+					$array_c[]=$value;
 					$inventario[$ni]=$ni;
-				}			}
-		}	}
+				}
+			}
+		}
+	}
 
 	MostrarSalida($array_c,$arrHttp["output"],$bar_c);
 }
@@ -221,7 +288,6 @@ $fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["tipo
 if ($fp){
 	foreach ($fp as $conf){
 		$conf=trim($conf);
-		//echo $conf."<br>";
 		if ($conf!=""){
 			$a=explode('=',$conf,2);
 			$bar_c[$a[0]]=$a[1];
@@ -232,14 +298,16 @@ if ($fp){
 $bar_c["height"]=$bar_c["height"]*$cm2em;
 $bar_c["width"]=$bar_c["width"]*$cm2em;
 
-if ($arrHttp["output"]=="txt"){
+if ($arrHttp["output"]=="txt" or $arrHttp["output"]=="txt_print"){
 	$bar_c["label_format"]=$bar_c["label_format_txt"];
 	if (substr($bar_c["label_format"],0,1)=='@')
 		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
-}else{	if (substr($bar_c["label_format"],0,1)=='@')
-		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";}
-
-switch ($arrHttp["tipo"]){	case "barcode":
+}else{
+	if (substr($bar_c["label_format"],0,1)=='@')
+		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
+}
+switch ($arrHttp["tipo"]){
+	case "barcode":
 		$Pft=trim($bar_c["label_format"])."/";
 		break;
 	case "lomos":
@@ -247,9 +315,10 @@ switch ($arrHttp["tipo"]){	case "barcode":
 		break;
 	case "etiquetas":
 		$Pft=trim($bar_c["label_format"])."/";
-		break;}
-
-switch ($arrHttp["Opcion"]){	case "mfn":
+		break;
+}
+switch ($arrHttp["Opcion"]){
+	case "mfn":
 		MfnBarCode($arrHttp["base"],$arrHttp["mfn_from"],$arrHttp["mfn_to"],$bar_c,$Pft);
 		break;
 	case "clasificacion":
@@ -272,4 +341,5 @@ switch ($arrHttp["Opcion"]){	case "mfn":
 if ($arrHttp["output"]=="display"){
 	echo "</body></html>";
 }
+
 ?>

@@ -7,17 +7,18 @@
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
 <?php
-	if (isset($unicode) and $unicode=="utf8"){
-		//echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1256\" />";
-		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
+   // if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
+	if (isset($charset)){
+		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$charset\" />\n";
 	}else{
-		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />";
+		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$meta_encoding\" />\n";
 	}
 	if (!isset($css_name))
 		$css_name="";
 	else
 		$css_name.="/";
 ?>
+		<meta http-equiv="X-Content-Type-Options" content="nosniff">
 		<meta name="robots" CONTENT="NONE" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
@@ -29,8 +30,11 @@
 		<!--[if IE 6]>
 			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
-<?php if (isset($context_menu) and $context_menu=="N"){
+<?php
+include ("css_settings.php");
+
 ?>
+<?php if (isset($context_menu) and $context_menu=="N"){?>
 <script>
 
  var isNS = (navigator.appName == "Netscape") ? 1 : 0;

@@ -9,7 +9,7 @@ include("../config.php");
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
 //foreach($arrHttp as $var=>$value) echo "$var=$value<br>";
-$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
+//$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab";
 $fp=fopen($archivo,"a");
 $res=fwrite($fp,trim($arrHttp["Descripcion"])."|".trim($arrHttp["Expresion"])."\n\n");

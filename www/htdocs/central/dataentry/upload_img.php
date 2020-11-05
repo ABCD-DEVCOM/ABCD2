@@ -106,7 +106,7 @@ foreach ($files['name'] as $key=>$name) {
 	  		if (substr($loc,0,1)=="/") $loc=substr($loc,1);
 			echo "<html>\n";
 			echo "<title>".$msgstr["uploadfile"]."</title>\n";
-			echo "<script language=javascript src=js/lr_trim.js></script>\n";
+			echo "<script language=\"JavaScript\" type=\"text/javascript\" src=js/lr_trim.js></script>\n";
 			echo "<body>\n";
 			echo "<font face=verdana>\n";
 			//echo "location: ".$location;

@@ -37,7 +37,7 @@
       		<do task=mfnrange>
     			<parm name=db><pft>v5001</pft></parm>
 				<field action="statusdb" tag="1091"><pft>v5001</pft></field>
-    			<parm name="buffersize">800000</parm>
+    			<!--parm name="buffersize">800000</parm-->
         		<!--parm name=MAX_TMP_STRING>800000</parm-->
     			<field action=define tag=1002>Isis_Total</field>
         		<field action=define tag=1102>Isis_Status</field>
@@ -50,7 +50,9 @@
      				<field action=import tag=3030>3030</field>
      				<field action=import tag=3031>3031</field>
      				<display><pft type=reload><pft>
-     					if val(v1091)<>1 and val(v1091)<>2 then if p(v3031) then v3031 else if v3030='' or v3030='ALL' then 'ALL' else '@'v3030'.pft' fi fi fi</pft></pft></display>
+     					if val(v1091)<>1 and val(v1091)<>2 then if p(v3031) then v3031 else if v3030='' or v3030='ALL' then 'ALL' else '@'v3030'.pft' fi fi fi
+     					</pft></pft>
+     				</display>
      			<label>ELIMINADO</label>
     		</loop>
    		</do>

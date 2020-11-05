@@ -73,7 +73,10 @@ if (isset($arrHttp["usuario"])){
    	$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path/par/users.par&Formato=".$formato_us;
 	$contenido="";
 	$IsisScript=$xWxis."cipres_usuario.xis";
-	include("../common/wxis_llamar.php");
+	if (isset($CentralPath) and $CentralPath!="")
+		include($CentralPath."common/wxis_llamar.php");
+	else
+		include("../common/wxis_llamar.php");
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){		$c=implode("\n",$contenido);
 		if (trim($c)=="")
 			$ec_output="**";	}
@@ -105,7 +108,10 @@ if (isset($arrHttp["usuario"])){
 	    if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
 	   	$query = "&Expresion=TRU_P_".$arrHttp["usuario"]."&base=trans&cipar=$db_path"."par/trans.par&Pft=v40'$$$',@".$formato_obj;
 		$IsisScript=$xWxis."cipres_usuario.xis";
-		include("../common/wxis_llamar.php");
+		if (isset($CentralPath) and $CentralPath!="")
+			include($CentralPath."common/wxis_llamar.php");
+		else
+			include("../common/wxis_llamar.php");
 		$prestamos=array();
 		foreach ($contenido as $linea){
 			if (trim($linea)!=""){				$prestamos[]=$linea;
@@ -115,8 +121,17 @@ if (isset($arrHttp["usuario"])){
 		$np=0;   //Total libros en poder del usuario
 	   // echo "<pre>".print_r($politica);
 		if (count($prestamos)>0) {			$ec_output.= "\n<strong>".$msgstr["loans"]."</strong>
-			<table width=100% bgcolor=#cccccc>
-			<td> </td><th>".$msgstr["inventory"]."</th><th>".$msgstr["control_n"]."</th><th>".$msgstr["reference"]."</th><th>".$msgstr["typeofitems"]."</th><th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["overdue"]."</th><th>".$msgstr["renewed"]."</th>\n";
+			<table width=100% bgcolor=#cccccc>";
+			if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
+				$ec_output.="<td> </td>";
+			}
+
+			$ec_output.="<th>".$msgstr["inventory"]."</th>";
+			if (!isset($desde_opac)) $ec_output.="<th>".$msgstr["control_n"]."</th>";
+			$ec_output.="<th>".$msgstr["reference"]."</th>";
+			if (!isset($desde_opac) )
+				$ec_output.= "<th>".$msgstr["typeofitems"]."</th>";
+			$ec_output.="<th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["overdue"]."</th><th>".$msgstr["renewed"]."</th>\n";
 	        $xnum_p=0;
 	        $total_politica=array();
 			foreach ($prestamos as $linea) {
@@ -159,27 +174,38 @@ if (isset($arrHttp["usuario"])){
 						}
 					}
 
-					$ec_output.= "\n<tr><td  bgcolor=white valign=top nowrap>";
+					$ec_output.= "\n<tr>";
 
 					if (!isset($_SESSION["library"])or (isset($_SESSION["library"]) and substr($p[0],0,strlen($_SESSION["library"]))==$_SESSION["library"])) {
 						$xnum_p++;
 						$np=$np+1;
-						$ec_output.="$xnum_p";
-						$ec_output.= "<input type=radio name=chkPr_".$xnum_p." value=$mora  id='".$p[0]."'>";
+
+						if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
+							$ec_output.="<td  bgcolor=white valign=top nowrap>";
+							$ec_output.="$xnum_p";
+							$ec_output.= "<input type=checkbox name=chkPr_".$xnum_p." value=$mora  id='".$p[0]."'>";
+						}
 						$ec_output.= "<input type=hidden name=politica value=\"".$politica_str."\"> \n";
 
 					}
 
+                    	if (isset($_REQUEST["inventory_out"]) and strtoupper($_REQUEST["inventory_out"])==strtoupper($p[0])){
+                    		$inventory_out='<font color=red><strong>'.$p[0].'</strong></font>';
+                   	 	}else{
+                    		$inventory_out=$p[0];
+                  	  	}
+						$ec_output.="</td>";
 
-					$ec_output.="</td>
-
-						<td bgcolor=white nowrap align=center valign=top>".$p[0]."</td>".
-						"<!--td bgcolor=white nowrap align=center valign=top>".$p[14]."</td>".
-						"<td bgcolor=white nowrap align=center valign=top>".$p[15]."</td -->".
-						"<td bgcolor=white nowrap align=center valign=top>".$p[12]."(".$p[13].")</td><td bgcolor=white valign=top>".$p[2];
-						if (isset($p[19]) and $p[19]!="") $ec_output.= "<br><Font color=darkred>".$p[19]."</font>";
-						$ec_output.="</td><td bgcolor=white align=center valign=top>". $p[3]. "</td><td bgcolor=white nowrap align=center valign=top>".$p[4]."</td><td nowrap bgcolor=white align=center valign=top>$fuente";
-						 if ($lapso_p=="D"){						 	$ixd=strpos($p[5]," ");
+						$ec_output.="<td bgcolor=white nowrap align=center valign=top>".$inventory_out."</td>";
+					if (!isset($desde_opac)){
+						$ec_output.=	"<td bgcolor=white nowrap align=center valign=top>".$p[12]."(".$p[13].")</td>";
+					}
+					$ec_output.="<td bgcolor=white valign=top>".$p[2];
+					if (isset($p[19]) and $p[19]!="") $ec_output.= "<br><Font color=darkred>".$p[19]."</font>";
+					$ec_output.="</td>";
+					if (!isset($desde_opac)) $ec_output.="<td bgcolor=white align=center valign=top>". $p[3]. "</td>";
+					$ec_output.="<td bgcolor=white nowrap align=center valign=top>".$p[4]."</td><td nowrap bgcolor=white align=center valign=top>$fuente";
+					if ($lapso_p=="D"){						 	$ixd=strpos($p[5]," ");
 						 	if ($ixd>0){
 						 		$ec_output.=  trim(substr($p[5],0,$ixd));
 							}else{

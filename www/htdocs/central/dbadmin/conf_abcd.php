@@ -30,13 +30,18 @@ include("../common/header.php");
 
 // INCLUSION DE LOS SCRIPTS
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script languaje=javascript>
 
 function Update(Option){
 
 	document.update_base.submit()
 }
+
+function Ejecutar(Script,Opcion){	document.forma1.action=Script
+	if (Opcion!="")
+		document.forma1.Opcion.value=Opcion
+	document.forma1.submit()}
 
 </script>
 <body>
@@ -75,7 +80,7 @@ echo "			</div>
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/admin.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Modificar_definici%C3%B3n_base_de_datos target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
+echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/conf_abcd.php";
 ?>
 </font>
 	</div>
@@ -93,9 +98,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
             <br>
             <ul style="font-size:12px;line-height:20px">
             <?php if ($_SESSION["profile"]=="adm"){
-				echo "<li><a href=../dbadmin/editar_abcd_def.php?Opcion=abcd_def>abcd.def</a></li>";
-				echo "<li><a href=../dbadmin/databases_list.php>". $msgstr["dblist"]."</a></li>";
-				echo "<li><a href=../dbadmin/editar_correo_ini.php>correo.ini</a></li>";
+				echo "<li><a href='javascript:Ejecutar(\"../dbadmin/editar_abcd_def.php\",\"abcd_def\")'>abcd.def, ". $msgstr["logo_css"]."</a></li>";
+				echo "<li><a href='Javascript:Ejecutar(\"../dbadmin/databases_list.php\",\"\")'>". $msgstr["dblist"]."</a></li>";
+				echo "<li><a href='Javascript:Ejecutar(\"../dbadmin/editar_correo_ini.php\",\"\")'>correo.ini</a></li>";
+				echo "<li><a href='Javascript:Ejecutar(\"../dbadmin/opac_configure.php\",\"\")'>". $msgstr["opac_configure"]."</a></li>";
 			}
 			?>
             </ol>
@@ -109,5 +115,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
 // PIE DE PÁGINA
 include("../common/footer.php");
 ?>
+<form name=forma1 method=post>
+<input type=hidden name=Opcion>
+</form>
 </body>
 </html>

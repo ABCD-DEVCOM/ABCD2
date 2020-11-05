@@ -47,8 +47,17 @@ if ($formato_nombre=="") $formato_nombre="v30";
 # Se lee el formato para extraer el código de usuario
 $codigo=LeerPft("loans_uskey.pft","users");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
+function checkSubmit(e,forma) {
+   if(e && e.keyCode == 13) {   		switch(forma){   			case 1:
+   				EnviarForma('U')
+   				break
+   			case 2:
+   				EnviarForma('I')
+   				break   		}
+   }
+}
 function EnviarForma(Proceso){	if (Trim(document.usersearch.code.value)=="" && Trim(document.inventorysearch.inventory.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]."/".$msgstr["inventory"]?>")
 		return	}
 	if (Proceso==""){
@@ -98,7 +107,7 @@ function AbrirIndice(TipoI,Ctrl){
  		case "I":
 			db="trans"
 			prefijo="!Z"
-   			AbrirIndiceAlfabetico(Ctrl,"TR_P","","","trans","trans.par","10",1,"","v10,`$$$`,v10")
+   			AbrirIndiceAlfabetico(Ctrl,"TR_P_","","","trans","trans.par","10",1,"","ifp")
 			break
 	}
 }
@@ -111,14 +120,14 @@ function Output(code,name){
 		if (document.inventorysearch.sort[i].checked) {
 			document.output.sort.value=document.inventorysearch.sort[i].value
 		}
-	}	document.output.action="../output_circulation/rs01.php"
+	}	document.output.action="../output_circulation/"+name+".php"
 	document.output.code.value=code
 	document.output.name.value=name
 	document.output.submit()}
 </script>
 <?php
 $encabezado="";
-echo "<body>\n";
+echo "<body onLoad=javascript:document.usersearch.usercode.focus()>\n";
 include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
@@ -153,7 +162,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 ?>
 	</div>
 <div class="middle list">
-	<div class="searchBox">
+	<div class="searchBox" >
 	<form name=usersearch action="" method=post onsubmit="javascript:return false">
 	<input type=hidden name=Indice>
 	<table width=100%>
@@ -162,7 +171,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 			<strong><?php echo $msgstr["usercode"]?></strong>
 		</label>
 		</td><td>
-		<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';" />
+		<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,1)" />
 
 		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="submit" onClick="javascript:AbrirIndice('U',document.usersearch.usercode)" />
 		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma('U')"/>
@@ -181,7 +190,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 			<strong><?php echo $msgstr["inventory"]?></strong>
 		</label>
 		</td><td>
-		<input type="text" name="inventory" id="searchExpr" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
+		<input type="text" name="inventory" id="searchExpr" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,2)" />
 
 		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('I',document.inventorysearch.inventory)"/>
 		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma('I')"/>
@@ -194,7 +203,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 	<br><br><dd>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"];
 
-		if ((isset($arrHttp["reserve"]) and $arrHttp["reserve"]=="S") or (isset($arrHttp["reserve_ex"]) and $arrHttp["reserve_ex"]=="S")) {			echo "<p>";
+		if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y")  {			echo "<p>";
+            echo "<input type=button name=rsv_p value=\"Reservas web\" style='font-size:27px;border-radius:20px;background color:#cccccc; font-color=black' onclick=\"javascript:Output('actives_web','rsweb')\"><p>";
+		}
+		if (isset($arrHttp["reserve"]) and $arrHttp["reserve"]=="S"){
 			echo "<h3>".$msgstr["reports"]."</h3>";
 			echo $msgstr["orderby"];
 			echo "&nbsp; &nbsp;<input type=radio name=sort value=name>".$msgstr["name"];
@@ -202,12 +214,13 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 			echo "&nbsp; &nbsp;<input type=radio name=sort value=date_assigned>".$msgstr["assigned_date"];
 			echo "&nbsp; &nbsp;<input type=radio name=sort value=date_attended>".$msgstr["loandate"];
 			echo "<br>";
-			echo "<input type=button name=rs00 value=\"".$msgstr["rs00"]."\" onClick=\"javascript:Output('today','rs00')\" style='width:400px'><p>";
-			echo "<input type=button name=rs01 value=\"".$msgstr["rs01"]."\" onClick=\"javascript:Output('actives','rs01')\" style='width:400px'><p>";			echo "<input type=button name=rs02 value=\"".$msgstr["rs02"]."\" onClick=\"javascript:Output('assigned','rs02')\" style='width:400px'><p>";
-			echo "<input type=button name=rs03 value=\"".$msgstr["rs03"]."\" onClick=\"javascript:Output('overdued','rs03')\" style='width:400px'><p>";
-			echo "<input type=button name=rs04 value=\"".$msgstr["rs04"]."\" onClick=\"javascript:Output('attended','rs04')\" style='width:400px'><p>";
-			echo "<input type=button name=rs05 value=\"".$msgstr["rs05"]."\" onClick=\"javascript:Output('cancelled','rs05')\" style='width:400px' ><p>";
-			echo "<br><br>";		}
+			echo "<input type=button name=rs00 value=\"".$msgstr["rs00"]."\" onClick=\"javascript:Output('today','rsweb')\" style='width:400px'><p>";
+			echo "<input type=button name=rs01 value=\"".$msgstr["rs01"]."\" onClick=\"javascript:Output('actives','rsweb')\" style='width:400px'><p>";			echo "<input type=button name=rs02 value=\"".$msgstr["rs02"]."\" onClick=\"javascript:Output('assigned','rsweb')\" style='width:400px'><p>";
+			echo "<input type=button name=rs03 value=\"".$msgstr["rs03"]."\" onClick=\"javascript:Output('overdued','rs01')\" style='width:400px'><p>";
+			echo "<input type=button name=rs04 value=\"".$msgstr["rs04"]."\" onClick=\"javascript:Output('attended','rs01')\" style='width:400px'><p>";
+			echo "<input type=button name=rs05 value=\"".$msgstr["rs05"]."\" onClick=\"javascript:Output('cancelled','rs01')\" style='width:400px' ><p>";
+			echo "<br><br>";
+		}
 ?>
 </form>
 </div>

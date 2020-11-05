@@ -6,6 +6,7 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
+$arrHttp["tipo"]="inventory";
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
 
@@ -17,6 +18,7 @@ include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/reports.php");
 include ("configure.php");
+$bar_c=array();
 ?>
 <style>
 #overlay {
@@ -28,7 +30,7 @@ include ("configure.php");
     width:100%;
     height:100%;
     z-index:998;
-    background-color: Black;
+    background-color: #FFFFFF;
     opacity: .5;
     display:none;
 }
@@ -38,19 +40,26 @@ include ("configure.php");
     top:200px;
     width:100%;
     height:200px;
-    background-color:#8DA5C6;
+    background-color:#FFFFFF;
     z-index: 999;
     display:none;
 }
 
 </style>
 <script>
-	function Continuar(){		var division = document.getElementById("overlay");
+	function Continuar(){		document.forma1.Opcion.value='OK'
+		document.forma1.submit()	}
+	function Comenzar(){
+		var division = document.getElementById("overlay");
 		division.style.display="block"
 		var division = document.getElementById("popup");
 		division.style.display="block"
-		document.forma1.Opcion.value='OK'
-		document.forma1.submit()	}
+	}
+	function Finalizar(){		var division = document.getElementById("overlay");
+		division.style.display="none"
+		var division = document.getElementById("popup");
+		division.style.display="none"
+		alert("<?php echo $msgstr["end_process"]?>")	}
 </script>
 <?php
 
@@ -62,7 +71,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl;
 }
 
 function LeerConfiguracion($base){
-global $db_path;	$fp=file($db_path.$base."/pfts/".$_SESSION["lang"]."/inventory.conf");
+global $db_path;
+	$bar_c=array();	$fp=file($db_path.$base."/pfts/".$_SESSION["lang"]."/inventory.conf");
 	if ($fp){
 		foreach ($fp as $conf){
 			$conf=trim($conf);
@@ -98,6 +108,16 @@ global $msgstr,$arrHttp;
 	echo "<td bgcolor=white><textarea name=tag_inventory_control_format cols=100 rows=1>";
 	if (isset($bar_c["inventory_control_format"])) echo $bar_c["inventory_control_format"];
 	echo "</textarea></td></tr>\n";
+	echo "<tr>";
+	echo "<td bgcolor=white width=100>".$msgstr["inventory_type_record"]."</td>";
+	echo "<td bgcolor=white><textarea name=tag_inventory_type_record cols=100 rows=4>";
+	if (isset($bar_c["inventory_type_record"])) echo $bar_c["inventory_type_record"];
+	echo "</textarea></td></tr>\n";
+	echo "<tr>";
+	echo "<td bgcolor=white width=100>".$msgstr["inventory_item_info"]."</td>";
+	echo "<td bgcolor=white><textarea name=tag_inventory_item_info cols=100>";
+	if (isset($bar_c["inventory_item_info"])) echo $bar_c["inventory_item_info"];
+	echo "</textarea></td></tr>\n";
 	echo "</table>";
 	echo "<input type=submit name=Actualizar value=Actualizar onclick=document.forma1.Opcion.value='actualizar'>\n";
 }
@@ -105,7 +125,8 @@ global $msgstr,$arrHttp;
 function Ask_Confirmation(){global $arrHttp;
 	echo "<div style='margin: 20px 40px 10px 200px; width:400px '>";
 	echo "Este proceso carga el inventario desde la base de datos ".$arrHttp["base"]." y los pasa a la base de datos de inventario (abcd_inventory)\n";
-	echo "";
+	echo "<p>Lee todos los registros de la base de datos ".$arrHttp["base"]." y por cada ocurrencia del campo repetible de inventario crea un registro en la base de datos de inventario (abcd_inventory)\n";;
+	echo "<p>Puede tardar varios minutos dependiendo del número de registros de la base de datos ".$arrHttp["base"]." y del número de items del inventario.";
 	echo "<p>";
 	echo "<a href=inventory_dbload.php?base=".$arrHttp["base"]."&Opcion=configurar>Configurar la captura de informacion de la base catalográfica</a><p>";
 	echo "<input type=submit value=continuar onclick=Continuar()>";
@@ -115,8 +136,8 @@ function Ask_Confirmation(){global $arrHttp;
 function GenerarInventario($base){
 global $db_path,$mx_path;
 
-	echo "Leyendo la base de datos bibliográfica para extraer los datos requeridos para el inventario<p>";
-	echo date("Ymd h:i:s")."<p>";
+	echo "Leyendo la base de datos $base para extraer los datos requeridos para el inventario<p>";
+	echo date("d-m-Y h:i:s")."<p>";
 	$IsisScript="administrar.xis";
 	$query = "&base=".$base . "&cipar=$db_path"."par/".$base.".par&Opcion=status";
     $contenido=WxisLlamar($IsisScript,$base,$query);
@@ -137,37 +158,64 @@ global $db_path,$mx_path;
     $bar_c=LeerConfiguracion($base);
     $Pft="";
     if (isset($bar_c["inventory_number_format"]))
-    	$Pft="(".$bar_c["inventory_number_format"]."'$$$')";
+    	$Pft="(".$bar_c["inventory_number_format"]."'##'".$bar_c["inventory_item_info"]."'$$$')";
     $Pft.="'|'";
     if (isset($bar_c["classification_number_format"]))
     	$Pft.=$bar_c["classification_number_format"];
     $Pft.="'|'";
     if (isset($bar_c["inventory_title_format"]))
     	$Pft.=$bar_c["inventory_title_format"];
+    $Pft.="'|'";
+    if (isset($bar_c["inventory_title_format"]))
+    	$Pft.=$bar_c["inventory_type_record"];
     $Pft.="/";
 	$IsisScript="leer_mfnrange.xis";
 	$Fecha=date("Ymd");
-	$query="&base=$base&cipar=$db_path"."par/$base.par&Pft=".$Pft."&from=1&to=$MaxMfn";
-	$contenido=WxisLlamar($IsisScript,$base,$query);
+	$cuenta=1000;
+	$from=1;
+	$to=-1;
 	$fp=fopen($db_path."wrk/".$base.".txt","w");
-	foreach ($contenido as $value){
-		$value=trim($value);
-		if ($value!=""){
-			$ValorCapturado="";			$a=explode('|',$value);
-			$VC="";
-			if (trim($a[1])!="") $VC.=$a[1];
-			$VC.="|";
-			if (trim($a[2])!="") $VC.=$a[2];
-			$VC.="|";
-			$VC.=$Fecha."|";
-			if (trim($a[0])!=""){				$b=explode('$$$',$a[0]);
-				foreach ($b as $item){					$item=trim($item);					if ($item!=""){						$ValorCapturado=$VC.$item."\r\n" ;
-						fwrite($fp,$ValorCapturado);
-					}				}			}		}
+	echo "\n<script>Comenzar()</script>\n";
+	flush();
+    ob_flush();
+	while ($from<=$MaxMfn){		$to=$from+1000-1;
+		if ($to>$MaxMfn) $to=$MaxMfn;
+		echo "Leyendo registro desde $from hasta $to<br>";
+		flush();
+    	ob_flush();
+		$query="&base=$base&cipar=$db_path"."par/$base.par&Pft=".$Pft."&from=$from&to=$to";
+		$contenido=WxisLlamar($IsisScript,$base,$query);
+		foreach ($contenido as $value){
+			$value=trim($value);
+			if ($value!=""){
+				$ValorCapturado="";				$a=explode('|',$value);
+				if (trim($a[0])!=""){
+					$VC="";
+					if (trim($a[1])!="") $VC.=$a[1];
+					$VC.="|";
+					if (trim($a[2])!="") $VC.=$a[2];
+					$VC.="|";
+					if (trim($a[3])!="") $VC.=$a[3];
+					$VC.="|";
+					$VC.=$Fecha;
+					$VC.="|";
+					if (trim($a[0])!=""){						$b=explode('$$$',$a[0]);
+						foreach ($b as $item){							$item=trim($item);							if ($item!=""){
+								$it=explode('##',$item);
+								if (trim($it[0])!=""){									$ValorCapturado=$VC.$it[0];
+									$ValorCapturado.='|';
+									if (isset($it[1])) $ValorCapturado.=$it[1];
+									$ValorCapturado.="\r\n";
+									fwrite($fp,$ValorCapturado);
+								}
+							}						}					}
+				}			}
+		}
+		$from=$to+1;
 	}
 	fclose($fp);
 
-	echo "<p>".date("Ymd h:i:s");
+	echo "<p>".date("d-m-Y h:i:s");
     echo "<h4>Fin de la lectura dela base de datos catalográfica. Comienzo de la creación de abcd_inventory</h4>\n";
     $fp = fopen($db_path."wrk/".$base.".prc", "w");
 	if (!$fp){
@@ -177,16 +225,20 @@ global $db_path,$mx_path;
 	$savestring="'d*',
 	'<10>'v1'</10>',
 	'<15>'v2'</15>',
-	'<40>'v3'</40>',
-	'<30>'v4'</30>',
+	'<1>'v3'</1>',
+	'<40>'v4'</40>',
+	'<30>'v5'</30>',
+	'<120>'v6'</120>',
 	";
 	fwrite($fp,$savestring);
 	fclose($fp);
 	$mx=$mx_path." seq=".$db_path."wrk/biblo.txt proc=@".$db_path."wrk/$base.prc append=".$db_path."abcd_inventory/data/abcd_inventory now -all";
 	echo $mx;
 	exec($mx,$outmx,$banderamx);
-	echo $outmx."<br>".$banderamx;
-	echo "<p>".date("Ymd h:i:s")."<p>";
+	echo "<p>";
+	foreach ($outmx as $value) echo "$value<br>";
+	echo "<br>".$banderamx;
+	echo "<p>".date("d-m-Y h:i:s")."<p>";
 
 }
 ?>
@@ -200,7 +252,7 @@ if (isset($arrHttp["encabezado"])){
 $ayuda="inventory.html";
 ?>
 <div id="overlay"></div>
-<div id="popup"><center><h1>Procesando su requerimiento ...<br>Espere por favor</center></div>
+<div id="popup"><center><img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." /></center></div>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["inventory_dbload"].": ".$arrHttp["base"]?>
@@ -221,7 +273,7 @@ $ayuda="inventory.html";
 <?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
 	echo "&nbsp; &nbsp;<a href=\"http://abcdwiki.net/wiki/es/index.php?title=Inventory\" target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: barcode/inventory_dbinit.php";
+echo "<font color=white>&nbsp; &nbsp; Script: barcode/inventory_dbload.php";
 ?>
 </font>
 </div>
@@ -232,6 +284,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: barcode/inventory_dbinit.php";
 <input type=hidden name=Opcion value="">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <?php
+
 if (!file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/inventory.conf") and $arrHttp["Opcion"]!="actualizar" ){	Configurar($arrHttp["base"],$bar_c);}else{
 	switch ($arrHttp["Opcion"]){		case "actualizar":
 			$fp=fopen($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/inventory.conf","w");
@@ -250,6 +303,7 @@ if (!file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/inventor
 			break;
 		case "OK":
 			GenerarInventario($arrHttp["base"]);
+			echo "\<script>Finalizar()</script>\n";
 			break;
 		case "inicio":
 	        Ask_Confirmation();

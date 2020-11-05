@@ -55,6 +55,7 @@ $pft_dispobj="";
 $pft_storobj="";
 $pft_disploan="";
 $pft_typeofr="";
+$pft_item_inf_add="";
 
 function LeerPft($pft_name){
 global $arrHttp,$db_path,$lang_db;
@@ -89,7 +90,8 @@ $pft_dispobj=LeerPft("loans_display.pft");
 $pft_storobj=LeerPft("loans_store.pft");
 $pft_loandisp=LeerPft("loans_show.pft");
 $pft_typeofr=LeerPft("loans_typeofobject.pft");
-$pft_reserve_object=LeerPft("reserve_object.pft");
+$pft_item_inf_add=LeerPft("item_inf_add.pft");
+$pft_reserve=LeerPft("pft_reserve.pft");
 include("../common/header.php");
 ?>
 <script>
@@ -146,32 +148,33 @@ if ($arrHttp["base"]!="loanobjects"){
 	if ($arrHttp["loan_option"]=="nocopies"){
 		echo "
 		<table>
-		<tr><td valign=top>1. ".$msgstr["pft_obj"]."<br>(loans_display.pft)</td><td><textarea rows=5 cols=80 name=bibref>".$pft_dispobj."</textarea></td>
-		<tr><td valign=top>2. ".$msgstr["pft_store"]."<br>(loans_store.pft)</td><td><textarea rows=5 cols=80 name=bibstore>".$pft_storobj."</textarea></td>
-		<tr><td valign=top>3. ".$msgstr["pft_loandisp"]."<br>(loans_show.pft)</td><td><textarea rows=5 cols=80 name=loandisp>".$pft_loandisp."</textarea></td>
+		<tr><td valign=top>1. ".$msgstr["pft_obj"]."<br><br>(loans_display.pft)</td><td><textarea rows=5 cols=80 name=bibref>".$pft_dispobj."</textarea></td>
+		<tr><td valign=top>2. ".$msgstr["pft_store"]."<br><br>(loans_store.pft)</td><td><textarea rows=5 cols=80 name=bibstore>".$pft_storobj."</textarea></td>
+		<tr><td valign=top>3. ".$msgstr["pft_loandisp"]."<br><br>(loans_show.pft)</td><td><textarea rows=5 cols=80 name=loandisp>".$pft_loandisp."</textarea></td>
 		<tr><td valign=top>4. ".$msgstr["pft_ninv"]."<br>(loans_inventorynumber.pft)</td><td><textarea rows=2 cols=80 name=num_i>".$pft_in."</textarea></td>
 		<tr><td valign=top>5. ".$msgstr["invkey"]."<br>(loans_conf.tab)</td><td valign=top><input type=text name=invkey value='".$prefix_in."'></td>
 		<tr><td valign=top>6. ".$msgstr["nckey"]."<br>(loans_conf.tab)</td><td valign=top><input type=text name=nckey value='";
 		if (isset($prefix_nc)) echo $prefix_nc;
 		echo"'></td>
-		<tr><td valign=top>7. ".$msgstr["pft_nclas"]."<br>(loans_cn.pft)</td><td><textarea rows=2 cols=80 name=num_c>";
+		<tr><td valign=top>7. ".$msgstr["pft_nclas"]."<br><br>(loans_cn.pft)</td><td><textarea rows=2 cols=80 name=num_c>";
 		if (isset($pft_nc)) echo $pft_nc;
 		echo "</textarea></td>
 		<tr><td valign=top>8. ".$msgstr["pft_nejem"]."<br>(loans_totalitems.pft)</td><td valign=top><textarea rows=2 cols=80 name=totalej>".$pft_totalitems."</textarea></td>
 		<tr><td valign=top>9. ".$msgstr["pft_typeofr"]."<br>(loans_typeofobject.pft)</td><td><textarea rows=5 cols=80 name=tm>".$pft_typeofr."</textarea></td>
-		<!--tr><td valign=top>10. ".$msgstr["pft_typeobjreserv"]."<br>(reserve_object.pft)</td><td><textarea rows=5 cols=80 name=tor>".$pft_reserve_object."</textarea></td -->
+		<tr><td valign=top>10. ".$msgstr["item_inf_add"]."<br><br>(item_inf_add.pft)</td><td><textarea rows=5 cols=80 name=item_inf_add>".$pft_item_inf_add."</textarea></td></tr>
+		<tr><td valign=top>11. ".$msgstr["pft_reserve"]."<br><br>(pft_reserve.pft)</td><td><textarea rows=5 cols=80 name=pft_reserve>".$pft_reserve."</textarea></td></tr>
 		</table>
 		<input type=hidden name=link_copies value=N>
 		";
 	}else{		echo "
 		<table>
-		<tr><td valign=top>1. ".$msgstr["pft_obj"]."<br>(loans_display.pft</td><td><textarea rows=5 cols=80 name=bibref>".$pft_dispobj."</textarea></td>
-		<tr><td valign=top>2. ".$msgstr["pft_store"]."<br>(loans_store.pft)</td><td><textarea rows=5 cols=80 name=bibstore>".$pft_storobj."</textarea></td>
-		<tr><td valign=top>3. ".$msgstr["pft_loandisp"]."<br>(loans_show.pft)</td><td><textarea rows=5 cols=80 name=loandisp>".$pft_loandisp."</textarea></td>
-		<tr><td valign=top>4. ".$msgstr["pft_nclas"]."<br>(loans_cn.pft)</td><td><textarea rows=2 cols=80 name=num_c>";
+		<tr><td valign=top>1. ".$msgstr["pft_obj"]."<br><br>(loans_display.pft</td><td><textarea rows=5 cols=80 name=bibref>".$pft_dispobj."</textarea></td>
+		<tr><td valign=top>2. ".$msgstr["pft_store"]."<br><br>(loans_store.pft)</td><td><textarea rows=5 cols=80 name=bibstore>".$pft_storobj."</textarea></td>
+		<tr><td valign=top>3. ".$msgstr["pft_loandisp"]."<br><br>(loans_show.pft)</td><td><textarea rows=5 cols=80 name=loandisp>".$pft_loandisp."</textarea></td>
+		<tr><td valign=top>4. ".$msgstr["pft_nclas"]."<br><br>(loans_cn.pft)</td><td><textarea rows=2 cols=80 name=num_c>";
 		if (isset($pft_nc)) echo $pft_nc;
 		echo "</textarea></td>
-		<!--tr><td valign=top>5. ".$msgstr["pft_typeobjreserv"]."<br>(reserve_object.pft)</td><td><textarea rows=5 cols=80 name=tor>".$pft_reserve_object."</textarea></td -->
+       	<tr><td valign=top>5. ".$msgstr["pft_reserve"]."<br><br>(pft_reserve.pft)</td><td><textarea rows=5 cols=80 name=pft_reserve>".$pft_reserve."</textarea></td></tr>
 		</table>
 		<input type=hidden name=link_copies value=S>
 		";

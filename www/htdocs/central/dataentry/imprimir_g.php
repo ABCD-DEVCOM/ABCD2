@@ -9,8 +9,8 @@ include("../common/get_post.php");
 include("../config.php");
 include ("../lang/admin.php");
 
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; die;
-
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; //die;
+$data="";
 if (isset($arrHttp["Expresion"])){	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
 	if (strpos('"',$arrHttp["Expresion"])==0) {
     	$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
@@ -65,52 +65,79 @@ if (isset($arrHttp["guardarformato"])){
 
 }
 
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".$Expresion."&Opcion=$Opcion&Word=S&Formato=".$Formato;
-if (isset($arrHttp["seleccionados"]))
-	$query.="&Mfn=".str_replace(",","&Mfn=",$arrHttp["seleccionados"]);
-else
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+if (isset($Expresion)) $query.="&Expresion=".$Expresion;
+$query.="&Opcion=$Opcion&Word=S&Formato=".$Formato;
+if (isset($arrHttp["seleccionados"])){	$seleccion="";
+	$mfn_sel=explode(',',$arrHttp["seleccionados"]);
+	foreach ($mfn_sel as $sel){		if ($seleccion==""){			$seleccion="'$sel'";
+		}else{			$seleccion.="/,'$sel'";		}	}
+	$query.="&Mfn=$seleccion";
+}else
 	$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
-//echo $query;
 if (!isset($arrHttp["sortkey"])){
 	$IsisScript=$xWxis."imprime.xis";
+
 }else{
-	$query.='&sortkey='.urlencode($arrHttp["sortkey"]);
+	$query.='&sortkey='.urlencode($arrHttp["sortkey"]).",";
 	$IsisScript=$xWxis."sort.xis";
 }
 include("../common/wxis_llamar.php");
+//foreach ($contenido as $value) echo "$value<br>";
 $ficha=$contenido;
-switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
-	case "T":  //TABLE
-		break;
-	case "P":  //PARRAGRAPH
-		break;
-	case "CT": //COLUMNS (TABLE)
-		$data="<table border=1>";
-		if (isset($arrHttp["headings"])){			$h=explode("\r",$arrHttp["headings"]);
-			foreach ($h as $value){				$data.="<th>$value</th>";			}		}
-		break;
-	case "CD":
-		if (isset($arrHttp["headings"])){
-			$h=explode("\r",$arrHttp["headings"]);
-			foreach ($h as $value){
-				if (trim($value)!=""){
-					if ($data==""){						$data=$value;					}else{						$data.="|$value";					}
-               }
+if (isset($arrHttp["tipof"])){
+	switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
+		case "T":  //TABLE
+			break;
+		case "P":  //PARRAGRAPH
+			break;
+		case "CT": //COLUMNS (TABLE)
+			$data="<table border=1>";
+			if (isset($arrHttp["headings"])){				$h=explode("\r",$arrHttp["headings"]);
+				foreach ($h as $value){					$data.="<th>$value</th>";				}			}
+			break;
+		case "CD":
+			if (isset($arrHttp["headings"])){
+				$h=explode("\r",$arrHttp["headings"]);
+				foreach ($h as $value){
+					if (trim($value)!=""){
+						if ($data==""){							$data=$value;						}else{							$data.="|$value";						}
+	               }
+				}
+				$data.="\n";
 			}
-			$data.="\n";
-		}
-		break;}
+			break;	}
+}
 foreach ($ficha as $linea){
 	if (substr($linea,0,6)=='$$REF:'){
 	 			$ref=substr($linea,6);
 	 			$f=explode(",",$ref);
-	 			$bd_ref=$f[0];
-	 			$pft_ref=$f[1];
-	 			$expr_ref=$f[2];
-	 			$IsisScript=$xWxis."buscar.xis";
- 				$query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=$pft_ref";
+	 			$bd_ref=trim($f[0]);
+	 			$pft_ref=trim($f[1]);
+	 			$expr_ref=trim($f[2]);
+	 			if (file_exists($db_path.$bd_ref."/pfts/".$_SESSION["lang"]."/" .$pft_ref.".pft")){
+ 					$pft_ref=$db_path.$bd_ref."/pfts/".$_SESSION["lang"]."/" .$pft_ref;
+ 				}else{
+ 					$pft_ref=$db_path.$bd_ref."/pfts/".$lang_db."/" .$pft_ref;
+        		}
+	 			$IsisScript=$xWxis."imprime.xis";
+ 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
 				include("../common/wxis_llamar.php");
-				foreach($contenido as $linea) $data.= "$linea\n";
+				$ixcuenta=0;
+				foreach($contenido as $linea_alt){					if (trim($linea_alt)!=""){
+						$ll=explode('|^',$linea_alt);
+						if (isset($ll[1])){
+							$ixcuenta=$ixcuenta+1;
+							$SS[trim($ll[1])."-$ixcuenta"]=$ll[0];
+						}else{
+							$data.= "$linea_alt\n";
+						}
+					}
+				}
+				if (isset($SS) and count($SS)>0){
+					ksort($SS);
+					foreach ($SS as $linea_alt)
+					     $data.= "$linea\n";				}
 	}else{		$data.= $linea."\n" ;	}
 
 }
@@ -148,20 +175,21 @@ switch ($arrHttp["vp"]){	case "WP":
 		include("../common/header_display.php");
 }
    echo $data;
-switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
-	case "T":  //TABLE
-		echo "</body></html>";
-		break;
-	case "P":  //PARRAGRAPH
-		echo "</body></html>";
-		break;
-	case "CT": //COLUMNS (TABLE)
-		echo "</table></body></html>";
-		break;
-	case "CD":
-		break;
+if (isset($arrHttp["tipof"])){
+	switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
+		case "T":  //TABLE
+			echo "</body></html>";
+			break;
+		case "P":  //PARRAGRAPH
+			echo "</body></html>";
+			break;
+		case "CT": //COLUMNS (TABLE)
+			echo "</table></body></html>";
+			break;
+		case "CD":
+			break;
+	}
 }
-
 die;
 
 ?>

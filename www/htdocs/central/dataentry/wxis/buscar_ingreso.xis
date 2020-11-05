@@ -23,7 +23,7 @@
        	</parm>
 		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
     	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
-		<parm name="buffersize">200000</parm>
+		<!--parm name="buffersize">200000</parm-->
 
        <label>BUSCAR</label>
           <do task=search>

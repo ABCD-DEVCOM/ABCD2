@@ -1,8 +1,12 @@
 <?php
+//header('Content-Type: text/html; charset=iso-8859-1');
+
 ini_set('error_reporting', E_ALL);
+$cisis_versions_allowed="16-60;ffi;bigisis";
+
 // Main server configuration
-$server_url="http://127.0.0.1:9090";    // URL with port (if not 80)
-$postMethod=1;                          // if set to '1' (or true) ABCD will use POST-method; use with caution
+$server_url="http://127.0.0.1:9099";    // URL with port (if not 80)
+$postMethod=1;                          // if set to '1' (or true) ABCD will use POST-method; if set to '0' the GET-method will be used. Use with caution
 $dirtree=1;                             // SE THIS PARAMETER TO SHOW THE ICON THAT ALLOWS THE BASES FOLDER EXPLORATION
 $MD5=0;                                 // USE THIS PARAMETER TO ENABLE/DISABLE THE MD5 PASSWORD ENCRIPTYON (0=OFF 1=ON)
 $EmpWeb=0;                              // use EmpWeb or not
@@ -10,20 +14,31 @@ $use_ldap=0;                            // use LDAP or not
 
 // Set operation system depending variables
 if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0) {  //Windows path variables
- $ABCD_path="/ABCD/";                    // base path to ABCD-installation
- $db_path="/ABCD/www/bases/";            // path where the databases are to be located
- $exe_ext=".exe";                        // extension for executables
+	$ABCD_path="/ABCD2.2/";                    // base path to ABCD-installation
+ 	$db_path="/ABCD2.2/www/bases/";                     // path where the databases are to be located
+ 	$exe_ext=".exe";                        // extension for executables
 }else{                                   // Linux path variables
- $ABCD_path="/opt/ABCD/";
- $db_path="/var/opt/ABCD/bases/";
- $exe_ext="";
+ 	$ABCD_path="/opt/ABCD2.2/";
+ 	$db_path="/var/opt/ABCD/bases/";
+ 	$exe_ext="";
+}
+$ABCD_scripts_path=$ABCD_path. "www/htdocs/";  //PATH
+
+//IF THERE ARE MULTIPLE BASES FOLDERS THE FOLDETR SELECTED IS SET
+if ( isset($_SESSION["db_path"]) and  $_SESSION["db_path"]!="")
+ 	$db_path=$_SESSION["db_path"];
+
+if (isset($_REQUEST["db_path"])) {    //PARA PERMITIR MANEJAR VARIAS CARPETAS BASES DESDE EL OPAC
+	$_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
+	$db_path=$_REQUEST["db_path"];
+	if (isset($_SESSION)) $_SESSION["db_path"]=$db_path; //CUANDO VIENE DEL OPAC NO SE TRABAJA CON SESIONES
 }
 
 // Other local settings to be configured
 $open_new_window="N";                   // Open the Central module in a new window for avoiding the use of the browse buttons
 $context_menu="Y";                      // allow opening right-click menu
 $config_date_format="DD/MM/YY";         // USED FOR ALL THE DATE FUNCTIONS. DD=DAYS, MM=MONTH, AA=YEAR. USE / AS SEPARATOR
-$app_path="central";                    // Folder with the administration modulo
+$app_path="central";                    // Folder with the administration module
 $inventory_numeric ="N";                // This variable erases the left zeroes in the inventory number
 $max_inventory_length=1;                // Add Zeroes to the left for reaching the max length of the inventory number
 $max_cn_length=1;                       // Add Zeroes to the left for reaching the max length of the control number
@@ -35,7 +50,7 @@ $ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    
 
 // *** NO CHANGES NEEDED BELOW HERE
 // Construction of executable path and URL
-$cisis_ver="";                             // initialisation of $cisis_ver as empty = default standard CISIS-version
+                             // initialisation of $cisis_ver as empty = default standard CISIS-version
 $wxis_exec="wxis".$exe_ext;                // name and extension of wxis executable
 $mx_exec="mx".$exe_ext;                    // name and extension of mx executable
 $msg_path=$db_path;                        // path where the message-files are stored, typciall the database-directory
@@ -45,65 +60,89 @@ $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis
 
 //$unicode="";
 
-if ( isset($_SESSION["BASES_DIR"]) )  {
- $db_path=$_SESSION["BASES_DIR"];  }
-else {
- $unicode="";
- $institution_name="";
-// if (isset($arrHttp["base"])) {
-  if (!file_exists($db_path."abcd.def")){
-	echo "Missing abcd.def in the database folder"; die;
-  }
-  $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
-  $institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
-//echo "institution=$institution_name<BR>";
-  if ( $def["UNICODE"] == "ansi" || $def["UNICODE"] == '0' ) $unicode='ansi'; else $unicode='utf8';
-  if (  isset($arrHttp["base"]) && isset($def[$arrHttp["base"]])  )
-  $cisis_ver=$def[$arrHttp["base"]] ; // use the CISIS-version defined for that database
-// }
-}
+if (substr($db_path, strlen($db_path)-1,1) <> "/") $db_path.="/";
+$unicode="";
+$institution_name="";
+$cisis_ver="";
+if (!file_exists($db_path."abcd.def")){
+	echo "Missing abcd.def in the database folder $db_path of ABCD"; die;
+ }
+if (isset($_SESSION["MULTIPLE_DB_FORMATS"])) unset($_SESSION["MULTIPLE_DB_FORMATS"]);
+$def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
+$institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
+
+if (isset($def["UNICODE"]) and $def["UNICODE"]==1)
+	$meta_encoding="UTF-8";
+else
+	$meta_encoding="ISO-8859-1";
+
+
 
 if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php")){
- include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
+ 	include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
+}
+//en el config_extended.php se pueden cambiar los valores de $def["UNICODE"],$def[["CISIS_VERSION"]] 0 $def["UNICODE"]
+//se determina la versión del cisis; Si el parámetro no existe se asuma 16-60
+//echo "<pre>";echo print_r($def);echo "</pre>";
+
+ if (isset($def["UNICODE"]) and $def["UNICODE"]==1){
+	$unicode="utf8";
+	$charset="UTF-8";
+}else{
+	$unicode="ansi";
+	$def["UNICODE"]=0;
+	$charset="ISO-8859-1";
+}
+if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
+if (!headers_sent()) header('Content-Type: text/html; charset=$charset');
+
+//SE CAMBIA EL LENGUAJE POR DEFECTO POR EL QUE SE ESTABLEZCA EN abcd.def
+if (isset($def["DEFAULT_LANG"])) $lang=$def["DEFAULT_LANG"];
+
+$cisis_ver="";
+if (isset($def["CISIS_VERSION"]) and $def["CISIS_VERSION"]!="16-60" and $def["CISIS_VERSION"]!="" ){
+	$cisis_ver=$def["CISIS_VERSION"];
 }
 
-if ($unicode == "ansi" || $unicode == '0') $unicode="ansi"; else $unicode='utf8';
+$cisis_path=$cgibin_path.$unicode;
+if ($cisis_ver!="")
+	$cisis_path.="/".$cisis_ver."/";   // path to directory with correct CISIS-executables
+else
+	$cisis_path.="/";
 
-$cisis_path=$cgibin_path.$unicode."/".$cisis_ver;   // path to directory with correct CISIS-executables
 $mx_path=$cisis_path.$mx_exec;                      // path to mx-executable
-$Wxis=$cisis_path.$wxis_exec;             // path to the wwwisis executable (include the name of the program, with extension if present)
-if ($postMethod == '1')
-$wxisUrl=$server_url."/cgi-bin/".$unicode."/".$cisis_ver.$wxis_exec;  // POST method used
-else { $wxisUrl="";
-// echo "GET METHOD USED <BR>";
-}                                                // GET method used
+if ($postMethod == '1'){
+	$wxisUrl=$server_url."/cgi-bin/";
+	if ($unicode!="") $wxisUrl.="$unicode/";
+	if ($cisis_ver!="") $wxisUrl.=$cisis_ver."/";
+	$wxisUrl.=$wxis_exec;  // POST method used
+	$Wxis="";
+}else{
+	$wxisUrl="";
+ 	$Wxis=$cgibin_path;
+ 	if ($unicode!="") $Wxis.="$unicode/";
+ 	if ($cisis_ver!="") $Wxis.=$cisis_ver."/";
+ 	$Wxis.=$wxis_exec;   //GET method is used
+}
 
-//echo "cisis_path=$cisis_path<BR>";
-//echo "cisis_ver=$cisis_ver<BR>";
-//echo "mx=$mx_path<BR>";
-//echo "unicode=$unicode<BR>";
-//echo "cgibin_path=$cgibin_path<BR>";
-//echo "bases_path=$db_path<BR>";
-//echo "msg_path=$msg_path<BR>";
-//echo "wxisUrl=$wxisUrl<BR>";
-//print "wxis=$Wxis<BR>";    // sleep(1);
 
 
 $FCKConfigurationsPath="/".$app_path."/dataentry/fckconfig.js";  // path to CKeditor configuration
 $FCKEditorPath="/site/bvs-mod/FCKeditor/";                       // path to CKEditor
 if ($use_ldap) {                                                 //LDAP parameters if used
-$ldap_host = "ldap://zflexldap.com";
-$ldap_dn = "cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com";
-$ldap_search_context = "ou=guests,dc=zflexsoftware,dc=com";
-$ldap_port = "389";
-$ldap_pass = "zflexpass";
+	$ldap_host = "ldap://zflexldap.com";
+	$ldap_dn = "cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com";
+	$ldap_search_context = "ou=guests,dc=zflexsoftware,dc=com";
+	$ldap_port = "389";
+	$ldap_pass = "zflexpass";
 }
 if ($EmpWeb) {                                                   //EmpWeb parameters if used
-$empwebservicequerylocation = "http://localhost:8086/ewengine/services/EmpwebQueryService";
-$empwebservicetranslocation = "http://localhost:8086/ewengine/services/EmpwebTransactionService";
-$empwebserviceobjectsdb = "objetos";
-$empwebserviceusersdb = "*";
+	$empwebservicequerylocation = "http://localhost:8086/ewengine/services/EmpwebQueryService";
+	$empwebservicetranslocation = "http://localhost:8086/ewengine/services/EmpwebTransactionService";
+	$empwebserviceobjectsdb = "objetos";
+	$empwebserviceusersdb = "*";
 }
-$adm_login="eds";                                                // emergency username for administrator
-$adm_password="eeddss";                                          // emergency password for administrator
+$adm_login="";                                                // emergency username for administrator
+$adm_password="";                                            // emergency password for administrator
+//echo "<pre>";print_r($def); echo "</pre>";
 ?>

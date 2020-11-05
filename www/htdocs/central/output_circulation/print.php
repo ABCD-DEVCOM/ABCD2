@@ -21,7 +21,7 @@ include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/prestamo.php");
 
-function ErrorEnSalida($err){global $msgstr,$db_path,$institution_name;	include("../common/header.php");
+function ErrorEnSalida($err){global $msgstr,$db_path,$institution_name,$meta_encoding;	include("../common/header.php");
 	include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
@@ -59,7 +59,6 @@ if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){
 
 $l=explode('|',$linea);
 $Disp_format=$l[1];
-
 $Titles=$l[2];
 $Sort=$l[3];
 $Expresion=$l[4];
@@ -138,7 +137,8 @@ if ($msgerr==""){
 			else				$data.="<td>$value</td>";		}	}
 	if ($arrHttp["vp"] =="TB") $data.="\n";
 	foreach ($contenido as $linea){
-		if (trim($linea)!=""){			$continuar="Y";			if ($Ask!="" and $Tag!=""){
+		if (trim($linea)!=""){
+			$continuar="Y";			if ($Ask!="" and $Tag!=""){
 				$out=explode('$$$',$linea);
 
 				//if (!isset($out[1])) echo "$linea<br>";
@@ -224,7 +224,7 @@ switch ($arrHttp["vp"]){	case "WP":
 	function GenerarCorreos(){		ixn=document.forma1.chk_p.length
     	result=\"N\"
 		Seleccion=\"\"
-    	for (i=0;i<ixn-1;i++){
+    	for (i=0;i<ixn;i++){
     		if(document.forma1.chk_p[i].checked){
     			Seleccion=Seleccion+\"|\"+document.forma1.chk_p[i].value
     			result=\"S\"

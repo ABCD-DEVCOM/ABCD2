@@ -36,7 +36,7 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 include("leer_pft.php");
-//foreach ($arrHttp as $var => $value) echo "$var = $value<br>"; die;
+//foreach ($arrHttp as $var => $value) echo "$var = $value<br>"; //die;
 
 // SE LEE LOS PARÁMETROS DE CONFIGURACIÓN
 if (isset($arrHttp["db_inven"])){
@@ -262,13 +262,14 @@ include("../common/header.php");
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
+$a=explode('|',$_REQUEST["db_inven"]);
 echo "
 		<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".$msgstr["sala"]."
 			</div>
 			<div class=\"actions\">\n";
 
-				echo "<a href=\"sala.php\" class=\"defaultButton backButton\">
+				echo "<a href=\"sala.php?base=".$a[0]."\" class=\"defaultButton backButton\">
 					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
@@ -280,7 +281,7 @@ echo "
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/sala.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/sala.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Pr%C3%A9stamo_en_sala target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala_configure.php </font>";
+echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala_ex.php </font>";
 echo "</div>
 		<div class=\"middle form\">
 			<div class=\"formContent\"> ";
@@ -325,6 +326,9 @@ foreach ($invent as $arrHttp["inventory"]){
 			$tt=explode('||',$tt[0]);
 			$titulo=$tt[0];
 			     //signatura topográfica
+			if (!isset($sala["usercode"])) $sala["usercode"]="";
+			if (!isset($sala["typeofuser"])) $sala["typeofuser"]="";
+			if (!isset($sala["typeofloan"])) $sala["typeofloan"]="";
 			$resultado=ProcesarPrestamo($sala["usercode"],$arrHttp["inventory"],$obj_store,$sala["typeofuser"],$sala["typeofloan"],$control_number,$catalog_db);
 			$resul=implode("\n",$resultado);
 			echo  "<td bgcolor=white valign=top>$titulo</td><td bgcolor=white valign=top>".$msgstr["updated"]." $resul</td>";

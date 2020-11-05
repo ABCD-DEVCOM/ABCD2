@@ -9,7 +9,7 @@ include ("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
-
+if (!isset($tesaurus)) $tesaurus=$_REQUEST["base"];
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
 	$fp=file($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat");
 else
@@ -39,10 +39,9 @@ $IsisScript=$xWxis."ifp.xis";
 $query ="&base=$tesaurus&cipar=$db_path"."par/$tesaurus".".par&Opcion=autoridades&prefijo=$prefijo&pref=$pref&formato_e=".urlencode($Formato);
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);
-//foreach ($contenido as $var=>$value) echo "$var=$value<br>"; die;
+//foreach ($contenido as $var=>$value) echo "$var=$value<br>";
 $subtitle= " Tesaurus";
 include("../common/header.php");
-echo "<h3>Tesaurus ($tesaurus)</h3>\n";
 echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>\n";
 echo "
 		<script languaje=Javascript>
@@ -74,13 +73,14 @@ echo "
 	if (isset($arrHttp["Tag"]))
 		echo "Tag='".$arrHttp["Tag"]."'\n";
 ?>
-	function ObtenerTermino(Seleccion){        if (document.Lista.ficha.checked){        	document.show.termino.value=Seleccion
+	function ObtenerTermino(Seleccion){
+        if (document.Lista.ficha.checked){        	document.show.termino.value=Seleccion
         	document.show.submit()
         	return
         }
         if (Seleccion!=""){
 			if (Tag==""){
-				window.opener.top.Expresion="<?php echo $prefix_search_tesaurus?>"+Seleccion
+				window.opener.top.Expresion='"'+"<?php echo $prefix_search_tesaurus?>"+Seleccion+'"'
 				window.opener.top.Menu("ejecutarbusqueda")
 			}else{
 				Var=eval("window.opener.document.forma1."+Tag)
@@ -127,28 +127,34 @@ echo "function AbrirIndice(Termino){\n";
 </script>\n";
 ?>
 	<body>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/alfa.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/alfa.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: tesaurus/perm.php" ?>
-</font></div>
-<form method=post name=Lista onSubmit="javascript:return false">
-	<table width=100%>
-		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"]?>><strong><font color=white><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"]?>><strong><font color=white><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
-    	<td width=50% align=right><font color=white><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
-    </table>
  <div class="middle form">
 			<div class="formContent">
+<?php
+	echo "<h3>Tesaurus ($tesaurus)</h3>\n";
+	echo "<font color=#000000>&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
+	echo "<font color=#000000>&nbsp; &nbsp; Script: tesaurus/perm.php" ?>
+</font>
+<form method=post name=Lista onSubmit="javascript:return false">
+	<table width=100% style="background:#EEEEEE">
+		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"]?>><strong><font color=#000000><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"]?>><strong><font color=#000000><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
+    	<td width=50% align=right><font color=#000000><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
+    </table>
+
 
 <?php
 	$xwidth="350";
 ?>
+
 	<table border=0  width=100% height=80%>
 	<td  width=5% align=center valign=top><font size=1 face="verdana"><?php for ($i=65;$i<91;$i++ ) echo "<a href=javascript:AbrirIndice('".chr($i)."')>".chr($i)."</a><br>"?></td>
-	<td align=center width=95%><table cellpadding=0 cellspacing=0 align=center>
+	<td align=center width=95%>
+	<div style="border:1px solid">
+	<table cellpadding=0 cellspacing=0 align=center>
+
 <?php
-	foreach ($contenido as $linea){		$b=explode('|',$linea);
+	foreach ($contenido as $linea){
+		$linea=trim($linea);
+		if ($linea=="") continue;		$b=explode('|',$linea);
         $termino=$b[1];
         $use="";
         if (isset($b[2])) {        	$use=$b[2];
@@ -193,16 +199,17 @@ echo "function AbrirIndice(Termino){\n";
         				$w2=substr($termino,$ix+strlen($word));        			}
         		}
         	}        }
-        if ($use!=""){        	echo "<tr height=18px><td align=right valign=top nowrap bgcolor=#FFFFFF>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a>";
+        if ($use!=""){        	echo "\n<tr height=18px><td align=right valign=top nowrap bgcolor=#FFFFFF>$url".$w1."</a></td><td class=texto_lista valign=top><font color=darkblue><b>$url$word</font></a></b>$url".$w2."</a>";
         	echo "<font color=black> USE $use</td>";        }else{
-			echo "<tr height=18px><td align=right valign=top bgcolor=#FFFFFF nowrap>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a></td>";
+			echo "\n<tr height=18px><td align=right valign=top bgcolor=#FFFFFF nowrap>$url".$w1."</a></td><td class=texto_lista valign=top><b>$url$word</a></b>$url".$w2."</a></td>";
 		}
 		$last=$word;	}
 
 ?>
 	</td>
 
-	</table></td></table>
+	</table></div></td></table>
+
 	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"]?>><strong><?php echo $msgstr["tes_alphabetic"]?></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"]?>><?php echo $msgstr["tes_permuted"]?></a></strong><br>
 	<table cellpadding=0 cellspacing=0 border=0 width=100%  height=20% bgcolor=#4E617C>
 		<td valign=top width=100%><a href=Javascript:Continuar() class="defaultButton backButton">

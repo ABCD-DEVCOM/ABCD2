@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central 
+ * @program:   ABCD - ABCD-Central
  * @copyright:  Copyright (C) 2014 UO - VLIR/UOS
  * @file:      import_doc.php
  * @desc:      Import full text docs to a record
@@ -35,21 +35,40 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
-include("../config.php");
+include("../common/header.php");
+echo "<body>";
 $base=$arrHttp["base"];
 //echo "base=$base<BR>";
+
+
+if (isset($arrHttp["encabezado"])) {
+	include("../common/institutional_info.php");
+	$encabezado="&encabezado=s";	
+}
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">Import DOC: " . $base."
 			</div>
 			<div class=\"actions\">";
+if (isset($arrHttp["encabezado"])){
+echo "<a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<span><strong>". $msgstr["back"]."</strong></span></a>";
+}
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";
-
 ?>
+<div class="helper">
+<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/import_doc.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_import_doc.html target=_blank>".$msgstr["edhlp"]."</a>";
+	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/import_doc.html target=_blank>".$msgstr["edhlp"]."</a>";
+echo "<font color=white>&nbsp; &nbsp; Script: import_doc_mnu.php" ?>
+</font>
+</div>
+
+<?php
+
 //echo  "drpathdef=".$db_path.$arrHttp["base"]."/dr_path.def<BR>";
 //die;
 if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
@@ -65,17 +84,8 @@ if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
 		$dr_path_rel="<i>[DOCUMENT_ROOT]</i>/bases/".$arrHttp["base"]."/";
 	}
 }
-include("../common/header.php");
 ?>
-<body>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/import_doc.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/import_doc.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: import_doc_mnu.php" ?>
-</font>
-</div>
+
 <div class="middle form">
 	<div class="formContent">
 <?php
@@ -87,7 +97,7 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
-$fn=$_POST["fn"];
+if(isset($_POST["fn"])) $fn=$_POST["fn"];
 $count=0;
 if(isset($fn))
 {
@@ -121,7 +131,7 @@ $fp=file($dr_path."/ABCDSourceRepo/".$nombre);
 $IsisScript="$Wxis"." IsisScript=".$db_path."wrk/hi.xis";
 $strNro="";
 foreach ($fp as $Nro){
-if ($Nro!="") 
+if ($Nro!="")
 {
 $pos=strpos($Nro,'"/>')-strlen($Nro);
 if (substr($Nro,0,23)=='<meta name="dc:creator"') $creator=trim(substr($Nro,33,$pos));
@@ -137,7 +147,7 @@ $strNro.= strip_tags($Nro);
 @ $fp = fopen($db_path."wrk/txt99.txt", "w");
 if (!$fp)
  {
-   echo "Unable to write the file ".$db_path."wrk/txt99.txt";         
+   echo "Unable to write the file ".$db_path."wrk/txt99.txt";
    exit;
  }
 fwrite($fp,$strNro);
@@ -171,8 +181,8 @@ echo "mxindexcmd=$mxindex<BR>";
 exec($mxindex,$salida,$b);
 if($b==0)
 echo "<br> Index created OK<br>";
-}  
-else 
+}
+else
 {
 include("upload_myfile.php");
 }

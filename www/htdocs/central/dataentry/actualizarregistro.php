@@ -2,7 +2,7 @@
 include("verificar_eliminacion.php");
 
 function ValidarDuplicados($tag,$subc,$prefijo,$valor,$titulo){
-global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$fdt,$msgstr;
+global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$fdt,$msgstr,$def;
 	$c_ant=array();
 	$occ=explode("\n",$valor);
 	$Expresion="";
@@ -74,7 +74,7 @@ $tabla = Array();
 
 global $vars,$cipar,$from,$base,$ValorCapturado,$arrHttp,$ver,$valortag,$fdt,$tagisis,$cn,$msgstr,$tm,$lang_db,$MD5;
 global $xtl,$xnr,$Mfn,$FdtHtml,$xWxis,$variables,$db_path,$Wxis,$default_values,$rec_validation,$wxisUrl,$validar,$tm;
-global $max_cn_length;
+global $max_cn_length,$def;
 
 	$variables_org=$variables;
 	$ValorCapturado="";
@@ -107,9 +107,11 @@ global $max_cn_length;
 			}
 		}
 	}
-	if (count($variables)==0 and !isset($arrHttp["check_select"]) and $arrHttp["Opcion"]!="eliminar") {
-	    echo $msgstr["specvalue"];
-		return;
+	if (is_array($variables)){
+		if (count($variables)==0 and !isset($arrHttp["check_select"]) and $arrHttp["Opcion"]!="eliminar") {
+		    echo $msgstr["specvalue"];
+			return;
+		}
 	}
 	PlantillaDeIngreso($xtl,$xnr);
 	$cdup=array();
@@ -401,7 +403,7 @@ global $max_cn_length;
 //	echo "Longitud del campo de actualización: ".strlen($ValorCapturado);
     $salida="";
 	foreach ($contenido as $linea){
-        if (substr($linea,0,4)=="WXIS"){        	echo $linea;die;        }		if (substr($linea,0,4)=="MFN:") {
+        if (substr($linea,0,4)=="WXIS"){        	echo $linea;        }		if (substr($linea,0,4)=="MFN:") {
 	    	$arrHttp["Mfn"]=trim(substr($linea,4));
 		}else{
 			if (trim($linea)!="") $salida.= $linea."\n";

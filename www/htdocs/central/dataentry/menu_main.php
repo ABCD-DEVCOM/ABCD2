@@ -6,11 +6,11 @@ if (!isset($_SESSION["permiso"])){
 
 include("../common/get_post.php");
 include("../config.php");
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$meta_encoding\" />\n";
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
-echo "<script>permiso='".implode('',$_SESSION["permiso"])."'</script>";
-#print_r("<script>permiso='".$_SESSION["permiso"]."'</script>");
-include("../common/header.php");
+echo "<script>permiso='".$_SESSION["permiso"]["profilename"]."'</script>";
+//include("../common/header.php");
 $db=$arrHttp["base"];
 ?>
 
@@ -23,24 +23,19 @@ document.onkeypress =
             : document.all ? event.keyCode
             : evt.keyCode;
 	if (c==13){
-       switch (Ctrl_activo){
-       		case "blibre":
+       switch (Ctrl_activo){       		case "blibre":
        			Buscar("TW_")
        			break
        		default:
        			top.Menu('ira')
-       			break
-       }
-
-	}
+       			break       }
+	}
 
     return true;
   };
 
-function FocoEn(Ctrl){
-	Ctrl_activo=Ctrl
-
-}
+function FocoEn(Ctrl){	Ctrl_activo=Ctrl
+}
 
 function Diccionario(){
 
@@ -78,29 +73,22 @@ function Buscar(Prefijo){
 		EB=EB.replace(/  /g,' ')
 		p=EB.split(" ")
 		for (term in p){
-			if (Trim(p[term])!=""){
-				if (Expr=="")
+			if (Trim(p[term])!=""){				if (Expr=="")
 					Expr=Prefijo+p[term]
 				else
 					Expr+=" and "+Prefijo+p[term]
-			}
-		}
-	}else{
-		Expr=Prefijo+EB
-	}
+			}		}
+	}else{		Expr=Prefijo+EB	}
 	top.Expresion=Expr;
-	top.Menu("ejecutarbusqueda")
-}
+	top.Menu("ejecutarbusqueda")}
 function AbrirAyuda(){
 	msgwin=window.open("../documentacion/ayuda.php?help="+lang+"/dataentry_toolbar.html","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
 		msgwin.focus()
 
 }
 
-function AyudaBusqueda(){
-	msgwin=window.open("http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
-	msgwin.focus()
-}
+function AyudaBusqueda(){	msgwin=window.open("http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
+	msgwin.focus()}
 
 function EditarFormato(){
 	i=document.forma1.formato.selectedIndex
@@ -108,20 +96,16 @@ function EditarFormato(){
 	}else{
 	  	pft=document.forma1.formato.options[i].value
 	  	descripcion=document.forma1.formato.options[i].text
-		if (pft!='ALL') {
-			document.editpft.base.value=top.base
+		if (pft!='ALL') {			document.editpft.base.value=top.base
 			document.editpft.cipar.value=top.base+".par";
 			document.editpft.archivo.value=pft
-			document.editpft.descripcion.value=descripcion
-			msgwin=window.open("","editpft","width=800, height=400, scrollbars, resizable")
+			document.editpft.descripcion.value=descripcion			msgwin=window.open("","editpft","width=800, height=400, scrollbars, resizable")
 			document.editpft.submit()
 			msgwin.focus()
 		}else{
 
 		}
-	}
-
-}
+	}}
 
 function GenerarDespliegue(){
 	base=top.base
@@ -142,10 +126,7 @@ function GenerarDespliegue(){
 		}else{
 		}
 	}
-	if (top.mfn>0){
-		top.mfn=top.mfn-1
-		top.Menu('proximo')
-	}
+	top.Menu('same')
 }
 
 function GenerarWks(){
@@ -173,15 +154,12 @@ function GenerarWks(){
 <body bgcolor=#EDF3F3 text=#000000 LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 >
 <form name=forma1 onsubmit="return false" method=post>
 <link rel="STYLESHEET" type="text/css" href="js/dhtmlXToolbar.css">
-<script language="JavaScript" src="js/dhtmlXProtobar.js"></script>
-<script language="JavaScript" src="js/dhtmlXToolbar.js"></script>
-<script language="JavaScript" src="js/dhtmlXCommon.js"></script>
-<script language="JavaScript" src="js/lr_trim.js"></script>
-<?php if (isset($_SESSION["screen_width"])){
-	      	$SW=$_SESSION["screen_width"];
-	      	$TH=48;
-   	  	 }else{
-   	  	 	$SW=1200;
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
+<?php if (isset($_SESSION["screen_width"])){	      	$SW=$_SESSION["screen_width"];
+	      	$TH=48;   	  	 }else{   	  	 	$SW=1200;
    	  	 	$TH=90;
    	  	 }
 		if (isset($FRAME_2H) and $FRAME_2H!="") $TH=$FRAME_2H;
@@ -205,8 +183,7 @@ function GenerarWks(){
 
 	   		$pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:190px\">";
 	   		foreach ($fpb as $value){
-	   			if (trim($value)!=""){
-	   				$y=explode('|',$value);
+	   			if (trim($value)!=""){	   				$y=explode('|',$value);
 					$y[2]=trim($y[2]);
 	   				foreach ($fst as $linea){
 	   					if (stripos($linea,$y[2])>0){
@@ -226,11 +203,10 @@ function GenerarWks(){
 	   		$pal.="</select><a href=javascript:Diccionario()><img src=img/search.gif valign=ABSBOTTOM></a>";
 	   		unset($fpb);
 	  	}
-
-   	?>
+   	?>
    	<td  valign=middle style=line-height:20px><font style="font-size:10px;font-family:arial">
    	<?php echo $msgstr["buscar"]." ".$pal;
-   	if ($SW<1200)
+   	if ($SW<1200 or $TH>48)
    		echo "&nbsp; &nbsp; ";
    	else
    		echo "<br>";
@@ -240,7 +216,7 @@ function GenerarWks(){
 
    	</td>
    	<td width=5>&nbsp; </td>
-   	<?php 	if ($SW<1200)
+   	<?php 	if ($SW<1200 or $TH>48)
 				echo "<tr><td valign=center colspan=3>";
 		   	else
 		   		echo "<td valign=center>";
@@ -252,8 +228,7 @@ function GenerarWks(){
 			<?php if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
        		    	  isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
         			  isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
-	    			  isset($_SESSION["permiso"][$db."_CENTRAL_EDPFT"])){
-	    	?>
+	    			  isset($_SESSION["permiso"][$db."_CENTRAL_EDPFT"])){	    	?>
 	    	<td rowspan=2 valign=top>
 	    	         <a href=javascript:EditarFormato()><img src=img/barEdit.png alt="edit display format" title="edit display format" border=0></a>
 	    	</td>
@@ -299,14 +274,9 @@ function GenerarWks(){
 
 	//CHECK IF THE DATABASE ACCEPT IMPORT pdf
 	$pdf="";
-  	if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
-		$def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
-		if (isset($def["IMPORTPDF"]))
-			$pdf=trim($def["IMPORTPDF"]);
-	}
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
-	?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
+  	if (isset($def["IMPORTPDF"]))
+		$pdf=trim($def["IMPORTPDF"]);
+	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {	?>		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
 	<?php
 		if ($pdf=="Y"){
     ?>
@@ -341,6 +311,7 @@ function GenerarWks(){
 	    isset($_SESSION["permiso"][$db."_CENTRAL_PREC"])){
 	?>
 		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarPrint.png","20","24",12,"3_imprimir","<?php echo $msgstr["m_reportes"]?>"))
+		//toolbar.addItem(new dhtmlXImageButtonObject("img/mail_p.png","26","24",14,"email","<?php echo $msgstr["m_email"]?>"))
 	<?php }
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"])      or
 	    isset($_SESSION["permiso"]["CENTRAL_UTILS"])    or
@@ -375,15 +346,14 @@ function GenerarWks(){
 <?php $select="";
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_STATGEN"])  or isset($_SESSION["permiso"]["CENTRAL_STATCONF"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])   or isset($_SESSION["permiso"][$db."_CENTRAL_STATGEN"])  or isset($_SESSION["permiso"][$db."_CENTRAL_STATCONF"])){
 ?>
-	toolbar.addItem(new dhtmlXImageButtonObject("img/grafico.gif","20","24",13,"stats","<?php echo $msgstr["estadisticas"]?>"))
+	toolbar.addItem(new dhtmlXImageButtonObject("img/grafico.gif","24","24",13,"stats","<?php echo $msgstr["estadisticas"]?>"))
 <?PHP }?>
 	toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarHelp.png","16","24",14,"5_ayuda","<?php echo $msgstr["m_ayuda"]?>"))
 	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_6'))
 
 	toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarHome.png","16","24",14,"home","<?php echo $msgstr["inicio"]?>"))
 	toolbar.showBar();
-	function onButtonClick(itemId,itemValue){
-
+	function onButtonClick(itemId,itemValue){
 		switch (itemId){
 			<?php echo $select;?>
 			case "select":
@@ -408,12 +378,10 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 						top.Menu("proximo")
 						break
 					case "selected_records":
-						if (top.RegistrosSeleccionados==""){
-							alert("<?php echo $msgstr["no_sel_records"]?>")
+						if (top.RegistrosSeleccionados==""){							alert("<?php echo $msgstr["no_sel_records"]?>")
 							var item=top.menu.toolbar.getItem('select');
     						item.selElement.options[0].selected =true
-							return
-						}
+							return						}
 						top.browseby="selected_records"
 						top.Listar_pos=top.Listar_pos-1
 						if (top.Listar_pos<-1) top.Listar_pos=-1
@@ -530,6 +498,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
     		case "tesaurus":
     			top.Tesaurus()
     			break;
+    		case "email":
+    			top.Mail()
+    			break
 		}
 	};
 
@@ -568,15 +539,13 @@ if (isset($arrHttp["base"])){
 			}
 		}
 
-	}else{
-		echo "document.forma1.formato.options.length=0\n";
-	}
+	}else{		echo "document.forma1.formato.options.length=0\n";	}
 	$i=$i+1;
 	if (isset($_SESSION["permiso"][$db."_pft_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])
 
 	){
-		echo "document.forma1.formato.options[$i]=new Option('Todo','')\n";
-		echo "document.forma1.formato.options[$i+1]=new Option('Sin formato','ALL')\n";
+		echo "document.forma1.formato.options[$i]=new Option('".$msgstr["all"]."','')\n";
+		echo "document.forma1.formato.options[$i+1]=new Option('".$msgstr["noformat"]."','ALL')\n";
 	}
 	unset($fp);
 	//Se leen las hojas de entrada disponibles
@@ -587,10 +556,8 @@ if (isset($arrHttp["base"])){
 			$fp = file($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks");
 	}
 	$i=-1;
-	if (isset($_SESSION["permiso"][$db."_fmt_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) ){
-		echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.wks.options[0]=new Option('','')\n";
-		$i=0;
-	}
+	if (isset($_SESSION["permiso"][$db."_fmt_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) ){		echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.wks.options[0]=new Option('','')\n";
+		$i=0;	}
 
 
 	$wks_p=array();
@@ -651,8 +618,7 @@ if (isset($fp)) {
 }
 if (isset($arrHttp["inicio"]) and $arrHttp["inicio"]=="s"){
 	echo 'top.main.location.href="inicio_base.php?inicio=s&base="+top.base+"&cipar="+top.base+".par&per="+top.db_permiso';
-}else{
-	if (!isset($arrHttp["reload"]))
+}else{	if (!isset($arrHttp["reload"]))
 		echo "url=top.main.location.href
 	top.main.location.href=url\n";
 }

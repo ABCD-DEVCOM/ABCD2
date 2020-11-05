@@ -39,6 +39,8 @@ include("../lang/prestamo.php");
 include("../reserve/reserves_read.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
+echo "<body>";
+ 	include("../common/institutional_info.php");
 
 // se determina si el préstamo está vencido
 function compareDate ($FechaP){
@@ -125,7 +127,7 @@ global $locales,$config_date_format;;
 	if (count($prestamos)>0) {
 		$ec_output.= "<strong>".$msgstr["loans"]."</strong>
 		<table width=95% bgcolor=#cccccc>
-		<td> </td><th>".$msgstr["inventory"]."</th><th>".$msgstr["control_n"]."</th><th>".$msgstr["reference"]."</th><th>".$msgstr["typeofitems"]."</th><th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["actual_dev"]."</th><th>".$msgstr["renewals"]."</th>";
+		<th> </th><th>".$msgstr["inventory"]."</th><th>".$msgstr["control_n"]."</th><th>".$msgstr["reference"]."</th><th>".$msgstr["typeofitems"]."</th><th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["actual_dev"]."</th><th>".$msgstr["renewals"]."</th>";
 
 		foreach ($prestamos as $linea) {			if (trim($linea)!=""){
 				$p=explode("^",$linea);
@@ -159,7 +161,7 @@ global $locales,$config_date_format;;
     $Expr_b= "TRANS_S_".$arrHttp["usuario"]." or TRANS_M_".$arrHttp["usuario"]." or TRANS_N_".$arrHttp["usuario"];
 	include("sanctions_read.php");
 
-	if ($sanctions_output!=""){		$ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
+	if ($sanctions_output!=""){		if ($nmulta!=0 or $nsusp!=0) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
 		$ec_output.=$sanctions_output;	}
 
 $reserves="";
@@ -177,11 +179,9 @@ ProduceOutput($ec_output.$reserves);
 
 function ProduceOutput($ec_output){
 global $msgstr,$arrHttp,$reservas_p,$signatura,$posicion_cola,$msg_1,$cont,$institution_name,$db_path;
-	include("../common/header.php");
-    echo "<body>";
- 	include("../common/institutional_info.php");
+
 ?>
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -197,7 +197,7 @@ global $msgstr,$arrHttp,$reservas_p,$signatura,$posicion_cola,$msg_1,$cont,$inst
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/borrower_history.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
     echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/borrower_history.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: borrower_history_ex.php </font>
+echo "<font color=white>&nbsp; &nbsp; Script: circulation/borrower_history_ex.php </font>
 	</div>";
 // prestar, reservar o renovar
 ?>

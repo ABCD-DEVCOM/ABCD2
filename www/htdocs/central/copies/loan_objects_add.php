@@ -8,7 +8,7 @@ include ("../config.php");
 include("../lang/acquisitions.php");
 
 include("../lang/admin.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+//foreach ($arrHttp as $var=>$value) echo "*$var=$value<br>";
 
 // SE LEE LA TABLA DE STATUS DE LAS COPIAS
 $tab_st=$db_path."copies/def/".$_SESSION["lang"]."/status_copy.tab";
@@ -30,9 +30,7 @@ foreach ($fp as $value){
 
 
 // GET THE CONTROL NUMBER FOR THE BIBLIOGRAPHIC RECORD
-//var_dump($arrHttp);die;
-if (!isset($arrHttp["cn"])){
-	LeerFst($arrHttp["base"]);
+if (!isset($arrHttp["cn"])){	LeerFst($arrHttp["base"]);
 	if ($tag_ctl!=""){
 		$Formato="v".$tag_ctl;
 
@@ -41,25 +39,21 @@ if (!isset($arrHttp["cn"])){
 		$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato&Opcion=rango";
 		$IsisScript=$xWxis."imprime.xis";
 		include("../common/wxis_llamar.php");
-	//	foreach ($contenido as $value)  echo "$value<br>";
 		$valortag[1]=implode("",$contenido);
 		if ($valortag[1]==""){     //CHECK IF THE RECORD HAS CONTROL NUMBER
 			$err_copies="Y";
 		}else{
 			$err_copies="N";
 			$arrHttp["cn"]="CN_".$arrHttp["base"]."_".$valortag[1];
-		}
-	}else{
-		Print_page();
+		}	}else{		Print_page();
 		die;
-	}
-}
+	}}
 
 //GET THE RECORD FROM LOANOBJECTS USING THE CONTROL NUMBER
 $Formato=$db_path."loanobjects/pfts/".$_SESSION["lang"]."/loanobjects_add.pft" ;
 if (!file_exists($Formato)) $Formato=$db_path."loanobjects/pfts/".$lang_db."/loanobjects_add.pft"  ;
 $Expresion=$arrHttp["cn"];
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par"."&from=1&Formato=@$Formato&Opcion=buscar&Expresion=".urlencode(strtoUpper($Expresion))."&cttype=s";
+$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par"."&from=1&Formato=@$Formato&Opcion=buscar&Expresion=".urlencode($Expresion)."&cttype=s";
 $IsisScript=$xWxis."imprime.xis";
 include("../common/wxis_llamar.php");
 $old_c=$contenido;
@@ -67,14 +61,12 @@ $old_c=$contenido;
 $ixc=0;
 foreach ($contenido as $value){
 	if (trim($value)!=""){
-	    if ($ixc==0){
-	    	$ixc=1;
+	    if ($ixc==0){	    	$ixc=1;
 	    	$v=explode('$$$',$value);
 	    	if (isset($v[1]))
 	    		$value=$v[1];
 	    	else
-	    		$value="";
-	    }
+	    		$value="";	    }
 		$inv=explode('|',$value);
 		if (isset($inv[2]))
 			$dup[$inv[2]]="Y";
@@ -84,11 +76,13 @@ foreach ($contenido as $value){
 $Formato=$db_path."copies/pfts/".$_SESSION["lang"]."/copies_add.pft" ;
 if (!file_exists($Formato)) $Formato=$db_path."copies/pfts/".$lang_db."/copies_add.pft"  ;
 $Expresion=$arrHttp["cn"]."* STATUS_1";
-$query = "&base=copies&cipar=$db_path"."par/copies.par"."&from=1&Formato=@$Formato&Opcion=buscar&Expresion=".urlencode($Expresion);
+$query = "&base=copies&cipar=$db_path"."par/copies.par"."&from=1&Formato=@$Formato&Opcion=buscar&Expresion=".$Expresion;
 $IsisScript=$xWxis."imprime.xis";
+$contenido=array();
 include("../common/wxis_llamar.php");
-$c=implode("",$contenido);
 //foreach ($contenido as $value) echo "$value<br>";
+$c=implode("",$contenido);
+
 //GET THE TYPE OF OBJECT IN RESPECT TO THE LOAN POLICY
 $file=$db_path."circulation/def/".$_SESSION["lang"]."/items.tab";
 if (!file_exists($file)) $file=$db_path."circulation/def/".$lang_db."/items.tab";
@@ -96,11 +90,9 @@ $fp_items=file($file);
 
 
 Print_page();
-if (trim($c)=="") {
-	echo "<p><br><br><dd><strong>".$msgstr["nocopiestoadd"]."</strong></dd></div></div>";
+if (trim($c)=="") {	echo "<p><br><br><dd><strong>".$msgstr["nocopiestoadd"]."</strong></dd></div></div>";
     	include("../common/footer.php");
-    	die;
-}
+    	die;}
 $ix=0;
 $subc="ilbotv";
 echo "<script>
@@ -109,22 +101,17 @@ echo "<script>
 $ix=-1;
 $cn="";
 $db="";
-foreach ($contenido as $value){
-	if (trim($value)!=""){
-		$t=explode('|',$value);
+foreach ($contenido as $value){	if (trim($value)!=""){		$t=explode('|',$value);
 		$ix=$ix+1;
-		if ($ix==0){
-			$cn=$t[0];
-			$db=$t[1];
-		}
+		if ($ix==0){			$cn=$t[0];
+			$db=$t[1];		}
 		$vc="^".$subc[0].$t[3];
 		if (trim($t[4])!="") $vc.="^".$subc[1].$t[4];
 		if (trim($t[5])!="") $vc.="^".$subc[2].$t[5];
 		if (trim($t[6])!="") $vc.="^".$subc[4].$t[6];
 		if (trim($t[7])!="") $vc.="^".$subc[5].$t[7];
 		echo "copies[$ix]=\"".$vc."\"\n";
-	}
-}
+	}}
 echo "</script>\n";
 
 $archivo=$db_path."copies/pfts/".$_SESSION["lang"]."/copies_add.tit";
@@ -157,19 +144,16 @@ foreach ($contenido as $value){
 		$t=explode("|",$value);
 		$duplicate="";
 		if (isset($t[3])){
-			if (isset($dup[$t[3]])) {
-				$duplicate="<strong><font color=red>".$msgstr["exitems"]."</font></strong>";
+			if (isset($dup[$t[3]])) {				$duplicate="<strong><font color=red>".$msgstr["exitems"]."</font></strong>";
 				echo "<input type=hidden name=duplicated value=Y>\n";
-			}else{
-				echo "<input type=hidden name=duplicated>\n";
-			}
-		}else{
-			echo "<input type=hidden name=duplicated>\n";
-		}
+			}else{				echo "<input type=hidden name=duplicated>\n";			}
+		}else{			echo "<input type=hidden name=duplicated>\n";		}
 
 		echo "<tr><td>";
 		if (isset($t[3]))
 			echo $t[3]." $duplicate";
+			$x=strpos($t[2],'^b');
+			if ($x>0) echo "(".substr($t[2],$x+2).")";
 		echo "</td><td>";
 		if (isset($t[4]))
 			echo $t[4];
@@ -186,10 +170,8 @@ foreach ($contenido as $value){
 		echo "<td align=center><Select name=status>";
 
 		$vc="";
-		foreach ($fp_items as $value){
-			$v=explode('|',$value);
-			echo "<option value=".$v[0].">".$v[1]."</option>\n";
-		}
+		foreach ($fp_items as $value){			$v=explode('|',$value);
+			echo "<option value=".$v[0].">".$v[1]."</option>\n";		}
 		echo "</select></td>";
 	}
 }
@@ -207,34 +189,26 @@ include("../common/footer.php");
 //=====================================
 
 function Print_page(){
-Global $arrHttp,$msgstr,$error;
+Global $arrHttp,$msgstr,$error,$meta_encoding;
 	$encabezado="";
 	include("../common/header.php");
 ?>
 <script>
-function Show(CN,db){
-	msgwin=window.open("../dataentry/show.php?base="+db+"&Expresion="+CN,"show","width=600, height=600, resizable, scrollbars")
-	msgwin.focus()
-}
+function Show(CN,db){	msgwin=window.open("../dataentry/show.php?base="+db+"&Expresion="+CN,"show","width=600, height=600, resizable, scrollbars")
+	msgwin.focus()}
 
 function Send(){
 	ValorCapturado=""
-	for (i=0;i<document.forma1.status.length-1;i++){
-		if (document.forma1.duplicated[i].value==""){
+	for (i=0;i<document.forma1.status.length-1;i++){		if (document.forma1.duplicated[i].value==""){
 			ind=document.forma1.status[i].selectedIndex
-			tobj=document.forma1.status[i].options[ind].value
-			copies[i]+="^o"+tobj
+			tobj=document.forma1.status[i].options[ind].value			copies[i]+="^o"+tobj
 			ValorCapturado+=copies[i]+"\n"
 		}
-
-	}
-	if (ValorCapturado==""){
-		alert("<?php echo $msgstr["exitems"]?>")
-		return
-	}
+	}
+	if (ValorCapturado==""){		alert("<?php echo $msgstr["exitems"]?>")
+		return	}
 	document.forma1.ValorCapturado.value=ValorCapturado
-	document.forma1.submit()
-}
+	document.forma1.submit()}
 </script>
 <?php
 	echo "<body>
@@ -284,9 +258,7 @@ echo "
 		<div class=\"formContent\">
 
 ";
-if ($error!=""){
-	echo "<h4>".$msgstr[$error]."</h4>";
-}
+if ($error!=""){	echo "<h4>".$msgstr[$error]."</h4>";}
 }
 
 // ==================================================================================

@@ -77,7 +77,7 @@ print "</table>";
 if ($reservas < $total_ej){	echo "<p><span class=titulo1>Información del usuario</span>";
 	echo "<form name=reserva action=reservar.php onsubmit='return false'>\n";
 	echo "<table><td class=td>Código de usuario</td>\n";
-	echo "<td><input type=password name=codigo> ";
+	echo "<td><input type=password name=codigo autocomplete='off'> ";
 	echo "<input type=hidden name=cotalibros value='".$arrHttp["cotalibros"]."'>";
 	echo "<input type=hidden name=cotaprestamos value='".$arrHttp["cotaprestamos"]."'>";
 	echo "<input type=submit onClick=javascript:Enviar() value='Reservar'>

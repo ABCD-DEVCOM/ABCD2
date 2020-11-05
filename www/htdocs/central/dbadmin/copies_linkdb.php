@@ -41,17 +41,32 @@ include("../lang/acquisitions.php");
 $base=$arrHttp["base"];
 $fp=file($db_path."bases.dat");
 $copies_link="";
-foreach ($fp as $value){	$value=trim($value);	$v=explode('|',$value);
-	if ($v[0]==$base){		if ($v[2]=="Y") $copies_link=" checked";
-		break;	}}
+foreach ($fp as $value){
+	$value=trim($value);
+	$v=explode('|',$value);
+	if (($v[0]==$base)&& (isset($v[2]))){
+		if ($v[2]=="Y") $copies_link=" checked";
+		break;
+	}
+}
 
 
 include("../common/header.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>"
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
-function Enviar(){	control=Trim(document.forma1.control_n.value)
-	if (control=="" || control=="0"){		if (confirm("The control number of the database will be restored to 0 \n\n Is that correct? ")){			if (confirm("are you sure?")){			}else{				return			}		}else{			return		}	}
+function Enviar(){
+	control=Trim(document.forma1.control_n.value)
+	if (control=="" || control=="0"){
+		if (confirm("The control number of the database will be restored to 0 \n\n Is that correct? ")){
+			if (confirm("are you sure?")){
+			}else{
+				return
+			}
+		}else{
+			return
+		}
+	}
 	control=Trim(document.forma1.inv_n.value)
 	if (control=="" || control=="0"){
 		if (confirm("The inventory number of the copies database will be restored to 0 \n\n Is that correct? ")){
@@ -63,7 +78,8 @@ function Enviar(){	control=Trim(document.forma1.control_n.value)
 			return
 		}
 	}
-	document.forma1.submit()}
+	document.forma1.submit()
+}
 
 
 </script>
@@ -104,7 +120,8 @@ echo "<form name=forma1 action=resetautoinc_update.php method=post>
 if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=s>\n";
 echo "<h3>".$msgstr["database"]." ".$base."<p>";
 echo "<br><input type=checkbox name=copies value=on $copies_link>".$msgstr["incopies"].".<br>".$msgstr["copiesreq"]."</h3>";
-echo "<input type=submit name=mark value=".$msgstr["update"].">";
+echo "<input type=submit name=mark value=".$msgstr["update"].">";
+
 echo "<form></div></div>";
 include("../common/footer.php");
 echo "</body></html>";

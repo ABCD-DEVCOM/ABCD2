@@ -21,13 +21,16 @@ switch ($arrHttp["format"]){
 	case "endf"  :
 		$ext=".end";
 		break;
+	case "recdel_val" ;
+		$ext=".pft";
+		break;
 }
 
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language=javascript>
 //THIS VARIABLE IS FOR TESTING THE VALIDATION PFT
 var pos_val=0

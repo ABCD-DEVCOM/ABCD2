@@ -21,7 +21,7 @@ if (isset($arrHttp["encabezado"])) {
 }
 
 
-echo "<div style='float:right;'> <a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<div style='float:right;'> <a href=\"..\dbadmin\menu_mantenimiento.php?base=".$base."\" class=\"defaultButton backButton\">";
 echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a></div>";
@@ -36,15 +36,15 @@ $converter_path=$mx_path;
 //}
 //else
 //$converter_path=$mx_path.$cisis_ver."mx.exe";
+$t="";$barcode="";
 $retag_path=$converter_path;
 $base=$arrHttp["base"];
 $bd=$db_path.$base;
-$barcode=$_GET['barcode'];
-$bf=$_GET['bf'];
+if (isset($_GET['barcode'])) $barcode=$_GET['barcode'];
+if (isset($_GET['bf'])) $bf=$_GET['bf'];
 $strINV=$retag_path." ".$bd."/data/".$base." \"".$barcode."\"";
 if($barcode!="")
 {
-
 exec($strINV, $output,$t);
 $straux="";
 $strstr="";
@@ -110,7 +110,7 @@ $i++;
 return $mfn;
 }
 
-			if($t==0 and $barcode!=""){
+if($t==0 and $barcode!=""){
 echo ("<h3>Results for barcode '$barcode' in database $base</h3><br>");
 echo "<li>Found in $base?";
 if(strpos($strstr,"Hits=0")==false and $t==0) echo " yes";
@@ -152,7 +152,8 @@ echo "<li><font color='red'>Control number:".$CN."</font></li>";
 }
 
 }
- if(strpos($straux[3],"="))
+
+ if (isset($straux)) if(strpos($straux[3],"="))
 {
 /*
 echo "<form name='f2' method='get' action='cn.php'>";

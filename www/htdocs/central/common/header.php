@@ -1,25 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <head profile="http://www.w3.org/2005/10/profile">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
+<html>
+	<head>
 		<title>ABCD<?php if (isset($subtitle))  echo $subtitle?></title>
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
 <?php
-	if (isset($unicode) and $unicode=="utf8"){
-		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
-	}else{
-		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />";
-	}
+	if (isset($charset)){
+		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$charset\" />\n";
+	}else{		echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$meta_encoding\" />\n";	}
+	//$page_encoding=$meta_encoding;
 	if (!isset($css_name))
 		$css_name="";
 	else
 		$css_name.="/";
-
 ?>
-                <meta name="robots" CONTENT="NONE" />
+		<meta http-equiv="X-Content-Type-Options" content="nosniff">
+		<meta name="robots" CONTENT="NONE" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
 		<!-- Stylesheets -->
@@ -52,4 +51,7 @@
 			  z-index: 100;
 			}
 		</style>
-</head>
+<?php
+include ("css_settings.php");
+
+?></head>

@@ -33,8 +33,8 @@ global $db_path,$xWxis,$Wxis;
 	}
 	return $arr_combo;
 }
-function ComboBox($type,$tag,$width,$repetible,$pick,$pick_name,$formato_e,$Prefijo,$db_path,$base,$valor){
-
+function ComboBox($type,$tag,$width,$repetible,$pick,$pick_name,$formato_e,$Prefijo,$db_path,$base,$valor){global $msgstr;
+    $fp=array();
 	echo "<script>\n
 	var combolist$tag = Array(";
 	switch ($pick){
@@ -47,9 +47,9 @@ function ComboBox($type,$tag,$width,$repetible,$pick,$pick_name,$formato_e,$Pref
 
   			$xx=explode('/',$Tab_name);
 			if (count($xx)>1){
-				$fp=file($Tab_name);
-			}else{
-				$fp=file($db_path.$base."/def/".$_SESSION["lang"]."/".$pick_name);
+				if (file_exists($Tab_name)) $fp=file($Tab_name);
+			}else{				if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/".$pick_name))
+					$fp=file($db_path.$base."/def/".$_SESSION["lang"]."/".$pick_name);
 			}
 			$arr_combo="";
 			foreach ($fp as $value){
@@ -75,6 +75,9 @@ function ComboBox($type,$tag,$width,$repetible,$pick,$pick_name,$formato_e,$Pref
 			break;
 	}
 	echo "<table><td valign=top>";
+	if (count($fp)==0){		echo "<font color=red>".$msgstr["missing"]." $pick_name</font>";
+		echo "</td></table>";
+		return;	}
 	echo "<input onKeyUp=\"handleKeyUp(9999999,document.forma1.combotext$tag,this,combolist$tag);\" type=\"text\" name=\"cbtag$tag\" VALUE=\"$valor\" autocomplete=\"off\" style=\"font-size:10pt;width:$width"."px;\"><br>
 		<select onClick=\"handleSelectClick(this,tag$tag,$repetible);\" name=\"combotext$tag\" size=\"5\" style=\"font-size:10pt;width:$width"."px;\">
 		</select></td>";

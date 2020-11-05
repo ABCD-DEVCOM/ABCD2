@@ -6,6 +6,12 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include ("../config.php");
+if (isset($_SESSION["UNICODE"])) {
+	IF ($_SESSION["UNICODE"]==1)
+		$meta_encoding="UTF-8";
+	else
+		$meta_encoding="ISO-8859-1";
+}
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("fdt_include.php");
@@ -13,7 +19,7 @@ include("fdt_include.php");
 $Fdt=explode('|',$arrHttp["ValorCapturado"]);
 include("../common/header.php");
 ?>
-	<script src=../dataentry/js/lr_trim.js></script>
+	<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 	<script>
 
 	function AsignarFdt(){		nf=window.opener.frames.length

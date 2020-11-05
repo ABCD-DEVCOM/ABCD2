@@ -52,31 +52,34 @@ function Validar(){
 		alert("<?php echo $msgstr["err_objectctl"]?>")
 		return "N"
 	}
-	mydiv = document.getElementById("INE");	
+	mydiv = document.getElementById("INE");
 	inv = document.forma1.tag30;
 	if (inv.value=="") {
-	mydiv.innerHTML='</br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $msgstr["errINE"];?></br></br>';
-	mydiv.style.display='block';
-	inv.focus();
-	return "N";
+		mydiv.innerHTML='</br>&nbsp; &nbsp;<?php echo $msgstr["errINE"];?></br></br>';
+		mydiv.style.display='block';
+		inv.focus();
+		return "N";
 	}
-invdup=0;
-invnumbers=document.getElementById("INVA").value;
-/*alert(invnumbers);*/
-if (invnumbers!="~"){
-mydiv.innerHTML='</br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $msgstr["errEXCopyS"];?></br></br></br>';
-mydiv.style.display='block';
-inv.focus();
-return "N";
-}	
+	invdup=0;
+	invnumbers=document.getElementById("INVA").value;
+	if (invnumbers!="~"){
+		mydiv.innerHTML='</br>&nbsp; &nbsp;<?php echo $msgstr["errEXCopyS"];?></br></br></br>';
+		mydiv.style.display='block';
+		inv.focus();
+		return "N";
+	}
 	check=-1;
-	for(i=0;i<document.forma1.tag200.length;i++){	
-    if(document.forma1.tag200[i].checked) check=i;}	
-	if (check==-1) {	
-	mydiv.innerHTML='</br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $msgstr["errSE"];?></br></br>';
-	mydiv.style.display='block';	
-	return "N";
+	for(i=0;i<document.forma1.tag200.length;i++){
+    	if(document.forma1.tag200[i].checked) check=i;
+    }
+	if (check==-1) {
+		mydiv.innerHTML='</br>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $msgstr["errSE"];?></br></br>';
+		mydiv.style.display='block';
+		return "N";
 	}
+	document.getElementById('middleForm').style.display = 'none'
+	document.getElementById('my_id').style.display = 'block'
+	mydiv.style.display='none';
 }
 
 function RefrescarPicklist(tabla,Ctrl,valor){
@@ -184,10 +187,12 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 <input type=hidden name=Indice value="">
 <input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
 <input type=hidden name=valor value="">
+<div id="my_id" style="display: none;margin:0 auto;width:100%; height:100%;position:relative;overflow:hidden; background:#FFFFFF;text-align:center"><br><br><br><img src=../dataentry/img/preloader.gif></div>
 
-<div class="middle form">
+<div class="middle form" id="middleForm">
 <div name="INE" id="INE" style="color:#990000; display:none; font-style:italic; font-weight:bold;"></div>
 <input type=hidden name=INVA id=INVA value="<?php echo $arrHttp["Mfn"]?>~">
+
 <?php
 if ($error!=""){
 	echo "<script>top.toolbarEnabled=\"\"</script>\n";
@@ -200,20 +205,20 @@ if ($err_copies=="Y"){
 	die;
 }
 echo "\n<div class=\"searchBox\">\n";
-if ($AI=="Y"){
-	echo "<label for=\"addCopies\">
+
+echo "<label for=\"addCopies\">
 		<strong>". $msgstr["numcopies"]."</strong>
 		</label>
 		<input type=\"text\" size=11 maxlength=2 name=\"copies\" id=\"copies\" value=\"\"/>
 		&nbsp; &nbsp; &nbsp;";
-}
+
 echo "<a href=javascript:Show('copies','CN_".$db_addto."_".$valortag[1]."')>". $msgstr["dispcopies"]."</a>
 <!--		<input type=checkbox value=Y checked name=createloans>
 		<label for=\"regCopies\">
 			<strong>".$msgstr["regcopies"]."</strong>
 		</label>  --> ";
 echo "</div>
-	<div class=\"formContent\">";
+	<div class=\"formContent\" id=\"formContent\">";
 
 $arrHttp["cipar"]="copies.par";
 $fmt_test="S";
@@ -313,7 +318,7 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr;
 ?>
 <script language=javascript>
 document.forma1.tag200[2].disabled = true;
-function CheckInventory()
+function CheckInventory(tag)
 {
 CheckInventoryDup(document.getElementById("tag30").value,1);
 }

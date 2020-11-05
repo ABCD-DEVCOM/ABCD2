@@ -48,8 +48,8 @@ include("../common/header.php");
 
 ?>
 
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
-<script language=Javascript src=../dataentry/js/selectbox.js></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
 <style type=text/css>
 div#editformat{
 	margin: 0px 20px 0px 20px;
@@ -67,7 +67,7 @@ div#generateformat{
 <script languaje=javascript>
 
 function AbrirVentana(Archivo){
-	xDir="<?php echo $xSlphp.'ayudas/'?>"
+	xDir="<?php echo 'ayudas/'?>"
 	msgwin=window.open(xDir+Archivo,"Ayuda","menu=no, resizable,scrollbars")
 	msgwin.focus()
 }
@@ -196,7 +196,7 @@ if (isset($arrHttp["encabezado"])){
 </div>
 <form name=forma1 method=post action=fmt_update.php onsubmit="Javascript:return false" >
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
+<input type=hidden name=cipar value=<?php if (isset($arrHttp["cipar"])) echo $arrHttp["cipar"]?>>
 <input type=hidden name=tagsel>
 <input type=hidden name=Opcion>
 <input type=hidden name=wks>

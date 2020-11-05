@@ -1,10 +1,11 @@
+salida=""
 function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
 {
   // the highlightStartTag and highlightEndTag parameters are optional
-  if ((!highlightStartTag) || (!highlightEndTag)) {
+  //if ((!highlightStartTag) || (!highlightEndTag)) {
     highlightStartTag = "<font style='color:blue; background-color:yellow;'>";
     highlightEndTag = "</font>";
-  }
+  //}
 
   // find all occurences of the search term in the given text,
   // and add some "highlight" tags to them (we're not using a
@@ -13,6 +14,7 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
   // we have to do a little extra validation)
   var newText = "";
   var i = -1;
+
   var lcSearchTerm = searchTerm.toLowerCase();
   lcSearchTerm  = lcSearchTerm.replace(/[ийкл]/ig, 'e');
   lcSearchTerm  = lcSearchTerm.replace(/[авдб]/ig, "a");
@@ -38,6 +40,7 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
         // skip anything inside a <script> block
         if (lcBodyText.lastIndexOf("/script>", i) >= lcBodyText.lastIndexOf("<script", i)) {
           newText += bodyText.substring(0, i) + highlightStartTag + bodyText.substr(i, searchTerm.length) + highlightEndTag;
+          salida+=highlightStartTag + bodyText.substr(i, searchTerm.length) + highlightEndTag+" "
           bodyText = bodyText.substr(i + searchTerm.length);
           lcBodyText = bodyText.toLowerCase();
           lcBodyText = lcBodyText.replace(/[ийкл]/ig, 'e');
@@ -79,8 +82,9 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
     return false;
   }
   searchArray=searchText.split('|')
-  texto=document.getElementById('results');
-  var bodyText = texto.innerHTML;
+   texto=document.getElementById('results');
+   var bodyText = texto.innerHTML;
+  //var bodyText = document.body.innerHTML;
   for (var ixt = 0; ixt < searchArray.length; ixt++) {
     term=searchArray[ixt];
 	ix=term.lastIndexOf('_')
@@ -94,13 +98,14 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
 	st=term.split(" ")
 	for (ixst=0;ixst<st.length;ixst++){
 		termino=Trim(st[ixst])
+
 		if (termino!="" && termino.length>3){
 			bodyText = doHighlight(bodyText,termino , highlightStartTag, highlightEndTag);
 		}
     }
   }
-
   texto.innerHTML = bodyText;
+ // document.body.innerHTML = bodyText;
   return true;
 }
 

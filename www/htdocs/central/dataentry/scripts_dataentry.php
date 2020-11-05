@@ -1,3 +1,7 @@
+<?php if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
+}
+?>
 <!-- save search expression style -->
 <style>
 	#headerDiv, #contentDiv {
@@ -82,27 +86,29 @@ a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radi
 <!-- calendar stylesheet -->
   <link rel="stylesheet" type="text/css" media="all" href="../dataentry/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
-  <script type="text/javascript" src="../dataentry/calendar/calendar.js"></script>
+  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar.js"></script>
   <!-- language for the calendar -->
-  <script type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
+  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
   <!-- the following script defines the Calendar.setup helper function, which makes
        adding a calendar a matter of 1 or 2 lines of code. -->
-  <script type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
+  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
 
-<script language=javascript src=../dataentry/js/campos.js?<?php echo time(); ?>></script>
-<script language=Javascript src=../dataentry/js/windowdhtml.js></script>
-<script language=Javascript src=../dataentry/js/lr_trim.js></script>
-<script language=Javascript src=../dataentry/js/password_check.js?<?php echo time(); ?>></script>
-<script language=javascript src=../dataentry/fckeditor.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/campos.js?<?php echo time(); ?>></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/windowdhtml.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/password_check.js?<?php echo time(); ?>></script>
+<!--script language="JavaScript" type="text/javascript" src=../dataentry/fckeditor.js></script-->
 
 
 
-<script src="../ckeditor/ckeditor.js"></script>
 
-<script type="text/javascript" src="../dataentry/js/textcounter.js?<?php echo time(); ?>"></script>
+<script language="JavaScript" type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script language="JavaScript" type="text/javascript" src="../ckeditor/config.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/textcounter.js?<?php echo time(); ?>"></script>
 
 <?php if (file_exists("../dataentry/js/".$arrHttp["base"].".js"))
-	echo "<script language=javascript src=".$arrHttp["base"].".js></script>\n";
+	echo "<script language=\"JavaScript\" type=\"text/javascript\" src=".$arrHttp["base"].".js></script>\n";
 
 ?>
 
@@ -113,6 +119,7 @@ a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radi
 	if (isset($SECURE_PASSWORD_LENGTH))
 		echo "secure_password_length='$SECURE_PASSWORD_LENGTH'\n";
 ?>
+tesaurus="";
 var score=0
 tag_password=""
 mandatory_password=""
@@ -126,6 +133,7 @@ function switchMenu(obj,ixsec) {
 		el.style.display = '';
 	}
 }
+
 
 	function toggle(showHideDiv, switchTextDiv) {
 		var ele = document.getElementById(showHideDiv);
@@ -273,7 +281,57 @@ function ChangeSeq(ix,prefix){
 	msgwin.focus()
 }
 
+
+
+function RelacionesInversas(Accion){	rel_text="";
+	j=document.forma1.elements.length-1
+	termino=""
+	for (ielem=0;ielem<=j;ielem++){
+		campo=document.forma1.elements[ielem]
+		nombre=campo.name
+		id=campo.id
+		if (Trim(campo.value)!=""){
+			if (nombre.substr(0,3)=="tag"){
+				nombre=nombre.substr(3)
+				nn=nombre.split('_')
+				tag=nn[0]
+				if (tag==tag_termino) {					termino=campo.value
+				}else{
+					if (tag==tag_refer) {						termino=campo.value
+					}else{
+		            	if (tag in tag_rel){
+		            		c=campo.value
+		            		field=c.replace(/(?:\r\n|\r|\n)/g, '$*');
+							if(rel_text==""){
+		  						rel_text=tag+"_"+field
+		  					}else{
+		  						rel_text+='$$$'+tag+"_"+field
+		  					}
+		  				}
+					}
+				}
+  			}
+		}
+	}
+    if (termino==""){    	alert("<?php $msgstr["tes_missterm"]?>")
+    	return
+    }
+	ant_text=""
+	for (tag in val_rel_ant){		ant_text+='$*$'+tag+"_"+val_rel_ant[tag]	}
+	switch (Accion){		case "check": msgwin=window.open("../tesaurus/actualizar_relaciones.php?base="+top.base+"&Opcion=check&Mfn=1&rel_text="+rel_text+"&ant_text="+ant_text+"&termino="+termino,"Tesaurus","width=500,height=400")
+						break
+		case "update": return [rel_text,ant_text,termino]
+						break
+	}
+}
+
+
 function FormarValorCapturado(){
+	if (tesaurus=="S"){		tes=RelacionesInversas('update')
+		rel_text=tes[0]
+		ant_text=tes[1]
+		termino=tes[2]
+		msgwin=window.open("../tesaurus/actualizar_relaciones.php?base="+top.base+"&Opcion=update&Mfn=1&rel_text="+rel_text+"&ant_text="+ant_text+"&termino="+termino,"Tesaurus","width=500,height=400")	}
 	j=document.forma1.elements.length-1
 	ValorCapturado=""
 	VC=new Array()
@@ -359,6 +417,7 @@ function EnviarForma(){	if (tag_password!=""){		Ctrl=eval("document.forma1."+t
 
 		if (!res && (secure_password_level!="" || secure_password_length!="")){
 			if (Trim(pwd.value)!="" || mandatory_password==1){
+				<?php if (!isset($SECURE_PASSWORD_LEVEL) or trim($SECURE_PASSWORD_LEVEL)=="" or $SECURE_PASSWORD_LEVEL=="0") {$SECURE_PASSWORD_LEVEL="1";$SECURE_PASSWORD_LEVEL="1";}?>
 				alert('<?php echo $msgstr["pass_error"]." ".$msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
 				if ($SECURE_PASSWORD_LENGTH>0) echo ". ". $msgstr["pass_format_1"]. " ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"];?>')
 			    return
@@ -440,7 +499,8 @@ function CapturarRegistro(){
 		msgwin.focus()
 	}
 
-	function AbrirTesauro(Tag){		Url="../tesaurus/index.php?base=<?php echo $arrHttp["base"]?>&Tag="+Tag
+	function AbrirTesauro(Tag){
+		Url="../tesaurus/index.php?base=<?php echo $arrHttp["base"]?>&Tag="+Tag
 		myleft=screen.width-450
 		msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)
 		msgwin.focus()	}
@@ -487,7 +547,7 @@ function CapturarRegistro(){
 function NuevaBusqueda(){
 	if (Trim(document.forma1.nueva_b.value)!=""){		str=document.forma1.nueva_b.value;
 		var res = str.replace(/"/g,"")
-		top.Expresion=res
+		top.Expresion=str
 		top.Menu("ejecutarbusqueda")	}}
 function CopiarHtml(Tag,Tipo,Mfn){         //tipo B=External HTM
 		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
@@ -922,6 +982,11 @@ function Limpiar(Ctrl){
 }
 
 
+//REVISA POR CLAVES DUPLICADAS ANTES DE ENVIAR LA FORMA. NO SE APLICA EN DATAENTRY
+function CheckInventory(tag,prefix){
+
+}
+
 </script>
 
 
@@ -1041,7 +1106,7 @@ if (isset($arrHttp["from"]))
 <input type=hidden name=ValorCapturado value="">
 <input type=hidden name=check_select value="">
 <input type=hidden name=Indice value="">
-<input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
+<input type=hidden name=Mfn value="<?php if (isset($arrHttp["Mfn"])) echo $arrHttp["Mfn"]?>">
 <input type=hidden name=ver value=S>
 <input type=hidden name=ventana value="<?php if (isset($arrHttp["ventana"]))echo $arrHttp["ventana"]?>">
 <?php

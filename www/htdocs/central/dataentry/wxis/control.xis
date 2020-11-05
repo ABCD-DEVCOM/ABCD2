@@ -1,5 +1,5 @@
 <IsisScript name="control">
-
+<trace>xON</trace>
 <function name="error" action="replace" tag="1">
 	<parm name="isisxml table">
 		<pft>
@@ -14,6 +14,7 @@
 </function>
 
 <function name="status" action="replace" tag="2001">
+
 	<field action="statusdb" tag="1091"><pft>v2001</pft></field>
 	<field action="replace" tag="1092">
 				<pft>
@@ -201,6 +202,7 @@
 	<call name="error">missing parameter: function</pft></call>
 
 	<label>STATUS</label>
+	<display><pft></pft></display>
 	<call name="status"><pft>v2001</pft></call>
 	<flow action="jump">END</flow>
 

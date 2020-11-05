@@ -67,7 +67,7 @@ global $arrHttp,$msgstr;
 include("../common/header.php");
 if (isset($arrHttp["encabezado"]))
 	include("../common/institutional_info.php");
-echo "<script  src=\"../dataentry/js/lr_trim.js\"></script>\n";
+echo "<script language=\"JavaScript\" type=\"text/javascript\"  src=\"../dataentry/js/lr_trim.js\"></script>\n";
 echo "<script languaje=javascript>
 function EnviarForma(){
 	if (Trim(document.winisis.userfile.value)==''){
@@ -119,21 +119,13 @@ $files = $_FILES;
 if ($files["userfile"]['size']) {
       // clean up file name
 	$name=$files["userfile"]['name'];
-   	$name = preg_replace("/[^a-z0-9._]/", "",
-    str_replace(" ", "_",
-       	str_replace("%20", "_", strtolower($name)
-					)
-      			)
-        );
 	$fp=file($files["userfile"]['tmp_name']);
 	$Fdt="";
  	foreach($fp as $linea) $Fdt.=$linea;
   	$Fdt_conv=CrearFdt($Fdt);
    	$_SESSION["FDT"]=$Fdt_conv;
     MostrarFdt($_SESSION["FDT"]);
-}else{
-	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);
-}
+}else{	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);}
 $_SESSION["DESC"]=$arrHttp["desc"];
 unset ($_SESSION["FST"]);
 unset ($_SESSION["PFT"]);

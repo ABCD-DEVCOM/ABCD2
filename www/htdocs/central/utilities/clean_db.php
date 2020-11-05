@@ -14,7 +14,7 @@ include("../common/header.php");
 
 $base=$arrHttp["base"];
 $OS=strtoupper(PHP_OS);
-$converter_path=$cisis_path;
+$converter_path=$mx_path;
 
 
 
@@ -32,6 +32,7 @@ echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";
 ?>
+
 <div class="helper">
 	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_clean_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
@@ -39,7 +40,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_vmxISO_load.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "<font color=white>&nbsp; &nbsp; Script: clean_db.php</font>";
 ?>
-
+</div>
 <div class="middle form">
 
 <?php
@@ -62,7 +63,7 @@ echo "<br>MX query: ".$strINV;
 echo "<br>Process output: ".$straux; 
 if($t==0)
 {
-echo "<br>Process exporting OK!<br>File saved in ".$db_pat."wrk/".$isoname;
+echo "<br>Process exporting OK!<br>File saved in ".$db_path."wrk/".$isoname;
 
 //importing iso
 $op="create";

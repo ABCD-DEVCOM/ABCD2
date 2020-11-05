@@ -17,26 +17,39 @@ include ("../lang/lang.php");
 include("leerregistroisispft.php");
 
 $arrHttp["IsisScript"]="ingreso.xis";
-if (isset($_SESSION["mfn_admin"])) $arrHttp["Mfn"]=$_SESSION["mfn_admin"];
+$arrHttp["Mfn"]=$_SESSION["mfn_admin"];
 
 $fp = file($db_path."bases.dat");
 if (!$fp){
 	echo "falta el archivo bases.dat";
 	die;
 }
+
+if ( !isset($def["UNICODE"]) or $def["UNICODE"] == "ansi" || $def["UNICODE"] == '0' ) {
+	$unicode='ansi';
+	$charset="ISO-8859-1";
+} else {
+	$unicode='utf8';
+	$charset="UTF-8";
+}
+$meta_encoding=$charset;
+include("../common/header.php");
 echo "<script>
-top.listabases=Array()\n";
-foreach ($fp as $linea){
-	if (trim($linea)!="") {
+top.listabases=Array()
+top.basesdat=Array()\n";
+foreach ($fp as $linea){	$linea=trim($linea);
+	if ($linea!="") {
 		$ix=strpos($linea,"|");
-		$llave=trim(substr($linea,0,$ix));
+		$ix_bb=explode('|',$linea);
+		$llave=trim($ix_bb[0]);
 		$lista_bases[$llave]=trim(substr($linea,$ix+1));
 		echo "top.listabases['$llave']='".trim(substr($linea,$ix+1))."'\n";
+		echo "top.basesdat['$llave']='".$ix_bb[1]."'\n";
 	}
 
 }
 echo "</script>\n";
-include("../common/header.php");
+
 ?>
 <script>
 lang='<?php echo $_SESSION["lang"]?>'
@@ -63,18 +76,19 @@ function CambiarBase(){
   	top.ixbasesel=i
    	if (i==-1) i=0
   	abd=document.OpcionesMenu.baseSel.options[i].value
-	//	top.base=abd
+
 	if (abd.substr(0,2)=="--"){
 		alert("<?php echo $msgstr["seldb"]?>")
 		return
 	}
-	ab=abd+'|'
+	ab=abd+'|||'
 	ix=ab.split('|')
 	base=ix[0]
 	top.base=base
 	if (document.OpcionesMenu.baseSel.options[i].text==""){
 		return
 	}
+	base_sel=base+'|'+ix[1]+'|'+top.basesdat[base]+'|'+ix[2]
 	top.db_copies=ix[2]
 	cipar=base+".par"
 	top.nr=nr
@@ -91,6 +105,7 @@ function CambiarBase(){
 	top.Mfn_Search=0
 	top.Max_Search=0
 	top.Search_pos=0
+	lang=document.OpcionesMenu.lenguaje.options[document.OpcionesMenu.lenguaje.selectedIndex].value
 	switch (top.ModuloActivo){
 		case "dbadmin":
 
@@ -100,9 +115,8 @@ function CambiarBase(){
 		case "catalog":
 			i=document.OpcionesMenu.baseSel.selectedIndex
 			document.OpcionesMenu.baseSel.options[i].text
-			//if (top.NombreBase==document.OpcionesMenu.baseSel.options[i].text) return
 			top.NombreBase=document.OpcionesMenu.baseSel.options[i].text
-			top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&inicio=s&cipar=acces.par&base="+base
+			top.location.href="inicio_main.php?base="+base_sel+"|"+"&base_activa="+base_sel+"&lang="+lang+"&cambiolang=s"
 			top.menu.document.forma1.ir_a.value=""
 			i=document.OpcionesMenu.baseSel.selectedIndex
 			break
@@ -112,8 +126,7 @@ function CambiarBase(){
 	}
 }
 
-function Modulo(){
-	Opcion=document.OpcionesMenu.modulo.options[document.OpcionesMenu.modulo.selectedIndex].value
+function Modulo(){	Opcion=document.OpcionesMenu.modulo.options[document.OpcionesMenu.modulo.selectedIndex].value
 	switch (Opcion){
 		case "loan":
 			top.location.href="../common/change_module.php?modulo=loan"
@@ -131,11 +144,7 @@ function Modulo(){
 			top.main.location.href="inicio_base.php?inicio=s&base="+base+"&cipar="+base+".par"
 			top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&cipar=acces.par&cambiolang=S&base="+base
 			top.ModuloActivo="catalog"
-			if (i>0) {
-				top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&cipar=acces.par&cambiolang=S&base="+base
-			}else{
-				top.menu.location.href="../dataentry/blank.html"
-			}
+			if (i>0) {				top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&cipar=acces.par&cambiolang=S&base="+base			}else{				top.menu.location.href="../dataentry/blank.html"			}
 			break
 
 
@@ -164,37 +173,29 @@ function CambiarLenguaje(){
 </script>
 </head>
 <body>
-<?php //echo "Session=" ; var_dump($_SESSION);
-?>
 <form name=OpcionesMenu>
 <input type=hidden name=base value="">
 <input type=hidden name=cipar value="">
 <input type=hidden name=marc value="">
 <input type=hidden name=tlit value="">
 <input type=hidden name=nreg value="">
-
-<div class="heading"> &nbsp;
-<?php include("../common/institutional_info.php"); ?>
-<!--	<div class="institutionalInfo">
-		<h1>
-                <img src=
-                <?php
-                if (isset($logo))
-		   echo $logo;
-		else
-		    echo "../images/logoabcd.jpg";
-		?>
-		> &nbsp; &nbsp;
-                <?php echo $institution_name?>
-                </h1>
+<div class="heading" style="height:150px"> &nbsp;
+	<div class="institutionalInfo">
+		<h1><img src=<?php if (isset($logo))
+								echo $logo;
+							else
+								echo "../images/logoabcd.jpg";
+					  ?>
+					  ><?php echo $institution_name?></h1>
 	</div>
--->	<div class="userInfo">
+	<div class="userInfo">
 		<span><?php echo $_SESSION["nombre"]?></span>,
 		<?php  $dd=explode("/",$db_path);
                if (isset($dd[count($dd)-2])){
 			   		$da=$dd[count($dd)-2];
 			   		echo " (".$da.") ";
 				}
+				echo " | $meta_encoding ";
 		?> |
 		<?php echo $_SESSION["profile"]?> |
 <?php
@@ -212,8 +213,7 @@ $circulation="";
 $acquisitions="";
 foreach ($_SESSION["permiso"] as $key=>$value){
 	$p=explode("_",$key);
-	if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";
-	if (substr($key,0,8)=="CENTRAL_")  $central="Y";
+	if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";	if (substr($key,0,8)=="CENTRAL_")  $central="Y";
 	if (substr($key,0,5)=="CIRC_")  $circulation="Y";
 	if (substr($key,0,4)=="ACQ_")  $acquisitions="Y";
 
@@ -239,8 +239,7 @@ if ($circulation=="Y" or $acquisitions=="Y"){
 		foreach ($fp as $value){
 
 			$value=trim($value);
-			if ($value!=""){
-				$l=explode('=',$value);
+			if ($value!=""){				$l=explode('=',$value);
 				if ($l[0]!="lang"){
 					if ($l[0]==$_SESSION["lang"]) $selected=" selected";
 					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
@@ -265,10 +264,8 @@ foreach ($lista_bases as $key => $value) {
 	$t=explode('|',$value);
 	if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$key."_CENTRAL_ALL"])){
 		if (isset($arrHttp["base_activa"])){
-			if ($key==$arrHttp["base_activa"]) 	{
-				$xselected=" selected";
-				if (isset($t[1])) $hascopies=$t[1];
-			}
+			if ($key==$arrHttp["base_activa"]) 	{				$xselected=" selected";
+				if (isset($t[1])) $hascopies=$t[1];			}
 
 		}
 		if (!isset($t[1])) $t[1]="";
@@ -276,11 +273,8 @@ foreach ($lista_bases as $key => $value) {
 	}
 }
 echo "</select>" ;
-if ($hascopies=="Y" and (isset($_SESSION["permiso"]["CENTRAL_ADDCO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ADDCO"]))){
-	echo "\n<script>top.db_copies='Y'\n</script>\n";
-}
+if ($hascopies=="Y" and (isset($_SESSION["permiso"]["CENTRAL_ADDCO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ADDCO"]))){	echo "\n<script>top.db_copies='Y'\n</script>\n";}
 ?>
-
 	</div>
 
 </div>

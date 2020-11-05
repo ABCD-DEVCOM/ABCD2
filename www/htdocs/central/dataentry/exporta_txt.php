@@ -65,8 +65,8 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
 
 
 ?>
-<script language="javascript1.2" src="js/lr_trim.js"></script>
-<script language=Javascript src=js/selectbox.js></script>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src=js/selectbox.js></script>
 <style type=text/css>
 div#editformat{
 	margin: 0px 0px 0px 0px;
@@ -98,9 +98,10 @@ function check( x )  {
 }
 
 function AbrirVentana(Archivo){
-	xDir="<?php echo $xSlphp?>"
+return
+/*	xDir="<?php echo $xSlphp?>"
 	msgwin=window.open(xDir+"ayudas/<?php echo $lang?>/"+Archivo,"Ayuda","")
-	msgwin.focus()
+	msgwin.focus()     */
 }
 
 
@@ -221,12 +222,13 @@ echo "
 	 <div class=\"middle form\">
 			<div class=\"formContent\">
 	";
+if (!isset($arrHttp["Dir"])) $arrHttp["Dir"]="/bases_abcd/";
 ?>
 <form name=forma1 method=post action=exporta_txt_ex.php onsubmit="Javascript:return false" >
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
 <input type=hidden name=Dir value=<?php echo $arrHttp["Dir"]?>>
-<input type=hidden name=cnv value=<?php echo $arrHttp["cnv"]?>>
+<input type=hidden name=cnv value=<?php if (isset($arrHttp["cnv"]))echo $arrHttp["cnv"]?>>
 <input type=hidden name=tipo value=<?php echo $arrHttp["tipo"]?>>
 <input type=hidden name=letrasel>
 <input type=hidden name=tagsel>
@@ -266,7 +268,7 @@ echo "
 			</table>
 		</td>
 </table>
-<?
+<?php
 	if ($arrHttp["tipo"]!="iso"){
 		echo "
 		<a href=javascript:EnviarForma('P')><img src=img/preview.gif border=0 alt=\"".$msgstr["vistap"]."\"></a> &nbsp;";

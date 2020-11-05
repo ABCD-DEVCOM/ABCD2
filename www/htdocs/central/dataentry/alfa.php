@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+foreach ($_REQUEST as $var=>$value)  echo "$var=$value<br>";
 $page="";
 if (isset($_REQUEST['GET']))
 	$page = $_REQUEST['GET'];
@@ -21,7 +21,7 @@ include("../lang/admin.php");
 
 include("../lang/dbadmin.php");
 
-
+include("../common/header.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
 	$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt");
 else
@@ -57,7 +57,7 @@ $query ="&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);
 //foreach ($contenido as $var=>$value) echo "$var=$value<br>";
-include("../common/header.php");
+
 echo "
 		<script languaje=Javascript>
 		document.onkeypress =

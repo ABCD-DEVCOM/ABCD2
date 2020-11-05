@@ -84,16 +84,16 @@ else
 echo "</script>\n";
 
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <!-- calendar stylesheet -->
   <link rel="stylesheet" type="text/css" media="all" href="../dataentry/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
-  <script type="text/javascript" src="../dataentry/calendar/calendar.js"></script>
+  <script  language="JavaScript" type="text/javascript"" src="../dataentry/calendar/calendar.js"></script>
   <!-- language for the calendar -->
-  <script type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
+  <script  language="JavaScript" type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
   <!-- the following script defines the Calendar.setup helper function, which makes
        adding a calendar a matter of 1 or 2 lines of code. -->
-  <script type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
+  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
 <script>
 kardex=""
 
@@ -263,14 +263,14 @@ ASK_LPN="<?php echo $ASK_LPN?>"
 </script>
 <?php
 $encabezado="";
-echo "<body onLoad=javascript:document.inventorysearch.inventory.focus()>\n";
+echo "<body onLoad=javascript:document.inventorysearch.inventory_sel.focus()>\n";
 include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-		<?php echo $msgstr["loan"];
+		<?php echo $msgstr["loan"]." ";
 		  if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") echo " - ".$msgstr["users"].": ".$arrHttp["usuario"];
 		?>
 	</div>
@@ -350,9 +350,10 @@ if (file_exists($db_path."loans.dat")){
 			<strong><?php echo $msgstr["inventory"]?></strong>
 		</label>
 		</td><td>
-		<?php if (isset($LOAN_POLICY) and $LOAN_POLICY=="BY_USER"  ){			?><input type=text name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';">	<?php }else{			?>
-		<textarea name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" rows=5 cols=50/></textarea>
-	<?php }
+		<?php if (isset($LOAN_POLICY) and $LOAN_POLICY=="BY_USER"  ){				echo "<input type=text name=\"inventory_sel\" id=\"inventory_sel\" value=\"";
+				if (isset($arrHttp["inventory_sel"])) echo $arrHttp["inventory_sel"];
+				echo "\" class=\"textEntry\" onfocus=\"this.className = 'textEntry';\"  onblur=\"this.className = 'textEntry';\">\n";			  }else{				echo "<textarea name=\"inventory_sel\" id=\"inventory_sel\" class=\"textEntry\" onfocus=\"this.className = 'textEntry';\"  onblur=\"this.className = 'textEntry';\" rows=5 cols=50/></textarea>\n";
+	 		  }
 
 	?>
 	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
@@ -409,8 +410,7 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="")
 	echo "value=\"".$arrHttp["usuario"]."\"";
 ?>
- onclick="document.inventorysearch.usuario.value=''"
-/>
+ onclick="document.inventorysearch.usuario.value=''"/>
 
 		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
 

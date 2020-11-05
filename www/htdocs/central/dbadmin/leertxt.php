@@ -75,11 +75,11 @@ if (isset($arrHttp["archivo"])) {
 function ActualizarFormato(){	document.forma1.action="pft_update.php"
 	document.forma1.submit()}
 function Enviar(){
-	window.opener.document.forma1.pft.value=esc(document.forma1.pftedit.value)
+	window.opener.document.forma1.pft.value=document.forma1.pftedit.value
 	if (heading=="Y")
 		window.opener.document.forma1.headings.value=document.forma1.headings.value
-	window.opener.EsconderVentana('pftedit')
-	window.opener.toggleLayer('pftedit')
+	window.opener.EsconderVentana('createformat')
+	window.opener.toggleLayer('createformat')
 //CHECK THE OPENER FORM WITH THE TYPE OF OUTPUT
 	switch (type){		case "CT":
 			window.opener.document.forma1.tipof[2].checked =true

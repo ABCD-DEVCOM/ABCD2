@@ -17,12 +17,13 @@ $rows_title=array();
 $rows_title[0]=$msgstr["usertype"];
 $rows_title[1]=$msgstr["description"];
 $rows_title[2]=$msgstr["tit_np"];
+$rows_title[3]=$msgstr["web_reserve"];
 
 include("../common/header.php");
 ?>
 <link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
-<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 
 	function AgregarFila(ixfila,Option){
@@ -131,20 +132,17 @@ echo "  </div>
 		$archivo=$db_path."circulation/def/".$lang_db."/typeofusers.tab";
 	if (file_exists($archivo)){
 		$fp=file($archivo);
-	}else{
-		$fp=array();
+	}else{		$fp=array();
 		for ($i=0;$i<20;$i++){
 			$fp[$i]='|||||';
 		}
-		$tope=20;
-	}
+		$tope=20;	}
 	$nfilas=0;
 	$i=-1;
 	$t=array();
 	$i=-1;
 	$IN=array();
-	foreach ($fp as $value){
-		$value=trim($value);
+	foreach ($fp as $value){		$value=trim($value);
 		if (trim($value)!=""){
 	    	$nfilas=$nfilas+1;
 			echo "\n<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n";
@@ -152,6 +150,9 @@ echo "  </div>
 			$value.='||||||';
 			$t=explode("|",$value);
 			echo "<td width=200>".$t[0]."</td><td width=300>".$t[1]."</td><td align=center>".$t[2]."</td>";
+			echo "<td align=center>";
+			if (isset($t[3])) echo $t[3];
+			echo "</td>";
       		echo " </tr>";
 		}
 
@@ -162,16 +163,16 @@ echo "  </div>
 	</table>
 	<a href=javascript:Enviar()><?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
 	<a href=configure_menu.php?encabezado=s><?php echo $msgstr["cancel"]?></a>
-<script>
+	<script>
 
     nfilas=<?php echo $nfilas."\n"?>
     var mygrid = new dhtmlXGridFromTable('tblToGrid');
 
 	mygrid.setImagePath("../dataentry/js/dhtml_grid/imgs/");
-	mygrid.setInitWidths("100,200,100")
+	mygrid.setInitWidths("100,200,50,50")
 
-	mygrid.setColAlign("left,left,center")
-	mygrid.setColTypes("ed,ed,ed");
+	mygrid.setColAlign("left,left,center,center")
+	mygrid.setColTypes("ed,ed,ed,ed");
     mygrid.enableAutoWidth(true);
     mygrid.enableAutoHeight(true,800);
  	mygrid.setOnBeforeRowDeletedHandler(doBeforeRowDeleted);
@@ -179,8 +180,8 @@ echo "  </div>
  	mygrid.setColSorting("")
 	nfilas++
 	for (j=nfilas;j<nfilas+10;j++){
-		mygrid.addRow((new Date()).valueOf(),['','',''],j)
-	}
+		mygrid.addRow((new Date()).valueOf(),['','','',''],j)
+    }
 
 	mygrid.clearSelection()
 	mygrid.setSizes();

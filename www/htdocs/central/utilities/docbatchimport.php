@@ -6,8 +6,8 @@
  * @desc:      Script to automaticly extract the metadata from the documents and create full text indexed DB
  * @author:    Marcos Mirabal - marcos.clary@gmail.com with additional input from EdS
  * @since:     20141203
- * @version:   2.8.2
- * @updated:   20191220
+ * @version:   2.8.3
+ * @updated:   20200920
  *
  * == BEGIN LICENSE ==
  *
@@ -39,9 +39,9 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 if (isset($arrHttp["base"])) $base_ant=$arrHttp["base"];
 $tikapath=$cgibin_path;
-$converter_path=$cisis_path."mx";
+$converter_path=$mx_path;
 $OS=strtoupper(PHP_OS);
-$maxfilezise=26214400;//25 MB
+$maxfilesize=26214400;//25 MB
 $filesCounter=0;
 
 $inipath = php_ini_loaded_file();
@@ -54,21 +54,22 @@ foreach($fp as $avalue)
 	if ($pos !== false)
 	 {
 		$cadmax=explode("=",$avalue);
-		$maxfilezise="";
+		$maxfilesize="";
 		$var=$cadmax[1];
 		for($i=0;$i<strlen($var);$i++)
 		  for($j=0;$j<=9;$j++)
 			{				
 				$local=(string)$j;				
-				if ($var[$i]==$local) $maxfilezise.=$var[$i];						
+				if ($var[$i]==$local) $maxfilesize.=$var[$i];
 			}
 	 }	 
 }
 } 
 
-$maxfilezise=((int)$maxfilezise)*1048576;
+$maxfilesize=((int)$maxfilesize)*1048576;
 //Get the path of the collection folder
 $def = parse_ini_file($db_path.$base_ant."/dr_path.def");
+//echo "collection-directory=".$db_path.$base_ant."/dr_path.def". "|||". $def['COLLECTION'] ; die;
 echo "<body onunload=win.close()>\n";
 
 if (isset($arrHttp["encabezado"])) {
@@ -128,7 +129,7 @@ echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
 <?php
 echo '<b><label style="color:red">'.$msgstr["warning"].'</label></b></br>'; 
 echo $msgstr["docbatchimport_tw"]."</br>";
-echo $msgstr["docbatchimport_filezise"]." ".($maxfilezise/1048576)." MB";
+echo $msgstr["docbatchimport_filesize"]." ".($maxfilesize/1048576)." MB";
  ?>
             <font color=green>
             <HR align=left width="80%">
@@ -351,7 +352,7 @@ echo '<table width="850">
 </table>
 <br>';
 		  
-ob_flush();flush();
+flush();
 $doctotal=0;
 $docerror=0;
 $total=mt_rand(1, 1000);
@@ -416,7 +417,7 @@ $directorio -> close();
 
 function get_infoFile($path,$archivo)
 { 
-global $total,$tikapath,$converter_path,$db_path,$base_ant,$cisis_ver,$Wxis,$doctotal,$img_path,$OS,$procstartedatN,$docerror,$maxfilezise,$truepathcol,$charsetcv,$level,$fieldspart,$filesCounter,$totalfilestoimport;
+global $total,$tikapath,$converter_path,$db_path,$base_ant,$cisis_ver,$Wxis,$doctotal,$img_path,$OS,$procstartedatN,$docerror,$maxfilesize,$truepathcol,$charsetcv,$level,$fieldspart,$filesCounter,$totalfilestoimport;
 if(!is_dir($path.$archivo)){
 //Get the file info
 $originalFileName=$archivo;
@@ -452,7 +453,14 @@ if (isset($vdocsource)) $vdocsource=intval(RemoveV($_POST["docsource"]))+$level;
 $charsetcv = $_POST["charsetcv"];
 $granularity = $_POST["granularity"];
 $textmode = $_POST["textmode"];
-$resetfilename = $_POST["resetfilename"];
+//Set resetfilename to false by default.
+$resetfilename = 0; 
+//If the POST variable "resetfilename" exists.
+if(isset($_POST['resetfilename'])){
+    //Checkbox has been ticked.
+    $resetfilename = 1;
+}
+
 // clean up file name to make it easy to process
 ///$newdocname= preg_replace("/[^a-z0-9._]/", "",str_replace(" ", "_", str_replace("%20", "_", strtolower($archivo)))); 
 ///$newdocname=str_replace(".".$ext,"",$newdocname);
@@ -465,26 +473,17 @@ $newdocname=str_replace('\'','_', $newdocname);
 $newdocname=str_replace("%20","_", $newdocname);
 $newdocname=str_replace($ext,$sep.$total,$newdocname);        // remove extension and add sep and number
 $newdocname_Len=strlen($newdocname);
-// next line to remove trailing numbers in filename, e.g. added by previous runs of this script
-//if ($resetfilename="y") {
-if ($resetfilename<>"") {
-//echo "resetfn=$resetfilename<BR>";//die;
- for ($ii=$newdocname_Len-1; (is_numeric(substr($newdocname,$ii,1)) OR substr($newdocname,$ii,1)=='_');$ii--);
-//echo "sep=".substr($newdocname,$ii+1,1)."<BR>";//die;
-if (substr($newdocname,$ii+1,1)=='_') $newdocname=substr($newdocname,0,$ii+1); // only if numbers was added with _
-}
-//echo "newdocname after numremove=$newdocname<BR>";die;
-$newdocname_Len=strlen($newdocname);
+
 // next line to remove, if selected, trailing numbers in filename, e.g. added by previous runs of this script
-if ($resetfilename=='1') {
+if ($resetfilename==0) {
  for ($ii=$newdocname_Len-1; (is_numeric(substr($newdocname,$ii,1)) OR substr($newdocname,$ii,1)=='_');$ii--);
 $newdocname=substr($newdocname,0,$ii+1);
 }
-if (filesize($path.$archivo)<$maxfilezise)
+if (filesize($path.$archivo)<$maxfilesize)
 {//If File is less than 25 MB
 //build the text to display
 //$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue">Processing</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. Renaming to <label style="font-weight:bold;color:blue">'.$newdocname.$ext."</label> .Creating record...";ob_flush();flush();
-$cadena="&nbsp;&nbsp;&nbsp;&nbsp;NO.".$filesCounter.'&nbsp;&nbsp;<label style="color:blue">Processing</label> <label style="font-style:italic">';
+$cadena="&nbsp;&nbsp;&nbsp;&nbsp;#".$filesCounter.'&nbsp;&nbsp;<label style="color:blue">Processing</label> <label style="font-style:italic">';
 $cadena.=$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>';
 //rename the file before proccessing
 $temppath=substr($path,strpos($path,'ABCDImportRepo'));
@@ -547,7 +546,7 @@ if (substr($value,0,21)=='<meta name="dc:title"') { $title=trim(substr($value,31
 if (substr($value,0,28)=='<meta name="dcterms:created"') $created=trim(substr($value,38,$pos));
 if (substr($value,0,25)=='<meta name="dc:publisher"') $publisher=trim(substr($value,35,$pos));
 if (substr($value,0,27)=='<meta name="dc:description"') { $description=trim(substr($value,37,$pos));
-$title=str_replace('\'','_',$title);     echo "title=$title<BR>";die;
+$title=str_replace('\'','_',$title);   //  echo "title=$title<BR>";die;
 $title=str_replace('\"','_',$title);
 $description=str_replace('\"',' ',$description);
 $description=str_replace('\'',' ',$description);            }
@@ -585,10 +584,13 @@ $htmlfile=str_replace('"','',$htmlfile);
 $lastpartno=1;
 if ($cisis_ver='bigisis'  OR $cisis_ver='ffi') $maxsize=1000000; else $maxsize=32000;
 //=========== NEW EdS
-if ($textmode<>'m')    // don't process full-text if metadata-only
+if ($textmode <> 'm') { //only if not metadata-only
+echo "Fulltext processing<BR>";
 $lastpartno = split_sourcefile($htmlfile,$maxsize,$granularity,$textmode,$firstpar);            // SPLIT_SOURCEFILE
-else
+} else {
+echo "Metadata only<BR>";
 $lastpartno = 1;
+}
 //===========
 $fieldspart1=$fieldspart;                           //fieldspart before adding v96 different docsourcepath values for each part
 
@@ -634,11 +636,11 @@ exec($mx,$outmx,$banderamx);
 @unlink($db_path."wrk/".$newdocname.'.html');
 $total++;
 $doctotal++;
-$cadena.=' <label style="font-weight:bold"> with '.$lastpartno.' record(s) created. Done</label></br>'; ob_flush();flush();
+$cadena.=' <label style="font-weight:bold"> with '.$lastpartno.' record(s) created. Done</label></br>'; flush();
 }//End of If File is less than 25 MB 
 else
 {
-$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:red">NOT Processed</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. <label style="font-weight:bold;color:red">File size limit exceded</label></br>';ob_flush();flush(); 
+$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:red">NOT Processed</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. <label style="font-weight:bold;color:red">File size limit exceded</label></br>';flush(); 
 $docerror++;
 //Move the file to the error folder
 $temppath=substr($path,strpos($path,'ABCDImportRepo'));
@@ -647,7 +649,7 @@ createPath($truepathcol."ImportError/");
 createPath($truepathcol."ImportError/".$fixpath);
 rename($path.$archivo, $truepathcol."ImportError/".$fixpath.$newdocname.$sep.$total.$ext);
 }
-}
+
 //Update the loading gift
 $percent = intval($filesCounter/$totalfilestoimport * 100)."%";
  echo '<script language="javascript">
@@ -655,6 +657,7 @@ $percent = intval($filesCounter/$totalfilestoimport * 100)."%";
   document.getElementById("information").innerHTML="'.$filesCounter.' file(s) processed of '.$totalfilestoimport.' files";
   </script>';
 return $cadena;	
+}
 }
 
 function RemoveV($field)
@@ -836,7 +839,7 @@ function split_sourcefile($sourcefilename,$maxsize,$granularity,$textmode,$first
 global $truepathcol;
  $linelen=0;
  $continue=0;
- $partheader="<H3><FONT COLOR=GREEN> PART ";
+ $partheader="<H3><FONT COLOR=GREEN> # ";
  $cisis_maxrecsize=$maxsize;
  $infile=$sourcefilename;
  $filesize=filesize($infile);
@@ -856,7 +859,7 @@ else $maxsize=$cisis_maxrecsize*0.5;
 //echo "maxsize=$maxsize<BR>";
 if ($filesize>$maxsize) {
 // if multi-part start with indicating 'PART 1'
-  $partsheader="<table  width=100% border=2><tr><td width=88%>$firstpar</td><td width=12% valign=top><font size=3 color=green $partheader $partno </font></td></tr></table>";
+  $partsheader="<table  width=100% border=1><tr><td width=88%>$firstpar</td><td width=12% valign=top bgcolor=antiquewhite><font size=3 color=green $partheader $partno </font></td></tr></table>";
   $writeFile=file_put_contents($truepathcol."ABCDSourceRepo/".$outname.'.html',"\n".$partsheader."\n", FILE_APPEND);
  }
 $bodystart=0;
@@ -864,7 +867,9 @@ $totalsize=0;
 $linecounter1=0;
 $linecounter=0;
 $firstparAdd=0;
-$file = @fopen($infile, "r") ;
+$firstparr="";
+//$file = @fopen($infile, "r") ;
+if(($file = fopen($infile, "r"))) {      // only if successfully opened the file for reading
 while (!feof($file))                   // main loop over all lines of the source file
 {
     $thisLine = fgets($file); //line contents
@@ -903,6 +908,8 @@ while (!feof($file))                   // main loop over all lines of the source
     }  // if line not empty
 }
        fclose($file) ;
+}  // end if if file successfully opened
+
 return $partno;
 }
 

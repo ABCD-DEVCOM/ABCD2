@@ -29,7 +29,7 @@
 ///////
 
 function LeerPft_Borrowers($pft_name){
-global $arrHttp,$db_path,$lang_db,$bd;$msgstr;
+global $arrHttp,$db_path,$lang_db,$bd,$msgstr;
 	$pft="";
 	$archivo=$db_path.$bd."/loans/".$_SESSION["lang"]."/$pft_name";
 	if (!file_exists($archivo)) $archivo=$db_path.$bd."/loans/".$lang_db."/$pft_name";
@@ -72,4 +72,5 @@ $pft_uskey=LeerPft_Borrowers("loans_uskey.pft");     // pft para leer el código 
 $pft_ustype=LeerPft_Borrowers("loans_ustype.pft");   // pft para leer el tipo de usuario
 $pft_usvig=LeerPft_Borrowers("loans_usvig.pft");     // pft para leer la vigencia del usuario
 $pft_usdisp=LeerPft_Borrowers("loans_usdisp.pft");   // pft para desplegar la información del usuario
+$pft_usmore=LeerPft_Borrowers("loans_usmore.pft");   // pft para leer la información adicional del usuario
 ?>

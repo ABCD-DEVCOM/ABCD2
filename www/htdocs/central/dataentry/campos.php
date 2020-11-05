@@ -127,7 +127,7 @@ echo "</script>\n";
 
 ?>
 <STYLE type=text/css>TABLE {	BACKGROUND-COLOR: #ffffff; FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt}BODY {	FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt}
-input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}text		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}</STYLE></head><script language=JavaScript src=js/terminoseleccionado.js?<?php echo time(); ?>></SCRIPT><script language=JavaScript src=js/lr_trim.js></SCRIPT><script language=javascript>
+input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}text		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}</STYLE></head><script language="JavaScript" type="text/javascript" src=js/terminoseleccionado.js?<?php echo time(); ?>></SCRIPT><script language="JavaScript" type="text/javascript" src=js/lr_trim.js></SCRIPT><script language=javascript>
 	base=window.opener.top.base
 	url_indice=""
 	Ctrl_activo=""
@@ -140,10 +140,17 @@ input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COL
 }
 	function AbrirIndiceAlfabetico(xI,Prefijo,SubC,Separa,db,cipar,tag,Formato){		Ctrl_activo=getElement(xI)
 	    document.forma1.Indice.value=xI
-	    Separa="&delimitador="+Separa	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo	    ancho=200		url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+xI+Prefijo+"&indice="+xI+"&repetible=0"+"&Formato="+Formato+"&postings=10&sfe=s"  		msgwin=window.open(url_indice,"indice","width=600, height=520,resizable, scrollbar")
+	    Separa="&delimitador="+Separa	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo	    ancho=200
+		url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+xI+Prefijo+"&indice="+xI+"&repetible=0"+"&Formato="+Formato+"&postings=10&sfe=s"  		msgwin=window.open(url_indice,"indice","width=600, height=520,resizable, scrollbar")
   		msgwin.focus()    	return
 
 	}
+function AbrirTesauro(Tag,base){
+		Url="../tesaurus/index.php?base="+base+"&Tag="+Tag
+		myleft=screen.width-450
+		msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)
+		msgwin.focus()
+	}
 
 	function AbrirIndice(ira){		url_indice=url_indice+ira	    ancho=screen.width-500-20		msgwin=window.open(url_indice,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=520,top=20,left="+ancho)		msgwin.focus()	}
 
@@ -188,7 +195,7 @@ input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COL
 <input type=hidden name=Formato>
 <input type=hidden name=Repetible><input type=hidden name=Indice>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class=td2>    <tr>
-    	<td>			<script language=JavaScript src=js/editarocurrencias.js?<?php echo time(); ?>></SCRIPT>
+    	<td>			<script language="JavaScript" type="text/javascript" src=js/editarocurrencias.js?<?php echo time(); ?>></SCRIPT>
 		</td>
 	<tr>
 		<td id="asubc">
@@ -209,10 +216,11 @@ function PickList($ix,$file){
 global $db_path,$lang_db,$arrHttp;
 	$Options="";	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$file;
 	if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$file;
+	$fp=array();
 	if (file_exists($archivo)){		$fp=file($archivo);
 		$Options="";
 		foreach ($fp as $value) {			$value=rtrim($value);
-			if ($value!=""){				$Options.=$value."$$$$";			}		}	}
+			if ($value!=""){				$Options.=$value.'$$$$';			}		}	}else{		$Options='$$$$';	}
 	echo "PickList['$ix']='".str_replace("'","&#39;",$Options)."'\n";}
 ?>
 

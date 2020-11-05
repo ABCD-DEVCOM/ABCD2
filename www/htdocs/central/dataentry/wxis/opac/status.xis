@@ -1,0 +1,40 @@
+ <IsisScript>
+
+	<section>
+		<field action=cgi tag=2001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=5017>lang</field>
+		<field action=cgi tag=9088>cttype</field>
+        <field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+         <trace>xOn</trace>
+		<display><pft></pft></display>
+
+       	<parm name=cipar>
+          	<pft>s1:=(''),s2:=(''),if p(v5016) then s1:=(replace(s(cat(v5016)),'%path_database%',v1)) s(s1),fi,/if p(v5015) then s2:=(replace(s(cat(v5015)),'%path_database%',v1))/ fi
+          	    s3:=(s(s1),/,s(s2)),replace(s(s3),'%lang%',v5017 )
+          	 </pft>
+       	</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<parm name="buffersize">200000</parm>
+
+		<label>status</label>
+			<field action="statusdb" tag="1091"><pft>v2001</pft></field>
+			<field action="replace" tag="1092">
+				<pft>
+					/*'STATUS'/'BD:',if v1091^s : 'm' then 'Y' else 'N' fi/
+					'IF:',if v1091^s : 'i' then 'Y' else 'N' fi/ */
+					if p(v1091^n) then 'MAXMFN:',f(val(v1091^n) - 1,1,0)  fi/
+					/*'DENTRYLOCK:'v1091^d,/
+					'EXCLUSIVEWRITELOCK:'v1091^e,/ */
+				</pft>
+			</field>
+		<display>
+			<pft>v1092/</pft>
+		</display>
+       	<flow action=exit>1</flow>
+
+    </section>
+</IsisScript>

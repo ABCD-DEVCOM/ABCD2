@@ -1,14 +1,14 @@
 <?php
 session_start();
+include("../common/get_post.php");
+include("../config.php");
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-include("../common/get_post.php");
-
 if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!="")
 	$arrHttp["Opcion"]="buscar";
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
-include("../config.php");
+
 
 
 include("../lang/soporte.php");
@@ -20,13 +20,13 @@ include("leer_fdt.php");
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global  $arrHttp,$xWxis;
-
 function WxisLLamar($IsisScript,$query){global $Wxis,$xWxis,$db_path;
 	include("../common/wxis_llamar.php");
 	return $contenido;}
 
 function GenerarSalida($Mfn,$count,$Pft,$sel_mfn){
-global $arrHttp,$xWxis,$db_path;	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Mfn=$Mfn&count=$count";
+global $arrHttp,$xWxis,$db_path;
+	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Mfn=$Mfn&count=$count";
   	if ($Pft=="") $Pft=$arrHttp["search"].'#';
 	$query.="&Formato=".urlencode($Pft.'/')."&Opcion=rango";
 	$contenido="";
@@ -95,7 +95,9 @@ global $arrHttp,$xWxis,$db_path;	$query="&base=".$arrHttp["base"]."&cipar=$db_p
 
 
 //foreach ($arrHttp as $val=>$value) echo "$val=$value<br>";
+
 include ("../common/header.php");
+
 ?>
 <script>
 RegistrosSeleccionados=top.RegistrosSeleccionados
@@ -257,7 +259,6 @@ if (!isset($arrHttp["Expresion"])){
 	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
 	$query.="&Expresion=".urlencode(stripslashes($arrHttp["Expresion"]))."&Opcion=".$arrHttp["Opcion"];
 	$query.="&from=$desde&Mfn=$desde&count=$count";
-
 	if ($arrHttp["tipob"]=="pft"){
 	    $arrHttp["search"]=str_replace('/','<br>',$arrHttp["search"]);
 		$query.='&Formato='.urlencode($arrHttp["search"].'#');
@@ -352,9 +353,9 @@ if ($Opcion=="rango" or $Opcion=="busqueda"){
 	$hasta=$desde+$count;
 	if ($hasta>=$total){		$hasta=1;	}
 
-	echo "<p><font face=arial size=1>
-	Próximo registro:<input type=text size=5 name=from value='".$hasta."'>,
-	procesar <input type=text size=5 name=count value=".$count."> registros más
+	echo "<p><font face=arial size=1>".$msgstr["cg_nxtr"].
+	" <input type=text size=5 name=from value='".$hasta."'>,".$msgstr["cg_read"]."
+	&nbsp;<input type=text size=5 name=count value=".$count."> ".$msgstr["cg_morer"]."
 	<p><input type=submit value=\"".$msgstr["continuar"]."\" onclick=EnviarForma() ><br>";
 }
 echo "<input type=hidden name=total value=$total>\n";

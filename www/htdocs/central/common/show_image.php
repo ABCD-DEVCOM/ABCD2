@@ -29,6 +29,7 @@
        case "eps": $cont_type="application/postscript";break;
        case "ps": $cont_type="application/postscript";break;
        case "xls": $cont_type="application/vnd.ms-excel";break;
+       case "xlsx": $cont_type="application/vnd.ms-excel";break;
        case "ppt": $cont_type="application/vnd.ms-powerpoint";break;
        case "zip": $cont_type="application/zip";break;
        case "mid": $cont_type="audio/midi";break;
@@ -47,19 +48,12 @@
 
 	 }
 	$img=$img_path.$arrHttp["image"];
-
-//echo 'image='.$img;
-//die;
-	if (!file_exists($img)){
-		echo $img." Not found";
-		die;
-	}
+	if (!file_exists($img)){		echo $img." Not found";
+		die;	}
 	header("Content-type: $cont_type");
 	header('Content-Disposition: inline; filename="'.$img.'"');
 
-  	//if (!file_exists($img)){
-  	///	$img=$img_path."/noimage.jpg";
-  	//}
+  	//if (!file_exists($img)){  	///	$img=$img_path."/noimage.jpg";  	//}
   	$img=file($img);
 	$imagen="";
 	foreach ($img as $value)  $imagen.=$value;

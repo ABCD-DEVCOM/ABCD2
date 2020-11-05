@@ -1,20 +1,8 @@
 <?php
-echo "<script language=\"javascript\">
-function validar()
-{
-if(document.form1.from.value<=0)
-{
-alert(\"Check the range!\");
-event.returnValue=false;
-return false;
-}
-return true;
-}
-</script>";
-//session_start();
-/*if (!isset($_SESSION["permiso"])){
+session_start();
+if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
-}*/
+}
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
@@ -31,6 +19,18 @@ if (isset($arrHttp["encabezado"])) {
 	$encabezado="&encabezado=s";
 
 }
+echo "<script language=\"javascript\">
+function validar()
+{
+if(document.form1.from.value<=0)
+{
+alert(\"Check the range!\");
+event.returnValue=false;
+return false;
+}
+return true;
+}
+</script>";
 				echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">Add to Loan Objects: " . $base."
 			</div>
@@ -203,16 +203,17 @@ while(!feof($fp))
 <?php
 include("../common/get_post.php");
 $base=$_POST['base'];
+$bdp="loanobjects";
 // calling wxis with IsisScript hi.xis in $db_path
 $IsisScript=$Wxis." IsisScript=".$db_path."hi.xis";
 //echo "hixis=$IsisScript<BR>";
+if (isset($_POST['from'])){
 $from=$_POST['from'];
 $to=$_POST['to'];
 $bprinc=$_POST['ml'];;
 $bsec=$_POST['sl'];
 $campo=$_POST['field'];
 $tag=$_POST['tag'];
-$bdp="loanobjects";
 $CNF=$_POST['cnf'];
 //$OS=strtoupper(PHP_OS);
 //$converter_path=$mx_path;
@@ -337,7 +338,7 @@ echo "$cantReg loanobject records created!";
 else
 echo "NO loanobject records created!";
 }
-
+}
 ?>
 </div>
 

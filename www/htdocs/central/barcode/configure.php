@@ -9,7 +9,7 @@ if (!file_exists($archivo)){
 	foreach ($fp as $value){
 		$value=trim($value);
 		if ($value=="") continue;
-		if ($value=="" or substr($value,1,2)=='//') continue;
+		if ($value=="" or substr($value,0,2)=='//') continue;
 		$v=explode('=',$value,2);
 		$v[1]=trim($v[1]);
 		if ($v[1]!=""){

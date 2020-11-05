@@ -30,10 +30,12 @@ foreach ($fp_leader as $value){	$value=trim($value);
 //echo $titulo;
 $pl_tag=substr($arrHttp["Tag"],3);
 echo $pl_tag;
+$fp=array();
 if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pll[1]))
 	$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pll[1]);
 else
-    $fp=file($db_path.$arrHttp["base"]."/def/".$lang_db."/".$pll[1]);
+    if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/".$pll[1]))
+    	$fp=file($db_path.$arrHttp["base"]."/def/".$lang_db."/".$pll[1]);
 echo "\n<script>
 picklist=new Array()
 namepick=new Array()
@@ -46,15 +48,20 @@ foreach ($fp as $value) {	$value=rtrim($value);
 	    echo "SubCampos"."[".$ixpos."]=\"$value\"\n";
 		if ($pick!=""){			$name=$pick;
 			$name=str_replace(".","_",$pick);
+			$fpick=array();
 			if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/$pick"))
 				$fpick=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/$pick");
 			else
-			    $fpick=file($db_path.$arrHttp["base"]."/def/".$lang_db."/$pick");
+				if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/$pick"))
+			    	$fpick=file($db_path.$arrHttp["base"]."/def/".$lang_db."/$pick");
 			$tt="";
 			foreach ($fpick as $pl){				$pl=rtrim($pl);
 				if ($pl!="") $tt.=$pl."!!!!";			}
-			$tt=substr($tt,0,strlen($tt)-4);
-			$tt=str_replace('"',"&quot;",$tt);
+
+			if ($tt!=""){
+				$tt=substr($tt,0,strlen($tt)-4);
+				$tt=str_replace('"',"&quot;",$tt);
+			}
 			echo "picklist"."[".$ixpos."]=\"$tt\"\n";
 			$arr=explode("|",$value);
 			echo "namepick"."[".$ixpos."]=\"".$arr[11]."\"\n";
@@ -64,7 +71,7 @@ echo "</script>\n";
 include("../common/header.php");
 ?>
 
-<script language=Javascript src=js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <script language=javascript>
 mod_picklist="<?php echo $msgstr["mod_picklist"]?>"
 reload_picklist="<?php echo $msgstr["reload_picklist"]?>"
@@ -151,30 +158,31 @@ for (i=1;i<nSC;i++) {
    			multiple=" "
    		NombreCampo="tag"+i        document.writeln("<select name=tag"+i+multiple+" id="+NombreCampo+">")
         document.writeln("<option value=''></option>")
-        pl=picklist[i].split('!!!!')
-        optx=pl[0].split('|',2)
+        if (picklist[i].length!=0){
+       		pl=picklist[i].split('!!!!')
+        	optx=pl[0].split('|',2)
 
-        opcion=Contenido.substr(ixpos,s[9])
-        len_opt=optx[0].length
-        sel=""
-        for(ix_o in pl){
-        	opc_output=pl[ix_o].split('|',2)
         	opcion=Contenido.substr(ixpos,s[9])
-        	document.writeln("<option value='"+opc_output[0]+"'")
-        	while (opcion.length>0){        		opt_data=opcion.substr(0,len_opt)
+        	len_opt=optx[0].length
+        	sel=""
+        	for(ix_o in pl){
+        		opc_output=pl[ix_o].split('|',2)
+        		opcion=Contenido.substr(ixpos,s[9])
+        		document.writeln("<option value='"+opc_output[0]+"'")
+        		while (opcion.length>0){        			opt_data=opcion.substr(0,len_opt)
 
-        		opcion=opcion.substr(len_opt)
+        			opcion=opcion.substr(len_opt)
 
-        		if (opc_output[0]==opt_data){
-        			sel=" selected"
-        			opcion=""
-        		}else{
-        			sel=""
-                }
-			}
-        	document.writeln(sel+">"+opc_output[1]+" ("+opc_output[0]+")"+"</option>\n")        }
+        			if (opc_output[0]==opt_data){
+        				sel=" selected"
+        				opcion=""
+        			}else{
+        				sel=""
+                	}
+				}
+        		document.writeln(sel+">"+opc_output[1]+" ("+opc_output[0]+")"+"</option>\n")        	}
 
-
+        }
         document.writeln("</select>\n")
         picklist_name=namepick[i]
         <?php

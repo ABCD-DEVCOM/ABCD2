@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 include("../config.php");
 $response="";
 $OS=strtoupper(PHP_OS);

@@ -26,17 +26,30 @@
  * == END LICENSE ==
 */
 session_start();
+//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";//die;
 if (isset($_SESSION["DB_PATH"]))
-	$arrHttp["DB_PATH"]=$_SESSION["DB_PATH"];
+	$arrHttp["db_path"]=$_SESSION["DB_PATH"];
+if (isset($_REQUEST["db_path"]))$_SESSION["DB_PATH"]=$_REQUEST["db_path"];
 if (!isset($_SESSION["login"])) $_SESSION["login"] ="web";
 include("../common/get_post.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";die;
 include("../config.php");
-if (!isset($arrHttp["vienede"]) or $arrHttp["vienede"]!="ecta_web" ){
+if (isset($_REQUEST["Web_Dir"])){
+/* para leer el db_path */
+	$Web_Dir=$_REQUEST["Web_Dir"];
+	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita"){		$xis_path=$xWxis;
+		$exe_path=$Wxis;
+		include($Web_Dir."php/config_opac.php");
+		$xWxis=$xis_path;
+		$Wxis=$exe_path;
+	}
+}
+if (isset($_REQUEST["OpacHttp"]))  $OpacHttp=$_REQUEST["OpacHttp"];
+if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="ecta_web" and $arrHttp["vienede"]!="orbita") ){
 	if (!isset($_SESSION["permiso"])){
 		header("Location: ../common/error_page.php") ;
 	}
 }
+
 if (isset($arrHttp["DB_PATH"])) $db_path=$arrHttp["DB_PATH"];
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 if (isset($arrHttp["lang"])) $_SESSION["lang"]=$arrHttp["lang"];
@@ -56,8 +69,8 @@ $us_tab=LeerPft("loans_uskey.tab","users");
 $t=explode("\n",$us_tab);
 $uskey=$t[0];
 
-require_once("../circulation/grabar_log.php");
-
+if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita"){	require_once("../circulation/grabar_log.php");}else{	require_once("../circulation/grabar_log.php");}
+$error="";
 //se busca el numero de control en el archivo de transacciones para ver si el usuario tiene otro ejemplar prestado
 function LocalizarTransacciones($control_number,$prefijo,$base_origen){
 global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
@@ -140,15 +153,13 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
 		$IsisScript=$xWxis."buscar_ingreso.xis";
 		include("../common/wxis_llamar.php");
 		$Total=0;
-		foreach ($contenido as $linea){
-			$linea=trim($linea);
+		foreach ($contenido as $linea){			$linea=trim($linea);
 			if ($linea!="") {
 				$l=explode('|$',$linea);
 				if (substr($linea,0,6)=="[MFN:]"){					$Mfn=trim(substr($linea,6));				}else{					if (substr($linea,0,8)=="[TOTAL:]"){						$Total=trim(substr($linea,8));					}else{						$prestamo=$linea;					}
 				}
 			}
 		}
-
 		$errores="";
 	//echo "Mfn=$Mfn<p>" ;
 		if ($Total<=0){			$error="&error=".$msgstr["notloaned"];
@@ -169,6 +180,8 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
 			$ppres=$p[10];            //Loan policy
 			$num_ctrl=$p[11];         // Número de control
 			$catalog_db=$p[12];           // Nombre de la base de datos
+			if ($catalog_db=="" and isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita"){				$catalog_db="biblo";			}
+
 			$total_prestados=$p[13];  //Total de ejemplares prestados por número de control
 			$arrHttp["usuario"]=$cod_usuario;
             include_once("sanctions_read.php");
@@ -219,11 +232,12 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
 			//se verifica si el objeto admite más renovaciones
 
 			if ($p[6]!=""){
+
 				if ($no_renova>=$p[6]){
 					$error="&error=".$msgstr["nomorenew"];
 					$resultado.=";".$num_inv."  ".$msgstr["nomorenew"];
 					$renewed="N";
-					Regresar($error);
+					Regresar($error,$OpacHttp);
 					continue;				}
             }
 //se verifica la fecha límite del usuario
@@ -232,7 +246,7 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
 					$resultado.=";".$num_inv." *** ".$msgstr["limituserdate"].". ".$p[15]."  ".", ".$msgstr["nomorenew"];
 					$renewed="N";
 					//echo $resultado;die;
-					Regresar($error);
+					Regresar($error,$OpacHttp);
 					continue;
 				}
 			}
@@ -243,66 +257,66 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
 					$resultado.=";".$num_inv."  ".$msgstr["limitobjectdate"].", ".$msgstr["nomorenew"];
 					$renewed="N";
 					//echo $resultado;die;
-					Regresar($error);
+					Regresar($error,$OpacHttp);
 					continue;
 				}
 			}
 // se verifica si el titulo no está reservado
-
-			if (!isset($reserve_active) or (isset($reserve_active) and $reserve_active!="N")){
-//DETERMINAMOS EL TOTAL DE EJEMPLARES QUE TIENE EL TITULO
-				$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
-				$base_catalogo="";
-				if (file_exists($db_path."loans.dat"))					$copies="N";
-				else
-					$copies="Y";
-				if ($copies=="Y"){
-					$Expresion="CN_".$catalog_db."_".$num_ctrl;
-					$base_catalogo=$catalog_db;
-					$catalog_db="loanobjects";
-					$pft_ni="(v959/)";
-				}else{
-					//SE LEE EL PREFIJO A UTILIZAR PARA LOCALIZAR EL OBJETO A TRAVÉS DE SU NÚMERO DE INVENTARIO
-					$Expresion=$prefix_cn.$num_ctrl;
-					$catalog_db=strtolower($catalog_db);
-					$pft_ni=LeerPft("loans_inventorynumber.pft",$catalog_db);
-					$pft_ni=str_replace("/"," ",$pft_ni);
-					$pft_ni=str_replace("\n"," ",$pft_ni);
-					if (isset($_SESSION["library"])) $pft_ni=str_replace('#library#',$_SESSION['library'],$pft_ni);
-					$pft_ni="(".$pft_ni."/)";
+            //echo $reserve_active;die;
+            if (isset($ILL) and $ILL==$tipo_objeto){            }else{				if (isset($reserve_active) and $reserve_active!="N"){
+	//DETERMINAMOS EL TOTAL DE EJEMPLARES QUE TIENE EL TITULO
+					$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
+					$base_catalogo="";
+					if (file_exists($db_path."loans.dat"))						$copies="N";
+					else
+						$copies="Y";
+					if ($copies=="Y"){
+						$Expresion="CN_".$catalog_db."_".$num_ctrl;
+						$base_catalogo=$catalog_db;
+						$catalog_db="loanobjects";
+						$pft_ni="(v959/)";
+					}else{
+						//SE LEE EL PREFIJO A UTILIZAR PARA LOCALIZAR EL OBJETO A TRAVÉS DE SU NÚMERO DE INVENTARIO
+						$Expresion=$prefix_cn.$num_ctrl;
+						$catalog_db=strtolower($catalog_db);
+						$pft_ni=LeerPft("loans_inventorynumber.pft",$catalog_db);
+						$pft_ni=str_replace("/"," ",$pft_ni);
+						$pft_ni=str_replace("\n"," ",$pft_ni);
+						if (isset($_SESSION["library"])) $pft_ni=str_replace('#library#',$_SESSION['library'],$pft_ni);
+						$pft_ni="(".$pft_ni."/)";
+					}
+					$query = "&Opcion=disponibilidad&base=$catalog_db&cipar=$db_path"."par/$catalog_db.par&Expresion=".$Expresion."&Pft=".urlencode($pft_ni);
+					include("../common/wxis_llamar.php");
+					$obj=array();
+					foreach ($contenido as $value){						$value=trim($value);
+						if (trim($value)!="" and substr($value,0,8)!='$$TOTAL:')
+							$obj[]=$value;
+					}
+					if ($catalog_db=="loanobjects") $catalog_db=$base_catalogo;
+					//Se determinan los items prestados
+					$tr_prestamos=LocalizarTransacciones($num_ctrl,"ON",$catalog_db);
+					$items_prestados=count($tr_prestamos);
+					$lista_espera=Reservado($num_ctrl,$catalog_db);
+	                //echo $lista_espera;
+					if ($lista_espera>0)
+						$disponibilidad=0;
+	                else
+						$disponibilidad=count($obj)-($items_prestados-1)-$lista_espera;
+					if ($disponibilidad<=0){						$error="&error=".$msgstr["reservednorenew"];
+						$resultado.=";".$num_inv."  ".$msgstr["reservednorenew"];
+						$renewed="N";
+						//echo $resultado;die;
+						Regresar($error,$OpacHttp);
+						continue;					}
 				}
-				$query = "&Opcion=disponibilidad&base=$catalog_db&cipar=$db_path"."par/$catalog_db.par&Expresion=".$Expresion."&Pft=".urlencode($pft_ni);
-				include("../common/wxis_llamar.php");
-				$obj=array();
-				foreach ($contenido as $value){					$value=trim($value);
-					if (trim($value)!="" and substr($value,0,8)!='$$TOTAL:')
-						$obj[]=$value;
-				}
-				if ($catalog_db=="loanobjects") $catalog_db=$base_catalogo;
-				//Se determinan los items prestados
-				$tr_prestamos=LocalizarTransacciones($num_ctrl,"ON",$catalog_db);
-				$items_prestados=count($tr_prestamos);
-				$lista_espera=Reservado($num_ctrl,$catalog_db);
-                //echo $lista_espera;
-				if ($lista_espera>0)
-					$disponibilidad=0;
-                else
-					$disponibilidad=count($obj)-($items_prestados-1)-$lista_espera;
-				//echo "<br> $items_prestados ".$disponibilidad; die;
-				if ($disponibilidad<=0){					$error="&error=".$msgstr["reservednorenew"];
-					$resultado.=";".$num_inv."  ".$msgstr["reservednorenew"];
-					$renewed="N";
-					//echo $resultado;die;
-					Regresar($error);
-					continue;				}
 			}
 // Se calcula si hay atraso en la fecha de devolución
 			$atraso=compareDate($fecha_d,$lapso);
 			if ($atraso<0){
-				if ($p[13]!="Y"){  // se verifica si la política permite renovar cuando está atrasado					$error="&error=".$msgstr["loanoverdued"];
+				if ($p[13]!="Y" and $p[13]!=""){  // se verifica si la política permite renovar cuando está atrasado					$error="&error=".$msgstr["loanoverdued"];
 					$resultado.=";".$num_inv."  ".$msgstr["loanoverdued"]."  ";
 					$renewed="N";
-					Regresar($error);
+					Regresar($error,$OpacHttp);
 					continue;
 				}
 			}
@@ -314,7 +328,7 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
             if ($nsusp>0 or $nmulta>0){            	$error="&error=".$msgstr["pending_sanctions"];
             	$resultado.=";".$num_inv." ".$msgstr["pending_sanctions"];
             	$renewed="N";
-            	Regresar($error);
+            	Regresar($error,$OpacHttp);
             	continue;
             }
 // se verifica si tiene reservas
@@ -342,6 +356,7 @@ foreach ($items as $num_inv){	$num_inv=trim($num_inv);
 				$ValorCapturado.="<40 0>".$fecha_d."</40>";
 				$ValorCapturado.="<45 0>".$hora_d."</45>";
 				$ValorCapturado.="<200 0>".$f_ant."</200>";
+				$ValorCapturado.="<201 0>^a".$_SESSION["login"]."^b".date("Ymd h:i A")."^tR</201>";
 				$ValorCapturado=urlencode($ValorCapturado);
 				$IsisScript=$xWxis."actualizar_registro.xis";
 				$Formato="";
@@ -374,19 +389,38 @@ else
 	$cu="&usuario=$cod_usuario";
 if (isset($arrHttp["reserve"])){	$reserve="&reserve=\"S\"";
 }else{	$reserve="";}
-if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){    header("Location: opac_statment_ex.php?usuario=$cod_usuario$error&vienede=ecta_web&lang=$lang&resultado=".urlencode($resultado));
-    die;
-}header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
+if (isset($arrHttp["vienede"])){	switch ($arrHttp["vienede"]){
+		case "ecta_web":
+			header("Location: $OpacHttp"."php/opac_statment_call.php?usuario=$cod_usuario$error&vienede=".$arrHttp["vienede"]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path");
+    		break;
+    	case "orbita";
+    		$url=$OpacHttp."/php/opac_statment_call.php?usuario=".$_REQUEST["usuario"]."$error&vienede=".$arrHttp["vienede"]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path";
+    		header("Location: ".$url);
+    		break;
+    	default:
+    		header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
+	}
+	die;}
+
+header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
 die;
 
-function Regresar($error){global $arrHttp,$cod_usuario,$db_path,$lang;
-    if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){    	header("Location: opac_statment_ex.php?usuario=$cod_usuario$error&vienede=ecta_web&DB_PATH=$db_path&lang=$lang");
-    	die;    }
-}
-
-
-
-
-
-
+function Regresar($error,$OpacHttp){global $arrHttp,$cod_usuario,$db_path,$lang;
+    $resultado="";
+    if (isset($arrHttp["vienede"])){    	switch ($arrHttp["vienede"]){    		case "orbita":
+    			$url=$OpacHttp."/php/opac_statment_call.php?usuario=".$_REQUEST["usuario"]."$error&vienede=".$_REQUEST["vienede."]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path";
+    			header("Location: ".$url);
+    			break;
+    		case "ecta_web":
+    			header("Location:$OpacHttp"."php/opac_statment_call.php?usuario=$cod_usuario$error&vienede=".$_REQUEST["vienede"]."&db_path=$db_path&lang=$lang");
+    			break;
+    		case "renovar":
+    		default:
+    			header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&usuario=".$cod_usuario."$error");
+    	}    }    die;}
 ?>
+<form name=retorno action=opac_statment_ex.php method=post>
+<input type=hidden name=usuario value="<?php echo $cod_usuario?>">
+<input type=hidden name=vienede value=orbita>
+<input type=hidden name=lang value="<?php echo $lang?>">
+<input type=hidden name=resultado value="<?php echo $resultado?>">

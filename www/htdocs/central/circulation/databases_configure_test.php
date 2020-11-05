@@ -37,7 +37,7 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
 function LeerRegistro($Pft,$base){global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
 	if (isset($arrHttp["Mfn"])){
@@ -121,9 +121,25 @@ $Pft=urlencode($Pft);
 LeerRegistro($Pft,"trans");
 echo "</td></table>";
 
+if (isset($arrHttp["item_inf_add"])){
+	echo "<table border=1 width=90%><td><h5><font color=darkred>". $msgstr["item_inf_add"]."</font></H5>";
+	$Pft=stripslashes($arrHttp["item_inf_add"]);
+	$Pft=urlencode($Pft);
+	LeerRegistro($Pft,$object_db);
+	echo "</td></table>";
+}
+
 if (isset($arrHttp["pft_typeofr"])){
 	echo "<table border=1 width=90%><td><h5><font color=darkred>". $msgstr["pft_typeofr"]."</font></H5>";
 	$Pft=stripslashes($arrHttp["tm"]);
+	$Pft=urlencode($Pft);
+	LeerRegistro($Pft,$object_db);
+	echo "</td></table>";
+}
+
+if (isset($arrHttp["pft_reserve"])){
+	echo "<table border=1 width=90%><td><h5><font color=darkred>". $msgstr["pft_reserve"]."</font></H5>";
+	$Pft=stripslashes($arrHttp["pft_reserve"]);
 	$Pft=urlencode($Pft);
 	LeerRegistro($Pft,$object_db);
 	echo "</td></table>";

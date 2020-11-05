@@ -26,6 +26,7 @@
  * == END LICENSE ==
 */
 include("../common/get_post.php");
+$arrHttp = filter_input_array(INPUT_POST, $arrHttp);
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";//die;
 
 if (!isset($arrHttp["desde"]) or isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){
@@ -180,7 +181,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$tr_prestamos;
 	foreach ($contenido as $linea){
 		if (trim($linea)!=""){
 			$lp=explode('^',$linea);
-			if ($arrHttp["base"]==$lp[13]){				//Se determina si el préstamo corresponde a la base de datos desde la cual se reserva
+			if ($arrHttp["base"]==$lp[13]){				$lp[0]=strtoupper($lp[0]);				//Se determina si el préstamo corresponde a la base de datos desde la cual se reserva
 				$prestamos[$lp[0]]=$lp[4] ." &nbsp; &nbsp;(".$lp[10].")";
 				$usuarios_p[$lp[10]]=$lp[13];  //código del usuario			}
 
@@ -196,6 +197,7 @@ function DeterminarItems($contenido,$politica,$tipoUsuario,$prestamos,$msgstr){
     $items_reserve=0;
     $items_no_reserve=0;
     $total_prestados=0;	foreach ($contenido as $linea){
+	//echo $linea."<br>";
 		$linea=trim($linea);
 		if ($linea!=""){
 			if (substr($linea,0,8)=='$$TOTAL:'){
@@ -203,8 +205,7 @@ function DeterminarItems($contenido,$politica,$tipoUsuario,$prestamos,$msgstr){
 			}else{
 				$l=explode('||',$linea);
 				$f_dev="";
-				if (count($l)>0){
-					if (isset($prestamos[$l[0]]))
+				if (count($l)>0){					if (isset($prestamos[$l[0]]))
 						$f_dev= $prestamos[$l[0]];
 					if (isset($prestamos[strtoupper($l[0])]))
 						$f_dev= $prestamos[strtoupper($l[0])];
@@ -217,12 +218,14 @@ function DeterminarItems($contenido,$politica,$tipoUsuario,$prestamos,$msgstr){
 						       $can_reserve=explode('|',$politica[0][strtoupper($tipoUsuario)]);
 							else{
 								echo $msgstr["nopolicy"]." ".$l[1]." / ".$tipoUsuario;
-								die;
+								//die;
 							}
 						}
 					}else{
 						$can_reserve=explode('|',$politica[strtoupper($l[1])][strtoupper($tipoUsuario)]);
                 	}
+                	////********* revisar
+                	$puede_reservar="";
 					if (isset($can_reserve[11])){
 						if (($can_reserve[11])=="") $can_reserve[11] ="N";
 						if ($can_reserve[11]=="Y"){
@@ -241,6 +244,7 @@ function DeterminarItems($contenido,$politica,$tipoUsuario,$prestamos,$msgstr){
 			}
 		}
 	}
+	//die;
 	return array($copies_title,$items_reserve,$items_no_reserve,$total_prestados);}
 
 // Se localiza el número de inventario en la base de datos de objetos  de préstamo
@@ -317,7 +321,6 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$politica,$msgstr,$lang_db;
 	$items_reserve=$res[1];
 	$items_no_reserve=$res[2];
 	$total_prestados=$res[3];
-
 	$disponibilidad=$items_reserve-$total_prestados;
 	return array($copies_title,$disponibilidad,$items_reserve,$items_no_reserve) ;
 }
@@ -386,13 +389,14 @@ function MostrarResultados($contenido){global $msgstr,$arrHttp,$db_path,$xWxis,
 		echo "<input type=hidden name=Opcion value=".$arrHttp["Opcion"].">\n";
 	$tipoUsuario=ExtraerTipoUsuario($_SESSION["user_reserve"]);
 	echo "<input type=hidden name=tipoUsuario value='$tipoUsuario'>\n";
-	foreach ($contenido as $value) $con.=$value;
+	foreach ($contenido as $value) {		if (substr($value,0,6)=='[MFN:]') continue;
+		if (substr($value,0,8)=='[TOTAL:]') continue;
+		$con.=$value;	}
 	$registro=explode('####',$con);
 	If (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA")echo $msgstr["rsvr_hlp"];
 	echo "<br><table bgcolor=#eeeeee width=100% border=0>";
 	echo "<td bgcolor=white width=85% valign=top>\n";
-	foreach ($registro as $linea){		if (trim($linea)!="") {
-			$lin=explode('$$$$',$linea);
+	foreach ($registro as $linea){		if (trim($linea)!="") {			$lin=explode('$$$$',$linea);
 			$msgerr="";
 			$reservas_activas=0;
 			if (isset($lin[1])){
@@ -478,7 +482,6 @@ global $arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db,$Expresion;
 	 	$Expresion=stripslashes($Expresion);
 		$arrHttp["Opcion"]="busquedalibre";
 	}
-	//echo $Expresion;
 	$Expresion=urlencode(trim($Expresion));
 	if (!isset($arrHttp["from"])) $arrHttp["from"]=1;
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=1;
@@ -494,7 +497,6 @@ global $arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db,$Expresion;
 
 
 // Prepara la fórmula de búsqueda cuando viene de la búsqueda avanzada
-
 function PrepararBusqueda(){
 global $arrHttp,$matriz_c,$camposbusqueda;
 
@@ -510,70 +512,31 @@ global $arrHttp,$matriz_c,$camposbusqueda;
 	// se analiza cada sub-expresion para preparar la fórmula de búsqueda
 	$nse=-1;
 	for ($i=0;$i<count($expresion);$i++){
-		$expresion[$i]=trim(stripslashes($expresion[$i]));
-		if ($expresion[$i]!=""){
-
-			$cb=$matriz_c[$prefijos[$i]];
-			$cb=explode('|',$cb);
-			$pref=trim($cb[2]);
-			$pref1='"'.$pref;
-			if (substr(strtoupper($expresion[$i]),0,strlen($pref1))==strtoupper($pref1) or substr(strtoupper($expresion[$i]),0,strlen($pref))==strtoupper($pref)){
-
-			}else{
-
-				$expresion[$i]=$pref.$expresion[$i];
-			}
-			$formula=str_replace("  "," ",$expresion[$i]);
-			$subex=Array();
-			if (trim($campos[$i])!="" and trim($campos[$i])!="---"){
-				$id="/(".trim($campos[$i]).")";
-			}else{
-				$id="";
-			}
-			$xor="¬or¬$pref";
-			$xand="¬and¬$pref";
-
-			$formula=stripslashes($formula);
-			while (is_integer(strpos($formula,'"'))){
-				$nse=$nse+1;
-				$pos1=strpos($formula,'"');
-				$xpos=$pos1+1;
-				$pos2=strpos($formula,'"',$xpos);
-				$subex[$nse]=trim(substr($formula,$xpos,$pos2-$xpos));
-				if ($pos1==0){
-					$formula="{".$nse."}".substr($formula,$pos2+1);
-				}else{
-					$formula=substr($formula,0,$pos1-1)."{".$nse."}".substr($formula,$pos2+1);
+		$formula_parcial="";
+		if (trim($expresion[$i])!="" and trim($campos[$i])!="---"){
+			$exp=explode('"',$expresion[$i]);
+			foreach ($exp as $val_exp){
+				if (trim($val_exp)!=""){
+					if ($val_exp !=" and " and $val_exp !=" or "){
+						$val_exp='"'.trim($prefijos[$i]).$val_exp.'"';
+						$formula_parcial.=$val_exp;
+					}else{
+						$formula_parcial.=$val_exp;
+					}
 				}
 			}
-			$formula=str_replace (" {", "{", $formula);
-			$formula=str_replace (" or ", $xor, $formula);
-			$formula=str_replace ("+", $xor, $formula);
-			$formula=str_replace (" and ", $xand, $formula);
-			$formula=str_replace ("*", $xand, $formula);
-			$formula=str_replace ('\"', '"', $formula);
-		//	if (substr($formula,0,strlen($pref))!=$pref)
-		//		$formula=$pref.$formula;
-			while (is_integer(strpos($formula,"{"))){
-				$pos1=strpos($formula,"{");
-				$pos2=strpos($formula,"}");
-				$ix=substr($formula,$pos1+1,$pos2-$pos1-1);
-				if ($pos1==0){
-					$formula=$subex[$ix].substr($formula,$pos2+1);
-				}else{
-					$formula=substr($formula,0,$pos1)." ".$subex[$ix]." ".substr($formula,$pos2+1);
-				}
-			}
-
-			$formula=str_replace ("¬", " ", $formula);
-//			if (substr($formula,0,strlen($pref))!=$pref) $formula=$pref.$formula;
-			$expresion[$i]=trim($formula);
+			//$expresion[$i]=$formula_parcial;
+			$expresion[$i]=trim($formula_parcial);
 		}
 	}
+	//return $expresion[0];
 	$formulabusqueda="";
 	for ($i=0;$i<count($expresion);$i++){
 		if (trim($expresion[$i])!=""){
-			$formulabusqueda=$formulabusqueda." (".$expresion[$i].") ";
+			if ($i!=0)
+				$formulabusqueda=$formulabusqueda." (".$expresion[$i].") ";
+			else
+				$formulabusqueda=$expresion[$i];
 			$resto="";
 			for ($j=$i+1;$j<count($expresion);$j++){
 				$resto=$resto.trim($expresion[$j]);
@@ -581,12 +544,13 @@ global $arrHttp,$matriz_c,$camposbusqueda;
 			if (trim($resto)!="") $formulabusqueda=$formulabusqueda." ".$operadores[$i];
 		}
 	}
+	$formulabusqueda=str_replace("&ldquo;",'"',$formulabusqueda);
 	return $formulabusqueda;
 
 }
 
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 
 function AbrirIndice(xI){

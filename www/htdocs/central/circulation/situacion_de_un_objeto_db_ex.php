@@ -36,7 +36,7 @@ include("../config.php");
 include("../config_loans.php");
 $lang=$_SESSION["lang"];
 
-include("../lang/admin.php");
+include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 
 include("../reserve/reserves_read.php");
@@ -217,9 +217,7 @@ $Pft="";
 if (file_exists($archivo)) {
 	$tit_tabla=file($archivo);
 }else{
-	$tit_tabla[]=$msgstr["inventory"];
-	$tit_tabla[]=$msgstr["usercode"];
-	$tit_tabla[]=$msgstr["devdate"];
+	$tit_tabla=array($msgstr["inventory"],$msgstr["usercode"],$msgstr["devdate"]);
 }
 //SE LEE EL FORMATO DE LOS REGISTROS
 $archivo=$db_path."$catalog_db/pfts/".$_SESSION["lang"]."/sob.pft";

@@ -1,0 +1,7 @@
+Número de control
+Referencia
+Fecha reserva y Operador
+Lapso de espera
+Fecha cancelación
+Fecha préstamo
+Situación

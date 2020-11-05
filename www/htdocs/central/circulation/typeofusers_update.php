@@ -12,7 +12,8 @@ $arrHttp["ValorCapturado"]= htmlspecialchars_decode ($arrHttp["ValorCapturado"])
 $arrHttp["ValorCapturado"]= stripslashes ($arrHttp["ValorCapturado"]);
 $t=explode("\n",$arrHttp["ValorCapturado"]);
 $fp=fopen($db_path."circulation/def/".$_SESSION["lang"]."/typeofusers.tab","w");
-foreach ($t as $value){	fwrite($fp,stripslashes($value)."\n");
+foreach ($t as $value){
+	fwrite($fp,stripslashes($value)."\n");
 }
 include("../common/header.php");
 

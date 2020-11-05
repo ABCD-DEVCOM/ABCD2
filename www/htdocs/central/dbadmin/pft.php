@@ -8,6 +8,10 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
+if (isset($_SESSION["UNICODE"])) {	IF ($_SESSION["UNICODE"]==1)		$meta_encoding="UTF-8";
+	else
+		$meta_encoding="ISO-8859-1";
+}
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 
@@ -92,7 +96,7 @@ foreach ($fpTm as $linea){
 
 include("../common/header.php");
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script language=Javascript src=../dataentry/js/selectbox.js></script>
 <style type=text/css>
 
@@ -362,6 +366,7 @@ function GenerarFormato(Tipo){
 }
 
 function LeerArchivo(Opcion){
+
   	if (Opcion!="agregar"){
 		ix=document.forma1.fgen.selectedIndex
 		if (ix==-1 || ix==0){
@@ -369,6 +374,7 @@ function LeerArchivo(Opcion){
     		return
 		}
 		fmt=document.forma1.fgen.options[ix].value
+
 		desc=document.forma1.fgen.options[ix].text
 		forsel=document.forma1.fgen.options[ix].value
   	}else{
@@ -425,7 +431,7 @@ function EnviarForma(vp){
 	if (vp=="P") {
 		document.forma1.vp.value="S"
 		document.forma1.target="VistaPrevia"
-		msgwin=window.open("","VistaPrevia","resizable, status, scrollbars")
+		msgwin=window.open("","VistaPrevia","width=400,top=0,left=0,resizable, status, scrollbars")
 	}else{
 		document.forma1.vp.value=vp
 		document.forma1.target=""
@@ -639,8 +645,8 @@ if ($arrHttp["Opcion"]!="new"){
 		echo "<table width=800  class=listTable>";
 		echo "<td valign=top>";
 		echo "<strong>".$msgstr["listados"]."</strong>: <xselect name=listados onchange=javascript:Listados()><option></option>";
-		foreach ($fp as $value){
-			if (trim($value)!=""){
+		foreach ($fp as $value){			$value=trim($value);
+			if ($value!=""){
 				$pp=explode('|',$value);
 				if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_pft_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])
 				   or isset($_SESSION["permiso"][$arrHttp["base"]."_pft_".$pp[0]])){
@@ -653,7 +659,7 @@ if ($arrHttp["Opcion"]!="new"){
 				}
 			}
 		}
-        echo "</xselect>";
+        echo "</select>";
         echo "</table><p>";
 	}
 }
@@ -681,8 +687,8 @@ if ($arrHttp["Opcion"]!="new"){
 	if (!file_exists($archivo)) $archivo=$db_path.$base."/pfts/".$lang_db."/formatos.dat";
 	if (file_exists($archivo)) $fp = file($archivo);
 	if (isset($fp)){
-		foreach ($fp as $value){
-			if (trim($value)!=""){
+		foreach ($fp as $value){			$value=trim($value);
+			if ($value!=""){
 				$pp=explode('|',$value);
 				if (!isset($pp[2])) $pp[2]="";
 				if (!isset($pp[3])) $pp[3]="";
@@ -695,8 +701,10 @@ if ($arrHttp["Opcion"]!="new"){
 
 	}
 	echo "</select>";
-	echo "<a href=javascript:LeerArchivo(\"\")>".$msgstr["edit"]."</a> | <a href=javascript:EliminarFormato()>".$msgstr["delete"]."</a>";
-
+	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])
+	 or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EDPFT"])  or isset($_SESSION["permiso"]["_CENTRAL_EDPFT"])) {
+		echo "<a href=javascript:LeerArchivo(\"\")>".$msgstr["edit"]."</a> | <a href=javascript:EliminarFormato()>".$msgstr["delete"]."</a>";
+    }
 ?>
 </table>
 </div>
@@ -711,7 +719,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$ar
 <table bgcolor=#FFFFFF width=600 class=listTable border=0>
 	<tr>
 		<td valign=top width=600>
-		&nbsp; <A HREF="javascript:EsconderVentana('pftedit');toggleLayer('createformat');toggleLayer('pftedit')"><u><strong><?php echo $msgstr["r_creaf"]?></strong></u></a>
+		&nbsp; <A HREF="javascript:toggleLayer('createformat')"><u><strong><?php echo $msgstr["r_creaf"]?></strong></u></a>
     	<div id=createformat>
     	<P><?php echo $msgstr["r_incluirc"]?><br>
 			<table width=600 border=0>
@@ -719,11 +727,13 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$ar
 
  <?php
  	$t=array();
- 	foreach ($Fdt as $linea){ 		$t=explode('|',$linea);
+ 	foreach ($Fdt as $linea){
+ 		$t=explode('|',$linea);
    		echo "<option value='".$linea."'>".$t[2]." (".$t[1].")\n";
   	}
 ?>
-				</select></td>
+					</select>
+				</td>
 				<TD ALIGN=CENTER width=50><center>
 					<A HREF="#" onClick="moveSelectedOptions(document.forms[0]['list11'],document.forms[0]['list21'],false);return false;"><img src=../dataentry/img/barArrowRight.png border=0></A><BR><BR>
 					<A HREF="#" onClick="moveAllOptions(document.forms[0]['list11'],document.forms[0]['list21'],false); return false;"><img src=../dataentry/img/barArrowRight.png border=0><img src=../dataentry/img/barArrowRight.png border=0></A><BR><BR>
@@ -741,38 +751,35 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$ar
 					<BR><BR>
 					<a href="javascript:moveOptionDown(document.forms[0]['list21'])" class=boton><?php echo $msgstr["r_bajar"]?></a>
 				</TD>
-
-
 			</table>
+			<p>
+            <table>
+				<tr>
+					<td valign=top colspan=4  align=center><?php echo $msgstr["r_fgent"]?> &nbsp;&nbsp;
+						<input type=radio name=tipof value=T onclick=GenerarFormato('T') ><?php echo $msgstr["r_tabla"]?>
+						&nbsp; <input type=radio name=tipof value=P onclick=GenerarFormato('P')><?php echo $msgstr["r_parrafo"]?>
+						&nbsp; <input type=radio name=tipof value=PL onclick=GenerarFormato('PL')><?php echo $msgstr["r_parrafo"]?>(with Labels)
+						&nbsp; <input type=radio name=tipof value=CT onclick=GenerarFormato('CT')><?php echo $msgstr["r_colstab"]?>
+						&nbsp; <input type=radio name=tipof value=CD onclick=GenerarFormato('CD')><?php echo $msgstr["r_colsdelim"]?>
+					</td>
+				</tr>
+				<tr>
+					<td align=center colspan=4>
+						<table>
+							<td>
+								<textarea name=pft cols=80 rows=10 style="font-family:courier new;"></textarea>
+									<br><input type=button name=borrar value=<?php echo $msgstr["borrar"]?> onClick='javascript:BorrarFormato("pft")'>
+	    					</td>
+    						<td><?php echo $msgstr["r_heading"]?><br>
+    							<textarea name=headings cols=30 rows=9 style="font-family:courier new;" onfocus=CheckType()></textarea>
+    						</td>
+						</table>
+					</td>
+			</table>
+		</td>
+		</tr>
 		</div>
 		</td>
-		<tr>
-		<td>
-		<div id=pftedit>
-			<table>
-				<tr>
-				<td valign=top colspan=4  align=center><?php echo $msgstr["r_fgent"]?> &nbsp;&nbsp;
-					       <input type=radio name=tipof value=T onclick=GenerarFormato('T') ><?php echo $msgstr["r_tabla"]?>
-					&nbsp; <input type=radio name=tipof value=P onclick=GenerarFormato('P')><?php echo $msgstr["r_parrafo"]?>
-					&nbsp; <input type=radio name=tipof value=PL onclick=GenerarFormato('PL')><?php echo $msgstr["r_parrafo"]?>(with Labels)
-					&nbsp; <input type=radio name=tipof value=CT onclick=GenerarFormato('CT')><?php echo $msgstr["r_colstab"]?>
-					&nbsp; <input type=radio name=tipof value=CD onclick=GenerarFormato('CD')><?php echo $msgstr["r_colsdelim"]?>
-
-				</td>
-				<tr>
-				<td align=center colspan=4>
-					<table>
-					<td>
-						<textarea name=pft cols=80 rows=10 style="font-family:courier new;"></textarea>
-						<br><input type=button name=borrar value=<?php echo $msgstr["borrar"]?> onClick='javascript:BorrarFormato("pft")'>
-	    			</td>
-    				<td><?php echo $msgstr["r_heading"]?><br>
-    					<textarea name=headings cols=30 rows=9 style="font-family:courier new;" onfocus=CheckType()></textarea><td>
-			</table>
-          </div>
-		</td>
-		</td>
-	</table>
 </table>
 
 
@@ -785,26 +792,31 @@ if ($arrHttp["Opcion"]!="new"){?>
 		<td>
 			&nbsp; <A HREF="javascript:toggleLayer('testformat')"><u><strong><?php echo $msgstr["generateoutput"]?></strong></u></a>
     		<div id=testformat><p>
-    		<table>
-		<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
-	<tr>
-		<td  align=center colspan=2><strong><?php echo $msgstr["r_mfnr"]?></strong>: &nbsp; &nbsp; &nbsp;
-		<?php echo $msgstr["r_desde"]?>: <input type=text name=Mfn size=10>&nbsp; &nbsp; &nbsp; &nbsp;<?php echo $msgstr["r_hasta"]?>:<input type=text name=to size=10>
-		 &nbsp; &nbsp; &nbsp; <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a>
-		<script> if (top.window.frames.length>0)
-			document.writeln(" &nbsp; &nbsp; &nbsp; (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script></td>
+    			<table>
+    				<tr>
+						<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
+					</tr>
+					<tr>
+						<td  align=center colspan=2><strong><?php echo $msgstr["r_mfnr"]?></strong>: &nbsp; &nbsp; &nbsp;
+							<?php echo $msgstr["r_desde"]?>: <input type=text name=Mfn size=10>&nbsp; &nbsp; &nbsp; &nbsp;<?php echo $msgstr["r_hasta"]?>:<input type=text name=to size=10>
+		 					&nbsp; &nbsp; &nbsp; <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a>
+							<script> if (top.window.frames.length>0)
+								document.writeln(" &nbsp; &nbsp; &nbsp; (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script>
+						</td>
+					</tr>
 	<?php
 	if (isset($arrHttp["seleccionados"])){
-		echo "<tr>
-				  <td  align=center colspan=2><strong>".$msgstr["selected_records"]."</strong>: &nbsp; &nbsp; &nbsp;";
+		echo "		<tr>
+				  		<td  align=center colspan=2><strong>".$msgstr["selected_records"]."</strong>: &nbsp; &nbsp; &nbsp;";
 		$sel=str_replace("__",",",trim($arrHttp["seleccionados"]));
 		$sel=str_replace("_","",$sel);
 		echo "<input type=text name=seleccionados size=100 value=$sel>\n";
-		echo "</td></tr>";
+		echo "			</td>
+					</tr>";
 	}
 	?>
-	<tr>
-		<td  align=center colspan=2><strong><?php echo $msgstr["r_busqueda"]?></strong>: &nbsp;
+					<tr>
+						<td  align=center colspan=2><strong><?php echo $msgstr["r_busqueda"]?></strong>: &nbsp;
 <?php
 unset($fp);
 if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab"))
@@ -838,13 +850,14 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
      	&nbsp &nbsp <input type=button value=\"". $msgstr["savesearch"]."\" onclick=GuardarBusqueda()>
 		</div>\n";}
 ?>
-		</td>
-	<tr>
-		<td colspan=2><strong><?php echo $msgstr["sortkey"]?></strong>: &nbsp;
-		<input type=text name=sortkey size=70> &nbsp; &nbsp; &nbsp; <?php echo $msgstr["sortkeycopy"]?>
-		&nbsp; &nbsp;
-    		<select name=sort  onChange=CopySortKey()>
-    		<option value=''>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2><strong><?php echo $msgstr["sortkey"]?></strong>: &nbsp;
+				<input type=text name=sortkey size=70> &nbsp; &nbsp; &nbsp; <?php echo $msgstr["sortkeycopy"]?>
+					&nbsp; &nbsp;
+    				<select name=sort  onChange=CopySortKey()>
+    					<option value=''>
 <?php
 unset($fp);
 if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/sort.tab"))
@@ -867,9 +880,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
  echo "&nbsp; &nbsp;<a href=javascript:CreateSortKey()>".$msgstr["sortkeycreate"]."</a>";
  }
 ?>
-		</td>
-
-	<tr>
+			</td>
+		</tr>
+		<tr>
 		<td colspan=2 width=100%>
 			<strong><?php echo $msgstr["sendto"]?></strong>:
 			<a href=javascript:EnviarForma('WP')><?php echo $msgstr["word"]?></a>
@@ -886,7 +899,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 </table>
 
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EDPFT"])){
 $save="Y";?>
 <table width=600 cellpadding=5 class=listTable>
 	<tr>
@@ -959,9 +972,9 @@ include("../common/footer.php");
 <?php if (isset($arrHttp["pft"])and $arrHttp["pft"]!="") {
 ?> <script>
 		xpft='<?php echo $arrHttp["pft"]?>'
-		xDesc=xpft='<?php echo $arrHttp["desc"]?>'
+		xDesc='<?php echo $arrHttp["desc"]?>'
 		document.forma.nombre.value=xpft
-		document.forma1.descripcion.value=
+		document.forma1.descripcion.value=""
 		msgwin=window.open("leertxt.php?base=<?php echo $arrHttp["base"]."&cipar=".$arrHttp["cipar"]?>&archivo="+xpft,"editar","menu=no, resizable, scrollbars,width=790")
 		msgwin.focus()
 	</script>
@@ -970,4 +983,4 @@ include("../common/footer.php");
 ?>
 <?php
 if ($arrHttp["Opcion"]=="new")
-	echo "\n<script>toggleLayer('pftedit')\n</script>\n"; ?>
+	echo "\n<script>toggleLayer('createformat')\n</script>\n"; ?>

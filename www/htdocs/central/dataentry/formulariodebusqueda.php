@@ -159,6 +159,7 @@ function PrepararExpresion(){
 			}
 		}
 	}
+
 	document.forma1.Expresion.value=Expresion
 	document.forma1.Campos.value=Campos
 	document.forma1.Operadores.value=Operadores
@@ -204,7 +205,7 @@ function Diccionario(jx){
 		msgwin=window.open("","Diccionario","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,height=500,width=700")
 		msgwin.focus()
 		id=dt[j][1]
-		document.diccio.campo.value=escape(nombrec)
+		document.diccio.campo.value=nombrec
 		document.diccio.prefijo.value=prefijo
 		document.diccio.id.value=id
 		document.diccio.Diccio.value=jx
@@ -315,13 +316,14 @@ function Diccionario(jx){
 		echo "</td>";
 		echo "<td align=center>";
 		if (isset($_SESSION["Expresion"]) and $jx==0){
-			$E=$_SESSION["Expresion"];
+			$E=str_replace('"',"''",$_SESSION["Expresion"]);
 			//if (substr($E,0,1)=="("){			//	$E=substr($E,1);
 			//	if (substr($E,strlen($E)-1)==")")
 			//		$E=substr($E,0,strlen($E)-1);
 			//}
-            $E=str_replace('"','',$E);			echo "<input type=text size=100 name=expre value=\"".$E."\"></td>\n<td nowrap>";
-			unset($_SESSION["Expresion"]);		}else{
+            //$E=str_replace('"','',$E);
+			echo "<input type=text size=100 name=expre value=\"".$E."\"></td>\n<td nowrap>";
+		//	unset($_SESSION["Expresion"]);		}else{
 			echo "<input type=text size=100 name=expre value=\"\"></td>\n<td nowrap>";
 		}
 		if ($str_expr=="Y")
@@ -397,4 +399,3 @@ function Diccionario(jx){
 
 }
 ?>
-

@@ -275,6 +275,15 @@ if ($arrHttp["base_sel"]!="~~NewDb"){
 echo "<p>copying files ... <p>";
 //CopiarDirectorio($file,$newfile,$base,$bd);
 
+//Se copia el dr_path.dat
+$file = $Dir."$base"."/dr_path.def";
+$newfile=$Dir."$bd"."/dr_path.def";
+if(copy($file, $newfile)) {
+    touch($newfile, filemtime($file));
+}else{
+	echo "Error: File '$file' could not be copied!\n";
+}
+
 $file = $Dir."$base"."/pfts/";
 $newfile = $Dir."$bd"."/pfts/";
 CopiarDirectorio($file,$newfile,$base,$bd);
