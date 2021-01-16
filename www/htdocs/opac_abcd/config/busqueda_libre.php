@@ -1,7 +1,8 @@
 <?php
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
+$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (!isset($_SESSION["db_path"])){	echo "Session expired";die;}
 $db_path=$_SESSION["db_path"];
@@ -93,6 +94,7 @@ global $msgstr,$db_path;
 	if (file_exists($db_path."opac_conf/$lang/$file")){
 		$fp=file($db_path."opac_conf/$lang/$file");
 		$cuenta_00=count($fp);
+		if ($cuenta_00==0) $fp=array('||');
 	} else{		$fp=array('||');	}
   	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 	echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>\n";
