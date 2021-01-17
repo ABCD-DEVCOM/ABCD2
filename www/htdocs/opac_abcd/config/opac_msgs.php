@@ -1,13 +1,17 @@
 <?php
 include("tope_config.php");
+if (!isset($_SESSION["db_path"])){
+	echo "Session expired";die;
+}
+if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
+$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Mensajes_del_sistema";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Mensajes_del_sistema";
 ?>
 <div id="page">
-	<p>
-    <h3><?php echo $msgstr["sys_msg"]." &nbsp; <a href=http://wiki.abcdonline.info/OPAC-ABCD_configuraci%C3%B3n#Mensajes_del_sistema target=blank><img src=../images_config/helper_bg.png></a></h2><p>";?>
-
-    <p>
-<?php
-if (isset($msg_path) and $msg_path!="")	$path=$msg_path;else	$path=$db_path;
+<h3><?php echo $msgstr["sys_msg"]." &nbsp; ";
+include("wiki_help.php");
+echo "<p>";
+if (isset($msg_path) and $msg_path!="")	$path=$msg_path;else	$path=$db_path;
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 	foreach ($_REQUEST as $var=>$value){
@@ -33,7 +37,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 		echo $value."=".$nom_msg[$key]."<br>";
 	}
 	fclose($fout);
-	echo "<h2>".$_REQUEST["lang"]."/lang.tab"." ".$msgstr["updated"]."</h2>";
+	echo "<h2>../lang/".$_REQUEST["lang"]."/opac.tab"." ".$msgstr["updated"]."</h2>";
 	die;
 }
 

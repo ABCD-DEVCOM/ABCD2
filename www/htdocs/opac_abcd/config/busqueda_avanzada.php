@@ -1,7 +1,8 @@
 <?php
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Avanzada";
+$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Avanzada";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Avanzada";
 if (isset($_SESSION["showhelp"]) and $_SESSION["showhelp"]=="Y"){
 	$showhelp="block";
 }else

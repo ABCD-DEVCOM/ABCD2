@@ -6,6 +6,7 @@ if (isset($_REQUEST["letra"])) $_REQUEST["letra"]=urldecode($_REQUEST["letra"]);
 function BuscarClavesLargas($Termino,$base){
 
 global $Formato,$xWxis,$Wxis,$db_path,$Prefijo,$last,$terminos,$postings,$bd_list;
+return;
 	$T=explode('$#$',$Termino);
 	$Termino_busqueda=$T[0];
 	$letra=str_replace($Prefijo,"",$Termino_busqueda);
@@ -142,7 +143,7 @@ foreach ($bd_list as $base=>$value){
 		$query.="&count=200";
 	$resultado=wxisLLamar($base,$query,$IsisScript);
 	$cuenta=0;
-	foreach ($resultado as $t){
+	foreach ($resultado as $t){		//echo $t."<br>";
 		if (trim($t)=="") continue;
          $cuenta=$cuenta+1;
 		if (substr($t,0,7)=='$$Last=') {
@@ -150,17 +151,21 @@ foreach ($bd_list as $base=>$value){
 
 		}else{
 			$tx=explode('|$$|',$t);
-			$key=explode('$$$',$tx[1]);
-			if (substr($key[1],0,strlen($_REQUEST["prefijo"]))!=$_REQUEST["prefijo"]) continue;
-			//echo"**". $tx[1]."<br>";
-			if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
-				if (isset($key[1]) and $key[1]<$last) {
-					$keys_rec[$key[1]]=$t;				}
-			}else{				   $keys_rec[$key[1]]=$t;			}
+			if (isset($tx[1])){
+				$key=explode('$$$',$tx[1]);
+				if (substr($key[1],0,strlen($_REQUEST["prefijo"]))!=$_REQUEST["prefijo"]) {					continue;				}
+				//echo"**". $tx[1]."<br>";
+				if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){					if (isset($key[1]) and $last==""){						$keys_rec[$key[1]]=$t;					}else{
+						if (isset($key[1]) and $key[1]<$last and $last!="") {							echo "-----entro-----";
+							$keys_rec[$key[1]]=$t;						}
+					}
+				}else{					   $keys_rec[$key[1]]=$t;				}
+			}
 		}
 	}
 	//echo "<h1>$cuenta</h1>";
 }
+
 ksort($keys_rec);
 $terminos=$keys_rec;
 //foreach ($terminos as $key) echo "$key<br>";die;

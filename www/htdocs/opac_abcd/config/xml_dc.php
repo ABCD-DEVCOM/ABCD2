@@ -74,10 +74,10 @@ if (isset($_REQUEST["Opcion"])){
 		fclose($fout);
 		echo "<p><font color=red>".  $archivo." ".$msgstr["updated"]."</font>";
 		echo "<p>".$msgstr["dc_step3"]. " (".$_REQUEST["base"]."/pfts/dcxml.pft)<br>";
-    	echo "<textarea name=Pft cols=100 rows=20>$formato</textarea>";
+    	echo "<textarea name=Pft xcols=80 rows=20 style='width:80%'>$formato</textarea>";
 		echo "<input type=hidden name=Opcion value=\"GuardarPft\">\n";
 		echo "<p>";
-    	echo $msgstr["try_mfn"]." <input type=text name=mfn size=5> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
+    	echo $msgstr["try_mfn"]." <input type=text name=mfn size=5 id=mfn> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
 		echo "<div><img src=../images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/dcxml.pft \" style=\"font-size:15px;\"></div>";
     	echo "</form>";
     }else{    	if ($_REQUEST["Opcion"]=="GuardarPft"){    		$archivo=$db_path.$_REQUEST["base"]."/pfts/dcxml.pft";
@@ -129,8 +129,11 @@ global $msgstr,$db_path,$charset;
 	}
     if (file_exists($db_path."opac_conf/".$base."_dcxml.tab")){
 		$dc_scheme=$db_path."opac_conf/".$base."_dcxml.tab";
-	}else{
-		$dc_scheme=$db_path."opac_conf/dc_sch.xml";
+	}else{		if (file_exists($db_path."opac_conf/dc_sch.xml"))
+			$dc_scheme=$db_path."opac_conf/dc_sch.xml";
+		else
+			$dc_scheme="dc.xml";
+
 	}
 	echo "<strong>$dc_scheme</strong><br>";
   	echo "<table bgcolor=#cccccc cellpadding=5>\n";
@@ -154,7 +157,7 @@ global $msgstr,$db_path,$charset;
 		}
 	}
 	echo "</table>\n";
-	echo "<p><div><img src=../images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab\"  style=\"font-size:15px;\"></div>";
+	echo "<p><div><img src=../images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab / ".$msgstr["dc_step3"]."\"  style=\"width:400px;height:60px;font-size:15px;white-space: normal\"></div>";
 	echo "</div>\n";
 	echo "<div style=\"flex: 1\">";
 
@@ -183,10 +186,11 @@ global $msgstr,$db_path,$charset;
 </body
 </html>
 <script>
-document.getElementById("dcpft").onkeypress = function(e) {
+document.getElementById("mfn").onkeypress = function(e) {
   var key = e.charCode || e.keyCode || 0;
   if (key == 13) {
   	e.preventDefault();
+  	Probar();
   }
 }
 function Probar(){

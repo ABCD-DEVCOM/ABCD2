@@ -1,6 +1,7 @@
 <?php
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
+$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
 
 ?>

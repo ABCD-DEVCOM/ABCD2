@@ -1,7 +1,8 @@
 <?php
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?title=OPAC-ABCD_formatos#Formatos_para_la_presentación_de_los_resultados";
+$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_formatos#Formatos_para_la_presentación_de_los_resultados";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_formatos#Formatos_para_la_presentación_de_los_resultados";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQUEST["lang"];

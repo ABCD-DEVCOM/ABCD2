@@ -1,12 +1,12 @@
 <?php
 include ("tope_config.php");
-/*
-if (!isset($_REQUEST["db_path"])){	$_REQUEST["db_path"]=$db_path;
-	$_REQUEST["db_path_desc"]="$db_path";}
-if (isset($_REQUEST["db_path"])) {	$_SESSION["db_path"]=$_REQUEST["db_path"];
-	$_SESSION["db_path_desc"]=$_REQUEST["db_path_desc"];
+ if (!isset($_SESSION["db_path"])){
+	echo "Session expired";die;
 }
-*/
+if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
+$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal";
+
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
 
 
@@ -14,33 +14,13 @@ if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
 
 /////////////////////////////////////////////////////////////////////
 
-if (!isset($_SESSION["permiso"])){
-	session_destroy();
-	$msg=$msgstr["invalidright"]." ".$msgstr[$_REQUEST["startas"]];
-	echo "
-	<html>
-	<body>
-	<form name=err_msg action=error_page.php method=post>
-	<input type=hidden name=error value=\"$msg\">
-	";
-	echo "
-	</form>
-	<script>
-		document.err_msg.submit()
-	</script>
-	</body>
-	</html>
-	";
-   	session_destroy();
-   	die;
- }
+
 ?>
 <div id="page" style="margin-top:10px;padding:10px;">
-<h3><?php echo $msgstr["horizontal_menu"]?> &nbsp; <a href=http://wiki.abcdonline.info/OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal target=_blank><img src=../images_config/helper_bg.png></a></h3>
-<br>
-<?php
+<h3><?php echo $msgstr["horizontal_menu"]." &nbsp; ";
+include("wiki_help.php");
+echo "<p>";
 $lang=$_REQUEST["lang"];
-$Permiso=$_SESSION["permiso"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");

@@ -1,13 +1,20 @@
 <?php
 include ("tope_config.php");
 echo "<script src=\"../js/jscolor.js\"></script>" ;
+if (!isset($_SESSION["db_path"])){
+	echo "Session expired";die;
+}
+if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
+$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Estilos";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Estilos";
+
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){}
 ?>
 <div id="page">
-	<p>
-    <h3><?php echo $msgstr["styles"]?> &nbsp; <a href=http://wiki.abcdonline.info/OPAC-ABCD_configuraci%C3%B3n#Estilos.2C_encabezado.2C_pie_de_p.C3.A1gina target=_blank><img src=../images_config/helper_bg.png></a></h3><p>
-   <?php echo $msgstr["styles_msg"]?>
-    <p><?php echo $msgstr["styles_body"]?> <p>
+<h3><?php echo $msgstr["styles"]." &nbsp; ";
+include("wiki_help.php");
+echo "<p>";
+echo $msgstr["styles_body"]?> <p>
     <img src=../images_config/estilos_1.png border=1><br>
     <table>
     <tr><td colspan=2>body</td></tr>

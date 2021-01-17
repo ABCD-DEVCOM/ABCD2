@@ -1,7 +1,8 @@
 <?php
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
+$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 ?>
 <div id="page" style="min-height:400px";>
@@ -95,7 +96,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		if (count($pft_noinc)>0){			Echo "<hr><h4>Adding missing files to $base.par</h4>";
 			foreach ($pft_noinc as $value){				$value=trim($value);
 				if ($value!=""){
-					if ($value=="select_record"){						$par_array[$value.".pft"]="%path_database%opac_conf/$value.pft";					}else{						if ($value=="autoridades_opac")							$par_array[$value.".pft"]="%path_database%$base/$value.pft";
+					if ($value=="select_record"){						$par_array[$value.".pft"]="%path_database%opac_conf/$value.pft";					}else{						if ($value=="autoridades_opac")							$par_array[$value.".pft"]="%path_database%$base/pfts/$value.pft";
 						else
 							$par_array[$value.".pft"]="%path_database%$base/pfts/%lang%/$value.pft";					}
 					echo $value.".pft=".$par_array[$value.".pft"]. " added<br>";				}			}

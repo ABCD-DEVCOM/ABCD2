@@ -86,7 +86,8 @@ include("wiki_help.php");
             	<li><a href="javascript:SeleccionarProceso('busqueda_libre.php','<?php echo $base?>')"><?php echo $msgstr["free_search"];?></li>
 				<li><a href="javascript:SeleccionarProceso('busqueda_avanzada.php','<?php echo $base?>')"><?php echo $msgstr["buscar_a"];?></li>
 		    	<?php
-		    	if ($base!="META"){					echo "<li><a href=\"javascript:SeleccionarProceso('formatos_salida.php','$base')\">".$msgstr["select_formato"]."</a></li>";		    	}
+		    	if ($base!="META"){					echo "<li><a href=\"javascript:SeleccionarProceso('formatos_salida.php','$base')\">".$msgstr["select_formato"]."</a></li>";
+					echo "<li><a href=\"javascript:SeleccionarProceso('dbn_par.php','$base')\">".$msgstr["dbn_par"]."</a></li>";		    	}
 		    	?>
 	<?php
 				 if ($_REQUEST["base"]!="META"){

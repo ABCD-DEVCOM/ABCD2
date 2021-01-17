@@ -1,7 +1,8 @@
 <?php
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/OPAC-ABCD_configuraci%C3%B3n_avanzada#Facetas";
+$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Facetas";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Facetas";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>"; DIE;
 $linea=array();
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQUEST["lang"];

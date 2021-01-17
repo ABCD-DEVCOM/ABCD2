@@ -439,6 +439,7 @@ function delCookie(){
 function showCookie(cname){	cookie=getCookie(cname)
 	if (cookie==""){		alert(msgstr["rsel_no"])
 		return	}
+	alert(document.buscar.lang.value)
     document.buscar.action="presentar_seleccion.php"
 	document.buscar.cookie.value=cookie
 
