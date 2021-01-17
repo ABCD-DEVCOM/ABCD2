@@ -129,7 +129,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp;
 	$output.="</div>\n";
 	return array($output,$msg_rsvr,$num_control);}
 
-if (!isset($arrHttp["lang"]))  $arrHttp["lang"]="es";
+if (!isset($_REQUEST["lang"]))  $_REQUEST["lang"]="es";
 $desde=1;
 $count="";
 $accion="";
@@ -165,7 +165,7 @@ foreach ($seleccion as $base=>$value){    echo "<hr style=\"border: 5px solid #
 			$_REQUEST["cookie"]=str_replace($item,'',$_REQUEST["cookie"]);
 		}
     	if ($msg_rsvr!="NO" and isset($WEBRESERVATION) and $WEBRESERVATION=="Y"){
-			$ract=DeterminarReservasActivas($db_path,$x[1],$arrHttp["lang"],$msgstr,$no_control);
+			$ract=DeterminarReservasActivas($db_path,$x[1],$_REQUEST["lang"],$msgstr,$no_control);
 			$nreserv=0;
 			foreach ($ract as $xx) {				$xx=trim($xx);
 				if ($xx!=""){					if (substr($xx,0,8)=="[TOTAL:]") continue;
