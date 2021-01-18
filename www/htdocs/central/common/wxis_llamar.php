@@ -1,5 +1,5 @@
 <?php
-global $server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
+global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 //CHANGED
 	if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
 		$query.="&lock=S";
@@ -10,8 +10,9 @@ global $server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset
     parse_str($query, $arr_query);
     $actual_db=$arr_query["base"];
     $charset_db="";
+    //$MULTIPLE_DB_FORMATS="Y";
     if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]=="Y" or isset($MULTIPLE_DB_FORMATS) and $MULTIPLE_DB_FORMATS=="Y"){
-   		//echo "def<pre>";print_r($def);echo "</pre>";
+
    		if (file_exists($db_path.$actual_db."/dr_path.def")){
    			$def_db = parse_ini_file($db_path.$actual_db."/dr_path.def");
    		}
