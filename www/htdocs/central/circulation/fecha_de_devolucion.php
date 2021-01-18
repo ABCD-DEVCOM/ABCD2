@@ -29,7 +29,6 @@
 function FechaDevolucion($lapso,$unidad,$fecha_inicio){
 global $feriados,$locales,$notrabaja,$config_date_format,$CALENDAR_S;
 
-
 	$f_date=explode("/",$config_date_format);
 	switch ($unidad){
 		case "H":
@@ -48,6 +47,7 @@ global $feriados,$locales,$notrabaja,$config_date_format,$CALENDAR_S;
 	        	$dev=trim(substr($dev,0,$ix));
 			break;
 	}
+
     $d=0;
     $df=0;
     $diaFeriado="F";
@@ -81,7 +81,6 @@ global $feriados,$locales,$notrabaja,$config_date_format,$CALENDAR_S;
     	}
     }
     $lapso=$lapso+$df-1;
-
     $dev= date("Ymd h:i:s A",strtotime($dev."+$lapso days"));
 	return $dev;
 

@@ -42,7 +42,7 @@ if ($archivo!=""){	$fp=file($archivo);
 				$chk_solvency=" checked";
 				break;		}	}}
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script  language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 function CheckName(fn,Ctrl){	res= /^[a-z][\w]+$/i.test(fn)
 	if (res==false){

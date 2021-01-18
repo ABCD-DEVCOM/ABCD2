@@ -97,6 +97,10 @@ echo "<h5><font color=darkred>". $msgstr["pft_usdisp"]."</font></H5>";
 $Pft=stripslashes($arrHttp["pft_usdisp"]);
 GuardarPft($Pft,$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_usdisp.pft");
 
+echo "<h5><font color=darkred>". $msgstr["pft_usmore"]."</font></H5>";
+if (isset($arrHttp["pft_usmore"])){	$Pft=stripslashes($arrHttp["pft_usmore"]);
+	GuardarPft($Pft,$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_usmore.pft");}
+
 ?>
 </div></div>
 </body>

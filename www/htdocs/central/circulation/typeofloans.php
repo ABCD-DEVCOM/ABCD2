@@ -48,13 +48,13 @@ include("../common/header.php");
 ?>
 <link rel="STYLESHEET" type="text/css" href="../css/dhtmlXGrid.css">
 <link rel="STYLESHEET" type="text/css" href="../css/dhtmlXGrid_skins.css">
-<script  src="../js/dhtml_grid/dhtmlXCommon.js"></script>
-<script  src="../js/dhtml_grid/dhtmlXGrid.js"></script>
-<script  src="../js/dhtml_grid/dhtmlXGridCell.js"></script>
-<script  src="../js/dhtml_grid/dhtmlXGrid_drag.js"></script>
-<script  src="../js/dhtml_grid/dhtmlXGrid_excell_link.js"></script>
-<script  src="../js/dhtml_grid/dhtmlXGrid_start.js"></script>
-<script  src="../js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXCommon.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGrid.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGridCell.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGrid_drag.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGrid_excell_link.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGrid_start.js"></script>
+<script language="JavaScript" type="text/javascript"t  src="../js/lr_trim.js"></script>
 <script>
 	function Enviar(){
 		ret=Validate("Actualizar")

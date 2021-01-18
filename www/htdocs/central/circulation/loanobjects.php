@@ -139,7 +139,7 @@ foreach ($fp as $value) {
 }
 echo "</script>\n";
 ?>
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script  language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <script>
 	var RT=new Array()
 	var RT_A=new Array()
@@ -233,10 +233,13 @@ foreach  ($type_items as $var=>$value){
 		x=""
     	if (document.forma1.unidad[0].checked) x=document.forma1.unidad[0].value
     	if (document.forma1.unidad[1].checked) x=document.forma1.unidad[1].value
+    	if (document.forma1.unidad[2].checked) x=document.forma1.unidad[2].value
     	if (x==""){
     		alert("<?php echo $msgstr["falta"].$rows_title[5]?>")
     		return
     	}
+    	if (x=="F" && Trim(document.forma1.fecha_i.value)=="" ){    		alert("<?php echo $msgstr["falta"]." ".$msgstr["tit_limobjeto"]?>")
+    		return    	}
     	xItem+='|'+x
 
     	x=Trim(document.forma1.renov_n.value)
@@ -371,9 +374,11 @@ foreach  ($type_items as $var=>$value){
 				case "5":
 					Dias=""
 					Horas=""
+					Fecha=""
 					if (cell[c]=="D") Dias=" checked"
 					if (cell[c]=="H") Horas=" checked"
-					html+="<input type=radio name=unidad value=D"+Dias+">"+"<?php echo $msgstr["days"]?>"+"<input type=radio name=unidad value=H"+Horas+"><?php echo $msgstr["hours"]?></td>"
+					if (cell[c]=="F") Fecha=" checked"
+					html+="<input type=radio name=unidad value=D"+Dias+">"+"<?php echo $msgstr["days"]?>"+"<input type=radio name=unidad value=H"+Horas+"><?php echo $msgstr["hours"]?>"+"<input type=radio name=unidad value=F"+Fecha+"><?php echo $msgstr["date"]?></td>"
 					break;
 				case "6":
     				html+="<input type=text name=renov_n value=\""+cell[c]+"\"></td>"
@@ -476,6 +481,7 @@ foreach  ($type_items as $var=>$value){
 							unidad=""
 							if (cell[c]=="D") unidad="<?php echo $msgstr["days"]?>"
 							if (cell[c]=="H") unidad="<?php echo $msgstr["hours"]?>"
+							if (cell[c]=="F") unidad="<?php echo $msgstr["date"]?>"
 							html+="<td>"+unidad+"</td>"
 		    				break
 		  				case "11":

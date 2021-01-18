@@ -105,8 +105,15 @@ echo "<font color=white>&nbsp; &nbsp; Script: configure_menu.php" ?></font>
 
            		<a href="sala_configure.php" class="menuButton multiLine loanpolicyButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-					<span><strong><?php if (isset($msgstr["sala"])) echo $msgstr["sala"]; else echo "Internal loan"; ?></strong></span>
+					<span><strong><?php echo $msgstr["sala"]?></strong></span>
 				</a>
+				<?php if (isset($ILL)){				?>
+				<a href="../circulation/interbib_configure.php?encabezado=s" class="menuButton providersButton">
+							<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+							<span><strong><?php echo $msgstr["r_ill"]?></strong></span>
+						</a>
+				<?php				}
+				?>
 
 			</div>
 			<div class="spacer">&#160;</div>

@@ -98,7 +98,7 @@ function DibujarSelectBases($fp){global $msgstr,$arrHttp,$copies;
 
 <?php}
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 
 base_selec=""
@@ -221,7 +221,7 @@ function BusquedaAvanzada(copies) {        switch (copies){        	case "N":
 </script>
 <?php
 $encabezado="";
-echo "<body>\n";
+echo "<body onLoad=javascript:document.inventorysearch.inventory_sel.focus()>\n";
 include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];

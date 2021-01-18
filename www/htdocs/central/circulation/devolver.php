@@ -89,17 +89,14 @@ function AbrirIndiceAlfabetico(){
 	cipar="trans.par"
 	postings=1
 	tag="10"
-	<?php if (isset($_SESSION["library"])){
-		echo "Prefijo='TR_P_".$_SESSION["library"]."_'\n";
-	}else{
-		echo "Prefijo='TR_P_'\n";
-	}
+	<?php if (isset($_SESSION["library"])){		echo "Prefijo='TR_P_".$_SESSION["library"]."_'\n";	}else{		echo "Prefijo='TR_P_'\n";	}
 	?>
 	Ctrl_activo=document.inventorysearch.inventory
 	lang="<?php echo $_SESSION["lang"]?>"
 	Separa=""
 	Repetible="1"
 	Formato="v10,`$$$`,v10"
+	Formato="ifp"
 	Prefijo=Separa+"&prefijo="+Prefijo
 	ancho=200
 	url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+tag+"&tagfst=10"+Prefijo+"&lang="+lang+"&repetible="+Repetible+"&Formato="+Formato+"&postings=1"
@@ -178,12 +175,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: devolver.php </font>
 	</form>
 	</div>
 <?php
-if (isset($arrHttp["usuario"])){
-   // include("ec_include.php");
+if (isset($arrHttp["usuario"])){   // include("ec_include.php");
    // echo "<div class=formContent>$ec_output</div>";
 }
-if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp["errores"])){
-	$inven=explode(';',$arrHttp["errores"]);
+if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp["errores"])){	$inven=explode(';',$arrHttp["errores"]);
 	foreach ($inven as $inventario){
 		if (trim($inventario)!=""){
 			$Mfn=trim($inventario);
@@ -197,8 +192,8 @@ if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp
 	$lista_mfn=explode(';',$arrHttp["resultado"]);
 	foreach ($lista_mfn as $Mfn){
 		if (trim($Mfn)!=""){
-			echo "<p><font color=red>".$msgstr["returned"]." ".$msgstr["item"]." :  </font>";
-			$Formato="v10,x3,mdl,v100'<br>'";
+			echo "<p><font color=red>".$msgstr["returned"]." ".$msgstr["item"].":  </font>";
+			$Formato="v10,' ',mdl,v100'<br>'";
 			$Formato="&Pft=$Formato";
 			$IsisScript=$xWxis."leer_mfnrange.xis";
 			$query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn&to=$Mfn$Formato";
@@ -211,14 +206,10 @@ if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp
 }
 
 //SE VERIFICA SI ALGUNO DE LOS EJEMPLARES DEVUELTOS ESTÁ RESERVADO
-if (isset($arrHttp["lista_control"])) {
-	include("../reserve/reserves_read.php");
+if (isset($arrHttp["lista_control"])) {	include("../reserve/reserves_read.php");
 	$rn=explode(";",$arrHttp["lista_control"]);
 	$Expresion="";
-	foreach ($rn as $value){
-		$value=trim($value);
-		if ($value!=""){
-			if ($Expresion=="")
+	foreach ($rn as $value){		$value=trim($value);		if ($value!=""){			if ($Expresion=="")
 				$Expresion=$value;
 			else
 				$Expresion.=" or ".$value;
@@ -230,15 +221,13 @@ if (isset($arrHttp["lista_control"])) {
 	if ($reserves_title!=""){
 		echo "<p><!--strong>".$msgstr["reserves"]."</strong><br-->";
 		echo $reserves_title."<p>";
-	}
-}
+	}}
 
 // se imprimen los recibos de devolucion, si procede
 if (isset($arrHttp["rec_dev"])) {
 	$r=explode(";",$arrHttp["rec_dev"]);
 	$recibo="";
-	foreach ($r as $Mfn){
-		if ($Mfn!=""){
+	foreach ($r as $Mfn){		if ($Mfn!=""){
 			$Formato="";
 			if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/r_return.pft")){
 				$Formato=$db_path."trans/pfts/".$_SESSION["lang"]."/r_return";
@@ -249,26 +238,18 @@ if (isset($arrHttp["rec_dev"])) {
 			}
 			if ($Formato!="") {
                 $Formato="&Formato=$Formato";
-				$IsisScript=$xWxis."leer_mfnrange.xis";
-				$query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn&to=$Mfn$Formato";
+				$IsisScript=$xWxis."leer_mfnrange.xis";				$query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn&to=$Mfn$Formato";
 				include("../common/wxis_llamar.php");
-				foreach ($contenido as $value){
-					$recibo.=trim($value);
-				}
-			}
-		}
+				foreach ($contenido as $value){					$recibo.=trim($value);				}			}		}
 	}
 	if ($recibo!="") {
-		ImprimirRecibo($recibo);
-	}
+		ImprimirRecibo($recibo);	}
 }
 
-if (isset($arrHttp["error"])){
-	echo "<script>
+if (isset($arrHttp["error"])){	echo "<script>
 			alert('".$arrHttp["error"]."')
 			</script>
-	";
-}
+	";}
 echo "</div>";
 include("../common/footer.php");
 echo "</body></html>" ;

@@ -52,7 +52,7 @@ $valortag = Array();
 
 include("../common/header.php");
 ?>
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <script>
 
 document.onkeypress =

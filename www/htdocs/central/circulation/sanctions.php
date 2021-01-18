@@ -71,7 +71,7 @@ if ($formato_nombre=="") $formato_nombre="v30";
 # Se lee el formato para extraer el código de usuario
 $codigo=LeerPft("loans_uskey.pft","users");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 document.onkeypress =
   function (evt) {
@@ -114,7 +114,7 @@ function AbrirIndice(TipoI,Ctrl){
 </script>
 <?php
 $encabezado="";
-echo "<body>\n";
+echo "<body onLoad=javascript:document.usersearch.usuario.focus()>\n";
 include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
