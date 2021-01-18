@@ -14,7 +14,7 @@ include ("../lang/reports.php");
 include ("configure.php");
 ?>
 <body>
-<script language=Javascript src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function AbrirVentana(Url){	msgwin=window.open(Url,"","width=400, height=400, resizable, scrollbars, menu=no, toolbar=no")
 	msgwin.focus();}

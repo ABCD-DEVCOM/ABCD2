@@ -177,10 +177,10 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
  	$query = "&base=$base&cipar=$db_path"."par/".$cipar. "&from=" . $from."&to=$to&Pft=$Pft";
  	//echo $Pft;
 	include("../common/wxis_llamar.php");
-   // foreach ($contenido as $value){
-   // 	 echo "***".$value;
-    //}
-    //die;
+    /*foreach ($contenido as $value){
+    	 echo "***".$value;
+    }
+    die;  */
     $contenido=implode("!!!",$contenido);
 	$contenido=explode('%%%',$contenido);
 	MostrarSalida($contenido,$arrHttp["output"],$bar_c);
@@ -252,15 +252,21 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
 		if (trim($value)!=""){
 			$numeros="";
 			$ix=strpos($value,"*INV*");
-			if ($ix==-1) continue;
-			$ix1=strpos($value,"*INV*",$ix+1);
-			$ni=substr($value,$ix+5,$ix1-$ix-5);
-			if ($ni>=trim($arrHttp["inventory_from"]) and $ni<=trim($arrHttp["inventory_to"])){
+			if ($ix!==false){
+				$ix1=strpos($value,"*INV*",$ix+1);
+				$ni=substr($value,$ix+5,$ix1-$ix-5);
+				if ($ni>=trim($arrHttp["inventory_from"]) and $ni<=trim($arrHttp["inventory_to"])){
+					if (!isset($inventario[$ni])){
+						$array_c[]=$value;
+						$inventario[$ni]=$ni;
+					}
+				}
+			}else{				$ni=$value;
 				if (!isset($inventario[$ni])){
 					$array_c[]=$value;
 					$inventario[$ni]=$ni;
-				}
-			}
+				}			}
+
 		}
 	}
 
