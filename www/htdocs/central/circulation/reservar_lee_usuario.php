@@ -109,7 +109,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_in,$pft_nc,$
 		}
 
  	</style>
-    <script src=../dataentry/js/lr_trim.js></script>
+    <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
     <script>top.resizeTo(900,500);</script>
     <script>
     	function AnularReserva(Mfn){    		document.anular.Mfn.value=Mfn

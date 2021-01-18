@@ -99,7 +99,7 @@ function EnviarForma(){
 
 </script>
 <?php
-echo "<body>\n";
+echo "<body onLoad=javascript:document.sala.inventory.focus()>\n";
 include("../common/institutional_info.php");
 // ARE THE COPIES IN THE COPIES DATABASE OR IN THE BIBLIOGRAPHIC DATABASE?
 
@@ -121,7 +121,7 @@ if (isset($arrHttp["db_inven"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-		<?php echo $msgstr["return"]?>
+		<?php echo $msgstr["r_sala"]?>
 	</div>
 	<div class="actions">
 		<?php include("submenu_prestamo.php");?>
@@ -179,9 +179,9 @@ if (file_exists($db_path."loans.dat")){
 				$value.=$v[2];
 			}
 
-			if (isset($_SESSION["loans_dbinven"])){
+			if (isset($_REQUEST["base"])){
 
-				if ($_SESSION["loans_dbinven"]==$v[0])
+				if ($_REQUEST["base"]==$v[0])
 					$xselected=" selected";
 				else
 					$xselected="";
@@ -205,7 +205,7 @@ echo "
 		</td><td valign=top>
 		<textarea name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" /></textarea>
 
-		<input type="submit" name="Enviar" value="<?php echo $msgstr["return"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="submit" name="Enviar" value="<?php echo $msgstr["r_sala"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
 		</td></table>
     <p><br><br>
 	</form>

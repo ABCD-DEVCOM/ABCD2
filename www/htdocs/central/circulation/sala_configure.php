@@ -61,7 +61,7 @@ function Actualizar(){global $db_path,$arrHttp,$msgstr;
     fclose($fp);
     echo "<h2>sala.tab ".$msgstr["saved"];}
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Guardar(){
 	if (Trim(document.forma1.typeofuser.value)=="" || Trim(document.forma1.typeofloan.value)=="" || Trim(document.forma1.usercode.value)==""){		alert("<?php echo $msgstr["missing_data"];?>")

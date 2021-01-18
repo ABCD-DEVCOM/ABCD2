@@ -41,7 +41,6 @@ include("../common/header.php");
 
 function ActualizarLoansDat(){
 global $db_path,$arrHttp,$msgstr;
-echo "dbpath=$db_path<BR>";
 	if (isset($arrHttp["loan_option"])) {
 		if ($arrHttp["loan_option"]=="copies"){
 			if (file_exists($db_path."loans.dat")){
@@ -52,8 +51,7 @@ echo "dbpath=$db_path<BR>";
 			$loans_dat=array();
 			if (file_exists($db_path."loans.dat")){
 				$fp=file($db_path."loans.dat");
-				foreach ($fp as $base){
-					$base=trim($base);
+				foreach ($fp as $base){					$base=trim($base);
 					if ($base!=""){
 						$b=explode("|",$base);
 						$loans_dat[$b[0]]=$b[1];

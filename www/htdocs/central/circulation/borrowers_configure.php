@@ -87,7 +87,7 @@ $pft_uskey=LeerPft("loans_uskey.pft");
 $pft_ustype=LeerPft("loans_ustype.pft");
 $pft_usvig=LeerPft("loans_usvig.pft");
 $pft_usdisp=LeerPft("loans_usdisp.pft");
-
+$pft_usmore=LeerPft("loans_usmore.pft");
 
 include("../common/header.php");
 ?>
@@ -155,6 +155,7 @@ echo "
 <tr><td valign=top>5. ".$msgstr["pft_ustype"] ." (loans_ustype.pft)</td><td valign=top><textarea rows=2 cols=80 name=pft_ustype>".$pft_ustype."</textarea></td>
 <tr><td valign=top>6. ".$msgstr["pft_usvig"] ." (loans_usvig.pft)</td><td valign=top><textarea rows=2 cols=80 name=pft_usvig>".$pft_usvig."</textarea></td>
 <tr><td valign=top>7. ".$msgstr["pft_usdisp"] ." (loans_usdisp.pft)</td><td valign=top><textarea rows=6 cols=80 name=pft_usdisp>".$pft_usdisp."</textarea></td>
+<tr><td valign=top>7. ".$msgstr["pft_usmore"] ." (loans_usmore.pft)</td><td valign=top><textarea rows=6 cols=80 name=pft_usmore>".$pft_usmore."</textarea></td>
 </table>
 ";
 echo "&nbsp; &nbsp;<a href=javascript:Test()>".$msgstr["test"]."</a>

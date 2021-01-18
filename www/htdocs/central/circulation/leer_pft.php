@@ -6,7 +6,7 @@ global $arrHttp,$db_path,$lang_db;
 	if ($dbname=="")
 		$dbname=$arrHttp["db"];
 	$archivo=$db_path.$dbname."/loans/".$_SESSION["lang"]."/$pft_name";
-	if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["db"]."/loans/".$lang_db."/$pft_name";
+	if (!file_exists($archivo)) $archivo=$db_path.$dbname."/loans/".$lang_db."/$pft_name";
 	$fp=file_exists($archivo);
 	if ($fp){
 		$fp=file($archivo);

@@ -56,6 +56,7 @@ if ($arrHttp["Formato"]=="ifp"){	$query = "&base=".$arrHttp["base"] ."&cipar=$d
 		$Formato="@".$Formato;	}else{		$Formato=$arrHttp["Formato"];	}
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"])."&postings=".$arrHttp["postings"]."&formato_e=".$Formato;
 }
+//echo $Formato;die;
 $IsisScript=$xWxis."ifp.xis";
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);
