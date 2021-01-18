@@ -18,10 +18,10 @@ include ("../lang/reports.php");
 include ("configure.php");
 ?>
 <body>
-<script language=Javascript src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Enviar(){
-	document.forma1.target=""	if (document.forma1.output[0].checked){		msgwin=window.open("","display","width=800,height=600,scrollbars,menubar,toolbar,resizable");
+	document.forma1.target=""	if (document.forma1.output[0].checked || document.forma1.output[3].checked){		msgwin=window.open("","display","width=800,height=600,scrollbars,menubar,toolbar,resizable");
 		document.forma1.target="display"
 		msgwin.focus()	}
 	document.forma1.submit()}
@@ -141,7 +141,10 @@ $ayuda="barcode.html";
 	</div>
 
 	<div class="actions">
-<?php echo "<a href=\"menu.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
+<?php
+if (isset($arrHttp["Mfn"])){	echo "<a href=\"javascript:top.Menu('same')\" class=\"defaultButton backButton\">";}else{
+	echo "<a href=\"menu.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
+}
 ?>
 		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
@@ -196,102 +199,103 @@ switch ($arrHttp["tipo"]){	case "barcode":
 		break;
 }
 echo "</strong></font><p>";
-
-echo "<img src=../images/tools.png width=35 align=middle><a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=".$arrHttp["tipo"]."><font size=3><strong>".$msgstr["configure"]."</strong></font></a><p>";
+if (!isset($arrHttp["Mfn"]))
+	echo "<img src=../images/tools.png width=35 align=middle><a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=".$arrHttp["tipo"]."><font size=3><strong>".$msgstr["configure"]."</strong></font></a><p>";
 echo "<font size=3><strong>".$msgstr["sendto"].": "."</strong></font>";
 echo "&nbsp; &nbsp; <input type=radio name=output value=display checked >".$msgstr["display"];
-//echo "&nbsp; &nbsp; <input type=radio name=output value=excel>".$msgstr["excel"];
-//echo "&nbsp; &nbsp; <input type=radio name=output value=xls>".$msgstr["calc"];
-//echo "&nbsp; &nbsp; <input type=radio name=output value=odt>".$msgstr["odt"];
 echo "&nbsp; &nbsp; <input type=radio name=output value=doc>".$msgstr["doc"];
-echo "&nbsp; &nbsp; <input type=radio name=output value=txt>txt";
-//echo "&nbsp; &nbsp; <input type=radio name=output value=rtf>RTF";
+echo "&nbsp; &nbsp; <input type=radio name=output value=txt>".$msgstr["txt_file"];
+echo "&nbsp; &nbsp; <input type=radio name=output value=txt_print>".$msgstr["txt_print"];
 echo "<p>";
-echo "<table><td valign=top>";
-echo "<font size=3><strong>".$msgstr["r_recsel"]."&nbsp; &nbsp; </strong></font>";
-echo "</td><td>";
-echo "<table>";
+
 
 echo "<input type=hidden name=Indice>";
 echo "<input type=hidden name=base>";
 echo "<input type=hidden name=Opcion>";
 echo "<input type=hidden name=copies>";
-echo "<tr height=50px><td><strong>".$msgstr["byclass_num"]."</strong></td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
-echo "<td>";
-//(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.classification_from,\"$classification_number_pref\",\"\",\"\",\"$base_classification\",\"$base_classification.par\",\"classification_from\",\"1\",\"0\",\"".urlencode(str_replace('"','|',$classification_number_format))."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=classification_from size=30>";
-echo "</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.classification_from,\"$classification_number_pref\",\"\",\"\",\"$base_classification\",\"$base_classification.par\",\"classification_to\",\"1\",\"0\",\"".urlencode(str_replace('"','|',$classification_number_format))."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=classification_to size=30>";
-echo "</td>";
-echo "<td><input type=submit name=classification value=".$msgstr["entrar"]." onClick=javascript:PorNumeroClasificacion()></td>";
-echo "</tr>";
-/*
-echo "<tr height=50px><td><strong>".$msgstr["bycontrol_num"]." (".$base_control.")</strong></td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.control_from,\"$pref_control\",\"\",\"\",\"$base_control\",\"$base_control.par\",\"control_from\",\"1\",\"0\",\"".urlencode($fe_control)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=control_from size=30>";
-echo "</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.control_to,\"$pref_control\",\"\",\"\",\"$base_control\",\"$base_control.par\",\"control_to\",\"1\",\"0\",\"".urlencode($fe_control)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=control_to size=30>";
-echo "</td>";
-echo "<td><input type=submit name=control value=".$msgstr["entrar"]." onClick=javascript:PorNumeroControl()></td>";
-echo "</tr>";
-*/
-echo "<tr height=50px><td><strong>".$msgstr["byinventory_num"]."</strong></td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.inventory_from,\"$inventory_number_pref\",\"\",\"\",\"$base_inventory\",\"$base_inventory.par\",\"inventory_from\",\"1\",\"0\",\"".urlencode($inventory_number_format)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=inventory_from size=30>";
-echo "</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.inventory_to,\"$inventory_number_pref\",\"\",\"\",\"$base_inventory\",\"$base_inventory.par\",\"inventory_to\",\"1\",\"0\",\"".urlencode($inventory_number_format)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=inventory_to size=30>";
-echo "</td>";
-echo "<td><input type=submit name=inventory value=".$msgstr["entrar"]." onClick=javascript:PorNumeroInventario()></td>";
-echo "</tr>";
+if (!isset($arrHttp["Mfn"])){	echo "<table><td valign=top>";
+	echo "<font size=3><strong>".$msgstr["r_recsel"]."&nbsp; &nbsp; </strong></font>";
+	echo "</td><td>";
+	echo "<table>";
+	echo "<tr height=50px><td><strong>".$msgstr["byclass_num"]."</strong></td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
+	echo "<td>";
+	//(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.classification_from,\"$classification_number_pref\",\"\",\"\",\"$base_classification\",\"$base_classification.par\",\"classification_from\",\"1\",\"0\",\"".urlencode(str_replace('"','|',$classification_number_format))."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=classification_from size=30>";
+	echo "</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.classification_from,\"$classification_number_pref\",\"\",\"\",\"$base_classification\",\"$base_classification.par\",\"classification_to\",\"1\",\"0\",\"".urlencode(str_replace('"','|',$classification_number_format))."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=classification_to size=30>";
+	echo "</td>";
+	echo "<td><input type=submit name=classification value=".$msgstr["entrar"]." onClick=javascript:PorNumeroClasificacion()></td>";
+	echo "</tr>";
+	/*
+	echo "<tr height=50px><td><strong>".$msgstr["bycontrol_num"]." (".$base_control.")</strong></td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.control_from,\"$pref_control\",\"\",\"\",\"$base_control\",\"$base_control.par\",\"control_from\",\"1\",\"0\",\"".urlencode($fe_control)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=control_from size=30>";
+	echo "</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.control_to,\"$pref_control\",\"\",\"\",\"$base_control\",\"$base_control.par\",\"control_to\",\"1\",\"0\",\"".urlencode($fe_control)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=control_to size=30>";
+	echo "</td>";
+	echo "<td><input type=submit name=control value=".$msgstr["entrar"]." onClick=javascript:PorNumeroControl()></td>";
+	echo "</tr>";
+	*/
+	echo "<tr height=50px><td><strong>".$msgstr["byinventory_num"]."</strong></td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.inventory_from,\"$inventory_number_pref\",\"\",\"\",\"$base_inventory\",\"$base_inventory.par\",\"inventory_from\",\"1\",\"0\",\"".urlencode($inventory_number_format)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=inventory_from size=30>";
+	echo "</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.inventory_to,\"$inventory_number_pref\",\"\",\"\",\"$base_inventory\",\"$base_inventory.par\",\"inventory_to\",\"1\",\"0\",\"".urlencode($inventory_number_format)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=inventory_to size=30>";
+	echo "</td>";
+	echo "<td><input type=submit name=inventory value=".$msgstr["entrar"]." onClick=javascript:PorNumeroInventario()></td>";
+	echo "</tr>";
 
-echo "<tr height=50px><td><strong>".$msgstr["byinventory_list"]."<br>".$msgstr["list_comma"]."</strong></td>";
-echo "<td colspan=4>";
-echo "<textarea name=inventory_list cols=90 rows=1></textarea>";
-echo "</td>";
-echo "<td><input type=submit name=inven_list value=".$msgstr["entrar"]." onClick=javascript:PorListaInventario()></td>";
-echo "</tr>";
+	echo "<tr height=50px><td><strong>".$msgstr["byinventory_list"]."<br>".$msgstr["list_comma"]."</strong></td>";
+	echo "<td colspan=4>";
+	echo "<textarea name=inventory_list cols=90 rows=1></textarea>";
+	echo "</td>";
+	echo "<td><input type=submit name=inven_list value=".$msgstr["entrar"]." onClick=javascript:PorListaInventario()></td>";
+	echo "</tr>";
 
-if (isset($input_date_pref)){
-echo "<tr height=50px><td><strong>".$msgstr["byinput_date"]." (".$base_date.")</strong></td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.date_from,\"$pref_date\",\"\",\"\",\"$base_date\",\"$base_date.par\",\"date_from\",\"1\",\"0\",\"".urlencode($fe_date)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=date_from size=30>";
-echo "</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
-echo "<td>";
-echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.date_to,\"$pref_date\",\"\",\"\",\"$base_date\",\"$base_date.par\",\"date_to\",\"1\",\"0\",\"".urlencode($fe_date)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
-echo "<input type=text name=date_to size=30>";
-echo "</td>";
-echo "<td>";
-echo "<input type=submit name=date value=".$msgstr["entrar"]." onClick=Javascript:PorFechaIngreso()></td>";
-echo "</tr>";
-}
-echo "<tr height=50px><td><strong>".$msgstr["bymfn_range"]."</strong></td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;<input type=text name=mfn_from size=30>";
-echo "</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
-echo "<td>&nbsp; &nbsp; &nbsp;<input type=text name=mfn_to  size=30>";
-echo "</td>";
-echo "<td><input type=submit name=mfn value=".$msgstr["entrar"]." onClick='javascript:PorRangoMfn()'></td>";
-echo "</tr>";
-echo "</tr>";
+	if (isset($input_date_pref)){
+	echo "<tr height=50px><td><strong>".$msgstr["byinput_date"]." (".$base_date.")</strong></td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.date_from,\"$pref_date\",\"\",\"\",\"$base_date\",\"$base_date.par\",\"date_from\",\"1\",\"0\",\"".urlencode($fe_date)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=date_from size=30>";
+	echo "</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
+	echo "<td>";
+	echo "<a href='javascript:AbrirIndiceAlfabetico(document.forma1.date_to,\"$pref_date\",\"\",\"\",\"$base_date\",\"$base_date.par\",\"date_to\",\"1\",\"0\",\"".urlencode($fe_date)."\")'><img src=../dataentry/img/defaultButton_list.png border=0 width=16></a>";
+	echo "<input type=text name=date_to size=30>";
+	echo "</td>";
+	echo "<td>";
+	echo "<input type=submit name=date value=".$msgstr["entrar"]." onClick=Javascript:PorFechaIngreso()></td>";
+	echo "</tr>";
+	}
+	echo "<tr height=50px><td><strong>".$msgstr["bymfn_range"]."</strong></td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_from"]."</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;<input type=text name=mfn_from size=30>";
+	echo "</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;".$msgstr["cg_to"]."</td>";
+	echo "<td>&nbsp; &nbsp; &nbsp;<input type=text name=mfn_to  size=30>";
+	echo "</td>";
+	echo "<td><input type=submit name=mfn value=".$msgstr["entrar"]." onClick='javascript:PorRangoMfn()'></td>";
+	echo "</tr>";
+	echo "</tr>";
+}else{	echo "<input type=hidden name=mfn_from size=30 value=".$arrHttp["Mfn"].">\n";
+	echo "<input type=hidden name=mfn_to size=30 value=".$arrHttp["Mfn"].">\n";
+	echo "<input type=submit name=mfn value=".$msgstr["entrar"]." onClick='javascript:PorRangoMfn()'>";}
 echo "<input type=hidden name=tipo value=".$arrHttp["tipo"].">\n";
 echo "</form>";
 
