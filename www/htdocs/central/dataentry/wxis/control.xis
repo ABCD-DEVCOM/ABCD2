@@ -193,8 +193,8 @@
     	<parm name=cipar>
       		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
       	</parm>
-
-
+    <field action=cgi tag=9088>cttype</field>
+    <display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
 	<field action="cgi" tag="2001">base</field>
 	<call name="error"><pft>"missing parameter: database"n2001</pft></call>
 	<field action="cgi" tag="2002">Opcion</field>

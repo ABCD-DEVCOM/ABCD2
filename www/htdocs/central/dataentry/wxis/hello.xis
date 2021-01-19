@@ -1,6 +1,7 @@
 <IsisScript>
-	<trace>on</trace>
+
 	<section>
+	    <display><pft>'Content-type: text/html'/#</pft></display>
 		<display><pft>'<h1>Hello</h1>'</pft></display>
 	</section>
 </IsisScript>

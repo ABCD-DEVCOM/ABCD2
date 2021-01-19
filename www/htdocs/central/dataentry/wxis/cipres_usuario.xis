@@ -14,7 +14,7 @@
   		<field action=cgi tag=1>path_db</field>
   		<field action=cgi tag=9088>cttype</field>
   		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
-		<display><pft></pft></display>
+ 		<display><pft></pft></display>
    		<parm name=cipar>
     		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
     	</parm>
@@ -37,7 +37,7 @@
                 	<field action=import tag=8000>8000</field>
 					<field action=import tag=1091>1091</field>
                 	<display>
-						<pft type=reload><pft>if p(v3030) then '@'v3030 else v3031 fi</pft></pft>
+						<pft type=reload><pft>if p(v3030) then '@'v3030, else v3031 fi</pft></pft>
                 	</display>
 
              	</loop>
