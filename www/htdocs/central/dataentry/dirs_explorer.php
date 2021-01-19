@@ -64,22 +64,24 @@ $expl->Set("icons_dir","img/dir_explorer/");
 
 
 //Now it's needed to set files of icons for various file types
-$types['image.gif'] = array ('jpg', 'gif','png','tif','bmp');
-$types['txt.gif'] = array ('txt','tab','dat','def','fdt','fmt','pft','fst','val','wks','beg','end','cfg','bat');
-$types['winamp.gif'] = array ('mp3');
-$types['mov.gif'] = array ('mov');
-$types['wmv.gif'] = array ('avi', 'mpeg','mpg');
-$types['rar.gif'] = array ('rar');
-$types['zip.gif'] = array ('zip');
-$types['doc.gif'] = array ('doc');
-$types['pdf.gif'] = array ('pdf');
-$types['excel.gif'] = array ('xls');
-$types['html.gif'] = array ('htm','html');
-#$types['exe.gif'] = array ('exe');
-#$types['mdb.gif'] = array ('mdb');
-$types['ppt.gif'] = array ('ppt');
-//types - name of variable and it should be static!
-//$types - array of icons files and file types
+if (isset($arrHttp["mx"])){	$types["db_add.png"]=array("mst");}else{
+	$types['image.gif'] = array ('jpg', 'gif','png','tif','bmp');
+	$types['txt.gif'] = array ('txt','tab','dat','def','fdt','fmt','pft','fst','val','wks','beg','end','cfg','bat');
+	$types['winamp.gif'] = array ('mp3');
+	$types['mov.gif'] = array ('mov');
+	$types['wmv.gif'] = array ('avi', 'mpeg','mpg');
+	$types['rar.gif'] = array ('rar');
+	$types['zip.gif'] = array ('zip');
+	$types['doc.gif'] = array ('doc');
+	$types['pdf.gif'] = array ('pdf');
+	$types['excel.gif'] = array ('xls');
+	$types['html.gif'] = array ('htm','html');
+	#$types['exe.gif'] = array ('exe');
+	#$types['mdb.gif'] = array ('mdb');
+	$types['ppt.gif'] = array ('ppt');
+	//types - name of variable and it should be static!
+	//$types - array of icons files and file types
+}
 $expl->Set("types",$types);
 
 
@@ -133,7 +135,7 @@ global $tag,$msgstr,$arrHttp;
   		msgwin.focus()
   	}
 </script>
-<script src=js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <body>
 <font face=arial>
 

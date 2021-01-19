@@ -44,7 +44,7 @@ include("../common/header_display.php");
 // Se lee la tabla de conversión de los rótulos
 
 $base=$arrHttp["base"];
-Global $separador;
+$separador="";
 	$fp=file($db_path."$base/cnv/".$arrHttp["cnv"]);
 	$ix=-1;
 	foreach($fp as $value){
@@ -66,14 +66,14 @@ Global $separador;
 			}
 		}
 	}
+echo "<xmp>";var_dump($rotulo);echo "</xmp>";
 
-
-
-$variables=explode('##',$arrHttp["Texto"]);
-
+if ($separador=='[TABS]'){	$variables=explode("\n",$arrHttp["Texto"]);}else{
+	$variables=explode('##',$arrHttp["Texto"]);
+}
 foreach($variables as $registro){
 	$noLocalizados="";
-	$salida=Rotulos2Tags($rotulo,$registro);
+	$salida=Rotulos2Tags($rotulo,$registro,$separador);
 	if (count($salida)>0){
 		echo "<p><b>Registro nuevo:</b> <br><font color=red><b>Rótulos localizados:</b></font color=black><br>";
 		foreach ($salida as $key=>$value){

@@ -5,7 +5,8 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include ("../config.php");
-
+if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){	$arrHttp["base"]=$_REQUEST["baseactiva"];
+	$arrHttp["cipar"]=$arrHttp["base"].".par";}
 function BuscarClavesLargas($Termino){
 global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path;
 

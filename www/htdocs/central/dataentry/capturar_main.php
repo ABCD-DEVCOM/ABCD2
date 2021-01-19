@@ -17,11 +17,12 @@ require_once ('leerregistroisispft.php');
 //foreach ($arrHttp as $var => $value) echo "$var=$value<br>";
 $prefijo="";
 if (isset($arrHttp["prefijo"])) $prefijo=$arrHttp["prefijo"];
-$arrHttp["Opcion"]="STATUS";
-$arrHttp["IsisScript"]="control.xis";
-$llave=LeerRegistro();
-$stat=explode('|',$llave);
-$llave=substr($stat[2],7);
+//$arrHttp["Opcion"]="STATUS";
+//$arrHttp["IsisScript"]="control.xis";
+//$llave=LeerRegistro();
+//echo "****".$llave;
+//$stat=explode('|',$llave);
+//$llave=substr($stat[2],7);
 ?>
 		<HTML>
 				<Title>Capturar</title>

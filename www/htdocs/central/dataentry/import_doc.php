@@ -130,7 +130,7 @@ foreach ($files['name'] as $key=>$name){
 		// creating the upload window
 		echo "<html>\n";
 		echo "<title>".$msgstr["uploadfile"]."</title>\n";
-		echo "<script language=javascript src=js/lr_trim.js></script>\n";
+		echo "<script language=\"JavaScript\" type=\"text/javascript\" src=\"js/lr_trim.js\"></script>\n";
 		echo "<body>\n";
 		echo "<font face=verdana>\n";
 		switch($tipo){
