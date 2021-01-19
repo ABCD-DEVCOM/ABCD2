@@ -49,7 +49,7 @@ function LeerRegistro() {
  include("../common/wxis_llamar.php");
  $ic=-1;
     $tag= "";
- foreach ($contenido as $linea){
+ foreach ($contenido as $linea){ 	echo "**$linea<br>";
   if ($arrHttp["Opcion"]=="Identificacion"){
    if ($ic==-1){
     $ic=1;

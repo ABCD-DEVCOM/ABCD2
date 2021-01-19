@@ -8,7 +8,7 @@ include("../common/header.php");
 ?>
 <html>
 
-<script language="JavaScript" src="js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
 <script>
 function Verificar(){
 	if (Trim(document.forma1.password.value)==""){		alert("<?php echo $msgstr["record_protected"]?>")

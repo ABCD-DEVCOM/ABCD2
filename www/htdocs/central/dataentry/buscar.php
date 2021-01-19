@@ -19,12 +19,14 @@ include ("../lang/admin.php");
 function EjecutarBusqueda(){
 global $arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl;
 		$vienede=$arrHttp["Opcion"];
+
 		if ($arrHttp["Opcion"]!="continuar" and $arrHttp["Opcion"]!="buscar_en_este"){
 			$Expresion=PrepararBusqueda();
 		}else{
 		 	$Expresion=stripslashes($arrHttp["Expresion"]);
 			$arrHttp["Opcion"]="busquedalibre";
 		}
+		echo $Expresion;
 		//$Expresion=urlencode(trim($Expresion));
 		if ($arrHttp["desde"]!="dataentry"){
 			if (!isset($arrHttp["from"])) $arrHttp["from"]=1;
@@ -37,6 +39,7 @@ global $arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl;
 			}
 			$IsisScript=$xWxis."buscar.xis";
 			$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".$Expresion."&Opcion=".$arrHttp["Opcion"]."&count=".$arrHttp["count"]."&Mfn=".$arrHttp["Mfn"]."&Formato=$Formato";
+ 			echo $query;
  			include("../common/wxis_llamar.php");
 			foreach ($contenido as $linea){
 				if (trim($linea)!="") {
@@ -130,6 +133,7 @@ global $arrHttp,$matriz_c,$camposbusqueda;
 	$formulabusqueda=str_replace("&ldquo;",'"',$formulabusqueda);
 	return $formulabusqueda;
 
+
 }
 
 include("../dataentry/formulariodebusqueda.php");
@@ -198,9 +202,10 @@ switch ($arrHttp["Opcion"]){
 		$Expresion=PrepararBusqueda();
 		header("Location: actualizarportabla.php?base=".$arrHttp["base"]."&cipar=".$arrHttp["cipar"]."&Expresion=".urlencode($Expresion));
 		die;
+		break;
 	case "solobusqueda":
 	    $Expresion=PrepararBusqueda();
-	    if ($arrHttp["Tabla"]=="imprimir" or $arrHttp["Tabla"]=="cGlobal"){	    	 $Ctrl='window.opener.document.forma1.Expresion.value="'.$Expresion.'"';	    }else{	    	 $Ctrl='window.opener.document.forma1.'.$arrHttp["Tabla"].'.value="'.$Expresion.'"';	    }
+	    if ($arrHttp["Tabla"]=="imprimir" or $arrHttp["Tabla"]=="cGlobal"){	    	 $Ctrl='window.opener.document.forma1.Expresion.value=\''.$Expresion.'\'';	    }else{	    	 $Ctrl='window.opener.document.forma1.'.$arrHttp["Tabla"].'.value=\''.$Expresion.'\'';	    }
 		echo "<script>
 				$Ctrl
 				self.close()
