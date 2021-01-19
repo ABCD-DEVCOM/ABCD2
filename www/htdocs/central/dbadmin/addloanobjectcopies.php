@@ -3,7 +3,6 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-set_time_limit(0);
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
@@ -12,11 +11,11 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
 echo "<body onunload=win.close()>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";	
+	$encabezado="&encabezado=s";
 }
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".$msgstr["addLOwithoCP_mx"].": " . $base_ant."
@@ -117,7 +116,7 @@ if (isNaN(numero)==true)
 }
 function ChangeOption(option)
 {
-if (option==1) 
+if (option==1)
 {
 document.getElementById("systype").style.display="block";
 document.getElementById("fieldsel").style.display="none";
@@ -129,16 +128,16 @@ document.getElementById("fieldsel").style.display="block";
 document.form1.typef.focus();
 }
 }
-</script>	
-</div>		
+</script>
+</div>
 <div class="middle form">
 	<div class="formContent">
 <form action="" method="post" name="form1" target="_self" id="form1" onsubmit="OpenWindows();">
 <?php
-echo "<p>".$msgstr["addloanobjectcopies"]."</p>";   
+echo "<p>".$msgstr["addloanobjectcopies"]."</p>";
   echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
   echo "<h3>".$msgstr["database"]." ".$base_ant."<p>";
-  ?>  
+  ?>
   <table width="750" border="0">
   <tr>
     <td width="202" align="right"> <label>From
@@ -152,10 +151,10 @@ echo "<p>".$msgstr["addloanobjectcopies"]."</p>";
 	<script language="javascript">//estableciendo el foco en el 2do textbox
    document.form1.from.value="1";
   document.form1.to.focus();
-     function OpenWindows() {      
+     function OpenWindows() {
 NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 win.focus()
-    }	
+    }
 function NewWindow(mypage,myname,w,h,scroll,pos){
 if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
 if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
@@ -165,7 +164,7 @@ win=window.open(mypage,myname,settings);}
 
   </script>
     Last MFN=
-<?php 
+<?php
 $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
 include("../common/wxis_llamar.php");
@@ -184,7 +183,7 @@ $total=(int) $tag["MAXMFN"];
 echo '<script language="javascript">
    document.form1.to.value="'.$total.'";
    </script>';
-echo $total;  
+echo $total;
   ?>
   </label></td>
    <td width="121" align="right">&nbsp;</td>
@@ -204,14 +203,14 @@ echo $total;
     <td align="center">-</td>
     <td align="left"><label>SubField
   <input name="cnsf" type="text" id="cnsf" value="<?php if ($_POST["cnsf"]!="") echo $_POST["cnsf"];?>" size="5"/>
-  </label></td>    
+  </label></td>
     <td align="left"><select name=agregar id=atunique onChange=AlterEntry(1) style=width:165px>
 	<option value=''>add</option>
 	<option value="ml">Main Library</option>
 	<option value="bl">Branch Library</option>
 	<option value="tome">Tome</option>
 	<option value="volume">Volume/Part</option>
-	</select>&nbsp;<a href=javascript:AlterEntry(0)><img src=../dataentry/img/delete_occ.gif border=0 ></a>	
+	</select>&nbsp;<a href=javascript:AlterEntry(0)><img src=../dataentry/img/delete_occ.gif border=0 ></a>
 	</td>
 	<td align="left"></td>
   </tr>
@@ -241,26 +240,26 @@ echo $total;
     <td align="left">&nbsp;</td>
 	<td align="left">&nbsp;</td>
   </tr>
-</table> 
-<?php 
+</table>
+<?php
 if ($_POST["mlf"]!="")
-echo '<div id="ml" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Main Library Field&nbsp;<input name="mlf" type="text" id="mlf" value="'.$_POST["mlf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="mlsf" type="text" id="mlsf" value="'.$_POST["mlsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="ml" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Main Library Field&nbsp;<input name="mlf" type="text" id="mlf" value="'.$_POST["mlf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="mlsf" type="text" id="mlsf" value="'.$_POST["mlsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="ml" style="display:none"></div>';
 
 if ($_POST["blf"]!="")
-echo '<div id="bl" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Branch Library Field&nbsp;<input name="blf" type="text" id="blf" value="'.$_POST["blf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="blsf" type="text" id="blsf" value="'.$_POST["blsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="bl" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Branch Library Field&nbsp;<input name="blf" type="text" id="blf" value="'.$_POST["blf"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="blsf" type="text" id="blsf" value="'.$_POST["blsf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="bl" style="display:none"></div>';
 
 if ($_POST["tomef"]!="")
-echo '<div id="tome" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Tome Field&nbsp;<input name="tomef" type="text" id="tomef" value="'.$_POST["tomef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="tomesf" type="text" id="tomesf" value="'.$_POST["tomesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="tome" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Tome Field&nbsp;<input name="tomef" type="text" id="tomef" value="'.$_POST["tomef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="tomesf" type="text" id="tomesf" value="'.$_POST["tomesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="tome" style="display:none"></div>';
 
 if ($_POST["volumef"]!="")
-echo '<div id="volume" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Volume Field&nbsp;<input name="volumef" type="text" id="volumef" value="'.$_POST["volumef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="volumesf" type="text" id="volumesf" value="'.$_POST["volumesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>'; 
-else 
+echo '<div id="volume" style="display:block"><table width="750" border="0"><tr><td width="202" align="right"><label>Volume Field&nbsp;<input name="volumef" type="text" id="volumef" value="'.$_POST["volumef"].'" size="5"/></label></td><td width="22" align="center">-</td><td width="187"align="left"><label>SubField&nbsp;<input name="volumesf" type="text" id="volumesf" value="'.$_POST["volumesf"].'" size="5"/></label></td><td width="121" align="left"></td><td width="200" align="left">&nbsp;</td></tr></tr><tr><td align="right">&nbsp;</td><td>&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td><td align="left">&nbsp;</td></tr></table></div>';
+else
 echo '<div id="volume" style="display:none"></div>';
 ?>
 <table width="750" border="0">
@@ -277,9 +276,9 @@ echo '<div id="volume" style="display:none"></div>';
  flock($fp, 1);
  if (!$fp)
    {
-     echo "Unable to open file circulation/def/$lang/items.tab.</strong></p></body></html>";         
+     echo "Unable to open file circulation/def/$lang/items.tab.</strong></p></body></html>";
      exit;
-   }   
+   }
 while(!feof($fp))
 {
  $order= fgets($fp, 100);
@@ -290,7 +289,7 @@ while(!feof($fp))
   fclose($fp);
    ?>
     </select>
-    </label>	
+    </label>
 	</div></td>
 <td width="121" align="left"></td>
 <td width="200" align="left">&nbsp;</td>
@@ -335,12 +334,12 @@ while(!feof($fp))
 <table width="750px" border="0">
   <tr>
      <td width="22">&nbsp;</td>
-    <td><?php 
-  echo "<input type=submit name=submit value=".$msgstr["update"].">"; 
+    <td><?php
+  echo "<input type=submit name=submit value=".$msgstr["update"].">";
   if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";
  ?></td>
     </tr>
-</table> 
+</table>
 </form>
 </div>
 <?php
@@ -412,7 +411,7 @@ $cantloabobjectsbefore=(int) $tag["MAXMFN"];
 @ $fp = fopen($db_path."wrk/lo_create.prc", "w");
 if (!$fp)
  {
-   echo "Unable to write the file ".$db_path."wrk/lo_create.prc";         
+   echo "Unable to write the file ".$db_path."wrk/lo_create.prc";
    exit;
  }
 $savestring="'d*',
@@ -426,7 +425,7 @@ if ($mlf!="") if ($mlf!=$inf) $savestring.="'^l'".$mlfent."[1],\n";
  else $savestring.="'^l'".$mlfent.",\n";
 if ($blf!="") if ($blf!=$inf) $savestring.="'^b'".$blfent."[1],\n";
  else $savestring.="'^b'".$blfent.",\n";
-if ($_POST["radiobutton"]=="systype") $savestring.="'^o".$_POST['type']."',\n"; 
+if ($_POST["radiobutton"]=="systype") $savestring.="'^o".$_POST['type']."',\n";
 else $savestring.="'^o'".Vfield(strtolower($_POST['typef']))."^".RemovePico(strtolower($_POST['typesf'])).",\n";
 if ($volumef!="") if ($volumef!=$inf) $savestring.="'^v'".$volumefent."[1],\n";
  else $savestring.="'^v'".$volumefent.",\n";
@@ -468,7 +467,7 @@ echo '<br /><span style="color: blue"><b>&nbsp;&nbsp;'.$cantadd.' loanobjects re
 		$value=trim($value);
 		$val=explode('|',$value);
 		if (trim($val[0])==trim($arrHttp["base"])){
-			$value=$val[0].'|'.$val[1];							
+			$value=$val[0].'|'.$val[1];
 		}
 		fwrite($new,$value."\n");
 	}

@@ -46,7 +46,7 @@ if (isset($arrHttp["encabezado"])){
 	$encabezado="";
 }
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function returnObjById( id ){
     if (document.getElementById)

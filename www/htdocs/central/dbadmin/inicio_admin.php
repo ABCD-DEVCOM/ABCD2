@@ -35,15 +35,13 @@ function LeerRegistro() {
  $query = "?xx=&base=acces&cipar=$db_path"."par/acces.par"."&login=".$_SESSION["login"]."&password=".$_SESSION["password"];
  putenv('REQUEST_METHOD=GET');
  putenv('QUERY_STRING='.$query);
-
  $contenido="";
 
  exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
  $ic=-1;
  $tag= "";
  foreach ($contenido as $linea){
- 	if ($ic==-1){
-    	$ic=1;
+ 	if ($ic==-1){    	$ic=1;
     	$pos=strpos($linea, '##LLAVE=');
     	if (is_integer($pos)) {
      		$llave_pft=substr($linea,$pos+8);
@@ -87,13 +85,11 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
 		$arrHttp["Mfn"]=$mfn;
   		$Permiso="|";
   		$P=explode("\n",$valortag[40]);
-  		foreach ($P as $value){
-  			$value=substr($value,2);
+  		foreach ($P as $value){  			$value=substr($value,2);
   			$ix=strpos($value,'^');
     		$Permiso.=substr($value,0,$ix)."|";
     	}
- 	}else{
- 		echo "<script>
+ 	}else{ 		echo "<script>
  		self.location.href=\"../../index.php?login=N\";
  		</script>";
   		die;
@@ -125,13 +121,9 @@ $query="";
     		session_destroy();
     		die;
     	}
-    }
-	$Permiso=$_SESSION["permiso"];
-	if (trim($Permiso)==""){
-		echo "Missing user rights";
+    }	$Permiso=$_SESSION["permiso"];	if (trim($Permiso)==""){		echo "Missing user rights";
 		session_destroy();
-		die;
-	}
+		die;	}
 
 	$bases=explode("\n",$valortag[100]);
 	$arrHttp["base"]=$bases[0];
@@ -204,15 +196,12 @@ $query="";
 					insWindow = window.open('ayudas/'+lang+'ayuda.html', 'Ayuda', 'location=no,width=700,height=550,scrollbars=yes,top=10,left=100,resizable');
 					insWindow.focus()
 				}
-				function BrowseBySearch(){
-
-				}
+				function BrowseBySearch(){				}
 			";
 
 ?>
 
-function ApagarEdicion(){
-	top.menu.toolbar.hideButtons('2_editar');
+function ApagarEdicion(){	top.menu.toolbar.hideButtons('2_editar');
 	top.menu.toolbar.hideButtons('4_cancelar')
 	top.menu.toolbar.hideButtons('4_guardar')
 	top.menu.toolbar.hideButtons('4_eliminar')
@@ -246,8 +235,7 @@ function ApagarEdicion(){
 	item.enable();
 }
 
-function PrenderEdicion(){
-	top.menu.toolbar.showButtons('2_editar');
+function PrenderEdicion(){	top.menu.toolbar.showButtons('2_editar');
 	if (xeditar=="S"){
 		top.menu.toolbar.showButtons('4_cancelar')
 		top.menu.toolbar.showButtons('4_guardar')
@@ -280,21 +268,14 @@ function PrenderEdicion(){
 		var item=top.menu.toolbar.getItem("config"); //get item object by
 		item.disable();
 	}
-	top.menu.toolbar.showButtons('4_eliminar')
-	if (Expresion!=""){
-		var item=top.menu.toolbar.getItem("select"); //get item object by id
-		item.enable(); //enable
-	}
+	top.menu.toolbar.showButtons('4_eliminar')	if (Expresion!=""){		var item=top.menu.toolbar.getItem("select"); //get item object by id
+		item.enable(); //enable	}
+}
 
-}
+function ApagarCreacion(){	var item=top.menu.toolbar.getItem("select"); //get item object by id
+	item.disable(); //disable}
 
-function ApagarCreacion(){
-	var item=top.menu.toolbar.getItem("select"); //get item object by id
-	item.disable(); //disable
-}
-
-function TipoDeRegistro(){
-	top.main.document.writeln("<html><body style='font-size:10px;font-family:arial'>")
+function TipoDeRegistro(){	top.main.document.writeln("<html><body style='font-size:10px;font-family:arial'>")
 	top.main.document.writeln("<center><br><br>")
 	top.main.document.writeln("<h4>Seleccione el tipo de registro</h4><table>")
 	tr=typeofrecord.split('$$$')
@@ -304,14 +285,10 @@ function TipoDeRegistro(){
 			linea=tr[i].split('|')
 
 			top.main.document.writeln("<tr><td><a href=\"javascript:top.wks='"+linea[0]+"';top.Menu('crear')\"><span style='font-size:10px;font-family:arial'>"+linea[3]+"</span></a></td>")
-		}
-	}
-	top.main.document.writeln("</table>")
-}
+		}	}
+	top.main.document.writeln("</table>")}
 
-function Permisos(){
-	return true
-}
+function Permisos(){	return true}
 
 function ValidarIrA(){
   	xmfn=top.menu.document.forma1.ir_a.value
@@ -391,8 +368,7 @@ function Menu(Opcion){
 	}else{
 		tope=maxmfn
 	}
-	switch (Opcion) {
-		case "editdv":
+	switch (Opcion) {		case "editdv":
 			top.main.location.href="default_edit.php?Opcion=valdef&ver=N&Mfn=0&base="+top.base
 			top.xeditar="valdef"
 			break
@@ -411,8 +387,7 @@ function Menu(Opcion){
   			url="recval_display.php?&base="+base+"&cipar="+cipar+"&Mfn="+mfn_edit
   			recvalwin=window.open(url,"recval","width=350,height=300,resizable,scrollbars")
   			recvalwin.focus()
-			break;
-		case "ejecutarbusqueda":
+			break;		case "ejecutarbusqueda":
 			Mfn_Search=1
 			mfn=1
 
@@ -593,8 +568,7 @@ function Menu(Opcion){
   		 		top.main.document.location.href="fmt.php?Opcion="+Opcion+"&base="+base+"&cipar="+cipar+"&Mfn="+mfn+"&ver=S"+FormatoActual+works
   			}else{
   				if (Opcion=="cancelar")mfn=Search_pos
-  				top.main.document.location.href="fmt.php?Opcion=buscar&Expresion="+Expresion+"&base="+base+"&cipar="+cipar+"&from="+mfn+FormatoActual
-  			}
+  				top.main.document.location.href="fmt.php?Opcion=buscar&Expresion="+Expresion+"&base="+base+"&cipar="+cipar+"&from="+mfn+FormatoActual  			}
   			return
   		}
 
@@ -603,10 +577,8 @@ function Menu(Opcion){
 
 
 			tipom=""
-			if (typeofrecord!="" && Opcion=="nuevo"){
-				top.main.document.close()
-				TipoDeRegistro()
-			}else{
+			if (typeofrecord!="" && Opcion=="nuevo"){				top.main.document.close()
+				TipoDeRegistro()			}else{
 			    xeditar="S"
 	 			top.main.document.location="fmt.php?Opcion=nuevo&base="+base+"&cipar="+cipar+"&Mfn=New&ver=N"+FormatoActual+"&tipom="+tipom+works
 	 		}

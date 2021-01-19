@@ -1,8 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
+}
 echo "<script language=\"javascript\">
 function validar()
 {
-if(document.form1.from.value<=0||document.form1.from.value>document.form1.to.value)
+if(document.form1.from.value<=0)
 {
 alert(\"Check the range!\");
 event.returnValue=false;
@@ -11,10 +15,7 @@ return false;
 return true;
 }
 </script>";
-session_start();
-if (!isset($_SESSION["permiso"])){
-	header("Location: ../common/error_page.php") ;
-}
+
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
@@ -23,27 +24,38 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+$base=$arrHttp['base']; //$_POST['base'];
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
 echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-	
+
 }
-
-echo "<a href=\"menu_mantenimiento.php?base=".$arrHttp["base"]."&encabezado=s\" class=\"defaultButton backButton\">";
+				echo "<div class=\"sectionInfo\">
+			<div class=\"breadcrumb\">Add to Loan Objects: " . $base."
+			</div>
+			<div class=\"actions\">";
+if (isset($arrHttp["encabezado"])){
+echo "<a href=\"menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong> back </strong></span>
-				</a>";
-//$base=$arrHttp['base']; //$_POST['base'];
-echo "<br>";
-echo "<br>";
-echo "<br>";
+	<span><strong>". $msgstr["back"]."</strong></span></a>";
+}
+echo "</div>
+	<div class=\"spacer\">&#160;</div>
+	</div>";
 ?>
-
+<div class="helper">
+	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addloanobject.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<?php
+if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
+ 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addloanobject.html target=_blank>".$msgstr["edhlp"]."</a>";
+echo "<font color=white>&nbsp; &nbsp; Script: addloanobject.php</font>";
+?>
+</div>
 <div class="middle form">
 	<div class="formContent">
-<form action="" method="post" name="form1" target="_self" id="form1">
+<form id="form1" name="form1" method="post" action="">
 <label>
 <strong> Base:</strong>
 <?php include("../common/get_post.php");
@@ -55,19 +67,26 @@ echo $base;
   <br>
   <br>
   From
-   <input type="text" name="from" id="from" />
+   <input type="text" name="from" id="from" value="1"/>
   </label>
-  <script language="javascript">//estableciendo el foco en el 1mer textbox
-   document.form1.from.value="1";
-  document.form1.from.focus();
-  </script>
   <label>To
-  <input type="text" name="to" id="to" />
-    <label>
-    last MFN=<?php 
+  <input type="text" name="to" id="to" value="9999" />
+  <label>
+  last MFN=<?php
   include("../common/get_post.php");
 $base=$_POST['base'];
-  $mx_max_mfn="$mx_path"."mx.exe ".$db_path.$base."/data/".$base;
+$OS=strtoupper(PHP_OS);
+$converter_path=$mx_path;
+if (strpos($OS,"WIN")=== false)
+{
+$converter_path=str_replace('mx.exe','',$converter_path);
+$converter_path.=$cisis_ver."mx";
+
+}
+else
+$converter_path.=$cisis_ver."mx.exe";
+$mx_path=$converter_path;
+  $mx_max_mfn="$mx_path"." ".$db_path.$base."/data/".$base;
 exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
 for($i=0;$i<count($outmx_max_mfn);$i++)
 {
@@ -75,41 +94,27 @@ $datosMFN.=$outmx_max_mfn[$i];
 }
 $split_mfn=explode("mfn=",$datosMFN);
 $max_mfn=count($split_mfn);
-$max_mfnM1=$max_mfn-1;
-  echo "
-  <script language=\"javascript\">
-   document.form1.to.value=\"$max_mfnM1\";
-   </script> ";
-  echo $max_mfnM1 ;
-  ?>
+  echo $max_mfn-1;?>
   </label>
   <label></label>
   <br />
   <br />
-  
-  <label>
-     Field for barcode
-     </label>
+  Field for barcode
   <input type="text" name="field" id="field" value="82"/>
-  <script>
-   document.form1.field.value="82";
-    </script>
-       Sub-field
+  Sub-field
   <input type="text" name="tag" id="tag" value="a"/>
-   <label></label><label><br />
+  <label></label><label><br />
   <br />
-  
+
   Control number field
   <input name="cnf" type="text" id="cnf" value="1" />
   <br />
   <br />
   Number of copies
   <input name="nc" type="text" id="nc" value="3" />
-   or take the number
-    
-   of copies from field 
+   or take the number of copies from field
    <input name="fnc" type="text" id="fnc" />
-    and sub-field 
+    and sub-field
     <input type="text" name="ncsf" id="ncsf" />
     <br />
     <br />
@@ -121,11 +126,11 @@ $max_mfnM1=$max_mfn-1;
  if (!$fp)
    {
      echo "Unable to open file circulation/def/$lang/items.tab.</strong></p></body></html>";
-         
+
      exit;
 
    }
-   
+
 while(!feof($fp))
 {
  $order= fgets($fp, 100);
@@ -135,12 +140,14 @@ while(!feof($fp))
  flock($fp, 3);
   fclose($fp);
 	?>
+
+
     </select>
     <br />
   </label>
   <label><br />
   </label>
-  <p> 
+  <p>
     <label>Main Library
     <input type="text" name="ml" id="ml" />
     </label>
@@ -149,13 +156,13 @@ while(!feof($fp))
     <label>Secundary Library
     <input type="text" name="sl" id="sl" />
     </label>
-    </p>
-  <p>
+    <br />
     <label></label>
-    <?php
+    <br />
+        <?php
  include("../common/get_post.php");
   $base=$arrHttp["base"];
- 
+
   echo " <input type=\"hidden\" value=\"$base\" name=\"base\"/>";
   ?>
       <input type="submit" name="sub" id="sub" value="Submit"
@@ -163,13 +170,13 @@ while(!feof($fp))
       </label>
   </p>
   <p>&nbsp;</p>
-  
+
 </form>
 </div>
 <?php
 include("../common/get_post.php");
 $base=$_POST['base'];
-$IsisScript="$Wxis"."wxis.exe IsisScript=hi.xis";
+$IsisScript=$Wxis." IsisScript=hi.xis";
 $from=$_POST['from'];
 $to=$_POST['to'];
 $bprinc=$_POST['ml'];;
@@ -178,8 +185,19 @@ $campo=$_POST['field'];
 $tag=$_POST['tag'];
 $bdp="loanobjects";
 $CNF=$_POST['cnf'];
-$mx="$mx_path"."mx.exe $db_path".$base."/data/".$base." from=$from to=$to pft=v".$campo;
-$queryNro="$mx_path"."mx.exe $db_path".$base."/data/".$base." from=$from to=$to pft=v".$CNF;
+$OS=strtoupper(PHP_OS);
+$converter_path=$mx_path;
+if (strpos($OS,"WIN")=== false)
+{
+$converter_path=str_replace('mx.exe','',$converter_path);
+$converter_path.=$cisis_ver."mx";
+
+}
+else
+$converter_path.=$cisis_ver."mx.exe";
+$mx_path=$converter_path;
+$mx="$mx_path"." $db_path".$base."/data/".$base." from=$from to=$to pft=v".$campo;
+$queryNro="$mx_path"." $db_path".$base."/data/".$base." from=$from to=$to pft=v".$CNF;
 $cantCopias=$_POST['nc'];
 $numcopiascampo=$_POST['fnc'];
 $numcopiassubcampo=$_POST['ncsf'];
@@ -195,7 +213,7 @@ if($from<=$to && $to>0 && $from>0&&$to<=$max_mfn-1)
 if(strlen($numcopiascampo)>0&& strlen($numcopiassubcampo)>0)
 {
 unset($strOutNumCop);
-$mx_num_cop="$mx_path"."mx.exe $db_path".$base."/data/".$base." from=$from to=$to pft=v".$numcopiascampo;
+$mx_num_cop="$mx_path"." $db_path".$base."/data/".$base." from=$from to=$to pft=v".$numcopiascampo;
 
 exec($mx_num_cop,$outmx_num_cop,$banderamx_num_cop);
 $splitCantCop=explode("..",$outmx_num_cop[0]);
@@ -259,6 +277,7 @@ $str="<IsisScript name=hi>
 <write>Unlock</write>
 <display>
 <pft>if val(v1102) = 0 then '<b>Created!</b><hr>' fi </pft>
+<pft>if val(v1102) = 1 then '<b>Sorry, no registries created!</b><hr>' fi </pft>
 </display>
 </update>
 </do>
@@ -288,28 +307,12 @@ echo "$cantReg registries created!";
 else
 echo "NO registries created!";
 }
-else
-{
-echo "<script language=\"javascript\">
-function validar()
-{
-if(document.form1.from.value<=0||document.form1.from.value>document.form1.to.value)
-{
-alert(\"Check the range!\");
-event.returnValue=false;
-return false;
-}
-return true;
-}
-</script>";
-exit();
-}
 
 ?>
 </div>
 
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
-<?
+<?php
 include("../common/footer.php");
 
 ?>

@@ -27,7 +27,7 @@ echo "
 	<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".$msgstr["z3950"].": ".$msgstr["z3950_cnv"]." (".$arrHttp["base"].")</div>
 	<div class=\"actions\">\n";
-echo "<a href=z3950_conf.php?base=^a". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">
+echo "<a href=z3950_conf.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">
 	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>". $msgstr["back"]."</strong></span>
 		</a>

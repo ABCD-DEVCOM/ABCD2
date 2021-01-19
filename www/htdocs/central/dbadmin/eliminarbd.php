@@ -28,7 +28,7 @@ global $db_path;
    }
 
 	$ix=strlen($db_path);
-   echo "<p><b>File modified:</b> ".substr($filename,$ix)."<br>";
+   echo "<p><b>Archivo modificado:</b> ".substr($filename,$ix)."<br>";
 
    fclose($handle);
    return 0;
@@ -48,8 +48,7 @@ global $db_path;
         return  false;
     while($file  =  readdir($dir_handle))  {
 
-        if  ($file  !=  "."  &&  $file  !=  "..")  {
-
+        if  ($file  !=  "."  &&  $file  !=  "..")  {
         	echo "file: ".$file."<br>";
             if  (!is_dir($dirname."/".$file))
                 unlink($dirname ."/".$file);
@@ -128,13 +127,11 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/eliminarbd.php";
 <?php
 if  (!is_dir($db_path.$arrHttp["base"])) {
     	echo "<p><h5>".$arrHttp["base"]."<br>Database does not exist</h5>";
-    	if (!isset($arrHttp["encabezado"])){
-    		if (!isset($arrHttp["eliminar"]))
+    	if (!isset($arrHttp["encabezado"])){    		if (!isset($arrHttp["eliminar"]))
     			echo " <p><center><a href=menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado>". $msgstr["back"]."</a>";
     		else
     			echo " <p><center><a href=.php?base=".$arrHttp["base"]."$encabezado>". $msgstr["back"]."</a>";
-
-    	}
+    	}
         echo "
 		</div>
 		</div>
@@ -182,12 +179,8 @@ if (isset($arrHttp["eliminar"])){
 			if (!isset($arrHttp["encabezado"])) echo "<script>EliminarListaBases('".$arrHttp["base"]. "')</script>";
 		}
 	}
-}else{
-	if (isset($arrHttp["encabezado"])) {
-		$url="../common/inicio.php?reiniciar=s";
-	}else{
-		$url="index.php";
-	}
+}else{	if (isset($arrHttp["encabezado"])) {		$url="../common/inicio.php?reiniciar=s";
+	}else{		$url="index.php";	}
 	if ($protected=="N"){
 		echo "<script>
 				if (confirm(\"".$msgstr["mnt_ebd"]." ".$arrHttp["base"]." ??\")==true){

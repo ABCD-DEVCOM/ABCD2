@@ -14,7 +14,7 @@ include("../lang/admin.php");
 	<head>
 <xMETA HTTP-EQUIV="Expires" CONTENT="Tue, 04 Dec 1993 21:29:02 GMT">
 
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 
 <script languaje=javascript>
 
