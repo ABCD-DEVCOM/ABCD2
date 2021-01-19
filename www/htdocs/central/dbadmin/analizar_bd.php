@@ -21,7 +21,7 @@ if (!isset($_SESSION["login"])){
 $Permiso=$_SESSION["permiso"];
 ?>
 
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="javascript" type="text/javascript">
 
 </script>

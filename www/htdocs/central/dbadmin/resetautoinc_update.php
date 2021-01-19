@@ -56,7 +56,7 @@ if (isset($file) and file_exists($file)){
 	$cn_val=implode("",$fp);
 }
 include("../common/header.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>"
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <?php
 echo "<body>\n";
@@ -77,7 +77,7 @@ if (isset($arrHttp["encabezado"])) {
 if ($arrHttp["Opcion"]=="inventory")
 	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
 else
-	echo "<a href=\"menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
+	echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
 ?>
 					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>

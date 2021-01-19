@@ -6,12 +6,9 @@ if (!isset($_SESSION["permiso"])){
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 include("../common/get_post.php");
 include ("../config.php");
-include ("../lang/admin.php");
-include ("../lang/dbadmin.php");
-
-
-
-
+include("../lang/admin.php");
+include("../lang/soporte.php");
+include("../lang/dbadmin.php");
 
 function LeerArchivos($Dir,$Ext){
 // se leen los archivos con la extensión .pft
@@ -82,19 +79,19 @@ if (!file_exists($archivo)){
 
 include("../common/header.php");
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
-<script language=Javascript src=../dataentry/js/selectbox.js></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
 
 <script languaje=javascript>
 
 function BorrarRango(){
-	document.forma1.Mfn.value=''
-	document.forma1.to.value=''
+	document.cnFrm.Mfn.value=''
+	document.cnFrm.to.value=''
 }
 
-function EnviarForma(vp){
-	de=Trim(document.forma1.Mfn.value)
-  	a=Trim(document.forma1.to.value)
+function EnviarFormaCN(vp){
+	de=Trim(document.cnFrm.Mfn.value)
+  	a=Trim(document.cnFrm.to.value)
   	if (de!="" || a!="") {
   		Se=""
 		var strValidChars = "0123456789";
@@ -122,7 +119,7 @@ function EnviarForma(vp){
 		}
 	}
 
-  	document.forma1.submit()
+  	document.cnFrm.submit()
 }
 
 </script>
@@ -142,7 +139,7 @@ if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php")
 	$ayuda="control_number.html";
 	$arrHttp["encabezado"]="s";
 	if (isset($arrHttp["encabezado"])){		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"])   or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
-			echo "<a href=\"menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
+			echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
 			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
 			";
@@ -166,7 +163,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: assign_control_number.php";
 ?>
 </font>
 	</div>
-<form name=forma1 method=post action=assign_control_number_ex.php onsubmit="Javascript:return false">
+<form name=cnFrm method=post action=assign_control_number_ex.php onsubmit="Javascript:return false">
 <input type=hidden name=encabezado value=s>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
@@ -175,6 +172,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: assign_control_number.php";
 <center>
 <div class="middle form">
 	<div class="formContent">
+<?php
+echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
+?>
 	<table width=600 cellpadding=5>
 	<tr>
 		<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
@@ -203,7 +203,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: assign_control_number.php";
 	<tr>
 		<td colspan=2 align=center>
 		<?php
-		echo "Last control number: ".$last_cn." <a href=Javascript:Reset()>".$msgstr["resetcn"]."</a>";?><p><input type=submit name=enviar value="<?php echo $msgstr["send"]?>" onClick=javascript:EnviarForma()></td>
+		echo "Last control number: ".$last_cn." <a href=Javascript:Reset()>".$msgstr["resetcn"]."</a>";?><p><input type=submit name=enviar value="<?php echo $msgstr["send"]?>" onClick=javascript:EnviarFormaCN()></td>
 </table>
 </form>
 </center>

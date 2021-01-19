@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -11,7 +11,7 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
 echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
@@ -21,8 +21,8 @@ echo "<a href=\"menu_mantenimiento.php?base=".$base."$encabezado\" class=\"defau
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a>";
-				
-				
+
+
 $base=$arrHttp["base"];
 $bd=$db_path.$base;
 
@@ -50,14 +50,14 @@ $straux.=$output[$i]."<br>";
              <br>
 			<ul>
 			<li>
-          <?php  
-		  echo "<h3>Query: $strINV"."</h3><br>"; 
+          <?
+		  echo "<h3>Query: $strINV"."</h3><br>";
 		  ?>
             </li>
            <br>
             <li>
-			<?php 
-			
+			<?php
+
 			if($straux!="")
 echo ("<h3>Proccess Output: ".$straux."<br>Proccess Finished OK</h3><br>");
 else
@@ -68,7 +68,7 @@ echo"NO database selected";
 }
 ?></li>
 
-            
+
 			</ul>
 
 		</td>
@@ -81,7 +81,7 @@ echo"NO database selected";
 </form>
 </div>
 </div>
-<?php
+<?
 include("../common/footer.php");
 echo "</body></html>";
 ?>

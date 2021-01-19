@@ -12,7 +12,7 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
 echo "<body onunload=win.close()>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");

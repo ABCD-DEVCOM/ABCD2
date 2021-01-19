@@ -18,6 +18,9 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 }else{
 	$archivo=str_replace("%path_database%",$db_path,$arrHttp["picklist"]);
 }
+if (strpos($arrHttp["picklist"],'../')!==false){
+	echo "<h1>invalid pick list name</h1>";die;
+}
 $fp=false;
 $fp=file($archivo);
 if (!$fp){	echo $archivo.": ".$msgstr["misfile"];

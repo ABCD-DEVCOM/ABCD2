@@ -12,7 +12,7 @@ include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
 
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
 echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
@@ -43,7 +43,7 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
  <?php
  include("../common/get_post.php");
   $base=$arrHttp["base"];
- 
+
   echo " <input type=\"hidden\" value=\"$base\" name=\"base\"/>";
   ?>
   <input type="submit" value="Enviar"/>
@@ -53,11 +53,11 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 
 		$base=$_POST['base'];
 $bd=$db_path.$base;
-			
+
 if( !isset($_FILES['archivo']) )
 {
   echo '<div class=\"middle form\"><br>No file choosen yet<br/></div>';
-  
+
 }
 else
 {
@@ -69,7 +69,7 @@ else
 
      $limite = 5000 * 1024;
 
-  
+
     if( $_FILES['archivo']['error'] > 0 )
 	{
       echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
@@ -90,22 +90,22 @@ else
 	  {
    move_uploaded_file($nombre_tmp,
           "../../../bases/wrk/" . $nombre);
-		  
+
 		  echo "<br/>Saved in: " . "../../../bases/wrk/" . $nombre;
 		  $OK="OK";
       }
     }
-	
+
   }
-		  
-		  
-	
+
+
+
   if(isset($OK))
   {
   echo "<h3>Proccess information</h3>";
 echo "File upload OK, importing ".$nombre."...";
 	 $op=$_POST['OpISO'];
-	
+
 	 $strINV=$mx_path."mx.exe "."iso="."../../../bases/wrk/".$nombre." ".$op."=".$bd."/data/".$base." -all now";
 	 exec($strINV, $output,$t);
 	 $straux="";
@@ -114,7 +114,7 @@ for($i=0;$i<count($output);$i++)
 $straux.=$output[$i]."<br>";
 }
 echo "<br>MX query: ".$strINV;
-echo "<br>Proccess output: ".$straux; 
+echo "<br>Proccess output: ".$straux;
 if($t==0)
 echo "<br>Process OK!";
 else

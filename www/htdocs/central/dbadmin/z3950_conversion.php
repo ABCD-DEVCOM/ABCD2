@@ -44,7 +44,7 @@ else
 	$db=$arrHttp["base"];
 include("../common/header.php");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language=javascript>
 function Enviar(){
 	if (Trim(document.cnv.namecnvtb.value)=="" || Trim(document.cnv.descr.value)==""){		alert("<?php echo $msgstr["namecnvtamiss"]?>")
@@ -71,7 +71,7 @@ if (isset($arrHttp["encabezado"])){
 
 	<div class="actions">
 <?php
-	echo "<a href=z3950_conf.php?base=^a".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">
+	echo "<a href=z3950_conf.php?base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">
 		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["back"]."</strong></span>
 		</a>\n";

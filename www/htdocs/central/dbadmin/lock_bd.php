@@ -8,6 +8,7 @@ if (!isset($_SESSION["permiso"]) or !isset($arrHttp["base"])){
 
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
+include("../lang/admin.php");
 $lang=$_SESSION["lang"];
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
@@ -90,6 +91,7 @@ echo "<div class=helper>
 			<div class=\"formContent\">
 
 ";
+echo "<center><h3>".$msgstr["protect_db"]."</h3></center>";
 if (!isset($_SESSION["permiso"]["CENTRAL_ALL"])){	echo "<h4>".$msgstr["invalidright"]."</h4>";}else{
 	if (!isset($arrHttp["action"])){		echo "<form name=protect onsubmit='return false'><table align=center class=listTable>";
 		echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";

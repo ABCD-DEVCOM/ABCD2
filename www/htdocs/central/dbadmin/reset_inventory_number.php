@@ -18,7 +18,7 @@ if (file_exists($file)){
 }
 
 include("../common/header.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>"
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
 function Enviar(){	control=Trim(document.forma1.control_n.value)

@@ -3,7 +3,6 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-set_time_limit(0);
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
@@ -17,11 +16,11 @@ $OS=strtoupper(PHP_OS);
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
 $arrHttp["base"]="loanobjects";
-echo "<script src=../dataentry/js/lr_trim.js></script>";
-echo "<body onunload=win.close()>\n";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
+echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";	
+	$encabezado="&encabezado=s";
 }
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">Create duplicate copies report: " . $base_ant."
@@ -43,20 +42,20 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_copiesdupreport.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "<font color=white>&nbsp; &nbsp; Script: copiesdupreport.php</font>";
 ?>
-</div>	
+</div>
 <script type="text/JavaScript" language="javascript">
 function Save(file)
 {
 
 window.open('download.php?file='+file,'_self');
 }
-</SCRIPT>	
+</SCRIPT>
 <div class="middle form">
 	<div class="formContent">
 
 
 <?php
-echo "<p>".$msgstr["CPdupreport_mx_text"]."</p>";   
+echo "<p>".$msgstr["CPdupreport_mx_text"]."</p>";
 echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
 if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";
 echo "<h3>Report<p>";
@@ -84,8 +83,8 @@ if ($actualin==$tempactualin){//There is a duplicate
 $res.=$actualid."+-+".$actualdb."+-+".$actualin."+~+".$tempactualid."+-+".$tempactualdb."+-+".$tempactualin;
 }//There is a duplicate
 }//Going from actual until total
-if ($res!="") 
-if (strpos($dupIN,','.$actualin.',') === false) 
+if ($res!="")
+if (strpos($dupIN,','.$actualin.',') === false)
 {
 $duplicates[]=$res;
 $dupIN.=$actualin.",";
@@ -115,7 +114,7 @@ for ($i = 0; $i < count($duplicates); $i++) {//Now going by duplicates entries
 $dupentries=explode("+~+",$duplicates[$i]);
 for ($j = 0; $j < count($dupentries); $j++){//Selecting one Inventory Number duplicate records
 $tempvalues=explode("+-+",$dupentries[$j]);
-if ($j==0) 
+if ($j==0)
 {
 echo '<tr><td rowspan="'.count($dupentries).'" align="center">'.$tempvalues[2].'</td>';
 $cantblanc=18-strlen($tempvalues[2]);
@@ -144,7 +143,7 @@ echo '</table>';
 @ $fp = fopen($db_path."copies/DuplicateCopiesReport.txt", "w");
 if (!$fp)
  {
-   echo "Unable to write the file ".$db_path."copies/DuplicateCopiesReport.txt";         
+   echo "Unable to write the file ".$db_path."copies/DuplicateCopiesReport.txt";
    exit;
  }
 fwrite($fp,$savefile);
@@ -152,8 +151,8 @@ fclose($fp);
 
 }//There are duplicates to display
 else
-echo $msgstr["noduplicates"]; 
-?>   
+echo $msgstr["noduplicates"];
+?>
 
 </div>
 </div>

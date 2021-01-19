@@ -24,7 +24,7 @@ switch ($arrHttp["componente"]){	case "soporte.tab":
 		$rotulo=$msgstr["catalogacion"];
 		break;
 	case "statistics.tab":
-		$rotulo=$msgstr["statistics"];
+		$rotulo=$msgstr["estadisticas"];
 		break;
 }
 echo "
@@ -94,8 +94,9 @@ if (file_exists($a)) {
 		if (trim($value)!="") {
 			$m=explode('=',$value,2);
 			$m[0]=trim($m[0]);
-			if (!isset($msg[$m[0]]))
+			if (!isset($msg[$m[0]])){
 				$msg[$m[0]]=trim($m[1]);
+			}
 		}
 	}
 }

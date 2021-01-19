@@ -13,7 +13,7 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 
 function CargarTabla(Tabla){

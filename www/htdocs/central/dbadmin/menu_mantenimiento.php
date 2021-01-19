@@ -1,26 +1,7 @@
 <?php
 session_start();
 
-unset($_SESSION["Browse_Expresion"]);
-//PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
-unset($_SESSION["root_base"]);
-unset($_SESSION["dir_base"]);
-unset($_SESSION["Folder_Name"]);
-unset($_SESSION["Folder_Type"]);
-unset($_SESSION["Opened_Folder"]);
-unset($_SESSION["Father"]);
-unset($_SESSION["Numfile"]);
-unset($_SESSION["File_Date"]);
-unset($_SESSION["Last_Node"]);
-unset($_SESSION["Level_Tree"]);
-unset($_SESSION["Levels_Fixed_Path"]);
-unset($_SESSION["Numbytes"]);
-unset($_SESSION["Children_Files"]);
-unset($_SESSION["Children_Subdirs"]);
-unset($_SESSION["Maxfoldersize"]);
-unset($_SESSION["Last_Level_Node"]);
-unset($_SESSION["Total_Time"]);
-unset($_SESSION["Server_Path"]);
+
 
 //echo "<pre>"; print_r($_SESSION); ECHO "</pre>";
 
@@ -74,176 +55,7 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 
 
-<script language="javascript" type="text/javascript">
 
-function EnviarForma(Opcion,Mensaje){
-
-	base="<?php echo $arrHttp["base"]?>"
-	if (Opcion=="eliminarbd" || Opcion=="inicializar"){
-		if (base==""){
-			alert("<?php echo $msgstr["seldb"]?>")
-			return
-		}
-
-	}
-	switch (Opcion){		case "dbcp":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/copy_db.php"
-			document.admin.target=""
-			break;
-		case "mxdbread":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/mx_dbread.php"
-			document.admin.target=""
-			break;
-		case "readiso":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/mx_dbread.php"
-			document.admin.iso="Y"
-			document.admin.target=""
-			break;
-		case "dbrestore":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/dbrestore.php"
-			document.admin.target=""
-			break;
-		case "lock":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="lock_bd.php"
-			document.admin.target=""
-			break;
-		case "eliminarbd":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="eliminarbd.php"
-			document.admin.target=""
-			break;
-		case "inicializar":
-			document.admin.base.value=base
-			document.admin.target=""
-			break;
-        case "cn":  //assign control number
-          	document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="assign_control_number.php"
-			document.admin.target=""
-			break
-		case "resetcn":    //RESET LAST CONTROL NUMBER IN THE BIBLIOGRAPHIC DATABASE
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="reset_control_number.php"
-			document.admin.target=""
-			break;
-		case "linkcopies":    //LINK BIBLIOGRAPHIC DATABASE WITH COPIES DATABASE
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="copies_linkdb.php"
-			document.admin.target=""
-			break;
-		case "addcopiesdatabase":    //Marcos Script
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addcopiesdatabase.php"
-			document.admin.target=""
-			break;
-		case "copiesocurrenciesreport":    //Marcos Script
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="copiesdupreport.php"
-			document.admin.target=""
-			break;
-		case "addloanobjectcopies":    //Marcos Script
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobjectcopies.php"
-			document.admin.target=""
-			break;
-		case "addloanobj":    //Marino Vretag
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobject.php"
-			document.admin.target=""
-			break;
-		case "fullinv":     //INVERTED FILE GENERATION WITH MX
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/vmx_fullinv.php"
-			document.admin.target=""
-			break;
-		case "importiso":    //Marino ISO load
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/vmxISO_load.php"
-			document.admin.target=""
-			break;
-		case "exportiso":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/iso_export.php"
-			document.admin.target=""
-			break;
-		case "unlock":    //Marino Vretag
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="unlock_db_retag_check.php"
-			document.admin.target=""
-			break;
-		case "addloanobj":    //Marino addloanobj
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobject.php"
-			document.admin.target=""
-			break;
-		case "barcode":    //Marino barcode search
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/barcode.php"
-			document.admin.target=""
-			break;
-		case "dirtree": //EXPLORE DATABASE DIRECTORY
-			switch (Mensaje){
-				case "par":
-				case "www":
-				case "wrk":
-					document.admin.folder.value=Mensaje
-					document.admin.base.value=base
-					break;
-				default:
-					document.admin.base.value=base
-					break;
-			}
-			document.admin.action="dirtree.php";
-			document.admin.target=""
-			break;
-		case "more_utils":    //More utils
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/more_utils.php"
-			document.admin.target=""
-			break;
-		case "menu_extra":    //extra utilities sub-menu
-
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/menu_extra.php"
-				document.admin.target=""
-
-				break;
-		default:
-			alert("")
-			return;
-	}
-	document.admin.Opcion.value=Opcion
-	document.admin.cipar.value=base+".par"
-	document.admin.submit()
-}
-
-</script>
 <body onunload=win.close()>
 <?php
 
@@ -276,8 +88,56 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 </font>
 </div>
 <div class="middle form">
-	<div class="formContent">
-<form name=maintenance>
+	<div class="formContent" style="min-height:300px;">
+
+<?php include("menu_bar.php")?>
+
+<br><br>
+<?php
+$IsisScript=$xWxis."administrar.xis";
+$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+include("../common/wxis_llamar.php");
+$ix=-1;
+foreach($contenido as $linea) {
+	$ix=$ix+1;
+	if ($ix>0) {
+		if (trim($linea)!=""){
+	   		$a=explode(":",$linea);
+	   		if (isset($a[1])) $tag[$a[0]]=$a[1];
+	  	}
+	}
+}
+if (!isset($tag["MAXMFN"]))   $tag["MAXMFN"]=0;
+echo "<center><b>".$msgstr["bd"].": ".$arrHttp["base"]."</b>";
+if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
+	$charset_db="ISO-8859-1";
+}else{
+	$charset_db="UTF-8";
+}
+echo "<br><strong>$charset_db</strong>" ;
+echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$tag["MAXMFN"]."</b></font>";
+
+if ($tag["BD"]=="N")
+	echo "<p>".$msgstr["database"]." ".$msgstr["ne"];
+if ($tag["IF"]=="N")
+	echo "<p>".$msgstr["if"]." ".$msgstr["ne"];
+if ($tag["EXCLUSIVEWRITELOCK"]!=0) {
+	echo "<p>".$msgstr["database"]." ".$msgstr["exwritelock"]."=".$tag["EXCLUSIVEWRITELOCK"].". ".$msgstr["contactdbadm"]."
+	<script>top.lock_db='Y'</script>
+	";
+
+}
+
+if ($wxisUrl!=""){
+	echo "<p>CISIS version: $wxisUrl</p>";
+}else{
+	$ix=strpos($Wxis,"cgi-bin");
+	$wxs=substr($Wxis,$ix);
+    echo "<p>CISIS version: ".$wxs."</p>";
+}
+?>
+</div>
+<!--form name=maintenance>
 <table cellspacing=5 width=500 align=center>
 	<tr>
 		<td nowrap>
@@ -341,16 +201,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mantenimiento.php";
 			</ul>
 
 		</td>
-</table></form>
-<form name=admin method=post action=administrar_ex.php onSubmit="Javascript:return false">
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion>
-<input type=hidden name=encabezado value=s>
-<input type=hidden name=folder>
-<input type=hidden name=iso>
-<input type=hidden name=activa value=<?php echo $_REQUEST["base"]?>>
-</form>
+</table></form-->
+
 </div>
 </div>
 <?php include("../common/footer.php");?>
