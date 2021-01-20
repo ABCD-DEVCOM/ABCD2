@@ -73,7 +73,7 @@ global $xWxis,$wxisUrl,$Wxis;	echo "<p>Título solicitado: ".$signatura."<p>";
 	<meta http-equiv="keywords" content="" />
 	<meta http-equiv="description" content="" />
 	<link rel="stylesheet" rev="stylesheet" href="../common/css/styles.css" type="text/css" media="screen"/>
-    <script src=../common/js/lr_trim.js></script>
+    <script language="JavaScript" type="text/javascript" src=../common/js/lr_trim.js></script>
 
 </head>
 <body>

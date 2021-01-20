@@ -108,7 +108,7 @@ global $ix_nb,$base_sel;
 	return $bases_p;
 }
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 
 
