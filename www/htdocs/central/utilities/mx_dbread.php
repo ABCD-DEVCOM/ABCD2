@@ -152,6 +152,7 @@ echo "
 	 <div class=\"middle form\">
 			<div class=\"formContent\">
 	";
+echo "<center><h3>".$msgstr["mx_dbread"]."</h3></center>";
 
 if (!isset($mx_path)){
 	echo $msgstr["mis_mx_path"];
@@ -182,7 +183,6 @@ if (pathinfo ( strtolower($arrHttp["copyname"]) , PATHINFO_EXTENSION)=="iso"){
 	$command=$mx_path." iso=$db from=$from to=$to";
 	echo "<h4>".$msgstr["readiso_mx"]."</h4>";
 }else{
-	echo "<h4>".$msgstr["mx_dbread"]."</h4>";
 	$command=$mx_path." $db +control";
 	//echo "<strong>Command line: $command</strong><p> ";
 	exec($command,$contenido,$res);
@@ -190,9 +190,20 @@ if (pathinfo ( strtolower($arrHttp["copyname"]) , PATHINFO_EXTENSION)=="iso"){
 	unset($contenido);
 	echo "<p>";	$command=$mx_path." $db from=$from to=$to";}
 echo "Command line: $command<p> ";
+$toRead=explode("/",$_REQUEST["storein"]);
+$toRead=$toRead[0];
+$charset_db=$charset;
+if (file_exists($db_path.$toRead."/dr_path.def")){	$fp=file($db_path.$toRead."/dr_path.def");	foreach ($fp as $value){		$v=explode("=",$value);
+		if ($v[0]=="UNICODE"){			if ($v[1]==0)
+				$charset_db="ISO-8859-1";
+			else				$charset_db="UTF-8";
+			break;		}
+	}}
 exec($command,$contenido,$res);
-foreach ($contenido as $value) echo "$value<br>";
-echo "</font>";
+foreach ($contenido as $value) {	if ($charset_db!=$charset){		if ($charset_db=="ISO-8859-1"){			echo utf8_encode($value);		}else{			echo $value;		}	}else{		echo $value;	}
+
+	echo "<br>";
+}echo "</font>";
 echo "<p>";
 echo $msgstr["cg_rango"].": ".$msgstr["cg_from"];
 $count=$arrHttp["to"]-$arrHttp["from"]+1;

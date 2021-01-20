@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-if (!isset($_SESSION["lang"]))  
+if (!isset($_SESSION["lang"]))
 $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
@@ -12,16 +12,14 @@ include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
-echo "arrHttp=";
-var_dump($arrHttp);
+
 $base=$arrHttp["base"];
-if ($base=="") echo "base not defined !<BR>";
 $converter_path=$cisis_path;
 
 include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-echo "<div style='float:right;'> <a href=\"menu_extra.php?base=".$_POST['basef']."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<div style='float:right;'> <a href=\"../dbadmin/menu_mantenimiento.php?base=".$_POST['base']."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a></div>";
 echo "<div class=\"sectionInfo\">
@@ -66,14 +64,14 @@ $bd=$db_path.$base;
 $OK=$_POST['ok'];
 
 
-  
+
 	$mf=$_POST['mf'];
 $isoname=$_POST['isoname'];
 if($isoname!='')
 {
 if($mf=="no")
 	 $strINV=$cisis_path."mx ".$db_path."/".$base."/data/".$base." iso=".$db_path."/wrk/".$isoname." -all now";
-else 
+else
 $strINV=$cisis_path."mx ".$db_path.$base."/data/".$base." iso=".$db_path."wrk/".$isoname." outisotag1=3000 -all now";
 	 exec($strINV, $output,$t);
 	 $straux="";
@@ -82,7 +80,7 @@ for($i=0;$i<count($output);$i++)
 $straux.=$output[$i]."<br>";
 }
 echo "<br>MX query: ".$strINV;
-echo "<br>Process output: ".$straux; 
+echo "<br>Process output: ".$straux;
 if($t==0)
 {
 echo "<br>Process OK!<br>File saved in ".$db_pat."wrk/".$isoname;

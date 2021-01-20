@@ -33,6 +33,7 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 //die;
+$arrHttp["copyname"] =str_replace(".mst","",$arrHttp["copyname"]);
 include("../config.php");
 $lang=$_SESSION["lang"];
 
@@ -119,15 +120,12 @@ $copyname=str_replace('/',"",$copyname);
 $to=$db_path.$to."/".$arrHttp["copyname"];
 $OS=PHP_OS;
 
-echo "<H4>" . $from ." => $to</H4>";
+echo "<H4>" . $from .".mst => $to.mst</H4>";
 if (isset($arrHttp["reorganize"])){
     $mxcp_path=$cisis_path."mxcp".$exe_ext;
    if (!file_exists($mxcp_path)){
-    	$mxcp_path=$cgibin_path."/mxcp";
-    	if (!file_exists($mxcp_path)){
-    		echo $msgstr["mis_mx_path"];
-	    	die;
-    	}
+    	echo "<font color=red><strong>".$msgstr["missing"]." ". $mxcp_path;
+    	die;
     }
     echo "<font face='courier new'>Command line: ".$mxcp_path." $from create=$to</font><br> ";
  }

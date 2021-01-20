@@ -20,7 +20,7 @@ $converter_path=$mx_path;
 
 include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-echo "<div style='float:right;'> <a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<div style='float:right;'> <a href=\"../dbadmin/menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\"/>
 					<span><strong> back </strong></span>
 				</a></div>";
@@ -60,7 +60,7 @@ for($i=0;$i<count($output);$i++)
 $straux.=$output[$i]."<br>";
 }
 echo "<br>MX query: ".$strINV;
-echo "<br>Process output: ".$straux; 
+echo "<br>Process output: ".$straux;
 if($t==0)
 {
 echo "<br>Process exporting OK!<br>File saved in ".$db_path."wrk/".$isoname;
@@ -75,7 +75,7 @@ for($i=0;$i<count($output);$i++)
 $straux.=$output[$i]."<br>";
 }
 echo "<br>MX query: ".$strINV;
-echo "<br>Process output: ".$straux; 
+echo "<br>Process output: ".$straux;
 if($t==0)
 echo "<br>Process importing OK!";
 else

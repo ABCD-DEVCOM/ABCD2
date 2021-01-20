@@ -9,6 +9,8 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
+include("../lang/admin.php");
+include("../lang/soporte.php");
 include("../config.php");
 include("../common/header.php");
 $base=$arrHttp["base"];
@@ -32,7 +34,7 @@ $OS=strtoupper(PHP_OS);
 $converter_path=$cisis_path;
 
 $converter_path=$cisis_path.$cisis_ver."retag";
-$retag_path=$converter_path;	
+$retag_path=$converter_path;
 $base=$arrHttp["base"];
 $bd=$db_path.$base;
 $strINV=$retag_path." ".$bd."/data/".$base." unlock";
@@ -48,7 +50,7 @@ echo "<div class=\"sectionInfo\">
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -62,11 +64,14 @@ echo "</div>
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_unlock_db_retag.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: unlock_db_retag.php</font>";
+echo "<font color=white>&nbsp; &nbsp; Script: utilities/unlock_db_retag.php</font>";
 ?>
 </div>
 <div class="middle form">
 	<div class="formContent">
+<?php
+echo "<center><h3>". $msgstr["mnt_unlock"]."</h3></center>";
+?>
 <form name=maintenance>
 <table cellspacing=5 width=400 align=center>
 	<tr>
@@ -99,12 +104,7 @@ echo"NO database selected";
 
 		</td>
 </table></form>
-<form name=admin method=post action=../dbadmin/administrar_ex.php onSubmit="Javascript:return false">
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion>
-<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
-</form>
+
 </div>
 </div>
 <?php
