@@ -276,7 +276,7 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  		$fp=array();
  	}
  	$cuenta=count($fp);
- 	if (count($fp<3)){
+ 	if (count($fp)<3){
  		$fp[]="||||||";
  		$fp[]="||||||";
     } 		foreach ($fp as $value) { 			$value=trim($value); 			if (trim($value)!=""){

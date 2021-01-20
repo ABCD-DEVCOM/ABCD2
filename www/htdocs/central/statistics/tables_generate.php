@@ -9,20 +9,15 @@ include("../common/get_post.php");
 include ("../config.php");
 include ("../lang/admin.php");
 include ("../lang/statistics.php");
-
 //foreach ($arrHttp as $key => $value) echo "$key = $value <br>";
-
 //SE EXTRAE EL NOMBRE DE LA BASE DE DATOS
-if (strpos($arrHttp["base"],"|")===false){
-
-}   else{
-//		$ix=strpos($arrHttp["base"],'|');
-$dbase=explode("|",$arrHttp["base"]);
-$arrHttp["base"]=$dbase[0];
-//		$arrHttp["base"]=substr($arrHttp["base"],2,$ix-2);
-//                echo "base=". $dbasename. "<BR>";
-//$arrHttp["base"] = $dbasename;
-}
+$x=explode('|',$arrHttp["base"]);
+$arrHttp["base"]=$x[0];
+$date_prefix="";
+if (file_exists($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg")){	$fp=file($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg");
+	foreach ($fp as $value){		if (trim($value)!=""){			$date_prefix=trim($value);
+			break;		}	}}
+unset($fp);
 if (!isset($arrHttp["Opcion"]))$arrHttp["Opcion"]="";
 
 if (isset($arrHttp["encabezado"]))
@@ -32,9 +27,7 @@ else
 
 // SE LEE EL MÁXIMO MFN DE LA BASE DE DATOS
 $IsisScript=$xWxis."administrar.xis";
-//echo "IsisScript=$IsisScript<BR>";
 $query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
-//$query = "&base=".$dbasename . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -51,12 +44,26 @@ foreach($contenido as $linea) {
 //HEADER DEL LA PÁGINA HTML Y ARCHIVOS DE ESTIVO
 include("../common/header.php");
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <style type=text/css>
 
-td{
-	font-size:12px;
-	font-family:Arial;
+td{	font-size:12px;
+	font-family:Arial;}
+
+div#statsgen{
+	margin: 0px 20px 0px 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+
+div#useextproc{
+
+	display: none;
+	margin: 0px 20px 0px 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
 }
 
 div#useextable{
@@ -68,8 +75,7 @@ div#useextable{
 	color: #000000;
 }
 
-div#createtable{
-<?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
+div#createtable{<?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
 
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -105,7 +111,7 @@ div#configure{
 
 TipoFormato=""
 C_Tag=Array()
-
+var strValidChars = "0123456789$";
 
 
 function AbrirVentana(Archivo){
@@ -114,8 +120,7 @@ function AbrirVentana(Archivo){
 	msgwin.focus()
 }
 
-function EsconderVentana( whichLayer ){
-var elem, vis;
+function EsconderVentana( whichLayer ){var elem, vis;
 	if( document.getElementById ) // this is the way the standards work
 		elem = document.getElementById( whichLayer );
 	else if( document.all ) // this is the way old msie versions work
@@ -132,10 +137,8 @@ var elem, vis;
 function toggleLayer( whichLayer ){
 	var elem, vis;
 
-	switch (whichLayer){
-		case "createtable":
-<?php
-		echo '
+	switch (whichLayer){		case "createtable":
+<?php		echo '
 			EsconderVentana("useextable")
 			break
 			';
@@ -157,66 +160,106 @@ function toggleLayer( whichLayer ){
 		vis.display = ( elem.offsetWidth != 0 && elem.offsetHeight != 0 ) ? 'block':'none';
 	vis.display = ( vis.display == '' || vis.display == 'block' ) ? 'none':'block';
 }
+function IsNumeric(data){   	//  test strString consists of valid characters listed above
+   	for (i = 0; i < data.length; i++){
+    	strChar = data.charAt(i);
+    	if (strValidChars.indexOf(strChar) == -1){
+    		return false
 
+    	}
+    }
+    return true}
+function Globales(){	var d = new Date();
+	var n = d.getFullYear();
+	year_from=Trim(document.globales.year_from.value)
+	if (year_from==0 || year_from=="" || !IsNumeric(year_from) ) {
+		alert("<?php echo $msgstr["inv_date"]?>")
+		return
+	}
+	month_from=Trim(document.globales.month_from.value)
+	if (month_from=="" ){
 
-
-function BorrarRango(){
-	document.forma1.Mfn.value=''
-	document.forma1.to.value=''
-}
+	} else{
+		if (month_from<1 || month_from>12 || !IsNumeric(month_from) ) {
+			alert("<?php echo $msgstr["inv_date"]?>")
+			return
+		}
+	}
+	document.globales.submit()}
 
 function BorrarExpresion(){
 	document.forma1.Expresion.value=''
 }
 
-function EnviarForma(){
-	de=Trim(document.forma1.Mfn.value)
-  	a=Trim(document.forma1.to.value)
-  	if (de!="" || a!="") {
-	  	document.forma1.Opcion.value="rango"
-  		Se=""
-		var strValidChars = "0123456789";
-		blnResult=true
+function EnviarForma(Desde){
+	switch (Desde){
+		case 1:
+			var d = new Date();
+			var n = d.getFullYear();
+			year_from=Trim(document.forma1.year_from.value)
+			//year_to=Trim(document.forma1.year_to.value)
+			if (year_from==0 || year_from=="" || !IsNumeric(year_from) ) {				alert("<?php echo $msgstr["inv_date"]?>")
+				return			}
+			//if (year_to < year_from){			//	alert("<?php echo $msgstr["inv_date"]?>")
+			//	return			//}
+			month_from=Trim(document.forma1.month_from.value)
+			//month_to=Trim(document.forma1.month_to.value)
+			if (month_from=="" ){			} else{				if (month_from<1 || month_from>12 || !IsNumeric(month_from) ) {
+					alert("<?php echo $msgstr["inv_date"]?>")
+					return
+				}			}
+            document.forma1.Opcion.value="FECHAS"
+			break
+		case 2:
+			de=Trim(document.forma1.Mfn.value)
+  			a=Trim(document.forma1.to.value)
+  			Se=""
+			blnResult=true
    	//  test strString consists of valid characters listed above
-   		for (i = 0; i < de.length; i++){
-    		strChar = de.charAt(i);
-    		if (strValidChars.indexOf(strChar) == -1){
-    			alert("<?php echo $msgstr["inv_mfn"]?>")
-	    		return
+   			for (i = 0; i < de.length; i++){
+    			strChar = de.charAt(i);
+    			if (strValidChars.indexOf(strChar) == -1){
+    				alert("<?php echo $msgstr["inv_mfn"]?>")
+	    			return
+    			}
     		}
-    	}
-    	for (i = 0; i < a.length; i++){
-    		strChar = a.charAt(i);
-    		if (strValidChars.indexOf(strChar) == -1){
-    			alert("<?php echo $msgstr["inv_mfn"]?>")
-	    		return
+    		for (i = 0; i < a.length; i++){
+    			strChar = a.charAt(i);
+    			if (strValidChars.indexOf(strChar) == -1){
+    				alert("<?php echo $msgstr["inv_mfn"]?>")
+	    			return
+    			}
     		}
-    	}
-    	de=Number(de)
-    	a=Number(a)
-    	if (de<=0 || a<=0 || de>a ||a><?php echo $tag["MAXMFN"]?>){
-	    	alert("<?php echo $msgstr["inv_mfn"]?>")
-	    	return
-		}
+    		de=Number(de)
+    		a=Number(a)
+    		if (de<=0 || a<=0 || de>a ||a><?php echo $tag["MAXMFN"]?>){
+	    		alert("<?php echo $msgstr["inv_mfn"]?>")
+	    		return
+			}
+			document.forma1.Opcion.value="MFN"
+			break
+		case 3:
+			if (Trim(document.forma1.Expresion.value)==""){
+				alert("<?php echo $msgstr["selreg"]?>")
+				return
+			}
+			document.forma1.Opcion.value="BUSQUEDA"
+			break
 	}
-    if (Trim(document.forma1.Expresion.value)=="" && (Trim(document.forma1.Mfn.value)=="" )){
-		alert("<?php echo $msgstr["selreg"]?>")
-		return
-	}
-	if (Trim(document.forma1.Expresion.value)!="" && (Trim(document.forma1.Mfn.value)!="" )){
-		alert("<?php echo $msgstr["selreg"]?>")
-		return
-	}
-	if (document.forma1.tables.selectedIndex>0 ){
-		if (document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){
-			alert("<?php echo $msgstr["seltab"]?>")
-			return
-		}
-	}
-	if (document.forma1.tables.selectedIndex || document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){
-	  	document.forma1.submit()
+    if (document.forma1.proc.selectedIndex<1 && document.forma1.tables.selectedIndex<1 && document.forma1.rows.selectedIndex<1 && document.forma1.cols.selectedIndex<1){
+	  	alert("<?php echo $msgstr["seltab"]?>")
 	  	return
 	}
+	i=0
+	if (document.forma1.proc.selectedIndex>0 ){
+		document.forma1.Accion.value="Procesos"		i=i+1
+	}
+	if (document.forma1.tables.selectedIndex>0 ){		document.forma1.Accion.value="Tablas"		i=i+1
+	}
+    if ( document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){
+    	document.forma1.Accion.value="Variables"    	i=i+1    }
+    if (i>1){    	alert("<?php echo $msgstr["seltab"]?>")
+	  	return    }
 	document.forma1.submit();
 }
 
@@ -227,6 +270,7 @@ function Buscar(){
   	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
 	msgwin.focus()
 }
+function Probar(){	alert("entro")}
 
 function Configure(Option){
 	if (document.configure.base.value==""){
@@ -234,11 +278,40 @@ function Configure(Option){
 		return
 	}
 	switch (Option){
+		case "stats_gen":
+			document.configure.action="stats_gen_cfg.php"
+			break
 		case "stats_var":
 			document.configure.action="config_vars.php"
 			break
 		case "stats_tab":
 			document.configure.action="tables_cfg.php"
+			break
+		case "stats_proc":
+			document.configure.action="proc_cfg.php"
+			break
+		case "stats_pft":
+			document.configure.action="config_tables.php"
+			break
+		case "date_prefix":
+			document.forma1.date_prefix.style="border: 1px solid red;"
+			document.forma1.date_prefix.focus()
+			document.forma1.date_prefix.onclick=null
+			Ctrl=document.getElementById("label_dp")
+			if (Ctrl.innerHTML=="<?php echo $msgstr['save']?>"){
+				date_prefix=document.forma1.date_prefix.value
+				date_prefix=Trim(date_prefix)
+				if (date_prefix==""){					alert("<?php echo $msgstr['miss_dp']?>")
+					return				}
+				base="<?php echo $arrHttp["base"]?>"				msgwin=window.open("date_prefix_update.php?date_prefix="+date_prefix+"&base="+base,"dp","width=300,height=100")
+				Ctrl.innerHTML="<?php echo $msgstr['change']?>"
+				document.forma1.date_prefix.style="border: 0px solid white;"
+
+				document.forma1.date_prefix.blur()
+				document.forma1.date_prefix.onclick= function (){document.forma1.date_prefix.blur()}
+				return			}
+			Ctrl.innerHTML="<?php echo $msgstr['save']?>"
+			return
 			break
 	}
 	document.configure.submit()
@@ -246,15 +319,13 @@ function Configure(Option){
 </script>
 <body>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-//<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
-<?php echo $msgstr["stats"].": ".$dbasename?>
+<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
 	</div>
 
 	<div class="actions">
@@ -271,23 +342,74 @@ if (isset($arrHttp["encabezado"]))
 <div class="spacer">&#160;</div>
 </div>
 <div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/stats/stats_tables_generate.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/stats/stats_tables_generate.html target=_blank>".$msgstr["edhlp"]."</a>";
-?>
+<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <font color=white>&nbsp; &nbsp; Script: tables_generate.php</font>
 </div>
-<form name=forma1 method=post action=tables_generate_ex.php onsubmit="Javascript:return false">
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
-<input type=hidden name=Opcion>
 
-<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
-?>
+
+
 <div class="middle form">
-	<div class="formContent">
 
+	<div class="formContent">
+  <?php
+  if (file_exists($db_path."proc_gen.cfg")){ ?>
+		<div id=statsgen>
+			<strong><?php echo "<h2>".$msgstr["gen_output"]."</h2>"?></strong><hr>
+			<form name=globales action=stats_gen_ex.php method=post onsubmit="Globales();return false">
+			<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+		<?php
+        if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
+		echo "<strong>".$msgstr["stats_gen"]."</strong>: ";
+		echo $msgstr["year"]?> <input type=text name=year_from size=5 value="">&nbsp; &nbsp;
+		<?php echo $msgstr["month"]?> <input type=text name=month_from size=2 value="">&nbsp; &nbsp;
+		<input type=submit value="<?php echo $msgstr["send"]?>"> <br>
+		<?php
+		$fp=file($db_path."proc_gen.cfg");
+		foreach ($fp as $value) {			echo str_replace('$$',': ',$value."<br>");		}		unset($fp);
+    ?>
+		</form>
+<?php }?>
+		<form name=forma1 method=post action=tables_generate_ex.php onsubmit="Javascript:return false">
+		<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";?>
+		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+		<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
+		<input type=hidden name=Opcion>
+		<input type=hidden name=Accion>
+<?php
+
+//USAR UN PROCESO PRE-DEFINIDO
+
+	echo "<table width=600 border=0  class=listTable>
+			<tr>
+			<td align=left   valign=center bgcolor=#ffffff><h2><i>".$arrHttp["base"]."</i></h2>
+    		&nbsp; <A HREF=\"javascript:toggleLayer('useextproc')\"> <u><strong>". $msgstr["exist_proc"]."</strong></u></a>
+    		<div id=useextproc><br>
+    		"."<select name=proc  style=\"width:300px\">
+    		<option value=''>";
+    unset($fp);
+	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/proc.cfg";
+	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/proc.cfg";
+	if (!file_exists($file)){
+		$error="S";
+	}else{
+		$fp=file($file);
+		$fields="";
+		foreach ($fp as $value) {
+			$value=trim($value);
+			if ($value!=""){
+				$t=explode('||',$value);
+				echo "<option value=".urlencode($value).">".trim($t[0])."</option>";
+			}
+		}
+	}
+?>
+			</select>
+
+		</div>
+
+	</td>
+</table>
+<p>
 <?php
 //USAR UNA TABLA YA EXISTENTE
 	echo "<table width=600 border=0  class=listTable>
@@ -295,7 +417,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 			<td align=left   valign=center bgcolor=#ffffff>
     		&nbsp; <A HREF=\"javascript:toggleLayer('useextable')\"> <u><strong>". $msgstr["exist_tb"]."</strong></u></a>
     		<div id=useextable>
-    		<br>".$msgstr["tab_list"].": <select name=tables  style=\"width:300\">
+    		<select name=tables  style=\"width:300\">
     		<option value=''>";
     unset($fp);
 	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tabs.cfg";
@@ -313,14 +435,27 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 			}
 		}
 	}
+	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tables.cfg";
+	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tables.cfg";
+	if (!file_exists($file)){
+		$error="S";
+	}else{
+		$fp=file($file);
+		$fields="";
+		foreach ($fp as $value) {
+			$value=trim($value);
+			if ($value!=""){
+				$t=explode('|',$value);
+				echo "<option value=\"".$value.'{{PFT'."\">".trim($t[0])."</option>";
+			}
+		}
+	}
 ?>
 			</select>
-			<p>
 		</div>
 	</td>
 </table>
-<br>
-
+<p>
 <!-- CONSTRUIR UNA TABLA SELECCIONANDO FILAS Y COLUMNAS  -->
 <table border=0 width=600 class=listTable>
 	<tr>
@@ -329,9 +464,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
     	<div id=createtable>
     	<table width=600>
     		<td>
-    		<P><strong><?php echo $msgstr["rows"]?></strong><br>
-			<table width=300 border=0 >
-				<td align=right width=250>
+    			<strong><?php echo $msgstr["rows"]?></strong><br>
 				<Select name=rows style="width:250px">
 				<option value=""></option>
 
@@ -352,13 +485,10 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 		}
 	}
 ?>
-				</select></td>
-			</table>
+				</select>
 			</td>
 			<td bgcolor=#ffffff>
-			<P><strong><?php echo $msgstr["cols"]?></strong><br>
-			<table width=300 border=0 >
-				<td align=right width=250>
+				<strong><?php echo $msgstr["cols"]?></strong><br>
 				<Select name=cols style="width:250px">
 				<option value=""></option>
 
@@ -372,29 +502,51 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 		}
 ?>
 				</select>
-				</td>
-			</table>
-		</td>
-	</table>
+			</td>
+		</table>
  </div>
 </td>
 </table>
 <p>
-
 <!-- SELECCION DE LOS REGISTROS  -->
 <table width=600 class=listTable>
 	<tr>
 		<td bgcolor=white>
-			&nbsp; <A HREF="javascript:toggleLayer('generate')"><u><strong><?php echo $msgstr["gen_output"]?></strong></u></a>
+			&nbsp; <A HREF="javascript:toggleLayer('generate')"><u><strong><?php echo $msgstr["r_recsel"]?></strong></u></a>
     		<div id=generate><p>
     		<table>
     <tr>
+    	<td  align=center bgcolor=#eeeeee><strong><?php echo $msgstr["bydate"]?></strong></td><td>
+    	<div id=date_prefix>
+    	<strong>
+    	<?php
+			echo $msgstr["date_pref"].": $date_prefix";
+
+		?>
+		</strong>
+		</div>
+    	</td>
+    </tr>
+    <tr>
+		<td></td><td width=30% align=right>
+		<?php echo $msgstr["year"]?> <input type=text name=year_from size=5 value="">&nbsp; &nbsp;
+		<?php echo $msgstr["month"]?> <input type=text name=month_from size=2 value="">&nbsp; &nbsp;
+
+
+		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+		<input type=submit value="<?php echo $msgstr["send"]?>" onclick=EnviarForma(1)>
+		&nbsp; &nbsp;
+
+		</td>
+    <tr>
 		<td  align=center colspan=2 bgcolor=#eeeeee><strong><?php echo $msgstr["bymfn"]?></strong></td>
 	<tr>
-		<td width=50% align=right><?php echo $msgstr["from"]?>: <input type=text name=Mfn size=10 value=1>&nbsp; &nbsp; </td>
-		<td width=50%><?php echo $msgstr["to"]?>: <input type=text name=to size=10 value=<?php echo $tag["MAXMFN"]?>>
-		 <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["clear"]?></a> (
-		<?php echo $msgstr["maxmfn"].": ".$tag["MAXMFN"]?>)</td>
+		<td width=30% align=right><strong><?php echo $msgstr["from"]?></strong>: <input type=text name=Mfn size=10 value="">&nbsp; &nbsp; </td>
+		<td width=70%><strong><?php echo $msgstr["to"]?></strong>: <input type=text name=to size=10 value="">
+		<?php echo $msgstr["maxmfn"].": ".$tag["MAXMFN"]?>
+		&nbsp; &nbsp;
+		<input type=submit value="<?php echo $msgstr["send"]?>" onclick=EnviarForma(2)>
+		</td>
 	<tr>
 		<td  align=center colspan=2 bgcolor=#eeeeee><strong><?php echo $msgstr["bysearch"]?></strong></td>
 	<tr>
@@ -406,8 +558,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 
 					<a href=javascript:BorrarExpresion() class=boton><?php echo $msgstr["clear"]?></a></td>
 				<td colspan=2 width=100% align=center>
-			<input type=submit value="<?php echo $msgstr["send"]?>" onclick=EnviarForma()>
+                &nbsp; &nbsp;
+		<input type=submit value="<?php echo $msgstr["send"]?>" onclick=EnviarForma(3)>
 		</td>
+
+		</tr>
 			</table>
 		</td>
 	<tr>
@@ -416,15 +571,23 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 </div>
 </td>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
-?>
+if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){?>
 <tr>
-	<td align=left   valign=center bgcolor=#ffffff><p>
-    	&nbsp; <A HREF="javascript:toggleLayer('configure')"> <u><strong><?php echo $msgstr["stats_conf"]?></strong></u></a>
+	<td align=left   valign=center bgcolor=#ffffff><hr><p>
+    	&nbsp; <A HREF="javascript:toggleLayer('configure')"> <font color=black><strong><?php echo "<h2>".$msgstr["stats_conf"]."</h2>"?></strong></font></a>
     	<div id=configure>
     	<ul>
     		<li><a href=javascript:Configure("stats_var")><?php echo $msgstr["var_list"]?></a></li>
+            <li><a href=javascript:Configure("stats_pft")><?php echo $msgstr["def_pre_tabs"]?></a></li>
             <li><a href=javascript:Configure("stats_tab")><?php echo $msgstr["tab_list"]?></a></li>
+            <li><a href=javascript:Configure("stats_proc")><?php echo $msgstr["exist_proc"]?></a></li>
+            <li><a href=javascript:Configure("stats_gen")><?php echo $msgstr["stats_gen"]?></a><p></li>
+            <li>
+            <?php
+			echo $msgstr["date_pref"].": <input type=text name=date_prefix size=5 style='border:0px white;' onclick=javascript:blur() value=$date_prefix> ";
+			echo "<a href=javascript:Configure('date_prefix')><div id=label_dp style='display:inline;clear:both'>".$msgstr["change"]."</div></a>";
+			?>
+			</li>
     	</ul>
     	</div>
     </td>

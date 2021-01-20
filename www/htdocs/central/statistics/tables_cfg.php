@@ -21,7 +21,9 @@ if (!file_exists($file)){	$error="S";}else{	$fp=file($file);
 	$fields="";
 	foreach ($fp as $value) {		$value=trim($value);
 		if ($value!=""){			$t=explode('|',$value);
-			$fields.=trim($t[0])."||";
+			$fields.=trim($t[0]);
+			if (isset($t[2]) and $t[2]=="LMP") $fields.='%'."LMP";
+			$fields.="||";
 			//$ix++;
 			//$cfg[$ix]=$value;
 		}
@@ -29,7 +31,7 @@ if (!file_exists($file)){	$error="S";}else{	$fp=file($file);
 }
 echo "<script>fields='$fields'</script>\n";
 ?>
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script languaje=javascript>
 
 //LLEVA LA CUENTA DE TABLAS AGREGADAS A LA LISTA
@@ -127,7 +129,7 @@ function DeleteElement(ix){
 function AddElement(){
 	seccion=returnObjById( "tabs" )
 	html=""
-	Ctrl=eval("document.stats.rows")
+	Ctrl=document.stats.tit
 	if (Ctrl){
 		if (Ctrl.length){
 			ixLength=Ctrl.length
@@ -145,6 +147,11 @@ function AddElement(){
 		 }
 	 }else{
 		ia=0
+		ixRow=document.stats.rows.selectedIndex
+		ixCol=document.stats.cols.selectedIndex
+		Title=document.stats.tit.value
+		xhtm=DrawElement(ia,Title,ixRow,ixCol)
+		html+=xhtm
 	 }
 	nuevo=DrawElement(ia,"","","")
 	seccion.innerHTML = html+nuevo
@@ -173,9 +180,18 @@ function Guardar(){	ValorCapturado=""
 			row=""
 			col=""			titulo=Trim(document.stats.tit[i].value)
 			ix=document.stats.rows[i].selectedIndex
-			if (ix>0) row=Trim(document.stats.rows[i].options[ix].value)
+            rr_len=0
+            cc_len=0
+			if (ix>0) {				row=Trim(document.stats.rows[i].options[ix].value)
+				rr=row.split('%');
+				row=rr[0]
+				rr_len=rr.length;
+			}
 			ix=document.stats.cols[i].selectedIndex
-			if (ix>0) col=Trim(document.stats.cols[i].options[ix].value)
+			if (ix>0){				col=Trim(document.stats.cols[i].options[ix].value)
+				cc=col.split('%');
+				col=cc[0]
+				cc_len=cc.length;			}
 			if (titulo!="" && row=="" && col==""){
 				alert("<?php echo $msgstr["sel_rc"]?>")   //SELECCIONAR VARIABLE PARA LAS FILAS O LAS COLUMNAS
 				return;
@@ -184,6 +200,8 @@ function Guardar(){	ValorCapturado=""
 				alert("<?php echo $msgstr["sel_tit"]?>")   //INDICAR EL TITULO DEL CUADRO
 				return;
 			}
+			if (col!="" && rr_len>1 || cc_len>1){				alert("Los mas prestados solo puede aparecer como fila")
+				return			}
 			if (titulo!="") ValorCapturado+=titulo+"|"+row+"|"+col+"\n"
 		}	}
 	document.enviar.base.value=base
@@ -217,12 +235,8 @@ if ($error==""){	echo "
 ?>
 </div><div class="spacer">&#160;</div></div>
 <div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/stats/stats_config_tabs.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/stats/stats_config_tabs.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: tables_cfg.php";
-?>
+<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<font color=white>&nbsp; &nbsp; Script: tables_cfg.php
 </font>
 	</div>
 <div class="middle form">
@@ -238,29 +252,38 @@ $total=-1;
 echo  "<div id=tabs>\n";
 if (file_exists($file)){
 	$fp=file($file);
+}else{	$fp=array();}
+$cuenta=count($fp);
+if (count($fp)<3){
+ 	$fp[]="||||||";
+ 	$fp[]="||||||";
 }
-$fp[]="||";
-$fp[]='||';
 foreach ($fp as $value) {
 	$value=trim($value);
 	if ($value!=""){		$total++;
 		$t=explode('|',$value);
-		echo "<table  width=800 bgcolor=#cccccc border=0>";
-		echo "<td rowspan=3 bgcolor=white valign=top><a href=javascript:DeleteElement(".$total.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";
+		echo "<table  width=800 bgcolor=#cccccc border=0 name=tbst>";
+		echo "<td rowspan=4 bgcolor=white valign=top><a href=javascript:DeleteElement(".$total.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";
 		echo "<td width=300 bgcolor=white>".$msgstr["title"]."</td>";
-		echo "<td bgcolor=white><input type=text name=tit size=120 value=\"".$t[0]."\"></td>";
+		echo "<td bgcolor=white><input type=text name=tit size=120 value=\"".$t[0]."\"></td></tr>";
+		echo "<!--tr><td bgcolor=white>ID</td><td bgcolor=white><input type=text name=id size=10 value='";
+		if (isset($t[3])) echo $t[3];
+		echo "'></td></tr-->";
    		echo "<tr><td bgcolor=white>".$msgstr["rows"]."</td><td bgcolor=white><select name=rows><option></option>";
    		$f=explode('||',$fields);
-   		foreach ($f as $opt) {   			$selected="";
-   			if ($opt==$t[1]) $selected=" selected";
-   			echo "<option value=\"$opt\" $selected>$opt</option>\n";   		}
+   		foreach ($f as $opt_x) {
+   			$opt=explode('%',$opt_x);   			$selected="";
+   			if ($opt[0]==$t[1]) $selected=" selected";
+   			echo "<option value=\"$opt_x\" $selected>".$opt[0]."</option>\n";   		}
    		echo "</select></td>";
    		echo "<tr><td bgcolor=white>".$msgstr["cols"]."</td><td bgcolor=white><select name=cols><option></option>";
    		$f=explode('||',$fields);
-   		foreach ($f as $opt) {
+   		foreach ($f as $opt_x) {
    			$selected="";
-   			if ($opt==$t[2]) $selected=" selected";
-   			echo "<option value=\"$opt\" $selected>$opt</option>\n";
+   			$opt=explode('%',$opt_x);
+   			$selected="";
+   			if ($opt[0]==$t[2]) $selected=" selected";
+   			echo "<option value=\"$opt_x\" $selected>".$opt[0]."</option>\n";
    		}
            echo "</table><br>";
            echo "<script>MarcarSeleccion(document.stats.rows,$total,'".$t[1]."')
@@ -277,9 +300,11 @@ echo "<script>total=$total</script>\n";
 
         </div>
         <a href='javascript:AddElement()'><?php echo $msgstr["add"]?></a>
+
 	</div>
 </div>
 </form>
+
 <form name=enviar method=post action=tables_cfg_update.php>
 <input type=hidden name=base>
 <input type=hidden name=ValorCapturado>
@@ -291,8 +316,9 @@ if (isset($arrHttp["from"])) echo "<input type=hidden name=from value=".$arrHttp
 <?php
 include("../common/footer.php");
 ?>
+
 </body>
 </html>
 <script>
-	if (total==-1) AgregarTabla()
+	if (total==-1) AddElement()
 </script>

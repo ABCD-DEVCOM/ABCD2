@@ -7,7 +7,7 @@ $lang=$_SESSION["lang"];
 // ARCHIVOD DE MENSAJES
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
-
+//foreach ($_REQUEST as $key => $value)  echo "$key=$value<br>"; die;
 // ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILOinclude("../common/header.php");
 
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
@@ -28,22 +28,20 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
 ?>
 </div><div class="spacer">&#160;</div></div>
 <div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/stats_index.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/stats_index.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: config_vars_update.php";
-?>
+<font color=white>&nbsp; &nbsp; Script: config_vars_update.php
 </font>
-	</div>
+</div>
 <div class="middle form">
 	<div class="formContent">
 <?php
 $file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/stat.cfg";
 $fp=fopen($file,"w");
+if (!isset($arrHttp["ValorCapturado"]))  $arrHttp["ValorCapturado"]="";
 $arrHttp["ValorCapturado"]=stripslashes($arrHttp["ValorCapturado"]);
 $vc=explode("\n",$arrHttp["ValorCapturado"]);
-foreach ($vc as $value){	$r=fwrite($fp,$value."\n");}
+foreach ($vc as $value){	echo "$value<br>";	if (trim($value)!="")		$r=fwrite($fp,$value."\n");}
+if (isset($_REQUEST["lmp"]) and $_REQUEST["lmp"]!=""){	$excluir="";	if (isset($_REQUEST["excluir"])){		$excluir=trim($_REQUEST["excluir"]);	}
+	$r=fwrite($fp,"Los más prestados|".$_REQUEST["lmp"]."|LMP|$excluir\n");}
 $r=fclose($fp);
 echo "<h4>". $arrHttp["base"]."/".$_SESSION["lang"]."/def/stat.cfg"." ".$msgstr["updated"]."</h4>" ;
 
