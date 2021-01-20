@@ -13,21 +13,25 @@ session_start();
     </head>
 <body>
 <?php
-echo "<h3>Reporte de correos enviados el ".date("d-m-y h:m")."</h3><p>";
+
 //error_reporting(0);
 
 include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/reports.php");
+include("../lang/prestamo.php");
+echo "<h3>".$msgstr["mail_sent_date"]."  ".date("d-m-y h:m")."</h3><p>";
 include("class.phpmailer.php");
 $mail= new PHPMailer();
-//foreach ($_REQUEST as $key=>$value)  echo "$key=$value<br>";die;
+//foreach ($_REQUEST as $key=>$value)  echo "$key=$value<br>";//die;
+
 
 function LlamarWxis($query,$IsisScript){global $xWxis,$Wxis,$db_path,$wxisUrl;
 	include("../common/wxis_llamar.php");
 	return($contenido);}
 
-function SendPhpMail($to,$name,$invitacion,$ini,$cuenta,$desde){global $enviados;
+function SendPhpMail($to,$name,$invitacion,$ini,$cuenta,$desde){global $enviados,$msgstr;
 	$subject = $ini["SUBJECT"];
 // NOT SUGGESTED TO CHANGE THESE VALUES
 	$headers = 'From: ' . $ini[ "FROM" ] . PHP_EOL ;
@@ -35,13 +39,13 @@ function SendPhpMail($to,$name,$invitacion,$ini,$cuenta,$desde){global $enviado
 	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 	$invitacion=$name."<p>".$invitacion;
 	$resultado=mail ( $to, $subject,$invitacion, $headers ) ;
-	echo "<p><font face=arial size=1>($cuenta) Remitente: ".$ini["FROM"].". ".$ini["FROMNAME"];
-	echo "<br>Destinatario: ".$to. " ".$name;
+	echo "<p><font face=arial size=1>($cuenta) ".$msgstr["from"].": ".$ini["FROM"].". ".$ini["FROMNAME"];
+	echo "<br>".$msgstr["to"].": ".$to. " ".$name;
 	if ($resultado)
 		$enviados=$enviados+1;}
 
 function SendMail($mail,$to,$name,$invitacion,$ini,$cuenta,$desde){
-global $enviados;
+global $enviados,$msgstr;
 	//CUERPO DEL MENSAJE
 	$invitacion=$name."<p>".$invitacion;
     $mail= new PHPMailer();
@@ -67,25 +71,27 @@ global $enviados;
     $mail->SMTPDebug  = 1;
 	$mail->IsHTML(true); // send as HTML
     //echo "<META HTTP-EQUIV=Content-Type; CONTENT=text/html; charset=ISO-8859-1>";
-  	echo "<p><font face=arial size=1>Remitente: ".$ini["FROM"].". ".$ini["FROMNAME"];
-	echo "<br>Destinatario: ".$to. " ".$name;
+  	echo "<p><font face=arial size=1>".$msgstr["from"].": ".$ini["FROM"].". ".$ini["FROMNAME"];
+	echo "<br>".$msgstr["to"].": ".$to. " ".$name;
 	$secuencia=$cuenta+$desde;
 	if(!$mail->Send()) {
-  		echo "<BR>($secuencia) Error al enviar el correo: " . $mail->ErrorInfo;
+  		echo "<BR>($secuencia) ".$msgstr["mail_error"].": " . $mail->ErrorInfo;
 	} else {
 
-		echo "<br><STRONG>($secuencia) Correo enviado!!!</strong>";
+		echo "<br><STRONG>($secuencia) ".$msgstr["mail_sent"]."</strong>";
 		$enviados=$enviados+1;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-
-$fp=file($db_path."correo.ini");
+if (isset($_REQUEST["ini"])) {
+	if (!file_exists($db_path.$_REQUEST["ini"])){		echo $msgstr["notfound"]."; ".$_REQUEST["ini"];
+		die;	}	$fp=file($db_path.$_REQUEST["ini"]);}else{
+	$fp=file($db_path."correo.ini");
+}
 foreach ($fp as $key=>$value){	$value=trim($value);
 	if ($value!=""){		$x=explode('=',$value);
 		$ini[$x[0]]=$x[1];	}}
-
 $ex=explode('|',$_REQUEST["contactos"]);
 $IsisScript=$xWxis."leer_mfnrange.xis";
 $Expresion="";
@@ -93,16 +99,18 @@ $icuenta=0;
 $desde=0;
 $enviados=0;
 if (!isset($_REQUEST["desde"]))  $_REQUEST["desde"]=1;
-if (!isset($_REQUEST["count"]))  $_REQUEST["count"]=count($ex)-1;
+if (!isset($_REQUEST["count"]))  $_REQUEST["count"]=count($ex);
 if (trim($_REQUEST["desde"])=="") $_REQUEST["desde"]=1;
-if (trim($_REQUEST["count"])=="")  $_REQUEST["count"]=count($ex)-1;
+if (trim($_REQUEST["count"])=="")  $_REQUEST["count"]=count($ex);
 foreach ($ex as $Mfn){
-
 	$Mfn=trim($Mfn);
 	if ($Mfn!=""){		if (isset($_REQUEST["desde"])){			$desde=$desde+1;			if ($desde<$_REQUEST["desde"]) continue;
-		}		$icuenta=$icuenta+1;
-		if ($icuenta>$_REQUEST["count"]) break;
-        $query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn$&to=$Mfn&Formato=$db_path"."trans/pfts/".$_SESSION["lang"]."/mail_dev";		$correo=LlamarWxis($query,$IsisScript);
+		}
+		if (isset($_REQUEST["pft"])){			$Formato=$_REQUEST["pft"];		}else{			$Formato=$db_path."trans/pfts/".$_SESSION["lang"]."/mail_dev";		}		$icuenta=$icuenta+1;
+		if ($icuenta>$_REQUEST["count"] and $_REQUEST["count"]!=0) break;
+		if (isset($_REQUEST["base"])) {			$base=$_REQUEST["base"];		}else{			$base="trans";		}
+        $query = "&base=$base&cipar=$db_path"."par/$base.par&from=$Mfn$&to=$Mfn&Formato=$Formato";
+		$correo=LlamarWxis($query,$IsisScript);
 		$correo=implode("\n",$correo);
 		if (trim($correo)!=""){			$datos=explode('$$$',$correo);
 			$c=explode('|',$datos[0]);
@@ -124,13 +132,13 @@ foreach ($ex as $Mfn){
 		}
 	}}
 echo "<P>";
-$aenviar=count($ex)-1;
+$aenviar=count($ex);
 $correos_enviados=$enviados;
-echo "Total correos a enviar: ".$aenviar."<br>";
-echo "Total correos a enviados: ".$enviados."<p>";
+echo $msgstr["mail_to_send"].": ".$aenviar."<br>";
+echo $msgstr["mail_sent"].": ".$enviados."<p>";
 $enviados=$_REQUEST["desde"]+$enviados;
 
-
+/*
 if ($enviados<$aenviar){	echo "<form name=continuar method=post action=correos.php>\n";
 	echo "Continuar desde: <input type=text name=desde value=$enviados size=4>\n";
 	echo " y enviar <input type=text name=count value=".$_REQUEST["count"]." size=5> correos más\n";
@@ -138,10 +146,11 @@ if ($enviados<$aenviar){	echo "<form name=continuar method=post action=correos.
 	echo "&nbsp;<input type=submit value='continuar'>";
 	echo "</form>";
 }
+*/
 ?>
 
 </body>
 </html>
 <script>
-alert("<?php echo $correos_enviados?> correos enviados")
+alert("<?php echo $correos_enviados." ".$msgstr["mail_sent"]?>")
 </script>

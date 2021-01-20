@@ -102,7 +102,9 @@ function SetCalendar($Ctrl){global $config_date_format;	if ($config_date_forma
 	}
 	function Imprimir(Media){
 		sel=""
-		Ctrl=document.forma1.RN		for (ix=0;ix<Ctrl.length;ix++){			if (Ctrl[ix].checked){				sel=Ctrl[ix].value			}		}
+		Ctrl=document.forma1.RN
+		if (Ctrl.constructor!==Array){			sel=Ctrl.value		}else{			for (ix=0;ix<Ctrl.length;ix++){				if (Ctrl[ix].checked){					sel=Ctrl[ix].value				}			}
+		}
 		if (sel==""){			alert("<?php echo $msgstr["r_self"]?>")
 			return		}
 		s=sel.split('|')
@@ -120,9 +122,13 @@ function SetCalendar($Ctrl){global $config_date_format;	if ($config_date_forma
 		document.forma1.action="print_add.php";
 		sel=""
 		Ctrl=document.forma1.RN
-		for (ix=0;ix<Ctrl.length;ix++){
-			if (Ctrl[ix].checked){
-				sel=Ctrl[ix].value
+		if (Ctrl.constructor!==Array){
+			sel=Ctrl.value
+		}else{
+			for (ix=0;ix<Ctrl.length;ix++){
+				if (Ctrl[ix].checked){
+					sel=Ctrl[ix].value
+				}
 			}
 		}
 		if (sel==""){
@@ -184,7 +190,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: reports_menu.php";
 			echo "<p>";
 			echo "<strong>".$msgstr["basedatos"].": ".$bd."</strong>";
 			echo "<ul>";
-			foreach ($fp as $value){				$value=trim($value);
+			foreach ($fp as $value){
+				$value=trim($value);
 				if ($value=="") continue;
 				if (substr($value,0,2)=="//") continue;
 				$l=explode('|',$value);
@@ -215,7 +222,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: reports_menu.php";
 			echo "&nbsp; &nbsp;<a href=javascript:Editar()><font color=red>".$msgstr["editar"]."</font></a>";
 			echo "<hr size=5>";		}
 	}
-
 ?>
 <p>
 
