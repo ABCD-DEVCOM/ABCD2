@@ -3,13 +3,13 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
+var_dump($_SESSION);DIE;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
-include("../config.php");
 include("../common/header.php");
 $base=$arrHttp['base']; //$_POST['base'];
 echo "<script src=../dataentry/js/lr_trim.js></script>";
@@ -51,7 +51,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addloanobject.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "<font color=white>&nbsp; &nbsp; Script: addloanobject.php</font>";
 ?>
-</div>	
+</div>
 <div class="middle form">
 	<div class="formContent">
 <form id="form1" name="form1" method="post" action="">
@@ -81,7 +81,7 @@ echo $base;
 $base=$_POST['base'];
 //$OS=strtoupper(PHP_OS);
 //$converter_path=$mx_path;
-//if (strpos($OS,"WIN")=== false) 
+//if (strpos($OS,"WIN")=== false)
 //{
 //$converter_path=str_replace('mx.exe','',$converter_path);
 //$converter_path.=$cisis_ver."mx";
@@ -118,7 +118,7 @@ $base=$_POST['base'];
   <td>
   <input type="text" name="tag" id="tag" value="a"/>
   </td>
- <td> 
+ <td>
   Control number field
   </td>
   <td>
@@ -133,13 +133,13 @@ $base=$_POST['base'];
   <input name="nc" type="text" id="nc" value="3" />
   </td>
   <td>
-   or take the number of copies from field 
+   or take the number of copies from field
    </td>
    <td>
    <input name="fnc" type="text" id="fnc" />
    </td>
    <td>
-    and sub-field 
+    and sub-field
 	</td>
 	<td>
     <input type="text" name="ncsf" id="ncsf" />
@@ -157,11 +157,11 @@ $base=$_POST['base'];
  if (!$fp)
    {
      echo "Unable to open file circulation/def/$lang/items.tab.</strong></p></body></html>";
-         
+
      exit;
 
    }
-   
+
 while(!feof($fp))
 {
  $order= fgets($fp, 100);
@@ -171,8 +171,8 @@ while(!feof($fp))
  flock($fp, 3);
   fclose($fp);
 	?>
-   
-      
+
+
     </select>
 	</td>
      <td>Main Library</td>
@@ -189,15 +189,15 @@ while(!feof($fp))
         <?php
  include("../common/get_post.php");
   $base=$arrHttp["base"];
- 
+
   echo " <input type=\"hidden\" value=\"$base\" name=\"base\"/>";
   ?>
-      <input type="submit" name="sub" id="sub" value="Submit" 
+      <input type="submit" name="sub" id="sub" value="Submit"
   onClick="javascript:validar();" />
   </td>
      </tr>
 	 </table>
-  
+
 </form>
 </div>
 <?php
@@ -217,7 +217,7 @@ $tag=$_POST['tag'];
 $CNF=$_POST['cnf'];
 //$OS=strtoupper(PHP_OS);
 //$converter_path=$mx_path;
-//if (strpos($OS,"WIN")=== false) 
+//if (strpos($OS,"WIN")=== false)
 //{
 //$converter_path=str_replace('mx.exe','',$converter_path);
 //$converter_path.=$cisis_ver."mx";

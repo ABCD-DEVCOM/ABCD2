@@ -1,6 +1,6 @@
-<?php 
+<?php
 /**
- * @program:   ABCD - ABCD-Central 
+ * @program:   ABCD - ABCD-Central
  * @copyright:  Copyright (C) 2015 UO - VLIR/UOS
  * @file:      convert_utf8.php
  * @desc:      Convert files to utf8
@@ -51,7 +51,7 @@ echo "
 
 	";
 
-	echo "<a href=\"menu_extra.php?base=".$base."&encabezado=S\" class=\"defaultButton backButton\">";
+	echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base."&encabezado=S\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 
@@ -96,9 +96,9 @@ else if($_GET['path']=="htdocs")
 else
 {
 $path=$bd."acces/";
-	$iterator  = new RecursiveDirectoryIterator($path);	
+	$iterator  = new RecursiveDirectoryIterator($path);
 }
-    
+
     $validExtensions = $ext; // Extensiones de archivo a buscar y convertir
     //echo '<div id="loader" style="display:block" align="center"><img src="../dataentry/img/preloader.gif" width="128" height="128" alt=""/></div>';//
     foreach(new RecursiveIteratorIterator($iterator) as $fileInfo)
@@ -111,7 +111,7 @@ $path=$bd."acces/";
             $file     = $fileInfo->getRealPath();
             $contents = file_get_contents($file);
             $encoding = mb_detect_encoding($contents, "auto", true);
-    
+
             // Check encoding
             if ($encoding===FALSE)
             {
@@ -151,7 +151,7 @@ $path=$bd."acces/";
 	{
 	echo "<h3>File comversion statistics:</h3><hr/><br/>";
     echo "Not converted, already in utf-8:\n";
-	echo count($utf8)."<br/><br/>";     
+	echo count($utf8)."<br/><br/>";
     for($i=0;$i<count($utf8);$i++)
 	{
 		if($uft8[$i]!="")
@@ -182,7 +182,7 @@ $path=$bd."acces/";
 		$style_config= "display:block;";
 	}
 ?>
-<iframe id="iframe_proc" src="proc.html" width="128" height="128" marginheight="0" marginwidth="0" noresize scrolling="No" frameborder="0" style="display:none;"> 
+<iframe id="iframe_proc" src="proc.html" width="128" height="128" marginheight="0" marginwidth="0" noresize scrolling="No" frameborder="0" style="display:none;">
 </iframe>
 <div id="see_config" style="<?php echo $style_config;?>">
 <form id="config" name="config" method="get" action="">
@@ -219,16 +219,16 @@ Extensions<hr/>
 <script>
 function check_vars_base()
 {
-	
+
 		alert('base');
-	
+
 }
 function check_vars_htdocs()
 {
-	
+
 		document.getElementById('base_chk').checked=false;
-	
-	
+
+
 }
 function show_proc()
 {
