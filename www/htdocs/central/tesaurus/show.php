@@ -10,28 +10,24 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";if (file_exists($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat"))
 	$fp=file($db_path.$tesaurus."/def/".$_SESSION["lang"]."/".$tesaurus.".dat");
 else
 	$fp=file($db_path.$tesaurus."/def/".$lang_db."/".$tesaurus.".dat");
-foreach($fp as $value) {
-	$f=explode('=',$value);
-	switch($f[0]){
-		case "alpha_prefix":
+foreach($fp as $value) {	$f=explode('=',$value);
+	switch($f[0]){		case "alpha_prefix":
 			$prefijo=trim($f[1]);
 			break;
 		case "display":
 			$Formato=trim($f[1]);
 			break;
-	}
-}
+	}}
 
 //foreach ($contenido as $var=>$value) echo "$var=$value<br>";
 $subtitle= " Tesaurus";
 include("../common/header.php");
 echo "<h3>Tesaurus ($tesaurus)</h3>\n";
-echo "<script language=Javascript src=../dataentry/js/lr_trim.js></script>\n";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>\n";
 $Tag="";
 echo "
 <script languaje=Javascript>\n";
@@ -42,8 +38,7 @@ echo "
 		$Tag=$arrHttp["Tag"];
 	}
 ?>
-	function Show(Seleccion){
-        document.show.termino.value=Seleccion
+	function Show(Seleccion){        document.show.termino.value=Seleccion
         document.show.submit()
 	}
 	function Search(Seleccion){
@@ -76,11 +71,12 @@ echo "
 	<div class="helper">
 	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/alfa.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/alfa.html target=_blank>".$msgstr["edhlp"]."</a>";
+	echo " &nbsp; &nbsp; ><a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
 	echo "<font color=white>&nbsp; &nbsp; Script: tesaurus/show.php" ?>
 </font></div>
 <form method=post name=Lista onSubmit="javascript:return false">
 	<table width=100%>
-		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Alphabetical</strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white>Permuted</strong></font></a></td>
+		<td width=50%><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=white><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
     </table>
  <div class="middle form">
 			<div class="formContent">
@@ -107,7 +103,7 @@ echo "
 	</td>
 
 	</table>
-	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong>Alphabetical</a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>>Permuted</a></strong><br>
+	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><?php echo $msgstr["tes_alphabetic"]?></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><?php echo $msgstr["tes_permuted"]?></a></strong><br>
 	</form>
 	</div>
 	</div>
