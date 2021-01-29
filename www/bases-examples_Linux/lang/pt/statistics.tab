@@ -1,3 +1,4 @@
+
 add=Adicionar
 ag=Animação (exige o Flash)
 back=Voltar
@@ -7,6 +8,7 @@ cancel=Cancelar
 chartype=Tipo de gráfico
 clear=Limpar
 close=Fechar
+cols=Colunas
 column=Colunas
 create_tb=Criar uma tabela
 delete=Apagar
@@ -29,6 +31,7 @@ prefix=Prefixo
 prn=Impressora
 recsel=Seleção de registro
 row=Linhas
+rows=Linhas
 save=Salvar
 sel_rc=Deverá escolher um campo para linha/coluna
 sel_tit=Por favor, inserir o título da tabela
@@ -47,6 +50,3 @@ updated=Atualizado
 var=Variável
 var_list=Lista de variáveis
 wks=Planilha de entrada
-rows=Linhas
-cols=Colunas
-

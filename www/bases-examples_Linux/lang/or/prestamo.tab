@@ -1,3 +1,4 @@
+
 ab_mlocal=You must indicate the abbreviation of the local currency
 activo=Active (0)
 actual_dev=Current due date
@@ -82,7 +83,9 @@ item_reserved=All the copies are reserved
 itemloaned=This item is already on loan
 last=Last
 limitobjectdata=This item has reached the limit for loans
+limitobjectdate=This item has reached the limit for loans
 limituserdata=This borrower has reached the limit for loans
+limituserdate=This borrower has reached the limit for loans
 list=List
 loan=Lend
 loanadm=Loan administrator
@@ -96,10 +99,10 @@ loans=Circulation
 loantit=Circulation
 local=Currency, working days and working hours
 location=Location
-m1=January
 m10=October
 m11=November
 m12=December
+m1=January
 m2=February
 m3=March
 m4=April
@@ -261,6 +264,3 @@ workingdays=Working days
 workinghours=Working hours
 yareservado=Item already reserved by the bor.
 yes=yes
-limituserdate=This borrower has reached the limit for loans
-limitobjectdate=This item has reached the limit for loans
-
