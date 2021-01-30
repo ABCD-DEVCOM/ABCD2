@@ -1,9 +1,12 @@
+
 ACQALL=ሁሉም
 ACQDATABASES=የመረጃ ማግኛ ውሂብ ጎታ አስተዳደር
 ACQREPORTS=የመረጃ ማግኛ ሪፖርት
 ACQUISITIONS=የመረጃ ማግኛ
 ADDCOP=ቅጂዎቹን  አክል፤ አርትእ፤ ሰርዝ (ቆጠራ)
 ADDLO=ወደ አይነቶቹ (የውሰት ውሂብ ጎታ) አክል
+ADMALL=ሁሉም
+ADMINISTRATION=አስተዳደር
 ALL=ሁሉም
 APPROVREJECT=አማራጮችን ተቀበል/አትቀበል
 BACK=ወደ ኋላ
@@ -21,6 +24,7 @@ CRDB=ውሂብ ጎታ ፍጠር
 CREATEORDER=የግዢ ትዕዛዝ አዘጋጅ/ፍጠር/
 CREC=ምዝገባዎችን ፍጠር
 DATABASES=ውሂብ ጎታዎች
+DATAENTRY=መረጃ ማስገቢያ
 DBUTILS=የውሂብ ጎታ  መገልገያዎች
 DECISION=የመረጃ ማግኛ ውሳኔ
 DELETE=አጥፋ
@@ -46,6 +50,7 @@ MISSPROFNAME=የማህደሩ ስም የለም
 MODIFYDEF=የውሂብ ጎታዎችን ብየናዎች ቀይር
 NEW=አዲስ
 NEWSUGGESTIONS=አማራጮችን ፍጠር
+NOTAB=profile.tab የሚለው ፋይል የለም
 PERMISSIONS=ፍቃዶች
 PREC=ምዝገባዎችን አትም
 PROFILEDESC=የማህደር ገለጣ
@@ -70,8 +75,3 @@ VALDEF=ነባሪ እሴቶችን ፍጠር ወይም አርትእ
 WORKSHEET=መረጃ ማስገቢያ ቀመረ ሉህ
 Z3950CAT=Z39.50 ማውጫ
 Z3950CONF=Z39.50 client ን አዘጋጅ
-DATAENTRY=መረጃ ማስገቢያ
-NOTAB=profile.tab የሚለው ፋይል የለም
-ADMINISTRATION=አስተዳደር
-ADMALL=ሁሉም
-
