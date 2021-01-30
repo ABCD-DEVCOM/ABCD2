@@ -1,3 +1,4 @@
+
 add=ጨምር
 ag=አንም /Animated/ የሆነ ንድፋንድፍ (ብልጭታ ይጠይቃል)
 back=ወደ ኋላ
@@ -7,6 +8,7 @@ cancel=ሰርዝ
 chartype=ዓይነተ ገበታ
 clear=አጥፋ
 close=ዝጋ
+cols=አምዶች
 column=አምዶች
 create_tb=ሰንጠረዥ ፍጠር
 delete=ሰርዝ
@@ -29,6 +31,7 @@ prefix=ቅድመ ቅጥያ
 prn=አታሚ
 recsel=ምዝገባ መረጣ
 row=ረድፎች
+rows=ረድፎች
 save=አስቀምጥ
 sel_rc=ለ ረድፎች/አምዶች የግድ መስክ መምረጥ አለብህ።
 sel_tit=እባክዎን የሰንጠረዡን ርዕስ ያስገቡ።
@@ -47,6 +50,3 @@ updated=ታድሷል
 var=ተለዋዋጭ
 var_list=የተለዋዋጮች ዝርዝር
 wks=የቀመር ሉህ
-rows=ረድፎች
-cols=አምዶች
-

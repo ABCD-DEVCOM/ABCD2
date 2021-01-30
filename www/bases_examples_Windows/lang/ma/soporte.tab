@@ -1,3 +1,4 @@
+
 blockedrecs=blocked records
 cg_add=Add Field
 cg_addocc=Add occurence
@@ -35,6 +36,7 @@ cg_separador=You must specify the delimiter to be used to split the field
 cg_sinindice=This field does not have an index. Please enter in the box the content you want to change
 cg_split=Split Field
 cg_splitdel=Delete
+cg_tagdel=or insert (separated with one space) the list of tags to be deleted
 cg_tipoc=Select the type of global change you want to execute
 cg_titulo=Global changes
 cg_to=To
@@ -103,5 +105,3 @@ reopendb=Open the database
 seguro=Are you sure?
 subir=Upload
 transferido=Uploaded
-cg_tagdel=or insert (separated with one space) the list of tags to be deleted
-
