@@ -1,3 +1,4 @@
+
 add=Add
 ag=Animated graphic (requires flash)
 back=Back
@@ -7,6 +8,7 @@ cancel=Cancel
 chartype=Chart type
 clear=Clear
 close=Close
+cols=Columns
 column=Columns
 create_tb=Create a table
 delete=Delete
@@ -29,6 +31,7 @@ prefix=Prefix
 prn=Printer
 recsel=Record selection
 row=Rows
+rows=Rows
 save=Save
 sel_rc=You must select a field for the rows/columns
 sel_tit=Please insert the title of the table
@@ -47,6 +50,3 @@ updated=Updated
 var=Variable
 var_list=List of variables
 wks=Worksheet
-rows=Rows
-cols=Columns
-
