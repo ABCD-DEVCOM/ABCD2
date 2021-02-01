@@ -1,0 +1,4 @@
+doar.*=%path_database%doar/data/doar.*
+doar.pft=%path_database%doar/pfts/en/doar.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

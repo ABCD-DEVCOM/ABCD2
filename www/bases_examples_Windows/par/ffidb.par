@@ -1,0 +1,4 @@
+ffidb.*=%path_database%ffidb/data/ffidb.*
+ffidb.pft=%path_database%ffidb/pfts/en/ffidb.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

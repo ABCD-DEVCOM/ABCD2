@@ -1,8 +1,8 @@
 [FILE_LOCATION]
 
-FILE DATABASE.*=%path_database%doaj/data/doaj.*
-FILE standard.pft=%path_database%doaj/pfts/%lang%/doaj.pft
-FILE SHORTCUT.IAH=%path_database%doaj/pfts/%lang%/shortcut.pft
+FILE DATABASE.*=%path_database%doajuni/data/doajuni.*
+FILE standard.pft=%path_database%doajuni/pfts/%lang%/doajuni.pft
+FILE SHORTCUT.IAH=%path_database%doajuni/pfts/%lang%/shortcut.pft
 FILE GXML=%path_database%gizmo/gXML.*
 
 [INDEX_DEFINITION]
@@ -28,3 +28,4 @@ SEND RESULT BY EMAIL=ON
 NAVIGATION BAR=ON
 DOCUMENTS PER PAGE=20
 FEATURES=XML
+UNICODE=1

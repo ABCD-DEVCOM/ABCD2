@@ -1,0 +1,7 @@
+digili2.*=%path_database%digili2/data/digili2.*
+digili2.pft=%path_database%digili2/pfts/es/digili2.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+isisac.tab=%path_database%digili2/data/isisac.tab
+isisuc.tab=%path_database%digili2/data/isisuc.tab
+STW=%path_database%digili2/data/digili2.stw

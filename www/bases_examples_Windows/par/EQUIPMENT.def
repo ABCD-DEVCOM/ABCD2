@@ -1,0 +1,25 @@
+[FILE_LOCATION] 
+FILE DATABASE.*=%path_database%equipment/data/equipment.* 
+FILE standard.pft=%path_database%equipment/pfts/%lang%/equipment.pft 
+FILE SHORTCUT.IAH=%path_database%equipment/pfts/%lang%/shortcut.pft 
+FILE GXML=%path_database%gizmo/gXML.* 
+
+[INDEX_DEFINITION] 
+INDEX CN=^3Control Number^d*^xCN ^yDATABASE^uCN_^mCN_ 
+INDEX TW=^1picture^2photuwaa^3words^4^xTW ^yDATABASE^uTW_^mTW_ 
+INDEX IM=^3Object image^xIM ^yDATABASE^uIM_^mIM_ 
+INDEX DO=^1documentos^3DOCUMENT^xDO ^yDATABASE^uDO_^mDO_ 
+
+[APPLY_GIZMO] 
+
+[FORMAT_NAME] 
+FORMAT standard.pft=^1Normal^2normal^3Normal^4normal 
+FORMAT DEFAULT=standard.pft 
+
+[HELP_FORM] 
+[PREFERENCES] 
+AVAILABLE FORMS=F,B 
+SEND RESULT BY EMAIL=OFF 
+NAVIGATION BAR=ON 
+DOCUMENTS PER PAGE=20 
+FEATURES= 

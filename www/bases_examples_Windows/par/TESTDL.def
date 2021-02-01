@@ -1,8 +1,8 @@
 [FILE_LOCATION]
 
-FILE DATABASE.*=%path_database%doaj/data/doaj.*
-FILE standard.pft=%path_database%doaj/pfts/%lang%/doaj.pft
-FILE SHORTCUT.IAH=%path_database%doaj/pfts/%lang%/shortcut.pft
+FILE DATABASE.*=%path_database%testdl/data/testdl.*
+FILE standard.pft=%path_database%testdl/pfts/%lang%/testdl.pft
+FILE SHORTCUT.IAH=%path_database%testdl/pfts/%lang%/shortcut.pft
 FILE GXML=%path_database%gizmo/gXML.*
 
 [INDEX_DEFINITION]
@@ -15,7 +15,7 @@ INDEX Ti=^1Títulos^2Títulos^3Titles^4Titres^xTI ^yDATABASE^uTI_^mTI_
 
 [FORMAT_NAME]
 
-FORMAT standard.pft=^1defecto^2defecto^3default^4défaut
+FORMAT standard.pft=^1por defecto^2por defecto^3default^4default
 FORMAT DEFAULT=standard.pft
 
 [HELP_FORM]
@@ -23,8 +23,8 @@ FORMAT DEFAULT=standard.pft
 
 [PREFERENCES]
 
-AVAILABLE FORMS=F,A
-SEND RESULT BY EMAIL=ON
-NAVIGATION BAR=ON
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
 DOCUMENTS PER PAGE=20
-FEATURES=XML
+FEATURES=
