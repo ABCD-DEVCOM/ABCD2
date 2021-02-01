@@ -1,0 +1,7 @@
+testdl.*=%path_database%testdl/data/testdl.*
+testdl.pft=%path_database%testdl/pfts/en/testdl.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+isisactab.*=%path_database%testdl/data/isisactab_utf8.tab
+isisuctab.*=%path_database%testdl/data/isisuctab_utf8.tab
+

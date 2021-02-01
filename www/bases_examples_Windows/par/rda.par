@@ -1,4 +1,7 @@
 rda.*=%path_database%rda/data/rda.*
+FRBRkey.pft=%path_database%rda/pfts/%lang%/FRBRkey.pft
+FRBRbase.pft=%path_database%rda/pfts/%lang%/FRBRbase.pft
+rda_opac.pft=%path_database%rda/pfts/%lang%/rda_opac.pft
 prologoact.pft=%path_database%www/prologoact.pft
 prologo.pft=%path_database%www/prologo.pft
 epilogoact.pft=%path_database%www/epilogoact.pft

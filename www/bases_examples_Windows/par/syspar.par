@@ -1,9 +1,10 @@
+acces.*=%path_database%acces/data/acces.*
+biblo.*=%path_database%/biblo/data/biblo.*
 marc.*=%path_database%marc/data/marc.*
-biblo.*=%path_database%biblo/data/biblo.*
+users.*=%path_database%users/data/users.*
 copies.*=%path_database%copies/data/copies.*
 loanobjects.*=%path_database%loanobjects/data/loanobjects.*
-users.*=%path_database%users/data/users.*
+suspml.*=%path_database%suspml/data/suspml.*
 trans.*=%path_database%trans/data/trans.*
+reserve.*=%path_database%reserve/data/reserve.*
 logtrans.*=%path_database%logtrans/data/logtrans.*
-prologoact.pft=%path_database%www/prologoact.pft
-epilogoact.pft=%path_database%www/epilogoact.pft
