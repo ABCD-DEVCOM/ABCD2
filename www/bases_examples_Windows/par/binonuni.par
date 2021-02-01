@@ -1,0 +1,7 @@
+binonuni.*=%path_database%binonuni/data/binonuni.*
+binonuni.pft=%path_database%binonuni/pfts/en/binonuni.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+isisactab.*=%path_database%binonuni/data/isisactab_utf8.tab
+isisuctab.*=%path_database%binonuni/data/isisuctab_utf8.tab
+

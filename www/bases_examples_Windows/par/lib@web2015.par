@@ -1,0 +1,4 @@
+lib@web2015.*=%path_database%lib@web2015/data/lib@web2015.*
+lib@web2015.pft=%path_database%lib@web2015/pfts/en/lib@web2015.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

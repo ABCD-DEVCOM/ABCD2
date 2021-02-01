@@ -1,0 +1,4 @@
+literacy2.*=%path_database%literacy2/data/literacy2.*
+literacy2.pft=%path_database%literacy2/pfts/en/literacy2.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

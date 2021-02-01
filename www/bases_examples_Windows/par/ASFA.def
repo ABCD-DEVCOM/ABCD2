@@ -1,0 +1,31 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%asfa/data/asfa.*
+FILE standard.pft=%path_database%asfa/pfts/%lang%/asfa.pft
+FILE SHORTCUT.IAH=%path_database%asfa/pfts/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TW=^1Palabras texto^2Palabras texto^3Text words^4Mots texte^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX AU=^1Aautor^2Autor^3Authors^4Auteurs^xAU ^yDATABASE^uAU_^mAU_
+INDEX TI=^1Titulo^2Titulo^3Titles^4Titres^xTI ^yDATABASE^uTI_^mTI_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Normal^2Normal^3Default^4Défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

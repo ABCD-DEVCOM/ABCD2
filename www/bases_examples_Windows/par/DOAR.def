@@ -1,0 +1,31 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%doar/data/doar.*
+FILE standard.pft=%path_database%doar/pfts/%lang%/doar.pft
+FILE SHORTCUT.IAH=%path_database%doar/pfts/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TW=^1Palabras^2Palabras^3Words^4Mots^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX NA=^1Nombre^2Nombre^3Name^4Nom^xNA ^yDATABASE^uNA_^mNA_
+INDEX CO=^1Pais^2Pais^3Country^4Pays^xCO ^yDATABASE^uCO_^mCO_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1defecto^2defecto^3default^4défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=ON
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=10
+FEATURES=XML

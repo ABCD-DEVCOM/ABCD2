@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%agrovoc/data/agrovoc.*
+FILE standard.pft=%path_database%agrovoc/pfts/%lang%/agrovoc.pft
+FILE SHORTCUT.IAH=%path_database%agrovoc/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TT=^1todo^2todo^3All text words^4Tous les mots^d*^xTT ^yDATABASE^uTT_^mTT_
+INDEX ID=^1ID^2ID^3ID^4ID^xID ^yDATABASE^uID_^mID_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1defecto^2defecto^3default^4défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=
