@@ -12,7 +12,7 @@ fi,
 '<table width=100% align=left class=registro>'/
 if p(v82) or s(v2,v4):'aa' then 
 	'<tr>' 
-		'<td width=20% valign=top><font face="arial narrow" size=-1>Topográfico:</font></td>'/
+		'<td width=20% valign=top><font face="arial narrow" size=-1>TopogrÃ¡fico:</font></td>'/
         '<td valign=top>'
           '<b>' v82^a" / "v82^b" / "v82^c," / "v82^d,v773^w,". "v773^a,". "v773^t, 
 		'</td>
@@ -22,7 +22,7 @@ fi,
    
 if p(v84) then 
 	'<tr>'
-		'<td valign=top><font face="arial narrow" size=-1>Topográfico:</font></td><td valign=top>'v84^a" / "v84^b" / "v84^c,, '</td>'/
+		'<td valign=top><font face="arial narrow" size=-1>TopogrÃ¡fico:</font></td><td valign=top>'v84^a" / "v84^b" / "v84^c,, '</td>'/
    '</tr>'/
 fi,
   
@@ -34,14 +34,14 @@ fi,
 
 if p(v245) and s(v2,v4)='ab' then   
       '<tr>'
-        '<td valign=top><font face="arial narrow" size=-1>Título Artículo:</font></td><td valign=top>'v245^a,v245^b,, 
+        '<td valign=top><font face="arial narrow" size=-1>TÃ­tulo ArtÃ­culo:</font></td><td valign=top>'v245^a,v245^b,, 
 		'<br>'v773
         '</td>'/
       '</tr>'/
 		
  else 
     '<tr>'
-        '<td valign=top><font face="arial narrow" size=-1>Título:</font></td><td valign=top>'v245^a,v245^b, '</td>'/
+        '<td valign=top><font face="arial narrow" size=-1>TÃ­tulo:</font></td><td valign=top>'v245^a,v245^b, '</td>'/
       '</tr>'/
 fi
 
@@ -64,7 +64,7 @@ fi
 
 if p(v250) then 
    '<tr>'
-         '<td valign=top><font face="arial narrow" size=-1>Edición:</font></td><td valign=top>'v250^a,'</td>'/
+         '<td valign=top><font face="arial narrow" size=-1>EdiciÃ³n:</font></td><td valign=top>'v250^a,'</td>'/
    '</tr>'/
 fi 
 
@@ -141,7 +141,7 @@ fi,
 
 if p(v651) then 
 	'<tr>'
-		'<td valign=top width=140>Descriptores geográficos:</td>',
+		'<td valign=top width=140>Descriptores geogrÃ¡ficos:</td>',
 		'<td valign=top bgcolor=white><font face=arial>'
 
       	(if p(v651) then `<a href='javascript:CRUZARD("DG_","`v651^a,`","`mstname,`");'>`,v651^a,|-|v651^x,|-|v651^y,|-|v651^z '</a><br>'  fi)/
@@ -150,7 +150,7 @@ if p(v651) then
    	'</tr>'/  
 fi, 
 
-"<tr><td valign=top width=140><font face='arial narrow' size=-1>Enlace Electrónico : </td>"d856,
+"<tr><td valign=top width=140><font face='arial narrow' size=-1>Enlace ElectrÃ³nico : </td>"d856,
 "<td width=430 bgcolor=white><font face=arial size=-1>"d856,
 (if p(v856^a) then '<a href=http://',v856^a' target=_blank>',v856^a,'</a><br>' else if p(v856^u) then '<a href=',v856^u' target=_blank>Ver texto completo</a><br>' fi fi )/
 ,"</td>"d856/
@@ -180,7 +180,7 @@ fi/
 
 if p(v740) then 
      
-   '<tr><td valign=top><font face="arial narrow" size=-1>Otros Títulos</font></td><td valign=top>'(v740^a,if p(v740) then '<br>' fi),'</td>'/
+   '<tr><td valign=top><font face="arial narrow" size=-1>Otros TÃ­tulos</font></td><td valign=top>'(v740^a,if p(v740) then '<br>' fi),'</td>'/
    '</tr>'/
 fi/ 
      
@@ -192,7 +192,7 @@ fi/
 if p(v900^n) then 
 	'<br>'
 	'<br><br><img src="../images/buttonp.gif" border=0 id=i'f(mfn,1,0)'1 > &nbsp;',
-		`<span id="m`f(mfn,1,0)`x1" onClick="showhide(m`f(mfn,1,0)`o1,i`f(mfn,1,0)`1)" style="cursor:pointer; text-decoration:underline; width:150; align:left">Ubicación y copias disponibles</span>`/
+		`<span id="m`f(mfn,1,0)`x1" onClick="showhide(m`f(mfn,1,0)`o1,i`f(mfn,1,0)`1)" style="cursor:pointer; text-decoration:underline; width:150; align:left">UbicaciÃ³n y copias disponibles</span>`/
 		'<DIV id="m'f(mfn,1,0)'o1" style="display:none"><p>'
 
 	'<table cellpading=0 cellspacing=3 width="90%" border=0 bgcolor=lightgrey valign=top>
