@@ -1,0 +1,531 @@
+!ID 000001
+!v001!EN
+!v002!Inglés
+!ID 000002
+!v001!PT
+!v002!Portugués
+!ID 000003
+!v001!ES
+!v002!Español
+!ID 000004
+!v001!FR
+!v002!Francés
+!ID 000005
+!v001!AB
+!v002!Abkhazian
+!ID 000006
+!v001!AK
+!v002!Akan
+!ID 000007
+!v001!AA
+!v002!Afar
+!ID 000008
+!v001!AF
+!v002!Africano
+!ID 000009
+!v001!AY
+!v002!Aymará
+!ID 000010
+!v001!AM
+!v002!Amhárico
+!ID 000011
+!v001!AR
+!v002!Arabe
+!ID 000012
+!v001!AS
+!v002!Assamés
+!ID 000013
+!v001!AV
+!v002!Avar
+!ID 000014
+!v001!AE
+!v002!Avestan
+!ID 000015
+!v001!AZ
+!v002!Azerbaijani
+!ID 000016
+!v001!BA
+!v002!Bashkir
+!ID 000017
+!v001!BM
+!v002!Bambara
+!ID 000018
+!v001!BN
+!v002!Bengalí
+!ID 000019
+!v001!BE
+!v002!Bielorruso
+!ID 000020
+!v001!BH
+!v002!Bihari
+!ID 000021
+!v001!BI
+!v002!Bislama
+!ID 000022
+!v001!BS
+!v002!Bosnio
+!ID 000023
+!v001!BR
+!v002!Bretón
+!ID 000024
+!v001!BG
+!v002!Búlgaro
+!ID 000025
+!v001!KS
+!v002!Cachemiro
+!ID 000026
+!v001!KN
+!v002!Kannada
+!ID 000027
+!v001!KR
+!v002!Kanuri
+!ID 000028
+!v001!KK
+!v002!Kazakh
+!ID 000029
+!v001!CA
+!v002!Catalán
+!ID 000030
+!v001!CH
+!v002!Chamorro
+!ID 000031
+!v001!KG
+!v002!Kongo, Congo
+!ID 000032
+!v001!KO
+!v002!Coreano
+!ID 000033
+!v001!KW
+!v002!Córnico
+!ID 000034
+!v001!CO
+!v002!Corso
+!ID 000035
+!v001!CR
+!v002!Cree
+!ID 000036
+!v001!KU
+!v002!Kurdo, Curdo
+!ID 000037
+!v001!DA
+!v002!Danés
+!ID 000038
+!v001!DV
+!v002!Divehi
+!ID 000039
+!v001!DZ
+!v002!Dzongkha
+!ID 000040
+!v001!GD
+!v002!Gaélico escocés
+!ID 000041
+!v001!CU
+!v002!Eslavo litúrgico, viejo eslavo
+!ID 000042
+!v001!SL
+!v002!Esloveno
+!ID 000043
+!v001!EO
+!v002!Esperanto
+!ID 000044
+!v001!ET
+!v002!Estonio
+!ID 000045
+!v001!EE
+!v002!Ewe
+!ID 000046
+!v001!FO
+!v002!Faroés
+!ID 000047
+!v001!FJ
+!v002!Fijiano
+!ID 000048
+!v001!FI
+!v002!Finés o finlandés
+!ID 000049
+!v001!FY
+!v002!Frisiano o frisón
+!ID 000050
+!v001!FF
+!v002!Fulani, Peul, Fulfulde
+!ID 000051
+!v001!GL
+!v002!Gallego
+!ID 000052
+!v001!GN
+!v002!Guaraní
+!ID 000053
+!v001!GU
+!v002!Gujarati
+!ID 000054
+!v001!HA
+!v002!Hausa
+!ID 000055
+!v001!HE
+!v002!Hebreo
+!ID 000056
+!v001!HZ
+!v002!Herero
+!ID 000057
+!v001!HI
+!v002!Hindi
+!ID 000058
+!v001!HO
+!v002!Hiri Motu
+!ID 000059
+!v001!HU
+!v002!Húngaro
+!ID 000060
+!v001!IG
+!v002!Igbo
+!ID 000061
+!v001!YI
+!v002!Yiddish
+!ID 000062
+!v001!ID
+!v002!Indonesio
+!ID 000063
+!v001!IA
+!v002!Interlingua (Asociación para un Lenguaje Auxiliar Internacional)
+!ID 000064
+!v001!IE
+!v002!Interlingue
+!ID 000065
+!v001!IU
+!v002!Inuktitut
+!ID 000066
+!v001!IK
+!v002!Inupiak o inuit
+!ID 000067
+!v001!YO
+!v002!Yoruba
+!ID 000068
+!v001!GA
+!v002!Irish
+!ID 000069
+!v001!IT
+!v002!Italiano
+!ID 000070
+!v001!JA
+!v002!Japonés
+!ID 000071
+!v001!JV
+!v002!Javanés
+!ID 000072
+!v001!KL
+!v002!Kalâtdlisut
+!ID 000073
+!v001!KM
+!v002!Khmer
+!ID 000074
+!v001!KV
+!v002!Komi
+!ID 000075
+!v001!KJ
+!v002!Kuanyama
+!ID 000076
+!v001!LO
+!v002!Laosiano
+!ID 000077
+!v001!LA
+!v002!Latín
+!ID 000078
+!v001!LV
+!v002!Letón
+!ID 000079
+!v001!LN
+!v002!Lingala
+!ID 000080
+!v001!LT
+!v002!Lituano
+!ID 000081
+!v001!LU
+!v002!Luba-Katanga
+!ID 000082
+!v001!LG
+!v002!Ganda, Luganda
+!ID 000083
+!v001!LB
+!v002!Luxemburgués
+!ID 000084
+!v001!ML
+!v002!Malayalam
+!ID 000085
+!v001!MG
+!v002!Malgache
+!ID 000086
+!v001!MT
+!v002!Maltés
+!ID 000087
+!v001!GV
+!v002!Manx o manés
+!ID 000088
+!v001!MR
+!v002!Maratí
+!ID 000089
+!v001!MH
+!v002!Marshallés
+!ID 000090
+!v001!MO
+!v002!Moldavo
+!ID 000091
+!v001!MN
+!v002!Mongol
+!ID 000092
+!v001!NA
+!v002!Nauru
+!ID 000093
+!v001!NV
+!v002!Navajo
+!ID 000094
+!v001!NR
+!v002!Ndebele (Sudáfrica)
+!ID 000095
+!v001!ND
+!v002!Ndebele (Zimbabwe)
+!ID 000096
+!v001!NG
+!v002!Ndonga
+!ID 000097
+!v001!NE
+!v002!Nepalí
+!ID 000098
+!v001!NY
+!v002!Nyanja
+!ID 000099
+!v001!NO
+!v002!Noruego
+!ID 000100
+!v001!OC
+!v002!Occitan (a partir de 1500)
+!ID 000101
+!v001!OJ
+!v002!Ojibwa
+!ID 000102
+!v001!OR
+!v002!Oriya
+!ID 000103
+!v001!OM
+!v002!Oromo
+!ID 000104
+!v001!OS
+!v002!Ossetic
+!ID 000105
+!v001!PI
+!v002!Pali
+!ID 000106
+!v001!PA
+!v002!Panjabi, punjabi o penjabi
+!ID 000107
+!v001!PL
+!v002!Polaco
+!ID 000108
+!v001!PS
+!v002!Pushto, pashto
+!ID 000109
+!v001!QU
+!v002!Quechua
+!ID 000110
+!v001!KI
+!v002!Kikuyu
+!ID 000111
+!v001!RW
+!v002!Kinyarwanda
+!ID 000112
+!v001!KY
+!v002!Kyrgyz
+!ID 000113
+!v001!RM
+!v002!Reto romance, romanche
+!ID 000114
+!v001!RN
+!v002!Rundi, kirundi
+!ID 000115
+!v001!RU
+!v002!Ruso
+!ID 000116
+!v001!SE
+!v002!Sami del Norte
+!ID 000117
+!v001!SM
+!v002!Samoano
+!ID 000118
+!v001!SG
+!v002!Sango (Ubangi criollo)
+!ID 000119
+!v001!SA
+!v002!Sánscrito
+!ID 000120
+!v001!SC
+!v002!Sardo
+!ID 000121
+!v001!SN
+!v002!Shona
+!ID 000122
+!v001!SD
+!v002!Sindhi
+!ID 000123
+!v001!SI
+!v002!Singalés
+!ID 000124
+!v001!SO
+!v002!Somalí
+!ID 000125
+!v001!ST
+!v002!Soto
+!ID 000126
+!v001!SW
+!v002!Suahili
+!ID 000127
+!v001!SU
+!v002!Sudanés
+!ID 000128
+!v001!SV
+!v002!Sueco
+!ID 000129
+!v001!SS
+!v002!Swazi
+!ID 000130
+!v001!TG
+!v002!Tajik
+!ID 000131
+!v001!TL
+!v002!Tagalo
+!ID 000132
+!v001!TY
+!v002!Tahitiano
+!ID 000133
+!v001!TA
+!v002!Tamil
+!ID 000134
+!v001!TT
+!v002!Tatar
+!ID 000135
+!v001!CE
+!v002!Chechén
+!ID 000136
+!v001!CV
+!v002!Chuvash
+!ID 000137
+!v001!TE
+!v002!Telugu
+!ID 000138
+!v001!TH
+!v002!Thai
+!ID 000139
+!v001!TI
+!v002!Tigriña
+!ID 000140
+!v001!TO
+!v002!Tonganés
+!ID 000141
+!v001!TS
+!v002!Tsonganés
+!ID 000142
+!v001!TN
+!v002!Tswanano
+!ID 000143
+!v001!TW
+!v002!Twi
+!ID 000144
+!v001!TR
+!v002!Turco
+!ID 000145
+!v001!TK
+!v002!Turcomano
+!ID 000146
+!v001!UK
+!v002!Ucraniano
+!ID 000147
+!v001!UG
+!v002!Uigur
+!ID 000148
+!v001!UR
+!v002!Urdu
+!ID 000149
+!v001!UZ
+!v002!Uzbeco
+!ID 000150
+!v001!VE
+!v002!Venda
+!ID 000151
+!v001!VI
+!v002!Vietnamita
+!ID 000152
+!v001!VO
+!v002!Volapuk
+!ID 000153
+!v001!WO
+!v002!Wolof
+!ID 000154
+!v001!XH
+!v002!Xhosa
+!ID 000155
+!v001!ZA
+!v002!Zhuang
+!ID 000156
+!v001!ZU
+!v002!Zulú
+!ID 000157
+!v001!BO
+!v002!Tibetano
+!ID 000158
+!v001!CS
+!v002!Checo
+!ID 000159
+!v001!CY
+!v002!Galés
+!ID 000160
+!v001!DE
+!v002!Alemán
+!ID 000161
+!v001!EL
+!v002!Grego
+!ID 000162
+!v001!EU
+!v002!Vasco
+!ID 000163
+!v001!FA
+!v002!Persa
+!ID 000164
+!v001!HR
+!v002!Croata
+!ID 000165
+!v001!HY
+!v002!Arménio
+!ID 000166
+!v001!IS
+!v002!Islandés
+!ID 000167
+!v001!KA
+!v002!Georgiano
+!ID 000168
+!v001!MK
+!v002!Macedonio
+!ID 000169
+!v001!MI
+!v002!Maori
+!ID 000170
+!v001!MS
+!v002!Malai
+!ID 000171
+!v001!MY
+!v002!Burmés
+!ID 000172
+!v001!NL
+!v002!Holandés
+!ID 000173
+!v001!RO
+!v002!Romeno
+!ID 000174
+!v001!SK
+!v002!Eslovaco
+!ID 000175
+!v001!SQ
+!v002!Albanés
+!ID 000176
+!v001!SR
+!v002!Servio
+!ID 000177
+!v001!ZH
+!v002!Chinés
