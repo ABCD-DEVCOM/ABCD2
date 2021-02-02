@@ -1,19 +1,22 @@
+acces|(acces) Operators
+agrovoc|Agrovoc Thesaurus
+biblo|Cepal|Y
+copies|Collection inventory
+dcdspace|dSpace Bridge
+doajuni|DOAJ: Directory of Open Access Journals
+dubcore|DublinCore Repository
+experts|Experts
+isadg|ISAD(G): International Standard Archival Description
+loanobjects|Loan objects
 marc|MARC|Y
 marcuni|MARCUNI|Y
-dubcore|DublinCore Repository
-rda|RDA|Y
-biblo|CEPAL|Y
-copies|Acquisitions, Copies
-providers|Providers
-suggestions|Suggestions (Acquisitions)
-purchaseorder|Purchase Orders
-users|patrons
-loanobjects|Loan objects
-trans|Loan transactions
-suspml|Suspensions and fines
-reserve|Loan reservations
-isadg|ISAD/G
 projects|Projects
-experts|Experts
-doajuni|DOAJ
-agrovoc|Agrovoc Thesaurus
+providers|Providers
+purchaseorder|Purchase Orders
+rda|RDA: Resource Description & Access|Y
+reserve|Reservations
+suggestions|Suggestions (Acquisitions)
+suspml|Suspensions and fines
+trans|Transactions Loans
+unicode|UNICODE
+users|Patrons
