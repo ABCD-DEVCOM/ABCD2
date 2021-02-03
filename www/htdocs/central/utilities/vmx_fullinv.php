@@ -172,6 +172,7 @@ $parameters.= "mx: $mx_path"." <a href=mx_test.php target=test onclick=OpenWindo
 if ($stw!="") $parameters.= "stw: $stw<br>";
 if ($uctab!="") $parameters.= "uctab: $uctab<br>";
 if ($uctab!="") $parameters.= "actab: $actab<br>";
+unset($m);
 if (isset($_POST['m'])) $m=$_POST['m'];
 $m_var="";
 if(isset($m)) $m_var="/m";
