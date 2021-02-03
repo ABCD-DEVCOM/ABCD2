@@ -48,7 +48,7 @@ include ("rotulos2tags.php");
 function Delimited($rotulos,$registro){
 	$salida=array();
 	if (trim($registro!="")){
-	echo "**$registro<br>";		$t=explode("|",$registro);
+		$t=explode("\t",$registro);
 		foreach ($rotulos as $value){
 	 		if (trim($value[1])!=""){
 	 			$tag[$value[0]]=$value[1];
@@ -64,7 +64,6 @@ function Delimited($rotulos,$registro){
 	 				$salida[$tag[$ix]]=str_replace("\r"," ",$val);
 	 			}	 	}
 	}
-	var_dump($salida);
  	return $salida;
 }
 
@@ -105,20 +104,22 @@ global $arrHttp;
 			$delim="";
 		if (isset($rotulo[$key][4])) $rep=$rotulo[$key][4];
 		if (isset($rotulo[$key][5])) $formato=$rotulo[$key][5];
-		foreach ($linea as $value){			if (trim($value)!=""){
-				if (trim($rep)!=""){
-					$sal=explode($rep,$value);
-					foreach ($sal as $campo){
-						if (trim($subc)!="") $campo=SubCampos($campo,$subc,$delim);
-						$ValorCapturado.="<$key 0>".trim($campo)."</".$key.">";
+		if (is_array($linea)){
+			foreach ($linea as $value){				if (trim($value)!=""){
+					if (trim($rep)!=""){
+						$sal=explode($rep,$value);
+						foreach ($sal as $campo){
+							if (trim($subc)!="") $campo=SubCampos($campo,$subc,$delim);
+								$ValorCapturado.="<$key 0>".trim($campo)."</".$key.">";
+							}
+						}else{
+							if (trim($subc)!="") $value=SubCampos($value,$subc,$delim);
+							$ValorCapturado.="<$key 0>".trim($value)."</".$key.">";
 					}
-				}else{
-					if (trim($subc)!="") $value=SubCampos($value,$subc,$delim);
-					$ValorCapturado.="<$key 0>".trim($value)."</".$key.">";
 				}
 
 			}
-        }
+        }else{        	$ValorCapturado.="<$key 0>".trim($linea)."</".$key.">";        }
 	}
 	ActualizarRegistro($base,$ValorCapturado);
 
@@ -212,14 +213,17 @@ if (trim($value)!="") {
 		$variables=explode($separador,$value);
 	}else{		$variables=explode("\n",$value);	}
 	foreach($variables as $registro){		$noLocalizados="";
-//		if ($separador=='[TABS]'){//        	$salida=Delimited($rotulo,$registro);//		}else{
+		if ($separador=='[TABS]'){        	$salida=Delimited($rotulo,$registro);		}else{
 			$salida=Rotulos2Tags($rotulo,$registro,$separador);
-//		}
+		}
 		if (count($salida)>0){
 			echo "<p><b>--------</b> <br>";
 			if (!isset($arrHttp["Actualizar"])) {
 				echo "<br>";
-				foreach ($salida as $key=>$value){					 foreach ($value as $campo){					 	 echo $rotulo[$key][1]." ".$campo."<br>";					 }
+				foreach ($salida as $key=>$value){
+					if (is_array($value)){					 	foreach ($value as $campo){					 		 echo $rotulo[$key][1]." ".$campo."<br>";					 	}
+					}else{						echo $rotulo[$key][1]." ".$value."<br>";					}
+
 				}			}
 			if (isset($arrHttp["Actualizar"])) ProcesarBD($arrHttp["base"],$salida,$rotulo);
 		}
