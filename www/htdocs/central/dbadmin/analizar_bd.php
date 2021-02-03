@@ -37,7 +37,7 @@ echo "
 	";
 echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>Regresar</strong></span></a>";
+	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";

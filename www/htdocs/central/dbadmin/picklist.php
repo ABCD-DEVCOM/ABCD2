@@ -138,7 +138,7 @@ if (isset($arrHttp["wks"])) $wks="&wks=".$arrHttp["wks"];
 sort ($the_array);
 reset ($the_array);
 
-while (list ($key, $val) = each ($the_array)) {
+foreach ($the_array as $key=>$val) {
 //	echo "key=".$key."<br>val=$val<br>wks=$wks<br>"  ;
    echo "<a href=javascript:Pl_name(\"$val\",\"".$arrHttp["base"]."\")>$val</a>; ";
 
