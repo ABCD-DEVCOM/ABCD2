@@ -1,4 +1,9 @@
 <?php
+/* Modifications
+2021-01-04 fho4abcd Removed login encryption
+2021-01-04 fh04abcd Corrected "languaje" --> language
+*/
+
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
@@ -42,8 +47,10 @@ include ("$app_path/lang/lang.php");
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
 <script src=<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
+<!-- Crypto not required if password encoding is not active
 <script src=<?php echo $app_path?>/dataentry/js/crypto-js.js></script>
-<script languaje=javascript>
+-->
+<script language=javascript>
 
 document.onkeypress =
 	function (evt) {
@@ -83,8 +90,13 @@ function Enviar(){
 		} else{
 			document.administra.target=""
 		}
-		 var hash = CryptoJS.MD5(password);
-		 document.administra.password.value=hash
+		// This encrypts all passwords before send to the server
+		// Effects: Emergency login no longer works +
+		//	Databases without md5 encryption cannot login +
+		//	Change password is impossible
+		// Next lines changed to comment so encryption is not executed
+		// var hash = CryptoJS.MD5(password);
+		// document.administra.password.value=hash
 		document.administra.submit()
 	}
 }
@@ -233,6 +245,3 @@ else
 <?php include ("$app_path/common/footer.php");?>
 	</body>
 </html>
-
-
-
