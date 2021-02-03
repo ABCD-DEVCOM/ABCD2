@@ -37,12 +37,12 @@ global $xWxis,$wxisUrl,$Wxis;	echo "<p>Título solicitado: ".$signatura."<p>";
 	if ($num_reservas !=0) echo "</table>";
 	if ($yareservado=="S"){
 		echo "<strong><font color=red>** El título solicitado ya está reservado por ese usuario</font></strong>";
-		"<p><a href=javascript:self.close>Cerrar</a>";
+		"<p><a href=javascript:self.close>".$msgstr["cerrar"]."</a>";
 		return;
 	}
 	if ($num_reservas>=2){
 		print "No se permiten más de 2 reservas";
-		"<p><a href=javascript:self.close>Cerrar</a>";
+		"<p><a href=javascript:self.close>".$msgstr["cerrar"]."</a>";
 		return;
 	}
 	$ValorCapturado="<10 0>".$usuario."</10><20 0>".$signatura."</20><30 0>".date('Ymd')."</30>";
@@ -96,7 +96,7 @@ foreach ($contenido as $value) {
 		$tipousuario=substr($value,14);
 	else		print "$value";}
 if ($found=="N"){	print "Codigo de usuario inexistente";
-	print "<p><a href=javascript:history.back()>Regresar</a>";
+	print "<p><a href=javascript:history.back()>".$msgstr["regresar"]."</a>";
 	die;}
 
 //SE LOCALIZAN LOS PRÉSTAMOS PENDIENTES

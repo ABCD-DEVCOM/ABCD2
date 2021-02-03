@@ -4,7 +4,8 @@ session_start();
 include("get_post.php");
 include("header.php");
 include("../config.php");
-include("../lang/admin.php");
+if (isset($_SESSION["lang"]))
+	include("../lang/admin.php");
 include("institutional_info.php");
 ?>
 <body>

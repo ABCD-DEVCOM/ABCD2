@@ -99,12 +99,12 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr;
 	if ($num_reservas !=0) echo "</table>";
 	if ($yareservado=="S"){
 		echo "<strong><font color=red>** El título solicitado ya está reservado por ese usuario</font></strong>";
-		"<p><a href=javascript:self.close>Cerrar</a>";
+		"<p><a href=javascript:self.close>".$msgstr["cerrar"]."</a>";
 		return;
 	}
 	if ($num_reservas>=2){
 		print "No se permiten más de 2 reservas";
-		"<p><a href=javascript:self.close>Cerrar</a>";
+		"<p><a href=javascript:self.close>".$msgstr["cerrar"]."</a>";
 		return;
 	}
 	$ValorCapturado="<10 0>".$usuario."</10><20 0>".$signatura."</20><30 0>".date('Ymd')."</30>";

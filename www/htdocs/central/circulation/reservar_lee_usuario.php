@@ -179,8 +179,8 @@ include("ec_include.php");
 if (trim($ec_output))
 include("opac_reservas.php");
 if ($nv>0){
-	print "<font color=red><h3>Tiene préstamos vencidos. No puede reservar</h3></font>";
-
+	print "<font color=red><h3>".$msgstr["reservations_not_allowed"]."</h3></font>";
+    //Tiene préstamos vencidos. No puede reservar
 }
 echo $ec_output;
 $ec_output="";
@@ -209,7 +209,7 @@ foreach ($copies_title as $value){	if (trim($value)!=""){		$c=explode('|',$val
 					break;				}			}		}
 	}}
 if ($yaprestado=="S"){	echo "<br><font color=red><strong>Ya tiene prestado un ejemplar de ese título. No puede reservar</strong></font>";
-	"<p><a href=javascript:self.close>Cerrar</a>";
+	"<p><a href=javascript:self.close>".$msgstr["cerrar"]."</a>";
 	echo "<br>";
 	echo $reserva_output;
 	die;

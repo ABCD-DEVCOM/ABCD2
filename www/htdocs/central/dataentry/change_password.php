@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-01-05 guilda Added message $msgstr["pass_format_0"]
+*/
 session_start();
 include("../common/get_post.php");
 if (isset($arrHttp["db_path"]))
@@ -17,6 +20,7 @@ include ("../lang/lang.php");
 		$css_name="";
 	else
 		$css_name.="/";
+if (!isset($msgstr["pass_format_0"])) $msgstr["pass_format_0"]="";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,14 +45,18 @@ include ("../lang/lang.php");
 		<![endif]-->
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/password_check.js></script>
-<script languaje=javascript>
+<script language=javascript>
 
 <?php
 
 if (isset($SECURE_PASSWORD_LEVEL))
 	echo "secure_password_level='$SECURE_PASSWORD_LEVEL'\n";
+else
+	echo "secure_password_level='0'\n";
 if (isset($SECURE_PASSWORD_LENGTH))
 	echo "secure_password_length='$SECURE_PASSWORD_LENGTH'\n";
+else
+	echo "secure_password_length='0'\n";
 ?>
 
 
@@ -64,6 +72,7 @@ function alphanumeric(inputtxt) {
 }
 
 function Enviar(){	res=VerificarPassword("pwd")
+
 	if (!res && secure_password_level!="" && secure_password_length!=""){		alert('<?php echo $msgstr["pass_error"]." ".$msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
 		if ($SECURE_PASSWORD_LENGTH>0) echo ". ". $msgstr["pass_format_1"]. " ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"];?>')
 		return	}	login=Trim(document.administra.login.value)

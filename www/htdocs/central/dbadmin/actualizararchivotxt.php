@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-01-05 guilda Added $msgstr["close"]
+*/
+
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -66,7 +70,7 @@ echo $file." ".$msgstr["updated"]?></h4>
 <?php if (!isset($arrHttp["encabezado"]))
 		echo "
 			<script>if (top.frames.length<1)
-			        document.writeln(\"<a href=javascript:self.close()>Cerrar</a>\")
+			        document.writeln(\"<a href=javascript:self.close()>".$msgstr["close"]."</a>\")
 			</script>
          ";
 ?>
