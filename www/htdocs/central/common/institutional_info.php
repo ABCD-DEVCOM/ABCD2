@@ -5,17 +5,18 @@
 							else
 								echo "../images/logoabcd.jpg";
 					  ?>
-					  ><?php echo $institution_name?></h1>
+					  ><?php if (isset($institution_name)) echo $institution_name?></h1>
 	</div>
 	<div class="userInfo">
-		<span><?php echo $_SESSION["nombre"]?></span>,
-		<?php echo $_SESSION["profile"]?> |
-		<?php  $dd=explode("/",$db_path);
-               if (isset($dd[count($dd)-2])){
-			   		$da=$dd[count($dd)-2];
-			   		echo " (".$da.") ";
+		<span><?php if (isset($_SESSION["nombre"])) echo $_SESSION["nombre"]?></span>,
+		<?php if (isset($_SESSION["profile"])) {			 		echo $_SESSION["profile"]."|";
+					$dd=explode("/",$db_path);
+               		if (isset($dd[count($dd)-2])){
+			   			$da=$dd[count($dd)-2];
+			   			echo " (".$da.") ";
+					}
+					echo" | ". $meta_encoding;
 				}
-				echo" | ". $meta_encoding;
 		?> |
 <?php
 
