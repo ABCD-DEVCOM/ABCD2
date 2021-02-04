@@ -2,6 +2,7 @@
 /* Modifications
 2021-02-03 fho4abcd: Set metaencoding only for active session (from repository ABCD2.2)
 2021-02-03 fho4abcd: moved comment for cisis version to actual statement
+2021-02-04 fho4abcd: ensure trailing slash for $db_path
 */
 //header('Content-Type: text/html; charset=iso-8859-1');
 
@@ -53,6 +54,7 @@ $change_password="Y";                   //allow change password
 $ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
 
 // *** NO CHANGES NEEDED BELOW HERE
+if (substr($db_path, strlen($db_path)-1,1) <> "/") $db_path.="/"; //Ensure trailing slash
 // Construction of executable path and URL                             
 $wxis_exec="wxis".$exe_ext;                // name and extension of wxis executable
 $mx_exec="mx".$exe_ext;                    // name and extension of mx executable
