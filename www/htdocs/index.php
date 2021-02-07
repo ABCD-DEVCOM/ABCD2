@@ -2,6 +2,7 @@
 /* Modifications
 2021-01-04 fho4abcd Removed login encryption
 2021-01-04 fh04abcd Corrected "languaje" --> language
+2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
 */
 
 session_start();
@@ -90,13 +91,6 @@ function Enviar(){
 		} else{
 			document.administra.target=""
 		}
-		// This encrypts all passwords before send to the server
-		// Effects: Emergency login no longer works +
-		//	Databases without md5 encryption cannot login +
-		//	Change password is impossible
-		// Next lines changed to comment so encryption is not executed
-		// var hash = CryptoJS.MD5(password);
-		// document.administra.password.value=hash
 		document.administra.submit()
 	}
 }
@@ -106,13 +100,12 @@ function Enviar(){
 <body>
 	<div class="heading">
 		<div class="institutionalInfo">
-		<img src=<?php //echo "LOGO=$logo<BR>"; die;
-                                   if (isset($logo))
-								echo "central/".substr($logo,3);
-							else
-								echo "central/images/logoabcd.jpg";
-					  ?>
-					  ><h1><?php echo $institution_name?></h1>
+			<img src=<?php	if (isset($logo))
+						echo "$logo" ;
+					else
+						echo "central/images/logoabcd.jpg";
+				 ?>
+			><h1><?php echo $institution_name?></h1>
 		</div>
 		<div class="userInfo"><?php echo $meta_encoding?></div>
 
