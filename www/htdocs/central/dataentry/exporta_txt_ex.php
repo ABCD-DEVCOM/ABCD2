@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-02-07 fho4abcd Add translation for download action.
+*/
+
 global $arrHttp;
 set_time_limit(0);
 session_start();
@@ -16,12 +20,13 @@ include("../lang/soporte.php");
 
 //set_time_limit(120);
 
-// se incluye la rutina que convierte los rótulos a tags isis
+// se incluye la rutina que convierte los rÃ³tulos a tags isis
 include ("rotulos2tags.php");
 
 function GuardarArchivo($contenido){
 global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
-	switch ($arrHttp["tipo"]){		case "txt":
+	switch ($arrHttp["tipo"]){
+		case "txt":
 		default:
 			$file=$db_path."wrk/".$arrHttp["archivo"];
 			if ($arrHttp["tipo"]!="iso" or ($arrHttp["tipo"]=="iso" and isset($arrHttp["seleccionados"]))){
@@ -34,7 +39,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 				fclose($fp);
 			}
 			echo "<center><br><br><h4>$file &nbsp;".$msgstr["okactualizado"];
-			echo " &nbsp;<a href=javascript:Download()>Bajar</a>"."</h4></center>";
+			echo " &nbsp;<a href=javascript:Download()>".$msgstr["download"]."</a>"."</h4></center>";;
 	}
 
 }
@@ -59,7 +64,7 @@ function SubCampos($campo,$subc,$delim){
 	return $campo;
 }
 
-//Se lee la tabla con la estructura de conversión de rótulos a tags isis
+//Se lee la tabla con la estructura de conversiÃ³n de rÃ³tulos a tags isis
 function LeerTablaCnv(){
 Global $separador,$arrHttp,$db_path;
 	$fp=file($db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"]);
@@ -85,15 +90,22 @@ Global $separador,$arrHttp,$db_path;
 				if (trim($t[5])==""){
 				    if ($separador=="[TABS]"){
 						$Pft.="if p(v".$t[1].") then (v".$t[1]."+|; |) fi,'|'";
-					}else{						$Pft.="if p(v".$t[1].") then '".$t[0]."' (v".$t[1]."/)/fi,\n";					}
-				}else{					if ($separador=="[TABS]"){
+					}else{
+						$Pft.="if p(v".$t[1].") then '".$t[0]."' (v".$t[1]."/)/fi,\n";
+					}
+				}else{
+					if ($separador=="[TABS]"){
 						$Pft.=$t[5]."'|'";
-					}else{						$Pft.="'".$t[0]."' ".$t[5]."/";					}
+					}else{
+						$Pft.="'".$t[0]."' ".$t[5]."/";
+					}
 				}
 			}
 		}
 	}
-	if ($separador=="[TABS]"){		$Pft.="/";	}else{
+	if ($separador=="[TABS]"){
+		$Pft.="/";
+	}else{
 		$Pft.="'$separador'/#";
 	}
 //	echo $Pft;
@@ -106,7 +118,8 @@ global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl;
     if (isset($arrHttp["Mfn"]) and trim($arrHttp["Mfn"])!="") {
     	$query.="&Opcion=rango&Mfn=" . $arrHttp["Mfn"]."&to=".$arrHttp["to"];
     }else{
-		if (isset($arrHttp["Expresion"]) and trim($arrHttp["Expresion"])!=""){			$query.="&Opcion=buscar&Expresion=";
+		if (isset($arrHttp["Expresion"]) and trim($arrHttp["Expresion"])!=""){
+			$query.="&Opcion=buscar&Expresion=";
 		 	$query.= urlencode($arrHttp["Expresion"]);
 		}else{
 			$query.="&Opcion=seleccionados&Seleccionados=";
@@ -144,7 +157,9 @@ if(!isset($arrHttp["tipo"])) $arrHttp["tipo"]="txt";
 include("../common/header.php");
 ?>
 <script>
-function Download(){	document.download.submit()}
+function Download(){
+	document.download.submit()
+}
 
 
 </script>
@@ -155,9 +170,11 @@ echo "
 	<div class=\"breadcrumb\">".$msgstr["cnv_export"]." ".$msgstr["cnv_".$arrHttp["tipo"]]."
 	</div>
 	<div class=\"actions\">";
-if ($arrHttp["Accion"]!="P"){	echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">
+if ($arrHttp["Accion"]!="P"){
+	echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">
 	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["regresar"]."</strong></span></a>";}
+		<span><strong>".$msgstr["regresar"]."</strong></span></a>";
+}
 ?>
 
 	</div>

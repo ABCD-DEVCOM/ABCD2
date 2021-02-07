@@ -82,6 +82,7 @@ dbn=Database name
 deldb=Delete database records before importing
 delimited_tab=Delimited with tabulators (1 record per line)
 descripcion=Description
+download=Download
 end_process=End of the process
 exp_archivo=Your must supply the file name
 exp_selreg=Please select the records to be exported
