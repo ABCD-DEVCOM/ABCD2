@@ -1,4 +1,0 @@
-marc.*=/var/opt/ABCD/bases/marc/data/marc.*
-copies.*=/var/opt/ABCD/bases/copies/data/copies.*
-loanobjects.*=/var/opt/ABCD/bases/loanobjects/data/loanobjects.*
-trans.*=/var/opt/ABCD/bases/trans/data/trans.*
