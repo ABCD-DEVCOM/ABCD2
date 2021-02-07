@@ -3,11 +3,10 @@
 /* modified:
    2021-02-06: fho4abcd Added minimal descriptive content.
    The intention is that all additional descriptions, guides, ... will be located in other files, even on other websites
+   2021-02-07: improved text
 */
 -->
-[Automation of Libraries and Documentation Center's.](http://abcd.netcat.be/)
-
-This repository contains code for [ABCD version **2**](http://abcd.netcat.be/?q=node/43)
+Code for Automation of Libraries and Documentation Center's: [ABCD](http://abcd.netcat.be/) version [**2.x**](http://abcd.netcat.be/?q=node/43)
 
 Acronym **ABCD** stands for:
 
@@ -16,6 +15,6 @@ Acronym **ABCD** stands for:
 > **A**utomatização das **B**ibliotecas e dos **C**entros de **D**ocumentação<br>
 > **A**utomatisering van **B**ibliotheken en **C**entra voor **D**ocumentatie
 
-ABCD was initially developed by [Bireme](http://regional.bvsalud.org/local/Site/bireme/I/homepage.htm) with the support of [VLIR/UOS](https://www.vliruos.be/en/home/1) and based on [UNESCO-supported ISIS-technology](http://www.unesco.org/isis).
+ABCD was initially developed by [Bireme](http://regional.bvsalud.org/local/Site/bireme/I/homepage.htm) with the support of [VLIR/UOS](https://www.vliruos.be/en/home/1) and based on [UNESCO-supported ISIS-technology](http://www.unesco.org/isis). Currently the development is solely done by volunteers in several countries but not enough thanks can be given to G. Ascencio and E. Spinak.
 
 Please check also the [ABCD wiki](http://abcdwiki.net).
