@@ -975,7 +975,7 @@ S||Método de referencia utilizado|0|0|2||X|||||||||0||0|0|||
 S||Materiales específicos a los cuales se aplica el campo|0|0|3||X|||||||||0||0|0|||
 H||Mención de serie|0|0||||||||||||0||0|0|||
 T|440|Mención de Serie/Asiento Secundario-Título|0|1|12anpvwx068|||||||||||1|https://www.loc.gov/marc/bibliographic/bd440.html|0|0|||
-S||Indicador 1|0|0|1||X||1|P|ind-b.tab|||||0||0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Indicador 2|0|0|2||X||1|P|130-ind1.tab|||||0||0|0|||
 S||Titulo|0|0|a||X|||||||||0||0|0|||
 S||Número de la parte/sección de una obra|0|0|n||X|||||||||0||0|0|||
