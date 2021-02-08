@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-02-08 fho4abcd Remove code in comment & languaje->language
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -16,7 +19,7 @@ if (!isset($arrHttp["Subc"])){
 			echo "<h1>".$msgstr["dbexists"]."</h1>";
 			die;
 		}
-		//OJO ARREGLAR ESTO PARA QUE SALGA LA DESCRIPCIÓN
+		//OJO ARREGLAR ESTO PARA QUE SALGA LA DESCRIPCIÃ“N
 		if (isset($arrHttp["desc"])) $_SESSION["DESC"]=$arrHttp["desc"];
 		echo "<script>Opcion='new'</script>\n";
 	}
@@ -26,13 +29,10 @@ if (!isset($arrHttp["Subc"])){
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlXcommon.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgrid.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgridCell.js"></script-->
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 
-	<script languaje=javascript>
+	<script language=javascript>
 	field_type=Array()
 	input_type=Array()
 	pick_type=Array()
@@ -317,7 +317,7 @@ function Validate(Opcion){
 		pl_format=""
 		pl_display=""
 		cell=""
-		for (j=1;j<cols;j++){   // Se verifica que la línea no esté en blanco
+		for (j=1;j<cols;j++){   // Se verifica que la lÃ­nea no estÃ© en blanco
 			cell=""
 			if (j!=14) {
 				cell=Trim(mygrid.cells2(i,j).getValue())
@@ -460,7 +460,7 @@ function Validate(Opcion){
 					}
               	}
 			}
-			if (cell_type=="S"){    // se determina que el subcampo esté precedido por un tipo T o por TB  o por M
+			if (cell_type=="S"){    // se determina que el subcampo estÃ© precedido por un tipo T o por TB  o por M
 				res=false
     			for (ix=i-1;ix>=0;ix--){
 					type=mygrid.cells2(ix,1).getValue()
