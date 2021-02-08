@@ -1,7 +1,6 @@
 <?php
 session_start();
 include("get_post.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 $_SESSION["super_user"]=$_SESSION["permiso"];
 
 // to see if a separate window is activate

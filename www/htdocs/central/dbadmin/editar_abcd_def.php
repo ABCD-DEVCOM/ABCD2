@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-01-05 guilda Added $msgstr["regresar"]
+*/
 session_start();
 
 if (!isset($_SESSION["permiso"])){
@@ -190,7 +193,7 @@ switch ($arrHttp["Opcion"]){
 		break;
 }
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>Regresar</strong></span></a>";
+	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
 	echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
 	echo "

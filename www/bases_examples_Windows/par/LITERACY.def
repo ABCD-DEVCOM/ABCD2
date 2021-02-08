@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%literacy/data/literacy.*
+FILE standard.pft=%path_database%literacy/pfts/%lang%/literacy.pft
+FILE SHORTCUT.IAH=%path_database%literacy/pfts/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Text words^2Palabras^3Full Text^4Mots^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX RP=^1Persona responsabile^Persona Responabile^3Responsible Person^4Personne responsable^xRP ^yDATABASE^uRP_^mRP_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1por defecto^2por defecto^3default^4défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=ON
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

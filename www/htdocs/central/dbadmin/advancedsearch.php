@@ -25,7 +25,7 @@ if (isset($arrHttp["modulo"])){
 	}
 }
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$file;
-if (!file_exists($archivo)) $archivo= $db_path.$arrHttp["base"]."/pfts/".$lang_db."/camposbusqueda.tab";
+//if (!file_exists($archivo)) $archivo= $db_path.$arrHttp["base"]."/pfts/".$lang_db."/camposbusqueda.tab";
 if (file_exists($archivo)){
 	$arrHttp["Opcion"]="update";
 }else{
@@ -37,9 +37,10 @@ include("../common/header.php");
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 	<script language=javascript>
+
 		pl_type=""
 		Opcion="<?php echo $arrHttp["Opcion"]?>"
 		valor=""

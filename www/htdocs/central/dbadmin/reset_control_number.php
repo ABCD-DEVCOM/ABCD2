@@ -17,7 +17,7 @@ if (file_exists($file_cn)){	$fp=file($file_cn);
 	$cn_val=implode("",$fp);}
 
 include("../common/header.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>"
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
 function Enviar(){	control=Trim(document.forma1.control_n.value)
@@ -38,12 +38,12 @@ if (isset($arrHttp["encabezado"])) {
 		<?php echo $msgstr["resetcn"].": $base"?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"menu_mantenimiento.php?base=".$base."$encabezado\" class=\"defaultButton backButton\">";
+<?php echo "<a href=\"assign_control_number.php?base=".$base."$encabezado\" class=\"defaultButton backButton\">";
 ?>
 					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
-	</div>
+ 	</div>
 	<div class="spacer">&#160;</div>
 </div>
 <div class="helper">

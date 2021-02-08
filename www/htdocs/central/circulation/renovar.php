@@ -15,7 +15,7 @@ include("../lang/prestamo.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 document.onkeypress =
   function (evt) {
@@ -86,6 +86,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: renovar.php</font>\n";
 
 	<div class="searchBox">
 	<form name=inventorysearch action=renovar_ex.php method=post onsubmit="javascript:return false">
+	<input type=hidden name=vienede value="renovar">
 	<table width=100%>
 		<?php
 if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
@@ -113,6 +114,7 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
 <input type=hidden name=usuario value="">
+
 </form>
 <?php
 include("../common/footer.php");

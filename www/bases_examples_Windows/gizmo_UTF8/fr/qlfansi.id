@@ -1,0 +1,249 @@
+!ID 000001
+!v001!^sadmin
+!v002!/administration & dosage
+!ID 000002
+!v001!^sagon
+!v002!/agonists
+!ID 000003
+!v001!^sanal
+!v002!/analysis
+!ID 000004
+!v001!^sanalogs
+!v002!/analogs & derivatives
+!ID 000005
+!v001!^sanat
+!v002!/anatomy & histology
+!ID 000006
+!v001!^sabnorm
+!v002!/abnormalities
+!ID 000007
+!v001!^santag
+!v002!/antagonists & inhibitors
+!ID 000008
+!v001!^sbiosyn
+!v002!/biosynthesis
+!ID 000009
+!v001!^sradionuclide
+!v002!/radionuclide imaging
+!ID 000010
+!v001!^ssurg
+!v002!/surgery
+!ID 000011
+!v001!^scytol
+!v002!/cytology
+!ID 000012
+!v001!^sclass
+!v002!/classification
+!ID 000013
+!v001!^scompl
+!v002!/complications
+!ID 000014
+!v001!^scongen
+!v002!/congenital
+!ID 000015
+!v001!^scontra
+!v002!/contraindications
+!ID 000016
+!v001!^sgrowth
+!v002!/growth & development
+!ID 000017
+!v001!^sdefic
+!v002!/deficiency
+!ID 000018
+!v001!^sdiag
+!v002!/diagnosis
+!ID 000019
+!v001!^sdiet ther
+!v002!/diet therapy
+!ID 000020
+!v001!^secon
+!v002!/economics
+!ID 000021
+!v001!^seduc
+!v002!/education
+!ID 000022
+!v001!^sadv eff
+!v002!/adverse effects
+!ID 000023
+!v001!^sdrug eff
+!v002!/drug effects
+!ID 000024
+!v001!^srad eff
+!v002!/radiation effects
+!ID 000025
+!v001!^sembryol
+!v002!/embryology
+!ID 000026
+!v001!^snurs
+!v002!/nursing
+!ID 000027
+!v001!^spois
+!v002!/poisoning
+!ID 000028
+!v001!^senzymol
+!v002!/enzymology
+!ID 000029
+!v001!^sepidemiol
+!v002!/epidemiology
+!ID 000030
+!v001!^sstatist
+!v002!/statistics & numerical data
+!ID 000031
+!v001!^setiol
+!v002!/etiology
+!ID 000032
+!v001!^sethnol
+!v002!/ethnology
+!ID 000033
+!v001!^spharmacokin
+!v002!/pharmacokinetics
+!ID 000034
+!v001!^spharmacol
+!v002!/pharmacology
+!ID 000035
+!v001!^sphysiol
+!v002!/physiology
+!ID 000036
+!v001!^sphysiopathol
+!v002!/physiopathology
+!ID 000037
+!v001!^sgenet
+!v002!/genetics
+!ID 000038
+!v001!^shist
+!v002!/history
+!ID 000039
+!v001!^simmunol
+!v002!/immunology
+!ID 000040
+!v001!^schem ind
+!v002!/chemically induced
+!ID 000041
+!v001!^sinnerv
+!v002!/innervation
+!ID 000042
+!v001!^sinstrum
+!v002!/instrumentation
+!ID 000043
+!v001!^sblood supply
+!v002!/blood supply
+!ID 000044
+!v001!^sisol
+!v002!/isolation & purification
+!ID 000045
+!v001!^scsf
+!v002!/cerebrospinal fluid
+!ID 000046
+!v001!^slegis
+!v002!/legislation & jurisprudence
+!ID 000047
+!v001!^sinj
+!v002!/injuries
+!ID 000048
+!v001!^smetab
+!v002!/metabolism
+!ID 000049
+!v001!^smicrobiol
+!v002!/microbiology
+!ID 000050
+!v001!^smortal
+!v002!/mortality
+!ID 000051
+!v001!^smethods
+!v002!/methods
+!ID 000052
+!v001!^sstand
+!v002!/standards
+!ID 000053
+!v001!^sorgan
+!v002!/organization & administration
+!ID 000054
+!v001!^sparasitol
+!v002!/parasitology
+!ID 000055
+!v001!^spathogen
+!v002!/pathogenicity
+!ID 000056
+!v001!^spathol
+!v002!/pathology
+!ID 000057
+!v001!^spolicies
+!v002!/policies
+!ID 000058
+!v001!^sprev
+!v002!/prevention & control
+!ID 000059
+!v001!^ssupply
+!v002!/supply & distribution
+!ID 000060
+!v001!^spsychol
+!v002!/psychology
+!ID 000061
+!v001!^schem
+!v002!/chemistry
+!ID 000062
+!v001!^sdrug ther
+!v002!/drug therapy
+!ID 000063
+!v001!^sradiogr
+!v002!/radiography
+!ID 000064
+!v001!^sradiother
+!v002!/radiotherapy
+!ID 000065
+!v001!^srehabil
+!v002!/rehabilitation
+!ID 000066
+!v001!^sman
+!v002!/manpower
+!ID 000067
+!v001!^sblood
+!v002!/blood
+!ID 000068
+!v001!^ssecret
+!v002!/secretion
+!ID 000069
+!v001!^ssecond
+!v002!/secondary
+!ID 000070
+!v001!^schem syn
+!v002!/chemical synthesis
+!ID 000071
+!v001!^strends
+!v002!/trends
+!ID 000072
+!v001!^sther
+!v002!/therapy
+!ID 000073
+!v001!^stox
+!v002!/toxicity
+!ID 000074
+!v001!^stransm
+!v002!/transmission
+!ID 000075
+!v001!^stranspl
+!v002!/transplantation
+!ID 000076
+!v001!^sultrastruct
+!v002!/ultrastructure
+!ID 000077
+!v001!^sultrasonogr
+!v002!/ultrasonography
+!ID 000078
+!v001!^surine
+!v002!/urine
+!ID 000079
+!v001!^sdiag use
+!v002!/diagnostic use
+!ID 000080
+!v001!^sther use
+!v002!/therapeutic use
+!ID 000081
+!v001!^sutil
+!v002!/utilization
+!ID 000082
+!v001!^svet
+!v002!/veterinary
+!ID 000083
+!v001!^svirol
+!v002!/virology

@@ -554,6 +554,9 @@ LABEL {
 	A.reserveButton IMG{
 	 	background: url('../images/icon/reservar.png') no-repeat center;
 	}
+	A.homeButton IMG{
+	 	background: url('../../images/icon/home.png') no-repeat center;
+	}
 	/*#END #buttons background classes */
 
 	/*#list classes */

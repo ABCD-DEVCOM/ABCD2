@@ -11,7 +11,7 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");;
 if (!isset($arrHttp["archivo"])) die;
 $archivo=str_replace("\\","/",$arrHttp["archivo"]);
-$archivo=str_replace(" ","",$archivo);
+
 include("../common/header.php");
 
 ?>
@@ -41,10 +41,13 @@ if (isset($arrHttp["encabezado"])){
 <br><br>
 <?php
 
-if (!file_exists($db_path.$archivo)){
-	echo $db_path."$archivo ".$msgstr["ne"];
-
-}else{
+$a=explode("/",$archivo);
+$b=explode("/",$db_path);
+if ($a[0]==$b[count($b)-2]){
+	$archivo=substr($archivo,strlen($a[0])+1);
+}
+if (!file_exists($db_path.$archivo)){	echo $db_path."$archivo ".$msgstr["ne"];
+}else{
 	$fp=file($db_path.$archivo);
 	echo "<h5>".$arrHttp["archivo"]." &nbsp;
 	<a href=editararchivotxt.php?archivo=".$archivo.">".$msgstr["edit"]."</a> &nbsp;

@@ -21,7 +21,7 @@ if (!isset($_SESSION["login"])){
 $Permiso=$_SESSION["permiso"];
 ?>
 
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="javascript" type="text/javascript">
 
 </script>
@@ -37,7 +37,7 @@ echo "
 	";
 echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>Regresar</strong></span></a>";
+	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";

@@ -18,7 +18,7 @@ if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and !isset($_SESSION["permiso"][
 include("../common/header.php");
 ?>
 <link rel="STYLESHEET" type="text/css" href="../styles/basic.css">
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 
 <body>
 <?php if (isset($arrHttp["encabezado"])){
@@ -64,8 +64,10 @@ if (!$ldr_06){	echo "missing file ".$ldr_06;
 echo "<div style=position:relative;margin-left:100px>";
 echo "<strong>File: ldr_06.fdt (<a href=picklist_edit.php?base=".$arrHttp["base"]."&picklist=ldr_06.tab&desde=fixed_marc$encabezado>".$msgstr["edit"]."</a>)</strong><p>" ;
 foreach ($ldr_06 as $value){	$value=trim($value);
-	$t=explode('|',$value);
-	echo $t[0]." - ".$t[1].": <a href=\"fdt.php?base=". $arrHttp["base"]."$encabezado&Fixed_field=y&fdt_name=".$t[2]."\">".$t[2]."</a><br>";}
+	if ($value!=""){
+		$t=explode('|',$value);
+		echo $t[0]." - ".$t[1].": <a href=\"fdt.php?base=". $arrHttp["base"]."$encabezado&Fixed_field=y&fdt_name=".$t[2]."\">".$t[2]."</a><br>";	}
+}
 echo "</div><p>";
 echo "</div></div>";
 include("../common/footer.php");?>

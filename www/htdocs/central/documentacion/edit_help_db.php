@@ -5,7 +5,7 @@ include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
-foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
+//foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 unset($fp);
 $archivo_in="";
 $archivo=$db_path.$arrHttp["base"]."/ayudas/".$_SESSION["lang"]."/"."tag_".$arrHttp["help"].".html";
@@ -22,10 +22,12 @@ if (file_exists($archivo)){
 	}
 }
 $texto="";
+
 if (isset($fp)){
 	foreach ($fp as $value) $texto.= trim($value);
 }
-$texto=str_replace("'","`",$texto)
+$texto=str_replace("'","`",$texto);
+
 //
 ?>
 <html>
@@ -33,7 +35,7 @@ $texto=str_replace("'","`",$texto)
 		<title><?php echo $msgstr["helpdatabasefields"]?></title>
 	</head>
 
-		<script type="text/javascript" src="fckeditor.js"></script>
+		<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 		<script type="text/javascript">
 // FCKeditor_OnComplete is a special function that is called when an editor
 // instance is loaded ad available to the API. It must be named exactly in
@@ -67,14 +69,6 @@ function InsertHTML()
 		alert( 'You must be on WYSIWYG mode!' ) ;
 }
 
-function SetContents()
-{
-	// Get the editor instance that we want to interact with.
-	var oEditor = FCKeditorAPI.GetInstance('FCKeditor1') ;
-
-	// Set the editor contents (replace the actual one).
-	//oEditor.SetHTML( '<?echo $texto?>' ) ;
-}
 
 function GetContents()
 {
@@ -128,24 +122,10 @@ function GetLength()
 	<body>
     <a href=http://docs.fckeditor.net/FCKeditor_2.x/Users_Guide/Quick_Reference target=_blank><?php echo $msgstr["fckeditor"]?></a>
 		<form action="save_help_db.php" method="post"  name=FCKfrm onSubmit="Enviar();return false">
-		<?php echo $msgstr["edhlp"]?>:<input type=hidden name=archivo value='<?php echo $archivo_save. "'>".$arrHttp["base"]."/ayudas/".$_SESSION["lang"]."/"."tag_".$arrHttp["help"].".html"?>
-			<script type="text/javascript">
-var sBasePath = '<?echo $FCKEditorPath?>' ;
-var oFCKeditor = new FCKeditor( 'FCK','100%','500' ) ;
-oFCKeditor.BasePath	= sBasePath ;
-oFCKeditor.Config["CustomConfigurationsPath"] = "<?echo $FCKConfigurationsPath?>"
-oFCKeditor.Config["DefaultLanguage"]		= "<?echo $_SESSION["lang"]?>" ;
-//oFCKeditor.Config["DocType"] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' ;
 
-//$FCK_UserFilesPath="/abcd/php/img/";   //Este parámetro lo usa el FCKEditor para el path hacia los archivos de imágenes
-//$FCK_UserFilesAbsolutePath="c:\\inetpub\\wwwroot\\abcd\\php\\img\\";   //este parámetro es la ruta real hacia los archivos de imágenes
-//	$UPGRADE="N";
-oFCKeditor.Value	= '<?echo str_replace('',$app_path.'/',$texto)?>' ;
-oFCKeditor.Create() ;
-
-			</script>
+			<textarea cols="100%" id="editor1" name=FCK rows="20" ><?php echo str_replace('',$app_path.'/',$texto)?></textarea>
 			<input type=hidden name=Opcion>
-			<input type=hidden name=archivo_o value="<?echo $archivo_save?>">
+			<input type=hidden name=archivo value="<?echo $archivo_save?>">
 			<br>
 			<input type="submit" value="<?php echo $msgstr["save"]?>" onClick=javascript:document.FCKfrm.Opcion.value="Revisar">  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 		</form>
@@ -153,5 +133,7 @@ oFCKeditor.Create() ;
 	</body>
 </html>
 <script>
-
+		CKEDITOR.replace( 'editor1', {
+			height: 260
+		} );
 </script>

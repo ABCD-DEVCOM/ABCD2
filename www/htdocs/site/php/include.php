@@ -25,10 +25,10 @@ if (USE_SERVER_PATH == true){
 }
 
 
-if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0)
-$def = @parse_ini_file("../ABCD-site-win.conf");
-else
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win")== 0)
 $def = @parse_ini_file("../ABCD-site-lin.conf");
+else
+$def = @parse_ini_file("../ABCD-site-win.conf");
 
 if( isset($def["SHOW_ERRORS"]) && $def["SHOW_ERRORS"] == true ){
     error_reporting( E_ALL ^E_NOTICE );

@@ -11,7 +11,7 @@ include("../lang/soporte.php");
 include("../common/header.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 
 document.onkeypress =

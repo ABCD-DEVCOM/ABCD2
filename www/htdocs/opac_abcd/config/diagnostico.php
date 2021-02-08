@@ -197,7 +197,13 @@ foreach ($dir_arr as $lang){	echo "<br><h3>Checking <strong><font color=red>$la
 							echo "</td>";						}
 						echo "</tr>\n";					}				}
 			}
-			echo "</table>";		}	}}
+
+			echo "</table>";
+			echo "<p><strong>Checking XML configuration</strong><p>" ;
+			$archivo=$opac_conf."/marc_sch.xml";
+			if (!file_exists($archivo)){				echo "XML default marc schema not configured";
+				die;			}
+		}	}}
 echo "<form name=regresar method=post action=menu.php>\n";
 foreach ($_REQUEST as $var=>$value){	echo "<input type=hidden name=$var value=$value>";}
 echo "</form>";

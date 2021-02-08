@@ -31,6 +31,9 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 }else{
 	$archivo=str_replace("%path_database%",$db_path,$arrHttp["picklist"]);
 }
+if (strpos($arrHttp["picklist"],'../')!==false){
+	echo "<h1>invalid pick list name</h1>";die;
+}
 ?>
 <script>
 
@@ -94,8 +97,9 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
+
 <?php
 echo "
 	<div class=\"sectionInfo\">
@@ -233,7 +237,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: picklist_edit.php" ;
 <input type=hidden name=ValorCapturado>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=picklist value=<?php echo $arrHttp["picklist"]?>>
-<input type=hidden name=row value=<?php echo $arrHttp["row"]?>>
+<input type=hidden name=row value=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]?>>
 <?php if (isset($arrHttp["desde"])) echo "<input type=hidden name=desde value=".$arrHttp["desde"].">\n";
 if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=".$arrHttp["encabezado"].">\n";
 if (isset($arrHttp["Ctrl"])) echo "<input type=hidden name=Ctrl value=".$arrHttp["Ctrl"].">\n";

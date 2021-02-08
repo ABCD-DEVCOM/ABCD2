@@ -39,16 +39,16 @@ actualScript="<?php echo $actualScript?>"
 	</style>
 <script>
 function EnviarForma(Proceso){
-	document.forma1.action=Proceso
-	document.forma1.submit()
+	document.opciones_menu.action=Proceso
+	document.opciones_menu.submit()
 }
 
 function SeleccionarBase(Base){	document.forma1.action="procesos_base.php"	document.forma1.base.value=Base
 	document.forma1.submit()}
 
-function SeleccionarProceso(Proceso,Base){	document.forma1.action=Proceso
-	document.forma1.base.value=Base
-	document.forma1.submit()}
+function SeleccionarProceso(Proceso,Base){	document.opciones_menu.action=Proceso
+	document.opciones_menu.base.value=Base
+	document.opciones_menu.submit()}
 
 function ShowHide(myDIV) {  var x = document.getElementById(myDIV);
   if (x.style.display === "none") {
@@ -74,54 +74,11 @@ function ShowHide(myDIV) {  var x = document.getElementById(myDIV);
 	 echo $charset."<br>";
 	 echo $msgstr["db_space"].": ".$_SESSION["db_path"];?>
 	 </span></div>
-
-
 </div>
-<form name=form_lang method=post>
+</div>
 <?php if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="advanced")
 			echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	  if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
 			echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
+include("menu_bar.php");
 ?>
-<div id="menu-wrapper">
-	<div id=menu>
-		<UL>
-			<?php
-			if (isset($_SESSION["lang_init"]))
-				$l_init=$_SESSION["lang_init"];
-			else
-				$l_init=$_REQUEST["lang"];
-			echo "<li><a href=\"index.php?lang=".$l_init."\">LogOut</a></li>";?>
-		</ul>
-	</div>
-	<div id=right>
-		<div id="language"><?php echo $msgstr["lang"];?>
-
-			<select name=lang onchange=document.form_lang.submit() id=lang >
-				<?php
-					$archivo=$db_path."opac_conf/$lang/lang.tab";
-					if (file_exists($archivo)){						$fp=file($archivo);
-						foreach ($fp as $value){
-							if (trim($value)!=""){
-								$a=explode("=",$value);
-								echo "<option value=".$a[0];
-								if ($lang==$a[0]) echo " selected";
-								echo ">".trim($a[1])."</option>";
-							}
-						}
-						unset($fp);
-					}else{						echo "<option value=$lang selected>$lang</option>";					}
-
-				?>
-			</select>
-
-		</div>
-		<div id="back">
-			<a href="<?php if (isset($url_back)) echo $url_back; else echo 'menu.php?';?>lang=<?php echo $_REQUEST["lang"];
-			 if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="advanced") echo '&conf_level='.$_REQUEST["conf_level"]
-			 ?>"><img src=../images_config/defaultButton_back.png alt=<?php echo $msgstr["back"];?> title=<?php echo $msgstr["back"];?>></a>
-		</div>
-	</div>
-	<!-- end #menu -->
-</div>
-</form>

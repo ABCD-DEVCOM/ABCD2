@@ -1,0 +1,4 @@
+aautest.*=%path_database%aautest/data/aautest.*
+aautest.pft=%path_database%aautest/pfts/en/aautest.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

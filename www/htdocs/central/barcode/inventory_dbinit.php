@@ -5,6 +5,7 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
+$arrHttp["tipo"]="inventory";
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
 
@@ -15,7 +16,8 @@ include ("../lang/soporte.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/reports.php");
-include ("configure.php");
+
+//include ("configure.php");
 
 function WxisLlamar($IsisScript,$base,$query){
 global $db_path,$Wxis,$xWxis,$wxisUrl;

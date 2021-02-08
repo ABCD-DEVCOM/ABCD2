@@ -36,7 +36,7 @@ echo "<h4>".$arrHttp["titulo"]."</h4>";
 echo InsertChart("chart_library/charts.swf", "chart_library","grafico_data.php?tipo=".str_replace(" ","+",$arrHttp["tipo"]),"680" ,"290");
 echo "\n<br><br></center>\n";
 
-$mat=split('###',$arreglo_original);
+$mat=explode('###',$arreglo_original);
 $matriz_n=array();
 $matriz_n[0][0]="";
 $i=-1;

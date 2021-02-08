@@ -53,5 +53,4 @@
 		</style>
 <?php
 include ("css_settings.php");
-
 ?></head>

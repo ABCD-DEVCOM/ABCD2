@@ -1,0 +1,4 @@
+reservaasoisis.*=%path_database%reservaasoisis/data/reservaasoisis.*
+reservaasoisis.pft=%path_database%reservaasoisis/pfts/en/reservaasoisis.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

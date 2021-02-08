@@ -21,10 +21,11 @@ if (isset($def["BG_WEB"]))
 	$BG_web=" style=\"background:".$def["BG_WEB"]."\"";
 else
 	$BG_web=" ";
+
 ?>
 <html>
 <title><?php echo $msgstr["statment"]?></title>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <Script>
 function EnviarForma(){	if (Trim(document.reserva.usuario.value)==""){		alert("Debe suministrar su número de carnet")
 		return	}

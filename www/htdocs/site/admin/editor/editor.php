@@ -1,43 +1,52 @@
-<?php
+<?
 require_once("../auth_check.php");
 
 auth_check_login();
-$lang = ( $_REQUEST['lang'] != '' ? $_REQUEST['lang'] : 'pt' );
+$lang = ( $_REQUEST['lang'] != '' ? $_REQUEST['lang'] : 'en' );
 $admPath = substr($_SERVER['PHP_SELF'],0,strpos($_SERVER['PHP_SELF'],'editor.php'));
 
 ?>
 <html>
   <head>
-    <title>BVS-Site Admin</title>
+    <title>ABCD-Site Admin</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-    <script type="text/javascript" src="../../bvs-mod/FCKeditor/fckeditor.js"></script>
+    <!--script type="text/javascript" src="../../bvs-mod/FCKeditor/fckeditor.js"></script-->
+    <script src="../../../central/ckeditor/ckeditor.js"></script>
+    <script>
+    /**
+ * Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or http://ckeditor.com/license
+ */
 
-    <script type="text/javascript">
-        window.onload = function() {
-        var editor = new FCKeditor( 'buffer' ) ;
-        editor.BasePath = "../../bvs-mod/FCKeditor/";
-        editor.Height = "96%";
-        editor.Config["AutoDetectLanguage"] = false ;
-        editor.Config["ProcessHTMLEntities"] = false;
-        editor.Config["DefaultLanguage"] = "<?php if ($lang =='pt') echo 'pt-br'; else $lang;?>" ;
+/* exported initSample */
 
-        editor.Config["LinkBrowserURL"] = "<?php echo $admPath; ?>filemanager/browser/browser.html?Connector=connectors/php/connector.php";
-        editor.Config["LinkUploadURL"]  = "<?php echo $admPath; ?>filemanager/upload/php/upload.php?Type=File";
-        editor.Config["ImageBrowserURL"]= "<?php echo $admPath; ?>filemanager/browser/browser.html?Type=Image&Connector=connectors/php/connector.php";
-        editor.Config["ImageUploadURL"] = "<?php echo $admPath; ?>filemanager/upload/php/upload.php?Type=Image";
-        editor.Config["FlashBrowserURL"]= "<?php echo $admPath; ?>filemanager/browser/browser.html?Type=Flash&Connector=connectors/php/connector.php";
-        editor.Config["FlashUploadURL"] = "<?php echo $admPath; ?>filemanager/upload/php/upload.php?Type=Flash";
+if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
+	CKEDITOR.tools.enableHtml5Elements( document );
 
-        editor.ReplaceTextarea() ;
-    }
+// The trick to keep the editor in the sample quite small
+// unless user specified own height.
+CKEDITOR.config.height = 150;
+CKEDITOR.config.width = 'auto';
+CKEDITOR.config.entities = true;
+CKEDITOR.config.entities_latin = false;
+CKEDITOR.config.AutoDetectLanguage= false;
+CKEDITOR.config.htmlEncodeOutput = false;
+CKEDITOR.config.basicEntities = false;
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+CKEDITOR.config.startupMode = "wysiwyg";
 
-    function updateContent() {
+function initCkeditor(){
+	CKEDITOR.replace( 'buffer' );
+
+}
+
+
+
+     function updateContent() {
 
         // Get the editor instance that we want to interact with.
-        var editor = FCKeditorAPI.GetInstance('buffer') ;
-        var content = editor.GetXHTML(true);
-
+        var content = CKEDITOR.instances.buffer.getData();
         // Get the editor contents in XHTML.
 
         opener.HTMLAreaElement.innerHTML = content
@@ -53,27 +62,38 @@ $admPath = substr($_SERVER['PHP_SELF'],0,strpos($_SERVER['PHP_SELF'],'editor.php
 
     var msgModify = opener.HTMLAreaModifyButtonLabel;
     var msgCancel = opener.HTMLAreaCancelButtonLabel;
+	</script>
 
-    </script>
-
-    <link rel="stylesheet" href="../../css/admin/adm.css" type="text/css" />
 
   </head>
 
-  <body style="margin: 2px;">
-      <form action="#" onsubmit="updateContent()" name="formEditor">
-        <script type="text/javascript">
-            document.write('<textarea id="buffer">');
-            document.write(opener.HTMLAreaElement.innerHTML);
-            document.write('</textarea>');
+  <body id="main">
+    <form  name="formEditor">
+	<div class="adjoined-bottom">
+		<div class="grid-container">
+			<div class="grid-width-100">
 
-            document.write('<div align="center">');
+					<!--script>document.writeln('<div id="buffer">'+opener.HTMLAreaElement.innerHTML+'</div>')</script-->
+                    <script>
+                    content=opener.HTMLAreaElement.innerHTML
+                    a=content.replace(/&lt;/g,'<')
+                    a=a.replace(/&gt;/g,'>')
+                    document.writeln('<div id="buffer">'+a+'</div>')</script>
+				<script>
+				document.write('<div align="center">');
             document.write('  <input type="button" name="cancel" value="' + msgCancel + '" onclick="javascript: window.close();" class="button"/>');
-            document.write('  <input type="submit" name="ok" value="' + msgModify + '" class="button"/>');
+            document.write('  <input type="button" name="ok" value="' + msgModify + '" class="button" onclick=updateContent() />');
             document.write('</div>');
-        </script>
-    </form>
-  </body>
+            	</script>
+			</div>
+		</div>
+	</div>
+   </form>
+<script>
+	initCkeditor();
+</script>
+
+</body>
 
 </html>
 

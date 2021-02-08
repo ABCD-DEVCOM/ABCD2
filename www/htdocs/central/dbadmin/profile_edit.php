@@ -46,7 +46,7 @@ if (isset($arrHttp["encabezado"])){
 	$encabezado="";
 }
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 //VERIFICA SI ESTA MARCADO ALL PARA TODAS LAS BASES DE DATOS PARA TAMBIEN MARCAR LA CASILLA DE NIVEL SUPERIOR
 function CheckAll(){	ixnum_db=0;

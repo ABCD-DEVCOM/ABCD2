@@ -7,22 +7,24 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
+include("../lang/soporte.php");
 include("../lang/dbadmin.php");
-include("../lang/acquisitions.php");
 include("../config.php");
 include("../common/header.php");
 $base=$arrHttp["base"];
 
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>";
 echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
+$encabezado="&encabezado=s";
 
-echo "<div style='float:right;'> <a href=\"menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<div style='float:right;'>";
+echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
 echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a></div>";
@@ -52,7 +54,7 @@ echo "<div class=\"sectionInfo\">
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -71,6 +73,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: unlock_db_retag.php</font>";
 </div>
 <div class="middle form">
 	<div class="formContent">
+<?php include("../dbadmin/menu_bar.php");
+echo "<center><h3>". $msgstr["mnt_unlock"]."</h3></center>";
+?>
+
 <form name=maintenance>
 <table cellspacing=5 width=400 align=center>
 	<tr>

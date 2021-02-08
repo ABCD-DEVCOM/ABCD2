@@ -14,7 +14,7 @@ include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
 function ImportarHoja($file,$fdt){
-
+
 /** PHPExcel_IOFactory */
 	require_once '../Classes/PHPExcel/IOFactory.php';
 
@@ -75,8 +75,7 @@ function EnviarAxls($fdt,$tooltip,$base){
 
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 	$objWriter->save('php://output');
-	exit;
-}
+	exit;}
 
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab";
 if (file_exists($archivo)){
@@ -125,9 +124,7 @@ include("../common/header.php");
 ?>
 
 <script languaje=javascript>
-function Guardar(){
-	document.update.submit();
-}
+function Guardar(){	document.update.submit();}
 function AbrirVentana(Html){
 	msgwin=window.open("../documentacion/ayuda.php?help=<?php echo $lang?>/"+Html,"Ayuda","")
 	msgwin.focus()
@@ -140,10 +137,8 @@ function Edit(Html){
 function VerificarUpload(){
 	if(document.getElementById("archivo").value == "") {
 		alert("Debe suministrar el archivo a convertir")
-		return false
-	}
-	document.upload.submit()
-}
+		return false	}
+	document.upload.submit()}
 </script>
 <?php
 include("../common/institutional_info.php");
@@ -185,10 +180,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/database_tooltips.php";
 
 
 <?php
-if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="Importar"){
-	if (!isset($_FILES["archivo"])){
-	ECHO "<h2>".$msgstr["import_ods"]."</H2>";
-?>
+if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="Importar"){	if (!isset($_FILES["archivo"])){
+	ECHO "<h2>".$msgstr["import_ods"]."</H2>";?>
 <form action="" method="post" enctype="multipart/form-data" name=upload_form onsubmit="javascript:VerificarUpload();return false">
  <br> <label for="archivo"><?php echo $msgstr["selfile"]?>:</label>
   <input type="file" name="archivo" id="archivo" />
@@ -202,19 +195,13 @@ if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="Importar"){
   <input type="hidden" name=Opcion value=importado>
   </form>
 <?php
-	die;
-	}else{
+	die;	}else{
 		$nombre = $_FILES['archivo']['name'];
 		$nombre_tmp = $_FILES['archivo']['tmp_name'];
 		$file=$db_path."wrk/" . $nombre;
-		if (file_exists($file)){
-			copy($file,$file."bak");
-		}
-		move_uploaded_file($nombre_tmp,$db_path."wrk/" . $nombre);
-		$tooltip=ImportarHoja($file,$tooltip);
-	}
-
-}
+		if (file_exists($file)){			copy($file,$file."bak");		}
+		move_uploaded_file($nombre_tmp,$db_path."wrk/" . $nombre);		$tooltip=ImportarHoja($file,$tooltip);	}
+}
 if (!isset($arrHttp["Opcion"]) or isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]!="importado"){
 ?>
 <a href=database_tooltips.php?Opcion=xls&base=<?php echo $arrHttp["base"]?>><?php echo $msgstr["sendto"]." ".$msgstr["wks"]?></a>
@@ -226,20 +213,14 @@ if (!isset($arrHttp["Opcion"]) or isset($arrHttp["Opcion"]) and $arrHttp["Opcion
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <?php
 
-
-
-echo "<table>";
-foreach ($fdt as $key=>$value){
-	echo "<tr><td valign=top>$key</td><td><strong>$value</strong><br><Textarea rows=3 cols=200 name=tag$key>";
-	if (isset($tooltip[$key])) {
-		echo $tooltip[$key];
-	}
+echo "<table>";
+foreach ($fdt as $key=>$value){	echo "<tr><td valign=top>$key</td><td><strong>$value</strong><br><Textarea rows=3 cols=200 name=tag$key>";
+	if (isset($tooltip[$key])) {		echo $tooltip[$key];	}
 	echo "</textarea>";
 	if (isset($tooltip[$key])) {
 		echo "<br><font color=darkblue>".$tooltip[$key]."</font>";
 	}
-	echo "</td>";
-}
+	echo "</td>";}
 echo "</table></center></div></div>";
 echo "</form>";
 include("../common/footer.php");

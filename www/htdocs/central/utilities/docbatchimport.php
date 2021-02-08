@@ -41,7 +41,7 @@ if (isset($arrHttp["base"])) $base_ant=$arrHttp["base"];
 $tikapath=$cgibin_path;
 $converter_path=$mx_path;
 $OS=strtoupper(PHP_OS);
-$maxfilesize=26214400;//25 MB
+$maxfilezise=26214400;//25 MB
 $filesCounter=0;
 
 $inipath = php_ini_loaded_file();
@@ -54,19 +54,19 @@ foreach($fp as $avalue)
 	if ($pos !== false)
 	 {
 		$cadmax=explode("=",$avalue);
-		$maxfilesize="";
+		$maxfilezise="";
 		$var=$cadmax[1];
 		for($i=0;$i<strlen($var);$i++)
 		  for($j=0;$j<=9;$j++)
-			{				
-				$local=(string)$j;				
-				if ($var[$i]==$local) $maxfilesize.=$var[$i];
+			{
+				$local=(string)$j;
+				if ($var[$i]==$local) $maxfilezise.=$var[$i];
 			}
-	 }	 
+	 }
 }
-} 
+}
 
-$maxfilesize=((int)$maxfilesize)*1048576;
+$maxfilezise=((int)$maxfilezise)*1048576;
 //Get the path of the collection folder
 $def = parse_ini_file($db_path.$base_ant."/dr_path.def");
 //echo "collection-directory=".$db_path.$base_ant."/dr_path.def". "|||". $def['COLLECTION'] ; die;
@@ -74,14 +74,14 @@ echo "<body onunload=win.close()>\n";
 
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";	
+	$encabezado="&encabezado=s";
 }
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".$msgstr["docbatchimport_mx"].": " . $base_ant."
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_extra.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
+echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
@@ -90,13 +90,13 @@ echo "</div>
 	</div>";
 ?>
 	<script language="javascript">
-    
+
 var seconds = 1;
 function secondPassed() {
     var minutes = Math.round((seconds - 30)/60);
     var remainingSeconds = seconds % 60;
     if (remainingSeconds < 10) {
-        remainingSeconds = "0" + remainingSeconds; 
+        remainingSeconds = "0" + remainingSeconds;
     }
     document.getElementById('countdown').innerHTML = "Please wait " + remainingSeconds+" seconds while tika server starts.";
     if (seconds == 0) {
@@ -106,7 +106,7 @@ function secondPassed() {
         seconds--;
     }
 }
- 
+
 var countdownTimer = setInterval('secondPassed()', 1000);
 
  </script>
@@ -117,19 +117,19 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_docbatchimport.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "<font color=white>&nbsp; &nbsp; Script: docbatchimport.php</font>";
 ?>
-</div>		
+</div>
 <div class="middle form">
 	<div class="formContent">
 <form action="" method="post" name="form1" target="_self" id="form1">
 <?php
-echo "<p>".$msgstr["docbatchimport_tx"]."</p>";  
-echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";  
+echo "<p>".$msgstr["docbatchimport_tx"]."</p>";
+echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
   ?>
-<div id="formarea" style="display:block"> 
+<div id="formarea" style="display:block">
 <?php
-echo '<b><label style="color:red">'.$msgstr["warning"].'</label></b></br>'; 
+echo '<b><label style="color:red">'.$msgstr["warning"].'</label></b></br>';
 echo $msgstr["docbatchimport_tw"]."</br>";
-echo $msgstr["docbatchimport_filesize"]." ".($maxfilesize/1048576)." MB";
+echo $msgstr["docbatchimport_filezise"]." ".($maxfilezise/1048576)." MB";
  ?>
             <font color=green>
             <HR align=left width="80%">
@@ -197,7 +197,7 @@ echo $msgstr["docbatchimport_filesize"]." ".($maxfilesize/1048576)." MB";
             <td align="left" style="font-size:14px"><label>Sections</label></td>
 	    <td align="left" style="font-size:14px"><input type="text" name="sections" size="2" value="v97"/></td>
 	    <td align="left" style="font-size:14px"><label>DocText</label></td>
-	    <td align="left" style="font-size:14px"><input type="text" name="doctext" size="2" /></td>	    
+	    <td align="left" style="font-size:14px"><input type="text" name="doctext" size="2" /></td>
 	    <td align="left" style="font-size:14px"><label>Identifier</label></td>
 	    <td align="left" style="font-size:14px"><input type="text" name="id" size="2" value="v111"/></td>
 	    <td align="left" style="font-size:14px"><label>Date Added</label></td>
@@ -251,19 +251,19 @@ echo $msgstr["docbatchimport_filesize"]." ".($maxfilesize/1048576)." MB";
 	    <td align="left" style="font-size:14px">&nbsp;</td>
 	    </tr>
     </tr>
-</table> 
+</table>
             <HR align=left width="80%">
 
 <table width="750px" border="0">
   <tr>
      <td width="10">&nbsp;</td>
-    <td><?php 
-//	if (strpos($OS,"WIN")=== false) 
+    <td><?php
+//	if (strpos($OS,"WIN")=== false)
 //{
 //Linux
 //echo '<span id="countdown" class="timer" style="font-size:14px"></span>';
 //}
-//else 
+//else
 //echo "<input type=submit name=submit value=".$msgstr["update"].">";
 
   if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";
@@ -291,11 +291,11 @@ else             // truepathcol not writable
 
 
 
- 
+
  ?>
  </td>
  </tr>
-</table> 
+</table>
 </div>
 </form>
 </div>
@@ -308,7 +308,7 @@ $procstartedatN=date("Ymd H:i:s");
 <script languaje=javascript>
 document.getElementById("formarea").style.display='none';
 </script>
-<?php 
+<?php
 //echo '<div id="loader" style="display:block" align="center"><img src="../dataentry/img/preloader.gif" width="128" height="128" alt=""/></div></br></br>';
 
 $totalfilestoimport = 0;
@@ -336,8 +336,8 @@ function scanDirectories($rootDir, $allData=array()) {
      }
      return $allData;
  }
- 
-$totalfilestoimport=count(scanDirectories($truepathcol."ABCDImportRepo")); 
+
+$totalfilestoimport=count(scanDirectories($truepathcol."ABCDImportRepo"));
 echo '<table width="850">
   <tr>
     <td style="font-size:12px" width="70" height="30">&nbsp;</td>
@@ -351,7 +351,7 @@ echo '<table width="850">
   </tr>
 </table>
 <br>';
-		  
+
 flush();
 $doctotal=0;
 $docerror=0;
@@ -387,37 +387,37 @@ global $db_path,$max_cn_length;
 	}
 }
 
-function showFiles($path) { 
+function showFiles($path) {
 
-// asignamos a $directorio el objeto dir creado con la ruta 
-$directorio = dir($path); 
+// asignamos a $directorio el objeto dir creado con la ruta
+$directorio = dir($path);
 // recorremos todos los archivos y carpetas
-while ($archivo = $directorio -> read()) 
-{ 
-if($archivo!="." && $archivo!="..") 
-{ 
-if(is_dir($path.$archivo)) 
-{ 
-// Mostramos el nombre de la carpeta y los archivo contenidos 
-// en la misma 
+while ($archivo = $directorio -> read())
+{
+if($archivo!="." && $archivo!="..")
+{
+if(is_dir($path.$archivo))
+{
+// Mostramos el nombre de la carpeta y los archivo contenidos
+// en la misma
 echo get_infoFile($path,$archivo);
-// llamamos nuevamente a la función con la nueva carpeta 
+// llamamos nuevamente a la función con la nueva carpeta
 showFiles($path.$archivo."/");
 }
 else
 {
-// Mostramos el archivo 
+// Mostramos el archivo
 echo get_infoFile($path,$archivo);
-} 
-} 
-} 
-$directorio -> close(); 
+}
+}
+}
+$directorio -> close();
 }
 
 
 function get_infoFile($path,$archivo)
-{ 
-global $total,$tikapath,$converter_path,$db_path,$base_ant,$cisis_ver,$Wxis,$doctotal,$img_path,$OS,$procstartedatN,$docerror,$maxfilesize,$truepathcol,$charsetcv,$level,$fieldspart,$filesCounter,$totalfilestoimport;
+{
+global $total,$tikapath,$converter_path,$db_path,$base_ant,$cisis_ver,$Wxis,$doctotal,$img_path,$OS,$procstartedatN,$docerror,$maxfilezise,$truepathcol,$charsetcv,$level,$fieldspart,$filesCounter,$totalfilestoimport;
 if(!is_dir($path.$archivo)){
 //Get the file info
 $originalFileName=$archivo;
@@ -454,7 +454,7 @@ $charsetcv = $_POST["charsetcv"];
 $granularity = $_POST["granularity"];
 $textmode = $_POST["textmode"];
 //Set resetfilename to false by default.
-$resetfilename = 0; 
+$resetfilename = 0;
 //If the POST variable "resetfilename" exists.
 if(isset($_POST['resetfilename'])){
     //Checkbox has been ticked.
@@ -462,7 +462,7 @@ if(isset($_POST['resetfilename'])){
 }
 
 // clean up file name to make it easy to process
-///$newdocname= preg_replace("/[^a-z0-9._]/", "",str_replace(" ", "_", str_replace("%20", "_", strtolower($archivo)))); 
+///$newdocname= preg_replace("/[^a-z0-9._]/", "",str_replace(" ", "_", str_replace("%20", "_", strtolower($archivo))));
 ///$newdocname=str_replace(".".$ext,"",$newdocname);
 if (strval($charsetcv)>0) {
    if ($unicode=0) $tocharset = "windows-8859-1"; else $tocharset = "utf-8//TRANSLIT//IGNORE";
@@ -479,7 +479,7 @@ if ($resetfilename==0) {
  for ($ii=$newdocname_Len-1; (is_numeric(substr($newdocname,$ii,1)) OR substr($newdocname,$ii,1)=='_');$ii--);
 $newdocname=substr($newdocname,0,$ii+1);
 }
-if (filesize($path.$archivo)<$maxfilesize)
+if (filesize($path.$archivo)<$maxfilezise)
 {//If File is less than 25 MB
 //build the text to display
 //$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue">Processing</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. Renaming to <label style="font-weight:bold;color:blue">'.$newdocname.$ext."</label> .Creating record...";ob_flush();flush();
@@ -535,7 +535,7 @@ $creator=$format=$subject=$title=$created=$publisher=$description="";
 $fp=file($db_path."wrk/".$newdocname.'.html');
 
 foreach ($fp as $value){
-if ($value!="") 
+if ($value!="")
 {
 //Get the metadata
 $pos=strpos($value,'"/>')-strlen($value);
@@ -611,7 +611,7 @@ $gloadproc="\"proc='Gload/".$vdoctext."=".$db_path."wrk/DocImportFullTxTv99.txt"
 //Save the text into a file
 @ $fp = fopen($db_path."wrk/DocImportFullTxTv99.txt", "w");
 fwrite($fp,$str);
-fclose($fp); 
+fclose($fp);
 $mx = $converter_path." null ".$gloadproc." ".$fieldspart." append=".$db_path.$base_ant."/data/".$base_ant." count=1 now -all";
 exec($mx,$outmx,$banderamx);
 }
@@ -627,7 +627,7 @@ else  // doctext not to be saved inside record
 $mx = $converter_path." null ".$fieldspart." append=".$db_path.$base_ant."/data/".$base_ant." count=1 now -all";
 //echo "mx-command=$mx<BR>";die;
 exec($mx,$outmx,$banderamx);
-} 
+}
 }   // end loop over partnos.
 //unlink($fixfilename);
 @unlink($db_path."wrk/TikaTemp.txt");
@@ -637,10 +637,10 @@ exec($mx,$outmx,$banderamx);
 $total++;
 $doctotal++;
 $cadena.=' <label style="font-weight:bold"> with '.$lastpartno.' record(s) created. Done</label></br>'; flush();
-}//End of If File is less than 25 MB 
+}//End of If File is less than 25 MB
 else
 {
-$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:red">NOT Processed</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. <label style="font-weight:bold;color:red">File size limit exceded</label></br>';flush(); 
+$cadena='&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:red">NOT Processed</label> <label style="font-style:italic">'.$archivo.'</label> of <label style="font-weight:bold">'.number_format(filesize($path.$archivo)/1024,2,",",".").'Kb</label>. <label style="font-weight:bold;color:red">File size limit exceded</label></br>';flush();
 $docerror++;
 //Move the file to the error folder
 $temppath=substr($path,strpos($path,'ABCDImportRepo'));
@@ -656,7 +656,7 @@ $percent = intval($filesCounter/$totalfilestoimport * 100)."%";
   document.getElementById("progress").innerHTML="<div style=\"width:'.$percent.';background-color:#364c6c;\"><div style=\"color:#fff;\" align=\"center\">'.$percent.'</div></div>";
   document.getElementById("information").innerHTML="'.$filesCounter.' file(s) processed of '.$totalfilestoimport.' files";
   </script>';
-return $cadena;	
+return $cadena;
 }
 }
 
@@ -668,30 +668,30 @@ if (isset($field[0])) {
  return $field;
  }
 }
-function time_diff($s) { 
+function time_diff($s) {
     $m = 0; $hr = 0; $d = 0; $td = "now";
-    if ($s > 59) { 
-        $m = (int)($s/60); 
-        $s = $s-($m*60); // sec left over 
+    if ($s > 59) {
+        $m = (int)($s/60);
+        $s = $s-($m*60); // sec left over
         $td = "$m minute";
 		if ($m > 1) $td .= "s";
 		$td.=" $s second";
-		if ($s > 1) $td .= "s";				
-    } 
-    if ($m > 59) { 
-        $hr = (int)($m / 60); 
-        $m = $m - ($hr*60); // min left over 
-        $td = "$hr hour"; 
+		if ($s > 1) $td .= "s";
+    }
+    if ($m > 59) {
+        $hr = (int)($m / 60);
+        $m = $m - ($hr*60); // min left over
+        $td = "$hr hour";
         if ($hr > 1) $td .= "s";
         if ($m > 0) $td .= ", $m minute";
 		if ($m > 1) $td .= "s";
 		$td.=" $s second";
 		if ($s > 1) $td .= "s";
-    } 
-    if ($hr > 23) { 
-        $d = (int) ($hr / 24); 
-        $hr = $hr-($d*24); // hr left over 
-        $td = "$d day"; 
+    }
+    if ($hr > 23) {
+        $d = (int) ($hr / 24);
+        $hr = $hr-($d*24); // hr left over
+        $td = "$d day";
         if ($d > 1) $td .= "s";
         if ($hr > 0) $td .= ", $hr hour";
         if ($hr > 1) $td .= "s";
@@ -699,10 +699,10 @@ function time_diff($s) {
 		if ($m > 1) $td .= "s";
 		$td.=" $s second";
 		if ($s > 1) $td .= "s";
-        
-    } 
-    return $td; 
-} 
+
+    }
+    return $td;
+}
 //Comprobamos si la carpeta de la coleccion existe
 //if ((is_dir($truepathcol)) &&
 if (is_writable(substr($truepathcol,0,-1)))
@@ -710,7 +710,7 @@ if (is_writable(substr($truepathcol,0,-1)))
 //Comprobamos si la carpeta de la ABCDImportRepo existe
 if ((is_dir($truepathcol."ABCDImportRepo/")) && (is_writable($truepathcol."ABCDImportRepo")))
 {
-	
+
 //----------------------------------------------------------------------------------------------------
 //Llamamos a la funcion de procesar la coleccion
 showFiles($truepathcol."ABCDImportRepo/");
@@ -730,7 +730,7 @@ if ($differ>60)
 {
 $endtime=time_diff($differ);
 }
-else 
+else
 {
 $endtime=$differ;
 $endtime.=" seconds";
@@ -741,7 +741,7 @@ echo "</br></br>";
 eliminarDir($truepathcol."ABCDImportRepo");
 if (is_dir($truepathcol."ImportError"))
 {
-//Move the ImportError to ABCDImportRepo	
+//Move the ImportError to ABCDImportRepo
 rmdir($truepathcol."ABCDImportRepo");
 rename($truepathcol."ImportError",$truepathcol."ABCDImportRepo");
 }
@@ -771,7 +771,7 @@ function createPath($path) {
 function eliminarDir($carpeta)
 {
 foreach(glob($carpeta . "/*") as $archivos_carpeta)
-{ 
+{
 if (is_dir($archivos_carpeta))
 {
 eliminarDir($archivos_carpeta);

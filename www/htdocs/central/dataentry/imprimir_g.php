@@ -74,7 +74,8 @@ if (isset($arrHttp["seleccionados"])){	$seleccion="";
 		}else{			$seleccion.="/,'$sel'";		}	}
 	$query.="&Mfn=$seleccion";
 }else
-	$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
+	if (isset($arrHttm["Mfn"]) and isset($arrHttp["to"]))
+		$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
 if (!isset($arrHttp["sortkey"])){
 	$IsisScript=$xWxis."imprime.xis";
 

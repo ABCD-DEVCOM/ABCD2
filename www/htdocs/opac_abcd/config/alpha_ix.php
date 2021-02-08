@@ -22,8 +22,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQ
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	$linea=array();
-	foreach ($_REQUEST as $var=>$value){		ECHO "$value<br>";
-		$value=trim($value);
+	foreach ($_REQUEST as $var=>$value){		$value=trim($value);
 		if ($value!=""){
 			$var=trim($var);
 			if (substr($var,0,9)=="conf_base"){				$x=explode('_',$var);
@@ -124,10 +123,12 @@ global $msgstr,$db_path;
 		$fp=array();
 		for ($i=0;$i<5;$i++)
 			$fp[]='|||';
+		$ix="N";
 	}else{
 		$fp=file($db_path."opac_conf/$lang/$file");
 		for ($i=0;$i<5;$i++)
 			$fp[]='|||';
+		$ix="Y";
 	}
     echo "<div style=\"flex: 0 0 50%;\">";
 	echo "<form name=$iD"."Frm method=post>\n";
@@ -173,7 +174,7 @@ global $msgstr,$db_path;
 		}
 	}
 	echo "<tr><td colspan=4 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD."\"></td></tr>";
+	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD." (opac_conf/$lang/$file)\"></td></tr>";
 	echo "</table>\n";
 	echo "</div>";
 	echo "<div style=\"flex: 1\">";
@@ -181,19 +182,47 @@ global $msgstr,$db_path;
 	if ($base!="" and $base!="META"){
 	    $fp_campos=file($db_path.$base."/data/$base.fst");
 	    $cuenta=count($fp_campos);
-    }
-	if ($cuenta>0){
-		echo "<table bgcolor=#cccccc cellpadding=2 width=100%>\n";
-        echo "<tr><td colspan=3>";
-        echo "<strong>$base/data/$base.fst</strong><br><br></td></tr>";
-		foreach ($fp_campos as $value) {
-			if (trim($value)!=""){
-				$v=explode(' ',$value,3);
-				echo "<tr><td bgcolor=white>".$v[0]."</td><td bgcolor=white>".$v[1]."</td><td bgcolor=white>".$v[2]."</td></tr>\n";
+		if ($cuenta>0){
+			echo "<table bgcolor=#cccccc cellpadding=2 width=100%>\n";
+        	echo "<tr><td colspan=3>";
+        	echo "<strong>$base/data/$base.fst</strong><br><br></td></tr>";
+			foreach ($fp_campos as $value) {
+				if (trim($value)!=""){
+					$v=explode(' ',$value,3);
+					echo "<tr><td bgcolor=white>".$v[0]."</td><td bgcolor=white>".$v[1]."</td><td bgcolor=white>".$v[2]."</td></tr>\n";
+				}
 			}
+			echo "</table>";
 		}
-		echo "</table>";
-	}
+	}else{		if ($base=="META"){			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
+			foreach ($fp as $value){				$v=explode("|",$value);
+				$bd_ix=$v[0];
+				if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$bd_ix.ix")){					echo "<p><strong><font color=darkred>".$msgstr["indice_alfa"]." &nbsp$bd_ix.ix</font></strong>";
+					echo "<table bgcolor=#cccccc cellpadding=5>\n";
+					echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th><th>".$msgstr["ix_cols"]."</th><th>".$msgstr["ix_postings"]."</th></tr>\n";					$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$bd_ix.ix");
+					foreach($fp as $linea){						$l=explode('|',$linea);
+						if (count($l)!=5) $l[]="";
+						echo "<tr>";
+						$ix=-1;
+						foreach ($l as $var_l){
+							$ix=$ix+1;
+
+							if ($ix!=2){
+								echo "<td bgcolor=white>";
+								if ($ix!=4){
+				 					echo $var_l;
+
+								}else{
+									echo "<input type=checkbox name=check_b value=ALL";
+									if ($var_l=="ALL") echo " checked";
+									echo ">";
+			 					}
+								echo "</td>\n";
+							}
+						}
+						echo "</tr>\n";
+					}
+					echo "</table>";				}else{					echo "<font color=red><strong>".$msgstr["missing"]." ".$msgstr["indice_alfa"]." &nbsp$bd_ix.ix</strong></font><p>";				}			}		}	}
 	echo "</div></div>";
 	echo "</form></div><p>";
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-foreach ($_REQUEST as $var=>$value)  echo "$var=$value<br>";
+//foreach ($_REQUEST as $var=>$value)  echo "$var=$value<br>";
 $page="";
 if (isset($_REQUEST['GET']))
 	$page = $_REQUEST['GET'];

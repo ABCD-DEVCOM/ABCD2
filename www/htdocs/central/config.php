@@ -1,11 +1,16 @@
 <?php
+/* Modifications
+2021-02-03 fho4abcd: Set metaencoding only for active session (from repository ABCD2.2)
+2021-02-03 fho4abcd: moved comment for cisis version to actual statement
+2021-02-04 fho4abcd: ensure trailing slash for $db_path
+*/
 //header('Content-Type: text/html; charset=iso-8859-1');
 
 ini_set('error_reporting', E_ALL);
 $cisis_versions_allowed="16-60;ffi;bigisis";
 
 // Main server configuration
-$server_url="http://127.0.0.1:9099";    // URL with port (if not 80)
+$server_url="http://localhost:9090";    // URL with port (if not 80)
 $postMethod=1;                          // if set to '1' (or true) ABCD will use POST-method; if set to '0' the GET-method will be used. Use with caution
 $dirtree=1;                             // SE THIS PARAMETER TO SHOW THE ICON THAT ALLOWS THE BASES FOLDER EXPLORATION
 $MD5=0;                                 // USE THIS PARAMETER TO ENABLE/DISABLE THE MD5 PASSWORD ENCRIPTYON (0=OFF 1=ON)
@@ -14,11 +19,11 @@ $use_ldap=0;                            // use LDAP or not
 
 // Set operation system depending variables
 if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0) {  //Windows path variables
-	$ABCD_path="/ABCD2.2/";                    // base path to ABCD-installation
- 	$db_path="/ABCD2.2/www/bases/";                     // path where the databases are to be located
+	$ABCD_path="/ABCD/";                    // base path to ABCD-installation
+ 	$db_path="/ABCD/www/bases/";                     // path where the databases are to be located
  	$exe_ext=".exe";                        // extension for executables
 }else{                                   // Linux path variables
- 	$ABCD_path="/opt/ABCD2.2/";
+ 	$ABCD_path="/opt/ABCD/";
  	$db_path="/var/opt/ABCD/bases/";
  	$exe_ext="";
 }
@@ -49,21 +54,29 @@ $change_password="Y";                   //allow change password
 $ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
 
 // *** NO CHANGES NEEDED BELOW HERE
-// Construction of executable path and URL
-                             // initialisation of $cisis_ver as empty = default standard CISIS-version
+if (substr($db_path, strlen($db_path)-1,1) <> "/") $db_path.="/"; //Ensure trailing slash
+// Construction of executable path and URL                             
 $wxis_exec="wxis".$exe_ext;                // name and extension of wxis executable
 $mx_exec="mx".$exe_ext;                    // name and extension of mx executable
 $msg_path=$db_path;                        // path where the message-files are stored, typciall the database-directory
-$img_path=$ABCD_path."www/htdocs/bases/";  // legacy path to the folder where the uploaded images are to be stored (the database name will be added to this path)
+$img_path=$db_path;                        // legacy path to the folder where the uploaded images are to be stored (the database name will be added to this path)
 $cgibin_path=$ABCD_path."www/cgi-bin/";    // path to the basic directory for CISIS-utilities
 $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
-
+//para leer los par√°metros reales de configuracion
+/*if (file_exists("config_vars.php"))
+	include("config_vars.php");
+else
+	if (file_exists("../config_vars.php"))
+		include("../config_vars.php");
+	else
+		if (file_exists("central/config_vars.php"))
+			include("central/config_vars.php");
+*/
 //$unicode="";
-
 if (substr($db_path, strlen($db_path)-1,1) <> "/") $db_path.="/";
 $unicode="";
 $institution_name="";
-$cisis_ver="";
+$cisis_ver=""; // initialisation of $cisis_ver as empty = default standard CISIS-version
 if (!file_exists($db_path."abcd.def")){
 	echo "Missing abcd.def in the database folder $db_path of ABCD"; die;
  }
@@ -82,7 +95,7 @@ if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended
  	include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");  //Include config_extended.php that reads extra configuration parameters
 }
 //en el config_extended.php se pueden cambiar los valores de $def["UNICODE"],$def[["CISIS_VERSION"]] 0 $def["UNICODE"]
-//se determina la versiÛn del cisis; Si el par·metro no existe se asuma 16-60
+//se determina la versi√≥n del cisis; Si el par√°metro no existe se asuma 16-60
 //echo "<pre>";echo print_r($def);echo "</pre>";
 
  if (isset($def["UNICODE"]) and $def["UNICODE"]==1){
@@ -94,7 +107,7 @@ if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended
 	$charset="ISO-8859-1";
 }
 if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
-if (!headers_sent()) header('Content-Type: text/html; charset=$charset');
+header('Content-Type: text/html; charset=$charset');
 
 //SE CAMBIA EL LENGUAJE POR DEFECTO POR EL QUE SE ESTABLEZCA EN abcd.def
 if (isset($def["DEFAULT_LANG"])) $lang=$def["DEFAULT_LANG"];
@@ -144,5 +157,6 @@ if ($EmpWeb) {                                                   //EmpWeb parame
 }
 $adm_login="";                                                // emergency username for administrator
 $adm_password="";                                            // emergency password for administrator
-//echo "<pre>";print_r($def); echo "</pre>";
+
+
 ?>

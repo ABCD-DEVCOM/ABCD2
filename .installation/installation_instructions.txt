@@ -1,0 +1,171 @@
+Please read the following instructons carefully in order to get a working version of ABCD.
+
+
+ABCD is no longer distributed in a self-installable package which includes Apache and PHP.
+There were several problems with this approach :
+- legal : whereas both Apache and PHP are FOSS, distribution of these packages can better be left to their own communities
+and/or the specialized packages such as WAMP, XAMP and EASYPHP.
+- size : the ABCD packages for downloading are much smaller without Apache and PHP included.
+- technical : esp. in Windows there are compatibility issues in between Apache, PHP and PHP-libraries (eg. php_yaz).
+Apache itself has different communities for compiling/maintaining the Windows version, e.g Apache Haus (http://www.apachehaus.com)
+and Apache Lounge (https://www.apachelounge.com).
+Compilation for Windows can have been done with several versions of MS VC : 9. 10, 14 and also VC15 is now available.
+Also PHP comes in several flavors : 32- or 64-bits, multi-threaded or not, several VC versions ...
+and in reality whenever one of these doesn't match your system 'it won't work'... with only cryptic error messages at best available,
+e.g. stating that the file php_yaz.dll does not exist (whereas it does, in a path-included folder) or cannot be loaded.
+
+By leaving all these potential problems to the more specialized packages we hope to offer a better solution :
+- Apache and PHP (and MySQL in case of EmpWeb usage) are installed by the specialized packages, which (should) take care of all compatibility
+issues in between Apache and PHP(-modules);
+- ABCD is installed by copying its directories in a separate folder, e.g. simply in the root, and referring to it (or linking it)
+into these Apache-installers by a 'virtual host' file.
+
+With this new approach we can also better maintain one single installation for both Windows and Linux :
+- the htdocs-folder contains PHP-scripts and text-files; PHP scripts run the same in both Linux and Windows
+  and text-files can be read by both; we try to ensure compatibility also in the configuration files but these need to be manually checked
+  anyway by the system managers, mostly to ensure correct paths are given to the individual ABCD modules.
+- the cgi-bin executables are not compatible in between Linux and Windows, so they are distributed as two different folders :
+   * cgi-bin_Windows
+   * cgi-bin_Linux
+- the databases are not compatible in between Linux and Windows, so they are distributed as two different folders :
+   * bases-examples_Windows
+   * bases-examples_Linux
+
+CONCRETE STEPS TO INSTALL ABCD :
+
+1. download or 'pull' the packages of ABCD 2.0 from the GitHub server (https://www.github.com/ABCD-DEVCOM), i.e.
+   * the EMPWEB folder only if you want to use EmpWeb (which comes with its own manual to explain its meaning, installation and use)
+   * the www-folder which contains the 5 above mentioned folders for htdocs, bases (Windows and Linux) and cgi-bin (Windows and Linux).
+
+2. unzip the archives into a folder/directory 'ABCD', preferably :
+   * for Windows : in the root of your harddisk (e.g. C:\ABCD)
+   * for Linux : in your opt-folder : /opt/ABCD
+You need to end up with your ABCD-directory having one or two sub-directories :
+   * www
+   * only if you use EmpWeb : empweb
+   (* an optional folder 'installation' containing the Apache virtual hosts files as examples)
+The 'www'-directory needs the following sub-directories :
+   * htdocs (with all the scripts for ABCD modules, e.g. central, iah, site, isis-oai-provider, secs-web, isiws)
+   * cgi-bin
+   * bases
+So rename the downloaded cgi-bin and bases-folders (according to your operating system) to these simple names 'cgi-bin' and 'bases'.
+
+3. Create (or copy/edit from the provided examples) a virtual host file for Apache to link to your ABCD.
+Such text-file needs to be put in a folder which is 'included' into the main Apache configuration file 'httpd.conf'.
+In essence it needs to define two main directories :
+   * DocumentRoot : the directory with your PHP-scripts, in case of Windows : \ABCD\www\htdocs, for Linux : /opt/ABCD/www/htdocs
+   * Alias cgi-bin : the directory with your ISIS-executables, in Windows : \ABCD\www\cgi-bin, in Linux : /opt/ABCD/www/cgi-bin
+   * optionally : one or more other aliases pointing to directories which you want to use for documents linked to records, e.g. PDF's;
+     one such alias is already provided in the example virtual-hosts files : 'docs' (e.g. /var/opt/ABCD/bases for Linux).
+
+4. Put the virtual host file for ABCD into the dedicated folder of your Apache, e.g.
+   * in wamp : wamp\alias
+   * in xamp : the 'extra' subfolder of apache\conf
+   * in easy-php : the 'extra' subfolder of apache\conf
+
+5. restart your Apache and if no errors issued, your ABCD should work at the URL 'http://127.0.0.1:9090' given that you use that URL for your ABCD,
+with real servers (with servernames) please adjust your URL to open ABCD, also change the port if you don't use port 9090.
+(Re-)starting Apache can be done as follows :
+   * for Windows : first create a 'service' by typing into a CMD-terminal window :
+      * cd \[path_to_your_Apache_bin-folder]
+      * type the command : httpd -k install, then : httpd -k start
+OR    * when using WAMP, XAMP or EASY-PHP : use the launchers coming with these packages and their installers, much easier and in fact
+        one of the reasons we prefer this method now.
+OR alternatively, once the 'service' for Apache is running in Windows, one can stop/start/restart :
+      * open 'services' (from the START option), search for 'apache' and use the (right-click) (re-)start option
+   * for Linux : open a terminal, become administrator (e.g. by using 'sudo' or 'su') and type 'service apache2 restart'
+
+6. Check and if necessary adjust each of the configuration files for the ABCD-modules by opening them with a text-editor,
+   * in Windows : with e.g. Notepad (by default available in Windows)
+   * in Linux : gedit (graphical) or nano or vi(m) (in terminal)
+   The following paths need to be set correctly, reflecting your installation :
+   * Central : in config.php the variables '$server_url', $ABCD_path and "$db_path' need to be defined with correct path.
+   For $db_path use the correct segment according to your OS : for Windows before, for Linux after the 'else' statement
+   All other parameters don't need to be adjusted except for functional reasons (see the manual).
+   * IAh : the new 'index.php' sets some variables according to OS (win or lin) and calls accordingly a different version of iah.xis, i.e.
+   respectively iah-win.xis for Windows or iah-lin.xis for Linux.
+   The versions differ ONLY re the iah.def.php parsed to define the paths :
+   in Linux :
+   iah-def-lin.php, with the following default paths :
+        PATH_DATA=/iah/
+        PATH_CGI-BIN=/opt/ABCD/www/htdocs/iah/scripts/
+        PATH_DATABASE=/var/opt/ABCD/bases/
+        PATH_DEF=/var/opt/ABCD/bases/par/
+   in Windows (note the use of Linux slashes however) :
+        PATH_DATA=/iah/
+        PATH_CGI-BIN=/ABCD/www/htdocs/iah/scripts/
+        PATH_DATABASE=/ABCD/www/bases/
+        PATH_DEF=/ABCD/www/bases/par/
+   * SITE : a new version of the script PHP/include.php now contains the following added code :
+              if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0)
+                 $def = @parse_ini_file("../ABCD-site-win.conf");
+              else
+                  $def = @parse_ini_file("../ABCD-site-lin.conf");
+   so as to parse indeed different configuration files ofr Windows and Linux instead of the original and legacy-named 'bvs-site-conf.php'.
+   As for the iAH module the default-paths are different in between Windows and Linux but both cases use the 'Unix-style' slashes,
+   e.g. Windows :
+   [ENVIRONMENT]
+                DIRECTORY=/site/
+                SITE_PATH=C:/ABCD/www/htdocs/site/
+                DATABASE_PATH=C:/ABCD/www/bases/site/
+                SERVERNAME=localhost
+                LETTER_UNIT=C:\
+                {this last line only used in Windows !)
+   and for Linux :
+   [ENVIRONMENT]
+   DIRECTORY=/site/
+   SITE_PATH=/opt/ABCD/www/htdocs/site/
+   DATABASE_PATH=/opt/ABCD/www/bases/site/
+   SERVERNAME=localhost
+
+   * Site : the demo-Site needs still to be re-configured for your local situation :
+       ** which databases are there,
+       ** which versions of wxis do they use (ansi/utf8 and default or ffi/bigisis etc.),
+       ** if in Windows : use 'wxis.exe', but if in Linux : use 'wxis' (without extension) in the URL
+       so please use the Site/Admin CMS to edit the correct URL's for each database !
+
+   * Secs-Web :
+   No need to adjust paths in the configuration, BUT : make sure you have a directory 'temp' in the dedicated 'bases'-subdirectory
+   secs-web of your bases-folder, since the temporary (sessions-) files will need to be written there.
+   * remark for EmpWeb : since EmpWeb has a completely different technology, it is put OUTSIDE the ABCD-www folder and needs to be
+   configured according to the instructions in its own manual.
+
+7. Opening the resp. ABCD-modules in your browser, using the following URL's :
+   * Central :  http://localhost:9090
+   * iAH : http://localhost:9090/iah  (demo-login : username 'abcd', password 'adm')
+   * SITE : http://localhost:9090/site  (no login)
+   * SITE-admin : http://localhost:9090/site/admin  (username 'adm', password 'x')
+   * Secs-Web : http://localhost:9090/secs-web (username 'admsecs', password 'admsecs')
+
+8. Note on updating ABCD instead of installing it :
+When updating an existing version of ABCD instead of just installing it, some special precautions need to be taken.
+In general there are 2 alternative ways of dealing with it :
+I. method I : 'outside' existing installation
+A. Rename the current ABCD-directory (after e.g. closing Apache if it runs from within that directory as is the case in the original Windows
+installation for ABCD)
+B. Install ABCD as a new installation
+C. Copy the databases from the old installation to the new one; the new package however might contain interesting new databases or models,
+which then can be added into the bases-folder along with their 'par' and 'DEF' files in the par-subdirectory.
+D. If special settings were used, also transfer these to the new configuration files,
+e.g. if you use 'MD5' encryption, change the variable in the new config.php of Central.
+     if you use several database-directories, copy/change the file htdocs/dbpath.dat !
+[E. After having checked that all works well (restart Apache !), one might delete the 'old' installation, in order to save space.]
+
+II. method II : 'inside' existing installation
+A. rename, one-by-one, existing folders, e.g. to [name-of-folder].old, e.g. central becomes central.old
+B. copy the new folder in the same location next to the renamed folder, e.g. central inside 'htdocs' etc.
+C. in principle your local databases can be kept unaltered, but the directory 'bases-examples', coming with the new package, contain possibly
+several new relevant databases or models, which you then can simply add into the bases-folder (and to the par-subfolder : each database needs
+its own .par and .DEF files but these can be copied from the package par-folder).
+D. A bit tricker part : adapt your configuration files with the new ones, which will need to be manual work. E.g. the central/config.php
+is fully re-vamped but the existing variables in your old config.php will need to be implemented in the new one (to be copied from the package).
+In iAH and Site also new files are to be copied, so check these carefully, e.g. iah-def-win.php for iAH and ABCD-site-win.conf for Site.
+[E. After having checked that all works well, one might delete all folders with '.old' extension, in order to save space.]
+
+The recommended method is the first one ('outside') since it ensures all new configurations are in place, only need to be checked/adjusted.
+
+Additional help can be obtained by joining and using the e-mail based 'ISIS-users discussion list',
+   * registering: http://lists.iccisis.org/listinfo/isis-users
+   * using : mail to 'isis-users@iccisis.org'
+
+Wishing you good luck in using ABCD !

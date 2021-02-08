@@ -35,7 +35,6 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
-include("../common/header.php");
 echo "<body>";
 $base=$arrHttp["base"];
 //echo "base=$base<BR>";
@@ -43,16 +42,16 @@ $base=$arrHttp["base"];
 
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";	
+	$encabezado="&encabezado=s";
 }
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">Import DOC: " . $base."
 			</div>
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
+	echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
+	echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<span><strong>".$msgstr["back"]."</strong></span></a>";
 }
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
@@ -63,7 +62,7 @@ echo "</div>
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/import_doc.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: import_doc_mnu.php" ?>
+echo "<font color=white>&nbsp; &nbsp; Script: import_doc.php" ?>
 </font>
 </div>
 
@@ -95,7 +94,6 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
-include("../config.php");
 include("../common/header.php");
 if(isset($_POST["fn"])) $fn=$_POST["fn"];
 $count=0;

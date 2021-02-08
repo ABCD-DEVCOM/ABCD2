@@ -11,7 +11,7 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../common/header.php");
 ?>
-<script  src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 
 <script languaje=javascript>
 

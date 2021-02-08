@@ -60,7 +60,11 @@ if (isset($def["LOGO"])) $logo=$def["LOGO"];
 //Activar reservas
 $reserve_active="Y";
 if (isset($def["RESERVATION"])) $reserve_active=strtoupper($def["RESERVATION"]);
-if (isset($def["WEBRESERVATION"])) $WEBRESERVATION=$def["WEBRESERVATION"];
+IF (isset($def["OPACHTTP"])){
+	$OpacHttp=trim($def["OPACHTTP"]);
+	if (substr($OpacHttp,strlen($OpacHttp)-1,1)!="/")
+		$OpacHttp.="/";
+}
 
 //se lee el archivo dr_path.def para ver las configuraciones locales de la base de datos
 if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){

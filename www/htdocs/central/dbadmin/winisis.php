@@ -17,7 +17,7 @@ include ("../lang/soporte.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include("../common/header.php");
-echo "<script  src=\"../dataentry/js/lr_trim.js\"></script>\n";
+echo "<script language=\"JavaScript\" type=\"text/javascript\"  src=\"../dataentry/js/lr_trim.js\"></script>\n";
 echo "<script languaje=javascript>
 function EnviarForma(){	if (Trim(document.winisis.userfile.value)==''){		alert('".$msgstr["missing"]." ".$msgstr["fdt"]."')
 		return	}

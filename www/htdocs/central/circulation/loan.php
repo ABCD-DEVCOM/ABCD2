@@ -12,7 +12,7 @@ include("../lang/prestamo.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function EnviarFormaUsuario(){	if (Trim(document.usersearch.usercode.value)==""){		alert("Debe especificar el usuario")
 		return	}

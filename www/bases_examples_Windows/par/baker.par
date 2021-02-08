@@ -1,0 +1,4 @@
+baker.*=%path_database%baker/data/baker.*
+baker.pft=%path_database%baker/pfts/en/baker.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

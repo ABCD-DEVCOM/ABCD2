@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-01-05 guilda Removed login encryption
+2021-01-05 LeerRegistro compares the password
+*/
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
 session_start();
@@ -28,18 +32,21 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	$tag= "";
 	$IsisScript=$xWxis."login.xis";
 	$pass=$arrHttp["password"];
-	if (!isset($MD5) or  $MD5!=1){		$pass=md5($pass);	}
+	if (!isset($MD5) or  $MD5!=0){		$pass=md5($pass);	}
 	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
 	include("wxis_llamar.php");
+	$llave_ret="";
 	 foreach ($contenido as $linea){
-	 	if ($ic==-1){	    	$ic=1;
-	    	$pos=strpos($linea, '##LLAVE=');
-	    	if (is_integer($pos)) {	     		$llave_pft=substr($linea,$pos+8);
-	     		$pos=strpos($llave_pft, '##');
-	     		$llave_pft=substr($llave_pft,0,$pos);
-	     		if ($llave_pft==$pass)
+	 	if ($ic==-1){
+	 		$pos=strpos($linea, '##LLAVE=');
+	    	if (is_integer($pos)) {
+	     		$llave_pft=substr($linea,$pos+8);
+	     		$ll=explode('|',$llave_pft);
+	     		if ($ll[0]==$pass){
 	     			$ic=1;
-
+	     			$llave_ret=$llave_pft;
+	     			$valortag=array();
+	     		}
 			}
 		}else{
 			$linea=trim($linea);
@@ -55,7 +62,7 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 		}
 
 	}
-	return $llave_pft;
+    return $llave_ret;
 
 }
 
@@ -94,7 +101,8 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     	unset($_SESSION["login"]);
     	$_SESSION["profile"]=$Perfil;
     	$_SESSION["login"]=$arrHttp["login"];
-    	foreach ($profile as $value){    		$value=trim($value);
+    	foreach ($profile as $value){
+    		$value=trim($value);
     		if ($value!=""){    			$key=explode("=",$value);
     			$_SESSION["permiso"][$key[0]]=$key[1];    		}
     	}
@@ -118,11 +126,10 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     				$_SESSION["permiso"][$key[0]]=$key[1];
     			}
     		}
-    	}else{ 			echo "<script>\n";
- 			if (isset($_SESSION["HOME"]))
- 				echo "self.location.href=\"".$_SESSION["HOME"]."?login=N\"\n";
- 			else
- 				echo "self.location.href=\"../../index.php?login=N\";\n";
+    	}else{
+ 			echo "<script>\n";
+ 			if (isset($_SESSION["HOME"])) 				echo "self.location.href=\"".$_SESSION["HOME"]."?login=N\"\n";
+ 			else 				echo "self.location.href=\"../../index.php?login=N\";\n";
 
  			echo "</script>\n";
   			die;

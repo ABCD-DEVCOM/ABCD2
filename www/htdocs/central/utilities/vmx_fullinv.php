@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central 
+ * @program:   ABCD - ABCD-Central
  * @copyright:  Copyright (C) 2015 UO - VLIR/UOS
  * @file:      vmx_fullinv.php
  * @desc:      Create database index
@@ -34,8 +34,10 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
-include("../lang/dbadmin.php");
 include("../common/header.php");
+include("../lang/admin.php");
+include("../lang/soporte.php");
+include("../lang/dbadmin.php");
 echo "<script src=../dataentry/js/lr_trim.js></script>";
 echo "<body onunload=win.close()>";
 include("../common/institutional_info.php");
@@ -58,8 +60,8 @@ echo "
 
 	";
 
-	echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."&encabezado=S\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	echo "<a href=\"../dbadmin/menu_mantenimiento.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
+	echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 
 echo "</div>
@@ -73,10 +75,10 @@ function OpenWindow(){
 	msgwin=window.open("","test","width=800,height=200");
 	msgwin.focus()
 }
- function OpenWindows() {      
+ function OpenWindows() {
 NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 win.focus()
-    }	
+    }
 function NewWindow(mypage,myname,w,h,scroll,pos){
 if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
 if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
@@ -98,19 +100,21 @@ echo "<font color=white>&nbsp; &nbsp; Script: utilities/vmx_fullinv.php";
 
 <div class="middle form">
 	<div class="formContent">
+<?php
+echo "<center><h3>".$msgstr["mnt_gli"]."</h3></center>";
+?>
 <form name=maintenance action='' method='post' onsubmit='OpenWindows();'>
 <table cellspacing=5 align=center>
 	<tr>
 		<td>
 
 		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-             <br>
 
-          
+
 			<?php
 
 
-if (isset($_POST['fst'])) $fst=$_POST['fst'];
+if (isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
 if(isset($fst))
 {
 if (file_exists($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw"))
@@ -157,7 +161,7 @@ if ($unicode=="utf8")
 {
 	if (file_exists($db_path."isisactab_utf8.tab"))
 			$actab=$db_path."isisactab_utf8.tab";
-		
+
 		if (file_exists($db_path."isisuctab_utf8.tab"))
 		$uctab=$db_path."isisuctab_utf8.tab";
 }
@@ -168,6 +172,7 @@ $parameters.= "mx: $mx_path"." <a href=mx_test.php target=test onclick=OpenWindo
 if ($stw!="") $parameters.= "stw: $stw<br>";
 if ($uctab!="") $parameters.= "uctab: $uctab<br>";
 if ($uctab!="") $parameters.= "actab: $actab<br>";
+unset($m);
 if (isset($_POST['m'])) $m=$_POST['m'];
 $m_var="";
 if(isset($m)) $m_var="/m";
@@ -206,7 +211,9 @@ if ($file != "." && $file != ".." && (strpos($file,".fst")||strpos($file,".FST")
 echo "<option value='$file'>$file</option>";
 }}
 echo "</select><br><br>";
-echo "<font size='2'>Use /m parameter </font><input type='checkbox' name='m'><br><br>";
+echo "<font size='2'>Use /m parameter </font><input type='checkbox' name='m'>
+<font color=red>Warning: do not check this parameter if you are using picklists type DB in the FDT</font>
+<br><br>";
 echo "<input type='submit' value='START'>";
 }
 
@@ -217,12 +224,6 @@ echo "<input type='submit' value='START'>";
 
 		</td>
 </table></form>
-<form name=admin method=post action=administrar_ex.php onSubmit="Javascript:return false">
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion>
-<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
-</form>
 
 </div>
 </div>

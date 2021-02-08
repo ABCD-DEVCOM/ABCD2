@@ -25,16 +25,15 @@
  *
  * == END LICENSE ==
 */
+if (!isset($arrHttp["lang"])) session_start();
 include ("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=>$value<br>";  //die;
 if (isset($arrHttp["lang"])) $_SESSION["lang"]=$arrHttp["lang"];
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 
 include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/prestamo.php");
-
 function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
 	return $contenido;}
@@ -56,7 +55,7 @@ global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
 	if ($pref_cn=="") $pref_cn="CN_";
 	$Expresion=$pref_cn.$CN;
 	$formato_obj=$db_path.$dbname."/loans/".$_SESSION["lang"]."/loans_display.pft";
-	if (!file_exists($formato_obj)) $formato_obj=$db_path.$dbname."/loans/".$lang_db."/loans_display.pft";
+	if (!file_exists($formato_obj)){		echo $msgstr["falta"]." $formato_obj";die;	}
 	$arrHttp["count"]="";
 	$Formato=$formato_obj;
 	$IsisScript=$xWxis."buscar_ingreso.xis";
@@ -75,9 +74,7 @@ global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
 switch ($arrHttp["code"]){
 	case "assigned":		$Disp_format="reserve_assigned.pft";
 		$Pft=$db_path."reserve/pfts/".$_SESSION["lang"]."/".$Disp_format;
-		if (!file_exists($Pft)){
-			$Pft=$db_path."reserve/pfts/".$lang_db."/".$Disp_format;
-		}        break;
+		break;
 }
 if (!file_exists($Pft)){
 	echo $Disp_format. " ** ".$msgstr["falta"];
@@ -141,6 +138,6 @@ $body=str_replace("#REFER#",$Referencia,$body);
 
 echo $body;
 
-echo "<script>self.print();self.close()</script>";
+echo "<script>self.print();</script>";
 ?>
 

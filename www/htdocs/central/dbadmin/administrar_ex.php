@@ -10,6 +10,9 @@ include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
 include("../lang/dbadmin.php");
+include("../lang/dbadmin.php");
+include("../lang/soporte.php");
+
 
 function InicializarBd(){
 global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr;
@@ -18,11 +21,8 @@ global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr;
 
  	include("../common/wxis_llamar.php");
 	foreach ($contenido as $linea){
-	 	if ($linea=="OK"){
-
-	 		echo "<h4>".$arrHttp["base"]." ".$msgstr["init"]."</h4>";
-	 		//echo $Wxis." ".$wxisUrl;
-	 	}
+	 	if ($linea=="OK"){	 		echo "<h4>".$arrHttp["base"]." ".$msgstr["init"]."</h4>";
+	 		echo $Wxis." ".$wxisUrl;	 	}
  	}
 }
 
@@ -44,12 +44,10 @@ function VerStatus(){
 	return $tag;
 }
 
-function Footer(){
-	echo "</div></div>";
+function Footer(){	echo "</div></div>";
 	include("../common/footer.php");
 	echo "</body></html>";
-	die;
-}
+	die;}
 
 
 
@@ -83,10 +81,8 @@ echo "
 echo "<font size=1> &nbsp; &nbsp; Script: dbadmin/administrar_ex.php</font><br>";
 switch ($arrHttp["Opcion"]) {
     case "inicializar":
-    	if (!file_exists($db_path.$arrHttp["base"])){
-    		echo "<h3>".$arrHttp["base"].": ".$msgstr["folderne"]."</h3>";
-    		Footer();
-    	}
+    	if (!file_exists($db_path.$arrHttp["base"])){    		echo "<h3>".$arrHttp["base"].": ".$msgstr["folderne"]."</h3>";
+    		Footer();    	}
     	if (!file_exists($db_path."par/".$arrHttp["base"].".par")){
     		echo "<h3>"."par/".$arrHttp["base"].".par: ".$msgstr["ne"]."</h3>";
     		Footer();

@@ -16,9 +16,13 @@ include("../common/header.php");
 
 
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
-
+function checkSubmit(e) {
+   if(e && e.keyCode == 13) {
+   		EnviarForma()
+   }
+}
 function EnviarForma(){
 	if (Trim(document.inventorysearch.inventory.value)=="" ){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["inventory"]." / ".$msgstr["usercode"]?>")
@@ -26,20 +30,7 @@ function EnviarForma(){
 	}
     document.inventorysearch.submit()}
 
-function AbrirIndice(Tipo,xI){
-	Ctrl_activo=xI
-	lang="<?php echo $_SESSION["lang"]?>"
 
-	switch (Tipo){		case "I":
-			Separa=""
-    		Prefijo=Separa+"&prefijo=IN_"
-    		ancho=200
-			url_indice="capturaclaves.php?opcion=autoridades&base=loanobjects&cipar=loanobjects.par"+Prefijo+"&postings=1"+"&lang="+lang+"&repetible=0&Formato=@autoridades.pft"
-			break
-	}
-	msgwin=window.open(url_indice,"Indice","width=480, height=425,scrollbars")
-	msgwin.focus()
-}
 
 </script>
 <?php
@@ -62,8 +53,9 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 <div class="helper">
 <?php echo "
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/item_history.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
+if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/item_history.html target=_blank>".$msgstr["edhlp"]."</a>";
+echo "<a href=http://www.abcdwiki.net?title=Historia_de_un_item target=_blank>abcdwiki</a>  &nbsp; ";
 echo "<font color=white>&nbsp; &nbsp; Script: item_history.php </font>
 	</div>";
 // prestar, reservar o renovar
@@ -80,8 +72,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: item_history.php </font>
 			<strong><?php echo $msgstr["inventory"]?></strong>
 		</label>
 		</td><td>
-		<input type="text" name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('I',document.inventorysearch.inventory);return false"/>
+		<input type="text" name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,1)" />
 		<input type="submit" name="reservar" value="<?php echo $msgstr["search"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
 		</td>
 	</table>

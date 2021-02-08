@@ -1,5 +1,9 @@
 <?php
+session_start();
+unset($_SESSION);
+session_destroy();
 $fp=file("../php/config_opac.php");
+
 $wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Tutorial_de_configuraci%C3%B3n#Entrada_al_m.C3.B3dulo_de_configuraci.C3.B3n";
 $wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Tutorial_de_configuraci%C3%B3n#Entrada_al_m.C3.B3dulo_de_configuraci.C3.B3n";
 $msg_err="";
@@ -41,6 +45,7 @@ foreach ($fp as $value){
 	}
 }
 include("../php/config_opac.php");
+
 $_SESSION["lang"]=$lang;
 $_REQUEST["lang"]=$lang;
 $_REQUEST["modo"]="";
@@ -51,7 +56,7 @@ include ("$CentralPath/lang/opac.php");
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 	<head>
 		<title>ABCD</title>
 		<meta http-equiv="Expires" content="-1" />

@@ -1,5 +1,6 @@
 <?php
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
+date_default_timezone_set('America/New_York');
 if (isset($_REQUEST["conf_level"])) unset($_REQUEST["conf_level"]);
 include ("tope_config.php");
 if (isset($_REQUEST["lang_init"])){	$_SESSION["lang_init"]=$_REQUEST["lang_init"];
@@ -215,7 +216,7 @@ Global $valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per
 echo "&nbsp; &nbsp<h3>";
 include("wiki_help.php");
 ?>
-	<div id=page>
+	<!--div id=page>
 			<p>
 			<h4><a href="javascript:EnviarForma('diagnostico.php')"><?php echo $msgstr["check_conf"];?></a><h4>
 			<h4><?php echo $msgstr["general"] ?></h4>
@@ -268,7 +269,7 @@ include("wiki_help.php");
 			</ul>
 
 <?php } ?>
-</div>
+</div-->
 <br><br><br>
 <?php
 

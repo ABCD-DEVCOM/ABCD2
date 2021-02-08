@@ -63,7 +63,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_traducir.php";
 			<div class="sectionTitle">
 				<h4><strong><?php echo $msgstr["traducir"]?></strong></h4>
 				<?php echo $msgstr["lang"].": ".$_SESSION["lang"]."<br>";?>
-				<h3><a href="convert_utf8.php"><?php echo $msgstr["convert_utf8"]?></a></h3>
+				<!--h3><a href="convert_utf8.php"><?php echo $msgstr["convert_utf8"]?></a></h3-->
 			</div>
 			<div class="sectionButtons">
 				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=admin.tab<?php echo $encabezado?>" class="menuButton  listButton">
@@ -98,6 +98,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_traducir.php";
                 <a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=iah_conf.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
+				</a>
+				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=opac.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
+					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
 				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=profile.tab<?php echo $encabezado?>" class="menuButton  userButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />

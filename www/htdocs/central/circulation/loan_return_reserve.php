@@ -18,7 +18,7 @@ if (!isset($_SESSION["permiso"]["CIRC_CIRCALL"])){
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 document.onkeypress =
   function (evt) {

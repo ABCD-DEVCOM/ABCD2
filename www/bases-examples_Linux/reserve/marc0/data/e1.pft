@@ -1,2 +1,0 @@
-e1:=nocc(v980),
-(if iocc=e1 then v980/ fi)

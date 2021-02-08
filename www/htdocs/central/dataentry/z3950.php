@@ -38,7 +38,7 @@ include("../lang/admin.php");
 include("../common/header.php");
 
 ?>
-<script src=js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <script language=javascript>
    function AbrirVentana(Marc){
         msgwin=window.open("",Marc,"status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=800,height=600,top=00,left=00")

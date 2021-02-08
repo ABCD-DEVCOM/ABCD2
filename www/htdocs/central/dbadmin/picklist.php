@@ -13,7 +13,7 @@ include("../lang/dbadmin.php");
 include("../common/header.php");
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 
 function CargarTabla(Tabla){
@@ -138,7 +138,7 @@ if (isset($arrHttp["wks"])) $wks="&wks=".$arrHttp["wks"];
 sort ($the_array);
 reset ($the_array);
 
-while (list ($key, $val) = each ($the_array)) {
+foreach ($the_array as $key=>$val) {
 //	echo "key=".$key."<br>val=$val<br>wks=$wks<br>"  ;
    echo "<a href=javascript:Pl_name(\"$val\",\"".$arrHttp["base"]."\")>$val</a>; ";
 

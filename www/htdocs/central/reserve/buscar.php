@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-01-05 guilda added $msgstr["catalognotfound"]  y $msgstr["regresar"]
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -363,12 +366,13 @@ function Reservas($cn,$base){global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$
 	return array($output,$reserves_arr[1]);}
 
 function MostrarResultados($contenido){global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db,$Expresion,$copies,$reservas_u_cn;
+
 	if (trim(implode("\n",$contenido))=="[TOTAL:]0"){
 		if (isset($_SESSION["user_reserve"]))
 			$user_reserve=$_SESSION["user_reserve"];
 		else
-			$user_reserve="";		echo "no se encuentra el registro";
-		echo "<p><a href=../circulation/estado_de_cuenta.php?reserve=S&usuario=".$user_reserve.">Regresar</a>";
+			$user_reserve="";		echo $msgstr["catalognotfound"];
+		echo "<p><a href=../circulation/estado_de_cuenta.php?reserve=S&usuario=".$user_reserve.">".$msgstr["regresar"]."</a>";
 		return;	}
 	$con="";
 	$ix=0;
@@ -423,7 +427,7 @@ function MostrarResultados($contenido){global $msgstr,$arrHttp,$db_path,$xWxis,
 								$habilitar="N";
 						}					}
 				}else{					$habilitar="N";				}
-				if ($habilitar=="S"){					$ix=$ix+1;
+ 				if ($habilitar=="S"){					$ix=$ix+1;
 	            	echo "<input type=checkbox name=chk_reserva value=\"".$lin[1]."\"><input type=button name=reserve value=".$msgstr["reserve"]." onclick=javascript:Reservar(\"".$arrHttp["base"]."\")><br>";				}
 				echo $lin[0]."\n";
 				if ($msgerr!="") echo $msgerr."<br>";
@@ -450,8 +454,8 @@ function MostrarResultados($contenido){global $msgstr,$arrHttp,$db_path,$xWxis,
 	echo "</table>";
 	if (!isset($arrHttp["desde"]) )
 		echo "<input type=button value='".$msgstr["back"]."' onclick=document.regresar.submit()>";
-	else
-		echo "<input type=button value='".$msgstr["close"]."' onclick=self.close()>";
+//	else
+//		echo "<input type=button value='".$msgstr["close"]."' onclick=self.close()>";
 }
 
 

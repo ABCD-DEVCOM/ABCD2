@@ -29,7 +29,7 @@ if (!isset($arrHttp["Subc"])){
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 
 	<script language=javascript>
@@ -823,7 +823,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: fdt_short_a.php";
 			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
 			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
  &nbsp; &nbsp; <font color=darkred size=1><strong><?php echo $msgstr['double_click']?></strong></font>
-	<table  style="width:100%; height:200" id=tblToGrid class="dhtmlXgrid">
+	<table  style="width:100%; height:200" id=tblToGrid class="dhtmlxGrid">
 <?php
 echo "<tr>";
 $tope=0;

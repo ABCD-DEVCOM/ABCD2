@@ -13,7 +13,7 @@ include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../common/header.php");
 
-set_time_limit(420);
+set_time_limit(0);
 
 ?>
 <div class="sectionInfo">
@@ -56,14 +56,13 @@ function Delimited($rotulos,$registro){
 	 		}
 	 	}
 	 	$ix=0;
-	 	foreach ($t as $val) {
-
+	 	foreach ($t as $val) {
 	 		$ix=$ix+1;
 	 		if (trim($val)!="")
-	 			if (isset($tag[$ix]))
+	 			if (isset($tag[$ix])){
 	 				$salida[$tag[$ix]]=str_replace("\n"," ",$val);
 	 				$salida[$tag[$ix]]=str_replace("\r"," ",$val);
-	 	}
+	 			}	 	}
 	}
  	return $salida;
 }
@@ -105,21 +104,22 @@ global $arrHttp;
 			$delim="";
 		if (isset($rotulo[$key][4])) $rep=$rotulo[$key][4];
 		if (isset($rotulo[$key][5])) $formato=$rotulo[$key][5];
-		foreach ($linea as $value){
-			if (trim($value)!=""){
-				if (trim($rep)!=""){
-					$sal=explode($rep,$value);
-					foreach ($sal as $campo){
-						if (trim($subc)!="") $campo=SubCampos($campo,$subc,$delim);
-						$ValorCapturado.="<$key 0>".trim($campo)."</".$key.">";
+		if (is_array($linea)){
+			foreach ($linea as $value){				if (trim($value)!=""){
+					if (trim($rep)!=""){
+						$sal=explode($rep,$value);
+						foreach ($sal as $campo){
+							if (trim($subc)!="") $campo=SubCampos($campo,$subc,$delim);
+								$ValorCapturado.="<$key 0>".trim($campo)."</".$key.">";
+							}
+						}else{
+							if (trim($subc)!="") $value=SubCampos($value,$subc,$delim);
+							$ValorCapturado.="<$key 0>".trim($value)."</".$key.">";
 					}
-				}else{
-					if (trim($subc)!="") $value=SubCampos($value,$subc,$delim);
-					$ValorCapturado.="<$key 0>".trim($value)."</".$key.">";
 				}
 
 			}
-        }
+        }else{        	$ValorCapturado.="<$key 0>".trim($linea)."</".$key.">";        }
 	}
 	ActualizarRegistro($base,$ValorCapturado);
 
@@ -128,6 +128,7 @@ global $arrHttp;
 //Se lee la tabla con la estructura de conversión de rótulos a tags isis
 function LeerTablaCnv(){
 Global $separador,$arrHttp,$db_path;
+	$separador="";
 	$fp=file($db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"]);
 	$ix=-1;
 	foreach($fp as $value){
@@ -160,6 +161,7 @@ Global $separador,$arrHttp,$db_path;
 function ActualizarRegistro($base,$ValorCapturado){
 global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr;
 	$ValorCapturado=urlencode($ValorCapturado);
+
 	$Mfn="New";
 	$base=$arrHttp["base"];
 	$IsisScript=$xWxis."crear_registro.xis";
@@ -209,26 +211,20 @@ if (trim($value)!="") {
 	//echo urldecode($HTTP_POST_VARS[$var]);
 	if ($separador!='[TABS]'){
 		$variables=explode($separador,$value);
-	}else{
-		$variables=explode("\n",$value);
-	}
-	foreach($variables as $registro){
-		$noLocalizados="";
-		if ($separador=='[TABS]'){
-        	$salida=Delimited($rotulo,$registro);
-		}else{
-			$salida=Rotulos2Tags($rotulo,$registro);
+	}else{		$variables=explode("\n",$value);	}
+	foreach($variables as $registro){		$noLocalizados="";
+		if ($separador=='[TABS]'){        	$salida=Delimited($rotulo,$registro);		}else{
+			$salida=Rotulos2Tags($rotulo,$registro,$separador);
 		}
 		if (count($salida)>0){
 			echo "<p><b>--------</b> <br>";
 			if (!isset($arrHttp["Actualizar"])) {
 				echo "<br>";
 				foreach ($salida as $key=>$value){
-					 foreach ($value as $campo){
-					 	 echo $rotulo[$key][0]." ".$campo."<br>";
-					 }
-				}
-			}
+					if (is_array($value)){					 	foreach ($value as $campo){					 		 echo $rotulo[$key][1]." ".$campo."<br>";					 	}
+					}else{						echo $rotulo[$key][1]." ".$value."<br>";					}
+
+				}			}
 			if (isset($arrHttp["Actualizar"])) ProcesarBD($arrHttp["base"],$salida,$rotulo);
 		}
 		if (trim($noLocalizados)!="") {
@@ -240,10 +236,8 @@ if (trim($value)!="") {
 
 if (!isset($arrHttp["Actualizar"])){
 	echo "<p><strong>".$msgstr["bd"].": ".$arrHttp["base"]."</strong> <input type=submit value=".$msgstr["actualizar"].">";
-} else{
-	echo "<P><a href=javascript:self.close()>".$msgstr["cerrar"]."</a> &nbsp; &nbsp;";
-	echo "<a href=javascript:RefreshDB()>".$msgstr["reopendb"]."</a>";
-}
+} else{	echo "<P><a href=javascript:self.close()>".$msgstr["cerrar"]."</a> &nbsp; &nbsp;";
+	echo "<a href=javascript:RefreshDB()>".$msgstr["reopendb"]."</a>";}
 echo "</form>
 </div>
 </div>

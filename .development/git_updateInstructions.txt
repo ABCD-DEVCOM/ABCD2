@@ -1,0 +1,9 @@
+Steps for GitHub :
+
+- make the necessary changes into the files of the ~/ABCD20f directory
+- git add [files changed]  or : git add . (for all files)
+- git commit -m "message to describe changes"
+- git push -u origin master
+- to push to branch : git push -u origin [name-of-branch]
+- to pull from master to local copy : git pull origin master
+- to change from master to branch : git checkout master/branch

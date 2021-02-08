@@ -1,0 +1,34 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%lib@web2015/data/lib@web2015.*
+FILE standard.pft=%path_database%lib@web2015/pfts/%lang%/lib@web2015.pft
+FILE SHORTCUT.IAH=%path_database%lib@web2015/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX FT=^1Palabras^2Palabras^3Words^4Mots^d*^xFT ^yDATABASE^uFT_^mFT_
+INDEX NA=^1Nombres^2Nombres^3Namess^4Noms^xNA ^yDATABASE^uNA_^mNA_
+INDEX TI=^1Titulo^2Titulo^3Title^4Titre^xTI ^yDATABASE^uTI_^mTI_
+INDEX MS=^1Software^2Software^3Software^4Software^xMS ^yDATABASE^uMS_^mMS_
+INDEX GE=^1Sexo^2Sexo^3Gender^4Sexe^xGE ^yDATABASE^uGE_^mGE_
+INDEX MS=^1Programa^2Programa^3Software^4Logiciel^xMS ^yDATABASE^uMS_^mMS_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1defecto^2defecto^3default^4d�faut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=ON
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=XML

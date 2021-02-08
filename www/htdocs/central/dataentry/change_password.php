@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-01-05 guilda Added message $msgstr["pass_format_0"]
+*/
 session_start();
 include("../common/get_post.php");
 if (isset($arrHttp["db_path"]))
@@ -17,6 +20,7 @@ include ("../lang/lang.php");
 		$css_name="";
 	else
 		$css_name.="/";
+if (!isset($msgstr["pass_format_0"])) $msgstr["pass_format_0"]="";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -39,16 +43,20 @@ include ("../lang/lang.php");
 		<!--[if IE 6]>
 			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
-<script src=../dataentry/js/lr_trim.js></script>
-<script language=Javascript src=../dataentry/js/password_check.js></script>
-<script languaje=javascript>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/password_check.js></script>
+<script language=javascript>
 
 <?php
 
 if (isset($SECURE_PASSWORD_LEVEL))
 	echo "secure_password_level='$SECURE_PASSWORD_LEVEL'\n";
+else
+	echo "secure_password_level='0'\n";
 if (isset($SECURE_PASSWORD_LENGTH))
 	echo "secure_password_length='$SECURE_PASSWORD_LENGTH'\n";
+else
+	echo "secure_password_length='0'\n";
 ?>
 
 
@@ -64,6 +72,7 @@ function alphanumeric(inputtxt) {
 }
 
 function Enviar(){	res=VerificarPassword("pwd")
+
 	if (!res && secure_password_level!="" && secure_password_length!=""){		alert('<?php echo $msgstr["pass_error"]." ".$msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
 		if ($SECURE_PASSWORD_LENGTH>0) echo ". ". $msgstr["pass_format_1"]. " ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"];?>')
 		return	}	login=Trim(document.administra.login.value)
@@ -112,16 +121,16 @@ function Enviar(){	res=VerificarPassword("pwd")
 			<div class="boxContent">
 				<div class="formRow">
 					<label for="user"><?php echo $msgstr["userid"]?></label>
-					<input type="text" name="login" id="user" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
+					<input autocomplete="off" type="text" name="login" id="user" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
 				</div>
 				<div class="formRow">
 					<label for="pwd"><?php echo $msgstr["actualpass"]?></label>
-					<input type="password" name="password" id="actualpwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
+					<input autocomplete="off" type="password" name="password" id="actualpwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
 					<a href=javascript:DisplayPassword('actualpwd')><?php echo $msgstr["ver"]?></a>
 				</div>
 				<div class="formRow">
 					<label for="pwd"><?php echo $msgstr["newpass"]?></label>
-					<input type="password" name="new_password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus'";
+					<input autocomplete="off" type="password" name="new_password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus'";
 				 	onblur="this.className = 'textEntry superTextEntry';<?php if (isset($SECURE_PASSWORD_LEVEL)  or isset($SECURE_PASSWORD_LENGTH)) echo "pwd_Validation('pwd')";?> " />
                     <a href=javascript:DisplayPassword('pwd')><?php echo $msgstr["ver"]?></a>
 				<?php
@@ -135,7 +144,7 @@ function Enviar(){	res=VerificarPassword("pwd")
 				</div>
 				<div class="formRow">
 					<label for="pwd"><?php echo $msgstr["confirmpass"]?></label>
-					<input type="password" name="confirm_password" id="confirmpwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';<?php if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")  or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="") ) echo "VerificarPassword('pwd')";?>"
+					<input autocomplete="off" type="password" name="confirm_password" id="confirmpwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';<?php if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")  or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="") ) echo "VerificarPassword('pwd')";?>"
 					   onblur="this.className = 'textEntry superTextEntry';" />
 					<a href=javascript:DisplayPassword('confirmpwd')><?php echo $msgstr["ver"]?></a>
 				</div>

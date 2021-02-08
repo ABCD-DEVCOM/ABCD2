@@ -57,8 +57,10 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){?>
 			$pos_ant=$pos;		}
 	}
 	//echo "<xmp>$marc_leader</xmp>";
-	echo "<textarea rows=25 cols=150 name=Pft>\n";
 	$archivo=$db_path."opac_conf/marc_sch.xml";
+	if (!file_exists($archivo))
+		$archivo="marc.xml";
+	echo "<textarea rows=25 cols=90 name=Pft>\n";
 	$fp=file($archivo);
 	$cerrar="";
 	$fi="";
@@ -143,7 +145,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){?>
 		}	}
 	echo "</textarea>";
     echo "<p><br>";
-    echo $msgstr["try_mfn"]." <input type=text name=mfn size=5> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
+    echo $msgstr["try_mfn"]." <input type=text name=mfn size=5 id=mfn> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
 	echo "<div><img src=../images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/marc2xml.pft\" \" onclick=document.marcxml.submit() style=\"font-size:15px;\"></div>";
 	?>
 	</form>
@@ -157,14 +159,15 @@ include ("../php/footer.php");
 </body
 </html>
 <script>
-document.getElementById("marcxml").onkeypress = function(e) {
+document.getElementById("mfn").onkeypress = function(e) {
   var key = e.charCode || e.keyCode || 0;
   if (key == 13) {  	e.preventDefault();
+  	Probar()
   }
 }
 function Probar(){	mfn=document.marcxml.mfn.value;
 	if (mfn==0){		alert("<?php echo $msgstr["missing"]?> MFN")
-		return	}
+		return false	}
 	document.marcxml.cookie.value="c_<?php echo $_REQUEST["base"]?>_"+mfn ;
 	document.marcxml.target="_blank";
 	document.marcxml.action="../php/sendtoxml.php";

@@ -34,7 +34,7 @@ $arrHttp["base"]="users";
 include("../common/header.php");
 
 ?>
-<script language=javascript src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" language=javascript src=../dataentry/js/lr_trim.js></script>
 <script>
 function LimpiarHorario(Ctrl){
 	switch (Ctrl.name){		case "mon":
@@ -246,7 +246,12 @@ if (!file_exists($archivo)) $archivo=$db_path."circulation/def/".$lang_db."/loca
 if (file_exists($archivo)){
 	$locales=parse_ini_file($archivo,true,INI_SCANNER_RAW);
 }
-
+for ($i=0;$i<7;$i++){
+	if (!isset($locales[$i]["from"]))   $locales[$i]["from"]="";
+	if (!isset($locales[$i]["to"]))     $locales[$i]["to"]="";
+	if (!isset($locales[$i]["f_ampm"])) $locales[$i]["f_ampn"]="";
+	if (!isset($locales[$i]["t_ampm"])) $locales[$i]["t_ampn"]="";
+}
 echo "<br>
 <table cellspacing=8>
 <tr><td valign=top>1. ".$msgstr["currency"]."</td><td valign=top><input type=text name=currency  size=4 value=\"".$locales["currency"]."\"></td>
@@ -345,33 +350,46 @@ echo "<br>
 		if (trim($locales[6]["from"])!="" and trim($locales[6]["to"]!="")) echo " checked";
 		echo " onclick=LimpiarHorario(this)><b>".$msgstr["sat"]."</b>&nbsp;
 		<br> ".$msgstr["from"].":<input type=text name=sat_from size=4 value=\"".$locales[6]["from"]."\"><select name=ssat_from><option value=am";
-		if ($locales[6]["f_ampm"]=="am") echo " selected";
+		if (isset($locales[6]["f_ampm"]))
+			if ($locales[6]["f_ampm"]=="am") echo " selected";
 		echo " onclick=LimpiarHorario(this)>am</option><option value=pm";
-		if ($locales[6]["f_ampm"]=="pm") echo " selected";
+		if (isset($locales[6]["f_ampm"]))
+			if ($locales[6]["f_ampm"]=="pm") echo " selected";
 		echo ">pm</option><option value=pm>pm</option></select>
 		&nbsp;".$msgstr["to"].":<input type=text name=sat_to size=4 value=\"".$locales[6]["to"]."\"><select name=ssat_to><option value=am";
-		if ($locales[6]["t_ampm"]=="am") echo " selected";
+		if (isset($locales[6]["t_ampm"]))
+			if ($locales[6]["t_ampm"]=="am") echo " selected";
 		echo ">am</option><option value=pm";
-		if ($locales[6]["t_ampm"]=="pm") echo " selected";
-		echo ">pm</option><option value=pm>pm</option></select>
+		if (isset($locales[6]["t_ampm"]))
+			if ($locales[6]["t_ampm"]=="pm") echo " selected";
+		echo ">pm</option></select>
 
 	</td>
 	<tr>
 	<td bgcolor=white align=center>
 		<input type=checkbox name=sun value=sun";
-		if (trim($locales[0]["from"])!="" and trim($locales[0]["to"]!="")) echo " checked";
+		if (isset($locales[0]["from"]))
+			if (trim($locales[0]["from"])!="" and trim($locales[0]["to"]!="")) echo " checked";
 		echo " onclick=LimpiarHorario(this)><b>".$msgstr["sun"]."</b>&nbsp;
-		<br> ".$msgstr["from"].":<input type=text name=sun_from size=4 value=\"".$locales[0]["from"]."\">
+		<br> ".$msgstr["from"].":<input type=text name=sun_from size=4 value=\"";
+		if (isset($locales[0]["from"])) echo $locales[0]["from"];
+		echo "\">
 		<select name=ssun_from><option value=am";
-		if ($locales[0]["f_ampm"]=="am") echo " selected";
+		if (isset($locales[0]["f_ampm"]))
+			if ($locales[0]["f_ampm"]=="am") echo " selected";
 		echo ">am</option><option value=pm";
-		if ($locales[0]["f_ampm"]=="pm") echo " selected";
+		if (isset($locales[0]["f_ampm"]))
+			if ($locales[0]["f_ampm"]=="pm") echo " selected";
 		echo ">pm</option></select>
-		&nbsp;".$msgstr["to"].":<input type=text name=sun_to size=4 value=\"".$locales[0]["to"]."\">
+		&nbsp;".$msgstr["to"].":<input type=text name=sun_to size=4 value=\"";
+		if (isset($locales[0]["to"])) echo $locales[0]["to"];
+		echo "\">
 		<select name=ssun_to><option value=am";
-		if ($locales[0]["t_ampm"]=="am") echo " selected";
+		if (isset($locales[0]["t_ampm"]))
+			if ($locales[0]["t_ampm"]=="am") echo " selected";
 		echo ">am</option><option value=pm";
-		if ($locales[0]["t_ampm"]=="pm") echo " selected";
+		if (isset($locales[0]["t_ampm"]))
+			if ($locales[0]["t_ampm"]=="pm") echo " selected";
 		echo ">pm</option></select>
 
 	</td>

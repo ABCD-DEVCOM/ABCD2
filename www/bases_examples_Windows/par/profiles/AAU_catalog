@@ -1,0 +1,6 @@
+profilename=AAU_catalog
+profiledesc=cataloging in MARCUNI
+db_marcuni=marcuni
+marcuni_pft_ALL=on
+marcuni_fmt_ALL=on
+marcuni_CENTRAL_ALL=Y

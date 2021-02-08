@@ -1,7 +1,9 @@
 <?php
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
+$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
+$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
+/*
 /*
 if (!isset($_REQUEST["db_path"])){	$_REQUEST["db_path"]=$db_path;
 	$_REQUEST["db_path_desc"]="$db_path";}

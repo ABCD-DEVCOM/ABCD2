@@ -3,16 +3,8 @@ session_start();
 $Permiso=$_SESSION["permiso"];
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
-if (!isset($arrHttp["base"])) $arrHttp["base"]="";
-
-if (strpos($arrHttp["base"],"|")===false){
-
-}   else{
-		$ix=explode('|',$arrHttp["base"]);
-		$arrHttp["base"]=$ix[0];
-}
 $db=$arrHttp["base"];
-echo "base=$db<BR>";
+
 
 include ("../config.php");
 $lang=$_SESSION["lang"];
@@ -82,111 +74,103 @@ function EnviarForma(Opcion,Mensaje){
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/addcopiesdatabase.php"
-				document.admin.target=""				
+				document.admin.target=""
 				break;
-			case "copiesocurrenciesreport":    //Marcos Script				
+			case "copiesocurrenciesreport":    //Marcos Script
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/copiesdupreport.php"
-				document.admin.target=""				
+				document.admin.target=""
 				break;
-			case "addloanobjectcopies":    //Marcos Script				
+			case "addloanobjectcopies":    //Marcos Script
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="addloanobjectcopies.php"
-				document.admin.target=""				
-				break;				
-			case "addloanobj":    //Marino Vretag				
+				document.admin.target=""
+				break;
+			case "addloanobj":    //Marino Vretag
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/addloanobject.php"
-				document.admin.target=""				
-				break;				
-				
-			case "isoimport":    //Marino ISO load
-				
+				document.admin.target=""
+				break;
+
+				case "advanced2":    //Marino ISO load
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/vmxISO_load.php"
 				document.admin.target=""
-				
+
 				break;
-                        case "isoexport":    //Marino ISO export
-				
+case "isoexport":    //Marino ISO export
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/vmxISO_export.php"
 				document.admin.target=""
-				
+
 				break;
-                        case "importdoc":    //Marino doc import
-				
+case "importdoc":    //Marino doc import
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/import_doc.php"
 				document.admin.target=""
-				
+
 				break;
 case "cleandb":    //Marino clean DB
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/clean_db.php"
 				document.admin.target=""
-				
+
 				break;
 				case "unlock":    //Marino Vretag
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/unlock_db_retag_check.php"
 				document.admin.target=""
 				break;
 				case "addloanobj":    //Marino addloanobj
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/addloanobject.php"
 				document.admin.target=""
-				
+
 				break;
 				case "convertutf8":    //Marino convert
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/convert_utf8.php"
 				document.admin.target=""
-				
+
 				break;
 				case "convertansi":    //Marino convert
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/convert_ansi.php"
 				document.admin.target=""
-				
+
 				break;
 				case "barcode":    //Marino barcode search
-				
+
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/barcode_check.php"
 				document.admin.target=""
-				
+
 				break;
-				case "docbatchimport":     //EdS docbatchimport
+				case "docbatchimport":     //Marcos docbatchimport
 				//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 				document.admin.base.value=base
 				document.admin.cipar.value=base+".par"
 				document.admin.action="../utilities/docbatchimport.php"
-				document.admin.target=""
-				break;
-				
-				case "msrt":     //sort database
-				//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
-				document.admin.base.value=base
-				document.admin.cipar.value=base+".par"
-				document.admin.action="../utilities/msrt.php"
 				document.admin.target=""
 				break;
 
@@ -259,21 +243,19 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mx_based.php";
 
 		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
              <br>
-			<ul>						
+			<ul style="font-size:12px;line-height:20px">
 			<?php
 			if (($arrHttp["base"]!="copies") and ($arrHttp["base"]!="providers") and ($arrHttp["base"]!="suggestions") and ($arrHttp["base"]!="purchaseorder")
                         and ($arrHttp["base"]!="users") and ($arrHttp["base"]!="loanobjects") and ($arrHttp["base"]!="trans") and ($arrHttp["base"]!="suspml") ) {
                         ?>
 			<li><a href='Javascript:EnviarForma("docbatchimport","<?php echo $msgstr["docbatchimport_mx"]?>")'><?php echo $msgstr["docbatchimport_mx"]?></a></li>
-			<li><a href='Javascript:EnviarForma("msrt","<?php echo 'msrt'?>")'><?php echo 'sort database'?></a></li>
-
 			<li><a href='Javascript:EnviarForma("importdoc","<?php echo "Import Document"?>")'><?php echo "Upload/Import Document"?></a></li>
                         <?php }?>
 			<li><a href='Javascript:EnviarForma("addloanobj","<?php echo $msgstr["addLOfromDB_mx"]?>")'><?php echo $msgstr["addLOfromDB_mx"]?></a></li>
-			<li><a href='Javascript:EnviarForma("addloanobjectcopies","<?php echo $msgstr["addLOwithoCP_mx"]?>")'><?php echo $msgstr["addLOwithoCP_mx"]?></a></li>          
-			<li><a href='Javascript:EnviarForma("addcopiesdatabase","<?php echo $msgstr["addCPfromDB_mx"]?>")'><?php echo $msgstr["addCPfromDB_mx"]?></a></li> 			
-			<li><a href='Javascript:EnviarForma("isoimport","<?php echo "ImportISO with mx"?>")'><?php echo "Import ISO with Visual MX"?></a></li>
-			<li><a href='Javascript:EnviarForma("isoexport","<?php echo "ExportISO with mx"?>")'><?php echo "Export ISO with Visual MX"?></a></li>
+			<li><a href='Javascript:EnviarForma("addloanobjectcopies","<?php echo $msgstr["addLOwithoCP_mx"]?>")'><?php echo $msgstr["addLOwithoCP_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("addcopiesdatabase","<?php echo $msgstr["addCPfromDB_mx"]?>")'><?php echo $msgstr["addCPfromDB_mx"]?></a></li>
+			<li><a href='Javascript:EnviarForma("advanced2","<?php echo "ImportISO MX"?>")'><?php echo "Import ISO with Visual MX"?></a></li>
+			<li><a href='Javascript:EnviarForma("isoexport","<?php echo "ExportISO MX"?>")'><?php echo "Export ISO with Visual MX"?></a></li>
 			<li><a href='Javascript:EnviarForma("cleandb","<?php echo "Clean DB"?>")'><?php echo "Clean/Compact DB"?></a></li>
                         <?php
 			if ($arrHttp["base"]=="loanobjects"){
@@ -282,17 +264,17 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mx_based.php";
                         <?php }?>
                         <li><a href='Javascript:EnviarForma("convertutf8","<?php echo "Convert ABCD to Unicode"?>")'><?php echo "Convert ABCD to Unicode"?></a></li>
                         <li><a href='Javascript:EnviarForma("convertansi","<?php echo "Convert ABCD to ANSI"?>")'><?php echo "Convert ABCD to ANSI"?></a></li>
-			  
+
 
 			<?php
 			if ($arrHttp["base"]=="copies") {
 			?>
 			<li><a href='Javascript:EnviarForma("copiesocurrenciesreport","<?php echo $msgstr["CPdupreport_mx"]?>")'><?php echo $msgstr["CPdupreport_mx"]?></a></li>
 			<?php }?>
-			
-			
-			
-			
+
+
+
+
 	<?php
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) and
 		(isset($_SESSION["permiso"]["CENTRAL_EXDBDIR"]) or
@@ -300,7 +282,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_mx_based.php";
     ){
 
     ?>
-			
+
 	<?php }?>
 			</ul>
 

@@ -7,7 +7,7 @@ FILE DATABASE.XML=%path_database%marc/pfts/lilXML.pft
 FILE standard.pft=%path_database%marc/pfts/%lang%/admarc.pft
 FILE detailed.pft=%path_database%marc/pfts/%lang%/mrclte.pft
 FILE descritores.pft=%path_database%marc/pfts/%lang%/descritores.pft
-FILE SHORTCUT.IAH=%path_database%marc/pfts/%lang%/shortcut.pft
+FILE SHORTCUT.IAH=%path_database%marc/pfts/shortcut.pft
 FILE BOOKMARK.PFT=%path_database%marc/pfts/%lang%/bookmark.pft
 FILE DBLIL_LINK.PFT=%path_database%marc/pfts/%lang%/dblil_link.pft
 FILE availability.pft=%path_database%marc/pfts/%lang%/availability.pft
@@ -18,7 +18,7 @@ FILE call_export_EndNote.pft=%path_database%marc/pfts/%lang%/call_export_EndNote
 FILE call_export_ProCite.pft=%path_database%marc/pfts/%lang%/call_export_ProCite.pft
 FILE call_export_ReferenceManager.pft=%path_database%marc/pfts/%lang%/call_export_ReferenceManager.pft
 FILE call_export_Refworks.pft=%path_database%marc/pfts/%lang%/call_export_Refworks.pft
-FILE call_statement.pft=%path_database%marc/pfts/%lang%/call_statement.pft
+
 FILE export_BibTex.pft=%path_database%marc/pfts/export_BibTex.pft
 FILE export_EndNote.pft=%path_database%marc/pfts/export_EndNote.pft
 FILE export_ProCite.pft=%path_database%marc/pfts/export_ProCite.pft
@@ -28,34 +28,34 @@ FILE export_Refworks.pft=%path_database%marc/pfts/export_Refworks.pft
 [INDEX_DEFINITION]
 
 INDEX Tw=^1Palavras^2Palabras^3Words^4Mots^d*^xTW ^uTW_^yDATABASE^mTW_
-INDEX Tt=^1Palavras do tï¿½tulo^2Palabras del tï¿½tulo^3Title words^4Mots du titre^xTI ^uTT_^yDATABASE^mTT_
-INDEX Ti=^1Tï¿½tulo^2Tï¿½tulo^3Title^4Titre^xTI ^uTI_^yDATABASE^mTI_
-INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Rï¿½sumï¿½ mots^xAB ^uAB_^yDATABASE^mAB_
+INDEX Tt=^1Palavras do título^2Palabras del título^3Title words^4Mots du titre^xTI ^uTT_^yDATABASE^mTT_
+INDEX Ti=^1Título^2Título^3Title^4Titre^xTI ^uTI_^yDATABASE^mTI_
+INDEX Ab=^1Palavras do resumo^2Palabras del resumen^3Abstract words^4Résumé mots^xAB ^uAB_^yDATABASE^mAB_
 INDEX Au=^1Autor^2Autor^3Author^4Auteur^xAU ^uAU_^yDATABASE^mAU_
 INDEX Ai=^1Autor institucional^2Autor institucional^3Institutional author^4Institutionnel auteur^xAI ^uAI_^yDATABASE^mAI_
-INDEX Ma=^1Assunto tï¿½pico^2Descriptor^3Subject^4Sujet^xMA ^uMA_^yDATABASE^mMA_
-INDEX Dg=^1Nome geogrï¿½fico^2Descriptor geogrï¿½fico^3Subject geographic^4Sujet gï¿½ographique^xGF ^uGF_^yDATABASE^mGF_
-INDEX Gf=^1Gï¿½nero/Forma^2Gï¿½nero/Forma^3Genre/Form^4Genre/Forme^xDG ^uDG_^yDATABASE^mDG_
-INDEX Pa=^1Paï¿½s^2Paï¿½s^3Country^4Pays^xPA ^uPA_^yDATABASE^mPA_^tshort
+INDEX Ma=^1Assunto tópico^2Descriptor^3Subject^4Sujet^xMA ^uMA_^yDATABASE^mMA_
+INDEX Dg=^1Nome geográfico^2Descriptor geográfico^3Subject geographic^4Sujet géographique^xGF ^uGF_^yDATABASE^mGF_
+INDEX Gf=^1Gênero/Forma^2Género/Forma^3Genre/Form^4Genre/Forme^xDG ^uDG_^yDATABASE^mDG_
+INDEX Pa=^1País^2País^3Country^4Pays^xPA ^uPA_^yDATABASE^mPA_^tshort
 
 [APPLY_GIZMO]
 
 
 [FORMAT_NAME]
 
-FORMAT standard.pft=^1Padrï¿½o^2Largo^3Large^4Grand
-FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Dï¿½taillï¿½e
+FORMAT standard.pft=^1Padrão^2Largo^3Large^4Grand
+FORMAT detailed.pft=^1Detalhado^2Detallado^3Detailed^4Détaillée
 FORMAT DEFAULT=standard.pft
 
 [HELP_FORM]
 
 HELP FORM=help_form_lilacs.htm
-NOTE FORM=note_form_lilacs.htm
+NOTE FORM F=note_form_lilacs.htm
 
 [PREFERENCES]
 
 AVAILABLE FORMS=F,A
 SEND RESULT BY EMAIL=OFF
-NAVIGATION BAR=OFF
+NAVIGATION BAR=ON
 DOCUMENTS PER PAGE=20
 FEATURES=XML

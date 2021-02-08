@@ -14,7 +14,7 @@ include("../common/header.php");
 ?>
 <!--link rel=stylesheet href=../css/styles.css type=text/css -->
 <script language=Javascript src=../dataentry/js/selectbox.js></script>
-<script language=Javascript src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Editar(){
 	msgwin=window.open("editararchivotxt.php?archivo=bases.dat&desde=menu$encabezado&desde=menu","editpar","width=600, height=500, resizable, scrollbars")

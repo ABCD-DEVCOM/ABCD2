@@ -70,8 +70,8 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
 
 include("../common/header.php");
 ?>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
-<script language=Javascript src=../dataentry/js/selectbox.js></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
 <style type=text/css>
 
 td{	font-size:12px;

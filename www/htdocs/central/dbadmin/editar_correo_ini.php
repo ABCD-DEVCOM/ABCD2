@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-01-05 guilda Added $msgstr["regresar"]
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -22,7 +25,7 @@ if (!isset($_SESSION["login"])){
 $Permiso=$_SESSION["permiso"];
 ?>
 
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="javascript" type="text/javascript">
 function Enviar(){	document.maintenance.submit()}
 </script>
@@ -38,7 +41,7 @@ echo "
 	";
 echo "<a href=\"conf_abcd.php\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>Regresar</strong></span></a>";
+	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 if (!isset($arrHttp["Opcion"]) or $arrHttp["Opcion"]!=="actualizar"){
 	echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
 	echo "

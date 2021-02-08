@@ -56,14 +56,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$config_date_format;
     $Expresion="CN_".$cn;
     $Pft="";
     $archivo=$db_path."loanobjects/pfts/".$_SESSION["lang"]."/sob.pft";
-    if (file_exists($archivo)){
-    	$fp=file($archivo);
-    	foreach ($fp as $value) $Pft.=$value." ";
-    }
-    if ($Pft==""){
-    	$Pft="(if P(v959) then v1[1]'|'v10[1]'|'v959^i,'|',v959^l,'|',v959^b,'|',v959^v,'|',v959^t,'|',v959^o,'| ',ref(['trans']l(['trans'],'TR_P_'v959^i),v20, ref(['users']l(['users']'CO_'v20),' - 'v30),'|',";
-//    	$Pft="(v959";
-
+    if (file_exists($archivo)){    	$fp=file($archivo);
+    	foreach ($fp as $value) $Pft.=$value." ";    }
+    if ($Pft==""){    	$Pft="(if P(v959) then v1[1]'|'v10[1]'|'v959^i,'|',v959^l,'|',v959^b,'|',v959^v,'|',v959^t,'|',v959^o,'| ',ref(['trans']l(['trans'],'TR_P_'v959^i),v20, ref(['users']l(['users']'CO_'v20),' - 'v30),'|',";
     	switch (substr($config_date_format,0,2)){
 		    case "DD":
 		    	$Pft.= "v40*6.2,'/',v40*4.2,'/',v40.4";
@@ -80,12 +75,10 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$config_date_format;
 	$Expresion=urlencode($Expresion);
 	$formato_obj=urlencode($formato_ex);
 	$query = "&Opcion=disponibilidad&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Expresion=".$Expresion."&Pft=$formato_ex";
-//echo "query=".$query;die;
 	include("../common/wxis_llamar.php");
 	$loanobjects=array();
 	$ix=0;
-	foreach ($contenido as $linea){
-		$linea=trim($linea);
+	foreach ($contenido as $linea){		$linea=trim($linea);
 		if ($linea!="" and substr($linea,0,8)!='$$TOTAL:')
 			$loanobjects[]=$linea;
 
@@ -107,7 +100,6 @@ global $db_path,$Wxis,$wxisUrl,$xWxis;
    		$Expresion=urlencode($Expresion);
 
 		$query = "&Opcion=disponibilidad&base=copies&cipar=$db_path"."par/copies.par&Expresion=".$Expresion."&Pft=$formato_ex";
-//echo "query=".$query;die;
 		include("../common/wxis_llamar.php");
 		$nc="";
         foreach ($contenido as $linea){
@@ -247,22 +239,17 @@ else
 $codigos=explode("\n",$arrHttp["inventory"]);
 $archivo=$db_path."loanobjects/pfts/".$_SESSION["lang"]."/sob_h.txt";
 $tit_tabla="";
-if (file_exists($archivo)) {
-	$fp=file($archivo);
-	foreach ($fp as $value) {
-		if($tit_tabla=="")
+if (file_exists($archivo)) {	$fp=file($archivo);
+	foreach ($fp as $value) {		if($tit_tabla=="")
 		  	$tit_tabla.=$value;
 		else
-			$tit_tabla.='$$$'.$value;
-	}
-}else{
+			$tit_tabla.='$$$'.$value;	}}else{
 	$tit_tabla=$msgstr["inventory"].'$$$'.$msgstr["main_lib"].'$$$'.$msgstr["branch_lib"].'$$$'.$msgstr["volume"].'$$$'.$msgstr["tome"].'$$$'.$msgstr["typeofitems"].'$$$'.$msgstr["usercode"].'$$$'.$msgstr["devdate"];
 }
 $t_obj=explode('$$$',$tit_tabla);
 $ncols_tit=count($t_obj);
 
-foreach ($codigos as $cod_inv){
-	$mensaje="";
+foreach ($codigos as $cod_inv){	$mensaje="";
 	$cod_inv=trim($cod_inv);
 	if ($cod_inv=="")continue;
 	if (strpos($lista_control_no,";".$cod_inv.";")!==false)
@@ -276,8 +263,7 @@ foreach ($codigos as $cod_inv){
 		$primera_vez="S";
 		foreach ($ejemp as $eje){
 			$tit=$eje[0];
-       		if (trim($tit)!=""){
-				$t=explode('|',$tit);
+       		if (trim($tit)!=""){				$t=explode('|',$tit);
 				$catalog_db=strtolower($t[1]);
 				$control_no=$t[0];
 				If (trim($catalog_db)!="" and $primera_vez=="S"){
@@ -299,11 +285,7 @@ foreach ($codigos as $cod_inv){
 						echo "<th>".$val."</th>";
 
 				}
-                        //echo "eje=";
-                        //var_dump($eje);
-                        //echo "<BR>";
-                        //die;
-                        	$lista_control_no.=ShowItems($eje,$codigos,$Opcion,$lista_control_no,$ncols_tit);
+				$lista_control_no.=ShowItems($eje,$codigos,$Opcion,$lista_control_no,$ncols_tit);
 			}
 		}
 		echo "</table>";
@@ -321,27 +303,20 @@ foreach ($codigos as $cod_inv){
 Function ShowItems($item,$codigos,$Opcion,$lista_control_no,$cols){
 global $msgstr,$mensaje;
 	$lista_inv="";
-//        var_dump($item);//die;
-//        echo "item1=".$item[0]."<BR>";
-	if (isset($item[0])){
-		$nota="";
-		if ($item[0]=="*") {
-			$item[0]=$item[0];
+	if (isset($item[1])){		$nota="";
+		if ($item[1]=="*") {			$item[1]=$item[0];
 			$nota="<font color=red> (*) </font>";
-			$mensaje="S";
-		}
-		$l1=explode('|',$item[0]);
+			$mensaje="S";		}
+		$l1=explode('|',$item[1]);
 		//$l1=explode('$$$',$l[2]);
-		$inv=$l1[2]; //echo "inv=$inv<BR>";
+		$inv=$l1[2];
 		echo "<tr>";
 		$ixt=0;
 		$ixcols=0;
 		foreach ($l1 as $value){
 
 			$ixcols=$ixcols+1;
-			if ($ixcols>2){
-				$ixt=$ixt+1;
-	            echo "<td bgcolor=white valign=top>";
+			if ($ixcols>2){				$ixt=$ixt+1;	            echo "<td bgcolor=white valign=top>";
 	            if ($value=="")
 	            	echo "&nbsp;";
 	          	else
@@ -349,12 +324,9 @@ global $msgstr,$mensaje;
 	            echo "$nota </td>";
 	            $nota="";
 	         }
-
-		}
-		if($ixt<$cols){
-			for ($i=$ixt;$i<$cols;$i++)
-				echo "<td bgcolor=white>&nbsp;</td>";
-		}
+		}
+		if($ixt<$cols){			for ($i=$ixt;$i<$cols;$i++)
+				echo "<td bgcolor=white>&nbsp;</td>";		}
 		$lista_inv.=";".$inv.";";
     }else{
 	    if (isset($item[0])){
@@ -362,11 +334,10 @@ global $msgstr,$mensaje;
 			echo "<tr>";
 			echo "<td bgcolor=white>".$l[2]."</td>";
 			echo "<td bgcolor=white colspan=$cols-1>";
-			echo "PROBLEM : ".$msgstr["copy_nlo"]." (".$l[3].")";
+			echo $msgstr["copy_nlo"]." (".$l[3].")";
 			echo "</td>";
     	}
     }
-//echo "lista_inv=".$lista_inv, "<BR>";   die;
     return $lista_inv;
 }
 

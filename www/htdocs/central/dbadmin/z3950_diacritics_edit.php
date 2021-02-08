@@ -11,7 +11,7 @@ include("../lang/soporte.php");
 include("../common/header.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 ?>
-<script src=../dataentry/js/lr_trim.js></script>
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 
 document.onkeypress =
@@ -133,7 +133,7 @@ if (isset($arrHttp["encabezado"])){
 
 	<div class="actions">
 <?php
-	if ($encabezado!="") echo "<a href=z3950_conf.php?&base=^a".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">";
+	if ($encabezado!="") echo "<a href=z3950_conf.php?&base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">";
 ?>
 <img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
