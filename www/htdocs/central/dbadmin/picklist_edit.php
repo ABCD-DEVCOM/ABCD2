@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-02-08 fho4abcd Remove code in comment
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -28,7 +31,10 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 }else{
 	$archivo=str_replace("%path_database%",$db_path,$arrHttp["picklist"]);
 }
-if (strpos($arrHttp["picklist"],'../')!==false){	echo "<h1>invalid pick list name</h1>";die;}?>
+if (strpos($arrHttp["picklist"],'../')!==false){
+	echo "<h1>invalid pick list name</h1>";die;
+}
+?>
 <script>
 
 	function AgregarFila(ixfila,Option){
@@ -53,19 +59,22 @@ if (strpos($arrHttp["picklist"],'../')!==false){	echo "<h1>invalid pick list na
 
 	}
 
-	function Cancelar(){		document.cancelar.submit()	}
+	function Cancelar(){
+		document.cancelar.submit()
+	}
 
 	function Enviar(){
 		cols=mygrid.getColumnCount()
 		rows=mygrid.getRowsNum()
 		VC=""
-		for (i=0;i<rows;i++){			lineat=""
+		for (i=0;i<rows;i++){
+			lineat=""
 			for (j=0;j<cols;j++){
 				cell=mygrid.cells2(i,j).getValue()
 				if (cell.indexOf('|')!=-1){
 					fila=i+1
 					columna=j+1
-					alert("caracter inválido | en la fila "+fila+" columna "+columna)
+					alert("caracter invÃ¡lido | en la fila "+fila+" columna "+columna)
 					return
 				}
 				if (j==0)
@@ -88,11 +97,9 @@ if (strpos($arrHttp["picklist"],'../')!==false){	echo "<h1>invalid pick list na
 
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlxcommon.js"></script>
-	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlxgrid.js"></script>
-	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlxgridCell.js"></script-->
-	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
- 	<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+ 	<script  src="../dataentry/js/lr_trim.js"></script>
+
 <?php
 echo "
 	<div class=\"sectionInfo\">
@@ -104,7 +111,12 @@ echo "
 	";
 if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="fixed_marc"){
 	echo "<a href=\"fixed_marc.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
-}else{	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry"){       echo "<a href=javascript:self.close() class=\"defaultButton cancelButton\">";	}else	 	echo "<a href=\"javascript:Cancelar()\" class=\"defaultButton cancelButton\">";}
+}else{
+	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry"){
+       echo "<a href=javascript:self.close() class=\"defaultButton cancelButton\">";
+	}else
+	 	echo "<a href=\"javascript:Cancelar()\" class=\"defaultButton cancelButton\">";
+}
 
 echo "
 					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
@@ -209,7 +221,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: picklist_edit.php" ;
 				echo "mygrid.addRow((new Date()).valueOf(),['".trim($t[0])."','".trim($t[1])."','".trim($t[2])."'],i)\n";
 			}
 		}
-	}else{
+	}else{
+
  	}
 ?>
 

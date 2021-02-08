@@ -298,8 +298,8 @@ S||Authority record control number or standard number|0|0|0||X|||||||||0||0|0|||
 S||Source|0|0|2||X|||||||||0||0|0|||
 S||Materials specified|0|0|3||X|||||||||0||0|0|||
 T|351|Organization and Arrangement of Materials|0|1|12abc3|||||||||||1|http://www.loc.gov/marc/bibliographic/bd351.html|0|0|||
-S||Indicator 1|0|0|1||X||1|P|ind-b.tab|||||0||0|0|||
-S||Indicator 2|0|0|2||X||1|P|ind-b.tab|||||0||0|0|||
+S||Indicator 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicator 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
 S||Organization|0|0|a||X|||||||||0||0|0|||
 S||Arrangement|0|0|b||X|||||||||0||0|0|||
 S||Hierarchical level|0|0|c||X|||||||||0||0|0|||

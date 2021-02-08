@@ -315,7 +315,7 @@ S||Idioma da obra|0|0|l||X|||||||||0||0|
 S||Subdivisão de Forma|0|1|v||X|||||||||0||0|
 S||Subdivisão Geral|0|1|x||X|||||||||0||0|
 T|650|Assunto - Termo Tópico|0|1|12avxyz||X|2|100|D||MA_|@autoridades.pft|||1||0|
-S||Indicador 1|0|0|1||X||1|P|ind-b.tab|||||0||0|
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|
 S||Indicador 2|0|0|2||X||1|P|650-ind2.tab|||||0||0|
 S||Termo tópico|0|0|a||X|||||||||0||0|
 S||Subdivisão de Forma|0|1|v||X|||||||||0||0|
