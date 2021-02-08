@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-02-08 fho4abcd. Remove code in comment & languaje->language
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -34,12 +37,9 @@ include("../common/header.php");
 ?>
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlXcommon.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgrid.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgridCell.js"></script-->
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
-	<script languaje=javascript>
+	<script language=javascript>
 		pl_type=""
 		Opcion="<?php echo $arrHttp["Opcion"]?>"
 		valor=""
