@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-02-08 fho4abcd Remove code in comment
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -68,7 +71,7 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 				if (cell.indexOf('|')!=-1){
 					fila=i+1
 					columna=j+1
-					alert("caracter inválido | en la fila "+fila+" columna "+columna)
+					alert("caracter invÃ¡lido | en la fila "+fila+" columna "+columna)
 					return
 				}
 				if (j==0)
@@ -91,9 +94,6 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<!--script  src="../dataentry/js/dhtml_grid/dhtmlXcommon.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgrid.js"></script>
-	<script  src="../dataentry/js/dhtml_grid/dhtmlXgridCell.js"></script-->
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 <?php
