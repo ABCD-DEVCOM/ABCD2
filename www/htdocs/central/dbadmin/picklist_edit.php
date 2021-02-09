@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-02-08 fho4abcd Remove code in comment
+2021-02-09 fho4abcd Original name for dhtmlX.js
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -97,7 +98,7 @@ if (strpos($arrHttp["picklist"],'../')!==false){
 
 	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 
-	<script  src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 
 <?php

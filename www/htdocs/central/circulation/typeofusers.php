@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-02-09 fho4abcd Original name for dhtmlX.js
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -22,7 +25,7 @@ $rows_title[3]=$msgstr["web_reserve"];
 include("../common/header.php");
 ?>
 <link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
-<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlx.js"></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 
@@ -132,17 +135,20 @@ echo "  </div>
 		$archivo=$db_path."circulation/def/".$lang_db."/typeofusers.tab";
 	if (file_exists($archivo)){
 		$fp=file($archivo);
-	}else{		$fp=array();
+	}else{
+		$fp=array();
 		for ($i=0;$i<20;$i++){
 			$fp[$i]='|||||';
 		}
-		$tope=20;	}
+		$tope=20;
+	}
 	$nfilas=0;
 	$i=-1;
 	$t=array();
 	$i=-1;
 	$IN=array();
-	foreach ($fp as $value){		$value=trim($value);
+	foreach ($fp as $value){
+		$value=trim($value);
 		if (trim($value)!=""){
 	    	$nfilas=$nfilas+1;
 			echo "\n<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n";
