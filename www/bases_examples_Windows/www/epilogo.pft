@@ -12,7 +12,7 @@
 '<A Name=final>'/
 '<hr size=1>'/
 '<center>'/
-'<font class=menu>',v1002,' Registros recuperados '
+'<font class=menu>',v1002,' Records retrieved '
 '<br>'
 if a(v3333) then 
     if p(v1021) then 
@@ -54,11 +54,10 @@ if a(v3333) then
 fi,
 
 if val(v1091) = 3 then,
-   '<center><h4>Error de sintáxis.</h4></center>'/,
+   '<center><h4>Syntax error.</h4></center>'/,
    else,
       if val(v1091) = 4 then,
-         '<center><h4>Error de ejecución en
-         b&uacute;squeda.</h4></center>'/,
+         '<center><h4>Search execution error.</h4></center>'/,
       fi,
 fi,
 '<center>'/
@@ -70,23 +69,23 @@ if val(v1002)>0 then,
   if (val(v1032)<>0) and 
     (val(v1002)>val(v1032)-val(v1031)+1) then 
     
-     'Presentados en esta página: del '
+     'Shown in this page: from '
 	if v1081='reverse' then
        v1002 ' al '  f(val(v1002)-val(v1032)+1,1,0)
     else 
-		v1031' al ' if val(v1032)>val(v1002) then v1002 else  v1032 fi 
+		v1031' to ' if val(v1032)>val(v1002) then v1002 else  v1032 fi 
     fi,
      '<center>'/
      '<span class=menu>'
-     'Ir al registro no. <input type=text class=td2 name=from size=5 value=',
+     'Go to record <input type=text class=td2 name=from size=5 value=',
      if v1081='reverse' then
          f(val(v1002)-val(v1032),1,0) '>'
      else
      	if val(v1032)<val(v1002) then f(val(v1032)+1,1,0),else '1' fi '>', 
 	 fi,
-       '         Presentar ',
-        '<input class=td2 type=text name=to size=5 value=',f(val(v1032)-val(v1031)+1,1,0),'>'  /, ' registros    
-         m&aacute;s  '/
+       '         Show ',
+        '<input class=td2 type=text name=to size=5 value=',f(val(v1032)-val(v1031)+1,1,0),'>'  /, ' more records    
+           '/
   else,
      '<input type=hidden name=from value=1>'/
   fi/
@@ -104,8 +103,6 @@ fi,
 '<br><br>'/
 
 '</form>'/
-
-
 '</body>'
 '</html>'
 
