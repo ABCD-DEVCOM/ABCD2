@@ -1,3 +1,0 @@
-20170203 07:17:37 AM	abcd	/central/dataentry/inicio_main.php	/ABCD/www/htdocs/central/dataentry/wxis/login.xis	&base=acces&cipar=/ABCD/www/bases/par/acces.par&login=abcd&password=adm&path_db=/ABCD/www/bases/&syspar=/ABCD/www/bases/par/syspar.par
-20170203 07:17:37 AM	abcd	/central/dataentry/inicio_base.php	/ABCD/www/htdocs/central/dataentry/wxis/administrar.xis	&base=unicode&cipar=/ABCD/www/bases/par/unicode.par&Opcion=status&path_db=/ABCD/www/bases/&syspar=/ABCD/www/bases/par/syspar.par
-20170203 07:17:41 AM	abcd	/central/dataentry/fmt.php	/ABCD/www/htdocs/central/dataentry/wxis/buscar.xis	&cipar=/ABCD/www/bases/par/unicode.par&Mfn=38&Opcion=ver&base=unicode&Formato=/ABCD/www/bases/unicode/pfts/en/unicode&path_db=/ABCD/www/bases/&syspar=/ABCD/www/bases/par/syspar.par
