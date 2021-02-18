@@ -1,6 +1,0 @@
-unicode.*=%path_database%unicode/data/unicode.*
-unicode.pft=%path_database%unicode/pfts/en/unicode.pft
-prologoact.pft=%path_database%www/prologoact.pft
-epilogoact.pft=%path_database%www/epilogoact.pft
-isisac.tab=%path_database%unicode/data/isisactab_utf8.tab
-isisuc.tab=%path_database%unicode/data/isisuctab_utf8.tab
