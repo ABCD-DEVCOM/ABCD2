@@ -1,7 +1,6 @@
 <?php
 /* Modifications
 2021-01-05 fho4abcd Modified comment for button with incorrect reference. This restores button bar.
-2021-02-25 fho4abcd Mail button restored: index is present and code also.
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -315,7 +314,7 @@ function GenerarWks(){
 	    isset($_SESSION["permiso"][$db."_CENTRAL_PREC"])){
 	?>
 		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarPrint.png","20","24",12,"3_imprimir","<?php echo $msgstr["m_reportes"]?>"))
-		toolbar.addItem(new dhtmlXImageButtonObject("img/mail_p.png","26","24",14,"email","<?php echo $msgstr["m_email"]?>"))
+		/*toolbar.addItem(new dhtmlXImageButtonObject("img/mail_p.png","26","24",14,"email","<?php echo $msgstr["m_email"]?>"))*/
 	<?php }
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"])      or
 	    isset($_SESSION["permiso"]["CENTRAL_UTILS"])    or
