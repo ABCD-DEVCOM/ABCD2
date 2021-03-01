@@ -5,6 +5,7 @@
 2021-02-04 fho4abcd: ensure trailing slash for $db_path
 2021-02-10 fho4abcd: new/improved checks $ABCD_path, $db_path, abcd.def
 2021-02-10 fho4abcd: replace fixed server port by autodetection of server port, code formatting
+2021-02-25 fho4abcd: don't send header info (wrong and out of order here)
 */
 
 ini_set('error_reporting', E_ALL);
@@ -84,6 +85,14 @@ $institution_name="";
 $cisis_ver=""; // initialisation of $cisis_ver as empty = default standard CISIS-version
 
 // Check existence of locations/files
+// These checks are not bulletproof: succesfull check does not guarantee correct configuration
+$document_root=$_SERVER['DOCUMENT_ROOT'];
+if (!fnmatch("*".$ABCD_path."*", $document_root)) {
+    echo "<div>Variable '\$ABCD_path' in the configuration file must be a substring of 'DocumentRoot' in the virtual host file</div>";
+    echo "<div>E.g. \"$ABCD_path\" (configured path) must be substring of \"$document_root\" (DocumentRoot)</div>";
+    echo "<div>&#8594; Please check your virtual host file and variable '\$ABCD_path' in file ".__FILE__."</div>";
+    die;
+}
 if (!file_exists($ABCD_path)) {
     echo "<div>Missing Base path to ABCD installation folder: $ABCD_path</div>";
     echo "<div>&#8594; Please check variable '\$ABCD_path' in file ".__FILE__."</div>";
@@ -112,7 +121,7 @@ else
 
 
 if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php")){
-        //Include config_extended.php that reads extra configuration parameters
+    //Include config_extended.php that reads extra configuration parameters
  	include (realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended.php");
 }
 //en el config_extended.php se pueden cambiar los valores de $def["UNICODE"],$def[["CISIS_VERSION"]] 0 $def["UNICODE"]
@@ -128,7 +137,6 @@ if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended
 	$charset="ISO-8859-1";
 }
 if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
-header('Content-Type: text/html; charset=$charset');
 
 //SE CAMBIA EL LENGUAJE POR DEFECTO POR EL QUE SE ESTABLEZCA EN abcd.def
 if (isset($def["DEFAULT_LANG"])) $lang=$def["DEFAULT_LANG"];

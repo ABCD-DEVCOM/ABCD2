@@ -3,6 +3,7 @@
 2021-01-04 fho4abcd Removed login encryption
 2021-01-04 fh04abcd Corrected "languaje" --> language
 2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
+2021-02-27 fho4abcd png favicon works better in bookmarks. 
 */
 
 session_start();
@@ -36,7 +37,7 @@ include ("$app_path/lang/lang.php");
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
-                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" sizes="16x16">
+        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 
 		<title>ABCD</title>
 		<!-- Stylesheets -->
@@ -48,9 +49,7 @@ include ("$app_path/lang/lang.php");
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
 <script src=<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
-<!-- Crypto not required if password encoding is not active
-<script src=<?php echo $app_path?>/dataentry/js/crypto-js.js></script>
--->
+
 <script language=javascript>
 
 document.onkeypress =
