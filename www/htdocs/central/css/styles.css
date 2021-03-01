@@ -1,11 +1,10 @@
+/* 2021-03-01 fho4abcd : deleted overruled font-family, font-size */
 /* #general styles */
 BODY {
 	background: #364c6c;
 }
 
 BODY, INPUT, SELECT, TEXTAREA {
-	font-family: "Trebuchet MS", Arial, Verdana, Helvetica;
-	font-size: 10pt;
 	color: #000;
 	BORDER-TOP-COLOR: #000000;
 	BORDER-LEFT-COLOR: #000000;
