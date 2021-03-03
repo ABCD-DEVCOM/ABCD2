@@ -106,7 +106,7 @@ LABEL {
 
 	.helper {
 		background: url('../images/icon/helper_bg.png') no-repeat top left;
-		color: #646567
+		color: #cddef6;
 	}
 
 	.alert {

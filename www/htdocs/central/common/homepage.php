@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-02-25 fho4abcd Conformance: Moved <body>,</body>,<html>, deleted <div>. Non-functional readability of html
+2021-03-02 fho4abcd Replaced helper code fragment by included file
+*/
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
 unset($_SESSION["root_base"]);
 unset($_SESSION["dir_base"]);
@@ -81,6 +85,7 @@ if (file_exists($db_path."logtrans/data/logtrans.mst")){
 }
 include("header.php");
 ?>
+<body>
 <script>
 
 function ActivarModulo(Url,base){	if (base=="Y"){		ix=document.admin.base.selectedIndex
@@ -228,7 +233,6 @@ function Modulo(){
 
 	</script>
 
-<body>
 <div class=heading>
 	<div class="institutionalInfo">
 		<h1><img src=<?php if (isset($logo))
@@ -270,11 +274,12 @@ function Modulo(){
 		die;
 	}
 ?>
-<div class="language"><form name=cambiolang> <table border=0><td><?php echo $msgstr["lang"]?>:</td>
-	<td><select name=lenguaje style="width:90px;font-size:10pt;font-family:arial narrow" onchange=CambiarLenguaje()>
+<div class="language">
+    <form name=cambiolang> <table border=0>
+    <tr><td><?php echo $msgstr["lang"]?>:</td>
+	<td><select name=lenguaje style="width:90px;font-size:8pt;font-family:arial narrow" onchange=CambiarLenguaje()>
 		<option value=""></option>
-		 <?php
-
+<?php
  	if (file_exists($a)){
 		$fp=file($a);
 		$selected="";
@@ -283,16 +288,20 @@ function Modulo(){
 			if ($value!=""){
 				$l=explode('=',$value);
 				if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-				echo "<option value=$l[0] $selected>".$l[1]."</option>";
+				echo "     <option value=$l[0] $selected>".$l[1]."</option>\n";
 				$selected="";
 			}
 		}
-		echo "</select>";
 	}else{
 		echo $msgstr["flang"].$db_path."lang/".$_SESSION["lang"]."/lang.tab";
 		die;
 	}
-	echo "</td><tr>";
+?>
+        </select>
+    </td>
+    </tr>
+    <tr>
+ <?php
 	$central="";
 $circulation="";
 $acquisitions="";
@@ -305,27 +314,29 @@ foreach ($_SESSION["permiso"] as $key=>$value){
 
 }
 if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
-	echo "<td>".$msgstr["modulo"].":</td><td>";
-  	echo '<select name=modulo style="width:90px;font-size:8pt;font-family:arial narrow"   onchange=Modulo()>';
-  	echo '<option value=""></option>';
+	echo "   <td>".$msgstr["modulo"].":</td>
+    <td>\n    ";
+  	echo '<select name=modulo style="width:90px;font-size:8pt;font-family:arial narrow"   onchange=Modulo()>'."\n";
+  	echo '    <option value=""></option>'."\n";
   	if ($central=="Y") {
-  		echo "<option value=catalog";
+  		echo "    <option value=catalog";
   		if ($_SESSION["MODULO"]=="catalog") echo " selected";
-  		echo ">".$msgstr["catalogacion"];
+  		echo ">".$msgstr["catalogacion"]."\n";
   	}
   	if ($circulation=="Y") {
-  		echo "<option value=loan";
+  		echo "    <option value=loan";
   		if ($_SESSION["MODULO"]=="loan") echo " selected";
-  		echo ">".$msgstr["prestamo"];
+  		echo ">".$msgstr["prestamo"]."\n";
   	}
   	if ($acquisitions=="Y") {
-  		echo "<option value=acquisitions";
+  		echo "    <option value=acquisitions";
   		if ($_SESSION["MODULO"]=="acquisitions") echo " selected";
-  		echo ">".$msgstr["acquisitions"];
+  		echo ">".$msgstr["acquisitions"]."\n";
   	}
-  	echo "</select></td></table>";
 }
 ?>
+    </select></td>
+    </table>
     </form>
     </div>
 	</div>
@@ -344,16 +355,8 @@ if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
 	<div class="spacer">&#160;</div>
 </div>
 
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]."/$ayuda"?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
- <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])){
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/$ayuda target=_blank>".$msgstr["edhlp"];
-	echo "</a>
-		&nbsp; &nbsp; Script: homepage.php";
-}
-?>
-</div>
+<?php $wiki_help="";include "inc_div-helper.php"?>
+
 <div class="middle homepage">
 <?php
 $Permiso=$_SESSION["permiso"];
@@ -366,8 +369,7 @@ switch ($_SESSION["MODULO"]){	case "catalog":
 	case "acquisitions":
 		MenuAcquisitionsAdministrator();
 		break;}
-echo "		</div>
-	</div>";
+echo "		</div>";
 include("footer.php");
 echo "<form name=admFrm method=post>
 <input type=hidden name=Opcion>
@@ -376,8 +378,7 @@ echo "<form name=admFrm method=post>
 <input type=hidden name=retorno>
 <input type=hidden name=cipar>
 </form>";
-echo "	</body>
-</html>";
+
 
 ///---------------------------------------------------------------
 
@@ -571,3 +572,4 @@ echo "</script>\n";
 screen_width=window.screen.availWidth
 document.admin.screen_width.value=screen_width
 </script>
+</body></html>

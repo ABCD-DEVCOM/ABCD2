@@ -1,6 +1,8 @@
 <?php
-//error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-
+/* Modifications
+2021-03-03 fho4abcd Replaced helper code fragment by included file
+2021-03-03 fho4abcd Conformance:moved <body>, deleted <td> replaced <center>,...
+*/
 // ==================================================================================================
 // INICIO DEL PROGRAMA
 // ==================================================================================================
@@ -39,8 +41,9 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
 }
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
-<script languaje=javascript>
+<script language=javascript>
 
 function EnviarForma(){	buscar=""	if (document.forma1.tipob[0].checked)
 		buscar="valor"
@@ -90,7 +93,6 @@ function Buscar(){
 }
 
 </script>
-<body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["m_busquedalibre"].": ".$arrHttp["base"]?>
@@ -99,28 +101,19 @@ function Buscar(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/freesearch.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/freesearch.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "&nbsp; &nbsp; &nbsp; <a href=\"http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas#B.C3.BAsqueda_Libre\" target=_blank>abcdwiki</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: dataentry/freesearch.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
+<?php $wiki_help="B%C3%BAsquedas#B.C3.BAsqueda_Libre";
+      include "../common/inc_div-helper.php"
 ?>
+<div class="middle form">
+<div class="formContent">
 <form name=forma1 method=post action=freesearch_ex.php onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
 <input type=hidden name=MaxMfn>
 <input type=hidden name=fields>
-<center>
-<table cellpading=5 cellspacing=5 border=0 width=600>
+</form>
+<div align=center>
+<table cellpadding=2 cellspacing=5 border=0 width=600>
 
 	<tr>
 	<td align=center bgcolor=#cccccc colspan=3><?php echo $msgstr["r_recsel"]?> </td>
@@ -131,10 +124,9 @@ echo "
 		<td  align=left><?php echo $msgstr["cg_to"]?>: <input type=text name=to size=10>
 		<script> if (top.window.frames.length>0)
 			document.writeln(" &nbsp; &nbsp; &nbsp; (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script></td>
-		</td>
 
 	</tr>
-		<?php
+<?php
 	if (isset($arrHttp["seleccionados"])){
 		echo "<tr>
 				  <td><strong>".$msgstr["selected_records"]."</strong></td><td colspan=2>";
@@ -143,12 +135,13 @@ echo "
 		echo "<input type=text name=seleccionados size=100 value=$sel>\n";
 		echo "</td></tr>";
 	}
-	?>
+?>
 	<TR><td colspan=3><hr></td>
 	<tr>
 		<td  align=left valign=top><a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle border=0><?php echo $msgstr["cg_search"]?> </a></td>
         <TD colspan=2 align=left><?php echo $msgstr["expresion"]?><br>
-		<textarea rows=1 cols=80 name=Expresion><?php
+		<textarea rows=1 cols=80 name=Expresion>
+<?php
 	if (isset($arrHttp["Expresion"])){
 	  	echo $Expresion;
 	}
@@ -182,11 +175,10 @@ echo "
 	<?php echo $msgstr["buscar"]?><input type=radio name=tipob value=string>Valor  <input type=radio name=tipob value=pft>Pft:<br><textarea name=search cols=100 rows=2></textarea></td>
 
 </table>
-<p><input type=submit value=<?php echo $msgstr["cg_execute"]?> onClick=javascript:EnviarForma()>
+<p><input type=submit value=<?php echo $msgstr["cg_execute"]?> onClick=javascript:EnviarForma()></p>
 </div>
 </div>
-</center>
-</form>
+</div>
 <?php
 include("../common/footer.php");
 ?>
