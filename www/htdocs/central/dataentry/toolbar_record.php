@@ -1,22 +1,20 @@
 <?php
+/* Modifications
+2021-03-02 fho4abcd Replaced helper code fragment by included file
+*/
 
 //echo $arrHttp["ventana"];
-if (!isset($fmt_test) and !isset($arrHttp["ventana"])){	echo "<div class=\"helper\" style=\"height:23px\">\n" ;
-	if (isset($default_values)){
-		echo "<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/valdef.html target=_blank>".$msgstr["m_ayuda"]."</a>&nbsp &nbsp;";
-	    if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/valdef.html target=_blank>". $msgstr["edhlp"]."</a>";
+if (!isset($fmt_test) and !isset($arrHttp["ventana"])){	if (isset($default_values)){
+        $ayuda = "valdef.html";
 	}else{
 		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
-			echo "<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/copy_record.html target=_blank>".$msgstr["m_ayuda"]."</a>&nbsp &nbsp;";
-	    	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/copy_record.html target=_blank>". $msgstr["edhlp"]."</a>";
+            $ayuda = "copy_record.html";
 		}else{
-			echo "<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/dataentry.html target=_blank>".$msgstr["m_ayuda"]."</a>&nbsp &nbsp;";
-	    	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/dataentry.html target=_blank>". $msgstr["edhlp"]."</a>";
+            $ayuda = "dataentry.html";
 	  	}
 	}
-	echo "&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Entrada_de_datos' target=_blank>abcdwiki.net</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: dataentry/fmt.php  (page-encoding: $charset)</font>
-	</div>";
+    $wiki_help="Entrada_de_datos";
+    include "../common/inc_div-helper.php";
 }
 
 ?>

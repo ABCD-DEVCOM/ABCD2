@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-03-03 fho4abcd Replaced helper code fragment by included file
+*/
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -96,6 +99,7 @@ foreach ($fpTm as $linea){
 
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script language=Javascript src=../dataentry/js/selectbox.js></script>
 <style type=text/css>
@@ -569,7 +573,6 @@ function Listados(){	ix=document.forma1.listados.selectedIndex
 	}}
 
 </script>
-<body>
 <?php
 if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
@@ -614,13 +617,7 @@ if ($arrHttp["Opcion"]=="new"){
 
 <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/pft.php";
-?></font>
-	</div>
+<?php include "../common/inc_div-helper.php" ?>
 <form name=forma1 method=post action=../dataentry/imprimir_g.php onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>

@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-03-02 fho4abcd Replaced helper code fragment by included file
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -193,15 +196,8 @@ if (html=='' && top.HTML==''){        //No changes in the toolbar}else{
 
 ?>
 <body>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/inicio_base.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/inicio_base.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Entrada_de_datos' target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: central/inicio_base.php" ?>
-</font>
-	</div>
+<?php $wiki_help="Entrada_de_datos";include "../common/inc_div-helper.php"?>
+
 <div class="middle" style="">
 			<div class="formContent">
 <br><br><br>
