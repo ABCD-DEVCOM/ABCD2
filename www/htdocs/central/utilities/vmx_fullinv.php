@@ -1,4 +1,9 @@
 <?php
+/* Modifications
+20210304 fho4abcd Replaced helper code fragment by included file
+20210304 fho4abcd Move html tags, php code indented and reordered
+20210204 fho4abcd Send mx executable to test button. Test button also on first form
+*/
 /**
  * @program:   ABCD - ABCD-Central
  * @copyright:  Copyright (C) 2015 UO - VLIR/UOS
@@ -38,18 +43,13 @@ include("../common/header.php");
 include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../lang/dbadmin.php");
-echo "<script src=../dataentry/js/lr_trim.js></script>";
-echo "<body onunload=win.close()>";
+?>
+<body onunload=win.close()>
+<script src=../dataentry/js/lr_trim.js></script>
+<?php
 include("../common/institutional_info.php");
 $base=$arrHttp["base"];
 $bd=$db_path.$base;
-
-//                        echo "base=" .$arrHttp["base"]." <BR>";
-//                        echo "unicode=$unicode<BR>";
-//echo "Cisis version : ".$cisis_ver."<BR>";
-//echo "mx_path : ".$mx_path."<BR>";
-
-
 
 echo "
 	<div class=\"sectionInfo\">
@@ -86,149 +86,123 @@ else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPositio
 settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
 win=window.open(mypage,myname,settings);}
 </script>
-
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: utilities/vmx_fullinv.php";
-
-?>
-</font>
-</div>
-
+<?php include "../common/inc_div-helper.php" ?>
 <div class="middle form">
-	<div class="formContent">
+    <div class="formContent">
+    <div align=center ><h3><?php echo $msgstr["mnt_gli"]?></h3></div>
 <?php
-echo "<center><h3>".$msgstr["mnt_gli"]."</h3></center>";
+// The test button gives the mx_path to the test window
+$testbutton='<a href="mx_test.php?mx_path='.$mx_path.'" target=test onclick=OpenWindow()>Test MX</a>';
+
+if(isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
+if(!isset($fst)) { // The form sets the fst: the first action of this php
 ?>
-<form name=maintenance action='' method='post' onsubmit='OpenWindows();'>
-<table cellspacing=5 align=center>
-	<tr>
+    <form name=maintenance action='' method='post' onsubmit='OpenWindows();'>
+    <table cellspacing=5 align=center>
+	  <tr>
 		<td>
-
-		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-
-
-			<?php
-
-
-if (isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
-if(isset($fst))
-{
-if (file_exists($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw"))
-{
-	$stw=" stw=@".$db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw";
-}
-else
-	if (file_exists($db_path."stw.tab"))
-		$stw=" stw=@".$db_path."stw.tab";
-	else
-		$stw="";
-if (!file_exists($cisis_path)){
-	echo $cisis_path.": ".$msgstr["misfile"];
-	die;
-}
-$uctab="";
-$actab="";
-$cipar="";
-if (file_exists($db_path."cipar.par")){
-	$cipar=$db_path."cipar.par";
-	$uctab="isisuc.tab";
-	$actab="isisac.tab";
-}else{
-	if (file_exists($db_path.$arrHttp["base"]."/data/isisuc.tab")){
-		$uctab=$db_path.$arrHttp["base"]."/data/isisuc.tab";
-	}else{
-		if (file_exists($db_path."isisuc.tab"))
-			$uctab=$db_path."isisuc.tab";
-	}
-	if ($uctab=="")  $uctab="ansi";
+		  <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+          <h2>Please adjust the following parameters and press 'START'</h2>
+          <br>
+    <?php
+    echo "<font size='2'>Select FST </font><select name='fst'>";
+    $handle=opendir($bd."/data/");
+    while ($file = readdir($handle)) {
+        if ($file != "." && $file != ".." && (strpos($file,".fst")||strpos($file,".FST"))) {
+            echo "<option value='$file'>$file</option>";
+        }
+    }
+    echo "</select>";echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$testbutton";
+    ?>
+    <br><br>
+    <font size='2'>Use /m parameter </font><input type='checkbox' name='m'>
+    <font color=red>Warning: do not check this parameter if you are using picklists type DB in the FDT</font>
+    <br><br>
+    <input type='submit' value='START'>
+    </td>
+    </table></form>
 
 
-	if (file_exists($db_path.$arrHttp["base"]."/data/isisac.tab")){
-		$actab=$db_path.$arrHttp["base"]."/data/isisac.tab";
-	}else{
-		if (file_exists($db_path."isisuc.tab"))
-			$actab=$db_path."isisac.tab";
-	}
-	if ($actab=="")  $actab="ansi";
-}
-//checking tabs
-//if(strpos($cisis_path,"utf8"))
-if ($unicode=="utf8")
-{
-	if (file_exists($db_path."isisactab_utf8.tab"))
-			$actab=$db_path."isisactab_utf8.tab";
+<?php
+} else {
+    if (file_exists($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw")) {
+        $stw=" stw=@".$db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw";
+    }else{
+        if (file_exists($db_path."stw.tab"))
+            $stw=" stw=@".$db_path."stw.tab";
+        else
+            $stw="";
+    }
+    if (!file_exists($cisis_path)){
+        echo $cisis_path.": ".$msgstr["misfile"];
+        die;
+    }
+    $uctab="";
+    $actab="";
+    $cipar="";
+    if (file_exists($db_path."cipar.par")){
+        $cipar=$db_path."cipar.par";
+        $uctab="isisuc.tab";
+        $actab="isisac.tab";
+    }else{
+        if (file_exists($db_path.$arrHttp["base"]."/data/isisuc.tab")){
+            $uctab=$db_path.$arrHttp["base"]."/data/isisuc.tab";
+        }else{
+            if (file_exists($db_path."isisuc.tab"))
+                $uctab=$db_path."isisuc.tab";
+        }
+        if ($uctab=="")  $uctab="ansi";
 
-		if (file_exists($db_path."isisuctab_utf8.tab"))
-		$uctab=$db_path."isisuctab_utf8.tab";
-}
-$parameters= "<br>";
-$parameters.= "database: ".$bd."/data/".$base."<br>";
-$parameters.= "fst: @".$bd."/data/".$base.".fst<br>";
-$parameters.= "mx: $mx_path"." <a href=mx_test.php target=test onclick=OpenWindow()>Test</a><br>";
-if ($stw!="") $parameters.= "stw: $stw<br>";
-if ($uctab!="") $parameters.= "uctab: $uctab<br>";
-if ($uctab!="") $parameters.= "actab: $actab<br>";
-unset($m);
-if (isset($_POST['m'])) $m=$_POST['m'];
-$m_var="";
-if(isset($m)) $m_var="/m";
 
-$strINV=$mx_path." ".$bd."/data/".$base. "$cipar fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stw fullinv".$m_var."=".$bd."/data/".$base." -all now tell=100";
-//echo "strINV=$strINV<BR>";
-exec($strINV, $output,$t);
-$straux="";
-for($i=0;$i<count($output);$i++)
-{
-$straux.=$output[$i]."<br>";
+        if (file_exists($db_path.$arrHttp["base"]."/data/isisac.tab")){
+            $actab=$db_path.$arrHttp["base"]."/data/isisac.tab";
+        }else{
+            if (file_exists($db_path."isisuc.tab"))
+                $actab=$db_path."isisac.tab";
+        }
+        if ($actab=="")  $actab="ansi";
+    }
 
-}
+    if ($unicode=="utf8"){
+        if (file_exists($db_path."isisactab_utf8.tab"))
+            $actab=$db_path."isisactab_utf8.tab";
 
-			if($straux!="")
-			{
-			echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br><hr>";
-		 // echo "Query: $strINV"."</font><br>";
-echo ("<h3>Process Result: <br>Process Finished OK</h3><br>");
-}
-else
-echo ("<h2>Output: <font color='red'><br>Process NOT EXECUTED</font></h2><br>"."<font face=courier size=2>".$parameters."<br>Command line: $strINV<br><hr>");
-if($base=="")
-{
-echo"NO database selected";
-}
+        if (file_exists($db_path."isisuctab_utf8.tab"))
+            $uctab=$db_path."isisuctab_utf8.tab";
+    }
+    $parameters= "<br>";
+    $parameters.= "database: ".$bd."/data/".$base."<br>";
+    $parameters.= "fst: @".$bd."/data/".$base.".fst<br>";
+    $parameters.= "mx: $mx_path  ".$testbutton."<br>";
+    if ($stw!="") $parameters.= "stw: $stw<br>";
+    if ($uctab!="") $parameters.= "uctab: $uctab<br>";
+    if ($uctab!="") $parameters.= "actab: $actab<br>";
+    unset($m);
+    if (isset($_POST['m'])) $m=$_POST['m'];
+    $m_var="";
+    if(isset($m)) $m_var="/m";
 
-}
-else
-{
-echo "<h2>Please adjust the following parameters and press 'START'</h2><br>";
-echo "<font size='2'>Select FST </font><select name='fst'>";
-$handle=opendir($bd."/data/");
-while ($file = readdir($handle)) {
-if ($file != "." && $file != ".." && (strpos($file,".fst")||strpos($file,".FST"))) {
-echo "<option value='$file'>$file</option>";
-}}
-echo "</select><br><br>";
-echo "<font size='2'>Use /m parameter </font><input type='checkbox' name='m'>
-<font color=red>Warning: do not check this parameter if you are using picklists type DB in the FDT</font>
-<br><br>";
-echo "<input type='submit' value='START'>";
+    $strINV=$mx_path." ".$bd."/data/".$base. "$cipar fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stw fullinv".$m_var."=".$bd."/data/".$base." -all now tell=100";
+    // execute the command
+    exec($strINV, $output,$t);
+    $straux="";
+    for($i=0;$i<count($output);$i++){
+        $straux.=$output[$i]."<br>";
+    }
+
+    if($straux!="") {
+        echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
+        echo ("<h3>Process Result: <br>Process Finished OK</h3>");
+    } else {
+        echo ("<h2>Output: <font color='red'><br>Process NOT EXECUTED</font></h2><br>"."<font face=courier size=2>".$parameters."<br>Command line: $strINV</font><hr>");
+    }
 }
 
-?></li>
-
-
-			</ul>
-
-		</td>
-</table></form>
-
-</div>
-</div>
-<?
-include("../common/footer.php");
-echo "</body></html>";
 ?>
 
+</div></div>
+
+<?php
+include("../common/footer.php");
+?>
+</body></html>
