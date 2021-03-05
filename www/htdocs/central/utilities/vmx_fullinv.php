@@ -2,7 +2,8 @@
 /* Modifications
 20210304 fho4abcd Replaced helper code fragment by included file
 20210304 fho4abcd Move html tags, php code indented and reordered
-20210204 fho4abcd Send mx executable to test button. Test button also on first form
+20210304 fho4abcd Send mx executable to test button. Test button also on first form
+20210305 fho4abcd Check process status. Catch error output. Menu as real table. Menu option to control number of standard messages
 */
 /**
  * @program:   ABCD - ABCD-Central
@@ -99,28 +100,40 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
 ?>
     <form name=maintenance action='' method='post' onsubmit='OpenWindows();'>
     <table cellspacing=5 align=center>
-	  <tr>
-		<td>
+	  <tr> <th colspan=3>
 		  <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-          <h2>Please adjust the following parameters and press 'START'</h2>
-          <br>
+          Please adjust the following parameters and press 'START'
+          </th></tr>
+      <tr><td>Select FST </td>
+           <td>
     <?php
-    echo "<font size='2'>Select FST </font><select name='fst'>";
+    echo "<select name='fst'>";
     $handle=opendir($bd."/data/");
     while ($file = readdir($handle)) {
         if ($file != "." && $file != ".." && (strpos($file,".fst")||strpos($file,".FST"))) {
             echo "<option value='$file'>$file</option>";
         }
     }
-    echo "</select>";echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$testbutton";
+    echo "</select>"
     ?>
-    <br><br>
-    <font size='2'>Use /m parameter </font><input type='checkbox' name='m'>
-    <font color=red>Warning: do not check this parameter if you are using picklists type DB in the FDT</font>
-    <br><br>
-    <input type='submit' value='START'>
-    </td>
-    </table></form>
+    </td><td></td></tr>
+    <tr> <td>Use /m parameter</td>
+         <td><input type='checkbox' name='m'></td>
+         <td><font color=red>Warning: do not check this parameter if you<br>are using picklists with type DB in the FDT</font></td>
+    </tr>
+    <tr> <td>Show execution info</td>
+         <td><input type='checkbox' name='tell'>
+         <td><select name='tellnumber'>
+             <option value="10000000">Minimal</option>
+             <option value='1000'>every 1000 records</option>
+             <option value='100'>every &nbsp;100 records</option>
+             <option value='10'>every &nbsp;&nbsp;10 records</option>
+             <option value='1'>all records (!!)</option>
+        </select></td>
+    </tr>
+    <tr> <td></td><td><input type='submit' value='START'></td>
+         <td><?php echo "$testbutton" ?></td>
+    </tr></table></form>
 
 
 <?php
@@ -177,25 +190,42 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     if ($stw!="") $parameters.= "stw: $stw<br>";
     if ($uctab!="") $parameters.= "uctab: $uctab<br>";
     if ($uctab!="") $parameters.= "actab: $actab<br>";
+    // Process /m parameter
     unset($m);
     if (isset($_POST['m'])) $m=$_POST['m'];
     $m_var="";
     if(isset($m)) $m_var="/m";
+    //process tell parameter
+    $tellvar="";
+    $tellnumbervar="";
+    unset ($tell);
+    if (isset($_POST['tell'])) $tell=$_POST['tell'];
+    if(isset($tell)){
+        $tellvar="tell=";
+        //process tellnumber parameter
+        unset ($tellnumber);
+        if (isset($_POST['tellnumber'])) $tellnumber=$_POST['tellnumber'];
+        $tellnumbervar="1000000";
+        if(isset($tellnumber)) $tellnumbervar=$tellnumber;
+    }
+    $tellvar.=$tellnumbervar;
 
-    $strINV=$mx_path." ".$bd."/data/".$base. "$cipar fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stw fullinv".$m_var."=".$bd."/data/".$base." -all now tell=100";
+    $strINV=$mx_path." ".$bd."/data/".$base. "$cipar fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stw fullinv".$m_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
     // execute the command
-    exec($strINV, $output,$t);
+    exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){
         $straux.=$output[$i]."<br>";
     }
-
-    if($straux!="") {
+    if($status==0) {
         echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
         echo ("<h3>Process Result: <br>Process Finished OK</h3>");
+        echo "$straux";
     } else {
-        echo ("<h2>Output: <font color='red'><br>Process NOT EXECUTED</font></h2><br>"."<font face=courier size=2>".$parameters."<br>Command line: $strINV</font><hr>");
-    }
+        echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
+        echo ("<h3><font color='red'><br>Process NOT EXECUTED or FAILED</font></h3><hr>");
+        echo "<font color='red'>".$straux."</font>";
+   }
 }
 
 ?>
