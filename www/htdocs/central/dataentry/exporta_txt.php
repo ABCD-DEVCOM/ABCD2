@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-03-08 fho4abcd Replaced helper code fragment by included file
+2021-03-08 fho4abcd Improved html & code. Hovering symbols works now
+*/
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $arrHttp;
 session_start();
@@ -14,30 +18,10 @@ include ("../lang/admin.php");
 include ("../lang/soporte.php");
 
 
-
-function LeerArchivos($Dir,$Ext){
-// se leen los archivos con la extensión .pft
-$the_array = Array();
-$handle = opendir($Dir);
-while (false !== ($file = readdir($handle))) {
-   if ($file != "." && $file != "..") {
-   		if(is_file($Dir."/".$file))
-		   if (substr($file,strlen($file)-4,4)==".".$Ext) $the_array[]=$file;
-   }
-}
-closedir($handle);
-return $the_array;
-}
-
 // ==================================================================================================
 // INICIO DEL PROGRAMA
 // ==================================================================================================
 
-//
-
-
-
-//foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 
 
 include("../common/header.php");
@@ -61,21 +45,12 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
   	$Expresion="";
 }
 
-//foreach ($arrHttp as $key => $value) echo "$key = $value <br>";
-
 
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
-<script language="JavaScript" type="text/javascript" src=js/selectbox.js></script>
-<style type=text/css>
-div#editformat{
-	margin: 0px 0px 0px 0px;
-	width:700px;
-	xdisplay: none;
-	border: "3px coral solid";
-}
-</style>
-<script languaje=javascript>
+<script language="JavaScript" type="text/javascript" src="js/selectbox.js"></script>
+<script language=javascript>
 
 function check( x )  {
     x = x.replace(/\*/g, "")      // delete *
@@ -95,13 +70,6 @@ function check( x )  {
    	x = x.replace(/\;/g, "")      // delete ;
    	x = x.replace(/ /g, "_")         // delete spaces
 	return x
-}
-
-function AbrirVentana(Archivo){
-return
-/*	xDir="<?php echo $xSlphp?>"
-	msgwin=window.open(xDir+"ayudas/<?php echo $lang?>/"+Archivo,"Ayuda","")
-	msgwin.focus()     */
 }
 
 
@@ -191,12 +159,11 @@ function Buscar(){
 	FormatoActual="&Formato="+Formato
 
   	Url="buscar.php?Opcion=formab&prologo=prologoact&Target=s&Tabla=imprimir&base="+base+"&cipar="+cipar+FormatoActual
-  	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
+  	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=850,height=400")
 	msgwin.focus()
 }
 
 </script>
-<body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_".$arrHttp["tipo"]]?>
@@ -209,73 +176,77 @@ function Buscar(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/exportiso.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/exportiso.html target=_blank>".$msgstr["edhlp"]."</a>
-		<font color=white>&nbsp; &nbsp; Script: dataentry/exporta_txt.php</font>";
-	echo "
+<?php $ayuda="exportiso.html"; include "../common/inc_div-helper.php" ?>
 
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
-if (!isset($arrHttp["Dir"])) $arrHttp["Dir"]="/bases_abcd/";
-?>
+<div class="middle form">
+<div class="formContent">
+
 <form name=forma1 method=post action=exporta_txt_ex.php onsubmit="Javascript:return false" >
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
-<input type=hidden name=Dir value=<?php echo $arrHttp["Dir"]?>>
 <input type=hidden name=cnv value=<?php if (isset($arrHttp["cnv"]))echo $arrHttp["cnv"]?>>
 <input type=hidden name=tipo value=<?php echo $arrHttp["tipo"]?>>
-<input type=hidden name=letrasel>
-<input type=hidden name=tagsel>
 <input type=hidden name=Accion>
 
-<center><br>
-<table cellpading=5 cellspacing=5 border=0 background=img/fondo0.jpg width=800>
+<div align=center><br>
+<table cellpadding=5 border=0 background=img/fondo0.jpg >
 	<tr>
-		<td colspan=2 align=center height=1 bgcolor=#cccccc><?php echo $msgstr["r_recsel"]?></td>
+		<td colspan=2 align=center  bgcolor=#cccccc><?php echo $msgstr["r_recsel"]?></td>
 	<tr>
-		<td  align=center colspan=2><?php echo $msgstr["r_mfnr"]?><br></td>
+		<td align=center colspan=2><?php echo $msgstr["r_mfnr"]?><br></td>
 	<tr>
-		<td width=50% align=right><?php echo $msgstr["r_desde"]?>: <input type=text name=Mfn size=10 >&nbsp; &nbsp; </td>
-		<td width=50%><?php echo $msgstr["r_hasta"]?>:<input type=text name=to size=10 >
-		<script>document.write(" (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script> <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a></td>
+		<td width=50% align=right>
+            <?php echo $msgstr["r_desde"]?>:&nbsp;<input type=text name=Mfn size=10 >&nbsp; &nbsp;
+        </td>
+		<td width=50%>
+            <?php echo $msgstr["r_hasta"]?>:&nbsp;<input type=text name=to size=10 >
+		    <script>document.write(" (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script> <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a>
+        </td>
 		<?php
 			if (isset($arrHttp["seleccionados"])){				echo "<tr>
-				 	 <td  colspan=2><strong>".$msgstr["selected_records"]."</strong>: &nbsp; &nbsp; &nbsp;";
+				<td colspan=2><strong>".$msgstr["selected_records"]."</strong>: &nbsp;";
 				$sel=str_replace("__",",",trim($arrHttp["seleccionados"]));
 				$sel=str_replace("_","",$sel);
-				echo "<input type=text name=seleccionados size=100 value=$sel>\n";
+				echo "<input type=text name=seleccionados size=80 value=$sel>\n";
 				echo "</td></tr>";
-			}else{				echo "<input type=hidden name=seleccionados>\n";			}
+			}else{ // next line required to suppress javascript errors				echo "<tr><td colspan=2><input type=hidden name=seleccionados>\n</td></tr>";			}
 		?>
 	<tr>
 		<td colspan=2><hr></td>
 
 	<tr>
-		<td align=center colspan=2><?php echo $msgstr["r_busqueda"]?><br></td>
+		<td align=center colspan=2><?php echo $msgstr["r_busqueda"]?></td>
+    </tr>
 	<tr>
-
-		<td colspan=2 class=subtitlebody>
-			<table>
-				<td><a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle border=0 alt="<?php echo $msgstr["m_indice"]?>"></a></td>
-				<td><textarea rows=4 cols=90 name=Expresion ><?php if ($Expresion!="") echo $Expresion?></textarea>
-				<a href=javascript:BorrarExpresion()><?php echo $msgstr["borrar"]?></a></td>
-			</table>
-		</td>
+    <td colspan=2>
+    <table>
+        <tr><td>
+                <a href=javascript:Buscar()><img src=img/barSearch.png height=24 border=0 title="<?php echo $msgstr["m_indice"]?>"></a>&nbsp;&nbsp;</td>
+            <td>
+                <textarea rows=3 cols=90 name=Expresion ><?php if ($Expresion!="") echo $Expresion?></textarea></td>
+            <td>
+			    &nbsp;&nbsp;<a href=javascript:BorrarExpresion()><?php echo $msgstr["borrar"]?></a></td>
+        </tr>
+    </table>
+    </td>
+    </tr>
+    <tr>
+		<td colspan=2><hr></td>
+	</tr>
 </table>
+
+<div>
 <?php
-	if ($arrHttp["tipo"]!="iso"){
-		echo "
-		<a href=javascript:EnviarForma('P')><img src=img/preview.gif border=0 alt=\"".$msgstr["vistap"]."\"></a> &nbsp;";
-	}
-	echo $msgstr["cnv_".$arrHttp["tipo"]]." &nbsp;<input type=text name=archivo size=25> &nbsp;<a href=javascript:EnviarForma('S')><img src=img/barSave.png border=0 alt=\"".$msgstr["cnv_export"]."\"></a>";
-echo "</center></div></div>";
-include("../common/footer.php");
+if ($arrHttp["tipo"]!="iso"){ // The preview symbol
+?>
+<a href="javascript:EnviarForma('P')" title=<?php echo $msgstr["vistap"]?>><img src=img/preview.gif border=0 style="vertical-align:middle"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+<?php }
+echo $msgstr["cnv_".$arrHttp["tipo"]]?> 
+<input type=text name=archivo size=25 title="Filename with extension" >&nbsp;&nbsp;
+<a href="javascript:EnviarForma('S')" title=<?php echo $msgstr["cnv_export"]?> ><img src=img/barSave.png border=0 style="vertical-align:middle"></a>
+</div><br>
+</div>
+<?php include("../common/footer.php");
 ?>
 
 

@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-03-08 fho4abcd Replaced helper code fragment by included file
+2021-03-08 fho4abcd Improved html
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -38,11 +42,12 @@ function PresentarLeader($leader,$tc){
 	}
 }
 ?>
+<body>
 <div class="sectionInfo">
-	<div class="breadcrumb">
+<div class="breadcrumb">
 <?php echo $msgstr["cnv_import"]." ".$msgstr["cnv_ver"]?>
-	</div>
-	<div class="actions">
+</div>
+<div class="actions">
 <?php echo "<a href=javascript:self.close()  class=\"defaultButton cancelButton\">";
 ?>
 		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
@@ -50,20 +55,11 @@ function PresentarLeader($leader,$tc){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php" ?>
+<div class="middle form">
+<div class="formContent">
+
 <?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/carga_txt_ver.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/carga_txt_ver.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: carga_txt_ver.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
-
 $rep="";
 $separador="";
 $fp=file($db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"]);
@@ -82,10 +78,12 @@ foreach ($fp as $value){
 	}
 }
 
-echo "<p><font face=arial><b>".$msgstr["cnv_tab"].": </b>".$arrHttp["cnv"];
+echo "<p><font face=arial><b>".$msgstr["cnv_tab"].": </b>".$arrHttp["cnv"]."</font></p>\n";
+
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
 $fp=file($archivo);
+
 echo "<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1 class=td>";
 echo "<tr><td>".$msgstr["campo"]."</td><td>".$msgstr["tag"]."</td><td>".$msgstr["cnv_rotulo"]."</td><td>".$msgstr["tipo"]."</td><td>".$msgstr["subc"]."</td><td>".$msgstr["editsubc"]."</td><td>".$msgstr["osep"]."</td><td nowrap>".$msgstr["pftex"]."</td>";
 $ix=-1;
@@ -136,18 +134,17 @@ foreach ($fp as $value){	$t=explode('|',$value);
 }
 echo "<tr><td colspan=8 bgcolor=linen>";
 if ($separador!='[TABS]')
-	 echo $msgstr["cnv_sep"].": $separador</td>";
+	 echo $msgstr["cnv_sep"].": $separador</td></tr>";
 else
-	echo "<input type=checkbox checked>".$msgstr["delimited_tab"]."</td>";
+	echo "<input type=checkbox checked>".$msgstr["delimited_tab"]."</td></tr>";
 $arch="";
 if (isset($arrHttp["cnv"])){
 	$ixpos=strpos($arrHttp["cnv"],".");
 	$arch=substr($arrHttp["cnv"],0,$ixpos);
 }
 ?>
-
+</table>
 </div>
 </div>
-
 </body>
 </html>
