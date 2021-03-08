@@ -1,6 +1,8 @@
 <?php
 /* Modifications
 2021-02-07 fho4abcd Add translation for download action.
+2021-03-08 fho4abcd Replaced helper code fragment by included file
+2021-03-08 fho4abcd Correct preview for txt files
 */
 
 global $arrHttp;
@@ -121,7 +123,7 @@ global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl;
 		if (isset($arrHttp["Expresion"]) and trim($arrHttp["Expresion"])!=""){
 			$query.="&Opcion=buscar&Expresion=";
 		 	$query.= urlencode($arrHttp["Expresion"]);
-		}else{
+		}else if (isset($arrHttp["seleccionados"])){
 			$query.="&Opcion=seleccionados&Seleccionados=";
 			$query.="&Mfn=".str_replace(",","&Mfn=",$arrHttp["seleccionados"]);
        }
@@ -131,7 +133,11 @@ global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl;
  	$IsisScript=$xWxis."export_txt.xis";
  	include("../common/wxis_llamar.php");
  	if ($arrHttp["Accion"]=="P"){
- 		foreach ($contenido as $value) echo "$value<br>";
+ 		$salida="";
+ 		$nl="<br>";
+  		foreach ($contenido as $value)  $salida.=$value.$nl;
+ 		if (trim($value)==$separador) $salida.=$nl.$nl;
+        echo "$salida";
  		die;
  	}
  	if ($arrHttp["Accion"]=="W" or $arrHttp["Accion"]=="S" ){        //and $arrHttp["tipo"]=="txt"
@@ -156,6 +162,7 @@ global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl;
 if(!isset($arrHttp["tipo"])) $arrHttp["tipo"]="txt";
 include("../common/header.php");
 ?>
+<body>
 <script>
 function Download(){
 	document.download.submit()
@@ -165,7 +172,6 @@ function Download(){
 </script>
 <?php
 echo "
-<body>
 <div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".$msgstr["cnv_export"]." ".$msgstr["cnv_".$arrHttp["tipo"]]."
 	</div>
@@ -180,16 +186,8 @@ if ($arrHttp["Accion"]!="P"){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/exportiso.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/exportiso.html target=_blank>".$msgstr["edhlp"]."</a>
-		<font color=white>&nbsp; &nbsp; Script: dataentry/exporta_txt_ex.php</font>";
 
-?>
-	</div>
+<?php $ayuda="exportiso.html";include "../common/inc_div-helper.php" ?>
 
 <div class="middle form">
 			<div class="formContent">

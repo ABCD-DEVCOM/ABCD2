@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-03-08 fho4abcd Replaced helper code fragment by included file
+2021-03-08 fho4abcd Improved html
+*/
 function DibujarFormaBusqueda(){
 global $arrHttp,$camposbusqueda,$db_path,$tagisis,$msgstr;
 
@@ -42,7 +46,7 @@ echo "</script>\n";
 
 ?>
 
-<script languaje=javascript>
+<script language=javascript>
 document.onkeypress =
 	function (evt) {
 			var c = document.layers ? evt.which
@@ -91,16 +95,6 @@ function switchMenu(obj) {
 		el.style.display = '';
 	}
 }
-
-/*function LeerExpresion(TipoR,Obj){
-	var el = document.getElementById('Expre')
-	el.style.display = 'none';
-	var el = document.getElementById('myvar')
-	el.style.display = '';
-	url="busqueda_leer.php?base=<?php echo $arrHttp["base"]?>&tipor="+TipoR+"&obj="+Obj
-	msgwin=window.open(url,"busqueda","menu=no,status=yes")
-	msgwin.focus()
-} */
 
 function Buscar_Expre(){
 	document.forma1.Expresion.value=document.forma1.Expre_b.value
@@ -240,14 +234,9 @@ function Diccionario(jx){
 	}
 	$Tope=$ix+1;  //significa que se van a colocar 7 cajas de texto con la expresión de búsqueda
 	echo "</script>\n";
-	echo "<body>";
 	if (!isset ($arrHttp["encabezado"])){
-		echo "<div class=\"helper\">
-			<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/buscar.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-		if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-			echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/buscar.html target=_blank>".$msgstr["edhlp"]."</a>";
-		echo "<font color=white>&nbsp; &nbsp; Script: dataentry/buscar.php</font>";
-		echo "</div>";
+        $ayuda="buscar.html";
+        include "../common/inc_div-helper.php";
 	}
 	echo "<div class=\"middle form\">
 			<div class=\"formContent\">
@@ -261,7 +250,7 @@ function Diccionario(jx){
 	echo "  onSubmit=\"javascript:return false\" >";
 
 	echo '<input type=hidden name=tag8999 value="">';
-	echo "<input type=hidden name=desde value=".$arrHttp['desde'].">\n";
+	echo "<input type=hidden name=desde value=\"".$arrHttp['desde']."\">\n";
 	echo "<input type=hidden name=base value=".$arrHttp['base'].">\n";
 	echo "<input type=hidden name=cipar value=".$arrHttp['cipar'].">\n";
 	if (isset($arrHttp["copies"])) echo "<input type=hidden name=copies value=".$arrHttp['copies'].">\n";
@@ -278,7 +267,6 @@ function Diccionario(jx){
 	if (isset($arrHttp["prestamo"])) echo "<input type=hidden name=prestamo value=\"".$arrHttp['prestamo']."\">\n";
 	if (isset($arrHttp["Tabla"])) echo "<input type=hidden name=Tabla value=".$arrHttp['Tabla'].">\n";
 	if (isset($arrHttp["copies"])) echo "<input type=hidden name=copies value=".$arrHttp['copies'].">\n";
-	echo "<center>\n";
 	echo "<table valign=center cellpadding=2 Cellspacing=0 border=0 width=800>\n
 			<tr>
 				<td colspan=3>";
@@ -290,8 +278,8 @@ function Diccionario(jx){
 				}
 				echo "<p>".$msgstr["mensajeb"]."</td>
 			<tr>
-				<td bgcolor=#cccccc nowrap><font face=verdana size=2 color=#697782><b>".$msgstr["campo"]."</b></td>
-				<td bgcolor=#cccccc><font face=verdana size=2 color=#697782><b>".$msgstr["expresion"]."</td>
+				<td bgcolor=#cccccc nowrap><font face=verdana size=2 color=#697782><b>".$msgstr["campo"]."</b></font></td>
+				<td bgcolor=#cccccc><font face=verdana size=2 color=#697782><b>".$msgstr["expresion"]."</font></td>
 				<td bgcolor=#cccccc>&nbsp;</td>
 			</tr>\n";
 	for ($jx=0;$jx<$Tope;$jx++){
@@ -312,7 +300,7 @@ function Diccionario(jx){
 			echo ">".$parte1;
 		}
 		echo "</SELECT> &nbsp;";
-		echo "<font size=1><a href=\"javascript:Diccionario(".$jx.")\"><font size=1>".$msgstr["indice"]."</a>\n";
+		echo "<a href=\"javascript:Diccionario(".$jx.")\">".$msgstr["indice"]."</a>\n";
 		echo "</td>";
 		echo "<td align=center>";
 		if (isset($_SESSION["Expresion"]) and $jx==0){
@@ -344,24 +332,24 @@ function Diccionario(jx){
 	echo "<tr>\n";
 	echo "<td colspan=3 align=center><p><br>\n";
 	?>
-	<div class="sectionButtons"><center>
-		<a href="javascript:PrepararExpresion()" class="defaultButton multiLine listButton">
-		<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-							<span><?php echo $msgstr["m_buscar"]?></strong></span>
-						</a>
-		<a href="javascript:LimpiarBusqueda(this,1)" class="defaultButton multiLine cancelButton">
-		<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-							<span><?php echo $msgstr["borrar"]?></strong></span>
-						</a>
+	<div class="sectionButtons">
+        <a href="javascript:PrepararExpresion()" class="defaultButton multiLine listButton">
+            <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+            <span style="color:black"><strong><?php echo $msgstr["m_buscar"]?></strong></span>
+        </a>
+        <a href="javascript:LimpiarBusqueda(this,1)" class="defaultButton multiLine cancelButton">
+            <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+            <span style="color:black"><strong><?php echo $msgstr["borrar"]?></strong></span>
+        </a>
 
 
 	<?php
 	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserve"){
 	?>
-	 <a href="javascript:document.basedatos.submit()" class="defaultButton multiLine backButton">
-		<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-							<span><?php echo $msgstr["back"]?></strong></span>
-						</a>
+         <a href="javascript:document.basedatos.submit()" class="defaultButton multiLine backButton">
+            <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+            <span style="color:black"><stro<?php echo $msgstr["back"]?></strong></span>
+            </a>
 	<?php	}
 	echo "</div>";
 	echo "</td>\n";
@@ -379,7 +367,7 @@ function Diccionario(jx){
 	echo "<input type=hidden name=id value=\"\">\n";
 	echo "<input type=hidden name=Diccio value=\"\">\n";
 	echo "<input type=hidden name=Decode value=\"\">\n";
-	echo "<input type=hidden name=desde value=".$arrHttp["desde"].">";
+	echo "<input type=hidden name=desde value=\"".$arrHttp["desde"]."\">";
 	if (isset($arrHttp["epilogo"])) echo "<input type=hidden name=epilogo value=".$arrHttp['epilogo'].">\n";
 	if (isset($arrHttp["prologo"])) echo "<input type=hidden name=prologo value=".$arrHttp["prologo"].">\n";
 	if (isset($arrHttp["prestamo"])) {
@@ -392,7 +380,7 @@ function Diccionario(jx){
 	    echo "<input type=hidden name=Tabla value=".$arrHttp['Tabla'].">\n";
 	}
 	echo "</form>\n";
-    echo "</div></div></center>\n";
+    echo "</div></div>\n";
     include("../common/footer.php");
 	echo "</body>";
 	echo "</html>";

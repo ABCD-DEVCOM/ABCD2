@@ -1,4 +1,11 @@
 <?php
+/* Modifications
+2021-03-08 fho4abcd Replaced helper code fragment by included file
+2021-03-08 fho4abcd Replaced obsolete each, correct line ends
+2021-03-08 fho4abcd Add footer
+2021-03-08 fho4abcd Error message if cnv folder does not exist and creation fails
+2021-03-08 fho4abcd Pass selected records (conforms with iso export)
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -32,6 +39,7 @@ function PresentarLeader($leader,$tc){	$fp=file($leader);
 
 
 if (!isset($arrHttp["accion"])) $arrHttp["accion"]="";
+if (!isset($arrHttp["seleccionados"])) $arrHttp["seleccionados"]="";
 
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
@@ -39,6 +47,7 @@ if (!isset($arrHttp["accion"])) $arrHttp["accion"]="";
 if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <script language=javascript>
 function Eliminar(Archivo){
@@ -130,21 +139,10 @@ function AbrirVentana(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/txt2isis.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/txt2isis.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: dataentry/carga_txt_cnv.php</font>";
-	echo "
 
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
-?>
-
+<?php $ayuda="txt2isis.html";include "../common/inc_div-helper.php" ?>
+<div class="middle form">
+<div class="formContent">
 <form name=explora action=eliminararchivo.php method=post>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=tablacnv value="">
@@ -154,7 +152,19 @@ echo "
 }
 $Dir=$db_path.$arrHttp["base"]."/".$arrHttp["Opcion"]."/";
 $the_array = Array();
-$handle = opendir($Dir);
+// Create folder "../cnv" if it does not exist
+if ( ! file_exists($Dir) ) {
+    if ( !mkdir($Dir) ) {
+        echo "<h2 style=\"color:red\">This function requires folder $Dir.</h2>";
+        echo "<h2 style=\"color:red\">Automatic creation failed. Please create it manually</h2>";
+        unset($Dir);
+    } else {
+        echo "<div>Folder $Dir created.</div>";
+    }
+}
+// Skip all code if folder cnv is nor present
+if (isset($Dir)) {
+    $handle = opendir($Dir);
 if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 	while (false !== ($file = readdir($handle))) {
 	   if ($file != "." && $file != "..") {
@@ -182,7 +192,7 @@ if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 		   			<td bgcolor=white></td>
 		   			<td bgcolor=white></td>
 		   			<td bgcolor=white></td>";
-		while (list ($key, $val) = each ($the_array)) {
+        foreach( $the_array as $key=>$val){
 		   echo "<tr>
 		   			<td bgcolor=white width=10><a href=carga_txt_ver.php?base=".$arrHttp["base"]."&cnv=$val&lang=$lang target=_new><img src=img/preview.gif alt=\"".$msgstr["ver"]."\" border=0></a></td>
 		   			<td bgcolor=white><a href=";
@@ -190,7 +200,7 @@ if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 						echo "carga_txt.php";
 					else
 						echo "exporta_txt.php";
-					echo "?base=".$arrHttp["base"]."&cipar=".$arrHttp["base"].".par&cnv=$val&lang=$lang&accion=".$arrHttp["accion"]."&tipo=".$arrHttp["tipo"]."><img src=img/aceptar.gif alt=\"".$msgstr["cnv_sel"]."\" border=0></a></td>
+					echo "?base=".$arrHttp["base"]."&cipar=".$arrHttp["base"].".par&cnv=$val&lang=$lang&accion=".$arrHttp["accion"]."&tipo=".$arrHttp["tipo"]."&seleccionados=".$arrHttp["seleccionados"]."><img src=img/aceptar.gif alt=\"".$msgstr["cnv_sel"]."\" border=0></a></td>
 		   			<td bgcolor=white width=40><a href=carga_txt_cnv.php?base=".$arrHttp["base"]."&cnv=$val&Opcion=cnv&proceso=editar&lang=$lang&tipo=".$arrHttp["tipo"]."&accion=".$arrHttp["accion"]."><img src=img/barEdit.png border=0 alt=\"".$msgstr["editar"]."\"></a></td>
 		   			<td bgcolor=white width=40><a href=javascript:Eliminar('$val')><img src=img/barDelete.png border=0 alt=\"".$msgstr["eliminar"]."\"></a></td>
 					<td bgcolor=white><font face=verdana size=2 color=darkred><b>$val</b></td>";
@@ -341,13 +351,20 @@ foreach ($fp as $value){
 
 echo "<tr><td colspan=8 bgcolor=linen>".$msgstr["cnv_sep"].": <input type=text size=5 name=separador value=\"$separador\"></td>";
 $arch="";
+
 if (isset($arrHttp["cnv"])){
 	$ixpos=strpos($arrHttp["cnv"],".");
 	$arch=substr($arrHttp["cnv"],0,$ixpos);
 }
 echo "<tr><td colspan=6 valign=top align=right><font color=darkred>".$msgstr["cnv_ntab"].": <input type=text size=20 name=fn value=$arch> .cnv <a href=javascript:GuardarTabla()><img src=img/barSave.png align=middle border=0></td>";
-echo "</table>";
-echo "</form>
-
-</body></html>";
+//echo "</table>";
+//echo "</form>";
+}
 ?>
+</table>
+</form>
+</div></div>
+<?php
+include("../common/footer.php");
+?>
+</body>

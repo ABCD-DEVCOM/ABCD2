@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-03 fho4abcd Replaced helper code fragment by included file
 2021-03-03 fho4abcd Conformance: Moved <body>,improved other html (more to do)
+2021-03-06 fho4abcd Pass selected records (conforms with iso export)
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -40,7 +41,7 @@ function Activar(Opcion){
 				self.location="carga_txt_cnv.php?base="+top.base+"&Opcion=cnv&accion=import&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"
 				break
 			case "exptxt":
-				self.location="carga_txt_cnv.php?base="+top.base+"&Opcion=cnv&accion=export&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"
+				self.location="carga_txt_cnv.php?base="+top.base+"&Opcion=cnv&accion=export&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"+seleccionados
 				break
 			case "expiso":
 				self.location="exporta_txt.php?base="+top.base+"&cipar="+top.base+".par&tipo=iso&lang=<?php echo $_SESSION["lang"]?>"+seleccionados
