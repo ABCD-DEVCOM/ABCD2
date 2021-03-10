@@ -1,4 +1,9 @@
 <?php
+/* Modifications
+20210310 fho4abcd Replaced helper code fragment by included file
+20210310 fho4abcd html code:body at begin
+20210310 fho4abcd improved selection and error message of pft and order table
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -11,61 +16,62 @@ include("../lang/admin.php");
 include("../common/get_post.php");
 include("../common/header.php");
 $encabezado="";
-echo "<script>
-xEliminar=\"\"
+?>
+<body>
+<script>
+xEliminar=""
 Mfn_eliminar=''
 function Mostrar(Expresion){
-	msgwin=window.open(\"../dataentry/show.php?base=suggestions&Expresion=CN_\"+Expresion,\"show\",\" width=550,height=400,resizable, scrollbars\")
+	msgwin=window.open("../dataentry/show.php?base=suggestions&Expresion=CN_"+Expresion,"show"," width=550,height=400,resizable, scrollbars")
 	msgwin.focus()}
 function Editar(Mfn){
 	document.EnviarFrm.Mfn.value=Mfn
-	document.EnviarFrm.Opcion.value=\"editar\"
+	document.EnviarFrm.Opcion.value="editar"
 	document.EnviarFrm.submit()
 
 }
 
 function Delete(Mfn){
-		if (xEliminar==\"\"){
-			alert(\"".$msgstr["confirmdel"]."\")
-			xEliminar=\"1\"
+		if (xEliminar==""){
+			alert("".$msgstr["confirmdel"]."")
+			xEliminar="1"
 			Mfn_eliminar=Mfn
 		}else{
 			if (Mfn_eliminar!=Mfn){
-				alert(\"".$msgstr["mfndelchanged"]."\")
-				xEliminar=\"\"
+				alert("".$msgstr["mfndelchanged"]."")
+				xEliminar=""
                 return
 			}
-			xEliminar=\"\"
+			xEliminar=""
 			document.eliminar.Mfn.value=Mfn
 			document.eliminar.submit()
 		}
 	}
 </script>
-";
-echo "<body>\n";
-include("../common/institutional_info.php");
+<?php
 $arrHttp["base"]="purchaseorder";
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+$index="pv_order.pft";
+$tit="pv_order_tit.tab";
+include("../common/institutional_info.php");
 
 // Se ubican todas las solicitudes que estén pendientes (STATUS=0)
 // se asigna el formato correspondiente a la clave de clasificación
 // se lee el título de las columnas de la tabla
-$index="pv_order.pft";
-$tit="pv_order_tit.tab";
-$Formato_o=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$index" ;
-$tit_o=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$tit";
-if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$index" ;
-if (!file_exists($Formato)){	echo $msgstr["missing"] ." $Formato";
+
+$Formato_order=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$index" ;
+if (!file_exists($Formato_order)) $Formato_order=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$index" ;
+if (!file_exists($Formato_order)){
+	echo "<div><font color=red>".$msgstr["missing"]." file: ".$Formato_order."</font></div>";
 	die;}
+$tit_o=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$tit";
 if (!file_exists($tit_o)) $tit_o=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$tit" ;
 if (!file_exists($tit_o)){
-	echo $msgstr["missing"] ." $tit_o";
-
+	echo "<div><font color=red>".$msgstr["missing"]." file: ".$tit_o."</font></div>";
+	die;
 }
 $fp=file($tit_o);
 $tit_tab=implode("",$fp);
-$Formato_order=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/pv_order.pft" ;
-if (!file_exists($Formato_order)) $Formato_order=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/pv_order.pft" ;
+
 $Formato="@$Formato_order,/";
 $Expresion="";
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=1&Formato=$Formato&Opcion=buscar&Expresion=PO_$";
@@ -112,21 +118,15 @@ function EnviarForma(){	sel="N"	if (ncheck==0){		if (document.order.oc.checke
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-		<?php echo $msgstr["purchase"].": ".$msgstr["pending"]?>
+		<?php echo $msgstr["purchase"].": ".$msgstr["pending"];?>
 	</div>
 	<div class="actions">
 	<?php include("order_menu.php")?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/pending_order.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/pending_order.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: pending_order.php</font>\n";
-?>
-	</div>
+<?php include "../common/inc_div-helper.php" ?>
+
 <div class="middle form">
 	<div class="formContent">
 	<table class=listTable cellspacing=0 border=0>
@@ -156,7 +156,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: pending_order.php</font>\n";
 ?>
 </table>
 </div>
-	</div>
 </div>
 <form name=EnviarFrm method=post action=pending_order_ex.php>
 <input type=hidden name=base value="purchaseorder">
@@ -167,10 +166,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: pending_order.php</font>\n";
 </form>
 <?php echo "\n<script>ncheck=$ixelem</script>\n" ?>
 <?php include("../common/footer.php");
-echo "</body></html>" ;
 ?>
 <form name=eliminar method=post action=../dataentry/eliminar_registro.php>
- <input type=hidden name=base value="<?php echo $arrHttp["base"]?>"
+ <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
  <input type=hidden name=retorno value=../acquisitions/pending_order.php>
  <input type=hidden name=Mfn>
 </form>
+</body></html>
