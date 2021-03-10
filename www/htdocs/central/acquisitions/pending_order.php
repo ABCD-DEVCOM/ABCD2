@@ -3,6 +3,7 @@
 20210310 fho4abcd Replaced helper code fragment by included file
 20210310 fho4abcd html code:body at begin
 20210310 fho4abcd improved selection and error message of pft and order table
+20210310 fho4abcd corrected help file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -125,7 +126,7 @@ function EnviarForma(){	sel="N"	if (ncheck==0){		if (document.order.oc.checke
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php include "../common/inc_div-helper.php" ?>
+<?php $ayuda="acquisitions/pending_order.html"; include "../common/inc_div-helper.php" ?>
 
 <div class="middle form">
 	<div class="formContent">
