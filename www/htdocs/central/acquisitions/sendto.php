@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210310 fho4abcd Corrected php tag on last line
+*/
 if (isset($index)){?>
 <strong><?php echo $msgstr["sendto"]?>:&nbsp; &nbsp;
 		<a href='javascript:SendTo("D")'><?php echo $msgstr["doc"]?></a> &nbsp; | &nbsp;
@@ -14,5 +17,4 @@ function SendTo(SendTo){
 	msgwin=window.open("sendto_ex.php?base="+base+"&sort="+sort+"&Opcion="+SendTo+"&index="+index+"&tit="+tit+"&Expresion="+Expresion,"sendto")
 	msgwin.focus()}
 </script>
-<?}?>
-
+<?php } ?>

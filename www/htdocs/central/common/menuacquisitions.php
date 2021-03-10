@@ -1,7 +1,9 @@
 <?php
+/* Modifications
+20210310 fho4abcd removed language include.(set by inicio.php)
+*/
 $_SESSION["MODULO"]="acquisitions";
 global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases;
-	include ("../lang/acquisitions.php");
 ?>
 			<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
 				<div class="boxTop">
