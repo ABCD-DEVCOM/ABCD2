@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+20210310 fho4abcd Replaced helper code fragment by included file
+20210310 fho4abcd html code:body at begin+...
+*/
 //
 // Presenta la lista de sugerencias que tienen proveedores asignados
 // a fin de que se seleccione aquellos para los cuales se elaborará orden de compra
@@ -19,17 +23,18 @@ if(isset($_SESSION["permiso"]["ACQ_ACQALL"]))
 	if (!isset($arrHttp["see_all"])) $arrHttp["see_all"]="Y";
 include("../common/header.php");
 $encabezado="";
-echo "<script>
+?>
+<body>
+<script>
 function Editar(Mfn){
 	document.EnviarFrm.Mfn.value=Mfn
-	document.EnviarFrm.Opcion.value=\"editar\"
+	document.EnviarFrm.Opcion.value="editar"
 	document.EnviarFrm.submit()
 }
-function Mostrar(Mfn){	msgwin=window.open(\"../dataentry/show.php?base=".$arrHttp["base"]."&Mfn="."\"+Mfn,\"show\",\"width=600, height=600, scrollbars, resizable\")
+function Mostrar(Mfn){	msgwin=window.open("../dataentry/show.php?base=".$arrHttp["base"]."&Mfn=".""+Mfn,"show","width=600, height=600, scrollbars, resizable")
 	msgwin.focus()}
 </script>
-";
-echo "<body>\n";
+<?php
 include("../common/institutional_info.php");
 $arrHttp["base"]="suggestions";
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
@@ -115,35 +120,28 @@ function Enviar(sort){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/decision.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/decision.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: decision.php</font>\n";
-?>
-	</div>
+<?php $ayuda="acquisitions/decision.html"; include "../common/inc_div-helper.php" ?>
 <form name=sort>
 <div class="middle form">
 	<div class="formContent">
 		<?php echo $msgstr["sugginbid"]." ".$msgstr["sorted"]?>
 		<div class="pagination">
-			<a href=javascript:Enviar("TI") class="singleButton singleButtonSelected">
+			<a href='javascript:Enviar("TI")' class="singleButton singleButtonSelected">
 						<span class="sb_lb">&#160;</span>
 						[  <?php echo $msgstr["title"]?> ]
 						<span class=sb_rb>&#160;</span>
 					</a>
-			<a href=javascript:Enviar("RB") class="singleButton singleButtonSelected">
+			<a href='javascript:Enviar("RB"' class="singleButton singleButtonSelected">
 						<span class="sb_lb">&#160;</span>
 						[  <?php echo $msgstr["recomby"]?> ]
 						<span class=sb_rb>&#160;</span>
 					</a>
-			<a href=javascript:Enviar("DA") class="singleButton singleButtonSelected">
+			<a href='javascript:Enviar("DA")' class="singleButton singleButtonSelected">
 						<span class="sb_lb">&#160;</span>
 						[ <?php echo $msgstr["date_app"]?> ]
 						<span class=sb_rb>&#160;</span>
 					</a>
-			<a href=javascript:Enviar("OP") class="singleButton singleButtonSelected">
+			<a href='javascript:Enviar("OP")' class="singleButton singleButtonSelected">
 						<span class="sb_lb">&#160;</span>
 						[ <?php echo $msgstr["operator"]?> ]
 						<span class=sb_rb>&#160;</span>
@@ -152,7 +150,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: decision.php</font>\n";
 			<?php if (isset($arrHttp["see_all"]) and $arrHttp["see_all"]=="Y") echo "value=Y checked"?>><?php echo $msgstr["all_oper"]?>
 		</div>
 
-		</h5>
 	<table class=listTable cellspacing=0 border=1>
 		<tr>
 
@@ -178,7 +175,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: decision.php</font>\n";
 </table>
 
 </div>
-	</div>
 </div>
 </form>
 <form name=EnviarFrm method=post action=decision_ex.php>
