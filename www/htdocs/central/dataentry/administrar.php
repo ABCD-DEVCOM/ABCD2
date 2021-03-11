@@ -3,6 +3,7 @@
 2021-03-03 fho4abcd Replaced helper code fragment by included file
 2021-03-03 fho4abcd Conformance: Moved <body>,improved other html (more to do)
 2021-03-06 fho4abcd Pass selected records (conforms with iso export)
+2021-03-11 fho4abcd lineends, sanitize html
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -154,16 +155,13 @@ echo "	</div>
 					<h4><strong><?php echo $msgstr["cnv_import"]?></strong></h4>
 				</div>
 				<div class="sectionButtons">
-					<a href=javascript:Activar("impiso")>
-						<span><strong><?php echo $msgstr["cnv_iso"]?></strong></span></a>
-						<a href=../documentacion/ayuda.php?help=<?php echo $lang?>/importiso.html target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       	<?PHP if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/importiso.html target=_blank>edit help file</a>"?>
-                           <br>
-        					<a href=javascript:Activar("imptxt")>
-						<span><strong><?php echo $msgstr["cnv_txt"]?></strong></span>
-					</a>
-                       <a href=../documentacion/ayuda.php?help=<?php echo $lang?>/txt2isis.html target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       	<?PHP if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/txt2isis.html target=_blank>edit help file</a>"?>
+					<a href='javascript:Activar("impiso")'><?php echo $msgstr["cnv_iso"]?></a>
+					<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/importiso.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
+       	<?PHP if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/importiso.html' target=_blank>edit help file</a>"?>
+                    <br>
+        			<a href='javascript:Activar("imptxt")'><?php echo $msgstr["cnv_txt"]?></a>
+                    <a href='../documentacion/ayuda.php?help=<?php echo $lang?>/txt2isis.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
+       	<?PHP if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/txt2isis.html' target=_blank>edit help file</a>"?>
 		<br>
 				</div>
 				<div class="spacer">&#160;</div>
@@ -193,12 +191,12 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
 					<h4>&#160;<strong><?php echo $msgstr["cnv_export"]?></strong></h4>
 				</div>
 				<div class="sectionButtons">
-					<a href=javascript:Activar("expiso")><?php echo $msgstr["cnv_iso"]?></a>
-					<a href=../documentacion/ayuda.php?help=<?php echo $lang?>/exportiso.html target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exportiso.html target=_blank>edit help file</a>"?>
-					<br><a href=javascript:Activar("exptxt")><?php echo $msgstr["cnv_txt"]?></a>
-					<a href=../documentacion/ayuda.php?help=<?php echo $lang?>/exporttxt.html target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exporttxt.html target=_blank>edit help file</a>"?>
+					<a href='javascript:Activar("expiso")'><?php echo $msgstr["cnv_iso"]?></a>
+					<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/exportiso.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
+       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exportiso.html' target=_blank>edit help file</a>"?>
+					<br><a href='javascript:Activar("exptxt")'><?php echo $msgstr["cnv_txt"]?></a>
+					<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/exporttxt.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
+       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exporttxt.html' target=_blank>edit help file</a>"?>
 				</div>
 				<div class="spacer">&#160;</div>
 			</div>
@@ -284,8 +282,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_GLOBC"]) or
 
 }
 ?>
-           			<a href=../documentacion/ayuda.php?help=<?php echo $lang?>/mantenimiento.html target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/mantenimiento.html target=_blank>edit help file</a>"?>
+
+           			<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/mantenimiento.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
+       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/mantenimiento.html' target=_blank>edit help file</a>"?>
 				</div>
 				<div class="spacer">&#160;</div>
 			</div>

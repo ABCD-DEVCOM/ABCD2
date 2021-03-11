@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210311 fho4abcd Add workaround in error message WXIS|execution error|file|tmpnam| Error detected on Windows
+*/
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 //CHANGED
 	if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
@@ -101,8 +104,14 @@ IF ($actual_db == "acces" ) //OR $actual_db== "loanobjects" OR $actual_db= "tran
            		$err_wxis.=$value."<br>";
            	}
         	$contenido[]=$value;
+           	if (substr($value,0,4)=="WXIS" && strpos($value,"|tmpnam|")>0 ) {
+                $contenido[]="<br><br><div style='color:blue'>The default temporary folder could not be used for some reason.<br>";
+                $contenido[]="Possible workaround: consider explicit definition of a temporary folder by adding a line like:<br>";
+                $contenido[]="<strong>&nbsp;&nbsp;&nbsp;ci_tempdir=%path_database%wrk</strong><br>";
+                $contenido[]="to file <b>par/syspar.par</b> or file <b>par/&lt;dbname&gt;.par</b>.</div>";
+          }
         }
-        $contenido=$con;
+        
        if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
   }else{                      // GET-method used
       	$query.="&path_db=".$db_path;

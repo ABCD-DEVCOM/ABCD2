@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210311 fho4abcd Replaced helper code fragment by included file + minor html corrections + dont die always
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -18,7 +21,6 @@ global $arrHttp,$xWxis,$Wxis,$db_path,$wxisUrl;
 	if (!isset($arrHttp["count"])) $arrHttp["count"]="";
  	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&from=".$arrHttp["from"]."&count=".$arrHttp["count"];
   	include("../common/wxis_llamar.php");
-//  	foreach ($contenido as $value)  echo "---$value<br>"; die;
     return $contenido;
 
 }
@@ -65,15 +67,9 @@ if ($arrHttp["Opcion"]!="fullinv"){	echo "<a href=\"administrar.php?base=".$arr
 echo "
 	</div>
 	<div class=\"spacer\">&#160;</div>
-	</div>
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/mantenimiento.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/mantenimiento.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dataentry/administrar_ex.php</font>";
+	</div>";
+include "../common/inc_div-helper.php";
 echo "
-
-	</div>
 	 <div class=\"middle form\">
 			<div class=\"formContent\">
 	";
@@ -169,7 +165,7 @@ switch ($arrHttp["Opcion"]) {
 		foreach ($contenido as $linea){
   			echo "$linea\n";
 	 	}
-	 	DIE;
+	 	//DIE;
 		break;
 	case "listar":
 	case "unlock":
@@ -191,13 +187,13 @@ switch ($arrHttp["Opcion"]) {
 		echo $msgstr["cg_from"]." = ".$arrHttp["from"]." - ".$msgstr["cg_to"]." = ".$arrHttp["to"]." (".$arrHttp["count"]." ".$msgstr["records"].")";
 		echo "<table class=listTable>";
 		switch ($arrHttp["Opcion"]){			case "unlock":
-				echo "<th>Mfn</th><th>&nbsp;</th>";
+				echo "<tr><th>Mfn</th><th>&nbsp;</th></tr>";
 				break;
 			case "listar":
-				echo "<th>Mfn</th><th>Locked by</th><th>Isis Status</th>";
+				echo "<tr><th>Mfn</th><th>Locked by</th><th>Isis Status</th></tr>";
 				break;
 			case "lisdelrec":
-				echo "<th>Mfn</th><th></th>";
+				echo "<tr><th>Mfn</th><th></th></tr>";
 				$opc_ant=$arrHttp["Opcion"];
 				$arrHttp["Opcion"]="listar";
 				break;		}
@@ -210,19 +206,19 @@ switch ($arrHttp["Opcion"]) {
 			if ($value!=""){				switch ($arrHttp["Opcion"]){					case "unlock":
 						$t=explode('|',$value);
 						if (trim($t[1])=="UNLOCKED") $nb++;
-						echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td>\n";
+						echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td></tr>\n";
 						break;
 					case "listar":
 						$t=explode('|',$value);
 						if (trim($t[2])!=""){
 							$nb++;
-							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td><td>".$t[2]."</td>\n";
+							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td><td>".$t[2]."</td></tr>\n";
 						}
 						break;
 					case "lisdelrec":
 						$t=explode('|',$value);
 						if (trim($t[1])=="DELETED") {							$nb++;
-							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td>\n";
+							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td></tr>\n";
 						}
 						break;				}
 			}		}
