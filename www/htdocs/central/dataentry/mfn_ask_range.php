@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+20210311 fho4abcd Replaced helper code fragment by included file
+20210311 fho4abcd html move body + sanitize html & javascript
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -51,13 +55,12 @@ foreach($contenido as $linea) {
 	  	}
 	}
 }
-echo "<script>Maxmfn=".$tag["MAXMFN"]."</script>\n";
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-<script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
 
-<script languaje=javascript>
+<script language=javascript>
 
 function BorrarRango(){
 	document.forma1.Mfn.value=''
@@ -67,6 +70,10 @@ function BorrarRango(){
 function EnviarForma(vp){
 	de=Trim(document.forma1.Mfn.value)
   	a=Trim(document.forma1.to.value)
+  	if (de=="" && a=="") {
+        alert ( "Please enter values");
+        return
+    }
   	if (de!="" || a!="") {
   		Se=""
 		var strValidChars = "0123456789";
@@ -88,7 +95,7 @@ function EnviarForma(vp){
     	}
     	de=Number(de)
     	a=Number(a)
-    	if (de<=0 || a<=0 || de>a ||a>Maxmfn){
+    	if (de<=0 || a<=0 || de>a ||a><?php echo $tag["MAXMFN"] ?>){
 	    	alert("<?php echo $msgstr["numfr"]?>")
 	    	return
 		}
@@ -98,7 +105,6 @@ function EnviarForma(vp){
 }
 
 </script>
-<body>
 <?php
 if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
@@ -132,24 +138,16 @@ echo ": ".$arrHttp["base"]?>
 
 <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: mfn_ask_range.php";
-?>
-</font>
-	</div>
+<?php include "../common/inc_div-helper.php"; ?>
+<div align=center>
+<div class="middle form">
+	<div class="formContent">
 <form name=forma1 method=post action=administrar_ex.php onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
 <input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
 ?>
-<center>
-<div class="middle form">
-	<div class="formContent">
 	<table width=600 cellpadding=5>
 	<tr>
 		<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
@@ -161,7 +159,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: mfn_ask_range.php";
 		else
 			echo "1";
 		echo ">&nbsp; &nbsp; &nbsp; &nbsp;";
-		echo $msgstr["r_hasta"].": <input type=text name=to size=10 value=";
+		echo $msgstr["r_hasta"].": <input type=text name=to size=10 value=\"";
 		if (isset($arrHttp["to"])){
 			$count=$arrHttp["to"]-$arrHttp["from"]+1;
 			if (isset($arrHttp["to"]))
@@ -171,18 +169,18 @@ echo "<font color=white>&nbsp; &nbsp; Script: mfn_ask_range.php";
 			else
 				echo $count;
 		}
-		echo ">";
-		echo $msgstr["maxmfn"].": ".$tag["MAXMFN"];
+		echo "\">";
+		echo "&nbsp;".$msgstr["maxmfn"].": ".$tag["MAXMFN"];
 		?>
 		&nbsp; &nbsp; &nbsp; <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a>
 	</td>
 	<tr>
 		<td colspan=2 align=center><input type=submit name=enviar value="<?php echo $msgstr["cg_execute"]?>" onClick=javascript:EnviarForma()></td>
 </table>
-</center>
+</form>
 </div>
 </div>
-</center>
+</div>
 <?php
 include("../common/footer.php");
 ?>

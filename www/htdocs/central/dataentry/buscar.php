@@ -1,6 +1,6 @@
 <?php
 /* Modifications
-20210308 fho4abcd body tag on correct position
+20210311 fho4abcd body tag on correct position
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -179,6 +179,9 @@ if (!isset($arrHttp['count'])) $arrHttp["count"]="10";
 		}
 	}
 include("../common/header.php");
+?>
+<body>
+<?php
 switch ($arrHttp["Opcion"]){
 
 	case "busquedalibre":
