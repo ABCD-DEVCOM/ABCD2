@@ -4,6 +4,7 @@
 20210314 fho4abcd removed css xbox/xtext declarations (attempt without x was disappointing)
 20210314 fho4abcd Menu: removed duplicate READ DB/ISO, removed empty button
 20210315 fho4abcd Menu: Other code for Export ISO whith MX.Code to frame and back button
+20210317 fho4abcd Initilalize DB uses now code inicio_bd.php
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -183,6 +184,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			break;
 		case "inicializar":
 			document.admin.base.value=base
+            document.admin.action="inicio_bd.php"
 			document.admin.target=""
 			break;
         case "cn":  //assign control number
@@ -459,8 +461,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
   </ul>
 <?php }?>
 </nav>
-
-<form name=admin method=post action=administrar_ex.php onSubmit="Javascript:return false">
+<!--administrar_default.php is never used see document.admin.action in javascript above -->
+<form name=admin method=post action=administrar_default.php onSubmit="Javascript:return false">
 <input type=hidden name=base value=<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"]?>>
 <input type=hidden name=cipar value=<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"]?>.par>
 <input type=hidden name=Opcion>
