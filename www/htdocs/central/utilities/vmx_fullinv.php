@@ -5,6 +5,7 @@
 20210304 fho4abcd Send mx executable to test button. Test button also on first form
 20210305 fho4abcd Check process status. Catch error output. Menu as real table. Menu option to control number of standard messages
 20210316 fho4abcd Work inside/ouside frame, improved backbutton
+20210317 fho4abcd Show correct heading and backbutton for second invocation (was not corect from menu_mantenimiento)
 */
 /**
  * @program:   ABCD - ABCD-Central
@@ -108,6 +109,8 @@ if(isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
 if(!isset($fst)) { // The form sets the fst: the first action of this php
 ?>
     <form name=maintenance action='' method='post' onsubmit='OpenWindows();'>
+        <input type=hidden name=backtoscript value="<?php echo $backtoscript ?>">
+        <input type=hidden name=inframe value="<?php echo $inframe ?>">
     <table cellspacing=5 align=center>
 	  <tr> <th colspan=3>
 		  <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
