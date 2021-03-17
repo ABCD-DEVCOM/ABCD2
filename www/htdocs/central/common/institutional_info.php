@@ -1,3 +1,9 @@
+<?php
+/* Modifications
+20210312 fho4abcd show also charset if different from metaencoding
+20210312 logout without [] to visually detect this script
+*/
+?>
 <div class="heading">
 	<div class="institutionalInfo">
 		<h1><img src=<?php if (isset($logo))
@@ -15,12 +21,17 @@
 			   			$da=$dd[count($dd)-2];
 			   			echo " (".$da.") ";
 					}
-					echo" | ". $meta_encoding;
-				}
+			  }
+              if ( $meta_encoding == $charset ) {
+                  echo " | ".$meta_encoding;
+              } else {
+                  echo " | ".$meta_encoding." / ".$charset;
+              }
 		?> |
 <?php
 
-if (isset($_SESSION["newindow"]) or isset($arrHttp["newindow"])){	echo "<a href='javascript:top.location.href=\"../dataentry/logout.php\";top.close()' xclass=\"button_logout\"><span>[logout]</span></a>";}else{	echo "<a href=\"../dataentry/logout.php\" xclass=\"button_logout\"><span>[logout]</span></a>";}
+if (isset($_SESSION["newindow"]) or isset($arrHttp["newindow"])){	echo "<a href='javascript:top.location.href=\"../dataentry/logout.php\";top.close()' xclass=\"button_logout\"><span>[logout]</span></a>";}else{	echo "<a href=\"../dataentry/logout.php\" xclass=\"button_logout\"><span>logout</span></a>";
+}
 ?>
 	</div>
 	<div class="spacer">&#160;</div>

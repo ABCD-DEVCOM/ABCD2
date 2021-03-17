@@ -1,4 +1,7 @@
 <?php
+/*
+20210315 fho4abcd The destination form no longer fixed to "upload" but specified by option &targetForm=...&..
+*/
 session_start();
 
 if (!isset($_SESSION["permiso"])){
@@ -23,7 +26,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db
 	die;
 
 }
-
+// The default target form (where the selected folder will be set) for this script can be overridden by an an option
+$targetForm="upload";// the default form used by other apps
+if (isset($arrHttp["targetForm"]) and ($arrHttp["targetForm"] != "") ) $targetForm=$arrHttp["targetForm"];
 $expl = new php_dirs_explorer();
 
 //Now it's needed set FULL path of directory which should be seen
@@ -56,7 +61,7 @@ if (!isset($arrHttp["path"])){
 $source= trim($path.$source);
 if (trim($source)!=""){	if (substr($source,0,1)=="/") $source=substr($source,1);
 	if (substr($source,strlen($source),1)!="/") $source=$source."/";}
-echo "<input type=radio name=root value=\"\"  onclick=\"window.opener.document.upload.storein.value='".$source."';window.opener.focus();self.close()\">" .$name_path;
+echo "<input type=radio name=root value=\"\"  onclick=\"window.opener.document.".$targetForm.".storein.value='".$source."';window.opener.focus();self.close()\">" .$name_path;
 //Now it's needed set path of icons
 //icons_dir - name of variable and it should be static!
 //icons/ - directory of icons
@@ -109,13 +114,13 @@ global $tag,$msgstr,$arrHttp;
 <title><?php echo $msgstr["explore"];?></title>
 <script>
 <?php if (isset($tag) and trim($tag)!=""){?>
-	function CopiarImagen(Img){		campo=window.opener.document.forma1.<?php echo $tag?>.value
+	function CopiarImagen(Img){		campo=window.opener.document.forma2.<?php echo $tag?>.value
 		tag="<?php echo $tag?>"
 		t=tag.split("_");
 		if (campo=="")
-			 window.opener.document.forma1.<?php echo $tag?>.value=Img
+			 window.opener.document.forma2.<?php echo $tag?>.value=Img
 		else
-		     window.opener.document.forma1.<?php echo $tag?>.value=campo+"\r"+Img
+		     window.opener.document.forma2.<?php echo $tag?>.value=campo+"\r"+Img
 		if (t.length>1) self.close();
 	}
 <?php } ?>
