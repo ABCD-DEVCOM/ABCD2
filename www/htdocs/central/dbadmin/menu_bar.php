@@ -1,4 +1,10 @@
 <?php
+/* Modifications
+20210314 fho4abcd html + improved hovering to submenu and subsubmenu
+20210314 fho4abcd removed css xbox/xtext declarations (attempt without x was disappointing)
+20210314 fho4abcd Menu: removed duplicate READ DB/ISO, removed empty button
+20210315 fho4abcd Menu: Other code for Export ISO whith MX.Code to frame and back button
+*/
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
@@ -42,16 +48,11 @@ nav ul {
   text-transform: uppercase;
   font-size: 80%;
   letter-spacing: 2px;
-  xtext-shadow: 0 -1px 0 #000;
   position: relative;
 }
 .nav{
   vertical-align: top;
   display: inline-block;
-  xbox-shadow:
-    1px -1px -1px 1px #000,
-    -1px 1px -1px 1px #fff,
-    0 0 6px 3px #fff;
   border-radius:6px;
 }
 .nav li {
@@ -64,7 +65,6 @@ nav ul {
 }
 .nav > li > a {
   margin-bottom: 1px;
-  xbox-shadow: inset 0 2em .33em -0.5em #555;
 }
 .nav > li:hover,
 .nav > li:hover > a {
@@ -110,13 +110,13 @@ nav ul {
 }
 .nav > li:hover > ul {
   left: auto;
-  margin-top: 5px;
+  margin-top: 1px;
   min-width: 100%;
 }
 .nav > li li:hover > ul {
   left: 100%;
-  margin-left: 1px;
-  top: -1px;
+  margin-left: 0px;
+  top: -6px;
 }
 /* arrow hover styling */
 .nav > li > a:first-child:nth-last-child(2):before {
@@ -161,13 +161,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/mx_dbread.php"
-			document.admin.target=""
-			break;
-		case "readiso":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/mx_dbread.php"
-			document.admin.iso="Y"
 			document.admin.target=""
 			break;
 		case "dbrestore":
@@ -246,11 +239,19 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/vmxISO_load.php"
 			document.admin.target=""
 			break;
-		case "exportiso":
+		case "exportisoold":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/iso_export.php"
 			document.admin.target=""
+            document.admin.tipo.value="iso"
+			break;
+		case "exportiso":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+            document.admin.action="../dataentry/exporta_txt.php"
+			document.admin.target=""
+            document.admin.tipo.value="iso"
 			break;
 		case "addloanobj":    //Marino addloanobj
 			document.admin.base.value=base
@@ -380,7 +381,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
   <li><a href="#">Db Maintenance</a>
       <ul>
         <li><a href='javascript:EnviarFormaMNT("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"] ."(MX)"?></a></li>
-		<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("unlock","<?php echo $msgstr["mnt_unlock"]?>")'><?php echo $msgstr["mnt_unlock"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("cn","<?php echo $msgstr["assigncn"]?>")'><?php echo $msgstr["assigncn"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("lock","<?php echo $msgstr["protect_db"]?>")'><?php echo $msgstr["protect_db"]?></a></li>
@@ -392,10 +392,11 @@ function EnviarFormaMNT(Opcion,Mensaje){
   </li>
   <li><a href="#">Import/Export</a>
   	<ul>
-       	<!--li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo "ExportISO MX"?>")'><?php echo $msgstr["exportiso_mx"]?></a></li-->
-		<li><a href='Javascript:EnviarFormaMNT("readiso","<?php echo "ReadISO  MX"?>")'><?php echo $msgstr["readiso_mx"]?></a></li>
-		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo "ImportISO MX"?>")'><?php echo $msgstr["importiso_mx"]?></a></li>
+       	<li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo "ExportISO MX"?>")'><?php echo $msgstr["exportiso_mx"]?></a></li>
+       	<li><a href='Javascript:EnviarFormaMNT("exportisoold","<?php echo "ExportISO MX OLD"?>")'><?php echo "Export ISO WITH MX (iso_export.php)"?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("isoexport","<?php echo "ExportISO MX"?>")'><?php echo "Export ISO with Visual MX"?></a></li>
+		<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>
+		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo "ImportISO MX"?>")'><?php echo $msgstr["importiso_mx"]?></a></li>
   		<li><a href="#">Import documents</A>
     		<ul>
     			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["docbatchimport_mx"]?>")'><?php echo $msgstr["docbatchimport_mx"]?></a></li>
@@ -427,7 +428,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
   	</ul>
   </li>
 
-  <li><a href="#">Convert UTF8 <==> ANSI</A>
+  <li><a href="#">Convert UTF8 &lt;==&gt; ANSI</A>
   	<ul>
   		<li><a href='Javascript:EnviarFormaMNT("convertutf8","<?php echo "Convert ABCD to Unicode"?>")'><?php echo "Convert ABCD to Unicode"?></a></li>
         <li><a href='Javascript:EnviarFormaMNT("convertansi","<?php echo "Convert ABCD to ANSI"?>")'><?php echo "Convert ABCD to ANSI"?></a></li>
@@ -444,7 +445,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
   <li><a href="#">Explore</A>
     <ul>
 
-    	<li><a href='Javascript:EnviarForma("dirtree","<?php echo $msgstr["expbases"]?>")'>
     	<li><a href='Javascript:EnviarFormaMNT("dirtree","<?php echo $msgstr["expbases"]?>")'><?php echo $msgstr["expbases"]?></a></li>
 	    <li><a href="#"><?php echo $msgstr["explore_sys_folders"]?></a>
 	    <ul>
@@ -456,6 +456,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 
     </ul>
   </li>
+  </ul>
 <?php }?>
 </nav>
 
@@ -465,7 +466,9 @@ function EnviarFormaMNT(Opcion,Mensaje){
 <input type=hidden name=Opcion>
 <input type=hidden name=encabezado value=s>
 <input type=hidden name=folder>
-<input type=hidden name=iso>
+<input type=hidden name=backtoscript value="/central/dbadmin/menu_mantenimiento.php">
+<input type=hidden name=inframe value=0>
+<input type=hidden name=tipo>
 <input type=hidden name=activa value=<?php echo $_REQUEST["base"]?>>
 <input type=hidden name=lang value=<?php echo $_SESSION["lang"]?>>
 </form>

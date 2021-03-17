@@ -4,6 +4,7 @@
 20210304 fho4abcd Move html tags, php code indented and reordered
 20210304 fho4abcd Send mx executable to test button. Test button also on first form
 20210305 fho4abcd Check process status. Catch error output. Menu as real table. Menu option to control number of standard messages
+20210316 fho4abcd Work inside/ouside frame, improved backbutton
 */
 /**
  * @program:   ABCD - ABCD-Central
@@ -44,32 +45,40 @@ include("../common/header.php");
 include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../lang/dbadmin.php");
+/*
+** Old code might not send specific info.
+** Set defaults for the return script and frame info
+*/
+$backtoscript="../dataentry/administrar.php"; // The default return script
+$inframe=1;                      // The default runs in a frame
+if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
+if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 ?>
 <body onunload=win.close()>
 <script src=../dataentry/js/lr_trim.js></script>
 <?php
-include("../common/institutional_info.php");
+// If outside a frame: show institutional info
+if ($inframe!=1) include "../common/institutional_info.php";
 $base=$arrHttp["base"];
 $bd=$db_path.$base;
 
-echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["maintenance"]. ": " . $arrHttp["base"]."
-			</div>
-			<div class=\"actions\">
-
-	";
-
-	echo "<a href=\"../dbadmin/menu_mantenimiento.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
-	echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-
 ?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+<?php 
+        echo $msgstr["maintenance"].": ".$arrHttp["base"];
+?>
+	</div>
+	<div class="actions">
+<?php
+        $backtourl=$backtoscript."?base=".$arrHttp["base"];
+        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
+?>
+		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
 <script>
 var win;
 function OpenWindow(){

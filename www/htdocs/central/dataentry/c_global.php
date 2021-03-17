@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+20210312 fho4abcd Replaced helper code fragment by included file
+20210312 fho4abcd html move body + sanitize html
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 // ==================================================================================================
@@ -39,6 +43,7 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
 }
 include("../common/header.php");
 ?>
+<body>
 <style>
 .myLayersClass { position: absolute; visibility: hidden; xdisplay:none }
 .Botones { position: relative; visibility: hidden; xdisplay:none }
@@ -305,7 +310,6 @@ function Buscar(){
 }
 
 </script>
-<body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["cg_titulo"].": ".$arrHttp["base"]?>
@@ -318,33 +322,19 @@ function Buscar(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/cglobal.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/cglobal.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: dataentry/c_global.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
-?>
+<?php $ayuda="cglobal.html"; include "../common/inc_div-helper.php"; ?>
+<div class="middle form">
+<div class="formContent">
+<div align=center>
 <form name=forma1 method=post action=c_global_ex.php onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
 <input type=hidden name=MaxMfn>
-<?php
-echo "
-	  <input type=hidden name=Opcion value=$Opcion>";
-?>
-<center>
-<table cellpading=5 cellspacing=5 border=0 width=600>
+<input type=hidden name=Opcion value=<?php echo $Opcion?>>
 
+<table cellpading=5 cellspacing=5 border=0 width=600>
 	<tr>
-	<td align=center bgcolor=#cccccc colspan=3><?php echo $msgstr["r_recsel"]?> <a href=../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#SEL target=_blank><img src=img/barHelp.png border=0 height=12></a></td>
+	<td align=center bgcolor=#cccccc colspan=3><?php echo $msgstr["r_recsel"]?> <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#SEL' target=_blank><img src=img/barHelp.png border=0 height=12></a></td>
 
 	<tr>
 		<td  align=left><?php echo $msgstr["cg_rango"]?> </td>
@@ -369,22 +359,24 @@ echo "
    		echo "\n";
   	}
 ?>
-					</select> <a href=../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#CAMPO target=_blank><img src=img/barHelp.png border=0 height=15></a>
+					</select> <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#CAMPO' target=_blank><img src=img/barHelp.png border=0 height=15></a>
 					<br>
 					</td>
 
 	<tr><td colspan=4>&nbsp;</td>
 	<tr>
 		<td  colspan=4 align=center bgcolor=#cccccc>
-                <?php echo $msgstr["cg_tipoc"]?>  <a href=../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#TIPO_CAMBIO target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
+                <?php echo $msgstr["cg_tipoc"]?>  <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#TIPO_CAMBIO' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
 				<table>
+                <tr>
 					<td><input type=radio name=tipoc value="agregar"><?php echo $msgstr["cg_add"]?></td>
 					<td><input type=radio name=tipoc value="modificar"><?php echo $msgstr["cg_modify"]?></td>
 					<td><input type=radio name=tipoc value="eliminar"><?php echo $msgstr["cg_delete"]?></td>
-		        <tr>
+		        </tr><tr>
 		        	<td><input type=radio name=tipoc value="agregarocc"><?php echo $msgstr["cg_addocc"]?></td>
 					<td><input type=radio name=tipoc value="modificarocc"><?php echo $msgstr["cg_modifyocc"]?></td>
 					<td><input type=radio name=tipoc value="eliminarocc"><?php echo $msgstr["cg_deleteocc"]?></td>
+                </tr>
 				</table>
 		</td>
 		<tr>
@@ -392,32 +384,29 @@ echo "
 		<?php echo "<font color=darkred>".$msgstr["cg_modify"]." / " .$msgstr["cg_modifyocc"]."</font><br>".$msgstr["cg_scope"]?>:
 						<input type=radio name=tipoa value="frase" checked><?php echo $msgstr["cg_field"]?>&nbsp; &nbsp; &nbsp;
 						<input type=radio name=tipoa value="cadena"><?php echo $msgstr["cg_part"]?>&nbsp; &nbsp; &nbsp;
-		</div>
-					</td>
+		</td></tr>
 
-	<tr>
-
+	    <tr>
 		<td  colspan=4 align=left width=100%>
-
 			<table>
-
 				<tr>
-					<td   valign=top  bgcolor=#cccccc><?php echo $msgstr["cg_valactual"]?>  <a href=../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#VALOR target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
+					<td   valign=top  bgcolor=#cccccc><?php echo $msgstr["cg_valactual"]?>  <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#VALOR' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
 					<input type=text name=actual size=100>
 					</td>
-				<tr>
-					<td ><?php echo $msgstr["cg_nuevoval"]?>:  <a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/cglobal.html#NUEVO_VALOR target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
+				</tr><tr>
+					<td ><?php echo $msgstr["cg_nuevoval"]?>:  <a href='../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/cglobal.html#NUEVO_VALOR' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
 					<input type=text name=nuevo size=100><!-- <a href=javascript:MostrarLista("nuevo")><img src=img/barSearch.png height=24 align=middle border=0></a>-->
 					</td>
+                </tr>
 			</table>
 		</td>
 	<tr>
 		<td  colspan=4 align=center bgcolor=#cccccc>
 				<input type=radio name=tipoc value="dividir"><?php echo $msgstr["cg_split"]?>&nbsp;
 				<input type=radio name=tipoc value="mover"><?php echo $msgstr["cg_move"]?>&nbsp;
-				<a href=../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#DIVIDIR target=_blank><img src=img/barHelp.png border=0 height=12></a>&nbsp; &nbsp;
+				<a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#DIVIDIR' target=_blank><img src=img/barHelp.png border=0 height=12></a>&nbsp; &nbsp;
 		</td>
-	<tr>
+	</tr><tr>
 		<td colspan=4 >
 		<table border=0>
 			<tr>
@@ -429,23 +418,25 @@ echo "
 		$t=explode('|',$linea);
    		echo "<option value='".$t[1]."|".trim(substr($linea,46,2))."|".trim(substr($linea,59))."'>".$t[2]." (".$t[1].")\n";  	}
 ?>
-</select></td><tr><td></td><td ><?php echo $msgstr["cg_found"]?><input type=radio name=posicion value=antes><?php echo $msgstr["cg_before"]?> <input type=radio name=posicion value=despues><?php echo $msgstr["cg_after"]?> </div>
-			</td>
+</select></td>
+        <tr><td></td>
+        <td ><?php echo $msgstr["cg_found"]?><input type=radio name=posicion value=antes><?php echo $msgstr["cg_before"]?> <input type=radio name=posicion value=despues><?php echo $msgstr["cg_after"]?> 
+		</td>
 		</table>
 		</td>
 	<TR><td colspan=3 bgcolor=#cccccc>&nbsp;</td>
 </table>
 <p><input type=submit value=<?php echo $msgstr["cg_execute"]?> onClick=javascript:EnviarForma()>
 &nbsp; &nbsp; &nbsp; <input type=reset value=<?php echo $msgstr["cg_borrar"]?>>&nbsp; &nbsp; &nbsp;
+</form>
 </div>
 </div>
-</center>
+</div>
 <script>
 if (top.CG_actual.value!="") document.forma1.actual.value=top.CG_actual
 if (top.CG_nuevo.value!="") document.forma1.nuevo.value=top.CG_nuevo
 
 </script>
-</form>
 <?php
 include("../common/footer.php");
 ?>

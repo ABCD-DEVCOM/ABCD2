@@ -1,4 +1,7 @@
 <?php
+/* Modification
+20210315 fho4abcd The destination form no longer fixed to "upload" but specified by variable $targetForm.
+*/
 //*****************************************************************
 //** Author: Marius Buivydas                                     **
 //** E-mail: mairo@takas.lt                                      **
@@ -86,7 +89,7 @@ function get_file_type($filename) {
 
 
 function show_dirs($Opcion,$db_path,$tag) {
-global $arrHttp,$img_path,$msgstr;
+global $arrHttp,$img_path,$msgstr,$targetForm;
 	$root=false;
 	if (isset($_GET['source']))
 		$source=$_GET['source']; // it can be directory or file on which is clicked
@@ -198,7 +201,7 @@ global $arrHttp,$img_path,$msgstr;
 					   		$sel_dir=str_replace($img_path,"",$sel_dir);
 					   		$sel_dir.=$turinys["pavadinimas"][$i];
 					   		$sel_dir=str_replace("//","/",$sel_dir);
-					   		echo "<input type=radio name=sel value='".$turinys["pavadinimas"][$i]."' onclick=\"window.opener.document.upload.storein.value='".$sel_dir."';window.opener.focus();self.close()\">";
+					   		echo "<input type=radio name=sel value='".$turinys["pavadinimas"][$i]."' onclick=\"window.opener.document.".$targetForm.".storein.value='".$sel_dir."';window.opener.focus();self.close()\">";
 						}
 					   	echo "<img src=\"".$this->icons_dir.$this->dir_icon."\">";
 					   if ($i==1 and $turinys["pavadinimas"][$i]=="..")

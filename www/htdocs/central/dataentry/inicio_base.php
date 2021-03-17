@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-03-02 fho4abcd Replaced helper code fragment by included file
+2021-03-15 fho4abcd Replaced dbinfo code by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -47,19 +48,9 @@ if (!file_exists($archivo)){
 }
 if ($cont=="N") die;
 
-$IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
-include("../common/wxis_llamar.php");
-$ix=-1;
-foreach($contenido as $linea) {	$ix=$ix+1;
-	if ($ix>0) {		if (trim($linea)!=""){
-	   		$a=explode(":",$linea);
-	   		if (isset($a[1])) $tag[$a[0]]=$a[1];
-	  	}
-	}
-}
-if (!isset($tag["MAXMFN"]))   $tag["MAXMFN"]=0;
-echo "<script>top.maxmfn=".$tag["MAXMFN"]."
+// Get info about the current database from the database
+include("../common/inc_get-dbinfo.php");
+echo "<script>top.maxmfn=".$arrHttp["MAXMFN"]."
 	top.mfn=0
 	top.wks=''
 	top.Formato=''
@@ -209,13 +200,13 @@ if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNIC
 	$charset_db="UTF-8";
 }
 echo "<br><strong>$charset_db</strong>" ;
-echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$tag["MAXMFN"]."</b></font>";
+echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</b></font>";
 
-if ($tag["BD"]=="N")
+if ($arrHttp["BD"]=="N")
 	echo "<p>".$msgstr["database"]." ".$msgstr["ne"];
-if ($tag["IF"]=="N")
+if ($arrHttp["IF"]=="N")
 	echo "<p>".$msgstr["if"]." ".$msgstr["ne"];
-if ($tag["EXCLUSIVEWRITELOCK"]!=0) {	echo "<p>".$msgstr["database"]." ".$msgstr["exwritelock"]."=".$tag["EXCLUSIVEWRITELOCK"].". ".$msgstr["contactdbadm"]."
+if ($arrHttp["EXCLUSIVEWRITELOCK"]!=0) {	echo "<p>".$msgstr["database"]." ".$msgstr["exwritelock"]."=".$arrHttp["EXCLUSIVEWRITELOCK"].". ".$msgstr["contactdbadm"]."
 	<script>top.lock_db='Y'</script>
 	";
 }

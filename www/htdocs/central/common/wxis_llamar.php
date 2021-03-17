@@ -1,70 +1,61 @@
 <?php
 /* Modifications
 20210311 fho4abcd Add workaround in error message WXIS|execution error|file|tmpnam| Error detected on Windows
+20210315 fho4abcd Small textual corrections + removed unused code for mx
+20210315 fho4abcd Display better error message and set $err_wxis in that case too.
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
-//CHANGED
-	if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
-		$query.="&lock=S";
-	}
-    unset($contenido);
-    $content="";
-    $err_wxis="";
-    parse_str($query, $arr_query);
-    $actual_db=$arr_query["base"];
-    $charset_db="";
-    //$MULTIPLE_DB_FORMATS="Y";
-    if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]=="Y" or isset($MULTIPLE_DB_FORMATS) and $MULTIPLE_DB_FORMATS=="Y"){
+unset($contenido);  // This array will get the text of the result
+$err_wxis="";       // An empty variable indicates that no error occurred
 
-   		if (file_exists($db_path.$actual_db."/dr_path.def")){
-   			$def_db = parse_ini_file($db_path.$actual_db."/dr_path.def");
-   		}
-   		If (!isset($def_db["CISIS_VERSION"]))$def_db["CISIS_VERSION"]="";
-   		if (!isset($def_db["UNICODE"]))	     $def_db["UNICODE"]=$def["UNICODE"];
-   		$cisis_ver="";
-   		if (isset($def_db["CISIS_VERSION"]) and $def_db["CISIS_VERSION"]!="16-60" )
-			$cisis_ver=$def_db["CISIS_VERSION"];
-   		if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
-			$unicode='ansi';
-			$charset="ISO-8859-1";
-			//$meta_encoding="ISO-8859-1";
-		} else {
-			$unicode='utf8';
-			$charset="UTF-8";
-			//$meta_encoding="UTF-8";
-		}
-        //echo "<h1>$unicode</h1>";
-		$cisis_path=$cgibin_path;
+if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
+    $query.="&lock=S";
+}
 
-		if ($unicode!="") {
-			$cisis_path.=$unicode;
-		}
-		if ($cisis_ver!="") {
-			$cisis_ver.="/";
-		}
-		$cisis_path.=$cisis_ver;   // path to directory with correct CISIS-executables
-		$mx_path=$cisis_path.$mx_exec;// path to mx-executable
-		if ($postMethod == '1'){
-			$wxisUrl=$server_url."/cgi-bin/";
-			if ($unicode!="")
-				$wxisUrl.="$unicode/";
-            if ($cisis_ver!=""){
-               	$wxisUrl.=$cisis_ver.$wxis_exec;
-            }else{
-               	$wxisUrl.="".$wxis_exec;
-            }
-				  // POST method used
-			$Wxis="";
-		}else{
- 			$wxisUrl="";
- 			$Wxis=$cgibin_path;
- 			if ($unicode!="") $Wxis.="$unicode/";
- 			if ($cisis_ver!="") $Wxis.=$cisis_ver."/";
- 			$Wxis.=$wxis_exec;   //GET method is used
-		}
+parse_str($query, $arr_query);
+$actual_db=$arr_query["base"];
+$charset_db="";
 
-   		//echo "<p>$postMethod - ".$wxisUrl."  ".$Wxis. " $IsisScript";die;
-   	}
+if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]=="Y" or isset($MULTIPLE_DB_FORMATS) and $MULTIPLE_DB_FORMATS=="Y"){
+
+    if (file_exists($db_path.$actual_db."/dr_path.def")){
+        $def_db = parse_ini_file($db_path.$actual_db."/dr_path.def");
+    }
+    If (!isset($def_db["CISIS_VERSION"]))$def_db["CISIS_VERSION"]="";
+    if (!isset($def_db["UNICODE"]))	     $def_db["UNICODE"]=$def["UNICODE"];
+    $cisis_ver="";
+    if (isset($def_db["CISIS_VERSION"]) and $def_db["CISIS_VERSION"]!="16-60" )
+        $cisis_ver=$def_db["CISIS_VERSION"];
+    if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
+        $unicode='ansi';
+        $charset="ISO-8859-1";
+    } else {
+        $unicode='utf8';
+        $charset="UTF-8";
+    }
+
+    if ($cisis_ver!="") {
+        $cisis_ver.="/";
+    }
+
+    if ($postMethod == '1'){
+        $wxisUrl=$server_url."/cgi-bin/";
+        if ($unicode!="")
+            $wxisUrl.="$unicode/";
+        if ($cisis_ver!=""){
+            $wxisUrl.=$cisis_ver.$wxis_exec;
+        }else{
+            $wxisUrl.="".$wxis_exec;
+        }	  
+        $Wxis=""; // POST method used
+    }else{
+        $wxisUrl="";
+        $Wxis=$cgibin_path;
+        if ($unicode!="") $Wxis.="$unicode/";
+        if ($cisis_ver!="") $Wxis.=$cisis_ver."/";
+        $Wxis.=$wxis_exec;   //GET method is used
+    }
+}
 
 /*// next line to make sure password is checked with ANSI-database acces
 IF ($actual_db == "acces" ) //OR $actual_db== "loanobjects" OR $actual_db= "trans")
@@ -73,102 +64,100 @@ IF ($actual_db == "acces" ) //OR $actual_db== "loanobjects" OR $actual_db= "tran
 	$cisis_ver="";
 }
 */
-	if (isset($wxisUrl) and $wxisUrl!=""){
-        $query.="&path_db=".$db_path;
-        $url="IsisScript=$IsisScript$query&cttype=s";
-		if (file_exists($db_path."par/syspar.par"))
-        	$url.="&syspar=$db_path"."par/syspar.par";
+if (isset($wxisUrl) and $wxisUrl!=""){  //POST method 
+    $query.="&path_db=".$db_path;
+    $url="IsisScript=$IsisScript$query&cttype=s";
+    if (file_exists($db_path."par/syspar.par"))
+        $url.="&syspar=$db_path"."par/syspar.par";
 
-        parse_str($url, $arr_url);
-		$postdata = http_build_query($arr_url);
-		$opts = array('http' =>
-    				array(
-        					'method'  => 'POST',
-        					'header'  => 'Content-type: application/x-www-form-urlencoded',
-        					'content' => $postdata
-
-    				     )
-					);
-		$context = stream_context_create($opts);
-// MAIN POST CONNECTION in following line
-		unset($result);
-		unset($contenido);
-		unset($con);
-        $result=file_get_contents($wxisUrl,false, $context);
-        //$result=file_get_contents('php://input',false, $context);
+    parse_str($url, $arr_url);
+    $postdata = http_build_query($arr_url);
+    $opts = array('http' =>
+                array(
+                        'method'  => 'POST',
+                        'header'  => 'Content-type: application/x-www-form-urlencoded',
+                        'content' => $postdata
+                     )
+                );
+    $context = stream_context_create($opts);
+    unset($result);
+    unset($con);
+    // MAIN POST CONNECTION in following line
+    $result=@file_get_contents($wxisUrl,false, $context);
+    if ($result === false ) {
+        $file_get_contents_error= error_get_last();
+        $err_wxis="Error &rarr; ".$file_get_contents_error["message"];
+        $err_wxis.="<br> in &rarr; ".$file_get_contents_error["file"];
+        $contenido[] = ""; // do not break code that does not check correct
+    } else {
         $con=explode("\n",$result);
         $ix=0;
         $contenido=array();
         foreach ($con as $value) {
-           	if (substr($value,0,4)=="WXIS"){
-           		$err_wxis.=$value."<br>";
-           	}
-        	$contenido[]=$value;
-           	if (substr($value,0,4)=="WXIS" && strpos($value,"|tmpnam|")>0 ) {
+            if (substr($value,0,4)=="WXIS"){
+                $err_wxis.=$value."<br>";
+            }
+            //echo "<div>wxisll ".$value."</div>";
+            $contenido[]=$value;
+            if (substr($value,0,4)=="WXIS" && strpos($value,"|tmpnam|")>0 ) {
                 $contenido[]="<br><br><div style='color:blue'>The default temporary folder could not be used for some reason.<br>";
                 $contenido[]="Possible workaround: consider explicit definition of a temporary folder by adding a line like:<br>";
                 $contenido[]="<strong>&nbsp;&nbsp;&nbsp;ci_tempdir=%path_database%wrk</strong><br>";
                 $contenido[]="to file <b>par/syspar.par</b> or file <b>par/&lt;dbname&gt;.par</b>.</div>";
-          }
+            }
         }
-        
-       if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
-  }else{                      // GET-method used
-      	$query.="&path_db=".$db_path;
-		putenv('REQUEST_METHOD=GET');
-		$q=explode("&",$query);
-		$query="";
+    }
+    if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
+}else{                      // GET-method used
+    $query.="&path_db=".$db_path;
+    putenv('REQUEST_METHOD=GET');
+    $q=explode("&",$query);
+    $query="";
 
-		foreach ($q as $value){
-			if (trim($value!="")){
-				$ix=strpos($value,"=");
-				if ($ix>0){
-					$key=substr($value,0,$ix);
-					$par=substr($value,$ix+1);
-					if ($key=="cipar"){
-						if (!file_exists($par)){
-							$par="";
-						}
-					}
-					if ($par!="")
-						$query.="&".$key."=".$par;
-				}
-			}
-		}
-        if (file_exists($db_path."par/syspar.par"))
-        	$query.="&syspar=$db_path"."par/syspar.par";
-		putenv('QUERY_STRING='."?xx=".$query);
-	 	exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
-	 	$err_wxis="";
-	 	foreach ($contenido as $value) {
-           	if (substr($value,0,4)=="WXIS"){
-           		$err_wxis.=$value."<br>";
-           	}
-
+    foreach ($q as $value){
+        if (trim($value!="")){
+            $ix=strpos($value,"=");
+            if ($ix>0){
+                $key=substr($value,0,$ix);
+                $par=substr($value,$ix+1);
+                if ($key=="cipar"){
+                    if (!file_exists($par)){
+                        $par="";
+                    }
+                }
+                if ($par!="")
+                    $query.="&".$key."=".$par;
+            }
         }
-       	if ($err_wxis!="") {
-       		echo "<font color=red size=+1>$err_wxis</font>";
-       	}
- 	}
+    }
+    if (file_exists($db_path."par/syspar.par"))
+        $query.="&syspar=$db_path"."par/syspar.par";
+    putenv('QUERY_STRING='."?xx=".$query);
+    exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
+    foreach ($contenido as $value) {
+        if (substr($value,0,4)=="WXIS"){
+            $err_wxis.=$value."<br>";
+        }
+    }
+    if ($err_wxis!="") {
+        echo "<font color=red size=+1>$err_wxis</font>";
+    }
+}
 
-	$cset=strtoupper($meta_encoding);
-	//echo $page_encoding." ".$cset." $unicode<P>";
-	unset($cont_cnv);
-	if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
-		foreach ($contenido as $value){
-
-			$cont_cnv[]=utf8_encode($value);
-		}
-		if (isset($cont_cnv))$contenido=$cont_cnv;
-
-	}
- //if (isset($log) and $log=="Y"){
- 	if (is_dir($db_path."log") and isset($_SESSION['login'])){
-
-	 	$fp=fopen($db_path."log/log_".date("Ymd").".log","a");
-	 	$out=date('Ymd h:i:s A')."\t".$_SESSION['login']."\t".$_SERVER["PHP_SELF"]."\t".$IsisScript."\t".str_replace("\n"," ",urldecode($query))."\n";
-		fwrite($fp,$out);
-		fclose($fp);
-	}
- //}
+$cset=strtoupper($meta_encoding);
+//echo $page_encoding." ".$cset." $unicode<P>";
+unset($cont_cnv);
+if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
+    foreach ($contenido as $value){
+        $cont_cnv[]=utf8_encode($value);
+    }
+    if (isset($cont_cnv))$contenido=$cont_cnv;
+}
+// Write a line for this action to the log file
+if (is_dir($db_path."log") and isset($_SESSION['login'])){
+    $fp=fopen($db_path."log/log_".date("Ymd").".log","a");
+    $out=date('Ymd h:i:s A')."\t".$_SESSION['login']."\t".$_SERVER["PHP_SELF"]."\t".$IsisScript."\t".str_replace("\n"," ",urldecode($query))."\n";
+    fwrite($fp,$out);
+    fclose($fp);
+}
 ?>
