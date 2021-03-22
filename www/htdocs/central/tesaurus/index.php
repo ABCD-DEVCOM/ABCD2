@@ -38,7 +38,7 @@ if(isset($arrHttp["pref"]))
 	$prefijo=$prefijo.$arrHttp["pref"];
 else
 	$pref=$prefijo;
-
+$prefix_search_tesaurus=$pref;
 $IsisScript=$xWxis."ifp.xis";
 
 $query ="&base=$tesaurus&cipar=$db_path"."par/$tesaurus".".par&Opcion=autoridades&prefijo=$prefijo&pref=$pref&formato_e=".urlencode($Formato);

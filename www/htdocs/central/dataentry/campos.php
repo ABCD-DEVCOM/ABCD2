@@ -145,7 +145,8 @@ input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COL
   		msgwin.focus()    	return
 
 	}
-function AbrirTesauro(Tag,base){
+function AbrirTesauro(Tag,base,prefijo){
+
 		Url="../tesaurus/index.php?base="+base+"&Tag="+Tag
 		myleft=screen.width-450
 		msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)

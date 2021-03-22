@@ -210,17 +210,17 @@ function Redraw(xsalida,newSc,add_name){
            	Formato=sc[13]
            	db_link=sc[11]
            	if (db_link=="") db_link=base
+
            	cipar_link=db_link+".par"
 	   		link=" &nbsp;<a href='javascript:AbrirIndiceAlfabetico(\"t"+C_Sc+"_"+M+"\",\""+prefijo+"\",\""+iSc+"\",\"S\""+",\""+db_link+"\""+",\""+cipar_link+"\""+",\""+TagCampo+"\""+",\""+Formato+"\")'><img src=img/setsearch.gif border=0 align=center></a><font color=red>"
 
-			if (sc[7]!="I" && sc[10]=="T") {
-				link+="&nbsp;<a href='javascript:AbrirTesauro(\"t"+C_Sc+"_"+M+"\",\""+db_link+"\",\"0\")'><img src=../dataentry/img/toolbarTesaurus.gif></a>&nbsp;";
-							}
+			if (sc[7]!="I" && sc[10]=="T") {				link+="&nbsp;<a href='javascript:AbrirTesauro(\"t"+C_Sc+"_"+M+"\",\""+db_link+"\",\"DE_\",\"0\")'><img src=../dataentry/img/toolbarTesaurus.gif></a>&nbsp;";
+			}
 		}else{                                                                                                                                                                                  		link=""
 		}
 		if (link!="") html+="<font color=darkblue>"+link+"</a>"
 	   	html+="</td>"
-	   	link=""
+	   	//link=""
 	   	//GET THE SUBFIELD NAME
        	ixnamec=Tx[5].indexOf(C_Sc)
        	if (is_marc=="S" && (C_Sc==1 || C_Sc==2) && i<3 ){       		NombreSc=Desc_sc["I"+C_Sc]        //GET THE NAME OF THE INDICATOR       	}else{
@@ -230,6 +230,7 @@ function Redraw(xsalida,newSc,add_name){
        	xsize="70"
        	if (is_marc=="S" && i<3 && (C_Sc==1 || C_Sc==2)){       		xsize="1 maxlength=1"
        		NamePick="I"+C_Sc       	}else{       		NamePick=C_Sc       	}
+        if (link!=""){        	pick=""        }
        	if (pick!=""){
        		NombreCampo="t"+C_Sc+"_"+M;
        		html+=" <select name="+TagCampo+" id=t"+C_Sc+"_"+M+"><option value=' '> </option>\n"
