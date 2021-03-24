@@ -3,6 +3,7 @@
 20210314 fho4abcd Replaced helper code fragment by included file
 20210314 fho4abcd html move body and remove win.close + sanitize html
 20210314 fho4abcd Replaced dbinfo code by included file
+20210324 fho4abcd Catch error after database deletion, display also long name of the database
 */
 session_start();
 
@@ -84,10 +85,19 @@ include "../common/inc_div-helper.php";
 // Display menu bar
 include("menu_bar.php");
 
-// Get info about the current database from the database
-include ("../common/inc_get-dbinfo.php");
-// Display info about current database
-echo "<br><br><div align=center><b>".$msgstr["bd"].": ".$arrHttp["base"]."</b>";
+// Get info about the current database from the database(if there is a database)
+if ( isset($arrHttp["base"]) and $arrHttp["base"]!="" and file_exists($db_path.$arrHttp["base"])) {
+    include ("../common/inc_get-dbinfo.php");
+    include "../common/inc_get-dblongname.php";
+    // Display info about current database
+    echo "<br><br><div align=center><b>".$msgstr["bd"].": ".$arrHttp["base"]." (".$arrHttp["dblongname"].")</b>";
+} else {
+    if ( isset($arrHttp["base"])){
+        echo "<font color=darkred><b>". $arrHttp["base"]."</b></font>";
+    }
+    echo "<br><font color=darkred><b>". $msgstr["dbnex"]."</b></font><br>";
+    $arrHttp["MAXMFN"]="?";
+}
 
 if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
 	$charset_db="ISO-8859-1";

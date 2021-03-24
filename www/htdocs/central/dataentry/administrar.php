@@ -4,6 +4,7 @@
 2021-03-03 fho4abcd Conformance: Moved <body>,improved other html (more to do)
 2021-03-06 fho4abcd Pass selected records (conforms with iso export)
 2021-03-11 fho4abcd lineends, sanitize html
+2021-03-22 fho4abcd remove unused functions in script
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -50,10 +51,6 @@ function Activar(Opcion){
 			case "impiso":
 				self.location="carga_iso.php?base="+top.base+"&cipar="+top.base+".par&tipo=iso&lang=<?php echo $_SESSION["lang"]?>"
 				break
-			case "soporte":
-				self.location="soporte.php?base="+top.base+"&cipar="+top.base+".par"
-				break
-
 		}
 	}
 }
@@ -71,14 +68,6 @@ function EnviarForma(Opcion,Mensaje){
 					msgwin.focus()
 					document.admin.target="fullinv"
 					break
-				case "estructuras":
-					document.admin.action="orbita_estructuras.php"
-					document.admin.target=""
-					break;
-				case "eliminarbd":
-					document.admin.action="eliminarbd.php"
-					document.admin.target=""
-					break;
 				case "globalc":
 					document.admin.action="c_global.php"
 					document.admin.target=""
@@ -90,10 +79,6 @@ function EnviarForma(Opcion,Mensaje){
 					document.admin.target=""
 					break;
 				default:
-					document.admin.target=""
-					break;
-				case "dbcp":
-					document.admin.action="copy_db.php";
 					document.admin.target=""
 					break;
 				case "fullinvMX":
@@ -277,7 +262,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_GLOBC"]) or
     isset($_SESSION["permiso"]["CENTRAL_ALL"])     or
     isset($_SESSION["permiso"][$db."_CENTRAL_GLOBC"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_DBUTILS"]) or
-    isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){			echo "
+    isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){
+			echo "
 					<a href='javascript:EnviarForma(\"globalc\",\"Global changes\")'>". $msgstr["mnt_globalc"]."</a><br>";
 
 }
@@ -301,7 +287,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_GLOBC"]) or
 <input type=hidden name=cipar>
 <input type=hidden name=Opcion>
 <?php
-if (isset($arrHttp["seleccionados"])){	echo "<input type=hidden name=seleccion value=".$arrHttp["seleccionados"].">\n";}
+if (isset($arrHttp["seleccionados"])){
+	echo "<input type=hidden name=seleccion value=".$arrHttp["seleccionados"].">\n";
+}
 ?>
 </form>
 <?php include("../common/footer.php"); ?>

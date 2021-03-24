@@ -7,6 +7,7 @@
 2021-03-15 fho4abcd Add functionality from utilities/iso_export.php: folder from caller+busy indicator
 2021-03-15 fho4abcd replace double quotes in values: search expressions will now work
 2021-03-16 fho4abcd iso files not directly written to disc are now written without extra linefeeds
+2021-03-24 fho4abcd Use function to delete a file, improve confirm
 */
 
 global $arrHttp;
@@ -21,6 +22,7 @@ $lang=$_SESSION["lang"];
 
 
 include("../lang/admin.php");
+include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 /*
 ** Old code might not send specific info.
@@ -40,6 +42,7 @@ $filename= $arrHttp["archivo"].".".$arrHttp["tipo"];
 //==================== Functions =============================
 // se incluye la rutina que convierte los rótulos a tags isis
 include ("rotulos2tags.php");
+include ("../common/inc_file-delete.php");
 
 function Confirmar(){
     global $msgstr;
@@ -47,7 +50,7 @@ function Confirmar(){
     <br><br>
 	<input type=button name=continuar value="<?php echo $msgstr["continuar"]?>" onclick=Confirmar()>
 	&nbsp; &nbsp;<input type=button name=cancelar value="<?php echo $msgstr["cancelar"] ?>" onclick=Regresar()>
-	</body></html>
+	</div></div></body></html>
     <?php
 }
 
@@ -199,16 +202,20 @@ function Regresar(){
 	document.continuar.submit()
 }
 </script>
-<form name=continuar action=exporta_txt_ex.php method=post>
 <?php
+// Create a form for submission.
+echo "<form name=continuar action=exporta_txt_ex.php method=post>\n";
 foreach ($_REQUEST as $var=>$value){
     // some values (e.g. expresion) may contain quotes or other "non-standard" values
     $value=htmlspecialchars($value);
 	echo "<input type=hidden name=$var value=\"$value\">\n";
 }
+if (!isset($arrHttp["confirmar"])){ 
+    $arrHttp["confirmar"]="";
+    echo "<input type=hidden name=confirmar value=\"\">\n";
+}
+echo "</form>\n";
 ?>
-<input type=hidden name=confirmar>
-</form>
 <div id="loading">
     <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
 </div>
@@ -294,15 +301,12 @@ if (!isset($arrHttp["confirmar"]) or (isset($arrHttp["confirmar"]) and $arrHttp[
 
 // This part will be excuted the second invocation. The busy symbol runs...
 // Remove the target file now: prevents downloading an old file if the process would fail
-if ( file_exists($fullpath)) {
-    if ( !@unlink($fullpath)) {
-        $file_get_contents_error= error_get_last();
-        echo "<div><font color=red><b>Error &rarr; </b>".$file_get_contents_error["message"]."</font></div>";
-        echo "<div><font color=red>Target file <b>".$fullpath."</b> cannot be deleted. Export ABORTED</b></font></div>";
-        echo "<div><h2><font color=red><b>Content of ".$fullpath."</b> is not modified !</font></h2></div>";
-        echo "<a href='javascript:Regresar()'> Cancel</a>";
-        die;
-    }
+$errors=DeleteFile($fullpath,0);
+if ( $errors>0) {
+    echo "<div><font color=red><b>Export ABORTED</b></font></div>";
+    echo "<div><h2><font color=red><b>Content of ".$fullpath."</b> is not modified !</font></h2></div>";
+    echo "<a href='javascript:Regresar()'> Cancel</a>";
+    die;
 }
 // Export the given range to file or to $data
 $data=Exportar($Pft, $fullpath);

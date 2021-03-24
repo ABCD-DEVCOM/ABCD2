@@ -1,6 +1,8 @@
 <?php
 /* Modifications
 20210312 fho4abcd Created
+20210319 fho4abcd Print error if par/<dbname>.par is missing (to understand the error thrown by wxis_llamar.php
+20210322 fho4abcd Comment
 */
 /*
 ** Execute function get_dbinfo
@@ -9,7 +11,11 @@
 /*--------------------------------------------------------------
 ** Function  : Get info about the current database from the database
 **             The info is requested by wxis_llamar.php (Opcion=status)
-**             The info is returned in an array
+** Returns   : All info is returned in $arrHttp
+**             - $arrHttp["MAXMFN"]             (always, default=0)
+**             - $arrHttp["BD"]                 (if applicable)
+**             - $arrHttp["IF"]                 (if applicable)
+**             - $arrHttp["EXCLUSIVEWRITELOCK"] (if applicable)
 ** Globals   : This function uses wxis_llamar.php (with many globals)
 **   $arrHttp: I/O specifies at least the current database
 **   $xWxis  : I   path to the wxis scripts .xis for Central
@@ -28,7 +34,11 @@ function get_dbinfo () {
          die;
     }
     $IsisScript=$xWxis."administrar.xis";
-    $query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+    $fullciparpath=$db_path."par/".$arrHttp["base"].".par";
+    if (!file_exists($fullciparpath)){
+        echo "<h3><font color=red>".$fullciparpath.": Does not exist</font></h3>";
+    }
+    $query = "&base=".$arrHttp["base"] . "&cipar=".$fullciparpath. "&Opcion=status";
     include("../common/wxis_llamar.php");
     if ( $err_wxis!="" ) die;
 
