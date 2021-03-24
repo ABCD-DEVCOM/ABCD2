@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-03-03 fho4abcd Replaced header code by standard include
+*/
 //error_reporting(E_ALL);
 session_start();
 unset( $_SESSION["TOOLBAR_RECORD"]);
@@ -114,9 +117,8 @@ if (isset($arrHttp["base"])){
 	if (!isset($db_copies)) $db_copies="";
 	if (!isset($bddesc)) $bddesc="";
 	if (!isset($bd)) $bd="";
-	echo "<HTML><title>ABCD</title>
-				<head>
-				<script language=\"JavaScript\" type=\"text/javascript\" src=\"js/lr_trim.js\"></script>
+    include "../common/header.php";
+    echo "<script language=\"JavaScript\" type=\"text/javascript\" src=\"js/lr_trim.js\"></script>
 				<script languaje=javascript>
 				self.resizeTo(screen.availWidth,screen.availHeight)
 				self.moveTo(0,0)

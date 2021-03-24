@@ -2,182 +2,157 @@
 /* Modifications
 20210317 fho4abcd Created from dbadmin/administrar_ex.php to avoid confusion with other files with that name
 20210317 fho4abcd Replaced helper code fragment by included file, removed some unused code
+20210324 fho4abcd Reprogrammed, improved feedback
 */
-// Globales.
-//set_time_limit (0);
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-include ("../config.php");
-include("../lang/dbadmin.php");
+include("../config.php");
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
+$backtoscript="menu_mantenimiento.php"; // The default return script
+$inframe=1;                             // The default runs in a frame
+if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
+if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 
+//====================== Functions =================
+// Function to show a "confirm" and "cancel" button. Actions by corresponding script
+function Confirmar(){
+    global $msgstr;
+    ?>
+    <br><br>
+	<input type=button name=continuar value="<?php echo $msgstr["procesar"]?>" onclick=Confirmar()>
+	&nbsp; &nbsp;
+    <input type=button name=cancelar value="<?php echo $msgstr["cancelar"] ?>" onclick=Regresar()>
+	</div></div></body></html>
+    <?php
+}
+//----------------------- End functions --------------------------------------------------
 
-function InicializarBd(){
-global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr;
- 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"];
- 	$IsisScript=$xWxis.$arrHttp["IsisScript"];
+include("../common/header.php");
+?>
+<body>
+<script>
+function Confirmar(){
+	document.continuar.confirmcount.value++;
+	document.continuar.submit()
+}
+function Regresar(){
+	document.continuar.action='<?php echo $backtoscript;?>'
+	document.continuar.submit()
+}
+</script>
+<?php
+// Create a form for submission.
+echo "<form name=continuar action=inicio_bd.php method=post>\n";
+foreach ($_REQUEST as $var=>$value){
+    // some values may contain quotes or other "non-standard" values
+    $value=htmlspecialchars($value);
+	echo "<input type=hidden name=$var value=\"$value\">\n";
+}
+if (!isset($arrHttp["confirmcount"])){ 
+    $arrHttp["confirmcount"]=0;
+    echo "<input type=hidden name=confirmcount value=\"0\">\n";
+}
+echo "</form>\n";
 
- 	include("../common/wxis_llamar.php");
-	foreach ($contenido as $linea){
-	 	if ($linea=="OK"){
-	 		echo "<h4>".$arrHttp["base"]." ".$msgstr["init"]."</h4>";
-	 		echo $Wxis." ".$wxisUrl;
-	 	}
- 	}
+// If outside a frame: show institutional info
+if ($inframe!="1") include "../common/institutional_info.php";
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["maintenance"]." " .$msgstr["database"].": ".$arrHttp["base"]?>
+    </div>
+    <div class="actions">
+<?php 
+// Show 'back' button,
+$backtourl=$backtoscript."?base=".$arrHttp["base"];
+echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
+echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+    <span><strong>".$msgstr["regresar"]."</strong></span></a>";
+?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+    <div class="formContent">
+<?php
+// First some initial checks
+// Not all very likely to occur, but better safe than sorry
+$errors=0;
+$databasefolder=$db_path.$arrHttp["base"];
+$parfullname   =$db_path."par/".$arrHttp["base"].".par";
+if (!file_exists($databasefolder)){
+    echo "<h3><font color=red>".$databasefolder.": ".$msgstr["folderne"]."</font></h3>";
+    $errors++;
+}
+if (!file_exists($parfullname)){
+    echo "<h3><font color=red>".$parfullname.": ".$msgstr["ne"]."</font></h3>";
+    $errors++;
+}
+//Check that the database is not protected
+if (file_exists($db_path.$arrHttp["base"]."/protect_status.def")){
+    $fp=file($db_path.$arrHttp["base"]."/protect_status.def");
+    foreach ($fp as $value){
+        $value=trim($value);
+        if ($value=="PROTECTED"){
+            echo "<div><font color=red>".$msgstr["protect_active"]."</font></div>";
+            $errors++;
+        }
+    }
 }
 
-function VerStatus(){
-	global $arrHttp,$xWxis,$wxisUrl,$OS,$db_path,$Wxis;
-	$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
- 	$IsisScript=$xWxis."administrar.xis";
- 	include("../common/wxis_llamar.php");
- 	$ix=-1;
-	foreach($contenido as $linea) {
-		if (trim($linea)!=""){
-			$ix=$ix+1;
-			if ($ix>0) {
-	  			$a=explode(":",$linea);
-	  			$tag[$a[0]]=$a[1];
-			}
-		}
-	}
-	return $tag;
-}
-
-function Footer(){
+if ($errors>0) {
 	echo "</div></div>";
 	include("../common/footer.php");
 	echo "</body></html>";
 	die;
 }
+// Display information about the status
+echo "<table>";
+// Display the executable that will be used
+echo "<tr><td>".$msgstr["procesar"].":<td><td>".$wxisUrl."</td></tr></table><br>";
 
+// Get info of the database
+include "../common/inc_get-dbinfo.php";
+include "../common/inc_get-dblongname.php";
 
+// Display the action to be executed
+echo "<div><h4>".$msgstr["mnt_ibd"]." ".$arrHttp["base"]." (".$arrHttp["dblongname"].")<br>";
+echo $msgstr["delete"]." ". $arrHttp["MAXMFN"]." ".$msgstr["registros"]. "</h4></div>";
 
-$encabezado="";
-if (isset($arrHttp["encabezado"])) $encabezado="&encabezado=s";
-include("../common/header.php");
-echo "<body>\n";
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-?>
-<div class="sectionInfo">
-
-			<div class="breadcrumb">
-				<?php echo "<h5>".$msgstr["maintenance"]." " .$msgstr["database"].": ".$arrHttp["base"]."</h5>"?>
-			</div>
-
-			<div class="actions">
-<?php echo "<a href=\"menu_mantenimiento.php?reinicio=s&base=".$arrHttp["base"]."&encabezado=s\" class=\"defaultButton backButton\">";
-?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
-			</div>
-			<div class="spacer">&#160;</div>
-</div>
-<?php }
-include "../common/inc_div-helper.php" 
-?>
-<div class="middle form">
-    <div class="formContent">
-<?php
-switch ($arrHttp["Opcion"]) {
-    case "inicializar":
-    	if (!file_exists($db_path.$arrHttp["base"])){
-    		echo "<h3>".$arrHttp["base"].": ".$msgstr["folderne"]."</h3>";
-    		Footer();
-    	}
-    	if (!file_exists($db_path."par/".$arrHttp["base"].".par")){
-    		echo "<h3>"."par/".$arrHttp["base"].".par: ".$msgstr["ne"]."</h3>";
-    		Footer();
-    	}
-    	$protected="N";
-		if (file_exists($db_path.$arrHttp["base"]."/protect_status.def")){
-			$fp=file($db_path.$arrHttp["base"]."/protect_status.def");
-			foreach ($fp as $value){
-				$value=trim($value);
-				if ($value=="PROTECTED"){
-					echo "<h4>".$msgstr["protect_active"]."</h4>";
-					$protected="Y";
-				}
-			}
-		}
-		if ($protected=="N"){
-    		$arrHttp["IsisScript"]="administrar.xis";
-    		$tag=VerStatus();
-			if (!isset($arrHttp["borrar"])){
-				if ($tag["BD"]!="N"){
-					echo "<br><span class=td><h4>".$arrHttp["base"]."<br><font color=red>".$msgstr["bdexiste"]."</font><br>".$tag["MAXMFN"]." ".$msgstr["registros"]."<BR>";
-					echo "<script>
-						if (confirm(\"".$msgstr["elregistros"]." ??\")==true){
-							borrarBd=true
-						}else{
-							borrarBd=false
-						}
-						if (borrarBd==true){
-							if (confirm(\"".$msgstr["seguro"]." ??\")==true){
-								borrarBd=true
-							}else{
-								borrarBd=false
-							}
-						}
-						if (borrarBd==true)
-							self.location=\"inicio_bd.php?base=".$arrHttp["base"]."&cipar=".$arrHttp["cipar"]."&Opcion=inicializar&borrar=true$encabezado\"
-						</script>";
-				}else{
-
-					InicializarBd();
-					$arrHttp["Opcion"]="unlockbd";
-				}
-			}else{
-				$arrHttp["IsisScript"]="administrar.xis";
-				InicializarBd();
-				$fp=fopen($db_path."par/".$arrHttp["base"].".par","r");
-				if (!$fp){
-					echo $arrHttp["base"].".par"." ".$msgstr["falta"];
-					die;
-				}
-				$fp=file($db_path."par/".$arrHttp["base"].".par");
-				foreach($fp as $value){
-					$ixpos=strpos($value,'=');
-					if ($ixpos===false){
-					}else{
-						if (substr($value,0,$ixpos)==$arrHttp["base"].".*"){
-							$path=trim(substr($value,$ixpos+1));
-							$ixpos=strrpos($path, '/');
-							$path=substr($path,0,$ixpos)."/";
-	//						echo "<p>$path<p>";
-							break;
-						}
-					}
-				}
-				$arrHttp["Opcion"]="unlockbd";
-			}
-		}
-		break;
-//	case "unlockbd": case prbably unnecessary. left as documentation for further improvement
-//$contenido=VerStatus();
-//       echo "<div><h4>Unlocking action</h4></div>";die;
-//		echo "<p><span class=td>";
-//		foreach ($contenido as $value) echo "<dd>$value<br>";
-//		$arrHttp["IsisScript"]="administrar.xis";
-//		MostrarPft();
-//		break;
+//Ask for confirmation (twice)
+if ($arrHttp["confirmcount"]<2) {
+    if ($arrHttp["confirmcount"]==0) {
+        echo "<div><h4><font color=red>".$msgstr["elregistros"]." ?</font></h4></div>";
+    } else {
+        echo "<div><h1><font color=red>".$msgstr["areysure"]."</font></h1></div>";
+   }
+	Confirmar();
+	die;
 }
-if (!isset($arrHttp["encabezado"])){
-	if ($arrHttp["Opcion"]!="fullinv")
- 		echo "<p><center><a href=index.php?base=".$arrHttp["base"]." class=boton> &nbsp; &nbsp; Menu &nbsp; &nbsp; </a>";
+// This part will be excuted the second invocation. 
+
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=inicializar";
+$IsisScript=$xWxis."administrar.xis";
+// the actual initialisation
+include("../common/wxis_llamar.php");
+foreach ($contenido as $linea){
+    if ($linea=="OK"){
+        echo "<h4>".$msgstr["init"]." ".$arrHttp["base"]." (".$arrHttp["dblongname"].")</h4>";
+    } else {
+        echo "<h4><font color=red>".$msgstr["mnt_ibd"]." ".$arrHttp["base"]." FAILED</font></h4>";
+    }
 }
 ?>
-</div>
-</div>
+</div></div>
 <?php
 	include("../common/footer.php");
 ?>
-</body>
-</html>
+</body></html>
