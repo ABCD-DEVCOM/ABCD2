@@ -8,6 +8,7 @@
 2021-03-15 fho4abcd replace double quotes in values: search expressions will now work
 2021-03-16 fho4abcd iso files not directly written to disc are now written without extra linefeeds
 2021-03-24 fho4abcd Use function to delete a file, improve confirm
+2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
 */
 
 global $arrHttp;
@@ -44,6 +45,7 @@ $filename= $arrHttp["archivo"].".".$arrHttp["tipo"];
 include ("rotulos2tags.php");
 include ("../common/inc_file-delete.php");
 
+/*--------------------------------------------------------------*/
 function Confirmar(){
     global $msgstr;
     ?>
@@ -54,6 +56,7 @@ function Confirmar(){
     <?php
 }
 
+/*--------------------------------------------------------------*/
 function GuardarArchivo($contenido, $fullpath){
     global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
     // if wxis did not write to disc we do it here
@@ -85,6 +88,7 @@ function GuardarArchivo($contenido, $fullpath){
 }
 
 
+/*--------------------------------------------------------------*/
 //Se lee la tabla con la estructura de conversión de rótulos a tags isis
 function LeerTablaCnv(){
     Global $separador,$arrHttp,$db_path;
@@ -132,6 +136,10 @@ function LeerTablaCnv(){
 	return $Pft;
 }
 
+/*--------------------------------------------------------------
+** - $Pft      : string with the text conversion specification
+** - $fullpath : outputfile specification. Note that wxis does not always write this file
+*/
 function Exportar($Pft, $fullpath){
     global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl;
     $query = "&base=" . $arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["cipar"]."&Formato=".urlencode($Pft);
@@ -178,6 +186,61 @@ function Exportar($Pft, $fullpath){
         }
  	}
 }
+/*--------------------------------------------------------------
+** - $fullpath : outputfile specification.
+*/
+function ExportarMX( $fullpath){
+    global $mx_path,$db_path,$arrHttp,$msgstr;
+    $strINV = $mx_path." db=".$db_path.$arrHttp["base"]."/data/".$arrHttp["base"];
+    $strINV.= " iso=".$fullpath;
+    //$strINV.= " cipar=".$db_path."par/".$arrHttp["base"].".par";
+    // Enter the range
+    if (isset($arrHttp["Mfn"]) and trim($arrHttp["Mfn"]) !="") {
+        $strINV.=" from=".$arrHttp["Mfn"]." to=".$arrHttp["to"];
+    }
+    // Enter the marc special
+    if (isset($arrHttp["usemarcformat"]) and $arrHttp["usemarcformat"]=="on") {
+        $strINV.=" outisotag1=3000";
+    }
+    //
+    if (isset($arrHttp["Expresion"]) and trim($arrHttp["Expresion"]) !="") {
+        $expresion=str_replace('"','' ,trim($arrHttp["Expresion"]));
+        $strINV.= " bool=\"".$expresion."\"";
+    }
+    $strINV.= " -all now 2>&1";
+    echo "Command line: ".$strINV."<br>";
+
+    // Execute the command
+    exec($strINV, $output,$status);
+    // collect regular and error output
+    $straux="";
+    for($i=0;$i<count($output);$i++){
+        $straux.=$output[$i]."<br>";
+    }
+    // If nothing was found we have an error
+    if($status==0) {
+        clearstatcache();
+        if ( !file_exists($fullpath) or filesize($fullpath)==0) {
+            echo "<div><font color=red>The export action did not result in any data</font></div>";
+            echo "<div><font color=red>File <b>".$fullpath."</b> does not exist or is empty</font></div>";
+            echo "<a href='javascript:Regresar()'>Try again</a>";
+            return 1;
+        }
+        ?>
+        <div align=center><br><br>
+            <h4><?php echo $fullpath ?> &nbsp; <?php echo $msgstr["okactualizado"] ?> &nbsp;
+                <a href=javascript:Download()> <?php echo $msgstr["download"]?></a>
+            </h4>
+        </div>
+        <?php
+        if ( $straux != "") echo "<hr>".$straux;
+    } else {
+        echo ("<h3><font color='red'><br>Process NOT EXECUTED or FAILED</font></h3><hr>");
+        echo "<font color='red'>".$straux."</font>";
+        return 1;
+   }
+   return 0;
+}
 //----------------------- End functions --------------------------------------------------
 //----------------------------------------------------------------------------------------
 
@@ -199,6 +262,11 @@ function Confirmar(){
 
 function Regresar(){
 	document.continuar.action="exporta_txt.php";
+	document.continuar.submit()
+}
+
+function ActivarMx(){
+	document.continuar.action="../utilities/mx_dbread.php";
 	document.continuar.submit()
 }
 </script>
@@ -249,7 +317,10 @@ include "../common/inc_div-helper.php"
 <div class="middle form">
 <div class="formContent">
 <?php
- echo "<table>";
+$marcleader=0;
+$usemx=0;
+$seleccionados=0;
+echo "<table>";
 // Display the conversion file and convert the table in this file
 if (isset($arrHttp["cnv"]) and trim($arrHttp["cnv"]) !="") {
     echo "<tr><td>".$msgstr["cnv_tab"].":<td><td>".$arrHttp["cnv"]."</td></tr>";
@@ -268,6 +339,12 @@ if (isset($arrHttp["Mfn"]) and trim($arrHttp["Mfn"]) !="") {
 // Display selection
 if (isset($arrHttp["seleccionados"]) and trim($arrHttp["seleccionados"]) !="") {
     echo "<tr><td>".$msgstr["selected_records"].":<td><td>".$arrHttp["seleccionados"]."</td></tr>";
+    $seleccionados++;
+}
+// Display Marc Leader selection
+if (isset($arrHttp["usemarcformat"]) and $arrHttp["usemarcformat"]=="on") {
+    echo "<tr><td>".$msgstr["ft_ldr"].":<td><td>".$arrHttp["usemarcformat"]."</td></tr>";
+    $marcleader++;
 }
 // Compute full foldername + full filename and display full filename
 // Note that wrong characters (e.g. / and \) are already removed in the calling script
@@ -278,7 +355,14 @@ $fullpath=$full_storein."/".$filename;
 echo "<tr><td>".$msgstr["r_fgent"].":<td><td>".$fullpath."</td></tr>";
 
 // Display the executable that will be used
-echo "<tr><td>".$msgstr["procesar"].":<td><td>".$wxisUrl."</td></tr></table><br>";
+if (isset($arrHttp["usemx"]) and $arrHttp["usemx"]=="on") {
+    $testbutton='<a href="../utilities/mx_test.php?mx_path='.$mx_path.'" target=test onclick=OpenWindow()>Test MX</a>';
+    echo "<tr><td>".$msgstr["procesar"].":<td><td>".$mx_path."&nbsp;&nbsp;&nbsp;".$testbutton."</td></tr>";
+    $usemx++;
+}else {
+    echo "<tr><td>".$msgstr["procesar"].":<td><td>".$wxisUrl."</td></tr>";
+}
+echo "</table><br>";
 
 // Check the existence of the supplied folder
 if ( !file_exists($full_storein)){
@@ -290,6 +374,18 @@ if ( !file_exists($full_storein)){
 if ( is_file($full_storein)){
     echo "<div><font color=red>Folder <b>".$storein."</b> is a file and NOT a folder in <b>".$db_path."</b></font></div>";
     echo "<a href='javascript:Regresar()'> Please enter a valid folder</a>";
+    die;
+}
+// Check that seleccionados is not combined with MX
+if ( $seleccionados>0 and $usemx>0) {
+    echo "<div><font color=red><b>".$msgstr["selected_records"]."</b> is not supported by MX </b></font></div>";
+    echo "<a href='javascript:Regresar()'> Please enter a valid combination</a>";
+    die;
+}
+// Check that mx is selected if Marc Leader is set
+if ( $marcleader>0 and $usemx==0) {
+    echo "<div><font color=red><b>".$msgstr["ft_ldr"]."</b> requires MX </b></font></div>";
+    echo "<a href='javascript:Regresar()'> Please enter a valid combination</a>";
     die;
 }
 
@@ -304,15 +400,24 @@ if (!isset($arrHttp["confirmar"]) or (isset($arrHttp["confirmar"]) and $arrHttp[
 $errors=DeleteFile($fullpath,0);
 if ( $errors>0) {
     echo "<div><font color=red><b>Export ABORTED</b></font></div>";
-    echo "<div><h2><font color=red><b>Content of ".$fullpath."</b> is not modified !</font></h2></div>";
+    echo "<div><h2><font color=red><b>Content of existing ".$fullpath."</b> is not modified !</font></h2></div>";
     echo "<a href='javascript:Regresar()'> Cancel</a>";
     die;
 }
 // Export the given range to file or to $data
-$data=Exportar($Pft, $fullpath);
-// Download the exported information
-if ($arrHttp["Accion"]=="S") {
-	GuardarArchivo($data,$fullpath);
+// The method depends on the checkbox of "usemx"
+if (isset($arrHttp["usemx"]) and $arrHttp["usemx"]=="on") {
+    $exportret=ExportarMX($fullpath);
+	if ($exportret==0 ) echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
+} else {
+    // Compute exported information.
+    // Show it in case of action Preview
+    $data=Exportar($Pft, $fullpath);
+    // Download the exported information in case of action Submit
+    if ($arrHttp["Accion"]=="S") {
+        GuardarArchivo($data,$fullpath);
+        echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
+    }
 }
 ?>
 

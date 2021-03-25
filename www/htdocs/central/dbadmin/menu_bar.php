@@ -5,6 +5,7 @@
 20210314 fho4abcd Menu: removed duplicate READ DB/ISO, removed empty button
 20210315 fho4abcd Menu: Other code for Export ISO whith MX.Code to frame and back button
 20210317 fho4abcd Initilalize DB uses now code inicio_bd.php
+20210325 fho4abcd Reorganized exports: all exports by 1 menu item. Others removed
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -241,13 +242,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/vmxISO_load.php"
 			document.admin.target=""
 			break;
-		case "exportisoold":
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/iso_export.php"
-			document.admin.target=""
-            document.admin.tipo.value="iso"
-			break;
 		case "exportiso":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -298,18 +292,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="addloanobjectcopies.php"
-			document.admin.target=""
-			break;
-		case "advanced2":    //Marino ISO load
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/vmxISO_load.php"
-			document.admin.target=""
-			break;
-		case "isoexport":    //Marino ISO export
-  			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/vmxISO_export.php"
 			document.admin.target=""
 			break;
 		case "importdoc":    //Marino doc import
@@ -382,7 +364,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
   <ul class="nav">
   <li><a href="#">Db Maintenance</a>
       <ul>
-        <li><a href='javascript:EnviarFormaMNT("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"] ."(MX)"?></a></li>
+        <li><a href='javascript:EnviarFormaMNT("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("unlock","<?php echo $msgstr["mnt_unlock"]?>")'><?php echo $msgstr["mnt_unlock"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("cn","<?php echo $msgstr["assigncn"]?>")'><?php echo $msgstr["assigncn"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("lock","<?php echo $msgstr["protect_db"]?>")'><?php echo $msgstr["protect_db"]?></a></li>
@@ -392,11 +374,9 @@ function EnviarFormaMNT(Opcion,Mensaje){
 
       </ul>
   </li>
-  <li><a href="#">Import/Export</a>
+  <li><a href="#"><?php echo $msgstr["cnv_export"]."/".$msgstr["cnv_import"]?></a>
   	<ul>
-       	<li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo "ExportISO MX"?>")'><?php echo $msgstr["exportiso_mx"]?></a></li>
-       	<li><a href='Javascript:EnviarFormaMNT("exportisoold","<?php echo "ExportISO MX OLD"?>")'><?php echo "Export ISO WITH MX (iso_export.php)"?></a></li>
-		<li><a href='Javascript:EnviarFormaMNT("isoexport","<?php echo "ExportISO MX"?>")'><?php echo "Export ISO with Visual MX"?></a></li>
+       	<li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?>")'><?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo "ImportISO MX"?>")'><?php echo $msgstr["importiso_mx"]?></a></li>
   		<li><a href="#">Import documents</A>

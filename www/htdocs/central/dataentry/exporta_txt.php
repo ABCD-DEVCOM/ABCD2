@@ -4,6 +4,7 @@
 2021-03-08 fho4abcd Improved html & code. Hovering symbols works now
 2021-03-15 fho4abcd Add functionality from utilities/iso_export.php (specify folder with explorer)
 2021-03-15 fho4abcd Add operation in/out of a frame + correct "backto" url
+2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $arrHttp;
@@ -17,6 +18,7 @@ $lang=$_SESSION["lang"];
 
 
 include ("../lang/admin.php");
+include ("../lang/dbadmin.php");
 include ("../lang/soporte.php");
 
 // ==================================================================================================
@@ -218,13 +220,16 @@ include ("../common/inc_get-dbinfo.php");// sets MAXMFN
 		    <?php echo $msgstr["maxmfn"]?>:&nbsp;<?php echo $arrHttp["MAXMFN"] ?>&nbsp;<a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a>
         </td>
 		<?php
-			if (isset($arrHttp["seleccionados"])){				echo "<tr>
+			if (isset($arrHttp["seleccionados"])){
+				echo "<tr>
 				<td colspan=2><strong>".$msgstr["selected_records"]."</strong>: &nbsp;";
 				$sel=str_replace("__",",",trim($arrHttp["seleccionados"]));
 				$sel=str_replace("_","",$sel);
 				echo "<input type=text name=seleccionados size=80 value=$sel>\n";
 				echo "</td></tr>";
-			}else{ // next line required to suppress javascript errors				echo "<tr><td colspan=2><input type=hidden name=seleccionados>\n</td></tr>";			}
+			}else{ // next line required to suppress javascript errors
+				echo "<tr><td colspan=2><input type=hidden name=seleccionados>\n</td></tr>";
+			}
 		?>
 	<tr>
 		<td colspan=2><hr></td>
@@ -263,6 +268,26 @@ include ("../common/inc_get-dbinfo.php");// sets MAXMFN
 </td>
 <td>
     <table>
+    <?php
+    if ($arrHttp["tipo"]=="iso"){ //only show for iso export
+        // Check if files exist <dbname>/def/<lang>/leader.fdt
+        $leaderfiles=glob($db_path.$arrHttp["base"]."/def/*/leader.fdt");
+        $checkmx="";    
+        if ( count($leaderfiles)>0) {
+            $checkmx="checked";    
+    ?>
+    <tr>
+         <td><?php echo $msgstr["cnv_export"]." ".$msgstr["ft_ldr"];?></td>
+         <td><input type='checkbox' name='usemarcformat' checked value="on" ><font color=blue>MARC 'leader.fdt' detected</font></td>
+    </tr>
+    <?php }
+    ?>
+    <tr>
+         <td><?php echo $msgstr["exportiso_mx"];?></td>
+         <td><input type='checkbox' name='usemx' <?php echo $checkmx ?> value="on" ><font color=blue>Default WXIS</font></td>
+    </tr>
+    <?php }
+    ?> 
     <tr>
         <td><?php echo $msgstr["folder_name"];?></td>
         <td>
@@ -288,6 +313,3 @@ include ("../common/inc_get-dbinfo.php");// sets MAXMFN
 <?php 
 include("../common/footer.php");
 ?>
-
-
-
