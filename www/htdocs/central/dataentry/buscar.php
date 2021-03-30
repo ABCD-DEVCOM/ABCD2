@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210311 fho4abcd body tag on correct position
+20210326 guilda Error when searching due to quoting
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -53,7 +54,7 @@ global $arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl;
 			if ($vienede=="buscar_en_este" or $vienede=="toolbar"){
 				echo "<script>
 						window.opener.top.browseby=\"search\"
-						window.opener.top.Expresion=".$Expresion."
+						window.opener.top.Expresion='".str_replace("'","¨",$Expresion)."'
 						window.opener.top.mfn=1
 						window.opener.top.Menu(\"ejecutarbusqueda\");
 						self.close()

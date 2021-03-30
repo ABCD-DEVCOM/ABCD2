@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-03-20 guilda Error when searching due to quoting
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -179,6 +182,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	$contenido="";
 	$registro="";
 	$IsisScript=$xWxis."buscar_ingreso.xis";
+	$Expresion=str_replace('¨',"'",$Expresion);
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".urlencode($Expresion)."&count=1&from=".$arrHttp["from"]."&Formato=$Formato&prologo=@prologoact.pft&epilogo=@epilogoact.pft";
 	include("../common/wxis_llamar.php");
     $ficha_bib=$contenido;
