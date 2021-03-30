@@ -9,6 +9,7 @@
 2021-03-16 fho4abcd iso files not directly written to disc are now written without extra linefeeds
 2021-03-24 fho4abcd Use function to delete a file, improve confirm
 2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
+2021-03-26 fho4abcd Button mxread: now with file and only for iso files
 */
 
 global $arrHttp;
@@ -29,7 +30,7 @@ include("../lang/soporte.php");
 ** Old code might not send specific info.
 ** Set defaults for the return script and frame info
 */
-$backtoscript="administrar.php"; // The default return script
+$backtoscript="../dataenty/administrar.php"; // The default return script
 $inframe=1;                      // The default runs in a frame
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
@@ -37,7 +38,15 @@ if (!isset($arrHttp["tipo"]))         $arrHttp["tipo"]="iso";
 if (!isset($arrHttp["archivo"]))      $arrHttp["archivo"]="dummy";// can be used by preview
 if (!isset($arrHttp["storein"]))      $arrHttp["storein"]="/wrk";
 // ensure that the file has extension iso or txt. Avoids overwriting db files (.mst/.tab/.pft/.fdt,...)
-$filename= $arrHttp["archivo"].".".$arrHttp["tipo"];
+$fileinfo = pathinfo($arrHttp["archivo"]);
+if ( !isset($fileinfo['extension'])){ // no extension
+    $arrHttp["archivo"]=$arrHttp["archivo"].".".$arrHttp["tipo"];
+} else if ( $fileinfo['extension']=="") { // empty extension
+    $arrHttp["archivo"]=$arrHttp["archivo"].$arrHttp["tipo"];
+} else if ( $fileinfo['extension']!=$arrHttp["tipo"]) { //wrong extension
+    $arrHttp["archivo"]=$fileinfo['filename'].".".$arrHttp["tipo"];
+}
+$filename= $arrHttp["archivo"];
 
 
 //==================== Functions =============================
@@ -84,6 +93,9 @@ function GuardarArchivo($contenido, $fullpath){
             </h4>
         </div>
         <?php
+        if ($arrHttp["tipo"]=="iso") {
+            echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
+        }
     }
 }
 
@@ -266,7 +278,7 @@ function Regresar(){
 }
 
 function ActivarMx(){
-	document.continuar.action="../utilities/mx_dbread.php";
+	document.continuar.action='../utilities/mx_dbread.php?copyname=<?php echo $arrHttp["archivo"] ?>&charset=<?php echo $charset ?>';
 	document.continuar.submit()
 }
 </script>
@@ -416,7 +428,6 @@ if (isset($arrHttp["usemx"]) and $arrHttp["usemx"]=="on") {
     // Download the exported information in case of action Submit
     if ($arrHttp["Accion"]=="S") {
         GuardarArchivo($data,$fullpath);
-        echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
     }
 }
 ?>
