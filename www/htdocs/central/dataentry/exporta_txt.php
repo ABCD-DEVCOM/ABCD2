@@ -5,6 +5,7 @@
 2021-03-15 fho4abcd Add functionality from utilities/iso_export.php (specify folder with explorer)
 2021-03-15 fho4abcd Add operation in/out of a frame + correct "backto" url
 2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
+2021-03-27 fho4abcd add path to return script
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $arrHttp;
@@ -28,7 +29,7 @@ include ("../lang/soporte.php");
 ** Old code might not send specific info.
 ** Set defaults for the return script and frame info
 */
-$backtoscript="administrar.php"; // The default return script
+$backtoscript="../dataentry/administrar.php"; // The default return script
 $inframe=1;                      // The default runs in a frame
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
