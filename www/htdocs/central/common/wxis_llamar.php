@@ -3,6 +3,7 @@
 20210311 fho4abcd Add workaround in error message WXIS|execution error|file|tmpnam| Error detected on Windows
 20210315 fho4abcd Small textual corrections + removed unused code for mx
 20210315 fho4abcd Display better error message and set $err_wxis in that case too.
+20210402 fho4abcd Code added to allow self-signed certificates for internal server calls
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 unset($contenido);  // This array will get the text of the result
@@ -72,14 +73,7 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
 
     parse_str($url, $arr_url);
     $postdata = http_build_query($arr_url);
-    $opts = array('http' =>
-                array(
-                        'method'  => 'POST',
-                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-                        'content' => $postdata
-                     )
-                );
-    $context = stream_context_create($opts);
+    include "../common/inc_setup-stream-context.php";
     unset($result);
     unset($con);
     // MAIN POST CONNECTION in following line

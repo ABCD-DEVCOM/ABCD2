@@ -6,14 +6,19 @@
 2021-02-10 fho4abcd: new/improved checks $ABCD_path, $db_path, abcd.def
 2021-02-10 fho4abcd: replace fixed server port by autodetection of server port, code formatting
 2021-02-25 fho4abcd: don't send header info (wrong and out of order here)
+2021-04-02 fho4abcd: autodetected protocol (port was already detected since 2021-02-10))
 */
 
 ini_set('error_reporting', E_ALL);
 $cisis_versions_allowed="16-60;ffi;bigisis";
 
 // *** Main server configuration
-// URL with autodetected port
-$server_url="http://localhost:".$_SERVER['SERVER_PORT'];    
+// URL for internal server actions, with autodetected protocol and port
+// Note: protocol/port are determined by server config vhosts file. (also if defaults are used)
+$protocol="http:"; // default protocol
+if ( isset($_SERVER['HTTPS']) and $_SERVER['HTTPS']=="on") $protocol="https:";
+$server_url=$protocol."//localhost:".$_SERVER['SERVER_PORT'];
+
 $postMethod=1;      // if set to '1' (or true) ABCD will use POST-method; if set to '0' the GET-method will be used. Use with caution
 $dirtree=1;         // USE THIS PARAMETER TO SHOW THE ICON THAT ALLOWS THE BASES FOLDER EXPLORATION
 $MD5=0;             // USE THIS PARAMETER TO ENABLE/DISABLE THE MD5 PASSWORD ENCRIPTYON (0=OFF 1=ON)
