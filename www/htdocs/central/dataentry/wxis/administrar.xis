@@ -1,4 +1,5 @@
 <IsisScript name="Administrar">
+<!-- 20210409 fho4abcd set parm buffersize to allow large isisactab_utf8-->
 
 <function name="error" action="replace" tag="1">
 	<parm name="isisxml table">
@@ -289,6 +290,7 @@
 <display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
 <display><pft></pft></display>
 
+    <parm name="buffersize">200000</parm>
     <parm name=cipar>
       		<pft> if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi
     		</pft>
