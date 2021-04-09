@@ -6,6 +6,8 @@
 20210305 fho4abcd Check process status. Catch error output. Menu as real table. Menu option to control number of standard messages
 20210316 fho4abcd Work inside/ouside frame, improved backbutton
 20210317 fho4abcd Show correct heading and backbutton for second invocation (was not corect from menu_mantenimiento)
+20210409 fho4abcd Read actab,uctab,stw from .par file (no fixed files, equal to incremental update procedure)
+20210409          The stw file comes from tag STW (present in many .par files).
 */
 /**
  * @program:   ABCD - ABCD-Central
@@ -83,7 +85,7 @@ $bd=$db_path.$base;
 <script>
 var win;
 function OpenWindow(){
-	msgwin=window.open("","test","width=800,height=200");
+	msgwin=window.open("","testshow","width=800,height=250");
 	msgwin.focus()
 }
  function OpenWindows() {
@@ -102,8 +104,18 @@ win=window.open(mypage,myname,settings);}
     <div class="formContent">
     <div align=center ><h3><?php echo $msgstr["mnt_gli"]?></h3></div>
 <?php
+// Ensure that the parameter file exists
+$ciparfile=$arrHttp["base"].".par";
+$fullciparpath=$db_path."par/".$ciparfile;
+if (!file_exists($fullciparpath)){
+    echo "<h3><font color=red>".$fullciparpath.": Does not exist</font></h3>";
+}
 // The test button gives the mx_path to the test window
-$testbutton='<a href="mx_test.php?mx_path='.$mx_path.'" target=test onclick=OpenWindow()>Test MX</a>';
+// The show button gives the content of the parameter file
+$testbutton=
+'<a href="mx_test.php?mx_path='.$mx_path.'" target=testshow onclick=OpenWindow()>Test MX</a>';
+$showbutton=
+'<a href="show_par_file.php?par_file='.$fullciparpath.'" target=testshow onclick=OpenWindow()>Show &lt;dbn&gt;.par</a>';
 
 if(isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
 if(!isset($fst)) { // The form sets the fst: the first action of this php
@@ -144,64 +156,56 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         </select></td>
     </tr>
     <tr> <td></td><td><input type='submit' value='START'></td>
-         <td><?php echo "$testbutton" ?></td>
+         <td><?php echo "$testbutton" ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "$showbutton" ?></td>
     </tr></table></form>
 
 
 <?php
 } else {
-    if (file_exists($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw")) {
-        $stw=" stw=@".$db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".stw";
-    }else{
-        if (file_exists($db_path."stw.tab"))
-            $stw=" stw=@".$db_path."stw.tab";
-        else
-            $stw="";
-    }
     if (!file_exists($cisis_path)){
         echo $cisis_path.": ".$msgstr["misfile"];
         die;
     }
-    $uctab="";
-    $actab="";
-    $cipar="";
-    if (file_exists($db_path."cipar.par")){
-        $cipar=$db_path."cipar.par";
-        $uctab="isisuc.tab";
-        $actab="isisac.tab";
-    }else{
-        if (file_exists($db_path.$arrHttp["base"]."/data/isisuc.tab")){
-            $uctab=$db_path.$arrHttp["base"]."/data/isisuc.tab";
-        }else{
-            if (file_exists($db_path."isisuc.tab"))
-                $uctab=$db_path."isisuc.tab";
-        }
-        if ($uctab=="")  $uctab="ansi";
-
-
-        if (file_exists($db_path.$arrHttp["base"]."/data/isisac.tab")){
-            $actab=$db_path.$arrHttp["base"]."/data/isisac.tab";
-        }else{
-            if (file_exists($db_path."isisuc.tab"))
-                $actab=$db_path."isisac.tab";
-        }
-        if ($actab=="")  $actab="ansi";
+    // Read parameters from par/<basename>.par file.
+    // Ensure that the parameter file exists
+    $fullciparpath=$db_path."par/".$arrHttp["base"].".par";
+    if (!file_exists($fullciparpath)){
+        echo "<h3><font color=red>".$fullciparpath.": Does not exist</font></h3>";
     }
-
+    $def_cipar = parse_ini_file($fullciparpath);
+    // Default for parameters $actab and $uctab and $stw
+    // Note that $actab and $uctab can be valid for ansi, but never for utf-8
+    $actab="ansi";
+    $uctab="ansi";
+    $stw="";
+    $stwat="";
     if ($unicode=="utf8"){
-        if (file_exists($db_path."isisactab_utf8.tab"))
-            $actab=$db_path."isisactab_utf8.tab";
-
-        if (file_exists($db_path."isisuctab_utf8.tab"))
-            $uctab=$db_path."isisuctab_utf8.tab";
+        $actab="";
+        $uctab="";
+    }
+    // Get parameters $actab and $uctab and STW from the .par file.
+    // Replace %path_database% by actual value
+    // No need to test for existance isisac.tab and isisuc.tab: done by mx
+    // WXIS does not allow non-existing stw files. So here we do the same test
+    if (isset($def_cipar["isisac.tab"]))$actab=str_replace("%path_database%",$db_path,$def_cipar["isisac.tab"]);
+    if (isset($def_cipar["isisuc.tab"]))$uctab=str_replace("%path_database%",$db_path,$def_cipar["isisuc.tab"]);
+    if (isset($def_cipar["STW"])){
+        $stwfile=str_replace("%path_database%",$db_path,$def_cipar["STW"]);
+        if (file_exists($stwfile)) {
+            $stw=$stwfile;
+            $stwat="stw=@".$stw;
+        }
     }
     $parameters= "<br>";
     $parameters.= "database: ".$bd."/data/".$base."<br>";
-    $parameters.= "fst: @".$bd."/data/".$base.".fst<br>";
-    $parameters.= "mx: $mx_path  ".$testbutton."<br>";
-    if ($stw!="") $parameters.= "stw: $stw<br>";
+    $parameters.= "fst&nbsp;&nbsp;: @".$bd."/data/".$base.".fst<br>";
+    $parameters.= "mx&nbsp;&nbsp;&nbsp;: $mx_path<br>";
+    if ($stw  !="") $parameters.= "stw&nbsp;&nbsp;: @$stw<br>";
     if ($uctab!="") $parameters.= "uctab: $uctab<br>";
-    if ($uctab!="") $parameters.= "actab: $actab<br>";
+    if ($actab!="") $parameters.= "actab: $actab<br>";
+    $parameters.= " &nbsp; ".$testbutton;
+    $parameters.= " &nbsp; ".$showbutton."<br>";
+
     // Process /m parameter
     unset($m);
     if (isset($_POST['m'])) $m=$_POST['m'];
@@ -221,8 +225,10 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         if(isset($tellnumber)) $tellnumbervar=$tellnumber;
     }
     $tellvar.=$tellnumbervar;
+    // Create command.
+    // Note that mx does not extract uctab/actab from cipar: explicitly specified here
+    $strINV=$mx_path." ".$bd."/data/".$base. " fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stwat fullinv".$m_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
 
-    $strINV=$mx_path." ".$bd."/data/".$base. "$cipar fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stw fullinv".$m_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
     // execute the command
     exec($strINV, $output,$status);
     $straux="";
