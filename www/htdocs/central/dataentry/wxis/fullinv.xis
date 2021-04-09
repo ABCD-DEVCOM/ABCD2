@@ -1,5 +1,6 @@
 <IsisScript name="fullinv">
 <!-- 20210408 fho4abcd Added newlines in feedback -->
+<!-- 20210409 fho4abcd set parm buffersize to allow large isisactab_utf8-->
 <section name="fullinversion">
 
 <function name="status" action="replace" tag="2001">
@@ -29,6 +30,7 @@
 	<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
  	<trace>xOn</trace>
 <display><pft></pft></display>
+    <parm name="buffersize">200000</parm>
     <parm name=cipar>
       		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
     </parm>
