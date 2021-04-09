@@ -1,4 +1,5 @@
 <IsisScript name="fullinv">
+<!-- 20210408 fho4abcd Added newlines in feedback -->
 <section name="fullinversion">
 
 <function name="status" action="replace" tag="2001">
@@ -38,10 +39,10 @@
 		<field action="replace" tag="2004"><pft>v5001,'.fst'</pft></field>
 		<parm name="fst"><pft>cat(v2004)</pft></parm>
 		<field action="define" tag="1102">Isis_Status</field>
-		<display><pft>'Full invertion: ',v5001/</pft></display>
+		<display><pft>'Full invertion: ',v5001,'<br>'/</pft></display>
 		<loop>
 		</loop>
-	     <display><pft>'Finished.'/</pft></display>
+	     <display><pft>'Finished.<br>'/</pft></display>
     	 <display><pft>'Lock status = 'v1102'<br>' if v1102='8' then ' No se ejecutó la actualización. Debe desbloquear la base de datos' fi/</pft></display>
   </do>
 
