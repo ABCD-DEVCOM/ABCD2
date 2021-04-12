@@ -6,6 +6,7 @@
 20210315 fho4abcd Menu: Other code for Export ISO whith MX.Code to frame and back button
 20210317 fho4abcd Initilalize DB uses now code inicio_bd.php
 20210325 fho4abcd Reorganized exports: all exports by 1 menu item. Others removed
+20210411 fho4abcd unlock_db_retag_check -> unlock_db_retag
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -309,7 +310,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		case "unlock":    //Marino Vretag
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/unlock_db_retag_check.php"
+			document.admin.action="../utilities/unlock_db_retag.php"
 			document.admin.target=""
 			break;
 		case "addloanobj":    //Marino addloanobj
