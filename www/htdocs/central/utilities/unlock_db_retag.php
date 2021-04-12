@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210412 fho4abcd Rewrite(helper code fragment,integrate confirm, show status, correct execution&feedback,..)
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -7,108 +10,111 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../common/header.php");
 include("../lang/dbadmin.php");
-include("../lang/acquisitions.php");
 include("../lang/admin.php");
 include("../lang/soporte.php");
-include("../config.php");
-include("../common/header.php");
-$base=$arrHttp["base"];
-
-echo "<script src=../dataentry/js/lr_trim.js></script>";
-echo "<body>\n";
-if (isset($arrHttp["encabezado"])) {
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
+//====================== Functions =================
+// Function to show a "confirm" and "cancel" button. Actions by corresponding script
+function Confirmar(){
+    global $msgstr;
+    ?>
+    <br><br><div align=center>
+	<input type=button name=continuar value="<?php echo $msgstr["procesar"]?>" onclick=Confirmar()>
+	&nbsp; &nbsp;
+    <input type=button name=cancelar value="<?php echo $msgstr["cancelar"] ?>" onclick=Regresar()>
+	</div>
+    <?php
 }
-include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-
-echo "<div style='float:right;'> <a href=\"../dbadmin/menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong> back </strong></span>
-				</a></div>";
-
-
-$OS=strtoupper(PHP_OS);
-$converter_path=$cisis_path;
-
-$converter_path=$cisis_path.$cisis_ver."retag";
-$retag_path=$converter_path;
+//----------------------- End functions --------------------------------------------------
+$backtoscript="../dbadmin/menu_mantenimiento.php";
 $base=$arrHttp["base"];
 $bd=$db_path.$base;
-$strINV=$retag_path." ".$bd."/data/".$base." unlock";
-exec($strINV, $output,$t);
-$straux="";
-for($i=0;$i<count($output);$i++)
-{
-$straux.=$output[$i]."<br>";
-}
-
-echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">Unlock DB: " . $base."
-			</div>
-			<div class=\"actions\">";
-if (isset($arrHttp["encabezado"])){
-echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-}
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_unlock_db_retag.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<body>
+<script>
+function Confirmar(){
+	document.continuar.confirmcount.value++;
+	document.continuar.submit()
+}
+function Regresar(){
+	document.continuar.action='<?php echo $backtoscript;?>'
+	document.continuar.submit()
+}
+</script>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_unlock_db_retag.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: utilities/unlock_db_retag.php</font>";
+// Show institutional info
+include "../common/institutional_info.php";
 ?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr["maintenance"]." &rarr; ".$msgstr["mnt_unlock"];?>
+	</div>
+	<div class="actions">
+        <?php
+        $backtourl=$backtoscript."?base=".$arrHttp["base"];
+        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
+        ?>
+		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+	</div>
+	<div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php" ?>
 <div class="middle form">
 	<div class="formContent">
 <?php
-echo "<center><h3>". $msgstr["mnt_unlock"]."</h3></center>";
-?>
-<form name=maintenance>
-<table cellspacing=5 width=400 align=center>
-	<tr>
-		<td>
+// Ask for confirmation
+if (!isset($arrHttp["confirmcount"])) {
+    echo "<div align=center><h3>". $msgstr["mnt_unlock"]." : ".$arrHttp["base"]." ?</h3></div>";
+    include ("../common/inc_get-dbinfo.php");
+    echo "<div align=center>".$msgstr["database"]." ".$msgstr["exwritelock"].
+         " = ".$arrHttp["EXCLUSIVEWRITELOCK"]."</div>";
+    // Create a form for submission and request confirmation
+    echo "<form name=continuar action=unlock_db_retag.php method=post>\n";
+    foreach ($_REQUEST as $var=>$value){
+        // some values may contain quotes or other "non-standard" values
+        $value=htmlspecialchars($value);
+        echo "<input type=hidden name=$var value=\"$value\">\n";
+        if (!isset($arrHttp["confirmcount"])){ 
+            $arrHttp["confirmcount"]=0;
+            echo "<input type=hidden name=confirmcount value=\"0\">\n";
+        }
+    }
+    echo "</form>\n";
+	Confirmar();
+} else{
+    // This part is only after confirmation
+    echo "<div align=center><h3>". $msgstr["mnt_unlock"]." : ".$arrHttp["base"]."</h3></div>";
+    // Create command
+    $parameters= "<br>";
+    $parameters.= "database: ".$bd."/data/".$base."<br>";
+    $retag_path=$cisis_path."retag".$exe_ext;
+    $strINV=$retag_path." ".$bd."/data/".$base." unlock 2>&1";
 
-		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-             <br>
-			<ul>
-			<li>
-          <?php
-		  echo "<h3>Query: $strINV"."</h3><br>";
-		  ?>
-            </li>
-           <br>
-            <li>
-			<?php
-
-			if($t==0)
-echo ("<h3>process Output: ".$straux."<br>process Finished OK</h3><br>");
-else
-echo ("<h2>Output: <br>process NOT EXECUTED</h2><br>");
-if($base=="")
-{
-echo"NO database selected";
+    // execute the command
+    exec($strINV, $output,$status);
+    $straux="";
+    for($i=0;$i<count($output);$i++){
+        $straux.=$output[$i]."<br>";
+    }
+    if($status==0) {
+        echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
+        echo ("<h3>Process Result: <br>Process Finished OK</h3>");
+        echo "$straux";
+    } else {
+        echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
+        echo ("<h3><font color='red'><br>Process NOT EXECUTED or FAILED</font></h3><hr>");
+        echo "<font color='red'>".$straux."</font>";
+    }
 }
-?></li>
+?>
 
+</div></div>
 
-			</ul>
-
-		</td>
-</table></form>
-
-</div>
-</div>
 <?php
 include("../common/footer.php");
-echo "</body></html>";
 ?>
+</body></html>
+
 
