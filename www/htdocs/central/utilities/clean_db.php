@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210414 fho4abcd Rewrite(helper code fragment,add confirm, correct error checks,html code..)
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -7,93 +10,146 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
-include("../lang/dbadmin.php");
-include("../lang/acquisitions.php");
-include("../config.php");
 include("../common/header.php");
-
+include("../lang/dbadmin.php");
+include("../lang/admin.php");
+//====================== Functions =================
+// Function to show a "confirm" and "cancel" button. Actions by corresponding script
+function Confirmar(){
+    global $msgstr;
+    ?>
+    <br><br><div align=center>
+	<input type=button name=continuar value="<?php echo $msgstr["procesar"]?>" onclick=Confirmar()>
+	&nbsp; &nbsp;
+    <input type=button name=cancelar value="<?php echo $msgstr["cancelar"] ?>" onclick=Regresar()>
+	</div>
+    <?php
+}
+//----------------------- End functions --------------------------------------------------
+$backtoscript="../dbadmin/menu_mantenimiento.php";
 $base=$arrHttp["base"];
-$OS=strtoupper(PHP_OS);
-$converter_path=$mx_path;
-
-
-
-include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-echo "<div style='float:right;'> <a href=\"../dbadmin/menu_mantenimiento.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\"/>
-					<span><strong> back </strong></span>
-				</a></div>";
-echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">Clean/Compact: " . $base."
-			</div>
-			<div class=\"actions\">";
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-?>
-
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_clean_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_vmxISO_load.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: clean_db.php</font>";
-?>
-</div>
-<div class="middle form">
-
-<?php
-
-
 $bd=$db_path.$base;
-
-$isoname=$base."tmp.iso";
-if($isoname!='')
-{
-
-$strINV=$cisis_path."mx ".$db_path.$base."/data/".$base." iso=".$db_path."wrk/".$isoname." outisotag1=3000 -all now";
-	 exec($strINV, $output,$t);
-	 $straux="";
-for($i=0;$i<count($output);$i++)
-{
-$straux.=$output[$i]."<br>";
-}
-echo "<br>MX query: ".$strINV;
-echo "<br>Process output: ".$straux;
-if($t==0)
-{
-echo "<br>Process exporting OK!<br>File saved in ".$db_path."wrk/".$isoname;
-
-//importing iso
-$op="create";
-$strINV=$cisis_path."mx "."iso=".$db_path."wrk/".$isoname." ".$op."=".$db_path.$base."/data/".$base." isotag1=3000 -all now";
-	 exec($strINV, $output,$t);
-	 $straux="";
-for($i=0;$i<count($output);$i++)
-{
-$straux.=$output[$i]."<br>";
-}
-echo "<br>MX query: ".$strINV;
-echo "<br>Process output: ".$straux;
-if($t==0)
-echo "<br>Process importing OK!";
-else
-echo "<br>Process NOT executed!";
-
-}
-else
-echo "<br>Process NOT executed!";
-if($base=="")
-{
-echo"<br>NO database selected";
-}
-}
-echo "</div>";
-//echo "<br>"."<a href='../dbadmin/menu_mantenimiento.php?base=&encabezado=s'>Maintenance Menu</a>"."<br>";
+$bd_mst=$bd."/data/".$base;
+$bd_mst_full=$bd_mst.".mst";
+$fullisoname=$db_path."wrk/".$base."_tmp.iso";
+$cleancompactmsg="Clean/Compact DB";
 ?>
-<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
-</form>
+<body>
+<script>
+var win
+function Confirmar(){
+	document.continuar.confirmcount.value++;
+	document.getElementById('preloader').style.visibility='visible'
+	document.continuar.submit()
+}
+function Regresar(){
+	document.continuar.action='<?php echo $backtoscript;?>'
+	document.continuar.submit()
+}
+</script>
+<?php
+// Show institutional info
+include "../common/institutional_info.php";
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr["maintenance"]." &rarr; ".$cleancompactmsg;?>
+	</div>
+	<div class="actions">
+        <?php
+        $backtourl=$backtoscript."?base=".$base;
+        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
+        ?>
+		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
+<?php include "../common/inc_div-helper.php" ?>
+<div class="middle form">
+	<div class="formContent">
+        <div align=center><h3><?php echo $cleancompactmsg." : ".$base;?></h3></div>
+<?php
+include ("../common/inc_get-dbinfo.php");
+$initsize=number_format(filesize($bd_mst_full),0,',','.');
+$initmsg= "<br>".$msgstr["database"].": ".$bd_mst." &rarr; ";
+$initmsg.="<b><font color=darkred>".$msgstr["maxmfn"].": ".$arrHttp["MAXMFN"];
+$initmsg.="&rarr; Size: ".$initsize."</font></b><br>";
+
+// First screen: Ask for confirmation
+if (!isset($arrHttp["confirmcount"])) {
+    // Show the "loading" marker initially hidden and absolutely positioned in about the center
+    // Create a form for submission and request confirmation
+    ?>
+    <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
+          style="visibility:hidden;position:absolute;top:30%;left:45%;border:2px solid;"/>
+    <div align=center>
+        <?php echo "Current status:<br>".$initmsg?><br>
+    </div>
+    <form name=continuar  method=post >
+        <input type=hidden name=confirmcount value=0>
+        <?php
+        foreach ($_REQUEST as $var=>$value){
+            // some values may contain quotes or other "non-standard" values
+            $value=htmlspecialchars($value);
+            echo "<input type=hidden name=$var value=\"$value\">\n";
+        }
+        Confirmar();
+        ?>
+    </form>
+    <?php
+} else{
+    // Second screen: execute the function
+    echo $initmsg;
+    if (file_exists($fullisoname)) {
+        unlink($fullisoname);
+    }
+    $strINV=$mx_path." ".$bd_mst." iso=$fullisoname outisotag1=3000 -all now 2>&1";
+    exec($strINV, $output,$status);
+    $straux="";
+    for($i=0;$i<count($output);$i++){
+        $straux.=$output[$i]."<br>";
+    }
+    if($status==0) {
+        echo "<hr>Command line: $strINV<br>";
+        echo ("<h3>Export process result: OK</h3>");
+        echo "$straux";
+    } else {
+        echo "<hr>Command line: $strINV<br>";
+        echo ("<h3><font color='red'><br>Export process NOT EXECUTED or FAILED</font></h3>");
+        echo "<font color='red'>".$straux."</font>";
+    }
+    if ( file_exists($fullisoname)) {
+        echo "ISO file $fullisoname saved.<br>";
+    }
+
+    //importing iso
+    $strINV=$mx_path." iso=$fullisoname create=".$db_path.$base."/data/".$base." isotag1=3000 -all now 2>&1";
+    exec($strINV, $output,$status);
+    $straux="";
+    for($i=0;$i<count($output);$i++){
+        $straux.=$output[$i]."<br>";
+    }
+    if($status==0) {
+        echo "<br>Command line: $strINV<br>";
+        echo ("<h3>Import process result: OK</h3>");
+        echo "$straux";
+    } else {
+        echo "<br>Command line: $strINV<br>";
+        echo ("<h3><font color='red'><br>Import process NOT EXECUTED or FAILED</font></h3>");
+        echo "<font color='red'>".$straux."</font>";
+    }
+    if (file_exists($fullisoname)) {
+        if ( unlink($fullisoname)==true) echo "ISO file $fullisoname deleted";
+    }
+    $aftersize=number_format(filesize($bd_mst_full),0,',','.');
+    get_dbinfo();// declared in "../common/inc_get-dbinfo.php"
+    $aftermsg= "<hr>".$msgstr["database"].": ".$bd_mst." &rarr; ";
+    $aftermsg.="<b><font color=darkred>".$msgstr["maxmfn"].": ".$arrHttp["MAXMFN"];
+    $aftermsg.="&rarr; Size: ".$aftersize."</font></b><br>";
+    echo $aftermsg;
+}
+?>
 </div>
 </div>
 <?php
