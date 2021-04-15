@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-02 fho4abcd Replaced helper code fragment by included file
 2021-03-15 fho4abcd Replaced dbinfo code by included file
+2021-04-15 fho4abcd use charset from config.php
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -72,13 +73,17 @@ if (!isset($arrHttp["inicio"])){   //indica que no se van a colocar los formatos
 	echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.formato.options.length=0\n";
 	$i=-1;
 	if (isset($fp)) {
-		foreach($fp as $linea){			if (trim($linea)!="") {				$linea=trim($linea);
+		foreach($fp as $linea){
+			if (trim($linea)!="") {
+				$linea=trim($linea);
 				$ll=explode('|',$linea);
 				$cod=$ll[0];
 				$nom=$ll[1];
 				if (isset($_SESSION["permiso"][$arrHttp["base"]."_pft_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_pft_".$ll[0]]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])
-						or isset($_SESSION["permiso"]["CENTRAL_ALL"])){					$i=$i+1;
-					echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.formato.options[$i]=new Option('$nom','$cod')\n";				}
+						or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+					$i=$i+1;
+					echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.formato.options[$i]=new Option('$nom','$cod')\n";
+				}
 			}
 		}
 
@@ -93,13 +98,16 @@ if (!isset($arrHttp["inicio"])){   //indica que no se van a colocar los formatos
 	//Se leen las hojas de entrada disponibles
 	if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks")){
 		$fp = file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks");
-	}else{		if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks"))
-			$fp = file($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks");	}
+	}else{
+		if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks"))
+			$fp = file($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks");
+	}
 	$i=0;
 	$wks_p=array();
 	if (isset($fp)) {
 		foreach($fp as $linea){
-			if (trim($linea)!="") {				$linea=trim($linea);
+			if (trim($linea)!="") {
+				$linea=trim($linea);
 				$l=explode('|',$linea);
 				$cod=trim($l[0]);
 				$nom=trim($l[1]);
@@ -117,20 +125,25 @@ if (!isset($arrHttp["inicio"])){   //indica que no se van a colocar los formatos
 	unset($fp);
 	if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
 		$fp = file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab");
-	}else{		if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab"))
-			$fp = file($db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab");	}
+	}else{
+		if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab"))
+			$fp = file($db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab");
+	}
 	$i=0;
 	$typeofr="";
 	if (isset($fp)) {
-		foreach($fp as $linea){	           if ($i==0){
+		foreach($fp as $linea){
+	           if ($i==0){
 	           	$l=explode(" ",$linea);
 	           	echo "top.tl='".trim($l[0])."'\n";
 	           	if (isset($l[1]))
 	           		echo "top.nr='".trim($l[1])."'\n";
 	           	else
 	           	    echo "top.nr=''\n";
-	           	$i=1;	           }else{
-				if (trim($linea)!="") {					$l=explode('|',$linea);
+	           	$i=1;
+	           }else{
+				if (trim($linea)!="") {
+					$l=explode('|',$linea);
 					$cod=$l[0];
 					$ix=strpos($cod,".");
 					$cod=substr($cod,0,$ix);
@@ -140,7 +153,9 @@ if (!isset($arrHttp["inicio"])){   //indica que no se van a colocar los formatos
 			}
 		}
 		echo "top.typeofrecord=\"$typeofr\"\n";
-	}else{		echo "top.typeofrecord=\"\"\n";	}
+	}else{
+		echo "top.typeofrecord=\"\"\n";
+	}
 }
 
 //Se lee la fdt para determinar el prefijo y el formato de extracción del campo del índice de la entrada principal
@@ -165,9 +180,12 @@ foreach($fp as $linea){
 		$fdt=explode('|',$linea);
 		if ($fdt[7]=="B") $HTML=$fdt[1];  //LOAD EXTERNAL TEXT FILE  IN THIS TAG
 		if ($fdt[7]=="H") $URL=$fdt[1];   //URL TO TH DOCUMENT LOADED IN $HTML
-		if ($fdt[3]==1){                  //MAIN FIELD ALPHABETIC INDEX			$pi=$fdt[12];
+		if ($fdt[3]==1){                  //MAIN FIELD ALPHABETIC INDEX
+			$pi=$fdt[12];
 			$fe=$fdt[13];
-			if (trim($fe=="")){				$fe="v".trim($fdt[1]);			}
+			if (trim($fe=="")){
+				$fe="v".trim($fdt[1]);
+			}
 		}
 	}
 }
@@ -177,12 +195,15 @@ html='$HTML'
 url='$URL'
 top.prefijo_indice='$pi'
 top.formato_indice='".urlencode($fe)."'
-if (html=='' && top.HTML==''){        //No changes in the toolbar}else{
+if (html=='' && top.HTML==''){        //No changes in the toolbar
+
+}else{
 	top.HTML='$HTML'
 	top.URL='$URL'
 	top.lock_db=\"\"
 	top.menu.location.href=\"menu_main.php?base=\"+top.base+\"&reload=N\"
-}</script>";
+}
+</script>";
 
 
 ?>
@@ -194,27 +215,25 @@ if (html=='' && top.HTML==''){        //No changes in the toolbar}else{
 <br><br><br>
 <?php
 echo "<center><b>".$msgstr["bd"].": ".$arrHttp["base"]."</b>";
-if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
-	$charset_db="ISO-8859-1";
-}else{
-	$charset_db="UTF-8";
-}
-echo "<br><strong>$charset_db</strong>" ;
+echo "<br><strong>$charset</strong>" ;
 echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</b></font>";
 
 if ($arrHttp["BD"]=="N")
 	echo "<p>".$msgstr["database"]." ".$msgstr["ne"];
 if ($arrHttp["IF"]=="N")
 	echo "<p>".$msgstr["if"]." ".$msgstr["ne"];
-if ($arrHttp["EXCLUSIVEWRITELOCK"]!=0) {	echo "<p>".$msgstr["database"]." ".$msgstr["exwritelock"]."=".$arrHttp["EXCLUSIVEWRITELOCK"].". ".$msgstr["contactdbadm"]."
+if ($arrHttp["EXCLUSIVEWRITELOCK"]!=0) {
+	echo "<p>".$msgstr["database"]." ".$msgstr["exwritelock"]."=".$arrHttp["EXCLUSIVEWRITELOCK"].". ".$msgstr["contactdbadm"]."
 	<script>top.lock_db='Y'</script>
 	";
-}
+
+}
 echo $warning;
 
 if ($wxisUrl!=""){
 	echo "<p>CISIS version: $wxisUrl</p>";
-}else{	$ix=strpos($Wxis,"cgi-bin");
+}else{
+	$ix=strpos($Wxis,"cgi-bin");
 	$wxs=substr($Wxis,$ix);
     echo "<p>CISIS version: ".$wxs."</p>";
 }

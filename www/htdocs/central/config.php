@@ -7,6 +7,7 @@
 2021-02-10 fho4abcd: replace fixed server port by autodetection of server port, code formatting
 2021-02-25 fho4abcd: don't send header info (wrong and out of order here)
 2021-04-02 fho4abcd: autodetected protocol (port was already detected since 2021-02-10))
+2021-04-15 fho4abcd: Send header info to server. (revert 2021-02-25)
 */
 
 ini_set('error_reporting', E_ALL);
@@ -74,17 +75,6 @@ $img_path=$db_path;                        // legacy path to the folder where th
 $cgibin_path=$ABCD_path."www/cgi-bin/";    // path to the basic directory for CISIS-utilities
 $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis scripts .xis for Central
 
-//para leer los parámetros reales de configuracion
-/*if (file_exists("config_vars.php"))
-	include("config_vars.php");
-else
-	if (file_exists("../config_vars.php"))
-		include("../config_vars.php");
-	else
-		if (file_exists("central/config_vars.php"))
-			include("central/config_vars.php");
-*/
-
 $unicode="";
 $institution_name="";
 $cisis_ver=""; // initialisation of $cisis_ver as empty = default standard CISIS-version
@@ -141,6 +131,9 @@ if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended
 	$def["UNICODE"]=0;
 	$charset="ISO-8859-1";
 }
+// Send characterset to the server. Note that the browser gets it via the html header.
+header('Content-type: text/html; charset=$charset');
+
 if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
 
 //SE CAMBIA EL LENGUAJE POR DEFECTO POR EL QUE SE ESTABLEZCA EN abcd.def

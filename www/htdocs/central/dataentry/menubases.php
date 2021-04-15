@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-04-15 fho4abcd use charset from config.php+show charsets like institutional_info.php
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $valortag;
 session_start();
@@ -24,20 +27,12 @@ if (!$fp){
 	echo "falta el archivo bases.dat";
 	die;
 }
-
-if ( !isset($def["UNICODE"]) or $def["UNICODE"] == "ansi" || $def["UNICODE"] == '0' ) {
-	$unicode='ansi';
-	$charset="ISO-8859-1";
-} else {
-	$unicode='utf8';
-	$charset="UTF-8";
-}
-$meta_encoding=$charset;
 include("../common/header.php");
 echo "<script>
 top.listabases=Array()
 top.basesdat=Array()\n";
-foreach ($fp as $linea){	$linea=trim($linea);
+foreach ($fp as $linea){
+	$linea=trim($linea);
 	if ($linea!="") {
 		$ix=strpos($linea,"|");
 		$ix_bb=explode('|',$linea);
@@ -126,7 +121,8 @@ function CambiarBase(){
 	}
 }
 
-function Modulo(){	Opcion=document.OpcionesMenu.modulo.options[document.OpcionesMenu.modulo.selectedIndex].value
+function Modulo(){
+	Opcion=document.OpcionesMenu.modulo.options[document.OpcionesMenu.modulo.selectedIndex].value
 	switch (Opcion){
 		case "loan":
 			top.location.href="../common/change_module.php?modulo=loan"
@@ -144,7 +140,11 @@ function Modulo(){	Opcion=document.OpcionesMenu.modulo.options[document.Opcione
 			top.main.location.href="inicio_base.php?inicio=s&base="+base+"&cipar="+base+".par"
 			top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&cipar=acces.par&cambiolang=S&base="+base
 			top.ModuloActivo="catalog"
-			if (i>0) {				top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&cipar=acces.par&cambiolang=S&base="+base			}else{				top.menu.location.href="../dataentry/blank.html"			}
+			if (i>0) {
+				top.menu.location.href="../dataentry/menu_main.php?Opcion=continue&cipar=acces.par&cambiolang=S&base="+base
+			}else{
+				top.menu.location.href="../dataentry/blank.html"
+			}
 			break
 
 
@@ -195,7 +195,11 @@ function CambiarLenguaje(){
 			   		$da=$dd[count($dd)-2];
 			   		echo " (".$da.") ";
 				}
-				echo " | $meta_encoding ";
+              if ( isset( $charset )) {
+                  echo " | ".$charset;
+              } else {
+                  echo " | ".$meta_encoding;
+              }
 		?> |
 		<?php echo $_SESSION["profile"]?> |
 <?php
@@ -213,7 +217,8 @@ $circulation="";
 $acquisitions="";
 foreach ($_SESSION["permiso"] as $key=>$value){
 	$p=explode("_",$key);
-	if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";	if (substr($key,0,8)=="CENTRAL_")  $central="Y";
+	if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";
+	if (substr($key,0,8)=="CENTRAL_")  $central="Y";
 	if (substr($key,0,5)=="CIRC_")  $circulation="Y";
 	if (substr($key,0,4)=="ACQ_")  $acquisitions="Y";
 
@@ -239,7 +244,8 @@ if ($circulation=="Y" or $acquisitions=="Y"){
 		foreach ($fp as $value){
 
 			$value=trim($value);
-			if ($value!=""){				$l=explode('=',$value);
+			if ($value!=""){
+				$l=explode('=',$value);
 				if ($l[0]!="lang"){
 					if ($l[0]==$_SESSION["lang"]) $selected=" selected";
 					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
@@ -264,8 +270,10 @@ foreach ($lista_bases as $key => $value) {
 	$t=explode('|',$value);
 	if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$key."_CENTRAL_ALL"])){
 		if (isset($arrHttp["base_activa"])){
-			if ($key==$arrHttp["base_activa"]) 	{				$xselected=" selected";
-				if (isset($t[1])) $hascopies=$t[1];			}
+			if ($key==$arrHttp["base_activa"]) 	{
+				$xselected=" selected";
+				if (isset($t[1])) $hascopies=$t[1];
+			}
 
 		}
 		if (!isset($t[1])) $t[1]="";
@@ -273,7 +281,9 @@ foreach ($lista_bases as $key => $value) {
 	}
 }
 echo "</select>" ;
-if ($hascopies=="Y" and (isset($_SESSION["permiso"]["CENTRAL_ADDCO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ADDCO"]))){	echo "\n<script>top.db_copies='Y'\n</script>\n";}
+if ($hascopies=="Y" and (isset($_SESSION["permiso"]["CENTRAL_ADDCO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ADDCO"]))){
+	echo "\n<script>top.db_copies='Y'\n</script>\n";
+}
 ?>
 	</div>
 
