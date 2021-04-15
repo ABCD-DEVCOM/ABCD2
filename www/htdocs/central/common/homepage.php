@@ -2,6 +2,7 @@
 /* Modifications
 2021-02-25 fho4abcd Conformance: Moved <body>,</body>,<html>, deleted <div>. Non-functional readability of html
 2021-03-02 fho4abcd Replaced helper code fragment by included file
+2021-04-15 fho4abcd show charsets like institutional_info.php + refresh after change of database
 */
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
 unset($_SESSION["root_base"]);
@@ -27,8 +28,10 @@ $modulo_anterior="";
 if (isset($_SESSION["MODULO"]))
 	$modulo_anterior=$_SESSION["MODULO"];
 
-if (isset($arrHttp["modulo"])) {	$_SESSION["MODULO"]=$arrHttp["modulo"];
-}
+if (isset($arrHttp["modulo"])) {
+	$_SESSION["MODULO"]=$arrHttp["modulo"];
+
+}
 $lista_bases=array();
 if (file_exists($db_path."bases.dat")){
 	$fp = file($db_path."bases.dat");
@@ -45,20 +48,40 @@ $central="";
 $circulation="";
 $acquisitions="";
 $ixcentral=0;
-foreach ($_SESSION["permiso"] as $key=>$value){	$p=explode("_",$key);
-	if (isset($p[1]) and $p[1]=="CENTRAL"){		$central="Y";
-		$ixcentral=$ixcentral+1;	}
-	if (substr($key,0,8)=="CENTRAL_")  	{		$central="Y";
-		$ixcentral=$ixcentral+1;	}
-	if (substr($key,0,4)=="ADM_"){		$central="Y";
-		$ixcentral=$ixcentral+1;	}
+foreach ($_SESSION["permiso"] as $key=>$value){
+	$p=explode("_",$key);
+	if (isset($p[1]) and $p[1]=="CENTRAL"){
+		$central="Y";
+		$ixcentral=$ixcentral+1;
+	}
+	if (substr($key,0,8)=="CENTRAL_")  	{
+		$central="Y";
+		$ixcentral=$ixcentral+1;
+	}
+	if (substr($key,0,4)=="ADM_"){
+		$central="Y";
+		$ixcentral=$ixcentral+1;
+	}
 	if (substr($key,0,5)=="CIRC_")  	$circulation="Y";
 	if (substr($key,0,4)=="ACQ_")  		$acquisitions="Y";
 
 }
 // Se determina el nombre de la página de ayuda a mostrar
-if (!isset($_SESSION["MODULO"])) {	if ($central=="Y" and $ixcentral>0) {		$arrHttp["modulo"]="catalog";	}else{		if ($circulation=="Y"){			$arrHttp["modulo"]="loan";		}else{			$arrHttp["modulo"]="acquisitions";		}	}}else{	$arrHttp["modulo"]=$_SESSION["MODULO"];}
-switch ($arrHttp["modulo"]){	case "catalog":
+if (!isset($_SESSION["MODULO"])) {
+	if ($central=="Y" and $ixcentral>0) {
+		$arrHttp["modulo"]="catalog";
+	}else{
+		if ($circulation=="Y"){
+			$arrHttp["modulo"]="loan";
+		}else{
+			$arrHttp["modulo"]="acquisitions";
+		}
+	}
+}else{
+	$arrHttp["modulo"]=$_SESSION["MODULO"];
+}
+switch ($arrHttp["modulo"]){
+	case "catalog":
 		$ayuda="homepage.html";
 		$module_name=$msgstr["catalogacion"];
 		$_SESSION["MODULO"]="catalog";
@@ -71,24 +94,35 @@ switch ($arrHttp["modulo"]){	case "catalog":
 	case "loan":
 		$ayuda="circulation/homepage.html";
 		$module_name=$msgstr["loantit"];
-		$_SESSION["MODULO"]="loan";}
+		$_SESSION["MODULO"]="loan";
+}
 if (file_exists($db_path."logtrans/data/logtrans.mst")){
 	if ($_SESSION["MODULO"]!="loan" and $modulo_anterior=="loan"){
 		include("../circulation/grabar_log.php");
 		$datos_trans["operador"]=$_SESSION["login"];
 		GrabarLog("Q",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path);
-	}else{		if ($_SESSION["MODULO"]=="loan" and $modulo_anterior!="loan"){
+	}else{
+		if ($_SESSION["MODULO"]=="loan" and $modulo_anterior!="loan"){
 			include("../circulation/grabar_log.php");
 			$datos_trans["operador"]=$_SESSION["login"];
 			GrabarLog("P",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path);
-		}	}
+		}
+	}
 }
 include("header.php");
 ?>
 <body>
 <script>
-
-function ActivarModulo(Url,base){	if (base=="Y"){		ix=document.admin.base.selectedIndex
+function doReload(selectvalue){
+    /* note that selectvalue has format <base>|adm|<base_prompt>*/
+    valuearr=selectvalue.split('|')
+    base=valuearr[0]
+    base="?base="+base;
+	document.location = '../common/inicio.php' + base;
+}
+function ActivarModulo(Url,base){
+	if (base=="Y"){
+		ix=document.admin.base.selectedIndex
 		if (ix<1){
 		  	alert("<?php echo $msgstr["seldb"]?>")
 		   	return
@@ -97,9 +131,14 @@ function ActivarModulo(Url,base){	if (base=="Y"){		ix=document.admin.base.sele
 		b=base.split('|')
 		base=b[0]
 		base="?base="+base;
-	}else{		base="";	}
+
+	}else{
+		base="";
+	}
 	Url="../"+Url+base
-	top.location.href=Url}
+	top.location.href=Url
+
+}
 function Modulo(){
 	Opcion=document.cambiolang.modulo.options[document.cambiolang.modulo.selectedIndex].value
 	switch (Opcion){
@@ -137,14 +176,17 @@ function Modulo(){
 		    b=db.split('|')
 		    db=b[0]
 		}
-	    switch(Modulo){			case 'table':
+	    switch(Modulo){
+			case 'table':
 				document.admin.action="../dataentry/browse.php"
 				break
 	    	case "resetautoinc":
 	    		if (db+"_CENTRAL_RESETLCN" in perms || "CENTRAL_RESETLCN" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
 	    	   		document.admin.action="../dbadmin/resetautoinc.php";
-	    		}else{	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;	    		}
+	    		}else{
+	    			alert("<?php echo $msgstr["invalidright"];?>")
+	    			return;
+	    		}
 	    		break;
 	    	case "toolbar":
 	    		document.admin.action="../dataentry/inicio_main.php";
@@ -159,7 +201,8 @@ function Modulo(){
 	    		}
                 break;
    			case "estructuras":
-   				if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){					document.admin.action="../dbadmin/menu_modificardb.php";
+   				if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
+					document.admin.action="../dbadmin/menu_modificardb.php";
 				}else{
 	    			alert("<?php echo $msgstr["invalidright"];?>")
 	    			return;
@@ -202,7 +245,8 @@ function Modulo(){
 	}
 
 	function FuncionesAdministracion(Accion){
-		switch (Accion){			case "CBD":
+		switch (Accion){
+			case "CBD":
 				document.admFrm.action="../dbadmin/menu_creardb.php"
 				document.admFrm.encabezado.value="s"
 				break;
@@ -227,8 +271,10 @@ function Modulo(){
 				break;
 
 
-		}
-		document.admFrm.submit()	}
+
+		}
+		document.admFrm.submit()
+	}
 
 
 	</script>
@@ -248,8 +294,14 @@ function Modulo(){
                if (isset($dd[count($dd)-2]) and $dd[count($dd)-2]!=""){
 			   		$da=$dd[count($dd)-2];
 			   		echo " (".$da.") ";
-				}else{					echo " (".$db_path.") ";				}
-				echo " | $meta_encoding";
+				}else{
+					echo " (".$db_path.") ";
+				}
+              if ( isset( $charset )) {
+                  echo " | ".$charset;
+              } else {
+                  echo " | ".$meta_encoding;
+              }
 		?> |
 		<a href="../dataentry/logout.php" xclass="button_logout"><span>[logout]</span></a><br>
 <?php
@@ -360,7 +412,8 @@ if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
 <div class="middle homepage">
 <?php
 $Permiso=$_SESSION["permiso"];
-switch ($_SESSION["MODULO"]){	case "catalog":
+switch ($_SESSION["MODULO"]){
+	case "catalog":
 		AdministratorMenu();
 		break;
 	case "loan":
@@ -368,7 +421,8 @@ switch ($_SESSION["MODULO"]){	case "catalog":
 		break;
 	case "acquisitions":
 		MenuAcquisitionsAdministrator();
-		break;}
+		break;
+}
 echo "		</div>";
 include("footer.php");
 echo "<form name=admFrm method=post>
@@ -401,7 +455,7 @@ global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
 			</div>
 			<div class="sectionButtons">
             	<div class="searchTitles">
-					<form name="admin" action="dataentry/inicio_main.php" method="post">
+					<form name="admin" action="../dataentry/inicio_main.php" method="post">
 					<input type=hidden name=encabezado value=s>
 					<input type=hidden name=retorno value="../common/inicio.php">
 					<input type=hidden name=modulo value=catalog>
@@ -410,7 +464,7 @@ global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
 					echo "<input type=hidden name=newindow value=Y>\n";?>
 					<div class="stInput">
 						<label for="searchExpr"><?php echo $msgstr["seleccionar"]?>:</label>
-						<select name=base  class="textEntry singleTextEntry" >
+						<select name=base  id="selbase" class="textEntry singleTextEntry" onchange="doReload(this.value)">
 							<option value=""></option>
 <?php
 $i=-1;
@@ -435,12 +489,18 @@ foreach ($lista_bases as $key => $value) {
 					&nbsp;
 <?php
 if (isset($def["MODULOS"])){
-	if (isset($def["MODULOS"]["SELBASE"])  ){		$base_sel=$def["MODULOS"]["SELBASE"];	}else{		$base_sel="";	}?>
+	if (isset($def["MODULOS"]["SELBASE"])  ){
+		$base_sel=$def["MODULOS"]["SELBASE"];
+	}else{
+		$base_sel="";
+	}
+?>
 	<a href="javascript:ActivarModulo('<?php echo $def["MODULOS"]["SCRIPT"]."','$base_sel";?>')" class="menuButton <?php echo $def["MODULOS"]["BUTTON"]?>">
 		<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $def["MODULOS"]["TITLE"]?></strong></span>
 	</a>
-<?php}
+<?php
+}
 ?>
 				<a href="javascript:CambiarBaseAdministrador('stats')" class="menuButton statButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
@@ -494,7 +554,8 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"])  or isset
 					</div>
 					<div class="sectionButtons">
 <?Php
-if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset($Permiso["ADM_CRDB"])){?>
+if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset($Permiso["ADM_CRDB"])){
+?>
                     <a href="javascript:FuncionesAdministracion('CBD')" class="menuButton databaseButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["createdb"]?></strong></span></a>
@@ -524,12 +585,17 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_TRANSLATE"])){
 				</a>
 <?Php
 }
-if ($_SESSION["profile"]=="adm"){?>				<a href="javascript:FuncionesAdministracion('CABCD')" class="menuButton utilsButton">
+if ($_SESSION["profile"]=="adm"){
+?>
+				<a href="javascript:FuncionesAdministracion('CABCD')" class="menuButton utilsButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["configure"]. " ABCD"?></strong></span>
-				</a><?php}
+				</a>
+<?php
+}
 
-if ($dirtree==1 or $dirtree=="Y"){	if ($_SESSION["profile"]=="adm"){
+if ($dirtree==1 or $dirtree=="Y"){
+	if ($_SESSION["profile"]=="adm"){
 ?>
 				<a href="javascript:FuncionesAdministracion('DIRTREE')" class="menuButton exploreButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />

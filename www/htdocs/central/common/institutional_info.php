@@ -2,6 +2,7 @@
 /* Modifications
 20210312 fho4abcd show also charset if different from metaencoding
 20210312 logout without [] to visually detect this script
+20210415 fho4abcd Show db characterset if available, otherwise meta characterset. No longer show difference
 */
 ?>
 <div class="heading">
@@ -15,22 +16,26 @@
 	</div>
 	<div class="userInfo">
 		<span><?php if (isset($_SESSION["nombre"])) echo $_SESSION["nombre"]?></span>,
-		<?php if (isset($_SESSION["profile"])) {			 		echo $_SESSION["profile"]."|";
+		<?php if (isset($_SESSION["profile"])) {
+			 		echo $_SESSION["profile"]."|";
 					$dd=explode("/",$db_path);
                		if (isset($dd[count($dd)-2])){
 			   			$da=$dd[count($dd)-2];
 			   			echo " (".$da.") ";
 					}
 			  }
-              if ( $meta_encoding == $charset ) {
-                  echo " | ".$meta_encoding;
+              if ( isset( $charset )) {
+                  echo " | ".$charset;
               } else {
-                  echo " | ".$meta_encoding." / ".$charset;
+                  echo " | ".$meta_encoding;
               }
 		?> |
 <?php
 
-if (isset($_SESSION["newindow"]) or isset($arrHttp["newindow"])){	echo "<a href='javascript:top.location.href=\"../dataentry/logout.php\";top.close()' xclass=\"button_logout\"><span>[logout]</span></a>";}else{	echo "<a href=\"../dataentry/logout.php\" xclass=\"button_logout\"><span>logout</span></a>";
+if (isset($_SESSION["newindow"]) or isset($arrHttp["newindow"])){
+	echo "<a href='javascript:top.location.href=\"../dataentry/logout.php\";top.close()' xclass=\"button_logout\"><span>[logout]</span></a>";
+}else{
+	echo "<a href=\"../dataentry/logout.php\" xclass=\"button_logout\"><span>logout</span></a>";
 }
 ?>
 	</div>

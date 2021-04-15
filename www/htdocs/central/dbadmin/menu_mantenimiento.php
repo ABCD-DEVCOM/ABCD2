@@ -4,6 +4,7 @@
 20210314 fho4abcd html move body and remove win.close + sanitize html
 20210314 fho4abcd Replaced dbinfo code by included file
 20210324 fho4abcd Catch error after database deletion, display also long name of the database
+20210415 fho4abcd use charset from config.php
 */
 session_start();
 
@@ -46,7 +47,8 @@ foreach ($fp as $value){
 	$value=trim($value);
 	$x=explode("|",$value);
 	if ($x[0]==$arrHttp["base"]){
-		if (isset($x[2]) and $x[2]=="Y"){			$copies="Y";
+		if (isset($x[2]) and $x[2]=="Y"){
+			$copies="Y";
 		}
 		break;
 	}
@@ -98,13 +100,7 @@ if ( isset($arrHttp["base"]) and $arrHttp["base"]!="" and file_exists($db_path.$
     echo "<br><font color=darkred><b>". $msgstr["dbnex"]."</b></font><br>";
     $arrHttp["MAXMFN"]="?";
 }
-
-if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
-	$charset_db="ISO-8859-1";
-}else{
-	$charset_db="UTF-8";
-}
-echo "<br><strong>$charset_db</strong>" ;
+echo "<br><strong>$charset</strong>" ;
 echo "<br><font color=darkred><b>". $msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</b></font>";
 
 if (isset($arrHttp["BD"]) and $arrHttp["BD"]=="N")
