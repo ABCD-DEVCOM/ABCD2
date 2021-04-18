@@ -7,6 +7,7 @@
 20210317 fho4abcd Initilalize DB uses now code inicio_bd.php
 20210325 fho4abcd Reorganized exports: all exports by 1 menu item. Others removed
 20210411 fho4abcd unlock_db_retag_check -> unlock_db_retag
+20210418 fho4abcd vmxISO_load -> vmx_import_iso
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -237,10 +238,10 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/vmx_fullinv.php"
 			document.admin.target=""
 			break;
-		case "importiso":    //Marino ISO load
+		case "importiso":    //ISO load
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/vmxISO_load.php"
+			document.admin.action="../utilities/vmx_import_iso.php"
 			document.admin.target=""
 			break;
 		case "exportiso":
@@ -307,7 +308,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/clean_db.php"
 			document.admin.target=""
    			break;
-		case "unlock":    //Marino Vretag
+		case "unlock":    // unlock db
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/unlock_db_retag.php"

@@ -5,6 +5,7 @@
 2021-03-06 fho4abcd Pass selected records (conforms with iso export)
 2021-03-11 fho4abcd lineends, sanitize html
 2021-03-22 fho4abcd remove unused functions in script
+2021-04-18 fho4abcd Iso import from carga_iso.pho to vmx_import_iso.php
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -49,7 +50,7 @@ function Activar(Opcion){
 				self.location="exporta_txt.php?base="+top.base+"&cipar="+top.base+".par&tipo=iso&lang=<?php echo $_SESSION["lang"]?>"+seleccionados
 				break
 			case "impiso":
-				self.location="carga_iso.php?base="+top.base+"&cipar="+top.base+".par&tipo=iso&lang=<?php echo $_SESSION["lang"]?>"
+				self.location="../utilities/vmx_import_iso.php?base="+top.base
 				break
 		}
 	}
