@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-29 fho4abcd Replaced helper code fragment by included file
 2021-03-29 fho4abcd Improved html & code:Removed ghost code, correct display of « »
+2021-04-18 fho4abcd Improved backbutton:send also &inframe and if necessary &backtoscript
 */
 /*
 ** Shows the content of a .iso file or a .mst file by mx
@@ -50,8 +51,8 @@ include("../lang/soporte.php");
 ** Old code might not send specific info.
 ** Set defaults for the return script and frame info
 */
-$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
-$inframe=0;                      // The default runs not in a frame
+$backtoscript="../dataentry/administrar.php"; // The default return script
+$inframe=1;                      // The default runs in a frame
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 
@@ -59,7 +60,8 @@ include("../common/header.php");
 
 //==================== Functions =============================
 Function Explorar(){
-global $msgstr;	echo "<form name=upload method=post onsubmit=\"EnviarFormaUpload();return false;\">";
+global $msgstr;
+	echo "<form name=upload method=post onsubmit=\"EnviarFormaUpload();return false;\">";
 	foreach ($_REQUEST as $var=>$value){
 		echo "<input type=hidden name=$var value=\"$value\">\n";
 	}
@@ -74,15 +76,23 @@ global $msgstr;	echo "<form name=upload method=post onsubmit=\"EnviarFormaUploa
 	echo "<p><input type=submit value=".$msgstr["procesar"].">\n
 	<td></tr></table>\n
 	</form>";
-    die;}
+    die;
+}
 
 /*--------------------------------------------------------------*/
-function ShowDatabases($storein,$db_path){global $msgstr,$arrHttp;	$Dir=$db_path.$storein;
+function ShowDatabases($storein,$db_path){
+global $msgstr,$arrHttp;
+	$Dir=$db_path.$storein;
 	$handle = opendir($Dir);
 	$ix=0;
 	echo "<table bgcolor=#cccccc border=0 cellpadding=8>";
-	while (false !== ($file = readdir($handle))) {	   	if ($file != "." && $file != "..") {	   		$f=$file;	   		$file=$Dir."/".$file;
-	   		if(is_file($file)){	   			if ( pathinfo ( strtolower($file) , PATHINFO_EXTENSION)=="iso" or  pathinfo ( strtolower($file) , PATHINFO_EXTENSION)=="mst"){		   			$ix=$ix+1;
+	while (false !== ($file = readdir($handle))) {
+	   	if ($file != "." && $file != "..") {
+	   		$f=$file;
+	   		$file=$Dir."/".$file;
+	   		if(is_file($file)){
+	   			if ( pathinfo ( strtolower($file) , PATHINFO_EXTENSION)=="iso" or  pathinfo ( strtolower($file) , PATHINFO_EXTENSION)=="mst"){
+		   			$ix=$ix+1;
 		            $the_array["name"]=$file;
 		            $dateFormat = "D d M Y g:i A";
 					$ctime = filectime($file);
@@ -96,8 +106,10 @@ function ShowDatabases($storein,$db_path){global $msgstr,$arrHttp;	$Dir=$db_pa
 	echo "</table>";
 	echo "<input type=hidden name=db_sel>\n";
 	echo "<input type=hidden name=copyname>\n";
-	if ($ix==0){		echo "<h4>".$msgstr["mx_nodb"]."</h4>";
-		die;	}
+	if ($ix==0){
+		echo "<h4>".$msgstr["mx_nodb"]."</h4>";
+		die;
+	}
 	closedir($handle);
 	echo "<p><input type=submit value=".$msgstr["procesar"].">\n";
 	echo "</form></body></html>";
@@ -109,7 +121,8 @@ function ShowDatabases($storein,$db_path){global $msgstr,$arrHttp;	$Dir=$db_pa
 
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
 <script>
-function Explorar(){	msgwin=window.open("../dataentry/dirs_explorer.php?desde=dbcp&Opcion=explorar&base=<?php echo $db_path?>&mx=s&tag=document.forma1.dbfolder","explorar","width=400,height=600,top=0,left=0,resizable,scrollbars,menu")
+function Explorar(){
+	msgwin=window.open("../dataentry/dirs_explorer.php?desde=dbcp&Opcion=explorar&base=<?php echo $db_path?>&mx=s&tag=document.forma1.dbfolder","explorar","width=400,height=600,top=0,left=0,resizable,scrollbars,menu")
     msgwin.focus()
 }
 
@@ -122,19 +135,28 @@ function Limpiar(){
 	}
 }
 
-function EnviarFormaUpload(){	Limpiar()
+function EnviarFormaUpload(){
+	Limpiar()
 	if (Trim(document.upload.storein.value)==""){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["folder_name"]?>")
 		return
-	}	document.upload.submit();}
+	}
+	document.upload.submit();
+}
 
-function EnviarFormaMX(){	selected_db=""
-	for (i=0;i<document.continuar.db_sel.length-1;i++){		if(document.continuar.db_sel[i].checked){
-			document.continuar.copyname.value=document.continuar.db_sel[i].value			selected_db="OK"		}	}
+function EnviarFormaMX(){
+	selected_db=""
+	for (i=0;i<document.continuar.db_sel.length-1;i++){
+		if(document.continuar.db_sel[i].checked){
+			document.continuar.copyname.value=document.continuar.db_sel[i].value
+			selected_db="OK"
+		}
+	}
 	if (selected_db=="OK")
 		document.continuar.submit()
 	else
-		alert("<?php echo $msgstr["mx_select"]?>")}
+		alert("<?php echo $msgstr["mx_select"]?>")
+}
 </script>
 <?php
 // If outside a frame: show institutional info
@@ -146,12 +168,9 @@ if ($inframe!=1) include "../common/institutional_info.php";
 	</div>
 	<div class="actions">
 <?php
-if (isset($arrHttp["backtoscript"])){
-    $backtourl=$backtoscript."?base=".$arrHttp["base"];
-}else {
-    $backtourl="/central/common/inicio_base.php";
-}
-echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
+        $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
+        if (isset($arrHttp["backtoscript_org"])) $backtourl.="&backtoscript=".$arrHttp["backtoscript_org"];
+        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
 ?>
 		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
@@ -165,6 +184,7 @@ include "../common/inc_div-helper.php"
 <div class="formContent">
     <div align=center><h3><?php echo $msgstr["mx_dbread"] ?></h3></div>
 <?php
+//foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
 // The character set from the config_file cannot be trusted (may be another database)
 // When launched from an export the characterset and storein and copyname are given by the caller
 $charset_to_use="";
@@ -172,15 +192,19 @@ if ( isset($arrHttp["charset"])) $charset_to_use=$arrHttp["charset"];
 
 // $storein is the folder where the database or iso files will be searched
 // $copyname is the name of the file
-if (!isset($arrHttp["storein"])){	Explorar();
+if (!isset($arrHttp["storein"])){
+	Explorar();
 }else{
 	echo "<form name=continuar action=mx_dbread.php method=post onsubmit=\"EnviarFormaMX();return false;\">";
-	foreach ($_REQUEST as $var=>$value){		if (trim($value)!="")
+	foreach ($_REQUEST as $var=>$value){
+		if (trim($value)!="")
 			echo "<input type=hidden name=$var value=\"$value\">\n";
 	}
-	if (isset($arrHttp["storein"]) and !isset($arrHttp["copyname"]) ){		ShowDatabases($arrHttp["storein"],$db_path);
+	if (isset($arrHttp["storein"]) and !isset($arrHttp["copyname"]) ){
+		ShowDatabases($arrHttp["storein"],$db_path);
         echo "</form></body></html>";
-		die;	}
+		die;
+	}
 
 }
 // At this point the foldername (storein) and filename (copyname) are set.
@@ -190,13 +214,19 @@ $charset_db=$meta_encoding; // The default if no dr_path value found (or in wrk 
 $cisis_ver_db=$def["CISIS_VERSION"];   // The default if no dr_path value found (or in wrk folder)
 $toRead=explode("/",$_REQUEST["storein"]);
 $toRead=$toRead[0];
-if (file_exists($db_path.$toRead."/dr_path.def")){	$fp=file($db_path.$toRead."/dr_path.def");	foreach ($fp as $value){		$v=explode("=",$value);
-		if ($v[0]=="UNICODE"){			if ($v[1]==0)
+if (file_exists($db_path.$toRead."/dr_path.def")){
+	$fp=file($db_path.$toRead."/dr_path.def");
+	foreach ($fp as $value){
+		$v=explode("=",$value);
+		if ($v[0]=="UNICODE"){
+			if ($v[1]==0)
 				$charset_db="ISO-8859-1";
-			else				$charset_db="UTF-8";
+			else
+				$charset_db="UTF-8";
 		}
 		if ($v[0]=="CISIS_VERSION")  $cisis_ver_db=trim($v[1]);
-	}}
+	}
+}
 
 // Determine the characterset to be used. The helper $unicode can be set now too
 if ( $charset_to_use=="") $charset_to_use=$charset_db; // charset_db is normally always set now
@@ -220,7 +250,8 @@ $to=$arrHttp["to"];
 
 // $db is the full path of the file (iso/mst) to list
 $db=$db_path.$arrHttp["storein"]."/".$arrHttp["copyname"];
-// For an .iso display only a header, for a .mst display the control record
+
+// For an .iso display only a header, for a .mst display the control record
 // In both cases the list command is prepared
 if (pathinfo ( strtolower($arrHttp["copyname"]) , PATHINFO_EXTENSION)=="iso"){
     // command to list an iso file
@@ -239,7 +270,8 @@ if (pathinfo ( strtolower($arrHttp["copyname"]) , PATHINFO_EXTENSION)=="iso"){
     }
 	unset($contenido);
     // command to list the rest of the mst file
-	$command=$mx_path." $db from=$from to=$to 2>&1";}
+	$command=$mx_path." $db from=$from to=$to 2>&1";
+}
 
 // Read the content of the iso/mst file
 exec($command,$contenido,$res);
@@ -261,7 +293,8 @@ echo "Execution status: $res </font></p>";
 **   Marker » = dec 187,hex BB/html &#187; or &raquo; / Unicode \u00BB
 **   Best solution is transfer them in html (ensures correct display)
 */
-foreach ($contenido as $value) {    if ( $charset_to_use=="UTF-8" ) {
+foreach ($contenido as $value) {
+    if ( $charset_to_use=="UTF-8" ) {
         if ( ord(substr($value,-1))==194) $value=substr($value,0,-1)."&raquo;";
         $spacepos=strpos($value," ".chr(194));
     } else {
@@ -273,7 +306,8 @@ foreach ($contenido as $value) {    if ( $charset_to_use=="UTF-8" ) {
     }
     if ($res==0) echo $value."<br>";
     if ($res!=0) echo "<font color=red>".$value."<br></font>";
-}echo "</font>";
+}
+echo "</font>";
 echo "<p>";
 echo $msgstr["cg_rango"].": ".$msgstr["cg_from"];
 $count=$arrHttp["to"]-$arrHttp["from"]+1;
