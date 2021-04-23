@@ -10,6 +10,7 @@
 2021-03-24 fho4abcd Use function to delete a file, improve confirm
 2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
 2021-03-26 fho4abcd Button mxread: now with file and only for iso files
+2021-04-21 fho4abcd Show iso files with mx_show_iso + move action columns after file name column
 */
 
 global $arrHttp;
@@ -94,7 +95,9 @@ function GuardarArchivo($contenido, $fullpath){
         </div>
         <?php
         if ($arrHttp["tipo"]=="iso") {
-            echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
+            ?>
+            <br><input type=button name=mxread value='<?php echo $msgstr["show"]." ".$msgstr["cnv_iso"];?>' onclick=ActivarMx()>
+            <?php
         }
     }
 }
@@ -268,7 +271,7 @@ function Download(){
 
 function Confirmar(){
 	document.continuar.confirmar.value="OK";
-	document.getElementById('loading').style.display='block';
+	document.getElementById('preloader').style.visibility='visible'
 	document.continuar.submit()
 }
 
@@ -278,7 +281,8 @@ function Regresar(){
 }
 
 function ActivarMx(){
-	document.continuar.action='../utilities/mx_dbread.php?copyname=<?php echo $arrHttp["archivo"] ?>&charset=<?php echo $charset ?>';
+	document.getElementById('preloader').style.visibility='visible'
+	document.continuar.action='../utilities/mx_show_iso.php?copyname=<?php echo $arrHttp["archivo"] ?>'
 	document.continuar.submit()
 }
 </script>
@@ -296,9 +300,8 @@ if (!isset($arrHttp["confirmar"])){
 }
 echo "</form>\n";
 ?>
-<div id="loading">
-    <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
-</div>
+    <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
+          style="visibility:hidden;position:absolute;top:30%;left:45%;border:2px solid;"/>
 <?php
 // If outside a frame: show institutional info
 if ($inframe!=1) include "../common/institutional_info.php";

@@ -1,6 +1,8 @@
 <?php
 /* Modifications
-20210418 fho4abcd Created as repalcement for all iso import functions.
+20210418 fho4abcd Created as replacement for all iso import functions.
+20210421 fho4abcd Show iso files with mx_show_iso
+20210421 fho4abcd No error if an inspected file has no extension
 */
 global $arrHttp;
 set_time_limit(0);
@@ -50,7 +52,7 @@ function Seleccionar(iso){
 }
 function ActivarMx(folder,iso){
     document.continuar.backtoscript.value='../utilities/vmx_import_iso.php'
-	document.continuar.action='../utilities/mx_dbread.php?&storein='+folder+
+	document.continuar.action='../utilities/mx_show_iso.php?&storein='+folder+
                               '&copyname='+iso+'&backtoscript_org=<?php echo $backtoscript?>'
 	document.continuar.submit()
 }
@@ -112,7 +114,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     $handle = opendir($wrkfull);
 	while (($file = readdir($handle))!== false) {
         $info = pathinfo($file);
-        if (is_file($wrkfull."/".$file) and $info["extension"] == "iso") {
+        if (is_file($wrkfull."/".$file) and isset($info["extension"])and $info["extension"] == "iso") {
             if ( isset($arrHttp["deleteiso"]) and $file==$arrHttp["deleteiso"]) {
                 //delete the file
                 unlink ($wrkfull."/".$file);
@@ -155,11 +157,11 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         <h4><?php echo $msgstr["seleccionar"]." ".$msgstr["cnv_iso"]?> </h4>
         <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=4>
         <tr>
-            <th><?php echo $msgstr["seleccionar"]?> </th>
-            <th><?php echo $msgstr["eliminar"]?> </th>
-            <th><?php echo $msgstr["ver"]?> </th>
             <th><?php echo $msgstr["archivo"]?> </th>
-        </tr>
+            <th><?php echo $msgstr["ver"]?> </th>
+            <th><?php echo $msgstr["eliminar"]?> </th>
+            <th><?php echo $msgstr["seleccionar"]?> </th>
+       </tr>
         <?php
         foreach ($file_array as $file) {
             $filemsg="<b>".$file."</b><br>";
@@ -167,10 +169,10 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
             $filemsg.=", Size: ".number_format(filesize($wrkfull."/".$file),0,',','.');
         ?> 
         <tr>
-            <td bgcolor=white><a href="javascript:Seleccionar('<?php echo $file?>')"> <<?php echo $selimg?>> </a></td>
-            <td bgcolor=white><a href="javascript:Eliminar('<?php echo $file?>')"> <<?php echo $delimg?>> </a></td>
-            <td bgcolor=white><a href="javascript:ActivarMx(<?php echo "'$wrk'"?>,<?php echo "'$file'"?>)"> <<?php echo $lisimg?>> </a></td>
             <td bgcolor=white><?php echo $filemsg?></td>
+            <td bgcolor=white><a href="javascript:ActivarMx(<?php echo "'$wrk'"?>,<?php echo "'$file'"?>)"> <<?php echo $lisimg?>> </a></td>
+            <td bgcolor=white><a href="javascript:Eliminar('<?php echo $file?>')"> <<?php echo $delimg?>> </a></td>
+            <td bgcolor=white><a href="javascript:Seleccionar('<?php echo $file?>')"> <<?php echo $selimg?>> </a></td>
         </tr>
         <?php
         }
