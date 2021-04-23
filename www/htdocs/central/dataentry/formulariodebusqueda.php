@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-08 fho4abcd Replaced helper code fragment by included file
 2021-03-08 fho4abcd Improved html
+2021-03-27 fho4abcd lineends
 */
 function DibujarFormaBusqueda(){
 global $arrHttp,$camposbusqueda,$db_path,$tagisis,$msgstr;
@@ -56,12 +57,15 @@ document.onkeypress =
 			return true;
 	}
 
-function CopyExpr(){	Opc=str_search[stored]
+function CopyExpr(){
+	Opc=str_search[stored]
 	o=Opc.split('|')
 	document.forma1.expre[copyTo].value=o[1]
-	document.forma1.camp[copyTo].selectedIndex=0}
+	document.forma1.camp[copyTo].selectedIndex=0
+}
 
-function GetExpression(ic){// get an previously stored search expression and copy to the search form
+function GetExpression(ic){
+// get an previously stored search expression and copy to the search form
 	copyTo=ic
 	var winl = (screen.width-300)/2;
 	var wint = (screen.height-100)/2;
@@ -75,13 +79,16 @@ function GetExpression(ic){// get an previously stored search expression and co
 	<?php
 	if (isset($stored)){
 		foreach ($stored as $var=>$value){
-			$s=explode("|",$value);			echo "msgwin.document.writeln(\"<option value=$var>".$s[0]."\")\n";		}
+			$s=explode("|",$value);
+			echo "msgwin.document.writeln(\"<option value=$var>".$s[0]."\")\n";
+		}
 	}
 	?>
     msgwin.document.writeln("</select>")
 	msgwin.document.writeln("</body></html>")
 	msgwin.document.close()
-	msgwin.focus()}
+	msgwin.focus()
+}
 
 function Ayuda(){
 	msgwin=window.open("../html/ayuda_expresion.html")
@@ -294,7 +301,9 @@ function Diccionario(jx){
 			$parte2=$l[1];
 			$parte1=$l[0];
 			echo "<OPTION value='".$parte2."'";
-			if ($jx==0 and isset($_SESSION["Expresion"])){			}else{
+			if ($jx==0 and isset($_SESSION["Expresion"])){
+
+			}else{
 				if ($i==$jx) echo " selected ";
 			}
 			echo ">".$parte1;
@@ -305,13 +314,15 @@ function Diccionario(jx){
 		echo "<td align=center>";
 		if (isset($_SESSION["Expresion"]) and $jx==0){
 			$E=str_replace('"',"''",$_SESSION["Expresion"]);
-			//if (substr($E,0,1)=="("){			//	$E=substr($E,1);
+			//if (substr($E,0,1)=="("){
+			//	$E=substr($E,1);
 			//	if (substr($E,strlen($E)-1)==")")
 			//		$E=substr($E,0,strlen($E)-1);
 			//}
             //$E=str_replace('"','',$E);
 			echo "<input type=text size=100 name=expre value=\"".$E."\"></td>\n<td nowrap>";
-		//	unset($_SESSION["Expresion"]);		}else{
+		//	unset($_SESSION["Expresion"]);
+		}else{
 			echo "<input type=text size=100 name=expre value=\"\"></td>\n<td nowrap>";
 		}
 		if ($str_expr=="Y")
@@ -350,7 +361,9 @@ function Diccionario(jx){
             <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
             <span style="color:black"><stro<?php echo $msgstr["back"]?></strong></span>
             </a>
-	<?php	}
+	<?php
+
+	}
 	echo "</div>";
 	echo "</td>\n";
 	echo "</table>\n";
