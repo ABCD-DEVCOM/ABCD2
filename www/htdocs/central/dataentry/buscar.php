@@ -2,6 +2,7 @@
 /* Modifications
 20210311 fho4abcd body tag on correct position
 20210326 guilda Error when searching due to quoting
+20210327 fho4abcd Show error if camposbusqueda.tab is empty (prevents follow up errors)
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -10,8 +11,10 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 
-if (isset($arrHttp["Expresion"])) {	$arrHttp["Expresion"]=urldecode($arrHttp["Expresion"]);
-	$arrHttp["Expresion"]=str_replace("''",'"',$arrHttp["Expresion"]);}
+if (isset($arrHttp["Expresion"])) {
+	$arrHttp["Expresion"]=urldecode($arrHttp["Expresion"]);
+	$arrHttp["Expresion"]=str_replace("''",'"',$arrHttp["Expresion"]);
+}
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>"; //if (isset($arrHttp["Expresion"]))die;
 include("../config.php");
 
@@ -60,14 +63,16 @@ global $arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl;
 						self.close()
 					</script>
 				";
-			}else{				echo "<script>
+			}else{
+				echo "<script>
 						top.browseby=\"search\"
 						top.Expresion='".str_replace("'","¨",$Expresion)."'
 						top.Expre_b='".str_replace("'","¨",$Expresion)."'
 						top.mfn=1
 						top.Menu(\"ejecutarbusqueda\");
 					</script>
-				";			}
+				";
+			}
 		}
 
 }
@@ -112,9 +117,16 @@ global $arrHttp,$matriz_c,$camposbusqueda;
 		$formula_parcial="";
 		if (trim($expresion[$i])!="" and trim($campos[$i])!="---"){
 			$exp=explode('"',$expresion[$i]);
-			foreach ($exp as $val_exp){				if (trim($val_exp)!=""){					if ($val_exp !=" and " and $val_exp !=" or "){						$val_exp='"'.trim($prefijos[$i]).$val_exp.'"';
-						$formula_parcial.=$val_exp;					}else{						$formula_parcial.=$val_exp;					}
-				}			}
+			foreach ($exp as $val_exp){
+				if (trim($val_exp)!=""){
+					if ($val_exp !=" and " and $val_exp !=" or "){
+						$val_exp='"'.trim($prefijos[$i]).$val_exp.'"';
+						$formula_parcial.=$val_exp;
+					}else{
+						$formula_parcial.=$val_exp;
+					}
+				}
+			}
 			//$expresion[$i]=$formula_parcial;
 			$expresion[$i]=trim($formula_parcial);
 		}
@@ -150,7 +162,9 @@ include("../dataentry/formulariodebusqueda.php");
 
 
 
-if (isset($arrHttp['Tabla']) and $arrHttp["Opcion"]!="formab"){	$arrHttp["Opcion"]="solobusqueda";}
+if (isset($arrHttp['Tabla']) and $arrHttp["Opcion"]!="formab"){
+	$arrHttp["Opcion"]="solobusqueda";
+}
 
 if (isset($arrHttp["prestamo"])) {
 	    unset($arrHttp["Target"]);
@@ -165,20 +179,31 @@ if (!isset($arrHttp['count'])) $arrHttp["count"]="10";
 
 	$a= $db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab";
 	$fp=file_exists($a);
-	if (!$fp){		$a= $db_path.$arrHttp["base"]."/pfts/".$lang_db."/camposbusqueda.tab";
+	if (!$fp){
+		$a= $db_path.$arrHttp["base"]."/pfts/".$lang_db."/camposbusqueda.tab";
 		$fp=file_exists($a);
-		if (!$fp){			echo "<br><br><h4><center>".$msgstr["faltacamposbusqueda"]."</h4>";
-			die;		}
+		if (!$fp){
+			echo "<br><br><h4 align=center>".$msgstr["faltacamposbusqueda"]."</h4>";
+			die;
+		}
 	}
 	$fp = fopen ($a, "r");
 	$fp = file($a);
-	foreach ($fp as $linea){		$linea=trim($linea);		if ($linea!=""){            $camposbusqueda[]= $linea;
+	foreach ($fp as $linea){
+		$linea=trim($linea);
+		if ($linea!=""){
+            $camposbusqueda[]= $linea;
 			$t=explode('|',$linea);
 			$pref=$t[2];
 
 			$matriz_c[$pref]=$linea;
 		}
 	}
+    if ( !isset($camposbusqueda)) {
+        echo "<br><div align=center>".$a." is empty</div>";
+        echo "<br><br><h4 align=center>".$msgstr["faltacamposbusqueda"]."</h4>";
+        die;
+    }
 include("../common/header.php");
 ?>
 <body>
@@ -212,7 +237,11 @@ switch ($arrHttp["Opcion"]){
 		break;
 	case "solobusqueda":
 	    $Expresion=PrepararBusqueda();
-	    if ($arrHttp["Tabla"]=="imprimir" or $arrHttp["Tabla"]=="cGlobal"){	    	 $Ctrl='window.opener.document.forma1.Expresion.value=\''.$Expresion.'\'';	    }else{	    	 $Ctrl='window.opener.document.forma1.'.$arrHttp["Tabla"].'.value=\''.$Expresion.'\'';	    }
+	    if ($arrHttp["Tabla"]=="imprimir" or $arrHttp["Tabla"]=="cGlobal"){
+	    	 $Ctrl='window.opener.document.forma1.Expresion.value=\''.$Expresion.'\'';
+	    }else{
+	    	 $Ctrl='window.opener.document.forma1.'.$arrHttp["Tabla"].'.value=\''.$Expresion.'\'';
+	    }
 		echo "<script>
 				$Ctrl
 				self.close()

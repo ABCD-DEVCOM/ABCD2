@@ -26,7 +26,7 @@
 ** mx does not honour the "from" clause for iso files.(Bug?)
 ** The code reads always all (to "to") records and skips the display up to the "from" record.
 */
-error_reporting(E_ALL ^ E_NOTICE ^ E_WAR NING);
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
