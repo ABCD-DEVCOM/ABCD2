@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-03-03 fho4abcd Replaced header code by standard include
+2021-04-21 fho4abcd Do not crash if emergency user logs in: allows update of databases by emergency user
 */
 //error_reporting(E_ALL);
 session_start();
@@ -112,7 +113,12 @@ if (isset($arrHttp["base"])){
 	$arrHttp["IsisScript"]="control.xis";
 	$llave=LeerRegistro();
 	$stat=explode('|',$llave);
-	$llave=substr($stat[2],7);
+	if (isset($stat[2])) {
+        $llave=substr($stat[2],7);
+    } else {
+        // if the user is not found (emergency user) set ridiculous value
+        $llave="r1dicul0uS";
+    }
 	if (!isset($bdright)) $bdright="";
 	if (!isset($db_copies)) $db_copies="";
 	if (!isset($bddesc)) $bddesc="";
