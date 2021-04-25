@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-04-15 fho4abcd use charset from config.php+show charsets like institutional_info.php
+2021-04-21 fho4abcd no undefined index for emergency user.
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $valortag;
@@ -20,7 +21,12 @@ include ("../lang/lang.php");
 include("leerregistroisispft.php");
 
 $arrHttp["IsisScript"]="ingreso.xis";
-$arrHttp["Mfn"]=$_SESSION["mfn_admin"];
+if (isset($_SESSION["mfn_admin"])){
+    $arrHttp["Mfn"]=$_SESSION["mfn_admin"];
+} else {
+    //Pointing to a user mfn in the acces database is not good.
+    //The fake name is set in inicio.php
+}
 
 $fp = file($db_path."bases.dat");
 if (!$fp){

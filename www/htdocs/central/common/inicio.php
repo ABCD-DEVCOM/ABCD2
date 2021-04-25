@@ -2,6 +2,7 @@
 /* Modifications
 2021-01-05 guilda Removed login encryption
 2021-01-05 LeerRegistro compares the password
+2021-04-21 fho4abcd Show a an emergency user name if applicable
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -112,6 +113,7 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
         }else{        	unset ($_SESSION["library"]);        }
  	}else{
  		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){ 			$Perfil="adm";
+  		    $nombre="!!Emergency/Emergencia!!"; // The displayed name of the emergency user
  			unset($_SESSION["profile"]);
     		unset($_SESSION["permiso"]);
     		unset($_SESSION["login"]);
