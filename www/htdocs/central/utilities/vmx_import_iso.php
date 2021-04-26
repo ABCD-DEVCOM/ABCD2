@@ -3,6 +3,7 @@
 20210418 fho4abcd Created as replacement for all iso import functions.
 20210421 fho4abcd Show iso files with mx_show_iso
 20210421 fho4abcd No error if an inspected file has no extension
+2021-04-26 fho4abcd Check line endings
 */
 global $arrHttp;
 set_time_limit(0);
@@ -179,6 +180,9 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         echo "</table>";
     }
 } else if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
+    // Check that the lineends fit with the current OS (mx requirement)
+    include "inc_check-line-end.php";
+    if ( check_line_end($fullisoname)!=0) die; // cannot continue
     ?>
     <table  cellspacing=5>
         <tr>
