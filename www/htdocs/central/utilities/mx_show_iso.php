@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-04-20 fho4abcd Created from readiso_mx and reduce functionality to iso files
+2021-04-26 fho4abcd Check line endings
 */
 /*
 ** Shows the content of an .iso file o file by mx
@@ -25,6 +26,8 @@
 **
 ** mx does not honour the "from" clause for iso files.(Bug?)
 ** The code reads always all (to "to") records and skips the display up to the "from" record.
+**
+** mx requires the correct line endings. This is checked in advance.
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -157,6 +160,10 @@ $arrHttp["toiso"]=$arrHttp["fromiso"]+$count;
 <?php
 // $db is the full path of the file (iso/mst) to list
 $db=$db_path.$arrHttp["storein"]."/".$arrHttp["copyname"];
+
+// Check that the lineends fit with the current OS (mx requirement)
+include "inc_check-line-end.php";
+if ( check_line_end($db)!=0) die; // cannot continue
 
 // set excutable dependent on displayed characterset
 // See config php
