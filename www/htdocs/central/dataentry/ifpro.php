@@ -1,8 +1,13 @@
 <?php
+/* Modifications
+20210430 fho4abcd Improve html + helper script 
+*/
+
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 ?>
+<body>
 <script language=javascript>
 <?php
 	if (isset($arrHttp["Tabla"]))
@@ -104,7 +109,6 @@ function EjecutarBusqueda(F,desde){
 }
 </script>
 
-<body>
 <?php
 echo "
 	<div class=\"sectionInfo\">
@@ -117,16 +121,11 @@ echo "
 echo "			</div>
 			<div class=\"spacer\">&#160;</div>
 	</div>";
+$ayuda=$_SESSION["lang"]."/diccionario.html";include "../common/inc_div-helper.php"
+
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/diccionario.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/diccionario.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: diccionario.php" ?></font>
-</div>
  <div class="middle form">
 			<div class="formContent">
-
-<basefont=2> <Font face="Arial">
 
 <FORM METHOD="Post" name=forma1 action=diccionario.php onSubmit="Javascript:return false">
 <input type=hidden name=Opcion value='<?php echo $arrHttp["Opcion"]?>'>
@@ -135,13 +134,13 @@ echo "			</div>
 <input type=hidden name=cipar value='<?php echo $arrHttp["cipar"]?>'>
 <input type=hidden name=Formato value='<?php echo $arrHttp["Formato"]?>'>
 <input type=hidden name=prologo value='<?php echo $arrHttp["prologo"]?>'>
-<input type=hidden name=epilogo value='<?php echo $arrHttp["epilogo"]?>'>
-<input type=hidden name=Expresion value="">
+<input type=hidden name=epilogo value='<?php if (isset($arrHttp["epilogo"])) echo $arrHttp["epilogo"]?>'>
+<input type=hidden name=Expresion value=''>
 <input type=hidden name=prefijo value='<?php echo $arrHttp["prefijo"]?>'>
 <input type=hidden name=Diccio value='<?php echo $arrHttp["Diccio"]?>'>
-<input type=hidden name=desde value=<?php if (isset($arrHttp["desde"])) echo $arrHttp["desde"]?>>
-<input type=hidden name=id value=<?php if (isset($arrHttp["id"])) echo $arrHttp["id"]?>>
-<input type=hidden name=toolbar value=<?php if (isset($arrHttp["toolbar"])) echo $arrHttp["toolbar"]?>>
+<input type=hidden name=desde value='<?php if (isset($arrHttp["desde"])) echo $arrHttp["desde"]?>'>
+<input type=hidden name=id value='<?php if (isset($arrHttp["id"])) echo $arrHttp["id"]?>'>
+<input type=hidden name=toolbar value='<?php if (isset($arrHttp["toolbar"])) echo $arrHttp["toolbar"]?>'>
 <?php if (isset($arrHttp["prestamo"])) {
 	echo "<input type=hidden name=prestamo value=".$arrHttp["prestamo"].">";
 
@@ -170,8 +169,16 @@ if (isset($arrHttp["Target"])) {
       <td width="20">&nbsp;</td>
       <td rowspan="2" width="5" align="left" valign="top">&nbsp;</td>
       <td rowspan="2" xwidth="585" valign=top>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <table width="100%" border="0" cellspacing="0" cellpadding="4">
           <tr>
             <td xwidth=250>
-              <select name=terminos  size=16 multiple xwidth=250 <?php if (isset($arrHttp["toolbar"])) echo 'onclick="EjecutarBusqueda(0,';if ($arrHttp["Opcion"]=="diccionario") echo "1"; else echo "2";?>)">
+              <select name=terminos  size=16 multiple xwidth=250
+                  <?php if (isset($arrHttp["toolbar"])) {
+                            if ($arrHttp["Opcion"]=="diccionario"){
+                                echo 'onclick="EjecutarBusqueda(0,1)'; 
+                            } else {
+                                'onclick="EjecutarBusqueda(0,2)';
+                            }
+                        }
+                  ?>>
               <OPTION VALUE="">

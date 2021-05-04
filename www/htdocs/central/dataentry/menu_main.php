@@ -1,6 +1,8 @@
 <?php
 /* Modifications
 2021-01-05 fho4abcd Modified comment for button with incorrect reference. This restores button bar.
+2021-05-03 fho4abcd Correct header. Ensures that encoding fits with db encoding+header with DOCTYPE
+2021-05-03 fho4abcd Rewrite html: standardized & improved layout
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -9,13 +11,51 @@ if (!isset($_SESSION["permiso"])){
 
 include("../common/get_post.php");
 include("../config.php");
-echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$meta_encoding\" />\n";
+include("../common/header.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
-echo "<script>permiso='".$_SESSION["permiso"]["profilename"]."'</script>";
-//include("../common/header.php");
 $db=$arrHttp["base"];
+   		$fst_file=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
+   		$prefix_W="";
+   		foreach ($fst_file as $value){
+   			if (trim($value)!=""){
+   				$fst[]=trim($value);
+
+   			}
+   		}
+   		$pal="";
+   	    if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
+	   		$fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
+
+	   		$pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:100px\">";
+	   		foreach ($fpb as $value){
+	   			if (trim($value)!=""){
+	   				$y=explode('|',$value);
+					$y[2]=trim($y[2]);
+	   				foreach ($fst as $linea){
+	   					if (stripos($linea,$y[2])>0){
+	   						$y[2]=$y[2].'|';
+	   						$linea=str_replace("  "," ",$linea);
+	   						$it=explode(" ",$linea);
+	   						if ($it[1]==8)
+	   							$y[2].='W';
+	   						break;
+	   					}
+
+	   				}
+	   				$pal.="<option value=".trim($y[2]).">".trim($y[0]);
+	   			}
+
+	   		}
+	   		$pal.="</select><a style=\"position:relative;bottom:-4px\" href=javascript:Diccionario()><img src=img/search.gif ></a>";
+	   		unset($fpb);
+	  	}
+
+
 ?>
+
+<body bgcolor=#EDF3F3 text=#000000 LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 >
+<script>permiso='<?php echo $_SESSION["permiso"]["profilename"]?>'</script>
 
 <script>
 Ctrl_activo=""
@@ -26,19 +66,24 @@ document.onkeypress =
             : document.all ? event.keyCode
             : evt.keyCode;
 	if (c==13){
-       switch (Ctrl_activo){       		case "blibre":
+       switch (Ctrl_activo){
+       		case "blibre":
        			Buscar("TW_")
        			break
        		default:
        			top.Menu('ira')
-       			break       }
-	}
+       			break
+       }
+
+	}
 
     return true;
   };
 
-function FocoEn(Ctrl){	Ctrl_activo=Ctrl
-}
+function FocoEn(Ctrl){
+	Ctrl_activo=Ctrl
+
+}
 
 function Diccionario(){
 
@@ -76,22 +121,29 @@ function Buscar(Prefijo){
 		EB=EB.replace(/  /g,' ')
 		p=EB.split(" ")
 		for (term in p){
-			if (Trim(p[term])!=""){				if (Expr=="")
+			if (Trim(p[term])!=""){
+				if (Expr=="")
 					Expr=Prefijo+p[term]
 				else
 					Expr+=" and "+Prefijo+p[term]
-			}		}
-	}else{		Expr=Prefijo+EB	}
+			}
+		}
+	}else{
+		Expr=Prefijo+EB
+	}
 	top.Expresion=Expr;
-	top.Menu("ejecutarbusqueda")}
+	top.Menu("ejecutarbusqueda")
+}
 function AbrirAyuda(){
 	msgwin=window.open("../documentacion/ayuda.php?help="+lang+"/dataentry_toolbar.html","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
 		msgwin.focus()
 
 }
 
-function AyudaBusqueda(){	msgwin=window.open("http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
-	msgwin.focus()}
+function AyudaBusqueda(){
+	msgwin=window.open("http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
+	msgwin.focus()
+}
 
 function EditarFormato(){
 	i=document.forma1.formato.selectedIndex
@@ -99,16 +151,20 @@ function EditarFormato(){
 	}else{
 	  	pft=document.forma1.formato.options[i].value
 	  	descripcion=document.forma1.formato.options[i].text
-		if (pft!='ALL') {			document.editpft.base.value=top.base
+		if (pft!='ALL') {
+			document.editpft.base.value=top.base
 			document.editpft.cipar.value=top.base+".par";
 			document.editpft.archivo.value=pft
-			document.editpft.descripcion.value=descripcion			msgwin=window.open("","editpft","width=800, height=400, scrollbars, resizable")
+			document.editpft.descripcion.value=descripcion
+			msgwin=window.open("","editpft","width=800, height=400, scrollbars, resizable")
 			document.editpft.submit()
 			msgwin.focus()
 		}else{
 
 		}
-	}}
+	}
+
+}
 
 function GenerarDespliegue(){
 	base=top.base
@@ -153,105 +209,76 @@ function GenerarWks(){
 
 
 </script>
-</head>
-<body bgcolor=#EDF3F3 text=#000000 LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 >
 <form name=forma1 onsubmit="return false" method=post>
 <link rel="STYLESHEET" type="text/css" href="js/dhtmlXToolbar.css">
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
-<?php if (isset($_SESSION["screen_width"])){	      	$SW=$_SESSION["screen_width"];
-	      	$TH=48;   	  	 }else{   	  	 	$SW=1200;
+<?php if (isset($_SESSION["screen_width"])){
+	      	$SW=$_SESSION["screen_width"];
+	      	$TH=90;
+   	  	 }else{
+   	  	 	$SW=1200;
    	  	 	$TH=90;
    	  	 }
 		if (isset($FRAME_2H) and $FRAME_2H!="") $TH=$FRAME_2H;
-   ?>
-<table width=100% bgcolor=#d4d0c8 cellpadding=0 cellspacing=0 border=0 height=<?php echo $TH?>>
-	<td  valign=middle><font style="font-size:10px;font-family:arial;">&nbsp; &nbsp; <?php echo $msgstr["m_ir"]?>:<br>
-		&nbsp; &nbsp; <input type=text  name=ir_a size=15 value='' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" style="font-size:10px;font-family:arial">
-   	</td>
-   	<?php
-   		$fst_file=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
-   		$prefix_W="";
-   		foreach ($fst_file as $value){
-   			if (trim($value)!=""){
-   				$fst[]=trim($value);
-
-   			}
-   		}
-   		$pal="";
-   	    if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
-	   		$fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
-
-	   		$pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:190px\">";
-	   		foreach ($fpb as $value){
-	   			if (trim($value)!=""){	   				$y=explode('|',$value);
-					$y[2]=trim($y[2]);
-	   				foreach ($fst as $linea){
-	   					if (stripos($linea,$y[2])>0){
-	   						$y[2]=$y[2].'|';
-	   						$linea=str_replace("  "," ",$linea);
-	   						$it=explode(" ",$linea);
-	   						if ($it[1]==8)
-	   							$y[2].='W';
-	   						break;
-	   					}
-
-	   				}
-	   				$pal.="<option value=".trim($y[2]).">".trim($y[0]);
-	   			}
-
-	   		}
-	   		$pal.="</select><a href=javascript:Diccionario()><img src=img/search.gif valign=ABSBOTTOM></a>";
-	   		unset($fpb);
-	  	}
-   	?>
-   	<td  valign=middle style=line-height:20px><font style="font-size:10px;font-family:arial">
-   	<?php echo $msgstr["buscar"]." ".$pal;
-   	if ($SW<1200 or $TH>48)
-   		echo "&nbsp; &nbsp; ";
-   	else
-   		echo "<br>";
-   	?>
-   	<input type=text  name=busqueda_palabras onfocus="FocoEn('blibre')" size=40 value='' style="font-size:10px;font-family:arial">
-   	<a href=Javascript:AyudaBusqueda()><img src=img/question.gif valign=bottom textalign=bottom></a>
-
-   	</td>
-   	<td width=5>&nbsp; </td>
-   	<?php 	if ($SW<1200 or $TH>48)
-				echo "<tr><td valign=center colspan=3>";
-		   	else
-		   		echo "<td valign=center>";
-	?>
-		   <div id="toolbarBox" style="height:30;position:relative"></div></td>
-    <td align=right>
-       	<table cellspacing=0 cellpadding=0>
-
-			<?php if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
-       		    	  isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
-        			  isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
-	    			  isset($_SESSION["permiso"][$db."_CENTRAL_EDPFT"])){	    	?>
-	    	<td rowspan=2 valign=top>
-	    	         <a href=javascript:EditarFormato()><img src=img/barEdit.png alt="edit display format" title="edit display format" border=0></a>
-	    	</td>
-       		<?php } ?>
-       		<td align=right>
-       		          <font style="font-size:7pt"><?php echo $msgstr["displaypft"]?>:</td>
-
-			<td><select name=formato onChange=Javascript:GenerarDespliegue()  style="width:90;font-size:8pt;font-family:arial narrow">
-				<option></option>
-				</select>
-			</td>
-	  	 <tr><td align=right><font style="font-size:7pt"><?php echo $msgstr["fmt"]?>:&nbsp; </td><td>
-				<select name=wks onChange=Javascript:GenerarWks() style="width:90;font-size:8pt;font-family:arial narrow">
-					<option></option>
-				</select>
-			</td>
-		</table>
-	</td>
-	<td width=3>&nbsp;</td>
-</table>
+?>
+<table style="background-color:#d4d0c8;width:100%;cellpadding:0;cellspacing:0" height=<?php echo $TH?> >
+<tr><td width=75% valign=middle><!-- left cell with first table-->
+    <table  cellpadding=0 cellspacing=0 style="float:left" >
+        <tr>
+            <td><!-- Cell goto record -->
+                &nbsp;<?php echo $msgstr["m_ir"]?>
+                &nbsp;<input type=text  name=ir_a size=15 value='' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
+                &nbsp;
+            </td>
+            
+            <td><!-- Cell search on term+free search-->
+                <?php echo $msgstr["buscar"]." ".$pal;?>
+                &nbsp; &nbsp;
+                <input type=text  name=busqueda_palabras onfocus="FocoEn('blibre')" size=40 value=''>
+                <a style="position:relative;bottom:-4px" href=Javascript:AyudaBusqueda()><img src=img/question.gif ></a>
+            </td>
+        </tr>
+        <tr height=35 ><!-- row and cell with toolbar object -->
+            <td valign=center colspan=2>
+                <div id="toolbarBox" style="height:30;position:relative"></div>
+            </td>
+        </tr>
+    </table>
+</td>
+<td  width=25%  valign=middle><!-- right cell with second table-->
+    <table cellspacing=0 cellpadding=0 style="float:right">
+        <tr>
+        <?php if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
+                  isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
+                  isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
+                  isset($_SESSION["permiso"][$db."_CENTRAL_EDPFT"])){
+        ?>
+        <td rowspan=2 valign=top>
+            <a href=javascript:EditarFormato()><img src=img/barEdit.png alt="edit display format" title="edit display format" border=0></a>
+        </td>
+        <?php } ?>
+        <td align=right>
+            <font style="font-size:7pt"><?php echo $msgstr["displaypft"]?>:</font>
+        </td>
+        <td>
+            <select name=formato onChange=Javascript:GenerarDespliegue()  style="width:90;font-size:8pt;font-family:arial narrow">
+            </select>
+        </td>
+        </tr>
+        <tr>
+        <td align=right>
+            <font style="font-size:7pt"><?php echo $msgstr["fmt"]?>:&nbsp; </font>
+        </td>
+        <td>
+            <select name=wks onChange=Javascript:GenerarWks() style="width:90;font-size:8pt;font-family:arial narrow">
+            </select>
+        </td>
+        </tr>
+    </table>
+</td></tr></table>
 <script>
 
 	//horisontal toolbar
@@ -261,6 +288,7 @@ function GenerarWks(){
     toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowLeft.png',18,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowRight.png',18,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowRight2.png',18,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
+	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_0'))
     toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',100,100,''))
    //	toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>','browse',100,100,''))
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
@@ -279,7 +307,9 @@ function GenerarWks(){
 	$pdf="";
   	if (isset($def["IMPORTPDF"]))
 		$pdf=trim($def["IMPORTPDF"]);
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {	?>		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
+	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
+	?>
+		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
 	<?php
 		if ($pdf=="Y"){
     ?>
@@ -356,7 +386,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 
 	toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarHome.png","16","24",14,"home","<?php echo $msgstr["inicio"]?>"))
 	toolbar.showBar();
-	function onButtonClick(itemId,itemValue){
+	function onButtonClick(itemId,itemValue){
+
 		switch (itemId){
 			<?php echo $select;?>
 			case "select":
@@ -381,10 +412,12 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 						top.Menu("proximo")
 						break
 					case "selected_records":
-						if (top.RegistrosSeleccionados==""){							alert("<?php echo $msgstr["no_sel_records"]?>")
+						if (top.RegistrosSeleccionados==""){
+							alert("<?php echo $msgstr["no_sel_records"]?>")
 							var item=top.menu.toolbar.getItem('select');
     						item.selElement.options[0].selected =true
-							return						}
+							return
+						}
 						top.browseby="selected_records"
 						top.Listar_pos=top.Listar_pos-1
 						if (top.Listar_pos<-1) top.Listar_pos=-1
@@ -510,11 +543,13 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 
 </script>
 
-	</form>
-	<script>
-		top.ModuloActivo="catalog"
+</form>
 
-	</script>
+<script>
+    top.ModuloActivo="catalog"
+
+</script>
+
 <script>
 <?php
 unset($fp);
@@ -542,7 +577,9 @@ if (isset($arrHttp["base"])){
 			}
 		}
 
-	}else{		echo "document.forma1.formato.options.length=0\n";	}
+	}else{
+		echo "document.forma1.formato.options.length=0\n";
+	}
 	$i=$i+1;
 	if (isset($_SESSION["permiso"][$db."_pft_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])
 
@@ -559,8 +596,10 @@ if (isset($arrHttp["base"])){
 			$fp = file($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks");
 	}
 	$i=-1;
-	if (isset($_SESSION["permiso"][$db."_fmt_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) ){		echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.wks.options[0]=new Option('','')\n";
-		$i=0;	}
+	if (isset($_SESSION["permiso"][$db."_fmt_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) ){
+		echo "if (top.ModuloActivo==\"catalog\") top.menu.document.forma1.wks.options[0]=new Option('','')\n";
+		$i=0;
+	}
 
 
 	$wks_p=array();
@@ -621,7 +660,8 @@ if (isset($fp)) {
 }
 if (isset($arrHttp["inicio"]) and $arrHttp["inicio"]=="s"){
 	echo 'top.main.location.href="inicio_base.php?inicio=s&base="+top.base+"&cipar="+top.base+".par&per="+top.db_permiso';
-}else{	if (!isset($arrHttp["reload"]))
+}else{
+	if (!isset($arrHttp["reload"]))
 		echo "url=top.main.location.href
 	top.main.location.href=url\n";
 }

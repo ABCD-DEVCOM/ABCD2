@@ -1,6 +1,8 @@
 <?php
 /* Modifications
 2021-01-05 guilda Added $msgstr["regresar"]
+2021-04-30 fho4abcd Error message if file is not writable. 
+2021-04-30 fho4abcd Corrected html. Replaced helper code fragment by included file
 */
 session_start();
 
@@ -24,29 +26,34 @@ if (!isset($_SESSION["login"])or $_SESSION["profile"]!="adm" ){
           </script>";
     die;
 }
-$Permiso=$_SESSION["permiso"];
+//$Permiso=$_SESSION["permiso"];
 
 //SE LEE LA LISTA DE MENSAJES DISPONIBLEE
 $l=$msg_path.'lang/';
 if ($handle = opendir($l)) {
 	$lang_dir="";
     while (false !== ($entry = readdir($handle))) {
-        if ($entry!="." and $entry!=".." and is_dir($l.$entry)){ 			if ($lang_dir=="")
+        if ($entry!="." and $entry!=".." and is_dir($l.$entry)){
+ 			if ($lang_dir=="")
  				$lang_dir=$entry;
  			else
- 				$lang_dir.=";".$entry;        }
+ 				$lang_dir.=";".$entry;
+        }
     }
+    closedir($handle);
 }
+//================= PHP function ==========
+function LeerIniFile($ini_vars,$ini,$tipo){
+global $msg_path;
 
-function LeerIniFile($ini_vars,$ini,$tipo){global $msg_path;
-	if ($tipo==1) $pref="ini_"; else $pref="mod_";
+	if ($tipo==1) $pref="ini_"; else $pref="mod_";
 	foreach ($ini_vars as $key=>$Opt){
 
 		if ($Opt["it"]=="title"){
- 		    echo "<th colspan=2>".$Opt["Label"]."</th></tr>\n";
+ 		    echo "<tr><th colspan=2>".$Opt["Label"]."</th></tr>\n";
  		    continue;
  		}else{
- 			echo "<td>$key</td>
+ 			echo "<tr><td>$key</td>
 		         <td>";
 		}
 		switch ($Opt["it"]){
@@ -83,17 +90,22 @@ function LeerIniFile($ini_vars,$ini,$tipo){global $msg_path;
 				}
                 break;
 		}
-		echo "</td></tr>\n";
+		echo "</td></tr>";
 	}
 }
+//============= end function ========
 ?>
-
+<body >
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="javascript" type="text/javascript">
-function Enviar(){	document.maintenance.submit()}
+function Enviar(){
+	document.maintenance.submit()
+}
 </script>
-<body >
+
 <?php
+include("../common/institutional_info.php");
+
 switch ($arrHttp["Opcion"]){
 	case "abcd_def":
 		$ini_vars=array("UNICODE" => array("it"=>"radio","Options"=>"0;1"),
@@ -142,7 +154,7 @@ switch ($arrHttp["Opcion"]){
 						"SELBASE" => array("it"=>"radio","Options"=>"Y;N")
 						);
 		$file=$db_path."abcd.def";
-		$help="Abcd.def";
+		$help="abcd.def";
 		break;
 	case "dr_path":
 		$ini_vars=array("UNICODE" => array("it"=>"radio","Options"=>"0;1"),
@@ -170,17 +182,19 @@ switch ($arrHttp["Opcion"]){
 						"ROOT" => array("it"=>"text","Options"=>""),
 						);
 		$file=$db_path.$arrHttp["base"]."/dr_path.def";
-		$help="Dr_path.def";
+		$help=$arrHttp["base"].": dr_path.def";
 		break;
 }
-	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">$help
-			</div>
-			<div class=\"actions\">
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+<?php 
+        echo $msgstr["editar"].": ".$help
+?>
+	</div>
+	<div class="actions">
+<?php
 
-	";
 switch ($arrHttp["Opcion"]){
 	case "abcd_def":
 		echo "<a href=\"../dbadmin/conf_abcd.php?reinicio=s\" class=\"defaultButton backButton\">";
@@ -204,14 +218,12 @@ if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";
-?>
-<div class="helper">
-	&nbsp; &nbsp;<?php echo $msgstr["help"]?>: <a href=http://abcdwiki.net/wiki/es/index.php?title=<?php echo $help?> target=_blank>abcdwiki.net</a>
-</div>
-<?php
+include "../common/inc_div-helper.php";
+
 $ini=array();
 $modulo=array();
 $mod="";
+// Read a possible existing abcd.def/dr_path.def file
 if (file_exists($file)){
 	$fp=file($file);
 	foreach ($fp as $key=>$value){
@@ -242,8 +254,6 @@ if (file_exists($file)){
 if (!isset($ini["DIRTREE_EXT"]) and $arrHttp["Opcion"]!="css")
 	$ini["DIRTREE_EXT"]="*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,";
 ?>
-</font>
-</div>
 <div class="middle">
 	<div class="formContent" >
 <form name=maintenance method=post>
@@ -251,9 +261,10 @@ if (!isset($ini["DIRTREE_EXT"]) and $arrHttp["Opcion"]!="css")
 <?php
 if (isset($arrHttp["base"]))
 	echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
+
 if (!isset($arrHttp["Accion"])){
 	echo "<input type=hidden name=Accion value=\"actualizar\">\n";
-	echo "<table cellspacing=5 width=400 align=center >";
+	echo "<table cellspacing=5 width=200 align=center >";
 	LeerIniFile($ini_vars,$ini,"1");
 	foreach ($ini as $key=>$val){
 		if (!isset($ini_vars[$key]) and trim($val)!="") echo "<tr><td>$key</td><td><input type=text name=ini_$key value=\"$val\"></td></tr>";
@@ -264,33 +275,38 @@ if (!isset($arrHttp["Accion"])){
 	}
 	echo "</table>";
 }else{
-	if ($arrHttp["Accion"]=="actualizar"){
-	   $fp=fopen($file,"w");
-	    foreach ($arrHttp as $key=>$Opt){
-	    	if (substr($key,0,4)=="ini_"){
-	    		$key=substr($key,4);
-	    		echo $key."=".$arrHttp["ini_".$key]."<br>";
-	    		fwrite($fp,$key."=".trim($arrHttp["ini_".$key])."\n");
-	    	}
-	    }
-	    if ($arrHttp["Opcion"]=="abcd_def" and !isset($arrHttp["ini_LEGEND2"])){
-	    	fwrite($fp,"LEGEND2=\n");
-	    }
-	    if (isset($arrHttp["mod_TITLE"])){
-	    	echo "[MODULOS]<BR>";
-	    	fwrite($fp,"[MODULOS]\n");
-	    	foreach ($arrHttp as $key=>$Opt){
-	    		if (substr($key,0,4)=="mod_"){
-	    			$key=substr($key,4);
-	    			echo $key."=".$arrHttp["mod_".$key]."<br>";
-	    			fwrite($fp,$key."=".trim($arrHttp["mod_".$key])."\n");
-	    		}
-	   		}
-	    }
-	    fclose($fp);
-	    echo "<h4>$help ".$msgstr["updated"]."</h4>";
-	    //echo "<a href=editar_abcd_def.php?Opcion=".$_REQUEST["Opcion"]."&base=".$_REQUEST["base"].">".$msgstr["edit"]."</a>";
-	 }
+    if ($arrHttp["Accion"]=="actualizar"){
+        $fp=@fopen($file,"w");
+        if (!$fp) {
+            $contents_error= error_get_last();
+            echo "<font color=red><b>".$msgstr["copenfile"]." ".$help."</b> : ".$contents_error["message"];
+        } else { 
+            foreach ($arrHttp as $key=>$Opt){
+                if (substr($key,0,4)=="ini_"){
+                    $key=substr($key,4);
+                    echo $key."=".$arrHttp["ini_".$key]."<br>";
+                    fwrite($fp,$key."=".trim($arrHttp["ini_".$key])."\n");
+                }
+            }
+            if ($arrHttp["Opcion"]=="abcd_def" and !isset($arrHttp["ini_LEGEND2"])){
+                fwrite($fp,"LEGEND2=\n");
+            }
+            if (isset($arrHttp["mod_TITLE"])){
+                echo "[MODULOS]<BR>";
+                fwrite($fp,"[MODULOS]\n");
+                foreach ($arrHttp as $key=>$Opt){
+                    if (substr($key,0,4)=="mod_"){
+                        $key=substr($key,4);
+                        echo $key."=".$arrHttp["mod_".$key]."<br>";
+                        fwrite($fp,$key."=".trim($arrHttp["mod_".$key])."\n");
+                    }
+                }
+            }
+            fclose($fp);
+            echo "<h4>$help ".$msgstr["updated"]."</h4>";
+            //echo "<a href=editar_abcd_def.php?Opcion=".$_REQUEST["Opcion"]."&base=".$_REQUEST["base"].">".$msgstr["edit"]."</a>";
+        }
+    }
 }
 ?>
 </form>

@@ -3,6 +3,7 @@
 2021-01-05 guilda Removed login encryption
 2021-01-05 LeerRegistro compares the password
 2021-04-21 fho4abcd Show a an emergency user name if applicable
+2021-04-30 fho4abcd Do not switch language if selection is empty
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -339,7 +340,7 @@ if (isset($arrHttp["newindow"]))
 	$_SESSION["newindow"]="Y";
 else
 	if (!isset($arrHttp["reinicio"])) unset($_SESSION["newindow"]);
-if (isset($arrHttp["lang"])){
+if (isset($arrHttp["lang"]) and $arrHttp["lang"]!=""){
 	$_SESSION["lang"]=$arrHttp["lang"];
 	$lang=$arrHttp["lang"];
 }else{
