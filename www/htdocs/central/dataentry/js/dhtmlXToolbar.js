@@ -1,7 +1,6 @@
-
-
-
-
+/*
+20210503 fho4abcd minimum nbsp and size 1px in dhtmlXToolbarDivider*
+*/
  function dhtmlXToolbarObject(htmlObject,width,height,name,vMode){
  this.width=width;this.height=height;
  if(typeof(htmlObject)!="object")
@@ -295,7 +294,7 @@
  td=document.createElement("td");
  this.topNod=td;td.align="center";td.style.paddingRight="2";td.style.paddingLeft="2";
  td.innerHTML="<div class='toolbarDividerY'>&nbsp;</div>";
- if(!document.all)td.childNodes[0].style.height="0px";
+ if(!document.all)td.childNodes[0].style.height="1px";
  return this;
 };
  dhtmlXToolbarDividerYObject.prototype = new dhtmlXButtonPrototypeObject;
@@ -309,8 +308,8 @@
  if(id)this.id=id;else this.id=0;
  td=document.createElement("td");
  this.topNod=td;td.align="center";td.style.paddingRight="2";td.style.paddingLeft="2";td.width="4px";
- td.innerHTML="<div class='toolbarDivider'></div >";
- if(!document.all){td.childNodes[0].style.width="0px";td.style.padding="0 0 0 0";td.style.margin="0 0 0 0";}
+ td.innerHTML="<div class='toolbarDivider'>&nbsp;</div >";
+ if(!document.all){td.childNodes[0].style.width="1px";td.style.padding="0 0 0 0";td.style.margin="0 0 0 0";}
  return this;
 };
  dhtmlXToolbarDividerXObject.prototype = new dhtmlXButtonPrototypeObject;

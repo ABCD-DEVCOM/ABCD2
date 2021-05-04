@@ -1,3 +1,8 @@
+<?php
+/* Modifications
+20210430 fho4abcd Improve html
+*/
+?>
 </select>
    <INPUT TYPE=HIDDEN VALUE="<?php echo $arrHttp["LastKey"]?>" NAME="LastKey">
    <br>
@@ -10,24 +15,33 @@
 <?php
 if (!isset($arrHttp["toolbar"])){
 // Si existe $arrHttp["Target"] no se realiza la búsqueda directamente
-	if (!isset($arrHttp["Target"])) echo "<p>".$msgstr["finsel_1"]."&nbsp;&nbsp; <strong><a href=\"javascript:EjecutarBusqueda(this,1)\" class=boton>".$msgstr["buscar"]."</a></strong> &nbsp;&nbsp;".$msgstr["finsel_2"];
-
-    echo "<p><strong><a href=\"javascript:EjecutarBusqueda(this,2)\" class=boton>".$msgstr["ptersel"]."</a></strong> &nbsp;&nbsp; ".$msgstr["pterselmsg"];
+	if (!isset($arrHttp["Target"])) echo "<br><br>".$msgstr["finsel_1"]."&nbsp;&nbsp; <strong><a href=\"javascript:EjecutarBusqueda(this,1)\" class=boton>".$msgstr["buscar"]."</a></strong> &nbsp;&nbsp;".$msgstr["finsel_2"];
 }
 ?>
+                <br><br>
+                <strong>
+                <a href="javascript:EjecutarBusqueda(this,2)" class=boton><?php echo $msgstr["ptersel"];?></a>
+                </strong>
+                &nbsp;&nbsp; <?php echo $msgstr["pterselmsg"];?>
             </td>
-          </tr>
-          <tr>
-            <td align=center>&nbsp;&nbsp;<strong><a href="javascript:EjecutarBusqueda(this,4)" class=boton><?php echo $msgstr["masterms"]?></a>&nbsp;&nbsp;
+        </tr>
+        <tr>
+            <td align=center>
+                &nbsp;&nbsp;
+                <strong>
+                <a href="javascript:EjecutarBusqueda(this,4)" class=boton><?php echo $msgstr["masterms"]?></a>
+                </strong>&nbsp;&nbsp;
             </td>
-          </tr>
-        </table>
-      </td>
-  </table>
+        </tr>
+    </table>
+    </td>
+    </tr>
+</table>
 
 </form>
 </div>
 </div>
 <?php include("../common/footer.php")?>
+</body>
 
 

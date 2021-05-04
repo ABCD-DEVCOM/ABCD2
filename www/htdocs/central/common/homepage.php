@@ -3,6 +3,8 @@
 2021-02-25 fho4abcd Conformance: Moved <body>,</body>,<html>, deleted <div>. Non-functional readability of html
 2021-03-02 fho4abcd Replaced helper code fragment by included file
 2021-04-15 fho4abcd show charsets like institutional_info.php + refresh after change of database
+2021-04-30 fho4abcd Language selection menu equal to menubases.php+ moved language selection to included file
+2021-05-04 fho4abcd Language selection: Enable selection of first menu item
 */
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
 unset($_SESSION["root_base"]);
@@ -158,7 +160,7 @@ function Modulo(){
 }
 
 	function CambiarLenguaje(){
-		if (document.cambiolang.lenguaje.selectedIndex>0){
+		if (document.cambiolang.lenguaje.selectedIndex>=0){
                lang=document.cambiolang.lenguaje.options[document.cambiolang.lenguaje.selectedIndex].value
                self.location.href="inicio.php?reinicio=s&lang="+lang
 		}
@@ -304,51 +306,28 @@ function Modulo(){
               }
 		?> |
 		<a href="../dataentry/logout.php" xclass="button_logout"><span>[logout]</span></a><br>
-<?php
-	if (isset($msg_path))
-		$path_this=$msg_path;
-	else
-		$path_this=$db_path;
-	$a=$path_this."lang/".$_SESSION["lang"]."/lang.tab";
- 	if (!file_exists($a)) {
- 		$a=$path_this."lang/en/lang.tab";
- 	}
- 	if (!file_exists($a)){
-		echo $msgstr["flang"]." ".$a;
-		die;
-	}
- 	$a=$path_this."lang/".$_SESSION["lang"]."/lang.tab";
- 	if (!file_exists($a)) {
- 		$a=$path_this."lang/en/lang.tab";
- 	}
- 	if (!file_exists($a)){
-		echo $msgstr["flang"]." ".$path_this."lang/".$_SESSION["lang"]."/lang.tab";
-		die;
-	}
-?>
+
 <div class="language">
     <form name=cambiolang> <table border=0>
     <tr><td><?php echo $msgstr["lang"]?>:</td>
 	<td><select name=lenguaje style="width:90px;font-size:8pt;font-family:arial narrow" onchange=CambiarLenguaje()>
-		<option value=""></option>
-<?php
- 	if (file_exists($a)){
-		$fp=file($a);
-		$selected="";
-		foreach ($fp as $value){
-			$value=trim($value);
-			if ($value!=""){
-				$l=explode('=',$value);
-				if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-				echo "     <option value=$l[0] $selected>".$l[1]."</option>\n";
-				$selected="";
-			}
-		}
-	}else{
-		echo $msgstr["flang"].$db_path."lang/".$_SESSION["lang"]."/lang.tab";
-		die;
-	}
-?>
+        <?php
+        include "../common/inc_get-langtab.php";
+        $a=get_langtab();
+        $fp=file($a);
+        $selected="";
+        foreach ($fp as $value){
+            $value=trim($value);
+            if ($value!=""){
+                $l=explode('=',$value);
+                if ($l[0]!="lang"){
+                    if ($l[0]==$_SESSION["lang"]) $selected=" selected";
+                    echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
+                    $selected="";
+                }
+            }
+        }
+        ?>
         </select>
     </td>
     </tr>

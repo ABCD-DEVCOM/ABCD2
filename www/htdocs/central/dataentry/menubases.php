@@ -2,6 +2,7 @@
 /* Modifications
 2021-04-15 fho4abcd use charset from config.php+show charsets like institutional_info.php
 2021-04-21 fho4abcd no undefined index for emergency user.
+2021-05-03 fho4abcd Use include to select best language tables
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $valortag;
@@ -15,7 +16,7 @@ include("../config.php");
 
 
 
-if (isset($arrHttp["cambiolang"]))  $_SESSION["lang"]=$arrHttp["lang"];
+if (isset($arrHttp["lang"]) and  $arrHttp["lang"]!="")  $_SESSION["lang"]=$arrHttp["lang"];
 include ("../lang/admin.php");
 include ("../lang/lang.php");
 include("leerregistroisispft.php");
@@ -241,30 +242,25 @@ if ($circulation=="Y" or $acquisitions=="Y"){
   			</select><br>
           <?php } ?>
   			<?php echo $msgstr["lang"]?>:
-  			<select name=lenguaje style="width:140;font-size:8pt;font-family:arial narrow"  onclick=VerificarEdicion() onchange=CambiarLenguaje()>
- <?php
- 	$a=$msg_path."lang/".$_SESSION["lang"]."/lang.tab";
- 	if (file_exists($a)){
-		$fp=file($a);
-		$selected="";
-		foreach ($fp as $value){
-
-			$value=trim($value);
-			if ($value!=""){
-				$l=explode('=',$value);
-				if ($l[0]!="lang"){
-					if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
-					$selected="";
-				}
-			}
-		}
-	}else{
-		echo $msgstr["flang"].$db_path."lang/".$_SESSION["lang"]."/lang.tab";
-		die;
-	}
-?>
-		</select><br>
+            <select name=lenguaje style="width:140;font-size:8pt;font-family:arial narrow"   onchange=CambiarLenguaje()>
+            <?php
+            include "../common/inc_get-langtab.php";
+            $a=get_langtab();
+            $fp=file($a);
+            $selected="";
+            foreach ($fp as $value){
+                $value=trim($value);
+                if ($value!=""){
+                    $l=explode('=',$value);
+                    if ($l[0]!="lang"){
+                        if ($l[0]==$_SESSION["lang"]) $selected=" selected";
+                        echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
+                        $selected="";
+                    }
+                }
+            }
+            ?>
+            </select><br>
 <?php echo $msgstr["bd"]?>:
 		<select name=baseSel onchange=CambiarBase() onclick=VerificarEdicion() style="width:140;font-size:8pt;font-family:arial narrow">
 		<option value=""></option>
