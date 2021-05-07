@@ -4,6 +4,8 @@
 20210315 fho4abcd Small textual corrections + removed unused code for mx
 20210315 fho4abcd Display better error message and set $err_wxis in that case too.
 20210402 fho4abcd Code added to allow self-signed certificates for internal server calls
+20210507 fho4abcd Improved logging:show login (without password), show cisisver, show wxis_error, time in 24 hour format
+20210507 fho4abcd Activated workaround to cope with mixed cisis versions
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 unset($contenido);  // This array will get the text of the result
@@ -58,13 +60,15 @@ if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]
     }
 }
 
-/*// next line to make sure password is checked with ANSI-database acces
-IF ($actual_db == "acces" ) //OR $actual_db== "loanobjects" OR $actual_db= "trans")
+// next clause to make sure password is checked with ANSI-database acces
+// This is a workaround that can be removed if other code is sanitized:
+// Example: remove hidden login action while accessing a database with different cisis_ver
+IF ($actual_db == "access" ) //OR $actual_db== "loanobjects" OR $actual_db= "trans")
 {
 	$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec;
 	$cisis_ver="";
 }
-*/
+
 if (isset($wxisUrl) and $wxisUrl!=""){  //POST method 
     $query.="&path_db=".$db_path;
     $url="IsisScript=$IsisScript$query&cttype=s";
@@ -148,9 +152,33 @@ if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
     if (isset($cont_cnv))$contenido=$cont_cnv;
 }
 // Write a line for this action to the log file
-if (is_dir($db_path."log") and isset($_SESSION['login'])){
+if (is_dir($db_path."log") ){
     $fp=fopen($db_path."log/log_".date("Ymd").".log","a");
-    $out=date('Ymd h:i:s A')."\t".$_SESSION['login']."\t".$_SERVER["PHP_SELF"]."\t".$IsisScript."\t".str_replace("\n"," ",urldecode($query))."\n";
+    $out=date('Ymd h:i:s')."\t";
+    if( isset($_SESSION['login'])) {
+        // this is the logged in name
+        $out.=$_SESSION['login']."\t";
+    } else if (isset($arrHttp["login"])) {
+        // this is the name before login is granted, shows also unauthorized tries
+        $out.=$arrHttp["login"]."(ini)"."\t";
+    }
+    $out.=$_SERVER["PHP_SELF"]."\t";
+    $out.=$IsisScript."\t";
+    if ( strpos($IsisScript,"login.xis")==false) { 
+        // dump query string of not used by login.xis
+        $out.=str_replace("\n"," ",urldecode($query))."\t";
+    } else {
+        // do not dump credentials info for login.xis
+        $out.="credentials_hidden_in_log\t";
+    }
+    $out.="cisis_ver=".$cisis_ver;
+    if ($err_wxis!="" ) { // Show wxis error reduced to single line
+        $out_err_wxis=str_replace("<br>",".",$err_wxis);
+        $out_err_wxis=str_replace("\r","",$out_err_wxis);
+        $out_err_wxis=str_replace("\n","",$out_err_wxis);
+        $out.="\tERROR:".$out_err_wxis;
+    }
+    $out.="\n";
     fwrite($fp,$out);
     fclose($fp);
 }
