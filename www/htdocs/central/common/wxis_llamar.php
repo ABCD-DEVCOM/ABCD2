@@ -63,7 +63,7 @@ if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]
 // next clause to make sure password is checked with ANSI-database acces
 // This is a workaround that can be removed if other code is sanitized:
 // Example: remove hidden login action while accessing a database with different cisis_ver
-IF ($actual_db == "access" ) //OR $actual_db== "loanobjects" OR $actual_db= "trans")
+IF ($actual_db == "acces" ) //OR $actual_db== "loanobjects" OR $actual_db= "trans")
 {
 	$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec;
 	$cisis_ver="";
