@@ -116,7 +116,7 @@
 
 
 	<base name="corporate" type="users">
-      <uri>http://127.0.0.1:9090/central/bridge/endpointusers.php</uri>
+      <uri>http://abcd/central/bridge/endpointusers.php</uri>
       <wsdlFile>/dbws/users/v1/empweb-users-service-1-0.wsdl</wsdlFile>
     </base>
 
@@ -157,7 +157,7 @@
     <empweb class="net.kalio.empweb.engine.db.ew15db.Empweb15DB">
 
       <base name="TRANSA" type="transa">
-        <uri>jdbc:mysql://127.0.0.1:3306/transa</uri>
+        <uri>jdbc:mysql://db:3306/transa</uri>
         <user>root</user>
         <password>empweb</password>
         <schema>ew15db-schema.sql</schema>    <!-- It's a resource inside ew15db.jar -->

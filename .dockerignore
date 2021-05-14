@@ -1,0 +1,12 @@
+**
+
+!www/bases_examples_Linux
+!www/cgi-bin_Linux
+!www/htdocs
+!empweb
+!docker
+
+**/*~
+**/*.log
+**/.DS_Store
+**/Thumbs.db

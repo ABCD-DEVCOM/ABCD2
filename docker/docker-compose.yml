@@ -1,0 +1,66 @@
+version: '3.4'
+
+services:
+  abcd:
+    build:
+      context: .
+      dockerfile: ./docker/abcd/Dockerfile
+    image: abcd:latest
+    restart: always
+    hostname: abcd.abcd
+    container_name: abcd.abcd
+    expose:
+    - "80"
+    ports:
+    - "80:80"
+    volumes:
+      - ./www/bases-examples_Linux:/var/opt/ABCD/bases/
+    networks:
+      abcd:
+        ipv4_address: 172.18.18.2
+    extra_hosts:
+    - "empweb:172.18.18.3"
+  empweb:
+    build:
+      context: .
+      dockerfile: ./docker/empweb/Dockerfile
+    image: empweb:latest
+    restart: always
+    hostname: empweb.abcd
+    container_name: empweb.abcd
+    expose:
+    - "8080"
+    networks:
+      abcd:
+        ipv4_address: 172.18.18.3
+    extra_hosts:
+    - "abcd:172.18.18.2"
+    - "db:172.18.18.4"
+    depends_on:
+    - "db"
+    links:
+    - "db"
+  db:
+    image: mysql:5
+    restart: always
+    hostname: db.abcd
+    container_name: db.abcd
+    expose:
+    - "3306"
+    volumes:
+    - ./docker/mysql/data:/var/lib/mysql:rw
+    environment:
+      MYSQL_ROOT_PASSWORD: empweb
+      MYSQL_DATABASE: TRANSA
+    networks:
+      abcd:
+        ipv4_address: 172.18.18.4
+
+networks:
+  abcd:
+    external:
+      name: abcd
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.18.18.0/24
