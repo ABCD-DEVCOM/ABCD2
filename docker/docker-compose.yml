@@ -15,6 +15,7 @@ services:
     - "80:80"
     volumes:
     - ./www/bases-examples_Linux:/var/opt/ABCD/bases/
+    - ./docker/logs:/var/opt/ABCD/bases/log
     networks:
       abcd:
         ipv4_address: 172.18.18.2

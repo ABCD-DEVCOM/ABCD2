@@ -4,7 +4,8 @@
 !www/cgi-bin_Linux
 !www/htdocs
 !empweb
-!docker
+!docker/abcd
+!docker/empweb
 
 **/*~
 **/*.log

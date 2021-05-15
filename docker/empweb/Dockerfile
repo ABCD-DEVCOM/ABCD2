@@ -2,8 +2,8 @@ FROM java:7-jdk
 
 COPY ./www/cgi-bin_Linux /opt/ABCD/www/cgi-bin
 COPY ./empweb /opt/ABCD/empweb
-#COPY ./docker/empweb/mysql-connector-java-3.1.12-bin.jar /opt/ABCD/empweb/common/ext/mysql-connector-java-3.1.12-bin.jar
-COPY ./docker/empweb/mysql-connector-java-5.1.49-bin.jar /opt/ABCD/empweb/common/ext/mysql-connector-java-5.1.49-bin.jar
+#COPY ./docker/empweb/mysql-connector-java-3.1.12-bin.jar /opt/ABCD/empweb/common/ext/mysql-connector-java-bin.jar
+COPY ./docker/empweb/mysql-connector-java-5.1.49-bin.jar /opt/ABCD/empweb/common/ext/mysql-connector-java-bin.jar
 
 WORKDIR /opt/ABCD
 
