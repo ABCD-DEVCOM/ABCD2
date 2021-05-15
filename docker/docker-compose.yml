@@ -14,7 +14,7 @@ services:
     ports:
     - "80:80"
     volumes:
-      - ./www/bases-examples_Linux:/var/opt/ABCD/bases/
+    - ./www/bases-examples_Linux:/var/opt/ABCD/bases/
     networks:
       abcd:
         ipv4_address: 172.18.18.2
@@ -30,6 +30,8 @@ services:
     container_name: empweb.abcd
     expose:
     - "8080"
+    volumes:
+    - ./docker/logs:/opt/ABCD/empweb/logs
     networks:
       abcd:
         ipv4_address: 172.18.18.3
