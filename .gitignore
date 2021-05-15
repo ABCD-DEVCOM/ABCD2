@@ -1,2 +1,2 @@
-docker/logs/
 docker/mysql/
+docker/logs/*
