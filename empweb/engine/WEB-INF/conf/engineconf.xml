@@ -157,13 +157,14 @@
     <empweb class="net.kalio.empweb.engine.db.ew15db.Empweb15DB">
 
       <base name="TRANSA" type="transa">
-        <uri>jdbc:mysql://db:3306/transa</uri>
+        <uri>jdbc:mysql://mysql:3306/transa</uri>
         <user>root</user>
         <password>empweb</password>
         <schema>ew15db-schema.sql</schema>    <!-- It's a resource inside ew15db.jar -->
         <backupDir>/opt/ABCD/empweb/db</backupDir> <!-- Please check access rights!-->
         <poolSettings>
           <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+	  <!-- <driverClassName>org.mariadb.jdbc.Driver</driverClassName> -->
           <minPoolSize>3</minPoolSize>
           <maxPoolSize>20</maxPoolSize>
           <initialPoolSize>3</initialPoolSize>

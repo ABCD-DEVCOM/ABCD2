@@ -38,23 +38,25 @@ services:
         ipv4_address: 172.18.18.3
     extra_hosts:
     - "abcd:172.18.18.2"
-    - "db:172.18.18.4"
+    - "mysql:172.18.18.4"
     depends_on:
-    - "db"
+    - "mysql"
     links:
-    - "db"
-  db:
+    - "mysql"
+  mysql:
+    #image: mariadb:5.5.64
     image: mysql:5
     restart: always
-    hostname: db.abcd
-    container_name: db.abcd
+    hostname: mysql.abcd
+    container_name: mysql.abcd
     expose:
     - "3306"
     volumes:
     - ./docker/mysql/data:/var/lib/mysql:rw
+    - ./docker/mysql/restore:/docker-entrypoint-initdb.d:ro
     environment:
       MYSQL_ROOT_PASSWORD: empweb
-      MYSQL_DATABASE: TRANSA
+      MYSQL_DATABASE: transa
     networks:
       abcd:
         ipv4_address: 172.18.18.4
