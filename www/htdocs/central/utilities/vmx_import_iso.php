@@ -3,7 +3,8 @@
 20210418 fho4abcd Created as replacement for all iso import functions.
 20210421 fho4abcd Show iso files with mx_show_iso
 20210421 fho4abcd No error if an inspected file has no extension
-2021-04-26 fho4abcd Check line endings
+20210426 fho4abcd Check line endings
+20210516 fho4abcd Add upload button
 */
 global $arrHttp;
 set_time_limit(0);
@@ -46,6 +47,12 @@ function Confirmar(){
 	document.getElementById('preloader').style.visibility='visible'
 	document.continuar.submit()
 }
+function Upload(){
+    document.initform.backtoscript.value='../utilities/vmx_import_iso.php'
+	document.initform.action='../utilities/upload_wrkfile.php?&backtoscript_org=<?php echo $backtoscript?>'
+	document.initform.submit()
+}
+
 function Seleccionar(iso){
     document.continuar.isofile.value=iso;
     document.continuar.confirmcount.value++;
@@ -103,11 +110,26 @@ $file_value=$wrk."/".$isofile;
 /* --- The confirmcount determines the progress of the action ---*/
 if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     ?>
+    <form name=initform  method=post >
+    <?php
+        if ( !isset($arrHttp["backtoscript"])) echo "<input type=hidden name=\"backtoscript\" value=\"".$backtoscript."\">";
+        if ( !isset($arrHttp["inframe"]))      echo "<input type=hidden name=\"inframe\" value=\"".$inframe."\">";
+        foreach ($_REQUEST as $var=>$value){
+            if ( $var!= "deleteiso" ){
+                // some values may contain quotes or other "non-standard" values
+                $value=htmlspecialchars($value);
+                echo "<input type=hidden name=$var value=\"$value\">\n";
+            }
+        }
+    ?>
     <table  cellspacing=5>
         <tr>
             <td><?php echo $dbmsg_label;?></td><td><?php echo $dbmsg_value;?></td>
         </tr>
+        <tr><td align=center colspan=2>
+                <input type=button value='<?php echo $msgstr["uploadfile"];?>' onclick=Upload()></td>
     </table>
+    </form>
     <?php
     // Get the list of iso files in the working folder
     clearstatcache();

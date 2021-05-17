@@ -10,6 +10,7 @@
 20210418 fho4abcd vmxISO_load -> vmx_import_iso
 20210421 fho4abcd Commented mxdbread (dangerous and currently not working correct)
 20210421 fho4abcd Improved text Import ISO (no longer with MX in the title)
+20210516 fho4abcd Add function upload file
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -347,6 +348,12 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/docbatchimport.php"
 			document.admin.target=""
 			break;
+		case "uploadfile":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/upload_wrkfile.php"
+			document.admin.target=""
+			break;
 		default:
 			alert(Opcion+" Not Available")
 			return;
@@ -383,6 +390,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
        	<li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?>")'><?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?></a></li>
 		<!--<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>-->
 		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?>")'><?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?></a></li>
+		<li><a href='Javascript:EnviarFormaMNT("uploadfile","<?php echo $msgstr["uploadfile"]?>")'><?php echo $msgstr["uploadfile"]?></a></li>
   		<li><a href="#">Import documents</A>
     		<ul>
     			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["docbatchimport_mx"]?>")'><?php echo $msgstr["docbatchimport_mx"]?></a></li>
