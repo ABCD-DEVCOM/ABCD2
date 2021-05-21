@@ -3,6 +3,7 @@
 20210430 fho4abcd Encode only the value, not the key (used by the code)
 20210430 fho4abcd Encode to UTF-8 only for UTF-8 and if the value is not UTF-8
 20210430 fho4abcd Optimize flow: coding activities only if the key is not present in $msgstr
+20210521 fho4abcd Language 00 located in central/lang
 */
 /*
 Function:
@@ -60,7 +61,8 @@ if (file_exists($a)) {
 	}
 }
 // Process the fallback file (language 00)
-$a=$path."/lang/00/$msg_tab";
+// Fullpath is used to get correct error message if missing
+$a=dirname(__FILE__)."/00/$msg_tab";
 if (file_exists($a)) {
 	$fp=file($a);
 	foreach($fp as $var=>$value){
@@ -80,5 +82,12 @@ if (file_exists($a)) {
             }
 		}
 	}
+} else {
+    // issue an error message. This is in the top area, maybe before any other output
+    $langerrormessage="<body><div><font color=red>";
+    $langerrormessage.="Fallback language table <b>$a</b> not present";
+    $langerrormessage.="</font></div>";
+    echo $langerrormessage;
 }
+    
 ?>
