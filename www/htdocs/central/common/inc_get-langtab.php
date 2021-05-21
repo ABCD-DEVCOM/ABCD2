@@ -2,6 +2,7 @@
 /* Modifications
 20210430 fho4abcd Created
 20210520 fho4abcd New location 00 file
+20210521 fho4abcd typo
 */
 /*--------------------------------------------------------------
 ** Function  : Select the best available language table file
@@ -28,7 +29,7 @@ function get_langtab () {
     } else {
 		$path_this=$db_path;
     }
-	$langtab_file=$path_this."lang/".$_SESSION["lang"]."/lang.tab1";
+	$langtab_file=$path_this."lang/".$_SESSION["lang"]."/lang.tab";
  	if (!file_exists($langtab_file)) {
         // Try the default language. Note that the homepage can change the default language
  		$langtab_file=$path_this."lang/".$lang."/lang.tab";
