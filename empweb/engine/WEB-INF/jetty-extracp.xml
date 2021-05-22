@@ -75,7 +75,7 @@
 
   <!-- For the ew15db implementation -->
   <Call name="addClassPath">
-    <Arg><SystemProperty name="empweb.home"/>/common/ext/mysql-connector-java-3.1.12-bin.jar</Arg>
+    <Arg><SystemProperty name="empweb.home"/>/common/ext/mysql-connector-java-bin.jar</Arg>
   </Call>
   <Call name="addClassPath">
     <Arg><SystemProperty name="empweb.home"/>/common/ext/c3p0-0.9.1-pre10.jar</Arg>
