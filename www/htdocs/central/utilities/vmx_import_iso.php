@@ -5,6 +5,7 @@
 20210421 fho4abcd No error if an inspected file has no extension
 20210426 fho4abcd Check line endings
 20210516 fho4abcd Add upload button
+20210526 fho4abcd Detect non-executable working folder. Show number of found files
 */
 global $arrHttp;
 set_time_limit(0);
@@ -95,7 +96,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 <?php include "../common/inc_div-helper.php" ?>
 <div class="middle form">
     <div class="formContent">
-    <div align=center ><h3><?php echo $importisomsg?></h3></div>
+    <div align=center ><h4><?php echo $importisomsg?></h4></div>
     <div align=center>
 <?php
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
@@ -105,7 +106,16 @@ $dbmsg_label=$msgstr["database"].":";
 $dbmsg_value=$arrHttp["dblongname"]." (".$base.") &rarr; ";
 $dbmsg_value.="<b><font color=darkred>".$msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</font></b>";
 $file_label=$msgstr["archivo"].": ";
-$file_value=$wrk."/".$isofile;
+$file_value=$isofile;
+// Check if wrk is readable
+$wrkfolder_label=$msgstr["workfolder"].":";
+if (is_readable($wrkfull) and is_executable($wrkfull) ) {
+    $wrkfolder_value=$wrkfull;
+    $is_readablefolder=true;
+} else {
+    $wrkfolder_value="<span style='color:red'>".$wrkfull." <b>".$msgstr["notreadable"]."</b></span>";
+    $is_readablefolder=false;
+}
 
 /* --- The confirmcount determines the progress of the action ---*/
 if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
@@ -126,15 +136,21 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         <tr>
             <td><?php echo $dbmsg_label;?></td><td><?php echo $dbmsg_value;?></td>
         </tr>
-        <tr><td align=center colspan=2>
+         <tr>
+            <td><?php echo $wrkfolder_label;?></td><td><?php echo $wrkfolder_value;?></td>
+        </tr>
+       <tr><td align=center colspan=2>
                 <input type=button value='<?php echo $msgstr["uploadfile"];?>' onclick=Upload()></td>
     </table>
     </form>
     <?php
+    // Do not continue if the folder is not readable
+    if (!$is_readablefolder) die;
     // Get the list of iso files in the working folder
     clearstatcache();
     $file_array = Array();
     $handle = opendir($wrkfull);
+    $numisofiles=0;
 	while (($file = readdir($handle))!== false) {
         $info = pathinfo($file);
         if (is_file($wrkfull."/".$file) and isset($info["extension"])and $info["extension"] == "iso") {
@@ -144,6 +160,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
                 echo "<div>".$msgstr["archivo"]." ".$file." ".$msgstr["deleted"]."</div>";
             } else {
                 $file_array[]=$file;
+                $numisofiles++;
             }
         }
 	}
@@ -177,7 +194,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
             ?>
         </form>
 
-        <h4><?php echo $msgstr["seleccionar"]." ".$msgstr["cnv_iso"]?> </h4>
+        <h3><?php echo $msgstr["seleccionar"]." ".$msgstr["cnv_iso"]?> </h3>
         <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=4>
         <tr>
             <th><?php echo $msgstr["archivo"]?> </th>
@@ -200,6 +217,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         <?php
         }
         echo "</table>";
+        echo "<br><div>".$numisofiles." ".$msgstr["filesfound"]." (".$msgstr["extension"]." = iso)"."</div>";
     }
 } else if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
     // Check that the lineends fit with the current OS (mx requirement)
@@ -209,7 +227,11 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     <table  cellspacing=5>
         <tr>
             <td><?php echo $dbmsg_label;?></td><td><?php echo $dbmsg_value;?></td>
-        </tr><tr>
+        </tr>
+         <tr>
+            <td><?php echo $wrkfolder_label;?></td><td><?php echo $wrkfolder_value;?></td>
+        </tr>
+        <tr>
             <td><?php echo $file_label;?></td><td><?php echo $file_value;?></td>
         </tr>
     </table><br>
@@ -244,12 +266,16 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     <?php
 } else {  /* - Last screen: execution and result -*/
     $file_label=$msgstr["archivo"].": ";
-    $file_value=$wrk."/".$isofile;
+    $file_value=$isofile;
     ?>
     <table  cellspacing=5>
         <tr>
             <td><?php echo $dbmsg_label;?></td><td><?php echo $dbmsg_value;?></td>
-        </tr><tr>
+        </tr>
+         <tr>
+            <td><?php echo $wrkfolder_label;?></td><td><?php echo $wrkfolder_value;?></td>
+        </tr>
+        <tr>
             <td><?php echo $file_label;?></td><td><?php echo $file_value;?></td>
         </tr>
     </table><hr>
