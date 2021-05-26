@@ -11,6 +11,7 @@
 20210421 fho4abcd Commented mxdbread (dangerous and currently not working correct)
 20210421 fho4abcd Improved text Import ISO (no longer with MX in the title)
 20210516 fho4abcd Add function upload file
+20210526 fho4abcd function for convert replaced. Update convert menu text (translated text) add option to convert language
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -323,16 +324,36 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/addloanobject.php"
 			document.admin.target=""
 			break;
-		case "convertutf8":    //Marino convert
+		case "convertdbutf":
 			document.admin.base.value=base
+			document.admin.targetcode.value="UTF-8"
+			document.admin.function.value="database"
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/convert_utf8.php"
+			document.admin.action="../utilities/convert_txt.php"
 			document.admin.target=""
 			break;
-		case "convertansi":    //Marino convert
+		case "convertdbiso":
 			document.admin.base.value=base
+			document.admin.targetcode.value="ISO-8859-1"
+			document.admin.function.value="database"
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/convert_ansi.php"
+			document.admin.action="../utilities/convert_txt.php"
+			document.admin.target=""
+			break;
+		case "convertlangutf":
+			document.admin.base.value=base
+			document.admin.targetcode.value="UTF-8"
+			document.admin.function.value="language"
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/convert_txt.php"
+			document.admin.target=""
+			break;
+		case "convertlangiso":
+			document.admin.base.value=base
+			document.admin.targetcode.value="ISO-8859-1"
+			document.admin.function.value="language"
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/convert_txt.php"
 			document.admin.target=""
 			break;
 		case "barcode":    //Marino barcode search
@@ -373,7 +394,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 <nav>
 
   <ul class="nav">
-  <li><a href="#">Db Maintenance</a>
+  <li><a href="#"><?php echo $msgstr["dbmaintenance"]?></a>
       <ul>
         <li><a href='javascript:EnviarFormaMNT("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("unlock","<?php echo $msgstr["mnt_unlock"]?>")'><?php echo $msgstr["mnt_unlock"]?></a></li>
@@ -399,14 +420,14 @@ function EnviarFormaMNT(Opcion,Mensaje){
   		</li>
   	</ul>
   </li>
-  <li><a href="#">Backup/Restore</a>
+  <li><a href="#"><?php echo $msgstr["dbbackrest"]?></a>
    	<ul>
    		<li><a href='javascript:EnviarFormaMNT("dbcp","<?php echo $msgstr["db_cp"]?>")'><?php echo $msgstr["db_cp"]?></a></li>
    		<li><a href='javascript:EnviarFormaMNT("dbrestore","<?php echo $msgstr["db_restore"]?>")'><?php echo $msgstr["db_restore"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("cleandb","<?php echo "Clean DB"?>")'><?php echo "Clean/Compact DB"?></a></li>
 	</ul>
   </li>
-  <li><a href="#">Copies/Loan objects</a>
+  <li><a href="#"><?php echo $msgstr["copyloanobjects"]?></a>
   	<ul>
   		<li><a href='javascript:EnviarFormaMNT("linkcopies","<?php echo $msgstr["linkcopies"]?>")'><?php echo $msgstr["linkcopies"]?></a></li>
 		<?php if ($arrHttp["base"]!="copies" and $arrHttp["base"]!="providers" and $arrHttp["base"]!="suggestions" and $arrHttp["base"]!="purchaseorder" and $arrHttp["base"]!="users" and $arrHttp["base"]!="loanobjects" and $arrHttp["base"]!="trans" and $arrHttp["base"]!="suspml" and $arrHttp["base"]!="reserve" ) {
@@ -422,10 +443,13 @@ function EnviarFormaMNT(Opcion,Mensaje){
   	</ul>
   </li>
 
-  <li><a href="#">Convert UTF8 &lt;==&gt; ANSI</A>
+  <li><a href="#"><?php echo $msgstr["convert"];?> ISO &harr; UTF-8</A>
   	<ul>
-  		<li><a href='Javascript:EnviarFormaMNT("convertutf8","<?php echo "Convert ABCD to Unicode"?>")'><?php echo "Convert ABCD to Unicode"?></a></li>
-        <li><a href='Javascript:EnviarFormaMNT("convertansi","<?php echo "Convert ABCD to ANSI"?>")'><?php echo "Convert ABCD to ANSI"?></a></li>
+  		<li><a href='Javascript:EnviarFormaMNT("convertdbutf","<?php echo $msgstr["convert_txtutf"]?>")'><?php echo $msgstr["convert_txtutf"]?></a></li>
+  		<li><a href='Javascript:EnviarFormaMNT("convertlangutf","<?php echo $msgstr["convert_langutf"]?>")'><?php echo $msgstr["convert_langutf"]?></a></li>
+        <li><a href='#'>&nbsp;</a></li>
+        <li><a href='Javascript:EnviarFormaMNT("convertdbiso","<?php echo $msgstr["convert_txtiso"]?>")'><?php echo $msgstr["convert_txtiso"]?></a></li>
+  		<li><a href='Javascript:EnviarFormaMNT("convertlangiso","<?php echo $msgstr["convert_langiso"]?>")'><?php echo $msgstr["convert_langiso"]?></a></li>
     </ul>
   </li>
 <?php
@@ -436,7 +460,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
     ){
 
 ?>
-  <li><a href="#">Explore</A>
+  <li><a href="#"><?php echo $msgstr["explore"];?></A>
     <ul>
 
     	<li><a href='Javascript:EnviarFormaMNT("dirtree","<?php echo $msgstr["expbases"]?>")'><?php echo $msgstr["expbases"]?></a></li>
@@ -463,6 +487,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
 <input type=hidden name=backtoscript value="/central/dbadmin/menu_mantenimiento.php">
 <input type=hidden name=inframe value=0>
 <input type=hidden name=tipo>
+<input type=hidden name=function>
+<input type=hidden name=targetcode>
 <input type=hidden name=activa value=<?php echo $_REQUEST["base"]?>>
 <input type=hidden name=lang value=<?php echo $_SESSION["lang"]?>>
 </form>
