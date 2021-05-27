@@ -9,7 +9,7 @@
 ** This script tries to set the best guessed encoding. But user may override this
 ** Note that it is possible to copy/past UTF-8 text into ISO:
 **  the system changes this to &1234; (for amharic which is clearly not possible in ISO)
-**  the system changes this to ISO (for traduções which is possible in ISO)
+**  the system changes this to ISO (for traduÃ§Ãµes which is possible in ISO)
 */
 session_start();
 if (!isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) and !isset($_SESSION["permiso"]["CENTRAL_ALL"])){
@@ -40,7 +40,7 @@ $curstat["en"]="ISO-8859-1";
 $curstat["es"]="ISO-8859-1";
 $curstat["fr"]="ISO-8859-1";
 $curstat["pt"]="ISO-8859-1";
-$curstat["am"]="UTF-8";
+$curstat["am"]="utf-8";
 if ( isset($curstat[$lang]) ) {
     $selcharset=$curstat[$lang];
     $guessstatus="lang";
@@ -63,7 +63,9 @@ if ($guessstatus=="manual")   $guessed=$msgstr["manualset"];
 ?>
 <body>
 <script>
-function Enviar(){	document.forma1.submit()}
+function Enviar(){
+	document.forma1.submit()
+}
 function doReload(selectvalue){
     document.continuar.selcharset.value=selectvalue
 	document.continuar.submit();
@@ -118,7 +120,7 @@ if ($table==""){
         <tr><td><?php echo $msgstr["show"]." ".$table." in";?></td>
             <td><select name=selcharset  id="selcharset" onchange="doReload(this.value)">
                     <option value='ISO-8859-1' <?php echo $ichecked;?> >ISO-8859-1</option>
-                    <option value='UTF-8' <?php echo $uchecked;?> >UTF-8</option>
+                    <option value='utf-8' <?php echo $uchecked;?> >UTF-8</option>
                 </select>
             </td>
             <td style="color:blue"> <?php echo $guessed;?> </td>
