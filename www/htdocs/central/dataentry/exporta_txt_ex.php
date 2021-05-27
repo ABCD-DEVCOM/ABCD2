@@ -11,6 +11,7 @@
 2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
 2021-03-26 fho4abcd Button mxread: now with file and only for iso files
 2021-04-21 fho4abcd Show iso files with mx_show_iso + move action columns after file name column
+2021-05-27 fho4abcd Show always footer. Check permissions work folder. Translations
 */
 
 global $arrHttp;
@@ -379,68 +380,71 @@ if (isset($arrHttp["usemx"]) and $arrHttp["usemx"]=="on") {
 }
 echo "</table><br>";
 
-// Check the existence of the supplied folder
-if ( !file_exists($full_storein)){
-    echo "<div><font color=red>Folder <b>".$storein."</b> does not exists in <b>".$db_path."</b></font></div>";
-    echo "<a href='javascript:Regresar()'> Please enter a valid folder</a>";
+// Check the existence and permissions of the supplied folder
+clearstatcache();
+if ( PHP_OS_FAMILY=="Linux") {
+    if (is_executable($full_storein)) {
+        $isexec=true;
+    } else {
+        $isexec=false;
+    }
+} else {
+    $isexec=true; // Executable only for Linux
+}
+if (!is_writable($full_storein) or !$isexec ) {
+    echo "<div style='color:red'>".$full_storein." <b>".$msgstr["notreadable"]."</b></div>";
     die;
 }
-// check if supplied existing folder happens to be a regular file
-if ( is_file($full_storein)){
-    echo "<div><font color=red>Folder <b>".$storein."</b> is a file and NOT a folder in <b>".$db_path."</b></font></div>";
-    echo "<a href='javascript:Regresar()'> Please enter a valid folder</a>";
-    die;
-}
+
 // Check that seleccionados is not combined with MX
 if ( $seleccionados>0 and $usemx>0) {
-    echo "<div><font color=red><b>".$msgstr["selected_records"]."</b> is not supported by MX </b></font></div>";
-    echo "<a href='javascript:Regresar()'> Please enter a valid combination</a>";
+    echo "<div style='color:red'><b>".$msgstr["selected_records"]." </b>".$msgstr["mx_notsupport"]."</b></div>";
+    echo "<a href='javascript:Regresar()'>".$msgstr["entervalcomb"]."</a>";
     die;
 }
 // Check that mx is selected if Marc Leader is set
 if ( $marcleader>0 and $usemx==0) {
-    echo "<div><font color=red><b>".$msgstr["ft_ldr"]."</b> requires MX </b></font></div>";
-    echo "<a href='javascript:Regresar()'> Please enter a valid combination</a>";
+    echo "<div style='color:red'><b>".$msgstr["ft_ldr"]." </b>".$msgstr["mx_required"]."</b></div>";
+    echo "<a href='javascript:Regresar()'>".$msgstr["entervalcomb"]."</a>";
     die;
 }
 
 // Display Continue and Cancel in first activation of this script
 if (!isset($arrHttp["confirmar"]) or (isset($arrHttp["confirmar"]) and $arrHttp["confirmar"]!="OK")){
 	Confirmar();
-	die;
-}
-
-// This part will be excuted the second invocation. The busy symbol runs...
-// Remove the target file now: prevents downloading an old file if the process would fail
-$errors=DeleteFile($fullpath,0);
-if ( $errors>0) {
-    echo "<div><font color=red><b>Export ABORTED</b></font></div>";
-    echo "<div><h2><font color=red><b>Content of existing ".$fullpath."</b> is not modified !</font></h2></div>";
-    echo "<a href='javascript:Regresar()'> Cancel</a>";
-    die;
-}
-// Export the given range to file or to $data
-// The method depends on the checkbox of "usemx"
-if (isset($arrHttp["usemx"]) and $arrHttp["usemx"]=="on") {
-    $exportret=ExportarMX($fullpath);
-	if ($exportret==0 ) echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
 } else {
-    // Compute exported information.
-    // Show it in case of action Preview
-    $data=Exportar($Pft, $fullpath);
-    // Download the exported information in case of action Submit
-    if ($arrHttp["Accion"]=="S") {
-        GuardarArchivo($data,$fullpath);
+    // This part will be excuted the second invocation. The busy symbol runs...
+    // Remove the target file now: prevents downloading an old file if the process would fail
+    $errors=DeleteFile($fullpath,0);
+    if ( $errors>0) {
+        echo "<div><font color=red><b>Export ABORTED</b></font></div>";
+        echo "<div><h2><font color=red><b>Content of existing ".$fullpath."</b> is not modified !</font></h2></div>";
+        echo "<a href='javascript:Regresar()'> Cancel</a>";
+        die;
     }
-}
-?>
+    // Export the given range to file or to $data
+    // The method depends on the checkbox of "usemx"
+    if (isset($arrHttp["usemx"]) and $arrHttp["usemx"]=="on") {
+        $exportret=ExportarMX($fullpath);
+        if ($exportret==0 ) echo "<br><input type=button name=mxread value=\"".$msgstr["mx_dbread"]."\" onclick=ActivarMx()>";
+    } else {
+        // Compute exported information.
+        // Show it in case of action Preview
+        $data=Exportar($Pft, $fullpath);
+        // Download the exported information in case of action Submit
+        if ($arrHttp["Accion"]=="S") {
+            GuardarArchivo($data,$fullpath);
+        }
+    }
+    ?>
 
-</div>
-</div>
-<form name=download action="../utilities/download.php">
-<input type=hidden name=archivo value="<?php echo $filename ?>">
-</form>
+    </div>
+    </div>
+    <form name=download action="../utilities/download.php">
+    <input type=hidden name=archivo value="<?php echo $filename ?>">
+    </form>
 <?php
+}
 include("../common/footer.php");
 ?>
 </body>

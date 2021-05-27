@@ -6,6 +6,7 @@
 20210426 fho4abcd Check line endings
 20210516 fho4abcd Add upload button
 20210526 fho4abcd Detect non-executable working folder. Show number of found files
+20210527 fho4abcd bug repair: is_executable does not work for windows folders
 */
 global $arrHttp;
 set_time_limit(0);
@@ -107,9 +108,19 @@ $dbmsg_value=$arrHttp["dblongname"]." (".$base.") &rarr; ";
 $dbmsg_value.="<b><font color=darkred>".$msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</font></b>";
 $file_label=$msgstr["archivo"].": ";
 $file_value=$isofile;
-// Check if wrk is readable
 $wrkfolder_label=$msgstr["workfolder"].":";
-if (is_readable($wrkfull) and is_executable($wrkfull) ) {
+// Check if wrk is readable and writable. OS dependent
+clearstatcache();
+if ( PHP_OS_FAMILY=="Linux") {
+    if (is_executable($wrkfull)) {
+        $isexec=true;
+    } else {
+        $isexec=false;
+    }
+} else {
+    $isexec=true; // Executable always true for windows
+}
+if (is_writable($wrkfull) and is_readable($wrkfull) and $isexec ) {
     $wrkfolder_value=$wrkfull;
     $is_readablefolder=true;
 } else {
@@ -147,9 +158,9 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     // Do not continue if the folder is not readable
     if (!$is_readablefolder) die;
     // Get the list of iso files in the working folder
-    clearstatcache();
     $file_array = Array();
     $handle = opendir($wrkfull);
+    if ($handle===false) die;// to cope with unexpected situations
     $numisofiles=0;
 	while (($file = readdir($handle))!== false) {
         $info = pathinfo($file);
