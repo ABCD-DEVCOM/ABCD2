@@ -8,6 +8,7 @@
 20210317 fho4abcd Show correct heading and backbutton for second invocation (was not corect from menu_mantenimiento)
 20210409 fho4abcd Read actab,uctab,stw from .par file (no fixed files, equal to incremental update procedure)
 20210409          The stw file comes from tag STW (present in many .par files).
+20210527 fho4abcd Check existence and permissions uctab&actab. Translations
 */
 /**
  * @program:   ABCD - ABCD-Central
@@ -113,9 +114,9 @@ if (!file_exists($fullciparpath)){
 // The test button gives the mx_path to the test window
 // The show button gives the content of the parameter file
 $testbutton=
-'<a href="mx_test.php?mx_path='.$mx_path.'" target=testshow onclick=OpenWindow()>Test MX</a>';
+'<a href="mx_test.php?mx_path='.$mx_path.'" target=testshow onclick=OpenWindow()>'.$msgstr["test"].' MX</a>';
 $showbutton=
-'<a href="show_par_file.php?par_file='.$fullciparpath.'" target=testshow onclick=OpenWindow()>Show &lt;dbn&gt;.par</a>';
+'<a href="show_par_file.php?par_file='.$fullciparpath.'" target=testshow onclick=OpenWindow()>'.$msgstr["show"].' &lt;dbn&gt;.par</a>';
 
 if(isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
 if(!isset($fst)) { // The form sets the fst: the first action of this php
@@ -126,9 +127,9 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     <table cellspacing=5 align=center>
 	  <tr> <th colspan=3>
 		  <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-          Please adjust the following parameters and press 'START'
+          <?php echo $msgstr["adjustparms"];?>
           </th></tr>
-      <tr><td>Select FST </td>
+      <tr><td><?php echo $msgstr["select"];?> FST </td>
            <td>
     <?php
     echo "<select name='fst'>";
@@ -141,22 +142,23 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     echo "</select>"
     ?>
     </td><td></td></tr>
-    <tr> <td>Use /m parameter</td>
+    <tr> <td><?php echo $msgstr["useslashm"];?></td>
          <td><input type='checkbox' name='m'></td>
-         <td><font color=red>Warning: do not check this parameter if you<br>are using picklists with type DB in the FDT</font></td>
+         <td><font color=red><?php echo $msgstr["warnforslashm"];?></font></td>
     </tr>
-    <tr> <td>Show execution info</td>
+    <tr> <td><?php echo $msgstr["showexecinfo"];?></td>
          <td><input type='checkbox' name='tell'>
          <td><select name='tellnumber'>
-             <option value="10000000">Minimal</option>
-             <option value='1000'>every 1000 records</option>
-             <option value='100'>every &nbsp;100 records</option>
-             <option value='10'>every &nbsp;&nbsp;10 records</option>
-             <option value='1'>all records (!!)</option>
+             <option value="10000000"><?php echo $msgstr["minimal"];?></option>
+             <option value='1000'><?php echo $msgstr["every"];?> 1000 <?php echo $msgstr["records"];?></option>
+             <option value='100'><?php echo $msgstr["every"];?> &nbsp;100 <?php echo $msgstr["records"];?></option>
+             <option value='10'><?php echo $msgstr["every"];?> &nbsp;&nbsp;10 <?php echo $msgstr["records"];?></option>
+             <option value='1'><?php echo $msgstr["allrecords"];?></option>
         </select></td>
     </tr>
-    <tr> <td></td><td><input type='submit' value='START'></td>
-         <td><?php echo "$testbutton" ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "$showbutton" ?></td>
+    <tr><td></td>
+        <td><input type='submit' value='<?php echo $msgstr["ejecutar"];?>' title='<?php echo $msgstr["cg_execute"];?>'></td>
+        <td><?php echo "$testbutton" ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "$showbutton" ?></td>
     </tr></table></form>
 
 
@@ -197,7 +199,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         }
     }
     $parameters= "<br>";
-    $parameters.= "database: ".$bd."/data/".$base."<br>";
+    $parameters.= $msgstr["database"].": ".$bd."/data/".$base."<br>";
     $parameters.= "fst&nbsp;&nbsp;: @".$bd."/data/".$base.".fst<br>";
     $parameters.= "mx&nbsp;&nbsp;&nbsp;: $mx_path<br>";
     if ($stw  !="") $parameters.= "stw&nbsp;&nbsp;: @$stw<br>";
@@ -205,6 +207,22 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     if ($actab!="") $parameters.= "actab: $actab<br>";
     $parameters.= " &nbsp; ".$testbutton;
     $parameters.= " &nbsp; ".$showbutton."<br>";
+    // Check that actab and uctab exist (mx gives a bad warning or crashes)
+    $numerr=0;
+    if ($actab!="" and $actab!="ansi" ) {
+        if ( !is_readable($actab) ) {
+            echo "<div style='color:red'>".$actab." <b>".$msgstr["notreadable"]."</b></div>";
+            echo "<div>".$showbutton."</div>";
+            $numerr++;
+        }
+    }
+    if ($uctab!="" and $uctab!="ansi" ) {
+        if ( !is_readable($uctab) ) {
+            echo "<div style='color:red'>".$uctab." <b>".$msgstr["notreadable"]."</b></div>";
+            echo "<div>".$showbutton."</div>";
+            $numerr++;
+        }
+    }
 
     // Process /m parameter
     unset($m);
@@ -236,12 +254,12 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         $straux.=$output[$i]."<br>";
     }
     if($status==0) {
-        echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
-        echo ("<h3>Process Result: <br>Process Finished OK</h3>");
+        echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
+        echo ("<h3>".$msgstr["processok"]."</h3>");
         echo "$straux";
     } else {
-        echo "<font face=courier size=2>".$parameters."<br>Command line: $strINV<br></font><hr>";
-        echo ("<h3><font color='red'><br>Process NOT EXECUTED or FAILED</font></h3><hr>");
+        echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
+        echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3><hr>");
         echo "<font color='red'>".$straux."</font>";
    }
 }
