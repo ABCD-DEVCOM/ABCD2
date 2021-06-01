@@ -1,4 +1,3 @@
-
 ACQALL=Todos
 ACQDATABASES=Administração da base de dados  de aquisições
 ACQREPORTS=Relatórios de aquisições
@@ -15,7 +14,6 @@ BARCODE=Impressão de etiquetas e código de barras
 BIDDING=Processo de licitação
 CANCEL=Cancelar
 CAPTURE=Capturar registros de outras bases de dados
-CATALOGUING=Catalogação
 CIRCALL=Todos
 CIRCDATABASES=Administração de bases de dados
 CIRCFG=Configuração de circulação
@@ -73,6 +71,7 @@ RESETCN=Reiniciar número de controle de sugestões
 RESETLCN=Apagar último número de controle
 RESETLIN=Apagar último número de registro
 RETURN=Devolver
+SALA=Empréstimo de sala de leitura
 SAVE=Salvar
 SAVED=Salvo
 SAVEXPR=Salvar expressões de pesquisa
@@ -88,3 +87,4 @@ VALDEF=Criar/editar os valores default
 WORKSHEET=Planilhas de entrada de dados
 Z3950CAT=Catalogação através de Z39.50
 Z3950CONF=Configurar o cliente Z39.50
+
