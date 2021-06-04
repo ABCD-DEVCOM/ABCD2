@@ -1,3 +1,6 @@
+/*
+20210604 gascensio Added CruzarABCD
+*/
 accion=""
 
 function showhide(what,what2){
@@ -176,6 +179,19 @@ function CRUZARD(Prefijo,Termino,base){
 	document.buscar.prefijo.value=Prefijo
 	document.buscar.Sub_Expresion.value=Termino
 	document.buscar.submit()}
+
+function CruzarABCD(Termino,Prefijo){
+	document.buscar.Expresion.value=""
+	document.buscar.action="buscar_integrada.php"
+	//document.buscar.base.value=""
+	document.buscar.desde.value=1
+	document.buscar.count.value=25
+	document.buscar.resaltar.value="S"
+	document.buscar.Opcion.value="detalle"
+	document.buscar.prefijo.value=Prefijo
+	document.buscar.Sub_Expresion.value=Termino
+	document.buscar.submit()
+}
 
 //BUSQUEDA AVANZADA
 
