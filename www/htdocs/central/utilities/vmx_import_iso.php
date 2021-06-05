@@ -7,6 +7,7 @@
 20210516 fho4abcd Add upload button
 20210526 fho4abcd Detect non-executable working folder. Show number of found files
 20210527 fho4abcd bug repair: is_executable does not work for windows folders
+20210605 fh04abcd Remove isotag1=3000 from command to avoid creation of extra fields. Translations
 */
 global $arrHttp;
 set_time_limit(0);
@@ -263,12 +264,12 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         ?>
         <table cellspacing=5 align=center>
           <tr> <th colspan=3>
-              Please adjust the following parameters and press 'START'
+              <?php echo $msgstr["adjustparms"];?>
               </th>
           </tr><tr>
               <td><?php echo $msgstr["deldb"]?></td>
               <td><input type=checkbox name=delrec></td>
-              <td><font color=blue>Unchecked = Append records</font></td>
+              <td><font color=blue><?php echo $msgstr["unch_append"]?></font></td>
           </tr><tr>
               <td></td><td><input type=button value='START' onclick=Confirmar()></td><td></td>
          </tr>       
@@ -297,19 +298,18 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
 	else
 		$accion=" append";
 
-    $strINV=$mx_path." iso=$fullisoname $accion=".$db_path.$base."/data/".$base." isotag1=3000 -all now 2>&1";
+    $strINV=$mx_path." iso=$fullisoname $accion=".$db_path.$base."/data/".$base."  -all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){
         $straux.=$output[$i]."<br>";
     }
+    echo "<br>".$msgstr["commandline"].": $strINV<br>";
     if($status==0) {
-        echo "<br>Command line: $strINV<br>";
-        echo ("<h3>Import process result: OK</h3>");
+        echo ("<h3>".$msgstr["import_process_ok"]."</h3>");
         echo "$straux";
     } else {
-        echo "<br>Command line: $strINV<br>";
-        echo ("<h3><font color='red'><br>Import process NOT EXECUTED or FAILED</font></h3>");
+        echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3>");
         echo "<font color='red'>".$straux."</font>";
     }
     get_dbinfo();

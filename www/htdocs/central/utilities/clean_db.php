@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210414 fho4abcd Rewrite(helper code fragment,add confirm, correct error checks,html code..)
+20210605 fho4abcd Remove isotag1. Improves operation for standard db's.Translations
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -13,6 +14,7 @@ $lang=$_SESSION["lang"];
 include("../common/header.php");
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
+include("../lang/soporte.php");
 //====================== Functions =================
 // Function to show a "confirm" and "cancel" button. Actions by corresponding script
 function Confirmar(){
@@ -84,7 +86,7 @@ if (!isset($arrHttp["confirmcount"])) {
     <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
           style="visibility:hidden;position:absolute;top:30%;left:45%;border:2px solid;"/>
     <div align=center>
-        <?php echo "Current status:<br>".$initmsg?><br>
+        <?php echo $msgstr["currentstatus"].":<br>".$initmsg?><br>
     </div>
     <form name=continuar  method=post >
         <input type=hidden name=confirmcount value=0>
@@ -104,43 +106,41 @@ if (!isset($arrHttp["confirmcount"])) {
     if (file_exists($fullisoname)) {
         unlink($fullisoname);
     }
-    $strINV=$mx_path." ".$bd_mst." iso=$fullisoname outisotag1=3000 -all now 2>&1";
+    $strINV=$mx_path." ".$bd_mst." iso=$fullisoname  -all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){
         $straux.=$output[$i]."<br>";
     }
+    echo "<hr>".$msgstr["commandline"].": $strINV<br>";
     if($status==0) {
-        echo "<hr>Command line: $strINV<br>";
-        echo ("<h3>Export process result: OK</h3>");
+        echo ("<h3>".$msgstr["export_process_ok"]."</h3>");
         echo "$straux";
     } else {
-        echo "<hr>Command line: $strINV<br>";
-        echo ("<h3><font color='red'><br>Export process NOT EXECUTED or FAILED</font></h3>");
+        echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3>");
         echo "<font color='red'>".$straux."</font>";
     }
     if ( file_exists($fullisoname)) {
-        echo "ISO file $fullisoname saved.<br>";
+        echo $msgstr["saved"]." ".$msgstr["cnv_iso"]." $fullisoname<br><br><br>";
     }
 
     //importing iso
-    $strINV=$mx_path." iso=$fullisoname create=".$db_path.$base."/data/".$base." isotag1=3000 -all now 2>&1";
+    $strINV=$mx_path." iso=$fullisoname create=".$db_path.$base."/data/".$base."  -all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){
         $straux.=$output[$i]."<br>";
     }
+    echo "<br>".$msgstr["commandline"].": $strINV<br>";
     if($status==0) {
-        echo "<br>Command line: $strINV<br>";
-        echo ("<h3>Import process result: OK</h3>");
+        echo ("<h3>".$msgstr["import_process_ok"]."</h3>");
         echo "$straux";
     } else {
-        echo "<br>Command line: $strINV<br>";
-        echo ("<h3><font color='red'><br>Import process NOT EXECUTED or FAILED</font></h3>");
+        echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3>");
         echo "<font color='red'>".$straux."</font>";
     }
     if (file_exists($fullisoname)) {
-        if ( unlink($fullisoname)==true) echo "ISO file $fullisoname deleted";
+        if ( unlink($fullisoname)==true) echo $msgstr["eliminados"]." ".$msgstr["cnv_iso"]." $fullisoname";
     }
     $aftersize=number_format(filesize($bd_mst_full),0,',','.');
     get_dbinfo();// declared in "../common/inc_get-dbinfo.php"

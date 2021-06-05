@@ -12,6 +12,7 @@
 2021-03-26 fho4abcd Button mxread: now with file and only for iso files
 2021-04-21 fho4abcd Show iso files with mx_show_iso + move action columns after file name column
 2021-05-27 fho4abcd Show always footer. Check permissions work folder. Translations
+2021-06-05 fho4abcd Export without marc without isotag. Export with marc with iso=marc + isotag.
 */
 
 global $arrHttp;
@@ -208,13 +209,19 @@ function Exportar($Pft, $fullpath){
 function ExportarMX( $fullpath){
     global $mx_path,$db_path,$arrHttp,$msgstr;
     $strINV = $mx_path." db=".$db_path.$arrHttp["base"]."/data/".$arrHttp["base"];
-    $strINV.= " iso=".$fullpath;
+    $strINV.= " iso=";
+    // Enter the marc special
+    if (isset($arrHttp["usemarcformat"]) and $arrHttp["usemarcformat"]=="on") {
+        $strINV.="marc=";
+    }
+    $strINV.= $fullpath;
+
     //$strINV.= " cipar=".$db_path."par/".$arrHttp["base"].".par";
     // Enter the range
     if (isset($arrHttp["Mfn"]) and trim($arrHttp["Mfn"]) !="") {
         $strINV.=" from=".$arrHttp["Mfn"]." to=".$arrHttp["to"];
     }
-    // Enter the marc special
+    // Enter the marc special for the tag
     if (isset($arrHttp["usemarcformat"]) and $arrHttp["usemarcformat"]=="on") {
         $strINV.=" outisotag1=3000";
     }
@@ -224,7 +231,7 @@ function ExportarMX( $fullpath){
         $strINV.= " bool=\"".$expresion."\"";
     }
     $strINV.= " -all now 2>&1";
-    echo "Command line: ".$strINV."<br>";
+    echo $msgstr["commandline"].": ".$strINV."<br>";
 
     // Execute the command
     exec($strINV, $output,$status);
@@ -251,7 +258,7 @@ function ExportarMX( $fullpath){
         <?php
         if ( $straux != "") echo "<hr>".$straux;
     } else {
-        echo ("<h3><font color='red'><br>Process NOT EXECUTED or FAILED</font></h3><hr>");
+        echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3>");
         echo "<font color='red'>".$straux."</font>";
         return 1;
    }
