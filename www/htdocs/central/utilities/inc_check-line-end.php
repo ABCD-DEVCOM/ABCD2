@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210426 fho4abcd Created
+20210605 fho4abcd Extra check if there is no lineend. (was an error, now only a remark)
 */
 
 /*--------------------------------------------------------------
@@ -41,10 +42,13 @@ function check_line_end($filename) {
     if (strcmp(PHP_EOL,"\r")==0)   $oslinend="CR";
     if (strcmp(PHP_EOL,"\n")==0)   $oslinend="LF";
     if (strcmp(PHP_EOL,$actlinend)==0) {
-        echo "Line endings of file $filename: $strlinend &rarr; OK";
+        echo $msgstr["lineendsof"]." $filename: $strlinend &rarr; ".$msgstr["isok"];
+        return 0;
+    } else if ( strcmp($actlinend,"")==0) {
+        echo "<font color=blue>".$msgstr["error"].": ".$msgstr["lineendsof"]." $filename: <b>$strlinend &rarr; Show MIGHT fail </b></font>";
         return 0;
     } else {
-        echo "<font color=red>".$msgstr["fatal"].": Line endings of file $filename: <b>$strlinend</b> &rarr; Please correct to <b>$oslinend</b></font>";
+        echo "<font color=red>".$msgstr["fatal"].": ".$msgstr["lineendsof"]." $filename: <b>$strlinend</b> &rarr; Please correct to <b>$oslinend</b></font>";
         return 2;
     }
  return $retval;
