@@ -21,6 +21,7 @@
  * AUTHOR   Fred Hommersom
  * HISTORY:
  *      2021-06-04:(fho) Initial version
+ *      2021-06-08:(fho) print feedback to stdout
  *_____________________________________________________________________
  * Call tree    : main
  *              :   processFile
@@ -42,7 +43,7 @@
 #include <ctype.h>
 #include <errno.h>
 
-#define VERSION "1.0"
+#define VERSION "1.1"
 #define isStrNull(str) (str==NULL || (int)strlen(str) == 0)
 
 #ifdef __linux__ 
@@ -85,7 +86,6 @@ static const unsigned char  AscMax         = '\x7F';   /* Maximum standard ASCII
 static const int            MaxDeEntries   = 1000;     /* Labels have 3 positions (digits+letters) */ 
 
 static const unsigned char* INTERNALERR    = "***__Internal_Error__:"; /* standard text for arraylimits etc */
-static const unsigned char* ISODelimiter   = "#";                      /* Field & record separator in the ISO file */
 
 /* items available with actual values for all modules of this file */
 static int   Notsplit       = 1;        /* <=0 : do not split record, 1=split record in lines of 80 characters*/
@@ -257,7 +257,7 @@ int main( int argc, char *argv[] )
         }
     }
     /*
-    ** Check parameters : convert is optional with values n,i,w,iw
+    ** Check parameters : terminator is optional with values hash and norm
     */
     if ( !isStrNull(sterminator) ) {
         if ( strcmp(sterminator,"hash")==0) {
@@ -327,22 +327,24 @@ int main( int argc, char *argv[] )
     /*
     ** Print the result of the input parameter processing
     */
-    if(Convert==0) sconvert="none";
-    if(Convert==1) sconvert="ISO-8859-1";
-    if(Convert==2) sconvert="Windows-1252 (delta)";
-    if(Convert>=3) sconvert="ISO-8859-1 + Windows-1252 (delta)";
-    if(Terminator==0) sterminator="Hash (#)";
-    if(Terminator>=1) sterminator="Control characters (<RS>/<GS>)";
-    fprintf(stderr, "-i: ISO-2709 file to be converted will be read from : '%s'\n", infile);
-    fprintf(stderr, "-o: Converted file will be written to               : '%s'\n", outfile);
-    fprintf(stderr, "-c: Conversions                                     : '%s'\n", sconvert);
-    fprintf(stderr, "-t: Terminators                                     : '%s'\n", sterminator);
-    if ( Notsplit <= 0 ) {
-        fprintf(stderr, "-n: ISO records are written as single line\n");
-    } else {
-        fprintf(stderr, "-n: ISO records are split into lines of 80 characters\n");
+    if(Feedback>0) {
+        if(Convert==0) sconvert="none";
+        if(Convert==1) sconvert="ISO-8859-1";
+        if(Convert==2) sconvert="Windows-1252 (delta)";
+        if(Convert>=3) sconvert="ISO-8859-1 + Windows-1252 (delta)";
+        if(Terminator==0) sterminator="Hash (#)";
+        if(Terminator>=1) sterminator="Control characters (<RS>/<GS>)";
+        fprintf(stdout, "-i: ISO-2709 file to be converted will be read from : '%s'\n", infile);
+        fprintf(stdout, "-o: Converted file will be written to               : '%s'\n", outfile);
+        fprintf(stdout, "-c: Conversions                                     : '%s'\n", sconvert);
+        fprintf(stdout, "-t: Terminators                                     : '%s'\n", sterminator);
+        if ( Notsplit <= 0 ) {
+            fprintf(stdout, "-n: ISO records are written as single line\n");
+        } else {
+            fprintf(stdout, "-n: ISO records are split into lines of 80 characters\n");
+        }
+        fprintf(stdout, "-f: Feedback level                                  : '%d'\n\n", Feedback);
     }
-    fprintf(stderr, "-f: Feedback level                                  : '%d'\n", Feedback);
 
     /*
     ** Open the input file
@@ -905,38 +907,38 @@ void q00Help( int helptype )
 */ 
 {
     if ( helptype == 0 ) {
-        fprintf(stderr, "*** Run this program with option -h or -H to show usage information *** \n");
+        fprintf(stdout, "*** Run this program with option -h or -H to show usage information *** \n");
     }
     else if ( helptype == 1 ) {
-        fprintf(stderr, "Version %s, compiled on %s, %s\n", VERSION, __DATE__,__TIME__);
+        fprintf(stdout, "Version %s, compiled on %s, %s\n", VERSION, __DATE__,__TIME__);
     }
     else {
-        fprintf(stderr, "\
+        fprintf(stdout, "\
 Function: This program converts a ISO-2709 file encoded in ISO-8859-1 into an ISO-2709 file encoded in UTF-8.\n\
 Commandline options:\n\
-          -i <iso_file_in_iso-8859-1> -o <iso_file_in_utf-8>\n\
-          [-c <conversion>] [-f <level>] [-t <terminator> [-n] [-v] [-h]\n\
+          -i 'iso_file_in_iso-8859-1' -o 'iso_file_in_utf-8'\n\
+          [-c 'conversion'] [-f 'level'] [-t 'terminator' [-n] [-v] [-h]\n\
   options:\n\
    -c - Conversion directive. Default=iw\n\
-        - n  = no conversion,\n\
-        - i  = convert ISO8859-1\n\
-        - w  = convert Windows-1252 delta\n\
-        - iw = convert ISO8859-1 + Windows-1252 delta\n\
+   ------ n  = no conversion,\n\
+   ------ i  = convert ISO8859-1\n\
+   ------ w  = convert Windows-1252 delta\n\
+   ------ iw = convert ISO8859-1 + Windows-1252 delta\n\
    -f - Feedback level directive. default=0 \n\
-        - 0  = no additional feedback.\n\
-        - 1  = print leader of first record\n\
-        - 2  = print modfied fields\n\
-        - 3  = print leaders + modified fields \n\
+   ------ 0  = no additional feedback.\n\
+   ------ 1  = print leader of first record\n\
+   ------ 2  = print modfied fields\n\
+   ------ 3  = print leaders + modified fields \n\
    -i - Path to csv inputfile to be converted to ISO-2709.\n\
    -n - Do not split isorecord into lines of 80 characters. Default is split (required by import)\n\
    -o - Path to iso outputfile.\n\
    -t - Terminator indicator for the output file\n\
-        - hash = Field and record terminator the # sign (default)\n\
-        - norm = Conform ISO-2709: Field terminator=IS2(RS). Record terminator=IS3(GS)\n\
+   ------ hash = Field and record terminator the # sign (default)\n\
+   ------ norm = Conform ISO-2709: Field terminator=IS2(RS). Record terminator=IS3(GS)\n\
    -v - version information\n\
    -h - usage/function information (this message)\n\
-Examples: ./isofile_iso_to_utf -i mydownload.iso -o myupload.iso\n\
-          ./isofile_iso_to_utf -i mydownload.iso -o myupload.iso  -n -t norm -f 3\n\
+Example 1: ./isofile_iso_to_utf -i mydownload.iso -o myupload.iso\n\
+Example 2: ./isofile_iso_to_utf -i mydownload.iso -o myupload.iso  -n -t norm -f 3\n\
 "); 
     }
     
