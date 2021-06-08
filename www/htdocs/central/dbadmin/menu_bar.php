@@ -12,6 +12,7 @@
 20210421 fho4abcd Improved text Import ISO (no longer with MX in the title)
 20210516 fho4abcd Add function upload file
 20210526 fho4abcd function for convert replaced. Update convert menu text (translated text) add option to convert language
+20210607 fho4abcd Add function to convert an iso to utf-8
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -356,6 +357,12 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/convert_txt.php"
 			document.admin.target=""
 			break;
+		case "convertiso2utf":    //convert ISO
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/cnv_iso_2_utf.php"
+			document.admin.target=""
+			break;
 		case "barcode":    //Marino barcode search
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -446,6 +453,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
   <li><a href="#"><?php echo $msgstr["convert"];?> ISO &harr; UTF-8</A>
   	<ul>
   		<li><a href='Javascript:EnviarFormaMNT("convertdbutf","<?php echo $msgstr["convert_txtutf"]?>")'><?php echo $msgstr["convert_txtutf"]?></a></li>
+  		<li><a href='Javascript:EnviarFormaMNT("convertiso2utf","<?php echo $msgstr["cnv_iso2utf"]?>")'><?php echo $msgstr["cnv_iso2utf"]?></a></li>
   		<li><a href='Javascript:EnviarFormaMNT("convertlangutf","<?php echo $msgstr["convert_langutf"]?>")'><?php echo $msgstr["convert_langutf"]?></a></li>
         <li><a href='#'>&nbsp;</a></li>
         <li><a href='Javascript:EnviarFormaMNT("convertdbiso","<?php echo $msgstr["convert_txtiso"]?>")'><?php echo $msgstr["convert_txtiso"]?></a></li>
