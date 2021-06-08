@@ -39,10 +39,14 @@ include("../lang/dbadmin.php");
 
 include("../lang/admin.php");
 include("../lang/prestamo.php");
-if (!isset($arrHttp["bymfn"])) {	unset($_SESSION["Browse_Expresion"]);}else{
+if (!isset($arrHttp["bymfn"])) {
+	unset($_SESSION["Browse_Expresion"]);
+}else{
 	if (isset($arrHttp["Expresion"])){
 		$_SESSION["Browse_Expresion"] = $arrHttp["Expresion"];
-	}else{		if (isset($_SESSION["Browse_Expresion"]))  $arrHttp["Expresion"]=$_SESSION["Browse_Expresion"];	}
+	}else{
+		if (isset($_SESSION["Browse_Expresion"]))  $arrHttp["Expresion"]=$_SESSION["Browse_Expresion"];
+	}
 }
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
@@ -142,12 +146,14 @@ include("../common/header.php");
 <script>
 xEliminar="";
 Mfn_eliminar=0;
-function  ShowDeleted(){	if (document.forma1.showdeleted.checked)
+function  ShowDeleted(){
+	if (document.forma1.showdeleted.checked)
 		document.browse.showdeleted.value="yes"
 	else
 		document.browse.showdeleted.value="no"
 	document.browse.from.value=1
-	document.browse.submit()}
+	document.browse.submit()
+}
 function Browse(){
 	if (Indices=="Y") document.browse.Expresion.value=""
 	document.browse.bymfn.value="Y"
@@ -243,8 +249,10 @@ function Eliminar(Mfn){
 	}
 }
 
-function Mostrar(Mfn){	msgwin=window.open("show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
-	msgwin.focus()}
+function Mostrar(Mfn){
+	msgwin=window.open("show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
+	msgwin.focus()
+}
 </script>
 <?php
 echo "<body>";
@@ -417,12 +425,12 @@ echo "			</table>";
 					</a>
 					<a href="javascript:EjecutarBusqueda('next')" class="singleButton eraseButton">
 						<span class="sb_rb">&#160;</span>
-						&#187; <?php echo $msgstr["next"] ?>
+						 <?php echo $msgstr["next"] ?> &#187;
 						<span class="sb_rb">&#160;</span>
 					</a>
 					<a href="javascript:EjecutarBusqueda('last')" class="singleButton eraseButton">
 						<span class="sb_rb">&#160;</span>
-						&#171; <?php echo $msgstr["last"]?>
+						 <?php echo $msgstr["last"]?> &#187;
 						<span class="sb_rb">&#160;</span>
 					</a>
 					<div class="spacer">&#160;</div>
