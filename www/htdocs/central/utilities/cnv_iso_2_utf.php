@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210607 fho4abcd Created new (from vmx_import_iso)
+20210609 fho4abcd Added explanation message+ bug in confirmcount
 */
 global $arrHttp;
 set_time_limit(0);
@@ -108,7 +109,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php 
-        echo $msgstr["maintenance"]." &rarr; ".$msgstr["cnv_export"]."/".$msgstr["cnv_import"].": ".$arrHttp["base"];
+        echo $msgstr["maintenance"]." &rarr; ISO&harr;UTF-8 &rarr;".$convertisomsg;
 ?>
 	</div>
 	<div class="actions">
@@ -125,6 +126,10 @@ if ($inframe!=1) include "../common/institutional_info.php";
 <div class="middle form">
     <div class="formContent">
     <div align=center ><h4><?php echo $convertisomsg?></h4></div>
+    <?php if ($confirmcount==0) { ?>
+    <div align=center style='color:blue;'><?php echo $msgstr["isodef"];?><br><br>
+                                          <?php echo $msgstr["isodescnvscript"];?></div><br>
+    <?php } ?>
     <div align=center>
 <?php
 //==================
@@ -199,7 +204,7 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
         </table>
     </form>
     <?php
-} else {  /* - Last screen: execution and result -*/
+} else if($confirmcount>1){  /* - Last screen: execution and result -*/
     $file_label=$msgstr["archivo"].": ";
     $file_value=$isofile;
     ?>
