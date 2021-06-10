@@ -6,6 +6,7 @@
 20210402 fho4abcd Code added to allow self-signed certificates for internal server calls
 20210507 fho4abcd Improved logging:show login (without password), show cisisver, show wxis_error, time in 24 hour format
 20210507 fho4abcd Activated workaround to cope with mixed cisis versions
+20210610 fho4abcd Removed workaround
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 unset($contenido);  // This array will get the text of the result
@@ -60,14 +61,6 @@ if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]
     }
 }
 
-// next clause to make sure password is checked with ANSI-database acces
-// This is a workaround that can be removed if other code is sanitized:
-// Example: remove hidden login action while accessing a database with different cisis_ver
-IF ($actual_db == "access" ) //OR $actual_db== "loanobjects" OR $actual_db= "trans")
-{
-	$wxisUrl=$server_url."/cgi-bin/ansi/".$wxis_exec;
-	$cisis_ver="";
-}
 
 if (isset($wxisUrl) and $wxisUrl!=""){  //POST method 
     $query.="&path_db=".$db_path;
@@ -171,7 +164,11 @@ if (is_dir($db_path."log") ){
         // do not dump credentials info for login.xis
         $out.="credentials_hidden_in_log\t";
     }
-    $out.="cisis_ver=".$cisis_ver;
+    if (isset($cisis_ver) ){
+        $out.="cisis_ver=".$cisis_ver;
+    } else {
+        $out.="cisis_ver=not_set";
+    }
     if ($err_wxis!="" ) { // Show wxis error reduced to single line
         $out_err_wxis=str_replace("<br>",".",$err_wxis);
         $out_err_wxis=str_replace("\r","",$out_err_wxis);

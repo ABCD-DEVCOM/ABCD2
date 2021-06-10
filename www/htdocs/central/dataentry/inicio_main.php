@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-03 fho4abcd Replaced header code by standard include
 2021-04-21 fho4abcd Do not crash if emergency user logs in: allows update of databases by emergency user
+2021-06-10 fho4abcd Remove undesired login code
 */
 //error_reporting(E_ALL);
 session_start();
@@ -30,20 +31,8 @@ include ("../lang/admin.php");
 include ("../lang/soporte.php");
 include ("../lang/lang.php");
 
-
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-//echo "<pre>";print_r($_SESSION);echo "</pre>";
-//die;
 if (isset($arrHttp["newindow"]))
 	$_SESSION["newindow"]="Y";
-
-
-
-if (isset($_SESSION["login"])) $arrHttp["login"]=$_SESSION["login"];
-//else
-//	$_SESSION["login"]=$
-if (isset($_SESSION["password"])) $arrHttp["password"]=$_SESSION["password"];
-if (isset($_SESSION["permiso"])) $arrHttp["startas"]=$_SESSION["permiso"];
 
 function LeerRegistro() {
    global $llamada, $valortag,$maxmfn,$arrHttp,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl;
@@ -107,18 +96,6 @@ if (isset($arrHttp["base"])){
     foreach ($Permiso as $key=>$value){    	if (substr($key,0,3)=="db_"){    		$bases=substr($key,3);
     		break;    	}    }
 	$arrHttp["base"]=$bases;
-	$arrHttp["cipar"]=$arrHttp["base"].".par";
-	$NombreBase="";
-	$arrHttp["Opcion"]="STATUS";
-	$arrHttp["IsisScript"]="control.xis";
-	$llave=LeerRegistro();
-	$stat=explode('|',$llave);
-	if (isset($stat[2])) {
-        $llave=substr($stat[2],7);
-    } else {
-        // if the user is not found (emergency user) set ridiculous value
-        $llave="r1dicul0uS";
-    }
 	if (!isset($bdright)) $bdright="";
 	if (!isset($db_copies)) $db_copies="";
 	if (!isset($bddesc)) $bddesc="";

@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-20 guilda Error when searching due to quoting
 2021-04-23 fho4abcd Line endings,body tag
+2021-06-10 fho4abcd Remove password argument
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -545,7 +546,6 @@ if ($arrHttp["Opcion"]=="ver" or $arrHttp["Opcion"]=="cancelar" or $arrHttp["Opc
 }
 
 $arrHttp["login"]=$_SESSION["login"];
-$arrHttp["password"]=$_SESSION["password"];
 
 
 $arrHttp["Notificacion"]="N";
@@ -608,7 +608,6 @@ $base =$arrHttp["base"];
 $cipar =$arrHttp["cipar"];
 if (isset($arrHttp["Mfn"]))$Mfn=$arrHttp["Mfn"];
 $login=$arrHttp["login"];
-$password=$arrHttp["password"];
 if (!isset($arrHttp["ver"])) $arrHttp["ver"]="";
 if ($arrHttp["ver"]=="S") {
 
@@ -790,7 +789,7 @@ switch ($arrHttp["Opcion"]) {
 	        	if ($arrHttp["Formato"]!=""){
 	        		echo "<table width=100%><td width=10></td><td><font size+1>$registro.</td></table>";
 	        	}else{
-	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 	        		echo $arrHttp["Opcion"]." ".$clave_proteccion;
             		$ver=true;
             		if (isset($arrHttp["wks"])){
@@ -832,7 +831,7 @@ switch ($arrHttp["Opcion"]) {
 	        	if ($arrHttp["Formato"]!=""){
 	        		echo "<div id=results>".$registro."</div>";
 	        	}else{
-	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
             		$ver=true;
             		if (isset($arrHttp["wks"])){
 					}else{
@@ -887,17 +886,17 @@ switch ($arrHttp["Opcion"]) {
 	case "presentar_captura":
         $ver="";
         if (isset($arrHttp["cnvtabsel"])){
-        	$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,$password,"");
+        	$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,"");
         	CambiarFormatoRegistro();
         }else{
-			$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,$password,"");
+			$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,"");
        	}
        	$arrHttp["Mfn"]="New";
    	 	$arrHttp["Opcion"]="crear";
         break;
 	case "captura_bd":
         $ver="S";
-		$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,$password,"");
+		$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,"");
   	 	$arrHttp["Opcion"]="crear";
   	 	$arrHttp["capturar"]="S";
         break;
@@ -907,7 +906,7 @@ switch ($arrHttp["Opcion"]) {
 		if (top.window.frames.length>0) top.PrenderEdicion()
 		</script>\n";
 		if (isset($arrHttp["Mfn"]) and $arrHttp["Mfn"]!="New")
-			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"editar",$arrHttp["login"],$password,"");
+			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"editar",$arrHttp["login"],"");
 //		echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
 		CargarMatriz($arrHttp["ValorCapturado"]);
 		$arrHttp["Opcion"]="crear";
@@ -930,7 +929,7 @@ switch ($arrHttp["Opcion"]) {
         	break;
         }
 		$arrHttp["unlock"] ="S";
-		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 
 		if (isset($arrHttp["Formato"]) and $arrHttp["Formato"]!=""){
         	include("scripts_dataentry.php");
@@ -947,9 +946,9 @@ switch ($arrHttp["Opcion"]) {
 			}
 			die;
 		}else{
-			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 			unset($arrHttp["unlock"]);
-			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
             $ver=true;
             if (isset($arrHttp["wks"])){
 			}else{
@@ -962,7 +961,7 @@ switch ($arrHttp["Opcion"]) {
 	    $arrHttp["lock"] ="S";
     case "password_ok":
 	case "leer":
-		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$arrHttp["login"],$password,"");
+		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$arrHttp["login"],"");
 		//echo "**".$password_protection;die;
 
 		if ($clave_proteccion!="" and $_SESSION["profile"]!="adm"
@@ -1072,7 +1071,7 @@ if ($actualizar=="SI"){
 	$ver="S";
 	reset($valortag);
 	if (!isset($arrHttp["Formato"])or $arrHttp["Formato"]==""){
-		$regSal=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$login,$password,$arrHttp["Formato"]);
+		$regSal=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$login,$arrHttp["Formato"]);
     	$arrHttp["Notificacion"]="N";
 		require_once('ingresoadministrador.php');
 	}else{

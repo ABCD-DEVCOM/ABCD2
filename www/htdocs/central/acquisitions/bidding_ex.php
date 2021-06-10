@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument
+*/
+
 //
 // Presenta una sugerencia presentada desde el script bidding.php anterior para la inserción de los datos de las cotizaciones
 // DISPLAYS FOR EDITING THE SUGGESTIONS SELECTED FROM THE LIST SHOWN IN BIDDING.PHP IN ORDER TO UPDATE THE BIDDING DATA
@@ -149,7 +153,7 @@ ConstruyeWorksheetFmt();
 //Se lee el registro que va a ser editado
 $arrHttp["lock"] ="S";
 $maxmfn=$arrHttp["Mfn"];
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"","");
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"");
 echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../images/zoom.png></a> &nbsp;<strong>".$valortag[18]."<br>Copias aprobadas:".$valortag[240]."</strong><br>";
 echo "<br>";
 if ($res=="LOCKREJECTED") {
