@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument
+*/
 session_start();
 include("../common/get_post.php");
 include("../config.php");
@@ -21,7 +24,7 @@ $arrHttp["lock"] ="S";
 $arrHttp["opcion"]="leer";
 $maxmfn=0;
 
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,"editar",$_SESSION["login"],"","");
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,"editar",$_SESSION["login"],"");
 if ($res=="LOCKREJECTED") {
 	echo "<script>
 	alert('".$arrHttp["Mfn"].": ".$msgstr["reclocked"]."')

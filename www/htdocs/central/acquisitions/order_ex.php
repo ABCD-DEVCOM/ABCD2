@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove unused include
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -12,9 +15,6 @@ include("../lang/admin.php");
 
 include("../common/get_post.php");
 $arrHttp["base"]="suggestions";
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
-//die;
-include ('../dataentry/leerregistroisis.php');
 
 include("../common/header.php");
 ?>

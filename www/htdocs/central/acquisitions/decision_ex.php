@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument
+*/
 //
 //Presenta una sugerencia, seleccionada de la lista anterior, para que sean insertados los datos de la aprobación
 //
@@ -237,7 +240,7 @@ ConstruyeWorksheetFmt();
 //Se lee el registro que va a ser editado
 $arrHttp["lock"] ="S";
 $maxmfn=$arrHttp["Mfn"];
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"","");
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"");
 echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../images/zoom.png></a> &nbsp;<strong>".$valortag[18]."</strong><br>";
 echo "<br>";
 if ($res=="LOCKREJECTED") {

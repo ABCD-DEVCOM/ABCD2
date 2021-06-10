@@ -1,6 +1,8 @@
 <?php
-
-function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$password,$Formato,$allow="") {global $OS,$valortag,$lang_db,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion,$def;
+/* Modifications
+2021-06-10 fho4abcd Remove unused password argument
+*/
+function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$Formato,$allow="") {global $OS,$valortag,$lang_db,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion,$def;
 global $record_protection,$password_protection;
 	$query="";
 	if (isset($arrHttp["lock"])){    	$IsisScript=$xWxis."lock.xis";
@@ -64,7 +66,7 @@ global $record_protection,$password_protection;
   	if ($record_protection!="")
   	    $Pft.='"$$_$$"V'.$record_protection;
 	$IsisScript=$xWxis."leer.xis";
-	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$Opcion."&login=".$login."&password=".$password;
+	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$Opcion."&login=".$login."&password=dummy";
 
 	if ($Formato!="")
 		$query.="&Formato=".$arrHttp["Formato"];
