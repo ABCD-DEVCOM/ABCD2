@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210613 fho4abcd Use inc_div_helper.some html improvements
+*/
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -14,6 +17,7 @@ include ("../lang/prestamo.php");
 if (!isset($_SESSION["login"])){	echo $msgstr["sessionexpired"];
 	die;}
 include("../common/header.php");
+echo "<body>";
 
 function SolicitarExpresion($base){global $msgstr,$arrHttp,$db_path,$lang_db;?>
 &nbsp; <A HREF="javascript:Buscar('<?php echo $base?>')"><u><strong><?php echo $msgstr["r_busqueda"]?></strong></u></a>
@@ -162,15 +166,7 @@ include("../common/institutional_info.php");
 
 <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/reports.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/reports.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: reports_menu.php";
-?>
-</font>
-	</div>
+<?php include "../common/inc_div-helper.php" ?>
 <form name=forma1 method=post action=print.php>
 <input type=hidden name=codigo>
 <input type=hidden name=base>
@@ -195,7 +191,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: reports_menu.php";
 				if ($value=="") continue;
 				if (substr($value,0,2)=="//") continue;
 				$l=explode('|',$value);
-				echo "<li><input type=radio name=RN value=\"$bd|$l[0]|$l[1]\">(".$l[0].") ".$l[5]."</a>\n";
+				echo "<li><input type=radio name=RN value=\"$bd|$l[0]|$l[1]\">(".$l[0].") ".$l[5]."\n";
 				if (isset($l[6])){					switch ($l[6]){						case "DATE":
 						case "DATEQUAL":
 						case "DATELESS":

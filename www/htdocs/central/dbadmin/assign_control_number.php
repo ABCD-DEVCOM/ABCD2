@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210613 fho4abcd remove password, lineends
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -48,7 +51,6 @@ else
 	$encabezado="";
 
 $arrHttp["login"]=$_SESSION["login"];
-$arrHttp["password"]=$_SESSION["password"];
 
 $base =$arrHttp["base"];
 $cipar =$arrHttp["base"].".par";
@@ -74,13 +76,16 @@ if (!file_exists($archivo)){
 	$fp=fopen($archivo,"w");
 	$res=fwrite($fp,"");
 	fclose($fp);
-}else{	$fp=file($archivo);
-	$last_cn=implode("",$fp);}
+}else{
+	$fp=file($archivo);
+	$last_cn=implode("",$fp);
+}
 
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-<script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/selectbox.js"></script>
 
 <script languaje=javascript>
 
@@ -123,9 +128,9 @@ function EnviarFormaCN(vp){
 }
 
 </script>
-<body>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
@@ -138,15 +143,18 @@ if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php")
 <?php
 	$ayuda="control_number.html";
 	$arrHttp["encabezado"]="s";
-	if (isset($arrHttp["encabezado"])){		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"])   or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
+	if (isset($arrHttp["encabezado"])){
+		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"])   or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
 			echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
 			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
 			";
-		}else{			echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
+		}else{
+			echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
 			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
-			";		}
+			";
+		}
 	}
 ?>
 
@@ -214,7 +222,8 @@ echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=encabezado value=s>
 </form>
-<script>function Reset(){	document.reset_nc.submit()
+<script>function Reset(){
+	document.reset_nc.submit()
 }
 </script>
 <?php

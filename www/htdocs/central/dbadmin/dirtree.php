@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20210614 fho4abcd remove password+lineends
+*/
 /*
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -186,13 +189,17 @@ if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
     (isset($_SESSION["permiso"][$_SESSION["dir_base"]."_CENTRAL_ALL"]) or
     isset($_SESSION["permiso"][$_SESSION["dir_base"]."CENTRAL_EXDBDIR"]))
     )
-{}else{
+{
+}else{
 	header("Location: ../common/error_page.php") ;
 }
-if (isset($arrHttp["base"])){	$_SESSION["root_base"]=$_REQUEST["base"];
-	if (isset($arrHttp["folder"])){
+if (isset($arrHttp["base"])){
+	$_SESSION["root_base"]=$_REQUEST["base"];
+	if (isset($arrHttp["folder"])){
+
 		$_SESSION["dir_base"]=$_REQUEST["folder"];
-	}else{		$_SESSION["dir_base"]= trim($arrHttp["base"]);
+	}else{
+		$_SESSION["dir_base"]= trim($arrHttp["base"]);
 		echo $arrHttp["base"];
 	}
 }
@@ -209,8 +216,6 @@ $_POST['File_Extension']=$_POST['FILE_EXTENSION'];
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 $lang=$_SESSION["lang"];
-$_POST['username']=$_SESSION["login"];
-$_POST['password']=$_SESSION["password"];
 $_SESSION['autentified']=true;
 //echo "<pre>"; print_r($_SESSION); ECHO "</pre>";
 
@@ -220,13 +225,15 @@ if (!isset($_REQUEST["ACTION"])) $_REQUEST["ACTION"]="";
 if ($_REQUEST["ACTION"]!="downloadfile1"){
 	include("../common/header.php");
 	if (isset($arrHttp["encabezado"])){
-		$encabezado="&encabezado=s";	}
+		$encabezado="&encabezado=s";
+	}
 	EncabezadoPagina();
 	//echo "<link rel=\"STYLESHEET\" type=\"text/css\" href=\"../css/".$css_name."template.css\">";
 }
 
 function EncabezadoPagina(){
-global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;	echo "<Body>";
+global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;
+	echo "<Body>";
     //if (isset($arrHttp["encabezado"]))
     	include("../common/institutional_info.php");
      echo "
@@ -255,7 +262,8 @@ global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;	echo "
     echo "<font color=white>&nbsp; &nbsp; Script: dirtree.php</font></div>";
 
      echo "<div class=\"middle form\">
-			<div class=\"formContent\">";}
+			<div class=\"formContent\">";
+}
 
 Function BUILD_DIRECTORY_TREE($SOURCE, $PREVIOUS) {
 /*
@@ -2575,7 +2583,8 @@ This function write the data in the column files of the dirtreeview table.
    <?php
 } //end function
 
-Function COLUMN_FILENAMES_ROOT($BGC, $FGC) {global $encabezado;
+Function COLUMN_FILENAMES_ROOT($BGC, $FGC) {
+global $encabezado;
 /*
 This function write the data in the column filenames exclusively for the first
 row of the dirtreeview table. (root dir).

@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument, lineends
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -44,7 +47,7 @@ include("leerregistroisis.php");
 $maxmfn=0;
 $arrHttp["Opcion"]="leer";
 $arrHttp["Formato"]="ALL";
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],"","","");
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],"","");
 
 //READ THE FILE WITH THE TYPE OR RECORDS, IF ANY
 unset ($tm);
@@ -62,7 +65,8 @@ if ($tor!=""){
 	$fp = file($tor);
 	$ix=0;
 	$tm[]="";
-	foreach ($fp as $linea){		$linea=trim($linea);
+	foreach ($fp as $linea){
+		$linea=trim($linea);
 		if ($linea!=""){
 			if ($ix==0){
 				$ij=strpos($linea," ");
@@ -87,14 +91,20 @@ if (isset($valortag[$tl])){
 if (isset($valortag[$nr])){
 	if ($nr!="") $nr=strtolower($valortag[$nr]);
 }
-if ($tl!="") {	$pftval=$tl."_".$nr."_".$arrHttp["base"].".val";
+if ($tl!="") {
+	$pftval=$tl."_".$nr."_".$arrHttp["base"].".val";
 	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
-	if (!file_exists($archivo))		$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
-	if (!file_exists($archivo)){		$pftval=$arrHttp["base"].".val";
-		$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;	}
+	if (!file_exists($archivo))
+		$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
+	if (!file_exists($archivo)){
+		$pftval=$arrHttp["base"].".val";
+		$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
+	}
 
-}else{	$pftval=$arrHttp["base"].".val";
-	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;}
+}else{
+	$pftval=$arrHttp["base"].".val";
+	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
+}
 if (!file_exists($archivo))  $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
 //echo $arrHttp["base"]."/def/".$lang_db."/".$pftval."<br>";
 $rec_validation="";
@@ -106,7 +116,8 @@ if (file_exists($archivo)){
 	$fp=explode('###',$fp_str);
 	$ix_fatal=-1;
 	foreach($fp as $value){
-		$value=str_replace('$%|%$',' ',$value);		$value=trim($value);
+		$value=str_replace('$%|%$',' ',$value);
+		$value=trim($value);
 		if ($value!="") {
 			$ix=strpos($value,':');
 			if ($ix===false){
@@ -131,8 +142,10 @@ if (file_exists($archivo)){
 //	echo $rec_validation;
 
 }
-if ($rec_validation==""){	echo "<h4>".$msgstr["recvalempty"]."</H4>";
-	die;}
+if ($rec_validation==""){
+	echo "<h4>".$msgstr["recvalempty"]."</H4>";
+	die;
+}
 $formato=urlencode($rec_validation);
 $query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&proc=<3333>R</3333>";
 $IsisScript=$xWxis."leer_mfnrange.xis";
@@ -153,7 +166,8 @@ $linea=explode('$$$$',$res);
 echo "<table>";
 $ix_fatal=-1;
 $ixerror=0;
-foreach ($linea as $v_value){	$v_value=trim($v_value);
+foreach ($linea as $v_value){
+	$v_value=trim($v_value);
 	$ix_fatal=$ix_fatal+1;
 	if ($v_value!=""){
 		$v_ix=strpos($v_value,':');
