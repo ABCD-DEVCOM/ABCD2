@@ -1,5 +1,7 @@
 <?php
-
+/* Modifications
+** 20210613 fho4abcd Removed password,html:body. Use inc_div_helper.
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -52,7 +54,6 @@ else
 	$encabezado="";
 
 $arrHttp["login"]=$_SESSION["login"];
-$arrHttp["password"]=$_SESSION["password"];
 
 $base ="trans";
 $cipar ="trans.par";
@@ -70,8 +71,9 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
 
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-<script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/selectbox.js"></script>
 <style type=text/css>
 
 td{	font-size:12px;
@@ -271,7 +273,6 @@ function GuardarBusqueda(){
 	document.savesearch.submit()
 }
 </script>
-<body>
 <?php
 if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
@@ -294,15 +295,8 @@ if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php")
 
 <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/reports.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/reports.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: reports_menu.php";
-?>
-</font>
-	</div>
+<?php $ayuda="/circulation/reports.html";include "../common/inc_div-helper.php" ?>
+
 <form name=forma1 method=post action=../dataentry/imprimir_g.php onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>

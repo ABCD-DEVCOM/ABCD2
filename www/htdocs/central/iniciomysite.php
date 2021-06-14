@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-14 fho4abcd Do not set/get password in/from $_SESSION 
+*/
 
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
@@ -445,7 +448,6 @@ if (isset($arrHttp["action"]))
 	if ($arrHttp["action"]=='gotosite')
     {
 	$arrHttp["login"]=$_SESSION["login"];
-    $arrHttp["password"]=$_SESSION["password"];
 	}
 }
 
@@ -457,7 +459,6 @@ if (isset($arrHttp["action"]))
 
       	if (isset($arrHttp["reinicio"])){
       		$arrHttp["login"]=$_SESSION["login"];
-      		$arrHttp["password"]=$_SESSION["password"];
       		$arrHttp["startas"]=$_SESSION["permiso"];
       		$arrHttp["lang"]=$_SESSION["lang"];
             $arrHttp["db"]=$_SESSION["db"];
@@ -479,7 +480,6 @@ if (isset($arrHttp["action"]))
 		}
         $_SESSION["userid"]=$userid;
       	$_SESSION["login"]=$arrHttp["login"];
-      	$_SESSION["password"]=$arrHttp["password"];
       	$_SESSION["permiso"]="mysite".$userid;
       	$_SESSION["nombre"]=$nombre;
         $_SESSION["db"]=$db;

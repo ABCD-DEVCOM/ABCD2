@@ -2,6 +2,7 @@
 /* Modifications
 20210311 fho4abcd Replaced helper code fragment by included file
 20210311 fho4abcd html move body + sanitize html & javascript
+20210613 fho4abcd remove password
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -37,7 +38,6 @@ return $the_array;
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
 $arrHttp["login"]=$_SESSION["login"];
-$arrHttp["password"]=$_SESSION["password"];
 
 $base =$arrHttp["base"];
 $cipar =$arrHttp["base"].".par";
@@ -106,7 +106,8 @@ function EnviarForma(vp){
 
 </script>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
@@ -128,10 +129,12 @@ echo ": ".$arrHttp["base"]?>
 		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancelar"]."</strong></span></a>
 		";
-	}else{		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
+	}else{
+		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
 		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
-		";	}
+		";
+	}
 ?>
 
 </div>
