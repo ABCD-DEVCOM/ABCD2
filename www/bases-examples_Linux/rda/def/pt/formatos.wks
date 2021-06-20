@@ -1,9 +1,15 @@
-BK_a_LI|Material textual (Livro)|
-BK_a_TE|Tese/Dissertação|
-VM_g_MP|Material projetável|
-CF_m_AC|Recurso eletrônico (Arquivo de computador)|
-MP_e_MC|Material Cartográfico|
-SE_s_PE|Recurso contínuo (Periódico)|
-SE_s_AP|Recurso contínuo (Artigo de periódico)|
-VM_o_KI|Kit - Dois ou mais tipos publicados juntos)|
-VM_p_MM|Material misto - Varios tipos|
+BK_a_LI|Material textual (livro)
+BK_t_TE|Tese/Dissetação
+MS_j_CD|Audio-CD
+PM_g_DVD|DVD-video
+PM_g_PM|Outro recurso projetado
+CF_m_AC|Recurso eletrônico (arquivo de computador)
+MP_e_MC|Recurso cartográfico
+NM_c_MN|Música notada
+GR_k_PO|Recurso gráfico bidimensional
+GR_r_OB|Recurso tridimensional (artefato ou objeto)
+VM_o_KI|Kit (dois ou mais tipos publicados juntos)
+MM_p_MM|Material Misto - Vários tipos
+SE_s_PE|Jornal
+SE_s_AP|Artigo de periódico
+BC_a_LC|Capítulo de livro

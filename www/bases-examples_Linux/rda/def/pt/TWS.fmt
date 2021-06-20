@@ -1,0 +1,13 @@
+T|16|Número de controle da Agência Bibliográfica Nacional|0|1|12az2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd016.html|0|0|||
+S||Indicador 1 (Agência bibliográfica nacional)|0|0|1||X||1|P|016-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Número de controle do registro|0|0|a||X|||||||||0||0|0|||
+S||Número de controle cancelado/invalido|0|0|z||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+T|20|ISBN|0|1|12acqz|||||||||||1|http://www.loc.gov/marc/bibliographic/bd020.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||ISBN|0|0|a||X|||||||||0||0|0|||
+S||Termos de disponibilidade|0|0|c||X|||||||||0||0|0|||
+S||Informações sobre qualificação|0|0|q||X|||||||||0||0|0|||
+S||ISBN cancelado/invalido|0|0|z||X|||||||||0||0|0|||
