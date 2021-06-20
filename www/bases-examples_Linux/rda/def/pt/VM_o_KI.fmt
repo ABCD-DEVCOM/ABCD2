@@ -1,212 +1,722 @@
-LDR||Leader|0|0||||||||||||1||
-AI|1|N√∫mero de controle|0|0|||X||20|||||||1||
-M5|5|Data da √∫ltima modifica√ß√£o|0|0|||X||20|||||||1||
-M|8|Campo Fixo (08)|0|0|||X||||||||aammdds        bl nnn #     #0   b por d|1||
-H||DADOS GERAIS|0|0||||||||||||0||
-T|20|ISBN|0|1|12ac||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||ISBN|0|0|a||X|||||||||0||
-S||Disponibilidade|0|0|c||X|||||||||0||
-T|82|Classifica√ß√£o CDD|0|1|12ab2||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|082-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|082-ind2.tab|||||0||
-S||N√∫mero de classifica√ß√£o|0|0|a||X|||||||||0||
-S||Nota√ß√£o de Autor|0|0|b||X|||||||||0||
-S||N√∫mero da Edi√ß√£o|0|0|2||X|||||||||0||
-T|90|N√∫mero de chamada local|0|0|12abcd||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Classifica√ß√£o|0|0|a||X|||||||||0||
-S||C√≥digo de Cutter|0|0|b||X|||||||||0||
-S||Edi√ß√£o/Ano|0|0|c||X|||||||||0||
-S||Informa√ß√µes adicionais|0|0|d||X|||||||||0||
-H||ENTRADA PRINCIPAL|0|0||||||||||||0||
-T|100|Autor Pessoal|0|0|12abcdq||X||100|D||AU_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|100-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Sobrenome e nome|0|0|a||X|||||||||0||
-S||Numera√ß√£o|0|0|b||X|||||||||0||
-S||T√≠tulo/palavras associadas|0|0|c||X|||||||||0||
-S||Data de nac. e morte|0|0|d||X|||||||||0||
-S||Nome Completo|0|0|q||X|||||||||0||
-T|110|Autor Entidade Coletiva|0|0|12ab||X||100|D||AI_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|110-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Nome da entidade|0|0|a||X|||||||||0||
-S||Unidade subordinada|0|1|b||X|||||||||0||
-T|111|Autor Nome de evento|0|0|12acdnq||X||100|D||CF_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|111-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Nome do evento|0|0|a||X|||||||||0||
-S||Local do evento|0|0|c||X|||||||||0||
-S||Data do evento|0|0|d||X|||||||||0||
-S||N√∫mero do evento|0|0|n||X|||||||||0||
-S||Nome do evento que segue o nome da jurisdi√ß√£o|0|0|q||X|||||||||0||
-H||T√çTULO(S), EDI√á√ÉO, PUBLICA√á√ÉO, ETC.|0|0||||||||||||0||
-T|240|T√≠tulo Uniforme|0|0|12am||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|240-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|240-ind2.tab|||||0||
-S||T√≠tulo uniforme|0|0|a||X|||||||||0||
-S||Meio de Execu√ß√£o para M√∫sica|0|1|m||X|||||||||0||
-T|245|T√≠tulo Principal|1|0|12abchknp||X||100|||TI_|v245^a,\" \"v245^b,`(` f(mfn,1,0),`)`|f(mfn,1,0)||1||
-S||Indicador 1|0|0|1||X||1|P|245-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|245-ind2.tab|||||0||
-S||T√≠tulo|0|0|a||X|||||||||0||
-S||Complemento do t√≠tulo|0|0|b||X|||||||||0||
-S||Inf. de responsabilidade|0|0|c||X|||||||||0||
-S||Meio|0|0|h||X|||||||||0||
-S||Subcabe√ßalho de Forma|0|0|k||X|||||||||0||
-S||No. Parte/Se√ß√£o/Evento|0|1|n||X|||||||||0||
-S||Nome da Parte/Se√ß√£o|0|1|p||X|||||||||0||
-T|246|Forma variante do t√≠tulo|0|0|12abcnp||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|246-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Titulo/T√≠tulo abreviado|0|0|a||X|||||||||0||
-S||Complemento do T√≠tulo|0|0|b||X|||||||||0||
-S||Inf. de responsabilidade|0|0|c||X|||||||||0||
-S||No. Parte/Se√ß√£o/Evento|0|1|n||X|||||||||0||
-S||Parte/Se√ß√£o da obra|0|1|p||X|||||||||0||
-T|250|Edi√ß√£o|0|0|12ab||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Informa√ß√£o de edi√ß√£o|0|0|a||X|||||||||0||
-S||Inf. adicionais|0|0|b||X|||||||||0||
-T|260|Publica√ß√£o (imprenta)|0|1|12abc||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Local de publica√ß√£o, distribui√ß√£o, etc.|0|1|a||X|||D||PA_|v260^a|v260^a||0||
-S||Editora|0|1|b||X|||D||ED_|v260^b|v260^b||0||
-S||Data|0|1|c||X|||||||||0||
-T|300|Descri√ß√£o f√≠sica|0|1|12abce||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Extens√£o|0|1|a||X|||||||||0||
-S||Outras desc.. f√≠sicas|0|0|b||X|||||||||0||
-S||Dimens√µes|0|1|c||X|||||||||0||
-S||Material complementar|0|0|e||X|||||||||0||
-T|340|Meio f√≠sico|0|1|12abei||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Base do material e cofigura√ß√£o|0|0|a||X|||||||||0||
-S||Dimens√µes|0|0|b||X|||||||||0||
-S||Suporte|0|0|e||X|||||||||0||
-S||Especifica√ß√µes t√©cnicas|0|0|i||X|||||||||0||
-T|351|Organiza√ß√£o e arranjo de materiais|0|1|12abc||X||100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Organiza√ß√£o|0|0|a||X|||||||||0||
-S||Arranjo|0|0|b||X|||||||||0||
-S||N√≠vel hier√°rquico|0|0|c||X|||||||||0||
-H||INFORMA√á√ïES DE S√âRIE e NOTAS|0|0||||||||||||0||
-T|490|Informa√ß√£o de s√©rie|0|1|12av||X||100|||||||1||
-S||Indicador 1|0|0|2||X||1|P|490-ind1.tab|||||0||
-S||Indicador 1|0|0|1||X||1|||||||0||
-S||T√≠tulo da s√©rie|0|0|a||X|||||||v490^a||0||
-S||Volume|0|0|v||X|||||||||0||
-T|500|Nota Geral|0|1|12a||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Nota|0|0|a||X|||||||||0||
-T|505|Nota Conte√∫do|0|1|12a||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|505-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|505-ind2.tab|||||0||
-S||Nota de conte√∫do|0|0|a||X|||||||||0||
-T|520|Nota de Resumo|0|1|12a||X|5|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|520-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Resumo|0|0|a||X|||||||||0||
-T|521|P√∫blico-alvo|0|1|12a||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|521-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||P√∫blico-alvo|0|0|a||X|||||||||0||
-T|546|Nota de idioma|0|1|12a||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Nota|0|0|a||X|||||||||0||
-H||ENTRADAS SECUND√ÅRIAS|0|0||||||||||||0||
-T|600|Nome pessoal como assunto|0|1|12abcdqvxy||X|2|100|D||AU_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|600-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|600-ind2.tab|||||0||
-S||Nome Pessoal|0|0|a||X|||||||||0||
-S||Numera√ß√£o|0|0|b||X|||||||||0||
-S||T√≠tulo/Palavras associadas|0|0|c||X|||||||||0||
-S||Data nac. e morte|0|0|d||X|||||||||0||
-S||Nome completo|0|0|q||X|||||||||0||
-S||Subdivis√£o de Forma|0|1|v||X|||||||||0||
-S||Subdivis√£o geral|0|1|x||X|||||||||0||
-S||Subdivis√£o cronol√≥gica|0|1|y||X|||||||||0||
-T|610|Nome corporativo como assunto|0|1|12abktvx||X|2|100|D||AI_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|610-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|610-ind2.tab|||||0||
-S||Nome|0|0|a||X|||||||||0||
-S||Unidade subordinada|0|1|b||X|||||||||0||
-S||Subcabe√ßalhos de forma|0|1|k||X|||||||||0||
-S||T√≠tulo da obra|0|0|t||X|||||||||0||
-S||Subdivis√£o de Forma|0|1|v||X|||||||||0||
-S||Subdivis√£o genal|0|1|x||X|||||||||0||
-T|611|Nome de evento como assunto|0|1|12acdnvx||X|2|100|D||CF_|@autorides.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|611-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|611-ind2.tab|||||0||
-S||Nome do evento|0|0|a||X|||||||||0||
-S||Lugar|0|0|c||X|||||||||0||
-S||Data|0|0|d||X|||||||||0||
-S||N√∫mero da parte/se√ß√£o|0|1|n||X|||||||||0||
-S||Subdivis√£o de Forma|0|1|v||X|||||||||0||
-S||Subdivis√£o Geral|0|1|x||X|||||||||0||
-T|650|Assunto - Termo T√≥pico|0|1|12avxyz||X|2|100|D||MA_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|650-ind2.tab|||||0||
-S||Termo t√≥pico|0|0|a||X|||||||||0||
-S||Subdivis√£o de Forma|0|1|v||X|||||||||0||
-S||Subdivis√£o geral|0|1|x||X|||||||||0||
-S||Subdivis√£o cronol√≥gica|0|1|y||X|||||||||0||
-S||Subdivis√£o geogr√°fica|0|1|z||X|||||||||0||
-T|653|Assunto - Termo N√£o Controlado|0|1|12a||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||
-S||Termo n√£o controlado|0|0|a||X|||||||||0||
-T|700|Ent. secund√°ria - Autor pessoal|0|1|12abcdq||X|2|100|D||AU_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|700-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|700-ind2.tab|||||0||
-S||Nome pessoal|0|0|a||X|||||||||0||
-S||Numera√ß√£o|0|0|b||X|||||||||0||
-S||T√≠tulo e outras palavras associadas|0|0|c||X|||||||||0||
-S||Data nac. e morte|0|0|d||X|||||||||0||
-S||Forma completa do nome|0|0|q||X|||||||||0||
-T|710|Ent. secund√°ria - Autor corporativo|0|1|12ab||X|2|100|D||AI_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|710-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|710-ind2.tab|||||0||
-S||Nome corporativo|0|0|a||X|||||||||0||
-S||Unidades subordinadas|0|0|b||X|||||||||0||
-T|711|Ent. secud√°ria - Nome de evento|0|1|12acdnq||X|2|100|D||CF_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|711-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|711-ind2.tab|||||0||
-S||Nome do evento|0|0|a||X|||||||||0||
-S||Lugar|0|0|c||X|||||||||0||
-S||Data|0|0|d||X|||||||||0||
-S||N√∫mero da parte/se√ß√£o da publica√ß√£o|0|0|n||X|||||||||0||
-S||Nome do evento que segue nome de jurisdi√ß√£o|0|0|q||X|||||||||0||
-H||END. ELETR√îNICO e N¬∫ DE REGISTRO|0|0|||X|||||||||0||
-T|856|Endere√ßo eletr√¥nico|0|1|12auyzq||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|856-ind1.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|856-ind2.tab|||||0||
-S||Nome do servidor|0|0|a||X|||||||||0||
-S||Identificador Uniforme - URI|0|0|u||X|||||||||0||
-S||Descri√ß√£o do link|0|0|y||X|||||||||0||
-S||Nota/observa√ß√£o|0|0|z||X|||||||||0||
-S||Tipo de meio eletr√¥nico|0|0|2||X|||||||||0||
-T|900|Itens (Exemplares)|0|1|nmlofprqykwz||X|5|100|||||||1||
-S||No.de registro|0|0|n||X||5|||||||0||
-S||Volume|0|0|m||X||5|||||||0||
-S||Exemplar|0|0|l||X||5|||||||0||
-S||Localiza√ß√£o f√≠sica|0|0|o||X||10|||||||0||
-S||Forma de aquisi√ß√£o|0|0|f||X||10|||||||0||
-S||Data de aquisi√ß√£o|0|0|p||X||10|||||||0||
-S||Fornecedor|0|0|r||X||20|||||||0||
-S||Moeda nacional|0|0|q||X||10|||||||0||
-S||moeda estrangeira|0|0|y||X||10|||||||0||
-S||Notas|0|0|k||X|||||||||0||
-S||Data de entrada|0|0|w||X||5|||||||0||
-S||Documentalista|0|0|z||X||5|||||||0||
-OD|980|Data de modifica√ß√£o e Usu√°rio|0|1||||||||||||1||
+LDR||LÌder|0|0||||||||||||1|http://www.loc.gov/marc/bibliographic/bdleader.html|0|0|||
+H||00X: Campos de controle|0|0||||||||||||0||0|0|||
+F|1|N˙mero de controle|0|0|||AI||20|||||||1|http://www.loc.gov/marc/bibliographic/bd001.html|0|0|||
+F|3|Identificador do n˙mero de controle|0|0|||X||20|||||||1|http://www.loc.gov/marc/bibliographic/bd003.html|0|0|||
+M5|5|Data e hora da ˙ltima transaÁ„o|0|0|||X||20|||||||1||0|0|||
+M|8|Campo fixo (08)|0|0|||||||||||aammdd---------      ------------b-por d|1|http://www.loc.gov/marc/bibliographic/bd008.html|0|0|||
+H||01X-09X: N˙meros e campos de cÛdigo|0|0||||||||||||0||0|0|||
+T|17|Direitos Autorais ou N˙mero de DepÛsito Legal|0|1|12abdiz2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd017.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2 (Mostrar controlador constante)|0|0|2||X||1|P|017-ind2.tab|||||0||0|0|||
+S||N˙mero de polÌcia ou dep.|0|1|a||X|||||||||0||0|0|||
+S||AgÍncia|0|0|b||X|||||||||0||0|0|||
+S||Data|0|0|d||X|||||||||0||0|0|||
+S||Exibir texto|0|0|i||X|||||||||0||0|0|||
+S||Direitos autorais ou n˙mero de depÛsito legal cancelados/invalidados|0|0|z||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+T|20|ISBN|0|1|12acqz||X|||||||||1|http://www.loc.gov/marc/bibliographic/bd020.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||N˙mero padr„o internacional do livro|0|0|a||X|||||||||0||0|0|||
+S||Termos de disponibilidade|0|0|c||X|||||||||0||0|0|||
+S||InformaÁıes sobre qualificaÁ„o|0|0|q||X|||||||||0||0|0|||
+S||ISBN cancelado/invalido|0|0|z||X|||||||||0||0|0|||
+T|24|Outro identificador padr„o|0|1|12acdqz2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd024.html|0|0|||
+S||Indicador 1 (Tipo de n˙mero ou cÛdigo padr„o)|0|0|1||X||1|P|024-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Indicador de diferenÁa)|0|0|2||X||1|P|024-ind2.tab|||||0||0|0|||
+S||N˙mero ou cÛdigo padr„o|0|0|a||X|||||||||0||0|0|||
+S||Termos de disponibilidade|0|0|c||X|||||||||0||0|0|||
+S||CÛdigos adicionais|0|0|d||X|||||||||0||0|0|||
+S||InformaÁıes sobre qualificaÁ„o|0|0|q||X|||||||||0||0|0|||
+S||N˙mero ou cÛdigo padr„o cancelado/invalido|0|0|z||X|||||||||0||0|0|||
+S||Fonte do n˙mero ou cÛdigo|0|0|2||X|||||||||0||0|0|||
+T|28|N˙mero da editora|0|1|12abq|||||||||||1|http://www.loc.gov/marc/bibliographic/bd028.html|0|0|||
+S||Indicador 1 (Tipo de n˙mero da editora)|0|0|1||X||1|P|028-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Nota/controlador de entrada adicional)|0|0|2||X||1|P|028-ind2.tab|||||0||0|0|||
+S||N˙mero da editora|0|0|a||X|||||||||0||0|0|||
+S||Fonte|0|0|b||X|||||||||0||0|0|||
+S||InformaÁıes sobre qualificaÁ„o|0|0|q||X|||||||||0||0|0|||
+T|40|Fonte de catalogaÁ„o|0|0|12abcde||X||||||||  ^beng^erda|1|http://www.loc.gov/marc/bibliographic/bd040.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||AgÍncia de catalogaÁ„o original|0|0|a||X|||||||||0||0|0|||
+S||Idioma da catalogaÁ„o|0|0|b||X|||||||||0||0|0|||
+S||AgÍncia de transcriÁ„o|0|0|c||X|||||||||0||0|0|||
+S||AgÍncia modificadora|0|0|d||X|||||||||0||0|0|||
+S||DescriÁ„o das convenÁıes|0|0|e||X|||||||||0||0|0|||
+T|41|CÛdigo de idioma|0|1|12abdefghjkmn2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd041.html|0|0|||
+S||Indicador 1 (IndicaÁ„o de traduÁ„o)|0|0|1||X||1|P|041-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Fonte do cÛdigo)|0|0|2||X||1|P|041-ind2.tab|||||0||0|0|||
+S||CÛdigo do idioma do texto|0|0|a||X|||||||||0||0|0|||
+S||CÛdigo de resumo do idioma|0|0|b||X|||||||||0||0|0|||
+S||CÛdigo do idioma do texto cantado|0|0|d||X|||||||||0||0|0|||
+S||CÛdigo de idioma dos libretos|0|0|e||X|||||||||0||0|0|||
+S||CÛdigo de idioma do Ìndice|0|0|f||X|||||||||0||0|0|||
+S||CÛdigo do idioma do material de acompanhamento|0|0|g||X|||||||||0||0|0|||
+S||CÛdigo do idioma das traduÁıes originais e/ou intermedi·rias do texto|0|0|h||X|||||||||0||0|0|||
+S||CÛdigo de idioma das legendas ou legendas|0|0|j||X|||||||||0||0|0|||
+S||CÛdigo linguÌstico das traduÁıes intermedi·rias|0|0|k||X|||||||||0||0|0|||
+S||CÛdigo do idioma do material original de acompanhamento, exceto libretos|0|0|m||X|||||||||0||0|0|||
+S||CÛdigo de idioma do libreto original|0|0|n||X|||||||||0||0|0|||
+S||Fonte do cÛdigo|0|0|2||X|||||||||0||0|0|||
+T|80|N˙mero de ClassificaÁ„o Decimal Universal|0|1|12abx2||X|1||D||CU_|@cdu.pft|||1|http://www.loc.gov/marc/bibliographic/bd080.html|0|0|||
+S||Indicador 1 (Tipo de ediÁ„o)|0|0|1||X||1|P|080-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||N˙mero de ClassificaÁ„o Decimal Universal|0|0|a||X|||D||CU_|@cdu.pft|||0||0|0|||
+S||N˙mero do item|0|0|b||X|||||||||0||0|0|||
+S||Subdivis„o auxiliar comum|0|0|x||X|||||||||0||0|0|||
+S||Identificador de ediÁ„o|0|0|2||X|||||||||0||0|0|||
+T|82|N˙mero de chamada decimal de Dewey|0|1|12abmq2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd082.html|0|0|||
+S||Indicador 1 (Tipo de ediÁ„o)|0|0|1||X||1|P|082-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Fonte do n˙mero de classificaÁ„o)|0|0|2||X||1|P|082-ind2.tab|||||0||0|0|||
+S||N˙mero de classificaÁ„o|0|0|a||X|||D||CD_|@cdd.pft|||0||0|0|||
+S||N˙mero do item|0|0|b||X|||||||||0||0|0|||
+S||DesignaÁ„o padr„o ou opcional|0|0|m||X|||||||||0||0|0|||
+S||AgÍncia encarregada da designaÁ„o|0|0|q||X|||||||||0||0|0|||
+S||N˙mero de ediÁ„o|0|0|2||X|||||||||0||0|0|||
+T|83|N˙mero adicional da ClassificaÁ„o Decimal Dewey|0|1|12acmqyz2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd083.html|0|0|||
+S||Indicador 1 (Tipo de ediÁ„o)|0|0|1||X||1|P|083-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||N˙mero de classificaÁ„o|0|0|a||X|||||||||0||0|0|||
+S||N˙mero de classificaÁ„o... N˙mero final do intervalo|0|0|c||X|||||||||0||0|0|||
+S||DesignaÁ„o padr„o ou opcional|0|0|m||X|||||||||0||0|0|||
+S||AgÍncia encarregada da designaÁ„o|0|0|q||X|||||||||0||0|0|||
+S||N˙mero seq¸encial da tabela para sub-arranjo interno ou adicionar tabela|0|0|y||X|||||||||0||0|0|||
+S||IdentificaÁ„o da tabela|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de ediÁ„o|0|0|2||X|||||||||0||0|0|||
+T|84|Outro n˙mero de chamada|0|1|12abq2|||||||||||1|http://www.loc.gov/marc/bibliographic/bd084.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||N˙mero de classificaÁ„o|0|0|a||X|||||||||0||0|0|||
+S||N˙mero do item|0|0|b||X|||||||||0||0|0|||
+S||AgÍncia encarregada da designaÁ„o|0|0|q||X|||||||||0||0|0|||
+S||Fonte do n˙mero|0|0|2||X|||||||||0||0|0|||
+T|85|N˙mero de ClassificaÁ„o Sintetizado Componentes|0|1|12abcfrstuvwyz|||||||||||0||0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||1|http://www.loc.gov/marc/bibliographic/bd085.html|0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||N˙mero onde as instruÁıes s„o encontradas - n˙mero ˙nico ou n˙mero inicial do v„o|0|0|a||X|||||||||0||0|0|||
+S||N˙mero base|0|0|b||X|||||||||0||0|0|||
+S||N˙mero de classificaÁ„o - n˙mero de finalizaÁ„o do intervalo|0|0|c||X|||||||||0||0|0|||
+S||Designador de facetas|0|0|f||X|||||||||0||0|0|||
+S||N˙mero da raiz|0|0|r||X|||||||||0||0|0|||
+S||DÌgitos adicionados a partir do n˙mero de classificaÁ„o no cronograma ou tabela externa|0|0|s||X|||||||||0||0|0|||
+S||DÌgitos adicionados a partir de uma subordenaÁ„o interna ou tabela de adiÁ„o|0|0|t||X|||||||||0||0|0|||
+S||N˙mero em an·lise|0|0|u||X|||||||||0||0|0|||
+S||N˙mero em sub-arranjo interno ou adicionar tabela onde se encontram as instruÁıes|0|0|v||X|||||||||0||0|0|||
+S||IdentificaÁ„o da tabela - Sub-ordenaÁ„o interna ou acrescentar tabela|0|0|w||X|||||||||0||0|0|||
+S||N˙mero seq¸encial da tabela para sub-arranjo interno ou adicionar tabela|0|0|y||X|||||||||0||0|0|||
+S||IdentificaÁ„o da tabela|0|0|z||X|||||||||0||0|0|||
+H||1XX: Principais campos de entrada|0|0||||||||||||0||0|0|||
+T|100|Nome pessoal|0|0|12abcdequ04||X|1||D||AU_|@autoridades.pft||1 ^a^4aut|1|http://www.loc.gov/marc/bibliographic/bd100.html|0|0|||
+S||Indicador 1 (Tipo de elemento de entrada de nome pessoal)|0|0|1||X||1|P|100-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nome pessoal|0|0|a||X|||D||AU_|@autoridades.pft|||0||0|0|||
+S||NumeraÁ„o|0|0|b||X|||||||||0||0|0|||
+S||TÌtulos assoc. com nome|0|0|c||X|||||||||0||0|0|||
+S||Datas assoc. com nome|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X||1|P|relator.tab|||||0||0|0|||
+S||Forma mais completa do nome|0|0|q||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
+T|110|Nomes corporativos|0|0|12abcdeu04||X|||D||AI_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd110.html|0|0|||
+S||Indicador 1 (Tipo de elemento de entrada do nome da empresa)|0|0|1||X||1|P|110-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Raz„o social|0|0|a||X|||D||AI_|@autoridades.pft|||0||0|0|||
+S||Unidade subordinada|0|0|b||X|||||||||0||0|0|||
+S||Local da reuni„o|0|0|c||X|||||||||0||0|0|||
+S||Data da reuni„o|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X||1|P|relator.tab|||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
+T|111|Nome do evento|0|0|12acdefgjklnpqtu04||X|||D||CF_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd111.html|0|0|||
+S||Indicador 1 (Tipo de elemento de entrada do Nome do evento)|0|0|1||X||1|P|111-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nome do evento|0|0|a||X|2||D||CF_|@autoridades.pft|||0||0|0|||
+S||LocalizaÁ„o|0|0|c||X|||||||||0||0|0|||
+S||Data|0|0|d||X|||||||||0||0|0|||
+S||Unidade subordinada|0|0|e||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||Termo Relator|0|0|j||X||1|P|relator.tab|||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||N∫ de peÁa/secÁ„o/reuni„o|0|0|n||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Nome do evento|0|0|q||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
+T|130|TÌtulo uniforme|0|0|12adfghklmnoprst0|||||||||||1|http://www.loc.gov/marc/bibliographic/bd130.html|0|0|||
+S||Indicador 1 (n˙mero de caracteres sem preenchimento, 0-9)|0|0|1||X||1|P|130-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||TÌtulo|0|0|a||X|||||||||0||0|0|||
+S||Data da assinatura do tratado|0|0|d||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|0|m||X|||||||||0||0|0|||
+S||N∫ de peÁa/secÁ„o|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|0|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|0|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+H||2XX-24X: Campos relacionados ao tÌtulo e ao tÌtulo|0|0||||||||||||0||0|0|||
+T|240|TÌtulo uniforme|0|0|12adfghklmnoprs0|||||||||||1|http://www.loc.gov/marc/bibliographic/bd240.html|0|0|||
+S||Indicador 1|0|0|1||X||2|P|240-ind1.tab|||||0||0|0|||
+S||Indicador 2 (n˙mero de caracteres sem preenchimento, 0-9)|0|0|2||X||2|P|130-ind1.tab|||||0||0|0|||
+S||TÌtulo|0|0|a||X|||||||||0||0|0|||
+S||Data da assinatura do tratado|0|0|d||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|0|m||X|||||||||0||0|0|||
+S||N∫ de peÁa/secÁ„o|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|0|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|0|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+T|242|TÌtulo traduzido|0|1|12abcy|||||||||||1|http://www.loc.gov/marc/bibliographic/bd242.html|0|0|||
+S||Indicador 1 (TÌtulo adicionado entrada)|0|0|1||X||2|P|210-ind1.tab|||||0||0|0|||
+S||Indicador 2 (n˙mero de caracteres sem preenchimento, 0-9)|0|0|2||X||2|P|130-ind1.tab|||||0||0|0|||
+S||TÌtulo|0|0|a||X|||||||||0||0|0|||
+S||Resto do tÌtulo|0|0|b||X|||||||||0||0|0|||
+S||DeclaraÁ„o de responsabilidade, etc.|0|0|c||X|||||||||0||0|0|||
+S||CÛdigo do idioma|0|0|y||X|||||||||0||0|0|||
+T|245|DeclaraÁ„o de tÌtulo|1|0|12abcnp|||1||||||||1|http://www.loc.gov/marc/bibliographic/bd245.html|0|0|||
+S||Indicador 1 (TÌtulo adicionado entrada)|0|0|1||X||2|P|210-ind1.tab|||||0||0|0|||
+S||Indicador 2 (n˙mero de caracteres sem preenchimento, 0-9)|0|0|2||X||2|P|130-ind1.tab|||||0||0|0|||
+S||TÌtulo|0|0|a||X|||||||||0||0|0|||
+S||Resto do tÌtulo|0|0|b||X|||||||||0||0|0|||
+S||DeclaraÁ„o de responsabilidade|0|0|c||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||Nome da peÁa/secÁ„o|0|0|p||X|||||||||0||0|0|||
+T|246|Forma vari·vel de tÌtulo|0|1|12abinp|||||||||||1|http://www.loc.gov/marc/bibliographic/bd246.html|0|0|||
+S||Indicador 1 (Nota/controlador de entrada adicional)|0|0|1||X||2|P|028-ind2.tab|||||0||0|0|||
+S||Indicador 2 (Tipo de tÌtulo)|0|0|2||X||2|P|246-ind2.tab|||||0||0|0|||
+S||TÌtulo prÛprio|0|0|a||X|||||||||0||0|0|||
+S||Resto do tÌtulo|0|0|b||X|||||||||0||0|0|||
+S||Exibir texto|0|0|i||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||Nome da peÁa/secÁ„o|0|0|p||X|||||||||0||0|0|||
+T|247|TÌtulo anterior|0|1|12abfghnpx|||||||||||1|http://www.loc.gov/marc/bibliographic/bd247.html|0|0|||
+S||Indicador 1 (TÌtulo adicionado entrada)|0|0|1||X||1|P|210-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Controlador de notas)|0|0|2||X||1|P|247-ind2.tab|||||0||0|0|||
+S||TÌtulo|0|0|a||X|||||||||0||0|0|||
+S||Resto do tÌtulo|0|0|b||X|||||||||0||0|0|||
+S||Data ou designaÁ„o seq¸encial|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||N˙mero de sÈrie padr„o internacional|0|0|x||X|||||||||0||0|0|||
+H||25X-28X: Campos de ediÁ„o, impress„o, etc.|0|0||||||||||||0||0|0|||
+T|250|EdiÁ„o|0|1|12ab3|||||||||||1|http://www.loc.gov/marc/bibliographic/bd250.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||DeclaraÁ„o de ediÁ„o|0|0|a||X|||||||||0||0|0|||
+S||Restante declaraÁ„o de ed.|0|0|b||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|260|Impresso|0|1|12abcefg3|||1||||PA_|v260^a,if p(v260^b) then ` : `v260^b fi|v260||1|http://www.loc.gov/marc/bibliographic/bd260.html|0|0|||
+S||Indicador 1 (SequÍncia de declaraÁıes de publicaÁ„o)|0|0|1||X||1|P|260-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Local de publicaÁ„o|0|0|a||X|||D||PA_|v260^a|v260^a||0||0|0|||
+S||Nome da editora|0|0|b||X|||D||ED_|v260^b|v260^b||0||0|0|||
+S||Data de publicaÁ„o|0|0|c||X|||||||||0||0|0|||
+S||Local de fabricaÁ„o|0|0|e||X|||||||||0||0|0|||
+S||Fabricante|0|0|f||X|||||||||0||0|0|||
+S||Data de fabricaÁ„o|0|0|g||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|263|Data de PublicaÁ„o Projetada|0|0|12a|||||||||||1|http://www.loc.gov/marc/bibliographic/bd263.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Data prevista de publicaÁ„o|0|0|a||X|||||||||0||0|0|||
+T|264|Aviso de produÁ„o, publicaÁ„o, distribuiÁ„o, fabricaÁ„o e direitos autorais|0|1|12abc|||||||||||1|http://www.loc.gov/marc/bibliographic/bd264.html|0|0|||
+S||Indicador 1 (SequÍncia de declaraÁıes)|0|0|1||X||2|P|264-ind1.tab|||||0||0|0|||
+S||Indicador 2 (FunÁ„o da entidade)|0|0|2||X||2|P|264-ind2.tab|||||0||0|0|||
+S||Local de produÁ„o, publicaÁ„o, distribuiÁ„o, fabricaÁ„o|0|0|a||X|||||||||0||0|0|||
+S||Nome do produtor, editora, distribuidora, fabricante|0|0|b||X|||||||||0||0|0|||
+S||Data de produÁ„o, publicaÁ„o, distribuiÁ„o, fabricaÁ„o, ou aviso de direitos autorais|0|0|c||X|||||||||0||0|0|||
+H||3XX: DescriÁ„o fÌsica|0|0||||||||||||0||0|0|||
+T|300|DescriÁ„o fÌsica|0|1|12abce|||||||||||1|http://www.loc.gov/marc/bibliographic/bd300.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Extens„o|0|0|a||X|||||||||0||0|0|||
+S||Outros detalhes fÌsicos|0|0|b||X||1|P|300b.tab|||||0||0|0|||
+S||Dimensıes|0|0|c||X|||||||||0||0|0|||
+S||Material de acompanhamento|0|0|e||X|||||||||0||0|0|||
+T|336|Tipo de conte˙do|0|1|12ab023||||||||||  ^athree-dimentional form^2rdacontent|1|http://www.loc.gov/marc/bibliographic/bd336.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Termo tipo de conte˙do|0|0|a||X|||P|rdacontent.tab|||||0||0|0|||
+S||CÛdigo do tipo de conte˙do|0|0|b||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|337|Tipo de mÌdia|0|1|12ab023||||||||||  ^aunmediated^2rdamedia|1|http://www.loc.gov/marc/bibliographic/bd337.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Termo tipo de mÌdia|0|0|a||X||1|P|rdamedia.tab|||||0||0|0|||
+S||CÛdigo do tipo de mÌdia|0|0|b||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|338|Tipo de portador|0|1|12ab023||||||||||  ^aobject^2rdacarrier|1|http://www.loc.gov/marc/bibliographic/bd338.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Termo tipo portador|0|0|a||X||1|P|rdacarrier.tab|||||0||0|0|||
+S||CÛdigo do tipo de portadora|0|0|b||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|340|Meio fÌsico|0|1|12abcdefhijkmno023|||||||||||1|http://www.loc.gov/marc/bibliographic/bd340.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Base de material e configuraÁ„o|0|0|a||X|||||||||0||0|0|||
+S||Dimensıes|0|0|b||X|||||||||0||0|0|||
+S||Materiais aplicados ‡ superfÌcie|0|0|c||X|||||||||0||0|0|||
+S||TÈcnica de registro de informaÁıes|0|0|d||X|||||||||0||0|0|||
+S||Apoio|0|0|e||X|||||||||0||0|0|||
+S||Taxa/raz„o de produÁ„o|0|0|f||X|||||||||0||0|0|||
+S||LocalizaÁ„o dentro do meio|0|0|h||X|||||||||0||0|0|||
+S||EspecificaÁıes tÈcnicas do meio|0|0|i||X|||||||||0||0|0|||
+S||GeraÁ„o|0|0|j||X|||||||||0||0|0|||
+S||Layout|0|0|k||X|||||||||0||0|0|||
+S||Formato do livro|0|0|m||X|||||||||0||0|0|||
+S||Tamanho de letra|0|0|n||X|||||||||0||0|0|||
+S||Polaridade|0|0|o||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|351|OrganizaÁ„o e Arranjo de Materiais|0|1|12abc3|||||||||||1|http://www.loc.gov/marc/bibliographic/bd351.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||OrganizaÁ„o|0|0|a||X|||||||||0||0|0|||
+S||Arranjo|0|0|b||X|||||||||0||0|0|||
+S||NÌvel hier·rquico|0|0|c||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+H||4XX: Campos de declaraÁ„o de sÈrie|0|0||||||||||||0||0|0|||
+T|440|DeclaraÁ„o de sÈrie (registros antigos)|0|1|12anpvwx068|||||||||||1|https://www.loc.gov/marc/bibliographic/bd440.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|tab-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|130-ind1.tab|||||0||0|0|||
+S||TÌtulo|0|0|a||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Volume|0|0|v||X|||||||||0||0|0|||
+S||N˙mero de controle dos registros bibliogr·ficos|0|0|w||X|||||||||0||0|0|||
+S||ISSN|0|0|x||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade|0|0|0||X|||||||||0||0|0|||
+S||Linkage|0|0|6||X|||||||||0||0|0|||
+S||LigaÁ„o de campo e n˙mero seq¸encial|0|0|8||X|||||||||0||0|0|||
+T|490|DeclaraÁ„o de sÈrie|0|1|12avx|||||||||||1|http://www.loc.gov/marc/bibliographic/bd490.html|0|0|||
+S||Indicador 1 (PolÌtica de rastreamento de sÈries)|0|0|1||X||1|P|490-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||SÈrie|0|0|a||X|||||||||0||0|0|||
+S||Volume|0|0|v||X|||||||||0||0|0|||
+S||ISSN|0|0|x||X|||||||||0||0|0|||
+H||5XX: Campos de notas|0|0||||||||||||0||0|0|||
+T|500|Nota geral|0|1|12a35|||||||||||1|http://www.loc.gov/marc/bibliographic/bd500.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nota geral|0|0|a||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+T|501|Com Nota|0|1|12a5|||||||||||1|http://www.loc.gov/marc/bibliographic/bd501.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Com nota|0|0|a||X|||||||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+T|502|Nota de dissertaÁ„o|0|1|12abcdgo|||||||||||1|http://www.loc.gov/marc/bibliographic/bd502.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nota de dissertaÁ„o|0|0|a||X|||||||||0||0|0|||
+S||Tipo de grau|0|0|b||X|||||||||0||0|0|||
+S||Nome da instituiÁ„o que concede o auxÌlio|0|0|c||X|||||||||0||0|0|||
+S||Ano de graduaÁ„o concedido|0|0|d||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||Identificador de dissertaÁ„o|0|0|o||X|||||||||0||0|0|||
+T|504|Nota Bibliogr·fica|0|1|12ab|||||||||||1|http://www.loc.gov/marc/bibliographic/bd504.html|0|0|||
+S||Indicador 1 (Mostrar controlador constante)|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2 (NÌvel de designaÁ„o do conte˙do)|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Bibliografia, etc. nota|0|0|a||X|||||||||0||0|0|||
+S||N˙mero de referÍncias|0|0|b||X|||||||||0||0|0|||
+T|505|Nota de conte˙do formatado|0|1|12agrtu|||||||||||1|http://www.loc.gov/marc/bibliographic/bd505.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|505-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|505-ind2.tab|||||0||0|0|||
+S||Nota de conte˙do formatado|0|0|a||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||DeclaraÁ„o de responsabilidade|0|0|r||X|||||||||0||0|0|||
+S||TÌtulo|0|0|t||X|||||||||0||0|0|||
+S||Identificador Uniforme de Recursos|0|0|u||X|||||||||0||0|0|||
+T|520|Sum·rio|0|1|12abcu23|||||||||||1|http://www.loc.gov/marc/bibliographic/bd520.html|0|0|||
+S||Indicador 1 (Mostrar controlador constante)|0|0|1||X||1|P|520-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Sum·rio|0|0|a||X|||||||||0||0|0|||
+S||Expans„o da nota resumida|0|0|b||X|||||||||0||0|0|||
+S||AtribuiÁ„o da fonte|0|0|c||X|||||||||0||0|0|||
+S||Identificador Uniforme de Recursos|0|0|u||X|||||||||0||0|0|||
+S||Fonte|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|521|Nota do p˙blico alvo|0|1|12ab3|||||||||||1|http://www.loc.gov/marc/bibliographic/bd521.html|0|0|||
+S||Indicador 1 (Mostrar controlador constante)|0|0|1||X||1|P|521-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nota do p˙blico alvo|0|1|a||X|||||||||0||0|0|||
+S||Fonte|0|0|b||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+T|534|Nota sobre a vers„o original|0|1|12abcefklmnoptxz3|||||||||||1|http://www.loc.gov/marc/bibliographic/bd534.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Entrada principal do original|0|0|a||X|||||||||0||0|0|||
+S||DeclaraÁ„o de ediÁ„o do original|0|0|b||X|||||||||0||0|0|||
+S||PublicaÁ„o, distribuiÁ„o, etc. do original|0|1|c||X|||||||||0||0|0|||
+S||DescriÁ„o fÌsica, etc. do original|0|0|e||X|||||||||0||0|0|||
+S||DeclaraÁ„o em sÈrie do original|0|0|f||X|||||||||0||0|0|||
+S||TÌtulo chave do original|0|0|k||X|||||||||0||0|0|||
+S||LocalizaÁ„o do original|0|0|l||X|||||||||0||0|0|||
+S||Detalhes especÌficos do material|0|0|m||X|||||||||0||0|0|||
+S||Nota sobre o original|0|0|n||X|||||||||0||0|0|||
+S||Outro identificador de recursos|0|0|0||X|||||||||0||0|0|||
+S||Frase introdutÛria|0|0|p||X|||||||||0||0|0|||
+S||DeclaraÁ„o de tÌtulo do original|0|0|t||X|||||||||0||0|0|||
+S||ISSN|0|0|x||X|||||||||0||0|0|||
+S||N˙mero padr„o internacional do livro|0|0|z||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+H||6XX: Campos de acesso ao assunto|0|0||||||||||||0||0|0|||
+T|600|Nome pessoal|0|1|12abcdefghjklmnopqrstuvxyz0234|||1||||||||0||0|0|||
+S||Indicador 1 (Tipo de elemento de entrada de nome pessoal)|0|0|1||S||1|P|100-ind1.tab|||||1|http://www.loc.gov/marc/bibliographic/bd600.html|0|0|||
+S||Indicador 2 (Thesaurus)|0|0|2||S||1|P|600-ind2.tab|||||0||0|0|||
+S||Nome pessoal|0|0|a||X|||D||AU_|@autoridades.pft|||0||0|0|||
+S||NumeraÁ„o|0|0|b||X|||||||||0||0|0|||
+S||TÌtulos/palavras assoc. com nome|0|0|c||X|||||||||0||0|0|||
+S||Datas assoc. com nome|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||Qualificador de atribuiÁ„o|0|0|j||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|0|m||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|0|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Forma mais completa do nome|0|0|q||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|0|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|0|v||X|||||||||0||0|0|||
+S||Subdivis„o geral|0|0|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|0|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|610|Raz„o social|0|1|12abcdefghklmnoprstuvxyz0234|||1||||||||0||0|0|||
+S||Indicador 1 (Tipo de elemento de entrada do nome da empresa)|0|0|1||S||1|P|110-ind1.tab|||||0|http://www.loc.gov/marc/bibliographic/bd610.html|0|0|||
+S||Indicador 2 (Thesaurus)|0|0|2||S||1|P|600-ind2.tab|||||0||0|0|||
+S||Raz„o social|0|0|a||X|||D||AI_|@autoridades.pft|||0||0|0|||
+S||Unidade subordinada|0|0|b||X|||||||||0||0|0|||
+S||Local da reuni„o|0|0|c||X|||||||||0||0|0|||
+S||Data da reuni„o ou assinatura do tratado|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|0|m||X|||||||||0||0|0|||
+S||N˙mero de peÁa/secÁ„o/reuni„o|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|0|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|0|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|0|v||X|||||||||0||0|0|||
+S||Subdivis„o geral|0|0|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|0|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|611|Nome do evento|0|1|12acdefghjklnpqstuvxyz0234|||1||||||||0||0|0|||
+S||Indicador 1|0|0|1||X||1|P|110-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|600-ind2.tab|||||0||0|0|||
+S||Nome do evento|0|0|a||X|1||D||CF_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd611.html|0|0|||
+S||Local da reuni„o|0|0|c||X|||||||||0||0|0|||
+S||Data da reuni„o|0|0|d||X|||||||||0||0|0|||
+S||Unidade subordinada|0|0|e||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||Termo Relator|0|0|j||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||N∫ de peÁa/secÁ„o|0|0|n||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Nome do evento apÛs o elemento de entrada do nome da jurisdiÁ„o|0|0|q||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|0|v||X|||||||||0||0|0|||
+S||Subdivis„o geral|0|0|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|0|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|630|TÌtulo uniforme|0|1|12adefghklmnoprstvxyz0234||X|1||||||||1|http://www.loc.gov/marc/bibliographic/bd630.html|0|0|||
+S||Indicador 1 (caracteres sem preenchimento)|0|0|1||X||1|P|130-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Thesaurus)|0|0|2||X||1|P|600-ind2.tab|||||0||0|0|||
+S||TÌtulo uniforme|0|0|a||X|||||||||0||0|0|||
+S||Data da assinatura do tratado|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|1|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|1|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|1|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|1|m||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|1|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave da m˙sica|0|1|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|1|v||X|||||||||0||0|0|||
+S||Subdivis„o geral|0|1|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|1|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|1|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|650|TÛpico|0|1|12abcdegvxyz0234||X|1||D||MA_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd650.html|0|0|||
+S||Indicador 1 (NÌvel de assunto)|0|0|1||X||1|P|650-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Thesaurus)|0|0|2||X||1|P|600-ind2.tab|||||0||0|0|||
+S||Termo principal|0|0|a||X|||||||||0||0|0|||
+S||Termo tÛpico apÛs elemento de entrada do nome geogr·fico|0|0|b||X|||||||||0||0|0|||
+S||Local do evento|0|0|c||X|||||||||0||0|0|||
+S||Datas ativas|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|0|v||X|||||||||0||0|0|||
+S||Subdivis„o geral|0|0|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|0|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|651|Nome geogr·fico|0|1|12aegvxyz0234|||||||||||1|http://www.loc.gov/marc/bibliographic/bd651.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2 (Thesaurus)|0|0|2||X||1|P|651-ind2.tab|||||0||0|0|||
+S||Nome geogr·fico|0|0|a||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|0|v||X|||||||||0||0|0|||
+S||Subdivis„o geral|0|0|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|0|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|653|Termo Ìndice n„o controlado|0|1|12a|||||||||||1|http://www.loc.gov/marc/bibliographic/bd653.html|0|0|||
+S||Indicador 1 (NÌvel do termo de Ìndice)|0|0|1||X||1|P|650-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Tipo de termo ou nome)|0|0|2||X||1|P|653-ind2.tab|||||0||0|0|||
+S||Dados de gÍnero/forma ou termo de foco|0|0|a||X|||||||||0||0|0|||
+T|654|Termos TÛpicos de entrada-frente adicionados|0|1|12abcevyz0234|||||||||||1|http://www.loc.gov/marc/bibliographic/bd654.html|0|0|||
+S||Indicador 1 (NÌvel de assunto)|0|0|1||X||1|P|650-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Termo de foco|0|0|a||X|||||||||0||0|0|||
+S||Termo sem foco|0|0|b||X|||||||||0||0|0|||
+S||DesignaÁ„o Facet/hierarchy|0|0|c||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|0|v||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|0|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|0|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+T|655|Termo Ìndice gÍnero/forma|0|1|12abcvxyz0235|||||||||||1|http://www.loc.gov/marc/bibliographic/bd655.html|0|0|||
+S||Indicador 1 (Tipo de cabeÁalho)|0|0|1||X||1|P|655-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Thesaurus)|0|0|2||X||1|P|655-ind2.tab|||||0||0|0|||
+S||Dados de gÍnero/forma ou termo de foco|0|0|a||X|||||||||0||0|0|||
+S||Termo sem foco|0|0|b||X|||||||||0||0|0|||
+S||DesignaÁ„o Facet/hierarchy|0|0|c||X|||||||||0||0|0|||
+S||Subdivis„o do formul·rio|0|1|v||X|||||||||0||0|0|||
+S||Subdivis„o gereral|0|1|x||X|||||||||0||0|0|||
+S||Subdivis„o cronolÛgica|0|1|y||X|||||||||0||0|0|||
+S||Subdivis„o geogr·fica|0|1|z||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade|0|0|0||X|||||||||0||0|0|||
+S||Fonte do termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+H||7XX-75XX: Campos de entrada adicionados|0|0||||||||||||0||0|0|||
+T|700|Nome pessoal|0|0|12abcdequ04||X|1||D||AU_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd700.html|0|0|||
+S||Indicador 1 (Tipo de elemento de entrada de nome pessoal)|0|0|1||X||1|P|100-ind1.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nome pessoal|0|0|a||X|||D||AU_|@autoridades.pft|||0||0|0|||
+S||NumeraÁ„o|0|0|b||X|||||||||0||0|0|||
+S||TÌtulos assoc. com nome|0|0|c||X|||||||||0||0|0|||
+S||Datas assoc. com nome|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X||1|P|relator.tab|||||0||0|0|||
+S||Forma mais completa do nome|0|0|q||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
+T|710|Raz„o social|0|1|12abcdefghiklmnoprstux0345||X|1||||AI_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd710.html|0|0|||
+S||Indicador 1 (Tipo de elemento de entrada do nome da empresa)|0|0|1||X||1|P|110-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Tipo de entrada adicional)|0|0|2||X||1|P|700-ind2.tab|||||0||0|0|||
+S||Raz„o social|0|0|a||X|||D||AI_|@autoridades.pft|||0||0|0|||
+S||Unidade subordinada|0|0|b||X|||||||||0||0|0|||
+S||Local da reuni„o|0|0|c||X|||||||||0||0|0|||
+S||Data da reuni„o|0|0|d||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X||1|P|relator.tab|||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||InformaÁıes sobre o relacionamento|0|0|i||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|0|m||X|||||||||0||0|0|||
+S||N∫ de peÁa/secÁ„o/reuni„o|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|0|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|0|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||N˙mero de sÈrie padr„o internacional|0|0|x||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+T|711|Nome do evento|0|1|12acdefghijklnpqstux0345||X|1||||CF_|@autoridades.pft|||1|http://www.loc.gov/marc/bibliographic/bd711.html|0|0|||
+S||Indicador 1 (Tipo de elemento de entrada do Nome do evento)|0|0|1||X||1|P|110-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Tipo de entrada adicional)|0|0|2||X||1|P|700-ind2.tab|||||0||0|0|||
+S||Nome do evento|0|0|a||X|||D||CF_|@autoridades.pft|||0||0|0|||
+S||Local da reuni„o|0|0|c||X|||||||||0||0|0|||
+S||Data da reuni„o|0|0|d||X|||||||||0||0|0|||
+S||Unidade subordinada|0|0|e||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||InformaÁıes sobre o relacionamento|0|0|i||X|||||||||0||0|0|||
+S||Termo Relator|0|0|j||X||1|P|relator.tab|||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||N∫ de peÁa/secÁ„o/reuni„o|0|0|n||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Nome do evento apÛs o elemento de entrada do nome da jurisdiÁ„o|0|0|q||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||AfiliaÁ„o|0|0|u||X|||||||||0||0|0|||
+S||N˙mero de sÈrie padr„o internacional|0|0|x||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X||1|P|relatorcode.tab|||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+T|730|TÌtulo uniforme|0|1|12adfghiklmnoprstx035|||1||||||||1|http://www.loc.gov/marc/bibliographic/bd730.html|0|0|||
+S||Indicador 1 (caracteres sem preenchimento)|0|0|1||X||1|P|130-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Tipo de entrada adicional)|0|0|2||X||1|P|700-ind2.tab|||||0||0|0|||
+S||TÌtulo uniforme|0|0|a||X|||||||||0||0|0|||
+S||Data de assinatura do tratado|0|1|d||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||InformaÁıes sobre o relacionamento|0|0|i||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|1|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|1|m||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|1|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o de m˙sica|0|1|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|1|r||X|||||||||0||0|0|||
+S||Vers„o|0|1|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||N˙mero de sÈrie padr„o internacional|0|0|x||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||ISSN|0|0|5||X|||||||||0||0|0|||
+T|740|TÌtulo analÌtico|0|1|12ahnp5|||||||||||1|http://www.loc.gov/marc/bibliographic/bd740.html|0|0|||
+S||Indicador 1 (caracteres sem preenchimento)|0|0|1||X||1|P|130-ind1.tab|||||0||0|0|||
+S||Indicador 2 (Tipo de entrada adicional)|0|0|2||X||1|P|700-ind2.tab|||||0||0|0|||
+S||TÌtulo analÌtico|0|0|a||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+T|751|Adicionado Nome Geogr·fico de Entrada|0|1|12ae0234|||||||||||1|http://www.loc.gov/marc/bibliographic/bd751.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2|0|0|2||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Nome geogr·fico|0|0|a||X|||||||||0||0|0|||
+S||Termo Relator|0|0|e||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade|0|0|0||X|||||||||0||0|0|||
+S||Fonte do tÌtulo ou termo|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||CÛdigo do relator|0|0|4||X|||||||||0||0|0|||
+H||80X-83X: SÈrie acrescentou campos de entrada|0|0||||||||||||0||0|0|||
+T|830|SÈrie TÌtulo de entrada-uniforme acrescentado|0|1|12adfghklmnoprstvwx035|||||||||||1|http://www.loc.gov/marc/bibliographic/bd830.html|0|0|||
+S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||0|0|||
+S||Indicador 2 (caracteres sem preenchimento)|0|0|2||X||1|P|130-ind1.tab|||||0||0|0|||
+S||TÌtulo uniforme|0|0|a||X|||||||||0||0|0|||
+S||Data da assinatura do tratado|0|0|d||X|||||||||0||0|0|||
+S||Data de um trabalho|0|0|f||X|||||||||0||0|0|||
+S||InformaÁıes diversas|0|0|g||X|||||||||0||0|0|||
+S||MÈdio|0|0|h||X|||||||||0||0|0|||
+S||SubtÌtulo do formul·rio|0|0|k||X|||||||||0||0|0|||
+S||Idioma de uma obra|0|0|l||X|||||||||0||0|0|||
+S||Meio de apresentaÁ„o para m˙sica|0|0|m||X|||||||||0||0|0|||
+S||N˙mero de parte/secÁ„o de uma obra|0|0|n||X|||||||||0||0|0|||
+S||DeclaraÁ„o arranjada para m˙sica|0|0|o||X|||||||||0||0|0|||
+S||Nome da parte/secÁ„o de uma obra|0|0|p||X|||||||||0||0|0|||
+S||Chave para a m˙sica|0|0|r||X|||||||||0||0|0|||
+S||Vers„o|0|0|s||X|||||||||0||0|0|||
+S||TÌtulo de uma obra|0|0|t||X|||||||||0||0|0|||
+S||DesignaÁ„o de volume/seq¸encial|0|0|v||X|||||||||0||0|0|||
+S||N˙mero de controle dos registros bibliogr·ficos|0|0|w||X|||||||||0||0|0|||
+S||N˙mero de sÈrie padr„o internacional|0|0|x||X|||||||||0||0|0|||
+S||N˙mero de controle de registro de autoridade ou n˙mero padr„o|0|0|0||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+S||InstituiÁ„o ‡ qual se aplica o campo|0|0|5||X|||||||||0||0|0|||
+H||84X-88X: Campos de suporte, localizaÁıes, gr·ficos alternativos, etc.|0|0||||||||||||0||0|0|||
+T|856|LocalizaÁ„o e acesso eletrÙnico|0|1|12acdflnoprsuvwxyz23||X|||||||||1|http://www.loc.gov/marc/bibliographic/bd856.html|0|0|||
+S||Indicador 1 (MÈtodo de acesso)|0|0|1||X||1|P|856-ind1.tab|||||0||0|0|||
+S||Indicador 2 (RelaÁ„o)|0|0|2||X||1|P|856-ind2.tab|||||0||0|0|||
+S||Nome do Servidor|0|0|a||X|||||||||0||0|0|||
+S||InformaÁıes sobre a compress„o|0|0|c||X|||||||||0||0|0|||
+S||Caminho|0|0|d||X|||||||||0||0|0|||
+S||Nome eletrÙnico|0|0|f||X|||||||||0||0|0|||
+S||Logon|0|0|l||X|||||||||0||0|0|||
+S||Nome do local de hospedagem|0|0|n||X|||||||||0||0|0|||
+S||Sistema operacional|0|0|o||X|||||||||0||0|0|||
+S||Porto|0|0|p||X|||||||||0||0|0|||
+S||ConfiguraÁ„o|0|0|r||X|||||||||0||0|0|||
+S||Tamanho do arquivo|0|0|s||X|||||||||0||0|0|||
+S||Identificador Uniforme de Recursos|0|0|u||X|||||||||0||0|0|||
+S||MÈtodo de acesso por hora disponÌvel|0|0|v||X|||||||||0||0|0|||
+S||N˙mero de controle recorde|0|0|w||X|||||||||0||0|0|||
+S||Nota n„o-p˙blica|0|0|x||X|||||||||0||0|0|||
+S||Texto do link|0|0|y||X|||||||||0||0|0|||
+S||Nota p˙blica|0|0|z||X|||||||||0||0|0|||
+S||MÈtodo de acesso|0|0|2||X|||||||||0||0|0|||
+S||Materiais especificados|0|0|3||X|||||||||0||0|0|||
+H||9XX: Campos locais|0|0||||||||||||0||0|0|||
+F|911|FRBR-key|0|1|||X|||||||||0||0|0|||
+F|980|Data da ˙ltima modificaÁ„o|0|1|||OD|||||||||0||0|0|||

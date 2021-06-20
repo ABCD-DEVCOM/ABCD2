@@ -1,7 +1,17 @@
-#|NÃ£o hÃ¡ partes ou nÃ£o especificado
-d|Partes instrumentais e vocais
-e|Partes instrumentais
-f|Partes vocais
-n|NÃ£o se aplica
+a|Partitura completa
+b|Miniatura ou escore de estudo
+c|acompanhamento reduzido para teclado
+d|Voice score com acompanhamento omitido
+e|Partitura condensada ou partitura piano-condutor
+g|Fechar pontuação
+h|Corus score
+i|Condensed score
+j|Parte condutor-condutor de desempenho
+k|Vocal score
+l|Score
+m|Múltiplos formatos de pontuação
+n|Não se aplica
+p|Piano pontuação
 u|Desconhecido
-||InformaÃ§Ã£o nÃ£o fornecida
+z|Outros
+-| Nenhuma tentativa de codificar
