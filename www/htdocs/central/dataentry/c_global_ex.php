@@ -1,6 +1,8 @@
 <?php
 /* Modifications
 20210613 fho4abcd remove password, lineends
+20210623 fho4abcd Replaced helper code fragment by included file, improve backbutton, add page title, small html improvements
+20210623 fho4abcd Expand echo into html (readability), translate string, enable click on MFN for all situations
 */
 
 session_start();
@@ -9,17 +11,15 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 
-if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!="")
-	$arrHttp["Opcion"]="buscar";
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
 include("../config.php");
-
-
 include("../lang/soporte.php");
 include("../lang/admin.php");
 set_time_limit(0);
+include("../common/header.php");
+$backtoscript="../dataentry/c_global.php"; // The default return script
 
-
+/* ===================================================== */
 function CambiarCampo($Mfn,$ValorCapturado,$Tag){
 global $xWxis,$db_path,$Wxis,$arrHttp,$wxisUrl;
    	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Mfn=$Mfn&count=1";
@@ -27,7 +27,7 @@ global $xWxis,$db_path,$Wxis,$arrHttp,$wxisUrl;
  	$contenido="";
  	$IsisScript=$xWxis."actualizar_cg.xis";
 	include("../common/wxis_llamar.php");
-	foreach ($contenido as $value) echo "$value<br>";
+	foreach ($contenido as $value) echo "$value";
  	$nfilas=0;
 
 }
@@ -170,6 +170,7 @@ global $arrHttp,$ValorCapturado,$Cambiado;
 
 	}
 }
+/* ===================================================== */
 
 
 include("leer_fdt.php");
@@ -181,13 +182,9 @@ global  $arrHttp,$xWxis;
 // INICIO DEL PROGRAMA
 // ==================================================================================================
 
-//
-
-
-
 //foreach ($arrHttp as $val=>$value) echo "$val=$value<br>";
-include ("../common/header_display.php");
 ?>
+<body>
 <script>
 w=135
 h=135
@@ -202,28 +199,36 @@ function Presentar(Mfn){
 	msgwin.focus()
 }
 </script>
-<body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["cg_titulo"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"c_global.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";?>
-
+<?php $backtourl=$backtoscript."?base=".$arrHttp["base"];
+        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
+?>
 		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
+<?php $ayuda="cglobal.html"; include "../common/inc_div-helper.php"; ?>
+<div class=middle form>
+    <div class=formContent>
+
+<form name=tabla method=post action=c_global_ex.php>
+<div align=center>
 <?php
 $base =$arrHttp["base"];
 $cipar =$arrHttp["cipar"];
-$arrHttp["login"]=$_SESSION["login"];
-$login=$arrHttp["login"];
+if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!="")	$arrHttp["Opcion"]="buscar";
+
 if (isset($arrHttp["to"])) $MaxMfn=$arrHttp["to"];
 
 //foreach ($arrHttp as $key => $value) echo "$key = $value <br>";
 // se lee el archivo mm.fdt
+$arrHttp["login"]=$_SESSION["login"];
+$login=$arrHttp["login"];
 if ($arrHttp["login"]==""){
   	echo $msgstr["menu_noau"];
   	die;
@@ -238,83 +243,76 @@ foreach ($Fdt as $tag=>$linea){
 
 //echo $arrHttp["anterior"];
 if (isset($arrHttp["actual"])) $ValorAnterior=explode("\r",$arrHttp["actual"]);
-include("../common/header.php");
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/cglobal_ex.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/cglobal_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: c_global_ex.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-
-	<form name=tabla method=post action=c_global_ex.php>
-	<br><br><center>
-";
-    if (isset($arrHttp["global_C"])){
-		$T=explode('|',$arrHttp["global_C"]);
-		$tit= $Titulos[$T[0]];
-	    $tx=explode('|',$tit);
-		echo "<strong>(".$T[0].") ".$tx[1]."</strong>";
-		$Tag=$T[0];
-		while (strlen($Tag)<3) $Tag="0".$Tag;
-	}
-	echo "<center><div style=\"width:700px;border-style:solid;border-width:1px; \">";
-	switch ($arrHttp["tipoc"]){
-		case "agregar":
-	  		$msg_accion=$msgstr["cg_add"];
-	  		break;
-	  	case "agregarocc":
-	  		$msg_accion=$msgstr["cg_addocc"];
-	  		break;
-	  	case "modificar":
-	  		$msg_accion= $msgstr["cg_modify"];
-	  		break;
-	  	case "modificarocc":
-	  		$msg_accion= $msgstr["cg_modifyocc"];
-	  		break;
-	  	case "dividir":
-	  		$msg_accion= $msgstr["cg_split"];
-	  		break;
-	 	case "mover":
-	  		$msg_accion= $msgstr["cg_move"];
-	  		break;
-	  	case "eliminar":
-	  		$msg_accion= $msgstr["cg_delete"];
-	  		break;
-	 	case "eliminarocc":
-	 		$msg_accion= $msgstr["cg_deleteocc"];
-	 		break;
-	}
-	if (isset($arrHttp["tipoa"])){
-		$msg_accion.=". ".$msgstr["cg_scope"].": ";
-		switch ($arrHttp["tipoa"]){
-			case "frase":
-				$msg_accion.=$msgstr["cg_field"];
-				break;
-			case "cadena":
-				$msg_accion.=$msgstr["cg_part"];
-				break;
-		}
-	}
-	echo "<strong>$msg_accion</strong><br>";
-	if (isset($ValorAnterior)){
-
-		echo "<strong>".$msgstr["cg_locate"].": </strong>";
-		if ($arrHttp["tipoc"]!="dividir"){
-			foreach ($ValorAnterior as $value) echo stripslashes($value)."<br>";
-		}
-	}
-	echo $msgstr["g_newval"].": <font color=#222222>".stripslashes($arrHttp["nuevo"])."</font>";
-	echo "</div>";
+if (isset($arrHttp["global_C"])){
+    $T=explode('|',$arrHttp["global_C"]);
+    $tit= $Titulos[$T[0]];
+    $tx=explode('|',$tit);
+    ?>
+    <h3><?php echo $msgstr["cg_titulo"];?>
+        &nbsp;&nbsp;&rarr;&nbsp;&nbsp;(<?php echo $T[0]?>)&nbsp; <?php echo $tx[1];?></h3>
+    <?php
+    $Tag=$T[0];
+    while (strlen($Tag)<3) $Tag="0".$Tag;
+}
+switch ($arrHttp["tipoc"]){
+    case "agregar":
+        $msg_accion=$msgstr["cg_add"];
+        break;
+    case "agregarocc":
+        $msg_accion=$msgstr["cg_addocc"];
+        break;
+    case "modificar":
+        $msg_accion= $msgstr["cg_modify"];
+        break;
+    case "modificarocc":
+        $msg_accion= $msgstr["cg_modifyocc"];
+        break;
+    case "dividir":
+        $msg_accion= $msgstr["cg_split"];
+        break;
+    case "mover":
+        $msg_accion= $msgstr["cg_move"];
+        break;
+    case "eliminar":
+        $msg_accion= $msgstr["cg_delete"];
+        break;
+    case "eliminarocc":
+        $msg_accion= $msgstr["cg_deleteocc"];
+        break;
+}
+if (isset($arrHttp["tipoa"])){
+    $msg_accion.=". ".$msgstr["cg_scope"].": ";
+    switch ($arrHttp["tipoa"]){
+        case "frase":
+            $msg_accion.=$msgstr["cg_field"];
+            break;
+        case "cadena":
+            $msg_accion.=$msgstr["cg_part"];
+            break;
+    }
+}
 ?>
-<center>
-<table bgcolor=#cccccc cellspacing=1 border=0 cellpadding=5>
-<tr><td bgcolor=white align=center>Mfn</td><td bgcolor=white align=center>
-    </td><td bgcolor=white align=center></td>
+
+
+<div style='width:700px;border-style:solid;border-width:1px;text-align:center'>
+    <strong><?php echo $msg_accion;?></strong><br>
+    <?php
+    if (isset($ValorAnterior)){
+        echo "<strong>".$msgstr["cg_locate"].": </strong>";
+        if ($arrHttp["tipoc"]!="dividir"){
+            foreach ($ValorAnterior as $value) echo stripslashes($value)."<br>";
+        }
+    }
+    ?>
+    <strong><?php echo $msgstr["g_newval"].": "?></strong><font color=blue><?php echo stripslashes($arrHttp["nuevo"])?></font>
+</div> <!-- end of border div-->
+
+<table bgcolor=#cccccc cellspacing=2 border=0 cellpadding=5>
+    <tr>
+        <th style='text-align:center'>MFN</th>
+        <th></th>
+        <th></th>
+    </tr>
 <?php
 if (isset($T[0]))
 	$Formato="(V".$T[0].'+|$$|)';
@@ -393,12 +391,17 @@ foreach ($arr_mfn as $Mfn){
         			$Actualizar="S";
             	}
         	}
-        	echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2></td>\n<td bgcolor=white>";
+            ?>
+        	<tr  style='background-color:white;'>
+                <td style='text-align:right'><?php echo $seq;?> <a href=javascript:Presentar(<?php echo $Mfn;?>)><?php echo $Nreg?></a></td>
+                <td><?php echo $cont?></td>
+                <td>
+            <?php
 			if ($Actualizar=="S"){
-				echo " <b>OK!!!</b>";
+				echo "OK!!!";
 				CambiarCampo($Nreg,$ValorCapturado,$Tag);
 			}
-			echo "</td>";
+			echo "</td></tr>";
 			continue;
 		}
 		foreach($contenido_c as $cont){
@@ -415,8 +418,13 @@ foreach ($arr_mfn as $Mfn){
 							if ($cont!="")
 	  							$ValorCapturado.="a".$Tag."²" .$cont."²\n";
 						}else{
-							echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2>".$cont."</td>\n<td bgcolor=white>";
-							echo " <b>OK!!!</b>";
+                            ?>
+                            <tr style='background-color:white;'>
+                                <td style='text-align:right'><?php echo $seq;?> <a href=javascript:Presentar(<?php echo $Mfn;?>)><?php echo $Nreg?></a></td>
+                                <td><font size=2><?php echo $cont?></font></td>
+                                <td><b>OK!!!</b></td>
+                            </tr>
+                            <?php
 							$Actualizar="S";
 							break;
 						}
@@ -429,12 +437,16 @@ foreach ($arr_mfn as $Mfn){
 					$Tag="";
 				if (!isset($Tag)) $Tag="";
 				EjecutarCambio($Mfn,"",$Tag,$cont);
-				echo $arrHttp["nuevo"];
 				if ($Cambiado==""){
 					$ValorCapturado.="a".$Tag."²" .$cont."²\n";
 				}else{
-					echo "<tr><td bgcolor=white>$seq <a href=javascript:Presentar($Mfn)>".$Nreg."</a></td><td bgcolor=white><font size=2>".$cont."</td>\n<td bgcolor=white>";
-					echo " <b>OK!!!</b>";
+                    ?>
+					<tr style='background-color:white;'>
+                        <td style='text-align:right'><?php echo $seq;?> <a href=javascript:Presentar(<?php echo $Mfn;?>)><?php echo $Nreg?></a></td>
+                        <td><font size=2><?php echo $cont?></font></td>
+                        <td><b>OK!!!</b></td>
+                    </tr>
+                    <?php
 					$Actualizar="S";
 					break;
 				}
@@ -444,17 +456,23 @@ foreach ($arr_mfn as $Mfn){
 		if ($Actualizar=="S"){
 			CambiarCampo($Nreg,$ValorCapturado,$Tag);
 		}else{
-			echo "<tr><td bgcolor=white>$Nreg</td>";
-			echo "<td bgcolor=white>No se pudo realizar el cambio</td>" ;
+            ?>
+			<tr style='background-color:white;'>
+                <td style='text-align:right'><?php echo $seq;?> <a href=javascript:Presentar(<?php echo $Mfn;?>)><?php echo $Nreg?></a></td>
+                <td style='color:blue'><?php echo $msgstr["cg_nochange"];?></td>
+                <td></td>
+            </tr>
+            <?php
 		}
 		//if ($arrHttp["Opcion"]=='buscar') $tope=$hasta;
 		flush();
     	ob_flush();
 	}
 }
-
-echo "</table>";
-echo "<script>waitwin.close()</script>";
+?>
+</table>
+<script>waitwin.close()</script>
+<?php
 switch ($arrHttp["Opcion"]){
   	case "rango":
   		$arrHttp["from"]=$Mfn+1;
@@ -494,14 +512,12 @@ if ($Mfn<$hasta){
 
 }
 ?>
-</td>
+</div>
 </form>
-</table>
 <form name=menu method=post action=c_global.php>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
 </form>
-<p>
 </div>
 </div>
 <?php include("../common/footer.php")?>
