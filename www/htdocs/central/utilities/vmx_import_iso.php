@@ -8,6 +8,7 @@
 20210526 fho4abcd Detect non-executable working folder. Show number of found files
 20210527 fho4abcd bug repair: is_executable does not work for windows folders
 20210605 fh04abcd Remove isotag1=3000 from command to avoid creation of extra fields. Translations
+20210624 fho4abcd Import only if second screen was executed (and not immediately during list presentation)
 */
 global $arrHttp;
 set_time_limit(0);
@@ -150,7 +151,7 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
         </table>
     </form>
     <?php
-} else {  /* - Last screen: execution and result -*/
+} else if ($confirmcount>1){  /* - Last screen: execution and result -*/
     $file_label=$msgstr["archivo"].": ";
     $file_value=$isofile;
     ?>
