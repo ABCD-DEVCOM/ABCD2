@@ -20,8 +20,9 @@
  *
  * AUTHOR   Fred Hommersom
  * HISTORY:
- *      2021-06-04:(fho) Initial version
- *      2021-06-08:(fho) print feedback to stdout
+ *      2021-06-04:(fho) Initial version (1.0)
+ *      2021-06-08:(fho) print feedback to stdout (1.1)
+ *      2021-06-25:(fho) improve display of help (1.2)
  *_____________________________________________________________________
  * Call tree    : main
  *              :   processFile
@@ -31,6 +32,7 @@
  *              :       readTerminator
  *              :       readField
  *              :       convertRecord
+ *              :           convertField
  *              :       writeRecord
  *              :   q00Help
 *********************************************************************/
@@ -43,7 +45,7 @@
 #include <ctype.h>
 #include <errno.h>
 
-#define VERSION "1.1"
+#define VERSION "1.2"
 #define isStrNull(str) (str==NULL || (int)strlen(str) == 0)
 
 #ifdef __linux__ 
@@ -914,27 +916,28 @@ void q00Help( int helptype )
     }
     else {
         fprintf(stdout, "\
-Function: This program converts a ISO-2709 file encoded in ISO-8859-1 into an ISO-2709 file encoded in UTF-8.\n\
+Function: This program converts an ISO-2709 file encoded in ISO-8859-1\n\
+                           into an ISO-2709 file encoded in UTF-8.\n\
 Commandline options:\n\
           -i 'iso_file_in_iso-8859-1' -o 'iso_file_in_utf-8'\n\
           [-c 'conversion'] [-f 'level'] [-t 'terminator' [-n] [-v] [-h]\n\
   options:\n\
    -c - Conversion directive. Default=iw\n\
-   ------ n  = no conversion,\n\
-   ------ i  = convert ISO8859-1\n\
-   ------ w  = convert Windows-1252 delta\n\
-   ------ iw = convert ISO8859-1 + Windows-1252 delta\n\
+          n  = no conversion,\n\
+          i  = convert ISO8859-1\n\
+          w  = convert Windows-1252 delta\n\
+          iw = convert ISO8859-1 + Windows-1252 delta\n\
    -f - Feedback level directive. default=0 \n\
-   ------ 0  = no additional feedback.\n\
-   ------ 1  = print leader of first record\n\
-   ------ 2  = print modfied fields\n\
-   ------ 3  = print leaders + modified fields \n\
-   -i - Path to csv inputfile to be converted to ISO-2709.\n\
+          0  = no additional feedback.\n\
+          1  = print leader of first record\n\
+          2  = print modfied fields\n\
+          3  = print leaders + modified fields \n\
+   -i - Path to ISO-2709 inputfile encoded in ISO-8859-1 to be converted to UTF-8 encoding.\n\
    -n - Do not split isorecord into lines of 80 characters. Default is split (required by import)\n\
    -o - Path to iso outputfile.\n\
    -t - Terminator indicator for the output file\n\
-   ------ hash = Field and record terminator the # sign (default)\n\
-   ------ norm = Conform ISO-2709: Field terminator=IS2(RS). Record terminator=IS3(GS)\n\
+          hash = Field and record terminator the # sign (default)\n\
+          norm = Conform ISO-2709: Field terminator=IS2(RS). Record terminator=IS3(GS)\n\
    -v - version information\n\
    -h - usage/function information (this message)\n\
 Example 1: ./isofile_iso_to_utf -i mydownload.iso -o myupload.iso\n\
