@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210608 fho4abcd Created
+20210625 fho4abcd better output
 */
 include("../config.php");
 echo "<hr>";
@@ -21,12 +22,13 @@ echo "<p><font color=blue>Testing the execution of  <b>$cnvexe</b></font><br>";
 $strINV=$cnvexe." -h 2>&1";
 echo "<strong>Command line: $strINV</STRONG>";
 echo "<div style='font-family:courier;font-size:12px'>";
+echo "<pre>";
 exec($strINV, $output,$t);
 $straux="";
 for($i=0;$i<count($output);$i++)
 {
 echo $output[$i]."<br>";
 }
-echo "</div>";
+echo "</pre></div>";
 
 ?>
