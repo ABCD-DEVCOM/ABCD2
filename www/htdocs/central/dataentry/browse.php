@@ -24,6 +24,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * == END LICENSE ==
+ * 2021-06-25 rogercgui - Creating a function to correct the table footer, Correction of the direction of the arrow in the "Last" option
 */
 //
 // SHOWS THE RECORD OF A DATABASE IN A TABLE VIEW
@@ -39,10 +40,14 @@ include("../lang/dbadmin.php");
 
 include("../lang/admin.php");
 include("../lang/prestamo.php");
-if (!isset($arrHttp["bymfn"])) {	unset($_SESSION["Browse_Expresion"]);}else{
+if (!isset($arrHttp["bymfn"])) {
+	unset($_SESSION["Browse_Expresion"]);
+}else{
 	if (isset($arrHttp["Expresion"])){
 		$_SESSION["Browse_Expresion"] = $arrHttp["Expresion"];
-	}else{		if (isset($_SESSION["Browse_Expresion"]))  $arrHttp["Expresion"]=$_SESSION["Browse_Expresion"];	}
+	}else{
+		if (isset($_SESSION["Browse_Expresion"]))  $arrHttp["Expresion"]=$_SESSION["Browse_Expresion"];
+	}
 }
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
@@ -98,7 +103,7 @@ if (strpos($base,'^')===false){
 }
 $Permiso=$_SESSION["permiso"];
 if ($Permiso==""){
-	echo "<br><br><h2>".$msgstr["menu_noau"]."<h2>";
+	echo "<br><h2>".$msgstr["menu_noau"]."<h2>";
 	die;
 }
 
@@ -140,14 +145,17 @@ if (!isset($arrHttp["Expresion"])){
 include("../common/header.php");
 ?>
 <script>
+
 xEliminar="";
 Mfn_eliminar=0;
-function  ShowDeleted(){	if (document.forma1.showdeleted.checked)
+function  ShowDeleted(){
+	if (document.forma1.showdeleted.checked)
 		document.browse.showdeleted.value="yes"
 	else
 		document.browse.showdeleted.value="no"
 	document.browse.from.value=1
-	document.browse.submit()}
+	document.browse.submit()
+}
 function Browse(){
 	if (Indices=="Y") document.browse.Expresion.value=""
 	document.browse.bymfn.value="Y"
@@ -209,7 +217,7 @@ alert(Accion)
 		document.diccionario.id.value=t[1]
 		document.diccionario.Opcion.value="buscar"
 		document.diccionario.submit()
-	}else{
+	} else {
 		if (Indices=="Y")document.diccionario.Expresion.value=document.forma1.expre.value
   		if (document.forma1.showdeleted.checked) {
 			document.browse.showdeleted.value="yes"
@@ -243,13 +251,17 @@ function Eliminar(Mfn){
 	}
 }
 
-function Mostrar(Mfn){	msgwin=window.open("show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
-	msgwin.focus()}
+function Mostrar(Mfn){
+	msgwin=window.open("show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
+	msgwin.focus()
+}
 </script>
+
+<body>
+
 <?php
-echo "<body>";
-include("../common/institutional_info.php");
-$encabezado="&encabezado=s";
+	include("../common/institutional_info.php");
+	$encabezado="&encabezado=s";
 ?>
 
 <div class="sectionInfo">
@@ -260,13 +272,15 @@ $encabezado="&encabezado=s";
                 <?php if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes") echo " checked";
                 	echo ">".$msgstr["showdelrec"]?></span>
 	</div>
+
 <?php
 if (file_exists($db_path."/menu.dat")){
 	MenuBrowse();
 }else{
+?>
+	<div class="actions">
 
-	echo "<div class=\"actions\">";
-
+<?php
 		if (!isset($arrHttp["return"])){
 			$ret="../common/inicio.php?reinicio=s$encabezado";
 			if (isset($arrHttp["modulo"])) $ret.="&modulo=".$arrHttp["modulo"];
@@ -285,7 +299,11 @@ if (file_exists($db_path."/menu.dat")){
 		</a>
 
 	</div>
-<?php }?>
+
+<?php 
+	}
+?>
+
 	<div class="spacer">&#160;</div>
 </div>
 		<div class="middle list">
@@ -297,8 +315,6 @@ if (file_exists($archivo)){
 	$ad_s="S";
 	echo "<Script>Indices='Y'</script>\n" ;
 ?>
-
-
 		<div class="searchBox">
 				<label for="searchExpr">
 					<strong><?php echo $msgstr["buscar"]?></strong>
@@ -334,33 +350,42 @@ if (file_exists($archivo)){
 
 
 		</div>
-<?php }else{
-	echo "<Script>Indices='N'</script>\n" ;
-}
+<?php 
 
-echo "
-			<table class=\"listTable\">
-				<tr>
-					<th>&nbsp;</th>
-	";
+}else{
+	echo "<Script>Indices='N'</script>\n" ;
+	}
+
+echo "<table class=\"listTable\">";
+
 // se lee la tabla con los títulos de las columnas
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/tbtit.tab";
+
+
+//function created to display the information of the columns
+function read_collumns($archivo) { 
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/tbtit.tab";
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/tb".$arrHttp["base"]."_h.txt";
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/tb".$arrHttp["base"]."_h.txt";
 $Pft_t=explode("/",$archivo);
 $Pft_tit=end($Pft_t);
-if (file_exists($archivo)){
-	$fp=file($archivo);
-	foreach ($fp as $value){
-		$value=trim($value);
-		if (trim($value)!=""){
-			$t=explode('|',$value);
-			foreach ($t as $rot) echo "<th>$rot</th>";
+	echo "<tr><th>#</th>";
+	if (file_exists($archivo)){
+		$fp=file($archivo);
+		foreach ($fp as $value){
+			$value=trim($value);
+			if (trim($value)!=""){
+				$t=explode('|',$value);
+				foreach ($t as $rot) echo "<th>$rot</th>";
+			}
 		}
 	}
+	echo "<th class=\"action\">&nbsp;</th></tr>";
 }
-echo "<th class=\"action\">&nbsp;</th></tr>";
+
+echo read_collumns($archivo);
+
+
 $desde=0;
 $hasta=0;
 foreach ($lista_users as $value){
@@ -400,10 +425,16 @@ foreach ($lista_users as $value){
 		}
 	}
 }
-echo "			</table>";
 
-?>			<div class="tMacroActions">
-<?php echo "$Pft_rec $Pft_tit";?>
+
+echo read_collumns($archivo);
+?>	
+
+	</table>
+
+		
+
+<div class="tMacroActions">
 				<div class="pagination">
 					<a href="javascript:EjecutarBusqueda('first')" class="singleButton eraseButton">
 						<span class="sb_lb">&#160;</span>
@@ -422,7 +453,7 @@ echo "			</table>";
 					</a>
 					<a href="javascript:EjecutarBusqueda('last')" class="singleButton eraseButton">
 						<span class="sb_rb">&#160;</span>
-						&#171; <?php echo $msgstr["last"]?>
+						<?php echo $msgstr["last"]?> &#187; 
 						<span class="sb_rb">&#160;</span>
 					</a>
 					<div class="spacer">&#160;</div>
@@ -430,51 +461,72 @@ echo "			</table>";
 				<div class="spacer">&#160;</div>
 			</div>
 		</div>
+
+	</div>
+	</div>
+	</form>
+
 <?php
-echo "</div></div>";
-echo " </form>\n";
 include("../common/footer.php");
-echo "
- <form name=eliminar method=post action=eliminar_registro.php>
- <input type=hidden name=base value=".$arrHttp["base"].">
- <input type=hidden name=from value=".$arrHttp["from"].">
- <input type=hidden name=retorno value=browse.php?base=".$arrHttp["base"]."&modulo=loan>\n ";
- if (isset($arrHttp["Expresion"])) echo "<input type=hidden name=Expresion value=".urlencode($arrHttp["Expresion"]).">\n";
- echo "<input type=hidden name=Mfn>\n";
- if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
- if (isset($arrHttp["return"]))
-	echo "<input type=hidden name=return value=".$arrHttp["return"].">\n";
-  if (isset($arrHttp["showdeleted"]))
-	echo "<input type=hidden name=showdeleted value=".$arrHttp["showdeleted"].">\n";
- $desde=$desde+1;
-echo "</form>
-<form name=diccionario method=post action=diccionario.php target=Diccionario>
-	<input type=hidden name=base value=".$arrHttp["base"].">
-	<input type=hidden name=cipar value=".$arrHttp["base"].".par>
-	<input type=hidden name=prefijo>
-	<input type=hidden name=Formato>
-	<input type=hidden name=campo>
-	<input type=hidden name=id>
-	<input type=hidden name=Diccio>
-	<input type=hidden name=from value=$desde>
-	<input type=hidden name=Opcion value=diccionario>
-	<input type=hidden name=Target value=s>
-	<input type=hidden name=Expresion>
-	<input type=hidden name=Tabla value=browse>";
+?>
+
+ <form name="eliminar" method="post" action="eliminar_registro.php">
+ <input type="hidden" name="base" value="<?php echo $arrHttp['base'];?>">
+ <input type="hidden" name="from" value="<?php echo $arrHttp['from'];?>">
+ <input type="hidden" name="retorno" value="browse.php?base=<?php echo $arrHttp['base']; ?>&modulo=loan">
+ 
+ <?php
+	if (isset($arrHttp["Expresion"])) 
+		echo "<input type=hidden name=Expresion value=".urlencode($arrHttp["Expresion"]).">\n";
+		echo "<input type=hidden name=Mfn>\n";
+
+	if (isset($arrHttp["encabezado"])) 
+		echo "<input type=hidden name=encabezado value=s>\n";
+
+	if (isset($arrHttp["return"]))
+		echo "<input type=hidden name=return value=".$arrHttp["return"].">\n";
+
+	if (isset($arrHttp["showdeleted"]))
+		echo "<input type=hidden name=showdeleted value=".$arrHttp["showdeleted"].">\n";
+ 		$desde=$desde+1;
+?>
+ </form>
+
+ <form name="diccionario" method="post" action="diccionario.php" target="Diccionario">
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
+	<input type="hidden" name="cipar" value="<?php echo $arrHttp["base"];?>".par>
+	<input type="hidden" name="prefijo">
+	<input type="hidden" name="Formato">
+	<input type="hidden" name="campo">
+	<input type="hidden" name="id">
+	<input type="hidden" name="Diccio">
+	<input type="hidden" name="from" value="<?php echo $desde; ?>">
+	<input type="hidden" name="Opcion" value="diccionario">
+	<input type="hidden" name="Target" value="s">
+	<input type="hidden" name="Expresion">
+	<input type="hidden" name="Tabla" value="browse">";
+ 
+<?php
  if (isset($arrHttp["showdeleted"]))
-	echo "<input type=hidden name=showdeleted value=".$arrHttp["showdeleted"].">\n";
-echo "
+	echo "<input type=\"hidden\" name=\"showdeleted\" value=".$arrHttp["showdeleted"].">\n";
+?>
+
 </form>
-<form name=browse method=post action=browse.php>
-	<input type=hidden name=bymfn> ";
-	echo "<input type=hidden name=showdeleted value=";
-	if (isset($arrHttp["showdeleted"])) echo $arrHttp["showdeleted"];
+
+<form name="browse" method="post" action="browse.php">
+	<input type="hidden" name="bymfn">
+	<input type="hidden" name="showdeleted" value="
+	<?php
+	if (isset($arrHttp["showdeleted"])) 
+	echo $arrHttp["showdeleted"];
 	echo ">\n";
-echo "
-	<input type=hidden name=base value=".$arrHttp["base"].">
-	<input type=hidden name=cipar value=".$arrHttp["base"].".par>
-	<input type=hidden name=from value=$desde>
-	<input type=hidden name=to>";
+	?>" >
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
+	<input type="hidden" name=cipar value="<?php echo $arrHttp["base"]; ?>".par>
+	<input type="hidden" name="from" value="<?php echo $desde; ?>">
+	<input type="hidden" name="to">
+
+<?php	
 if (isset($arrHttp["encabezado"])){
 	echo "<input type=hidden name=encabezado value=s>\n";
 }
@@ -482,11 +534,15 @@ if (isset($arrHttp["return"])){
 	echo "<input type=hidden name=return value=".$arrHttp["return"].">\n";
 }
 if (isset($arrHttp["Expresion"])) echo "<input type=hidden name=Expresion value=".urlencode($arrHttp["Expresion"])."\">\n";
-echo "</form>
-<form name=editar method=post action=fmt.php>
-	<input type=hidden name=from value=".$arrHttp["from"].">
-	<input type=hidden name=base value=".$arrHttp["base"].">
-	<input type=hidden name=cipar value=".$arrHttp["base"].".par>\n";
+?>
+</form>
+
+<form name="editar" method="post" action="fmt.php">
+	<input type="hidden" name="from" value="<?php echo $arrHttp["from"]; ?>">
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
+	<input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]; ?>".par>
+
+	<?php
 	if (isset($arrHttp["modulo"]))
 		echo "<input type=hidden name=modulo value=".$arrHttp["modulo"].".par>\n";
 	 if (isset($arrHttp["showdeleted"]))
@@ -495,8 +551,8 @@ echo "</form>
     <input type=hidden name=Status>
     <input type=hidden name=retorno value=browse.php>
     <input type=hidden name=Opcion value=editar>
-    <input type=hidden name=encabezado value=s>
-";
+    <input type=hidden name=encabezado value=s>";
+
 if (isset($arrHttp["encabezado"])){
 	echo "<input type=hidden name=encabezado value=s>\n";
 }
@@ -504,16 +560,20 @@ if (isset($arrHttp["return"])){
 	echo "<input type=hidden name=return value=".$arrHttp["return"].">\n";
 }
 if (isset($arrHttp["Expresion"])) echo "<input type=hidden name=Expresion value=".urlencode($arrHttp["Expresion"]).">\n";
-echo "</form>
+?>
+
+		</form>
 	</body>
 </html>
+
 <script>
 	first=1
-	last=$hasta
-	desde=$desde
+	last=<?php echo $hasta;?>
+	desde=<?php echo $desde;?>
 </script>
-";
 
+
+<?php
 function MenuBrowse(){
 global $msgstr,$arrHttp,$ret;
 	echo "<div class=\"actions\">";
@@ -525,7 +585,7 @@ global $msgstr,$arrHttp,$ret;
 			$ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
 		}
 	?>
-		<a href=<?php echo $ret?>><?php echo $msgstr["back"]?></a> |
+		<a href="<?php echo $ret?>"><?php echo $msgstr["back"]?></a> |
 		<a href="javascript:Crear()"><?php echo $msgstr["crear"]?></a> |
 		<a href="javascript:Generar()"><?php echo "Generar Agenda"?>
 		</a>
