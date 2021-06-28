@@ -2,6 +2,7 @@
 /* Modifications
 20210428 fho4abcd System info has latest release & date (not dynamic, so must be fixed every release)
 20210610 fho4abcd update date. Remove wiki (done by URL1 and all pages
+20210626 fho4abcd MOve logo from css to php +span to title.
 */
         require_once (dirname(__FILE__)."/../config.php");
         $def = parse_ini_file($db_path."abcd.def");
@@ -10,7 +11,7 @@
 
 		<div class="footer">
 			<div class="systemInfo">
-				<span><b>ABCD v2.2.0-beta-0</b> + ... &rarr; 2021-06-10</span>
+				<span><b>ABCD v2.2.0-beta-0</b> + ... &rarr; 2021-06-26</span>
 				<span><?php if (isset($def["LEGEND1"])) echo $def["LEGEND1"]; ?></span>
 				<?php if(isset($def["URL1"])){
 					echo "<a href=".$def["URL1"]." target=_blank>". $def["URL1"]."</a>";
@@ -22,9 +23,15 @@
 			</div>
 			<?php
 			if (!isset($def["LEGEND2"])) $def["LEGEND2"]=$def["LEGEND1"];
-			if (isset($def["URL2"]) and isset($def["LEGEND2"])){
-				echo "<div class=\"distributorLogo\">";
-				echo "<a href=".$def["URL2"]." target=_blank><span>". $def["LEGEND2"]."</span></a></div> ";
+			if (isset($def["URL2"])){
+                ?>
+                <div class="distributorLogo">
+                    <a  href=<?php echo $def["URL2"]." target=_blank"?>>
+                        <img src='/central/images/distributorLogo.gif' 
+                        title='<?php if (isset($def["LEGEND2"])) echo $def["LEGEND2"]?>'>
+                    </a>
+                </div>
+                <?php
 			}
 			?>
 			<div class="spacer">&#160;</div>
