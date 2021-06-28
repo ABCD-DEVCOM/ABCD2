@@ -1,4 +1,6 @@
-/* 2021-03-01 fho4abcd : deleted overruled font-family, font-size */
+/* 2021-03-01 fho4abcd : deleted overruled font-family, font-size
+** 2021-06-26 fho4abcd Move distributor logo to php
+*/
 /* #general styles */
 BODY {
 	background: #364c6c;
@@ -219,9 +221,6 @@ LABEL {
 		font-size: 110%;
 	}
 
-	.distributorLogo A {
-		background: url('../images/distributorLogo.gif') no-repeat top left;
-	}
 	/*#END #footer classes */
 
 	/*#homepage classes */

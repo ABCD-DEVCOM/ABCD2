@@ -1,3 +1,6 @@
+/*
+** 2021-06-26 fho4abcd Improve distributor logo styles
+*/
 /* general styles */
 BODY {
 	margin: 0px;
@@ -171,6 +174,10 @@ A.menuButton {
 	.institutionalInfo H1, .institutionalInfo H2 {
 		margin: 0px 0px 0px 0px;
 	}
+	.institutionalInfo IMG {
+		display: inline-block;
+		height: 30px;
+	}
 
 	.userInfo {
 		float: right;
@@ -252,16 +259,11 @@ A.menuButton {
 		padding: 11px 15px 11px 0px;
 	}
 
-	.distributorLogo A {
-		display: -moz-inline-box;
+	.distributorLogo IMG {
 		display: inline-block;
-		width: 96px;
-		height: 52px;
+		height: 50px;
 	}
 
-	.distributorLogo A SPAN {
-		display: none;
-	}
 	/*#END #footer classes */
 
 	/*#homepage classes */
