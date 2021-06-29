@@ -71,7 +71,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: users_adm.php" ?></font>
 	<div class="formContent">
 	<ul>
 <?php
-echo "<li><a href=../dataentry/browse.php?showdeleted=Y&encabezado=s&base=acces&cipar=acces.par&return=../dbadmin/users_adm.php|>".$msgstr["usuarios"] ."</a><p>";
+echo "<li><a href=../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par&return=../dbadmin/users_adm.php|>".$msgstr["usuarios"] ."</a><p>";
 echo "<li><a href=profile_edit.php?encabezado=s>".$msgstr["profiles"]."</a>";
 
 ?>
