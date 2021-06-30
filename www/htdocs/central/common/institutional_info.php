@@ -7,12 +7,15 @@
 ?>
 <div class="heading">
 	<div class="institutionalInfo">
-		<h1><img src=<?php if (isset($logo))
+		<img src=<?php if (isset($logo))
 								echo $logo;
 							else
-								echo "../images/logoabcd.jpg";
+								echo "../images/logoabcd.png";
 					  ?>
-					  ><?php if (isset($institution_name)) echo $institution_name?></h1>
+					  />
+					  <h1>
+					  	<?php if (isset($institution_name)) echo $institution_name;?>
+					  </h1>
 	</div>
 	<div class="userInfo">
 		<span><?php if (isset($_SESSION["nombre"])) echo $_SESSION["nombre"]?></span>,

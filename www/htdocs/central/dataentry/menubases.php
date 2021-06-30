@@ -188,12 +188,13 @@ function CambiarLenguaje(){
 <input type=hidden name=nreg value="">
 <div class="heading" style="height:150px"> &nbsp;
 	<div class="institutionalInfo">
-		<h1><img src=<?php if (isset($logo))
+		<img src=<?php if (isset($logo))
 								echo $logo;
 							else
-								echo "../images/logoabcd.jpg";
+								echo "../images/logoabcd.png";
 					  ?>
-					  ><?php echo $institution_name?></h1>
+					  >
+					  <h1><?php echo $institution_name?></h1>
 	</div>
 	<div class="userInfo">
 		<span><?php echo $_SESSION["nombre"]?></span>,
