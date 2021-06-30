@@ -283,11 +283,13 @@ function Modulo(){
 
 <div class=heading>
 	<div class="institutionalInfo">
-		<h1><img src=<?php if (isset($logo))
+		<img src=<?php if (isset($logo))
 								echo $logo;
 							else
-								echo "../images/logoabcd.jpg";
-					  ?>><?php echo $institution_name?> </h1>
+								echo "../images/logoabcd.png";
+					  ?>>
+					  <h1>
+					  	<?php echo $institution_name?> </h1>
     </div>
 	<div class="userInfo">
 		<span><?php echo $_SESSION["nombre"]?></span>,

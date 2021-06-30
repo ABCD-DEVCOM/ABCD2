@@ -10,7 +10,7 @@ PATH_DEF=/var/opt/ABCD/bases/par/
 /* Please adjust /css/stylesheet.css */
 
 [HEADER]
-LOGO IMAGE=logoabcd.jpg
+LOGO IMAGE=logoabcd.png
 LOGO URL="^1/site/php/index.php^2/site/php/index.php^3/site/php/index.php^4/site/php/index.php^5/iah/ma/index.php"
 HEADER IMAGE=online.gif
 HEADER URL="^1/iah/pt/index.htm^2/iah/es/index.htm^3/iah/en/index.htm^4/iah/fr/index.htm^5/iah/ma/index.htm"

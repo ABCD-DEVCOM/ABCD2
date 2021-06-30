@@ -16,7 +16,7 @@
     <text id="topic.expand" available="yes">show subtopics</text>
   </texts>
   <parent id="" available="yes">
-    <item id="1" available="yes" img="/central/images/logoabcd.jpg">ABCD</item>
+    <item id="1" available="yes" img="/central/images/logoabcd.png">ABCD</item>
   </parent>
   <identification id="" available="yes">
     <item id="2" available="yes">A B C D SITE DEMO</item>
