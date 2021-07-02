@@ -80,7 +80,7 @@ A.menuButton {
 		display: block;
 	}
 
-	.textEntry, .submit {
+	.textEntry, .submit, .index {
 		vertical-align: middle;
 	}
 
@@ -397,10 +397,10 @@ A.menuButton {
 		padding: 4px;
 	}
 
-	.searchBox INPUT.submit {
-		width: 81px;
+	.searchBox INPUT.submit, .searchBox INPUT.index {
+		padding: 0 15px;
 		height: 26px;
-		padding-left: 26px;
+
 	}
 
 	.searchBox INPUT.submitAdvanced {
