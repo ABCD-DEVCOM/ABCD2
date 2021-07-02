@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210607 fho4abcd Created from vmx_import_iso.php
+20210702 fho4abcd added scriptaction="matchisofdt"
 */
 /*
 ** Function : Combine the common part of actions operaing on the wrk folder
@@ -9,10 +10,11 @@
 ** variable $scriptaction. Current recognized values:
 **   $scriptaction=="importiso"
 **   $scriptaction=="cnviso2utf"
+**   $scriptaction=="matchisofdt";
 */
 
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
-if ( $scriptaction=="importiso") {
+if ( $scriptaction=="importiso" || $scriptaction=="matchisofdt") {
     include ("../common/inc_get-dblongname.php");
     include ("../common/inc_get-dbinfo.php");
     $dbmsg_label=$msgstr["database"].":";
@@ -57,7 +59,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         }
     ?>
     <table  cellspacing=5>
-        <?php if ($scriptaction=="importiso") { ?>
+        <?php if ($scriptaction=="importiso" || $scriptaction=="matchisofdt") { ?>
         <tr>
             <td><?php echo $dbmsg_label;?></td><td><?php echo $dbmsg_value;?></td>
         </tr>
@@ -99,6 +101,9 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         if ($scriptaction=="cnviso2utf") {
             $actioncolmsg=$msgstr["convert"];
             $selimg="img src='../dataentry/img/barTool.png' alt='" .$msgstr["cnv_iso2utf"]."' title='".$msgstr["cnv_iso2utf"]."'";
+        } else if ( $scriptaction=="matchisofdt") {
+            $actioncolmsg=$msgstr["match"];
+            $selimg="img src='../dataentry/img/barTool.png' alt='" .$msgstr["matchisofdt"]."' title='".$msgstr["matchisofdt"]."'";
         }
         $selimg=htmlentities($selimg);
         $delimg="img src='../dataentry/img/barDelete.png' alt='" .$msgstr["eliminar"]."' title='".$msgstr["eliminar"]."'";

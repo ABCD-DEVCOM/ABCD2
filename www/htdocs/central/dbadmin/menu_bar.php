@@ -13,6 +13,7 @@
 20210516 fho4abcd Add function upload file
 20210526 fho4abcd function for convert replaced. Update convert menu text (translated text) add option to convert language
 20210607 fho4abcd Add function to convert an iso to utf-8
+20210702 fho4abcd Add function to match an iso with an fdt
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -363,6 +364,12 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/cnv_iso_2_utf.php"
 			document.admin.target=""
 			break;
+		case "matchisofdt":    //Match ISO with fdt
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/match_iso_with_fdt.php"
+			document.admin.target=""
+			break;
 		case "barcode":    //Marino barcode search
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -418,6 +425,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
        	<li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?>")'><?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?></a></li>
 		<!--<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>-->
 		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?>")'><?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?></a></li>
+		<li><a href='Javascript:EnviarFormaMNT("matchisofdt","<?php echo $msgstr["matchisofdt"]?>")'><?php echo $msgstr["matchisofdt"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("uploadfile","<?php echo $msgstr["uploadfile"]?>")'><?php echo $msgstr["uploadfile"]?></a></li>
   		<li><a href="#">Import documents</A>
     		<ul>
