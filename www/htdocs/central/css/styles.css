@@ -4,20 +4,14 @@
 /* #general styles */
 BODY {
 	background: #364c6c;
+		font-size: 12px;
+	FONT-FAMILY: Arial,Helvetica;
 }
 
-BODY, INPUT, SELECT, TEXTAREA {
+INPUT, SELECT, TEXTAREA {
 	color: #000;
-	BORDER-TOP-COLOR: #000000;
-	BORDER-LEFT-COLOR: #000000;
-	BORDER-RIGHT-COLOR: #000000;
-	BORDER-BOTTOM-COLOR: #000000;
-	BORDER-TOP-WIDTH: 1px;
-	BORDER-LEFT-WIDTH: 1px;
-	FONT-SIZE: 12px;
-	BORDER-BOTTOM-WIDTH: 1px;
-	FONT-FAMILY: Arial,Helvetica;
-	BORDER-RIGHT-WIDTH: 1px
+	border: 1px solid #a7a6aa;
+
 }
 
 A {
@@ -83,6 +77,11 @@ LABEL {
 
 	.textEntry {
 		background: #f5f5f5;
+	}
+
+	select.textEntry {
+		border: 2px solid #a7a6aa;
+		    padding: 3px;
 	}
 
 	INPUT.textEntry, TEXTAREA.textEntry {
@@ -477,7 +476,9 @@ LABEL {
 	A.copiesdbaddButton IMG {
 		background: url('../images/icon/db_update.png') no-repeat center;
 	}
-	A.loanButton IMG{		background: url('../images/icon/loan.png') no-repeat center;	}
+	A.loanButton IMG{
+		background: url('../images/icon/loan.png') no-repeat center;
+	}
 	A.returnButton IMG{
 		background: url('../images/icon/return.png') no-repeat center;
 	}
@@ -571,15 +572,21 @@ LABEL {
 	}
 
 	.searchBox INPUT.submit {
-		border: 0px none;
-		background: url('../images/searchBox_submit_bg.gif') no-repeat top left;
-		color: #848484
+		border: 1px solid #546de5;
+		background:  #778beb;
+		color: #fff;
+	}
+
+	.searchBox INPUT.index {
+		border: 1px solid #8395a7;
+		background: #c8d6e5;
+		color: #222f3e;
 	}
 
 	.searchBox INPUT.submitAdvanced {
 		border: 0px none;
 		background: url('../images/searchBox_submitadvanced_bg.gif')  top left;
-		color: #848484
+		color: #848484;
 	}
 
 
@@ -693,10 +700,6 @@ LABEL {
 		color:#646567;
 	}
 
-	td{
-		font-family:arial;
-		font-size:10px;
-	}
 /*   */
 	.formHead H4 {
 		font-size: 160%;

@@ -25,31 +25,38 @@
  *
  * == END LICENSE ==
  * 2021-06-25 rogercgui - Creating a function to correct the table footer, Correction of the direction of the arrow in the "Last" option
+ * 2021-07-02 rogercgui - More browse.php fixes
 */
 //
 // SHOWS THE RECORD OF A DATABASE IN A TABLE VIEW
 //
+
 error_reporting(E_ALL);
 session_start();
+
+include ("../config.php");
 
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 
-include("../common/get_post.php");
-include ("../config.php");
-include("../lang/dbadmin.php");
 
+include("../common/get_post.php");
+
+//include for translate
+include("../lang/dbadmin.php");
 include("../lang/admin.php");
 include("../lang/prestamo.php");
 
+
 if (!isset($arrHttp["bymfn"])) {
 	unset($_SESSION["Browse_Expresion"]);
-}else{
-	if (isset($arrHttp["Expresion"])){
-		$_SESSION["Browse_Expresion"] = $arrHttp["Expresion"];
-	}else{
-		if (isset($_SESSION["Browse_Expresion"]))  $arrHttp["Expresion"]=$_SESSION["Browse_Expresion"];
+} else {
+if (isset($arrHttp["Expresion"])){
+	$_SESSION["Browse_Expresion"] = $arrHttp["Expresion"];
+} else {
+	if (isset($_SESSION["Browse_Expresion"]))
+	$arrHttp["Expresion"]=$_SESSION["Browse_Expresion"];
 	}
 }
 
@@ -62,8 +69,8 @@ if (isset($arrHttp["Expresion"])){
 	$Expresion=trim($arrHttp["Expresion"]);
 	$Expresion=str_replace("  "," ",$Expresion);
 	$Expresion=str_replace("  "," ",$Expresion);
-	$xor="¬or¬";
-	$xand="¬and¬";
+	$xor="Â¬orÂ¬";
+	$xand="Â¬andÂ¬";
 	$Expresion=str_replace (" {", "{", $Expresion);
 	$Expresion=str_replace (" or ", $xor, $Expresion);
 	$Expresion=str_replace ("+", $xor, $Expresion);
@@ -94,11 +101,13 @@ if (isset($arrHttp["Expresion"])){
 			$Expresion=substr($Expresion,0,$pos1)." ".$subex[$ix]." ".substr($Expresion,$pos2+1);
 		}
 	}
-	$Expresion=str_replace ("¬", " ", $Expresion);
+	$Expresion=str_replace ("Â¬", " ", $Expresion);
 	$Expresion=urlencode($Expresion);
 }
 
-$base=$arrHttp["base"];
+
+
+$base=$arrHttp['base'];
 if (strpos($base,'^')===false){
 
 }else{
@@ -129,7 +138,6 @@ if (isset($arrHttp["unlock"]) and $arrHttp["Mfn"]!="New"){
 }
 
 
-
 if (!isset($arrHttp["from"])) $arrHttp["from"]=1;
 	$arrHttp["Mfn"]=1;
 	$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/tb".$arrHttp["base"];
@@ -140,40 +148,36 @@ if (!file_exists($Formato.".pft")) $Formato=$db_path.$arrHttp["base"]."/pfts/".$
 
 //function that stores the next interval
 function to_mfn($arrHttp) {
+	//Display 20 lines
 	$to = $arrHttp["from"]+19;
 	return $to;
 }
 
 
 if (!isset($arrHttp["Expresion"])){
-	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=1&Formato=".$Formato."&Opcion=buscar";
-
-//if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes")
-	$query.="&showdeleted=yes";
+	$query = "&base=".$arrHttp["base"]."&cipar=".$db_path."/par/".$arrHttp["base"].".par"."&from=1&Formato=".$Formato."&Opcion=buscar&showdeleted=yes";
 	$IsisScript=$xWxis."leer_mfnrange_browse.xis";
 	include("../common/wxis_llamar.php");
-	$lista_users0=$contenido0;
-
-} 
-$valor=0;
+	$lista_users=$contenido;
+	$valor=0;
+	$Mfn_t=0;
 foreach ($contenido as $linha){
 	$linha=trim($linha);
 	if ($linha!=""){
 		$f=explode('|',$linha);
 		$deletados="$f[0]";
 		$Mfn_t=$f[1];
-
 		if ($deletados=="1")
 		$valor+=$deletados;
 
 	}
 }
-
 $hide_del=$Mfn_t-$valor;
+}
 
 
 if (!isset($arrHttp["Expresion"])){
-	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=".$arrHttp["from"]."&to=".to_mfn($arrHttp)."&Formato=".$Formato."&Opcion=buscar";
+	$query = "&base=".$arrHttp["base"]."&cipar=".$db_path."/par/".$arrHttp["base"].".par"."&from=".$arrHttp["from"]."&to=".to_mfn($arrHttp)."&Formato=".$Formato."&Opcion=buscar";
 
 if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes")
 	$query.="&showdeleted=yes";
@@ -183,8 +187,9 @@ if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes")
 
 } else {
 
-	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=".$arrHttp["from"]."&to=".to_mfn($arrHttp)."&Formato=".$Formato.".pft&Expresion=".$Expresion;
-	$IsisScript=$xWxis."cipres_usuario.xis";
+	$query = "&base=".$arrHttp["base"]."&cipar=".$db_path."/par/".$arrHttp["base"].".par"."&from=".$arrHttp["from"]."&to=".to_mfn($arrHttp)."&Formato=".$Formato."&Opcion=buscar&&Expresion=".$arrHttp["Expresion"];
+	$query.="&showdeleted=yes";
+	$IsisScript=$xWxis."browse.xis";
 	include("../common/wxis_llamar.php");
 	$lista_users=$contenido;
 	
@@ -195,7 +200,7 @@ include("../common/header.php");
 
 ?>
 
-<script>
+<script language="JavaScript">
 
 xEliminar="";
 Mfn_eliminar=0;
@@ -210,6 +215,7 @@ function  ShowDeleted(){
 function Browse(){
 	if (Indices=="Y") document.browse.Expresion.value=""
 		document.browse.bymfn.value="Y"
+		document.browse.from.value=1
 		document.browse.submit();
 }
 
@@ -262,15 +268,16 @@ function EjecutarBusqueda(Accion){
 		t=sel.split('|')
 
         document.diccionario.target=""
-        if (Indices=="Y") document.diccionario.Expresion.value=document.forma1.expre.value
+        document.diccionario.Expresion.value=document.forma1.expre.value
         document.diccionario.action="browse.php"
 		document.diccionario.campo.value=escape(t[0])
 		document.diccionario.prefijo.value=t[2]
+	document.diccionario.Prefijos.value=t[2]
 		document.diccionario.id.value=t[1]
 		document.diccionario.Opcion.value="buscar"
 		document.diccionario.submit()
 	}else{
-		if (Indices=="Y")document.diccionario.Expresion.value=document.forma1.expre.value
+		document.diccionario.Expresion.value=document.forma1.expre.value
   		if (document.forma1.showdeleted.checked) {
 			document.browse.showdeleted.value="yes"
 		}
@@ -290,6 +297,7 @@ function PresentarDiccionario(){
 
 	document.diccionario.campo.value=escape(t[0])
 	document.diccionario.prefijo.value=t[2]
+	document.diccionario.Prefijos.value=t[2]
 	document.diccionario.id.value=t[1]
 	document.diccionario.Diccio.value="document.forma1.expre"
 	document.diccionario.submit()
@@ -318,7 +326,7 @@ function Mostrar(Mfn){
 
 <div class="sectionInfo">
 	<div class="breadcrumb">
-		<form name="forma1" onsubmit="javascript:return false">
+		<form name="forma1" method="get" onsubmit="javascript:return false">
 		<?php echo $msgstr["admin"]." (".$arrHttp["base"],")"?>
 		    <span><input type="checkbox" name="showdeleted"    onclick=ShowDeleted()
                 <?php if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes") echo " checked";
@@ -356,7 +364,7 @@ if (file_exists($db_path."/menu.dat")){
 </div>
 	<div class="middle list">
 <?php
-$ad_s="";  // Hay formulario de búsqueda avanzada?
+$ad_s="";  // Hay formulario de bï¿½squeda avanzada?
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab";
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/camposbusqueda.tab";
 if (file_exists($archivo)){
@@ -364,11 +372,12 @@ if (file_exists($archivo)){
 	echo "<Script>Indices='Y'</script>\n" ;
 ?>
 		<div class="searchBox">
+
 				<label for="searchExpr">
 					<strong><?php echo $msgstr["buscar"]?></strong>
 				</label>
 				<input type="text" name="expre" id="Expre" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';"
-				value='<?php if (isset($arrHttp["Expresion"])) echo $arrHttp["Expresion"]?>' />
+				value='<?php if (isset($arrHttp["Expresion"])) echo $arrHttp['Expresion']?>' />
 				<select name="indexes" class="textEntry">
 					<option></option>
 <?php
@@ -389,15 +398,17 @@ if (file_exists($archivo)){
 ?>
 				</select>
 
-				<input type="button" name="ok" value="<?php echo $msgstr["index"]?>" xclass="submit" onClick=javascript:PresentarDiccionario() />
+				<input type="button" name="ok" value="<?php echo $msgstr["index"]?>" class="index" onClick=javascript:PresentarDiccionario() />
 				<input type="submit" name="ok" value="<?php echo $msgstr["buscar"]?>" class="submit" onClick=javascript:document.diccionario.from.value=1;EjecutarBusqueda() />
 				<?php if (isset($arrHttp["Expresion"]))
-					echo "\n<input type=\"submit\" name=\"ok\" value=\"".$msgstr["bmfn"]."\"  onClick=javascript:Browse() />"
+					echo "\n<input type=\"submit\" name=\"ok\" value=\"".$msgstr["bmfn"]."\" class=\"index\"  onClick=javascript:Browse() />"
 				?>
 				<input type="hidden" name="Target" value="S">
 
 
 		</div>
+
+
 <?php }else{
 	echo "<Script>Indices='N'</script>\n" ;
 }
@@ -407,7 +418,7 @@ if (file_exists($archivo)){
 				<tr>
 
 <?php				
-// se lee la tabla con los títulos de las columnas
+// se lee la tabla con los tï¿½tulos de las columnas
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/tbtit.tab";
 
 //function created to display the information of the columns
@@ -437,24 +448,42 @@ echo read_collumns($archivo);
 $desde=0;
 $hasta=0;
 
+if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes" and (!isset($arrHttp["Expresion"])))  {
+	$hide_del=$hide_del;
+}
 
+
+//executes the loop of records
 foreach ($contenido as $value){
 	$value=trim($value);
 	if ($value!=""){
 		$u=explode('|',$value);
+
+if (!isset($arrHttp["Expresion"])){		
 		$Status=$u[0];
 		$Mfn=$u[1];
 		$desde=$u[3];
 		$hasta=$u[4];
+} else  {
+		$Status="0|";
+		$Mfn=$u[0];
+		$desde=$u[1];
+		$hasta=$u[0];
 
-			if ($arrHttp["showdeleted"]=="yes") {
-				$display_total=$hasta;						
-			} 
-			else {
-				$display_total=$hide_del;
-			}
+}		
 
 
+//echo $value."<br>";
+
+//if deleted then displays "the total-the deleted"
+if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes" or (isset($arrHttp["Expresion"])))  {
+			$display_total=$hasta;						
+		} 
+		else {
+			$display_total=$hide_del;
+		}
+
+		//change class based in status
 		if (($Status==0 or $Status==-2) or (isset($arrHttp["showdeleted"]) and $Status==1)){
 			if ($Status==1) {
 				echo "<style>
@@ -474,10 +503,7 @@ foreach ($contenido as $value){
 			}
 
 			echo "<tr class=\"bg_status-".$Mfn."\" onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = 'bg_status-".$Mfn."';\">\n";
-			echo "<td>".$u[3]++."/".$display_total;
-
-
-
+			echo "<td>".$desde++."/".$display_total;
 			echo "</td>";
 			for ($ix=5;$ix<count($u);$ix++) echo "<td>" .$u[$ix]."</td>";
 			echo "<td class=\"action\" nowrap>
@@ -485,7 +511,7 @@ foreach ($contenido as $value){
 				<img src=\"../images/edit.png\" alt=\"".$msgstr["edit"]."\" title=\"".$msgstr["edit"]."\" /></a>
 				<a href=javascript:Mostrar(".$Mfn.")><img src=\"../images/zoom.png\"  alt=\"".$msgstr["show"]."\" title=\"".$msgstr["show"]."\" /></a>";
 			if ($Status==0) echo "
-				<a href=\"javascript:Eliminar($Mfn)\"><img src=\"../images/delete.png\" alt=\"".$msgstr["eliminar"]."\" title=\"".$msgstr["eliminar"]."\" /></a>";
+				<a href=\"javascript:Eliminar(".$Mfn.")\"><img src=\"../images/delete.png\" alt=\"".$msgstr["eliminar"]."\" title=\"".$msgstr["eliminar"]."\" /></a>";
 			else {
 				switch ($Status){
 					case -2:
@@ -500,10 +526,8 @@ foreach ($contenido as $value){
 			echo "</tr>";
 		}
 	}
-}
+}//End loop
 echo read_collumns($archivo);
-
-
 
 ?>		
 
@@ -544,35 +568,37 @@ echo read_collumns($archivo);
 include("../common/footer.php");
 ?>
 
-	<form name="eliminar" method="post" action="eliminar_registro.php">
-	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
-	<input type="hidden" name="from" value="<?php echo $arrHttp["from"]; ?>">
-	<input type="hidden" name="retorno" value="browse.php?showdeleted=yes&base=<?php echo $arrHttp["base"];?>&modulo=<?php echo $arrHttp["modulo"]; ?>.">
- 
+<form name="eliminar" method="post" action="eliminar_registro.php">
+<input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
+<input type="hidden" name="from" value="<?php echo $arrHttp["from"]; ?>">
+
 <?php
- if (isset($arrHttp["Expresion"]))
+if (isset($arrHttp["Expresion"]))
 ?>
-	<input type="hidden" name="Expresion" value="<?php echo urlencode($arrHttp["Expresion"]);?>">
-	<input type="hidden" name="Mfn">
+<input type="hidden" name="Expresion" value="<?php echo urlencode($arrHttp["Expresion"]);?>">
+<input type="hidden" name="Mfn">
 <?php
- if (isset($arrHttp["encabezado"]))
+if (isset($arrHttp["encabezado"]))
 ?>
-	<input type="hidden" name="encabezado" value="s">
+<input type="hidden" name="encabezado" value="s">
 <?php
- if (isset($arrHttp["return"])){
-?>	
-	<input type="hidden" name="return" value="<?php echo $arrHttp["return"];?>">
+if (isset($arrHttp["return"])){
+?>
+	<input type="hidden" name="showdeleted" value="yes">
+<input type="hidden" name="return" value="<?php echo $arrHttp["return"];?>">
 <?php
 }
- $desde=$desde+1;
- ?>
+$desde=$desde+1;
+?>
 
 </form>
+
 <form name="diccionario" method="post" action="diccionario.php" target="Diccionario">
-	<input type="hidden" name="showdeleted">
+	<input type="hidden" name="showdeleted" value="yes">
 	<input type="hidden" name="base" value="<?php echo $arrHttp['base']; ?>">
 	<input type="hidden" name="cipar" value="<?php echo $arrHttp['base'];?>.par">
 	<input type="hidden" name="prefijo">
+	<input type="hidden" name="Prefijos">
 	<input type="hidden" name="Formato">
 	<input type="hidden" name="campo">
 	<input type="hidden" name="id">
@@ -587,7 +613,7 @@ include("../common/footer.php");
 
 <form name="browse" method="post" action="browse.php">
 	<input type="hidden" name="bymfn" value="yes">
-	<input type="hidden" name="showdeleted" value=".<?php $_REQUEST['showdeleted'] ?>.">
+	<input type="hidden" name="showdeleted" value="yes">
 	<input type="hidden" name="base" value="<?php echo $arrHttp['base']; ?>">
 	<input type="hidden" name="cipar" value="<?php echo $arrHttp['base'];?>.par">
 	<input type="hidden" name="from" value="<?php echo $desde; ?>" >
@@ -618,6 +644,7 @@ if (isset($arrHttp["Expresion"])) {
 </form>
 
 
+
 <form name="editar" method="post" action="fmt.php">
 	<input type="hidden" name="from" value="<?php echo $arrHttp["from"]; ?>">
 	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
@@ -628,6 +655,7 @@ if (isset($arrHttp["Expresion"])) {
 	<input type="hidden" name="modulo" value="<?php echo $arrHttp["modulo"]; ?>.par">
     <input type="hidden" name="Mfn">
     <input type="hidden" name="Status">
+    <input type="hidden" name="showdeleted" value="yes">
     <input type="hidden" name="retorno" value="browse.php">
     <input type="hidden" name="Opcion" value="editar">
     <input type="hidden" name="encabezado" value="s">
@@ -639,6 +667,7 @@ if (isset($arrHttp["encabezado"])){
 }
 if (isset($arrHttp["return"])){
 	echo "<input type=hidden name=return value=".$arrHttp["return"].">\n";
+	echo '<input type="hidden" name="showdeleted" value="yes">';
 }
 if (isset($arrHttp["Expresion"])) echo "<input type=hidden name=Expresion value=".urlencode($arrHttp["Expresion"]).">\n";
 ?>
