@@ -148,8 +148,8 @@ if (!file_exists($Formato.".pft")) $Formato=$db_path.$arrHttp["base"]."/pfts/".$
 
 //function that stores the next interval
 function to_mfn($arrHttp) {
-	//Display 20 lines
-	$to = $arrHttp["from"]+19;
+	//Display 10 lines
+	$to = $arrHttp["from"]+9;
 	return $to;
 }
 
@@ -545,12 +545,21 @@ echo read_collumns($archivo);
 						&#171; <?php echo $msgstr["previous"]?>
 						<span class="sb_lb">&#160;</span>
 					</a>
-					<a href="javascript:EjecutarBusqueda('next')" class="singleButton eraseButton">
+					<?php
+					if ($compara == $display_total) {
+						$lock_buttons='style="pointer-events: none; text-decoration: none;text-decoration: none; color: gray;"';
+						echo "igual";
+					} else {
+						$lock_buttons='style="pointer-events: visible;"';
+						echo "diferente";
+					}
+					?>
+					<a <?php echo $lock_buttons; ?> href="javascript:EjecutarBusqueda('next')" class="singleButton eraseButton">
 						<span class="sb_rb">&#160;</span>
 						&#187; <?php echo $msgstr["next"] ?>
 						<span class="sb_rb">&#160;</span>
 					</a>
-					<a href="javascript:EjecutarBusqueda('last')" class="singleButton eraseButton">
+					<a <?php echo $lock_buttons; ?> href="javascript:EjecutarBusqueda('last')" class="singleButton eraseButton">
 						<span class="sb_rb">&#160;</span>
 						<?php echo $msgstr["last"]?> &#187; 
 						<span class="sb_rb">&#160;</span>
@@ -588,7 +597,7 @@ if (isset($arrHttp["return"])){
 <input type="hidden" name="return" value="<?php echo $arrHttp["return"];?>">
 <?php
 }
-$desde=$desde+1;
+//$desde=$desde+1;
 ?>
 
 </form>

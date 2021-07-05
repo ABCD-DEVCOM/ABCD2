@@ -1,24 +1,214 @@
-`<table border=0 width=90%>`
-'<td rowspan=21 valign=top width=150><img src=../common/show_image.php?image='v620'&base=users></td>'
-if p(v10) then `<tr><td width=20% valign=top><font face=arial size=2><b>Type utilisateur</b></td><td valign=top><font face=arial size=2>`,v10^*,". "v10^b,,`</td>` fi/
-if p(v12) then `<tr><td width=20% valign=top><font face=arial size=2><b>Sexe</b></td><td valign=top><font face=arial size=2>`,v12^*,". "v12^b,,`</td>` fi/
-if p(v15) then `<tr><td width=20% valign=top><font face=arial size=2><b>Date limite de validité de la carte</b></td><td valign=top><font face=arial size=2>`v15+|<br>|,`</td>` fi/
-if p(v18) then `<tr><td width=20% valign=top><font face=arial size=2><b>Date ISO de validité de la carte</b></td><td valign=top><font face=arial size=2>`v18+|<br>|,`</td>` fi/
-if p(v20) then `<tr><td width=20% valign=top><font face=arial size=2><b>Code utilisateur</b></td><td valign=top><font face=arial size=2>`v20+|<br>|,`</td>` fi/
-if p(v30) then `<tr><td width=20% valign=top><font face=arial size=2><b>Nom et prénoms</b></td><td valign=top><font face=arial size=2>`v30+|<br>|,`</td>` fi/
-if p(v35) then `<tr><td width=20% valign=top><font face=arial size=2><b>Carte d'identité</b></td><td valign=top><font face=arial size=2>`v35+|<br>|,`</td>` fi/
-if p(v40) then `<tr><td width=20% valign=top><font face=arial size=2><b>employeur</b></td><td valign=top><font face=arial size=2>`v40+|<br>|,`</td>` fi/
-if p(v45) then `<tr><td width=20% valign=top><font face=arial size=2><b>Localisation</b></td><td valign=top><font face=arial size=2>`v45+|<br>|,`</td>` fi/
-if p(v47) then `<tr><td width=20% valign=top><font face=arial size=2><b>Niveau Adm. 1</b></td><td valign=top><font face=arial size=2>`v47+|<br>|,`</td>` fi/
-if p(v49) then `<tr><td width=20% valign=top><font face=arial size=2><b>Niveau Adm. 2</b></td><td valign=top><font face=arial size=2>`v49+|<br>|,`</td>` fi/
-if p(v100) then `<tr><td width=20% valign=top><font face=arial size=2><b>Adresse physique</b></td><td valign=top><font face=arial size=2>`v100+|<br>|,`</td>` fi/
-if p(v110) then `<tr><td width=20% valign=top><font face=arial size=2><b>Adresse postale</b></td><td valign=top><font face=arial size=2>`v110+|<br>|,`</td>` fi/
-if p(v120) then `<tr><td width=20% valign=top><font face=arial size=2><b>Ville</b></td><td valign=top><font face=arial size=2>`v120+|<br>|,`</td>` fi/
-if p(v130) then `<tr><td width=20% valign=top><font face=arial size=2><b>Pays</b></td><td valign=top><font face=arial size=2>`v130+|<br>|,`</td>` fi/
-if p(v140) then `<tr><td width=20% valign=top><font face=arial size=2><b>Téléphone</b></td><td valign=top><font face=arial size=2>`v140+|<br>|,`</td>` fi/
-if p(v150) then `<tr><td width=20% valign=top><font face=arial size=2><b>Fax</b></td><td valign=top><font face=arial size=2>`v150+|<br>|,`</td>` fi/
-if p(v160) then `<tr><td width=20% valign=top><font face=arial size=2><b>Courrier électronique</b></td><td valign=top><font face=arial size=2>`v160+|<br>|,`</td>` fi/
-if p(v600) then `<tr><td width=20% valign=top><font face=arial size=2><b>Identifiant</b></td><td valign=top><font face=arial size=2>`v600+|<br>|,`</td>` fi/
-if p(v610) then `<tr><td width=20% valign=top><font face=arial size=2><b>Mot de passe</b></td><td valign=top><font face=arial size=2>`v610+|<br>|,`</td>` fi/
-if p(v620) then `<tr><td width=20% valign=top><font face=arial size=2><b>Photo</b></td><td valign=top><font face=arial size=2>`v620+|<br>|,`</td>` fi/
-`</table><p>`
+'<style>
+table.users {
+	width: 90%;
+	border: 0;
+	font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+table.users tr td {
+	border: 0;
+}
+
+table.users tr:nth-child(even) {
+	background-color: #f2f2f2;
+
+
+}
+
+table.users tr td.label {
+	width: 200px;
+		padding: 8px 8px;
+}
+
+
+img.users-avatar {
+	width: 150px;
+	border: 1px solid #000;
+	padding: 8px;
+}
+div.avatar {
+	width:150px;
+	height: 150px;
+	border: 8px solid #fff;
+	background-image: url(../common/show_image.php?image=images/'v620'&base=users);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+
+div.no-avatar {
+	width:150px;
+	height: 150px;
+	border: 8px solid #fff;
+	background-image: url(../common/show_image.php?image=/images/default-user-image.png&base=users);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+</style>'
+
+
+'<table class="users">'
+
+'<tr>'
+'<td rowspan="21" valign="top" width="150">'
+if p(v620) then
+	'<div class="avatar"></div>'
+
+else 
+	'<div class="no-avatar"></div>'
+fi
+'</td>'
+'<td></td>'
+'<td></td>'
+'</tr>'
+
+if p(v10) then 
+'<tr>'
+'<td class="label"><b>Type utilisateur</b></td>'
+'<td class="label">'mdl,v10+|<br>|,mpl,'</td>'
+'</tr>' 
+fi/
+
+if p(v12) then 
+'<tr>'
+'<td class="label"><b>Sexe</b></td>'
+'<td class="label">'v12^*, ". "v12^b,mpl,'</td>'
+'</tr>' 
+fi/
+
+if p(v15) then 
+'<tr>'
+'<td class="label"><b>Date limite de validité de la carte</b></td>'
+'<td class="label">'v15+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v18) then 
+'<tr>'
+'<td class="label"><b>Date ISO de validité de la carte</b></td>'
+'<td class="label">'v18+|<br>|,'</td>'
+'</tr>'  
+fi/
+
+if p(v20) then 
+'<tr>'
+'<td class="label"><b>Code utilisateur</b></td>'
+'<td class="label">'v20+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v30) then 
+'<tr>'
+'<td class="label"><b>Nom et prénoms</b></td>'
+'<td class="label">'v30+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v35) then 
+'<tr>'
+'<td class="label"><b>Carte d'identité</b></td>'
+'<td class="label">'v35+|<br>|,'</td>'
+'</tr>'  
+fi/
+
+if p(v40) then 
+'<tr>'
+'<td class="label"><b>Employeur</b></td>'
+'<td class="label">'v40+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v45) then 
+'<tr>'
+'<td class="label"><b>Localisation</b></td>'
+'<td class="label">'v45+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v47) then 
+'<tr>'
+'<td class="label"><b>Niveau Adm. 1</b></td>'
+'<td class="label">'v47+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v49) then 
+'<tr>'
+'<td class="label"><b>Niveau Adm. 2</b></td>'
+'<td class="label">'v49+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v100) then
+ '<tr>'
+'<td class="label"><b>Adresse physique</b></td>'
+'<td class="label">'v100+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v110) then
+'<tr>'
+'<td class="label"><b>Adresse postale</b></td>'
+'<td class="label">'v110+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v120) then 
+'<tr>'
+'<td class="label"><b>Ville</b></td>'
+'<td class="label">'v120+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v130) then 
+'<tr>'
+'<td class="label"><b>Pays</b></td>
+<td class="label">'v130+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v140) then 
+'<tr>'
+'<td class="label"><b>Téléphone</b></td>'
+'<td class="label">'v140+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v150) then '<tr>'
+'<td class="label"><b>Fax</b></td>'
+'<td class="label">'v150+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v160) then 
+'<tr>'
+'<td class="label"><b>Courrier électronique</b></td>'
+'<td class="label">'v160+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v600) then 
+'<tr>'
+'<td  class="label"><b>Identifiant</b></td>
+<td class="label">'v600+|<br>|,'</td>'
+'</tr>' 
+fi/
+
+if p(v610) then 
+'<tr>'
+'<td class="label"><b>Mot de passe</b></td>
+<td class="label">'v610+|<br>|,'</td>'
+'</tr>' 
+fi/
+
+if p(v620) then 
+'<tr>'
+'<td class="label"><b>Photo</b></td>
+<td class="label">'v620+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+'</table>'

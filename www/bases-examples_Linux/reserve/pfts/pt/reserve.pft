@@ -1,17 +1,161 @@
-'<table border=0 width=90%>'
-if p(v1) then '<tr><td width=20% valign=top nowrap><font face=arial size=2><b>Situacion</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
-if p(v10) then '<tr><td width=20% valign=top nowrap><font face=arial size=2><b>Código de usuario</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
-if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de usuario</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
-if p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Base de datos</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
-if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de control</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
-if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha reserva</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
-if p(v31) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de reserva</b></td><td valign=top><font face=arial size=2>'v31+|<br>|,'</td>' fi/
-if p(v32) then '<tr><td width=20% valign=top><font face=arial size=2><b>Operador que reserva</b></td><td valign=top><font face=arial size=2>'v32+|<br>|,'</td>' fi/
-if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Esperar hasta</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
-if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>No. de clasificación</b></td><td valign=top><font face=arial size=2>'v50+|<br>|,'</td>' fi/
-if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha asignación objeto</b></td><td valign=top><font face=arial size=2>'v60+|<br>|,'</td>' fi/
-if p(v130) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha cancelación de la reserva</b></td><td valign=top><font face=arial size=2>'v130+|<br>|,'</td>' fi/
-if p(v131) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora cancelación de la reserva</b></td><td valign=top><font face=arial size=2>'v131+|<br>|,'</td>' fi/
-if p(v132) then '<tr><td width=20% valign=top><font face=arial size=2><b>Operador cancelación reserva</b></td><td valign=top><font face=arial size=2>'v132+|<br>|,'</td>' fi/
-if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha préstamo</b></td><td valign=top><font face=arial size=2>'v200+|<br>|,'</td>' fi/
-'</table><p>'
+'<style>
+table.reserve {
+	width: 90%;
+	border: 0;
+	font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+table.reserve tr td {
+	border: 0;
+}
+
+table.reserve tr:nth-child(even) {
+	background-color: #f2f2f2;
+
+
+}
+
+table.reserve tr td.label {
+	width: 200px;
+		padding: 8px 8px;
+}
+
+
+img.reserve-avatar {
+	width: 150px;
+	border: 1px solid #000;
+	padding: 8px;
+}
+div.avatar {
+	width:150px;
+	height: 150px;
+	border: 8px solid #fff;
+	background-image: url(../common/show_image.php?image=images/'v620'&base=reserve);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+
+div.no-avatar {
+	width:150px;
+	height: 150px;
+	border: 8px solid #fff;
+	background-image: url(../common/show_image.php?image=/images/default-user-image.png&base=reserve);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+</style>'
+
+
+'<table class="reserve">'
+
+if p(v1) then 
+'<tr>'
+'<td class="label"><b>Situação</b></td>'
+'<td class="label">'mdl,v1+|<br>|,mpl,'</td>'
+'</tr>' 
+fi/
+
+if p(v10) then 
+'<tr>'
+'<td class="label"><b>Código do usuário</b></td>'
+'<td class="label">'mdl,v10+|<br>|,mpl,'</td>'
+'</tr>' 
+fi/
+
+if p(v12) then 
+'<tr>'
+'<td class="label"><b>Tipo de usuario</b></td>'
+'<td class="label">'v12+|<br>|,'</td>'
+'</tr>' 
+fi/
+
+if p(v15) then 
+'<tr>'
+'<td class="label"><b>Base de dados</b></td>'
+'<td class="label">'v15+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v20) then 
+'<tr>'
+'<td class="label"><b>Número de controle</b></td>'
+'<td class="label">'v20+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v30) then 
+'<tr>'
+'<td class="label"><b>Data de reserva</b></td>'
+'<td class="label">'v30+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v31) then 
+'<tr>'
+'<td class="label"><b>Hora da reserva</b></td>'
+'<td class="label">'v31+|<br>|,'</td>'
+'</tr>'  
+fi/
+
+if p(v32) then 
+'<tr>'
+'<td class="label"><b>Operador da reserva</b></td>'
+'<td class="label">'v32+|<br>|,'</td>'
+'</tr>'  
+fi/
+
+if p(v40) then 
+'<tr>'
+'<td class="label"><b>Vencimento da reserva</b></td>'
+'<td class="label">'v40+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v50) then 
+'<tr>'
+'<td class="label"><b>Classificação</b></td>'
+'<td class="label">'v50+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v60) then 
+'<tr>'
+'<td class="label"><b>Data de atribuição do objeto</b></td>'
+'<td class="label">'v60+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+
+if p(v130) then
+ '<tr>'
+'<td class="label"><b>Data de cancelamento da reserva</b></td>'
+'<td class="label">'v130+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v131) then
+'<tr>'
+'<td class="label"><b>Hora de cancelamento da reserva</b></td>'
+'<td class="label">'v131+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v132) then 
+'<tr>'
+'<td class="label"><b>Operador que efetuou o cancelamento</b></td>'
+'<td class="label">'v132+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v200) then 
+'<tr>'
+'<td class="label"><b>Data do empréstimo</b></td>
+<td class="label">'v200+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+'</table>'
