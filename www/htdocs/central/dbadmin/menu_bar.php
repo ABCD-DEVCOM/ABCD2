@@ -14,6 +14,7 @@
 20210526 fho4abcd function for convert replaced. Update convert menu text (translated text) add option to convert language
 20210607 fho4abcd Add function to convert an iso to utf-8
 20210702 fho4abcd Add function to match an iso with an fdt
+20210705 fho4abcd Uncomment mxdbread, move to db maintenance and make it work for current mst file (should be safe)
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -170,6 +171,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		case "mxdbread":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
+            document.admin.storein.value=base+"/data"
+			document.admin.copyname.value=base+".mst"
 			document.admin.action="../utilities/mx_dbread.php"
 			document.admin.target=""
 			break;
@@ -416,14 +419,12 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		<li><a href='javascript:EnviarFormaMNT("lock","<?php echo $msgstr["protect_db"]?>")'><?php echo $msgstr["protect_db"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("inicializar","<?php echo $msgstr["mnt_ibd"]?>")'><?php echo $msgstr["mnt_ibd"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("eliminarbd","<?php echo $msgstr["mnt_ebd"]?>")'><?php echo $msgstr["mnt_ebd"]?></a></li>
-
-
+		<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>
       </ul>
   </li>
   <li><a href="#"><?php echo $msgstr["cnv_export"]."/".$msgstr["cnv_import"]?></a>
   	<ul>
        	<li><a href='Javascript:EnviarFormaMNT("exportiso","<?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?>")'><?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_iso"]?></a></li>
-		<!--<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>-->
 		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?>")'><?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("matchisofdt","<?php echo $msgstr["matchisofdt"]?>")'><?php echo $msgstr["matchisofdt"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("uploadfile","<?php echo $msgstr["uploadfile"]?>")'><?php echo $msgstr["uploadfile"]?></a></li>
@@ -498,6 +499,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
 <input type=hidden name=base value=<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"]?>>
 <input type=hidden name=cipar value=<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"]?>.par>
 <input type=hidden name=Opcion>
+<input type=hidden name=storein>
+<input type=hidden name=copyname>
 <input type=hidden name=encabezado value=s>
 <input type=hidden name=folder>
 <input type=hidden name=backtoscript value="/central/dbadmin/menu_mantenimiento.php">
