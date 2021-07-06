@@ -272,7 +272,7 @@ function EjecutarBusqueda(Accion){
         document.diccionario.action="browse.php"
 		document.diccionario.campo.value=escape(t[0])
 		document.diccionario.prefijo.value=t[2]
-	document.diccionario.Prefijos.value=t[2]
+		document.diccionario.Prefijos.value=t[2]
 		document.diccionario.id.value=t[1]
 		document.diccionario.Opcion.value="buscar"
 		document.diccionario.submit()
@@ -458,22 +458,11 @@ foreach ($contenido as $value){
 	$value=trim($value);
 	if ($value!=""){
 		$u=explode('|',$value);
-
-if (!isset($arrHttp["Expresion"])){		
 		$Status=$u[0];
 		$Mfn=$u[1];
 		$desde=$u[3];
 		$hasta=$u[4];
-} else  {
-		$Status="0|";
-		$Mfn=$u[0];
-		$desde=$u[1];
-		$hasta=$u[0];
 
-}		
-
-
-//echo $value."<br>";
 
 //if deleted then displays "the total-the deleted"
 if (isset($arrHttp["showdeleted"]) and $arrHttp["showdeleted"]=="yes" or (isset($arrHttp["Expresion"])))  {
@@ -546,12 +535,13 @@ echo read_collumns($archivo);
 						<span class="sb_lb">&#160;</span>
 					</a>
 					<?php
+					$compara = $desde-1;
 					if ($compara == $display_total) {
 						$lock_buttons='style="pointer-events: none; text-decoration: none;text-decoration: none; color: gray;"';
-						echo "igual";
+						
 					} else {
 						$lock_buttons='style="pointer-events: visible;"';
-						echo "diferente";
+						
 					}
 					?>
 					<a <?php echo $lock_buttons; ?> href="javascript:EjecutarBusqueda('next')" class="singleButton eraseButton">

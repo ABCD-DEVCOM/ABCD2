@@ -5,8 +5,13 @@
 
 		<field action=cgi tag=5015>cipar</field>
 		<field action=cgi tag=5016>syspar</field>
-		<field action=cgi tag=2001>count</field>
-		<field action=cgi tag=2000>Mfn</field>
+		<field action=cgi tag=2000>from</field>
+	   <field action=cgi tag=2001>to</field>	
+		
+		<!-- <field action=cgi tag=2001>count</field> -->
+
+		<!--<field action=cgi tag=2000>Mfn</field>-->
+
 		<field action=cgi tag=2028>Operador</field>
 		<field action=replace tag=2028 split=occ><pft>(v2028/)</pft></field>
 		<field action=cgi tag=2050>LastKey</field>
@@ -25,6 +30,7 @@
 		<field action=cgi tag=9001>Opcion</field>
 		<field action=cgi tag=9015>reverse</field>
 		<field action=cgi tag=9002>Desplegar</field>
+
    		<field action=cgi tag=9060>login</field>
 		<field action=replace tag=3030><pft>if a(v3030) then 'ad'v5001 fi</pft></field>
 		<field action=cgi tag=9088>cttype</field>
@@ -84,35 +90,28 @@
 
 
 		<label>LEERREGISTRO</label>
-			<do task=mfnrange>
-				<parm name="buffersize">800000</parm>
-                <!--parm name=MAX_TMP_STRING>800000</parm-->
-           		<parm name=db><pft>v5001</pft></parm>
-           		<parm name=from><pft>v2000</pft></parm>
-           		<parm name=to><pft>v2000</pft></parm>
+  			<do task=mfnrange>
+				<parm name=db><pft>v5001</pft></parm>
+				<parm name=from><pft>v2000</pft></parm>
+				<parm name=to><pft>v2001</pft></parm>
+				<parm name="buffersize">400000</parm>
+                <parm name=MAX_TMP_STRING>400000</parm>
+                <field action=define tag=1001>Isis_Current</field>
 				<field action=define tag=1002>Isis_Total</field>
-            	<field action=define tag=1102>Isis_Status</field>
-				<field action=define tag=1199>Isis_RecordStatus</field>
+            	<field action=define tag=1091>Isis_Status</field>
+				<field action=define tag=1092>Isis_RecordStatus</field>
 				<loop>
+                    <field action=import tag=9092>9092</field>
+                    <field action=import tag=9090>9090</field>
+                    <field action=import tag=5001>5001</field>
 					<field action=import tag=3030>3030</field>
-					<field action=import tag=5001>5001</field>
-					<display><pft>if val(v1102)=1 then 'Registro Eliminado' fi</pft></display>
-					<display><pft type=reload><pft>if v3030= 'ALL' then v3030 else '@'v3030,'.pft' fi</pft></pft></display>
+					<field action=import tag=3031>3031</field>
+					<display><pft></pft></display>
+					<display><pft>if p(v9090) then proc(v9090) fi </pft></display>
+					<display><pft type=reload><pft>if val(v1091)<>1 and val(v1091)<>2 or v9092='yes' then if p(v3031) then v3031 else if a(v3030) then 'ALL' else  , '@'v3030'.pft' fi fi fi </pft></pft></display>
 				</loop>
 			</do>
-		<flow action=exit>1</flow>
-
-		<label>LOGIN</label>
-			<do task=mfnrange>
-           		<parm name=db><pft>v5001</pft></parm>
-           		<parm name=from><pft>v2000</pft></parm>
-           		<parm name=to><pft>v2000</pft></parm>
-				<loop>
-					<display><pft>@login.pft</pft></display>
-				</loop>
-
-			</do>
-		<flow action=exit>1</flow>
+			<flow action=exit>1</flow>
 
        	<label>PRESENTAR_DICCIONARIO</label>
  			<do task=keyrange>
@@ -158,7 +157,24 @@
                 <field action=import tag=5015>5015</field>
                 <field action=import tag=3030>3030</field>
 				<field action=import tag=3000>3000</field>
-                <display><pft type=reload><pft>if v3030='ALL' then 'ALL' else , ',v1002"|",@'v3030'.pft' fi</pft></pft></display>
+					<display>
+					<pft type=reload>
+						<pft> 
+						if val(v1091)<>1 and 
+						   val(v1091)<>2 or 
+						   v9092='yes' 
+							then 
+							if p(v3031) 
+								then v3031 
+							else 
+								if a(v3030) then 'ALL' 
+									else  'v1092"|",@'v3030'.pft' 
+								fi 
+							fi 
+						fi 
+						</pft>
+					</pft>
+					</display>
 
                 <field action=export tag=3000>3000</field>
              </loop>
