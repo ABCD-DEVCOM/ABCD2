@@ -52,7 +52,7 @@
 								then v3031 
 							else 
 								if a(v3030) then 'ALL' 
-									else  'v9093,v1091"|",@'v3030'.pft' 
+									else  'v1091"|",@'v3030'.pft' 
 								fi 
 							fi 
 						fi 
