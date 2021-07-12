@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-07-11 fh04abcd Rewrite: Improve html&layout, div-helper
+*/
+
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -39,8 +43,11 @@ $Permiso=$_SESSION["permiso"];
 $sep='|';
 $db=explode($sep,$arrHttp["base"]);
 $db=$db[0];
+if(!isset($arrHttp["cipar"])) $arrHttp["cipar"]=$db.".par";
+$ciparamp="&amp;cipar=".$arrHttp["cipar"];
 include("../common/header.php");
 ?>
+<body>
 <script>
 function Edit(){
 	if  (document.forma1.cnv.selectedIndex<1){
@@ -62,7 +69,6 @@ function Delete(){
 	document.enviar.submit()
 }
 </script>
-<body>
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -78,7 +84,7 @@ if (isset($arrHttp["encabezado"])){
 
 	<div class="actions">
 <?php
-	if ($encabezado!="") echo "<a href=../common/inicio.php?reinicio=s&base=$db class=\"defaultButton backButton\">";
+	 echo "<a href='../common/inicio.php?reinicio=s&base=$db' class=\"defaultButton backButton\">";
 ?>
 <img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
@@ -86,36 +92,33 @@ if (isset($arrHttp["encabezado"])){
 			</div>
 			<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/z3950_conf.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/z3950_conf.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: z3950_conf.php </font>";
-?>
-	</div>
+<?php include "../common/inc_div-helper.php";?>
+
 <div class="middle form">
 	<div class="formContent">
 	<form name=forma1>
-	<table class=listTable><td>
-	<ul>
-	<li><a href=../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db.$encabezado?>><?php echo $msgstr["z3950_servers"]?></a><br><br></li>
-	<li><?php echo $msgstr["z3950_cnv"]?>
-	<dd><a href=z3950_conversion.php?base=<?php echo $db.$encabezado?>><?php echo $msgstr["new"]?></a>
-<?php
-if (file_exists($db_path.$db."/def/z3950.cnv")){	echo  "&nbsp; | <a href=javascript:Edit()>".$msgstr["edit"]."</a> &nbsp; | <a href=javascript:Delete()>".$msgstr["delete"]."</a> &nbsp; ";
-	$fp=file($db_path.$db."/def/z3950.cnv");
-	echo "<select name=cnv>
-	<option value=''>\n";
-	foreach ($fp as $var=>$value){
-		$o=explode('|',$value);		echo "<option value='".$o[0]."'>".$o[1]."\n";	}
-	echo "</select><br><br>";}
-?>
-
-	<li><a href=z3950_diacritics_edit.php?base=<?php echo $db.$encabezado?>><?php echo $msgstr["z3950_diacritics"]?></a><br><br></li>
-	<li><a href=../dataentry/z3950.php?base=<?php echo $db.$encabezado?>&test=Y target=_blank><?php echo $msgstr["test"]?></a></li>
-	</ul>
-	</td>
+	<table >
+    <tr><td>
+        <li><a href='../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db.$encabezado?>'><?php echo $msgstr["z3950_servers"]?></a><br><br></li>
+    </td></tr>
+    <tr><td>
+        <li><?php echo $msgstr["z3950_cnv"]?>
+    </td><td>
+        <a href='z3950_conversion.php?base=<?php echo $db.$encabezado?>'><?php echo $msgstr["new"]?></a>
+        <?php
+        if (file_exists($db_path.$db."/def/z3950.cnv")){            echo  "&nbsp; | <a href=javascript:Edit()>".$msgstr["edit"]."</a> &nbsp; | <a href=javascript:Delete()>".$msgstr["delete"]."</a> &nbsp; ";
+            $fp=file($db_path.$db."/def/z3950.cnv");
+            echo "<select name=cnv>
+            <option value=''>\n";
+            foreach ($fp as $var=>$value){
+                $o=explode('|',$value);                echo "<option value='".$o[0]."'>".$o[1]."\n";            }
+            echo "</select><br><br>";        }
+        ?>
+        <a href='z3950_diacritics_edit.php?base=<?php echo $db.$encabezado?>'><?php echo $msgstr["z3950_diacritics"]?></a><br><br>
+    </td></tr>
+    <tr><td>
+        <li><a href='../dataentry/z3950.php?base=<?php echo $db.$encabezado.$ciparamp?>&test=Y&Opcion=test&backtoscript=../dbadmin/z3950_conf.php' target=_blank><?php echo $msgstr["test"]?></a></li>
+	</td></tr>
 	</table>
 	</form>
  	</div>
