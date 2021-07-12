@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-07-11 fh04abcd Rewrite: Improve html, header, div-helper, undefined indexes, add error messages
+*/
+
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -29,7 +33,7 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-error_reporting(E_ALL & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_NOTICE);
 
 include("../config.php");
 include("../lang/admin.php");
@@ -45,26 +49,35 @@ if (isset($arrHttp["cnvtab"]) ) {
 $file=$db_path."cnv/marc-8_to_ansi.tab";
 $marc8=array ();
 $ansi=array();
-if (file_exists($file)){	$fp=file($file);
-	foreach ($fp as $value){		$ar=explode(" ",$value);
+if (file_exists($file)){
+	$fp=file($file);
+	foreach ($fp as $value){
+		$ar=explode(" ",$value);
 		$marc8[]=trim($ar[0]);
-		$ansi[]=trim($ar[1]);	}}
+		$ansi[]=trim($ar[1]);
+	}
+}
 unset($fp);
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 
 	set_time_limit (120);
-    $term = $arrHttp['term'];
+    $term="";
+    if(isset($arrHttp['term'])) $term = $arrHttp['term'];
+    if(!isset($arrHttp['Opcion']) ) $arrHttp['Opcion']="test";
     $field = $arrHttp['field'];
     $addr =$arrHttp['host'];
 	$addrhost=explode("\n",$addr);
 	$intentos= $arrHttp['reintentar'];
-	$isbn=explode("\n",$arrHttp['isbn_l']);
+    $isbn="";
 	$expr_isbn="";
-	$i=0;
-	foreach ($isbn as $linea) {
-		if (trim($linea)!="") $expr_isbn="@or ".$expr_isbn." @attr 1=7 ".$linea." ";
-	}
-    $expr_isbn=trim($expr_isbn);
+	if (isset($arrHttp['isbn_l'])) {
+        $isbn=explode("\n",$arrHttp['isbn_l']);
+        $i=0;
+        foreach ($isbn as $linea) {
+            if (trim($linea)!="") $expr_isbn="@or ".$expr_isbn." @attr 1=7 ".$linea." ";
+        }
+        $expr_isbn=trim($expr_isbn);
+    }
 	if ($expr_isbn!="")$expr_isbn=substr($expr_isbn,4);
 //	echo "Expresion= ".$expr_isbn."-";
 $jhost=-1;
@@ -86,12 +99,22 @@ $host=Array();
         $term = stripslashes($term);
 //        echo ' Expresión de búsqueda: ' . htmlspecialchars($term);
     }
-    include("../common/header.php");
+    //include("../common/header.php");
+    if (!isset($css_name))
+		$css_name="";
+	else
+		$css_name.="/";
+
 ?>
-    <title>Z39.50
-	</title>
-	<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<script languaje=javascript>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+    <title>Z39.50</title>
+    <link rel="stylesheet" rev="stylesheet" href="../css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+
+	<script language=javascript>
 		function Transmitir(ixT){
 			var Cuenta
 			var Opcion="<?php echo $arrHttp["Opcion"]?>"
@@ -114,24 +137,30 @@ $host=Array();
 			<?php if (isset($_SESSION["cnvtab"]))
 			echo "\ncnvtab='&cnvtab=".urlencode($_SESSION["cnvtab"])."'\n";
 			?>
-			if (Opcion=="edit"){				loc="z3950_copy.php?userid=g&Opcion=capturar&ver=N&Mfn="+Mfn+"&base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>&Opcion_z="+Opcion
+			if (Opcion=="edit"){
+				loc="z3950_copy.php?userid=g&Opcion=capturar&ver=N&Mfn="+Mfn+"&base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>&Opcion_z="+Opcion
 				loc=loc+"&ValorCapturado="+campo+cnvtab
        			window.opener.top.main.location=loc
        			document.z3950.marc[ixT].value=""
-				window.opener.top.main.focus()			}else{
+				window.opener.top.main.focus()
+			}else if(Opcion=="new"){
 				loc="z3950_copy.php?userid=g&Opcion=capturar&ver=N&Mfn=New&base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>&Opcion_z="+Opcion
 				loc=loc+"&ValorCapturado="+campo+cnvtab
        			window.opener.top.main.location=loc
        			document.z3950.marc[ixT].value=""
 				window.opener.top.main.focus()
-			}
+			} else {
+                alert ( "No action. This is a test action (by Opcion="+Opcion+")")
+            }
    		}
    </script>
   </head>
 <body >
+
+<?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-		<div class="formContent">
-Host: <?php echo $host[0]?>
+<div class="formContent">
+<?php echo $msgstr["z3950_server"].": ";echo $host[0]?>
 <form method="get" name=z3950>
 
 
@@ -152,11 +181,7 @@ Host: <?php echo $host[0]?>
 		$syntaxar["OPAC"] = "opac";
 
 ?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]."/z3950-01.html"?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
- <?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/z3950-01.html target=_blank>".$msgstr["edhlp"]."</a>";
- echo "&nbsp; &nbsp; Script: z3950.php" ?></font>
-</div>
+
 <table width="100%" cellspacing="0" cellpadding="3" border="0" bgcolor="#4E617C">
 <?php
 function print_structured_record($ar) {
@@ -171,7 +196,11 @@ function print_marc_record($ar) {
 global $marc8,$ansi;
     reset($ar);
     $nl = "";
-    while(list($key,list($tagpath,$data))=each($ar)) {
+    $arcount=count($ar);
+    for ( $i=0;$i<$arcount;$i++ ){
+        $tagpath=$ar[$i][0];
+        $data="";
+        if (isset($ar[$i][1])) $data=$ar[$i][1];
      	$data=str_replace($marc8,$ansi,$data);
         if (preg_match("/^\(3,([^)]*)\)\(3,@\)$/",$tagpath,$res)) {
             echo $res[1] . ' ' . htmlspecialchars($data) . "\n";
@@ -298,10 +327,12 @@ if ((!empty($term)||$expr_isbn!="") && $num_hosts > 0)
 					$ixreg=$ixreg+1;
 					echo "$pos/$max_hits<br>";
                		if (is_array($ar)){
-                   		if ($syntax == "GRS-1") {                    		print_structured_record($ar);
+                   		if ($syntax == "GRS-1") {
+                    		print_structured_record($ar);
                    		} else {
 							echo '<table cellspacing="0" cellpadding="2" border="0"><tr><td align="center" class=td>';
-							echo '<a href="javascript:Transmitir('.$ixreg.')"><img src=img/capturar.gif border=0 alt="Copy to the database"></a>';
+							echo '<a href="javascript:Transmitir('.$ixreg.')">';
+                            echo '<img src=img/capturar.gif border=0 alt="'.$msgstr["z3950_copytodb"].'" title="'.$msgstr["z3950_copytodb"].'"> </a>';
 
            		  			echo '</td></tr></table></td><td width="96%">';
                				echo '<table cellspacing="3"><tr><td>';
@@ -346,7 +377,8 @@ if ($max_hits > 0)
     $tope=0;
     while ($i < $max_hits  && $number > 1) {
         echo '&nbsp;';
-        if ($start != $i) {
+        if ($start != $i) {
+
             echo '<a href=z3950-01.php?';
             echo "start=$i&number=$number&reintentar=$intentos&";
             echo $host_url."^s$syntax^f$element";
@@ -363,8 +395,10 @@ if ($max_hits > 0)
             echo '</a>';
         }
         $tope=$tope+1;
-        if ($tope>10){        	echo "<br>";
-        	$tope=0;        }
+        if ($tope>10){
+        	echo "<br>";
+        	$tope=0;
+        }
         $i += $number;
     }
 }
