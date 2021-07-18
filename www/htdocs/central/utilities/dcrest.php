@@ -1,5 +1,7 @@
 <?php
-
+/* Modifications
+2021-07-18 fho4abcd Show error if curl is not installed. Errors to screen and not to file
+*/
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
 //session_start();
@@ -62,7 +64,19 @@ class Repository_api
 	   
         $resultado = array();
         $request_url =  $this->rest_url. $endpoint;
+        if (!function_exists("curl_init")){
+            echo "<div style='color:red;font-size:large;font-weight:bold'>".
+            "The PHP curl package is not present<br>".
+            "Please install and configure it</div>";
+        }
         $ch = curl_init();
+        if ( $ch===false or $ch==0) {
+            $curl_error= error_get_last();
+            echo "<div style='color:red;font-size:large;font-weight:bold'>".
+            "Error initiating curl package:<br>".$curl_error.
+            "</div>";
+            die;
+        }
 		
 
 		if($ch == false)
@@ -100,27 +114,19 @@ class Repository_api
 		  }*/
 		
        if (curl_errno($ch)) {
-
-            $fp = fopen("Mylog.txt", "a+");
-            fwrite($fp, "> Error Curl [" . curl_error($ch) . "]\n");
-            fclose($fp);
-
+            echo "<div style='color:red;font-size:large;font-weight:bold'>".
+            "Error detected by Curl: [".curl_error($ch).
+            "]</div>";
         } else {
-             $resultado = json_decode($response, true);
-							 
+            $resultado = json_decode($response, true);				 
             if (JSON_ERROR_NONE !== json_last_error()) {
-
-                $fp = fopen("Mylog.txt", "a+");
-                fwrite($fp, "> Error JSON [" . json_last_error()."] \n");
-                fclose($fp);
+                echo "<div style='color:red;font-size:large;font-weight:bold'>".
+                "Error detected by JSON: [".json_last_error().
+                "]</div>";
             }
         }
-
         curl_close($ch);
-
-        return $resultado;	  
-		  
-		 
+        return $resultado;	   
     }
  
     function get_TotalItems(){
