@@ -1,10 +1,8 @@
 <?php
+/* Modifications
+2021-07-18 fho4abcd div-helper,html,translations
+*/
 session_start();
-//$_POST["submit"]=false;
-//$_POST["cantItems"]=0;
-//$_POST = array_merge(array($key=>false),$_POST);
-//return $_POST[$key];
-// var_dump($_POST);
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -15,22 +13,25 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 
 include("../lang/dbadmin.php");
+include("../lang/soporte.php");
 include("../common/header.php");
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
-//echo "<script src=../_js/jquery.js></script>";
-echo "<script src=../dbadmin/jquery.js></script>";
-echo "<script src=../dataentry/js/lr_trim.js></script>";
-echo "<body onunload=win.close()>\n";
-
-include("../common/institutional_info.php");
 $encabezado="&encabezado=s";
 
-echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">API/REST-Dspace: " . $base_ant."
-			</div>
-			<div class=\"actions\">";
+?>
+<body>
+<script src='../dbadmin/jquery.js'></script>
+<script src='../dataentry/js/lr_trim.js'></script>
+<?php
 
+include("../common/institutional_info.php");
+?>
+<div class=sectionInfo>
+    <div class=breadcrumb><?php echo $msgstr["dspace_bread"].": ". $base_ant?>
+    </div>
+    <div class=actions>
+<?php
 echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
 echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
@@ -38,14 +39,7 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";
-?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addloanobjectcopies.html target=_blank>
-        <?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addloanobjectcopies.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dcdspace.php</font>";
+include "../common/inc_div-helper.php";
 ?>
 
 
@@ -156,7 +150,7 @@ $(document).ready(function()
  
 		
 		if($("#url").val() == "" ){
-             alert("<?php echo $msgstr["errurl"]?>");
+             alert("<?php echo $msgstr["dspace_errurl"]?>");
 			$("#url").focus();
 			return false;
           }	
@@ -215,7 +209,7 @@ $(document).ready(function()
 		}
        else
          {
-		    alert("<?php echo $msgstr["errurlcorrecta"]?>");
+		    alert("<?php echo $msgstr["dspace_errurlcorrecta"]?>");
 			$("#url").focus().val("");
 			return false;
 		 }        
@@ -225,17 +219,14 @@ $(document).ready(function()
 });
 
 </script>	
-</div>		
 <div class="middle form">
 	<div class="formContent">
 <form action="" method="post" name="form1" target="_self" id="form1" >
 
 <?php
-  echo "<p>".$msgstr["apires"]."</p>";   
+  echo "<h3>".$msgstr["dspace_title"]."</h3>";   
   echo " <input type=\"hidden\" value=\"$base_ant\" name=\"base\"/>";
   echo "<i>".$msgstr["cantdatabase"]." ".$base_ant."</i> ";
-//if(isset($_POST['url']))
-//  echo " from URL ". $_POST["url"] ;
 ?>
 
 <?php
@@ -244,9 +235,7 @@ function TotalItems(){
  
 $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
-//echo "IsisScript = $IsisScript<BR> Query=$query";
 include("../common/wxis_llamar.php");
-//echo "CONTENIDO="; var_dump($contenido);//die;
 	$ix=-1;
 	foreach($contenido as $linea) {
 		$ix=$ix+1;
@@ -259,13 +248,11 @@ include("../common/wxis_llamar.php");
 	}
 if (!isset($tag["MAXMFN"])) 
 	$tag["MAXMFN"]=0;	
-//echo  'maxMFN='.$tag["MAXMFN"]." <BR>";
 	return  (int) $tag["MAXMFN"];
 
 }
 ?>  
  <label id="cant"></label>
-  <p><p/>   
   <table name="admin" id="admin" border="0" >
     <tr>
 	   <?php  if(!(isset($_POST["submit"]) && $_POST["submit"])){  ?>
@@ -287,15 +274,15 @@ if (!isset($tag["MAXMFN"]))
         <tr><td align="right">&nbsp;</td></tr>
 	  <tr>
 	   <td  align="right"> 
-		  <label><?php echo $msgstr["url"]; ?>
-			 <input  size="35" type="text" placeholder="https://wedocs.unep.org/rest/" name="url" id="url" value="">
+		  <label><?php echo $msgstr["dspace_url"]; ?>
+			 <input  size="35" type="text" title="<?php echo $msgstr['dspace_errurl'];?>" name="url" id="url" value="">
 		  </label>  
 	   </td>
 	  </tr>
 	  <tr><td align="right">&nbsp;</td></tr>
 	  <tr>
 	   <td  align="right"> 
-		  <label><?php echo $msgstr["count"]; ?>
+		  <label><?php echo $msgstr["dspace_count"]; ?>
 			 <input  size="35" type="text" name="count" id="count" value="" onkeypress="return OnlyNum(event)">
 		  </label>  
 	   </td>
@@ -377,13 +364,12 @@ if (!isset($tag["MAXMFN"]))
 <tr><td align="right">&nbsp;</td></tr>  
 
  <?php   
-// echo "postsubmit=" . $_POST["submit"]. "<BR>"; 
 if (!(isset($_POST["submit"]) && $_POST["submit"])) { ?> 
  
 <table >
   <tr>
      <td width="10">&nbsp;</td>
-    <td colspan="10" style="font-size:14px">Match your fields with the Dublin Core metadata format.</td>
+    <td colspan="10" style="font-size:14px"><?php echo $msgstr["dspace_match"];?></td>
 	  <tr>
     <td width="10">&nbsp;</td>
     <td width="59" align="left" style="font-size:14px"><label>DC:Title</label></td>

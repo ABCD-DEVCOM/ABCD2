@@ -15,6 +15,7 @@
 20210607 fho4abcd Add function to convert an iso to utf-8
 20210702 fho4abcd Add function to match an iso with an fdt
 20210705 fho4abcd Uncomment mxdbread, move to db maintenance and make it work for current mst file (should be safe)
+20210718 fho4abcd Add function DSpace bridge 
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -392,6 +393,12 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/upload_wrkfile.php"
 			document.admin.target=""
 			break;
+		case "dcdspace":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/dcdspace.php"
+			document.admin.target=""
+			break;
 		default:
 			alert(Opcion+" Not Available")
 			return;
@@ -428,6 +435,9 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		<li><a href='Javascript:EnviarFormaMNT("importiso","<?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?>")'><?php echo $msgstr["cnv_import"]." ISO ".$msgstr["archivo"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("matchisofdt","<?php echo $msgstr["matchisofdt"]?>")'><?php echo $msgstr["matchisofdt"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("uploadfile","<?php echo $msgstr["uploadfile"]?>")'><?php echo $msgstr["uploadfile"]?></a></li>
+        <?php if ($arrHttp["base"]==("dcdspace")) { ?>
+		<li><a href='Javascript:EnviarFormaMNT("dcdspace","<?php echo $msgstr["dspace_title"]?>")'><?php echo $msgstr["dspace_title"]?></a></li>
+        <?php } ?>
   		<li><a href="#">Import documents</A>
     		<ul>
     			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["docbatchimport_mx"]?>")'><?php echo $msgstr["docbatchimport_mx"]?></a></li>
