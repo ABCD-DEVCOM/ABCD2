@@ -1,12 +1,14 @@
 <?php
 error_reporting(0);
 session_start();
-include("get_post.php");
-include("header.php");
-include("../config.php");
 if (isset($_SESSION["lang"]))
-	include("../lang/admin.php");
-include("institutional_info.php");
+
+include("../config.php");
+include("get_post.php");
+
+include("../lang/admin.php");
+include("header.php");
+include("institutional_info.php"); 
 ?>
 <body>
 <div class="middle form">
