@@ -4,6 +4,7 @@
 2021-04-23 fho4abcd Line endings,body tag
 2021-06-10 fho4abcd Remove password argument
 2021-07-07 fho4abcd Improve leader reformat (was broken since update to OPAC)
+2021-07-22 fho4abcd Repair PHP errors due to previous (Improve leader format...)
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -574,7 +575,7 @@ foreach ($arrHttp as $var => $value) {
 		$tag=explode("_",$var);
 		if (count($tag)>0){ //IF LEADER, REFORMAT THE FIELD FOR ELIMINATING |
 			if ( isset($lid) and substr($tag[0],3)>=$lid[0] and substr($tag[0],3)<=$lid[1]  or
-                 count($tmLeader)>0 and
+                 isset($tmLeader) and count($tmLeader)>0 and
                     (substr($tag[0],3)==$tmLeader[0] or substr($tag[0],3)==$tmLeader[1])
                 ) {  
 				$v=explode('|',$value);
