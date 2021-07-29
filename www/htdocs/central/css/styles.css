@@ -2,27 +2,68 @@
 ** 2021-06-26 fho4abcd Move distributor logo to php
 */
 /* #general styles */
-BODY {
+
+:root {
+  --blue: #39547a;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #bcd1ef;
+  --white: #f8f8f8;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #39547a;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #bcd1ef;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #cfd0d1;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; }
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+body{
 	background: #364c6c;
-		font-size: 12px;
-	FONT-FAMILY: Arial,Helvetica;
+	font-size: 0.8rem;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	color: #212529;
 }
 
-INPUT, SELECT, TEXTAREA {
-	color: #000;
+input, select, textarea {
 	border: 1px solid #a7a6aa;
-
 }
 
-A {
+a {
 	color: #708bb1;
 }
 
-A IMG {
+a img {
 	border: 0px;
 }
 
-LABEL {
+label {
 	cursor: pointer;
 }
 
@@ -80,15 +121,14 @@ LABEL {
 	}
 
 	select.textEntry {
-		border: 2px solid #a7a6aa;
-		    padding: 3px;
+		border: 1px solid #a7a6aa;
+		padding: 3px;
 	}
 
 	INPUT.textEntry, TEXTAREA.textEntry {
-		border-top: 2px solid #a7a6aa;
-		border-left: 2px solid #a7a6aa;
-		border-bottom: 2px solid #a7a6aa;
-		border-right: 2px solid #a7a6aa;
+		border: 1px solid #a7a6aa;
+
+
 	}
 
 	INPUT.textEntryFocus, TEXTAREA.textEntryFocus {
@@ -563,8 +603,8 @@ LABEL {
 
 	}
 
-	.searchBox {
-		background: #d8dade;
+	.searchBox{
+		background: #f5f5f5;
 	}
 
 	.searchBox LABEL {
@@ -574,7 +614,34 @@ LABEL {
 	.searchBox INPUT.submit {
 		border: 1px solid #546de5;
 		background:  #778beb;
-		color: #fff;
+	}
+
+button:not(:disabled),
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled) {
+  cursor: pointer; }
+
+	.searchBox button, .SubsearchBox button {
+		background: #cfd0d1;
+		border: 1px solid #6c757d !important;
+	}
+
+	.button_browse {
+		background: #ebebeb;
+		border: 1px solid #ebe8e8 !important;
+		text-decoration: none;
+	}
+
+	.button_browse:hover {
+		background: #fff;
+		border: 1px solid #6c757d!important;
+		text-decoration: none;
+	}
+
+	.searchBox button:hover,
+	.searchBox button:focus {
+		background-color: #dae0e5 !important; 
 	}
 
 	.searchBox INPUT.index {
@@ -595,7 +662,7 @@ LABEL {
 		border-spacing: 0px;
 	}
 
-	.statTable TH {
+	.statTable th {
 		border-right: 1px solid #9d9d9d;
 		background: #848484;
 		border-bottom: 3px solid #848484;
@@ -603,7 +670,6 @@ LABEL {
 		cursor: pointer;
 		border:1px solid #9d9d9d;
 	}
-
 
 	.listTable {
 		border-collapse: collapse;
@@ -611,14 +677,22 @@ LABEL {
 	}
 
 
-	.listTable TH {
-		border-right: 1px solid #9d9d9d;
-		background: #848484;
-		border-bottom: 3px solid #848484;
-		color: #fff;
+	.listTable th {
+		background: #fff;
+		color: #000;
 		cursor: pointer;
-		border:1px solid #9d9d9d;
+  		padding: 8px;
+  		font-weight: bold;
 	}
+
+	.listTable.browse tr:first-child {
+		border-bottom: 2px solid #c9c9c9;
+	}
+
+	.listTable.browse tr:last-child {
+		border-top: 2px solid #c9c9c9;
+	}	
+
 
 	.listTable TH.checkboxes,
 	.listTable TH.action {
@@ -629,14 +703,14 @@ LABEL {
 		background-image: url('../images/listTable_th_desc.gif');
 		background-repeat: no-repeat;
 		background-position:  right center;
-		border-bottom-color: #29a1c8
+		color: #555
 	}
 
 	.listTable TH.asc {
 		background-image: url('../images/listTable_th_asc.gif');
 		background-repeat: no-repeat;
 		background-position:  right center;
-		border-bottom-color: #29a1c8
+		color: #555
 	}
 
 	.listTable TD {
@@ -678,7 +752,7 @@ LABEL {
 	}
 	*/
 	.tMacroActions {
-		background: #708bb1;
+		background: #fff;
 	}
 
 	.tMacroActions .checkboxAction {
@@ -686,11 +760,50 @@ LABEL {
 	}
 	/*#END #list classes */
 
+/*NAVPAGE OF BROWSER.PHP*/
+
+.navpage {
+    float: right;
+    margin-right: 50px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.navpage span.current {
+    float: left;
+}
+
+.navpage span a{
+  padding: 10px;
+}
+
+.navpage span{
+  float: left;
+  padding: 10px 5px;
+}
+
+.navpage span a {
+  color: black;
+  text-decoration: none;
+}
+
+.navpage span.current {
+  padding: 10px 15px;
+  background-color: #ebebeb;
+  color: #000;
+  font-weight: bold;
+  border: 1px solid #6c757d!important;
+
+}
+
+.navpage span:hover:not(.current) {
+    background-color: #ddd;
+}
+
+/*END NAVPAGE OF BROWSER.PHP*/
+
+
 	/*#form classes */
-	.form {
-
-	}
-
 
 	.formHead {
 		background: #d8dade;

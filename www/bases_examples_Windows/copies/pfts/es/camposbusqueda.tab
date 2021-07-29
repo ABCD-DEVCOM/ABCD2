@@ -1,2 +1,15 @@
 Número de control|1|CN_|
-Situación|200|STATUS_|
+Base de datos|10|BASE_|
+Número de llamada|20|CL_|
+Número de inventario|30|IN_|
+Estado|200|STATUS_|
+Biblioteca principal|35|ML_|
+Biblioteca de la sucursal|40|BL_|
+Número de copia|63|CN_|
+Tipo de adquisición|68|AT_|
+Proveedor / Donante / Institución|70|PDI_|
+Fecha de obtención|80|DA_|
+Precio|90|PR_|
+Orden de compra|100|PO_|
+Número de sugerencia|110|SN_|
+A cambio de|400|EX_|

@@ -1,0 +1,37 @@
+'<table border=0 width=90% class=listTable>'
+'<tr><td width=20% valign=top><font face=arial size=2><b>Ordem No.</b></td><td valign=top><font face=arial size=2>',v1,'</td>'/
+'<tr><td width=20% valign=top><font face=arial size=2><b>Data</b></td><td valign=top><font face=arial size=2>',v2,'</td>' /
+'<tr><td width=20% valign=top><font face=arial size=2><b>Aquisição type</b></td><td valign=top><font face=arial size=2>',v10^b," ("v10^a")",'</td>' /
+if v10^a='pr' then
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Provider</b></td><td valign=top><font face=arial size=2>',v5,'</td>' /
+fi,
+if v10^a='ex' then
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Exchanger</b></td><td valign=top><font face=arial size=2>',v700,'</td>' /
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Trocados por
+</b></td><td valign=top><font face=arial size=2>',v710,'</td>' /
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Conditions</b></td><td valign=top><font face=arial size=2>',v720,'</td>' /
+fi,
+if v10^a='do' then
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Doado por</b></td><td valign=top><font face=arial size=2>',v600,'</td>' /
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Condições</b></td><td valign=top><font face=arial size=2>',v610,'</td>' /
+fi,
+'<tr><td width=20% valign=top><font face=arial size=2><b>Ordem fechada?</b></td><td valign=top><font face=arial size=2>',v500,'</td>'
+'<tr><td colspan=2 valign=top><p>
+     <table class=listTable>',
+	'<tr><th>Item</th><th>Qty</th><th>Price</th><th>Sugestão</th><th>Cotação</th><th>Obj.tipo</th><th>Base de dados</th><th>Controle n.</th><th>Exemplares recebidos</th>'
+	(if p(v50) then 
+		'<tr><td>'v50^a,
+		'</td><td align=center>'v50^b,
+		'</td><td align=center>'v50^c,
+		'</td><td align=center>'v50^d,
+		'</td><td align=center>'v50^e'</td>' 
+		'</td><td align=center>' if v50^g='N' then 'Novo' else 'Exemplar' fi '</td>'
+		'</td><td align=center>'v50^h'</td>'
+		'</td><td align=center>'v50^i'</td>'
+		'</td><td align=center>'v50^f'</td>'
+				
+	fi /)
+    '</table></td>',
+'<tr><td width=20% valign=top><font face=arial size=2><b>Reclamações
+</b></td><td valign=top><font face=arial size=2>',v450+|<br>|,'</td>' 
+'</table>'/

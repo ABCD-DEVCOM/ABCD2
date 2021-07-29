@@ -16,7 +16,8 @@ v12,'^'
 v15,'^'
 v1,'^'
 v400'^' 
-v500*6.2,'-',v500*4.2,'-',v500.4/
+v500*6.2,'-',v500*4.2,'-',v500.4'^'
+v300/
 
 /* 0  Número de inventario
    1  Número de  clasificación
@@ -37,6 +38,7 @@ v500*6.2,'-',v500*4.2,'-',v500.4/
    16 Tipo de movimiento: P=préstamo X=devolución
    17 Política de préstamos
    18 Fecha real de devolución
+   19 Comentarios
    
 */
 

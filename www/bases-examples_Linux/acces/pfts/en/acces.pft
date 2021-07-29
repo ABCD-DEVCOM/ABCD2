@@ -1,5 +1,5 @@
 '<strong>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
-'<table   class=td2 border=0>'/
+'<table class=td2 border=0>'/
 '	<td valign=top>Name of user</td>'/
 '	<td>'v10'</td>'/
 '	<tr>'/
@@ -14,5 +14,4 @@
 '	<tr>
 	<td>Valid until</td>
 	<td>'v50'</td>'
-
 '</table>'/

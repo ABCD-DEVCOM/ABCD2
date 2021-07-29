@@ -1,5 +1,5 @@
-Tipo de sanção|1|RE_|
-Situação|10|ST_|
-Data|30|DA_|
-Vencimento|60|DV_|
-Data de pag./cancelamento|110|DC_|
+Sanction type|1|RE_|
+Status|10|ST_|
+Date|30|DA_|
+Due date|60|DV_|
+Cancel/payment date|110|DC_|

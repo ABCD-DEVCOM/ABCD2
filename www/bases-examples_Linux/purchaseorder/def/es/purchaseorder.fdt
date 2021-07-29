@@ -1,5 +1,5 @@
 H||Orden de compra|0|0||||||||||||0||
-F|10|Forma de adquisición|0|0|ab||R||5|P|%path_database%copies/def/en/acquiredby.tab|||||0||
+F|10|Forma de adquisición|0|0|ab||R||5|P|%path_database%copies/def/es/acquiredby.tab|||||0||
 F|1|Número de la orden|0|0|||X|||D|suggestions|NC_|v1'-',v18|v1||0||
 F|2|Fecha|0|0|||D||10|||||||0||
 F|3|Fecha ISO|0|0|||ISO||10|||||||0||
@@ -22,7 +22,11 @@ S||Comentarios|0|0|||X||100|||||||0||
 H||Recepción|0|0||||||||||||0||
 F|480|Fecha|0|0|||D||10|||||||0||
 F|481|Fecha ISO|0|0|||ISO||10|||||||0||
-F|500|Orden cerrada|0|0|||X||1|||||||0||
+T|500|Actualización|0|0|abcd||TB|||||||||0||
+S||Número de sugerencia|0|0|||X||10|||||||0||
+S||Número de cotización|0|0|||X||10|||||||0||
+S||Identificación del objeto|0|0|||X||10|||||||0||
+S||Base de datos|0|0|||X||10|||||||0||
 H||Donación|0|0||||||||||||0||
 F|600|Donante|0|0||||||||||||0||
 F|610|Condiciones|0|0||||||||||||0||

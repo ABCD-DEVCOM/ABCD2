@@ -27,6 +27,7 @@
 		<meta http-equiv="description" content="" />
 		<!-- Stylesheets -->
 		<link rel="stylesheet" rev="stylesheet" href="../css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+		<link href="../../assets/css/all.min.css" rel="stylesheet"> <!--load all styles -->
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie.css" type="text/css" media="screen"/>
 		<![endif]-->
@@ -57,4 +58,5 @@
 		</style>
 <?php
 include ("css_settings.php");
-?></head>
+?>
+</head>

@@ -1,2 +1,15 @@
 Número de controle|1|CN_|
+Base de dados|10|BASE_|
+Número de chamada|20|CL_|
+Número de inventário|30|IN_|
 Status|200|STATUS_|
+Biblioteca principal|35|ML_|
+Biblioteca de sucursais|40|BL_|
+Número de cópia|63|CN_|
+Tipo de aquisição|68|AT_|
+Fornecedor / Doador / Instituição|70|PDI_|
+Data do chegada|80|DA_|
+Preço|90|PR_|
+Pedido de compra|100|PO__|
+Sugestão Número|110|SN_|
+Em troca de|400|EX_|

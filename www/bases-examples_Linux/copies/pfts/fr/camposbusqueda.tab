@@ -1,0 +1,15 @@
+Numéro de contrôle|1|CN_|
+Base de données|10|BASE_|
+Numéro d'appel|20|CL_|
+Numéro d'inventaire|30|IN_|
+Statut|200|STATUS_|
+Bibliothèque principale|35|ML_|
+Bibliothèque annexe|40|BL_|
+Numéro d'exemplaire|63|CN_|
+Type d'acquisition|68|AT_|
+Fournisseur/Donneur/Institution|70|PDI_|
+Date d'acquisition|80|DA_|
+Prix|90|PR_|
+Bon de commande|100|PO_|
+Numéro de suggestion|110|SN_|
+En échange de|400|EX_|

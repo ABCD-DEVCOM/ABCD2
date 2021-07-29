@@ -167,7 +167,7 @@ A.menuButton {
 
 	.institutionalInfo {
 		float: left;
-		width: 60%;
+		width: 55%;
 		display: table;
 		padding: 15px 0px 14px 15px;
 	}
@@ -194,7 +194,7 @@ A.menuButton {
 
 	.userInfo {
 		float: right;
-		width: 30%;
+		width: 40%;
 		text-align: right;
 		white-space: nowrap;
 		padding: 15px 15px 0px 0px;
@@ -202,7 +202,7 @@ A.menuButton {
 
 	.language {
 		float: right;
-		width: 30%;
+		width: 35%;
 		text-align: right;
 		white-space: nowrap;
 		padding: 0px 47px 0px 0px;
@@ -383,18 +383,84 @@ A.menuButton {
 
 	}
 
-	.searchBox {
-		padding: 5px 15px;
+	.searchBox, .SubsearchBox  {
+		padding: 15px;
+		display: inline-block;
+		width: 100%;
+		position: relative;
+		height: fit-content;
+	}
+
+
+	.searchBox form, .SubsearchBox form{
+		display: inline-flex;
+		margin: 5px 10px;
+		vertical-align: middle;
+	}
+
+	.searchBox .f_right, .SubsearchBox .f_right{
+		float: right;
+		position: relative;
+		text-align: right;
+	}
+
+
+.SubsearchBox .f_right{
+		margin-right:20px;
+	}
+
+
+	.searchBox .f_left{
+		float: left;
 		position: relative;
 	}
 
-	.searchBox LABEL {
-		margin-right: 4px;
+
+	.searchBox label, .SubsearchBox  label {
+		margin: 10px 4px 0 10px;
+
 	}
 
-	.searchBox INPUT.textEntry {
-		width: 30%;
-		padding: 4px;
+	.searchBox INPUT.textEntry, .SubsearchBox INPUT.textEntry{
+		padding: 6px;
+		margin: 4px;
+	}
+
+
+	.searchBox INPUT.textEntry.b_search {
+		width: 300px;
+	}
+
+		INPUT.textEntry.textEntryFocus.b_search {
+		width: 600px;
+		transition: width 0.5s;
+	}
+
+	.searchBox select.textEntry, .SubsearchBox select.textEntry {
+		width: auto;
+		padding: 6px;
+	}
+
+	.searchBox button, .SubsearchBox button {
+		padding: 6px;
+		margin: 4px;
+		width: 180px;
+
+	}
+
+	.button_browse {
+		padding: 4px 8px;
+	}
+
+	a.button_browse img{
+		vertical-align: middle;
+		text-align: center;
+	}
+
+	.searchBox button.showdeleted {
+		padding: 6px;
+		width: auto;
+
 	}
 
 	.searchBox INPUT.submit, .searchBox INPUT.index {
@@ -426,7 +492,8 @@ A.menuButton {
 
 
 	.listTable {
-		width: 100%;
+		width: 96%;
+		margin: 30px 20px;
 	}
 
 	.listTable TD,
@@ -435,7 +502,7 @@ A.menuButton {
 	}
 
 	.listTable TD {
-		vertical-align: top;
+		vertical-align: middle;
 		text-align: left;
 	}
 
@@ -455,9 +522,10 @@ A.menuButton {
 	.listTable .action {
 		padding-right: 15px;
 		white-space: nowrap;
+		width: 100px;
 	}
 	.listTable .action a img{
-		margin-right:5px;
+	/*	margin-right:5px;*/
 	}
 	.listTable TD A {
 		white-space: nowrap;
@@ -471,6 +539,7 @@ A.menuButton {
 	}
 
 	.tMacroActions {
+		padding: 30px 0;
 
 	}
 
@@ -487,12 +556,11 @@ A.menuButton {
 		width: 30%;
 		margin: 10px 15px 0px 0px;
 	}
+
+
 	/*#END #list classes */
 
 	/*#form classes */
-	.form {
-
-	}
 
 	.formHead, .formContent {
 		padding: 15px;

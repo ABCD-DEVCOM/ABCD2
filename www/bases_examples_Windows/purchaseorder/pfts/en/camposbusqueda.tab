@@ -1,4 +1,7 @@
-Purchase Order No.|1|ON_|
-Suggestion number|50|SN_|
+Order Number|1|ON_|
+Date|2|DA_|
 Provider|5|PV_|
-proveedor_suggestion|5|PVSN_
+Description of item|50|DI_
+Price|50|PR_|
+Suggestion number|50|SN_|
+Date (received)|480|DR_|

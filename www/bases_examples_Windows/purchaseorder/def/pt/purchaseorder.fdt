@@ -1,43 +1,36 @@
-H||Ordem|0|0||||||||||||0||
-F|1|Número da ordem|0|0|||X|||D|suggestions|NC_|v1'-',v18|v1||0||
-F|2|Data da ordem|0|0|||D||10|||||||0||
-F|3|Data da ordem ISO|0|0|||ISO||10|||||||0||
-F|5|Fornecedor|0|0|||X|||||||||0||
-F|16|Autor pessoa|0|0|||X|||||||||0||
-F|17|Autor instituição|0|0|||X|||||||||0||
-F|18|Título|0|0|||X|||||||||0||
-F|21|Volume|0|0|||X|||||||||0||
-F|29|Editor|0|0|||X|||||||||0||
-H||Série|0|0||||||||||||0||
-F|30|Título|0|0|||X|||||||||0||
-F|31|Volume|0|0|||X|||||||||0||
-F|32|Número|0|0|||X|||||||||0||
-H||Outros dados|0|0||||||||||||0||
-F|35|ISSN|0|0|||X|||||||||0||
-F|47|ISBN|0|0|||X|||||||||0||
-F|38|Editor|0|0|||X|||||||||0||
-F|39|Cidade|0|0|||X|||||||||0||
-F|40|País|0|0|||X|||||||||0||
-F|41|Edição|0|0|||X|||||||||0||
-T|50|Objetos|0|1|abcdeghi||TB|||||||||0||
-S||Referência|0|0|||X||35|||||||0||
-S||Quantidade|0|0|||X||5|||||||0||
-S||Preço|0|0|||X||5|||||||0||
-S||Número da sugestão|0|0|||X||10|||||||0||
-S||Número da cotação|0|0|||X||10|||||||0||
-S||Tipo de aquisição|0|0|||S||5|P|typeofacquisition.tab|||||0||
-S||Base de dados|0|0|||S||10|P|%path_database%bases.dat|||||0||
-S||Número de controle|0|0|||X||10|||||||0||
-H||Reclamações|0|0||||||||||||0||
-T|450|Créditos|0|1|abc||TB|10||||||||0||
+H||Pedido de compra|0|0||||||||||||0||
+F|10|Forma de compra|0|0|ab||R||5|P|%path_database%copies/def/pt/acquiredby.tab|||||0||
+F|1|Número do pedido|0|0|||X|||D|suggestions|NC_|v1'-',v18|v1||0||
+F|2|Data|0|0|||D||10|||||||0||
+F|3|Data ISO|0|0|||ISO||10|||||||0||
+F|5|Fornecedor|0|0|||X|||D|providers|NA_|v10|v10||0||
+T|50|Objetos a serem supridos|0|1|abcdeghif||TB|5||||||||0||
+S||Descrição do objeto|0|0|a||X||25|||||||0||
+S||Quantidade|0|0|b||X||5|||||||0||
+S||Preço|0|0|c||X||5|||||||0||
+S||Número da sugestão|0|0|d||X||10|||||||0||
+S||Número de cotações|0|0|e||X||10|||||||0||
+S||Tipo de objeto (New/Copies)|0|0|g||S||5|P|typeofacquisition.tab|||||0||
+S||Base de dados|0|0|h||S||10|P|%path_database%acquisitions.dat|||||0||
+S||Número de controle|0|0|i||X||10|||||||0||
+S||Quantidade recebida|0|0|f||X||5|||||||0||
+H||Reivindicações|0|0||||||||||||0||
+T|450|Reclamação|0|1|abc||TB|10||||||||0||
 S||Data|0|0|||D||10|||||||0||
-S||Data ISO dos créditos|0|0|||ISO||10|||||||0||
+S||Data ISO|0|0|||ISO||10|||||||0||
 S||Comentários|0|0|||X||100|||||||0||
-H||Recepção|0|0||||||||||||0||
+H||Recebido|0|0||||||||||||0||
 F|480|Data|0|0|||D||10|||||||0||
-F|481|Data iso da Recep.|0|0|||ISO||10|||||||0||
-T|500|Atualizado|0|0|abcd||TB|||||||||0||
+F|481|Data ISO|0|0|||ISO||10|||||||0||
+T|500|Atualização|0|0|abcd||TB|||||||||0||
 S||Número da sugestão|0|0|||X||10|||||||0||
-S||Número da cotação|0|0|||X||10|||||||0||
-S||Id objeto|0|0|||X||10|||||||0||
+S||Número de cotações|0|0|||X||10|||||||0||
+S||Identificação do objeto|0|0|||X||10|||||||0||
 S||Base de dados|0|0|||X||10|||||||0||
+H||Doação|0|0||||||||||||0||
+F|600|Doador|0|0||||||||||||0||
+F|610|Condições|0|0||||||||||||0||
+H||Troca|0|0||||||||||||0||
+F|700|Instituição|0|0||||||||||||0||
+F|710|Trocado por|0|0||||||||||||0||
+F|720|Condições|0|0||||||||||||0||
