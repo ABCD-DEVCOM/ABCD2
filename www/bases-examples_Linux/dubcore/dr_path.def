@@ -1,5 +1,5 @@
 ROOT=/opt/ABCD/www/htdocs/bases/dubcore/
 IMPORTPDF=Y
 COLLECTION=/var/opt/ABCD/bases/dubcore/collection/
-UNICODE=utf8
+UNICODE=1
 CISIS_VERSION=bigisis
