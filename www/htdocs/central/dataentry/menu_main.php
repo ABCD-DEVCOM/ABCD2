@@ -3,6 +3,7 @@
 2021-01-05 fho4abcd Modified comment for button with incorrect reference. This restores button bar.
 2021-05-03 fho4abcd Correct header. Ensures that encoding fits with db encoding+header with DOCTYPE
 2021-05-03 fho4abcd Rewrite html: standardized & improved layout
+2021-08-02 fho4abcd Import PDF in menu bar
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -305,8 +306,8 @@ function GenerarWks(){
 
 	//CHECK IF THE DATABASE ACCEPT IMPORT pdf
 	$pdf="";
-  	if (isset($def["IMPORTPDF"]))
-		$pdf=trim($def["IMPORTPDF"]);
+  	if (isset($def_db["IMPORTPDF"]))
+		$pdf=trim($def_db["IMPORTPDF"]);
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
 	?>
 		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
