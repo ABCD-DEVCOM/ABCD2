@@ -9,6 +9,7 @@
 20210527 fho4abcd bug repair: is_executable does not work for windows folders
 20210605 fh04abcd Remove isotag1=3000 from command to avoid creation of extra fields. Translations
 20210624 fho4abcd Import only if second screen was executed (and not immediately during list presentation)
+20210802 fho4abcd Make Show file work the first time
 */
 global $arrHttp;
 set_time_limit(0);
@@ -64,9 +65,10 @@ function Seleccionar(iso){
 	document.continuar.submit()
 }
 function ActivarMx(folder,iso){
+    document.continuar.storein.value=folder
+    document.continuar.copyname.value=iso
     document.continuar.backtoscript.value='../utilities/vmx_import_iso.php'
-	document.continuar.action='../utilities/mx_show_iso.php?&storein='+folder+
-                              '&copyname='+iso+'&backtoscript_org=<?php echo $backtoscript?>'
+	document.continuar.action='../utilities/mx_show_iso.php?'+'&backtoscript_org=<?php echo $backtoscript?>'
 	document.continuar.submit()
 }
 function Eliminar(iso){

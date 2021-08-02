@@ -2,6 +2,7 @@
 /* Modifications
 20210607 fho4abcd Created from vmx_import_iso.php
 20210702 fho4abcd added scriptaction="matchisofdt"
+20210802 fho4abcd Make Show file work the first time
 */
 /*
 ** Function : Combine the common part of actions operaing on the wrk folder
@@ -117,11 +118,14 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
             <input type=hidden name=confirmcount value=0>
             <input type=hidden name=deleteiso value=0>
             <input type=hidden name=isofile value=0>
+            <input type=hidden name=storein value=0>
+            <input type=hidden name=copyname value=0>
             <?php
             if ( !isset($arrHttp["backtoscript"])) echo "<input type=hidden name=\"backtoscript\" value=\"".$backtoscript."\">";
             if ( !isset($arrHttp["inframe"]))      echo "<input type=hidden name=\"inframe\" value=\"".$inframe."\">";
             foreach ($_REQUEST as $var=>$value){
-                if ( $var!= "deleteiso" ){
+                // do not copy special fields
+                if ( $var!= "deleteiso" and $var!="storein" and $var!="copyname"){
                     // some values may contain quotes or other "non-standard" values
                     $value=htmlspecialchars($value);
                     echo "<input type=hidden name=$var value=\"$value\">\n";
