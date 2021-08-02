@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210702 fho4abcd Created new
+20210802 fho4abcd Make Show file work the first time
 */
 global $arrHttp;
 set_time_limit(0);
@@ -67,12 +68,16 @@ function Seleccionar(iso){
 	document.continuar.submit()
 }
 function ActivarMx(folder,iso){
+    document.continuar.storein.value=folder
+    document.continuar.copyname.value=iso
     document.continuar.backtoscript.value='../utilities/match_iso_with_fdt.php'
 	document.continuar.action='../utilities/mx_show_iso.php?&storein='+folder+
                               '&copyname='+iso+'&backtoscript_org=<?php echo $backtoscript?>'
 	document.continuar.submit()
 }
 function ActivarMx2(folder,iso){
+    document.continuar2.storein.value=folder
+    document.continuar2.copyname.value=iso
     document.continuar2.backtoscript.value='../utilities/match_iso_with_fdt.php'
 	document.continuar2.action='../utilities/mx_show_iso.php?&storein='+folder+
                               '&copyname='+iso+'&backtoscript_org=<?php echo $backtoscript?>'
