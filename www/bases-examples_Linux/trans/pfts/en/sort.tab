@@ -1,0 +1,10 @@
+Status|v1
+Inventory|v10
+Borrower|v20
+Loan date|v30
+Loan hour |v35
+Return date|v40
+Return hour|v45
+User type|v70
+Object type|v80
+Reference|v100
