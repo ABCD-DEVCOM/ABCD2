@@ -576,7 +576,7 @@ foreach ($arrHttp as $var => $value) {
 		if (count($tag)>0){ //IF LEADER, REFORMAT THE FIELD FOR ELIMINATING |
 			if ( isset($lid) and substr($tag[0],3)>=$lid[0] and substr($tag[0],3)<=$lid[1]  or
                  isset($tmLeader) and count($tmLeader)>0 and
-                    (substr($tag[0],3)==$tmLeader[0] or substr($tag[0],3)==$tmLeader[1])
+                    (substr($tag[0],3)==$tmLeader[0] or isset($tmLeader[1]) and substr($tag[0],3)==$tmLeader[1])
                 ) {  
 				$v=explode('|',$value);
 				$value=$v[0];
