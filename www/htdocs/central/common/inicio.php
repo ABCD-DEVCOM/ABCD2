@@ -5,6 +5,7 @@
 2021-04-21 fho4abcd Show a an emergency user name if applicable
 2021-04-30 fho4abcd Do not switch language if selection is empty
 2021-06-14 fho4abcd Do not set password in $_SESSION + lineends
+2021-08-12 fho4abcd Give message if profiles/adm is missing for emergency user
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -129,12 +130,18 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
         	unset ($_SESSION["library"]);
         }
  	}else{
+        // This is the emergency login
  		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){
  			$Perfil="adm";
   		    $nombre="!!Emergency/Emergencia!!"; // The displayed name of the emergency user
  			unset($_SESSION["profile"]);
     		unset($_SESSION["permiso"]);
     		unset($_SESSION["login"]);
+            if (!file_exists($db_path."par/profiles/".$Perfil)){
+                echo "Missing file: ". $db_path."par/profiles/".$Perfil."<br>";
+                echo "The emergency user needs administrator privileges";
+                die;
+            }
  			$profile=file($db_path."par/profiles/".$Perfil);
     		$_SESSION["profile"]=$Perfil;
     		$_SESSION["login"]=$arrHttp["login"];
