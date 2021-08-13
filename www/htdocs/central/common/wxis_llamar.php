@@ -7,8 +7,10 @@
 20210507 fho4abcd Improved logging:show login (without password), show cisisver, show wxis_error, time in 24 hour format
 20210507 fho4abcd Activated workaround to cope with mixed cisis versions
 20210610 fho4abcd Removed workaround
+20210813 fho4abcd Improve include path
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
+global $ABCD_scripts_path,$app_path;
 unset($contenido);  // This array will get the text of the result
 $err_wxis="";       // An empty variable indicates that no error occurred
 
@@ -70,7 +72,7 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
 
     parse_str($url, $arr_url);
     $postdata = http_build_query($arr_url);
-    include "../common/inc_setup-stream-context.php";
+    include $ABCD_scripts_path.$app_path."/common/inc_setup-stream-context.php";
     unset($result);
     unset($con);
     // MAIN POST CONNECTION in following line
