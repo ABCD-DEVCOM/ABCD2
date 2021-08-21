@@ -79,11 +79,11 @@ A.menuButton {
 	A.defaultButton STRONG{
 		display: block;
 	}
-
+/*
 	.textEntry, .submit, .index {
 		vertical-align: middle;
 	}
-
+*/
 	.textEntry {
 		width: 180px;
 	}
@@ -99,6 +99,7 @@ A.menuButton {
 	TEXTAREA.singleTextEntry,
 	SELECT.singleTextEntry {
 		width: 90%;
+		margin: 2px;
 	}
 
 	TEXTAREA.textEntry {
@@ -194,7 +195,7 @@ A.menuButton {
 
 	.userInfo {
 		float: right;
-		width: 30%;
+		/*width: 30%;*/
 		text-align: right;
 		white-space: nowrap;
 		padding: 15px 15px 0px 0px;
@@ -247,6 +248,7 @@ A.menuButton {
 	/*#middle classes */
 	.middle {
 		min-height: 230px;
+		padding: 0 5px;
 	}
 	/*#END #middle classes */
 
@@ -396,13 +398,13 @@ A.menuButton {
 		width: 30%;
 		padding: 4px;
 	}
-
+/*
 	.searchBox INPUT.submit, .searchBox INPUT.index {
 		padding: 0 15px;
 		height: 26px;
 
 	}
-
+*/
 	.searchBox INPUT.submitAdvanced {
 		width: 126px;
 		height: 26px;
@@ -435,12 +437,12 @@ A.menuButton {
 	}
 
 	.listTable TD {
-		vertical-align: top;
+		vertical-align:	middle;
 		text-align: left;
 	}
 
 	.listTable TH {
-		text-align: center;
+		text-align: left;
 	}
 
 	.listTable TH.asc,
@@ -455,6 +457,7 @@ A.menuButton {
 	.listTable .action {
 		padding-right: 15px;
 		white-space: nowrap;
+		width: 100px;
 	}
 	.listTable .action a img{
 		margin-right:5px;
@@ -470,9 +473,6 @@ A.menuButton {
 		white-space: nowrap;
 	}
 
-	.tMacroActions {
-
-	}
 
 	.tMacroActions .checkboxAction {
 		float: left;
@@ -713,3 +713,129 @@ A.menuButton {
 		width: 40px;
 	}
 	/* #END #Login */
+
+
+	/* BROWSER */
+
+
+
+/*#list classes */
+.searchBoxBrowser, .SubsearchBoxBrowser  {
+	padding: 0;
+	display: inline-block;
+	width: 100%;
+	position: relative;
+
+}
+
+.searchBoxBrowser form, .SubsearchBoxBrowser form{
+	display: inline-flex;
+	margin: 5px 5px;
+	vertical-align: middle;
+}
+
+.searchBoxBrowser .f_right, .SubsearchBoxBrowser .f_right{
+	float: right;
+	position: relative;
+	text-align: right;
+}
+
+.SubsearchBoxBrowser {
+	vertical-align: baseline;
+	height: 90px;
+}
+
+.SubsearchBoxBrowser .f_right{
+width: 45%;
+float: right;
+}
+
+.SubsearchBoxBrowser .f_left{
+width: 45%;
+float: left;
+}
+
+.searchBoxBrowser .f_left{
+float: left;
+position: relative;
+}
+
+
+.searchBoxBrowser LABEL, .SubsearchBoxBrowser LABEL {
+margin: 10px 4px 0 10px;
+
+}
+
+.searchBoxBrowser INPUT.textEntry, .SubsearchBoxBrowser INPUT.textEntry{
+padding: 6px;
+margin: 4px;
+}
+
+
+.searchBoxBrowser INPUT.textEntry.b_search {
+width: 300px;
+}
+
+INPUT.textEntry.textEntryFocus.b_search {
+width: 400px;
+transition: width 0.5s;
+}
+
+.searchBoxBrowser select.textEntry, .SubsearchBoxBrowser select.textEntry {
+width: auto;
+padding: 6px;
+}
+
+.searchBoxBrowser button, .SubsearchBoxBrowser button {
+padding: 6px;
+margin: 4px;
+width: 180px;
+
+}
+
+.button_browse {
+padding: 4px 8px;
+}
+
+a.button_browse img{
+vertical-align: middle;
+text-align: center;
+}
+
+.searchBoxBrowser button.showdeleted {
+padding: 6px;
+width: auto;
+
+}
+/*
+.searchBoxBrowser INPUT.submit, .searchBoxBrowser INPUT.index {
+padding: 0 15px;
+height: 26px;
+
+}*/
+
+.searchBoxBrowser INPUT.submitAdvanced {
+width: 126px;
+height: 26px;
+position: absolute;
+top: 7px;
+padding-left: 6px;
+}
+
+
+.searchBoxBrowser INPUT.submitButton {
+width: 81px;
+height: 26px;
+padding-left: 6px;
+}
+
+.searchBoxBrowser .helper {
+position: absolute;
+top: 11px;
+right: 15px;
+}
+
+.tMacroActions.Browser {
+	margin-bottom: 30px;
+}
+

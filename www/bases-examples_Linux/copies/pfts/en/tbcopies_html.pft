@@ -1,0 +1,3 @@
+'<tr><td>'v1'</td><td>',v10'</td><td>',
+if v200^a='1' then '<font color=red>', fi, v200^b, " ("v200^a")",'</font>',
+'</td><td>',v30'</td><td>',v35,"."v40'</td><td>',v50'</td><td>',v60'</td><td>',v68^b,'</td><td>',v80'</td><td>',v90'</td><td>',v100'</td><td>',v110'</td><td>',v120,/'</td></tr>'
