@@ -1,0 +1,13 @@
+'<tr><td>',
+v10, " ("v12")",'</td><td>',                                                                /*Código y tipo de usuario*/
+ref(['users']l(['users']'CO_'v10),v30,| (<a href=mailto:|v160|>|v160|)</a>)|),'</td><td>' ,   /*Nombre y correo*/
+v15'</td><td>',                                                                             /*BD del objeto reservado */
+v20'</td><td>',                                                                             /*No.de control del objeto reservado*/
+v30*6.2,"/"v30*4.2,"/"v30.4,'</td><td>'                                                     /*Fecha de la reserva*/
+v31'</td><td>',                                                                             /* Hora de la reserva*/
+v32,'</td><td>',                                                                            /*Operador que reserva*/
+v60*6.2,"/"v60*4.2,"/"v60.4 '</td><td>',                                                    /*Fecha que fue asignado el ejemplar devuelto*/
+if v1='0' or v1='3' then if p(v40) and v40<mid(date,0,8) then,'<font color=red>' fi fi,v40*6.2,"/"v40*4.2,"/"v40.4'</td><td>',                                                     /*Fecha hasta espera*/
+v130*6.2,"/"v130*4.2,"/"v130.4'</td><td>',                                                  /*Fecha de cancelación*/
+v200*6.2,"/"v200*4.2,"/"v200.4,'</td><td>',                                                 /*Fecha en que se procesó el préstamo*/
+v1'</td></tr>'/

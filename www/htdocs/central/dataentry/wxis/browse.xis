@@ -1,208 +1,240 @@
- <IsisScript>
+<IsisScript>
 	<trace>xOn</trace>
 	<section>
+		<field action=cgi tag=1>path_db</field>
 		<field action=cgi tag=5001>base</field>
-
 		<field action=cgi tag=5015>cipar</field>
 		<field action=cgi tag=5016>syspar</field>
 		<field action=cgi tag=2000>from</field>
-	   <field action=cgi tag=2001>to</field>	
-		
-		<!-- <field action=cgi tag=2001>count</field> -->
-
-		<!--<field action=cgi tag=2000>Mfn</field>-->
+		<field action=cgi tag=2001>to</field>	
+		<field action=cgi tag=3030>Formato</field>
+		<field action=cgi tag=3031>pft</field>
+		<field action=cgi tag=9092>showdeleted</field>
+		<field action=cgi tag=3035>sortkey</field>          
+		<field action=cgi tag=9090>proc</field>
+		<field action=cgi tag=9015>reverse</field>
+		<field action=cgi tag=3000>Expresion</field>
+		<field action=cgi tag=9001>option</field>
 
 		<field action=cgi tag=2028>Operador</field>
 		<field action=replace tag=2028 split=occ><pft>(v2028/)</pft></field>
 		<field action=cgi tag=2050>LastKey</field>
 		<field action=cgi tag=5042>campo</field>
 		<field action=cgi tag=3021>Seleccion</field>
-		<field action=cgi tag=2021>Diccio</field>
-		<field action=cgi tag=2020>prefijo</field>
-		<field action=cgi tag=2021>tagfst</field>
+
 		<field action=cgi tag=2022>id</field>
-		<field action=cgi tag=3000>Expresion</field>
-		<field action=cgi tag=3030>Formato</field>
-		<field action=cgi tag=3040>prologo</field>
-		<field action=cgi tag=3050>epilogo</field>
-		<field action=cgi tag=3033>Diferido</field>
-		<field action=cgi tag=1>Accion</field>
-		<field action=cgi tag=9001>Opcion</field>
-		<field action=cgi tag=9015>reverse</field>
-		<field action=cgi tag=9002>Desplegar</field>
-
-   		<field action=cgi tag=9060>login</field>
+		<field action=cgi tag=9060>login</field>
 		<field action=replace tag=3030><pft>if a(v3030) then 'ad'v5001 fi</pft></field>
+		<field action=replace tag=3000><pft>if a(v3000) then '$' else v3000 fi</pft></field>
 		<field action=cgi tag=9088>cttype</field>
-		<field action=cgi tag=1>path_db</field>
 
-		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
-<display><pft></pft></display>
-<trace>xOn</trace>
-       	<parm name=cipar>
-          	<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
-       	</parm>
+
+	<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+
+
+	<trace>xOn</trace>
+		<parm name=cipar>
+		<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+		</parm>
+
 		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
-    	<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
 		<parm name="buffersize">200000</parm>
 
-<display><pft></pft></display>
 		<flow action=jump>
-  			<pft>
+			<pft>
 				select s(v9001)
-					case 'diccionario': 		'PRESENTAR_DICCIONARIO'
-					case 'buscar_en_este':		'BUSCAR'
-					case 'buscar':				'BUSCAR'
-					case 'busquedalibre':		'BUSCAR'
-					case 'ubicar':				'UBICAR'
-					case 'login':               'LOGIN'
-					case 'leerregistro':        'LEERREGISTRO'
-                    case 'ver':                 'VER'
-                    case 'presentar_captura':   'VER'
-                    case 'cancelar':            'VER'
+					case 'search':	'BUSCAR'
+					case 'sort':	'ORDENAR'
+					case 'showdeleted':	'SHOW_DELETED'
+					case 'presentar_captura':   'VER'
 				endsel
 			</pft>
-   		</flow>
-        <flow action="exit">1</flow>
-		<label>VER</label>
-			<display><pft type=reload><pft>if v3030<>'ALL' then '@prologoact.pft' fi</pft></pft></display>
-			<do task=mfnrange>
-				<parm name="buffersize">200000</parm>
-                <!--parm name=MAX_TMP_STRING>800000</parm-->
-				<parm name=db><pft>v5001</pft></parm>
-           		<parm name=from><pft>v2000</pft></parm>
-           		<parm name=to><pft>v2000</pft></parm>
-				<field action=define tag=1001>Isis_Current</field>
-             	<field action=define tag=1002>Isis_Total</field>
-				<field action=define tag=1091>Isis_Status</field>
-				<field action=define tag=1092>Isis_RecordStatus</field>
-
-				<loop>
-					<field action=import tag=3030>3030</field>
-					<field action=import tag=5001>5001</field>
-					<display><pft>if val(v1091)=1 or val(v1091)=2 then '$$DELETED' fi</pft></display>
-					<display><pft type=reload><pft>if val(v1091)<>1 and val(v1091)<>2 then if v3030='ALL' then v3030 else '@'v3030'.pft' fi fi</pft</pft></display>
-				</loop>
-				<display><pft></pft></display>
-				<display><pft type=reload><pft>if val(v1091)<>1 and val(v1091)<>2 then if v3030<>'ALL' and v9001<>'presentar_captura' then '@epilogoact.pft' fi FI</pft></pft></display>
-			</do>
-		<flow action=exit>1</flow>
+		</flow>
+	<flow action="exit">1</flow>
 
 
-		<label>LEERREGISTRO</label>
-  			<do task=mfnrange>
-				<parm name=db><pft>v5001</pft></parm>
-				<parm name=from><pft>v2000</pft></parm>
-				<parm name=to><pft>v2001</pft></parm>
-				<parm name="buffersize">400000</parm>
-                <parm name=MAX_TMP_STRING>400000</parm>
-                <field action=define tag=1001>Isis_Current</field>
-				<field action=define tag=1002>Isis_Total</field>
-            	<field action=define tag=1091>Isis_Status</field>
-				<field action=define tag=1092>Isis_RecordStatus</field>
-				<loop>
-                    <field action=import tag=9092>9092</field>
-                    <field action=import tag=9090>9090</field>
-                    <field action=import tag=5001>5001</field>
-					<field action=import tag=3030>3030</field>
-					<field action=import tag=3031>3031</field>
-					<display><pft></pft></display>
-					<display><pft>if p(v9090) then proc(v9090) fi </pft></display>
-					<display><pft type=reload><pft>if val(v1091)<>1 and val(v1091)<>2 or v9092='yes' then if p(v3031) then v3031 else if a(v3030) then 'ALL' else  , '@'v3030'.pft' fi fi fi </pft></pft></display>
-				</loop>
-			</do>
-			<flow action=exit>1</flow>
+	<label>VER</label>
+		<display><pft type=reload><pft>if v3030<>'ALL' then '@prologoact.pft' fi</pft></pft></display>
+		<do task=mfnrange>
+			<parm name="buffersize">200000</parm>
+			<parm name=MAX_TMP_STRING>800000</parm>
+			<parm name=db><pft>v5001</pft></parm>
+			<parm name=from><pft>v2000</pft></parm>
+			<parm name=to><pft>v2000</pft></parm>
+			<field action=define tag=1001>Isis_Current</field>
+			<field action=define tag=1002>Isis_Total</field>
+			<field action=define tag=1091>Isis_Status</field>
+			<field action=define tag=1092>Isis_RecordStatus</field>
 
-       	<label>PRESENTAR_DICCIONARIO</label>
- 			<do task=keyrange>
-           		<parm name=db><pft>v5001</pft></parm>
-           		<parm name=from><pft>if p(v2050) then v2050 else v2020 fi</pft></parm>
-           		<parm name=to><pft>if p(v2050) then v2050.2'ZZZZZ' else v2020.2'zzzz' fi</pft></parm>
-           		<parm name=count>200</parm>
-           		<field action=define tag=2010>Isis_Key</field>
-           		<field action=define tag=2011>Isis_Postings</field>
-
-           		<display><pft>@ifpro.pft</pft></display>
-           		<loop>
-               		<display><pft>@ifp.pft</pft></display>
-               		<field action=export tag=2050>2010</field>
-           		</loop>
-           		<display><pft>@ifepil.pft</pft></display>
-       		</do>
-		<flow action=exit>1</flow>
-
-       <label>BUSCAR</label>
-          <do task=search>
-          	 <parm name="buffersize">800000</parm>
-           	 <!--parm name=MAX_TMP_STRING>800000</parm-->
-             <parm name=db><pft>v5001</pft></parm>
-             <parm name=from><pft>v2000</pft></parm>
-			 <parm name=count><pft>if a(v2001) then '25' else v2001 fi</pft></parm>
-			 <parm name=reverse><pft>V9015</pft></parm>
-             <parm name=expression>
-                 <pft>
-                     (v3005[1],v3000,v4012[1] if iocc<nocc(v3000) then v2080[1] fi)
-                 </pft>
-             </parm>
-                <field action=define tag=1001>Isis_Current</field>
-				<field action=define tag=1002>Isis_Total</field>
-            	<field action=define tag=1091>Isis_Status</field>
-				<field action=define tag=1092>Isis_RecordStatus</field>
-             <field action=replace tag=3000>
-                 <pft>(v3005[1],v3000,v4012[1] if iocc<nocc(v3000) then v2080[1] fi)</pft>
-             </field>
+			<loop>
+				<field action=import tag=3030>3030</field>
+				<field action=import tag=5001>5001</field>
+				<display><pft>if val(v1091)=1 or val(v1091)=2 then '$$DELETED' fi</pft></display>
+				<display><pft type=reload><pft>if val(v1091)<>1 and val(v1091)<>2 then if v3030='ALL' then v3030 else '@'v3030'.pft' fi fi</pft</pft></display>
+			</loop>
 			<display><pft></pft></display>
-             <loop>
-                <field action=import tag=5001>5001</field>
-                <field action=import tag=5015>5015</field>
-                <field action=import tag=3030>3030</field>
-				<field action=import tag=3000>3000</field>
-					<display>
+			<display>
+				<pft type=reload>
+					<pft>if val(v1091)<>1 and val(v1091)<>2 then 
+							if v3030<>'ALL' and v9001<>'presentar_captura' then '@epilogoact.pft' fi 
+						fi
+					</pft>
+				</pft>
+			</display>
+		</do>
+	<flow action=exit>1</flow>
+
+
+
+	<label>ORDENAR</label>
+		<do task=search>
+			<parm name=db><pft>v5001</pft></parm>
+			<parm name=from><pft>v2000</pft></parm>
+			<parm name=to><pft>v2001</pft></parm>
+			<parm name="buffersize">400000</parm>
+			<parm name=MAX_TMP_STRING>400000</parm>
+			<field action=import tag=3035>3035</field>
+			<parm name=expression>
+			<pft>
+				if a(v3000) then "" else v3000 fi
+			</pft>
+			</parm>
+			<loop>
+				<field action=cgi tag=3035>sortkey</field>
+				<field action=import tag=3030>3030</field>
+				<list action=load type=sort>
+					<pft type=reload><pft>v3035,`'^a',f(mfn,1,0)/`</pft></pft>
+				</list>
+			</loop>
+			<do task=list>
+				<field action=define tag=1>Isis_Item</field>
+				<field action=define tag=1001>Isis_Current</field>
+				<field action=define tag=1002>Isis_Items</field>
+			<parm name=reverse><pft>v9015</pft></parm>
+			<loop>
+				<field action=import tag=5001>5001</field>
+				<field action=import tag=3030>3030</field>
+				<field action=import tag=1102>1102</field>
+
+				<display>
 					<pft type=reload>
 						<pft> 
 						if val(v1091)<>1 and 
-						   val(v1091)<>2 or 
-						   v9092='yes' 
-							then 
-							if p(v3031) 
-								then v3031 
+						val(v1091)<>2 or 
+						v9092='yes' 
+						then 
+						if p(v3031) 
+						then v3031 
+						else 
+						if a(v3030) then 'ALL' 
+						else  '"0|"v1001"|"v1002"|"','REF([V5001]val(v1^a),'v3030',)'
+						fi 
+						fi 
+						fi 
+						</pft>
+					</pft>
+				</display>
+			</loop>
+			</do>
+		</do>
+	<flow action=exit>1</flow>
+
+
+
+	<label>SHOW_DELETED</label>
+		<do task=mfnrange>
+			<parm name=db><pft>v5001</pft></parm>
+			<parm name=from><pft>v2000</pft></parm>
+			<parm name=to><pft>v2001</pft></parm>
+			<parm name="buffersize">400000</parm>
+			<parm name=MAX_TMP_STRING>400000</parm>
+			<parm name=reverse><pft>v9015</pft></parm>
+
+			<field action=define tag=1001>Isis_Current</field>
+			<field action=define tag=1002>Isis_Total</field>
+			<field action=define tag=1091>Isis_Status</field>
+			<field action=define tag=1092>Isis_RecordStatus</field>
+
+			<loop>
+				<field action=import tag=9092>9092</field>
+				<field action=import tag=9090>9090</field>
+				<field action=import tag=5001>5001</field>
+				<field action=import tag=3030>3030</field>
+				<field action=import tag=3031>3031</field>
+				<field action=cgi tag=3035>sortkey</field>
+
+				<display><pft></pft></display>
+				<display><pft>if p(v9090) then proc(v9090) fi </pft></display>
+				<display>
+					<pft type=reload>
+						<pft> 
+						if val(v1091)=1 or val(v1091)=2 then 
+							if p(v3031) then v3031 
 							else 
 								if a(v3030) then 'ALL' 
-									else  'v1092"|",@'v3030'.pft' 
+									else  'v1091"|"v1102"|"v1001"|"v1002"|"',v3030 
 								fi 
 							fi 
 						fi 
 						</pft>
 					</pft>
-					</display>
+				</display>
+			</loop>
+		</do>
+	<flow action=exit>1</flow>
 
-                <field action=export tag=3000>3000</field>
-             </loop>
-          </do>
-        <flow action=exit>1</flow>
 
-       <label>UBICAR</label>
-          <do task=search>
-          	 <parm name="buffersize">800000</parm>
-             <parm name=MAX_TMP_STRING>800000</parm>
-             <parm name=db><pft>v5001</pft></parm>
-             <parm name=from><pft>v4001</pft></parm>
-             <parm name=from><pft>'1'</pft></parm>
-             <parm name=expression>
-                 <pft>
-                     v3000
-                 </pft>
-             </parm>
-             <field action=define tag=1001>Isis_Current</field>
-             <field action=define tag=1002>Isis_Total</field>
-             <field action=define tag=1031>Isis_From</field>
-             <field action=define tag=1032>Isis_To</field>
-             <loop>
-                <display><pft>f(mfn,1,0)/</pft></display>
-             </loop>
-			<display><pft>if v1002='0' then 'NO EXISTE' /fi</pft></display>
-          </do>
-        <flow action=exit>1</flow>
 
-    </section>
- </IsisScript>
+
+	<label>BUSCAR</label>
+		<do task=search>
+			<parm name="buffersize">800000</parm>
+			<parm name=MAX_TMP_STRING>800000</parm>
+			<parm name=db><pft>v5001</pft></parm>
+			<parm name=from><pft>v2000</pft></parm>
+			<parm name=count><pft>if a(v2001) then '100' else v2001 fi</pft></parm>
+			<parm name=reverse><pft>V9015</pft></parm>
+			<parm name=expression>
+			<pft>
+				(v3005[1],v3000,v4012[1] if iocc<nocc(v3000) then v2080[1] fi)
+			</pft>
+			</parm>
+			<field action=define tag=1001>Isis_Current</field>
+			<field action=define tag=1002>Isis_Total</field>
+			<field action=define tag=1031>Isis_From</field>
+			<field action=define tag=1032>Isis_To</field>
+			<field action=define tag=1091>Isis_Status</field>
+			<field action=replace tag=3000>
+			<pft>(v3005[1],v3000,v4012[1] if iocc<nocc(v3000) then v2080[1] fi)</pft>
+			</field>
+			<display><pft></pft></display>
+
+			<loop>
+				<field action=import tag=5001>5001</field>
+				<field action=import tag=5015>5015</field>
+				<field action=import tag=3030>3030</field>
+				<field action=import tag=3000>3000</field>
+				<display>
+
+				<pft type=reload>
+				<pft> 
+					if val(v1091)<>1 and val(v1091)<>2 or v9092='yes' then 
+						if p(v3031) then v3031 
+					else 
+						if a(v3030) then 'ALL' 
+							else  '"0|"v1001"|"v1002"||"',v3030 
+						fi 
+					fi 
+				fi 
+				</pft>
+				</pft>
+				</display>
+				<field action=export tag=3000>3000</field>
+			</loop>
+
+		</do>
+	<flow action=exit>1</flow>
+
+	</section>
+</IsisScript>
