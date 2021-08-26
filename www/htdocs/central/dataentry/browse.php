@@ -130,17 +130,17 @@ if (isset($arrHttp["unlock"]) and $arrHttp["Mfn"]!="New"){
 
 //Function generating the paging
 function custom_pagination($page, $totalpage, $link, $show)  {
-
+    global $msgstr;
 //show page
     if($totalpage == 0) { 
-        return 'Page 0 of 0'; 
+        return '<div class="navpage"><span class="current">'.$msgstr['Page'].' 0 '.$msgstr['de'].' 0</span></div>'; 
     } else { 
 
 //Fixes the space for sprintf()
     $link=str_replace("%2A","*",$link);    
     $link=str_replace("%24","*",$link);    
         
-        $nav_page = '<div class="navpage"><span class="current">Page '.$page.' of '.$totalpage.': </span>'; 
+        $nav_page = '<div class="navpage"><span class="current">'.$msgstr['Page'].' '.$page.' '.$msgstr['de'].' '.$totalpage.': </span>'; 
         $limit_nav = 3; 
         $start = ($page - $limit_nav <= 0) ? 1 : $page - $limit_nav; 
         $end = $page + $limit_nav > $totalpage ? $totalpage : $page + $limit_nav; 
@@ -667,7 +667,7 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
                 <input type="hidden" name=headings value="<?php echo $arrHttp["headings"];?>">
                 <input type="hidden" name="pft" value="<?php echo $Formato_html;?>">
                 <input type="hidden" name="vp" value="S">
-                <button type="submit" class="bt-gray" onclick="EnviarForma('P')"><i class="fas fa-print"></i> <?php echo $msgstr["vistap"]?></button>
+                <button type="submit" class="bt-gray" onclick="EnviarForma('P')"><i class="fas fa-print"></i> <?php echo $msgstr["Print"]?></button>
              </form>
              <!-- ./FORM PRINT -->
 
