@@ -21,7 +21,7 @@ function isLdapUser($username,$password, $ldap){
         return false;
 }
 
-function Auth($username, $password, $adGroupName = false){
+function Auth($username, $password, string $adGroupName = 'false'){
     global $ldap_host,$ldap_dn,$ldap_port;
 
     $ldap = ldap_connect($ldap_host,$ldap_port);
@@ -32,8 +32,8 @@ function Auth($username, $password, $adGroupName = false){
      return isLdapUser($username, $password, $ldap);
 }
 
-function Info($username, $password, $adGroupName = false,$attrib){
-    global $ldap_host,$ldap_dn,$ldap_port,$ldap_pass,$ldap_search_context;;
+function Info($username, $password, $attrib, string $adGroupName = 'false'){
+    global $ldap_host,$ldap_dn,$ldap_port,$ldap_pass,$ldap_search_context;
 
     $ldap = ldap_connect($ldap_host,$ldap_port);
 
