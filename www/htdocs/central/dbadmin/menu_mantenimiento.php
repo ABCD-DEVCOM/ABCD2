@@ -5,6 +5,7 @@
 20210314 fho4abcd Replaced dbinfo code by included file
 20210324 fho4abcd Catch error after database deletion, display also long name of the database
 20210415 fho4abcd use charset from config.php
+20210803 fho4abcd added language file
 */
 session_start();
 
@@ -26,6 +27,7 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../lang/dbadmin.php");
+include("../lang/importdoc.php");
 
 if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and
     !isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) and

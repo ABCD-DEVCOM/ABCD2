@@ -2,6 +2,7 @@
 /* Modified
 20210521 fho4abcd Replaced helper code fragment by included file
 20210521 fho4abcd Added OPAC compare+replace componente by table (makes equal code)
+20210829 fho4abcd Added missing importdoc compare+replace componente by table
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -11,13 +12,14 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
-include("../lang/prestamo.php");
-include("../lang/admin.php");
-include("../lang/soporte.php");
-include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
+include("../lang/admin.php");
+include("../lang/dbadmin.php");
 include("../lang/iah_conf.php");
+include("../lang/importdoc.php");
+include("../lang/prestamo.php");
 include("../lang/profile.php");
+include("../lang/soporte.php");
 include("../common/header.php");
 $backtoscript="../common/inicio.php?reinicio=s"; // The default return script
 if (isset($arrHttp["base"]))$backtoscript.="&base=".$arrHttp["base"];
@@ -63,6 +65,10 @@ include "../common/inc_div-helper.php";
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=soporte.tab" class="menuButton  utilsButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
+				</a>
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=importdoc.tab" class="menuButton  utilsButton">
+					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<span><strong><?php echo $msgstr["dd_documents"]?></strong></span>
 				</a>
     			<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton  importButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
@@ -124,7 +130,11 @@ include "../common/inc_div-helper.php";
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
-    				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton  importButton">
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=importdoc.tab" class="menuButton  utilsButton">
+					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<span><strong><?php echo $msgstr["dd_documents"]?></strong></span>
+				</a>
+    			<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton  importButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["prestamo"]?></strong></span>
 				</a>
@@ -132,7 +142,7 @@ include "../common/inc_div-helper.php";
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
-				 <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton  statButton">
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton  statButton">
 					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
