@@ -15,7 +15,8 @@
 20210607 fho4abcd Add function to convert an iso to utf-8
 20210702 fho4abcd Add function to match an iso with an fdt
 20210705 fho4abcd Uncomment mxdbread, move to db maintenance and make it work for current mst file (should be safe)
-20210718 fho4abcd Add function DSpace bridge 
+20210718 fho4abcd Add function DSpace bridge
+20210829 fho4abcd Modified Import Documents
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -306,10 +307,10 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="addloanobjectcopies.php"
 			document.admin.target=""
 			break;
-		case "importdoc":    //Marino doc import
+		case "importdoc":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/import_doc.php"
+			document.admin.action="../utilities/docfiles_upload.php"
 			document.admin.target=""
 			break;
 		case "cleandb":    //Marino clean DB
@@ -380,11 +381,11 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/barcode_check.php"
 			document.admin.target=""
 			break;
-		case "docbatchimport":     //Marcos docbatchimport
+		case "docbatchimport":     //was Marcos docbatchimport
 			//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/docbatchimport.php"
+			document.admin.action="../utilities/docfiles_import.php"
 			document.admin.target=""
 			break;
 		case "uploadfile":
@@ -438,10 +439,10 @@ function EnviarFormaMNT(Opcion,Mensaje){
         <?php if ($arrHttp["base"]==("dcdspace")) { ?>
 		<li><a href='Javascript:EnviarFormaMNT("dcdspace","<?php echo $msgstr["dspace_title"]?>")'><?php echo $msgstr["dspace_title"]?></a></li>
         <?php } ?>
-  		<li><a href="#">Import documents</A>
+  		<li><a href="#"><?php echo $msgstr["dd_documents"]?></a>
     		<ul>
-    			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["docbatchimport_mx"]?>")'><?php echo $msgstr["docbatchimport_mx"]?></a></li>
-				<li><a href='Javascript:EnviarFormaMNT("importdoc","<?php echo "Import Document"?>")'><?php echo "Upload/Import Document"?></a></li>
+				<li><a href='Javascript:EnviarFormaMNT("importdoc","<?php echo $msgstr["dd_upload"]?>")'><?php echo $msgstr["dd_upload"]?></a></li>
+    			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["dd_batchimport"]?>")'><?php echo $msgstr["dd_batchimport"]?></a></li>
 			</ul>
   		</li>
   	</ul>

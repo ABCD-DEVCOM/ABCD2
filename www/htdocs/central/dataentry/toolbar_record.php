@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-03-02 fho4abcd Replaced helper code fragment by included file
+2021-08-29 fho4abcd Removed document import (the code made a new record)
 */
 
 //echo $arrHttp["ventana"];
@@ -65,13 +66,6 @@ startScrollingDetector()
 <table bgcolor=#bbbbbb>
 <td>
 <?php
-//CHECK IF THE DATABASE ACCEPT IMPORT pdf
-	$pdf="";
-  	if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
-		$def_tool = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
-		if (isset($def_tool["IMPORTPDF"]))
-			$pdf=trim($def_tool["IMPORTPDF"]);
-	}
 
 //CHECK IF THERE IS A VALIDATION FORMAT
 	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".val";
@@ -92,16 +86,6 @@ startScrollingDetector()
 				if (isset($_SESSION["TOOBAL_RECORD"]) and $_SESSION["TOOLBAR_RECORD"]=="N"){					unset( $_SESSION["TOOLBAR_RECORD"]);
 					break;				}
 				echo "				<input type=checkbox name=sel_mfn id=sel_mfn onclick=top.SeleccionarRegistro(this) value=".$arrHttp["Mfn"].">";
-				if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src=img/toolbarEdit.png alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
-				    if ($pdf=="Y") {
-				    	echo " &nbsp;<a href=\"javascript:top.Menu('editar_HTML')\" title=\"IMPORT DOC\">";
-				    	echo "<img src=img/import.gif alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>";
-				    	echo "  &nbsp;\n";
-				    	//echo " &nbsp;<a href=\"javascript:top.Menu('pdf2Txt')\" title=\"CONVERT PDF TO TEXT\">";
-				    	//echo "<img src=img/pdf2text.png alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>";
-				    	//echo "  &nbsp;\n";
-					}
-				}
 				if (isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {					echo " &nbsp;<a href=\"javascript:top.Menu('dup_record')\" title=\"".$msgstr["m_copyrec"]."\"><img src=img/toolbarCopy.png alt=\"".$msgstr["m_copyrec"]."\" style=\"border:0;\"></a>  &nbsp;\n";
 				}
 				echo " &nbsp;<a href=\"javascript:top.Menu('same')\" title=\"".$msgstr["refresh_db"]."\"><img src=img/refresh0.gif alt=\"".$msgstr["refresh_record"]."\" title=\"".$msgstr["refresh_record"]."\" style=\"border:0;\"></a>  &nbsp;\n";

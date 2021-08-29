@@ -4,6 +4,7 @@
 2021-04-21 fho4abcd Do not crash if emergency user logs in: allows update of databases by emergency user
 2021-06-10 fho4abcd Remove undesired login code
 2021-06-14 fho4abcd Remove unused function LeerRegistro + lineends
+2021-08-29 fho4abcd Replaced document import
 */
 //error_reporting(E_ALL);
 session_start();
@@ -52,9 +53,9 @@ if (isset($arrHttp["base"])){
     $base_x=explode('|',$bdsel);
     $db_copies="";
     if (isset($base_x[3]) and $base_x[3]=="Y") $db_copies="Y";
-	$bd=$base_x[0];
-	$bdright= $base_x[1];
-	$bddesc=$base_x[2];
+	if (isset($base_x[0])) $bd=$base_x[0];
+	if (isset($base_x[1])) $bdright= $base_x[1];
+	if (isset($base_x[2])) $bddesc=$base_x[2];
 }
 	if (isset($arrHttp["lang"])){
 		 $_SESSION["lang"]=$arrHttp["lang"];
@@ -338,15 +339,9 @@ function Menu(Opcion){
 
 	switch (Opcion) {
 
-		case "editar_HTML":
-		case "importarHTML":
-			Tag=HTML
-			Tipo="B"
-			if (Opcion=="importarHTML")
-				Mfn="New"
-			else
-				Mfn=mfn
-			top.main.location.href="../utilities/upload_myfile.php?base="+base+"&Mfn="+Mfn+"&fURL="+URL+"&Tag="+HTML+"&Tipo="+Tipo+"&fURL="+URL
+		case "importarDoc":
+			Mfn="New"
+			top.main.location.href="../utilities/docfiles_upload.php?base="+base+"&Mfn="+Mfn
 			break
 		case "edit_Z3950":
 			Desplegar="N"

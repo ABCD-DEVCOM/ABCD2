@@ -4,6 +4,7 @@
 2021-05-03 fho4abcd Correct header. Ensures that encoding fits with db encoding+header with DOCTYPE
 2021-05-03 fho4abcd Rewrite html: standardized & improved layout
 2021-08-02 fho4abcd Import PDF in menu bar
+2021-08-29 fho4abcd Modified Import PDF into Upload Document
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -304,23 +305,23 @@ function GenerarWks(){
 	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_2'))
 	<?php
 
-	//CHECK IF THE DATABASE ACCEPT IMPORT pdf
-	$pdf="";
-  	if (isset($def_db["IMPORTPDF"]))
-		$pdf=trim($def_db["IMPORTPDF"]);
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
 	?>
 		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
-	<?php
-		if ($pdf=="Y"){
-    ?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/import.gif","16","16",7,"2_nuevoHTML","<?php echo "IMPORT DOC"?>"))
-
-	<?php } }
+	<?php }
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CAPTURE"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_CAPTURE"])){
 	?>
 		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarCopy.png","18","24",9,"2_capturar","<?php echo $msgstr["m_capturar"]?>"))
 	<?php }
+	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
+        //CHECK IF THE DATABASE ACCEPT IMPORT documents
+        $collection="";
+        if (isset($def_db["COLLECTION"])) 		$collection=trim($def_db["COLLECTION"]);
+		if ($collection!=""){
+    ?>
+		toolbar.addItem(new dhtmlXImageButtonObject("img/import.gif","16","16",7,"2_nuevoDoc","<?php echo $msgstr["dd_upload"]?>"))
+
+	<?php } }
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_Z3950CAT"])){
 	?>
 		toolbar.addItem(new dhtmlXImageButtonObject("img/z3950.png","18","16",19,"2_z3950","<?php echo $msgstr["m_z3950"]?>"))
@@ -476,8 +477,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 			case "2_nuevo":
 				top.Menu('nuevo')
 				break
-			case "2_nuevoHTML":
-				top.Menu("importarHTML")
+			case "2_nuevoDoc":
+				top.Menu("importarDoc")
 				break
 			case "2_editar":
 				top.Menu('editar')
