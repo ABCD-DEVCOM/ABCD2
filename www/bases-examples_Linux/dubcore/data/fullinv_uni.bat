@@ -1,1 +1,0 @@
-\abcd\www\cgi-bin\unicode\mx dubcore fst=@ fullinv=dubcore actab=isisactab_utf8.tab

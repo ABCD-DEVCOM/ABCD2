@@ -9,10 +9,10 @@
 9 5 '/FO_/', mpu,v9 
 10 5 '/ID_/', mpu,v10 
 11 5 '/SO_/', mpu,v11 
-12 5 '/LA_/', , mpu,(v12/) 
-13 5 '/RE_/', , mpu,(v13/) 
+12 5 '/LA_/', mpu,(v12/) 
+13 5 '/RE_/', mpu,(v13/) 
 14 5 '/CO_/', mpu,v14 
-15 5 '/RM_/', , mpu,(v15/) 
+15 5 '/RM_/', mpu,(v15/) 
 99 8 '/TW_/', mpu,(v1/),(v3/), (v4/)
 99 8 '/TW_/', mhu, v99 
 98 8 '/FN_/', v98 
@@ -20,4 +20,4 @@
 97 8 '/SE_/', v97 
 111 5 '/ID=/', v111 
 112 5 '/OAI_DATE_/', v112 
-99 8 '/TW_/',if p(v96) then proc('Gload/99/nonl='v96) fi,v99
+99 8 '/TW_/',if p(v96) then proc('Gload/99/nonl='v96) fi, mpu, v99
