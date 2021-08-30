@@ -706,9 +706,9 @@ if ($arrHttp["Opcion"]!="new"){
 <table border=0 width=600 class=listTable>
 	<td  align=center>
 		<?php echo "<strong>".$msgstr["r_fgent"]."</strong>";?>
-        &nbsp; &nbsp; <a href=http://bvsmodelo.bvsalud.org/download/cisis/CISIS-LinguagemFormato4-<?php echo $_SESSION["lang"]?>.pdf target=_blank><font size=1><?php echo $msgstr["cisis"]?>
+        &nbsp; &nbsp; <a href="https://abcd-community.org/cisis-formatting-language/" target="_blank"><font size=1><i class="far fa-life-ring"></i> <?php echo $msgstr["cisis"]?>
         </a>
-.   </td>
+   </td>
 <?php
 echo "</table>\n";
 if ($arrHttp["Opcion"]!="new"){
