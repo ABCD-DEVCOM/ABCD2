@@ -486,7 +486,7 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
             if (isset($arrHttp["modulo"])) $ret.="&modulo=".$arrHttp["modulo"];
             if (isset($base)) $ret.="&base=".$base;
         }else{
-            $ret=str_replace("|","?",$arrHttp["return"])."encabezado=".$arrHttp["encabezado"];
+            $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
         }
         ?>
         <a href=<?php echo $ret?> class="defaultButton backButton">
