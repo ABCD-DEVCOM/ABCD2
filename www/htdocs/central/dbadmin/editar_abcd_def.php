@@ -3,6 +3,7 @@
 2021-01-05 guilda Added $msgstr["regresar"]
 2021-04-30 fho4abcd Error message if file is not writable. 
 2021-04-30 fho4abcd Corrected html. Replaced helper code fragment by included file
+2021-08-29 fho4abcd PDF-> Digital documents,no radiobutton. Digital documents-> linked documents
 */
 session_start();
 
@@ -159,8 +160,7 @@ switch ($arrHttp["Opcion"]){
 	case "dr_path":
 		$ini_vars=array("UNICODE" => array("it"=>"radio","Options"=>"0;1"),
 						"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed),
-						"PDFIMPORT"=>array("it"=>"title","Label"=>"<hr size=2>"."IMPORT PDF"),
-						"IMPORTPDF" => array("it"=>"radio","Options"=>"Y;N"),
+						"DIGDOCS"=>array("it"=>"title","Label"=>"<hr size=2>"."DIGITAL DOCUMENTS"),
 						"COLLECTION" => array("it"=>"text","Options"=>""),
 						"INVENTORY"=>array("it"=>"title","Label"=>"<hr size=2>"."INVENTORY"),
 						"inventory_numeric" => array("it"=>"radio","Options"=>"Y;N"),
@@ -178,7 +178,7 @@ switch ($arrHttp["Opcion"]){
 						"STYLES"=>array("it"=>"title","Label"=>"<hr size=2>"."STYLES"),
 						"CSS_NAME" => array("it"=>"text","Options"=>""),
 						"LOGO" => array("it"=>"text","Options"=>""),
-						"DIGITAL"=>array("it"=>"title","Label"=>"<hr size=2>"."DIGITAL DOCUMENTS"),
+						"DIGITAL"=>array("it"=>"title","Label"=>"<hr size=2>"."LINKED DOCUMENTS"),
 						"ROOT" => array("it"=>"text","Options"=>""),
 						);
 		$file=$db_path.$arrHttp["base"]."/dr_path.def";
