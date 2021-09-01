@@ -1,6 +1,13 @@
 <?php
 /* Modifications
 20210807 fho4abcd Created from several docbatchimport.php files
+20210831 fho4abcd Improved URL fields
+**
+** The field-id's in this file have a default, but can be configured
+** Effect is that this code can be used for databases with other field-id's
+** Configuration is part of this code (enforced at first time usage)
+** Note that this module is not aware of the actual database fdt,fst,...
+** The database administrator has to take care of matching both worlds.
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -48,13 +55,14 @@ array_push($metadataMap,array("term"=>"relation", "label"=>$msgstr['dd_term_rela
 array_push($metadataMap,array("term"=>"coverage", "label"=>$msgstr['dd_term_coverage'], "field"=>"v14"));
 array_push($metadataMap,array("term"=>"rights", "label"=>$msgstr['dd_term_rights'], "field"=>"v15"));
 $metadataMapCntDC=count($metadataMap);
-array_push($metadataMap,array("term"=>"docsource", "label"=>$msgstr['dd_term_docsource'], "field"=>"v96"));
-array_push($metadataMap,array("term"=>"sections", "label"=>$msgstr['dd_term_sections'], "field"=>"v97"));
+array_push($metadataMap,array("term"=>"htmlSrcURL", "label"=>$msgstr['dd_term_htmlSrcURL'], "field"=>"v95"));
+array_push($metadataMap,array("term"=>"htmlSrcFLD", "label"=>$msgstr['dd_term_htmlSrcFLD'], "field"=>"v96"));
+array_push($metadataMap,array("term"=>"sections", "label"=>$msgstr['dd_term_section'], "field"=>"v97"));
 array_push($metadataMap,array("term"=>"url", "label"=>$msgstr['dd_term_url'], "field"=>"v98"));
+array_push($metadataMap,array("term"=>"doctext", "label"=>$msgstr['dd_term_doctext'], "field"=>"v99"));
 array_push($metadataMap,array("term"=>"id", "label"=>$msgstr['dd_term_id'], "field"=>"v111"));
 array_push($metadataMap,array("term"=>"dateadded", "label"=>$msgstr['dd_term_dateadded'], "field"=>"v112"));
 array_push($metadataMap,array("term"=>"htmlfilesize", "label"=>$msgstr['dd_term_htmlfilesize'], "field"=>"v997"));
-array_push($metadataMap,array("term"=>"doctext", "label"=>$msgstr['dd_term_doctext'], "field"=>""));
 $metadataMapCnt=count($metadataMap);
 $metadataMapCntABCD=$metadataMapCnt-$metadataMapCntDC;
 
@@ -515,9 +523,11 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path, $metadataMapCntD
         // Add timestamp. Don't care that it is in seconds
         $docname.=$time_sep.time();
     }
-    $htmlfile     = $db_path."wrk/".$docname.'.html';
-    $procfile     = $db_path."wrk/".$docname.'.proc';
-    $docsourcepath= $fullcolpath."/ABCDSourceRepo/".$docname.".html";
+    $htmlfile    = $db_path."wrk/".$docname.'.html';
+    $procfile    = $db_path."wrk/".$docname.'.proc';
+    $htmlSrcPath = $fullcolpath."/ABCDSourceRepo/".$docname.".html";
+    $htmlURLtail = substr($htmlSrcPath, strlen($db_path));
+    $htmlURLPath = "/docs/".$htmlURLtail;
     /*
     ** Move the uploaded file to the collection
     */
@@ -608,17 +618,22 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path, $metadataMapCntD
     if ($c_source=="") $c_source = $def_c_source;
     /*
     ** Construct other metadata content:
-    ** - c_docsource   :
-    ** - c_sections    :
-    ** - c_url         :
+    ** - c_htmlSrcURL  :
+    ** - c_htmlSrcFLD  :
+    ** - c_sections    : by the section name
+    ** - c_url         : by /docs/<collection>/<sectionname>/<docname>.<doc_ext>
     ** - c_id          : by next_cn_number
-    ** - c_dateadded   :
+    ** - c_dateadded   : by current data&time
     ** - c_htmlfilesize:
-    ** - c_doctext     :
+    ** - c_doctext     : filled by index generation
     */
-    $c_docsource=$docsourcepath;
+    $c_htmlSrcURL=$htmlURLPath;
+    $c_htmlSrcFLD=$htmlSrcPath;
     $c_sections=$sectionname;
-    $c_url=$sectionname."/".$docname.".".$docext;
+    $c_url="/docs/";
+    $c_url.=substr($fullcolpath, strlen($db_path));
+    if ($sectionname!="") $c_url.="/".$sectionname;
+    $c_url.="/".$docname.".".$docext;
     if ( next_cn_number($basename,$c_id)!=0 ){
         unlink($htmlfile);
         rename($docpath, $full_imp_path);
@@ -645,7 +660,8 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path, $metadataMapCntD
     $vrelation    = remove_v($_POST["relation"]);
     $vcoverage    = remove_v($_POST["coverage"]);
     $vrights      = remove_v($_POST["rights"]);
-    $vdocsource   = remove_v($_POST["docsource"]);
+    $vhtmlSrcURL  = remove_v($_POST["htmlSrcURL"]);
+    $vhtmlSrcFLD  = remove_v($_POST["htmlSrcFLD"]);
     $vsections    = remove_v($_POST["sections"]);
     $vurl         = remove_v($_POST["url"]);
     $vid          = remove_v($_POST["id"]);
@@ -673,7 +689,8 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path, $metadataMapCntD
     if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">";
     if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">";
     if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">";
-    if (($c_docsource!="")   and ($vdocsource!=""))   $fields.="<".$vdocsource.">".$c_docsource."</".$vdocsource.">";
+    if (($c_htmlSrcURL!="")  and ($vhtmlSrcURL!=""))  $fields.="<".$vhtmlSrcURL.">".$c_htmlSrcURL."</".$vhtmlSrcURL.">";
+    if (($c_htmlSrcFLD!="")  and ($vhtmlSrcFLD!=""))  $fields.="<".$vhtmlSrcFLD.">".$c_htmlSrcFLD."</".$vhtmlSrcFLD.">";
     if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">";
     if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">";
     if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">";
@@ -707,7 +724,7 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path, $metadataMapCntD
         echo (": <i>".$docname.".".$docext."</i></li>");
         ob_flush();flush();
     }
-    if (file_exists($htmlfile) ) rename($htmlfile,$docsourcepath);
+    if (file_exists($htmlfile) ) rename($htmlfile,$htmlSrcPath);
     if (file_exists($procfile) ) unlink($procfile);
 
     return(0);
