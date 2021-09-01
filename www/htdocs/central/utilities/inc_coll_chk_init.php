@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210807 fho4abcd Created
+20210831 fho4abcd Enable %path_database% in COLLECTION. Check dat collection is in the base
 */
 /*
 ** Function: Initial check of collection.
@@ -25,7 +26,16 @@ if (!isset($def_db["COLLECTION"]) or $def_db["COLLECTION"]=="") {
     die;
 }
 $fullcolpath=$def_db["COLLECTION"];
+$fullcolpath=str_replace("%path_database%",$db_path,$fullcolpath);
 $fullcolpath=rtrim($fullcolpath,"/ ");
+// The collection can be anywhere (in theory)
+// However: we want urls' starting with /docs/  (alias define in the virtual host file)
+// To make things a bit more testable we require now that the collection is in the current base
+if (substr($fullcolpath, 0, strlen($db_path)) != $db_path) {
+    echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_colfolderbase"]." '".$db_path."' ";
+    echo $msgstr["dd_colfolderpref"]." '".$fullcolpath."'  </div>";
+    die;
+}
 // Check if collection folder exists and is writable
 if (!file_exists($fullcolpath) or !is_dir($fullcolpath)) {
     echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_colfolder"]." '".$fullcolpath."' ".$msgstr["notreadable"]."</div>";

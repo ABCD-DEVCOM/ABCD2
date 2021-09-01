@@ -7,5 +7,3 @@ STW=%path_database%dubcore/data/dubcore.stw
 isisac.tab=%path_database%isisactab_utf8.tab
 isisuc.tab=%path_database%isisuctab_utf8.tab
 ci_tempdir=%path_database%wrk
-extfile.pft=%path_database%/dubcore/pfts/%lang%/extfile.pft
-exttext.pft=%path_database%/dubcore/pfts/%lang%/exttext.pft
