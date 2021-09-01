@@ -1,9 +1,0 @@
-'<head>'
-'<meta name="DC.Title" content="',v1,'"/>',
-(if p(v2) then '<meta name="DC.Creator" content="',v2,'"/>' '<br>' fi),
-'</head>',
-
-'<body>'
-'Title : 'v1/
-('Author : 'v2+|<br>|)
-'</body>'
