@@ -1,4 +1,2 @@
-ROOT=\ABCD\www\bases\dubcore\
-IMPORTPDF=Y
-COLLECTION=/ABCD/www/bases/dubcore/collection/
 CISIS_VERSION=ffi
+COLLECTION=%path_database%dubcore/collection/
