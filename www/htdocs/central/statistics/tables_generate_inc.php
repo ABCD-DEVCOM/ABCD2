@@ -20,13 +20,16 @@ global $trow,$tcol,$rows,$cols,$tabs,$tab,$tipo,$filter_date;
 		if (trim($value)!="" and trim($value)!='$$$$'){
 			$rec=explode('****',$value);
             $i=-1;
-			foreach ($rec as $linea){				$i=$i+1;
-				if (isset($_REQUEST["year_from"]) and trim($_REQUEST["year_from"])!=""){					$fecha_comp=$_REQUEST["year_from"];
+			foreach ($rec as $linea){
+				$i=$i+1;
+				if (isset($_REQUEST["year_from"]) and trim($_REQUEST["year_from"])!=""){
+					$fecha_comp=$_REQUEST["year_from"];
 					if (isset($_REQUEST["month_from"]) and $_REQUEST["month_from"]!="")
 						$fecha_comp.=$_REQUEST["month_from"];
 					$fecha_comp=str_replace('$',"",$fecha_comp);
 					$len=strlen($fecha_comp);
-				}
+
+				}
                 $linea=trim($linea);
 				$x=explode('|',$tabs[$i]);
 				$trow=$x[1];
@@ -35,7 +38,8 @@ global $trow,$tcol,$rows,$cols,$tabs,$tab,$tipo,$filter_date;
 				else
 					$tcol="";
 				$row_col=explode('¬¬¬¬¬',$linea);
-				foreach ($row_col as $rrcc){					if(trim($rrcc)=="") continue;
+				foreach ($row_col as $rrcc){
+					if(trim($rrcc)=="") continue;
 					$rrcc.='$$$$';
 					$t=explode('$$$$',$rrcc);
                     $descartar="";
@@ -98,7 +102,8 @@ function Frecuencia($rc){
 
 // SE CONSTRUYE EL FORMATO PARA LA TABLA DE CONTINGENCIA
 function Contingencia($tabla_L,$tab_vars){
-	$filter_d="";	$lmp="";
+	$filter_d="";
+	$lmp="";
 	$excluir="";
 // SE LEE LA LISTA DE VARIABLES PARA FORMAR LA TABLA
 	$tabla_L=urldecode($tabla_L);
@@ -112,11 +117,13 @@ function Contingencia($tabla_L,$tab_vars){
 			if ($tabla[1]== $t[0]){
 				$pft_row=$t[1];
 				if(isset($t[2])and $t[2]=="LMP"){
-					$lmp=$t{2};
+					$lmp=$t[2];
 					$excluir=$t[3];
-				}else{					if (isset($t[2]) and $t[2]=="true")
+				}else{
+					if (isset($t[2]) and $t[2]=="true")
 						$filter_d="rows";
-				}
+
+				}
 			}
 		}
 	}
@@ -189,18 +196,21 @@ global $tabla,$tit_proc,$tabs,$tipo,$filter_date;
 			$proc=explode("|",urldecode($_REQUEST["proc"]));
 			$tit_proc="**";
 			$Formulas="";
-			foreach ($proc as $value){				if ($tit_proc=="**"){
+			foreach ($proc as $value){
+				if ($tit_proc=="**"){
 					$tit_proc=$value;
 				}else{
 					$PFT="";
 					$value=trim($value);
-					if ($value!=""){
+					if ($value!=""){
+
 						$txx=explode('{{',$value);
 						$value=$txx[0];
 						if(isset($txx[1])) $PFT="PFT";
 						$tabs[]=$tabla[$value];
 
-	                    if ($PFT=="PFT"){	                    	$For=explode('|',$tabla[$value]);
+	                    if ($PFT=="PFT"){
+	                    	$For=explode('|',$tabla[$value]);
 							$Formato=str_replace("/","'¬¬¬¬¬'",$For[3]);
 							$tipo[]=$For[1].'|'.$For[2];
 							if (isset($For[4])) $filter_date[]=$For[4];
@@ -292,15 +302,23 @@ global $tabla,$tit_proc,$tabs,$tipo,$filter_date;
 	return $Formato;
 }
 
-function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){global $msgstr;
+function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){
+global $msgstr;
 	switch ($_REQUEST["Opcion"]){
 		case "FECHAS":
 			$file_date=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg";
-			if (!file_exists($file_date)){				echo $msgstr["miss_dp"];
-				die;			}
+			if (!file_exists($file_date)){
+				echo $msgstr["miss_dp"];
+				die;
+			}
 			$fp=file($file_date);
-			foreach ($fp as $value){				$value=trim($value);				if ($value!=""){					$date_prefix=$value;
-					break;				}			}
+			foreach ($fp as $value){
+				$value=trim($value);
+				if ($value!=""){
+					$date_prefix=$value;
+					break;
+				}
+			}
 		    $Expresion=$date_prefix.$_REQUEST["year_from"];
 		    if (isset($_REQUEST["month_from"]))
 		    	$Expresion.=$_REQUEST["month_from"];
@@ -323,7 +341,9 @@ function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){global $msgstr
 	return $contenido;
 }
 
-function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){	for ($i=0;$i<count($tab);$i++){		$t=explode("|",$tabs[$i]);
+function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){
+	for ($i=0;$i<count($tab);$i++){
+		$t=explode("|",$tabs[$i]);
 		$tit=$t[0];
 		$lmp="";$maximo="";
 		$x=explode('|',$tipo[$i]);
@@ -408,7 +428,10 @@ function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){	for ($i=0;$i<count($tab
 				echo "<td>".$total_cols[$ixcol]."</td>";
 				$tgen=$tgen+$total_cols[$ixcol];
 			}
-		}else{			echo "<td>".$total_cols[0]."</td>";			$tgen=$tgen+$total_cols[0];		}
+		}else{
+			echo "<td>".$total_cols[0]."</td>";
+			$tgen=$tgen+$total_cols[0];
+		}
 		if (isset($cols_label)){
 			echo "<td>$tgen</td>";
 		}
