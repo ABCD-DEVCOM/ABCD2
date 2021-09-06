@@ -22,7 +22,7 @@ if (isset($arrHttp["encabezado"])) {
 
 
 echo "<div style='float:right;'> <a href=\"..\dbadmin\menu_mantenimiento.php?base=".$base."\" class=\"defaultButton backButton\">";
-echo "<img 'src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img 'src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a></div>";
 

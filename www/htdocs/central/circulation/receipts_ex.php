@@ -21,10 +21,17 @@ $ayuda="receipts.html";
 $fp=fopen($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst","w");
 $error=array();
 $activated=array();
-foreach ($arrHttp as $var=>$value){	if (substr($var,0,2)=="pr"){		$pft=$value;
-		if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/$pft")){			$res=fwrite($fp,"$var\n");
+foreach ($arrHttp as $var=>$value){
+	if (substr($var,0,2)=="pr"){
+		$pft=$value;
+		if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/$pft")){
+			$res=fwrite($fp,"$var\n");
 			$activated[$var]=$value;
-		}else{			$error[$var]=$value ;		}	}}
+		}else{
+			$error[$var]=$value ;
+		}
+	}
+}
 fclose($fp);
 ?>
 <body>
@@ -34,7 +41,7 @@ fclose($fp);
 	</div>
 	<div class="actions">
 		<a href="receipts.php?base=trans" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo  $msgstr["back"]?></strong></span>
 		</a>
 	</div>
@@ -57,12 +64,18 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/receipts_ex.php";
 
 echo "<tr><td colspan=3><strong>".$msgstr["receipts"]."</td></tr>\n";
 echo "<tr><td>".$msgstr["loan"]."</td><td>";
-if (isset($activated["pr_loan"])){	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";}else{	if (isset($error["pr_loan"])) echo $msgstr["falta"]." ".$pft_val["pr_loan"];}
+if (isset($activated["pr_loan"])){
+	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
+}else{
+	if (isset($error["pr_loan"])) echo $msgstr["falta"]." ".$pft_val["pr_loan"];
+}
 echo "</td>\n";
 echo "<tr><td>".$msgstr["return"]."</td><td>";
 if (isset($activated["pr_return"])){
 	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
-}else{	if (isset($error["pr_return"])) echo $msgstr["falta"]." ".$pft_val["pr_return"];}
+}else{
+	if (isset($error["pr_return"])) echo $msgstr["falta"]." ".$pft_val["pr_return"];
+}
 echo "</td>\n";
 echo "<tr><td>".$msgstr["fine"]."</td><td>";
 if (isset($activated["pr_fine"])){

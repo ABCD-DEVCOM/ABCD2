@@ -45,8 +45,10 @@ function GuardarPft($Pft,$base){
 global $msgstr,$db_path;
 
 	$fp=fopen($base,"w");
-	if (!$fp){		echo "$base ".$msgstr["notsaved"]."<hr>";
-		die;	}
+	if (!$fp){
+		echo "$base ".$msgstr["notsaved"]."<hr>";
+		die;
+	}
 	fwrite($fp,$Pft);
 	echo "<xmp>".$Pft."</xmp><p>$base <strong>". $msgstr["saved"]." </strong><hr>";
 
@@ -63,7 +65,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>
@@ -98,8 +100,10 @@ $Pft=stripslashes($arrHttp["pft_usdisp"]);
 GuardarPft($Pft,$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_usdisp.pft");
 
 echo "<h5><font color=darkred>". $msgstr["pft_usmore"]."</font></H5>";
-if (isset($arrHttp["pft_usmore"])){	$Pft=stripslashes($arrHttp["pft_usmore"]);
-	GuardarPft($Pft,$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_usmore.pft");}
+if (isset($arrHttp["pft_usmore"])){
+	$Pft=stripslashes($arrHttp["pft_usmore"]);
+	GuardarPft($Pft,$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_usmore.pft");
+}
 
 ?>
 </div></div>

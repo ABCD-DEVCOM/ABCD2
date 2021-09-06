@@ -29,7 +29,8 @@ if (file_exists($archivo)){
 $ix=0;
 $total_prestamos_politica=0;
 $can_reserve=array();
-foreach ($fp as $value) {	if (trim($value)!=""){
+foreach ($fp as $value) {
+	if (trim($value)!=""){
 		//echo $value.'<br>';
 		$Ti=explode('|',$value);
 		$objeto=strtoupper($Ti[0]);

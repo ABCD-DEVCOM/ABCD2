@@ -27,7 +27,7 @@ include("../common/institutional_info.php");
     </div>
     <div class="actions">
         <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
             <span><strong><?php echo $msgstr["regresar"]?></strong></span>
         </a>
     </div>
@@ -47,7 +47,8 @@ include "../common/inc_div-helper.php";
 */
 $mensajes="";
 
-foreach ($arrHttp as $var=>$value) {	if (substr($var,0,4)=="msg_"){
+foreach ($arrHttp as $var=>$value) {
+	if (substr($var,0,4)=="msg_"){
 		$var=substr($var,4);
 		$mensajes.=$var."=".$value."\n";
 	}

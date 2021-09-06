@@ -206,12 +206,12 @@ switch ($arrHttp["Opcion"]){
 		echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s\" class=\"defaultButton backButton\">";
 		break;
 }
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
 	echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
 	echo "
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 			<span><strong>". $msgstr["save"]."</strong></span>
 			</a>";
 }

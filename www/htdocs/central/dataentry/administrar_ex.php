@@ -39,7 +39,8 @@ echo "<body>
 <div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">
 	";
-switch ($arrHttp["Opcion"]){	case "fullinv":
+switch ($arrHttp["Opcion"]){
+	case "fullinv":
 		echo $msgstr["mnt_gli"];
 		break;
 	case "unlockbd":
@@ -55,13 +56,16 @@ switch ($arrHttp["Opcion"]){	case "fullinv":
 		break;
 	case "lisdelrec":
 		echo $msgstr["mnt_lisdr"];
-		break;}
+		break;
+}
 echo ": ".$arrHttp["base"];
 echo "</div>
 	<div class=\"actions\">
 ";
-if ($arrHttp["Opcion"]!="fullinv"){	echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";    echo "
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+if ($arrHttp["Opcion"]!="fullinv"){
+	echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
+    echo "
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["back"]."</strong></span></a>";
 }
 echo "
@@ -171,7 +175,9 @@ switch ($arrHttp["Opcion"]) {
 	case "unlock":
 	case "lisdelrec":
 		$contenido=VerStatus();
-		foreach ($contenido as $linea){			if (substr($linea,0,7)=='MAXMFN:'){				$maxmfn=trim(substr($linea,7));
+		foreach ($contenido as $linea){
+			if (substr($linea,0,7)=='MAXMFN:'){
+				$maxmfn=trim(substr($linea,7));
 				break;
 			}
         }
@@ -186,7 +192,8 @@ switch ($arrHttp["Opcion"]) {
 		echo "<input type=hidden name=to value=".$arrHttp["to"].">";
 		echo $msgstr["cg_from"]." = ".$arrHttp["from"]." - ".$msgstr["cg_to"]." = ".$arrHttp["to"]." (".$arrHttp["count"]." ".$msgstr["records"].")";
 		echo "<table class=listTable>";
-		switch ($arrHttp["Opcion"]){			case "unlock":
+		switch ($arrHttp["Opcion"]){
+			case "unlock":
 				echo "<tr><th>Mfn</th><th>&nbsp;</th></tr>";
 				break;
 			case "listar":
@@ -196,14 +203,17 @@ switch ($arrHttp["Opcion"]) {
 				echo "<tr><th>Mfn</th><th></th></tr>";
 				$opc_ant=$arrHttp["Opcion"];
 				$arrHttp["Opcion"]="listar";
-				break;		}
+				break;
+		}
 		$arrHttp["IsisScript"]="administrar.xis";
 		$contenido=MostrarPft();
         $nb=0;
         if (isset($opc_ant)) $arrHttp["Opcion"]=$opc_ant;
 		foreach ($contenido as $value) {
 			$value=trim($value);
-			if ($value!=""){				switch ($arrHttp["Opcion"]){					case "unlock":
+			if ($value!=""){
+				switch ($arrHttp["Opcion"]){
+					case "unlock":
 						$t=explode('|',$value);
 						if (trim($t[1])=="UNLOCKED") $nb++;
 						echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td></tr>\n";
@@ -217,16 +227,25 @@ switch ($arrHttp["Opcion"]) {
 						break;
 					case "lisdelrec":
 						$t=explode('|',$value);
-						if (trim($t[1])=="DELETED") {							$nb++;
+						if (trim($t[1])=="DELETED") {
+							$nb++;
 							echo '<tr><td>'.$t[0]."</td><td>".$t[1]."</td></tr>\n";
 						}
-						break;				}
-			}		}
+						break;
+				}
+			}
+		}
 		echo "</table>";
 		if ($arrHttp["Opcion"]!="lisdelrec"){
-	        if ($nb==0){	        	echo "<strong>".$msgstr["noblockedrecs"]."</strong>";	        }else{	        	echo $nb." ".$msgstr["blockedrecs"];	        }
+	        if ($nb==0){
+	        	echo "<strong>".$msgstr["noblockedrecs"]."</strong>";
+	        }else{
+	        	echo $nb." ".$msgstr["blockedrecs"];
+	        }
 		}
-		if ($arrHttp["to"]<$maxmfn){			echo "<p><input type=submit value=".$msgstr["continuar"].">";		}
+		if ($arrHttp["to"]<$maxmfn){
+			echo "<p><input type=submit value=".$msgstr["continuar"].">";
+		}
 		echo "</form>";
 		break;
 	case "unlockbd":

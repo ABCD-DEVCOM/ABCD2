@@ -135,7 +135,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 	if ($encabezado!="") echo "<a href=z3950_conf.php?&base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">";
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
 </a>
 			</div>
@@ -162,15 +162,18 @@ else
 $ix=-1;
 echo "<center><div id=accent>";
 echo "Marc-8 &nbsp; &nbsp; ANSI";
-foreach ($fp as $value){	if (trim($value)!=""){
+foreach ($fp as $value){
+	if (trim($value)!=""){
 		$ix=$ix+1;
 		$v=explode(" ",$value);
 		echo "<br>";
 		echo "<input type=text size=3 name=ac$ix id=iac$ix value=".$v[0].">&nbsp; &nbsp; &nbsp;";
 		echo "<input type=text size=3 name=nac$ix id=inac$ix value=".$v[1].">";
-	}}
+	}
+}
 $ix=$ix+1;
-for ($i=$ix;$i<$ix+5;$i++){	echo "<br>";
+for ($i=$ix;$i<$ix+5;$i++){
+	echo "<br>";
 	echo "<input type=text size=3 name=ac$i id=iac$i value=\"\">&nbsp; &nbsp; &nbsp;";
 	echo "<input type=text size=3 name=nac$i id=inac$i value=\"\">";
 }

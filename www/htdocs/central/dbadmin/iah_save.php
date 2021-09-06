@@ -29,7 +29,9 @@ unset($fp);
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -40,7 +42,7 @@ if (isset($arrHttp["encabezado"])){
 if (isset($arrHttp["encabezado"]))
 	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -63,8 +65,10 @@ $arrHttp["ValorCapturado"]= stripslashes($arrHttp["ValorCapturado"]);
 echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
 $file=$db_path."par/".strtoupper($arrHttp["base"]).".def";
 $fp=fopen($file,"w");
-if (!$fp){	echo "Cannot open the file $file for writing";
-	die;}
+if (!$fp){
+	echo "Cannot open the file $file for writing";
+	die;
+}
 $res=fwrite($fp,$arrHttp["ValorCapturado"]);
 
 fclose($fp);

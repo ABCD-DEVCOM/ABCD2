@@ -8,7 +8,8 @@ include("../config.php");
 $ValorCapturado="";
 $arrHttp=array();
 foreach ($_GET as $var => $value) {
-	$value=trim($value);	if ($value!="")	VariablesDeAmbiente($var,$value);
+	$value=trim($value);
+	if ($value!="")	VariablesDeAmbiente($var,$value);
 }
 if (count($arrHttp)==0){
 
@@ -26,7 +27,8 @@ $xnr="";
 $arrHttp["wks"]="";
 include("../dataentry/plantilladeingreso.php");
 include("../dataentry/actualizarregistro.php");
-foreach ($arrHttp as $var => $value) {	if (substr($var,0,3)=="tag" ){
+foreach ($arrHttp as $var => $value) {
+	if (substr($var,0,3)=="tag" ){
 		$tag=explode("_",$var);
 		if (isset($variables[$tag[0]])){
 			$variables[$tag[0]].="\n".$value;
@@ -45,7 +47,8 @@ die;
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
 global $arrHttp;
-		if (substr($var,0,3)=="tag") {			$ixpos=strpos($var,"_");
+		if (substr($var,0,3)=="tag") {
+			$ixpos=strpos($var,"_");
 			if ($ixpos!=0) {
 				$occ=explode("_",$var);
 				$value="^".trim($occ[2]).$value;

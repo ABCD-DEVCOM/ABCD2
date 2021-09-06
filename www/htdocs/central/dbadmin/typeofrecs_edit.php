@@ -16,18 +16,26 @@ include("../common/header.php");
 
 <script languaje=javascript>
 
-function EnviarTipoR(){	if (Trim(document.tipordef.tipom.value)==""){		alert("<?php echo $msgstr["typeofrecords_new"]?>")
-		return	}
-	document.tipordef.submit()}
+function EnviarTipoR(){
+	if (Trim(document.tipordef.tipom.value)==""){
+		alert("<?php echo $msgstr["typeofrecords_new"]?>")
+		return
+	}
+	document.tipordef.submit()
+}
 
 function Enviar(rows){
-	err=false	for (i=1;i<rows;i++){		c1=""
+	err=false
+	for (i=1;i<rows;i++){
+		c1=""
 		c2=""
 		c3=""
 		c4=""
 		tr=0
-		for (j=1;j<5;j++){			Ctrl=eval("document.tor.cell"+i+"_"+j)
-			switch (j){				case 1:
+		for (j=1;j<5;j++){
+			Ctrl=eval("document.tor.cell"+i+"_"+j)
+			switch (j){
+				case 1:
 					c1=Ctrl.value
 					break
 				case 2:
@@ -40,20 +48,33 @@ function Enviar(rows){
 					break
 				case 4:
 					c4=Ctrl.value
-					break			}
+					break
+			}
 		}
-		if (c1+c2+c3+c4==""){		}else{			if (c1=="" || (c2=="" && c3=="") || c4==""){				alert ("<?php echo $msgstr["typeofrecerror"]?>")
-				err=true			}else{
-				if (c2==""){					Ctrl=eval("document.tor.cell"+i+"_"+2)
-					Ctrl.value="_"				}
+		if (c1+c2+c3+c4==""){
+
+		}else{
+			if (c1=="" || (c2=="" && c3=="") || c4==""){
+				alert ("<?php echo $msgstr["typeofrecerror"]?>")
+				err=true
+			}else{
+				if (c2==""){
+					Ctrl=eval("document.tor.cell"+i+"_"+2)
+					Ctrl.value="_"
+				}
 				if (c3==""){
 					Ctrl=eval("document.tor.cell"+i+"_"+3)
 					Ctrl3=Ctrl
 					Ctrl.value="_"
-				}				tr++			}		}
+				}
+				tr++
+			}
+		}
 	}
 
-    if (err==false) document.tor.submit();}
+
+    if (err==false) document.tor.submit();
+}
 
 
 </script>
@@ -61,7 +82,9 @@ function Enviar(rows){
 <?php if (isset($arrHttp["encabezado"])){
     include("../common/institutional_info.php");
     $encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 echo "
 	<div class=\"sectionInfo\">
 		<div class=\"breadcrumb\">".
@@ -69,7 +92,7 @@ echo "
 		</div>
 		<div class=\"actions\">\n";
 		echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 			<span><strong>". $msgstr["cancel"]."</strong></span>
 			</a>
 		</div>
@@ -92,17 +115,22 @@ echo "<font color=white>&nbsp; &nbsp; Script: typeofrecs_edit.php";
 <br><center>
 <?php
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks";
-if (!file_exists($archivo))	$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks";
+if (!file_exists($archivo))
+	$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks";
 if (!file_exists($archivo)){
 	echo "<p><span class=title>".$msgstr["typeofrecnowks"];
 	if (!isset($arrHttp["encabezado"]))
 		echo "<p><a href=menu_modificardb.php?base=".$arrHttp["base"].">".$msgstr["back"]."</a><p>";
-	die;}
+	die;
+}
 
 $fp = file($archivo);
-foreach ($fp as $linea){	$fmt[]=$linea;}
+foreach ($fp as $linea){
+	$fmt[]=$linea;
+}
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab";
-if (!file_exists($archivo))    $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab";
+if (!file_exists($archivo))
+    $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab";
 if (!file_exists($archivo)){
 	echo "<p>
 	<form name=tipordef method=post action=typeofrecs_update.php onsubmit='javascript:return false'>
@@ -145,8 +173,10 @@ if ($fp) {
 			$linea=trim($linea);
 			if ($ix==0){
 				$ixpos=strpos($linea," ");
-				if ($ixpos===false){					$tipom=trim($linea);
-					$nivelr="";				}else{
+				if ($ixpos===false){
+					$tipom=trim($linea);
+					$nivelr="";
+				}else{
 					$tipom=trim(substr($linea,0,$ixpos));
 					$nivelr=trim(substr($linea,$ixpos+1));
 				}
@@ -166,34 +196,45 @@ if ($fp) {
 				$ix=1;
 				echo "<table>";
 				echo "<tr><td align=center>".$msgstr["fmt"]."</td><td align=center>".$msgstr["tag"]." 1 ".$msgstr["value"]."</td><td align=center>".$msgstr["tag"]." 2 ".$msgstr["value"]."</td><td align=center>".$msgstr["typeofrecords"]." ".$msgstr["description"]."</td><td>";
-			}else{				$j=$j+1;
+			}else{
+				$j=$j+1;
 				$i=0;
 				$l=explode('|',$linea);
 				echo "<tr>";
-				foreach ($l as $value) {					$value=trim($value);
+				foreach ($l as $value) {
+					$value=trim($value);
 					$i=$i+1;
-					if ($i==1){						echo "<td><select name=cell$j"."_".$i.">
+					if ($i==1){
+						echo "<td><select name=cell$j"."_".$i.">
 						<option value=\"\"></option>-- ";
 						foreach ($fmt as $f){
 							$xxtm=explode('|',$f);
 							$xselected="";
-							if ($xxtm[0].".fmt"==$l[0]) $xselected=" selected";							echo "<option value=\"".$xxtm[0].".fmt\"$xselected>".trim($xxtm[1])." (".$xxtm[0].")\n";						}
-						echo "</td></select>";					}else{
-						switch ($i){							case 2:
+							if ($xxtm[0].".fmt"==$l[0]) $xselected=" selected";
+							echo "<option value=\"".$xxtm[0].".fmt\"$xselected>".trim($xxtm[1])." (".$xxtm[0].")\n";
+						}
+						echo "</td></select>";
+					}else{
+						switch ($i){
+							case 2:
 							case 3:
 								$xsize=" size=10";
 								break;
 							case 4:
 								$xsize=" size=30";
-								break;						}						echo "<td><input type=text name=cell$j"."_".$i." value=\"$value\" $xsize></td>";
-					}				}
+								break;
+						}
+						echo "<td><input type=text name=cell$j"."_".$i." value=\"$value\" $xsize></td>";
+					}
+				}
 			}
 		}
 	}
 
 }
 
-for ($k=$j+1;$k<$j+8;$k++){	$i=0;
+for ($k=$j+1;$k<$j+8;$k++){
+	$i=0;
 	$linea="|||";
 	$l=explode('|',$linea);
 	echo "<tr>";
@@ -222,7 +263,9 @@ for ($k=$j+1;$k<$j+8;$k++){	$i=0;
 			echo "<td><input type=text name=cell$k"."_".$i." value=\"$value\" $xsize></td>";
 		}
 
-	}}
+	}
+
+}
 echo "</table>
 <p>
 <a href=javascript:Enviar($k)>".$msgstr["update"]."</a> &nbsp; &nbsp;";

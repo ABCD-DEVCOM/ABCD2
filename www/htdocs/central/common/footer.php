@@ -11,7 +11,7 @@
 
 		<div class="footer">
 			<div class="systemInfo">
-				<span><b>ABCD v2.2.0-beta-0</b> + ... &rarr; 2021-08-30</span>
+				<span><b>ABCD v2.2.0-beta-0</b> + ... &rarr; 2021-09-05</span>
 				<span><?php if (isset($def["LEGEND1"])) echo $def["LEGEND1"]; ?></span>
 				<?php if(isset($def["URL1"])){
 					echo "<a href=".$def["URL1"]." target=_blank>". $def["URL1"]."</a>";
@@ -27,7 +27,7 @@
                 ?>
                 <div class="distributorLogo">
                     <a  href=<?php echo $def["URL2"]." target=_blank"?>>
-                        <img src='/central/images/distributorLogo.png' 
+                        <img src='/assets/images/distributorLogo.png' 
                         title='<?php if (isset($def["LEGEND2"])) echo $def["LEGEND2"]?>'>
                     </a>
                 </div>
@@ -36,3 +36,6 @@
 			?>
 			<div class="spacer">&#160;</div>
 		</div>
+
+</body>
+</html>

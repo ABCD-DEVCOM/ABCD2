@@ -24,7 +24,8 @@ xEliminar=""
 Mfn_eliminar=''
 function Mostrar(Expresion){
 	msgwin=window.open("../dataentry/show.php?base=suggestions&Expresion=CN_"+Expresion,"show"," width=550,height=400,resizable, scrollbars")
-	msgwin.focus()}
+	msgwin.focus()
+}
 function Editar(Mfn){
 	document.EnviarFrm.Mfn.value=Mfn
 	document.EnviarFrm.Opcion.value="editar"
@@ -63,7 +64,8 @@ $Formato_order=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$index" ;
 if (!file_exists($Formato_order)) $Formato_order=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$index" ;
 if (!file_exists($Formato_order)){
 	echo "<div><font color=red>".$msgstr["missing"]." file: ".$Formato_order."</font></div>";
-	die;}
+	die;
+}
 $tit_o=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$tit";
 if (!file_exists($tit_o)) $tit_o=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$tit" ;
 if (!file_exists($tit_o)){
@@ -90,7 +92,8 @@ foreach ($contenido as $value){
 	}
 
 
-}
+
+}
 ksort($recom);
 ?>
 <script src=../dataentry/js/lr_trim.js></script>
@@ -103,15 +106,29 @@ document.onkeypress =
 	if (c==13) EnviarForma("")
     return true;
   }
-function EnviarForma(){	sel="N"	if (ncheck==0){		if (document.order.oc.checked){			alert(document.order.oc.value)
-			sel="S"		}	}else{		Mfn=""		for (i=0;i<ncheck;i++){			if (document.order.oc[i].checked){
+function EnviarForma(){
+	sel="N"
+	if (ncheck==0){
+		if (document.order.oc.checked){
+			alert(document.order.oc.value)
+			sel="S"
+		}
+	}else{
+		Mfn=""
+		for (i=0;i<ncheck;i++){
+			if (document.order.oc[i].checked){
 				Mfn+=document.order.oc[i].value+"\n"
 				sel="S"
-			}		}	}
-	if (sel=="N"){		alert("<?php echo $msgstr["err_order"]?>")
-		return	}
+			}
+		}
+	}
+	if (sel=="N"){
+		alert("<?php echo $msgstr["err_order"]?>")
+		return
+	}
 	document.order.Mfn_sel.value=Mfn
-	document.order.submit()}
+	document.order.submit()
+}
 
 </script>
 <?php
@@ -139,19 +156,34 @@ function EnviarForma(){	sel="N"	if (ncheck==0){		if (document.order.oc.checke
 	echo "<th>&nbsp;</th>";
 	foreach ($t as $v)  echo "<th>".$v."</th>";
     $ixelem=0;
-	foreach ($recom as $value){		$r=explode('|',$value);
+	foreach ($recom as $value){
+
+		$r=explode('|',$value);
 //		if ($r[8]=="OK")    // Se verifica si ya existe una órden para ese proveedor y ese objeto
 //			$check="NO";
 //		else
 			$check="SI";
 		$ix1=-1;
-		if ($check=="SI"){			echo "\n<tr>";
-			foreach ($r as $cell){				$ix1=$ix1+1;
-				if ($ix1==1){					echo "<td nowrap><a href=javascript:Editar($cell)><img src=\"../images/edit.png\"></a>&nbsp;
-					<a href=javascript:Delete($cell)><img src=\"../images/delete.png\"></a>&nbsp;
-					</td>";				}				if ($ix1>1){
+		if ($check=="SI"){
+			echo "\n<tr>";
+			foreach ($r as $cell){
+				$ix1=$ix1+1;
+				if ($ix1==1){
+					?>
+					<td>
+						<button class="button_browse edit" type="button" onclick="Editar('<?php echo $cell; ?>')">
+							<i class="fas fa-edit"></i>
+						</button>
+						<button class="button_browse show" type="button" onclick="Mostrar('<?php echo $cell; ?>')">
+							<i class="far fa-eye"></i>
+						</button>
+					</td>
+					<?php
+				}
+				if ($ix1>1){
 					echo "<td>$cell</td>";
-				}			}
+				}
+			}
         }
 	}
 ?>

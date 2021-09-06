@@ -104,11 +104,11 @@ echo "
 		<div class=\"actions\">\n";
 ?>
 			<a href=<?php echo $arrHttp["retorno"]?> class="defaultButton cancelButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["cancelar"]?></strong></span>
 			</a>
 			<a href=javascript:EnviarForma() class="defaultButton saveButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
 			</a>
 <?php

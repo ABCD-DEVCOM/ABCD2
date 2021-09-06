@@ -36,7 +36,9 @@ $arrHttp["Opcion"]="buscar";
 $Formato=$db_path."trans/pfts/".$_SESSION["lang"]."/r_solvency";
 $query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&Expresion=$Expresion&Opcion=".$arrHttp["Opcion"]."&base=" .$arrHttp["base"]."&Formato=$Formato&prologo=NNN";
 include("../common/wxis_llamar.php");
-foreach ($contenido as $value){	echo "$value<br>";}
+foreach ($contenido as $value){
+	echo "$value<br>";
+}
 
 echo "</body></html>" ;
 

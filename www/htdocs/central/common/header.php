@@ -26,9 +26,10 @@
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
 		<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="../css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+		<link rel="stylesheet" rev="stylesheet" href="../../assets/css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
 		<!--FontAwesome-->
-		<link href="../../assets/css/all.min.css" rel="stylesheet"> <!--load all styles -->
+		<link href="../../assets/css/all.min.css" rel="stylesheet"> 
+		<!--load all styles -->
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie.css" type="text/css" media="screen"/>
 		<![endif]-->
@@ -57,6 +58,7 @@
 			  z-index: 100;
 			}
 		</style>
+
 <?php
 include ("css_settings.php");
 ?>

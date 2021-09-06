@@ -51,14 +51,18 @@ $archivo= $db_path."users/def/".$_SESSION["lang"]."/usuarios.tab";
 if (!file_exists($archivo))  $db_path."users/def/".$lang_db."/usuarios.tab";
 $fp=file($archivo);
 foreach ($fp as $value){
-	$value=trim($value);	if ($value!=""){		$t=explode('|',$value);
+	$value=trim($value);
+	if ($value!=""){
+		$t=explode('|',$value);
 		$type_users[$t[0]]=$t[1];
-	}}
+	}
+}
 unset($fp);
 $archivo=$db_path."circulation/def/".$_SESSION["lang"]."/items.tab";
 if (!file_exists($archivo)) $db_path."circulation/def/".$lang_db."/items.tab";
 $fp=file($archivo);
-foreach ($fp as $value){	$value=trim($value);
+foreach ($fp as $value){
+	$value=trim($value);
 	if ($value!=""){
 		$t=explode('|',$value);
 		$type_items[$t[0]]=$t[1];
@@ -73,7 +77,7 @@ echo "<div class=\"sectionInfo\">
 			</div>
 			<div class=\"actions\">\n";
 echo "<a href=javascript:self.close() class=\"defaultButton cancelButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["cancel"]."</strong></span>
 				</a>\n
 			</div>
@@ -91,17 +95,22 @@ $fp=file($archivo);
 	foreach ($rows_title as $r=>$v) echo "<td bgcolor=white align=center>$v</td>";
 	$ixc=count($rows_title);
 
-	foreach ($fp as $value) {		if (trim($value!="")){			$Ti=explode('|',$value);
+	foreach ($fp as $value) {
+		if (trim($value!="")){
+			$Ti=explode('|',$value);
 			echo "<tr>";
 			$i=0;
-			foreach ($Ti as $obj) {				$i=$ix+1;
+			foreach ($Ti as $obj) {
+				$i=$ix+1;
 				if ($i>$ixc) break;
-				switch ($i){					case 1:
+				switch ($i){
+					case 1:
 						$obj=$type_items[$obj];
 						break;
 					case 2:
 						$obj=$type_users[$obj];
-						break;				}
+						break;
+				}
 				echo "<td bgcolor=white>".$obj."</td>";
 			}
         }

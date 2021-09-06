@@ -21,12 +21,18 @@ $chk_return="";
 $chk_fine="";
 $chk_statment="";
 $chk_solvency="";
-if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst")){	$archivo=$db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst";
-}else{	if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst"))
-		$archivo=$db_path."trans/pfts/".$lang_db."/receipts.lst";}
-if ($archivo!=""){	$fp=file($archivo);
-	foreach ($fp as $value){		$value=trim($value);
-		switch($value){			case "pr_loan":
+if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst")){
+	$archivo=$db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst";
+}else{
+	if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst"))
+		$archivo=$db_path."trans/pfts/".$lang_db."/receipts.lst";
+}
+if ($archivo!=""){
+	$fp=file($archivo);
+	foreach ($fp as $value){
+		$value=trim($value);
+		switch($value){
+			case "pr_loan":
 				$chk_loan=" checked";
 				break;
 			case "pr_return":
@@ -40,33 +46,44 @@ if ($archivo!=""){	$fp=file($archivo);
 				break;
 			case "pr_solvency":
 				$chk_solvency=" checked";
-				break;		}	}}
+				break;
+		}
+	}
+}
 ?>
 <script  language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
-function CheckName(fn,Ctrl){	res= /^[a-z][\w]+$/i.test(fn)
+function CheckName(fn,Ctrl){
+	res= /^[a-z][\w]+$/i.test(fn)
 	if (res==false){
 		alert("<?php echo $msgstr["errfilename"]?>");
 		Ctrl.focus()
 		return false
-	}}
-function Guardar(){
-	document.receipts.submit()}
+	}
+}
+function Guardar(){
+
+	document.receipts.submit()
+}
 
 function Editar(Pft){
 	ix=Pft.indexOf(".pft")
 	Pft=Pft.substr(0,ix)
-	switch (Pft){		case "r_fine":
+	switch (Pft){
+		case "r_fine":
 			document.editar.base.value="suspml"
 			document.editar.cipar.value="suspml.par"
 			break
 		default:
 			document.editar.base.value="trans"
 			document.editar.cipar.value="trans.par"
-			break	}	msgwin=window.open("","editar","width=600,height=600,resizable,scrollbars")
+			break
+	}
+	msgwin=window.open("","editar","width=600,height=600,resizable,scrollbars")
 	document.editar.archivo.value=Pft
 	document.editar.submit()
-	msgwin.focus()}
+	msgwin.focus()
+}
 
 </script>
 <body>
@@ -76,11 +93,11 @@ function Editar(Pft){
 	</div>
 	<div class="actions">
 		<a href="configure_menu.php" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo  $msgstr["back"]?></strong></span>
 		</a>
 		<a href=javascript:Guardar() class="defaultButton saveButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["update"]?></strong></span>
 		</a>
 	</div>
@@ -91,8 +108,8 @@ function Editar(Pft){
 <a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/receipts.php";
-?></font>
+echo " Script: circulation/receipts.php";
+?>
 </div>
 <div class="middle form">
 	<div class="formContent">

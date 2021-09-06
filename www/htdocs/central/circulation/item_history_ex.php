@@ -27,9 +27,11 @@
 */
 session_start();
 // Situación de un objeto
-if (!isset($_SESSION["permiso"])){	header("Location: ../common/error_page.php") ;
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
 }
-$script_php="../circulation/item_history_ex.php";if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
+$script_php="../circulation/item_history_ex.php";
+if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 $arrHttp["ecta"]="Y";
 include("../config.php");
@@ -66,7 +68,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 	$tr_prestamos=array();
 	$ix=0;
 	foreach ($contenido as $linea){
-		if (trim($linea)!=""){			$t=explode('^',$linea);
+		if (trim($linea)!=""){
+			$t=explode('^',$linea);
 			$ix=$ix+1;
 			$tr_prestamos[$t[8]."_$ix"]=$linea;
         }
@@ -90,7 +93,7 @@ include("../circulation/scripts_circulation.php");
 	</div>
 	<div class="actions">
 		<a href="item_history.php" class="defaultButton backButton">
-			<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+			<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 			<span><?php echo $msgstr["back"]?></strong></span>
 		</a>
 	</div>
@@ -109,7 +112,10 @@ echo "
 	<div class=\"formContent\">";
 //SE LEEN LAS TRANSACCIONES DE PRÉSTAMO
 	$trans=LeerTransacciones($arrHttp["inventory"]);
-	if (count($trans)==0){		echo "<h2>".$msgstr["no_transactions"]."<h2>";	}else{		echo "<table cellpadding=5>\n";
+	if (count($trans)==0){
+		echo "<h2>".$msgstr["no_transactions"]."<h2>";
+	}else{
+		echo "<table cellpadding=5>\n";
 		echo "<tr><th> </th><th>".$msgstr["inventory"]."</th><th>".$msgstr["usercode"]."</th>";
 		echo "<th>".$msgstr["reference"]."</th>";
 		echo "<th>".$msgstr["usertype"]."</th>";
@@ -118,7 +124,8 @@ echo "
 		echo "<th>".$msgstr["devdate"]."</th>";
 		echo "<th>".$msgstr["actual_dev"]."</th>";
 		echo "<th>".$msgstr["renewals"]."</th>";
-		foreach ($trans as $value) {			$t=explode('^',$value);
+		foreach ($trans as $value) {
+			$t=explode('^',$value);
 			echo "<tr>\n";
 			echo "<td>";
 			if ($t[16]=="P")
@@ -135,7 +142,8 @@ echo "
 			echo "<td>".$t[5]."</td>";
 			echo "<td>".$t[18]."</td>";
 			echo "<td>".$t[11]."</td>";
-			echo "</tr>\n";		}
+			echo "</tr>\n";
+		}
 		echo "</table>";
 	}
 

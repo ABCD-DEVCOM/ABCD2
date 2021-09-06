@@ -2,7 +2,11 @@
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
-}else{	if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and !isset($_SESSION["permiso"]["CENTRAL_RESETLIN"])){		header("Location: ../common/error_page.php") ;	}}
+}else{
+	if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and !isset($_SESSION["permiso"]["CENTRAL_RESETLIN"])){
+		header("Location: ../common/error_page.php") ;
+	}
+}
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
@@ -21,7 +25,8 @@ include("../common/header.php");
 echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
-function Enviar(){	control=Trim(document.forma1.control_n.value)
+function Enviar(){
+	control=Trim(document.forma1.control_n.value)
 	if (control=="" || control=="0"){
 		if (confirm("The inventory number of the copies database will be restored to 0 \n\n Is that correct? ")){
 			if (confirm("are you sure?")){
@@ -32,7 +37,8 @@ function Enviar(){	control=Trim(document.forma1.control_n.value)
 			return
 		}
 	}
-	document.forma1.submit()}
+	document.forma1.submit()
+}
 
 </script>
 <?php
@@ -51,7 +57,7 @@ if (isset($arrHttp["encabezado"])) {
 	<div class="actions">
 <?php echo "<a href=\"../common/inicio.php?reinicio=s$encabezado\" class=\"defaultButton backButton\">";
 ?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
 	</div>

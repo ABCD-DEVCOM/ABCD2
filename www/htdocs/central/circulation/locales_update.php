@@ -20,7 +20,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 
@@ -42,10 +42,12 @@ $salida="currency=\"".$arrHttp["currency"]."\"\n";
 $salida.="fine=".$arrHttp["fine"]."\n";
 //  Se graba el horario 0=domingo, 1=lunes, ...
 $salida.= "[1]\n";
-if (isset($arrHttp["mon"])){	$salida.= "from=".$arrHttp["mon_from"]."\n";
+if (isset($arrHttp["mon"])){
+	$salida.= "from=".$arrHttp["mon_from"]."\n";
 	$salida.= "f_ampm=".$arrHttp["smon_from"]."\n";
 	$salida.= "to=".$arrHttp["mon_to"]."\n";
-	$salida.= "t_ampm=".$arrHttp["smon_to"]."\n";}
+	$salida.= "t_ampm=".$arrHttp["smon_to"]."\n";
+}
 $salida.= "[2]\n";
 if (isset($arrHttp["tue"])){
 	$salida.= "from=".$arrHttp["tue_from"]."\n";

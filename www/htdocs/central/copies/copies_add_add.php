@@ -23,7 +23,7 @@ echo "<body>\n";
 	</div>
 	<div class="actions">
     	<a href="javascript:top.Menu('same')" class="defaultButton backButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["back"]?></strong></span>
 			</a>
 	</div>
@@ -65,16 +65,23 @@ $cont_database=$contenido;
 if (isset($arrHttp["copies"])) echo "<br>".$msgstr["copies_no"].": ".$arrHttp["copies"];
 
 $Mfn="";
-if (isset($arrHttp["tag30"])  and !isset($arrHttp["copies"])){	$inven=explode("\n",$arrHttp["tag30"]);
+if (isset($arrHttp["tag30"])  and !isset($arrHttp["copies"])){
+	$inven=explode("\n",$arrHttp["tag30"]);
 	unset($arrHttp["tag30"]);
-	foreach ($inven as $cn) {		if (trim($cn)!="")
-			CrearCopia(trim($cn),$max_inventory_length);	}}else{
+	foreach ($inven as $cn) {
+		if (trim($cn)!="")
+			CrearCopia(trim($cn),$max_inventory_length);
+	}
+}else{
 	for ($ix=1;$ix<=$arrHttp["copies"];$ix++ ){
 		echo "<hr>";
-		if (isset($arrHttp["tag30"])){			if ($ix==1)
+		if (isset($arrHttp["tag30"])){
+			if ($ix==1)
 				$cn=$arrHttp["tag30"];
 			else
-				$cn=$cn+1;		}else{			$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
+				$cn=$cn+1;
+		}else{
+			$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
 		}
 		CrearCopia($cn,$max_inventory_length);
 	}
@@ -165,7 +172,10 @@ global $db_path;
 
 function BuscarCopias($inventario){
 global $xWxis,$db_path,$wxisUrl,$Wxis;
-	if ($inventario!=""){		$Prefijo="IN_".$inventario;	}else{		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
+	if ($inventario!=""){
+		$Prefijo="IN_".$inventario;
+	}else{
+		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
 	}
 	$IsisScript= $xWxis."ifp.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=diccionario&prefijo=$Prefijo&campo=1";
@@ -181,7 +191,8 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			}
 		}
 	}
-	return 0;}
+	return 0;
+}
 
 function LeerFst($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;

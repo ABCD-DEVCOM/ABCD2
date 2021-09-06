@@ -15,7 +15,10 @@ $vc=explode("\n",$arrHttp["ValorCapturado"]);
 $Pft=array();
 $ix=-1;
 $formato="";
-foreach ($vc as $var=>$value) {	$value=trim($value);	if (substr($value,0,1)=="@"){		$pft_file=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".trim(substr($value,1));
+foreach ($vc as $var=>$value) {
+	$value=trim($value);
+	if (substr($value,0,1)=="@"){
+		$pft_file=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".trim(substr($value,1));
 		if (!file_exists($pft_file)) $pft_file=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".trim(substr($value,1));
 		$formato="@".$pft_file;
 		break;
@@ -35,7 +38,7 @@ include("../common/wxis_llamar.php");
 	<div class="actions">
 <?php echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["close"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>

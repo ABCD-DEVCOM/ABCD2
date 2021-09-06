@@ -27,11 +27,17 @@ else
 <title><?php echo $msgstr["statment"]?></title>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <Script>
-function EnviarForma(){	if (Trim(document.reserva.usuario.value)==""){		alert("Debe suministrar su número de carnet")
-		return	}
-	document.reserva.submit()}
-function PoliticaReserva(){	msgwin=window.open("politica_reserva.html","politica","width=500,height=400, resizable, scrollbars")
-	msgwin.focus()}
+function EnviarForma(){
+	if (Trim(document.reserva.usuario.value)==""){
+		alert("Debe suministrar su número de carnet")
+		return
+	}
+	document.reserva.submit()
+}
+function PoliticaReserva(){
+	msgwin=window.open("politica_reserva.html","politica","width=500,height=400, resizable, scrollbars")
+	msgwin.focus()
+}
 </script>
 <body <?php echo $BG_web; ?>>
 <?PHP

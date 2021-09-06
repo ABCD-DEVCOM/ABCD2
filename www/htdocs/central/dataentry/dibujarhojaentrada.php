@@ -1,8 +1,19 @@
+<!-- Stylesheets -->
+<link rel="stylesheet" rev="stylesheet" href="../../assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+<!--FontAwesome-->
+<link href="../../assets/css/all.min.css" rel="stylesheet"> 
 <?php
 /* Modifications
 20210721 fho4abcd default subfield-codes for OD from "od to "do"" + lineends
 */
 require_once("combo_inc.php");
+
+//include for translate
+include("../lang/dbadmin.php");
+include("../lang/admin.php");
+include("../lang/prestamo.php");
+include("../lang/opac.php");
+
 
 function AsociarVinculo($linea){
  	$ix=strpos($linea,"<");
@@ -253,9 +264,9 @@ global $msgstr,$base;
     if (isset($_SESSION["permiso"])){
 
     	if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$base."_CENTRAL_ACTPICKLIST"])){
-			echo " <a href=\"javascript:AgregarPicklist('$picklist','$nombrec','$campo')\"><img src=img/s2.gif alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."' border=0></a>";
+			echo " <a href=\"javascript:AgregarPicklist('$picklist','$nombrec','$campo')\"><img src=../dataentry/img/s2.gif alt='".$msgstr["mod_picklist"]."' title='".$msgstr["mod_picklist"]."' border=0></a>";
 		}
-		echo " <a href=\"javascript:RefrescarPicklist('$picklist','$nombrec','$campo')\"><img src=img/reset.gif alt='".$msgstr["reload_picklist"]."' title='".$msgstr["reload_picklist"]."' border=0></a> &nbsp; ";
+		echo " <a href=\"javascript:RefrescarPicklist('$picklist','$nombrec','$campo')\"><img src=../dataentry/img/reset.gif alt='".$msgstr["reload_picklist"]."' title='".$msgstr["reload_picklist"]."' border=0></a> &nbsp; ";
 	}
 }
 
@@ -292,6 +303,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
   //  echo "<td bgcolor=#eeeeee></td>";
 
  	foreach($filas as $lin){
+ 		global $msgstr;
 
     	if (trim($lin)!=""){
 	    	$l=explode('|',$lin);
@@ -1184,8 +1196,7 @@ Function PrepararFormato() {
 				if (trim($t[17])!=""){
 					echo $hlp_tip[$t[17]];
 				}
-				echo "<div id=\"myvar_$ivars\" style=\"$display;border: 2px solid #cccccc;-moz-border-radius: 15px;
-border-radius: 15px;padding: 10px 10px 5px 10px;\">";
+				echo "<div id=\"myvar_$ivars\" style=\"$display;\" class=\"group-fields\">";
 				$ixant=$ivars;
 			}
 			if ($t[0]=="XL"){

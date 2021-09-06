@@ -43,7 +43,8 @@ include("../lang/prestamo.php");
 
 
 
-function LeerRegistro($Pft,$base){global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
+function LeerRegistro($Pft,$base){
+global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
 	if (isset($arrHttp["Mfn"])){
 		$query = "&base=$base&cipar=$db_path"."par/$base".".par&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Pft=$Pft";
 		$contenido="";
@@ -51,7 +52,8 @@ function LeerRegistro($Pft,$base){global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_pat
 		include("../common/wxis_llamar.php");
 		foreach ($contenido as $value) echo "$value<br>";
 
-	}}
+	}
+}
 
 include("../common/header.php");
 echo "		<div class=\"middle form\">

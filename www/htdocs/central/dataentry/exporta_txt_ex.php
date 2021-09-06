@@ -323,7 +323,7 @@ echo "
 if ($arrHttp["Accion"]!="P"){
     $backtourl=$backtoscript."?base=".$arrHttp["base"];
     echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-	echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 }
 ?>

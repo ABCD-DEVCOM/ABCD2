@@ -25,7 +25,8 @@ include("../common/institutional_info.php");
 <script language="javascript" type="text/javascript">
 
 function EnviarForma(Opcion,Mensaje,base){
-	switch (Opcion){		case "inicializar":
+	switch (Opcion){
+		case "inicializar":
 			if (confirm(Mensaje+": "+base+". "+"<?php echo $msgstr["areysure"]?>"))
 				document.inicializar.action="bases_inicializar.php"
 				document.inicializar.base.value=base
@@ -40,7 +41,8 @@ function EnviarForma(Opcion,Mensaje,base){
 			if (confirm("<?php echo $msgstr["areysure"]?>"))
 				document.inicializar.action="canceladas2eliminar.php"
 				document.inicializar.submit();
-			break;	}
+			break;
+	}
 }
 
 </script>
@@ -57,7 +59,7 @@ echo "
 			</div>
 			<div class=\"actions\">
                 <a href=\"../common/inicio.php?reinicio=s&modulo=loan\" class=\"defaultButton backButton\">
-                <img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+                <img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	           <span><strong>". $msgstr["back"]."</strong></span></a>
             </div>
 	       <div class=\"spacer\">&#160;</div>
@@ -84,10 +86,13 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulacion/menu_mantenimiento.php
 			<!--ul>
 			<li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].":".$msgstr["trans"]?>","trans")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["trans"]?> (trans)</a></li>
 			<?php
-				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){					?><li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].": ".$msgstr["reserve"]?>","reserve")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["reserve"]?> (reserve)</a></li>
+				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
+					?><li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].": ".$msgstr["reserve"]?>","reserve")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["reserve"]?> (reserve)</a></li>
 			<?php } ?>
 			<li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].": ".$msgstr["suspen"]?>","suspml")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["suspen"]?> (suspml)</a></li>
-			<?php if (file_exists($db_path."logtrans/data/logtrans.mst")){				echo "<li><a href='javascript:EnviarForma(\"inicializar\",\"". $msgstr["mnt_ibd"].": ".$msgstr["logtrans"]."\",\"logtrans\")'>".$msgstr["mnt_ibd"].": ".$msgstr["logtrans"]." (logtrans)</a></li>";			}
+			<?php if (file_exists($db_path."logtrans/data/logtrans.mst")){
+				echo "<li><a href='javascript:EnviarForma(\"inicializar\",\"". $msgstr["mnt_ibd"].": ".$msgstr["logtrans"]."\",\"logtrans\")'>".$msgstr["mnt_ibd"].": ".$msgstr["logtrans"]." (logtrans)</a></li>";
+			}
 			?>
 			<!--li><a href='javascript:EnviarForma("inactivas","<?php echo $msgstr["susp_inac"]?>")'><?php echo $msgstr["susp_inac"]?></a></li-->
 

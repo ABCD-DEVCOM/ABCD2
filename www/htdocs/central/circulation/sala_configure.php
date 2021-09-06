@@ -44,28 +44,35 @@ $fp=file_exists($archivo);
 $sala=array();
 if ($fp){
 	$fp=file($archivo);
-	foreach ($fp as $value){		$value=trim($value);
-		if ($value!=""){			$v=explode('=',$value);
-			$sala[$v[0]]=$v[1];		}
+	foreach ($fp as $value){
+		$value=trim($value);
+		if ($value!=""){
+			$v=explode('=',$value);
+			$sala[$v[0]]=$v[1];
+		}
 	}
 }
 
 include("../common/header.php");
 
-function Actualizar(){global $db_path,$arrHttp,$msgstr;
+function Actualizar(){
+global $db_path,$arrHttp,$msgstr;
     $archivo=$db_path."/circulation/def/".$_SESSION["lang"]."/sala.tab";
     $fp=fopen($archivo,"w");
     fwrite($fp,"typeofuser=".trim($arrHttp["typeofuser"])."\n");
     fwrite($fp,"typeofloan=".trim($arrHttp["typeofloan"])."\n");
     fwrite($fp,"usercode=".trim($arrHttp["usercode"])."\n");
     fclose($fp);
-    echo "<h2>sala.tab ".$msgstr["saved"];}
+    echo "<h2>sala.tab ".$msgstr["saved"];
+}
 ?>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Guardar(){
-	if (Trim(document.forma1.typeofuser.value)=="" || Trim(document.forma1.typeofloan.value)=="" || Trim(document.forma1.usercode.value)==""){		alert("<?php echo $msgstr["missing_data"];?>")
-		return	}
+	if (Trim(document.forma1.typeofuser.value)=="" || Trim(document.forma1.typeofloan.value)=="" || Trim(document.forma1.usercode.value)==""){
+		alert("<?php echo $msgstr["missing_data"];?>")
+		return
+	}
 	document.forma1.action="sala_configure.php"
 	document.forma1.target="_self";
     document.forma1.submit()
@@ -82,13 +89,13 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 				if (!isset($arrHttp["actualizar"]))
 					echo "
 				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["update"]."</strong></span>
 				</a>";
 				echo "
@@ -99,12 +106,14 @@ echo "
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Pr%C3%A9stamo_en_sala target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala_configure.php </font>";
+echo " Script: circulation/sala_configure.php";
 echo "</div>
 		<div class=\"middle form\">
 			<div class=\"formContent\"> ";
 echo "<form name=forma1 action=sala_configure.php method=post>\n";
-if (isset($arrHttp["actualizar"]) and $arrHttp["actualizar"]=="Y"){	Actualizar();}else{
+if (isset($arrHttp["actualizar"]) and $arrHttp["actualizar"]=="Y"){
+	Actualizar();
+}else{
 	echo "<input type=hidden name=actualizar value=Y>\n";
 	echo "
 	<table>

@@ -40,8 +40,10 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/selectbox.js></script>
 <style type=text/css>
 
-td{	font-size:12px;
-	font-family:Arial;}
+td{
+	font-size:12px;
+	font-family:Arial;
+}
 
 div#useexformat{
 
@@ -81,8 +83,10 @@ function CopySortKey(){
 }
 
 function CreateSortKey(){
-	msgwin=window.open("","sortkey","resizable,scrollbars, width=600,height=600")	document.sortkey.submit()
-	msgwin.focus()}
+	msgwin=window.open("","sortkey","resizable,scrollbars, width=600,height=600")
+	document.sortkey.submit()
+	msgwin.focus()
+}
 
 function AbrirVentana(Archivo){
 	xDir=""
@@ -90,7 +94,8 @@ function AbrirVentana(Archivo){
 	msgwin.focus()
 }
 
-function EsconderVentana( whichLayer ){var elem, vis;
+function EsconderVentana( whichLayer ){
+var elem, vis;
 
 	if( document.getElementById ) // this is the way the standards work
 		elem = document.getElementById( whichLayer );
@@ -211,7 +216,8 @@ function GuardarBusqueda(){
 </script>
 <body>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
@@ -223,8 +229,9 @@ if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php")
 	<div class="actions">
 <?php
 	$ayuda="pft.html";
-	if (isset($arrHttp["encabezado"])){			echo "<a href=\"reports_menu.php?$encabezado\" class=\"defaultButton backButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	if (isset($arrHttp["encabezado"])){
+			echo "<a href=\"reports_menu.php?$encabezado\" class=\"defaultButton backButton\">
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["back"]."</strong></span></a>
 			";
 	}
@@ -302,10 +309,12 @@ if ($fp){
 			<textarea rows=2 cols=100 name=Expresion><?php if ($Expresion!="") echo $Expresion?></textarea>
 			<a href=javascript:BorrarExpresion() class=boton><?php echo $msgstr["borrar"]?></a>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){	echo "&nbsp; <A HREF=\"javascript:toggleLayer('savesearch')\"> <u><strong>". $msgstr["savesearch"]."</strong></u></a>";
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){
+	echo "&nbsp; <A HREF=\"javascript:toggleLayer('savesearch')\"> <u><strong>". $msgstr["savesearch"]."</strong></u></a>";
 	echo "<div id=savesearch>".$msgstr["r_desc"].": <input type=text name=Descripcion size=40>
      	&nbsp &nbsp <input type=button value=\"". $msgstr["savesearch"]."\" onclick=GuardarBusqueda()>
-		</div>\n";}
+		</div>\n";
+}
 ?>
 		</td>
 	<tr>

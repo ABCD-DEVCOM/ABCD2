@@ -27,7 +27,8 @@ if (isset($arrHttp["unlock"])){
     	include("../common/wxis_llamar.php");
     	$res=implode("",$contenido);
     	$res=trim($res);
-    }}
+    }
+}
 if (!isset($arrHttp["from"])) $arrHttp["from"]=1;
 if (isset($arrHttp["Expresion"])) $arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
@@ -56,10 +57,12 @@ include("../common/header.php");
 xEliminar="";
 Mfn_elminar=0;
 top.toolbarEnabled=""
-	function Editar(Mfn,Status){		document.editar.Mfn.value=Mfn
+	function Editar(Mfn,Status){
+		document.editar.Mfn.value=Mfn
 		document.editar.Status.value=Status
 		document.editar.Opcion.value="editar"
-		document.editar.submit()	}
+		document.editar.submit()
+	}
 
 	function Eliminar(Mfn){
 		if (xEliminar==""){
@@ -84,7 +87,9 @@ echo "<body>";
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 
 ?>
 <div class="sectionInfo">
@@ -100,10 +105,10 @@ if (isset($arrHttp["encabezado"])){
 		}
 		?>
 		<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span>
 		<a href=loan_objects_add.php?cn=<?php echo $arrHttp["Expresion"]?>&base=<?php echo $arrHttp["base"]?> class="defaultButton copiesdbaddButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["addloansdb"]?></strong></span>
 		</a>
 
@@ -122,7 +127,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: copies_edit_browse.php</font>\n";
 		<div class="middle form">
 		<div class="formContent">
 <?php
-	echo "<Script>Indices='N'</script>\n" ;
+	echo "<Script>Indices='N'</script>\n" ;
+
 echo "
 			<table class=\"listTable\">
 				<tr>
@@ -133,10 +139,13 @@ $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/tbtit.tab";
 if (!file_exists($archivo)) $archivo=$db_path."copies/pfts/".$lang_db."/tbtit.tab";
 if (file_exists($archivo)){
 	$fp=file($archivo);
-	foreach ($fp as $value){		$value=trim($value);
-		if (trim($value)!=""){			$t=explode('|',$value);
+	foreach ($fp as $value){
+		$value=trim($value);
+		if (trim($value)!=""){
+			$t=explode('|',$value);
 			foreach ($t as $rot) echo "<th>$rot</th>";
-		}	}
+		}
+	}
 }
 echo "<th class=\"action\">&nbsp;</th></tr>";
 $desde=0;
@@ -152,16 +161,18 @@ foreach ($inventary as $value){
 		$desde=$u[2];
 		$hasta=$u[3];
 		echo "<td>".$u[2]."/",$u[3];
-		if ($Status==1) echo "<img src=\"../images/delete.png\" align=absmiddle alt=\"excluir base de dados\" title=\"excluir base de dados\" />";
+		if ($Status==1) echo "<img src=\"../../assets/images/delete.png\" align=absmiddle alt=\"excluir base de dados\" title=\"excluir base de dados\" />";
 		echo "</td>";
 		for ($ix=4;$ix<count($u);$ix++) echo "<td>" .$u[$ix]."</td>";
 		echo "<td class=\"action\">
 			<a href=javascript:Editar($Mfn,$Status)>
-			<img src=\"../images/edit.png\" alt=\"editar base de dados\" title=\"editar base de dados\" /></a>
-			<a href=../dataentry/show.php?base=copies&cipar=copies.par&Mfn=$Mfn".$encabezado."&Opcion=editar  target=_blank><img src=\"../images/zoom.png\"/></a>";
+			<img src=\"../../assets/images/edit.png\" alt=\"editar base de dados\" title=\"editar base de dados\" /></a>
+			<a href=../dataentry/show.php?base=copies&cipar=copies.par&Mfn=$Mfn".$encabezado."&Opcion=editar  target=_blank><img src=\"../../assets/images/zoom.png\"/></a>";
 		if ($Status==0) echo "
-			<a href=\"javascript:Eliminar($Mfn)\"><img src=\"../images/delete.png\" alt=\"".$msgstr["eliminar"]."\" title=\"".$msgstr["eliminar"]."\" /></a>";
-		else {			switch ($Status){				case -2:
+			<a href=\"javascript:Eliminar($Mfn)\"><img src=\"../../assets/images/delete.png\" alt=\"".$msgstr["eliminar"]."\" title=\"".$msgstr["eliminar"]."\" /></a>";
+		else {
+			switch ($Status){
+				case -2:
 					echo $msgstr["recblock"];
 					break;
 				case 1:
@@ -198,7 +209,9 @@ echo "</form>
     <input type=hidden name=retorno value=../copies/copies_edit_browse.php?base=copies&Expresion=".urlencode($arrHttp["Expresion"]).">
     <input type=hidden name=Opcion value=editar>
 ";
-if (isset($arrHttp["encabezado"])){	echo "<input type=hidden name=encabezado value=s>\n";}
+if (isset($arrHttp["encabezado"])){
+	echo "<input type=hidden name=encabezado value=s>\n";
+}
 if (isset($arrHttp["return"])){
 	echo "<input type=hidden name=return value=".$arrHttp["return"].">\n";
 }

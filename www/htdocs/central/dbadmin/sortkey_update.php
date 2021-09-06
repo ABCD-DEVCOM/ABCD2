@@ -26,7 +26,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 	if ($encabezado!="") echo "<a href=javascript:self.close() class=\"defaultButton backButton\">";
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
 </a>
 			</div>
@@ -53,9 +53,12 @@ $ix=0;
 foreach ($accents as $val){
 	$val=trim($val);
 	$ix=$ix+1;
-	if($val!=""){		$a=explode('|',$val);
+	if($val!=""){
+		$a=explode('|',$val);
 		echo "window.opener.document.forma1.sort.options[$ix]= new Option('".$a[0]."','".$a[1]."')\n";
-		fwrite($fp,$a[0]."|".$a[1]."\n");	}}
+		fwrite($fp,$a[0]."|".$a[1]."\n");
+	}
+}
 fclose($fp);
 echo "</script>\n";
 echo "sort.tab ".$msgstr["updated"]."<p>";

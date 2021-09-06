@@ -20,13 +20,18 @@ include ("configure.php");
 <script language=Javascript src=../dataentry/js/lr_trim.js></script>
 <script>
 function Enviar(){
-	document.forma1.target=""	if (document.forma1.output[0].checked){		msgwin=window.open("","display","width=400,height=400,scrollbars,menubar,toolbar,resizable");
+	document.forma1.target=""
+	if (document.forma1.output[0].checked){
+		msgwin=window.open("","display","width=400,height=400,scrollbars,menubar,toolbar,resizable");
 		document.forma1.target="display"
-		msgwin.focus()	}
-	document.forma1.submit()}
+		msgwin.focus()
+	}
+	document.forma1.submit()
+}
 function PorNumeroClasificacion(){
 	classification_from=Trim(document.forma1.classification_from.value)
-	classification_to=Trim(document.forma1.classification_to.value)    if (Trim(classification_from)=="" || Trim(classification_to)==""){
+	classification_to=Trim(document.forma1.classification_to.value)
+    if (Trim(classification_from)=="" || Trim(classification_to)==""){
     	alert("<?php echo $msgstr["range_classification_invalid"]?>")
     	return
     }
@@ -37,7 +42,8 @@ function PorNumeroClasificacion(){
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="clasificacion"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
 function PorNumeroControl(){
 	control_from=Trim(document.forma1.control_from.value)
@@ -53,9 +59,11 @@ function PorNumeroControl(){
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="control"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
-function PorNumeroInventario(){    inventory_from=Trim(document.forma1.inventory_from.value)
+function PorNumeroInventario(){
+    inventory_from=Trim(document.forma1.inventory_from.value)
 	inventory_to=Trim(document.forma1.inventory_to.value)
     if (Trim(inventory_from)=="" || Trim(inventory_to)==""){
     	alert("<?php echo $msgstr["range_inventory_invalid"]?>")
@@ -68,9 +76,11 @@ function PorNumeroInventario(){    inventory_from=Trim(document.forma1.inventor
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="inventario"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
-function PorFechaIngreso(){    date_from=Trim(document.forma1.date_from.value)
+function PorFechaIngreso(){
+    date_from=Trim(document.forma1.date_from.value)
 	date_to=Trim(document.forma1.date_to.value)
     if (Trim(date_from)=="" || Trim(date_to)==""){
     	alert("<?php echo $msgstr["range_date_invalid"]?>")
@@ -83,13 +93,20 @@ function PorFechaIngreso(){    date_from=Trim(document.forma1.date_from.value)
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="date"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
-function PorRangoMfn(){	mfn_from=Trim(document.forma1.mfn_from.value)
-	mfn_to=Trim(document.forma1.mfn_to.value)    if (Trim(mfn_from)=="" || Trim(mfn_to)=="" || mfn_from==0 || mfn_to==0 ){    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
-    	return    }
-    if (mfn_to<mfn_from){    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
-    	return    }
+function PorRangoMfn(){
+	mfn_from=Trim(document.forma1.mfn_from.value)
+	mfn_to=Trim(document.forma1.mfn_to.value)
+    if (Trim(mfn_from)=="" || Trim(mfn_to)=="" || mfn_from==0 || mfn_to==0 ){
+    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
+    	return
+    }
+    if (mfn_to<mfn_from){
+    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
+    	return
+    }
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="mfn"
     document.forma1.copies.value="<?php echo $copies?>"
@@ -125,7 +142,7 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php echo "<a href=\"../dbadmin/pft.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -137,12 +154,12 @@ if (isset($arrHttp["encabezado"])){
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDB"])){
 		$retorno="../dbadmin/pft.php";
 		echo "<a href=\"$retorno"."?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
 		";
 	}else{
 		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
 		";
 	}
@@ -164,11 +181,13 @@ echo "<font color=white>&nbsp; &nbsp; Script: reports/barcode.php";
 <div class="middle form">
 	<div class="formContent">
 <?php
-if ($msg_err!=""){	echo $msg_err;
+if ($msg_err!=""){
+	echo $msg_err;
 	echo "&nbsp; &nbsp; <a href=barcode_conf.php?base=".$arrHttp["base"].">".$msgstr["configure"]."</a>";
 	echo "</div></div>";
 	include("../common/footer.php");
-	die;}else{
+	die;
+}else{
 	echo "&nbsp; &nbsp; <a href=barcode_conf.php?base=".$arrHttp["base"].">".$msgstr["configure"]."</a>";
 }
 echo "<form name=forma1 action=barcode_ex.php method=post onSubmit='javascript:return false'>";

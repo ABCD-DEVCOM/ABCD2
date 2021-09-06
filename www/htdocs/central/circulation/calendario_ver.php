@@ -34,7 +34,8 @@ function calcula_numero_dia_semana($dia,$mes,$ano){
 	return $numerodiasemana;
 }
 //Funcion que verifica si el dia es feriado//
-function dia_feri($dia,$mes){global $db_path,$lang_db;
+function dia_feri($dia,$mes){
+global $db_path,$lang_db;
 	$file =$db_path."circulation/def/".$_SESSION["lang"]."/feriados.tab";
 	if (!file_exists($file) ) $file =$db_path."circulation/def/".$lang_db."/feriados.tab";
 	$arreglo=file($file);

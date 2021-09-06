@@ -68,10 +68,12 @@ $usname="";
 $uspft="";
 if ($fp){
 	$fp=file($archivo);
-	foreach ($fp as $value){		$ix++;
+	foreach ($fp as $value){
+		$ix++;
 		$value=trim($value);
 		switch ($ix){
-			case 1:				$uskey=$value;
+			case 1:
+				$uskey=$value;
 		       	break;
 		 	case 2:
 		 		$usname=$value;
@@ -126,11 +128,11 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["update"]."</strong></span>
 				</a>
 			</div>
@@ -139,7 +141,7 @@ echo "
 		<div class=\"helper\">
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: borrowers_configure.php </font>";
+echo " Script: borrowers_configure.php";
 echo "</div>
 		<div class=\"middle form\">
 			<div class=\"formContent\"> ";

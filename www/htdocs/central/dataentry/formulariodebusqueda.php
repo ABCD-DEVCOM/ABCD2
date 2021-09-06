@@ -345,11 +345,11 @@ function Diccionario(jx){
 	?>
 	<div class="sectionButtons">
         <a href="javascript:PrepararExpresion()" class="defaultButton multiLine listButton">
-            <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
             <span style="color:black"><strong><?php echo $msgstr["m_buscar"]?></strong></span>
         </a>
         <a href="javascript:LimpiarBusqueda(this,1)" class="defaultButton multiLine cancelButton">
-            <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
             <span style="color:black"><strong><?php echo $msgstr["borrar"]?></strong></span>
         </a>
 
@@ -358,7 +358,7 @@ function Diccionario(jx){
 	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserve"){
 	?>
          <a href="javascript:document.basedatos.submit()" class="defaultButton multiLine backButton">
-            <img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
             <span style="color:black"><stro<?php echo $msgstr["back"]?></strong></span>
             </a>
 	<?php

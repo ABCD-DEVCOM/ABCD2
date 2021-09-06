@@ -40,4 +40,5 @@ switch ($arrHttp["Opcion"]){
     echo "</html>";
 
 	die;
-?>
+
+?>

@@ -27,8 +27,10 @@
 */
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
-if (isset($arrHttp["error"])){	$msg_error_0=$arrHttp["error"];
-	unset($arrHttp["error"]);}
+if (isset($arrHttp["error"])){
+	$msg_error_0=$arrHttp["error"];
+	unset($arrHttp["error"]);
+}
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -40,8 +42,10 @@ $debug="";
 
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 
-if (isset($arrHttp["db_inven"])){	$dbinv=explode('|',$arrHttp["db_inven"]);
-	$_SESSION["loans_dbinven"]=$dbinv[0];}
+if (isset($arrHttp["db_inven"])){
+	$dbinv=explode('|',$arrHttp["db_inven"]);
+	$_SESSION["loans_dbinven"]=$dbinv[0];
+}
 include("../config.php");
 //include("../config_loans.php");              // BORRADO EL 07/03/2013
 
@@ -67,7 +71,9 @@ $t=explode("\n",$us_tab);
 $uskey=$t[0];
 
 include("../reserve/reserves_read.php");
-if (isset($arrHttp["reserve"])){	include("../reserve/seleccionar_bd.php");}
+if (isset($arrHttp["reserve"])){
+	include("../reserve/seleccionar_bd.php");
+}
 
 $valortag = Array();
 
@@ -85,13 +91,20 @@ if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst")){
 			$Formato=$db_path."trans/pfts/".$lang_db."/receipts.lst";
 		}
 	}
-if ($Formato!=""){	$fp=file($Formato);
-	foreach ($fp as $value){		if (trim($value)!=""){			$value=trim($value);
-			$recibo_list[$value]=$value;		}	}}
+if ($Formato!=""){
+	$fp=file($Formato);
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$value=trim($value);
+			$recibo_list[$value]=$value;
+		}
+	}
+}
 
 function PrestamoMismoObjeto($control_number,$user,$base_origen){
 global $copies_title,$msgstr,$obj;
-	$msg="";	$tr_prestamos=LocalizarTransacciones($control_number,"ON",$base_origen);
+	$msg="";
+	$tr_prestamos=LocalizarTransacciones($control_number,"ON",$base_origen);
 	$items_prestados=count($tr_prestamos);
 	if ($items_prestados>0){
 		foreach($tr_prestamos as $value){
@@ -101,7 +114,8 @@ global $copies_title,$msgstr,$obj;
 		   		$pv=$nc_us[14];                                  //GET THE VOLUME OF THE LOANED OBJECT
 		   		$pt=$nc_us[15];                                  //GET THE TOME OF THE LOANED OBJECT
 				$comp=$pi." ".$pv." ".$pt;
-				foreach ($copies_title as $cop){					$c=explode('||',$cop);
+				foreach ($copies_title as $cop){
+					$c=explode('||',$cop);
 					$comp_01=$c[2];
 					if (isset($c[6]))
 						$comp_01.=" ".$c[6];
@@ -121,9 +135,11 @@ global $copies_title,$msgstr,$obj;
 	    }
 
 	}
-	return array($msg,$items_prestados);}
+	return array($msg,$items_prestados);
+}
 
-function Disponibilidad($control_number,$catalog_db,$items_prestados,$prefix_cn,$copies,$pft_ni){global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
+function Disponibilidad($control_number,$catalog_db,$items_prestados,$prefix_cn,$copies,$pft_ni){
+global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 	//DETERMINAMOS EL TOTAL DE EJEMPLARES QUE TIENE EL TITULO
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 	if ($copies=="Y"){
@@ -149,7 +165,8 @@ function Disponibilidad($control_number,$catalog_db,$items_prestados,$prefix_cn,
 			$obj[]=$value;
 	}
 	$disponibilidad=count($obj)-$items_prestados;
-	return $disponibilidad;}
+	return $disponibilidad;
+}
 
 function LocalizarReservas($control_number,$catalog_db,$usuario,$items_prestados,$prefix_cn,$copies,$pft_ni) {
 global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
@@ -175,7 +192,8 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 	$reservas=array();
 	$reservas_3=array();
 	$reservas_0=array();
-	foreach ($contenido as $value){		$value=trim($value);
+	foreach ($contenido as $value){
+		$value=trim($value);
 		if ($value!=""){
 			$r=explode('|',$value);
 			$Mfn=$r[0];
@@ -192,8 +210,10 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 				if ($fecha_limite<date("Ymd")) continue;
 			}
 
-			if ($status==3){				$reservas_3[$fecha_asignacion." ".$Mfn]=$value;
-			}else{				$reservas_0[$fecha_reserva." ".$hora_reserva." ".$Mfn]=$value;
+			if ($status==3){
+				$reservas_3[$fecha_asignacion." ".$Mfn]=$value;
+			}else{
+				$reservas_0[$fecha_reserva." ".$hora_reserva." ".$Mfn]=$value;
 			}
 			//$reservas[$fecha_reserva." ".$hora_reserva." ".$Mfn]=$value;  //Total de rservas
 		}
@@ -215,25 +235,40 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
  	if (count($reservas_3)>0){
  		foreach ($reservas_3 as $value){
  			if (trim($value)!=""){
- 				$ixcola_3=$ixcola_3+1; 				$v=explode('|',$value);
+ 				$ixcola_3=$ixcola_3+1;
+ 				$v=explode('|',$value);
  				if ($usuario==$v[1]) {
  					$mfn_3=$v[0];
- 					$usuario_3=$v[1]; 					$encontrado_3="S";
- 					break; 				} 			} 		} 	}
+ 					$usuario_3=$v[1];
+ 					$encontrado_3="S";
+ 					break;
+ 				}
+ 			}
+ 		}
+ 	}
 //SI SE ENCONTRÓ EN LA COLA DE RESERVAS EN ESPERA
 	if ($encontrado_3=="S"){
 // SI ES EL PRIMERO DE LA COLA O NO ES EL PRIMERO PERO HAY SUFICIENTE EJEMPLARES PARA ATENDER LA COLA DE RESERVA
 // SE LE CONCEDE EL PRESTAMO
-		if ($ixcola_3==1 or ($disponibilidad-$ixcola_3)>=0){			return array("continuar",$mfn_3,$usuario_3,$tr);		}else{			return array("no_continuar",0,0,$disponibilidad);		}
+		if ($ixcola_3==1 or ($disponibilidad-$ixcola_3)>=0){
+			return array("continuar",$mfn_3,$usuario_3,$tr);
+		}else{
+			return array("no_continuar",0,0,$disponibilidad);
+		}
 	}
 
 // VEMOS SI EL USUARIO ESTÁ EN LA COLA DE RESERVAS PENDIENTES
-	foreach ($reservas_0 as $value){		if (trim($value)!=""){			$ixcola_0=$ixcola_0+1;
+	foreach ($reservas_0 as $value){
+		if (trim($value)!=""){
+			$ixcola_0=$ixcola_0+1;
 			$v=explode('|',$value);
-			if ($usuario==$v[1]){				$encontrado_0="S";
+			if ($usuario==$v[1]){
+				$encontrado_0="S";
 				$mfn_0=$v[0];
  				$usuario_0=$v[1];
-			}		}	}
+			}
+		}
+	}
 
 //SI ESTA EN LA COLA DE RESERVAS PENDIENTES Y HAY SUFICIENTES EJEMPLARES DISPONIBLES
 // PARA SU LUGAR COLA DE RESERVAS SE LE DA EL PRESTAMO
@@ -246,14 +281,20 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 
 //SI NO ESTA EN LA COLA DE RESERVAS PENDIENTES Y HAY SUFICIENTES EJEMPLARES DISPONIBLES
 // PARA ATENDERLA COLA DE RESERVAS SE LE DA EL PRESTAMO
-	if ($encontrado_0=="N"){		$cola=$ixcola_0+$ixcola_3;		if ($disponibilidad-$cola>0){			return array("continuar",0,0,$tr);		}	}
+	if ($encontrado_0=="N"){
+		$cola=$ixcola_0+$ixcola_3;
+		if ($disponibilidad-$cola>0){
+			return array("continuar",0,0,$tr);
+		}
+	}
 
 
 }
 
 function ActualizarReserva($diap,$horap){
 global $db_path,$lang_db;
-	$ValorCapturado ="d1d200d201d202<1 0>4</1>";	$ValorCapturado.="<200 0>$diap</200><201 0>$horap</201><202 0>".$_SESSION["login"]."</202>";
+	$ValorCapturado ="d1d200d201d202<1 0>4</1>";
+	$ValorCapturado.="<200 0>$diap</200><201 0>$horap</201><202 0>".$_SESSION["login"]."</202>";
 	$ValorCapturado=urlencode($ValorCapturado);
 	if (file_exists($db_path."reserve/pfts/".$_SESSION["lang"]."/reserve.pft")){
 		$Formato=$db_path."reserve/pfts/".$_SESSION["lang"]."/reserve";
@@ -294,13 +335,20 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	}
 	$objeto=explode('$$',$obj);
 	$obj=explode('|',$ppres);
-	$fp=date("Ymd h:i A");	// DEVOLUTION DATE
+	$fp=date("Ymd h:i A");
+	// DEVOLUTION DATE
 
-	if ($tr<=0){		if (trim($obj[4])=="") $obj[4]=2 ;
+	if ($tr<=0){
+		if (trim($obj[4])=="") $obj[4]=2 ;
 		$fd=FechaDevolucion($obj[4],$obj[5],"");    //lapso reserva
-	}else{		if (isset($arrHttp["date"])){			$fd=$arrHttp["date"].date(" h:i A");;		}else{			if (isset($arrHttp["lpn"])){
+	}else{
+		if (isset($arrHttp["date"])){
+			$fd=$arrHttp["date"].date(" h:i A");;
+		}else{
+			if (isset($arrHttp["lpn"])){
 				$fd=FechaDevolucion($arrHttp["lpn"],$obj[5],"");
-			}else{				if ($obj[5]=="F")  // la fecha de devolución fijada en la política
+			}else{
+				if ($obj[5]=="F")  // la fecha de devolución fijada en la política
 					$fd=$obj[16]." 24:00";
 				else
 					$fd=FechaDevolucion($obj[3],$obj[5],"");    //lapso normal
@@ -316,7 +364,8 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	$horad=trim(substr($fd,$ix));
     if (isset($obj[16]) and $obj[16]!=""){
     	if ($diad>$obj[16])
-    		$diad=$obj[16];    }
+    		$diad=$obj[16];
+    }
 	$ValorCapturado="<1 0>P</1>";
 	$ValorCapturado.="<10 0>".trim($inventario)."</10>";	// INVENTORY NUMBER
 	if (isset($item_data[6])) $ValorCapturado.="<12 0>".$item_data[6]."</12>";         	// VOLUME
@@ -334,8 +383,10 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	else
 		$horad="";
 	$ValorCapturado.="<70 0>".$usrtype."</70>";
-	if (isset($arrHttp["using_pol"])){		$pp=explode('|',$arrHttp["using_pol"]);
-		$item_data[5]=$pp[0];	}
+	if (isset($arrHttp["using_pol"])){
+		$pp=explode('|',$arrHttp["using_pol"]);
+		$item_data[5]=$pp[0];
+	}
 	$ValorCapturado.="<80 0>".$item_data[5]."</80>";
 	$ValorCapturado.="<95 0>".$item_data[0]."</95>";                   // Control number of the object
 	$ValorCapturado.="<98 0>".$item_data[1]."</98>";             			// Database name
@@ -363,8 +414,10 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 			}
 		}
 	}
-	if ($Formato!="") {		$Formato="&Formato=$Formato";
-		$Pft="mfn/";	}
+	if ($Formato!="") {
+		$Formato="&Formato=$Formato";
+		$Pft="mfn/";
+	}
 	$query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."$Formato&ValorCapturado=".$ValorCapturado;
 
 	//Se graba el log de prestamos
@@ -399,11 +452,16 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	//foreach ($contenido as $value)  echo "$value<br>"; die;
 
     $recibo="";
-	if ($Formato!="") {		foreach ($contenido as $r){
-			$recibo.=trim($r);		}		$recibo_arr[]=$recibo;
-		//ImprimirRecibo($recibo);	}
+	if ($Formato!="") {
+		foreach ($contenido as $r){
+			$recibo.=trim($r);
+		}
+		$recibo_arr[]=$recibo;
+		//ImprimirRecibo($recibo);
+	}
 	$fechas=array($diad,$horad);
-	return $fechas;}
+	return $fechas;
+}
 
 
 // Se localiza el número de control en la base de datos bibliográfica
@@ -411,8 +469,10 @@ function ReadCatalographicRecord($control_number,$db,$inventory){
 global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$titulo,$prefix_in,$prefix_cn,$multa,$pft_storobj,$lang_db;
 	//Read the FDT of the database for extracting the prefix used for indexing the control number
     $pft_typeofr=str_replace('~',',',$pft_typeofr);
-	if (isset($arrHttp["db_inven"])){		$dbi=explode("|",$arrHttp["db_inven"]);
-	}else{		$dbi[0]="loanobjects";
+	if (isset($arrHttp["db_inven"])){
+		$dbi=explode("|",$arrHttp["db_inven"]);
+	}else{
+		$dbi[0]="loanobjects";
 	}
 
 	if (isset($arrHttp["db_inven"]) and $dbi[0]!="loanobjects"){
@@ -421,7 +481,8 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 	}else{
 	    $Expresion="CN_".trim($control_number);
 	}
-	if ($control_number=="")		$Expresion=$prefix_in.$inventory;
+	if ($control_number=="")
+		$Expresion=$prefix_in.$inventory;
 //    echo $Expresion;
 	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
 	// se toman de databases_configure_read.php
@@ -470,10 +531,13 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 
 	$Expresion=urlencode($Expresion);
-	if (isset($arrHttp["db_inven"])){		$dbi=explode('|',$arrHttp["db_inven"]);
-		$dbi_base=$dbi[0];	}
+	if (isset($arrHttp["db_inven"])){
+		$dbi=explode('|',$arrHttp["db_inven"]);
+		$dbi_base=$dbi[0];
+	}
 	if (isset($arrHttp["db_inven"]) and $dbi_base!="loanobjects"){
-	//IF NO LOANOBJECTS READ THE PFT FOR EXTRACTING THEN INVENTORY NUMBER AND THE TYPE OF RECORD		$d=explode('|',$arrHttp["db_inven"]);
+	//IF NO LOANOBJECTS READ THE PFT FOR EXTRACTING THEN INVENTORY NUMBER AND THE TYPE OF RECORD
+		$d=explode('|',$arrHttp["db_inven"]);
 		$arrHttp["base"]=strtolower($d[0]);
 		$arrHttp["db_inven"]=strtolower($d[0]);
 		$pft_typeofrec=LeerPft("loans_typeofobject.pft",$d[0]);
@@ -520,9 +584,11 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 			$formato_ex="$pft_nc,('||".$d[0]."||',$pft_ni,'||||||',".$pft_typeofrec.",'||||||'$pft_item_inf_add/)";
 		}
 		if (isset($_SESSION["library"])) $formato_ex=str_replace('#v5000#',"'".$_SESSION["library"]."'",$formato_ex);
-	}else{		$arrHttp["base"]="loanobjects";
+	}else{
+		$arrHttp["base"]="loanobjects";
 		$formato_ex="(v1[1]'||'v10[1],'||',v959^i,'||',v959^l,'||',v959^b,'||',v959^o,'||',v959^v,'||',v959^t,'||'/)";
-    // control number||database||inventory||main||branch||type||volume||tome	}
+    // control number||database||inventory||main||branch||type||volume||tome
+	}
 	$formato_obj=urlencode($formato_ex);
 	$query = "&Opcion=disponibilidad&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".$Expresion."&Pft=$formato_obj";
 	include("../common/wxis_llamar.php");
@@ -533,7 +599,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
     $tto="";
 	foreach ($contenido as $linea){
 		$linea=trim($linea);
-		if ($linea!=""){			if (substr($linea,0,8)=='$$TOTAL:'){
+		if ($linea!=""){
+			if (substr($linea,0,8)=='$$TOTAL:'){
 				$total=trim(substr($linea,8));
 			}else{
 				$t=explode('||',$linea);
@@ -542,7 +609,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 				if ($t[0]=="" ) $t[0]=$cno;
 				if ($t[5]=="")  $t[5]=$tto;
 				$linea="";
-				foreach ($t as $value){					$linea.=trim($value)."||";				}
+				foreach ($t as $value){
+					$linea.=trim($value)."||";
+				}
 				if (strtoupper($inventory)==strtoupper(trim($t[2]))) $item=$linea;
 				$copies_title[]=$linea;
 			}
@@ -576,7 +645,10 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 			if (isset($l[13])){
 				if ($base_origen==$l[13])
 					$tr_prestamos[]=$linea;
-			}else{				$tr_prestamos[]=$linea;			}        }
+			}else{
+				$tr_prestamos[]=$linea;
+			}
+        }
 	}
 	return $tr_prestamos;
 }
@@ -589,10 +661,12 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 
 // ARE THE COPIES IN THE COPIES DATABASE OR IN THE BIBLIOGRAPHIC DATABASE?
 
-if (isset($arrHttp["db_inven"])){	if (isset($arrHttp["copies"]))
+if (isset($arrHttp["db_inven"])){
+	if (isset($arrHttp["copies"]))
 		$from_copies=$arrHttp["copies"];
 	else
-		$from_copies="N";	$dbi=explode('|',$arrHttp["db_inven"]);
+		$from_copies="N";
+	$dbi=explode('|',$arrHttp["db_inven"]);
 	if ($dbi[0]!="loanobjects"){
 
 		$x=explode('|',$arrHttp["db_inven"]);
@@ -601,8 +675,10 @@ if (isset($arrHttp["db_inven"])){	if (isset($arrHttp["copies"]))
 	}else{
 		$prefix_in="IN_";
 	}
-}else{	$prefix_in="IN_";
-	$from_copies="Y";}
+}else{
+	$prefix_in="IN_";
+	$from_copies="Y";
+}
 if (isset($arrHttp["Opcion"])){
 	if ( $arrHttp["Opcion"]=="reservar")
 		$msg_1=$msgstr["reserve"];
@@ -622,10 +698,15 @@ $cont="";
 $np=0;
 $nv=0;
 include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los préstamos pendientes
-if ($nsusp!=0 or $nmulta!=0) {	$cont="N";
-	unset($arrHttp["inventory"]);}
-if (count($prestamos)>0) {	$ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a> | <a href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a>";
-	if (isset($ASK_LPN) AND $ASK_LPN=="Y"){		$ec_output.=" ".$msgstr["days"]."<input type=text name=lpn size=4>";	}
+if ($nsusp!=0 or $nmulta!=0) {
+	$cont="N";
+	unset($arrHttp["inventory"]);
+}
+if (count($prestamos)>0) {
+	$ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a> | <a href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a>";
+	if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
+		$ec_output.=" ".$msgstr["days"]."<input type=text name=lpn size=4>";
+	}
 	$ec_output.= "</strong><p>";
 }
 
@@ -645,9 +726,12 @@ if (isset($arrHttp["usuario"])){
 		$linea=trim($linea);
 		if ($linea!="")  $user.=$linea;
 	}
-}else{	$user="";}
+}else{
+	$user="";
+}
 
-if (trim($user)==""){	ProduceOutput("<h4>".$msgstr["userne"]."</h4>","");
+if (trim($user)==""){
+	ProduceOutput("<h4>".$msgstr["userne"]."</h4>","");
 	die;
 }else{
 
@@ -661,29 +745,43 @@ if (trim($user)==""){	ProduceOutput("<h4>".$msgstr["userne"]."</h4>","");
      }
 
     $arrHttp["ecta"]="S";
-    if (isset($arrHttp["ecta"])){    	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){      //para ver si tiene activado el módulo de reservas. Se lee desde el abcd.def
+    if (isset($arrHttp["ecta"])){
+    	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){      //para ver si tiene activado el módulo de reservas. Se lee desde el abcd.def
 			$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
 			$reserves_user=$reserves_arr[0];
-		}else{			$reserves_user="";		}
+		}else{
+			$reserves_user="";
+		}
 	}else
 		$reserves_user="";
-	if ($nsusp>0 or $nmulta>0) {		 $msgsusp= "pending_sanctions";
-		 $vig="N";	}else{	//Se analiza la vigencia del usuario
+	if ($nsusp>0 or $nmulta>0) {
+		 $msgsusp= "pending_sanctions";
+		 $vig="N";
+	}else{
+	//Se analiza la vigencia del usuario
 		$userdata=explode('$$',$user);
-	    if (trim($userdata[2])!=""){	    	if ($userdata[2]<date("Ymd")){	    		$msgsusp= "limituserdata";
-				$vig="N";	    	}    	}
-    }}
+	    if (trim($userdata[2])!=""){
+	    	if ($userdata[2]<date("Ymd")){
+	    		$msgsusp= "limituserdata";
+				$vig="N";
+	    	}
+    	}
+    }
+}
 $ec_output.= "\n
 <script>
   Vigencia='$vig'
   np=$np
   nv=$nv
 </script>\n";
-if ($msgsusp!=""){	$ec_output.="<font color=red><h3>**".$msgstr[$msgsusp]."</h3></font>";
+if ($msgsusp!=""){
+	$ec_output.="<font color=red><h3>**".$msgstr[$msgsusp]."</h3></font>";
 	if ($reserves_user!="")
-		$ec_output.="<p><strong>".$msgstr["reserves"]."</strong><br>".$reserves_user."<p>";
+		$ec_output.="<p><strong>".$msgstr["reserves"]."</strong><br>".$reserves_user."<p>";
+
 	ProduceOutput($ec_output,"");
-	die;}
+	die;
+}
 //OJO AGREGARLE AL TIPO DE USUARIO SI SE LE PUEDEN PRESTAR CUANDO ESTÁ VENCIDO
 //if ($nv>0 and isset($arrHttp["inventory"])){
 //	$ec_output.= "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
@@ -744,15 +842,21 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
     		$tipo_obj=trim(strtoupper($tipo_obj));
     		$tipo_us=$userdata[1];
     		$userdata[1]=trim(strtoupper($userdata[1]));
-            if (isset($arrHttp["using_pol"])){            	$ppres=$arrHttp["using_pol"];
+            if (isset($arrHttp["using_pol"])){
+            	$ppres=$arrHttp["using_pol"];
             	$o=explode("|",$ppres);
             	$using_pol=$o[0]." - ".$o[1];
-            	$tipo_obj=$o[0];            }
-			if (isset($politica[$tipo_obj][$userdata[1]])){	    		$ppres=$politica[$tipo_obj][$userdata[1]];
+            	$tipo_obj=$o[0];
+            }
+			if (isset($politica[$tipo_obj][$userdata[1]])){
+	    		$ppres=$politica[$tipo_obj][$userdata[1]];
 	    		$using_pol=$tipo_obj." - " .$userdata[1];
 			}
-			if (trim($ppres)==""){				if (isset($politica[0][$userdata[1]])) {					$ppres=$politica[0][$userdata[1]];
-					$using_pol="0 - " .$userdata[1];				}
+			if (trim($ppres)==""){
+				if (isset($politica[0][$userdata[1]])) {
+					$ppres=$politica[0][$userdata[1]];
+					$using_pol="0 - " .$userdata[1];
+				}
 			}
 			if (trim($ppres)==""){
 				if (isset($politica[$tipo_obj][0])){
@@ -782,14 +886,17 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 				$fechal_usuario=$obj[15];
 				$fecha_d=date("Ymd");
 				if (trim($fechal_usuario)!=""){
-					if ($fecha_d>$fechal_usuario){						$este_prestamo.= "fecha límite del usuario ";
+					if ($fecha_d>$fechal_usuario){
+						$este_prestamo.= "fecha límite del usuario ";
 						$norenovar="S";
 						$cont="N";
-						//die;					}
+						//die;
+					}
 				}
 			}
 /*
-			if (isset($obj[15])){				$fechal_objeto=$obj[16];
+			if (isset($obj[15])){
+				$fechal_objeto=$obj[16];
 				if (trim($fechal_objeto)!="" and $obj[5]!="F"){
 					if ($fecha_d>$fechal_objeto){
 						$este_prestamo.= "fecha límite del objeto ";
@@ -872,7 +979,8 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        			$este_prestamo.="<td bgcolor=white valign=top>".$msg."</td>";
 	        		if ($cont=="Y"){
 	        			$msg="";
-	        			$ec_output.="<td bgcolor=white valign=top>";	        			if ($grabar=="Y"){
+	        			$ec_output.="<td bgcolor=white valign=top>";
+	        			if ($grabar=="Y"){
 	        				$tr=0;
 	        				//SE LOCALIZA SI EL TITULO ESTÁ RESERVADO
 	        				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){         //para ver si tiene activado el módulo de reservas se lee desde el abcd.def
@@ -884,10 +992,12 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        						$codusuario_reserva=$reservado[2];
 	        					else
 	        						$codusuario_reserva="";
-	        				}else{	        					$reservado=array("continuar",0);
+	        				}else{
+	        					$reservado=array("continuar",0);
 	        					$mfn_reserva=0;
 	        					$codusuario_reserva="";
-	        					$tr=1;	        				}
+	        					$tr=1;
+	        				}
 	        				if (!isset($total_politica[$tipo_obj])) $total_politica[$tipo_obj]=0;
 	        				if ($reservado[0]=="continuar"){
 	        					//echo  "<p>np:".$np. " total_prestamos_usuario: $tprestamos_p total_prestamos_politica: ". $total_prestamos_politica ."  total_politica[$tipo_obj]: ". $total_politica[$tipo_obj]."<br>";
@@ -902,7 +1012,8 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	  								$grabar="N";
 	  								$msg="<font color=red>".$msgstr["nomoreloans"]."</font>";
 	  							}
-	  						}else{	  							if ($allow_reservation=="Y"){
+	  						}else{
+	  							if ($allow_reservation=="Y"){
 	  								$grabar="N";
 	  								$msg="<font color=red><a href='javascript:ShowReservations(\"CN_".$catalog_db."_"."$control_number\",\"$catalog_db\")'>".$msgstr["reserved_other_user"]."</a></font>";
 	  								//echo $msg;
@@ -914,26 +1025,47 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 						$ec_output.=$este_prestamo;
 						$Opcion="prestar";
 						$msg_1=$msgstr["loan"];
-						if ($grabar=="Y"){							if (isset($userdata[3])) {								$us_more=$userdata[3];							}else{								$us_more="";							}							$devolucion=ProcesarPrestamo($arrHttp["usuario"],$arrHttp["inventory"],$signatura,$item,$tipo_us,$from_copies,$ppres,$prefix_in,$prefix_cn,$mfn_reserva,$codusuario_reserva,$tr,$us_more);
+						if ($grabar=="Y"){
+							if (isset($userdata[3])) {
+								$us_more=$userdata[3];
+							}else{
+								$us_more="";
+							}
+							$devolucion=ProcesarPrestamo($arrHttp["usuario"],$arrHttp["inventory"],$signatura,$item,$tipo_us,$from_copies,$ppres,$prefix_in,$prefix_cn,$mfn_reserva,$codusuario_reserva,$tr,$us_more);
 
 							if ($mfn_reserva!=0){
                                 if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
-									$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
+
+									$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
 									$reserves_user=$reserves_arr[0];
-								}else{									$reserves_user="";								}							}
-						}else{							$devolucion=array();
+								}else{
+									$reserves_user="";
+								}
+							}
+						}else{
+							$devolucion=array();
 						}
 						$ec_output.="<td bgcolor=white valign=top >$msg";
 
 						if (count($devolucion)>0) {
-							if (substr($config_date_format,0,2)=="DD"){								$ec_output.=substr($devolucion[0],6,2)."/".substr($devolucion[0],4,2)."/".substr($devolucion[0],0,4);							}else{								$ec_output.=substr($devolucion[0],4,2)."/".substr($devolucion[0],6,2)."/".substr($devolucion[0],0,4);							}
+							if (substr($config_date_format,0,2)=="DD"){
+								$ec_output.=substr($devolucion[0],6,2)."/".substr($devolucion[0],4,2)."/".substr($devolucion[0],0,4);
+							}else{
+								$ec_output.=substr($devolucion[0],4,2)."/".substr($devolucion[0],6,2)."/".substr($devolucion[0],0,4);
+							}
 							$ec_output.=" ".$devolucion[1];
 							if ($codusuario_reserva!="" and $codusuario_reserva==$arrHttp["usuario"]) $ec_output.=" <font color=red><br>".$msgstr["rs04"]." <!--a href=\"javascript:EnviarCorreo('".$arrHttp["usuario"]."','"."'".$arrHttp["inventory"]."')\"><img src=../dataentry/img/toolbarMail.png></a--> </font>";
 						}
 						$ec_output.="</td><td bgcolor=white valign=top ></td> ";
-	           		}else{	           			$ec_output.="<td bgcolor=white></td>".$este_prestamo;	           		}
-				} else{					$ec_output.="<td bgcolor=white></td>".$este_prestamo;				}
-			}else{				$ec_output.="<td bgcolor=white></td>".$este_prestamo;			}
+	           		}else{
+	           			$ec_output.="<td bgcolor=white></td>".$este_prestamo;
+	           		}
+				} else{
+					$ec_output.="<td bgcolor=white></td>".$este_prestamo;
+				}
+			}else{
+				$ec_output.="<td bgcolor=white></td>".$este_prestamo;
+			}
 		}
 	}
 	$ec_output.="</table>";
@@ -946,12 +1078,18 @@ if ($reserves_user!="")
 	$ec_output.="<p><!--strong>".$msgstr["reserves"]." <font color=red>(user)</font></strong><br -->".$reserves_user."<p>";
 ProduceOutput($ec_output,"");
 
-function ProduceOutput($ec_output,$reservas){global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php;global $prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_name,$logo,$ILL,$meta_encoding;
-	include("../common/header.php");    echo "<body>";
+function ProduceOutput($ec_output,$reservas){
+global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php;
+global $prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_name,$logo,$ILL,$meta_encoding;
+	include("../common/header.php");
+    echo "<body>";
  	include("../common/institutional_info.php");
  	include("../circulation/scripts_circulation.php");
-// 	if ($recibo!=""){// 		$recibo="&recibo=$recibo";
-// 		$link_u.=$recibo;// 	}
+// 	if ($recibo!=""){
+
+// 		$recibo="&recibo=$recibo";
+// 		$link_u.=$recibo;
+// 	}
 ?>
 
 <body>
@@ -1003,20 +1141,28 @@ function ProduceOutput($ec_output,$reservas){global $msgstr,$msg_error_0,$arrHt
 	<br>
 	";
 	echo $ec_output;
-	if ($reservas !=""){		echo "<P><font color=red><strong>".$msgstr["total_copies"].": ".count($copies_title).". ".$msgstr["item_reserved"]."</strong></font><br>";
-		echo $reservas ;	}
+	if ($reservas !=""){
+		echo "<P><font color=red><strong>".$msgstr["total_copies"].": ".count($copies_title).". ".$msgstr["item_reserved"]."</strong></font><br>";
+		echo $reservas ;
+	}
 
 	if (isset($arrHttp["prestado"]) and $arrHttp["prestado"]=="S"){
 		if (isset($arrHttp["resultado"])){
 			$inven=explode(';',$arrHttp["resultado"]);
-			foreach ($inven as $inventario){				echo "<p><font color=red>". $inventario." ".$msgstr["item"].": ".$msgstr["loaned"]." </font>";
-				if (isset($arrHttp["policy"])){					$p=explode('|',$arrHttp["policy"]);
-					echo $msgstr["policy"].": " . $p[0] ." - ". $p[1];				}
+			foreach ($inven as $inventario){
+				echo "<p><font color=red>". $inventario." ".$msgstr["item"].": ".$msgstr["loaned"]." </font>";
+				if (isset($arrHttp["policy"])){
+					$p=explode('|',$arrHttp["policy"]);
+					echo $msgstr["policy"].": " . $p[0] ." - ". $p[1];
+				}
 			}
 		}
 	}
-	if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S"){		if (isset($arrHttp["resultado"]) and isset($arrHttp["rec_dev"])){			$inven=explode(';',$arrHttp["rec_dev"]);
-			foreach ($inven as $inventario){				if (trim($inventario)!=""){
+	if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S"){
+		if (isset($arrHttp["resultado"]) and isset($arrHttp["rec_dev"])){
+			$inven=explode(';',$arrHttp["rec_dev"]);
+			foreach ($inven as $inventario){
+				if (trim($inventario)!=""){
 					$Mfn=trim($inventario);
 					echo "<p><font color=red>". $inventario." ".$msgstr["item"].": ".$msgstr["returned"]." </font>";
 					$Formato="v10,' ',mdl,v100'<br>'";
@@ -1065,12 +1211,17 @@ function ProduceOutput($ec_output,$reservas){global $msgstr,$msg_error_0,$arrHt
 		}
 	}
 
-	if (isset($arrHttp["renovado"]) and $arrHttp["renovado"]=="S"){		if (isset($arrHttp["resultado"])){			$inven=explode(';',$arrHttp["resultado"]);
+	if (isset($arrHttp["renovado"]) and $arrHttp["renovado"]=="S"){
+		if (isset($arrHttp["resultado"])){
+			$inven=explode(';',$arrHttp["resultado"]);
 			foreach ($inven as $inventario){
 				if (trim($inventario)!="")
 					echo "<p><font color=red>".$msgstr["item"]." ". $inventario." </font>";
-			}		}
-	}else{	}
+			}
+		}
+	}else{
+
+	}
 
 //SE IMPRIMEN LOS RECIBOS DE PRÉSTAMOS
 	if (count($recibo_arr)>0) {
@@ -1078,8 +1229,10 @@ function ProduceOutput($ec_output,$reservas){global $msgstr,$msg_error_0,$arrHt
 	}
 
 //SE IMPRIMEN LOS RECIBOS DE DEVOLUCION
-	if (isset($arrHttp["rec_dev"])){		$Mfn_rec=$arrHttp["rec_dev"];
-		$fs="r_return";		$r=explode(";",$Mfn_rec);
+	if (isset($arrHttp["rec_dev"])){
+		$Mfn_rec=$arrHttp["rec_dev"];
+		$fs="r_return";
+		$r=explode(";",$Mfn_rec);
 		$rec_salida=array();
 
 		foreach ($r as $Mfn){
@@ -1116,14 +1269,16 @@ function ProduceOutput($ec_output,$reservas){global $msgstr,$msg_error_0,$arrHt
 ?>
 
 <?php
-if (isset($arrHttp["reservaWeb"]) and $arrHttp["reservaWeb"]=="xY"){	echo "<form method=post action=../output_circulation/rsweb.php>\n";
+if (isset($arrHttp["reservaWeb"]) and $arrHttp["reservaWeb"]=="xY"){
+	echo "<form method=post action=../output_circulation/rsweb.php>\n";
 	echo "<input type=hidden name=base value=reserve>\n";
 	echo "<input type=hidden name=code value=actives_web>\n";
     echo "<input type=hidden name=name value=rsweb>\n";
     echo "<input type=hidden name=retorno value=../circulation/estado_de_cuenta.php>\n";
     echo "<input type=hidden name=reserva value=S>\n";
     echo "<input type=hidden name=reservaWeb value=Y>\n";
-    echo "<p><input type=submit name=rsv_p value=\"Reservas web\" style='font-size:27px;border-radius:20px;background color:#cccccc; font-color=black'\"><p>";    echo "</form>";
+    echo "<p><input type=submit name=rsv_p value=\"Reservas web\" style='font-size:27px;border-radius:20px;background color:#cccccc; font-color=black'\"><p>";
+    echo "</form>";
 }
 echo "</div></div>\n";
 include("../common/footer.php");?>
@@ -1131,7 +1286,8 @@ include("../common/footer.php");?>
 </html>
 
 <?php
-	if (isset($msg_error_0)){		echo "<script>
+	if (isset($msg_error_0)){
+		echo "<script>
 		alert('".$msg_error_0."')
 		</script>
 		";
@@ -1142,8 +1298,10 @@ include("../common/footer.php");?>
 
 
 
-function ImprimirRecibo($recibo_arr){	$salida="";
-	foreach ($recibo_arr as $Recibo){		$salida=$salida.$Recibo;
+function ImprimirRecibo($recibo_arr){
+	$salida="";
+	foreach ($recibo_arr as $Recibo){
+		$salida=$salida.$Recibo;
 	}
 	$salida=str_replace('/','\/',$salida);
 ?>
@@ -1164,7 +1322,8 @@ function ImprimirRecibo($recibo_arr){	$salida="";
 <input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
 <?php if (isset($arrHttp["reserve"])) echo "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
       if (isset($arrHttp["base"]))  echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
-	  if (isset($control_number))   {	  		echo "<input type=hidden name=Expresion value=$Expresion".">\n";
+	  if (isset($control_number))   {
+	  		echo "<input type=hidden name=Expresion value=$Expresion".">\n";
      	 	echo "<input type=hidden name=control_number value=$control_number".">\n";
      }?>
 </form>

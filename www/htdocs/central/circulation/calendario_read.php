@@ -31,7 +31,8 @@ $file=$db_path."circulation/def/".$_SESSION["lang"]."/feriados.tab";
 if (!file_exists($file)) $file=$db_path."circulation/def/".$lang_db."/feriados.tab";
 if (file_exists($file)){
 	$fp = file($file);
-    foreach ($fp as $value){    	$ixmes=$ixmes+1;
+    foreach ($fp as $value){
+    	$ixmes=$ixmes+1;
     	if ($ixmes>0) $feriados[$ixmes]=$value;
     }
 }

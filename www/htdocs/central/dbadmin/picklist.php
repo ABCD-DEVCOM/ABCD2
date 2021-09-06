@@ -21,8 +21,11 @@ function CargarTabla(Tabla){
     self.location.href=url
 }
 
-function EditCreate(){	if (Trim(document.pl.picklist.value)==""){		alert("<?php echo $msgstr["misfilen"].": ".$msgstr["picklistname"]?>")
-		return	}
+function EditCreate(){
+	if (Trim(document.pl.picklist.value)==""){
+		alert("<?php echo $msgstr["misfilen"].": ".$msgstr["picklistname"]?>")
+		return
+	}
 	fn=document.pl.picklist.value
 	bool=  /^[a-z][\w]+$/i.test(fn)
 	bool=true
@@ -33,25 +36,30 @@ function EditCreate(){	if (Trim(document.pl.picklist.value)==""){		alert("<?ph
       	alert("<?php echo $msgstr["errfilename"]?>");
       	return
    	}
-	document.pl.submit()}
+
+	document.pl.submit()
+}
 
 function Pl_name(Tabla,DB){
 		CargarTabla(Tabla)
 		document.pl.picklist.value=Tabla
 	}
-function PickList_update(){	row="<?php echo $arrHttp["row"]?>"
+function PickList_update(){
+	row="<?php echo $arrHttp["row"]?>"
 	name=self.document.pl.picklist.value
 	if (window.top.frames.length>1){
 		window.top.frames[2].valor=name
 		window.top.frames[2].Asignar()
-	}else{		window.opener.valor=name
+	}else{
+		window.opener.valor=name
 		window.opener.Asignar()
 	}
 	self.close()
 }
 
 
-function EliminarArchivo(){	Tabla=Trim(document.pl.picklist.value)
+function EliminarArchivo(){
+	Tabla=Trim(document.pl.picklist.value)
 	if (Tabla==""){
 		alert("please, select the picklist to be deleted")
 		return
@@ -73,7 +81,7 @@ echo "
 
 echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["cancel"]."</strong></span>
 				</a>";
 echo "			</div>

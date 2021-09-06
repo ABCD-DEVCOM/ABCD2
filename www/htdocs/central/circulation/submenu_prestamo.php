@@ -7,10 +7,12 @@ if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["C
 ?>
 		<a href="../circulation/prestar.php?encabezado=s<?php echo $link_u?>" >
 			<?php echo $msgstr["loan"]?></a>&nbsp; | &nbsp;
-		<?php if (isset($ILL) and $ILL!=""){		?>
+		<?php if (isset($ILL) and $ILL!=""){
+		?>
 			 <a href="../circulation/interbib.php?encabezado=s<?php echo $link_u?>"><?php echo $msgstr["r_ill"]?></a>&nbsp; | &nbsp;
 		<?php
-		}}
+		}
+}
 
 
 
@@ -32,7 +34,8 @@ if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["C
 			<?php echo $msgstr["reserve"]?></a>&nbsp; | &nbsp;
 
 <?php } }
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SALA"])){?>     <a href=../circulation/sala.php><?php echo $msgstr["sala"]?></a>&nbsp; | &nbsp;
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SALA"])){
+?>     <a href=../circulation/sala.php><?php echo $msgstr["sala"]?></a>&nbsp; | &nbsp;
 <?php }
 if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SUSPEND"])){
 ?>

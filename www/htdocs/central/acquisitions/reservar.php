@@ -4,12 +4,17 @@ include("../common/get_post.php");
 foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include("../config.php");
 // SE DETERMINA LA SIGNATURA DEL OBJETO
-if (!isset($arrHttp["cotaprestamos"]) or $arrHttp["cotaprestamos"]==""){	$signatura=substr($arrHttp["cotalibros"],2);}else{	$signatura=substr($arrHttp["cotaprestamos"],2);}
+if (!isset($arrHttp["cotaprestamos"]) or $arrHttp["cotaprestamos"]==""){
+	$signatura=substr($arrHttp["cotalibros"],2);
+}else{
+	$signatura=substr($arrHttp["cotaprestamos"],2);
+}
 
 
 //PROCESAR LA RESERVA
 function Reservar($usuario,$signatura,$tipousuario){
-global $xWxis,$Wxis;	echo "<p>Título solicitado: ".$signatura."<p>";
+global $xWxis,$Wxis;
+	echo "<p>Título solicitado: ".$signatura."<p>";
 //SE DETERMINA SI EL USUARIO NO TIENE YA RESERVADO ESE OBJETO
 	$IsisScript=$xWxis."buscar.xis";
 	$query="&base=reserva&cipar=reserva.par&Expresion=CU_".$usuario."&Formato=@reservados.pft";
@@ -19,19 +24,28 @@ global $xWxis,$Wxis;	echo "<p>Título solicitado: ".$signatura."<p>";
 	exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
 	$num_reservas=0;
 	$yareservado="N";
-	foreach ($contenido as $value) {		if ($num_reservas==0){			echo "<table bgcolor=#cccccc><td>Usuario</td><td>No.clasif.</td><td>Fecha reserva</td><td></td>";		}
+	foreach ($contenido as $value) {
+		if ($num_reservas==0){
+			echo "<table bgcolor=#cccccc><td>Usuario</td><td>No.clasif.</td><td>Fecha reserva</td><td></td>";
+		}
 		$value=trim($value);
 		$num_reservas++;
 		$r=explode('|',$value);
 		echo "<tr>";
 		$ixl=-1;
-		foreach ($r as $linea) {			$ixl++;
-			if ($ixl==2){				$linea=substr($linea,6,2)."-".substr($linea,4,2)."-".substr($linea,0,4);			}
-			echo "<td>".$linea."</td>";		}
+		foreach ($r as $linea) {
+			$ixl++;
+			if ($ixl==2){
+				$linea=substr($linea,6,2)."-".substr($linea,4,2)."-".substr($linea,0,4);
+			}
+			echo "<td>".$linea."</td>";
+		}
 		if ($r[1]==$signatura){
 			echo "<td><strong><font color=red>**</font></strong></td>";
 			$yareservado="S";
-	    }else{	    	echo "<td></td>";	    }
+	    }else{
+	    	echo "<td></td>";
+	    }
 	}
 
 	if ($num_reservas !=0) echo "</table>";
@@ -61,7 +75,8 @@ global $xWxis,$Wxis;	echo "<p>Título solicitado: ".$signatura."<p>";
 	}
 	print "<span class=titulo1>Reserva realizada</span>";
 }
-?>
+
+?>
 <html>
 <head>
 	<title>Reserva</title>
@@ -91,13 +106,18 @@ putenv('QUERY_STRING='."?xx=".$query);
 $contenido="";
 exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
 foreach ($contenido as $value) {
-	$value=trim($value);	$found="S";
+	$value=trim($value);
+	$found="S";
 	if (substr($value,0,14)=='$$TIPOUSUARIO:')
 		$tipousuario=substr($value,14);
-	else		print "$value";}
-if ($found=="N"){	print "Codigo de usuario inexistente";
+	else
+		print "$value";
+}
+if ($found=="N"){
+	print "Codigo de usuario inexistente";
 	print "<p><a href=javascript:history.back()>Regresar</a>";
-	die;}
+	die;
+}
 
 //SE LOCALIZAN LOS PRÉSTAMOS PENDIENTES
 $Formato="v800^n'|',v800^c'|',v800^t'|',v800^h/";
@@ -109,31 +129,51 @@ putenv('QUERY_STRING='."?xx=".$query);
 $contenido="";
 $vencidos=0;
 exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
-foreach ($contenido as $value) {	if ($found=="N"){		print "<p><span class=titulo2>Estado de cuenta</span><table bgcolor=#cccccc><th>No.inv</th><th>No.clasif</th><th>Título</th><th>Vencimiento</th>";		$found="S";
+foreach ($contenido as $value) {
+	if ($found=="N"){
+		print "<p><span class=titulo2>Estado de cuenta</span><table bgcolor=#cccccc><th>No.inv</th><th>No.clasif</th><th>Título</th><th>Vencimiento</th>";
+		$found="S";
 	}
 	echo "<tr>";
 	$t=explode('|',$value);
 	$ix=0;
 	$yaprestado="";
-	foreach ($t as $prest){//PARA CADA PRESTAMO SE DETERMINA SI ESTÁ VENCIDO O SI YA TIENE UN EJEMPLAR DEL OBJETO		$ini="";
+	foreach ($t as $prest){
+//PARA CADA PRESTAMO SE DETERMINA SI ESTÁ VENCIDO O SI YA TIENE UN EJEMPLAR DEL OBJETO
+		$ini="";
 		$fin="";
-		if ($ix==3) {			if (date("Ymd")>$prest){				$vencidos++;
+		if ($ix==3) {
+			if (date("Ymd")>$prest){
+				$vencidos++;
 				$ini="<font color=red>";
-				$fin="</font>";			}			$prest=substr($prest,6,2)."-".substr($prest,4,2)."-".substr($prest,0,4);		}
+				$fin="</font>";
+			}
+			$prest=substr($prest,6,2)."-".substr($prest,4,2)."-".substr($prest,0,4);
+		}
 		$ix++;
 		print "<td>".$ini.$prest.$fin."</td>";
-		if ($ix==1){			if ($signatura==$prest){				$yaprestado="S";			}		}
+		if ($ix==1){
+			if ($signatura==$prest){
+				$yaprestado="S";
+			}
+		}
 	}
 	print "\n";
 }
-if ($found=="S") {	print "</table>\n";
-	if ($vencidos>0){		print "<p><font color=darkred>Tiene ejemplares vencidos. No puede reservar</font>";
+if ($found=="S") {
+	print "</table>\n";
+	if ($vencidos>0){
+		print "<p><font color=darkred>Tiene ejemplares vencidos. No puede reservar</font>";
 		"<p><a href=javascript:self.close>Cerrar</a>";
-		die;	}
+		die;
+	}
 }
-if ($yaprestado=="S"){	echo "Ya tiene prestado un ejemplar de ese título. No puede reservar";
+if ($yaprestado=="S"){
+	echo "Ya tiene prestado un ejemplar de ese título. No puede reservar";
 	"<p><a href=javascript:self.close>Cerrar</a>";
-}else{	Reservar($arrHttp["codigo"],$signatura,$tipousuario);}
+}else{
+	Reservar($arrHttp["codigo"],$signatura,$tipousuario);
+}
 
 ?>
 </body>

@@ -19,10 +19,17 @@ include("../lang/prestamo.php");
 	$prestamos=array();
 	$inicio="S";
 	$usuario="";
-	foreach ($contenido as $linea){
-		if ($inicio=="S"){			$usuario=trim($linea);
+	foreach ($contenido as $linea){
+
+		if ($inicio=="S"){
+			$usuario=trim($linea);
 			$inicio="N";
-			break;		}
+			break;
+		}
 	}
-	if ($usuario!=""){		header("Location: usuario_prestamos_presentar.php?base=users&usuario=".$usuario."&inventory_out=".$arrHttp["inventory"]);	}else{		header("Location: loan_return_reserve.php?base=users&error=S&inventory=".$arrHttp["inventory"]);	}
+	if ($usuario!=""){
+		header("Location: usuario_prestamos_presentar.php?base=users&usuario=".$usuario."&inventory_out=".$arrHttp["inventory"]);
+	}else{
+		header("Location: loan_return_reserve.php?base=users&error=S&inventory=".$arrHttp["inventory"]);
+	}
 ?>

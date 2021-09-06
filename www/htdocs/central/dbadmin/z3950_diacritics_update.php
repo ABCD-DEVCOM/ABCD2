@@ -26,7 +26,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 	if ($encabezado!="") echo "<a href=z3950_conf.php?&base=$db$encabezado class=\"defaultButton backButton\">";
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
 </a>
 			</div>
@@ -47,8 +47,11 @@ $fp=fopen($db_path."cnv/marc-8_to_ansi.tab","w");
 $accents=explode("\n",$arrHttp["ValorCapturado"]);
 foreach ($accents as $val){
 	$val=trim($val);
-	if($val!=""){		$a=explode('|',$val);
-		fwrite($fp,$a[0]." ".$a[1]."\n");	}}
+	if($val!=""){
+		$a=explode('|',$val);
+		fwrite($fp,$a[0]." ".$a[1]."\n");
+	}
+}
 fclose($fp);
 echo "<h4>marc-8_to_ansi.tab : ".$msgstr["updated"]."</h4>";
 ?>

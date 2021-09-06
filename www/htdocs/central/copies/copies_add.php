@@ -143,7 +143,7 @@ if (isset($arrHttp["db_copies"])) $urlcopies="&db_copies=Y";
 if ($err_copies!="Y" and $error==""){
 	if (isset($arrHttp["encabezado"])){
 				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 						<span><strong>". $msgstr["cancel"]."</strong></span>
 					</a>";
 	}
@@ -151,18 +151,18 @@ if ($err_copies!="Y" and $error==""){
 			<a href=../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
 			if (isset($arrHttp["Formato"])) echo "&Formato=".$arrHttp["Formato"];
 			echo $urlcopies?> class="defaultButton cancelButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["cancelar"]?></strong></span>
 			</a>
 			<a href=javascript:EnviarForma() class="defaultButton saveButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
 			</a>
 	<?php
 }else{
 ?>
 	<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
 <?php
 }
 echo "	</div>

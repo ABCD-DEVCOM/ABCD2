@@ -72,7 +72,7 @@ if (isset($arrHttp["encabezado"]))
 		$encabezado="";
 echo "<a href=winisis_upload_fdt.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado." class=\"defaultButton backButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>
@@ -106,7 +106,9 @@ if (!isset($_SESSION["FST"])){
 		CrearFst($Fst);
 		$_SESSION["FST"]=$Fst;
 	}
-}else{	CrearFst($_SESSION["FST"]);}
+}else{
+	CrearFst($_SESSION["FST"]);
+}
 echo "
 <form name=winisis action=winisis_upload_pft.php method=POST enctype=multipart/form-data onsubmit='javascript:EnviarForma();return false'>
 <input type=hidden name=Opcion value=PFT>

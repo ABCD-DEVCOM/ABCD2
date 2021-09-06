@@ -110,9 +110,12 @@ if (isset($arrHttp["Opcion"])){
 
 
 
-function wxisLLamar($query,$base,$IsisScript){global $db_path,$Wxis,$xWxis,$wxisUrl;
-	$IsisScript=$xWxis.$IsisScript;	include("../common/wxis_llamar.php");
-	return $contenido;}
+function wxisLLamar($query,$base,$IsisScript){
+global $db_path,$Wxis,$xWxis,$wxisUrl;
+	$IsisScript=$xWxis.$IsisScript;
+	include("../common/wxis_llamar.php");
+	return $contenido;
+}
 
 function ProcesarPrestamo($usercode,$inventory,$referencia,$typeofuser,$typeofloan,$control_number,$db){
 global $db_path;
@@ -139,7 +142,8 @@ global $db_path;
 	$ValorCapturado=urlencode($ValorCapturado);
     $query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."&Pft=mfn/&ValorCapturado=".$ValorCapturado;
     $contenido= wxisLLamar($query,"trans","crear_registro.xis");
-    return $contenido;}
+    return $contenido;
+}
 
 function LocalizarInventario($inventory){
 global $db_path,$arrHttp,$pft_totalitems,$pft_ni,$copies_title,$prefix_in,$formato_obj;
@@ -156,7 +160,9 @@ global $db_path,$arrHttp,$pft_totalitems,$pft_ni,$copies_title,$prefix_in,$forma
 	if (isset($arrHttp["db_inven"])){
 		$dbi=explode('|',$arrHttp["db_inven"]);
 		$dbi_base=$dbi[0];
-	}else{		$dbi_base="loanobjects";	}
+	}else{
+		$dbi_base="loanobjects";
+	}
 	$query = "&Opcion=disponibilidad&base=$dbi_base&cipar=$db_path"."par/$dbi_base.par&Expresion=".$Expresion."&Pft=$formato_obj";
 	$contenido=wxisLlamar($query,$dbi_base,"loans/prestamo_disponibilidad.xis");
 	$total=0;
@@ -248,16 +254,21 @@ $fp=file_exists($archivo);
 $sala=array();
 if ($fp){
 	$fp=file($archivo);
-	foreach ($fp as $value){		$value=trim($value);
-		if ($value!=""){			$v=explode('=',$value);
-			$sala[$v[0]]=$v[1];		}
+	foreach ($fp as $value){
+		$value=trim($value);
+		if ($value!=""){
+			$v=explode('=',$value);
+			$sala[$v[0]]=$v[1];
+		}
 	}
 }
 
 include("../common/header.php");
 ?>
 <style>
-	td{		font-size:12px;	}
+	td{
+		font-size:12px;
+	}
 </style>
 <?php
 $encabezado="";
@@ -270,7 +281,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"sala.php?base=".$a[0]."\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 				echo "

@@ -113,7 +113,7 @@ if ($npost==0){
 	$IsisScript=$xWxis."acquisitions/order_create.xis";
 	$pft=$db_path."purchaseorder/pfts/".$_SESSION["lang"]."/purchaseorder.pft";
 	if (!file_exists($pft)) $pft=$db_path."purchaseorder/pfts/".$lang_db."/purchaseorder.pft";
-	$query = "&base=".$base ."&cipar=$db_path"."par/".$cipar."&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado."&order_no=".$arrHttp["order_no"]."&order_date=".$arrHttp["order_date"]."&Mfnsuggestion=".$Mfnsuggestion;
+	$query = "&base=".$base ."&cipar=$db_path"."par/".$cipar."&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado."&order_no=".$arrHttp["order_no"]."&order_date=".$arrHttp["order_date"];
 	$query.="&Formato_o=@$pft";
 	$pft=$db_path."suggestions/pfts/".$_SESSION["lang"]."/suggestions.pft";
 	if (!file_exists($pft)) $pft=$db_path."suggestions/pfts/".$lang_db."/suggestions.pft";

@@ -12,7 +12,8 @@ include("../circulation/leer_pft.php");
 // se lee la configuración de la base de datos de usuarios
 include("../circulation/borrowers_configure_read.php");
 
-function MostrarRegistroCatalografico($CN){global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
+function MostrarRegistroCatalografico($CN){
+global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
 	$dbname=$arrHttp["base"];
 	$pref_cn="";
 	$archivo=$db_path.$dbname."/loans/".$_SESSION["lang"]."/loans_conf.tab";
@@ -36,11 +37,15 @@ function MostrarRegistroCatalografico($CN){global $msgstr,$arrHttp,$db_path,$xW
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$dbname.".par&Expresion=".$Expresion."&Formato=$formato_obj";
 	include("../common/wxis_llamar.php");
 	foreach ($contenido as $value){
-		if (substr($value,0,8)!="[TOTAL:]")			echo $value."\n";	}
+		if (substr($value,0,8)!="[TOTAL:]")
+			echo $value."\n";
+	}
 }
 
-function ColocarTitulos($base){global $db_path,$lang_db;
-	echo "<table>";	// se lee la tabla con los títulos de las columnas
+function ColocarTitulos($base){
+global $db_path,$lang_db;
+	echo "<table>";
+	// se lee la tabla con los títulos de las columnas
 	$archivo=$db_path.$base."/pfts/".$_SESSION["lang"]."/tbtit.tab";
 	if (!file_exists($archivo)) $archivo=$db_path.$base."/pfts/".$lang_db."/tbtit.tab";
 	if (file_exists($archivo)){
@@ -53,7 +58,8 @@ function ColocarTitulos($base){global $db_path,$lang_db;
 			}
 		}
 	}
-	echo "<th class=\"action\">&nbsp;</th></tr>";}
+	echo "<th class=\"action\">&nbsp;</th></tr>";
+}
 
 function Reservar($usuario,$NC){
 global $xWxis,$Wxis,$db_path,$msgstr;
@@ -76,9 +82,11 @@ global $xWxis,$Wxis,$db_path,$msgstr;
 		$r=explode('|',$value);
 		echo "<tr>";
 		$ixl=-1;
-		foreach ($r as $linea) {			echo "<td>";
+		foreach ($r as $linea) {
+			echo "<td>";
 			$ixl++;
-			switch ($ixl){				case 0:
+			switch ($ixl){
+				case 0:
 					echo $r[0]."=".$NC;
 				    if ($r[0]==$NC){
 						echo "<strong><font color=red>**</font></strong>";
@@ -90,7 +98,8 @@ global $xWxis,$Wxis,$db_path,$msgstr;
 					$linea=$r[3];
 				    $linea=substr($linea,6,2)."-".substr($linea,4,2)."-".substr($linea,0,4);
 				default;
-					echo $r[$ixl];			}
+					echo $r[$ixl];
+			}
 
 			echo "</td>";
 	    }
@@ -133,10 +142,14 @@ $uskey=$t[0];
 $ec_output="" ;
 ?>
 <script>
-function Enviar(){	Codigo=Trim(document.reserva.codigo.value)
-	if (Codigo==""){		alert("Debe especificar su código de usuario")
-		return	}
-	document.reserva.submit()}
+function Enviar(){
+	Codigo=Trim(document.reserva.codigo.value)
+	if (Codigo==""){
+		alert("Debe especificar su código de usuario")
+		return
+	}
+	document.reserva.submit()
+}
 </script>
 </head>
 <body>
@@ -149,7 +162,7 @@ function Enviar(){	Codigo=Trim(document.reserva.codigo.value)
 	include("../circulation/submenu_prestamo.php");
  	echo "<a href=\"buscar.php?base=".$arrHttp["base"]."&cipar=".$arrHttp["base"].".par&count=1&Opcion=buscar_en_este&Expresion=".$arrHttp["Expresion"]."\" class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span>
 		</a>
 		<?php ?>
@@ -200,14 +213,24 @@ $np=0;   //Total libros en poder del usuario
 $cont="";
 $fecha=date("Ymd");
 if (count($prestamos)>0) {
-	foreach ($prestamos as $pre){		echo " fecha de vencimiento:" .$pre;		$np++;		if ($pre<$fecha)
-			$nv++;	}
+	foreach ($prestamos as $pre){
+		echo " fecha de vencimiento:" .$pre;
+		$np++;
+		if ($pre<$fecha)
+			$nv++;
+	}
 }
 echo "<h4>".$msgstr["loaned"].": ". $np."<br>";
 echo "<p>".$msgstr["vence"].": $nv</h4>";
-if ($nv!=0){	echo "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
-	$cont="N";}
-if ($cont!="N"){	$resultado=Reservar($arrHttp["usuario"],$arrHttp["cn"]);}
+if ($nv!=0){
+	echo "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
+	$cont="N";
+}
+if ($cont!="N"){
+
+	$resultado=Reservar($arrHttp["usuario"],$arrHttp["cn"]);
+
+}
 ?>
 
 

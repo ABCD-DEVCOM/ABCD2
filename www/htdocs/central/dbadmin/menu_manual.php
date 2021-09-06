@@ -37,7 +37,7 @@ if (isset($arrHttp["encabezado"])){
 	echo "<a href=\"../common/inicio.php?reinicio=s";
 	if (isset($arrHttp["base"]))echo "&base=".$arrHttp["base"];
 	echo "\" class=\"defaultButton backButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>". $msgstr["back"]."</strong></span>
 		</a>
 	";

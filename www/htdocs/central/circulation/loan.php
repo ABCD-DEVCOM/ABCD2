@@ -14,8 +14,11 @@ include("../common/header.php");
 ?>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
-function EnviarFormaUsuario(){	if (Trim(document.usersearch.usercode.value)==""){		alert("Debe especificar el usuario")
-		return	}
+function EnviarFormaUsuario(){
+	if (Trim(document.usersearch.usercode.value)==""){
+		alert("Debe especificar el usuario")
+		return
+	}
 	document.EnviarFrm.usuario.value=document.usersearch.usercode.value
 	document.EnviarFrm.action="usuario_prestamos_presentar.php"
 	document.EnviarFrm.submit()
@@ -69,7 +72,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>

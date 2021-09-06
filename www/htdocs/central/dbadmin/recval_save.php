@@ -7,7 +7,11 @@ include("../common/get_post.php");
 include ("../config.php");
 include("../lang/dbadmin.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";  //die;
-if (isset($arrHttp["ValorCapturado"]))  {	$pft=explode("\n",$arrHttp["ValorCapturado"]);}else{	$pft=array();}
+if (isset($arrHttp["ValorCapturado"]))  {
+	$pft=explode("\n",$arrHttp["ValorCapturado"]);
+}else{
+	$pft=array();
+}
 
 if (isset($arrHttp["encabezado"]))
 	$encabezado="&encabezado=S";
@@ -16,17 +20,22 @@ else
 $lang=$_SESSION["lang"];
 $fp=fopen($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fn"],"w");
 if (!$fp){
-	echo $arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fn"].": ";	echo $msgstr["nopudoseractualizado"];
-	die;}
-foreach ($pft as $value){
-	switch ($arrHttp["fn"]){		case "recdel_val.pft":
+	echo $arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fn"].": ";
+	echo $msgstr["nopudoseractualizado"];
+	die;
+}
+foreach ($pft as $value){
+
+	switch ($arrHttp["fn"]){
+		case "recdel_val.pft":
 			fwrite($fp,urldecode($value)."\n");
 			break;
 		default:
 			$tag=substr($value,0,4);
 			$value=trim(substr($value,4));
 			fwrite($fp,ltrim($tag, "0").":".urldecode($value)."\n###\n");
-			break;	}
+			break;
+	}
 
 }
 fclose($fp);
@@ -42,14 +51,16 @@ echo "
 	<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".$msgstr["recval"].": ".$arrHttp["base"]."</div>
 	<div class=\"actions\">\n";
-switch ($arrHttp["fn"]){	case "recdel_val.pft":
+switch ($arrHttp["fn"]){
+	case "recdel_val.pft":
 		$retorno="menu_modificardb.php";
 		break;
 	default:
 		$retorno="typeofrecs.php";
-		break;}
+		break;
+}
 echo "<a href=$retorno?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>". $msgstr["back"]."</strong></span>
 		</a>
 		</div>

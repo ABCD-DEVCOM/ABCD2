@@ -108,7 +108,7 @@ if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 		<div class=\"actions\">\n";
 if (isset($arrHttp["encabezado"])){
 			echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["cancel"]."</strong></span>
 				</a>";
 }

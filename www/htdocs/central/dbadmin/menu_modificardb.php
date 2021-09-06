@@ -28,7 +28,12 @@ if (strpos($arrHttp["base"],"|")===false){
 }
 $base=$arrHttp["base"];
 // VERIFICACION DE LA PERMISOLOTIA
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"]) or isset($_SESSION["permiso"][$base."_CENTRAL_MODIFYDEF"]) or isset($_SESSION["permiso"][$base."_CENTRAL_ALL"]) ){}else{	echo "<h2>".$msgstr["invalidright"]. " ".$base;	die;}
+if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"]) or isset($_SESSION["permiso"][$base."_CENTRAL_MODIFYDEF"]) or isset($_SESSION["permiso"][$base."_CENTRAL_ALL"]) ){
+
+}else{
+	echo "<h2>".$msgstr["invalidright"]. " ".$base;
+	die;
+}
 
 
 
@@ -48,7 +53,8 @@ function Update(Option){
 	switch (Option){
 		case "tes_config":
 			document.update_base.action="tes_config.php"
-			break		case "fdt":
+			break
+		case "fdt":
 			document.getElementById('loading').style.display='block';
 			document.update_base.action="fdt.php"
 			document.update_base.type.value="bd"
@@ -169,7 +175,7 @@ echo "
 if (isset($arrHttp["encabezado"])){
 	echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 }
@@ -183,10 +189,16 @@ if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp
 else
 	$fp=file($db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt");
 $ldr="";
-foreach ($fp as $value){	$value=trim($value);
-	if (trim($value)!=""){		$fdt=explode('|',$value);
-		if ($fdt[0]=="LDR"){			$ldr="s";
-			break;		}	}}
+foreach ($fp as $value){
+	$value=trim($value);
+	if (trim($value)!=""){
+		$fdt=explode('|',$value);
+		if ($fdt[0]=="LDR"){
+			$ldr="s";
+			break;
+		}
+	}
+}
 
 // AYUDA EN CONTEXTO E IDENTIFICACIÓN DEL SCRIPT QUE SE ESTÁ EJECUTANDO
 // OPCIONES DEL MENU
@@ -230,7 +242,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
 			<li><a href=javascript:Update("fmt")><?php echo $msgstr["fmt"]?></a></li>
 			<li><a href=javascript:Update("pft")><?php echo $msgstr["pft"]?></a></li>
 			<?php
-			if (!isset($ldr) or $ldr!="s" )// SI NO ES UN REGISTRO MARC SE INCLUYE EL MANEJO DE LOS TIPOS DE REGISTRO NO MARC
+			if (!isset($ldr) or $ldr!="s" )
+// SI NO ES UN REGISTRO MARC SE INCLUYE EL MANEJO DE LOS TIPOS DE REGISTRO NO MARC
 			    echo "<li><a href=javascript:Update(\"typeofrecs\")>".$msgstr["typeofrecords"]."</a></li>";
 			?>
 

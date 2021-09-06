@@ -8,18 +8,22 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
-// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILOinclude("../common/header.php");
+// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
+include("../common/header.php");
 ?>
 <script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <script languaje=javascript>
 //LEE LA FDT O LA FST
 function Ayuda(hlp){
-	switch (hlp){		case 0:
+	switch (hlp){
+		case 0:
 			msgwin=window.open("../dbadmin/fdt_leer.php?base=<?php echo $arrHttp["base"]?>","FDT","")
 			break
 		case 1:
 		   	msgwin=window.open("../dbadmin/fst_leer.php?base=<?php echo $arrHttp["base"]?>","FST","")
-			break	}
+			break
+	}
+
 	msgwin.focus()
 }
 
@@ -59,7 +63,8 @@ function DrawElement(ixE,nombre,filas,columnas,pft,date_in){
 	selected1=""
 	selected2=""
 	selected3=""
-	switch (date_in){		case "no_date":
+	switch (date_in){
+		case "no_date":
 			selected1=" checked"
 			break
 		case "rows":
@@ -67,7 +72,8 @@ function DrawElement(ixE,nombre,filas,columnas,pft,date_in){
 			break
 		case "cols":
 			selected3=" checked"
-			break	}
+			break
+	}
 	xhtml+="<input type=radio name=date_in_"+ixE+" value=no_date"+selected1+"><?php echo $msgstr["no_date"]?><br>"
     xhtml+="<input type=radio name=date_in_"+ixE+" value=rows"+selected2+"><?php echo $msgstr["rows"]?> <input type=radio name=date_in_"+ixE+" value=cols"+selected3+"><?php echo $msgstr["cols"]?>"
 	xhtml+="</td></tr>"
@@ -79,10 +85,12 @@ function DeleteElement(ix){
 	html_sec="<table width=910 cellpadding=0 border=0>"
 	Ctrl=eval("document.stats.tag_nombre")
 	ixLength=Ctrl.length
-	if (ixLength==undefined){		document.stats.tag_nombre.value=""
+	if (ixLength==undefined){
+		document.stats.tag_nombre.value=""
 		document.stats.tag_pft.value=""
 		document.stats.tag_filas.value=""
-		document.stats.tag_columnas.value=""	}else{
+		document.stats.tag_columnas.value=""
+	}else{
 		if (ixLength<3){
 			document.stats.tag_nombre[ix].value=""
 			document.stats.tag_pft[ix].value=""
@@ -137,7 +145,8 @@ function AddElement(){
 			    	html+=xhtm
 			    }
 		    }
-		 }	 }else{
+		 }
+	 }else{
 	 	seltext=""
     	nombre=""
     	pft=""
@@ -148,7 +157,9 @@ function AddElement(){
     	Ctrl=document.getElementsByName("date_in_0")
 		date_in=GetDateIn(Ctrl)
     	xhtm=DrawElement(0,nombre,filas,columnas,pft,date_in)
-    	html+=xhtm		ia=1	 }
+    	html+=xhtm
+		ia=1
+	 }
 	nuevo=DrawElement(ia,"","","","","","")
 	seccion.innerHTML = html+nuevo+"</table>"
 }
@@ -164,21 +175,27 @@ function GetDateIn(Ctrl){
 	}
 	return ""
 }
-function Guardar(){	ValorCapturado=""
+function Guardar(){
+	ValorCapturado=""
 	base="<?php echo $arrHttp["base"]?>"
 	total=document.stats.tag_nombre.length
 	if (total==0 || total==undefined){
 		pft=Trim(document.stats.tag_pft.value)
 		nombre=Trim(document.stats.tag_nombre.value)
 		filas=Trim(document.stats.tag_filas.value)
-		columnas=Trim(document.stats.tag_columnas.value)		if (nombre==""){			alert("<?php echo $msgstr["sel_tit"]?>")
-			return;		}
+		columnas=Trim(document.stats.tag_columnas.value)
+		if (nombre==""){
+			alert("<?php echo $msgstr["sel_tit"]?>")
+			return;
+		}
 		if (pft==""){
 			alert("<?php echo $msgstr["misspft"]?>")
 			return;
 		}
-		if (filas=="" && columnas==""){			alert ("<?php echo $msgstr["sel_rc"]?>")
-			return		}
+		if (filas=="" && columnas==""){
+			alert ("<?php echo $msgstr["sel_rc"]?>")
+			return
+		}
 		if (pft!=""){
 			pft=pft.replace(new RegExp('\\n','g'),' ')
 			pft=pft.replace(new RegExp('\\r','g'),'')
@@ -187,7 +204,9 @@ function Guardar(){	ValorCapturado=""
 			date_in=GetDateIn(Ctrl)
 			ValorCapturado+='|'+date_in +"\n"
 		}
-	}else{		for (i=0;i<total;i++){			pft=Trim(document.stats.tag_pft[i].value)
+	}else{
+		for (i=0;i<total;i++){
+			pft=Trim(document.stats.tag_pft[i].value)
 			nombre=Trim(document.stats.tag_nombre[i].value)
 			filas=Trim(document.stats.tag_filas[i].value)
 			columnas=Trim(document.stats.tag_columnas[i].value)
@@ -214,14 +233,20 @@ function Guardar(){	ValorCapturado=""
 				date_in=GetDateIn(Ctrl)
 				ValorCapturado+='|'+date_in +"\n"
 
-			}		}	}
+			}
+		}
+	}
 	document.enviar.base.value=base
 	document.enviar.ValorCapturado.value=ValorCapturado
-	document.enviar.submit()}</script>
+	document.enviar.submit()
+}
+
+</script>
 <body>
 <?php
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
@@ -235,10 +260,10 @@ if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
 else
 	$script="../dbadmin/menu_modificardb.php";
 	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>
 	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["save"]."</strong></span></a>";
 ?>
 </div><div class="spacer">&#160;</div></div>
@@ -271,7 +296,8 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  	$ix=-1;
  	$lmp="";
  	$excluir="";
- 	if (file_exists($file)){ 		$fp=file($file);
+ 	if (file_exists($file)){
+ 		$fp=file($file);
  	}else{
  		$fp=array();
  	}
@@ -279,14 +305,18 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  	if (count($fp)<3){
  		$fp[]="||||||";
  		$fp[]="||||||";
-    } 		foreach ($fp as $value) { 			$value=trim($value); 			if (trim($value)!=""){
+    }
+ 		foreach ($fp as $value) {
+ 			$value=trim($value);
+ 			if (trim($value)!=""){
  				$var=explode('|',$value);
  				$ix++;
  				$total=$ix;
  				$sel1="";
  				$sel2="";
  				$sel3="";
- 				switch ($var[4]){ 					case "no_date":
+ 				switch ($var[4]){
+ 					case "no_date":
  						$sel1=" checked";
  						break;
  					case "rows":
@@ -294,8 +324,10 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  						break;
  					case "cols":
  						$sel3="checked";
- 						break; 				}
- 				echo "<tr height=50><td valign=top><a href=javascript:DeleteElement(".$ix.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";	 			echo "<td bgcolor=white width=250  valign=top>";
+ 						break;
+ 				}
+ 				echo "<tr height=50><td valign=top><a href=javascript:DeleteElement(".$ix.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";
+	 			echo "<td bgcolor=white width=250  valign=top>";
  				echo "<input type=text name=\"tag_nombre\" value=\"".$var[0]."\" size=35 id=tag_nombre></td>\n";
  				echo "<td width=100 valign=top><input type=text name=\"tag_filas\" value=\"".$var[1]."\" size=18 id=tag_filas></td>\n";
  				echo "<td width=100 valign=top><input type=text name=\"tag_columnas\" value=\"".$var[2]."\" size=18 id=tag_columnas></td>\n";
@@ -305,7 +337,8 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  				echo "<input type=radio name=date_in_$ix value='no_date' $sel1>".$msgstr["no_date"]. "<br>";
      			echo "<input type=radio name=date_in_$ix value='rows' $sel2>".$msgstr["rows"]. " <input type=radio name=date_in_$ix value='cols' $sel3>".$msgstr["cols"];
                echo "</td></tr>";
- 			}
+ 			}
+
  	}
 
 

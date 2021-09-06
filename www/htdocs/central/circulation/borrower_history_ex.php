@@ -129,7 +129,8 @@ global $locales,$config_date_format;;
 		<table width=95% bgcolor=#cccccc>
 		<th> </th><th>".$msgstr["inventory"]."</th><th>".$msgstr["control_n"]."</th><th>".$msgstr["reference"]."</th><th>".$msgstr["typeofitems"]."</th><th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["actual_dev"]."</th><th>".$msgstr["renewals"]."</th>";
 
-		foreach ($prestamos as $linea) {			if (trim($linea)!=""){
+		foreach ($prestamos as $linea) {
+			if (trim($linea)!=""){
 				$p=explode("^",$linea);
 
 				$np=$np+1;
@@ -161,14 +162,18 @@ global $locales,$config_date_format;;
     $Expr_b= "TRANS_S_".$arrHttp["usuario"]." or TRANS_M_".$arrHttp["usuario"]." or TRANS_N_".$arrHttp["usuario"];
 	include("sanctions_read.php");
 
-	if ($sanctions_output!=""){		if ($nmulta!=0 or $nsusp!=0) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
-		$ec_output.=$sanctions_output;	}
+	if ($sanctions_output!=""){
+		if ($nmulta!=0 or $nsusp!=0) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
+		$ec_output.=$sanctions_output;
+	}
 
 $reserves="";
 if (!isset($reserve_active) or isset($reserve_active)and $reserve_active!="N"){
 	$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"],"N"," ");
 	$reserves=$reserves_arr[0];
-	if (trim($reserves)!=""){		 $reserves="<p><strong>".$msgstr["reserves"]."</strong>".$reserves;	}
+	if (trim($reserves)!=""){
+		 $reserves="<p><strong>".$msgstr["reserves"]."</strong>".$reserves;
+	}
 }
 
 ProduceOutput($ec_output.$reserves);

@@ -40,7 +40,9 @@ $DISPLAYPFT="";
 
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="javascript" type="text/javascript">
-function Enviar(){	document.maintenance.submit()}
+function Enviar(){
+	document.maintenance.submit()
+}
 </script>
 <body >
 <?php
@@ -55,12 +57,12 @@ echo "
 
 	";
 echo "<a href=\"../dbadmin/menu_modificardb.php?reinicio=s&base=".$arrHttp["base"]."&encabezado=".$arrHttp["encabezado"]."\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
 	echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
 	echo "
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 			<span><strong>". $msgstr["save"]."</strong></span>
 			</a>";
 }
@@ -96,7 +98,8 @@ if (file_exists($file)){
 		if ($value!=""){
 			$v=explode(" ",$value);
 			$v[0]=strtoupper(trim($v[0]));
-			switch ($v[0]){				case "PREFIX":
+			switch ($v[0]){
+				case "PREFIX":
 					$prefix=trim($v[1]);
 					break;
 				case "REF":
@@ -116,16 +119,20 @@ if (file_exists($file)){
 				case "USE":
 					$uf=trim($v[1]);
 					$use=trim($v[2]);
-					break;			}
+					break;
+			}
 		}
 	}
 }
 $file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".dat";
 if (file_exists($file)){
 	$fp=file($file);
-	foreach ($fp as $key=>$value){		$value=trim($value);
-		if ($value!=""){			$v=explode('=',$value);
-			switch ($v[0]){				case "alpha_prefix":
+	foreach ($fp as $key=>$value){
+		$value=trim($value);
+		if ($value!=""){
+			$v=explode('=',$value);
+			switch ($v[0]){
+				case "alpha_prefix":
 					$prefixalpha=$v[1];
 					break;
 				case "perm_prefix":
@@ -136,12 +143,16 @@ if (file_exists($file)){
 					break;
 				case "display":
 					$displaypft=$v[1];
-					break;			}		}
+					break;
+			}
+		}
 	}
 }
 if (isset($arrHttp["base"]))
 	echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
-if (!isset($arrHttp["Accion"])){	echo "<input type=hidden name=Accion value=\"actualizar\">\n";	echo "<table cellspacing=5 width=600 border=0 align=center style='font-size:20px;'>";
+if (!isset($arrHttp["Accion"])){
+	echo "<input type=hidden name=Accion value=\"actualizar\">\n";
+	echo "<table cellspacing=5 width=600 border=0 align=center style='font-size:20px;'>";
 	echo "<td></td><td colspan=4><font style='font-size:14px;'><strong>".$msgstr["tag"]."</strong></font></td>\n";
 	echo "<tr><td style='font-size:12px;'>";
 	echo $msgstr["tes_descriptor"];
@@ -231,10 +242,14 @@ if (!isset($arrHttp["Accion"])){	echo "<input type=hidden name=Accion value=\"a
 $PREFIXALPHA="";
 $PREFIXPERM="";
 $TERMPFT="";
-$DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
+$DISPLAYPFT="";
+	if ($arrHttp["Accion"]=="actualizar"){
 		$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tesaurus.rel";
 	   	$fp=fopen($file,"w");
-	    foreach ($arrHttp as $key=>$Opt){	    	if (substr($key,0,4)=="tag_"){	    		$key=trim(substr($key,4));	    		switch ($key){
+	    foreach ($arrHttp as $key=>$Opt){
+	    	if (substr($key,0,4)=="tag_"){
+	    		$key=trim(substr($key,4));
+	    		switch ($key){
 	    			case "prefix":
 	    				$PREFIX=$Opt;
 	    				break;
@@ -243,7 +258,8 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    				break;
 	    			case "ref":
 	    				$REF=$Opt;
-	    				break;	    			case "nt":
+	    				break;
+	    			case "nt":
 	    				$NT=$Opt;
 	    				break;
 	    			case"bt":
@@ -263,7 +279,8 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    				break;
 	    		}
 
-	    	}	    }
+	    	}
+	    }
 	    if ($PREFIX!="") fwrite($fp,"PREFIX ".$PREFIX."\n");
 	    if ($TERM!="")   fwrite($fp,"TERM   ".$TERM."\n");
 	    if ($REF!="")    fwrite($fp,"REF    ".$REF."\n");
@@ -277,7 +294,8 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    foreach ($arrHttp as $key=>$Opt){
 	    	if (substr($key,0,4)=="tag_"){
 	    		$key=trim(substr($key,4));
-	    		switch ($key){	    			case "prefixalpha":
+	    		switch ($key){
+	    			case "prefixalpha":
 	    				$PREFIXALPHA=$Opt;
 	    				break;
 	    			case "prefixperm":
@@ -298,7 +316,8 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    if ($DISPLAYPFT!="")  fwrite($fp,"display="     .$DISPLAYPFT."\n");
 		fclose($fp);
 	    echo "<h4>$file ".$msgstr["updated"]."</h4>";
-	}}
+	}
+}
 ?>
 </form>
 </div>

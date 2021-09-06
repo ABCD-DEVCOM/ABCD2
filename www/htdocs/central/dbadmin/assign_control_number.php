@@ -146,12 +146,12 @@ if (isset($arrHttp["encabezado"])){
 	if (isset($arrHttp["encabezado"])){
 		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"])   or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
 			echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
 			";
 		}else{
 			echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
 			";
 		}

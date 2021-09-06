@@ -36,7 +36,8 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
-switch ($arrHttp["Opcion"]){	case "control_n":
+switch ($arrHttp["Opcion"]){
+	case "control_n":
 		$file=$db_path.$arrHttp["base"]."/data/control_number.cn";
 		$msg=$msgstr["resetcn"];
 		$upd=$msgstr["lastcnupd"];
@@ -54,7 +55,8 @@ switch ($arrHttp["Opcion"]){	case "control_n":
 if (isset($file) and file_exists($file)){
 	$fp=file($file);
 	$cn_val=implode("",$fp);
-}
+}
+
 include("../common/header.php");
 echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
@@ -79,7 +81,7 @@ if ($arrHttp["Opcion"]=="inventory")
 else
 	echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
 ?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
 	</div>
@@ -99,13 +101,24 @@ if ($arrHttp["Opcion"]=="copies"){
 	$fp=file($db_path."bases.dat");
 	$new=fopen($db_path."bases.dat","w");
 	foreach ($fp as $value){
-		$value=trim($value);		$val=explode('|',$value);
-		if (trim($val[0])==trim($arrHttp["base"])){			$value=$val[0].'|'.$val[1]."|";
-			if (isset($arrHttp["copies"])){				$value.='Y';				$msg=$msgstr["linkedtocopies"];			}else{				$msg=$msgstr["unlinkedtocopies"];			}
+		$value=trim($value);
+		$val=explode('|',$value);
+		if (trim($val[0])==trim($arrHttp["base"])){
+			$value=$val[0].'|'.$val[1]."|";
+			if (isset($arrHttp["copies"])){
+				$value.='Y';
+				$msg=$msgstr["linkedtocopies"];
+			}else{
+				$msg=$msgstr["unlinkedtocopies"];
+			}
 
 		}
-		fwrite($new,$value."\n");	}
-	fclose($new);    echo "<dd><h4>"."<br>".$arrHttp["base"]." ".$msg."</h4>";}else{	$fp=fopen($file,"w");
+		fwrite($new,$value."\n");
+	}
+	fclose($new);
+    echo "<dd><h4>"."<br>".$arrHttp["base"]." ".$msg."</h4>";
+}else{
+	$fp=fopen($file,"w");
 	fwrite($fp,$arrHttp["control_n"]);
 	fclose($fp);
 

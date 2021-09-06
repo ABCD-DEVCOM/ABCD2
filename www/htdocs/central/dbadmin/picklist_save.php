@@ -9,8 +9,12 @@ $lang=$_SESSION["lang"];
 
 include("../lang/dbadmin.php");
 include("../common/header.php");
-if (isset($arrHttp["encabezado"])){	$encabezado="&encabezado=s";
-	include("../common/institutional_info.php");}else{	$encabezado="";}
+if (isset($arrHttp["encabezado"])){
+	$encabezado="&encabezado=s";
+	include("../common/institutional_info.php");
+}else{
+	$encabezado="";
+}
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 //die;
 
@@ -23,12 +27,14 @@ echo "
 			<div class=\"actions\">
 
 	";
-if (isset($arrHttp["desde"]) and $arrHttp["desde"]!="dataentry"){	echo "<a href=\"fixed_marc.php?base=". $arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";}else{
+if (isset($arrHttp["desde"]) and $arrHttp["desde"]!="dataentry"){
+	echo "<a href=\"fixed_marc.php?base=". $arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
+}else{
 	if (!isset($arrHttp["desde"]))
 		echo "<a href=\"picklist.php?base=". $arrHttp["base"]."&row=".$arrHttp["row"]."&picklist=".$arrHttp["picklist"]."\" class=\"defaultButton backButton\">";
 }
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 echo "			</div>
@@ -52,18 +58,24 @@ if (strpos($arrHttp["picklist"],"%path_database%")===false){
 }
 $fp=false;
 $fp=fopen($archivo,"w");
-if (!$fp){//	echo $archivo.": ".$msgstr["nopudoseractualizado"];
-//	die;}
+if (!$fp){
+//	echo $archivo.": ".$msgstr["nopudoseractualizado"];
+//	die;
+}
 fwrite($fp,$arrHttp["ValorCapturado"]);
 fclose($fp);
 $Opciones="";
 $VC=explode("\n",$arrHttp["ValorCapturado"]);
-foreach ($VC as $value){	$value=trim($value);	if ($Opciones=="")
+foreach ($VC as $value){
+	$value=trim($value);
+	if ($Opciones=="")
 		$Opciones=$value;
 	else
-		$Opciones.='$$$$'.$value;}
+		$Opciones.='$$$$'.$value;
+}
 echo "<h3>".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["picklist"]." ".$msgstr["updated"]."</h3>";
-if (!isset($arrHttp["desde"]) or $arrHttp["desde"]!="dataentry"){?>
+if (!isset($arrHttp["desde"]) or $arrHttp["desde"]!="dataentry"){
+?>
 
 <script>
 	row=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]."\n"?>

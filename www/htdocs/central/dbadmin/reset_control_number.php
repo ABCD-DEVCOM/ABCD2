@@ -13,16 +13,29 @@ include("../lang/acquisitions.php");
 $base=$arrHttp["base"];
 $cn_val="";
 $file_cn=$db_path.$base."/data/control_number.cn";
-if (file_exists($file_cn)){	$fp=file($file_cn);
-	$cn_val=implode("",$fp);}
+if (file_exists($file_cn)){
+	$fp=file($file_cn);
+	$cn_val=implode("",$fp);
+}
 
 include("../common/header.php");
 echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
-function Enviar(){	control=Trim(document.forma1.control_n.value)
-	if (control=="" || control=="0"){		if (confirm("The control number of the database will be restored to 0 \n\n Is that correct? ")){			if (confirm("are you sure?")){			}else{				return			}		}else{			return		}	}
-	document.forma1.submit()}
+function Enviar(){
+	control=Trim(document.forma1.control_n.value)
+	if (control=="" || control=="0"){
+		if (confirm("The control number of the database will be restored to 0 \n\n Is that correct? ")){
+			if (confirm("are you sure?")){
+			}else{
+				return
+			}
+		}else{
+			return
+		}
+	}
+	document.forma1.submit()
+}
 
 </script>
 <?php
@@ -40,7 +53,7 @@ if (isset($arrHttp["encabezado"])) {
 	<div class="actions">
 <?php echo "<a href=\"assign_control_number.php?base=".$base."$encabezado\" class=\"defaultButton backButton\">";
 ?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
  	</div>

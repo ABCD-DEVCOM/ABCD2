@@ -24,7 +24,11 @@ echo "<body>
 <input type=hidden name=Opcion value=".$arrHttp["Opcion"].">
 
 	";
-if (isset($arrHttp["Formato"])){	$Pft=$arrHttp["Formato"].".pft";}else{	$Pft=$arrHttp["base"].".pft";}
+if (isset($arrHttp["Formato"])){
+	$Pft=$arrHttp["Formato"].".pft";
+}else{
+	$Pft=$arrHttp["base"].".pft";
+}
 if (!isset($arrHttp["from"])) $arrHttp["from"]=1;
 if (!isset($arrHttp["to"])) $arrHttp["to"]="20";
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$Pft" ;
@@ -37,8 +41,11 @@ $total=0;
 if (count($contenido)>0){
 echo "<table bgcolor=#cccccc cellpadding=5>";
 echo "<th>No.Inventario</th><th>Ubicación</th><th>Tipo Objeto</th><th>Situación</th><th>Disponibilidad</th>";
-foreach ($contenido as $value){	$value=trim($value);
-	echo "<tr>";	if (trim($value)!=""){		$y=explode('|',$value);
+foreach ($contenido as $value){
+	$value=trim($value);
+	echo "<tr>";
+	if (trim($value)!=""){
+		$y=explode('|',$value);
 		echo "<td bgcolor=white>".$y[0]."</td><td bgcolor=white>".$y[1]."</td><td bgcolor=white>".$y[3]."</td>";
 		echo "<td bgcolor=white>"." "."</td><td bgcolor=white>"." "."</td>";
 	}

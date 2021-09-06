@@ -68,8 +68,10 @@ function EnviarForma(Forma,Elem){
     submitCtrl=eval("document."+Forma+".submit_"+Elem)
 
 	Ctrl_order=eval("document."+Forma+".order_no")
-	if (Trim(Ctrl_order.value)==""){		alert("<?php echo $msgstr["missorder"]?>")
-		return	}
+	if (Trim(Ctrl_order.value)==""){
+		alert("<?php echo $msgstr["missorder"]?>")
+		return
+	}
 	Ctrl_date=eval("document."+Forma+".order_date")
 	if (Trim(Ctrl_date.value)==""){
 		alert("<?php echo $msgstr["missdate"]?>")
@@ -114,13 +116,15 @@ echo "<font color=white>&nbsp; &nbsp; Script: order_ex.php</font>\n";
 <?php
 // se lee el formato de la fecha utilizando la configuración de préstamos
 $locales=explode('/',$config_date_format);
-switch ($locales[0]){	case "DD":
+switch ($locales[0]){
+	case "DD":
 		$date1="d";
 		break;
 	case "MM":
 		$date1="m";
 		break;
-}switch ($locales[1]){
+}
+switch ($locales[1]){
 	case "DD":
 		$date2="d";
 		break;
@@ -134,11 +138,20 @@ $fecha=date($formato_fecha);
 //
 $exp=explode("\n",$arrHttp["Mfn_sel"]);
 $Expresion="";
-foreach ($exp as $value){	$value=trim($value);	if ($value!=""){
+foreach ($exp as $value){
+	$value=trim($value);
+	if ($value!=""){
 		$e=explode('_',$value);
-		$Mfn[$value]=$value;  // se hace un arreglo que tiene el MFN y el número de la ocurrencia		$value="MFN_".$e[0];  // se construye la expresión de búsqueda
-		if ($Expresion==""){			$Expresion=$value;		}else{			$Expresion.=" or $value";		}
-	}}
+		$Mfn[$value]=$value;  // se hace un arreglo que tiene el MFN y el número de la ocurrencia
+		$value="MFN_".$e[0];  // se construye la expresión de búsqueda
+		if ($Expresion==""){
+			$Expresion=$value;
+		}else{
+			$Expresion.=" or $value";
+		}
+
+	}
+}
 $Expresion=urlencode($Expresion);
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/pv_order.pft" ;
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/pv_order.pft" ;
@@ -148,9 +161,13 @@ include("../common/wxis_llamar.php");
 $order=array();
 foreach ($contenido as $value){
 	if (trim($value)!=""){
-// se averigua si la ocurrencia que se presenta ha sido seleccionada		$v=explode('|',$value);
+// se averigua si la ocurrencia que se presenta ha sido seleccionada
+		$v=explode('|',$value);
 		if (isset($Mfn[$v[1]]))
-			$order[$v[0]][]=$value;	}}
+			$order[$v[0]][]=$value;
+	}
+
+}
 ksort($order);
 $tit=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/pv_order_tit.tab";
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/pv_order_tit.tab" ;
@@ -159,9 +176,12 @@ $tit_tab=implode("",$fp);
 $cols=explode('|',$tit_tab);
 echo "<table class=listTable cellspacing=3>" ;
 echo "<tr>";
-foreach ($cols as $value){	echo "<th>".$value."</th>";}
+foreach ($cols as $value){
+	echo "<th>".$value."</th>";
+}
 $form=0;
-foreach ($order as $prov=>$linea){	echo "<tr><td colspan=3><strong>$prov</strong></td></tr>";
+foreach ($order as $prov=>$linea){
+	echo "<tr><td colspan=3><strong>$prov</strong></td></tr>";
 	$form=$form+1;
 	echo "<form name=form_$form action=order_update.php onsubmit='return false'>
 	<input type=hidden name=forma value='form_$form'>
@@ -171,7 +191,8 @@ foreach ($order as $prov=>$linea){	echo "<tr><td colspan=3><strong>$prov</stron
 	$or="";
 	$typeacq="";
 	foreach ($linea as $l){
-		$cell=explode('|',$l);		if ($or=="")
+		$cell=explode('|',$l);
+		if ($or=="")
 			$or=$cell[1];
 		else
 			$or.="|".$cell[1];
@@ -180,8 +201,13 @@ foreach ($order as $prov=>$linea){	echo "<tr><td colspan=3><strong>$prov</stron
 	    $ix1=0;
 	    foreach ($cell as $c){
 	    	$ix1=$ix+1;
-	    	if ($ix1>2) {	    		if ($ix1!==16) {	    			echo  "<td>".$c."</td>";	    		}else{	    			$acq=strpos($cell[15],'^',2);
-	    			echo "<td>".substr($cell[15],$acq+2)."(".substr($cell[15],2,$acq-2).")</td>";	    		}
+	    	if ($ix1>2) {
+	    		if ($ix1!==16) {
+	    			echo  "<td>".$c."</td>";
+	    		}else{
+	    			$acq=strpos($cell[15],'^',2);
+	    			echo "<td>".substr($cell[15],$acq+2)."(".substr($cell[15],2,$acq-2).")</td>";
+	    		}
 	   		}
 		}
 		echo "<input type=hidden name=object_".$cell[1]." value=\"".$cell[5]."\">
@@ -200,7 +226,8 @@ foreach ($order as $prov=>$linea){	echo "<tr><td colspan=3><strong>$prov</stron
 		<input type=hidden name=acqtype_".$cell[1]." value=\"".$cell[15]."\">
 		";
 		$cc=explode("_",$cell[1]);  // para obtener el Mfn del registro de la sugerencia
-		echo "<input type=hidden name=Mfnsuggestion_".$cell[1]." value=".$cc[0].">\n";	}
+		echo "<input type=hidden name=Mfnsuggestion_".$cell[1]." value=".$cc[0].">\n";
+	}
 	echo "<tr><td colspan=3>
 		<div id=headerDiv_".$cell[1]. "style=\"headerDiv\">
 	    	<div id=titleText_".$cell[1]." class=titleText><a id=myHeader_".$cell[1]." style=\"myHeader\" href=\"javascript:toggle('contentDiv_".$cell[1]."','myHeader_".$cell[1]."');\" >".$msgstr["createorder"]."</a>
@@ -212,7 +239,8 @@ foreach ($order as $prov=>$linea){	echo "<tr><td colspan=3><strong>$prov</stron
 		<br>
 	</td></tr>\n";
 	echo "</form>";
-}
+
+}
 
 echo "</table>";
 

@@ -54,7 +54,7 @@ if (isset($arrHttp["encabezado"])){
 
 	<div class="actions">
 <?php echo "<a href=\"../common/inicio.php?reinicio=s$encabezado\" class=\"defaultButton backButton\">";?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["BACK"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>

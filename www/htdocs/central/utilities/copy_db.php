@@ -31,10 +31,14 @@ function Explorar(){
     msgwin.focus()
 }
 function EnviarForma(){
-	if (Trim(document.upload.storein.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["folder_name"]?>")
-		return	}
-	if (Trim(document.upload.copyname.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["cp_name"]?>")
-		return	}
+	if (Trim(document.upload.storein.value)==""){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["folder_name"]?>")
+		return
+	}
+	if (Trim(document.upload.copyname.value)==""){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["cp_name"]?>")
+		return
+	}
 	dbn=Trim(document.upload.copyname.value)
 	var alphaExp = /^[a-zA-Z_0123456789-]+$/;
     if(dbn.match(alphaExp)){
@@ -47,9 +51,12 @@ function EnviarForma(){
    	document.upload.submit()
 }
 
-function Limpiar(){	fld=Trim(document.upload.storein.value)
-	if (fld.substr(0,1)=="/"){		fld=fld.substring(1)
-		document.upload.storein.value=fld	}
+function Limpiar(){
+	fld=Trim(document.upload.storein.value)
+	if (fld.substr(0,1)=="/"){
+		fld=fld.substring(1)
+		document.upload.storein.value=fld
+	}
 }
 </script>
 </head>
@@ -61,7 +68,7 @@ function Limpiar(){	fld=Trim(document.upload.storein.value)
 	<div class="actions">
 <?php echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>

@@ -39,15 +39,23 @@ $chart[ 'series_color' ] = array ("aa0000","FFFFC0",
 								  "5F0000","ee0000",
 								  "3e454a","05fbfa" );
 
-for ($i=0;$i<30;$i++){    $j=$i+1;	mt_srand((double)microtime()* 100000);
+for ($i=0;$i<30;$i++){
+    $j=$i+1;
+	mt_srand((double)microtime()* 100000);
     $c = '';
     while(strlen($c)<6){
         $c .= sprintf("%02X", mt_rand(0, 255));
     }
-    foreach ($chart["series_color"] as $value){    	if (abs($c-$value)<10){    		$c="";
+    foreach ($chart["series_color"] as $value){
+    	if (abs($c-$value)<10){
+    		$c="";
     		$i=$i-1;
-    		break;    	}    }    if ($c!="") $chart[ 'series_color' ][] =$c;
-}
+    		break;
+    	}
+    }
+    if ($c!="") $chart[ 'series_color' ][] =$c;
+
+}
 $order="series";
 $duration=0.5;
 $orientation="diagonal_up";

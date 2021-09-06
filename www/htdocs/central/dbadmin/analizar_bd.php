@@ -36,7 +36,7 @@ echo "
 
 	";
 echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
@@ -68,12 +68,14 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/analizar_bd";
 </html>
 <?php
 function Ask_Confirmation(){
-	echo "<div style='margin: 20px 40px 10px 200px; width:400px '>";	echo "Este proceso analiza el contenido de una base de datos para determinar qué campos y subcampos se están utilizando.  Puede tardar varios minutos por lo que no debe presionar ninguna tecla hasta obtener el mensaje
+	echo "<div style='margin: 20px 40px 10px 200px; width:400px '>";
+	echo "Este proceso analiza el contenido de una base de datos para determinar qué campos y subcampos se están utilizando.  Puede tardar varios minutos por lo que no debe presionar ninguna tecla hasta obtener el mensaje
 	 que indique que el proceso ha terminado\n";
 	 echo "";
 	 echo "<p>";
 	 echo "<input type=submit value=continuar onclick=document.generar.ok.value='OK'>";
-	 echo "</div>";}
+	 echo "</div>";
+}
 
 
 function AnalizarBaseDeDatos($base){
@@ -100,15 +102,20 @@ global $db_path;
     ob_flush();
 	$IsisScript="leer_mfnrange.xis";
 	//$MaxMfn=100;
-	for ($mfn=1;$mfn<$MaxMfn;$mfn++){		echo "$mfn<br>";
+	for ($mfn=1;$mfn<$MaxMfn;$mfn++){
+		echo "$mfn<br>";
 		$query="&base=$base&cipar=$db_path"."par/".$base.".par&Pft=ALL&from=$mfn&to=$mfn";
 		$contenido=WxisLlamar($IsisScript,$base,$query);
 		foreach ($contenido as $value){
 			$value=trim($value);
 			if ($value!=""){
-				if (substr($value,0,4)!='mfn='){					$pos=strpos($value," ");
+				if (substr($value,0,4)!='mfn='){
+					$pos=strpos($value," ");
 					$tag=substr($value,0,$pos);
-					if (isset($resultado[$tag]["tag"])){	                     $resultado[$tag]["cuenta"]=$resultado[$tag]["cuenta"]+1;					}else{						$resultado[$tag]["tag"]=$tag;
+					if (isset($resultado[$tag]["tag"])){
+	                     $resultado[$tag]["cuenta"]=$resultado[$tag]["cuenta"]+1;
+					}else{
+						$resultado[$tag]["tag"]=$tag;
 						$resultado[$tag]["indicadores"]="";
 						$resultado[$tag]["subc"]="";
 						$resultado[$tag]["cuenta"]=1;
@@ -120,8 +127,10 @@ global $db_path;
 	           		//echo "$ix / $value";
 	           		if ($ix===false) continue;
 	           		$indicadores="";
-	           		if ($ix==2){	           			$resultado[$tag]["indicadores"]="S";
-	           			$indicadores="S";	           		}
+	           		if ($ix==2){
+	           			$resultado[$tag]["indicadores"]="S";
+	           			$indicadores="S";
+	           		}
 	           		$value=substr($value,$ix);
 	           		$v=explode('^',$value);
 	           		if (count($v)>1){
@@ -131,28 +140,38 @@ global $db_path;
 		                	if (isset($resultado[$tag]["subc"])){
 		                		if (strpos($resultado[$tag]["subc"],$sc)===false)
 		                			$resultado[$tag]["subc"].=$sc;
-		                	}else{		                		$resultado[$tag]["subc"]=$sc;		                	}		                }
+		                	}else{
+		                		$resultado[$tag]["subc"]=$sc;
+		                	}
+		                }
 		            }
 					//echo "** $tag=".$value;
 					//echo "<xmp>";print_r($v);echo "</xmp>";
 					flush();
-	    			ob_flush();				}
-			}
-		}	}
+	    			ob_flush();
+				}
+
+			}
+		}
+	}
 	echo "<table border=1 cellpadding=5><th>Tag</th><th>Indicadores</th><th>Subcampos</th><th>Contador</th>";
 	ksort($resultado);
-	foreach ($resultado as $value){		echo "<tr><td>".$value["tag"]."</td>";
+	foreach ($resultado as $value){
+		echo "<tr><td>".$value["tag"]."</td>";
 		echo "<td>".$value["indicadores"]."</td>";
 		echo "<td>".$value["subc"]."</td>";
 		echo "<td>".$value["cuenta"]."</td>";
-		echo "</tr>";	}
+		echo "</tr>";
+	}
     echo "</table>";
 
     echo "\n<script>alert('Fin del Proceso')</script>\n";
 }
 
-function WxisLlamar($IsisScript,$base,$query){global $db_path,$Wxis,$xWxis,$wxisUrl;
+function WxisLlamar($IsisScript,$base,$query){
+global $db_path,$Wxis,$xWxis,$wxisUrl;
 	$IsisScript=$xWxis.$IsisScript;
 	INCLUDE ("../common/wxis_llamar.php");
-	return $contenido;}
+	return $contenido;
+}
 ?>

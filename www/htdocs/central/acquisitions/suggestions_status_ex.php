@@ -21,7 +21,8 @@ include("../common/header.php");
 include("javascript.php");
 ?>
 <script>
-function Validar(){	res=""
+function Validar(){
+	res=""
 	if (document.forma1.tag2[1].checked || document.forma1.tag2[2].checked) res="Y"
 	if (res==""){
 		alert ("<?php echo $msgstr["err2_1"]?>")
@@ -59,11 +60,11 @@ if (isset($arrHttp["see_all"])) $see_all="&see_all=Y"
 	</div>
 	<div class="actions">
 		<a href=suggestions_status.php?encabezado=s&base=<?php echo $arrHttp["base"]."&sort=".$arrHttp["sort"].$see_all?> class="defaultButton cancelButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 			<span><strong><?php echo $msgstr["cancel"]?></strong></span>
 		</a>
 		<a href=javascript:EnviarForma() class="defaultButton saveButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 			<span><strong><?php echo $msgstr["update"]?></strong></span>
 		</a>
 	</div>
@@ -104,7 +105,7 @@ ConstruyeWorksheetFmt();
 $arrHttp["lock"] ="S";
 $maxmfn=$arrHttp["Mfn"];
 $res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"");
-echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../images/zoom.png></a> &nbsp;<strong>".$valortag[18]."</strong><br>";
+echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../../assets/images/zoom.png></a> &nbsp;<strong>".$valortag[18]."</strong><br>";
 echo "<br>";
 if ($res=="LOCKREJECTED") {
 	echo "<script>

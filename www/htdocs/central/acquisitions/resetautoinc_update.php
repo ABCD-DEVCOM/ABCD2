@@ -11,8 +11,10 @@ include("../lang/acquisitions.php");
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 $file_cn=$db_path.$arrHttp["base"]."/data/control_number.cn";
-if (file_exists($file_cn)){	$fp=file($file_cn);
-	$cn_val=implode("",$fp);}
+if (file_exists($file_cn)){
+	$fp=file($file_cn);
+	$cn_val=implode("",$fp);
+}
 include("../common/header.php");
 echo "<script src=../dataentry/js/lr_trim.js></script>"
 ?>
@@ -29,7 +31,7 @@ include("../common/institutional_info.php");
 	<div class="actions">
 <?php echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
 ?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
 	</div>

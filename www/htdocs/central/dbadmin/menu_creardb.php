@@ -4,7 +4,11 @@ unset($_SESSION["DCIMPORT"]);
 unset($_SESSION["CISIS"]);
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
-}else{	if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and !isset($_SESSION["permiso"]["CENTRAL_CRDB"])){		header("Location: ../common/error_page.php") ;	}}
+}else{
+	if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and !isset($_SESSION["permiso"]["CENTRAL_CRDB"])){
+		header("Location: ../common/error_page.php") ;
+	}
+}
 unset($_SESSION["FDT"]);
 unset($_SESSION["PFT"]);
 unset($_SESSION["FST"]);
@@ -39,7 +43,9 @@ function VerificarTipo(){
 function Validar(){
 	cisisv=""
 	ix=document.forma1.CISIS_VERSION.length
-	for (i=0;i<ix;i++){		if (document.forma1.CISIS_VERSION[i].checked) cisisv=document.forma1.CISIS_VERSION[i].value	}
+	for (i=0;i<ix;i++){
+		if (document.forma1.CISIS_VERSION[i].checked) cisisv=document.forma1.CISIS_VERSION[i].value
+	}
 	if (cisisv==""){
 		alert("<?php echo $msgstr["falta"]." CISIS VERSION"?>")
 		return
@@ -69,10 +75,12 @@ function Validar(){
     document.forma1.base.value=dbn.toLowerCase()
     document.forma1.nombre.value=dbn.toLowerCase()
 	ix=document.forma1.base_sel.options.length
-	for (i=1;i<ix;i++){		if (document.forma1.base_sel.options[i].value==dbn){
+	for (i=1;i<ix;i++){
+		if (document.forma1.base_sel.options[i].value==dbn){
 			alert("<?php echo $msgstr["dbexists"]?>")
 			return
-		}	}
+		}
+	}
 	desc=Trim(document.forma1.desc.value)
 	if (desc==""){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["descripcion"]?>")
@@ -109,7 +117,9 @@ function Validar(){
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 ?>
 	<div class="sectionInfo">
 
@@ -120,7 +130,7 @@ if (isset($arrHttp["encabezado"])){
 		<div class="actions">
 <?php if (isset($arrHttp["encabezado"])){
 	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["cancel"]."</strong></span>
 				</a>
 	";
@@ -135,7 +145,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/admin.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_creardb.php</font>";
+echo "&nbsp; &nbsp; Script: dbadmin/menu_creardb.php";
 ?>
 	</div>
 	<form method=post name=forma1 onsubmit="javascript:return false">
@@ -152,7 +162,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_creardb.php</font>";
 
  <?php
  	$CIV=explode(";",$cisis_versions_allowed);
- 	foreach ($CIV as $v){ 		echo "<input type=radio name=\"CISIS_VERSION\" value=\"$v\">$v &nbsp; &nbsp;"; 	}
+ 	foreach ($CIV as $v){
+ 		echo "<input type=radio name=\"CISIS_VERSION\" value=\"$v\">$v &nbsp; &nbsp;";
+ 	}
  ?>
                 		<p>
                 	</div>
@@ -207,21 +219,7 @@ foreach ($fp as $linea){
 }
 ?>
 						</select>
-						<p>
-<div name=dbtype id=dbtype style="display:none">
-<!--
-CISIS type <select name='cisis'>
-<option value=''>default</option>
-<option value='bigisis'>bigisis</option>
-<option value='ffi'>ffi</option>
-<option value='unicode'>unicode</option>
-</select>
-<br><br>Import documents?<select name='dcimport'>
-<option value='yes'>Yes</option>
-<option value='no' selected>No</option>
-</select>
--->
-</div>
+
 					</div>
 					<div class="spacer">&#160;</div>
 				</div>
@@ -231,9 +229,7 @@ CISIS type <select name='cisis'>
 		<div class="formFoot">
 			<div class="pagination">
 				<a href="javascript:Validar()" class="singleButton singleButtonSelected">
-						<span class="sb_lb">&#160;</span>
-						[<?php echo $msgstr["continuar"]?>]
-						<span class="sb_rb">&#160;</span>
+						<?php echo $msgstr["continuar"]?> <i class="fas fa-arrow-right"></i>
 					</a>
 				<div class="spacer">&#160;</div>
 			</div>

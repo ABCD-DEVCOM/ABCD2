@@ -14,7 +14,8 @@ if (isset($arrHttp["encabezado"]))
 else
 	$encabezado="";
 $lang=$_SESSION["lang"];
-
+
+
 include("../common/header.php");
 echo "<body>";
 if (isset($arrHttp["encabezado"])){
@@ -28,7 +29,7 @@ echo "
 	<div class=\"breadcrumb\">".$msgstr["z3950"].": ".$msgstr["z3950_cnv"]." (".$arrHttp["base"].")</div>
 	<div class=\"actions\">\n";
 echo "<a href=z3950_conf.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>". $msgstr["back"]."</strong></span>
 		</a>
 		</div>

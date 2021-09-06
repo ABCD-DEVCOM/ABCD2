@@ -44,7 +44,7 @@ include("../common/header.php");
 	<div class="actions">
 <?php echo "<a href=\"carga_iso.php?base=".$arrHttp["base"]."&tipo=".$arrHttp["tipo"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -70,14 +70,19 @@ $ext_all="";
 foreach ($ext_allowed as $val){
 	$ext_all.=" &nbsp; ".$val;
 }
-foreach ($files['name'] as $key=>$name) {	$ext = pathinfo($name, PATHINFO_EXTENSION);
+foreach ($files['name'] as $key=>$name) {
+	$ext = pathinfo($name, PATHINFO_EXTENSION);
 	if(!in_array(strtoupper($ext),$ext_allowed) ) {
 		echo "<p><dd><h3>".$name." ".$msgstr["inv_file_ext"]." ".$ext_all."</h3></p></dd>";
     	die;
-	}  	$max=get_cfg_var ("upload_max_filesize");
-    if ((int)$files['size'][$key]==0){    	$max=get_cfg_var ("upload_max_filesize");
-    	echo "upload_max_filesize = $max<br>";    	echo $msgstr["maxfilesiz"];
-    	die;    }
+	}
+  	$max=get_cfg_var ("upload_max_filesize");
+    if ((int)$files['size'][$key]==0){
+    	$max=get_cfg_var ("upload_max_filesize");
+    	echo "upload_max_filesize = $max<br>";
+    	echo $msgstr["maxfilesiz"];
+    	die;
+    }
 	if ($files['size'][$key]) {
       // clean up file name
    		$name = str_replace(" ", "_",

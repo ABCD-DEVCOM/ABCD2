@@ -69,18 +69,23 @@ echo "<font color=white>&nbsp; &nbsp; Script: suggestions_new_update.php</font>\
 		<div class="formContent">
 <?php
 if ($cn!=""){
-	$arrHttp["Formato"]=$arrHttp["base"];	echo LeerRegistroFormateado($arrHttp["Formato"]);
+	$arrHttp["Formato"]=$arrHttp["base"];
+	echo LeerRegistroFormateado($arrHttp["Formato"]);
 }else{
 	echo "<h5>".$msgstr["noseq"]."</h5>";
 	$url="";
     echo "<form name=enviar method=post action=suggestions_new_update.php>\n";
-    foreach ($arrHttp as $var=>$value) {    	echo "<input type=hidden name=$var value=\"$value\">\n";    }
+    foreach ($arrHttp as $var=>$value) {
+    	echo "<input type=hidden name=$var value=\"$value\">\n";
+    }
     echo "<input type=submit value=\"".$msgstr["tryagain"]."\">
 
     </form>";
-    echo "<p>$url";//	$permisos=VerificarPermisos($perms);
+    echo "<p>$url";
+//	$permisos=VerificarPermisos($perms);
 //	echo $permisos."<p>";
-	die;}
+	die;
+}
 die;
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
@@ -118,7 +123,8 @@ global $arrHttp;
 }
 
 
-function VerificarPermisos($perms){	if (($perms & 0xC000) == 0xC000) {
+function VerificarPermisos($perms){
+	if (($perms & 0xC000) == 0xC000) {
 	    // Socket
 	    $info = 's';
 	} elseif (($perms & 0xA000) == 0xA000) {
@@ -166,5 +172,6 @@ function VerificarPermisos($perms){	if (($perms & 0xC000) == 0xC000) {
 	            (($perms & 0x0200) ? 'T' : '-'));
 
  	return $info;
-}
+
+}
 ?>

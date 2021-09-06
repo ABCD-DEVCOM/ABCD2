@@ -36,24 +36,34 @@ include("../common/header.php");
 var pos_val=0
 
 function PrepareString(){
-	format='<?php echo $arrHttp["format"]?>'	ix=document.recval.tag.length
+	format='<?php echo $arrHttp["format"]?>'
+	ix=document.recval.tag.length
 	ValorCapturado=""
 	check=""
-	for (i=0; i<ix; i++){		ixsel=document.recval.tag[i].selectedIndex
+	for (i=0; i<ix; i++){
+		ixsel=document.recval.tag[i].selectedIndex
 		pft=Trim(document.recval.format[i].value)
 		if (pft!=""){
 			if (format=="recval")
 				check=document.recval.check[i].checked
 			else
 				check=""
-			if (ixsel<1 && format!="recval"){				alert("<?php echo $msgstr["selfields"]?>")
-				return false			}
+			if (ixsel<1 && format!="recval"){
+				alert("<?php echo $msgstr["selfields"]?>")
+				return false
+			}
 			tag=Trim(document.recval.tag[i].options[ixsel].value)
-			while (tag.length<4){				tag="0"+tag			}			ValorCapturado+=tag+escape(pft)+"$$|$$"+check+"\n"		}	}
+			while (tag.length<4){
+				tag="0"+tag
+			}
+			ValorCapturado+=tag+escape(pft)+"$$|$$"+check+"\n"
+		}
+	}
 
 	return ValorCapturado
 }
-function Enviar(){	ValorCapturado=PrepareString()
+function Enviar(){
+	ValorCapturado=PrepareString()
 	//if (ValorCapturado==false) return
 	document.recval.ValorCapturado.value=ValorCapturado
 	document.recval.target=""
@@ -62,8 +72,11 @@ function Enviar(){	ValorCapturado=PrepareString()
 
 }
 
-function SaveAs(){	if (document.recval.tipom.selectedIndex<1){		alert("You must select the type of record of the validation format to be saved")
-		return	}
+function SaveAs(){
+	if (document.recval.tipom.selectedIndex<1){
+		alert("You must select the type of record of the validation format to be saved")
+		return
+	}
 	ValorCapturado=PrepareString()
 	if (ValorCapturado==false) return
 	document.recval.ValorCapturado.value=ValorCapturado
@@ -105,8 +118,10 @@ function TestIndividual(){
 	msgwintest.focus()
 }
 
-function TraerFormato(Tag){	document.recval.format[Tag].value=msgwin.document.editar.campo.value
-	msgwin.close()}
+function TraerFormato(Tag){
+	document.recval.format[Tag].value=msgwin.document.editar.campo.value
+	msgwin.close()
+}
 
 function EditarFormato(ix){
     ixopc=document.recval.tag[ix].selectedIndex
@@ -167,19 +182,22 @@ function getElement(psID) {
 	}
 }
 
-function DrawElement(selind,pft,ixpt,fatal){	selected=""
+function DrawElement(selind,pft,ixpt,fatal){
+	selected=""
 	selind=selind-1
 	xhtml="<tr><td bgcolor=white><select name=tag>\n<option></option>"
-	for (var opt in option){		o=option[opt].split('|')
+	for (var opt in option){
+		o=option[opt].split('|')
 
-		if (selind==opt) {			selected=" selected"
+		if (selind==opt) {
+			selected=" selected"
 	    }
 		xhtml+="<option value=\""+o[0]+"\""+selected+">"+o[1]+" ("+o[0]+" "+o[2]+")</option>\n";
 		selected=""
 	}
 	xhtml+="</select><br><a href=javascript:AddElement("+ixpt+")><?php echo $msgstr["add"]?></a></td>"
 	xhtml+="<td bgcolor=white><textarea name=format cols=80 rows=1>"+pft+"</textarea></td>"
-	xhtml+="<td bgcolor=white><a href=\"javascript:EditarFormato("+ixpt+")\"><img src=../images/edit.png border=0></a>&nbsp; &nbsp;"
+	xhtml+="<td bgcolor=white><a href=\"javascript:EditarFormato("+ixpt+")\"><img src=../../assets/images/edit.png border=0></a>&nbsp; &nbsp;"
 	xhtml+="&nbsp;<a href=javascript:DeleteElement("+ixpt+")><img src=../dataentry/img/toolbarDelete.png alt=\"<?php echo $msgstr["delete"]?>\" text=\"<?php $msgstr["delete"]?>\"></a>"
 	<?php if ($arrHttp["format"]=="recval")
 		echo 'xhtml+="<div><input type=checkbox name=check";
@@ -241,8 +259,11 @@ function AddElement(ixpos){
 			    	pft=document.recval.format[ia].value
 			    	xhtm=DrawElement(ixSel,pft,ixnum,check)
 			    	html+=xhtm
-			    	if (ia==ixpos){			    		ixnum++			    		nuevo=DrawElement(0,"",ixnum,"")
-			    		html+=nuevo			    	}
+			    	if (ia==ixpos){
+			    		ixnum++
+			    		nuevo=DrawElement(0,"",ixnum,"")
+			    		html+=nuevo
+			    	}
 
 			    }
 		    }
@@ -261,12 +282,16 @@ function AddElement(ixpos){
 if (isset($arrHttp["encabezado"])){
     include("../common/institutional_info.php");
     $encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 if (isset($arrHttp["wks"])){
 	$arrHttp["wks"]=urldecode($arrHttp["wks"]);
 	$w=explode('|',$arrHttp["wks"]);
-}else{	$w[0]=$arrHttp["base"].".fdt";
-	$w[3]="";}
+}else{
+	$w[0]=$arrHttp["base"].".fdt";
+	$w[3]="";
+}
 echo "
 	<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".
@@ -274,7 +299,7 @@ echo "
 	</div>
 	<div class=\"actions\">\n";
 echo "<a href=\"typeofrecs.php?Opcion=update&type=&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["cancel"]."</strong></span>
 	</a>
 	</div>
@@ -304,12 +329,18 @@ if (isset($arrHttp["encabezado"]))
 
 //NAME OF THE FILE
 $pref="";
-if (isset($arrHttp["wks"])and $arrHttp["wks"]!="" ){	$w=explode('|',$arrHttp["wks"]);
+if (isset($arrHttp["wks"])and $arrHttp["wks"]!="" ){
+	$w=explode('|',$arrHttp["wks"]);
 	$pref=strtolower($w[1]);
 	$field=$w[0];
-	if (isset($w[2]) and $w[2]!=""){		$pref.="_".$w[2];	}
+	if (isset($w[2]) and $w[2]!=""){
+		$pref.="_".$w[2];
+	}
 	$pref.="_";
-	$field=$pref.$arrHttp["base"];}else{	$field=$arrHttp["base"];}
+	$field=$pref.$arrHttp["base"];
+}else{
+	$field=$arrHttp["base"];
+}
 unset($pft);
 
 //READ THE DATAENTRY FORMAT OF THE SELECTED TYPE OF RECORD. IF NOT FOUND, READ THE DATABASE FDT
@@ -320,7 +351,8 @@ if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db.
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
 $fp=file($archivo);
-foreach ($fp as $value){	$value=trim($value);
+foreach ($fp as $value){
+	$value=trim($value);
 	$t=explode('|',$value);
 	if ($t[0]!='G'){
 		$tag=$t[1];
@@ -346,7 +378,8 @@ if (file_exists($archivo)){
 	$fp=explode('###',$str_file);
 	foreach ($fp as $value){
 		if (trim($value)!=""){
-			$pft[]=$value;		}
+			$pft[]=$value;
+		}
 	}
 
 }
@@ -361,28 +394,33 @@ else
 	$start=count($pft);
 for ($i=$start;$i<3;$i++)  $pft[]=":";
 if (isset($pft)){
-	foreach ($pft as $value){		$value=trim($value);
+	foreach ($pft as $value){
+		$value=trim($value);
 		if ($value=="") continue;
 		$value=str_replace('%%%%',"",$value);
 		$x=explode(':',$value,2);
 
 		$tag=trim($x[0]);
-//		if ($tag!=""){			$ix=$ix+1;
+//		if ($tag!=""){
+			$ix=$ix+1;
 			echo "<tr><td bgcolor=white>";
 			echo '<select name=tag><option></option>';
-			foreach ($select as $val){				$t=explode('|',$val);
+			foreach ($select as $val){
+				$t=explode('|',$val);
 				if ($x[0]==$t[1])
 					$selected=" selected";
 				else
 					$selected="";
-				echo "<option value=".$t[1]." $selected>".$t[2]." (".$t[1]. " ".$t[5].")</option>\n";			}
+				echo "<option value=".$t[1]." $selected>".$t[2]." (".$t[1]. " ".$t[5].")</option>\n";
+			}
 			echo "</select><br><a href=javascript:AddElement($ix)>".$msgstr["add"]."</a></td>";
             $y=explode('$$|$$',$x[1]);
 			echo "<td bgcolor=white><textarea cols=80 rows=1 name=format>";
 			echo $y[0];
-			echo "</textarea></td><td bgcolor=white><a href=\"javascript:EditarFormato($ix)\"><img src=../images/edit.png border=0></a>&nbsp; &nbsp;
+			echo "</textarea></td><td bgcolor=white><a href=\"javascript:EditarFormato($ix)\"><img src=../../assets/images/edit.png border=0></a>&nbsp; &nbsp;
 			&nbsp;<a href=javascript:DeleteElement(".$ix.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a>";
-			if ($arrHttp["format"]=="recval"){				echo "<div><input type=checkbox name=check";
+			if ($arrHttp["format"]=="recval"){
+				echo "<div><input type=checkbox name=check";
 				if (isset($y[1]) and trim($y[1])=="true") echo " checked";
 				echo ">".$msgstr["fatal"]."</div>";
 				echo "</td>";
@@ -405,7 +443,9 @@ echo "<input type=hidden name=fn value=$pref".$arrHttp["base"]."$ext>";
 
 $tr=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab";
 if (!file_exists($tr))  $tr=$db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab";
-if (file_exists($tr)){	echo "| &nbsp; &nbsp <img src=../dataentry/img/toolbarSave.png> &nbsp;";	echo $msgstr["saveas"].": ";
+if (file_exists($tr)){
+	echo "| &nbsp; &nbsp <img src=../dataentry/img/toolbarSave.png> &nbsp;";
+	echo $msgstr["saveas"].": ";
 
 	$fp=file($tr);
     echo "<select name=tipom>\n<option></option>";

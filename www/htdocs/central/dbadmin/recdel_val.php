@@ -23,7 +23,8 @@ include("../common/header.php");
 var pos_val=0
 
 
-function Enviar(){	ValorCapturado=document.recval.format.value
+function Enviar(){
+	ValorCapturado=document.recval.format.value
 	document.recval.ValorCapturado.value=ValorCapturado
 	document.recval.target=""
 	document.recval.action="recval_save.php"
@@ -57,12 +58,16 @@ function Test(Tag){
 if (isset($arrHttp["encabezado"])){
     include("../common/institutional_info.php");
     $encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 if (isset($arrHttp["wks"])){
 	$arrHttp["wks"]=urldecode($arrHttp["wks"]);
 	$w=explode('|',$arrHttp["wks"]);
-}else{	$w[0]=$arrHttp["base"].".fdt";
-	$w[3]="";}
+}else{
+	$w[0]=$arrHttp["base"].".fdt";
+	$w[3]="";
+}
 echo "
 	<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".
@@ -70,7 +75,7 @@ echo "
 	</div>
 	<div class=\"actions\">\n";
 echo "<a href=\"menu_modificardb.php?Opcion=update&type=&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["cancel"]."</strong></span>
 	</a>
 	</div>
@@ -102,9 +107,12 @@ if (file_exists($archivo)){
 	$fp=file($archivo);
 	foreach ($fp as $value){
 		if (trim($value)!=""){
-			$pft[]=$value;		}
+			$pft[]=$value;
+		}
 	}
-}else{	$pft[]="";}
+}else{
+	$pft[]="";
+}
 echo "<center>";
 echo "<div id=rows>\n";
 echo "<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1>";
@@ -112,7 +120,8 @@ echo "<tr><td nowrap>".$msgstr[$arrHttp["format"]]."</td></tr>";
 $ix=-1;
 echo "<tr><td bgcolor=white><textarea cols=80 rows=5 name=format>";
 if (isset($pft)){
-	foreach ($pft as $value){		echo $value;
+	foreach ($pft as $value){
+		echo $value;
 		echo "\n";
 	}
 

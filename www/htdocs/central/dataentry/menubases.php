@@ -191,7 +191,7 @@ function CambiarLenguaje(){
 		<img src=<?php if (isset($logo))
 								echo $logo;
 							else
-								echo "../images/logoabcd.png";
+								echo "../../assets/images/logoabcd.png";
 					  ?>
 					  >
 					  <h1><?php echo $institution_name?></h1>
@@ -234,16 +234,16 @@ foreach ($_SESSION["permiso"] as $key=>$value){
 if ($circulation=="Y" or $acquisitions=="Y"){
 		echo $msgstr["modulo"].":";
          ?>
-  			<select name=modulo style="width:140;font-size:8pt;font-family:arial narrow"  onclick=VerificarEdicion() onchange=Modulo()>
+  			<select name=modulo   onclick=VerificarEdicion() onchange=Modulo()>
   				<option value=catalog><?php echo $msgstr["catalogacion"]?>
   				<!--option value=dbadmin><?php echo $msgstr["dbadmin"]?></option -->
   				<option value=loan><?php echo $msgstr["prestamo"]?>
   				<option value=acquisitions><?php echo $msgstr["acquisitions"]?>
 
-  			</select><br>
+  			</select>
           <?php } ?>
   			<?php echo $msgstr["lang"]?>:
-            <select name=lenguaje style="width:140;font-size:8pt;font-family:arial narrow"   onchange=CambiarLenguaje()>
+            <select name="lenguaje"  onchange="CambiarLenguaje()">
             <?php
             include "../common/inc_get-langtab.php";
             $a=get_langtab();
@@ -263,7 +263,7 @@ if ($circulation=="Y" or $acquisitions=="Y"){
             ?>
             </select><br>
 <?php echo $msgstr["bd"]?>:
-		<select name=baseSel onchange=CambiarBase() onclick=VerificarEdicion() style="width:140;font-size:8pt;font-family:arial narrow">
+		<select name="baseSel" onchange="CambiarBase()" onclick="VerificarEdicion()">
 		<option value=""></option>
 <?php
 $i=-1;

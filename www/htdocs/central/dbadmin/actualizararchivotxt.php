@@ -49,7 +49,7 @@ if (isset($arrHttp["encabezado"])){
 			<div class="actions">
 <?php echo "<a href=\"$retorno\" class=\"defaultButton backButton\">";
 ?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
 			</div>
