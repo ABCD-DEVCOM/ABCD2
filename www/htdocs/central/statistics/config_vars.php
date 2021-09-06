@@ -8,7 +8,8 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
-// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILOinclude("../common/header.php");
+// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
+include("../common/header.php");
 
 // LECTURA DE LA FDT DE LA BASE DE DATOS Y CREAR LISTA DE CAMPOS
 $file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
@@ -29,12 +30,15 @@ echo "</script>\n";
 <script languaje=javascript>
 //LEE LA FDT O LA FST
 function Ayuda(hlp){
-	switch (hlp){		case 0:
+	switch (hlp){
+		case 0:
 			msgwin=window.open("../dbadmin/fdt_leer.php?base=<?php echo $arrHttp["base"]?>","FDT","")
 			break
 		case 1:
 		   	msgwin=window.open("../dbadmin/fst_leer.php?base=<?php echo $arrHttp["base"]?>","FST","")
-			break	}
+			break
+	}
+
 	msgwin.focus()
 }
 
@@ -127,14 +131,18 @@ function AddElement(){
 			    	html+=xhtm
 			    }
 		    }
-		 }	 }else{		ia=0	 }
+		 }
+	 }else{
+		ia=0
+	 }
 	nuevo=DrawElement(ia,"","","","")
 	seccion.innerHTML = html+nuevo+"</table>"
 }
 
 // PASA AL CAMPO DE TEXTO EL NOMBRE DE LA VARIABLE SELECCIONADA
 function Cambiar(ix){
-		sel=document.stats.sel_text[ix].selectedIndex
+
+		sel=document.stats.sel_text[ix].selectedIndex
 		if (sel==0){
 			document.stats.nombre[ix].value=""
 			document.stats.pft[ix].value=""
@@ -145,13 +153,18 @@ function Cambiar(ix){
 }
 
 //RECOLECTA LOS VALORES DE LA PAGINA Y ENVIA LA FORMA
-function Guardar(){	ValorCapturado=""
+function Guardar(){
+	ValorCapturado=""
 	base="<?php echo $arrHttp["base"]?>"
-	total=document.stats.nombre.length	if (total==0){
+	total=document.stats.nombre.length
+	if (total==0){
 		pft=Trim(document.stats.pft.value)
 		nombre=Trim(document.stats.nombre.value)
-		date=document.stats.date.checked		if (nombre=="" && pft!=""){			alert("<?php echo $msgstr["mustselectfield"]?>")
-			return;		}
+		date=document.stats.date.checked
+		if (nombre=="" && pft!=""){
+			alert("<?php echo $msgstr["mustselectfield"]?>")
+			return;
+		}
 		if (nombre!="" && pft==""){
 			alert("<?php echo $msgstr["misspft"]?>")
 			return;
@@ -161,7 +174,9 @@ function Guardar(){	ValorCapturado=""
 			pft=pft.replace(new RegExp('\\r','g'),'')
 			ValorCapturado=Trim(nombre)+"|"+Trim(pft)+"|"+date
 		}
-	}else{		for (i=0;i<total;i++){			pft=Trim(document.stats.pft[i].value)
+	}else{
+		for (i=0;i<total;i++){
+			pft=Trim(document.stats.pft[i].value)
 			nombre=Trim(document.stats.nombre[i].value)
 			date=document.stats.date[i].checked
 			if (nombre=="" && pft!=""){
@@ -177,22 +192,30 @@ function Guardar(){	ValorCapturado=""
 				pft=pft.replace(new RegExp('\\n','g'),' ')
 				pft=pft.replace(new RegExp('\\r','g'),'')
 				ValorCapturado+=Trim(nombre)+"|"+Trim(pft)+"|"+date+"\n"
-			}		}	}
+			}
+		}
+	}
 	Ctrl=returnObjById( "lmp" )
 	if (Ctrl){
 		pft=Trim(document.stats.lmp.value)
 		pft=pft.replace(new RegExp('\\n','g'),' ')
 		pft=pft.replace(new RegExp('\\r','g'),'')
     	if (Trim(pft)!=""){
-        	document.enviar.excluir.value=document.stats.excluir.value    		document.enviar.lmp.value=pft    	}
+        	document.enviar.excluir.value=document.stats.excluir.value
+    		document.enviar.lmp.value=pft
+    	}
     }
 	document.enviar.base.value=base
 	document.enviar.ValorCapturado.value=ValorCapturado
-	document.enviar.submit()}</script>
+	document.enviar.submit()
+}
+
+</script>
 <body>
 <?php
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
@@ -206,10 +229,10 @@ if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
 else
 	$script="../dbadmin/menu_modificardb.php";
 	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>
 	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["save"]."</strong></span></a>";
 ?>
 </div><div class="spacer">&#160;</div></div>
@@ -237,15 +260,26 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  	if (file_exists($file)){
  		$fp=file($file);
  	}else{
- 		$fp=array(); 	}
+ 		$fp=array();
+ 	}
  	$cuenta=count($fp);
- 	if ($cuenta<3){ 		$fp[]="||||||";
- 		$fp[]="||||||"; 	}
- 	$lineas=0; 		foreach ($fp as $value) { 			$value=trim($value); 			if ($value!=""){
+ 	if ($cuenta<3){
+ 		$fp[]="||||||";
+ 		$fp[]="||||||";
+ 	}
+ 	$lineas=0;
+ 		foreach ($fp as $value) {
+ 			$value=trim($value);
+ 			if ($value!=""){
  				$var=explode('|',$value);
- 				if (isset($var[2]) and $var[2]=="LMP"){ 					$lmp=$var[1];
- 					$excluir=$var[3]; 				}else{
- 					$xselected=""; 					if (isset($var[2])){ 						if ($var[2]=="true")
+ 				if (isset($var[2]) and $var[2]=="LMP"){
+ 					$lmp=$var[1];
+ 					$excluir=$var[3];
+
+ 				}else{
+ 					$xselected="";
+ 					if (isset($var[2])){
+ 						if ($var[2]=="true")
  							$xselected=" checked";
  					}
  					$ix++;
@@ -258,7 +292,8 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
  					echo "<input type=checkbox name=date $xselected>".$msgstr["date_field"]."<input type=hidden name=prefix size=5>";
  					echo "&nbsp;</td></tr>\n";
  				}
- 			} 		}
+ 			}
+ 		}
 
 
 
@@ -268,7 +303,9 @@ echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
 
 		<a href="javascript:AddElement('rows')"><?php echo $msgstr["add"]?></a>
 <?php
-if ($arrHttp["base"]=="trans"){?>
+if ($arrHttp["base"]=="trans"){
+?>
+
 		<p><table xwidth=800  class=listTable><td bgcolor=white width=120 valign=top>Los más prestados
 		</td><td  bgcolor=white width=500><textarea name=lmp id=lmp style='width:500px;height:30px'><?php echo $lmp?></textarea></td>
 		<td>Excluir total menor a <input type=text name=excluir size=4 value=<?php echo $excluir?>></td>

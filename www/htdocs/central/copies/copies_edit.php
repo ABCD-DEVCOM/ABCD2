@@ -33,7 +33,9 @@ if ($error==""){
 	else
 		$err_copies="N";
 //echo $err_copies;
-}else{	$err_copies="Y";}
+}else{
+	$err_copies="Y";
+}
 if ($err_copies=="Y"){
     include("../common/header.php");
 	if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
@@ -47,7 +49,7 @@ if ($err_copies=="Y"){
 		</div>
 		<div class="actions">
 		<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
 
 		</div>
 		<div class="spacer">&#160;</div>
@@ -72,8 +74,11 @@ echo "<font color=white>&nbsp; &nbsp; Script: copies/copies_edit.php";
 </body>
 </html>
 <?php
-	die;}else{ 	$Expresion="CN_".$arrHttp["base"]."_".$valortag[1];
-    header("Location:copies_edit_browse.php?Expresion=$Expresion&base=copies");}
+	die;
+}else{
+ 	$Expresion="CN_".$arrHttp["base"]."_".$valortag[1];
+    header("Location:copies_edit_browse.php?Expresion=$Expresion&base=copies");
+}
 ?>
 
 

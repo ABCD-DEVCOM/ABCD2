@@ -19,8 +19,11 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/soporte.php");
 
-function PresentarLeader($leader,$tc){	$fp=file($leader);
-	foreach ($fp as $value){		$t=explode('|',$value);		echo "<tr><td bgcolor=white>".$t[2]."</td>";
+function PresentarLeader($leader,$tc){
+	$fp=file($leader);
+	foreach ($fp as $value){
+		$t=explode('|',$value);
+		echo "<tr><td bgcolor=white>".$t[2]."</td>";
 		echo "<input type=hidden name=tag value=".$t[1].">";
 		echo "<td bgcolor=white>".$t[1]."</td>";
 		$tag=$t[1];
@@ -35,7 +38,9 @@ function PresentarLeader($leader,$tc){	$fp=file($leader);
 		echo "<td bgcolor=white class=td><input type=hidden name=occ></td>";
 		echo "<td bgcolor=white class=td><input type=text name=formato size=40 value=\"";
 		if (isset($tc[$tag][5])) echo $tc[$tag][5];
-		echo "\"></td>";	}}
+		echo "\"></td>";
+	}
+}
 
 
 if (!isset($arrHttp["accion"])) $arrHttp["accion"]="";
@@ -134,7 +139,7 @@ function AbrirVentana(){
 	<div class="actions">
 <?php echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -230,7 +235,8 @@ if (isset($arrHttp["proceso"])){
 		case "editar":
 			$tit=$msgstr["editar"];
 			$fp=file($db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"]);
-			foreach ($fp as $value){				$value=trim($value);
+			foreach ($fp as $value){
+				$value=trim($value);
 				if ($rep==""){
 					if ($value=='[TABS]'){
 						$delimited=$value;
@@ -265,7 +271,8 @@ if (isset($arrHttp["proceso"])){
 }
 
 echo "<dd><h4>$tit ".$msgstr["cnv_tab"];
-if (count($the_array)<=0) {	echo "&nbsp; <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/conversion_table.html target=_blank><img src=img/helper_bg.png border=0>".$msgstr["help"]."</a>&nbsp &nbsp";
+if (count($the_array)<=0) {
+	echo "&nbsp; <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/conversion_table.html target=_blank><img src=img/helper_bg.png border=0>".$msgstr["help"]."</a>&nbsp &nbsp";
 	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
         	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/conversion_table.html target=_blank>".$msgstr["edhlp"]."</a>";
 }
@@ -292,8 +299,10 @@ $ix=-1;
 foreach ($fp as $value){
 	$t=explode('|',$value);
 	if ($t[0]!='G'){
-		if ($t[0]=="LDR"){			PresentarLeader($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/leader.fdt",$tc);
-			continue;		}
+		if ($t[0]=="LDR"){
+			PresentarLeader($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/leader.fdt",$tc);
+			continue;
+		}
 		$ix=$ix+1;
 		$tag=$t[1];
 		if ($tag!=""){

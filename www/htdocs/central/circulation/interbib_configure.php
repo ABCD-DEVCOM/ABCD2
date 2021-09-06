@@ -44,29 +44,42 @@ $fp=file_exists($archivo);
 $sala=array();
 if ($fp){
 	$fp=file($archivo);
-	foreach ($fp as $value){		$value=trim($value);
-		if ($value!=""){			$v=explode('=',$value);
-			$sala[$v[0]]=$v[1];		}
+	foreach ($fp as $value){
+		$value=trim($value);
+		if ($value!=""){
+			$v=explode('=',$value);
+			$sala[$v[0]]=$v[1];
+		}
 	}
 }
 
 include("../common/header.php");
 
-function Actualizar(){global $db_path,$arrHttp,$msgstr;
+function Actualizar(){
+global $db_path,$arrHttp,$msgstr;
     $archivo=$db_path."circulation/def/".$_SESSION["lang"]."/ill.tab";
     $ix=-1;
-    foreach ($_REQUEST as $key=>$value){    	if (substr($key,0,4)=="tag_"){    		$t=explode('_',$key);
+    foreach ($_REQUEST as $key=>$value){
+    	if (substr($key,0,4)=="tag_"){
+    		$t=explode('_',$key);
     		$ix=$t[2];
     		$xc=$t[1];
     		if (isset($s[$ix]))
     			$s[$ix].=trim($value);
     		else
     			$s[$ix]=trim($value).'|';
-    	}    }
+
+    	}
+    }
     $fp=fopen($archivo,"w");
-    foreach ($s as $value){    	if (trim($value)!="|"){    		fwrite($fp,$value."\n");    	}    }
+    foreach ($s as $value){
+    	if (trim($value)!="|"){
+    		fwrite($fp,$value."\n");
+    	}
+    }
     fclose($fp);
-    echo "<h2>ill.tab ".$msgstr["saved"];}
+    echo "<h2>ill.tab ".$msgstr["saved"];
+}
 ?>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
@@ -87,13 +100,13 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 				if (!isset($arrHttp["actualizar"]))
 					echo "
 				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["update"]."</strong></span>
 				</a>";
 				echo "
@@ -109,24 +122,36 @@ echo "</div>
 		<div class=\"middle form\">
 			<div class=\"formContent\"> ";
 echo "<form name=forma1 action=sala_configure.php method=post>\n";
-if (isset($arrHttp["actualizar"]) and $arrHttp["actualizar"]=="Y"){	Actualizar();}else{
+if (isset($arrHttp["actualizar"]) and $arrHttp["actualizar"]=="Y"){
+	Actualizar();
+}else{
 	echo "<input type=hidden name=actualizar value=Y>\n";
-	if (file_exists($db_path."circulation/def/".$_SESSION["lang"]."/ill.tab")){		$ibib=file($db_path."circulation/def/".$_SESSION["lang"]."/ill.tab");	}else{		$ibib=array();	}
+	if (file_exists($db_path."circulation/def/".$_SESSION["lang"]."/ill.tab")){
+		$ibib=file($db_path."circulation/def/".$_SESSION["lang"]."/ill.tab");
+	}else{
+		$ibib=array();
+	}
 	echo " <h4>".$msgstr["agreement"]."</h4>";
 	echo "<table> ";
 	echo "<tr><th>Id</th><th>".$msgstr["agreement"]."</th></tr>";
 	$ix=-1;
-	foreach ($ibib as $value){		$value=trim($value);
-		if ($value!=""){			$ix=$ix+1;
+	foreach ($ibib as $value){
+		$value=trim($value);
+		if ($value!=""){
+			$ix=$ix+1;
 			$v=explode('|',$value);
 			echo "<tr><td><input type=text name=tag_a_$ix value=\"".trim($v[0])."\"></td>\n";
 			echo "    <td><input type=text name=tag_b_$ix value=\"".trim($v[1])."\" size=100></td>\n";
-			echo "</tr>\n";		}
-	}
-	for ($i=0;$i<2;$i++){		$ix=$ix+1;
+			echo "</tr>\n";
+		}
+
+	}
+	for ($i=0;$i<2;$i++){
+		$ix=$ix+1;
 		echo "<tr><td><input type=text name=tag_a_$ix value=\"\"></td>\n";
 		echo "    <td><input type=text name=tag_b_$ix value=\"\" size=100></td>\n";
-		echo "</tr>";	}
+		echo "</tr>";
+	}
 	echo "</table>\n";
 }
 echo "</form></div></div>";

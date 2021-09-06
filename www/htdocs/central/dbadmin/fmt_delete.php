@@ -16,7 +16,8 @@ $Permiso=$_SESSION["permiso"];
 $archivo="";
 $archivo=$arrHttp["fmt"].".fmt";
 $file=$arrHttp["fmt"];
-$url="fmt.php";$lista="formatos.wks";
+$url="fmt.php";
+$lista="formatos.wks";
 $titulo=$msgstr["fmt"];
 include("../common/header.php");
 ?>
@@ -38,7 +39,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 	 echo "<a href=\"fmt.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
 </a>
 			</div>
@@ -54,24 +55,33 @@ if (isset($arrHttp["encabezado"])){
 if ($archivo!=""){
 	$a=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/$archivo";
 	if (!file_exists($a )) $a=$db_path.$arrHttp["base"]."/def/".$lang_db."/$archivo";
-	if (!file_exists($a)){		echo "<p>".$msgstr["ne"];	}else{
+	if (!file_exists($a)){
+		echo "<p>".$msgstr["ne"];
+	}else{
 		$res=unlink($a);
-		if ($res==0){			echo $msgstr["nodeleted"];
-		}else{			echo $msgstr["deleted"];
+		if ($res==0){
+			echo $msgstr["nodeleted"];
+		}else{
+			echo $msgstr["deleted"];
 			if ($lista!=""){
-				$salida="";				$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/$lista");
-				foreach ($fp as $value){					$value=trim($value);
+				$salida="";
+				$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/$lista");
+				foreach ($fp as $value){
+					$value=trim($value);
 					$v=explode('|',$value);
-					if ($v[0]!=$file) $salida.=$value."\n";				}
+					if ($v[0]!=$file) $salida.=$value."\n";
+				}
 	            $fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/$lista","w");
 	            fwrite($fp,$salida);
 	            fclose($fp);
 	            echo "<p>$lista: Updated!!!";
-			}		}
+			}
+		}
 	}
 }
 if ($encabezado!=""){
-	if (isset($arrHttp["pft"]) or $url!=""){		echo "<script>
+	if (isset($arrHttp["pft"]) or $url!=""){
+		echo "<script>
 			url='".$url."'
 
 			if ( top.frames.length>0){
@@ -82,5 +92,6 @@ if ($encabezado!=""){
 			}
 			</script>
 			";
-	}}
+	}
+}
 ?>

@@ -263,12 +263,12 @@ if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){
 	$script="../dbadmin/menu_modificardb.php";
 }
 	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>";
 if ($error==""){
 	echo "
 	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["save"]."</strong></span></a>";
 }
 ?>

@@ -7,7 +7,8 @@ include("../config.php");
 include("../lang/admin.php");
 include("../lang/acquisitions.php");
 $ValorCapturado="";
-foreach ($_GET as $var => $value) {	VariablesDeAmbiente($var,$value);
+foreach ($_GET as $var => $value) {
+	VariablesDeAmbiente($var,$value);
 }
 if (count($arrHttp)==0){
 	foreach ($_POST as $var => $value) {
@@ -68,11 +69,13 @@ else
 			<?php echo $msgstr["purchase"].": ".$msgstr["new"]?>
 		</div>
 		<div class="actions">
-			<?php if ($err==""){			?>
+			<?php if ($err==""){
+			?>
 			<a href=../common/inicio.php?reinicio=s&encabezado=s&base=<?php echo $arrHttp["base"]?> class="defaultButton backButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["back"]?></strong></span>
-			</a>			<?php }?>
+			</a>
+			<?php }?>
 		</div>
 		<div class="spacer">&#160;</div>
 	</div>
@@ -87,12 +90,16 @@ echo "<font color=white>&nbsp; &nbsp; Script: order_new_update.php</font>\n";
 	<div class="middle form">
 		<div class="formContent">
 <?php
-	if ($err==""){		$arrHttp["Formato"]="purchaseorder";
+	if ($err==""){
+		$arrHttp["Formato"]="purchaseorder";
 		$regSal=LeerRegistroFormateado($arrHttp["Formato"]);
-		echo $regSal;	}else{
-		echo "<h4>$err</h4>" ;
+		echo $regSal;
+	}else{
+
+		echo "<h4>$err</h4>" ;
 		echo "<p><a href=javascript:document.forma2.submit()>".$msgstr["back"]."</a>";
-	}
+
+	}
 echo "<form name=forma2 method=post action=order_new.php>\n";
 echo "<input type=hidden name=wks value=".$arrHttp["wks"].">";
 echo "<input type=hidden name=base value=".$arrHttp["base"].">";

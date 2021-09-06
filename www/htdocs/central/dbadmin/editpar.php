@@ -27,7 +27,7 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["cancel"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -37,7 +37,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/editpar.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: editpar.php";
+echo " Script: editpar.php";
 ?>
 </font>
 	</div>
@@ -47,15 +47,22 @@ echo "<font color=white>&nbsp; &nbsp; Script: editpar.php";
 $par="";
 $fp=file($db_path."par/".$arrHttp["base"].".par");
 foreach ($fp as $value) $par.=trim($value)."\n";
-echo "<form name=db action=editpar_update.php method=post>";
-echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
-if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=s>\n";
-echo "<center><b>".$arrHttp["base"].".par</b><br><textarea cols=100 rows=20 name=par>".$par."</textarea>
-<br><input type=submit value=\"". $msgstr["update"]."\">
+?>
+<form name="db" action="editpar_update.php" method="post">
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"];?>">
+	<?php 
+		if (isset($arrHttp["encabezado"]))  
+			echo "<input type=hidden name=encabezado value=s>\n";
+	?>	
+
+	<center><label><?php echo $arrHttp["base"];?>.par</label>
+		<br>
+	<textarea cols="100" rows="20" name="par" class="par"><?php echo $par;?></textarea><br>
+	<input type="submit" value="<?php echo $msgstr["update"];?>">
 </form>
 </div>
 </div>
-</center>";
+</center>
+<?php
 include("../common/footer.php");
-echo "</body></html>\n";
 ?>

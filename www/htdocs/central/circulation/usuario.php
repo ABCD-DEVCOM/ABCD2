@@ -39,7 +39,7 @@ echo "<body>";
 	</div>
 	<div class="actions">
 		<a href="javascript:self.close()" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span>
 		</a>
 	</div>

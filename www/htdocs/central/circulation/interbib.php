@@ -90,7 +90,8 @@ kardex=""
 function ValidarFecha(){
 	msg=""
 	valor=Trim(document.interlibraryloan.date.value)
-	if (valor!=""){		var expreg = /^(\d{4})([0][1-9]|[1][0-2])([0][1-9]|[12][0-9]|3[01])$/;
+	if (valor!=""){
+		var expreg = /^(\d{4})([0][1-9]|[1][0-2])([0][1-9]|[12][0-9]|3[01])$/;
    		if (!expreg.test(valor) )  {
             msg="<?php echo $msgstr["js_inv_dateformat"]?>"
         }else{
@@ -100,8 +101,10 @@ function ValidarFecha(){
    		if(msg!=""){
    			alert(msg)
    			return false
-   		}	}
-	return true}
+   		}
+	}
+	return true
+}
 
 function DateToIso(From,To){
 		if (Trim(From)=="") {
@@ -151,7 +154,8 @@ function EnviarForma(){
 
     INV=escape(document.interlibraryloan.inventory_sel.value)
     document.interlibraryloan.inventory.value=INV
-    document.interlibraryloan.submit()}
+    document.interlibraryloan.submit()
+}
 
 function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){
 		Ctrl_activo=xI
@@ -176,7 +180,8 @@ function AbrirIndice(Tipo,xI){
     	              else
     	            echo "Repetible=1\n";
  	?>
-	switch (Tipo){
+	switch (Tipo){
+
 		case "S":
 			bd_sel=document.interlibraryloan.db_inven.selectedIndex
 			if (bd_sel<=0){
@@ -210,7 +215,8 @@ function AbrirIndice(Tipo,xI){
 					AbrirIndiceAlfabetico(xI,prefijo,"","",bd,bd+".par","3",1,Repetible,formato)
 					break
 			}
-			break		case "I":
+			break
+		case "I":
 			Separa=""
 			ancho=200
 
@@ -223,8 +229,10 @@ function AbrirIndice(Tipo,xI){
 				sel=document.interlibraryloan.db_inven.options[ix].value
 				s=sel.split('|')
 				bd=s[0]
-				pref="IN_"+pref				Prefijo=Separa+"&prefijo="+pref
-				url_indice="capturaclaves.php?opcion=autoridades&base="+bd+"&cipar="+bd+".par"+Prefijo+"&postings=1"+"&lang="+lang+"&repetible="+Repetible+"&Formato=@autoridades.pft"			}
+				pref="IN_"+pref
+				Prefijo=Separa+"&prefijo="+pref
+				url_indice="capturaclaves.php?opcion=autoridades&base="+bd+"&cipar="+bd+".par"+Prefijo+"&postings=1"+"&lang="+lang+"&repetible="+Repetible+"&Formato=@autoridades.pft"
+			}
 			break
 		case "U":
 <?php
@@ -238,7 +246,8 @@ $codigo=LeerPft("loans_uskey.pft","users");
     		Prefijo=Separa+"&prefijo=<?php if (isset($t[1])) echo trim($t[1]); else echo 'NO_';?>"
     		ancho=200
 			url_indice="capturaclaves.php?opcion=autoridades&base=users&cipar=users.par"+Prefijo+"&postings=1"+"&lang="+lang+"&repetible=0&Formato="+Formato
-			break	}
+			break
+	}
 	msgwin=window.open(url_indice,"Indice","width=480, height=450,left=300,scrollbars")
 	msgwin.focus()
 }
@@ -324,7 +333,10 @@ if (!file_exists($db_path."circulation/def/".$_SESSION["lang"]."/ill.tab")){
 			<strong><?php echo $msgstr["signature"]. " &nbsp".$ILL."-"?></strong>
 		</label>
 		</td><td>
-		<?php if (isset($LOAN_POLICY) and $LOAN_POLICY=="BY_USER"  ){			?><input type=text name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';">	<?php }else{			?>
+		<?php if (isset($LOAN_POLICY) and $LOAN_POLICY=="BY_USER"  ){
+			?><input type=text name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';">
+	<?php }else{
+			?>
 		<textarea name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" rows=5 cols=50/></textarea>
 	<?php }
 

@@ -28,7 +28,8 @@ function EnviarForma(){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["inventory"]." / ".$msgstr["usercode"]?>")
 		return
 	}
-    document.inventorysearch.submit()}
+    document.inventorysearch.submit()
+}
 
 
 

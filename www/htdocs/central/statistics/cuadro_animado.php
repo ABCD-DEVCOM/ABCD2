@@ -129,8 +129,10 @@ for ($i=1;$i<=$nfilas;$i++){
 				echo "$total";
 				echo "</td>";
 			}
-		}else{			echo "-";
-			echo "</td>";		}
+		}else{
+			echo "-";
+			echo "</td>";
+		}
 
 	//	echo $links[$i][$j]."<br>";
 

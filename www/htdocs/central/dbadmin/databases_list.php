@@ -18,15 +18,23 @@ include("../common/header.php");
 <script>
 function Editar(){
 	msgwin=window.open("editararchivotxt.php?archivo=bases.dat&desde=menu$encabezado&desde=menu","editpar","width=600, height=500, resizable, scrollbars")
-	msgwin.focus()}
+	msgwin.focus()
+
+}
 function Enviar(){
-	ValorCapturado=""	for (i=0;i<document.forma1.lista.options.length;i++){
-		a= Trim(document.forma1.lista.options[i].value)		if (a!="") {			if (ValorCapturado=="")
+	ValorCapturado=""
+	for (i=0;i<document.forma1.lista.options.length;i++){
+		a= Trim(document.forma1.lista.options[i].value)
+		if (a!="") {
+			if (ValorCapturado=="")
 				ValorCapturado=a
 			else
-			    ValorCapturado+="\n"+a		}	}
+			    ValorCapturado+="\n"+a
+		}
+	}
 	document.forma1.txt.value=ValorCapturado
-	document.forma1.submit()}
+	document.forma1.submit()
+}
 </script>
 </head>
 <body>
@@ -40,7 +48,7 @@ include("../common/institutional_info.php");
 	<div class="actions">
 <?php echo "<a href=\"conf_abcd.php\" class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["cancel"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -73,9 +81,12 @@ echo "<font color=white>&nbsp; &nbsp; Script: databases_list.php";
 			<select name=lista size=20>
 <?php
 $fp=file($db_path."bases.dat");
-foreach ($fp as $value){	if (trim($value)!=""){		$b=explode('|',$value);
+foreach ($fp as $value){
+	if (trim($value)!=""){
+		$b=explode('|',$value);
 		echo "<option value='$value'>".$b[1]." (".$b[0].")</option><br>";
-	}}
+	}
+}
 
 ?>
 

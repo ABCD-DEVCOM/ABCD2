@@ -43,7 +43,8 @@ if (isset($arrHttp["vienede"]) and ($arrHttp["vienede"]=="ecta_web" or $arrHttp[
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
 	$reservas=array();
-	foreach ($contenido as $linea){		$reservas[]=$linea;
+	foreach ($contenido as $linea){
+		$reservas[]=$linea;
 	}
 	$total_atraso=0;
 	$reservas_vencidas="";
@@ -57,7 +58,8 @@ if (isset($arrHttp["vienede"]) and ($arrHttp["vienede"]=="ecta_web" or $arrHttp[
 			<table bgcolor=#cccccc>
 			<th>"."título"."</th><th>".$msgstr["reserve_date"]."</th><th>".$msgstr["reserve_expire"]."</th><th></th>";
 		foreach ($reservas as $res){
-			if (trim($res)!=""){				$r=explode('|',$res);
+			if (trim($res)!=""){
+				$r=explode('|',$res);
 				$fecha=$r[1];
 				$vence=$r[2];
 			 	$difference=compareDate ($r[2]);
@@ -65,7 +67,8 @@ if (isset($arrHttp["vienede"]) and ($arrHttp["vienede"]=="ecta_web" or $arrHttp[
 			 	//SE DETERMINA LA FECHA DE VENCIMIENTO MAS RECIENTE PARA
 			 	//CALCULAR LA SUSPENSIÓN A PARTIR DE ELLS
 			 	$anular="";
-			 	if ($datediff>0){			 		$reservas_vencidas="S";
+			 	if ($datediff>0){
+			 		$reservas_vencidas="S";
 			 		$total_atraso+=1;
 			 		$vence="<font color=red>".$r[2]."</font>";
 			 		$anular="&nbsp;";

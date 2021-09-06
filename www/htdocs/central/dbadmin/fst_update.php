@@ -15,14 +15,18 @@ else
 	$encabezado="";
 $arrHttp["ValorCapturado"]= htmlspecialchars_decode ($arrHttp["ValorCapturado"]);
 $arrHttp["ValorCapturado"]= stripslashes ($arrHttp["ValorCapturado"]);
-if ($arrHttp["Opcion"]=="new"){	$_SESSION["FST"]=$arrHttp["ValorCapturado"];
+if ($arrHttp["Opcion"]=="new"){
+	$_SESSION["FST"]=$arrHttp["ValorCapturado"];
 	header("Location:pft.php?Opcion=new&base=".$arrHttp["base"].$encabezado);
-	die;}
+	die;
+}
 $t=explode("\n",$arrHttp["ValorCapturado"]);
 $fp=fopen($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst","w");
 
-foreach ($t as $value){	fwrite($fp,stripslashes($value)."\n");
-	//echo "$value<br>";}
+foreach ($t as $value){
+	fwrite($fp,stripslashes($value)."\n");
+	//echo "$value<br>";
+}
 
 include("../common/header.php");
 echo "<body>";
@@ -43,7 +47,7 @@ if (isset($arrHttp["encabezado"])){
 	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
 }
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
 </a>
 			</div>

@@ -28,15 +28,19 @@ document.onkeypress =
     return true;
   };
 
-function EnviarForma(){	if (Trim(document.inventorysearch.searchExpr.value)==""){		alert("Debe especificar el inventario")
-		return	}
+function EnviarForma(){
+	if (Trim(document.inventorysearch.searchExpr.value)==""){
+		alert("Debe especificar el inventario")
+		return
+	}
 	<?php if (isset($inventory_numeric) and $inventory_numeric =="Y")
 		echo "document.inventorysearch.searchExpr.value=parseInt(document.inventorysearch.searchExpr.value,10)\n";
 	?>
 	document.inventorysearch.submit();
 }
 
-function AbrirIndiceAlfabetico(){	db="trans"
+function AbrirIndiceAlfabetico(){
+	db="trans"
 	cipar="trans.par"
 	postings=1
 	tag="10"
@@ -119,9 +123,11 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 <?php
 include("../common/footer.php");
 echo "</body></html>" ;
-if (isset($arrHttp["error"])){	echo "<script>
+if (isset($arrHttp["error"])){
+	echo "<script>
 			alert('".$arrHttp["error"]."')
 			</script>
-	";}
+	";
+}
 
 ?>

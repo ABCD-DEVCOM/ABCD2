@@ -26,7 +26,7 @@ if (isset($arrHttp["encabezado"])){
 			echo "</div>
 			<div class=\"actions\">
 				<a href=\"../$retorno/browse.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["back"]."</strong></span>
 				</a>
 			</div>
@@ -56,7 +56,9 @@ if (isset($arrHttp["wks"])){
 	else
 		$arrHttp["wk_tipom_2"]="";
 
-}else{	$arrHttp["wks"]="";}
+}else{
+	$arrHttp["wks"]="";
+}
 $base=$arrHttp["base"];
 $arrHttp["cipar"]="$base.par";
 if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
@@ -76,7 +78,8 @@ $default_values="S";
 if (isset($_SESSION["valdef"])){
 	$default=$_SESSION["valdef"];
 	$fp=explode('$$$',$default);
-	foreach ($fp as $linea){		if (trim($linea)!=""){
+	foreach ($fp as $linea){
+		if (trim($linea)!=""){
 			$linea=rtrim($linea);
 			$tag=trim(substr($linea,0,4))*1;
 			if (trim(substr($linea,4))!=""){

@@ -52,12 +52,14 @@ include("../common/header.php");
 function Edit(){
 	if  (document.forma1.cnv.selectedIndex<1){
 		alert('<?php echo $msgstr["selcnvtb"]?>')
-		return	}
+		return
+	}
 	document.enviar.action="z3950_conversion.php";
 	document.enviar.Table.value=document.forma1.cnv.options[document.forma1.cnv.selectedIndex].value
 	document.enviar.descr.value=document.forma1.cnv.options[document.forma1.cnv.selectedIndex].text
 	document.enviar.Opcion.value="edit"
-	document.enviar.submit()}
+	document.enviar.submit()
+}
 function Delete(){
 	if  (document.forma1.cnv.selectedIndex<1){
 		alert('<?php echo $msgstr["selcnvtb"]?>')
@@ -86,7 +88,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 	 echo "<a href='../common/inicio.php?reinicio=s&base=$db' class=\"defaultButton backButton\">";
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["back"]?></strong></span>
 </a>
 			</div>
@@ -106,13 +108,17 @@ if (isset($arrHttp["encabezado"])){
     </td><td>
         <a href='z3950_conversion.php?base=<?php echo $db.$encabezado?>'><?php echo $msgstr["new"]?></a>
         <?php
-        if (file_exists($db_path.$db."/def/z3950.cnv")){            echo  "&nbsp; | <a href=javascript:Edit()>".$msgstr["edit"]."</a> &nbsp; | <a href=javascript:Delete()>".$msgstr["delete"]."</a> &nbsp; ";
+        if (file_exists($db_path.$db."/def/z3950.cnv")){
+            echo  "&nbsp; | <a href=javascript:Edit()>".$msgstr["edit"]."</a> &nbsp; | <a href=javascript:Delete()>".$msgstr["delete"]."</a> &nbsp; ";
             $fp=file($db_path.$db."/def/z3950.cnv");
             echo "<select name=cnv>
             <option value=''>\n";
             foreach ($fp as $var=>$value){
-                $o=explode('|',$value);                echo "<option value='".$o[0]."'>".$o[1]."\n";            }
-            echo "</select><br><br>";        }
+                $o=explode('|',$value);
+                echo "<option value='".$o[0]."'>".$o[1]."\n";
+            }
+            echo "</select><br><br>";
+        }
         ?>
         <a href='z3950_diacritics_edit.php?base=<?php echo $db.$encabezado?>'><?php echo $msgstr["z3950_diacritics"]?></a><br><br>
     </td></tr>

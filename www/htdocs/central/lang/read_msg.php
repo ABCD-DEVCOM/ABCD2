@@ -44,7 +44,8 @@ $a=$path."lang/".$_SESSION["lang"]."/$msg_tab";
 if (file_exists($a)) {
 	$fp=file($a);
 	foreach($fp as $var=>$value){
-        if (trim($value)!="") {            $m=explode('=',$value,2);
+        if (trim($value)!="") {
+            $m=explode('=',$value,2);
             $key=trim($m[0]);
             if (!isset($msgstr[$key]) and isset($m[1]) and trim($m[1]!="")) {
                 $value=$m[1];

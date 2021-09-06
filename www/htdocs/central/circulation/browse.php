@@ -65,11 +65,14 @@ include("../common/header.php");
 xEliminar="";
 Mfn_elminar=0;
 
-	function Browse(){		self.location="browse.php?encabezado=s"	}
+	function Browse(){
+		self.location="browse.php?encabezado=s"
+	}
 
 
 	function EjecutarBusqueda(Accion){
-		switch (Accion){			case "first":
+		switch (Accion){
+			case "first":
 				document.diccionario.from.value=1
 				break
 			case "previous":
@@ -83,7 +86,9 @@ Mfn_elminar=0;
 				desde=last-10
 				if (desde<=0) desde=1
 				document.diccionario.from.value=desde
-				break		}		ix=document.searchBox.indexes.selectedIndex
+				break
+		}
+		ix=document.searchBox.indexes.selectedIndex
 		sel=document.searchBox.indexes.options[ix].value
 		t=sel.split('|')
         document.diccionario.target=""
@@ -94,48 +99,60 @@ Mfn_elminar=0;
 		document.diccionario.id.value=t[1]
 		document.diccionario.Opcion.value="buscar"
 
-		document.diccionario.submit()	}
+		document.diccionario.submit()
+	}
 
 	function PresentarDiccionario(){
-		msgwin=window.open("","Diccionario","scrolling, height=400")		ix=document.searchBox.indexes.selectedIndex
-		if (ix<1){			alert("<?php echo $msgstr["selcampob"]?>")
-			return		}
+		msgwin=window.open("","Diccionario","scrolling, height=400")
+		ix=document.searchBox.indexes.selectedIndex
+		if (ix<1){
+			alert("<?php echo $msgstr["selcampob"]?>")
+			return
+		}
 		sel=document.searchBox.indexes.options[ix].value
 		t=sel.split('|')
-		document.diccionario.campo.value=escape(t[0])
+
+		document.diccionario.campo.value=escape(t[0])
 		document.diccionario.prefijo.value=t[2]
 		document.diccionario.id.value=t[1]
 		document.diccionario.Diccio.value="document.searchBox.searchExpr"
 		document.diccionario.submit()
-		msgwin.focus()	}
-	function Eliminar(Mfn){		if (xEliminar==""){
+		msgwin.focus()
+	}
+	function Eliminar(Mfn){
+		if (xEliminar==""){
 			alert("<?php echo $msgstr["confirmdel"]?>")
 			xEliminar="1"
 			Mfn_eliminar=Mfn
 		}else{
-			if (Mfn_eliminar!=Mfn){				alert("<?php echo $msgstr["mfndelchanged"]?>")
+			if (Mfn_eliminar!=Mfn){
+				alert("<?php echo $msgstr["mfndelchanged"]?>")
 				xEliminar=""
-                return			}
+                return
+			}
 			xEliminar=""
 			document.eliminar.Mfn.value=Mfn
 			document.eliminar.submit()
-		}	}
+		}
+	}
 </script>
 <?php
 echo "<body>";
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";?>
+
+	include("../common/institutional_info.php");
+	$encabezado="&encabezado=s";
+?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["usuarios"]?>
 	</div>
 	<div class="actions">
 		<a href="../inicio.php?reinicio=s<?php echo $encabezado?>" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span>
 		</a>
 		<a href="../dataentry/fmt.php?base=users&cipar=users.par&Mfn=New<?php echo $encabezado?>&Opcion=nuevo" class="defaultButton  newButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["newoper"]?></strong> </span>
 		</a>
 
@@ -156,10 +173,15 @@ echo "<body>";
 $archivo=$db_path."users/pfts/".$_SESSION["lang"]."/camposbusqueda.tab";
 if (!file_exists($archivo)) $archivo=file($db_path."users/pfts/".$lang_db."/camposbusqueda.tab");
 $fp=file($archivo);
-foreach ($fp as $value){	$t=explode('|',$value);
+foreach ($fp as $value){
+	$t=explode('|',$value);
 	$xselected="";
-	if (isset($arrHttp["Indice"])){		if ($arrHttp["Indice"]==$t[1]) $xselected=" selected";	}	echo "<Option value='$value' $xselected>".$t[0]."\n";
-}
+	if (isset($arrHttp["Indice"])){
+		if ($arrHttp["Indice"]==$t[1]) $xselected=" selected";
+	}
+	echo "<Option value='$value' $xselected>".$t[0]."\n";
+
+}
 ?>
 				</select>
 				<input type="submit" name="ok" value="<?php echo $msgstr["buscar"]?>" class="submit" onClick=javascript:document.diccionario.from.value=1;EjecutarBusqueda() />
@@ -180,23 +202,25 @@ foreach ($fp as $value){	$t=explode('|',$value);
 				</tr>
 <?php
 foreach ($lista_users as $value){
-	echo "<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n";	$u=explode('|',$value);
+	echo "<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n";
+	$u=explode('|',$value);
 	$Mfn=$u[0];
 	$Status=$u[1];
 	$desde=$u[2];
 	$hasta=$u[3];
 	echo "<td>".$u[2]."/",$u[3];
-	if ($Status==1) echo "<img src=\"../images/delete.png\" align=absmiddle alt=\"excluir base de dados\" title=\"excluir base de dados\" />";
+	if ($Status==1) echo "<img src=\"../../assets/images/delete.png\" align=absmiddle alt=\"excluir base de dados\" title=\"excluir base de dados\" />";
 	echo "</td>";
 	for ($ix=4;$ix<count($u);$ix++) echo "<td>" .$u[$ix]."</td>";
 	echo "<td class=\"action\">
-		<a href=../dataentry/fmt.php?base=users&cipar=users.par&Mfn=$Mfn".$encabezado."&Opcion=editar><img src=\"../images/edit.png\" alt=\"editar base de dados\" title=\"editar base de dados\" /></a>";
+		<a href=../dataentry/fmt.php?base=users&cipar=users.par&Mfn=$Mfn".$encabezado."&Opcion=editar><img src=\"../../assets/images/edit.png\" alt=\"editar base de dados\" title=\"editar base de dados\" /></a>";
 	if ($Status==0) echo "
-		<a href=\"javascript:Eliminar($Mfn)\"><img src=\"../images/delete.png\" alt=\"".$msgstr["eliminar"]."\" title=\"".$msgstr["eliminar"]."\" /></a>";
+		<a href=\"javascript:Eliminar($Mfn)\"><img src=\"../../assets/images/delete.png\" alt=\"".$msgstr["eliminar"]."\" title=\"".$msgstr["eliminar"]."\" /></a>";
 	else
 		echo $msgstr["recdel"];
 	echo "</td>";
-	echo "</tr>";}
+	echo "</tr>";
+}
 echo "			</table>";
 
 ?>			<div class="tMacroActions">

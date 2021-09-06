@@ -13,7 +13,9 @@ include ("../lang/dbadmin.php");
 include ("../lang/acquisitions.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 //die;
-if (!isset($arrHttp["base"]) or $arrHttp["base"]==""){	$arrHttp["base"]=$arrHttp["activa"];}
+if (!isset($arrHttp["base"]) or $arrHttp["base"]==""){
+	$arrHttp["base"]=$arrHttp["activa"];
+}
 $base =$arrHttp["base"];
 $cipar =$arrHttp["base"].".par";
 //GET THE MAX MFN
@@ -55,12 +57,12 @@ $ayuda="control_number.html";
 if (isset($arrHttp["encabezado"])){
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"])){
 		echo "<a href=\"assign_control_number.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>
 		";
 	}else{
 		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>
 		";
 	}
@@ -80,11 +82,13 @@ echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 
 $Formato=$tag_ctl;
 if ($tag_ctl==""){
-	echo "<h4>".$msgstr["missingctl"]."</h4>";}else{
+	echo "<h4>".$msgstr["missingctl"]."</h4>";
+}else{
 	echo "Tag for the control number: $tag_ctl<br>";
 	echo "<table>";
 	echo "<th>Mfn</th><th>".$msgstr["cn"]."</th>";
-	for ($Mfn=$arrHttp["Mfn"];$Mfn<=$arrHttp["to"];$Mfn++){		$control=ProximoNumero($arrHttp["base"]);
+	for ($Mfn=$arrHttp["Mfn"];$Mfn<=$arrHttp["to"];$Mfn++){
+		$control=ProximoNumero($arrHttp["base"]);
 		$tag_ctl=trim($tag_ctl);
 		$ValorCapturado="d".$tag_ctl."<".$tag_ctl." 0>".$control."</".$tag_ctl.">";
 		$ValorCapturado=urlencode($ValorCapturado);
@@ -93,12 +97,14 @@ if ($tag_ctl==""){
 		include("../common/wxis_llamar.php");
 		echo "<tr><td>$Mfn</td><td>$control</td>" ;
 		echo "<td>";
-		//foreach ($contenido as $value) {		//	if (trim($value)!="")
+		//foreach ($contenido as $value) {
+		//	if (trim($value)!="")
 		//		echo "---$value<br>";
 		//}
 		echo "</td>";
 		flush();
-    	ob_flush();	}
+    	ob_flush();
+	}
 
 	echo "<form name=forma1 action=assign_control_number.php method=post>
 	<input type=hidden name=base value=".$arrHttp["base"].">

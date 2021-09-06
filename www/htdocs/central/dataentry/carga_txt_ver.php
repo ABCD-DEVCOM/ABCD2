@@ -50,7 +50,7 @@ function PresentarLeader($leader,$tc){
 <div class="actions">
 <?php echo "<a href=javascript:self.close()  class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["cerrar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -88,7 +88,8 @@ echo "<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1 class=td>";
 echo "<tr><td>".$msgstr["campo"]."</td><td>".$msgstr["tag"]."</td><td>".$msgstr["cnv_rotulo"]."</td><td>".$msgstr["tipo"]."</td><td>".$msgstr["subc"]."</td><td>".$msgstr["editsubc"]."</td><td>".$msgstr["osep"]."</td><td nowrap>".$msgstr["pftex"]."</td>";
 $ix=-1;
 
-foreach ($fp as $value){	$t=explode('|',$value);
+foreach ($fp as $value){
+	$t=explode('|',$value);
 	if ($t[0]!='G'){
 		if ($t[0]=="LDR"){
 			PresentarLeader($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/leader.fdt",$tc);

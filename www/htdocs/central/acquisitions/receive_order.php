@@ -16,7 +16,8 @@ $encabezado="";
 <script>
 function Mostrar(Expresion){
 	msgwin=window.open("../dataentry/show.php?base=suggestions&Expresion=NC_"+Expresion,"show")
-	msgwin.focus()}
+	msgwin.focus()
+}
 function Editar(Mfn){
 	document.EnviarFrm.Mfn.value=Mfn
 	document.EnviarFrm.Opcion.value="editar"
@@ -93,7 +94,9 @@ function EnviarForma(){
 	if (Trim(document.forma1.searchExpr.value)==""){
 		alert("<?php echo $msgstr["missorder"]?>")
 		return
-	}    document.forma1.submit();}
+	}
+    document.forma1.submit();
+}
 
 </script>
 <?php
@@ -113,7 +116,7 @@ function EnviarForma(){
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/receive_order.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: receive_order.php</font>\n";
+echo " Script: receive_order.php\n";
 
 ?>
 	</div>

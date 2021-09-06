@@ -34,7 +34,7 @@ echo "
 
 	";
 echo "<a href=\"../dbadmin/menu_modificardb.php?reinicio=s&base=".$arrHttp["base"]."&encabezado=".$arrHttp["encabezado"]."\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>";
 
 echo "</div>
@@ -62,17 +62,22 @@ else
 	$path_this=$db_path;
 $a=$path_this."lang/".$_SESSION["lang"]."/lang.tab";
 $fp=file($a);
-foreach ($fp as $value) {	$v=explode('=',$value);
-	$lang_tab[$v[0]]=$v[1];}
+foreach ($fp as $value) {
+	$v=explode('=',$value);
+	$lang_tab[$v[0]]=$v[1];
+}
 $ll_t=$lang_tab;
 echo "<h1>".$msgstr["def_lang"]." (lang.tab)</h1><br>";
 $ixid=0;
-foreach ($lang_tab as $v => $value){	echo "$v = $value ";
+foreach ($lang_tab as $v => $value){
+	echo "$v = $value ";
 	$ixid=$ixid+1;
 	if (!is_dir($db_path.$arrHttp["base"]."/pfts/$v")){
 		echo " <font color=red>".$msgstr["falta"]." ".$db_path.$arrHttp["base"]."/pfts/$v</font>";
 		echo " &nbsp; &nbsp; Create from ";
-		foreach ($ll_t as $a=>$b){			if ($a !=$v) echo "&nbsp &nbsp;<input type=radio name=$a"."_$ixid value=$a> $a";		}
+		foreach ($ll_t as $a=>$b){
+			if ($a !=$v) echo "&nbsp &nbsp;<input type=radio name=$a"."_$ixid value=$a> $a";
+		}
 		echo " &nbsp; &nbsp;<input type=checkbox name=utf8_$ixid>Convert to utf8";
 		echo "&nbsp; &nbsp; <a href=CrearDesde($ixid)>Crear</a>";
 	}
@@ -93,18 +98,27 @@ foreach ($lang_tab as $v => $value){
 </body>
 </html>
 <?php
-function Analizar ($tipo,$db_path,$base,$lang){global $msgstr;	switch ($tipo){		case 'pfts':
+function Analizar ($tipo,$db_path,$base,$lang){
+global $msgstr;
+	switch ($tipo){
+		case 'pfts':
 			$file="formatos.dat";
 			echo "<br><font size=3><strong>formatos.dat</strong></font></br>";
-			if (!file_exists($db_path.$base."/pfts/$lang/formatos.dat")){				echo "<font color=red>".$msgstr["falta"]." formatos.dat</font><br>";			}else{
+			if (!file_exists($db_path.$base."/pfts/$lang/formatos.dat")){
+				echo "<font color=red>".$msgstr["falta"]." formatos.dat</font><br>";
+			}else{
 				$fp=file($db_path.$base."/pfts/$lang/formatos.dat");
 				foreach ($fp as $value){
 					$value=trim($value);
-					if ($value!=""){						echo $value;
+					if ($value!=""){
+						echo $value;
 						$v=explode('|',$value);
 						$pft=trim($v[0]).".pft";
 						if (!file_exists($db_path.$base."/pfts/$lang/$pft")) echo " <font color=red>".$msgstr["falta"]."</font>";
 						echo "<br>";
-					}				}
+					}
+				}
 			}
-			break;	}}
+			break;
+	}
+}

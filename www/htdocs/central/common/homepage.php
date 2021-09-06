@@ -286,7 +286,7 @@ function Modulo(){
 		<img src=<?php if (isset($logo))
 								echo $logo;
 							else
-								echo "../images/logoabcd.png";
+								echo "../../assets/images/logoabcd.png";
 					  ?>>
 					  <h1>
 					  	<?php echo $institution_name?> </h1>
@@ -312,7 +312,7 @@ function Modulo(){
 <div class="language">
     <form name=cambiolang> <table border=0>
     <tr><td><?php echo $msgstr["lang"]?>:</td>
-	<td><select name=lenguaje style="width:90px;font-size:8pt;font-family:arial narrow" onchange=CambiarLenguaje()>
+	<td><select name=lenguaje onchange=CambiarLenguaje()>
         <?php
         include "../common/inc_get-langtab.php";
         $a=get_langtab();
@@ -349,7 +349,7 @@ foreach ($_SESSION["permiso"] as $key=>$value){
 if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
 	echo "   <td>".$msgstr["modulo"].":</td>
     <td>\n    ";
-  	echo '<select name=modulo style="width:90px;font-size:8pt;font-family:arial narrow"   onchange=Modulo()>'."\n";
+  	echo '<select name=modulo onchange=Modulo()>'."\n";
   	echo '    <option value=""></option>'."\n";
   	if ($central=="Y") {
   		echo "    <option value=catalog";
@@ -422,11 +422,7 @@ global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
 	$_SESSION["MODULO"]="catalog";
 ?>
 
-	<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-		<div class="boxTop">
-			<div class="btLeft">&#160;</div>
-			<div class="btRight">&#160;</div>
-		</div>
+	<div class="mainBox" >
 		<div class="boxContent toolSection ">
 			<div class="sectionIcon">
 				&#160;
@@ -460,11 +456,12 @@ foreach ($lista_bases as $key => $value) {
 }
 ?>
 						</select>
-					</div>
-					<a href="javascript:CambiarBaseAdministrador('toolbar')" class="menuButton nextButton">
-						<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-						<span><strong><?php echo $msgstr["dataentry"]?></strong></span>
+					<a href="javascript:CambiarBaseAdministrador('toolbar')" class="bt-blue">
+						<?php echo $msgstr["dataentry"]?> <i class="fas fa-arrow-right"></i>
 					</a>
+
+					</div>
+
 					</form>
 				</div>
 					&nbsp;
@@ -477,43 +474,39 @@ if (isset($def["MODULOS"])){
 	}
 ?>
 	<a href="javascript:ActivarModulo('<?php echo $def["MODULOS"]["SCRIPT"]."','$base_sel";?>')" class="menuButton <?php echo $def["MODULOS"]["BUTTON"]?>">
-		<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $def["MODULOS"]["TITLE"]?></strong></span>
 	</a>
 <?php
 }
 ?>
 				<a href="javascript:CambiarBaseAdministrador('stats')" class="menuButton statButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
 
 				<a href="javascript:CambiarBaseAdministrador('reportes')" class="menuButton reportButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
 
 				<a href="javascript:CambiarBaseAdministrador('estructuras')" class="menuButton update_databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["updbdef"]?></strong></span>
 				</a>
 
 				<a href="javascript:CambiarBaseAdministrador('utilitarios')" class="menuButton utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
 
 				<a href="javascript:CambiarBaseAdministrador('z3950')"  class="menuButton z3950Button">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["z3950"]?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>
 			</div>
-			<div class="boxBottom">
-			<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
-		</div>
 	</div>
 <?php
 
@@ -521,12 +514,8 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"])  or isset
   or isset($Permiso["CENTRAL_RESETLIN"])  or isset($Permiso["CENTRAL_TRANSLATE"])  or isset($Permiso["CENTRAL_EXDBDIR"]))
 {
 ?>
-			<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-				<div class="boxTop">
-					<div class="btLeft">&#160;</div>
-					<div class="btRight">&#160;</div>
-				</div>
-				<div class="boxContent toolSection ">
+			<div class="mainBox" >
+				<div class="boxContent maskSection">
 					<div class="sectionIcon">
 						&#160;
 					</div>
@@ -538,14 +527,14 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"])  or isset
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset($Permiso["ADM_CRDB"])){
 ?>
                     <a href="javascript:FuncionesAdministracion('CBD')" class="menuButton databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["createdb"]?></strong></span></a>
 <?Php
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isset($Permiso["ADM_USRADM"])){
 ?>
 				<a href="javascript:FuncionesAdministracion('AUSR')" class="menuButton userButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["usuarios"]?></strong></span>
 				</a>
 <?Php
@@ -553,7 +542,7 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isse
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_RESETLIN"])){
 ?>
 				<a href="javascript:FuncionesAdministracion('RNU')" class="menuButton resetButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["resetinv"]?></strong></span>
 				</a>
 <?Php
@@ -561,7 +550,7 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_RESETLIN"])){
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_TRANSLATE"])){
 ?>
 				<a href="javascript:CambiarBaseAdministrador('traducir')" class="menuButton exportButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["translate"]?></strong></span>
 				</a>
 <?Php
@@ -569,7 +558,7 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_TRANSLATE"])){
 if ($_SESSION["profile"]=="adm"){
 ?>
 				<a href="javascript:FuncionesAdministracion('CABCD')" class="menuButton utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["configure"]. " ABCD"?></strong></span>
 				</a>
 <?php
@@ -579,17 +568,13 @@ if ($dirtree==1 or $dirtree=="Y"){
 	if ($_SESSION["profile"]=="adm"){
 ?>
 				<a href="javascript:FuncionesAdministracion('DIRTREE')" class="menuButton exploreButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["expbases"]?></strong></span>
 				</a>
 <?Php }
 }?>
 					</div>
 					<div class="spacer">&#160;</div>
-				</div>
-				<div class="boxBottom">
-					<div class="bbLeft">&#160;</div>
-					<div class="bbRight">&#160;</div>
 				</div>
 			</div>
 

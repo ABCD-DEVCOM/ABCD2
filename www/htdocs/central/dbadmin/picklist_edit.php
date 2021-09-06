@@ -120,12 +120,12 @@ if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="fixed_marc"){
 }
 
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["cancel"]."</strong></span>
 				</a>";
 echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["save"]."</strong></span>
 				</a>";
 echo "			</div>

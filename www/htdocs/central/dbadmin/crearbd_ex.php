@@ -85,20 +85,27 @@ $requestedURL=substr($requestedURL,0,$ix+1);
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 echo "<html>
 <script>
-function Continuar(){    if (confirm(\"".$msgstr["borrartodo"]."\")==true ) {    	document.continuar.accion.value=\"cont\"
-    	document.continuar.submit()    }
+function Continuar(){
+    if (confirm(\"".$msgstr["borrartodo"]."\")==true ) {
+    	document.continuar.accion.value=\"cont\"
+    	document.continuar.submit()
+    }
 }
 
 function ActualizarListaBases(bd,desc){
 	ix=top.encabezado.document.OpcionesMenu.baseSel.options.length
-	for (i=0;i<ix;i++){		xbase=top.encabezado.document.OpcionesMenu.baseSel.options[i].value
+	for (i=0;i<ix;i++){
+		xbase=top.encabezado.document.OpcionesMenu.baseSel.options[i].value
 		ixsel=xbase.indexOf('^b')
 		if (ixsel==-1)
 			basecomp=xbase.substr(2)
 		else
 			basecomp=xbase.substr(2,ixsel-2)
-		if (basecomp==bd){			top.encabezado.document.OpcionesMenu.baseSel.options[i].text=desc
-			return		}	}
+		if (basecomp==bd){
+			top.encabezado.document.OpcionesMenu.baseSel.options[i].text=desc
+			return
+		}
+	}
 	top.encabezado.document.OpcionesMenu.baseSel.options[ix]=new Option('^a'+bd+'^badm',desc)
 }
 </script>
@@ -199,10 +206,14 @@ if ($arrHttp["base"]=="~~NewDb"){
 	<font color=black><p>";
 	echo "<h4>Remember to assign the users of ABCD which have acces to the new database ";
 	echo "<a href=../../documentacion/".$_SESSION["lang"]."/assign_operators.html target=_blank>How to assign operators? <img src=../img/about.gif alt=Help border=0></a>&nbsp &nbsp;
-        		<a href=../../documentacion/php/edit.php?archivo=../". $_SESSION["lang"]."/assign_operators.html target=_blank>edit help file</a></h4>";	echo "<p><font face=arial size=4><a href=fdt.php?base=$bd&dir=$newfile&Opcion=NewBd><b>Continue<b></a>";
-	die;}
-if ($arrHttp["base"]=="~~WinIsis" or $arrHttp["base"]=="~~DocuManager"){	echo "<p><font face=arial size=4><a href=winisis.php?base=$bd&dir=$newfile><b>Upload CDS/Isis Definitions</b></a>";
-	die;}
+        		<a href=../../documentacion/php/edit.php?archivo=../". $_SESSION["lang"]."/assign_operators.html target=_blank>edit help file</a></h4>";
+	echo "<p><font face=arial size=4><a href=fdt.php?base=$bd&dir=$newfile&Opcion=NewBd><b>Continue<b></a>";
+	die;
+}
+if ($arrHttp["base"]=="~~WinIsis" or $arrHttp["base"]=="~~DocuManager"){
+	echo "<p><font face=arial size=4><a href=winisis.php?base=$bd&dir=$newfile><b>Upload CDS/Isis Definitions</b></a>";
+	die;
+}
 echo "<p>copying files ... <p>";
 CopiarDirectorio($file,$newfile,$base,$bd);
 

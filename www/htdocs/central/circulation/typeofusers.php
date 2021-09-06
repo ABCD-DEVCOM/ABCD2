@@ -99,11 +99,11 @@ echo "
 				echo "
 
 					<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 				<a href=javascript:Enviar() class=\"defaultButton saveButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["update"]."</strong></span>
 				</a>
 			</div>
@@ -112,7 +112,7 @@ echo "
 		<div class=\"helper\">
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_typeofusers.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_typeofusers.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/typeofusers.php </font>";
+echo " Script: circulation/typeofusers.php";
 echo "  </div>
 		<div class=\"middle form\">
 			<div class=\"formContent\">";

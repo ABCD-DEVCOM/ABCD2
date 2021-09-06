@@ -16,10 +16,13 @@ include ("configure.php");
 <body>
 <script language=Javascript src=../dataentry/js/lr_trim.js></script>
 <script>
-function AbrirVentana(Url){	msgwin=window.open(Url,"","width=400, height=400, resizable, scrollbars, menu=no, toolbar=no")
-	msgwin.focus();}
+function AbrirVentana(Url){
+	msgwin=window.open(Url,"","width=400, height=400, resizable, scrollbars, menu=no, toolbar=no")
+	msgwin.focus();
+}
 
-function Enviar(){	if (Trim(document.forma1.tag_pref_classification_number.value)==""){
+function Enviar(){
+	if (Trim(document.forma1.tag_pref_classification_number.value)==""){
 		alert("<?php echo $msgstr["err_prefix"]?>")
 		return
 	}
@@ -27,7 +30,8 @@ function Enviar(){	if (Trim(document.forma1.tag_pref_classification_number.valu
 		alert("<?php echo $msgstr["err_pft_class"]?>")
 		return
 	}
-	document.forma1.submit()}
+	document.forma1.submit()
+}
 </script>
 <?php
 if (isset($arrHttp["encabezado"])){
@@ -43,7 +47,7 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php echo "<a href=\"../dbadmin/pft.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -55,12 +59,12 @@ if (isset($arrHttp["encabezado"])){
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDB"])){
 		$retorno="../dbadmin/pft.php";
 		echo "<a href=\"$retorno"."?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
 		";
 	}else{
 		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
 		";
 	}
@@ -86,14 +90,24 @@ echo "<font color=white>&nbsp; &nbsp; Script: barcode_conf.php";
 // leer el bases.dat para ver si la base activa está vinculada con copies
 $copies="";
 $fp=file($db_path."bases.dat");
-foreach ($fp as $value){	if (trim($value)!=""){		$v=explode("|",$value);
-		if ($v[0]==$arrHttp["base"]){			if (isset($v[2])) $copies=$v[2];
-			break;		}	}}
+foreach ($fp as $value){
+	if (trim($value)!=""){
+		$v=explode("|",$value);
+		if ($v[0]==$arrHttp["base"]){
+			if (isset($v[2])) $copies=$v[2];
+			break;
+		}
+	}
+}
 $bar_c=array();
 if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/barcode.conf")){
 	$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/barcode.conf");
-	if ($fp){		foreach ($fp as $conf){			$a=explode("=",$conf);
-			$bar_c[$a[0]]=$a[1];		}	}
+	if ($fp){
+		foreach ($fp as $conf){
+			$a=explode("=",$conf);
+			$bar_c[$a[0]]=$a[1];
+		}
+	}
 }
 echo "<form name=forma1 action=barcode_conf_ex.php method=post onsubmit='javascript:return false'>";
 echo "<dd><dd><table bgcolor=#cccccc cellpadding=10>";

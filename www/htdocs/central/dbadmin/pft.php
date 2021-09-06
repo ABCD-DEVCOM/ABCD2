@@ -626,10 +626,10 @@ if (isset($arrHttp["encabezado"])){
 if ($arrHttp["Opcion"]=="new"){
 	$ayuda="pft_create.html";
 	echo "<a href=fst.php?Opcion=new&base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>";
 	echo "<a href=\"menu_creardb.php?$encabezado\"$encabezado class=\"defaultButton cancelButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 <span><strong>".$msgstr["cancel"]."</strong></span></a>
 	";
 }else{
@@ -641,12 +641,12 @@ if ($arrHttp["Opcion"]=="new"){
 			else
 				$retorno="menu_modificardb.php";
 			echo "<a href=\"$retorno"."?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
 			";
 		}else{
 			echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["cancel"]."</strong></span></a>
 			";
 		}

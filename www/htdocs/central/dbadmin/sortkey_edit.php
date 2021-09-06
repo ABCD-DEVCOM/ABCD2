@@ -135,7 +135,7 @@ if (isset($arrHttp["encabezado"])){
 <?php
 	if ($encabezado!="") echo "<a href=javascript:self.close() class=\"defaultButton cancelButton\">";
 ?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 <span><strong><?php echo $msgstr["close"]?></strong></span>
 </a>
 			</div>
@@ -166,15 +166,18 @@ echo $msgstr["r_desc"]." &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbs
  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;   ".$msgstr["pftex"]."
  &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; ";
 echo "<div id=accent>";
-foreach ($fp as $value){	if (trim($value)!=""){
+foreach ($fp as $value){
+	if (trim($value)!=""){
 		$ix=$ix+1;
 		$v=explode('|',$value);
 		echo "<br>";
 		echo "<input type=text size=20 name=ac$ix id=iac$ix value=\"".$v[0]."\">&nbsp; &nbsp; &nbsp;";
 		echo "<input type=text size=60 name=nac$ix id=inac$ix value=\"".$v[1]."\">";
-	}}
+	}
+}
 $ix=$ix+1;
-for ($i=$ix;$i<$ix+5;$i++){	echo "<br>";
+for ($i=$ix;$i<$ix+5;$i++){
+	echo "<br>";
 	echo "<input type=text size=20 name=ac$i id=iac$i value=\"\">&nbsp; &nbsp; &nbsp;";
 	echo "<input type=text size=60 name=nac$i id=inac$i value=\"\">";
 }

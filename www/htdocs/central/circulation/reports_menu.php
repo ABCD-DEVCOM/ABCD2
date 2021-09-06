@@ -13,10 +13,14 @@ include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/prestamo.php");
 
-if (!isset($_SESSION["login"])){	echo $msgstr["sessionexpired"];
-	die;}
+if (!isset($_SESSION["login"])){
+	echo $msgstr["sessionexpired"];
+	die;
+}
 
-function DoList($database){global $db_path,$msgstr,$encabezado,$lang_db; 	unset($fp);
+function DoList($database){
+global $db_path,$msgstr,$encabezado,$lang_db;
+ 	unset($fp);
 	if (file_exists($db_path."$database/pfts/".$_SESSION["lang"]."/formatos.dat"))
 		$fp = file($db_path."$database/pfts/".$_SESSION["lang"]."/formatos.dat");
 	else
@@ -36,7 +40,8 @@ function DoList($database){global $db_path,$msgstr,$encabezado,$lang_db; 	unse
 		echo "</ul>";
 
 	}
-    echo "<p>";}
+    echo "<p>";
+}
 
 
 // ==================================================================================================
@@ -76,8 +81,10 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/selectbox.js"></script>
 <style type=text/css>
 
-td{	font-size:12px;
-	font-family:Arial;}
+td{
+	font-size:12px;
+	font-family:Arial;
+}
 
 div#useexformat{
 
@@ -109,9 +116,13 @@ TipoFormato=""
 C_Tag=Array()
 
 //IF THE TYPE OF OUTPUT IS NOT IN COLUMN, HEADINGS ARE NOT ALLOWED
-function CheckType(){	if (document.forma1.tipof[0].checked || document.forma1.tipof[1].checked){		alert("<?php echo $msgstr["r_noheading"]?>")
-		document.forma1.pft.focus()	}
-}
+function CheckType(){
+	if (document.forma1.tipof[0].checked || document.forma1.tipof[1].checked){
+		alert("<?php echo $msgstr["r_noheading"]?>")
+		document.forma1.pft.focus()
+	}
+
+}
 
 function CopiarExpresion(){
 	Expr=document.forma1.Expr.options[document.forma1.Expr.selectedIndex].value
@@ -125,8 +136,10 @@ function CopySortKey(){
 }
 
 function CreateSortKey(){
-	msgwin=window.open("","sortkey","resizable,scrollbars, width=600,height=600")	document.sortkey.submit()
-	msgwin.focus()}
+	msgwin=window.open("","sortkey","resizable,scrollbars, width=600,height=600")
+	document.sortkey.submit()
+	msgwin.focus()
+}
 
 function AbrirVentana(Archivo){
 	xDir=""
@@ -134,7 +147,8 @@ function AbrirVentana(Archivo){
 	msgwin.focus()
 }
 
-function EsconderVentana( whichLayer ){var elem, vis;
+function EsconderVentana( whichLayer ){
+var elem, vis;
 
 	if( document.getElementById ) // this is the way the standards work
 		elem = document.getElementById( whichLayer );
@@ -153,8 +167,10 @@ function EsconderVentana( whichLayer ){var elem, vis;
 function toggleLayer( whichLayer ){
 	var elem, vis;
 
-	switch (whichLayer){		case "createformat":
-<?php if ($arrHttp["Opcion"]!="new"){		echo '
+	switch (whichLayer){
+		case "createformat":
+<?php if ($arrHttp["Opcion"]!="new"){
+		echo '
 			document.forma1.fgen.selectedIndex=-1
 			EsconderVentana("useexformat")
             if (save=="Y"){
@@ -168,7 +184,8 @@ function toggleLayer( whichLayer ){
 		case "useexformat":
 			EsconderVentana("createformat")
 			break
-	}
+
+	}
 	if( document.getElementById ) // this is the way the standards work
 		elem = document.getElementById( whichLayer );
 	else if( document.all ) // this is the way old msie versions work
@@ -274,7 +291,8 @@ function GuardarBusqueda(){
 }
 </script>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
@@ -285,10 +303,12 @@ if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php")
 
 	<div class="actions">
 <?php
-	if (isset($arrHttp["encabezado"])){		echo "<a href=\"../common/inicio.php?reinicio=s&modulo=loan&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	if (isset($arrHttp["encabezado"])){
+		echo "<a href=\"../common/inicio.php?reinicio=s&modulo=loan&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
+			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 		<span><strong>".$msgstr["back"]."</strong></span></a>
-			";	}
+			";
+	}
 ?>
 
 </div>

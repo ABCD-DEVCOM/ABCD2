@@ -32,7 +32,7 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 	</div>
 	<div class="actions">
 		<a href=suggestions.php?encabezado=s&base=<?php echo $arrHttp["base"]?> class="defaultButton backButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
+			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 			<span><strong><?php echo $msgstr["back"]?></strong></span>
 		</a>
 	</div>

@@ -27,7 +27,9 @@ function Edit(Html){
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 
 	echo " <body>
 	<div class=\"sectionInfo\">
@@ -39,7 +41,7 @@ if (isset($arrHttp["encabezado"])) {
 	";
 echo "<a href=\"menu_traducir.php?$encabezado\" class=\"defaultButton backButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 echo "			</div>

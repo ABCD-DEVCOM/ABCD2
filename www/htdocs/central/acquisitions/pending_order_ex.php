@@ -63,7 +63,8 @@ function toggle(showHideDiv, switchTextDiv) {
 	}
 }
 
-function EnviarForma(){	alert('not developed yet')
+function EnviarForma(){
+	alert('not developed yet')
 	return false
 }
 </script>
@@ -98,13 +99,15 @@ echo "<font color=white>&nbsp; &nbsp; Script: pending_order_ex.php</font>\n";
 <?php
 
 $locales=explode('/',$config_date_format);
-switch ($locales[0]){	case "DD":
+switch ($locales[0]){
+	case "DD":
 		$date1="d";
 		break;
 	case "MM":
 		$date1="m";
 		break;
-}switch ($locales[1]){
+}
+switch ($locales[1]){
 	case "DD":
 		$date2="d";
 		break;

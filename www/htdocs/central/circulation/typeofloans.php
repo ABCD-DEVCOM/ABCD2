@@ -68,8 +68,12 @@ include("../common/header.php");
 			Actualizar()
 		}
 	}
-	function Validate(Accion){	}
-	function Actualizar(){	}
+	function Validate(Accion){
+
+	}
+	function Actualizar(){
+
+	}
 	function doBeforeRowDeleted(rowId){
   		VC=""
 		for (j=0;j<3;j++){
@@ -119,7 +123,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>
@@ -145,11 +149,13 @@ echo "<font color=white>&nbsp; &nbsp; Script: typeofloans.php</font>\n";
 	unset($fp);
 	if (file_exists($db_path."users/def/typeofloans.tab")){
 		$fp=file($db_path."users/def/typeofloans.tab");
-	}else{		$fp=array();
+	}else{
+		$fp=array();
 		for ($i=0;$i<20;$i++){
 			$fp[$i]='|||||||||';
 		}
-		$tope=20;	}
+		$tope=20;
+	}
 	$nfilas=0;
 	$i=-1;
 	$t=array();
@@ -159,7 +165,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: typeofloans.php</font>\n";
 		$value=trim($value);
 		if (trim($value)!=""){
 			$t=explode("|",$value);
-			foreach ($t as $l){				if ($l=="") $l="&nbsp;";			 	echo "<td>$l</td>";
+			foreach ($t as $l){
+				if ($l=="") $l="&nbsp;";
+			 	echo "<td>$l</td>";
 			}
 		}
 	    echo " </tr>";

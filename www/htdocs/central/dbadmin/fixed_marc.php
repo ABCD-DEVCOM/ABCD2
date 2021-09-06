@@ -30,7 +30,7 @@ if (isset($arrHttp["encabezado"]))
 else
 	$encabezado="";
 echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["cancel"]."</strong></span>
 	</a>
 	</div>
@@ -59,14 +59,18 @@ else
     if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/ldr_06.tab"))
 		$ldr_06=file($db_path.$arrHttp["base"]."/def/".$lang_db."/ldr_06.tab");
 
-if (!$ldr_06){	echo "missing file ".$ldr_06;
-	die;}
+if (!$ldr_06){
+	echo "missing file ".$ldr_06;
+	die;
+}
 echo "<div style=position:relative;margin-left:100px>";
 echo "<strong>File: ldr_06.fdt (<a href=picklist_edit.php?base=".$arrHttp["base"]."&picklist=ldr_06.tab&desde=fixed_marc$encabezado>".$msgstr["edit"]."</a>)</strong><p>" ;
-foreach ($ldr_06 as $value){	$value=trim($value);
+foreach ($ldr_06 as $value){
+	$value=trim($value);
 	if ($value!=""){
 		$t=explode('|',$value);
-		echo $t[0]." - ".$t[1].": <a href=\"fdt.php?base=". $arrHttp["base"]."$encabezado&Fixed_field=y&fdt_name=".$t[2]."\">".$t[2]."</a><br>";	}
+		echo $t[0]." - ".$t[1].": <a href=\"fdt.php?base=". $arrHttp["base"]."$encabezado&Fixed_field=y&fdt_name=".$t[2]."\">".$t[2]."</a><br>";
+	}
 }
 echo "</div><p>";
 echo "</div></div>";

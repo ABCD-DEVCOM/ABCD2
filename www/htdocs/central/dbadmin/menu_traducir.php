@@ -32,7 +32,7 @@ include("../common/institutional_info.php");
 	<div class="breadcrumb"><?php echo $msgstr["translate"];?></div>
 	<div class="actions">
         <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
             <span><strong><?php echo $msgstr["regresar"]?></strong></span>
         </a>
     </div>
@@ -43,10 +43,7 @@ include "../common/inc_div-helper.php";
 ?>
 <div class="middle homepage">
 	<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-		<div class="boxTop">
-			<div class="btLeft">&#160;</div>
-			<div class="btRight">&#160;</div>
-		</div>
+
 		<div class="boxContent titleSection">
 			<div class="sectionTitle">
 				<h4><strong><?php echo $msgstr["traducir"]?></strong></h4>
@@ -54,120 +51,109 @@ include "../common/inc_div-helper.php";
 			</div>
 			<div class="sectionButtons">
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=admin.tab" class="menuButton  listButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["catalogacion"]?></strong></span>
 				</a>
 
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=dbadmin.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["dbadmin"]?></strong></span>
 				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=soporte.tab" class="menuButton  utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=importdoc.tab" class="menuButton  utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["dd_documents"]?></strong></span>
 				</a>
     			<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton  importButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["prestamo"]?></strong></span>
 				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=reports.tab" class="menuButton  reportsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
 				 <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton  statButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
                 <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
 				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab" class="menuButton  userButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>
 		</div>
-		<div class="boxBottom">
-			<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
-		</div>
 	</div>
 
 	<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-		<div class="boxTop">
-			<div class="btLeft">&#160;</div>
-			<div class="btRight">&#160;</div>
-		</div>
+
 		<div class="boxContent titleSection">
 			<div class="sectionTitle">
 				<h4><strong><?php echo $msgstr["compare_trans"]?></strong></h4>
 			</div>
 			<div class="sectionButtons">
 				<a href="../lang/compare_admin.php?table=admin.tab" class="menuButton  listButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["catalogacion"]?></strong></span>
 				</a>
 
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=dbadmin.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["dbadmin"]?></strong></span>
 				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=soporte.tab" class="menuButton  utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=importdoc.tab" class="menuButton  utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["dd_documents"]?></strong></span>
 				</a>
     			<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton  importButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["prestamo"]?></strong></span>
 				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=reports.tab" class="menuButton  reportsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton  statButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
                 <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
 				</a>
                 <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab" class="menuButton  userButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>
-		</div>
-		<div class="boxBottom">
-			<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
 		</div>
 	</div>
 

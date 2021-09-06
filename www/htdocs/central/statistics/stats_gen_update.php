@@ -8,10 +8,12 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
-// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILOinclude("../common/header.php");
+// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
+include("../common/header.php");
 
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
@@ -26,7 +28,7 @@ if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){
 	$script="../dbadmin/menu_modificardb.php";
 }
 	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>
 	";
 ?>
@@ -46,7 +48,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: stat_gen_update.php";
 $file=$db_path."/proc_gen.cfg";
 $fp=fopen($file,"w");
 $vc=explode("\n",$arrHttp["ValorCapturado"]);
-foreach ($vc as $value){	$r=fwrite($fp,$value."\n");}
+foreach ($vc as $value){
+	$r=fwrite($fp,$value."\n");
+}
 $r=fclose($fp);
 echo "<h4>proc_gen.cfg"." ".$msgstr["updated"]."</h4>" ;
 ?>

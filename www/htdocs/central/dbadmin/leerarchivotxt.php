@@ -29,7 +29,7 @@ if (isset($arrHttp["encabezado"])){
 			<div class="actions">
 <?php echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s\" class=\"defaultButton backButton\">";
 ?>
-					<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["back"]?></strong></span>
 				</a>
 			</div>
@@ -46,8 +46,10 @@ $b=explode("/",$db_path);
 if ($a[0]==$b[count($b)-2]){
 	$archivo=substr($archivo,strlen($a[0])+1);
 }
-if (!file_exists($db_path.$archivo)){	echo $db_path."$archivo ".$msgstr["ne"];
-}else{
+if (!file_exists($db_path.$archivo)){
+	echo $db_path."$archivo ".$msgstr["ne"];
+
+}else{
 	$fp=file($db_path.$archivo);
 	echo "<h5>".$arrHttp["archivo"]." &nbsp;
 	<a href=editararchivotxt.php?archivo=".$archivo.">".$msgstr["edit"]."</a> &nbsp;

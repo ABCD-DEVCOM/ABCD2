@@ -45,15 +45,21 @@ include("../common/header.php");
 <script>
 function Continuar(){
 	ix=document.forma1.base.selectedIndex
-	if (ix<1){		alert("<?php echo $msgstr["seldb"]?>")
-		return	}    document.forma1.submit()}
-function Deshabilitar(){	ix=document.forma1.base.selectedIndex
+	if (ix<1){
+		alert("<?php echo $msgstr["seldb"]?>")
+		return
+	}
+    document.forma1.submit()
+}
+function Deshabilitar(){
+	ix=document.forma1.base.selectedIndex
 	if (ix<1){
 		alert("<?php echo $msgstr["seldb"]?>")
 		return
 	}
 	document.forma1.action="disable_db.php"
-    document.forma1.submit()}
+    document.forma1.submit()
+}
 </script>
 <?php
 $encabezado="";
@@ -66,7 +72,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>
@@ -76,12 +82,16 @@ echo "
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_databases.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_databases.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/databases.php </font>";
+echo " Script: circulation/databases.php";
 
 echo " </div>
 		<div class=\"middle form\">
 			<div class=\"formContent\">";
-if (file_exists($db_path."loans.dat")){	$loans_dat=" checked";}else{	$loans_dat="";}
+if (file_exists($db_path."loans.dat")){
+	$loans_dat=" checked";
+}else{
+	$loans_dat="";
+}
 echo "<p><form name=forma1 action=databases_configure.php >\n";
 echo "<!--p><h3>".$msgstr["loan_option"].": ";
 echo "<input type=radio name=loan_option value=copies>".$msgstr["with_copies"]."&nbsp; &nbsp; ";
@@ -98,17 +108,23 @@ $bases_p=array();
 $ya_elegida="";
 foreach ($fp as $value){
 	$value=trim($value);
-	if ($value!=""){		$b=explode('|',$value);
-		if ($b[0]=="trans" or $b[0]=="suspml" or $b[0]=="copies" or $b[0]=="users" or $b[0]=="reserve" or $b[0]=="suggestions" or $b[0]=="purchaseorder" or $b[0]=="loanobjects"){		}else{
+	if ($value!=""){
+		$b=explode('|',$value);
+		if ($b[0]=="trans" or $b[0]=="suspml" or $b[0]=="copies" or $b[0]=="users" or $b[0]=="reserve" or $b[0]=="suggestions" or $b[0]=="purchaseorder" or $b[0]=="loanobjects"){
+
+		}else{
 			$archivo="";
 			if (!isset($b[2])) $b[2]="N";
 			echo "<option value=".$b[0]."|".$b[2],">".$b[1]."\n";
-			if (file_exists($db_path.$b[0]."/loans/".$_SESSION["lang"]."/loans_display.pft")){				if ($ya_elegida=="")
+			if (file_exists($db_path.$b[0]."/loans/".$_SESSION["lang"]."/loans_display.pft")){
+				if ($ya_elegida=="")
 					$ya_elegida= $b[1]." (".$b[0].")<br>";
 				else
-					$ya_elegida.= $b[1]." (".$b[0].")<br>";			}
+					$ya_elegida.= $b[1]." (".$b[0].")<br>";
+			}
 		}
-	}}
+	}
+}
 echo "</select></td>";
 echo "<td valign=top>".$msgstr["alreadysel"].": <br>$ya_elegida";
 

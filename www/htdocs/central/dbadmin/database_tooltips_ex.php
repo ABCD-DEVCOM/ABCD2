@@ -38,7 +38,7 @@ echo " <body>
 
 echo "<a href=\"menu_modificardb.php?encabezado=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 echo "			</div>
@@ -64,12 +64,18 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/database_tooltips.php";
 <?php
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab";
 $fp=fopen($archivo,"w");
-foreach ($arrHttp as $key=>$value){	$value=trim($value);
+foreach ($arrHttp as $key=>$value){
+	$value=trim($value);
 	if ($value!=""){
 		if (substr($key,0,3)=="tag"){
-			$key=substr($key,3);			$value=str_replace("\n","",$value);
+			$key=substr($key,3);
+			$value=str_replace("\n","",$value);
 			$value=str_replace("\r","",$value);
-			fwrite($fp,$key."=".$value."\n");		}	}}
+			fwrite($fp,$key."=".$value."\n");
+		}
+
+	}
+}
 fclose($fp);
 echo "<h2>".$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab: ".$msgstr["updated"]."</h2>";
 echo "</div></div>";

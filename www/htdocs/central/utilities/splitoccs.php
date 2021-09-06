@@ -24,7 +24,7 @@ echo "<div class=\"sectionInfo\">
 			<div class=\"actions\">";
 if (isset($arrHttp["encabezado"])){
 echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>". $msgstr["back"]."</strong></span></a>";
 }
 echo "</div>

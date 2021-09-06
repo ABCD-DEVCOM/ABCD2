@@ -14,7 +14,9 @@ include("../lang/dbadmin.php");
 $vc=explode("\n",$arrHttp["ValorCapturado"]);
 $Pft=array();
 $ix=-1;
-foreach ($vc as $var=>$value) {	$value=trim($value);	if ($value!=""){
+foreach ($vc as $var=>$value) {
+	$value=trim($value);
+	if ($value!=""){
 		$ix=$ix+1;
 		$Pft[$ix]["TAG"]=substr($value,0,4);
 		$xx=substr($value,4);
@@ -25,8 +27,10 @@ foreach ($vc as $var=>$value) {	$value=trim($value);	if ($value!=""){
 }
 $formato="";
 $ixt=-1;
-foreach ($Pft as $value){	$ixt=$ixt+1;
-	if (substr(trim($value["PFT"]),0,1)=="@"){		$pft_file=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".trim(substr($value["PFT"],1));
+foreach ($Pft as $value){
+	$ixt=$ixt+1;
+	if (substr(trim($value["PFT"]),0,1)=="@"){
+		$pft_file=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".trim(substr($value["PFT"],1));
 		if (!file_exists($pft_file)) $pft_file=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".trim(substr($value["PFT"],1));
 		$value["PFT"]="@".$pft_file;
 	}
@@ -46,7 +50,7 @@ include("../common/wxis_llamar.php");
 	<div class="actions">
 <?php echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["close"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -67,12 +71,17 @@ echo "<p><table bgcolor=#eeeeee cellspacing=3 border=0>
 <tr><td>".$msgstr["tag"]."</td><td>".$msgstr["pftval"]."</td><td>".$msgstr["recval"]."</td></tr>";
 
 $t=explode('$$$$',$recval_pft);
-foreach ($t as $salida){	if (trim($salida)!=""){
+foreach ($t as $salida){
+	if (trim($salida)!=""){
 		$ix_sal=explode('|',$salida);
 	    $ixt=$ix_sal[0];
 	    $salida=$ix_sal[1];
 	    $ix=strpos($salida,' ');
-	    if ($ix===false){	    	$campo="";	    }else{	    	$campo=substr($salida,$ix+1);	    }
+	    if ($ix===false){
+	    	$campo="";
+	    }else{
+	    	$campo=substr($salida,$ix+1);
+	    }
 		echo  $Html[$ixt];
 		if ($campo!="")
 			echo "<td valign=top bgcolor=white>".$campo."</td>\n";

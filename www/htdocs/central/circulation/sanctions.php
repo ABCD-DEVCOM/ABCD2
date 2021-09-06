@@ -83,8 +83,10 @@ document.onkeypress =
   }
 
 function EnviarForma(){
-	if (Trim(document.usersearch.usuario.value)=="" ){		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]?>")
-		return	}
+	if (Trim(document.usersearch.usuario.value)=="" ){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]?>")
+		return
+	}
 	document.usersearch.action="sanctions_ex.php"
 	document.usersearch.submit()
 }

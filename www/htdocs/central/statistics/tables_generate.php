@@ -14,9 +14,15 @@ include ("../lang/statistics.php");
 $x=explode('|',$arrHttp["base"]);
 $arrHttp["base"]=$x[0];
 $date_prefix="";
-if (file_exists($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg")){	$fp=file($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg");
-	foreach ($fp as $value){		if (trim($value)!=""){			$date_prefix=trim($value);
-			break;		}	}}
+if (file_exists($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg")){
+	$fp=file($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg");
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$date_prefix=trim($value);
+			break;
+		}
+	}
+}
 unset($fp);
 if (!isset($arrHttp["Opcion"]))$arrHttp["Opcion"]="";
 
@@ -47,9 +53,6 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <style type=text/css>
 
-td{	font-size:12px;
-	font-family:Arial;}
-
 div#statsgen{
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -75,7 +78,8 @@ div#useextable{
 	color: #000000;
 }
 
-div#createtable{<?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
+div#createtable{
+<?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
 
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -120,7 +124,8 @@ function AbrirVentana(Archivo){
 	msgwin.focus()
 }
 
-function EsconderVentana( whichLayer ){var elem, vis;
+function EsconderVentana( whichLayer ){
+var elem, vis;
 	if( document.getElementById ) // this is the way the standards work
 		elem = document.getElementById( whichLayer );
 	else if( document.all ) // this is the way old msie versions work
@@ -137,8 +142,10 @@ function EsconderVentana( whichLayer ){var elem, vis;
 function toggleLayer( whichLayer ){
 	var elem, vis;
 
-	switch (whichLayer){		case "createtable":
-<?php		echo '
+	switch (whichLayer){
+		case "createtable":
+<?php
+		echo '
 			EsconderVentana("useextable")
 			break
 			';
@@ -160,7 +167,9 @@ function toggleLayer( whichLayer ){
 		vis.display = ( elem.offsetWidth != 0 && elem.offsetHeight != 0 ) ? 'block':'none';
 	vis.display = ( vis.display == '' || vis.display == 'block' ) ? 'none':'block';
 }
-function IsNumeric(data){   	//  test strString consists of valid characters listed above
+function IsNumeric(data){
+
+   	//  test strString consists of valid characters listed above
    	for (i = 0; i < data.length; i++){
     	strChar = data.charAt(i);
     	if (strValidChars.indexOf(strChar) == -1){
@@ -168,8 +177,10 @@ function IsNumeric(data){   	//  test strString consists of valid characters l
 
     	}
     }
-    return true}
-function Globales(){	var d = new Date();
+    return true
+}
+function Globales(){
+	var d = new Date();
 	var n = d.getFullYear();
 	year_from=Trim(document.globales.year_from.value)
 	if (year_from==0 || year_from=="" || !IsNumeric(year_from) ) {
@@ -185,7 +196,8 @@ function Globales(){	var d = new Date();
 			return
 		}
 	}
-	document.globales.submit()}
+	document.globales.submit()
+}
 
 function BorrarExpresion(){
 	document.forma1.Expresion.value=''
@@ -198,16 +210,24 @@ function EnviarForma(Desde){
 			var n = d.getFullYear();
 			year_from=Trim(document.forma1.year_from.value)
 			//year_to=Trim(document.forma1.year_to.value)
-			if (year_from==0 || year_from=="" || !IsNumeric(year_from) ) {				alert("<?php echo $msgstr["inv_date"]?>")
-				return			}
-			//if (year_to < year_from){			//	alert("<?php echo $msgstr["inv_date"]?>")
-			//	return			//}
+			if (year_from==0 || year_from=="" || !IsNumeric(year_from) ) {
+				alert("<?php echo $msgstr["inv_date"]?>")
+				return
+			}
+			//if (year_to < year_from){
+			//	alert("<?php echo $msgstr["inv_date"]?>")
+			//	return
+			//}
 			month_from=Trim(document.forma1.month_from.value)
 			//month_to=Trim(document.forma1.month_to.value)
-			if (month_from=="" ){			} else{				if (month_from<1 || month_from>12 || !IsNumeric(month_from) ) {
+			if (month_from=="" ){
+
+			} else{
+				if (month_from<1 || month_from>12 || !IsNumeric(month_from) ) {
 					alert("<?php echo $msgstr["inv_date"]?>")
 					return
-				}			}
+				}
+			}
             document.forma1.Opcion.value="FECHAS"
 			break
 		case 2:
@@ -252,14 +272,21 @@ function EnviarForma(Desde){
 	}
 	i=0
 	if (document.forma1.proc.selectedIndex>0 ){
-		document.forma1.Accion.value="Procesos"		i=i+1
+		document.forma1.Accion.value="Procesos"
+		i=i+1
 	}
-	if (document.forma1.tables.selectedIndex>0 ){		document.forma1.Accion.value="Tablas"		i=i+1
+	if (document.forma1.tables.selectedIndex>0 ){
+		document.forma1.Accion.value="Tablas"
+		i=i+1
 	}
     if ( document.forma1.rows.selectedIndex>0 || document.forma1.cols.selectedIndex>0){
-    	document.forma1.Accion.value="Variables"    	i=i+1    }
-    if (i>1){    	alert("<?php echo $msgstr["seltab"]?>")
-	  	return    }
+    	document.forma1.Accion.value="Variables"
+    	i=i+1
+    }
+    if (i>1){
+    	alert("<?php echo $msgstr["seltab"]?>")
+	  	return
+    }
 	document.forma1.submit();
 }
 
@@ -270,7 +297,9 @@ function Buscar(){
   	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
 	msgwin.focus()
 }
-function Probar(){	alert("entro")}
+function Probar(){
+	alert("entro")
+}
 
 function Configure(Option){
 	if (document.configure.base.value==""){
@@ -301,15 +330,19 @@ function Configure(Option){
 			if (Ctrl.innerHTML=="<?php echo $msgstr['save']?>"){
 				date_prefix=document.forma1.date_prefix.value
 				date_prefix=Trim(date_prefix)
-				if (date_prefix==""){					alert("<?php echo $msgstr['miss_dp']?>")
-					return				}
-				base="<?php echo $arrHttp["base"]?>"				msgwin=window.open("date_prefix_update.php?date_prefix="+date_prefix+"&base="+base,"dp","width=300,height=100")
+				if (date_prefix==""){
+					alert("<?php echo $msgstr['miss_dp']?>")
+					return
+				}
+				base="<?php echo $arrHttp["base"]?>"
+				msgwin=window.open("date_prefix_update.php?date_prefix="+date_prefix+"&base="+base,"dp","width=300,height=100")
 				Ctrl.innerHTML="<?php echo $msgstr['change']?>"
 				document.forma1.date_prefix.style="border: 0px solid white;"
 
 				document.forma1.date_prefix.blur()
 				document.forma1.date_prefix.onclick= function (){document.forma1.date_prefix.blur()}
-				return			}
+				return
+			}
 			Ctrl.innerHTML="<?php echo $msgstr['save']?>"
 			return
 			break
@@ -319,7 +352,8 @@ function Configure(Option){
 </script>
 <body>
 <?php
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
 ?>
@@ -332,7 +366,7 @@ if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php")
 <?php
 if (isset($arrHttp["encabezado"]))
 	echo "<a href=\"../common/inicio.php?reinicio=S&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 <span><strong>".$msgstr["back"]."</strong></span></a>
 	";
 ?>
@@ -342,8 +376,7 @@ if (isset($arrHttp["encabezado"]))
 <div class="spacer">&#160;</div>
 </div>
 <div class="helper">
-<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<font color=white>&nbsp; &nbsp; Script: tables_generate.php</font>
+<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;&nbsp; &nbsp; Script: tables_generate.php
 </div>
 
 
@@ -365,7 +398,10 @@ if (isset($arrHttp["encabezado"]))
 		<input type=submit value="<?php echo $msgstr["send"]?>"> <br>
 		<?php
 		$fp=file($db_path."proc_gen.cfg");
-		foreach ($fp as $value) {			echo str_replace('$$',': ',$value."<br>");		}		unset($fp);
+		foreach ($fp as $value) {
+			echo str_replace('$$',': ',$value."<br>");
+		}
+		unset($fp);
     ?>
 		</form>
 <?php }?>
@@ -571,7 +607,8 @@ if (isset($arrHttp["encabezado"]))
 </div>
 </td>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){?>
+if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+?>
 <tr>
 	<td align=left   valign=center bgcolor=#ffffff><hr><p>
     	&nbsp; <A HREF="javascript:toggleLayer('configure')"> <font color=black><strong><?php echo "<h2>".$msgstr["stats_conf"]."</h2>"?></strong></font></a>

@@ -30,10 +30,15 @@ session_start();
 include("../common/get_post.php");
 include ("../config.php");
 $fp=file($db_path.$arrHttp["base"]."/".$arrHttp["base"].".fdt");
-foreach($fp as $value) {	$f=explode('|',$value);
-	if ($f[3]==1){		if (substr($f[13],0,1)!="@")			$arrHttp["formato_e"]=$f[13]."'$$$'f(mfn,1,0)";
+foreach($fp as $value) {
+	$f=explode('|',$value);
+	if ($f[3]==1){
+		if (substr($f[13],0,1)!="@")
+			$arrHttp["formato_e"]=$f[13]."'$$$'f(mfn,1,0)";
 		else
-			$arrHttp["formato_e"]=$f[13];	}}
+			$arrHttp["formato_e"]=$f[13];
+	}
+}
 $arrHttp["formato_e"]=stripslashes($arrHttp["formato_e"]);
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
@@ -84,7 +89,8 @@ if (!isset($arrHttp["pref"]))$arrHttp["pref"]=$arrHttp["prefijo"];
 	echo "Tag=\"".$arrHttp["Tag"]."\"\n";
 	echo "Prefijo=\"".$arrHttp["prefijo"]."\"\n";
 ?>
-	function ObtenerTerminos(){		Seleccion=""
+	function ObtenerTerminos(){
+		Seleccion=""
 		icuenta=0
 		i=document.Lista.autoridades.selectedIndex
 		for (i=0;i<document.Lista.autoridades.options.length; i++){
@@ -103,7 +109,8 @@ if (!isset($arrHttp["pref"]))$arrHttp["pref"]=$arrHttp["prefijo"];
 			pref="<?php echo $arrHttp["pref"]?>"
     		cipar="<?php echo $arrHttp["cipar"]?>"
  <?php
- 			if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]!=""){ 				echo "top.xeditar=\"S\"\n";
+ 			if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]!=""){
+ 				echo "top.xeditar=\"S\"\n";
 				echo 'parent.main.location="fmt.php?xx=xx&base='.$_SESSION["base"]."&cipar=".$_SESSION["cipar"].'&basecap="+db+"&ciparcap="+cipar+"&Mfn="+Seleccion+"&Opcion=captura_bd&ver=S&capturar=S"'."\n";
 			}else{
 				echo 'window.opener.top.main.location.href="fmt.php?cc=xx&base="+db+"&cipar="+cipar+"&Mfn="+Seleccion+"&Opcion=leer&ver=S&Formato=ALL"+db'."\n";

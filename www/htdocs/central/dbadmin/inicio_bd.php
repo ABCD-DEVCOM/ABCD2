@@ -71,7 +71,7 @@ if ($inframe!="1") include "../common/institutional_info.php";
 // Show 'back' button,
 $backtourl=$backtoscript."?base=".$arrHttp["base"];
 echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
     <span><strong>".$msgstr["regresar"]."</strong></span></a>";
 ?>
 	</div>

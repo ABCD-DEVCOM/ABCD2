@@ -63,7 +63,9 @@ if ($guessstatus=="manual")   $guessed=$msgstr["manualset"];
 ?>
 <body>
 <script>
-function Enviar(){	document.forma1.submit()}
+function Enviar(){
+	document.forma1.submit()
+}
 function doReload(selectvalue){
     document.continuar.selcharset.value=selectvalue
 	document.continuar.submit();
@@ -79,11 +81,11 @@ include("../common/institutional_info.php");
     </div>
     <div class="actions">
         <a href="javascript:Enviar()" class="defaultButton saveButton">
-            <img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
             <span><strong><?php echo $msgstr["m_guardar"]?></strong></span>
         </a>
         <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
             <span><strong><?php echo $msgstr["regresar"]?></strong></span>
         </a>
     </div>

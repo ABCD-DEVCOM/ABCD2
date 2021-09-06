@@ -10,7 +10,7 @@
 		<img src=<?php if (isset($logo))
 								echo $logo;
 							else
-								echo "../images/logoabcd.png";
+								echo "../../assets/images/logoabcd.png";
 					  ?>
 					  />
 					  <h1>

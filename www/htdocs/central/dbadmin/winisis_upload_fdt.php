@@ -98,7 +98,7 @@ if (isset($arrHttp["encabezado"]))
 		$encabezado="";
 echo "<a href=winisis.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado." class=\"defaultButton backButton\">";
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>
@@ -125,7 +125,9 @@ if ($files["userfile"]['size']) {
   	$Fdt_conv=CrearFdt($Fdt);
    	$_SESSION["FDT"]=$Fdt_conv;
     MostrarFdt($_SESSION["FDT"]);
-}else{	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);}
+}else{
+	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);
+}
 $_SESSION["DESC"]=$arrHttp["desc"];
 unset ($_SESSION["FST"]);
 unset ($_SESSION["PFT"]);

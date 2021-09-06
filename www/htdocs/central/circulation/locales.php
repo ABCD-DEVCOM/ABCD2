@@ -1,7 +1,8 @@
 <?php
 function LeerLocales(){
 global $db_path,$locales,$config_date_format;
-	if (file_exists($db_path."circulation/def/".$_SESSION["lang"]."/locales.tab")){		$locales=parse_ini_file($db_path."circulation/def/".$lang_db."/locales.tab",true);
+	if (file_exists($db_path."circulation/def/".$_SESSION["lang"]."/locales.tab")){
+		$locales=parse_ini_file($db_path."circulation/def/".$lang_db."/locales.tab",true);
 	}
 }
 session_start();
@@ -37,7 +38,8 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" language=javascript src=../dataentry/js/lr_trim.js></script>
 <script>
 function LimpiarHorario(Ctrl){
-	switch (Ctrl.name){		case "mon":
+	switch (Ctrl.name){
+		case "mon":
 			document.forma1.mon_from.value=""
 			document.forma1.mon_to.value=""
 			break
@@ -64,7 +66,9 @@ function LimpiarHorario(Ctrl){
 		case "sun":
 			document.forma1.sun_from.value=""
 			document.forma1.sun_to.value=""
-			break	}}
+			break
+	}
+}
 
 function IsValidTime(timeStr,Day) {
 // Checks if time is in HH:MM:SS AM/PM format.
@@ -212,11 +216,11 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["update"]."</strong></span>
 				</a>
 			</div>
@@ -226,7 +230,7 @@ echo "
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/locales.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/locales.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: locales.php </font>";
+echo " Script: locales.php";
 echo "</div>
 		<div class=\"middle form\">
 			<div class=\"formContent\"> ";
@@ -237,10 +241,12 @@ $locales["currency"]="";
 $locales["fine"]="";
 $locales["date1"]="";
 $locales["date2"]="";
-for ($i=0;$i<7;$i++){	$locales[$i]["from"]="";
+for ($i=0;$i<7;$i++){
+	$locales[$i]["from"]="";
 	$locales[$i]["to"]="";
 	$locales[$i]["f_ampn"]="";
-	$locales[$i]["t_ampn"]="";}
+	$locales[$i]["t_ampn"]="";
+}
 $archivo=$db_path."circulation/def/".$_SESSION["lang"]."/locales.tab";
 if (!file_exists($archivo)) $archivo=$db_path."circulation/def/".$lang_db."/locales.tab";
 if (file_exists($archivo)){

@@ -20,7 +20,7 @@ if (isset($arrHttp["encabezado"])) {
 }
 
 echo "<a href=\"menu_mantenimiento.php?base=&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong> back </strong></span>
 				</a>";
 ?>

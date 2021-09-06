@@ -142,15 +142,15 @@ if ($arrHttp["Opcion"]=="new"){
 }else{
 	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
 }
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>";
 if ($arrHttp["Opcion"]=="new"){
 	echo "<a href=fdt.php?Opcion=new&base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>";
 }
 //echo "<a href=javascript:Enviar() class=\"defaultButton saveButton\">
-//	<img src=\"../images/defaultButton_iconBorder.gif\" />
+//	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 //	<strong>".$msgstr["update"]."</strong></a>";
 ?>
 </div><div class="spacer">&#160;</div></div>

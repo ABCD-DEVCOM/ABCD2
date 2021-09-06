@@ -74,7 +74,7 @@ if ($inframe!="1") include "../common/institutional_info.php";
 $backtourl=$backtoscript."?base=".$arrHttp["base"];
 if ($arrHttp["confirmcount"]>=2) $backtourl="/central/common/inicio.php";
 echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
     <span><strong>".$msgstr["regresar"]."</strong></span></a>";
 ?>
 	</div>

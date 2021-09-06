@@ -28,11 +28,16 @@ include("../common/header.php");
 //Actualiza las copias de la base de datos
 function Update(elem){
 	activeForm=eval("document.frm"+elem)
-	if (activeForm.received.value==""){		alert("<?php echo $msgstr["misscr"]?>")
-		return	}
-	if (activeForm.received.value*1.0>activeForm.copies_req.value*1.0){		alert("<?php echo $msgstr["invcr"]?>")
-		return	}
-	activeForm.submit()}
+	if (activeForm.received.value==""){
+		alert("<?php echo $msgstr["misscr"]?>")
+		return
+	}
+	if (activeForm.received.value*1.0>activeForm.copies_req.value*1.0){
+		alert("<?php echo $msgstr["invcr"]?>")
+		return
+	}
+	activeForm.submit()
+}
 </script>
 <?php
 $encabezado="";
@@ -75,7 +80,9 @@ $closed=trim($linea[4]);
 $l=explode('^^',$linea[1]);
 // se obtiene la información correspondiente a los objetos ya actualizados para evitar la duplicación  (campo 500 de purchaseorder)
 print $linea[0];
-if ($closed!=""){	print "<font color=darkred size=+2><strong>".$msgstr["orderclosed"]."</strong></font>";}else{
+if ($closed!=""){
+	print "<font color=darkred size=+2><strong>".$msgstr["orderclosed"]."</strong></font>";
+}else{
 	echo "<br><font class=\"textEntry\"><b>".$msgstr["date_receival"].": </b>".$arrHttp["date"]."</font>"  ;
 }
 echo "<table cellspacing=4  border=0 class=statTable>";
@@ -84,9 +91,13 @@ echo "<tr><th width=610>".$msgstr["item"]."</th><th width=90 align=center nowrap
 $ix=0;
 foreach ($l as $val) {
 	$val=trim($val);
-	if (trim($val)!=""){		$ix=$ix+1;
-		$cell=explode('|',$val);
-		if (isset($cell[5]) and trim($cell[5])!="") {			LeerFst($cell[5]);		}
+	if (trim($val)!=""){
+		$ix=$ix+1;
+
+		$cell=explode('|',$val);
+		if (isset($cell[5]) and trim($cell[5])!="") {
+			LeerFst($cell[5]);
+		}
 		echo "\n<form name=frm$ix method=post action=receive_order_update.php>\n";
 		echo "<input type=hidden name=Mfn_order value=$Mfn_order>\n";
 		echo "<input type=hidden name=date value=".$arrHttp["date"].">\n";
@@ -126,10 +137,13 @@ foreach ($l as $val) {
 		echo "</td><td align=center><select name=typeofobj>";
 		$fp=file($db_path."suggestions/def/".$lang."/typeacquisition.tab");
 		if ((int)$cell[7]!=0) $cell[6]="C";
-		foreach ($fp as $value){			$ta=explode("|",$value);
-			$selected="";			echo "<option value=".$ta[0];
+		foreach ($fp as $value){
+			$ta=explode("|",$value);
+			$selected="";
+			echo "<option value=".$ta[0];
 			if ($cell[6]==$ta[0]) $selected= " selected";
-			echo "$selected>".$ta[1];		}
+			echo "$selected>".$ta[1];
+		}
 		echo "</select></td>\n";
 		$ref="";
 		if (isset($obj_rec[$cell[3]][$cell[4]]["posts"])){
@@ -140,10 +154,12 @@ foreach ($l as $val) {
 		echo "<td align=center>";
 		echo "<input type=hidden name=objectid value=\"".$cell[7]."\">";
 		echo $cell[7]."</td>\n";
-		if ((int)$cell[10]<(int)$cell[1])			if ($closed=="")
+		if ((int)$cell[10]<(int)$cell[1])
+			if ($closed=="")
 				echo "<td align=center><a href=javascript:Update($ix)>".$msgstr["update"]."</a></td>";
 		echo "</form>\n";
-	}};
+	}
+};
 echo "</table>";
 if ($closed==""){
 	echo "<form name=close action=close_order.php>\n";
@@ -191,7 +207,8 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
 }
 
 
-function LeerFdt($base){global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
+function LeerFdt($base){
+global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
 // se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática y el prefijo con el cual se indiza el número de control
     return;
 	$archivo=$db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
@@ -219,6 +236,7 @@ function LeerFdt($base){global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
 	if ($tag_ctl=="" or $pref_ctl==""){
 		echo "<h2>".$msgstr["missingctl"]."</h2>";
 		die;
-	}}
+	}
+}
 
 ?>

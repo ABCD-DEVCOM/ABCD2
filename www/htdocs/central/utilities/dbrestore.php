@@ -56,7 +56,8 @@ global $msgstr,$arrHttp;
 }
 
 Function Explorar(){
-global $msgstr;	echo "<form name=upload method=post onsubmit=\"EnviarFormaUpload();return false;\">";
+global $msgstr;
+	echo "<form name=upload method=post onsubmit=\"EnviarFormaUpload();return false;\">";
 	foreach ($_REQUEST as $var=>$value){
 		echo "<input type=hidden name=$var value=\"$value\">\n";
 	}
@@ -71,14 +72,21 @@ global $msgstr;	echo "<form name=upload method=post onsubmit=\"EnviarFormaUploa
 	echo "<p><input type=submit value=".$msgstr["procesar"].">\n
 	<td></tr></table>\n
 	</form>";
-    die;}
+    die;
+}
 
-function ShowDatabases($storein,$db_path){global $msgstr;	$Dir=$db_path.$storein;
+function ShowDatabases($storein,$db_path){
+global $msgstr;
+	$Dir=$db_path.$storein;
 	$handle = opendir($Dir);
 	$ix=0;
 	echo "<table bgcolor=#cccccc border=0 cellpadding=8>";
-	while (false !== ($file = readdir($handle))) {	   	if ($file != "." && $file != "..") {	   		$f=$file;	   		$file=$Dir."/".$file;
-	   		if(is_file($file) and pathinfo ( $file , PATHINFO_EXTENSION)=="mst" ){	   			$ix=$ix+1;
+	while (false !== ($file = readdir($handle))) {
+	   	if ($file != "." && $file != "..") {
+	   		$f=$file;
+	   		$file=$Dir."/".$file;
+	   		if(is_file($file) and pathinfo ( $file , PATHINFO_EXTENSION)=="mst" ){
+	   			$ix=$ix+1;
 	   			$ixpos=strpos($f,".");
 	   			if ($ixpos>0){
 	   				$fmst=substr($f,0,$ixpos);
@@ -94,8 +102,10 @@ function ShowDatabases($storein,$db_path){global $msgstr;	$Dir=$db_path.$store
 	echo "</table>";
 	echo "<input type=hidden name=db_sel>\n";
 	echo "<input type=hidden name=copyname>\n";
-	if ($ix==0){		echo "<h4>".$msgstr["mx_nodb"]."</h4>";
-		die;	}
+	if ($ix==0){
+		echo "<h4>".$msgstr["mx_nodb"]."</h4>";
+		die;
+	}
 	closedir($handle);
 	echo "<p><input type=submit value=".$msgstr["procesar"].">\n";
 	echo "</form></body></html>";
@@ -106,7 +116,8 @@ function ShowDatabases($storein,$db_path){global $msgstr;	$Dir=$db_path.$store
 
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
 <script>
-function Explorar(){	msgwin=window.open("../dataentry/dirs_explorer.php?desde=dbcp&Opcion=explorar&base=<?php echo $db_path?>&mx=s&tag=document.forma1.dbfolder","explorar","width=400,height=600,top=0,left=0,resizable,scrollbars,menu")
+function Explorar(){
+	msgwin=window.open("../dataentry/dirs_explorer.php?desde=dbcp&Opcion=explorar&base=<?php echo $db_path?>&mx=s&tag=document.forma1.dbfolder","explorar","width=400,height=600,top=0,left=0,resizable,scrollbars,menu")
     msgwin.focus()
 }
 
@@ -144,9 +155,11 @@ function Regresar(){
 	document.continuar.submit()
 }
 
-function FullInv(){	document.getElementById('loading').style.display='block';
+function FullInv(){
+	document.getElementById('loading').style.display='block';
 	document.continuar.action="vmx_fullinv.php";
-	document.continuar.submit()}
+	document.continuar.submit()
+}
 
 </script>
 <body>
@@ -162,7 +175,7 @@ function FullInv(){	document.getElementById('loading').style.display='block';
 	<div class="actions">
 <?php if (isset($arrHttp["base"]))echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -197,21 +210,27 @@ if (file_exists($db_path.$arrHttp["base"]."/protect_status.def")){
 	}
 }
 
-if (!isset($arrHttp["storein"])){	Explorar();
+if (!isset($arrHttp["storein"])){
+	Explorar();
 
 }else{
 	echo "<form name=continuar method=post onsubmit=\"EnviarForma();return false;\">";
 
-	foreach ($_REQUEST as $var=>$value){		if (trim($value)!="")
+	foreach ($_REQUEST as $var=>$value){
+		if (trim($value)!="")
 			echo "<input type=hidden name=$var value=\"$value\">\n";
 	}
-	if (isset($arrHttp["storein"]) and !isset($arrHttp["copyname"])){		ShowDatabases($arrHttp["storein"],$db_path);
+	if (isset($arrHttp["storein"]) and !isset($arrHttp["copyname"])){
+		ShowDatabases($arrHttp["storein"],$db_path);
         echo "</form></body></html>";
-		die;	}
+		die;
+	}
 
 }
 
-if (!isset($arrHttp["confirmar"]) or $arrHttp["confirmar"]!="OK"){	Confirmar();}
+if (!isset($arrHttp["confirmar"]) or $arrHttp["confirmar"]!="OK"){
+	Confirmar();
+}
 
 $err="";
 $from=$db_path.$arrHttp["storein"]."/".$arrHttp["copyname"];
@@ -227,9 +246,13 @@ if ($res==1){
 }else{
 	$err="Y";
 }
-if ($err==""){	echo "<h4>".$msgstr["copied"]."</h4>";
+if ($err==""){
+	echo "<h4>".$msgstr["copied"]."</h4>";
 	echo "<input type=hidden name=encabezado value=Y>\n";
-	echo "<a href=javascript:FullInv()>".$msgstr["mnt_gli"]."</a>";}else{	echo "<h4>".$msgstr["not_copied"]."</h4>";}
+	echo "<a href=javascript:FullInv()>".$msgstr["mnt_gli"]."</a>";
+}else{
+	echo "<h4>".$msgstr["not_copied"]."</h4>";
+}
 ?>
 </form>
 </div>

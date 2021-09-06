@@ -106,7 +106,7 @@ if ($arrHttp["typeofobj"]=="C"){
 		echo "</h4>";
 	}else{
 		echo $cont_database;
-//		echo " &nbsp; <a href=show.php?base=".$arrHttp["database"]."&Expresion=CN_".$arrHttp["objectid"]." target=_blank>"."<img src=../images/zoom.png></a>";
+//		echo " &nbsp; <a href=show.php?base=".$arrHttp["database"]."&Expresion=CN_".$arrHttp["objectid"]." target=_blank>"."<img src=../../assets/images/zoom.png></a>";
 
 		echo "\n<form name=copies method=post action=copies_create.php>\n";
 		foreach ($arrHttp as $var=>$value){

@@ -16,14 +16,23 @@ $query ="&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".p
 //echo $query;
 include("../common/wxis_llamar.php");
 foreach ($contenido as $value){
-	//echo "$value<br>";	$x=explode('|',$value);
-	if (!isset($inven[$x[0]])){		$inven[$x[0]]=$value;	}else{		$inven[$x[0]].="\n".$value;	}
-}
-foreach ($inven as $key=>$value){	$value=trim($value);
-	if ($value!=""){		$control=$key;
+	//echo "$value<br>";
+	$x=explode('|',$value);
+	if (!isset($inven[$x[0]])){
+		$inven[$x[0]]=$value;
+	}else{
+		$inven[$x[0]].="\n".$value;
+	}
+
+}
+foreach ($inven as $key=>$value){
+	$value=trim($value);
+	if ($value!=""){
+		$control=$key;
 		$ValorCapturado="<1>".$control."</1><10>libros</10>";
 		$obj=explode("\n",$value);
-		foreach ($obj as $lobje) {			$lobje=trim($lobje);
+		foreach ($obj as $lobje) {
+			$lobje=trim($lobje);
 			$a=explode('|',$lobje);
 			$inven=$a[2];
 			$signa=strtoupper($a[6]);
@@ -32,21 +41,31 @@ foreach ($inven as $key=>$value){	$value=trim($value);
 			$tipo=strtoupper(substr($inven,2,1));
 			if ($tipo=="T"){
 				$tipo='^oT';
-			}else{				if (substr($signa,0,3)=="^AR"){
+			}else{
+				if (substr($signa,0,3)=="^AR"){
 					$tipo="^oR";
-				}else{					$ix=strpos($copia,"RS");
-					if (!$ix==false){						$tipo="^oRS";					}else{						$tipo="^oCG";					}				}			}
+				}else{
+					$ix=strpos($copia,"RS");
+					if (!$ix==false){
+						$tipo="^oRS";
+					}else{
+						$tipo="^oCG";
+					}
+				}
+			}
 			$ValorCapturado.=$tipo;
 			if ($a[3]!="^t")
 			   $ValorCapturado.=$a[3];
 			if ($a[4]!="^v")
 			   $ValorCapturado.=$a[4];
-			//$ValorCapturado.="\n";			}
+			//$ValorCapturado.="\n";
+			}
 		echo "<xmp>$ValorCapturado</xmp>";
 		$IsisScript=$xWxis."actualizar.xis";
 		$ValorCapturado=urlencode($ValorCapturado);
   		$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&login=abcd&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado;
 		include("../common/wxis_llamar.php");
 		foreach ($contenido as $linea) echo "$linea<br>";
-	}}
+	}
+}
 ?>

@@ -16,13 +16,20 @@ if (isset($arrHttp["encabezado"])){
 }
 ?>
 <script>
-	function SendForm(wks){		check=""		for (i=0;i<document.validation.format.length;i++){			if (document.validation.format[i].checked)  check=document.validation.format[i].value		}
-		if (check==""){			alert("select one type of format")
-			return		}
+	function SendForm(wks){
+		check=""
+		for (i=0;i<document.validation.format.length;i++){
+			if (document.validation.format[i].checked)  check=document.validation.format[i].value
+		}
+		if (check==""){
+			alert("select one type of format")
+			return
+		}
 		document.forma1.format.value=check
 		document.forma1.wks.value=wks
 		document.forma1.submit()
-	}
+
+	}
 </script>
 <body>
 <div class="sectionInfo">
@@ -32,7 +39,7 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["cancel"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -68,9 +75,13 @@ $nr="";
 if (isset($fp)){
 	foreach($fp as $value){
 		$value=trim($value);
-		if ($value!=""){			if ($ix==0){				$ttm=explode(" ",$value);				$tl=trim($ttm[0]);
+		if ($value!=""){
+			if ($ix==0){
+				$ttm=explode(" ",$value);
+				$tl=trim($ttm[0]);
 				if (isset($ttm[1])) $nr=trim($ttm[1]);
-				$ix=1;			}else{
+				$ix=1;
+			}else{
 				$ttm=explode('|',$value);
 				echo "<tr><td><a href='javascript:SendForm(\"".urlencode($value)."\")'>".$ttm[3]."</a></td>\n";
 			}

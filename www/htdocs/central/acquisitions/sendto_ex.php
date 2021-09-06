@@ -46,7 +46,9 @@ if (!file_exists($titulo))
 if (file_exists($titulo)){
 	$fp=file($titulo);
 	$tit_tab=implode("",$fp);
-}else{	$tit_tab=$arrHttp["missing"]. " ".$arrHttp["tit"];}
+}else{
+	$tit_tab=$arrHttp["missing"]. " ".$arrHttp["tit"];
+}
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["index"] ;
 if (!file_exists($Formato))
 	$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["index"] ;
@@ -57,7 +59,8 @@ $IsisScript=$xWxis."imprime.xis";
 include("../common/wxis_llamar.php");
 $recom=array();
 $ix=-1;
-foreach ($contenido as $value){	$value=trim($value);
+foreach ($contenido as $value){
+	$value=trim($value);
 	if ($value!="")	{
 		$ix=$ix+1;
 		$s=explode('|',$value);
@@ -93,4 +96,5 @@ echo "<th>&nbsp;</th>";
 	}
 echo "</table>";
 echo "</body></html>"
-?>
+
+?>

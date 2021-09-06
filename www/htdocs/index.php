@@ -41,7 +41,10 @@ include ("$app_path/lang/lang.php");
 
 		<title>ABCD</title>
 		<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/template.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" rev="stylesheet" href="assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+
+		<!--FontAwesome-->
+		<link href="../../assets/css/all.min.css" rel="stylesheet"> 
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie.css" type="text/css" media="screen"/>
 		<![endif]-->
@@ -102,7 +105,7 @@ function Enviar(){
 			<img src=<?php	if (isset($logo))
 						echo "$logo" ;
 					else
-						echo "central/images/logoabcd.jpg";
+						echo "assets/images/logoabcd.png";
 				 ?>
 			><h1><?php echo $institution_name?></h1>
 		</div>
@@ -115,15 +118,12 @@ function Enviar(){
 		<div class="actions"></div>
 		<div class="spacer">&#160;</div>
 	</div>
-<form name=administra onsubmit="javascript:return false" method=post action=<?php echo $app_path?>/common/inicio.php>
-<input type=hidden name=Opcion value=admin>
-<input type=hidden name=cipar value=acces.par>
+<form name="administra" onsubmit="javascript:return false" method="post" action="<?php echo $app_path?>/common/inicio.php">
+<input type="hidden" name="Opcion" value="admin">
+<input type="hidden" name="cipar" value="acces.par">
 	<div class="middle login">
 		<div class="loginForm">
-			<div class="boxTop">
-				<div class="btLeft">&#160;</div>
-				<div class="btRight">&#160;</div>
-			</div>
+
 		<div class="boxContent">
 <?php
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
@@ -208,32 +208,24 @@ else
 ?> />
 			<label for="setCookie" class="inline"><?php echo $msgstr["openwindow"]?></label>
 		</div>
-		<div class="submitRow">
-			<div class="frLeftColumn"></div>
-			<div class="frRightColumn">
-				<a href="javascript:Enviar()" class="defaultButton goButton">
-				<img src="<?php echo $app_path?>/images/icon/defaultButton_next.png" alt="" title="" />
-					<span><strong><?php echo $msgstr["entrar"]?></strong></span>
+		<div class="formRow">
+				<a href="javascript:Enviar()" class="bt-blue bt-sign">
+					<?php echo $msgstr["entrar"]?> 
 				</a>
-			</div>
-			<div class="spacer">&#160;</div>
 		</div>
-		<div class="spacer">&#160;</div>
 	</div>
-	<div class="boxBottom">
-		<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
-	</div>
+
 </div>
 </div>
 </form>
-<form name=cambiarPass action="<?php echo $app_path?>/dataentry/change_password.php" method=post>
-<input type=hidden name=login>
-<input type=hidden name=password>
-<input type=hidden name=lang>
-<input type=hidden name=db_path>
-<input type=hidden name=Opcion value=chgpsw>
+<form name="cambiarPass" action="<?php echo $app_path?>/dataentry/change_password.php" method="post">
+	<input type="hidden" name="login">
+	<input type="hidden" name="password">
+	<input type="hidden" name="lang">
+	<input type="hidden" name="db_path">
+	<input type="hidden" name="Opcion" value="chgpsw">
 </form>
+
 <?php include ("$app_path/common/footer.php");?>
 	</body>
 </html>

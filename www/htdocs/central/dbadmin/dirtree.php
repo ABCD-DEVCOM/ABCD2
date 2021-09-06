@@ -247,7 +247,7 @@ global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;
 			echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\"> ";
 		else
 			echo "<a href=\"menu_mantenimiento.php?base=".$_SESSION["root_base"]."\" class=\"defaultButton backButton\"> ";
-		echo"  <img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		echo"  <img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 	echo "
@@ -259,7 +259,7 @@ global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;
 	 	<div class=\"helper\">
 	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/dirtree.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;
     ";
-    echo "<font color=white>&nbsp; &nbsp; Script: dirtree.php</font></div>";
+    echo " Script: dirtree.php</div>";
 
      echo "<div class=\"middle form\">
 			<div class=\"formContent\">";

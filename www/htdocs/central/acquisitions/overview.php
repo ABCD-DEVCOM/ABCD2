@@ -26,7 +26,8 @@ $IsisScript=$xWxis."ifp.xis";
 include("../common/wxis_llamar.php");
 $Total=array(0,0,0,0,0,0,0,0);
 
-foreach ($contenido as $value)  {	$L=explode('|',$value);
+foreach ($contenido as $value)  {
+	$L=explode('|',$value);
 	$ix=substr($L[0],4);
 	if (isset($L[1]) ) $Total[$ix]=$L[1];
 }
@@ -51,23 +52,47 @@ include("../common/institutional_info.php");
 
 	<center>
 	<h3><?php echo $msgstr["overview"].": ".$msgstr["suggestions"]?></h3>
-	<table class=statTable cellpadding=10 bgcolor=#cccccc>
+	<table class=statTable cellpadding=10 >
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_0" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["status_0"]?></td><td bgcolor=white> <?php if (isset( $Total[0])) echo $Total[0]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_0" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["status_0"]?></td>
+			<td> <?php if (isset( $Total[0])) echo $Total[0]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_1" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["approved"]?></td><td bgcolor=white> <?php if (isset($Total[1])) echo $Total[1]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_1" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["approved"]?></td>
+			<td> <?php if (isset($Total[1])) echo $Total[1]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_2" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["rejected"]?></td><td bgcolor=white> <?php if (isset($Total[2])) echo $Total[2]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_2" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["rejected"]?></td>
+			<td> <?php if (isset($Total[2])) echo $Total[2]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_3" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["inbidding"]?></td><td bgcolor=white> <?php if (isset($Total[3])) echo $Total[3]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_3" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["inbidding"]?></td>
+			<td> <?php if (isset($Total[3])) echo $Total[3]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_4" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["prov_sel"]?></td><td bgcolor=white> <?php if (isset($Total[4])) echo $Total[4]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_4" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["prov_sel"]?></td>
+			<td> <?php if (isset($Total[4])) echo $Total[4]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_5" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["purchase"]?></td><td bgcolor=white> <?php if (isset($Total[5])) echo $Total[5]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_5" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["purchase"]?></td>
+			<td> <?php if (isset($Total[5])) echo $Total[5]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_6" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["itemsrec"]?></td><td bgcolor=white> <?php if (isset($Total[6])) echo $Total[6]?> </td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_6" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["itemsrec"]?></td>
+			<td> <?php if (isset($Total[6])) echo $Total[6]?> </td>
+		</tr>
 		<tr>
-			<td bgcolor=white align=left><a href="../dataentry/show.php?base=suggestions&Expresion=STA_7" target=_blank><img src=../images/icon/search.png align=absmiddle></a> <?php echo $msgstr["completed"]?></td><td bgcolor=white> <?php if (isset($Total[7])) echo $Total[7]?></td>
+			<td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_7" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["completed"]?></td>
+			<td> <?php if (isset($Total[7])) echo $Total[7]?></td>
+		</tr>
 	</table>
 	</center>
 

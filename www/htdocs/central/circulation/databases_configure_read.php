@@ -37,17 +37,24 @@ $pft_typeofr="";
 
 $archivo=$db_path.$arrHttp["db"]."/loans/".$_SESSION["lang"]."/loans_conf.tab";
 //if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["db"]."/loans/".$lang_db."/loans_conf.tab";
-if (!file_exists($archivo)){	//echo $msgstr["falta"]." ".$arrHttp["db"]."/loans/".$_SESSION["lang"]."/loans_conf.tab";
+if (!file_exists($archivo)){
+	//echo $msgstr["falta"]." ".$arrHttp["db"]."/loans/".$_SESSION["lang"]."/loans_conf.tab";
 	//die;
-	$prefix_cn="CN_";}else{
+	$prefix_cn="CN_";
+}else{
 	$fp=file($archivo);
-	foreach ($fp as $value){		if (trim($value)!=""){			$ix=strpos($value," ");
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$ix=strpos($value," ");
 			$tag=trim(substr($value,0,$ix));
-			switch($tag){				case "IN": $prefix_in=trim(substr($value,$ix));
+			switch($tag){
+				case "IN": $prefix_in=trim(substr($value,$ix));
 					break;
 				case "NC": $prefix_cn=trim(substr($value,$ix));
-					break;			}
-		}	}
+					break;
+			}
+		}
+	}
 }
 $pft_totalitems=LeerPft("loans_totalitems.pft");
 $pft_in=LeerPft("loans_inventorynumber.pft");

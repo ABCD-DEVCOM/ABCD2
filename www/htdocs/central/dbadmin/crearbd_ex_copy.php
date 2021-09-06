@@ -19,7 +19,8 @@ global $arrHttp,$xWxis,$db_path,$wxisUrl,$Wxis;
 	   	echo "$linea\n";
  	}
  	$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($db_path.$arrHttp["base"]."/data"), RecursiveIteratorIterator::SELF_FIRST);
-	foreach($iterator as $item) {		echo $item ."<br>";
+	foreach($iterator as $item) {
+		echo $item ."<br>";
     	chmod($item, 0777);
 	} ;
 }
@@ -47,7 +48,8 @@ function CopiarDirectorio($srcdir, $dstdir,$basesrc,$basedst, $verbose = true) {
            else echo "Error: File '$srcfile' could not be copied!\n";
          }
        }
-       else if(is_dir($srcfile)) {       	chmod ($dstfile,0777);
+       else if(is_dir($srcfile)) {
+       	chmod ($dstfile,0777);
         $num += DirCopy($srcfile, $dstfile, $verbose);
        }
      }
@@ -124,20 +126,27 @@ $requestedURL=substr($requestedURL,0,$ix+1);
 include("../common/header.php");
 echo "
 <script>
-function Continuar(){    if (confirm(\"".$msgstr["borrartodo"]."\")==true ) {    	document.continuar.accion.value=\"cont\"
-    	document.continuar.submit()    }
+function Continuar(){
+    if (confirm(\"".$msgstr["borrartodo"]."\")==true ) {
+    	document.continuar.accion.value=\"cont\"
+    	document.continuar.submit()
+    }
 }
 
 function ActualizarListaBases(bd,desc){
 	ix=top.encabezado.document.OpcionesMenu.baseSel.options.length
-	for (i=0;i<ix;i++){		xbase=top.encabezado.document.OpcionesMenu.baseSel.options[i].value
+	for (i=0;i<ix;i++){
+		xbase=top.encabezado.document.OpcionesMenu.baseSel.options[i].value
 		ixsel=xbase.indexOf('^b')
 		if (ixsel==-1)
 			basecomp=xbase.substr(2)
 		else
 			basecomp=xbase.substr(2,ixsel-2)
-		if (basecomp==bd){			top.encabezado.document.OpcionesMenu.baseSel.options[i].text=desc
-			return		}	}
+		if (basecomp==bd){
+			top.encabezado.document.OpcionesMenu.baseSel.options[i].text=desc
+			return
+		}
+	}
 	top.encabezado.document.OpcionesMenu.baseSel.options[ix]=new Option(desc,'^a'+bd+'^badm')
 	top.encabezado.document.OpcionesMenu.selectedIndex=ix
 	top.encabezado.document.OpcionesMenu.baseSel.options[ix].selected=true
@@ -171,7 +180,7 @@ if ($arrHttp["Opcion"]=="new"){
 	echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
 }
 echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>

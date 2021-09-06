@@ -8,10 +8,12 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 //foreach ($_REQUEST as $key => $value)  echo "$key=$value<br>"; die;
-// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILOinclude("../common/header.php");
+// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
+include("../common/header.php");
 
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
@@ -20,9 +22,13 @@ echo "<form name=stats method=post>";
 echo "<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".$msgstr["stats_conf"].": ".$arrHttp["base"]."</div>
 	<div class=\"actions\">";
-if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){	$script="tables_generate.php";}else{	$script="../dbadmin/menu_modificardb.php";}
+if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){
+	$script="tables_generate.php";
+}else{
+	$script="../dbadmin/menu_modificardb.php";
+}
 echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
+echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 	<span><strong>".$msgstr["back"]."</strong></span></a>
 	";
 ?>
@@ -39,9 +45,18 @@ $fp=fopen($file,"w");
 if (!isset($arrHttp["ValorCapturado"]))  $arrHttp["ValorCapturado"]="";
 $arrHttp["ValorCapturado"]=stripslashes($arrHttp["ValorCapturado"]);
 $vc=explode("\n",$arrHttp["ValorCapturado"]);
-foreach ($vc as $value){	echo "$value<br>";	if (trim($value)!="")		$r=fwrite($fp,$value."\n");}
-if (isset($_REQUEST["lmp"]) and $_REQUEST["lmp"]!=""){	$excluir="";	if (isset($_REQUEST["excluir"])){		$excluir=trim($_REQUEST["excluir"]);	}
-	$r=fwrite($fp,"Los más prestados|".$_REQUEST["lmp"]."|LMP|$excluir\n");}
+foreach ($vc as $value){
+	echo "$value<br>";
+	if (trim($value)!="")
+		$r=fwrite($fp,$value."\n");
+}
+if (isset($_REQUEST["lmp"]) and $_REQUEST["lmp"]!=""){
+	$excluir="";
+	if (isset($_REQUEST["excluir"])){
+		$excluir=trim($_REQUEST["excluir"]);
+	}
+	$r=fwrite($fp,"Los más prestados|".$_REQUEST["lmp"]."|LMP|$excluir\n");
+}
 $r=fclose($fp);
 echo "<h4>". $arrHttp["base"]."/".$_SESSION["lang"]."/def/stat.cfg"." ".$msgstr["updated"]."</h4>" ;
 

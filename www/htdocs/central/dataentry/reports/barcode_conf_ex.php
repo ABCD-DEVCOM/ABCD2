@@ -16,8 +16,10 @@ include ("configure.php");
 <body>
 <script language=Javascript src=../dataentry/js/lr_trim.js></script>
 <script>
-function AbrirVentana(Url){	msgwin=window.open(Url,"","width=400, height=400, resizable, scrollbars, menu=no, toolbar=no")
-	msgwin.focus();}
+function AbrirVentana(Url){
+	msgwin=window.open(Url,"","width=400, height=400, resizable, scrollbars, menu=no, toolbar=no")
+	msgwin.focus();
+}
 </script>
 <?php
 if (isset($arrHttp["encabezado"])){
@@ -33,7 +35,7 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php echo "<a href=\"../dbadmin/pft.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
@@ -45,12 +47,12 @@ if (isset($arrHttp["encabezado"])){
 	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDB"])){
 		$retorno="../dbadmin/pft.php";
 		echo "<a href=\"$retorno"."?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
 		";
 	}else{
 		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	<span><strong>".$msgstr["cancel"]."</strong></span></a>
 		";
 	}
@@ -74,7 +76,12 @@ echo "<font color=white>&nbsp; &nbsp; Script: barcode_conf.php";
 	</div>
 <?php
 $fp=fopen($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/barcode.conf","w");
-foreach ($arrHttp as $key=>$conf){	if (substr($key,0,4)=="tag_"){		$key=substr($key,4);		echo "$key=$conf<br>";		fwrite($fp,"$key=$conf"."\n");	}
+foreach ($arrHttp as $key=>$conf){
+	if (substr($key,0,4)=="tag_"){
+		$key=substr($key,4);
+		echo "$key=$conf<br>";
+		fwrite($fp,"$key=$conf"."\n");
+	}
 }
 fclose($fp);
 ?>

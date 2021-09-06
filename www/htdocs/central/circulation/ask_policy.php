@@ -34,8 +34,10 @@ if (!isset($_SESSION["permiso"])){
 $script_php="../circulation/ask_policy.php";
 $debug="";
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
-if (isset($arrHttp["db_inven"])){	$dbinv=explode('|',$arrHttp["db_inven"]);
-	$_SESSION["loans_dbinven"]=$dbinv[0];}
+if (isset($arrHttp["db_inven"])){
+	$dbinv=explode('|',$arrHttp["db_inven"]);
+	$_SESSION["loans_dbinven"]=$dbinv[0];
+}
 include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/admin.php");
@@ -63,7 +65,9 @@ $t=explode("\n",$us_tab);
 $uskey=$t[0];
 
 include("../reserve/reserves_read.php");
-if (isset($arrHttp["reserve"])){	include("../reserve/seleccionar_bd.php");}
+if (isset($arrHttp["reserve"])){
+	include("../reserve/seleccionar_bd.php");
+}
 
 $valortag = Array();
 
@@ -71,7 +75,8 @@ $ec_output="" ;
 
 function PrestamoMismoObjeto($control_number,$user,$base_origen){
 global $copies_title,$msgstr,$obj;
-	$msg="";	$tr_prestamos=LocalizarTransacciones($control_number,"ON",$base_origen);
+	$msg="";
+	$tr_prestamos=LocalizarTransacciones($control_number,"ON",$base_origen);
 	$items_prestados=count($tr_prestamos);
 	if ($items_prestados>0){
 		foreach($tr_prestamos as $value){
@@ -101,7 +106,8 @@ global $copies_title,$msgstr,$obj;
 	    }
 
 	}
-	return array($msg,$items_prestados);}
+	return array($msg,$items_prestados);
+}
 
 function LocalizarReservas($control_number,$catalog_db,$usuario,$items_prestados,$prefix_cn,$copies,$pft_ni) {
 global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
@@ -138,8 +144,10 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 			if ($fecha_limite!=""){
 				if ($fecha_limite<date("Ymd")) continue;
 			}
-			if ($status==3){				$reservas_3[$fecha_asignacion." ".$Mfn]=$value;
-			}else{				$reservas_0[$fecha_reserva." ".$hora_reserva." ".$Mfn]=$value;
+			if ($status==3){
+				$reservas_3[$fecha_asignacion." ".$Mfn]=$value;
+			}else{
+				$reservas_0[$fecha_reserva." ".$hora_reserva." ".$Mfn]=$value;
 			}
 			//$reservas[$fecha_reserva." ".$hora_reserva." ".$Mfn]=$value;  //Total de rservas
 		}
@@ -156,12 +164,18 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 
 	//VEMOS SI EL USUARIO ES EL PRIMERO DE LA COLA DE RESERVAS ASIGNADAS
 	//SI NO HAY RESERVAS ASIGNADAS VERIFICAMOS SI ES EL PRIMERO DE LA COLA DE RESERVAS PENDIENTES
- 	if (count($reservas_3)>0){ 		$value=array_shift($reservas_3);
+ 	if (count($reservas_3)>0){
+ 		$value=array_shift($reservas_3);
  	}else{
-		if (count($reservas_0)>0){ 			$value=array_shift($reservas_0);
- 		} 	}
-	if ($value!=""){		$v=explode('|',$value);
-		if ($usuario==$v[1])			return array("continuar",$v[0]);	}
+		if (count($reservas_0)>0){
+ 			$value=array_shift($reservas_0);
+ 		}
+ 	}
+	if ($value!=""){
+		$v=explode('|',$value);
+		if ($usuario==$v[1])
+			return array("continuar",$v[0]);
+	}
 
 	//DETERMINAMOS EL TOTAL DE EJEMPLARES QUE TIENE EL TITULO
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
@@ -185,10 +199,16 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 	}
 	$disponibilidad=count($obj)-$items_prestados;
 	//SI HAY EJEMPLARES DISPONIBLES VEMOS SI SE LE PUEDE PRESTAR AL USUARIO PORQUE ESTÁ EN ALGUN LUGAR LA COLA DE RESERVAS ASIGNADAS
-	if ($disponibilidad-1>0){		foreach ($reservas_3 as $value){			 if (trim($value)!=""){			 	$r=explode('|',$value);
+	if ($disponibilidad-1>0){
+		foreach ($reservas_3 as $value){
+			 if (trim($value)!=""){
+			 	$r=explode('|',$value);
 					if ($r[1]==$usuario){
 						return array("continuar",$r[0]);
-				}			 }		}	}
+				}
+			 }
+		}
+	}
 
 	//SI HAY EJEMPLARES DISPONIBLES VEMOS SI SE LE PUEDE PRESTAR AL USUARIO PORQUE ESTÁ EN ALGUN LUGAR LA COLA DE RESERVAS PENDIENTES
 	if ($disponibilidad-1>0){
@@ -208,7 +228,9 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 	$disponibilidad=$disponibilidad-count($reservas_3)-count($reservas_0);
 
 	//SI QUEDAN EJEMPLARES DISPONIBLES, SE LE DA EL PRÉSTAMO AL USUARIO
-	if ($disponibilidad>0){		return array("continuar",0);	}
+	if ($disponibilidad>0){
+		return array("continuar",0);
+	}
 	return array("no_continuar",0);
 }
 
@@ -218,8 +240,10 @@ function ReadCatalographicRecord($control_number,$db,$inventory){
 global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$titulo,$prefix_in,$prefix_cn,$multa,$pft_storobj,$lang_db;
 	//Read the FDT of the database for extracting the prefix used for indexing the control number
 	$pft_typeofr=str_replace('~',',',$pft_typeofr);
-	if (isset($arrHttp["db_inven"])){		$dbi=explode("|",$arrHttp["db_inven"]);
-	}else{		$dbi[0]="loanobjects";
+	if (isset($arrHttp["db_inven"])){
+		$dbi=explode("|",$arrHttp["db_inven"]);
+	}else{
+		$dbi[0]="loanobjects";
 	}
 
 	if (isset($arrHttp["db_inven"]) and $dbi[0]!="loanobjects"){
@@ -228,7 +252,8 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 	}else{
 	    $Expresion="CN_".trim($control_number);
 	}
-	if ($control_number=="")		$Expresion=$prefix_in.$inventory;
+	if ($control_number=="")
+		$Expresion=$prefix_in.$inventory;
 	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
 	// se toman de databases_configure_read.php
 	// pft_totalitems= pft para extraer el número total de ejemplares del título
@@ -275,10 +300,13 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 
 	$Expresion=urlencode($Expresion);
-	if (isset($arrHttp["db_inven"])){		$dbi=explode('|',$arrHttp["db_inven"]);
-		$dbi_base=$dbi[0];	}
+	if (isset($arrHttp["db_inven"])){
+		$dbi=explode('|',$arrHttp["db_inven"]);
+		$dbi_base=$dbi[0];
+	}
 	if (isset($arrHttp["db_inven"]) and $dbi_base!="loanobjects"){
-	//IF NO LOANOBJECTS READ THE PFT FOR EXTRACTING THEN INVENTORY NUMBER AND THE TYPE OF RECORD		$d=explode('|',$arrHttp["db_inven"]);
+	//IF NO LOANOBJECTS READ THE PFT FOR EXTRACTING THEN INVENTORY NUMBER AND THE TYPE OF RECORD
+		$d=explode('|',$arrHttp["db_inven"]);
 		$arrHttp["base"]=strtolower($d[0]);
 		$arrHttp["db_inven"]=strtolower($d[0]);
 		$pft_typeofrec=LeerPft("loans_typeofobject.pft",$d[0]);
@@ -314,9 +342,11 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 		}
 
 		if (isset($_SESSION["library"])) $formato_ex=str_replace('#v5000#',"'".$_SESSION["library"]."'",$formato_ex);
-	}else{		$arrHttp["base"]="loanobjects";
+	}else{
+		$arrHttp["base"]="loanobjects";
 		$formato_ex="(v1[1]'||'v10[1],'||',v959^i,'||',v959^l,'||',v959^b,'||',v959^o,'||',v959^v,'||',v959^t,'||'/)";
-    // control number||database||inventory||main||branch||type||volume||tome	}
+    // control number||database||inventory||main||branch||type||volume||tome
+	}
 	$formato_obj=urlencode($formato_ex);
 	$query = "&Opcion=disponibilidad&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".$Expresion."&Pft=$formato_obj";
 	include("../common/wxis_llamar.php");
@@ -327,7 +357,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
     $tto="";
 	foreach ($contenido as $linea){
 		$linea=trim($linea);
-		if ($linea!=""){			if (substr($linea,0,8)=='$$TOTAL:'){
+		if ($linea!=""){
+			if (substr($linea,0,8)=='$$TOTAL:'){
 				$total=trim(substr($linea,8));
 			}else{
 				$t=explode('||',$linea);
@@ -336,7 +367,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 				if ($t[0]=="" ) $t[0]=$cno;
 				if ($t[5]=="")  $t[5]=$tto;
 				$linea="";
-				foreach ($t as $value){					$linea.=trim($value)."||";				}
+				foreach ($t as $value){
+					$linea.=trim($value)."||";
+				}
 				if (strtoupper($inventory)==strtoupper(trim($t[2]))) $item=$linea;
 
 				$copies_title[]=$linea;
@@ -354,7 +387,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
 	if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
 	$query = "&Expresion=".$prefijo."_P_".$control_number;
-	if (isset($arrHttp["year"]) or isset($arrHttp["volumen"])){		$query.="_";
+	if (isset($arrHttp["year"]) or isset($arrHttp["volumen"])){
+		$query.="_";
 		if (isset($arrHttp["year"])) $query.="A:".$arrHttp["year"];
 		if (isset($arrHttp["volumen"])) $query.="V:".$arrHttp["volumen"];
 		if (isset($arrHttp["numero"])) $query.="N:".$arrHttp["numero"];
@@ -370,7 +404,10 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 			if (isset($l[13])){
 				if ($base_origen==$l[13])
 					$tr_prestamos[]=$linea;
-			}else{				$tr_prestamos[]=$linea;			}        }
+			}else{
+				$tr_prestamos[]=$linea;
+			}
+        }
 	}
 	return $tr_prestamos;
 }
@@ -383,7 +420,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 
 // ARE THE COPIES IN THE COPIES DATABASE OR IN THE BIBLIOGRAPHIC DATABASE?
 
-if (isset($arrHttp["db_inven"])){	$dbi=explode('|',$arrHttp["db_inven"]);
+if (isset($arrHttp["db_inven"])){
+	$dbi=explode('|',$arrHttp["db_inven"]);
 	if ($dbi[0]!="loanobjects"){
 		$from_copies="N";
 		$x=explode('|',$arrHttp["db_inven"]);
@@ -393,8 +431,10 @@ if (isset($arrHttp["db_inven"])){	$dbi=explode('|',$arrHttp["db_inven"]);
 		$prefix_in="IN_";
 		$from_copies="Y";
 	}
-}else{	$prefix_in="IN_";
-	$from_copies="Y";}
+}else{
+	$prefix_in="IN_";
+	$from_copies="Y";
+}
 if (isset($arrHttp["Opcion"])){
 	if ( $arrHttp["Opcion"]=="reservar")
 		$msg_1=$msgstr["reserve"];
@@ -413,8 +453,10 @@ $cont="";
 $np=0;
 $nv=0;
 include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los préstamos pendientes
-if ($nmulta!=0 or $nsusp!=0) {	$cont="N";
-	unset($arrHttp["inventory"]);}
+if ($nmulta!=0 or $nsusp!=0) {
+	$cont="N";
+	unset($arrHttp["inventory"]);
+}
 if (count($prestamos)>0) $ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a> | <a href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a></strong><p>";
 
 //Se obtiene el código, tipo y vigencia del usuario
@@ -428,36 +470,52 @@ $user="";
 $msgsusp="";
 $vig="";
 
-foreach ($contenido as $linea){	$linea=trim($linea);
+foreach ($contenido as $linea){
+	$linea=trim($linea);
 	if ($linea!="")  $user.=$linea;
 }
 
-if (trim($user)==""){	ProduceOutput("<h4>".$msgstr["userne"]."</h4>","");
+if (trim($user)==""){
+	ProduceOutput("<h4>".$msgstr["userne"]."</h4>","");
 	die;
 }else{
-    if (isset($arrHttp["ecta"])){    	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){      //para ver si tiene activado el módulo de reservas. Se lee desde el abcd.def
+    if (isset($arrHttp["ecta"])){
+    	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){      //para ver si tiene activado el módulo de reservas. Se lee desde el abcd.def
 			$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
 			$reserves_user=$reserves_arr[0];
-		}else{			$reserves_user="";		}
+		}else{
+			$reserves_user="";
+		}
 	}else
 		$reserves_user="";
-	if ($nsusp>0 or $nmulta>0) {		 $msgsusp= "pending_sanctions";
-		 $vig="N";	}else{	//Se analiza la vigencia del usuario
+	if ($nsusp>0 or $nmulta>0) {
+		 $msgsusp= "pending_sanctions";
+		 $vig="N";
+	}else{
+	//Se analiza la vigencia del usuario
 		$userdata=explode('$$',$user);
-	    if (trim($userdata[2])!=""){	    	if ($userdata[2]<date("Ymd")){	    		$msgsusp= "limituserdata";
-				$vig="N";	    	}    	}
-    }}
+	    if (trim($userdata[2])!=""){
+	    	if ($userdata[2]<date("Ymd")){
+	    		$msgsusp= "limituserdata";
+				$vig="N";
+	    	}
+    	}
+    }
+}
 $ec_output.= "\n
 <script>
   Vigencia='$vig'
   np=$np
   nv=$nv
 </script>\n";
-if ($msgsusp!=""){	$ec_output.="<font color=red><h3>**".$msgstr[$msgsusp]."</h3></font>";
+if ($msgsusp!=""){
+	$ec_output.="<font color=red><h3>**".$msgstr[$msgsusp]."</h3></font>";
 	if ($reserves_user!="")
-		$ec_output.="<p><strong>".$msgstr["reserves"]."</strong><br>".$reserves_user."<p>";
+		$ec_output.="<p><strong>".$msgstr["reserves"]."</strong><br>".$reserves_user."<p>";
+
 	ProduceOutput($ec_output,"");
-	die;}
+	die;
+}
 //OJO AGREGARLE AL TIPO DE USUARIO SI SE LE PUEDEN PRESTAR CUANDO ESTÁ VENCIDO
 if ($nv>0 and isset($arrHttp["inventory"])){
 	$ec_output.= "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
@@ -538,7 +596,9 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	    		}
 	    		$select_policy.= "</select>\n";
 	    		$select_policy.=" <input type=button name=prestar value=\"".$msgstr["loan"]."\" onclick=Javascript:Prestar()>";
-            }else{            	$select_policy="$tipo_obj";            }
+            }else{
+            	$select_policy="$tipo_obj";
+            }
 			$fechal_usuario="";
 			$fechal_objeto="";
 			//SE VERIFICA SI EL USUARIO TIENE PRÉSTAMOS VENCIDOS
@@ -601,13 +661,16 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        			$este_prestamo.="<td bgcolor=white valign=top>".$msg."</td>";
 	        		if ($cont=="Y"){
 	        			$msg="";
-	        			$ec_output.="<td bgcolor=white valign=top>";	        			if ($grabar=="Y"){
+	        			$ec_output.="<td bgcolor=white valign=top>";
+	        			if ($grabar=="Y"){
 	        				//SE LOCALIZA SI EL TITULO ESTÁ RESERVADO
 	        				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){         //para ver si tiene activado el módulo de reservas se lee desde el abcd.def
 	        					$reservado=LocalizarReservas($control_number,$catalog_db,$arrHttp["usuario"],$items_prestados,$prefix_cn,$from_copies,$pft_ni);
 	        					$mfn_reserva=$reservado[1];
-	        				}else{	        					$reservado=array("continuar",0);
-	        					$mfn_reserva=0;	        				}
+	        				}else{
+	        					$reservado=array("continuar",0);
+	        					$mfn_reserva=0;
+	        				}
 
 	        				if ($reservado[0]=="continuar"){
 	        					//echo  "<p>np:".$np. " total_prestamos_usuario: $tprestamos_p total_prestamos_politica: ". $total_prestamos_politica ."  total_politica[$tipo_obj]: ". $total_politica[$tipo_obj]."<br>";
@@ -618,17 +681,25 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 						$ec_output.=$este_prestamo;
 						$Opcion="prestar";
 						$msg_1=$msgstr["loan"];
-						if ($grabar=="Y"){							//$devolucion=ProcesarPrestamo($arrHttp["usuario"],$arrHttp["inventory"],$signatura,$item,$userdata[1],$from_copies,$ppres,$prefix_in,$prefix_cn,$mfn_reserva);
+						if ($grabar=="Y"){
+							//$devolucion=ProcesarPrestamo($arrHttp["usuario"],$arrHttp["inventory"],$signatura,$item,$userdata[1],$from_copies,$ppres,$prefix_in,$prefix_cn,$mfn_reserva);
 
-						}else{							$devolucion=array();
+						}else{
+							$devolucion=array();
 						}
 						$ec_output.="<td bgcolor=white valign=top >$msg";
                         $ec_output.=$select_policy;
 
 						$ec_output.="</td><td bgcolor=white valign=top ></td> ";
-	           		}else{	           			$ec_output.="<td bgcolor=white></td>".$este_prestamo;	           		}
-				} else{					$ec_output.="<td bgcolor=white></td>".$este_prestamo;				}
-			}else{				$ec_output.="<td bgcolor=white></td>".$este_prestamo;			}
+	           		}else{
+	           			$ec_output.="<td bgcolor=white></td>".$este_prestamo;
+	           		}
+				} else{
+					$ec_output.="<td bgcolor=white></td>".$este_prestamo;
+				}
+			}else{
+				$ec_output.="<td bgcolor=white></td>".$este_prestamo;
+			}
 		}
 	}
 	$ec_output.="</table>";
@@ -641,14 +712,20 @@ if ($reserves_user!="")
 	$ec_output.="<p><!--strong>".$msgstr["reserves"]." <font color=red>(user)</font></strong><br -->".$reserves_user."<p>";
 ProduceOutput($ec_output,"");
 
-function ProduceOutput($ec_output,$reservas){global $msgstr,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php,$logo,$css_name;global $prestamos_este,$xnum_p,$reserve_active,$meta_encoding;
-	include("../common/header.php");    echo "<body>";
+function ProduceOutput($ec_output,$reservas){
+global $msgstr,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php,$logo,$css_name;
+global $prestamos_este,$xnum_p,$reserve_active,$meta_encoding;
+	include("../common/header.php");
+    echo "<body>";
  	include("../common/institutional_info.php");
  	include("../circulation/scripts_circulation.php");
 ?>
 <script>
 function Prestar(){
-	document.ecta.action="usuario_prestamos_presentar.php"	document.ecta.submit()	return}
+	document.ecta.action="usuario_prestamos_presentar.php"
+	document.ecta.submit()
+	return
+}
 </script>
 <body>
 <div class="sectionInfo">
@@ -673,7 +750,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/ask_policy.php </font>
 <form name=ecta action=usuario_prestamo_presentar.php method=post>
 
 <?php
-foreach ($_REQUEST as $var=>$value){	echo "<input type=hidden name=$var value=\"$value\">\n";}
+foreach ($_REQUEST as $var=>$value){
+	echo "<input type=hidden name=$var value=\"$value\">\n";
+}
 if ($xnum_p=="") $xnum_p=0;
 $ec_output.= "</form>";
 $ec_output.="<script>
@@ -696,8 +775,10 @@ $ec_output.= "</form>
 <br>
 ";
 echo $ec_output;
-if ($reservas !=""){	echo "<P><font color=red><strong>".$msgstr["total_copies"].": ".count($copies_title).". ".$msgstr["item_reserved"]."</strong></font><br>";
-	echo $reservas ;}
+if ($reservas !=""){
+	echo "<P><font color=red><strong>".$msgstr["total_copies"].": ".count($copies_title).". ".$msgstr["item_reserved"]."</strong></font><br>";
+	echo $reservas ;
+}
 }
 ?>
 </div></div>
