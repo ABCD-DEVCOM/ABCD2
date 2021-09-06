@@ -2,12 +2,11 @@
 /* Modifications
 20210807 fho4abcd Created from several docbatchimport.php files
 20210831 fho4abcd Improved URL fields
+20210903 fho4abcd Moved configuration code to separate files.
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
-** Configuration is part of this code (enforced at first time usage)
 ** Note that this module is not aware of the actual database fdt,fst,...
-** The database administrator has to take care of matching both worlds.
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -36,36 +35,6 @@ if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["impdoc_cnfcnt"])) $impdoc_cnfcnt=$arrHttp["impdoc_cnfcnt"];
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 
-// Define default array for Dublin Core metadata elements + ABCD elements and their initial map
-// Map defined here to ensure availability
-$metadataMap=array();
-array_push($metadataMap,array("term"=>"title", "label"=>$msgstr['dd_term_title'], "field"=>"v1"));
-array_push($metadataMap,array("term"=>"creator", "label"=>$msgstr['dd_term_creator'], "field"=>"v2"));
-array_push($metadataMap,array("term"=>"subject", "label"=>$msgstr['dd_term_subject'], "field"=>"v3"));
-array_push($metadataMap,array("term"=>"description", "label"=>$msgstr['dd_term_description'], "field"=>"v4"));
-array_push($metadataMap,array("term"=>"publisher", "label"=>$msgstr['dd_term_publisher'], "field"=>"v5"));
-array_push($metadataMap,array("term"=>"contributor", "label"=>$msgstr['dd_term_contributor'], "field"=>"v6"));
-array_push($metadataMap,array("term"=>"date", "label"=>$msgstr['dd_term_date'], "field"=>"v7"));
-array_push($metadataMap,array("term"=>"type", "label"=>$msgstr['dd_term_type'], "field"=>"v8"));
-array_push($metadataMap,array("term"=>"format", "label"=>$msgstr['dd_term_format'], "field"=>"v9"));
-array_push($metadataMap,array("term"=>"identifier", "label"=>$msgstr['dd_term_identifier'], "field"=>"v10"));
-array_push($metadataMap,array("term"=>"source", "label"=>$msgstr['dd_term_source'], "field"=>"v11"));
-array_push($metadataMap,array("term"=>"language", "label"=>$msgstr['dd_term_language'], "field"=>"v12"));
-array_push($metadataMap,array("term"=>"relation", "label"=>$msgstr['dd_term_relation'], "field"=>"v13"));
-array_push($metadataMap,array("term"=>"coverage", "label"=>$msgstr['dd_term_coverage'], "field"=>"v14"));
-array_push($metadataMap,array("term"=>"rights", "label"=>$msgstr['dd_term_rights'], "field"=>"v15"));
-$metadataMapCntDC=count($metadataMap);
-array_push($metadataMap,array("term"=>"htmlSrcURL", "label"=>$msgstr['dd_term_htmlSrcURL'], "field"=>"v95"));
-array_push($metadataMap,array("term"=>"htmlSrcFLD", "label"=>$msgstr['dd_term_htmlSrcFLD'], "field"=>"v96"));
-array_push($metadataMap,array("term"=>"sections", "label"=>$msgstr['dd_term_section'], "field"=>"v97"));
-array_push($metadataMap,array("term"=>"url", "label"=>$msgstr['dd_term_url'], "field"=>"v98"));
-array_push($metadataMap,array("term"=>"doctext", "label"=>$msgstr['dd_term_doctext'], "field"=>"v99"));
-array_push($metadataMap,array("term"=>"id", "label"=>$msgstr['dd_term_id'], "field"=>"v111"));
-array_push($metadataMap,array("term"=>"dateadded", "label"=>$msgstr['dd_term_dateadded'], "field"=>"v112"));
-array_push($metadataMap,array("term"=>"htmlfilesize", "label"=>$msgstr['dd_term_htmlfilesize'], "field"=>"v997"));
-$metadataMapCnt=count($metadataMap);
-$metadataMapCntABCD=$metadataMapCnt-$metadataMapCntDC;
-
 ?>
 <body>
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
@@ -74,8 +43,13 @@ function Eliminar(docfile,filename){
     /* docfile is the fullpath, filename is the user friendly name */
 	if (confirm("<?php echo $msgstr["cnv_deltab"]?>"+" "+filename)==true){
 	    document.continuar.deletedocfile.value=docfile
+        document.continuar.impdoc_cnfcnt.value=1;
         document.continuar.submit()
 	}
+}
+function SetImportOptions(){
+    document.continuar.impdoc_cnfcnt.value=2;
+    document.continuar.submit()
 }
 function Import(){
     document.continuar.impdoc_cnfcnt.value=3;
@@ -86,26 +60,8 @@ function Invert(){
     document.continuar.impdoc_cnfcnt.value=4;
     document.continuar.submit()
 }
-function MapDefault(){
-    document.continuar.impdoc_cnfcnt.value=1;
-    document.continuar.mapoption.value="Default";
-    document.continuar.submit()
-}
-function MapSave(){
-    document.continuar.impdoc_cnfcnt.value=1;
-    document.continuar.mapoption.value="Save";
-    document.continuar.submit()
-}
 function ShowDetails(){
     document.getElementById('importactiondiv').style.display='inherit'
-}
-function SetFieldsMap(){
-    document.continuar.impdoc_cnfcnt.value=1;
-    document.continuar.submit()
-}
-function SetImportOptions(){
-    document.continuar.impdoc_cnfcnt.value=2;
-    document.continuar.submit()
 }
 </script>
 
@@ -139,19 +95,25 @@ include "../common/inc_div-helper.php";
 <?php
 // Set collection related parameters and create folders if not present
 include "../utilities/inc_coll_chk_init.php";
-// The file with adapted configuration
-$metadataConfig="docfiles_metadataconfig.tab";
-$metadataConfigFull=$fullcolpath."/".$metadataConfig;
 // The function to list a folder and initial parameters
 include "../utilities/inc_list-folder.php";
 $fileList=array();
 $skipNames=array($metadataConfig);
+// Include configuration functions
+include "inc_coll_read_cfg.php";
 
 /* =======================================================================
 /* ----- First screen: Give info and check existence of uploaded files -*/
-if ($impdoc_cnfcnt<=0) {
+if ($impdoc_cnfcnt<=1) {
     echo "<p>".$msgstr["dd_imp_init"]."</p>";
+    // If this is the first time that this code runs: Read the configuration file
+    if ($impdoc_cnfcnt==0) {
+        $actualField=array();
+        $retval= read_dd_cfg("operate", $metadataConfigFull, $metadataMapCnt,$actualField );
+        if ($retval!=0) die;
+    }
     echo "<h3>".$msgstr["dd_imp_step"]." ".($impdoc_cnfcnt+1).": ".$msgstr["dd_imp_step_check_files"]."</h3>";
+    // If the request was to delete a file (second and subsequent runs)
     if ( isset($arrHttp["deletedocfile"]) && $arrHttp["deletedocfile"]!="")  {
         //delete the file
         unlink ($arrHttp["deletedocfile"]);
@@ -202,121 +164,24 @@ if ($impdoc_cnfcnt<=0) {
                     echo "<input type=hidden name=$var value=\"$value\">\n";
                 }
             }
+            // The first run adds the map configuration
+            if ($impdoc_cnfcnt==0) {
+                for ($i=0;$i<$metadataMapCnt;$i++) {
+                    echo "<input type=hidden name=".$actualField[$i]["term"]." value='".$actualField[$i]["field"]."'>\n";
+                }
+            }
             ?>
             <br>
             <?php echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;
-            <input type=button value='<?php echo $msgstr["dd_imp_setfields"];?>' onclick=SetFieldsMap()>
+            <input type=button value='<?php echo $msgstr["dd_imp_options"];?>' onclick=SetImportOptions()>
         </form>
     <?php
     }
 }
 /* =======================================================================
-/* ----- Second screen: Check metadata mapping -*/
-else if ($impdoc_cnfcnt==1) {
-    echo "<h3>".$msgstr["dd_imp_step"]." ".($impdoc_cnfcnt+1).": ".$msgstr["dd_imp_step_check_map"]."</h3>";
-    $mapoption="";
-    if (isset($arrHttp["mapoption"])) $mapoption=$arrHttp["mapoption"];
-    $actualField=array();
-    $showallbuttons=true;
-    if ($mapoption=="" ) {
-        $fp=@fopen($metadataConfigFull,"r");
-        if ($fp===false) {
-            echo "<p>".$msgstr["dd_map_intern"]."</p><br>";
-            $showallbuttons=false;
-            for ($i=0; $i<$metadataMapCnt;$i++) {
-                array_push($actualField,array("field"=>$metadataMap[$i]["field"]));
-            }
-        }else {
-            echo "<p>".$msgstr["dd_map_read"]." ".$metadataConfigFull."</p><br>";
-            for ($i=0; $i<$metadataMapCnt;$i++) {
-                $line=fgets($fp);
-                if ($line!==false) {
-                    $line=rtrim($line); // remove trailing white space(inc cr/lf)
-                    $linecontent=explode("|",$line);
-                    if(isset($linecontent[1])) {
-                        array_push($actualField,array("field"=>$linecontent[1]));
-                    }
-                    else {
-                        array_push($actualField,array("field"=>""));
-                    }
-                }
-            }
-        }
-    }
-    else if ($mapoption=="Save") {
-        echo "<p>".$msgstr["dd_map_write"]." ".$metadataConfigFull."</p><br>";
-        $fp=fopen($metadataConfigFull,"w");
-        for ($i=0; $i<$metadataMapCnt;$i++) {
-            $term=$metadataMap[$i]["term"];
-            if (isset($arrHttp[$term])) {
-                $field=$arrHttp[$term];
-            }else{
-                $field=$metadataMap[$i]["field"];
-            }
-            fwrite($fp,$term."|".$field."\n");
-            array_push($actualField,array("field"=>$field));
-        }
-        fclose($fp);
-    }
-    else if ($mapoption=="Default") {
-        echo "<p>".$msgstr["dd_map_intern"]."</p><br>";
-        $showallbuttons=false;
-        if (file_exists($metadataConfigFull) ) {
-            unlink($metadataConfigFull);
-        }
-        for ($i=0; $i<$metadataMapCnt;$i++) {
-            array_push($actualField,array("field"=>$metadataMap[$i]["field"]));
-        }
-    }
-    ?>
-    <form name=continuar  method=post >
-        <input type=hidden name=mapoption>
-        <?php
-        foreach ($_REQUEST as $var=>$value){
-            if ( $var!="upldoc_cnfcnt" && $var!="mapoption"){
-                // some values may contain quotes or other "non-standard" values
-                $value=htmlspecialchars($value);
-                echo "<input type=hidden name=$var value=\"$value\">\n";
-            }
-        }
-        ?>
-        <table cellspacing=1 cellpadding=4>
-        <tr><td colspan=8 style="color:green" align=center><?php echo $msgstr["dd_imp_meta_dublin"];?></td></tr>
-        <tr>
-        <?php
-        for ($i=0;$i<$metadataMapCntDC;$i++) {
-            echo "<td align=right>".$metadataMap[$i]["label"]."</td>";
-            echo "<td><input type=text name=".$metadataMap[$i]["term"]." value='".$actualField[$i]["field"]."' size=4></td>\n";
-            if ( $i%5==4) echo "</tr><tr>";
-        }
-        ?>
-        <tr><td colspan=10 style="color:green" align=center><?php echo $msgstr["dd_imp_meta_docs"];?></td></tr>
-        <tr>
-        <?php
-        for ($i=0;$i<$metadataMapCntABCD;$i++) {
-            $j=$i+$metadataMapCntDC;
-            echo "<td align=right>".$metadataMap[$j]["label"]."</td>";
-            echo "<td><input type=text name=".$metadataMap[$j]["term"]." value='".$actualField[$j]["field"]."' size=4></td>\n";
-            if ( $j%5==4) echo "</tr><tr>";
-        }
-        ?>
-        <tr><td colspan=10 style="color:darkred" align=center><?php echo $msgstr["dd_map_fdt"];?></td></tr>
-        </table>
-        <br><br>
-        <input type=button value='<?php echo $msgstr["dd_map_save"];?>' onclick=MapSave()>
-        <?php if ($showallbuttons==true) { ?>
-        <input type=button value='<?php echo $msgstr["dd_map_default"];?>' onclick=MapDefault()>
-        &numsp;&numsp;&numsp;&numsp;&numsp;&numsp;
-        <?php echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;
-        <input type=button value='<?php echo $msgstr["dd_imp_options"];?>' onclick=SetImportOptions()>
-        <?php } ?>
-    </form>
-    <?php   
-}
-/* =======================================================================
-/* ----- Third screen: Set import options -*/
+/* ----- Second screen: Set import options -*/
 else if ($impdoc_cnfcnt==2) {
-    echo "<h3>".$msgstr["dd_imp_step"]." ".($impdoc_cnfcnt+1).": ".$msgstr["dd_imp_step_options"]."</h3>";
+    echo "<h3>".$msgstr["dd_imp_step"]." 2: ".$msgstr["dd_imp_step_options"]."</h3>";
     ?>
     <form name=continuar  method=post >
         <input type=hidden name=mapoption>
@@ -354,9 +219,9 @@ else if ($impdoc_cnfcnt==2) {
     <?php   
 }
 /* =======================================================================
-/* ----- Fourth screen: Actual import -*/
+/* ----- Third screen: Actual import -*/
 else if ($impdoc_cnfcnt==3) {
-    echo "<h3>".$msgstr["dd_imp_step"]." ".($impdoc_cnfcnt+1).": ".$msgstr["dd_imp_step_exec"]."</h3>";
+    echo "<h3>".$msgstr["dd_imp_step"]." 3: ".$msgstr["dd_imp_step_exec"]."</h3>";
     $retval=0;
     $addtimestamp=$arrHttp["addtimestamp"];
     $textmode=$arrHttp["textmode"];
@@ -476,7 +341,7 @@ function import_action($full_imp_path, $addtimestamp, $textmode, $basename) {
 ** Other variables via 'Global'.
 ** Return : 0=OK, 1=NOT-OK
 */
-global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path, $metadataMapCntDC, $metadataMap;
+global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     $retval=1;
     $time_sep="__";
     clearstatcache(true);
@@ -777,16 +642,6 @@ global $db_path,$max_cn_length, $msgstr;
     fclose($fp);
     if (isset($max_cn_length)) $cn=str_pad($cn, $max_cn_length, '0', STR_PAD_LEFT);
     return($retval);
-}
-// ====== remove_v =============================
-function remove_v($field) {
-    $field=trim($field);
-    if (isset($field[0])) {
-        if (($field[0]=='v') or ($field[0]=='V')) {
-            $field=str_replace( 'v','',strtolower($field));
-        }
-    }
-    return $field;
 }
 // ====== secondsToTime =============================
 /* 

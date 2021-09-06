@@ -2,6 +2,7 @@
 /* Modifications
 20210807 fho4abcd Created
 20210831 fho4abcd Enable %path_database% in COLLECTION. Check dat collection is in the base
+20210903 fho4abcd Add name of configuration file
 */
 /*
 ** Function: Initial check of collection.
@@ -85,4 +86,9 @@ if (!is_writable($colsrcfull) ) {
     echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_colsrcfolder"]." '".$colsrcfull."' ".$msgstr["dd_nowrite"]."</div>";
     die;
 }
+// The filename of the file with configuration info
+// Note that initially this file does not exist. Created by a configuration script
+$metadataConfig="docfiles_metadataconfig.tab";
+$metadataConfigFull=$fullcolpath."/".$metadataConfig;
+
 /* and here the including file continues processing */

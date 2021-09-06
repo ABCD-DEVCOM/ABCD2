@@ -17,6 +17,7 @@
 20210705 fho4abcd Uncomment mxdbread, move to db maintenance and make it work for current mst file (should be safe)
 20210718 fho4abcd Add function DSpace bridge
 20210829 fho4abcd Modified Import Documents
+20210903 fho4abcd Add options to configure Digital documents functionality and Repair Digital Documents
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -281,6 +282,18 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/docfiles_import.php"
 			document.admin.target="ABCD_Frame"
 			break;
+		case "docfilesconfig":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/docfiles_config.php"
+			document.admin.target="ABCD_Frame"
+			break;
+		case "docfilesrepair":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/docfiles_repair.php"
+			document.admin.target="ABCD_Frame"
+			break;
 		case "uploadfile":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -338,6 +351,9 @@ function EnviarFormaMNT(Opcion,Mensaje){
     		<ul>
 				<li><a href='Javascript:EnviarFormaMNT("importdoc","<?php echo $msgstr["dd_upload"]?>")'><?php echo $msgstr["dd_upload"]?></a></li>
     			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["dd_batchimport"]?>")'><?php echo $msgstr["dd_batchimport"]?></a></li>
+                <li><a href='#'>&nbsp;</a></li>
+				<li><a href='Javascript:EnviarFormaMNT("docfilesconfig","<?php echo $msgstr["dd_config"]?>")'><?php echo $msgstr["dd_config"]?></a></li>
+				<li><a href='Javascript:EnviarFormaMNT("docfilesrepair","<?php echo $msgstr["dd_repair"]?>")'><?php echo $msgstr["dd_repair"]?></a></li>
 			</ul>
   		</li>
   	</ul>
