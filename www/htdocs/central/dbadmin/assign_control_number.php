@@ -167,10 +167,11 @@ if (isset($arrHttp["encabezado"])){
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: assign_control_number.php";
+echo " Script: assign_control_number.php";
 ?>
-</font>
-	</div>
+
+</div>
+
 <form name=cnFrm method=post action=assign_control_number_ex.php onsubmit="Javascript:return false">
 <input type=hidden name=encabezado value=s>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
@@ -183,7 +184,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: assign_control_number.php";
 <?php
 echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 ?>
-	<table width=600 cellpadding=5>
+	<table width=100% cellpadding=5>
 	<tr>
 		<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
 	<tr>

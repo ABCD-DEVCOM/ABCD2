@@ -5,7 +5,6 @@
 2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
 2021-02-27 fho4abcd png favicon works better in bookmarks. 
 */
-
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
@@ -14,6 +13,8 @@ include("$app_path/common/get_post.php");
 $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
+$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
 	$lang=$_SESSION["lang"];
@@ -21,18 +22,22 @@ if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$lang;
 	$_SESSION["lang"]=$lang;
 }
+
 include ("$app_path/lang/admin.php");
 include ("$app_path/lang/lang.php");
+	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang;?>">
 
 <head profile="http://www.w3.org/2005/10/profile">
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
-		<META http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
+		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 		<meta http-equiv="Content-Language" content="pt-br" />
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
@@ -72,8 +77,8 @@ function CambiarClave(){
 	document.cambiarPass.password.value=Trim(document.administra.password.value)
 	ix=document.administra.lang.selectedIndex
 	document.cambiarPass.lang.value=document.administra.lang.options[ix].value
-	ix=document.administra.db_path.selectedIndex
-	document.cambiarPass.db_path.value=document.administra.db_path.options[ix].value
+	ix=document.administra.db_path.value
+	document.cambiarPass.db_path.value=document.administra.db_path.value
 	document.cambiarPass.submit()
 }
 function Enviar(){
@@ -134,7 +139,7 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 }
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
 		echo "
-			<div class=\"helper alert\">".$msgstr["pswchanged"]."
+			<div class=\"helper success\">".$msgstr["pswchanged"]."
 			</div>
 		";
 }
@@ -149,15 +154,18 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		echo "
 			<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry\" onfocus=\"this.className = 'textEntry superTextEntry textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry';\" />\n";
 }
+
 ?>
 		</div>
+
 		<div class="formRow">
 			<label for="pwd"><?php echo $msgstr["password"]?></label>
 			<input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
 		   <?php if (isset($change_password) and $change_password=="Y") echo "<br><a href=javascript:CambiarClave()>". $msgstr["chgpass"]."</a>\n";?>
 		</div>
 		<div id="formRow3" class="formRow formRowFocus">
-			<label ><?php echo $msgstr["lang"]?></label> <select name=lang class="textEntry singleTextEntry">
+			<label ><?php echo $msgstr["lang"]?></label> 
+			<select name=lang class="textEntry singleTextEntry" onchange="this.submit()">
 <?php
 
  	$a=$msg_path."lang/$lang/lang.tab";
@@ -171,7 +179,7 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 				$l=explode('=',$value);
 				if ($l[0]!="lang"){
 					if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
+					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>\n";
 					$selected="";
 				}
 			}
@@ -186,17 +194,20 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		<div class="formRow"><br>
 <?php
 if (file_exists("dbpath.dat")){
+	global $db_path;
 	$fp=file("dbpath.dat");
-	echo $msgstr["database_dir"].": <select name=db_path>\n";
+	echo $msgstr["database_dir"].': <select class="textEntry singleTextEntry" name=db_path>\n';
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$v=explode('|',$value);
 			$v[0]=trim($v[0]);
-			echo "<Option value=".trim($v[0]).">".$v[1]."\n";
+			echo "<option value=".trim($v[0]).">".$v[1]."\n";
 		}
 
 	}
-	echo "</select><p>";
+	echo "</select>";
+} else {
+	echo '<input type="hidden" name="db_path" value="/home/suporte/ABCD2/www/bases-examples_Linux">';
 }
 ?>
 			<input type="checkbox" name="newindow" value=

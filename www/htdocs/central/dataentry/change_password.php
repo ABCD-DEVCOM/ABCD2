@@ -36,7 +36,7 @@ if (!isset($msgstr["pass_format_0"])) $msgstr["pass_format_0"]="";
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
 		<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="../css/<?php echo $css_name?>template.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" rev="stylesheet" href="../../assets/css/<?php echo $css_name?>template.css" type="text/css" media="screen"/>
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie.css" type="text/css" media="screen"/>
 		<![endif]-->
@@ -105,12 +105,12 @@ function Enviar(){
 <body>
 	<div class="heading">
 		<div class="institutionalInfo">
-			<h1><img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../../assets/images/logoabcd.jpg";
-					  ?>>
-			<?php echo $institution_name?></h1>
+			<img src=<?php	if (isset($logo))
+						echo "$logo" ;
+					else
+						echo "../../assets/images/logoabcd.png";
+				 ?>
+			><h1><?php echo $institution_name?></h1>
 		</div>
 		<div class="userInfo"></div>
 		<div class="spacer">&#160;</div>
@@ -126,10 +126,6 @@ function Enviar(){
 <input type=hidden name=db_path value="<?php if (isset($arrHttp["db_path"])) echo $arrHttp["db_path"]?>">
 	<div class="middle login">
 		<div class="loginForm">
-			<div class="boxTop">
-				<div class="btLeft">&#160;</div>
-				<div class="btRight">&#160;</div>
-			</div>
 			<div class="boxContent">
 				<div class="formRow">
 					<label for="user"><?php echo $msgstr["userid"]?></label>
@@ -163,17 +159,14 @@ function Enviar(){
 					   onblur="this.className = 'textEntry superTextEntry';" />
 					<a href=javascript:DisplayPassword('confirmpwd')><?php echo $msgstr["ver"]?></a>
 				</div>
-				<div class="submitRow">
-					<a href="javascript:Enviar()" class="defaultButton goButton">
-					<img src="../../assets/images/icon/defaultButton_next.png" alt="" title="" />
-					<span><?php echo $msgstr["chgpass"]?></span>
-					</a>
+				<div class="formRow">
+				<a href="javascript:Enviar()" class="bt-blue bt-sign">
+					<?php echo $msgstr["chgpass"]?>
+				</a>
+
 				</div>
+								<a href="javascript:history.back()"><?php echo $msgstr["regresar"];?></a>
 				<div class="spacer">&#160;</div>
-			</div>
-			<div class="boxBottom">
-				<div class="bbLeft">&#160;</div>
-				<div class="bbRight">&#160;</div>
 			</div>
 		</div>
 	</div>
