@@ -207,7 +207,7 @@ if (file_exists("dbpath.dat")){
 	}
 	echo "</select>";
 } else {
-	echo '<input type="hidden" name="db_path" value="/home/suporte/ABCD2/www/bases-examples_Linux">';
+	echo '<input type="hidden" name="db_path" value="'.$db_path.'">';
 }
 ?>
 			<input type="checkbox" name="newindow" value=
