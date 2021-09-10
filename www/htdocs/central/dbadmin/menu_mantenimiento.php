@@ -143,19 +143,22 @@ include("menu_bar.php");
     // Adjusting the iframe height onload event
     iframe.onload = function(){
     	var janela = iframe.contentWindow.document.body.scrollHeight
-    	var hidehead = iframe.contentWindow.document.getElementsByClassName("heading")[0];
-    	var hidesectionInfo = iframe.contentWindow.document.getElementsByClassName("sectionInfo")[0];
-    	var hidemiddle = iframe.contentWindow.document.getElementsByClassName("middle")[0];
-    	var hidefooter = iframe.contentWindow.document.getElementsByClassName("footer")[0];
-        hidehead.style.display = "none";	
-        hidesectionInfo.style.display = "none";	
-        hidemiddle.style.background = "#fff";	
-        hidefooter.style.display = "none";	
 	   	var valorfolga = 150;
         var folga = janela + valorfolga;
         iframe.style.height = folga + 'px';
 
     }
+
+
+ //   	document.getElementById("ABCD_Frame").getElementsByClassName("heading")style.visibility = "hidden";;
+  //  	var hidesectionInfo = iframe.contentWindow.document.getElementsByClassName("sectionInfo")[0];
+   // 	var hidemiddle = iframe.contentWindow.document.getElementsByClassName("middle")[0];
+  //  	var hidefooter = iframe.contentWindow.document.getElementsByClassName("footer")[0];
+  //      hidehead.style.visibility = "hidden";
+  //      hidesectionInfo.style.visibility = "hidden";	
+//        hidemiddle.style.background = "#fff";	
+ //       hidefooter.style.display = "none";	
+
     </script>
 
 	</div> <!--./formContent-->

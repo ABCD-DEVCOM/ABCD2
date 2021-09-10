@@ -228,6 +228,22 @@ SELECT.singleTextEntry {
 }
 
 
+.success {
+  color: var(--white);
+  background-color: var(--success);
+	font-weight: bold;
+	padding: 8px;
+	border-radius: 4px;
+}
+
+.success:before {
+	font-family: "Font Awesome 5 Free";
+	content: "\f071";
+	color: var(--yellow);
+	margin-right: 10px;
+}
+
+
 
 A.singleButton .sb_lb {
 	background: url('../images/singleButton_lb.gif') no-repeat top left;
@@ -313,6 +329,7 @@ A.singleButton .sb_rb {
 /*#middle classes */
 .middle {
 	background: var(--gray-light);
+	min-height: 100vh;
 }
 /*#END #middle classes */
 
@@ -322,6 +339,8 @@ A.singleButton .sb_rb {
 	color: var(--gray);
 	background: var(--white);
 	padding: .8rem;
+	-webkit-box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32); 
+	box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32);
 }
 
 .footer A {
