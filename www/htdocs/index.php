@@ -3,7 +3,8 @@
 2021-01-04 fho4abcd Removed login encryption
 2021-01-04 fh04abcd Corrected "languaje" --> language
 2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
-2021-02-27 fho4abcd png favicon works better in bookmarks. 
+2021-02-27 fho4abcd png favicon works better in bookmarks.
+2021-08-10 fho4abcd Do not crash if first language file (from the browser) is missing. Visible message if no file found
 */
 session_start();
 $_SESSION=array();
@@ -12,7 +13,7 @@ include("central/config.php");
 include("$app_path/common/get_post.php");
 $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
-
+$lang_config=$lang;
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
 if (isset($_SESSION["lang"])){
@@ -164,13 +165,26 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		   <?php if (isset($change_password) and $change_password=="Y") echo "<br><a href=javascript:CambiarClave()>". $msgstr["chgpass"]."</a>\n";?>
 		</div>
 		<div id="formRow3" class="formRow formRowFocus">
+        <?php
+        // Check if the language from the browser is present
+        $a=$msg_path."lang/$lang/lang.tab";
+        if (!file_exists($a)){
+            // switch to configured language if browser language is not present
+            echo "<div>".$msgstr["flang"].": ".$a."<br>";
+            echo $msgstr["using_config"]." '".$lang_config."'<br>&nbsp;</div>";
+            $lang=$lang_config;
+        }
+        // Check if the language file is present
+        $a=$msg_path."lang/$lang/lang.tab";
+        if (!file_exists($a)){
+            echo "<div style='color:red'>".$msgstr["fatal"].": ".$msgstr["flang"].": ".$a."</div>";
+            die;
+        }
+        ?>
 			<label ><?php echo $msgstr["lang"]?></label> 
 			<select name=lang class="textEntry singleTextEntry" onchange="this.submit()">
 <?php
 
- 	$a=$msg_path."lang/$lang/lang.tab";
-
- 	if (file_exists($a)){
 		$fp=file($a);
 		$selected="";
 		foreach ($fp as $value){
@@ -184,10 +198,6 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 				}
 			}
 		}
-	}else{
-		echo $msgstr["flang"].$db_path."lang/".$_SESSION["lang"]."/lang.tab";
-		die;
-	}
 ?>
 			</select>
 		</div>
@@ -238,5 +248,4 @@ else
 </form>
 
 <?php include ("$app_path/common/footer.php");?>
-	</body>
-</html>
+
