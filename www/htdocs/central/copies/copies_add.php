@@ -1,4 +1,7 @@
 <?php
+/*
+20210908 fho4abcd div-helper, cleanup html
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -15,32 +18,11 @@ include("../lang/acquisitions.php");
 $db_addto=$arrHttp["base"];
 $arrHttp["base"]="copies";
 include("../common/header.php");
+
+echo "<body>";
 include("../acquisitions/javascript.php");
-
-//READ THE FST OF THE BIBLIOGRAPHIC DATABASE IN ORDER TO GET THE TAG OF THE CONTROL FIELD
-$tag_ctl="";
-$error="";
-LeerFst($db_addto);
-if ($tag_ctl!=""){
-	$Formato="v".$tag_ctl;
-
-	//READ THE BIBLIOGRAPHIC RECORD TO GET THE CONTROL NUMBER
-
-	$query = "&base=".$db_addto."&cipar=$db_path"."par/".$db_addto.".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato&Opcion=rango";
-	$IsisScript=$xWxis."imprime.xis";
-	include("../common/wxis_llamar.php");
-	$valortag[1]=implode("",$contenido);
-//print 'valortag1='.$valortag[1].'<p>';
-	if ($valortag[1]=="")     //CHECK IF THE RECORD HAS CONTROL NUMBER
-		$err_copies="Y";
-	else
-		$err_copies="N";
-
-//READ THE FDT OF THE COPIES DATABASE TO SEE IF THE INVENTORY NUMBER IS AUTOINCREMENT
-	LeerFdt("copies");
-}
-
 ?>
+
 <script language=javascript>
 top.toolbarEnabled="N"
 function Validar(){
@@ -127,8 +109,29 @@ function AsignarTabla(){
 	}
 }
 </script>
-<body>
 <?php
+//READ THE FST OF THE BIBLIOGRAPHIC DATABASE IN ORDER TO GET THE TAG OF THE CONTROL FIELD
+$tag_ctl="";
+$error="";
+LeerFst($db_addto);
+if ($tag_ctl!=""){
+	$Formato="v".$tag_ctl;
+
+	//READ THE BIBLIOGRAPHIC RECORD TO GET THE CONTROL NUMBER
+
+	$query = "&base=".$db_addto."&cipar=$db_path"."par/".$db_addto.".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato&Opcion=rango";
+	$IsisScript=$xWxis."imprime.xis";
+	include("../common/wxis_llamar.php");
+	$valortag[1]=implode("",$contenido);
+//print 'valortag1='.$valortag[1].'<p>';
+	if ($valortag[1]=="")     //CHECK IF THE RECORD HAS CONTROL NUMBER
+		$err_copies="Y";
+	else
+		$err_copies="N";
+
+//READ THE FDT OF THE COPIES DATABASE TO SEE IF THE INVENTORY NUMBER IS AUTOINCREMENT
+	LeerFdt("copies");
+}
 if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	include("../common/institutional_info.php");
 }
@@ -148,9 +151,9 @@ if ($err_copies!="Y" and $error==""){
 					</a>";
 	}
 	?>
-			<a href=../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
+			<a href='../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
 			if (isset($arrHttp["Formato"])) echo "&Formato=".$arrHttp["Formato"];
-			echo $urlcopies?> class="defaultButton cancelButton">
+			echo $urlcopies?>' class="defaultButton cancelButton">
 				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 				<span><strong><?php echo $msgstr["cancelar"]?></strong></span>
 			</a>
@@ -168,17 +171,10 @@ if ($err_copies!="Y" and $error==""){
 echo "	</div>
 		<div class=\"spacer\">&#160;</div>
 	</div>";
-?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies/copies_add.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/copies/copies_add.html target=_blank>".$msgstr["edhlp"]."</a>";
- echo "<font color=white>&nbsp; &nbsp; Script: copies/copies_add.php";
-?>
-</font>
-	</div>
 
+include "../common/inc_div-helper.php";
+
+?>
 <form method=post name=forma1 action=copies_add_add.php onSubmit="javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"].".par"?>>
@@ -212,7 +208,7 @@ echo "<label for=\"addCopies\">
 		<input type=\"text\" size=11 maxlength=2 name=\"copies\" id=\"copies\" value=\"\"/>
 		&nbsp; &nbsp; &nbsp;";
 
-echo "<a href=javascript:Show('copies','CN_".$db_addto."_".$valortag[1]."')>". $msgstr["dispcopies"]."</a>
+echo "<a href=\"javascript:Show('copies','CN_".$db_addto."_".$valortag[1]."')\">". $msgstr["dispcopies"]."</a>
 <!--		<input type=checkbox value=Y checked name=createloans>
 		<label for=\"regCopies\">
 			<strong>".$msgstr["regcopies"]."</strong>
@@ -231,13 +227,10 @@ ConstruyeWorksheetFmt();
 include("../dataentry/dibujarhojaentrada.php");
 PrepararFormato();
 
-?>
+?></div>
 </form>
 	</div>
 </div>
-<?php include("../common/footer.php"); ?>
-</body>
-</html>
 <form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>
    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
    <input type=hidden name=picklist>
@@ -323,3 +316,5 @@ function CheckInventory(tag)
 CheckInventoryDup(document.getElementById("tag30").value,1);
 }
 </script>
+<?php include("../common/footer.php"); ?>
+
