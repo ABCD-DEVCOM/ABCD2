@@ -338,6 +338,7 @@ undo_selected=Undo selection
 uploadfile=Upload file
 userid=Login
 username=Name
+using_config=Using configured default
 usrmanual=User Manual
 valchars=Only caracters 0-9 and a-z are accepted in login and password
 valdef=Default value
