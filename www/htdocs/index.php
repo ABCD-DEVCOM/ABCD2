@@ -14,6 +14,7 @@ include("$app_path/common/get_post.php");
 $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 $lang_config=$lang;
+
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
 if (isset($_SESSION["lang"])){
@@ -192,7 +193,7 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 			if ($value!=""){
 				$l=explode('=',$value);
 				if ($l[0]!="lang"){
-					if ($l[0]==$_SESSION["lang"]) $selected=" selected";
+					if ($l[0]==$lang) $selected=" selected";
 					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>\n";
 					$selected="";
 				}
