@@ -99,6 +99,21 @@ LABEL {
 	cursor: pointer;
 }
 
+.row {
+    --bs-gutter-x: 1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+  	margin-top: 20px;
+  	margin-bottom: 20px;
+    align-content: center;
+}
+.row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
 /* #master classes */
 
 /* ABCD ADDED*/
@@ -1050,8 +1065,13 @@ a.bt-sign {
 
 }
 
+.bt {
+	margin: 3px;
+	width: auto;
+}
 
 .bt-green {
+	text-decoration: none;
 	background-color: var(--green);
 	border: 1px solid var(--green);
 	border-radius: 3px;
@@ -1147,6 +1167,21 @@ a.bt-sign {
   .bt-gray {
     padding: 10px 30px;
   }
+}
+
+.bt-disabled {
+	text-decoration: none;
+	background-color: var(--white);
+	border: 1px solid var(--gray-light);
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: var(--gray);
+	cursor: default;
+	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+	font-weight: 400;
+	outline: 0;
+	padding: 10px 25px;
+	text-align: center;
 }
 
 .group-fields {

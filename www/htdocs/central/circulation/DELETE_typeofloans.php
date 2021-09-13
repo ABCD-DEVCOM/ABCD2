@@ -46,8 +46,8 @@ foreach ($fp as $value){
 }
 include("../common/header.php");
 ?>
-<link rel="STYLESHEET" type="text/css" href="../css/dhtmlXGrid.css">
-<link rel="STYLESHEET" type="text/css" href="../css/dhtmlXGrid_skins.css">
+<link rel="STYLESHEET" type="text/css" href="../../assets/css/dhtmlXGrid.css">
+<link rel="STYLESHEET" type="text/css" href="../../assets/css/dhtmlXGrid_skins.css">
 <script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXCommon.js"></script>
 <script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGrid.js"></script>
 <script language="JavaScript" type="text/javascript"  src="../js/dhtml_grid/dhtmlXGridCell.js"></script>

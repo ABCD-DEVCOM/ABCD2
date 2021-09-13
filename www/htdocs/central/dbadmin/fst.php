@@ -164,49 +164,65 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fst.php";
 </font>
 	</div>
 <div class="middle form">
-			<div class="formContent">
+	<div class="formContent">
+
+	<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
+		<?php echo $msgstr["addrowbef"]?>
+	</a>
+	<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">	
+		<?php echo $msgstr["addrowaf"]?>
+	</a>
+	<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
+		<?php echo $msgstr["remselrow"]?>
+	</a>
+	<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span>
+
+
+<div class="row">
+
 <table width=100% border=0>
-   	<td width=680 valign=top >
-   		<table>
-	        <tr>
-			<td>
-				<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
-				&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-				&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
-				&nbsp; &nbsp; <font color=darkred size=1><strong><?php echo $msgstr['double_click']?></strong></font><br>
-			</td>
-			<tr>
-				<td valign=top>
-					<div id="gridbox" width="650px" height="250px" style="left:0;top:0;background-color:white;overflow:hidden"></div>
-				</td>
+	<tr>
+		<td width="50%">
+			<div id="gridbox" width="650px" height="250px" style="left:0;top:0;background-color:white;overflow:hidden"></div>
+		</td>
+		<td width="50%">
+			<iframe id="cframe" src="fdt_leer.php?Opcion=<?php echo $arrHttp["Opcion"]?>&base=<?php echo $arrHttp["base"]?>" width=100% height=450 scrolling=yes name=fdt></iframe>
+		</td>
+	</tr>
 
-			</tr>
-			<tr>
-				<td>
-					<?php if ($arrHttp["Opcion"]!="new"){
-						echo $msgstr["testmfn"];
-						echo "<input type=text size=5 name=Mfn><a href=javascript:Test()>".$msgstr["test"]."</a>  &nbsp; &nbsp;";
-						}
+	<tr>
+		<td colspan="100%">
+		<?php if ($arrHttp["Opcion"]!="new"){ ?>
+	
+	<label><?php echo $msgstr["testmfn"];?></label>
+	<input type="text" size="5" name="Mfn">
+		<a class="bt bt-blue" href="javascript:Test()">
+			<?php echo $msgstr["test"];?>
+		</a>
+	<?php	
+	}
+?>
+	 <a class="bt bt-green" href="javascript:Enviar()"><?php echo $msgstr["update"]?></a>
 
-					?>
-						 <a href=javascript:Enviar()><?php echo $msgstr["update"]?></a>  &nbsp; &nbsp;
-					<?php
-					if ($encabezado=""){
-						if ($arrHttp["Opcion"]!="new")
-							echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].">".$msgstr["cancel"]."</a>";
-				  		else
-				    		echo "<a href=menu_creardb.php>".$msgstr["cancel"]."</a>";
-					}
-					?>
-	 			</td>
-			</tr>
-		</table>
-	</td>
-	<td valign=top><iframe id="cframe" src="fdt_leer.php?Opcion=<?php echo $arrHttp["Opcion"]?>&base=<?php echo $arrHttp["base"]?>" width=100% height=400 scrolling=yes name=fdt></iframe>
-	</td>
-		</table>
-	</td>
+
+<?php
+if ($encabezado=""){
+	if ($arrHttp["Opcion"]!="new")
+		echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].">".$msgstr["cancel"]."</a>";
+		else
+		echo "<a href=menu_creardb.php>".$msgstr["cancel"]."</a>";
+}
+?>	
+		</td>
+	</tr>
+
 </table>
+
+
+
+
+</div>
+
 <script>
 	mygrid = new dhtmlXGridObject('gridbox');
   // mygrid.setSkin("modern");
@@ -281,23 +297,25 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fst.php";
 
 
 </form>
-<form name=forma1 action=fst_update.php method=post>
-<input type=hidden name=ValorCapturado>
-<input type=hidden name=desc>
-<input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=S>"; ?>
-</form>
-<form name=test action=fst_test.php method=post target="FST_Test">
-<input type=hidden name=ValorCapturado>
-<input type=hidden name=desc>
-<input type=hidden name=Mfn>
-<input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-</form>
-</div></div>
+	<form name="forma1" action="fst_update.php" method="post">
+		<input type="hidden" name="ValorCapturado">
+		<input type="hidden" name="desc">
+		<input type="hidden" name="Opcion" value="<?php echo $arrHttp["Opcion"]?>">
+		<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+		<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=S>"; ?>
+	</form>
+
+	<form name="test" action="fst_test.php" method="post" target="FST_Test">
+		<input type="hidden" name="ValorCapturado">
+		<input type="hidden" name="desc">
+		<input type="hidden" name="Mfn">
+		<input type="hidden" name="Opcion" value="<?php echo $arrHttp["Opcion"]?>">
+		<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+	</form>
+
+	</div>
+</div>
+
 <?php
 include("../common/footer.php");
 ?>
-</body>
-</html>
