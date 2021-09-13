@@ -99,6 +99,21 @@ LABEL {
 	cursor: pointer;
 }
 
+.row {
+    --bs-gutter-x: 1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+  	margin-top: 20px;
+  	margin-bottom: 20px;
+    align-content: center;
+}
+.row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
 /* #master classes */
 
 /* ABCD ADDED*/
@@ -165,6 +180,9 @@ input[type=text], input[type=password] {
   box-shadow: inset 1px 1px 3px 0.1px var(--light);
 	box-sizing: border-box;
 	margin: 1px 0;
+/*color: var(--blue);*/
+	font-size: 12px;
+	line-height: 18px;
 }
 
 textarea.par {
@@ -731,6 +749,7 @@ A.homeButton IMG{
 	border-collapse: collapse;
 	border-spacing: 0px;
 	margin: 25px 0;
+	background: var(--white);
 }
 
 
@@ -1050,8 +1069,13 @@ a.bt-sign {
 
 }
 
+.bt {
+	margin: 3px;
+	width: auto;
+}
 
 .bt-green {
+	text-decoration: none;
 	background-color: var(--green);
 	border: 1px solid var(--green);
 	border-radius: 3px;
@@ -1147,6 +1171,103 @@ a.bt-sign {
   .bt-gray {
     padding: 10px 30px;
   }
+}
+
+.bt-disabled {
+	text-decoration: none;
+	background-color: var(--white);
+	border: 1px solid var(--gray-light);
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: var(--gray);
+	cursor: default;
+	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+	font-weight: 400;
+	outline: 0;
+	padding: 10px 25px;
+	text-align: center;
+}
+
+.bt-fdt i {
+	width: 16px;
+	height: 16px;
+}
+
+.bt-fdt{
+	text-decoration: none;
+	background-color: var(--white);
+	border: 1px solid var(--blue);
+	border-radius: 3px;
+/*box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;*/
+	color: var(--blue);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 5px;
+	text-align: center;
+	touch-action: manipulation;
+	vertical-align: middle;
+	margin: 2px;
+}
+
+
+
+.bt-fdt-blue {
+	text-decoration: none;
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+	border-radius: 3px;
+/*box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;*/
+	color: var(--white);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 5px;
+	text-align: center;
+	touch-action: manipulation;
+	vertical-align: middle;
+	margin: 2px;
+}
+
+
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--black);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+
+#wrapper {
+	text-align:left;
+	margin:10px auto;
+	width:100%;
+	xmin-height:10px;
+	xborder:1px solid #ccc;
+	padding:0px;
+}
+
+#wrapper a {
+	font-size: 13px;
+}
+
+
+#myvar {
+	border:1px solid #ccc;
+	background:#ffffff;
+	padding:2px;
+}
+
+td.rotuloIng {
+	vertical-align: middle;
+	width: 130px;
+	font-size: 12px;
 }
 
 .group-fields {
