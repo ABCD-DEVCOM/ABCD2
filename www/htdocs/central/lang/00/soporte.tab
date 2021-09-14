@@ -183,6 +183,9 @@ transferido=Uploaded
 useslashm=Use /m parameter
 unch_append=Unchecked = Append records
 unch_wxis=Unchecked = Use WXIS
+upload_conf_errmsg=May be a configuration error for file uploads. Check log files and php.ini.
+upload_logout=Logout recommended
+upload_exceed=Exceeded
 warnforslashm=Warning: do not check this parameter if you<br>are using picklists with type DB in the FDT
 warnmuchoutput=Warning: levels 2,3 give much feedback
 workfolder=Work folder
