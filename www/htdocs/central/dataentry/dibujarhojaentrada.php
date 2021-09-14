@@ -29,7 +29,7 @@ global $config_date_format;
  	else
        	$date_format= "%m/%d/%Y";
 	echo "<!-- calendar attaches to existing form element -->
-		<input type=text size=10 name=tag$Etq id=tag$Etq value='";
+		<input tabindex='0' type=text size=10 name=tag$Etq id=tag$Etq value='";
 		if (trim($campo)!="") echo $campo;
 		echo "'";
 		if ($type_de=="D"){
@@ -164,7 +164,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 				        else
 				        	$date_format= "%m/%d/%Y";
 					echo "<!-- calendar attaches to existing form element -->
-							<input type=text size=8 name=tag$Etq id=tag$Etq value='";
+							<input tabindex='0' type=text size=8 name=tag$Etq id=tag$Etq value='";
 							if (trim($campo)!="") echo $campo;
 							echo "'";
 							if ($type_de[7]="ISO") echo " onChange='Javascript:DateToIso(this.value,document.forma1.tag$Etq)'";
@@ -192,12 +192,12 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	   							$lengthmax=$maxlength;
 	   						else
 	   							$lengthmax=$maxlength-$lengthmax;
-	   						echo "<br><span align=right><input type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."</span>\n";
+	   						echo "<br><span align=right><input tabindex='0' type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."</span>\n";
                     	}
 					}else{
 						if ($maxlength!=0)
 							echo "<a style=\"text-decoration:none\" onMouseover=\"ddrivetip(document.forma1.tag".$Etq.".value,'linen',200 )\"; onMouseout=\"hideddrivetip()\"; onclick=\"hideddrivetip()\">";
-						echo "<input type=text name=tag".$Etq." size=$n";
+						echo "<input tabindex='0' type=text name=tag".$Etq." size=$n";
 						if ($maxlength!=0) echo " maxlength=$maxlength";
 						echo " class=td value=\"$campo\">";
 						if ($maxlength!=0) echo "</a>";
@@ -286,12 +286,9 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  	}
  	$seleccion= Array();
  	$ind=Array();
- 	echo "<td colspan=5>\n<table border=0 id=id_".$t[1];
- 	echo " bgcolor=#eeeeee";
+ 	echo "<td colspan=5 class='table-fdt-four'>\n<table class='table-fdt' border=0 id=id_".$t[1]." ".$celda.">";
 
- 	echo " $celda>";
-
-	echo "<td colspan=$cant_cols><strong>".$t[2]."</strong></td><tr>";
+	echo "<td colspan=$cant_cols  class='table-fdt-four'><b>".$t[2]."</b></td><tr>";
  	$indice_alfa="";  // para desplegar el índice alfabético del campo
   //  echo "<td bgcolor=#eeeeee></td>";
 
@@ -344,9 +341,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	  		$ind[$cols]=$lin;
 	  		if (count($filas)>1){
 			if (trim($l[2])!="" and $l[7]!="I") {     //columns title
-		    	echo "<td bgcolor=#eeeeee><b>".trim($l[2]);
-
-		    	echo "</b></td>";
+		    	echo "<td><b>".trim($l[2])."</b></td>";
 			}
 			}
 		}
@@ -515,7 +510,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	   									$lengthmax=$maxlength;
 	   								else
 	   									$lengthmax=$maxlength-$lengthmax;
-	   								echo "<br><input type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."\n";
+	   								echo "<br><input tabindex='0' type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."\n";
 	   							}
 	   						}else{
 	   							echo nl2br($campo);
@@ -524,7 +519,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 							if (!isset($ver)){
 								if ($maxlength!=0)
 									echo "<a style=\"text-decoration:none\"; onMouseover=\"ddrivetip(document.forma1.tag".$Etq.".value,'linen',200 )\"; onMouseout=\"hideddrivetip()\";>";
-								echo "<input type=text name=tag".$Etq."  id=tag".$Etq." size=$n";
+								echo "<input tabindex='0' type=text name=tag".$Etq."  id=tag".$Etq." size=$n";
 								if ($maxlength!=0) {
 									echo " maxlength=$maxlength";
 									echo "  onBlur=\"hideddrivetip();document.forma1.tag".$Etq.".size=$n\"
@@ -542,14 +537,14 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
     					if (isset($ver))
     						echo $campo;
     					else
-    						echo "<input type=text name=tag".$Etq." id=tag".$Etq." size=$n maxlength=$n class=td value=\"$campo\">";
+    						echo "<input tabindex='0' type=text name=tag".$Etq." id=tag".$Etq." size=$n maxlength=$n class=td value=\"$campo\">";
     					break;
     				case "U":
     					if (isset($ver)){
     						echo $campo;
     					}else{
-	     					echo "<input type=text name=tag".$Etq." id=tag".$Etq." size=$n class=td value=\"$campo\">";
-    	 					echo "<a class=\"bt-fdt\" href=javascript:EnviarArchivo('tag$Etq')><i class=\"fas fa-upload\" alt=\"".$msgstr["uploadfile"]."\" title=\"".$msgstr["uploadfile"]."\"></i></a> ";
+	     					echo "<input tabindex='0' type=text name=tag".$Etq." id=tag".$Etq." size=$n class=td value=\"$campo\">";
+    	 					echo "<a class=\"bt-fdt\" href=javascript:EnviarArchivo('tag$Etq')><i class=\"fas fa-upload\" alt=\"".$msgstr["uploadfile"]."\" title=\"".$msgstr["uploadfile"]."\"></i></a>";
      						echo "<a class=\"bt-fdt\" href=dirs_explorer.php?Opcion=seleccionar&base=".$arrHttp["base"]."&tag=tag$Etq target=_blank><i class=\"far fa-folder-open\" alt=\"".$msgstr["selfile"]."\" title=\"".$msgstr["selfile"]."\"></i></a>";
      					}
      					break;
@@ -557,7 +552,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
      					if (isset($ver)){
      						echo $campo;
      					}else{
-     						echo "<input type=text name=tag".$Etq." id=tag".$Etq." size=$n class=td value=\"$campo\">";
+     						echo "<input tabindex='0' type=text name=tag".$Etq." id=tag".$Etq." size=$n class=td value=\"$campo\">";
      						echo "<a class=\"bt-fdt\" href=javascript:EnviarArchivo('tag$Etq')><i class=\"fas fa-upload\" alt=\"Subir archivo al servidor\"></i></a>";
    							echo "<a href=javascript:EditarArchivo('tag$Etq')><i class=\"far fa-edit\" alt=\"Editar archivo existente\"></i></a>";
   						}
@@ -593,7 +588,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  						if (isset($ver)){
  							echo $campo;
  						}else{
-	 						echo "<input type=text name=tag".$Etq." name=tag".$Etq." size=10 class=td value=\"$campo\" onfocus=blur()>";
+	 						echo "<input tabindex='0' type=text name=tag".$Etq." name=tag".$Etq." size=10 class=td value=\"$campo\" onfocus=blur()>";
 	 						if ($campo=="")
 	 							echo "<a class=\"bt-fdt\" href=javascript:AgregarOperador('tag$Etq')><i class=\"fas fa-plus\" alt='".$msgstr["add"]."' title='".$msgstr["add"]."'></i></a>";
 	 						break;
@@ -651,7 +646,7 @@ function DecodificaSubCampos($campo,$numsubc,$subc,$delimsc){
 function DibujarCheck($filas,$fondocelda,$valor,$tag,$opciones,$tope,$tipo,$subc){
 global $ver,$base,$arrHttp,$Path,$db_path,$lang_db,$msgstr;
 
-echo "<td align=left>";
+echo "<td align=left class='table-fdt-four input-fdt'>";
 if (!$ver){
 	if ($tope>1) {
     	echo "<table>\n";
@@ -702,8 +697,8 @@ if (!$ver){
             if (strpos($opcVal,"<")===true){
             	$opcVal=str_replace('"','´',$opcVal);
             }
-      		if ($tipo=="R") echo "<input type=radio name=tag$tag id=tag$tag value='".$opcVal."'";
-      		if ($tipo=="C" or $tipo=="RP") echo "<input type=checkbox name=tag$tag id=tag$tag value=\"".$opcVal."\"";
+      		if ($tipo=="R") echo "<input tabindex='0' type=radio name=tag$tag id=tag$tag value='".$opcVal."'";
+      		if ($tipo=="C" or $tipo=="RP") echo "<input tabindex='0' type=checkbox name=tag$tag id=tag$tag value=\"".$opcVal."\"";
       		foreach ($val as $check) {
 
       			if ($subc!=""){
@@ -796,14 +791,17 @@ global $ver,$base,$arrHttp,$Path,$Tabla_sel,$db_path,$lang_db,$msgstr;
 			}
 	   		$linea=trim($linea);
 	   		$pp=explode('|',$linea);
-
+	   		
+	   		
 			if ($linea!=""){
 	            if ($pp[0]!="")
 	            	$key1=$pp[0];
 				else
 					$key1=$pp[1];
+				echo $pp[1];
+				
 				if ($pp[1]=="")
-					$key2=$key1;
+					$key2=$pp[1];
 				else
 					$key2=$pp[1];
 				$opc[$key2]=$key1;
@@ -904,11 +902,11 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	 if (isset($t[16])) $help=$t[16];
 	// $upload=substr($linea,53,1);
 	 if ($tipo!="I"){
-	 	echo "<td class=\"rotuloIng\">";
+	 	echo "<td class=\"table-fdt-three\">";
 	 	$titulo=trim($t[2]);
 	 	echo $titulo;
 	 	echo "</td>";
-	 	echo "<td align=left>";
+	 	echo "<td align=left class='table-fdt-four input-fdt'>";
 	 }
 	 if ($rep==1 and $numl==0) $numl=1;
 	 if ($numl==0) $numl=1;
@@ -918,7 +916,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	 if ($ver) {
 	  	foreach ($dummy as $lin){
 	   		if ($ksc>0 and trim($delimsc)!="") $lin=DecodificaSubCampos($lin,$ksc,$subc,$delimsc);
-	   		if ($tipo!="I")echo $lin."<br>";
+	   		if ($tipo!="I")echo $lin."";
 	  	}
 	 } else {
 
@@ -962,7 +960,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
    				}
    				echo ">" .$campo."</textarea>";
 	   			if ($maxlength>0)
-	   				echo "<br><input readonly type=\"text\" name=\"rem$tag\" size=\"3\" maxlength=\"$maxlength\" value=\"$maxlength\" class=charCount>".$msgstr["avalchars"]."\n";
+	   				echo "<input readonly type=\"text\" name=\"rem$tag\" size=\"3\" maxlength=\"$maxlength\" value=\"$maxlength\" class=charCount>".$msgstr["avalchars"]."\n";
 	  		}else{
 	   			if ($len==0) $len="100";
 				switch ($tipo){
@@ -1010,11 +1008,11 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   				echo "</a>";
 	   			if ($tipo=="AI") {
 	   				if (isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["ACQ_ALL"]) or isset($_SESSION["permiso"]["ACQ_RESETCN"])){
-	   					echo " <a href=javascript:ChangeSeq($tag,\"$pref\")>".$msgstr["assign"]."</a>
+	   					echo " <a class='bt-fdt-green' href=javascript:ChangeSeq($tag,\"$pref\")><i class=\"fas fa-plus\"></i> ".$msgstr["assign"]."</a>
 	   					&nbsp ";
-	   					echo "<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
+	   					echo "<a class='bt-fdt-help' href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-life-ring\"></i> ".$msgstr["help"]."</a>&nbsp &nbsp;";
 	   					if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])){
-							echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/autoincrement.html target=_blank>".$msgstr["edhlp"]."</a>";
+							echo "<a class='bt-fdt-blue' href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-edit\"></i> ".$msgstr["edhlp"]."</a>";
 						}
 	   				}
 	   			}
@@ -1029,14 +1027,14 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   		    </script>\n";
 	   		    echo " <a class=\"bt-fdt\" href=javascript:DisplayPassword('tag$tag')><i class=\"far fa-eye\"></i> ".$msgstr["ver"]."</a>";
 	   			if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="") or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="")){
-	   				echo "<span class=\"bt-disabled\">";
+	   				echo "<br><small class=\"bt-disabled\">";
 	   				if (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="")
 	   					echo $msgstr["pass_format_1"] ." ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"].". ";
 	   				if (isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")
 	   					echo $msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
-	   				echo  ' &nbsp;<span id="spnPwd" class="pwd_Strength" ></span><br />';
+	   				echo  ' &nbsp;<span id="spnPwd" class="pwd_Strength" ></small><br />';
 	   			}
-	   			echo "</td><tr><td colspan=2></td><td>Confirm password</td><td><input type=password size=$len name=confirm id=confirmpwd  value=\"$campo\"";
+	   			echo "</td><tr><td colspan=2></td><td class='table-fdt-three'>Confirm password</td><td><input tabindex='0' type=password size=$len name=confirm id=confirmpwd  value=\"$campo\"";
 	   			if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")  or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="") ) echo " onfocus=VerificarPassword('tag$tag')";
 	   			echo ">";
 	   			echo " <a class=\"bt-fdt\" href=javascript:DisplayPassword('confirmpwd')><i class=\"far fa-eye\"></i> ".$msgstr["ver"]."</a>";
@@ -1046,7 +1044,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	 if ($tipo=="SRO" or $tipo=="MRO" ){
 	   				echo "<a href=\"javascript:Limpiar(document.forma1.tag$tag)\">borrar</a>";
 	   			}
-	 if ($tipo!="I") echo "<br><br></td></tr>\n";
+	 if ($tipo!="I") echo "</td></tr>\n";
 
 }
 
@@ -1109,7 +1107,7 @@ Function PrepararFormato() {
 							<SELECT NAME=\"reorg\" id=\"reorg\" MULTIPLE SIZE=20 style=\"width:600px\">
 							</SELECT>
 						</td>
-						<td ALIGN=\"left\" width=50>
+						<td ALIGN=\"left\" width=50 class='input-fdt'>
 							<a href=# onClick=\"moveOptionUp(document.forma1.reorg)\" class=boton>".$msgstr["r_subir"]."</a>
 							<BR><BR>
 							<a href=\"javascript:moveOptionDown(document.forma1.reorg)\" class=boton>".$msgstr["r_bajar"]."</a>
@@ -1154,9 +1152,9 @@ Function PrepararFormato() {
 			}else {
 				$display="display:none";
 				if (isset($titulo_ant) and $titulo_ant!="*" and $numero_secciones>0){
-					echo "\n<a href=\"javascript:switchMenu('myvar_$ixant');\" style=\"text-decoration:none \">";
+					echo "\n<a tabindex='-1' href=\"javascript:switchMenu('myvar_$ixant');\" style=\"text-decoration:none \">";
 					if (substr($titulo_ant,0,1)!="<"){
-						echo "<i class=\"far fa-minus-square\" style=\"vertical-align:middle\"></i> &nbsp;<strong>".$msgstr["cerrar"]."</strong></a> $titulo_ant";
+						echo "<i class=\"far fa-minus-square\" style=\"vertical-align:middle\"></i> &nbsp;<b>".$msgstr["cerrar"]."</b> $titulo_ant</a> ";
 					}else{
 						echo $msgstr["cerrar"];
 					}
@@ -1177,11 +1175,11 @@ Function PrepararFormato() {
 				}
 				echo "\n<div id=\"wrapper\">";
 				if ($t[0]=="H" and $numero_secciones>0)
-					echo "<a onclick=\"switchMenu('myvar_$ivars');\" style=\"text-decoration:none \">";
+					echo "<a class=\"header-fdt\" onclick=\"switchMenu('myvar_$ivars');\" style=\"text-decoration:none \">";
 				else
-					echo "<a onclick=#>";
+					echo "<a class=\"header-fdt\" onclick=#>";
 				if (substr($titulo,0,1)!="<" and $numero_secciones>0)
-					echo "<i class=\"far fa-plus-square\" style=\"vertical-align:middle\" ></i> &nbsp;<strong>$titulo</strong>";
+					echo "<i class=\"far fa-plus-square\" style=\"vertical-align:middle\" ></i> &nbsp;<b>$titulo</b>";
 				else
 					echo $titulo;
 				echo "</a>";
@@ -1199,7 +1197,7 @@ Function PrepararFormato() {
 			}
 		}
 
-		echo "<table border=0 cellspacing=0 width=100% class=listTable>\n";
+		echo "<table border=0  class=\"table-fdt\">\n";
 		if (isset($t[14])) if (substr($t[13],0,1)!="@") $fe.=urlencode('`$$$`'.$t[14]);
 		if ($t[0]=="H"){
 			$ixTab=$ixTab+1;
@@ -1258,7 +1256,7 @@ Function PrepararFormato() {
 		 		if (isset($valortag[$tag]) and $t[0]!="H" and $t[0]!="L"){
    					if ($ver && $valortag[$tag] || !$ver){;
    						if  ($t[7]!="I"){
-      						echo "<tr><td width=20 nowrap><span class=\"badge\">";
+      						echo "<tr><td class='table-fdt-one'><span class=\"badge\">";
       					}
 						if ($tag<1000 and $t[7]!="I")
 							echo  $tag.$ksc."</span>";
@@ -1288,7 +1286,7 @@ Function PrepararFormato() {
    						if ($t[4]==1) $Repetible="R";
    						$postings=1;
    						if (!$ver){
-   							echo "<td width=100 nowrap>";
+   							echo "<td class='table-fdt-two'>";
    							if ($t[7]!="COMBO" and $t[7]!="COMBORO"){
 		     					if ($a!="" or $t[10]=="T"){  //es una lista de autoridades o un tesauro
 		     						if ($t[7]!="I" and $t[7]!="TB" and $t[10]!="T" and ($t[10]!="")) echo "<a  class=\"bt-fdt\" href='javascript:AbrirIndiceAlfabetico(document.forma1.tag$tag,\"$a\",\"$c\",\"$separa\",\"$autoridades\",\"$autoridades.par\",\"tag$tag\",\"$postings\",\"$Repetible\",\"".urlencode($fe)."\")'><i class=\"fas fa-search\"></i></a>";
@@ -1300,7 +1298,7 @@ Function PrepararFormato() {
 		     					    		echo "<br><a class=\"bt-fdt\" href='javascript:AbrirIndiceAlfabetico(document.forma1.tag$tag,\"$a\",\"$c\",\"$separa\",\"$autoridades\",\"$autoridades.par\",\"tag$tag\",\"$postings\",\"$Repetible\",\"".urlencode($fe)."\")'><i class=\"fas fa-search\"></i></a>";
 		     					    }
 		     					}else{
-		     						if ($t[7]!="I") echo "&nbsp;";
+		     						if ($t[7]!="I") echo "";
 		     					}
 
                             }
@@ -1325,7 +1323,6 @@ Function PrepararFormato() {
 											}
 										}
 										if ($t[7]!="I") {
-											echo "&nbsp;";
 											echo "<a class=\"bt-fdt\" href='javascript:CampoFijo(document.forma1.tag$tag,$ixicampo,\"$fe\",\"$base\",\"\",\"$help_url\",\"$tag_tipol\",\"$tag_nivelr\")'><i class=\"fas fa-plus\"></i></a>";
 										}
 									}
@@ -1341,15 +1338,15 @@ Function PrepararFormato() {
 						 		if (isset($t[16])) $help=$t[16];
 
 					 			if (isset($hlp_tip[$tag]))
-					 				echo "<a class=\"tooltip\"><img src=\"../dataentry/img/callout.jpg\"><span>".$hlp_tip[$tag]." </span> </a>";
+					 				echo "<a class=\"tooltip\"><i class=\"far fa-life-ring\"></i><span>".$hlp_tip[$tag]." </span> </a>";
 						 		if ($help==1 or $help_url!=""){
 						 			if ($help_url==""){
-						 				if ($t[7]!="I") echo "<a class=\"bt-fdt\" href=javascript:Ayuda($tag)><i class=\"fas fa-question\"></i></a>";
+						 				if ($t[7]!="I") echo "<a tabindex='-1' class=\"bt-fdt-question\" href=javascript:Ayuda($tag)><i class=\"fas fa-question\"></i></a>";
 									}else{
-										if ($t[7]!="I") echo "<a class=\"bt-fdt\" href='javascript:msgh=window.open(\"$help_url\",\"help\",\"width=600,height=400\");msgh.focus()'><i class=\"fas fa-question\"></i></a>";
+										if ($t[7]!="I") echo "<a tabindex='-1' class=\"bt-fdt-question\" href='javascript:msgh=window.open(\"$help_url\",\"help\",\"width=600,height=400\");msgh.focus()'><i class=\"fas fa-question\"></i></a>";
 						 			}
 						 		}else{
-						 			if ($t[7]!="I") echo "&nbsp;";
+						 			if ($t[7]!="I") echo "";
 								}
 		     					echo "</td>\n";
                             }
@@ -1373,9 +1370,9 @@ Function PrepararFormato() {
 		        					$is_marc="S";
 		        					if (!isset($default_values) or $default_values!="S"){    //CHECK IF EDITING DEFAULT VALUES
 	      								$campo=$valortag[$tag];
-      									echo "\n<td class=\"rotuloIng\">";
+      									echo "\n<td class='table-fdt-three'>";
       									echo trim($titulo)."</td>\n";
-      									echo "\n<td align=left>\n";
+      									echo "\n<td align=left class='table-fdt-four' class='input-fdt'>\n";
       									if (!$ver) {
       										$campo=date("YmdHi.s");
        										echo "<input type=hidden name=tag$tag id=tag$tag  value=\"".$campo."\" >\n";
@@ -1387,13 +1384,13 @@ Function PrepararFormato() {
    	   							case "OC":   //OPERATOR WHO CREATED THE RECORD
    	   								if (!isset($default_values) or $default_values!="S"){    //CHECK IF EDITING DEFAULT VALUES
 	      								$campo=$valortag[$tag];
-      									echo "\n<td width=130>";
+      									echo "\n<td class='table-fdt-three'>";
       									echo trim($titulo)."</td>\n";
-      									echo "\n<td align=left>\n";
+      									echo "\n<td align=left class='table-fdt-four input-fdt'>\n";
       									if (!$ver) {
       										if (trim($campo)=="")
       											if ($arrHttp["Mfn"]=='New')$campo=$_SESSION["login"];
-       										echo "<input type=text name=tag$tag id=tag$tag value=\"".$campo."\" size=20 onfocus=blur()>\n";
+       										echo "<input tabindex='0' type=text name=tag$tag id=tag$tag value=\"".$campo."\" size=20 onfocus=blur()>\n";
        									}
        									echo "</td><tr>\n";
        								}
@@ -1401,13 +1398,13 @@ Function PrepararFormato() {
    	   							case "DC":  //DATE THE RECORD WAS CREATED
    	   								if (!isset($default_values) or $default_values!="S"){    //CHECK IF EDITING DEFAULT VALUES
 	      								$campo=$valortag[$tag];
-      									echo "\n<td width=130>";
+      									echo "\n<td class='table-fdt-three'>";
       									echo trim($titulo)."</td>\n";
-      									echo "\n<td align=left>\n";
+      									echo "\n<td align=left class='table-fdt-four input-fdt'>\n";
       									if (!$ver) {
       										if ($campo=="")
       											if ($arrHttp["Mfn"]=='New')$campo=date("Ymd h:i:s");
-       										echo "<input type=text name=tag$tag id=tag$tag  value=\"".$campo."\" size=20 onfocus=blur()>\n";
+       										echo "<input tabindex='0' type=text name=tag$tag id=tag$tag  value=\"".$campo."\" size=20 onfocus=blur()>\n";
        									}
        									echo "</td><tr>\n";
        								}
@@ -1416,10 +1413,10 @@ Function PrepararFormato() {
 		        					if ($arrHttp["Opcion"]!="valdef"){    //CHECK IF EDITING DEFAULT VALUES
 	      								$campo=$valortag[$tag];
 	      								$campo_out="";
-      									echo "\n<td width=130>";
+      									echo "\n<td class='table-fdt-three'>";
       									if (trim($t[5])=="") $t[5]="do";
       									echo trim($titulo)."</td>\n";
-      									echo "\n<td align=left>\n";
+      									echo "\n<td align=left class=' class='table-fdt-four' input-fdt'>\n";
       									//KEEP ONLY THE NUMBER OF OCCURRENCES SPECIFIED IN THE COLUMN ROW OF THE FDT
       									$ix=0;
       									$ccc=explode("\n",$campo);
@@ -1445,7 +1442,7 @@ Function PrepararFormato() {
 	      									}
        										echo "<input type=hidden name=tag$tag id=tag$tag value=\"".$campo."\" >\n";
        									}
-       									echo "<table bgcolor=#eeeeee>";
+       									echo "<table>";
        									echo "<tr><td width=150>".$msgstr["it_d"]."</td><td>".$msgstr["dboper"]."</td></tr>";
        									$campo_out=explode("\n",$campo);
        									foreach ($campo_out as $var=>$value){
@@ -1471,7 +1468,7 @@ Function PrepararFormato() {
 
                                     $ksc=0;
                                     $ldr_tit=array();
-                                    echo "<td>$titulo</td><td><table cellpadding=0 cellspacing=5  bgcolor=#EEEEEE>";
+                                    echo "<td>$titulo</td><td><table class='table-fdt' cellpadding=0 cellspacing=0>";
                                     for ($ixsc=1;$ixsc<=100;$ixsc++){
 
         								$ivars=$ivars+1;
@@ -1549,7 +1546,7 @@ Function PrepararFormato() {
     	   							break;
 								case "A":        //HTMLarea
 									echo "<td colspan=2>";
-									echo "<strong>$titulo</strong>";
+									echo "<b>$titulo</b>";
 									if (!$ver) {
 										DibujarHtmlArea($tag,$vars[$ivars],$t[8],$tipo_e);
 										$a=str_replace("'","\"",$valortag[$tag]);
@@ -1561,7 +1558,7 @@ Function PrepararFormato() {
 									break;
 	      						case "D":
 									$campo=$valortag[$tag];
-        							echo "\n<td class=\"rotuloIng\">";
+        							echo "\n<td class=\"table-fdt-three\">";
        								echo trim($titulo)."</td>\n";
        								echo "\n<td>\n";
        								if (!$ver) {
@@ -1582,13 +1579,12 @@ Function PrepararFormato() {
        									}
 
        									//calendar attaches to existing form element
-       									echo "<input type=text name=tag$tag id=tag$tag"."_c Xreadonly=\"1\"  value=\"$campo\" ";
+       									echo "<input tabindex='0' type=text name=tag$tag id=tag$tag"."_c Xreadonly=\"1\"  value=\"$campo\" ";
 												
 												if ($iso_tag!="") echo " onChange='Javascript:DateToIso(this.value,document.forma1.$iso_tag)'";
 												
 												echo "/>
-												<a class=\"bt-fdt\" href=\"#\">
-												<i class=\"far fa-calendar-alt\"  id=\"f_tag$tag\" title=\"Date selector\"></i></a>
+												<a class=\"bt-fdt\" href=\"#\"><i class=\"far fa-calendar-alt\"  id=\"f_tag$tag\" title=\"Date selector\"></i></a>
 
 
 												 <script type=\"text/javascript\">
@@ -1614,7 +1610,7 @@ Function PrepararFormato() {
     	   							break;
     	   						case "ISO":
     	   							$campo=$valortag[$tag];
-        							echo "\n<td class=\"rotuloIng\">";
+        							echo "\n<td class=\"table-fdt-three\">";
 
        								echo trim($titulo)."</td>\n";
 
@@ -1626,9 +1622,8 @@ Function PrepararFormato() {
        								echo "\n<td>\n";
        								if (!$ver) {
        									//calendar attaches to existing form element
-                                        echo "<input type=text name=tag$tag id=tag$tag"."_c Xreadonly=\"1\"  value=\"$campo\"
-												 onChange='Javascript:DateToIso(this.value,document.forma1.tag$tag)'";
-												echo "/><a class=\"bt-fdt\" href=\"#\"><i class=\"far fa-calendar-alt\" id=\"f_tag$tag\" title=\"Date selector\"
+                                        echo "<input tabindex='0' type=text name=tag$tag id=tag$tag"."_c Xreadonly=\"1\"  value=\"$campo\"
+												 onChange='Javascript:DateToIso(this.value,document.forma1.tag$tag)'/> <a class=\"bt-fdt\" href=\"#\"><i class=\"far fa-calendar-alt\" id=\"f_tag$tag\" title=\"Date selector\"
 					     						  /></i></a>
 												 <script type=\"text/javascript\">
 											    Calendar.setup({
@@ -1725,7 +1720,7 @@ Function PrepararFormato() {
 	       							$filas=Array();
 	       							$field_t=$vars[$ivars];
 	       							if ($nsc==0){
-                                        echo "\n<td class=\"rotuloIng\">$titulo</td>\n";
+                                        echo "\n<td class=\"table-fdt-three\">$titulo</td>\n";
                                         DibujarTextRepetible($tag,$fondocelda,$field_t);
 	       							}else{
 	    	   							for ($ixsc=1;$ixsc<=$nsc;$ixsc++){
@@ -1739,7 +1734,7 @@ Function PrepararFormato() {
     	   							break;
       							case "R":   //Radio button
       								$tope=$t[9];
-       								echo "\n<td class=\"rotuloIng\">$titulo</td>\n";
+       								echo "\n<td class=\"table-fdt-three\">$titulo</td>\n";
        								$opciones=trim($t[11]);
 									$lt=array();
 									$lin="";
@@ -1748,7 +1743,7 @@ Function PrepararFormato() {
        								break;
       							case "C":  //check box
 									$tope=$t[9];
-       								echo "\n<td class=\"rotuloIng\">$titulo</td>\n";
+       								echo "\n<td class=\"table-fdt-three\">$titulo</td>\n";
     	    						$opciones=trim($t[11]);
     	    						$lt=array();
     	   							DibujarCheck($linea,$fondocelda,$valortag[$tag],$tag,$opciones,$tope,$tipo_e,$t[5]);
@@ -1762,20 +1757,20 @@ Function PrepararFormato() {
        									TextBox($vars[$ivars],$fondocelda,$titulo,$ver,$len,$tag,$ksc,$rep,$delrep,$ayuda);
        									break;
        								}
-       								echo "\n<td class=\"rotuloIng\">$titulo</td>\n";
+       								echo "\n<td class=\"table-fdt-three\">$titulo</td>\n";
     		    					$opciones=trim($t[11]);
     	   							DibujarSelect($linea,$fondocelda,$valortag[$tag],$tag,$ksc,$opciones,$rep,$t[5]);
     	   							break;
     	   						case "RP":
     	   							$tope=1;
     	   							$filas=array();
-    	   							echo "\n<td class=\"rotuloIng\">$titulo</td>\n";
+    	   							echo "\n<td class=\"table-fdt-three\">$titulo</td>\n";
     	   							$opciones=1;
     	   							DibujarCheck($filas,$fondocelda,$valortag[$tag],$tag,$opciones,$tope,$tipo_e,$t[5]);
     	   							break;
     	   						case "COMBO":
     	   						case "COMBORO":
-    	   							echo "\n<td class=\"rotuloIng\">$titulo</td>\n";
+    	   							echo "\n<td class=\"table-fdt-three\">$titulo</td>\n";
     	   							$width=$t[9];
     	   							if ($width==0) $width=50;
     	   							$width=$width*5.5;
@@ -1821,9 +1816,9 @@ Function PrepararFormato() {
         	echo "Cargar texto";
         }
        if (isset($titulo_ant) and $titulo_ant!="*" and $numero_secciones>1){
-			echo "\n<a href=\"javascript:switchMenu('myvar_$ixant');\" style=\"text-decoration:none \">";
+			echo "\n<a  tabindex='-1' href=\"javascript:switchMenu('myvar_$ixant');\" style=\"text-decoration:none \">";
 			if (substr($titulo_ant,0,1)!="<"){
-				echo "<i class=\"far fa-minus-square\" style=\"vertical-align:middle\"></i> &nbsp;<strong>".$msgstr["cerrar"]."</strong></a> $titulo_ant";
+				echo "<i class=\"far fa-minus-square\" style=\"vertical-align:middle\"></i> &nbsp;<b>".$msgstr["cerrar"]."</b> $titulo_ant</a> ";
 			}else{
 				echo $msgstr["cerrar"];
 			}
@@ -1862,3 +1857,4 @@ Function PrepararFormato() {
 
 
 ?>
+

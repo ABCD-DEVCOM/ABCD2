@@ -39,17 +39,7 @@
   --bs-body-color: #212529;
 }
 
-.formContent > * >.formContent {
-	border: none;
-	border-width: 0;
-	box-shadow: none;
-	background: var(--white);
-}
-
-.middle.form > * > .middle.form{
-	background: var(--white);
-}
-/* #general styles */
+/* GENERAL STYLES */
 
 html {
   font-family: sans-serif;
@@ -62,9 +52,8 @@ body {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
-    -webkit-text-size-adjust: 100%;
-    color: var(--bs-body-color);
-/*	background: var(--blue-abcd);*/
+  -webkit-text-size-adjust: 100%;
+  color: var(--bs-body-color);
 }
 
 input,
@@ -99,68 +88,17 @@ LABEL {
 	cursor: pointer;
 }
 
-.row {
-    --bs-gutter-x: 1.5rem;
-    display: flex;
-    flex-wrap: nowrap;
-  	margin-top: 20px;
-  	margin-bottom: 20px;
-    align-content: center;
-}
-.row > * {
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 100%;
-  margin-top: 20px;
+.formContent > * >.formContent {
+	border: none;
+	border-width: 0;
+	box-shadow: none;
+	background: var(--white);
 }
 
-/* #master classes */
-
-/* ABCD ADDED*/
-
-
-/*   */
-
-/* #defaultButton classes */
-A.defaultButton {
-	text-decoration: none;
-	color: #fff;
+.middle.form > * > .middle.form{
+	background: var(--white);
 }
 
-A.defaultButton:hover IMG {
-	background-color: #4E617C;
-}
-
-
-A.defaultButton SPAN {
-	cursor: pointer;
-
-}
-
-A.defaultButton STRONG {
-
-}
-
-/* #menuButton classes */
-A.menuButton {
-	text-decoration: none;
-	color: #fff;
-}
-
-A.menuButton:hover IMG {
-	background-color: #4E617C;
-}
-
-
-A.menuButton SPAN {
-	cursor: pointer;
-}
-
-A.menuButton STRONG {
-	color: var(--gray-dark);
-	font-weight: 600;
-	letter-spacing: 0.02rem;
-}
 
 select.textEntry, INPUT.textEntry, TEXTAREA, input[type=text],input[type=button], select {
 	border: 1px solid #a7a6aa;
@@ -214,6 +152,70 @@ SELECT.singleTextEntry {
 	margin: 2px;
 }
 
+
+
+.row {
+    --bs-gutter-x: 1.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+  	margin-top: 20px;
+  	margin-bottom: 20px;
+    align-content: center;
+}
+.row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 20px;
+}
+
+
+
+
+/* ABCD CLASSIC */
+
+/* #defaultButton classes */
+A.defaultButton {
+	text-decoration: none;
+	color: #fff;
+}
+
+A.defaultButton:hover IMG {
+	background-color: #4E617C;
+}
+
+
+A.defaultButton SPAN {
+	cursor: pointer;
+
+}
+
+A.defaultButton STRONG {
+
+}
+
+/* #menuButton classes */
+A.menuButton {
+	text-decoration: none;
+	color: #fff;
+}
+
+A.menuButton:hover IMG {
+	background-color: #4E617C;
+}
+
+
+A.menuButton SPAN {
+	cursor: pointer;
+}
+
+A.menuButton STRONG {
+	color: var(--gray-dark);
+	font-weight: 600;
+	letter-spacing: 0.02rem;
+}
+
+
 .inputAlert {
 	background: #f3eeb5 url('../images/icon/singleButton_alert.gif') no-repeat center right !important;
 }
@@ -223,8 +225,9 @@ SELECT.singleTextEntry {
 	color: var(--gray);
 
 }
+
 .helper:before {
-		font-weight: 600;
+	font-weight: 600;
 	font-family: "Font Awesome 5 Free";
 	content: "\f05a";
 	color: var(--gray);
@@ -291,14 +294,14 @@ A.singleButton .sb_rb {
 
 .institutionalInfo H2 {
 	font-weight: normal;
-
-	color: #c3d7f4;
+	color: var(--white);
 }
 
 .userInfo, .userInfo A, .language, .language A {
 	font-size: 0.7rem;
-	color: #fff;
+	color: var(--white);
 }
+
 .language select {
 	font-size: 0.6rem;
 	border-style: solid;
@@ -327,7 +330,7 @@ A.singleButton .sb_rb {
 }
 
 .breadcrumb H3 {
-	color: #fff;
+	color: var(--white);
 }
 
 .breadcrumb, .breadcrumb A {
@@ -339,7 +342,7 @@ A.singleButton .sb_rb {
 }
 
 .actions, .actions A {
-	color: #fff;
+	color: var(--white);
 	text-decoration: none;
 }
 /*#END #sectionInfo classes */
@@ -705,10 +708,7 @@ A.homeButton IMG{
 /*#END #buttons background classes */
 
 /*#list classes */
-.list {
-
-}
-
+/*
 .searchBox {
 	background: #f2f2f2;
 }
@@ -728,6 +728,7 @@ A.homeButton IMG{
 	background: url('../images/searchBox_submitadvanced_bg.gif')  top left;
 	color: #848484;
 }
+*/
 
 
 .statTable {
@@ -744,6 +745,7 @@ A.homeButton IMG{
 	border:1px solid #9d9d9d;
 }
 
+/* Table Browser */
 
 .listTable {
 	border-collapse: collapse;
@@ -751,7 +753,6 @@ A.homeButton IMG{
 	margin: 25px 0;
 	background: var(--white);
 }
-
 
 .listTable th {
 	background: var(--white);
@@ -773,7 +774,6 @@ A.homeButton IMG{
 .listTable TH.action {
 	cursor: default;
 }
-
 
 .listTable TD {
 	border-bottom: 1px solid #e7e7e7;
@@ -804,28 +804,243 @@ A.homeButton IMG{
 	background: #d36666;
 }
 
-/*
-.listTable .rowOver .tButton {
+.tMacroActions .checkboxAction {
+	background: url('../images/checkboxAction_bg.gif') no-repeat top left;
+}
+/*#END #listTable classes */
+
+/* TABLE IN DIBUJARHOJADEENTRADA */
+
+.table-fdt {
+	border-collapse: collapse;
+	border-spacing: 0px;
+	background: var(--white);
+}
+
+.table-fdt th {
+	background: var(--white);
+	color: #000;
+	cursor: pointer;
+	padding: 8px;
+	font-weight: bold;
+}
+
+.table-fdt.browse tr:first-child {
+	border-bottom: 2px solid var(--gray-light);
+}
+
+.table-fdt.browse tr:last-child {
+	border-top: 2px solid var(--gray-light);
+}	
+
+.table-fdt TH.checkboxes,
+.table-fdt TH.action {
+	cursor: default;
+}
+
+.table-fdt td, .table-fdt tbody tr td {
+	border-bottom: 1px solid var(--gray-light);
+	padding: 4px 6px;
+/*	background: var(--white);*/
+  display: table-cell;
+  vertical-align: middle;
+
+}
+
+
+.table-fdt > tbody > tr > td > input[type=text], 
+.table-fdt > tbody > tr > td > input[type=password], 
+.table-fdt > tbody > tr > td > input[type=radio], 
+.table-fdt > tbody > tr > td > textarea, 
+.table-fdt > tbody > tr > td > select {
+	margin: 2% 10px;
+	font-size: 13px;
+	color: var(--blue);
+	line-height: 12px;
+	padding: 8px;
+	box-shadow: none;
+	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--light);
+  -moz-box-shadow: inset 1px 1px 3px 0.1px var(--light);
+  box-shadow: inset 1px 1px 3px 0.1px var(--light);
+
+}
+
+td.input-fdt {
+	align-content: center;
+	vertical-align: middle;
+	margin: auto;
+}
+
+.table-fdt .tButton {
+	background: #bdced3;
+	color: #000;
+	text-decoration: none;
+}
+
+.table-fdt .tErase {
+	background: #dfbfbf;
+}
+
+.table-fdt .rowOver .tButton:hover {
 	background: #88a6d3;
 	color: #fff;
 }
 
-.listTable .rowOver .tErase {
+.table-fdt .rowOver .tErase:hover {
 	background: #d36666;
 }
-*/
 
 
-.tMacroActions .checkboxAction {
-	background: url('../images/checkboxAction_bg.gif') no-repeat top left;
+/* TAG */
+td.table-fdt-one {
+	width: 50px;
 }
-/*#END #list classes */
+
+
+/* BUTTONS */
+.table-fdt-two {
+	width: 130px;
+}
+
+/* NAME OF FIELD */
+.table-fdt-three {
+	width: 150px;
+	font-size: 12px;
+}
+
+/* INPUT FORM */
+.table-fdt-four {
+	width: 600px;
+}
+
+
+[class^="bt-fdt"] {
+	height: 10px;
+	padding: 8px;
+	display: inline;
+	vertical-align: middle;
+}
+
+
+.bt-fdt{
+	text-decoration: none;
+	background-color: var(--white);
+	border: 1px solid var(--blue);
+	border-radius: 3px;
+	color: var(--blue);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: center;
+	touch-action: manipulation;
+	vertical-align: middle;
+	margin: 2px;
+	width: 10px;
+
+}
+
+.bt-fdt-help{
+	text-decoration: none;
+	background-color: var(--white);
+	border: 1px solid var(--cyan);
+	border-radius: 3px;
+	color: var(--cyan);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: center;
+	touch-action: manipulation;
+	vertical-align: middle;
+
+}
+
+
+.bt-fdt-question {
+	text-decoration: none;
+	text-align: center;
+	background-color: var(--white);
+	border: 1px solid var(--cyan);
+	border-radius: 3px;
+	color: var(--cyan);
+	cursor: pointer;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.bt-fdt i, .bt-fdt-question i {
+		width: 16px;
+}
+
+
+.bt-fdt-blue {
+	text-decoration: none;
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+	border-radius: 3px;
+	color: var(--white);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 2px;
+}
+
+.bt-fdt-green {
+	text-decoration: none;
+	background-color: var(--success);
+	border: 1px solid var(--success);
+	border-radius: 3px;
+	color: var(--white);
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 2px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--black);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+
+#wrapper {
+	text-align:left;
+	margin:0 auto;
+	width:100%;
+	min-height:10px;
+	border:1px solid var(--gray-light);
+	padding: 8px;
+}
+
+#wrapper a.header-fdt {
+	font-size: 13px;
+	cursor: pointer;
+}
+
+
+
+
+#myvar {
+	border:1px solid #ccc;
+	padding:2px;
+}
+
+
+
+
+/* END TABLE IN DIBUJARHOJADEENTRADA */
+
+
+
 
 /*#form classes */
-.form {
-
-}
-
 
 .formHead {
 	background: #d8dade;
@@ -1188,87 +1403,7 @@ a.bt-sign {
 	text-align: center;
 }
 
-.bt-fdt i {
-	width: 16px;
-	height: 16px;
-}
 
-.bt-fdt{
-	text-decoration: none;
-	background-color: var(--white);
-	border: 1px solid var(--blue);
-	border-radius: 3px;
-/*box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;*/
-	color: var(--blue);
-	cursor: pointer;
-	font-size: 12px;
-	font-weight: normal;
-	padding: 5px;
-	text-align: center;
-	touch-action: manipulation;
-	vertical-align: middle;
-	margin: 2px;
-}
-
-
-
-.bt-fdt-blue {
-	text-decoration: none;
-	background-color: var(--blue);
-	border: 1px solid var(--blue);
-	border-radius: 3px;
-/*box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;*/
-	color: var(--white);
-	cursor: pointer;
-	font-size: 12px;
-	font-weight: normal;
-	padding: 5px;
-	text-align: center;
-	touch-action: manipulation;
-	vertical-align: middle;
-	margin: 2px;
-}
-
-
-.badge {
-  display: inline-block;
-  padding: 0.35em 0.65em;
-  font-size: 0.75em;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--black);
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25rem;
-}
-
-
-#wrapper {
-	text-align:left;
-	margin:10px auto;
-	width:100%;
-	xmin-height:10px;
-	xborder:1px solid #ccc;
-	padding:0px;
-}
-
-#wrapper a {
-	font-size: 13px;
-}
-
-
-#myvar {
-	border:1px solid #ccc;
-	background:#ffffff;
-	padding:2px;
-}
-
-td.rotuloIng {
-	vertical-align: middle;
-	width: 130px;
-	font-size: 12px;
-}
 
 .group-fields {
 	background-color: var(--white);
