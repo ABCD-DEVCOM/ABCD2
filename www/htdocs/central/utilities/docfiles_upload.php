@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210807 fho4abcd Created from upload_myfile.php
+20210914 fho4abcd Improved error message display&handling in case of upload errors
 */
 /*
 ** Upload a file from the users environment into the digital document area of ABCD
@@ -42,6 +43,7 @@ $upldoc_cnfcnt=0;
 if ( isset($arrHttp["backtoscript"]))  $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["upldoc_cnfcnt"])) $upldoc_cnfcnt=$arrHttp["upldoc_cnfcnt"];
+if ( !isset($arrHttp["base"])) $arrHttp["base"]=""; // In case of upload errors destroying this option
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 ?>
 <body>
@@ -71,21 +73,11 @@ function DocfilesImport(){
 </script>
 <?php
 // If outside a frame: show institutional info
-if ($inframe!=1) include "../common/institutional_info.php";
+if ($inframe!=1 or $arrHttp["base"]=="") include "../common/institutional_info.php";
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php   echo $msgstr["mantenimiento"].": ".$msgstr["dd_upload"];
-        if ($contents_error!="") {
-            echo "<br><b style='color:red'>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"];
-            echo "<br>May be a configuration error for file uploads. ";
-            echo "Check log files and php.ini ";
-            echo "<br>-- Exceeded 'post_max_size' (= ".ini_get('post_max_size')." ) ?";
-            echo "<br>-- Exceeded 'upload_max_filesize' (= ".ini_get('upload_max_filesize')." ) ?";
-            echo "<br>-- Exceeded 'max_file_uploads' (= ".ini_get('max_file_uploads')." ) ?";
-            die;
-        }
-?>
+    <?php echo $msgstr["mantenimiento"].": ".$msgstr["dd_upload"];?>
 	</div>
 	<div class="actions">
 <?php
@@ -103,11 +95,24 @@ include "../common/inc_div-helper.php";
 <div class="formContent">
     <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
           style="visibility:hidden;position:absolute;top:30%;left:45%;border:2px solid;"/>
+    <?php
+    if ($contents_error!="") {
+        echo "<br><b style='color:red'>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"];
+        echo "<br>".$msgstr["upload_conf_errmsg"];
+        echo "<br>-- ".$msgstr["upload_exceed"]." 'post_max_size' (= ".ini_get('post_max_size').") ?";
+        echo "<br>-- ".$msgstr["upload_exceed"]." 'upload_max_filesize' (= ".ini_get('upload_max_filesize').") ?";
+        echo "<br>-- ".$msgstr["upload_exceed"]." 'max_file_uploads' (= ".ini_get('max_file_uploads').") ?";
+        echo "<br><br><b style='color:red'>".$msgstr["upload_logout"]."</b>";
+        echo "</div></div>";
+        die;
+    }
+    ?>
     <div align=center><h3><?php echo $msgstr["dd_upload"] ?></h3>
 
 <?php
 // Set collection related parameters and create folders if not present
 include "../utilities/inc_coll_chk_init.php";
+
 
 /* ----- First screen: Select the doc file -*/
 if ($upldoc_cnfcnt<=0) {
