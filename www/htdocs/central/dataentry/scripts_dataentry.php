@@ -1,4 +1,8 @@
-<?php if (!isset($_SESSION["permiso"])){
+<?php
+/*
+20210914 fho4abcd modified size of popup window for upload
+*/
+if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 ?>
@@ -571,7 +575,7 @@ function CapturarRegistro(){
 	function EnviarArchivo(Tag){
 		document.enviararchivo.Tag.value=Tag
 		document.enviararchivo.storein.value=top.img_dir
-		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
+		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=300,top=100,left=5");
 		msgwin.focus()  ;
 		document.enviararchivo.submit()
 	}
