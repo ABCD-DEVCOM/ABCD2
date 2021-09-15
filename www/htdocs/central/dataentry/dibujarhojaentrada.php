@@ -299,7 +299,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  	echo " $celda valign=top>";
 
 	echo "<td colspan=$cant_cols bgcolor=white><strong>".$t[2]."</strong></td><tr>";
- 	$indice_alfa="";  // para desplegar el Ã­ndice alfabÃ©tico del campo
+ 	$indice_alfa="";  // para desplegar el índice alfabético del campo
   //  echo "<td bgcolor=#eeeeee></td>";
 
  	foreach($filas as $lin){
@@ -708,7 +708,7 @@ if (!$ver){
 			}
 			$i=$ix+1;
             if (strpos($opcVal,"<")===true){
-            	$opcVal=str_replace('"','Â´',$opcVal);
+            	$opcVal=str_replace('"','´',$opcVal);
             }
       		if ($tipo=="R") echo "<input type=radio name=tag$tag id=tag$tag value='".$opcVal."'";
       		if ($tipo=="C" or $tipo=="RP") echo "<input type=checkbox name=tag$tag id=tag$tag value=\"".$opcVal."\"";
@@ -1070,7 +1070,7 @@ Function PrepararFormato() {
 		include("../tesaurus/leer_relaciones.php");
 		$tesaurus="Y";
 	}
-    //Se lee el archivo typeofrecords.tab para determinar los campos donde estÃ¡ el tipo de literatura el nivel de registro para la asignaciÃ³n del campo 08
+    //Se lee el archivo typeofrecords.tab para determinar los campos donde está el tipo de literatura el nivel de registro para la asignación del campo 08
     	$tag_tipol="";
     	$tag_nivelr="";
     	if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
@@ -1080,7 +1080,7 @@ Function PrepararFormato() {
     		if (isset($tor[0])) $tag_tipol=$tor[0];
     		if (isset($tor[1])) $tag_nivelr=$tor[1];
     	}
-//SE LEE EL ARCHIVO DE AYUDAS EN LÃNEA
+//SE LEE EL ARCHIVO DE AYUDAS EN LÍNEA
 	if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab")){
 
 		$hlp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab");
@@ -1433,12 +1433,11 @@ Function PrepararFormato() {
       									echo trim($titulo)."</td>\n";
       									echo "\n<td valign=top align=left>\n";
       									//KEEP ONLY THE NUMBER OF OCCURRENCES SPECIFIED IN THE COLUMN ROW OF THE FDT
-      									$ix=0;
       									$ccc=explode("\n",$campo);
       									if ($t[8]==0) $t[8]=10;
       									if (count($ccc)>=$t[8]){
       										$campo="";
-      										$ix=(int)(count($ccc))-(int)$t[8]+1;
+      										$ix=count($ccc)-$t[8]+1;
       										for ($yx=$ix;$yx<count($ccc);$yx++){
       											if ($campo=="")
       												$campo=$ccc[$yx];
@@ -1488,7 +1487,7 @@ Function PrepararFormato() {
 
         								$ivars=$ivars+1;
         								$linea=$vars[$ivars];
-        								if (substr($linea,0,1)!="S"){    //para detectar el fin de la descripciÃ³n del leader
+        								if (substr($linea,0,1)!="S"){    //para detectar el fin de la descripción del leader
         									$ivars=$ivars-1;
         									$ixsc=999;
         								}else{
@@ -1761,7 +1760,7 @@ Function PrepararFormato() {
     	    						$lt=array();
     	   							DibujarCheck($linea,$fondocelda,$valortag[$tag],$tag,$opciones,$tope,$tipo_e,$t[5]);
        								break;
-      							case "S":    //select simple o mÃºltiple
+      							case "S":    //select simple o múltiple
       							case "SRO":
       							case "M":
       							case "MRO":
