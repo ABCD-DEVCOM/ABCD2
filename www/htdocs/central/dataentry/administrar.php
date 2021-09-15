@@ -131,11 +131,8 @@ echo "	</div>
           isset($_SESSION["permiso"][$db."_CENTRAL_IMPORT"]) or
           isset($_SESSION["permiso"][$db."_CENTRAL_IMPORT"])){
 ?>
-		<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-			<div class="boxTop">
-				<div class="btLeft">&#160;</div>
-				<div class="btRight">&#160;</div>
-			</div>
+		<div class="mainBox" >
+
 			<div class="boxContent titleSection">
 				<div class="sectionTitle">
 					<h4><strong><?php echo $msgstr["cnv_import"]?></strong></h4>
@@ -152,10 +149,6 @@ echo "	</div>
 				</div>
 				<div class="spacer">&#160;</div>
 			</div>
-			<div class="boxBottom">
-				<div class="bbLeft">&#160;</div>
-				<div class="bbRight">&#160;</div>
-			</div>
 		</div>
 <?php }
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
@@ -167,14 +160,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_IMPEXP"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_EXPORT"])){
 ?>
-		<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-			<div class="boxTop">
-				<div class="btLeft">&#160;</div>
-				<div class="btRight">&#160;</div>
-			</div>
+		<div class="mainBox" >
+
 			<div class="boxContent toolSection">
 				<div class="sectionTitle">
-					<h4>&#160;<strong><?php echo $msgstr["cnv_export"]?></strong></h4>
+					<h4><strong><?php echo $msgstr["cnv_export"]?></strong></h4>
 				</div>
 				<div class="sectionButtons">
 					<a href='javascript:Activar("expiso")'><?php echo $msgstr["cnv_iso"]?></a>
@@ -185,10 +175,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
        				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exporttxt.html' target=_blank>edit help file</a>"?>
 				</div>
 				<div class="spacer">&#160;</div>
-			</div>
-			<div class="boxBottom">
-				<div class="bbLeft">&#160;</div>
-				<div class="bbRight">&#160;</div>
 			</div>
 		</div>
 <?php }
@@ -210,14 +196,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_GLOBC"])
     ){
 ?>
-		<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-			<div class="boxTop">
-				<div class="btLeft">&#160;</div>
-				<div class="btRight">&#160;</div>
-			</div>
+		<div class="mainBox" >
+
 			<div class="boxContent toolSection">
 				<div class="sectionTitle">
-					<h4>&#160;<strong><?php echo $msgstr["mantenimiento"]?></strong></h4>
+					<h4><strong><?php echo $msgstr["mantenimiento"]?></strong></h4>
 				</div>
 				<div class="sectionButtons">
 <?php
@@ -274,10 +257,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_GLOBC"]) or
        				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/mantenimiento.html' target=_blank>edit help file</a>"?>
 				</div>
 				<div class="spacer">&#160;</div>
-			</div>
-			<div class="boxBottom">
-				<div class="bbLeft">&#160;</div>
-				<div class="bbRight">&#160;</div>
 			</div>
 		</div>
 <?php }?>

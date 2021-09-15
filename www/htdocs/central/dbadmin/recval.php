@@ -26,7 +26,7 @@ switch ($arrHttp["format"]){
 		break;
 }
 
-foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 
 ?>
