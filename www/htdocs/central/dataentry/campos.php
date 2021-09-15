@@ -34,11 +34,14 @@ echo "is_marc='".$arrHttp["is_marc"]."'\n";
 echo "PickList=new Array()\n";
 echo "NamePickList=new Array()\n";
 echo "SubCampos=new Array()\n";
-foreach ($fp as $linea){	$linea=trim($linea);
-	//echo $linea."<br>";	if (trim($linea)!=""){
+foreach ($fp as $linea){
+	$linea=trim($linea);
+	//echo $linea."<br>";
+	if (trim($linea)!=""){
 		$l=explode('|',$linea);
 		$ix=$ix+1;
-		if ($l[0]=="S") {			$ind_sc=$ix;
+		if ($l[0]=="S") {
+			$ind_sc=$ix;
 	        $Ind="";
 	        if ($ind_sc<2 and $arrHttp["is_marc"]=="S"){
 	           	if (substr($subc,$ind_sc,1)==1 or substr($subc,$ind_sc,1)==2)
@@ -47,10 +50,16 @@ foreach ($fp as $linea){	$linea=trim($linea);
 	        $key=$Ind.substr($subc,$ind_sc,1);
 			if (trim($l[11])!=""){
 				echo "NamePickList['".$key."']='".$l[11]."'\n";
-				PickList($key,$l[11]);			}else{
+				PickList($key,$l[11]);
+			}else{
 				$l=$ix-1;
-				echo "PickList['".$key."']=''\n";			}
-			echo "SubCampos['$key']='$key'\n";		}else{		}	}}
+				echo "PickList['".$key."']=''\n";
+			}
+			echo "SubCampos['$key']='$key'\n";
+		}else{
+		}
+	}
+}
 echo "mod_picklist=\"".$msgstr["mod_picklist"]."\"\n";
 echo "reload_picklist=\"".$msgstr["reload_picklist"]."\"\n";
 ?>
@@ -126,25 +135,52 @@ function EnviarArchivo(Tag,subc){
 echo "</script>\n";
 
 ?>
-<STYLE type=text/css>TABLE {	BACKGROUND-COLOR: #ffffff; FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt}BODY {	FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt}
-input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}text		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}</STYLE></head><script language="JavaScript" type="text/javascript" src=js/terminoseleccionado.js?<?php echo time(); ?>></SCRIPT><script language="JavaScript" type="text/javascript" src=js/lr_trim.js></SCRIPT><script language=javascript>
+
+<STYLE type=text/css>
+TABLE {
+	BACKGROUND-COLOR: #ffffff; FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt
+}
+BODY {
+	FONT-FAMILY: Verdana, Helvetica, Arial; FONT-SIZE: 8pt
+}
+
+input 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+select 		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+textarea	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+text		{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+checkbox	{BORDER-TOP-COLOR: #000000; BORDER-LEFT-COLOR: #000000; BORDER-RIGHT-COLOR: #000000; BORDER-BOTTOM-COLOR: #000000; BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; FONT-FAMILY: Arial,Helvetica; BORDER-RIGHT-WIDTH: 1px}
+</STYLE>
+</head>
+<script language="JavaScript" type="text/javascript" src=js/terminoseleccionado.js?<?php echo time(); ?>></SCRIPT>
+<script language="JavaScript" type="text/javascript" src=js/lr_trim.js></SCRIPT>
+<script language=javascript>
 	base=window.opener.top.base
 	url_indice=""
 	Ctrl_activo=""
-	function getElement(psID) {	if(!document.all) {
+	function getElement(psID) {
+	if(!document.all) {
 		return document.getElementById(psID);
 
 	} else {
 		return document.all[psID];
 	}
 }
-	function AbrirIndiceAlfabetico(xI,Prefijo,SubC,Separa,db,cipar,tag,Formato){		Ctrl_activo=getElement(xI)
+
+	function AbrirIndiceAlfabetico(xI,Prefijo,SubC,Separa,db,cipar,tag,Formato){
+		Ctrl_activo=getElement(xI)
 	    document.forma1.Indice.value=xI
-	    Separa="&delimitador="+Separa	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo	    ancho=200
-		url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+xI+Prefijo+"&indice="+xI+"&repetible=0"+"&Formato="+Formato+"&postings=10&sfe=s"  		msgwin=window.open(url_indice,"indice","width=600, height=520,resizable, scrollbar")
-  		msgwin.focus()    	return
-
-	}
+	    Separa="&delimitador="+Separa
+	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo
+	    ancho=200
+		url_indice="capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+xI+Prefijo+"&indice="+xI+"&repetible=0"+"&Formato="+Formato+"&postings=10&sfe=s"
+  		msgwin=window.open(url_indice,"indice","width=600, height=520,resizable, scrollbar")
+  		msgwin.focus()
+    	return
+
+
+
+	}
+
 function AbrirTesauro(Tag,base,prefijo){
 
 		Url="../tesaurus/index.php?base="+base+"&Tag="+Tag
@@ -152,19 +188,30 @@ function AbrirTesauro(Tag,base,prefijo){
 		msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)
 		msgwin.focus()
 	}
-
-	function AbrirIndice(ira){		url_indice=url_indice+ira	    ancho=screen.width-500-20		msgwin=window.open(url_indice,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=520,top=20,left="+ancho)		msgwin.focus()	}
+
+
+	function AbrirIndice(ira){
+		url_indice=url_indice+ira
+	    ancho=screen.width-500-20
+		msgwin=window.open(url_indice,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=520,top=20,left="+ancho)
+		msgwin.focus()
+	}
 
 	function Ayuda(tag,help){
 
-		if (help!=""){			url=help		}else{
+		if (help!=""){
+			url=help
+		}else{
 
 			url="../documentacion/ayuda_db.php?&base="+base+"&campo=tag_"+tag+".html"
 		}
 		msgwin=window.open(url,"Ayuda","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=400,top=100,left=100")
-		msgwin.focus()	}
+		msgwin.focus()
+	}
 
-</script><body>
+
+</script>
+<body>
 	<div class="helper">
 	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/assist_sc.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 	<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/assist_sc.html target=_blank>".$msgstr["edhlp"]."</a>";
@@ -190,38 +237,81 @@ function AbrirTesauro(Tag,base,prefijo){
    <input type=hidden name=valor>
    <input type=hidden name=desde value=dataentry>
 </form>
-<form name=forma1>
 
-<input type=hidden name=tagcampo><input type=hidden name=occur><input type=hidden name=ep><input type=hidden name=NoVar><input type=hidden name=Indice value=""><input type=hidden name=base><input type=hidden name=cipar>
+<form name=forma1>
+
+<input type=hidden name=tagcampo>
+<input type=hidden name=occur>
+<input type=hidden name=ep>
+<input type=hidden name=NoVar>
+<input type=hidden name=Indice value="">
+<input type=hidden name=base>
+<input type=hidden name=cipar>
 <input type=hidden name=Formato>
-<input type=hidden name=Repetible><input type=hidden name=Indice>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class=td2>    <tr>
-    	<td>			<script language="JavaScript" type="text/javascript" src=js/editarocurrencias.js?<?php echo time(); ?>></SCRIPT>
+<input type=hidden name=Repetible>
+<input type=hidden name=Indice>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class=td2>
+    <tr>
+    	<td>
+			<script language="JavaScript" type="text/javascript" src=js/editarocurrencias.js?<?php echo time(); ?>></SCRIPT>
 		</td>
 	<tr>
 		<td id="asubc">
-		</td>	<tr>		<td><br>		<!--	<font size=1>Use los símbolos <img src=../img/add.gif> y <img src=../img/delete.gif> para agregar o eliminar ocurrencias respectivamente.            Cuando agregue una ocurrencia, la misma se adicionará al menú de selección cuando haga clic sobre <img src=../img/aceptar.gif alt='Aceptar estos cambios' border=0 height=15>.			Al terminar la edición del campo, haga clic sobre <img src=../img/pasaraldocumento.gif alt='Pasar al registro' border=0 height=15> para actualizar el formulario de ingreso.			Si no desea pasar los cambios al formulario, haga clic sobre <img src=../img/cancelar.gif alt='cancelar la edición del campo' border=0 height=15>-->		</td></table><br><center><table width=200 bgcolor=#FFFFFF border=0 cellspacing=5>	<td align=center>		<a href=javascript:AceptarCambios()><img src=img/aceptar.gif  border=0><br><?php echo $msgstr["aceptar"]?></a>	</td>	<td align=center><a href=javascript:ActualizarForma()><img src=img/pasaraldocumento.gif  border=0><br><?php echo $msgstr["actualizar"]?></a>	</td>
+		</td>
+	<tr>
+		<td><br>
+		<!--	<font size=1>Use los símbolos <img src=../img/add.gif> y <img src=../img/delete.gif> para agregar o eliminar ocurrencias respectivamente.
+            Cuando agregue una ocurrencia, la misma se adicionará al menú de selección cuando haga clic sobre <img src=../img/aceptar.gif alt='Aceptar estos cambios' border=0 height=15>.
+			Al terminar la edición del campo, haga clic sobre <img src=../img/pasaraldocumento.gif alt='Pasar al registro' border=0 height=15> para actualizar el formulario de ingreso.
+			Si no desea pasar los cambios al formulario, haga clic sobre <img src=../img/cancelar.gif alt='cancelar la edición del campo' border=0 height=15>-->
+		</td>
+</table>
+<br><center>
+<table width=200 bgcolor=#FFFFFF border=0 cellspacing=5>
+	<td align=center>
+		<a href=javascript:AceptarCambios()><img src=img/aceptar.gif  border=0><br><?php echo $msgstr["aceptar"]?></a>
+	</td>
+	<td align=center><a href=javascript:ActualizarForma()><img src=img/pasaraldocumento.gif  border=0><br><?php echo $msgstr["actualizar"]?></a>
+	</td>
 	<td align=center>
 		<a href="javascript:self.close()"><img src=img/cancelar.gif  border=0><br><?php echo $msgstr["cancelar"]?></a>
-	</td></table><script language=javascript>
-  	if (Occ>0) {  		TerminoSeleccionado()
+	</td>
+</table>
+<script language=javascript>
+  	if (Occ>0) {
+  		TerminoSeleccionado()
   	}else{
-  		Redraw("")  	}</script></form>
+  		Redraw("")
+  	}
+</script>
+</form>
 </center>
 </div>
 </div>
-<?php include("../common/footer.php")?><p></body></html>
+</body></html>
+
 <?php
 // ===============================================
 function PickList($ix,$file){
 global $db_path,$lang_db,$arrHttp;
-	$Options="";	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$file;
+	$Options="";
+	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$file;
 	if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$file;
 	$fp=array();
-	if (file_exists($archivo)){		$fp=file($archivo);
+	if (file_exists($archivo)){
+		$fp=file($archivo);
 		$Options="";
-		foreach ($fp as $value) {			$value=rtrim($value);
-			if ($value!=""){				$Options.=$value.'$$$$';			}		}	}else{		$Options='$$$$';	}
-	echo "PickList['$ix']='".str_replace("'","&#39;",$Options)."'\n";}
+		foreach ($fp as $value) {
+			$value=rtrim($value);
+			if ($value!=""){
+				$Options.=$value.'$$$$';
+			}
+		}
+	}else{
+		$Options='$$$$';
+	}
+
+	echo "PickList['$ix']='".str_replace("'","&#39;",$Options)."'\n";
+}
 ?>
 
