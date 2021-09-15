@@ -276,10 +276,10 @@ function Validate(Opcion){
     var height = screen.availHeight
 	msgwin=window.open("","Fdt","width="+width+", height="+height+" resizable=yes, scrollbars=yes, menu=yes")
     msgwin.document.writeln("<html>")
-    msgwin.document.writeln("<style>BODY{font-family: 'Trebuchet MS', Arial, Verdana, Helvetica; font-size: 8pt;}")
+    msgwin.document.writeln("<style>BODY{font-size: 8pt;}")
     msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
     msgwin.document.writeln("</style>")
-	msgwin.document.writeln("<body><table bgcolor=#CCCCCC>")
+	msgwin.document.writeln("<body><table bgcolor=#F5F5F5>")
 	EncabezarFilas("row")
 	cols=mygrid.getColumnCount()
 	rows=mygrid.getRowsNum()
@@ -790,18 +790,19 @@ if (isset($arrHttp["encabezado"])){
 <?php
 if ((isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) and !isset($arrHttp["moodle"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fdt.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fdt.php";
+echo " Script: dbadmin/fdt.php";
 ?>
 </font>
 	</div>
 	<div class="middle form">
 		<div class="formContent">
-			<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
-
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
- &nbsp; &nbsp; <font color=darkred size=1><strong><?php echo $msgstr['double_click']?></strong></font>
-	<table  style="width:100%; height:200" id=tblToGrid class="dhtmlxGrid">
+			<a class="bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+			<a class="bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
+			<a class="bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span>
+	
+<div class="row">
+<table  style="width:100%; height:300px;" id=tblToGrid class="dhtmlxGrid">
 <?php
 echo "<tr>";
 $tope=0;
@@ -942,12 +943,13 @@ if (isset($fp)){
 ?>
 
 	</table>
-	<a href=javascript:Test()><?php echo $msgstr["test"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a href=javascript:List()><?php echo $msgstr["list"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a href=javascript:Validate()><?php echo $msgstr["validate"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
+</div>		
+	<a class="bt-blue" href=javascript:Test()><?php echo $msgstr["test"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
+	<a class="bt-blue" href=javascript:List()><?php echo $msgstr["list"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
+	<a class="bt-blue" href=javascript:Validate()><?php echo $msgstr["validate"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
 	<?php
 	if (!isset($arrHttp["moodle"]))
-		echo "<a href=javascript:Enviar()>". $msgstr["update"]."</a>";?>&nbsp; &nbsp; &nbsp; &nbsp;
+		echo "<a class='bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>&nbsp; &nbsp; &nbsp; &nbsp;
 
 <script>
 	var mygrid = new dhtmlXGridFromTable('tblToGrid');

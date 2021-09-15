@@ -240,7 +240,7 @@ A.menuButton {
 		float: right;
 		width: 50%;
 		text-align: right;
-		white-space: nowrap;
+	/*	white-space: nowrap;*/
 		padding: 8px 0px 0px 0px;
 		vertical-align: middle;
 	}
