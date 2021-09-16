@@ -609,7 +609,7 @@ function CapturarRegistro(){
 	function EnviarArchivo(Tag){
 		document.enviararchivo.Tag.value=Tag
 		document.enviararchivo.storein.value=top.img_dir
-		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=300,top=100,left=5");
+		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=750,top=300,left=5");
 		msgwin.focus()  ;
 		document.enviararchivo.submit()
 	}
@@ -1111,7 +1111,9 @@ function CheckInventory(tag,prefix){
 <span id="toolTipBox" width="200"></span>
 <?php
 if (isset($arrHttp["encabezado"])){
-// Si se está creando un registro desde el script browse.php
+
+//IF A RECORD IS BEING CREATED FROM THE BROWSE.PHP SCRIPT	
+	
 	if ($arrHttp["Opcion"]=="ver"){
 		include("../common/institutional_info.php");
 		echo "<div class=\"sectionInfo\">
@@ -1119,7 +1121,7 @@ if (isset($arrHttp["encabezado"])){
 				</div>";
 		echo "<div class=\"actions\">
 			<a href=\"$retorno$return\" class=\"defaultButton backButton\">
-				<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+				<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 				<span><strong>".$msgstr["back"]."</strong></span>
 			</a>
 		</div>
@@ -1137,11 +1139,11 @@ if (isset($arrHttp["encabezado"])){
 				echo "</div>
 				<div class=\"actions\">
 					<a href=javascript:EnviarForma() class=\"defaultButton saveButton\">
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 						<span><strong>".$msgstr["m_guardar"]."</strong></span>
 					</a>
 					<a href=\"$retorno$return\" class=\"defaultButton cancelButton\">
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 						<span><strong>".$msgstr["cancelar"]."</strong></span>
 					</a>
 				</div>
