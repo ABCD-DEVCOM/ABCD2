@@ -42,19 +42,22 @@
    Tx=Titulo.split('|')
    Tx_Rep=Tx[4] // para ver si el campo es repetible
    document.write("<table width=700 cellpadding=0 cellspacing=0>")
-   if (Trim(Tx[17])!=""){   		document.write("<td class=mmed0 colspan=2><a href='javascript:Ayuda(\"\",\""+Tx[17]+"\")'><img src=img/question.gif border=0></a>")
-   }else{   		if (Tx[16]==1)
-   			document.write("<td class=mmed0 colspan=2><a href='javascript:Ayuda("+Tx[1]+",\"\")'><img src=img/question.gif border=0></a>")   }
-   document.write("<b><font size=2>"+Tx[2]+"("+Tx[1]+")</b></td> ")
+   if (Trim(Tx[17])!=""){
+   		document.write("<td class=mmed0 colspan=2><a href='javascript:Ayuda(\"\",\""+Tx[17]+"\")'><i class=\"fas fa-question\"></i></a>")
+   }else{
+   		if (Tx[16]==1)
+   			document.write("<td class=mmed0 colspan=2><a href='javascript:Ayuda("+Tx[1]+",\"\")'><i class=\"fas fa-question\"></i></a>")
+   }
+   document.write("<b> <font size=2>"+Tx[2]+"("+Tx[1]+")</b></td> ")
    Occ=valoresCampo.length
 
    if (Occ>5){kOc=5} else {kOc=Occ}
-   document.write('<tr><td valign=top width=80 >')
+   document.write('<tr><td valign=top width=150>')
    if (Tx_Rep==1){
-   		if (Repetible=="R") document.write("<a href=javascript:AgregarOcurrencia()><img src=img/add.gif border=0 Alt='agregar ocurrencia'></a> &nbsp;")
-   		document.write("<a href=javascript:EliminarOcurrencia()><img src=img/delete_occ.gif border=0 Alt='eliminar ocurrencia seleccionada'></a>")
-  	 	if (Repetible=="R") document.write("<a href=javascript:SubirOcurrencia('lista')><img src=img/up.gif border=0></a>")
-   		if (Repetible=="R") document.write("<a href=javascript:BajarOcurrencia('lista')><img src=img/down.gif border=0></a> &nbsp;")
+   		if (Repetible=="R") document.write("<a class='bt-fdt-blue' href=javascript:AgregarOcurrencia()><i class='fas fa-plus' Alt='agregar ocurrencia'></i>")
+   		document.write("<a class='bt-fdt' href=javascript:EliminarOcurrencia()><i class='far fa-trash-alt'  Alt='eliminar ocurrencia seleccionada'></i></a>")
+  	 	if (Repetible=="R") document.write("<a class='bt-fdt' href=javascript:SubirOcurrencia('lista')><i class='fas fa-caret-up'></i></a>")
+   		if (Repetible=="R") document.write("<a class='bt-fdt' href=javascript:BajarOcurrencia('lista')><i class='fas fa-caret-down'></i></a> &nbsp;")
    }
    document.writeln("</td>")
    document.write("<td><select name=lista style='width:550px;background-color=#F2F6F8;'  size="+kOc+" onClick=\"javascript:TerminoSeleccionado();\">")
@@ -94,7 +97,8 @@ function Redraw(xsalida,newSc,add_name){
 	inctr=""
 	indicadores=""
 	if (!is_marc=="S"){
-		if (xsalida=='' || xsalida=='^-'){			for (i=0;i<Tx[5].length;i++){
+		if (xsalida=='' || xsalida=='^-'){
+			for (i=0;i<Tx[5].length;i++){
 				sc=Tx[5].substr(i,1)
 				xsalida+='^'+sc
 			}
@@ -105,7 +109,8 @@ function Redraw(xsalida,newSc,add_name){
 			if (ixpos!=2)
 				indicadores='  '
 			else
-				indicadores=xsalida.substr(0,ixpos)			xsalida=xsalida.substr(ixpos)
+				indicadores=xsalida.substr(0,ixpos)
+			xsalida=xsalida.substr(ixpos)
 			xsalida='^I1'+indicadores.substr(0,1)+'^I2'+indicadores.substr(1,1)+xsalida
 		}
 	}
@@ -113,10 +118,13 @@ function Redraw(xsalida,newSc,add_name){
 	vc=Array()
 	icampos=-1
 	// se coloca en un arreglo el contenido de los campos
-	for (i=1;i<campos.length;i++){		if (campos[i]!=""){			if (i<3 && indicadores!=""){
+	for (i=1;i<campos.length;i++){
+		if (campos[i]!=""){
+			if (i<3 && indicadores!=""){
 				cc=campos[i].substr(0,2)
 				len_c=2
-			}else{				cc=campos[i].substr(0,1)
+			}else{
+				cc=campos[i].substr(0,1)
 				len_c=1
 			}
 			if (cc in vc){
@@ -133,7 +141,8 @@ function Redraw(xsalida,newSc,add_name){
 	Desc_sc=Array()
 // se obtiene el nombre de los subcampos para el select del ADD
 	campocompleto=""
-	for (i=0;i<Tx[5].length;i++){		key=Tx[5].substr(i,1)
+	for (i=0;i<Tx[5].length;i++){
+		key=Tx[5].substr(i,1)
 		key_sc=key
 		if (i<2 && indicadores!="") key="I"+key
 		if (key in vc){
@@ -142,15 +151,20 @@ function Redraw(xsalida,newSc,add_name){
 				for (icc=0;icc<c.length;icc++){
 					campocompleto+="^"+key_sc+c[icc]
 				}
-			}else{				campocompleto+="^"+key_sc			}
-		}else{			campocompleto+="^"+key		}
+			}else{
+				campocompleto+="^"+key_sc
+			}
+		}else{
+			campocompleto+="^"+key
+		}
 	}
 	campos=campocompleto.split('^')
 	for (i=0;i<Tx[5].length;i++){
 		xd=SubCampos[i].split('|')
 		if ((xd[5]==1 || xd[5]==2) && i<2 && is_marc=="S"){
             ix="I"+xd[5]          //ADD THE LETTER I TO THE INDICATOR CODE FOR NOT CONFUSING WITH SUBFIELD 2
-            Desc_sc[ix]=xd[2]		}else{
+            Desc_sc[ix]=xd[2]
+		}else{
 			Desc_sc[xd[5]]=xd[2]
 		}
 	}
@@ -161,7 +175,8 @@ function Redraw(xsalida,newSc,add_name){
         list_subc=Tx[5].substr(i-1,1)
         pick=""
         //SE OBTIENE LAS CARACTERISTICAS DEL SUBCAMPO
-        for (j=0;j<Tx[5].length;j++){        	sc=SubCampos[j].split('|')
+        for (j=0;j<Tx[5].length;j++){
+        	sc=SubCampos[j].split('|')
         	tipoe=sc[7]
         	Ind=""
         	if (i<3 && (sc[5]==1 || sc[5]==2) && is_marc=="S")
@@ -170,7 +185,9 @@ function Redraw(xsalida,newSc,add_name){
         		ind_pick=Ind+sc[5]
         		if (ind_pick in PickList)
         			pick=PickList[ind_pick]
-        		break        	}        }
+        		break
+        	}
+        }
 
         valor=""
 
@@ -181,8 +198,12 @@ function Redraw(xsalida,newSc,add_name){
         M++
 		html+="<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n"
         html+="<td nowrap valign=top >"
-        if (sc[16]=="1" || Trim(sc[17])!=""){        	if (Trim(sc[17])!=""){        		html+="<a href='javascript:Ayuda(\"\",\""+sc[17]+"\")'><img src=../dataentry/img/question.gif border=0 align=top width=16></a>"        	}else{
-        		html+="<a href=javascript:Ayuda('"+Tx[1]+"_"+new_subc+"','')><img src=../dataentry/img/question.gif border=0 align=top width=16></a>"
+        if (sc[16]=="1" || Trim(sc[17])!=""){
+
+        	if (Trim(sc[17])!=""){
+        		html+=" <a class='bt-fdt' href='javascript:Ayuda(\"\",\""+sc[17]+"\")'><i class=\"fas fa-question\"></i></a>"
+        	}else{
+        		html+="<a class='bt-fdt' href=javascript:Ayuda('"+Tx[1]+"_"+new_subc+"','')><i class=\"fas fa-question\"></i></a>"
         	}
         }
         html+=new_subc
@@ -194,14 +215,16 @@ function Redraw(xsalida,newSc,add_name){
         if (is_marc!="S" || i>2 || (C_Sc!=1 && C_Sc!=2)){
         	if (C_Sc!="-"){
         		if (sc_ant!="-"){
-        			html+="<a href=javascript:SubirSubc('t"+C_Sc+"_"+M+"')><img src=img/up.gif border=0></a>"
-                   	html+="<a href=javascript:BajarSubc('t"+C_Sc+"_"+M+"')><img src=img/down.gif border=0></a>"
+        			html+=" <a class='bt-fdt' href=javascript:SubirSubc('t"+C_Sc+"_"+M+"')><i class='fas fa-caret-up'></i></a>"
+                   	html+="<a class='bt-fdt' href=javascript:BajarSubc('t"+C_Sc+"_"+M+"')><i class='fas fa-caret-down'></i></a>"
     			}else{
     				sc_ant=""
-    				html+="<a href=javascript:BajarSubc('t"+C_Sc+"_"+M+"')><img src=img/down.gif border=0></a>"
+    				html+="<a class='bt-fdt' href=javascript:BajarSubc('t"+C_Sc+"_"+M+"')><i class='fas fa-caret-down'></i></a>"
     			}
     			ixsc=Tx[5].indexOf(new_subc,2)
-    		}else{    			sc_ant="-"    		}
+    		}else{
+    			sc_ant="-"
+    		}
       	}
 
         if (sc[12]!=""){
@@ -212,9 +235,10 @@ function Redraw(xsalida,newSc,add_name){
            	if (db_link=="") db_link=base
 
            	cipar_link=db_link+".par"
-	   		link=" &nbsp;<a href='javascript:AbrirIndiceAlfabetico(\"t"+C_Sc+"_"+M+"\",\""+prefijo+"\",\""+iSc+"\",\"S\""+",\""+db_link+"\""+",\""+cipar_link+"\""+",\""+TagCampo+"\""+",\""+Formato+"\")'><img src=img/setsearch.gif border=0 align=center></a><font color=red>"
+	   		link=" &nbsp;<a href='javascript:AbrirIndiceAlfabetico(\"t"+C_Sc+"_"+M+"\",\""+prefijo+"\",\""+iSc+"\",\"S\""+",\""+db_link+"\""+",\""+cipar_link+"\""+",\""+TagCampo+"\""+",\""+Formato+"\")'><i class=\"fas fa-search\"></i></a><font color=red>"
 
-			if (sc[7]!="I" && sc[10]=="T") {				link+="&nbsp;<a href='javascript:AbrirTesauro(\"t"+C_Sc+"_"+M+"\",\""+db_link+"\",\"DE_\",\"0\")'><img src=../dataentry/img/toolbarTesaurus.gif></a>&nbsp;";
+			if (sc[7]!="I" && sc[10]=="T") {
+				link+="&nbsp;<a href='javascript:AbrirTesauro(\"t"+C_Sc+"_"+M+"\",\""+db_link+"\",\"DE_\",\"0\")'><i class=\"fas fa-cubes\"></i></a>&nbsp;";
 			}
 		}else{                                                                                                                                                                                  		link=""
 		}
@@ -223,20 +247,31 @@ function Redraw(xsalida,newSc,add_name){
 	   	//link=""
 	   	//GET THE SUBFIELD NAME
        	ixnamec=Tx[5].indexOf(C_Sc)
-       	if (is_marc=="S" && (C_Sc==1 || C_Sc==2) && i<3 ){       		NombreSc=Desc_sc["I"+C_Sc]        //GET THE NAME OF THE INDICATOR       	}else{
+       	if (is_marc=="S" && (C_Sc==1 || C_Sc==2) && i<3 ){
+       		NombreSc=Desc_sc["I"+C_Sc]        //GET THE NAME OF THE INDICATOR
+       	}else{
        		NombreSc=Desc_sc[C_Sc]            //GET THE NAME OF THE SUBFIELD
-       	}        html+="<td  valign=top>"+NombreSc+"</a></td>"
+       	}
+        html+="<td  valign=top>"+NombreSc+"</a> </td>"
        	html+="<td class=td nowrap>"
        	xsize="70"
-       	if (is_marc=="S" && i<3 && (C_Sc==1 || C_Sc==2)){       		xsize="1 maxlength=1"
-       		NamePick="I"+C_Sc       	}else{       		NamePick=C_Sc       	}
-        if (link!=""){        	pick=""        }
+       	if (is_marc=="S" && i<3 && (C_Sc==1 || C_Sc==2)){
+       		xsize="1 maxlength=1"
+       		NamePick="I"+C_Sc
+       	}else{
+       		NamePick=C_Sc
+       	}
+        if (link!=""){
+        	pick=""
+        }
        	if (pick!=""){
        		NombreCampo="t"+C_Sc+"_"+M;
        		html+=" <select name="+TagCampo+" id=t"+C_Sc+"_"+M+"><option value=' '> </option>\n"
        		opt=pick.split('$$$$')
        		selected=""
-       		for (var ixopt in opt){       			if (Trim(opt[ixopt])!=""){	       			o=opt[ixopt].split('|')
+       		for (var ixopt in opt){
+       			if (Trim(opt[ixopt])!=""){
+	       			o=opt[ixopt].split('|')
 	       			if (Trim(o[1])=="") o[1]=o[0]
 	       			if (Trim(valor)==Trim(o[0]))  selected= " selected"
 	       			if (o[5]!="-")
@@ -247,24 +282,30 @@ function Redraw(xsalida,newSc,add_name){
             html+="</select>\n";
             picklist=NamePickList[NamePick]
             if (act_picklist=="Y")
-            	html+= " <a href=\"javascript:AgregarPicklist('"+picklist+"','"+NombreCampo+"','$campo')\"><img src=img/s2.gif alt='"+mod_picklist+"' title='"+mod_picklist+"' border=0></a>"
-			html+= " <a href=\"javascript:RefrescarPicklist('"+picklist+"','"+NombreCampo+"','$campo')\"><img src=img/reset.gif alt='"+reload_picklist+"' title='"+reload_picklist+"' border=0></a> &nbsp; ";       	}else{
-       		switch (sc[7]){       			case "U":
+            	html+= " <a class='bt-fdt' href=\"javascript:AgregarPicklist('"+picklist+"','"+NombreCampo+"','$campo')\"><i class='far fa-edit'alt='"+mod_picklist+"' title='"+mod_picklist+"'></i></a>"
+			html+= " <a class='bt-fdt' href=\"javascript:RefrescarPicklist('"+picklist+"','"+NombreCampo+"','$campo')\"><i class='fas fa-redo' alt='"+reload_picklist+"' title='"+reload_picklist+"'></i></a> &nbsp; ";
+       	}else{
+       		switch (sc[7]){
+       			case "U":
        				msgupload="Subir"
        				msgseleccionar="Seleccionar"
        				NombreCampo="t"+C_Sc+"_"+M;
        				html+="<input type=text class=SubC  size="+xsize+" name="+NombreCampo+" id=t"+C_Sc+"_"+M+" value='"+valor+"' >"
-       				html+=" <a href=javascript:EnviarArchivo('"+NombreCampo+"','"+sc[7]+"')><img src=../dataentry/img/upload.gif border=0 alt=\""+msgupload+"\" title=\""+msgupload+"\" align=top></a>\n"
-       				html+=" <a href='javascript:msgwin=window.open(\"dirs_explorer.php?Opcion=seleccionar&tag="+NombreCampo+"&base="+base+"\",\"Explore\",\"width=300,height=500,left=500,scrollbars,resizable,toolbar=yes\");msgwin.focus()'><img src=../dataentry/img/item_chk1.gif border=0 alt=\""+msgseleccionar+"\" title=\"".msgseleccionar+"\" align=top></a>&nbsp;"
+       				html+=" <a class=\"bt-fdt\" href=javascript:EnviarArchivo('"+NombreCampo+"','"+sc[7]+"')><i class=\"fas fa-upload\"  alt=\""+msgupload+"\" title=\""+msgupload+"\" align=top></i></a>\n"
+       				html+=" <a class=\"bt-fdt\" href='javascript:msgwin=window.open(\"dirs_explorer.php?Opcion=seleccionar&tag="+NombreCampo+"&base="+base+"\",\"Explore\",\"width=300,height=500,left=500,scrollbars,resizable,toolbar=yes\");msgwin.focus()'><i class=\"far fa-folder-open\" alt=\""+msgseleccionar+"\" title=\"".msgseleccionar+"\" align=top></i></a>&nbsp;"
        				break
        			default:
        				if (valor.indexOf("'")==-1)
 	       				html+="<input type=text class=SubC  size="+xsize+" name="+TagCampo+" id=t"+C_Sc+"_"+M+" value='"+valor+"' >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 	       			else
-	       				html+="<input type=text class=SubC  size="+xsize+" name="+TagCampo+" id=t"+C_Sc+"_"+M+" value=\""+valor+"\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+valor       		}
+	       				html+="<input type=text class=SubC  size="+xsize+" name="+TagCampo+" id=t"+C_Sc+"_"+M+" value=\""+valor+"\" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+valor
+       		}
        	}
         subc_r="S"
-       	if (subc_r!="S" || (i>2 || C_Sc!=1 && C_Sc!=2 && subc_r=="S")){       		//html+="at"+C_Sc+"_"+M	    	if (subc_r=="S"){	    		html+="<select name=agregar id=at"+C_Sc+"_"+M+" onChange=AgregarSubcampo(this,"+j+") style=width:100px>"
+       	if (subc_r!="S" || (i>2 || C_Sc!=1 && C_Sc!=2 && subc_r=="S")){
+       		//html+="at"+C_Sc+"_"+M
+	    	if (subc_r=="S"){
+	    		html+="<select name=agregar id=at"+C_Sc+"_"+M+" onChange=AgregarSubcampo(this,"+j+") style=width:100px>"
   				html+="<option value=''>add"
     			for (ia=0;ia<Tx[5].length;ia++){
      				sca=Tx[5].substr(ia,1)
@@ -273,7 +314,7 @@ function Redraw(xsalida,newSc,add_name){
            					html+="<option value="+Tx[5].substr(ia,1)+">"+Tx[5].substr(ia,1)+" "+Desc_sc[sca]
         		}
         		if (C_Sc!="-"){
-	        		html+="</select> &nbsp;<a href=javascript:DeleteSubfield('t"+C_Sc+"_"+M+"')><img src=../dataentry/img/delete_occ.gif border=0 ></a>"
+	        		html+="</select> &nbsp;<a class='bt-fdt' href=javascript:DeleteSubfield('t"+C_Sc+"_"+M+"')><i class='far fa-trash-alt'></i></a>"
         		}
         	}
         }
@@ -287,7 +328,8 @@ function Redraw(xsalida,newSc,add_name){
 
 function BajarOcurrencia(id){
 	ix=document.forma1.lista.selectedIndex
-	if (ix==-1 || ix>=document.forma1.lista.options.length) return	ocurren=document.forma1.lista.options[ix+1].value
+	if (ix==-1 || ix>=document.forma1.lista.options.length) return
+	ocurren=document.forma1.lista.options[ix+1].value
 	txt_ocurren=document.forma1.lista.options[ix+1].text
 	document.forma1.lista.options[ix+1].value=document.forma1.lista.options[ix].value
 	document.forma1.lista.options[ix+1].text=document.forma1.lista.options[ix].text
@@ -309,7 +351,8 @@ function SubirOcurrencia(id){
 }
 
 
-function BajarSubc(Id){	valores=Array()
+function BajarSubc(Id){
+	valores=Array()
 	for (i=0;i<lista_sc.length;i++){
 		valores[i]=returnObjById(lista_sc[i]).value
 		if (lista_sc[i]==Id){
@@ -325,8 +368,11 @@ function BajarSubc(Id){	valores=Array()
 	lista_sc[xpos]=areemplazar
 	xsalida=""
 
-	for (i=0;i<lista_sc.length;i++){		subc=lista_sc[i].substr(1,1)
-		if ((i==0 || i==1 ) & (subc==1 || subc==2) && is_marc=="S"){			xsalida+=valores[i]		}else{
+	for (i=0;i<lista_sc.length;i++){
+		subc=lista_sc[i].substr(1,1)
+		if ((i==0 || i==1 ) & (subc==1 || subc==2) && is_marc=="S"){
+			xsalida+=valores[i]
+		}else{
 			xsalida+="^"+subc+valores[i]
 		}
 	}
@@ -370,7 +416,8 @@ function AgregarSubcampo(subc,j){
 	ins=ins.substr(1)
 	ctrl= returnObjById(ins)
 	if (Trim(ctrl.value)=="") {
-		if (ins.substr(1,1)!="-"){   //if the subfield is optional can be empty			subc.selectedIndex=0
+		if (ins.substr(1,1)!="-"){   //if the subfield is optional can be empty
+			subc.selectedIndex=0
   			ins=-1
   			return
   		}
@@ -429,7 +476,8 @@ function AgregarSubcampo(subc,j){
 function DeleteSubfield(subc){
 	salida=""
 	ixsc=-1
-    for (i=0;i<document.forma1.elements.length;i++){
+
+    for (i=0;i<document.forma1.elements.length;i++){
     	tipo=document.forma1.elements[i].type
    		nombre=""
        	switch (tipo){
@@ -445,7 +493,9 @@ function DeleteSubfield(subc){
 	    			}else{
 	    				if ((ixsc==0 || ixsc==1) && (subc_act=="1" || subc_act=="2")){
 	    					salida+=valor
-	               		}else{	               			salida+="^"+subc_act+valor	               		}
+	               		}else{
+	               			salida+="^"+subc_act+valor
+	               		}
 	    			}
     			}
             	break

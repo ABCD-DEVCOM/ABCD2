@@ -38,27 +38,8 @@ if (!isset($_SESSION["permiso"])){
 </style>
 
 <style type="text/css">
-#wrapper {
-	text-align:left;
-	margin:0 auto;
-	width:100%;
-	xmin-height:10px;
-	xborder:1px solid #ccc;
-	padding:0px;
-}
 
-
-a {
-
-	cursor:pointer;
-}
-
-
-#myvar {
-	border:1px solid #ccc;
-	background:#ffffff;
-	padding:2px;
-}
+/*
 input,textarea {
     border: 1px solid #CCCCCC;
     -webkit-box-shadow:
@@ -73,7 +54,7 @@ input,textarea {
     padding: 2px;
     background: rgba(255,255,255,0.5);
     margin: 0 0 0px 0;
-}
+}*/
 </style>
 
 <!-- Estilos para el tooltip -->
@@ -111,8 +92,60 @@ a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radi
 
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/textcounter.js?<?php echo time(); ?>"></script>
 
-<?php if (file_exists("../dataentry/js/".$arrHttp["base"].".js"))
+<?php 
+
+		global $Expresion;
+
+if (file_exists("../dataentry/js/".$arrHttp["base"].".js"))
 	echo "<script language=\"JavaScript\" type=\"text/javascript\" src=".$arrHttp["base"].".js></script>\n";
+
+
+
+//Treatment of the search expression
+if (isset($arrHttp["Expresion"])){
+    $arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
+    $Expresion=trim($arrHttp["Expresion"]);
+    $Expresion=str_replace("  "," ",$Expresion);
+    $Expresion=str_replace("  "," ",$Expresion);
+    $Expresion=str_replace('("',"",$Expresion);
+    $Expresion=str_replace('")',"",$Expresion);
+    $xor="¬or¬";
+    $xand="¬and¬";
+    $Expresion=str_replace (" {", "{", $Expresion);
+    $Expresion=str_replace (" or ", $xor, $Expresion);
+    $Expresion=str_replace ("+", $xor, $Expresion);
+    $Expresion=str_replace (" and ", $xand, $Expresion);
+    $Expresion=str_replace ("*", $xand, $Expresion);
+    $nse=-1;
+    while (is_integer(strpos($Expresion,'"'))){
+        $nse=$nse+1;
+        $pos1=strpos($Expresion,'"');
+        $xpos=$pos1+1;
+        $pos2=strpos($Expresion,'"',$xpos);
+        $subex[$nse]=trim(substr($Expresion,$xpos,$pos2-$xpos));
+        if ($pos1==0){
+            $Expresion="{".$nse."}".substr($Expresion,$pos2+1);
+        }else{
+            $Expresion=substr($Expresion,0,$pos1-1)."{".$nse."}".substr($Expresion,$pos2+1);
+        }
+    }
+
+   $Expresion=str_replace(" ","*",$Expresion);
+
+    while (is_integer(strpos($Expresion,"{"))){
+        $pos1=strpos($Expresion,"{");
+        $pos2=strpos($Expresion,"}");
+        $ix=substr($Expresion,$pos1+1,$pos2-$pos1-1);
+        if ($pos1==0){
+            $Expresion=$subex[$ix].substr($Expresion,$pos2+1);
+        }else{
+            $Expresion=substr($Expresion,0,$pos1)." ".$subex[$ix]." ".substr($Expresion,$pos2+1);
+        }
+    }
+    $Expresion=str_replace ("¬", " ", $Expresion);
+    $Expresion=urlencode($Expresion);
+}
+
 
 ?>
 
@@ -150,6 +183,7 @@ function switchMenu(obj,ixsec) {
 		}
 	}
 	function GuardarBusqueda(){
+
 		Descripcion=document.forma1.Descripcion.value
 		if (Trim(Descripcion)==""){
 			alert("<?php echo $msgstr["errsave"]?>")
@@ -575,7 +609,7 @@ function CapturarRegistro(){
 	function EnviarArchivo(Tag){
 		document.enviararchivo.Tag.value=Tag
 		document.enviararchivo.storein.value=top.img_dir
-		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=300,top=100,left=5");
+		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=750,top=300,left=5");
 		msgwin.focus()  ;
 		document.enviararchivo.submit()
 	}
@@ -988,9 +1022,8 @@ function SeleccionarRegistro(Mfn){
 			top.RegistrosSeleccionados+='|'+Mfn+"-"
 		}
 	}else{
-		top.RegistrosSeleccionados=top.RegistrosSeleccionados.replace('|'+Mfn+'-','')
+		top.RegistrosSeleccionados=top.RegistrosSeleccionados.replace('|'+Mfn+'-','');
 	}
-
 }
 
 //MANEJO DEL COMBOBOX
@@ -1078,7 +1111,9 @@ function CheckInventory(tag,prefix){
 <span id="toolTipBox" width="200"></span>
 <?php
 if (isset($arrHttp["encabezado"])){
-// Si se est� creando un registro desde el script browse.php
+
+//IF A RECORD IS BEING CREATED FROM THE BROWSE.PHP SCRIPT	
+	
 	if ($arrHttp["Opcion"]=="ver"){
 		include("../common/institutional_info.php");
 		echo "<div class=\"sectionInfo\">
@@ -1145,7 +1180,7 @@ if (isset($arrHttp["encabezado"])){
 
 <form name=guardar action=busqueda_guardar.php method=post target=guardar>
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-	<input type=hidden name=Expresion value="<?php echo urlencode($arrHttp["Expresion"])?>">
+	<input type=hidden name=Expresion value=<?php echo $Expresion;?>>
 	<input type=hidden name=Descripcion value="">
 </form>
 
