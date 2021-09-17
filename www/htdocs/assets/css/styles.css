@@ -3,8 +3,9 @@
 */
 
 :root {
-  --blue: #6663a6;
-  --blue-abcd: #364c6c;
+  --blue: #3955a3;
+  --blue-abcd: #124078;
+  --bgsectionInfo: #4a78b0;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
@@ -326,7 +327,7 @@ A.singleButton .sb_rb {
 
 /*#sectionInfo classes */
 .sectionInfo {
-	background: #708bb1;
+	background: var(--bgsectionInfo);
 }
 
 .breadcrumb H3 {
@@ -810,6 +811,146 @@ A.homeButton IMG{
 /*#END #listTable classes */
 
 /* TABLE IN DIBUJARHOJADEENTRADA */
+
+/*TOOLBAR*/
+body.toolbar-dataentry {
+	background: var(--gray-light);
+	margin: 6px;
+	color: var(--bgsectionInfo);
+}
+
+.GenerarWks {
+	float: right;
+}
+
+#toolbarBox {
+	float: left;
+}
+
+table.toolbar-dataentry {
+	width:100%;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	padding: 8px;
+	border-bottom: 1px solid var(--cyan);
+}
+
+.toolbar-dataentry td {
+	vertical-align: middle;
+}
+
+table.toolbar-dataentry select, table.toolbar-dataentry input {
+	font-size: 12px;
+	width: 100px;
+}
+
+.toolbar-dataentry a {
+	color: var(--bgsectionInfo);
+	padding: 8px;
+
+}
+
+.toolbar-dataentry a:hover {
+	background: #7da3c6;
+	color: var(--white);
+}
+
+.ph-10 {
+	padding: 2px 10px;
+}
+
+.defaultButtonText{
+	font-size: 11px;
+	cursor:pointer;
+}
+
+
+.buttonTextDisabled {
+	color: gray;
+}
+
+.defaultButton {
+	fill: var(--white);
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+}
+
+
+td.defaultButton img {
+    filter: invert(90%) sepia(50%) saturate(3880%) hue-rotate(189deg) brightness(100%) contrast(100%);
+    vertical-align: middle;
+    text-align: center;
+
+    }
+
+.defaultButtonDown {
+	background-color : var(--gray-light);
+	cursor : pointer;
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+	text-align: center;
+}
+
+.defaultButtonOver {
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+	background-color : var(--gray);
+	cursor : pointer;
+	filter: invert(1)
+}
+
+.icongray {
+/*	border : solid 1px var(--bgsectionInfo);*/
+	cursor : default;
+}
+
+/*
+.toolbarDivider {
+	background-color : var(--white);
+	border-right : solid #FFFFFF 1px;
+	height : 100%;
+	margin-bottom : 2px;
+	margin-top : 1px;
+	overflow : hidden;
+	vertical-align : middle;
+}
+
+.toolbarDividerY {
+	background-color : var(--bgsectionInfo);
+	border-bottom : none;
+	border-top : none;
+	height : 2px;
+	overflow : hidden;
+	width : 100%;
+}
+
+
+.toolbarName{
+	letter-spacing : 3px;
+	padding-left : 10px;
+	padding-right : 10px;
+}
+*/
+.toolbarTable{
+	border: none;
+	margin : 0px;
+	padding : 0px;
+	table-layout : fixed;
+}
+
+
+/*END TOOLBAR*/
+
+/* SECOND TOOLBAR */
+
+
+/* END SECOND TOOLBAR */
+
+
+
 
 .table-fdt {
 	border-collapse: collapse;

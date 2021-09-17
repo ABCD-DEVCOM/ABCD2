@@ -807,7 +807,7 @@ function Unload(){
 
 </head>
 
-<frameset rows=<?php if (isset($FRAME_1H) and trim($FRAME_1H)!="") echo $FRAME_1H; else echo '80';?>,<?php if (isset($FRAME_2H) and trim($FRAME_2H)!="") echo $FRAME_2H; else echo '50'; ?>,* cols=* border=0>
+<frameset rows=<?php if (isset($FRAME_1H) and trim($FRAME_1H)!="") echo $FRAME_1H; else echo '80';?>,<?php if (isset($FRAME_2H) and trim($FRAME_2H)!="") echo $FRAME_2H; else echo '60'; ?>,* cols=* border=0>
 <?php
 if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
