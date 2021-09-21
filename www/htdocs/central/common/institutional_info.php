@@ -5,6 +5,9 @@
 20210415 fho4abcd Show db characterset if available, otherwise meta characterset. No longer show difference
 */
 ?>
+
+
+
 <div class=heading>
 	<div class="institutionalInfo">
 		<img src=<?php if (isset($logo))
@@ -16,6 +19,7 @@
     </div>
 		<div class="heading-database">
 		<?php	
+			global $central;
 			if ($central=="Y") {
 						if ($_SESSION["MODULO"]=="catalog")  {
 		?>
@@ -50,7 +54,7 @@
 
 		}
 
-
+		global $verify_selbase;
 		if ($verify_selbase=="Y") {
 
 			if ($_SESSION["mfn_admin"]=="1") {
@@ -99,6 +103,7 @@
     <nav class="heading-nav">
     <ul>
 			 <?php
+
 				$central="";
 				$circulation="";
 				$acquisitions="";

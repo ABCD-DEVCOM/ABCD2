@@ -345,7 +345,7 @@ select.heading-database {
 	 vertical-align: top;
 	 background: var(--blue);
 	 color: var(--white);
-	 width: 300px;
+	 width: 250px;
 	 border: none;
 	 border-radius: inherit;
 	 float: right;
@@ -366,7 +366,6 @@ nav.heading-nav, {
 }
 
 nav.heading-nav ul {
-	z-index: 9999999;
 	float: right;
 	padding: 0;
   margin: 0;
@@ -376,7 +375,6 @@ nav.heading-nav ul {
 	}
 	
 nav.heading-nav ul li {
-	z-index: 9999999999;
 	display:inline-block;
 	vertical-align: top;
 	background-color: var(--blue-abcd);
@@ -384,7 +382,6 @@ nav.heading-nav ul li {
 	}
 
 nav.heading-nav a, nav.heading-nav button {
-	z-index: 9999999999;
 	background-color: var(--blue-abcd);
 	display: block;	
 	color: #FFF;
@@ -398,7 +395,6 @@ nav.heading-nav a, nav.heading-nav button {
 
 nav.heading-nav li ul button {
 	min-width: 100px;
-	z-index: 9999999999;
 }
 
 
@@ -413,7 +409,7 @@ nav.heading-nav a:hover, nav.heading-nav button:hover  {
 
 /* Hide Dropdowns by Default */
 nav.heading-nav ul ul {
-	z-index: 9999999999;
+	z-index: 999999999;
 	display: none;
 	position: absolute; 
 	top: 45px; /* the height of the main nav */
@@ -1041,10 +1037,11 @@ A.homeButton IMG{
 /*TOOLBAR*/
 
 iframe.dataentry-header {
+	z-index: 999999999;
 	border: none; 
 	width: 100%;
 	position: relative; 
-	height: 50px; 
+	height: 45px; 
 	overflow-y: hidden;
 }
 
