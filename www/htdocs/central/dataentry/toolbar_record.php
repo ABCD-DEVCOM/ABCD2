@@ -65,7 +65,7 @@ startScrollingDetector()
 
 
 </script>
-<div id="myDiv" style="position:absolute; top:0px; left:50%;" >
+<div id="myDiv" style="position:absolute; top:0px; right: 0;" >
 
 <table class="toolbar-edit-dataentry">
 <tr>	
@@ -93,8 +93,16 @@ startScrollingDetector()
 					unset( $_SESSION["TOOLBAR_RECORD"]);
 					break;
 				}
-				echo "
-				<input type=checkbox name=sel_mfn id=sel_mfn onclick=top.SeleccionarRegistro(this) value=".$arrHttp["Mfn"].">";
+?>
+
+ 
+<label class="check_sec">
+  <input type="checkbox" name="sel_mfn" id="sel_mfn" onclick="top.SeleccionarRegistro(this)" value="<?php echo $arrHttp["Mfn"];?>">
+  <span class="checkmark"></span>
+</label>
+
+
+<?php
                 if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
 					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src='../../assets/images/toolbar/ic_fluent_document_edit_24_regular.svg' alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
                 }
@@ -106,7 +114,7 @@ startScrollingDetector()
 				if (isset($_SESSION["permiso"]["CENTRAL_DELREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_DELREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) 
 					echo "<a href=\"javascript:top.Menu('eliminar')\" title=\"".$msgstr["m_eliminar"]."\"><img src='../../assets/images/toolbar/ic_fluent_delete_dismiss_24_regular.svg' alt=\"".$msgstr["m_eliminar"]."\" style=\"border:0;\"></a> &nbsp;\n";
 				if (isset($_SESSION["permiso"]["CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"][$db."_CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) 
-					echo "<a href=\"javascript:top.Menu('edit_Z3950')\" title=\"Z39.50\"><img src='../../assets/images/toolbar/ic_fluent_arrow_download_24_filled.svg' alt=\"Z39.50\" style=\"border:0;\"></a>\n";
+					echo "<a href=\"javascript:top.Menu('edit_Z3950')\" title=\"Z39.50\"><img src='../../assets/images/toolbar/ic_fluent_arrow_download_24_regular.svg' alt=\"Z39.50\" style=\"border:0;\"></a>\n";
 				if (isset($_SESSION["permiso"]["CENTRAL_EDREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 					if (isset($rec_validation)) 
 						echo "<a href='javascript:top.Menu(\"recvalidation\")' title=\"".$msgstr["rval"]."\"><img src='../../assets/images/toolbar/ic_fluent_calendar_checkmark_24_regular.svg' alt=\"".$msgstr["rval"]."\" style=\"border:0;\"></a> &nbsp;\n";
@@ -116,7 +124,7 @@ startScrollingDetector()
 						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"editdelcopies\")' title='".$msgstr["m_editdelcopies"]."'><img src='../../assets/images/toolbar/ic_fluent_collections_24_regular.svg' alt='".$msgstr["m_editdelcopies"]."' border=0></a> &nbsp;\n";
 				    }
 					if (isset($_SESSION["permiso"]["CENTRAL_ADDLO"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDLO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]))
-						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addloanobjects\")' title='".$msgstr["addloansdb"]."'><img src='../../assets/images/toolbar/ic_fluent_reading_list_add_24_filled.svg' alt='".$msgstr["addloansdb"]."' border=0></a> \n";
+						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addloanobjects\")' title='".$msgstr["addloansdb"]."'><img src='../../assets/images/toolbar/ic_fluent_reading_list_add_24_regular.svg' alt='".$msgstr["addloansdb"]."' border=0></a> \n";
 				}
 				if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
 	    			 isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))

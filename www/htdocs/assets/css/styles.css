@@ -6,6 +6,9 @@
   --blue: #3955a3;
   --blue-abcd: #124078;
   --bgsectionInfo: #4a78b0;
+  --cat-color: #2b579a;
+  --acq-color: #217346;
+  --loan-color: #6264a7;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
@@ -16,9 +19,14 @@
   --teal: #20c997;
   --cyan: #bcd1ef;
   --white: #FBFEFF;
+  --gray190:  #201f1e;
+  --gray110:  #8a8886;
+  --gray60:  #c8c6c4;
+  --gray40:  	#e1dfdd;
+  --gray20:  #f3f2f1;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --gray-light: #f5f5f5;
+  --gray-light: #faf9f8;
   --primary: #39547a;
   --secondary: #6c757d;
   --success: #28a745;
@@ -282,20 +290,235 @@ A.singleButton .sb_rb {
 /*#heading classes */
 .heading {
 	background-color: var(--blue-abcd);
+	height: 45px;
+	width: 100%;
+
 }
 
-.institutionalInfo H1, .institutionalInfo H2 {
+
+.institutionalInfo {
+	float: left;
+	width: 35%;
+	display: table;
+	padding: 2px 10px;
+}
+
+.institutionalInfo IMG {
+	float: left;
+	margin: 2px 8px 0 0;
+	display: inline-block;
+	height: 32px;
+}
+
+
+.institutionalInfo>H1, .institutionalInfo H2 {
 	letter-spacing: 0.03rem;
-}
-
-.institutionalInfo H1 {
-
-	color: #fff;
-}
-
-.institutionalInfo H2 {
-	font-weight: normal;
 	color: var(--white);
+	font-weight: normal;
+	margin-left: 50px;
+	font-size: 0.8rem;
+}
+.institutionalInfo H1 {
+	margin-top: 10px;
+	margin-left: 20%;
+	vertical-align: middle;
+	position: relative;
+}
+
+
+.heading-database {
+	margin-right: 0;
+	width: 15%;
+	padding: 0;
+	height: 45px;
+	display: inline-block;
+	position: absolute;
+}
+
+.heading-database form  {
+	float: right;
+}
+
+select.heading-database {
+	 display:block;
+	 margin: 0;
+	 vertical-align: top;
+	 background: var(--blue);
+	 color: var(--white);
+	 width: 300px;
+	 border: none;
+	 border-radius: inherit;
+	 float: right;
+	 padding: 9px 0;
+	 height: 45px;
+	 box-shadow: none;
+	 font-weight: 600;
+	 font-size: 18px;
+	text-align: left;
+}
+
+nav.heading-nav, {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	background-color: var(--blue-abcd);
+}
+
+nav.heading-nav ul {
+	z-index: 9999999;
+	float: right;
+	padding: 0;
+  margin: 0;
+  vertical-align: top;
+	list-style: none;
+	position: relative;
+	}
+	
+nav.heading-nav ul li {
+	z-index: 9999999999;
+	display:inline-block;
+	vertical-align: top;
+	background-color: var(--blue-abcd);
+	float: left;
+	}
+
+nav.heading-nav a, nav.heading-nav button {
+	z-index: 9999999999;
+	background-color: var(--blue-abcd);
+	display: block;	
+	color: #FFF;
+	height: 45px;
+	line-height: 60px;
+	text-decoration:none;
+	border: none;
+	padding: 0 8px;
+	vertical-align: middle;
+}
+
+nav.heading-nav li ul button {
+	min-width: 100px;
+	z-index: 9999999999;
+}
+
+
+nav.heading-nav a img {
+	margin-top: 8px;
+	vertical-align: middle;
+}
+
+nav.heading-nav a:hover, nav.heading-nav button:hover  { 
+	background-color: var(--blue);
+}
+
+/* Hide Dropdowns by Default */
+nav.heading-nav ul ul {
+	z-index: 9999999999;
+	display: none;
+	position: absolute; 
+	top: 45px; /* the height of the main nav */
+	right: 0;
+	left: 200px;
+}
+	
+/* Display Dropdowns on Hover */
+nav.heading-nav ul li:hover > ul {
+	display:inherit;
+}
+	
+/* Fisrt Tier Dropdown */
+nav.heading-nav ul ul li {
+	float:none;
+	display:list-item;
+	position: relative;
+	margin-left: -80px;
+}
+
+
+
+/* Second, Third and more Tiers	*/
+nav.heading-nav ul ul ul li {
+	position: relative;
+	top:-60px; 
+
+}
+
+.bt-mod {
+	margin: 0;
+	height: 46px;
+	width: 42px;
+	border-radius: 0px;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	outline: 0;
+	padding: 10px;
+	text-align: center;
+	transform: translateY(0);
+	transition: transform 150ms, box-shadow 150ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;		
+	background-repeat: no-repeat;
+	background-position: center;			
+}
+
+.bt-cat {
+	background-color: var(--blue-abcd);
+	border: 1px solid var(--blue-abcd);
+	background-image: url(../images/svg/ic_fluent_book_database_24_regular.svg);
+}
+
+.bt-cat.active {
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; 
+	background-color: var(--cat-color);
+	border: 1px solid var(--cat-color);
+	background-image: url(../images/svg/ic_fluent_book_database_24_filled.svg);
+}
+
+.bt-loan {
+	background-color: var(--blue-abcd);
+	border: 1px solid var(--blue-abcd);
+	background-image: url(../images/svg/ic_fluent_people_swap_24_regular.svg);
+}
+
+.bt-loan.active {
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	background-image: url(../images/svg/ic_fluent_people_swap_24_filled.svg);
+	background-color: var(--loan-color);
+	border: 1px solid var(--loan-color);
+}
+
+.bt-acq {
+	background-color: var(--blue-abcd);
+	border: 1px solid var(--blue-abcd);
+	background-image: url(../images/svg/ic_fluent_cart_24_regular.svg);
+}
+
+.bt-acq.active {
+	background-image: url(../images/svg/ic_fluent_cart_24_filled.svg);
+	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	background-color: var(--acq-color);
+	border: 1px solid var(--acq-color);
+}
+
+li a.bt-charset,li a.bt-charset:hover {
+	background: var(--blue-abcd);
+	margin-top: -16px;
+	padding: 8px 4px;
+	cursor: default;
+	transform: none;
+	box-shadow: none;
+
+}
+
+li a.bt-exit {
+	background-color: var(--danger);
+	border: none;
+}
+li a.bt-exit:hover {
+	background-color: var(--danger);
+	border: none;
 }
 
 .userInfo, .userInfo A, .language, .language A {
@@ -303,26 +526,13 @@ A.singleButton .sb_rb {
 	color: var(--white);
 }
 
-.language select {
-	font-size: 0.6rem;
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-	box-sizing: border-box;
-	width: 90px;
-	margin: 0.1rem 0;
-	padding: 1px;	
+
+
+select.lang:active {
+    border: 1px solid #000;
 }
 
-.userInfo A.button_logout {
-	background: url('../images/button_logout.gif') no-repeat center right;
-	text-decoration: none
-}
 
-.userInfo A.button_logout:hover SPAN {
-	text-decoration: underline;
-}
 /* #END #heading classes */
 
 /*#sectionInfo classes */
@@ -330,11 +540,16 @@ A.singleButton .sb_rb {
 	background: var(--bgsectionInfo);
 }
 
-.breadcrumb H3 {
+.breadcrumb {
+	float: left;
+	width: 45%;
+	padding: 5px 0px 5px 15px;
+	display: inline;
 	color: var(--white);
+	font-size: 150%;
 }
 
-.breadcrumb, .breadcrumb A {
+ .breadcrumb a {
 	color: var(--white);
 	font-weight: 600;
 }
@@ -350,9 +565,20 @@ A.singleButton .sb_rb {
 
 /*#middle classes */
 .middle {
-	background: var(--gray-light);
+	background: var(--gray40);
 	min-height: 100vh;
 }
+
+.ActionFooter {
+	display: inline-flex;
+	width: 100%;
+	margin: 20px 10px;
+}
+
+.ActionFooter a {
+	margin: 2px;
+}
+
 /*#END #middle classes */
 
 /*#footer classes */
@@ -813,6 +1039,16 @@ A.homeButton IMG{
 /* TABLE IN DIBUJARHOJADEENTRADA */
 
 /*TOOLBAR*/
+
+iframe.dataentry-header {
+	border: none; 
+	width: 100%;
+	position: relative; 
+	height: 50px; 
+	overflow-y: hidden;
+}
+
+
 body.toolbar-dataentry {
 	background: var(--gray-light);
 	margin: 6px;
@@ -850,11 +1086,6 @@ table.toolbar-dataentry select, table.toolbar-dataentry input {
 
 }
 
-.toolbar-dataentry a:hover {
-	background: #7da3c6;
-	color: var(--white);
-}
-
 .ph-10 {
 	padding: 2px 10px;
 }
@@ -876,36 +1107,50 @@ table.toolbar-dataentry select, table.toolbar-dataentry input {
 	padding: 4px 0;
 }
 
-
-td.defaultButton img {
-    filter: invert(90%) sepia(50%) saturate(3880%) hue-rotate(189deg) brightness(100%) contrast(100%);
-    vertical-align: middle;
-    text-align: center;
-
-    }
-
-.defaultButtonDown {
-	background-color : var(--gray-light);
-	cursor : pointer;
+.defaultButtonOver  {
+	border-radius: 3px;
 	height: 24px;
 	width: 32px;
 	padding: 4px 0;
-	text-align: center;
+	background-color : var(--blue);
+	cursor : pointer;
 }
 
-.defaultButtonOver {
+.defaultButtonOver img {
+	filter: invert(100%) sepia(96%) saturate(4522%) hue-rotate(348deg) brightness(97%) contrast(109%);
+}
+
+.defaultButtonDown {
+	background-color : var(--white);
+	cursor : pointer;
 	height: 24px;
 	width: 32px;
 	padding: 4px 0;
-	background-color : var(--gray);
-	cursor : pointer;
-	filter: invert(1)
+	fill: var(--blue);
+	vertical-align: middle;
+	text-align: center;
 }
 
 .icongray {
 /*	border : solid 1px var(--bgsectionInfo);*/
 	cursor : default;
 }
+
+.btn-toolbar-blue i {
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	box-sizing: border-box;
+	padding: 3px 4px;
+	text-decoration: none;
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+	border-radius: 3px;
+	color: var(--white);
+	cursor: pointer;
+	font-size: 15px;
+	vertical-align: middle;
+	text-align: center;
+}
+
 
 /*
 .toolbarDivider {
@@ -945,6 +1190,101 @@ td.defaultButton img {
 /*END TOOLBAR*/
 
 /* SECOND TOOLBAR */
+
+#myDiv{
+	margin-right: 5px;
+	padding: 0 10px;
+	background: var(--bgsectionInfo);
+	border-radius: 3px;
+	border-top: 1px solid var(--gray);
+	height: 38px;
+	vertical-align: middle;
+}
+
+#myDiv a img{
+	margin: 0 2px;
+	padding: 0 10px;
+	border-radius: 3px;
+}
+
+#myDiv a img {
+		padding: 4px;
+		filter: invert(99%) sepia(100%) saturate(4%) hue-rotate(61deg) brightness(105%) contrast(100%);
+}
+
+#myDiv img:hover {
+	background: var(--light);
+}
+
+
+/* The container */
+.check_sec {
+	vertical-align: top;
+	top: 5px;
+	width: 22px;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check_sec input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.check_sec:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.check_sec input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.check_sec input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.check_sec .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 
 
 /* END SECOND TOOLBAR */
@@ -1386,6 +1726,7 @@ a.bt-sign {
 	background: var(--blue);
 	color: var(--light);
 	border-color: var(--blue);
+	text-decoration: none;
 
 }
 
@@ -1397,6 +1738,7 @@ a.bt-sign {
 .button_browse.edit {
 	background: var(--success);
 	color: var(--white);
+	text-decoration: none;
 }
 
 .button_browse.edit:hover {
@@ -1485,7 +1827,17 @@ a.bt-sign {
 	touch-action: manipulation;
 }
 
-.bt-blue:hover, A.singleButton:hover, .submitAdvanced:hover {
+
+a[class^="bt-"] {	
+	transform: translateY(0);
+	transition: transform 150ms, box-shadow 150ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	text-decoration: none;
+}
+
+.bt-blue:hover, A.singleButton:hover, .submitAdvanced:hover, a[class^="bt-"]:hover {
 	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
 	transform: translateY(-2px);
 }

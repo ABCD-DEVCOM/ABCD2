@@ -107,7 +107,7 @@ function CambiarBase(){
 	top.Mfn_Search=0
 	top.Max_Search=0
 	top.Search_pos=0
-	lang=document.OpcionesMenu.lenguaje.options[document.OpcionesMenu.lenguaje.selectedIndex].value
+	lang=document.OpcionesMenu.lang.value
 	switch (top.ModuloActivo){
 		case "dbadmin":
 
@@ -180,118 +180,16 @@ function CambiarLenguaje(){
 </script>
 </head>
 <body>
-<form name=OpcionesMenu>
-<input type=hidden name=base value="">
-<input type=hidden name=cipar value="">
-<input type=hidden name=marc value="">
-<input type=hidden name=tlit value="">
-<input type=hidden name=nreg value="">
-<div class="heading" style="height:150px"> &nbsp;
-	<div class="institutionalInfo">
-		<img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../../assets/images/logoabcd.png";
-					  ?>
-					  >
-					  <h1><?php echo $institution_name?></h1>
-	</div>
-	<div class="userInfo">
-		<span><?php echo $_SESSION["nombre"]?></span>,
-		<?php  $dd=explode("/",$db_path);
-               if (isset($dd[count($dd)-2])){
-			   		$da=$dd[count($dd)-2];
-			   		echo " (".$da.") ";
-				}
-              if ( isset( $charset )) {
-                  echo " | ".$charset;
-              } else {
-                  echo " | ".$meta_encoding;
-              }
-		?> |
-		<?php echo $_SESSION["profile"]?> |
+
 <?php
 
-if (isset($_SESSION["newindow"]) or isset($arrHttp["newindow"])){
-	echo "<a href=\"javascript:top.close()\" xclass=\"button_logout\"><span>[logout]</span></a>";
-}else{
-	echo "<a href=\"../dataentry/logout.php\" xclass=\"button_logout\"><span>[logout]</span></a>";
-}
+$verify_selbase="Y";
+
+require_once ('../common/institutional_info.php');
+
 ?>
-<br>
-<?php
-$central="";
-$circulation="";
-$acquisitions="";
-foreach ($_SESSION["permiso"] as $key=>$value){
-	$p=explode("_",$key);
-	if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";
-	if (substr($key,0,8)=="CENTRAL_")  $central="Y";
-	if (substr($key,0,5)=="CIRC_")  $circulation="Y";
-	if (substr($key,0,4)=="ACQ_")  $acquisitions="Y";
 
-}
-if ($circulation=="Y" or $acquisitions=="Y"){
-		echo $msgstr["modulo"].":";
-         ?>
-  			<select name=modulo   onclick=VerificarEdicion() onchange=Modulo()>
-  				<option value=catalog><?php echo $msgstr["catalogacion"]?>
-  				<!--option value=dbadmin><?php echo $msgstr["dbadmin"]?></option -->
-  				<option value=loan><?php echo $msgstr["prestamo"]?>
-  				<option value=acquisitions><?php echo $msgstr["acquisitions"]?>
 
-  			</select>
-          <?php } ?>
-  			<?php echo $msgstr["lang"]?>:
-            <select name="lenguaje"  onchange="CambiarLenguaje()">
-            <?php
-            include "../common/inc_get-langtab.php";
-            $a=get_langtab();
-            $fp=file($a);
-            $selected="";
-            foreach ($fp as $value){
-                $value=trim($value);
-                if ($value!=""){
-                    $l=explode('=',$value);
-                    if ($l[0]!="lang"){
-                        if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-                        echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
-                        $selected="";
-                    }
-                }
-            }
-            ?>
-            </select><br>
-<?php echo $msgstr["bd"]?>:
-		<select name="baseSel" onchange="CambiarBase()" onclick="VerificarEdicion()">
-		<option value=""></option>
-<?php
-$i=-1;
-$hascopies="";
-foreach ($lista_bases as $key => $value) {
-	$xselected="";
-	$t=explode('|',$value);
-	if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$key."_CENTRAL_ALL"])){
-		if (isset($arrHttp["base_activa"])){
-			if ($key==$arrHttp["base_activa"]) 	{
-				$xselected=" selected";
-				if (isset($t[1])) $hascopies=$t[1];
-			}
-
-		}
-		if (!isset($t[1])) $t[1]="";
-		echo "<option value=\"$key|adm|".$t[1]."\" $xselected>".$t[0]."\n";
-	}
-}
-echo "</select>" ;
-if ($hascopies=="Y" and (isset($_SESSION["permiso"]["CENTRAL_ADDCO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ADDCO"]))){
-	echo "\n<script>top.db_copies='Y'\n</script>\n";
-}
-?>
-	</div>
-
-</div>
-</form>
 
 <script>
 <?php

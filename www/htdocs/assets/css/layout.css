@@ -169,30 +169,8 @@ A.menuButton {
 
 	}
 
-	.institutionalInfo {
-		float: left;
-		width: 60%;
-		display: table;
-		padding: 15px 0px 14px 15px;
-	}
-
-	.institutionalInfo IMG {
-		float: left;
-		margin: 0 8px 0 0;
-		display: inline-block;
-		height: 45px;
-	}
 
 
-	.institutionalInfo>H1, .institutionalInfo H2 {
-		margin-left: 50px;
-	}
-	.institutionalInfo H1 {
-		margin-top: 10px;
-		margin-left: 20%;
-		vertical-align: middle;
-		position: relative;
-	}
 
 
 
@@ -226,15 +204,6 @@ A.menuButton {
 
 	}
 
-	.breadcrumb {
-		float: left;
-		width: 45%;
-		padding: 11px 0px 11px 15px;
-	}
-
-	.breadcrumb H3 {
-		display: inline;
-	}
 
 	.actions {
 		float: right;
@@ -326,7 +295,7 @@ A.menuButton {
 
 	.homepage .mainBox .boxContent {
 		min-height: 101px;
-		padding: 10px 26px;
+		padding: 10px 0px;
 	}
 
 	.homepage .mainBox .boxContent .sectionIcon {
@@ -668,12 +637,12 @@ A.menuButton {
 
 	/* #Login */
 	.login {
-		padding: 2.6% 20px;
+		padding: 2.6%	 0px;
 	}
 
 	.login .loginForm {
 		margin: 0px auto;
-		width: 400px;
+		width: 350px;
 	}
 
 	.login .loginForm {

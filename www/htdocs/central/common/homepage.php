@@ -281,100 +281,13 @@ function Modulo(){
 
 	</script>
 
-<div class=heading>
-	<div class="institutionalInfo">
-		<img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../../assets/images/logoabcd.png";
-					  ?>>
-					  <h1>
-					  	<?php echo $institution_name?> </h1>
-    </div>
-	<div class="userInfo">
-		<span><?php echo $_SESSION["nombre"]?></span>,
-		<?php echo $_SESSION["profile"]?> |
-		<?php  $dd=explode("/",$db_path);
-               if (isset($dd[count($dd)-2]) and $dd[count($dd)-2]!=""){
-			   		$da=$dd[count($dd)-2];
-			   		echo " (".$da.") ";
-				}else{
-					echo " (".$db_path.") ";
-				}
-              if ( isset( $charset )) {
-                  echo " | ".$charset;
-              } else {
-                  echo " | ".$meta_encoding;
-              }
-		?> |
-		<a href="../dataentry/logout.php" xclass="button_logout"><span>[logout]</span></a><br>
 
-<div class="language">
-    <form name=cambiolang> <table border=0>
-    <tr><td><?php echo $msgstr["lang"]?>:</td>
-	<td><select name=lenguaje onchange=CambiarLenguaje()>
-        <?php
-        include "../common/inc_get-langtab.php";
-        $a=get_langtab();
-        $fp=file($a);
-        $selected="";
-        foreach ($fp as $value){
-            $value=trim($value);
-            if ($value!=""){
-                $l=explode('=',$value);
-                if ($l[0]!="lang"){
-                    if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-                    echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
-                    $selected="";
-                }
-            }
-        }
-        ?>
-        </select>
-    </td>
-    </tr>
-    <tr>
- <?php
-	$central="";
-$circulation="";
-$acquisitions="";
-foreach ($_SESSION["permiso"] as $key=>$value){
-	$p=explode("_",$key);
-	if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";
-	if (substr($key,0,8)=="CENTRAL_")  $central="Y";
-	if (substr($key,0,5)=="CIRC_")  $circulation="Y";
-	if (substr($key,0,4)=="ACQ_")  $acquisitions="Y";
 
-}
-if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
-	echo "   <td>".$msgstr["modulo"].":</td>
-    <td>\n    ";
-  	echo '<select name=modulo onchange=Modulo()>'."\n";
-  	echo '    <option value=""></option>'."\n";
-  	if ($central=="Y") {
-  		echo "    <option value=catalog";
-  		if ($_SESSION["MODULO"]=="catalog") echo " selected";
-  		echo ">".$msgstr["catalogacion"]."\n";
-  	}
-  	if ($circulation=="Y") {
-  		echo "    <option value=loan";
-  		if ($_SESSION["MODULO"]=="loan") echo " selected";
-  		echo ">".$msgstr["prestamo"]."\n";
-  	}
-  	if ($acquisitions=="Y") {
-  		echo "    <option value=acquisitions";
-  		if ($_SESSION["MODULO"]=="acquisitions") echo " selected";
-  		echo ">".$msgstr["acquisitions"]."\n";
-  	}
-}
+
+<?php
+require_once ('institutional_info.php');
+
 ?>
-    </select></td>
-    </table>
-    </form>
-    </div>
-	</div>
-	<div class="spacer">&#160;</div>
-</div>
 
 
 
@@ -432,7 +345,7 @@ global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
 			</div>
 			<div class="sectionButtons">
             	<div class="searchTitles">
-					<form name="admin" action="../dataentry/inicio_main.php" method="post">
+
 					<input type=hidden name=encabezado value=s>
 					<input type=hidden name=retorno value="../common/inicio.php">
 					<input type=hidden name=modulo value=catalog>

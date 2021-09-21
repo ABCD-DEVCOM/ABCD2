@@ -805,22 +805,44 @@ function Unload(){
 
 </script>
 
+<style type="text/css">
+	*, html {
+		height: 100%;
+	}
+</style>
+
+
 </head>
 
-<frameset rows=<?php if (isset($FRAME_1H) and trim($FRAME_1H)!="") echo $FRAME_1H; else echo '80';?>,<?php if (isset($FRAME_2H) and trim($FRAME_2H)!="") echo $FRAME_2H; else echo '60'; ?>,* cols=* border=0>
+<body style="height:100%; overflow: hidden;">
+
 <?php
 if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
-    echo "<frame name=encabezado src=menubases.php?inicio=s&Opcion=Menu_o&base=$bd&cipar=$bd.par&Mfn=".$arrHttp["Mfn"]."&base_activa=$bd&per=$bdright MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";
-	echo "<frame name=menu  src=\"\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-	echo "<frame name=main  src=\"\" scrolling=yes frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-}else{
-	echo "<frame name=encabezado src=menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=".$arrHttp["Mfn"]." MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";
-	echo "<frame name=menu  src=\"blank.html\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-	echo "<frame name=main src=\"homepage.htm\" scrolling=yes frameborder=no marginheight=2   MARGINWIDTH=0 >";
+?>
+	<iframe scrolling="no" name="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" style="z-index:99999999; overflow: visible;"></iframe>
+	<iframe scrolling="no" name=menu  src="" style="border: none; width: 100%; height: 78px; position: relative; z-index:-1;"></iframe>
+	<iframe name=main  src="" style="border: none; width: 100%; height: 75%; position: relative;"></iframe>
+
+<?php
+	}else{
+?>
+
+	<frame scrolling="no" name="encabezado" class="dataentry-header"  src="menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=<?php echo $arrHttp["Mfn"];?>" SCROLLING=no >
+	<frame name="menu"  src="blank.html" scrolling=no>
+	<frame name="main" src="homepage.htm" scrolling=yes>
+
+
+
+<?php
 }
 ?>
 
-</frameset>
-</HTML>
+</div>
+
+
+
+
+
+</html>
 

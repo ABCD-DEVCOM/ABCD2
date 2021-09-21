@@ -36,7 +36,7 @@ echo "
 	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/typeofrecs.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
 	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/typeofrecs.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: typeofrecs.php</font>";
+	echo " Script: typeofrecs.php";
 	echo "</div>\n";
 
 //READ THE DATAENTRY WORKSHEET TO DETERMINE THE AVAILABILITY FOR THE OPERATOR
@@ -71,31 +71,34 @@ $fp=file($tr);
 
 ?>
 <div class="middle form">
-			<div class="formContent">
-<center>
-<h3><?php echo $msgstr["typeofr"]?></h3>
-<table>
-<?php
-$ix=0;
-$tr="";
-$nr="";
-foreach($fp as $value){
-	$value=trim($value);
-	if ($value!=""){
-		if ($ix==0){  				//THE FIRST LINE MUST CONTAIN THE TAGS THAT DEFINES THE TYPE OF RECORD AND BIBLIOGRAPHIC LEVEL			$ttm=explode(" ",$value);			$tl=trim($ttm[0]);
+	<div class="formContent">
+	<center>
+	<h3><?php echo $msgstr["typeofr"]?></h3>
+		<table cellspacing="12" width="30%">
+		<?php
+		$ix=0;
+		$tr="";
+		$nr="";
+		foreach($fp as $value){
+		$value=trim($value);
+			if ($value!=""){
+			if ($ix==0){  				//THE FIRST LINE MUST CONTAIN THE TAGS THAT DEFINES THE TYPE OF RECORD AND BIBLIOGRAPHIC LEVEL
+			$ttm=explode(" ",$value);
+			$tl=trim($ttm[0]);
 			if (isset($ttm[1])) $nr=trim($ttm[1]);
-			$ix=1;		}else{
+			$ix=1;
+			}else{
 			$ttm=explode('|',$value);
 			$cod=$ttm[0];
 			$ipos=strpos($cod,".");
 			$cod=substr($cod,0,$ipos);
-            if (isset($wks_p[$cod]))
-				echo "<tr><td><a href=\"javascript:top.wks='".$value."|$tl|$nr';top.Menu('crear')\">".$ttm[3]."</a></td>\n";
+			if (isset($wks_p[$cod]))
+				echo "<tr><td><a class='button_browse edit' href=\"javascript:top.wks='".$value."|$tl|$nr';top.Menu('crear')\">".$ttm[3]." <i class='fas fa-arrow-right'></i></a></td></tr>\n";
+			}
 		}
-	}
-}
-?>
-</table>
+		}
+		?>
+		</table>
+	</div>
 </div>
-</div>
-</body></html>
+
