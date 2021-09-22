@@ -823,7 +823,7 @@ if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
 
 ?> 
-	<iframe scrolling="no" name="encabezado" id="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" style="z-index:99999999; overflow: visible;" frameborder="0" allowfullscreen wmode="transparent"></iframe>
+	<iframe scrolling="no" name="encabezado" id="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" frameborder="0" ></iframe>
 
 	<iframe scrolling="no" name=menu id=menu src="" style="border: none; width: 100%; height: 78px; position: relative;" frameborder="0" allowfullscreen wmode="transparent"></iframe>
 	<iframe name="main" id="main" src="" style="border: none; width: 100%;  position: relative;"></iframe>
@@ -844,8 +844,7 @@ if (isset($arrHttp["base"])){
 
 </div>
 
-    <script>
-
+<script>
     // Selecting the iframe element
     var iframeEncabezado = document.getElementById("encabezado");
     var iframeMenu = document.getElementById("menu");
