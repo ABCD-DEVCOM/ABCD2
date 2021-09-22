@@ -292,7 +292,6 @@ A.singleButton .sb_rb {
 	background-color: var(--blue-abcd);
 	height: 45px;
 	width: 100%;
-
 }
 
 
@@ -363,6 +362,9 @@ nav.heading-nav, {
 	margin: 0;
 	vertical-align: top;
 	background-color: var(--blue-abcd);
+  transition-property: width;
+  transition-duration: 5s;
+  transition-delay: 2s;
 }
 
 nav.heading-nav ul {
@@ -394,6 +396,7 @@ nav.heading-nav a, nav.heading-nav button {
 	border: none;
 	padding: 0 8px;
 	vertical-align: middle;
+
 }
 
 nav.heading-nav li ul button {
@@ -432,6 +435,7 @@ nav.heading-nav ul ul li {
 	display:list-item;
 	position: relative;
 	margin-left: -80px;
+
 }
 
 
@@ -528,8 +532,9 @@ li a.bt-exit:hover {
 
 
 
-select.lang:active {
+.lang:active {
     border: 1px solid #000;
+    pointer-events: initial;
 }
 
 
@@ -1040,14 +1045,64 @@ A.homeButton IMG{
 
 /*TOOLBAR*/
 
+
+
+
+/*
+.ABCD_menubases iframe:hover {
+	position: relative;
+	background: red;
+}
+*/
+
+div.ABCD_menu {
+	z-index: 99999999;
+	background: yellow; 
+}
+
+div.ABCD_menu:hover{
+	z-index: 99999999;
+	background: yellow;
+	height: 50px; 
+}
+
+.ABCD_main {
+	z-index: 11;
+}
+
+.ABCD_menubases {
+	height: 200px;
+}
+.ABCD_menubases iframe {
+    height:50px;
+    overflow:visible;
+    z-index: 99999999;
+    pointer-events: initial; 
+}
+
+
+
 iframe.dataentry-header {
+	height: 50px; 
+	width: 100%;
+	border: none;
+}
+
+iframe.open{
+	border: none; 
+	width: 100%;
+	position: relative; 
+	height: 600px; 
+	background: pink;
+}
+
+iframe.close {
 	border: none; 
 	width: 100%;
 	position: relative; 
 	height: 50px; 
-	overflow-y: hidden;
+		background: yellow;
 }
-
 
 body.toolbar-dataentry {
 	background: var(--gray-light);

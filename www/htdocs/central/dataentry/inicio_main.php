@@ -820,10 +820,18 @@ function Unload(){
 if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
 ?>
-	<iframe scrolling="no" name="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" style="z-index:99999999; overflow: visible;"></iframe>
-	<iframe scrolling="no" name=menu  src="" style="border: none; width: 100%; height: 78px; position: relative; z-index:-1;"></iframe>
-	<iframe name=main  src="" style="border: none; width: 100%; height: 75%; position: relative;"></iframe>
+	<div class="ABCD_menubases" id="ABCD_menubases" >
+	<iframe onmouseover="changeClass2();"  onclick="changeClass();"  scrolling="no" id="encabezado" name="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>"></iframe>
+	</div>
 
+	<div class="ABCD_menu" style="height: 80px; margin: 0; vertical-align: top; margin-top: -155px;">
+	<iframe scrolling="no" name=menu  src="" style=" border: none; width: 100%; height: 78px; position: relative;  top: 0;"></iframe>
+
+	</div>
+
+	<div class="ABCD_main" style="background: green; height: 100%;">
+	<iframe name=main  src="" style="border: none; width: 100%; height: 75%; position: relative;"></iframe>
+	</div>
 <?php
 	}else{
 ?>
@@ -840,9 +848,32 @@ if (isset($arrHttp["base"])){
 
 </div>
 
+    <script>
 
+function changeClass2() {
+    document.getElementById("encabezado").className = "open";
+}
 
+function changeClass() {
+    document.getElementById("encabezado").className = "close";
+}
 
-
-</html>
+    // Selecting the iframe element
+    var iframeEncabezado = document.getElementById("encabezado");
+    var iframeMenu = document.getElementById("menu");
+    var iframeMain = document.getElementById("main");
+   
+    // Adjusting the iframeMain height onload event
+    iframeMain.onload = function() {
+    	var Todobody = window.screen.height;
+    	var encabezado = iframeEncabezado.contentWindow.document.body.scrollHeight
+    	var menu = iframeMenu.contentWindow.document.body.scrollHeight
+    	var janela = iframeMain.contentWindow.document.body.scrollHeight
+	   	var toolbar = (encabezado + menu) * 2;
+	   	var valorfolga = -toolbar;
+        var folga = Todobody - toolbar;
+        iframeMain.style.height = folga + 'px';
+		//alert (folga);
+    }
+</script>
 
