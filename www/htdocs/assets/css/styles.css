@@ -146,7 +146,7 @@ textarea.par {
 
 INPUT.textEntryFocus, TEXTAREA.textEntryFocus {
 	border-color: #5e88b6;
-	background: #fff;
+	background: var(--white);
 }
 
 INPUT.superTextEntry,
@@ -186,7 +186,7 @@ SELECT.singleTextEntry {
 /* #defaultButton classes */
 A.defaultButton {
 	text-decoration: none;
-	color: #fff;
+	color: var(--white);
 }
 
 A.defaultButton:hover IMG {
@@ -206,16 +206,37 @@ A.defaultButton STRONG {
 /* #menuButton classes */
 A.menuButton {
 	text-align: right;
-	border: 1px solid var(--blue);
+	border: 1px solid var(--info);
 	padding: 8px;
 	width: 200px;
 	border-radius: 3px;
 	margin: 5px;
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	transform: translateY(0);
+	transition: transform 150ms, box-shadow 150ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: bottom;
+
+
 }
 
 A.menuButton:hover  {
-	background-color: #4E617C;
-	color: var(--white);
+	background-color: var(--info);
+	color: var(--blue);
+	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+	transform: translateY(-2px);	
+}
+
+a.menuButton span {
+	padding: 4px;
+	height: 100%;
+	width: 150px;
+	float: left;
+	text-align: left;
+	margin: auto 50px;
+	font-size: 85%;
 }
 
 
@@ -386,7 +407,7 @@ nav.heading-nav ul li {
 nav.heading-nav a {
 	background-color: var(--blue-abcd);
 	display: block;	
-	color: #FFF;
+	color: var(--white);
 	height: 45px;
 	line-height: 60px;
 	text-decoration:none;
@@ -405,7 +426,7 @@ nav.heading-nav select {
 	text-transform: uppercase;
 	background-color: var(--blue-abcd);
 	display: block;	
-	color: #fff;
+	color: var(--white);
 
 	height: 43px;
 	width: 60px;
@@ -576,7 +597,7 @@ li a.bt-exit:hover {
 /*#middle classes */
 .middle {
 	background: var(--gray40);
-	min-height: 100vh;
+	min-height: 50vh;
 }
 
 .ActionFooter {
@@ -649,7 +670,7 @@ li a.bt-exit:hover {
 }
 
 .homepage .mainBoxHighlighted .boxContent {
-	background: #fff url('../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
+	background: var(--white) url('../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
 	border-color: #b2c2d4
 }
 
@@ -676,23 +697,65 @@ li a.bt-exit:hover {
 .homepage .mainBoxHighlighted .boxBottom .bbRight {
 	background: url('../images/mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
 }
+
+
 .homepage .mainBox .boxContent .sectionTitle {
-		font-size: 1.5rem;
-		padding: 0 8px;
+		display: inline-block;
+		width: 100%;
+		height: 42px;
+		padding: 0;
+		box-sizing: border-box;
+		top: 0;
+		position: absolute;
 }
 
-.homepage .mainBox .boxContent .sectionTitle H4 {
-	font-weight: normal;
+.homepage .mainBox .boxContent .sectionTitle h1 {
+	margin-left: 35px;
+	font-size: 1.5rem;
+	font-weight: 400;
+	width: 90%;
+	color: var(--blue-abcd);
 }
 
-.homepage .mainBox .boxContent .sectionTitle H4 STRONG {
-	color: #265182;
-	font-weight: normal;
+.homepage .mainBox .boxContent .sectionTitle img {
+	height: 50px;
+	float: left;
+	padding: 10px 0;
+	vertical-align: middle;
 }
 
-.homepage .mainBox .boxContent .sectionTitle SPAN {
-	color: #4c4c4c;
+
+.homepage .mainBox .loanSection {
+	background: url('../svg/circ/bg_loan.svg') no-repeat left top;
+	background-size: 150px;
+	background-color: var(--white);
 }
+
+.homepage .mainBox .catalogSection {
+	background: url('../svg/catalog/bg_catalog.svg') no-repeat left top;
+	background-size: 150px;
+	background-color: var(--white);
+}
+
+.homepage .mainBox .acqSection {
+	background: url('../svg/acq/bg_acq.svg') no-repeat left top;
+	background-size: 150px;
+	background-color: var(--white);
+}
+
+	.homepage .mainBox .boxContent .sectionButtons {
+		justify-content: center;
+		margin: 40px auto;
+		width: 65%;
+	}
+
+	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+		margin-top: 3px;
+	}
+	.homepage .mainBox .boxContent {
+		min-height: 101px;
+		padding: 30px 10px;
+	}
 
 .homepage .mainBox .titleSection .sectionIcon {
 	background: url('../images/database.png') no-repeat center;
@@ -718,18 +781,11 @@ li a.bt-exit:hover {
 	background: url('../images/icon/mainBox_maskSection.png') no-repeat center;
 }
 
-.homepage .mainBox .toolSection .sectionIcon {
-	background: url('../images/icon/mainBox_toolSection.png') no-repeat center;
-	background-size: contain;
-}
-
-.homepage .mainBox .loanSection .sectionIcon {
-	background: url('../images/icon/mainBox_loanSection.png') no-repeat center;
-}
 
 .homepage .mainBox .helpSection .sectionIcon {
 	background: url('../images/icon/mainBox_helpSection.png') no-repeat center;
-}
+
+}	
 
 
 .homepage .mainBox .boxContent .searchTitles .stInput LABEL {
@@ -742,12 +798,10 @@ li a.bt-exit:hover {
 }
 
 .homepage .mainBox A.defaultButton:hover IMG {
-	background-color: #fff;
+	background-color: var(--white);
 }
 
-.homepage .mainBox A.menuButton:hover IMG {
-	background-color: #fff;
-}
+
 /*#END #homepage classes */
 
 /* #buttons background classes */
@@ -755,21 +809,7 @@ A.listButton IMG {
 	background: url('../images/icon/defaultButton_list.png') no-repeat center;
 }
 
-A.databaseButton IMG {
-	background: url('../images/icon/database.png') no-repeat center;
-}
 
-A.update_databaseButton IMG {
-	background: url('../images/icon/kexi.png') no-repeat center;
-}
-A.utilsButton IMG {
-	background: url('../images/icon/agt_utilities.png') no-repeat center;
-}
-A.exploreButton {
-	background: url('../svg/circ/ic_fluent_key_24_regular.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
-}
 A.newButton IMG {
 	background: url('../images/icon/ascii.png') no-repeat center;
 }
@@ -778,65 +818,325 @@ A.importButton IMG {
 	background: url('../images/icon/defaultButton_import.png') no-repeat center;
 }
 
-A.exportButton IMG {
-	background: url('../images/icon/defaultButton_export.png') no-repeat center;
+
+/* CATALOG */
+
+A.DataEntry {
+	background: url('../svg/catalog/ic_fluent_form_new_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
 }
 
-A.reportButton IMG {
-	background: url('../images/icon/defaultButton_report.png') no-repeat center;
+A.CatstatButton {
+	background: url('../svg/catalog/ic_fluent_data_usage_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
 }
 
-A.toolsButton IMG {
-	background: url('../images/icon/tools.png') no-repeat center;
+A.reportButton  {
+	background: url('../svg/catalog/ic_fluent_print_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
 }
-A.userButton IMG {
-	background: url('../images/icon/defaultButton_user.png') no-repeat center;
+
+A.origendatabaseButton {
+ 	background: url('../images/icon/basededatosorigen.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
 }
+
+A.utilsButton {
+	background: url('../svg/catalog/ic_fluent_toolbox_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.z3950Button {
+	background: url('../svg/catalog/ic_fluent_arrow_download_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.update_databaseButton {
+	background: url('../svg/catalog/ic_fluent_content_settings_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.databaseButton {
+	background: url('../svg/catalog/ic_fluent_database_plus_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
+}
+
+A.CataluserButton {
+	background: url('../svg/catalog/ic_fluent_people_settings_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.resetButton {
+	background: url('../svg/catalog/ic_fluent_arrow_reset_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.translateButton {
+	background: url('../svg/catalog/ic_fluent_globe_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.CatexploreButton {
+	background: url('../svg/catalog/ic_fluent_folder_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+
+
+/* END CATALOG */
+
+
+
+
+/* CIRCULATION  */
+A.exploreButton {
+	background: url('../svg/circ/ic_fluent_key_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.toolsButton {
+	background: url('../svg/circ/ic_fluent_settings_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.userButton {
+	background: url('../svg/circ/ic_fluent_people_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.statButton {
+	background: url('../svg/circ/ic_fluent_book_pulse_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
+}
+
+A.receivingButton  {
+	background: url('../svg/circ/ic_fluent_book_pulse_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.loanButton {
+	background: url('../svg/circ/ic_fluent_arrow_routing_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.returnButton {
+	background: url('../svg/circ/ic_fluent_arrow_wrap_32_filled.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.renewButton {
+	background: url('../svg/circ/ic_fluent_arrow_sync_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.sanctionsButton {
+	background: url('../svg/circ/ic_fluent_person_money_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.statusitemButton {
+ 	background: url('../svg/circ/ic_fluent_book_question_mark_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.userstatmentButton {
+ 	background: url('../svg/circ/ic_fluent_person_accounts_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.userhistoryButton {
+ 	background: url('../svg/circ/ic_fluent_person_info_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.transactionsButton {
+ 	background: url('../svg/circ/ic_fluent_arrow_swap_32_filled.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.statisticsusersButton {
+ 	background: url('../svg/circ/ic_fluent_people_list_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.statisticsanctionsButton {
+ 	background: url('../svg/circ/ic_fluent_money_calculator_32_regular.svg') no-repeat center;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.reportsButton {
+ 	background: url('../svg/circ/ic_fluent_data_usage_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.reserveButton {
+	background: url('../svg/circ/ic_fluent_book_clock_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+/* END CIRCULATION  */
+
+
+/* ACQUISITIONS */
+A.resumeButton {
+	background: url('../svg/acq/ic_fluent_document_landscape_data_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.newsuggestionButton {
+ 	background: url('../svg/acq/ic_fluent_person_chat_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.approvedsuggestionsButton {
+ 	background: url('../svg/acq/ic_fluent_document_checkmark_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.biddingButton {
+	background: url('../svg/acq/ic_fluent_money_calculator_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.decisionButton {
+	background: url('../svg/acq/ic_fluent_cart_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.createpurchaseorderButton {
+ 	background: url('../svg/acq/ic_fluent_table_add_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.requisitionButton {
+	background: url('../svg/acq/ic_fluent_print_add_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.pendingButton {
+	background: url('../svg/acq/ic_fluent_document_bullet_list_clock_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.ACQreceivingButton  {
+	background: url('../svg/acq/ic_fluent_receipt_add_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.suggestButton {
+	background: url('../svg/acq/ic_fluent_person_feedback_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.providersButton {
+ 	background: url('../svg/acq/ic_fluent_building_shop_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.copiesdbButton {
+	background: url('../svg/acq/ic_fluent_table_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.ACQresetButton {
+	background: url('../svg/acq/ic_fluent_arrow_reset_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+/* END ACQUISITIONS */
 
 A.pdfButton IMG {
 	background: url('../images/icon/defaultButton_pdf.png') no-repeat center;
 }
-
 A.cancelButton IMG {
 	background: url('../images/icon/defaultButton_cancel.png') no-repeat center;
 }
-
 A.saveButton IMG {
 	background: url('../images/icon/defaultButton_save.png') no-repeat center;
 }
-/*
 A.nextButton IMG {
 	background: url('../images/icon/defaultButton_next.png') no-repeat center;
-}*/
-
+}
 A.backButton IMG {
 	background: url('../images/icon/defaultButton_back.png') no-repeat center;
 }
-
 A.eraseButton IMG {
 	background: url('../images/icon/singleButton_erase.png') no-repeat center;
 }
-
 A.indexButton IMG {
 	background: url('../images/icon/singleButton_e.png') no-repeat center;
-}
-
-A.statButton IMG {
-	background: url('../images/icon/kchart.png') no-repeat center;
-}
-A.suggestButton IMG {
-	background: url('../images/icon/suggestions.jpg') no-repeat center;
-}
-A.requisitionButton IMG {
-	background: url('../images/icon/requisition.png') no-repeat center;
-}
-A.receivingButton  {
-	background: url('../svg/circ/ic_fluent_book_pulse_24_regular.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
-}
-A.biddingButton IMG {
-	background: url('../images/icon/bidding.png') no-repeat center;
 }
 A.checkButton IMG {
 	background: url('../images/icon/clean.png') no-repeat center;
@@ -844,95 +1144,11 @@ A.checkButton IMG {
 A.discardButton IMG {
 	background: url('../images/icon/trashcan_full.png') no-repeat center;
 }
-A.copiesdbButton IMG {
-	background: url('../images/icon/kmultiple.png') no-repeat center;
-}
-A.decisionButton IMG {
-	background: url('../images/icon/kexi_kexi.png') no-repeat center;
-}
-A.resumeButton IMG {
-	background: url('../images/icon/spreadsheet.png') no-repeat center;
-}
-A.pendingButton IMG {
-	background: url('../images/icon/file-manager.png') no-repeat center;
-}
-
-A.resetButton IMG {
-	background: url('../images/icon/agt_reload.png') no-repeat center;
-}
-A.z3950Button IMG {
-	background: url('../images/icon/defaultButton_import.png') no-repeat center;
-}
 A.copiesdbaddButton IMG {
 	background: url('../images/icon/db_update.png') no-repeat center;
 }
-A.loanButton {
-	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
-}
-A.returnButton {
-	background: url('../svg/circ/ic_fluent_arrow_wrap_20_filled.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
-}
-A.renewButton {
-	background: url('../svg/circ/ic_fluent_arrow_sync_24_regular.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
-}
-A.sanctionsButton {
-	background: url('../svg/circ/ic_fluent_person_money_24_regular.svg') no-repeat left;
-		background-size: 44px;
-	background-position: 10px;
-}
-A.statusitemButton {
- 	background: url('../svg/circ/ic_fluent_book_question_mark_24_regular.svg') no-repeat left;
- 	background-size: 44px;
-	background-position: 10px;
-}
-A.userstatmentButton {
- 	background: url('../svg/circ/ic_fluent_person_accounts_24_regular.svg') no-repeat left;
- 	background-size: 44px;
-	background-position: 10px;
-}
-A.userhistoryButton {
- 	background: url('../svg/circ/ic_fluent_person_accounts_24_regular.svg') no-repeat left;
- 	background-size: 44px;
-	background-position: 10px;
-}
-A.transactionsButton {
- 	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat left;
- 	background-size: 44px;
-	background-position: 10px;
-}
-A.statisticsusersButton {
- 	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat center;
-}
-
-A.statisticsanctionsButton {
- 	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat center;
- 	background-size: 44px;
-	background-position: 10px;
-}
-
-A.newsuggestionButton IMG{
- 	background: url('../images/icon/newsuggestion.png') no-repeat center;
-}
-A.providersButton IMG{
- 	background: url('../images/icon/providers.png') no-repeat center;
-}
 A.purchaseorderButton IMG{
  	background: url('../images/icon/purchaseorder.png') no-repeat center;
-}
-A.createpurchaseorderButton IMG{
- 	background: url('../images/icon/createpurchaseorder.jpg') no-repeat center;
-}
-A.approvedsuggestionsButton IMG{
- 	background: url('../images/icon/approvedsuggestions.png') no-repeat center;
-}
-A.origendatabaseButton IMG{
- 	background: url('../images/icon/basededatosorigen.png') no-repeat center;
 }
 A.usersconfigureButton IMG{
  	background: url('../images/icon/usersconfigure.png') no-repeat center;
@@ -954,18 +1170,6 @@ A.calendarButton IMG{
 }
 A.receiptsButton IMG{
  	background: url('../images/icon/receipts.png') no-repeat center;
-}
-A.reportsButton {
- 	background: url('../svg/circ/ic_fluent_data_usage_24_regular.svg') no-repeat left;
- 	background-size: 44px;
-	background-position: 10px;
-
-}
-
-A.reserveButton {
-	background: url('../svg/circ/ic_fluent_book_clock_24_regular.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
 }
 A.homeButton IMG{
  	background: url('../../images/icon/home.png') no-repeat center;
@@ -1005,7 +1209,7 @@ A.homeButton IMG{
 	border-right: 1px solid #9d9d9d;
 	background: #848484;
 	border-bottom: 3px solid #848484;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	border:1px solid #9d9d9d;
 }
@@ -1062,7 +1266,7 @@ A.homeButton IMG{
 
 .listTable .rowOver .tButton:hover {
 	background: #88a6d3;
-	color: #fff;
+	color: var(--white);
 }
 
 .listTable .rowOver .tErase:hover {
@@ -1258,7 +1462,7 @@ table.toolbar-dataentry a {
 /*
 .toolbarDivider {
 	background-color : var(--white);
-	border-right : solid #FFFFFF 1px;
+	border-right : solid var(--white)FFF 1px;
 	height : 100%;
 	margin-bottom : 2px;
 	margin-top : 1px;
@@ -1467,7 +1671,7 @@ td.input-fdt {
 
 .table-fdt .rowOver .tButton:hover {
 	background: #88a6d3;
-	color: #fff;
+	color: var(--white);
 }
 
 .table-fdt .rowOver .tErase:hover {
@@ -1646,7 +1850,7 @@ td.table-fdt-one {
 }
 
 .formFoot .helper {
-	color: #fff;
+	color: var(--white);
 	border-right: 1px solid #8da2c1;
 }
 h4 {
@@ -1695,7 +1899,7 @@ TD.showSTitle .collectionInfo {
 }
 
 TD.showSTitle .collectionMode {
-	background: #fff;
+	background: var(--white);
 }
 
 .rowOver TD.showSTitle .collectionMode {
@@ -1794,13 +1998,12 @@ a.bt-sign {
 /* BUTTONS 2021  */
 
 
-.button_browse, .submit, input[type=submit]{
-
+.button_browse, .submit, input[type=submit], input[type=button]{
 	border-width: 1px;
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1826,10 +2029,19 @@ a.bt-sign {
 
 
 .button_browse.show, .submit, input[type=submit], input[type=button] {
+/*	background: var(--blue);
+	color: var(--light);
+	border-color: var(--blue);
+	text-decoration: none;
+*/
+}
+
+.button_browse.show {
 	background: var(--blue);
 	color: var(--light);
 	border-color: var(--blue);
 	text-decoration: none;
+	padding: 5px 13px;
 
 }
 
@@ -1882,7 +2094,7 @@ a.bt-sign {
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1915,7 +2127,7 @@ a.bt-sign {
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1958,7 +2170,7 @@ a[class^="bt-"] {
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -2055,7 +2267,7 @@ nav ul {
 .nav a {
   display:block;
   background: var(--blue);
-  color: #fff;
+  color: var(--white);
   text-decoration: none;
   padding: 0.8em 1.8em;
   font-size: 80%;

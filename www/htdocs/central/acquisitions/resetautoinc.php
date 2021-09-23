@@ -99,11 +99,10 @@ if (isset($arrHttp['encabezado'])) {
 		<form name="forma1" action="resetautoinc_update.php" method="post" onsubmit="javascript:return false">
 		<input type="hidden" name="base" value="<?php echo $base; ?>">
 			<label><?php echo $msgstr["lastcn"]; ?></label>
-			<input type="textbox" name="control_n" value="<?php echo $cn_val;?>">
-			<input type="submit" name="send" value="<?php echo $msgstr["update"]; ?>" onclick="Enviar()">
+			<input type="text" name="control_n" value="<?php echo $cn_val;?>">
+			<input type="submit" class="bt-green" name="send" value="<?php echo $msgstr["update"]; ?>" onclick="Enviar()">
 		</form>
 	</div>
 </div>
-
 
 <?php include("../common/footer.php");?>

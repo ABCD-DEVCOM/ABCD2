@@ -393,7 +393,7 @@ if (file_exists($db_path."loans.dat")){
 	 		  }
 
 	?>
-	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
+	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
         <div id=kardex style="display:none;">
             <br>
 			Año: <input type=text name=year size=4>
@@ -449,13 +449,13 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="")
 ?>
  onclick="document.inventorysearch.usuario.value=''"/>
 
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
 
 		<tr><br><td>
 		<label for="searchExpr">
 			<strong><?php echo $msgstr["comments"]?></strong>
 		</label></td><td><br><input type=text name=comments   size=100 maxlength=100>
-		<input type="submit" name="prestar" value="<?php echo $msgstr["loan"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="submit" name="prestar" value="<?php echo $msgstr["loan"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 
 		</td></table>
         <?php echo $msgstr["clic_en"]." <i>[".$msgstr["loan"]."]</i> ".$msgstr["para_c"]?>

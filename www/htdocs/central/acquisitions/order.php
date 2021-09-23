@@ -141,12 +141,12 @@ function EnviarForma(){
 <?php
 
 ?>
+<?php include("order_menu.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["purchase"].": ".$msgstr["createorder"]?>
 	</div>
 	<div class="actions">
-		<?php include("order_menu.php");?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -236,7 +236,7 @@ echo " Script: order.php\n";
 	}
 ?>
 </table>
-&nbsp; &nbsp;<input type=submit name=send value=<?php echo $msgstr["order"]?> onclick=EnviarForma()>
+<input class="bt-blue" type=submit name=send value=<?php echo $msgstr["order"]?> onclick=EnviarForma()>
 </form>
 </div>
 	</div>

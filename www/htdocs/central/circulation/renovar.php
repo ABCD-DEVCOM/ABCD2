@@ -83,7 +83,7 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: renovar.php</font>\n";
+echo " Script: renovar.php\n";
 ?>
 	</div>
 
@@ -106,8 +106,8 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 		<input type="text" name="searchExpr" id="searchExpr" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
         <input type=hidden name=base value=trans>
         <?php if (isset($arrHttp["usuario"])) echo "<input type=hidden name=usuario value=".$arrHttp["usuario"].">"?>
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
-		<input type="submit" name="renovar" value="<?php echo $msgstr["renew"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
+		<input type="submit" name="renovar" value="<?php echo $msgstr["renew"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 		</td>
 
 
@@ -124,7 +124,7 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 </form>
 <?php
 include("../common/footer.php");
-echo "</body></html>" ;
+
 if (isset($arrHttp["error"])){
 	echo "<script>
 			alert('".$arrHttp["error"]."')

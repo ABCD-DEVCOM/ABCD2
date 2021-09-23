@@ -234,6 +234,9 @@ function ChangeLang(){
 			$central="";
 			$circulation="";
 			$acquisitions="";
+			$style_cat="";
+			$style_loan="";
+			$style_acq="";
 
 
 			foreach ($_SESSION["permiso"] as $key=>$value){

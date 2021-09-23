@@ -135,7 +135,7 @@ if (isset($arrHttp["db_inven"])){
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/sala.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sala.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala.php </font>
+echo " Script: circulation/sala.php
 	</div>";
 // prestar, reservar o renovar
 ?>
@@ -206,7 +206,7 @@ echo "
 		</td><td valign=top>
 		<textarea name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" /></textarea>
 
-		<input type="submit" name="Enviar" value="<?php echo $msgstr["r_sala"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="submit" name="Enviar" value="<?php echo $msgstr["r_sala"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 		</td></table>
     <p><br><br>
 	</form>

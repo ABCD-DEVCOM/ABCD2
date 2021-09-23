@@ -154,7 +154,7 @@ include("../common/institutional_info.php");
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: devolver.php </font>
+echo " Script: devolver.php
 	</div>";
 // prestar, reservar o renovar
 ?>
@@ -173,8 +173,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: devolver.php </font>
         <input type=hidden name=base value=trans>
         <input type=hidden name=searchExpr>
         </td><td valign=top>
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
-		<input type="submit" name="reservar" value="<?php echo $msgstr["return"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
+		<input type="submit" name="reservar" value="<?php echo $msgstr["return"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 		</td></table>
 		<?php echo $msgstr["clic_en"]." <i>[".$msgstr["return"]."]</i> ".$msgstr["para_c"]?>
 	</form>

@@ -57,16 +57,6 @@ A.menuButton {
 		float: left;
 	}
 
-	A.menuButton SPAN {
-		/*display: -moz-inline-block; */
-		display: inline-block;
-		vertical-align: middle;
-		width: 190px;
-		padding: 12px 0px 0px 0px;
-		float: left;
-	}
-
-
 
 	A.multiLine SPAN {
 		padding-top: 5px;
@@ -295,18 +285,11 @@ A.menuButton {
 
 	.homepage .mainBox .boxContent {
 		min-height: 101px;
-		padding: 10px 0px;
+		padding: 30px;
 	}
 
-	.homepage .mainBox .boxContent .sectionIcon {
-		vertical-align: top;
-		float: left;
-		width: 80px;
-		height: 95px;
-		margin-right: 5px;
-		display: inline;
-	}
 
+/*
 	.homepage .mainBox .boxContent .sectionTitle {
 			vertical-align: baseline;
 		float: left;
@@ -324,25 +307,19 @@ A.menuButton {
 		overflow: hidden;
 	}
 
-	.homepage .mainBox .boxContent .sectionButtons {
-		margin: 27px 0px 0px 0px;
-		float: left;
-		width: 65%;
-	}
 
-	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
-		margin-top: 3px;
-	}
+
 
 	.homepage .mainBox .boxContent .searchTitles label{
 	display: block;	
 }
+/*
 	.homepage .mainBox .boxContent .searchTitles {
 		width: 100%;
 		clear: both;
 		float: left;
 	}
-
+*/
 	.homepage .mainBox .boxContent .searchTitles .stInput {
 		width: auto;
 		display: inline-block;

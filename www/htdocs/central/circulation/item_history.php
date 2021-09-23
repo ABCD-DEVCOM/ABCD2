@@ -58,7 +58,7 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/item_history.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo "<a href=http://www.abcdwiki.net?title=Historia_de_un_item target=_blank>abcdwiki</a>  &nbsp; ";
-echo "<font color=white>&nbsp; &nbsp; Script: item_history.php </font>
+echo " Script: item_history.php
 	</div>";
 // prestar, reservar o renovar
 ?>
@@ -76,7 +76,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: item_history.php </font>
 		</label>
 		</td><td>
 		<input type="text" name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,1)" />
-		<input type="submit" name="reservar" value="<?php echo $msgstr["search"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="submit" name="reservar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 		</td>
 	</table>
 	</div>

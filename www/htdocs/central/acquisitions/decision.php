@@ -118,15 +118,13 @@ function Enviar(sort){
 
 }
 </script>
-<?php
-
-?>
+<?php include("suggestions_menu.php")?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["suggestions"].": ".$msgstr["decision"]?>
 	</div>
 	<div class="actions">
-		<?php include("suggestions_menu.php")?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

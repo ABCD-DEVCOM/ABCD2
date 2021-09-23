@@ -445,7 +445,7 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
                 echo '<td class="action" nowrap>';
 
                 if ($Isis_Status==0) {
-                    echo '<button class="button_browse show" type="button" onclick="Mostrar('.$mfn.')"><i class="far fa-eye" alt="'.$msgstr["show"].'" title="'.$msgstr["show"].'"></i> '.$msgstr["show"].'</button>';
+                    echo '<button class="button_browse show bt-blue" type="button" onclick="Mostrar('.$mfn.')"><i class="far fa-eye" alt="'.$msgstr["show"].'" title="'.$msgstr["show"].'"></i> '.$msgstr["show"].'</button>';
                 
                     echo '<button class="button_browse edit" "type="button" onclick="Editar('.$mfn.','.$Isis_Status.')"><i class="fas fa-edit" alt="'.$msgstr["edit"].'" title="'.$msgstr["edit"].'"></i> '.$msgstr["edit"].'</button>';
 

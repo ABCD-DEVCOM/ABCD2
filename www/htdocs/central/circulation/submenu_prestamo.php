@@ -1,7 +1,4 @@
 <div class="toolbar-dataentry" >
-	<a class="bt-tool" href="../common/inicio.php?reinicio=s&modulo=loan">
-		<img src="../../assets/svg/circ/ic_fluent_home_24_regular.svg">
-	</a>
 
 <?php
 if (!isset($link_u)) $link_u="";
@@ -72,5 +69,8 @@ if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["C
 
 		<a class="bt-tool" href="../circulation/borrower_history.php?encabezado=s<?php echo $link_u?>" title="<?php echo $msgstr["bo_history"]?>">
 			<img src="../../assets/svg/circ/ic_fluent_person_accounts_24_regular.svg">
+		</a>
+		<a class="bt-tool" href="../common/inicio.php?reinicio=s&modulo=loan">
+			<img src="../../assets/svg/circ/ic_fluent_home_24_regular.svg">
 		</a>
 </div>
