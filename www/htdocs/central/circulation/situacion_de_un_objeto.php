@@ -252,12 +252,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["ecobj"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -271,6 +272,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: situacion_de_un_objeto.php</font>\
 ?>
 </div>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 		<form name=inventorysearch  method=post onsubmit="javascript:return false">
 <?php
@@ -354,6 +356,7 @@ if (file_exists($db_path."loans.dat")){
 	<br><br><br><br>
 	</div>
 
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php if (isset($arrHttp["base"])) echo $arrHttp["base"]?>">

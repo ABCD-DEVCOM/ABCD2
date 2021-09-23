@@ -150,6 +150,7 @@ else
 <div id="loading">
   <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
 </div>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php if (!isset($arrHttp["reserve"]))
@@ -159,7 +160,7 @@ else
 		?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -172,6 +173,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 ?>
 	</div>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox" >
 	<form name=usersearch action="" method=post onsubmit="javascript:return false">
 	<input type=hidden name=Indice>
@@ -238,6 +240,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/estado_de_cuenta.php</
 
 ?>
 </form>
+</div>
 </div>
 
 <form name=EnviarFrm method=post>

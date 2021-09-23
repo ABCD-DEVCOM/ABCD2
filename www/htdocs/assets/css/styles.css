@@ -205,24 +205,20 @@ A.defaultButton STRONG {
 
 /* #menuButton classes */
 A.menuButton {
-	text-decoration: none;
-	color: #fff;
+	text-align: right;
+	border: 1px solid var(--blue);
+	padding: 8px;
+	width: 200px;
+	border-radius: 3px;
+	margin: 5px;
 }
 
-A.menuButton:hover IMG {
+A.menuButton:hover  {
 	background-color: #4E617C;
+	color: var(--white);
 }
 
 
-A.menuButton SPAN {
-	cursor: pointer;
-}
-
-A.menuButton STRONG {
-	color: var(--gray-dark);
-	font-weight: 600;
-	letter-spacing: 0.02rem;
-}
 
 
 .inputAlert {
@@ -409,15 +405,16 @@ nav.heading-nav select {
 	text-transform: uppercase;
 	background-color: var(--blue-abcd);
 	display: block;	
-	color: #FFF;
+	color: #fff;
+
 	height: 43px;
 	width: 60px;
-	line-height: 60px;
 	text-decoration:none;
 	border: none;
-	padding: 0 8px;
+	padding: 8px;
 	vertical-align: middle;
 	box-shadow: none;
+	line-height: 60px;
 }
 
 
@@ -478,25 +475,25 @@ nav.heading-nav ul ul ul li {
 .bt-cat {
 	background-color: var(--blue-abcd);
 	border: 1px solid var(--blue-abcd);
-	background-image: url(../images/svg/ic_fluent_book_database_24_regular.svg);
+	background-image: url(../svg/ic_fluent_book_database_24_regular.svg);
 }
 
 .bt-cat.active {
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; 
 	background-color: var(--cat-color);
 	border: 1px solid var(--cat-color);
-	background-image: url(../images/svg/ic_fluent_book_database_24_filled.svg);
+	background-image: url(../svg/ic_fluent_book_database_24_filled.svg);
 }
 
 .bt-loan {
 	background-color: var(--blue-abcd);
 	border: 1px solid var(--blue-abcd);
-	background-image: url(../images/svg/ic_fluent_people_swap_24_regular.svg);
+	background-image: url(../svg/ic_fluent_people_swap_24_regular.svg);
 }
 
 .bt-loan.active {
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-	background-image: url(../images/svg/ic_fluent_people_swap_24_filled.svg);
+	background-image: url(../svg/ic_fluent_people_swap_24_filled.svg);
 	background-color: var(--loan-color);
 	border: 1px solid var(--loan-color);
 }
@@ -504,11 +501,11 @@ nav.heading-nav ul ul ul li {
 .bt-acq {
 	background-color: var(--blue-abcd);
 	border: 1px solid var(--blue-abcd);
-	background-image: url(../images/svg/ic_fluent_cart_24_regular.svg);
+	background-image: url(../svg/ic_fluent_cart_24_regular.svg);
 }
 
 .bt-acq.active {
-	background-image: url(../images/svg/ic_fluent_cart_24_filled.svg);
+	background-image: url(../svg/ic_fluent_cart_24_filled.svg);
 	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
 	background-color: var(--acq-color);
 	border: 1px solid var(--acq-color);
@@ -768,8 +765,10 @@ A.update_databaseButton IMG {
 A.utilsButton IMG {
 	background: url('../images/icon/agt_utilities.png') no-repeat center;
 }
-A.exploreButton IMG {
-	background: url('../images/icon/kdisknav.png') no-repeat center;
+A.exploreButton {
+	background: url('../svg/circ/ic_fluent_key_24_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
 }
 A.newButton IMG {
 	background: url('../images/icon/ascii.png') no-repeat center;
@@ -831,8 +830,10 @@ A.suggestButton IMG {
 A.requisitionButton IMG {
 	background: url('../images/icon/requisition.png') no-repeat center;
 }
-A.receivingButton IMG {
-	background: url('../images/icon/kword.png') no-repeat center;
+A.receivingButton  {
+	background: url('../svg/circ/ic_fluent_book_pulse_24_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
 }
 A.biddingButton IMG {
 	background: url('../images/icon/bidding.png') no-repeat center;
@@ -865,36 +866,54 @@ A.z3950Button IMG {
 A.copiesdbaddButton IMG {
 	background: url('../images/icon/db_update.png') no-repeat center;
 }
-A.loanButton IMG{
-	background: url('../images/icon/loan.png') no-repeat center;
+A.loanButton {
+	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
 }
-A.returnButton IMG{
-	background: url('../images/icon/return.png') no-repeat center;
+A.returnButton {
+	background: url('../svg/circ/ic_fluent_arrow_wrap_20_filled.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
 }
-A.renewButton IMG{
-	background: url('../images/icon/renew.png') no-repeat center;
+A.renewButton {
+	background: url('../svg/circ/ic_fluent_arrow_sync_24_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
 }
-A.sanctionsButton IMG{
-	background: url('../images/icon/sanctions.png') no-repeat center;
+A.sanctionsButton {
+	background: url('../svg/circ/ic_fluent_person_money_24_regular.svg') no-repeat left;
+		background-size: 44px;
+	background-position: 10px;
 }
-A.statusitemButton IMG{
- 	background: url('../images/icon/statusitem.png') no-repeat center;
+A.statusitemButton {
+ 	background: url('../svg/circ/ic_fluent_book_question_mark_24_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
 }
-A.userstatmentButton IMG{
- 	background: url('../images/icon/userstatment.png') no-repeat center;
+A.userstatmentButton {
+ 	background: url('../svg/circ/ic_fluent_person_accounts_24_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
 }
-A.userhistoryButton IMG{
- 	background: url('../images/icon/userhistory.png') no-repeat center;
+A.userhistoryButton {
+ 	background: url('../svg/circ/ic_fluent_person_accounts_24_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
 }
-A.transactionsButton IMG{
- 	background: url('../images/icon/transactions.png') no-repeat center;
+A.transactionsButton {
+ 	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
 }
-A.statisticsusersButton IMG{
- 	background: url('../images/icon/statisticsusers.png') no-repeat center;
+A.statisticsusersButton {
+ 	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat center;
 }
 
-A.statisticsanctionsButton IMG{
- 	background: url('../images/icon/statisticsanctions.png') no-repeat center;
+A.statisticsanctionsButton {
+ 	background: url('../svg/circ/ic_fluent_arrow_routing_24_regular.svg') no-repeat center;
+ 	background-size: 44px;
+	background-position: 10px;
 }
 
 A.newsuggestionButton IMG{
@@ -936,11 +955,17 @@ A.calendarButton IMG{
 A.receiptsButton IMG{
  	background: url('../images/icon/receipts.png') no-repeat center;
 }
-A.reportsButton IMG{
- 	background: url('../images/icon/reports.png') no-repeat center;
+A.reportsButton {
+ 	background: url('../svg/circ/ic_fluent_data_usage_24_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+
 }
-A.reserveButton IMG{
- 	background: url('../images/icon/reservar.png') no-repeat center;
+
+A.reserveButton {
+	background: url('../svg/circ/ic_fluent_book_clock_24_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
 }
 A.homeButton IMG{
  	background: url('../../images/icon/home.png') no-repeat center;
@@ -1106,6 +1131,11 @@ body.toolbar-dataentry {
 	color: var(--bgsectionInfo);
 }
 
+div.toolbar-dataentry {
+	background: var(--gray-light);
+	color: var(--bgsectionInfo);
+}
+
 .GenerarWks {
 	float: right;
 }
@@ -1114,10 +1144,17 @@ body.toolbar-dataentry {
 	float: left;
 }
 
-table.toolbar-dataentry {
+table.toolbar-dataentry  {
 	width:100%;
 	border-spacing: 0px;
 	border-collapse: collapse;
+	padding: 8px;
+	border-bottom: 1px solid var(--cyan);
+}
+
+div.toolbar-dataentry  {
+	box-sizing: border-box;
+	width:100%;
 	padding: 8px;
 	border-bottom: 1px solid var(--cyan);
 }
@@ -1131,10 +1168,24 @@ table.toolbar-dataentry select, table.toolbar-dataentry input {
 	width: 100px;
 }
 
-.toolbar-dataentry a {
+table.toolbar-dataentry a {
 	color: var(--bgsectionInfo);
 	padding: 8px;
+	text-decoration: none;
+}
 
+.toolbar-dataentry .bt-tool {
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.toolbar-dataentry .bt-tool img {
+	padding: 5px;
+	margin-top: -5px;
 }
 
 .ph-10 {
@@ -1158,7 +1209,8 @@ table.toolbar-dataentry select, table.toolbar-dataentry input {
 	padding: 4px 0;
 }
 
-.defaultButtonOver  {
+
+.defaultButtonOver, .toolbar-dataentry .bt-tool:hover  {
 	border-radius: 3px;
 	height: 24px;
 	width: 32px;
@@ -1167,7 +1219,7 @@ table.toolbar-dataentry select, table.toolbar-dataentry input {
 	cursor : pointer;
 }
 
-.defaultButtonOver img {
+.defaultButtonOver img, .toolbar-dataentry .bt-tool img:hover  {
 	filter: invert(100%) sepia(96%) saturate(4522%) hue-rotate(348deg) brightness(97%) contrast(109%);
 }
 

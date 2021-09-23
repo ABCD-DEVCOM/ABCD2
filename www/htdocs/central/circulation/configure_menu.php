@@ -43,12 +43,13 @@ $encabezado="";
 echo "<body>\n";
 $encabezado="&encabezado=s";
 include("../common/institutional_info.php");
+include("submenu_prestamo.php");
 echo "<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".
 		$msgstr["configure"]."
 	</div>
 	<div class=\"actions\">";
-	include("submenu_prestamo.php");
+	
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 </div>";

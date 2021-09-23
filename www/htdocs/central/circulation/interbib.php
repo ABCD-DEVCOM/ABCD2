@@ -261,6 +261,7 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["loan"];
@@ -268,7 +269,7 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 		?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -290,6 +291,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/interbib.php </font>
 <input type=hidden name=Opcion value=prestar>
 <input type=hidden name=inventory>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 	<table width=100% border=0>
 <?php
@@ -417,6 +419,7 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="")
 
 	</div>
 	</div>
+</div>
 </div>
 
 </form>

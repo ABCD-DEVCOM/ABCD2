@@ -94,12 +94,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -130,7 +131,8 @@ if ($_SESSION["permiso"]=="loanadm"){
 		</td></table>
 	</form>
 	</div>
-	<div class=\"spacer\">&#160;</div>
+	<div class="spacer">&#160;</div>
+	<div class="formContent">
 	<div class="searchBox">
 	<form name=inventorysearch action=numero_inventario.php method=post onsubmit="javascript:return false">
 	<table width=100%>
@@ -148,6 +150,7 @@ if ($_SESSION["permiso"]=="loanadm"){
 	</div>
 	<br><br><dd>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]?>
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">

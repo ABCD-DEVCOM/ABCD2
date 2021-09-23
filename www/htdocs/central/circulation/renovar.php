@@ -68,12 +68,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["renew"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -87,7 +88,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: renovar.php</font>\n";
 	</div>
 
 <div class="middle list">
-
+<div class="formContent">
 	<div class="searchBox">
 	<form name=inventorysearch action=renovar_ex.php method=post onsubmit="javascript:return false">
 	<input type=hidden name=vienede value="renovar">
@@ -114,6 +115,7 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 		<?php echo $msgstr["clic_en"]." <i>[".$msgstr["renew"]."]</i> ".$msgstr["para_c"]?>
 	</form>
 	</div>
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">

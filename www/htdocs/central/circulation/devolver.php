@@ -138,12 +138,13 @@ function DeleteSuspentions(){
 echo "<body onload='javascript:document.inventorysearch.inventory.focus()'>\n";
 include("../common/institutional_info.php");
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["return"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -158,7 +159,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: devolver.php </font>
 // prestar, reservar o renovar
 ?>
 <div class="middle list">
-
+<div class="formContent">
 	<div class="searchBox">
 	<form name=inventorysearch action=devolver_ex.php method=post onsubmit="javascript:return false">
 	<table>
@@ -271,6 +272,7 @@ if (isset($arrHttp["error"])){
 	";
 }
 echo "</div>";
+echo "</div>";
 include("../common/footer.php");
-echo "</body></html>" ;
+
 ?>

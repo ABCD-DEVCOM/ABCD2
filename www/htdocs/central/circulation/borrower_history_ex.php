@@ -188,12 +188,13 @@ global $msgstr,$arrHttp,$reservas_p,$signatura,$posicion_cola,$msg_1,$cont,$inst
 ?>
 <script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <body>
+<?php include("submenu_prestamo.php");?>	
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["bo_history"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -213,7 +214,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/borrower_history_ex.ph
 echo $ec_output;
 echo "</div></div>\n";
 include("../common/footer.php");
-echo "</body>
-</html>" ;
+
 }  //END FUNCTION PRODUCEOUTPUT
 ?>

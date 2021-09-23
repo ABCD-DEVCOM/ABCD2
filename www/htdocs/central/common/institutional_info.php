@@ -142,6 +142,7 @@ function ChangeLang(){
 					  ?>>
 					  <h1><?php if (isset($institution_name)) echo $institution_name;?></h1>
     </div>
+		
 		<div class="heading-database">
 		<?php	
 			global $central;
@@ -156,7 +157,7 @@ function ChangeLang(){
 							<?php if (isset($arrHttp["newindow"]))
 							echo "<input type=hidden name=newindow value=Y>\n";?>
 
-								<select class="heading-database" name=base  id="selbase" class="textEntry singleTextEntry" onchange="doReload(this.value)">
+								<select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)">
 									<option value=""><?php echo $msgstr["seleccionar"]?></option>
 									<?php
 									$i=-1;
@@ -227,13 +228,14 @@ function ChangeLang(){
 
     <nav class="heading-nav">
     <ul>
-            <li>
-
+         
 			<?php
-
+		if ($central=="Y") {
 			$central="";
 			$circulation="";
 			$acquisitions="";
+
+
 			foreach ($_SESSION["permiso"] as $key=>$value){
 			$p=explode("_",$key);
 			if (isset($p[1]) and $p[1]=="CENTRAL") $central="Y";
@@ -247,8 +249,8 @@ function ChangeLang(){
 				if ($_SESSION["MODULO"]=="catalog") $style_cat="active";
 				global $msgstr;
 		  	?>		
-
-            <form>
+            <li>
+           <form>
             	<button class="bt-mod bt-cat <?php echo $style_cat;?>" type="submit" name=modulo value="catalog" onclick="Modulo();" title="<?php echo $msgstr["modulo"]." ".$msgstr["catalogacion"];?>"></button>
             	</form>
             <?php
@@ -280,7 +282,7 @@ function ChangeLang(){
 				}
 			?>	            	
             </li>
- 
+ <?php } ?>
             <li>
 				
 <?php if ($verify_selbase=="Y") { ?>
@@ -313,7 +315,7 @@ function ChangeLang(){
 </form>
 
 
-<?php } else { ?>
+<?php } elseif ($central=="Y") { ?>
 				<form name=cambiolang class="language">
 					<select name=lenguaje onchange=CambiarLenguaje() >
 				        <?php
@@ -372,10 +374,9 @@ function ChangeLang(){
 				</li>
      
             <li>
-            	<a class="bt-exit" href="../dataentry/logout.php"><img src="../../assets/images/svg/ic_fluent_sign_out_24_regular.svg"></a>
+            	<a class="bt-exit" href="../dataentry/logout.php"><img src="../../assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
             </li>
         </ul>
     </nav>
 
 </div>
-

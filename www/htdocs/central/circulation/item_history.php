@@ -41,13 +41,14 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["co_history"];
 		?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -66,6 +67,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: item_history.php </font>
 <form name=inventorysearch action=item_history_ex.php method=post onsubmit="javascript:return false">
 <input type=hidden name=Opcion value=prestar>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 	<table width=100% border=0>
 		<td width=150>
@@ -79,9 +81,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: item_history.php </font>
 	</table>
 	</div>
 </div>
+</div>
 
 </form>
 <?php include("../common/footer.php");
-echo "</body></html>" ;
 
 ?>

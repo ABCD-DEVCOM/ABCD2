@@ -119,12 +119,13 @@ if (isset($arrHttp["db_inven"])){
 	$from_copies="Y";
 }
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["r_sala"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -139,7 +140,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala.php </font>
 // prestar, reservar o renovar
 ?>
 <div class="middle list">
-
+<div class="formContent">
 	<div class="searchBox">
 	<form name=sala action=sala_ex.php method=post onsubmit="javascript:return false">
 	<input type=hidden name=invSearch>
@@ -211,6 +212,7 @@ echo "
 	</form>
 	</div>
 <?php
+echo "</div>";
 echo "</div>";
 include("../common/footer.php");
 echo "</body></html>" ;

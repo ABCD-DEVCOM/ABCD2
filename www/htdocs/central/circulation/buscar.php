@@ -546,6 +546,7 @@ function Enviar(){
 }
 </script>
 <body>
+<?php include("../circulation/submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["ecobj"];
@@ -556,7 +557,7 @@ function Enviar(){
 		?>
 	</div>
 	<div class="actions">
-<?php include("../circulation/submenu_prestamo.php");?>
+
 
 	</div>
 	<div class="spacer">&#160;</div>

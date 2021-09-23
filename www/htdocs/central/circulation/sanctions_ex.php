@@ -113,12 +113,13 @@ function EnviarForma(){
 echo "<body>";
  include("../common/institutional_info.php");
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["suspend"]."/".$msgstr["fine"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

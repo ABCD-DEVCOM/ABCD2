@@ -125,12 +125,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -143,6 +144,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: borrower_history.php</font>\n";
 ?>
 	</div>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 	<form name=usersearch action="" method=post onsubmit="javascript:return false">
 	<input type=hidden name=Indice>
@@ -162,6 +164,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: borrower_history.php</font>\n";
 	<div class=\"spacer\">&#160;</div>
 	<dd>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]?>
+	</dd>
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">

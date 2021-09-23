@@ -25,14 +25,12 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases;
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_LOAN"])){
 ?>
 						<a href="../circulation/prestar.php?encabezado=s" class="menuButton loanButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["loan"]?></strong></span>
 						</a>
 <?php
 	if (isset($ILL) and $ILL!="") {
 ?>
 						<a href="../circulation/interbib.php?encabezado=s" class="menuButton providersButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["r_ill"]?></strong></span>
 						</a>
 <?php
@@ -42,7 +40,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
 ?>
 						<a href="../circulation/estado_de_cuenta.php?encabezado=s&reserve=S" class="menuButton reserveButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["reserve"]?></strong></span>
 						</a>
 <?php
@@ -51,7 +48,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_RETURN"])){
 ?>
 						<a href="../circulation/devolver.php?encabezado=s" class="menuButton returnButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["return"]?></strong></span>
 						</a>
 <?php
@@ -59,7 +55,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_RENEW"])){
 ?>
 						<a href="../circulation/renovar.php?encabezado=s" class="menuButton renewButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["renew"]?></strong></span>
 						</a>
 <?php
@@ -67,35 +62,28 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CI
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SALA"])){
 ?>
 						<a href="../circulation/sala.php?encabezado=s" class="menuButton exploreButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["sala"]?></strong></span>
 						</a>
 <?php }
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_SUSPEND"])){
 ?>
 						<a href="../circulation/sanctions.php?encabezado=s" class="menuButton sanctionsButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["suspend"]."/".$msgstr["fine"]?></strong></span>
 						</a>
 <?php }?>
 						<a href="../circulation/situacion_de_un_objeto.php?encabezado=s" class="menuButton statusitemButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["ecobj"]?></strong></span>
 						</a>
 						<a href="../circulation/estado_de_cuenta.php?encabezado=s" class="menuButton userstatmentButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["statment"]?></strong></span>
 						</a>
                         <a href="../circulation/borrower_history.php?encabezado=s" class="menuButton userhistoryButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["bo_history"]?></strong></span>
 						</a>
 						<a href="../circulation/item_history.php?encabezado=s" class="menuButton receivingButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["item_history"]?></strong></span>
 						</a>
 						<a href="../output_circulation/menu.php" class="menuButton reportsButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 							<span><strong><?php echo $msgstr["reports"]?></strong></span>
 						</a>
 					</div>
