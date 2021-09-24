@@ -1093,12 +1093,13 @@ global $prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_na
 ?>
 
 <body>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

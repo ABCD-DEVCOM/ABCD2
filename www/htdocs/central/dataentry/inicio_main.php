@@ -38,9 +38,9 @@ include ("../lang/lang.php");
 if (isset($arrHttp["newindow"]))
 	$_SESSION["newindow"]="Y";
 
-/////
-/////   INICIO DEL PROGRAMA
-/////
+
+/////   INICIO DEL PROGRAMA ////////
+
 
 
 $query="";
@@ -82,72 +82,74 @@ if (isset($arrHttp["base"])){
 	if (!isset($bddesc)) $bddesc="";
 	if (!isset($bd)) $bd="";
     include "../common/header.php";
-    echo "<script language=\"JavaScript\" type=\"text/javascript\" src=\"js/lr_trim.js\"></script>
-				<script languaje=javascript>
-				self.resizeTo(screen.availWidth,screen.availHeight)
-				self.moveTo(0,0)
-				self.focus();\n";
-	if (isset($_SESSION["newindow"]))
-// for detecting if is a new window or the same window
-				echo "var neww=\"&newindow=y\"\n";
-	else
-				echo "var neww=\"\"\n";
-	echo"
-				var listabases=Array()
-				var lock_db=''
-				var browseby=\"mfn\"
-				var Expresion=\"\"
-				var Expre_b=\"\"
-                var typeofrecord=''
-				var mfn=0
-				var maxmfn=0
-				var chk_mfn=0
-				var Mfn_Search=0
-				var Max_Search=0
-				var Search_pos=0
-				var Listar_pos=-1
-				var db_permiso=\"$bdright\"
-				var db_copies=\"$db_copies\"         // to check if the database uses the copies database
-				var NombreBase='$bddesc'
-				var ix_basesel=0
-				var ix_langsel=0
-				var Marc=''
-				var base=\"$bd\"
-				var cipar=\"$bd.par\"
-				var Formato='ALL'
-				var tl=''
-				var nr=''
-				var xeliminar=0
-				var xeditar=''
-				var ModuloActivo=\"catalog\"
-				var CG_actual=''
-				var CG_nuevo=''
-				var prefijo_indice=\"\"
-				var formato_indice=\"\"
-				ValorCapturado=''
-				var HTML=''        //FIELD TAG FOR LOADING THE FULL TEXT
-				var URL=''         //FIELD TAG FOR STORING THE URL OF THE DOCUMENT STORED IN HTML
-				var NombreBaseCopiarde=''
-				var RegistrosSeleccionados=''  //para mostrar los registros seleccionados
-				var RegSel_pos=0
-				var rs=new Array()
-				var rs_length=0
-				var wks=\"\"
-				buscar=''
-				refinar=''
-				lang='".$_SESSION["lang"]."'
-				img_dir=\"\";
-				ep=''
-				ConFormato=true
-				Capturando=''
-				toolbarEnabled=''      //enable/disable the toolbar
-				function AbrirVentanaAyuda(){
-					insWindow = window.open('../documentacion/ayuda.php?help='+lang+'/dataentry_toolbar.html', 'Ayuda', 'location=no,width=700,height=550,scrollbars=yes,top=10,left=100,resizable');
-					insWindow.focus()
-				}
-			";
-
 ?>
+	<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
+
+	<script type="text/javascript">
+		self.resizeTo(screen.availWidth,screen.availHeight)
+		self.moveTo(0,0)
+		self.focus();
+
+	<?php
+		if (isset($_SESSION["newindow"])) {
+			echo "var neww=\"&newindow=y\"\n";
+		} else {
+			echo "var neww=\"\"\n";
+		}
+	?>	
+	var listabases=Array()
+	var lock_db=""
+	var browseby="mfn"
+	var Expresion=""
+	var Expre_b=""
+    var typeofrecord=""
+	var mfn=0
+	var maxmfn=0
+	var chk_mfn=0
+	var Mfn_Search=0
+	var Max_Search=0
+	var Search_pos=0
+	var Listar_pos=-1	
+	var db_permiso="<?php echo $bdright;?>"
+	var db_copies="<?php echo $db_copies;?>"         // to check if the database uses the copies database
+	var NombreBase="<?php echo $bddesc;?>"
+	var ix_basesel=0
+	var ix_langsel=0
+	var Marc=""
+	var base="<?php echo $bd;?>"
+	var cipar="<?php echo $bd;?>.par"
+	var Formato="ALL"
+	var tl=""
+	var nr=""
+	var xeliminar=0
+	var xeditar=""
+	var ModuloActivo="catalog"
+	var CG_actual=""
+	var CG_nuevo=""
+	var prefijo_indice=""
+	var formato_indice=""
+	ValorCapturado=""
+	var HTML=""        //FIELD TAG FOR LOADING THE FULL TEXT
+	var URL=""         //FIELD TAG FOR STORING THE URL OF THE DOCUMENT STORED IN HTML
+	var NombreBaseCopiarde=""
+	var RegistrosSeleccionados=""  //para mostrar los registros seleccionados
+	var RegSel_pos=0
+	var rs=new Array()
+	var rs_length=0
+	var wks=""
+	buscar=""
+	refinar=""	
+	lang="<?php echo $_SESSION["lang"]; ?>"
+	img_dir="";
+	ep=""
+	ConFormato=true
+	Capturando=""
+	toolbarEnabled=""      //enable/disable the toolbar
+
+function AbrirVentanaAyuda(){
+	insWindow = window.open('../documentacion/ayuda.php?help='+lang+'/dataentry_toolbar.html', 'Ayuda', 'location=no,width=700,height=550,scrollbars=yes,top=10,left=100,resizable');
+	insWindow.focus()
+}
 
 function Mail(){
 	top.main.location.href="../mail/index.php?base="+base;
@@ -202,7 +204,7 @@ if (db_copies=="Y")
  if (file_exists($file)) $tacq=file($file);
  ?>
 	parent.main.document.writeln("<html>")
-	parent.main.document.writeln("<body><font face=arial>")
+	parent.main.document.writeln("<body>")
 	parent.main.document.writeln("<center><br><br>")
 	parent.main.document.writeln("<h4><?php $msgstr["typeofr"]?></h4><table>\n")
 <?php
@@ -805,22 +807,59 @@ function Unload(){
 
 </script>
 
+<style type="text/css">
+	*, html {
+		height: 100%;
+	}
+</style>
+
+
 </head>
 
-<frameset rows=<?php if (isset($FRAME_1H) and trim($FRAME_1H)!="") echo $FRAME_1H; else echo '80';?>,<?php if (isset($FRAME_2H) and trim($FRAME_2H)!="") echo $FRAME_2H; else echo '50'; ?>,* cols=* border=0>
+<div id="body" style="height: 100%; overflow: hidden;">
+
 <?php
 if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
-    echo "<frame name=encabezado src=menubases.php?inicio=s&Opcion=Menu_o&base=$bd&cipar=$bd.par&Mfn=".$arrHttp["Mfn"]."&base_activa=$bd&per=$bdright MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";
-	echo "<frame name=menu  src=\"\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-	echo "<frame name=main  src=\"\" scrolling=yes frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-}else{
-	echo "<frame name=encabezado src=menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=".$arrHttp["Mfn"]." MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no FRAMEBORDER=NO>\n";
-	echo "<frame name=menu  src=\"blank.html\" scrolling=no frameborder=NO  marginheight=0   MARGINWIDTH=0 >";
-	echo "<frame name=main src=\"homepage.htm\" scrolling=yes frameborder=no marginheight=2   MARGINWIDTH=0 >";
+
+?> 
+	<iframe scrolling="no" name="encabezado" id="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" frameborder="0" ></iframe>
+
+	<iframe scrolling="no" name=menu id=menu src="" style="border: none; width: 100%; height: 78px; position: relative;" frameborder="0" allowfullscreen wmode="transparent"></iframe>
+	<iframe name="main" id="main" src="" style="border: none; width: 100%;  position: relative;"></iframe>
+
+<?php
+	}else{
+?>
+
+	<frame scrolling="no" name="encabezado" class="dataentry-header"  src="menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=<?php echo $arrHttp["Mfn"];?>" SCROLLING=no >
+	<frame name="menu"  src="blank.html" scrolling=no>
+	<frame name="main" id="main" src="homepage.htm" scrolling=yes>
+
+
+
+<?php
 }
 ?>
 
-</frameset>
-</HTML>
+</div>
 
+<script>
+    // Selecting the iframe element
+    var iframeEncabezado = document.getElementById("encabezado");
+    var iframeMenu = document.getElementById("menu");
+    var iframeMain = document.getElementById("main");
+   
+    // Adjusting the iframeMain height onload event
+    iframeMain.onload = function() {
+    	var Todobody = window.screen.height;
+    	var encabezado = iframeEncabezado.contentWindow.document.body.scrollHeight
+    	var menu = iframeMenu.contentWindow.document.body.scrollHeight
+    	var janela = iframeMain.contentWindow.document.body.scrollHeight
+	   	var toolbar = (encabezado + menu) * 2;
+	   	var valorfolga = -toolbar;
+        var folga = Todobody - toolbar;
+        iframeMain.style.height = folga + 'px';
+		//alert (folga);
+    }
+</script>

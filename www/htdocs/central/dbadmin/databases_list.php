@@ -58,9 +58,9 @@ include("../common/institutional_info.php");
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/databases_list.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: databases_list.php";
+echo " Script: databases_list.php";
 ?>
-</font>
+
 	</div>
 <div class="middle form">
 	<div class="formContent">
@@ -73,9 +73,14 @@ echo "<font color=white>&nbsp; &nbsp; Script: databases_list.php";
 <table border=0>
 	<tr>
 		<td valign=center>
-   			<img src=../dataentry/img/up.gif border=0><INPUT TYPE="button" VALUE="up" onClick="moveOptionUp(this.form['lista'])">
+   			
+   			<button class="button_browse show" TYPE="button" VALUE="up" onClick="moveOptionUp(this.form['lista'])">
+   				<i class="fas fa-sort-up"></i>
+   			</button>
 			<BR><BR>
-			<img src=../dataentry/img/down.gif border=0><INPUT TYPE="button" VALUE="down" onClick="moveOptionDown(this.form['lista'])">
+			<button class="button_browse show" TYPE="button" VALUE="down" onClick="moveOptionDown(this.form['lista'])">
+				<i class="fas fa-sort-down"></i>
+			</button>
    		</td>
 		<td>
 			<select name=lista size=20>
@@ -94,9 +99,9 @@ foreach ($fp as $value){
 			</select>
 		</td>
 </table>
-<input type=submit value=<?php echo $msgstr["update"]?> onClick=javascript:Enviar()> &nbsp; &nbsp;
-<input type=submit value=<?php echo $msgstr["edit"]?> onClick=javascript:Editar()>
-&nbsp; &nbsp;<input type=submit value="<?php echo $msgstr["cancel"]?>" onClick="document.cancelar.submit();return false">
+<input type=submit class="bt-green" value=<?php echo $msgstr["update"]?> onClick=javascript:Enviar()> &nbsp; &nbsp;
+<input type=submit class="bt-blue" value=<?php echo $msgstr["edit"]?> onClick=javascript:Editar()>
+<input type=submit class="bt-gray" value="<?php echo $msgstr["cancel"]?>" onClick="document.cancelar.submit();return false">
 </form>
 <form name=cancelar method=post action=conf_abcd.php>
 <input type=hidden name=encabezado value=s>

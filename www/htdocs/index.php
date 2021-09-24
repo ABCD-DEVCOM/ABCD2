@@ -58,6 +58,16 @@ include ("$app_path/lang/lang.php");
 		<!--[if IE 6]>
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
+<style type="text/css">
+	html, body {
+		height: 100vh;
+		margin: 0;
+	}
+	.middle {
+		height: 70vh;
+	}
+</style>
+
 <script src=<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
 
 <script language=javascript>

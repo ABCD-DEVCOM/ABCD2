@@ -72,9 +72,9 @@ function GetExpression(ic){
 
 	msgwin=window.open("","sst","width=400,height=100,left="+winl+",top="+wint+",scrollbars,resizable")
     msgwin.document.close()
-	msgwin.document.writeln("<html><body><font face=arial size=2><form name=forma1>")
+	msgwin.document.writeln("<html><body><form name=forma1>")
 	msgwin.document.writeln("<?php echo $msgstr["copysearch"]?>")
-	msgwin.document.writeln("<p><select width=250 name=ex onchange=window.opener.stored=document.forma1.ex.options[document.forma1.ex.selectedIndex].value;window.opener.CopyExpr();self.close()>\n")
+	msgwin.document.writeln("<select width=250 name=ex onchange=window.opener.stored=document.forma1.ex.options[document.forma1.ex.selectedIndex].value;window.opener.CopyExpr();self.close()>\n")
 	msgwin.document.writeln("<option value=\"\"></option>")
 	<?php
 	if (isset($stored)){
@@ -245,10 +245,11 @@ function Diccionario(jx){
         $ayuda="buscar.html";
         include "../common/inc_div-helper.php";
 	}
-	echo "<div class=\"middle form\">
-			<div class=\"formContent\">
-	";
+	?>
+	<div class="middle">
+			<div class="formContent">
 
+<?php
 	echo "<form method=post name=forma1 action=";
 	if (isset($arrHttp["Target"]) and $arrHttp["Target"]=="reserve")
 		echo "buscar.php";
@@ -274,33 +275,33 @@ function Diccionario(jx){
 	if (isset($arrHttp["prestamo"])) echo "<input type=hidden name=prestamo value=\"".$arrHttp['prestamo']."\">\n";
 	if (isset($arrHttp["Tabla"])) echo "<input type=hidden name=Tabla value=".$arrHttp['Tabla'].">\n";
 	if (isset($arrHttp["copies"])) echo "<input type=hidden name=copies value=".$arrHttp['copies'].">\n";
-	echo "<table valign=center cellpadding=2 Cellspacing=0 border=0 width=800>\n
+	echo "<table valign=center cellpadding=2 Cellspacing=0 border=0 width=60%>\n
 			<tr>
 				<td colspan=3>";
 				if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab")){
 					if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$arrHttp["base"]."_EDITSTOREDEXPR"])){
 						if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry")
-							echo "<img src=../dataentry/img/search.gif border=0> <a href=\"edit_stored_expr.php?base=".$arrHttp["base"]."\">". $msgstr["edit_search_expr"]."</a>";
+							echo "<a class='bt-blue' href=\"edit_stored_expr.php?base=".$arrHttp["base"]."\"><i class='far fa-edit'></i> ". $msgstr["edit_search_expr"]."</a>";
 					}
 				}
 				echo "<p>".$msgstr["mensajeb"]."</td>
 			<tr>
-				<td bgcolor=#cccccc nowrap><font face=verdana size=2 color=#697782><b>".$msgstr["campo"]."</b></font></td>
-				<td bgcolor=#cccccc><font face=verdana size=2 color=#697782><b>".$msgstr["expresion"]."</font></td>
-				<td bgcolor=#cccccc>&nbsp;</td>
+				<td nowrap><b>".$msgstr["campo"]."</b></td>
+				<td><b>".$msgstr["expresion"]."</td>
+				<td>&nbsp;</td>
 			</tr>\n";
 	for ($jx=0;$jx<$Tope;$jx++){
 		echo "<tr><td  valign=center nowrap>";
-		echo "<SELECT name=camp>";
+		echo "<select name=camp>";
 
-		echo "<OPTION value=\"---\">---";
+		echo "<option value=\"---\">---";
 		for ($i=0;$i<count($camposbusqueda);$i++){
 			$linea=$camposbusqueda[$i];
 			$l=explode('|',$linea);
 			$parte3=$l[2];
 			$parte2=$l[1];
 			$parte1=$l[0];
-			echo "<OPTION value='".$parte2."'";
+			echo "<option value='".$parte2."'";
 			if ($jx==0 and isset($_SESSION["Expresion"])){
 
 			}else{
@@ -308,8 +309,8 @@ function Diccionario(jx){
 			}
 			echo ">".$parte1;
 		}
-		echo "</SELECT> &nbsp;";
-		echo "<a href=\"javascript:Diccionario(".$jx.")\">".$msgstr["indice"]."</a>\n";
+		echo "</select> &nbsp;";
+		echo "<a class='button_browse show' href=\"javascript:Diccionario(".$jx.")\">".$msgstr["indice"]."</a>\n";
 		echo "</td>";
 		echo "<td align=center>";
 		if (isset($_SESSION["Expresion"]) and $jx==0){
@@ -320,13 +321,13 @@ function Diccionario(jx){
 			//		$E=substr($E,0,strlen($E)-1);
 			//}
             //$E=str_replace('"','',$E);
-			echo "<input type=text size=100 name=expre value=\"".$E."\"></td>\n<td nowrap>";
+			echo "<input type=text size=100% name=expre value=\"".$E."\"></td>\n<td nowrap>";
 		//	unset($_SESSION["Expresion"]);
 		}else{
 			echo "<input type=text size=100 name=expre value=\"\"></td>\n<td nowrap>";
 		}
 		if ($str_expr=="Y")
-			echo "<a href=Javascript:GetExpression($jx)><img src=../dataentry/img/search.gif border=0 alt=\"".$msgstr["copysearch"]."\"></a>";
+			echo "<a class='button_browse show' href=Javascript:GetExpression($jx)><i class='fa fa-search'  alt=\"".$msgstr["copysearch"]."\"></i></a>";
 		if ($jx<$Tope-1){
        		echo "&nbsp;<select name=oper size=1>";
        		echo "<option value=and selected>and\n";
@@ -340,35 +341,39 @@ function Diccionario(jx){
    		echo "</td>\n";
 
 	}
-	echo "<tr>\n";
-	echo "<td colspan=3 align=center><p><br>\n";
-	?>
-	<div class="sectionButtons">
-        <a href="javascript:PrepararExpresion()" class="defaultButton multiLine listButton">
-            <img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
-            <span style="color:black"><strong><?php echo $msgstr["m_buscar"]?></strong></span>
+?>
+
+</tr>
+</table>
+
+
+	<div class="ActionFooter">
+        <a href="javascript:PrepararExpresion()" class="bt-green">
+             <i class="fas fa-search"></i> <?php echo $msgstr["m_buscar"]?>
         </a>
-        <a href="javascript:LimpiarBusqueda(this,1)" class="defaultButton multiLine cancelButton">
-            <img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
-            <span style="color:black"><strong><?php echo $msgstr["borrar"]?></strong></span>
+        <a href="javascript:LimpiarBusqueda(this,1)" class="bt-gray">
+           <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?>
         </a>
 
 
 	<?php
 	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserve"){
 	?>
-         <a href="javascript:document.basedatos.submit()" class="defaultButton multiLine backButton">
-            <img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
-            <span style="color:black"><stro<?php echo $msgstr["back"]?></strong></span>
-            </a>
+         <a href="javascript:document.basedatos.submit()" class="bt-green">
+            <i class="fas fa-search"></i> <?php echo $msgstr["back"]?>
+         </a>
 	<?php
 
 	}
-	echo "</div>";
-	echo "</td>\n";
-	echo "</table>\n";
-	echo "</form>\n";
+	?>
+	</div>
+
+		</form>
+	
+
+	<?php
 	echo "<script>document.forma1.expre[0].blur()</script>\n";
+
 	echo "<form name=diccio method=post action=../dataentry/diccionario.php target=Diccionario>\n";
 
 	echo "<input type=hidden name=base value=".$arrHttp['base'].">\n";
@@ -392,11 +397,15 @@ function Diccionario(jx){
 	if (isset($arrHttp["Tabla"])) {
 	    echo "<input type=hidden name=Tabla value=".$arrHttp['Tabla'].">\n";
 	}
-	echo "</form>\n";
-    echo "</div></div>\n";
-    include("../common/footer.php");
-	echo "</body>";
-	echo "</html>";
 
+?>
+
+	</form>
+    </div>
+</div>
+
+
+<?php
+    include("../common/footer.php");
 }
 ?>

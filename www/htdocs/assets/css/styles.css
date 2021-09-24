@@ -3,11 +3,14 @@
 */
 
 :root {
-  --blue: #6663a6;
-  --blue-abcd: #364c6c;
+  --blue: #3955a3;
+  --blue-abcd: #124078;
+  --bgsectionInfo: #4a78b0;
+  --cat-color: #B4E1F9;
+  --acq-color: #96EAC8;
+  --loan-color: #F7EF89;
   --indigo: #6610f2;
   --purple: #6f42c1;
-  --pink: #e83e8c;
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
@@ -15,9 +18,14 @@
   --teal: #20c997;
   --cyan: #bcd1ef;
   --white: #FBFEFF;
+  --gray190:  #201f1e;
+  --gray110:  #8a8886;
+  --gray60:  #c8c6c4;
+  --gray40:  	#e1dfdd;
+  --gray20:  #f3f2f1;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --gray-light: #f5f5f5;
+  --gray-light: #faf9f8;
   --primary: #39547a;
   --secondary: #6c757d;
   --success: #28a745;
@@ -72,12 +80,12 @@ h1, .h1 {
 }
 @media (min-width: 1200px) {
   h1, .h1 {
-    font-size: 1.3rem;
+    font-size: 0.8rem;
   }
 }
 
 A {
-	color: #708bb1;
+	color: var(--blue);
 }
 
 A IMG {
@@ -137,7 +145,7 @@ textarea.par {
 
 INPUT.textEntryFocus, TEXTAREA.textEntryFocus {
 	border-color: #5e88b6;
-	background: #fff;
+	background: var(--white);
 }
 
 INPUT.superTextEntry,
@@ -177,7 +185,7 @@ SELECT.singleTextEntry {
 /* #defaultButton classes */
 A.defaultButton {
 	text-decoration: none;
-	color: #fff;
+	color: var(--white);
 }
 
 A.defaultButton:hover IMG {
@@ -196,24 +204,42 @@ A.defaultButton STRONG {
 
 /* #menuButton classes */
 A.menuButton {
-	text-decoration: none;
-	color: #fff;
+	text-align: right;
+	border: 1px solid var(--info);
+	padding: 8px;
+	width: 200px;
+	border-radius: 3px;
+	margin: 5px;
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	transform: translateY(0);
+	transition: transform 150ms, box-shadow 150ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: bottom;
+
+
 }
 
-A.menuButton:hover IMG {
-	background-color: #4E617C;
+A.menuButton:hover  {
+	background-color: var(--info);
+	color: var(--blue);
+	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+	transform: translateY(-2px);	
+}
+
+a.menuButton span {
+	padding: 4px;
+	height: 100%;
+	width: 150px;
+	float: left;
+	text-align: left;
+	margin: auto 50px;
+	font-size: 85%;
+	color: var(--blue-abcd);
 }
 
 
-A.menuButton SPAN {
-	cursor: pointer;
-}
-
-A.menuButton STRONG {
-	color: var(--gray-dark);
-	font-weight: 600;
-	letter-spacing: 0.02rem;
-}
 
 
 .inputAlert {
@@ -281,20 +307,263 @@ A.singleButton .sb_rb {
 /*#heading classes */
 .heading {
 	background-color: var(--blue-abcd);
+	height: 45px;
+	width: 100%;
 }
 
-.institutionalInfo H1, .institutionalInfo H2 {
+
+.institutionalInfo {
+	float: left;
+	width: 35%;
+	padding: 2px 10px;
+	height: 40px;
+}
+
+.institutionalInfo IMG {
+	float: left;
+	margin: 2px 8px 0 0;
+	display: inline-block;
+	height: 32px;
+}
+
+
+.institutionalInfo>H1, .institutionalInfo H2 {
 	letter-spacing: 0.03rem;
-}
-
-.institutionalInfo H1 {
-
-	color: #fff;
-}
-
-.institutionalInfo H2 {
-	font-weight: normal;
 	color: var(--white);
+	font-weight: normal;
+	margin-left: 50px;
+	height: 40px;
+}
+.institutionalInfo H1 {
+	margin-top: 10px;
+	margin-left: 20%;
+	vertical-align: middle;
+	position: relative;
+}
+
+.heading-database {
+	display: inline-block;
+}
+
+.heading-database form {
+	margin-right: 15%;
+	padding: 0;
+	height: 45px;
+	display: inline-block;
+	position: absolute;
+	width: 30%;
+	vertical-align: middle;
+}
+
+
+.heading-database form label {
+	display: inline-block;
+	color: var(--white);
+	vertical-align: middle;
+	margin: 12px auto 0 30px;
+	width: 10%;
+	font-size: 1rem;
+}
+
+select.heading-database {
+	 display:block;
+	 margin-top: 5px;
+	 vertical-align: top;
+	 background: var(--cat-color);
+	 color: var(--blue-abcd);
+	 width: 70%;
+	 border: 1px solid var(--white);
+	 border-radius: inherit;
+	 float: right;
+	 padding: 9px;
+	 height: 35px;
+	 border-radius: 3px;
+	 box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	 font-weight: 600;
+	 font-size: 15px;
+	text-align: left;
+}
+
+nav.heading-nav, {
+	position: relative;
+	top: 0;
+	margin-top: 0;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	background-color: var(--blue-abcd);
+	float: right;
+}
+
+nav.heading-nav ul {
+	float: right;
+	padding: 0;
+  margin: 0;
+  vertical-align: top;
+	list-style: none;
+	position: relative;
+	overflow: hidden;
+	height: 45px;
+	}
+	
+nav.heading-nav ul li {
+	display:inline-block;
+	vertical-align: top;
+	background-color: var(--blue-abcd);
+	float: left;
+	}
+
+nav.heading-nav a {
+	background-color: var(--blue-abcd);
+	display: block;	
+	color: var(--white);
+	height: 45px;
+	line-height: 60px;
+	text-decoration:none;
+	border: none;
+	padding: 0 8px;
+	vertical-align: top;
+	box-shadow: none;
+}
+
+nav.heading-nav a img {
+	margin-top: 8px;
+	vertical-align: middle;
+}
+
+nav.heading-nav select {
+	text-transform: uppercase;
+	background-color: var(--blue-abcd);
+	display: block;	
+	color: var(--white);
+	height: 43px;
+	width: 60px;
+	text-decoration:none;
+	border: none;
+	padding: 8px;
+	vertical-align: middle;
+	box-shadow: none;
+	line-height: 60px;
+}
+
+nav.heading-nav select option {
+	background: var(--info);
+	color: var(--blue-abcd);
+	padding: 5px;
+}
+
+nav.heading-nav a:hover, nav.heading-nav button:hover, nav.heading-nav select:hover  { 
+	background-color: var(--blue);
+}
+
+/* Hide Dropdowns by Default */
+nav.heading-nav ul ul {
+	z-index: 999999999;
+	display: none;
+	position: absolute; 
+	top: 45px; /* the height of the main nav */
+	right: 0;
+	left: 200px;
+}
+	
+/* Display Dropdowns on Hover */
+nav.heading-nav ul li:hover > ul {
+	display:inherit;
+}
+	
+/* Fisrt Tier Dropdown */
+nav.heading-nav ul ul li {
+	float:none;
+	display:list-item;
+	position: relative;
+	margin-left: -80px;
+
+}
+
+/* Second, Third and more Tiers	*/
+nav.heading-nav ul ul ul li {
+	position: relative;
+	top:-60px; 
+}
+
+.bt-mod {
+	margin: 0;
+	height: 46px;
+	width: 42px;
+	border-radius: 0px;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	outline: 0;
+	padding: 10px;
+	text-align: center;
+	transform: translateY(0);
+	transition: transform 150ms, box-shadow 150ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;		
+	background-repeat: no-repeat;
+	background-position: center;			
+}
+
+.bt-cat {
+	background-color: var(--blue-abcd);
+	border: 1px solid var(--blue-abcd);
+	background-image: url(../svg/ic_fluent_book_database_24_regular.svg);
+}
+
+.bt-cat.active {
+	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+	background-image: url(../svg/ic_fluent_book_database_24_filled.svg);
+}
+
+.bt-loan {
+	background-color: var(--blue-abcd);
+	border: 1px solid var(--blue-abcd);
+	background-image: url(../svg/ic_fluent_people_swap_24_regular.svg);
+}
+
+.bt-loan.active {
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	background-image: url(../svg/ic_fluent_people_swap_24_filled.svg);
+	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+}
+
+.bt-acq {
+	background-color: var(--blue-abcd);
+	border: 1px solid var(--blue-abcd);
+	background-image: url(../svg/ic_fluent_cart_24_regular.svg);
+}
+
+.bt-acq.active {
+	background-image: url(../svg/ic_fluent_cart_24_filled.svg);
+	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+}
+
+li a.bt-charset,li a.bt-charset:hover {
+	background: var(--blue-abcd);
+	padding: 0px 8px;
+	cursor: default;
+	transform: none;
+	box-shadow: none;
+	margin-top: -6px;
+  font-size: 12px;
+}
+
+li a.bt-exit {
+	background-color: var(--danger);
+	border: none;
+}
+li a.bt-exit:hover {
+	background-color: var(--danger);
+	border: none;
 }
 
 .userInfo, .userInfo A, .language, .language A {
@@ -302,38 +571,29 @@ A.singleButton .sb_rb {
 	color: var(--white);
 }
 
-.language select {
-	font-size: 0.6rem;
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-	box-sizing: border-box;
-	width: 90px;
-	margin: 0.1rem 0;
-	padding: 1px;	
+.lang:active {
+    border: 1px solid #000;
+    pointer-events: initial;
 }
 
-.userInfo A.button_logout {
-	background: url('../images/button_logout.gif') no-repeat center right;
-	text-decoration: none
-}
 
-.userInfo A.button_logout:hover SPAN {
-	text-decoration: underline;
-}
 /* #END #heading classes */
 
 /*#sectionInfo classes */
 .sectionInfo {
-	background: #708bb1;
+	background: var(--bgsectionInfo);
 }
 
-.breadcrumb H3 {
+.breadcrumb {
+	float: left;
+	width: 45%;
+	padding: 5px 0px 5px 15px;
+	display: inline;
 	color: var(--white);
+	font-size: 150%;
 }
 
-.breadcrumb, .breadcrumb A {
+ .breadcrumb a {
 	color: var(--white);
 	font-weight: 600;
 }
@@ -349,23 +609,39 @@ A.singleButton .sb_rb {
 
 /*#middle classes */
 .middle {
-	background: var(--gray-light);
-	min-height: 100vh;
+	background: var(--gray40);
+	min-height: 50vh;
 }
+
+.ActionFooter {
+	display: inline-flex;
+	width: 100%;
+	margin: 20px 10px;
+}
+
+.ActionFooter a {
+	margin: 2px;
+}
+
 /*#END #middle classes */
 
 /*#footer classes */
 .footer {
 	border-top: 1px solid var(--light);
-	color: var(--gray);
-	background: var(--white);
+	color: var(--gray-light);
+	background: var(--blue-abcd);
 	padding: .8rem;
 	-webkit-box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32); 
 	box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32);
+  position: relative;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 5.5rem;            /* Footer height */
 }
 
 .footer A {
-	color: var(--gray);
+	color: var(--gray-light);
 }
 
 .systemInfo STRONG {
@@ -412,7 +688,7 @@ A.singleButton .sb_rb {
 }
 
 .homepage .mainBoxHighlighted .boxContent {
-	background: #fff url('../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
+	background: var(--white) url('../images/mainBox_boxContent_bg.gif') repeat-x bottom left;
 	border-color: #b2c2d4
 }
 
@@ -439,23 +715,65 @@ A.singleButton .sb_rb {
 .homepage .mainBoxHighlighted .boxBottom .bbRight {
 	background: url('../images/mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
 }
+
+
 .homepage .mainBox .boxContent .sectionTitle {
-		font-size: 1.5rem;
-		padding: 0 8px;
+		display: inline-block;
+		width: 100%;
+		padding: 0;
+		box-sizing: border-box;
+		top: 0;
+		position: absolute;
 }
 
-.homepage .mainBox .boxContent .sectionTitle H4 {
-	font-weight: normal;
+.homepage .mainBox .boxContent .sectionTitle h1 {
+	margin-left: 35px;
+	font-size: 1.5rem;
+	font-weight: 400;
+	width: 90%;
+	color: var(--blue-abcd);
 }
 
-.homepage .mainBox .boxContent .sectionTitle H4 STRONG {
-	color: #265182;
-	font-weight: normal;
+.homepage .mainBox .boxContent .sectionTitle img {
+	height: 50px;
+	float: left;
+	padding: 10px 0;
+	vertical-align: middle;
 }
 
-.homepage .mainBox .boxContent .sectionTitle SPAN {
-	color: #4c4c4c;
+
+.homepage .mainBox .loanSection {
+	background: url('../svg/circ/bg_loan.svg') no-repeat left top;
+	background-size: 150px;
+	background-color: var(--white);
 }
+
+.homepage .mainBox .catalogSection {
+	background: url('../svg/catalog/bg_catalog.svg') no-repeat left top;
+	background-size: 150px;
+	background-color: var(--white);
+}
+
+.homepage .mainBox .acqSection {
+	background: url('../svg/acq/bg_acq.svg') no-repeat left top;
+	background-size: 150px;
+	background-color: var(--white);
+}
+
+	.homepage .mainBox .boxContent .sectionButtons {
+		justify-content: center;
+		text-align: center;
+		margin: 40px auto;
+		width: 55%;
+	}
+
+	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+		margin-top: 3px;
+	}
+	.homepage .mainBox .boxContent {
+		min-height: 101px;
+		padding: 30px 10px;
+	}
 
 .homepage .mainBox .titleSection .sectionIcon {
 	background: url('../images/database.png') no-repeat center;
@@ -481,18 +799,11 @@ A.singleButton .sb_rb {
 	background: url('../images/icon/mainBox_maskSection.png') no-repeat center;
 }
 
-.homepage .mainBox .toolSection .sectionIcon {
-	background: url('../images/icon/mainBox_toolSection.png') no-repeat center;
-	background-size: contain;
-}
-
-.homepage .mainBox .loanSection .sectionIcon {
-	background: url('../images/icon/mainBox_loanSection.png') no-repeat center;
-}
 
 .homepage .mainBox .helpSection .sectionIcon {
 	background: url('../images/icon/mainBox_helpSection.png') no-repeat center;
-}
+
+}	
 
 
 .homepage .mainBox .boxContent .searchTitles .stInput LABEL {
@@ -505,12 +816,10 @@ A.singleButton .sb_rb {
 }
 
 .homepage .mainBox A.defaultButton:hover IMG {
-	background-color: #fff;
+	background-color: var(--white);
 }
 
-.homepage .mainBox A.menuButton:hover IMG {
-	background-color: #fff;
-}
+
 /*#END #homepage classes */
 
 /* #buttons background classes */
@@ -518,19 +827,7 @@ A.listButton IMG {
 	background: url('../images/icon/defaultButton_list.png') no-repeat center;
 }
 
-A.databaseButton IMG {
-	background: url('../images/icon/database.png') no-repeat center;
-}
 
-A.update_databaseButton IMG {
-	background: url('../images/icon/kexi.png') no-repeat center;
-}
-A.utilsButton IMG {
-	background: url('../images/icon/agt_utilities.png') no-repeat center;
-}
-A.exploreButton IMG {
-	background: url('../images/icon/kdisknav.png') no-repeat center;
-}
 A.newButton IMG {
 	background: url('../images/icon/ascii.png') no-repeat center;
 }
@@ -539,63 +836,367 @@ A.importButton IMG {
 	background: url('../images/icon/defaultButton_import.png') no-repeat center;
 }
 
-A.exportButton IMG {
-	background: url('../images/icon/defaultButton_export.png') no-repeat center;
+
+/* CATALOG */
+
+A.DataEntry {
+	background: url('../svg/catalog/ic_fluent_form_new_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
 }
 
-A.reportButton IMG {
-	background: url('../images/icon/defaultButton_report.png') no-repeat center;
+A.CatstatButton {
+	background: url('../svg/catalog/ic_fluent_data_usage_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
 }
 
-A.toolsButton IMG {
-	background: url('../images/icon/tools.png') no-repeat center;
+A.reportButton  {
+	background: url('../svg/catalog/ic_fluent_print_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
 }
-A.userButton IMG {
-	background: url('../images/icon/defaultButton_user.png') no-repeat center;
+
+A.origendatabaseButton {
+ 	background: url('../images/icon/basededatosorigen.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
 }
+
+A.utilsButton {
+	background: url('../svg/catalog/ic_fluent_toolbox_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.z3950Button {
+	background: url('../svg/catalog/ic_fluent_arrow_download_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.update_databaseButton {
+	background: url('../svg/catalog/ic_fluent_content_settings_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.databaseButton {
+	background: url('../svg/catalog/ic_fluent_database_plus_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
+}
+
+A.CataluserButton {
+	background: url('../svg/catalog/ic_fluent_people_settings_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.resetButton {
+	background: url('../svg/catalog/ic_fluent_arrow_reset_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.translateButton {
+	background: url('../svg/catalog/ic_fluent_globe_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.CatexploreButton {
+	background: url('../svg/catalog/ic_fluent_folder_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+
+
+/* END CATALOG */
+
+
+
+
+/* CIRCULATION  */
+A.exploreButton {
+	background: url('../svg/circ/ic_fluent_key_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.toolsButton {
+	background: url('../svg/circ/ic_fluent_settings_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.userButton {
+	background: url('../svg/circ/ic_fluent_people_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.statButton {
+	background: url('../svg/circ/ic_fluent_book_pulse_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);	
+}
+
+A.receivingButton  {
+	background: url('../svg/circ/ic_fluent_book_pulse_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.loanButton {
+	background: url('../svg/circ/ic_fluent_arrow_routing_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.returnButton {
+	background: url('../svg/circ/ic_fluent_arrow_wrap_32_filled.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.renewButton {
+	background: url('../svg/circ/ic_fluent_arrow_sync_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.sanctionsButton {
+	background: url('../svg/circ/ic_fluent_person_money_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.statusitemButton {
+ 	background: url('../svg/circ/ic_fluent_book_question_mark_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.userstatmentButton {
+ 	background: url('../svg/circ/ic_fluent_person_accounts_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.userhistoryButton {
+ 	background: url('../svg/circ/ic_fluent_person_info_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.transactionsButton {
+ 	background: url('../svg/circ/ic_fluent_arrow_swap_32_filled.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.statisticsusersButton {
+ 	background: url('../svg/circ/ic_fluent_people_list_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.statisticsanctionsButton {
+ 	background: url('../svg/circ/ic_fluent_money_calculator_32_regular.svg') no-repeat center;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.reportsButton {
+ 	background: url('../svg/circ/ic_fluent_data_usage_32_regular.svg') no-repeat left;
+ 	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+A.reserveButton {
+	background: url('../svg/circ/ic_fluent_book_clock_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.usersconfigureButton {
+ 	background: url('../images/icon/usersconfigure.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.userstypeButton {
+ 	background: url('../images/icon/userstype.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.itemstypeButton {
+ 	background: url('../images/icon/itemstype.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.currency_daysButton {
+ 	background: url('../images/icon/currency_days.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.calendarButton {
+ 	background: url('../images/icon/calendar.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.loanpolicyButton {
+ 	background: url('../images/icon/loanpolicy.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+/* END CIRCULATION  */
+
+
+/* ACQUISITIONS */
+A.resumeButton {
+	background: url('../svg/acq/ic_fluent_document_landscape_data_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.newsuggestionButton {
+ 	background: url('../svg/acq/ic_fluent_person_chat_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.approvedsuggestionsButton {
+ 	background: url('../svg/acq/ic_fluent_document_checkmark_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.biddingButton {
+	background: url('../svg/acq/ic_fluent_money_calculator_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.decisionButton {
+	background: url('../svg/acq/ic_fluent_cart_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.createpurchaseorderButton {
+ 	background: url('../svg/acq/ic_fluent_table_add_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.requisitionButton {
+	background: url('../svg/acq/ic_fluent_print_add_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.pendingButton {
+	background: url('../svg/acq/ic_fluent_document_bullet_list_clock_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.ACQreceivingButton  {
+	background: url('../svg/acq/ic_fluent_receipt_add_32_regular.svg') no-repeat left;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.suggestButton {
+	background: url('../svg/acq/ic_fluent_person_feedback_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.providersButton {
+ 	background: url('../svg/acq/ic_fluent_building_shop_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.copiesdbButton {
+	background: url('../svg/acq/ic_fluent_table_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.ACQresetButton {
+	background: url('../svg/acq/ic_fluent_arrow_reset_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+/* END ACQUISITIONS */
 
 A.pdfButton IMG {
 	background: url('../images/icon/defaultButton_pdf.png') no-repeat center;
 }
-
 A.cancelButton IMG {
 	background: url('../images/icon/defaultButton_cancel.png') no-repeat center;
 }
-
 A.saveButton IMG {
 	background: url('../images/icon/defaultButton_save.png') no-repeat center;
 }
-/*
 A.nextButton IMG {
 	background: url('../images/icon/defaultButton_next.png') no-repeat center;
-}*/
-
+}
 A.backButton IMG {
 	background: url('../images/icon/defaultButton_back.png') no-repeat center;
 }
-
 A.eraseButton IMG {
 	background: url('../images/icon/singleButton_erase.png') no-repeat center;
 }
-
 A.indexButton IMG {
 	background: url('../images/icon/singleButton_e.png') no-repeat center;
-}
-
-A.statButton IMG {
-	background: url('../images/icon/kchart.png') no-repeat center;
-}
-A.suggestButton IMG {
-	background: url('../images/icon/suggestions.jpg') no-repeat center;
-}
-A.requisitionButton IMG {
-	background: url('../images/icon/requisition.png') no-repeat center;
-}
-A.receivingButton IMG {
-	background: url('../images/icon/kword.png') no-repeat center;
-}
-A.biddingButton IMG {
-	background: url('../images/icon/bidding.png') no-repeat center;
 }
 A.checkButton IMG {
 	background: url('../images/icon/clean.png') no-repeat center;
@@ -603,104 +1204,20 @@ A.checkButton IMG {
 A.discardButton IMG {
 	background: url('../images/icon/trashcan_full.png') no-repeat center;
 }
-A.copiesdbButton IMG {
-	background: url('../images/icon/kmultiple.png') no-repeat center;
-}
-A.decisionButton IMG {
-	background: url('../images/icon/kexi_kexi.png') no-repeat center;
-}
-A.resumeButton IMG {
-	background: url('../images/icon/spreadsheet.png') no-repeat center;
-}
-A.pendingButton IMG {
-	background: url('../images/icon/file-manager.png') no-repeat center;
-}
-
-A.resetButton IMG {
-	background: url('../images/icon/agt_reload.png') no-repeat center;
-}
-A.z3950Button IMG {
-	background: url('../images/icon/defaultButton_import.png') no-repeat center;
-}
 A.copiesdbaddButton IMG {
 	background: url('../images/icon/db_update.png') no-repeat center;
-}
-A.loanButton IMG{
-	background: url('../images/icon/loan.png') no-repeat center;
-}
-A.returnButton IMG{
-	background: url('../images/icon/return.png') no-repeat center;
-}
-A.renewButton IMG{
-	background: url('../images/icon/renew.png') no-repeat center;
-}
-A.sanctionsButton IMG{
-	background: url('../images/icon/sanctions.png') no-repeat center;
-}
-A.statusitemButton IMG{
- 	background: url('../images/icon/statusitem.png') no-repeat center;
-}
-A.userstatmentButton IMG{
- 	background: url('../images/icon/userstatment.png') no-repeat center;
-}
-A.userhistoryButton IMG{
- 	background: url('../images/icon/userhistory.png') no-repeat center;
-}
-A.transactionsButton IMG{
- 	background: url('../images/icon/transactions.png') no-repeat center;
-}
-A.statisticsusersButton IMG{
- 	background: url('../images/icon/statisticsusers.png') no-repeat center;
-}
-
-A.statisticsanctionsButton IMG{
- 	background: url('../images/icon/statisticsanctions.png') no-repeat center;
-}
-
-A.newsuggestionButton IMG{
- 	background: url('../images/icon/newsuggestion.png') no-repeat center;
-}
-A.providersButton IMG{
- 	background: url('../images/icon/providers.png') no-repeat center;
 }
 A.purchaseorderButton IMG{
  	background: url('../images/icon/purchaseorder.png') no-repeat center;
 }
-A.createpurchaseorderButton IMG{
- 	background: url('../images/icon/createpurchaseorder.jpg') no-repeat center;
-}
-A.approvedsuggestionsButton IMG{
- 	background: url('../images/icon/approvedsuggestions.png') no-repeat center;
-}
-A.origendatabaseButton IMG{
- 	background: url('../images/icon/basededatosorigen.png') no-repeat center;
-}
-A.usersconfigureButton IMG{
- 	background: url('../images/icon/usersconfigure.png') no-repeat center;
-}
-A.userstypeButton IMG{
- 	background: url('../images/icon/userstype.png') no-repeat center;
-}
-A.itemstypeButton IMG{
- 	background: url('../images/icon/itemstype.png') no-repeat center;
-}
-A.loanpolicyButton IMG{
- 	background: url('../images/icon/loanpolicy.png') no-repeat center;
-}
-A.currency_daysButton IMG{
- 	background: url('../images/icon/currency_days.png') no-repeat center;
-}
-A.calendarButton IMG{
- 	background: url('../images/icon/calendar.png') no-repeat center;
-}
+
+
+
+
+
+
 A.receiptsButton IMG{
  	background: url('../images/icon/receipts.png') no-repeat center;
-}
-A.reportsButton IMG{
- 	background: url('../images/icon/reports.png') no-repeat center;
-}
-A.reserveButton IMG{
- 	background: url('../images/icon/reservar.png') no-repeat center;
 }
 A.homeButton IMG{
  	background: url('../../images/icon/home.png') no-repeat center;
@@ -740,7 +1257,7 @@ A.homeButton IMG{
 	border-right: 1px solid #9d9d9d;
 	background: #848484;
 	border-bottom: 3px solid #848484;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	border:1px solid #9d9d9d;
 }
@@ -797,7 +1314,7 @@ A.homeButton IMG{
 
 .listTable .rowOver .tButton:hover {
 	background: #88a6d3;
-	color: #fff;
+	color: var(--white);
 }
 
 .listTable .rowOver .tErase:hover {
@@ -810,6 +1327,331 @@ A.homeButton IMG{
 /*#END #listTable classes */
 
 /* TABLE IN DIBUJARHOJADEENTRADA */
+
+/*TOOLBAR*/
+
+
+
+
+/*
+.ABCD_menubases iframe:hover {
+	position: relative;
+	background: red;
+}
+*/
+
+div.ABCD_menu {
+	z-index: 99999999;
+	background: yellow; 
+}
+
+div.ABCD_menu:hover{
+	z-index: 99999999;
+	background: yellow;
+	height: 50px; 
+}
+
+.ABCD_main {
+	z-index: 11;
+}
+
+.ABCD_menubases {
+	height: 200px;
+}
+.ABCD_menubases iframe {
+    height:50px;
+    overflow:visible;
+    z-index: 99999999;
+    pointer-events: initial; 
+}
+
+
+
+iframe.dataentry-header {
+	z-index: 999999999;
+	position: relative; 
+	height: 50px; 
+	width: 100%;
+	border: none;
+}
+
+
+
+body.toolbar-dataentry {
+	background: var(--gray-light);
+	margin: 6px;
+	color: var(--bgsectionInfo);
+}
+
+div.toolbar-dataentry {
+	background: var(--gray-light);
+	color: var(--bgsectionInfo);
+	display: inline-block;
+}
+
+div.toolbar-dataentry form {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.GenerarWks {
+	float: right;
+}
+
+#toolbarBox {
+	float: left;
+}
+
+table.toolbar-dataentry  {
+	width:100%;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	padding: 8px;
+	border-bottom: 1px solid var(--cyan);
+}
+
+div.toolbar-dataentry  {
+	box-sizing: border-box;
+	width:100%;
+	padding: 8px;
+	border-bottom: 1px solid var(--cyan);
+}
+
+.toolbar-dataentry td {
+	vertical-align: middle;
+}
+
+table.toolbar-dataentry select, table.toolbar-dataentry input {
+	font-size: 12px;
+	width: 100px;
+}
+
+table.toolbar-dataentry a {
+	color: var(--bgsectionInfo);
+	padding: 8px;
+	text-decoration: none;
+}
+
+.toolbar-dataentry .bt-tool {
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.toolbar-dataentry .bt-tool img {
+	padding: 5px;
+	margin-top: -5px;
+}
+
+.ph-10 {
+	padding: 2px 10px;
+}
+
+.defaultButtonText{
+	font-size: 11px;
+	cursor:pointer;
+}
+
+
+.buttonTextDisabled {
+	color: gray;
+}
+
+.defaultButton {
+	fill: var(--white);
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+}
+
+
+.defaultButtonOver, .toolbar-dataentry .bt-tool:hover  {
+	border-radius: 3px;
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+	background-color : var(--blue);
+	cursor : pointer;
+}
+
+.defaultButtonOver img, .toolbar-dataentry .bt-tool img:hover  {
+	filter: invert(100%) sepia(96%) saturate(4522%) hue-rotate(348deg) brightness(97%) contrast(109%);
+}
+
+.defaultButtonDown {
+	background-color : var(--white);
+	cursor : pointer;
+	height: 24px;
+	width: 32px;
+	padding: 4px 0;
+	fill: var(--blue);
+	vertical-align: middle;
+	text-align: center;
+}
+
+.icongray {
+/*	border : solid 1px var(--bgsectionInfo);*/
+	cursor : default;
+}
+
+.btn-toolbar-blue i {
+	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	box-sizing: border-box;
+	padding: 3px 4px;
+	text-decoration: none;
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+	border-radius: 3px;
+	color: var(--white);
+	cursor: pointer;
+	font-size: 15px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+
+/*
+.toolbarDivider {
+	background-color : var(--white);
+	border-right : solid var(--white)FFF 1px;
+	height : 100%;
+	margin-bottom : 2px;
+	margin-top : 1px;
+	overflow : hidden;
+	vertical-align : middle;
+}
+
+.toolbarDividerY {
+	background-color : var(--bgsectionInfo);
+	border-bottom : none;
+	border-top : none;
+	height : 2px;
+	overflow : hidden;
+	width : 100%;
+}
+
+
+.toolbarName{
+	letter-spacing : 3px;
+	padding-left : 10px;
+	padding-right : 10px;
+}
+*/
+.toolbarTable{
+	border: none;
+	margin : 0px;
+	padding : 0px;
+	table-layout : fixed;
+}
+
+
+/*END TOOLBAR*/
+
+/* SECOND TOOLBAR */
+
+#myDiv{
+	margin-right: 5px;
+	padding: 0 10px;
+	background: var(--bgsectionInfo);
+	border-radius: 3px;
+	border-top: 1px solid var(--gray);
+	height: 38px;
+	vertical-align: middle;
+}
+
+#myDiv a img{
+	margin: 0 2px;
+	padding: 0 10px;
+	border-radius: 3px;
+}
+
+#myDiv a img {
+		padding: 4px;
+		filter: invert(99%) sepia(100%) saturate(4%) hue-rotate(61deg) brightness(105%) contrast(100%);
+}
+
+#myDiv img:hover {
+	background: var(--light);
+}
+
+
+/* The container */
+.check_sec {
+	vertical-align: top;
+	top: 5px;
+	width: 22px;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check_sec input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.check_sec:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.check_sec input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.check_sec input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.check_sec .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+/* END SECOND TOOLBAR */
+
+
+
 
 .table-fdt {
 	border-collapse: collapse;
@@ -883,7 +1725,7 @@ td.input-fdt {
 
 .table-fdt .rowOver .tButton:hover {
 	background: #88a6d3;
-	color: #fff;
+	color: var(--white);
 }
 
 .table-fdt .rowOver .tErase:hover {
@@ -1062,7 +1904,7 @@ td.table-fdt-one {
 }
 
 .formFoot .helper {
-	color: #fff;
+	color: var(--white);
 	border-right: 1px solid #8da2c1;
 }
 h4 {
@@ -1111,7 +1953,7 @@ TD.showSTitle .collectionInfo {
 }
 
 TD.showSTitle .collectionMode {
-	background: #fff;
+	background: var(--white);
 }
 
 .rowOver TD.showSTitle .collectionMode {
@@ -1210,13 +2052,12 @@ a.bt-sign {
 /* BUTTONS 2021  */
 
 
-.button_browse, .submit, input[type=submit]{
-
+.button_browse, .submit, input[type=submit], input[type=button]{
 	border-width: 1px;
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1242,9 +2083,19 @@ a.bt-sign {
 
 
 .button_browse.show, .submit, input[type=submit], input[type=button] {
+/*	background: var(--blue);
+	color: var(--light);
+	border-color: var(--blue);
+	text-decoration: none;
+*/
+}
+
+.button_browse.show {
 	background: var(--blue);
 	color: var(--light);
 	border-color: var(--blue);
+	text-decoration: none;
+	padding: 5px 13px;
 
 }
 
@@ -1256,6 +2107,7 @@ a.bt-sign {
 .button_browse.edit {
 	background: var(--success);
 	color: var(--white);
+	text-decoration: none;
 }
 
 .button_browse.edit:hover {
@@ -1296,7 +2148,7 @@ a.bt-sign {
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1329,7 +2181,7 @@ a.bt-sign {
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1344,7 +2196,17 @@ a.bt-sign {
 	touch-action: manipulation;
 }
 
-.bt-blue:hover, A.singleButton:hover, .submitAdvanced:hover {
+
+a[class^="bt-"] {	
+	transform: translateY(0);
+	transition: transform 150ms, box-shadow 150ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	text-decoration: none;
+}
+
+.bt-blue:hover, A.singleButton:hover, .submitAdvanced:hover, a[class^="bt-"]:hover {
 	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
 	transform: translateY(-2px);
 }
@@ -1362,7 +2224,7 @@ a.bt-sign {
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: var(--white);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;
@@ -1459,7 +2321,7 @@ nav ul {
 .nav a {
   display:block;
   background: var(--blue);
-  color: #fff;
+  color: var(--white);
   text-decoration: none;
   padding: 0.8em 1.8em;
   font-size: 80%;

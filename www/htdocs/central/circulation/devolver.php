@@ -138,12 +138,13 @@ function DeleteSuspentions(){
 echo "<body onload='javascript:document.inventorysearch.inventory.focus()'>\n";
 include("../common/institutional_info.php");
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["return"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -153,12 +154,12 @@ include("../common/institutional_info.php");
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: devolver.php </font>
+echo " Script: devolver.php
 	</div>";
 // prestar, reservar o renovar
 ?>
 <div class="middle list">
-
+<div class="formContent">
 	<div class="searchBox">
 	<form name=inventorysearch action=devolver_ex.php method=post onsubmit="javascript:return false">
 	<table>
@@ -172,8 +173,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: devolver.php </font>
         <input type=hidden name=base value=trans>
         <input type=hidden name=searchExpr>
         </td><td valign=top>
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
-		<input type="submit" name="reservar" value="<?php echo $msgstr["return"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
+		<input type="submit" name="reservar" value="<?php echo $msgstr["return"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 		</td></table>
 		<?php echo $msgstr["clic_en"]." <i>[".$msgstr["return"]."]</i> ".$msgstr["para_c"]?>
 	</form>
@@ -271,6 +272,7 @@ if (isset($arrHttp["error"])){
 	";
 }
 echo "</div>";
+echo "</div>";
 include("../common/footer.php");
-echo "</body></html>" ;
+
 ?>

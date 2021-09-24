@@ -98,7 +98,7 @@ global $msgstr,$arrHttp,$copies;
 	}
 ?>
 		</select>
-		<input type=submit value="<?php echo $msgstr["adsearch"]?>" onclick=BusquedaAvanzada("<?php echo $copies?>")></td></table>
+		<input type=submit class="bt-green" value="<?php echo $msgstr["adsearch"]?>" onclick=BusquedaAvanzada("<?php echo $copies?>")></td></table>
 
 <?php
 }
@@ -252,12 +252,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["ecobj"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -266,11 +267,12 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/object_statment.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: situacion_de_un_objeto.php</font>\n";
+echo " Script: situacion_de_un_objeto.php\n";
 
 ?>
 </div>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 		<form name=inventorysearch  method=post onsubmit="javascript:return false">
 <?php
@@ -307,12 +309,7 @@ if (file_exists($db_path."loans.dat")){
 	DibujarSelectBases($fp);
 }
 ?>
-
-
-
-
 	<input type=hidden name=inventory>
-
 		<table width=100% border=0>
 			<td width=150>
 				<label for="searchExpr">
@@ -320,8 +317,8 @@ if (file_exists($db_path."loans.dat")){
 			</label>
 			</td><td>
 				<textarea name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" rows=5 cols=50/></textarea>
-				<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
-				<input type="submit" name="buscar" value="<?php echo $msgstr["search"]?>" class="submit" onclick="javascript:EnviarForma()"/>
+				<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
+				<input type="submit" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 			</td>
 		</table>
 	</div>
@@ -334,8 +331,8 @@ if (file_exists($db_path."loans.dat")){
 		</label>
 		</td><td>
 		<input type="text" name="control" id="control" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "SC"; else echo "C";?>',document.inventorysearch.control)"/>
-		<input type="submit" name="ok" value="<?php echo $msgstr["search"]?>" class="submit" onClick=EnviarForma() />
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "SC"; else echo "C";?>',document.inventorysearch.control)"/>
+		<input type="submit" name="ok" value="<?php echo $msgstr["search"]?>" class="bt-green" onClick=EnviarForma() />
 		</td></table>
 	<p>
 
@@ -351,9 +348,10 @@ if (file_exists($db_path."loans.dat")){
 	?>
 
 	</form>
-	<br><br><br><br>
+
 	</div>
 
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php if (isset($arrHttp["base"])) echo $arrHttp["base"]?>">
@@ -374,6 +372,5 @@ if (file_exists($db_path."loans.dat")){
 	<input type=hidden name=Expresion>
 </form>
 <?php include("../common/footer.php");
-echo "</body></html>" ;
 
 ?>

@@ -276,7 +276,7 @@ if (file_exists($archivo)){
     </tr>
 </table>
 <br>
-<table border=1>
+<table border=0>
     <tr>
     <td valign=top colspan=4>
     	<div id=generateformat>
@@ -312,10 +312,20 @@ if (file_exists($archivo)){
 				</select>
 			</td>
 			<TD VALIGN=MIDDLE ALIGN=CENTER>
-				<A HREF="#" onClick="moveSelectedOptions(document.forms[0]['list11'],document.forms[0]['list21'],false);return false;"><img src=../dataentry/img/barArrowRight.png border=0></A><BR><BR>
-				<A HREF="#" onClick="moveAllOptions(document.forms[0]['list11'],document.forms[0]['list21'],false); return false;"><img src=../dataentry/img/barArrowRight.png border=0><img src=../dataentry/img/barArrowRight.png border=0></A><BR><BR>
-				<A HREF="#" onClick="moveAllOptions(document.forms[0]['list21'],document.forms[0]['list11'],false); return false;"><img src=../dataentry/img/barArrowLeft.png border=0><img src=../dataentry/img/barArrowLeft.png border=0></A><BR><BR>
-				<A HREF="#" onClick="moveSelectedOptions(document.forms[0]['list21'],document.forms[0]['list11'],false); return false;"><img src=../dataentry/img/barArrowLeft.png border=0></A>
+				<a class="button_browse show" href="#" onClick="moveSelectedOptions(document.forms[0]['list11'],document.forms[0]['list21'],false);return false;">
+					<i class="fas fa-angle-right"></i>
+				</a>
+				<BR><BR>
+				<a class="button_browse show" href="#" onClick="moveAllOptions(document.forms[0]['list11'],document.forms[0]['list21'],false); return false;">
+					<i class="fas fa-angle-double-right"></i>
+				</a>
+				<BR><BR>
+				<a class="button_browse show" href="#" onClick="moveAllOptions(document.forms[0]['list21'],document.forms[0]['list11'],false); return false;"><i class="fas fa-angle-double-left"></i>
+				</a>
+				<BR><BR>
+				<a class="button_browse show" href="#" onClick="moveSelectedOptions(document.forms[0]['list21'],document.forms[0]['list11'],false); return false;">
+					<i class="fas fa-angle-left"></i>
+				</a>
 
 
 			</TD>
@@ -340,10 +350,12 @@ if (isset($tag_s) ) {
 				</SELECT>
 			</TD>
 			<TD ALIGN="CENTER" VALIGN="MIDDLE">
-				<INPUT TYPE="button" VALUE="<?php echo $msgstr["up"]?>" onClick="moveOptionUp(this.form['list21'])">
+				<button class="button_browse show" type="button" value="<?php echo $msgstr["up"]?>" title="<?php echo $msgstr['up']?>" onClick="moveOptionUp(this.form['list21'])"><i class="fas fa-caret-up"></i></button>
 				<BR><BR>
-				<INPUT TYPE="button" VALUE="<?php echo $msgstr["down"]?>" onClick="moveOptionDown(this.form['list21'])">
-				<br><br><a href=javascript:Preview()><img src=../dataentry/img/preview.gif border=0 alt="preview"></a>
+				<button class="button_browse show" type="button" value="<?php echo $msgstr["down"]?>" title="<?php echo $msgstr["down"]?>" onClick="moveOptionDown(this.form['list21'])"><i class="fas fa-caret-down"></i></button>
+				<br><br>
+				<a href="javascript:Preview()" class="button_browse show" ><i class="far fa-eye"></i>
+				</a>
 				<br><br>
 			</TD>
             </tr>
@@ -353,7 +365,7 @@ if (isset($tag_s) ) {
 	<tr><td colspan=4><?php echo $msgstr["whendone"]?></td></tr>
 	<tr><td valign=top colspan=4 >
 		<?php echo $msgstr["name"]?>: <input type=text name=nombre size=8 maxlength=12> <?php echo $msgstr["description"]?>: <input type=text size=50 maxlength=50 name=descripcion> &nbsp;
-		<a href=javascript:GenerarFormato()><img src=../dataentry/img/barSave.png alt="save" border=0 align=absmiddle></a>
+		<a class="button_browse edit" href=javascript:GenerarFormato()><i class="far fa-save"></i></a>
 		</td>
     </tr>
 </table>

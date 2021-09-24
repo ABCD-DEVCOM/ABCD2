@@ -68,7 +68,7 @@ if (isset($arrHttp["encabezado"])) {
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/resetautoinc.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/reset_inventory_number.php</font>\n";
+echo " Script: dbadmin/reset_inventory_number.php\n";
 echo "
 	</div>
 <div class=\"middle form\">
@@ -79,7 +79,7 @@ if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado val
 echo "<table>";
 echo "<tr><td>".$msgstr["lastinv"]."</td><td><input type=textbox name=control_n value=$inv_val></td>";
 echo "</table>";
-echo "<p><input type=submit name=send value=".$msgstr["update"]." onclick=Enviar()>";
+echo "<p><input type=submit name=send class=bt-blue value=".$msgstr["update"]." onclick=Enviar()>";
 
 echo "</form></div></div>";
 include("../common/footer.php");

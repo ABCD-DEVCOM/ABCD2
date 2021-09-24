@@ -89,7 +89,7 @@ echo "</script>\n";
 <!-- calendar stylesheet -->
   <link rel="stylesheet" type="text/css" media="all" href="../dataentry/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
-  <script  language="JavaScript" type="text/javascript"" src="../dataentry/calendar/calendar.js"></script>
+  <script  language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar.js"></script>
   <!-- language for the calendar -->
   <script  language="JavaScript" type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
   <!-- the following script defines the Calendar.setup helper function, which makes
@@ -289,14 +289,16 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["loan"]." ";
 		  if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") echo " - ".$msgstr["users"].": ".$arrHttp["usuario"];
 		?>
 	</div>
+
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -305,10 +307,11 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: prestar.php </font>
+echo " Script: prestar.php </font>
 	</div>";
 // prestar, reservar o renovar
 ?>
+
 
 
 <form name=inventorysearch action=usuario_prestamos_presentar.php method=post onsubmit="javascript:return false">
@@ -316,6 +319,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: prestar.php </font>
 <input type=hidden name=Opcion value=prestar>
 <input type=hidden name=inventory>
 <div class="middle list">
+
+<div class="formContent">
 	<div class="searchBox">
 <?php
 //READ BASES.DAT TO FIND THE DATABASES CONNECTED WITH THE CIRCULATION MODULE, IF NOT, WORKING WITH COPIES DATABASES
@@ -388,7 +393,7 @@ if (file_exists($db_path."loans.dat")){
 	 		  }
 
 	?>
-	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
+	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
         <div id=kardex style="display:none;">
             <br>
 			Año: <input type=text name=year size=4>
@@ -444,24 +449,30 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="")
 ?>
  onclick="document.inventorysearch.usuario.value=''"/>
 
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
 
 		<tr><br><td>
 		<label for="searchExpr">
 			<strong><?php echo $msgstr["comments"]?></strong>
 		</label></td><td><br><input type=text name=comments   size=100 maxlength=100>
-		<input type="submit" name="prestar" value="<?php echo $msgstr["loan"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="submit" name="prestar" value="<?php echo $msgstr["loan"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 
 		</td></table>
         <?php echo $msgstr["clic_en"]." <i>[".$msgstr["loan"]."]</i> ".$msgstr["para_c"]?>
 
 	</div>
 	</div>
+
+</div><!--./formcontent-->
+
 </div>
 
 </form>
+
+
+
 <?php include("../common/footer.php");
-echo "</body></html>" ;
+
 if (isset($cuenta) and $cuenta==1){
 	echo "<script>
 	        document.inventorysearch.db_inven.selectedIndex=2

@@ -43,12 +43,13 @@ $encabezado="";
 echo "<body>\n";
 $encabezado="&encabezado=s";
 include("../common/institutional_info.php");
+include("submenu_prestamo.php");
 echo "<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".
 		$msgstr["configure"]."
 	</div>
 	<div class=\"actions\">";
-	include("submenu_prestamo.php");
+	
 echo "</div>
 	<div class=\"spacer\">&#160;</div>
 </div>";
@@ -59,55 +60,47 @@ echo "</div>
 echo " Script: configure_menu.php"; ?>
 	</div>
 <div class="middle homepage">
-	<div class="mainBox">
 
-		<div class="boxContent toolSection">
-			<div class="sectionIcon">
-						&#160;
-			</div>
-			<div class="sectionTitle">
-				<h4>&#160;<strong><?php echo $msgstr["policy"]?></strong></h4>
-			</div>
-			<div class="sectionButtons">
+
+<div class="mainBox" >
+	<div class="boxContent loanSection">
+		<div class="sectionTitle">
+		<img src="../../assets/svg/circ/ic_fluent_database_24_regular.svg">
+			<h1><?php echo $msgstr["policy"]?></h1>
+		</div>
+		<div class="sectionButtons">
+
 				<a href="databases.php" class="menuButton multiLine origendatabaseButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["sourcedb"]?></strong></span>
 				</a>
 				<a href="borrowers_configure.php" class="menuButton multiLine usersconfigureButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["bconf"]?></strong></span>
 				</a>
 				<a href="typeofusers.php" class="menuButton multiLine userstypeButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["typeofusers"]?></strong></span>
 				</a>
     				<a href="typeofitems.php" class="menuButton multiLine itemstypeButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["typeofitems"]?></strong></span>
 				</a>
     			<a href="loanobjects.php" class="menuButton multiLine loanpolicyButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["objectpolicy"]?></strong></span>
 				</a>
 
 				<a href="locales.php" class="menuButton multiLine currency_daysButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["local"]?></strong></span>
 				</a>
 
 				<a href="calendario.php" class="menuButton multiLine calendarButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["calendar"]?></strong></span>
 				</a>
 
            		<a href="sala_configure.php" class="menuButton multiLine loanpolicyButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["sala"]?></strong></span>
 				</a>
 				<?php if (isset($ILL)){
 				?>
 				<a href="../circulation/interbib_configure.php?encabezado=s" class="menuButton providersButton">
-							<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
+	
 							<span><strong><?php echo $msgstr["r_ill"]?></strong></span>
 						</a>
 				<?php
@@ -120,30 +113,25 @@ echo " Script: configure_menu.php"; ?>
 
 	</div>
 
-	<div class="mainBox">
 
-		<div class="boxContent toolSection">
-			<div class="sectionIcon">
-						&#160;
-			</div>
-			<div class="sectionTitle">
-				<h4>&#160;<strong><?php echo $msgstr["outputs"]?></strong></h4>
-			</div>
-			<div class="sectionButtons">
-				<a href="../circulation/receipts.php?base=trans&encabezado=s&retorno=../circulation/configure_menu.php" class="menuButton multiLine receiptsButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
+<div class="mainBox" >
+	<div class="boxContent loanSection">
+		<div class="sectionTitle">
+		<img src="../../assets/svg/circ/ic_fluent_database_24_regular.svg">
+			<h1><?php echo $msgstr["outputs"]?></h1>
+		</div>
+		<div class="sectionButtons">
+
+				<a href="../circulation/receipts.php?base=trans&encabezado=s&retorno=../circulation/configure_menu.php" class="menuButton multiLine reportsButton">
 					<span><strong><?php echo $msgstr["receipts"]?></strong></span>
 				</a>
 				<a href="../dbadmin/pft.php?base=trans&encabezado=s&retorno=../circulation/configure_menu.php" class="menuButton multiLine reportsButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports_trans"]?></strong></span>
 				</a>
 				<a href="../dbadmin/pft.php?base=suspml&encabezado=s&retorno=../circulation/configure_menu.php" class="menuButton multiLine reportsButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports_suspml"]?></strong></span>
 				</a>
 				<a href="../dbadmin/pft.php?base=users&encabezado=s&retorno=../circulation/configure_menu.php" class="menuButton multiLine reportsButton">
-					<img src="../../assets/images/mainBox_iconBorder.gif" alt="" title="" />
 					<span><strong><?php echo $msgstr["reports_borrowers"]?></strong></span>
 				</a>
 

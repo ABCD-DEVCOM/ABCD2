@@ -119,12 +119,13 @@ if (isset($arrHttp["db_inven"])){
 	$from_copies="Y";
 }
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["r_sala"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -134,12 +135,12 @@ if (isset($arrHttp["db_inven"])){
 <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/sala.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sala.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala.php </font>
+echo " Script: circulation/sala.php
 	</div>";
 // prestar, reservar o renovar
 ?>
 <div class="middle list">
-
+<div class="formContent">
 	<div class="searchBox">
 	<form name=sala action=sala_ex.php method=post onsubmit="javascript:return false">
 	<input type=hidden name=invSearch>
@@ -205,12 +206,13 @@ echo "
 		</td><td valign=top>
 		<textarea name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" /></textarea>
 
-		<input type="submit" name="Enviar" value="<?php echo $msgstr["r_sala"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+		<input type="submit" name="Enviar" value="<?php echo $msgstr["r_sala"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 		</td></table>
     <p><br><br>
 	</form>
 	</div>
 <?php
+echo "</div>";
 echo "</div>";
 include("../common/footer.php");
 echo "</body></html>" ;

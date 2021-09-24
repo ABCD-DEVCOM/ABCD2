@@ -57,16 +57,6 @@ A.menuButton {
 		float: left;
 	}
 
-	A.menuButton SPAN {
-		/*display: -moz-inline-block; */
-		display: inline-block;
-		vertical-align: middle;
-		width: 190px;
-		padding: 12px 0px 0px 0px;
-		float: left;
-	}
-
-
 
 	A.multiLine SPAN {
 		padding-top: 5px;
@@ -169,30 +159,8 @@ A.menuButton {
 
 	}
 
-	.institutionalInfo {
-		float: left;
-		width: 60%;
-		display: table;
-		padding: 15px 0px 14px 15px;
-	}
-
-	.institutionalInfo IMG {
-		float: left;
-		margin: 0 8px 0 0;
-		display: inline-block;
-		height: 45px;
-	}
 
 
-	.institutionalInfo>H1, .institutionalInfo H2 {
-		margin-left: 50px;
-	}
-	.institutionalInfo H1 {
-		margin-top: 10px;
-		margin-left: 20%;
-		vertical-align: middle;
-		position: relative;
-	}
 
 
 
@@ -226,15 +194,6 @@ A.menuButton {
 
 	}
 
-	.breadcrumb {
-		float: left;
-		width: 45%;
-		padding: 11px 0px 11px 15px;
-	}
-
-	.breadcrumb H3 {
-		display: inline;
-	}
 
 	.actions {
 		float: right;
@@ -326,18 +285,11 @@ A.menuButton {
 
 	.homepage .mainBox .boxContent {
 		min-height: 101px;
-		padding: 10px 26px;
+		padding: 30px;
 	}
 
-	.homepage .mainBox .boxContent .sectionIcon {
-		vertical-align: top;
-		float: left;
-		width: 80px;
-		height: 95px;
-		margin-right: 5px;
-		display: inline;
-	}
 
+/*
 	.homepage .mainBox .boxContent .sectionTitle {
 			vertical-align: baseline;
 		float: left;
@@ -355,25 +307,19 @@ A.menuButton {
 		overflow: hidden;
 	}
 
-	.homepage .mainBox .boxContent .sectionButtons {
-		margin: 27px 0px 0px 0px;
-		float: left;
-		width: 65%;
-	}
 
-	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
-		margin-top: 3px;
-	}
+
 
 	.homepage .mainBox .boxContent .searchTitles label{
 	display: block;	
 }
+/*
 	.homepage .mainBox .boxContent .searchTitles {
 		width: 100%;
 		clear: both;
 		float: left;
 	}
-
+*/
 	.homepage .mainBox .boxContent .searchTitles .stInput {
 		width: auto;
 		display: inline-block;
@@ -668,12 +614,12 @@ A.menuButton {
 
 	/* #Login */
 	.login {
-		padding: 2.6% 20px;
+		padding: 2.6%	 0px;
 	}
 
 	.login .loginForm {
 		margin: 0px auto;
-		width: 400px;
+		width: 350px;
 	}
 
 	.login .loginForm {

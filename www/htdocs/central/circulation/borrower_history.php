@@ -125,12 +125,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -139,10 +140,11 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/loans/borrower_history.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: borrower_history.php</font>\n";
+echo " Script: borrower_history.php\n";
 ?>
 	</div>
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 	<form name=usersearch action="" method=post onsubmit="javascript:return false">
 	<input type=hidden name=Indice>
@@ -154,14 +156,16 @@ echo "<font color=white>&nbsp; &nbsp; Script: borrower_history.php</font>\n";
 		</td><td>
 		<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';" />
 
-		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="submit" onClick="javascript:AbrirIndice('U',document.usersearch.usercode)" />
-		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma('U')"/>
+		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="bt-blue" onClick="javascript:AbrirIndice('U',document.usersearch.usercode)" />
+		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma('U')"/>
 		</td></table>
 	</form>
 	</div>
-	<div class=\"spacer\">&#160;</div>
+	<div class="spacer">&#160;</div>
 	<dd>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]?>
+	</dd>
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">

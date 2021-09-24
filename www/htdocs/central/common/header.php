@@ -17,7 +17,7 @@
 <html>
 	<head profile="http://www.w3.org/2005/10/profile">
 		<link rel="icon" type="image/png" href="/favicon.png"/>
-		<title>ABCD<?php if (isset($subtitle))  echo $subtitle?></title>
+		<title>ABCD <?php if (isset($subtitle))  echo $subtitle?></title>
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $content_charset?>" />
@@ -25,10 +25,15 @@
 		<meta name="robots" CONTENT="NONE" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Stylesheets -->
+		
+
 		<link rel="stylesheet" rev="stylesheet" href="../../assets/css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
 		<!--FontAwesome-->
+		
 		<link href="../../assets/css/all.min.css" rel="stylesheet"> 
+	
 		<!--load all styles -->
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie.css" type="text/css" media="screen"/>

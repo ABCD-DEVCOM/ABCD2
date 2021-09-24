@@ -197,7 +197,6 @@
  var div=document.createElement("div");
  div.innerHTML='<table cellpadding="0" cellspacing="1" class="'+this.tableCSS+'" style="display:none" width="'+this.width+'" height="'+this.height+'"><tbody>'+
  '<tr>'+
- '<td width="'+(this.gecko?5:3)+'px"><div class="toolbarHandle">&nbsp;</div></td>'+
  '<td class="'+this.titleCSS+'" style="display:none">'+this.name+'</td>'+
  '<td></td>'+
  '<td align="right" width="100%" class="'+this.titleCSS+'" style="display:none">'+this.name+'</td>'+

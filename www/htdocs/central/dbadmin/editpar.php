@@ -58,7 +58,7 @@ foreach ($fp as $value) $par.=trim($value)."\n";
 	<center><label><?php echo $arrHttp["base"];?>.par</label>
 		<br>
 	<textarea cols="100" rows="20" name="par" class="par"><?php echo $par;?></textarea><br>
-	<input type="submit" value="<?php echo $msgstr["update"];?>">
+	<input class="bt-green" type="submit" value="<?php echo $msgstr["update"];?>">
 </form>
 </div>
 </div>
