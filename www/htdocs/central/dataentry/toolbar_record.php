@@ -104,27 +104,27 @@ startScrollingDetector()
 
 <?php
                 if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
-					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src='../../assets/images/toolbar/ic_fluent_document_edit_24_regular.svg' alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
+					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src='../../assets/svg/catalog/ic_fluent_document_edit_24_regular.svg' alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
                 }
 				if (isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
-					echo " &nbsp;<a href=\"javascript:top.Menu('dup_record')\" title=\"".$msgstr["m_copyrec"]."\"><img src='../../assets/images/toolbar/ic_fluent_save_copy_24_regular.svg' alt=\"".$msgstr["m_copyrec"]."\" style=\"border:0;\"></a>  &nbsp;\n";
+					echo " &nbsp;<a href=\"javascript:top.Menu('dup_record')\" title=\"".$msgstr["m_copyrec"]."\"><img src='../../assets/svg/catalog/ic_fluent_save_copy_24_regular.svg' alt=\"".$msgstr["m_copyrec"]."\" style=\"border:0;\"></a>  &nbsp;\n";
 				}
-				echo " &nbsp;<a href=\"javascript:top.Menu('same')\" title=\"".$msgstr["refresh_db"]."\"><img src='../../assets/images/toolbar/ic_fluent_arrow_sync_circle_24_regular.svg' alt=\"".$msgstr["refresh_record"]."\" title=\"".$msgstr["refresh_record"]."\" style=\"border:0;\"></a>  &nbsp;\n";
+				echo " &nbsp;<a href=\"javascript:top.Menu('same')\" title=\"".$msgstr["refresh_db"]."\"><img src='../../assets/svg/catalog/ic_fluent_arrow_sync_circle_24_regular.svg' alt=\"".$msgstr["refresh_record"]."\" title=\"".$msgstr["refresh_record"]."\" style=\"border:0;\"></a>  &nbsp;\n";
 
 				if (isset($_SESSION["permiso"]["CENTRAL_DELREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_DELREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) 
-					echo "<a href=\"javascript:top.Menu('eliminar')\" title=\"".$msgstr["m_eliminar"]."\"><img src='../../assets/images/toolbar/ic_fluent_delete_dismiss_24_regular.svg' alt=\"".$msgstr["m_eliminar"]."\" style=\"border:0;\"></a> &nbsp;\n";
+					echo "<a href=\"javascript:top.Menu('eliminar')\" title=\"".$msgstr["m_eliminar"]."\"><img src='../../assets/svg/catalog/ic_fluent_delete_dismiss_24_regular.svg' alt=\"".$msgstr["m_eliminar"]."\" style=\"border:0;\"></a> &nbsp;\n";
 				if (isset($_SESSION["permiso"]["CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"][$db."_CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) 
-					echo "<a href=\"javascript:top.Menu('edit_Z3950')\" title=\"Z39.50\"><img src='../../assets/images/toolbar/ic_fluent_arrow_download_24_regular.svg' alt=\"Z39.50\" style=\"border:0;\"></a>\n";
+					echo "<a href=\"javascript:top.Menu('edit_Z3950')\" title=\"Z39.50\"><img src='../../assets/svg/catalog/ic_fluent_arrow_download_24_regular.svg' alt=\"Z39.50\" style=\"border:0;\"></a>\n";
 				if (isset($_SESSION["permiso"]["CENTRAL_EDREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
 					if (isset($rec_validation)) 
-						echo "<a href='javascript:top.Menu(\"recvalidation\")' title=\"".$msgstr["rval"]."\"><img src='../../assets/images/toolbar/ic_fluent_calendar_checkmark_24_regular.svg' alt=\"".$msgstr["rval"]."\" style=\"border:0;\"></a> &nbsp;\n";
+						echo "<a href='javascript:top.Menu(\"recvalidation\")' title=\"".$msgstr["rval"]."\"><img src='../../assets/svg/catalog/ic_fluent_calendar_checkmark_24_regular.svg' alt=\"".$msgstr["rval"]."\" style=\"border:0;\"></a> &nbsp;\n";
 				if (isset($arrHttp["db_copies"]) and $arrHttp["db_copies"]!=""){
 					if (isset($_SESSION["permiso"]["CENTRAL_ADDCOP"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDCOP"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){  //THE DATABASES HAS COPIES DATABASE
-						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addcopies\")' title='".$msgstr["m_addcopies"]."'><img src='../../assets/images/toolbar/ic_fluent_collections_add_24_regular.svg' alt='".$msgstr["m_addcopies"]."' border=0></a> &nbsp;\n";
-						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"editdelcopies\")' title='".$msgstr["m_editdelcopies"]."'><img src='../../assets/images/toolbar/ic_fluent_collections_24_regular.svg' alt='".$msgstr["m_editdelcopies"]."' border=0></a> &nbsp;\n";
+						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addcopies\")' title='".$msgstr["m_addcopies"]."'><img src='../../assets/svg/catalog/ic_fluent_collections_add_24_regular.svg' alt='".$msgstr["m_addcopies"]."' border=0></a> &nbsp;\n";
+						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"editdelcopies\")' title='".$msgstr["m_editdelcopies"]."'><img src='../../assets/svg/catalog/ic_fluent_collections_24_regular.svg' alt='".$msgstr["m_editdelcopies"]."' border=0></a> &nbsp;\n";
 				    }
 					if (isset($_SESSION["permiso"]["CENTRAL_ADDLO"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ADDLO"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]))
-						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addloanobjects\")' title='".$msgstr["addloansdb"]."'><img src='../../assets/images/toolbar/ic_fluent_reading_list_add_24_regular.svg' alt='".$msgstr["addloansdb"]."' border=0></a> \n";
+						echo "<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"addloanobjects\")' title='".$msgstr["addloansdb"]."'><img src='../../assets/svg/catalog/ic_fluent_reading_list_add_24_regular.svg' alt='".$msgstr["addloansdb"]."' border=0></a> \n";
 				}
 				if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
 	    			 isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
@@ -141,9 +141,9 @@ startScrollingDetector()
 					if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N"){
                         echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src=img/toolbarCancelEdit.png alt='".$msgstr["m_cancelar"]."' border=1><a> &nbsp; \n";
 					}else{
-				   		echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src='../../assets/images/toolbar/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1><a>\n";
+				   		echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src='../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1><a>\n";
 					}
-					echo "<a href='javascript:EnviarForma()' title=\"".$msgstr["m_guardar"]."\"><img src='../../assets/images/toolbar/ic_fluent_document_save_24_regular.svg' alt=\"".$msgstr["m_guardar"]."\"><a> &nbsp; \n";
+					echo "<a href='javascript:EnviarForma()' title=\"".$msgstr["m_guardar"]."\"><img src='../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg' alt=\"".$msgstr["m_guardar"]."\"><a> &nbsp; \n";
 					if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tesaurus.rel"))
 						echo "<a href=javascript:RelacionesInversas('check') title=\"".$msgstr["tes_chkinvrel"]."\"><img src=img/import.gif alt=\"".$msgstr["tes_chkinvrel"]."\"></a>\n";
 				}

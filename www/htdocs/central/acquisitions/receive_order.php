@@ -99,15 +99,13 @@ function EnviarForma(){
 }
 
 </script>
-<?php
-
-?>
+	<?php include("order_menu.php")?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["purchase"].": ".$msgstr["receiving"]?>
 	</div>
 	<div class="actions">
-	<?php include("order_menu.php")?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -165,8 +163,8 @@ echo " Script: receive_order.php\n";
 		</td><td>
 		<input type="text" name="searchExpr" id="searchExpr" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
         <input type=hidden name=base value=>
-		<input type="submit" name="list" value="<?php echo $msgstr["search"]?>" onclick="javascript:EnviarForma();return false"/>
-		<input type="submit" name="list" value="<?php echo $msgstr["listorders"]?>"  onclick="javascript:AbrirIndiceAlfabetico();return false"/>
+		<input type="submit" class="bt-blue" name="list" value="<?php echo $msgstr["search"]?>" onclick="javascript:EnviarForma();return false"/>
+		<input class="bt-green" type="submit" name="list" value="<?php echo $msgstr["listorders"]?>"  onclick="javascript:AbrirIndiceAlfabetico();return false"/>
 		</td>
 		</table>
 		<?php //echo $msgstr["clic_en"]." <i>[".$msgstr["return"]."]</i> ".$msgstr["para_c"]?>

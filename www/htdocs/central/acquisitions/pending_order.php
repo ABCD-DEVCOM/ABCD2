@@ -131,15 +131,13 @@ function EnviarForma(){
 }
 
 </script>
-<?php
-
-?>
+	<?php include("order_menu.php")?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["purchase"].": ".$msgstr["pending"];?>
 	</div>
 	<div class="actions">
-	<?php include("order_menu.php")?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

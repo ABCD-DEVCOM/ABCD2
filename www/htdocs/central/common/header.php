@@ -25,6 +25,7 @@
 		<meta name="robots" CONTENT="NONE" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Stylesheets -->
 		
 

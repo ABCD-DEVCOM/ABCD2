@@ -72,7 +72,7 @@ include "../common/inc_div-helper.php";
 				 <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton  statButton">
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
-				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton  resumeButton">
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton decisionButton">
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
                 <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton  databaseButton">
@@ -120,7 +120,7 @@ include "../common/inc_div-helper.php";
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton statButton">
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
-				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton databaseButton">
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton decisionButton">
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
                 <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton databaseButton">

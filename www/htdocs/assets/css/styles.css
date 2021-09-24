@@ -6,12 +6,11 @@
   --blue: #3955a3;
   --blue-abcd: #124078;
   --bgsectionInfo: #4a78b0;
-  --cat-color: #2b579a;
-  --acq-color: #217346;
-  --loan-color: #6264a7;
+  --cat-color: #B4E1F9;
+  --acq-color: #96EAC8;
+  --loan-color: #F7EF89;
   --indigo: #6610f2;
   --purple: #6f42c1;
-  --pink: #e83e8c;
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
@@ -86,7 +85,7 @@ h1, .h1 {
 }
 
 A {
-	color: #708bb1;
+	color: var(--blue);
 }
 
 A IMG {
@@ -237,6 +236,7 @@ a.menuButton span {
 	text-align: left;
 	margin: auto 50px;
 	font-size: 85%;
+	color: var(--blue-abcd);
 }
 
 
@@ -341,36 +341,46 @@ A.singleButton .sb_rb {
 	position: relative;
 }
 
-
 .heading-database {
+	display: inline-block;
+}
+
+.heading-database form {
 	margin-right: 15%;
 	padding: 0;
 	height: 45px;
 	display: inline-block;
 	position: absolute;
+	width: 30%;
+	vertical-align: middle;
 }
 
-.heading-database form  {
-	margin-right: 17%;
-	float: right;
-	width: 100%;
+
+.heading-database form label {
+	display: inline-block;
+	color: var(--white);
+	vertical-align: middle;
+	margin: 12px auto 0 30px;
+	width: 10%;
+	font-size: 1rem;
 }
 
 select.heading-database {
 	 display:block;
-	 margin: 0;
+	 margin-top: 5px;
 	 vertical-align: top;
-	 background: var(--blue);
-	 color: var(--white);
-	 width: 250px;
-	 border: none;
+	 background: var(--cat-color);
+	 color: var(--blue-abcd);
+	 width: 70%;
+	 border: 1px solid var(--white);
 	 border-radius: inherit;
 	 float: right;
-	 padding: 9px 0;
-	 height: 45px;
-	 box-shadow: none;
+	 padding: 9px;
+	 height: 35px;
+	 border-radius: 3px;
+	 box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
 	 font-weight: 600;
-	 font-size: 18px;
+	 font-size: 15px;
 	text-align: left;
 }
 
@@ -427,7 +437,6 @@ nav.heading-nav select {
 	background-color: var(--blue-abcd);
 	display: block;	
 	color: var(--white);
-
 	height: 43px;
 	width: 60px;
 	text-decoration:none;
@@ -438,6 +447,11 @@ nav.heading-nav select {
 	line-height: 60px;
 }
 
+nav.heading-nav select option {
+	background: var(--info);
+	color: var(--blue-abcd);
+	padding: 5px;
+}
 
 nav.heading-nav a:hover, nav.heading-nav button:hover, nav.heading-nav select:hover  { 
 	background-color: var(--blue);
@@ -500,9 +514,9 @@ nav.heading-nav ul ul ul li {
 }
 
 .bt-cat.active {
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; 
-	background-color: var(--cat-color);
-	border: 1px solid var(--cat-color);
+	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
 	background-image: url(../svg/ic_fluent_book_database_24_filled.svg);
 }
 
@@ -515,8 +529,9 @@ nav.heading-nav ul ul ul li {
 .bt-loan.active {
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	background-image: url(../svg/ic_fluent_people_swap_24_filled.svg);
-	background-color: var(--loan-color);
-	border: 1px solid var(--loan-color);
+	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
 }
 
 .bt-acq {
@@ -528,8 +543,8 @@ nav.heading-nav ul ul ul li {
 .bt-acq.active {
 	background-image: url(../svg/ic_fluent_cart_24_filled.svg);
 	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
-	background-color: var(--acq-color);
-	border: 1px solid var(--acq-color);
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
 }
 
 li a.bt-charset,li a.bt-charset:hover {
@@ -555,8 +570,6 @@ li a.bt-exit:hover {
 	font-size: 0.7rem;
 	color: var(--white);
 }
-
-
 
 .lang:active {
     border: 1px solid #000;
@@ -615,15 +628,20 @@ li a.bt-exit:hover {
 /*#footer classes */
 .footer {
 	border-top: 1px solid var(--light);
-	color: var(--gray);
-	background: var(--white);
+	color: var(--gray-light);
+	background: var(--blue-abcd);
 	padding: .8rem;
 	-webkit-box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32); 
 	box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32);
+  position: relative;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 5.5rem;            /* Footer height */
 }
 
 .footer A {
-	color: var(--gray);
+	color: var(--gray-light);
 }
 
 .systemInfo STRONG {
@@ -702,7 +720,6 @@ li a.bt-exit:hover {
 .homepage .mainBox .boxContent .sectionTitle {
 		display: inline-block;
 		width: 100%;
-		height: 42px;
 		padding: 0;
 		box-sizing: border-box;
 		top: 0;
@@ -745,8 +762,9 @@ li a.bt-exit:hover {
 
 	.homepage .mainBox .boxContent .sectionButtons {
 		justify-content: center;
+		text-align: center;
 		margin: 40px auto;
-		width: 65%;
+		width: 55%;
 	}
 
 	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
@@ -1020,6 +1038,48 @@ A.reserveButton {
 	background-color: var(--white);
 }
 
+A.usersconfigureButton {
+ 	background: url('../images/icon/usersconfigure.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.userstypeButton {
+ 	background: url('../images/icon/userstype.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.itemstypeButton {
+ 	background: url('../images/icon/itemstype.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.currency_daysButton {
+ 	background: url('../images/icon/currency_days.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.calendarButton {
+ 	background: url('../images/icon/calendar.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
+A.loanpolicyButton {
+ 	background: url('../images/icon/loanpolicy.png') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--white);
+}
+
 /* END CIRCULATION  */
 
 
@@ -1150,24 +1210,12 @@ A.copiesdbaddButton IMG {
 A.purchaseorderButton IMG{
  	background: url('../images/icon/purchaseorder.png') no-repeat center;
 }
-A.usersconfigureButton IMG{
- 	background: url('../images/icon/usersconfigure.png') no-repeat center;
-}
-A.userstypeButton IMG{
- 	background: url('../images/icon/userstype.png') no-repeat center;
-}
-A.itemstypeButton IMG{
- 	background: url('../images/icon/itemstype.png') no-repeat center;
-}
-A.loanpolicyButton IMG{
- 	background: url('../images/icon/loanpolicy.png') no-repeat center;
-}
-A.currency_daysButton IMG{
- 	background: url('../images/icon/currency_days.png') no-repeat center;
-}
-A.calendarButton IMG{
- 	background: url('../images/icon/calendar.png') no-repeat center;
-}
+
+
+
+
+
+
 A.receiptsButton IMG{
  	background: url('../images/icon/receipts.png') no-repeat center;
 }
@@ -1338,6 +1386,12 @@ body.toolbar-dataentry {
 div.toolbar-dataentry {
 	background: var(--gray-light);
 	color: var(--bgsectionInfo);
+	display: inline-block;
+}
+
+div.toolbar-dataentry form {
+	display: inline-block;
+	vertical-align: top;
 }
 
 .GenerarWks {

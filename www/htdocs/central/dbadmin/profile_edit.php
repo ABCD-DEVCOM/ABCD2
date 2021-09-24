@@ -195,7 +195,8 @@ function SendForm(){
 <?php echo $msgstr["PROFILES"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"users_adm.php?xx=s"."$encabezado\" class=\"defaultButton backButton\">";?>
+<?php //echo "<a href=\"users_adm.php?xx=s"."$encabezado\" class=\"defaultButton backButton\">";?>
+<?php echo "<a href=\"../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par&return=../dbadmin/users_adm.php|"."$encabezado\" class=\"defaultButton backButton\">";?>
 		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /></a>
 <?php if (isset($arrHttp["Opcion"])and $arrHttp["Opcion"]!="delete"){
 	  echo "<a href=\"javascript:SendForm()\" class=\"defaultButton saveButton\">";?>

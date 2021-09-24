@@ -468,53 +468,97 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
     }
 
 }//generate_table()
-?>
 
+
+if (!isset($arrHttp["return"])){
+    $ret="../common/inicio.php?reinicio=s".$encabezado;
+    if (isset($arrHttp["modulo"])) $ret.="&modulo=".$arrHttp["modulo"];
+    if (isset($base)) $ret.="&base=".$base;
+}else{
+    $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
+}
+
+?>
+<div class="toolbar-dataentry" >
+    <a href="javascript:Crear()" class="bt-tool" title="<?php echo $msgstr["crear"]?>">
+        <img src="../../assets/svg/browse/ic_fluent_database_plus_24_regular.svg" alt="" title="" />
+    </a> 
+    <?php if ($ABCD_base=='acces') { ?>
+    <a class="bt-tool" href="../dbadmin/profile_edit.php?encabezado=s" title="<?php echo $msgstr["profiles"];?>">
+         <img src="../../assets/svg/browse/ic_fluent_people_settings_24_regular.svg" /></a>
+    <?php } ?>
+
+    <a href="javascript:advancedSearch()" class="bt-tool" title="<?php echo $msgstr["advsearch"];?>">
+        <img src="../../assets/svg/browse/ic_fluent_database_search_24_regular.svg">
+    </a>
+
+
+
+     <!-- FORM PRINT -->
+    <form name="print" method="post" action="../dataentry/print.php" >
+        <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>" >
+        <input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]?>.par" >
+        <input type="hidden" name="tipof" value="CT">
+        <input type="hidden" name="print_content" value="<?php echo $breadcrumb;?>">
+    <?php
+    if (isset($arrHttp["Expresion"])){
+        $Expresion=str_replace("%2A","*",$Expresion);
+        echo '<input type="hidden" name="Expresion" value="'.$Expresion.'">';
+        }
+
+    ?>
+        <input type="hidden" name=headings value="<?php echo $arrHttp["headings"];?>">
+        <input type="hidden" name="pft" value="<?php echo $Formato_html;?>">
+        <input type="hidden" name="vp" value="S">
+        <a href="#" class="bt-tool" onclick="EnviarForma('P')" title="<?php echo $msgstr["Print"]?>">
+             <img src="../../assets/svg/browse/ic_fluent_print_24_regular.svg">
+        </a>
+     </form>
+     <!-- ./FORM PRINT -->
+
+    <!-- FORM XLS -->
+    <form name="spreadsheet" method="post" action="../dataentry/print.php" >
+        <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>" >
+        <input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]?>.par" >
+        <input type="hidden" name="tipof" value="CT">
+    <?php
+    if (isset($arrHttp["Expresion"])){
+        $Expresion=str_replace("%2A","*",$Expresion);
+        echo '<input type="hidden" name="Expresion" value="'.$Expresion.'">';
+        }
+
+    ?>
+        <input type="hidden" name=headings value="<?php echo $arrHttp["headings"];?>">
+        <input type="hidden" name="print_content" value="<?php echo $breadcrumb;?>">
+        <input type="hidden" name="pft" value="<?php echo $Formato_html;?>">
+        <input type="hidden" name="vp" value="TB">
+        <a class="bt-tool" onclick="document.spreadsheet.submit" title="<?php echo $msgstr["wsproc"]?>">
+            <img src="../../assets/svg/browse/file_excel_outline_icon_139604.svg">
+        </a>
+     </form>  
+     <!-- ./FORM XLS -->
+
+    <a href="<?php echo $ret;?>" class="bt-tool" title="<?php echo $msgstr["back"]?><">
+        <img src="../../assets/svg/browse/ic_fluent_home_24_regular.svg">
+    </a>
+</div>
 
 <div class="sectionInfo">
-
     <div class="breadcrumb">
         <?php $breadcrumb=$msgstr["admin"]." (".$arrHttp["base"].") | ".$total_lines." ".$msgstr["registros"];  ?>
         <?php echo $breadcrumb;?>
     </div><!--./breadcrumb-->
 
-
     <div class="actions">
-        <?php
-        if (!isset($arrHttp["return"])){
-            $ret="../common/inicio.php?reinicio=s".$encabezado;
-            if (isset($arrHttp["modulo"])) $ret.="&modulo=".$arrHttp["modulo"];
-            if (isset($base)) $ret.="&base=".$base;
-        }else{
-            $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
-        }
-        ?>
-        <a href=<?php echo $ret?> class="defaultButton backButton">
-        <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-        <span><strong><?php echo $msgstr["back"]?></strong></span>
-        </a>
-        <a href="javascript:Crear()" class="defaultButton  newButton">
-        <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-        <span><strong><?php echo $msgstr["crear"]?></strong> </span>
-        </a>
     </div><!--.actions-->
     <div class="spacer">&#160;</div>
 </div><!--./sectionInfo-->
 
-
-
 <div class="middle list">
-
-    <div class="searchBoxBrowser">
-            
-
+    <div class="searchBoxBrowser">        
         <div class="f_left">    
  
         <!--SEARCH FORM-->    
-            <button type="button" onclick="javascript:advancedSearch()" class="bt-blue">
-                <i class="fas fa-search-plus"></i> <?php echo $msgstr["advsearch"];?>
-            </button>
-
             <form name="forma1" class="formsearch" onsubmit="setGetParameter('forma1', 'ok')"> 
                 <label><?php echo $msgstr["buscar"]?>: </label>
                 <input type="hidden" name="reverse" value="<?php echo $ABCD_reverse;?>" onSubmit="setGetParameter('reverse', this.value,clear)">  
@@ -630,49 +674,7 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
 
 
 
-        <div class="f_right"> 
-            <!-- FORM XLS -->
-            <form name="spreadsheet" method="post" action="../dataentry/print.php" >
-                <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>" >
-                <input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]?>.par" >
-                <input type="hidden" name="tipof" value="CT">
-            <?php
-            if (isset($arrHttp["Expresion"])){
-                $Expresion=str_replace("%2A","*",$Expresion);
-                echo '<input type="hidden" name="Expresion" value="'.$Expresion.'">';
-                }
 
-            ?>
-                <input type="hidden" name=headings value="<?php echo $arrHttp["headings"];?>">
-                <input type="hidden" name="print_content" value="<?php echo $breadcrumb;?>">
-                <input type="hidden" name="pft" value="<?php echo $Formato_html;?>">
-                <input type="hidden" name="vp" value="TB">
-                <button type="submit" class="bt-gray" onclick="document.spreadsheet.submit" ><i class="fas fa-table"></i> <?php echo $msgstr["wsproc"]?></button>
-             </form>  
-             <!-- ./FORM XLS -->
-
-             <!-- FORM PRINT -->
-            <form name="print" method="post" action="../dataentry/print.php" >
-                <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>" >
-                <input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]?>.par" >
-                <input type="hidden" name="tipof" value="CT">
-                <input type="hidden" name="print_content" value="<?php echo $breadcrumb;?>">
-            <?php
-            if (isset($arrHttp["Expresion"])){
-                $Expresion=str_replace("%2A","*",$Expresion);
-                echo '<input type="hidden" name="Expresion" value="'.$Expresion.'">';
-                }
-
-            ?>
-                <input type="hidden" name=headings value="<?php echo $arrHttp["headings"];?>">
-                <input type="hidden" name="pft" value="<?php echo $Formato_html;?>">
-                <input type="hidden" name="vp" value="S">
-                <button type="submit" class="bt-gray" onclick="EnviarForma('P')"><i class="fas fa-print"></i> <?php echo $msgstr["Print"]?></button>
-             </form>
-             <!-- ./FORM PRINT -->
-
-
-    </div><!--./f_right-->
         
     </div>
 

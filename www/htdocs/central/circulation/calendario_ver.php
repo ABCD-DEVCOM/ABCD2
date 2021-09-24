@@ -85,7 +85,7 @@ global $arrHttp,$msgstr;
 	}
 	echo "<input type=hidden name=mes_ante value=".$mes_anterior.">";
 	echo "<input type=hidden name=ano_ante value=".$ano_anterior.">";
-	echo "<input type=button name=anterior value='&lt;&lt;' onClick=JavaScript:Dias_Fe(1)></td>";
+	echo "<input type=button class=bt-blue name=anterior value='&lt;&lt;' onClick=JavaScript:Dias_Fe(1)></td>";
 	   echo "<td align=center class=tit2>$nombre_mes $ano</td>";
 	   echo "<td align=center class=tit2>";
 	//calculo el mes y ano del mes siguiente
@@ -97,7 +97,7 @@ global $arrHttp,$msgstr;
 	}
 	echo "<input type=hidden name=mes_sig value=".$mes_siguiente.">";
 	echo "<input type=hidden name=ano_sig value=".$ano_siguiente.">";
-	echo "<input type=button name=siguiente value='&gt;&gt;' onClick=JavaScript:Dias_Fe(2)></td></tr></table></td></tr>";
+	echo "<input type=button class=bt-blue name=siguiente value='&gt;&gt;' onClick=JavaScript:Dias_Fe(2)></td></tr></table></td></tr>";
 	echo '	<tr>
 			    <td width=14% align=center class=altn>'.$msgstr["d1"].'</td>
 			    <td width=14% align=center class=altn>'.$msgstr["d2"].'</td>

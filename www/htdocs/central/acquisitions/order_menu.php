@@ -10,7 +10,7 @@
 		</a>
 <?php include("sendto.php")?>
 
-		<a href="../common/inicio.php?reinicio=s&modulo=acquisitions" title="Menu">
+		<a class="bt-tool" href="../common/inicio.php?reinicio=s&modulo=acquisitions" title="Menu">
 			<img src="../../assets/svg/circ/ic_fluent_home_24_regular.svg">
 		</a>
 

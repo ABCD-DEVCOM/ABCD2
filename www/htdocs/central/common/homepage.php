@@ -337,7 +337,7 @@ global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
 if (isset($arrHttp['base'])) {
 	$baseSelect = $arrHttp['base'];
 } else {
-	$baseSelect = $msgstr["seleccionar"];
+	$baseSelect = "[".$msgstr["seleccionar"]."]";
 }
 
 ?>
@@ -428,7 +428,7 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset(
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isset($Permiso["ADM_USRADM"])){
 ?>
-				<a href="javascript:FuncionesAdministracion('AUSR')" class="menuButton CataluserButton">
+				<a href="../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par&return=../dbadmin/users_adm.php|" class="menuButton CataluserButton">
 					<span><strong><?php echo $msgstr["usuarios"]?></strong></span>
 				</a>
 <?Php

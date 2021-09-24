@@ -156,9 +156,9 @@ function ChangeLang(){
 							<input type=hidden name=screen_width>
 							<?php if (isset($arrHttp["newindow"]))
 							echo "<input type=hidden name=newindow value=Y>\n";?>
-
+								<label><?php echo $msgstr["seleccionar"]?></label>
 								<select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)">
-									<option value=""><?php echo $msgstr["seleccionar"]?></option>
+									<option value=""></option>
 									<?php
 									$i=-1;
 									foreach ($lista_bases as $key => $value) {
@@ -194,7 +194,7 @@ function ChangeLang(){
 			<input type=hidden name=tlit value="">
 			<input type=hidden name=nreg value="">
 			<input type=hidden name=lang value="">
-
+			<label><?php echo $msgstr["seleccionar"]?></label>
 			<select class="heading-database" name="baseSel" onchange="CambiarBase()" onclick="VerificarEdicion()">
 			<option value=""></option>
 			<?php
