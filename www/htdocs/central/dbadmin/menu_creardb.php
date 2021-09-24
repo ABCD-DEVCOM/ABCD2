@@ -1,4 +1,7 @@
 <?php
+/*
+20210921 fho4abcd Button in form + inc_div-helper + sanitize html + remove unused VerificarTipo + translations
+*/
 session_start();
 unset($_SESSION["DCIMPORT"]);
 unset($_SESSION["CISIS"]);
@@ -26,20 +29,9 @@ include("../lang/dbadmin.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php")
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
-<script languaje=javascript>
-
-function VerificarTipo(){
-	ix=document.forma1.base_sel.selectedIndex
-	tipo=document.forma1.base_sel.options[ix].value
-	element=document.getElementById("dbtype");
-	if (tipo=="~~NewDb"){
-		element.style.display="block";
-	}else{
-		element.style.display="none";
-	}
-}
-
+<script language=javascript>
 function Validar(){
 	cisisv=""
 	ix=document.forma1.CISIS_VERSION.length
@@ -111,8 +103,6 @@ function Validar(){
 
 }
 </script>
-	</head>
-	<body>
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -121,13 +111,12 @@ if (isset($arrHttp["encabezado"])){
 	$encabezado="";
 }
 ?>
-	<div class="sectionInfo">
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["createdb"]?>
+    </div>
 
-		<div class="breadcrumb">
-				<?php echo $msgstr["createdb"]?>
-		</div>
-
-		<div class="actions">
+    <div class="actions">
 <?php if (isset($arrHttp["encabezado"])){
 	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
 					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
@@ -136,107 +125,91 @@ if (isset($arrHttp["encabezado"])){
 	";
 }
 ?>
-		</div>
-		<div class="spacer">&#160;</div>
-	</div>
-
-	<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/admin.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/admin.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp; Script: dbadmin/menu_creardb.php";
+include("../common/inc_div-helper.php");
 ?>
-	</div>
+<div class="middle form">
+<div class="formContent">
 	<form method=post name=forma1 onsubmit="javascript:return false">
 		<input type=hidden name=Opcion>
 		<input type=hidden name=base>
 		<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n"?>
-		<div class="middle form">
-			<div class="formContent">
-	<!--			<h4>New Database</h4>-->
-                <div id="formRow01" class="formRow">
-                	<label for="field01"><strong>CISIS VERSION</strong></label>
-                	<div class="frDataFields">
+        <div id="formRow01" class="formRow">
+            <label for="field01"><strong><?php echo $msgstr["cisis_version"]?></strong></label>
+            <div class="frDataFields">
+                <?php
+                $CIV=explode(";",$cisis_versions_allowed);
+                foreach ($CIV as $v){
+                    echo "<input type=radio name=\"CISIS_VERSION\" value=\"$v\">&nbsp;$v &nbsp; &nbsp;";
+                }
+                ?>
+                <p>
+            </div>
+            <div class="spacer">&#160;</div>
+        </div>
+        <div id="formRow01" class="formRow">
+            <label for="field01"><strong>UNICODE</strong></label>
+            <div class="frDataFields">
+                <input type=radio name="UNICODE" value=0>&nbsp;<?php echo $msgstr["uni_no"]?>&nbsp;&nbsp;
+                <input type=radio name="UNICODE" value=1>&nbsp;<?php echo $msgstr["uni_yes"]?>
+                <p>
+            </div>
+            <div class="spacer">&#160;</div>
+        </div>
+        <div id="formRow01" class="formRow">
+            <label for="field01"><strong><?php echo $msgstr["dbn"]?></strong></label>
+            <div class="frDataFields">
+                <input type="text" name="nombre"  id="field01" value="" class="textEntry singleTextEntry" onfocus="this.className = 'textEntry singleTextEntry textEntryFocus';document.getElementById('formRow01').className = 'formRow formRowFocus';" onblur="this.className = 'textEntry singleTextEntry';document.getElementById('formRow01').className = 'formRow';" />
+                <p>
+            </div>
+            <div class="spacer">&#160;</div>
+        </div>
+        <div id="formRow02" class="formRow">
+            <label for="field02"><strong><?php echo $msgstr["descripcion"]?></strong></label>
+            <div class="frDataFields">
+                <input type=text name="desc" id="field02" class="textEntry singleTextEntry" onfocus="this.className = 'textEntry singleTextEntry textEntryFocus';document.getElementById('formRow02').className = 'formRow formRowFocus';" onblur="this.className = 'textEntry singleTextEntry';document.getElementById('formRow02').className = 'formRow';">
+                <p>
+            </div>
+            <div class="spacer">&#160;</div>
+        </div>
 
-
- <?php
- 	$CIV=explode(";",$cisis_versions_allowed);
- 	foreach ($CIV as $v){
- 		echo "<input type=radio name=\"CISIS_VERSION\" value=\"$v\">$v &nbsp; &nbsp;";
- 	}
- ?>
-                		<p>
-                	</div>
-					<div class="spacer">&#160;</div>
-				</div>
-                <div id="formRow01" class="formRow">
-                	<label for="field01"><strong>UNICODE</strong></label>
-                	<div class="frDataFields">
-                    	<input type=radio name="UNICODE" value=0>No &nbsp; &nbsp;
-                    	<input type=radio name="UNICODE" value=1>Yes
-
-                		<p>
-                	</div>
-					<div class="spacer">&#160;</div>
-				</div>
-				<div id="formRow01" class="formRow">
-					<label for="field01"><strong><?php echo $msgstr["dbn"]?></strong></label>
-					<div class="frDataFields">
-						<input type="text" name="nombre"  id="field01" value="" class="textEntry singleTextEntry" onfocus="this.className = 'textEntry singleTextEntry textEntryFocus';document.getElementById('formRow01').className = 'formRow formRowFocus';" onblur="this.className = 'textEntry singleTextEntry';document.getElementById('formRow01').className = 'formRow';" />
-						<p>
-					</div>
-					<div class="spacer">&#160;</div>
-				</div>
-				<div id="formRow02" class="formRow">
-					<label for="field02"><strong><?php echo $msgstr["descripcion"]?></strong></label>
-					<div class="frDataFields">
-						<input type=text name="desc" id="field02" class="textEntry singleTextEntry" onfocus="this.className = 'textEntry singleTextEntry textEntryFocus';document.getElementById('formRow02').className = 'formRow formRowFocus';" onblur="this.className = 'textEntry singleTextEntry';document.getElementById('formRow02').className = 'formRow';">
-						<p>
-					</div>
-					<div class="spacer">&#160;</div>
-				</div>
-
-				<div id="formRow3" class="formRow formRowFocus">
-					<label for="field3"><strong><?php echo $msgstr["createfrom"]?>:</strong></label>
-					<div class="frDataFields">
-						<select name="base_sel" id="field3"  onchange=VerificarTipo() class="textEntry singleTextEntry">
-							<option value=""></option>
-							<option value="~~NewDb"><?php echo $msgstr["newdb"]?></option>
-							<option value="~~WinIsis"><?php echo $msgstr["winisisdb"]?></option>
-<?php
-
-$fp = file($db_path."bases.dat");
-$bdatos=array();
-foreach ($fp as $linea){
-	if (trim($linea)!="") {
-		$bdatos[]=$linea;
-		$b=explode('|',$linea);
-		$llave=$b[0];
-		if ($llave!="acces") echo "<option value=$b[0]>".$b[1];
-	}
-
-}
-?>
-						</select>
-
-					</div>
-					<div class="spacer">&#160;</div>
-				</div>
-
-			</div>
-		</div>
-		<div class="formFoot">
-			<div class="pagination">
-				<a href="javascript:Validar()" class="singleButton singleButtonSelected">
-						<?php echo $msgstr["continuar"]?> <i class="fas fa-arrow-right"></i>
-					</a>
-				<div class="spacer">&#160;</div>
-			</div>
-			<div class="spacer">&#160;</div>
-		</div>
-	</div>
-	</form>
+        <div id="formRow3" class="formRow formRowFocus">
+            <label for="field3"><strong><?php echo $msgstr["createfrom"]?>:</strong></label>
+            <div class="frDataFields">
+                <select name="base_sel" id="field3"  class="textEntry singleTextEntry">
+                    <option value=""></option>
+                    <option value="~~NewDb"><?php echo $msgstr["newdb"]?></option>
+                    <option value="~~WinIsis"><?php echo $msgstr["winisisdb"]?></option>
+                    <?php
+                    $fp = file($db_path."bases.dat");
+                    $bdatos=array();
+                    foreach ($fp as $linea){
+                        if (trim($linea)!="") {
+                            $bdatos[]=$linea;
+                            $b=explode('|',$linea);
+                            $llave=$b[0];
+                            if ($llave!="acces") echo "<option value=$b[0]>".$b[1];
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="spacer">&#160;</div>
+        </div>
+        <div align=center>
+            <table>
+            <tr><td>
+                <a href="javascript:Validar()" class="singleButton singleButtonSelected" >
+                    <?php echo $msgstr["continuar"]?> <i class="fas fa-arrow-right"></i>
+                </a>
+            </td></tr>
+            </table>
+        </div>
+</form>
+</div>
+</div>
 <?php include("../common/footer.php");?>
-	</body>
-</html>
+
