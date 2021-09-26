@@ -2,8 +2,8 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
 {
   // the highlightStartTag and highlightEndTag parameters are optional
   if ((!highlightStartTag) || (!highlightEndTag)) {
-    highlightStartTag = "<font style='color:blue; background-color:yellow;'>";
-    highlightEndTag = "</font>";
+    highlightStartTag = "<span style='color:blue; background-color:yellow;'>";
+    highlightEndTag = "</span>";
   }
   
   // find all occurences of the search term in the given text,
@@ -53,6 +53,7 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
   }
   
   return newText;
+
 }
 
 
@@ -94,8 +95,13 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
             bodyText = doHighlight(bodyText, term, highlightStartTag, highlightEndTag);
     }
   }
-  
+
   document.body.innerHTML = bodyText;
+
+  var textareDataentry = document.getElementById("nueva_b");
+  textareDataentry.innerHTML = textareDataentry.innerText.replace(/(<([^>]+)>)/gi, '');
+  
   return true;
 }
+
 

@@ -19,7 +19,6 @@ if (!isset($fmt_test) and !isset($arrHttp["ventana"])){
     $wiki_help="Entrada_de_datos";
     include "../common/inc_div-helper.php";
 }
-
 ?>
 
 	<div class="middle form">
@@ -129,7 +128,7 @@ startScrollingDetector()
 				if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
 	    			 isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
 	    			 and (isset($barcode1reg))){
-        				echo " &nbsp;<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"barcode_this\")' title='"."Código de barras"."'><img src=img/barcode.png alt='"."Código de barras"."' border=0></a> \n";
+        				echo " &nbsp;<a href='javascript:top.toolbarEnabled=\"\";top.Menu(\"barcode_this\")' title='"."CÃ³digo de barras"."'><img src=img/barcode.png alt='"."CÃ³digo de barras"."' border=0></a> \n";
 				}
 				echo " &nbsp;";
 				break;
@@ -155,27 +154,37 @@ startScrollingDetector()
 	echo "</td></tr></table></div>\n";
 }
     if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
-
     	//$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
-    	echo "<a href=javascript:toggle('Expresion','')><img src=../dataentry/img/defaultButton_list.png border=0 align=middle><font face=arial style=font-size:10px>".$msgstr["expresion"]."</a>";
-    	echo "<div id=Expresion style=\"display:none; hide:block\"><textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea> <a href=javascript:NuevaBusqueda()>".$msgstr["buscar"]."</a> <a href=javascript:top.Menu('refinar')>". $msgstr["refine"]."</a>
-    	 &nbsp; ";
-    	 InsertarEnlaces($arrHttp['base']);
-    	 echo "</font>";
+?>
+
+	<a class="button_browse show" href="javascript:toggle('Expresion','')">
+		<i class="fas fa-search"></i>
+			<?php echo $msgstr["expresion"];?>
+		</a>
+    	<div id="Expresion" style="display:none; padding: 10px;">
+    		<textarea name="nueva_b" id="nueva_b" cols="150" rows="1"><?php echo stripslashes($arrHttp["Expresion"]);?></textarea> 
+    		<a class="button_browse edit" href="javascript:NuevaBusqueda()"><i class="fas fa-search"></i> <?php echo $msgstr["buscar"];?></a> 
+    		<a class="button_browse show" href="javascript:top.Menu('refinar')"><i class="fas fa-search-plus"></i> <?php echo $msgstr["refine"];?></a>
+    	 &nbsp; 
+
+    	 <?php echo InsertarEnlaces($arrHttp['base']);
     	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){
-    ?>
-    		<div id=headerDiv_1 style="headerDiv">
-	    	<div id=titleText_1 class=titleText> <a id=myHeader_1 style="myHeader" href="javascript:toggle('contentDiv_1','myHeader_1');" ><?php echo $msgstr["savesearch"]?></a></div>
-			<div id=contentDiv_1 style="display:none; hide:block">
+    	?>
+    		<div id="headerDiv_1">
+	    	<div id="titleText_1" class="titleText"> 
+	    		<a class="button_browse edit" id="myHeader_1" href="javascript:toggle('contentDiv_1','myHeader_1');" >
+	    			<i class="far fa-save"></i> <?php echo $msgstr["savesearch"]?>
+	    		</a>
+	    	</div>
+			<div id="contentDiv_1" style="display:none;">
      		<?php echo $msgstr["r_desc"]?>: <input type=text name=Descripcion size=40>
      			&nbsp; &nbsp; <input type=button value="<?php echo $msgstr["savesearch"]?>" onclick=GuardarBusqueda()>
 			</div></div>
 			</div>
  <?php
  		}else{
- 			echo "</div><p>";
+ 			echo "</div>";
  		}
- 		echo "</font>";
     }
 
 //    echo $arrHttp["Opcion"];

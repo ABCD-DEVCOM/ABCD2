@@ -1,12 +1,11 @@
-salida=""
-function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
+function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag) 
 {
   // the highlightStartTag and highlightEndTag parameters are optional
-  //if ((!highlightStartTag) || (!highlightEndTag)) {
-    highlightStartTag = "<font style='color:blue; background-color:yellow;'>";
-    highlightEndTag = "</font>";
-  //}
-
+  if ((!highlightStartTag) || (!highlightEndTag)) {
+    highlightStartTag = "<span style='color:blue; background-color:yellow;'>";
+    highlightEndTag = "</span>";
+  }
+  
   // find all occurences of the search term in the given text,
   // and add some "highlight" tags to them (we're not using a
   // regular expression search, because we want to filter out
@@ -14,21 +13,21 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
   // we have to do a little extra validation)
   var newText = "";
   var i = -1;
-
   var lcSearchTerm = searchTerm.toLowerCase();
-  lcSearchTerm  = lcSearchTerm.replace(/[èéêë]/ig, 'e');
-  lcSearchTerm  = lcSearchTerm.replace(/[àâäá]/ig, "a");
-  lcSearchTerm  = lcSearchTerm.replace(/[îïíì]/ig, "i");
-  lcSearchTerm  = lcSearchTerm.replace(/[ôöóò]/ig, "o");
-  lcSearchTerm  = lcSearchTerm.replace(/[ùûüú]/ig, "u");
-  lcSearchTerm  = lcSearchTerm.replace(/[,]/ig, " ");
+  lcSearchTerm  = lcSearchTerm.replace(/[ÄÃ©Ä™Ã«]/ig, 'e');
+  lcSearchTerm  = lcSearchTerm.replace(/[Å•Ã¢Ã¤Ã¡]/ig, "a");
+  lcSearchTerm  = lcSearchTerm.replace(/[Ã®ÄÃ­Ä›]/ig, "i");
+  lcSearchTerm  = lcSearchTerm.replace(/[Ã´Ã¶Ã³Åˆ]/ig, "o");
+  lcSearchTerm  = lcSearchTerm.replace(/[Å¯Å±Ã¼Ãº]/ig, "u");
+  lcSearchTerm  = lcSearchTerm.replace(/[,]/ig, "");
 
   var lcBodyText = bodyText.toLowerCase();
-  lcBodyText = lcBodyText.replace(/[èéêë]/ig, 'e');
-  lcBodyText = lcBodyText.replace(/[àâäá]/ig, "a");
-  lcBodyText = lcBodyText.replace(/[îïíì]/ig, "i");
-  lcBodyText = lcBodyText.replace(/[ôöóò]/ig, "o");
-  lcBodyText = lcBodyText.replace(/[ùûüú]/ig, "u");
+  lcBodyText = lcBodyText.replace(/[ÄÃ©Ä™Ã«]/ig, 'e');
+  lcBodyText = lcBodyText.replace(/[Å•Ã¢Ã¤Ã¡]/ig, "a");
+  lcBodyText = lcBodyText.replace(/[Ã®ÄÃ­Ä›]/ig, "i");
+  lcBodyText = lcBodyText.replace(/[Ã´Ã¶Ã³Åˆ]/ig, "o");
+  lcBodyText = lcBodyText.replace(/[Å¯Å±Ã¼Ãº]/ig, "u");
+    
   while (bodyText.length > 0) {
     i = lcBodyText.indexOf(lcSearchTerm, i+1);
     if (i < 0) {
@@ -40,21 +39,21 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
         // skip anything inside a <script> block
         if (lcBodyText.lastIndexOf("/script>", i) >= lcBodyText.lastIndexOf("<script", i)) {
           newText += bodyText.substring(0, i) + highlightStartTag + bodyText.substr(i, searchTerm.length) + highlightEndTag;
-          salida+=highlightStartTag + bodyText.substr(i, searchTerm.length) + highlightEndTag+" "
           bodyText = bodyText.substr(i + searchTerm.length);
           lcBodyText = bodyText.toLowerCase();
-          lcBodyText = lcBodyText.replace(/[èéêë]/ig, 'e');
-  		  lcBodyText = lcBodyText.replace(/[àâäá]/ig, "a");
-  		  lcBodyText = lcBodyText.replace(/[îïíì]/ig, "i");
-  		  lcBodyText = lcBodyText.replace(/[ôöóò]/ig, "o");
-  		  lcBodyText = lcBodyText.replace(/[ùûüú]/ig, "u");
+          lcBodyText = lcBodyText.replace(/[ÄÃ©Ä™Ã«]/ig, 'e');
+        lcBodyText = lcBodyText.replace(/[Å•Ã¢Ã¤Ã¡]/ig, "a");
+        lcBodyText = lcBodyText.replace(/[Ã®ÄÃ­Ä›]/ig, "i");
+        lcBodyText = lcBodyText.replace(/[Ã´Ã¶Ã³Åˆ]/ig, "o");
+        lcBodyText = lcBodyText.replace(/[Å¯Å±Ã¼Ãº]/ig, "u");
           i = -1;
         }
       }
     }
   }
-
+  
   return newText;
+
 }
 
 
@@ -67,45 +66,42 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
  */
 function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highlightStartTag, highlightEndTag)
 {
-  // if the treatAsPhrase parameter is true, then we should search for
+  // if the treatAsPhrase parameter is true, then we should search for 
   // the entire phrase that was entered; otherwise, we will split the
   // search string so that each word is searched for and highlighted
   // individually
-  searchText = searchText.replace(/ and not /ig, '|');
-  searchText = searchText.replace(/ and /ig, '|');
-  searchText = searchText.replace(/ or /ig, '|');
-  searchText=searchText.replace(",","")
+  if (treatAsPhrase) {
+    searchArray = [searchText];
+  } else {
+    searchArray = searchText.split(" ");
+  }
+  
   if (!document.body || typeof(document.body.innerHTML) == "undefined") {
     if (warnOnFailure) {
       alert("Sorry, for some reason the text of this page is unavailable. Searching will not work.");
     }
     return false;
   }
-  searchArray=searchText.split('|')
-   texto=document.getElementById('results');
-   var bodyText = texto.innerHTML;
-  //var bodyText = document.body.innerHTML;
-  for (var ixt = 0; ixt < searchArray.length; ixt++) {
-    term=searchArray[ixt];
-	ix=term.lastIndexOf('_')
-	if (ix>0){
-		term=term.substring(ix+1)
-    }
+  
+  var bodyText = document.body.innerHTML;
+  for (var i = 0; i < searchArray.length; i++) {
+    term=searchArray[i];
     ix=term.lastIndexOf('$')
     if (ix>0){
         term=term.substring(0,ix)
-	}
-	st=term.split(" ")
-	for (ixst=0;ixst<st.length;ixst++){
-		termino=Trim(st[ixst])
-
-		if (termino!="" && termino.length>3){
-			bodyText = doHighlight(bodyText,termino , highlightStartTag, highlightEndTag);
-		}
+        bodyText = doHighlight(bodyText, term, highlightStartTag, highlightEndTag);
+    }else{
+        if (term.length>3)
+            bodyText = doHighlight(bodyText, term, highlightStartTag, highlightEndTag);
     }
   }
-  texto.innerHTML = bodyText;
- // document.body.innerHTML = bodyText;
+
+  document.body.innerHTML = bodyText;
+
+  var textareDataentry = document.getElementById("nueva_b");
+  textareDataentry.innerHTML = textareDataentry.innerText.replace(/(<([^>]+)>)/gi, '');
+  
   return true;
 }
+
 

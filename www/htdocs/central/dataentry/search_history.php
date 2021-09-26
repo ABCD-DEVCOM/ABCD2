@@ -22,8 +22,8 @@ include("../common/header.php");
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/search_history.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dataentry/search_history.php" ?>
-</font>
+echo "  Script: dataentry/search_history.php" ?>
+
 	</div>
 <div class="middle form">
 			<div class="formContent">
@@ -34,21 +34,36 @@ if (!isset($_SESSION["history"])){
 	die;
 }
 sort($_SESSION["history"]) ;
-echo "<center><a href=search_history_ex.php?base=".$arrHttp["base"]."&Opcion=clear>Delete history</a></center>";
-echo "<table align=center bgcolor=#cccccc cellpadding=5>";
+?>
+
+	<center>
+		<a class="button_browse delete"	 href="search_history_ex.php?base=<?php echo $arrHttp["base"];?>&Opcion=clear"><i class="far fa-trash-alt"></i> Delete history</a>
+	</center>
+	
+	<table align=center class="listTable" cellpadding=5>
+
+<?php
 $ix=0;
-foreach ($_SESSION["history"] as $value){	$h=explode('$$|$$',$value) ;
+foreach ($_SESSION["history"] as $value){
+	$h=explode('$$|$$',$value) ;
 	$ix=$ix+1;
 	if ($h[0]==$arrHttp["base"]){
-		echo "<tr><td bgcolor=white>".$h[0]."</td><td bgcolor=white>".$h[1]."</td>";
-		echo "<td bgcolor=white>".$h[2]."</td>";
-		echo "<td bgcolor=white><a href=search_history_ex.php?number=$ix><img src=img/toolbarSearchHistory.png></td></tr>";
-	}}
+?>
+		<tr>
+			<td><?php echo $h[0];?></td>
+			<td><?php echo $h[1];?></td>
+			<td><?php echo $h[2];?></td>
+			<td>
+				<a class="button_browse edit" href="search_history_ex.php?number=<?php echo $ix;?>">
+				<i class="fab fa-searchengin"></i>
+			</td>
+		</tr>
+<?php
+	}
+}
 ?>
 </table>
 </div>
 </div>
 </center>
 <?php include("../common/footer.php");?>
-</body>
-</html>
