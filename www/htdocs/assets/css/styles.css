@@ -2052,12 +2052,14 @@ a.bt-sign {
 /* BUTTONS 2021  */
 
 
-.button_browse, .submit, input[type=submit], input[type=button]{
+.button_browse, a.button_browse, .submit, input[type=submit], input[type=button], input[type=reset]{
+	text-decoration: none;
 	border-width: 1px;
 	border-radius: 3px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
 	color: var(--white);
+	background: var(--blue);
 	cursor: pointer;
 	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
 	font-weight: 400;

@@ -118,8 +118,8 @@ function Buscar(Prefijo){
 	Prefijo=p[0]
 	if (p[1]=="W"){
 		EB=EB.replace(/,/g,' ')
-	    EB=EB.replace(/\./g,' ')
-    	EB=EB.replace(/-/g,' ')
+	  EB=EB.replace(/\./g,' ')
+   	EB=EB.replace(/-/g,' ')
 		EB=EB.replace(/  /g,' ')
 		p=EB.split(" ")
 		for (term in p){
@@ -274,13 +274,13 @@ function GenerarWks(){
     toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',100,100,''))
    //	toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>','browse',100,100,''))
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
-    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_info_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
-    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_database_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_clipboard_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
 
    <?php if (isset($tesaurus)) {?>
    	 toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_notebook_24_regular.svg","24","24",5,"tesaurus","<?php echo $msgstr["m_tesaurus"]?>"))
 	<?php }?>
-	 toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_busquedalibre","<?php echo $msgstr["m_busquedalibre"]?>"))
+	 toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_database_search_24_regular.svg","24","24",5,"1_busquedalibre","<?php echo $msgstr["m_busquedalibre"]?>"))
 	toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_search_24_regular.svg","24","24",6,"1_alfa","<?php echo $msgstr["m_indice"]?>"))
 	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_2'))
 	<?php
