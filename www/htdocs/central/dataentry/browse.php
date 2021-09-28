@@ -678,7 +678,7 @@ if (!isset($arrHttp["return"])){
         
     </div>
 
-
+<div class="formContent">
     <!--Table of Contents-->
         <table  class="listTable browse">
             <?php echo read_collumns($archivo_tit);?>
@@ -706,6 +706,7 @@ if (!isset($arrHttp["return"])){
             }
         }
     ?>
+</div>
 
 </div><!--./middle list-->
 

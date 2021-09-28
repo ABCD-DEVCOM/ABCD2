@@ -10,12 +10,10 @@
   --acq-color: #96EAC8;
   --loan-color: #F7EF89;
   --indigo: #6610f2;
-  --purple: #6f42c1;
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
   --green: #13aa52;
-  --teal: #20c997;
   --cyan: #bcd1ef;
   --white: #FBFEFF;
   --gray190:  #201f1e;
@@ -62,18 +60,9 @@ body {
   line-height: var(--bs-body-line-height);
   -webkit-text-size-adjust: 100%;
   color: var(--bs-body-color);
+  background: var(--blue-abcd);
 }
 
-input,
-button,
-select,
-optgroup,
-textarea {
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
 
 h1, .h1 {
   font-size: calc(0.375rem + 0.5vw);
@@ -97,16 +86,33 @@ LABEL {
 }
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: auto;
+  border-collapse: separate;
+   border-spacing: 8px;
+/*  width: auto;*/
 
 }
 
 th, td {
   text-align: left;
-  padding: 8px;
 }
+
+
+input,
+button,
+select,
+optgroup,
+textarea,
+button {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border-radius: 3px;
+  border-width: 0;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+
+}
+
 
 .formContent > * >.formContent {
 	border: none;
@@ -123,8 +129,6 @@ th, td {
 select.textEntry, INPUT.textEntry, TEXTAREA, input[type=text],input[type=button], select {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
 	margin: 1px 0;
 }
@@ -132,7 +136,6 @@ select.textEntry, INPUT.textEntry, TEXTAREA, input[type=text],input[type=button]
 input[type=text], input[type=password] {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
-	border-radius: 3px;
   -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--light);
   -moz-box-shadow: inset 1px 1px 3px 0.1px var(--light);
   box-shadow: inset 1px 1px 3px 0.1px var(--light);
@@ -147,7 +150,6 @@ textarea.par {
 	font-family: monospace;
 	border: 1px solid #a7a6aa;
 	padding: 3px;
-	border-radius: 3px;
   -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--light);
   -moz-box-shadow: inset 1px 1px 3px 0.1px var(--light);
   box-shadow: inset 1px 1px 3px 0.1px var(--light);
@@ -220,9 +222,7 @@ A.menuButton {
 	border: 1px solid var(--info);
 	padding: 8px;
 	width: 200px;
-	border-radius: 3px;
 	margin: 5px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	transform: translateY(0);
 	transition: transform 150ms, box-shadow 150ms;
 	user-select: none;
@@ -387,13 +387,19 @@ select.heading-database {
 	 border: 1px solid var(--white);
 	 border-radius: inherit;
 	 float: right;
-	 padding: 9px;
+	 padding: 8px;
 	 height: 35px;
 	 border-radius: 3px;
 	 box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
 	 font-weight: 600;
-	 font-size: 15px;
+	 font-size: 14px;
 	text-align: left;
+}
+
+select.heading-database option {
+	 background: var(--white);
+	 color: var(--blue-abcd);
+
 }
 
 nav.heading-nav, {
@@ -506,10 +512,8 @@ nav.heading-nav ul ul ul li {
 	border-radius: 0px;
 	box-sizing: border-box;
 	cursor: pointer;
-	outline: none;
 	outline: 0;
 	padding: 10px;
-	text-align: center;
 	transform: translateY(0);
 	transition: transform 150ms, box-shadow 150ms;
 	user-select: none;
@@ -539,7 +543,6 @@ nav.heading-nav ul ul ul li {
 }
 
 .bt-loan.active {
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	background-image: url(../svg/ic_fluent_people_swap_24_filled.svg);
 	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
 	background-color: var(--blue);
@@ -678,8 +681,6 @@ li a.bt-exit:hover {
 .homepage .mainBox .boxContent {
 	background-color: var(--white);
 	border: 1px solid var(--light);
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
 }
 
@@ -741,7 +742,6 @@ li a.bt-exit:hover {
 .homepage .mainBox .boxContent .sectionTitle h1 {
 	margin-left: 35px;
 	font-size: 1.5rem;
-	font-weight: 400;
 	width: 90%;
 	color: var(--blue-abcd);
 }
@@ -774,7 +774,7 @@ li a.bt-exit:hover {
 
 	.homepage .mainBox .boxContent .sectionButtons {
 		justify-content: center;
-		text-align: center;
+
 		margin: 40px auto;
 		width: 55%;
 	}
@@ -1501,7 +1501,6 @@ table.toolbar-dataentry a {
 	padding: 4px 0;
 	fill: var(--blue);
 	vertical-align: middle;
-	text-align: center;
 }
 
 .icongray {
@@ -1510,18 +1509,15 @@ table.toolbar-dataentry a {
 }
 
 .btn-toolbar-blue i {
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
 	padding: 3px 4px;
 	text-decoration: none;
 	background-color: var(--blue);
 	border: 1px solid var(--blue);
-	border-radius: 3px;
 	color: var(--white);
 	cursor: pointer;
 	font-size: 15px;
 	vertical-align: middle;
-	text-align: center;
 }
 
 
@@ -1552,6 +1548,12 @@ table.toolbar-dataentry a {
 	padding-right : 10px;
 }
 */
+
+table.toolbarTable, table.toolbar-edit-dataentry {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
 .toolbarTable{
 	border: none;
 	margin : 0px;
@@ -1568,7 +1570,6 @@ table.toolbar-dataentry a {
 	margin-right: 5px;
 	padding: 0 10px;
 	background: var(--bgsectionInfo);
-	border-radius: 3px;
 	border-top: 1px solid var(--gray);
 	height: 38px;
 	vertical-align: middle;
@@ -1577,7 +1578,6 @@ table.toolbar-dataentry a {
 #myDiv a img{
 	margin: 0 2px;
 	padding: 0 10px;
-	border-radius: 3px;
 }
 
 #myDiv a img {
@@ -1661,9 +1661,6 @@ table.toolbar-dataentry a {
 
 
 /* END SECOND TOOLBAR */
-
-
-
 
 .table-fdt {
 	border-collapse: collapse;
@@ -1769,6 +1766,7 @@ td.table-fdt-one {
 
 
 [class^="bt-fdt"] {
+	border-radius: 3px;
 	height: 10px;
 	padding: 8px;
 	display: inline;
@@ -1780,12 +1778,10 @@ td.table-fdt-one {
 	text-decoration: none;
 	background-color: var(--white);
 	border: 1px solid var(--blue);
-	border-radius: 3px;
 	color: var(--blue);
 	cursor: pointer;
 	font-size: 12px;
 	font-weight: normal;
-	text-align: center;
 	touch-action: manipulation;
 	vertical-align: middle;
 	margin: 2px;
@@ -1797,12 +1793,10 @@ td.table-fdt-one {
 	text-decoration: none;
 	background-color: var(--white);
 	border: 1px solid var(--cyan);
-	border-radius: 3px;
 	color: var(--cyan);
 	cursor: pointer;
 	font-size: 12px;
 	font-weight: normal;
-	text-align: center;
 	touch-action: manipulation;
 	vertical-align: middle;
 
@@ -1811,10 +1805,8 @@ td.table-fdt-one {
 
 .bt-fdt-question {
 	text-decoration: none;
-	text-align: center;
 	background-color: var(--white);
 	border: 1px solid var(--cyan);
-	border-radius: 3px;
 	color: var(--cyan);
 	cursor: pointer;
 	font-weight: normal;
@@ -1830,7 +1822,6 @@ td.table-fdt-one {
 	text-decoration: none;
 	background-color: var(--blue);
 	border: 1px solid var(--blue);
-	border-radius: 3px;
 	color: var(--white);
 	cursor: pointer;
 	font-size: 12px;
@@ -1842,7 +1833,6 @@ td.table-fdt-one {
 	text-decoration: none;
 	background-color: var(--success);
 	border: 1px solid var(--success);
-	border-radius: 3px;
 	color: var(--white);
 	cursor: pointer;
 	font-size: 12px;
@@ -2001,8 +1991,6 @@ TD.showSTitle .collectionMode A.selected:hover {
 .login .loginForm .boxContent, .formContent {
 	background-color: var(--white);
 	border: 1px solid var(--light);
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
 }
 
@@ -2030,8 +2018,6 @@ a.bt-sign {
   border-color: var(--light);
   border-style: solid;
 	border-width: 1px;
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 }
 
 .navpage span{
@@ -2065,36 +2051,25 @@ a.bt-sign {
 
 
 .button_browse, a.button_browse, .submit, input[type=submit], input[type=button], input[type=reset]{
-	text-decoration: none;
-	border-width: 1px;
 	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+	text-decoration: none;
 	box-sizing: border-box;
 	color: var(--white);
-	background: var(--blue);
-	cursor: pointer;
-	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
-	font-weight: 400;
-	outline: none;
+	background: var(--bgsectionInfo);
 	outline: 0;
 	padding: 5px 13px;
-	text-align: center;
 	transform: translateY(0);
 	transition: transform 150ms, box-shadow 150ms;
 	user-select: none;
 	-webkit-user-select: none;
 	touch-action: manipulation;
-	margin: 2px;
+	margin: 3px;
 }
-
-
 
 .button_browse:hover {
 	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
 	transform: translateY(-2px);
 }
-
-
 
 .button_browse.show, .submit, input[type=submit], input[type=button] {
 /*	background: var(--blue);
@@ -2105,27 +2080,12 @@ a.bt-sign {
 }
 
 .button_browse.show {
-	background: var(--blue);
-	color: var(--light);
-	border-color: var(--blue);
-	text-decoration: none;
-	padding: 5px 13px;
-
-}
-
-.button_browse.show:hover {
-	border: 1px solid var(--blue);!important;
+	background: var(--bgsectionInfo);
 	color: var(--white);
 }
 
 .button_browse.edit {
 	background: var(--success);
-	color: var(--white);
-	text-decoration: none;
-}
-
-.button_browse.edit:hover {
-	border: 1px solid var(--green)!important;
 	color: var(--white);
 }
 
@@ -2134,15 +2094,10 @@ a.bt-sign {
 	color: var(--white);
 }
 
-.button_browse.delete:hover {
-	border: 1px solid var(--red)!important;
-	color: var(--white);
-}
-
 .f_right button.showdeleted {
 	border: 1px solid #000;
-
 }
+
 .f_right button.showdeleted_on {
 	background: var(--success); 
 	color: var(--white);
@@ -2156,17 +2111,13 @@ a.bt-sign {
 }
 
 .bt-green {
+	padding: 10px 15px;
+	border-radius: 3px;
 	text-decoration: none;
 	background-color: var(--green);
 	border: 1px solid var(--green);
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-	box-sizing: border-box;
 	color: var(--white);
 	cursor: pointer;
-	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
-	font-weight: 400;
-	outline: none;
 	outline: 0;
 	padding: 10px 25px;
 	text-align: center;
@@ -2189,25 +2140,21 @@ a.bt-sign {
 }
 
 .bt-blue, A.singleButton, .submitAdvanced {
+	border-radius: 3px;
 	text-decoration: none;
 	background-color: var(--blue);
-	border: 1px solid var(--blue);
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-	box-sizing: border-box;
 	color: var(--white);
 	cursor: pointer;
-	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
-	font-weight: 400;
-	outline: none;
 	outline: 0;
-	padding: 10px 25px;
-	text-align: center;
 	transform: translateY(0);
 	transition: transform 150ms, box-shadow 150ms;
 	user-select: none;
 	-webkit-user-select: none;
 	touch-action: manipulation;
+}
+
+A.singleButton {
+	padding: 10px 15px;
 }
 
 
@@ -2225,27 +2172,16 @@ a[class^="bt-"] {
 	transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-  .bt-blue {
-	padding: 10px 30px;
-  }
-}
-
 .bt-gray {
+	padding: 10px 15px;
+	border-radius: 3px;
 	text-decoration: none;
 	background-color: #85858f;
 	border: 1px solid #85858f;
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-	box-sizing: border-box;
 	color: var(--white);
 	cursor: pointer;
-	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
-	font-weight: 400;
-	outline: none;
 	outline: 0;
 	padding: 10px 25px;
-	text-align: center;
 	transform: translateY(0);
 	transition: transform 150ms, box-shadow 150ms;
 	user-select: none;
@@ -2268,23 +2204,15 @@ a[class^="bt-"] {
 	text-decoration: none;
 	background-color: var(--white);
 	border: 1px solid var(--gray-light);
-	border-radius: 3px;
-	box-sizing: border-box;
 	color: var(--gray);
 	cursor: default;
-	font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
-	font-weight: 400;
 	outline: 0;
 	padding: 10px 25px;
-	text-align: center;
 }
-
 
 .group-fields {
 	background-color: var(--white);
 	border: 1px solid var(--light);
-	border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
 	padding: 5px 15px;
 	margin: 10px 0;
@@ -2413,7 +2341,6 @@ nav ul {
   min-width: 100%;
   border: 1px solid #a7a6aa;
   border-radius: 3px;
-	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 }
 .nav > li li:hover > ul {
   left: 100%;
