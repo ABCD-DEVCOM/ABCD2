@@ -428,7 +428,7 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset(
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isset($Permiso["ADM_USRADM"])){
 ?>
-				<a href="../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par&return=../dbadmin/users_adm.php|" class="menuButton CataluserButton">
+				<a href="../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par" class="menuButton CataluserButton">
 					<span><strong><?php echo $msgstr["usuarios"]?></strong></span>
 				</a>
 <?Php
