@@ -1996,6 +1996,7 @@ TD.showSTitle .collectionMode A.selected:hover {
 
 a.bt-sign {
 	text-decoration: none;
+	padding: 10px 0;
 }
 
 /* #END Login */
