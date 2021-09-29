@@ -190,13 +190,32 @@ function SendForm(){
 }
 </script>
 
+<?php
+//CHECK ACTION FOR RETURN
+if (!isset($arrHttp["Opcion"])){
+	$ret="../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par".$encabezado;
+}else{
+
+	switch ($arrHttp["Opcion"]){
+		case "edit":
+			$ret="profile_edit.php?xx=s".$encabezado;
+			break;
+		case "new":
+			$ret="profile_edit.php?xx=s".$encabezado;
+			break;
+		case "delete":
+			$ret="profile_edit.php?xx=s".$encabezado;
+			break;
+	}
+}
+?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["PROFILES"]?>
 	</div>
 	<div class="actions">
-<?php //echo "<a href=\"users_adm.php?xx=s"."$encabezado\" class=\"defaultButton backButton\">";?>
-<?php echo "<a href=\"../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par&return=../dbadmin/users_adm.php|"."$encabezado\" class=\"defaultButton backButton\">";?>
+	<a href="<?php echo $ret;?>" class="defaultButton backButton">
 		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /></a>
 <?php if (isset($arrHttp["Opcion"])and $arrHttp["Opcion"]!="delete"){
 	  echo "<a href=\"javascript:SendForm()\" class=\"defaultButton saveButton\">";?>
@@ -212,9 +231,8 @@ function SendForm(){
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/profiles.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/profile_edit.php";
+echo " Script: dbadmin/profile_edit.php";
 ?>
-</font>
 	</div>
 <div class="middle form">
 	<div class="formContent">
@@ -238,16 +256,19 @@ if (!isset($arrHttp["Opcion"])){
 			break;
 	}
 }
+?>
 
-
-echo "</form></div>
+	</form>
+	</div>
 </div>
-</center>";
+</center>
+
+<?php
 include("../common/footer.php");
-echo "</body></html>\n";
+?>
 
 
-
+<?php
 function DisplayProfiles(){
 global $db_path,$msgstr,$encabezado;
 	echo "<table>";
@@ -257,13 +278,32 @@ global $db_path,$msgstr,$encabezado;
 		if ($val!=""){
 			$p=explode('|',$val);
             if ($p[0]!="adm"){
-				echo "<tr><td>".$p[1]." (".$p[0].")</td><td><a href=profile_edit.php?profile=".$p[0]."$encabezado&Opcion=edit>".$msgstr["EDIT"]."</A> | ";
-				echo "<a href=javascript:DeleteProfile(\"".$p[0]."\")>".$msgstr["delete"]."</A></td>";
+            	?>
+
+
+				<tr>
+					<td>
+						<?php echo $p[1]." (".$p[0].")";?>
+					</td>
+					<td>
+						<a class="button_browse show" href="profile_edit.php?profile=<?php echo $p[0].$encabezado;?>&Opcion=edit">
+							<i class="far fa-edit"></i> <?php echo $msgstr["EDIT"];?>
+						<a class="button_browse delete" href="javascript:DeleteProfile('<?php echo $p[0];?>')">
+							<i class="far fa-trash-alt"></i> <?php echo $msgstr["delete"];?>
+						</a>
+					</td>
+<?php 
 			}
 		}
 	}
-	echo "</table>\n";
-	echo "<a href=profile_edit.php?Opcion=new&encabezado=s>".$msgstr["new"]."</a>";
+?>
+		</table>
+		<br>
+		<a class="button_browse edit" href="profile_edit.php?Opcion=new&encabezado=s">
+			<i class="fas fa-plus"></i> <?php echo $msgstr["new"];?>
+		</a>
+
+<?php
 }
 
 function DeleteProfile(){
@@ -290,7 +330,14 @@ global $db_path,$msgstr,$lang_db,$arrHttp,$xWxis,$wxisUrl,$Wxis;
 	if ($res==0){
 		echo $arrHttp["profile"].": The file could not be deleted";
 	}else{
-		echo "<h2>".$arrHttp["profile"]." ".$msgstr["deleted"]."</h2>";
+		?>
+		<h2>
+			<?php echo $arrHttp["profile"]." ".$msgstr["deleted"];?>
+		</h2>
+		<a class="button_browse show" href="profile_edit.php?base=&encabezado=s">
+			<?php echo $msgstr["back"];?>
+		</a>
+	<?php
 	}
 }
 
@@ -374,12 +421,12 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 				if ($inicio=="S"){
 					$inicio="N";
 
-					echo "<tr><td bgcolor=white colspan=3><input type=checkbox name=db_ALL value=ALL onclick=AllDatabases()><strong><font color=darkred size=+1>".$msgstr["ALL"]."</font></strong></td>";
+					echo "<tr><td bgcolor=white colspan=3><input type=checkbox name=db_ALL value=ALL onclick=AllDatabases()><strong> <font color=darkred size=+1><label>".$msgstr["ALL"]."</label></font></strong></td>";
 				}
                 $bases_dat[$dbn]=$dbn;
 				echo "<tr><td valign=top bgcolor=white><input type=checkbox name=db_".$dbn." value=".$dbn;
 				if (isset($profile_usr["db_".$dbn])) echo " checked";
-				echo "><strong><font color=darkred>".$dd[1]." (".$dbn.")</font></strong></td>\n";
+				echo "> <strong><font color=darkred><label>".$dd[1]." (".$dbn.")</label></font></strong></td>\n";
 				echo "<td bgcolor=white valign=top>";
 				$file=$db_path.$dbn."/pfts/".$_SESSION["lang"]."/formatos.dat";
 				if (!file_exists($file)){
@@ -387,7 +434,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 				}
 				$checked="";
 				if (isset($profile_usr[$dbn."_pft_ALL"])) $checked=" checked";
-				echo "<input type=checkbox name=".$dbn."_pft_ALL $checked>".$msgstr["ALL"]."<br>\n";
+				echo "<input type=checkbox name=".$dbn."_pft_ALL $checked><label> ".$msgstr["ALL"]."</label><br>\n";
 				if (file_exists($file)){
 					$pft=file($file);
 					foreach($pft as $val){
@@ -398,7 +445,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 							if (isset($profile_usr[$dbn."_pft_".$p[0]])) $checked=" checked";
 							echo "<input type=checkbox name=".$dbn."_pft_".$p[0]." value=".$p[0]." $checked";
 							echo " onclick=document.profile.".$dbn."_pft_ALL.checked=false";
-							echo ">".$p[1]." (".$p[0].")<br>\n";
+							echo "><label> ".$p[1]." (".$p[0].")</label><br>\n";
 						}
 					}
 				}else{
@@ -413,7 +460,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 				$checked="";
 				if (isset($profile_usr[$dbn."_fmt_ALL"])) $checked=" checked";
 				echo "<input type=checkbox name=".$dbn."_fmt_ALL $checked";
-				echo ">".$msgstr["ALL"]."<br>\n";
+				echo "><label> ".$msgstr["ALL"]."</label><br>\n";
 				if (file_exists($file)){
 					$pft=file($file);
 					foreach($pft as $val){
@@ -424,7 +471,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 							if (isset($profile_usr[$dbn."_fmt_".$p[0]])) $checked=" checked";
 							echo "<input type=checkbox name=".$dbn."_fmt_".$p[0]." value=".$p[0]." $checked";
 							echo " onclick=document.profile.".$dbn."_fmt_ALL.checked=false";
-							echo ">".$p[1]." (".$p[0].")<br>\n";
+							echo "><label> ".$p[1]." (".$p[0].")</label><br>\n";
 						}
 					}
 				}else{
@@ -460,7 +507,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 
 						}
 						$j=1;
-						echo ">".$msgstr[$k[1]]."</td>\n";
+						echo "><label> ".$msgstr[$k[1]]."</label></td>\n";
 					}
 				}
 				echo "</table>";
@@ -522,7 +569,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 				$j=1;
 				$checked="";
 				if (isset($profile_usr[$mod."_".$usr_p]) and $profile_usr[$mod."_".$usr_p]=="Y") $checked=" checked";
-				echo "<td width=33%><input type=checkbox name=$mod"."_".$usr_p." $checked $onclick value=Y>".$msgstr[$usr_p]."</td>\n";
+				echo "<td width=33%><input type=checkbox name=$mod"."_".$usr_p." $checked $onclick value=Y>aa<label> ".$msgstr[$usr_p]."</label></td>\n";
 				$onclick="";
 				if ($i>2){
 					$i=0;

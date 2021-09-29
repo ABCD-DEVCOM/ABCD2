@@ -64,9 +64,8 @@ if (isset($arrHttp["encabezado"])){
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
  	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/profiles.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: profile_save.php";
+echo " Script: profile_save.php";
 ?>
-</font>
 	</div>
 <div class="middle form">
 	<div class="formContent">
@@ -93,11 +92,15 @@ foreach ($profiles as $key=>$value){
 	fwrite($fp,$key.'|'.$value."\n");
 }
 fclose($fp);
-echo "<h4>".$arrHttp["profilename"]." - " .$arrHttp["profiledesc"]." ".$msgstr['SAVED']."</h4>";
-echo "</div>
-</div>
-</center>";
-include("../common/footer.php");
-echo "</body></html>\n";
+?>
 
+	<h4><?php echo $arrHttp["profilename"]." - " .$arrHttp["profiledesc"]." ".$msgstr['SAVED'];?></h4>
+		<a class="button_browse show" href="profile_edit.php?base=&encabezado=s">
+			<?php echo $msgstr["back"];?>
+		</a>
+	</div>
+</div>
+</center>
+<?php
+include("../common/footer.php");
 ?>
