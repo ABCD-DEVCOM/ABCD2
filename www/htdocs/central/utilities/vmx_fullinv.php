@@ -9,6 +9,7 @@
 20210409 fho4abcd Read actab,uctab,stw from .par file (no fixed files, equal to incremental update procedure)
 20210409          The stw file comes from tag STW (present in many .par files).
 20210527 fho4abcd Check existence and permissions uctab&actab. Translations
+20210923 fho4abcd option to specify fstfile by URL
 */
 /**
  * @program:   ABCD - ABCD-Central
@@ -55,8 +56,10 @@ include("../lang/dbadmin.php");
 */
 $backtoscript="../dataentry/administrar.php"; // The default return script
 $inframe=1;                      // The default runs in a frame
+$presetfstfile="";               // No default fst file
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
+if ( isset($arrHttp["fstfile"]))      $presetfstfile=$arrHttp["fstfile"];
 ?>
 <body onunload=win.close()>
 <script src=../dataentry/js/lr_trim.js></script>
@@ -136,7 +139,11 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     $handle=opendir($bd."/data/");
     while ($file = readdir($handle)) {
         if ($file != "." && $file != ".." && (strpos($file,".fst")||strpos($file,".FST"))) {
-            echo "<option value='$file'>$file</option>";
+            if ( $file==$presetfstfile) {
+                echo "<option selected value='$file'>$file</option>";
+            } else {
+                echo "<option value='$file'>$file</option>";
+            }
         }
     }
     echo "</select>"
@@ -270,5 +277,4 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
 
 <?php
 include("../common/footer.php");
-?>
-</body></html>
+
