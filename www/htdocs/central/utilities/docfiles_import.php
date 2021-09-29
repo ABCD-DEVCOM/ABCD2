@@ -3,6 +3,7 @@
 20210807 fho4abcd Created from several docbatchimport.php files
 20210831 fho4abcd Improved URL fields
 20210903 fho4abcd Moved configuration code to separate files.
+20210929 fho4abcd Delete .proc file+ get html file size&db record size+split record
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -56,7 +57,7 @@ function Import(){
     document.continuar.submit()
 }
 function Invert(){
-    document.continuar.action='../utilities/vmx_fullinv.php?&backtoscript=<?php echo $backtoscript?>'
+    document.continuar.action='../utilities/vmx_fullinv.php?&backtoscript=<?php echo $backtoscript?>&fstfile=fulltext.fst';
     document.continuar.impdoc_cnfcnt.value=4;
     document.continuar.submit()
 }
@@ -128,7 +129,6 @@ if ($impdoc_cnfcnt<=1) {
     if ($numfiles==0) {
         echo "<p style='color:red'>".$msgstr["dd_imp_nofiles"].$colupl."<p>";
     } else {
-        $delimg="img src='../dataentry/img/barDelete.png' alt='" .$msgstr["eliminar"]."' title='".$msgstr["eliminar"]."'";
         echo "<p style='color:blue'>".$numfiles." ".$msgstr["dd_imp_numfiles"].$colupl."</p>";
         // build a table with filename, section and delete option
         sort($fileList);
@@ -137,7 +137,6 @@ if ($impdoc_cnfcnt<=1) {
         <tr>
             <th><?php echo $msgstr["archivo"]?> </th>
             <th><?php echo $msgstr["dd_section"]?> </th>
-            <th><?php echo $msgstr["eliminar"]?> </th>
         </tr>
         <?php
         for ( $i=0;$i<$numfiles;$i++) {
@@ -146,7 +145,9 @@ if ($impdoc_cnfcnt<=1) {
         <tr>
             <td bgcolor=white><?php echo $filename?></td>
             <td bgcolor=white><?php echo $sectionname?></td>
-            <td bgcolor=white><a href="javascript:Eliminar('<?php echo $fileList[$i]?>','<?php echo $filename?>')"> <<?php echo $delimg?>> </a></td>
+            <td><button class="button_browse delete" type="button" onclick="javascript:Eliminar('<?php echo $fileList[$i]?>','<?php echo $filename?>')"
+                alt="<?php echo $msgstr['eliminar']?>" title="<?php echo $msgstr['eliminar'].":".$fileList[$i]?>">
+                <i class="far fa-trash-alt" /> <?php echo $msgstr['eliminar']?></button></td>
         </tr>
         <?php
         }
@@ -197,9 +198,6 @@ else if ($impdoc_cnfcnt==2) {
         <div style="color:green"><?php echo $msgstr["dd_optionmsg"];?></div>
         <table cellspacing=1 cellpadding=4>
         <tr>
-            <td><?php echo $msgstr["dd_granularity"];?></td>
-            <td><input type=text name=granularity size=2 value=" "</td>
-        </tr><tr>
             <td><?php echo $msgstr["dd_addtimestamp"];?></td>
             <td><input type=checkbox id=addtimestamp name="addtimestamp" value=1 checked></td>
         </tr><tr>
@@ -232,6 +230,7 @@ else if ($impdoc_cnfcnt==3) {
     if ($retval==0) {
         $numfiles=count($fileList);
         $numfilesOK=0;
+        $numrecsOK=0;
         /*
         ** Before the import:
         ** Show number of files to do
@@ -255,7 +254,7 @@ else if ($impdoc_cnfcnt==3) {
             <?php
             ob_flush();flush();
             // Import file
-            $retval=import_action($fileList[$i],$addtimestamp, $textmode, $arrHttp["base"]);
+            $retval=import_action($fileList[$i],$addtimestamp, $textmode, $arrHttp["base"], $numrecsOK);
             ob_flush();flush();
             if ($retval==0) $numfilesOK++;
             ?>
@@ -282,6 +281,10 @@ else if ($impdoc_cnfcnt==3) {
         <table style=color:blue  cellspacing=1 cellpadding=4>
         <tr><td><?php echo $msgstr["dd_imp_importok"]?></td>
             <td><?php echo $numfilesOK?></td>
+            <td></td>
+        </tr>
+        <tr><td><?php echo $msgstr["dd_imp_numrec"]?></td>
+            <td><?php echo $numrecsOK?></td>
             <td></td>
         </tr>
         <tr><td><?php echo $msgstr["dd_imp_importrem"]?></td>
@@ -320,15 +323,18 @@ else if ($impdoc_cnfcnt==3) {
 </div>
 <?php
 include "../common/footer.php";
-?>
-</body>
-</html>
-<?php
 // ======================================================
 // This the end of main script. Only functions follow now
+//
 // =========================== Functions ================
+//  - import_action     : imports an uploaded file
+//  - next_cn_number    : returns the next control number
+//  - secondsToTime     : return H:mm:ss
+//  - split_path        : returns the "section" of the filename in ABCDImportRepo
+//  - split_html        : splits an html file into smaller files and returns the number of parts.
+//
 // ====== import_action =============================
-function import_action($full_imp_path, $addtimestamp, $textmode, $basename) {
+function import_action($full_imp_path, $addtimestamp, $textmode, $basename, &$numrecsOK) {
 /*
 ** Imports the given file in ABCDImportRepo/... into the collection
 ** The metadata of this file is stored in an ABCD record.
@@ -336,12 +342,12 @@ function import_action($full_imp_path, $addtimestamp, $textmode, $basename) {
 **
 ** In: $full_imp_path = Full filename in <collection>/ABCDImportRepo/...
 ** In: $addtimestamp  = Indicator to add a timestamp to the filename (0/1)
-** In: $textmode      = 
+** In: $textmode      = Indicator for tika: m=meta, t=text, h=html, x=xhtml
 ** In: $basename      = short name of the database (e.g. dubcore)
 ** Other variables via 'Global'.
 ** Return : 0=OK, 1=NOT-OK
 */
-global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
+global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     $retval=1;
     $time_sep="__";
     clearstatcache(true);
@@ -376,23 +382,19 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     ** - Construct default for dc:source
     ** - If checked: add timestamp to avoid accidental overwrite
     ** - replace space,%20 by underscore
-    ** - Construct the name of the tika generated target html file
+    ** - Construct the name of the tika generated target (html) file
     ** - Construct the name of the mx proc input file
-    ** - Construct the name of the final htmlfile (no sections in /ABCDSourceRepo)
     */
     $path_parts  = pathinfo($orgfilename);
     $docname     = $path_parts['filename'];
     $docext      = $path_parts['extension'];
     $def_c_source= $docname.".".$docext;
     if ($addtimestamp==1) {
-        // Add timestamp. Don't care that it is in seconds
-        $docname.=$time_sep.time();
+        // Add timestamp. Time is in seconds, date is larger but readable
+        $docname.=$time_sep.date("ymdHis");
     }
-    $htmlfile    = $db_path."wrk/".$docname.'.html';
+    $tikafile    = $db_path."wrk/".$docname.'.html';
     $procfile    = $db_path."wrk/".$docname.'.proc';
-    $htmlSrcPath = $fullcolpath."/ABCDSourceRepo/".$docname.".html";
-    $htmlURLtail = substr($htmlSrcPath, strlen($db_path));
-    $htmlURLPath = "/docs/".$htmlURLtail;
     /*
     ** Move the uploaded file to the collection
     */
@@ -402,7 +404,7 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     /*
     ** Construct & execute the tika command to detect the metadata
     */
-    $tikacommand='java -jar '.$cgibin_path.'tika-app-2.0.0.jar -r -'.$textmode.' '.$docpath.' 2>&1 >'.$htmlfile;
+    $tikacommand='java -jar '.$cgibin_path.'tika-app-2.0.0.jar -r -'.$textmode.' '.$docpath.' 2>&1 >'.$tikafile;
     echo "<li>".$msgstr['procesar'].": ".$tikacommand."</li>";
     ob_flush();flush();
     exec( $tikacommand, $output, $status);
@@ -412,7 +414,7 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
             echo $output[$i]."<br>";
         }
         echo "</b></div>";
-        if (file_exists($htmlfile) ) unlink($htmlfile);
+        if (file_exists($tikafile) ) unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
     } else {
@@ -428,13 +430,13 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     ** A missing file is considered a fatal error
     ** This file can be empty OR very large
     */
-    echo "<li>".$msgstr["dd_detect_meta"]." ".$htmlfile."</li>";
+    echo "<li>".$msgstr["dd_detect_meta"]." ".$tikafile."</li>";
     ob_flush();flush();
     $metatab=array();
-    $metatab=get_meta_tags($htmlfile);
+    $metatab=get_meta_tags($tikafile);
     if ($metatab===false) {
-        echo "<div style='color:red'>".$msgstr["dd_error_get_meta"]." (".$htmlfile.")</div>";
-        unlink($htmlfile);
+        echo "<div style='color:red'>".$msgstr["dd_error_get_meta"]." (".$tikafile.")</div>";
+        unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
     }
@@ -483,29 +485,26 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     if ($c_source=="") $c_source = $def_c_source;
     /*
     ** Construct other metadata content:
-    ** - c_htmlSrcURL  :
-    ** - c_htmlSrcFLD  :
+    ** - c_htmlSrcURL  : computed after split
+    ** - c_htmlSrcFLD  : computed after split
     ** - c_sections    : by the section name
     ** - c_url         : by /docs/<collection>/<sectionname>/<docname>.<doc_ext>
     ** - c_id          : by next_cn_number
     ** - c_dateadded   : by current data&time
-    ** - c_htmlfilesize:
+    ** - c_htmlfilesize: computed after split
     ** - c_doctext     : filled by index generation
     */
-    $c_htmlSrcURL=$htmlURLPath;
-    $c_htmlSrcFLD=$htmlSrcPath;
     $c_sections=$sectionname;
     $c_url="/docs/";
     $c_url.=substr($fullcolpath, strlen($db_path));
     if ($sectionname!="") $c_url.="/".$sectionname;
     $c_url.="/".$docname.".".$docext;
     if ( next_cn_number($basename,$c_id)!=0 ){
-        unlink($htmlfile);
+        unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
     }
     $c_dateadded=date("Y-m-d H:i:s");
-    $c_htmlfilesize="";
     $c_doctext="";
     /*
     ** Get the tags to be processed
@@ -534,63 +533,85 @@ global $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     $vhtmlfilesize= remove_v($_POST["htmlfilesize"]);
     $vdoctext     = remove_v($_POST["doctext"]);
     /*
-    ** Construct the proc file with metadata for mx
-    ** Note that the commandline has limitations (length,allowed character) so a file is better
+    ** The generated file may be too large for the current database
+    ** Next function call will split this file and return a list of files to be imported
     */
-    $fpproc=fopen($procfile,"w");
-    $fields="'";
-    if (($c_title!="")       and ($vtitle!=""))       $fields.="<".$vtitle.">".$c_title."</".$vtitle.">";
-    if (($c_creator!="")     and ($vcreator!=""))     $fields.="<".$vcreator.">".$c_creator."</".$vcreator.">";
-    if (($c_subject!="")     and ($vsubject!=""))     $fields.="<".$vsubject.">".$c_subject."</".$vsubject.">";
-    if (($c_description!="") and ($vdescription!="")) $fields.="<".$vdescription.">".$c_description."</".$vdescription.">";
-    if (($c_publisher!="")   and ($vpublisher!=""))   $fields.="<".$vpublisher.">".$c_publisher."</".$vpublisher.">";
-    if (($c_contributor!="") and ($vcontributor!="")) $fields.="<".$vcontributor.">".$c_contributor."</".$vcontributor.">";
-    if (($c_date!="")        and ($vdate!=""))        $fields.="<".$vdate.">".$c_date."</".$vdate.">";
-    if (($c_type!="")        and ($vtype!=""))        $fields.="<".$vtype.">".$c_type."</".$vtype.">";
-    if (($c_format!="")      and ($vformat!=""))      $fields.="<".$vformat.">".$c_format."</".$vformat.">";
-    if (($c_identifier!="")  and ($videntifier!=""))  $fields.="<".$videntifier.">".$c_identifier."</".$videntifier.">";
-    if (($c_source!="")      and ($vsource!=""))      $fields.="<".$vsource.">".$c_source."</".$vsource.">";
-    if (($c_language!="")    and ($vlanguage!=""))    $fields.="<".$vlanguage.">".$c_language."</".$vlanguage.">";
-    if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">";
-    if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">";
-    if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">";
-    if (($c_htmlSrcURL!="")  and ($vhtmlSrcURL!=""))  $fields.="<".$vhtmlSrcURL.">".$c_htmlSrcURL."</".$vhtmlSrcURL.">";
-    if (($c_htmlSrcFLD!="")  and ($vhtmlSrcFLD!=""))  $fields.="<".$vhtmlSrcFLD.">".$c_htmlSrcFLD."</".$vhtmlSrcFLD.">";
-    if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">";
-    if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">";
-    if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">";
-    if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">";
-    if (($c_htmlfilesize!="")and ($vhtmlfilesize!=""))$fields.="<".$vhtmlfilesize.">".$c_htmlfilesize."</".$vhtmlfilesize.">";
-    if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">";
-    $fields.="'";
-    fwrite($fpproc,$fields);
-    fclose($fpproc);
-    /*
-    ** run mx to create the record
-    */
-    $mxcommand= $mx_path." null proc=@".$procfile. " append=".$db_path.$basename."/data/".$basename. " count=1 now -all 2>&1";
-    $mxpretty=str_replace("<","&lt;",$mxcommand);
-    $mxpretty=str_replace(">","&gt;",$mxpretty);
-    echo "<li>".$msgstr['procesar'].": ".$mxpretty."</li>";
-    ob_flush();flush();
-    exec( $mxcommand, $output, $status);
-    if ($status!=0) {
-        echo "<div style='color:red'><b>".$msgstr["fatal"]."<br>";
-        for ($i=0; $i<count($output);$i++) {
-            echo $output[$i]."<br>";
-        }
-        echo "</b></div>";
-        if (file_exists($htmlfile) ) unlink($htmlfile);
-        //if (file_exists($procfile) ) unlink($procfile);
+    $split_files=Array();
+    if ( split_html($tikafile,$textmode,$c_title,$split_files)!=0 ) {
+        unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
-    } else {
-        echo ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_record_created"]);
-        echo (": <i>".$docname.".".$docext."</i></li>");
-        ob_flush();flush();
     }
-    if (file_exists($htmlfile) ) rename($htmlfile,$htmlSrcPath);
-    if (file_exists($procfile) ) unlink($procfile);
+    for ($ix=0; $ix<sizeof($split_files); $ix++ ) {
+        $act_split_file=$split_files[$ix];
+        /*
+        ** Construct the proc file with metadata for mx
+        ** Note that the commandline has limitations (length,allowed character) so a file is better
+        */
+        $fpproc=fopen($procfile,"w");
+        $fields="'";
+        if (($c_title!="")       and ($vtitle!=""))       $fields.="<".$vtitle.">".$c_title."</".$vtitle.">";
+        if (($c_creator!="")     and ($vcreator!=""))     $fields.="<".$vcreator.">".$c_creator."</".$vcreator.">";
+        if (($c_subject!="")     and ($vsubject!=""))     $fields.="<".$vsubject.">".$c_subject."</".$vsubject.">";
+        if (($c_description!="") and ($vdescription!="")) $fields.="<".$vdescription.">".$c_description."</".$vdescription.">";
+        if (($c_publisher!="")   and ($vpublisher!=""))   $fields.="<".$vpublisher.">".$c_publisher."</".$vpublisher.">";
+        if (($c_contributor!="") and ($vcontributor!="")) $fields.="<".$vcontributor.">".$c_contributor."</".$vcontributor.">";
+        if (($c_date!="")        and ($vdate!=""))        $fields.="<".$vdate.">".$c_date."</".$vdate.">";
+        if (($c_type!="")        and ($vtype!=""))        $fields.="<".$vtype.">".$c_type."</".$vtype.">";
+        if (($c_format!="")      and ($vformat!=""))      $fields.="<".$vformat.">".$c_format."</".$vformat.">";
+        if (($c_identifier!="")  and ($videntifier!=""))  $fields.="<".$videntifier.">".$c_identifier."</".$videntifier.">";
+        if (($c_source!="")      and ($vsource!=""))      $fields.="<".$vsource.">".$c_source."</".$vsource.">";
+        if (($c_language!="")    and ($vlanguage!=""))    $fields.="<".$vlanguage.">".$c_language."</".$vlanguage.">";
+        if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">";
+        if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">";
+        if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">";
+        // some variables are dependent on the actual processed file
+        $c_htmlfilesize= filesize($act_split_file);
+        $htmlfilesec   = substr($act_split_file, strlen($db_path."wrk/"));
+        $htmlSrcPath   = $fullcolpath."/ABCDSourceRepo/".$htmlfilesec;
+        $htmlURLPath   = "/docs/".substr($htmlSrcPath, strlen($db_path));
+        $c_htmlSrcURL  = $htmlURLPath;
+        $c_htmlSrcFLD  = $htmlSrcPath;
+
+        if (($c_htmlSrcURL!="")  and ($vhtmlSrcURL!=""))  $fields.="<".$vhtmlSrcURL.">".$c_htmlSrcURL."</".$vhtmlSrcURL.">";
+        if (($c_htmlSrcFLD!="")  and ($vhtmlSrcFLD!=""))  $fields.="<".$vhtmlSrcFLD.">".$c_htmlSrcFLD."</".$vhtmlSrcFLD.">";
+        if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">";
+        if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">";
+        if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">";
+        if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">";
+        if (($c_htmlfilesize!="")and ($vhtmlfilesize!=""))$fields.="<".$vhtmlfilesize.">".$c_htmlfilesize."</".$vhtmlfilesize.">";
+        if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">";
+        $fields.="'";
+        fwrite($fpproc,$fields);
+        fclose($fpproc);
+        /*
+        ** run mx to create the record
+        */
+        $mxcommand= $mx_path." null proc=@".$procfile. " append=".$db_path.$basename."/data/".$basename. " count=1 now -all 2>&1";
+        $mxpretty=str_replace("<","&lt;",$mxcommand);
+        $mxpretty=str_replace(">","&gt;",$mxpretty);
+        echo "<li>".$msgstr['procesar'].": ".$mxpretty."</li>";
+        ob_flush();flush();
+        exec( $mxcommand, $output, $status);
+        if ($status!=0) {
+            echo "<div style='color:red'><b>".$msgstr["fatal"]."<br>";
+            for ($i=0; $i<count($output);$i++) {
+                echo $output[$i]."<br>";
+            }
+            echo "</b></div>";
+            if (file_exists($act_split_file) ) unlink($act_split_file);
+            if (file_exists($procfile) ) unlink($procfile);
+            rename($docpath, $full_imp_path);
+            return(1);
+        } else {
+            echo ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_record_created"]);
+            echo (": <i>".$docname.".".$docext."</i></li>");
+            ob_flush();flush();
+        }
+        if (file_exists($act_split_file) ) rename($act_split_file,$htmlSrcPath);
+        if (file_exists($procfile) ) unlink($procfile);
+        $numrecsOK++;
+    }
 
     return(0);
 }
@@ -675,6 +696,131 @@ function split_path($full_path, &$filename, &$sectionname){
         $sectionname=substr($path,0,$slashpos);
         $filename=substr($path, $slashpos+1 );
     }
+    return(0);
+}
+// ====== split_html =============================
+function split_html($tikafile, $textmode, $c_title, &$split_files) {
+/*
+** Splits the given (html) file into smaller parts
+** Controlled by the database recordsize.
+** In : $tikafile   = Source file name generated by tika
+** In : $textmode   = Indicator for tika: m=meta, t=text, h=html, x=xhtml
+** In : $c_title    = Title extracted by tika. May be ""
+** Out: $split_files= Array with the names of the resulting files
+*/
+    global $cisis_ver, $msgstr;
+    /*
+    ** Before creating the database record  html filesize & database recordsize are shown
+    ** Note that the maximum recordsize is given in cisis.h by variable MAXMFRL
+    ** Note that we have 3 cisis versions in ABCD
+    ** - empty = 16-60: max recordsize=   32767 (linux+windows)
+    ** - ffi          : max recordsize= 1048576 (linux+windows, indexing methods for more static databases)
+    ** - bigisis      : max recordsize= 1048576 (linux, no images compiled for windows (at the time this code is written)
+    */
+    $c_htmlfilesize=filesize($tikafile);
+    $isis_record_size=32767; // This also for 16-60
+    if ($cisis_ver=="ffi")     $isis_record_size=1048576;
+    if ($cisis_ver=="bigisis") $isis_record_size=1048576;
+    $pretty_cisis_recsize=number_format($isis_record_size/1024,2,",",".")." Kb";
+    $pretty_html_filesize=number_format($c_htmlfilesize/1024,2,",",".")." Kb";
+    echo "<li>".$msgstr["dd_htmlfilesize"]." ".$pretty_html_filesize.". ".$msgstr["dd_recordsize"]." ".$pretty_cisis_recsize."</li>";
+    ob_flush();flush();
+    if (intval($c_htmlfilesize) < $isis_record_size) {
+        // no split required
+        $split_files[]=$tikafile;
+        return(0);
+    }
+    /*
+    ** Split the file into chunks
+    ** Set variables required during the split
+    */
+    $maxsize     = $isis_record_size*0.9; //safety margin of 10%
+    $path_parts  = pathinfo($tikafile);
+    $chunkfixfil = $path_parts['dirname'].'/'.$path_parts['filename'].'_'; // filename without chunknr
+    $chunkfixext = '.'.$path_parts['extension'];
+    $chunknr     = 1;
+    $chunkisopen = false;
+    $chunkexceed = false;
+    $partsheader = "<table style='color:green;font-size:150%;font-weight:bold;' border=1 width=100%>";
+    $partsheader.= "<tr><td>".$msgstr["dd_partnr"];
+    $partstrailer= "</td></tr></table><br>";
+    $pretty_targetsize=number_format($maxsize/1024,2,",",".")." Kb";
+    echo "<li>".$msgstr["dd_splitting"]."&nbsp;".$pretty_targetsize."</li>";
+    ob_flush();flush();
+    
+    if(($handle = fopen($tikafile, "r"))===false) {
+        return(1);
+    }
+    while (!feof($handle)) { // main loop over all lines of the source file
+        if ( !$chunkexceed    ) $thisline = fgets($handle); // get line contents 
+        // Some lines can be skipped
+        if ( $thisline==""    ) continue; //skip empty line
+        if ( $thisline=="\n"  ) continue; //skip empty line
+        if ( $thisline=="\r\n") continue; //skip empty line
+        if ( strpos($thisline,"<html")      !==false) continue; //skip html tag
+        if ( strpos($thisline,"<meta name=")!==false) continue; //tika generates many of these, valid ones already processed before
+        // Some lines need adjustment for html
+        if ( $textmode=='h') {
+            $thisline = str_ireplace('<p/>' , '<br>', $thisline);//tika generates invalid tag <p/> (windows)
+            $thisline = preg_replace('/\t/' , ' '   , $thisline);//tika keeps too much spaces (linux,windows)
+            $thisline = preg_replace('/  +/', ' '   , $thisline);//tika keeps too much spaces (linux,windows)
+        }
+        // Check if a file is opne to write to
+        if ( $chunkisopen==false ) {
+            // open the chunkfile and write a header
+            $chunkactfile= $chunkfixfil.$chunknr.$chunkfixext;
+            $chunkhandle = fopen($chunkactfile, "w");
+            $split_files[]=$chunkactfile;
+            $chunkisopen = true;
+            $chunksize   = 0;
+            $chunksize+=fwrite($chunkhandle,"<!DOCTYPE HTML>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"<html>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"<header>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"<title>".$c_title." #".$chunknr."</title>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"</header>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"<body>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,$partsheader."&nbsp;".$chunknr.$partstrailer.PHP_EOL);
+            $chunknr++;
+        }
+        // If the chunksize approaches the limit. Take care if over the safety limit
+        if ($chunksize > $maxsize) {
+            // Check for exceeding the recordsize
+            $thislinelen  = strlen($thisline);
+            $chunkexceed  = false;
+            if ( ($chunksize + $thislinelen) >= $isis_record_size){
+                $chunkexceed=true;
+            }
+            // Check for  "</div>" at the end of the line
+            $thistestline = trim($thisline,PHP_EOL);
+            $divendfound  = false;
+            if (strlen($thistestline)>=6){
+                $divendfound = stripos($thistestline,"</div>",-6);
+            }
+            /*
+            ** Close the file if there is a good reason
+            ** Over recordsize OR Text mode is "t"  OR </div> found
+            */
+            if ($chunkexceed OR $textmode=='t' OR $divendfound!==false) {
+                // write the current line before closing the chunk if there is space left
+                if (!$chunkexceed) {
+                    $chunksize+=fwrite($chunkhandle,$thisline);
+                }
+                fclose($chunkhandle);
+                $chunkisopen=false;
+                $pretty_filesize=number_format(filesize($chunkactfile)/1024,2,",",".")." Kb";
+                echo "<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>";
+                ob_flush();flush();
+                continue;
+            }
+        }
+        $chunksize+=fwrite($chunkhandle,$thisline);
+        $chunkexceed=false;
+    }
+    $pretty_filesize=number_format(filesize($chunkactfile)/1024,2,",",".")." Kb";
+    echo "<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>";
+    ob_flush();flush();
+    fclose($handle);
+    unlink($tikafile); // original no longer needed
     return(0);
 }
 // ======================= End functions/End =====

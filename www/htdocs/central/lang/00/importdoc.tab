@@ -19,7 +19,7 @@ dd_error_init_cnfile=Cannot create initial file for the control number (CN)
 dd_error_next_cnfile=Cannot create file for the computed control number (CN)
 dd_movingfiles=Moving files to
 dd_filesmoved=file(s) moved.
-dd_granularity=Granularity
+dd_htmlfilesize=Size of generated HTML file=
 dd_imp_actfile=Working on
 dd_imp_details=Show details
 dd_imp_exec=Import
@@ -33,6 +33,7 @@ dd_imp_nofiles=NO files found in collection upload area:
 dd_imp_numfiles=files found in collection upload area:
 dd_imp_options=Import options
 dd_imp_proctime=Processing time
+dd_imp_numrec=Succesfully created records
 dd_imp_step=Step
 dd_imp_step_check_files=Check files to be imported.
 dd_imp_step_check_map=Check/set metadata mapping to ABCD fields
@@ -53,7 +54,9 @@ dd_notok=NOT OK
 dd_nowrite=is not writable
 dd_optionmsg=When in doubt: leave the defaults
 dd_overwrite=Overwrite existing file?
+dd_partnr=Part #
 dd_record_created=ABCD record created for
+dd_recordsize=Maximum DB recordsize=
 dd_rep_content=Repair content of field
 dd_rep_execresults=Repair execution results
 dd_rep_options=Select repair option
@@ -62,6 +65,7 @@ dd_section=Section
 dd_sectionhlp=Type section name or click twice to view existing section names
 dd_sectionfoldererr=Unable to create Section folder
 dd_size=Size
+dd_splitting=Split the file. Target size=
 dd_status=Status
 dd_term_contributor=Contributor
 dd_term_coverage=Coverage
