@@ -78,6 +78,7 @@ editar=Editar
 editsubc=Literal para substituição do subcampo
 eliminados=Apagado
 eliminar=Apagar
+empty_is_def=Vazio seleciona a pasta padrão
 entrar=Entrar
 err_all=Você precisa selecional TODOS ou uma lista de campos
 err_cannotaddcopies=O registro não tem número de controle. Os exemplares não podem ser anexados
