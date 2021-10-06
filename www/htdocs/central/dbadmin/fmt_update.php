@@ -1,4 +1,4 @@
-<?
+<?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -66,8 +66,9 @@ $fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks","w
 foreach ($salida as $arch) $res=fwrite($fp,$arch."\n");
 fclose($fp);
 include("../common/header.php");
-
-echo "<body>\n";
+?>
+<body>
+<?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
