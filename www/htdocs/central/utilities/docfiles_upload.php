@@ -2,6 +2,7 @@
 /* Modifications
 20210807 fho4abcd Created from upload_myfile.php
 20210914 fho4abcd Improved error message display&handling in case of upload errors
+20211105 fho4abcd No filename sanitation: will be done by import script (admin may upload via backdoor, so import must do it again)
 */
 /*
 ** Upload a file from the users environment into the digital document area of ABCD
@@ -201,7 +202,8 @@ else if ($upldoc_cnfcnt==2)
         }
 
         ?>
-        <table  bgcolor=#e7e7e7 cellspacing=1 cellpadding=4 border=1>
+        <!--<table  bgcolor=#e7e7e7 cellspacing=1 cellpadding=4 border=0>-->
+        <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=4 >
             <tr><th><?php echo $msgstr["archivo"];?></th>
                 <th><?php echo $msgstr["type"];?></th>
                 <th><?php echo $msgstr["dd_size"];?></th>
@@ -214,24 +216,19 @@ else if ($upldoc_cnfcnt==2)
             $uploaderrortxt="";
             // basename() may prevent filesystem traversal attacks;
             // further validation/sanitation of the filename may be appropriate
-            // sanitation done twice (see rest of code)
+            // but not done here (done again in import)
             $selname=basename($myfiles["name"][$i]);
             if ($selname!="") {
-            $savname =  str_replace(" ", "_",strtolower($selname));
-            $savname =  str_replace("%", "_", $savname);
-            $savname =  str_replace("&", "_", $savname);
-            $savname =  str_replace("'", "_", $savname);
-            $savname =  str_replace("\"", "_", $savname);
-            if ( file_exists($coluplfull."/".$savname) ) {
-                if ( isset($arrHttp["overwrite"])  ) {
-                    $uploaderrortxt.="<span style='color:blue'>";
-                } else {
-                    $numerrors++;
-                    $uploaderrortxt.="<span style='color:red'>";
+                if ( file_exists($coluplfull."/".$selname) ) {
+                    if ( isset($arrHttp["overwrite"])  ) {
+                        $uploaderrortxt.="<span style='color:blue'>";
+                    } else {
+                        $numerrors++;
+                        $uploaderrortxt.="<span style='color:red'>";
+                    }
+                    $uploaderrortxt.=$msgstr["dd_duplicate"];
+                    $uploaderrortxt.="</span>";
                 }
-                $uploaderrortxt.=$msgstr["dd_duplicate"];
-                $uploaderrortxt.="</span>";
-            }
             }
             if ( $uploaderror!=0 ) {
                 $numerrors++;
@@ -240,10 +237,10 @@ else if ($upldoc_cnfcnt==2)
                 $uploaderrortxt.="</span>";
             }
             ?>
-            <tr><td><?php echo $myfiles["name"][$i];?></td>
-                <td><?php echo $myfiles["type"][$i];?></td>
-                <td align=right><?php echo number_format($myfiles["size"][$i],0,',','.');?></td>
-                <td align=right><?php echo $uploaderrortxt;?></td>
+            <tr><td bgcolor=white><?php echo $myfiles["name"][$i];?></td>
+                <td bgcolor=white><?php echo $myfiles["type"][$i];?></td>
+                <td align=right bgcolor=white><?php echo number_format($myfiles["size"][$i],0,',','.');?></td>
+                <td align=right bgcolor=white><?php echo $uploaderrortxt;?></td>
             </tr>
 <?php
         }
@@ -266,14 +263,9 @@ else if ($upldoc_cnfcnt==2)
             // further validation/sanitation of the filename may be appropriate
             // sanitation must match with sanitation above
             $selname = basename($myfiles["name"][$i]);
-            $savname =  str_replace(" ", "_",strtolower($selname));
-            $savname =  str_replace("%", "_", $savname);
-            $savname =  str_replace("&", "_", $savname);
-            $savname =  str_replace("'", "_", $savname);
-            $savname =  str_replace("\"", "_", $savname);
             // Remove possible duplicate first (if allowed)
-            if ( file_exists($fullsectionpath."/".$savname)  and isset($arrHttp["overwrite"])) {
-                $result=@unlink($fullsectionpath."/".$savname);
+            if ( file_exists($fullsectionpath."/".$selname)  and isset($arrHttp["overwrite"])) {
+                $result=@unlink($fullsectionpath."/".$selname);
                 if ($result==false) {
                     $contents_error= error_get_last();
                     $movemsg.= "<span style='color:red'>";
@@ -281,17 +273,17 @@ else if ($upldoc_cnfcnt==2)
                     $movemsg.= "<br></span>";
                 }
             }
-            if ( !file_exists($fullsectionpath."/".$savname) ) {
+            if ( !file_exists($fullsectionpath."/".$selname) ) {
                 if ($myfiles["error"][$i] == UPLOAD_ERR_OK) {
                     $tmp_name = $myfiles["tmp_name"][$i];
-                    $result=@move_uploaded_file($tmp_name, "$fullsectionpath/$savname");
+                    $result=@move_uploaded_file($tmp_name, "$fullsectionpath/$selname");
                     if ($result==false) {
                         $contents_error= error_get_last();
                         $movemsg.=  "<span style='color:red'>";
                         $movemsg.= $msgstr["dd_notok"]." : ".$contents_error["message"];
                         $movemsg.=  "<br></span>";
                     } else {
-                        $movemsg.= "$tmp_name &nbsp;&rarr;&nbsp; $colupl/$section/$savname";
+                        $movemsg.= "$tmp_name &nbsp;&rarr;&nbsp; $colupl/$section/$selname";
                         $movemsg.= "<br>";
                         $moved++;
                     }

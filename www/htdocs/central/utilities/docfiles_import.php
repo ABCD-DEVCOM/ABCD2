@@ -4,6 +4,7 @@
 20210831 fho4abcd Improved URL fields
 20210903 fho4abcd Moved configuration code to separate files.
 20210929 fho4abcd Delete .proc file+ get html file size&db record size+split record
+20211007 fho4abcd Search tika's, add tika selection+chunk size in menu+improved name cleaunup+proc file with pid
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -31,15 +32,32 @@ include("../lang/importdoc.php");
 $backtoscript="../dataentry/incio_main.php"; // The default return script
 $inframe=1;                      // The default runs in a frame
 $impdoc_cnfcnt=0;
+$splittarget=80;
 if ( isset($arrHttp["backtoscript"]))  $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["impdoc_cnfcnt"])) $impdoc_cnfcnt=$arrHttp["impdoc_cnfcnt"];
+if ( isset($arrHttp["splittarget"]))   $splittarget=$arrHttp["splittarget"];
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
+/*
+** The maximum recordsize is given in cisis.h by variable MAXMFRL
+** We have 3 cisis versions in ABCD
+** - empty = 16-60: max recordsize=   32767 (linux+windows)
+** - ffi          : max recordsize= 1048576 (linux+windows, indexing methods for more static databases)
+** - bigisis      : max recordsize= 1048576 (linux, no images compiled for windows (at the time this code is written)
+*/
+$isis_record_size=32767; // This also for 16-60
+if ($cisis_ver=="ffi")     $isis_record_size=1048576;
+if ($cisis_ver=="bigisis") $isis_record_size=1048576;
 
 ?>
 <body>
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
 <script>
+var win;
+function OpenWindow(){
+	msgwin=window.open("","testshow","width=800,height=250");
+	msgwin.focus()
+}
 function Eliminar(docfile,filename){
     /* docfile is the fullpath, filename is the user friendly name */
 	if (confirm("<?php echo $msgstr["cnv_deltab"]?>"+" "+filename)==true){
@@ -48,6 +66,12 @@ function Eliminar(docfile,filename){
         document.continuar.submit()
 	}
 }
+function Reselect(){
+	document.continuar.upldoc_cnfcnt.value='0';
+    document.continuar.action='../utilities/docfiles_upload.php?&backtoscript=<?php echo $backtoscript?>'
+	document.continuar.submit()
+}
+
 function SetImportOptions(){
     document.continuar.impdoc_cnfcnt.value=2;
     document.continuar.submit()
@@ -117,9 +141,16 @@ if ($impdoc_cnfcnt<=1) {
     // If the request was to delete a file (second and subsequent runs)
     if ( isset($arrHttp["deletedocfile"]) && $arrHttp["deletedocfile"]!="")  {
         //delete the file
-        unlink ($arrHttp["deletedocfile"]);
-        $path=substr($arrHttp["deletedocfile"],strlen($coluplfull)+1);
-        echo "<div>".$msgstr["archivo"]." ".$path." ".$msgstr["deleted"]."</div>";
+        $delindex=$arrHttp["deletedocfile"];
+        $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
+        if ($retval!=0) die;
+        sort($fileList);
+        $numfiles=count($fileList);
+        if ($numfiles>0 && $delindex<$numfiles) {
+            unlink ($fileList[$delindex]);
+            echo "<div>".$msgstr["archivo"]." ".$fileList[$delindex]." ".$msgstr["deleted"]."</div>";
+        }
+        $fileList=[];
     }
 
     // List all files in the upload folder
@@ -139,50 +170,75 @@ if ($impdoc_cnfcnt<=1) {
             <th><?php echo $msgstr["dd_section"]?> </th>
         </tr>
         <?php
-        for ( $i=0;$i<$numfiles;$i++) {
-            split_path($fileList[$i], $filename, $sectionname);
+        for ( $index=0;$index<$numfiles;$index++) {
+            split_path($fileList[$index], $filename, $sectionname);
+            /*
+            ** Note that the delete button works on the index in the list
+            ** Parameters with embedded quotes result in js errors, so the quote is removed from the shown name
+            ** The user won't notice this normally or think of a strange error
+            */
         ?> 
         <tr>
             <td bgcolor=white><?php echo $filename?></td>
             <td bgcolor=white><?php echo $sectionname?></td>
-            <td><button class="button_browse delete" type="button" onclick="javascript:Eliminar('<?php echo $fileList[$i]?>','<?php echo $filename?>')"
-                alt="<?php echo $msgstr['eliminar']?>" title="<?php echo $msgstr['eliminar'].":".$fileList[$i]?>">
+            <td><button class="button_browse delete" type="button"
+                onclick='javascript:Eliminar("<?php echo $index?>","<?php echo str_replace("'"," ",$filename)?>")'
+                alt="<?php echo $msgstr['eliminar']?>" title="<?php echo $msgstr['eliminar'].":".$fileList[$index]?>">
                 <i class="far fa-trash-alt" /> <?php echo $msgstr['eliminar']?></button></td>
         </tr>
         <?php
         }
         echo "</table>";
-        // Create a form
-        ?>
-        <form name=continuar  method=post >
-            <input type=hidden name=impdoc_cnfcnt>
-            <input type=hidden name=deletedocfile>
-            <?php
-            foreach ($_REQUEST as $var=>$value){
-                if ( $var!= "deletedocfile" && $var!="impdoc_cnfcnt" && $var!="upldoc_cnfcnt"){
-                    // some values may contain quotes or other "non-standard" values
-                    $value=htmlspecialchars($value);
-                    echo "<input type=hidden name=$var value=\"$value\">\n";
-                }
-            }
-            // The first run adds the map configuration
-            if ($impdoc_cnfcnt==0) {
-                for ($i=0;$i<$metadataMapCnt;$i++) {
-                    echo "<input type=hidden name=".$actualField[$i]["term"]." value='".$actualField[$i]["field"]."'>\n";
-                }
-            }
-            ?>
-            <br>
-            <?php echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;
-            <input type=button value='<?php echo $msgstr["dd_imp_options"];?>' onclick=SetImportOptions()>
-        </form>
-    <?php
     }
+    // Create a form
+    ?>
+    <form name=continuar  method=post >
+        <input type=hidden name=impdoc_cnfcnt>
+        <input type=hidden name=deletedocfile>
+        <input type=hidden name=upldoc_cnfcnt>
+        <?php
+        foreach ($_REQUEST as $var=>$value){
+            if ( $var!= "deletedocfile" && $var!="impdoc_cnfcnt" && $var!="upldoc_cnfcnt"){
+                // some values may contain quotes or other "non-standard" values
+                $value=htmlspecialchars($value);
+                echo "<input type=hidden name=$var value=\"$value\">\n";
+            }
+        }
+        // The first run adds the map configuration
+        if ($impdoc_cnfcnt==0) {
+            for ($i=0;$i<$metadataMapCnt;$i++) {
+                echo "<input type=hidden name=".$actualField[$i]["term"]." value='".$actualField[$i]["field"]."'>\n";
+            }
+        }
+        ?>
+        <br>
+        <input type=button value='<?php echo $msgstr["selfile"];?>' onclick=Reselect()>
+        
+        <?php if ($numfiles>0 ) {
+            // Display continuation button only if any files are present
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;";
+            echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;
+            <input type=button value='<?php echo $msgstr["dd_imp_options"];?>' onclick=SetImportOptions()>
+        <?php } ?>
+    </form>
+    <?php
 }
 /* =======================================================================
 /* ----- Second screen: Set import options -*/
 else if ($impdoc_cnfcnt==2) {
     echo "<h3>".$msgstr["dd_imp_step"]." 2: ".$msgstr["dd_imp_step_options"]."</h3>";
+    $pretty_cisis_recsize=number_format($isis_record_size/1024,0,",",".")." Kb";
+    // Find all tika jars
+    $tikanamepattern="*tika*.jar";
+    $tikajars=glob($cgibin_path.$tikanamepattern);
+    if (sizeof($tikajars)==0 OR $tikajars===false) {
+        echo "<p style='color:red'>".$msgstr["dd_imp_notika1"]."<br>";
+        echo $msgstr["dd_imp_tikasrc"]." &rarr;<b>".$tikanamepattern."</b>&larr;<br>";
+        echo $msgstr["dd_imp_tikadown"]." <a href='https://tika.apache.org/download.html'>Download Apache Tika</a><br>";
+        echo $msgstr["dd_imp_tikainst"]." ".$cgibin_path."</p>";
+        die;
+    }
+
     ?>
     <form name=continuar  method=post >
         <input type=hidden name=mapoption>
@@ -196,10 +252,45 @@ else if ($impdoc_cnfcnt==2) {
         }
         ?>
         <div style="color:green"><?php echo $msgstr["dd_optionmsg"];?></div>
-        <table cellspacing=1 cellpadding=4>
+        <table cellspacing=2 cellpadding=2>
         <tr>
             <td><?php echo $msgstr["dd_addtimestamp"];?></td>
             <td><input type=checkbox id=addtimestamp name="addtimestamp" value=1 checked></td>
+            <td style='color:blue'><?php echo $msgstr["dd_imp_unique"];?></td>
+        </tr><tr>
+            <td><?php echo $msgstr["dd_truncfilename"];?></td>
+            <td><select name=truncsize id=truncsize>
+                    <option value=""   ><?php echo $msgstr["dd_imp_nolimit"];?></option>
+                    <option value="100">100 <?php echo $msgstr["dd_imp_chars"];?></option>
+                    <option value="75" >&nbsp;75 <?php echo $msgstr["dd_imp_chars"];?></option>
+                    <option value="50" selected>&nbsp;50 <?php echo $msgstr["dd_imp_chars"];?></option>
+                    <option value="0"  >&nbsp;&nbsp;0 <?php echo $msgstr["dd_imp_chars"];?></option>
+                </select>
+            </td>
+            <td style='color:blue'><?php echo $msgstr["dd_truncmsg"];?></td>
+        </tr><tr><td colspan=3>&nbsp;</td>
+        </tr><tr>
+            <td><?php echo $msgstr["dd_imp_tikajar"];?></td>
+            <td><select name=tikajar id=tikajar>
+                <?php
+                $tikatags="";
+                $numtags=0;
+                foreach( $tikajars as $fulltikapath) {
+                    $tikajar = substr($fulltikapath, strlen($cgibin_path));
+                    echo "<option value=$tikajar>$tikajar</option>";
+                    // tikatags is part of the URL to test the found tikas
+                    if ($numtags>0) $tikatags.="&";
+                    $tikatags.="tikajar".$numtags."=".$tikajar;
+                    $numtags++;
+                }
+                ?>  
+                </select>
+            </td>
+            <td style='color:blue'><?php
+                $testbutton='<a href="test_tika.php?'.$tikatags.'"  target=testshow onclick=OpenWindow()>'.$msgstr["dd_imp_tikaver"].'</a>';
+                echo "$testbutton"."<br>".$msgstr["dd_imp_tikasrc"]." &rarr;<b>".$tikanamepattern."</b>&larr;<br>";
+                ?>
+            </td>
         </tr><tr>
             <td><?php echo $msgstr["dd_textformat"];?></td>
             <td><select name=textmode id=textmode>
@@ -208,7 +299,12 @@ else if ($impdoc_cnfcnt==2) {
                     <option value="h" selected><?php echo $msgstr["dd_tmode_html"];?></option>
                     <option value="x"><?php echo $msgstr["dd_tmode_xhtml"];?></option>
                 </select>
-            </td>            
+            </td>
+        </tr><tr>
+            <td><?php echo $msgstr["dd_imp_splittarget"];?></td>
+            <td><input name='splittarget' type=number min=1 max=100 value=<?php echo $splittarget;?> ></td>
+            <td style='color:blue'><?php echo $msgstr["dd_imp_splitperc"]." (".$pretty_cisis_recsize.")";?></td>
+        </tr>
         </table>
         <br>
         <?php echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;
@@ -222,7 +318,10 @@ else if ($impdoc_cnfcnt==3) {
     echo "<h3>".$msgstr["dd_imp_step"]." 3: ".$msgstr["dd_imp_step_exec"]."</h3>";
     $retval=0;
     $addtimestamp=$arrHttp["addtimestamp"];
+    $tikajar=$arrHttp["tikajar"];
     $textmode=$arrHttp["textmode"];
+    $truncsize="";
+    if (isset($arrHttp["truncsize"])) $truncsize=$arrHttp["truncsize"];
     $starttime = microtime(true);
     // List all files in the upload folder
     // The content is checked in the initial screen
@@ -254,7 +353,8 @@ else if ($impdoc_cnfcnt==3) {
             <?php
             ob_flush();flush();
             // Import file
-            $retval=import_action($fileList[$i],$addtimestamp, $textmode, $arrHttp["base"], $numrecsOK);
+            $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget,
+                                  $arrHttp["base"], $numrecsOK);
             ob_flush();flush();
             if ($retval==0) $numfilesOK++;
             ?>
@@ -334,7 +434,7 @@ include "../common/footer.php";
 //  - split_html        : splits an html file into smaller files and returns the number of parts.
 //
 // ====== import_action =============================
-function import_action($full_imp_path, $addtimestamp, $textmode, $basename, &$numrecsOK) {
+function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget, $basename, &$numrecsOK) {
 /*
 ** Imports the given file in ABCDImportRepo/... into the collection
 ** The metadata of this file is stored in an ABCD record.
@@ -342,14 +442,16 @@ function import_action($full_imp_path, $addtimestamp, $textmode, $basename, &$nu
 **
 ** In: $full_imp_path = Full filename in <collection>/ABCDImportRepo/...
 ** In: $addtimestamp  = Indicator to add a timestamp to the filename (0/1)
+** In: $truncsize     = Number of characters in core file name (""=unlimited)
+** In: $tikajar       = Name of actual tika jar in cgi-bin
 ** In: $textmode      = Indicator for tika: m=meta, t=text, h=html, x=xhtml
+** IN: $splittarget   = Percentage of recordsize as target of the split chunk size..
 ** In: $basename      = short name of the database (e.g. dubcore)
 ** Other variables via 'Global'.
 ** Return : 0=OK, 1=NOT-OK
 */
-global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
+global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis_record_size;
     $retval=1;
-    $time_sep="__";
     clearstatcache(true);
     /*
     ** Check if a section is required
@@ -380,21 +482,31 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     ** Actions with the filename:
     ** - Split in name and extension (more extensions will be created)
     ** - Construct default for dc:source
-    ** - If checked: add timestamp to avoid accidental overwrite
-    ** - replace space,%20 by underscore
-    ** - Construct the name of the tika generated target (html) file
-    ** - Construct the name of the mx proc input file
     */
     $path_parts  = pathinfo($orgfilename);
     $docname     = $path_parts['filename'];
     $docext      = $path_parts['extension'];
     $def_c_source= $docname.".".$docext;
-    if ($addtimestamp==1) {
-        // Add timestamp. Time is in seconds, date is larger but readable
-        $docname.=$time_sep.date("ymdHis");
-    }
+    /*
+    ** Modify the filename. Name and extension 
+    ** - Replace characters to enable usage in url (name+ext)
+    ** - Add timestamp for uniqueness (only name)
+    ** - Truncate excessive long names(only name)
+    */
+    if ( convert_name($addtimestamp, $truncsize, $docname) !=0 ) return(1);
+    if ( convert_name(0, "", $docext)) return(1);
+    /*
+    ** - Construct the name of the tika generated target (html) file
+    */
     $tikafile    = $db_path."wrk/".$docname.'.html';
-    $procfile    = $db_path."wrk/".$docname.'.proc';
+    /*
+    ** - Construct the name of the mx proc input file.
+    **   Use pid because mx does not like utf characters in this filename
+    **   Always add a timestamp because the pid is the server pid, not unique for this run
+    */
+    $procfile    = getmypid();      //get 
+    convert_name(1,"",$procfile);   //add always timestamp!!
+    $procfile    = $db_path."wrk/".$procfile.'.proc';
     /*
     ** Move the uploaded file to the collection
     */
@@ -403,8 +515,9 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     rename($full_imp_path, $docpath);
     /*
     ** Construct & execute the tika command to detect the metadata
+    ** option -r: For JSON, XML and XHTML outputs, adds newlines and whitespace, for better readability
     */
-    $tikacommand='java -jar '.$cgibin_path.'tika-app-2.0.0.jar -r -'.$textmode.' '.$docpath.' 2>&1 >'.$tikafile;
+    $tikacommand='java -jar '.$cgibin_path.$tikajar.' -r -'.$textmode.' '.$docpath.' 2>&1 >'.$tikafile;
     echo "<li>".$msgstr['procesar'].": ".$tikacommand."</li>";
     ob_flush();flush();
     exec( $tikacommand, $output, $status);
@@ -537,7 +650,7 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path;
     ** Next function call will split this file and return a list of files to be imported
     */
     $split_files=Array();
-    if ( split_html($tikafile,$textmode,$c_title,$split_files)!=0 ) {
+    if ( split_html($tikafile,$textmode,$c_title, $splittarget, $split_files)!=0 ) {
         unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
@@ -664,6 +777,82 @@ global $db_path,$max_cn_length, $msgstr;
     if (isset($max_cn_length)) $cn=str_pad($cn, $max_cn_length, '0', STR_PAD_LEFT);
     return($retval);
 }
+// ====== convert_name =============================
+/* 
+** Converts a filename or extension to be used by the import process
+** 
+** - Name in lowercase to be valid for windows/linux (and exports/imports)
+** - Replace characters to enable usage in url
+** - Add timestamp for uniqueness (use this only for the filename)
+** - Truncate excessive long names(normally not required for extensions)
+**
+** In    : $addtimestamp = 0:no stamp, 1: add stamp
+** In    : $truncsize    = Number of characters in core file name (""=unlimited)
+** In/Out: $docname      = Documentname (without folder and extension) or
+**                         Documentextension (without leading ".")
+**
+** Return : 0=OK, 1=NOT-OK
+*/
+function convert_name($addtimestamp, $truncsize, &$docname){
+    global $msgstr;
+    if ($docname=="") return 0;
+    $time_sep="__";
+    /*
+    ** Detect most probable filename encoding:
+    ** Set the detection order. Not the default PHP (is too simple)
+    ** Order is important: UTF must be before ISO !!
+    ** No way to distinguish mechanically ISO and Windows-1252
+    */
+    $ary[] = "ASCII";
+    $ary[] = "UTF-8";
+    $ary[] = "ISO-8859-1";
+    mb_detect_order($ary);
+    $name_encoding = mb_detect_encoding($docname,null,true);
+    if ($name_encoding===false) {
+        echo "<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$docname."&larr;</div>";
+        return 1;
+    }
+    /*
+    ** Filename cleanup is necessary to cope with restrictions:
+    **  - It should be possible to use the name in an url
+    **  - It should be possible to move information from windows to linux and vv.
+    ** Cleanup of the name : to lower case
+    */
+    $docname =  mb_strtolower($docname,$name_encoding);
+    /*
+    ** Note that filenames may occur in the
+    ** - "path component"of the URI  : Requires name_encoding or substitution
+    ** - "query component" of the URI: This can be encoded by PHP function: htmlspecialchars. No action here
+    ** From rfc 3986: "reserved" characters. Protected from normalization and 
+    ** safe to be used for delimiting data subcomponents within a URI
+    ** - gen-delims/sub-delims          ==> : / ? # [ ] @ ! $ & ' ( ) * + , ; =
+    ** - windows filename restrictions  ==>   / ?                     *         " \ < > |
+    ** - linux filename restrictions    ==>   /
+    ** ==> They should not appear in filenames
+    ** From rfc 3986: unreserved chars  ==> A-Z a-z 0-9 - . _ ~
+    */
+    // Replace space
+    $docname = mb_ereg_replace("[ ]","_",$docname);
+    // Replace gen-delims/subdelims
+    $docname = mb_ereg_replace("[:/?#\[\]@!$&'()*+,;=]","_",$docname);
+    // Replace windows restrictions
+    $docname = mb_ereg_replace("[\"\\<>|]","_",$docname);
+    // Replace all non-unreserved : No. Gives wrong effect !
+    //$docname = mb_ereg_replace("[^a-z0-9\-._~]","-",$docname);echo "4&rarr;".$docname."<br>";
+    
+    // truncate before adding the timestamp 
+    if ( $truncsize!="" ) {
+        $itruncsize=intval($truncsize);
+        if( mb_strlen($docname,$name_encoding)> $itruncsize) {
+            $docname=mb_substr($docname,0,$itruncsize,$name_encoding);
+        }
+    }
+    if ($addtimestamp==1) {
+        // Add timestamp. Time is in seconds, date is larger but readable
+        $docname.=$time_sep.date("ymdHis");
+    }
+    return(0);
+}
 // ====== secondsToTime =============================
 /* 
 ** In : $s  = Seconds
@@ -680,7 +869,7 @@ function secondsToTime($s) {
 // ====== split_path =============================
 function split_path($full_path, &$filename, &$sectionname){
 /* 
-** In : $full_path  = Full filename in ABCDImportRepo
+** IN : $full_path  = Full filename in ABCDImportRepo
 ** Out: $filename   = The filename (last part of the name)
 ** Out: $sectionname= The section (optional subdirectories)
 ** returns always 0 (OK)
@@ -699,33 +888,31 @@ function split_path($full_path, &$filename, &$sectionname){
     return(0);
 }
 // ====== split_html =============================
-function split_html($tikafile, $textmode, $c_title, &$split_files) {
+function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files) {
 /*
 ** Splits the given (html) file into smaller parts
 ** Controlled by the database recordsize.
 ** In : $tikafile   = Source file name generated by tika
 ** In : $textmode   = Indicator for tika: m=meta, t=text, h=html, x=xhtml
 ** In : $c_title    = Title extracted by tika. May be ""
+** In : $isis_record_size = maximum size of isisrecord
+** IN : $splittarget= Percentage of recordsize as target of the split chunk size..
 ** Out: $split_files= Array with the names of the resulting files
 */
-    global $cisis_ver, $msgstr;
+    global $cisis_ver, $msgstr, $isis_record_size;
     /*
-    ** Before creating the database record  html filesize & database recordsize are shown
-    ** Note that the maximum recordsize is given in cisis.h by variable MAXMFRL
-    ** Note that we have 3 cisis versions in ABCD
-    ** - empty = 16-60: max recordsize=   32767 (linux+windows)
-    ** - ffi          : max recordsize= 1048576 (linux+windows, indexing methods for more static databases)
-    ** - bigisis      : max recordsize= 1048576 (linux, no images compiled for windows (at the time this code is written)
+    ** Before creating the database record the html filesize & database recordsize are shown
     */
     $c_htmlfilesize=filesize($tikafile);
-    $isis_record_size=32767; // This also for 16-60
-    if ($cisis_ver=="ffi")     $isis_record_size=1048576;
-    if ($cisis_ver=="bigisis") $isis_record_size=1048576;
     $pretty_cisis_recsize=number_format($isis_record_size/1024,2,",",".")." Kb";
     $pretty_html_filesize=number_format($c_htmlfilesize/1024,2,",",".")." Kb";
     echo "<li>".$msgstr["dd_htmlfilesize"]." ".$pretty_html_filesize.". ".$msgstr["dd_recordsize"]." ".$pretty_cisis_recsize."</li>";
     ob_flush();flush();
-    if (intval($c_htmlfilesize) < $isis_record_size) {
+    $maxsize     = $isis_record_size*$splittarget/100; //splittarget is a percentage
+    if ($maxsize<1000) {// Just in case  a corrupt value is supplied
+        echo "<span style='color:red'>PROGRAM ERROR:variable maxsize=$maxsize : too small to be credible</span>";die;
+    }
+    if (intval($c_htmlfilesize) < $maxsize) {
         // no split required
         $split_files[]=$tikafile;
         return(0);
@@ -734,7 +921,6 @@ function split_html($tikafile, $textmode, $c_title, &$split_files) {
     ** Split the file into chunks
     ** Set variables required during the split
     */
-    $maxsize     = $isis_record_size*0.9; //safety margin of 10%
     $path_parts  = pathinfo($tikafile);
     $chunkfixfil = $path_parts['dirname'].'/'.$path_parts['filename'].'_'; // filename without chunknr
     $chunkfixext = '.'.$path_parts['extension'];
