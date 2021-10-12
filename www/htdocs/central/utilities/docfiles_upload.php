@@ -3,6 +3,7 @@
 20210807 fho4abcd Created from upload_myfile.php
 20210914 fho4abcd Improved error message display&handling in case of upload errors
 20211105 fho4abcd No filename sanitation: will be done by import script (admin may upload via backdoor, so import must do it again)
+20211111 fho4abcd set locale (required by basename)
 */
 /*
 ** Upload a file from the users environment into the digital document area of ABCD
@@ -211,6 +212,8 @@ else if ($upldoc_cnfcnt==2)
             </tr>
 <?php
         $numerrors=0;
+        $orglocale=setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'C.UTF-8');
         for ($i = 0; $i < $filecount; $i++) {
             $uploaderror=$myfiles["error"][$i];
             $uploaderrortxt="";
@@ -244,6 +247,7 @@ else if ($upldoc_cnfcnt==2)
             </tr>
 <?php
         }
+        setlocale(LC_CTYPE, $orglocale);
         ?>
         </table><br>
         <?php
@@ -257,6 +261,8 @@ else if ($upldoc_cnfcnt==2)
         <div>
         <?php
         $moved=0;
+        $orglocale=setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'C.UTF-8');
         for ($i = 0; $i < $filecount; $i++) {
             $movemsg="";
             // basename() may prevent filesystem traversal attacks;
@@ -295,6 +301,7 @@ else if ($upldoc_cnfcnt==2)
             <?php
             }
         }
+        setlocale(LC_CTYPE, $orglocale);
         ?>
         </div>
         <div style='color:blue'><?php echo $moved." ".$msgstr["dd_filesmoved"]?> <br></div>
@@ -320,6 +327,4 @@ else if ($upldoc_cnfcnt==2)
 </div>
 <?php
 include "../common/footer.php";
-?>
-</body>
-</html>
+
