@@ -6,6 +6,7 @@
 20210929 fho4abcd Delete .proc file+ get html file size&db record size+split record
 20211007 fho4abcd Search tika's, add tika selection+chunk size in menu+improved name cleaunup+proc file with pid
 20211011 fho4abcd Tika uses stdin/stdout. Set locale to UTF-8 (required for function pathinfo. Improve filename sanitation
+20211012 fho4abcd Error message if import subfolder not writable+ short timestamp for filenames>5 characters
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -145,8 +146,9 @@ if ($impdoc_cnfcnt<=1) {
         sort($fileList);
         $numfiles=count($fileList);
         if ($numfiles>0 && $delindex<$numfiles) {
-            unlink ($fileList[$delindex]);
-            echo "<div>".$msgstr["archivo"]." ".$fileList[$delindex]." ".$msgstr["deleted"]."</div>";
+            if (unlink ($fileList[$delindex])===true){
+                echo "<div>".$msgstr["archivo"]." ".$fileList[$delindex]." ".$msgstr["deleted"]."</div>";
+            }
         }
         $fileList=[];
     }
@@ -364,12 +366,15 @@ else if ($impdoc_cnfcnt==3) {
             $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget,
                                   $arrHttp["base"], $numrecsOK);
             ob_flush();flush();
-            if ($retval==0) $numfilesOK++;
+            $processed=$i;
+            if ($retval==0) {
+                $numfilesOK++;
+                $processed=$i+1;
+            }
             ?>
             </ul>
             <?php
             //Update the progress bar/loading gift
-            $processed=$i+1;
             $percent = intval($processed/$numfiles * 100)."%";
             $inner1='<div style="width:'.$percent.';background-color:#364c6c;"><div style="color:white" align=center>'.$percent.'</div></div>';
             $inner2=$processed." ".$msgstr["dd_imp_processed"]." ".$numfiles." ".$msgstr["dd_imp_files"];
@@ -525,7 +530,19 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     $docpath=$destpath.$docname;
     if ($docext!="") $docpath.=".".$docext;
     echo "<li>Moving $orgfilename to $docpath</li>";
-    rename($full_imp_path, $docpath);
+    if (@rename($full_imp_path, $docpath)===false){
+        $contents_error= error_get_last();
+        echo "<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>";
+        echo "&rarr; ".$msgstr["dd_error_moveto"]."</div>";
+        $orglocale=setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'C.UTF-8');
+        $importdir=dirname($full_imp_path);
+        setlocale(LC_CTYPE, $orglocale);
+        if (!is_writable($importdir) ) {
+            echo "<div style='font-weight:bold;color:red'>&rarr; '".$importdir."' ".$msgstr["dd_nowrite"]."</div>";
+        }
+        return(1);
+    }
     /*
     ** Construct & execute the tika command to detect the metadata
     ** option -r: For JSON, XML and XHTML outputs, adds newlines and whitespace, for better readability
@@ -927,7 +944,11 @@ function convert_name($fullpath, $addtimestamp, $truncsize, &$filename, &$extens
     }
     if ($addtimestamp==1) {
         // Add timestamp. Time is in seconds, date is larger but readable
-        $filename=$filename.$time_sep.date("ymdHis");
+        // Time format = "ymdHis" (default, always a unique filename even if truncated to 0)
+        // Time format = "His" if filename >5 characters. Assumed sufficient uniqueness
+        $timeformat="ymdHis";
+        if( mb_strlen($filename,$name_encoding)>5)$timeformat="His";
+        $filename=$filename.$time_sep.date($timeformat);
     }
     return(0);
 }
