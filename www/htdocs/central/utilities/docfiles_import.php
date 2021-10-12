@@ -5,6 +5,7 @@
 20210903 fho4abcd Moved configuration code to separate files.
 20210929 fho4abcd Delete .proc file+ get html file size&db record size+split record
 20211007 fho4abcd Search tika's, add tika selection+chunk size in menu+improved name cleaunup+proc file with pid
+20211011 fho4abcd Tika uses stdin/stdout. Set locale to UTF-8 (required for function pathinfo. Improve filename sanitation
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -113,10 +114,7 @@ include "../common/inc_div-helper.php";
 ?>
 <div class="middle form">
 <div class="formContent">
-    <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
-          style="visibility:hidden;position:absolute;top:20%;left:25%;border:2px solid;"/>
     <div align=center><h3><?php echo $msgstr["dd_batchimport"] ?></h3>
-
 <?php
 // Set collection related parameters and create folders if not present
 include "../utilities/inc_coll_chk_init.php";
@@ -164,7 +162,7 @@ if ($impdoc_cnfcnt<=1) {
         // build a table with filename, section and delete option
         sort($fileList);
         ?>
-        <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=4>
+        <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=1>
         <tr>
             <th><?php echo $msgstr["archivo"]?> </th>
             <th><?php echo $msgstr["dd_section"]?> </th>
@@ -184,7 +182,7 @@ if ($impdoc_cnfcnt<=1) {
             <td><button class="button_browse delete" type="button"
                 onclick='javascript:Eliminar("<?php echo $index?>","<?php echo str_replace("'"," ",$filename)?>")'
                 alt="<?php echo $msgstr['eliminar']?>" title="<?php echo $msgstr['eliminar'].":".$fileList[$index]?>">
-                <i class="far fa-trash-alt" /> <?php echo $msgstr['eliminar']?></button></td>
+                <i class="far fa-trash-alt"> <?php echo $msgstr['eliminar']?></i></button></td>
         </tr>
         <?php
         }
@@ -212,7 +210,7 @@ if ($impdoc_cnfcnt<=1) {
         }
         ?>
         <br>
-        <input type=button value='<?php echo $msgstr["selfile"];?>' onclick=Reselect()>
+        <input type=button value='<?php echo $msgstr["dd_upload"];?>' onclick=Reselect()>
         
         <?php if ($numfiles>0 ) {
             // Display continuation button only if any files are present
@@ -261,9 +259,9 @@ else if ($impdoc_cnfcnt==2) {
             <td><?php echo $msgstr["dd_truncfilename"];?></td>
             <td><select name=truncsize id=truncsize>
                     <option value=""   ><?php echo $msgstr["dd_imp_nolimit"];?></option>
-                    <option value="100">100 <?php echo $msgstr["dd_imp_chars"];?></option>
-                    <option value="75" >&nbsp;75 <?php echo $msgstr["dd_imp_chars"];?></option>
-                    <option value="50" selected>&nbsp;50 <?php echo $msgstr["dd_imp_chars"];?></option>
+                    <option value="90" >&nbsp;90 <?php echo $msgstr["dd_imp_chars"];?></option>
+                    <option value="60" >&nbsp;60 <?php echo $msgstr["dd_imp_chars"];?></option>
+                    <option value="30" selected>&nbsp;30 <?php echo $msgstr["dd_imp_chars"];?></option>
                     <option value="0"  >&nbsp;&nbsp;0 <?php echo $msgstr["dd_imp_chars"];?></option>
                 </select>
             </td>
@@ -332,15 +330,25 @@ else if ($impdoc_cnfcnt==3) {
         $numrecsOK=0;
         /*
         ** Before the import:
-        ** Show number of files to do
-        ** Open a div for all imports + show busy indicator
+        ** Open a progress bar/loading gift + show the number of files to do
+        ** Open a div for all imports
         */
         ?>
+        <div id=progresdiv>
+        <table width="850">
+          <tr>
+            <td style="font-size:12px" height="30"><!-- Progress bar holder -->
+                <div id="progress" style="width:800px;border:1px solid #ccc;">&nbsp;</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-size:12px" height="30"><!-- Progress information -->
+                <div id="information" style="width"><?php echo $msgstr["dd_imp_toimport"]." ".$numfiles;?></div>
+            </td>
+          </tr>
+        </table>
+        </div>
         <div id=importactiondiv align=left>
-        <div style=color:blue><?php echo $msgstr["dd_imp_toimport"]." ".$numfiles;?></div><br>
-        <script language=javascript>
-            document.getElementById('preloader').style.visibility='visible'
-        </script>
         <?php
         /*
         ** Loop over the files to import 
@@ -360,6 +368,18 @@ else if ($impdoc_cnfcnt==3) {
             ?>
             </ul>
             <?php
+            //Update the progress bar/loading gift
+            $processed=$i+1;
+            $percent = intval($processed/$numfiles * 100)."%";
+            $inner1='<div style="width:'.$percent.';background-color:#364c6c;"><div style="color:white" align=center>'.$percent.'</div></div>';
+            $inner2=$processed." ".$msgstr["dd_imp_processed"]." ".$numfiles." ".$msgstr["dd_imp_files"];
+            ?>
+            <script language="javascript">
+              document.getElementById("progress").innerHTML='<?php echo $inner1?>';
+              document.getElementById("information").innerHTML='<?php echo $inner2?>';
+              </script>
+            <?php
+            ob_flush();flush();
         }
         /*
         ** After import: remove import output (only if no errors) and loader icon (always)
@@ -375,7 +395,6 @@ else if ($impdoc_cnfcnt==3) {
             <?php if ($retval==0) {?>
             document.getElementById('importactiondiv').style.display='none'
             <?php } ?>
-            document.getElementById('preloader').style.visibility='hidden'
         </script>
         <br>
         <table style=color:blue  cellspacing=1 cellpadding=4>
@@ -427,11 +446,13 @@ include "../common/footer.php";
 // This the end of main script. Only functions follow now
 //
 // =========================== Functions ================
-//  - import_action     : imports an uploaded file
-//  - next_cn_number    : returns the next control number
-//  - secondsToTime     : return H:mm:ss
-//  - split_path        : returns the "section" of the filename in ABCDImportRepo
-//  - split_html        : splits an html file into smaller files and returns the number of parts.
+//  - import_action : imports an uploaded file
+//  - next_cn_number: returns the next control number
+//  - convert_name  : returns sanitized filename
+//  - convert_field : returns sanitized mx field
+//  - secondsToTime : return H:mm:ss
+//  - split_path    : returns the "section" of the filename in ABCDImportRepo
+//  - split_html    : splits an html file into smaller files and returns the number of parts.
 //
 // ====== import_action =============================
 function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget, $basename, &$numrecsOK) {
@@ -479,22 +500,14 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
        }
     }
     /*
-    ** Actions with the filename:
-    ** - Split in name and extension (more extensions will be created)
-    ** - Construct default for dc:source
-    */
-    $path_parts  = pathinfo($orgfilename);
-    $docname     = $path_parts['filename'];
-    $docext      = $path_parts['extension'];
-    $def_c_source= $docname.".".$docext;
-    /*
     ** Modify the filename. Name and extension 
     ** - Replace characters to enable usage in url (name+ext)
+    ** - Split in name and extension (more extensions will be created)
     ** - Add timestamp for uniqueness (only name)
     ** - Truncate excessive long names(only name)
     */
-    if ( convert_name($addtimestamp, $truncsize, $docname) !=0 ) return(1);
-    if ( convert_name(0, "", $docext)) return(1);
+    if ( convert_name($orgfilename, $addtimestamp, $truncsize, $docname, $docext) !=0 ) return(1);
+    if ( convert_field($orgfilename, $def_c_source) !=0 ) return(1);
     /*
     ** - Construct the name of the tika generated target (html) file
     */
@@ -504,21 +517,24 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     **   Use pid because mx does not like utf characters in this filename
     **   Always add a timestamp because the pid is the server pid, not unique for this run
     */
-    $procfile    = getmypid();      //get 
-    convert_name(1,"",$procfile);   //add always timestamp!!
+    $procfile    = getmypid()."_".date("ymdHis");//add always timestamp!!
     $procfile    = $db_path."wrk/".$procfile.'.proc';
     /*
     ** Move the uploaded file to the collection
     */
-    $docpath=$destpath.$docname.".".$docext;
+    $docpath=$destpath.$docname;
+    if ($docext!="") $docpath.=".".$docext;
     echo "<li>Moving $orgfilename to $docpath</li>";
     rename($full_imp_path, $docpath);
     /*
     ** Construct & execute the tika command to detect the metadata
     ** option -r: For JSON, XML and XHTML outputs, adds newlines and whitespace, for better readability
+    ** Read from stdin so tika will not complain about the filename (or filename encoding).
+    ** Using < in the command implies that the log message must contain &lt; in stead of <
     */
-    $tikacommand='java -jar '.$cgibin_path.$tikajar.' -r -'.$textmode.' '.$docpath.' 2>&1 >'.$tikafile;
-    echo "<li>".$msgstr['procesar'].": ".$tikacommand."</li>";
+    $tikacommand='java -jar '.$cgibin_path.$tikajar.' -r -'.$textmode.' <'.$docpath.' 2>&1 >'.$tikafile;
+    $tikashowcmd='java -jar '.$cgibin_path.$tikajar.' -r -'.$textmode.' &lt;'.$docpath.' 2>&1 >'.$tikafile;
+    echo "<li>".$msgstr['procesar'].": ".$tikashowcmd."</li>";
     ob_flush();flush();
     exec( $tikacommand, $output, $status);
     if ($status!=0) {
@@ -611,7 +627,8 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     $c_url="/docs/";
     $c_url.=substr($fullcolpath, strlen($db_path));
     if ($sectionname!="") $c_url.="/".$sectionname;
-    $c_url.="/".$docname.".".$docext;
+    $c_url.="/".$docname;
+    if ($docext!="") $c_url.=".".$docext;
     if ( next_cn_number($basename,$c_id)!=0 ){
         unlink($tikafile);
         rename($docpath, $full_imp_path);
@@ -663,21 +680,21 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         */
         $fpproc=fopen($procfile,"w");
         $fields="'";
-        if (($c_title!="")       and ($vtitle!=""))       $fields.="<".$vtitle.">".$c_title."</".$vtitle.">";
-        if (($c_creator!="")     and ($vcreator!=""))     $fields.="<".$vcreator.">".$c_creator."</".$vcreator.">";
-        if (($c_subject!="")     and ($vsubject!=""))     $fields.="<".$vsubject.">".$c_subject."</".$vsubject.">";
-        if (($c_description!="") and ($vdescription!="")) $fields.="<".$vdescription.">".$c_description."</".$vdescription.">";
-        if (($c_publisher!="")   and ($vpublisher!=""))   $fields.="<".$vpublisher.">".$c_publisher."</".$vpublisher.">";
-        if (($c_contributor!="") and ($vcontributor!="")) $fields.="<".$vcontributor.">".$c_contributor."</".$vcontributor.">";
-        if (($c_date!="")        and ($vdate!=""))        $fields.="<".$vdate.">".$c_date."</".$vdate.">";
-        if (($c_type!="")        and ($vtype!=""))        $fields.="<".$vtype.">".$c_type."</".$vtype.">";
-        if (($c_format!="")      and ($vformat!=""))      $fields.="<".$vformat.">".$c_format."</".$vformat.">";
-        if (($c_identifier!="")  and ($videntifier!=""))  $fields.="<".$videntifier.">".$c_identifier."</".$videntifier.">";
-        if (($c_source!="")      and ($vsource!=""))      $fields.="<".$vsource.">".$c_source."</".$vsource.">";
-        if (($c_language!="")    and ($vlanguage!=""))    $fields.="<".$vlanguage.">".$c_language."</".$vlanguage.">";
-        if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">";
-        if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">";
-        if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">";
+        if (($c_title!="")       and ($vtitle!=""))       $fields.="<".$vtitle.">".$c_title."</".$vtitle.">".PHP_EOL;
+        if (($c_creator!="")     and ($vcreator!=""))     $fields.="<".$vcreator.">".$c_creator."</".$vcreator.">".PHP_EOL;
+        if (($c_subject!="")     and ($vsubject!=""))     $fields.="<".$vsubject.">".$c_subject."</".$vsubject.">".PHP_EOL;
+        if (($c_description!="") and ($vdescription!="")) $fields.="<".$vdescription.">".$c_description."</".$vdescription.">".PHP_EOL;
+        if (($c_publisher!="")   and ($vpublisher!=""))   $fields.="<".$vpublisher.">".$c_publisher."</".$vpublisher.">".PHP_EOL;
+        if (($c_contributor!="") and ($vcontributor!="")) $fields.="<".$vcontributor.">".$c_contributor."</".$vcontributor.">".PHP_EOL;
+        if (($c_date!="")        and ($vdate!=""))        $fields.="<".$vdate.">".$c_date."</".$vdate.">".PHP_EOL;
+        if (($c_type!="")        and ($vtype!=""))        $fields.="<".$vtype.">".$c_type."</".$vtype.">".PHP_EOL;
+        if (($c_format!="")      and ($vformat!=""))      $fields.="<".$vformat.">".$c_format."</".$vformat.">".PHP_EOL;
+        if (($c_identifier!="")  and ($videntifier!=""))  $fields.="<".$videntifier.">".$c_identifier."</".$videntifier.">".PHP_EOL;
+        if (($c_source!="")      and ($vsource!=""))      $fields.="<".$vsource.">".$c_source."</".$vsource.">".PHP_EOL;
+        if (($c_language!="")    and ($vlanguage!=""))    $fields.="<".$vlanguage.">".$c_language."</".$vlanguage.">".PHP_EOL;
+        if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">".PHP_EOL;
+        if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">".PHP_EOL;
+        if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">".PHP_EOL;
         // some variables are dependent on the actual processed file
         $c_htmlfilesize= filesize($act_split_file);
         $htmlfilesec   = substr($act_split_file, strlen($db_path."wrk/"));
@@ -686,14 +703,14 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         $c_htmlSrcURL  = $htmlURLPath;
         $c_htmlSrcFLD  = $htmlSrcPath;
 
-        if (($c_htmlSrcURL!="")  and ($vhtmlSrcURL!=""))  $fields.="<".$vhtmlSrcURL.">".$c_htmlSrcURL."</".$vhtmlSrcURL.">";
-        if (($c_htmlSrcFLD!="")  and ($vhtmlSrcFLD!=""))  $fields.="<".$vhtmlSrcFLD.">".$c_htmlSrcFLD."</".$vhtmlSrcFLD.">";
-        if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">";
-        if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">";
-        if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">";
-        if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">";
-        if (($c_htmlfilesize!="")and ($vhtmlfilesize!=""))$fields.="<".$vhtmlfilesize.">".$c_htmlfilesize."</".$vhtmlfilesize.">";
-        if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">";
+        if (($c_htmlSrcURL!="")  and ($vhtmlSrcURL!=""))  $fields.="<".$vhtmlSrcURL.">".$c_htmlSrcURL."</".$vhtmlSrcURL.">".PHP_EOL;
+        if (($c_htmlSrcFLD!="")  and ($vhtmlSrcFLD!=""))  $fields.="<".$vhtmlSrcFLD.">".$c_htmlSrcFLD."</".$vhtmlSrcFLD.">".PHP_EOL;
+        if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">".PHP_EOL;
+        if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">".PHP_EOL;
+        if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">".PHP_EOL;
+        if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">".PHP_EOL;
+        if (($c_htmlfilesize!="")and ($vhtmlfilesize!=""))$fields.="<".$vhtmlfilesize.">".$c_htmlfilesize."</".$vhtmlfilesize.">".PHP_EOL;
+        if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">".PHP_EOL;
         $fields.="'";
         fwrite($fpproc,$fields);
         fclose($fpproc);
@@ -777,26 +794,19 @@ global $db_path,$max_cn_length, $msgstr;
     if (isset($max_cn_length)) $cn=str_pad($cn, $max_cn_length, '0', STR_PAD_LEFT);
     return($retval);
 }
-// ====== convert_name =============================
-/* 
-** Converts a filename or extension to be used by the import process
-** 
-** - Name in lowercase to be valid for windows/linux (and exports/imports)
-** - Replace characters to enable usage in url
-** - Add timestamp for uniqueness (use this only for the filename)
-** - Truncate excessive long names(normally not required for extensions)
+// ======= convert_field =====================================
+/*
+** Converts the content of a database field in such a way that
+** mx accepts it in a proc (file)
+** Characters "'", "<", ">" are replaced by a space
 **
-** In    : $addtimestamp = 0:no stamp, 1: add stamp
-** In    : $truncsize    = Number of characters in core file name (""=unlimited)
-** In/Out: $docname      = Documentname (without folder and extension) or
-**                         Documentextension (without leading ".")
-**
-** Return : 0=OK, 1=NOT-OK
+** In : $orgtext = original text with malicious text
+** Out: $cnvtext = converted text
 */
-function convert_name($addtimestamp, $truncsize, &$docname){
+function convert_field($orgtext, &$cnvtext){
     global $msgstr;
-    if ($docname=="") return 0;
-    $time_sep="__";
+    $cnvtext="";
+    if ($orgtext=="") return 0;
     /*
     ** Detect most probable filename encoding:
     ** Set the detection order. Not the default PHP (is too simple)
@@ -807,9 +817,54 @@ function convert_name($addtimestamp, $truncsize, &$docname){
     $ary[] = "UTF-8";
     $ary[] = "ISO-8859-1";
     mb_detect_order($ary);
-    $name_encoding = mb_detect_encoding($docname,null,true);
+    $name_encoding = mb_detect_encoding($orgtext,null,true);
     if ($name_encoding===false) {
-        echo "<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$docname."&larr;</div>";
+        echo "<div style='color:red'>".$msgstr["dd_fielderrenc"]." &rarr;".$orgtext."&larr;</div>";
+        return 1;
+    }
+    $cnvtext = mb_ereg_replace("[']","&quot;",$orgtext);
+    $cnvtext = mb_ereg_replace("[<]","&lt;",$cnvtext);
+    $cnvtext = mb_ereg_replace("[>]","&gt;",$cnvtext);
+    return 0;
+}
+// ====== convert_name =============================
+/*
+** Extracts a filename and extension from a path and convert these names
+** so they will be valid in windows AND linux
+** 
+** - Names in lowercase to be valid for windows/linux (and exports/imports)
+** - Replace characters to enable usage in url and windows/linux filename restrictions
+** - Add timestamp for uniqueness (only for the filename)
+** - Truncate excessive long names(only for the filename)
+**
+** In  : $fullpath     = Full or partial filename
+** In  : $addtimestamp = 0:no stamp, 1: add stamp
+** In  : $truncsize    = Number of characters in base name (""=unlimited)
+** Out : $filename     = PATHINFO_FILENAME  (processed)
+** Out : $extension    = PATHINFO_EXTENSION (processed)
+**
+** Return : 0=OK, 1=NOT-OK
+*/
+function convert_name($fullpath, $addtimestamp, $truncsize, &$filename, &$extension){
+    global $msgstr;
+    $filename="";
+    $extension="";
+    if ($fullpath=="") return 0;
+    $time_sep="__";
+    $replacechar= "_";
+    /*
+    ** Detect most probable filename encoding:
+    ** Set the detection order. Not the default PHP (is too simple)
+    ** Order is important: UTF must be before ISO !!
+    ** No way to distinguish mechanically ISO and Windows-1252
+    */
+    $ary[] = "ASCII";
+    $ary[] = "UTF-8";
+    $ary[] = "ISO-8859-1";
+    mb_detect_order($ary);
+    $name_encoding = mb_detect_encoding($fullpath,null,true);
+    if ($name_encoding===false) {
+        echo "<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$fullpath."&larr;</div>";
         return 1;
     }
     /*
@@ -818,38 +873,61 @@ function convert_name($addtimestamp, $truncsize, &$docname){
     **  - It should be possible to move information from windows to linux and vv.
     ** Cleanup of the name : to lower case
     */
-    $docname =  mb_strtolower($docname,$name_encoding);
+    $fullpath =  mb_strtolower($fullpath,$name_encoding);
     /*
     ** Note that filenames may occur in the
     ** - "path component"of the URI  : Requires name_encoding or substitution
     ** - "query component" of the URI: This can be encoded by PHP function: htmlspecialchars. No action here
     ** From rfc 3986: "reserved" characters. Protected from normalization and 
     ** safe to be used for delimiting data subcomponents within a URI
-    ** - gen-delims/sub-delims          ==> : / ? # [ ] @ ! $ & ' ( ) * + , ; =
-    ** - windows filename restrictions  ==>   / ?                     *         " \ < > |
-    ** - linux filename restrictions    ==>   /
-    ** ==> They should not appear in filenames
-    ** From rfc 3986: unreserved chars  ==> A-Z a-z 0-9 - . _ ~
+    ** - reserved gen-delims/sub-delims            ==> : / ? # [ ] @ ! $ & ' ( ) * + , ; =
+    ** - windows filename restrictions             ==>   / ?                     *         " \ < > |
+    ** - linux filename restrictions               ==>   /
+    ** Other characters that upset this script. (Marked !! if general filename rules also advise against usage)
+    ** !!space upsets uri check in tika            ==>
+    ** - Circumflex Accent upsets redirect(windows)==> ^
+    ** !!Backtick upsets redirect (Linux)          ==> `
+    ** !!Percent upsets (links,redirect)           ==> %
+    ** ==> None of the characters above should appear in filenames
+    ** From rfc 3986: unreserved chars    ==> A-Z a-z 0-9 - . _ ~
     */
-    // Replace space
-    $docname = mb_ereg_replace("[ ]","_",$docname);
     // Replace gen-delims/subdelims
-    $docname = mb_ereg_replace("[:/?#\[\]@!$&'()*+,;=]","_",$docname);
-    // Replace windows restrictions
-    $docname = mb_ereg_replace("[\"\\<>|]","_",$docname);
+    $fullpath = mb_ereg_replace("[:/\?#\[\]@!$&'\(\)\*\+,;=]",$replacechar,$fullpath);
+    // Replace windows restrictions (includes Linux)
+    $fullpath = mb_ereg_replace("[\"\\<>\|]",$replacechar,$fullpath);
+    // Replace space
+    $fullpath = mb_ereg_replace(" ",$replacechar,$fullpath);
+    // Replace Circumflex accent
+    $fullpath = mb_ereg_replace("\^",$replacechar,$fullpath);
+    // Replace backtick
+    $fullpath = mb_ereg_replace("\`",$replacechar,$fullpath);
+    // Replace %. Percent encoded space is done extra. Others not
+    $fullpath = mb_ereg_replace("%20",$replacechar,$fullpath);
+    $fullpath = mb_ereg_replace("%",$replacechar,$fullpath);
+  
     // Replace all non-unreserved : No. Gives wrong effect !
-    //$docname = mb_ereg_replace("[^a-z0-9\-._~]","-",$docname);echo "4&rarr;".$docname."<br>";
+    //$fullpath = mb_ereg_replace("[^a-z0-9\-._~]","-",$fullpath);echo "4&rarr;".$fullpath."<br>";
+    /*
+    ** Function path_info is used to extract the desired components.
+    ** Function is locale aware: to parse a path with multibyte characters, the matching locale must be set
+    */
+    $orglocale=setlocale(LC_CTYPE, 0);
+    setlocale(LC_CTYPE, 'C.'.$name_encoding);
+    $path_parts  = pathinfo($fullpath);
+    setlocale(LC_CTYPE, $orglocale);
+    $filename     = $path_parts['filename'];
+    if (isset($path_parts['extension'])) $extension = $path_parts['extension'];
     
     // truncate before adding the timestamp 
     if ( $truncsize!="" ) {
         $itruncsize=intval($truncsize);
-        if( mb_strlen($docname,$name_encoding)> $itruncsize) {
-            $docname=mb_substr($docname,0,$itruncsize,$name_encoding);
+        if( mb_strlen($filename,$name_encoding)> $itruncsize) {
+            $filename=mb_substr($filename,0,$itruncsize,$name_encoding);
         }
     }
     if ($addtimestamp==1) {
         // Add timestamp. Time is in seconds, date is larger but readable
-        $docname.=$time_sep.date("ymdHis");
+        $filename=$filename.$time_sep.date("ymdHis");
     }
     return(0);
 }
