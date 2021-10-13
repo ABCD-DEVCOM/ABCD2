@@ -1,10 +1,10 @@
-<!-- Stylesheets -->
-<link rel="stylesheet" rev="stylesheet" href="../../assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
-<!--FontAwesome-->
-<link href="../../assets/css/all.min.css" rel="stylesheet"> 
 <?php
 /* Modifications
 20210721 fho4abcd default subfield-codes for OD from "od to "do"" + lineends
+20210906 rogercgui new look
+20211013 fho4abcd Pick list "Table":do not echo content,no index failure if value (of key|value) is missing
+20211013 fho4abcd No index failure if a "Date" is the last of the FDT
+20211113 fho4abcd Remove phantom </center>, remove phantom links to awesome
 */
 require_once("combo_inc.php");
 
@@ -791,19 +791,18 @@ global $ver,$base,$arrHttp,$Path,$Tabla_sel,$db_path,$lang_db,$msgstr;
 			}
 	   		$linea=trim($linea);
 	   		$pp=explode('|',$linea);
-	   		
-	   		
 			if ($linea!=""){
-	            if ($pp[0]!="")
-	            	$key1=$pp[0];
-				else
-					$key1=$pp[1];
-				echo $pp[1];
-				
-				if ($pp[1]=="")
-					$key2=$pp[1];
-				else
-					$key2=$pp[1];
+                // The line contains "key|value" or "key"
+                if ($pp[0]!="") {
+                    $key1=$pp[0];
+                } else {
+                    $key1=$pp[1];
+                }
+                if (!isset($pp[1]) OR $pp[1]=="") {
+                    $key2=$key1;
+                } else {
+                    $key2=$pp[1];
+                }
 				$opc[$key2]=$key1;
 			}
 		}
@@ -1140,7 +1139,6 @@ Function PrepararFormato() {
 		$tipo_e="";
 		$entryType="";
 		if (!$ver or $ver and isset($valortag[$t[1]]) or ($t[0]=="H" or $t[0]=="L")){
-		echo "</center>";
 		if (($t[0]=="H" or $t[0]=="L" or $ivars==0)){
 			if ($first_time=="Y"){
 				$first_time="N";
@@ -1562,16 +1560,20 @@ Function PrepararFormato() {
        								echo trim($titulo)."</td>\n";
        								echo "\n<td>\n";
        								if (!$ver) {
-       									$sum_var=
-       									$next_field=explode('|',$vars[ $ivars + 1]);  //IF THE NEXT FIELD IS AN ISO FIELD CALL THE CONVERSION PROCEDURE
-       									if (trim($next_field[7])=="ISO"){
+       									$nextfieldexists=false;
+                                        if (isset($vars[ $ivars + 1]) ) {
+                                            //there is another line in the fdt
+                                            $nextfieldexists=true;
+                                            $next_field=explode('|',$vars[ $ivars + 1]);  //IF THE NEXT FIELD IS AN ISO FIELD CALL THE CONVERSION PROCEDURE
+                                        }
+       									if ($nextfieldexists && trim($next_field[7])=="ISO"){
        										$date_tag="tag$tag"; //NAME OF THE ACTUAL FIELD FOR GENERATING THE ISO DATE
        										$iso_tag="tag".$next_field[1]; //NAME OF THE ISO FIELD
        									}else{
-       										$next_field=explode('|',$vars[$ivars]);
-       										if (trim($next_field[0])=="ISO"){
+       										$curr_field=explode('|',$vars[$ivars]);
+       										if (trim($curr_field[0])=="ISO"){
        											$date_tag="tag$tag"; //NAME OF THE ACTUAL FIELD FOR GENERATING THE ISO DATE
-       											$iso_tag="tag".$next_field[1]; //NAME OF THE ISO FIELD
+       											$iso_tag="tag".$curr_field[1]; //NAME OF THE ISO FIELD
        										}else{
        											$date_tag="";
        											$iso_tag="";
