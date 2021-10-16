@@ -7,6 +7,7 @@
 20211007 fho4abcd Search tika's, add tika selection+chunk size in menu+improved name cleaunup+proc file with pid
 20211011 fho4abcd Tika uses stdin/stdout. Set locale to UTF-8 (required for function pathinfo. Improve filename sanitation
 20211012 fho4abcd Error message if import subfolder not writable+ short timestamp for filenames>5 characters
+20211015 fho4abcd Sanitize all metaterms+sanitize & check import section folders
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -152,7 +153,13 @@ if ($impdoc_cnfcnt<=1) {
         }
         $fileList=[];
     }
-
+    /*
+    ** The upload folder may contain subfolders with malicious folder names
+    ** This corrected first
+    */
+    clearstatcache();
+    $retval = sanitize_tree($coluplfull);
+    if ($retval!=0) die;
     // List all files in the upload folder
     $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
     if ($retval!=0) die;
@@ -451,13 +458,15 @@ include "../common/footer.php";
 // This the end of main script. Only functions follow now
 //
 // =========================== Functions ================
-//  - import_action : imports an uploaded file
-//  - next_cn_number: returns the next control number
-//  - convert_name  : returns sanitized filename
-//  - convert_field : returns sanitized mx field
-//  - secondsToTime : return H:mm:ss
-//  - split_path    : returns the "section" of the filename in ABCDImportRepo
-//  - split_html    : splits an html file into smaller files and returns the number of parts.
+//  - import_action     : imports an uploaded file
+//  - next_cn_number    : returns the next control number
+//  - convert_component : returns sanitized path component
+//  - convert_field     : returns sanitized mx field
+//  - convert_name      : returns sanitized filename
+//  - sanitize_tree     : sanitizes foldername(s)
+//  - secondsToTime     : return H:mm:ss
+//  - split_path        : returns the "section" of the filename in ABCDImportRepo
+//  - split_html        : splits an html file into smaller files and returns the number of parts.
 //
 // ====== import_action =============================
 function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget, $basename, &$numrecsOK) {
@@ -585,6 +594,18 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
+    }
+    /*
+    ** Sanitize the strings found by tika: They will be used by mx and mx does not like some characters
+    */
+    reset($metatab);
+    for ($i=0; $i<count($metatab); $i++ ) {
+        $key=key($metatab);
+        $val=current($metatab);
+        $newval="";
+        convert_field($val,$newval);
+        $metatab[$key]=$newval;
+        next($metatab);
     }
     /*
     ** Get metadata value/content from dc attributes
@@ -811,11 +832,78 @@ global $db_path,$max_cn_length, $msgstr;
     if (isset($max_cn_length)) $cn=str_pad($cn, $max_cn_length, '0', STR_PAD_LEFT);
     return($retval);
 }
+// ====== convert_component =============================
+/*
+** Converts a path component into a sanitized component
+** Leading parent folders should not be present:
+** The / and \ are converted to the replacemtn character
+** 
+** - Replace characters to enable usage in url and windows/linux filename restrictions
+**
+** In/Out: $path    = Partial filename
+** Out   : $encoding= encoding (detected from the path
+**
+** Return : 0=OK, 1=NOT-OK
+*/
+function convert_component(&$path, &$name_encoding){
+    global $msgstr;
+    $replacechar= "_";
+    /*
+    ** Detect most probable filename encoding:
+    ** Set the detection order. Not the default PHP (is too simple)
+    ** Order is important: UTF must be before ISO !!
+    ** No way to distinguish mechanically ISO and Windows-1252
+    */
+    $ary[] = "ASCII";
+    $ary[] = "UTF-8";
+    $ary[] = "ISO-8859-1";
+    mb_detect_order($ary);
+    $name_encoding = mb_detect_encoding($path,null,true);
+    if ($name_encoding===false) {
+        echo "<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$path."&larr;</div>";
+        return 1;
+    }
+    /*
+    ** Note that filenames may occur in the
+    ** - "path component"of the URI  : Requires name_encoding or substitution
+    ** - "query component" of the URI: This can be encoded by PHP function: htmlspecialchars. No action here
+    ** From rfc 3986: "reserved" characters. Protected from normalization and 
+    ** safe to be used for delimiting data subcomponents within a URI
+    ** - reserved gen-delims/sub-delims            ==> : / ? # [ ] @ ! $ & ' ( ) * + , ; =
+    ** - windows filename restrictions             ==>   / ?                     *         " \ < > |
+    ** - linux filename restrictions               ==>   /
+    ** Other characters that upset this script. (Marked !! if general filename rules also advise against usage)
+    ** !!space upsets uri check in tika            ==>
+    ** - Circumflex Accent upsets redirect(windows)==> ^
+    ** !!Backtick upsets redirect (Linux)          ==> `
+    ** !!Percent upsets (links,redirect)           ==> %
+    ** ==> None of the characters above should appear in filenames
+    ** From rfc 3986: unreserved chars    ==> A-Z a-z 0-9 - . _ ~
+    */
+    // Replace gen-delims/subdelims
+    $path = mb_ereg_replace("[:/\?#\[\]@!$&'\(\)\*\+,;=]",$replacechar,$path);
+    // Replace windows restrictions (includes Linux)
+    $path = mb_ereg_replace("[\"\\<>\|]",$replacechar,$path);
+    // Replace space
+    $path = mb_ereg_replace(" ",$replacechar,$path);
+    // Replace Circumflex accent
+    $path = mb_ereg_replace("\^",$replacechar,$path);
+    // Replace backtick
+    $path = mb_ereg_replace("\`",$replacechar,$path);
+    // Replace %. Percent encoded space is done extra. Others not
+    $path = mb_ereg_replace("%20",$replacechar,$path);
+    $path = mb_ereg_replace("%",$replacechar,$path);
+  
+    // Replace all non-unreserved : No. Gives wrong effect !
+    //$path = mb_ereg_replace("[^a-z0-9\-._~]","-",$path);echo "4&rarr;".$path."<br>";
+    return(0);
+}
 // ======= convert_field =====================================
 /*
 ** Converts the content of a database field in such a way that
 ** mx accepts it in a proc (file)
-** Characters "'", "<", ">" are replaced by a space
+** Characters "'", "<", ">" are replaced by their html code
+** CRLF and LF are replaced by a space
 **
 ** In : $orgtext = original text with malicious text
 ** Out: $cnvtext = converted text
@@ -839,22 +927,23 @@ function convert_field($orgtext, &$cnvtext){
         echo "<div style='color:red'>".$msgstr["dd_fielderrenc"]." &rarr;".$orgtext."&larr;</div>";
         return 1;
     }
-    $cnvtext = mb_ereg_replace("[']","&quot;",$orgtext);
-    $cnvtext = mb_ereg_replace("[<]","&lt;",$cnvtext);
-    $cnvtext = mb_ereg_replace("[>]","&gt;",$cnvtext);
+    $cnvtext = mb_ereg_replace("'","&apos;",$orgtext);
+    $cnvtext = mb_ereg_replace("<","&lt;",$cnvtext);
+    $cnvtext = mb_ereg_replace(">","&gt;",$cnvtext);
+    $cnvtext = mb_ereg_replace("\r\n"," ",$cnvtext);
+    $cnvtext = mb_ereg_replace("\n"," ",$cnvtext);
     return 0;
 }
 // ====== convert_name =============================
 /*
-** Extracts a filename and extension from a path and convert these names
-** so they will be valid in windows AND linux
+** Converts filename and extension so they will be valid in windows AND linux
 ** 
 ** - Names in lowercase to be valid for windows/linux (and exports/imports)
 ** - Replace characters to enable usage in url and windows/linux filename restrictions
 ** - Add timestamp for uniqueness (only for the filename)
 ** - Truncate excessive long names(only for the filename)
 **
-** In  : $fullpath     = Full or partial filename
+** In  : $orgfilename  = Full or partial filename
 ** In  : $addtimestamp = 0:no stamp, 1: add stamp
 ** In  : $truncsize    = Number of characters in base name (""=unlimited)
 ** Out : $filename     = PATHINFO_FILENAME  (processed)
@@ -862,75 +951,28 @@ function convert_field($orgtext, &$cnvtext){
 **
 ** Return : 0=OK, 1=NOT-OK
 */
-function convert_name($fullpath, $addtimestamp, $truncsize, &$filename, &$extension){
+function convert_name($orgfilename, $addtimestamp, $truncsize, &$filename, &$extension){
     global $msgstr;
     $filename="";
     $extension="";
-    if ($fullpath=="") return 0;
+    if ($orgfilename=="") return 0;
     $time_sep="__";
     $replacechar= "_";
     /*
-    ** Detect most probable filename encoding:
-    ** Set the detection order. Not the default PHP (is too simple)
-    ** Order is important: UTF must be before ISO !!
-    ** No way to distinguish mechanically ISO and Windows-1252
+    ** Convert and cleanup of the filename
     */
-    $ary[] = "ASCII";
-    $ary[] = "UTF-8";
-    $ary[] = "ISO-8859-1";
-    mb_detect_order($ary);
-    $name_encoding = mb_detect_encoding($fullpath,null,true);
-    if ($name_encoding===false) {
-        echo "<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$fullpath."&larr;</div>";
-        return 1;
-    }
+    if ( convert_component($orgfilename,$name_encoding)!=0) return 1;
     /*
-    ** Filename cleanup is necessary to cope with restrictions:
-    **  - It should be possible to use the name in an url
-    **  - It should be possible to move information from windows to linux and vv.
     ** Cleanup of the name : to lower case
     */
-    $fullpath =  mb_strtolower($fullpath,$name_encoding);
-    /*
-    ** Note that filenames may occur in the
-    ** - "path component"of the URI  : Requires name_encoding or substitution
-    ** - "query component" of the URI: This can be encoded by PHP function: htmlspecialchars. No action here
-    ** From rfc 3986: "reserved" characters. Protected from normalization and 
-    ** safe to be used for delimiting data subcomponents within a URI
-    ** - reserved gen-delims/sub-delims            ==> : / ? # [ ] @ ! $ & ' ( ) * + , ; =
-    ** - windows filename restrictions             ==>   / ?                     *         " \ < > |
-    ** - linux filename restrictions               ==>   /
-    ** Other characters that upset this script. (Marked !! if general filename rules also advise against usage)
-    ** !!space upsets uri check in tika            ==>
-    ** - Circumflex Accent upsets redirect(windows)==> ^
-    ** !!Backtick upsets redirect (Linux)          ==> `
-    ** !!Percent upsets (links,redirect)           ==> %
-    ** ==> None of the characters above should appear in filenames
-    ** From rfc 3986: unreserved chars    ==> A-Z a-z 0-9 - . _ ~
-    */
-    // Replace gen-delims/subdelims
-    $fullpath = mb_ereg_replace("[:/\?#\[\]@!$&'\(\)\*\+,;=]",$replacechar,$fullpath);
-    // Replace windows restrictions (includes Linux)
-    $fullpath = mb_ereg_replace("[\"\\<>\|]",$replacechar,$fullpath);
-    // Replace space
-    $fullpath = mb_ereg_replace(" ",$replacechar,$fullpath);
-    // Replace Circumflex accent
-    $fullpath = mb_ereg_replace("\^",$replacechar,$fullpath);
-    // Replace backtick
-    $fullpath = mb_ereg_replace("\`",$replacechar,$fullpath);
-    // Replace %. Percent encoded space is done extra. Others not
-    $fullpath = mb_ereg_replace("%20",$replacechar,$fullpath);
-    $fullpath = mb_ereg_replace("%",$replacechar,$fullpath);
-  
-    // Replace all non-unreserved : No. Gives wrong effect !
-    //$fullpath = mb_ereg_replace("[^a-z0-9\-._~]","-",$fullpath);echo "4&rarr;".$fullpath."<br>";
+    $orgfilename =  mb_strtolower($orgfilename,$name_encoding);
     /*
     ** Function path_info is used to extract the desired components.
     ** Function is locale aware: to parse a path with multibyte characters, the matching locale must be set
     */
     $orglocale=setlocale(LC_CTYPE, 0);
     setlocale(LC_CTYPE, 'C.'.$name_encoding);
-    $path_parts  = pathinfo($fullpath);
+    $path_parts  = pathinfo($orgfilename);
     setlocale(LC_CTYPE, $orglocale);
     $filename     = $path_parts['filename'];
     if (isset($path_parts['extension'])) $extension = $path_parts['extension'];
@@ -951,6 +993,48 @@ function convert_name($fullpath, $addtimestamp, $truncsize, &$filename, &$extens
         $filename=$filename.$time_sep.date($timeformat);
     }
     return(0);
+}
+// ====== sanitize_tree =============================
+/*
+** Sanitizes sub foldername(s) of the given root folder recursively
+** In : $rootDir  = actual foldername (not converted)
+*/
+function sanitize_tree($rootDir){
+    global $msgstr;
+    /*
+    ** The root directory can be present with wrong permissions (direct upload by admin)
+    ** Required= read access to list + write access to rename the folder and rename files in the folder
+    */
+    if (!is_writable($rootDir)) {
+        echo "<div style='font-weight:bold;color:red'>'".$rootDir."' ".$msgstr["dd_nowrite"]."</div>";
+        return 1;
+    }
+    //// run through content of root directory
+    $dirContent = scandir($rootDir);
+    foreach( $dirContent as $key => $content) {
+        $path = $rootDir.'/'.$content;
+        if ( $content!="." && $content!=".."&& is_dir($path)) {
+            $newcontent=$content;
+            $name_encoding="";
+            if ( convert_component($newcontent, $name_encoding)!=0) return 1;
+            if ( $newcontent!=$content){
+                // rename the folder
+                echo $msgstr["dd_movesecfolder"]." '".$content."' &rarr;  '".$newcontent."'<br>";
+                $newpath=$rootDir.'/'.$newcontent;
+                if (@rename($path, $newpath)===false){
+                    $contents_error= error_get_last();
+                    echo "<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>";
+                    echo "&rarr; ".$msgstr["dd_error_moveto"]."</div>";
+                    return 1;
+                }
+                $newpath=$rootDir.'/'.$newcontent;
+                if ( sanitize_tree($newpath)!=0) return 1;
+            } else {
+                if ( sanitize_tree($path)!=0) return 1;
+            }
+        }
+    }
+    return 0;
 }
 // ====== secondsToTime =============================
 /* 
