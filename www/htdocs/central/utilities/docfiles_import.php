@@ -8,6 +8,7 @@
 20211011 fho4abcd Tika uses stdin/stdout. Set locale to UTF-8 (required for function pathinfo. Improve filename sanitation
 20211012 fho4abcd Error message if import subfolder not writable+ short timestamp for filenames>5 characters
 20211015 fho4abcd Sanitize all metaterms+sanitize & check import section folders
+20211017 fho4abcd Remove empty files before presenting the list of files to be processed + option to log to file
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -36,10 +37,12 @@ $backtoscript="../dataentry/incio_main.php"; // The default return script
 $inframe=1;                      // The default runs in a frame
 $impdoc_cnfcnt=0;
 $splittarget=80;
+$logmode="web";
 if ( isset($arrHttp["backtoscript"]))  $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["impdoc_cnfcnt"])) $impdoc_cnfcnt=$arrHttp["impdoc_cnfcnt"];
 if ( isset($arrHttp["splittarget"]))   $splittarget=$arrHttp["splittarget"];
+if ( isset($arrHttp["logmode"]))       $logmode=$arrHttp["logmode"];
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 /*
 ** The maximum recordsize is given in cisis.h by variable MAXMFRL
@@ -160,7 +163,23 @@ if ($impdoc_cnfcnt<=1) {
     clearstatcache();
     $retval = sanitize_tree($coluplfull);
     if ($retval!=0) die;
-    // List all files in the upload folder
+    /*
+    ** Remove empty files (will crash tika)
+    ** List all files
+    ** Deletion is possible as sanitize tree has checked for writability
+    */
+    $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
+    if ($retval!=0) die;
+    for ( $index=0; $index<count($fileList); $index++) {
+        if (filesize($fileList[$index])==0){
+            unlink($fileList[$index]);
+            echo "<span style='color:orange'>".$msgstr["dd_error_empty"]."&rarr; ".$fileList[$index]."</span><br>";
+        }
+    }
+    /*
+    ** show all files to the user in a table with a "delete" button
+    */
+    $fileList=[];
     $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
     if ($retval!=0) die;
     $numfiles=count($fileList);
@@ -275,7 +294,7 @@ else if ($impdoc_cnfcnt==2) {
                 </select>
             </td>
             <td style='color:blue'><?php echo $msgstr["dd_truncmsg"];?></td>
-        </tr><tr><td colspan=3>&nbsp;</td>
+        </tr><tr><td colspan=3><hr></td>
         </tr><tr>
             <td><?php echo $msgstr["dd_imp_tikajar"];?></td>
             <td><select name=tikajar id=tikajar>
@@ -311,6 +330,16 @@ else if ($impdoc_cnfcnt==2) {
             <td><?php echo $msgstr["dd_imp_splittarget"];?></td>
             <td><input name='splittarget' type=number min=1 max=100 value=<?php echo $splittarget;?> ></td>
             <td style='color:blue'><?php echo $msgstr["dd_imp_splitperc"]." (".$pretty_cisis_recsize.")";?></td>
+        </tr><tr><td colspan=3><hr></td>
+       </tr><tr>
+            <td><?php echo $msgstr["dd_logto"];?></td>
+            <td><select name=logmode id=logmode>
+                    <option value="web" selected><?php echo $msgstr["dd_logtoweb"];?></option>
+                    <option value="file"><?php echo $msgstr["dd_logtofile"];?></option>
+                    <option value="both"><?php echo $msgstr["dd_logtoboth"];?></option>
+                </select>
+            </td>
+            <td style='color:blue'><?php echo $msgstr["dd_logfolder"].": <b>wrk";?></td>
         </tr>
         </table>
         <br>
@@ -355,6 +384,7 @@ else if ($impdoc_cnfcnt==3) {
                 <div id="information" style="width"><?php echo $msgstr["dd_imp_toimport"]." ".$numfiles;?></div>
             </td>
           </tr>
+          <tr><td><?php tolog("",$logmode);?></td></tr>
         </table>
         </div>
         <div id=importactiondiv align=left>
@@ -364,23 +394,16 @@ else if ($impdoc_cnfcnt==3) {
         ** Stop looping in case of errors
         */
         for ($i=0; $i<$numfiles && $retval==0; $i++) {
-            ?>
-            <hr>
-            <ul><li><?php echo $msgstr["dd_imp_actfile"]." #".($i+1)." &rarr; ".$fileList[$i]?></li>
-            <?php
-            ob_flush();flush();
+            tolog("<hr><ul><li>".$msgstr["dd_imp_actfile"]." #".($i+1)." &rarr; ".$fileList[$i]."</li>");
             // Import file
             $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget,
                                   $arrHttp["base"], $numrecsOK);
-            ob_flush();flush();
             $processed=$i;
             if ($retval==0) {
                 $numfilesOK++;
                 $processed=$i+1;
             }
-            ?>
-            </ul>
-            <?php
+            tolog("</ul>");
             //Update the progress bar/loading gift
             $percent = intval($processed/$numfiles * 100)."%";
             $inner1='<div style="width:'.$percent.';background-color:#364c6c;"><div style="color:white" align=center>'.$percent.'</div></div>';
@@ -409,6 +432,16 @@ else if ($impdoc_cnfcnt==3) {
             <?php } ?>
         </script>
         <br>
+        <form name=continuar  method=post >
+        <?php
+        foreach ($_REQUEST as $var=>$value){
+            if ( $var!="upldoc_cnfcnt" && $var!="mapoption"){
+                // some values may contain quotes or other "non-standard" values
+                $value=htmlspecialchars($value);
+                echo "<input type=hidden name=$var value=\"$value\">\n";
+            }
+        }
+        ?>
         <table style=color:blue  cellspacing=1 cellpadding=4>
         <tr><td><?php echo $msgstr["dd_imp_importok"]?></td>
             <td><?php echo $numfilesOK?></td>
@@ -427,24 +460,13 @@ else if ($impdoc_cnfcnt==3) {
             <td><?php echo secondsToTime($timediff)?></td>
             <td><input type=button value='<?php echo $msgstr["dd_imp_details"];?>' onclick=ShowDetails()></td>
         </tr>
-        <form name=continuar  method=post >
-        <?php
-        foreach ($_REQUEST as $var=>$value){
-            if ( $var!="upldoc_cnfcnt" && $var!="mapoption"){
-                // some values may contain quotes or other "non-standard" values
-                $value=htmlspecialchars($value);
-                echo "<input type=hidden name=$var value=\"$value\">\n";
-            }
-        }
-        ?>
         <tr>
             <td></td>
             <td><?php echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;</td>
             <td><input type=button value='<?php echo $msgstr["dd_imp_invert"];?>' onclick=Invert()></td>
         </tr>
-        </form>
         </table>
-
+        </form>
         <?php
     }
 }
@@ -467,6 +489,7 @@ include "../common/footer.php";
 //  - secondsToTime     : return H:mm:ss
 //  - split_path        : returns the "section" of the filename in ABCDImportRepo
 //  - split_html        : splits an html file into smaller files and returns the number of parts.
+//  - tolog             : writes information to screen and/or logfile
 //
 // ====== import_action =============================
 function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget, $basename, &$numrecsOK) {
@@ -498,18 +521,16 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     $destpath=$fullcolpath."/";
     split_path( $full_imp_path, $orgfilename, $sectionname);
     if ( $sectionname!="" ) {
-        ?>
-        <li><?php echo $msgstr["dd_chk_section"]." &rarr; ".$sectionname;?></li>
-        <?php
+        tolog("<li>".$msgstr["dd_chk_section"]." &rarr; ".$sectionname."</li>");
         $destpath.=$sectionname."/";
         if (!file_exists($destpath)) {
             if (!mkdir ($destpath,0777,true)){
-                echo '<div style="color:red">Failed to create section folder(s).... (e.g. &rarr;'.$destpath.'&larr;)>';
+                tolog('<div style="color:red">Failed to create section folder(s).... (e.g. &rarr;'.$destpath.'&larr;)>');
                 return(1);
             }
         }
         if (!is_dir($destpath) || !is_writable($destpath) ){
-             echo '<div style="color:red">Section is not a writeable folder (e.g. &rarr;'.$destpath.'&larr;)>';
+             tolog('<div style="color:red">Section is not a writeable folder (e.g. &rarr;'.$destpath.'&larr;)>');
              return(1);
        }
     }
@@ -538,17 +559,17 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     */
     $docpath=$destpath.$docname;
     if ($docext!="") $docpath.=".".$docext;
-    echo "<li>Moving $orgfilename to $docpath</li>";
+    tolog("<li>".$msgstr["dd_imp_moving"].": ".$orgfilename." &rarr; ".$docpath."</li>");
     if (@rename($full_imp_path, $docpath)===false){
         $contents_error= error_get_last();
-        echo "<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>";
-        echo "&rarr; ".$msgstr["dd_error_moveto"]."</div>";
+        tolog("<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>");
+        tolog("&rarr; ".$msgstr["dd_error_moveto"]."</div>");
         $orglocale=setlocale(LC_CTYPE, 0);
         setlocale(LC_CTYPE, 'C.UTF-8');
         $importdir=dirname($full_imp_path);
         setlocale(LC_CTYPE, $orglocale);
         if (!is_writable($importdir) ) {
-            echo "<div style='font-weight:bold;color:red'>&rarr; '".$importdir."' ".$msgstr["dd_nowrite"]."</div>";
+            tolog("<div style='font-weight:bold;color:red'>&rarr; '".$importdir."' ".$msgstr["dd_nowrite"]."</div>");
         }
         return(1);
     }
@@ -560,21 +581,19 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     */
     $tikacommand='java -jar '.$cgibin_path.$tikajar.' -r -'.$textmode.' <'.$docpath.' 2>&1 >'.$tikafile;
     $tikashowcmd='java -jar '.$cgibin_path.$tikajar.' -r -'.$textmode.' &lt;'.$docpath.' 2>&1 >'.$tikafile;
-    echo "<li>".$msgstr['procesar'].": ".$tikashowcmd."</li>";
-    ob_flush();flush();
+    tolog ("<li>".$msgstr['procesar'].": ".$tikashowcmd."</li>");
     exec( $tikacommand, $output, $status);
     if ($status!=0) {
-        echo "<div style='color:red'><b>".$msgstr["fatal"]."<br>";
+        tolog("<div style='color:red'><b>".$msgstr["fatal"]."<br>");
         for ($i=0; $i<count($output);$i++) {
-            echo $output[$i]."<br>";
+            tolog($output[$i]."<br>");
         }
-        echo "</b></div>";
+        tolog("</b></div>");
         if (file_exists($tikafile) ) unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
     } else {
-        echo ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_metadata_detect_ok"]."</li>");
-        ob_flush();flush();
+        tolog ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_metadata_detect_ok"]."</li>");
     }
     /*
     ** Read metadata from the tika generated html file
@@ -585,12 +604,12 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     ** A missing file is considered a fatal error
     ** This file can be empty OR very large
     */
-    echo "<li>".$msgstr["dd_detect_meta"]." ".$tikafile."</li>";
+    tolog("<li>".$msgstr["dd_detect_meta"]." ".$tikafile."</li>");
     ob_flush();flush();
     $metatab=array();
     $metatab=get_meta_tags($tikafile);
     if ($metatab===false) {
-        echo "<div style='color:red'>".$msgstr["dd_error_get_meta"]." (".$tikafile.")</div>";
+        tolog("<div style='color:red'>".$msgstr["dd_error_get_meta"]." (".$tikafile.")</div>");
         unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
@@ -758,23 +777,21 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         $mxcommand= $mx_path." null proc=@".$procfile. " append=".$db_path.$basename."/data/".$basename. " count=1 now -all 2>&1";
         $mxpretty=str_replace("<","&lt;",$mxcommand);
         $mxpretty=str_replace(">","&gt;",$mxpretty);
-        echo "<li>".$msgstr['procesar'].": ".$mxpretty."</li>";
-        ob_flush();flush();
+        tolog("<li>".$msgstr['procesar'].": ".$mxpretty."</li>");
         exec( $mxcommand, $output, $status);
         if ($status!=0) {
-            echo "<div style='color:red'><b>".$msgstr["fatal"]."<br>";
+            tolog("<div style='color:red'><b>".$msgstr["fatal"]."<br>");
             for ($i=0; $i<count($output);$i++) {
-                echo $output[$i]."<br>";
+                tolog($output[$i]."<br>");
             }
-            echo "</b></div>";
+            tolog("</b></div>");
             if (file_exists($act_split_file) ) unlink($act_split_file);
             if (file_exists($procfile) ) unlink($procfile);
             rename($docpath, $full_imp_path);
             return(1);
         } else {
-            echo ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_record_created"]);
-            echo (": <i>".$docname.".".$docext."</i></li>");
-            ob_flush();flush();
+            tolog("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_record_created"]);
+            tolog(": <i>".$docname.".".$docext."</i></li>");
         }
         if (file_exists($act_split_file) ) rename($act_split_file,$htmlSrcPath);
         if (file_exists($procfile) ) unlink($procfile);
@@ -805,8 +822,8 @@ global $db_path,$max_cn_length, $msgstr;
         $fp=@fopen($archivo,"w");
         if ($fp===false) {
             $contents_error= error_get_last();
-            echo "<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>";
-            echo "&rarr; ".$msgstr["dd_error_init_cnfile"]."</div>";
+            tolog("<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>");
+            tolog("&rarr; ".$msgstr["dd_error_init_cnfile"]."</div>");
             return(1);
         }
         fwrite($fp,"0");
@@ -823,8 +840,8 @@ global $db_path,$max_cn_length, $msgstr;
     $fp=@fopen($archivo,"w");
     if ($fp===false) {
         $contents_error= error_get_last();
-        echo "<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>";
-        echo "&rarr; ".$msgstr["dd_error_next_cnfile"]."</div>";
+        tolog("<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>");
+        tolog("&rarr; ".$msgstr["dd_error_next_cnfile"]."</div>");
         return(1);
     }
     fwrite($fp,$cn);
@@ -860,7 +877,7 @@ function convert_component(&$path, &$name_encoding){
     mb_detect_order($ary);
     $name_encoding = mb_detect_encoding($path,null,true);
     if ($name_encoding===false) {
-        echo "<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$path."&larr;</div>";
+        tolog("<div style='color:red'>".$msgstr["dd_filnamerrenc"]." &rarr;".$path."&larr;</div>");
         return 1;
     }
     /*
@@ -924,7 +941,7 @@ function convert_field($orgtext, &$cnvtext){
     mb_detect_order($ary);
     $name_encoding = mb_detect_encoding($orgtext,null,true);
     if ($name_encoding===false) {
-        echo "<div style='color:red'>".$msgstr["dd_fielderrenc"]." &rarr;".$orgtext."&larr;</div>";
+        tolog("<div style='color:red'>".$msgstr["dd_fielderrenc"]." &rarr;".$orgtext."&larr;</div>");
         return 1;
     }
     $cnvtext = mb_ereg_replace("'","&apos;",$orgtext);
@@ -1006,7 +1023,7 @@ function sanitize_tree($rootDir){
     ** Required= read access to list + write access to rename the folder and rename files in the folder
     */
     if (!is_writable($rootDir)) {
-        echo "<div style='font-weight:bold;color:red'>'".$rootDir."' ".$msgstr["dd_nowrite"]."</div>";
+        tolog("<div style='font-weight:bold;color:red'>'".$rootDir."' ".$msgstr["dd_nowrite"]."</div>");
         return 1;
     }
     //// run through content of root directory
@@ -1019,12 +1036,12 @@ function sanitize_tree($rootDir){
             if ( convert_component($newcontent, $name_encoding)!=0) return 1;
             if ( $newcontent!=$content){
                 // rename the folder
-                echo $msgstr["dd_movesecfolder"]." '".$content."' &rarr;  '".$newcontent."'<br>";
+                tolog($msgstr["dd_movesecfolder"]." '".$content."' &rarr;  '".$newcontent."'<br>");
                 $newpath=$rootDir.'/'.$newcontent;
                 if (@rename($path, $newpath)===false){
                     $contents_error= error_get_last();
-                    echo "<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>";
-                    echo "&rarr; ".$msgstr["dd_error_moveto"]."</div>";
+                    tolog("<div style='color:red'><b>".$msgstr["fatal"].": &rarr; </b>".$contents_error["message"]."<br>");
+                    tolog("&rarr; ".$msgstr["dd_error_moveto"]."</div>");
                     return 1;
                 }
                 $newpath=$rootDir.'/'.$newcontent;
@@ -1089,11 +1106,10 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
     $c_htmlfilesize=filesize($tikafile);
     $pretty_cisis_recsize=number_format($isis_record_size/1024,2,",",".")." Kb";
     $pretty_html_filesize=number_format($c_htmlfilesize/1024,2,",",".")." Kb";
-    echo "<li>".$msgstr["dd_htmlfilesize"]." ".$pretty_html_filesize.". ".$msgstr["dd_recordsize"]." ".$pretty_cisis_recsize."</li>";
-    ob_flush();flush();
+    tolog("<li>".$msgstr["dd_htmlfilesize"]." ".$pretty_html_filesize.". ".$msgstr["dd_recordsize"]." ".$pretty_cisis_recsize."</li>");
     $maxsize     = $isis_record_size*$splittarget/100; //splittarget is a percentage
     if ($maxsize<1000) {// Just in case  a corrupt value is supplied
-        echo "<span style='color:red'>PROGRAM ERROR:variable maxsize=$maxsize : too small to be credible</span>";die;
+        tolog("<span style='color:red'>PROGRAM ERROR:variable maxsize=$maxsize : too small to be credible</span>");die;
     }
     if (intval($c_htmlfilesize) < $maxsize) {
         // no split required
@@ -1114,8 +1130,7 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
     $partsheader.= "<tr><td>".$msgstr["dd_partnr"];
     $partstrailer= "</td></tr></table><br>";
     $pretty_targetsize=number_format($maxsize/1024,2,",",".")." Kb";
-    echo "<li>".$msgstr["dd_splitting"]."&nbsp;".$pretty_targetsize."</li>";
-    ob_flush();flush();
+    tolog("<li>".$msgstr["dd_splitting"]."&nbsp;".$pretty_targetsize."</li>");
     
     if(($handle = fopen($tikafile, "r"))===false) {
         return(1);
@@ -1177,8 +1192,7 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
                 fclose($chunkhandle);
                 $chunkisopen=false;
                 $pretty_filesize=number_format(filesize($chunkactfile)/1024,2,",",".")." Kb";
-                echo "<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>";
-                ob_flush();flush();
+                tolog("<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>");
                 continue;
             }
         }
@@ -1186,10 +1200,47 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
         $chunkexceed=false;
     }
     $pretty_filesize=number_format(filesize($chunkactfile)/1024,2,",",".")." Kb";
-    echo "<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>";
-    ob_flush();flush();
+    tolog("<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>");
     fclose($handle);
     unlink($tikafile); // original no longer needed
     return(0);
+}
+// ====== tolog =============================
+/*
+** Writes informational messages to the client and/or a logfile
+** In: $message : The message to be logged
+** In: $dest    : Sets the destination. A NULL value uses the static status
+**      $dest="web" : echo to the webpage
+**      $dest="file": write to file. The first call opens the log file
+**      $dest="both": writes to web and log
+** Note: The logfile name is set as static variable
+*/
+function tolog($message,$dest=NULL){
+    static $actualdest="web";
+    static $logfile=NULL;
+    global $db_path,$msgstr;
+    if ( isset($dest) ) {
+        if ( ($dest=="file" or $dest=="both") && $logfile==NULL) {
+            // open a log file
+            $logname="wrk/import_document_log_".date("ymdHis").".html";
+            $logfile=$db_path.$logname;
+            $logurl="/docs/".$logname;
+            echo "<div style='color:blue'>".$msgstr["dd_logfile"]." &rarr; ";
+            echo "<a href=".$logurl." target='_blank' >".$logname."</a></div>";
+            touch ($logfile);
+            ob_flush();flush();
+        }
+        if ( $dest=="file" OR $dest=="web" OR $dest=="both") {
+            $actualdest=$dest;
+        } else {
+            echo "Wrong parameter for function tolog:".$dest;
+            die;
+        }
+    }
+    if ($actualdest=="web" OR $actualdest=="both") {
+        echo $message;
+        ob_flush();flush();
+    }
+    if ($actualdest=="file" OR $actualdest=="both") file_put_contents($logfile,$message,FILE_APPEND);
 }
 // ======================= End functions/End =====
