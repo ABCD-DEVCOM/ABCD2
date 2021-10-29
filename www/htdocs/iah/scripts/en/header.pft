@@ -6,6 +6,9 @@ if p(v5030) or p(v5040) then
 
     proc('d9031',('a9031!',replace(v5031,s('^'v9022[1]),'^L'),'!')),
     proc('d9041',('a9041!',replace(v5041,s('^'v9022[1]),'^L'),'!')),
+/*'v5031=', v5031,'<BR>',
+'v5041=', v5041,'<BR>',
+*/
     '<div class="bar">'
         if v5006^m = 'ON' then
                         ,(
@@ -17,7 +20,7 @@ if p(v5030) or p(v5040) then
                                     if v9021 = 'fr' then 'français' fi,
                                     if v9021 = 'am' then 'amharic' fi,
                                     if v9021 = 'du' then 'dutch' fi,
-                                   if v9021 = 'ma' then 'मराठी' fi,
+/*                                   if v9021 = 'ma' then 'मराठी' fi,*/
                                   '</a>',
 
                                 if iocc < nocc(v9021) then,
@@ -29,9 +32,10 @@ if p(v5030) or p(v5040) then
       '</div>'
 
     '<div class="top">
-        <h1><a href="',v9031^L,'"><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1>
-        <h2><a title="Database search" href="',v9041^L,'"><span>Database search</span></a></h2>
-            <div class="spacer"> </div>
+        <!--h1><a href="',v9031^L,'"><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1-->
+        <h1><a href=/iah/en/index.htm><img src="',v5002,v5030,'" border="0" alt="logo" /></a></h1-->
+        <!--h2><a title="Database Search" href="',v9041^L,'"><span>New Database Search</span></a></h2-->
+        <h2><a title="Database Search" href="/iah/index.php"><span>New Database Search</span></a></h2>            <div class="spacer"> </div>
             <a name="top"></a>
     </div>'
 
