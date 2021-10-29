@@ -18,6 +18,7 @@
 20210718 fho4abcd Add function DSpace bridge
 20210829 fho4abcd Modified Import Documents
 20210903 fho4abcd Add options to configure Digital documents functionality and Repair Digital Documents
+20211029 edsz14 Replace vmx_fullinv.php by fullinv.php
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -140,7 +141,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		case "fullinv":     //INVERTED FILE GENERATION WITH MX
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/vmx_fullinv.php"
+			document.admin.action="../utilities/fullinv.php"
 			//document.admin.target="ABCD_Frame"
 			break;
 		case "importiso":    //ISO load
