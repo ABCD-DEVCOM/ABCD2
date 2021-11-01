@@ -1,4 +1,5 @@
 dubcore.*=%path_database%dubcore/data/dubcore.*
+htmlgizmo.*=/var/opt/ABCD/bases/dubcore/data/htmlgizmo.*
 dubcore.pft=%path_database%dubcore/pfts/en/dubcore.pft
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft

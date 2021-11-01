@@ -118,6 +118,8 @@ download=Download
 end_process=End of the process
 entervalcomb=Please enter a valid combination
 error=Error
+error_gizmofp="htmlgizmo.*=..." Cannot be specified with %database_path%
+error_gizmospec="htmlgizmo.*=..." Must be specified in
 every=Every
 exp_archivo=Your must supply the file name
 exp_selreg=Please select the records to be exported

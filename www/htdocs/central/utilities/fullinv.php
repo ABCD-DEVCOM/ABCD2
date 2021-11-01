@@ -10,12 +10,10 @@
 20210409          The stw file comes from tag STW (present in many .par files).
 20210527 fho4abcd Check existence and permissions uctab&actab. Translations
 20210923 fho4abcd option to specify fstfile by URL
-20211018 eds added options for stripHTML, incremental indexing
+20211018 eds added created from vmx_fullinv.php+options for stripHTML, incremental indexing
+20211101 fho4abcd Cehck for digital document+use cipar for gizmo+form layout+defaults to enable processing of "normal" databases
 */
 /**
- * @program:   ABCD - ABCD-Central
- * @copyright:  Copyright (C) 2015 UO - VLIR/UOS
- * @file:      vmx_fullinv.php
  * @desc:      Create database index
  * @author:    Marino Borrero Sánchez, Cuba. marinoborrero@gmail.com
  * @since:     20140203
@@ -51,6 +49,7 @@ include("../common/header.php");
 include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../lang/dbadmin.php");
+include("../lang/importdoc.php");
 /*
 ** Old code might not send specific info.
 ** Set defaults for the return script and frame info
@@ -115,6 +114,15 @@ $fullciparpath=$db_path."par/".$ciparfile;
 if (!file_exists($fullciparpath)){
     echo "<h3><font color=red>".$fullciparpath.": does not exist</font></h3>";
 }
+// Check if we have a database with an existing collection of documents
+$db_with_documents="";
+$default_ftt="96";
+if (isset($def_db["COLLECTION"])){
+    $fullcolpath=$def_db["COLLECTION"];
+    $fullcolpath=str_replace("%path_database%",$db_path,$fullcolpath);
+    $fullcolpath=rtrim($fullcolpath,"/ ");
+    if (file_exists($fullcolpath)) $db_with_documents="Y";
+}
 // The test button gives the mx_path to the test window
 // The show button gives the content of the parameter file
 $testbutton=
@@ -167,18 +175,25 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
          <td><font color=red><?php echo $msgstr["warnforslashm"];?></font></td>
     </tr>
 
-    <tr> <td><?php echo $msgstr["striphtml"];?></td>
-         <td><input type='checkbox' name='striphtml'></td>
-         <td>text-field : <input type='text' size=3 name='ftt'></td>
-         <!--td><font color=red><?php echo $msgstr["warnforstrip"];?></font></td-->
-    </tr>
-
-
     <tr> <td><?php echo $msgstr["incremental"];?></td>
          <td><input type='checkbox' name='incr'></td>
-         <td><font color=red><?php echo $msgstr["warnforincr"];?></font></td>
+         <td><font color=blue><?php echo $msgstr["warnforincr"];?></font></td>
     </tr>
 
+    <?php if ( $db_with_documents=="Y") {?>
+    <tr><td><?php echo "-- ".$msgstr["dd_documents"];?>
+        <td colspan=2><hr></td>      
+    </tr>
+    <tr> <td><?php echo $msgstr["striphtml"];?></td>
+         <td><input type='checkbox' name='striphtml' checked></td>
+         <td><font color=blue><?php echo $msgstr["warnforstrip"];?></font></td>
+    </tr>
+    <tr> <td><?php echo $msgstr["dd_term_htmlSrcFLD"];?></td>
+         <td><input type='text' size=3 name='ftt' value='<?php echo $default_ftt;?>'></td>
+    </tr>
+    <?php } ?>
+
+    <tr><td colspan=3><hr></td></tr>
     <tr><td></td>
         <td><input type='submit' value='<?php echo $msgstr["ejecutar"];?>' title='<?php echo $msgstr["cg_execute"];?>'></td>
         <td><?php echo "$testbutton" ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "$showbutton" ?></td>
@@ -221,13 +236,26 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
             $stwat=" stw=@".$stw;
         }
     }
+    // process the entry for the gizmo
+    $htmlgizmopar="";
+    if ( $db_with_documents=="Y") {
+        $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path."par/".$base.".par</span>";
+        if (isset($def_cipar["htmlgizmo.*"])) {
+            $htmlgizmopar=$def_cipar["htmlgizmo.*"];
+            $htmlgizmopar1=str_replace("%path_database%",$db_path,$htmlgizmopar);
+            if ($htmlgizmopar1!=$def_cipar["htmlgizmo.*"]) {
+                $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmofp"]."</span>";
+            }
+        }   
+    }
     $parameters= "<br>";
-    $parameters.= $msgstr["database"].": ".$bd."/data/".$base."<br>";
+    $parameters.= $msgstr["database"]." : ".$bd."/data/".$base."<br>";
+    if ($htmlgizmopar!="") $parameters.= "htmlgizmo: $htmlgizmopar<br>";
     $parameters.= "fst&nbsp;&nbsp;: @".$bd."/data/".$base.".fst<br>";
-    $parameters.= "mx&nbsp;&nbsp;&nbsp;: $mx_path<br>";
     if ($stw  !="") $parameters.= "stw&nbsp;&nbsp;: @$stw<br>";
     if ($uctab!="") $parameters.= "uctab: $uctab<br>";
     if ($actab!="") $parameters.= "actab: $actab<br>";
+    $parameters.= "mx&nbsp;&nbsp;&nbsp;: $mx_path<br>";
     $parameters.= " &nbsp; ".$testbutton;
     $parameters.= " &nbsp; ".$showbutton."<br>";
     // Check that actab and uctab exist (mx gives a bad warning or crashes)
@@ -248,18 +276,12 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     }
 
     // Process slashm parameter for omitting positions in postings
-
-    unset($slashm);
-    $slashm="";
     $slashm_var="";
-    if (isset($_POST['slashm'])) $slashm=$_POST['slashm'];
-    if(isset($slashm)) $slashm_var="/m";
+    if (isset($_POST['slashm']) AND strlen($_POST['slashm'])>0) $slashm_var="/m";
 
     // Process incr parameter : incremental or full inversion
-    unset($incr);
-    $incr="";
     $incr_var="";
-    if (isset($_POST['incr']) AND strval($_POST['incr'])>0) $incr_var=" ifupd"; else $incr_var="fullinv".$slashm_var;
+    if (isset($_POST['incr']) AND strlen($_POST['incr'])>0) $incr_var=" ifupd"; else $incr_var="fullinv".$slashm_var;
 
     //process tell parameter
     unset ($tell);
@@ -276,30 +298,28 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     }
     $tellvar.=$tellnumbervar;
 
-    // Process ftt parameter defining in which field to read HTML-file for Gload with default v96
-    if (isset($_POST['ftt']) AND strval($_POST['ftt'])>0) $ftt='v'.$_POST['ftt']; else $ftt="v96";
-
-
-    // Process stripHTLM parameter for stripping HTML with gizmo
-    $striphtml="";
+    // Process the parameters for Digital Documents
+    // The ftt parameter defines in which field the HTML-file name for Gload is stored. Default v96
     $strip_var="";
-    unset($strip);
-    if (isset($_POST['striphtml'])) { $striphtml=$_POST['striphtml'];
-    $gload="\"proc='Gload/9876='".$ftt."\"";
-    $ggizmo="\"proc='Ghtmlgizmo,9876'"."\"";
-    $d9876="\"proc='d9876'"."\"";
+    if (isset($_POST['ftt']) AND strval($_POST['ftt'])>0) $ftt='v'.$_POST['ftt']; else $ftt="v".$default_ftt;
+    // Load digital documents 
+    if ($db_with_documents=="Y"){
+        // The extra quotes surroundig the procs are required for the linux version
+        $strip_var.="\"proc='Gload/9876='".$ftt."\"";
+        // Process stripHTLM parameter for stripping HTML with gizmo
+        if (isset($_POST['striphtml']) AND strlen($_POST['striphtml'])>0) {
+            $strip_var.=" \"proc='Ghtmlgizmo,9876'\"";
+        }
     }
-    if (isset($striphtml))
-      $strip_var="$gload $ggizmo $d9876";
-      else $strip_var="";
 
     // Create command.
     // Note that mx does not extract uctab/actab from cipar: explicitly specified here
-#    $strINV=$mx_path." ".$bd."/data/".$base. " fst=@".$bd."/data/".$fst." uctab=$uctab actab=$actab $stwat fullinv".$m_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
-$strINV=$mx_path.' '.$cipar.$bd."/data/".$base. " fst=@".$bd."/data/".$fst;
-$strINV.=" ".$strip_var." uctab=".$uctab." actab=".$actab.$stwat;
-$strINV.=" ". $incr_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
-echo "$strINV<BR>";//die;
+    $strINV =$mx_path.' db='.$bd."/data/".$base. " fst=@".$bd."/data/".$fst;
+    $strINV.=" cipar=".$fullciparpath;
+    $strINV.=" ".$strip_var;
+    $strINV.=" uctab=".$uctab." actab=".$actab;
+    $strINV.=" ".$stwat;
+    $strINV.=" ".$incr_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
     // execute the command
     exec($strINV, $output,$status);
     $straux="";
