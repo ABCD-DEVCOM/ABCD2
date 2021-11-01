@@ -9,6 +9,7 @@
 20211012 fho4abcd Error message if import subfolder not writable+ short timestamp for filenames>5 characters
 20211015 fho4abcd Sanitize all metaterms+sanitize & check import section folders
 20211017 fho4abcd Remove empty files before presenting the list of files to be processed + option to log to file
+20211101 fho4abcd replace vmx_fullinv.php by fullinv.php
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -87,7 +88,7 @@ function Import(){
     document.continuar.submit()
 }
 function Invert(){
-    document.continuar.action='../utilities/vmx_fullinv.php?&backtoscript=<?php echo $backtoscript?>&fstfile=fulltext.fst';
+    document.continuar.action='../utilities/fullinv.php?&backtoscript=<?php echo $backtoscript?>';
     document.continuar.impdoc_cnfcnt.value=4;
     document.continuar.submit()
 }
