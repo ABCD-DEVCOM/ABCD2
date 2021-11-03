@@ -147,7 +147,7 @@ if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
     if (isset($cont_cnv))$contenido=$cont_cnv;
 }
 // Write a line for this action to the log file
-if (is_dir($db_path."log") ){
+if (is_writable($db_path."log") && is_dir($db_path."log")){
     $fp=fopen($db_path."log/log_".date("Ymd").".log","a");
     $out=date('Ymd h:i:s')."\t";
     if( isset($_SESSION['login'])) {
