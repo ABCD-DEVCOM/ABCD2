@@ -11,7 +11,8 @@
 20210527 fho4abcd Check existence and permissions uctab&actab. Translations
 20210923 fho4abcd option to specify fstfile by URL
 20211018 eds added created from vmx_fullinv.php+options for stripHTML, incremental indexing
-20211101 fho4abcd Cehck for digital document+use cipar for gizmo+form layout+defaults to enable processing of "normal" databases
+20211101 fho4abcd Check for digital document+use cipar for gizmo+form layout+defaults to enable processing of "normal" databases
+20211103 fho4abcd Enable gizmo for htmlfields+hint if gizmo is wrong+simplify interface
 */
 /**
  * @desc:      Create database index
@@ -63,6 +64,25 @@ if ( isset($arrHttp["fstfile"]))      $presetfstfile=$arrHttp["fstfile"];
 ?>
 <body onunload=win.close()>
 <script src=../dataentry/js/lr_trim.js></script>
+<script>
+var win;
+function OpenWindow(){
+	msgwin=window.open("","testshow","width=800,height=250");
+	msgwin.focus()
+}
+function OpenWindows() {
+    NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
+    win.focus()
+}
+function NewWindow(mypage,myname,w,h,scroll,pos){
+if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
+if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
+else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
+settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
+win=window.open(mypage,myname,settings);
+}
+</script>
+
 <?php
 // If outside a frame: show institutional info
 if ($inframe!=1) include "../common/institutional_info.php";
@@ -86,23 +106,6 @@ $bd=$db_path.$base;
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<script>
-var win;
-function OpenWindow(){
-	msgwin=window.open("","testshow","width=800,height=250");
-	msgwin.focus()
-}
- function OpenWindows() {
-NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
-win.focus()
-    }
-function NewWindow(mypage,myname,w,h,scroll,pos){
-if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
-if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
-else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
-settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
-win=window.open(mypage,myname,settings);}
-</script>
 <?php include "../common/inc_div-helper.php" ?>
 <div class="middle form">
     <div class="formContent">
@@ -114,15 +117,14 @@ $fullciparpath=$db_path."par/".$ciparfile;
 if (!file_exists($fullciparpath)){
     echo "<h3><font color=red>".$fullciparpath.": does not exist</font></h3>";
 }
-// Check if we have a database with an existing collection of documents
-$db_with_documents="";
-$default_ftt="96";
-if (isset($def_db["COLLECTION"])){
-    $fullcolpath=$def_db["COLLECTION"];
-    $fullcolpath=str_replace("%path_database%",$db_path,$fullcolpath);
-    $fullcolpath=rtrim($fullcolpath,"/ ");
-    if (file_exists($fullcolpath)) $db_with_documents="Y";
-}
+
+// Read Digital document data to determine the tag pointing to the html file
+// No error if no digital document collection or tag found
+get_htmlfiletag($htmlfiletag);
+
+// Read the fdt to determine tags with HTML content
+get_htmltags($htmlfiletag,$htmlfileTitle,$htmlTitles,$htmlTags);
+
 // The test button gives the mx_path to the test window
 // The show button gives the content of the parameter file
 $testbutton=
@@ -180,16 +182,26 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
          <td><font color=blue><?php echo $msgstr["warnforincr"];?></font></td>
     </tr>
 
-    <?php if ( $db_with_documents=="Y") {?>
-    <tr><td><?php echo "-- ".$msgstr["dd_documents"];?>
-        <td colspan=2><hr></td>      
-    </tr>
+    <?php if ($htmlfiletag!="") { ?>
     <tr> <td><?php echo $msgstr["striphtml"];?></td>
-         <td><input type='checkbox' name='striphtml' checked></td>
-         <td><font color=blue><?php echo $msgstr["warnforstrip"];?></font></td>
+         <td><select name='ftt[]' multiple size='2'>
+                <option value='<?php echo $htmlfiletag;?>' selected><?php echo $htmlfileTitle." (v".$htmlfiletag.")";?></option>
+                <option value='' ></option>
+             </select>
+         </td>
+         <td><font color=blue><?php echo $msgstr["warnforstrip"]."<br>".$msgstr["sourceis"]." ".$msgstr["dd_documents"];?></font></td>
     </tr>
-    <tr> <td><?php echo $msgstr["dd_term_htmlSrcFLD"];?></td>
-         <td><input type='text' size=3 name='ftt' value='<?php echo $default_ftt;?>'></td>
+    <?php } ?>
+    <?php if (count($htmlTags)>0) {?>
+    <tr> <td><?php echo $msgstr["striphtml"];?></td>
+         <td><select name='fdttag[]' multiple size='<?php echo count($htmlTags)+1;?>'>
+                <?php for ($i=0;$i<count($htmlTags);$i++) {?>
+                <option value='<?php echo $htmlTags[$i];?>' selected><?php echo $htmlTitles[$i]." (v".$htmlTags[$i].")";?></option>
+                <?php }?>
+                <option value='' ></option>
+             </select>
+          </td>
+         <td><font color=blue><?php echo $msgstr["warnforstrip"]."<br>".$msgstr["sourceis"]." FDT";?></font></td>
     </tr>
     <?php } ?>
 
@@ -238,7 +250,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     }
     // process the entry for the gizmo
     $htmlgizmopar="";
-    if ( $db_with_documents=="Y") {
+    if ( $htmlfiletag!="") {
         $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path."par/".$base.".par</span>";
         if (isset($def_cipar["htmlgizmo.*"])) {
             $htmlgizmopar=$def_cipar["htmlgizmo.*"];
@@ -298,17 +310,38 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     }
     $tellvar.=$tellnumbervar;
 
-    // Process the parameters for Digital Documents
-    // The ftt parameter defines in which field the HTML-file name for Gload is stored. Default v96
+    /*
+    ** Processing for Digital Documents
+    ** The htmlfiletag parameter defines in which field the HTML-file name for Gload is stored.
+    */
     $strip_var="";
-    if (isset($_POST['ftt']) AND strval($_POST['ftt'])>0) $ftt='v'.$_POST['ftt']; else $ftt="v".$default_ftt;
-    // Load digital documents 
-    if ($db_with_documents=="Y"){
+    if (strlen($htmlfiletag)>0) {
         // The extra quotes surroundig the procs are required for the linux version
-        $strip_var.="\"proc='Gload/9876='".$ftt."\"";
-        // Process stripHTLM parameter for stripping HTML with gizmo
-        if (isset($_POST['striphtml']) AND strlen($_POST['striphtml'])>0) {
+        $strip_var.="\"proc='Gload/9876='v".$htmlfiletag."\"";
+        $parameters.=$msgstr["load_htmldata"]." ".$htmlfiletag." &rarr; 9876<br>";
+    }
+    /*
+    ** Strip the html tags from the selected fields
+    ** Process ftt & fdttag parameters for stripping HTML with gizmo
+    ** ftt & fdttag are arrays. Both come from multiselect
+    */
+    // Digital documents uses the hidden field for the html content
+    if (isset($_POST['ftt'])) {
+        $taglist=$_POST['ftt'];
+        $ftt=$taglist[0];
+        if (strlen($ftt)>0) {
             $strip_var.=" \"proc='Ghtmlgizmo,9876'\"";
+            $parameters.=$msgstr["striphtml"].": 9876<br>";
+        }
+    }
+    // The fields from the FDT are processed with their own tag
+    if (isset($_POST['fdttag']) ) {
+        $taglist=$_POST['fdttag'];
+        foreach ( $taglist as $tag) {
+            if (strlen($tag)>0) {
+                $strip_var.=" \"proc='Ghtmlgizmo,".$tag."'\"";
+                $parameters.=$msgstr["striphtml"].": ".$tag."<br>";
+            }
         }
     }
 
@@ -334,6 +367,11 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
         echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3><hr>");
         echo "<font color='red'>".$straux."</font>";
+        if (strpos($straux,"fatal: recread/check/base")>0) {
+            echo "<div style='color:blue'>".$msgstr["possiblecause"]." :<br>";
+            echo "<b>htmlgizmo.mst</b> ".$msgstr["isnotcreated"]." <b>".$mx_path."</b><br>";
+            echo $msgstr["isismustmatch"]."</div>";
+        }
    }
 }
 
@@ -343,3 +381,80 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
 
 <?php
 include("../common/footer.php");
+// ======================================================
+// This the end of main script. Only functions follow now
+// =========================== Functions ================
+//  - get_htmlfiletag   : returns the tag for the html file for digital documents
+//  - get_htmltags      : returns the tags with html content from the FDT
+//
+// ====== get_htmlfiletag =============================
+/*
+** Check if there is a collection for this database
+** Read the configuration data and determine the tag for "htmlSrcFLD"
+** If nothing is found the returned tag value is empty.
+**
+** Return : 0=OK, 1=NOT-OK
+*/
+function get_htmlfiletag(&$htmlfiletag) {
+    global $msgstr,$arrHttp, $db_path, $def_db;
+    $htmlfiletag="";
+    if ( !isset($def_db["COLLECTION"])) return(0);
+    $fullcolpath=$def_db["COLLECTION"];
+    $fullcolpath=str_replace("%path_database%",$db_path,$fullcolpath);
+    $fullcolpath=rtrim($fullcolpath,"/ ");
+    if (!file_exists($fullcolpath)) return(0);
+    $metadataConfig="docfiles_metadataconfig.tab";
+    $metadataConfigFull=$fullcolpath."/".$metadataConfig;
+    if (!file_exists($metadataConfigFull)) return(0);
+    $fp=file($metadataConfigFull);
+    foreach ($fp as $value){
+        $value=trim($value);
+        if (trim($value)!=""){
+            $table=explode("|",$value);
+            if ($table[0]=="htmlSrcFLD" AND isset($table[1]) AND strlen($table[1])>0) {
+                $htmlfiletag=$table[1];
+                // the values in the table have a leading "v"
+                if (($htmlfiletag[0]=='v') or ($htmlfiletag[0]=='V')) {
+                    $htmlfiletag=str_replace( 'v','',strtolower($htmlfiletag));
+                }
+                return(0);
+            }
+        }
+    }
+    return(0);
+}
+// ====== get_htmltags =============================
+/*
+** Reads the current FDT and returns:
+** - The Title of the supplied tag for the digitral document html file
+** - The Titles and Tags of all fields with Input Type=HTML Area
+** Return : 0=OK, 1=NOT-OK
+*/
+function get_htmltags($htmlfiletag,&$htmlfileTitle,&$htmlTitles,&$htmlTags) {
+    global $msgstr,$arrHttp, $db_path, $lang_db;
+    $tagindex=1;
+    $titleindex=2;
+    $inputtypeindex=7;
+    $htmlfileTitle=$msgstr["dd_term_htmlSrcFLD"];
+    $htmlTitles=array();
+    $htmlTags=array();
+    // Open the language dependent fdt and if not present the default language fdt
+    $fdtfile=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
+    if (!file_exists($fdtfile)) $fdtfile=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
+    $fp=file($fdtfile);
+    foreach ($fp as $value){
+        $value=trim($value);
+        if (trim($value)!=""){
+            $table=explode("|",$value);
+            if ($table[$inputtypeindex]=="A") {
+                $htmlTags[]=$table[$tagindex];
+                $htmlTitles[]=$table[$titleindex];
+            }
+            if ($table[$tagindex]==$htmlfiletag) {
+                $htmlfileTitle=$table[$titleindex];
+            }
+        }
+    }
+    return(0);
+}
+// ======================= End functions/End =====
