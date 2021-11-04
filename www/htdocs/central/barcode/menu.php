@@ -1,4 +1,7 @@
 <?php
+/*
+2021-11-04 fho4abcd Replace vmx_fullinv.php by fullinv.php.
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -64,7 +67,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"])or isset($_SESSION["permiso"]["CEN
 	<ul style="font-size:12px;line-height:18px">
 	<li><a href="javascript:EnviarFormaInventario('inventory_dbinit.php','','','')"><?php echo $msgstr["inventory_dbinit"]?></a></li>
 	<li><a href="javascript:EnviarFormaInventario('inventory_dbload.php','inicio','','')"><?php echo $msgstr["inventory_dbload"]?></a></li>
-	<li><a href="javascript:EnviarFormaInventario('../utilities/vmx_fullinv.php','','abcd_inventory','../barcode/menu.php')"><?php echo $msgstr["inventory_fullinv"]?></a></li>
+	<li><a href="javascript:EnviarFormaInventario('../utilities/fullinv.php','','abcd_inventory','../barcode/menu.php')"><?php echo $msgstr["inventory_fullinv"]?></a></li>
 	<li><a href="javascript:EnviarFormaInventario('inventory_transload.php','inicio','','')"><?php echo $msgstr["inventory_transload"]?></a></li>
 	<li><a href="javascript:EnviarFormaInventario('inventory_itemsload.php','subir','','')"><?php echo $msgstr["inventory_itemsload"]?></a></li>
 	<!--li><a href=inventory_report.php?base=<?php echo $arrHttp["base"].">".$msgstr["inventory_report"]."</a></li-->\n";?>
@@ -87,11 +90,11 @@ Include("../common/footer.php");
 </Body>
 </Html>
 <script>
-function EnviarFormaInventario(action,Opcion,base_activa,retorno){	if (action=='inventory_dbinit.php' || action=='inventory_dbload.php' || action=='../utilities/vmx_fullinv.php' || action=='inventory_transload.php' || action=='inventory_itemsload.php'){		document.FormaInventario.Opcion.value=Opcion
+function EnviarFormaInventario(action,Opcion,base_activa,retorno){	if (action=='inventory_dbinit.php' || action=='inventory_dbload.php' || action=='../utilities/fullinv.php' || action=='inventory_transload.php' || action=='inventory_itemsload.php'){		document.FormaInventario.Opcion.value=Opcion
 		document.FormaInventario.action=action
 		document.FormaInventario.base_activa.value=base_activa
 		document.FormaInventario.retorno.value=retorno
-		if (action=='../utilities/vmx_fullinv.php'){			document.FormaInventario.base.value=base_activa
+		if (action=='../utilities/fullinv.php'){			document.FormaInventario.base.value=base_activa
 			document.FormaInventario.base_activa.value="<?php echo $arrHttp["base"] ?>"		}
 		document.FormaInventario.submit()
 	}}

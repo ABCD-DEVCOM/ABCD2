@@ -6,6 +6,7 @@
 2021-03-11 fho4abcd lineends, sanitize html
 2021-03-22 fho4abcd remove unused functions in script
 2021-04-18 fho4abcd Iso import from carga_iso.pho to vmx_import_iso.php
+2021-11-04 fho4abcd Replace vmx_fullinv.php by fullinv.php.
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -83,7 +84,7 @@ function EnviarForma(Opcion,Mensaje){
 					document.admin.target=""
 					break;
 				case "fullinvMX":
-				    document.admin.action="../utilities/vmx_fullinv.php"
+				    document.admin.action="../utilities/fullinv.php"
 				    document.admin.target=""
 			}
 			document.admin.Opcion.value=Opcion
