@@ -8,6 +8,7 @@
 2021-02-25 fho4abcd: don't send header info (wrong and out of order here)
 2021-04-02 fho4abcd: autodetected protocol (port was already detected since 2021-02-10))
 2021-04-15 fho4abcd: Send header info to server. (revert 2021-02-25)
+2021-11-04 fho4abcd: Check that extension mbstring is loaded
 */
 
 ini_set('error_reporting', E_ALL);
@@ -99,6 +100,15 @@ if (!file_exists($db_path)){
     echo "<div>&#8594; Please check paths in file ".dirname(__DIR__,1).DIRECTORY_SEPARATOR."dbpath.dat"."</div>";
     die;
 }
+// Check the loaded extensions
+// Extension mbstring:several functions use mbstring functions even for iso databases
+if ( extension_loaded("mbstring") == false ) {
+    echo "<div style='color:red'>PHP extension 'mbstring' is not loaded. </div>";
+    echo "<div style='color:red'>&#8594; Please install this extension and restart the websserver</div>";
+    die;
+}
+// Other extension can be added here if really necessary
+
 if (!file_exists($db_path."abcd.def")){
 	echo "Missing file abcd.def in database folder $db_path";
     die;
