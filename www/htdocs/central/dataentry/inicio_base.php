@@ -22,22 +22,49 @@ unset($_SESSION["count"]);
 if (!isset($arrHttp["base"])) die;
 
 include("../common/header.php");
+?>
 
+
+<script>
+	function CreateFiles() {
+	document.CreateFiles.action="../dbadmin/chk_dbdef.php"
+	document.CreateFiles.encabezado.value="s"
+	document.CreateFiles.target="_top"
+	document.CreateFiles.submit();
+}
+</script>
+
+<form name="CreateFiles" onSubmit="return false" method="post">
+	<input type=hidden name="encabezado" value="s">
+	<input type=hidden name="base" value="<?php echo $arrHttp["base"]?>">
+</form>	
+
+
+<body>
+<?php $wiki_help="Entrada_de_datos";include "../common/inc_div-helper.php"?>
+
+<div class="middle" style="">
+			<div class="formContent">
+
+<?php
 
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
 $cont="";
 $warning="";
 
+
 if (!file_exists($archivo)){
 	$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
 	if (!file_exists($archivo)){
-		echo "<h4><font face=Verdana>".$msgstr["fatal"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
+		echo "<h4>".$msgstr["misfile"]." ".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt</h4>";
+		echo "<p>".$msgstr["cf_notice"]."</p>";
+		echo '<a class="button" href="javascript:CreateFiles();">'.$msgstr["cf_createfiles"].'</a>';
 		$cont="N";
 	}
 }
 $archivo=$db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst";
 if (!file_exists($archivo)){
-	echo  "<h4><font face=Verdana>".$msgstr["fatal"].".. ".$msgstr["misfile"]."  ".$arrHttp["base"]."/data/".$arrHttp["base"].".fst";
+	echo  "<h4>".$msgstr["fatal"].".. ".$msgstr["misfile"]."  ".$arrHttp["base"]."/data/".$arrHttp["base"].".fst";
 	$cont="N";
 }
 
@@ -45,8 +72,10 @@ $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["base
 if (!file_exists($archivo)){
     $archivo=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["base"].".pft";
     if (!file_exists($archivo))
-		$warning="<br><h6><font face=Verdana>".$msgstr["warning"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/def/".$_SESSION['lang']."/".$arrHttp["base"].".pft";
+		$warning="<br><h6>".$msgstr["warning"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/def/".$_SESSION['lang']."/".$arrHttp["base"].".pft";
 }
+
+
 if ($cont=="N") die;
 
 // Get info about the current database from the database
@@ -169,7 +198,7 @@ if (file_exists($archivo)){
 }
 if (!$fp){
 	echo $msgstr["misfile"]. " ".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
-	die;
+	//die;
 }
 $pi="";
 $fe="";
@@ -207,13 +236,10 @@ if (html=='' && top.HTML==''){        //No changes in the toolbar
 
 
 ?>
-<body>
-<?php $wiki_help="Entrada_de_datos";include "../common/inc_div-helper.php"?>
 
-<div class="middle" style="">
-			<div class="formContent">
 <br><br><br>
 <?php
+
 echo "<center><b>".$msgstr["bd"].": ".$arrHttp["base"]."</b>";
 echo "<br><strong>$charset</strong>" ;
 echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</b></font>";

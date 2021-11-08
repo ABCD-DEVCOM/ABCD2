@@ -47,6 +47,7 @@
 
 /* GENERAL STYLES */
 
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -2050,6 +2051,27 @@ a.bt-sign {
 
 /* BUTTONS 2021  */
 
+a.button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+a.button:hover {
+  opacity:1;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.btn_ok {
+  width: 50%;
+}
 
 .button_browse, a.button_browse, .submit, input[type=submit], input[type=button], input[type=reset]{
 	border-radius: 3px;
@@ -2137,6 +2159,13 @@ a.bt-sign {
 @media (min-width: 768px) {
   .bt-green {
     padding: 10px 30px;
+  }
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+  .btn_ok {
+    width: 100%;
   }
 }
 
@@ -2364,4 +2393,43 @@ nav ul {
   border: 5px solid transparent;
   border-right-color: orange;
   right: 10px;
+}
+
+
+/* Add padding and center-align text to the container */
+.container {
+  padding: 45px 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: var(--blue-abcd);
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+	border-radius: 4px;
+  background-color: var(--white);
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
