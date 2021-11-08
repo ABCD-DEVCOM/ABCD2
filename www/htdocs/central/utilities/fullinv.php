@@ -13,6 +13,7 @@
 20211018 eds added created from vmx_fullinv.php+options for stripHTML, incremental indexing
 20211101 fho4abcd Check for digital document+use cipar for gizmo+form layout+defaults to enable processing of "normal" databases
 20211103 fho4abcd Enable gizmo for htmlfields+hint if gizmo is wrong+simplify interface
+20211108 fho4abcd Show parameters and commandline before processing,replaced wait pop-up by "working". Slashm default checked. 
 */
 /**
  * @desc:      Create database index
@@ -65,21 +66,13 @@ if ( isset($arrHttp["fstfile"]))      $presetfstfile=$arrHttp["fstfile"];
 <body onunload=win.close()>
 <script src=../dataentry/js/lr_trim.js></script>
 <script>
-var win;
 function OpenWindow(){
 	msgwin=window.open("","testshow","width=800,height=250");
 	msgwin.focus()
 }
-function OpenWindows() {
-    NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
-    win.focus()
-}
-function NewWindow(mypage,myname,w,h,scroll,pos){
-if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
-if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
-else if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
-settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
-win=window.open(mypage,myname,settings);
+function RemoveSpan(id){
+    var workingspan = document.getElementById(id);
+    workingspan.remove();
 }
 </script>
 
@@ -135,7 +128,7 @@ $showbutton=
 if(isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
 if(!isset($fst)) { // The form sets the fst: the first action of this php
 ?>
-    <form name=maintenance action='' method='post' onsubmit='OpenWindows();'>
+    <form name=maintenance action='' method='post'>
         <input type=hidden name=backtoscript value="<?php echo $backtoscript ?>">
         <input type=hidden name=inframe value="<?php echo $inframe ?>">
     <table cellspacing=5 align=center>
@@ -173,7 +166,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     </tr>
 
     <tr> <td><?php echo $msgstr["useslashm"];?></td>
-         <td><input type='checkbox' name='slashm'></td>
+         <td><input type='checkbox' name='slashm' checked></td>
          <td><font color=red><?php echo $msgstr["warnforslashm"];?></font></td>
     </tr>
 
@@ -353,19 +346,30 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     $strINV.=" uctab=".$uctab." actab=".$actab;
     $strINV.=" ".$stwat;
     $strINV.=" ".$incr_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
+    // Show the execution parameters
+    //echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
+    ?>
+    <font face=courier size=2><?php echo $parameters?><br>
+          <?php echo $msgstr["commandline"]?>: <?php echo $strINV?><br></font>
+    <hr>
+    <span id="working"><?php echo $msgstr["system_working"]?></span>
+    <?php
+    ob_flush();flush();
+
     // execute the command
     exec($strINV, $output,$status);
+    ?>
+    <script> RemoveSpan("working");</script>
+    <?php
     $straux="";
     for($i=0;$i<count($output);$i++){
         $straux.=$output[$i]."<br>";
     }
     if($status==0) {
-        echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
         echo ("<h3>".$msgstr["processok"]."</h3>");
         echo "$straux";
     } else {
-        echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
-        echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3><hr>");
+         echo ("<h3><font color='red'><br>".$msgstr["processfailed"]."</font></h3><hr>");
         echo "<font color='red'>".$straux."</font>";
         if (strpos($straux,"fatal: recread/check/base")>0) {
             echo "<div style='color:blue'>".$msgstr["possiblecause"]." :<br>";

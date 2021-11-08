@@ -10,6 +10,7 @@
 20211015 fho4abcd Sanitize all metaterms+sanitize & check import section folders
 20211017 fho4abcd Remove empty files before presenting the list of files to be processed + option to log to file
 20211101 fho4abcd replace vmx_fullinv.php by fullinv.php
+20211108 fho4abcd Improved split: file limit lower, split on </p>, time limit for each file, sanitize html before split
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -48,13 +49,14 @@ $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 /*
 ** The maximum recordsize is given in cisis.h by variable MAXMFRL
 ** We have 3 cisis versions in ABCD
-** - empty = 16-60: max recordsize=   32767 (linux+windows)
+** - empty = 16-60: max recordsize=   32768 (linux+windows)
 ** - ffi          : max recordsize= 1048576 (linux+windows, indexing methods for more static databases)
 ** - bigisis      : max recordsize= 1048576 (linux, no images compiled for windows (at the time this code is written)
+** Safety margin 1 (zero) byte
 */
 $isis_record_size=32767; // This also for 16-60
-if ($cisis_ver=="ffi")     $isis_record_size=1048576;
-if ($cisis_ver=="bigisis") $isis_record_size=1048576;
+if ($cisis_ver=="ffi")     $isis_record_size=1048575;
+if ($cisis_ver=="bigisis") $isis_record_size=1048575;
 
 ?>
 <body>
@@ -393,9 +395,17 @@ else if ($impdoc_cnfcnt==3) {
         /*
         ** Loop over the files to import 
         ** Stop looping in case of errors
+        ** This process may take a long time, so we ensure that each file gets a new (proper) timelimit
+        ** Experience: a large file takes about 1 minute on a windows laptop.
         */
+        $minutes_per_file=5;
+        $seconds_per_file=$minutes_per_file*60;
+        $ini_max_seconds=ini_get('max_execution_time');
+        if ( $ini_max_seconds!==false AND $ini_max_seconds>$seconds_per_file) $seconds_per_file=$ini_max_seconds;
         for ($i=0; $i<$numfiles && $retval==0; $i++) {
             tolog("<hr><ul><li>".$msgstr["dd_imp_actfile"]." #".($i+1)." &rarr; ".$fileList[$i]."</li>");
+            set_time_limit($seconds_per_file);
+            tolog("<li>".$msgstr["dd_imp_proctimelimit"]." ".$seconds_per_file." ".$msgstr["dd_imp_seconds"]."</li>");
             // Import file
             $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget,
                                   $arrHttp["base"], $numrecsOK);
@@ -597,6 +607,44 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         tolog ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_metadata_detect_ok"]."</li>");
     }
     /*
+    ** Sanitize html tika originating from all files
+    */
+    if ( $textmode=="h"  ) {
+        // open a the tika file and a new temporary tika file
+        $fptika=fopen($tikafile,"r");
+        $tmptikafile=$tikafile.".tmp";
+        $fptmptika=fopen($tmptikafile,"w");
+        /*
+        ** Read the tikafile and copy almost everything to the tmp file
+        ** - 
+        */
+        tolog ("<li>".$msgstr["dd_clean_pdf"].". ");
+        $numlinestika=0;
+        $numlinestmp=0;
+        $skip=false;
+        while (!feof($fptika)) { // main loop over all lines of the source file
+            $thisline = trim(fgets($fptika)); // get line contents trimmed
+            $numlinestika++;
+            if( $thisline=="") continue; // tika has at least an empty line at the end of the file
+            $metapos=strpos($thisline,'<meta name="xmpMM:');// pdf history lines
+            if( $metapos!==false  AND $metapos==1 ) continue;
+            // tika generates many lines for inline content (not valid to show or index)
+            if( $thisline=="<p>&lt;&lt;") $skip=true;
+            if( $thisline=="</p>") {
+                $skip=false;
+                continue;
+            }
+            if( $skip==true) continue;
+            $numlinestmp++;
+            fwrite($fptmptika,$thisline.PHP_EOL);
+        }
+        // Close the temporary tikafile and rename it to the actual tikafile
+        fclose($fptmptika);
+        fclose($fptika);
+        rename($tmptikafile,$tikafile);
+        tolog($numlinestika." ".$msgstr["dd_lines"]." &rarr; ".$numlinestmp." ".$msgstr["dd_lines"]."</li>");
+    }
+    /*
     ** Read metadata from the tika generated html file
     ** Lines like 
     ** <meta name="dc:format" content="application/pdf; version=1.5"/>
@@ -725,7 +773,7 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     ** Next function call will split this file and return a list of files to be imported
     */
     $split_files=Array();
-    if ( split_html($tikafile,$textmode,$c_title, $splittarget, $split_files)!=0 ) {
+    if ( split_html($tikafile,$textmode,$c_title, $isis_record_size, $splittarget, $split_files)!=0 ) {
         unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
@@ -797,7 +845,7 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         if (file_exists($act_split_file) ) rename($act_split_file,$htmlSrcPath);
         if (file_exists($procfile) ) unlink($procfile);
         $numrecsOK++;
-    }
+   }
 
     return(0);
 }
@@ -1089,7 +1137,7 @@ function split_path($full_path, &$filename, &$sectionname){
     return(0);
 }
 // ====== split_html =============================
-function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files) {
+function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittarget, &$split_files) {
 /*
 ** Splits the given (html) file into smaller parts
 ** Controlled by the database recordsize.
@@ -1100,7 +1148,7 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
 ** IN : $splittarget= Percentage of recordsize as target of the split chunk size..
 ** Out: $split_files= Array with the names of the resulting files
 */
-    global $cisis_ver, $msgstr, $isis_record_size;
+    global $cisis_ver, $msgstr;
     /*
     ** Before creating the database record the html filesize & database recordsize are shown
     */
@@ -1108,11 +1156,13 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
     $pretty_cisis_recsize=number_format($isis_record_size/1024,2,",",".")." Kb";
     $pretty_html_filesize=number_format($c_htmlfilesize/1024,2,",",".")." Kb";
     tolog("<li>".$msgstr["dd_htmlfilesize"]." ".$pretty_html_filesize.". ".$msgstr["dd_recordsize"]." ".$pretty_cisis_recsize."</li>");
-    $maxsize     = $isis_record_size*$splittarget/100; //splittarget is a percentage
-    if ($maxsize<1000) {// Just in case  a corrupt value is supplied
-        tolog("<span style='color:red'>PROGRAM ERROR:variable maxsize=$maxsize : too small to be credible</span>");die;
+
+    $targetsize = $isis_record_size*$splittarget/100; //splittarget is a percentage
+    $maxsize    = $isis_record_size - 1000;// to prevent Gload errors (unknown why, so sorry)
+    if ($targetsize<5000) {// Just in case  a corrupt value is supplied
+        tolog("<span style='color:red'>PROGRAM ERROR:variable targetsize=$targetsize : too small to be credible</span>");die;
     }
-    if (intval($c_htmlfilesize) < $maxsize) {
+    if (intval($c_htmlfilesize) < $targetsize) {
         // no split required
         $split_files[]=$tikafile;
         return(0);
@@ -1130,7 +1180,9 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
     $partsheader = "<table style='color:green;font-size:150%;font-weight:bold;' border=1 width=100%>";
     $partsheader.= "<tr><td>".$msgstr["dd_partnr"];
     $partstrailer= "</td></tr></table><br>";
-    $pretty_targetsize=number_format($maxsize/1024,2,",",".")." Kb";
+    $filetrail   = "</body></html>";
+    $targetsize  = $targetsize-strlen($filetrail);
+    $pretty_targetsize=number_format($targetsize/1024,2,",",".")." Kb";
     tolog("<li>".$msgstr["dd_splitting"]."&nbsp;".$pretty_targetsize."</li>");
     
     if(($handle = fopen($tikafile, "r"))===false) {
@@ -1143,14 +1195,21 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
         if ( $thisline=="\n"  ) continue; //skip empty line
         if ( $thisline=="\r\n") continue; //skip empty line
         if ( strpos($thisline,"<html")      !==false) continue; //skip html tag
-        if ( strpos($thisline,"<meta name=")!==false) continue; //tika generates many of these, valid ones already processed before
+        if ( strpos($thisline,"</html")     !==false) continue; //skip html tag
+        if ( strpos($thisline,"<head")      !==false) continue; //skip head tag
+        if ( strpos($thisline,"</head")     !==false) continue; //skip head tag
+        if ( strpos($thisline,"<title")     !==false) continue; //skip title tag, processed before
+        if ( strpos($thisline,"</title")    !==false) continue; //skip title tag, processed before
+        if ( strpos($thisline,"<meta")      !==false) continue; //tika generates many of these, valid ones already processed before
+        if ( strpos($thisline,"<body")      !==false) continue; //skip body tag, done by code below
+        if ( strpos($thisline,"</body")     !==false) continue; //skip body tag, done by code below
         // Some lines need adjustment for html
         if ( $textmode=='h') {
             $thisline = str_ireplace('<p/>' , '<br>', $thisline);//tika generates invalid tag <p/> (windows)
             $thisline = preg_replace('/\t/' , ' '   , $thisline);//tika keeps too much spaces (linux,windows)
             $thisline = preg_replace('/  +/', ' '   , $thisline);//tika keeps too much spaces (linux,windows)
         }
-        // Check if a file is opne to write to
+        // Check if a file is open to write to
         if ( $chunkisopen==false ) {
             // open the chunkfile and write a header
             $chunkactfile= $chunkfixfil.$chunknr.$chunkfixext;
@@ -1160,19 +1219,19 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
             $chunksize   = 0;
             $chunksize+=fwrite($chunkhandle,"<!DOCTYPE HTML>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<html>".PHP_EOL);
-            $chunksize+=fwrite($chunkhandle,"<header>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"<head>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<title>".$c_title." #".$chunknr."</title>".PHP_EOL);
-            $chunksize+=fwrite($chunkhandle,"</header>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"</head>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<body>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,$partsheader."&nbsp;".$chunknr.$partstrailer.PHP_EOL);
             $chunknr++;
         }
         // If the chunksize approaches the limit. Take care if over the safety limit
-        if ($chunksize > $maxsize) {
+        if ($chunksize > $targetsize) {
             // Check for exceeding the recordsize
             $thislinelen  = strlen($thisline);
             $chunkexceed  = false;
-            if ( ($chunksize + $thislinelen) >= $isis_record_size){
+            if ( ($chunksize + $thislinelen) >= $maxsize){
                 $chunkexceed=true;
             }
             // Check for  "</div>" at the end of the line
@@ -1181,16 +1240,25 @@ function split_html($tikafile, $textmode, $c_title, $splittarget, &$split_files)
             if (strlen($thistestline)>=6){
                 $divendfound = stripos($thistestline,"</div>",-6);
             }
+            $pendfound=false;
+            if ( $chunksize > ($targetsize+$maxsize)/2 AND strlen($thistestline)>=4) {
+                $pendfound = stripos($thistestline,"</p>",-4);
+            }
             /*
             ** Close the file if there is a good reason
-            ** Over recordsize OR Text mode is "t"  OR </div> found
+            ** Over recordsize OR textmode=t OR </div>  or </p>  found
             */
-            if ($chunkexceed OR $textmode=='t' OR $divendfound!==false) {
+            if ($chunkexceed  OR $textmode=='t' OR $divendfound!==false OR $pendfound!==false) {
                 // write the current line before closing the chunk if there is space left
                 if (!$chunkexceed) {
                     $chunksize+=fwrite($chunkhandle,$thisline);
                 }
+                // Add the filetrailer (space was reserved) and close the chunk
+                fwrite($chunkhandle,$filetrail);
                 fclose($chunkhandle);
+                if (filesize($chunkactfile)>= $isis_record_size){
+                    echo "<br><span style='color:blue'>File size=".filesize($chunkactfile)." Isis record=".$isis_record_size."</span>";
+                }
                 $chunkisopen=false;
                 $pretty_filesize=number_format(filesize($chunkactfile)/1024,2,",",".")." Kb";
                 tolog("<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>");
