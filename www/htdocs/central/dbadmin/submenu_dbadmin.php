@@ -36,7 +36,7 @@
 			<img src="../../assets/svg/catalog/ic_fluent_form_new_24_regular.svg">
 		</a>
 
-		<a class="bt-tool" href="javascript:CambiarBaseAdministrador('reportes')" title="<?php echo $msgstr["reportes"]?>">
+		<a class="bt-tool" href="javascript:CambiarBaseAdministrador('reportes')" title="<?php echo $msgstr["r_reportes"]?>">
 			<img src="../../assets/svg/catalog/ic_fluent_print_24_regular.svg">
 		</a>
 
