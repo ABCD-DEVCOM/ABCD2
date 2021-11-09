@@ -27,8 +27,8 @@ $Permiso=$_SESSION["permiso"];
 
 
 <form name="ReloadSite" method="post">
-	<input type=hidden name=encabezado value="s">
-	<input type=hidden name=base value="<?php echo $arrHttp["base"];?>">
+	<input type="hidden" name=encabezado value="s">
+	<input type="hidden" name=base value="<?php echo $arrHttp["base"];?>">
 </form>	
 
 <script>
@@ -158,7 +158,14 @@ function def_exist($db_path, $arrHttp) {
 function help_exist($db_path, $arrHttp) {
 	global $msgstr;	
 	$base_dir    = $db_path.$arrHttp["base"]."/ayudas";
+
+	if (is_dir($base_dir)){
+
 	$lang_dir = scandir($base_dir);
+
+	} else {
+	$lang_dir = array(); 			
+	}
 
 	//Verifica os idiomas disponíveis na instalação
 		if (isset($msg_path))
@@ -168,7 +175,6 @@ function help_exist($db_path, $arrHttp) {
 			$a=$path_this."lang/".$_SESSION["lang"]."/lang.tab";
 			$fp=file($a);
 			if ($lang_dir <> 0) {
-				echo array_count_values($lang_dir);
 						echo '<label> Copiar modelo a partir do idioma</label><br>';
 						echo ' <select name="source">';
 						echo '<option></option>';
@@ -320,7 +326,9 @@ foreach ($lang_tab as $v => $value){
 <div id="confirm" class="modal">
   <div class="modal-content">
     <div class="container">
-      <h1>Arquivos copiados de <?php echo $_POST['source']?> para <?php echo $_POST['destiny']?>!</h1>
+      <h1>Arquivos copiados de 
+      	<?php 
+  		if (isset($_POST['source'])) { echo $_POST['source']; }?> para <?php if (isset($_POST['destiny'])) { echo $_POST['destiny']; }?>!</h1>
       <p>Total <?php echo $total_files;?> arquivos copiados.</p>
       <div class="clearfix">
         <a class="button btn_ok" href="javascript:ReloadSite();">OK!</a>
@@ -333,7 +341,6 @@ foreach ($lang_tab as $v => $value){
 <form name=forma1 method=post action=../dataentry/imprimir_g.php onsubmit="Javascript:return false">
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 	<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
-	<input type=hidden name=Dir value=<?php echo $arrHttp["Dir"]?>>
 	<input type=hidden name=Modulo value=<?php if (isset($arrHttp["Modulo"])) echo $arrHttp["Modulo"]?>>
 	<input type=hidden name=tagsel>
 	<input type=hidden name=Opcion>
@@ -392,14 +399,7 @@ global $msgstr;
     }
     closedir($handle);
 	}
-?>
-<script type="text/javascript">
-function LeerArchivo_<?php echo $v[0];?>(Opcion){
-	msgwin=window.open("leertxt.php?base=<?php echo $base;?>&cipar=<?php echo $base;?>.par&lang=en&pft=s&archivo=<?php echo $pft;?>","editar","menu=no,status=yes, resizable, scrollbars,width=790")
-	msgwin.focus()
-}			
-</script>
-<?php			
+			
 	break;			
 	}
 }
