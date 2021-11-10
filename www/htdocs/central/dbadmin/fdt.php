@@ -56,7 +56,7 @@ if ($arrHttp["Opcion"]=="new"){
 	include("../common/header.php");
 
 ?>
-	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 	<script languaje=javascript>
@@ -796,13 +796,13 @@ echo " Script: dbadmin/fdt.php";
 	</div>
 	<div class="middle form">
 		<div class="formContent">
-			<a class="bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
-			<a class="bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			<a class="bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
 			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span>
 	
 <div class="row">
-<table  style="width:100%; height:300px;" id=tblToGrid class="dhtmlxGrid">
+<table  style="width:100%; height:300px;" id="tblToGrid" class="dhtmlxGrid">
 <?php
 echo "<tr>";
 $tope=0;
@@ -944,12 +944,12 @@ if (isset($fp)){
 
 	</table>
 </div>		
-	<a class="bt-blue" href=javascript:Test()><?php echo $msgstr["test"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a class="bt-blue" href=javascript:List()><?php echo $msgstr["list"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a class="bt-blue" href=javascript:Validate()><?php echo $msgstr["validate"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
+	<a class="bt bt-blue" href=javascript:Test()><?php echo $msgstr["test"]?></a>
+	<a class="bt bt-blue" href=javascript:List()><?php echo $msgstr["list"]?></a>
+	<a class="bt bt-blue" href=javascript:Validate()><?php echo $msgstr["validate"]?></a>
 	<?php
 	if (!isset($arrHttp["moodle"]))
-		echo "<a class='bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>&nbsp; &nbsp; &nbsp; &nbsp;
+		echo "<a class='bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>
 
 <script>
 	var mygrid = new dhtmlXGridFromTable('tblToGrid');

@@ -162,10 +162,9 @@ startScrollingDetector()
 			<?php echo $msgstr["expresion"];?>
 		</a>
     	<div id="Expresion" style="display:none; padding: 10px;">
-    		<textarea name="nueva_b" id="nueva_b" cols="150" rows="1"><?php echo stripslashes($arrHttp["Expresion"]);?></textarea> 
+    		<textarea name="nueva_b" id="nueva_b" cols="130" rows="1"><?php echo stripslashes($arrHttp["Expresion"]);?></textarea> 
     		<a class="button_browse edit" href="javascript:NuevaBusqueda()"><i class="fas fa-search"></i> <?php echo $msgstr["buscar"];?></a> 
     		<a class="button_browse show" href="javascript:top.Menu('refinar')"><i class="fas fa-search-plus"></i> <?php echo $msgstr["refine"];?></a>
-    	 &nbsp; 
 
     	 <?php echo InsertarEnlaces($arrHttp['base']);
     	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){
