@@ -12,6 +12,7 @@
 20211101 fho4abcd replace vmx_fullinv.php by fullinv.php
 20211108 fho4abcd Improved split: file limit lower, split on </p>, time limit for each file, sanitize html before split
 20211110 fho4abcd Reserve record space for inverted file generation, remove img clauses, chunk may and at </table>
+20201110 fho4abcd Remove debug file + corrected splittarget: menu value is noew used
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -46,7 +47,7 @@ if ( isset($arrHttp["backtoscript"]))  $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["impdoc_cnfcnt"])) $impdoc_cnfcnt=$arrHttp["impdoc_cnfcnt"];
 if ( isset($arrHttp["splittarget"]))   $splittarget=$arrHttp["splittarget"];
-if ( isset($arrHttp["splitmax"]))      $splittarget=$arrHttp["splitmax"];
+if ( isset($arrHttp["splitmax"]))      $splitmax=$arrHttp["splitmax"];
 if ( isset($arrHttp["logmode"]))       $logmode=$arrHttp["logmode"];
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 /*
@@ -623,7 +624,7 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
 
     /*
     ** Sanitize html tika originating from all files
-    */ copy ($tikafile,$tikafile.".html");
+    */
     if ( $textmode=="h"  ) {
         // open a the tika file and a new temporary tika file
         $fptika=fopen($tikafile,"r");
