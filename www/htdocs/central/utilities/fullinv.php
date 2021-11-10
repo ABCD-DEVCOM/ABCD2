@@ -13,7 +13,8 @@
 20211018 eds added created from vmx_fullinv.php+options for stripHTML, incremental indexing
 20211101 fho4abcd Check for digital document+use cipar for gizmo+form layout+defaults to enable processing of "normal" databases
 20211103 fho4abcd Enable gizmo for htmlfields+hint if gizmo is wrong+simplify interface
-20211108 fho4abcd Show parameters and commandline before processing,replaced wait pop-up by "working". Slashm default checked. 
+20211108 fho4abcd Show parameters and commandline before processing,replaced wait pop-up by "working". Slashm default checked.
+20211110 fho4abcd Reordered commandline parameters, add extra flush at end of page 
 */
 /**
  * @desc:      Create database index
@@ -340,10 +341,13 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
 
     // Create command.
     // Note that mx does not extract uctab/actab from cipar: explicitly specified here
-    $strINV =$mx_path.' db='.$bd."/data/".$base. " fst=@".$bd."/data/".$fst;
+    $strINV =$mx_path;
     $strINV.=" cipar=".$fullciparpath;
+    $strINV.=" db=".$bd."/data/".$base;
+    $strINV.=" fst=@".$bd."/data/".$fst;
     $strINV.=" ".$strip_var;
-    $strINV.=" uctab=".$uctab." actab=".$actab;
+    $strINV.=" actab=".$actab;
+    $strINV.=" uctab=".$uctab;
     $strINV.=" ".$stwat;
     $strINV.=" ".$incr_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
     // Show the execution parameters
@@ -352,7 +356,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     <font face=courier size=2><?php echo $parameters?><br>
           <?php echo $msgstr["commandline"]?>: <?php echo $strINV?><br></font>
     <hr>
-    <span id="working"><?php echo $msgstr["system_working"]?></span>
+    <span id="working" style="color:red"><b>.... <?php echo $msgstr["system_working"]?> ....</span>
     <?php
     ob_flush();flush();
 
@@ -377,6 +381,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
             echo $msgstr["isismustmatch"]."</div>";
         }
    }
+    ob_flush();flush();
 }
 
 ?>

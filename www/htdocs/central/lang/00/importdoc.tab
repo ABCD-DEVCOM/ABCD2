@@ -13,6 +13,7 @@ dd_coluplfoldererr=Unable to create collection folder for upload/import
 dd_continuewith=Continue with
 dd_detect_meta=Detect metadata in:
 dd_documents=Digital Documents
+dd_docpfilesize=Size of source file=
 dd_done=Done
 dd_duplicate=Duplicate
 dd_error_empty=Removed empty file
@@ -63,6 +64,7 @@ dd_imp_tikajar=Select tika jar
 dd_imp_tikasrc=Searched in cgi-bin by pattern:
 dd_imp_tikaver=Show tika version(s)
 dd_imp_unique=Guarantees unique filenames
+dd_imp_usablerecsize=Working recordsize
 dd_lines=lines
 dd_logfile=Logfile
 dd_logfolder=Logging folder
@@ -95,6 +97,7 @@ dd_section=Section
 dd_sectionhlp=Type section name or click twice to view existing section names
 dd_sectionfoldererr=Unable to create Section folder
 dd_size=Size
+dd_splitmax=Maximum used record size=
 dd_splitting=Split the file. Target size=
 dd_status=Status
 dd_term_contributor=Contributor

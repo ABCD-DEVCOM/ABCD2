@@ -11,6 +11,7 @@
 20211017 fho4abcd Remove empty files before presenting the list of files to be processed + option to log to file
 20211101 fho4abcd replace vmx_fullinv.php by fullinv.php
 20211108 fho4abcd Improved split: file limit lower, split on </p>, time limit for each file, sanitize html before split
+20211110 fho4abcd Reserve record space for inverted file generation, remove img clauses, chunk may and at </table>
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -39,11 +40,13 @@ $backtoscript="../dataentry/incio_main.php"; // The default return script
 $inframe=1;                      // The default runs in a frame
 $impdoc_cnfcnt=0;
 $splittarget=80;
+$splitmax=85;
 $logmode="web";
 if ( isset($arrHttp["backtoscript"]))  $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["impdoc_cnfcnt"])) $impdoc_cnfcnt=$arrHttp["impdoc_cnfcnt"];
 if ( isset($arrHttp["splittarget"]))   $splittarget=$arrHttp["splittarget"];
+if ( isset($arrHttp["splitmax"]))      $splittarget=$arrHttp["splitmax"];
 if ( isset($arrHttp["logmode"]))       $logmode=$arrHttp["logmode"];
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 /*
@@ -330,11 +333,16 @@ else if ($impdoc_cnfcnt==2) {
                 </select>
             </td>
         </tr><tr>
-            <td><?php echo $msgstr["dd_imp_splittarget"];?></td>
-            <td><input name='splittarget' type=number min=1 max=100 value=<?php echo $splittarget;?> ></td>
+            <td><?php echo $msgstr["dd_imp_usablerecsize"];?></td>
+            <td><input name='splitmax' type=number min=10 max=95 value=<?php echo $splitmax;?> ></td>
             <td style='color:blue'><?php echo $msgstr["dd_imp_splitperc"]." (".$pretty_cisis_recsize.")";?></td>
+        </tr>
+        </tr><tr>
+            <td><?php echo $msgstr["dd_imp_splittarget"];?></td>
+            <td><input name='splittarget' type=number min=50 max=100 value=<?php echo $splittarget;?> ></td>
+            <td style='color:blue'><?php echo "% of ".$msgstr["dd_imp_usablerecsize"];?></td>
         </tr><tr><td colspan=3><hr></td>
-       </tr><tr>
+        </tr><tr>
             <td><?php echo $msgstr["dd_logto"];?></td>
             <td><select name=logmode id=logmode>
                     <option value="web" selected><?php echo $msgstr["dd_logtoweb"];?></option>
@@ -407,7 +415,7 @@ else if ($impdoc_cnfcnt==3) {
             set_time_limit($seconds_per_file);
             tolog("<li>".$msgstr["dd_imp_proctimelimit"]." ".$seconds_per_file." ".$msgstr["dd_imp_seconds"]."</li>");
             // Import file
-            $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget,
+            $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splitmax, $splittarget,
                                   $arrHttp["base"], $numrecsOK);
             $processed=$i;
             if ($retval==0) {
@@ -503,7 +511,7 @@ include "../common/footer.php";
 //  - tolog             : writes information to screen and/or logfile
 //
 // ====== import_action =============================
-function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splittarget, $basename, &$numrecsOK) {
+function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splitmax, $splittarget, $basename, &$numrecsOK) {
 /*
 ** Imports the given file in ABCDImportRepo/... into the collection
 ** The metadata of this file is stored in an ABCD record.
@@ -514,7 +522,8 @@ function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $tex
 ** In: $truncsize     = Number of characters in core file name (""=unlimited)
 ** In: $tikajar       = Name of actual tika jar in cgi-bin
 ** In: $textmode      = Indicator for tika: m=meta, t=text, h=html, x=xhtml
-** IN: $splittarget   = Percentage of recordsize as target of the split chunk size..
+** In: $splitmax      = Percentage of recordsize as maximum of the split chunk size
+** In: $splittarget   = Percentage of splitmax as target of the split chunk size
 ** In: $basename      = short name of the database (e.g. dubcore)
 ** Other variables via 'Global'.
 ** Return : 0=OK, 1=NOT-OK
@@ -606,9 +615,15 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     } else {
         tolog ("<li style='color:green;font-weight:bold'>&rArr; ".$msgstr["dd_metadata_detect_ok"]."</li>");
     }
+    $c_docpathsize=filesize($docpath);
+    $c_tikafilesize=filesize($tikafile);
+    $pretty_docp_filesize=number_format($c_docpathsize/1024,2,",",".")." Kb";
+    $pretty_tika_filesize=number_format($c_tikafilesize/1024,2,",",".")." Kb";
+    tolog("<li>".$msgstr["dd_docpfilesize"].$pretty_docp_filesize." ".$msgstr["dd_htmlfilesize"]." ".$pretty_tika_filesize."</li>");
+
     /*
     ** Sanitize html tika originating from all files
-    */
+    */ copy ($tikafile,$tikafile.".html");
     if ( $textmode=="h"  ) {
         // open a the tika file and a new temporary tika file
         $fptika=fopen($tikafile,"r");
@@ -616,7 +631,6 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         $fptmptika=fopen($tmptikafile,"w");
         /*
         ** Read the tikafile and copy almost everything to the tmp file
-        ** - 
         */
         tolog ("<li>".$msgstr["dd_clean_pdf"].". ");
         $numlinestika=0;
@@ -635,6 +649,12 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
                 continue;
             }
             if( $skip==true) continue;
+            // some files (e.g. epub) show embedded images. They corrupt the index
+            $imgposbeg=stripos($thisline,'<img');// start of image
+            if( $imgposbeg!==false AND strlen($thisline)>2) {
+                $imgposend=stripos($thisline,'/>',-2);// start of image
+                if( $imgposend!==false) continue;
+            }
             $numlinestmp++;
             fwrite($fptmptika,$thisline.PHP_EOL);
         }
@@ -773,7 +793,7 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     ** Next function call will split this file and return a list of files to be imported
     */
     $split_files=Array();
-    if ( split_html($tikafile,$textmode,$c_title, $isis_record_size, $splittarget, $split_files)!=0 ) {
+    if ( split_html($tikafile,$textmode,$c_title, $isis_record_size, $splitmax, $splittarget, $split_files)!=0 ) {
         unlink($tikafile);
         rename($docpath, $full_imp_path);
         return(1);
@@ -1137,7 +1157,7 @@ function split_path($full_path, &$filename, &$sectionname){
     return(0);
 }
 // ====== split_html =============================
-function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittarget, &$split_files) {
+function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splitmax, $splittarget, &$split_files) {
 /*
 ** Splits the given (html) file into smaller parts
 ** Controlled by the database recordsize.
@@ -1145,7 +1165,8 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittar
 ** In : $textmode   = Indicator for tika: m=meta, t=text, h=html, x=xhtml
 ** In : $c_title    = Title extracted by tika. May be ""
 ** In : $isis_record_size = maximum size of isisrecord
-** IN : $splittarget= Percentage of recordsize as target of the split chunk size..
+** In: $splitmax      = Percentage of recordsize as maximum of the split chunk size
+** In: $splittarget   = Percentage of splitmax as target of the split chunk size
 ** Out: $split_files= Array with the names of the resulting files
 */
     global $cisis_ver, $msgstr;
@@ -1157,16 +1178,36 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittar
     $pretty_html_filesize=number_format($c_htmlfilesize/1024,2,",",".")." Kb";
     tolog("<li>".$msgstr["dd_htmlfilesize"]." ".$pretty_html_filesize.". ".$msgstr["dd_recordsize"]." ".$pretty_cisis_recsize."</li>");
 
-    $targetsize = $isis_record_size*$splittarget/100; //splittarget is a percentage
-    $maxsize    = $isis_record_size - 1000;// to prevent Gload errors (unknown why, so sorry)
+    /*
+    ** The maximum recordsize cannot be used (for some odd unknown reason)
+    ** The reduction value can be influenced by the form (splitmax)
+    ** - Gload              errors are shown if the reduction is much too small
+    ** - recgizmo/fldupdat  errors are shown with a moderate reduction
+    ** - fullinv/ifload     errors are shown if /m is unset and the reduction is still too small
+    */
+    $maxsize    = $isis_record_size*($splitmax/100); // maximum used recordsize. Is a percentage
+    /*
+    ** Split html is preferred at a logical boundary
+    ** If actual recordsize exceeds the target size the system searches for logical boundary
+    */
+    $targetsize = $maxsize*($splittarget/100); //splittarget is a percentage
     if ($targetsize<5000) {// Just in case  a corrupt value is supplied
         tolog("<span style='color:red'>PROGRAM ERROR:variable targetsize=$targetsize : too small to be credible</span>");die;
     }
-    if (intval($c_htmlfilesize) < $targetsize) {
+    /*
+    ** If the file is less then the maximum usable size a split is not necessary
+    */
+    if (intval($c_htmlfilesize) < $maxsize) {
         // no split required
         $split_files[]=$tikafile;
         return(0);
     }
+    /*
+    ** Splitting required. Show initial message
+    */
+    $pretty_maxsize=number_format($maxsize/1024,2,",",".")." Kb";
+    $pretty_targetsize=number_format($targetsize/1024,2,",",".")." Kb";
+    tolog("<li>".$msgstr["dd_splitting"]." ".$pretty_targetsize.". ".$msgstr["dd_splitmax"]." ".$pretty_maxsize."</li>");
     /*
     ** Split the file into chunks
     ** Set variables required during the split
@@ -1181,9 +1222,7 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittar
     $partsheader.= "<tr><td>".$msgstr["dd_partnr"];
     $partstrailer= "</td></tr></table><br>";
     $filetrail   = "</body></html>";
-    $targetsize  = $targetsize-strlen($filetrail);
-    $pretty_targetsize=number_format($targetsize/1024,2,",",".")." Kb";
-    tolog("<li>".$msgstr["dd_splitting"]."&nbsp;".$pretty_targetsize."</li>");
+    $maxsize     = $maxsize-strlen($filetrail)-2;// absolute working maximum adjusted for trailer+crlf
     
     if(($handle = fopen($tikafile, "r"))===false) {
         return(1);
@@ -1234,12 +1273,17 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittar
             if ( ($chunksize + $thislinelen) >= $maxsize){
                 $chunkexceed=true;
             }
-            // Check for  "</div>" at the end of the line
+            // Check for  "</div>" or "</table>" at the end of the line
             $thistestline = trim($thisline,PHP_EOL);
             $divendfound  = false;
+            $tabendfound  = false;
             if (strlen($thistestline)>=6){
                 $divendfound = stripos($thistestline,"</div>",-6);
             }
+            if (strlen($thistestline)>=8){
+                $tabendfound = stripos($thistestline,"</table>",-8);
+            }
+            // Check for "</p>" at the end of the line
             $pendfound=false;
             if ( $chunksize > ($targetsize+$maxsize)/2 AND strlen($thistestline)>=4) {
                 $pendfound = stripos($thistestline,"</p>",-4);
@@ -1248,7 +1292,7 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittar
             ** Close the file if there is a good reason
             ** Over recordsize OR textmode=t OR </div>  or </p>  found
             */
-            if ($chunkexceed  OR $textmode=='t' OR $divendfound!==false OR $pendfound!==false) {
+            if ($chunkexceed  OR $textmode=='t' OR $divendfound!==false OR $tabendfound!==false OR $pendfound!==false) {
                 // write the current line before closing the chunk if there is space left
                 if (!$chunkexceed) {
                     $chunksize+=fwrite($chunkhandle,$thisline);
@@ -1268,8 +1312,14 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splittar
         $chunksize+=fwrite($chunkhandle,$thisline);
         $chunkexceed=false;
     }
+    // The end of the input is found. Write a trailer and close the chunk if necessary
+    if ( $chunkisopen==true ) {
+        fwrite($chunkhandle,$filetrail);
+        fclose($chunkhandle);
+    }
     $pretty_filesize=number_format(filesize($chunkactfile)/1024,2,",",".")." Kb";
     tolog("<li>".$msgstr["dd_partnr"]." ".($chunknr-1)." ".$msgstr["dd_size"]." ".$pretty_filesize."</li>");
+    // Close the input file
     fclose($handle);
     unlink($tikafile); // original no longer needed
     return(0);
