@@ -2112,7 +2112,7 @@ a.button:hover {
 	color: var(--white);
 }
 
-.button_browse.delete {
+.button_browse.delete, .bt-red {
 	background: var(--red);
 	color: var(--white);
 }
@@ -2131,6 +2131,9 @@ a.button:hover {
 .bt {
 	margin: 3px;
 	width: auto;
+	padding: 5px 13px;
+	border-radius: 3px;
+	text-decoration: none;
 }
 
 .bt-green {
