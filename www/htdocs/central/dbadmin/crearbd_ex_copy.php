@@ -1,6 +1,7 @@
 <?php
 /*
 20210921 fho4abcd Complete rewrite: improve/extend functionality, all strings translatable.
+20211110 fho4abcd Ensure dr_path values for UNICODE and CISIS
 */
 /*
 ** Copies a database to a new folder
@@ -153,41 +154,65 @@ if ($arrHttp["checkdup"]==1 ) {
     $fp=file($oldfile);
     $contenido="";
     $tokens=array();
+    $issetISISAC=false;
+    $issetISISUC=false;
     foreach ($fp as $value){
         $tokens=explode('=',$value);
         if (isset($tokens[0]) && trim($tokens[0])=="isisac.tab") {
             $contenido.="isisac.tab=%path_database%".$isisac.PHP_EOL;
+            $issetISISAC=true;
         } else if (isset($tokens[0]) && trim($tokens[0])=="isisuc.tab") {
             $contenido.="isisuc.tab=%path_database%".$isisuc.PHP_EOL;
+            $issetISISUC=true;
         } else {
             $contenido.=str_replace($base_old,"$base_new",$value);
         }
     }
+    if (!$issetISISAC) $contenido.="isisac.tab=%path_database%".$isisac.PHP_EOL;
+    if (!$issetISISUC) $contenido.="isisuc.tab=%path_database%".$isisuc.PHP_EOL;
     CrearArchivo($newfile,$contenido);
 
     // Copy & update dr_path.def or create a new with default settings
     $oldfile=$db_path."$base_old"."/dr_path.def";
     $newfile=$db_path."$base_new"."/dr_path.def";
     $contenido="";
+    $issetCOLL=false;
     if ( file_exists($oldfile) ) {
         $fp=file($oldfile);
         $tokens=array();
+        $issetCISIS=false;
+        $issetUNI=false;
         foreach ($fp as $value){
             $tokens=explode('=',$value);
             if (isset($tokens[0]) && trim($tokens[0])=="CISIS_VERSION") {
                 $contenido.="CISIS_VERSION=".$arrHttp["CISIS_VERSION"].PHP_EOL;
+                $issetCISIS=true;
             } else if (isset($tokens[0]) && trim($tokens[0])=="UNICODE") {
                 $contenido.="UNICODE=".$arrHttp["UNICODE"].PHP_EOL;
+                $issetUNI=true;
+            } else if (isset($tokens[0]) && trim($tokens[0])=="COLLECTION") {
+                $issetCOLL=true;
+                $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
+                $colfolderfull=str_replace("%path_database%",$db_path."/",$tokens[1]);
+                $colfolderfull=str_replace($base_old,"$base_new",$colfolderfull);
+                $colfolderfull=trim($colfolderfull);
+                if ( substr($colfolderfull,-1)=="/") $colfolderfull=substr($colfolderfull,0,-1);
             } else {
-                $contenido.=str_replace($base_old,"$base_new",$value);
+                $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
             }
         }
+        if (!$issetCISIS)   $contenido.="CISIS_VERSION=".$arrHttp["CISIS_VERSION"].PHP_EOL;
+        if (!$issetUNI)     $contenido.="UNICODE=".$arrHttp["UNICODE"].PHP_EOL;
     } else {
         $contenido.="UNICODE=".$arrHttp["UNICODE"].PHP_EOL;
         $contenido.="CISIS_VERSION=".$arrHttp["CISIS_VERSION"].PHP_EOL;
         $contenido.="DIRTREE_EXT=*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,".PHP_EOL;
     }
-    CrearArchivo($newfile,$contenido);
+    CrearArchivo($newfile,$contenido); echo "<br>";var_dump($colfolderfull); echo "<br>";var_dump($issetCOLL);
+    if ( $issetCOLL AND !file_exists($colfolderfull)) {
+        mkdir($colfolderfull);
+        echo $msgstr["created"]." ".$colfolderfull."<br>";
+    }
 
     // Copy ayudas folder
     $file = $db_path."$base_old"."/ayudas";
@@ -222,6 +247,7 @@ if ($arrHttp["checkdup"]==1 ) {
     }
 
     // Copy all fst's in the data folder. At least one has the database name
+    // Copy also iso files (possible load files for a gizmo)
     $olddata=$db_path."$base_old"."/data";
     $handle=opendir($olddata);
     while (false !== ($tstfile = readdir($handle))) {
@@ -230,6 +256,11 @@ if ($arrHttp["checkdup"]==1 ) {
             $newfile=$db_path.$base_new."/data/".$base_new.".fst";
             CopyFile($file, $newfile);
         } else if ( substr(strrchr($tstfile, "."), 1)=="fst" ) {
+            $file   =$olddata."/".$tstfile;
+            $newfile=$db_path.$base_new."/data/".$tstfile;
+            CopyFile($file, $newfile);
+        }
+        if ( substr(strrchr($tstfile, "."), 1)=="iso" ) {
             $file   =$olddata."/".$tstfile;
             $newfile=$db_path.$base_new."/data/".$tstfile;
             CopyFile($file, $newfile);
