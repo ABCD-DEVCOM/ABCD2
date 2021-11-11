@@ -1,0 +1,1 @@
+mx dubcorebiguni fst=@dubcorebiguni.fst uctab=..\..\isisuctab_utf8.tab actab=..\..\isisactab_utf8.tab fullinv=dubcorebiguni -all now tell=100
