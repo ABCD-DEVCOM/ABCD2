@@ -1,0 +1,22 @@
+'<font face=arial size=2><b>Object Id: </b>'v1'<br>'/,
+'<b>Database: </b>'v10,/
+'<table border=1 cellspacing=5>'
+'<tr>'
+'<th><font face=arial size=2>Inventario</th>
+<th><font face=arial size=2>Biblioteca principal</th>
+<th><font face=arial size=2>Biblioteca secundaria</th>
+<th><font face=arial size=2>Tipo de objeto</th>
+<th><font face=arial size=2>Volumen</th>
+<th><font face=arial size=2>Tomo</th>'
+
+('<tr>',
+'<td valign=top><font face=arial size=2>'v959^i,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^l,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^b,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^o,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^v,' </td>'/
+'<td valign=top><font face=arial size=2>'v959^t,' </td>'/)
+'</table>'
+'<hr>'/
+
+

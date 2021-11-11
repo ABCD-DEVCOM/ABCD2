@@ -1,0 +1,35 @@
+<p><strong>Cria&ccedil;&atilde;o de uma nova sugest&atilde;o</strong></p>
+
+<p>As sugest&atilde;os inseridas na base de dados e se numeram sequencialmente 
+  afim de criar rela&ccedil;&otilde;es&nbsp;com as outras bases de dados do módulo 
+  de adquisi&ccedil;&atilde;o. Esta numera&ccedil;&atilde;o se realiza a través 
+  do arquivo <strong>control_number.cn</strong> localizado na pasta <strong>bases/suggestions/data.</strong></p>
+<p>Trabalhando com multi-usu&aacute;rio, &eacute; necesario evitar que duas esta&ccedil;&otilde;es 
+  de trabalho possam gerar o mesmo número. Para issose procededa assim:</p>
+
+<ol>
+  <li>Verifique se o arquivo <strong>control_number.cn </strong>tem ou n&atilde;o 
+    a propriedade <strong>somente leitura</strong></li>
+  <li>Se n&atilde;o tem a propriedade <strong>somente leitura</strong> ent&atilde;o: 
+    <ul>
+      <li> Proteja o arquivo para que outra esta&ccedil;&atilde;o n&atilde;o&nbsp; 
+        possa l&ecirc;-lo.</li>
+      <li>Leia o último número sequencial assinado e acrescente 1.</li>
+      <li>Tire uma c&oacute;pia do arquivo <strong>control_number.cn </strong>(<strong>control_number.bak</strong>)</li>
+      <li>Agrege o número sequencial ao campo do número de controle do registro</li>
+      <li>Grave no arquivo <strong>control_number.cn</strong> o último número 
+        sequencial asignado</li>
+      <li>Desproteja o arquivo&nbsp;<strong>control_number.cn </strong>para que 
+        outra esta&ccedil;&atilde;o possa criar um registro novo</li>
+    </ul>
+  </li>
+  <li>Se o arquivo <strong>control_number.cn</strong>&nbsp; tem a propriedade&nbsp;&nbsp;<strong>somente 
+    leitura</strong> avise esta situa&ccedil;&atilde;o ao operador e forne&ccedil;a 
+    um link para atribuir de novo fazer o número sequencial.</li>
+</ol>
+
+<p>Se ap&oacute;s v&aacute;rias tentativas n&atilde;o for atribu&iacute;do o n&uacute;mero 
+  sequencial, o Administrador do Sistema deve verificar as permiss&otilde;esdo 
+  arquivo&nbsp;&nbsp;<strong>control_number.cn</strong>&nbsp; e se necess&aacute;rio, 
+  modific&aacute;-lo a permis&atilde;o para fornecer de novo o acesso.</p>
+

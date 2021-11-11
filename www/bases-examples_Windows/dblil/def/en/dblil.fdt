@@ -1,0 +1,89 @@
+F|1|Codigo do Centro [01]|0|0|||||||||
+F|2|Numero de Identificacao [02]|0|0|||||||||
+F|3|Localizacao do Documento [03]|0|1|abct||||||||
+F|4|Base de Dados [04]|0|1|||||||||
+F|5|Tipo de Literatura [05]|0|0|||||||||
+F|6|Nivel de Tratamento [06]|0|0|||||||||
+F|7|Tombo [07]|0|1|||||||||
+F|8|Suporte Eletronico [08]|0|1|uiqygzxskl||||||||
+F|09|Tipo de Registro [09]|0|0|||||||||
+F|10|Autor Pessoal[10]|0|1|123pcr||||||||
+F|11|Autor Institucional [11]|0|1|r||||||||
+F|12|Titulo [12]|0|1|i||||||||
+F|13|Titulo Traduzido p/ Ingles [13|0|0|]||||||||
+F|14|Paginas [14]|0|1|fl||||||||
+F|16|Autor Pessoal [16]|0|1|123pcr||||||||
+F|17|Autor Institucional [17]|0|1|r||||||||
+F|18|Titulo [18]|0|1|i||||||||
+F|19|Titulo Traduzido p/ Ingles [19|0|0|]||||||||
+F|20|Paginas [20]|0|0|||||||||
+F|21|Volume [21]|0|0|||||||||
+F|23|Autor Pessoal [23]|0|1|123pcr||||||||
+F|24|Autor Institucional [24]|0|1|r||||||||
+F|25|Titulo [25]|0|1|i||||||||
+F|26|Titulo Traduzido p/ Ingles [26|0|0|]||||||||
+F|27|Numero Total de Volumes [27]|0|0|||||||||
+F|30|Titulo [30]|0|1|||||||||
+F|31|Volume [31]|0|0|||||||||
+F|32|Numero do Fasciculo [32]|0|0|||||||||
+F|35|ISSN [35]|0|0|||||||||
+F|38|Informacao Descritiva [38]|0|1|bace||||||||
+F|40|Idioma do Texto [40]|0|1|||||||||
+F|49|Autor Pessoal [49]|0|1|123pcr||||||||
+F|50|Tese - Instituicao [50]|0|0|||||||||
+F|51|Tese - Titulo Academico [51]|0|0|||||||||
+F|52|Evento - Instituicao [52]|0|1|||||||||
+F|53|Evento - Nome [53]|0|1|||||||||
+F|54|Evento - Data [54]|0|0|||||||||
+F|55|Evento - Data Normalizada [55]|0|0|||||||||
+F|56|Evento - Cidade [56]|0|0|||||||||
+F|57|Evento - Pais [57]|0|0|||||||||
+F|58|Projeto - Instituicao [58]|0|1|||||||||
+F|59|Projeto - Nome [59]|0|0|||||||||
+F|60|Projeto - Numero [60]|0|0|||||||||
+F|61|Notas Interna [61]|0|0|||||||||
+F|62|Editora [62]|0|1|||||||||
+F|63|Edicao [63]|0|0|||||||||
+F|64|Data de Publicacao [64]|0|0|||||||||
+F|65|Data Normalizada [65]|0|0|||||||||
+F|66|Cidade de Publicacao [66]|0|0|||||||||
+F|67|Pais de Publicacao [67]|0|0|||||||||
+F|68|Simbolo [68]|0|1|||||||||
+F|69|ISBN [69]|0|0|||||||||
+F|70|COCHRANE [70]|0|1|||||||||
+F|71|Tipo de Publicacao [71]|0|1|||||||||
+F|72|Numero Total Referencias [72]|0|0|||||||||
+F|74|Alcance Temporal(desde) [74]|0|0|||||||||
+F|75|Alcance Temporal(ate) [75]|0|0|||||||||
+F|76|Descritor Pre-Codificado [76]|0|1|||||||||
+F|78|Individuo como Tema [78]|0|1|||||||||
+F|82|Regiao Nao DeCS [82]|0|1|||||||||
+F|83|Resumo [83]|0|0|i||||||||
+F|84|Data Transferencia Base [84]|0|0|||||||||
+F|85|Palavras-chave do Autor [85]|0|1|is||||||||
+F|87|Descritor Primario [87]|0|1|ds||||||||
+F|88|Descritor Secundario [88]|0|1|ds||||||||
+F|91|Data do Processamento [91]|0|0|ift||||||||
+F|92|Documentalista [92]|0|1|||||||||
+F|93|Data utima Modificacao [93]|0|1|ift||||||||
+F|98|Reg Complementar(M,C,S) [98]|0|0|||||||||
+F|101|Reg Complementar(Evento) [101]|0|0|||||||||
+F|102|Reg Complementar(Proj) [102]|0|0|||||||||
+F|110|Forma do Item [110]|0|0|||||||||
+F|111|Tipo Arq Computador [111]|0|0|||||||||
+F|112|Tipo Material Cartografico [11|0|0|2]||||||||
+F|113|Tipo Periodico [113]|0|0|||||||||
+F|114|Tipo Material Visual [114]|0|0|||||||||
+F|115|Designacao Espec Mat [115]|0|0|||||||||
+F|500|Nota Geral [500]|0|0|||||||||
+F|505|Nota Formatada Conteudo [505]|0|0|||||||||
+F|530|Nota Disp Form Fis Adic [530]|0|0|||||||||
+F|533|Nota de Reproducao [533]|0|0|||||||||
+F|534|Nota de Versão Original [534]|0|0|||||||||
+F|610|Instituicao como Tema [610]|0|0|||||||||
+F|653|Descritores Locais [653]|0|0|||||||||
+F|700|Nome Reg Ensaio Clínico [700]|0|0|au||||||||
+F|724|DOI [724]|0|0|||||||||
+F|777|PID do Centro Coop [777]|0|0|||||||||
+F|778|Identificados Reg LILACS [778]|0|0|||||||||
+F|899|Versao do Software [899]|0|0|||||||||

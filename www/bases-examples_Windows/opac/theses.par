@@ -1,0 +1,10 @@
+theses.*=/var/opt/ABCD/bases/theses/data/theses.*
+theses.pft=/var/opt/ABCD/bases/theses/pfts/en/theses.pft
+prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
+prologo.pft=/var/opt/ABCD/bases/www/prologo.pft
+epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft
+epilogo.pft=/var/opt/ABCD/bases/www/epilogo.pft
+autoridades.pft=/var/opt/ABCD/bases/theses/pfts/es/autoridades.pft
+isisac.tab=/var/opt/ABCD/bases/theses/data/isisac.tab
+isisuc.tab=/var/opt/ABCD/bases/theses/data/isisuc.tab
+STW=/var/opt/ABCD/bases/theses/data/theses.stw

@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <p>
+      <font face="Arial"><strong>Types des articles</strong></font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Cette table décrit les règles appliquées 
+      aux différents types d'articles existants dans la base de données. The type d'objet 
+      dont il est question dans la table devrait être généré par le format d'extraction 
+      appliqué à la base de données contenant les objets en prêt ; cette sortie, parmi
+      d'autres données, devrait contenir le type d'objet qui sera utilisé dans la table 
+      pour définir les règles de gestion correspondantes.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Si le format d'extraction ne génère aucune sortie
+      alors le gestionnaire du prêt décide du type de prêt à appliquer en sélectionnant
+      une des options de la table <b>Types de prêts</b>.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Quand l'enregistrement d'un prêt est fait, 
+      le type d'objet ou le type de prêt sont stockés afin d'assurer l'application 
+      correcte des règles de retours, d'amendes ou de suspension.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2"><strong>Description de la table</strong></font>
+    </p>
+    <table cellspacing="1" cellpadding="1" width="80%" summary="" border="1">
+      <tbody>
+        <tr>
+          <td bgcolor="#99CCFF">
+            <font face="Arial" size="2"><strong>Champ</strong></font>
+          </td>
+          <td bgcolor="#99CCFF">
+            <font face="Arial"><font size="2"><strong>Usage dans l'application des règles de gestion</strong></font></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Type d'objet</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Valeur issue du format d'extraction
+            format apliqué à la base de données bibliographique.</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Description</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Nom du type d'article</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Type d'utilisateur</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Spécifie le type d'utilisateur auquel 
+            s'applique les régles pour un article de ce type. Si aucun utilisateur 
+            n'est sélectionné, les règles s'appliques à tous les utilisateurs</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Période de prêt</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Nombre de jours/heures pour calculer la période de prêt</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Unité</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Unité de mesure des périodes de prêt (Jours/Heures)</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">No. de réservations</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Nombre de réservations autorisées</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Amende par jour de retard</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Affiche l'amende comptabilisée pour chaque jour/heure de retour pour le retour d'un prêt</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Jours de suspension par jour de retard</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Précise combien de jours l'utilisateur sera suspendu pour chaque jour/heure de retard au retour</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Réservé. Amende par jour de retard</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Si l'objet est réservé, spécifie le montant de l'amende par jour de retard à appliquer au retour</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <font face="Arial" size="2">Réservé. Suspension par jour de retard</font>
+          </td>
+          <td>
+            <font face="Arial" size="2">Si l'objet est réservé, spécifie le nombre de jours de suspension par jour de retard à appliquer au retour</font>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

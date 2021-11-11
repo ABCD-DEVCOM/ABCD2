@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="es-ar">
+<head>
+</head>
+<body>
+<ol>
+
+
+    <li>
+    <div style="text-align: left;" id="result_box" dir="ltr">Display&nbsp; information de l'objet obtenu à partir du catalogue de la base de données.&nbsp;Pour déterminer le préfixe à appliquer dans cette recherche il faut lire la TDC du 
+catalogue de la base de données et trouver le champ type AI, qui doit indiquer
+le code utilisé pour indexer le numéro de contrôle de l'objet.&nbsp;La valeur du préfixe associée à l'identification de l'objet
+mise sur le bon de commande fournit l'expression de recherche à appliquer à 
+l'emplacement de l'objet.</div>
+
+  </li>
+  <li>Il fait une recherche dans les<span style="font-weight: bold;"> COPIES de la base de données </span>pour vérifier si&nbsp;les objets de
+ce bon de commande ont été mis à jour. Il construit une expression de recherche
+avec les champs suivant : <font size="2"><br>
+
+
+    ORDER_order_suggestion_bidding<br>
+
+
+    <br>
+
+
+    where&nbsp; order=number &nbsp;of purchase order,&nbsp; suggestion=recommendation number, bidding=quotated number.<br>
+    </font>Cette recherche va essayer d'empêcher la duplication dans les copies de la base de données, produite par la perte de connexion ou d'autres facteurs.<br>
+Si l'information des <span style="font-weight: bold;">copies </span>de la base de données
+est localisée pour mettre en oeuvre la recherche
+spécifiée, ayez à l'esprit cette condition et ne permettez pas la création de
+copies.&nbsp;Un message comprenant un lien est fournit pour rendre disponible des
+copies dans la base de données<font size="2"> <strong>copies</strong><br>
+
+
+    </font></li>
+
+
+    <li>Si aucune information n'est trouvée dans les&nbsp;<strong>copies de la base de données,</strong> la création de données dans la base de données est faite en utilisant les valeurs citées sur le bon de commande.&nbsp;</li>
+  <li>&nbsp;on procède à la création des enregistrements dans cette base de données en utilisant les valeurs figurant dans le 
+bon de commande. La valeur <span style="font-weight: bold;">nombre de copies</span> indique le nombre de données dont vous avez besoin pour créer des&nbsp;<strong>copies</strong> de la base de données.<br>
+
+
+    <br>
+
+
+    A chaque donnée est attribuée un numéro séquentiel correspondant au&nbsp;numéro d'inventaire.&nbsp;<font size="2">&nbsp;</font>
+    <div style="text-align: left;" id="result_box" dir="ltr">Pour cette raison, il faut un fichier&nbsp;<font size="2"> </font><strong><font size="2">control_number.cn</font>&nbsp;</strong>localisé dans<span style="font-weight: bold;">donnée </span> dossier de la base de données<span style="font-weight: bold;">copies </span>pour sauvegarder le dernier numéro d'inventaire attribué.<br>
+
+    </div>
+  </li>
+  <li>
+    <div style="text-align: left;" id="result_box" dir="ltr">Dans la FDT des<span style="font-weight: bold;">copies de la base de données</span> il y a nécessairement un fichier type AI (autoincrement) pour conserver a&nbsp; le numéro d'inventaire généré.</div>
+    <font size="2"></font><br>
+L'information minimale contenue dans les <span style="font-weight: bold;">copies de la base de données</span> se présente comme suit : <br>
+
+
+    <br>
+
+
+    </li>
+
+
+    
+  <table summary="" align="" border="1" cellpadding="1" cellspacing="1" height="203" width="600">
+
+
+        <tbody>
+
+            <tr>
+
+
+                <td><strong>&nbsp;Etiquette</strong></td>
+
+
+                <td><strong>Description</strong></td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>1</td>
+
+
+                <td>Numéro d'identification de l'objet&nbsp; <br>
+
+
+                </td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>10</td>
+
+
+                <td>Base de données dans laquelle l'objet est catalogué</td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>20</td>
+
+                <td>Etat de la Copie /situation </td>
+      </tr>
+      <tr>
+        <td>30</td>
+
+
+                <td>Numéro d'inventaire type AI (autoincrement)</td>
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>40</td>
+
+
+                <td>Type d'Objet</td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>50</td>
+
+
+                <td>Partie&nbsp;</td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>60</td>
+
+
+                <td>Volume</td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>80 </td>
+
+
+                <td>Date de commande</td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>90</td>
+
+
+                <td>Prix</td>
+
+
+            </tr>
+
+
+            <tr>
+
+
+                <td>100</td>
+
+
+                <td>Numéro de bon de commande</td>
+
+
+            </tr>
+
+
+        
+    </tbody>
+
+    
+  </table>
+
+
+    <br>
+
+
+    <li>
+    <div style="text-align: left;" id="result_box" dir="ltr">Après
+avoir créé des copies de l'objet et attribuer&nbsp;&nbsp;un numéro d'inventaire changez pour&nbsp;permettre 
+au buton de continuer de créer les données correspondantes dans la
+base de données des objets de&nbsp; prêt (<strong>objets de prêt)</strong></div>
+  </li>
+
+
+</ol>
+
+
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<ol>
+  <li>Apresenta informa&ccedil;&otilde;es do objeto obtidos a partir do banco 
+    de dados do cat&aacute;logo. Para determinar ou prefixo a ser aplicado nesta 
+    busca leia-se ou arquivo FDT da base de dados catalográfica e se localiza 
+    ou campo tipo <strong>AI</strong>, n&atilde;o qual deve indicar ou prefixo 
+    utilizado na indexa&ccedil;&atilde;o do número de controle do objeto. ou valor 
+    do prefixo anexado na identifica&ccedil;&atilde;o do objeto colocada na ordem 
+    de compra prev&ecirc; a express&atilde;o de pesquisa a se aplicar para a localiza&ccedil;&atilde;o 
+    do objeto.<br />
+    <br />
+  </li>
+  <li> 
+    <div align="justify">Faz uma pesquisa n&atilde;o banco de dados copies para 
+      checar se os objetos da presente nota de encomenda foram atualizados. Isso 
+      constr&oacute;i uma express&atilde;o de pesquisa com os seguintes campos:<br />
+      <br />
+      ORDER_order_suggestion_bidding<br>
+      <br>
+      onde order=número da ordem de compra, suggestion=número da sugest&atilde;o, 
+      bidding=número da licita&ccedil;&atilde;o.<br />
+      <br />
+      Esta pesquisa vai tentar evitar a duplica&ccedil;&atilde;o de exemplar &eacute; 
+      do banco de dados, impulsionada por perda de conex&atilde;o e outros fatores 
+      .<br />
+      Se na base de dados copi &eacute; se localiza a informa&ccedil;&atilde;o 
+      a ser aplicada na busca especificada, se avisa esta condi&ccedil;&atilde;o 
+      e n&atilde;o se permite a cria&ccedil;&atilde;o dos exemplar &eacute; . 
+      A mensagem inclui um link a fim de apresentar os exemplar &eacute; dispon&iacute;veis 
+      na base de dados <strong>copies</strong></div>
+  </li>
+  <li>Se n&atilde;o localizar a informa&ccedil;&atilde;o na base de dados <strong>copies 
+    , </strong>proceda para a cria&ccedil;&atilde;odos registros nesta base de 
+    dados, utilizando para isso os valor &eacute; que aparecem na nota de compra. 
+    ou valor correspondente ao <strong>número de exemplar &eacute; </strong>indica 
+    quantos registros se necessita criar na base de dados <strong>copies</strong>.<br />
+    <br />
+    Cada registro &eacute; atribu&iacute;do um n&uacute;mero sequencial correspondente 
+    ao n&uacute;mero de invent&aacute;rio. Para este efeito, &eacute; necess&aacute;rio 
+    a presen&ccedil;a do arquivo <strong>control_number.cn </strong>na pasta <strong>data 
+    </strong>da base de dados <strong>copies </strong>para armazenar ou &uacute;ltimo 
+    n&uacute;mero atribu&iacute;do ao invent&aacute;rio.<br />
+    <br />
+    Na FDT da base de dados <strong>copies </strong>se deve definir um campo do 
+    tipo <strong>AI</strong> (autoincrement) para indicar ou campo onde se vai 
+    armazenar ou número gerado.<br />
+    <br />
+    As informa&ccedil;&otilde;es mínimas que cont&eacute;m a base dados <strong>copies 
+    </strong>s&atilde;o as seguintes :<br />
+    <br />
+  </li>
+  <table height="203" width="600" cellspacing="1" cellpadding="1" border="1" align="" summary="">
+    <tbody>
+      <tr> 
+        <td><strong>&nbsp;Tag</strong></td>
+        <td><strong>Descri&ccedil;&atilde;o</strong></td>
+      </tr>
+      <tr> 
+        <td>1</td>
+        <td>Número de identifica&ccedil;&atilde;o do objeto </td>
+      </tr>
+      <tr> 
+        <td>10</td>
+        <td>Base de dados onde está catalogado ou objeto</td>
+      </tr>
+      <tr> 
+        <td>20</td>
+        <td>Situa&ccedil;&atilde;o do exemplar</td>
+      </tr>
+      <tr> 
+        <td>30</td>
+        <td>Número de invent&aacute;rio (autoincrement)</td>
+      </tr>
+      <tr> 
+        <td>40</td>
+        <td>Tipo de objeto</td>
+      </tr>
+      <tr> 
+        <td>50</td>
+        <td>Volume/Tomo</td>
+      </tr>
+      <tr> 
+        <td>60</td>
+        <td>Volume/Parte</td>
+      </tr>
+      <tr> 
+        <td>80 </td>
+        <td>Data de aquisi&ccedil;&atilde;o</td>
+      </tr>
+      <tr> 
+        <td>90</td>
+        <td>Pre&ccedil;o</td>
+      </tr>
+      <tr> 
+        <td>100</td>
+        <td>Número da ordem de compra</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p><br />
+  </p>
+  <p>&nbsp; </p>
+  <li>Ap&oacute;s a c&oacute;pia do objeto criado e atribu&iacute;do ou n&uacute;mero 
+    de invent&aacute;rio, habilitado ou bot&atilde;o para a v&atilde;o ar na cria&ccedil;&atilde;o 
+    dos correspondent &eacute; registros n&atilde;o banco de dados objetos de 
+    empr&eacute;stimo <strong>(loanobjects).</strong></li>
+</ol>
+<br />
+&nbsp;

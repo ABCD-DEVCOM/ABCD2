@@ -1,0 +1,12 @@
+'<script>
+cookie=getCookie("ORBITA")+"|"
+
+if (cookie.indexOf("c_',mstname,'_'f(mfn,1,0),'|")!=-1)
+	document.writeln("<input type=checkbox name=c_',mstname,'_'f(mfn,1,0)' id=c_'mstname'_'f(mfn,1,0)'  checked onclick=javascript:Seleccionar(this)> ")
+else
+	document.writeln("<input type=checkbox name=c_'mstname'_'f(mfn,1,0)' id=c_'mstname'_'f(mfn,1,0)' onclick=javascript:Seleccionar(this)> ")
+</script>'/
+'<br><a href=javascript:SendTo("print_one","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/print.png width=20>
+ <br><a href=javascript:SendTo("word","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/word.png width=20>
+ <br><a href=javascript:SendTo("mail_one","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/mail.png width=20>
+</a>'

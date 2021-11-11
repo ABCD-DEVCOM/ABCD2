@@ -1,0 +1,255 @@
+<p>O módulo de aquisi&ccedil;&atilde;o se apoia em&nbsp;quatro bases de dados:</p>
+
+<ol>
+
+    
+  <li><strong>Sugest&otilde;es </strong>Contem as solicita&ccedil;&otilde;es 
+    dos usu&aacute;rios quanto a necessidade de adquisi&ccedil;&atilde;o de novos 
+    objetos, ou novos exemplares de objetos j&aacute; existentes. Cont&eacute;m 
+    4 grupos de informa&ccedil;&otilde;es: 
+    <ul>
+
+        
+      <li>Dados do objeto solicitado </li>
+
+        
+      <li>Dados da pessoa ou departamento que solicita o objeto </li>
+      <li>Dados da aprova&ccedil;&atilde;o ou recusa da solicita&ccedil;&atilde;o</li>
+
+        
+      <li>Dados das licita&ccedil;&atilde;o &eacute; para a compra do objeto 
+        <ul>
+
+            
+          <li>Fornecedor </li>
+          <li> N&uacute;mero da licita&ccedil;&atilde;o</li>
+          <li>Quantidade </li>
+
+            
+          <li>Pre&ccedil;o unit&aacute;rio </li>
+
+            
+          <li>Moeda </li>
+
+            
+          <li>Dados da aceita&ccedil;&atilde;o da licita&ccedil;&atilde;o.<br />
+
+            &nbsp;<strong></strong></li>
+
+        </ul>
+
+        </li>
+
+    </ul>
+
+    </li>
+
+    
+  <li><strong>Ordem de compra<br />
+    </strong>Armazena a ordem de compra emitida como parte do processo de aquisi&ccedil;&otilde;es. 
+    Cont&eacute;m : 
+    <ul>
+
+        
+      <li>Fornecedor</li>
+
+        <li>Número da ordem  de compra</li>
+
+        
+      <li>Data da ordem de compra</li>
+
+        
+      <li>Dados do objeto adquirido 
+        <ul>
+
+            
+          <li>Número da requisi&ccedil;&atilde;o</li>
+
+            <li>Número da licita&ccedil;&atilde;o </li>
+
+            
+          <li>Quantidade</li>
+
+            
+          <li>Pre&ccedil;o unit&aacute;rio</li>
+
+        </ul>
+
+        </li>
+
+        
+      <li>Reclama&ccedil;&otilde;es<br />
+
+        </li>
+
+    </ul>
+
+    </li>
+
+    
+  <li><strong>Fornecedores </strong>Com a informa&ccedil;&atilde;o dos fornecedores 
+    que podem participar nos processos de licita&ccedil;&atilde;o e compra dos 
+    objetos <br />
+
+    </li>
+
+    
+  <li><strong>Exemplares</strong><br />
+    Cont&eacute;m cada uma dos exemplares que foram adquiridos como parte do processo 
+    de aquisi&ccedil;&otilde;es.</li>
+
+</ol>
+
+<p>O processo a seguir &eacute; o seguinte:</p>
+
+<ol>
+
+    
+  <li>Se cria uma nova solicita&ccedil;&atilde;o de compra de objeto na base de 
+    dados <strong>suggestions</strong>. Esta solicita&ccedil;&atilde;o pode referir-se 
+    a adquisi&ccedil;&atilde;o de um novo objeto ou a aquisi&ccedil;&atilde;o 
+    de novos exemplares de um objeto existente. <br />
+
+    <br />
+    Para cada registro que ingresa na base de dados <strong>suggestions </strong>se 
+    cria en forma automática um campo que posee um número sequencial o cual se 
+    utilizará posteriormente como campo de rela&ccedil;&atilde;o entre as sugest&atilde;o 
+    &eacute; e as ordem &eacute; de compra generadas<br />
+
+    <br />
+
+    Cada objeto na base de dados&nbsp;catalográfica&nbsp;se identifica com um número único que servirá posteriormente a establecer a relación entre o objeto e sus copias.<br />
+
+    <br />
+    Cada exemplar também adquir&aacute; um número de invent&aacute;rio, noqual 
+    se utilizará posteriormente no módulo de circula&ccedil;&atilde;o.<br />
+    se o objeto j&aacute; existe na base de dados, ent&atilde;o a solicitud deve 
+    indicar o número asignado a ese objeto na base de dados catalográfica a a 
+    cual pertenece. se &eacute; um novo objeto, ent&atilde;o, se insir&aacute; 
+    o número ao momento de cataloga&ccedil;&atilde;o do objeto, uma vez finalizada 
+    a compra. <br />
+
+    </li>
+
+    
+  <li>Cada solicita&ccedil;&atilde;o deverá ser aprovada ou recusada. Se &eacute; 
+    aprovada será necessario&nbsp;indicar o número de exemplares que v&atilde;o 
+    a ser adquiridos<br />
+
+    </li>
+
+    
+  <li>As solicita&ccedil;&otilde;es aprovadas se somam a um processo de licita&ccedil;&atilde;o, 
+    anotando no registro: 
+    <ul>
+
+        
+      <li>Fornecedores </li>
+
+        <li>Número da licita&ccedil;&atilde;o</li>
+
+        <li>data da licita&ccedil;&atilde;o</li>
+
+        
+      <li>Quantidade ofertada</li>
+
+        
+      <li>Pre&ccedil;o unit&aacute;rio</li>
+
+        
+      <li>Moeda<br />
+
+        </li>
+
+    </ul>
+
+    </li>
+
+    
+  <li>Com a informa&ccedil;&atilde;o da licita&ccedil;&atilde;o &eacute; tomada 
+    a decis&atilde;o de compra e atualiza a base de dados <strong>sugest&otilde;es 
+    </strong>(suggestions)&nbsp;a informa&ccedil;&atilde;o do fornecedor selecionado: 
+    <ul>
+
+        
+      <li>Data da aprova&ccedil;&atilde;o&nbsp;</li>
+
+        
+      <li>Opcionalmente se atualizam os campos de quantidade de exemplares e pre&ccedil;o 
+        unit&aacute;rio<br />
+
+        </li>
+
+    </ul>
+
+    </li>
+
+    
+  <li>Se emitem as ordem &eacute; de compra com os fornecedor &eacute; seleccionados. 
+    Estas ordens&eacute; de compra armazenam na base de dados <strong>purchaseorder</strong> 
+    e se vinculam a&nbsp;base de dados&nbsp; <strong>suggestions</strong>&nbsp;mediante 
+    ao número sequencial criado no momento de ingresso da sugest&atilde;o<br />
+
+    </li>
+
+    
+  <li>Se h&aacute; atrasos na chegada do material, ent&atilde;o se anota na base 
+    de dados de ordem de compra a data dos diferentes reinvindica&ccedil;&otilde;es 
+    realizadas. <br />
+
+    </li>
+
+    
+  <li>Quando chega o material&nbsp; adquirido, existem duas op&ccedil;&otilde;es 
+    : 
+    <ul>
+
+        
+      <li>Se o objeto for novo, se deve inserir o número de identifica&ccedil;&atilde;o 
+        do objeto, catalog&aacute;-lo e criar, na base de&nbsp; dados <strong>copies 
+        ,</strong>um registro para cada exemplar, inserindo o seu número de invent&aacute;rio 
+      </li>
+      <li>Se o objeto j&aacute; existe na base de dados catalográfica, s&oacute; 
+        se agregará um novo registro na base de dados <strong>copies com </strong>o 
+        número de invent&aacute;rio correspondente</li>
+
+    </ul>
+
+    </li>
+
+</ol>
+
+<p><strong>Transa&ccedil;&otilde;es</strong></p>
+
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+
+  <p><strong>Sugest&otilde;es</strong>&nbsp; <br />
+    Use esta op&ccedil;&atilde;o para inserir na base de dados as solicita&ccedil;&otilde;es 
+    para compra de novos objetos. Abaixo esta op&ccedil;&atilde;o poderá criar 
+    novas solicita&ccedil;&otilde;es e indicar qual s&atilde;o aprovadas ou recusadas, 
+    colocar a licita&ccedil;&atilde;o presentada pelos fornecedores e indicar 
+    o fornecedor cuja licita&ccedil;&atilde;o foi aprovada</p>
+
+  <p><strong>Ordem de compra</strong>&nbsp;<br />
+    Esta op&ccedil;&atilde;o permitirá:</p>
+  <ul>
+    <li>Gerar a ordem de compra para os fornecedores cuja licita&ccedil;&atilde;o 
+      foram aprovadas </li>
+    <li>Inserir na base de dados de sugest&otilde;es&nbsp;os dados 
+      da ordem de compra elaborada&nbsp;para a adquisi&ccedil;&atilde;o do objeto 
+      solicitado </li>
+    <li>Revisar as ordens de compra pendente e inserir as datas das reclama&ccedil;&otilde;es</li>
+    <li>Eliminar ordem &eacute; de compra e modificando o estado da sugest&atilde;o 
+      associada </li>
+    <li>Processar a chegada de os objetos adquiridos: 
+      <ul>
+        <li>Realizar a pr&eacute;-cataloga&ccedil;&atilde;o (si s&atilde;o novos 
+          objetos) </li>
+        <li>Gerar os registros correspondentes aos exemplares adquiridos </li>
+        <li>Disponibilizar os exemplares nosistema de circula&ccedil;&atilde;o 
+          e empréstimo</li>
+      </ul>
+    </li>
+  </ul>
+
+</blockquote>

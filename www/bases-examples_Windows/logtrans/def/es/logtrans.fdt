@@ -1,0 +1,16 @@
+F|1|Tipo de transacción|0|0|||R||4|P|tipot.tab|||||0||0|
+F|10|Base de datos de objetos usada|0|0|||X|||||||||0||0|
+F|20|Fecha transacción|0|0|||X|||||||||0||0|
+F|30|Hora transacción|0|0|||X|||||||||0||0|
+F|40|Id. del operador|0|0|||X|||||||||0||0|
+F|100|Número de control|0|0|||X|||||||||0||0|
+F|110|Número de inventario|0|0|||X|||||||||0||0|
+F|120|Tipo de objeto|0|0|||X|||||||||0||0|
+F|200|Código del usuario|0|0|||X|||||||||0||0|
+F|210|Tipo de usuario|0|0|||X|||||||||0||0|
+F|300|Fecha programada|0|0|||X|||||||||0||0|
+F|310|Días de atraso|0|0|||X|||||||||0||0|
+F|320|Días de suspensión|0|0|||X|||||||||0||0|
+F|330|Unidades de multa|0|0|||X|||||||||0||0|
+F|340|Monto multa|0|0|||X|||||||||0||0|
+

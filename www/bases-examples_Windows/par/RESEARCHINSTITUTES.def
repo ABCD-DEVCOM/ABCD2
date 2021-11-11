@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%researchinstitutes/data/researchinstitutes.*
+FILE standard.pft=%path_database%researchinstitutes/pfts/%lang%/researchinstitutes.pft
+FILE SHORTCUT.IAH=%path_database%researchinstitutes/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX TW=^1Expertos^2Expertos^3Experts^4Institutes^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX ID=^1Experto Nombre^2Experto Nombre^3Institute name^4Nom expert^xID ^yDATABASE^uID_^mID_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1defecto^2por defecto^3default^4Defaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,B
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

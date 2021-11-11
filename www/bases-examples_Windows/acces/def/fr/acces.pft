@@ -1,0 +1,26 @@
+'<html>'/
+'<head>'/
+'<link rel=stylesheet href=../../penvenezuela.org/js/style01.css type=text/css>'/
+'</head>'/
+'<body>'/
+'<br>'/
+'<font face=verdana color=red size=-1><b>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
+'<table   class=td2 border=0>'/
+'	<td class=td_N bgcolor=#f9f9f9 valign=top>Nom d'utilisateur</td>'/
+'	<td  bgcolor=#f9f9f9 class=td>'v10'</td>'/
+'	<tr>'/
+'	<td class=td_N bgcolor=#f9f9f9 valign=top>Identifiant</td>'/
+'	<td bgcolor=#f9f9f9 class=td>'v20'</td>'/
+'	<tr>'/
+'	<td  class=td_N bgcolor=#f9f9f9 valign=top>Mot de passe</td>'/
+'	<td  bgcolor=#f9f9f9 class=td>'v30'</td>'/
+'	<tr>'/
+'	<td  class=td_N bgcolor=#f9f9f9 valign=top>Bases de données disponibles</td>'/
+'	<td  bgcolor=#f9f9f9 class=td>'v100+|; |,'</td>'/
+
+'</table>'/
+ '<script>'/
+'	top.maxmfn='f(maxmfn-1,1,0)/
+'</script>'/
+'</body>'/
+'</html>'/

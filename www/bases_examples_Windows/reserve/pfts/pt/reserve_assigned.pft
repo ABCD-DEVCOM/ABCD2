@@ -1,8 +1,0 @@
-'#FROM: reservas@msinfo.info#'/
-'#SUBJECT: Atribuição de reserva'/
-'Sr(a): ' ref(['users']l(['users']'CO_'v10),v30,,"#TO:"V160"#"),   /*Nome e e-mail O e-mail deve ser precedido por #MAIL:  e terminar em #. Apenas um e-mail é permitido*/
-'<br>Sua reserva com o título foi designada a você.<br>'
-'<p><b>#REFER#</b></font>'
-'<br>que estará em vigor durante o período de '
-v60*6.2,"/"v60*4.2,"/"v60.4, " al "D40,v40*6.2,"/"v40*4.2,"/"v40.4 
-/

@@ -1,0 +1,59 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal title</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal URL</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Alternative title</b></td><td valign=top><font face=arial size=2>'v3+|<br>|,'</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal ISSN (print version)</b></td><td valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal EISSN (online version)</b></td><td valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>Publisher</b></td><td valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+if p(v7) then '<tr><td width=20% valign=top><font face=arial size=2><b>Society or institution</b></td><td valign=top><font face=arial size=2>'v7+|<br>|,'</td>' fi/
+if p(v8) then '<tr><td width=20% valign=top><font face=arial size=2><b>Platform, host or aggregator</b></td><td valign=top><font face=arial size=2>'v8+|<br>|,'</td>' fi/
+if p(v9) then '<tr><td width=20% valign=top><font face=arial size=2><b>Country of publisher</b></td><td valign=top><font face=arial size=2>'v9+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal article processing charges (APCs)</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v11) then '<tr><td width=20% valign=top><font face=arial size=2><b>APC information URL</b></td><td valign=top><font face=arial size=2>'v11+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>APC amount</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=20% valign=top><font face=arial size=2><b>Currency</b></td><td valign=top><font face=arial size=2>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal article submission fee</b></td><td valign=top><font face=arial size=2>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Submission fee URL</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
+if p(v16) then '<tr><td width=20% valign=top><font face=arial size=2><b>Submission fee amount</b></td><td valign=top><font face=arial size=2>'v16+|<br>|,'</td>' fi/
+if p(v17) then '<tr><td width=20% valign=top><font face=arial size=2><b>Submission fee currency</b></td><td valign=top><font face=arial size=2>'v17+|<br>|,'</td>' fi/
+if p(v18) then '<tr><td width=20% valign=top><font face=arial size=2><b>Number of articles publish in the last calendar year</b></td><td valign=top><font face=arial size=2>'v18+|<br>|,'</td>' fi/
+if p(v19) then '<tr><td width=20% valign=top><font face=arial size=2><b>Number of articles information URL</b></td><td valign=top><font face=arial size=2>'v19+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal waiver policy (for developing country authors etc)</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v21) then '<tr><td width=20% valign=top><font face=arial size=2><b>Waiver policy information URL</b></td><td valign=top><font face=arial size=2>'v21+|<br>|,'</td>' fi/
+if p(v22) then '<tr><td width=20% valign=top><font face=arial size=2><b>Digital archiving policy or program(s)</b></td><td valign=top><font face=arial size=2>'v22+|<br>|,'</td>' fi/
+if p(v23) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving: national library</b></td><td valign=top><font face=arial size=2>'v23+|<br>|,'</td>' fi/
+if p(v24) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving: other</b></td><td valign=top><font face=arial size=2>'v24+|<br>|,'</td>' fi/
+if p(v25) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving infomation URL</b></td><td valign=top><font face=arial size=2>'v25+|<br>|,'</td>' fi/
+if p(v26) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal full-text crawl permission</b></td><td valign=top><font face=arial size=2>'v26+|<br>|,'</td>' fi/
+if p(v27) then '<tr><td width=20% valign=top><font face=arial size=2><b>Permanent article identifiers</b></td><td valign=top><font face=arial size=2>'v27+|<br>|,'</td>' fi/
+if p(v28) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal provides download statistics</b></td><td valign=top><font face=arial size=2>'v28+|<br>|,'</td>' fi/
+if p(v29) then '<tr><td width=20% valign=top><font face=arial size=2><b>Download statistics information URL</b></td><td valign=top><font face=arial size=2>'v29+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>First calendar year journal provided online Open Access content</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v31) then '<tr><td width=20% valign=top><font face=arial size=2><b>Full text formats</b></td><td valign=top><font face=arial size=2>'v31+|<br>|,'</td>' fi/
+if p(v32) then '<tr><td width=20% valign=top><font face=arial size=2><b>Keywords</b></td><td valign=top><font face=arial size=2>'v32+|<br>|,'</td>' fi/
+if p(v33) then '<tr><td width=20% valign=top><font face=arial size=2><b>Full text language</b></td><td valign=top><font face=arial size=2>'v33+|<br>|,'</td>' fi/
+if p(v34) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL for the Editorial Board page</b></td><td valign=top><font face=arial size=2>'v34+|<br>|,'</td>' fi/
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2><b>Review process</b></td><td valign=top><font face=arial size=2>'v35+|<br>|,'</td>' fi/
+if p(v36) then '<tr><td width=20% valign=top><font face=arial size=2><b>Review process information URL</b></td><td valign=top><font face=arial size=2>'v36+|<br>|,'</td>' fi/
+if p(v37) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL for journal-s aims & scope</b></td><td valign=top><font face=arial size=2>'v37+|<br>|,'</td>' fi/
+if p(v38) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL for journal-s instructions for authors</b></td><td valign=top><font face=arial size=2>'v38+|<br>|,'</td>' fi/
+if p(v39) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal plagiarism screening policy</b></td><td valign=top><font face=arial size=2>'v39+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Plagiarism information URL</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v41) then '<tr><td width=20% valign=top><font face=arial size=2><b>Average number of weeks between submission and publication</b></td><td valign=top><font face=arial size=2>'v41+|<br>|,'</td>' fi/
+if p(v42) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL for journal-s Open Access statement</b></td><td valign=top><font face=arial size=2>'v42+|<br>|,'</td>' fi/
+if p(v43) then '<tr><td width=20% valign=top><font face=arial size=2><b>Machine-readable CC licensing information embedded or displayed in</b></td><td valign=top><font face=arial size=2>'v43+|<br>|,'</td>' fi/
+if p(v44) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL to an example page with embedded licensing information</b></td><td valign=top><font face=arial size=2>'v44+|<br>|,'</td>' fi/
+if p(v45) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal license</b></td><td valign=top><font face=arial size=2>'v45+|<br>|,'</td>' fi/
+if p(v46) then '<tr><td width=20% valign=top><font face=arial size=2><b>License attributes</b></td><td valign=top><font face=arial size=2>'v46+|<br>|,'</td>' fi/
+if p(v47) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL for license terms</b></td><td valign=top><font face=arial size=2>'v47+|<br>|,'</td>' fi/
+if p(v48) then '<tr><td width=20% valign=top><font face=arial size=2><b>Does this journal allow unrestricted reuse in compliance with BOAI?</b></td><td valign=top><font face=arial size=2>'v48+|<br>|,'</td>' fi/
+if p(v49) then '<tr><td width=20% valign=top><font face=arial size=2><b>Deposit policy directory</b></td><td valign=top><font face=arial size=2>'v49+|<br>|,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Author holds copyright without restrictions</b></td><td valign=top><font face=arial size=2>'v50+|<br>|,'</td>' fi/
+if p(v51) then '<tr><td width=20% valign=top><font face=arial size=2><b>Copyright information URL</b></td><td valign=top><font face=arial size=2>'v51+|<br>|,'</td>' fi/
+if p(v52) then '<tr><td width=20% valign=top><font face=arial size=2><b>Author holds publishing rights without restrictions</b></td><td valign=top><font face=arial size=2>'v52+|<br>|,'</td>' fi/
+if p(v53) then '<tr><td width=20% valign=top><font face=arial size=2><b>Publishing rights information URL</b></td><td valign=top><font face=arial size=2>'v53+|<br>|,'</td>' fi/
+if p(v54) then '<tr><td width=20% valign=top><font face=arial size=2><b>DOAJ Seal</b></td><td valign=top><font face=arial size=2>'v54+|<br>|,'</td>' fi/
+if p(v55) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tick: Accepted after March 2014</b></td><td valign=top><font face=arial size=2>'v55+|<br>|,'</td>' fi/
+if p(v56) then '<tr><td width=20% valign=top><font face=arial size=2><b>Added on Date</b></td><td valign=top><font face=arial size=2>'v56+|<br>|,'</td>' fi/
+if p(v57) then '<tr><td width=20% valign=top><font face=arial size=2><b>Subjects</b></td><td valign=top><font face=arial size=2>'v57+|<br>|,'</td>' fi/
+'</table><p>'

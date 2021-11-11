@@ -1,0 +1,19 @@
+
+'<tr>','<td valign=top><font face=arial size=2>'v1+|; | if a(v1) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v10+|; | if a(v10) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v12+|; | if a(v12) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v15+|; | if a(v15) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v20+|; | if a(v20) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v30+|; | if a(v30) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v35+|; | if a(v35) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v40+|; | if a(v40) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v45+|; | if a(v45) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v70+|; | if a(v70) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v80+|; | if a(v80) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v90+|; | if a(v90) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v95+|; | if a(v95) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v98+|; | if a(v98) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v100^* if a(v100) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'(v120^d,|-|v120^o|<br>|) if a(v120) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'(v130^d,|-|v130^o|<br>|) if a(v130) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'(if p(v200) then | |v200^a,| |v200^b,| |v200^c,| |v200^d,| |v200^e, if iocc<>nocc(v200) then '<br>' fi fi/) if a(v200) then '&nbsp;' fi,'</td>'/

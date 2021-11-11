@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Utilities for
+managing the database</FONT></FONT></STRONG></P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Unlock
+	the database</FONT></FONT></STRONG> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>List
+	the locked records</FONT></FONT></STRONG> 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Unlock
+	records</FONT></FONT></STRONG> 
+	</P>
+	<LI><P><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Global
+	changes</FONT></FONT></STRONG> 
+	</P>
+</OL>
+<P><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Unlock the
+database.</FONT></FONT></STRONG></P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>If at some point you
+notice that the database or the inverted file cannot be updated, the database may be locked. This usually happens after a crash
+of the system, or when the process of creating the inverted list is
+aborted, be it because of an abrupt ending or because of an error in the FST. </FONT></FONT>
+</P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Use this option to
+unlock the database, which will leave it ready for the updating of
+the master file and/or the inverted file. If you cannot access the
+index of terms, or they appear incomplete or in an incorrect order,
+create the inverted file again. If the FST has been
+modified, verify its syntax again.</FONT></FONT></P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Before proceeding to
+unlock the database, be sure that no other user is entering or
+updating the records.</FONT></FONT></P>
+<P><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>List the
+locked records </FONT></FONT></STRONG>
+</P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>It is recommended that this process is performed as part of the maintenance routine of a
+database. If you get a list of locked records, you should proceed
+to unlock them as indicated in the procedure to unlock records.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Unlock
+records</FONT></FONT></STRONG></P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Records get locked
+usually in the process of data entry, as part of the data updating
+protection mechanisms. That is: when a user is modifying a record, it
+is locked in order to avoid its simultaneous updating by another
+user. When the record is finally updated, it is unlocked and made
+available for the rest of the users. </FONT></FONT>
+</P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>If the updating cycle
+doesn't finish, that is, if the record doesn't get any data or if the
+updating is cancelled (button<SPAN STYLE="background: transparent">s
+Sa</SPAN>ve or <SPAN STYLE="background: transparent">Ca</SPAN>ncel in
+the tool bar), the record remains locked for some time (4 hours) to
+all other users. </FONT></FONT>
+</P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>There are two ways of
+unlocking a record before the mentioned time expires: </FONT></FONT>
+</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>The
+	user who locked the record can free (or unlock) it by either
+	updating, editing or cancelling its editing.</FONT></FONT></P>
+
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Using the
+	procedure to unlock records, which reviews the database and unlocks
+	all the records found to be locked.</FONT></FONT></P>
+</OL>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Before performing this
+procedure, it is recommended that you verify that data entry or record
+updating is not taking place.</FONT></FONT></P>
+<P><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Create the
+inverted file</FONT></FONT></STRONG></P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>This process creates
+the inverted file, but it can only be used in databases with few
+records, for example, less than 2000. For bigger databases, you have
+to use the MX utility. </FONT></FONT>
+</P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>The inverted file
+(indexes) is updated automatically when the records are created,
+edited or deleted. However, if you see a mistake when accessing the
+index of terms, you should recreate the inverted file in order to
+correct possible anomalies or corruption. </FONT></FONT>
+</P>
+<P><STRONG><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Global changes</FONT></FONT></STRONG></P>
+<P><FONT FACE="Arial, sans-serif"><FONT SIZE=2>See the instruction in
+the corresponding menu</FONT></FONT></P>
+</BODY>
+</HTML>

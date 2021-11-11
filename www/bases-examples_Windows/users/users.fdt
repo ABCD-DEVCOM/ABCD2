@@ -1,0 +1,19 @@
+H||Datos básicos|0|0|||||||||||0|0|
+F|10|Tipo de usuario|0|0|||S|||P|usuarios.tab||||0|0|
+F|15|Fecha de ingreso|0|0|||X||||||||0|0|
+F|20|Código usuario !C|0|0|||X|||D||!C|v20||0|0|
+F|30|Nombre del usuario !B|1|0|||X|||D||!B|v30,' 'f(mfn,1,0)|f(mfn,1,0)|0|0|
+F|35|C.Identidad|0|0|||X||||||||0|0|
+F|12|Sexo|0|0|||X||||||||0|0|
+F|40|Lugar de trabajo !T|0|0|||X|||||!T|v40|v40|0|0|
+F|45|Ubicación !K|0|0|||X|||||LOC_|v45|v45|0|0|
+F|47|Nivel Adm. 1 !E|0|0|||X|||||!E|v47|v47|0|0|
+F|49|Nivel Adm. 2 !F|0|0|||X|||||!F|v49|v49|0|0|
+H||Datos de localización|0|0|||||||||||0|0|
+F|100|Dir. física|0|0|||X||||||||0|0|
+F|110|Dir. postal|0|0|||X||||||||0|0|
+F|120|Ciudad !G|0|0|||X||||||||0|0|
+F|130|País !Q|0|0|||X||||||||0|0|
+F|140|Teléfono|0|0|||X||||||||0|0|
+F|150|Fax|0|0|||X||||||||0|0|
+F|160|C. electrónico|0|0|||X||||||||0|0|

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+</HEAD>
+<BODY LANG="fr-FR" DIR="LTR">
+<P><STRONG>Traduction des messages et des pages d'aide</STRONG></P>
+<P>ABCD utilise deux types de composants pour le traitement bilingue :</P>
+<P><STRONG>Messages et étiquettes</STRONG></P>
+<P>Contient une table des étiquettes utilisées pour le dialogue avec l'utilisateur, 
+aussi bien que les messages d'avertissement, d'erreur, et autres, utilisés pour la 
+communication avec l'utilisateur.</P>
+<P>Ces tables sont stockées dans les répertoires <STRONG>bases/lang/xx</STRONG>
+où<STRONG> xx</STRONG> correspond au code de langue.
+En outre, le code de langue <STRONG>00 </STRONG><STRONG><SPAN STYLE="font-weight: normal">a été 
+créé, et correspond à une table avec les messages utilisés durant l'exécution des opérations.
+Quand une langue de dialogue est sélectionnée, la première chose lue est la table de la  
+langue sélectionnée, et ensuite la table de langue </SPAN></STRONG><STRONG>00</STRONG>
+afin de compléter les messages qui ne sont pas définis dans la langue choisie. 
+De cette façon, les modules peuvent générer de nouveaux messages sans modifier 
+les tables avec des messages mis à jour par les utilisateurs, et sans afficher durant
+l'exécution des opérations qu'il manque des messages.</P>
+<P>Quand vous modifiez la table des messages d'un langage en particulier, 
+celle-ci sera automatiquement complétée avec la table du langage 
+<STRONG>00</STRONG> afin de permettre à l'utilisateur de traduire les nouveaux 
+messages incorporés à ABCD.</P>
+<P><STRONG>Pages d'aide</STRONG></P>
+<P>Cette option permet de traduire les pages d'aide qui existent dans les différents 
+modules d'ABCD. Afin de faciliter la traduction, une liste de ces pages est affichée
+dans chaque module, et l'utilisateur peut choisir :</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">D'afficher une prévisualisation de la page correspondante</P>
+	<LI><P>D'éditer la page d'aide</P>
+</UL>
+</BODY>
+</HTML>

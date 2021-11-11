@@ -1,0 +1,55 @@
+<center>
+<table width="90%">
+    <tbody>
+        <tr>
+            <td><font face="arial"><font size="4"><strong>Conversión de un archivo TXT a CDS/Isis</strong></font>
+            <p><font face="arial"><font size="2">El proceso de conversión de un archivo TXT a base de datos CDS/Isis, tiene como entrada un archivo TXT donde los campos a transferir pueden estar delimitados de dos maneras<br />
+            <strong><br />
+            </strong></font></font></p>
+            </font>
+            <ul>
+                <li><font face="arial"><font size="2"><strong>Con etiquetas</strong></font></font> </li>
+                <li><font face="arial"><font size="2"><strong>Con tabuladores </strong>(por ejemplo, obtenido de una hoja de cálculo donde se han salvado los resultados en formato TXT delimitado con tabuladores)</font></font> </li>
+            </ul>
+            <font face="arial">
+            <p><font face="arial" color="#800000" size="3"><strong>Archivo TXT con Etiquetas:</strong></font></p>
+            <p><font size="2"><font size="2">En este caso, cada elemento de datos se identifica con una etiqueta y cada etiqueta se asigna a un campo de la base de datos.<br />
+            </font><br />
+            Estas etiquetas siempre comienzan con <strong><font color="#ff0000">$$</font></strong> y terminan con <strong><font color="#ff0000">:</font></strong> para asegurar que las mismas no puedan confundirse con el contenido a convertir. Adicionalmente, todos los registros deben separarse por medio de una cadena de caracteres que también estemos seguros no ocurra en el contenido. Se recomienda usar <strong><font color="#ff0000">##</font></strong> como separador de registros.</font></p>
+            <p><font size="2"><strong><font color="#800000" size="3">Archivo TXT con Tabuladores:</font><br />
+            </strong></font></p>
+            <p><font size="2">En este caso cada línea del archivo TXT corresponde a un registro, y dentro de cada registro los campos están separados tabuladores. En la tabla de conversión, en la columna correspondiente a <strong>Etiqueta</strong> se colocará el número de la celda (columna) que ocupa el campo correspondiente en el archivo TXT a convertir<br />
+            </font></p>
+            <p><font size="2"><font color="#800000" size="3"><strong>Proceso de conversión:</strong></font><br />
+            </font></p>
+            <p><font size="2">El proceso de conversión consta de tres pasos:</font></p>
+            <ol>
+                <li><font size="2">Selección/Definición de la tabla de conversión</font> </li>
+                <li><font size="2">Validación del archivo de entrada contra la tabla de conversión</font> </li>
+                <li><font size="2">Conversión y carga&nbsp; en la base de datos</font> </li>
+            </ol>
+            <font size="2">Para ejecutar una conversión siga los siguientes pasos:</font>
+            <ol>
+                <li><font size="2">Del menú de administración seleccione la opción <strong>Cargar archivo TXT</strong></font> </li>
+                <li><font size="2">Seleccione, edite o cree la<a target="_blank" href="tabladeconversion.html"> tabla de conversión</a></font> </li>
+                <li><font size="2">Al seleccionar la tabla de conversión se presenta una ventana con un área de texto donde debe copiar el archivo TXT que deseea convertir. Se presentan además las siguientes opciones:</font>
+                <ul>
+                    <li><font size="2"><strong>Ver etiquedas definidas</strong>: Presenta las etiquetas presentes en la tabla de conversión seleccionada</font> </li>
+                    <li><font size="2"><strong>Validar etiquetas</strong>: Examina el archivo TXT contra la tabla de conversión y emite un reporte con las etiquetas encontradas y las etiquetas no localizadas</font> </li>
+                    <li><font size="2"><strong>Procesar</strong>: Ejecuta la conversión y carga en&nbsp; la base de datos</font> </li>
+                </ul>
+                </li>
+            </ol>
+            <p><strong><font size="2">Conversión y carga en la base de datos</font></strong></p>
+            <p><font size="2">Este paso vuelve a ejecutar la validación del archivo TXT contra la tabla de conversión y emite un nuevo reporte avisando los errores encontrados. Al final del mismo se muestra el boton </font><input type="submit" value="actualizar" /><font size="2">, el cual crea los nuevos registros en la base de datos. Aquella información identificada como <strong><font color="#ff0000">Etiquetas no localizadas </font></strong></font><font color="#000000"><font size="2">no será transferida a la base de datos.<br />
+            </font></font></p>
+            <p><font color="#000000"><font size="2"></font></font></p>
+            <ol><font size="2"></font></ol>
+                </font></td>
+            </tr>
+        </tbody>
+    </table>
+    </center>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>

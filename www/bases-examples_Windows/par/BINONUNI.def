@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%binonuni/data/binonuni.*
+FILE standard.pft=%path_database%binonuni/pfts/%lang%/binonuni.pft
+FILE SHORTCUT.IAH=%path_database%binonuni/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Palabras^2Palabras^3Words^4Mots^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX Ti=^1Títulos^2Títulos^3Titles^4Titres^xTI ^yDATABASE^uTI_^mTI_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1normal^2normal^3default^4défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

@@ -1,0 +1,12 @@
+'<table border=0 width=90% class=listTable>'
+'<tr><td width=20% valign=top><font face=arial size=2><b>No. Ordem</b></td><td valign=top><font face=arial size=2>',v1,'</td>'/
+'<tr><td width=20% valign=top><font face=arial size=2><b>Data</b></td><td valign=top><font face=arial size=2>',v2,'</td>' /
+'<tr><td width=20% valign=top><font face=arial size=2><b>Fornecedor</b></td><td valign=top><font face=arial size=2>',v5,'</td>' /
+'<tr><td width=20% valign=top><font face=arial size=2><b>Itens</b></td><td valign=top><font face=arial size=2>
+     <table class=statTable>',
+	'<tr><th>Item</th><th>Quant.</th><th>Preço</th><th>Sugestão</th><th>Cotação</th>'
+	(if p(v50) then '<tr><td>'v50^a,'</td><td align=center>'v50^b,'</td><td align=center>'v50^c,'</td><td align=center>'v50^d,'</td><td align=center>'v50^e'</td>' fi /)
+    '</table></td>',
+'<tr><td width=20% valign=top><font face=arial size=2><b>Reclamações</b></td><td valign=top><font face=arial size=2>',v450+|<br>|,'</td>' /
+'</table>'
+

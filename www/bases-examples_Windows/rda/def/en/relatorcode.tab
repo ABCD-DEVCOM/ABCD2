@@ -1,0 +1,161 @@
+act|Actor
+adp|Adapter
+ann|Annotator
+app|Applicant
+arc|Architect
+arr|Arranger
+art|Artist
+asg|Assignee
+asn|Associated name
+att|Attributed name
+auc|Auctioneer
+aut|Author
+aqt|Author in quotations or text abstracts
+aft|Author of afterword, colophon, etc.
+aui|Author of introduction
+aus|Author of screenplay, etc.
+ant|Bibliographic antecedent
+bnd|Binder
+bdd|Binding designer
+bkd|Book designer
+bkp|Book producer
+bjd|Bookjacket designer
+bpd|Bookplate designer
+bsl|Bookseller
+cll|Calligrapher
+ctg|Cartographer
+cns|Censor
+chr|Choreographer
+cli|Client
+clb|Collaborator
+col|Collector
+clt|Collotyper
+cmm|Commentator
+com|Compiler
+cpl|Complainant
+cpt|Complainant-appellant
+cpe|Complainant-appellee
+cmp|Composer
+cmt|Compositor
+ccp|Conceptor
+cnd|Conductor
+csl|Consultant
+cos|Contestant
+cot|Contestant-appellant
+coe|Contestant-appellee
+cts|Contestee
+cte|Contestee-appellee
+ctr|Contractor
+ctb|Contributor
+cpc|Copyright claimant
+cph|Copyright holder
+crr|Corrector
+crp|Correspondent
+cst|Costume designer
+cre|Creator
+cur|Curator
+dnc|Dancer
+dte|Dedicatee
+dto|Dedicator
+dfd|Defendant
+dft|Defendant-appellant
+dfe|Defendant-appellee
+dln|Delineator
+dpt|Depositor
+dsr|Designer
+drt|Director
+dis|Dissertant
+dst|Distributor
+dnr|Donor
+drm|Draftsman
+dub|Dubious author
+edt|Editor
+elt|Electrotyper
+eng|Engineer
+egr|Engraver
+etr|Etcher
+exp|Expert
+fac|Facsimilist
+flm|Film editor
+frg|Forger
+fmo|Former owner
+fnd|Funder
+grt|Graphic technician
+hnr|Honoree
+hst|Host
+ilu|Illuminator
+ill|Illustrator
+ins|Inscriber
+itr|Instrumentalist
+ive|Interviewee
+ivr|Interviewer
+inv|Inventor
+lsa|Landscape architect
+len|Lender
+lil|Libelant
+lit|Libelant-appellant
+lie|Libelant-appellee
+lel|Libelee
+let|Libelee-appellant
+lee|Libelee-appellee
+lbt|Librettist
+lse|Licensee
+lso|Licensor
+ltg|Lithographer
+lyr|Lyricist
+mdc|Metadata contact
+mte|Metal-engraver
+mod|Moderator
+mon|Monitor
+mus|Musician
+nrt|Narrator
+org|Originator
+oth|Other
+own|Owner
+ppm|Papermaker
+pth|Patent holder
+pat|Patron
+prf|Performer
+pht|Photographer
+ptf|Plaintiff
+ptt|Plaintiff-appellant
+pte|Plaintiff-appellee
+plt|Platemaker
+prt|Printer
+pop|Printer of plates
+prc|Process contact
+pro|Producer
+prd|Production personnel
+prg|Programmer
+pfr|Proofreader
+pbl|Publisher
+pbd|Publishing director
+rcp|Recipient
+rce|Recording engineer
+red|Redactor
+ren|Renderer
+rsp|Respondent
+rst|Respondent-appellant
+rse|Respondent-appellee
+rev|Reviewer
+rbr|Rubricator
+sce|Scenarist
+sad|Scientific advisor
+scr|Scribe
+scl|Sculptor
+sec|Secretary
+sgn|Signer
+sng|Singer
+spk|Speaker
+spn|Sponsor
+str|Stereotyper
+srv|Surveyor
+ths|Thesis advisor
+trc|Transcriber
+trl|Translator
+tyd|Type designer
+tyg|Typographer
+voc|Vocalist
+wit|Witness
+wde|Wood-engraver, woodcutter
+wam|Writer of accompanying material

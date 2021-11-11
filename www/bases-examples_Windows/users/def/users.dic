@@ -1,0 +1,20 @@
+Tipo de usuario               10                                     usuarios.tab
+Fecha/ingreso                 15 
+Código usuario                20 
+Nombre del usuario        !B  30 
+C.Identidad                   35 
+Lugar de trabajo          !T  40 
+Ubicación                 !K  45 
+Nivel Adm. 1              !E  47 
+Nivel Adm. 2              !F  49
+Dir. física                   100 R
+Dir. postal                   110 R
+Ciudad                        120 
+País                          130 
+Teléfono                      140 
+Fax                           150
+C. electrónico                160 
+Servicios que accesa          200 R;
+Areas de interés          !G  210 R;
+Palabras claves           !Z  300 R;
+

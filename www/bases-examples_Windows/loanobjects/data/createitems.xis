@@ -1,0 +1,60 @@
+<IsisScript>
+	<trace>On</trace>
+	<section>
+			
+				
+	<field action=add tag=1000>1</field>
+	<field action=add tag=1001><pft>'10010'</pft></field>
+	<field action=add tag=1005>1</field>
+
+	<do>
+		<loop>
+		   <field action=import tag=list>1000,1001,1005</field>
+		   
+			<do task="update">
+				<parm name="db"><pft>'loanobjects'</pft></parm>
+    			        <parm name="mfn">New</parm>
+				<parm name="buffersize">200000</parm>
+				<parm name=MAX_TMP_STRING>200000</parm>
+    				<field action=define tag=1102>Isis_Status</field>
+    				<update>
+					<field action=import tag=list>1000,1001,1005</field>	
+					<flow action="jump">
+					<pft> if (val(v1005)<3) then 'CASOA',else, if (val(v1005)<5) then 'CASOB' else, 'CASOC', fi, fi
+					</pft>
+					</flow>
+
+					<label>CASOA</label>
+						<proc><pft>,'d1000d1001d1005a1$',f(val(v1000)+1,1,0),'$a10$marc$a959$^i',v1001,'^lAGR^oL$'</pft></proc>
+						<flow action="jump">WRITE</flow>
+
+					<label>CASOB</label>
+						<proc><pft>,'d1000d1001d1005a1$',f(val(v1000)+1,1,0),'$a10$marc$a959$^i',v1001,'^lAGR^oCD$'</pft></proc>
+						<flow action="jump">WRITE</flow>
+
+					<label>CASOC</label>	
+						<proc><pft>,'d1000d1001d1005a1$',f(val(v1000)+1,1,0),'$a10$marc$a959$^i',v1001,'^lING^oL$'</pft></proc>
+
+					<label>WRITE</label>
+					<write>Unlock</write>			
+	    			</update>
+ 			</do>
+		
+
+		<field action=replace tag=1000><pft>f(val(v1000)+1,1,0)</pft></field>
+		<field action=replace tag=1001><pft>f(val(v1001)+1,1,0)</pft></field>
+
+		<field action=replace tag=1005><pft>if val(v1005)+1=6 then, '1', else, f(val(v1005)+1,1,0), fi</pft></field>
+
+		<field action=export tag=list>1000,1001,1005</field>
+		<flow action="skip"><pft>if val(v1000)=53 then 'Quit' else 'Next' fi</pft></flow>
+
+		</loop>
+	 </do>
+
+	<label>EXIT</label>		
+
+
+
+	</section>
+</IsisScript>

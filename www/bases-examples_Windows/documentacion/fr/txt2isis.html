@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.0  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="Liliana Melgar">
+	<META NAME="CHANGED" CONTENT="20090203;15193300">
+	<META NAME="Informaci&oacute;n 1" CONTENT="">
+	<META NAME="Informaci&oacute;n 2" CONTENT="">
+	<META NAME="Informaci&oacute;n 3" CONTENT="">
+	<META NAME="Informaci&oacute;n 4" CONTENT="">
+	<META NAME="CHANGEDBY" CONTENT="Liliana Melgar">
+	<META NAME="CHANGEDBY" CONTENT="Liliana Melgar">
+	<META NAME="CHANGEDBY" CONTENT="Liliana Melgar">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<CENTER>
+	<TABLE WIDTH=90% CELLPADDING=2 CELLSPACING=2 STYLE="page-break-before: always">
+		<TR>
+			<TD>
+				<P><STRONG><FONT FACE="arial"><FONT SIZE=4>Conversion d'un fichier TXT
+				vers CDS/Isis</FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>La conversion d'un ficher TXT vers une base CDS/Isis a un fichier TXT file en entr&eacute;e,
+				o&ugrave; les champs &agrave; transf&eacute;rer peuvent &ecirc;tre d&eacute;limit&eacute;s de deux mani&egrave;res:</FONT></FONT></P>
+				<UL>
+					<LI>
+					  <P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="arial"><FONT SIZE=2>avec &eacute;tiquettes </FONT></FONT></STRONG> 
+					</P>
+					<LI>
+					  <P><STRONG><FONT FACE="arial"><FONT SIZE=2>Avec tabulations </FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>(par
+					exemple, un fichier obtenu &agrave; partir d'une feuille de calcul sauv&eacute;e sous format TXT avec des tabulations comme d&eacute;limiteurs )</FONT></FONT></P>
+				</UL>
+				<P><STRONG><FONT COLOR="#800000"><FONT FACE="arial"><FONT SIZE=3>Fichier TXT avec &eacute;tiquettes:</FONT></FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>Dans ce cas, chaque &eacute;l&eacute;ment est identifi&eacute; par une &eacute;tiquette et &agrave; chaque &eacute;tiquette correspond un champ dans la base.<BR>
+				<BR>
+				Ces &eacute;tiquettes commencent toujours par  </FONT></FONT><STRONG><FONT COLOR="#ff0000"><FONT FACE="arial"><FONT SIZE=2>$$</FONT></FONT></FONT></STRONG>
+				<FONT FACE="arial"><FONT SIZE=2>et se terminent par  <STRONG><FONT COLOR="#ff0000">:</FONT></STRONG></FONT></FONT>
+			  <FONT FACE="arial"><FONT SIZE=2>pour assurer qu'il n'y ait aucune confusion dans le contenu &agrave; convertir. De plus, tous les enregistrements doivent &ecirc;tre s&eacute;par&eacute;s par une cha&icirc;ne de caract&egrave;res qu'on ne trouve nulle part dans le contenu des champs. Il est conseill&eacute; d'utiliser </FONT><FONT FACE="arial"><FONT SIZE=2><STRONG><FONT COLOR="#ff0000">##</FONT></STRONG></FONT></FONT> <FONT SIZE=2>comme s&eacute;parateur d'enregistrement.</FONT></FONT></P>
+				<P><STRONG><FONT COLOR="#800000"><FONT FACE="arial"><FONT SIZE=3>Fichier 
+				TXT avecTabulations:</FONT></FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>Dans ce cas, chaque ligne dans le fichier TXT correspond &agrave; un enregistrement, et les champs sont s&eacute;par&eacute;s par des tabulations dans chaque enregistrement. Dans la colonne <strong>&Eacute;tiquette</strong>  de la table de conversion, mettre le rang de la colonne o&ugrave; se trouve le champ &agrave; convertir dans le fichier TXT</FONT></FONT>			  </P>
+				<P><STRONG><FONT COLOR="#800000"><FONT FACE="arial"><FONT SIZE=3>Proc&eacute;dure de conversion:</FONT></FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>Elle se fait en trois &eacute;tapes:</FONT></FONT></P>
+				<OL>
+					<LI>
+					  <P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>S&eacute;lection/D&eacute;finition
+					de la table d conversion</FONT></FONT></P>
+					<LI>
+					  <P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>Validation
+					du fichier d'entr&eacute;e avec la table de conversion</FONT></FONT></P>
+					<LI>
+					  <P><FONT FACE="arial"><FONT SIZE=2>Conversion et chargement dans la base </FONT></FONT></P>
+				</OL>
+				<P><FONT FACE="arial"><FONT SIZE=2>Pour ex&eacute;cuter une conversion, suivre les &eacute;tapes suivantes:</FONT></FONT></P>
+				<OL>
+					<LI>
+					  <P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>S&eacute;lectionner l'option <B>Charger le fichier 
+					TXT </B></FONT></FONT> <FONT FACE="arial"><FONT SIZE=2>&agrave; partir du menu de gestion</FONT></FONT></P>
+					<LI>
+					  <P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>S&eacute;lectionner,
+					&eacute;diter ou cr&eacute;er la <A HREF="tabladeconversion.html"><SPAN STYLE="background: #ffff00">table de conversion</SPAN></A></FONT></FONT></P>
+					<LI>
+					  <P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>En s&eacute;lectionnant la table de conversion, une fen&ecirc;tre avec une zone de texte appara&icirc;t, o&ugrave; vous pouvez saisir le nom du fichier TXT &agrave; convertir. D'autres options sont &eacute;galement disponibles:</FONT></FONT></P>
+					  <UL>
+						<LI>
+						  <P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="arial"><FONT SIZE=2>Voir les &eacute;tiquettes d&eacute;finies </FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>:
+						Affiche les &eacute;tiquettes existantes dans la table de conversion</FONT></FONT></P>
+						  <P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="arial"><FONT SIZE=2>Valider les &eacute;tiquettes</FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>:
+						Traiter le fichier TXT en le confrontant avec la table de conversion,
+						et pr&eacute;senter un rapport avec les &eacute;tiquettes trouv&eacute;es et celles non trouv&eacute;es</FONT></FONT></P>
+						<LI>
+						  <P><STRONG><FONT FACE="arial"><FONT SIZE=2>Proc&eacute;der</FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>:
+						Ex&eacute;cuter la conversion et charger la base</FONT></FONT></P>
+					</UL>
+				</OL>
+				<P><STRONG><FONT FACE="arial"><FONT SIZE=2>Conversion et chargement de la base</FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>Cette &eacute;tape effectue encore une fois la validation du ficher TXT en le confrontant avec la table de conversion, et pr&eacute;sente un nouveau rapport avec les erreurs rencontr&eacute;es. A l'issue de cette &eacute;tape, vous verrez un bouton de commande pour cr&eacute;er les nouveaux enregistrements dans la base. Les lignes identifi&eacute;es comme avec <FONT COLOR="#ff0000"><B><strong>&Eacute;</strong>tiquettes non rep&eacute;r&eacute;es</B></FONT></FONT></FONT>				<FONT FACE="arial"><FONT SIZE=2>ne seront pas transf&eacute;r&eacute;es dans la base.</FONT></FONT></P>
+			</TD>
+		</TR>
+	</TABLE>
+</CENTER>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -1,0 +1,19 @@
+
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de registro</b></td><td valign=top><font face=arial size=2>'v1+|; |,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de inventario</b></td><td valign=top><font face=arial size=2>'v10+|; |,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Código de usuario</b></td><td valign=top><font face=arial size=2>'v20+|; |,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de préstamo</b></td><td valign=top><font face=arial size=2>'v30+|; |,'</td>' fi/
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de préstamo</b></td><td valign=top><font face=arial size=2>'v35+|; |,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de renovacicón</b></td><td valign=top><font face=arial size=2>'v40+|; |,'</td>' fi/
+if p(v45) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de renovación</b></td><td valign=top><font face=arial size=2>'v45+|; |,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de devolución (programada)</b></td><td valign=top><font face=arial size=2>'v50+|; |,'</td>' fi/
+if p(v55) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de devolución (programada)</b></td><td valign=top><font face=arial size=2>'v55+|; |,'</td>' fi/
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de devolución (real)</b></td><td valign=top><font face=arial size=2>'v60+|; |,'</td>' fi/
+if p(v65) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora de devolución (real)</b></td><td valign=top><font face=arial size=2>'v65+|; |,'</td>' fi/
+if p(v70) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de usuario</b></td><td valign=top><font face=arial size=2>'v70+|; |,'</td>' fi/
+if p(v80) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de Objeto</b></td><td valign=top><font face=arial size=2>'v80+|; |,'</td>' fi/
+if p(v100) then '<tr><td width=20% valign=top><font face=arial size=2><b>Referencia</b></td><td valign=top><font face=arial size=2>'mdl,v100+|; |,'</td>' fi/
+'<tr><td colspan=2><hr></td>'/
+'</table>'
+

@@ -1,0 +1,21 @@
+<p><FONT FACE="Arial"><FONT SIZE=2><h4><strong>Automatic generation of database record control numbers</h4>
+</strong>This option enables the automatic assignment of a sequential number to the database records.<br />
+<br />
+In the FDT the control field is defined&nbsp;as field type "Autoincrement". In the definition of the field the code which must be included is indicated in the inverted list and the corresponding display and extraction formats.<br />
+<br />
+The number is taken from the file <strong>control_number.cn</strong> stored in the folder <strong>data</strong> from the corresponding data base. The last number assigned to a record is stored in this file.</p>
+<p>The information in the control number field cannot be inserted directly, the record number is allocated by one of the following methods :</p>
+<ol>
+    <li>If the target field is left blank at the time of saving the record, the next number will be assigned and recorded in the corresponding field</li>
+    <li>If you wish to assign a control number directly follow this procedure:
+    <ul>
+        <li>Click on the link <strong>To assign</strong> next to the text box for the control number field.</li>
+        <li>A new window opens which allows the control number to be assigned</li>
+        <li>Click on <strong>Send</strong> to validate whether a control number exists or not.</li>
+        <li>If the validation is successful (i.e. the control number does not exist), the value is assigned to the entry form</li>
+        <li>If the validation is not successful (i.e. the control number exists) the record confirms that it is already assigned. Click on <strong>Return</strong> to assign another number or <strong>Close</strong> to close the window</li>
+    </ul>
+    </li>
+    <li>In order to erase the control number, click on <strong>Assign</strong> this leaves the control number in target, thereafter click on <strong>Send</strong></li>
+</ol>
+<p>&nbsp;</font></font></p>

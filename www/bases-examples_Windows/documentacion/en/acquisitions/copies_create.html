@@ -1,0 +1,76 @@
+<ol>
+    <li><font size="2">Se presenta la información del objeto obtenida desde la base de datos catalográfica. </font><font size="2">Para determinar el prefijo a aplicar en esta búsqueda se lee la FDT de la base de datos catalográfica y se localiza el campo tipo <strong>AI</strong>, el cual debe indicar el prefijo utilizado en la indización del número de control del objeto. El valor del prefijo anexado a la identificación del objeto colocada en la órden de compra provee la expresión de búsqueda a aplicar para la localización del objeto<br />
+    <br />
+    </font></li>
+    <li><font size="2">Se hace una búsqueda en la base de datos copies para verificar si ya los objetos de esa órden de compra han sido actualizados. Para ello se construye una expresión de búsqueda con los siguientes campos:<br />
+    <br />
+    ORDER_order_suggestion_bidding<br />
+    <br />
+    donde order=número de la órden de compra, suggestion=número de la recomendación, bidding=número de la cotización.<br />
+    <br />
+    Con esta búsqueda se intenta evitar duplicaciones en la base de datos de copias, motivadas por pérdidas de conexión y otros factores.<br />
+    Si la base de datos copies se localiza información al aplicar la búsqueda especificada, se avisa esta condición y no se permite la creación de las copias. En el mensaje suministrado se incluye un vínculo para que puedan presentarse las copias existentes en la base de datos <strong>copies</strong><br />
+    </font></li>
+    <li>Si no se localiza la información en la base de datos <strong>copies, </strong>se procede a la creación de los registros en esta base de datos, utilizando para ello los valores que figuran en la órden de compra. El valor correspondiente a <strong>número de copias</strong> indica cuantos registros se necesita crear en la base de datos <strong>copies</strong>.<br />
+    <br />
+    <font size="2">A cada registro se le asigna un número secuencial correspondiente al número de inventario. A estos efectos es necesario la presencia del archivo </font><strong><font size="2">control_number.cn</font> </strong>en la carpeta <strong>data </strong>de la base de datos <strong>copies</strong> para almacenar el útimo número de inventario asignado.<br />
+    <br />
+    En la FDT de la base de datos <strong>copies</strong> se debe definir un campo del tipo <strong>AI</strong> (autoincrement) para indicar el campo donde se va a almacenar el número generado.<br />
+    <br />
+    La mínima información que contiene la base datos <strong>copies</strong> es la siguiente:<br />
+    <br />
+    </li>
+    <table height="203" width="600" cellspacing="1" cellpadding="1" border="1" align="" summary="">
+        <tbody>
+            <tr>
+                <td><strong>&nbsp;Tag</strong></td>
+                <td><strong>Descripción</strong></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Número de identificación del objeto <br />
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Base de datos donde está catalogado el objeto</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>Situación de la copia</td>
+            </tr>
+            <tr>
+                <td>30</td>
+                <td>Número de inventario (autoincrement)</td>
+            </tr>
+            <tr>
+                <td>40</td>
+                <td>Tipo de objeto</td>
+            </tr>
+            <tr>
+                <td>50</td>
+                <td>Tomo</td>
+            </tr>
+            <tr>
+                <td>60</td>
+                <td>Volumen</td>
+            </tr>
+            <tr>
+                <td>80 </td>
+                <td>Fecha de adquisición</td>
+            </tr>
+            <tr>
+                <td>90</td>
+                <td>Precio</td>
+            </tr>
+            <tr>
+                <td>100</td>
+                <td>Número de la órden de compra</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <li>Luego de creadas las copias del objeto y asignados los números de inventario, se habilita el botón para proceder a crear los registros correspondientes en la base de datos de objetos de préstamo (<strong>loanobjects)</strong></li>
+</ol>
+<br />
+&nbsp;

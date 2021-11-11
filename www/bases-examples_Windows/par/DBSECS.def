@@ -1,0 +1,27 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%dblil/dbsecs.*
+FILE standard.pft=%path_database%dblil/pfts/%lang%/seclhtm.pft
+FILE detailed.pft=%path_database%dblil/pfts/%lang%/secdhtm.pft
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^pPalavras do título^ePalabras del título^iTitle Words^s100^d*
+INDEX Ti=^pTítulo abreviado^eTítulo abreviado^iAbridged title^s150
+INDEX De=^pAssunto^eAsunto^iSubject^s440
+INDEX La=^pIdioma^eIdioma^iLanguage^s350^tshort
+INDEX Is=^pISSN^eISSN^iISSN^s400
+
+[APPLY_GIZMO]
+GIZMO=ASC2ANS
+
+[FORMAT_NAME]
+FORMAT standard.pft=^pLongo^eLargo^iLarge
+FORMAT detailed.pft=^pDetallhado^eDetallado^iDetailed
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+HELP FORM=help_form_secs.htm
+
+[DISPLAY_FORM]
+AVAILABLE FORMS=F,B

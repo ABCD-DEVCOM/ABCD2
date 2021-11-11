@@ -1,0 +1,25 @@
+H||Purchase order|0|0||||||||||||0||
+F|10|Acquisition |0|0|ab||R||3|P|%path_database%copies/def/en/acquiredby.tab|||||0||
+F|1|Order num.|0|0|||X|||D|suggestions|NC_|v1|||0||
+F|2|Date|0|0|||D||10|||||||0||
+F|3|ISO Date|0|0|||ISO||10|||||||0||
+F|5|Provider|0|0|||X|||D|providers|NA_|v10|v10||0||
+T|50|Objects to acquire|0|1|abcdeghif||TB|5||||||||0||
+S||Description|0|0|a||X||25|||||||0||
+S||Quatity|0|0|b||X||5|||||||0||
+S||Price|0|0|c||X||5|||||||0||
+S||Suggestion number|0|0|d||X||10|||||||0||
+S||Bidding number|0|0|e||X||10|||||||0||
+S||Object type (New/Copies)|0|0|g||S||5|P|typeofacquisition.tab|||||0||
+S||Database|0|0|h||S||10|P|%path_database%acquisitions.dat|||||0||
+S||Control number|0|0|i||X||10|||||||0||
+S||Copies received|0|0|f||X||5|||||||0||
+H||Claims|0|0||||||||||||0||
+T|450|Claim|0|1|abc||TB|10||||||||0||
+S||Date|0|0|||D||10|||||||0||
+S||ISO Date|0|0|||ISO||10|||||||0||
+S||Notes|0|0|||X||100|||||||0||
+H||Items arraival|0|0||||||||||||0||
+F|480|Date|0|0|||D||10|||||||0||
+F|481|ISO date|0|0|||ISO||10|||||||0||
+F|500|Order closed|0|0|||X||1|||||||0||

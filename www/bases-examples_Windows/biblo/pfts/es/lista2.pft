@@ -1,0 +1,4 @@
+(if p(v101) or iocc=1 then 'control::'v2[1], '||titulo::'v12[1] if p(v18[1]) and p(v12[1]) then '.' fi v18[1],if s(v12[1],v18[1])<>'' then if p(v30[1]) then ' // En:' fi,fi, | |v30[1]'||inventario::'v101^n,'||fechaadquisicion::'v101^w,'||proveedor::'v101^r,
+
+'||clasificacion::'v3^a[1],|.|v3^b[1],|.|v3^c[1],|.|v3^d[1],|.|v3^e[1],'###' fi),/ 
+

@@ -1,0 +1,90 @@
+<html>
+
+    <head>
+
+        <title></title>
+
+    </head>
+
+    <body>
+
+        <strong><font face="Arial" size="2">Paramètres requis pour configurer une base de données avec des articles empruntables</font></strong><br />
+
+        <br />
+
+        <table cellspacing="1" cellpadding="1" width="90%" summary="" border="0">
+          <tbody>
+            <tr>
+              <td width="2%" valign="top"><font face="Arial" size="2">1.</font></td>
+              <td width="22%" valign="top"><font face="Arial" size="2">Préfixe pour localiser le numéro d'inventaire</font></td>
+              <td width="76%" valign="top">
+              <p><font face="Arial" size="2">Ce préfixe est ajouté au numéro d'inventaire fourni par l'opérateur des prêts en vue de localiser le titre approprié. </font><font face="Arial"><font size="2"> Il est stocké dans le dossier de la base de données sélectionnée <strong>def</strong> sous le nom</font></font><font face="Arial" size="2">&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_conf.tab</font></strong></font></p></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">2.</font></td>
+              <td valign="top"><font face="Arial" size="2">Préfixe pour localiser le numéro de la classe </font></td>
+              <td valign="top"><font face="Arial" size="2">Ce préfixe est ajouté au numéro de la classe fourni par l'opérateur des prêts en vue de localiser le titre approprié.&nbsp;&nbsp;</font><font face="Arial"><font size="2">Il est stocké dans le dossier de la base de données sélectionnée <strong>def</strong> sous le nom </font></font><font face="Arial" size="2"><strong><font face="Arial" color="#ff6600" size="2">loans_conf.tab</font></strong>&nbsp;file.</font></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">3.</font></td>
+              <td valign="top"><font face="Arial" size="2">Pft pour calculer le nombre total  de copies de l'article </font></td>
+              <td valign="top"><p><font size="2" face="Arial, Helvetica, sans-serif">Ce format est appliqué pour calculer le nombre total de copies de l'article à emprunter après qu'il a été localisé par les moyens de l'une des méthodes précedentes</font>s. <font face="Arial"><font size="2">Il est stocké dans le dossier de la base de données <strong>def</strong> sous le nom</font></font><font face="Arial" size="2">&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_totalitems.pft</font></strong></font></p></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">4.</font></td>
+              <td valign="top"><font face="Arial" size="2">PFT pour extraire le numéro d'inventaire </font></td>
+              <td valign="top"><font size="2" face="Arial, Helvetica, sans-serif">Ce format est appliqué</font><font face="Arial" size="2"> sur l'article à emprunter pour extraire leurs numéros d'inventaire et localiser la copié désirée. </font><font face="Arial"><font size="2"> Il est stocké dans le dossier de la base de données sélectionnée <strong>def</strong> sous le nom</font></font><font face="Arial" size="2">&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_inventorynumber.pft</font></strong></font></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">5.</font></td>
+              <td valign="top"><font face="Arial" size="2">PFT pour extraire le numéro de la classe </font></td>
+              <td valign="top"><font face="Arial" size="2"></font></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">6.</font></td>
+              <td valign="top"><font face="Arial" size="2">PFT pour afficher le registre de l'article à emprunter </font></td>
+              <td valign="top"><font face="Arial" size="2">Ce format est appliqué au registre situé dans la base de données avec les articles empruntables en vue de les visualiser.</font><font face="Arial"><font size="2">Il est stocké dans le dossier de la base de données sélectionnée <strong>def</strong> sous le nom</font></font><font face="Arial" size="2">&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_display.pft</font></strong></font></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">7.</font></td>
+              <td valign="top"><font face="Arial" size="2">PFT pour avoir le type de registre à partir de la base de données des prêts </font></td>
+              <td valign="top"><font face="Arial" size="2">Ce format est appliqué au registre situé dans la base de données avec les articles empruntables en vue d'avoir le type de registre des copies exigées. Ce type de registre est lié au type d'usager pour déterminer la politique de prêt de la copie exigée <font face="Arial"><font size="2">Il est stocké dans le dossier de la base de données selectionnée <strong>def</strong> sous le nom</font></font><font face="Arial" color="#ff6600" size="2"><strong> loans_typeofobject.pft</strong></font></font></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">8.</font></td>
+              <td valign="top"><font face="Arial" size="2">PFT pour stocker le registre dans la base de données des prêts </font></td>
+              <td valign="top"><font face="Arial" size="2">Ce format est appliqué au registre situé dans la base de données des prêts et il est utilisé pour stocker l'information catalographique de la copie empruntée. </font><font face="Arial"><font size="2">Il est stocké dans le dossier de la base de données sélectionnée <strong>def</strong> sous le nom</font></font><font face="Arial" size="2">&nbsp;</font><font face="Arial" size="2">&nbsp;<strong><font face="Arial" color="#ff6600" size="2">loans_store.pft</font></strong></font></td>
+            </tr>
+            <tr>
+              <td valign="top"><font face="Arial" size="2">9.</font></td>
+              <td valign="top"><font face="Arial" size="2">PFT pour afficher l'article de la base de données des prêts </font></td>
+              <td valign="top"><font face="Arial"><font size="2">Ce format ets utilisé pour afficher l'information sur les prêts en attente dans la base de données des <strong>prêts</strong>. </font><font face="Arial"><font size="2">Il est stocké dans le dossier de la base de données sélectionnée <strong>def</strong> sous le nom</font></font><font face="Arial" size="2"></font><font size="2">&nbsp;<font face="Arial" color="#ff6600" size="2"><strong>loans_show.pft</strong></font></font></font></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+    </table>
+        <p><font face="Arial" size="2">Vous pouvez utiliser le lien <strong>Essayer</strong> et entrer un MFN pour appliquer les formats appropriés à la base de données avec les articles empruntables.</font></p>
+        <p><font face="Arial" size="2">Pour stocker les formats, cliquez sur <strong>Sauvegarder</strong> </font></p>
+
+    </body>
+
+</html>

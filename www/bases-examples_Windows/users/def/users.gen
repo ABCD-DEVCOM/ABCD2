@@ -1,0 +1,20 @@
+Tipo de usuario                                   v10
+Fecha/ingreso                                     v15
+Código usuario                                    v20 
+Nombre del usuario                                v30 
+C.Identidad                                       v35 
+Sexo                                              v12
+Lugar de trabajo                                  v40 
+Ubicación                                         v45 
+Nivel Adm. 1                                      v47 
+Nivel Adm. 2                                      v49
+Dir. física                                       v100   
+Dir. postal                                       v110    
+Ciudad                                            v120 
+País                                              v130 
+Teléfono                                          v140 
+Fax                                               v150
+C. electrónico                                    v160 
+Servicios que accesa                              v200   
+Areas de interés                                  v210   
+Palabras claves                                   v300

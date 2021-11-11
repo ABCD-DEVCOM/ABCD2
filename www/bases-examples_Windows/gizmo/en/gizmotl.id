@@ -1,0 +1,48 @@
+!ID 000001
+!v001!S
+!v002!Document published as a periodic series
+!ID 000002
+!v001!SC
+!v002!Conference papers as a periodic series
+!ID 000003
+!v001!SCP
+!v002!Paper of project and conference as a periodic series
+!ID 000004
+!v001!SP
+!v002!Project paper as a periodic series
+!ID 000005
+!v001!M
+!v002!Document published as a monograph
+!ID 000006
+!v001!MC
+!v002!Conference paper as a monograph
+!ID 000007
+!v001!MCP
+!v002!Paper of project and conference as a monograph
+!ID 000008
+!v001!MP
+!v002!Project paper as a monograph
+!ID 000009
+!v001!MS
+!v002!Document published as a monographic series
+!ID 000010
+!v001!MSC
+!v002!Conference paper as a monographic series
+!ID 000011
+!v001!MSP
+!v002!Project paper as a monographic series
+!ID 000012
+!v001!T
+!v002!Thesis
+!ID 000013
+!v001!TS
+!v002!Thesis appearing as a monographic series
+!ID 000014
+!v001!N
+!v002!Non Conventional document
+!ID 000015
+!v001!NC
+!v002!Conference paper in a non conventional form
+!ID 000016
+!v001!NP
+!v002!Project paper in a non conventionally

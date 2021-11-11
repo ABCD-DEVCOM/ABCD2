@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%unicode/data/unicode.*
+FILE standard.pft=%path_database%unicode/pfts/%lang%/unicode.pft
+FILE SHORTCUT.IAH=%path_database%unicode/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX AL=^1^2todo^3all words^4^d*^xAL_^yDATABASE^uAL_^mAL_
+INDEX SA=^1^2^3Devanagari^4^xSA_^yDATABASE^uSA_^mSA_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1^2^3default^4
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=

@@ -1,0 +1,98 @@
+<meta http-equiv="Content-Type" content="text/html;xcharset=utf-8" />
+
+<p><font face="Arial" size="2"></font></p>
+
+<p><font face="Arial" size="2"><strong>Planilhas de Entrada</strong></font></p>
+
+<p><font face="Arial" size="2">O sistema mantém uma planilha de entrada, por default, construída através da <strong>.FDT</strong>. Podem ser elaboradas outras planilhas de entrada, as quais incluem apenas as etiquetas dos campos a incorporar pois as restantes são obtidas diretamente da <strong>FDT</strong></font>.</p>
+
+<p><span style="COLOR: #3366ff"><strong><font face="Arial" size="2">Criar a planilha de entrada (FMT)</font></strong></span></p>
+
+<p><font face="Arial" size="2">Permite criar planilhas de entrada de dados adicionais, as quais podem ser selecionadas&nbsp;no momento da entrada da informação utilizando o menu indicado por Worksheet&nbsp;apresentado na parte superior da janela do ABCD.</font></p>
+
+<p><font face="Arial"><font size="2"><strong>Criar uma nova planilha de entrada:<br />
+
+</strong><br />
+
+Selecione da lista de campos&nbsp;aqueles que vão fazer parte da&nbsp;planilha de entrada. Para selecionar um campo pode:</font></font></p>
+
+<ul>
+
+    <li><font face="Arial" size="2">Dar um   clique duplo sobre&nbsp;o&nbsp;campo</font></li>
+
+    <li><font face="Arial" size="2">Clicar sobre um campo e alargar a seleção&nbsp;com&nbsp;as teclas&nbsp;[Shift]&nbsp;&nbsp;ou&nbsp;&nbsp;[Ctrl-Shift]&nbsp;e em seguida clicar sobre a seta que aponta para a direita</font> </li>
+
+    <li><font face="Arial" size="2">Para copiar todos os campos da planilha de entrada, clique sobre&nbsp;a seta que aponta para a direita</font>&nbsp; </li>
+</ul>
+
+<p><font face="Arial" size="2">Para eliminar campos da planilha de entrada pode:</font></p>
+
+<ul>
+
+    <li><font face="Arial" size="2">Dar  clique duplo sobre&nbsp;o&nbsp;campo</font> </li>
+
+    <li><font face="Arial" size="2">Clicar sobre um campo e alargar a seleção&nbsp;com&nbsp;as teclas&nbsp;[Shift]&nbsp;&nbsp;ou&nbsp;&nbsp;[Ctrl-Shift]&nbsp;e em seguida clicar  sobre a seta&nbsp;</font>que aponta para a esquerda&nbsp; </li>
+
+    <li><font face="Arial" size="2">Para&nbsp;excluir todos os campos da planilha de entrada, clicar sobre a seta que aponta para a esquerda</font>&nbsp; </li>
+</ul>
+
+<p><font face="Arial" size="2">Os campos extraídos da planilha de entrada serão obtidos, no final, da janela contendo a lista de campos</font>.</p>
+
+<p><font face="Arial" size="2">Use os botões </font>
+  <input type="button" name="subir" value="Voltar" />
+<font face="Arial" size="2">&nbsp;ou </font><input type="button" name="bajar" value="Avançar" />
+<font face="Arial" size="2">&nbsp;para posicionar os campos na planilha de entrada.</font></p>
+
+<p><font face="Arial" size="2">Use o link <em> Vista prévia</em> <img alt="" src="../../php/dataentry/img/preview.gif" /> para&nbsp;pr&eacute;-visualizar a planilha de entrada em construção.</font></p>
+
+<p><font face="Arial" size="2">Quando terminar a planilha, insira no campo Nome o nome da planilha e em descrição, incluir uma breve explicação sobre a planilha criada. O&nbsp;nome da planilha poder conter letras, números ou o caracter _, devendo sempre começar por uma letra. Não são aceitos espaços nem caracteres especiais. A&nbsp;descrição deve ser resumida e curta de modo a poder ser visualizada no menu&nbsp;Worksheet localizado na parte superior da janela principal de&nbsp;ABCD.</font></p>
+
+<p><font face="Arial" size="2"></font><strong><font face="Arial" size="2">Modificar uma planilha de entrada já existente</font></strong></p>
+
+<p><font face="Arial" size="2">Selecione no menu suspenso a planilha que pretende editar e clique em <strong><u>Editar</u></strong>. Com a informa&ccedil;&atilde;o da planilha  se preencher&aacute; a janela&nbsp;<strong>Campos selecionados. </strong>Siga as instru&ccedil;&otilde;es mencionadas anteriormente para adicionar ou excluir campos da planilha.</font></p>
+
+<p><strong><font face="Arial" size="2">Excluir uma planilha de entrada já existente</font></strong></p>
+
+<p><font face="Arial" size="2">Selecione do menu suspenso a planilha que pretende excluir e clique sobre&nbsp;<u><strong>Excluir</strong></u>.</font></p>
+
+<font face="Arial" size="2"><hr />
+
+<p>&nbsp;</p>
+
+</font>
+<p><font face="Arial" size="2">As planilhas criadas</font><font face="Arial" size="2"> são guardadas na pasta <strong>def </strong>da pasta da base de dados, com a extensão&nbsp;<strong>.fmt</strong>. A lista das planilhas existentes está no arquivo &nbsp;<strong>formatos.wks</strong>, no qual consta uma linha para cada planilha, com o nome e a descrição separados pelo caracter&nbsp;<strong>|</strong> .</font></p>
+
+<font face="Arial" size="2">
+</font>
+<p><font face="Arial" size="2">Exemplo de uma planilha:</font></p>
+
+<font face="Arial" size="2"><p><font face="Courier New" size="2">H||Entradas principais|0|0|||||||||||<br />
+
+100<br />
+
+110<br />
+
+111<br />
+
+240<br />
+
+242<br />
+
+245<br />
+
+246<br />
+
+250<br />
+
+260<br />
+
+300<br />
+
+310</font></p>
+
+</font>
+<p><font face="Arial" size="2">Como se pode observar,&nbsp;a planilha de entrada&nbsp;criada inclui as linhas da FDT do tipo <strong>H </strong>(cabeçalho) ou <strong>L </strong>(linha divisória) e as etiquetas dos campos selecionados. Isto significa que  alterações realizadas&nbsp;na FDT,&nbsp;depois da criação das planilhas de entrada, serão apresentadas no momento da seleção da planilha de entrada correspondente.</font></p>
+
+<font face="Arial" size="2"></font>
+<p><font size="2" face="Arial">O arquivo&nbsp;<strong>formatos.wks</strong> serve para preencher o menu suspenso&nbsp;<strong>Worksheet. </strong>Quando  é criada ou excluída uma planilha,  é atualizado de forma automática o menu suspenso <strong>Worksheet </strong>incluído na parte superior da janela principal.</font></p>
+

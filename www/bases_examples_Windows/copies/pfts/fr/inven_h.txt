@@ -1,8 +1,0 @@
-No. control
-Database
-Signature
-Inventory
-Location
-Library princ.
-Library sec.
-Copy No.

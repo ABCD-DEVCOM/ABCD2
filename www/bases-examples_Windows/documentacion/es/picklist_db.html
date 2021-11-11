@@ -1,0 +1,47 @@
+<p>&nbsp;<font face="Arial"><font size="2"><strong>Captura de términos a través de un archivo de autoridades o utilizando la terminología ya ingresada en la base de datos</strong></font></font></p>
+<p><font face="Arial"><font size="2">Mediante esta opción se pueden capturar términos a partir de otra base de datos, por ejemplo, una base de datos de autoridades, o a partir de la misma base de datos, por ejemplo para normalizar los autores, descriptores, editoriales, etc.<br />
+</font></font></p>
+<p><font face="Arial"><font size="2">El acceso a los términos de la base de datos asociada se hace a través de la lista invertida. En consecuencia se requiere definir sub-diccionarios al interior del diccionario de términos, mediante la asignación de prefijos a los campos indizados.<br />
+</font></font></p>
+<p><font face="Arial"><font size="2">A través del prefijo indicado en la FDT&nbsp;se accede a los postings de las claves&nbsp; obteniendo el&nbsp;&nbsp; Mfn de los&nbsp;registro. Se utiliza el MFN del primer posting de la clave para acceder al registro y sobre el cual&nbsp;se aplican 2 formatos:&nbsp; <br />
+</font></font></p>
+<ul>
+    <li><strong><font size="2"><font face="Arial">formato de despliegue</font></font></strong></li>
+    <li><font face="Arial"><font size="2"><strong>formato de extracción</strong></font></font></li>
+</ul>
+<p><font size="2"><font face="Arial">El <strong>formato de despliegue</strong> se aplica sobre el registro obtenido a través del posting,&nbsp;a fin de&nbsp;determinar la forma como se va a desplegar el campo en la lista de selección que se le muestra al usuario, mientras que el <strong>formato de extracción</strong> se utiliza para extraer el campo y transferirlo al registro.&nbsp; La lista se construye con el elemento &lt;select&gt; del lenguaje HTML y las opciones del menú de selección se llenan de la siguiente manera:<br />
+&lt;option value="</font></font><font face="Arial"><font size="2"><strong>formato de extracción</strong>"&gt;</font></font><strong><font size="2"><font face="Arial">formato de despliegue</font></font></strong><font size="2"><font face="Arial">&lt;/option&gt;</font></font></p>
+<p><font size="2">Entonces, al usuario hacer clic sobre un término, la cadena asociada como <strong>formato de extracción</strong> es transferida al registro</font><br />
+<font size="2"><font face="Arial"><br />
+Los formatos mencionados pueden tener toda la complejidad del lenguaje para la elaboración de formatos del CDS/Isis. Para formatos muy complicados se recomienda colocar como formato de extracción un formato (PFT) previamente construído, utilizando la forma @xxxxxx.pft para incorporar el formato donde sea requerido. En este caso el formto de extracción y el formato de despliegue se incluyen en el formato @xxxxxx.pft, separados con $$$. Se debe utilizar la sentencia <strong>select</strong> del lenguaje de formateo para aplicar el formato de acuerdo al ID del campo recuperado en la lista invertida.<br />
+<br />
+Ejemplo:<br />
+</font></font></p>
+<p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><font face="Courier New">select e3<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 600: v600^a,`$$$`v600^a<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 700: v700^a,`$$$`v700^a</font></font><font face="Arial"><font face="Courier New"><br />
+<font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b,</font></font></font><font face="Arial"><font face="Courier New" size="2">`$$$`v260</font></font><br />
+<font face="Arial" size="2"><font face="Courier New">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+...<br />
+<br />
+...<br />
+<br />
+endsel</font></font></p>
+<p><font face="Arial" size="2">La variable asociada al case, identifica el Id asignado al campo en la FST; luego se especifica el formato a utilizar para el despliegue del campo en la lista de selección y, a continuación, precedido por `$$$`, el formato a utilizar para presentar el campo y transferirlo a la hoja de entrada. Si se omite el formato de extracción, se usa el formato de despliegue como formato de extracción.</font></p>
+<p><font size="2">El ID del campo se obtiene a través del posting obtenido mediante el prefijo. Por esta razón, es posible presentar una lista de selección que contemple varios campos, por ejemplo, todos los autores personales del formato Marc (100,600,700).</font></p>
+<p><font size="2">En este caso, todos los campos serán indizados con el mismo prefijo, pero el ID debe coincidir con el tag del campo para que extraiga correctamente de la base de datos, al aplicar el formato de extracción correcpondiente</font></p>
+<p><font size="2">Por ejemplo, para presentar todos los autores el formato MARC, de acuerdo al formato de extracción mostrado anteriormente (@xxxxx.pft)&nbsp;la FST para la indización deberá especificar:</font></p>
+<p><font size="2">100 0 "AU_"v100^a/<br />
+<font size="2">600 0 (| AU_| v600^a|%|/)<br />
+<font size="2">700 0 (| AU_| v700^a|%|/)</font></font></font></p>
+<p><font size="2">Note la utilización del % en el caso de campos repetibles para generar el número de la ocurrencia, ya que la presentación de las listas usa el componente del posting que identifica el número de la ocurrencia para extraer correctamente el campo.</font></p>
+<p><font size="2"></font></p>
+<br />
+<p>&nbsp;</p>
+<p>&nbsp;</p>

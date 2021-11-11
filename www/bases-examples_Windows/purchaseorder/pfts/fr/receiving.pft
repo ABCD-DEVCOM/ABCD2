@@ -1,0 +1,38 @@
+'<table border=0 width=90% class=listTable>'
+'<tr><td width=20% valign=top><font face=arial size=2><b>Order No.</b></td><td valign=top><font face=arial size=2>',v1,'</td>'/
+'<tr><td width=20% valign=top><font face=arial size=2><b>Date</b></td><td valign=top><font face=arial size=2>',v2,'</td>' /
+'<tr><td width=20% valign=top><font face=arial size=2><b>Acquisition type</b></td><td valign=top><font face=arial size=2>',v10^b," ("v10^a")",'</td>' /
+if v10^a='pr' then
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Provider</b></td><td valign=top><font face=arial size=2>',v5,'</td>' /
+fi,
+if v10^a='ex' then
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Exchanger</b></td><td valign=top><font face=arial size=2>',v700,'</td>' /
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Exchanged by</b></td><td valign=top><font face=arial size=2>',v710,'</td>' /
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Conditions</b></td><td valign=top><font face=arial size=2>',v720,'</td>' /
+fi,
+if v10^a='do' then
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Donated by</b></td><td valign=top><font face=arial size=2>',v600,'</td>' /
+	'<tr><td width=20% valign=top><font face=arial size=2><b>Conditions</b></td><td valign=top><font face=arial size=2>',v610,'</td>' /
+fi,
+'</table>$$$$',
+	(if p(v50^a) then v50^a,'|'
+		v50^b,'|'
+		v50^c,'|'
+		v50^d,'|'
+		v50^e,'|'
+		v50^h,'|' 
+		if v50^g='N' then 'N (New)' else 'C (Copies)' fi,'|'
+		v50^i,'|',
+		v1[1],'|' 
+		v50^j ,'|'
+		v50^f/ else
+		v18" / ",v16,"; "v17,". "v21,". "v29,". "v30,". "v31,". "v32,". "v35,". "v47,". "v37,". "v38,". "v39,". "v40,". "v41,'|'v50^b,'|'v50^c,'| | |'v50^h'|' if v50^g='N' then 'N (New)' else 'C (Copies)' fi '|'v50^i,'|' v1[1],'|' v50^j , 
+	fi '^^'),
+
+'$$$$'f(mfn,1,0),
+'$$$$'v5'$$$$'v500/
+'$$$$',if p(v600) then v600 '|' v610 else if p(v700) then v700 '|',v710,'|'v720, fi fi,
+'$$$$'v10
+
+
+

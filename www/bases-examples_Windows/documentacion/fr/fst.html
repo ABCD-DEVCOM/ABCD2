@@ -1,0 +1,556 @@
+<xmeta content="text/html;charset=utf-8" http-equiv="Content-Type"></xmeta>
+<table cellspacing="0" cellpadding="0" width="95%" border="0">
+    <tbody>
+        <tr>
+            <td><strong><font face="Arial" size="2">La Table de Sélection des Champs</font></strong>
+            <p align="justify">&nbsp;</p>
+            <p align="justify"><font face="Arial" size="2">La Table de Sélection des Champs (ou TSC) est la table utilisée par le logiciel ISIS pour créer et mettre à jour le fichier inversé, mais aussi pour échanger (import/export) des données et pour créer des clés de tri pour des sorties et rapports triés.</font></p>
+            <p align="justify"><font face="Arial" size="2">Lors de la définition de la TSF, le concepteur doit prendre en compte les types de recherches que voudront faire les utilisateurs avec le maximum de chances de succès.</font></p>
+            <p align="justify"><font face="Arial" size="2">CDS/Isis propose un large choix de possibilités pour garantir des recherches fructueuses : </font></p>
+            <ul>
+                <li><font face="Arial" size="2">8 techniques différentes d'indexation (champs, mot, termes marqués...), permettant au même champ d'être inclus dans l'index de différentes manières </font></li>
+                <li><font face="Arial" size="2">L'extraction des termes indexés est définie par le Langage de formatage, ce qui signifie que les termes à indexer peuvent être calculés et manipulés à partir du champ avant d'être envoyés vers l'index </font></li>
+                <li><font face="Arial" size="2">La transparence dans l'utilisation des majuscules, des minuscules et des signes diacritiques dans les termes de recherche </font></li>
+                <li><font face="Arial" size="2">L'identification des termes de recherche, qui permet de déterminer l'origine exacte (NFM, étiquette du champ, occurrence du champ et position du mot dans le champ) de chaque terme du dictionnaire.</font></li>
+            </ul>
+            <p align="justify"><font face="Arial" size="2">La FST est un pur fichier TXT avec trois colonnes dans lesquelles les trois éléments suivants sont identifiés :</font>
+            <table class="td" cellspacing="5" cellpadding="5" width="80%" border="1">
+                <tbody>
+                    <tr>
+                        <td class="td" valign="top"><font face="Arial" size="2">ID = Identification de la clé</font></td>
+                        <td><font face="Arial" size="2">L'étiquette du champ à partir de laquelle les clés ont été prises, que ce soit réel ou virtuel (alias). Les clés seront considérées comme issues des champs indiqués, que ce soit vrai ou pas (dans le cas d'un domaine virtuel ou un alias), ce qui signifie qu'un élément d'un champ est dit provenir d'un autre. Cette dernière technique permet, par exemple, de combiner tous les descripteurs de plusieurs champs pour être recherchés juste comme un type de descripteurs, ou toutes les variations d'un titre pour être cherché comme juste une donnée 'titre'. <br />
+                        </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">TI = Technique d'indexation</font></td>
+                        <td><font face="Arial" size="2">Signifie quelle technique à utiliser sur une valeur (ou une ligne) obtenue en exécutant le format sur un enregistrement de la base de donnée.<br />
+                        </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">Format d'extraction</font></td>
+                        <td><font face="Arial" size="2">Spécifie le format d'extraction qui sera appliqué à l'enregistrement avec le langage de formatage ISIS, pour la production de la clé de l'index<br />
+                        </font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p>&nbsp;</p>
+            <p align="justify"><font face="Arial" size="2">Le fichier inversé des structures ISIS contient 5 éléments : </font></p>
+            <p align="justify">&nbsp;</p>
+            <dir><dd><font face="Arial" size="2">Le Terme de recherche (clé)<br />
+            </font></dd><dd><font face="Arial" size="2">ID<br />
+            </font></dd><dd><font face="Arial" size="2">NFM<br />
+            </font></dd><dd><font face="Arial" size="2">Occurrence du champ<br />
+            </font></dd><dd><font face="Arial" size="2">Position dans l'occurrence du champ</font></dd></dir>
+            <p align="justify"><font face="Arial" size="2">La valeur trouvée dans la 1ère colonne de la TSC est l'identifiant (ID) d'un élément du fichier inversé. identifiant la clé générée par le format. Cette identification peut être utilisée pour connaître l'origine de la clé dans les recherches dans la base de données. En général, l'ID utilise l'étiquette déjà utilisée dans la TDC, mais dans certains cas spéciaux on peut utiliser des étiquettes 'virtuelles' (étiquettes de champs n'existant pas) ou des étiquettes 'alias' (redéfinissant l'origine d'un champ à l'autre).</font></p>
+            <p align="justify"><font face="Arial" size="2">Exemple : en supposant que notre base de données dispose de 3 champs pour indexer des auteurs :</font></p>
+            <p align="justify"><font face="Arial" size="2">10: Personal authors at analytic level<br />
+            16: Personal authors at monographic level<br />
+            23: Personal authors at series level<br />
+            </font></p>
+            <p align="justify"><font face="Arial" size="2">Pour tous les auteurs de la recherche, indépendamment du type de support dans lequel ils apparaissent, on peut attribuer à la TSC l'Id 10 pour toutes les clés prises dans les champs 10, 16 et 23, afin de permettre une recherche simple sur les auteurs sans prendre en compte le type de matière à laquelle ils sont liés.</font></p>
+            <p align="justify"><font face="Arial" size="2">Par conséquent, si notre TSC précise : </font></p>
+            <p align="justify"><font face="Courier New">10 0 (v10/)(v16/)(v23/)</font></p>
+            <p align="justify"><font face="Arial" size="2">En effectuant la recherche "Amaro, Jorge Luis / (10)" avec ce FI, nous aurons comme résultat toutes les notices dans lesquelles "Amaro, Jorge Luis" apparaît, que ce soit dans le champ 10, 16 ou 23. Nous avons donc récupéré les notices indépendamment du type d'auteurs enregistré dans la base.</font></p>
+            <p align="justify"><font face="Arial" size="2">L'attribution d'un ID unique pour les différentes étiquettes de champs permet de faciliter les expressions de recherche pour des recherches plus générales (trouver un terme indépendamment du champ où il a été pris), ou des recherches qualifiées (avec des limitations définies par le ID). Le degré de précision dépendra des décisions prises lors de la définition de la TSC.</font></p>
+            <p align="justify"><font face="Arial" size="2">Actuellement il existe 8 techniques d'indexation :</font></p>
+            <p>
+            <table class="td" height="202" cellspacing="0" cellpadding="0" width="604" summary="" border="1">
+                <tbody>
+                    <tr>
+                        <td valign="top" width="30"><font face="Arial" size="2">0</font></td>
+                        <td><font face="Arial" size="2">Sélectionne la ligne entière générée par le format</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">1</font></td>
+                        <td><font face="Arial" size="2">Sélectionne chaque sous-champ de la ligne générée par le format</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">2</font></td>
+                        <td><font face="Arial" size="2">Sélectionne, à partir de la ligne générée par le format, uniquement les termes encadrés par les caractères &lt; ... et &gt;</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">3</font></td>
+                        <td><font face="Arial" size="2">Sélectionne, à partir de la ligne générée par le format, uniquement les termes encadrés par les caractères /.../ </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">4</font></td>
+                        <td><font face="Arial" size="2">Sélectionne, à partir de la ligne générée par le format, chaque mot individuellement </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">5</font></td>
+                        <td><font face="Arial" size="2">Même technique que 1, en mettant un préfixe devant chaque clé générée</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">6</font></td>
+                        <td><font face="Arial" size="2">Même technique que 2, en mettant un préfixe devant chaque clé générée</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">7</font></td>
+                        <td><font face="Arial" size="2">Même technique que 3, en mettant un préfixe devant chaque clé générée</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">8</font></td>
+                        <td><font face="Arial" size="2">Même technique que 4, en mettant un préfixe devant chaque clé générée</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p align="justify"><font face="Arial" size="2">Les techniques 2 et 3 ont un effet similaire sur la génération des clés. La différence provient des délimiteurs utilisés. Les caractères /.../ ne peuvent pas être remplacés car ils seront toujours présent dans la sortie à l'écran ou l'imprimante, alors que les < et > peuvent être cachés ou affichés par une commande du langage de formatage ISIS. </font></p>
+            <p align="justify"><font face="Arial" size="2">Lorsque le format d'extraction de la TSC est appliqué à un enregistrement, la séquence est la suivante :</font></p>
+            <ol>
+                <li><font face="Arial" size="2">Le format est appliqué à l'enregistrement pour générer les clés </font></li>
+                <li><font face="Arial" size="2">La technique d'indexation est appliquée aux clés</font></li>
+                <li><font face="Arial" size="2">A chaque clé résultant de la technique d'indexation technique est attribuée l'ID donné, puis les deux sont insérés dans le fichier inversé. </font>
+                <p align="justify"><font face="Arial" size="2">Exemple : considérons l'enregistrement suivant (format MARC):</font></p>
+                </li>
+            </ol>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p align="justify"><font face="courier new"><font size="2">35 :&nbsp;&nbsp;$9(DLC) 90049743<br />
+            10 :&nbsp;&nbsp;^a 90049743<br />
+            20 :&nbsp;&nbsp;^a0387974490 (alk. paper)<br />
+            40 :&nbsp;&nbsp;^aDLC^cDLC^dDLC<br />
+            41 : 0^aeng^bfregerhebjapsparus<br />
+            500: 0^aGC89^b.E54 1991<br />
+            820: 0^a551.4/58$220<br />
+            100:1 ^aEmery, K. O.^q(Kenneth Orris),^d1914-<br />
+            245:10^aSea levels and tide gauges /^cK.O Emery, David G. Aubrey.<br />
+            260: &nbsp;^aNew York :^bSpringer-Verlag,^cc1991.<br />
+            300: &nbsp;^axiv, 237 p. :^bill., maps :^c29 cm.<br />
+            500: &nbsp;^aIn English, with summaries in French, German, Hebrew, Japanese, Spanish, and Russian.<br />
+            504: &nbsp;^aIncludes bibliographical references (p. 207-226) and indexes.<br />
+            650: 0^aSea level.<br />
+            650: 0^aSubsidences (Earth movements)<br />
+            650: 0^aTide-gages.<br />
+            650: 0^aDatabase management^xCongresses.<br />
+            650: 0^aArtificial intelligence^xCongresses.<br />
+            700:1 ^aAubrey, David G.<br />
+            520:000113 35151<br />
+            935:LA</font><br />
+            </font></p>
+            </blockquote>
+            <p dir="ltr" align="justify"><font face="Arial" size="2">nous aimerions obtenir les clés de recherche suivantes :</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px" align="justify">
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td><font face="Arial" size="2">Titre (245)</font></td>
+                        <td><font face="Arial" size="2">Pouvoir retrouver par chacun des mots individuellement</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Auteurs (100 y 700)</font></td>
+                        <td><font face="Arial" size="2">Retrouver par les références entières (Nom + prénom) et à la fois par le nom et le prénom indépendamment</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Matières (650)</font></td>
+                        <td><font face="Arial" size="2">Retrouver par référence complète ou chaque mot </font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Langues (41)</font></td>
+                        <td><font face="Arial" size="2">Chaque langue (note : dans le sous-champ b du champ 41 les langues sont données par un code de 3 caractères représentant chaque langage </font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Editeur (260)</font></td>
+                        <td><font face="Arial" size="2">Tel que sur la notice</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Date de publication (260)</font></td>
+                        <td><font face="Arial" size="2">Tel que sur la notice</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Classification LC (50)</font></td>
+                        <td><font face="Arial" size="2">pour permettre une recherche globale au niveau de la première partie du code de classification et à un niveau détaillé sur la totalité du code</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Date d'entrée dans la base (5)</font></td>
+                        <td><font face="Arial" size="2">Pour retrouver tous les enregistrements d'une année particulière, mois, ou jour</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">La TSC nécessaire pour cela est :<br />
+            </font></p>
+            <p>
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Titre (245)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">245 4 v245^a</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Auteurs (100 y 700)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">100 0 v100^a/,(v700^a/)<br />
+                        100 4 v100^a/(v700^a/)</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Matières (650)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">650 1 (v650*2/)<br />
+                        650 4 (v650*2/)</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Langues (41)</font></p>
+                        </td>
+                        <td>
+                        <p>
+                        <table class="td">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="30"><font face="Arial" size="2">41&nbsp; 0 </font></td>
+                                    <td><font face="Arial" size="2">v41^a/v41^b.3/ v41^b*3.3/ v41^b*6.3/ v41^b*9.3/ v41^b*12.3/ v41^b*15.3/ v41^b*18.3</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Editeur (260)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">260 0 v260^b</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Date de publication (260)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">260 0 v260^c</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Classification LC (50)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">50 0 v260^a/v260^a,v260^b</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Date d'entrée (5)</font></p>
+                        </td>
+                        <td><font face="Arial" size="2">5 0 v5.4/v5.6/v5</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p><font face="Arial" size="2">Le fichier inversé est un ensemble de 6 fichiers. 5 sont les index du dictionnaire, le 6e (avec l'extension .ifp) contient toutes les clés extraites de la base de données en appliquant la TSC à chaque enregistrement.</font></p>
+            <p align="justify"><font face="Arial" size="2">Les termes du dictionnaire sont une liste alphabétique de toutes les entrées qui ont été extraites de la base (définie par le TSC). L'ensemble de ces entrées contient les pointeurs pour désigner l'emplacement exact du terme. Chaque pointeur ou «posting» est composé de 5 éléments : </font></p>
+            <p><font face="Arial" size="2"></font></p>
+            <ul>
+                <li><font face="Arial" size="2">NFM de l'enregistrement à partir duquel la clé a été extraite </font></li>
+                <li><font face="Arial" size="2">ID. du champ, tel qu'indiqué dans la première colonne de la TSC</font></li>
+                <li><font face="Arial" size="2">Le numéro d'occurrence du champ d'où la clé a été extraite</font></li>
+                <li><font face="Arial" size="2">La position dans le champ du mot extrait (avec les technique d'indexation 4 ou 8) </font></li>
+            </ul>
+            <p><font face="Arial" size="2">Par exemple, si le terme "Education" apparaît dans les enregistrements 1 et 20 dans le champ matière (v76) ainsi que dans l'enregistrement 35 dans le champ Titre (v16) : "Methods of distance education", en appliquant la TSC pour cet enregistrement : </font></p>
+            <font face="courier new"><font size="2">76 0 (v76/)<br />
+            16 4 v16</font><font face="arial">
+            <p><font size="2">Le dictionnaire contiendra le terme Education comme suit : </font></p>
+            <p><font size="2"></font></p>
+            <p><font size="2">EDUCATION &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 76 1 1&nbsp;&nbsp; <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font size="2">20 76 1 1&nbsp;&nbsp; <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 35 16 1 3 </font></p>
+            <p><font size="2">Trois postings messages ont été créés pour ce terme. Le premier, 1 76 1 1 indique que la clé provient du NFM 1, première occurrence du champ 76 et est localisé en première position. Le deuxième posting 20 76 1 1 indique qu'il apparaît dans le NFM 20, champ 76, première occurrence, premier mot, et enfin 35 16 1 3 indique que le NFM 35 contient le terme 'education', extrait du champ 16, première occurrence et 3e mot de cette occurrence. </font></p>
+            <p><font size="2">La technique d'indexation 0 prend toujours la valeur 1 comme  position de la clé dans le champ. Les autres techniques d'indexation comptent la position de la clé dans le champ. Cette position permet la recherche de proximité. &nbsp;</font><font size="2">La «proximité» ou la distance entre les mots est obtenue en calculant la valeur de la position par rapport aux autres. </font></p>
+            <p><font size="2">La valeur de l'occurrence d'un champ est utilisée pour des recherches au sein d'un champ avec l'opérateur (F) qui indique que toutes les clés de recherche doivent provenir de la même occurrence d'un champ. </font></p>
+            <p><font size="2">Par exemple, considérons un résumé contenant la phrase suivante :</font></p>
+     <p><font size="2">72: L'enseignement présentiel est renforcé par l'ajustement ... <br />
+            72: La distance entre la salle et la bibliothèque doit ....... </font></p>
+            <p><font size="2">Avec une TSC : 72 4 (v72/) quand on veut récupérer tous les enregistrements se référant à DISTANCE EDUCATION, l'énoncé de recherche : </font></p>
+            <p><font size="2">DISTANCE (G) EDUCATION </font></p>
+            <p><font size="2">retrouvera l'entregistrement mentionné même s'il ne fait pas référence spécialement au concept d'éducation à distance, mais </font></p>
+            <p><font size="2">EDUCATION (F) DISTANCE </font></p>
+            <p><font size="2">ne retrouvera pas l'enregistrement. La raison de la différence est le fait que l'opérateur (G) ne vérifie pas l'occurrence de la clé, alors que l'opérateur (F) le fait. </font></p>
+            <p><font size="2">Analysons la TSC au début de cette page :</font></p>
+            <p>
+            <table class="td" cellspacing="4" cellpadding="2" border="1">
+                <tbody>
+                    <tr>
+                        <td width="200" colspan="2"><font size="2">245 4 v245^a</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Extrait le sous-champ a du champ 245 et applique la technique 4 à la clé générée. Chaque mot obtenu est inclu dans le dictionnaire avec le ID 245</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2"><font size="2">100 0 v100^a/,(v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Extrait le sous-champ a du champ 100 et le sous-champ a du champ 700. les lignes générées (technique 0) sont envoyées au fichier inversé avec le ID 100. Notez que le format v100^a, v700^a ne produirait pas les résultats escomptés parce que :</font>
+                        <ul>
+                            <li><font size="2">La technique d'indexation 0 génère une ligne à partir du champ comme indiqué dans la TSC. Puisqu'aucune 'nouvelle ligne' (/) n'est ajoutée,  le format produira uniquement une ligne avec tous les auteurs à la suite et suelement les 30 premiers caractères seront inclus dans le dictionnaire. </font></li>
+                            <li><font size="2">Le champ 700 est répétitif ; S'il n'est pas traité comme un groupe répétitif, le format n'extraira seulement toutes les occurences en une phrase, ce qui veut dire que les noms des auteurs ne seront pas individuellement envoyés au fichier inversé comme tels. </font></li>
+                        </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2"><font size="2">100 4 v100^a/(v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Extrait le sous-champ a des champs 100 et 700 des enregistrements. Chaque occurrence sera sur une ligne distincte. De cette liste de valeurs, chaque mot sera individuellement extrait (technique 4) et placé dans le dictionnaire avec le ID 100. Chaque mot porte avec lui le compteur d'occurrence du champ mais aussi le compteur de mot pour indiquer sa position relative dans son occurrence. <br />
+                        Lors de l'indexation mot-à-mot, pourquoi est-il nécessaire d'inclure un '/' pour séparer les occurrences ? Parce que s'il n'y a pas cette séparation entre les champs v100^a et v700^a, le dernier mot de v100^a apparaîtra collé à la première occurrence de v700^a, produisant une mauvaise entrée dans le dictionnaire. De la même manière, si les occurrences de v700 ne sont pas séparées avec une fin de ligne ('retour-chariot'), le premier mot de la nouvelle occurrence apparaîtra, là encore, collée au dernier mot de l'occurrence précédente.</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2"><font size="2">650 1 (v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Dans cet exemple chaque sous-champ du champ 650 est extrait et génère une entrée distincte dans le fichier inversé avec l'ID 650.</font>
+                        <p><font size="2">Pourquoi v650*2 ?. Cet enregistrement est catalogué suivant le format MARC et à cause de cla l''indicateur' 2 précède le sous-champ a. </font></p>
+                        <pre><font size="2">650 0^aDatabase management^xCongresses.<!--650--><br /><br />650 0^aArtificial intelligence^xCongresses.<!--650--><br /><br /></font></pre>
+                        <font size="2">Si nous utilisons dans la TSC l'expression (650 1 (v650/), ISIS essayera d'identifier tous les sous-champs de chauqe occurence du champ 650. De même, la partie correspondant aux indicateurs sera considérée comme sous-champs et seront tous considérés comme clés générées à partir du sous-champ de 650. Avec l'expression (v650*2/) nous commençons à partir de la 3e position (le logiciel compte à partir de zéro : 0, 1, 2...) et les indacateurs en position 0 et 1 ne seront pas pris en compte.</font>
+                        <p><font size="2">Quand on utilise la technique d'indexation 1, il est nécessaire de vérifier si le format d'extraction garde vraiment les sous-champs ; C'est pourquoi l'utilisation du format d'extraction avec la technique 1 '650 1 mhu,(v650*2/) génèrera de mauvaises clé car, par définition, le mode MHU remplace les marqueus des sous-champs par de la ponctuation, faisant disparaître les marqueurs des sous-champs du format appliqué à l'enregistrement, et dans ce cas la clé sera créée à parti d'une seule phrase avec tous les sous-champs. En outre l'index ne contiendra que les 30 premiers caractères (étendus à 60 dans ABCD) de cette phrase, entrainant une perte d'entrées pour cet enregistrement. </font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">650 4 (v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Même raisonnement que dans le cas précédent, mais ici les mots des lignes seront extraits.</font></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">v41^a/v41^b.3/ v41^b*3.3/ v41^b*6.3/ v41^b*9.3/ v41^b*12.3/ v41^b*15.3/ v41^b*18.3</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Depuis que le sous-champ b a une entrée obligatoire avec seulement 3 caractères pour définir le code langage, l'opérateur '.' peut être utilisé pour éviter d'inclure toutes les langues dans le dictionnaire.</font></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">50 0 v260^a/v260^a,v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Dans cet exemple sont créés des entrées pour chaque classification LC. Le premier v260^a permet d'améliorer les recherches par groupe thématique. La seconde clé produite permet de définir des codes de classifications particulières. Notez encore la présence des caractères (/) créant de nouvelles lignes, pour obtenir deux clés différentes.</font></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">v5.4/v5.6/v5</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Avec la date d'entrée de l'enregistrement,  seront créées3 clés: la première v5.4 permettra d'identifier rapidement tous les documents inscrits dans une année, la deuxième V5.6 permet de récupérer toutes les entrées dans un mois donné, la troisième toutes les entrées d'un jour précis. Notez que la création de trois clés (par année, année-mois et année-mois-jour) rend la recherche plus efficace que générer une seule clé au niveau de l'année, mois et jour, avec l'utilisation de l'opérateur de troncature à droite ( $) pour chercher l'année ou le mois. </font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p><font size="2">Il est donc important que le format pour extraire les valeurs de l'enregistrement soit en phase avec la technique d'indexation. Si ce n'est pas le cas, des erreurs se produiront dans la génération des clés. En outre, une bonne maitrise du langage de formatage permettra de créer des clés qui assureront l'efficacité dela récupération d'informations, tout comme une bonne compréhension du mécanisme pour la génération de clés et l'identification des opérateurs de recherche les plus pertinents. Ceci garantira une réponse précise à la demande de chaque utilisateur. <br />
+            </font></p>
+            <p><font size="2"></font></p>
+            </font></font></td>
+        </tr>
+    </tbody>
+</table>
+<p><br />
+<table cellspacing="0" cellpadding="0" width="95%" border="0">
+    <tbody>
+        <tr>
+            <td><font face="Arial" size="2">Utilisation des préfixes dans la génération des clés d'index</font>
+            <p align="justify">&nbsp;</p>
+            <p align="justify"><font face="Arial" size="2">Etant donné que le dictionnaire est un seul fichier avec toutes les clés classés par ordre alphabétique, toutes les entrées commençant par les mêmes caractères, auteurs, titres, mots-clés et tous les autres champs identifiés par la TSC, seront mélangés. </font></p>
+            <p align="justify"><font face="Arial" size="2">Pour garder les clés ensemble, par champ, il y a deux options : </font></p>
+            <ol>
+                <li><font face="Arial" size="2">Utiliser un préfixe au moment de la création des clés pour produire des 'sous-dictionnaires' (ou 'sections') </font></li>
+                <li><font face="Arial" size="2">Créer des dictionnaires séparés pour chaque champ. </font></li>
+            </ol>
+            <p align="justify"><font face="Arial" size="2">Pour la première option, changeons la TSC</font>
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td width="30%"><font face="Arial" size="2">Titre (245)</font></td>
+                        <td width="70%"><font face="Arial" size="2">245 4 v245^a</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Auteurs (100 y 700)</font></td>
+                        <td><font face="Arial" size="2">100 0 v100^a/,(v700^a/)<br />
+                        100 4 v100^a/(v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Matières (650)</font></td>
+                        <td><font face="Arial" size="2">650 1 (v650*2/)<br />
+                        650 4 (v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Langues (41)</font></td>
+                        <td>
+                        <table class="td">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="33"><font face="Arial" size="2">41 &nbsp;0 </font></td>
+                                    <td><font face="Arial" size="2">v41^a/v41^b.3/ v41^b*3.3/ v41^b*6.3/ v41^b*9.3/ v41^b*12.3/ v41^b*15.3/ v41^b*18.3</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Editeur (260)</font></td>
+                        <td><font face="Arial" size="2">260 0 v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Date de publication (260)</font></td>
+                        <td><font face="Arial" size="2">260 0 v260^c</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Classification LC (50)</font></td>
+                        <td><font face="Arial" size="2">50 &nbsp; 0 v260^a/v260^a,v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Date de saisie (5)</font></td>
+                        <td><font face="Arial" size="2">5 &nbsp; &nbsp; 0 v5.4/v5.6/v5</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p align="justify"><font face="Arial" size="2">en :</font>
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td width="30%"><font face="Arial" size="2">Titre (245)</font></td>
+                        <td width="70%"><font face="Arial" size="2">245 8 `/T:/`,v245^a</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Auteurs (100 y 700)</font></td>
+                        <td><font face="Arial" size="2">100 0 "A:"v100^a/,(|A:|v700^a/)<br />
+                        100 8 `/A:/`,v100^a/(|A:|v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Matières (650)</font></td>
+                        <td><font face="Arial" size="2">650 5 `/M:/`,(v650*2/)<br />
+                        650 4 `/M:/`,(v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Langues (41)</font></td>
+                        <td>
+                        <table class="td">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="33"><font face="Arial" size="2">41 &nbsp;8 </font></td>
+                                    <td><font face="Arial" size="2">`/I:/`,v41^a," "v41^b.3," "v41^b*3.3, " "v41^b*6.3, " "v41^b*9.3, " "v41^b*12.3, " "v41^b*15.3, " "v41^b*18.3</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Editeur (260)</font></td>
+                        <td><font face="Arial" size="2">260 0 "E:"v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Date de publication (260)</font></td>
+                        <td><font face="Arial" size="2">260 0 "F:"v260^c</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Classification LC (50)</font></td>
+                        <td><font face="Arial" size="2">50 &nbsp; 0 "C:"v260^a/"C:"v260^a,v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Date de saisie (5)</font></td>
+                        <td><font face="Arial" size="2">5 &nbsp; &nbsp; 0 "F:"v5.4/"F:"v5.6/"F:"v5</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p><font face="Arial" size="2">Comme on peut le constater, nous avons appliqué les modifications suivantes :</font></p>
+            <p><font face="Arial" size="2"></font></p>
+            <center>
+            <table class="td" border="2">
+                <tbody>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">Technique</font></td>
+                        <td><font face="Arial" size="2">changée en </font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">1</font></td>
+                        <td align="center"><font face="Arial" size="2">5</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">4</font></td>
+                        <td align="center"><font face="Arial" size="2">8</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </center>
+            <p align="justify"><font face="Arial" size="2">Pour les clés indexées avec la technique 0 il suffit d'ajouter un pré-littéral (préfixe) pour différencier les données. Pour les techniques (5, 6, 7 et 8) les préfixes doivent être définis avant le format d'extraction avec la syntaxe suivante : </font></p>
+            <ol>
+                <li><font face="Arial" size="2">Le préfixe doit être encadré entre des guillets </font></li>
+                <li><font face="Arial" size="2">Le littéral constituant le préfixe doit être encadré par 2 caractères spéciaux DIFFERENTS du préfixe. <br />
+                exemple:`/A:/` <br />
+                `#A:#` </font></li>
+            </ol>
+            <p align="justify"><font face="Arial" size="2">De plus, pour permettre de voir le contenu du champ trié, sans mélange avec des termes provenant d'autres champs, la recherche avec les préfixes est plus rapide qu'avec une recherche sur un champ précis. I.e.: </font></p>
+            <p><font face="Arial" size="2">La recherche 'M: Education' est plus efficace que 'Education / (650)', car un champ de recherche qualifié exige la vérification de l'ensemble des affectations du terme. </font></p>
+            <p align="justify"><font face="Arial" size="2">Pourtant, selon le niveau d'expérience des utilisateurs finaux et la capacité de l'équipement du système, il peut être parfois approprié d'indexer les données de différentes façons, avec ou sans préfixe, afin de donner plus de souplesse aux utilisateurs dans leurs recherches. Plus de clés d'indes signifie plus d'espace utilisé parle système mais pas nécessairement moins de vitesse de recherche, en fonction de la strucure du fichier inversé (B-Tree) qui sera réorganisé de façon constante de façon à ce que les branches de l'arbre aient le même hauteur (la hauteur de l'arbre reflète le nombre d'accès requis pour localiser un terme dans le fichier inversé).
+</p>
+            <p align="justify"><font face="Arial" size="2">La famille de logiciels ISIS, à l'exception de CDS / ISIS pour DOS et Windows (WINISIS) permettent de définir plus d'un dictionnaire pour une base de données. C'est-à-dire, avec la Isisdll, par exemple, nous pouvons créer un dictionnaire (ou index) pour les auteurs, un autre pour les titres, etc... Cependant, afin de combiner des termes de différents champs avec une seule expression de recherche, en utilisant des opérateur booléens, il demeure nécessaire de créer un dictionnaire général qui combine tous les champs alors qu'il n'est pas possible de croiser les termes de dictionnaires différents. La possibilité de dictionnaires séparés est remplacée par l'utilisation de préfixes pour présenter aux utilisateurs tous les termes extraits d'un champ particulier et permet des opérations logiques dans le même dictionnaire. </font></p>
+            <p><font face="Arial" size="2"></font></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>
+<table cellspacing="0" cellpadding="0" width="95%" border="0">
+    <tbody>
+        <tr>
+            <td><font face="Arial" size="2">La transparence dans l'utilisation des majuscules, minuscules et les signes diacritiques (caractères spéciaux)</font>
+            <p align="justify"><font face="Arial" size="2">L'une des subtilités du mécanisme de recherche CDS / ISIS est basée sur la transparence entre les majuscules / minuscules et les caractères spéciaux dans les termes de recherche.</font></p>
+            <p align="justify"><font face="Arial" size="2">A cette fin, toutes les clés sont rassemblées dans le fichier inversé en majuscules et, le cas échéant, les caractères accentués (diacritiques) seront remplacés par leur équivalent en majuscules. Les expressions de recherche données par l'utilisateur sont également transformées en majuscules, ce qui minimise le risque d'erreurs de frappe de l'utilisateur. </font></p>
+            <p align="justify"><font face="Arial" size="2">Pour la concersion des clés et des expressions de recherche, les utilisateurs du logiciel CDS/ISIS, utilisent le fichier ISISUC.TAB, qui est en phase avec le jeu de caractères utilisé avec la base de données.</p>
+            <p align="justify"><font face="Arial" size="2">Lors de l'indexation avec la technique 4 (par mot) CDS / ISIS utilise le fichier ISISAC.TAB pour définir la notion de «mot», c'est-à-dire, le tableau ISISAC.TAB indique à CDS / ISIS quels caractères doivent être considérés comme alphabétiques pour constituer le mot. Tous les caractères qui ne sont pas inclus dans le ISISAC.TAB seront considérés comme un séparateur et terminera le mot. </font></p>
+            <p align="justify"><font face="Arial" size="2">Supposons que ISISUC.TAB considère le caractère ñ équivalent à la majuscule Ñ. Si nous n'incluons pas dans ISISAC.TAB the code Ñ (165 en Ascii ou 209 en Ansi) </font></p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td width="100"><font face="Arial" size="2">les mots : </font></td>
+                        <td><font face="Arial" size="2">apparaîtront dans l'index ainsi</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">niño </font></td>
+                        <td align="center"><font face="Arial" size="2">NI O</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">cañería </font></td>
+                        <td align="center"><font face="Arial" size="2">CA ERIA</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">cañaveral </font></td>
+                        <td align="center"><font face="Arial" size="2">CA AVERAL</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">acuñación </font></td>
+                        <td align="center"><font face="Arial" size="2">ACU ACION</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <font face="Arial" size="2">Ainsi chaque mot sera séparé en deux parties, créant deux entrées dans le dictionnaire puisque ñ n'est pas inclu dans ISISAC.TAB et est considéré comme ponctuation.</font>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+<br />
+</p>
+<p>&nbsp;</p>

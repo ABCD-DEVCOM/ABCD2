@@ -1,0 +1,43 @@
+<p><font face="Arial"><font size="2"><strong>Editing the file DBN.def to configure a database to run with the iAH OPAC</strong>&nbsp;</font></font></p>
+<p><font face="Arial" size="2">This configuration page contains 4 mandatory sections to configure a database for IAH:</font></p>
+<ul>
+    <li><font face="Arial"><font size="2"><strong>FILE_LOCATION</strong> </font></font></li>
+    <li><font face="Arial"><font size="2"><strong>INDEX_DEFINITION</strong> </font></font></li>
+    <li><font face="Arial"><font size="2"><strong>APPLY_GIZMO</strong> </font></font></li>
+    <li><font face="Arial"><font size="2"><strong>FORMAT_NAME</strong> </font></font></li>
+    <li><font face="Arial"><font size="2"><strong>HELP_FORM</strong> </font></font></li>
+    <li><font face="Arial"><font size="2"><strong>PREFERENCES</strong> </font></font></li>
+</ul>
+<p><font face="Arial" size="2">For information on these sections, please consult the <strong>IAH User Manual</strong>. Here we provide help on how to use the configuration utility in ABCD but not with the content of the sections.</font></p>
+<p><font face="Arial" size="2">To edit the configuration file there are 2 options:</font></p>
+<ol>
+    <li><font face="Arial" size="2">Use a TXT-editor to modify the configuration file. For this click on the link <strong>Edit TXT format </strong> at the top of the page. </font></li>
+    <li><font face="Arial" size="2">Use the guide provided by ABCD to facilitate filling in the sections. </font></li>
+</ol>
+<p><font face="Arial" size="2">The guide is divided into the 6 required sections. Each one has a link  <strong>add</strong>&nbsp;at the end to allow addition of a new element in the section being edited.</font></p>
+<p><font face="Arial" size="2">The section &nbsp; <strong>INDEX_DEFINITION </strong> allows each line to be edited in order to fill in the information. For this click on the link <strong>edit</strong> which accompanies each index definition and which will put the corresponding information in the form. Once the form is completed, click on <strong>Accept </strong>to transfer the cells to the corresponding line of the section <strong>INDEX_DEFINITION</strong>.</font></p>
+<p><font face="Arial" size="2">The section <strong>FORMAT_NAME</strong>&nbsp; allows access to the PFT format editor of ABCD for creating or editing the corresponding format.&nbsp; This can be accessed by clicking on the link <strong>Create/edit format</strong> at the top of the section. When creating a new format, fill in the in the cells of the section providing the information shown when clicking on <strong>Add</strong>.</font></p>
+<p><font face="Arial" size="2">Once the form is completed, click on <strong>Validate</strong> in order to verify the consistency of the information entered and then on  <strong>Update</strong> to save the newly created file.</font></p>
+<p><font face="Arial" size="2">The validation criteria used are the following :</font></p>
+<p><strong><font face="Arial" size="2">FILE_LOCATION</font></strong></p>
+<ol>
+    <li><font face="Arial" size="2">Verify that all logical names are preceded by the literal <strong>FILE</strong>. If missing, add.</font></li>
+    <li><font face="Arial" size="2">Verify that all paths are preceded by the literal %path_database%. If missing, add.</font></li>
+</ol>
+<p><font face="Arial" size="2"><strong>INDEX_DEFINITION</strong></font></p>
+<ol>
+    <li><font face="Arial" size="2">Verify that all logical names are preceded by the literal <strong>INDEX</strong>. If missing, add.</font></li>
+    <li><font face="Arial" size="2">Verify that at least one subfield contains the name of the index.</font></li>
+    <li><font face="Arial" size="2">Verify that the logical names of databases of the indexes (^y) have ther corresponding entry in the section <strong>FILE_LOCATION</strong></font></li>
+</ol>
+<p><strong><font face="Arial" size="2">APPLY_GIZMO</font></strong></p>
+<ol>
+    <li><font face="Arial" size="2">Verify that the names of the gizmo files provided have their corresponding entry in the section <strong>FILE_LOCATION</strong></font></li>
+</ol>
+<p><strong><font face="Arial" size="2">PREFERENCES</font></strong></p>
+<ol>
+    <li><font face="Arial" size="2">Verify that at least one search form is active.</font></li>
+    <li><font face="Arial" size="2">Verify that the number of documents per page is a numerical value.
+<p>&nbsp;</p>
+<p><font face="Arial" size="2"></font></p>
+<p>&nbsp;</p>
