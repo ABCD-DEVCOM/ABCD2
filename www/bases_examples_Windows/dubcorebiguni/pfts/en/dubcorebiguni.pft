@@ -1,0 +1,35 @@
+'<table>'
+if p(v111) then '<tr><td ><b>ID</b></td><td style=>'v111+|<br>|,'</td>' fi/
+if p(v1) then '<tr><td><b>Title</b></td><td>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td><b>Creator</b></td><td>'v2+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td><b>Subject</b></td><td>'v3+|<br>|,'</td>' fi/
+if p(v4) then '<tr><td><b>Description</b></td><td>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td><b>Publisher</b></td><td>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td><b>Contributors</b></td><td>'v6+|<br>|,'</td>' fi/
+if p(v7) then '<tr><td><b>Date</b></td><td>'v7+|<br>|,'</td>' fi/
+if p(v8) then '<tr><td><b>Type</b></td><td>'v8+|<br>|,'</td>' fi/
+if p(v9) then '<tr><td><b>Format</b></td><td>'v9+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td><b>Identifier</b></td><td>'v10+|<br>|,'</td>' fi/
+if p(v11) then '<tr><td><b>Source</b></td><td>'v11+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td><b>Language</b></td><td>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td><b>Relation</b></td><td>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td><b>Coverage</b></td><td>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td><b>Rights Management</b></td><td>'v15+|<br>|,'</td>' fi/
+
+if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
+
+if p(v95) then '<tr><td><b>Preview pop-up<b></td><td>',
+'<a href="'v95,'"
+onclick="window.open(`',v95,'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`);
+return false;">' v95,'</a></td></tr>' fi,    
+
+if p(v95) then '<tr>
+<td><font face=arial size=2><b>Preview</b></td>
+<td><iframe height=200 width=800 scrolling=yes src=',v95,'></iframe></td>
+</tr>' fi/
+
+if p(v98) then '<tr><td><b>Document URL</b></td><td><A HREF="',v98'" target=new>'v98,'</A></td>' fi/
+
+if p(v112) then '<tr><td><b>Date added</b></td><td>'v112+|<br>|,'</td>' fi/
+
+'</table><p>'

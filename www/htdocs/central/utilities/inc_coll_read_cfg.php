@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210903 fho4abcd Created
+20211111 fho4abcd Allow empty and comment lines
 */
 /*
 ** Contains functions explicitly for digital document functionality
@@ -45,12 +46,17 @@ function read_dd_cfg($option, $metadataConfigFull, &$metadataMapCnt, &$metadataM
     echo "<p>".$msgstr["dd_map_read"]." ".$metadataConfigFull."</p><br>";
     $metadataMapCnt=0;
     while ( ($line=fgets($fp))!=false){
-        $metadataMapCnt++;
         $line=rtrim($line); // remove trailing white space(inc cr/lf)
+        // Lines with // and lines with # are skipped
+        // Lines that cannot caontain valid information are skipped
+        if ( strlen($line)<4 ) continue;
+        if ( stripos($line,'//') !== false ) continue;
+        if ( stripos($line, '#') !== false ) continue;
         $linecontent=explode("|",$line);
         $term=$linecontent[0];
         $field="";
         if (isset($linecontent[1])) $field=$linecontent[1];
+        $metadataMapCnt++;
         $metadataMap[]=array("term"=>$term, "field"=>$field);
     }
     return $retval;
