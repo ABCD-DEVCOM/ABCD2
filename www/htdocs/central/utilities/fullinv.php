@@ -15,6 +15,7 @@
 20211103 fho4abcd Enable gizmo for htmlfields+hint if gizmo is wrong+simplify interface
 20211108 fho4abcd Show parameters and commandline before processing,replaced wait pop-up by "working". Slashm default checked.
 20211110 fho4abcd Reordered commandline parameters, add extra flush at end of page 
+20211111 fho4abcd Location of metadataConfig in database root. Allow comment lines
 */
 /**
  * @desc:      Create database index
@@ -413,21 +414,24 @@ function get_htmlfiletag(&$htmlfiletag) {
     $fullcolpath=rtrim($fullcolpath,"/ ");
     if (!file_exists($fullcolpath)) return(0);
     $metadataConfig="docfiles_metadataconfig.tab";
-    $metadataConfigFull=$fullcolpath."/".$metadataConfig;
+    $metadataConfigFull=$db_path.$arrHttp["base"]."/".$metadataConfig;
     if (!file_exists($metadataConfigFull)) return(0);
     $fp=file($metadataConfigFull);
     foreach ($fp as $value){
         $value=trim($value);
-        if (trim($value)!=""){
-            $table=explode("|",$value);
-            if ($table[0]=="htmlSrcFLD" AND isset($table[1]) AND strlen($table[1])>0) {
-                $htmlfiletag=$table[1];
-                // the values in the table have a leading "v"
-                if (($htmlfiletag[0]=='v') or ($htmlfiletag[0]=='V')) {
-                    $htmlfiletag=str_replace( 'v','',strtolower($htmlfiletag));
-                }
-                return(0);
+        // Lines with // and lines with # are skipped
+        // Lines that cannot caontain valid information are skipped
+        if ( strlen($value)<4 ) continue;
+        if ( stripos($value,'//') !== false ) continue;
+        if ( stripos($value, '#') !== false ) continue;
+        $table=explode("|",$value);
+        if ($table[0]=="htmlSrcFLD" AND isset($table[1]) AND strlen($table[1])>0) {
+            $htmlfiletag=$table[1];
+            // the values in the table have a leading "v"
+            if (($htmlfiletag[0]=='v') or ($htmlfiletag[0]=='V')) {
+                $htmlfiletag=str_replace( 'v','',strtolower($htmlfiletag));
             }
+            return(0);
         }
     }
     return(0);

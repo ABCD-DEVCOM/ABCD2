@@ -3,6 +3,7 @@
 20210807 fho4abcd Created
 20210831 fho4abcd Enable %path_database% in COLLECTION. Check dat collection is in the base
 20210903 fho4abcd Add name of configuration file
+20211111 fho4abcd configfile to database root
 */
 /*
 ** Function: Initial check of collection.
@@ -12,6 +13,7 @@
 **   ../<collection>/ABCDImportRepo/
 **                  /ABCDImportRepo/
 ** - Missing folders are created, existing folders are checked for writability
+** - The name and location of the config file. Note must match fullinv.php
 */
 // Check existence of dr_path.def
 // Note that dr_path is already parsed in config.php
@@ -89,6 +91,6 @@ if (!is_writable($colsrcfull) ) {
 // The filename of the file with configuration info
 // Note that initially this file does not exist. Created by a configuration script
 $metadataConfig="docfiles_metadataconfig.tab";
-$metadataConfigFull=$fullcolpath."/".$metadataConfig;
+$metadataConfigFull=$db_path.$arrHttp["base"]."/".$metadataConfig;
 
 /* and here the including file continues processing */
