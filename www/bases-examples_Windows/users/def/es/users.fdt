@@ -1,0 +1,21 @@
+F|10|Tipo de usuario|0|0|ab||S|||P|%path_database%circulation/def/es/typeofusers.tab|||||0||
+F|12|Sexo|0|0|ab||R|||P|sexo.tab|||||0||
+F|15|Válido hasta|0|0|||D|||||||||0||
+F|18|Fecha ISO de validez|0|0|||ISO|||||||||0||
+F|30|Nombre|1|0|||X|||||NO_|v30|v30||0||
+F|35|Doc.Id|0|0|||X||20|||||||0||
+F|20|Código de usuario (barcode)|0|0|||X||20|||||||0||
+F|40|Unidad|0|0|||X|||||||||0||
+F|45|Dirección|0|0|||X|||||||||0||
+F|47|Niv.Adm. 1|0|0|||X|||||||||0||
+F|49|Niv. Adm. 2|0|0|||X|||||||||0||
+F|100|Dirección física|0|0|||X|||||||||0||
+F|110|Dirección postal|0|0|||X|||||||||0||
+F|120|Ciudad|0|0|||X|||||||||0||
+F|130|)Pais|0|0|||X||30|||||||0||
+F|140|Teléfono|0|0|||X|||||||||0||
+F|150|Fax|0|0|||X|||||||||0||
+F|160|E-mail|0|1|||X|||||||||0||
+F|600|Id.de usuario|0|0|||XF||10|||||||0||
+F|610|Clave|0|0|||P||10|||||||0||
+F|620|Foto|0|0|||U|||||||||0||

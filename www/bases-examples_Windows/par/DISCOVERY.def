@@ -1,0 +1,30 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%discovery/data/discovery.*
+FILE standard.pft=%path_database%discovery/pfts/%lang%/discovery.pft
+FILE SHORTCUT.IAH=%path_database%discovery/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Index basico^2Index basico^3Basic Index^4Index simple^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX RE=^1Recurso^2Recurso^3Resource^4Ressource^xRE ^yDATABASE^uRE_^mRE_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1Padrão^2Padrao^3default^4Défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=10
+FEATURES=XML

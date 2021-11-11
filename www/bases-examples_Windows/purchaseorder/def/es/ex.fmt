@@ -1,0 +1,15 @@
+H||Canje|0|0||||||||||||0||
+F|700|Institución|0|0|||X|||||||||0||
+F|710|Canjeado por|0|0|||X|||||||||0||
+F|720|Condiciones|0|0|||X|||||||||0||
+F|10|Forma de adquisición|0|0|ab||I|||||||||0||
+F|1|Referencia|0|0|||X|||||||||0||
+F|2|Fecha|0|0|||D||10|||||||0||
+F|3|Fecha ISO|0|0|||ISO||10|||||||0||
+T|50|Objetos recibidos|0|1|abghif||TB|5||||||||0||
+S||Descripción del objeto|0|0|a||X||25|||||||0||
+S||Cantidad|0|0|b||X||5|||||||0||
+S||Tipo de objeto (Nuevo/Copias)|0|0|g||S||5|P|typeofacquisition.tab|||||0||
+S||Base de datos|0|0|h||S||10|P|%path_database%acquisitions.dat|||||0||
+S||Número de control|0|0|i||X||10|||||||0||
+S||Cantidad recibida|0|0|f||I||5|||||||0||

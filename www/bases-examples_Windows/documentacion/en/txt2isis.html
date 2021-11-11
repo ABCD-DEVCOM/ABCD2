@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.0  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+		<META NAME="CHANGED" CONTENT="20090203;15193300">
+	<META NAME="Informaci&oacute;n 1" CONTENT="">
+	<META NAME="Informaci&oacute;n 2" CONTENT="">
+	<META NAME="Informaci&oacute;n 3" CONTENT="">
+	<META NAME="Informaci&oacute;n 4" CONTENT="">
+
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<CENTER>
+	<TABLE WIDTH=90% CELLPADDING=2 CELLSPACING=2 STYLE="page-break-before: always">
+		<TR>
+			<TD>
+				<P><STRONG><FONT FACE="arial"><FONT SIZE=4>Conversion from a TXT
+				file to CDS/Isis</FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>The process of converting a
+				TXT file into a CDS/Isis database has a TXT file as the input,
+				where the fields to transfer can be delimited in two ways:</FONT></FONT></P>
+				<UL>
+					<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="arial"><FONT SIZE=2>With
+					tags</FONT></FONT></STRONG> 
+					</P>
+					<LI><P><STRONG><FONT FACE="arial"><FONT SIZE=2>With tabs </FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>(for
+					example, obtained from a spread sheet where the results
+					have been saved in TXT format with tab delimiters)</FONT></FONT></P>
+				</UL>
+				<P><STRONG><FONT COLOR="#800000"><FONT FACE="arial"><FONT SIZE=3>
+				TXT File with tags:</FONT></FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>In this case, each element is
+				identified with a tag and each tag is assigned to a field in the
+				database. <BR><BR>These tags always have to start with </FONT></FONT><STRONG><FONT COLOR="#ff0000"><FONT FACE="arial"><FONT SIZE=2>$$</FONT></FONT></FONT></STRONG>
+				<FONT FACE="arial"><FONT SIZE=2>and end with </FONT></FONT><STRONG><FONT COLOR="#ff0000"><FONT FACE="arial"><FONT SIZE=2>:</FONT></FONT></FONT></STRONG>
+				<FONT FACE="arial"><FONT SIZE=2>to ensure that they cannot be
+				mixed with the content to be converted. Additionally, all the
+				records have to be separated with a character string which cannot
+				be present in the content of any of the fields. It is recommended
+				that&nbsp;</FONT></FONT><STRONG><FONT COLOR="#ff0000"><FONT FACE="arial"><FONT SIZE=2>##</FONT></FONT></FONT></STRONG>
+				<FONT FACE="arial"><FONT SIZE=2>is used as a record separator.</FONT></FONT></P>
+				<P><STRONG><FONT COLOR="#800000"><FONT FACE="arial"><FONT SIZE=3>
+				TXT File with Tabs:</FONT></FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>In this case each line in the
+				TXT file corresponds to a record, and inside each record the
+				fields are separated with tabs. </FONT></FONT><FONT FACE="arial"><FONT SIZE=2><SPAN LANG="en-US">In
+				the </SPAN></FONT></FONT><FONT FACE="arial"><FONT SIZE=2><SPAN LANG="en-US"><B>Tag
+				</B></SPAN></FONT></FONT><FONT FACE="arial"><FONT SIZE=2><SPAN LANG="en-US">column
+				of the conversion table, place the number of the cell (column)
+				that the field to convert occupies in the TXT</SPAN></FONT></FONT><FONT FACE="Arial"><FONT SIZE=2><SPAN LANG="en-US">.</SPAN></FONT></FONT>
+								</P>
+				<P><STRONG><FONT COLOR="#800000"><FONT FACE="arial"><FONT SIZE=3>Conversion
+				process:</FONT></FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>The conversion process has
+				three steps:</FONT></FONT></P>
+				<OL>
+					<LI><P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>Selection/Definition
+					of the conversion table</FONT></FONT></P>
+					<LI><P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>Validation
+					of the entry file with the conversion table</FONT></FONT></P>
+					<LI><P><FONT FACE="arial"><FONT SIZE=2>Conversion and loading in
+					the database</FONT></FONT></P>
+				</OL>
+				<P><FONT FACE="arial"><FONT SIZE=2>To perform a conversion follow
+				these steps:</FONT></FONT></P>
+				<OL>
+					<LI><P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>Select
+					the option </FONT></FONT><FONT FACE="arial"><FONT SIZE=2><B>Load
+					TXT File</B></FONT></FONT> <FONT FACE="arial"><FONT SIZE=2>from
+					the administration menu</FONT></FONT></P>
+					<LI><P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>Select,
+					edit or create the </FONT></FONT><A HREF="tabladeconversionENG.html"><FONT FACE="arial"><FONT SIZE=2><SPAN STYLE="background: #ffff00">conversion
+					table</SPAN></FONT></FONT></A></P>
+					<LI><P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>When
+					selecting the conversion table a window will be displayed with a
+					text box where you have to write the name of the TXT file that
+					you want to convert. Other options are also presented:</FONT></FONT></P>
+					<UL>
+						<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="arial"><FONT SIZE=2>See
+						defined tags</FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>:
+						Presents the tags existing in the selected conversion table</FONT></FONT></P>
+						<LI><P STYLE="margin-bottom: 0in"><STRONG><FONT FACE="arial"><FONT SIZE=2>Validate
+						tags</FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>:
+						Examines the TXT file contrasting it with the conversion table,
+						and presents a report with the tags found and those which were
+						not</FONT></FONT></P>
+						<LI><P><STRONG><FONT FACE="arial"><FONT SIZE=2>Process</FONT></FONT></STRONG><FONT FACE="arial"><FONT SIZE=2>:
+						Executes the conversion and loads the database</FONT></FONT></P>
+					</UL>
+				</OL>
+				<P><STRONG><FONT FACE="arial"><FONT SIZE=2>Conversion and load in
+				the database</FONT></FONT></STRONG></P>
+				<P><FONT FACE="arial"><FONT SIZE=2>This step performs the
+				validation of the TXT file again contrasting it with the conversion
+				table, and presents a new report with any errors found. At the
+				end of the process you will find a button to create the new records in
+				the database. The information identified as </FONT></FONT><FONT COLOR="#ff0000"><FONT FACE="arial"><FONT SIZE=2><B>Not
+				localized Tags</B></FONT></FONT></FONT><FONT COLOR="#ff0000">
+				</FONT><FONT FACE="arial"><FONT SIZE=2>won't be transferred to
+				the database.</FONT></FONT></P>
+			</TD>
+		</TR>
+	</TABLE>
+</CENTER>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

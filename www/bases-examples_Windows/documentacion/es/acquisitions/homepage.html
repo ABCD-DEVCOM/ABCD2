@@ -1,0 +1,109 @@
+<p>El módulo de adquisiciones se apoya en&nbsp;cuatro bases de datos:</p>
+<ol>
+    <li><strong>Recomendaciones<br />
+    </strong>Contiene las solicitudes de los usuarios en cuanto a las necesidades de adquisición de nuevos objetos, o nuevas copias de objetos ya existentes. Contiene 4 grupos de información:
+    <ul>
+        <li>Datos del objeto solicitado </li>
+        <li>Datos de la persona o departamento que solicita el objeto </li>
+        <li>Datos de la aprobación o rechazo de la solicitud </li>
+        <li>Datos de las cotizaciones para la compra del objeto
+        <ul>
+            <li>Proveedor </li>
+            <li>No. de cotización </li>
+            <li>Cantidad </li>
+            <li>Precio unitario </li>
+            <li>Moneda </li>
+            <li>Datos de la aceptación de la cotización<br />
+            &nbsp;<strong></strong></li>
+        </ul>
+        </li>
+    </ul>
+    </li>
+    <li><strong>Órdenes de compra<br />
+    </strong>Almacena las órdenes de compras emitidas como parte del proceso de adquisiciones. Contiene:
+    <ul>
+        <li>Proveedor</li>
+        <li>Número de la órden de compra</li>
+        <li>Fecha de la órden de compra</li>
+        <li>Datos del objeto adquirido
+        <ul>
+            <li>Número de la requisición </li>
+            <li>Número de la cotización </li>
+            <li>Cantidad</li>
+            <li>Precio unitario</li>
+        </ul>
+        </li>
+        <li>Reclamos<br />
+        </li>
+    </ul>
+    </li>
+    <li><strong>Proveedores</strong><br />
+    Con la información de los proveedores que pueden participar en los procesos de cotización y compra de los objetos <br />
+    </li>
+    <li><strong>Copias</strong><br />
+    Contiene cada una de las copias que han sido adquiridas como parte del proceso de adquisiciones.</li>
+</ol>
+<p>El proceso a seguir es el siguiente:</p>
+<ol>
+    <li>Se crea una nueva solicitud de compra de objeto en la base de datos <strong>suggestions</strong>. Esta solicitud puede referirse a la adquisición de un nuevo objeto o a la adquisición de nuevas copias de un objeto existente. <br />
+    <br />
+    Para cada registro que ingresa en la base de datos <strong>suggestions </strong>se crea en forma automática un campo que posee un número secuencial el cual se utilizará posteriormente como campo de relación entre las recomendaciones y las órdenes de compra generadas<br />
+    <br />
+    Cada objeto en la base de datos&nbsp;catalográfica&nbsp;se identifica con un número único que servirá posteriormente a establecer la relación entre el objeto y sus copias.<br />
+    <br />
+    Cada copia también poseerá un número de inventario, el cual se utilizará posteriormente en el módulo de circulación.<br />
+    <br />
+    Si el objeto ya existe en la base de datos, entonces la solicitud debe indicar el número asignado a ese objeto en la base de datos catalográfica a la cual pertenece. Si es un nuevo objeto, entonces, se le asignará el número al momento de catalogación del objeto, una vez finalizada la compra. <br />
+    </li>
+    <li>Cada solicitud deberá ser aprobada o rechazada. Si es aprobada será necesario&nbsp;indicar el número de copias que van a ser adquiridas<br />
+    </li>
+    <li>Las solicitudes aprobadas se someten a un proceso de cotización, anotando en&nbsp;el registro:
+    <ul>
+        <li>Proveedores&nbsp;</li>
+        <li>Número de la cotización</li>
+        <li>Fecha de la cotización</li>
+        <li>Cantidad ofertada</li>
+        <li>Precio unitario</li>
+        <li>Moneda<br />
+        </li>
+    </ul>
+    </li>
+    <li>Con la información de las cotizaciones se toma la decisión de compra y se actualiza la base de datos <strong>recomendaciones </strong>(suggestions)&nbsp;la información del proveedor seleccionado:
+    <ul>
+        <li>Fecha de la aprobación&nbsp;</li>
+        <li>Opcionalmente se actualizan los campos de cantidad de copias y precio unitario<br />
+        </li>
+    </ul>
+    </li>
+    <li>Se emiten las órdenes de compra con los proveedores seleccionados. Estas órdenes de compra se almacenan en la base de datos <strong>purchaseorder</strong> y se vinculan a la&nbsp;base de datos&nbsp; <strong>suggestions</strong>&nbsp;mediante el número secuencial creado al momento de ingreso de la recomendación<br />
+    </li>
+    <li>Si hay atrasos en la llegada del material, entonces se anota en la base de datos de órdenes de compra la fecha de&nbsp;los diferentes reclamos realizados. <br />
+    </li>
+    <li>Cuando llega el material&nbsp; adquirido, existen dos opciones:
+    <ul>
+        <li>Si el objeto es nuevo, se debe asignar el número de identificación del objeto, catalogarlo y crear, en la base de&nbsp; datos <strong>copies,</strong>un registro para cada copia ,asignándoles su número de inventario </li>
+        <li>Si el objeto ya existe en la base de datos catalográfica, solo se agregarán un nuevos registro&nbsp;en la base de datos <strong>copies</strong> con el número de inventario correspondiente</li>
+    </ul>
+    </li>
+</ol>
+<p><strong>Transacciones</strong></p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><strong>Sugerencias</strong>&nbsp; <br />
+Use esta opción para insertar en la base de datos las solicitudes para compra de nuevos objetos. Bajo esta opción podrá crear nuevas solicitudes e indicar cuáles han sido aprobadas o rechazadas, colocar las cotizaciones presentadas por los proveedores e indicar los proveedores cuyas cotizaciones hayan&nbsp;sido aprobadas</p>
+<p><strong>Órdenes de compra</strong>&nbsp;<br />
+Esta opción le permitirá:</p>
+<ul>
+    <li>Generar las órdenes de compra para los proveedores cuyas cotizaciones hayan sido aprobadas </li>
+    <li>Insertar en la base de datos de recomendaciones&nbsp;los datos de la órden de compra elaborada&nbsp;para la adquisición del objeto solicitado </li>
+    <li>Revisar las órdenes de compra pendientes e insertar las fechas de los reclamos </li>
+    <li>Eliminar órdenes de compra y modificando el estado de la recomendación asociada </li>
+    <li>Procesar la llegada de los objetos adquiridos:
+    <ul>
+        <li>Realizar la pre-catalogación (si son nuevos objetos) </li>
+        <li>Generar los registros correspondientes a las copias adquiridas </li>
+        <li>Disponibilizar las copias en el sistema de circulación y préstamo</li>
+    </ul>
+    </li>
+    <li>&nbsp;</li>
+</ul>
+</blockquote>

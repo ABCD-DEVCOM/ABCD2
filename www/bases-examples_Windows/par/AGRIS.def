@@ -1,0 +1,32 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%agris/data/agris.*
+FILE standard.pft=%path_database%agris/pfts/%lang%/agris.pft
+FILE SHORTCUT.IAH=%path_database%agris/pfts/shortcut.pft
+FILE GXML=%path_database%gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX KW=^1^2^3Text words^4Mots texte^d*^xKW ^yDATABASE^uKW_^mKW_
+INDEX AU=^1^2^3Authors^4Auteurs^xAU ^yDATABASE^uAU_^mAU_
+INDEX TI=^1^2^3Titles^4Titres^xTI ^yDATABASE^uTI_^mTI_
+INDEX DE=^1^2^3Titles^4Titres^xDE ^yDATABASE^uDE_^mDE_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1^2^3Default^4Défaut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=OFF
+NAVIGATION BAR=ON
+DOCUMENTS PER PAGE=20
+FEATURES=XML

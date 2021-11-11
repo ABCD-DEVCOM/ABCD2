@@ -1,0 +1,558 @@
+<xmeta content="text/html;charset=utf-8" http-equiv="Content-Type"></xmeta>
+<table cellspacing="0" cellpadding="0" width="95%" border="0">
+    <tbody>
+        <tr>
+            <td><strong><font face="Arial" size="2">LA TABLA DE EXTRACCION DE CAMPOS</font></strong>
+            <p align="justify">&nbsp;</p>
+            <p align="justify"><font face="Arial" size="2">La tabla de extracción de campos es el archivo utilizado en las estructuras CDS/Isis para actualización y mantenimiento de las listas invertidas así como en los procesos relacionados con el intercambio de información o la generación de claves para ordenar alfabéticamente los reportes de salida. </font></p>
+            <p align="justify"><font face="Arial" size="2">Al construir la tabla de extracción de campos el diseñador de la base de datos ha de tener en mente los tipos de búsqueda que quiere habilitar para los usuarios de la información e intentar que las consultas recuperen información, siempre que sea posible. </font></p>
+            <p align="justify"><font face="Arial" size="2">CDS/Isis proporciona un gran número de facilidades para garantizar el éxito de los procesos de recuperación de información, como son: </font></p>
+            <ul>
+                <li><font face="Arial" size="2">8 técnicas de indización diferentes, de tal forma que un mismo campo puede ser almacenado en los índices de diferentes maneras </font></li>
+                <li><font face="Arial" size="2">La extracción de claves se formula a través del lenguaje de formatos, lo que permite analizar y realizar transformaciones sobre los datos antes de enviarlos a los índices </font></li>
+                <li><font face="Arial" size="2">Transparencia en el uso de mayúsculas, minúsculas o caracteres acentuados en los términos de búsqueda </font></li>
+                <li><font face="Arial" size="2">Identificación de las claves de búsqueda, lo cual facilita determinar el orígen (mfn, campo, ocurrencia y posición relativa dentro del campo) de cada uno de los términos contenidos en el diccionario.</font></li>
+            </ul>
+            <p align="justify"><font face="Arial" size="2">La tabla de extracción de campos es un archivo del tipo TXT el cual consta de tres columnas donde se identifican los siguientes elementos:</font>
+            <table class="td" cellspacing="5" cellpadding="5" width="80%" border="1">
+                <tbody>
+                    <tr>
+                        <td colspan="2"><strong><font face="Arial" size="2">ID &nbsp; &nbsp; &nbsp; TI &nbsp; &nbsp; &nbsp; Formato de extracción</font></strong></td>
+                    </tr>
+                    <tr>
+                        <td class="td" valign="top"><font face="Arial" size="2">ID = Identificación de la clave</font></td>
+                        <td><font face="Arial" size="2">Identifica la etiqueta (tag) del campo que se utilizará para cualificar la busqueda. Las claves indizadas en esta línea tendrán en la lista invertida la identificación que se especifique en esta columan<br />
+                        </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">TI = Técnica de indización</font></td>
+                        <td><font face="Arial" size="2">Especifica la técnica de indización a aplicar sobre las líneas obtenidas luego de la ejecución del formato de extracción sobre un registro de la base de datos<br />
+                        </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">Formato de extracción</font></td>
+                        <td><font face="Arial" size="2">Indica el formato de extracción a aplicar sobre la base de datos para obtener la clave<br />
+                        </font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p>&nbsp;</p>
+            <p align="justify"><font face="Arial" size="2">El archivo de índices (listas invertidas) de las estructuras CDS/Isis consta de cinco elementos: </font></p>
+            <p align="justify">&nbsp;</p>
+            <dir><dd><font face="Arial" size="2">Término de búsqueda (clave)<br />
+            </font></dd><dd><font face="Arial" size="2">Id<br />
+            </font></dd><dd><font face="Arial" size="2">Mfn<br />
+            </font></dd><dd><font face="Arial" size="2">Número de Ocurrencia<br />
+            </font></dd><dd><font face="Arial" size="2">Número de Secuencia </font></dd></dir>
+            <p align="justify"><font face="Arial" size="2">El valor suministrado en la columna 1 de la FST genera el componente ID del archivo invertido, el cual le asigna una identificación a cada una de las claves generadas por el formato de extracción . Esta identificación podrá ser utilizada posteriormente para cualificar las búsquedas que se apliquen sobre la base de datos. Generalmente se utiliza como ID la misma etiqueta (tag) suministrada en la tabla de definición de campos, pero en algunos casos se puede variar el ID para obtener efectos especiales en la indización.</font></p>
+            <p align="justify"><font face="Arial" size="2">Ejemplo: supongamos que nuestra base de datos contiene 3 campos para ingresar los autores:</font></p>
+            <p align="justify"><font face="Arial" size="2">10: Autores personales a nivel analítico<br />
+            16: Autores personales a nivel monográfico<br />
+            23: Autores personales a nivel colección<br />
+            </font></p>
+            <p align="justify"><font face="Arial" size="2">A efectos de la búsqueda todos los autores pueden ser considerados como uno solo, independientemente del tipo de material donde aparecen. Entonces, podemos asignar en nuestra FST el ID 10 a todas las claves generadas desde los campos 10, 16 y 23 con el objeto de efectuar una búsqueda sobre todos los autores independientemente del tipo de material al cual estén relacionados..</font></p>
+            <p align="justify"><font face="Arial" size="2">Por lo tanto, si nuestra FST especifica:</font></p>
+            <p align="justify"><font face="Courier New">10 0 (v10/)(v16/)(v23/)</font></p>
+            <p align="justify"><font face="Arial" size="2">al aplicar la búsqueda Amaro, Jorge Luis /(10) sobre la lista invertida tendremos como resultado todos aquellos registros que posean la clave Amaro, Jorge Luis extraída bien sea desde el campo 10, o del campo 16 o del campo 23; o sea, recuperaremos los registros independientemente del tipo de autor que esté registrado en la base de datos.</font></p>
+            <p align="justify"><font face="Arial" size="2">La asignación de un único Id para varias etiquetas de la base de datos nos permite facilitarle a usuario la formulación de expresiones de búsqueda ya que podrá hacer búsquedas generales (ubicar un término independientemente del campo a partir del cual fué generado), o búsquedas cualificadas (ubicar un término en un campo particular, cualificado a partir del Id definido en la Fst ). La amplitud o restricción a aplicar en la búsqueda dependerá de las decisiones adoptadas al definir las claves en la FST.</font></p>
+            <p align="justify"><font face="Arial" size="2">Hasta el momento existen 8 técnicas de indización:</font></p>
+            <p>
+            <table class="td" height="202" cellspacing="0" cellpadding="0" width="604" summary="" border="1">
+                <tbody>
+                    <tr>
+                        <td valign="top" width="30"><font face="Arial" size="2">0</font></td>
+                        <td><font face="Arial" size="2">Pasa a la lista invertida cada línea generada por el formato de extracción</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">1</font></td>
+                        <td><font face="Arial" size="2">Pasa a la lista invertida cada sub-campo generado por el formato de extracción</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">2</font></td>
+                        <td><font face="Arial" size="2">Pasa a la lista invertida los elementos encerrados entre ... generados por el formato de extracción</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">3</font></td>
+                        <td><font face="Arial" size="2">Pasa a la lista invertida los elementos encerrados entre /.../ generados por el formato de extracción</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">4</font></td>
+                        <td><font face="Arial" size="2">Pasa a la lista invertida cada palabra generada por el formato de extracción</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">5</font></td>
+                        <td><font face="Arial" size="2">Igual a la técnica 1, agregando un prefijo a cada clave generada</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">6</font></td>
+                        <td><font face="Arial" size="2">Igual a la técnica 2, agregando un prefijo a cada clave generada</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">7</font></td>
+                        <td><font face="Arial" size="2">Igual a la técnica 3, agregando un prefijo a cada clave generada</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><font face="Arial" size="2">8</font></td>
+                        <td><font face="Arial" size="2">Igual a la técnica 4, agregando un prefijo a cada clave generada</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p align="justify"><font face="Arial" size="2">Las técnicas 2 y 3 tienen efectos similares en la generación de la clave; la diferencia proviene del tipo de delimitador utilizado para identificar las palabras claves: si se usa el delimitador ...MHx o MDx. El delimitador /.../ no puede sustituirse por lo que siempre estará presente en la salidas impresas o por pantalla. </font><font face="Arial" size="2">para identificar los términos claves, posteriormente, al emitir reportes impresos o salidas por pantalla, el mismo puede eliminarse o sustituirse por signos de puntuación aplicando el comando de modo </font></p>
+            <p align="justify"><font face="Arial" size="2">Cuando se aplica una fst sobre un registro para obtener una clave, el órden de operación es el siguiente: </font></p>
+            <ol>
+                <li><font face="Arial" size="2">Se aplica el formato de extracción sobre el registro para obtener la lista de claves </font></li>
+                <li><font face="Arial" size="2">A la lista de claves obtenida se les aplica la técnica de indización asociada con el formato de extracción </font></li>
+                <li><font face="Arial" size="2">A cada clave individual que resulte de la aplicación de la técnica de indización sobre la lista de claves, se le asigna el Id correspondiente y se almacena en la lista invertida. </font>
+                <p align="justify"><font face="Arial" size="2">Ejemplo. Supongamos que de el siguiente registro (en formato MARC):</font></p>
+                </li>
+            </ol>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p align="justify"><font face="courier new"><font size="2">35 :&nbsp;&nbsp;$9(DLC) 90049743<br />
+            10 :&nbsp;&nbsp;^a 90049743<br />
+            20 :&nbsp;&nbsp;^a0387974490 (alk. paper)<br />
+            40 :&nbsp;&nbsp;^aDLC^cDLC^dDLC<br />
+            41 : 0^aeng^bfregerhebjapsparus<br />
+            500: 0^aGC89^b.E54 1991<br />
+            820: 0^a551.4/58$220<br />
+            100:1 ^aEmery, K. O.^q(Kenneth Orris),^d1914-<br />
+            245:10^aSea levels and tide gauges /^cK.O Emery, David G. Aubrey.<br />
+            260: &nbsp;^aNew York :^bSpringer-Verlag,^cc1991.<br />
+            300: &nbsp;^axiv, 237 p. :^bill., maps :^c29 cm.<br />
+            500: &nbsp;^aIn English, with summaries in French, German, Hebrew, Japanese, Spanish, and Russian.<br />
+            504: &nbsp;^aIncludes bibliographical references (p. 207-226) and indexes.<br />
+            650: 0^aSea level.<br />
+            650: 0^aSubsidences (Earth movements)<br />
+            650: 0^aTide-gages.<br />
+            650: 0^aDatabase management^xCongresses.<br />
+            650: 0^aArtificial intelligence^xCongresses.<br />
+            700:1 ^aAubrey, David G.<br />
+            520:000113 35151<br />
+            935:LA</font><br />
+            </font></p>
+            </blockquote>
+            <p dir="ltr" align="justify"><font face="Arial" size="2">queremos obtener las siguientes claves:</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px" align="justify">
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td><font face="Arial" size="2">Título (245)</font></td>
+                        <td><font face="Arial" size="2">para ser recuperado por cada una de las palabras</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Autores (100 y 700)</font></td>
+                        <td><font face="Arial" size="2">para ser recuperados en forma completa (apellido + nombre) e independientemente por apellido o nombre</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Materias (650)</font></td>
+                        <td><font face="Arial" size="2">que puedan recuperarse por frase completa o por cualquiera de laa palabras que las forman</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Idiomas (41)</font></td>
+                        <td><font face="Arial" size="2">Todos los idiomas (nota: en el subcampo b del campo 41 los idiomas se incluyen en una cadena donde cada 3 caracteres representan el código de un idioma diferente</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Editorial (260)</font></td>
+                        <td><font face="Arial" size="2">tal como aparece en el documento</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Fecha de edición(260)</font></td>
+                        <td><font face="Arial" size="2">tal como aparece en el documento </font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Clasificacion LC (50)</font></td>
+                        <td><font face="Arial" size="2">de forma tal que permita hacer una búsqueda general por el primer nivel de la calsifixación y también por la clasificación completa</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Fecha de ingreso a la base de datos (5)</font></td>
+                        <td><font face="Arial" size="2">para recuperar todos los títulos ingresados en un aÃ±o, en un aÃ±o/mes y en un aÃ±o/mes/día</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">La Fst que necesitamos definir para estos efectos es la siguiente<br />
+            </font></p>
+            <p>
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Título (245)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">245 4 v245^a</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Autores (100 y 700)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">100 0 v100^a/,(v700^a/)<br />
+                        100 4 v100^a/(v700^a/)</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Materias (650)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">650 1 (v650*2/)<br />
+                        650 4 (v650*2/)</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Idiomas (41)</font></p>
+                        </td>
+                        <td>
+                        <p>
+                        <table class="td">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="30"><font face="Arial" size="2">41&nbsp; 0 </font></td>
+                                    <td><font face="Arial" size="2">v41^a/v41^b.3/ v41^b*3.3/ v41^b*6.3/ v41^b*9.3/ v41^b*12.3/ v41^b*15.3/ v41^b*18.3</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Editorial (260)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">260 0 v260^b</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Fecha de edición(260)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">260 0 v260^c</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Clasificacion LC (50)</font></p>
+                        </td>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">50 0 v260^a/v260^a,v260^b</font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Fecha de ingreso a la base de datos (5)</font></p>
+                        </td>
+                        <td><font face="Arial" size="2">5 0 v5.4/v5.6/v5</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p><font face="Arial" size="2">La lista invertida es un conjunto de 6 archivos, 5 de los cuales son índices hacia el diccionario de términos, el cual (con la extensión .ifp) alberga todas las claves extraídas de la base de datos a través de la aplicación de la tabla de extracción de campos (fst) sobre cada uno de los registros. </font></p>
+            <p align="justify"><font face="Arial" size="2">El diccionario de términos es una lista alfabética de todos los puntos de acceso que hemos extraído de la base de datos (con el auxilio de la .fst) y cada clave tiene asociada una lista de apuntadores que definen el lugar de donde se extrajo el término. Esta lista de apuntadores se denomina "postings" y cada "posting" tiene 4 componentes: </font></p>
+            <p><font face="Arial" size="2"></font></p>
+            <ul>
+                <li><font face="Arial" size="2">Mfn del registro del cual se extrajo la clave </font></li>
+                <li><font face="Arial" size="2">Id. del campo, tal como fué indicado en la primera columna de la FST </font></li>
+                <li><font face="Arial" size="2">Número de la ocurrencia del campo desde el cual se extrajo la clave </font></li>
+                <li><font face="Arial" size="2">Posición relativa de la palabra dentro del campo desde el cual se extrajo la clave (cuando el campo se indizó por técnica 4) </font></li>
+            </ul>
+            <p><font face="Arial" size="2">Por ejemplo, si el término "Educacion" aparece en los registros 1 y 20 en el campo de materias (v76) y también se encuentra en el registro 35 en el campo de título (v16): Métodos de educación a distancia, al aplicar la siguiente Fst sobre el registro: </font></p>
+            <font face="courier new"><font size="2">76 0 (v76/)<br />
+            16 4 v16</font><font face="arial">
+            <p><font size="2">el diccionario de términos referirá el término Educación de la siguiente manera: </font></p>
+            <p><font size="2"></font></p>
+            <p><font size="2">EDUACION &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 76 1 1&nbsp;&nbsp; <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font size="2">20 76 1 1&nbsp;&nbsp; <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 35 16 1 3 </font></p>
+            <p><font size="2">Se han generado tres "postings" para el término educación. El primero, 1 76 1 1 indica que la palabra clave proviene del MFN 1, primera ocurrencia del campo 76 y está localizada al inicio del campo. El segundo apuntador 20 76 1 1 especifica que también se encuentra en el Mfn 20, campo 76, primera ocurrencia y primera palabra y por último, 35 16 1 3 indica que el registro 35 contiene el término educación, extraído del campo 16, primera ocurrencia y además es la tercera palabra del campo. </font></p>
+            <p><font size="2">La técnica de indización 0 siempre coloca el valor 1 como posición relativa de la clave dentro del campo. El resto de las técnicas de indización enumeran la posición de la clave dentro del campo. La posición relativa de un término dentro del campo que lo contiene es lo que permite definir las búsquedas por proximidad. &nbsp;</font><font size="2">La distancia entre dos términos se determina obteniendo la diferencia entre sus posiciones relativas. </font></p>
+            <p><font size="2">El valor del número de ocurrencia se utiliza al aplicar el operador (F) para el cual, la expresión de búsqueda es verdadera cuando todos los términos que se combinan proceden de la misma ocurrencia del campo repetible. </font></p>
+            <p><font size="2">Por ejemplo, supongamos que un registro contiene el siguiente texto en el campo del resumen </font></p>
+            <p><font size="2">72: La educación presencial se fortalece con la adecuación ...<br />
+            72: La distancia entre el aula y la biblioteca debe ....... </font></p>
+            <p><font size="2">Si este campo se indiza de la siguiente manera: 72 4 (v72/) y posteriormente queremos recuperar todos los materiales en cuyo contenido se haga referencia a EDUCACION A DISTANCIA, la fórmula de búsqueda: </font></p>
+            <p><font size="2">EDUCACION (G) DISTANCIA </font></p>
+            <p><font size="2">recuperá el registro mencionado anteriormente aún cuando no hace referencia explícita a la Educación a distancia, pero </font></p>
+            <p><font size="2">EDUCACION (F) DISTANCIA </font></p>
+            <p><font size="2">no recuperará el registro. La razón de esta diferencia está en el hecho de que el operador (G) no averigua desde qué ocurrencia se generó la clave, a diferencia del operador (F) que analiza el componente número de ocurrencia de cada uno de los "postings" de los términos recuperados. </font></p>
+            <p><font size="2">Analicemos ahora la FST que mencionamos al inicio de esta página:</font></p>
+            <p>
+            <table class="td" cellspacing="4" cellpadding="2" border="1">
+                <tbody>
+                    <tr>
+                        <td width="200" colspan="2"><font size="2">245 4 v245^a</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Extrae el subcampo a del campo 245 y al resultado le aplica la técnica de indización 4. Cada palabra obtenida se envía a la lista invertida con el identificador 245</font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2"><font size="2">100 0 v100^a/,(v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Extrae el subcampo a del campo 100 y el subcampo a del campo 700. Analiza el resultado obtenido tratando de identificar líneas (técnica 0) y cada línea obtenida se envía a la lista invertida con el identificador 100. Note que el formato de extracción v100^a, v700^a no produciría los resultados requeridos por las siguientes razones:</font>
+                        <ul>
+                            <li><font size="2">La técnica de indización 0 busca líneas en el campo generado por el formato de extracción. Como no estamos generando cortes de línea (/), el formato de extracción producirá una sola cadena con todos los autores en forma contígua y de esa cadena se tomarán los primeros 30 caracteres los cuales se almacenarán en la lista invertida </font></li>
+                            <li><font size="2">el campo 700 es repetible; por lo tanto, si no se edita como un grupo repetible el formato extraerá todas las ocurrencias del campo creando una sola frase, y entonces cada autor no sería enviado como clave independiente a la lista invertida </font></li>
+                        </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2"><font size="2">100 4 v100^a/(v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Extrae el subcampo a de los campos 100 y 700 del registro. Cada ocurrencia se coloca en una nueva línea. De la lista generada extrae cada una de las palabras (técnica 4) y las envía a la lista invertida con el identificador 100. Cada palabra arrastra el número de ocurrencia que ocupa el autor en el campo así como la posición relativa de la misma al interior de cada ocurrencia. <br />
+                        Si estamos indizando por palabras, Â¿por qué es necesario incluir saltos de línea para separar los campos y las ocurrencias?. Por la siguiente razón: si no se incluye una separación entre v100^a y v700^a, la última palabra de v100^a aparecería pegada a la primera palabra de la primera ocurrencia de v700^a, produciendo una entrada errónea en el índice. Del mismo modo, si no se separan las ocurrencias de v700 con un salto de línea, la primera palabra de la siguiente ocurrencia aparecería pegada con la última palabra de la ocurrencia anterior. </font></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2"><font size="2">650 1 (v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">En este ejemplo estamos extrayendo cada subcampo del campo 650 y generando para cada uno, una entrada en la lista invertida con la identificación 650.</font>
+                        <p><font size="2">Â¿Por qué v650*2?. El registro presentado en el ejemplo está catalogado según el formato Marc y se están incluyendo los dos indicadores antes del subcampo a: </font></p>
+                        <pre><font size="2">650 0^aDatabase management^xCongresses.<!--650--><br /><br />650 0^aArtificial intelligence^xCongresses.<!--650--><br /><br /></font></pre>
+                        <font size="2">Si el formato de la fst lo expresamos como (650 1 (v650/) se intentarán identificar todos los subcampos de cada una de las ocurrencias del campo 650; por lo tanto, la porción correspondiente a los indicadores será tomada como un subcampo y tendremos una serie de claves generadas solo con los indicadores del campo 650. Al expresar el formato de extracción en la forma (v650*2/) estamos indicando un desplazamiento de 2 posiciones respecto al inicio del campo y los indicadores no serán tomados en cuenta.</font>
+                        <p><font size="2">Cuando se aplica la técnica de indización 1 es necesario verificar que el formato de extracción contenga subcampos; esto es, si colocamos como formato de extracción de claves 650 1 mhu,(v650*2/) estaremos generando claves erradas ya que, por definición, el Modo MHU sustituye los subcampos por signos de puntuación causando que los subcampos desaparezcan al aplicar el formato sobre el registro y en este caso la clave se generará haciendo una sola frase con todos los subcampos y el índice contendría entonces solo los 30 primeros caracteres de la frase obtenida (por ejemplo: ARTIFICIAL INTELLIGENCE. C0NGR), con la consiguiente pérdida de puntos de acceso hacia el registro. </font></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">650 4 (v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Igual razonamiento que en el caso anterior, pero se extráen las palabras de las líneas obtenidas</font></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">v41^a/v41^b.3/ v41^b*3.3/ v41^b*6.3/ v41^b*9.3/ v41^b*12.3/ v41^b*15.3/ v41^b*18.3</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Como el subcampo b tiene un patrón de ingreso que especifica que cada idioma ocupa 3 posiciones, utilizando las opciones de desplazamiento y la longitud podemos enviar cada idioma a la lista invertida</font></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">50 0 v260^a/v260^a,v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">En este ejemplo estamos generando dos claves para cada clasificación LC. La primera v260^a nos permitirá realizar búsquedas por grupos temáticos. La segunda clave generada nos permitirá ubicar un número de clasificación en particular. Fijese de nuevo la presencia del caracter de salto de línea (/), el cual obliga a generar dos claves independientes</font></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><font size="2">v5.4/v5.6/v5</font></td>
+                    </tr>
+                    <tr>
+                        <td><font size="2"></font></td>
+                        <td><font size="2">Con la fecha de ingreso del documento estamos generando tres claves: la primera v5.4 nos permitirá ubicar rápidamente todos los materiales ingresados en un aÃ±o; la segunda v5.6 recuperará los ingresos de un mes; y la tercera v5 los ingresos correspondientes a un día. Note que generar estas tres claves (por aÃ±o, aÃ±o-mes y aÃ±o-mes-dia) hace más eficiente la recuperación de información que generando una sola clave a nivel de aÃ±o,mes y día y aplicar el operador de truncación a la derecha para hacer búsquedas por aÃ±o y por aÃ±o y mes </font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p><font size="2">Es importante entonces que el formato de extracción a aplicar sobre el registro esté en concordancia con la técnica de indización; de no ser así podría incurrirse en errores en la generación de las claves. Además, un buen manejo del lenguaje de formateo nos permite generar claves que aseguren una eficiente recuperación de información. La comprensión del mecanismo de almacenamiento de las claves y la identificación del operador de búsqueda apropiado garantizará una respuesta precisa a las necesidades de cada usuario en particular<br />
+            </font></p>
+            <p><font size="2"></font></p>
+            </font></font></td>
+        </tr>
+    </tbody>
+</table>
+<p><br />
+<table cellspacing="0" cellpadding="0" width="95%" border="0">
+    <tbody>
+        <tr>
+            <td><font face="Arial" size="2">Uso de prefijos en el proceso de generación de claves</font>
+            <p align="justify">&nbsp;</p>
+            <p align="justify"><font face="Arial" size="2">Como el diccionario de términos es un único archivo con todas las claves ordenadas alfabéticamente, en el mismo se presentan mezclados los autores con los títulos, con las palabras claves y, en general, con todos los campos que hayan sido indizados en la FST . </font></p>
+            <p align="justify"><font face="Arial" size="2">Si queremos tener separadas las claves según el campo desde el cual fueron generadas tenemos dos soluciones: </font></p>
+            <ol>
+                <li><font face="Arial" size="2">Utilizar prefijos al momento de generar las claves de indización con el objeto de crear subdiccionarios al interior del diccionario de términos </font></li>
+                <li><font face="Arial" size="2">Crear diccionarios por separado de acuerdo al contenido de cada uno de los campos. </font></li>
+            </ol>
+            <p align="justify"><font face="Arial" size="2">De acuerdo con la primera opción, si la fst</font>
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td width="30%"><font face="Arial" size="2">Título (245)</font></td>
+                        <td width="70%"><font face="Arial" size="2">245 4 v245^a</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Autores (100 y 700)</font></td>
+                        <td><font face="Arial" size="2">100 0 v100^a/,(v700^a/)<br />
+                        100 4 v100^a/(v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Materias (650)</font></td>
+                        <td><font face="Arial" size="2">650 1 (v650*2/)<br />
+                        650 4 (v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Idiomas (41)</font></td>
+                        <td>
+                        <table class="td">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="33"><font face="Arial" size="2">41 &nbsp;0 </font></td>
+                                    <td><font face="Arial" size="2">v41^a/v41^b.3/ v41^b*3.3/ v41^b*6.3/ v41^b*9.3/ v41^b*12.3/ v41^b*15.3/ v41^b*18.3</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Editorial (260)</font></td>
+                        <td><font face="Arial" size="2">260 0 v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Fecha de edición(260)</font></td>
+                        <td><font face="Arial" size="2">260 0 v260^c</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Clasificacion LC (50)</font></td>
+                        <td><font face="Arial" size="2">50 &nbsp; 0 v260^a/v260^a,v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Fecha de ingreso a la base de datos (5)</font></td>
+                        <td><font face="Arial" size="2">5 &nbsp; &nbsp; 0 v5.4/v5.6/v5</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p align="justify"><font face="Arial" size="2">la cambiamos por</font>
+            <table class="td" border="1">
+                <tbody>
+                    <tr>
+                        <td width="30%"><font face="Arial" size="2">Título (245)</font></td>
+                        <td width="70%"><font face="Arial" size="2">245 8 `/T:/`,v245^a</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Autores (100 y 700)</font></td>
+                        <td><font face="Arial" size="2">100 0 "A:"v100^a/,(|A:|v700^a/)<br />
+                        100 8 `/A:/`,v100^a/(|A:|v700^a/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Materias (650)</font></td>
+                        <td><font face="Arial" size="2">650 5 `/M:/`,(v650*2/)<br />
+                        650 4 `/M:/`,(v650*2/)</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Idiomas (41)</font></td>
+                        <td>
+                        <table class="td">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="33"><font face="Arial" size="2">41 &nbsp;8 </font></td>
+                                    <td><font face="Arial" size="2">`/I:/`,v41^a," "v41^b.3," "v41^b*3.3, " "v41^b*6.3, " "v41^b*9.3, " "v41^b*12.3, " "v41^b*15.3, " "v41^b*18.3</font></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Editorial (260)</font></td>
+                        <td><font face="Arial" size="2">260 0 "E:"v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Fecha de edición(260)</font></td>
+                        <td><font face="Arial" size="2">260 0 "F:"v260^c</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Clasificacion LC (50)</font></td>
+                        <td><font face="Arial" size="2">50 &nbsp; 0 "C:"v260^a/"C:"v260^a,v260^b</font></td>
+                    </tr>
+                    <tr>
+                        <td><font face="Arial" size="2">Fecha de ingreso a la base de datos (5)</font></td>
+                        <td><font face="Arial" size="2">5 &nbsp; &nbsp; 0 "F:"v5.4/"F:"v5.6/"F:"v5</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>
+            <p><font face="Arial" size="2">Como puede observarse hemos hecho los siguientes cambios:</font></p>
+            <p><font face="Arial" size="2"></font></p>
+            <center>
+            <table class="td" border="2">
+                <tbody>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">Técnica</font></td>
+                        <td><font face="Arial" size="2">Cambiada a </font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">1</font></td>
+                        <td align="center"><font face="Arial" size="2">5</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">4</font></td>
+                        <td align="center"><font face="Arial" size="2">8</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            </center>
+            <p align="justify"><font face="Arial" size="2">A las claves que se estan indizando con técnica 0, basta agregarles un pre-literal con el prefijo que queremos utilizar para diferenciar los datos. Para el resto de las técnicas de indización (5, 6, 7 y 8) el prefijo se debe indicar antes del formato de extracción con siguiente sintaxis: </font></p>
+            <ol>
+                <li><font face="Arial" size="2">el prefijo se encierra entre apóstrofes (literal no condicional) </font></li>
+                <li><font face="Arial" size="2">el literal correspondiente al prefijo se encierra entre dos caracteres especiales que no estén incluídos en el prefijo. <br />
+                ejemplo:`/A:/` <br />
+                `#A:#` </font></li>
+            </ol>
+            <p align="justify"><font face="Arial" size="2">Además de permitirnos ver el contenido de un campo en forma ordenada, sin mezclar los términos obtenidos de otros campos, la búsqueda a través de un prefijo es más rápida que la búsqueda cualificada; esto es: </font></p>
+            <p><font face="Arial" size="2">Buscar M:Educación es más eficiente que Educación/(650) por cuanto la búsqueda cualificada requiere revisar cada uno de los apuntadores (postings) del término. </font></p>
+            <p align="justify"><font face="Arial" size="2">Sin embargo, dependiendo de la experiencia de nuestros usuarios finales y de la capacidad del equipo donde tenemos instalada nuestra base de datos, tal vez convenga indizar los datos de varias maneras diferentes, con prefijo y sin prefijo, a fin de proporcionar a nuestros usuarios mayor flexibilidad en las búsquedas. Más claves de búsqueda significa mayor espacio en disco y no necesariamente menor velocidad de recuperación, dada la estructura de la lista invertida (árbol B*) la cual se reorganiza constantemente para que la altura del árbol sea siempre la misma en todas sus ramas (la altura del árbol refleja el número de accesos requeridos para ubicar un término en la lista invertida). (ver </font><a href="javascript:../../msi/cdsisis/basico/listasinvertidas.html"><font face="Arial" size="2">Estructura de la lista invertida</font></a><font face="Arial" size="2">). </font></p>
+            <p align="justify"><font face="Arial" size="2">Los productos de la familia CDS/Isis, exceptuando Isis/Dos y WinIsis permiten definir más de un diccionario de términos para una base de datos. Esto es, con IsisDll, por ejemplo, podemos crear un diccionario para autores, otro para títulos, etc. Sin embargo, para que los términos de diferentes campos puedan combinarse entre sí, en una misma expresión de búsqueda, a través de los operadores booleanos siempre será necesario definir un diccionario general que los agrupe a todos ya que no es posible cruzar los términos de un diccionario con los términos de otro diccionario. La facilidad de diccionarios particulares sustituye el uso de prefijos para presentar al usuario los términos extraídos de un campo en particular y permite operar lógicamente los términos de un mismo diccionario. </font></p>
+            <p><font face="Arial" size="2"></font></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>
+<table cellspacing="0" cellpadding="0" width="95%" border="0">
+    <tbody>
+        <tr>
+            <td><font face="Arial" size="2">Transparencia en el uso de mayúsculas, minúsculas y caracteres especiales</font>
+            <p align="justify"><font face="Arial" size="2">Una de las bondades del mecanismo de búsqueda del CDS/Isis radica en la transparencia que brinda en el uso de mayúsculas, minúsculas o caracteres especiales en los términos de búsqueda.</font></p>
+            <p align="justify"><font face="Arial" size="2">Para lograr este objetivo, todas las claves se almacenan en la lista invertida en mayúsculas, y si así lo hemos previsto, los caracteres acentuados se transforman a su equivalente en mayúscula. Las expresiones de búsqueda que suministra el usuario son transformadas igualmente a mayúsculas lo que minimiza el error por errores de digitación del usuario. </font></p>
+            <p align="justify"><font face="Arial" size="2">Para realizar la conversión de las claves y expresiones de búsqueda, las estructuras CDS/Isis utilizan el archivo ISISUC.TAB el cual debe estar en concordancia con el juego de caracteres adoptado para la base de datos (ver </font><a target="_blank" href="configuracion.html#isisuc"><font face="Arial" size="2">Tabla de conversión de mayúsculas a minúsculas</font></a><font face="Arial" size="2">) </font></p>
+            <p align="justify"><font face="Arial" size="2">Cuando indizamos los campos con la técnica 4 (por palabras) CDS/Isis utiliza la tabla </font><a target="_blank" href="configuracion.html#isisac"><font face="Arial" size="2">ISISAC.TAB</font></a>&nbsp;<font face="Arial" size="2">para establecer la composición del concepto "palabra"; esto es, la tabla ISISAC.TAB le indica a CDS/Isis qué caracteres debe considerar como alfabéticos para formar las palabras. Cualquier caracter no insertado en ISISAC.TAB será considerado un separador y dará por terminada la palabra. </font></p>
+            <p align="justify"><font face="Arial" size="2">Supongamos que en ISISUC.TAB hacemos equivalente la letra ñ a su expresión en mayúscula Ñ. Si en ISISAC.TAB no incluímos el código Ñ (165 en Ascii o 209 en Ansi) </font></p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td width="100"><font face="Arial" size="2">las palabras: </font></td>
+                        <td><font face="Arial" size="2">aparecerán en el índice como</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">niño </font></td>
+                        <td align="center"><font face="Arial" size="2">NI O</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">cañería </font></td>
+                        <td align="center"><font face="Arial" size="2">CA ERIA</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">cañaveral </font></td>
+                        <td align="center"><font face="Arial" size="2">CA AVERAL</font></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><font face="Arial" size="2">acuñación </font></td>
+                        <td align="center"><font face="Arial" size="2">ACU ACION</font></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <font face="Arial" size="2">esto es, cada palabra se divide en dos, generando dos entradas en el diccionario, ya que al no estar la ñ incluída en ISISAC.TAB se considera un separador igual que un signo de puntuación.</font>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+<br />
+</p>
+<p>&nbsp;</p>

@@ -1,0 +1,12 @@
+'<table border=0 width=90% class=listTable>'
+'<tr><td width=20% valign=top><font face=arial size=2><b>No. Ordem</b></td><td valign=top><font face=arial size=2>',v1,'</td>'/
+'<tr><td width=20% valign=top><font face=arial size=2><b>Data</b></td><td valign=top><font face=arial size=2>',v2,'</td>' /
+'<tr><td width=20% valign=top><font face=arial size=2><b>Fornecedor</b></td><td valign=top><font face=arial size=2>',v5,'</td>' /
+'</table>$$$$',
+	(if p(v50^a) then v50^a,'|'v50^b,'|'v50^c,'|'v50^d,'|'v50^e,'|'v50^h,'|' if v50^g='N' then 'N (Novo)' else 'C (Cópias)' fi,'|'v50^i,'|',v1[1] / else
+		v18" / ",v16,"; "v17,'|'v50^b,'|'v50^c,'| | |'v50^h'|' if v50^g='N' then 'N (Novo)' else 'C (Cópias)' fi '|'v50^i,'|' v1 /, 
+	fi),
+'$$$$'f(mfn,1,0),
+'$$$$'(if p(v500) then v500^a,'|'v500^b,'|',v500^c,'|',v500^d,'|',if s(v500^c)<>'' then f(npost([v500^d],'NC_'v500^c),1,0) fi/fi)
+
+

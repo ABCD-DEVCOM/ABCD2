@@ -1,0 +1,9 @@
+'<font face=arial size=2><b>Centro de documentacion de ABCD</b>. Loan receipt<br>'
+"User code: "v20,'<br>',
+'Loan date: ' v30*6.2,'-',v30*4.2,'-',v30.4'<br>',
+'Return date: 'v40*6.2,'-',v40*4.2,'-',v40.4'<br>',
+'Title: 'v100^a,'<br><br>',
+
+'_______________________________'
+
+/

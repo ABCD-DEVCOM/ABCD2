@@ -1,0 +1,25 @@
+H||Order|0|0||||||||||||0||
+F|10|Type of acquisition|0|0|ab||S||5|P|typeofacquisition.tab|||||0||
+F|1|Order number|0|0|||X|||D|suggestions|CN_|v1'-',v18|v1||0||
+F|2|Date of Order|0|0|||D||10|||||||0||
+F|3|ISO date of Order|0|0|||ISO||10|||||||0||
+F|5|Provider|0|0|||X|||D|providers|NA_|v10|v10||0||
+T|50|Items|0|1|abcdeghif||TB|||||||||0||
+S||Reference|0|0|a||X||35|||||||0||
+S||Quantity|0|0|b||X||5|||||||0||
+S||Price|0|0|c||X||5|||||||0||
+S||Suggestion Number|0|0|d||X||10|||||||0||
+S||Bidding number|0|0|e||X||10|||||||0||
+S||Type of object (New/Copies)|0|0|g||S||5|P|typeofacquisition.tab|||||0||
+S||Database|0|0|h||S||10|P|%path_database%bases.dat|||||0||
+S||Control number|0|0|i||X||10|||||||0||
+S||Items received|0|0|f||X||2|||||||0||
+H||Claims|0|0||||||||||||0||
+T|450|Claims|0|1|abc||TB|10||||||||0||
+S||Date|0|0|||D||10|||||||0||
+S||ISO date of claims|0|0|||ISO||10|||||||0||
+S||Comments|0|0|||X||100|||||||0||
+H||Reception|0|0||||||||||||0||
+F|480|Date|0|0|||D||10|||||||0||
+F|481|ISO date of recep.|0|0|||ISO||10|||||||0||
+F|500|Closed|0|0|||X||1|||||||0||

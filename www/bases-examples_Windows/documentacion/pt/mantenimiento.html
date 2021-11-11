@@ -1,0 +1,52 @@
+<p><font size="3"><strong>Utilit&aacute;rios para a manuten&ccedil;&atilde;o da base de dados</strong></font></p>
+
+<ol>
+
+    <li><strong><font size="2">Desbloquear base de dados</font></strong> </li>
+
+    <li><strong><font size="2">Listar registros bloqueados</font></strong> </li>
+
+    <li><strong><font size="2">Desbloquear registros</font></strong> </li>
+
+    <li><strong><font size="2">Gera&ccedil;&atilde;o do arquivo invertido</font></strong> </li>
+
+    <li><strong><font size="2">Mudan&ccedil;as globais</font></strong></li>
+
+</ol>
+
+<p><strong><font size="2">Desbloquear base de dados.</font></strong></p>
+
+<p><font size="2">Se, a qualquer momento, parecer que a base de dados ou o arquivo invertido n&atilde;o podem ser atualizados, podemos estar diante de uma situa&ccedil;&atilde;o de bloqueio da base de dados. Isso normalmente ocorre ap&oacute;s uma queda do sistema, &nbsp;ou o cancelamento &nbsp;de um processo de gera&ccedil;&atilde;o do arquivo invertido, quer pela interrup&ccedil;&atilde;o abrupta ou por um erro na FST.</font></p>
+
+<p><font size="2">Utilize esta op&ccedil;&atilde;o para desbloquear a base de dados, tornando-a novamente habilitada para atualiza&ccedil;&atilde;o do arquivo mestre e/ou o arquivo invertido. Se você tamb&eacute;m n&atilde;o puder acessar o dicion&aacute;rio de termos, ou os mesmos est&atilde;o incompletos ou est&atilde;o mal organizados, gere novamente o arquivo invertido ou, se a FST sofreu altera&ccedil;&otilde;es, verifique a sintaxe da mesma.</font></p>
+
+<p><font size="2">Antes de fazer o desbloqueio, tenha a certeza de que nenhum usu&aacute;rio est&aacute; realizado entrada de dados ou alterando registros.</font></p>
+
+<p><font size="2"><strong><strong>Listar registros bloqueados</strong></font></p>
+
+<p>Recomenda-se que esse processo seja executado como parte da rotina de manuten&ccedil;&atilde;o de uma base de dados. Se a sa&iacute;da mostra registros bloqueados, você deve desbloque&aacute;-los, utilizando o procedimento de desbloquear registros.</p>
+
+<p><font size="2"><strong><strong>Desbloquear registros</strong></font></p>
+
+<p>O bloqueio de registros acontece geralmente no processo de entrada como parte do mecanismo de prote&ccedil;&atilde;o para a atualiza&ccedil;&atilde;o dos dados. Isto &eacute;: quando um usu&aacute;rio solicita (edita) um registro para ser modificado, o mesmo &eacute; bloqueado para que n&atilde;o possa ser modificado simultaneamente por outro usu&aacute;rio. Quando o registro &eacute; atualizado, ele &eacute; desbloqueado e se torna dispon&iacute;vel para outros usu&aacute;rios.</p>
+
+<p>Se o ciclo de atualiza&ccedil;&atilde;o n&atilde;o for completado, ou seja, o registro n&atilde;o &eacute; gravado ou a atualiza&ccedil;&atilde;o &eacute; cancelada (bot&otilde;es gravar ou cancelar da barra de ferramentas), o registro permanece bloqueado por um tempo (4 horas) para os demais usu&aacute;rios.</p>
+
+<p>Existem duas maneiras de remover o bloqueio antes de esgotar o prazo acima referido:</p>
+
+<ol><li>Se o mesmo operador que bloqueou o registro faz uma nova edi&ccedil;&atilde;o, este ter&aacute; o direito de atualizar o registro, podendo atualizar ou cancelar a edi&ccedil;&atilde;o para liberar o registro.</li>
+
+    <li>Executando o procedimento de desbloquear registros, que verifica a base de dados e libera todos os registros que est&atilde;o bloqueados.</li>
+</ol>
+
+<p>Recomenda-se, antes de executar este procedimento, verificar se n&atilde;o est&atilde;o sendo realizadas opera&ccedil;&otilde;es de entrada ou altera&ccedil;&atilde;o de registros.</p>
+
+<p><font size="2"><strong><strong>Gera&ccedil;&atilde;o do arquivo invertido</strong></font></p>
+
+<p>Este processo gera o arquivo invertido, mas s&oacute; pode ser utilizado em bases de dados com poucos registros, por exemplo, menos de 2000. Para bases de dados maiores, usar o utilit&aacute;rio MX.</p>
+
+<p>O arquivo invertido (&iacute;ndice) &eacute; atualizado automaticamente no processo de cria&ccedil;&atilde;o, edi&ccedil;&atilde;o ou exclus&atilde;o de registros. No entanto, se for detectado um erro ao acessar o dicion&aacute;rio de termos, o arquivo invertido deve ser gerado novamente para corrigir eventuais irregularidades ou de corrup&ccedil;&atilde;o que podem ocorrer.</p>
+
+<p><font size="2"><strong><strong>Mudan&ccedil;as globais</strong></font></p>
+
+<p>&nbsp;Veja formul&aacute;rio do procedimento de Mudan&ccedil;as Globais.</p>

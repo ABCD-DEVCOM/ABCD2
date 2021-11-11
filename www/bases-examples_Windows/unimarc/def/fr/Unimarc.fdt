@@ -1,0 +1,1984 @@
+LDR||Guide|0|0||||||||||||0||
+H||0-- Bloc des numéros d`identification|0|0||||||||||||0||
+AI|1|Identifiant de la notice|0|0|||X||80|||||||0||
+F|3|Identifiant pérenne de la notice|0|0|||X||80|||||||0||
+M5|5|Identifiant de la version|0|0||||||||||||0||
+T|10|ISBN (International Standard Book Number)|0|1|abdz6|||3||||||||0||||||||||||||
+S||ISBN|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|1|b||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||ISBN erroné|0|0|z||X|||||||||0||||||||||||||
+S||Code de liens entre zones|0|0|6||X|||||||||0||||||||||||||
+T|11|ISSN (International Standard Serial Number)|0|1|1abdfgyz|||3||||||||0||||||||||||||
+S||Indicateur l|0|0|1||S|||P|011-ind1.tab|||||0||||||||||||||
+S||Numéro (ISSN)|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||ISSN-L ou ISSN de liaison|0|0|f||X|||||||||0||||||||||||||
+S||ISSN-L annulé|0|0|g||X|||||||||0||||||||||||||
+S||ISSN annulé|0|0|y||X|||||||||0||||||||||||||
+S||ISSN erroné ou ISSN-L|0|0|z||X|||||||||0||||||||||||||
+T|12|Empreinte (livre ancien)|0|0|a25|||2||||||||0||||||||||||||
+S||Empreinte|0|0|a||X|||||||||0||||||||||||||
+S||Code du système utilisé pour l`empreinte|0|0|2||X|||||||||0||||||||||||||
+S||Code de l`institution concernée par la zone|0|0|5||X|||||||||0||||||||||||||
+T|13|ISMN (Numéro d`identification pour la musique imprimée)|0|1|abdz|||3||||||||0||||||||||||||
+S||ISMN|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||ISMN erroné|0|0|z||X|||||||||0||||||||||||||
+T|14|Identifiant d`un article de périodique|0|0|az2|||2||||||||0||||||||||||||
+S||Article Identifier|0|1|a||X|||||||||0||||||||||||||
+S||Erroneous Article Identifier|0|0|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+T|15|ISRN (International Standard technical Report Number)|0|1|abdz|||3||||||||0||||||||||||||
+S||Numéro (ISRN)|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||ISRN annulé, invalide ou erroné|0|0|z||X|||||||||0||||||||||||||
+T|16|ISRC (International Standard Recording Code)|0|1|abz|||3||||||||0||||||||||||||
+S||Numéro (ISRC)|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||ISRC erroné|0|0|z||X|||||||||0||||||||||||||
+T|17|Autre identifiant normalisé|0|1|12abdz2|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|017-ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|017-ind2.tab|||||0||||||||||||||
+S||Numéro normalisé|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||Modalités d`acquisition et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||Numéro ou code erroné|0|0|z||X|||||||||0||||||||||||||
+S||Code du référentiel|0|0|2||X|||||||||0||||||||||||||
+T|20|Numéro de la bibliographie nationale|0|1|abz|||||||||||0||||||||||||||
+S||Code de pays|0|0|a||S|||P|countries.tab|||||0||||||||||||||
+S||Numéro|0|0|b||X|||||||||0||||||||||||||
+S||Numéro erroné|0|0|z||X|||||||||0||||||||||||||
+T|21|Numéro de dépôt légal ou de copyright|0|1|abz|||||||||||0||||||||||||||
+S||Code de pays|0|0|a||S|||P|countries.tab|||||0||||||||||||||
+S||Numéro|0|0|b||X|||||||||0||||||||||||||
+S||Numéro erroné|0|0|z||X|||||||||0||||||||||||||
+T|22|Numéro de publication officielle|0|1|abz|||||||||||0||||||||||||||
+S||Code de pays|0|0|a||S|1||P|countries.tab|||||0||||||||||||||
+S||Numéro|0|0|b||X|||||||||0||||||||||||||
+S||Numéro erroné|0|0|z||X|||||||||0||||||||||||||
+T|35|Identifiant de la notice dans un autre système|0|1|az|||||||||||0||||||||||||||
+S||Identifiant de la notice dans un autre système|0|0|a||X|||||||||0||||||||||||||
+S||Identifiant annulé ou erroné|0|0|z||X|||||||||0||||||||||||||
+T|36|Incipit (musique)|0|1|abcdefgmnopqrtuz2|||3||||||||0||||||||||||||
+S||Numérotation de l&#146;oeuvre dans un ensemble|0|0|a||X|1|2|||||||0||||||||||||||
+S||Numérotation du mouvement|0|0|b||X|1|2|||||||0||||||||||||||
+S||Numérotation de l&#146;incipit|0|0|c||X|1|2|||||||0||||||||||||||
+S||Voix/instrument|0|0|d||X|||||||||0||||||||||||||
+S||Rôle|0|0|e||X|||||||||0||||||||||||||
+S||Titre ou intitulé du mouvement|0|0|f||X|||||||||0||||||||||||||
+S||Tonalité ou mode|0|0|g||X|||||||||0||||||||||||||
+S||Clef|0|0|m||X|1|3|||||||0||||||||||||||
+S||Armure|0|0|n||X|||||||||0||||||||||||||
+S||Chiffre de mesure|0|0|o||X|||||||||0||||||||||||||
+S||Incipit codé|0|0|p||X|||||||||0||||||||||||||
+S||Commentaires (texte libre)|0|0|q||X|3||||||||0||||||||||||||
+S||Précision codée|0|0|r||S|||P|036-r.tab|||||0||||||||||||||
+S||Incipit textuel|0|0|t||X|||||||||0||||||||||||||
+S||Uniform Resource Identifier|0|0|u||X|||||||||0||||||||||||||
+S||Langue du texte|0|0|z||S|||P|languages.tab|||||0||||||||||||||
+S||Système de codage de l`incipit musical|0|0|2||X|||||||||0||||||||||||||
+T|40|CODEN|0|1|az|||1||||||||0||||||||||||||
+S||CODEN|0|0|a||X|||||||||0||||||||||||||
+S||CODEN erroné|0|0|z||X|||||||||0||||||||||||||
+T|71|Référence éditoriale|0|1|12abcdz|||2||||||||0||||||||||||||
+S||Indicateur l|0|0|1||S|||P|071-ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|071-Ind2.tab|||||0||||||||||||||
+S||Numéro de référence éditoriale|0|0|a||X|||||||||0||||||||||||||
+S||Source|0|0|b||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|c||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||Numéro d&#146;éditeur erroné|0|0|z||X|||||||||0||||||||||||||
+T|72|UPC (Universal Product Code)|0|1|2abcdz||X|3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|072-ind2.tab|||||0||||||||||||||
+S||Standard Number|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||Additional codes following standard number or code|0|0|c||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||Erroneous Number or Code|0|0|z||X|||||||||0||||||||||||||
+T|73|EAN (European Article Numbering)|0|1|2abcdz|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||||||||0||||||||||||||
+S||Standard Number|0|0|a||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|b||X|||||||||0||||||||||||||
+S||Additional codes following standard number or code|0|0|c||X|||||||||0||||||||||||||
+S||Disponibilité et/ou prix|0|0|d||X|||||||||0||||||||||||||
+S||Erroneous Number or Code|0|0|z||X|||||||||0||||||||||||||
+H||1-- Bloc des informations codées|0|0||||||||||||0||
+M|100|Données générales de traitement|0|0||||||||||||0||
+T|101|Langue de la ressource|0|0|1abcdefghij|||||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|101-ind1.tab|||||0||||||||||||||
+S||Langue du texte, de la bande son, etc.|0|1|a||S|||P|languages.tab|||||0||||||||||||||
+S||Langue du texte intermédiaire quand la ressource n`est pas traduite à partir de l&#146;oeuvre originale|0|1|b||S|||P|languages.tab|||||0||||||||||||||
+S||Langue de l&#146;oeuvre originale|0|1|c||S|||P|languages.tab|||||0||||||||||||||
+S||Langue du résumé|0|1|d||S|||P|languages.tab|||||0||||||||||||||
+S||Langue de la table des matières|0|1|e||S|||P|languages.tab|||||0||||||||||||||
+S||Langue de la page de titre si elle diffère de celle du texte|0|1|f||S|||P|languages.tab|||||0||||||||||||||
+S||Langue du titre propre si elle diffère de la langue principale du texte, de la bande son, etc.|0|1|g||S|||P|languages.tab|||||0||||||||||||||
+S||Langue du livret, etc.|0|1|h||S|||P|languages.tab|||||0||||||||||||||
+S||Langue du matériel d&#146;accompagnement (autre que résumés, synthèses ou livrets)|0|1|i||S|||P|languages.tab|||||0||||||||||||||
+S||Langue des sous-titres|0|1|j||S|||P|languages.tab|||||0||||||||||||||
+T|102|Pays de publication ou de production|0|0|abc2||X|||||||||0||||||||||||||
+S||Pays de publication|0|0|a||S|||P|countries.tab|||||0||||||||||||||
+S||Lieu de publication (code non-ISO)|0|0|b||X|||||||||0||||||||||||||
+S||Lieu de publication (code ISO)|0|0|c||X|||||||||0||||||||||||||
+S||Source du code non-ISO|0|0|2||X|||||||||0||||||||||||||
+F|105|Zone de données codées : Ressources textuelles – Monographies|0|0|||I|||||||||0||
+F|106|Zone de données codées : Forme de la ressource|0|0|||I|||||||||0||
+F|110|Zone de données codées : Ressources continues|0|0|||I|||||||||0||
+F|115|Zone de données codées : Images projetées, enregistrements vidéo et films|0|0|||I|||||||||0||
+F|116|Zone de données codées : Ressources graphiques|0|0|||I|||||||||0||
+F|117|Zone de données codées : Objets en trois dimensions naturels ou fabriqués|0|0|||I|||||||||0||
+F|120|Zone de données codées : Ressources cartographiques – Généralités|0|0|||I|||||||||0||
+F|121|Zone de données codées : Ressources cartographiques – Caractéristiques matérielles|0|0|||I|||||||||0||
+F|122|Zone de données codées : Période chronologique couverte par la ressource|0|0|||I|||||||||0||
+F|123|Zone de données codées : Ressources cartographiques – Échelle et coordonnées|0|0|||I|||||||||0||
+F|124|Zone de données codées : Ressources cartographiques – Catégories particulières de ressources|0|0|||I|||||||||0||
+F|125|Zone de données codées : Enregistrements sonores et musique notée|0|0|||I|||||||||0||
+F|126|Zone de données codées : Enregistrements sonores – Caractéristiques matérielles|0|0|||I|||||||||0||
+F|127|Zone de données codées : Enregistrements sonores et musique notée – Durée|0|0|||I|||||||||0||
+F|128|Zone de données codées : Forme de l’œuvre musicale et tonalité ou mode|0|0|||I|||||||||0||
+F|130|Zone de données codées : Microformes – Caractéristiques matérielles|0|0|||I|||||||||0||
+F|131|Zone de données codées : Ressources cartographiques – Mesures géodésiques, quadrillage et mesures verticales|0|0|||I|||||||||0||
+F|135|Zone de données codées : Ressources électroniques|0|0|||I|||||||||0||
+F|140|Zone de données codées : Livres anciens – Généralités|0|0|||I|||||||||0||
+F|141|Zone de données codées : Particularités de l’exemplaire|0|0|||I|||||||||0||
+F|145|Zone de données codées : Distribution instrumentale et vocale|0|0|||I|||||||||0||
+H||2-- Bloc des informations descriptives|0|0||||||||||||0||
+T|200|Titre et mention de responsabilité|1|0|1abcdefghivz5|||6||||TI_|v245^a," "v245^b,`(` f(mfn,1,0),`)`|f(mfn,1,0)||0||||||||||||||
+S||Indicateur 1|1|0|1||S|||P|200-ind1.tab|||||0||||||||||||||
+S||Titre propre|0|1|a||X|||||||||0||||||||||||||
+S||Indication générale du type de ressource|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Titre d&#146;un auteur différent|0|0|c||X|||||||||0||||||||||||||
+S||Titre parallèle|0|0|d||X|||||||||0||||||||||||||
+S||Complément du titre|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|0|g||X|||||||||0||||||||||||||
+S||Numéro de partie|0|0|h||X|||||||||0||||||||||||||
+S||Titre de partie|0|0|i||X|||||||||0||||||||||||||
+S||Numérotation du volume|0|1|v||X|||||||||0||||||||||||||
+S||Langue du titre parallèle|0|0|z||S|||P|languages.tab|||||0||||||||||||||
+S||Institution à laquelle s&#146;applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|205|Mention d`édition|0|1|abdfg|||3||||||||0||||||||||||||
+S||Mention d`édition|0|0|a||X|||||||||0||||||||||||||
+S||Autre mention d`édition|0|1|b||X|||||||||0||||||||||||||
+S||Mention parallèle d`édition|0|1|d||X|||||||||0||||||||||||||
+S||Mention de responsabilité relative à l`édition|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+T|206|Zone particulière à certains types de ressources : Ressources cartographiques &#150; Données mathématiques|0|0|1abcdef|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|206-ind1.tab|||||0||||||||||||||
+S||Mention des données mathématiques|0|0|a||X|||||||||0||||||||||||||
+S||Mention de l&#146;échelle|0|1|b||X|||||||||0||||||||||||||
+S||Mention de la projection|0|0|c||X|||||||||0||||||||||||||
+S||Mention des coordonnées|0|0|d||X|||||||||0||||||||||||||
+S||Mention de la zone|0|0|e||X|||||||||0||||||||||||||
+S||Mention de l&#146;équinoxe|0|0|f||X|||||||||0||||||||||||||
+T|207|Zone particulière à certains types de ressources : Ressources continues - Numérotation|0|0|2az|||2||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|207-ind2.tab|||||0||||||||||||||
+S||Numérotation : dates et désignations des volumes|0|1|a||X|||||||||0||||||||||||||
+S||Source d&#146;information sur la numérotation|0|1|b||X|||||||||0||||||||||||||
+T|208|Zone particulière à certains types de ressources : Musique notée &#150; Présentation musicale|0|0|ad|||2||||||||0||||||||||||||
+S||Mention de présentation musicale|0|0|a||X|||||||||0||||||||||||||
+S||Mention parallèle de présentation musicale|0|0|d||X|||||||||0||||||||||||||
+T|210|Publication, production, diffusion, etc.|0|1|12abcdefgh|||4||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|210-ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|210-ind2.tab|||||0||||||||||||||
+S||Lieu de publication, de production, de diffusion, etc.|0|1|a||X|||||||||0||||||||||||||
+S||Adresse de l`éditeur, du producteur, du diffuseur, etc|0|1|b||X|||||||||0||||||||||||||
+S||Nom de l`éditeur, du producteur, du diffuseur, etc.|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication, production, diffusion, etc.|0|1|d||X|||||||||0||||||||||||||
+S||Lieu de fabrication|0|1|e||X|||||||||0||||||||||||||
+S||Adresse du fabricant|0|1|f||X|||||||||0||||||||||||||
+S||Nom du fabricant|0|1|g||X|||||||||0||||||||||||||
+S||Date de fabrication|0|1|h||X|||||||||0||||||||||||||
+T|211|Date de publication prévue|0|0|a|||||||||||0||||||||||||||
+S||Date (8 characters)|0|0|a||D|||||||||0||||||||||||||
+T|215|Description matérielle|0|0|acde|||2||||||||0||||||||||||||
+S||Indication spécifique du type de document et importance matérielle|0|1|a||X|||||||||0||||||||||||||
+S||Autres caractéristiques matérielles|0|0|c||X|||||||||0||||||||||||||
+S||Format|0|1|d||X|||||||||0||||||||||||||
+S||Matériel d`accompagnement|0|0|e||X|||||||||0||||||||||||||
+T|225|Collection|0|1|1adefhivxz|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|225-ind1.tab|||||0||||||||||||||
+S||Titre de la collection|0|0|a||X|||||||||0||||||||||||||
+S||Titre parallèle de la collection|0|1|d||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+S||Mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Numéro de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de partie|0|1|i||X|||||||||0||||||||||||||
+S||Numérotation du volume|0|1|v||X|||||||||0||||||||||||||
+S||ISSN de la collection|0|1|x||X|||||||||0||||||||||||||
+S||Langue du titre parallèle|0|1|z||S|||P|languages.tab|||||0||||||||||||||
+T|230|Zone particulière à certains types de ressources : Ressources électroniques|0|1|a|||2||||||||0||||||||||||||
+S||Nom et importance matériele du fichier|0|0|a||X|||||||||0||||||||||||||
+H||3-- Bloc des notes|0|0||||||||||||0||
+T|300|Note générale|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|301|Note sur les identifiants|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|302|Note sur les informations codées|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|303|Note générale sur la description bibliographique|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|304|Note sur le titre et la mention de responsabilité|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|305|Note sur l`édition et l`histoire bibliographique|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|306|Note sur la publication, la production, la diffusion, etc.|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|307|Note sur la description matérielle|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|308|Note sur la collection|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|310|Note sur la reliure et la disponibilité|0|1|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|311|Note sur les zones de lien|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|312|Note sur les titres associés|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|313|Note sur les vedettes matière|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|314|Note sur la responsabilité|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|315|Note sur l`information propre au type de ressources (ou au type de publications)|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|316|Note sur l&#146;exemplaire|0|1|au56|||2||||||||0||||||||||||||
+S||Texte de la note|0|1|a||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|1|u||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique la zone|0|0|5||X|||||||||0||||||||||||||
+S||Code de liens entre zones|0|0|6||X|||||||||0||||||||||||||
+T|317|Note sur la provenance|0|1|au56|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+S||Uniform Resource Identifier|0|1|u||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique la zone|0|0|5||X|||||||||0||||||||||||||
+S||Code de liens entre zones|0|0|6||X|||||||||0||||||||||||||
+T|318|Note sur les actions de préservation|0|1|abcdefhijklnopru5|||2||||||||0||||||||||||||
+S||Opération|0|0|a||X|||||||||0||||||||||||||
+S||Identification de l&#146;opération|0|1|b||X|||||||||0||||||||||||||
+S||Date de l&#146;opération|0|1|c||X|||||||||0||||||||||||||
+S||Intervalle entre les opérations|0|1|d||X|||||||||0||||||||||||||
+S||Contingence de l&#146;opération|0|1|e||X|||||||||0||||||||||||||
+S||Autorisation|0|1|f||X|||||||||0||||||||||||||
+S||Attribution|0|1|h||X|||||||||0||||||||||||||
+S||Méthode de l&#146;opération|0|1|i||X|||||||||0||||||||||||||
+S||Lieu de l&#146;opération|0|1|j||X|||||||||0||||||||||||||
+S||Agent de l&#146;opération|0|1|k||X|||||||||0||||||||||||||
+S||État|0|1|l||X|||||||||0||||||||||||||
+S||Importance matérielle|0|1|n||X|||||||||0||||||||||||||
+S||Type d&#146;unité matérielle|0|1|o||X|||||||||0||||||||||||||
+S||Note confidentielle|0|1|p||X|||||||||0||||||||||||||
+S||Note publique|0|1|r||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|1|u||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique la zone|0|1|5||X|||||||||0||||||||||||||
+T|320|Note sur les bibliographies ou les index contenus dans la ressource|0|1|au|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|1|u||X|||||||||0||||||||||||||
+T|321|Note sur les index, extraits et citations publiés séparément|0|1|1abcux56|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|321-ind1.tab|||||0||||||||||||||
+S||Nom de la source|0|0|a||X|||||||||0||||||||||||||
+S||Dates de recension|0|0|b||X|||||||||0||||||||||||||
+S||Localisation dans la source|0|0|c||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro international normalisé|0|0|x||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique la zone|0|0|5||X|||||||||0||||||||||||||
+S||Code de liens entre zones|0|0|6||X|||||||||0||||||||||||||
+T|322|Note sur le générique (films, vidéogrammes et enregistrements sonores)|0|0|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|323|Note sur les interprètes (films, vidéogrammes et enregistrements sonores)|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|324|Note sur l&#146;original reproduit|0|0|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|325|Note sur la reproduction|0|1|1a|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|325-ind1.tab|||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|326|Note sur la périodicité|0|1|ab|||2||||||||0||||||||||||||
+S||Frequency|0|0|a||X|||||||||0||||||||||||||
+S||Dates of Frequency|0|0|b||X|||||||||0||||||||||||||
+T|327|Note de contenu|0|1|12abcdefghipuz|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|327-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|327-Ind2.tab|||||0||||||||||||||
+S||Texte de la note|0|1|a||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 1|0|1|b||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 2|0|1|c||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 3|0|1|d||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 4|0|1|e||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 5|0|1|f||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 6|0|1|g||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 7|0|1|h||X|||||||||0||||||||||||||
+S||Titre de la subdivision de niveau 8|0|1|i||X|||||||||0||||||||||||||
+S||Premières pages ou séquence de pages d&#146;une subdivision|0|1|p||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|1|u||X|||||||||0||||||||||||||
+S||Autre information concernant une subdivision|0|1|z||X|||||||||0||||||||||||||
+T|328|Note de thèse ou autre travail universitaire|0|0|2abcdetz|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|328-ind2.tab|||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+S||Type de thèse ou de travail universitaire et nature du diplôme|0|0|b||X|||||||||0||||||||||||||
+S||Discipline du diplôme|0|0|c||X|||||||||0||||||||||||||
+S||Date du diplôme|0|0|d||X|||||||||0||||||||||||||
+S||Organisme qui délivre le diplôme|0|0|e||X|||||||||0||||||||||||||
+S||Titre d&#146;une autre édition de la thèse ou du travail universitaire|0|0|t||X|||||||||0||||||||||||||
+S||Texte qui précède ou suit la note|0|0|z||X|||||||||0||||||||||||||
+T|330|Résumé ou extrait|0|1|a|||5||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|332|Référence bibliographique recommandée pour citer la ressource|0|1|a|||4||||||||0||||||||||||||
+S||Preferred Citation|0|0|a||X|||||||||0||||||||||||||
+T|333|Note sur le public destinataire|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|334|Note sur les récompenses|0|1|abcdu|||2||||||||0||||||||||||||
+S||Text of awards note|0|0|a||X|||||||||0||||||||||||||
+S||Name of award|0|0|b||X|||||||||0||||||||||||||
+S||Year of award|0|0|c||X|||||||||0||||||||||||||
+S||Country of award|0|0|d||X|||||||||0||||||||||||||
+S||Uniform Resource Identifier (URI)|0|1|u||X|||||||||0||||||||||||||
+T|336|Note sur le type de ressource électronique|0|1|a|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|337|Note sur la configuration requise (ressources électroniques)|0|1|au|||2||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|1|u||X|||||||||0||||||||||||||
+T|345|Renseignements sur l`acquisition|0|0|abcdu|||2||||||||0||||||||||||||
+S||Source for Acquisition/Subscription Address|0|0|a||X|||||||||0||||||||||||||
+S||Stock Number|0|1|b||X|||||||||0||||||||||||||
+S||Medium|0|1|c||X|||||||||0||||||||||||||
+S||Terms of Availability|0|1|d||X|||||||||0||||||||||||||
+S||Uniform Resource Identifier (URI)|0|1|u||X|||||||||0||||||||||||||
+H||41-/42- Bloc des liens avec d’autres notices bibliographiques : Collections, sous-collections, suppléments, etc.|0|0||||||||||||0||
+T|410|Appartient à la collection|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|411|A pour sous-collection|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|412|Est un extrait ou un tiré à part de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|413|A pour extrait ou tiré à part|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|421|A pour supplément|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|422|Est un supplément de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|423|Est publié avec|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|424|Est mis à jour par|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|425|Met à jour|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+H||43- Bloc des liens avec d’autres notices bibliographiques : Liens entre publications en séries - Titres précédents|0|0||||||||||||0||
+T|430|Suite de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|431|Suite partielle de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|432|Remplace|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|433|Remplace partiellement|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|434|Absorbe|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|435|Absorbe partiellement|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|436|Fusion de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|437|Séparé de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+H||44- Bloc des liens avec d’autres notices bibliographiques : Publications en séries - Titres suivants|0|0||||||||||||0||
+T|440|Devient|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|441|Devient partiellement|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|442|Remplacé par|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|443|Remplacé partiellement par|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|444|Absorbé par|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|445|Absorbé partiellement par|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|446|Scindé en ... et en ...|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|447|Fusionne avec ... pour former ...|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|448|Redevient|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+H||45- Bloc des liens avec d’autres notices bibliographiques - Autres éditions du même titre|0|0||||||||||||0||
+T|451|A pour autre édition sur le même support|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|452|A pour autre édition sur un support différent|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|453|Traduit sous le titre|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|454|Est une traduction de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|455|Est une reproduction de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|456|Est reproduit comme|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+H||46- Bloc des liens avec d’autres notices bibliographiques : Niveaux bibliographiques|0|0||||||||||||0||
+T|461|Ensemble|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|462|Sous-ensemble|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|463|Unité matérielle|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|464|Partie composante|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+H||47-/48- Bloc des liens avec d’autres notices bibliographiques : Autres types de liens|0|0||||||||||||0||
+T|470|Ressource analysée|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|481|Est aussi relié dans ce volume|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|482|Relié à la suite de|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+T|488|Autre type de relation|0|1|21abcdefghilmnopstuvxyz035|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|4xx-Ind2.tab|||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Vedette auteur|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Lieu de publication|0|1|c||X|||||||||0||||||||||||||
+S||Date de publication|0|0|d||X|||||||||0||||||||||||||
+S||Mention d&#146;édition|0|0|e||X|||||||||0||||||||||||||
+S||Première mention de responsabilité|0|1|f||X|||||||||0||||||||||||||
+S||Mention de responsabilité suivante|0|1|g||X|||||||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Titre parallèle|0|1|l||X|||||||||0||||||||||||||
+S||ISMN, Numéro international normalisé de la musique|0|1|m||X|||||||||0||||||||||||||
+S||Nom de l&#146;éditeur, du distributeur, etc.|0|1|n||X|||||||||0||||||||||||||
+S||Sous-titre ou complément du titre|0|1|o||X|||||||||0||||||||||||||
+S||Description matérielle|0|0|p||X|||||||||0||||||||||||||
+S||Mention de collection|0|1|s||X|||||||||0||||||||||||||
+S||Titre|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Numéro de volume|0|0|v||X|||||||||0||||||||||||||
+S||ISSN|0|1|x||X|||||||||0||||||||||||||
+S||ISBN|0|1|y||X|||||||||0||||||||||||||
+S||CODEN|0|0|z||X|||||||||0||||||||||||||
+S||Identifiant de la notice bibliographique liée|0|0|0||X|||||||||0||||||||||||||
+S||Identifiant de notice d&#146;autorité liée|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s&#146;applique cette zone|0|0|5||X|||||||||0||||||||||||||
+H||5-- Bloc des titres associés|0|0||||||||||||0||
+T|500|Titre uniforme|0|1|12abhijklmnqrsuvwxyz23|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|500-ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|500-ind2.tab|||||0||||||||||||||
+S||Titre uniforme|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Numéro de section ou de partie|0|1|h||X|||||||||0||||||||||||||
+S||Titre de section ou de partie|0|1|i||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Date de publication|0|0|k||X|||||||||0||||||||||||||
+S||Sous-vedette de forme|0|1|l||X|||||||||0||||||||||||||
+S||Langue (quand elle fait partie de la vedette)|0|0|m||S|||P|languages.tab|||||0||||||||||||||
+S||Autres informations|0|1|n||X|||||||||0||||||||||||||
+S||Version (ou date d&#146;une version)|0|0|q||X|||||||||0||||||||||||||
+S||Distribution instrumentale et vocale (pour la musique)|0|1|r||X|||||||||0||||||||||||||
+S||Référence numérique (pour la musique)|0|1|s||X|||||||||0||||||||||||||
+S||Tonalité (pour la musique)|0|0|u||X|||||||||0||||||||||||||
+S||Indication de volume|0|0|v||X|||||||||0||||||||||||||
+S||Éléments additionnels (pour la musique)|0|0|w||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||Code du référentiel|0|0|2||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+T|501|Rubrique de classement|0|1|1abejkmrsuwxyz23|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|500-ind1.tab|||||0||||||||||||||
+S||Collective Uniform Title|0|0|a||X|||||||||0||||||||||||||
+S||Indication générale du type de document|0|0|b||S|||P|doc_type.tab|||||0||||||||||||||
+S||Collective Uniform Subtitle|0|0|e||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Date de publication, etc.|0|0|k||X|||||||||0||||||||||||||
+S||Langue (quand elle fait partie de la vedette)|0|0|m||S|||P|languages.tab|||||0||||||||||||||
+S||Distribution instrumentale et vocale (pour la musique)|0|1|r||X|||||||||0||||||||||||||
+S||Référence numérique (pour la musique)|0|1|s||X|||||||||0||||||||||||||
+S||Tonalité (pour la musique)|0|0|u||X|||||||||0||||||||||||||
+S||Arranged statement (for music)|0|0|w||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||Code du référentiel|0|0|2||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+T|503|Titre de forme|0|1|12abdefghijklmno|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|503-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|503-Ind2.tab|||||0||||||||||||||
+S||Titre de forme|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|0|b||X|||||||||0||||||||||||||
+S||Mois et jour|0|1|d||X|||||||||0||||||||||||||
+S||Nom de personne, élément d&#146;entrée|0|0|e||X|||||||||0||||||||||||||
+S||Nom de personne, élément(s) du nom rejeté(s)|0|0|f||X|||||||||0||||||||||||||
+S||Nom de personne, dates|0|0|g||X|||||||||0||||||||||||||
+S||Qualificatif|0|0|h||X|||||||||0||||||||||||||
+S||Titre de partie|0|0|i||X|||||||||0||||||||||||||
+S||Année|0|0|j||X|||||||||0||||||||||||||
+S||Numérotation (en chiffres arabes)|0|0|k||X|||||||||0||||||||||||||
+S||Numérotation (en chiffres romains)|0|0|l||X|||||||||0||||||||||||||
+S||Localisation|0|0|m||X|||||||||0||||||||||||||
+S||Établissement précisant la localisation|0|0|n||X|||||||||0||||||||||||||
+S||Place précisant la localisation|0|0|o||X|||||||||0||||||||||||||
+T|510|Titre parallèle|0|1|1aehijnz|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|510-Ind1.tab|||||0||||||||||||||
+S||Titre parallèle|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+S||Number of Part|0|1|h||X|||||||||0||||||||||||||
+S||Name of Part|0|1|i||X|||||||||0||||||||||||||
+S||Volume or Dates associated with Title|0|0|j||X|||||||||0||||||||||||||
+S||Miscellaneous Information|0|0|n||X|||||||||0||||||||||||||
+S||Language of Title|0|0|z||S|||||||||0||||||||||||||
+T|511|Faux-titre|0|1|1a|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|511-Ind1.tab|||||0||||||||||||||
+S||Faux-titre|0|0|a||X|||||||||0||||||||||||||
+T|512|Titre de couverture|0|1|1ae|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|512-Ind1.tab|||||0||||||||||||||
+S||Titre de couverture|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+T|513|Titre figurant sur une autre page de titre|0|1|1aehi|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|513-Ind1.tab|||||0||||||||||||||
+S||Added Title-page Title|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+S||Number of Part|0|1|h||X|||||||||0||||||||||||||
+S||Name of Part|0|1|i||X|||||||||0||||||||||||||
+T|514|Titre de départ|0|1|1ae|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|514-Ind1.tab|||||0||||||||||||||
+S||Caption Title|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+T|515|Titre courant|0|1|1a|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|515-Ind1.tab|||||0||||||||||||||
+S||Running Title|0|0|a||X|||||||||0||||||||||||||
+T|516|Titre de dos|0|1|1ae|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|516-Ind1.tab|||||0||||||||||||||
+S||Spine Title|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+T|517|Autres variantes du titre|0|1|1ae|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|517-Ind1.tab|||||0||||||||||||||
+S||Variant Title|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+T|518|Titre dans un alphabet moderne|0|1|1a|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||||||||0||||||||||||||
+S||Title proper, variant title or uniform title in standard modern spelling|0|0|a||X|||P|518-Ind1.tab|||||0||||||||||||||
+T|520|Titre précédent|0|0|1aehijnx|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|520-Ind1.tab|||||0||||||||||||||
+S||Former Title Proper|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+S||Number of Part|0|0|h||X|||||||||0||||||||||||||
+S||Name of Part|0|0|i||X|||||||||0||||||||||||||
+S||Volumes or Dates of Former Title|0|0|j||X|||||||||0||||||||||||||
+S||Miscellaneous Information|0|0|n||X|||||||||0||||||||||||||
+S||ISSN of Former Title|0|0|x||X|||||||||0||||||||||||||
+T|530|Titre clé|0|1|1abjv|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|530-Ind1.tab|||||0||||||||||||||
+S||Key Title|0|0|a||X|||||||||0||||||||||||||
+S||Qualifier|0|0|b||X|||||||||0||||||||||||||
+S||Volume or Dates Associated with Key Title|0|0|j||X|||||||||0||||||||||||||
+S||Volume Designation|0|0|v||X|||||||||0||||||||||||||
+T|531|Titre clé abrégé|0|1|abv|||2||||||||0||||||||||||||
+S||Abbreviated Title|0|0|a||X|||||||||0||||||||||||||
+S||Qualifier|0|0|b||X|||||||||0||||||||||||||
+S||Volume Designation|0|0|v||X|||||||||0||||||||||||||
+T|532|Titre développé|0|1|12az|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|532-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||M|||P|532-Ind1.tab|||||0||||||||||||||
+S||Expanded Title|0|0|a||X|||||||||0||||||||||||||
+S||Language of Title|0|0|z||S|||P|languages.tab|||||0||||||||||||||
+T|540|Titre ajouté par le catalogueur|0|0|1aehi|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|540-Ind1.tab|||||0||||||||||||||
+S||Titre ajouté|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|0|e||X|||||||||0||||||||||||||
+S||Numéro de partie|0|0|h||X|||||||||0||||||||||||||
+S||Titre de partie|0|0|i||X|||||||||0||||||||||||||
+T|541|Titre traduit ajouté par le catalogueur|0|0|1aehiz|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|541-Ind1.tab|||||0||||||||||||||
+S||Titre traduit|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|0|e||X|||||||||0||||||||||||||
+S||Numéro de partie|0|0|h||X|||||||||0||||||||||||||
+S||Titre de partie|0|0|i||X|||||||||0||||||||||||||
+S||Langue du titre|0|0|z||S|||P|languages.tab|||||0||||||||||||||
+T|545|Titre de section|0|0|1a|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|545-Ind1.tab|||||0||||||||||||||
+S||Titre de section|0|0|a||X|||||||||0||||||||||||||
+T|560|Titre artificiel|0|1|1ae5|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|560-ind1.tab|||||0||||||||||||||
+S||Titre artificiel|0|0|a||X|||||||||0||||||||||||||
+S||Complément du titre|0|1|e||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+H||6-- Bloc de l’indexation matière et de l`histoire bibliographique|0|0||||||||||||0||
+T|600|Vedette matière &#150; Nom de personne|0|1|2abcdfgjpxyz235|||5||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|600-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée|0|0|b||X|||||||||0||||||||||||||
+S||Additions to Name Other than Dates|0|1|c||X|||||||||0||||||||||||||
+S||Chiffres romains|0|0|d||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Expansion of Initials of Forename|0|0|g||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Affiliation/address|0|0|p||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|601|Vedette matière &#150; Collectivité|0|1|12abcdefghjxyz235|||5||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|601-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|601-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Number of Meeting and/or Number of Part of a Meeting|0|1|d||X|||||||||0||||||||||||||
+S||Location of Meeting|0|0|e||X|||||||||0||||||||||||||
+S||Date of Meeting|0|0|f||X|||||||||0||||||||||||||
+S||Inverted Element|0|0|g||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée and Inverted Element|0|0|h||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|602|Vedette matière &#150; Famille|0|1|afjxyz235|||5||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|1|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|604|Vedette matière &#150; Auteur/titre|0|1|1atjxyz3|||5||||||||0||||||||||||||
+S||Données de lien|0|1|1||X|||||||||0||||||||||||||
+S||Élément d&#146;entrée Name|0|0|a||X|||||||||0||||||||||||||
+S||Title|0|0|t||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|605|Vedette matière &#150; Titre|0|1|ahijklmnqrsuwxyz23|||5||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Number of Section or Part|0|1|h||X|||||||||0||||||||||||||
+S||Name of Section or Part|0|1|i||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Date of Publication|0|0|k||X|||||||||0||||||||||||||
+S||Form Subheading|0|0|l||X|||||||||0||||||||||||||
+S||Language (when part of heading)|0|0|m||X|||||||||0||||||||||||||
+S||Miscellaneous Information|0|1|n||X|||||||||0||||||||||||||
+S||Version (or Date of Version)|0|0|q||X|||||||||0||||||||||||||
+S||Medium of Performance|0|1|r||X|||||||||0||||||||||||||
+S||Numeric Designation (for Music)|0|1|s||X|||||||||0||||||||||||||
+S||Key (for Music)|0|0|u||X|||||||||0||||||||||||||
+S||Arranged Statement (for Music)|0|0|w||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|606|Vedette matière &#150; Nom commun|0|1|1ajxyz23|||5||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|606-Ind1.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|607|Vedette matière &#150; Nom géographique|0|1|ajxyz23|||5||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|608|Vedette matière &#150; Forme, genre ou caractéristiques matérielles|0|1|ajxyz235|||5||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|610|Indexation en vocabulaire libre|0|1|1a5|||5||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|610-Ind1.tab|||||0||||||||||||||
+S||Subject Term|0|1|a||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|615|Catégorie sujet (provisoire)|0|1|axnm23|||5||||||||0||||||||||||||
+S||Subject Category Élément d&#146;entrée Text|0|0|a||X|||||||||0||||||||||||||
+S||Subject Category Subdivision Text|0|1|x||X|||||||||0||||||||||||||
+S||Subject Category Code|0|1|n||X|||||||||0||||||||||||||
+S||Subject Category Subdivision Code|0|1|m||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|1|3||X|||||||||0||||||||||||||
+T|616|Vedette matière - Marque|0|1|afcjxyz23|||5||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Qualificatif|0|1|c||X|||||||||0||||||||||||||
+S||Subdivision de forme|0|1|j||X|||||||||0||||||||||||||
+S||Subdivision de sujet|0|1|x||X|||||||||0||||||||||||||
+S||Subdivision géographique|0|1|y||X|||||||||0||||||||||||||
+S||Subdivision chronologique|0|1|z||X|||||||||0||||||||||||||
+S||Code du système d&#146;indexation|0|0|2||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+T|617|Vedette matière - Nom géographique hiérarchisé|0|1|abcdefghikmno23|||5||||||||0||||||||||||||
+S||Pays|0|0|a||X|||||||||0||||||||||||||
+S||État, région, etc.|0|0|b||X|||||||||0||||||||||||||
+S||Département, comté, etc.|0|1|c||X|||||||||0||||||||||||||
+S||Ville|0|0|d||X|||||||||0||||||||||||||
+S||Lieu précis, salle, etc.|0|1|e||X|||||||||0||||||||||||||
+S||Date|0|1|f||X|||||||||0||||||||||||||
+S||Saison|0|0|g||X|||||||||0||||||||||||||
+S||Occasion|0|0|h||X|||||||||0||||||||||||||
+S||Date de fin|0|0|i||X|||||||||0||||||||||||||
+S||Subsection of City, etc.|0|1|k||X|||||||||0||||||||||||||
+S||Other Geographical Regions or Features|0|1|m||X|||||||||0||||||||||||||
+S||Extraterrestrial Areas|0|1|n||X|||||||||0||||||||||||||
+S||Geographical areas such as world, hemisphere, continent: larger area than country|0|1|o||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Identificateur de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+T|620|Lieu et date de publication, de représentation ou d`enregistrement, etc.|0|1|12abcdefghikmno23|||5||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|620-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|620-Ind2.tab|||||0||||||||||||||
+S||Pays|0|0|a||X|||||||||0||||||||||||||
+S||État, région, etc.|0|0|b||X|||||||||0||||||||||||||
+S||Département, comté, etc.|0|1|c||X|||||||||0||||||||||||||
+S||Ville|0|0|d||X|||||||||0||||||||||||||
+S||Lieu précis, salle, etc.|0|1|e||X|||||||||0||||||||||||||
+S||Date|0|1|f||X|||||||||0||||||||||||||
+S||Saison|0|0|g||X|||||||||0||||||||||||||
+S||Occasion|0|0|h||X|||||||||0||||||||||||||
+S||Date de fin|0|0|i||X|||||||||0||||||||||||||
+S||Subsection of City, etc.|0|1|k||X|||||||||0||||||||||||||
+S||Other Geographical Regions or Features|0|1|m||X|||||||||0||||||||||||||
+S||Extraterrestrial Areas|0|1|n||X|||||||||0||||||||||||||
+S||Geographical areas such as world, hemisphere, continent: larger area than country|0|1|o||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Identificateur de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+T|621|Lieu et date de provenance|0|1|12abcdefghikmno235|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|621-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|621-Ind2.tab|||||0||||||||||||||
+S||Country (Nation State) or Larger Entity Country|0|0|a||X|||||||||0||||||||||||||
+S||State or Province, etc.|0|0|b||X|||||||||0||||||||||||||
+S||Département, comté, etc.|0|1|c||X|||||||||0||||||||||||||
+S||Ville|0|0|d||X|||||||||0||||||||||||||
+S||Building, vehicle, etc.|0|1|e||X|||||||||0||||||||||||||
+S||Date 1|0|1|f||X|||||||||0||||||||||||||
+S||Saison|0|0|g||X|||||||||0||||||||||||||
+S||Occasion|0|0|h||X|||||||||0||||||||||||||
+S||Date 2|0|0|i||X|||||||||0||||||||||||||
+S||Subsection of City, etc.|0|1|k||X|||||||||0||||||||||||||
+S||Other Geographical Regions or Features|0|1|m||X|||||||||0||||||||||||||
+S||Extraterrestrial Areas|0|1|n||X|||||||||0||||||||||||||
+S||Geographical areas such as world, hemisphere, continent: larger area than country|0|1|o||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+S||Identificateur de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+S||Institution à laquelle s`applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|660|Code de zone géographique|0|1|a|||||||||||0||||||||||||||
+S||Code|0|0|a||X|||||||||0||||||||||||||
+T|661|Code de période chronologique|0|1|a|||||||||||0||||||||||||||
+S||Time Period Code|0|0|a||X|||||||||0||||||||||||||
+T|670|PRECIS|0|1|bcez|||2||||||||0||||||||||||||
+S||Subject Indicateur Number|0|0|b||X|||||||||0||||||||||||||
+S||String|0|0|c||X|||||||||0||||||||||||||
+S||Reference Indicateur Number|0|1|e||X|||||||||0||||||||||||||
+S||Language of Terms|0|0|z||X|||||||||0||||||||||||||
+T|675|Classification décimale universelle (CDU)|0|1|avz3|||2||||||||0||||||||||||||
+S||Indice|0|0|a||X|||||||||0||||||||||||||
+S||Edition|0|0|v||X|||||||||0||||||||||||||
+S||Langue de l&#146;édition|0|0|z||S|||P|languages.tab|||||0||||||||||||||
+S||Identifiant de la notice de classification|0|0|3||X|||||||||0||||||||||||||
+T|676|Classification décimale Dewey|0|1|avz3|||2||||||||0||||||||||||||
+S||Indice|0|0|a||X|||||||||0||||||||||||||
+S||Edition|0|0|v||X|||||||||0||||||||||||||
+S||Langue de l&#146;édition|0|0|z||S|||P|languages.tab|||||0||||||||||||||
+S||Identifiant de la notice de classification|0|0|3||X|||||||||0||||||||||||||
+T|680|Classification de la Bibliothèque du Congrès|0|1|ab3|||2||||||||0||||||||||||||
+S||Indice|0|0|a||X|||||||||0||||||||||||||
+S||Numéro de livre|0|0|b||X|||||||||0||||||||||||||
+S||Identifiant de la notice de classification|0|0|3||X|||||||||0||||||||||||||
+T|686|Autres classifications|0|1|abcv23|||||||||||0||||||||||||||
+S||Indice|0|1|a||X|||||||||0||||||||||||||
+S||Numéro de livre|0|1|b||X|||||||||0||||||||||||||
+S||Subdivision de la classification|0|1|c||X|||||||||0||||||||||||||
+S||Edition|0|0|v||X|||||||||0||||||||||||||
+S||Code du système|0|0|2||X|||||||||0||||||||||||||
+S||Identifiant de la notice de classification|0|0|3||X|||||||||0||||||||||||||
+H||7-- Bloc des responsabilités|0|0||||||||||||0||
+T|700|Nom de personne &#150; Responsabilité principale|0|0|2abcdfgp34|||2||D|unimarc_authority|AU_|@autorites.pft|V200||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|700-702-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée|0|0|b||X|||||||||0||||||||||||||
+S||Eléments ajoutés aux noms autres que les dates|0|1|c||X|||||||||0||||||||||||||
+S||Chiffres romains|0|0|d||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Développement des initiales du prénom|0|0|g||X|||||||||0||||||||||||||
+S||Affiliation / adresse|0|0|p||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|701|Nom de personne &#150; Autre responsabilité principale|0|1|2abcdfgp34|||4||D|unimarc_authority|AU_|v200^a, ` `, v200^b|V200||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|700-702-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée|0|0|b||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée|0|1|c||X|||||||||0||||||||||||||
+S||Chiffres romains|0|0|d||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Développement des initiales du prénom|0|0|g||X|||||||||0||||||||||||||
+S||Affiliation / addresse|0|0|p||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|702|Nom de personne &#150; Responsabilité secondaire|0|1|2abcdfgp345|||4||D|unimarc_authority|AU_|v200^a, ` `, v200^b|V200||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|700-702-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée|0|0|b||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée|0|1|c||X|||||||||0||||||||||||||
+S||Chiffres romains|0|0|d||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Développement des initiales du prénom|0|0|g||X|||||||||0||||||||||||||
+S||Affiliation / addresse|0|0|p||X|||||||||0||||||||||||||
+S||Identifiant de la notice d&#146;autorité|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+S||Institution à laquelle s&#146;applique la zone|0|0|5||X|||||||||0||||||||||||||
+T|710|Collectivité &#150; Responsabilité principale|0|0|12abcdefghp34|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|710-712-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|710-712-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Number of Meeting and/or Number of Part of Meeting|0|0|d||X|||||||||0||||||||||||||
+S||Location of Meeting|0|0|e||X|||||||||0||||||||||||||
+S||Date of Meeting|0|0|f||X|||||||||0||||||||||||||
+S||Inverted Element|0|0|g||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée et élément inversé|0|0|h||X|||||||||0||||||||||||||
+S||Affiliation / addresse|0|0|p||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|711|Collectivité &#150; Autre responsabilité principale|0|1|12abcdefghp34|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|710-712-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|710-712-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Number of Meeting and/or Number of Part of Meeting|0|0|d||X|||||||||0||||||||||||||
+S||Location of Meeting|0|0|e||X|||||||||0||||||||||||||
+S||Date of Meeting|0|0|f||X|||||||||0||||||||||||||
+S||Inverted Element|0|0|g||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée and Inverted Element|0|0|h||X|||||||||0||||||||||||||
+S||Affiliation/address|0|0|p||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|712|Collectivité &#150; Responsabilité secondaire|0|1|12abcdefghp345|||4||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|710-712-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|710-712-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Number of Meeting and/or Number of Part of Meeting|0|0|d||X|||||||||0||||||||||||||
+S||Location of Meeting|0|0|e||X|||||||||0||||||||||||||
+S||Date of Meeting|0|0|f||X|||||||||0||||||||||||||
+S||Inverted Element|0|0|g||X|||||||||0||||||||||||||
+S||Partie du nom autre que l&#146;élément d&#146;entrée and Inverted Element|0|0|h||X|||||||||0||||||||||||||
+S||Affiliation/address|0|0|p||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||||||||||||||
+T|716|Marque|0|1|acf3|||3||||||||0||||||||||||||
+S||Data Element|0|0|a||X|||||||||0||||||||||||||
+S||Qualifications|0|1|c||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|720|Famille &#150; Responsabilité principale|0|0|af34|||2||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|721|Famille &#150; Autre responsabilité principale|0|0|af34|||2||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|722|Famille &#150; Responsabilité secondaire|0|0|af345|||4||||||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Dates|0|0|f||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+S||Institution and Copy to Which Field Applies|0|0|5||X|||||||||0||||||||||||||
+T|730|Nom &#150; Responsabilité|0|1|1a4|||2||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|730-Ind1.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Code de fonction|0|1|4||S|||P|relator.tab|||||0||||||||||||||
+T|740|Titre de forme pour les textes législatifs et religieux &#150; Responsabilité principale|0|0|2abcefilnt3|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|740-742-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Name of the other party|0|0|e||X|||||||||0||||||||||||||
+S||Date of legal issue or version, or date of signing|0|1|f||X|||||||||0||||||||||||||
+S||Name of section or part|0|1|i||X|||||||||0||||||||||||||
+S||Form subheading|0|1|l||X|||||||||0||||||||||||||
+S||Miscellaneous information|0|1|n||X|||||||||0||||||||||||||
+S||Uniform title|0|0|t||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|741|Titre de forme pour les textes législatifs et religieux &#150; Autre responsabilité principale|0|0|2abcefilnt3|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|740-742-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Name of the other party|0|0|e||X|||||||||0||||||||||||||
+S||Date of legal issue or version, or date of signing|0|1|f||X|||||||||0||||||||||||||
+S||Name of section or part|0|1|i||X|||||||||0||||||||||||||
+S||Form subheading|0|1|l||X|||||||||0||||||||||||||
+S||Miscellaneous information|0|1|n||X|||||||||0||||||||||||||
+S||Uniform title|0|0|t||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+T|742|Titre de forme pour les textes législatifs et religieux &#150; Responsabilité secondaire|0|0|2abcefilnt3|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|740-742-Ind2.tab|||||0||||||||||||||
+S||Élément d&#146;entrée|0|0|a||X|||||||||0||||||||||||||
+S||Subdivision|0|1|b||X|||||||||0||||||||||||||
+S||Addition to Name or Qualifier|0|1|c||X|||||||||0||||||||||||||
+S||Name of the other party|0|0|e||X|||||||||0||||||||||||||
+S||Date of legal issue or version, or date of signing|0|1|f||X|||||||||0||||||||||||||
+S||Name of section or part|0|1|i||X|||||||||0||||||||||||||
+S||Form subheading|0|1|l||X|||||||||0||||||||||||||
+S||Miscellaneous information|0|1|n||X|||||||||0||||||||||||||
+S||Uniform title|0|0|t||X|||||||||0||||||||||||||
+S||Authority Record Number|0|0|3||X|||||||||0||||||||||||||
+H||8-- Bloc des données internationales|0|0||||||||||||0||
+T|801|Source de catalogage|0|1|2abcgh2|||3||||||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|801-Ind2.tab|||||0||||||||||||||
+S||Pays|0|0|a||S|||P|countries.tab|||||0||||||||||||||
+S||Agence|0|0|b||X|||||||||0||||||||||||||
+S||Date de la transaction|0|0|c||X|||||||||0||||||||||||||
+S||Règles de catalogage utilisées (conventions de description)|0|1|g||S|||P|801-g.tab|||||0||||||||||||||
+S||Identifiant d&#146;origine|0|0|h||X|||||||||0||||||||||||||
+S||Code du format utilisé|0|0|2||S|||P|801-2.tab|||||0||||||||||||||
+T|802|Centre ISSN|0|0|a|||||||||||0||||||||||||||
+S||Code du Centre ISSN|0|0|a||X|||||||||0||||||||||||||
+T|830|Note générale du catalogueur|0|0|a|||3||||||||0||||||||||||||
+S||Texte de la note|0|0|a||X|||||||||0||||||||||||||
+T|850|Institution possédant le document|0|0|a|||2||||||||0||||||||||||||
+S||Code of Institution|0|1|a||X|||||||||0||||||||||||||
+T|852|Localisation et cote|0|1|12abcdegjklmnptxy2|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|852-Ind1.tab|||||0||||||||||||||
+S||Indicateur 2|0|0|2||S|||P|852-Ind2.tab|||||0||||||||||||||
+S||Identifiant de l&#146;établissement|0|0|a||X|||||||||0||||||||||||||
+S||Identifiant de sous-localisation|0|1|b||X|||||||||0||||||||||||||
+S||Adresse|0|0|c||X|||||||||0||||||||||||||
+S||Qualificatif de localisation codé|0|0|d||X|||||||||0||||||||||||||
+S||Qualificatif de localisation non codé|0|0|e||X|||||||||0||||||||||||||
+S||Préfixe de cote|0|0|g||X|||||||||0||||||||||||||
+S||Cote|0|0|j||X|||||||||0||||||||||||||
+S||Forme du titre, du nom de l&#146;auteur ou du segment auteur/titre utilisés pour le rangement|0|0|k||X|||||||||0||||||||||||||
+S||Suffixe de cote|0|0|l||X|||||||||0||||||||||||||
+S||Identifiant d&#146;un exemplaire unique|0|0|m||X|||||||||0||||||||||||||
+S||Identifiant d&#146;exemplaires multiples|0|0|n||X|||||||||0||||||||||||||
+S||Pays|0|0|p||S|||P|countries.tab|||||0||||||||||||||
+S||Numéro d&#146;exemplaires multiples|0|0|t||X|||||||||0||||||||||||||
+S||Note non destinée au public|0|0|x||X|||||||||0||||||||||||||
+S||Note publique|0|0|y||X|||||||||0||||||||||||||
+S||Code du référentiel utilisé|0|0|2||X|||||||||0||||||||||||||
+T|856|Adresse électronique et mode d&#146;accès|0|1|1abcdefhijklmnopqrstuvwxyz2|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|856-Ind1.tab|||||0||||||||||||||
+S||Nom du serveur|0|1|a||X|||||||||0||||||||||||||
+S||Numéro d&#146;accès|0|1|b||X|||||||||0||||||||||||||
+S||Compression de fichiers|0|1|c||X|||||||||0||||||||||||||
+S||Chemin d&#146;accès|0|1|d||X|||||||||0||||||||||||||
+S||Date et heure de la consultation et de l&#146;accès|0|0|e||X|||||||||0||||||||||||||
+S||Nom électronique|0|1|f||X|||||||||0||||||||||||||
+S||Opérateur de la requête|0|0|h||X|||||||||0||||||||||||||
+S||Instruction|0|1|i||X|||||||||0||||||||||||||
+S||Bits par seconde|0|0|j||X|||||||||0||||||||||||||
+S||Mot de passe|0|0|k||X|||||||||0||||||||||||||
+S||Logon/login|0|0|l||X|||||||||0||||||||||||||
+S||Assistance technique pour l&#146;accès à la ressource|0|1|m||X|||||||||0||||||||||||||
+S||Adresse du serveur cité en $a|0|0|n||X|||||||||0||||||||||||||
+S||Système d&#146;exploitation|0|0|o||X|||||||||0||||||||||||||
+S||Port|0|0|p||X|||||||||0||||||||||||||
+S||Type de format électronique|0|0|q||X|||||||||0||||||||||||||
+S||Configuration de transfert de données|0|0|r||X|||||||||0||||||||||||||
+S||Taille du fichier|0|1|s||X|||||||||0||||||||||||||
+S||Émulation du terminal|0|1|t||X|||||||||0||||||||||||||
+S||URI (Uniform Resource Identifier)|0|0|u||X|||||||||0||||||||||||||
+S||Heures d&#146;accès|0|1|v||X|||||||||0||||||||||||||
+S||Identifiant de la notice|0|1|w||X|||||||||0||||||||||||||
+S||Note non destinée au public|0|1|x||X|||||||||0||||||||||||||
+S||Mode d&#146;accès|0|0|y||X|||||||||0||||||||||||||
+S||Note destinée au public|0|1|z||X|||||||||0||||||||||||||
+S||Affichage du lien hypertextuel|0|1|2||X|||||||||0||||||||||||||
+T|886|Données du format source qui n&#146;ont pas été converties|0|1|1ab2|||3||||||||0||||||||||||||
+S||Indicateur 1|0|0|1||S|||P|886-Ind1.tab|||||0||||||||||||||
+S||Tag of the Source Format Field|0|1|a||X|||||||||0||||||||||||||
+S||Indicators and Subfields of the Source Format Field|0|1|b||X|||||||||0||||||||||||||
+S||System Code|0|0|2||X|||||||||0||||||||||||||
+H||9-- Bloc des données nationales et localesAnnexes|0|0||||||||||||0||

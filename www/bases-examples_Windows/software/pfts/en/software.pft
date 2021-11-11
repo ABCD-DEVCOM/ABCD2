@@ -1,0 +1,26 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>ID</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Name of software</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Current version</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Developer</b></td><td valign=top><font face=arial size=2>'(if p(v30) then | Name: |v30^n,| <BR>Contact:  |v30^a, if iocc<>nocc(v30) then '<br>' fi fi/),'</td>' fi/
+
+
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Release date</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+
+
+
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Website</b></td><td valign=top><font face=arial size=2>'
+
+'<a href="' v50  '" target="new"  >',v50 ,'</a>'
+
+
+'</td>' fi/
+
+
+if p(v60) then '<tr><td width=20% valign=top><font face=arial size=2><b>Platform</b></td><td valign=top><font face=arial size=2>'(v60+|<br>|),'</td>' fi/
+
+
+
+
+'</table><p>'

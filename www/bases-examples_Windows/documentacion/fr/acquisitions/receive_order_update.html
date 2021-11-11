@@ -1,0 +1,82 @@
+Le traitement de la distinction entre un ordre nouveau ou ajouter à un objet existant copies: 
+<br />
+<br />
+<strong>Nouvel objet:<br />
+</strong>
+<ol>
+    <li>Il identifie le domaine qui stocke le numéro d'identification de l'objet dans le catalogue de la base de données. Celui-ci lit la FDT&nbsp; et se atrouve un champ dont le type est <strong>AI</strong> (auto increment). Le tag associé à ce type de champ est celui dans lequel est placé l'objet du numéro d'identification et le préfixe de la liste inversé pour le préfixe utilisé pour la construction de  l'expression de recherche si vous souhaitez trouver un numéro d'identification. Suspension de la procédure pour  ne pas trouver un champ du type <strong>AI</strong> dans le TDC ou si la définition ne précise pas le préfixe utilisé dans l'indexation.</li>
+
+    <li>Il trouve dans la base de recommandations (suggestions) du catalogue l'information de l'objet. Ceci s'applique à une recherche en utilisant le numéro de la recommandation, précédé du préfixe NC_</li>
+    <li>L' information du catalogue est extraite à l'aide du format <strong>acquisitions.pft</strong> qui doit exister dans le dossier pft/<em>langue</em> de la base de données permettant de classer l'objet. Ce format est de la forme:<br />
+    <br />
+    Cepal:<br />
+
+    <br />
+    <br />
+    <br />
+    <font face="Courier New">"1:"v1/<br />
+    "16:"v16/<br />
+    "17:"v17/<br />
+    "18:"v18/<br />
+
+    "21:"v21/<br />
+    "29:"v29/<br />
+    "30:"v30/<br />
+    "31:"v31/<br />
+    "32:"v32/<br />
+    "35:"v35/<br />
+
+    "47:"v47/<br />
+    "38:"v38/<br />
+    "39:"v39/<br />
+    "40:"v40/<br />
+    "41:"v41/</font><br />
+    <br />
+
+    Marc:<br />
+    <font face="Courier New">"100:^a"v16/<br />
+    "110:^a"v17/<br />
+    "245:^a"v18,if s(v16,v17)&lt;&gt;`` then ` / ` v16," "v17 fi/<br />
+    "21:"v21/<br />
+    "29:"v29/<br />
+
+    "30:"v30/<br />
+    "31:"v31/<br />
+    "32:"v32/<br />
+    "35:"v35/<br />
+    "47:"v47/<br />
+    "38:"v38/<br />
+
+    "39:"v39/<br />
+    "40:"v40/<br />
+    "41:"v41/</font><br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    3. C'est à dire, chaque champ dans la base de données des <strong>suggestions</strong>, il est attribué l'étiquette du champ qui recevront les informaations de la base de données de catalaogue. Si le champ qui reçoit l'information a des sous-champs ou est composé de plusiers champs dans la base de recommandations (<strong>suggestions</strong>), cette situation doit être dûment pris en compte dans ce format.</li>
+    <li>Si aucun enregistrment est situé dans la base de données de recommandations, ce processus est suspendu</li>
+    <li>Il est attribué le numéro d' identification de l'objet à l'aide du fichier <strong>control_number.cn</strong> situé dans le dossier de données de la base de données du catalogue.&nbsp;</li>
+    <li>Il est mise à jour dans la base de données des bons de commande (<strong>purchaseorder</strong>) le numéro d'identification attribué au nouvel objet (champ 500). Cela est d'éviter les doubles emplois et, en cas de perte de connexion peut répéter le processus en utilisant le numéro d'identification attribué à l'objet.<br />
+
+    </li>
+    <li>Avec le résultat de l'application du format d'extraction sur la base de données de recommandations, à laquelle est ajouté le numéro d'identification de l'objet, crée de la valeur à envoyer au processus de création de nouveaux objets.<br />
+    </li>
+    <li>Cliquez sur <strong>Créer l'objet</strong> pour enregistrer dans la base de données du catalogue&nbsp;</li>
+</ol>
+<strong><strong>Les considérations prises en compte pour éiter les incohérences ou les doubles emplois dans les dossiers</strong><br />
+
+<br />
+</strong>Alors que ce processus génère le numéro d'identification de l'objet et immédiatement enregistrées dans la base de données des bons de commande, si vous rechargez la page pourrait causer le numéro d'identification attribué à l'objet&nbsp; et de produire una incohérence dans la base de données des ordres d'achat. Assurez-vous que, au début du script est lu à partir de la base de donnés d'achats purchaseorder pour vérifier si le processus de création de l'objet a déjà un numéro d'identification attribué. Si tel est le cas, prendre la valeur correspondante est affectée à l'objet et le bouton permet de créer de nouveaux objets.<br />
+<br />
+De même, avant d'activer la création de l'objet, il faut lire la base de données du catalogue pour vérifier si le numéro d'identification existe déjà. Si tel est le cas le message est pertinent et permet la création de copies, afin d'éviter la création de l'objet.<strong><strong><br />
+<br />
+Création d'exemplaires</strong> pour un objet existant</strong><br />
+<br />
+Si l'objet acquis existe déjà dans le catalogue de la base de données, il faut créer des copies en cliquant sur le bouton <strong>Créer une copie</strong><br />
+
+<strong><br />
+</strong><strong>Note importante: Dans le fichier purchaseorder.par il faudra ajouter le chemin d'accès à chacun des bases de donnés catalographiques impliquées dans le processus des acquisitions (achats) afin de localiser l'information catalographique de l'objet</strong> <br />
+<strong><strong><br />
+</strong></strong>

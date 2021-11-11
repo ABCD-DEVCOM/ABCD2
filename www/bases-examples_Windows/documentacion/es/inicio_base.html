@@ -1,0 +1,14 @@
+<p><strong>Seleccionar Base de Datos</strong></p>
+<p>Cuando se selecciona una base de datos, se informa el número total de registros que la misma tiene. También se dá una advertencia&nbsp; si la base de datos está bloqueada.</p>
+<p>Si la base de datos está bloqueada, no puede ser accedida por ningún operador hasta tanto el Administrador de la Base de Datos no proceda a desbloquearla.</p>
+<p>Para bloquear una base de datos use la opción <strong>Utilitarios-&gt;Bloquear Base de Datos </strong>del menú de inicio de <strong>ABCD.</strong></p>
+<p>Solo el Admistrador del Sistema o el Administrador de la Base de datos pueden bloquear o desbloquear bases de datos.</p>
+<p>Otra causa del bloqueo de base de datos se produce cuando se genera una condición de error al manipular la misma, por ejemplo, un proceso de lista invertida no culminado, un error en la FST cuando se intenta actualizar un registro. Esta situación también se avisa al momento de abrir la base de datos. En este último caso, como el bloqueo fué forzado por un Administrador,&nbsp;se debe primero proceder al desbloqueo de la base de datos y luego al desbloqueo de los registros a través &nbsp;del menú de utilitarios asociado al botón "<strong>utilitarios</strong>" de la barra de herramientas del procedimiento de catalogación.</p>
+<p>El bloqueo de los registros se realiza comunmente dentro del procedimiento de ingreso como parte del mecanismo de protección de la actualización de los datos. Esto es: cuando un usuario solicita modificar un registro, el mismo se bloquea para que no pueda ser modificado simultáneamente por otro usuario. Cuando el registro se actualiza, se desbloquea, y se pone disponible para el resto de los usuarios.</p>
+<p>Si el ciclo de actualización no se cumple, esto es, el registro no se escribe o se cancela la actualización (botones guardar o cancelar de la barra de herramientas), el registro permanece bloqueado por un tiempo (4 horas) para el resto de los usuarios.</p>
+<p>Existen dos formas para eliminar el bloqueo antes de que se cumpla el período antes mencionado:</p>
+<ol>
+    <li>Si el mismo operador que bloqueó el registro, solicita de nuevo su edición, entonces, se le concede el derecho a actualizar el registro, pudiendo actualizar o cancelar la edición para liberar el registro</li>
+    <li>Otra forma de desbloquear los registros es utilizando la opción "Desbloquear registros" contenido en el menú <strong>Utilitarios </strong>de la barra de herramientas.&nbsp;Solo el&nbsp;Administrador del&nbsp;Sistema o el Administrador de la Base de&nbsp;Datos tienen acceso a esta opción.</li>
+</ol>
+<p>&nbsp;</p>

@@ -1,0 +1,32 @@
+'<table border=0 width=90%>'
+
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de orden</b></td><td valign=top><font face=arial size=2>'v1+|; |,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de la orden</b></td><td valign=top><font face=arial size=2>'v2+|; |,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha ISO de la orden</b></td><td valign=top><font face=arial size=2>'v3+|; |,'</td>' fi/
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Proveedor</b></td><td valign=top><font face=arial size=2>'v5+|; |,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>Base de datos</b></td><td valign=top><font face=arial size=2>'v6+|; |,'</td>' fi/
+if p(v7) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de adqusición</b></td><td valign=top><font face=arial size=2>'if v7='N' then 'New object' else 'New copy' fi '</td>' fi/
+if p(v8) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de control</b></td><td valign=top><font face=arial size=2>'v8+|; |,'</td>' fi/
+if p(v16) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autor personal</b></td><td valign=top><font face=arial size=2>'v16+|; |,'</td>' fi/
+if p(v17) then '<tr><td width=20% valign=top><font face=arial size=2><b>Autor entidad</b></td><td valign=top><font face=arial size=2>'v17+|; |,'</td>' fi/
+if p(v18) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título</b></td><td valign=top><font face=arial size=2>'v18+|; |,'</td>' fi/
+if p(v21) then '<tr><td width=20% valign=top><font face=arial size=2><b>Volumen</b></td><td valign=top><font face=arial size=2>'v21+|; |,'</td>' fi/
+if p(v29) then '<tr><td width=20% valign=top><font face=arial size=2><b>Editor</b></td><td valign=top><font face=arial size=2>'v29+|; |,'</td>' fi/
+
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Título de la serie</b></td><td valign=top><font face=arial size=2>'v30+|; |,'</td>' fi/
+if p(v31) then '<tr><td width=20% valign=top><font face=arial size=2><b>Volumen</b></td><td valign=top><font face=arial size=2>'v31+|; |,'</td>' fi/
+if p(v32) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número</b></td><td valign=top><font face=arial size=2>'v32+|; |,'</td>' fi/
+
+if p(v35) then '<tr><td width=20% valign=top><font face=arial size=2><b>ISSN</b></td><td valign=top><font face=arial size=2>'v35+|; |,'</td>' fi/
+if p(v47) then '<tr><td width=20% valign=top><font face=arial size=2><b>ISBN</b></td><td valign=top><font face=arial size=2>'v47+|; |,'</td>' fi/
+if p(v38) then '<tr><td width=20% valign=top><font face=arial size=2><b>Editorial</b></td><td valign=top><font face=arial size=2>'v38+|; |,'</td>' fi/
+if p(v39) then '<tr><td width=20% valign=top><font face=arial size=2><b>Ciudad</b></td><td valign=top><font face=arial size=2>'v39+|; |,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>País</b></td><td valign=top><font face=arial size=2>'v40+|; |,'</td>' fi/
+if p(v41) then '<tr><td width=20% valign=top><font face=arial size=2><b>Edición</b></td><td valign=top><font face=arial size=2>'v41+|; |,'</td>' fi/
+if p(v50) then '<tr><td width=20% valign=top><font face=arial size=2><b>Cantidad</b></td><td valign=top><font face=arial size=2>'v50^b," &nbsp; &nbsp; <b>Price</b>: "v50^c,,'</td>' fi/
+if p(v450) then '<tr><td width=20% valign=top><font face=arial size=2><b>Reclamos</b></td><td valign=top><font face=arial size=2>'v450^a," "v450^b," "v450^c+|; |,'</td>' fi/
+
+if p(v480) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha de recepción</b></td><td valign=top><font face=arial size=2>'v480+|; |,'</td>' fi/
+if p(v481) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha ISO de recep.</b></td><td valign=top><font face=arial size=2>'v481+|; |,'</td>' fi/
+if p(v500) then '<tr><td width=20% valign=top><font face=arial size=2><b>Actualizado</b></td><td valign=top><font face=arial size=2>'v500^a," "v500^b," "v500^c," "v500^d+|; |,'</td>' fi/
+'</table><p>'

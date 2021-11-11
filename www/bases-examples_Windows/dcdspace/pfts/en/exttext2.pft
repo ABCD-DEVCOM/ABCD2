@@ -1,0 +1,26 @@
+'document text : ',
+/*'<a href="file://'v96'">'v96'</a>',*/
+(if p(v96) then '<a href="/../../', replace(v96,'/opt/ABCD/www/htdocs',''),'" target="_blank">',replace(v96,'/opt/ABCD/www/htdocs',''),'</a><br>' fi/)/
+/*|<a href="#" onClick="window.open(
+'http://../../|D96,
+ replace(v96,'/opt/ABCD/www/htdocs',''),
+|, '_blank')">|D96,v96,'</a>',
+*/
+'<a href="',replace(v96,'/opt/ABCD/www/htdocs',''),'"  onclick="window.open(`',replace(v96,'/opt/ABCD/www/htdocs',''),'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`); return false;">' replace(v96,'/opt/ABCD/www/htdocs',''),'</a>'
+
+/*<?php 
+exec('more /var/opt/ABCD/bases/dubcore/data/html/abc_of_abcd_v13t312340.html', $out,$outcode);
+?>
+*/
+/* @/var/opt/ABCD/bases/dubcore/pfts/en/extfile.pft */
+/*proc('Gload/99/nonl='v96),*/ 
+'<script>,
+function ShowText(){
+			new_window=new Date()			document.administra.target=new_window;
+			ancho=screen.availWidth-15
+			alto=(screen.availHeight||screen.height) -50
+			msgwin=window.open("",new_window,"menubar=no, toolbar=no, location=no, scrollbars=yes, status=yes, resizable=yes, top=0, left=0, width="+ancho+", height="+alto)
+			msgwin.focus()		}
+		document.administra.submit()
+}
+</script>'

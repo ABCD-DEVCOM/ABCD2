@@ -1,0 +1,9 @@
+F|1|Tyde d'enregistrement|0|0|||R||1|P|sanctions.tab|||||0||
+F|10|Statut|0|0|||R||2|P|status.tab|||||0||
+F|20|Code d'utilisateur|0|0|||X|||||||||0||
+F|30|Date|0|0|||X|||||||||0||
+F|40|Concept|0|0|||X|||||||||0||
+F|50|Montant|0|0|||X|||||||||0||
+F|60|Echéance|0|0|||X|||||||||0||
+F|100|Observations|0|0|||X|||||||||0||
+F|110|Operateur et date d'annulation|0|0|||X|||||||||0||

@@ -1,0 +1,57 @@
+<p><strong>Crear nueva recomendación</strong></p>
+<p>Antes de insertar una nueva recomendación en la base de datos, debe verificar si se trata de la adquisición de un nuevo objeto o de copias adicionales a un objeto hya existente.&nbsp; En este caso debe suministrar la <strong>base de datos</strong> donde se encuentra la información catalográfica del objeto y el <strong>Número de identificación del objeto, </strong>tal como fue asignada en la base de datos correspondiente.</p>
+<p>Si se trata de un nuevo objeto, también puede suministrar el nombre de la base de datos donde se catalogará el objeto.</p>
+<p>Los datos obligatorios a suministrar son:</p>
+<p>
+<table cellspacing="1" cellpadding="1" width="500" summary="" border="1">
+    <tbody>
+        <tr>
+            <td>Etiqueta</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Estado de la sugerencia</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Tipo de adquisición</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Base de datos donde se cataloga el objeto</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Número de identificación del objeto (Obligatorio si el tipo de adquisición seleccionado&nbsp;es <strong>Copias adicionales</strong>)</td>
+        </tr>
+        <tr>
+            <td>16/17</td>
+            <td>Se debe indicar el autor personal o el autor corporativo</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>Título</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>Nombre de la persona/departamente que sugirió la compra del objeto</td>
+        </tr>
+        <tr>
+            <td>210</td>
+            <td>Fecha de la sugerencia</td>
+        </tr>
+        <tr>
+            <td>211</td>
+            <td>Fecha ISO de la sugerencia</td>
+        </tr>
+        <tr>
+            <td>220</td>
+            <td>Número de copias solicitadas</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>&nbsp;La información ingresada se almacena en la base de datos <strong>suggestions</strong> y a los nuevos registros se les asigna en forma automática un número secuencial el cual es utilizado como campo de relación en los procesos de seguimiento del estado de la recomendación.</p>
+<p>Para la asignación del número secuencial, se mantiene en la carpeta <strong>data</strong> de la base de datos <strong>suggestions</strong> un archivo denominado <strong>control_number.cn</strong> el cual posee grabado el último número asignado.</p>
+<p>&nbsp;</p>

@@ -1,0 +1,60 @@
+
+'<table border=0 width=90%>'
+if p(v1) then 
+'<tr><td width=20% valign=top>
+<b>Tipo de fornecedor</b></td><td valign=top>
+'v1+|; |,'</td>' fi/
+
+if p(v10) then 
+'<tr><td width=20% valign=top>
+<b>Nome</b></td><td valign=top>
+'v10+|; |,'</td>' fi/
+
+if p(v20) then 
+'<tr><td width=20% valign=top>
+<b>Site</b></td><td valign=top>
+'v20+|; |,'</td>' fi/
+
+if p(v30) then 
+'<tr><td width=20% valign=top>
+<b>E-mail</b></td><td valign=top>
+'v30+|; |,'</td>' fi/
+
+if p(v40) then 
+'<tr><td width=20% valign=top>
+<b>Pessoa de contato</b></td><td valign=top>
+'v40+|; |,'</td>' fi/
+
+if p(v50) then 
+'<tr><td width=20% valign=top>
+<b>Telefone</b></td><td valign=top>
+'v50+|; |,'</td>' fi/
+
+if p(v60) then 
+'<tr><td width=20% valign=top>
+<b>Fax</b></td><td valign=top>
+'v60+|; |,'</td>' fi/
+
+if p(v70) then 
+'<tr><td width=20% valign=top>
+<b>Endereço</b></td><td valign=top>
+'v70+|; |,'</td>' fi/
+
+if p(v80) then 
+'<tr><td width=20% valign=top>
+<b>Cidade</b></td><td valign=top>
+'v80+|; |,'</td>' fi/
+
+if p(v90) then 
+'<tr><td width=20% valign=top>
+<b>País</b></td><td valign=top>
+'v90+|; |,'</td>' fi/
+
+if p(v200) then 
+'<tr><td width=20% valign=top>
+<b>Itens</b></td><td valign=top>
+'v200+|; |,'</td>' fi/
+
+'<tr><td colspan=2><hr></td>'/
+'</table>'
+

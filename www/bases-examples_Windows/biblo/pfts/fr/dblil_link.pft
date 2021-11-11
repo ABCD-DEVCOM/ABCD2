@@ -1,0 +1,17 @@
+,if s(mpu,v8^*,mpl) = 'INTERNET' then,
+         '<tr>'/
+         '<td width="28%"><a href="'v8^i'"><img src="',v5002[1],'fulltxt.gif" border="0" name="full text"></a></td>'/
+     '<td width="72%">'
+                        '<font face=verdana size="1"><i>'
+                        if s(mpu,v8^i,mpl) : '.PDF' then
+                                'Text in PDF'
+                        else
+                                if s(mpu,v8^i,mpl) : '.HTM' then
+                                        'Text in HTML'
+                                else
+                                        'Full text'
+                                fi,
+                        fi
+                '</i></font></td>'/
+        '</tr>'/
+,fi,

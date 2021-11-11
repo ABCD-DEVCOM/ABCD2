@@ -1,0 +1,32 @@
+e0:=instr(s0, s8)
+if e0 > 0 then
+	s1:=(mid(s0, e0+2, size(s0)))
+	e1:=instr(s1, s8)
+	if e1 > 0 then
+		s2:=(mid(s1, e1+2, size(s1)))
+		e2:=instr(s2, s8)
+		if e2 > 0 then
+			s3:=(mid(s2, e2+2, size(s2)))
+			e3:=instr(s3, s8)
+			if e3 > 0 then
+				s4:=(mid(s3, e3+2, size(s3)))
+				e4:=instr(s4, s8)
+				if e4 > 0 then
+					s5:=(mid(s4, e4+2, size(s4)))
+					e5:=instr(s5, s8)
+				fi	
+			fi		
+		fi
+	fi
+fi
+
+
+if e0=0 then s9:=('')
+else	if e1=0 then s9:=(mid(s0, e0+2, instr(s1, '^')-1))
+		else 	if e2=0 then s9:=(mid(s0, e0+2, e1+instr(s2, '^')))
+				fi
+		fi
+
+fi
+
+

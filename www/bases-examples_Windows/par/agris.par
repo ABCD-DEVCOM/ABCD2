@@ -1,0 +1,4 @@
+agris.*=%path_database%agris/data/agris.*
+agris.pft=%path_database%agris/pfts/en/agris.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft

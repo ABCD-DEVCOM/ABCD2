@@ -1,0 +1,14 @@
+v4,"."v6,
+if s(v4,v6)<>'' then '<br>' fi,
+'<font face=arial size=2>'
+v3^*,"."v3^b,"."v3^c,"."v3^d,,'<br>'
+"<b> "V12"</b>",' '
+ "<b>"v18"</b>" ,mpl,    
+if p(v10) or p(v11) then '  /  '     fi,
+(if p(v10) then |; |+v10^*,|, |v10^b fi)
+if p(v10) and p(v11) then '; ' fi,
+(if p(v11) then |; |+v11^*,|. |v11^b fi)
+if p(v104) then,
+ '<br><b> Ubicación: </b> ',(v104^*+|; |)/ '<br>' fi,
+v101^n+|;|
+'<p>'/

@@ -1,0 +1,7 @@
+providers.*=%path_database%providers/data/providers.*
+providers.pft=%path_database%providers/pfts/en/providers.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+isisac.tab=%path_database%providers/data/isisac.tab
+isisuc.tab=%path_database%providers/data/isisuc.tab.tab
+STW=%path_database%providers/data/providers.stw

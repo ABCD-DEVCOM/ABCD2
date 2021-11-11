@@ -1,0 +1,9 @@
+researchlibrarynetwork.*=%path_database%researchlibrarynetwork/data/researchlibrarynetwork.*
+researchlibrarynetwork.pft=c%path_database%researchlibrarynetwork/www/researchlibrarynetwork.pft
+prologoact.pft=%path_database%www/prologoact.pft
+epilogoact.pft=%path_database%www/epilogoact.pft
+autoridades.pft=%path_database%researchlibrarynetwork/pfts/en/autoridades.pft
+marc.*=%path_database%marc/data/marc.*
+
+
+

@@ -1,0 +1,9 @@
+'<font face=arial size=2><b>Centro de documentacion de ABCD</b>. Recibo de préstamo<br>'
+"Cód.usuario: "v20,'<br>',
+'Fecha préstamo: ' v30*6.2,'-',v30*4.2,'-',v30.4'<br>',
+'Fecha devolución: 'v40*6.2,'-',v40*4.2,'-',v40.4'<br>',
+'Título: 'v100^a,'<br><br>',
+
+'_______________________________'
+
+/

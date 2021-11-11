@@ -1,9 +1,0 @@
-Inventory number
-Volume
-Tome
-User code
-User type
-Loan date
-Return date
-Object type
-Reference

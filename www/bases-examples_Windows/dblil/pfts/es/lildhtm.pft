@@ -1,0 +1,188 @@
+/* if p(v98) then,
+proc(ref(l(v98),		
+	'a16~',v16,'~a17~',v17,'~a18~',v18,'~a19~',v19,'~a20~',v20,'~a21~',v21,'~a23~',v23,'~',
+	'a24~',v24,'~a25~',v25,'~a27~',v27,'~a30~',v30,'~a31~',v31,'~a35~',v35,'~a62~',v62,'~',
+	'a63~',v63,'~a64~',v64,'~a65~',v65,'~a66~',v66,'~a67~',v68,'~a69~',v69,'~'	
+	),	
+	ref(l(v101),		
+		'a52~',v52,'~a53~',v53,'~a54~',v54,'~a55~',v55,'~a56~',v56,'~a57~',v57,'~'
+	),				
+	ref(l(v102),		
+		'a58~',v58,'~a59~',v59,'~a60~',v60,'~'
+	),				
+	ref(l(v103),		
+		'a50~',v50,'~a51~',v50,'~'
+	),				
+,),	
+fi, */
+
+
+    '<table width="100%">'
+
+              '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Id:</td>'
+			  ,'<td valign="top" width="97%"><font face="Arial" size=2>',f(mfn,1,0),/,'</td></tr>',
+              if p(v10) then
+                  '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+				  ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v10^*+|; |"."),'</td></tr>',
+              fi,
+              if p(v11^p) then
+                  '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+				  ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v11^p+|; |"."),/,'</td></tr>',
+              else
+                  if p(v11^*) then,
+                     '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+					 ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v11^*+|; |"."),/,'</td></tr>',
+                  fi,
+              fi,
+              if p(v12) then              
+                  '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Título:</td>'
+				  ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v12),| / |v13,"."n13,/,'</td></tr>',
+              fi,
+                          
+              IF v06 = 'as' THEN
+
+                 if p(v30) then,
+                    '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Fuente:</td>'
+					,'<td valign="top" width="97%"><font face="Arial" size=2>'v30|;|,v31,|(|v32|)|,":"d14,
+                   ,if v14^f='' then ,v14, else ,v14^f,'-',v14^l, fi,
+,|, |v64|. |,(v38+|, |),'.'/,'</td></tr>',
+                 fi,
+
+              FI,
+
+              IF v06 : 'am' THEN,
+
+                if p(v16^*) then,
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Fuente:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>En: '(v16^*+|; |"."),
+                fi,
+
+                if p(v17^p) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Fuente:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>En: '(v17^p+|; |"."),
+                else
+                   if p(v17) then
+                      '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Fuente:</td>'
+					  ,'<td valign="top" width="97%"><font face="Arial" size=2>En: '(v17^*+|; |"."),
+                   fi,
+                fi,
+
+                if p(v16) or p(v17) then
+                   v18'. ',v66', ',v62', ',v64'. ',"p."d14,
+                   ,if v14^f='' then ,v14, else ,v14^f,'-',v14^l, fi,
+                   ,(v38+|, |),'. ',/,|(|v30,|, |v31,|, |v32, if p(v30) then ').' fi, | (|v68|)|,/,'</td></tr>',
+                fi,
+
+              FI,
+             
+              IF v06*0.1 = 'm' THEN
+
+                if p(v16^*) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v16^*+|; |),/,'</td></tr>',
+                fi,
+   
+                if p(v17^p) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v17^p+|; |),/,'</td></tr>',
+                else
+                    if p(v17^*) then
+                       '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+					   ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v17^*+|; |'*.'),/,'</td></tr>',
+                    fi,
+                fi,
+
+                if p(v18) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Título:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>'v18,/,v19,".","."n19,'-',V21,/,'</td></tr>',
+                fi,
+                if p(v66) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Fuente:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>'v66,'; ',v62,'; ',v64,'. ',v20| p. |,v38+|, |'.',/,|(|v30,   |, |v31,   |, |v32, if p(v30) then ').' fi,| (|v68|).|,/,'</td></tr>',
+                fi,
+
+                if p(v30) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial">&nbsp;</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>'|(|v30,   |, |v31,   |, |v32,  ').'|(|v68|).|,/,'</td></tr>',
+                fi,
+
+              FI,
+
+              IF v06 = 'c' THEN
+
+                 if p(v23^*) then
+                    '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+					,'<td valign="top" width="97%"><font face="Arial" size=2>'(v23^*+|;|),/,'</td></tr>',
+                 fi,
+
+                 if p(v24^p) then
+                    '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+					,'<td valign="top" width="97%"><font face="Arial" size=2>'(v24^p+|; |),/,'</td></tr>',
+                 else
+                    if p(v24^*) then
+                       '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Autor:</td>'
+					   ,'<td valign="top" width="97%"><font face="Arial" size=2>'(v24^*+|; |),/,'</td></tr>',
+                    fi,
+                 fi,
+
+                 if p(v25) then
+                    '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Título:</td>'
+					,'<td valign="top" width="97%"><font face="Arial" size=2>'(v25),|. |v27| vol.|,/,'</td></tr>',
+                 fi,
+                 if p(v66) then
+                    '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Fuente:</td>'
+					,'<td valign="top" width="97%"><font face="Arial" size=2>'v66'; ',v62'; ',v64'. ',v20| p. |,v38'.',/,'</td></tr>',
+                 fi,
+
+              FI,
+
+              if p(v50) then
+                '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Tese:</td>'
+				,'<td valign="top" width="97%"><font face="Arial" size=2>',|Presentada la |,v50| para obtención del grado de |,v51|.|,/,'</td></tr>',
+              fi,
+
+              if p(v53) then
+                 '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Conferencia:</td>'
+				 ,'<td valign="top" width="97%"><font face="Arial" size=2>',|Presentado en: |,v53|, |,v56|, |,v54|.|,/,'</td></tr>',
+              fi,
+
+              if p(v58) then
+                '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Proyecto</td>',
+				'<td valign="top" width="97%"><font face="Arial" size=2>',(v58+|; |,'. '),v59|. |,v60|. |,/,'</td></tr>',
+              fi,
+
+              if p(v68) then
+                '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Símbolo:</td>'
+				,'<td valign="top" width="97%"><font face="Arial" size=2>'v68".",/,'</td></tr>',
+              fi,
+
+              if p(v83) then
+                 '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Resumen:</td>'
+				 ,'<td valign="top" width="97%"><font face="Arial" size=2>'v83".",/,'</td></tr>',
+              fi,
+
+              if p(v87) or p(v88) then
+                   '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Descriptores:</td>'
+				   ,'<td valign="top" width="97%"><font face="Arial" size=2>',@descritores.pft,'</td></tr>',
+              fi
+  		     if p(v76^*) then
+                    '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Límites:</td>'
+					,'<td valign="top" width="97%"><font face="Arial" size=2>'(v76^*'<br>'),'</td></tr>',
+             fi,
+			 if p(v8) then        
+            	'<tr><td align="right" width="17%" valign="top" ><font size=2 face="Arial"><b>Medio Electrónico:</td>',
+				'<td  valign="top" align="left" ><font face="arial" size=2>'
+					(if s(mhu,v8^*,mpl) = 'INTERNET' then '<a href="',v8^i,'">Internet</a>' else v8^*,| / |v8^i fi'<br>'/),
+				'</td></tr>'
+	         fi,            
+            
+             if p(v3) then
+                '<tr><td align="right" width="13%" valign="top" nowrap><font size=2 face="Arial"><b>Localización:</td>'
+				,'<td valign="top" width="97%"><font face="Arial" size=2>'mhl,(v3+|; |),'</td></tr>',
+             fi,
+
+   '</table>',
+
+mpl,
+
+'<p>'/,

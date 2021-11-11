@@ -1,0 +1,20 @@
+v10,'^'v90'^',mdl,v100,mpl,'^'v80,'^' v30*6.2,'-',v30*4.2,'-',v30.4," "v35,'^', v40*6.2,'-',v40*4.2,'-',v40.4," "v45,'^',v70,'^',f(mfn,1,0),'^'v30,'^'v40,'^'v20,,'^',f(nocc(v200),1,0),,'^'v95,'^'v98,'^'v12,'^'v15,'^'v1/
+
+/ * 0 Numéro d'inventaire
+   1 Classification
+   2 Description de l'objet
+   3 Type d'objet
+   4 Date et moment de l'emprunt
+   5 Date et heure de retour
+   6 Type d'utilisateur
+   7 NFM d'enregistrement
+   8 Date de prêt au format ISO
+   9 Date de retour au format ISO
+   10 Code d'utilisateur
+   11 Nombre de renouvellements
+   12 Nombre objet de contrôle
+   13 Base de données
+   14 Volume
+   15 tome
+   16 Type de mouvement: P = Prêt ; X = Retour
+* /

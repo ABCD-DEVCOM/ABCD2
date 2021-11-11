@@ -1,0 +1,43 @@
+<p><font face="Tahoma"><font size="2"><strong>Editer le fichier DBN.def pour configurer le fonctionnement d'une base de donnée avec iAH oPAC</strong>&nbsp;</font></font></p>
+<p><font face="Tahoma" size="2">Cette page de configuration contient 4 sections obligatoires pour configurer une base pour IAH:</font></p>
+<ul>
+    <li><font face="Tahoma"><font size="2"><strong>FILE_LOCATION</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>INDEX_DEFINITON</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>APPLY_GIZMO</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>FORMAT_NAME</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>HELP_FORM</strong> </font></font></li>
+    <li><font face="Tahoma"><font size="2"><strong>PREFERENCES</strong> </font></font></li>
+</ul>
+<p><font face="Tahoma" size="2">Pour plus d'informations sur les sections en tant que telles,  consultez le <strong>manuel d'utilisation de l'IAH</strong>. Ici, n'est fourni de l'aide que sur l'utilisation de l'utilitaire de configuration dans ABCD, mais pas sur le contenu des sections.</font></p>
+<p><font face="Tahoma" size="2">Pour éditer le fichier de configuration, il y a 2 manières :</font></p>
+<ol>
+    <li><font face="Tahoma" size="2">Utiliser un éditeur de texte (TXT) pour modifier directement le ficher de configuration. Pour cela, cliquez sur le lien <strong>Editer en format TXT</strong> en haut de la page. </font></li>
+    <li><font face="Tahoma" size="2">Utilisez le guide fourni par ABCD pour faciliter le remplissage des sections. </font></li>
+</ol>
+<p><font face="Tahoma" size="2">Le guide est divisé en 6 sections. Chacune se termine par un lien <strong>Ajouter</strong>&nbsp; qui permet d'y ajouter un nouvel élément.</font></p>
+<p><font face="Tahoma" size="2">La section &nbsp; <strong>INDEX_DEFINITON </strong> permet d'éditer chaque ligne afin de compléter l'information. Pour cela cliquez sur le lien <strong>Editer</strong> qui accompagne chaque dfinition d'index et qui place les infromations complémentaires dans le formulaire. une fois le formulaire complété, cliquez sur <strong>Accepter </strong>pour transferer les cellules aux lignes correspondantes de la section <strong>INDEX_DEFINITION</strong>.</font></p>
+<p><font face="Tahoma" size="2">La section <strong>FORMAT_NAME</strong>&nbsp; donne accès à l'éditeur de format de la TDC de ABCD pour la création ou la modification des formats correspondants.&nbsp; On y accède pen cliquant sur le lien <strong>Créer modifier format</strong> en haut de la section. Lors de la création d'un nouveau format, mettez le dans la section fournissant les informations dans les cellules affichées en cliquant sur <strong>Ajouter</strong>.</font></p>
+<p><font face="Tahoma" size="2">Une fois le formulaire rempli, cliquez sur <strong>Valider</strong> afin de vérifier la cohérence des informations saisies, puis sur  <strong>Mise à jour</strong> pour sauvegarder le nouveau fichier créé.</font></p>
+<p><font face="Tahoma" size="2">Les critères de validation utilisés sont les suivants :</font></p>
+<p><strong><font face="Tahoma" size="2">FILE_LOCATION</font></strong></p>
+<ol>
+    <li><font face="Tahoma" size="2">Vérifiez que tous les noms logiques sont précédés d'un littéral <strong>FILE</strong>. Sinon, l'ajouter.</font></li>
+    <li><font face="Tahoma" size="2">Vérifier que tous les chemins sont précédés par le littéral %path_database%. Sinon, l'ajouter.</font></li>
+</ol>
+<p><font face="Tahoma" size="2"><strong>INDEX_DEFINITION</strong></font></p>
+<ol>
+    <li><font face="Tahoma" size="2">Vérifiez que tous les noms logiques sont précédés par le littéral <strong>INDEX</strong>. Sinon, l'ajouter.</font></li>
+    <li><font face="Tahoma" size="2">Vérifiez qu'au moins un sous-champ contient le nom de l'index.</font></li>
+    <li><font face="Tahoma" size="2">Vérifiez que les noms logiques des bases des index  (^y) ont leur entrées correspondantes dans la section <strong>FILE_LOCATION</strong></font></li>
+</ol>
+<p><strong><font face="Tahoma" size="2">APPLY_GIZMO</font></strong></p>
+<ol>
+    <li><font face="Tahoma" size="2">Vérifiez que les noms des fichiers gizmo fournis ont leur entrée correspondante dans la section <strong>FILE_LOCATION</strong></font></li>
+</ol>
+<p><strong><font face="Tahoma" size="2">PREFERENCES</font></strong></p>
+<ol>
+    <li><font face="Tahoma" size="2">Vérifiez qu'au moins un formulaire de recherche est actif.</font></li>
+    <li><font face="Tahoma" size="2">Vérifiez que le nombre de documents par page soit une valeur numérique.
+<p>&nbsp;</p>
+<p><font face="Tahoma" size="2"></font></p>
+<p>&nbsp;</p>

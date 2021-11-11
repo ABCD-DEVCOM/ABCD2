@@ -1,7 +1,0 @@
-proc('a1000~' if p(v84[1]) then v84[1] else v82[1] fi'~'),/
-(if p(v900^n) then ,
-   '*INV*'V900^n'*INV*'
-   `<center><br><span  style="font-family:'Bar Code 39 e HR' ; font-size:40px">`
-   v900^n`</span><p>`
-   v1000^a[1],|.|v1000^b[1],|.|v1000^c[1],|.|v1000^d[1] '%%%'/
-fi)

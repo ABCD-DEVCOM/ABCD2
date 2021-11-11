@@ -1,0 +1,12 @@
+<p><strong>Traducción de mensajes y páginas de ayuda</strong></p>
+<p>ABCD utiliza para el tratamiento multilingüe dos tipos de componentes:</p>
+<p><strong>Mensajes y etiquetas</strong></p>
+<p>Contiene una tabla de las etiquetas utilizadas para el diálogo con el usuario, así como los mensajes de advertencia, error, y otros utilizados en la comunicación con el usuario.</p>
+<p>Estas tablas se almacenan en la carpetas <strong>bases/lang/xx</strong> donde<strong> xx</strong> corresponde al código del lenguaje. Adicionalmente se ha creado el código de lenguaje <strong>00</strong> el cual es la tabla de mensajes utilizada en el desarrollo de los procesos. Cuando se selecciona un lenguaje de diálogo, se lee primero la tabla del lenguaje seleccionado y luego se lee la tabla correspondiente al lenguaje <strong>00</strong> con el fin&nbsp; de completar los mensajes que no estén descritos en el lenguaje seleccionado. De esta forma los módulos pueden generar nuevos mensajes, sin&nbsp; modificar las tablas de mensajes actualizadas por los usuarios, ni acusar mensajes faltantes durante la ejecución de los procesos.</p>
+<p>Cuando se solicita actualizar una tabla de mensajes de un idioma en particular, la misma se complementa con la tabla del lenguaje <strong>00</strong> a fin de que el usuario pueda traducir los nuevos mensajes incorporados en ABCD.</p>
+<p><strong>Páginas de ayuda</strong></p>
+<p>Esta opción permite traducir las páginas de ayuda que se presentan en los diferentes módulos de ABCD. Para facilitar la traducción se presenta la lista de las páginas desplegadas en cada módulo y el usuario puede seleccionar:</p>
+<ul>
+    <li>Presentar una vista previa de la página correspondiente</li>
+    <li>Editar la página de ayuda</li>
+</ul>

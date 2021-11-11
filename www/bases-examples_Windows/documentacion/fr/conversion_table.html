@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <center>
+      <table width="90%" cellpadding="2" cellspacing="2">
+        <tr>
+          <td>
+            <p>
+              <strong><font face="arial" size="2">Table de conversion pour
+              l'export de la base de données vers un fichier TXT avec
+              étiquettes</font></strong>
+            </p>
+            <p align="justify">
+              <font face="arial" size="2">La table de conversion est utilisée
+              pour l'export et pour l'import des enregistrements, selon les
+              caractéristiques suivantes :</font>
+            </p>
+            <p align="justify">
+              <font face="arial" size="2">Utilisez le choix <b>Délimité avec
+              tabulations</b> pour importer une feuille Excel sauvegardée au
+              format TXT. Dans ce cas, la colonne <b>Etiquette dans le fichier
+              TXT</b> doit contenir le numéro de la colonne (commençant à 1)
+              où se situe le champ correspondant dans la feuille Excel.</font>
+            </p>
+            <p>
+              <font face="arial" size="2">La table de conversion contient les
+              colonnes suivantes  :</font>
+            </p>
+            <table width="90%" cellpadding="2" cellspacing="2" bgcolor=
+            "#CCCCCC">
+              <tr>
+                <td valign="top" bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Etiquette dans le fichier
+                    TXT</font>
+                  </p>
+                </td>
+                <td bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Etiquette qui identifie le
+                    champ d'entrée ou sortie du fichier TXT. Les étiquettes
+                    doivent commencer par <strong>$$</strong> et se terminer
+                    par <strong>:</strong></font>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Etiquette</font>
+                  </p>
+                </td>
+                <td bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Etiquette du champ dans la base
+                    de données</font>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Sous-champs</font>
+                  </p>
+                </td>
+                <td bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Séparateurs de sous-champs. Si
+                    le premier sous-champ n'a pas de séparateur, laissez un
+                    espace vide</font>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Remplacer par</font>
+                  </p>
+                </td>
+                <td bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Si un champ a des sous-champs,
+                    indiquez ici les caractères qui seront utilisés dans le
+                    texte pour remplacer les délimiteurs de sous-champs. Le
+                    premier caractère de cette liste remplacera le premier
+                    sous-champ dans la liste. Si le premier délimiteur ne doit
+                    pas être remplacé, laissez un espace vide</font>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" bgcolor="white">
+                  <p>
+                    <font face="arial"><font size="2">Séparateur
+                    d'occurrences</font></font>
+                  </p>
+                </td>
+                <td bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Indiquez ici le caractère qui
+                    séparera les occurrences d'un champ répétitif</font>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Format d'extraction</font>
+                  </p>
+                </td>
+                <td bgcolor="white">
+                  <p>
+                    <font face="arial" size="2">Ce format s'applique à
+                    l'enregistrement afin de produire l'extraction du champ
+                    associé. L'application du format n'est exécutée que
+                    lors du processus d'extraction. Si vous définissez des
+                    délimiteurs de sous-champs en plus du format d'extraction,
+                    le dernier est celui alors appliqué durant le processus
+                    (pas encore mis en œuvre).</font>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>

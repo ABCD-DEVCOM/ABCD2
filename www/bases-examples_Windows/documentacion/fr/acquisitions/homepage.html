@@ -1,0 +1,50 @@
+<p>Le module des achats repose sur trois bases de données:</p>
+<ol>
+    <li><strong>Recommandations<br />
+    </strong>Il contient les demandes des utilisateurs pour les besoins de l'acquisition de nouveaux objets ou de nouvelles copies d'objets existants. Il contient 4 groupes d´information:
+    <ul>
+        <li>Les données de l'objet</li>
+        <li>Les données de la personne ou du service objet de la demande</li>
+        <li>Les données de l'approbation ou le rejet de la demande</li>
+        <li>Les données du devis pour l'achat de l'objet</li>
+        <li>Les données de l'ordre d'achat</li>
+        <li>Revendications</li>
+    </ul>
+    </li>
+    <li><strong>Fournisseurs</strong><br />
+    Grâce aux informations fournies par les fournisseurs qui participent au processus de cotation et l'achat d'articles</li>
+    <li><strong>Copies</strong><br />
+    Contient de chacun des exemplaires qui ont été acquises dans le cadre du processus d'approvisionnement.</li>
+</ol>
+<p>Le processus à suivre est le suivant:</p>
+<ol>
+    <li>Il apparaît un nouveau bon de commande. Cette demande peut traîter l'achat d'un nouvel objet ou l'acquisition de nouvelles copies d'un objet existant.<br />
+    Chaque objet dans la base de données est identifié par un numéro unique qui pourra ensuite établir la relation entre l'objet et de ses copies.<br />
+    Chaque exemplaire aura également un numéro d'inventaire, qui est utilisé plus tard sous dans le module de circulation.<br />
+    Si l'objet existe déjà dans la base de données, la demande doit indiquer le numéro attribué à cet objet. Si un nouvel objet, puis le numéro sera attribué lors de catalogage objet, après l'achat.</li>
+    <li>Chaque proposition doit être approuvée ou rejetée. S'il est approuvé, il sera nécessaire&nbsp; d'indiquer le nombre d'exemplaires à acheter</li>
+    <li>Les demandes approuvées sont soumises à un processus de négociation, en notant dans&nbsp;le registre des fournisseurs&nbsp;et de prix.</li>
+    <li>Avec les informations des cotes on décide l'achat; celle-ci est insérée dans la base de données du fournisseur d'information.</li>
+    <li>On émis des bons de commandes à des fournisseurs sélectionnés</li>
+    <li>S'il y a des retards dans l'arrivée du matériel, on enregistre sur la base de données les différentes demandes.</li>
+    <li>Quand il arrive le matériel acheté&nbsp;, il existe deux options:
+    <ul>
+        <li>Si l'objet est nouveau, doit être attribué le numéro d'identification, cataloger l'objet et créer un dossier pour chaque copie de la base de &nbsp; données <strong>exemplaires</strong>, donnant le numéro d'inventaire</li>
+        <li>Si l'objet existe déjà dans la base de données, il suffit d'ajouter un nouvel enregistrement&nbsp;dans la base de données sur le nombre de <strong>copies</strong> de l'inventaire</li>
+    </ul>
+    </li>
+</ol>
+<p><strong>Transactions</strong></p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><strong>Suggestions</strong>&nbsp; <br />
+Utilisez cette option pour insérer dans la base de données des applications pour l'achat de nouveaux objets. Selon cette option, vous pouvez créer de nouvelles applications et quels ont été approuvées ou  rejetées</p>
+<p><strong>Cours<br />
+</strong>Cette option vous permet d' insérer dans la base de données le nom des fournisseurs à qui elles ont été appliquées au prix d'achat de l' objet, en indiquant le prix offert. Il doit également indiquer le &nbsp;prix accepté pour l'achat de l'objet</p>
+<p><strong>Bons de commande</strong>&nbsp;<br />
+&nbsp;Cette option vous permettra d'insérer les données du bon de commande&nbsp;pour l'acquisition de l'objet</p>
+<p><strong>Revendications</strong><br />
+Ici, vous pouvez enregistrer des plaintes formulées</p>
+</blockquote>
+<ol>
+    <li>&nbsp;</li>
+</ol>

@@ -1,0 +1,24 @@
+'<br><font face=arial size=2>'
+
+IF a(v805) THEN,
+      if p(v12) then
+         v12,| / |v13'.',
+      fi,
+
+      IF v06*0.1 = 'm' THEN
+         if p(v18) then
+            (v18),| / |v19".","."n19,|-|V21,
+         fi,
+      FI,
+
+      IF v06 = 'c' THEN
+         if p(v25) then
+            (v25),|. |v27| vol.|,/,"."n27,
+         fi,
+      FI,
+
+fi,
+
+'</font><p><br>',
+
+

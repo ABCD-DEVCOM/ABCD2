@@ -1,0 +1,62 @@
+<h4>Cambios Globales</h4>
+<p><font face="Comic Sans MS" size="2">Para ejecutar cambios globales siga la siguiente secuencia:</font></p>
+<ol>
+    <li><font face="Comic Sans MS" size="2">Elija el método de selección de los registros</font></li>
+    <li><font face="Comic Sans MS" size="2">Seleccione el campo sobre el cual va a aplicar el cambio</font></li>
+    <li><font face="Comic Sans MS" size="2">Seleccione el tipo de cambio a realizar:</font>
+    <ul>
+        <li><font face="Comic Sans MS" size="2">Agregar</font></li>
+        <li><font face="Comic Sans MS" size="2">Modificar</font></li>
+        <li><font face="Comic Sans MS" size="2">Eliminar</font></li>
+        <li><font face="Comic Sans MS" size="2">Dividir</font></li>
+    </ul>
+    </li>
+    <li><font face="Comic Sans MS" size="2">Coloque el valor que&nbsp;ha que poseer actualmente el campo para que se aplique la modificación, por ejemplo se quiere eliminar el campo 30, cuando el campo 30 tenga el valor "Medicina"</font></li>
+    <li><font face="Comic Sans MS" size="2">Si el cambio es <strong>Modificar, </strong>seleccione el alcance de la modificación:</font>
+    <ul>
+        <li><font face="Comic Sans MS" size="2">Sobre todo el campo</font></li>
+        <li><font face="Comic Sans MS" size="2">Sobre una porción del campo</font></li>
+    </ul>
+    </li>
+    <li><font face="Comic Sans MS" size="2">Seleccione el nuevo valor a agregar o a modificar</font></li>
+    <li><font face="Comic Sans MS" size="2">Si el cambio es <strong>Dividir</strong>, seleccione:</font>
+    <ul>
+        <li><font face="Comic Sans MS" size="2">el caracter o caracteres a ser usados como delimitadores&nbsp;</font></li>
+        <li><font face="Comic Sans MS" size="2">el campo donde se va a mover la porción seleccionada</font></li>
+        <li><font face="Comic Sans MS" size="2">cuál porción del campo va a moverse al campo seleccionado</font></li>
+    </ul>
+    </li>
+</ol>
+<p><font face="Comic Sans MS" size="2">&nbsp;<a name="SEL"></a><strong>Método de selección de los registros</strong></font></p>
+<p><font face="Comic Sans MS" size="2">Los registros sobre el cual se va a aplicar el cambio global pueden ser seleccionados por dos vías:</font></p>
+<ol>
+    <li><font face="Comic Sans MS" size="2">Suministrando un rango de Mfn</font></li>
+    <li><font face="Comic Sans MS" size="2">Construyendo y aplicando una expresión de búsqueda. En este caso se presenta el formulario de búsqueda avanzada desde el cual se construye la fórmula de búsqueda</font></li>
+</ol>
+<p><font face="Comic Sans MS" size="2">Elija el método de recuperación que le permita seleccionar los registros sobre los cuales va a aplicar el cambio.</font></p>
+<p><a name="CAMPO"></a><strong><font face="Comic Sans MS" size="2">Campo sobre el cual va a operar el cambio</font></strong></p>
+<p><font face="Comic Sans MS" size="2">En el menú se presenta la lista de campos definidos en la FDT. Seleccione</font></p>
+<p><strong><font face="Comic Sans MS" size="2"><a name="TIPO_CAMBIO"></a>Tipo de cambio</font></strong></p>
+<p><font face="Comic Sans MS" size="2">Existen tres tipos de cambios:</font></p>
+<ol>
+    <li><font face="Comic Sans MS" size="2">Agregar campo</font></li>
+    <li><font face="Comic Sans MS" size="2">Modificar el contenido de un campo</font></li>
+    <li><font face="Comic Sans MS" size="2">Eliminar un campo</font></li>
+</ol>
+<p><font face="Comic Sans MS" size="2">El cambio correspondiente&nbsp;se aplicará&nbsp;sobre el campo seleccionado de los registros recuperados bien sea por rango de Mfn o por búsqueda&nbsp;</font></p>
+<p><font face="Comic Sans MS" size="2"><strong><a name="ALCANCE"></a>Alcance del cambio</strong></font></p>
+<p><font face="Comic Sans MS" size="2">Si seleccionó la opción de <strong>Modificar el contenido de un campo</strong>, esta opción indica si se debe reemplazar el campo completo o puede aplicarse sobre una porción del mismo. Por ejemplo, para reemplazar el contenido de un subcampo en particular</font></p>
+<p><a name="VALOR"></a><strong><font face="Comic Sans MS" size="2">Aplicar el cambio de acuerdo al contenido del campo</font></strong></p>
+<p><font face="Comic Sans MS" size="2">Esta casilla le permite establecer una lista de términos que pueden condicionar la aplicación del cambio. Esto es, si el contenido actual del campo coincide con&nbsp;al menos uno de los términos especificados, entonces el cambio se aplica. Si no se especifica ningún valor, entonces el cambio se aplica incondicionalmente.</font></p>
+<p><a name="NUEVO_VALOR"></a><strong><font face="Comic Sans MS" size="2">Nuevo valor del campo</font></strong></p>
+<p><font face="Comic Sans MS" size="2">Inserte en esta casilla el valor que va a ser agregado o reemplazado en el campo solicitado</font></p>
+<p><a name="DIVIDIR"></a><strong><font face="Comic Sans MS" size="2">Dividir un campo</font></strong></p>
+<p><font face="Comic Sans MS" size="2">Esta opción le permite ubicar un signo de puntuación o cualquier delimitador en el interior de un campo para:</font></p>
+<ul>
+    <li><font face="Comic Sans MS" size="2">Transferirlo&nbsp;a otro campo</font></li>
+    <li><font face="Comic Sans MS" size="2">Eliminarlo</font></li>
+</ul>
+<p><font face="Comic Sans MS" size="2">Puede seleccionar qué porción del campo (antes o después del delimitador) va a ser eliminada o transferida a otro campo</font></p>
+<p><strong><font face="Comic Sans MS" size="2">Ejecución del cambio.</font></strong></p>
+<p><font face="Comic Sans MS" size="2">El cambio se va ejecutando por lotes de registros. Se presenta un vínculo a los registros a fin de que pueda ser revisada la ejecución del proceso</font></p>
+<p><strong><font face="Comic Sans MS" size="2">Nota importante: Asegurese de obtener un respaldo de la base de datos antes de ejecutar un proceso de cambios globales.</font></strong></p>

@@ -1,0 +1,26 @@
+F|1|Número de orden|0|0|||X||10|||||||0||
+F|2|Fecha de la orden|0|0|||D||10|||||||0||
+F|3|Fecha ISO de la orden|0|0|||ISO||10|||||||0||
+F|5|Proveedor|0|0|||X|||||||||0||
+F|16|Autor personal|0|0|||X|||||||||0||
+F|17|Autor entidad|0|0|||X|||||||||0||
+F|18|título|0|0|||X|||||||||0||
+F|21|Volumen|0|0|||X|||||||||0||
+F|29|Editor|0|0|||X|||||||||0||
+H||Serie monográfica|0|0||||||||||||0||
+F|30|Título|0|0|||X|||||||||0||
+F|31|Volumen|0|0|||X|||||||||0||
+F|32|Número|0|0|||X|||||||||0||
+H||Otros datos|0|0||||||||||||0||
+F|35|ISSN|0|0|||X|||||||||0||
+F|47|ISBN|0|0|||X|||||||||0||
+F|38|Editor|0|0|||X|||||||||0||
+F|39|Ciudad|0|0|||X|||||||||0||
+F|40|País|0|0|||X|||||||||0||
+F|41|Edición|0|0|||X|||||||||0||
+T|50|Objetos |0|1|bcghi||TB|1||||||||0||
+S||Cantidad|0|0|||X||5|||||||0||
+S||Precio|0|0|||X||10|||||||0||
+S||Tipo de adquisición|0|0|||S||5|P|typeofacquisition.tab|||||0||
+S||Base de datos|0|0|||S|||P|%path_database%bases.dat|||||0||
+S||Número de control|0|0|||X||10|||||||0||

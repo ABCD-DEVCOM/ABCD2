@@ -1,0 +1,12 @@
+'<font face=arial size=2><b>Centro de documentação do ABCD</b>. Recibo de devolução<br>'
+"Cód.usuário: "v20,'<br>',
+'Data empréstimo: ' v30*6.2,'-',v30*4.2,'-',v30.4'<br>',
+'Data devolução: 'v40*6.2,'-',v40*4.2,'-',v40.4'<br>',
+'Data devolução real: 'v500*6.2,'-',v500*4.2,'-',v500.4'<br>',
+'Título: 'v100^a,'<br><br>',
+if npost(['suspml'],'TR_S_'v20)<>0 then 'Há suspensões pendentes<br>'  fi
+if npost(['suspml'],'TR_M_'v20)<>0 then 'Há multas pendentes<br>'  fi	
+
+'_______________________________'
+
+/

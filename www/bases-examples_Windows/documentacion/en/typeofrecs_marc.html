@@ -1,0 +1,36 @@
+<html>
+
+    <head>
+
+        <title></title>
+
+    </head>
+
+    <body>
+
+        <p><font face="Arial"><strong> Record Types (MARC format)</strong></font></p>
+
+        <p><font face="Arial" size="2">This option helps to define the record types which will be managed by the database when the system uses the MARC format. </font></p>
+
+        <p><font size="2" face="Arial, Helvetica, sans-serif">The </font><font face="Arial, Helvetica, sans-serif"><font size="2">record type is found in field <strong>3006 </strong>of the Leader and assists in identifying the format of the fixed field (008) to be used in the bibliographic description of the document.</font></font></p>
+
+        <p><font face="Arial" size="2">Defining the record type requires 2 components:</font></p>
+
+        <ol>
+
+            <li><font face="Arial" size="2">Identify the field (tag)&nbsp;of the database from which the record type corresponding to the document is going to be obtained (or to be entered in the case of a new record).  The current version of ABCD allows the definition of up to two fields whose values  determine the format of the fixed field (008) to be present in the data entry form</font>.</li>
+
+            <li><font face="Arial" size="2">Describe the record types with the following parameters:</font>
+              <ul>
+                <li><font face="Arial" size="2">Name of the field definition table (FDT) which holds the elements used to construct the data entry worksheet to capture the data</font> </li>
+                <li><font face="Arial" size="2">Value of the fields identified in (1)&nbsp;which are regarded as belonging to that record type</font> </li>
+                <li><font face="Arial" size="2">Description of the record type which will be displayed to the user at the time of data entry which precedes the selection of the corresponding type</font> </li>
+              </ul>
+            </li>
+        </ol>
+
+        <p><font size="2" face="Arial, Helvetica, sans-serif">To maintain consistency in the definitions of ABCD</font><font face="Arial" size="2">, the fixed fields are defined by a  <strong>FDT</strong> that contains the description of the data elements associated with the record type and  with all the characteristics defined in the process of creating the  FDT of the database. To edit the <strong>FDT </strong>associated with the fixed field for a record type, click on the link <b>Edit</b>. This will open a new window where the characteristics of the data elements that comprise the fixed field are given. </font></p>
+
+    </body>
+
+</html>

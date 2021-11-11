@@ -1,0 +1,68 @@
+<p><font face="arial" size="2"><a target="_blank" href="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-LinguagemFormato4-es.pdf"></a></font></p>
+<p><font face="arial" size="2"></font></p>
+<p><font face="arial" size="2"><strong>Creation of new display formats</strong></font></p>
+<p><font face="arial" size="2">This procedure allows you to generate an export format - or&nbsp;to modify&nbsp;one previously generated. The generated formats can be used to display the information to the screen or &nbsp;to send information directly to a word processor or to a spreadsheet.</font></p>
+<p><font face="arial"><font size="2"><strong>To select an existing format</strong>, check the list shown under <font face="arial" color="#ff0000"><strong>Formats</strong>:</font> and click on the format you require. Then click on&nbsp;<strong>Edit</strong> which will open a window with the selected format. If you know the formatting language&nbsp;<strong>Cds/isis</strong>, you can edit the format to make changes or adjustments; otherwise, do not modify the format as it will generate errors and you will obtain no results when requesting a listing. </font></font></p>
+<p><font face="arial"><font size="2">&nbsp;<font face="arial">In the window where the format is deployed, once the modifications are made click on <strong>send</strong> to send the format to the output file.&nbsp;</font></font></font></p>
+<p><font face="arial"><font size="2"><strong>To create a new format</strong> click on <strong>Create a format </strong> and select the fields you want to include in the output from the list. To select fields, double click on the name or highlight them with the help of the "mouse" and then click on the corresponding arrows. You can use the keys <strong><em>[Ctrl]</em></strong> and <strong><em>[Shift]</em></strong> to select the fields. The single arrows transfer the selected fields from one window to the other and the double arrows transfer all the fields.</font></font></p>
+<p><font face="arial" size="2">You can use the <strong>up </strong>or <strong>down </strong>buttons to change the position of the selected fields.</font></p>
+<p><font face="arial" size="2">When you have finished with your selection click on&nbsp;<strong>Generate format </strong>and the generated format will be displayed in the window. If you know the formatting language&nbsp;<strong>Cds/isis</strong>, you can edit the format to make changes or adjustments; otherwise do not modify the format as it will generate errors and you will obtain no results when requesting a listing.</font></p>
+<p><font size="2"><font face="arial"><font face="arial">The following possibilities exist for the generation of formats:</font></font>&nbsp;</font></p>
+<ul>
+    <li><font size="2"><font face="arial">Table</font> </font></li>
+    <li><font size="2"><font face="arial">Paragraph</font> </font></li>
+    <li><font size="2"><font face="arial">Paragraph (with labels)</font> </font></li>
+    <li><font size="2"><font face="arial">Columns ( in table)</font> </font></li>
+    <li><font size="2"><font face="arial">Columns (delimited)</font> </font></li>
+</ul>
+<p><strong><font face="arial" size="2">Table</font></strong></p>
+<p><font face="arial" size="2">Create a table format, that is, the first column with the label field and the second column with the content. Each field of the database is placed in the first column, and each record is in the second column.</font></p>
+<p><font face="arial" size="2"><strong>Paragraph</strong></font></p>
+<p><font face="arial" size="2">Create a format where each field is placed in a new line. Do not use labels for the fields. The records are separated by a paragraph break (&lt;P&gt;)</font></p>
+<p><strong><font face="arial" size="2">Paragraph (with labels)</font></strong></p>
+<p><font face="arial" size="2">As above, but each field is preceded with the label of the field in bold.</font></p>
+<p><strong><font face="arial" size="2">Columns (in table)</font></strong></p>
+<p><font face="arial" size="2">Create a table with all records selected. 	
+Each record is represented by a row in the table, and each field is located in a column. In this type of format an input window is presented in order to include the titles of the columns. 	
+By default it puts the name of the field in the FDT, but this can be modified.</font></p>
+<p><font face="arial" size="2">This format is ideal for exporting to word processors and spreadsheets and to use as a data source&nbsp;in mail merge processes.</font></p>
+<p><strong><font face="arial" size="2">Columns (delimited)</font></strong></p>
+<p><font face="arial" size="2">This creates a flat file where each record represents a&nbsp;líne. 	
+The selected fields are separated with the delimiter<strong>&nbsp;|</strong>&nbsp;.  If a data field is absent, then, the corresponding position is empty, but the delimiter is present. This is in order not to lose the alignment of columns. In this type of format an input window is presented in order to include the titles of the columns. By default it puts the name of the field in the FDT, but this can be modified.</font></p>
+<p><font face="arial" size="2">The results of the implementation of this format can be saved as a TXT file, which can then be processed by an editing program to convert it into a table.</font></p>
+<p><font face="arial" size="2"><strong>Editing subfields</strong></font></p>
+<p><font face="arial" size="2">During the process of generating formats the following measures for the management of subfields are taken.</font></p>
+<ul>
+    <li><font size="2"><font face="arial" >If in the descripton of the Definition Table of fields no information was provided in column 7 (pre-literal), then the subfield delimiters are removed and a blank space is inserted to separate the different components of the field</font> </font></li>
+    <li><font size="2"><font face="arial">If pre-literal information was contributed, then each subfield is preceded by the corresponding pre-literal. E.g.: if the FDT specifies abc as subfields and a column is specifed in the pre-literal <strong>-,.</strong> (hyphen comma full stop),&nbsp; ^a is not&nbsp;preceded with&nbsp;a delimiter (this is the function of the hyphen,&nbsp;the presence of which is mandatory in order to maintain the spacing between delimiters and characters&nbsp;during editing. Unfortunately you cannot use a space as the FDT editor removes spaces at the top and bottom of each &nbsp;column); ^b is preceded by a comma and ^c is preceded with a full stop&nbsp;</font> </font></li>
+</ul>
+<p><font face="arial" size="2">Once completed with the selection/editing/generation of a format, you can <strong>Generate the&nbsp;output</strong>.</font></p>
+<p><font face="arial" size="2">The records can be selected in two ways:</font></p>
+<ol>
+    <li><font size="2"><font face="arial">Through a range of records (from - to)</font> </font></li>
+    <li><font size="2"><font face="arial">By applying a search expression to the data base. In order to do this click on the search icon and construct the search expression.</font> </font></li>
+</ol>
+<p><font face="arial" size="2"> The following options can be used to conduct a search:</font></p>
+<ol>
+    <li><font face="arial" size="2">Type the search expression directly into the search box </font></li>
+    <li><font face="arial" size="2">Use the advanced search form to build a search expression.&nbsp; To do this click on the link <strong>New</strong> </font></li>
+    <li><font size="2"><font face="arial">To construct a search expression from previously stored searches, use the menu that is presented for this purpose</font> </font></li>
+</ol>
+<p><font face="arial" size="2">Once you have constructed the search expression you can view the results through the link <strong>Preview</strong>, and if considered suitable, this can be stored by using the link <strong>Save search expression</strong> using the link&nbsp;<strong>pfts</strong> 	
+The new search will be stored in the file search_expr.tab located in the sub-folder&nbsp;<strong><em>pfts/language-active</em></strong>&nbsp;of the selected database.</font></p>
+<p><font face="arial" size="2"><strong>Classification of the obtained results</strong></font></p>
+<p><font face="arial" size="2">Prior to displaying the results a classification format can be obtained in order to present/display the records in a defined order. This is by:</font></p>
+<ol>
+    <li><font size="2"><font face="arial">Providing a search format directly</font> </font></li>
+    <li><font size="2"><font face="arial">Selecting a search format from a list of formats already defined</font> </font></li>
+</ol>
+<p><font face="arial" size="2">The formats are defined as:&nbsp; MPU,v1,v2,MPL, or by utilizing any valid command of the CDS/Isis format language. Note that this only provides the allocation of a search format. If you want to sort by various fields, build the search format fields required.</font></p>
+<p><font face="arial" size="2">This option is an additional process for the server and if too many records are requested (depending on the speed of the server and the configuration of the time out limit assigned to the processes in the PHP), the process could be cancelled by "time limit exceeded"</font></p>
+<p><font face="arial"><font face="arial" size="2">Once the selection has been carried out, click on <strong><em>Send to a word processor</em></strong>&nbsp;(to send the obtained results to a word processor), <strong><em>Send to a spreadsheet,  </em></strong>or click on <strong><em>Preview </em></strong>to display the result <font face="arial"></font> on the screen.</font></font></p>
+<p><font face="arial"><font face="arial"><font size="2"> To display the results click on <strong>Generate results</strong> and arrange the information according to the method that you will use for the selection of records,<font face="arial">&nbsp;either by range of Mfn or by searching the database. </font></font></font></font></p>
+<p><font face="arial"><font size="2">To save the format click on <strong>Save format</strong> and give a name (only using letters and numbers and no blank spaces) and provide a description to display in the list of <font face="arial"><font color="#ff0000">Formats already defined.</font></font></font></p>
+<p><font face="arial" size="2">For further information about the formatting language click on:</font></p>
+<p><font face="arial" size="2"><a target="_blank" href="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-LinguagemFormato4-en.pdf">CDS/Isis Formatting Language Manual. (English)</a></font></p>
+<p><font face="arial" size="2"><a target="_blank" href="http://bvsmodelo.bvsalud.org/download/cisis/CISIS-LinguagemFormato4-es.pdf">CDS/Isis Formatting Language Manual. (Spanish)</a></font></p>
+<p><font size="2">&nbsp;</font></p>
+<p><font face="arial"><font face="arial" color="#ff0000" size="2"></font></font></p>

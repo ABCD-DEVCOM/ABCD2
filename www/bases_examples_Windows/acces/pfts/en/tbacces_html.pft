@@ -1,5 +1,0 @@
-'<tr>','<td valign=top>'v10+|; | if a(v10) then '&nbsp;' fi,'</td>'/
-'<td valign=top>'v20+|; | if a(v20) then '&nbsp;' fi,'</td>'/
-'<td valign=top>'v30+|; | if a(v30) then '&nbsp;' fi,'</td>'/
-'<td valign=top>'(if p(v40) then | |v40^a,| |v40^b, if iocc<>nocc(v40) then '<br>' fi fi/) if a(v40) then '&nbsp;' fi,'</td>'/
-'<td valign=top>'v50+|; | if a(v50) then '&nbsp;' fi,'</td>'/

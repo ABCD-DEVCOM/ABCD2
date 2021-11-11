@@ -1,0 +1,41 @@
+Apresenta a ordem emitida, especificando a lista de objetos que a compoem. Para 
+cada objeto se mostram os dados de:
+<ul>
+  <li>Referencia do objeto</li>
+  <li>Número de exemplares adquiridos</li>
+  <li>Pre&ccedil;o unit&aacute;rio de cada exemplar</li>
+  <li>Número da sugest&atilde;o onde se solicitou a aquisi&ccedil;&atilde;o do 
+    objeto</li>
+  <li>Referencia da licita&ccedil;&atilde;o que generou a ordem de compra</li>
+  <li>Base de dados onde se catalogará (novo) ou está catalogado (exemplares) 
+    o objeto</li>
+  <li>Tipo de adquisi&ccedil;&atilde;o: novo ou copias</li>
+  <li>Identifica&ccedil;&atilde;o do objeto, no caso de que o tipo de adquisi&ccedil;&atilde;o 
+    corresponda a copias</li>
+</ul>
+
+Esta informa&ccedil;&atilde;o se obt&eacute;m aplicando o formato <strong>receiving.pft</strong> 
+sobre o registro localizado na base de dados <strong>purchaseorder</strong><br />
+
+<br />
+Se necess&aacute;rio, se modificam os valorer correspondentes ao número de exemplares 
+e pre&ccedil;o unit&aacute;rio. Clique em <strong>continuar</strong> para processar 
+o objeto.<br />
+
+<br />
+Quando se constr&oacute;i este formato se faz uma busca na base de dados catalográfica 
+naqual pertenece o objeto, utilizando como chave o Id. do objeto inserido na ordem 
+de compra. Para determinar se o objeto existe, o formato receiving.pft inclui 
+o seguinte comando:<br />
+
+<br />
+
+<p><font face="Courier New">if s(v500^d)&lt;&gt;'' then f(npost([v500^d],'NC_'v500^c),1,0) fi/fi</font>)</p>
+
+<p>Isto &eacute; , se o objeto que se está processando inclui a informa&ccedil;&atilde;o 
+  da base de dados catalográfica e o número de controle do registro noqual pertenecem 
+  os exemplares adquiridos, ent&atilde;o, se localizam os "postings" correspondentes 
+  na base de dados catalográfica e se o resultado n&atilde;o &eacute; certo, ent&atilde;o, 
+  se assume que j&aacute; existe e se fornece um link para que possa ser revisado 
+  antes de continuar com o processo.</p>
+

@@ -1,0 +1,26 @@
+<p><font face="Arial"><strong><H4>The dbn.par file</H4></strong></font></p>
+<p><font face="Arial"><FONT SIZE=2>The file <strong>dbn.par</strong> is one of the typical <strong>CDS/Isis</strong> configuration files, which indicates the whereabouts or locality of the parts of a database.</p>
+<p>In the current version of <strong>ABCD</strong> this file specifies:</p>
+<ol>
+    <li>the path to the folder where the database itself resides</li>
+    <li>the path to the format which produces the prologue of the page for the update of a record</li>
+    <li>the path to the format which produces the epilogue of the page for the update of a record</li>
+</ol>
+<p>E.g.:</p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font face="Arial"><FONT SIZE=2>biblo.*=%path_database%biblo/data/biblo.*<br />
+prologoact.pft=%path_database%www/prologoact.pft<br />
+epilogoact.pft=%path_database%www/epilogoact.pft</font></font></p>
+</blockquote>
+<p dir="ltr"><font face="Arial"><FONT SIZE=2>The print formats are not included in this file since ABCD creates the path directly based on the configuration parameters.</font></font></p>
+<p dir="ltr"><font face="Arial">The name &nbsp;<strong>%path_database% </strong>in the file<strong> .par</strong> is substituted for the real path in the main configuration file <strong>config.php</strong>. This allows moving the directory <strong>bases</strong> without impact on the directories of the database parts.</font></p>
+<p dir="ltr"><font face="Arial">If for some reason the database files need to be put outside the base folder, specify the absolute (not relative) paths in the file<strong> dbn.par</strong></font></p>
+<p dir="ltr"><font face="Arial">If a format is referencing another one or REF is used to relate to another database, both the referred databases and the referring databases need to be included in the related <strong> dbn.par</strong></font></p>
+<p dir="ltr"><font face="Arial"><font face="Arial"><br />
+</font></font>
+<p>&nbsp;</p>
+</p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px"></blockquote>
+<p dir="ltr">&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</font></font></p>

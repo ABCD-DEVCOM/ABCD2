@@ -1,0 +1,17 @@
+(if v300^f='1' then mpu,v300^a,mpl,
+	'|',f(mfn,1,0),,'_',f(iocc,1,0),
+	'|'v1[1],
+	'|',v300^a ,
+	'|',v300^r
+	'|'v18[1],if s(v16[1],v17[1])<>'' then ' / ',v16[1],|  |v17[1],fi,
+	'|',v300^g,
+	'|',v300^b 
+	'|',v300^c,| |v300^d, 
+	'|',ref(['purchaseorder']l(['purchaseorder'],'RNBN_',mpu,s(v1[1]),'_'v300^r),|<b>|v1|</b>|),mpl, /* is the order generated?*/
+    '|',v3[1],
+	'|',v5[1],
+	'|',v6[1],
+	'|',V21[1],
+    '|',V22[1]
+	'|',v10[1],
+fi/)

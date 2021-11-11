@@ -1,0 +1,39 @@
+<strong>Configuración de las opciones para aplicar el protocolo Z3950 en los procesos de captura de información<br />
+<br />
+</strong>Se presentan tres opciones:<br />
+<br />
+<strong>Servers<br />
+</strong>Define la lista de servidores que van a presentarse en el menú de selección de la hoja de búsqueda de información. Deben suministrarse los siguientes campos<br />
+<br />
+<ul>
+    <li>Nombre del servidor, tal como se presentará en el menú de selección de servidores Z39.50</li>
+    <li>URL a utilizar para su localización</li>
+    <li>Puerto que está habilitado para el acceso al servidor a través del protocolo Z39.50</li>
+    <li>Nombre de la base de datos que se va a accesar en el servidor remoto</li>
+</ul>
+La base de datos de servidores se almacena en la carpeta <strong>bases </strong>bajo el nombre <strong>servers</strong><br />
+<br />
+<strong>Formato de conversión<br />
+<br />
+</strong>La información de los servidores Z3950 siempre se presenta en formato MARC. Esta opción permite definir un formato de conversión para hacer equivalencias entre los campos MARC de la base de datos Z3950 y los campos correspondientes a la base de datos local.<br />
+<br />
+La tabla de conversión considera dos columnas:<br />
+<ul>
+    <li>La primera columna contiene la etiqueta del campo que va a recibir la información en la base de datos local</li>
+    <li>La segunda columna contiene el campo a aplicar al registro MARC para transferir la información a la base de datos local</li>
+</ul>
+La conversión se realiza al momento de transferir un registro a la base de datos local<br />
+<br />
+Los formatos de conversión se almacenan en la carpeta <strong>/bases/cnv/</strong>. La lista de los formatos existentes se denomina <strong>z3950.cnv</strong><br />
+<br />
+<br />
+<strong>Tabla de conversión de caracteres MARC-8 a ANSI</strong><sup><br />
+<br />
+<font size="2"><font face="Arial">Los servidores Z3950 representan los caracteres especiales utilizando la codificación MARC-8, la cual contempla dos posiciones para cada diacrítico. Esta tabla transforma la codificación MARC-8 (dos caracteres para cada diacrítico) a ANSI (un carater para cada diacrítico).<br />
+<br />
+Si luego de hacer una búsqueda sobre un servidor Z3950 aparecen combinaciones de caracteres que no corresponden al lenguaje&nbsp; correspondiente, debe incluir dicha combinación en la tabla de conversión a fin de que el caracter correspondiente sea representado correctamente.&nbsp; <br />
+<br />
+La tabla de conversión de diacríticos se almacena en la carpeta <strong>bases</strong> bajo el nombre <strong>marc8-to-ansi.tab</strong><br />
+</font></font><br />
+<br />
+</sup>

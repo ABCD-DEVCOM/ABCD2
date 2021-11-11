@@ -1,0 +1,15 @@
+<strong><font face="Arial"><H4>Allocation of the control number to database records</H4></font></strong>
+
+<font face="Arial" size="2">This option allows the automatic assignment of a sequential number to the database records.<br />
+<br />
+In the FDT the control field is defined as&nbsp;field type "Autoincrement". If it is going to be used for inventory management for an acquisiton system, it should be indexed with the prefix <strong>CN_ </strong>in the FST <br />
+<br />
+The numbers are recorded in the file <strong>control_number.cn</strong> which is stored in the folder <strong>data</strong> of the corresponding database. The last number assigned to a record is stored in this file. To modify the allocation sequence of this number, use the option  <strong>Restore inventory number or control number</strong> which you will find on the homepage of the cataloging module.<br />
+<br />
+When the automatic allocation of a control number is requested a window appears where there is a range of MFNs to which the number will be assigned. Note that if the range of MFNs is too numerous, the time taken to allocate numbers can cause the process to "time out" on the server and the process&nbsp;can be interrupted.<br />
+<br />
+In this case, revise the output of the action taken by  revising the last MFN processed and resume the process from the next MFN.<br />
+<br />	
+As this process updates all the records in a requested range, it is recommended that entry and editing of records is suspended until this has been completed.<br />
+<br />
+It is recommended that the database is restructured after the allocation of the control number as the size in bytes may have doubled during the process of updating the records. In addition, the inverted file must be generated.</font><br />
