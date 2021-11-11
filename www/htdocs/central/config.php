@@ -9,10 +9,11 @@
 2021-04-02 fho4abcd: autodetected protocol (port was already detected since 2021-02-10))
 2021-04-15 fho4abcd: Send header info to server. (revert 2021-02-25)
 2021-11-04 fho4abcd: Check that extension mbstring is loaded
+2021-11-11 fho4abcd: Remove ffi
 */
 
 ini_set('error_reporting', E_ALL);
-$cisis_versions_allowed="16-60;ffi;bigisis";
+$cisis_versions_allowed="16-60;bigisis";
 
 // *** Main server configuration
 // URL for internal server actions, with autodetected protocol and port
