@@ -19,6 +19,7 @@
 20210829 fho4abcd Modified Import Documents
 20210903 fho4abcd Add options to configure Digital documents functionality and Repair Digital Documents
 20211029 edsz14 Replace vmx_fullinv.php by fullinv.php
+20211114 fho4abcd Add create_gizmo
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -73,6 +74,12 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/mx_dbread.php"
 			//document.admin.target="ABCD_Frame"
 			break;
+		case "create_gizmo":
+  			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/create_gizmo.php"
+			//document.admin.target="ABCD_Frame"
+   			break;
 		case "dbrestore":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -337,6 +344,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		<li><a href='javascript:EnviarFormaMNT("inicializar","<?php echo $msgstr["mnt_ibd"]?>")'><?php echo $msgstr["mnt_ibd"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("eliminarbd","<?php echo $msgstr["mnt_ebd"]?>")'><?php echo $msgstr["mnt_ebd"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>
+		<li><a href='javascript:EnviarFormaMNT("create_gizmo","<?php echo $msgstr["create_gizmo"]?>")'><?php echo $msgstr["create_gizmo"]?></a></li>
       </ul>
   </li>
   <li><a href="#"><?php echo $msgstr["cnv_export"]."/".$msgstr["cnv_import"]?></a>
