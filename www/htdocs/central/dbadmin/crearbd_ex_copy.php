@@ -2,6 +2,7 @@
 /*
 20210921 fho4abcd Complete rewrite: improve/extend functionality, all strings translatable.
 20211110 fho4abcd Ensure dr_path values for UNICODE and CISIS
+20211112 fho4abcd remove debug, copy extra files, do not update content of stw,iso,tab, do not create command files
 */
 /*
 ** Copies a database to a new folder
@@ -43,7 +44,6 @@ $arrHttp['base']    =$base_new;
 $arrHttp['nombre']  =$base_new;
 if (!isset($arrHttp["checkdup"])) $arrHttp["checkdup"]=0;
 
-$OS=strtoupper(PHP_OS);
 $isisac="isisac.tab";
 $isisuc="isisuc.tab";
 if ($arrHttp["UNICODE"]==1){
@@ -133,7 +133,7 @@ if ($arrHttp["checkdup"]==1 ) {
             echo "<p style='color:red'>".$msgstr["fatal"].": ".$msgstr["foldernotc"]." (".$base_new.")";
             die;
         }
-        echo $msgstr["created"]." ".$db_path.$base_new."<br>";
+        echo "<b>".$msgstr["createdfolder"]."</b> ".$db_path.$base_new."<br>";
     }
     // Update bases.dat with new database
     $filename= $db_path."bases.dat";
@@ -208,12 +208,24 @@ if ($arrHttp["checkdup"]==1 ) {
         $contenido.="CISIS_VERSION=".$arrHttp["CISIS_VERSION"].PHP_EOL;
         $contenido.="DIRTREE_EXT=*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,".PHP_EOL;
     }
-    CrearArchivo($newfile,$contenido); echo "<br>";var_dump($colfolderfull); echo "<br>";var_dump($issetCOLL);
+    CrearArchivo($newfile,$contenido);
     if ( $issetCOLL AND !file_exists($colfolderfull)) {
         mkdir($colfolderfull);
-        echo $msgstr["created"]." ".$colfolderfull."<br>";
+        echo "<b>".$msgstr["createdfolder"]."</b> ".$colfolderfull."<br>";
     }
 
+    // Copy .tab files. Do not change the name
+    $olddata=$db_path."$base_old";
+    $handle=opendir($olddata);
+    while (false !== ($tstfile = readdir($handle))) {
+        $ext=substr(strrchr($tstfile, "."), 1);
+        if ( $ext!== false && ($ext=="tab")) {
+            $file   =$db_path.$base_old."/".$tstfile;
+            $newfile=$db_path.$base_new."/".$tstfile;
+            CopyFile($file, $newfile);
+        }
+    }
+    echo "<br>";
     // Copy ayudas folder
     $file = $db_path."$base_old"."/ayudas";
     $newfile = $db_path."$base_new"."/ayudas";
@@ -240,6 +252,7 @@ if ($arrHttp["checkdup"]==1 ) {
     CopyDir($file, $newfile);
 
     // Add items to data folder
+    echo "<br>";
     $newfile=$db_path."$base_new"."/data";
     if (!file_exists($newfile)) {
         mkdir($newfile);
@@ -248,34 +261,20 @@ if ($arrHttp["checkdup"]==1 ) {
 
     // Copy all fst's in the data folder. At least one has the database name
     // Copy also iso files (possible load files for a gizmo)
+    // Copy also stw files
     $olddata=$db_path."$base_old"."/data";
     $handle=opendir($olddata);
     while (false !== ($tstfile = readdir($handle))) {
-        if ($tstfile==$base_old.".fst") {
+        $ext=substr(strrchr($tstfile, "."), 1);
+        if ( $ext!== false && ($ext=="fst" OR $ext=="stw" OR $ext=="iso")) {
             $file   =$db_path.$base_old."/data/".$tstfile;
-            $newfile=$db_path.$base_new."/data/".$base_new.".fst";
-            CopyFile($file, $newfile);
-        } else if ( substr(strrchr($tstfile, "."), 1)=="fst" ) {
-            $file   =$olddata."/".$tstfile;
-            $newfile=$db_path.$base_new."/data/".$tstfile;
-            CopyFile($file, $newfile);
-        }
-        if ( substr(strrchr($tstfile, "."), 1)=="iso" ) {
-            $file   =$olddata."/".$tstfile;
-            $newfile=$db_path.$base_new."/data/".$tstfile;
+            $newname=str_replace($base_old,$base_new,$tstfile);
+            $newfile=$db_path.$base_new."/data/".$newname;
             CopyFile($file, $newfile);
         }
     }
 
-    // Create fullinv.sh or fullinv.dat in the data folder
-    if (stristr($OS,"win")==false){
-        $contenido="mx $base_new fst=@$base_new.fst uctab=../../".$isisuc." actab=../../".$isisac." fullinv=$base_new -all now tell=100";
-        $filename=$db_path."$base_new"."/data/fullinv.sh";
-    } else{
-        $contenido="mx $base_new fst=@$base_new.fst uctab=..\..\\".$isisuc." actab=..\..\\".$isisac." fullinv=$base_new -all now tell=100";
-        $filename=$db_path."$base_new"."/data/fullinv.bat";
-    }
-    CrearArchivo($filename,$contenido);
+    //  Do NOT Create fullinv.sh or fullinv.dat in the data folder: The command is too complicated. See fullinv.php
 
     // Create control_number.cn in the data folder
     $contenido=0;
@@ -296,6 +295,7 @@ if ($arrHttp["checkdup"]==1 ) {
             echo "<b>".$msgstr["init"]." ".$base_new." (".$arrHttp["desc"].")</b> ,";
             echo "CISIS_VERSION=".$arrHttp["CISIS_VERSION"].", ";
             echo "UNICODE=".$arrHttp["UNICODE"]."<br><br>";
+            echo "<b>".$msgstr["processok"]."<br>";
         } else { echo $linea;
             echo "<p style='color:red;font-size:150%'><b>".$msgstr["mnt_ibd"]." ".$base_new." FAILED</b></p>";
             break;
@@ -314,7 +314,7 @@ global $arrHttp, $msgstr;
     if (!file_exists($srcdir)) return;
     if (!is_dir($dstdir)){
         mkdir($dstdir);
-        echo $msgstr["created"]." ".$dstdir."<br>";
+        echo "<b>".$msgstr["createdfolder"]."</b> ".$dstdir."<br>";
     }
     if ($curdir = opendir($srcdir)) {
         while($file = readdir($curdir)) {
@@ -385,6 +385,8 @@ function UpdateContent($dstfile){
     // No updates in help files (too tricky and not functional)
     $ext = pathinfo($dstfile, PATHINFO_EXTENSION);
     if ( isset($ext) && ($ext=="html"  or $ext=="htm") ) return;
+    // No updates in iso,stw and tab files
+    if ( isset($ext) && ($ext=="iso"  or $ext=="stw" or $ext=="tab") ) return;
     
     $fileupdated=false;
     $content="";
