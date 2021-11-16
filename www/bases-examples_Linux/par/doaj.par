@@ -1,4 +1,0 @@
-doaj.*=%path_database%doaj/data/doaj.*
-doaj.pft=%path_database%doaj/pfts/en/doaj.pft
-prologoact.pft=%path_database%www/prologoact.pft
-epilogoact.pft=%path_database%www/epilogoact.pft
