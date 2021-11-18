@@ -5,6 +5,7 @@
 20211013 fho4abcd Pick list "Table":do not echo content,no index failure if value (of key|value) is missing
 20211013 fho4abcd No index failure if a "Date" is the last of the FDT
 20211113 fho4abcd Remove phantom </center>, remove phantom links to awesome
+20211118 fho4abcd improvement for tags with/without leading zeros
 */
 require_once("combo_inc.php");
 
@@ -182,8 +183,10 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 							echo " onKeyDown=\"textCounter(document.forma1.tag".$Etq.",document.forma1.rem$Etq,$maxlength)\"
 					   			   onKeyUp=\"textCounter(document.forma1.tag".$Etq.",document.forma1.rem$Etq,$maxlength)\"";
    						}
-   						if (isset($t[20]) and $t[20]=="U")
+   						if (isset($t[20]) and $t[20]=="U") {
+   							//echo "duplcheck called on field $Etq!<BR>";
    							echo " onKeyUp=\"CheckInventory($Etq)\"";
+   						}
    						echo "> " .$campo."</textarea>";
    						if ($maxlength!=0){
 	         				echo "\n<script>max_l['$Etq']=$maxlength</script>\n";
@@ -895,8 +898,9 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	 $cols=$t[9];
 	 if ($cols==0) $cols=100;
 	 $len=$cols;
-	 $tag=intval($t[1]);
-	 $pref=$t[12];
+
+	 $tag=$t[1];
+    $pref=$t[12];
 	 $help="";
 	 if (isset($t[16])) $help=$t[16];
 	// $upload=substr($linea,53,1);
@@ -998,11 +1002,11 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 				}
 				if ($maxlength!=0)
 						echo "<a style=\"text-decoration:none\" onMouseover=\"ddrivetip(document.forma1.tag".$tag.".value,'linen',300 )\"; onMouseout=\"hideddrivetip()\"; onclick=\"hideddrivetip()\">";
-	   			echo "<input type=$it name=tag$tag id=tag$tag size=$len ";
+	   			echo '<input type="'.$it.'" name=tag'.$tag.' id="tag'.$tag.'" size="'.$len.'"';
 	   			if ($maxlength>0){
-	   				echo " maxlength=$maxlength ";
+	   				echo ' maxlength="'.$maxlength.'" "';
 	   			}
-	   			echo" value=\"$campo\" $arrow>";
+	   			echo ' value="'.$campo.'" '.$arrow.'>';
 	   			if ($maxlength!=0)
 	   				echo "</a>";
 	   			if ($tipo=="AI") {
@@ -1044,7 +1048,6 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   				echo "<a href=\"javascript:Limpiar(document.forma1.tag$tag)\">borrar</a>";
 	   			}
 	 if ($tipo!="I") echo "</td></tr>\n";
-
 }
 
 Function PrepararFormato() {
@@ -1129,7 +1132,8 @@ Function PrepararFormato() {
 		$titulo=$t[2];
 		$len=$t[9];
 		$rep=$t[4];
-		$tag=intval($t[1]);
+		$tag=$t[1];
+        
 	//	if (isset($rels[$tag]["tag"])) continue;
 		$delrep="";
 		if (!isset($t[13])) $t[13]="";
@@ -1232,7 +1236,7 @@ Function PrepararFormato() {
 						$t[0]="F";
 				    	$t[7]="AI";
 			}
-  			$tag=intval($t[1]);
+            $tag=$t[1];
   			$subc=rtrim($t[5]);
   			$edit_subc=rtrim($t[6]);
 			$nsc=strlen(rtrim($t[5]));
