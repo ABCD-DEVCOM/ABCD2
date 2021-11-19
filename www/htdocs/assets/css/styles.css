@@ -1695,7 +1695,7 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	padding: 4px 6px;
 /*	background: var(--white);*/
 /*  display: table-cell;*/
-	display: inline-table;
+	display: inline;
   vertical-align: middle;
 
 }
