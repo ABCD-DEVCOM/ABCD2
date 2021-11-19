@@ -1694,7 +1694,8 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	border-bottom: 1px solid var(--gray-light);
 	padding: 4px 6px;
 /*	background: var(--white);*/
-  display: table-cell;
+/*  display: table-cell;*/
+	display: inline;
   vertical-align: middle;
 
 }
@@ -2112,7 +2113,7 @@ a.button:hover {
 	color: var(--white);
 }
 
-.button_browse.delete, .bt-red {
+.button_browse.delete {
 	background: var(--red);
 	color: var(--white);
 }
@@ -2128,42 +2129,64 @@ a.button:hover {
 
 }
 
-.bt {
+.bt, 
+input[type=button].bt,
+input[type=submit].bt {
 	margin: 3px;
 	width: auto;
 	padding: 5px 13px;
 	border-radius: 3px;
 	text-decoration: none;
-}
-
-.bt-green {
-	padding: 10px 15px;
-	border-radius: 3px;
-	text-decoration: none;
-	background-color: var(--green);
-	border: 1px solid var(--green);
-	color: var(--white);
 	cursor: pointer;
 	outline: 0;
-	padding: 10px 25px;
-	text-align: center;
+	text-align: center;	
+	outline: 0;
 	transform: translateY(0);
 	transition: transform 150ms, box-shadow 150ms;
 	user-select: none;
 	-webkit-user-select: none;
-	touch-action: manipulation;
+	touch-action: manipulation;	
 }
 
-.bt-green:hover {
+.bt:hover, .bt-lg:hover {
 	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
 	transform: translateY(-2px);
 }
 
-@media (min-width: 768px) {
-  .bt-green {
-    padding: 10px 30px;
-  }
+.bt-lg {
+	border-radius: 3px;
+	padding: 10px 25px;
 }
+
+.bt-lg img {
+	vertical-align: middle;
+	margin: 0 3px;
+	filter: invert(99%) sepia(100%) saturate(4%) hue-rotate(
+61deg) brightness(105%) contrast(100%);
+}
+
+.bt-red {
+	border: 1px solid var(--red);
+	background: var(--red);
+	color: var(--white);
+}
+
+.bt-green, 
+input[type=button].bt-green, 
+input[type=submit].bt-green {
+	background-color: var(--green);
+	border: 1px solid var(--green);
+	color: var(--white);
+}
+
+.bt-blue,
+input[type=button].bt-blue, 
+input[type=submit].bt-blue  {
+	background-color: var(--blue);
+	border: 1px solid var(--blue);
+	color: var(--white);
+}
+
 
 /* Change styles for cancel button and delete button on extra small screens */
 @media screen and (max-width: 300px) {
@@ -2172,7 +2195,7 @@ a.button:hover {
   }
 }
 
-.bt-blue, A.singleButton, .submitAdvanced {
+A.singleButton, .submitAdvanced {
 	border-radius: 3px;
 	text-decoration: none;
 	background-color: var(--blue);
@@ -2200,38 +2223,23 @@ a[class^="bt-"] {
 	text-decoration: none;
 }
 
-.bt-blue:hover, A.singleButton:hover, .submitAdvanced:hover, a[class^="bt-"]:hover {
+A.singleButton:hover, .submitAdvanced:hover, a[class^="bt-"]:hover {
 	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
 	transform: translateY(-2px);
 }
 
 .bt-gray {
-	padding: 10px 15px;
-	border-radius: 3px;
-	text-decoration: none;
-	background-color: #85858f;
-	border: 1px solid #85858f;
+	background-color: var(--gray);
+	border: 1px solid var(--gray);
 	color: var(--white);
-	cursor: pointer;
-	outline: 0;
-	padding: 10px 25px;
-	transform: translateY(0);
-	transition: transform 150ms, box-shadow 150ms;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
 }
 
-.bt-gray:hover {
-	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
-	transform: translateY(-2px);
+.bt-orange {
+	background-color: var(--orange);
+	border: 1px solid var(--orange);
+	color: var(--white);
 }
 
-@media (min-width: 768px) {
-  .bt-gray {
-    padding: 10px 30px;
-  }
-}
 
 .bt-disabled {
 	text-decoration: none;
@@ -2247,7 +2255,7 @@ a[class^="bt-"] {
 	background-color: var(--white);
 	border: 1px solid var(--light);
 	box-sizing: border-box;
-	padding: 5px 15px;
+	padding: 10px 15px;
 	margin: 10px 0;
 }
 

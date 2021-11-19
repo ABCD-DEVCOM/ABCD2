@@ -6,6 +6,7 @@
 20211013 fho4abcd No index failure if a "Date" is the last of the FDT
 20211113 fho4abcd Remove phantom </center>, remove phantom links to awesome
 20211118 fho4abcd improvement for tags with/without leading zeros
+20211118 rogercgui edited line 	$it="password\""; $it="text\" onfocus=blur()";
 */
 require_once("combo_inc.php");
 
@@ -942,7 +943,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 
 	  			if ($len==0) $len="100%";
 	   			if ($tipo=="RO" or $tipo=="SRO" or $tipo=="MRO")
-					$it="text onfocus=blur()";
+					$it="text\" onfocus=blur()";
 				else
 					$it="";
 				$maxlength=0;
@@ -969,24 +970,24 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 				switch ($tipo){
 					case "P":
 					case "PR":
-						$it="password ";
+						$it="password\"";
 						if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="") or
 						    (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!=""))
-						    	$it.="onblur=\"pwd_Validation('tag$tag')\" ";
+						    	$it.=" onblur=\"pwd_Validation('tag$tag')\" ";
 						$len=20;
 						if ($MD5==1) $campo="";
 						break;
 					case "AI":
 						echo "<input type=hidden name=autoincrement value=$tag>";
-						$it="text onfocus=blur()";
+						$it="text\" onfocus=blur()";
 						break;
 					case "RO":
                     case "SRO":
 
-						$it="text onfocus=blur()";
+						$it="text\" onfocus=blur()";
 						break;
 					case "I":
-						$it=" hidden";
+						$it=" hidden\"";
 						break;
 					default:
 						$maxlength=0;

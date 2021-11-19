@@ -949,7 +949,7 @@ if (isset($fp)){
 	<a class="bt bt-blue" href=javascript:Validate()><?php echo $msgstr["validate"]?></a>
 	<?php
 	if (!isset($arrHttp["moodle"]))
-		echo "<a class='bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>
+		echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>
 
 <script>
 	var mygrid = new dhtmlXGridFromTable('tblToGrid');

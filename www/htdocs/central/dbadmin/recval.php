@@ -185,7 +185,7 @@ function getElement(psID) {
 function DrawElement(selind,pft,ixpt,fatal){
 	selected=""
 	selind=selind-1
-	xhtml="<tr><td bgcolor=white><select name=tag>\n<option></option>"
+	xhtml="<tr><td><select name=tag>\n<option></option>"
 	for (var opt in option){
 		o=option[opt].split('|')
 
@@ -195,21 +195,22 @@ function DrawElement(selind,pft,ixpt,fatal){
 		xhtml+="<option value=\""+o[0]+"\""+selected+">"+o[1]+" ("+o[0]+" "+o[2]+")</option>\n";
 		selected=""
 	}
-	xhtml+="</select><br><a href=javascript:AddElement("+ixpt+")><?php echo $msgstr["add"]?></a></td>"
-	xhtml+="<td bgcolor=white><textarea name=format cols=80 rows=1>"+pft+"</textarea></td>"
-	xhtml+="<td bgcolor=white><a href=\"javascript:EditarFormato("+ixpt+")\"><img src=../../assets/images/edit.png border=0></a>&nbsp; &nbsp;"
-	xhtml+="&nbsp;<a href=javascript:DeleteElement("+ixpt+")><img src=../dataentry/img/toolbarDelete.png alt=\"<?php echo $msgstr["delete"]?>\" text=\"<?php $msgstr["delete"]?>\"></a>"
+	xhtml+="</select></td>"
+	xhtml+="<td><textarea name=format cols=80 rows=3>"+pft+"</textarea></td>"
+	xhtml+="<td>"
 	<?php if ($arrHttp["format"]=="recval")
-		echo 'xhtml+="<div><input type=checkbox name=check";
+		echo 'xhtml+="<div style=\"width=100%; padding: 5px;\"><input type=checkbox name=check";
 			if (fatal==true) xhtml+=" checked"
-			xhtml+=">'.$msgstr["fatal"].'</div></td>"
+			xhtml+=">'.$msgstr["fatal"].'</div>"
 			';
 	?>
+	xhtml+="<a class='bt bt-blue' href='javascript:EditarFormato("+ixpt+")'><i class='far fa-edit'></i></a><a class='bt bt-red' href=javascript:DeleteElement("+ixpt+")><i class='far fa-trash-alt' alt='<?php echo $msgstr["delete"];?>' title='<?php echo $msgstr["delete"];?>' ></i></a>"
+	xhtml+="<a class='bt bt-orange' href=javascript:AddElement("+ixpt+")><i class='fas fa-plus'></i> <?php echo $msgstr["add"]?></a></td>"
     return xhtml
 }
 function DeleteElement(ix){
 	seccion=returnObjById( "rows" )
-	html_sec="<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1>"
+	html_sec="<table cellpadding=8 cellspacing=1>"
 	html_sec+="<tr><td><?php echo $msgstr["campo"]?></td><td nowrap><?php echo $msgstr[$arrHttp["format"]]?></td><td></td>"
 	Ctrl=eval("document.recval.tag")
 	ixLength=Ctrl.length
@@ -242,7 +243,7 @@ function DeleteElement(ix){
 
 function AddElement(ixpos){
 	seccion=returnObjById( "rows" )
-	html="<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1>"
+	html="<table cellpadding=8 cellspacing=1>"
 	html+="<tr><td><?php echo $msgstr["campo"]?></td><td nowrap><?php echo $msgstr[$arrHttp["format"]]?></td><td></td>"
 	Ctrl=eval("document.recval.tag")
 	if (Ctrl){
@@ -312,7 +313,7 @@ echo "<a href=\"typeofrecs.php?Opcion=update&type=&base=".$arrHttp["base"]."$enc
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/recval.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: recval.php";
+echo "&nbsp; &nbsp; Script: dbadmin/recval.php";
 ?>
 </font>
 </div>
@@ -320,8 +321,8 @@ echo "<font color=white>&nbsp; &nbsp; Script: recval.php";
 	<div class="formContent">
 
 
-<form name=recval  method=post onsubmit="javascript:return false">
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+<form name="recval"  method="post" onsubmit="javascript:return false">
+<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
 <?php
 if (isset($arrHttp["encabezado"]))
    echo "<input type=hidden name=encabezado value=s>";
@@ -385,7 +386,7 @@ if (file_exists($archivo)){
 }
 echo "<center>";
 echo "<div id=rows>\n";
-echo "<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1>";
+echo "<table border=0 cellpadding=8 cellspacing=1>";
 echo "<tr><td>".$msgstr["campo"]."</td><td nowrap>".$msgstr[$arrHttp["format"]]."</td><td></td>";
 $ix=-1;
 if (!isset($pft))
@@ -403,7 +404,7 @@ if (isset($pft)){
 		$tag=trim($x[0]);
 //		if ($tag!=""){
 			$ix=$ix+1;
-			echo "<tr><td bgcolor=white>";
+			echo "<tr><td>";
 			echo '<select name=tag><option></option>';
 			foreach ($select as $val){
 				$t=explode('|',$val);
@@ -413,18 +414,21 @@ if (isset($pft)){
 					$selected="";
 				echo "<option value=".$t[1]." $selected>".$t[2]." (".$t[1]. " ".$t[5].")</option>\n";
 			}
-			echo "</select><br><a href=javascript:AddElement($ix)>".$msgstr["add"]."</a></td>";
+			echo "</select></td>";
             $y=explode('$$|$$',$x[1]);
-			echo "<td bgcolor=white><textarea cols=80 rows=1 name=format>";
+			echo "<td bgcolor=white><textarea cols=80 rows=3 name=format>";
 			echo $y[0];
-			echo "</textarea></td><td bgcolor=white><a href=\"javascript:EditarFormato($ix)\"><img src=../../assets/images/edit.png border=0></a>&nbsp; &nbsp;
-			&nbsp;<a href=javascript:DeleteElement(".$ix.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a>";
+			echo "</textarea>";
+			echo "</td><td>";
 			if ($arrHttp["format"]=="recval"){
-				echo "<div><input type=checkbox name=check";
+				echo "<div style='width=100%; padding: 5px;'><input type=checkbox name=check";
 				if (isset($y[1]) and trim($y[1])=="true") echo " checked";
 				echo ">".$msgstr["fatal"]."</div>";
-				echo "</td>";
 			}
+			echo "<a class='bt bt-blue' href=\"javascript:EditarFormato($ix)\"><i class='far fa-edit'></i></a>";
+			echo "<a class='bt bt-red' href=javascript:DeleteElement(".$ix.")><i class='far fa-trash-alt' alt=\"".$msgstr["delete"]."\" title=\"".$msgstr["delete"]."\"></i></a>";
+
+			echo "<a class='bt bt-orange' href=javascript:AddElement($ix)><i class='fas fa-plus'></i> ".$msgstr["add"]."</a></td>";
 		}
 //	}
 }
@@ -433,18 +437,18 @@ echo "<tr><td>&nbsp;</td><td nowrap>&nbsp;</td><td>&nbsp;</td>";
 echo "</table></div>";
 
 echo "\n<table>\n";
-echo "<tr><td bgcolor=white>";
+echo "<tr><td>";
 echo $msgstr["testmfn"];
-echo "&nbsp; <input type=text size=5 name=Mfn> <a href=javascript:Test()>".$msgstr["test"]."</a>  &nbsp; &nbsp;";
-echo "</td><td colspan=3  bgcolor=white><img src=../dataentry/img/toolbarSave.png> &nbsp;";
+echo "&nbsp; <input type=text size=5 name=Mfn> <a class='bt bt-gray' href=javascript:Test()> <i class='fas fa-vial'></i> ".$msgstr["test"]."</a>  &nbsp; &nbsp;";
+echo "</td><td colspan=3>&nbsp;";
 
-echo "<a href=javascript:Enviar()>".$msgstr["save"]."&nbsp;</a> ($pref".$arrHttp["base"]."$ext)  &nbsp; &nbsp ";
+echo "<a class='bt bt-green' href=javascript:Enviar()><i class='far fa-save'></i> ".$msgstr["save"]."&nbsp;</a> ($pref".$arrHttp["base"]."$ext)  &nbsp; &nbsp ";
 echo "<input type=hidden name=fn value=$pref".$arrHttp["base"]."$ext>";
 
 $tr=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab";
 if (!file_exists($tr))  $tr=$db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab";
 if (file_exists($tr)){
-	echo "| &nbsp; &nbsp <img src=../dataentry/img/toolbarSave.png> &nbsp;";
+	echo "| &nbsp; &nbsp; &nbsp;";
 	echo $msgstr["saveas"].": ";
 
 	$fp=file($tr);
@@ -471,18 +475,23 @@ if (file_exists($tr)){
 		}
 	}
 	echo "</select>\n";
-	echo "<a href=javascript:SaveAs()>".$msgstr["save"]."</a>  &nbsp; &nbsp";
+	echo "<a class='bt bt-blue' href=javascript:SaveAs()><i class='far fa-save'></i> ".$msgstr["save"]."</a>  &nbsp; &nbsp";
 }
-if (isset($arrHttp["encabezado"])) echo "&nbsp; &nbsp; | &nbsp; &nbsp; <a href=typeofrecs.php?Opcion=update&base=".$arrHttp["base"]."$encabezado>".$msgstr["cancelar"]."</a>";
+if (isset($arrHttp["encabezado"])) 
+echo "<a class='bt bt-red' href=typeofrecs.php?Opcion=update&base=".$arrHttp["base"]."$encabezado><i class='fas fa-times'></i> ".$msgstr["cancelar"]."</a>";
 echo "</td></table>";
 echo "<input type=hidden name=ValorCapturado>";
 echo "</form>"
+
 ?>
-<form name=test  method=post action=recval_test.php target=RecvalTest>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=Mfn>
-<input type=hidden name=ValorCapturado>
+
+
+<form name=test  method=post action="recval_test.php" target="RecvalTest">
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+	<input type="hidden" name="Mfn">
+	<input type="hidden" name="ValorCapturado">
 </form>
-</div></div>
+	</div>
+</div>
+
 <?php include("../common/footer.php");?>
-</body></html>
