@@ -7,8 +7,10 @@ $xnr="";
 $xtl="";
 $Rtl="";
 $Rnr="";
-if (isset($default_values)){	echo "<span class=title><h2>".$msgstr["valdef"]."</h2></span>";
-}else{
+if (isset($default_values)){
+	echo "<span class=title><h2>".$msgstr["valdef"]."</h2></span>";
+
+}else{
 	if (isset($arrHttp["Formato"])) echo "<input type=hidden name=Formato value='".$arrHttp["Formato"]."'>\n";
 }
 if ($arrHttp["Opcion"]!="valdef"){
@@ -24,7 +26,11 @@ if ($arrHttp["Opcion"]!="valdef"){
 if (isset($arrHttp["wks_a"])){
 	$w=explode('|',$arrHttp["wks_a"]);
 	echo "&nbsp; &nbsp; ".$msgstr["fmt"].":  (".$w[0].")";
-}else{	if (isset($arrHttp["wks"])){		echo "&nbsp; &nbsp; ".$msgstr["fmt"].": ".$arrHttp['wks'];	}}
+}else{
+	if (isset($arrHttp["wks"])){
+		echo "&nbsp; &nbsp; ".$msgstr["fmt"].": ".$arrHttp['wks'];
+	}
+}
 echo "&nbsp <a href=JavaScript:OpenAll()>".$msgstr["expand_colapse"]."</a>";
 // Se construye el índice de acceso a la hoja de entrada
 $ixIndice="S";
@@ -35,8 +41,10 @@ if ($ixIndice=="S"){
 		$linea=$vars[$ix1];
 		$t=explode('|',$linea);
 	}
-    if ($i!=-1){    	echo "</td></table>";
-    	echo "</div><br>";    }
+    if ($i!=-1){
+    	echo "</td></table>";
+    	echo "</div><br>";
+    }
 }
 	echo "<input type=hidden name=tag$Rtl value='".$xtl."'>";
 	echo "<input type=hidden name=tag$Rnr value='".$xnr."'>";
@@ -55,27 +63,33 @@ if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se está
 	$db=$arrHttp["base"];
 	if (!$ver or isset($arrHttp["capturar"])){
 		echo "<dd><table border=0 cellspacing=5 cellpadding=10 bgcolor=white>\n";
-		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){            echo "<td align=center bgcolor=white ><a href=\"javascript:CapturarRegistro()\"><img src=img/capturar.gif border=0 alt=\"".$msgstr["m_capturar"]."\"></a></td>\n";		}else{
+		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
+            echo "<td align=center bgcolor=white ><a href=\"javascript:CapturarRegistro()\"><img src=img/capturar.gif border=0 alt=\"".$msgstr["m_capturar"]."\"></a></td>\n";
+		}else{
 
 			if (!isset($arrHttp["encabezado"])){
-				echo "<td align=center bgcolor=white><a href=\"javascript:EnviarForma()\"><img src=img/barSave.png border=0 alt=\"".$msgstr["actualizar"]."\"></a></td>\n";
-    			echo "<td align=center bgcolor=white><a href=javascript:CancelarActualizacion()><img src=img/barCancelEdit.png border=0 alt=\"".$msgstr["cancelar"]."\"></a></td>\n";
+				echo "<td align=center bgcolor=white><a class='bt-lg bt-green' href=\"javascript:EnviarForma()\"><img src=\"../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg\" border=0 alt=\"".$msgstr["actualizar"]."\">".$msgstr["actualizar"]."</a></td>\n";
+    			echo "<td align=center bgcolor=white><a class='bt-lg bt-gray' href=javascript:CancelarActualizacion()><img src=../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg border=0 alt=\"".$msgstr["cancelar"]."\">".$msgstr["cancelar"]."</a></td>\n";
 				if (isset($_SESSION["permiso"]["CENTRAL_DELREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_DELREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){
-					echo "<td align=center bgcolor=white><a href=javascript:EliminarRegistro()><img src=img/barDelete.png border=0 alt=\"".$msgstr["eliminar"]."\"></a></td>\n";
+					echo "<td><a class='bt-lg bt-red' href=javascript:EliminarRegistro()><img src=../../assets/svg/catalog/ic_fluent_delete_dismiss_24_regular.svg border=0 alt=\"".$msgstr["eliminar"]."\">".$msgstr["eliminar"]."</a></td>\n";
 				}
 			}
 		}
 		echo "</table>\n";
 	}
 }
-if (isset($default_values)){	echo "<dd><table border=0 cellspacing=5 cellpadding=10>\n";
+if (isset($default_values)){
+	echo "<dd><table border=0 cellspacing=5 cellpadding=10>\n";
 	echo "<td align=center ><a href=\"javascript:EnviarValoresPorDefecto()\"><img src=img/barSave.png border=0 alt=\"".$msgstr["actualizar"]."\"></a></td>\n";
 	echo "<td align=center ><a href=javascript:CancelarActualizacion()><img src=img/barCancelEdit.png border=0 alt=\"".$msgstr["cancelar"]."\"></a></td>\n";
-	echo "</table>\n";}
+	echo "</table>\n";
+}
 echo "</form>\n";
 echo "<form method=post name=forma2 action=fmt.php >\n";
-if (isset($arrHttp["encabezado"])) {	 echo "<input type=hidden name=encabezado value=s>\n";
-	 echo "<input type=hidden name=Formato value=".$arrHttp["base"].">\n";}
+if (isset($arrHttp["encabezado"])) {
+	 echo "<input type=hidden name=encabezado value=s>\n";
+	 echo "<input type=hidden name=Formato value=".$arrHttp["base"].">\n";
+}
 echo "<input type=hidden name=IsisScript value=ingreso.xis>\n";
 echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
 echo "<input type=hidden name=cipar value=".$arrHttp["cipar"].">\n";

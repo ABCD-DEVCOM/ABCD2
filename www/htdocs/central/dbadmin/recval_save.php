@@ -18,9 +18,9 @@ if (isset($arrHttp["encabezado"]))
 else
 	$encabezado="";
 $lang=$_SESSION["lang"];
-$fp=fopen($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fn"],"w");
+$fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["fn"],"w");
 if (!$fp){
-	echo $arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fn"].": ";
+	echo $arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["fn"].": ";
 	echo $msgstr["nopudoseractualizado"];
 	die;
 }
@@ -68,10 +68,8 @@ echo "<a href=$retorno?base=". $arrHttp["base"].$encabezado." class=\"defaultBut
 		</div>";
 echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
-echo "<font size=1 face=arial> &nbsp; &nbsp; Script: dbadmin/recval_save.php</font>";
-echo "<center><h4>".$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fn"].": ".$msgstr["updated"];
+echo "&nbsp; &nbsp; Script: dbadmin/recval_save.php";
+echo "<center><h4>".$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["fn"].": ".$msgstr["updated"];
 echo "</h4></center></div></div>";
 include("../common/footer.php");
-echo "</body>
-</html>";
 ?>

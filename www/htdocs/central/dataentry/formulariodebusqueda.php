@@ -62,6 +62,7 @@ function CopyExpr(){
 	o=Opc.split('|')
 	document.forma1.expre[copyTo].value=o[1]
 	document.forma1.camp[copyTo].selectedIndex=0
+	document.forma1.submit();
 }
 
 function GetExpression(ic){
@@ -281,7 +282,7 @@ function Diccionario(jx){
 				if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab")){
 					if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$arrHttp["base"]."_EDITSTOREDEXPR"])){
 						if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry")
-							echo "<a class='bt-blue' href=\"edit_stored_expr.php?base=".$arrHttp["base"]."\"><i class='far fa-edit'></i> ". $msgstr["edit_search_expr"]."</a>";
+							echo "<a class='bt bt-blue' href=\"edit_stored_expr.php?base=".$arrHttp["base"]."\"><i class='far fa-edit'></i> ". $msgstr["edit_search_expr"]."</a>";
 					}
 				}
 				echo "<p>".$msgstr["mensajeb"]."</td>
@@ -348,10 +349,10 @@ function Diccionario(jx){
 
 
 	<div class="ActionFooter">
-        <a href="javascript:PrepararExpresion()" class="bt-green">
+        <a href="javascript:PrepararExpresion()" class="bt bt-green">
              <i class="fas fa-search"></i> <?php echo $msgstr["m_buscar"]?>
         </a>
-        <a href="javascript:LimpiarBusqueda(this,1)" class="bt-gray">
+        <a href="javascript:LimpiarBusqueda(this,1)" class="bt bt-gray">
            <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?>
         </a>
 
@@ -359,7 +360,7 @@ function Diccionario(jx){
 	<?php
 	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserve"){
 	?>
-         <a href="javascript:document.basedatos.submit()" class="bt-green">
+         <a href="javascript:document.basedatos.submit()" class="bt bt-green">
             <i class="fas fa-search"></i> <?php echo $msgstr["back"]?>
          </a>
 	<?php
