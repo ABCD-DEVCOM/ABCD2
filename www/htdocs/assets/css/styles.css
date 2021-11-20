@@ -280,11 +280,16 @@ a.menuButton span {
 	border-radius: 4px;
 }
 
+table.alert:before {
+	display: none;
+}
+
 .alert:before {
 	font-family: "Font Awesome 5 Free";
 	content: "\f071";
 	color: #664d03;
 	margin-right: 10px;
+	display: inline-block;
 }
 
 
@@ -1695,7 +1700,7 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	padding: 4px 6px;
 /*	background: var(--white);*/
 /*  display: table-cell;*/
-	display: inline;
+	display: inline-table;
   vertical-align: middle;
 
 }

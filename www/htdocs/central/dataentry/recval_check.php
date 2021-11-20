@@ -90,7 +90,7 @@ if (file_exists($file_val)){
 			if (trim($v_res)!=""){
 				$output.="<tr><td valign=top>$v_tag</td><td valign=top>".nl2br($v_res)."</td>";
 				if (isset($err[$ix_fatal])and $err[$ix_fatal]=="true"){
-					$output.=  "<td valign=top><font color=darkred>".$msgstr["fatal"]."</td>";
+					$output.=  "<td valign=top>&nbsp;<font color=darkred>".$msgstr["fatal"]."</td>";
 					$fatal="Y";
 				}else{
 					$output.=  "<td>&nbsp;</td>";
@@ -98,7 +98,9 @@ if (file_exists($file_val)){
 			}
 	    }
 	}
-	if (trim($output)!="") {		$output="<table bgcolor=#dddddd>".$output. "</table>";	}
+	if (trim($output)!="") {
+		$output="<table class='alert'><tr><td>".$output."<td></tr></table>";
+	}
 }else{
 	$output="";
 	$fatal="";
