@@ -3,6 +3,7 @@
 20210921 fho4abcd Complete rewrite: improve/extend functionality, all strings translatable.
 20211110 fho4abcd Ensure dr_path values for UNICODE and CISIS
 20211112 fho4abcd remove debug, copy extra files, do not update content of stw,iso,tab, do not create command files
+20211122 fho4abcd Improve create of dbn.par: works now with actab/uctab. More files copied/renamed. Add testbutton. Sanitize html.
 */
 /*
 ** Copies a database to a new folder
@@ -14,10 +15,15 @@
 ** - 'CISIS_VERSION' = Value of CISIS_VERSION for the new database (may be different from original)
 **
 ** This function copies all relevant configuration files recursively
-** Filenames are converted if matching <base_sel>.*
+** Filenames are converted if matching <base_sel>.* and _<base_sel>.*
 ** Strings in copied files are converted if applicable (See function UpdateContent below)
-** References to isisuc/isisac are filled according to value of UNICODE
-** The data content is NOT copied. An empty database is created
+** Specials for dr_path.def:
+**  - This function creates the folders for COLLECTION and ROOT if applicable
+** Specials for <dbn>.par:
+**  - If unicode values match the original settings of actab/uctab are preserved 
+**  - If unicode values are different the keys actab and uctab are not written (with a remark).
+**  - Keywords isisac.tab/isisuc.tab are treated as actab/uctab 
+** The database content is NOT copied. An empty database is created
 ** This function does NOT set any protection: left to default PHP and configuration of the webserver user
 */
 global $arrHttp;
@@ -44,13 +50,6 @@ $arrHttp['base']    =$base_new;
 $arrHttp['nombre']  =$base_new;
 if (!isset($arrHttp["checkdup"])) $arrHttp["checkdup"]=0;
 
-$isisac="isisac.tab";
-$isisuc="isisuc.tab";
-if ($arrHttp["UNICODE"]==1){
-    $isisac="isisactab_utf8.tab";
-    $isisuc="isisuctab_utf8.tab";
-}
-
 ?>
 <body>
 <script>
@@ -61,6 +60,10 @@ function Confirmar(){
 function Regresar(){
 	document.continuar.action='menu_creardb.php'
 	document.continuar.submit()
+}
+function OpenWindow(){
+	msgwin=window.open("","testshow","width=800,height=250");
+	msgwin.focus()
 }
 </script>
 <?php
@@ -73,7 +76,7 @@ include("../common/institutional_info.php");
     <div class="actions">
 <?php 
 // Show 'back' button,
-$backtourl=$backtoscript."?base=".$arrHttp["base"];
+$backtourl=$backtoscript."&base=".$arrHttp["base"];
 echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
 echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
     <span><strong>".$msgstr["regresar"]."</strong></span></a>";
@@ -86,16 +89,6 @@ include("../common/inc_div-helper.php");
 ?>
 <div class="middle form">
 <div class="formContent">
-<form name=continuar action=crearbd_ex_copy.php method=post>
-<?php
-foreach ($_REQUEST as $var=>$value){
-    // some values may contain quotes or other "non-standard" values
-    $value=htmlspecialchars($value);
-	echo "<input type=hidden name=$var value=\"$value\">\n";
-}
-?>
-<input type=hidden name=checkdup>
-</form>
 <?php
 if (!file_exists($db_path.$base_old)) {
     // In case of corrupt bases.dat
@@ -103,6 +96,17 @@ if (!file_exists($db_path.$base_old)) {
     die;
 }
 if ($arrHttp["checkdup"]==0){
+    ?>
+    <form name=continuar action=crearbd_ex_copy.php method=post>
+    <?php
+    foreach ($_REQUEST as $var=>$value){
+        // some values may contain quotes or other "non-standard" values
+        $value=htmlspecialchars($value);
+        echo "<input type=hidden name=$var value=\"$value\">\n";
+    }
+    ?>
+    <input type=hidden name=checkdup>
+    <?php
     $handle = opendir($db_path);
     while (false !== ($file = readdir($handle))) {
         if ($file != "." && $file != ".." && !is_file($db_path."/".$file) && $file==$base_new) {
@@ -126,8 +130,12 @@ if ($arrHttp["checkdup"]==0){
         }
     }
     closedir($handle);
+    ?>
+    </form>
+    <?php
 }
 if ($arrHttp["checkdup"]==1 ) {
+    // Create the new base folder
     if (!file_exists($db_path.$base_new)){
         if (mkdir($db_path.$base_new)==false) {
             echo "<p style='color:red'>".$msgstr["fatal"].": ".$msgstr["foldernotc"]." (".$base_new.")";
@@ -148,35 +156,15 @@ if ($arrHttp["checkdup"]==1 ) {
     $contenido.="\n".$base_new."|".$descripcion;
     CrearArchivo($filename,$contenido);
 
-    // Copy & update par/[dbn].par
-    $oldfile=$db_path."par/$base_old.par";
-    $newfile=$db_path."par/$base_new.par";
-    $fp=file($oldfile);
-    $contenido="";
-    $tokens=array();
-    $issetISISAC=false;
-    $issetISISUC=false;
-    foreach ($fp as $value){
-        $tokens=explode('=',$value);
-        if (isset($tokens[0]) && trim($tokens[0])=="isisac.tab") {
-            $contenido.="isisac.tab=%path_database%".$isisac.PHP_EOL;
-            $issetISISAC=true;
-        } else if (isset($tokens[0]) && trim($tokens[0])=="isisuc.tab") {
-            $contenido.="isisuc.tab=%path_database%".$isisuc.PHP_EOL;
-            $issetISISUC=true;
-        } else {
-            $contenido.=str_replace($base_old,"$base_new",$value);
-        }
-    }
-    if (!$issetISISAC) $contenido.="isisac.tab=%path_database%".$isisac.PHP_EOL;
-    if (!$issetISISUC) $contenido.="isisuc.tab=%path_database%".$isisuc.PHP_EOL;
-    CrearArchivo($newfile,$contenido);
-
-    // Copy & update dr_path.def or create a new with default settings
+    /*
+    ** Copy & update dr_path.def or create a new with default settings
+    */
     $oldfile=$db_path."$base_old"."/dr_path.def";
     $newfile=$db_path."$base_new"."/dr_path.def";
     $contenido="";
     $issetCOLL=false;
+    $issetROOT=false;
+    $oldunicode=0;// We assume that an unset unicode was set to 0
     if ( file_exists($oldfile) ) {
         $fp=file($oldfile);
         $tokens=array();
@@ -184,19 +172,33 @@ if ($arrHttp["checkdup"]==1 ) {
         $issetUNI=false;
         foreach ($fp as $value){
             $tokens=explode('=',$value);
-            if (isset($tokens[0]) && trim($tokens[0])=="CISIS_VERSION") {
+            if (isset($tokens[0])) $tokens0=trim($tokens[0]); else $tokens0="";
+            if (isset($tokens[1])) $tokens1=trim($tokens[1]); else $tokens1="";
+            if ($tokens0=="CISIS_VERSION") {
                 $contenido.="CISIS_VERSION=".$arrHttp["CISIS_VERSION"].PHP_EOL;
                 $issetCISIS=true;
-            } else if (isset($tokens[0]) && trim($tokens[0])=="UNICODE") {
+            } else if ($tokens0=="UNICODE") {
                 $contenido.="UNICODE=".$arrHttp["UNICODE"].PHP_EOL;
                 $issetUNI=true;
-            } else if (isset($tokens[0]) && trim($tokens[0])=="COLLECTION") {
+                if ($tokens1!=""){
+                    $oldunicode=intval($tokens1);
+                    if ( $oldunicode<0) $oldunicode=0;
+                    if ( $oldunicode>1) $oldunicode=1;
+                }
+            } else if ($tokens0=="COLLECTION" && $tokens1!="" ) {
                 $issetCOLL=true;
                 $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
-                $colfolderfull=str_replace("%path_database%",$db_path."/",$tokens[1]);
+                $colfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
                 $colfolderfull=str_replace($base_old,"$base_new",$colfolderfull);
                 $colfolderfull=trim($colfolderfull);
                 if ( substr($colfolderfull,-1)=="/") $colfolderfull=substr($colfolderfull,0,-1);
+            } else if ($tokens0=="ROOT" && $tokens1!="" ) {
+                $issetROOT=true;
+                $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
+                $rootfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
+                $rootfolderfull=str_replace($base_old,"$base_new",$rootfolderfull);
+                $rootfolderfull=trim($rootfolderfull);
+                if ( substr($rootfolderfull,-1)=="/") $rootfolderfull=substr($rootfolderfull,0,-1);
             } else {
                 $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
             }
@@ -209,12 +211,90 @@ if ($arrHttp["checkdup"]==1 ) {
         $contenido.="DIRTREE_EXT=*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,".PHP_EOL;
     }
     CrearArchivo($newfile,$contenido);
+    // Create a possible missing COLLECTION folder
     if ( $issetCOLL AND !file_exists($colfolderfull)) {
-        mkdir($colfolderfull);
-        echo "<b>".$msgstr["createdfolder"]."</b> ".$colfolderfull."<br>";
+        $result=@mkdir($colfolderfull);// do not create intermediate folders (to avoid complete wrong full paths)
+        if ($result===false) {
+            $file_get_contents_error= error_get_last();
+            echo "<span style='color:red'>".$msgstr["error_create_folder"].": ".$colfolderfull;
+            echo "<br>&rarr; ".$file_get_contents_error["message"];
+            echo "<br>&rarr; ".$file_get_contents_error["file"]."</span><br>";
+        }
+        else {
+            echo "<b>".$msgstr["createdfolder"]."</b> ".$colfolderfull."<br>";
+        }
+    }
+    // Create a possible missing ROOT folder
+    if ( $issetROOT AND !file_exists($rootfolderfull)) {
+        $result=@mkdir($rootfolderfull);// do not create intermediate folders (to avoid complete wrong full paths)
+        if ($result===false) {
+            $file_get_contents_error= error_get_last();
+            echo "<span style='color:red'>".$msgstr["error_create_folder"].": ".$rootfolderfull;
+            echo "<br>&rarr; ".$file_get_contents_error["message"];
+            echo "<br>&rarr; ".$file_get_contents_error["file"]."</span><br>";
+        }
+        else {
+            echo "<b>".$msgstr["createdfolder"]."</b> ".$rootfolderfull."<br>";
+        }
     }
 
-    // Copy .tab files. Do not change the name
+    /*
+    ** Copy & update par/[dbn].par
+    ** Note that existing actab/uctab entries (old or new) will not be copied
+    ** They can be wrong (due to change of ansi<->utf8
+    */
+    $oldfile=$db_path."par/$base_old.par";
+    $newfile=$db_path."par/$base_new.par";
+    // The show button gives the content of the parameter file
+    $showbutton=
+        '<a href="../utilities/show_par_file.php?par_file='.$newfile.'" target=testshow onclick=OpenWindow()>'.$msgstr["show"].' &lt;dbn&gt;.par</a>';
+
+    $fp=file($oldfile);
+    $contenido="";
+    $tokens=array();
+    foreach ($fp as $value){
+        $tokens=explode('=',$value);
+        if (isset($tokens[0])) {
+            $tokens0=trim($tokens[0]);
+            unset($tokens1);
+            if (isset($tokens[1]) AND trim($tokens[1])!="") $tokens1=trim($tokens[1]);
+            // Save the location of the conversion tables if the unicode values match
+            if ($oldunicode==$arrHttp["UNICODE"] && isset($tokens1)) {
+                if ( $tokens0=="isisac.tab" OR $tokens0=="actab" ) {
+                    $oldactab=str_replace($base_old,"$base_new",$tokens1);
+                }
+                if ( $tokens0=="isisuc.tab" OR $tokens0=="uctab" ) {
+                    $olductab=str_replace($base_old,"$base_new",$tokens1);
+                }
+            }
+            if ( $tokens0!="isisac.tab" && $tokens0!="actab" && $tokens0!="isisuc.tab" && $tokens0!="uctab") {
+                $contenido.=str_replace($base_old,"$base_new",$value);
+            }
+        } else {
+            $contenido.=str_replace($base_old,"$base_new",$value);
+        }
+    }
+    if (isset($oldactab) ) {
+        $actabline="actab=".$oldactab;
+        $contenido.=$actabline.PHP_EOL;
+    } 
+    else {
+        echo "<span style='color:blue'>".$msgstr["parmfile"].": par/".$base_new.".par ".$msgstr["parmdefault"]."<br>";
+        echo "&rarr; <b>actab=</b> <br></span>";
+    }
+    if (isset($olductab) ) {
+        $uctabline="uctab=".$olductab;
+        $contenido.=$uctabline.PHP_EOL;
+    } 
+    else {
+        echo "<span style='color:blue'>".$msgstr["parmfile"].": par/".$base_new.".par ".$msgstr["parmdefault"]."<br>";
+        echo "&rarr; <b>uctab=</b> <br></span>";
+    }
+    CrearArchivo($newfile,$contenido);
+    echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton<br>";
+
+
+    // Copy .tab files in the database topfolder. Do not change the name
     $olddata=$db_path."$base_old";
     $handle=opendir($olddata);
     while (false !== ($tstfile = readdir($handle))) {
@@ -225,7 +305,6 @@ if ($arrHttp["checkdup"]==1 ) {
             CopyFile($file, $newfile);
         }
     }
-    echo "<br>";
     // Copy ayudas folder
     $file = $db_path."$base_old"."/ayudas";
     $newfile = $db_path."$base_new"."/ayudas";
@@ -251,22 +330,25 @@ if ($arrHttp["checkdup"]==1 ) {
     $newfile = $db_path."$base_new"."/pfts";
     CopyDir($file, $newfile);
 
-    // Add items to data folder
+    // Create the data folder
     echo "<br>";
     $newfile=$db_path."$base_new"."/data";
     if (!file_exists($newfile)) {
         mkdir($newfile);
-        echo $msgstr["created"]." ".$newfile."<br>";
+        echo "<b>".$msgstr["createdfolder"]."</b> ".$newfile."<br>";
     }
 
-    // Copy all fst's in the data folder. At least one has the database name
-    // Copy also iso files (possible load files for a gizmo)
-    // Copy also stw files
+    /*
+    ** Copy all fst's in the data folder. At least one has the database name
+    ** Copy also iso files (possible load files for a gizmo)
+    ** Copy also stw files
+    ** Copy also tab files (possible local actab/uctab files)
+    */
     $olddata=$db_path."$base_old"."/data";
     $handle=opendir($olddata);
     while (false !== ($tstfile = readdir($handle))) {
         $ext=substr(strrchr($tstfile, "."), 1);
-        if ( $ext!== false && ($ext=="fst" OR $ext=="stw" OR $ext=="iso")) {
+        if ( $ext!== false && ($ext=="fst" OR $ext=="stw" OR $ext=="iso" OR $ext=="tab")) {
             $file   =$db_path.$base_old."/data/".$tstfile;
             $newname=str_replace($base_old,$base_new,$tstfile);
             $newfile=$db_path.$base_new."/data/".$newname;
@@ -286,6 +368,7 @@ if ($arrHttp["checkdup"]==1 ) {
     // this one does not work
     // $IsisScript=$xWxis."inicializar_bd.xis";
     // $query = "&base=".$base_new."&cipar=$db_path"."par/".$base_new.".par";
+
     echo "<br>";
     $query = "&base=".$base_new."&cipar=$db_path"."par/".$base_new.".par"."&Opcion=inicializar";
     $IsisScript=$xWxis."administrar.xis";
@@ -301,6 +384,7 @@ if ($arrHttp["checkdup"]==1 ) {
             break;
         }
     }
+    echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton<br>";
 }
 ?>
 </div>
@@ -310,20 +394,27 @@ include("../common/footer.php");
 
 /* ===================== Functions ==============*/
 function CopyDir($srcdir, $dstdir) {
-global $arrHttp, $msgstr;
+global $arrHttp, $msgstr,$base_new;
     if (!file_exists($srcdir)) return;
     if (!is_dir($dstdir)){
         mkdir($dstdir);
-        echo "<b>".$msgstr["createdfolder"]."</b> ".$dstdir."<br>";
+        echo "<br><b>".$msgstr["createdfolder"]."</b> ".$dstdir."<br>";
     }
     if ($curdir = opendir($srcdir)) {
         while($file = readdir($curdir)) {
             if($file != '.' && $file != '..') {
                 $srcfile = $srcdir . "/" . $file;
-                // Replace filenames only if an exact match with source
+                /*
+                ** Replace filenames if an exact match with source
+                ** Replace filename of validation records with pattern <any_string>_<filename>.<ext>
+                */
                 $newname=$file;
-                if ( substr($file, 0, strlen($arrHttp["base_sel"].".")) === $arrHttp["base_sel"].".") {
-                    $newname=str_replace($arrHttp["base_sel"],$arrHttp["nombre"],$file);
+                $oldbase=$arrHttp["base_sel"];
+                $valsubstr="_".$oldbase."."; // to catch val,beg.end
+                if ( substr($file, 0, strlen($oldbase.".")) === $oldbase.".") {
+                    $newname=str_replace($oldbase,$base_new,$file);
+                } else if ( strlen($file)>strlen($valsubstr) ) {
+                    $newname=str_replace($valsubstr,"_".$base_new.".",$file);
                 }
                 $dstfile = $dstdir . "/" . $newname;
                 if(is_file($srcfile)) {
@@ -382,12 +473,13 @@ function CopyFile($srcfile,$dstfile){
 */
 function UpdateContent($dstfile){
     global $msgstr,$base_old,$base_new;
-    // No updates in help files (too tricky and not functional)
     $ext = pathinfo($dstfile, PATHINFO_EXTENSION);
-    if ( isset($ext) && ($ext=="html"  or $ext=="htm") ) return;
-    // No updates in iso,stw and tab files
-    if ( isset($ext) && ($ext=="iso"  or $ext=="stw" or $ext=="tab") ) return;
-    
+    // No updates in help files (too tricky and not functional)
+    if ( isset($ext) && ($ext=="html" or $ext=="htm") ) return;
+    // No updates in iso,stw,tab,cfg,val,beg,end files
+    if ( isset($ext) && ($ext=="iso" or $ext=="stw" or $ext=="tab") ) return;
+    if ( isset($ext) && ($ext=="cfg" or $ext=="val" or $ext=="beg" or $ext=="end") ) return;
+
     $fileupdated=false;
     $content="";
     $fp=file($dstfile);
