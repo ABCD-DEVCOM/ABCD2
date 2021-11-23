@@ -10,6 +10,7 @@
 2021-04-15 fho4abcd: Send header info to server. (revert 2021-02-25)
 2021-11-04 fho4abcd: Check that extension mbstring is loaded
 2021-11-11 fho4abcd: Remove ffi
+2021-11-23 fho4abcd: Allow trailing backslash for $db_path
 */
 
 ini_set('error_reporting', E_ALL);
@@ -67,7 +68,8 @@ $change_password="Y";                   //allow change password
 $ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
 
 // *** NO CHANGES NEEDED BELOW HERE
-if (substr($db_path, strlen($db_path)-1,1) <> "/") $db_path.="/"; // Ensure db_path has has trailing /.
+// Ensure db_path has has trailing / or \.
+if ( (substr($db_path, strlen($db_path)-1,1) <> "/") AND (substr($db_path, strlen($db_path)-1,1) <> "\\")) $db_path.="/";
 
 // Construction of executable path and URL                             
 $wxis_exec="wxis".$exe_ext;                // name and extension of wxis executable

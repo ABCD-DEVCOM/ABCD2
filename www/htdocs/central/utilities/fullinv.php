@@ -16,6 +16,7 @@
 20211108 fho4abcd Show parameters and commandline before processing,replaced wait pop-up by "working". Slashm default checked.
 20211110 fho4abcd Reordered commandline parameters, add extra flush at end of page 
 20211111 fho4abcd Location of metadataConfig in database root. Allow comment lines
+20211122 fho4abcd test actab/uctab/stw files from dbn.par-> <dbpath>/<base>/data -> <dbpath>. + small enhancements
 */
 /**
  * @desc:      Create database index
@@ -213,36 +214,104 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         echo $cisis_path.": ".$msgstr["misfile"];
         die;
     }
-    // Read parameters from par/<basename>.par file.
-    // Ensure that the parameter file exists
+    // Default for parameters $actab and $uctab and $stw
+    $actab="";
+    $uctab="";
+    $stw="";
+    $stwat="";
+    // Default filenames for actab/uctab dependent on unicode.
+    // These names are defined by history
+    $actabdeffile="isisac.tab";
+    $uctabdeffile="isisuc.tab";
+    if ($unicode=="utf8"){
+        $actabdeffile="isisactab_utf8.tab";
+        $uctabdeffile="isisuctab_utf8.tab";
+    }
+    /*
+    ** Read parameters from par/<basename>.par file.
+    ** Ensure that the parameter file exists
+    */
     $fullciparpath=$db_path."par/".$arrHttp["base"].".par";
     if (!file_exists($fullciparpath)){
         echo "<h3><font color=red>".$fullciparpath.": Does not exist</font></h3>";
     }
-    $def_cipar = parse_ini_file($fullciparpath);
-    // Default for parameters $actab and $uctab and $stw
-    // Note that $actab and $uctab can be valid for ansi, but never for utf-8
-    $actab="ansi";
-    $uctab="ansi";
-    $stw="";
-    $stwat="";
-    if ($unicode=="utf8"){
-        $actab="";  // what about defining it here as 'isisactab_utf8.tab'?
-        $uctab="";  // what about defining it here as 'isisuctab_utf8.tab'?
-    }
-    // Get parameters $actab and $uctab and STW from the .par file.
-    // Replace %path_database% by actual value
-    // No need to test for existance isisac.tab and isisuc.tab: done by mx
-    // WXIS does not allow non-existing stw files. So here we do the same test
-    if (isset($def_cipar["isisac.tab"]))$actab=str_replace("%path_database%",$db_path,$def_cipar["isisac.tab"]);
-    if (isset($def_cipar["isisuc.tab"]))$uctab=str_replace("%path_database%",$db_path,$def_cipar["isisuc.tab"]);
-    if (isset($def_cipar["STW"])){
-        $stwfile=str_replace("%path_database%",$db_path,$def_cipar["STW"]);
-        if (file_exists($stwfile)) {
-            $stw=$stwfile;
-            $stwat=" stw=@".$stw;
+    else {
+        $def_cipar = parse_ini_file($fullciparpath);
+        /*
+        ** Get parameters $actab and $uctab and $stw from the .par file.
+        ** Replace %path_database% by actual value
+        ** The best keywords are actab/uctab but for historical reasons we check first isisac.tab/isisuc.tab
+        ** The best keyword for stw is "stw" but for historical reasons we check first STW
+        */
+        if (isset($def_cipar["isisac.tab"]))$actab=str_replace("%path_database%",$db_path,$def_cipar["isisac.tab"]);
+        if (isset($def_cipar["isisuc.tab"]))$uctab=str_replace("%path_database%",$db_path,$def_cipar["isisuc.tab"]);
+        if (isset($def_cipar["actab"]))     $actab=str_replace("%path_database%",$db_path,$def_cipar["actab"]);
+        if (isset($def_cipar["uctab"]))     $uctab=str_replace("%path_database%",$db_path,$def_cipar["uctab"]);
+        if (isset($def_cipar["STW"]))       $stw=str_replace("%path_database%",$db_path,$def_cipar["STW"]);
+        if (isset($def_cipar["stw"]))       $stw=str_replace("%path_database%",$db_path,$def_cipar["stw"]);
+        /*
+        ** Show a non-fatal error if these files do not exist
+        */
+        if ($actab!="" and !is_readable($actab) ) {
+            echo "<div style='color:red'>".$actab." <b>".$msgstr["notreadable"]."</b></div>";
+            $actab="";
+        }
+        if ($uctab!="" and !is_readable($uctab) ) {
+            echo "<div style='color:red'>".$uctab." <b>".$msgstr["notreadable"]."</b></div>";
+            $uctab="";
+        }
+        if ($stw!="" and !is_readable($stw) ) {
+            echo "<div style='color:red'>".$stw." <b>".$msgstr["notreadable"]."</b></div>";
+            $stw="";
         }
     }
+    /*
+    ** If actab/uctab/stw still empty try the default file in bases/data
+    */
+    if ($actab=="") {
+        $actab=$db_path.$base."/data/".$actabdeffile;
+        if (!is_readable($actab) ) {
+            echo "<div >".$actab." ".$msgstr["notreadable"]."</div>";
+            $actab="";
+        }
+    }
+    if ($uctab=="") {
+        $uctab=$db_path.$base."/data/".$uctabdeffile;
+        if (!is_readable($uctab) ) {
+            echo "<div >".$uctab." ".$msgstr["notreadable"]."</div>";
+            $uctab="";
+        }
+    }
+    if ( $stw=="") {
+        $stw=$db_path.$base."/data/".$base.".stw";
+        if (!is_readable($stw) ) {
+            echo "<div >".$stw." ".$msgstr["notreadable"]."</div>";
+            $stw="";
+        }
+    }
+    /*
+    ** If actab/uctab still empty try the default file in bases
+    */
+    if ($actab=="") {
+        $actab=$db_path.$actabdeffile;
+        if (!is_readable($actab) ) {
+            echo "<div >".$actab." ".$msgstr["notreadable"]."</div>";
+            $actab="";
+        }
+    }
+    if ($uctab=="") {
+        $uctab=$db_path.$uctabdeffile;
+        if (!is_readable($uctab) ) {
+            echo "<div >".$uctab." ".$msgstr["notreadable"]."</div>";
+            $uctab="";
+        }
+    }
+    /*
+    ** If actab/uctab still empty set ansi
+    */
+    if ($actab=="") $actab="ansi";
+    if ($uctab=="") $uctab="ansi";
+
     // process the entry for the gizmo
     $htmlgizmopar="";
     if ( $htmlfiletag!="") {
@@ -260,27 +329,11 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     if ($htmlgizmopar!="") $parameters.= "htmlgizmo: $htmlgizmopar<br>";
     $parameters.= "fst&nbsp;&nbsp;: @".$bd."/data/".$base.".fst<br>";
     if ($stw  !="") $parameters.= "stw&nbsp;&nbsp;: @$stw<br>";
-    if ($uctab!="") $parameters.= "uctab: $uctab<br>";
     if ($actab!="") $parameters.= "actab: $actab<br>";
+    if ($uctab!="") $parameters.= "uctab: $uctab<br>";
     $parameters.= "mx&nbsp;&nbsp;&nbsp;: $mx_path<br>";
     $parameters.= " &nbsp; ".$testbutton;
     $parameters.= " &nbsp; ".$showbutton."<br>";
-    // Check that actab and uctab exist (mx gives a bad warning or crashes)
-    $numerr=0;
-    if ($actab!="" and $actab!="ansi" ) {
-        if ( !is_readable($actab) ) {
-            echo "<div style='color:red'>".$actab." <b>".$msgstr["notreadable"]."</b></div>";
-            echo "<div>".$showbutton."</div>";
-            $numerr++;
-        }
-    }
-    if ($uctab!="" and $uctab!="ansi" ) {
-        if ( !is_readable($uctab) ) {
-            echo "<div style='color:red'>".$uctab." <b>".$msgstr["notreadable"]."</b></div>";
-            echo "<div>".$showbutton."</div>";
-            $numerr++;
-        }
-    }
 
     // Process slashm parameter for omitting positions in postings
     $slashm_var="";
@@ -340,16 +393,20 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         }
     }
 
-    // Create command.
-    // Note that mx does not extract uctab/actab from cipar: explicitly specified here
+    /*
+    ** Create command for mx.
+    ** Note that mx may extract uctab/actab from cipar:
+    ** In case cipar uses alternative keywords an explicit value is necessary. Also if the command if copy/pasted
+    ** If the internal tables are used actab/uctab are not set: unicode exe's generate an error, ansi exe's don't care
+    */
     $strINV =$mx_path;
     $strINV.=" cipar=".$fullciparpath;
     $strINV.=" db=".$bd."/data/".$base;
     $strINV.=" fst=@".$bd."/data/".$fst;
     $strINV.=" ".$strip_var;
-    $strINV.=" actab=".$actab;
-    $strINV.=" uctab=".$uctab;
-    $strINV.=" ".$stwat;
+    if ($actab!="ansi") $strINV.=" actab=".$actab;
+    if ($uctab!="ansi") $strINV.=" uctab=".$uctab;
+    if ($stw!="") $strINV.=" stw=@".$stw;
     $strINV.=" ".$incr_var."=".$bd."/data/".$base." -all now ".$tellvar." 2>&1";
     // Show the execution parameters
     //echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";

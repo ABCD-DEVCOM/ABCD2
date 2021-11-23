@@ -122,6 +122,7 @@ download=Download
 end_process=End of the process
 entervalcomb=Please enter a valid combination
 error=Error
+error_create_folder=Error creating folder
 error_gizmofp="htmlgizmo.*=..." Cannot be specified with %database_path%
 error_gizmospec="htmlgizmo.*=..." Must be specified in
 every=Every
@@ -191,6 +192,8 @@ notransferido=Not uploaded
 notreadable=Does not exist or has insufficient permissions
 nueva=New
 overwritefolder=Overwrite existing folder ?
+parmfile=Parameter file
+parmdefault=is an update from the original without an entry for
 possiblecause=Possible cause of this message
 processfailed=Process NOT EXECUTED or FAILED
 processok=Process Result: <br>Process Finished OK
