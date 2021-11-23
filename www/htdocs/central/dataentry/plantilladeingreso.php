@@ -1,6 +1,10 @@
 <?php
+/*
+20211123 fho4abcd/edsz Avoid undefined index + correct line ends
+*/
 function ConstruyeWorksheetFMT(){
-global $arrHttp,$vars,$db_path,$lang_db,$base_fdt,$wks_avail,$msgstr;
+
+global $arrHttp,$vars,$db_path,$lang_db,$base_fdt,$wks_avail,$msgstr;
 	$base=$arrHttp["base"];
 	//echo $db_path.$base."/def/".$_SESSION["lang"]."/"."$base.fdt";
 	$fpDb_fdt = $db_path.$base."/def/".$_SESSION["lang"]."/"."$base.fdt";
@@ -36,12 +40,14 @@ function ConstruyeWorksheetFMT(){
 			}
 		}else{
 			echo "	<div class=\"middle form\">
-						<div class=\"formContent\">\n";			 echo "<h4>".$msgstr["fmt"].":".$arrHttp["wks"]." ".$msgstr["recnoallow"]."</h4>";
+						<div class=\"formContent\">\n";
+			 echo "<h4>".$msgstr["fmt"].":".$arrHttp["wks"]." ".$msgstr["recnoallow"]."</h4>";
 			 echo "<script>top.xeditar=\"\"</script>";
 			 $arrHttp["unlock"] ="S";
 			 $maxmfn=0;
 			 $res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$arrHttp["login"],"","");
-			 die;		}
+			 die;
+		}
 	}
 	if (!isset($fp)){
 		if (isset($arrHttp["wks"])) echo "<h4>".$msgstr["notfound"].": ".$db_path.$base."/def/".$_SESSION["lang"]."/".$arrHttp["wks"]."</h4>";
@@ -52,11 +58,12 @@ function ConstruyeWorksheetFMT(){
     $ix=-1;
     reset($fp);
     $copiado="N";
-	foreach ($fp as $value){		$value=trim($value);
+	foreach ($fp as $value){
+		$value=trim($value);
 		if ($value!=""){
 			unset($tx);
 			$tx=explode('|',$value) ;
-			if ($tx[18]==1){
+			if (isset($tx[18]) and $tx[18]==1){
 				$copiado="S";
 				$primeravez="S";
 				reset($base_fdt);
@@ -78,30 +85,44 @@ function ConstruyeWorksheetFMT(){
 							}
 						}
 					}
-				}			}else{
-				if ($copiado=="S" and $tx[1]=="" and $tx[0]!="H" and $tx[0]!="L"){					continue;				}else{					$copiado="N";				}
-				if ($tx[0]=="LDR"){					$Leader="S";
+				}
+			}else{
+				if ($copiado=="S" and $tx[1]=="" and $tx[0]!="H" and $tx[0]!="L"){
+					continue;
+				}else{
+					$copiado="N";
+				}
+				if ($tx[0]=="LDR"){
+					$Leader="S";
 					$Marc="S";
 					if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/leader.fdt"))
 						$fixed=file($db_path.$base."/def/".$_SESSION["lang"]."/leader.fdt");
 					else
 						$fixed=file($db_path.$base."/def/".$lang_db."/leader.fdt");
 					foreach ($fixed as $fx){
-						if (trim($fx)!="") {							$ix=$ix+1;
-							$vars[$ix]=$fx;						}
-					}				}else{
+						if (trim($fx)!="") {
+							$ix=$ix+1;
+							$vars[$ix]=$fx;
+						}
+					}
+				}else{
                 	$ix=$ix+1;
 					$vars[$ix]=$value;
 				}
 			}
 		}
 	}
-}
+
+}
 
 
 function ConstruyeWorksheetFDT($tm){
 global $arrHttp,$vars,$db_path,$lang_db,$msgstr;
-	if (!isset($arrHttp["base"])){		$base=$arrHttp["db"];	}else{		$base=$arrHttp["base"];	}
+	if (!isset($arrHttp["base"])){
+		$base=$arrHttp["db"];
+	}else{
+		$base=$arrHttp["base"];
+	}
 
 	$fpDb_fdt = $db_path.$base."/def/".$_SESSION["lang"]."/"."$base.fdt";
 	if (!file_exists($fpDb_fdt)) {
@@ -111,12 +132,14 @@ global $arrHttp,$vars,$db_path,$lang_db,$msgstr;
 			die;
 		}
 	}
-	$fpTm=file($fpDb_fdt);	if (!$fpTm) {
+	$fpTm=file($fpDb_fdt);
+	if (!$fpTm) {
    		echo $msgstr["notfound"].": ".$db_path.$base."/def/".$_SESSION["lang"]."/$base.fdt";
 		die;
 	}
 	$base_fdt=array();
-	foreach ($fpTm as $linea){		if (trim($linea)!="") {
+	foreach ($fpTm as $linea){
+		if (trim($linea)!="") {
 			$t=explode('|',$linea);
 			if (trim($linea)!=""){
 				switch ($t[0]){
@@ -157,16 +180,23 @@ function PlantillaDeIngreso(){
 global $arrHttp,$valortag,$tm,$vars,$base,$fdt,$tab_prop,$msgstr,$tagisis,$db_path,$Marc,$tl,$nr,$lang_db;
 
 	$ixsfdt=0;
-	if (!isset($arrHttp["wks"])){    	ConstruyeWorksheetFDT("");
-    	return;    }
-	if (isset($arrHttp["wks"])and $arrHttp["wks"]!=""){		$ix=strpos($arrHttp["wks"],".");
+	if (!isset($arrHttp["wks"])){
+    	ConstruyeWorksheetFDT("");
+    	return;
+    }
+	if (isset($arrHttp["wks"])and $arrHttp["wks"]!=""){
+		$ix=strpos($arrHttp["wks"],".");
 		$tipo_f=substr($arrHttp["wks"],$ix);
-		if ($tipo_f==".fdt"){			ConstruyeWorksheetFDT($arrHttp["wks"]);
-			return;		}else{
+		if ($tipo_f==".fdt"){
+			ConstruyeWorksheetFDT($arrHttp["wks"]);
+			return;
+		}else{
 			ConstruyeWorksheetFMT($arrHttp["wks"].".fmt");
-			return;		}
+			return;
+		}
 
-	}else{		$comp="";
+	}else{
+		$comp="";
 		$tipom="";
 		if (isset($valortag[trim($tl)]))
 			$tipom=$valortag[trim($tl)];
@@ -190,7 +220,8 @@ global $arrHttp,$valortag,$tm,$vars,$base,$fdt,$tab_prop,$msgstr,$tagisis,$db_pa
 			}
 			$linea=rtrim($linea);
 			if ($linea!=""){
-				if (substr($linea,0,3)=="LDR"){					$Leader="S";
+				if (substr($linea,0,3)=="LDR"){
+					$Leader="S";
 					$Marc="S";
 					if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/leader.fdt"))
 						$fixed=file($db_path.$base."/def/".$_SESSION["lang"]."/leader.fdt");
@@ -198,7 +229,8 @@ global $arrHttp,$valortag,$tm,$vars,$base,$fdt,$tab_prop,$msgstr,$tagisis,$db_pa
 						$fixed=file($db_path.$base."/def/".$lang_db."/leader.fdt");
 					foreach ($fixed as $fx){
 						if (trim($fx)!="") $vars[]=$fx;
-					}				}else{
+					}
+				}else{
   					$vars[]=$linea;
   				}
 			}
