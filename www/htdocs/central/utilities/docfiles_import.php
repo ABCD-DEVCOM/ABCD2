@@ -13,6 +13,7 @@
 20211108 fho4abcd Improved split: file limit lower, split on </p>, time limit for each file, sanitize html before split
 20211110 fho4abcd Reserve record space for inverted file generation, remove img clauses, chunk may and at </table>
 20201110 fho4abcd Remove debug file + corrected splittarget: menu value is noew used
+20201123 fho4abcd Html header for split/unsplit is now equal. unicode filenames to hex (required for fullinv:Gload)
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -505,6 +506,7 @@ include "../common/footer.php";
 //  - convert_component : returns sanitized path component
 //  - convert_field     : returns sanitized mx field
 //  - convert_name      : returns sanitized filename
+//  - convert_tika_html : convert tika generated html
 //  - sanitize_tree     : sanitizes foldername(s)
 //  - secondsToTime     : return H:mm:ss
 //  - split_path        : returns the "section" of the filename in ABCDImportRepo
@@ -624,46 +626,10 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
 
     /*
     ** Sanitize html tika originating from all files
+    ** Do not yet replace the header as this is needed to detect the metadata
     */
     if ( $textmode=="h"  ) {
-        // open a the tika file and a new temporary tika file
-        $fptika=fopen($tikafile,"r");
-        $tmptikafile=$tikafile.".tmp";
-        $fptmptika=fopen($tmptikafile,"w");
-        /*
-        ** Read the tikafile and copy almost everything to the tmp file
-        */
-        tolog ("<li>".$msgstr["dd_clean_pdf"].". ");
-        $numlinestika=0;
-        $numlinestmp=0;
-        $skip=false;
-        while (!feof($fptika)) { // main loop over all lines of the source file
-            $thisline = trim(fgets($fptika)); // get line contents trimmed
-            $numlinestika++;
-            if( $thisline=="") continue; // tika has at least an empty line at the end of the file
-            $metapos=strpos($thisline,'<meta name="xmpMM:');// pdf history lines
-            if( $metapos!==false  AND $metapos==1 ) continue;
-            // tika generates many lines for inline content (not valid to show or index)
-            if( $thisline=="<p>&lt;&lt;") $skip=true;
-            if( $thisline=="</p>") {
-                $skip=false;
-                continue;
-            }
-            if( $skip==true) continue;
-            // some files (e.g. epub) show embedded images. They corrupt the index
-            $imgposbeg=stripos($thisline,'<img');// start of image
-            if( $imgposbeg!==false AND strlen($thisline)>2) {
-                $imgposend=stripos($thisline,'/>',-2);// start of image
-                if( $imgposend!==false) continue;
-            }
-            $numlinestmp++;
-            fwrite($fptmptika,$thisline.PHP_EOL);
-        }
-        // Close the temporary tikafile and rename it to the actual tikafile
-        fclose($fptmptika);
-        fclose($fptika);
-        rename($tmptikafile,$tikafile);
-        tolog($numlinestika." ".$msgstr["dd_lines"]." &rarr; ".$numlinestmp." ".$msgstr["dd_lines"]."</li>");
+        convert_tika_html($tikafile,"initial", "");
     }
     /*
     ** Read metadata from the tika generated html file
@@ -790,6 +756,13 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     $vhtmlfilesize= remove_v($_POST["htmlfilesize"]);
     $vdoctext     = remove_v($_POST["doctext"]);
     /*
+    ** Sanitize html tika originating from all files
+    ** Replace the header to conform with split files
+    */
+    if ( $textmode=="h"  ) {
+        convert_tika_html($tikafile,"header",$c_title);
+    }
+    /*
     ** The generated file may be too large for the current database
     ** Next function call will split this file and return a list of files to be imported
     */
@@ -825,6 +798,12 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         // some variables are dependent on the actual processed file
         $c_htmlfilesize= filesize($act_split_file);
         $htmlfilesec   = substr($act_split_file, strlen($db_path."wrk/"));
+        // Gload on Windows does not like unicode characters in the file name
+        if ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ) {
+            // urlencode converts all unicode to %hex.
+            // The % is stripped as this is not accepted in the url
+            $htmlfilesec=str_replace("%","",urlencode( $htmlfilesec));
+        }
         $htmlSrcPath   = $fullcolpath."/ABCDSourceRepo/".$htmlfilesec;
         $htmlURLPath   = "/docs/".substr($htmlSrcPath, strlen($db_path));
         $c_htmlSrcURL  = $htmlURLPath;
@@ -1081,6 +1060,100 @@ function convert_name($orgfilename, $addtimestamp, $truncsize, &$filename, &$ext
     }
     return(0);
 }
+// ====== convert_tika_html ============================
+function convert_tika_html($tikafile, $pass, $c_title){
+/*
+** Update the content of the html file generated by tiki
+** Controlled by variable $pass
+**  $pass="initial":
+**      - skip inline content ( <p>&lt;&lt;     ... </p> )
+**      - skip images (<img .... /> )
+**  $pass="header":
+**      - replace header content
+**
+** In : $tikafile = full name of the file generated by tika
+** In : $pass     = parameter to control the content update
+**
+** Return : 0=OK, 1=NOT-OK
+*/
+global $msgstr;
+    // open a the tika file and a new temporary tika file
+    $fptika=fopen($tikafile,"r");
+    $tmptikafile=$tikafile.".tmp";
+    $fptmptika=fopen($tmptikafile,"w");
+    /*
+    ** Read the tikafile and copy almost everything to the tmp file
+    */
+    $index="dd_".$pass;
+    tolog ("<li>".$msgstr["dd_clean_pdf"]." (".$msgstr["$index"]."). ");
+    $numlinestika=0;
+    $numlinestmp=0;
+    $skip=false;
+    $headadded=false;
+    while (!feof($fptika)) { // main loop over all lines of the source file
+        $thisline = trim(fgets($fptika)); // get line contents trimmed
+        $numlinestika++;
+        // tika has also at least an empty line at the end of the file
+        if( $thisline=="") continue;
+        if( $pass=="initial") {
+            // The initial cleaunup removes several raw things, except the header
+            // pdf history lines
+            $metapos=strpos($thisline,'<meta name="xmpMM:');
+            if( $metapos!==false  AND $metapos==1 ) continue;
+            // tika generates many lines for inline content (not valid to show or index)
+            if( $thisline=="<p>&lt;&lt;") $skip=true;
+            if( $thisline=="</p>") {
+                $skip=false;
+                continue;
+            }
+            if( $skip==true) continue;
+            // some files (e.g. epub) show embedded images. They corrupt the index
+            $imgposbeg=stripos($thisline,'<img');// start of image
+            if( $imgposbeg!==false AND strlen($thisline)>2) {
+                $imgposend=stripos($thisline,'/>',-2);// start of image
+                if( $imgposend!==false) continue;
+            }
+            // Some lines need adjustment
+            $thisline = str_ireplace('<p/>' , '<br>', $thisline);//tika generates invalid tag <p/> (windows)
+            $thisline = preg_replace('/\t/' , ' '   , $thisline);//tika keeps too much spaces (linux,windows)
+            $thisline = preg_replace('/  +/', ' '   , $thisline);//tika keeps too much spaces (linux,windows)
+        } 
+        else if( $pass=="header") {
+            // The head cleanup  replaces the tika header by a minimal header
+            if ( strpos($thisline,"<html")      !==false) continue; //skip html tag
+            if ( strpos($thisline,"<head")      !==false) continue; //skip head tag
+            if ( strpos($thisline,"</head")     !==false) continue; //skip head tag
+            if ( strpos($thisline,"<title")     !==false) continue; //skip title tag, processed before
+            if ( strpos($thisline,"</title")    !==false) continue; //skip title tag, processed before
+            if ( strpos($thisline,"<meta")      !==false) continue; //tika generates many of these, valid ones already processed before
+            if ( strpos($thisline,"<body")      !==false) continue; //skip body tag, done by code below
+            if ( $headadded==false ) {
+                $headadded = true;
+                fwrite($fptmptika,"<!DOCTYPE HTML>".PHP_EOL);
+                fwrite($fptmptika,"<html>".PHP_EOL);
+                fwrite($fptmptika,"<head>".PHP_EOL);
+                fwrite($fptmptika,"<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />".PHP_EOL);
+                fwrite($fptmptika,"<title>".$c_title."</title>".PHP_EOL);
+                fwrite($fptmptika,"</head>".PHP_EOL);
+                fwrite($fptmptika,"<body>".PHP_EOL);
+                $numlinestmp=$numlinestmp+7;
+            }
+        } else {
+            echo "WRONG PARAMETER VALUE:".$pass." for PARAMETER \$pass<br>";die;
+        }
+        // Write the line to the temp file
+        $numlinestmp++;
+        fwrite($fptmptika,$thisline.PHP_EOL);
+    }
+    // Correct for the last empty line
+    $numlinestmp++;
+    // Close the temporary tikafile and rename it to the actual tikafile
+    fclose($fptmptika);
+    fclose($fptika);
+    rename($tmptikafile,$tikafile);
+    tolog($numlinestika." ".$msgstr["dd_lines"]." &rarr; ".$numlinestmp." ".$msgstr["dd_lines"]."</li>");
+    return(0);
+}
 // ====== sanitize_tree =============================
 /*
 ** Sanitizes sub foldername(s) of the given root folder recursively
@@ -1234,21 +1307,14 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splitmax
         if ( $thisline==""    ) continue; //skip empty line
         if ( $thisline=="\n"  ) continue; //skip empty line
         if ( $thisline=="\r\n") continue; //skip empty line
+        if ( strpos($thisline,"<!DOCTYPE")  !==false) continue; //skip DOCTYPE tag
         if ( strpos($thisline,"<html")      !==false) continue; //skip html tag
-        if ( strpos($thisline,"</html")     !==false) continue; //skip html tag
         if ( strpos($thisline,"<head")      !==false) continue; //skip head tag
         if ( strpos($thisline,"</head")     !==false) continue; //skip head tag
         if ( strpos($thisline,"<title")     !==false) continue; //skip title tag, processed before
         if ( strpos($thisline,"</title")    !==false) continue; //skip title tag, processed before
         if ( strpos($thisline,"<meta")      !==false) continue; //tika generates many of these, valid ones already processed before
         if ( strpos($thisline,"<body")      !==false) continue; //skip body tag, done by code below
-        if ( strpos($thisline,"</body")     !==false) continue; //skip body tag, done by code below
-        // Some lines need adjustment for html
-        if ( $textmode=='h') {
-            $thisline = str_ireplace('<p/>' , '<br>', $thisline);//tika generates invalid tag <p/> (windows)
-            $thisline = preg_replace('/\t/' , ' '   , $thisline);//tika keeps too much spaces (linux,windows)
-            $thisline = preg_replace('/  +/', ' '   , $thisline);//tika keeps too much spaces (linux,windows)
-        }
         // Check if a file is open to write to
         if ( $chunkisopen==false ) {
             // open the chunkfile and write a header
@@ -1260,6 +1326,7 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splitmax
             $chunksize+=fwrite($chunkhandle,"<!DOCTYPE HTML>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<html>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<head>".PHP_EOL);
+            $chunksize+=fwrite($chunkhandle,"<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<title>".$c_title." #".$chunknr."</title>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"</head>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<body>".PHP_EOL);

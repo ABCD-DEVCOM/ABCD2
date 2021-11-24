@@ -27,6 +27,7 @@ dd_movingfiles=Moving files to
 dd_filesmoved=file(s) moved.
 dd_fielderrenc=Unknown encoding for field.
 dd_filnamerrenc=Unknown encoding for filename part.
+dd_header=header
 dd_htmlfilesize=Size of generated HTML file=
 dd_imp_actfile=Working on
 dd_imp_chars=characters
@@ -65,6 +66,7 @@ dd_imp_tikasrc=Searched in cgi-bin by pattern:
 dd_imp_tikaver=Show tika version(s)
 dd_imp_unique=Guarantees unique filenames
 dd_imp_usablerecsize=Working recordsize
+dd_initial=initial
 dd_lines=lines
 dd_logfile=Logfile
 dd_logfolder=Logging folder

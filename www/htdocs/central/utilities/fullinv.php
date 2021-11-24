@@ -17,6 +17,7 @@
 20211110 fho4abcd Reordered commandline parameters, add extra flush at end of page 
 20211111 fho4abcd Location of metadataConfig in database root. Allow comment lines
 20211122 fho4abcd test actab/uctab/stw files from dbn.par-> <dbpath>/<base>/data -> <dbpath>. + small enhancements
+20211123 fho4abcd Show error if lineendings of stw files are not correct (most mx exe's require this)
 */
 /**
  * @desc:      Create database index
@@ -392,7 +393,12 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
             }
         }
     }
-
+    // Check that the lineends fit with the current OS (mx requirement for stw files)
+    include "inc_check-line-end.php";
+    if ( $stw!="" ) {
+        $result=check_line_end($stw);
+    }
+    echo "<br>";
     /*
     ** Create command for mx.
     ** Note that mx may extract uctab/actab from cipar:

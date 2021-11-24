@@ -18,15 +18,24 @@ if p(v15) then '<tr><td><b>Rights Management</b></td><td>'v15+|<br>|,'</td>' fi/
 
 if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
 
-if p(v95) then '<tr><td><b>Preview pop-up<b></td><td>',
+if p(v95) then
+if 'jpg jpeg png gif tiff' : right(v98,3) then /* file type is image */
+'<tr>
+<td><font face=arial size=2><b>Image preview</b></td>
+<td><img height=200 width=800 src=',v98,'></img></td>
+</tr>'
+
+else /* file is of type text */
+'<tr><td><b>Preview pop-up<b></td><td>',
 '<a href="'v95,'"
 onclick="window.open(`',v95,'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`);
-return false;">' v95,'</a></td></tr>' fi,    
+return false;">' v95,'</a></td></tr>',
 
-if p(v95) then '<tr>
-<td><font face=arial size=2><b>Preview</b></td>
+'<tr>
+<td><font face=arial size=2><b>Text preview</b></td>
 <td><iframe height=200 width=800 scrolling=yes src=',v95,'></iframe></td>
-</tr>' fi/
+</tr>'
+fi,fi/
 
 if p(v98) then '<tr><td><b>Document URL</b></td><td><A HREF="',v98'" target=new>'v98,'</A></td>' fi/
 
