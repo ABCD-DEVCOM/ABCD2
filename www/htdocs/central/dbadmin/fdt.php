@@ -1,25 +1,15 @@
 <?php
 /* Modifications
 2021-02-09 fho4abcd Original name for dhtmlX.js
+2011-11-25 fho4abcd Validate tags on int value, not on string (e.g. 1==001->error) + improve html
 */
 session_start();
 include("../common/get_post.php");
 include ("../config.php");
-if (isset($arrHttp["UNICODE"])) {
-	if ($arrHttp["UNICODE"]==1)
-		$meta_encoding="UTF-8";
-	else
-		$meta_encoding="ISO-8859-1";
-}else{
-	if (isset($_SESSION["UNICODE"])) {
-		IF ($_SESSION["UNICODE"]==1)
-			$meta_encoding="UTF-8";
-		else
-			$meta_encoding="ISO-8859-1";
-	}
-}
+
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");// for indexes in institutionalinfo
 include("../lang/dbadmin.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
@@ -56,6 +46,8 @@ if ($arrHttp["Opcion"]=="new"){
 	include("../common/header.php");
 
 ?>
+<body>
+
 	<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
@@ -426,18 +418,19 @@ function Validate(Opcion){
 					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["tagreq"]?>"+" ** "+cell_type+"<br>"
 				}
 				if (cell_tag!="") {
-                    if (fdt_tag.indexOf("|"+cell_tag+"|")==-1){
-						fdt_tag+="|"+cell_tag+"|"
-					}else{
-						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["duptag"]?>"+"<br>"
-					}
 					if (IsNumeric(cell_tag)==false){
 						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
-					}
-					tt= parseInt(cell_tag )
-					if (tt<1 || tt>999){
-						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
-					}
+					} else {
+                        tt= parseInt(cell_tag )
+                        if (tt<1 || tt>999){
+                            msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
+                        }
+                        if (fdt_tag.indexOf("|"+tt+"|")==-1){
+                            fdt_tag+="|"+tt+"|"
+                        }else{
+                            msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["duptag"]?>"+"<br>"
+                        }
+                    }
               	}
 			}
 			if (cell_type=="S"){    // se determina que el subcampo esté precedido por un tipo T o por TB  o por M
@@ -522,7 +515,7 @@ function Validate(Opcion){
 		msg+="<?php echo $msgstr["errmainentry"]?>"
 	}
 	if (msg!=""){
-		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>&nbsp &nbsp;')
+		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>nbsp; &nbsp;')
     	msgwin.document.writeln('<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank>edit help file</a>')
 		msgwin.document.writeln("<p>"+msg)
 		msgwin.focus()
@@ -682,7 +675,6 @@ function doOnCellEdit(stage,rowId,cellInd){
 }
 </script>
 
-<body>
 <div id="loading">
   <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
 </div>
@@ -786,10 +778,10 @@ if (isset($arrHttp["encabezado"])){
 
 ?>
 <div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<a href="../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt.html" target=_blank><?php echo $msgstr["help"]?></a>&nbsp; &nbsp;
 <?php
 if ((isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) and !isset($arrHttp["moodle"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fdt.html target=_blank>".$msgstr["edhlp"]."</a>";
+	echo "<a href='../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fdt.html' target=_blank>".$msgstr["edhlp"]."</a>";
 echo " Script: dbadmin/fdt.php";
 ?>
 </font>
@@ -849,7 +841,7 @@ if (isset($fp)){
       		}
 			$i=$i+1;
 			$irow=$i+1;
-			$linkr="<a href=javascript:EditarFila(\"".$irow."\",$i)><font size=1>$irow</a>";
+			$linkr="<a href='javascript:EditarFila(\"".$irow."\",$i)'><font size=1>$irow</font></a>";
 			echo "<td type=\"link\">$linkr</td>";
 			if ($t[0]=="F" or $t[0]=="S"){
 				if (trim($t[7])=="") $t[7]="X";
@@ -858,12 +850,12 @@ if (isset($fp)){
 			for ($ix=0;$ix<21;$ix++) if (!isset($t[$ix])) $t[$ix]="";
 			if (trim($t[0])!="H" and trim($t[0])!="L"){
 				if ($t[10]=="")
-					$pick="<a href=javascript:Picklist(\"".$t[1].".tab\",$i)><font size=1>browse</a>";
+					$pick="<a href='javascript:Picklist(\"".$t[1].".tab\",$i)'><font size=1>browse</font></a>";
 				else
-		    		$pick="<a href=javascript:Picklist(\"".$t[10]."\",$i)><font size=1>browse</a>";
+		    		$pick="<a href='javascript:Picklist(\"".$t[10]."\",$i)'><font size=1>browse</font></a>";
 			}
 			$irow=$i+1;
-			$linkr="<a href=javascript:EditarFila(\"".$irow."\",$i)><font size=1>$irow</a>";
+			$linkr="<a href='javascript:EditarFila(\"".$irow."\",$i)'><font size=1>$irow</font></a>";
 			if (!isset($t[16])) $t[16]="";
 			$ixt=-1;
 			//"link,coro,ed,ed,ch,ch,ed,ed,coro,ed,ed,coro,ed,ed,link,ed,ed,ed,ch,ed,ch,ch,coro,ed"
@@ -1047,6 +1039,7 @@ if (isset($fp)){
 
 </script>
 <br><br>
+</div></div>
 </form>
 <form name=forma1 action=fdt_update.php method=post>
 <?php if (isset($arrHttp["fmt_name"])){
@@ -1089,11 +1082,6 @@ if (isset($fp)){
 <input type=hidden name=row>
 <input type=hidden name=type>
 </form>
-</div>
-</div>
-<?php include ("../common/footer.php");?>
-</body>
-</html>
 <script>
 <?php
 $xar=explode(".",$xarch);
@@ -1105,3 +1093,6 @@ else
 
 document.getElementById('loading').style.display='none';
 </script>
+
+<?php include ("../common/footer.php");?>
+
