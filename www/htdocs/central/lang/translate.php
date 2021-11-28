@@ -2,6 +2,7 @@
 /* Modified
 20210521 fho4abcd Replaced helper code fragment by included file
 20210521 fho4abcd Rewritten: use correct encoding for translation
+20121128 fho4abcd Translations with quotes are now shown correct
 */
 /*
 ** The encoding of the translated messages must match with the entered text
@@ -216,7 +217,7 @@ if (file_exists($langfile)) {
         if ( isset($msgarr[$lang])) $value=$msgarr[$lang];
         $msgname="msg_".$msgarr["code"];
         ?>
-        <td width=75%><input type=text style='width:100%' name=<?php echo $msgname;?> value="<?php echo $value;?>"></td>
+        <td width=75%><input type=text style='width:100%' name=<?php echo $msgname;?> value="<?php echo str_replace("\"","&quot;",$value);?>"></td>
         </tr>
         <?php
      }
