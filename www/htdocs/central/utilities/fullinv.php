@@ -18,6 +18,8 @@
 20211111 fho4abcd Location of metadataConfig in database root. Allow comment lines
 20211122 fho4abcd test actab/uctab/stw files from dbn.par-> <dbpath>/<base>/data -> <dbpath>. + small enhancements
 20211123 fho4abcd Show error if lineendings of stw files are not correct (most mx exe's require this)
+20211202 fho4abcd Incremental not for Digdoc.Set /m dependent on DigDoc (remove from menu).Tag selection menu from dropdown to checkboxes.
+20211202          Improved check and messages for gizmo. Check that tag 9876 is in FST
 */
 /**
  * @desc:      Create database index
@@ -112,7 +114,7 @@ $bd=$db_path.$base;
 $ciparfile=$arrHttp["base"].".par";
 $fullciparpath=$db_path."par/".$ciparfile;
 if (!file_exists($fullciparpath)){
-    echo "<h3><font color=red>".$fullciparpath.": does not exist</font></h3>";
+    echo "<h3 style='color:red'>".$fullciparpath.": ".$msgstr["notreadable"]."</h3>";
 }
 
 // Read Digital document data to determine the tag pointing to the html file
@@ -169,36 +171,27 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         </select></td>
     </tr>
 
-    <tr> <td><?php echo $msgstr["useslashm"];?></td>
-         <td><input type='checkbox' name='slashm' checked></td>
-         <td><font color=red><?php echo $msgstr["warnforslashm"];?></font></td>
-    </tr>
-
+    <?php if ($htmlfiletag=="") { ?>
     <tr> <td><?php echo $msgstr["incremental"];?></td>
          <td><input type='checkbox' name='incr'></td>
-         <td><font color=blue><?php echo $msgstr["warnforincr"];?></font></td>
+         <td></td>
     </tr>
+   <?php } ?>
 
     <?php if ($htmlfiletag!="") { ?>
-    <tr> <td><?php echo $msgstr["striphtml"];?></td>
-         <td><select name='ftt[]' multiple size='2'>
-                <option value='<?php echo $htmlfiletag;?>' selected><?php echo $htmlfileTitle." (v".$htmlfiletag.")";?></option>
-                <option value='' ></option>
-             </select>
-         </td>
-         <td><font color=blue><?php echo $msgstr["warnforstrip"]."<br>".$msgstr["sourceis"]." ".$msgstr["dd_documents"];?></font></td>
+    <tr><td><?php echo $msgstr["striphtml"];?></td>
+        <td>
+            <input type='checkbox' name='<?php echo $htmlfiletag;?>' checked> <?php echo $htmlfileTitle." (v".$htmlfiletag.")";?>
+        </td>
+        <td><font color=blue><?php echo $msgstr["sourceis"]." ".$msgstr["dd_documents"];?></font></td>
     </tr>
     <?php } ?>
-    <?php if (count($htmlTags)>0) {?>
-    <tr> <td><?php echo $msgstr["striphtml"];?></td>
-         <td><select name='fdttag[]' multiple size='<?php echo count($htmlTags)+1;?>'>
-                <?php for ($i=0;$i<count($htmlTags);$i++) {?>
-                <option value='<?php echo $htmlTags[$i];?>' selected><?php echo $htmlTitles[$i]." (v".$htmlTags[$i].")";?></option>
-                <?php }?>
-                <option value='' ></option>
-             </select>
-          </td>
-         <td><font color=blue><?php echo $msgstr["warnforstrip"]."<br>".$msgstr["sourceis"]." FDT";?></font></td>
+    <?php for ($i=0;$i<count($htmlTags);$i++) {?>
+    <tr><td><?php echo $msgstr["striphtml"];?></td>
+        <td>
+            <input type='checkbox' name='<?php echo $htmlTags[$i];?>' checked> <?php echo $htmlTitles[$i]." (v".$htmlTags[$i].")";?>
+        </td>
+        <td><font color=blue><?php echo $msgstr["sourceis"]." FDT";?></font></td>
     </tr>
     <?php } ?>
 
@@ -211,6 +204,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
 
 <?php
 } else {
+    // This is the second part of this script. The fst is set by the menu
     if (!file_exists($cisis_path)){
         echo $cisis_path.": ".$msgstr["misfile"];
         die;
@@ -230,13 +224,10 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     }
     /*
     ** Read parameters from par/<basename>.par file.
-    ** Ensure that the parameter file exists
+    ** The existence of the file is already checked at script start : error message here only an if to prevent many errors
     */
     $fullciparpath=$db_path."par/".$arrHttp["base"].".par";
-    if (!file_exists($fullciparpath)){
-        echo "<h3><font color=red>".$fullciparpath.": Does not exist</font></h3>";
-    }
-    else {
+    if (file_exists($fullciparpath)){
         $def_cipar = parse_ini_file($fullciparpath);
         /*
         ** Get parameters $actab and $uctab and $stw from the .par file.
@@ -313,17 +304,44 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     if ($actab=="") $actab="ansi";
     if ($uctab=="") $uctab="ansi";
 
-    // process the entry for the gizmo
+    /*
+    ** Determine if the gizmo is required
+    */
+    $gizmorequired=0;
+    if ( $htmlfiletag!="") $gizmorequired=1;
+    for ($i=0;$i<count($htmlTags);$i++){
+        $tag=$htmlTags[$i];
+        if (isset($_POST[$tag]) AND strlen($_POST[$tag])>0 ) $gizmorequired=1;
+    }
+    /*
+    ** Process the entry for the gizmo
+    */
     $htmlgizmopar="";
-    if ( $htmlfiletag!="") {
-        $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path."par/".$base.".par</span>";
+    if ( $gizmorequired==1) {
+        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;".$msgstr["examplefor"]." par/".$base.".par &rArr;&nbsp;htmlgizmo.*=";
+        $htmlgizmoexample.=$db_path.$base."/data/htmlgizmo.*</span>";
         if (isset($def_cipar["htmlgizmo.*"])) {
+            // The .par exists and there is a gizmo entry
             $htmlgizmopar=$def_cipar["htmlgizmo.*"];
+            // Check that %path_database% is not used
             $htmlgizmopar1=str_replace("%path_database%",$db_path,$htmlgizmopar);
             if ($htmlgizmopar1!=$def_cipar["htmlgizmo.*"]) {
                 $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmofp"]."</span>";
+                $htmlgizmopar.=$htmlgizmoexample;
             }
-        }   
+            // Check that the gizmo mst exists
+            else {
+                $htmlgizmomst=str_replace(".*",".mst",$htmlgizmopar,$count);
+                if ($count==0 OR !file_exists($htmlgizmomst) ) {
+                    $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmodb"]."</span>";
+                    $htmlgizmopar.=$htmlgizmoexample;
+                }
+            }
+        } else {
+            // The .par does not exist or has no gizmo entry
+            $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path."par/".$base.".par</span>";
+            $htmlgizmopar.=$htmlgizmoexample;
+        }
     }
     $parameters= "<br>";
     $parameters.= $msgstr["database"]." : ".$bd."/data/".$base."<br>";
@@ -336,9 +354,12 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     $parameters.= " &nbsp; ".$testbutton;
     $parameters.= " &nbsp; ".$showbutton."<br>";
 
-    // Process slashm parameter for omitting positions in postings
+    /*
+    ** Process slashm parameter for omitting positions in postings
+    ** Not controlled by the menu: Must be set for Digital documents and omitted for all others
+    */    
     $slashm_var="";
-    if (isset($_POST['slashm']) AND strlen($_POST['slashm'])>0) $slashm_var="/m";
+    if ($htmlfiletag!="") $slashm_var="/m";
 
     // Process incr parameter : incremental or full inversion
     $incr_var="";
@@ -362,35 +383,35 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     /*
     ** Processing for Digital Documents
     ** The htmlfiletag parameter defines in which field the HTML-file name for Gload is stored.
+    ** The fst should contain this parameter
     */
     $strip_var="";
-    if (strlen($htmlfiletag)>0) {
+    if ($htmlfiletag!="") {
         // The extra quotes surroundig the procs are required for the linux version
         $strip_var.="\"proc='Gload/9876='v".$htmlfiletag."\"";
         $parameters.=$msgstr["load_htmldata"]." ".$htmlfiletag." &rarr; 9876<br>";
+        $fullfst=$bd."/data/".$fst;
+        $fstcontent=file_get_contents($fullfst);
+        if ( stripos($fstcontent,"v9876") === false) {
+            echo "<div style='color:red'>FST ".$fst." ".$msgstr["doesnotcontaintag"]." v9876. ".$msgstr["invertincomplete"]."</div>";
+            echo "<div style='color:blue'>".$msgstr["invertloads"]." v".$htmlfiletag." ".$msgstr["intotag"]." v9876</div>";
+        }
     }
     /*
     ** Strip the html tags from the selected fields
-    ** Process ftt & fdttag parameters for stripping HTML with gizmo
-    ** ftt & fdttag are arrays. Both come from multiselect
+    ** Controlled by checkboxes
     */
-    // Digital documents uses the hidden field for the html content
-    if (isset($_POST['ftt'])) {
-        $taglist=$_POST['ftt'];
-        $ftt=$taglist[0];
-        if (strlen($ftt)>0) {
-            $strip_var.=" \"proc='Ghtmlgizmo,9876'\"";
-            $parameters.=$msgstr["striphtml"].": 9876<br>";
-        }
+    // Digital documents
+    if (isset($_POST[$htmlfiletag]) AND strlen($_POST[$htmlfiletag])>0 ) {
+        $strip_var.=" \"proc='Ghtmlgizmo,9876'\"";
+        $parameters.=$msgstr["striphtml"].": 9876<br>";
     }
     // The fields from the FDT are processed with their own tag
-    if (isset($_POST['fdttag']) ) {
-        $taglist=$_POST['fdttag'];
-        foreach ( $taglist as $tag) {
-            if (strlen($tag)>0) {
-                $strip_var.=" \"proc='Ghtmlgizmo,".$tag."'\"";
-                $parameters.=$msgstr["striphtml"].": ".$tag."<br>";
-            }
+    for ($i=0;$i<count($htmlTags);$i++){
+        $tag=$htmlTags[$i];
+        if (isset($_POST[$tag]) AND strlen($_POST[$tag])>0 ) {
+            $strip_var.=" \"proc='Ghtmlgizmo,".$tag."'\"";
+            $parameters.=$msgstr["striphtml"].": ".$tag."<br>";
         }
     }
     // Check that the lineends fit with the current OS (mx requirement for stw files)
