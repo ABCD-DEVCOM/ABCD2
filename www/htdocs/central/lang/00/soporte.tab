@@ -118,14 +118,17 @@ delta=delta
 descripcion=Description
 detectorder=Detection order
 doesexist=does exist
+doesnotcontaintag=does not contain tag
 download=Download
 end_process=End of the process
 entervalcomb=Please enter a valid combination
 error=Error
 error_create_folder=Error creating folder
+error_gizmodb="htmlgizmo.*=..." Does not specify an existing htmlgizmo database
 error_gizmofp="htmlgizmo.*=..." Cannot be specified with %database_path%
 error_gizmospec="htmlgizmo.*=..." Must be specified in
 every=Every
+examplefor=Example entry in
 exp_archivo=Your must supply the file name
 exp_selreg=Please select the records to be exported
 explore_sys_folders=Explore system folders
@@ -143,6 +146,9 @@ gizmolocatefolder=Locate folder with data files to be imported in the gizmo data
 gizmonametitle=Filename (no extension)
 g_newval=New value
 htmlfield=HTML fields
+intotag=in temporary tag
+invertincomplete=Indexing will not be complete
+invertloads=Inverted file computation loads the contents of the file indicated in tag
 importado=imported
 import_process_ok=Import process result: OK
 incremental=Use incremental indexing
@@ -212,7 +218,6 @@ targetfile=Target file
 testmx=Test
 tolinux=Delete carriage return (Windows -> Linux)
 transferido=Uploaded
-useslashm=Use m parameter
 unch_append=Unchecked = Append records
 unch_wxis=Unchecked = Use WXIS
 updatedfile=Updated file
@@ -221,9 +226,6 @@ upload_logout=Logout recommended
 upload_exceed=Exceeded
 uni_no=No
 uni_yes=Yes
-warnforincremental=Do not use this together with slashm parameter
-warnforslashm=Warning: do not check this parameter if you<br>are using picklists with type DB in the FDT
-warnforstrip=Omit common HTML-tags from selected targets
 warnforincr=Index only newly added MFNs
 warnmuchoutput=Warning: levels 2,3 give a lot of feedback
 workfolder=Work folder

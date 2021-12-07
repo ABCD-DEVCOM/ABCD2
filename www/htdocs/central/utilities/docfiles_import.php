@@ -14,6 +14,7 @@
 20211110 fho4abcd Reserve record space for inverted file generation, remove img clauses, chunk may and at </table>
 20201110 fho4abcd Remove debug file + corrected splittarget: menu value is noew used
 20201123 fho4abcd Html header for split/unsplit is now equal. unicode filenames to hex (required for fullinv:Gload)
+20211201 fho4abcd Splittarget by dropdown+call it granularity. Apply split also if filesize > granularity.
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -340,8 +341,14 @@ else if ($impdoc_cnfcnt==2) {
             <td style='color:blue'><?php echo $msgstr["dd_imp_splitperc"]." (".$pretty_cisis_recsize.")";?></td>
         </tr>
         </tr><tr>
-            <td><?php echo $msgstr["dd_imp_splittarget"];?></td>
-            <td><input name='splittarget' type=number min=50 max=100 value=<?php echo $splittarget;?> ></td>
+            <td><?php echo $msgstr["dd_imp_granularity"];?></td>
+            <td><select name='splittarget' id='splitarget'>
+                    <option value="80" selected>80</option>
+                    <option value="60">60</option>
+                    <option value="40">40</option>
+                    <option value="20">20</option>
+               </select>
+            </td>
             <td style='color:blue'><?php echo "% of ".$msgstr["dd_imp_usablerecsize"];?></td>
         </tr><tr><td colspan=3><hr></td>
         </tr><tr>
@@ -1264,14 +1271,14 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splitmax
     ** Split html is preferred at a logical boundary
     ** If actual recordsize exceeds the target size the system searches for logical boundary
     */
-    $targetsize = $maxsize*($splittarget/100); //splittarget is a percentage
+    $targetsize = $maxsize*(intval($splittarget)/100); //splittarget is a percentage
     if ($targetsize<5000) {// Just in case  a corrupt value is supplied
         tolog("<span style='color:red'>PROGRAM ERROR:variable targetsize=$targetsize : too small to be credible</span>");die;
     }
     /*
-    ** If the file is less then the maximum usable size a split is not necessary
+    ** If the file is less then the target size a split is not necessary
     */
-    if (intval($c_htmlfilesize) < $maxsize) {
+    if (intval($c_htmlfilesize) < $targetsize) {
         // no split required
         $split_files[]=$tikafile;
         return(0);

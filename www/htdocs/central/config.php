@@ -11,6 +11,7 @@
 2021-11-04 fho4abcd: Check that extension mbstring is loaded
 2021-11-11 fho4abcd: Remove ffi
 2021-11-23 fho4abcd: Allow trailing backslash for $db_path
+2021-11-28 fho4abcd: Ensure trailing slash in ABCD_path
 */
 
 ini_set('error_reporting', E_ALL);
@@ -41,6 +42,9 @@ if (stripos($_SERVER["SERVER_SOFTWARE"],"Win") > 0) {
  	$db_path="/var/opt/ABCD/bases/"; // path where the databases are to be located
  	$exe_ext="";                     // extension for executables
 }
+// Ensure ABCD_path has trailing / or \.
+if ( (substr($ABCD_path, strlen($ABCD_path)-1,1) <> "/") AND (substr($ABCD_path, strlen($ABCD_path)-1,1) <> "\\")) $ABCD_path.="/";
+
 $ABCD_scripts_path=$ABCD_path. "www/htdocs/";  //PATH
 
 //IF THERE ARE MULTIPLE BASES FOLDERS THE FOLDER SELECTED IS SET
@@ -68,7 +72,7 @@ $change_password="Y";                   //allow change password
 $ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
 
 // *** NO CHANGES NEEDED BELOW HERE
-// Ensure db_path has has trailing / or \.
+// Ensure db_path has trailing / or \.
 if ( (substr($db_path, strlen($db_path)-1,1) <> "/") AND (substr($db_path, strlen($db_path)-1,1) <> "\\")) $db_path.="/";
 
 // Construction of executable path and URL                             
