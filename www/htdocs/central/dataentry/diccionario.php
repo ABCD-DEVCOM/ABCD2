@@ -2,11 +2,11 @@
 /* Modifications
 20210430 fho4abcd Removed duplicate header setting.Lineends
 20211206 fho4abcd Full rewrite, include ifpro.php (with workaround from eds for truncated utf-8 last character) and ifepil.php
+20211207 fho4abcd Improved buttons + comment "broken multi-byte end-character (semi-)solution" + html errors + remove <table>' + add working message
 */
+// Show the dictionary of terms in the database
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-
-// Manejar el diccionario de términos de la base de datos
 session_start();
 if (!isset($_SESSION["permiso"])){
     header("Location: ../common/error_page.php") ;
@@ -14,7 +14,6 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 //foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
 include("../config.php");
-
 include ("../lang/admin.php");
 include ("leerregistroisispft.php");
 
@@ -35,6 +34,11 @@ function EjecutarBusqueda(desde){
             document.forma1.Opcion.value="buscar_en_este"
             for (i=0;i<document.forma1.terminos.length;i++){
                 if (document.forma1.terminos.options[i].selected==true){
+                    /* 
+                    ** (semi-)solution for broken multi-byte end-character
+                    ** Replace with a truncation '$' the UTF8-character at the end when broken (corrupt) by the splitting in between LE1 and LE2
+                    ** (resp. short and long terms max) in CISIS cifst.c code. 
+                    */
                     Termino=document.forma1.terminos.options[i].value;
                     var index=Termino.indexOf(String.fromCharCode("65533"));
                     if(index>=0){
@@ -114,6 +118,10 @@ function EjecutarBusqueda(desde){
             break
     }
 }
+function RemoveSpan(id){
+    var workingspan = document.getElementById(id);
+    workingspan.remove();
+}
 </script>
 <div class="sectionInfo">
     <div class="breadcrumb">
@@ -124,11 +132,10 @@ function EjecutarBusqueda(desde){
 <div class="spacer">&#160;</div>
 </div>
 <?php
-$ayuda=$_SESSION["lang"]."/diccionario.html";
 include "../common/inc_div-helper.php";
 ?>
- <div class="middle form">
-            <div class="formContent">
+<div class="middle form">
+<div class="formContent">
 
 <FORM METHOD="Post" name=forma1 action=diccionario.php onSubmit="Javascript:return false">
 <input type=hidden name=Opcion value='<?php echo $arrHttp["Opcion"]?>'>
@@ -152,53 +159,57 @@ if (isset($arrHttp["Target"])) {
     echo "<input type=hidden name=Target value=".$arrHttp["Target"].">";
 }
 ?>
-<div><?php echo $msgstr["selmultiple"];?></div>
-<div><?php echo $msgstr["src_advance"];?>
-&nbsp;<input type=text name="IR_A" size=10>&nbsp;
-<?php echo $msgstr["src_click"]?>
-&nbsp;<input type=button class="bt bt-blue" value='<?php echo $msgstr["continuar"];?>' onclick="EjecutarBusqueda(3)"></div>
-
-<table border="0" cellspacing="0" cellpadding="4">
-    <tr>
-        <td style='text-align:center'>
-            <select name=terminos  size=13 multiple 
-                <?php
-                if (isset($arrHttp["toolbar"])) {
-                    if ($arrHttp["Opcion"]=="diccionario"){
-                        echo 'onclick="EjecutarBusqueda(1)'; 
-                    } else {
-                        'onclick="EjecutarBusqueda(2)';
-                    }
+    <div><?php echo $msgstr["selmultiple"];?></div>
+    <div>
+        <input type=text name="IR_A" size=15>&nbsp;<?php echo $msgstr["src_advance"];?>
+        <input type="submit" style="display:none;" onclick="EjecutarBusqueda(3)"/>
+    </div>
+    <div>
+        <span id="working" style="color:red"><b>.... <?php echo $msgstr["src_system_working"]?> ....</span>
+        <?php  ob_flush();flush();?>
+        <select name=terminos  size=13 multiple 
+            <?php
+            // When the function is initiated from the toolbar a hit will search immediately
+            if (isset($arrHttp["toolbar"])) {
+                if ($arrHttp["Opcion"]=="diccionario"){
+                    echo 'onclick="EjecutarBusqueda(1)"'; 
+                } else {
+                    echo 'onclick="EjecutarBusqueda(2)"';
                 }
-                ?>>
-                <OPTION VALUE="">
-                <?php
-                PresentarDiccionario();
-                ?>
-            </select>
-            <INPUT TYPE=HIDDEN VALUE="<?php echo $arrHttp["LastKey"]?>" NAME="LastKey">
-        </td>
-    </tr>
-    <tr>
-        <td style='text-align:center'>
-        <input type=button class="bt bt-blue" value='<?php echo $msgstr["masterms"];?>' onclick="EjecutarBusqueda(4)">
-        &nbsp;&nbsp;
-        <input type=button class="bt bt-blue" value='<?php echo $msgstr["src_send"];?>' onclick="EjecutarBusqueda(2)">
-        &nbsp;&nbsp;
-        <?php
-        if (!isset($arrHttp["toolbar"])){
-            // Si existe $arrHttp["Target"] no se realiza la búsqueda directamente
-            if (!isset($arrHttp["Target"])) {
-                ?>
-                <input type=button class="bt bt-blue" value='<?php echo $msgstr["buscar"];?>' onclick="EjecutarBusqueda(1)">
-                <?php
             }
-        }
+            echo ">";
+            PresentarDiccionario();
+            ?>
+        </select>
+        <script> RemoveSpan("working");</script>
+        <INPUT TYPE=HIDDEN VALUE="<?php echo $arrHttp["LastKey"]?>" NAME="LastKey">
+    </div>
+    <div class="ActionFooter"  style='text-align:center'>
+        <a href="javascript:EjecutarBusqueda(4)" class="bt bt-gray">
+             <i class="fas fa-chevron-circle-down"></i> <?php echo $msgstr["masterms"]?>
+        </a>
+        <?php
+        $showsend=true;
+        if (isset($arrHttp["toolbar"])) $showsend=false;
+        $showsearch=true;
+        if (isset($arrHttp["Target"])) $showsearch=false;// Si existe $arrHttp["Target"] no se realiza la búsqueda directamente
+    
+        if ($showsend) {
         ?>
-        </td>
-    </tr>
-</table>
-
+            &nbsp;&nbsp;
+            <a href="javascript:EjecutarBusqueda(2)" class="bt bt-blue">
+                 <i class="fas fa-share-square"></i> <?php echo $msgstr["src_send"]?>
+            </a>
+        <?php
+        }
+        if ($showsearch) {
+        ?>
+            &nbsp;&nbsp;
+            <a href="javascript:EjecutarBusqueda(1)" class="bt bt-green">
+                 <i class="fas fa-search"></i> <?php echo $msgstr["buscar"]?>
+            </a>
+        <?php } ?>
+    </div>
 </form>
 </div>
 </div>
@@ -206,9 +217,8 @@ if (isset($arrHttp["Target"])) {
 include("../common/footer.php");
 // ======================================================
 // This the end of main script. Only functions follow now
-// =========================== Functions ================
 //
-// ====== PresentarDiccionario =============================
+// ====== PresentarDiccionario ==========================
 // Para presentar el diccionario de términos
 // To present the dictionary of terms
 
