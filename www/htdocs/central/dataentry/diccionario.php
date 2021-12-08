@@ -3,6 +3,7 @@
 20210430 fho4abcd Removed duplicate header setting.Lineends
 20211206 fho4abcd Full rewrite, include ifpro.php (with workaround from eds for truncated utf-8 last character) and ifepil.php
 20211207 fho4abcd Improved buttons + comment "broken multi-byte end-character (semi-)solution" + html errors + remove <table>' + add working message
+20211208 fho4abcd First depends on quick search. Search button not for quicksearch
 */
 // Show the dictionary of terms in the database
 
@@ -158,8 +159,17 @@ if (isset($arrHttp["Tabla"])) {
 if (isset($arrHttp["Target"])) {
     echo "<input type=hidden name=Target value=".$arrHttp["Target"].">";
 }
+$showsend=true;
+if (isset($arrHttp["toolbar"])) $showsend=false;
+$showsearch=true;
+if (isset($arrHttp["Target"])) $showsearch=false;// Si existe $arrHttp["Target"] no se realiza la búsqueda directamente
+if (isset($arrHttp["toolbar"])) $showsearch=false;
+if ($showsend or $showsearch) {
+    echo "<div>".$msgstr["selmultiple"]."</div>";
+} else {
+    echo "<div>".$msgstr["src_selterm"]."</div>";
+}
 ?>
-    <div><?php echo $msgstr["selmultiple"];?></div>
     <div>
         <input type=text name="IR_A" size=15>&nbsp;<?php echo $msgstr["src_advance"];?>
         <input type="submit" style="display:none;" onclick="EjecutarBusqueda(3)"/>
@@ -189,11 +199,6 @@ if (isset($arrHttp["Target"])) {
              <i class="fas fa-chevron-circle-down"></i> <?php echo $msgstr["masterms"]?>
         </a>
         <?php
-        $showsend=true;
-        if (isset($arrHttp["toolbar"])) $showsend=false;
-        $showsearch=true;
-        if (isset($arrHttp["Target"])) $showsearch=false;// Si existe $arrHttp["Target"] no se realiza la búsqueda directamente
-    
         if ($showsend) {
         ?>
             &nbsp;&nbsp;
