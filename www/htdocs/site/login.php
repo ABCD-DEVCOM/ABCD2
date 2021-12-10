@@ -1,18 +1,10 @@
 <?php
-/* Modifications
-2021-01-04 fho4abcd Removed login encryption
-2021-01-04 fh04abcd Corrected "languaje" --> language
-2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
-2021-02-27 fho4abcd png favicon works better in bookmarks.
-2021-08-10 fho4abcd Do not crash if first language file (from the browser) is missing. Visible message if no file found
-*/
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
 include("../central/config.php");
 include("../$app_path/common/get_post.php");
-$new_window=time();
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+
 $lang_config=$lang;
 
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -81,19 +73,11 @@ document.onkeypress =
 			return true;
 	}
 
-function UsuarioNoAutorizado(){
+function UsuarioNoAutorizado() {
 	alert("<?php echo $msgstr["menu_noau"]?>")
 }
-function CambiarClave(){
-	document.cambiarPass.login.value=Trim(document.administra.login.value)
-	document.cambiarPass.password.value=Trim(document.administra.password.value)
-	ix=document.administra.lang.selectedIndex
-	document.cambiarPass.lang.value=document.administra.lang.options[ix].value
-	ix=document.administra.db_path.value
-	document.cambiarPass.db_path.value=document.administra.db_path.value
-	document.cambiarPass.submit()
-}
-function Enviar(){
+
+function Enviar(id) {
 	login=Trim(document.administra.login.value)
 	password=Trim(document.administra.password.value)
 	if (login=="" || password==""){
@@ -112,6 +96,45 @@ function Enviar(){
 		}
 		document.administra.submit()
 	}
+}
+
+
+var http = getXMLHTTPRequest();
+ 
+function DoLogIn(user,pass,id)  {
+
+ if (http.readyState == 4 || http.readyState == 0) {
+  
+  mydbaccess="<?php echo $db_path ?>";
+  var myurl = 'dologin.php'; //define la url
+  myRand = parseInt(Math.random()*999999999999999); // es para que la info no vaya a la cache sino al servidor  
+  var modurl = myurl+"?user="+user+"&pass="+pass+"&path="+mydbaccess+"&rand="+myRand;//crea la nueva url
+
+	http.open("GET", modurl); //define tipo de convercion
+  http.onreadystatechange = function(){ResponseDoLogin(id);} //es lo que queremos q se ejecute
+  http.send(null); //se ejecuta la funcion
+  }
+  else
+    setTimeout('DoLogIn('+user+','+pass+','+id+')', 1000);
+ }
+
+ function ResponseDoLogin(id) {
+
+if (http.readyState == 4)
+	  if(http.status == 200)
+	{
+	  if (http.responseText=="DISPLAY") {		   
+		   opener.document.getElementById('divurld'+id).style.display='none';
+		   opener.document.getElementById('divurl'+id).style.display='block';
+		   opener.document.getElementById('into').value='si';
+           close(); 		   
+		  }
+		  else
+		  {
+		   alert(" Wrong user login-data, please try again");
+		   document.getElementById("user").focus();
+		  }
+        }
 }
 
 </script>
@@ -239,7 +262,7 @@ if (file_exists("dbpath.dat")){
 		</div>
 
 		<div class="formRow">
-				<a href="javascript:Enviar()" class="bt-blue bt-sign">
+				<a href="javascript:Enviar('<?php echo $_GET["id"];?>')" class="bt-blue bt-sign">
 					<?php echo $msgstr["entrar"]?> 
 				</a>
 		</div>
