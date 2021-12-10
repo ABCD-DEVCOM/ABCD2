@@ -5,6 +5,7 @@
 2021-06-10 fho4abcd Remove undesired login code
 2021-06-14 fho4abcd Remove unused function LeerRegistro + lineends
 2021-08-29 fho4abcd Replaced document import
+2021-12-09 fho4abcd Improved sizeof popup for alfa
 */
 //error_reporting(E_ALL);
 session_start();
@@ -462,9 +463,9 @@ function Menu(Opcion){
 		case 'alfa':
 			formato_ix=formato_indice
 	    	Prefijo="&prefijo="+prefijo_indice+"&formato_e="+ formato_ix+"&bymfn=S"
-			var width = screen.width-600-100
+			var width = screen.width-650-100
 			url="alfa.php?Opcion=autoridades&base="+base+"&cipar="+cipar+Prefijo+"&Formato="+Formato
-			msgwin=window.open(url,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=600,height=580,top=10,left="+width)
+			msgwin=window.open(url,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=650,height=540,top=10,left="+width)
     		msgwin.focus()
 			break
   		case 'ayuda':
@@ -822,25 +823,19 @@ function Unload(){
 if (isset($arrHttp["base"])){
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
 
-?> 
+    ?> 
 	<iframe scrolling="no" name="encabezado" id="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" frameborder="0" ></iframe>
-
 	<iframe scrolling="no" name=menu id=menu src="" style="border: none; width: 100%; height: 78px; position: relative;" frameborder="0" allowfullscreen wmode="transparent"></iframe>
 	<iframe name="main" id="main" src="" style="border: none; width: 100%;  position: relative;"></iframe>
-
-<?php
+    <?php
 	}else{
-?>
-
+    ?>
 	<frame scrolling="no" name="encabezado" class="dataentry-header"  src="menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=<?php echo $arrHttp["Mfn"];?>" SCROLLING=no >
 	<frame name="menu"  src="blank.html" scrolling=no>
 	<frame name="main" id="main" src="homepage.htm" scrolling=yes>
-
-
-
-<?php
-}
-?>
+    <?php
+    }
+    ?>
 
 </div>
 
