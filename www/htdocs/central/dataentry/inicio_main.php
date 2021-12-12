@@ -6,6 +6,7 @@
 2021-06-14 fho4abcd Remove unused function LeerRegistro + lineends
 2021-08-29 fho4abcd Replaced document import
 2021-12-09 fho4abcd Improved sizeof popup for alfa
+2021-12-12 fho4abcd Improved sizeof popup for alfa (for breadcrumb)
 */
 //error_reporting(E_ALL);
 session_start();
@@ -465,7 +466,7 @@ function Menu(Opcion){
 	    	Prefijo="&prefijo="+prefijo_indice+"&formato_e="+ formato_ix+"&bymfn=S"
 			var width = screen.width-650-100
 			url="alfa.php?Opcion=autoridades&base="+base+"&cipar="+cipar+Prefijo+"&Formato="+Formato
-			msgwin=window.open(url,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=650,height=540,top=10,left="+width)
+			msgwin=window.open(url,"Indice","status=yes,resizable=yes,toolbar=no,menu=yes,scrollbars=yes,width=650,height=580,top=10,left="+width)
     		msgwin.focus()
 			break
   		case 'ayuda':

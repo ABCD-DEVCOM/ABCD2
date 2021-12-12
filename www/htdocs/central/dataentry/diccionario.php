@@ -4,6 +4,7 @@
 20211206 fho4abcd Full rewrite, include ifpro.php (with workaround from eds for truncated utf-8 last character) and ifepil.php
 20211207 fho4abcd Improved buttons + comment "broken multi-byte end-character (semi-)solution" + html errors + remove <table>' + add working message
 20211208 fho4abcd First depends on quick search. Search button not for quicksearch
+20211212 fho4abcd Buttons like alfa.php:new Up button, goto field moved down, added enter button,shorter text in buttons, added hover text+removed footer
 */
 // Show the dictionary of terms in the database
 
@@ -171,11 +172,7 @@ if ($showsend or $showsearch) {
 }
 ?>
     <div>
-        <input type=text name="IR_A" size=15>&nbsp;<?php echo $msgstr["src_advance"];?>
-        <input type="submit" style="display:none;" onclick="EjecutarBusqueda(3)"/>
-    </div>
-    <div>
-        <span id="working" style="color:red"><b>.... <?php echo $msgstr["src_system_working"]?> ....</span>
+        <span id="working" style="color:red"><b>.... <?php echo $msgstr["src_system_working"]?> ....</b></span>
         <?php  ob_flush();flush();?>
         <select name=terminos  size=13 multiple 
             <?php
@@ -194,32 +191,36 @@ if ($showsend or $showsearch) {
         <script> RemoveSpan("working");</script>
         <INPUT TYPE=HIDDEN VALUE="<?php echo $arrHttp["LastKey"]?>" NAME="LastKey">
     </div>
-    <div class="ActionFooter"  style='text-align:center'>
-        <a href="javascript:EjecutarBusqueda(4)" class="bt bt-gray">
-             <i class="fas fa-chevron-circle-down"></i> <?php echo $msgstr["masterms"]?>
-        </a>
+    <div>
+        <a href="javascript:EjecutarBusqueda(3)" class="bt bt-gray" title='<?php echo $msgstr["src_top"]?>'>
+             <i class="fas fa-chevron-circle-up"></i></a>
+        <a href="javascript:EjecutarBusqueda(4)" class="bt bt-gray" title='<?php echo $msgstr["masterms"]?>'>
+             <i class="fas fa-chevron-circle-down"></i></a>
+        &nbsp;
+        <?php echo $msgstr["avanzara"]?>
+        <input type=text name="IR_A" size=5 title='<?php echo $msgstr["src_advance"];?>'>
+        <a href="javascript:EjecutarBusqueda(3)" class="bt bt-gray" title='<?php echo $msgstr["src_enter"]?>'>
+            <i class="fas fa-arrow-alt-circle-right"></i></a>
+        <input type="submit" style="display:none;" onclick="EjecutarBusqueda(3)"/>
         <?php
         if ($showsend) {
         ?>
-            &nbsp;&nbsp;
-            <a href="javascript:EjecutarBusqueda(2)" class="bt bt-blue">
-                 <i class="fas fa-share-square"></i> <?php echo $msgstr["src_send"]?>
-            </a>
+            <a href="javascript:EjecutarBusqueda(2)" class="bt bt-blue" title=' <?php echo $msgstr["src_send"]?>'>
+                <i class="fas fa-share-square"></i> <?php echo $msgstr["src_sendto"]?></a>
         <?php
         }
         if ($showsearch) {
         ?>
-            &nbsp;&nbsp;
             <a href="javascript:EjecutarBusqueda(1)" class="bt bt-green">
-                 <i class="fas fa-search"></i> <?php echo $msgstr["buscar"]?>
-            </a>
+                 <i class="fas fa-search"></i> <?php echo $msgstr["buscar"]?></a>
         <?php } ?>
     </div>
 </form>
 </div>
 </div>
+</body>
+</html>
 <?php
-include("../common/footer.php");
 // ======================================================
 // This the end of main script. Only functions follow now
 //

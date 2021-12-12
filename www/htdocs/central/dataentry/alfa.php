@@ -1,6 +1,7 @@
 <?php
 /*
 20211209 fho4abcd Rewrite, echos-> script. improve layout & html
+20211212 fho4abcd Add TOP button + keep pref if db is switched + add breadcrumb to help the db manager+resolve script errors
 */
 /*
 ** Functionality:
@@ -13,7 +14,6 @@ if (!isset($_SESSION["permiso"])){
     header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
-//foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
 include("../config.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
@@ -24,13 +24,19 @@ include ("leerregistroisispft.php");
 // ------------------------------------------------------
 
 include("../common/header.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+//foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
 ?>
 <body onblur=self.close()>
 <?php
 /*
 ** Read the FDT
+** Some calls do not supply correct parameters: check first
 */
+if (!isset($arrHttp["base"]) OR $arrHttp["base"]=="" ) {
+    echo "<div style='color:red'>ERROR: base is not set. Dump of all url parameters:<br>";
+    var_dump($arrHttp);
+    echo "<br>-</div>";die;
+}
 if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
     $fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt");
 else
@@ -53,7 +59,6 @@ if (!isset($arrHttp["tagfst"])) $arrHttp["tagfst"]="";
 if (!isset($arrHttp["delimitador"]))$arrHttp["delimitador"]="";
 if (!isset($arrHttp["Tag"]))$arrHttp["Tag"]="";
 if (!isset($arrHttp["prefijo"]))$arrHttp["prefijo"]="";
-if (!isset($arrHttp["capturar"]))$arrHttp["capturar"]="";
 if (!isset($arrHttp["capturar"]))$arrHttp["capturar"]="";
 if (!isset($arrHttp["pref"]))$arrHttp["pref"]=$arrHttp["prefijo"];
 
@@ -108,6 +113,7 @@ else
     echo "cnvtabsel=\"\"\n";
 ?>
 function CambiarBase(){
+    //Change Base
     tl=""
     nr=""
     i=document.Lista.baseSel.selectedIndex
@@ -121,7 +127,7 @@ function CambiarBase(){
     ciparcap=basecap+".par"
     <?php $arrHttp["formato_e"]=str_replace('"','|',$arrHttp["formato_e"])?>
     formato_ix="<?php echo stripslashes($arrHttp["formato_e"])?>"
-    Prefijo="&prefijo=<?php echo $arrHttp["prefijo"]?>"+"&formato_e="+ formato_ix
+    Prefijo="&prefijo=<?php echo $arrHttp["pref"]?>"+"&formato_e="+ formato_ix
     if (top.frames.length>0){
         parent.indice.location.href="alfa.php?base="+basecap+"&cipar="+ciparcap+Prefijo+"&Opcion=autoridades&capturar=S&bymfn=S"
     }else{
@@ -193,8 +199,12 @@ function ObtenerTerminos(){
 }
 
 function Continuar(){
-    i=document.Lista.autoridades.length-1
-    a=document.Lista.autoridades[i].text
+    i=document.Lista.autoridades.length
+    a=' '
+    if (i>1) {
+        i--
+        a=document.Lista.autoridades[i].text
+    }
     AbrirIndice(a)
 }
 
@@ -232,6 +242,14 @@ function AbrirIndice(Termino){
     self.location.href=URL
 }
 </script>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["indicede"].": ".urldecode($arrHttp["pref"])?>
+    </div>
+    <div class="actions">
+    </div>
+<div class="spacer">&#160;</div>
+</div>
 <?php
 include "../common/inc_div-helper.php";
 ?>
@@ -240,6 +258,7 @@ include "../common/inc_div-helper.php";
 <form method=post name=Lista onSubmit="javascript:return false">
 <?php
 // si viene de la opción de capturar de otra base de datos se presenta la lista de bases de datos disponibles
+// if it comes from the option to capture from another database, the list of available databases is displayed
 if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
     $key_bd="";
     if (isset($arrHttp["base"])) $key_bd=$arrHttp["base"];
@@ -346,12 +365,15 @@ foreach ($contenido as $linea){
 </tr>
 <tr>
     <td colspan=2><!--full width required to avoid wrap in all languages-->
-        <a href="javascript:Continuar()" class="bt bt-gray">
-             <i class="fas fa-chevron-circle-down"></i> <?php echo $msgstr["masterms"]?>
+        <a href="javascript:AbrirIndice(' ')" class="bt bt-gray" title='<?php echo $msgstr["src_top"]?>'>
+             <i class="fas fa-chevron-circle-up"></i> 
         </a>
-        &nbsp;  &nbsp;
-        <?php echo $msgstr["avanzara"]?>&nbsp;
-        <input type=text name=ira size=5 value="" onKeyPress="codes(event)" title="<?php echo $msgstr["src_advance"];?>"> &nbsp;
+        <a href="javascript:Continuar()" class="bt bt-gray" title='<?php echo $msgstr["masterms"]?>'>
+             <i class="fas fa-chevron-circle-down"></i>
+        </a>
+        &nbsp;
+        <?php echo $msgstr["avanzara"]?>
+        <input type=text name=ira size=5 value="" onKeyPress="codes(event)" title="<?php echo $msgstr["src_advance"];?>">
         <a href=Javascript:IrA() class="bt bt-gray" title='<?php echo $msgstr["src_enter"]?>'>
             <i class="fas fa-arrow-alt-circle-right"></i></a>
     </td>
