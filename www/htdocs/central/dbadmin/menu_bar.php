@@ -20,6 +20,7 @@
 20210903 fho4abcd Add options to configure Digital documents functionality and Repair Digital Documents
 20211029 edsz14 Replace vmx_fullinv.php by fullinv.php
 20211114 fho4abcd Add create_gizmo
+20211214 fho4abcd Digital documents to top menu
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -356,16 +357,16 @@ function EnviarFormaMNT(Opcion,Mensaje){
         <?php if ($arrHttp["base"]==("dcdspace")) { ?>
 		<li><a href='Javascript:EnviarFormaMNT("dcdspace","<?php echo $msgstr["dspace_title"]?>")'><?php echo $msgstr["dspace_title"]?></a></li>
         <?php } ?>
-  		<li><a href="#"><?php echo $msgstr["dd_documents"]?></a>
-    		<ul>
-				<li><a href='Javascript:EnviarFormaMNT("importdoc","<?php echo $msgstr["dd_upload"]?>")'><?php echo $msgstr["dd_upload"]?></a></li>
-    			<li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["dd_batchimport"]?>")'><?php echo $msgstr["dd_batchimport"]?></a></li>
-                <li><a href='#'>&nbsp;</a></li>
-				<li><a href='Javascript:EnviarFormaMNT("docfilesconfig","<?php echo $msgstr["dd_config"]?>")'><?php echo $msgstr["dd_config"]?></a></li>
-				<li><a href='Javascript:EnviarFormaMNT("docfilesrepair","<?php echo $msgstr["dd_repair"]?>")'><?php echo $msgstr["dd_repair"]?></a></li>
-			</ul>
-  		</li>
   	</ul>
+  </li>
+  <li><a href="#"><?php echo $msgstr["dd_documents"]?></a>
+    <ul>
+        <li><a href='Javascript:EnviarFormaMNT("importdoc","<?php echo $msgstr["dd_upload"]?>")'><?php echo $msgstr["dd_upload"]?></a></li>
+        <li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["dd_batchimport"]?>")'><?php echo $msgstr["dd_batchimport"]?></a></li>
+        <li><a href='#'>&nbsp;</a></li>
+        <li><a href='Javascript:EnviarFormaMNT("docfilesconfig","<?php echo $msgstr["dd_config"]?>")'><?php echo $msgstr["dd_config"]?></a></li>
+        <li><a href='Javascript:EnviarFormaMNT("docfilesrepair","<?php echo $msgstr["dd_repair"]?>")'><?php echo $msgstr["dd_repair"]?></a></li>
+    </ul>
   </li>
   <li><a href="#"><?php echo $msgstr["dbbackrest"]?></a>
    	<ul>

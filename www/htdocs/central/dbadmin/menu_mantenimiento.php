@@ -6,6 +6,7 @@
 20210324 fho4abcd Catch error after database deletion, display also long name of the database
 20210415 fho4abcd use charset from config.php
 20210803 fho4abcd added language file
+20211214 fho4abcd Backbutton by included file
 */
 session_start();
 
@@ -59,27 +60,20 @@ foreach ($fp as $value){
 include("../common/header.php");
 ?>
 <body>
-
-
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
-
 <?php
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
+include("../common/institutional_info.php");
+$encabezado="&encabezado=s";
 ?>
-
-
-	<div class="sectionInfo">
-			<div class="breadcrumb">
-				<?php echo $msgstr["maintenance"]. ": " . $arrHttp["base"]; ?>
-			</div>
-			<div class="actions">
-				<a href="../common/inicio.php?reinicio=s&base=<?php echo $arrHttp["base"]; ?>" class="defaultButton backButton">
-					<img src="../../assets/images/defaultButton_iconBorder.gif" />
-				<span><strong><?php echo $msgstr["back"]; ?></strong></span></a>
-			</div>
-		   <div class="spacer">&#160;</div> 
-	</div>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["maintenance"]. ": " . $arrHttp["base"]; ?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php";?>
+    </div>
+   <div class="spacer">&#160;</div> 
+</div>
 
 <?php
 include "../common/inc_div-helper.php";
@@ -89,10 +83,7 @@ include("menu_bar.php");
 ?>
 
 <div class="middle form">
-
 	<div class="formContent" style="min-height:300px;">
-
-
 	<div class="log_base">
 	<?php
 	// Get info about the current database from the database(if there is a database)
@@ -148,17 +139,6 @@ include("menu_bar.php");
         iframe.style.height = folga + 'px';
 
     }
-
-
- //   	document.getElementById("ABCD_Frame").getElementsByClassName("heading")style.visibility = "hidden";;
-  //  	var hidesectionInfo = iframe.contentWindow.document.getElementsByClassName("sectionInfo")[0];
-   // 	var hidemiddle = iframe.contentWindow.document.getElementsByClassName("middle")[0];
-  //  	var hidefooter = iframe.contentWindow.document.getElementsByClassName("footer")[0];
-  //      hidehead.style.visibility = "hidden";
-  //      hidesectionInfo.style.visibility = "hidden";	
-//        hidemiddle.style.background = "#fff";	
- //       hidefooter.style.display = "none";	
-
     </script>
 
 	</div> <!--./formContent-->
