@@ -3,6 +3,7 @@
 20210607 fho4abcd Created from vmx_import_iso.php
 20210702 fho4abcd added scriptaction="matchisofdt"
 20210802 fho4abcd Make Show file work the first time
+20211214 fho4abcd New icons. Simplified layout
 */
 /*
 ** Function : Combine the common part of actions operaing on the wrk folder
@@ -68,8 +69,10 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
          <tr>
             <td><?php echo $wrkfolder_label;?></td><td><?php echo $wrkfolder_value;?></td>
         </tr>
-       <tr><td align=center colspan=2>
-                <input type=button value='<?php echo $msgstr["uploadfile"];?>' onclick=Upload()></td>
+        <tr><td align=center colspan=2>
+                <a href="javascript:Upload()" class="bt bt-blue" title='<?php echo $msgstr["uploadfile"]?>'>
+                <i class="fas fa-file-upload"></i>&nbsp;<?php echo $msgstr["uploadfile"];?></a></td>
+        </tr>
     </table>
     </form>
     <?php
@@ -98,19 +101,11 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         sort ($file_array);
         reset ($file_array);
         $actioncolmsg=$msgstr["seleccionar"];
-        $selimg="img src='../dataentry/img/aceptar.gif' alt='" .$msgstr["selfile"]."' title='".$msgstr["selfile"]."'";
         if ($scriptaction=="cnviso2utf") {
             $actioncolmsg=$msgstr["convert"];
-            $selimg="img src='../dataentry/img/barTool.png' alt='" .$msgstr["cnv_iso2utf"]."' title='".$msgstr["cnv_iso2utf"]."'";
         } else if ( $scriptaction=="matchisofdt") {
             $actioncolmsg=$msgstr["match"];
-            $selimg="img src='../dataentry/img/barTool.png' alt='" .$msgstr["matchisofdt"]."' title='".$msgstr["matchisofdt"]."'";
         }
-        $selimg=htmlentities($selimg);
-        $delimg="img src='../dataentry/img/barDelete.png' alt='" .$msgstr["eliminar"]."' title='".$msgstr["eliminar"]."'";
-        $delimg=htmlentities($delimg);
-        $lisimg="img src='../dataentry/img/preview.gif' alt='" .$msgstr["ver"]."' title='".$msgstr["ver"]."'";
-        $lisimg=htmlentities($lisimg);
         // Create a form with all necessary info
         // Show the list of iso files in /wrk
         ?>
@@ -135,13 +130,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         </form>
 
         <h3><?php echo $msgstr["seleccionar"]." ".$msgstr["cnv_iso"]?> </h3>
-        <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=4>
-        <tr>
-            <th><?php echo $msgstr["archivo"]?> </th>
-            <th><?php echo $msgstr["ver"]?> </th>
-            <th><?php echo $msgstr["eliminar"]?> </th>
-            <th><?php echo $actioncolmsg?> </th>
-       </tr>
+        <table style="border-collapse:collapse;"  cellpadding=5 >
         <?php
         foreach ($file_array as $file) {
             $filemsg="<b>".$file."</b><br>";
@@ -149,10 +138,26 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
             $filemsg.=", Size: ".number_format(filesize($wrkfull."/".$file),0,',','.');
         ?> 
         <tr>
-            <td bgcolor=white><?php echo $filemsg?></td>
-            <td bgcolor=white><a href="javascript:ActivarMx(<?php echo "'$wrk'"?>,<?php echo "'$file'"?>)"> <<?php echo $lisimg?>> </a></td>
-            <td bgcolor=white><a href="javascript:Eliminar('<?php echo $file?>')"> <<?php echo $delimg?>> </a></td>
-            <td bgcolor=white><a href="javascript:Seleccionar('<?php echo $file?>')"> <<?php echo $selimg?>> </a></td>
+            <td style="border-top: 1px solid var(--gray110);"><?php echo $filemsg?></td>
+            <td >
+                <a href="javascript:ActivarMx(<?php echo "'$wrk'"?>,<?php echo "'$file'"?>)" class="bt bt-gray" title='<?php echo $msgstr["ver"]?>'>
+                <i class="fas fa-tv"></i></a>
+                <a href="javascript:Eliminar('<?php echo $file?>')" class="bt bt-red" title='<?php echo $msgstr["eliminar"]?>'>
+                <i class="fas fa-trash-alt"></i></a>
+                <?php if ($scriptaction=="cnviso2utf") {
+                ?>
+                <a href="javascript:Seleccionar('<?php echo $file?>')" class="bt bt-green" title='<?php echo $msgstr["cnv_iso2utf"]?>'>
+                <i class="fas fa-wrench"></i>&nbsp;<?php echo $msgstr["convert"]?></a>
+                <?php } else if ( $scriptaction=="matchisofdt") {
+                ?>
+                <a href="javascript:Seleccionar('<?php echo $file?>')" class="bt bt-green" title='<?php echo $msgstr["matchisofdt"]?>'>
+                <i class="fas fa-hammer"></i>&nbsp;<?php echo $msgstr["match"]?></a>
+                <?php } else {
+                ?>
+                <a href="javascript:Seleccionar('<?php echo $file?>')" class="bt bt-green" title='<?php echo $importisomsg?>'>
+                <i class="fas fa-check"></i>&nbsp;<?php echo $msgstr["cnv_import"]?></a>
+                <?php } ?>
+            </td>
         </tr>
         <?php
         }

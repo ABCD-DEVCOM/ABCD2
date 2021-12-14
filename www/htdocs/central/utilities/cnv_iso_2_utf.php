@@ -2,6 +2,7 @@
 /* Modifications
 20210607 fho4abcd Created new (from vmx_import_iso)
 20210609 fho4abcd Added explanation message+ bug in confirmcount
+20211214 fho4abcd Backbutton by included file
 */
 global $arrHttp;
 set_time_limit(0);
@@ -113,12 +114,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -291,5 +287,5 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
 echo "</div></div></div>";
 include("../common/footer.php");
 ?>
-</body></html>
+
 
