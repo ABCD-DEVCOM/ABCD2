@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210413 fho4abcd Redesign. Improved:helper fragment+breadcrumb+feedback+simplified coding,...
+20211215 fho4abcd Backbutton by included file. Rename file to protect_db.php. Improve strings
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -13,17 +14,17 @@ $lang=$_SESSION["lang"];
 include("../common/header.php");
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
+include("../lang/soporte.php");
 
 $backtoscript="../dbadmin/menu_mantenimiento.php";
-$backtourl=$backtoscript."?base=".$arrHttp["base"];
 $base=$arrHttp["base"];
 $protectfilename=$db_path.$base."/protect_status.def";
 if (file_exists($protectfilename)) {
     $protectstatus=1;
-    $protectstatusmsg="Protected";
+    $protectstatusmsg=$msgstr["protect_db_prot"];
 } else {
     $protectstatus=0;
-    $protectstatusmsg="NOT protected";
+    $protectstatusmsg=$msgstr["protect_db_unprot"];
 }
 echo "<body>";
 // Show institutional info
@@ -31,20 +32,18 @@ include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["maintenance"]." &rarr; ".$msgstr["protect_db"];?>
+        <?php echo $msgstr["maintenance"]." &rarr; ".$msgstr["protect_db_title"];?>
 	</div>
 	<div class="actions">
-        <a href='<?php echo $backtourl?>'  class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
-	</div>
+    <?php include "../common/inc_back.php";?>
+    </div>
 	<div class="spacer">&#160;</div>
 </div>
 <?php include "../common/inc_div-helper.php" ?>
 <div class="middle form">
 	<div class="formContent">
     <div align=center>
-        <h3><?php echo $msgstr["protect_db"]?></h3>
+        <h3><?php echo $msgstr["protect_db_title"]?></h3>
     </div>
 <?php
 if (!isset($_SESSION["permiso"]["CENTRAL_ALL"])){
@@ -111,5 +110,4 @@ if (!isset($arrHttp["action"])){
 }
 include("../common/footer.php");
 ?>
-</body></html>
 
