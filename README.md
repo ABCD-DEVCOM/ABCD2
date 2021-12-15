@@ -174,21 +174,6 @@ _Rights: Administrator_
 User: adm
 Password: x
  ```  
- 
- 
-***SeCS-Web – Administrator*** – http://demo.abcd-community.org/secs-web
- 
-_Rights: Administrator_
- ```  
-   User: admsecs
-   Password: admsecs
- ```  
-_Rights: Editor_
- ```  
-   User: edtsecs
-   Password: edtsecs
-
-```
 
 _For more examples, please refer to the [Documentation](https://github.com/ABCD-DEVCOM/ABCD2/blob/master/ABCofABCD_2.0f.pdf)_
 
