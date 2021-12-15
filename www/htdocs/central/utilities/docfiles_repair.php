@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210903 fho4abcd Created
+20211215 fho4abcd Backbutton by included file
 **
 ** This file contains functionality for the mitigation of
 ** - Field url: v98 contains no url but only a filename
@@ -72,11 +73,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-<?php
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -198,5 +195,4 @@ echo "<div> Under construction</div>";
 <?php
 include "../common/footer.php";
 ?>
-</body>
-</html>
+

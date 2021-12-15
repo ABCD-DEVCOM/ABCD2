@@ -6,6 +6,7 @@
 20210524 fho4abcd Only files of current database, Preview result, Only rewrite if modified, Error checks
 20210524 fho4abcd Check with correct charactersets and correct detection order.
 20210524 fho4abcd Files with UTF-8-BOM are recognized. Empty files also allowed (=ascii->no conversion)
+20211215 fho4abcd Backbutton by included file
 */
 /*
 ** This file can be used to convert the encoding of several text files in a folder and subfolders
@@ -91,16 +92,12 @@ include("../common/institutional_info.php");
 ?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php include "../common/inc_div-helper.php";
+<?php
+include "../common/inc_div-helper.php";
 // Check valid values of controlling parameters and set folder to check
 if ( $targetcode=="" or ($targetcode!="UTF-8" and $targetcode!="ISO-8859-1") ) {
     echo "<div style='color:red'>Error: Targetcode  '$targetcode' is invalid</div>";
@@ -315,4 +312,4 @@ if ($confirmcount<=0) {  /* - First screen: Select the extensions -*/
 echo "</div></div></div>";
 include("../common/footer.php");
 ?>
-</body></html>
+

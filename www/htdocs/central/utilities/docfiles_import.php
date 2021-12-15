@@ -15,6 +15,7 @@
 20201110 fho4abcd Remove debug file + corrected splittarget: menu value is noew used
 20201123 fho4abcd Html header for split/unsplit is now equal. unicode filenames to hex (required for fullinv:Gload)
 20211201 fho4abcd Splittarget by dropdown+call it granularity. Apply split also if filesize > granularity.
+20211215 fho4abcd Backbutton by included file
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -115,11 +116,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-<?php
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

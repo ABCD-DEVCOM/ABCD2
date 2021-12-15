@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210614 fho4abcd remove password+lineends
+20211215 fho4abcd Backbutton & helper by included file
 */
 /*
  This program is free software; you can redistribute it and/or
@@ -204,6 +205,9 @@ if (isset($arrHttp["base"])){
 	}
 }
 include("../config.php");
+$backtoscript="../dbadmin/menu_mantenimiento.php";
+if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
+
 $_POST["Server_Path"]=$db_path;
 if (isset($_SESSION["dir_base"])) $_POST["Server_Path"].=trim($_SESSION["dir_base"]);
 $_SESSION["Server_Path"]=$_POST["Server_Path"];
@@ -213,11 +217,11 @@ if (isset($def["DIRTREE_EXT"]))
 	$_POST['FILE_EXTENSION']=$def["DIRTREE_EXT"];
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>"; die;
 $_POST['File_Extension']=$_POST['FILE_EXTENSION'];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 $lang=$_SESSION["lang"];
 $_SESSION['autentified']=true;
-//echo "<pre>"; print_r($_SESSION); ECHO "</pre>";
 
 global $encabezado;
 $encabezado="";
@@ -228,41 +232,26 @@ if ($_REQUEST["ACTION"]!="downloadfile1"){
 		$encabezado="&encabezado=s";
 	}
 	EncabezadoPagina();
-	//echo "<link rel=\"STYLESHEET\" type=\"text/css\" href=\"../css/".$css_name."template.css\">";
 }
 
 function EncabezadoPagina(){
-global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;
+global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding, $backtoscript;
 	echo "<Body>";
-    //if (isset($arrHttp["encabezado"]))
-    	include("../common/institutional_info.php");
-     echo "
-		<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-				$msgstr["expbases"]."
-		</div>
-		<div class=\"actions\">\n";
-
-		if (!isset($_SESSION["root_base"]))
-			echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\"> ";
-		else
-			echo "<a href=\"menu_mantenimiento.php?base=".$_SESSION["root_base"]."\" class=\"defaultButton backButton\"> ";
-		echo"  <img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>";
-	echo "
-		</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>";
-
-	 echo "
-	 	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/dirtree.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;
-    ";
-    echo " Script: dirtree.php</div>";
-
-     echo "<div class=\"middle form\">
-			<div class=\"formContent\">";
+    include("../common/institutional_info.php");
+?>
+<div class="sectionInfo">
+<div class="breadcrumb">
+        <?php echo $msgstr["expbases"]?>
+</div>
+    <div class="actions">
+    <?php include "../common/inc_back.php";?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>";
+<?php include "../common/inc_div-helper.php"; ?>
+<div class="middle form">
+    <div class="formContent">
+<?php
 }
 
 Function BUILD_DIRECTORY_TREE($SOURCE, $PREVIOUS) {
