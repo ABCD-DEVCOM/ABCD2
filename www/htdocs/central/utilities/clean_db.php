@@ -2,6 +2,7 @@
 /* Modifications
 20210414 fho4abcd Rewrite(helper code fragment,add confirm, correct error checks,html code..)
 20210605 fho4abcd Remove isotag1. Improves operation for standard db's.Translations
+20211215 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -58,12 +59,7 @@ include "../common/institutional_info.php";
         <?php echo $msgstr["maintenance"]." &rarr; ".$cleancompactmsg;?>
 	</div>
 	<div class="actions">
-        <?php
-        $backtourl=$backtoscript."?base=".$base;
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-        ?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -154,6 +150,4 @@ if (!isset($arrHttp["confirmcount"])) {
 </div>
 <?php
 include("../common/footer.php");
-echo "</body></html>";
-
 ?>

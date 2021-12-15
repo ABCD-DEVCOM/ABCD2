@@ -1,6 +1,7 @@
 <?php
 /*
 20211104 fho4abcd Replace vmx_fullinv.php by fullinv.php. Remove obsolete comment
+20211215 fho4abcd Backbutton & helper by included file
 */
 session_start();
 set_time_limit(0);
@@ -20,7 +21,9 @@ include("../lang/soporte.php");
 
 include("../common/header.php");
 include("../common/institutional_info.php");
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 
+///////////////////////////////////////////////
 function Confirmar(){
 global $msgstr,$arrHttp;
 	echo "<input type=hidden name=confirmar>";
@@ -88,9 +91,8 @@ global $msgstr;
 	echo "</form></body></html>";
 	die;
 }
-
 ?>
-
+<body>
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
 <script>
 function Explorar(){
@@ -137,9 +139,7 @@ function FullInv(){
 	document.continuar.action="fullinv.php";
 	document.continuar.submit()
 }
-
 </script>
-<body>
 
 
 <div id="loading">
@@ -150,27 +150,14 @@ function FullInv(){
 	<?php echo $msgstr["db_restore"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php if (isset($arrHttp["base"]))echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php";?>
+<div class="middle form">
+<div class="formContent">
 <?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/copy_db.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/copy_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: utilities/dbrestore.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
-
 if (!isset($mx_path)){
 	echo $msgstr["mis_mx_path"];
     die;
@@ -202,7 +189,6 @@ if (!isset($arrHttp["storein"])){
         echo "</form></body></html>";
 		die;
 	}
-
 }
 
 if (!isset($arrHttp["confirmar"]) or $arrHttp["confirmar"]!="OK"){
@@ -236,9 +222,5 @@ if ($err==""){
 </div>
 </center>
 <?php
-
 include("../common/footer.php");
 ?>
-
-</body>
-</html>

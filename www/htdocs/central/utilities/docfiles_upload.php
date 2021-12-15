@@ -4,6 +4,7 @@
 20210914 fho4abcd Improved error message display&handling in case of upload errors
 20211105 fho4abcd No filename sanitation: will be done by import script (admin may upload via backdoor, so import must do it again)
 20211111 fho4abcd set locale (required by basename)
+20211215 fho4abcd Backbutton by included file
 */
 /*
 ** Upload a file from the users environment into the digital document area of ABCD
@@ -82,11 +83,7 @@ if ($inframe!=1 or $arrHttp["base"]=="") include "../common/institutional_info.p
     <?php echo $msgstr["mantenimiento"].": ".$msgstr["dd_upload"];?>
 	</div>
 	<div class="actions">
-<?php
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
