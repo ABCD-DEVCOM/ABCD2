@@ -21,6 +21,7 @@
 20211029 edsz14 Replace vmx_fullinv.php by fullinv.php
 20211114 fho4abcd Add create_gizmo
 20211214 fho4abcd Digital documents to top menu
+20211215 fho4abcd lock_bd.php->protect_db.php
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -87,10 +88,10 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/dbrestore.php"
 			//document.admin.target="ABCD_Frame"
 			break;
-		case "lock":
+		case "protect":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="lock_bd.php"
+			document.admin.action="../utilities/protect_db.php"
 			//document.admin.target="ABCD_Frame"
 			break;
 		case "eliminarbd":
@@ -341,7 +342,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
         <li><a href='javascript:EnviarFormaMNT("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("unlock","<?php echo $msgstr["mnt_unlock"]?>")'><?php echo $msgstr["mnt_unlock"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("cn","<?php echo $msgstr["assigncn"]?>")'><?php echo $msgstr["assigncn"]?></a></li>
-		<li><a href='javascript:EnviarFormaMNT("lock","<?php echo $msgstr["protect_db"]?>")'><?php echo $msgstr["protect_db"]?></a></li>
+		<li><a href='javascript:EnviarFormaMNT("protect","<?php echo $msgstr["protect_db_title"]?>")'><?php echo $msgstr["protect_db_title"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("inicializar","<?php echo $msgstr["mnt_ibd"]?>")'><?php echo $msgstr["mnt_ibd"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("eliminarbd","<?php echo $msgstr["mnt_ebd"]?>")'><?php echo $msgstr["mnt_ebd"]?></a></li>
 		<li><a href='javascript:EnviarFormaMNT("mxdbread","<?php echo $msgstr["mx_dbread"]?>")'><?php echo $msgstr["mx_dbread"]?></a></li>

@@ -1,4 +1,7 @@
 <?php
+/*
+20211215 fho4abcd Backbutton by & helper by included file
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -33,11 +36,13 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 //READ BASES.DAT TO READ IF THE DATABASE IS LINKED WITH COPIES DATABASE
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 $base=$arrHttp["base"];
 $fp=file($db_path."bases.dat");
 $copies_link="";
@@ -52,6 +57,7 @@ foreach ($fp as $value){
 
 
 include("../common/header.php");
+echo "<body>\n";
 echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
 <script>
@@ -84,7 +90,6 @@ function Enviar(){
 
 </script>
 <?php
-echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
@@ -96,23 +101,13 @@ if (isset($arrHttp["encabezado"])) {
 		<?php echo $msgstr["linkcopies"].": $base"?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"menu_mantenimiento.php?base=".$base."$encabezado\" class=\"defaultButton backButton\">";
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies_configuration.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/copies_linkdb.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: copies_linkdb.php</font>\n";
-echo "
-	</div>
-<div class=\"middle form\">
+include "../common/inc_div-helper.php";
+echo "<div class=\"middle form\">
 	<div class=\"formContent\">";
 echo "<form name=forma1 action=resetautoinc_update.php method=post>
  <input type=hidden name=base value=$base>
@@ -124,5 +119,5 @@ echo "<input type=submit name=mark value=".$msgstr["update"].">";
 
 echo "<form></div></div>";
 include("../common/footer.php");
-echo "</body></html>";
+
 ?>

@@ -4,6 +4,7 @@
 20211110 fho4abcd Ensure dr_path values for UNICODE and CISIS
 20211112 fho4abcd remove debug, copy extra files, do not update content of stw,iso,tab, do not create command files
 20211122 fho4abcd Improve create of dbn.par: works now with actab/uctab. More files copied/renamed. Add testbutton. Sanitize html.
+20211215 fho4abcd Backbutton by included file
 */
 /*
 ** Copies a database to a new folder
@@ -74,13 +75,7 @@ include("../common/institutional_info.php");
         <?php echo $msgstr["copydb"].": " . $base_new. ". ".$msgstr["createfrom"].": ".$base_old?>
     </div>
     <div class="actions">
-<?php 
-// Show 'back' button,
-$backtourl=$backtoscript."&base=".$arrHttp["base"];
-echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-    <span><strong>".$msgstr["regresar"]."</strong></span></a>";
-?>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

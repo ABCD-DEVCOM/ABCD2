@@ -20,6 +20,7 @@
 20211123 fho4abcd Show error if lineendings of stw files are not correct (most mx exe's require this)
 20211202 fho4abcd Incremental not for Digdoc.Set /m dependent on DigDoc (remove from menu).Tag selection menu from dropdown to checkboxes.
 20211202          Improved check and messages for gizmo. Check that tag 9876 is in FST
+20211215 fho4abcd Backbutton by included file
 */
 /**
  * @desc:      Create database index
@@ -91,17 +92,10 @@ $bd=$db_path.$base;
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php 
-        echo $msgstr["maintenance"].": ".$arrHttp["base"];
-?>
+    <?php echo $msgstr["maintenance"].": ".$arrHttp["base"];?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

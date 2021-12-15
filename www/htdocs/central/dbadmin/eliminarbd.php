@@ -2,6 +2,7 @@
 /* Modifications
 20210323 fho4abcd Replaced helper code fragment by included file
 20210324 fho4abcd Reprogrammed, decent error processing, improved feedback and backbutton
+20211215 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -69,14 +70,7 @@ if ($inframe!="1") include "../common/institutional_info.php";
         <?php echo $msgstr["mnt_ebd"]." " .$msgstr["database"].": ".$arrHttp["base"]?>
     </div>
     <div class="actions">
-<?php 
-// Show 'back' button, This depends on the stage: if the deletion is done go back to home.
-$backtourl=$backtoscript."?base=".$arrHttp["base"];
-if ($arrHttp["confirmcount"]>=2) $backtourl="/central/common/inicio.php";
-echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-    <span><strong>".$msgstr["regresar"]."</strong></span></a>";
-?>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -171,5 +165,4 @@ echo "<h4>".$msgstr["end_process"].": ".$errors." error(s).</h4>";
 </div>
 <?php
 include("../common/footer.php");
-echo "</body></html>\n";
 ?>

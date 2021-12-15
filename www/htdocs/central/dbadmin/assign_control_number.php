@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210613 fho4abcd remove password, lineends
+20211215 fho4abcd Backbutton by & helper by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -144,33 +145,23 @@ if (isset($arrHttp["encabezado"])){
 	$ayuda="control_number.html";
 	$arrHttp["encabezado"]="s";
 	if (isset($arrHttp["encabezado"])){
-		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"])   or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
-			echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["cancel"]."</strong></span></a>
-			";
+		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
+            isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"]) or
+            isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"]) or
+            isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
+            $backtoscript="../dbadmin/menu_mantenimiento.php";
 		}else{
-			echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["cancel"]."</strong></span></a>
-			";
+            $backtoscript="../common/inicio.php";
 		}
-	}
+        include "../common/inc_back.php";	}
 ?>
 
 </div>
 
 <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: assign_control_number.php";
-?>
+<?php include "../common/inc_div-helper.php" ?>
 
-</div>
 
 <form name=cnFrm method=post action=assign_control_number_ex.php onsubmit="Javascript:return false">
 <input type=hidden name=encabezado value=s>
@@ -230,5 +221,3 @@ echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 <?php
 include("../common/footer.php");
 ?>
-</body>
-</html>
