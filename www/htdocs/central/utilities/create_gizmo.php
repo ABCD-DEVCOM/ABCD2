@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20211114 fho4abcd created
+20211215 fho4abcd Backbutton by included file+ add gizmo to .par file
 */
 /*
 ** Creates a gizmo database in the data folder of the current database
@@ -29,6 +30,7 @@ $confirmcount=0;
 $backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 $gizmoname="";
 $datafilename="";
+$base=$arrHttp["base"];
 $storein=$arrHttp["base"]."/data";// variable name fixed by dirs_explorer function
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["confirmcount"])) $confirmcount=$arrHttp["confirmcount"];
@@ -37,6 +39,11 @@ if ( isset($arrHttp["datafilename"])) $datafilename=$arrHttp["datafilename"];
 if ( isset($arrHttp["storein"]))      $storein=$arrHttp["storein"];
 $datafullfolder=$db_path.$storein;
 $datafullfilename=$datafullfolder."/".$datafilename;
+// If no gizmo name: derive it from the datafile
+if ( $gizmoname=="" && $datafilename!="") {
+    // remove extension from filename
+    $gizmoname=substr($datafilename,0,-4);
+}
 
 include("../common/header.php");
 
@@ -46,6 +53,10 @@ include("../common/header.php");
 <script>
 function Confirmar(){
 	document.continuar.confirmcount.value++;
+	document.continuar.submit()
+}
+function Reselect(){
+	document.continuar.confirmcount.value=0;
 	document.continuar.submit()
 }
 function Explorar(){
@@ -62,14 +73,7 @@ include "../common/institutional_info.php";
 <?php echo $msgstr["create_gizmo"]?>
 	</div>
 	<div class="actions">
-<?php
-        if (!isset($arrHttp["base"]))$arrHttp["base"]="_no db set_";
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        if (isset($arrHttp["backtoscript_org"])) $backtourl.="&backtoscript=".$arrHttp["backtoscript_org"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -85,9 +89,13 @@ include "../common/inc_div-helper.php"
 ** The sources for the gizmo are .iso files in folder <database>/data
 */
 $gizmofullfolder=$db_path.$arrHttp["base"]."/data";
+$parfile=$db_path."par/$base.par";
+
 // The test button gives the mx_path to the test window
 $testbutton=
 '<a href="mx_test.php?mx_path='.$mx_path.'" target=testshow onclick=OpenWindow()>'.$msgstr["testmx"].' MX</a>';
+$showbutton=
+'<a href="../utilities/show_par_file.php?par_file='.$parfile.'" target=testshow onclick=OpenWindow()>'.$msgstr["show"].' &lt;dbn&gt;.par</a>';
 
 /* --- The confirmcount determines the progress of the action ---*/
 if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
@@ -113,6 +121,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
 </form>
 <?php
 }elseif ($confirmcount==1) {
+    /* Second screen select the gizmo source file and the gizmo database name*/
 ?>
 <form name=continuar method=post>
     <?php
@@ -136,9 +145,11 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
         <td><select name='datafilename'>
             <?php
             $handle=opendir($datafullfolder);
+            $numfiles=0;
             while ($file = readdir($handle)) {
                 if ($file != "." && $file != ".." && (strpos($file,".iso")||strpos($file,".ISO"))) {
                     echo "<option value='$file'>$file</option>";
+                    $numfiles++;
                 }
             }
             ?>
@@ -146,24 +157,53 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     </tr><tr>
         <td><?php echo $msgstr["gizmodbname"]?></td>
         <td><input type=text name=gizmoname value="<?php echo $gizmoname?>" title="<?php echo $msgstr["gizmonametitle"]?>"></td>
+        <td><span style='color:blue'><?php echo $msgstr["gizmonamederived"];?></span></td>
     </tr><tr>
+        <?php if ($numfiles>0) { ?>
          <td style='text-align:right'><?php echo $msgstr["dd_continuewith"]?>&nbsp;&rarr;</td>
-         <td><input type=button value='<?php echo $msgstr["gizmocreate"];?>' onclick=Confirmar()> 
+         <td><input type=button value='<?php echo $msgstr["gizmocreate"];?>' onclick=Confirmar()></td>
+        <?php } else { ?>
+        <td colspan=3><span style='color:red'><?php echo $msgstr["error_gizmonoiso"]." ".$datafullfolder." ";?></span>
+            <input type=button value='<?php echo $msgstr["gizmoreselect"];?>' onclick=Reselect()></td>
+        <?php } ?>
     </tr>       
     </table>
 </form>
 <?php   
 }elseif ($confirmcount==2) {
-    // Check parameters
-    if( $gizmoname=="" ) {
-        echo "<span style='color:red'>".$msgstr["gizmoisempty"];
-        die;
+    /* 
+    ** Third screen: Create the gizmo
+    ** Step 1: update the .par file: add /update the entry for this gizmo
+    */
+    $gizmokey=$gizmoname.".*";
+    $parfile=$db_path."par/$base.par";
+    $fp=file($parfile);
+    $contenido="";
+    $tokens=array();
+    foreach ($fp as $value){
+        $tokens=explode('=',$value);
+        if (isset($tokens[0])) {
+            $tokens0=trim($tokens[0]);
+            unset($tokens1);
+            if (isset($tokens[1]) AND trim($tokens[1])!="") $tokens1=trim($tokens[1]);
+            if ($tokens0!=$gizmokey ) {
+                $contenido.=$value;
+            }
+        } else {
+            $contenido.=$value;
+        }
     }
+    $contenido.=$gizmokey."=".$db_path.$base."/data/".$gizmokey;
+	$handle = fopen($parfile, 'w');
+    fwrite($handle, $contenido);
+    fclose($handle);
+    echo $msgstr["updatedfile"]." ".$parfile."<br>";
+
     $parameters = "<br>";
     $parameters.= $msgstr["dd_term_source"]." : ".$datafullfilename."<br>";
     $parameters.= "gizmo &nbsp;: ".$gizmoname."<br>";
-    $parameters.= "mx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:".$mx_path."<br>";
-    $parameters.= " &nbsp; ".$testbutton."<br>";
+    $parameters.= "mx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ".$mx_path."<br>";
+    $parameters.= " &nbsp; ".$testbutton."&nbsp;&nbsp;&nbsp;&nbsp;".$showbutton. "<br>";
 
 
     $strINV=$mx_path." iso=\"".$datafullfilename."\" create=".$gizmofullfolder."/".$gizmoname."  -all now 2>&1";

@@ -127,6 +127,7 @@ error_create_folder=Error creating folder
 error_gizmodb="htmlgizmo.*=..." Does not specify an existing htmlgizmo database
 error_gizmofp="htmlgizmo.*=..." Cannot be specified with %database_path%
 error_gizmospec="htmlgizmo.*=..." Must be specified in
+error_gizmonoiso=Error: No .iso files found in
 every=Every
 examplefor=Example entry in
 exp_archivo=Your must supply the file name
@@ -141,9 +142,10 @@ filesfound=Files found
 gizmocreate=Create Gizmo
 gizmocreate_options=Set Gizmo options
 gizmodbname=Name of the gizmo database
-gizmoisempty=Please enter a name for the gizmo database
 gizmolocatefolder=Locate folder with data files to be imported in the gizmo database
 gizmonametitle=Filename (no extension)
+gizmonamederived=An empty value will use the selected filename
+gizmoreselect=Select again
 g_newval=New value
 htmlfield=HTML fields
 intotag=in temporary tag
