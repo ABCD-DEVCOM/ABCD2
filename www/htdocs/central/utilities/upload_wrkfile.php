@@ -3,6 +3,7 @@
 20210516 fho4abcd Created from upload_myfile.php
 20210914 fho4abcd Improved error message display&handling in case of upload errors
 20211215 fho4abcd Backbutton by included file
+20211216 fho4abcd Backbutton by included file improved
 */
 /*
 ** Upload a file from the users environment into the working area of the ABCD base
@@ -40,7 +41,6 @@ $wrk="wrk";
 $wrkfull=$db_path.$wrk;
 $OK=" &rarr; OK";
 $NOT_OK=" &rarr; <b><font color=red>NOT OK</font></b>";
-if (isset($arrHttp["backtoscript_org"])) $backtoscript=$arrHttp["backtoscript_org"];
 ?>
 <body>
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>

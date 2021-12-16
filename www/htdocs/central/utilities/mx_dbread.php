@@ -4,7 +4,7 @@
 2021-03-29 fho4abcd Improved html & code:Removed ghost code, correct display of « »
 2021-04-18 fho4abcd Improved backbutton:send also &inframe and if necessary &backtoscript
 2021-08-02 fho4abcd Remove $inframe. Make standalone call possible
-20211215 fho4abcd Backbutton by included file
+20211215 fho4abcd Backbutton by included file improved
 */
 /*
 ** Shows the content of a .iso file or a .mst file by mx
@@ -167,10 +167,7 @@ include "../common/institutional_info.php";
 <?php echo $msgstr["mx_dbread"]?>
 	</div>
 	<div class="actions">
-    <?php
-    if (isset($arrHttp["backtoscript_org"])) $backtoscript=$arrHttp["backtoscript_org"];
-    include "../common/inc_back.php";
-    ?>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
