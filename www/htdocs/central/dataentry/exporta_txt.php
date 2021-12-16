@@ -7,6 +7,7 @@
 2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
 2021-03-27 fho4abcd add path to return script
 2021-06-05 fho4abcd Always preselect mx for iso. translations
+20211215 fho4abcd Backbutton by included file
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $arrHttp;
@@ -181,12 +182,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

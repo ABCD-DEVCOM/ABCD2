@@ -2,6 +2,7 @@
 /* Modifications
 20210615 fho4abcd Removed opac configuration.Not working and not in line with wiki OPAC-ABCD Configuration Tutorial
 20210615 fho4abcd Improve html, cleanup code, lineends
+20211216 fho4abcd Backbutton by included file
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,13 +61,8 @@ include("../common/institutional_info.php");
 <div class=sectionInfo>
     <div class=breadcrumb><?php echo $msgstr["configure"]. " ABCD";?>
     </div>
-    	<div class="actions">
-<?php
-        $backtourl="../common/inicio.php?reinicio=s";
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <div class="actions">
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -74,7 +70,7 @@ include("../common/institutional_info.php");
 $ayuda="admin.html";
 include "../common/inc_div-helper.php";
 ?>
- <div class="middle form">
+<div class="middle form">
 <div class="formContent">
 <table width=400 align=center>
 	<tr>

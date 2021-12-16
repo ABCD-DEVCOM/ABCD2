@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20211216 fho4abcd Backbutton & helper by included file
+*/
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
 // ==================================================================================================
@@ -9,6 +12,8 @@ include("../common/get_post.php");
 include ("../config.php");
 include ("../lang/admin.php");
 include ("../lang/statistics.php");
+$backtoscript="../common/inicio.php"; // The default return script
+
 //foreach ($arrHttp as $key => $value) echo "$key = $value <br>";
 //SE EXTRAE EL NOMBRE DE LA BASE DE DATOS
 $x=explode('|',$arrHttp["base"]);
@@ -50,6 +55,7 @@ foreach($contenido as $linea) {
 //HEADER DEL LA PÁGINA HTML Y ARCHIVOS DE ESTIVO
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <style type=text/css>
 
@@ -350,7 +356,6 @@ function Configure(Option){
 	document.configure.submit()
 }
 </script>
-<body>
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -363,26 +368,17 @@ if (isset($arrHttp["encabezado"])){
 	</div>
 
 	<div class="actions">
-<?php
-if (isset($arrHttp["encabezado"]))
-	echo "<a href=\"../common/inicio.php?reinicio=S&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-<span><strong>".$msgstr["back"]."</strong></span></a>
-	";
-?>
-
+    <?php
+    if (isset($arrHttp["encabezado"])){
+        include "../common/inc_back.php";
+    }
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
-
-<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
-<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;&nbsp; &nbsp; Script: tables_generate.php
-</div>
-
-
+<?php include "../common/inc_div-helper.php"?>
 
 <div class="middle form">
-
 	<div class="formContent">
   <?php
   if (file_exists($db_path."proc_gen.cfg")){ ?>
@@ -644,5 +640,3 @@ if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"
 <?php
 include("../common/footer.php");
 ?>
-</body>
-</html>

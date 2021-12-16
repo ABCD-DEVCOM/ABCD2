@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-07-11 fh04abcd Rewrite: Improve html&layout, div-helper
+20211216 fho4abcd Backbutton by included file
 */
 
 /**
@@ -33,6 +34,7 @@ session_start();
 include("../common/get_post.php");
 include ("../config.php");
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
 include("../lang/soporte.php");
@@ -83,16 +85,10 @@ if (isset($arrHttp["encabezado"])){
 	<div class="breadcrumb">
 <?php echo $msgstr["z3950"]." (".$db.")" ?>
 	</div>
-
 	<div class="actions">
-<?php
-	 echo "<a href='../common/inicio.php?reinicio=s&base=$db' class=\"defaultButton backButton\">";
-?>
-<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-<span><strong><?php echo $msgstr["back"]?></strong></span>
-</a>
-			</div>
-			<div class="spacer">&#160;</div>
+    <?php include "../common/inc_back.php"; ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
 <?php include "../common/inc_div-helper.php";?>
 
