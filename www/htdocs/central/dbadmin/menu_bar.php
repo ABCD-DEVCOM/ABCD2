@@ -22,6 +22,7 @@
 20211114 fho4abcd Add create_gizmo
 20211214 fho4abcd Digital documents to top menu
 20211215 fho4abcd lock_bd.php->protect_db.php
+20211216 fho4abcd Remove duplicate copiesocurrenciesreport
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -127,12 +128,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="addcopiesdatabase.php"
-			//document.admin.target="ABCD_Frame"
-			break;
-		case "copiesocurrenciesreport":    //Marcos Script
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="copiesdupreport.php"
 			//document.admin.target="ABCD_Frame"
 			break;
 		case "addloanobjectcopies":    //Marcos Script

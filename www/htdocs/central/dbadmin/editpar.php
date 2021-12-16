@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20211216 fho4abcd Backbutton & helper by included file. Improve html
+*/
 global $arrHttp;
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -10,8 +13,10 @@ include("../common/header.php");
 
 
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>";
+$backtoscript="../dbadmin/menu_modificardb.php";
 echo "<body>\n";
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -22,27 +27,16 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["dbnpar"].": ".$arrHttp["base"]?>
+    <?php echo $msgstr["dbnpar"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["cancel"]?></strong></span></a>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/editpar.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/editpar.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: editpar.php";
-?>
-</font>
-	</div>
+<?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-			<div class="formContent">
+    <div class="formContent">
 <?php
 $par="";
 $fp=file($db_path."par/".$arrHttp["base"].".par");
@@ -55,14 +49,13 @@ foreach ($fp as $value) $par.=trim($value)."\n";
 			echo "<input type=hidden name=encabezado value=s>\n";
 	?>	
 
-	<center><label><?php echo $arrHttp["base"];?>.par</label>
-		<br>
+	<div style='text-align:center'><h3><?php echo $arrHttp["base"];?>.par</h3>
 	<textarea cols="100" rows="20" name="par" class="par"><?php echo $par;?></textarea><br>
 	<input class="bt-green" type="submit" value="<?php echo $msgstr["update"];?>">
+    </div>
 </form>
 </div>
 </div>
-</center>
 <?php
 include("../common/footer.php");
 ?>
