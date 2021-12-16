@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20211216 fho4abcd Backbutton & helper by included file. Improve html
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -6,14 +9,19 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../common/header.php");
+?>
+<body>
+<?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
 }
+$backtoscript="../dbadmin/menu_modificardb.php";
 ?>
 <script>
 	function SendForm(wks){
@@ -31,24 +39,19 @@ if (isset($arrHttp["encabezado"])){
 
 	}
 </script>
-<body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["recval"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["cancel"]?></strong></span></a>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/recval.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
- 	<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/recval.html target=_blank><?php echo $msgstr["edhlp"]?></a>
-<?php echo "<font color=white>&nbsp; &nbsp; Script: typeofrecs.php" ?></font>
-	</div>
+<?php
+$ayuda="recval.html";
+include "../common/inc_div-helper.php";
+?>
 <div class="middle form">
 	<div class="formContent">
 <?php
@@ -58,16 +61,14 @@ $tr=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab";
 if (!file_exists($tr))  $tr=$db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab";
 if (file_exists($tr)) $fp=file($tr);
 ?>
-<div class="middle form">
-			<div class="formContent">
-<center>
+<div style='text-align:center'>
 <form name=validation>
 <h3>
-<input type=radio name=format value=recval><?php echo $msgstr["recval"]?>&nbsp;
-<input type=radio name=format value=beginf><?php echo $msgstr["beginf"]?>&nbsp;
-<input type=radio name=format value=endf><?php echo $msgstr["endf"]?></h3>
-<h3>Record type</h3>
-<table>
+<input type=radio name=format value=recval> <?php echo $msgstr["recval"]?>&nbsp;
+<input type=radio name=format value=beginf> <?php echo $msgstr["beginf"]?>&nbsp;
+<input type=radio name=format value=endf> <?php echo $msgstr["endf"]?></h3>
+<table align=center>
+<tr><th><?php echo $msgstr["select"]." ".$msgstr["typeofr"]?></th></tr>
 <?php
 $ix=0;
 $tr="";
@@ -91,15 +92,18 @@ if (isset($fp)){
 echo "<tr><td><a href='javascript:SendForm(\"\")'>".$msgstr["1recval"]."</a></td>\n";
 ?>
 </table>
-</div>
-</div>
 </form>
 <form name=forma1 action=recval.php method=post>
-<input type=hidden name=base value=<?php echo $arrHttp["base"].">\n";
-if ($encabezado=="&encabezado=s")
- echo "<input type=hidden name=encabezado value=s>\n";
-?>
-<input type=hidden name=wks>
-<input type=hidden name=format value="">
+    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+    <?php if ($encabezado=="&encabezado=s")
+        echo "<input type=hidden name=encabezado value=s>\n";
+    ?>
+    <input type=hidden name=wks>
+    <input type=hidden name=format value="">
 </form>
-</body></html>
+</div>
+</div>
+</div>
+<?php
+include("../common/footer.php");
+?>

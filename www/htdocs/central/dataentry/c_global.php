@@ -3,8 +3,8 @@
 20210312 fho4abcd Replaced helper code fragment by included file
 20210312 fho4abcd html move body + sanitize html
 20210623 fho4abcd Rewrite:pop-up to second screen, remove historical remains, code readability.
+20211216 fho4abcd Backbutton by included file
 */
-//error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -94,12 +94,7 @@ function Buscar(){
 <?php echo $msgstr["cg_titulo"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php 
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -494,7 +489,4 @@ if ($confirmcount==0) {
 <?php
 include("../common/footer.php");
 ?>
-
-</body>
-</html>
 

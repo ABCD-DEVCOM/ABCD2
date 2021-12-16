@@ -1,6 +1,7 @@
 <?php
 /* Modifications
-2021-07-18 fho4abcd div-helper,html,translations
+20210718 fho4abcd div-helper,html,translations
+20211215 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -12,12 +13,14 @@ include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 include("../common/header.php");
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
 $encabezado="&encabezado=s";
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 
 ?>
 <body>
@@ -31,17 +34,11 @@ include("../common/institutional_info.php");
     <div class=breadcrumb><?php echo $msgstr["dspace_bread"].": ". $base_ant?>
     </div>
     <div class=actions>
-<?php
-echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-include "../common/inc_div-helper.php";
-?>
-
+    <?php include "../common/inc_back.php";?>
+    </div>
+	<div class="spacer">&#160;</div>
+	</div>
+    <?php include "../common/inc_div-helper.php"; ?>
 
 <script type="text/javascript">
  
@@ -189,22 +186,6 @@ $(document).ready(function()
          
 	   if($("#url").val().match(pattern)){
           
-		 /* var mypage = "../dataentry/img/preloader.gif";
-		  var myname = "progress";
-		  var w = 100;
-		  var h = 100;
-		  var scroll = "NO";
-		  var pos = "center";
-
-		   if(pos=="random"){LeftPosition=(screen.width)?Math.floor(Math.random()*(screen.width-w)):100;TopPosition=(screen.height)?Math.floor(Math.random()*((screen.height-h)-75)):100;}
-
-          if(pos=="center"){LeftPosition=(screen.width)?(screen.width-w)/2:100;TopPosition=(screen.height)?(screen.height-h)/2:100;}
-            else 
-			   if((pos!="center" && pos!="random") || pos==null){LeftPosition=0;TopPosition=20}
-           settings='width='+w+',height='+h+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no';
-           win=window.open(mypage,myname,settings);
-           //win.focus()*/
-		  		  
 		  return true;
 		}
        else
@@ -470,10 +451,9 @@ if (!(isset($_POST["submit"]) && $_POST["submit"])) { ?>
 			 echo $cantItems;
 			}
 	?>
-	   
+
 </form>
 </div>
-
 </div>
 <?php
  include("../common/footer.php");

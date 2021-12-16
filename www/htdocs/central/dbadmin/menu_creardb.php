@@ -1,6 +1,7 @@
 <?php
 /*
 20210921 fho4abcd Button in form + inc_div-helper + sanitize html + remove unused VerificarTipo + translations
+20211216 fho4abcd Backbutton by included file
 */
 session_start();
 unset($_SESSION["DCIMPORT"]);
@@ -115,16 +116,8 @@ if (isset($arrHttp["encabezado"])){
     <div class="breadcrumb">
         <?php echo $msgstr["createdb"]?>
     </div>
-
     <div class="actions">
-<?php if (isset($arrHttp["encabezado"])){
-	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["cancel"]."</strong></span>
-				</a>
-	";
-}
-?>
+    <?php include "../common/inc_back.php"; ?>
     </div>
     <div class="spacer">&#160;</div>
 </div>

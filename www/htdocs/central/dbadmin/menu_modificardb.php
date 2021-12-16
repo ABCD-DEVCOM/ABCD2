@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20211216 fho4abcd Backbutton & helper by included file. improve html
+*/
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  MODIFICA LA CONFIGURACIÓN DE LA BASE DE DATOS
@@ -42,6 +45,7 @@ include("../common/header.php");
 
 // INCLUSION DE LOS SCRIPTS
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script languaje=javascript>
 
@@ -154,7 +158,6 @@ function Update(Option){
 }
 
 </script>
-<body>
 <div id="loading">
   <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
 </div>
@@ -164,24 +167,16 @@ if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
-echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["updbdef"]. ": " . $arrHttp["base"]."
-			</div>
-			<div class=\"actions\">
-
-	";
-if (isset($arrHttp["encabezado"])){
-	echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
-echo "
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>";
-}
-echo "			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb"><?php echo $msgstr["updbdef"]. ": " . $arrHttp["base"]?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php"; ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
 
 // para verificar si en la FDT tiene el campo LDR Definido y ver si se presenta el tipo de registro MARC
 if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
@@ -202,20 +197,10 @@ foreach ($fp as $value){
 
 // AYUDA EN CONTEXTO E IDENTIFICACIÓN DEL SCRIPT QUE SE ESTÁ EJECUTANDO
 // OPCIONES DEL MENU
- ?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/admin.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/admin.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Modificar_definici%C3%B3n_base_de_datos target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
+    include "../common/inc_div-helper.php"
 ?>
-</font>
-	</div>
- <div class="middle form">
-			<div class="formContent">
-</center>
+<div class="middle form">
+<div class="formContent">
 <table width=400 align=center>
 	<tr>
 		<td>
@@ -255,13 +240,12 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
             <li><a href=javascript:Update("tooltips")><?php echo $msgstr["database_tooltips"]?></a></li>
             <li><a href=javascript:Update("IAH")><?php echo $msgstr["iah-conf"]?></a></li>
             <li><a href=javascript:Update("tes_config")><?php echo $msgstr["tes_config"]?></a></li>
-            <?php if ($_SESSION["profile"]=="adm"){
-            	echo "<li><a href=javascript:Update(\"chk_dbdef\")>".$msgstr["chk_dbdef"]."</a></li>";
-				echo "<li><a href=javascript:Update(\"dr_path\")>dr_path.def</a></li>";
-			}
-			?>
-			<li><a href=javascript:Update("par")><?php echo $msgstr["dbnpar"]?></a>
-            </ol>
+            <?php if ($_SESSION["profile"]=="adm"){?>
+            	<li><a href=javascript:Update("chk_dbdef")><?php echo $msgstr["chk_dbdef"]?></a></li>
+				<li><a href=javascript:Update("dr_path")><?php echo "dr_path.def"?></a></li>
+			<?php } ?>
+			<li><a href=javascript:Update("par")><?php echo $msgstr["dbnpar"]?></a></li>
+            </ul>
 			</form>
 		</td>
 </table>
@@ -272,5 +256,4 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_modificardb.php";
 // PIE DE PÁGINA
 include("../common/footer.php");
 ?>
-</body>
-</html>
+

@@ -7,6 +7,7 @@
 2021-03-22 fho4abcd remove unused functions in script
 2021-04-18 fho4abcd Iso import from carga_iso.pho to vmx_import_iso.php
 2021-11-04 fho4abcd Replace vmx_fullinv.php by fullinv.php.
+20211216 fho4abcd Backbutton by included file, removed redundant help
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -101,26 +102,18 @@ function EnviarForma(Opcion,Mensaje){
 if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	include("../common/institutional_info.php");
 }
- echo "
-	<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-			 $msgstr["mantenimiento"]."
-		</div>
-		<div class=\"actions\">\n";
-if (isset($arrHttp["encabezado"])){
-			echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["cancel"]."</strong></span>
-				</a>";
-}
-echo "	</div>
-		<div class=\"spacer\">&#160;</div>
-	</div>
-";
 ?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+	<?php echo $msgstr["mantenimiento"]?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php";?>
+    </div>
+		<div class="spacer">&#160;</div>
+	</div>
 <?php include "../common/inc_div-helper.php" ?>
-
-	<div class="middle homepage">
+	<div class="  homepage">
 <?php if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
           isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
           isset($_SESSION["permiso"]["CENTRAL_IMPEXP"]) or
@@ -133,20 +126,15 @@ echo "	</div>
           isset($_SESSION["permiso"][$db."_CENTRAL_IMPORT"])){
 ?>
 		<div class="mainBox" >
-
 			<div class="boxContent titleSection">
 				<div class="sectionTitle">
 					<h4><strong><?php echo $msgstr["cnv_import"]?></strong></h4>
 				</div>
 				<div class="sectionButtons">
 					<a href='javascript:Activar("impiso")'><?php echo $msgstr["cnv_iso"]?></a>
-					<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/importiso.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       	<?PHP if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/importiso.html' target=_blank>edit help file</a>"?>
                     <br>
         			<a href='javascript:Activar("imptxt")'><?php echo $msgstr["cnv_txt"]?></a>
-                    <a href='../documentacion/ayuda.php?help=<?php echo $lang?>/txt2isis.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       	<?PHP if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/txt2isis.html' target=_blank>edit help file</a>"?>
-		<br>
+              		<br>
 				</div>
 				<div class="spacer">&#160;</div>
 			</div>
@@ -169,11 +157,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
 				</div>
 				<div class="sectionButtons">
 					<a href='javascript:Activar("expiso")'><?php echo $msgstr["cnv_iso"]?></a>
-					<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/exportiso.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exportiso.html' target=_blank>edit help file</a>"?>
-					<br><a href='javascript:Activar("exptxt")'><?php echo $msgstr["cnv_txt"]?></a>
-					<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/exporttxt.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/exporttxt.html' target=_blank>edit help file</a>"?>
+					<br>
+                    <a href='javascript:Activar("exptxt")'><?php echo $msgstr["cnv_txt"]?></a>
 				</div>
 				<div class="spacer">&#160;</div>
 			</div>
@@ -197,13 +182,12 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_GLOBC"])
     ){
 ?>
-		<div class="mainBox" >
-
-			<div class="boxContent toolSection">
-				<div class="sectionTitle">
-					<h4><strong><?php echo $msgstr["mantenimiento"]?></strong></h4>
-				</div>
-				<div class="sectionButtons">
+<div class="mainBox" >
+    <div class="boxContent toolSection">
+        <div class="sectionTitle">
+            <h4><strong><?php echo $msgstr["mantenimiento"]?></strong></h4>
+        </div>
+        <div class="sectionButtons">
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
     isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
@@ -211,7 +195,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
 	isset($_SESSION["permiso"][$db."_CENTRAL_UNLOCKDB"])
     ){
 ?>
-					<a href='javascript:EnviarForma("unlockbd","<?php echo $msgstr["mnt_desb"]?>")'><?php echo $msgstr["mnt_desb"]?></a><br>
+        <a href='javascript:EnviarForma("unlockbd","<?php echo $msgstr["mnt_desb"]?>")'><?php echo $msgstr["mnt_desb"]?></a><br>
 <?php }
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
     isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
@@ -219,7 +203,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
 	isset($_SESSION["permiso"][$db."_CENTRAL_LISTBKREC"])
     ){
 ?>
-					<a href='javascript:EnviarForma("listar","<?php echo $msgstr["mnt_rlb"]?>")'><?php echo $msgstr["mnt_rlb"]?></a><br>
+        <a href='javascript:EnviarForma("listar","<?php echo $msgstr["mnt_rlb"]?>")'><?php echo $msgstr["mnt_rlb"]?></a><br>
 <?php }
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
     isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
@@ -227,8 +211,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
 	isset($_SESSION["permiso"][$db."_CENTRAL_UNLOCKDBREC"])
     ){
 ?>
-					<a href='javascript:EnviarForma("unlock","<?php echo $msgstr["mnt_dr"]?>")'><?php echo $msgstr["mnt_dr"]?></a><br>
-					<a href='javascript:EnviarForma("lisdelrec","<?php echo $msgstr["mnt_lisdr"]?>")'><?php echo $msgstr["mnt_lisdr"]?></a><br>
+        <a href='javascript:EnviarForma("unlock","<?php echo $msgstr["mnt_dr"]?>")'><?php echo $msgstr["mnt_dr"]?></a><br>
+        <a href='javascript:EnviarForma("lisdelrec","<?php echo $msgstr["mnt_lisdr"]?>")'><?php echo $msgstr["mnt_lisdr"]?></a><br>
 <?php }
 
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
@@ -237,31 +221,26 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
 	isset($_SESSION["permiso"][$db."_CENTRAL_FULLINV"])
     ){
 ?>
-					<a href='javascript:EnviarForma("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]. " <font color=red>(WXIS)</font>"?></a><br>
-					<a href='javascript:EnviarForma("fullinvMX","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]. " <font color=red>(MX)</font>"?></a><br>
+        <a href='javascript:EnviarForma("fullinv","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]. " <font color=red>(WXIS)</font>"?></a><br>
+        <a href='javascript:EnviarForma("fullinvMX","<?php echo $msgstr["mnt_gli"]?>")'><?php echo $msgstr["mnt_gli"]. " <font color=red>(MX)</font>"?></a><br>
 <?php
 }
-
 if (isset($_SESSION["permiso"]["CENTRAL_GLOBC"]) or
     isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
     isset($_SESSION["permiso"]["CENTRAL_ALL"])     or
     isset($_SESSION["permiso"][$db."_CENTRAL_GLOBC"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_DBUTILS"]) or
     isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){
-			echo "
-					<a href='javascript:EnviarForma(\"globalc\",\"Global changes\")'>". $msgstr["mnt_globalc"]."</a><br>";
-
+?>
+        <a href='javascript:EnviarForma("globalc","Global changes")'><?php echo $msgstr["mnt_globalc"]?></a>
+<?php
 }
 ?>
-
-           			<a href='../documentacion/ayuda.php?help=<?php echo $lang?>/mantenimiento.html' target=_blank><img src=img/barHelp.png border=0 align=absmiddle></a>&nbsp; &nbsp;
-       				<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/mantenimiento.html' target=_blank>edit help file</a>"?>
-				</div>
-				<div class="spacer">&#160;</div>
-			</div>
-		</div>
+            </div>
+        </div>
+    </div>
 <?php }?>
-	</div>
+</div>
 
 <form name=admin method=post action=administrar_ex.php onSubmit="Javascript:return false">
 <input type=hidden name=base>
@@ -274,5 +253,3 @@ if (isset($arrHttp["seleccionados"])){
 ?>
 </form>
 <?php include("../common/footer.php"); ?>
-</body>
-</html>

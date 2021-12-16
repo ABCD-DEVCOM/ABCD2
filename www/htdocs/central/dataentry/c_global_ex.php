@@ -3,6 +3,7 @@
 20210613 fho4abcd remove password, lineends
 20210623 fho4abcd Replaced helper code fragment by included file, improve backbutton, add page title, small html improvements
 20210623 fho4abcd Expand echo into html (readability), translate string, enable click on MFN for all situations
+20211216 fho4abcd Backbutton by included file
 */
 
 session_start();
@@ -204,11 +205,7 @@ function Presentar(Mfn){
 <?php echo $msgstr["cg_titulo"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -520,6 +517,7 @@ if ($Mfn<$hasta){
 </form>
 </div>
 </div>
-<?php include("../common/footer.php")?>
-</body>
-</html>
+<?php
+include("../common/footer.php")
+?>
+

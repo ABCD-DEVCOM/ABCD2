@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210311 fho4abcd Replaced helper code fragment by included file + minor html corrections + dont die always
+20211216 fho4abcd Backbutton by included file, removed redundant help
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -11,8 +12,10 @@ set_time_limit (0);
 include("../common/get_post.php");
 //foreach($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
+$backtoscript="../dataentry/administrar.php"; // The default return script
 
 function MostrarPft(){
 global $arrHttp,$xWxis,$Wxis,$db_path,$wxisUrl;
@@ -35,10 +38,11 @@ function VerStatus(){
 
 
 include("../common/header.php");
-echo "<body>
-<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">
-	";
+?>
+<body>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+<?php
 switch ($arrHttp["Opcion"]){
 	case "fullinv":
 		echo $msgstr["mnt_gli"];
@@ -59,24 +63,21 @@ switch ($arrHttp["Opcion"]){
 		break;
 }
 echo ": ".$arrHttp["base"];
-echo "</div>
-	<div class=\"actions\">
-";
+?>
+    </div>
+	<div class="actions">
+<?php
 if ($arrHttp["Opcion"]!="fullinv"){
-	echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-    echo "
-		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["back"]."</strong></span></a>";
+    include "../common/inc_back.php";
 }
-echo "
+?>
 	</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-include "../common/inc_div-helper.php";
-echo "
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
+	<div class="spacer">&#160;</div>
+	</div>
+    <?php include "../common/inc_div-helper.php";?>
+    <div class="middle form">
+        <div class="formContent">
+<?php
 if ($wxisUrl!="") echo $wxisUrl."<br>";
 
 switch ($arrHttp["Opcion"]) {

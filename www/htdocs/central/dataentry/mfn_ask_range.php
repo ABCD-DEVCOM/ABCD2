@@ -3,6 +3,7 @@
 20210311 fho4abcd Replaced helper code fragment by included file
 20210311 fho4abcd html move body + sanitize html & javascript
 20210613 fho4abcd remove password
+20211216 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -41,6 +42,8 @@ $arrHttp["login"]=$_SESSION["login"];
 
 $base =$arrHttp["base"];
 $cipar =$arrHttp["base"].".par";
+$backtoscript="../dataentry/administrar.php"; // The default return script
+
 //GET THE MAX MFN
 $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
@@ -113,33 +116,18 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php
-if ($arrHttp["Opcion"]=="listar")
-	echo $msgstr["mnt_rlb"];
-else
-	echo $msgstr["mnt_dr"];
-echo ": ".$arrHttp["base"]?>
+    <?php
+    if ($arrHttp["Opcion"]=="listar")
+        echo $msgstr["mnt_rlb"];
+    else
+        echo $msgstr["mnt_dr"];
+    echo ": ".$arrHttp["base"]
+    ?>
 	</div>
-
 	<div class="actions">
-<?php
-	$ayuda="";
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"])){
-		echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\" class=\"defaultButton cancelButton\">
-		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["cancelar"]."</strong></span></a>
-		";
-	}else{
-		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["cancel"]."</strong></span></a>
-		";
-	}
-?>
-
-</div>
-
-<div class="spacer">&#160;</div>
+    <?php include "../common/inc_back.php"; ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
 <?php include "../common/inc_div-helper.php"; ?>
 <div align=center>
@@ -187,5 +175,4 @@ echo ": ".$arrHttp["base"]?>
 <?php
 include("../common/footer.php");
 ?>
-</body>
-</html>
+

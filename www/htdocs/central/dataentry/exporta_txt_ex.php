@@ -13,6 +13,7 @@
 2021-04-21 fho4abcd Show iso files with mx_show_iso + move action columns after file name column
 2021-05-27 fho4abcd Show always footer. Check permissions work folder. Translations
 2021-06-05 fho4abcd Export without marc without isotag. Export with marc with iso=marc + isotag.
+20211216 fho4abcd Backbutton by included file
 */
 
 global $arrHttp;
@@ -313,21 +314,17 @@ echo "</form>\n";
 <?php
 // If outside a frame: show institutional info
 if ($inframe!=1) include "../common/institutional_info.php";
-echo "
-<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["cnv_export"]." ".$msgstr["cnv_".$arrHttp["tipo"]]."
-	</div>
-	<div class=\"actions\">";
-
-// Show 'back' button, except for a Preview action (in a separate window)
-if ($arrHttp["Accion"]!="P"){
-    $backtourl=$backtoscript."?base=".$arrHttp["base"];
-    echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-	echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["regresar"]."</strong></span></a>";
-}
 ?>
-
+<div class="sectionInfo">
+	<div class="breadcrumb"><?php echo $msgstr["cnv_export"]." ".$msgstr["cnv_".$arrHttp["tipo"]]?>
+	</div>
+	<div class="actions">
+    <?php
+    // Show 'back' button, except for a Preview action (in a separate window)
+    if ($arrHttp["Accion"]!="P"){
+        include "../common/inc_back.php";
+    }
+    ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

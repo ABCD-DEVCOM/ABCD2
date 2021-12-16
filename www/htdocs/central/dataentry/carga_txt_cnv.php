@@ -5,6 +5,7 @@
 2021-03-08 fho4abcd Add footer
 2021-03-08 fho4abcd Error message if cnv folder does not exist and creation fails
 2021-03-08 fho4abcd Pass selected records (conforms with iso export)
+20211215 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -18,6 +19,7 @@ $lang=$_SESSION["lang"];
 
 include("../lang/admin.php");
 include("../lang/soporte.php");
+$backtoscript="../dataentry/administrar.php"; // The default return script
 
 function PresentarLeader($leader,$tc){
 	$fp=file($leader);
@@ -137,10 +139,7 @@ function AbrirVentana(){
 <?php echo $msgstr["cnv_".$arrHttp["accion"]]." ".$msgstr["cnv_".$arrHttp["tipo"]]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

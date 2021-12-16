@@ -3,6 +3,7 @@
 20210521 fho4abcd Replaced helper code fragment by included file
 20210521 fho4abcd Added OPAC compare+replace componente by table (makes equal code)
 20210829 fho4abcd Added missing importdoc compare+replace componente by table
+20211216 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -31,10 +32,7 @@ include("../common/institutional_info.php");
 <div class="sectionInfo">
 	<div class="breadcrumb"><?php echo $msgstr["translate"];?></div>
 	<div class="actions">
-        <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-            <span><strong><?php echo $msgstr["regresar"]?></strong></span>
-        </a>
+    <?php include "../common/inc_back.php"; ?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
