@@ -1,19 +1,24 @@
 <?php
+/*
+20211215 fho4abcd Backbutton by & helper by included file
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-var_dump($_SESSION);DIE;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../common/header.php");
 $base=$arrHttp['base']; //$_POST['base'];
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
+
 echo "<body>\n";
+echo "<script src=../dataentry/js/lr_trim.js></script>";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
@@ -31,25 +36,18 @@ return false;
 return true;
 }
 </script>";
-				echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">Add to Loan Objects: " . $base."
-			</div>
-			<div class=\"actions\">";
-if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_extra.php?base=".$base."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-}
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addloanobject.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<div class="sectionInfo">
+    <div class="breadcrumb"><?php echo "Add to Loan Objects: " . $base?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php";?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addloanobject.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: addloanobject.php</font>";
+$ayuda="menu_mantenimiento_addloanobject.html";
+include "../common/inc_div-helper.php";
 ?>
 </div>
 <div class="middle form">
@@ -345,5 +343,4 @@ echo "NO loanobject records created!";
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>"?>
 <?php
 include("../common/footer.php");
-
 ?>

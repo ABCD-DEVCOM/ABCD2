@@ -1,4 +1,7 @@
 <?php
+/*
+20211215 fho4abcd Backbutton by & helper by included file
+*/
 /**
  * @program:   ABCD - ABCD-Central-Utility - http://abcd.netcat.be/
  * @copyright:  Copyright (C) 2015 BIREME/PAHO/WHO - VLIR/UOS
@@ -34,36 +37,30 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../common/header.php");
 $converter_path=$mx_path;
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 $base_ant=$arrHttp["base"];
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+
 echo "<body onunload=win.close()>\n";
+echo "<script src=../dataentry/js/lr_trim.js></script>";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
-echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".$msgstr["addCPfromDB_mx"].": " . $base_ant."
-			</div>
-			<div class=\"actions\">";
-if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_extra.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-}
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addcopiesdatabase.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<div class="sectionInfo">
+    <div class="breadcrumb"><?php echo $msgstr["addCPfromDB_mx"].": " . $base_ant?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php";?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addcopiesdatabase.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: addcopiesdatabase.php</font>";
-?>
+include "../common/inc_div-helper.php";?>
 <script language="javascript">
 function AlterEntry(opcion)
 {
