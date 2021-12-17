@@ -23,6 +23,7 @@
 20211214 fho4abcd Digital documents to top menu
 20211215 fho4abcd lock_bd.php->protect_db.php
 20211216 fho4abcd Remove duplicate copiesocurrenciesreport
+20211217 fho4abcd Remove duplicate addcopiesdatabase,addloanobject,addloanobjectcopies
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -124,24 +125,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="copies_linkdb.php"
 			//document.admin.target="ABCD_Frame"
 			break;
-		case "addcopiesdatabase":    //Marcos Script
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addcopiesdatabase.php"
-			//document.admin.target="ABCD_Frame"
-			break;
-		case "addloanobjectcopies":    //Marcos Script
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobjectcopies.php"
-			//document.admin.target="ABCD_Frame"
-			break;
-		case "addloanobj":    //Marino Vretag
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobject.php"
-			//document.admin.target="ABCD_Frame"
-			break;
 		case "fullinv":     //INVERTED FILE GENERATION WITH MX
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -160,12 +143,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
             document.admin.action="../dataentry/exporta_txt.php"
 			//document.admin.target="ABCD_Frame"
             document.admin.tipo.value="iso"
-			break;
-		case "addloanobj":    //Marino addloanobj
-			document.admin.base.value=base
-			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobject.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "barcode":    //Marino barcode search
 			document.admin.base.value=base
@@ -203,7 +180,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
 		case "addloanobjectcopies":    //Marcos Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="addloanobjectcopies.php"
+			document.admin.action="../utilities/addloanobjectcopies.php"
 			//document.admin.target="ABCD_Frame"
 			break;
 		case "importdoc":
