@@ -124,14 +124,12 @@ function Enviar(sort){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/approval_rejection.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/approval_rejection.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: suggestions_status.php\n";
+$ayuda="acquisitions/approval_rejection.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <form name=sort>
 <div class="middle form">
 	<div class="formContent">

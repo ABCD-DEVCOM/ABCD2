@@ -44,7 +44,10 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php $ayuda="acquisitions/overview.html";include "../common/inc_div-helper.php" ?>
+<?php 
+$ayuda="acquisitions/overview.html";
+include "../common/inc_div-helper.php" 
+?>
 
 <div>
 <div class="middle form">

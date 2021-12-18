@@ -109,15 +109,12 @@ function EnviarForma(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/receive_order.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/receive_order.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: receive_order.php\n";
 
+<?php
+$ayuda="acquisitions/receive_order.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <div class="middle list">
 
 	<div class="searchBox">

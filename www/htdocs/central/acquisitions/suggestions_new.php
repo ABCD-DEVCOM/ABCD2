@@ -155,11 +155,11 @@ function switchMenu(obj) {
 		<?php echo $msgstr["suggestions"].": ".$msgstr["new"]?>
 	</div>
 	<div class="actions">
+	<?php
+		$backtoscript="overview.php";
+		include "../common/inc_back.php";
+	?>
 
-		<a href=overview.php?encabezado=s&base=<?php echo $arrHttp["base"]?> class="defaultButton cancelButton">
-			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["cancel"]?></strong></span>
-		</a>
 		<a href=javascript:EnviarForma() class="defaultButton saveButton">
 			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 			<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
@@ -167,14 +167,12 @@ function switchMenu(obj) {
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/suggestions_new.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/suggestions_new.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: suggestions_new.php\n";
+$ayuda="acquisitions/suggestions_new.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <div class="middle form">
 	<div class="formContent">
 <form method=post name=forma1 action=suggestions_new_update.php onSubmit="javascript:return false">

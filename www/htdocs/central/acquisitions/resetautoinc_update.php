@@ -6,6 +6,8 @@ if (!isset($_SESSION["permiso"])){
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
+
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../common/get_post.php");
@@ -29,24 +31,24 @@ include("../common/institutional_info.php");
 		<?php echo $msgstr["resetctl"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
+
+	<?php
+		$backtoscript="../common/inicio.php";
+		include "../common/inc_back.php";
+	?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies_configuration.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/copies_configuration.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: resetautoinc.php</font>\n";
-echo "
-	</div>
-<div class=\"middle form\">
-	<div class=\"formContent\">";
+$ayuda="copies_configuration.html";
+include "../common/inc_div-helper.php";
+?>
+
+<div class="middle form">
+	<div class="formContent">
+<?php		
 	$file_cn=$db_path.$arrHttp["base"]."/data/control_number.cn";
 	$fp=fopen($file_cn,"w");
 	fwrite($fp,$arrHttp["control_n"]);

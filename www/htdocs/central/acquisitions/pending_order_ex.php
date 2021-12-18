@@ -82,17 +82,11 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/pending_order_ex.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/pending_order_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: pending_order_ex.php</font>\n";
+$ayuda="acquisitions/pending_order_ex.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
-
-
-
 
 <div class="middle form">
 			<div class="formContent">

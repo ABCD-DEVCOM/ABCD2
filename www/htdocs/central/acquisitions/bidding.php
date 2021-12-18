@@ -45,6 +45,13 @@ $arrHttp["base"]="suggestions";
 // Se ubican todas las solicitudes que estén pendientes (STATUS=0)
 // se asigna el formato correspondiente a la clave de clasificación
 // se lee el título de las columnas de la tabla
+
+if (!isset($arrHttp["sort"])) {
+	$arrHttp["sort"] = "DA";
+			$index="da_bidding.pft";
+		$tit="da_bidding_tit.tab";
+} else {
+
 switch($arrHttp["sort"]){
 	case "TI":
 		$index="ti_bidding.pft";
@@ -66,6 +73,9 @@ switch($arrHttp["sort"]){
 		$index="ti_decision.pft";
 		$tit="ti_decision_tit.tab";				
 }
+
+}
+
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$index" ;
 $tit_pft=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$tit";
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$index" ;
@@ -129,14 +139,11 @@ function Enviar(sort){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/bidding.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/bidding.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: bidding.php\n";
+$ayuda="acquisitions/bidding.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <form name=sort>
 <div class="middle form">
 	<div class="formContent">

@@ -200,10 +200,14 @@ if (isset($arrHttp["see_all"])) $see_all="&see_all=Y"
 		<?php echo $msgstr["suggestions"].": ".$msgstr["decision"]?>
 	</div>
 	<div class="actions">
-		<a href=decision.php?encabezado=s&base=<?php echo $arrHttp["base"]."&sort=".$arrHttp["sort"].$see_all?> class="defaultButton cancelButton">
-			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["cancel"]?></strong></span>
-		</a>
+
+
+	<?php
+		$backtoscript="decision.php";
+		include "../common/inc_back.php";
+	?>
+
+
 		<a href=javascript:EnviarForma() class="defaultButton saveButton">
 			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
 			<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
@@ -211,17 +215,12 @@ if (isset($arrHttp["see_all"])) $see_all="&see_all=Y"
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/decision_ex.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/decision_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: decision_ex.php</font>\n";
+$ayuda="acquisitions/decision_ex.html";
+include "../common/inc_div-helper.php";
+
 ?>
-	</div>
-
-
-
 
 <div class="middle form">
 			<div class="formContent">
