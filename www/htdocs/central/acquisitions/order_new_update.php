@@ -71,22 +71,22 @@ else
 		<div class="actions">
 			<?php if ($err==""){
 			?>
-			<a href=../common/inicio.php?reinicio=s&encabezado=s&base=<?php echo $arrHttp["base"]?> class="defaultButton backButton">
-				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["back"]?></strong></span>
-			</a>
-			<?php }?>
+
+	<?php
+		$backtoscript="../common/inicio.php";
+		include "../common/inc_back.php";
+	 }
+
+	 ?>
 		</div>
 		<div class="spacer">&#160;</div>
 	</div>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/suggestions_new_update.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/order_new_update.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: order_new_update.php</font>\n";
-	?>
-	</div>
+$ayuda="acquisitions/suggestions_new_update.html";
+include "../common/inc_div-helper.php";
+?>
+
 	<div class="middle form">
 		<div class="formContent">
 <?php

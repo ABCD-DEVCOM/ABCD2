@@ -160,21 +160,19 @@ function Enviar(){
 	<div class="actions">
 <?php
 	include("../circulation/submenu_prestamo.php");
- 	echo "<a href=\"buscar.php?base=".$arrHttp["base"]."&cipar=".$arrHttp["base"].".par&count=1&Opcion=buscar_en_este&Expresion=".$arrHttp["Expresion"]."\" class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span>
-		</a>
-		<?php ?>
+	include "../common/inc_back.php"; 
+
+	?>
 
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulacion/reserva.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulacion/reserva.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: reserve/reservar_loans_ex.php" ?></font>
-</div>
+
+<?php
+$ayuda="circulacion/reserva.html";
+include "../common/inc_div-helper.php";
+?>
+
 <div class="middle form">
 	<div class="formContent">
 	<form name=inventorysearch target=reservar_loans_ex.php method=post>

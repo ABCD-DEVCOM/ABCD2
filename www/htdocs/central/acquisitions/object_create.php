@@ -29,18 +29,12 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/object_create.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/object_create.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: object_create.php</font>\n";
+$ayuda="acquisitions/object_create.html";
+include "../common/inc_div-helper.php";
 
 ?>
-	</div>
-
-
-
 
 <div class="middle form">
 			<div class="formContent">
@@ -62,7 +56,8 @@ $query = "&base=".$arrHttp["database"]."&cipar=$db_path"."par/".$arrHttp["databa
 $IsisScript=$xWxis."imprime.xis";
 include("../common/wxis_llamar.php");
 $cont_database=implode('',$contenido);
-if (trim($cont_database)!="") {	echo "<h3>".$msgstr["objectexist"]."</h4>";
+if (trim($cont_database)!="") {
+	echo "<h3>".$msgstr["objectexist"]."</h4>";
 	echo $cont_database;
 	echo "</div></div>";
 	include("../common/footer.php");
@@ -72,9 +67,12 @@ if (trim($cont_database)!="") {	echo "<h3>".$msgstr["objectexist"]."</h4>";
 
 //CREATE THE STRING FOR THE NEW RECORD
 $ValorCapturado="";
-foreach ($arrHttp as $var=>$value){	if (substr($var,0,3)=="tag"){		$tag=trim(substr($var,3));
+foreach ($arrHttp as $var=>$value){
+	if (substr($var,0,3)=="tag"){
+		$tag=trim(substr($var,3));
 		$ValorCapturado.="<".$tag." 0>".trim($value)."</".$tag.">";
-	}}
+	}
+}
 //ADD THE CONTROL NUMBER TO THE UPDATE STRING
 $ValorCapturado.="<".$tag_ctl." 0>".$CN."</".$tag_ctl.">";
 // ADD THE RECORD TO THE BIBLIOGRAPHIC DATABASE
@@ -99,7 +97,8 @@ $purchase_order[$arrHttp["occ"]].="^i".$CN;
 $ValorCapturado="";
 foreach ($purchase_order as $order_c){
 	if (trim($order_c)!="")
-		$ValorCapturado.="<50 0>".$order_c."</50>";}
+		$ValorCapturado.="<50 0>".$order_c."</50>";
+}
 $ValorCapturado=urlencode($ValorCapturado);
 $IsisScript=$xWxis."actualizar.xis";
 $query = "&base=purchaseorder&cipar=$db_path"."par/purchaseorder.par&login=".$_SESSION["login"]."&Mfn=".$arrHttp["Mfn_order"]."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
@@ -114,18 +113,23 @@ echo "</div></div>";
 include("../common/footer.php");
 echo "</body></html>";
 
-function ReadPurchaseOrder(){	global $arrHttp,$msgstr,$db_path,$Wxis,$wxisUrl,$xWxis;
+function ReadPurchaseOrder(){
+	global $arrHttp,$msgstr,$db_path,$Wxis,$wxisUrl,$xWxis;
 	$IsisScript=$xWxis."leer_mfnrange.xis";
 	$query = "&base=purchaseorder&cipar=$db_path"."par/purchaseorder.par&from=".$arrHttp["Mfn_order"]."&to=".$arrHttp["Mfn_order"]."&Opcion=leer&Pft=(v50/)";
 	include("../common/wxis_llamar.php");
 	$ix=0;
-	foreach($contenido as $value) {		$ix=$ix+1;
-		$purchase_order[$ix]=trim($value);	}
+	foreach($contenido as $value) {
+		$ix=$ix+1;
+		$purchase_order[$ix]=trim($value);
+	}
 	return $purchase_order;
-}
+
+}
 
 
-function AddCopies(){	global $arrHttp,$msgstr,$CN;
+function AddCopies(){
+	global $arrHttp,$msgstr,$CN;
 	echo "<form name=forma1 action=copies_create.php method=post>\n";
 	foreach ($arrHttp as $var=>$value){
 		if (substr($var,0,3)!="tag"){
@@ -135,7 +139,8 @@ function AddCopies(){	global $arrHttp,$msgstr,$CN;
 	echo "<input type=hidden name=objectid value=$CN>\n";
 	echo "<input type=submit value=\"".$msgstr["createcopies"]."\">\n";
 	echo "</form>";
-}
+
+}
 
 function NextControlNumber($base){
 global $db_path;

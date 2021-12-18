@@ -56,15 +56,12 @@ ActualizarRegistro();
 		</div>
 		<div class="spacer">&#160;</div>
 	</div>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/suggestions_new_update.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/suggestions_new_update.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: suggestions_new_update.php</font>\n";
 
-	?>
-	</div>
+<?php
+$ayuda="acquisitions/suggestions_new_update.html";
+include "../common/inc_div-helper.php";
+?>
+
 	<div class="middle form">
 		<div class="formContent">
 <?php

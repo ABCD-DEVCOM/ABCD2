@@ -141,7 +141,10 @@ function EnviarForma(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php $ayuda="acquisitions/pending_order.html"; include "../common/inc_div-helper.php" ?>
+<?php 
+	$ayuda="acquisitions/pending_order.html"; 
+	include "../common/inc_div-helper.php";
+?>
 
 <div class="middle form">
 	<div class="formContent">

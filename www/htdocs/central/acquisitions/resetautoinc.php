@@ -10,6 +10,7 @@ include("../config.php");
 
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 
@@ -76,23 +77,20 @@ if (isset($arrHttp['encabezado'])) {
         }else{
             $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
         }
-        ?>
-        <a href="<?php echo $ret; ?>" class="defaultButton backButton">
-        <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-        <span><strong><?php echo $msgstr["back"]?></strong></span>
-        </a>
+
+		$backtoscript = $ret;;
+		include "../common/inc_back.php";
+	?>
+
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies_configuration.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-	<?php
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/copies_configuration.html target=_blank>".$msgstr["edhlp"]."</a>";
-	?>
-	&nbsp; &nbsp; Script: resetautoinc.php
 
-</div>
+<?php
+$ayuda="copies_configuration.html";
+include "../common/inc_div-helper.php";
+?>
 
 <div class="middle form">
 	<div class="formContent">
