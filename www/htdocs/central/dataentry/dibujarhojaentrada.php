@@ -61,11 +61,11 @@ function DibujarHtmlArea($tag,$linea,$numl,$tipoH){
 	}
 	$valortag[$tag]=str_replace("\r","",$valortag[$tag]);
 	$valortag[$tag]=str_replace("\n","",$valortag[$tag]);
-	echo '
-	<textarea cols="100%" id="tag'.$tag. '" name="tag'.$tag.'" rows="'.$numl.'" >';
+	echo '<td class="table-fdt-four">';
+	echo '<textarea cols="100%" id="tag'.$tag. '" name="tag'.$tag.'" rows="'.$numl.'" >';
 	echo str_replace("'","`",$valortag[$tag]);
 	echo '</textarea>';
-
+	echo '</td>';
 ?>
 <script>
 		CKEDITOR.replace('<?php echo "tag$tag"?>', {
@@ -290,7 +290,8 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  	}
  	$seleccion= Array();
  	$ind=Array();
- 	echo "<td colspan=5 class='table-fdt-four'>\n<table class='table-fdt' border=0 id=id_".$t[1]." ".$celda.">";
+ 	echo "<td class=\"table-fdt-three\"></td>";
+ 	echo "<td colspan=5 class='table-fdt-four'><table id=id_".$t[1]." ".$celda.">";
 
 	echo "<td colspan=$cant_cols  class='table-fdt-four'><b>".$t[2]."</b></td><tr>";
  	$indice_alfa="";  // para desplegar el índice alfabético del campo
@@ -1548,7 +1549,7 @@ Function PrepararFormato() {
     	   							echo "</td></tr>";
     	   							break;
 								case "A":        //HTMLarea
-									echo "<td colspan=2>";
+									echo "<td colspan=2  class=\"table-fdt-three\">";
 									echo "<b>$titulo</b>";
 									if (!$ver) {
 										DibujarHtmlArea($tag,$vars[$ivars],$t[8],$tipo_e);

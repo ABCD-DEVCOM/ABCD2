@@ -1697,11 +1697,13 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 
 .table-fdt td, .table-fdt tbody tr td {
 	border-bottom: 1px solid var(--gray-light);
-	padding: 4px 6px;
+/*	padding: 4px 6px;*/
 /*	background: var(--white);*/
 /*  display: table-cell;*/
-	display: inline-table;
-  vertical-align: middle;
+/*	display: inline-table;*/
+/*  vertical-align: middle;*/
+vertical-align: top;
+padding: 0.3rem;
 
 }
 
@@ -1751,13 +1753,13 @@ td.input-fdt {
 
 /* TAG */
 td.table-fdt-one {
-	width: 50px;
+	min-width: 50px;
 }
 
 
 /* BUTTONS */
 .table-fdt-two {
-	width: 130px;
+	min-width: 130px;
 }
 
 /* NAME OF FIELD */
@@ -1768,7 +1770,10 @@ td.table-fdt-one {
 
 /* INPUT FORM */
 .table-fdt-four {
-	width: 600px;
+  min-width: 55rem;
+  max-width: 60rem;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 
@@ -1809,7 +1814,6 @@ td.table-fdt-one {
 
 }
 
-
 .bt-fdt-question {
 	text-decoration: none;
 	background-color: var(--white);
@@ -1819,11 +1823,6 @@ td.table-fdt-one {
 	font-weight: normal;
 	font-size: 12px;
 }
-
-.bt-fdt i, .bt-fdt-question i {
-		width: 16px;
-}
-
 
 .bt-fdt-blue {
 	text-decoration: none;
@@ -1875,15 +1874,10 @@ td.table-fdt-one {
 	cursor: pointer;
 }
 
-
-
-
 #myvar {
 	border:1px solid #ccc;
 	padding:2px;
 }
-
-
 
 
 /* END TABLE IN DIBUJARHOJADEENTRADA */
@@ -1922,10 +1916,6 @@ h4 {
 /*#END #form classes */
 
 /* #Loading */
-.loading {
-
-}
-
 .loading DIV {
 	background: url('../images/loading.gif') no-repeat top center;
 }
@@ -2100,13 +2090,6 @@ a.button:hover {
 	transform: translateY(-2px);
 }
 
-.button_browse.show, .submit, input[type=submit], input[type=button] {
-/*	background: var(--blue);
-	color: var(--light);
-	border-color: var(--blue);
-	text-decoration: none;
-*/
-}
 
 .button_browse.show {
 	background: var(--bgsectionInfo);
