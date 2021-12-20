@@ -24,8 +24,8 @@ echo "<br><br><dd><h1>".$msgstr["sessionexpired"]."</h1>";
 </center>
 <script type="text/javascript">
 	setTimeout(function(){
-            window.location.href = '<?php echo $server_url ?>';
-         }, 3000);
+            top.location.href = '<?php echo $server_url ?>';
+         }, 1000);
 </script>
 
 </div>
