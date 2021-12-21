@@ -3,6 +3,8 @@
 20210312 fho4abcd show also charset if different from metaencoding
 20210312 logout without [] to visually detect this script
 20210415 fho4abcd Show db characterset if available, otherwise meta characterset. No longer show difference
+20211220 rogercgui Moved script from dataentry to common
+20211221 fho4abcd improved path to logout.php
 */
 ?>
 
@@ -377,7 +379,7 @@ function ChangeLang(){
 				</li>
      
             <li>
-            	<a class="bt-exit" href="logout.php"><img src="../../assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
+            	<a class="bt-exit" href="../common/logout.php"><img src="../../assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
             </li>
         </ul>
     </nav>
