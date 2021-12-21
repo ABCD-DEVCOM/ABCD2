@@ -1575,8 +1575,8 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 #myDiv{
 	margin-right: 5px;
 	padding: 0 10px;
-/*	background: var(--bgsectionInfo);
-	border-top: 1px solid var(--gray);*/
+	background: var(--bgsectionInfo);
+	border-top: 1px solid var(--gray);
 	height: 38px;
 	vertical-align: middle;
 }
