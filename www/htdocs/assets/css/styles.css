@@ -1575,8 +1575,8 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 #myDiv{
 	margin-right: 5px;
 	padding: 0 10px;
-	background: var(--bgsectionInfo);
-	border-top: 1px solid var(--gray);
+/*	background: var(--bgsectionInfo);
+	border-top: 1px solid var(--gray);*/
 	height: 38px;
 	vertical-align: middle;
 }
@@ -2090,6 +2090,13 @@ a.button:hover {
 	transform: translateY(-2px);
 }
 
+.button_browse.show, .submit, input[type=submit], input[type=button] {
+/*	background: var(--blue);
+	color: var(--light);
+	border-color: var(--blue);
+	text-decoration: none;
+*/
+}
 
 .button_browse.show {
 	background: var(--bgsectionInfo);
@@ -2262,8 +2269,10 @@ div.log_base span {
 
 
 iframe.menumantenimento {
-	width: 100%;
-	border: none;
+	width: 95%;
+	height: 100%;
+	border: 0.1rem var(--light) solid;
+	overflow: scroll;
 
 }
 

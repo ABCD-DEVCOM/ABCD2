@@ -7,6 +7,11 @@ if (isset($_SESSION["permiso"]["ACQ_ACQALL"]) or isset($_SESSION["permiso"]["ACQ
 
 <div class="toolbar-dataentry" >
 
+	<a class="bt-tool" href="overview.php" title="<?php echo $msgstr["new"]?>">
+		<img src="../../assets/svg/acq/ic_fluent_eye_show_24_regular.svg">
+	</a>
+
+
 	<a class="bt-tool" href="suggestions_new.php?base=suggestions&amp;cipar=suggestions.par&amp;Opcion=crear&amp;ventana=S&amp;encabezado=s&amp;retorno=<?php echo urlencode("../acquisitions/suggestions.php")?>" title="<?php echo $msgstr["new"]?>">
 		<img src="../../assets/svg/acq/ic_fluent_person_chat_24_regular.svg">
 	</a>

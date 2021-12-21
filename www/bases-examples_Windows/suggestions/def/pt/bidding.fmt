@@ -1,4 +1,14 @@
-300
-330
-331
-
+T|300|Fornecedor|0|1|arbcdijefgh||TB|||||||||0||
+S||Nome|0|0|||X||25|D|providers|NA_|v10|v10||0||
+S||Referência|0|0|||X||10|||||||0||
+S||Número de cópias|0|0|||X||10|||||||0||
+S||Preço|0|0|||X||10|||||||0||
+S||Moeda|0|0|||X||5|||||||0||
+S||Quantidade de cópias aprovadas|0|0|||I||10|||||||0||
+S||Preço aprovado|0|0|||I||10|||||||0||
+S||Comentário|0|0|||I||30|||||||0||
+S||Selecionar|0|0|||I|||P|selected.tab|||||0||
+S||Data de compra|0|0|||I||10|||||||0||
+S||Data ISO|0|0|||I||8|||||||0||
+F|330|Data do pedido/licitação|0|0|||D|||||||||0||
+F|331|Data ISO|0|0|||ISO||8|||||||0||

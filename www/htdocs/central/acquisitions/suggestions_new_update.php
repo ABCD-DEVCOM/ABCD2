@@ -44,7 +44,7 @@ foreach ($arrHttp as $var => $value) {
 ActualizarRegistro();
 
 	include("../common/header.php");
-	echo "<body>\n";
+
 	include("../common/institutional_info.php");
 ?>
 	<div class="sectionInfo">
@@ -52,9 +52,9 @@ ActualizarRegistro();
 			<?php echo $msgstr["suggestions"].": ".$msgstr["purchase"]?>
 		</div>
 		<div class="actions">
-			<?php include("suggestions_menu.php")?>
+
 		</div>
-		<div class="spacer">&#160;</div>
+			<?php include("suggestions_menu.php")?>
 	</div>
 
 <?php

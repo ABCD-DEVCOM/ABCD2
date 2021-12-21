@@ -125,14 +125,10 @@ if (isset($arrHttp["see_all"])) $see_all="&see_all=Y"
 
 		<?php
 		$backtoscript="bidding.php";
+		$savescript="javascript:EnviarForma()";
 		include "../common/inc_back.php";
+		include "../common/inc_save.php";
 		?>
-
-
-		<a href=javascript:EnviarForma() class="defaultButton saveButton">
-			<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-		</a>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

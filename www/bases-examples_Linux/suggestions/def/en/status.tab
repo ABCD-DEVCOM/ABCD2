@@ -1,7 +1,8 @@
 0|Pending
 1|Approved
 2|Rejected
-3|In bidding
-4|Provider selected
-5|Order emitted
-6|Cerrada
+3|In quotation
+4|Selected Supplier
+5|Order issued
+6|Close
+7|Items received
