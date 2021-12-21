@@ -35,14 +35,14 @@ foreach ($contenido as $value)  {
 $encabezado="";
 include("../common/institutional_info.php");
 ?>
-<?php include("suggestions_menu.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["suggestions"]?>
 	</div>
 	<div class=actions>
 	</div>
-	<div class="spacer">&#160;</div>
+<?php include("suggestions_menu.php");?>
 </div>
 <?php 
 $ayuda="acquisitions/overview.html";
@@ -51,53 +51,59 @@ include "../common/inc_div-helper.php"
 
 <div>
 <div class="middle form">
-	<div class="formContent">
-
-	<center>
 	<h3><?php echo $msgstr["overview"].": ".$msgstr["suggestions"]?></h3>
+	<div class="formContent row">
+
+	
+	<div class="col-2">
+
 	<table class=statTable cellpadding=10 >
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_0" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["status_0"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_0" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["status_0"]?></td>
 			<td> <?php if (isset( $Total[0])) echo $Total[0]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_1" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["approved"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_1" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["approved"]?></td>
 			<td> <?php if (isset($Total[1])) echo $Total[1]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_2" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["rejected"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_2" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["rejected"]?></td>
 			<td> <?php if (isset($Total[2])) echo $Total[2]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_3" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["inbidding"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_3" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["inbidding"]?></td>
 			<td> <?php if (isset($Total[3])) echo $Total[3]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_4" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["prov_sel"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_4" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["prov_sel"]?></td>
 			<td> <?php if (isset($Total[4])) echo $Total[4]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_5" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["purchase"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_5" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["purchase"]?></td>
 			<td> <?php if (isset($Total[5])) echo $Total[5]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_6" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["itemsrec"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_6" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["itemsrec"]?></td>
 			<td> <?php if (isset($Total[6])) echo $Total[6]?> </td>
 		</tr>
 		<tr>
 			<td>
-				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_7" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["completed"]?></td>
+				<a href="../dataentry/show.php?base=suggestions&Expresion=STA_7" target="overview" class="singleButton" target=_blank><i class="fas fa-search"></i></a> <?php echo $msgstr["completed"]?></td>
 			<td> <?php if (isset($Total[7])) echo $Total[7]?></td>
 		</tr>
 	</table>
-	</center>
+	</div> <!--./col-2-->
+
+	<div class="col-10">
+		<iframe name="overview" class="menumantenimento" src="../dataentry/show.php?base=suggestions&Expresion=STA_0"></iframe>
+	</div>	
 
 	</div>
 </div>

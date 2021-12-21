@@ -118,7 +118,7 @@ function Enviar(sort){
 
 }
 </script>
-<?php include("suggestions_menu.php")?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["suggestions"].": ".$msgstr["decision"]?>
@@ -126,7 +126,7 @@ function Enviar(sort){
 	<div class="actions">
 
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("suggestions_menu.php")?>
 </div>
 <?php $ayuda="acquisitions/decision.html"; include "../common/inc_div-helper.php" ?>
 <form name="sort">

@@ -141,14 +141,15 @@ function EnviarForma(){
 <?php
 
 ?>
-<?php include("order_menu.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["purchase"].": ".$msgstr["createorder"]?>
 	</div>
 	<div class="actions">
 	</div>
-	<div class="spacer">&#160;</div>
+<?php include("order_menu.php");?>
+	
 </div>
 
 <?php
@@ -164,19 +165,19 @@ include "../common/inc_div-helper.php";
 		<input type=hidden name=sort value=<?php echo $arrHttp["sort"]?>>
 		<?php echo $msgstr["approvacq"]." ".$msgstr["sorted"]?>
 		<div class="pagination">
-			<a href=javascript:Enviar("PV") class="singleButton singleButtonSelected">
+			<a href=javascript:Enviar("PV") class="bt bt-blue">
  <?php echo $msgstr["provider"]?>
 			</a>
-			<a href=javascript:Enviar("TI") class="singleButton singleButtonSelected">
+			<a href=javascript:Enviar("TI") class="bt bt-blue">
   <?php echo $msgstr["title"]?>
 			</a>
-			<a href=javascript:Enviar("DA") class="singleButton singleButtonSelected">
+			<a href=javascript:Enviar("DA") class="bt bt-blue">
  <?php echo $msgstr["date_app"]?>
 			</a>
-			<a href=javascript:Enviar("SN") class="singleButton singleButtonSelected">
+			<a href=javascript:Enviar("SN") class="bt bt-blue">
  <?php echo $msgstr["suggestno"]?>
 			</a>
-			<a href=javascript:Enviar("OP") class="singleButton singleButtonSelected">
+			<a href=javascript:Enviar("OP") class="bt bt-blue">
  <?php echo $msgstr["operator"]?>
 			</a>
 			<p align=right><input type=checkbox name=see_all
@@ -184,12 +185,12 @@ include "../common/inc_div-helper.php";
 		</div>
 
 		</h5>
-	<table class=listTable cellspacing=0 border=0>
+	<table class="listTable" cellspacing=0 border=0>
 		<tr>
 
 <?php
 // se imprime la lista de recomendaciones pendientes
-	echo "<th>&nbsp;</th>";
+	//echo "<th>&nbsp;</th>";
 	$t=explode('|',$tit_tab);
 	foreach ($t as $v)  echo "<th>".$v."</th>";
     $ixelem=0;
@@ -235,7 +236,7 @@ include "../common/inc_div-helper.php";
 	}
 ?>
 </table>
-<input class="bt-blue" type=submit name=send value=<?php echo $msgstr["order"]?> onclick=EnviarForma()>
+<input class="bt-blue" type="submit" name="send" value=<?php echo $msgstr["order"]?> onclick=EnviarForma()>
 </form>
 </div>
 	</div>

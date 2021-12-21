@@ -479,7 +479,17 @@ if (!isset($arrHttp["return"])){
 }
 
 ?>
-<div class="toolbar-dataentry" >
+
+
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php $breadcrumb=$msgstr["admin"]." (".$arrHttp["base"].") | ".$total_lines." ".$msgstr["registros"];  ?>
+        <?php echo $breadcrumb;?>
+    </div><!--./breadcrumb-->
+
+    <div class="actions">
+    </div><!--.actions-->
+    <div class="toolbar-dataentry" >
     <a href="javascript:Crear()" class="bt-tool" title="<?php echo $msgstr["crear"]?>">
         <img src="../../assets/svg/browse/ic_fluent_database_plus_24_regular.svg" alt="" title="" />
     </a> 
@@ -542,16 +552,6 @@ if (!isset($arrHttp["return"])){
         <img src="../../assets/svg/browse/ic_fluent_home_24_regular.svg">
     </a>
 </div>
-
-<div class="sectionInfo">
-    <div class="breadcrumb">
-        <?php $breadcrumb=$msgstr["admin"]." (".$arrHttp["base"].") | ".$total_lines." ".$msgstr["registros"];  ?>
-        <?php echo $breadcrumb;?>
-    </div><!--./breadcrumb-->
-
-    <div class="actions">
-    </div><!--.actions-->
-    <div class="spacer">&#160;</div>
 </div><!--./sectionInfo-->
 
 <div class="middle list">
