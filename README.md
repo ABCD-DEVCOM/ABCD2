@@ -131,9 +131,8 @@ This is an example of how to list things you need to use the software and how to
 
 **Read the detailed instructions in the links:**
 
-* [Installattion instructions](https://github.com/ABCD-DEVCOM/ABCD2/blob/master/.installation/installation_instructions.txt)
-* [Readme for WIndows](https://github.com/ABCD-DEVCOM/ABCD2/blob/master/.installation/README1st.txt)
-  
+* [Installattion instructions](https://github.com/ABCD-DEVCOM/ABCD2/blob/master/.installation/installation_instructions.md)
+
 
 
 
