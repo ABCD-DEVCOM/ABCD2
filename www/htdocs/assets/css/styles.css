@@ -1,6 +1,8 @@
 /* 2021-03-01 fho4abcd : deleted overruled font-family, font-size
 ** 2021-06-26 fho4abcd Move distributor logo to php
+** 2021-12-23 fho4abcd Restored background mydiv (line 1577) to view the action buttons in fmt (disappeared after previous commit)
 */
+
 :root {
   --blue: #3955a3;
   --blue-abcd: #124078;
@@ -1574,8 +1576,8 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 #myDiv{
 	margin-right: 5px;
 	padding: 0 10px;
-/*	background: var(--bgsectionInfo);
-	border-top: 1px solid var(--gray);*/
+	background: var(--bgsectionInfo);
+	border-top: 1px solid var(--gray);
 	height: 38px;
 	vertical-align: middle;
 }
