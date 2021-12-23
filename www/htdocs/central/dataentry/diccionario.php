@@ -5,6 +5,7 @@
 20211207 fho4abcd Improved buttons + comment "broken multi-byte end-character (semi-)solution" + html errors + remove <table>' + add working message
 20211208 fho4abcd First depends on quick search. Search button not for quicksearch
 20211212 fho4abcd Buttons like alfa.php:new Up button, goto field moved down, added enter button,shorter text in buttons, added hover text+removed footer
+20211222 fho4abcd Correct search after redisplay for next list
 */
 // Show the dictionary of terms in the database
 
@@ -178,11 +179,7 @@ if ($showsend or $showsearch) {
             <?php
             // When the function is initiated from the toolbar a hit will search immediately
             if (isset($arrHttp["toolbar"])) {
-                if ($arrHttp["Opcion"]=="diccionario"){
-                    echo 'onclick="EjecutarBusqueda(1)"'; 
-                } else {
-                    echo 'onclick="EjecutarBusqueda(2)"';
-                }
+                echo 'onclick="EjecutarBusqueda(1)"'; 
             }
             echo ">";
             PresentarDiccionario();
