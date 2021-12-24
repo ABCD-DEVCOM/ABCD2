@@ -1,8 +1,11 @@
 <?php
+/*
+20211224 fho4abcd Read default message file from central, with central processing, lineends
+*/
 session_start();
 error_reporting(E_ALL);
 //CHANGE THIS ////
-include ("/abcd2.2/www/htdocs/central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
+include ("../../central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
 //LOS SIGUIENTES PARÁMETROS ESTÁN DEFINIDOS EN EL CONFIG.PHP DE LA VERSIÓN 2.2. SE INCLUYEN AQUÍ PARA
 //COMPATIBILIDAD CON LA VERSION 1.6
@@ -12,8 +15,7 @@ if (!isset($server_url)){
 	$server_url="http://localhost:9091";       //El url qaue se usa para acceder a ABCD
 	$OpacHttp=$server_url;
 }
-//
-if (!isset($charset)) $charset="ISO-8859-1";
+
 if (!isset($_REQUEST["lang"]))
 	$_REQUEST["lang"]=$lang;
 else
@@ -23,9 +25,14 @@ if (isset($_SESSION["db_path"]))
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
 else
 	if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
-if (isset($_REQUEST["lang"])){	 $_SESSION["lang"]= $_REQUEST["lang"];
+if (isset($_REQUEST["lang"])){
+	 $_SESSION["lang"]= $_REQUEST["lang"];
 	 $lang=$_REQUEST["lang"];
-}$actualScript=basename($_SERVER['PHP_SELF']);
+}
+// Read language files from central
+include "../../central/lang/opac.php";
+
+$actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
 $CentralHttp=$server_url;
 $NovedadesDir="";
@@ -106,13 +113,15 @@ if ($showhide=="Y")
 	$showhide_help="block";
 else
 	$showhide_help="none";
-include("read_lang.php");
+
 $db_path=trim(urldecode($db_path));
 $ix=explode('/',$db_path);
 $xxp="";
-for ($i=1;$i<count($ix);$i++) {	$xxp.=$ix[$i];
+for ($i=1;$i<count($ix);$i++) {
+	$xxp.=$ix[$i];
 	if ($i!=count($ix)-1) $xxp.='/';
-}
+
+}
 
 if (!isset($diagnostico)){
 	if (!is_dir($db_path."opac_conf")) {
@@ -120,7 +129,8 @@ if (!isset($diagnostico)){
 		echo "<a href=//wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuración#Estructura_de_carpetas_y_archivos_de_configuraci.C3.B3n>".$msgstr["help"]."</a>";
         die;
 	}
-	if (!is_dir($db_path."opac_conf/$lang")) {		echo "<h3>".$msgstr["missing_folder"]."  $xxp opac_conf <font color=red>$lang</font><h3>";
+	if (!is_dir($db_path."opac_conf/$lang")) {
+		echo "<h3>".$msgstr["missing_folder"]."  $xxp opac_conf <font color=red>$lang</font><h3>";
 		echo "<a href=//wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci&oacute;n#Estructura_de_carpetas_y_archivos_de_configuraci.C3.B3n>".$msgstr["help"]."</a>";
 		die;
 	}
