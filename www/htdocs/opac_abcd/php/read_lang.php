@@ -1,4 +1,5 @@
 <?php
+// 20211224 fho4abcd: This file can be replaced by ../../central/lang/opac.php
 if (isset($msg_path) and $msg_path!="")	$path=$msg_path;else	$path=$db_path;$a=$path."lang/00/opac.tab";
 iF (!isset($msgstr["menu_1"])) $msgstr["menu_1"]="LogOut";
 iF (!isset($msgstr["menu_2"])) $msgstr["menu_2"]="General";

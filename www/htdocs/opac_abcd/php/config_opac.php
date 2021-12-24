@@ -1,8 +1,11 @@
 <?php
+/*
+20211224 fho4abcd Read default message file from central, with central processing
+*/
 session_start();
 error_reporting(E_ALL);
 //CHANGE THIS ////
-include ("/abcd2.2/www/htdocs/central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
+include ("../../central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
 //LOS SIGUIENTES PARÁMETROS ESTÁN DEFINIDOS EN EL CONFIG.PHP DE LA VERSIÓN 2.2. SE INCLUYEN AQUÍ PARA
 //COMPATIBILIDAD CON LA VERSION 1.6
@@ -12,8 +15,7 @@ if (!isset($server_url)){
 	$server_url="http://localhost:9091";       //El url qaue se usa para acceder a ABCD
 	$OpacHttp=$server_url;
 }
-//
-if (!isset($charset)) $charset="ISO-8859-1";
+
 if (!isset($_REQUEST["lang"]))
 	$_REQUEST["lang"]=$lang;
 else
@@ -25,7 +27,10 @@ else
 	if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
 if (isset($_REQUEST["lang"])){	 $_SESSION["lang"]= $_REQUEST["lang"];
 	 $lang=$_REQUEST["lang"];
-}$actualScript=basename($_SERVER['PHP_SELF']);
+}
+// Read language files from centralinclude "../../central/lang/opac.php";
+
+$actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
 $CentralHttp=$server_url;
 $NovedadesDir="";
@@ -106,7 +111,7 @@ if ($showhide=="Y")
 	$showhide_help="block";
 else
 	$showhide_help="none";
-include("read_lang.php");
+
 $db_path=trim(urldecode($db_path));
 $ix=explode('/',$db_path);
 $xxp="";
