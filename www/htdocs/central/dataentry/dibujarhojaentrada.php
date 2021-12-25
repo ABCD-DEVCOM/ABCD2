@@ -7,6 +7,7 @@
 20211113 fho4abcd Remove phantom </center>, remove phantom links to awesome
 20211118 fho4abcd improvement for tags with/without leading zeros
 20211118 rogercgui edited line 	$it="password\""; $it="text\" onfocus=blur()";
+20211225 include field type number - $tipo=N
 */
 require_once("combo_inc.php");
 
@@ -570,6 +571,13 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	 						echo "<input type=hidden name=tag".$Etq." size=$n class=td value=\"$campo\">$campo";
  						}
  						break;
+					case "N":
+ 						if (isset($ver)){
+ 							echo $campo;
+ 						}else{
+	 						echo "<input type='number' name=tag".$Etq." size=$n class=td value=\"$campo\">$campo";
+ 						}
+ 						break; 					
  					case "RO":
  						if (isset($ver)){
  							echo $campo;
@@ -987,6 +995,10 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 
 						$it="text\" onfocus=blur()";
 						break;
+                    case "N":
+
+						$it="number\" onfocus=blur()";
+						break;						
 					case "I":
 						$it=" hidden\"";
 						break;
@@ -1011,6 +1023,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   			echo ' value="'.$campo.'" '.$arrow.'>';
 	   			if ($maxlength!=0)
 	   				echo "</a>";
+
 	   			if ($tipo=="AI") {
 	   				if (isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["ACQ_ALL"]) or isset($_SESSION["permiso"]["ACQ_RESETCN"])){
 	   					echo " <a class='bt-fdt-green' href=javascript:ChangeSeq($tag,\"$pref\")><i class=\"fas fa-plus\"></i> ".$msgstr["assign"]."</a>

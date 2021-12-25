@@ -1,2 +1,5 @@
-marc|Formato Marc
-biblo|Formato Cepal
+biblo|Cepal
+dubcore|DublinCore Repository
+marc|MARC
+marcuni|MARCUNI
+rda|RDA: Resource Description & Access

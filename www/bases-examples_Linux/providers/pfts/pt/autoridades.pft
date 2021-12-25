@@ -1,0 +1,3 @@
+select e3
+		case 10: v10
+endsel
