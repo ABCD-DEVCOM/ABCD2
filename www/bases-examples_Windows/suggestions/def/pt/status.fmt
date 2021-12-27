@@ -1,5 +1,5 @@
-F|2|Status|0|0|||R||4|P|status.tab|||||0||
-F|230|Data|0|0|||D||10|||||||0||
-F|231|Data ISO|0|0|||ISO||10|||||||0||
-F|240|Cópias aprovadas|0|0|||X||10|||||||0||
-F|250|Rejeição|0|0|||X|||||||||0||
+F|2|Status|0|0|||R||4|P|status.tab|||||0||0|0|||
+F|230|Data|0|0|||D||10|||||||0||0|0|||
+F|231|Data ISO da aprovação/rejeição|0|0|||ISO||10|||||||0||0|0|||
+F|240|Quantidade de cópias aprovadas|0|0|||N||10|||||||0||0|0|||
+F|250|Motivo da rejeição|0|0|||X||80|||||||0||0|0|||

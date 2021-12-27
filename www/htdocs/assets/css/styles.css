@@ -128,14 +128,22 @@ button {
 }
 
 
-select.textEntry, INPUT.textEntry, TEXTAREA, input[type=text],input[type=button], select {
+select.textEntry, 
+INPUT.textEntry, 
+TEXTAREA, 
+input[type=text],
+input[type=number],
+input[type=button], 
+select {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
 	box-sizing: border-box;
 	margin: 1px 0;
 }
 
-input[type=text], input[type=password] {
+input[type=text], 
+input[type=password], 
+input[type=number] {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
   -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--light);
@@ -1714,7 +1722,7 @@ padding: 0.3rem;
 .table-fdt > tbody > tr > td > input[type=radio], 
 .table-fdt > tbody > tr > td > textarea, 
 .table-fdt > tbody > tr > td > select {
-	margin: 2% 10px;
+	margin: 0.2rem 0.1rem;
 	font-size: 13px;
 	color: var(--blue);
 	line-height: 12px;

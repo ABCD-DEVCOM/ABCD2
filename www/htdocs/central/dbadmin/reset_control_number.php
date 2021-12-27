@@ -7,6 +7,7 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
@@ -51,35 +52,36 @@ if (isset($arrHttp["encabezado"])) {
 		<?php echo $msgstr["resetcn"].": $base"?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"assign_control_number.php?base=".$base."$encabezado\" class=\"defaultButton backButton\">";
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
+
+ <?php 
+$inc_backtourl="assign_control_number.php?base=".$base.$encabezado;
+ include "../common/inc_back.php" ?>
+
+
  	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/resetautoinc.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/resetautoinc.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: reset_control_number.php</font>\n";
-echo "
-	</div>
-<div class=\"middle form\">
-	<div class=\"formContent\">";
- echo "<form name=forma1 action=resetautoinc_update.php method=post onsubmit=\"javascript:return false\">
- <input type=hidden name=base value=$base>
- <input type=hidden name=Opcion value=control_n>\n";
+
+<?php 
+$ayuda=$_SESSION["lang"]."/resetautoinc.html";
+include "../common/inc_div-helper.php" 
+?>
+
+
+<div class="middle form">
+	<div class="formContent">
+ 		<form name="forma1" action="resetautoinc_update.php" method="post" onsubmit="javascript:return false">
+ <input type="hidden" name="base" value="<?php echo $base;?>">
+ <input type="hidden" name="Opcion" value="control_n">
+
+<?php 
 if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=s>\n";
 echo "<table>
-	<td>".$msgstr["lastcn"]."</td><td><input type=textbox name=control_n value=$cn_val></td>";
+	<td>".$msgstr["lastcn"]."</td><td><input type=text name=control_n value=$cn_val></td>";
 echo "<tr><td colspan=2>&nbsp;</td>";
 echo "</table>";
 echo "<p><input type=submit name=send value=".$msgstr["update"]." onclick=Enviar()>";
 
 echo "</form></div></div>";
 include("../common/footer.php");
-echo "</body></html>";
 ?>

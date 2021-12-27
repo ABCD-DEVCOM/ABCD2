@@ -1,4 +1,9 @@
 <?php
+/*
+20211225 rogercgui include input type number
+
+*/
+
 	$rows_title=array();
 	$rows_title[0]=$msgstr["row"];
 	$rows_title[1]=$msgstr["type"];
@@ -53,6 +58,7 @@
 	$input_type["SRO"]=$msgstr["it_sro"];
 	$input_type["M"]=$msgstr["it_m"];
 	$input_type["MRO"]=$msgstr["it_mro"];
+	$input_type["N"]=$msgstr["it_n"];
 	$input_type["C"]=$msgstr["it_c"];
 	$input_type["R"]=$msgstr["it_r"];
 	$input_type["A"]=$msgstr["it_a"];
