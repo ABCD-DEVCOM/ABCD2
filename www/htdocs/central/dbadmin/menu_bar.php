@@ -24,6 +24,7 @@
 20211215 fho4abcd lock_bd.php->protect_db.php
 20211216 fho4abcd Remove duplicate copiesocurrenciesreport
 20211217 fho4abcd Remove duplicate addcopiesdatabase,addloanobject,addloanobjectcopies
+20211228 fho4abcd Separate duplicate barcode entries
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -68,7 +69,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/copy_db.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "mxdbread":
 			document.admin.base.value=base
@@ -76,79 +76,66 @@ function EnviarFormaMNT(Opcion,Mensaje){
       document.admin.storein.value=base+"/data"
 			document.admin.copyname.value=base+".mst"
 			document.admin.action="../utilities/mx_dbread.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "create_gizmo":
   			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/create_gizmo.php"
-			//document.admin.target="ABCD_Frame"
    			break;
 		case "dbrestore":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/dbrestore.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "protect":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/protect_db.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "eliminarbd":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="eliminarbd.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "inicializar":
 			document.admin.base.value=base
             document.admin.action="inicio_bd.php"
-			//document.admin.target="ABCD_Frame"
 			break;
         case "cn":  //assign control number
           	document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="assign_control_number.php"
-			//document.admin.target="ABCD_Frame"
 			break
 		case "resetcn":    //RESET LAST CONTROL NUMBER IN THE BIBLIOGRAPHIC DATABASE
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="reset_control_number.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "linkcopies":    //LINK BIBLIOGRAPHIC DATABASE WITH COPIES DATABASE
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="copies_linkdb.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "fullinv":     //INVERTED FILE GENERATION WITH MX
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/fullinv.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "importiso":    //ISO load
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/vmx_import_iso.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "exportiso":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
             document.admin.action="../dataentry/exporta_txt.php"
-			//document.admin.target="ABCD_Frame"
             document.admin.tipo.value="iso"
 			break;
-		case "barcode":    //Marino barcode search
+		case "barcodesearch":    //Marino barcode search
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
-			document.admin.action="../utilities/barcode.php"
-			//document.admin.target="ABCD_Frame"
+			document.admin.action="../utilities/barcode_search.php"
 			break;
 		case "dirtree": //EXPLORE DATABASE DIRECTORY
 			switch (Mensaje){
@@ -163,49 +150,41 @@ function EnviarFormaMNT(Opcion,Mensaje){
 					break;
 			}
 			document.admin.action="dirtree.php";
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "addcopiesdatabase":    //Marino Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/addcopiesdatabase.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "copiesocurrenciesreport":    //Marcos Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/copiesdupreport.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "addloanobjectcopies":    //Marcos Script
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/addloanobjectcopies.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "importdoc":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/docfiles_upload.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "cleandb":    //Marino clean DB
   			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/clean_db.php"
-			//document.admin.target="ABCD_Frame"
    			break;
 		case "unlock":    // unlock db
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/unlock_db_retag.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "addloanobj":    //Marino addloanobj
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/addloanobject.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "convertdbutf":
 			document.admin.base.value=base
@@ -213,7 +192,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.function.value="database"
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/convert_txt.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "convertdbiso":
 			document.admin.base.value=base
@@ -221,7 +199,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.function.value="database"
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/convert_txt.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "convertlangutf":
 			document.admin.base.value=base
@@ -229,7 +206,6 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.function.value="language"
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/convert_txt.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "convertlangiso":
 			document.admin.base.value=base
@@ -237,56 +213,46 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.function.value="language"
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/convert_txt.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "convertiso2utf":    //convert ISO
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/cnv_iso_2_utf.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "matchisofdt":    //Match ISO with fdt
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/match_iso_with_fdt.php"
-			//document.admin.target="ABCD_Frame"
 			break;
-		case "barcode":    //Marino barcode search
+		case "barcodecheck":    //Marino barcode check
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/barcode_check.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "docbatchimport":     //was Marcos docbatchimport
-			//NewWindow("../dataentry/img/preloader.gif","progress",100,100,"NO","center")
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/docfiles_import.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "docfilesconfig":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/docfiles_config.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "docfilesrepair":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/docfiles_repair.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "uploadfile":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/upload_wrkfile.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		case "dcdspace":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/dcdspace.php"
-			//document.admin.target="ABCD_Frame"
 			break;
 		default:
 			alert(Opcion+" Not Available")
@@ -358,7 +324,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
   	    <li><a href='Javascript:EnviarFormaMNT("addloanobj","<?php echo $msgstr["addLOfromDB_mx"]?>")'><?php echo $msgstr["addLOfromDB_mx"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("addloanobjectcopies","<?php echo $msgstr["addLOwithoCP_mx"]?>")'><?php echo $msgstr["addLOwithoCP_mx"]?></a></li>
 		<li><a href='Javascript:EnviarFormaMNT("addcopiesdatabase","<?php echo $msgstr["addCPfromDB_mx"]?>")'><?php echo $msgstr["addCPfromDB_mx"]?></a></li>
-        <li><a href='Javascript:EnviarFormaMNT("barcode","<?php echo "Barcode search"?>")'><?php echo "Barcode search"?></a></li>
+        <li><a href='Javascript:EnviarFormaMNT("barcodesearch","<?php echo $msgstr["barcode_search"]?>")'><?php echo $msgstr["barcode_search"]?></a></li>
+        <!--<li><a href='Javascript:EnviarFormaMNT("barcodecheck","<?php echo "Barcode check"?>")'><?php echo "Barcode check"?></a></li>-->
   	    <li><a href='Javascript:EnviarFormaMNT("copiesocurrenciesreport","<?php echo $msgstr["CPdupreport_mx"]?>")'><?php echo $msgstr["CPdupreport_mx"]?></a></li>
   		<?php } } ?>
   	</ul>
