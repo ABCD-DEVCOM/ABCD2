@@ -1,5 +1,7 @@
 adjustparms=Please adjust the following parameters and press 'Start'
 allrecords=All records (!!)
+barcode_enter=Enter barcode
+barcode_search=Search for barcode
 blockedrecs=blocked records
 cg_add=Add Field
 cg_addocc=Add occurence

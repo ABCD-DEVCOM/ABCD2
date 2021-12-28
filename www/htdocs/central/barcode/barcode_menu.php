@@ -1,4 +1,7 @@
 <?php
+/*
+20211223 fho4abcd Backbutton &helper by included file
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -109,9 +112,7 @@ if (isset($arrHttp["encabezado"])){
 	<div class="breadcrumb">
 	</div>
 	<div class="actions">
-		<a href="javascript:document.regresar.submit()" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"];?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 
 <div class="spacer">&#160;</div>
