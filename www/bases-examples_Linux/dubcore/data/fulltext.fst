@@ -13,8 +13,6 @@
 13 5 '/RE_/', mpu,(v13/) 
 14 5 '/CO_/', mpu,v14 
 15 5 '/RM_/', mpu,(v15/) 
-99 8 '/TW_/', mpu,(v1/),(v3/), (v4/)
-97 8 '/SE_/', v97 
+99 8 '/TW_/', mpu,(v99/)
+97 8 '/SE_/', mpu,(v97/) 
 111 5 '/ID=/', v111 
-112 5 '/OAI_DATE_/', v112 
-99 8 '/TW_/',if p(v96) then proc('Gload/99/nonl='v96) fi, mpu, v99

@@ -4,14 +4,16 @@
 20210831 fho4abcd Enable %path_database% in COLLECTION. Check dat collection is in the base
 20210903 fho4abcd Add name of configuration file
 20211111 fho4abcd configfile to database root
+20220103 fho4abcd new names standard subfolders and config file
 */
 /*
 ** Function: Initial check of collection.
 ** This file covers
 ** - The presence of a COLLECTION entry in dr_path
 ** - The presence of the collection folder and standard subfolders.
-**   ../<collection>/ABCDImportRepo/
-**                  /ABCDImportRepo/
+**   ../<collection>/ImportRepo/
+**                  /SourceRepo/
+**                  /DocRepo/
 ** - Missing folders are created, existing folders are checked for writability
 ** - The name and location of the config file. Note must match fullinv.php
 */
@@ -48,7 +50,7 @@ if (!file_exists($fullcolpath) or !is_dir($fullcolpath)) {
     die;
 }
 // Check if the upload (=import) folder exists (if not create it) and is writable
-$colupl="ABCDImportRepo";
+$colupl="ImportRepo";
 $coluplfull=$fullcolpath."/".$colupl;
 if ( !file_exists($coluplfull)) {
     $result=@mkdir($coluplfull);
@@ -69,7 +71,7 @@ if (!is_writable($coluplfull) ) {
 }
 
 // Check if the source folder exists (if not create it) and is writable
-$colsrc="ABCDSourceRepo";
+$colsrc="SourceRepo";
 $colsrcfull=$fullcolpath."/".$colsrc;
 if ( !file_exists($colsrcfull)) {
     $result=@mkdir($colsrcfull);
@@ -88,9 +90,31 @@ if (!is_writable($colsrcfull) ) {
     echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_colsrcfolder"]." '".$colsrcfull."' ".$msgstr["dd_nowrite"]."</div>";
     die;
 }
+
+// Check if the docs folder exists (if not create it) and is writable
+$coldoc="DocRepo";
+$coldocfull=$fullcolpath."/".$coldoc;
+if ( !file_exists($coldocfull)) {
+    $result=@mkdir($coldocfull);
+    if ($result === false ) {
+        $file_get_contents_error= error_get_last();
+        $err_mkdir="&rarr; ".$file_get_contents_error["message"];
+        echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_coldocfoldererr"]." '".$coldocfull."' ".$err_mkdir."</div>";
+        die;
+    }
+}
+if (!is_dir($coldocfull) ) {
+    echo "<div style='font-weight:bold;color:red'> '".$coldocfull."' ".$msgstr["dd_nofolder"]."</div>";
+    die;
+}
+if (!is_writable($coldocfull) ) {
+    echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_coldocfolder"]." '".$coldocfull."' ".$msgstr["dd_nowrite"]."</div>";
+    die;
+}
 // The filename of the file with configuration info
 // Note that initially this file does not exist. Created by a configuration script
-$metadataConfig="docfiles_metadataconfig.tab";
-$metadataConfigFull=$db_path.$arrHttp["base"]."/".$metadataConfig;
+// If this variable is modified: modify also fullinv.php
+$tagConfig="docfiles_tagconfig.tab";
+$tagConfigFull=$fullcolpath."/".$tagConfig;
 
 /* and here the including file continues processing */

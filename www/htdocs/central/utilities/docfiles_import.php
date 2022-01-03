@@ -16,6 +16,7 @@
 20201123 fho4abcd Html header for split/unsplit is now equal. unicode filenames to hex (required for fullinv:Gload)
 20211201 fho4abcd Splittarget by dropdown+call it granularity. Apply split also if filesize > granularity.
 20211215 fho4abcd Backbutton by included file
+20220103 fho4abcd Revised collection structure.Improved tag processing
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -132,7 +133,6 @@ include "../utilities/inc_coll_chk_init.php";
 // The function to list a folder and initial parameters
 include "../utilities/inc_list-folder.php";
 $fileList=array();
-$skipNames=array($metadataConfig);
 // Include configuration functions
 include "inc_coll_read_cfg.php";
 
@@ -140,10 +140,10 @@ include "inc_coll_read_cfg.php";
 /* ----- First screen: Give info and check existence of uploaded files -*/
 if ($impdoc_cnfcnt<=1) {
     echo "<p>".$msgstr["dd_imp_init"]."</p>";
-    // If this is the first time that this code runs: Read the configuration file
+    // If this is the first time that this code runs: Read & check the configuration file
     if ($impdoc_cnfcnt==0) {
-        $actualField=array();
-        $retval= read_dd_cfg("operate", $metadataConfigFull, $metadataMapCnt,$actualField );
+        $actTagMap=array();
+        $retval= read_dd_cfg("operate", $tagConfigFull, $actTagMap );
         if ($retval!=0) die;
     }
     echo "<h3>".$msgstr["dd_imp_step"]." ".($impdoc_cnfcnt+1).": ".$msgstr["dd_imp_step_check_files"]."</h3>";
@@ -151,7 +151,7 @@ if ($impdoc_cnfcnt<=1) {
     if ( isset($arrHttp["deletedocfile"]) && $arrHttp["deletedocfile"]!="")  {
         //delete the file
         $delindex=$arrHttp["deletedocfile"];
-        $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
+        $retval = list_folder("files", $coluplfull, $fileList);
         if ($retval!=0) die;
         sort($fileList);
         $numfiles=count($fileList);
@@ -174,7 +174,7 @@ if ($impdoc_cnfcnt<=1) {
     ** List all files
     ** Deletion is possible as sanitize tree has checked for writability
     */
-    $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
+    $retval = list_folder("files", $coluplfull, $fileList);
     if ($retval!=0) die;
     for ( $index=0; $index<count($fileList); $index++) {
         if (filesize($fileList[$index])==0){
@@ -186,7 +186,7 @@ if ($impdoc_cnfcnt<=1) {
     ** show all files to the user in a table with a "delete" button
     */
     $fileList=[];
-    $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
+    $retval = list_folder("files", $coluplfull, $fileList);
     if ($retval!=0) die;
     $numfiles=count($fileList);
     if ($numfiles==0) {
@@ -234,12 +234,6 @@ if ($impdoc_cnfcnt<=1) {
                 // some values may contain quotes or other "non-standard" values
                 $value=htmlspecialchars($value);
                 echo "<input type=hidden name=$var value=\"$value\">\n";
-            }
-        }
-        // The first run adds the map configuration
-        if ($impdoc_cnfcnt==0) {
-            for ($i=0;$i<$metadataMapCnt;$i++) {
-                echo "<input type=hidden name=".$actualField[$i]["term"]." value='".$actualField[$i]["field"]."'>\n";
             }
         }
         ?>
@@ -378,7 +372,7 @@ else if ($impdoc_cnfcnt==3) {
     $starttime = microtime(true);
     // List all files in the upload folder
     // The content is checked in the initial screen
-    $retval = list_folder("files", $coluplfull, $skipNames, $fileList);
+    $retval = list_folder("files", $coluplfull, $fileList);
     if ($retval==0) {
         $numfiles=count($fileList);
         $numfilesOK=0;
@@ -513,18 +507,18 @@ include "../common/footer.php";
 //  - convert_tika_html : convert tika generated html
 //  - sanitize_tree     : sanitizes foldername(s)
 //  - secondsToTime     : return H:mm:ss
-//  - split_path        : returns the "section" of the filename in ABCDImportRepo
+//  - split_path        : returns the "section" of the filename in ImportRepo
 //  - split_html        : splits an html file into smaller files and returns the number of parts.
 //  - tolog             : writes information to screen and/or logfile
 //
 // ====== import_action =============================
 function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splitmax, $splittarget, $basename, &$numrecsOK) {
 /*
-** Imports the given file in ABCDImportRepo/... into the collection
+** Imports the given file in ImportRepo/... into the collection
 ** The metadata of this file is stored in an ABCD record.
 ** Normally a new record
 **
-** In: $full_imp_path = Full filename in <collection>/ABCDImportRepo/...
+** In: $full_imp_path = Full filename in <collection>/ImportRepo/...
 ** In: $addtimestamp  = Indicator to add a timestamp to the filename (0/1)
 ** In: $truncsize     = Number of characters in core file name (""=unlimited)
 ** In: $tikajar       = Name of actual tika jar in cgi-bin
@@ -535,7 +529,7 @@ function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $tex
 ** Other variables via 'Global'.
 ** Return : 0=OK, 1=NOT-OK
 */
-global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis_record_size;
+global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $mx_path,$isis_record_size,$tagConfigFull;
     $retval=1;
     clearstatcache(true);
     /*
@@ -545,19 +539,31 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     */
     $orgfilename="";
     $sectionname="";
-    $destpath=$fullcolpath."/";
+    $destdocpath=$coldocfull."/";
+    $destsrcpath=$colsrcfull."/";
     split_path( $full_imp_path, $orgfilename, $sectionname);
     if ( $sectionname!="" ) {
         tolog("<li>".$msgstr["dd_chk_section"]." &rarr; ".$sectionname."</li>");
-        $destpath.=$sectionname."/";
-        if (!file_exists($destpath)) {
-            if (!mkdir ($destpath,0777,true)){
-                tolog('<div style="color:red">Failed to create section folder(s).... (e.g. &rarr;'.$destpath.'&larr;)>');
+        $destdocpath.=$sectionname."/";
+        if (!file_exists($destdocpath)) {
+            if (!mkdir ($destdocpath,0777,true)){
+                tolog('<div style="color:red">Failed to create section folder(s).... (e.g. &rarr;'.$destdocpath.'&larr;)>');
                 return(1);
             }
         }
-        if (!is_dir($destpath) || !is_writable($destpath) ){
-             tolog('<div style="color:red">Section is not a writeable folder (e.g. &rarr;'.$destpath.'&larr;)>');
+        if (!is_dir($destdocpath) || !is_writable($destdocpath) ){
+             tolog('<div style="color:red">Section is not a writeable folder (e.g. &rarr;'.$destdocpath.'&larr;)>');
+             return(1);
+       }
+        $destsrcpath.=$sectionname."/";
+        if (!file_exists($destsrcpath)) {
+            if (!mkdir ($destsrcpath,0777,true)){
+                tolog('<div style="color:red">Failed to create section folder(s).... (e.g. &rarr;'.$destsrcpath.'&larr;)>');
+                return(1);
+            }
+        }
+        if (!is_dir($destsrcpath) || !is_writable($destsrcpath) ){
+             tolog('<div style="color:red">Section is not a writeable folder (e.g. &rarr;'.$destsrcpath.'&larr;)>');
              return(1);
        }
     }
@@ -584,7 +590,7 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     /*
     ** Move the uploaded file to the collection
     */
-    $docpath=$destpath.$docname;
+    $docpath=$destdocpath.$docname;
     if ($docext!="") $docpath.=".".$docext;
     tolog("<li>".$msgstr["dd_imp_moving"].": ".$orgfilename." &rarr; ".$docpath."</li>");
     if (@rename($full_imp_path, $docpath)===false){
@@ -704,25 +710,25 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     if ($c_coverage==""   && array_key_exists("dcterms:coverage",$metatab))   {$c_coverage=$metatab["dcterms:coverage"];}
     if ($c_rights==""     && array_key_exists("dcterms:rights",$metatab))     {$c_rights=$metatab["dcterms:rights"];}
     /*
-    ** Fill dc: values if not given by standard processing of tika output
+    ** Fill dc: values if not given dc: or dcterms:
     */
     if ($c_date=="" && array_key_exists("dcterms:created",$metatab)) {$c_date=$metatab["dcterms:created"];}
+    if ($c_type=="" && array_key_exists("content-type",$metatab))    {$c_type=$metatab["content-type"];}
     if ($c_type=="")   $c_type   = $docext;
     if ($c_source=="") $c_source = $def_c_source;
     /*
     ** Construct other metadata content:
     ** - c_htmlSrcURL  : computed after split
-    ** - c_htmlSrcFLD  : computed after split
     ** - c_sections    : by the section name
     ** - c_url         : by /docs/<collection>/<sectionname>/<docname>.<doc_ext>
     ** - c_id          : by next_cn_number
     ** - c_dateadded   : by current data&time
     ** - c_htmlfilesize: computed after split
-    ** - c_doctext     : filled by index generation
+    ** - c_doctext     : Reserved for future actions
     */
     $c_sections=$sectionname;
     $c_url="/docs/";
-    $c_url.=substr($fullcolpath, strlen($db_path));
+    $c_url.=substr($coldocfull, strlen($db_path));
     if ($sectionname!="") $c_url.="/".$sectionname;
     $c_url.="/".$docname;
     if ($docext!="") $c_url.=".".$docext;
@@ -736,29 +742,34 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
     /*
     ** Get the tags to be processed
     */
-    $vtitle       = remove_v($_POST["title"]);
-    $vcreator     = remove_v($_POST["creator"]);
-    $vsubject     = remove_v($_POST["subject"]);
-    $vdescription = remove_v($_POST["description"]);
-    $vpublisher   = remove_v($_POST["publisher"]);
-    $vcontributor = remove_v($_POST["contributor"]);
-    $vdate        = remove_v($_POST["date"]);
-    $vtype        = remove_v($_POST["type"]);
-    $vformat      = remove_v($_POST["format"]);
-    $videntifier  = remove_v($_POST["identifier"]);
-    $vsource      = remove_v($_POST["source"]);
-    $vlanguage    = remove_v($_POST["language"]);
-    $vrelation    = remove_v($_POST["relation"]);
-    $vcoverage    = remove_v($_POST["coverage"]);
-    $vrights      = remove_v($_POST["rights"]);
-    $vhtmlSrcURL  = remove_v($_POST["htmlSrcURL"]);
-    $vhtmlSrcFLD  = remove_v($_POST["htmlSrcFLD"]);
-    $vsections    = remove_v($_POST["sections"]);
-    $vurl         = remove_v($_POST["url"]);
-    $vid          = remove_v($_POST["id"]);
-    $vdateadded   = remove_v($_POST["dateadded"]);
-    $vhtmlfilesize= remove_v($_POST["htmlfilesize"]);
-    $vdoctext     = remove_v($_POST["doctext"]);
+    $actTagMap= array();
+    $retval   = read_dd_cfg("operates", $tagConfigFull, $actTagMap );
+    $actterms = array_column($actTagMap,"term");
+    $actfields= array_column($actTagMap,"field");
+    $vtitle       = remove_v( $actfields[array_search("title",$actterms)] );
+    $vcreator     = remove_v( $actfields[array_search("creator",$actterms)] );
+    $vsubject     = remove_v( $actfields[array_search("subject",$actterms)] );
+    $vdescription = remove_v( $actfields[array_search("description",$actterms)] );
+    $vpublisher   = remove_v( $actfields[array_search("publisher",$actterms)] );
+    $vcontributor = remove_v( $actfields[array_search("contributor",$actterms)] );
+    $vdate        = remove_v( $actfields[array_search("date",$actterms)] );
+    $vtype        = remove_v( $actfields[array_search("type",$actterms)] );
+    $vformat      = remove_v( $actfields[array_search("format",$actterms)] );
+    $videntifier  = remove_v( $actfields[array_search("identifier",$actterms)] );
+    $vsource      = remove_v( $actfields[array_search("source",$actterms)] );
+    $vlanguage    = remove_v( $actfields[array_search("language",$actterms)] );
+    $vrelation    = remove_v( $actfields[array_search("relation",$actterms)] );
+    $vcoverage    = remove_v( $actfields[array_search("coverage",$actterms)] );
+    $vrights      = remove_v( $actfields[array_search("rights",$actterms)] );
+    $vhtmlSrcURL  = remove_v( $actfields[array_search("htmlSrcURL",$actterms)] );
+    $vsections    = remove_v( $actfields[array_search("sections",$actterms)] );
+    $vurl         = remove_v( $actfields[array_search("url",$actterms)] );
+    $vidpartmax   = remove_v( $actfields[array_search("idpartmax",$actterms)] );
+    $vidpart      = remove_v( $actfields[array_search("idpart",$actterms)] );
+    $vid          = remove_v( $actfields[array_search("id",$actterms)] );
+    $vdateadded   = remove_v( $actfields[array_search("dateadded",$actterms)] );
+    $vhtmlfilesize= remove_v( $actfields[array_search("htmlfilesize",$actterms)] );
+    $vdoctext     = remove_v( $actfields[array_search("vdoctext",$actterms)] );
     /*
     ** Sanitize html tika originating from all files
     ** Replace the header to conform with split files
@@ -776,31 +787,42 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
         rename($docpath, $full_imp_path);
         return(1);
     }
-    for ($ix=0; $ix<sizeof($split_files); $ix++ ) {
+    $maxparts=sizeof($split_files);
+    for ($ix=0; $ix<$maxparts; $ix++ ) {
         $act_split_file=$split_files[$ix];
         /*
         ** Construct the proc file with metadata for mx
         ** Note that the commandline has limitations (length,allowed character) so a file is better
+        ** The actual terms depend on the part: see comments
         */
         $fpproc=fopen($procfile,"w");
         $fields="'";
-        if (($c_title!="")       and ($vtitle!=""))       $fields.="<".$vtitle.">".$c_title."</".$vtitle.">".PHP_EOL;
-        if (($c_creator!="")     and ($vcreator!=""))     $fields.="<".$vcreator.">".$c_creator."</".$vcreator.">".PHP_EOL;
-        if (($c_subject!="")     and ($vsubject!=""))     $fields.="<".$vsubject.">".$c_subject."</".$vsubject.">".PHP_EOL;
-        if (($c_description!="") and ($vdescription!="")) $fields.="<".$vdescription.">".$c_description."</".$vdescription.">".PHP_EOL;
-        if (($c_publisher!="")   and ($vpublisher!=""))   $fields.="<".$vpublisher.">".$c_publisher."</".$vpublisher.">".PHP_EOL;
-        if (($c_contributor!="") and ($vcontributor!="")) $fields.="<".$vcontributor.">".$c_contributor."</".$vcontributor.">".PHP_EOL;
-        if (($c_date!="")        and ($vdate!=""))        $fields.="<".$vdate.">".$c_date."</".$vdate.">".PHP_EOL;
-        if (($c_type!="")        and ($vtype!=""))        $fields.="<".$vtype.">".$c_type."</".$vtype.">".PHP_EOL;
-        if (($c_format!="")      and ($vformat!=""))      $fields.="<".$vformat.">".$c_format."</".$vformat.">".PHP_EOL;
-        if (($c_identifier!="")  and ($videntifier!=""))  $fields.="<".$videntifier.">".$c_identifier."</".$videntifier.">".PHP_EOL;
-        if (($c_source!="")      and ($vsource!=""))      $fields.="<".$vsource.">".$c_source."</".$vsource.">".PHP_EOL;
-        if (($c_language!="")    and ($vlanguage!=""))    $fields.="<".$vlanguage.">".$c_language."</".$vlanguage.">".PHP_EOL;
-        if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">".PHP_EOL;
-        if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">".PHP_EOL;
-        if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">".PHP_EOL;
-        // some variables are dependent on the actual processed file
-        $c_htmlfilesize= filesize($act_split_file);
+        // The ID field is always required to perform the lookup to the first record with this ID
+        if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">".PHP_EOL;
+        // Next fields are for the first record only
+        if ($ix==0) {
+            if (($c_title!="")       and ($vtitle!=""))       $fields.="<".$vtitle.">".$c_title."</".$vtitle.">".PHP_EOL;
+            if (($c_creator!="")     and ($vcreator!=""))     $fields.="<".$vcreator.">".$c_creator."</".$vcreator.">".PHP_EOL;
+            if (($c_subject!="")     and ($vsubject!=""))     $fields.="<".$vsubject.">".$c_subject."</".$vsubject.">".PHP_EOL;
+            if (($c_description!="") and ($vdescription!="")) $fields.="<".$vdescription.">".$c_description."</".$vdescription.">".PHP_EOL;
+            if (($c_publisher!="")   and ($vpublisher!=""))   $fields.="<".$vpublisher.">".$c_publisher."</".$vpublisher.">".PHP_EOL;
+            if (($c_contributor!="") and ($vcontributor!="")) $fields.="<".$vcontributor.">".$c_contributor."</".$vcontributor.">".PHP_EOL;
+            if (($c_date!="")        and ($vdate!=""))        $fields.="<".$vdate.">".$c_date."</".$vdate.">".PHP_EOL;
+            if (($c_type!="")        and ($vtype!=""))        $fields.="<".$vtype.">".$c_type."</".$vtype.">".PHP_EOL;
+            if (($c_format!="")      and ($vformat!=""))      $fields.="<".$vformat.">".$c_format."</".$vformat.">".PHP_EOL;
+            if (($c_identifier!="")  and ($videntifier!=""))  $fields.="<".$videntifier.">".$c_identifier."</".$videntifier.">".PHP_EOL;
+            if (($c_source!="")      and ($vsource!=""))      $fields.="<".$vsource.">".$c_source."</".$vsource.">".PHP_EOL;
+            if (($c_language!="")    and ($vlanguage!=""))    $fields.="<".$vlanguage.">".$c_language."</".$vlanguage.">".PHP_EOL;
+            if (($c_relation!="")    and ($vrelation!=""))    $fields.="<".$vrelation.">".$c_relation."</".$vrelation.">".PHP_EOL;
+            if (($c_coverage!="")    and ($vcoverage!=""))    $fields.="<".$vcoverage.">".$c_coverage."</".$vcoverage.">".PHP_EOL;
+            if (($c_rights!="")      and ($vrights!=""))      $fields.="<".$vrights.">".$c_rights."</".$vrights.">".PHP_EOL;
+            if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">".PHP_EOL;
+            if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">".PHP_EOL;
+            if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">".PHP_EOL;
+            if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">".PHP_EOL;
+        }
+
+        // some variables are dependent on the actual processed file: valid for all parts
         $htmlfilesec   = substr($act_split_file, strlen($db_path."wrk/"));
         // Gload on Windows does not like unicode characters in the file name
         if ( strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ) {
@@ -808,19 +830,19 @@ global $cisis_ver, $cgibin_path, $db_path, $fullcolpath, $msgstr, $mx_path,$isis
             // The % is stripped as this is not accepted in the url
             $htmlfilesec=str_replace("%","",urlencode( $htmlfilesec));
         }
-        $htmlSrcPath   = $fullcolpath."/ABCDSourceRepo/".$htmlfilesec;
-        $htmlURLPath   = "/docs/".substr($htmlSrcPath, strlen($db_path));
-        $c_htmlSrcURL  = $htmlURLPath;
-        $c_htmlSrcFLD  = $htmlSrcPath;
-
+        $htmlSrcPath   = $destsrcpath.$htmlfilesec;
+        $c_htmlSrcURL  = "/docs/".substr($htmlSrcPath, strlen($db_path));
         if (($c_htmlSrcURL!="")  and ($vhtmlSrcURL!=""))  $fields.="<".$vhtmlSrcURL.">".$c_htmlSrcURL."</".$vhtmlSrcURL.">".PHP_EOL;
-        if (($c_htmlSrcFLD!="")  and ($vhtmlSrcFLD!=""))  $fields.="<".$vhtmlSrcFLD.">".$c_htmlSrcFLD."</".$vhtmlSrcFLD.">".PHP_EOL;
-        if (($c_sections!="")    and ($vsections!=""))    $fields.="<".$vsections.">".$c_sections."</".$vsections.">".PHP_EOL;
-        if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">".PHP_EOL;
-        if (($c_id!="")          and ($vid!=""))          $fields.="<".$vid.">".$c_id."</".$vid.">".PHP_EOL;
-        if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">".PHP_EOL;
+        $c_htmlfilesize= filesize($act_split_file);
         if (($c_htmlfilesize!="")and ($vhtmlfilesize!=""))$fields.="<".$vhtmlfilesize.">".$c_htmlfilesize."</".$vhtmlfilesize.">".PHP_EOL;
-        if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">".PHP_EOL;
+        /*
+        ** The partnumber is computed and added if there are multiple parts
+        ** Valid for all parts
+        */
+        if ($maxparts>1) {
+            $fields.="<".$vidpartmax.">".$maxparts."</".$vidpartmax.">".PHP_EOL;
+            $fields.="<".$vidpart.">".($ix+1)."</".$vidpart.">".PHP_EOL;
+        }
         $fields.="'";
         fwrite($fpproc,$fields);
         fclose($fpproc);
@@ -1216,7 +1238,7 @@ function secondsToTime($s) {
 // ====== split_path =============================
 function split_path($full_path, &$filename, &$sectionname){
 /* 
-** IN : $full_path  = Full filename in ABCDImportRepo
+** IN : $full_path  = Full filename in ImportRepo
 ** Out: $filename   = The filename (last part of the name)
 ** Out: $sectionname= The section (optional subdirectories)
 ** returns always 0 (OK)
@@ -1296,9 +1318,6 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splitmax
     $chunknr     = 1;
     $chunkisopen = false;
     $chunkexceed = false;
-    $partsheader = "<table style='color:green;font-size:150%;font-weight:bold;' border=1 width=100%>";
-    $partsheader.= "<tr><td>".$msgstr["dd_partnr"];
-    $partstrailer= "</td></tr></table><br>";
     $filetrail   = "</body></html>";
     $maxsize     = $maxsize-strlen($filetrail)-2;// absolute working maximum adjusted for trailer+crlf
     
@@ -1334,7 +1353,6 @@ function split_html($tikafile, $textmode, $c_title, $isis_record_size, $splitmax
             $chunksize+=fwrite($chunkhandle,"<title>".$c_title." #".$chunknr."</title>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"</head>".PHP_EOL);
             $chunksize+=fwrite($chunkhandle,"<body>".PHP_EOL);
-            $chunksize+=fwrite($chunkhandle,$partsheader."&nbsp;".$chunknr.$partstrailer.PHP_EOL);
             $chunknr++;
         }
         // If the chunksize approaches the limit. Take care if over the safety limit

@@ -1,5 +1,10 @@
+/* The ID and possible partnumber are always shown from the record itself*/
+/* The L function (lookup) is always applied for a simple pft. Inverted file generation is mandatory*/
 '<table>'
-if p(v111) then '<tr><td ><b>ID</b></td><td style=>'v111+|<br>|,'</td>' fi/
+if p(v111) then '<tr><td ><b>ID</b></td><td>'v111+|<br>|,'</td>' fi,
+if p(v110) then '<tr><td ><b>Part nr</b></td><td>'v110' of 'v109+|<br>|,'</td>' fi,
+/* Next attributes are from the parent record (may be the current record, we don't care) */
+REF(  L('ID=',v111),
 if p(v1) then '<tr><td><b>Title</b></td><td>'v1+|<br>|,'</td>' fi/
 if p(v2) then '<tr><td><b>Creator</b></td><td>'v2+|<br>|,'</td>' fi/
 if p(v3) then '<tr><td><b>Subject</b></td><td>'v3+|<br>|,'</td>' fi/
@@ -17,28 +22,32 @@ if p(v14) then '<tr><td><b>Coverage</b></td><td>'v14+|<br>|,'</td>' fi/
 if p(v15) then '<tr><td><b>Rights Management</b></td><td>'v15+|<br>|,'</td>' fi/
 
 if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
-
+)
+/* If there is a HTML or image URL: display the text or the picture*/
 if p(v95) then
-if 'jpg jpeg png gif tiff' : right(v98,3) then /* file type is image */
-'<tr>
-<td><font face=arial size=2><b>Image preview</b></td>
-<td><img height=200 width=800 src=',v98,'></img></td>
-</tr>'
+    if 'jpg jpeg png gif tiff' : right(REF(L('ID='v111),v98),3) then /* file type is image */
+        '<tr>
+        <td><b>Image preview</b></td>
+        <td><img height=200 src=',v98,'></td>
+        </tr>'
+    else /* file is of type text */
+        '<tr>
+            <td><b>Preview pop-up</b></td>
+            <td>','<a href="'v95,'"
+                onclick="window.open(`',v95,'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`);
+                return false;">' v95,'</a>
+            </td>
+        </tr>',
+        '<tr>
+            <td><b>Text preview</b></td>
+            <td><iframe height=200 width=800 scrolling=yes src=',v95,'></iframe></td>
+        </tr>'
+    fi,
+fi/
 
-else /* file is of type text */
-'<tr><td><b>Preview pop-up<b></td><td>',
-'<a href="'v95,'"
-onclick="window.open(`',v95,'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`);
-return false;">' v95,'</a></td></tr>',
-
-'<tr>
-<td><font face=arial size=2><b>Text preview</b></td>
-<td><iframe height=200 width=800 scrolling=yes src=',v95,'></iframe></td>
-</tr>'
-fi,fi/
-
+REF(  L('ID=',v111),
 if p(v98) then '<tr><td><b>Document URL</b></td><td><A HREF="',v98'" target=new>'v98,'</A></td>' fi/
-
 if p(v112) then '<tr><td><b>Date added</b></td><td>'v112+|<br>|,'</td>' fi/
-
-'</table><p>'
+)
+if p(v997) then '<tr><td><b>HTML filesize</b></td><td>'v997+|<br>|,'</td>' fi/
+'</table>'

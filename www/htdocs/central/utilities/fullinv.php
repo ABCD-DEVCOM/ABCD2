@@ -21,6 +21,7 @@
 20211202 fho4abcd Incremental not for Digdoc.Set /m dependent on DigDoc (remove from menu).Tag selection menu from dropdown to checkboxes.
 20211202          Improved check and messages for gizmo. Check that tag 9876 is in FST
 20211215 fho4abcd Backbutton by included file
+20220103 fho4abcd Use relative path for digital documents in stead of full path,othe config file name
 */
 /**
  * @desc:      Create database index
@@ -377,12 +378,13 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     /*
     ** Processing for Digital Documents
     ** The htmlfiletag parameter defines in which field the HTML-file name for Gload is stored.
-    ** The fst should contain this parameter
+    ** The HTML filename is an URL: it starts with /docs/.. The load procedure requires a full path
+    ** The fst should contain parameter 9876
     */
     $strip_var="";
     if ($htmlfiletag!="") {
-        // The extra quotes surroundig the procs are required for the linux version
-        $strip_var.="\"proc='Gload/9876='v".$htmlfiletag."\"";
+        // The extra quotes surrounding the procs are required for the linux version
+        $strip_var.='"'."proc='Gload/9876='replace(v".$htmlfiletag.",'/docs/','$db_path')".'"';
         $parameters.=$msgstr["load_htmldata"]." ".$htmlfiletag." &rarr; 9876<br>";
         $fullfst=$bd."/data/".$fst;
         $fstcontent=file_get_contents($fullfst);
@@ -478,7 +480,7 @@ include("../common/footer.php");
 // ====== get_htmlfiletag =============================
 /*
 ** Check if there is a collection for this database
-** Read the configuration data and determine the tag for "htmlSrcFLD"
+** Read the configuration data and determine the tag for "htmlSrcURL"
 ** If nothing is found the returned tag value is empty.
 **
 ** Return : 0=OK, 1=NOT-OK
@@ -491,19 +493,19 @@ function get_htmlfiletag(&$htmlfiletag) {
     $fullcolpath=str_replace("%path_database%",$db_path,$fullcolpath);
     $fullcolpath=rtrim($fullcolpath,"/ ");
     if (!file_exists($fullcolpath)) return(0);
-    $metadataConfig="docfiles_metadataconfig.tab";
-    $metadataConfigFull=$db_path.$arrHttp["base"]."/".$metadataConfig;
-    if (!file_exists($metadataConfigFull)) return(0);
-    $fp=file($metadataConfigFull);
+    $tagConfig="docfiles_tagconfig.tab";
+    $tagConfigFull=$fullcolpath."/".$tagConfig;
+    if (!file_exists($tagConfigFull)) return(0);
+    $fp=file($tagConfigFull);
     foreach ($fp as $value){
         $value=trim($value);
         // Lines with // and lines with # are skipped
-        // Lines that cannot caontain valid information are skipped
+        // Lines that cannot contain valid information are skipped
         if ( strlen($value)<4 ) continue;
         if ( stripos($value,'//') !== false ) continue;
         if ( stripos($value, '#') !== false ) continue;
         $table=explode("|",$value);
-        if ($table[0]=="htmlSrcFLD" AND isset($table[1]) AND strlen($table[1])>0) {
+        if ($table[0]=="htmlSrcURL" AND isset($table[1]) AND strlen($table[1])>0) {
             $htmlfiletag=$table[1];
             // the values in the table have a leading "v"
             if (($htmlfiletag[0]=='v') or ($htmlfiletag[0]=='V')) {
@@ -526,7 +528,7 @@ function get_htmltags($htmlfiletag,&$htmlfileTitle,&$htmlTitles,&$htmlTags) {
     $tagindex=1;
     $titleindex=2;
     $inputtypeindex=7;
-    $htmlfileTitle=$msgstr["dd_term_htmlSrcFLD"];
+    $htmlfileTitle=$msgstr["dd_term_htmlSrcURL"];
     $htmlTitles=array();
     $htmlTags=array();
     // Open the language dependent fdt and if not present the default language fdt

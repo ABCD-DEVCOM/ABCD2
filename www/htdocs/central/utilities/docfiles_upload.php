@@ -5,16 +5,15 @@
 20211105 fho4abcd No filename sanitation: will be done by import script (admin may upload via backdoor, so import must do it again)
 20211111 fho4abcd set locale (required by basename)
 20211215 fho4abcd Backbutton by included file
+20211230 fho4abcd new names standard subfolders
 */
 /*
 ** Upload a file from the users environment into the digital document area of ABCD
 ** This area is specified in dr_path.def in parameter COLLECTION and has structure
-** .../<collection>/ABCDImportRepo/<imported_doc>
-**                 /ABCDImportRepo/<section>/<imported doc>
-**                 /ABCDSourceRepo/<converted_doc>.html
-**                 /<imported doc>
-**                 /<section>/<imported doc>
-** This upload function loads in ABCDImportRepo and /ABCDImportRepo/<section>
+** .../<collection>/ImportRepo/[<section>/]<uploaded_doc>
+**                 /SourceRepo/[<section>/]<converted_doc>.html
+**                 /DocRepo/[<section>/][<subsection>/]<imported_doc>
+** This upload function loads in ImportRepo and ImportRepo/<section>
 ** <section> may be a tree of subfolders.
 ** COLLECTION must exist. The other folders are created by this script if necessary
 ** Further processing of the file is done by other functions
@@ -119,9 +118,7 @@ if ($upldoc_cnfcnt<=0) {
     // Sections are subfolders of the collection, recursive and without the standard foldernames
     include "../utilities/inc_list-folder.php";
     $fileList=array();
-    $skipNames=array();
-    array_push($skipNames,$colsrc,$colupl);
-    $retval = list_folder("folders", $fullcolpath, $skipNames, $fileList);
+    $retval = list_folder("folders", $fullcolpath, $fileList);
     if ($retval!=0) die;
     // Construct the html datalist, used as dropdown for the input of a section
     echo "<datalist id='sections'>";

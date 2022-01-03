@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210806 fho4abcd Created from function scanDirectories
+20211230 fho4abcd Skipnames no longer required
 */
 
 /*--------------------------------------------------------------
@@ -8,11 +9,10 @@
 **             The folder is recursively scanned.
 **             Filenames ., .., .htaccess, .htpasswd, Thumbs.db are skipped by default
 ** Usage     : include "inc_list-folder.php";
-**             if ( list_folder($option, $rootDir, $skipNames, $fileList) != 0 ) // error processing
+**             if ( list_folder($option, $rootDir, $fileList) != 0 ) // error processing
 ** Parameters: - $option   : "files"  : List files recursively
 **                           "folders": List folders recursively
 **             - $rootDir  : Full path of directory to list
-**             - $skipNames: Array with additional names to skip
 **             - $nameList : Array with found names
 ** Returns   : 0 : no errors occured.
 **             1 : wrong option
@@ -20,7 +20,7 @@
 **             3 : rootDir is not a folder
 ** Messages  : Shows a failure message in case of errors
 */
-function list_folder($option, $rootDir, $skipNames=array(), &$nameList=array()) {
+function list_folder($option, $rootDir, &$nameList=array()) {
     global $msgstr;
     $retval=0;
     $errprefix="<div style='color:red'>ERROR in ".__FILE__."&rarr; ";
@@ -42,9 +42,8 @@ function list_folder($option, $rootDir, $skipNames=array(), &$nameList=array()) 
     $dirContent = scandir($rootDir);
     foreach($dirContent as $key => $content) {
         // filter all invisible files
-        // filter all files with skipped Names
         $path = $rootDir.'/'.$content;
-        if(!in_array($content, $invisibleFileNames) && !in_array($content, $skipNames)) {
+        if(!in_array($content, $invisibleFileNames) ) {
              if( $option=="files" && is_file($path) && is_readable($path)) {
                 // if option is "files" & content is a file & readable then
                 // save file name with path
@@ -56,7 +55,7 @@ function list_folder($option, $rootDir, $skipNames=array(), &$nameList=array()) 
                     $nameList[] = $path;
                 }
                 // recursive callback to open sub directory
-                $retval= list_folder($option, $path, $skipNames,$nameList );
+                $retval= list_folder($option, $path, $nameList );
                 if ($retval!=0) return $retval;
              }
         }

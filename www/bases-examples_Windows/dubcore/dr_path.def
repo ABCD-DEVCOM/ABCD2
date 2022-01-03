@@ -1,0 +1,4 @@
+CISIS_VERSION=bigisis
+COLLECTION=%path_database%dubcore/collection/
+
+UNICODE=1
