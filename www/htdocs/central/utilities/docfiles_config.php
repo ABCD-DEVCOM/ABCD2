@@ -2,6 +2,7 @@
 /* Modifications
 20210903 fho4abcd Created
 20211215 fho4abcd Backbutton by included file
+20220103 fho4abcd Remove unused fields, add extra fields, moved default map to included file, new names
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -35,36 +36,7 @@ if ( isset($arrHttp["backtoscript"]))  $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))       $inframe=$arrHttp["inframe"];
 $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
 
-// Define default array for Dublin Core metadata elements + ABCD elements and their initial map
-// Map defined here to ensure availability
-$metadataMap=array();
-array_push($metadataMap,array("term"=>"title", "label"=>$msgstr['dd_term_title'], "field"=>"v1"));
-array_push($metadataMap,array("term"=>"creator", "label"=>$msgstr['dd_term_creator'], "field"=>"v2"));
-array_push($metadataMap,array("term"=>"subject", "label"=>$msgstr['dd_term_subject'], "field"=>"v3"));
-array_push($metadataMap,array("term"=>"description", "label"=>$msgstr['dd_term_description'], "field"=>"v4"));
-array_push($metadataMap,array("term"=>"publisher", "label"=>$msgstr['dd_term_publisher'], "field"=>"v5"));
-array_push($metadataMap,array("term"=>"contributor", "label"=>$msgstr['dd_term_contributor'], "field"=>"v6"));
-array_push($metadataMap,array("term"=>"date", "label"=>$msgstr['dd_term_date'], "field"=>"v7"));
-array_push($metadataMap,array("term"=>"type", "label"=>$msgstr['dd_term_type'], "field"=>"v8"));
-array_push($metadataMap,array("term"=>"format", "label"=>$msgstr['dd_term_format'], "field"=>"v9"));
-array_push($metadataMap,array("term"=>"identifier", "label"=>$msgstr['dd_term_identifier'], "field"=>"v10"));
-array_push($metadataMap,array("term"=>"source", "label"=>$msgstr['dd_term_source'], "field"=>"v11"));
-array_push($metadataMap,array("term"=>"language", "label"=>$msgstr['dd_term_language'], "field"=>"v12"));
-array_push($metadataMap,array("term"=>"relation", "label"=>$msgstr['dd_term_relation'], "field"=>"v13"));
-array_push($metadataMap,array("term"=>"coverage", "label"=>$msgstr['dd_term_coverage'], "field"=>"v14"));
-array_push($metadataMap,array("term"=>"rights", "label"=>$msgstr['dd_term_rights'], "field"=>"v15"));
-$metadataMapCntDC=count($metadataMap);
-array_push($metadataMap,array("term"=>"htmlSrcURL", "label"=>$msgstr['dd_term_htmlSrcURL'], "field"=>"v95"));
-array_push($metadataMap,array("term"=>"htmlSrcFLD", "label"=>$msgstr['dd_term_htmlSrcFLD'], "field"=>"v96"));
-array_push($metadataMap,array("term"=>"sections", "label"=>$msgstr['dd_term_section'], "field"=>"v97"));
-array_push($metadataMap,array("term"=>"url", "label"=>$msgstr['dd_term_url'], "field"=>"v98"));
-array_push($metadataMap,array("term"=>"doctext", "label"=>$msgstr['dd_term_doctext'], "field"=>"v99"));
-array_push($metadataMap,array("term"=>"id", "label"=>$msgstr['dd_term_id'], "field"=>"v111"));
-array_push($metadataMap,array("term"=>"dateadded", "label"=>$msgstr['dd_term_dateadded'], "field"=>"v112"));
-array_push($metadataMap,array("term"=>"htmlfilesize", "label"=>$msgstr['dd_term_htmlfilesize'], "field"=>"v997"));
-$metadataMapCnt=count($metadataMap);
-$metadataMapCntABCD=$metadataMapCnt-$metadataMapCntDC;
-
+include "inc_coll_defmap.php";
 ?>
 <body>
 <script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
@@ -120,24 +92,25 @@ if (isset($arrHttp["mapoption"])) $mapoption=$arrHttp["mapoption"];
 $actualField=array();
 $showallbuttons=true;
 if ($mapoption=="" ) {
-    $retval= read_dd_cfg("config", $metadataConfigFull, $metadataMapCnt,$actualField );
+    $retval= read_dd_cfg("config", $tagConfigFull, $actualField );
     if ($retval!=0) {
         echo "<p>".$msgstr["dd_map_intern"]."</p><br>";
         $showallbuttons=false;
-        for ($i=0; $i<$metadataMapCnt;$i++) {
-            array_push($actualField,array("field"=>$metadataMap[$i]["field"]));
+        $actualField=array();
+        for ($i=0; $i<$defTagMapCnt;$i++) {
+            array_push($actualField,array("field"=>$defTagMap[$i]["field"]));
         }
     }
 }
 else if ($mapoption=="Save") {
-    echo "<p>".$msgstr["dd_map_write"]." ".$metadataConfigFull."</p><br>";
-    $fp=fopen($metadataConfigFull,"w");
-    for ($i=0; $i<$metadataMapCnt;$i++) {
-        $term=$metadataMap[$i]["term"];
+    echo "<p>".$msgstr["dd_map_write"]." ".$tagConfigFull."</p><br>";
+    $fp=fopen($tagConfigFull,"w");
+    for ($i=0; $i<$defTagMapCnt;$i++) {
+        $term=$defTagMap[$i]["term"];
         if (isset($arrHttp[$term])) {
             $field=$arrHttp[$term];
         }else{
-            $field=$metadataMap[$i]["field"];
+            $field="";
         }
         fwrite($fp,$term."|".$field."\n");
         array_push($actualField,array("field"=>$field));
@@ -147,11 +120,11 @@ else if ($mapoption=="Save") {
 else if ($mapoption=="Default") {
     echo "<p>".$msgstr["dd_map_intern"]."</p><br>";
     $showallbuttons=false;
-    if (file_exists($metadataConfigFull) ) {
-        unlink($metadataConfigFull);
+    if (file_exists($tagConfigFull) ) {
+        unlink($tagConfigFull);
     }
-    for ($i=0; $i<$metadataMapCnt;$i++) {
-        array_push($actualField,array("field"=>$metadataMap[$i]["field"]));
+    for ($i=0; $i<$defTagMapCnt;$i++) {
+        array_push($actualField,array("field"=>$defTagMap[$i]["field"]));
     }
 }
 ?>
@@ -170,19 +143,19 @@ else if ($mapoption=="Default") {
     <tr><td colspan=8 style="color:green" align=center><?php echo $msgstr["dd_imp_meta_dublin"];?></td></tr>
     <tr>
     <?php
-    for ($i=0;$i<$metadataMapCntDC;$i++) {
-        echo "<td align=right>".$metadataMap[$i]["label"]."</td>";
-        echo "<td><input type=text name=".$metadataMap[$i]["term"]." value='".$actualField[$i]["field"]."' size=4></td>\n";
+    for ($i=0;$i<$defTagMapCntDC;$i++) {
+        echo "<td align=right>".$defTagMap[$i]["label"]."</td>";
+        echo "<td><input type=text name=".$defTagMap[$i]["term"]." value='".$actualField[$i]["field"]."' size=4></td>\n";
         if ( $i%5==4) echo "</tr><tr>";
     }
     ?>
     <tr><td colspan=10 style="color:green" align=center><?php echo $msgstr["dd_imp_meta_docs"];?></td></tr>
     <tr>
     <?php
-    for ($i=0;$i<$metadataMapCntABCD;$i++) {
-        $j=$i+$metadataMapCntDC;
-        echo "<td align=right>".$metadataMap[$j]["label"]."</td>";
-        echo "<td><input type=text name=".$metadataMap[$j]["term"]." value='".$actualField[$j]["field"]."' size=4></td>\n";
+    for ($i=0;$i<$defTagMapCntABCD;$i++) {
+        $j=$i+$defTagMapCntDC;
+        echo "<td align=right>".$defTagMap[$j]["label"]."</td>";
+        echo "<td><input type=text name=".$defTagMap[$j]["term"]." value='".$actualField[$j]["field"]."' size=4></td>\n";
         if ( $j%5==4) echo "</tr><tr>";
     }
     ?>
