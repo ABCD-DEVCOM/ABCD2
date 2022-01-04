@@ -17,6 +17,7 @@
 20211201 fho4abcd Splittarget by dropdown+call it granularity. Apply split also if filesize > granularity.
 20211215 fho4abcd Backbutton by included file
 20220103 fho4abcd Revised collection structure.Improved tag processing
+20220104 fho4abcd Added exif
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -669,7 +670,7 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
         $val=current($metatab);
         $newval="";
         convert_field($val,$newval);
-        $metatab[$key]=$newval;
+        $metatab[$key]=$newval; //debug echo "key=".$key."value=".$newval."<br>";
         next($metatab);
     }
     /*
@@ -717,6 +718,34 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     if ($c_type=="")   $c_type   = $docext;
     if ($c_source=="") $c_source = $def_c_source;
     /*
+    ** Get metadata value/content from exif attributes
+    ** Ensure that each dc element has a value
+    */
+    if (array_key_exists("exif_ifd0:image_height",$metatab))     {$c_exifheight=$metatab["exif_ifd0:image_height"];}       else {$c_exifheight="";}
+    if (array_key_exists("exif_ifd0:image_width",$metatab))      {$c_exifwidth=$metatab["exif_ifd0:image_width"];}         else {$c_exifwidth="";}
+    if (array_key_exists("exif_ifd0:x_resolution",$metatab))     {$c_exifxresol=$metatab["exif_ifd0:x_resolution"];}       else {$c_exifxresol="";}
+    if (array_key_exists("exif_ifd0:y_resolution",$metatab))     {$c_exifyresol=$metatab["exif_ifd0:y_resolution"];}       else {$c_exifyresol="";}
+    if (array_key_exists("exif_ifd0:scene_type",$metatab))       {$c_exifscenetyp=$metatab["exif_ifd0:scene_type"];}       else {$c_exifscenetyp="";}
+    if (array_key_exists("exif_ifd0:image_description",$metatab)){$c_exifimgdesc=$metatab["exif_ifd0:image_description"];} else {$c_exifimgdesc="";}
+    if (array_key_exists("exif_ifd0:user_comment",$metatab))     {$c_exifusercom=$metatab["exif_ifd0:user_comment"];}      else {$c_exifusercom="";}
+    if (array_key_exists("exif_ifd0:artist",$metatab))           {$c_exifartist=$metatab["exif_ifd0:artist"];}             else {$c_exifartist="";}
+    if (array_key_exists("exif_ifd0:copyright",$metatab))        {$c_exifcopyrght=$metatab["exif_ifd0:copyright"];}        else {$c_exifcopyrght="";}
+    if (array_key_exists("exif_ifd0:make",$metatab))             {$c_exifmake=$metatab["exif_ifd0:make"];}                 else {$c_exifmake="";}
+    if (array_key_exists("exif_ifd0:model",$metatab))            {$c_exifmodel=$metatab["exif_ifd0:model"];}               else {$c_exifmodel="";}
+    if (array_key_exists("gps:gps_altitude_ref",$metatab))       {$c_gpsaltref=$metatab["gps:gps_altitude_ref"];}          else {$c_gpsaltref="";}
+    if (array_key_exists("gps:gps_altitude",$metatab))           {$c_gpsalt=$metatab["gps:gps_altitude"];}                 else {$c_gpsalt="";}
+    if (array_key_exists("gps:gps_latitude_ref",$metatab))       {$c_gpslatref=$metatab["gps:gps_latitude_ref"];}          else {$c_gpslatref="";}
+    if (array_key_exists("gps:gps_latitude",$metatab))           {$c_gpslat=$metatab["gps:gps_latitude"];}                 else {$c_gpslat="";}
+    if (array_key_exists("gps:gps_longitude_ref",$metatab))      {$c_gpslongref=$metatab["gps:gps_longitude_ref"];}        else {$c_gpslongref="";}
+    if (array_key_exists("gps:gps_longitude",$metatab))          {$c_gpslong=$metatab["gps:gps_longitude"];}               else {$c_gpslong="";}
+    /*
+    ** if ifd0 did not succeed: try subifd (with sometimes another term)
+    */
+    if ($c_exifheight==""   && array_key_exists("exif_subifd:exif_image_height",$metatab)) {$c_exifheight=$metatab["exif_subifd:exif_image_height"];}
+    if ($c_exifwidth==""    && array_key_exists("exif_subifd:exif_image_width",$metatab))  {$c_exifwidth=$metatab["exif_subifd:exif_image_width"];}
+    if ($c_exifscenetyp=="" && array_key_exists("exif_subifd:scene_type",$metatab))        {$c_exifscenetyp=$metatab["exif_subifd:scene_type"];}
+    if ($c_exifusercom==""  && array_key_exists("exif_subifd:user_comment",$metatab))      {$c_exifusercom=$metatab["exif_subifd:user_comment"];}
+    /*
     ** Construct other metadata content:
     ** - c_htmlSrcURL  : computed after split
     ** - c_sections    : by the section name
@@ -746,6 +775,9 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     $retval   = read_dd_cfg("operates", $tagConfigFull, $actTagMap );
     $actterms = array_column($actTagMap,"term");
     $actfields= array_column($actTagMap,"field");
+    /* for ($i=0;$i<count($actterms);$i++ ) {
+        echo $actterms[$i]."  -  ".$actfields[$i]."<br>";
+    }*/
     $vtitle       = remove_v( $actfields[array_search("title",$actterms)] );
     $vcreator     = remove_v( $actfields[array_search("creator",$actterms)] );
     $vsubject     = remove_v( $actfields[array_search("subject",$actterms)] );
@@ -769,7 +801,25 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     $vid          = remove_v( $actfields[array_search("id",$actterms)] );
     $vdateadded   = remove_v( $actfields[array_search("dateadded",$actterms)] );
     $vhtmlfilesize= remove_v( $actfields[array_search("htmlfilesize",$actterms)] );
-    $vdoctext     = remove_v( $actfields[array_search("vdoctext",$actterms)] );
+    $vdoctext     = remove_v( $actfields[array_search("doctext",$actterms)] );
+
+    $vexifheight  = remove_v( $actfields[array_search("exifheight",$actterms)] );
+    $vexifwidth   = remove_v( $actfields[array_search("exifwidth",$actterms)] );
+    $vexifxresol  = remove_v( $actfields[array_search("exifxresol",$actterms)] );
+    $vexifyresol  = remove_v( $actfields[array_search("exifyresol",$actterms)] );
+    $vexifscenetyp= remove_v( $actfields[array_search("exifscenetyp",$actterms)] );
+    $vexifimgdesc = remove_v( $actfields[array_search("exifimgdesc",$actterms)] );
+    $vexifusercom = remove_v( $actfields[array_search("exifusercom",$actterms)] );
+    $vexifartist  = remove_v( $actfields[array_search("exifartist",$actterms)] );
+    $vexifcopyrght= remove_v( $actfields[array_search("exifcopyrght",$actterms)] );
+    $vexifmake    = remove_v( $actfields[array_search("exifmake",$actterms)] );
+    $vexifmodel   = remove_v( $actfields[array_search("exifmodel",$actterms)] );
+    $vgpsaltref   = remove_v( $actfields[array_search("gpsaltref",$actterms)] );
+    $vgpsalt      = remove_v( $actfields[array_search("gpsalt",$actterms)] );
+    $vgpslatref   = remove_v( $actfields[array_search("gpslatref",$actterms)] );
+    $vgpslat      = remove_v( $actfields[array_search("gpslat",$actterms)] );
+    $vgpslongref  = remove_v( $actfields[array_search("gpslongref",$actterms)] );
+    $vgpslong     = remove_v( $actfields[array_search("gpslong",$actterms)] );
     /*
     ** Sanitize html tika originating from all files
     ** Replace the header to conform with split files
@@ -820,6 +870,24 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
             if (($c_url!="")         and ($vurl!=""))         $fields.="<".$vurl.">".$c_url."</".$vurl.">".PHP_EOL;
             if (($c_dateadded!="")   and ($vdateadded!=""))   $fields.="<".$vdateadded.">".$c_dateadded."</".$vdateadded.">".PHP_EOL;
             if (($c_doctext!="")     and ($vdoctext!=""))     $fields.="<".$vdoctext.">".$c_doctext."</".$vdoctext.">".PHP_EOL;
+            
+            if (($c_exifheight!="")  and ($vexifheight!=""))  $fields.="<".$vexifheight.">".$c_exifheight."</".$vexifheight.">".PHP_EOL;
+            if (($c_exifwidth!="")   and ($vexifwidth!=""))   $fields.="<".$vexifwidth.">".$c_exifwidth."</".$vexifwidth.">".PHP_EOL;
+            if (($c_exifxresol!="")  and ($vexifxresol!=""))  $fields.="<".$vexifxresol.">".$c_exifxresol."</".$vexifxresol.">".PHP_EOL;
+            if (($c_exifyresol!="")  and ($vexifyresol!=""))  $fields.="<".$vexifyresol.">".$c_exifyresol."</".$vexifyresol.">".PHP_EOL;
+            if (($c_exifscenetyp!="")and ($vexifscenetyp!=""))$fields.="<".$vexifscenetyp.">".$c_exifscenetyp."</".$vexifscenetyp.">".PHP_EOL;
+            if (($c_exifimgdesc!="") and ($vexifimgdesc!="")) $fields.="<".$vexifimgdesc.">".$c_exifimgdesc."</".$vexifimgdesc.">".PHP_EOL;
+            if (($c_exifusercom!="") and ($vexifusercom!="")) $fields.="<".$vexifusercom.">".$c_exifusercom."</".$vexifusercom.">".PHP_EOL;
+            if (($c_exifartist!="")  and ($vexifartist!=""))  $fields.="<".$vexifartist.">".$c_exifartist."</".$vexifartist.">".PHP_EOL;
+            if (($c_exifcopyrght!="")and ($vexifcopyrght!=""))$fields.="<".$vexifcopyrght.">".$c_exifcopyrght."</".$vexifcopyrght.">".PHP_EOL;
+            if (($c_exifmake!="")    and ($vexifmake!=""))    $fields.="<".$vexifmake.">".$c_exifmake."</".$vexifmake.">".PHP_EOL;
+            if (($c_exifmodel!="")   and ($vexifmodel!=""))   $fields.="<".$vexifmodel.">".$c_exifmodel."</".$vexifmodel.">".PHP_EOL;
+            if (($c_gpsaltref!="")   and ($vgpsaltref!=""))   $fields.="<".$vgpsaltref.">".$c_gpsaltref."</".$vgpsaltref.">".PHP_EOL;
+            if (($c_gpsalt!="")      and ($vgpsalt!=""))      $fields.="<".$vgpsalt.">".$c_gpsalt."</".$vgpsalt.">".PHP_EOL;
+            if (($c_gpslatref!="")   and ($vgpslatref!=""))   $fields.="<".$vgpslatref.">".$c_gpslatref."</".$vgpslatref.">".PHP_EOL;
+            if (($c_gpslat!="")      and ($vgpslat!=""))      $fields.="<".$vgpslat.">".$c_gpslat."</".$vgpslat.">".PHP_EOL;
+            if (($c_gpslongref!="")  and ($vgpslongref!=""))  $fields.="<".$vgpslongref.">".$c_gpslongref."</".$vgpslongref.">".PHP_EOL;
+            if (($c_gpslong!="")     and ($vgpslong!=""))     $fields.="<".$vgpslong.">".$c_gpslong."</".$vgpslong.">".PHP_EOL;
         }
 
         // some variables are dependent on the actual processed file: valid for all parts
