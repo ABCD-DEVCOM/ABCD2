@@ -1,6 +1,7 @@
 <?php
 /*
 20211230 fho4abcd extracted from docfile_config
+20220104 fho4abcd Added exif
 */
 // Define default array for Dublin Core metadata elements + ABCD elements and their initial map
 // Map defined here to ensure availability
@@ -21,6 +22,24 @@ array_push($defTagMap,array("term"=>"relation", "label"=>$msgstr['dd_term_relati
 array_push($defTagMap,array("term"=>"coverage", "label"=>$msgstr['dd_term_coverage'], "field"=>"v14"));
 array_push($defTagMap,array("term"=>"rights", "label"=>$msgstr['dd_term_rights'], "field"=>"v15"));
 $defTagMapCntDC=count($defTagMap);
+array_push($defTagMap,array("term"=>"exifheight", "label"=>$msgstr['dd_term_exifheight'], "field"=>"v50"));
+array_push($defTagMap,array("term"=>"exifwidth", "label"=>$msgstr['dd_term_exifwidth'], "field"=>"v51"));
+array_push($defTagMap,array("term"=>"exifxresol", "label"=>$msgstr['dd_term_exifxresol'], "field"=>"v52"));
+array_push($defTagMap,array("term"=>"exifyresol", "label"=>$msgstr['dd_term_exifyresol'], "field"=>"v53"));
+array_push($defTagMap,array("term"=>"exifscenetyp", "label"=>$msgstr['dd_term_exifscenetyp'], "field"=>"v54"));
+array_push($defTagMap,array("term"=>"exifimgdesc", "label"=>$msgstr['dd_term_exifimgdesc'], "field"=>"v55"));
+array_push($defTagMap,array("term"=>"exifusercom", "label"=>$msgstr['dd_term_exifusercom'], "field"=>"v56"));
+array_push($defTagMap,array("term"=>"exifartist", "label"=>$msgstr['dd_term_exifartist'], "field"=>"v57"));
+array_push($defTagMap,array("term"=>"exifcopyrght", "label"=>$msgstr['dd_term_exifcopyrght'], "field"=>"v58"));
+array_push($defTagMap,array("term"=>"exifmake", "label"=>$msgstr['dd_term_exifmake'], "field"=>"v59"));
+array_push($defTagMap,array("term"=>"exifmodel", "label"=>$msgstr['dd_term_exifmodel'], "field"=>"v60"));
+array_push($defTagMap,array("term"=>"gpsaltref", "label"=>$msgstr['dd_term_gpsaltref'], "field"=>"v61"));
+array_push($defTagMap,array("term"=>"gpsalt", "label"=>$msgstr['dd_term_gpsalt'], "field"=>"v62"));
+array_push($defTagMap,array("term"=>"gpslatref", "label"=>$msgstr['dd_term_gpslatref'], "field"=>"v63"));
+array_push($defTagMap,array("term"=>"gpslat", "label"=>$msgstr['dd_term_gpslat'], "field"=>"v64"));
+array_push($defTagMap,array("term"=>"gpslongref", "label"=>$msgstr['dd_term_gpslongref'], "field"=>"v65"));
+array_push($defTagMap,array("term"=>"gpslong", "label"=>$msgstr['dd_term_gpslong'], "field"=>"v66"));
+$defTagMapCntEX=count($defTagMap)-$defTagMapCntDC;;
 array_push($defTagMap,array("term"=>"htmlSrcURL", "label"=>$msgstr['dd_term_htmlSrcURL'], "field"=>"v95"));
 array_push($defTagMap,array("term"=>"sections", "label"=>$msgstr['dd_term_section'], "field"=>"v97"));
 array_push($defTagMap,array("term"=>"url", "label"=>$msgstr['dd_term_url'], "field"=>"v98"));
@@ -31,4 +50,4 @@ array_push($defTagMap,array("term"=>"id", "label"=>$msgstr['dd_term_id'], "field
 array_push($defTagMap,array("term"=>"dateadded", "label"=>$msgstr['dd_term_dateadded'], "field"=>"v112"));
 array_push($defTagMap,array("term"=>"htmlfilesize", "label"=>$msgstr['dd_term_htmlfilesize'], "field"=>"v997"));
 $defTagMapCnt=count($defTagMap);
-$defTagMapCntABCD=$defTagMapCnt-$defTagMapCntDC;
+$defTagMapCntABCD=$defTagMapCnt-$defTagMapCntDC-$defTagMapCntEX;

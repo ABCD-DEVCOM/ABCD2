@@ -3,6 +3,7 @@
 20210903 fho4abcd Created
 20211215 fho4abcd Backbutton by included file
 20220103 fho4abcd Remove unused fields, add extra fields, moved default map to included file, new names
+20220104 fho4abcd Added exif
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -149,14 +150,24 @@ else if ($mapoption=="Default") {
         if ( $i%5==4) echo "</tr><tr>";
     }
     ?>
+    <tr><td colspan=8 style="color:green" align=center><?php echo $msgstr["dd_imp_meta_exif"];?></td></tr>
+    <tr>
+    <?php
+    for ($i=0;$i<$defTagMapCntEX;$i++) {
+        $j=$i+$defTagMapCntDC;
+        echo "<td align=right>".$defTagMap[$j]["label"]."</td>";
+        echo "<td><input type=text name=".$defTagMap[$j]["term"]." value='".$actualField[$j]["field"]."' size=4></td>\n";
+        if ( $i%5==4) echo "</tr><tr>";
+    }
+    ?>
     <tr><td colspan=10 style="color:green" align=center><?php echo $msgstr["dd_imp_meta_docs"];?></td></tr>
     <tr>
     <?php
     for ($i=0;$i<$defTagMapCntABCD;$i++) {
-        $j=$i+$defTagMapCntDC;
+        $j=$i+$defTagMapCntEX+$defTagMapCntDC;
         echo "<td align=right>".$defTagMap[$j]["label"]."</td>";
         echo "<td><input type=text name=".$defTagMap[$j]["term"]." value='".$actualField[$j]["field"]."' size=4></td>\n";
-        if ( $j%5==4) echo "</tr><tr>";
+        if ( $i%5==4) echo "</tr><tr>";
     }
     ?>
     <tr><td colspan=10 style="color:darkred" align=center><b><br><?php echo $msgstr["dd_map_fdt"];?></td></tr>
