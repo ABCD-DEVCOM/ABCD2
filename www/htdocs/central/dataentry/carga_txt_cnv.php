@@ -6,12 +6,13 @@
 2021-03-08 fho4abcd Error message if cnv folder does not exist and creation fails
 2021-03-08 fho4abcd Pass selected records (conforms with iso export)
 20211215 fho4abcd Backbutton by included file
+20220106 fho4abcd new buttons, sanitized code, show table in poppoup
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-if (!isset($_SESSION['lang'])) $_SESSION["lang"]="es";
+if (!isset($_SESSION['lang'])) $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
@@ -20,36 +21,13 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/soporte.php");
 $backtoscript="../dataentry/administrar.php"; // The default return script
-
-function PresentarLeader($leader,$tc){
-	$fp=file($leader);
-	foreach ($fp as $value){
-		$t=explode('|',$value);
-		echo "<tr><td bgcolor=white>".$t[2]."</td>";
-		echo "<input type=hidden name=tag value=".$t[1].">";
-		echo "<td bgcolor=white>".$t[1]."</td>";
-		$tag=$t[1];
-		echo "<td bgcolor=white><input type=text name=rotulo size=30 value=\"";
-		if (isset($tc[$tag][0]))
-			echo $tc[$tag][0];
-
-		echo "\"></td>";
-		echo "<td bgcolor=white class=td>text</td>";
-		echo "<td bgcolor=white class=td><input type=hidden name=subc></td>";
-		echo "<td bgcolor=white class=td><input type=hidden name=editsubc></td>";
-		echo "<td bgcolor=white class=td><input type=hidden name=occ></td>";
-		echo "<td bgcolor=white class=td><input type=text name=formato size=40 value=\"";
-		if (isset($tc[$tag][5])) echo $tc[$tag][5];
-		echo "\"></td>";
-	}
-}
-
-
+if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if (!isset($arrHttp["accion"])) $arrHttp["accion"]="";
 if (!isset($arrHttp["seleccionados"])) $arrHttp["seleccionados"]="";
+// The name of the conversion folder
+$cnvfoldername="cnv";
 
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
-
 
 if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 include("../common/header.php");
@@ -57,13 +35,18 @@ include("../common/header.php");
 <body>
 <script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <script language=javascript>
+function LeerTxt(Cnv){
+	url="carga_txt_ver.php?base=<?php echo $arrHttp["base"]?>&cnv="+Cnv
+	msgwin=window.open(url,"","menu=no,scrollbars=yes,status=yes,width=800,height=380,resizable")
+	msgwin.focus()
+}
 function Eliminar(Archivo){
 	if (confirm("<?php echo $msgstr["cnv_deltab"]?>"+" "+Archivo)==true){
-		url="carga_txt_cnv.php?base=<?php echo $arrHttp["base"]?>&cnv="+Archivo+"&Opcion=cnv&proceso=eliminar&lang=<?php echo $lang?>&accion=<?php echo $arrHttp["accion"]?>"
+		url="carga_txt_cnv.php?base=<?php echo $arrHttp["base"]?>&cnv="+Archivo+"&proceso=eliminar&lang=<?php echo $lang?>&accion=<?php echo $arrHttp["accion"]?>"
 		self.location=url
 	}
 }
- function check( x )  {
+function check( x )  {
     x = x.replace(/\*/g, "")      // delete *
    	x = x.replace(/\[/g, "")      // delete [
    	x = x.replace(/\]/g, "")      // delete ]
@@ -125,18 +108,11 @@ function GuardarTabla(){
 	document.explora.action="carga_txt_guardar.php";
 	document.explora.fn.value=archivo
 	document.explora.submit()
-
 }
-
-function AbrirVentana(){
-	msgwin=window.open("","Nuevo","resizable=yes,width=600,height=500,top=0, left=0,scrollbars=yes,status=yes")
-	msgwin.focus()
-}
-
 </script>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["cnv_".$arrHttp["accion"]]." ".$msgstr["cnv_".$arrHttp["tipo"]]?>
+    <?php echo $msgstr["cnv_".$arrHttp["accion"]]." ".$msgstr["cnv_".$arrHttp["tipo"]]."&nbsp;&rarr;&nbsp;".$msgstr["cnv_sel"]?>
 	</div>
 	<div class="actions">
     <?php include "../common/inc_back.php";?>
@@ -154,28 +130,28 @@ function AbrirVentana(){
 <input type=hidden name=accion value=<?php echo $arrHttp["accion"]?>>
 <?php
 }
-$Dir=$db_path.$arrHttp["base"]."/".$arrHttp["Opcion"]."/";
+$fullcnvdir=$db_path.$arrHttp["base"]."/".$cnvfoldername."/";
 $the_array = Array();
 // Create folder "../cnv" if it does not exist
-if ( ! file_exists($Dir) ) {
-    if ( !mkdir($Dir) ) {
-        echo "<h2 style=\"color:red\">This function requires folder $Dir.</h2>";
+if ( ! file_exists($fullcnvdir) ) {
+    if ( !mkdir($fullcnvdir) ) {
+        echo "<h2 style=\"color:red\">This function requires folder $fullcnvdir.</h2>";
         echo "<h2 style=\"color:red\">Automatic creation failed. Please create it manually</h2>";
-        unset($Dir);
+        include("../common/footer.php");
+        die;
     } else {
-        echo "<div>Folder $Dir created.</div>";
+        echo "<div>Folder $fullcnvdir created.</div>";
     }
 }
-// Skip all code if folder cnv is nor present
-if (isset($Dir)) {
-    $handle = opendir($Dir);
+// List files in folder cnv 
+$handle = opendir($fullcnvdir);
 if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 	while (false !== ($file = readdir($handle))) {
 	   if ($file != "." && $file != "..") {
-	   		if(is_file($Dir."/".$file))
+	   		if(is_file($fullcnvdir."/".$file))
 	            $the_array[]=$file;
 	        else
-	            $dirs[]=$Dir."/".$file;
+	            $dirs[]=$fullcnvdir."/".$file;
 	   }
 	}
 	closedir($handle);
@@ -183,46 +159,42 @@ if (!isset($arrHttp["proceso"]) or $arrHttp["proceso"]!="eliminar"){
 		sort ($the_array);
 		reset ($the_array);
 		$Url="";
-		echo "<dd><b>".$msgstr["cnv_sel"]."</b>
-		<a href=../documentacion/ayuda.php?help=$lang/conversion_table.html target=_blank><img src=img/helper_bg.png border=0 align=absmiddle>".$msgstr["help"]."</a>&nbsp; &nbsp;";
+        $actscript="";
+        if ($arrHttp["accion"]=="import") {
+            $actscript="carga_txt.php";
+        } else {
+            $actscript="exporta_txt.php";
+        }
+		?>
+        <span style='color:var(--blue);font-weight: bold'><?php echo $msgstr["cnv_sel"]?></span> &nbsp; &nbsp;
+        <?php
+        echo "<a href=../documentacion/ayuda.php?help=$lang/conversion_table.html target=_blank>".$msgstr["help"]."</a>&nbsp; &nbsp;";
         if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-        	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/conversion_tabla.html target=_blank>".$msgstr["edhlp"]."</a>";
-		echo "<dd><table><td>";
-		echo "<table border=0  cellspacing=1 cellpadding=0 bgcolor=#cccccc>
-		     <tr><td><Font size=1 face=arial>".$msgstr["ver"]."</td><td><Font size=1 face=arial>".$msgstr["seleccionar"]."</td><td><Font size=1 face=arial>".$msgstr["editar"]."</td><td><Font size=1 face=arial>".$msgstr["eliminar"]."</td><td><Font size=1 face=arial>".$msgstr["archivo"]."</td>
-			 <tr>
-		   			<td bgcolor=white width=10></td>
-		   			<td bgcolor=white></td>
-		   			<td bgcolor=white></td>
-		   			<td bgcolor=white></td>
-		   			<td bgcolor=white></td>";
-        foreach( $the_array as $key=>$val){
-		   echo "<tr>
-		   			<td bgcolor=white width=10><a href=carga_txt_ver.php?base=".$arrHttp["base"]."&cnv=$val&lang=$lang target=_new><img src=img/preview.gif alt=\"".$msgstr["ver"]."\" border=0></a></td>
-		   			<td bgcolor=white><a href=";
-					if ($arrHttp["accion"]=="import")
-						echo "carga_txt.php";
-					else
-						echo "exporta_txt.php";
-					echo "?base=".$arrHttp["base"]."&cipar=".$arrHttp["base"].".par&cnv=$val&lang=$lang&accion=".$arrHttp["accion"]."&tipo=".$arrHttp["tipo"]."&seleccionados=".$arrHttp["seleccionados"]."><img src=img/aceptar.gif alt=\"".$msgstr["cnv_sel"]."\" border=0></a></td>
-		   			<td bgcolor=white width=40><a href=carga_txt_cnv.php?base=".$arrHttp["base"]."&cnv=$val&Opcion=cnv&proceso=editar&lang=$lang&tipo=".$arrHttp["tipo"]."&accion=".$arrHttp["accion"]."><img src=img/barEdit.png border=0 alt=\"".$msgstr["editar"]."\"></a></td>
-		   			<td bgcolor=white width=40><a href=javascript:Eliminar('$val')><img src=img/barDelete.png border=0 alt=\"".$msgstr["eliminar"]."\"></a></td>
-					<td bgcolor=white><font face=verdana size=2 color=darkred><b>$val</b></td>";
-		}
-		echo "
-
-		</table>
-		</td>
-		<td valign=top>
-		<Font size=1 face=arial color=red>".$msgstr["ver"].": <font color=#222222>".$msgstr["cnv_avis"]."<br>
-		<Font size=1 face=arial color=red>".$msgstr["seleccionar"].": <font color=#222222>".$msgstr["cnv_asel"]."<br>
-		<Font size=1 face=arial color=red>".$msgstr["editar"].": <font color=#222222>".$msgstr["cnv_aedit"]."<br>
-		<Font size=1 face=arial color=red>".$msgstr["eliminar"].": <font color=#222222>".$msgstr["cnv_aelim"]."<br>
-		</td>
-		</table>";
-		echo "<hr>";
+        	echo "<a href=../documentacion/edit.php?archivo=".$lang."/conversion_tabla.html target=_blank>".$msgstr["edhlp"]."</a>";
+		?>
+        <table border=0  cellspacing=1 cellpadding=3 bgcolor=#cccccc>
+            <?php foreach( $the_array as $key=>$val){?>
+            <tr>
+                <td><a href="javascript:LeerTxt('<?php echo $val?>')" class="bt bt-gray" title='<?php echo $msgstr["cnv_avis"]?>' >
+                        <i class="fas fa-tv"></i></a>
+                </td>
+                <td><a href="carga_txt_cnv.php?base=<?php echo $arrHttp["base"]."&cnv=$val&proceso=editar&lang=$lang&tipo=".$arrHttp["tipo"]."&accion=".$arrHttp["accion"]?>"
+                        class="bt bt-gray" title='<?php echo $msgstr["cnv_aedit"]?>'>
+                        <i class="fas fa-edit"></i></a>
+                </td>
+                <td><a href="javascript:Eliminar('<?php echo $val?>')" class="bt bt-red" title='<?php echo $msgstr["cnv_aelim"]?>'>
+                    <i class="fas fa-trash-alt"></i></a>
+                </td>
+                <td bgcolor=white><font face=verdana size=2 color=darkred><b><?php echo $val?></b></font></td>
+                <td><a href="<?php echo $actscript;?>?base=<?php echo $arrHttp["base"]."&cipar=".$arrHttp["base"].".par&cnv=".$val."&lang=".$lang."&accion=".$arrHttp["accion"]."&tipo=".$arrHttp["tipo"]."&seleccionados=".$arrHttp["seleccionados"]?>"
+                        class="bt bt-green" title='<?php echo $msgstr["cnv_aselc"]?>'>
+                        <i class="fas fa-check"></i>&nbsp;<?php echo $msgstr["seleccionar"]?></a>
+                </td>
+            <?php } ?>
+        </table>
+		<hr>
+        <?php
 	}
-
 }
 $tc=array();
 $rep="";
@@ -233,7 +205,7 @@ if (isset($arrHttp["proceso"])){
 	switch ($arrHttp["proceso"]){
 		case "editar":
 			$tit=$msgstr["editar"];
-			$fp=file($db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"]);
+			$fp=file($fullcnvdir."/".$arrHttp["cnv"]);
 			foreach ($fp as $value){
 				$value=trim($value);
 				if ($rep==""){
@@ -257,49 +229,54 @@ if (isset($arrHttp["proceso"])){
 			}
 			break;
 		case "eliminar":
-			$fp=$db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"];
+			$fp=$fullcnvdir."/".$arrHttp["cnv"];
 			if (file_exists($fp)) {
-				$r=unlink($db_path.$arrHttp["base"]."/cnv/".$arrHttp["cnv"]);
+				$r=unlink($fullcnvdir."/".$arrHttp["cnv"]);
 			}
-			header("Location: carga_txt_cnv.php?base=".$arrHttp["base"]."&tipo=txt&Opcion=cnv&accion=".$arrHttp["accion"]);
+			header("Location: carga_txt_cnv.php?base=".$arrHttp["base"]."&tipo=txt&accion=".$arrHttp["accion"]);
 			die;
 			break;
 		default:
-
 	}
 }
 
-echo "<dd><h4>$tit ".$msgstr["cnv_tab"];
+echo "<h4>$tit ".$msgstr["cnv_tab"];
 if (count($the_array)<=0) {
-	echo "&nbsp; <a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/conversion_table.html target=_blank><img src=img/helper_bg.png border=0>".$msgstr["help"]."</a>&nbsp &nbsp";
+	echo "&nbsp; <a href=../documentacion/ayuda.php?help=". $lang."/conversion_table.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
 	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-        	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/conversion_table.html target=_blank>".$msgstr["edhlp"]."</a>";
+        	echo "<a href=../documentacion/edit.php?archivo=".$lang."/conversion_table.html target=_blank>".$msgstr["edhlp"]."</a>";
 }
 echo "</h4>";
 
-$fpDb_fdt = $db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
+$fpDb_fdt = $db_path.$arrHttp["base"]."/def/".$lang."/".$arrHttp["base"].".fdt";
 if (!file_exists($fpDb_fdt)) {
 	$fpDb_fdt = $db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
 	if (!file_exists($fpDb_fdt)){
-  			echo $arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"." no existe";
+  			echo $arrHttp["base"]."/def/".$lang."/".$arrHttp["base"].".fdt"." no existe";
 		die;
 	}
 }
 $fp=file($fpDb_fdt);
 
-
-echo "<dd><input type=checkbox name=delimited ";
-if ($delimited=="[TABS]") echo "checked";
-echo ">".$msgstr["delimited_tab"];
-echo "<dd><table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1 class=td>";
-echo "<tr><td>".$msgstr["campo"]."</td><td>".$msgstr["tag"]."</td><td>".$msgstr["cnv_rotulo"]."</td><td>".$msgstr["tipo"]."</td><td>".$msgstr["subc"]."</td><td>".$msgstr["editsubc"]."</td><td with=10>".$msgstr["osep"]."</td><td nowrap>".$msgstr["pftex"]."</td>";
+?>
+<input type=checkbox name=delimited <?php if ($delimited=="[TABS]") echo "checked";?>>&nbsp;<?php echo $msgstr["delimited_tab"];?>
+<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1 >
+    <tr><td><?php echo $msgstr["campo"]?></td>
+        <td><?php echo $msgstr["tag"]?></td>
+        <td><?php echo $msgstr["cnv_rotulo"]?></td>
+        <td><?php echo $msgstr["tipo"]?></td>
+        <td><?php echo $msgstr["subc"]?></td>
+        <td><?php echo $msgstr["editsubc"]?></td>
+        <td width=10><?php echo $msgstr["osep"]?></td>
+        <td nowrap><?php echo $msgstr["pftex"]?></td>
+    </tr>
+<?php
 $ix=-1;
-
 foreach ($fp as $value){
 	$t=explode('|',$value);
 	if ($t[0]!='G'){
 		if ($t[0]=="LDR"){
-			PresentarLeader($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/leader.fdt",$tc);
+			PresentarLeader($db_path.$arrHttp["base"]."/def/".$lang."/leader.fdt",$tc);
 			continue;
 		}
 		$ix=$ix+1;
@@ -356,23 +333,49 @@ foreach ($fp as $value){
 		}
 	}
 }
-
-echo "<tr><td colspan=8 bgcolor=linen>".$msgstr["cnv_sep"].": <input type=text size=5 name=separador value=\"$separador\"></td>";
+?>
+    <tr><td colspan=8 bgcolor=linen><?php echo $msgstr["cnv_sep"]?>: <input type=text size=5 name=separador value="<?php echo $separador;?>">
+        </td>
+    </tr>
+<?php
 $arch="";
-
 if (isset($arrHttp["cnv"])){
 	$ixpos=strpos($arrHttp["cnv"],".");
 	$arch=substr($arrHttp["cnv"],0,$ixpos);
 }
-echo "<tr><td colspan=6 valign=top align=right><font color=darkred>".$msgstr["cnv_ntab"].": <input type=text size=20 name=fn value=$arch> .cnv <a href=javascript:GuardarTabla()><img src=img/barSave.png align=middle border=0></td>";
-//echo "</table>";
-//echo "</form>";
-}
 ?>
+    <tr><td colspan=6 valign=top align=right><font color=darkred><?php echo $msgstr["cnv_ntab"];?>: <input type=text size=20 name=fn value=<?php echo $arch;?>> .cnv &nbsp;&nbsp;
+         <a class='bt-lg bt-green' href="javascript:GuardarTabla()">
+            <img src="../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg" border=0 alt="Update"><?php echo $msgstr["save"];?></a>
+        </td>
+    </tr>
 </table>
 </form>
+
 </div></div>
 <?php
 include("../common/footer.php");
-?>
-</body>
+///=================================================
+function PresentarLeader($leader,$tc){
+	$fp=file($leader);
+	foreach ($fp as $value){
+		$t=explode('|',$value);
+		echo "<tr><td bgcolor=white>".$t[2]."</td>";
+		echo "<input type=hidden name=tag value=".$t[1].">";
+		echo "<td bgcolor=white>".$t[1]."</td>";
+		$tag=$t[1];
+		echo "<td bgcolor=white><input type=text name=rotulo size=30 value=\"";
+		if (isset($tc[$tag][0]))
+			echo $tc[$tag][0];
+
+		echo "\"></td>";
+		echo "<td bgcolor=white class=td>text</td>";
+		echo "<td bgcolor=white class=td><input type=hidden name=subc></td>";
+		echo "<td bgcolor=white class=td><input type=hidden name=editsubc></td>";
+		echo "<td bgcolor=white class=td><input type=hidden name=occ></td>";
+		echo "<td bgcolor=white class=td><input type=text name=formato size=40 value=\"";
+		if (isset($tc[$tag][5])) echo $tc[$tag][5];
+		echo "\"></td>";
+	}
+}
+

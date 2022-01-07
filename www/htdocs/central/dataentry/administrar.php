@@ -8,6 +8,7 @@
 2021-04-18 fho4abcd Iso import from carga_iso.pho to vmx_import_iso.php
 2021-11-04 fho4abcd Replace vmx_fullinv.php by fullinv.php.
 20211216 fho4abcd Backbutton by included file, removed redundant help
+20220107 fho4abcd Removed opcion parameter for text import/export. Smaller textblocks
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -43,10 +44,10 @@ function Activar(Opcion){
 		?>
 		switch (Opcion){
 			case "imptxt":
-				self.location="carga_txt_cnv.php?base="+top.base+"&Opcion=cnv&accion=import&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"
+				self.location="carga_txt_cnv.php?base="+top.base+"&accion=import&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"
 				break
 			case "exptxt":
-				self.location="carga_txt_cnv.php?base="+top.base+"&Opcion=cnv&accion=export&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"+seleccionados
+				self.location="carga_txt_cnv.php?base="+top.base+"&accion=export&tipo=txt&lang=<?php echo $_SESSION["lang"]?>"+seleccionados
 				break
 			case "expiso":
 				self.location="exporta_txt.php?base="+top.base+"&cipar="+top.base+".par&tipo=iso&lang=<?php echo $_SESSION["lang"]?>"+seleccionados
@@ -126,11 +127,11 @@ if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
           isset($_SESSION["permiso"][$db."_CENTRAL_IMPORT"])){
 ?>
 		<div class="mainBox" >
-			<div class="boxContent titleSection">
-				<div class="sectionTitle">
-					<h4><strong><?php echo $msgstr["cnv_import"]?></strong></h4>
+			<div class="formContent">
+				<div style='color:var(--blue);font-weight: bolder'>
+					<?php echo $msgstr["cnv_import"]?>
 				</div>
-				<div class="sectionButtons">
+				<div class="sectionButtons" style="margin-left: 150px;">
 					<a href='javascript:Activar("impiso")'><?php echo $msgstr["cnv_iso"]?></a>
                     <br>
         			<a href='javascript:Activar("imptxt")'><?php echo $msgstr["cnv_txt"]?></a>
@@ -151,11 +152,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
 ?>
 		<div class="mainBox" >
 
-			<div class="boxContent toolSection">
-				<div class="sectionTitle">
-					<h4><strong><?php echo $msgstr["cnv_export"]?></strong></h4>
+			<div class="formContent">
+				<div style='color:var(--blue);font-weight: bolder'>
+					<?php echo $msgstr["cnv_export"]?>
 				</div>
-				<div class="sectionButtons">
+				<div class="sectionButtons" style="margin-left: 150px;">
 					<a href='javascript:Activar("expiso")'><?php echo $msgstr["cnv_iso"]?></a>
 					<br>
                     <a href='javascript:Activar("exptxt")'><?php echo $msgstr["cnv_txt"]?></a>
@@ -183,11 +184,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or
     ){
 ?>
 <div class="mainBox" >
-    <div class="boxContent toolSection">
-        <div class="sectionTitle">
-            <h4><strong><?php echo $msgstr["mantenimiento"]?></strong></h4>
+    <div class="formContent">
+        <div style='color:var(--blue);font-weight: bolder'>
+            <?php echo $msgstr["mantenimiento"]?>
         </div>
-        <div class="sectionButtons">
+        <div class="sectionButtons" style="margin-left: 150px;">
 <?php
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"])  or
     isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
