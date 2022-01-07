@@ -2,6 +2,7 @@
 /* Modifications
 2021-03-08 fho4abcd Replaced helper code fragment by included file
 2021-03-08 fho4abcd Improved html
+2022-01-07 fho4abcd Close button, footer
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -44,16 +45,13 @@ function PresentarLeader($leader,$tc){
 ?>
 <body>
 <div class="sectionInfo">
-<div class="breadcrumb">
-<?php echo $msgstr["cnv_import"]." ".$msgstr["cnv_ver"]?>
-</div>
-<div class="actions">
-<?php echo "<a href=javascript:self.close()  class=\"defaultButton cancelButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["cerrar"]?></strong></span></a>
-	</div>
-	<div class="spacer">&#160;</div>
+    <div class="breadcrumb">
+    <?php echo $msgstr["cnv_import"]." ".$msgstr["cnv_avis"]?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_close.php";?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
 <?php include "../common/inc_div-helper.php" ?>
 <div class="middle form">
@@ -147,5 +145,5 @@ if (isset($arrHttp["cnv"])){
 </table>
 </div>
 </div>
-</body>
-</html>
+<?php
+include "../common/footer.php";
