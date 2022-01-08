@@ -1,7 +1,8 @@
 <?php
 /* Modifications
-2021-07-11 fh04abcd Rewrite: Improve html&layout, div-helper
+20210711 fho4abcd Rewrite: Improve html&layout, div-helper
 20211216 fho4abcd Backbutton by included file
+20220108 fho4abcd Improve layout&text
 */
 
 /**
@@ -34,8 +35,8 @@ session_start();
 include("../common/get_post.php");
 include ("../config.php");
 
-include("../lang/admin.php");
 include("../lang/dbadmin.php");
+include("../lang/admin.php");
 
 include("../lang/soporte.php");
 if (!isset($_SESSION["permiso"])) die;
@@ -74,12 +75,7 @@ function Delete(){
 }
 </script>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
+include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -93,46 +89,58 @@ if (isset($arrHttp["encabezado"])){
 <?php include "../common/inc_div-helper.php";?>
 
 <div class="middle form">
-	<div class="formContent">
-	<form name=forma1>
-	<table >
+<div class="formContent">
+<form name=forma1>
+<table>
     <tr><td>
-        <li><a href='../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db.$encabezado?>'><?php echo $msgstr["z3950_servers"]?></a><br><br></li>
+        <li><a href='../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db?>'><?php echo $msgstr["z3950_servers"]?></a><br><br></li>
     </td></tr>
     <tr><td>
         <li><?php echo $msgstr["z3950_cnv"]?>
-    </td><td>
-        <a href='z3950_conversion.php?base=<?php echo $db.$encabezado?>'><?php echo $msgstr["new"]?></a>
-        <?php
-        if (file_exists($db_path.$db."/def/z3950.cnv")){
-            echo  "&nbsp; | <a href=javascript:Edit()>".$msgstr["edit"]."</a> &nbsp; | <a href=javascript:Delete()>".$msgstr["delete"]."</a> &nbsp; ";
-            $fp=file($db_path.$db."/def/z3950.cnv");
-            echo "<select name=cnv>
-            <option value=''>\n";
-            foreach ($fp as $var=>$value){
-                $o=explode('|',$value);
-                echo "<option value='".$o[0]."'>".$o[1]."\n";
+        </td><td>
+        <table>
+            <tr>
+            <td>
+                <a href='z3950_conversion.php?base=<?php echo $db?>'><?php echo $msgstr["new"]." ".$msgstr["z3950_tab"]?></a>
+            </td>
+            <tr><td>
+            <?php
+            if (file_exists($db_path.$db."/def/z3950.cnv")){
+                $fp=file($db_path.$db."/def/z3950.cnv");
+                ?>
+                <select name=cnv>
+                    <option value=''>
+                    <?php
+                    foreach ($fp as $var=>$value){
+                        $o=explode('|',$value);
+                        echo "<option value='".$o[0]."'>".$o[1]."\n";
+                    }
+                    ?>
+                </select> &nbsp;
+                <a href=javascript:Edit()><?php echo $msgstr["edit"]?></a> | <a href=javascript:Delete()><?php echo $msgstr["delete"]?></a>
+                <?php
             }
-            echo "</select><br><br>";
-        }
-        ?>
-        <a href='z3950_diacritics_edit.php?base=<?php echo $db.$encabezado?>'><?php echo $msgstr["z3950_diacritics"]?></a><br><br>
-    </td></tr>
+            ?>
+            </td></tr><tr>
+            <td>
+                <a href='z3950_diacritics_edit.php?base=<?php echo $db?>'><?php echo $msgstr["z3950_diacritics"]?></a>
+            </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
     <tr><td>
-        <li><a href='../dataentry/z3950.php?base=<?php echo $db.$encabezado.$ciparamp?>&test=Y&Opcion=test&backtoscript=../dbadmin/z3950_conf.php' target=_blank><?php echo $msgstr["test"]?></a></li>
-	</td></tr>
-	</table>
-	</form>
- 	</div>
+        <li><a href='../dataentry/z3950.php?base=<?php echo $db.$ciparamp?>&test=Y&Opcion=test&backtoscript=../dbadmin/z3950_conf.php' ><?php echo $msgstr["test"]?></a></li>
+    </td></tr>
+</table>
+</form>
+</div>
 </div>
 <form name=enviar method=post>
 <input type=hidden name=base value=<?php echo $db?>>
 <input type=hidden name=Opcion>
 <input type=hidden name=Table>
 <input type=hidden name=descr>
-<?php if ($encabezado!="")
-echo "<input type=hidden name=encabezado value=s>\n";
-?>
 <form>
 <?php include("../common/footer.php")?>
 </body>
