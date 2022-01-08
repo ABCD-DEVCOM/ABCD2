@@ -15,7 +15,7 @@ if (isset($savescript) AND $savescript!="" ) {
 }
 ?>
 
-<a href="<?php echo $inc_save;?>" class="button_browse " title='<?php echo $msgstr["regresar"]?>'>
+<a href="<?php echo $inc_save;?>" class="button_browse " title='<?php echo $msgstr["actualizar"]?>'>
     <i class="far fa-save"></i>&nbsp;<?php echo $msgstr["actualizar"]?></a>
 <?php
 unset($inc_save);

@@ -22,6 +22,7 @@
 20211202          Improved check and messages for gizmo. Check that tag 9876 is in FST
 20211215 fho4abcd Backbutton by included file
 20220103 fho4abcd Use relative path for digital documents in stead of full path,othe config file name
+20220108 fho4abcd Add home button
 */
 /**
  * @desc:      Create database index
@@ -96,7 +97,10 @@ $bd=$db_path.$base;
     <?php echo $msgstr["maintenance"].": ".$arrHttp["base"];?>
 	</div>
 	<div class="actions">
-    <?php include "../common/inc_back.php";?>
+    <?php
+    include "../common/inc_back.php";
+    include("../common/inc_home.php");
+    ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

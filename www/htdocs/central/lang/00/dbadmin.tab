@@ -196,6 +196,7 @@ importiso_mx=Import ISO with Visual MX
 incopies=Check this box if the objects of this database requires copies administration
 incorporated=Has been incorporated to the copies database
 incorporated=Has been incorporated to the copies database
+inicio=Home
 init=Initialized
 inputtype=Input type
 insplname=You must supply the name of the picklist table
@@ -319,6 +320,7 @@ recval=Record validation
 refine=Refine
 registros=records
 remrow=Remove Selected Row
+regresar=Back
 remselrow=Remove Selected Row
 rep=Reptransferres=Row
 repeat=Repeatable
