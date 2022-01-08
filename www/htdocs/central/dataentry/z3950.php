@@ -1,6 +1,8 @@
 <?php
 /* Modifications
 2021-07-11 fh04abcd Rewrite: Improve html, header, div-helper, undefined indexes, add error message
+2022-01-06 fho4abcd backbuttun via included file
+2022-01-08 fho4abcd add home button
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -108,19 +110,17 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
 <?php
 include "../common/inc_div-helper.php";
 include ("../common/inc_get-dbinfo.php");// sets MAXMFN
-?>;
+?>
 
 <div class="middle form">
 <div class="formContent">
@@ -262,7 +262,5 @@ if (isset($arrHttp["test"])){
 
 </div>
 </div>
-<?php include ("../common/footer.php")?>
-
-     </body>
-</html>
+<?php include ("../common/footer.php")
+?>

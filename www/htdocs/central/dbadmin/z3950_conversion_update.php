@@ -1,4 +1,7 @@
 <?php
+/*
+20220108 fho4abcd backButton+ div helper+improve html
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -32,14 +35,37 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include ("../config.php");
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 //foreach($arrHttp as $var=>$value) echo "$var=$value<br>";
-//die;
-if (isset($arrHttp["encabezado"]))
-	$encabezado="&encabezado=S";
-else
-	$encabezado="";
+$backtoscript="../dbadmin/z3950_conf.php";
+
 $lang=$_SESSION["lang"];
+
+include("../common/header.php");
+echo "<body>";
+include("../common/institutional_info.php");
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["z3950"].": ".$msgstr["z3950_tab"]." (".$arrHttp["base"].")" ?>
+	</div>
+
+	<div class="actions">
+    <?php
+    $savescript="javascript:Enviar()";
+	include "../common/inc_back.php";
+	include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php $ayuda="z3950_conf.html"; include "../common/inc_div-helper.php";?>
+
+<div class="middle form">
+<div class="formContent">
+<div style="text-align:center">
+<?php
 $tag=array();
 $pft=array();
 foreach ($arrHttp as $var=>$value) {
@@ -51,21 +77,25 @@ foreach ($arrHttp as $var=>$value) {
 
 	}
 }
-$file=$db_path.$arrHttp["base"]."/def/".$arrHttp["namecnvtb"];
+$tabfile=$arrHttp["base"]."/def/".$arrHttp["namecnvtb"];
+$file=$db_path.$tabfile;
 $fp=fopen($file,"w");
 if (!$fp){
-	echo $arrHttp["namecnvtb"];
-	echo $msgstr["nopudoseractualizado"];
+	echo $tabfile.": ".$msgstr["nopudoseractualizado"];
 	die;
 }
 foreach ($pft as $tag=>$value){
 	fwrite($fp,$tag.":".$value."\n");
 }
 fclose($fp);
+?>
+<h4><?php echo $tabfile.": ".$msgstr["updated"];?></h4>
+<?php
 $add="Y";
+$cnvfile=$arrHttp["base"]."/def/z3950.cnv";
 $fp=array();
-if (file_exists($db_path.$arrHttp["base"]."/def/z3950.cnv")){
-	$fp=file($db_path.$arrHttp["base"]."/def/z3950.cnv");
+if (file_exists($db_path.$cnvfile)){
+	$fp=file($db_path.$cnvfile);
 	foreach ($fp as $value){
 		$t=explode('|',$value);
 		if ($t[0]==$arrHttp["namecnvtb"]){
@@ -76,39 +106,16 @@ if (file_exists($db_path.$arrHttp["base"]."/def/z3950.cnv")){
 }
 
 if ($add=="Y"){
-	$out=fopen($db_path.$arrHttp["base"]."/def/z3950.cnv","w");
+	$out=fopen($db_path.$cnvfile,"w");
 	foreach ($fp as $value){
 		$res=fwrite($out,$value);
 	}
 	$res=fwrite($out,$arrHttp["namecnvtb"].'|'.$arrHttp["descr"]."\n");
 	fclose($out);
-}
-
-include("../common/header.php");
-echo "<body>";
-if (isset($arrHttp["encabezado"])){
-    	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
-echo "
-	<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["z3950"].": ".$msgstr["z3950_cnv"]." (".$arrHttp["base"].")</div>
-	<div class=\"actions\">\n";
-echo "<a href=z3950_conf.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">
-	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>". $msgstr["back"]."</strong></span>
-		</a>
-		</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>";
-echo "<div class=\"middle form\">
-			<div class=\"formContent\">";
-echo "<font size=1 face=arial> &nbsp; &nbsp; Script: z3950_conversion_update.php</font>";
-echo "<center><h4>".$arrHttp["base"]."/def/z3950.cnv: ".$msgstr["updated"];
-echo "</h4></center></div></div>";
+?>
+<h4><?php echo $cnvfile.": ".$msgstr["updated"]?></h4>
+<?php } ?>
+</div></div>
+<?php
 include("../common/footer.php");
-echo "</body>
-</html>";
 ?>
