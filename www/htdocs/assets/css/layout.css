@@ -909,3 +909,80 @@ right: 15px;
   flex: 0 0 100%;
   max-width: 100%;
 }
+
+
+/* START SIDEBAR  */
+
+.abcd-sidebar{
+	height:100%;
+	background-color:#fff;
+	position:relative;!important;
+	z-index:1;
+	overflow:auto;
+}
+
+
+.abcd-bar-block .abcd-bar-item{
+	width:100%;
+	display:block;
+	padding:8px;
+	text-align:left;
+	border:none;
+	white-space:normal;
+	float:none;outline:0;
+}
+
+.abcd-bar-block.abcd-center .abcd-bar-item{
+	text-align:center;
+}
+
+.abcd-block{
+	display:block;
+	width:100%;
+}
+
+.abcd-btn,.abcd-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.abcd-btn,.abcd-button{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+.abcd-disabled,.abcd-btn:disabled,.abcd-button:disabled{cursor:not-allowed;opacity:0.3}.abcd-disabled *,:disabled *{pointer-events:none}
+.abcd-dropdown-hover:hover > .abcd-button:first-child,.abcd-dropdown-click:hover > .abcd-button:first-child{background-color:#ccc;color:#000}
+.abcd-dropdown-hover.abcd-mobile,.abcd-dropdown-hover.abcd-mobile .abcd-btn,.abcd-dropdown-hover.abcd-mobile .abcd-button,.abcd-dropdown-click.abcd-mobile,.abcd-dropdown-click.abcd-mobile .abcd-btn,.abcd-dropdown-click.abcd-mobile .abcd-button{width:100%}}
+.abcd-button:hover{
+	color:#000!important;
+	background-color:#ccc!important;
+}
+
+
+.abcd-bar-block .abcd-dropdown-hover .abcd-button,.abcd-bar-block .abcd-dropdown-click .abcd-button{width:100%;text-align:left;padding:8px 16px}
+.abcd-bar .abcd-button{white-space:normal}
+
+
+@media (min-width:993px){
+	.abcd-modal-content{
+		width:900px
+	}
+	.abcd-hide-large{
+		display:none!important
+	}
+	.abcd-sidebar.abcd-collapse{
+		display:block!important
+	}
+}
+
+
+@media (max-width:992px){
+	.abcd-sidebar.abcd-collapse{
+		display:none;
+	}
+	
+	.abcd-main{
+		margin-left:0!important;
+		margin-right:0!important;
+	}
+
+	.abcd-auto{
+		max-width:100%;
+	}
+	}
+
+
+/* END SIDEBAR  */
