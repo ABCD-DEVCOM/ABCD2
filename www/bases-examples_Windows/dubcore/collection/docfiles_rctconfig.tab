@@ -1,0 +1,10 @@
+text|text
+image|image
+application/epub+zip|text
+application/pdf|text
+application/vnd.ms-powerpoint|text
+application/vnd.openxmlformats-officedocument.presentationml.presentation|text
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|text
+application/vnd.openxmlformats-officedocument.wordprocessingml.document|text
+application/msword|text
+application/xhtml+xml|text
