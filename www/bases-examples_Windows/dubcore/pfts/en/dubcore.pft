@@ -1,5 +1,37 @@
-/* The ID and possible partnumber are always shown from the record itself*/
-/* The L function (lookup) is always applied for a simple pft. Inverted file generation is mandatory*/
+/*
+** Login protection script&proc
+** The login protection only works in iAH, not in Central
+*/
+'<script language=javascript>
+  function DisplayURL(id)
+  {
+    var loginto=document.getElementById("into").value;
+	if (loginto=="no")
+	{
+	var posicion_x;
+	var posicion_y;
+	posicion_x=(screen.width/2)-(315);
+	posicion_y=(screen.height/2)-(235);
+	sel = window.open("/site/login.php?id="+id, "ABCD Login", "width=630,height=470,menubar=0,toolbar=0,directories=0,scrollbars=no,resizable=no,left="+posicion_x+",top="+posicion_y+"");
+	}
+	else
+	{
+	document.getElementById("divurld"+id).style.display="none";
+	document.getElementById("divurl"+id).style.display="block";
+	}
+  }
+</script> '
+
+proc('<9000>',getenv('REMOTE_ADDR'),'</9000>'),
+    s1:=(left(v9000,instr(v9000,'.')-1)),
+    s2:=(mid(v9000,instr(v9000,'.')+1,size(v9000)))/,
+    s2:=(left(s2,instr(s2,'.')-1)),
+
+/*
+** == The display part ==
+** The ID and possible partnumber are always shown from the record itself
+** The L function (lookup) is always applied for a simple pft. Inverted file generation is mandatory
+*/
 '<table>'
 if p(v111) then '<tr><td ><b>ID</b></td><td>'v111+|<br>|,'</td>' fi,
 if p(v110) then '<tr><td ><b>Part nr</b></td><td>'v110' of 'f(npost('ID='v111),0,0),'</td>' fi,
@@ -41,7 +73,9 @@ REF(  L('ID=',v111),
 
     if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
 )
-/* If there is a HTML or image URL: display the text or the picture*/
+/*
+** If there is a HTML or image URL: display the text or the picture
+*/
 if p(v96) then
     if REF(L('ID='v111),v96) ='image' then /* file type is image */
         '<tr>
@@ -64,9 +98,52 @@ if p(v96) then
 fi/
 
 REF(  L('ID=',v111),
-    if p(v98) then '<tr><td><b>Document URL</b></td><td><A HREF="',v98'" target=new>'v98,'</A></td>' fi/
+    /*
+    ** Following lines to show the URL always
+    */
+    if p(v98) then '<tr><td><b>Document URL</b></td><td>
+        <A HREF="',v98'" target=new>'v98,'</A></td>'
+    fi/
+    /*
+    ** Following lines to only show URL after logging in
+    */
+    /*
+    if p(v98) then '<tr><td><b>Dcoument URL</b></td><td>
+        <div id=divurld',f(mfn,1,0),' name=divurld',f(mfn,1,0),'><a href=javascript:DisplayURL(',f(mfn,1,0),')>DISPLAY</a></div>
+        <div id=divurl',f(mfn,1,0),' name=divurl',f(mfn,1,0),' style=display:none>
+        <A HREF="',v98'" target=new>'v98+|<br>|,'</A></div></td>'
+    fi/
+    */
+    /*
+    ** Following lines to show URL only if within LAN range
+    */
+    /*
+    if p(v98) then '<tr><td><b>Document URL</b></td><td>',
+        if val(s1)=127 then
+           if val(s2)=0 then
+               '<A HREF="http://127.0.0.1:9090//',v98, '" target="new">'v98,'</A></td>'
+           else 'IP not allowed'
+           fi
+        else 'IP not allowed'
+        fi
+    fi,
+    */
+
     if p(v112) then '<tr><td><b>Date added</b></td><td>'v112+|<br>|,'</td>' fi/
 )
 if p(v96) then '<tr><td><b>Record type</b></td><td>'v96+|<br>|,'</td>' fi/
 if p(v997) then '<tr><td><b>HTML filesize</b></td><td>'v997+|<br>|,'</td>' fi/
+
+/*
+** View parts in iAH
+** Note the path to wxis (must match with the database architecture)
+** Note the extension of wxis (none for linux, .exe for windows)
+** Note the name of the database in parameter base=
+*/
+if p(v110) and val(v110)<2 then 
+'<tr><td><b>View parts</b></td><td>'
+'<a href="/cgi-bin/utf8/bigisis/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&reverse=off&base=dubcore&nextAction=lnk&exprSearch=',s(mpu,v111,mpl),'&indexSearch=ID"',
+'" target=new>Click here for more text-previews in new tab</a><br>',
+'</td>',
+fi,
 '</table>'
