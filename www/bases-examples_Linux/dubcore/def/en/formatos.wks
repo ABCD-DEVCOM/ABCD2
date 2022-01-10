@@ -1,1 +1,4 @@
-dubcore|Dublin Core
+text|Text parent (Dublin Core)
+text_c|Text child (Dublin Core)
+image|Image (Exif)
+unknown|Unknown (all attributes !!)

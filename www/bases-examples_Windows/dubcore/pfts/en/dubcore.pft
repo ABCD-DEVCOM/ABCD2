@@ -2,30 +2,48 @@
 /* The L function (lookup) is always applied for a simple pft. Inverted file generation is mandatory*/
 '<table>'
 if p(v111) then '<tr><td ><b>ID</b></td><td>'v111+|<br>|,'</td>' fi,
-if p(v110) then '<tr><td ><b>Part nr</b></td><td>'v110' of 'v109+|<br>|,'</td>' fi,
+if p(v110) then '<tr><td ><b>Part nr</b></td><td>'v110' of 'f(npost('ID='v111),0,0),'</td>' fi,
+ 
 /* Next attributes are from the parent record (may be the current record, we don't care) */
 REF(  L('ID=',v111),
-if p(v1) then '<tr><td><b>Title</b></td><td>'v1+|<br>|,'</td>' fi/
-if p(v2) then '<tr><td><b>Creator</b></td><td>'v2+|<br>|,'</td>' fi/
-if p(v3) then '<tr><td><b>Subject</b></td><td>'v3+|<br>|,'</td>' fi/
-if p(v4) then '<tr><td><b>Description</b></td><td>'v4+|<br>|,'</td>' fi/
-if p(v5) then '<tr><td><b>Publisher</b></td><td>'v5+|<br>|,'</td>' fi/
-if p(v6) then '<tr><td><b>Contributors</b></td><td>'v6+|<br>|,'</td>' fi/
-if p(v7) then '<tr><td><b>Date</b></td><td>'v7+|<br>|,'</td>' fi/
-if p(v8) then '<tr><td><b>Type</b></td><td>'v8+|<br>|,'</td>' fi/
-if p(v9) then '<tr><td><b>Format</b></td><td>'v9+|<br>|,'</td>' fi/
-if p(v10) then '<tr><td><b>Identifier</b></td><td>'v10+|<br>|,'</td>' fi/
-if p(v11) then '<tr><td><b>Source</b></td><td>'v11+|<br>|,'</td>' fi/
-if p(v12) then '<tr><td><b>Language</b></td><td>'v12+|<br>|,'</td>' fi/
-if p(v13) then '<tr><td><b>Relation</b></td><td>'v13+|<br>|,'</td>' fi/
-if p(v14) then '<tr><td><b>Coverage</b></td><td>'v14+|<br>|,'</td>' fi/
-if p(v15) then '<tr><td><b>Rights Management</b></td><td>'v15+|<br>|,'</td>' fi/
+    if p(v1) then '<tr><td><b>Title</b></td><td>'v1+|<br>|,'</td>' fi/
+    if p(v2) then '<tr><td><b>Creator</b></td><td>'v2+|<br>|,'</td>' fi/
+    if p(v3) then '<tr><td><b>Subject</b></td><td>'v3+|<br>|,'</td>' fi/
+    if p(v4) then '<tr><td><b>Description</b></td><td>'v4+|<br>|,'</td>' fi/
+    if p(v5) then '<tr><td><b>Publisher</b></td><td>'v5+|<br>|,'</td>' fi/
+    if p(v6) then '<tr><td><b>Contributors</b></td><td>'v6+|<br>|,'</td>' fi/
+    if p(v7) then '<tr><td><b>Date</b></td><td>'v7+|<br>|,'</td>' fi/
+    if p(v8) then '<tr><td><b>Type</b></td><td>'v8+|<br>|,'</td>' fi/
+    if p(v9) then '<tr><td><b>Format</b></td><td>'v9+|<br>|,'</td>' fi/
+    if p(v10) then '<tr><td><b>Identifier</b></td><td>'v10+|<br>|,'</td>' fi/
+    if p(v11) then '<tr><td><b>Source</b></td><td>'v11+|<br>|,'</td>' fi/
+    if p(v12) then '<tr><td><b>Language</b></td><td>'v12+|<br>|,'</td>' fi/
+    if p(v13) then '<tr><td><b>Relation</b></td><td>'v13+|<br>|,'</td>' fi/
+    if p(v14) then '<tr><td><b>Coverage</b></td><td>'v14+|<br>|,'</td>' fi/
+    if p(v15) then '<tr><td><b>Rights Management</b></td><td>'v15+|<br>|,'</td>' fi/
 
-if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
+    if p(v50) then '<tr><td><b>Image Height</b></td><td>'v50+|<br>|,'</td>' fi/
+    if p(v51) then '<tr><td><b>Image Width</b></td><td>'v51+|<br>|,'</td>' fi/
+    if p(v52) then '<tr><td><b>X Resolution</b></td><td>'v52+|<br>|,'</td>' fi/
+    if p(v53) then '<tr><td><b>Y Resolution</b></td><td>'v53+|<br>|,'</td>' fi/
+    if p(v54) then '<tr><td><b>Scene Type</b></td><td>'v54+|<br>|,'</td>' fi/
+    if p(v56) then '<tr><td><b>User Comment</b></td><td>'v56+|<br>|,'</td>' fi/
+    if p(v57) then '<tr><td><b>Artist</b></td><td>'v57+|<br>|,'</td>' fi/
+    if p(v58) then '<tr><td><b>Copyright</b></td><td>'v58+|<br>|,'</td>' fi/
+    if p(v59) then '<tr><td><b>Make</b></td><td>'v59+|<br>|,'</td>' fi/
+    if p(v60) then '<tr><td><b>Model</b></td><td>'v60+|<br>|,'</td>' fi/
+    if p(v61) then '<tr><td><b>GPS Altitude Ref</b></td><td>'v61+|<br>|,'</td>' fi/
+    if p(v62) then '<tr><td><b>GPS Altitude</b></td><td>'v62+|<br>|,'</td>' fi/
+    if p(v63) then '<tr><td><b>GPS Latitude Ref</b></td><td>'v63+|<br>|,'</td>' fi/
+    if p(v64) then '<tr><td><b>GPS Latitude</b></td><td>'v64+|<br>|,'</td>' fi/
+    if p(v65) then '<tr><td><b>GPS Longitude Ref</b></td><td>'v65+|<br>|,'</td>' fi/
+    if p(v66) then '<tr><td><b>GPS Longitude</b></td><td>'v66+|<br>|,'</td>' fi/
+
+    if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
 )
 /* If there is a HTML or image URL: display the text or the picture*/
-if p(v95) then
-    if 'jpg jpeg png gif tiff' : right(REF(L('ID='v111),v98),3) then /* file type is image */
+if p(v96) then
+    if REF(L('ID='v111),v96) ='image' then /* file type is image */
         '<tr>
         <td><b>Image preview</b></td>
         <td><img height=200 src=',v98,'></td>
@@ -46,8 +64,9 @@ if p(v95) then
 fi/
 
 REF(  L('ID=',v111),
-if p(v98) then '<tr><td><b>Document URL</b></td><td><A HREF="',v98'" target=new>'v98,'</A></td>' fi/
-if p(v112) then '<tr><td><b>Date added</b></td><td>'v112+|<br>|,'</td>' fi/
+    if p(v98) then '<tr><td><b>Document URL</b></td><td><A HREF="',v98'" target=new>'v98,'</A></td>' fi/
+    if p(v112) then '<tr><td><b>Date added</b></td><td>'v112+|<br>|,'</td>' fi/
 )
+if p(v96) then '<tr><td><b>Record type</b></td><td>'v96+|<br>|,'</td>' fi/
 if p(v997) then '<tr><td><b>HTML filesize</b></td><td>'v997+|<br>|,'</td>' fi/
 '</table>'

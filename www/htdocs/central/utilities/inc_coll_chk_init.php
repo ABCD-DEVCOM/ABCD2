@@ -5,6 +5,7 @@
 20210903 fho4abcd Add name of configuration file
 20211111 fho4abcd configfile to database root
 20220103 fho4abcd new names standard subfolders and config file
+20220110 fho4absd write default worksheet indicator file
 */
 /*
 ** Function: Initial check of collection.
@@ -116,5 +117,35 @@ if (!is_writable($coldocfull) ) {
 // If this variable is modified: modify also fullinv.php
 $tagConfig="docfiles_tagconfig.tab";
 $tagConfigFull=$fullcolpath."/".$tagConfig;
+
+// The filename of the file with record type information
+// The initial version is created here too
+// Content: some comment + lines with "content-type|record_type"
+$recConfig="docfiles_rctconfig.tab";
+$recConfigFull=$fullcolpath."/".$recConfig;
+if ( !file_exists($recConfigFull)) {
+    $fp=@fopen($recConfigFull,"w");
+    if ($fp === false ) {
+        $file_get_contents_error= error_get_last();
+        $err_mkfil="&rarr; ".$file_get_contents_error["message"];
+        echo "<div style='font-weight:bold;color:red'>".$msgstr["dd_coldocfoldererr"]." '".$recConfigFull."' ".$err_mkfil."</div>";
+        die;
+    }
+    $wksTextRecordtype="text";
+    $wksImageRecordtype="image";
+    fwrite($fp,"text"."|".$wksTextRecordtype.PHP_EOL);// includes text/plain text/html and others
+    fwrite($fp,"image"."|".$wksImageRecordtype.PHP_EOL);// includes image/jpeg and others
+    fwrite($fp,"application/epub+zip"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/pdf"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/vnd.ms-powerpoint"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/vnd.openxmlformats-officedocument.presentationml.presentation"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/vnd.openxmlformats-officedocument.wordprocessingml.document"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/msword"."|".$wksTextRecordtype.PHP_EOL);
+    fwrite($fp,"application/xhtml+xml"."|".$wksTextRecordtype.PHP_EOL);
+   
+    fclose($fp);
+}
+
 
 /* and here the including file continues processing */

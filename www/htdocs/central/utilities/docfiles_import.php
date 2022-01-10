@@ -18,6 +18,7 @@
 20211215 fho4abcd Backbutton by included file
 20220103 fho4abcd Revised collection structure.Improved tag processing
 20220104 fho4abcd Added exif
+20220110 fho4abcd Added record type indicator+remove maxparts and exifimagedesc (duplicate of dc:description)
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -118,7 +119,10 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-    <?php include "../common/inc_back.php";?>
+    <?php
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -508,6 +512,7 @@ include "../common/footer.php";
 //  - convert_tika_html : convert tika generated html
 //  - sanitize_tree     : sanitizes foldername(s)
 //  - secondsToTime     : return H:mm:ss
+//  - set_rectypind     : set record type indicator
 //  - split_path        : returns the "section" of the filename in ImportRepo
 //  - split_html        : splits an html file into smaller files and returns the number of parts.
 //  - tolog             : writes information to screen and/or logfile
@@ -533,6 +538,7 @@ function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $tex
 global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $mx_path,$isis_record_size,$tagConfigFull;
     $retval=1;
     clearstatcache(true);
+    $debug=false; // false=production mode
     /*
     ** Check if a section is required
     ** Create section (may be multiple subfolders) if not present in collection
@@ -581,13 +587,6 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     ** - Construct the name of the tika generated target (html) file
     */
     $tikafile    = $db_path."wrk/".$docname.'.html';
-    /*
-    ** - Construct the name of the mx proc input file.
-    **   Use pid because mx does not like utf characters in this filename
-    **   Always add a timestamp because the pid is the server pid, not unique for this run
-    */
-    $procfile    = getmypid()."_".date("ymdHis");//add always timestamp!!
-    $procfile    = $db_path."wrk/".$procfile.'.proc';
     /*
     ** Move the uploaded file to the collection
     */
@@ -670,7 +669,8 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
         $val=current($metatab);
         $newval="";
         convert_field($val,$newval);
-        $metatab[$key]=$newval; //debug echo "key=".$key."value=".$newval."<br>";
+        $metatab[$key]=$newval;
+        if ($debug) echo "key=".$key." value=".$newval."<br>";
         next($metatab);
     }
     /*
@@ -726,7 +726,6 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     if (array_key_exists("exif_ifd0:x_resolution",$metatab))     {$c_exifxresol=$metatab["exif_ifd0:x_resolution"];}       else {$c_exifxresol="";}
     if (array_key_exists("exif_ifd0:y_resolution",$metatab))     {$c_exifyresol=$metatab["exif_ifd0:y_resolution"];}       else {$c_exifyresol="";}
     if (array_key_exists("exif_ifd0:scene_type",$metatab))       {$c_exifscenetyp=$metatab["exif_ifd0:scene_type"];}       else {$c_exifscenetyp="";}
-    if (array_key_exists("exif_ifd0:image_description",$metatab)){$c_exifimgdesc=$metatab["exif_ifd0:image_description"];} else {$c_exifimgdesc="";}
     if (array_key_exists("exif_ifd0:user_comment",$metatab))     {$c_exifusercom=$metatab["exif_ifd0:user_comment"];}      else {$c_exifusercom="";}
     if (array_key_exists("exif_ifd0:artist",$metatab))           {$c_exifartist=$metatab["exif_ifd0:artist"];}             else {$c_exifartist="";}
     if (array_key_exists("exif_ifd0:copyright",$metatab))        {$c_exifcopyrght=$metatab["exif_ifd0:copyright"];}        else {$c_exifcopyrght="";}
@@ -769,15 +768,23 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     $c_dateadded=date("Y-m-d H:i:s");
     $c_doctext="";
     /*
+    ** Determine the record type
+    */
+    set_rectypind($metatab, $c_rectypind);
+    /*
     ** Get the tags to be processed
     */
     $actTagMap= array();
     $retval   = read_dd_cfg("operates", $tagConfigFull, $actTagMap );
     $actterms = array_column($actTagMap,"term");
     $actfields= array_column($actTagMap,"field");
-    /* for ($i=0;$i<count($actterms);$i++ ) {
-        echo $actterms[$i]."  -  ".$actfields[$i]."<br>";
-    }*/
+    if ($debug){
+        echo "<br>configuration table<br>";
+        for ($i=0;$i<count($actterms);$i++ ) {
+            echo $actterms[$i]."  -  ".$actfields[$i]."<br>";
+        }
+    }
+    // Note that array_search MAY return false. This is not checked here:TODO
     $vtitle       = remove_v( $actfields[array_search("title",$actterms)] );
     $vcreator     = remove_v( $actfields[array_search("creator",$actterms)] );
     $vsubject     = remove_v( $actfields[array_search("subject",$actterms)] );
@@ -794,21 +801,20 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     $vcoverage    = remove_v( $actfields[array_search("coverage",$actterms)] );
     $vrights      = remove_v( $actfields[array_search("rights",$actterms)] );
     $vhtmlSrcURL  = remove_v( $actfields[array_search("htmlSrcURL",$actterms)] );
+    $vrectypind   = remove_v( $actfields[array_search("rectypind",$actterms)] );
     $vsections    = remove_v( $actfields[array_search("sections",$actterms)] );
     $vurl         = remove_v( $actfields[array_search("url",$actterms)] );
-    $vidpartmax   = remove_v( $actfields[array_search("idpartmax",$actterms)] );
+    $vdoctext     = remove_v( $actfields[array_search("doctext",$actterms)] );
     $vidpart      = remove_v( $actfields[array_search("idpart",$actterms)] );
     $vid          = remove_v( $actfields[array_search("id",$actterms)] );
     $vdateadded   = remove_v( $actfields[array_search("dateadded",$actterms)] );
     $vhtmlfilesize= remove_v( $actfields[array_search("htmlfilesize",$actterms)] );
-    $vdoctext     = remove_v( $actfields[array_search("doctext",$actterms)] );
 
     $vexifheight  = remove_v( $actfields[array_search("exifheight",$actterms)] );
     $vexifwidth   = remove_v( $actfields[array_search("exifwidth",$actterms)] );
     $vexifxresol  = remove_v( $actfields[array_search("exifxresol",$actterms)] );
     $vexifyresol  = remove_v( $actfields[array_search("exifyresol",$actterms)] );
     $vexifscenetyp= remove_v( $actfields[array_search("exifscenetyp",$actterms)] );
-    $vexifimgdesc = remove_v( $actfields[array_search("exifimgdesc",$actterms)] );
     $vexifusercom = remove_v( $actfields[array_search("exifusercom",$actterms)] );
     $vexifartist  = remove_v( $actfields[array_search("exifartist",$actterms)] );
     $vexifcopyrght= remove_v( $actfields[array_search("exifcopyrght",$actterms)] );
@@ -840,6 +846,14 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     $maxparts=sizeof($split_files);
     for ($ix=0; $ix<$maxparts; $ix++ ) {
         $act_split_file=$split_files[$ix];
+        /*
+        ** - Construct the name of the mx proc input file.
+        **   Use pid because mx does not like utf characters in this filename
+        **   Always add a timestamp because the pid is the server pid, not unique for this run
+        */
+        $procfile    = getmypid()."_".date("ymdHis")."_".$ix;//add always timestamp and sequence number!!
+        $procfile    = $db_path."wrk/".$procfile.'.proc';
+
         /*
         ** Construct the proc file with metadata for mx
         ** Note that the commandline has limitations (length,allowed character) so a file is better
@@ -876,7 +890,6 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
             if (($c_exifxresol!="")  and ($vexifxresol!=""))  $fields.="<".$vexifxresol.">".$c_exifxresol."</".$vexifxresol.">".PHP_EOL;
             if (($c_exifyresol!="")  and ($vexifyresol!=""))  $fields.="<".$vexifyresol.">".$c_exifyresol."</".$vexifyresol.">".PHP_EOL;
             if (($c_exifscenetyp!="")and ($vexifscenetyp!=""))$fields.="<".$vexifscenetyp.">".$c_exifscenetyp."</".$vexifscenetyp.">".PHP_EOL;
-            if (($c_exifimgdesc!="") and ($vexifimgdesc!="")) $fields.="<".$vexifimgdesc.">".$c_exifimgdesc."</".$vexifimgdesc.">".PHP_EOL;
             if (($c_exifusercom!="") and ($vexifusercom!="")) $fields.="<".$vexifusercom.">".$c_exifusercom."</".$vexifusercom.">".PHP_EOL;
             if (($c_exifartist!="")  and ($vexifartist!=""))  $fields.="<".$vexifartist.">".$c_exifartist."</".$vexifartist.">".PHP_EOL;
             if (($c_exifcopyrght!="")and ($vexifcopyrght!=""))$fields.="<".$vexifcopyrght.">".$c_exifcopyrght."</".$vexifcopyrght.">".PHP_EOL;
@@ -908,8 +921,15 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
         ** Valid for all parts
         */
         if ($maxparts>1) {
-            $fields.="<".$vidpartmax.">".$maxparts."</".$vidpartmax.">".PHP_EOL;
             $fields.="<".$vidpart.">".($ix+1)."</".$vidpart.">".PHP_EOL;
+        }
+        /*
+        ** The recordtype indicator is always required, but the content differs from single/continuation page
+        */
+        if ($vrectypind!="" ) {
+            $actual_rectypind=$c_rectypind;
+            if ($maxparts>1 && ($ix+1)>1  ) $actual_rectypind.="_c";
+            $fields.="<".$vrectypind.">".$actual_rectypind."</".$vrectypind.">".PHP_EOL;
         }
         $fields.="'";
         fwrite($fpproc,$fields);
@@ -937,7 +957,9 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
             tolog(": <i>".$docname.".".$docext."</i></li>");
         }
         if (file_exists($act_split_file) ) rename($act_split_file,$htmlSrcPath);
-        if (file_exists($procfile) ) unlink($procfile);
+        if (file_exists($procfile) ){
+            if(!$debug) unlink($procfile);
+        }
         $numrecsOK++;
    }
 
@@ -1302,6 +1324,66 @@ function secondsToTime($s) {
     $m = floor($s / 60);
     $s -= $m * 60;
     return $h.':'.sprintf('%02d', $m).':'.sprintf('%02d', $s);
+}
+// ====== set_rectypind ============================
+function set_rectypind($metatab, &$rectypind){
+/*
+** Returns the most probable record type
+** The mapping of content-types to record types is by configuration file $recConfigFull
+** the existence of the file is checked at script startup.
+** In case of errors the record type "unknown" is returned
+**
+** Base for this record type is metatag "content-type". Detected by tika (very good)
+** Known content types are specified by http://www.iana.org/assignments/media-types/media-types.xhtml
+** Main types: application, audio, font, example, image, message, model, multipart, text, video
+**
+** In : $metatab   = Table with tika generate meta data
+** Out: $rectypind = Name of the record type
+** Return : 0=OK, 1=NOT-OK
+*/
+global $recConfigFull, $msgstr;
+    $rectypind = "unknown";
+    $c_type="";
+    if ( array_key_exists("content-type",$metatab))    {$c_type=$metatab["content-type"];}
+    // strip the part after the semicolon (if any)
+    $seppos=strpos($c_type, ";");
+    if ( $seppos!==false && $seppos>1) $c_type = trim(substr($c_type, 0, $seppos));
+    if ($c_type=="") return (0);
+    // Read te configuration file
+    $content=array();
+    $rectypindind=array();
+    $fp=fopen($recConfigFull,"r");
+    while ( ($line=fgets($fp))!=false){
+        $line=rtrim($line); // remove trailing white space(inc cr/lf)
+        // Lines with // and lines with # are skipped
+        // Lines that cannot contain valid information are skipped
+        if ( strlen($line)<3 ) continue;
+        if ( stripos($line,'//') !== false ) continue;
+        if ( stripos($line, '#') !== false ) continue;
+        $linecontent=explode("|",$line);
+        $linecontent[0]=trim($linecontent[0]);
+        if ($linecontent[0]=="") continue;
+        if (!isset($linecontent[1])) continue;
+        $linecontent[1]=trim($linecontent[1]);
+        if ($linecontent[1]=="") continue;
+        array_push($content,$linecontent[0]);
+        array_push($rectypindind,$linecontent[1]);
+    }
+    // search first for an exact match
+    $index=array_search($c_type,$content);
+    if ( $index!==false) {
+        $rectypind=$rectypindind[$index];
+        return (0);
+    }
+    // search with c_type truncated after the /
+    $seppos=strpos($c_type, "/");
+    if ( $seppos!==false && $seppos>1) $c_type = trim(substr($c_type, 0, $seppos));
+    $index=array_search($c_type,$content);;
+    if ( $index!==false) {
+        $rectypind=$rectypindind[$index];
+        return (0);
+    }
+    return(0);
 }
 // ====== split_path =============================
 function split_path($full_path, &$filename, &$sectionname){
