@@ -147,6 +147,7 @@ dd_term_subject=Subject
 dd_term_title=Title
 dd_term_type=Type
 dd_term_url=Document URL
+dd_term_rectypind=Record type
 dd_textformat=Tika output format
 dd_tmode_html=HTML
 dd_tmode_meta=Metadata only
