@@ -447,9 +447,9 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
                 if ($Isis_Status==0) {
                     echo '<button class="button_browse show bt-blue" type="button" onclick="Mostrar('.$mfn.')"><i class="far fa-eye" alt="'.$msgstr["show"].'" title="'.$msgstr["show"].'"></i> '.$msgstr["show"].'</button>';
                 
-                    echo '<button class="button_browse edit" "type="button" onclick="Editar('.$mfn.','.$Isis_Status.')"><i class="fas fa-edit" alt="'.$msgstr["edit"].'" title="'.$msgstr["edit"].'"></i> '.$msgstr["edit"].'</button>';
+                    echo '<button class="button_browse edit bt-green" "type="button" onclick="Editar('.$mfn.','.$Isis_Status.')"><i class="fas fa-edit" alt="'.$msgstr["edit"].'" title="'.$msgstr["edit"].'"></i> '.$msgstr["edit"].'</button>';
 
-                    echo '<button class="button_browse delete" type="button" onclick="Eliminar('.$mfn.')"><i class="far fa-trash-alt" alt="'.$msgstr["eliminar"].' title="'.$msgstr["eliminar"].' ></i> '.$msgstr["eliminar"].'</button>';
+                    echo '<button class="button_browse delete bt-red" type="button" onclick="Eliminar('.$mfn.')"><i class="far fa-trash-alt" alt="'.$msgstr["eliminar"].' title="'.$msgstr["eliminar"].' ></i> '.$msgstr["eliminar"].'</button>';
                 } else {
                     switch ($Isis_Status){
                         case -2:

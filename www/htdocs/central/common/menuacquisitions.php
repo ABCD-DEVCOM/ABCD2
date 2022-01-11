@@ -14,7 +14,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases;
 					</div>
 					<div class="sectionButtons">
 
-						<a href="../acquisitions/overview.php?encabezado=s" class="menuButton multiLine resumeButton">
+						<a href="../acquisitions/overview.php?encabezado=s&Expresion=STA_0" class="menuButton multiLine resumeButton">
 							<span><strong><?php echo $msgstr["overview"]?></strong></span>
 						</a>
 <?php
