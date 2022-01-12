@@ -2,6 +2,7 @@
 /*
 20211214 fho4abcd Created
 20211216 fho4abcd Add functionality for return script of the caller
+20220112 fho4abcd Do not add base= if there is already a base added
 Function  : Show the backbutton in the breadcrumb in div class actions
 Usage     : <?php include "../common/inc_back.php" ?>
 ** Variables
@@ -16,10 +17,12 @@ if (isset($backtoscript) AND $backtoscript!="" ) {
 } else {
     $inc_backtourl="/central/common/inicio.php";
 }
-if (isset($arrHttp["base"]) AND $arrHttp["base"]!="")  {
-    $inc_backtourl.="?base=".$arrHttp["base"];
-    if (isset($arrHttp["backtoscript_org"])) {
-        $inc_backtourl.="&backtoscript=".$arrHttp["backtoscript_org"];
+if (strpos($inc_backtourl, "base=")===false) {
+    if (isset($arrHttp["base"]) AND $arrHttp["base"]!="")  {
+        $inc_backtourl.="?base=".$arrHttp["base"];
+        if (isset($arrHttp["backtoscript_org"])) {
+            $inc_backtourl.="&backtoscript=".$arrHttp["backtoscript_org"];
+        }
     }
 }
 ?>
