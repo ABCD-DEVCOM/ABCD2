@@ -1,38 +1,30 @@
-<?php
-/* Modifications
-20210310 fho4abcd Replaced helper code fragment by included file
-20210310 fho4abcd html code:body at begin+...
-20210310 fho4abcd check existence $L1
-20220110 rogercgui change in process visualisation
-*/
-
+<?php 
+error_reporting(E_ALL);
 session_start();
+
+include ("../config.php");
+
 if (!isset($_SESSION["permiso"])){
-	header("Location: ../common/error_page.php") ;
+    header("Location: ../common/error_page.php") ;
 }
 
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
-include("../config.php");
-$lang=$_SESSION["lang"];
+include("../common/get_post.php");
 
-include("../lang/acquisitions.php");
+//include for translate
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
+include("../lang/acquisitions.php");
 include("../lang/prestamo.php");
 include("../lang/opac.php");
 
-include("../common/get_post.php");
-$arrHttp["base"]="suggestions";
-
-//Fields - copied from dataentry/browse.php 
+//Fields
 $ABCD_lang = $_SESSION["lang"];
 $ABCD_permission = $_SESSION["permiso"];
 $ABCD_base = $arrHttp['base'];
 $ABCD_cipar = $db_path."par/".$ABCD_base.".par";
 
-//$Formato - copied from dataentry/browse.php 
+//$Formato
 $table_browser="tb".$ABCD_base."";
-
 
 if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
     $Formato=urlencode($arrHttp["pft"]);
@@ -73,23 +65,71 @@ if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
 }
          
 
-include("../common/header.php");
 
+//Treatment of the search expression
+if (isset($arrHttp["Expresion"])){
+    $arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
+    $Expresion=trim($arrHttp["Expresion"]);
+    $Expresion=str_replace("  "," ",$Expresion);
+    $Expresion=str_replace("  "," ",$Expresion);
+    $Expresion=str_replace('("',"",$Expresion);
+    $Expresion=str_replace('")',"",$Expresion);
+    $xor="¬or¬";
+    $xand="¬and¬";
+    $Expresion=str_replace (" {", "{", $Expresion);
+    $Expresion=str_replace (" or ", $xor, $Expresion);
+    $Expresion=str_replace ("+", $xor, $Expresion);
+    $Expresion=str_replace (" and ", $xand, $Expresion);
+    $Expresion=str_replace ("*", $xand, $Expresion);
+    $nse=-1;
+    while (is_integer(strpos($Expresion,'"'))){
+        $nse=$nse+1;
+        $pos1=strpos($Expresion,'"');
+        $xpos=$pos1+1;
+        $pos2=strpos($Expresion,'"',$xpos);
+        $subex[$nse]=trim(substr($Expresion,$xpos,$pos2-$xpos));
+        if ($pos1==0){
+            $Expresion="{".$nse."}".substr($Expresion,$pos2+1);
+        }else{
+            $Expresion=substr($Expresion,0,$pos1-1)."{".$nse."}".substr($Expresion,$pos2+1);
+        }
+    }
 
-// Se determina el total de registros seg�n cada status del proceso
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&prefijo=STA_&Opcion=diccionario";
-$IsisScript=$xWxis."ifp.xis";
-include("../common/wxis_llamar.php");
-$Total=array(0,0,0,0,0,0,0,0);
+   $Expresion=str_replace(" ","*",$Expresion);
 
-foreach ($contenido as $value)  {
-	$L=explode('|',$value);
-	$ix=substr($L[0],4);
-	if (isset($L[1]) ) $Total[$ix]=$L[1];
+    while (is_integer(strpos($Expresion,"{"))){
+        $pos1=strpos($Expresion,"{");
+        $pos2=strpos($Expresion,"}");
+        $ix=substr($Expresion,$pos1+1,$pos2-$pos1-1);
+        if ($pos1==0){
+            $Expresion=$subex[$ix].substr($Expresion,$pos2+1);
+        }else{
+            $Expresion=substr($Expresion,0,$pos1)." ".$subex[$ix]." ".substr($Expresion,$pos2+1);
+        }
+    }
+    $Expresion=str_replace ("¬", " ", $Expresion);
+    $Expresion=urlencode($Expresion);
+}
+ 
+
+if (isset($arrHttp["unlock"]) and $arrHttp["Mfn"]!="New"){
+
+//if the record editing was cancelled unlock the record or keep deleted
+    $query="";
+    if (isset($arrHttp["unlock"])){
+        if (isset($arrHttp["Status"]) and $arrHttp["Status"]!=0)
+            $IsisScript=$xWxis."eliminarregistro.xis";
+        else
+            $IsisScript=$xWxis."unlock.xis";
+        $query = "&base=" . $arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"]. ".par&Mfn=" . $arrHttp["Mfn"]."&login=".$_SESSION["login"];
+        include("../common/wxis_llamar.php");
+        $res=implode("",$contenido);
+        $res=trim($res);
+    }
 }
 
 
-//Function generating the paging - copied from dataentry/browse.php 
+//Function generating the paging
 function custom_pagination($page, $totalpage, $link, $show)  {
     global $msgstr;
 //show page
@@ -145,7 +185,7 @@ if(isset($arrHttp['page'])) {
 }
 
 
-//check Option - copied from dataentry/browse.php 
+//check Option
 if (isset($arrHttp['option'])) {
     $ABCD_option = $arrHttp['option'];
     $parameters = "&option=".$ABCD_option;
@@ -154,7 +194,7 @@ if (isset($arrHttp['option'])) {
     $parameters = "&option=sort";
 }
 
-//check reverse - copied from dataentry/browse.php 
+//check reverse
 if (isset($arrHttp['reverse'])) {
     $ABCD_reverse = $arrHttp['reverse'];
     $parameters.= "&reverse=".$ABCD_reverse;
@@ -163,7 +203,7 @@ if (isset($arrHttp['reverse'])) {
     $parameters.= "&reverse=Off";
 }
 
-//check sortkey - copied from dataentry/browse.php 
+//check sortkey
 if (isset($arrHttp['sortkey'])) {
     $ABCD_sortkey = $arrHttp['sortkey'];
     $parameters.= "&sortkey=".$ABCD_sortkey;
@@ -172,7 +212,7 @@ if (isset($arrHttp['sortkey'])) {
     $parameters.= "&sortkey=mfn";
 }
 
-//check range - copied from dataentry/browse.php 
+//check range
 if (isset($arrHttp['range'])) {
     $ABCD_range = $arrHttp['range'];
     $parameters.= "&range=".$ABCD_range;
@@ -183,7 +223,7 @@ if (isset($arrHttp['range'])) {
 
 
 
-//check from - copied from dataentry/browse.php 
+//check from
 if (isset($arrHttp['from'])) {
     $ABCD_from = $arrHttp['from'];
     $parameters.= "&from=".$ABCD_from;
@@ -194,7 +234,6 @@ if (isset($arrHttp['from'])) {
 
 //checks the parameter "Expresion"
 if (isset($arrHttp['Expresion'])) {
-	$Expresion = $arrHttp['Expresion'];
     $parameters.= "&Expresion=".$Expresion;
  
 } else {
@@ -234,6 +273,7 @@ $archivo_tit=$db_path.$ABCD_base."/pfts/".$ABCD_lang."/tbtit.tab";
 $archivo_field=$db_path.$ABCD_base."/pfts/".$ABCD_lang."/tb".$ABCD_base.".pft";
 
 
+
 //Function created to display the information of the columns
 function read_collumns($archivo_tit) {
     global $ABCD_reverse;
@@ -266,6 +306,41 @@ function read_collumns($archivo_tit) {
     echo "<th class=\"action\"></th></tr>";
 }
 
+
+//Function Displays Options For Sorting Based On Sort.tab
+function display_sort($db_path,$ABCD_base,$ABCD_lang) {
+    global $msgstr;
+    global $ABCD_sortkey;
+    unset($fp);
+    if (file_exists($db_path.$ABCD_base."/pfts/".$ABCD_lang."/sort.tab"))
+        $fp = file($db_path.$ABCD_base."/pfts/".$ABCD_lang."/sort.tab");
+    else
+        if (file_exists($db_path.$ABCD_base."/pfts/".$ABCD_lang."/sort.tab"))
+            $fp = file($db_path.$ABCD_base."/pfts/".$ABCD_lang."/sort.tab");
+    if (isset($fp)){
+        echo '<option value="">'.$msgstr["select"].'</option>';
+        foreach ($fp as $value){
+            if (trim($value)!=""){
+                $pp=explode('|',$value);
+
+                $ver_sortkey=$ABCD_sortkey;
+
+               if (trim($pp[1]) == $ver_sortkey) {
+                   $selected = 'selected';
+               } else {
+                   $selected = "";
+               }
+               echo '<option value="' . trim($pp[1]) . '" '.$selected.'>' . $pp[0] . '</option>';
+
+            }
+        }
+    }
+
+}
+
+
+include("../common/header.php");
+include("../common/institutional_info.php"); 
 
 $mode = 0;
 
@@ -338,6 +413,7 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
                 echo "<style>
                 .bg_status-".$Isis_Item."{ 
                     color: #666;
+
                 }
 
                 </style>";
@@ -370,11 +446,11 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
                 echo '<td class="action" nowrap>';
 
                 if ($Isis_Status==0) {
-                    echo '<button class="button_browse show bt-blue" type="button" title='.$msgstr["show"].' onclick="Mostrar('.$mfn.')"><i class="far fa-eye" alt="'.$msgstr["show"].'" title="'.$msgstr["show"].'"></i> </button>';
+                    echo '<button class="button_browse show bt-blue" type="button" onclick="Mostrar('.$mfn.')"><i class="far fa-eye" alt="'.$msgstr["show"].'" title="'.$msgstr["show"].'"></i> '.$msgstr["show"].'</button>';
                 
-                    echo '<button title="'.$msgstr["edit"].'" class="button_browse edit bt-green" "type="button" onclick="Editar('.$mfn.','.$Isis_Status.')"><i class="fas fa-edit" alt="'.$msgstr["edit"].'" title="'.$msgstr["edit"].'"></i></button>';
+                    echo '<button class="button_browse edit bt-green" "type="button" onclick="Editar('.$mfn.','.$Isis_Status.')"><i class="fas fa-edit" alt="'.$msgstr["edit"].'" title="'.$msgstr["edit"].'"></i> '.$msgstr["edit"].'</button>';
 
-                    echo '<button title="'.$msgstr["eliminar"].'" class="button_browse delete bt-red" type="button" onclick="Eliminar('.$mfn.')"><i class="far fa-trash-alt" alt="'.$msgstr["eliminar"].' title="'.$msgstr["eliminar"].' ></i> </button>';
+                    echo '<button class="button_browse delete bt-red" type="button" onclick="Eliminar('.$mfn.')"><i class="far fa-trash-alt" alt="'.$msgstr["eliminar"].' title="'.$msgstr["eliminar"].' ></i> '.$msgstr["eliminar"].'</button>';
                 } else {
                     switch ($Isis_Status){
                         case -2:
@@ -393,107 +469,193 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
     }
 
 }//generate_table()
+
+
+if (!isset($arrHttp["return"])){
+    $ret="../common/inicio.php?reinicio=s".$encabezado;
+    if (isset($arrHttp["modulo"])) $ret.="&modulo=".$arrHttp["modulo"];
+    if (isset($base)) $ret.="&base=".$base;
+}else{
+    $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
+}
+
 ?>
 
-<style type="text/css">
-	a.<?php echo $Expresion;?> {
-		font-weight: bold;
-	}
-
-</style>
-
-<body>
-
-<?php
-$encabezado="";
-include("../common/institutional_info.php");
-?>
 
 <div class="sectionInfo">
-	<div class="breadcrumb">
-		<?php echo $msgstr["suggestions"]?>
-	</div>
-	<div class=actions>
-	</div>
-<?php include("suggestions_menu.php");?>
+    <div class="breadcrumb">
+        <?php $breadcrumb=$msgstr["admin"]." (".$arrHttp["base"].") | ".$total_lines." ".$msgstr["registros"];  ?>
+        <?php echo $breadcrumb;?>
+    </div><!--./breadcrumb-->
+
+    <div class="actions">
+    </div><!--.actions-->
+
+
+
+<?php include("browse_menu.php")?>
+
+
+
+
 </div>
-<?php 
-$ayuda="acquisitions/overview.html";
-include "../common/inc_div-helper.php" 
-?>
+</div><!--./sectionInfo-->
 
-<div>
-<div class="middle form">
-	<h3><?php echo $msgstr["overview"].": ".$msgstr["suggestions"]?></h3>
-	<div class="formContent row">
+<div class="middle list">
+    <div class="searchBoxBrowser">        
+        <div class="f_left">    
+ 
+        <!--SEARCH FORM-->    
+            <form name="forma1" class="formsearch" onsubmit="setGetParameter('forma1', 'ok')"> 
+                <label><?php echo $msgstr["buscar"]?>: </label>
+                <input type="hidden" name="reverse" value="<?php echo $ABCD_reverse;?>" onSubmit="setGetParameter('reverse', this.value,clear)">  
+                <input type="hidden" name="sortkey" value="<?php echo $ABCD_sortkey;?>" >      
+                <input type="hidden" name="range" value="<?php echo $ABCD_range;?>" >      
+                <input type="hidden" name="base" value="<?php echo $arrHttp['base'];?>" onSubmit="setGetParameter('base', this.value,clear)">
+                <input type="text" name="Expresion" placeholder="<?php echo $msgstr["m_busquedalibre"]?>..." class="textEntry b_search" onfocus="this.className = 'textEntry textEntryFocus b_search';"  onblur="this.className = 'textEntry b_search';" value='<?php if (isset($arrHttp["Expresion"])) echo $arrHttp['Expresion']?>' onchange="setGetParameter('Expresion', this.value)" />
+                <button type="submit" class="bt-blue">
+                    <i class="fas fa-search"></i> <?php echo $msgstr["buscar"]?>
+                </button>            
+            </form>
+        <!--./SEARCH FORM-->
 
-	
-	<div class="col-2 abcd-sidebar abcd-bar-block"  style="width:20%">
-	<h3 class="w3-bar-item">Menu</h3>
-		<a href="overview.php?base=suggestions&Expresion=STA_0" class="abcd-bar-item abcd-button STA_0" >
-			<i class="far fa-clock"></i> <?php echo $msgstr["status_0"]?> (<?php if (isset( $Total[0])) echo $Total[0]?>) 
-		</a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_1" class="abcd-bar-item abcd-button STA_1" >
-			<i class="far fa-thumbs-up"></i> <?php echo $msgstr["approved"]?> (<?php if (isset($Total[1])) echo $Total[1]?>) 
-		</a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_2" class="abcd-bar-item abcd-button STA_2" >
-			<i class="far fa-thumbs-down"></i> <?php echo $msgstr["rejected"]?>
-		(<?php if (isset($Total[2])) echo $Total[2]?>) </a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_3" class="abcd-bar-item abcd-button STA_3" >
-			<i class="fas fa-search-dollar"></i> <?php echo $msgstr["inbidding"]?>
-		(<?php if (isset($Total[3])) echo $Total[3]?>) </a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_4" class="abcd-bar-item abcd-button STA_4" >
-			<i class="fas fa-shopping-cart"></i> <?php echo $msgstr["prov_sel"]?>
-		(<?php if (isset($Total[4])) echo $Total[4]?>) </a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_5" class="abcd-bar-item abcd-button STA_5" >
-			<i class="fas fa-file-invoice-dollar"></i> <?php echo $msgstr["purchase"]?>
-		(<?php if (isset($Total[5])) echo $Total[5]?>) </a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_6" class="abcd-bar-item abcd-button STA_6" >
-			<i class="fas fa-receipt"></i> <?php echo $msgstr["itemsrec"]?>
-		(<?php if (isset($Total[6])) echo $Total[6]?>) </a>
-		
-		
-		<a href="overview.php?base=suggestions&Expresion=STA_7" class="abcd-bar-item abcd-button STA_7" >
-			<i class="fas fa-check"></i> <?php echo $msgstr["completed"]?>
-			(<?php if (isset($Total[7])) echo $Total[7]?>) 
-		</a>
-		
-	
-	</div> <!--./col-2-->
+        </div><!--./f_left-->
 
-	<div class="col-10">
-        <table  class=" browse">
+
+        <div class="f_right">
+            <!--Form for clearing all filters and search expressions-->
+            <form>
+                <input type="hidden" name="base" value="<?php echo $arrHttp['base'];?>" onSubmit="setGetParameter('base', this.value,clear)">
+                <input type="hidden" name="reverse" value="<?php echo $ABCD_reverse;?>" onSubmit="setGetParameter('reverse', this.value,clear)">
+                <button type="submit" class="bt-blue" value="sort" name="option" onclick="setGetParameter('option', this.value,clear)"><i class="fas fa-redo-alt"></i> <?php echo $msgstr["borrar"];?></button>
+            </form>
+
+            <!--Displays only deleted records-->
+            <?php
+             if ($ABCD_option=='showdeleted') {
+            ?>
+            <form>
+                <input type="hidden" name="base" value="<?php echo $arrHttp['base'];?>" onSubmit="setGetParameter('base', this.value,clear)">
+                <input type="hidden" name="reverse" value="<?php echo $ABCD_reverse;?>" onSubmit="setGetParameter('reverse', this.value,clear)">
+                <button type="submit" class="bt-green"  value="sort" name="option" onclick="setGetParameter('option', this.value,clear)"><i class="far fa-eye-slash"></i> <?php echo $msgstr["showdelrec"];?></button>
+            </form>
+
+            <?php 
+            } else {
+            ?>
+
+            <form>
+                <input type="hidden" name="base" value="<?php echo $arrHttp['base'];?>" onSubmit="setGetParameter('base', this.value,clear)">
+                <input type="hidden" name="reverse" value="<?php echo $ABCD_reverse;?>" onSubmit="setGetParameter('reverse', this.value,clear)">
+                <input type="hidden" name="Expresion" onSubmit="setGetParameter('Expresion', this.value,clear)">
+
+                <button type="submit" class="bt-blue" value="showdeleted" name="option" onclick="setGetParameter('option', this.value,clear)"><i class="far fa-eye"></i></i> <?php echo $msgstr["showdelrec"];?></button>
+
+            </form>
+
+            <?php
+            }
+            ?>
+        </div><!--./f_right-->
+
+    </div><!--./searchBoxBrowser-->
+
+
+    <div class="SubsearchBoxBrowser">
+
+        <div class="f_left">
+             <h2>
+               <?php
+                 echo $msgstr["total_recup"].": ".$total_lines." ".$msgstr["registros"];
+                ?>
+            </h2>
+
+            
+        <!-- FORM RANGE -->
+        <label><?php echo $msgstr["show"];?>: </label>
+            <select name="range" id="range" class="textEntry" onchange="setGetParameter('range', this.value)">
+                 <?php
+            
+                    if(!empty($_REQUEST['range'])) {
+                      $selected = $_GET['range'];
+                      $check = 'selected';
+                      echo '<option value="'.$selected.'" '.$check.'>'.$selected.'</option>';
+                    } else {
+                      echo '<option value="" disabled selected>'.$msgstr["select"].'</option>';
+                    }
+                ?>           
+                <option value="10" >10</option>
+                <option value="20" >20</option>
+                <option value="50" >50</option>
+                <option value="100" >100</option>
+            </select>
+
+    
+            <!-- ./FORM RANGE -->
+
+            <!-- FORM SORTKEY -->   
+                <label><?php echo $msgstr["orderby"];?>: </label>
+                <select name="sortkey" class="textEntry" onchange="setGetParameter('sortkey', this.value)">
+                    <?php echo display_sort($db_path,$ABCD_base,$ABCD_lang);?>
+                </select>
+            <!-- /SORTKEY -->   
+
+
+            <!-- FORM ASC/DESC -->
+            <form> 
+                <input type="hidden" name="sortkey" value="<?php echo $ABCD_sortkey;?>" onSubmit="setGetParameter('reverse', this.value)">    
+                <label>Reverse: </label>
+                <select name="reverse" class="textEntry" onchange="setGetParameter('reverse', this.value)">
+                    <option></option>
+                          <?php                    
+                              $selected = $ABCD_reverse;
+                              $check = 'selected';
+                              echo '<option value="" disabled selected>'.$msgstr["select"].'</option>';
+                        ?>  
+                    <option value="On" <?php if ($selected=="On") { echo $check; } ?> >On</option>
+                    <option value="Off"  <?php if ($selected=="Off") {echo $check; }?> >Off</option>
+                </select>
+            </form>
+
+        </div><!--./f_left-->
+
+
+
+
+        
+    </div>
+
+<div class="formContent">
+    <!--Table of Contents-->
+        <table  class="listTable browse">
             <?php echo read_collumns($archivo_tit);?>
             <?php echo generate_table($contenido, $first_post, $last_post,$show,$total_lines,$end_l) ;?>
             <?php echo read_collumns($archivo_tit);?>
         </table>
-	</div>	
 
-    <div class="tMacroActions Browser">
-        <div class="spacer">&#160;</div>     
-         <?php
-        //Show pagination
-        echo custom_pagination($page, $totalpage, 'browse.php?action=detail&page=%s&base='.$arrHttp['base'].'&range='.$show.$parameters , $show);
-         ?>
-        <div class="spacer">&#160;</div>        
-    </div><!--./tMacroActions-->  
+        <div class="tMacroActions Browser">
+            <div class="spacer">&#160;</div>     
+             <?php
+            //Show pagination
+            echo custom_pagination($page, $totalpage, 'browse.php?action=detail&page=%s&base='.$arrHttp['base'].'&range='.$show.$parameters , $show);
+             ?>
+            <div class="spacer">&#160;</div>        
+        </div><!--./tMacroActions-->  
 
+    <?php
+        $head=$db_path.$arrHttp["base"]."/pfts/".$ABCD_lang."/".$pft_name[0]."_print.txt";
 
-	</div>
+        if (file_exists($head)){
+            $fp=file($head);
+            $arrHttp["headings"]="";
+            foreach ($fp as $value) {
+                $arrHttp["headings"].=trim($value)."\r";
+            }
+        }
+    ?>
 </div>
 
+</div><!--./middle list-->
 
 
 <script type="text/javascript">
@@ -577,7 +739,7 @@ function Crear(){
 
 
 function Mostrar(Mfn){
-    msgwin=window.open("../dataentry/show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
+    msgwin=window.open("show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
     msgwin.focus()
 }
 
@@ -593,7 +755,7 @@ function Eliminar(Mfn){
 
 
 <!--FORM DELETE-->
-<form name="eliminar" method="post" action="../dataentry/eliminar_registro.php">
+<form name="eliminar" method="post" action="eliminar_registro.php">
     <input type="hidden" name="base" value="<?php echo $arrHttp["base"]; ?>">
     <input type="hidden" name="from" value="<?php echo $first_post+1; ?>">
 
@@ -605,18 +767,15 @@ function Eliminar(Mfn){
     <input type="hidden" name="Mfn">
     <?php if (isset($arrHttp["encabezado"])) ?>
     <input type="hidden" name="encabezado" value="s">
-    <?php
-
-
-    if (isset($arrHttp["encabezado"])){
-        echo "<input type=hidden name=encabezado value=s>\n";
-    }
-    if (isset($arrHttp["return"])){
-        echo "<input type=hidden name=retorno value=".$arrHttp["return"].">\n";
-        echo '<input type="hidden" name="showdeleted" value="yes">';
-    }
-    if (isset($arrHttp["Expresion"])) echo "<input type=hidden name=Expresion value=".urlencode($arrHttp["Expresion"]).">\n";
+    <?php 
+        if (isset($arrHttp["return"])) {
     ?>
+    <input type="hidden" name="showdeleted" value="yes">
+    <input type="hidden" name="return" value="<?php echo $arrHttp["return"];?>">
+    <?php
+    }
+    ?>
+
 </form>
 <!--./FORM DELETE-->
 
@@ -636,7 +795,7 @@ function Eliminar(Mfn){
     <input type="hidden" name="Mfn">
     <input type="hidden" name="Status">
     <input type="hidden" name="showdeleted" value="yes">
-    <input type="hidden" name="retorno" value="../acquisitions/overview.php">
+    <input type="hidden" name="retorno" value="browse.php">
     <input type="hidden" name="Opcion" value="editar">
     <input type="hidden" name="encabezado" value="s">
     <?php
@@ -655,6 +814,4 @@ function Eliminar(Mfn){
 <!--./FORM EDITION-->
 
 
-<?php
-include("../common/footer.php");
-?>
+<?php include("../common/footer.php"); ?>

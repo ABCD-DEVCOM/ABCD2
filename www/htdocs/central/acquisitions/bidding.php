@@ -146,22 +146,22 @@ include "../common/inc_div-helper.php";
 <form name=sort>
 <div class="middle form">
 	<div class="formContent">
-		<?php echo $msgstr["approved_rec"]." ".$msgstr["sorted"]?>
+		<h2><?php echo $msgstr["approved_rec"]." ".$msgstr["sorted"]?></h2>
 		<div class="pagination">
-			<a href='javascript:Enviar("TI")' class="singleButton">
+			<a href='javascript:Enviar("TI")' class="bt bt-gray">
 						<?php echo $msgstr["title"]?>
 					</a>
-			<a href='javascript:Enviar("RB"' class="singleButton">
+			<a href='javascript:Enviar("RB"' class="bt bt-gray">
 						<?php echo $msgstr["recomby"]?>
 					</a>
-			<a href='javascript:Enviar("DA")' class="singleButton">
+			<a href='javascript:Enviar("DA")' class="bt bt-gray">
 						 <?php echo $msgstr["date_app"]?>
 					</a>
-			<a href='javascript:Enviar("OP")' class="singleButton">
+			<a href='javascript:Enviar("OP")' class="bt bt-gray">
 						 <?php echo $msgstr["operator"]?>
 					</a>
 			<p align=right><input type=checkbox name=see_all
-			<?php if (isset($arrHttp["see_all"]) and $arrHttp["see_all"]=="Y") echo "value=Y checked"?>><?php echo $msgstr["all_oper"]?>
+			<?php if (isset($arrHttp["see_all"]) and $arrHttp["see_all"]=="Y") echo "value=Y checked"?>> <?php echo $msgstr["all_oper"]?>
 		</div>
 		
 		<table class="listTable browse">

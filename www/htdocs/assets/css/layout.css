@@ -914,22 +914,23 @@ right: 15px;
 /* START SIDEBAR  */
 
 .abcd-sidebar{
+	box-sizing: inherit;
 	height:100%;
-	background-color:#fff;
 	position:relative;!important;
 	z-index:1;
-	overflow:auto;
+	overflow: initial;
 }
 
 
 .abcd-bar-block .abcd-bar-item{
 	width:100%;
 	display:block;
-	padding:8px;
+	padding: 8px 2px;
 	text-align:left;
 	border:none;
 	white-space:normal;
 	float:none;outline:0;
+	border-right: solid 0.1rem var(--light);
 }
 
 .abcd-bar-block.abcd-center .abcd-bar-item{

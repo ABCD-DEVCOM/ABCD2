@@ -3,6 +3,8 @@
 2021-08-30 fho4abcd Restored from accidental delete
 2021-08-30 fho4abcd Added some description, inserted div-helper
 2021-08-30 fho4abcd Cleanup html, lineends, resolved undefined variable tag_s
+2022-01-11 rogercgui add new backbutton
+
 **
 ** Do not get confused by a file with the same name in central/dataentry.
 ** This file is to create and modify worksheets (with the extension .fmt)
@@ -210,15 +212,15 @@ if (isset($arrHttp["encabezado"])){
 			</div>
 
 			<div class="actions">
-<?php if ($arrHttp["Opcion"]=="new"){
-				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
-	}else{
-		       echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
-	}
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["cancel"]?></strong></span>
-				</a>
+			<?php 
+			if ($arrHttp["Opcion"]=="new"){
+				$backtoscript = '../common/inicio.php?reinicio=s';
+				include "../common/inc_back.php";
+			}else{
+				$backtoscript = 'menu_modificardb.php?base='.$arrHttp["base"].$encabezado;
+				include "../common/inc_back.php";
+			}
+			?>
 			</div>
 			<div class="spacer">&#160;</div>
 </div>
@@ -361,7 +363,7 @@ if (isset($tag_s) ) {
             </tr>
 		</table>
 	</td></tr>
-	<tr><td colspan=4><input type=checkbox name=link_fdt><?php echo $msgstr["link_fdt_msg"]?></td></tr>
+	<tr><td colspan=4><input type=checkbox name=link_fdt> <?php echo $msgstr["link_fdt_msg"]?></td></tr>
 	<tr><td colspan=4><?php echo $msgstr["whendone"]?></td></tr>
 	<tr><td valign=top colspan=4 >
 		<?php echo $msgstr["name"]?>: <input type=text name=nombre size=8 maxlength=12> <?php echo $msgstr["description"]?>: <input type=text size=50 maxlength=50 name=descripcion> &nbsp;

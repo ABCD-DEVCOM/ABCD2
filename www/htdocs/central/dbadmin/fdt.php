@@ -743,50 +743,57 @@ if (isset($arrHttp["encabezado"])){
 
 	echo "</div><div class=\"actions\">";
 	if (!isset($arrHttp["moodle"])){
+
 		if ($arrHttp["Opcion"]=="new"){
 			if (isset($arrHttp["encabezado"])){
-				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
+
+				$backtoscript = "../common/inicio.php?reinicio=s";
+				include "../common/inc_back.php";
 			}else{
-				 echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";
+				$backtoscript = "menu_creardb.php";
+				include "../common/inc_back.php";				
 			}
-		}else{
-			if (isset($arrHttp["encabezado"]))
+		} else {
+			if (isset($arrHttp["encabezado"])) {
 				$encabezado="&encabezado=s";
-			else
+			} else {
 				$encabezado="";
+			}
+
 			if (isset($arrHttp["Fixed_field"])){
-				echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";
-			}else{
-				if (!isset($arrHttp["ventana"]))
-					echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";
-				else
-					echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
+
+				$backtoscript = "fixed_marc.php?base=". $arrHttp["base"].$encabezado;
+				include "../common/inc_back.php";
+
+			} else {
+				if (!isset($arrHttp["ventana"])) {
+				
+				$backtoscript = "menu_modificardb.php?base=". $arrHttp["base"].$encabezado;
+				include "../common/inc_back.php";
+
+				} else { 
+
+				$backtoscript = "javascript:self.close()";
+				include "../common/inc_back.php";
+
 			}
 		}
-		echo "
-						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>". $msgstr["cancel"]."</strong></span>
-					</a>
-				</div>
-				<div class=\"spacer\">&#160;</div>
-		</div>";
-	}else{
-		echo "</div>
-				<div class=\"spacer\">&#160;</div>
-		</div>";
+
 	}
 
+}//isset($arrHttp["moodle"]
+		?>
+				</div>
+				<div class="spacer">&#160;</div>
+		</div>
+
+
+<?php 
+$ayuda = "fdt.html";
+include "../common/inc_div-helper.php";
 ?>
-<div class="helper">
-<a href="../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt.html" target=_blank><?php echo $msgstr["help"]?></a>&nbsp; &nbsp;
-<?php
-if ((isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) and !isset($arrHttp["moodle"]))
-	echo "<a href='../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fdt.html' target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: dbadmin/fdt.php";
-?>
-</font>
-	</div>
-	<div class="middle form">
+
+<div class="middle form">
 		<div class="formContent">
 			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
 			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
