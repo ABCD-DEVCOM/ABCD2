@@ -1,7 +1,7 @@
 H||Identificação do objeto|0|0||||||||||||0||0|0|||
 F|10|Tipo de aquisição proposta|0|0|ab||R||5|P|%path_database%copies/def/pt/acquiredby.tab|||||0||0|0|||
 F|1|Número da proposta|0|0|||AI|||||CN_|v1|v1||0||0|0|||
-F|2|Status|0|0|||R||4|P|status.tab|||||0||0|0|||
+F|2|Status|0|0|||S||4|P|status.tab||||0|0||0|0|||
 F|3|Sobre a aquisição|0|0|||R||1|P|typeacquisition.tab|||||0||0|0|||
 F|5|Acervo relacionado|0|0|||S||20|P|%path_database%acquisitions.dat|||||0||0|0|||
 F|6|Identificação do objeto|0|0|||S||20|P|type.tab|||||0||0|0|||

@@ -70,44 +70,51 @@ $encabezado="";
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 }
-echo "
-	<div class=\"sectionInfo\">
-
-			<div class=\"breadcrumb\"><h5>".
-				$msgstr["fdt"]." " .$msgstr["database"]. ": " . $arrHttp["base"]."</h5>
+?>
+	<div class="sectionInfo">
+			<div class="breadcrumb">
+				<h5>
+				<?php echo 	$msgstr["fdt"]." " .$msgstr["database"]. ": " . $arrHttp["base"]; ?>
+					
+				</h5>
 			</div>
 
-			<div class=\"actions\">
-	";
-if (isset($arrHttp["encabezado"]))
-		$encabezado="&encabezado=s";
-else
-	$encabezado="";
-if (isset($arrHttp["Fixed_field"])) {
-	echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
-}else{
-	if (!isset($arrHttp["ventana"]))
-		echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
-	else
-		echo "<a href=\"javascript:self.close()\" class=\"defaultButton backButton\">";
-}
-echo "
-		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>". $msgstr["back"]."</strong></span>
-		</a>
+			<div class="actions">
+				<?php	
+				if (isset($arrHttp["encabezado"])){
+					$encabezado="&encabezado=s";
+				} else {
+					$encabezado="";
+				}
+
+				if (isset($arrHttp["Fixed_field"])) {
+					echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
+				} else {
+				
+					if (!isset($arrHttp["ventana"])) {
+						$backtoscript = "menu_modificardb.php?base=". $arrHttp["base"].$encabezado;
+						include "../common/inc_back.php";
+
+					 } else {
+
+						$backtoscript = "javascript:self.close()";
+						include "../common/inc_back.php";
+				}
+
+			}
+				?>
 	</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-echo"
-	<div class=\"middle form\">
-		<div class=\"formContent\">";
-echo "<font size=1 face=arial> &nbsp; &nbsp; Script: fdt_update.php";
-echo "<br><br>
-	 <p><h2>".$msgstr["fdtupdated"]."</h2>";
-echo "
-</div>
-</div>";
-include ("../common/footer.php");
-?>
-</body>
-</html>
+
+	<div class="spacer">&#160;</div>
+
+	</div>
+
+	<?php include "../common/inc_div-helper.php" ?>
+
+	<div class="middle form">
+		<div class="formContent">
+	 		<h2><?php echo $msgstr["fdtupdated"];?> </h2>
+		</div>
+	</div>
+
+<?php include ("../common/footer.php"); ?>

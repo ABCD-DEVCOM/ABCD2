@@ -64,6 +64,14 @@ include "../common/inc_div-helper.php";
 
 	<div class="middle form">
 		<div class="formContent">
+
+
+<script type="text/javascript">
+	setTimeout(function(){
+            top.location.href = '<?php echo "../acquisitions/overview.php" ?>';
+         }, 1000);
+</script>
+
 <?php
 if ($cn!=""){
 	$arrHttp["Formato"]=$arrHttp["base"];
@@ -84,6 +92,11 @@ if ($cn!=""){
 	die;
 }
 die;
+?>
+
+
+<?php
+
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
 global $arrHttp;
@@ -172,3 +185,5 @@ function VerificarPermisos($perms){
 
 }
 ?>
+
+

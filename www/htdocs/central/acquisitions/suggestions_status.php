@@ -6,7 +6,10 @@ if (!isset($_SESSION["permiso"])){
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../config.php");
 $lang=$_SESSION["lang"];
+
 include("../lang/acquisitions.php");
+include("../lang/dbadmin.php");
+include("../lang/admin.php");
 
 include("../common/get_post.php");
 if(isset($_SESSION["permiso"]["ACQ_ACQALL"]))
@@ -34,6 +37,9 @@ $arrHttp["base"]="suggestions";
 // Se ubican todas las solicitudes que estén pendientes (STATUS=0)
 // se asigna el formato correspondiente a la clave de clasificación
 // se lee el título de las columnas de la tabla
+
+//$arrHttp["sort"] ="";
+
 switch($arrHttp["sort"]){
 	case "TI":
 		$index="ti.pft";
@@ -48,8 +54,8 @@ switch($arrHttp["sort"]){
 		$tit="dr_tit.tab";
 		break;
 	case "OP":
-		$index="op.pft";
-		$tit="op_tit.tab";
+		$index="op_order.pft";
+		$tit="op_order_tit.tab";
 		break;
 	default:
 		$index="ti_decision.pft";
@@ -133,22 +139,28 @@ include "../common/inc_div-helper.php";
 <form name=sort>
 <div class="middle form">
 	<div class="formContent">
-         <?php echo $msgstr["pending_sort"]?>
+         <h2><?php echo $msgstr["pending_sort"]?></h2>
 		<div class="pagination">
-			<a href='javascript:Enviar("TI")' class="singleButton">
-						<?php echo $msgstr["title"]?>
-					</a>
-			<a href='javascript:Enviar("RB"' class="singleButton">
-						<?php echo $msgstr["recomby"]?>
-					</a>
-			<a href='javascript:Enviar("DA")' class="singleButton">
-						 <?php echo $msgstr["date_app"]?>
-					</a>
-			<a href='javascript:Enviar("OP")' class="singleButton">
-						 <?php echo $msgstr["operator"]?>
-					</a>
-			<p align=right><input type=checkbox name=see_all
-			<?php if (isset($arrHttp["see_all"]) and $arrHttp["see_all"]=="Y") echo "value=Y checked"?>><?php echo $msgstr["all_oper"]?>
+			<a href='javascript:Enviar("TI")' class="bt bt-gray">
+				<?php echo $msgstr["title"]?>
+			</a>
+
+			<a href='javascript:Enviar("RB")' class="bt bt-gray">
+				<?php echo $msgstr["recomby"]?>
+			</a>
+			<a href='javascript:Enviar("DA")' class="bt bt-gray">
+				<?php echo $msgstr["date_app"]?>
+			</a>
+			<a href='javascript:Enviar("OP")' class="bt bt-gray">
+			 <?php echo $msgstr["operator"]?>
+			</a>
+			
+			<p align=right>
+				<input type=checkbox name=see_all
+			<?php 
+			if (isset($arrHttp["see_all"]) and $arrHttp["see_all"]=="Y") 
+				echo "value=Y checked"?>> <?php echo $msgstr["all_oper"]?>
+			</p>
 		</div>
 
 
@@ -165,17 +177,24 @@ include "../common/inc_div-helper.php";
 		echo "\n<tr>";
 		$r=explode('|',$value);
 		$ix1="";
-		foreach ($r as $cell){
+		foreach ($r as $mfn){
 			if ($ix1=="")
 				$ix1=1;
 			else
 				if ($ix1==1){
-					echo "<td nowrap><a href=javascript:Editar($cell)><img src=\"../../assets/images/edit.png\"></a>&nbsp;
-					<a href=javascript:Mostrar($cell)><img src=\"../../assets/images/zoom.png\"></a>
+					echo "<td nowrap>";
+
+ 					echo "<a  class=\"button_browse edit bt-green\" href=javascript:Editar($mfn)><i class=\"fas fa-edit\" alt=".$msgstr["edit"]." title=".$msgstr["edit"]."></i></a>&nbsp;";
+
+					echo '<a class="button_browse show bt-blue" type="button" title='.$msgstr["show"].' href="javascript:Mostrar('.$mfn.')"><i class="far fa-eye" alt="'.$msgstr["show"].'" title="'.$msgstr["show"].'"></i> </a>';
+
+					
+					echo "
+
 					</td>";
 					$ix1=2;
 				}else
-	 				echo "<td>$cell</td>";
+	 				echo "<td>$mfn</td>";
 		}
 
 	}
@@ -186,15 +205,17 @@ include "../common/inc_div-helper.php";
 	</div>
 </div>
 </form>
-<form name=EnviarFrm method=post action=suggestions_status_ex.php>
-<input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
-<input type=hidden name=Mfn value="">
-<input type=hidden name=Opcion value="">
-<input type=hidden name=sort value=<?php echo $arrHttp["sort"]?>>
-<input type=hidden name=retorno value=../acquisitions/suggestions_status.php>
-<input type=hidden name=encabezado value="S">
-<?php if (isset($arrHttp["see_all"])) echo "<input type=hidden name=see_all value=\"S\"> ";?>
+
+<form name="EnviarFrm" method="post" action="suggestions_status_ex.php" >
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+	<input type="hidden" name="Mfn" value="">
+	<input type="hidden" name="Opcion" value="">
+	<input type="hidden" name="sort" value=<?php echo $arrHttp["sort"]?>>
+	<input type="hidden" name="retorno" value="../acquisitions/suggestions_status.php">
+	<input type="hidden" name="encabezado" value="S">
+	<?php 
+		if (isset($arrHttp["see_all"])) 
+			echo '<input type="hidden" name="see_all" value="S">';
+	?>
 </form>
-<?php include("../common/footer.php");
-echo "</body></html>" ;
-?>
+<?php include("../common/footer.php");?>

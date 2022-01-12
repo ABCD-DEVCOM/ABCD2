@@ -92,7 +92,7 @@ if (isset($_SESSION["permiso"]["ACQ_ACQALL"]) or isset($_SESSION["permiso"]["ACQ
 					</div>
 					<div class="sectionButtons">
 
-						<a href="../dataentry/browse.php?base=suggestions&modulo=acquisitions" class="menuButton multiLine suggestButton">
+						<a href="../acquisitions/browse.php?base=suggestions&modulo=acquisitions" class="menuButton multiLine suggestButton">
 							<span><strong><?php echo $msgstr["suggestions"]?></strong></span>
 						</a>
 						<a href="../dataentry/browse.php?base=providers&modulo=acquisitions" class="menuButton multiLine providersButton">
