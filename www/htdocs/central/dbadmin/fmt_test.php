@@ -1,4 +1,7 @@
 <?php
+/*
+** 20220112 fho4abcd remove non-existent include+error messages+improve html_entity_decode+ script moved to dbadmin
+*/
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -6,16 +9,29 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include("../config.php");
-include("../common/header.php");
-
 $lang=$_SESSION["lang"];
-
 include("../lang/dbadmin.php");
-
 include("../lang/admin.php");
 
 $base=$arrHttp["base"];
-$arrHttp["cipar"]="$base.par";
+include("../common/header.php");
+
+?>
+<body>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+    <?php echo $msgstr["credfmt"]." &rarr; ".$msgstr["preview"]?>
+    </div>
+    <div class="actions">
+    <?php
+    include "../common/inc_close.php";
+    ?>
+	</div>
+    <div class="spacer">&#160;</div>
+</div>
+
+<?php
+include "../common/inc_div-helper.php";
 
 //Se lee el archivo .fdt de la base de datos para construir la hoja de ingreso
 
@@ -29,7 +45,7 @@ if (!$fpTm) {
 }
 $base_fdt=array();
 foreach ($fpTm as $linea){
-	if (trim($linea)!="") {
+	if (trim($linea)!="") {
 		$base_fdt[]=$linea;
 	}
 }
@@ -57,13 +73,13 @@ foreach ($t as $value){
 							$vars[$ix]=$lin;						}					}				}			}		}
 	}
 }
+// required by included files
 $fmt_test="S";
+$arrHttp["cipar"]="$base.par";
+$arrHttp["Mfn"]=0;
 include("../dataentry/dibujarhojaentrada.php");
-include("../dataentry/leerarchivoini.php");
-
 include("../dataentry/ingresoadministrador.php");
 
-
-
 ?>
+
 
