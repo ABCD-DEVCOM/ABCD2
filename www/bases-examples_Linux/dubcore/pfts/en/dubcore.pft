@@ -108,7 +108,7 @@ REF(  L('ID=',v111),
     ** Following lines to only show URL after logging in
     */
     /*
-    if p(v98) then '<tr><td><b>Dcoument URL</b></td><td>
+    if p(v98) then '<tr><td><b>Document URL</b></td><td>
         <div id=divurld',f(mfn,1,0),' name=divurld',f(mfn,1,0),'><a href=javascript:DisplayURL(',f(mfn,1,0),')>DISPLAY</a></div>
         <div id=divurl',f(mfn,1,0),' name=divurl',f(mfn,1,0),' style=display:none>
         <A HREF="',v98'" target=new>'v98+|<br>|,'</A></div></td>'
@@ -146,4 +146,5 @@ if p(v110) and val(v110)<2 then
 '" target=new>Click here for more text-previews in new tab</a><br>',
 '</td>',
 fi,
+
 '</table>'
