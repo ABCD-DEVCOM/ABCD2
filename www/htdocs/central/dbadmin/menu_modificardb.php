@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20211216 fho4abcd Backbutton & helper by included file. improve html
+20220112 fho4abcd fmt.php->fmt_adm.php
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -80,8 +81,8 @@ function Update(Option){
 			document.getElementById('loading').style.display='block';
 			document.update_base.action="fst.php"
 			break;
-		case "fmt":
-			document.update_base.action="fmt.php"
+		case "fmt_adm":
+			document.update_base.action="fmt_adm.php"
 			break;
 		case "pft":
 			document.update_base.action="pft.php"
@@ -224,7 +225,7 @@ foreach ($fp as $value){
 			}
 			?>
 			<li><a href=javascript:Update("fst")><?php echo $msgstr["fst"]?></a></li>
-			<li><a href=javascript:Update("fmt")><?php echo $msgstr["fmt"]?></a></li>
+			<li><a href=javascript:Update("fmt_adm")><?php echo $msgstr["fmt"]?></a></li>
 			<li><a href=javascript:Update("pft")><?php echo $msgstr["pft"]?></a></li>
 			<?php
 			if (!isset($ldr) or $ldr!="s" )

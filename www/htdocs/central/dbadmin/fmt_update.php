@@ -1,4 +1,7 @@
 <?php
+/*
+** 20220112 fho4abcd backbutton+helper+clean html+improve message
+*/
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -8,30 +11,58 @@ include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
 
-
 include("../lang/dbadmin.php");
-$fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["nombre"].".fmt","w",0);
+include("../common/header.php");
+?>
+<body>
+<?php
+$backtoscript="../dbadmin/fmt_adm.php"; // The default return script
+include("../common/institutional_info.php");
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["fmt"].": ". $arrHttp["nombre"]."-".$arrHttp["descripcion"]." (".$arrHttp["base"].")"?>
+	</div>
+	<div class="actions">
+    <?php 
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php include "../common/inc_div-helper.php";?>
+<div class="middle form">
+<div class="formContent">
+
+<?php
+$fmtfilename        = $db_path.$arrHttp["base"]."/def/".$lang."/".$arrHttp["nombre"].".fmt";
+$formatosfilename   = $db_path.$arrHttp["base"]."/def/".$lang."/formatos.wks";
+$formatosdeffilename= $db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks";
+
+$fp=fopen($fmtfilename,"w",0);
 if (!$fp){
-	echo $arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["nombre"].".fmt"." ";
-	echo $msgstr["nopudoseractualizado"];
+    echo "<p style='color:red'>".$fmtfilename." &rarr; ".$msgstr["nopudoseractualizado"]."<p>";
 	die;
 }
 if (isset($arrHttp["wks"])){
 	$fmt=ConstruyeWorksheetFMT();
 	foreach ($fmt as $value){
 	    $value=trim($value);
-	    if ($value!="")
-			$res=fwrite($fp,$value."\n");
-
+	    if ($value!="") $res=fwrite($fp,$value."\n");
 	}
 	fclose($fp); #close the file
+    ?>
+    <h4 style="text-align:center"><?php echo $msgstr["fmtupdated"]?>: &nbsp;<?php echo $fmtfilename?></h4>
+    <?php
 }
 
-if (file_exists(($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks"))){
+if (file_exists($formatosfilename)){
 	$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks");
-}else{
-	if (file_exists(($db_path.$arrHttp["base"]."/def/".$lang_db."/formatos.wks")))
-		$fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks");
+} else {
+    if (file_exists($formatosdeffilename)) {
+        $fp=file($formatosdeffilename);
+    }
 }
 $fex="N";
 if (isset($arrHttp["fmt"])){
@@ -62,55 +93,15 @@ if ($fex=="N"){
 	if (isset($arrHttp["sel_oper"])) $wks.=$arrHttp["sel_oper"];
 	$salida[]=$wks;
 }
-$fp=fopen($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks","w");
+$fp=fopen($formatosfilename,"w");
 foreach ($salida as $arch) $res=fwrite($fp,$arch."\n");
 fclose($fp);
-include("../common/header.php");
 ?>
-<body>
-<?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
-?>
-<div class="sectionInfo">
-	<div class="breadcrumb">
-<?php echo $msgstr["fmt"].": ". $arrHttp["nombre"]."-".$arrHttp["descripcion"]." (".$arrHttp["base"].")"?>
-	</div>
+<h4 style="text-align:center"><?php echo $msgstr["updated"]?>: &nbsp;<?php echo $formatosfilename?></h4>
 
-	<div class="actions">
-<?php if ($arrHttp["Opcion"]=="new"){
-	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
-}else{
-	echo "<a href=\"fmt.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-}
-?>
-<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-<span><strong><?php echo $msgstr["back"]?></strong></span>
-</a>
-			</div>
-			<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
-<?php echo "<font color=white>&nbsp; &nbsp; Script: fmt_update.php" ?></font>
-	</div>
-<div class="middle form">
-			<div class="formContent">
-<center><h4>
-<?php echo $msgstr["fmtupdated"]?></h4>
-
-		</TD>
-</table>
-</center>
 </div></div>
-<?php include("../common/footer.php");?>
-</body>
-</html>
-
-<?php
+<?php include("../common/footer.php");
+/*==========================================*/
 function ConstruyeWorksheetFMT(){
 global $arrHttp,$vars,$db_path,$lang_db;
 	$base=$arrHttp["base"];
