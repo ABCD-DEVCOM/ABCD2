@@ -1,0 +1,164 @@
+/*
+** Login protection script&proc
+** The login protection only works in iAH, not in Central
+*/
+'<script language=javascript>
+  function DisplayURL(id)
+  {
+    var loginto=document.getElementById("into").value;
+    if (loginto=="no")
+    {
+    var posicion_x;
+    var posicion_y;
+    posicion_x=(screen.width/2)-(315);
+    posicion_y=(screen.height/2)-(235);
+    sel = window.open("/site/login.php?id="+id, "ABCD Login", "width=630,height=470,menubar=0,toolbar=0,directories=0,scrollbars=no,resizable=no,left="+posicion_x+",top="+posicion_y+"");
+    }
+    else
+    {
+    document.getElementById("divurld"+id).style.display="none";
+    document.getElementById("divurl"+id).style.display="block";
+    }
+  }
+</script> '
+
+proc('<9000>',getenv('REMOTE_ADDR'),'</9000>'),
+    s1:=(left(v9000,instr(v9000,'.')-1)),
+    s2:=(mid(v9000,instr(v9000,'.')+1,size(v9000)))/,
+    s2:=(left(s2,instr(s2,'.')-1)),
+
+/*
+** == The display part ==
+** The ID and possible partnumber are always shown from the record itself
+** The L function (lookup) is always applied for a simple pft. Inverted file generation is mandatory
+*/
+'<table>'
+if p(v111) then '<tr><td ><b>ID</b></td><td>'v111+|<br>|,'</td>' fi,
+if p(v110) then '<tr><td ><b>Part nr</b></td><td>'v110' of 'f(npost('ID='v111),0,0),'</td>' fi,
+ 
+/* Next attributes are from the parent record (may be the current record, we don't care) */
+REF(  L('ID=',v111),
+    if p(v1) then '<tr><td><b>Título</b></td><td>'v1+|<br>|,'</td>' fi/
+    if p(v2) then '<tr><td><b>Autor</b></td><td>'v2+|<br>|,'</td>' fi/
+    if p(v3) then '<tr><td><b>Assunto / palavras-chave</b></td><td>'v3+|<br>|,'</td>' fi/
+    if p(v4) then '<tr><td><b>Descrição</b></td><td>'v4+|<br>|,'</td>' fi/
+    if p(v5) then '<tr><td><b>Editor</b></td><td>'v5+|<br>|,'</td>' fi/
+    if p(v6) then '<tr><td><b>Contribuidor/ colaborador</b></td><td>'v6+|<br>|,'</td>' fi/
+    if p(v7) then '<tr><td><b>Data</b></td><td>'v7+|<br>|,'</td>' fi/
+    if p(v8) then '<tr><td><b>Tipo de recurso</b></td><td>'v8+|<br>|,'</td>' fi/
+    if p(v9) then '<tr><td><b>Formato</b></td><td>'v9+|<br>|,'</td>' fi/
+    if p(v10) then '<tr><td><b>Identifier</b></td><td>'v10+|<br>|,'</td>' fi/
+    if p(v11) then '<tr><td><b>Fonte</b></td><td>'v11+|<br>|,'</td>' fi/
+    if p(v12) then '<tr><td><b>Idioma</b></td><td>'v12+|<br>|,'</td>' fi/
+    if p(v13) then '<tr><td><b>Relação</b></td><td>'v13+|<br>|,'</td>' fi/
+    if p(v14) then '<tr><td><b>Cobertura</b></td><td>'v14+|<br>|,'</td>' fi/
+    if p(v15) then '<tr><td><b>Gerenciamento de Direitos autorais</b></td><td>'v15+|<br>|,'</td>' fi/
+
+    if p(v50) then '<tr><td><b>Altura da imagem</b></td><td>'v50+|<br>|,'</td>' fi/
+    if p(v51) then '<tr><td><b>Largura da imagem</b></td><td>'v51+|<br>|,'</td>' fi/
+    if p(v52) then '<tr><td><b>Resolução X</b></td><td>'v52+|<br>|,'</td>' fi/
+    if p(v53) then '<tr><td><b>Resolução Y</b></td><td>'v53+|<br>|,'</td>' fi/
+    if p(v54) then '<tr><td><b>Tipo de cena</b></td><td>'v54+|<br>|,'</td>' fi/
+    if p(v56) then '<tr><td><b>Comentários</b></td><td>'v56+|<br>|,'</td>' fi/
+    if p(v57) then '<tr><td><b>Artista</b></td><td>'v57+|<br>|,'</td>' fi/
+    if p(v58) then '<tr><td><b>Direitos de cópia</b></td><td>'v58+|<br>|,'</td>' fi/
+    if p(v59) then '<tr><td><b>Make</b></td><td>'v59+|<br>|,'</td>' fi/
+    if p(v60) then '<tr><td><b>Model</b></td><td>'v60+|<br>|,'</td>' fi/
+    if p(v61) then '<tr><td><b>GPS Altitude Ref</b></td><td>'v61+|<br>|,'</td>' fi/
+    if p(v62) then '<tr><td><b>GPS Altitude</b></td><td>'v62+|<br>|,'</td>' fi/
+    if p(v63) then '<tr><td><b>GPS Latitude Ref</b></td><td>'v63+|<br>|,'</td>' fi/
+    if p(v64) then '<tr><td><b>GPS Latitude</b></td><td>'v64+|<br>|,'</td>' fi/
+    if p(v65) then '<tr><td><b>GPS Longitude Ref</b></td><td>'v65+|<br>|,'</td>' fi/
+    if p(v66) then '<tr><td><b>GPS Longitude</b></td><td>'v66+|<br>|,'</td>' fi/
+
+    if p(v97) then '<tr><td><b>Seção</b></td><td>'v97,'</td>' fi/
+)
+/*
+** If there is a HTML or image URL: display the text or the picture
+*/
+if p(v96) then
+    if REF(L('ID='v111),v96) ='image' then /* file type is image */
+        '<tr>
+        <td><b>Ver imagem</b></td>
+        <td><img height=200 src=',v98,'></td>
+        </tr>'
+    else /* file is of type text */
+        '<tr>
+            <td><b>Ver em nova janela</b></td>
+            <td>','<a href="'v95,'"
+                onclick="window.open(`',v95,'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`);
+                return false;">' v95,'</a>
+            </td>
+        </tr>',
+        '<tr>
+            <td><b>Ver texto</b></td>
+            <td><iframe height=200 width=800 scrolling=yes src=',v95,'></iframe></td>
+        </tr>'
+    fi,
+fi/
+
+REF(  L('ID=',v111),
+
+    /* COMENTE AS LINHAS ABAIXO PARA ESCONDER O CAMINHO DO DOCUMENTO */
+
+    if p(v98) then '<tr><td><b>URL do documento</b></td><td>
+        <A HREF="',v98'" target=new>'v98,'</A></td>'
+    fi/
+    
+
+
+    /*
+    ** As seguintes linhas para mostrar a URL somente após o login
+    */
+    
+    /* REMOVA O COMENTÁRIO PARA EXIBIR A OPÇÃO DE LOGIN
+    if p(v98) then 
+    '<tr>
+        <td>
+            <b>URL do documento</b>
+        </td>
+        <td>
+            <div id="divurld',f(mfn,1,0),'" name="divurld',f(mfn,1,0),'">
+                <a href="javascript:DisplayURL(',f(mfn,1,0),')">EXIBIR</a>
+            </div>
+
+        <div id="divurl',f(mfn,1,0),'" name="divurl',f(mfn,1,0),'" style="display:none">
+        <A HREF="',v98'" target=new>'v98+|<br>|,'</A></div></td>'
+    fi/
+    */
+
+
+    /*
+    ** Following lines to show URL only if within LAN range
+    */
+    /*
+    if p(v98) then '<tr><td><b>URL do documento</b></td><td>',
+        if val(s1)=127 then
+           if val(s2)=0 then
+               '<a href="//localhost:9090//',v98, '" target="new">'v98,'</A></td>'
+           else 'IP not allowed'
+           fi
+        else 'IP not allowed'
+        fi
+    fi,
+    */
+
+    if p(v112) then '<tr><td><b>Data de criação</b></td><td>'v112+|<br>|,'</td>' fi/
+)
+if p(v96) then '<tr><td><b>Tipo de registro</b></td><td>'v96+|<br>|,'</td>' fi/
+if p(v997) then '<tr><td><b>Tamanho do HTML</b></td><td>'v997+|<br>|,'</td>' fi/
+
+/*
+** View parts in iAH
+** Note the path to wxis (must match with the database architecture)
+** Note the extension of wxis (none for linux, .exe for windows)
+** Note the name of the database in parameter base=
+*/
+if p(v110) and val(v110)<2 then 
+'<tr><td><b>View parts</b></td><td>'
+'<a href="/cgi-bin/utf8/bigisis/wxis/iah/scripts/?IsisScript=iah.xis&lang=en&reverse=off&base=dubcore&nextAction=lnk&exprSearch=',s(mpu,v111,mpl),'&indexSearch=ID"',
+'" target=new>Clique aqui para mais revisões em nova guia</a><br>',
+'</td>',
+fi,
+
+'</table>'
