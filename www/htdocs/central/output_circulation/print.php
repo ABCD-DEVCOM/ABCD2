@@ -8,12 +8,15 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 $fd="date_".$arrHttp["codigo"];
-if (isset($arrHttp[$fd])){	$Date=$arrHttp[$fd];
+if (isset($arrHttp[$fd])){
+	$Date=$arrHttp[$fd];
 	$Date=substr($Date,6,4).substr($Date,3,2).substr($Date,0,2);
-}
+
+}
 $sel="select_".$arrHttp["codigo"];
 
-if (isset($arrHttp[$sel])){	$tipo=$arrHttp[$sel];
+if (isset($arrHttp[$sel])){
+	$tipo=$arrHttp[$sel];
 }
 //die;
 include("../config.php");
@@ -21,7 +24,9 @@ include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/prestamo.php");
 
-function ErrorEnSalida($err){global $msgstr,$db_path,$institution_name,$meta_encoding;	include("../common/header.php");
+function ErrorEnSalida($err){
+global $msgstr,$db_path,$institution_name,$meta_encoding;
+	include("../common/header.php");
 	include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
@@ -41,7 +46,8 @@ echo "<h4>$err</h4></div></div>";
 include ("../common/footer.php");
 die;
 
-}
+
+}
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; die;
 $bd=$arrHttp["base"];
@@ -51,8 +57,10 @@ if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){
 		$value=trim($value);
 		if (substr($value,0,2)=="//") continue;
 		$l=explode('|',$value);
-		if ($l[0]==$arrHttp["codigo"]){			$linea=$value;
-			break;		}
+		if ($l[0]==$arrHttp["codigo"]){
+			$linea=$value;
+			break;
+		}
 
 	}
 }
@@ -63,7 +71,11 @@ $Titles=$l[2];
 $Sort=$l[3];
 $Expresion=$l[4];
 $Nombre=$l[5];
-if (isset($l[6]) and $l[6]!=""){	$Ask=$l[6];}else{	$Ask="";}
+if (isset($l[6]) and $l[6]!=""){
+	$Ask=$l[6];
+}else{
+	$Ask="";
+}
 if (isset($l[7]) and $l[7]!=""){
 	$Tag=$l[7];
 }else{
@@ -72,9 +84,13 @@ if (isset($l[7]) and $l[7]!=""){
 $headings="";
 $msgerr="";
 $Pft=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$Disp_format;
-if (!file_exists($Pft)){	$Pft=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$Disp_format;}
-if (!file_exists($Pft)){	$msgerr= $Disp_format. " ** ".$msgstr["falta"];
-	$arrHttp["vp"]="";}
+if (!file_exists($Pft)){
+	$Pft=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$Disp_format;
+}
+if (!file_exists($Pft)){
+	$msgerr= $Disp_format. " ** ".$msgstr["falta"];
+	$arrHttp["vp"]="";
+}
 
 if ($Expresion!="") {
     $Opcion="buscar";
@@ -92,14 +108,20 @@ if ($msgerr==""){
 	else
 		$email="";
 	$Pft=$email.$Pft;
-	if ($Ask!=""){		switch ($Ask){			case "DATEQUAL":
+	if ($Ask!=""){
+		switch ($Ask){
+			case "DATEQUAL":
 				$Expresion=$Expresion.$Date;
 				break;
 			case "DATE":
 				break;
 			default:
-				break;		}	}
-	if ($Expresion!=""){		switch ($arrHttp["base"]){			case "trans":
+				break;
+		}
+	}
+	if ($Expresion!=""){
+		switch ($arrHttp["base"]){
+			case "trans":
 				if (isset($arrHttp["Expresion_trans"]))
 					$Expresion="(".$Expresion.")"." and (".$arrHttp["Expresion_trans"].")";
 				break;
@@ -110,7 +132,9 @@ if ($msgerr==""){
 			case "reserve":
 				if (isset($arrHttp["Expresion_reserve"]))
 					$Expresion="(".$Expresion.")"." and (".$arrHttp["Expresion_reserve"].")";
-				break;		}	}
+				break;
+		}
+	}
 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".$Expresion."&Opcion=$Opcion&Formato=".$Pft;
 	if ($Sort==""){
 		$IsisScript=$xWxis."imprime.xis";
@@ -122,29 +146,40 @@ if ($msgerr==""){
 	include("../common/wxis_llamar.php");
 	$data="\n";
 	$encab="<H3>$Nombre ";
-	if ($Ask!=""){		switch ($Ask){			case "DATE":
+	if ($Ask!=""){
+		switch ($Ask){
+			case "DATE":
 			case "DATEQUAL":
 				if (isset($Date)) $encab.= "(". $arrHttp[$fd].")";
 				break;
 			default:
 				if (isset($tipo) and $tipo !="") $encab.= "(". $tipo.")";
-				break;		}	}
+				break;
+		}
+	}
 	$encab.= "<br>".$msgstr["o_issued"].": ".date("d-m-Y")."</h3>";
 	if ($arrHttp["vp"] !="TB") $encab.= "<p><table border=0 width=100%>";
-	if ($Titles!=""){		$h=explode('#',$Titles);
-		foreach ($h as $value){			if ($arrHttp["vp"] =="TB")
+	if ($Titles!=""){
+		$h=explode('#',$Titles);
+		foreach ($h as $value){
+			if ($arrHttp["vp"] =="TB")
 				$data.=$value."\t";
-			else				$data.="<td>$value</td>";		}	}
+			else
+				$data.="<td>$value</td>";
+		}
+	}
 	if ($arrHttp["vp"] =="TB") $data.="\n";
 	foreach ($contenido as $linea){
 		if (trim($linea)!=""){
-			$continuar="Y";			if ($Ask!="" and $Tag!=""){
+			$continuar="Y";
+			if ($Ask!="" and $Tag!=""){
 				$out=explode('$$$',$linea);
 
 				//if (!isset($out[1])) echo "$linea<br>";
 				$linea=$out[1];
 				$ff=$out[0];
-				switch ($Ask){					case "DATE":
+				switch ($Ask){
+					case "DATE":
 						if ($ff>=$Date)
 							$continuar="Y";
 						else
@@ -169,25 +204,32 @@ if ($msgerr==""){
 							else
 								$continuar="N";
 						}
-						break;				}
+						break;
+				}
 			}
 			if ($continuar=="Y"){
 				$l=explode('|',$linea);
-				if ($arrHttp["vp"]=="TB"){
+				if ($arrHttp["vp"]=="TB"){
+
 					foreach ($l as $val)
 						$data.=trim(strip_tags($val))."\t";
-					$data.="\n";				}else{
+					$data.="\n";
+				}else{
 					$data.="<tr>";
 					foreach ($l as $val)
 						$data.="<td valign=top>$val</td>";
 					$data.="</tr>"."\n" ;
 				}
 			}
-		}	}
-}else{	ErrorEnSalida($msgerr);	die;
+		}
+	}
+}else{
+	ErrorEnSalida($msgerr);
+	die;
 }
 if (!isset($arrHttp["vp"])) $arrHttp["vp"]="";
-switch ($arrHttp["vp"]){	case "WP":
+switch ($arrHttp["vp"]){
+	case "WP":
     	$filename=$arrHttp["base"].".doc";
 		header('Content-Type: application/msword; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
@@ -219,9 +261,11 @@ switch ($arrHttp["vp"]){	case "WP":
 	default:
 		include("../common/header.php");
 		include("../common/institutional_info.php");
-		if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){		echo "
+		if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){
+		echo "
 <script>
-	function GenerarCorreos(){		ixn=document.forma1.chk_p.length
+	function GenerarCorreos(){
+		ixn=document.forma1.chk_p.length
     	result=\"N\"
 		Seleccion=\"\"
     	for (i=0;i<ixn;i++){
@@ -239,7 +283,8 @@ switch ($arrHttp["vp"]){	case "WP":
     	document.forma1.contactos.value=Seleccion
     	document.forma1.action=\"correos.php\";
     	msgwin.focus()
-    	document.forma1.submit()	}
+    	document.forma1.submit()
+	}
 	function Seleccionar(){
 		if (document.forma1.chkall.checked)
 			bool=1
@@ -265,11 +310,13 @@ switch ($arrHttp["vp"]){	case "WP":
 ?>
 	<div class="sectionInfo">
 	<div class="breadcrumb">
+		<?php echo $Nombre;?>
 	</div>
 	<div class="actions">
-		<a href="menu.php" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"];?></strong></span></a>
+		<?php
+		$inc_backtourl="../output_circulation/menu.php";
+		include "../common/inc_back.php";
+		?>
 	</div>
 
 <div class="spacer">&#160;</div>
@@ -277,15 +324,18 @@ switch ($arrHttp["vp"]){	case "WP":
 	<div class="formContent">
 
 <?php
-	if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){		echo "<form name=forma1  action=correo.php method=post>\n";
+	if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){
+		echo "<form name=forma1  action=correo.php method=post>\n";
 		echo "<input type=checkbox name=chkall onchange=Seleccionar()> ".$msgstr["selall"];
 		echo "&nbsp &nbsp <input type=button name=generar value='".$msgstr["mailgenerate"]."' onclick=GenerarCorreos()>";
-		echo " &nbsp; <a href=../dbadmin/leertxt.php?base=trans&desde=recibos&archivo=mail_dev.pft target=_blank>".$msgstr["edit"].": mail_dev.pft</a>";	}
+		echo " &nbsp; <a href=../dbadmin/leertxt.php?base=trans&desde=recibos&archivo=mail_dev.pft target=_blank>".$msgstr["edit"].": mail_dev.pft</a>";
+	}
 	echo $encab;
 	break;
 }
 echo $data;
-if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){	echo "<input type=hidden name=contactos>\n";
+if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){
+	echo "<input type=hidden name=contactos>\n";
 	echo "</form>\n";
 }
 if ($arrHttp["vp"]!="TB")

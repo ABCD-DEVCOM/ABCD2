@@ -150,7 +150,7 @@ else
 <div id="loading">
   <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
 </div>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php if (!isset($arrHttp["reserve"]))
@@ -160,18 +160,17 @@ else
 		?>
 	</div>
 	<div class="actions">
-
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/loans/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/loans/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: circulation/estado_de_cuenta.php\n";
-?>
-	</div>
+$ayuda="loan.html";
+include "../common/inc_div-helper.php";
+?> 	
+
+
 <div class="middle list">
 	<div class="formContent">
 	<div class="searchBox" >

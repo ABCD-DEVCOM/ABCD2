@@ -41,7 +41,7 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["co_history"];
@@ -50,18 +50,13 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 	<div class="actions">
 
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
-<?php echo "
-<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/item_history.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/item_history.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<a href=http://www.abcdwiki.net?title=Historia_de_un_item target=_blank>abcdwiki</a>  &nbsp; ";
-echo " Script: item_history.php
-	</div>";
-// prestar, reservar o renovar
-?>
+
+<?php
+$ayuda="item_history.html";
+include "../common/inc_div-helper.php";
+?> 	
 
 
 <form name=inventorysearch action=item_history_ex.php method=post onsubmit="javascript:return false">
