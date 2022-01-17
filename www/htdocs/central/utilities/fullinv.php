@@ -23,6 +23,7 @@
 20211215 fho4abcd Backbutton by included file
 20220103 fho4abcd Use relative path for digital documents in stead of full path,othe config file name
 20220108 fho4abcd Add home button
+29220117 fho4abcd Add blue message if /m is used
 */
 /**
  * @desc:      Create database index
@@ -359,7 +360,10 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     */    
     $slashm_var="";
     if ($htmlfiletag!="") $slashm_var="/m";
-
+    //$slashm_var="/m";
+    if ($slashm_var!="") {
+        echo "<div style='color:blue'>".$msgstr['inv_slashm']."</div>";
+    }
     // Process incr parameter : incremental or full inversion
     $incr_var="";
     if (isset($_POST['incr']) AND strlen($_POST['incr'])>0) $incr_var=" ifupd"; else $incr_var="fullinv".$slashm_var;
