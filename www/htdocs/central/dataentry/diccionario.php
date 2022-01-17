@@ -6,6 +6,7 @@
 20211208 fho4abcd First depends on quick search. Search button not for quicksearch
 20211212 fho4abcd Buttons like alfa.php:new Up button, goto field moved down, added enter button,shorter text in buttons, added hover text+removed footer
 20211222 fho4abcd Correct search after redisplay for next list
+20220116 fho4abcd ifp.xis-> ifp_slashm. other "enter" button
 */
 // Show the dictionary of terms in the database
 
@@ -25,6 +26,8 @@ include ("leerregistroisispft.php");
 // ------------------------------------------------------
 
 include("../common/header.php");
+$prefijo=$arrHttp["prefijo"];
+
 ?>
 <body>
 <script language=javascript>
@@ -81,7 +84,7 @@ function EjecutarBusqueda(desde){
             for (i=0;i<document.forma1.terminos.length;i++){
                 if (document.forma1.terminos.options[i].selected==true){
                     Termino=document.forma1.terminos.options[i].value
-                    len_t=<?php echo strlen($arrHttp["prefijo"])."\n"?>
+                    len_t=<?php echo strlen($prefijo)."\n"?>
                     Termino=Termino.substr(len_t)
                     Termino="\""+Termino+"\""
                     if (TerminosSeleccionados==""){
@@ -101,7 +104,7 @@ function EjecutarBusqueda(desde){
                     window.opener.document.forma1.expre[document.forma1.Diccio.value].value=a+" or "+TerminosSeleccionados
                 }
             <?php }else{ ?>
-                Prefijo="<?php echo $arrHttp["prefijo"]?>"
+                Prefijo="<?php echo $prefijo?>"
                 TerminosSeleccionados=TerminosSeleccionados.replace(/"/g,"")
                 window.opener.document.forma1.busqueda_palabras.value=TerminosSeleccionados
                 window.opener.Buscar(Prefijo)
@@ -146,7 +149,7 @@ include "../common/inc_div-helper.php";
 <input type=hidden name=base value='<?php echo $arrHttp["base"]?>'>
 <input type=hidden name=cipar value='<?php echo $arrHttp["cipar"]?>'>
 <input type=hidden name=Expresion value=''>
-<input type=hidden name=prefijo value='<?php echo $arrHttp["prefijo"]?>'>
+<input type=hidden name=prefijo value='<?php echo $prefijo?>'>
 <input type=hidden name=Diccio value='<?php echo $arrHttp["Diccio"]?>'>
 <input type=hidden name=desde value='<?php if (isset($arrHttp["desde"])) echo $arrHttp["desde"]?>'>
 <input type=hidden name=toolbar value='<?php if (isset($arrHttp["toolbar"])) echo $arrHttp["toolbar"]?>'>
@@ -197,7 +200,7 @@ if ($showsend or $showsearch) {
         <?php echo $msgstr["avanzara"]?>
         <input type=text name="IR_A" size=5 title='<?php echo $msgstr["src_advance"];?>'>
         <a href="javascript:EjecutarBusqueda(3)" class="bt bt-gray" title='<?php echo $msgstr["src_enter"]?>'>
-            <i class="fas fa-arrow-alt-circle-right"></i></a>
+            <i class="fas as fa-angle-right"></i></a>
         <input type="submit" style="display:none;" onclick="EjecutarBusqueda(3)"/>
         <?php
         if ($showsend) {
@@ -226,27 +229,26 @@ if ($showsend or $showsearch) {
 // To present the dictionary of terms
 
 function PresentarDiccionario(){
-global $arrHttp,$terBd,$xWxis,$db_path,$Wxis,$wxisUrl,$cisis_ver;
+global $arrHttp,$terBd,$xWxis,$db_path,$Wxis,$wxisUrl,$cisis_ver,$prefijo;
 
     if ($arrHttp["Opcion"]=="ir_a"){
-        $arrHttp["LastKey"]=$arrHttp["prefijo"].$arrHttp["IrA"];
+        $arrHttp["LastKey"]=$prefijo.$arrHttp["IrA"];
     }
     $arrHttp["Opcion"]="diccionario";
-    $Prefijo=$arrHttp["prefijo"];
     if (isset($arrHttp["LastKey"]))
         $LastKey=$arrHttp["LastKey"];
     else
         $LastKey="";
-    $IsisScript= $xWxis."ifp.xis";
-    $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&prefijo=".$arrHttp["prefijo"]."&LastKey=".$LastKey;
+    $IsisScript= $xWxis."ifp_slashm.xis";
+    $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&prefijo=".$prefijo."&LastKey=".$LastKey;
     $contenido=array();
     include("../common/wxis_llamar.php");
     $mayorclave="";
     foreach ($contenido as $linea){
-        $pre=trim(substr($linea,0,strlen($arrHttp["prefijo"])));
-        if ($pre==$arrHttp["prefijo"]){
+        $pre=trim(substr($linea,0,strlen($prefijo)));
+        if ($pre==$prefijo){
             $l=explode('|',$linea);
-            $ter=substr($l[0],strlen($arrHttp["prefijo"]));
+            $ter=substr($l[0],strlen($prefijo));
             $ter=trim($ter);
             $ttll=trim($l[0]);
             echo "<option value=\"".$ttll."\">".$ter;

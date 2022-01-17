@@ -71,7 +71,7 @@ REF(  L('ID=',v111),
     if p(v65) then '<tr><td><b>GPS Longitude Ref</b></td><td>'v65+|<br>|,'</td>' fi/
     if p(v66) then '<tr><td><b>GPS Longitude</b></td><td>'v66+|<br>|,'</td>' fi/
 
-    if p(v97) then '<tr><td><b>Section</b></td><td>'v97,'</td>' fi/
+    if p(v97) then '<tr><td><b>Section</b></td><td>'v97,|<BR>|v94,'</td>' fi/
 )
 /*
 ** If there is a HTML or image URL: display the text or the picture

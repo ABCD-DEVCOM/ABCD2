@@ -2,6 +2,8 @@
 /*
 20211209 fho4abcd Rewrite, echos-> script. improve layout & html
 20211212 fho4abcd Add TOP button + keep pref if db is switched + add breadcrumb to help the db manager+resolve script errors
+20220114 fho4abcd Reshuffle code to enable visible output. Replace ifp.xis by ifp_slashm.xis:output if indexed with slashm
+                  Don't make entries unique(they are unique)+Use correct prefix in case of copy
 */
 /*
 ** Functionality:
@@ -22,39 +24,9 @@ include ("leerregistroisispft.php");
 // ------------------------------------------------------
 // INICIO DEL PROGRAMA
 // ------------------------------------------------------
-
+$lang=$_SESSION["lang"];
 include("../common/header.php");
-//foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
-?>
-<body onblur=self.close()>
-<?php
-/*
-** Read the FDT
-** Some calls do not supply correct parameters: check first
-*/
-if (!isset($arrHttp["base"]) OR $arrHttp["base"]=="" ) {
-    echo "<div style='color:red'>ERROR: base is not set. Dump of all url parameters:<br>";
-    var_dump($arrHttp);
-    echo "<br>-</div>";die;
-}
-if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt"))
-    $fp=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt");
-else
-    $fp=file($db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt");
-foreach($fp as $value) {
-    $f=explode('|',$value);
-    if ($f[3]==1){
-        if (substr($f[13],0,1)!="@")
-            if (trim($f[13])!="")    // si no se especificó el formato para extraer la entrada principal se toma el tag del campo
-                $arrHttp["formato_e"]=$f[13]."'$$$'f(mfn,1,0)";
-            else
-                $arrHttp["formato_e"]="mhl,v".$f[1]."'$$$'f(mfn,1,0)";
-        else
-            $arrHttp["formato_e"]=$f[13];
-    }
-}
 
-$arrHttp["formato_e"]=stripslashes($arrHttp["formato_e"]);
 if (!isset($arrHttp["tagfst"])) $arrHttp["tagfst"]="";
 if (!isset($arrHttp["delimitador"]))$arrHttp["delimitador"]="";
 if (!isset($arrHttp["Tag"]))$arrHttp["Tag"]="";
@@ -62,18 +34,86 @@ if (!isset($arrHttp["prefijo"]))$arrHttp["prefijo"]="";
 if (!isset($arrHttp["capturar"]))$arrHttp["capturar"]="";
 if (!isset($arrHttp["pref"]))$arrHttp["pref"]=$arrHttp["prefijo"];
 
-$IsisScript=$xWxis."ifp.xis";
-if (substr($arrHttp["formato_e"],0,1)=="@"){
-    $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($arrHttp["formato_e"],1);
-    if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".substr($arrHttp["formato_e"],1);
+// some processing as we need the results in the breadcrumb
+/*
+** Some calls do not supply correct parameters: check first
+*/
+if (!isset($arrHttp["base"]) OR $arrHttp["base"]=="" ) {
+    echo "<div style='color:red'>ERROR: base is not set. Dump of all url parameters:<br>";
+    var_dump($arrHttp);
+    echo "<br>-</div>";die;
+}
+$base=$arrHttp["base"];
+$prefijo=urldecode($arrHttp["prefijo"]);
+$pref=urldecode($arrHttp["pref"]);
+/*
+** Open the FDT or the default fdt
+*/
+$fdtfull=$db_path.$base."/def/".$lang."/".$base.".fdt";
+$fdtfulldef=$db_path.$base."/def/".$lang_db."/".$base.".fdt";
+if (file_exists($fdtfull))
+    $fp=file($fdtfull);
+else
+    $fp=file(fdtfulldef);
+/*
+** Read the fdt file and determine if there is "principal entry" (field 3 = 1)
+*/
+$formato_e="";
+$fdtfieldname="";
+foreach($fp as $value) {
+    $f=explode('|',$value);
+    if ($f[3]==1){
+        $fdtfieldname=$f[2];
+        if (substr($f[13],0,1)!="@"){
+            // if the format is not specified to extract the principal input, the tag of the field is taken
+            if (trim($f[13])!="")   $formato_e=$f[13]."'$$$'f(mfn,1,0)";
+            else                    $formato_e="mhl,v".$f[1]."'$$$'f(mfn,1,0)";
+        }
+        else {
+            $formato_e=$f[13];
+        }
+        // If not specified (first time or switched after copy)
+        if ($pref=="") $pref=$f[12];
+        if ($prefijo=="") $prefijo=$f[12];
+        break;
+    }
+}
+
+?>
+<body onblur=self.close()>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["indicede"].": ".$fdtfieldname." &nbsp;(".urldecode($pref).")"?>
+    </div>
+    <div class="actions">
+    </div>
+<div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+<div class="formContent">
+
+<?php
+//foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
+
+$formato_e=stripslashes($formato_e);
+if ($formato_e=="") echo "<div style='color:red'>".$msgstr["azreuiresfdt"]."</div>";
+
+$IsisScript=$xWxis."ifp_slashm.xis";
+if (substr($formato_e,0,1)=="@"){
+    $Formato=$db_path.$base."/pfts/".$lang."/".substr($formato_e,1);
+    if (!file_exists($Formato)) $Formato=$db_path.$base."/pfts/".$lang_db."/".substr($formato_e,1);
     $Formato="@".$Formato;
 }else{
-    $Formato=$arrHttp["formato_e"];
+    $Formato=$formato_e;
 }
-$query ="&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"]."&prefijo=".urlencode($arrHttp["prefijo"])."&pref=".$arrHttp["pref"]."&formato_e=".urlencode($Formato)."&bymfn=S";
+$query ="&base=".$base ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"];
+$query.="&prefijo=".urlencode($prefijo)."&pref=".$pref."&formato_e=".urlencode($Formato)."&bymfn=S";
 //echo $query;
 include("../common/wxis_llamar.php");
-$contenido = array_unique ($contenido);
+// No need to make unique: Should be an exception. If there are duplicates they point to different records
 //foreach ($contenido as $var=>$value) echo "$var=$value<br>";
 
 ?>
@@ -103,12 +143,12 @@ function codes(e) {
 }
 Separa="<?php echo $arrHttp["delimitador"]?>"
 Tag="<?php echo $arrHttp["Tag"]?>"
-Prefijo="<?php echo $arrHttp["prefijo"]?>"
+Prefijo="<?php echo $prefijo?>"
 cnv="N"
 bsel="N"
 <?php
 if (isset($arrHttp["cnvtab"]))
-    echo "cnvtabsel=\"&cnvtabsel".$arrHttp["prefijo"]."\"\n";
+    echo "cnvtabsel=\"&cnvtabsel".$prefijo."\"\n";
 else
     echo "cnvtabsel=\"\"\n";
 ?>
@@ -125,13 +165,10 @@ function CambiarBase(){
     a=abd.split("|")
     basecap=a[0]
     ciparcap=basecap+".par"
-    <?php $arrHttp["formato_e"]=str_replace('"','|',$arrHttp["formato_e"])?>
-    formato_ix="<?php echo stripslashes($arrHttp["formato_e"])?>"
-    Prefijo="&prefijo=<?php echo $arrHttp["pref"]?>"+"&formato_e="+ formato_ix
     if (top.frames.length>0){
-        parent.indice.location.href="alfa.php?base="+basecap+"&cipar="+ciparcap+Prefijo+"&Opcion=autoridades&capturar=S&bymfn=S"
+        parent.indice.location.href="alfa.php?base="+basecap+"&cipar="+ciparcap+"&Opcion=autoridades&capturar=S&bymfn=S"
     }else{
-        parent.indice.location.href="alfa.php?base="+basecap+"&ciparcap="+cipar+Prefijo+"&Opcion=autoridades&capturar=S&bymfn=S"
+        parent.indice.location.href="alfa.php?base="+basecap+"&ciparcap="+cipar+"&Opcion=autoridades&capturar=S&bymfn=S"
 
     }
 }
@@ -155,7 +192,7 @@ function ObtenerTerminos(){
         top.ciparcap=basecap+".par"
         top.cnvtabsel=cnvtabsel
     }else{
-        basecap="<?php echo $arrHttp["base"]?>"
+        basecap="<?php echo $base?>"
     }
     Seleccion=""
     icuenta=0
@@ -170,21 +207,20 @@ function ObtenerTerminos(){
         }
 
     }
-    db="<?php echo $arrHttp["base"]?>"
+    db="<?php echo $base?>"
 
     if (Seleccion!=""){
         if (bsel=="S"){
             if (top.NombreBaseCopiara=="")
-                db="<?php echo $arrHttp["base"]?>"
+                db="<?php echo $base?>"
             else
                 db=top.NombreBaseCopiara
         }
-        pref="<?php echo $arrHttp["pref"]?>"
+        pref="<?php echo $pref?>"
         cipar="<?php echo $arrHttp["cipar"]?>"
         <?php
         if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]!=""){
             echo "top.xeditar=\"S\"\n";
-
             echo 'parent.main.location="fmt.php?xx=xx&base="+db+"&cipar="+db+".par&basecap="+basecap+"&ciparcap="+basecap+".par&Mfn="+Seleccion+"&Opcion=captura_bd&ver=S&capturar=S"+cnvtabsel+"&Formato="+basecap'."\n";
         }else{
             if (isset($arrHttp["Formato"]))
@@ -216,14 +252,14 @@ function IrA(ixj){
 function AbrirIndice(Termino){
     <?php
     if (isset($arrHttp["Formato"])) {
-    ?>
-    Formato='<?php echo urlencode($arrHttp["Formato"])?>'
-    <?php } else { ?>
-    Formato=''
+        ?>
+        Formato='<?php echo urlencode($arrHttp["Formato"])?>'
+        <?php } else { ?>
+        Formato=''
     <?php } ?>
-    db='<?php echo $arrHttp["base"]?>'
+    db='<?php echo $base?>'
     cipar='<?php echo $arrHttp["cipar"]?>'
-    Pref='<?php echo $arrHttp["pref"]?>'
+    Pref='<?php echo $pref?>'
     Prefijo=Pref+Termino
     capturar='<?php echo $arrHttp["capturar"]?>'
 
@@ -235,35 +271,23 @@ function AbrirIndice(Termino){
             cnvtabsel=""
         }
     }
-    URL='alfa.php?&opcion=autoridades&base='+db+'&cipar='+cipar+'&pref='+Pref+'&prefijo='+Prefijo+capturar+'&formato_e=<?php echo urlencode($arrHttp["formato_e"])?>'+cnvtabsel
+    URL='alfa.php?&new=new&opcion=autoridades&base='+db+'&cipar='+cipar+'&pref='+Pref+'&prefijo='+Prefijo+capturar+'&formato_e=<?php echo urlencode($formato_e)?>'+cnvtabsel
     if (Formato!=""){
         URL+='&Formato='+Formato
     }
     self.location.href=URL
 }
 </script>
-<div class="sectionInfo">
-    <div class="breadcrumb">
-        <?php echo $msgstr["indicede"].": ".urldecode($arrHttp["pref"])?>
-    </div>
-    <div class="actions">
-    </div>
-<div class="spacer">&#160;</div>
-</div>
-<?php
-include "../common/inc_div-helper.php";
-?>
-<div class="middle form">
-<div class="formContent">
 <form method=post name=Lista onSubmit="javascript:return false">
 <?php
-// si viene de la opción de capturar de otra base de datos se presenta la lista de bases de datos disponibles
-// if it comes from the option to capture from another database, the list of available databases is displayed
+/*
+** If the script is called  the option to capture from another database, the list of available databases is displayed
+** si viene de la opción de capturar de otra base de datos se presenta la lista de bases de datos disponibles
+*/
 if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
     $key_bd="";
-    if (isset($arrHttp["base"])) $key_bd=$arrHttp["base"];
+    if (isset($base)) $key_bd=$base;
     $prefijo="";
-    if (isset($arrHttp["prefijo"])) $prefijo=$arrHttp["prefijo"];
     if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]="";
     $fp = file($db_path."bases.dat");
     foreach ($fp as $linea){
@@ -289,7 +313,7 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
                 $i=$i+1;
                 $v=explode('|',$value);
                 if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$key."_CENTRAL_ALL"])){
-                    if ($v[0]==$arrHttp["base"])
+                    if ($v[0]==$base)
                         $sel="selected";
                     else
                         $sel="";
@@ -300,12 +324,12 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
             </select>
         </td>
         <td>
-        <a href='../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/ayuda_captura.html' target=_blank><?php echo $msgstr["help"]?></a>
+        <a href='../documentacion/ayuda.php?help=<?php echo $lang?>/ayuda_captura.html' target=_blank><?php echo $msgstr["help"]?></a>
         <?php
         if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) {
             ?>
             <br>
-            <a href='../documentacion/edit.php?archivo=".$_SESSION["lang"]."/ayuda_captura.html' target=_blank><?php echo $msgstr["edhlp"]?></a>
+            <a href='../documentacion/edit.php?archivo=".$lang."/ayuda_captura.html' target=_blank><?php echo $msgstr["edhlp"]?></a>
             <?php
         }
         ?>
@@ -348,8 +372,11 @@ else
 ?>
 <table cellpadding=0 cellspacing=0 border=0  height=80%>
 <tr>
-
-<td  width=5% align=center><font size=1 face="verdana"><?php for ($i=65;$i<91;$i++ ) echo "<a href=\"javascript:AbrirIndice('".chr($i)."')\">".chr($i)."</a><br>"?></td>
+<td  width=5% align=center style='font-size:10px'>
+    <?php for ($i=65;$i<91;$i++ ){?>
+    <a href="javascript:AbrirIndice('<?php echo chr($i)?>')"><?php echo chr($i)?></a><br>
+    <?php } ?>
+</td>
 <td width=95% valign=top>
 <select name=autoridades size=28 style="width:<?php echo $xwidth?>px; height:400px" onchange=ObtenerTerminos()>
 <?php
@@ -375,7 +402,7 @@ foreach ($contenido as $linea){
         <?php echo $msgstr["avanzara"]?>
         <input type=text name=ira size=5 value="" onKeyPress="codes(event)" title="<?php echo $msgstr["src_advance"];?>">
         <a href=Javascript:IrA() class="bt bt-gray" title='<?php echo $msgstr["src_enter"]?>'>
-            <i class="fas fa-arrow-alt-circle-right"></i></a>
+            <i class="fas fa-angle-right"></i></a>
     </td>
 </tr>
 </table>

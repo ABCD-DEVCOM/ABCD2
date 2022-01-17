@@ -152,6 +152,7 @@ gizmoreselect=Select again
 g_newval=New value
 htmlfield=HTML fields
 intotag=in temporary tag
+inv_slashm=Indexing with /m. Picklists with type DB in the FDT may not show expected results 
 invertincomplete=Indexing will not be complete
 invertloads=Inverted file computation loads the contents of the file indicated in tag
 importado=imported

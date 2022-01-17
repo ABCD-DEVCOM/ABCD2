@@ -1,6 +1,7 @@
 <?php
 /*
 20210914 fho4abcd modified size of popup window for upload
+20220116 fho4abcd modified size of popup window for capturaclaves
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -591,9 +592,9 @@ function CapturarRegistro(){
 	    document.forma1.Indice.value=xI
 	    Separa="&delimitador="+Separa
 	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo
-	    myleft=screen.width-600
+	    myleft=screen.width-800
 		url_indice="../dataentry/capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+tag+Prefijo+"&postings="+postings+"&lang="+lang+"&repetible="+Repetible+"&Formato="+Formato+"&subcampos="+Subc+"&baseactiva="+baseactiva
-		msgwin=window.open(url_indice,"Indice","width=650, height=530,  scrollbars, status, resizable location=no, left="+myleft)
+		msgwin=window.open(url_indice,"Indice","width=680, height=690,  scrollbars, status, resizable, location=no, left="+myleft)
 		msgwin.focus()
 		return
 	}
