@@ -1,4 +1,10 @@
 <?php
+/*
+20220117 fho4abcd Improve html+divhelper+ typo in the range processing
+*/
+/*
+** This module is located in central/dataentry as it is referenced from several sources
+*/
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 set_time_limit(0);
 session_start();
@@ -11,11 +17,13 @@ include ("../lang/admin.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; //die;
 $data="";
-if (isset($arrHttp["Expresion"])){	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
+if (isset($arrHttp["Expresion"])){
+	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
 	if (strpos('"',$arrHttp["Expresion"])==0) {
     	$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
 	}
-	$Expresion=urlencode($arrHttp["Expresion"]);}
+	$Expresion=urlencode($arrHttp["Expresion"]);
+}
 if (isset($arrHttp["pft"])) $arrHttp["pft"]=stripslashes($arrHttp["pft"]);
 
 
@@ -31,16 +39,22 @@ if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
 			$arrHttp["tipof"]="";
 		if (strpos($arrHttp["fgen"],'.pft')===false) $arrHttp["fgen"].=".pft";
 	    $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fgen"];
-	    if (!file_exists($Formato)){	    	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["fgen"];	    }
+	    if (!file_exists($Formato)){
+	    	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["fgen"];
+	    }
 	    if (file_exists($Formato)) $Formato="@".$Formato;
-// READ THE HEADINGS, IF ANY
-	    if ($arrHttp["tipof"]!=""){	    	$head=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$pft_name[0]."_h.txt";
+        // READ THE HEADINGS, IF ANY
+	    if ($arrHttp["tipof"]!=""){
+	    	$head=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$pft_name[0]."_h.txt";
 	    	if (!file_exists($head)){
 	    		$head=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$pft_name[0]."_h.txt";
 	    	}
-	    	if (file_exists($head)){	    		$fp=file($head);
+	    	if (file_exists($head)){
+	    		$fp=file($head);
 	    		$arrHttp["headings"]="";
-	    		foreach ($fp as $value) {	    			$arrHttp["headings"].=trim($value)."\r";	    		}
+	    		foreach ($fp as $value) {
+	    			$arrHttp["headings"].=trim($value)."\r";
+	    		}
 	    	}
 	    }
 	}
@@ -68,17 +82,25 @@ if (isset($arrHttp["guardarformato"])){
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
 if (isset($Expresion)) $query.="&Expresion=".$Expresion;
 $query.="&Opcion=$Opcion&Word=S&Formato=".$Formato;
-if (isset($arrHttp["seleccionados"])){	$seleccion="";
+
+if (isset($arrHttp["seleccionados"])){
+	$seleccion="";
 	$mfn_sel=explode(',',$arrHttp["seleccionados"]);
-	foreach ($mfn_sel as $sel){		if ($seleccion==""){			$seleccion="'$sel'";
-		}else{			$seleccion.="/,'$sel'";		}	}
+	foreach ($mfn_sel as $sel){
+		if ($seleccion==""){
+			$seleccion="'$sel'";
+		}else{
+			$seleccion.="/,'$sel'";
+		}
+	}
 	$query.="&Mfn=$seleccion";
-}else
-	if (isset($arrHttm["Mfn"]) and isset($arrHttp["to"]))
+}else {
+	if (isset($arrHttp["Mfn"]) and isset($arrHttp["to"]))
 		$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
+} // end if (isset selccionades
+
 if (!isset($arrHttp["sortkey"])){
 	$IsisScript=$xWxis."imprime.xis";
-
 }else{
 	$query.='&sortkey='.urlencode($arrHttp["sortkey"]).",";
 	$IsisScript=$xWxis."sort.xis";
@@ -86,6 +108,7 @@ if (!isset($arrHttp["sortkey"])){
 include("../common/wxis_llamar.php");
 //foreach ($contenido as $value) echo "$value<br>";
 $ficha=$contenido;
+
 if (isset($arrHttp["tipof"])){
 	switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
 		case "T":  //TABLE
@@ -94,21 +117,31 @@ if (isset($arrHttp["tipof"])){
 			break;
 		case "CT": //COLUMNS (TABLE)
 			$data="<table border=1>";
-			if (isset($arrHttp["headings"])){				$h=explode("\r",$arrHttp["headings"]);
-				foreach ($h as $value){					$data.="<th>$value</th>";				}			}
+			if (isset($arrHttp["headings"])){
+				$h=explode("\r",$arrHttp["headings"]);
+				foreach ($h as $value){
+					$data.="<th>$value</th>";
+				}
+			}
 			break;
 		case "CD":
 			if (isset($arrHttp["headings"])){
 				$h=explode("\r",$arrHttp["headings"]);
 				foreach ($h as $value){
 					if (trim($value)!=""){
-						if ($data==""){							$data=$value;						}else{							$data.="|$value";						}
+						if ($data==""){
+							$data=$value;
+						}else{
+							$data.="|$value";
+						}
 	               }
 				}
 				$data.="\n";
 			}
-			break;	}
-}
+			break;
+	}
+} // end if (isset
+
 foreach ($ficha as $linea){
 	if (substr($linea,0,6)=='$$REF:'){
 	 			$ref=substr($linea,6);
@@ -125,7 +158,8 @@ foreach ($ficha as $linea){
  				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
 				include("../common/wxis_llamar.php");
 				$ixcuenta=0;
-				foreach($contenido as $linea_alt){					if (trim($linea_alt)!=""){
+				foreach($contenido as $linea_alt){
+					if (trim($linea_alt)!=""){
 						$ll=explode('|^',$linea_alt);
 						if (isset($ll[1])){
 							$ixcuenta=$ixcuenta+1;
@@ -138,11 +172,16 @@ foreach ($ficha as $linea){
 				if (isset($SS) and count($SS)>0){
 					ksort($SS);
 					foreach ($SS as $linea_alt)
-					     $data.= "$linea\n";				}
-	}else{		$data.= $linea."\n" ;	}
+					     $data.= "$linea\n";
+				}
+	}else{
+		$data.= $linea."\n" ;
+	}
+} // end foreach
 
-}
-switch ($arrHttp["vp"]){	case "WP":
+
+switch ($arrHttp["vp"]){
+	case "WP":
     	$filename=$arrHttp["base"].".doc";
 		header('Content-Type: application/msword; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
@@ -174,8 +213,18 @@ switch ($arrHttp["vp"]){	case "WP":
 		break;
 	default:
 		include("../common/header_display.php");
-}
-   echo $data;
+        ?>
+        <body>
+        <?php
+        include "../common/inc_div-helper.php";
+        ?>
+        <div class="formContent">
+        <?php
+        //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; 
+} // end switch vp
+
+echo $data;
+
 if (isset($arrHttp["tipof"])){
 	switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
 		case "T":  //TABLE
