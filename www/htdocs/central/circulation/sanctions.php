@@ -121,7 +121,7 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
@@ -129,16 +129,16 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".
 	<div class="actions">
 
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/sanctions.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: sanctions.php\n";
-?>
-	</div>
+$ayuda="sanctions.html";
+include "../common/inc_div-helper.php";
+?> 	
+
+
 <div class="middle list">
 	<div class="formContent">
 	<div class="searchBox">

@@ -138,26 +138,22 @@ function DeleteSuspentions(){
 echo "<body onload='javascript:document.inventorysearch.inventory.focus()'>\n";
 include("../common/institutional_info.php");
 ?>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["return"]?>
 	</div>
 	<div class="actions">
-
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/devolver.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php echo "
-<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: devolver.php
-	</div>";
-// prestar, reservar o renovar
+
+
+<?php
+$ayuda="devolver.html";
+include "../common/inc_div-helper.php";
 ?>
+
 <div class="middle list">
 <div class="formContent">
 	<div class="searchBox">

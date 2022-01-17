@@ -289,31 +289,22 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["loan"]." ";
 		  if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") echo " - ".$msgstr["users"].": ".$arrHttp["usuario"];
 		?>
 	</div>
-
+	<?php include("submenu_prestamo.php");?>
 	<div class="actions">
-
 	</div>
-	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<?php echo "
-<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: prestar.php </font>
-	</div>";
-// prestar, reservar o renovar
+
+<?php
+$ayuda="loan.html";
+include "../common/inc_div-helper.php";
 ?>
-
-
-
 <form name=inventorysearch action=usuario_prestamos_presentar.php method=post onsubmit="javascript:return false">
 <input type=hidden name=loan_policy value=<?php echo $LOAN_POLICY?>>
 <input type=hidden name=Opcion value=prestar>

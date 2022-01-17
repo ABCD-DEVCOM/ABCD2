@@ -40,25 +40,29 @@ include("../lang/prestamo.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 $encabezado="";
-echo "<body>\n";
 $encabezado="&encabezado=s";
-include("../common/institutional_info.php");
-include("submenu_prestamo.php");
-echo "<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".
-		$msgstr["configure"]."
-	</div>
-	<div class=\"actions\">";
-	
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-</div>";
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/configure_menu.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/configure_menu.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: configure_menu.php"; ?>
+
+<body>
+
+<?php include("../common/institutional_info.php"); ?>
+
+	<div class="sectionInfo">
+	<div class="breadcrumb">
+		<?php echo $msgstr["configure"];?>
 	</div>
+	<div class="actions">
+	</div>
+	<?php include("submenu_prestamo.php");?>
+</div>
+
+
+<?php
+$ayuda="configure_menu.html";
+include "../common/inc_div-helper.php";
+?>
+
+
 <div class="middle homepage">
 
 
