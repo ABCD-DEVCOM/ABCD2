@@ -1,4 +1,18 @@
+/*
+2022-01-17 rogercgui add colors.css and buttons.css
+*/
+
+
+/* System colour library */
+@import url(./colors.css);
+
+/* Button library */
+@import url(./buttons.css);
+
+/* System structure */
 @import url(./layout.css);
+
+/* Visual styles: borders, fonts, application of colours, shadows and animations */
 @import url(./styles.css);
 
 /* style rule: para correção de erros para float */

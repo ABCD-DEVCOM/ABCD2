@@ -1,0 +1,163 @@
+/*
+* This style sheet serves as a basis for developers and database managers.
+* Its classes offer buttons of various colours that can be applied to link, button and input type elements.
+* To use it just call the class "bt" followed by the colour class, for example "bt-blue". 
+*/
+
+.bt, 
+input[type=button],
+input[type=submit],
+input[type=reset],
+button {
+  border-width: 0.1rem;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  margin: 3px;
+  width: auto;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  cursor: pointer;
+  outline: 0;
+  text-align: center; 
+  outline: 0;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation; 
+  display: inline-block;
+  background-color: var(--abcd-gray-200);
+  color: var(--abcd-gray-900);
+  border-style: solid;
+  border-width: 0.1rem;
+  padding: 0.375rem 0.75rem;
+}
+
+
+
+a.bt {
+  border-width: 0.1rem;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  margin: 3px;
+  width: auto;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  cursor: pointer;
+  outline: 0;
+  text-align: center; 
+  outline: 0;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation; 
+  display: inline-block;
+  border-style: solid;
+  border-width: 0.1rem;
+  padding: 0.375rem 0.75rem;
+}
+
+
+
+a[class^="bt-"] { 
+  border-radius: 0.3rem;
+}
+
+
+
+.bt, 
+input[type=button]:hover,
+input[type=submit]:hover,
+button:hover,
+a.bt:hover, 
+.bt-lg:hover {
+  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+
+/* COLORS  */
+
+.bt-default,
+.bt.bt-default {
+  background-color: var(--abcd-gray-200);
+  border-color: var(--abcd-gray-500);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-gray-900);
+}
+
+
+.bt-red {
+  background-color: var(--abcd-red);
+  border-color: var(--abcd-red);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-white);
+}
+
+.bt-green {
+  background-color: var(--abcd-green);
+  border-color: var(--abcd-green);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-white);
+}
+
+.bt-yellow {
+  background-color: var(--abcd-yellow);
+  border-color: var(--abcd-yellow);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-gray-dark);
+}
+
+.bt-blue {
+  background-color: var(--abcd-blue);
+  border-color: var(--abcd-blue);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-white);
+}
+
+.bt-gray {
+  background-color: var(--abcd-gray);
+  border-color: var(--abcd-gray);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-white);
+}
+
+.bt-dark {
+  background-color: var(--abcd-dark);
+  border-color: var(--abcd-dark);
+  border-style: solid;
+  border-width: 0.1rem;
+  color: var(--abcd-white);
+}
+
+
+/* SIZES */
+
+.bt-lg,
+.bt.bt-lg,
+button.bt-lg {
+  padding:.8rem 2rem;
+}
+
+.bt-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+}
+
+
+/* CATALOGUING BUTTONS - large buttons with images */
+
+.bt-lg img {
+  vertical-align: middle;
+  margin: 0 3px;
+  filter: invert(99%) sepia(100%) saturate(4%) hue-rotate(
+61deg) brightness(105%) contrast(100%);
+}

@@ -241,7 +241,7 @@ else
 			<label for="setCookie" class="inline"><?php echo $msgstr["openwindow"]?></label>
 		</div>
 		<div class="formRow">
-				<a href="javascript:Enviar()" class="bt-blue bt-sign">
+				<a href="javascript:Enviar()" class="bt bt-blue">
 					<?php echo $msgstr["entrar"]?> 
 				</a>
 		</div>

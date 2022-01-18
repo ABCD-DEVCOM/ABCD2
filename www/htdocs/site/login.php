@@ -9,7 +9,8 @@ session_start();
 //$_SESSION=array();
 include("../central/config.php");
 include("../$app_path/common/get_post.php");
-foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+foreach ($arrHttp as $var=>$value) 
+	//echo "$var = $value<br>";
 
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
@@ -200,7 +201,7 @@ if (file_exists("../dbpath.dat")){
 ?>
 		</div-->
 		<div class="formRow">
-				<a href="javascript:Enviar('<?php echo $_GET["id"];?>')" class="bt-blue bt-sign">
+				<a href="javascript:Enviar('<?php echo $_GET["id"];?>')" class="bt bt-blue">
 					<?php echo $msgstr["entrar"]?> 
 				</a>
 		</div>	
@@ -209,6 +210,6 @@ if (file_exists("../dbpath.dat")){
 </div>
 </div>
 </form>
-<?php //include ("../<?php echo $app_path?>/common/footer.php");?>
+
 	</body>
 </html>
