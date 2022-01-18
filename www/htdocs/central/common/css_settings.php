@@ -1,23 +1,69 @@
 <?php
-if (isset($def["BODY_BACKGROUND"]) or isset($def["HEADING"]) or isset($def["USERINFO"]) or isset($def["SECTIONINFO"]) or isset($def["HELPER"]) or isset($def["FOOTER"])){
+
+/*
+* 2022-01-18 rogercgui added new user-configurable classes
+*/
+
+
+if (isset($def["BODY_BACKGROUND"]) or 
+	isset($def["HEADING"]) or 
+	isset($def["USERINFO"]) or 
+	isset($def["SECTIONINFO"]) or 
+	isset($def["HELPER"]) or 
+	isset($def["FOOTER"])){
+
 	echo "<style>\n";
+	
 	if (isset($def["BODY_BACKGROUND"])){
-		echo "BODY {
-		background: ".$def["BODY_BACKGROUND"].";
+		echo "
+		BODY {
+		background-color: ".$def["BODY_BACKGROUND"].";
 		}\n";
 	}
+
+	if (isset($def["COLOR_LINK"])){
+		echo "
+		a,
+		a.menuButton span {
+		color: ".$def["COLOR_LINK"].";
+		}\n";
+	}
+
 	if (isset($def["HEADING"])){
-		echo ".heading{
+		echo "
+		.heading, 
+		nav.heading-nav ul li, 
+		nav.heading-nav a, 
+		nav.heading-nav select,
+		.bt-cat {
 		background-color: ".$def["HEADING"].";
 		}\n";
 	}
+
+	if (isset($def["TOOLBAR"])){
+		echo "
+		div.toolbar-dataentry,
+		body.toolbar-dataentry {
+		background-color: ".$def["TOOLBAR"].";
+		}\n";
+	}
+
 	if (isset($def["USERINFO_FONTCOLOR"])){
-		echo ".userInfo, .userInfo A, .language, .language A, .institutionalInfo H1, .institutionalInfo H2 {
+		echo "
+		.userInfo, 
+		.userInfo A, 
+		.language, 
+		.language A, 
+		.institutionalInfo H1, 
+		.institutionalInfo H2 {
 		color: ".$def["USERINFO_FONTCOLOR"].";
 		}
-		.institutionalInfo H1, .institutionalInfo H2 {
+
+		.institutionalInfo H1, 
+		.institutionalInfo H2 {
 			color: ".$def["USERINFO_FONTCOLOR"].";
 		}
+
 		.heading H1{
 			color: ".$def["USERINFO_FONTCOLOR"].";
 		}\n";

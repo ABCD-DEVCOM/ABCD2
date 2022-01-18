@@ -20,7 +20,7 @@ body {
   line-height: var(--abcd-body-line-height);
   color: var(--abcd-body-color);
   text-align: var(--abcd-body-text-align);
-  background-color: var(--abcd-body-bg);
+/*  background-color: var(--abcd-body-bg);*/
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -228,7 +228,7 @@ a.menuButton span {
 }
 
 .helper, .helper a {
-	background: var(--abcd-light);
+/*background: var(--abcd-light);*/
 	color: var(--abcd-gray);
 
 }
@@ -337,7 +337,7 @@ A.singleButton .sb_rb {
 	height: 45px;
 	display: inline-block;
 	position: absolute;
-	width: 30%;
+	width: 29%;
 	vertical-align: middle;
 }
 
@@ -402,12 +402,12 @@ nav.heading-nav ul {
 nav.heading-nav ul li {
 	display:inline-block;
 	vertical-align: top;
-	background-color: var(--blue-abcd);
+/*	background-color: var(--blue-abcd);*/
 	float: left;
 	}
 
 nav.heading-nav a {
-	background-color: var(--blue-abcd);
+/*	background-color: var(--blue-abcd);*/
 	display: block;	
 	color: var(--abcd-white);
 	height: 45px;
@@ -426,7 +426,7 @@ nav.heading-nav a img {
 
 nav.heading-nav select {
 	text-transform: uppercase;
-	background-color: var(--blue-abcd);
+	/*background-color: var(--blue-abcd);*/
 	display: block;	
 	color: var(--abcd-white);
 	height: 43px;
@@ -543,7 +543,7 @@ nav.heading-nav ul ul ul li {
 }
 
 li a.bt-charset,li a.bt-charset:hover {
-	background: var(--blue-abcd);
+/*	background: var(--blue-abcd);*/
 	padding: 0px 8px;
 	cursor: default;
 	transform: none;
@@ -625,7 +625,7 @@ li a.bt-exit:hover {
 .footer {
 	border-top: 1px solid var(--abcd-light);
 	color: var(--abcd-light);
-	background: var(--blue-abcd);
+/*background: var(--blue-abcd);*/
 	padding: .8rem;
 	-webkit-box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32); 
 	box-shadow: inset -1px 15px 5px -12px rgba(0,0,0,0.32);
@@ -1216,28 +1216,6 @@ A.homeButton IMG{
 }
 /*#END #buttons background classes */
 
-/*#list classes */
-/*
-.searchBox {
-	background: #f2f2f2;
-}
-
-.searchBox LABEL {
-	color: #848484;
-}
-
-.searchBox INPUT.index {
-	border: 1px solid #8395a7;
-	background: #c8d6e5;
-	color: #222f3e;
-}
-
-.searchBox INPUT.submitAdvanced {
-	border: 0px none;
-	background: url('../images/searchBox_submitadvanced_bg.gif')  top left;
-	color: #848484;
-}
-*/
 
 
 .statTable {
@@ -1322,9 +1300,6 @@ A.homeButton IMG{
 
 /*TOOLBAR*/
 
-
-
-
 /*
 .ABCD_menubases iframe:hover {
 	position: relative;
@@ -1376,7 +1351,6 @@ body.toolbar-dataentry {
 }
 
 div.toolbar-dataentry {
-	background: var(--abcd-light);
 	color: var(--bgsectionInfo);
 	display: inline-block;
 }

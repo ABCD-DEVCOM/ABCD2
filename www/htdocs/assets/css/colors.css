@@ -8,18 +8,22 @@
 * <h1 class="color-blue">Blue text</h1>
 */
 
-
-:root {
-
 /* Specific colours of the basic layout */
-  --blue-abcd: #003366;
+
+/*
+* ABCD standard colours
+*
+* Change colors in:  http://localhost:9090/central/dbadmin/editar_abcd_def.php;
+* or
+* bases/abcd.def
+* 
+  --blue-abcd: #003366; /* HEADING
   --bgmoduleInfo: #336699;
-  --bgsectionInfo:  var(--bgmoduleInfo);
-  --toolbar-abcd: #fafafa;
+  --bgsectionInfo:  var(--bgmoduleInfo); /* SECTIONINFO
   --cat-color: #CCCCFF;
   --acq-color: #96EAC8;
   --loan-color: #99FFCC;
-
+*/
 
 /*
 * Various colours for use in display formats, buttons and other graphic elements.
@@ -30,6 +34,8 @@
 * style="color: var(abcd-blue)" /*inline
 */
 
+
+:root {
   --abcd-blue: #0066FF;
   --abcd-indigo: #6600FF;
   --abcd-purple: #6633CC;
@@ -68,7 +74,6 @@
   --abcd-body-line-height: 1.5;
   --abcd-body-color: #212529;
   --abcd-body-bg: var(--abcd-white);
-
 }
 
 
