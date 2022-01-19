@@ -11,7 +11,7 @@
 
 		<div class="footer">
 			<div class="systemInfo">
-				<span><b>ABCD v2.2.0-beta-0</b> + ... &rarr; 2021-12-23</span>
+				<span><b>ABCD v2.2.0-beta-0</b> + ... &rarr; 2022-01-19</span>
 				<span><?php if (isset($def["LEGEND1"])) echo $def["LEGEND1"]; ?></span>
 				<?php if(isset($def["URL1"])){
 					echo "<a href=".$def["URL1"]." target=_blank>". $def["URL1"]."</a>";

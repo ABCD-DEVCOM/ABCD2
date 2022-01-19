@@ -3,6 +3,7 @@
 20210430 fho4abcd Created
 20210520 fho4abcd New location 00 file
 20210521 fho4abcd typo
+20220119 fho4abcd correct path to absolute default language table
 */
 /*--------------------------------------------------------------
 ** Function  : Select the best available language table file
@@ -36,7 +37,7 @@ function get_langtab () {
  	}
  	if (!file_exists($langtab_file)) {
         // Try absolute default language. 
- 		$langtab_file=dirname(__FILE__)."../lang/00/lang.tab";
+ 		$langtab_file=dirname(__FILE__)."/../lang/00/lang.tab";
  	}
  	if (!file_exists($langtab_file)){
 		echo "</select></form></table><div><font color=red>".$msgstr["flang"]." ".$langtab_file."</font></div>";

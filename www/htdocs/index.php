@@ -5,6 +5,8 @@
 2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
 2021-02-27 fho4abcd png favicon works better in bookmarks.
 2021-08-10 fho4abcd Do not crash if first language file (from the browser) is missing. Visible message if no file found
+2022-01-19 rogercgui Include css_settings.php
+2022-01-19 fho4abcd Configured language is preset in the language selection
 */
 session_start();
 $_SESSION=array();
@@ -13,10 +15,9 @@ include("central/config.php");
 include("$app_path/common/get_post.php");
 $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
-$lang_config=$lang;
 
+$lang_config=$lang; // save the configured language to preset it later
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
 	$lang=$_SESSION["lang"];
@@ -26,8 +27,7 @@ if (isset($_SESSION["lang"])){
 }
 
 include ("$app_path/lang/admin.php");
-include ("$app_path/lang/lang.php");
-	
+include ("$app_path/lang/lang.php");	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -197,22 +197,22 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
         ?>
 			<label ><?php echo $msgstr["lang"]?></label> 
 			<select name=lang class="textEntry singleTextEntry" onchange="this.submit()">
-<?php
-
-		$fp=file($a);
-		$selected="";
-		foreach ($fp as $value){
-			$value=trim($value);
-			if ($value!=""){
-				$l=explode('=',$value);
-				if ($l[0]!="lang"){
-					if ($l[0]==$lang) $selected=" selected";
-					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>\n";
-					$selected="";
-				}
-			}
-		}
-?>
+                <option value=''></option>
+                <?php
+                $fp=file($a);
+                $selected="";
+                foreach ($fp as $value){
+                    $value=trim($value);
+                    if ($value!=""){
+                        $l=explode('=',$value);
+                        if ($l[0]!="lang"){
+                            if ($l[0]==$lang_config) $selected=" selected";
+                            echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>\n";
+                            $selected="";
+                        }
+                    }
+                }
+                ?>
 			</select>
 		</div>
 		<div class="formRow"><br>
