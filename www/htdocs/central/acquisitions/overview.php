@@ -479,7 +479,7 @@ include "../common/inc_div-helper.php"
             <?php echo generate_table($contenido, $first_post, $last_post,$show,$total_lines,$end_l) ;?>
             <?php echo read_collumns($archivo_tit);?>
         </table>
-	</div>	
+
 
     <div class="tMacroActions Browser">
         <div class="spacer">&#160;</div>     
@@ -490,7 +490,8 @@ include "../common/inc_div-helper.php"
         <div class="spacer">&#160;</div>        
     </div><!--./tMacroActions-->  
 
-
+    </div>  
+    
 	</div>
 </div>
 
