@@ -44,7 +44,20 @@ include ("$app_path/lang/lang.php");
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
-        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+
+		<!-- Favicons -->
+		
+		<link rel="mask-icon" href="assets/images/favicons/favicon.svg">
+    	<link rel="icon" type="image/svg+xml" href="assets/images/favicons/favicon.svg" color="#fff">
+
+    	<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
+    	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
+
+    	<link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/favicon-60x60.png">
+    	<link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/favicon-76x76.png">
+    	<link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/favicon-120x120.png">
+    	<link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/favicon-152x152.png">
+    	<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/favicon-180x180.png">
 
 		<title>ABCD</title>
 		<!-- Stylesheets -->
