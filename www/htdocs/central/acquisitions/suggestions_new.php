@@ -116,12 +116,6 @@ include("../common/institutional_info.php");
 }
 
 
-a {
-	color:blue;
-	cursor:pointer;
-}
-
-
 #myvar {
 	border:1px solid #ccc;
 	background:#ffffff;

@@ -35,7 +35,10 @@ if (isset($def["BODY_BACKGROUND"]) or
 		nav.heading-nav ul li, 
 		nav.heading-nav a, 
 		nav.heading-nav select,
-		.bt-cat {
+		.bt-cat,
+		.bt-loan,
+		.bt-acq,
+		.modal {
 		background-color: ".$def["HEADING"].";
 		}\n";
 	}
@@ -68,11 +71,25 @@ if (isset($def["BODY_BACKGROUND"]) or
 			color: ".$def["USERINFO_FONTCOLOR"].";
 		}\n";
 	}
+
+
 	if (isset($def["SECTIONINFO"])){
-		echo ".sectionInfo {
-		background: ".$def["SECTIONINFO"].";
+		echo "
+		.sectionInfo,
+		#myDiv,
+		.button_browse, 
+		a.button_browse, 
+		.submit,
+		.button_browse.show,
+		.bt-cat.active,
+		.bt-loan.active,
+		.bt-acq.active  {
+		background-color: ".$def["SECTIONINFO"].";
 		}\n";
 	}
+	
+
+
 	if (isset($def["SECTIONINFO_FONTCOLOR"])){
 		echo ".sectionInfo .sectionInfo A{
 		color: ".$def["SECTIONINFO_FONTCOLOR"].";

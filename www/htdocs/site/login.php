@@ -129,6 +129,9 @@ if (http.readyState == 4)
         }
 }
 </script>
+<?php
+include ("../$app_path/common/css_settings.php");
+?>
 </head>
 <body>
 	<div style="display:none;" class="heading">
