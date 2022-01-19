@@ -5,6 +5,7 @@
 20210415 fho4abcd Show db characterset if available, otherwise meta characterset. No longer show difference
 20211220 rogercgui Moved script from dataentry to common
 20211221 fho4abcd improved path to logout.php
+20220119 fho4abcd add empty value in language menu to indicate to no language matches
 */
 ?>
 
@@ -304,6 +305,7 @@ function ChangeLang(){
             $a=get_langtab();
             $fp=file($a);
             $selected="";
+            echo "<option title='' value=''"."</option>";
             foreach ($fp as $value){
                 $value=trim($value);
                 if ($value!=""){
@@ -328,6 +330,7 @@ function ChangeLang(){
 				        $a=get_langtab();
 				        $fp=file($a);
 				        $selected="";
+                        echo "<option title='' value=''"."</option>";
 				        foreach ($fp as $value){
 				            $value=trim($value);
 				            if ($value!=""){

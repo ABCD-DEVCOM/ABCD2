@@ -6,6 +6,7 @@
 2021-04-30 fho4abcd Do not switch language if selection is empty
 2021-06-14 fho4abcd Do not set password in $_SESSION + lineends
 2021-08-12 fho4abcd Give message if profiles/adm is missing for emergency user
+2022-01-19 fho4abcd Set default language if none supplied
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -388,7 +389,11 @@ include("../lang/acquisitions.php");
 		VerificarUsuarioLDAP();
 	else
 		VerificarUsuario();
-		$_SESSION["lang"]=$arrHttp["lang"];
+        if (isset($arrHttp["lang"]) && $arrHttp["lang"]!="") {
+            $_SESSION["lang"]=$arrHttp["lang"];
+        } else {
+            $_SESSION["lang"]=$lang;
+        }
 		$_SESSION["login"]=$arrHttp["login"];
 		$_SESSION["nombre"]=$nombre;
 
