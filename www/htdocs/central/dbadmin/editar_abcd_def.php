@@ -3,7 +3,9 @@
 2021-01-05 guilda Added $msgstr["regresar"]
 2021-04-30 fho4abcd Error message if file is not writable. 
 2021-04-30 fho4abcd Corrected html. Replaced helper code fragment by included file
-2021-08-29 fho4abcd PDF-> Digital documents,no radiobutton. Digital documents-> linked documents
+2021-08-29 fho4abcd PDF-> Digital documents,no radiobutton. Digital documents-> 
+linked documents
+2022-01-18 rogercgui added new user-configurable classes
 */
 session_start();
 
@@ -58,6 +60,17 @@ global $msg_path;
 		         <td>";
 		}
 		switch ($Opt["it"]){
+			case "color":
+				$opc=explode(";",$Opt["Label"]);
+		   		echo "<input type=color placeholder=\"#00ff00\" data-value=\"#00ff00\" name=ini_$key size=";
+		   		if (isset($Opt["size"]))
+		   			echo trim($Opt["size"]);
+				else
+					echo "100";
+		   		echo " value='";
+		   		if (isset($ini[$key])) echo $ini[$key];
+				echo "'> <small>".$Opt["Label"]."</small>";
+				break;  			
 		   	case "text":
 		   		echo "<input type=text name=ini_$key size=";
 		   		if (isset($Opt["size"]))
@@ -76,7 +89,7 @@ global $msg_path;
 						if ($ini[$key]==$o)
 							echo " checked";
 					}
-					echo ">$o &nbsp; &nbsp;";
+					echo "> $o &nbsp; &nbsp;";
 				}
 				break;
 			case "check":
@@ -87,7 +100,7 @@ global $msg_path;
 						if ($ini[$key]==$o)
 							echo " checked";
 					}
-					echo ">$o &nbsp; &nbsp;";
+					echo "> $o &nbsp; &nbsp;";
 				}
                 break;
 		}
@@ -135,20 +148,24 @@ switch ($arrHttp["Opcion"]){
 						"URL3" => array("it"=>"text","Options"=>""),
 						"LOGO" => array("it"=>"text","Options"=>""),
 						"CSS_NAME" => array("it"=>"text","Options"=>""),
-						"BODY_BACKGROUND" => array("it"=>"text","Options"=>""),
-						"HEADING" => array("it"=>"text","Options"=>""),
-						"USERINFO_FONTCOLOR" => array("it"=>"text","Options"=>""),
-						"SECTIONINFO" => array("it"=>"text","Options"=>""),
-						"SECTIONINFO_FONTCOLOR" => array("it"=>"text","Options"=>""),
-						"HELPER" => array("it"=>"text","Options"=>""),
-						"HELPER_FONTCOLOR" => array("it"=>"text","Options"=>""),
-						"FOOTER" => array("it"=>"text","Options"=>""),
-						"FOOTER_FONTCOLOR" => array("it"=>"text","Options"=>""),
+						"COLORS" => array("it"=>"title","Label"=>"<hr size=2>".$msgstr["colors"]),
+						"BODY_BACKGROUND" => array("it"=>"color","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)"),
+						"COLOR_LINK" => array("it"=>"color","Label"=>" Default: #33669 or (R: 51, G: 102, B: 153)"),
+						"HEADING" => array("it"=>"color","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)"),
+						"HEADING_FONTCOLOR" => array("it"=>"color","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)" ),
+						"SECTIONINFO" => array("it"=>"color","Label"=>" Default: #33669 or (R: 51, G: 102, B: 153)"),
+						"SECTIONINFO_FONTCOLOR" => array("it"=>"color","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)"),
+						"TOOLBAR" => array("it"=>"color","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)"),
+						"HELPER" => array("it"=>"color","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)"),
+						"HELPER_FONTCOLOR" => array("it"=>"color","Label"=>" Default: #666666 or (R: 102, G: 102, B: 102)"),
+						"FOOTER" => array("it"=>"color","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)"),
+						"FOOTER_FONTCOLOR" => array("it"=>"color","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)"),
 						"BG_WEB" => array("it"=>"text","Options"=>""),
 						"FRAME_1H" => array("it"=>"text","Options"=>""),
 						"FRAME_2H" => array("it"=>"text","Options"=>""),
                         "MODULES" => array("it"=>"title","Label"=>"<HR size=2>"),
 						);
+
 		$mod_vars=array("TITLE" => array("it"=>"text","Options"=>""),
 						"SCRIPT" => array("it"=>"text","Options"=>""),
 						"BUTTON" => array("it"=>"text","Options"=>""),
@@ -197,23 +214,33 @@ switch ($arrHttp["Opcion"]){
 
 switch ($arrHttp["Opcion"]){
 	case "abcd_def":
-		echo "<a href=\"../dbadmin/conf_abcd.php?reinicio=s\" class=\"defaultButton backButton\">";
+
+		$inc_backtourl="../dbadmin/conf_abcd.php?reinicio=s";
+		include "../common/inc_back.php";
+
 		break;
 	case "css":
-		echo "<a href=\"../dbadmin/conf_abcd.php?reinicio=s\" class=\"defaultButton backButton\">";
+
+		$inc_backtourl="../dbadmin/conf_abcd.php?reinicio=s";
+		include "../common/inc_back.php";
+
 		break;
 	default:
-		echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s\" class=\"defaultButton backButton\">";
+
+		$inc_backtourl="menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s";
+		include "../common/inc_back.php";
+
 		break;
 }
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
+
+
+
 if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
-	echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
-	echo "
-			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-			<span><strong>". $msgstr["save"]."</strong></span>
-			</a>";
+
+$savescript="javascript:Enviar()";
+
+include "../common/inc_save.php";	
+
 }
 echo "</div>
 	<div class=\"spacer\">&#160;</div>

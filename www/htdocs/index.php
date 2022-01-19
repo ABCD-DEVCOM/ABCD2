@@ -115,6 +115,9 @@ function Enviar(){
 }
 
 </script>
+<?php
+include ("$app_path/common/css_settings.php");
+?>
 </head>
 <body>
 	<div class="heading">
