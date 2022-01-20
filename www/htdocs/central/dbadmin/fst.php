@@ -2,6 +2,7 @@
 /* Modifications
 2021-02-08 fho4abcd Remove code in comment & languaje->language
 2021-02-09 fho4abcd Original name for dhtmlX.js
+2022-01-20 fho4abcd div-helper+ cancel button
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -38,7 +39,7 @@ if ($arrHttp["Opcion"]!="new"){
 	}
 }
 if (isset($arrHttp["encabezado"]))
-	$encabezado="&encabezado=S";
+	$encabezado="&encabezado=s";
 else
 	$encabezado="";
 include("../common/header.php");
@@ -124,45 +125,26 @@ include("../common/header.php");
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
 }
 echo "<form name=fst method=post>";
 echo "<div class=\"sectionInfo\">
 	<div class=\"breadcrumb\">".$msgstr["fst"].": ".$arrHttp["base"]."</div>
 	<div class=\"actions\">";
 if ($arrHttp["Opcion"]=="new"){
-	if (isset($arrHttp["encabezado"])){
-		echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
-	}else{
-		echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";
-	}
-
+    $backtoscript="../dbadmin/fdt.php?Opcion=new";
+    $backtocancelscript="../dbadmin/menu_modificardb.php";
+    include "../common/inc_back.php";
+    include "../common/inc_cancel.php";
 }else{
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
+    $backtoscript="../dbadmin/menu_modificardb.php";
+    include "../common/inc_back.php";
+    include("../common/inc_home.php");
 }
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
-	<span><strong>".$msgstr["cancel"]."</strong></span></a>";
-if ($arrHttp["Opcion"]=="new"){
-	echo "<a href=fdt.php?Opcion=new&base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">
-	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>";
-}
-//echo "<a href=javascript:Enviar() class=\"defaultButton saveButton\">
-//	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
-//	<strong>".$msgstr["update"]."</strong></a>";
+
 ?>
 </div><div class="spacer">&#160;</div></div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fst.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fst.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fst.php";
-?>
-</font>
-	</div>
+<?php include "../common/inc_div-helper.php"; ?>
+
 <div class="middle form">
 	<div class="formContent">
 

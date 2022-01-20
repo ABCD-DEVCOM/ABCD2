@@ -1,23 +1,19 @@
 <?php
 /*
-20211214 fho4abcd Created
-20211216 fho4abcd Add functionality for return script of the caller
-20220112 fho4abcd Do not add base= if there is already a base added
-20200120 fho4abcd Check if the url has already options
+20220120 fho4abcd Created from inc_back
 
-Function  : Show the backbutton in the breadcrumb in div class actions
-Usage     : <?php include "../common/inc_back.php" ?>
+Function  : Show the cancelbutton in the breadcrumb in div class actions
+Usage     : <?php include "../common/inc_cancel.php" ?>
 ** Variables
 **  $arrHttp["base"]: The current database. If not set the Home page is shown
-**  $backtoscript   : The return script.  If not set the Home page is shown
-**  $arrHttp["backtoscript_org"]: The return script of the caller. If not set no action
+**  $backtocancelscript   : The return script.  If not set the Home page is shown
 **  $arrHttp["encabezado"]: Indicator to show the header. If not set no action
 */
 
 $inc_backtourl="";
 $inc_optionset=false;
-if (isset($backtoscript) AND $backtoscript!="" ) {
-    $inc_backtourl=$backtoscript;
+if (isset($backtocancelscript) AND $backtocancelscript!="" ) {
+    $inc_backtourl=$backtocancelscript;
 } else {
     $inc_backtourl="/central/common/inicio.php";
 }
@@ -33,12 +29,6 @@ if (strpos($inc_backtourl, "base=")===false) {
         $inc_optionset=true;
     }
 }
-if (isset($arrHttp["backtoscript_org"])) {
-    if (!$inc_optionset) $inc_backtourl.="?";
-    if ( $inc_optionset) $inc_backtourl.="&";
-    $inc_optionset=true;
-    $inc_backtourl.="backtoscript=".$arrHttp["backtoscript_org"];
-}
 
 if (strpos($inc_backtourl, "encabezado=")===false) {
     if (isset($arrHttp["encabezado"]) AND $arrHttp["encabezado"]!="")  {
@@ -49,8 +39,8 @@ if (strpos($inc_backtourl, "encabezado=")===false) {
     }
 }
 ?>
-<a href="<?php echo $inc_backtourl?>" class="button_browse show" title='<?php echo $msgstr["regresar"]?>'>
-    <i class="fas fa-arrow-circle-left"></i>&nbsp;<?php echo $msgstr["regresar"]?></a>
+<a href="<?php echo $inc_backtourl?>" class="button_browse show" title='<?php echo $msgstr["cancel"]?>'>
+    <i class="far fa-window-close bt-red""></i>&nbsp;<?php echo $msgstr["cancel"]?></a>
 <?php
 unset($inc_backtourl);
 unset($inc_optionset);
