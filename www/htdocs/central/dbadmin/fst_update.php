@@ -1,4 +1,9 @@
 <?php
+/*
+20220121 fho4abcd Buttons+div-helper + clean html_entity_decode
+*/
+// This script does nothing but display a message. The real work is done in fst.php
+// There is code for option=new: never used
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -37,34 +42,25 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["fst"].": ".$arrHttp["base"]?>
+        <?php echo $msgstr["fst"].": ".$arrHttp["base"]?>
 	</div>
-
 	<div class="actions">
-<?php if ($arrHttp["Opcion"]=="new"){
-	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
-}else{
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-}
-?>
-<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-<span><strong><?php echo $msgstr["back"]?></strong></span>
-</a>
-			</div>
-			<div class="spacer">&#160;</div>
+    <?php if ($arrHttp["Opcion"]=="new"){
+        $backtocancelscript="../common/inicio.php?reinicio=s";
+        include "../common/inc_cancel.php";
+    }else{
+        $backtoscript="menu_modificardb.php";
+        include "../common/inc_back.php";
+    }
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<?php echo "<font color=white>&nbsp; &nbsp; Script: fst_update.php" ?></font>
-	</div>
+<?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-			<div class="formContent">
-<center><h4>
-<?php echo $msgstr["fstupdated"]?></h4>
-
-		</TD>
-</table>
-</center>
+<div class="formContent">
+<h4>
+    <?php echo $msgstr["fstupdated"]?>
+</h4>
 </div></div>
 <?php include("../common/footer.php");?>
-</body>
-</html>

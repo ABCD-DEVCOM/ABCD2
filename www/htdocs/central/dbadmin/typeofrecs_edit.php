@@ -1,4 +1,7 @@
 <?php
+/*
+20220121 fho4abcd buttons+html cleanup+div-helper
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -9,12 +12,12 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 
 include("../lang/dbadmin.php");
 $lang=$_SESSION["lang"];
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 
-<script languaje=javascript>
+<script language=javascript>
 
 function EnviarTipoR(){
 	if (Trim(document.tipordef.tipom.value)==""){
@@ -78,40 +81,29 @@ function Enviar(rows){
 
 
 </script>
-<body>
 <?php if (isset($arrHttp["encabezado"])){
     include("../common/institutional_info.php");
     $encabezado="&encabezado=s";
 }else{
 	$encabezado="";
 }
-echo "
-	<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-				$msgstr["typeofrecords"].": ".$arrHttp["base"]."
-		</div>
-		<div class=\"actions\">\n";
-		echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">
-			<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-			<span><strong>". $msgstr["cancel"]."</strong></span>
-			</a>
-		</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>";
 ?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/typeofrecs.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/typeofrecs.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: typeofrecs_edit.php";
-?>
-</font>
-	</div>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["typeofrecords"].": ".$arrHttp["base"]?>
+    </div>
+    <div class="actions">
+        <?php
+        $backtocancelscript="menu_modificardb.php";
+        include "../common/inc_cancel.php";
+        include "../common/inc_home.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php $ayudad="typeofrecs.html"; include "../common/inc_div-helper.php"?>
 <div class="middle form">
-			<div class="formContent">
-
-
+    <div class="formContent">
 <br><center>
 <?php
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks";
@@ -132,29 +124,33 @@ $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/typeofrecord.tab"
 if (!file_exists($archivo))
     $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab";
 if (!file_exists($archivo)){
-	echo "<p>
+?>
+<p>
 	<form name=tipordef method=post action=typeofrecs_update.php onsubmit='javascript:return false'>
 	<input type=hidden name=Opcion value=tipom>
-	<input type=hidden name=base value=".$arrHttp["base"].">";
-	if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";
-    echo "
-<table border=0 background=../img/fondo0.jpg width=450>
+	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+	<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
+
+    <table border=0 >
 	<tr>
-		<TD valign=top colspan=2>" . $msgstr["typeofrecords_new"]."</td>
+		<td valign=top colspan=2><?php echo $msgstr["typeofrecords_new"];?></td>
 	</tr>
 	<tr>
-		<td width=80>".$msgstr["tag"]." 1</td><td width=400><input type=text name=tipom value='' size=4></td>
+		<td width=80><?php echo $msgstr["tag"]." 1"?></td><td><input type=text name=tipom value='' size=4></td>
 	</tr>
 	<tr>
-		<td width=80>".$msgstr["tag"]." 2</td><td><input type=text name=nivelr value='' size=4></td>
+		<td width=80><?php echo $msgstr["tag"]." 2"?></td><td><input type=text name=nivelr value='' size=4></td>
 	</tr>
 
 </table><p>
-	<input type=submit value=' &nbsp; &nbsp; ".$msgstr["send"]." &nbsp; &nbsp; ' onClick=javascript:EnviarTipoR()>
-</form>\n";
-echo "</div></div></center>";
+<button class="bt-green" type="button"
+    title="<?php echo $msgstr["save"]?>"
+    onclick="javascript:EnviarTipoR()" >
+    <i class="far fa-save"></i>&nbsp;<?php echo $msgstr["save"]?> </button>
+</form>
+</div></div></center>
+<?php
 include("../common/footer.php");
-echo "</body></html>";
 	die;
 }
 echo "<form name=tor method=post action=typeofrecs_update.php onsubmit='return false'>
@@ -181,7 +177,7 @@ if ($fp) {
 					$nivelr=trim(substr($linea,$ixpos+1));
 				}
 				echo "
-<table border=0 background=../img/fondo0.jpg width=450>
+<table border=0 width=450>
 	<tr>
 		<TD valign=top colspan=2>" .$msgstr["typeofrecords_new"]." ". $msgstr["typeofrecords_tags"]."</td>
 	</tr>
@@ -213,7 +209,7 @@ if ($fp) {
 							if ($xxtm[0].".fmt"==$l[0]) $xselected=" selected";
 							echo "<option value=\"".$xxtm[0].".fmt\"$xselected>".trim($xxtm[1])." (".$xxtm[0].")\n";
 						}
-						echo "</td></select>";
+						echo "</select></td>";
 					}else{
 						switch ($i){
 							case 2:
@@ -230,7 +226,6 @@ if ($fp) {
 			}
 		}
 	}
-
 }
 
 for ($k=$j+1;$k<$j+8;$k++){
@@ -249,7 +244,7 @@ for ($k=$j+1;$k<$j+8;$k++){
 				$xxtm=explode('|',$f);
 				echo "<option value=\"".$xxtm[0].".fmt\">".trim($xxtm[1])." (".$xxtm[0].")\n";
 			}
-			echo "</td></select>";
+			echo "</select></td>";
 		}else{
 			switch ($i){
 				case 2:
@@ -262,20 +257,18 @@ for ($k=$j+1;$k<$j+8;$k++){
 			}
 			echo "<td><input type=text name=cell$k"."_".$i." value=\"$value\" $xsize></td>";
 		}
-
 	}
-
 }
-echo "</table>
-<p>
-<a href=javascript:Enviar($k)>".$msgstr["update"]."</a> &nbsp; &nbsp;";
-if (!isset($arrHttp["encabezado"]))
- echo "<a href=menu_modificardb.php?base=".$arrHttp["base"].">".$msgstr["cancel"]."</a>";
 ?>
-</form>
+</table>
 <p>
+<button class="bt-green" type="button"
+    title="<?php echo $msgstr["update"]?>"
+    onclick="javascript:Enviar(<?php echo $k;?>)" >
+    <i class="far fa-save"></i>&nbsp;<?php echo $msgstr["update"]?> </button>
+
+</form>
 </center>
 </div></div>
 <?php include("../common/footer.php");?>
-</body>
-</html>
+
