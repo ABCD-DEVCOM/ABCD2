@@ -248,6 +248,7 @@ r_mfnr=By MFN range
 r_noheading=No headings allowed for this type of format
 r_oreporte=or an available report
 r_parrafo=Paragraph
+r_parrafowith=Paragraph (with labels)
 r_recsel=Record selection
 r_reportes=Reports
 r_self=Please select a format from the list
