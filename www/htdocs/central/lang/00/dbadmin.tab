@@ -400,6 +400,7 @@ typeofrecords_create=Create new type of record
 typeofrecords_delete=Delete a type of record
 typeofrecords_new=Please, identify the tag(s) to be used for determining the type or record (max. 2 fields).
 typeofrecords_tags=Then, select an existing dataentry worksheet and assign the values of tag 1 and tag 2
+typeofrecords_tagsempty=Please specify a value for Tag 1 and optional also Tag 2
 undefined=Undefined
 unprotect_db=Unprotect database from initialization or deletion
 up=Up

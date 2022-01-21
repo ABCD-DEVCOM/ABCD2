@@ -1,6 +1,7 @@
 <?php
 /*
 20220120 fho4abcd Created from inc_back
+20220121 fho4abcd typo
 
 Function  : Show the cancelbutton in the breadcrumb in div class actions
 Usage     : <?php include "../common/inc_cancel.php" ?>
@@ -40,7 +41,7 @@ if (strpos($inc_backtourl, "encabezado=")===false) {
 }
 ?>
 <a href="<?php echo $inc_backtourl?>" class="button_browse show" title='<?php echo $msgstr["cancel"]?>'>
-    <i class="far fa-window-close bt-red""></i>&nbsp;<?php echo $msgstr["cancel"]?></a>
+    <i class="far fa-window-close bt-red"></i>&nbsp;<?php echo $msgstr["cancel"]?></a>
 <?php
 unset($inc_backtourl);
 unset($inc_optionset);
