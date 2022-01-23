@@ -3,6 +3,7 @@
 20210520 fho4abcd Replaced helper code fragment by included file
 20210520 fho4abcd Rewritten: use language table for languages to compare+error detection+show ghost entries+mark empty entries
 20210521 fho4abcd line-ends
+20220123 fho4abcd buttons
 */
 session_start();
 if (!isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) and !isset($_SESSION["permiso"]["CENTRAL_ALL"])){
@@ -29,10 +30,8 @@ include "../common/institutional_info.php";
         <?php echo $msgstr["compare_trans"].": ".$table ?>
     </div>
     <div class="actions">
-        <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-            <span><strong><?php echo $msgstr["regresar"]?></strong></span>
-        </a>
+        <?php include "../common/inc_back.php"?>
+        <?php include "../common/inc_home.php"?>
     </div>
     <div class="spacer">&#160;</div>
 </div>

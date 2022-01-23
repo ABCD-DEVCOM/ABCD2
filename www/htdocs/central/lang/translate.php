@@ -3,6 +3,7 @@
 20210521 fho4abcd Replaced helper code fragment by included file
 20210521 fho4abcd Rewritten: use correct encoding for translation
 20121128 fho4abcd Translations with quotes are now shown correct
+20220123 fho4abcd buttons
 */
 /*
 ** The encoding of the translated messages must match with the entered text
@@ -32,7 +33,8 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 $table=$arrHttp["table"];
 $backtoscript="../dbadmin/menu_traducir.php"; // The default return script
-// The default characterset is of the selected database or system default
+$savescript="javascript:Enviar()"; // The save action
+ // The default characterset is of the selected database or system default
 $selcharset=$charset;
 $guessstatus="basesdef";
 // Try to guess from the language code and the actual code as existed at the time this script was written
@@ -81,14 +83,9 @@ include("../common/institutional_info.php");
         <?php echo $msgstr["traducir"].": ".$arrHttp["table"]?>
     </div>
     <div class="actions">
-        <a href="javascript:Enviar()" class="defaultButton saveButton">
-            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-            <span><strong><?php echo $msgstr["m_guardar"]?></strong></span>
-        </a>
-        <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-            <span><strong><?php echo $msgstr["regresar"]?></strong></span>
-        </a>
+        <?php include "../common/inc_save.php"?>
+        <?php include "../common/inc_back.php"?>
+        <?php include "../common/inc_home.php"?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
@@ -230,5 +227,4 @@ if (file_exists($langfile)) {
 
 </div></div>
 <?php echo include("../common/footer.php")?>
-</body>
-</html>
+
