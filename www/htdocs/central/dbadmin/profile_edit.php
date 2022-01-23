@@ -1,4 +1,7 @@
 <?php
+/*
+20220123 fho4abcd buttons+div-helper
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -35,6 +38,7 @@ include("../common/get_post.php");
 include("../config.php");
 include("../common/header.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/profile.php");
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>";
@@ -215,25 +219,22 @@ if (!isset($arrHttp["Opcion"])){
 <?php echo $msgstr["PROFILES"]?>
 	</div>
 	<div class="actions">
-	<a href="<?php echo $ret;?>" class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /></a>
-<?php if (isset($arrHttp["Opcion"])and $arrHttp["Opcion"]!="delete"){
-	  echo "<a href=\"javascript:SendForm()\" class=\"defaultButton saveButton\">";?>
-
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["SAVE"]?></strong></span></a>
-<?php } ?>
+    <?php
+    if (isset($arrHttp["Opcion"])and $arrHttp["Opcion"]!="delete"){
+        $savescript="javascript:SendForm()";
+        include "../common/inc_save.php";
+    }
+    $backtoscript=$ret;
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/profiles.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp; &nbsp;
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/profiles.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: dbadmin/profile_edit.php";
+$ayuda="profiles.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
 <div class="middle form">
 	<div class="formContent">
 <form name=profile action=profile_save.php onsubmit="javascript:return false" method=post>

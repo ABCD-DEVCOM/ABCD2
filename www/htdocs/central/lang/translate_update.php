@@ -2,6 +2,7 @@
 /* Modified
 20210521 fho4abcd Replaced helper code fragment by included file
 20210521 fho4abcd Rewritten: correct filenames and error checks
+20220123 fho4abcd buttons
 */
 
 session_start();
@@ -26,10 +27,8 @@ include("../common/institutional_info.php");
         <?php echo $msgstr["traducir"].": ".$table;?>
     </div>
     <div class="actions">
-        <a href='<?php echo $backtoscript;?>' class="defaultButton backButton">
-            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-            <span><strong><?php echo $msgstr["regresar"]?></strong></span>
-        </a>
+        <?php include "../common/inc_back.php"?>
+        <?php include "../common/inc_home.php"?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
@@ -77,5 +76,3 @@ if ($res!==false) {
 echo "</div></div>";
 include("../common/footer.php");
 ?>
-</body>
-</html>
