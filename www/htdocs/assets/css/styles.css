@@ -614,6 +614,17 @@ li a.bt-exit:hover {
 	color: var(--abcd-light);
 }
 
+.footer span.institutionName a{
+	text-decoration: none;
+	font-size: 1.0rem;
+	font-weight: 500;
+	padding: 3px 0;
+}
+
+.footer span.institutionName a:hover{
+	text-decoration: underline;
+}
+
 
 /*#END #footer classes */
 

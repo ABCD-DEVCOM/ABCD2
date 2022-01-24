@@ -5,6 +5,7 @@
 2021-04-15 fho4abcd show charsets like institutional_info.php + refresh after change of database
 2021-04-30 fho4abcd Language selection menu equal to menubases.php+ moved language selection to included file
 2021-05-04 fho4abcd Language selection: Enable selection of first menu item
+2022-01-23 rogercgui Option "CABCD" points to settings
 */
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
 unset($_SESSION["root_base"]);
@@ -263,7 +264,7 @@ function Modulo(){
 				document.admFrm.encabezado.value="s"
 				break;
    			case "CABCD":
-				document.admFrm.action="../dbadmin/conf_abcd.php"
+				document.admFrm.action="../settings/conf_abcd.php"
 				document.admFrm.Opcion.value="abcd_def"
 				break;
 			case "DIRTREE":

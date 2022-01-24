@@ -7,6 +7,7 @@
 2021-08-10 fho4abcd Do not crash if first language file (from the browser) is missing. Visible message if no file found
 2022-01-19 rogercgui Include css_settings.php
 2022-01-19 fho4abcd Configured language is preset in the language selection
+20220122 rogercgui Default logo is displayed if institution image is absent
 */
 session_start();
 $_SESSION=array();
@@ -135,12 +136,17 @@ include ("$app_path/common/css_settings.php");
 <body>
 	<div class="heading">
 		<div class="institutionalInfo">
-			<img src=<?php	if (isset($logo))
-						echo "$logo" ;
-					else
-						echo "assets/images/logoabcd.png";
-				 ?>
-			><h1><?php echo $institution_name?></h1>
+			<?php
+
+			if (isset($def["RESPONSIBLE_LOGO"])) {
+				echo "<img src='/assets/images/uploads/".$def["LOGO"]."' title='";
+				if (isset($institution_name)) echo $institution_name;
+				echo "'>";
+			} else {
+				echo "<img src='/assets/images/logoabcd.png' title='ABCD Community'>";
+			}
+
+			?>
 		</div>
 		<div class="userInfo"><?php echo $meta_encoding?></div>
 
