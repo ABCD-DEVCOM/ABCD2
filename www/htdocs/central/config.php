@@ -123,7 +123,12 @@ if (!file_exists($db_path."abcd.def")){
  
 if (isset($_SESSION["MULTIPLE_DB_FORMATS"])) unset($_SESSION["MULTIPLE_DB_FORMATS"]);
 $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
-$institution_name=$def["LEGEND2"];        // Institution name defined by abcd.def 'LEGEND2'
+
+if (isset($def["INSTITUTION_NAME"])){
+	$institution_name=$def["INSTITUTION_NAME"];  // Institution name defined by abcd.def 'INSTITUTION_NAME'
+} else {
+	$institution_name="ABCD";
+}
 
 if (isset($def["UNICODE"]) and $def["UNICODE"]==1)
 	$meta_encoding="UTF-8";

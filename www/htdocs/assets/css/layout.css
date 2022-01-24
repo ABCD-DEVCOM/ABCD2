@@ -229,7 +229,7 @@ A.menuButton {
 		padding: 11px 0px 11px 15px;
 	}
 
-	.systemInfo STRONG, .systemInfo SPAN, .systemInfo A {
+	.systemInfo STRONG, .systemInfo SPAN {
 		display: block;
 	}
 

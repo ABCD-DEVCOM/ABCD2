@@ -6,6 +6,7 @@
 20211220 rogercgui Moved script from dataentry to common
 20211221 fho4abcd improved path to logout.php
 20220119 fho4abcd add empty value in language menu to indicate to no language matches
+20220122 rogercgui Default logo is displayed if institution image is absent
 */
 ?>
 
@@ -138,12 +139,18 @@ function ChangeLang(){
 
 <div class=heading>
 	<div class="institutionalInfo">
-		<img src=<?php if (isset($logo))
-								echo $logo;
-							else
-								echo "../../assets/images/logoabcd.png";
-					  ?>>
-					  <h1><?php if (isset($institution_name)) echo $institution_name;?></h1>
+		
+<?php
+
+if (isset($def["RESPONSIBLE_LOGO"])) {
+	echo "<img src='/assets/images/uploads/".$def["LOGO"]."' title='";
+	if (isset($institution_name)) echo $institution_name;
+	echo "'>";
+} else {
+	echo "<img src='/assets/images/logoabcd.png' title='ABCD'>";
+}
+
+?>
     </div>
 		
 		<div class="heading-database">
