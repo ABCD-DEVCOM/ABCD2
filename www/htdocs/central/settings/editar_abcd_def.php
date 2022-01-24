@@ -6,6 +6,7 @@
 2021-08-29 fho4abcd PDF-> Digital documents,no radiobutton. Digital documents-> 
 linked documents
 2022-01-18 rogercgui added new user-configurable classes
+2022-01-24 rogercgui Included file renaming to avoid accumulation of images in the upload folder. Even without converting the extension the files will have fixed names.
 */
 session_start();
 
@@ -132,12 +133,12 @@ global $msg_path, $msgstr;
 
 		   		echo '<input type="file" name=ini_'.$key.' id=ini_'.$key.' accept="image/png, image/jpeg , image/jpg" onchange="preview_image'.$Opt["ID"].'(event)" value=';
 		   		if (isset($ini[$key])) echo $ini[$key];
-		   		echo '>';
+		   		echo '> <small> Max: 2MB </small>';
 
 				if (!isset($ini[$key])) {
-					echo '<img width="100" id="'.$Opt["ID"].'"/>'.$file_value.'';
+					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" id="'.$Opt["ID"].'"/>'.$file_value.'</div>';
 				} else {
-					echo '<img class="bg-gray-300 p-3" width="100" src=../../assets/images/uploads/'.$file_value.' id="'.$Opt["ID"].'"/>'.$file_value.'';
+					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" src=../../assets/images/uploads/'.$file_value.' id="'.$Opt["ID"].'"/> '.$file_value.'</div>';
 				}
 
 				echo "
@@ -364,6 +365,17 @@ global $fieldname,$fp;
 
 $target_dir = "../../assets/images/uploads/";
 $target_file = $target_dir.basename($_FILES[$fileimg]["name"]);
+
+
+$temp = explode(".", $target_file);
+$newfilename = $fieldname.'.'. end($temp);
+
+$target_file = $target_dir.basename($newfilename);
+
+
+//$target_file  = str_replace(" ", "_", $target_file );
+
+
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -447,10 +459,16 @@ if (!isset($arrHttp["Accion"])){
 		echo "<tr><td colspan=2><strong>[MODULOS]</strong></td></tr>";
 		LeerIniFile($mod_vars,$modulo,2);
 	}
-	echo "</table>";
 ?>
-	<button class="bt bt-green" type="submit"><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></button>
-	<button class="bt bt-gray"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></button>
+	<tr>
+	<td></td>
+	<td>
+		<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
+		<a class="bt bt-gray" href="../settings/conf_abcd.php?reinicio=s"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
+	</td>
+	</tr>
+
+</table>
 
 <?php	
 }else{
@@ -477,7 +495,13 @@ if (!isset($arrHttp["Accion"])){
    						$fieldname=substr($fileimg, strlen("ini_"));
 
    						if ($_FILES[$fileimg]["name"]) {
-   						fwrite($fp,$fieldname."=".$_FILES[$fileimg]["name"]."\n");
+						//$file_name = str_replace(" ", "_",$_FILES[$fileimg]["name"]);   
+
+						$temp = explode(".", $_FILES[$fileimg]["name"]);
+						$newfilename = $fieldname.'.'. end($temp);
+						$file_name  = $newfilename;
+
+   						fwrite($fp,$fieldname."=".$file_name ."\n");
    					} else {
    						fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
    					}	

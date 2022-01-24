@@ -1,7 +1,9 @@
 /*
 2022-01-17 rogercgui add colors.css and buttons.css
+2022-01-24 rogercgui add normalize to reset css
 */
 
+@import url(./normalize.css);
 
 /* System colour library */
 @import url(./colors.css);
@@ -11,6 +13,9 @@
 
 /* System structure */
 @import url(./layout.css);
+
+/* Paddings */
+@import url(./spaces.css);
 
 /* Visual styles: borders, fonts, application of colours, shadows and animations */
 @import url(./styles.css);

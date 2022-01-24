@@ -42,15 +42,42 @@
 				</a>
 				</span>				
 
-				<?php if(isset($def["URL1"])){
-					echo "<span><small><a href=".$def["URL1"]." target=_blank>". $def["TEXT1"]."</a></small></span>";
+				<?php 
+
+				if(isset($def["TEXT1"])){
+					$text1 = $def["TEXT1"];
+
 				} else {
-					echo "ONLY FOR TESTING - NOT FOR DISTRIBUTION";
+					$text1 = "ONLY FOR TESTING - NOT FOR DISTRIBUTION";
 				}
+
+
+				if ((isset($def["URL1"])) && (isset($def["TEXT1"]))) {
+					$url1 = $def["URL1"];
+					echo "<span><small><a href=".$def["URL1"]." target=_blank>".$def["TEXT1"]."</a></small></span>";					
+
+				} elseif (isset($def["URL1"])) {
+					echo "<span><small><a href=".$def["URL1"]." target=_blank>".$def["URL1"]."</a></small></span>";	
+				} else {
+					$url1 = "";
+				}
+
+
+
+
 				if(isset($def["URL2"])){
-					echo "<span><small><a href=".$def["URL2"]." target=_blank>". $def["TEXT2"]."</a></small></span>";
+					$url2 = $def["URL2"];
+				} else {
+					$url2 = "URL2";
 				}
-				?>
+
+				if(isset($def["TEXT2"])){
+					$text2 = $def["TEXT2"];
+				} else {
+					$text2 = "TEXT2";
+				}
+
+?>
 				<span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-0 + ... &rarr; 2022-01-22</small></span>
 			</div>
 
@@ -64,13 +91,13 @@
                     ?>" target="_blank" target="_blank"> 
 
                     <?php 
-                     if (isset($def["RESPONSIBLE_NAME"])) {
+                     if ((isset($def["RESPONSIBLE_NAME"])) && (!empty($def["RESPONSIBLE_NAME"]))) {
                     	$responsible = $def["RESPONSIBLE_NAME"];
                 	} else {
                     	$responsible = "ABCD Community";
                 	}
 
-                    if (isset($def["RESPONSIBLE_LOGO"])) {
+                    if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["RESPONSIBLE_LOGO"]))) {
                     	echo "<img src='/assets/images/uploads/".$def["RESPONSIBLE_LOGO"]."' title='".$responsible."'>";
                     } else {
                     	echo "<img src='/assets/images/distributorLogo.png' title='ABCD Community'>";
