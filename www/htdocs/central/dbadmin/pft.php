@@ -3,6 +3,7 @@
 2021-03-03 fho4abcd Replaced helper code fragment by included file
 2021-06-14 fho4abcd remove password+lineends
 2022-01-20 fho4abcd new look buttons+Remove some nested tables+cleanup html+repair bugs
+2022-01-25 fho4abcd more new look buttons, shift Generate output to the bottom, improve generate output layout
 */
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -104,13 +105,9 @@ foreach ($fpTm as $linea){
 
 ?>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-<script language=Javascript src=../dataentry/js/selectbox.js></script>
+<script language="Javascript" src=../dataentry/js/selectbox.js></script>
 <style type=text/css>
 
-td{
-	font-size:12px;
-	font-family:Arial;
-}
 
 div#useexformat{
 
@@ -153,16 +150,8 @@ div#saveformat{
 	font-size: 12px;
 	color: #000000;
 }
-
-div#savesearch{
-	display: none;
-	margin: 0px 20px 0px 20px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #000000;
-}
 </style>
-<script languaje=javascript>
+<script language=javascript>
 
 TipoFormato=""
 C_Tag=Array()
@@ -173,13 +162,11 @@ function CheckType(){
 		alert("<?php echo $msgstr["r_noheading"]?>")
 		document.forma1.pft.focus()
 	}
-
 }
 
 function CopiarExpresion(){
 	Expr=document.forma1.Expr.options[document.forma1.Expr.selectedIndex].value
 	document.forma1.Expresion.value=Expr
-
 }
 
 function CopySortKey(){
@@ -225,10 +212,6 @@ function toggleLayer( whichLayer ){
 		echo '
 			document.forma1.fgen.selectedIndex=-1
 			EsconderVentana("useexformat")
-            if (save=="Y"){
-			//	document.forma1.nombre.value=""
-			//	document.forma1.descripcion.value=""
-			}
 			break
 			';
 }
@@ -458,6 +441,10 @@ function BorrarExpresion(){
 	document.forma1.Expresion.value=''
 }
 
+function BorrarSeleccionados(){
+	document.forma1.seleccionados.value=''
+}
+
 function EnviarForma(vp){
 	if (vp=="P") {
 		document.forma1.vp.value="S"
@@ -551,7 +538,7 @@ function Buscar(){
 	base='<?php echo $arrHttp["base"]?>'
 	cipar=base+".par"
 	Url="../dataentry/buscar.php?Opcion=formab&prologo=prologoact&Target=s&Tabla=imprimir&base="+base+"&cipar="+cipar
-  	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
+  	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=1000,height=500")
 	msgwin.focus()
 }
 
@@ -715,8 +702,14 @@ if ($arrHttp["Opcion"]!="new"){
                     or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EDPFT"])
                     or isset($_SESSION["permiso"]["_CENTRAL_EDPFT"])) {
                     ?> &nbsp;
-                    <a href='javascript:LeerArchivo("")'><?php echo $msgstr["edit"]?></a> | 
-                    <a href='javascript:EliminarFormato()'><?php echo $msgstr["delete"]?></a>
+                    <button class="bt-green" type="button"
+                        title="<?php echo $msgstr["edit"]?>:&nbsp;<?php echo $arrHttp["base"]."/".$arrHttp["Dir"]."/..."?>"
+                        onclick='javascript:LeerArchivo("")'>
+                        <i class="far fa-edit"></i> <?php echo $msgstr["edit"]?></button>
+                    <button class="bt-red" type="button"
+                        title="<?php echo $msgstr["delete"]?>:&nbsp;<?php echo $arrHttp["base"]."/".$arrHttp["Dir"]."/..."?>"
+                        onclick='javascript:EliminarFormato()'>
+                        <i class="fas fa-trash"></i> <?php echo $msgstr["delete"]?></button>
                     <?php
                 }
                 ?>
@@ -805,9 +798,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"])
                 </tr>
                 <tr><td style="border-bottom:none" colspan=2>
                     <div style="text-align:center">
-                        <button class="bt-yellow" type="button"
+                        <button class="bt-gray" type="button"
                             title="<?php echo $msgstr["borrar"]?>" onclick='javascript:BorrarFormato("pft")'>
-                            <i class="fas fa-trash"></i> <?php echo $msgstr["borrar"]?></button>
+                            <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?></button>
                     </div>
                 </td></tr>
             </table>
@@ -819,9 +812,38 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"])
 }else{
 	echo "<div id=createformat></div>";
 }
-if ($arrHttp["Opcion"]!="new"){ //=============GENERATE OUTPUT============= ?>
-    <!-- GENERATE OUTPUT -->
+// =========== Save format =========== Not for new databases
+if ($arrHttp["Opcion"]!="new" and
+    (   isset($_SESSION["permiso"]["CENTRAL_ALL"])
+        or isset($_SESSION["permiso"]["CENTRAL_EDPFT"])
+        or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])
+        or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EDPFT"]))){
+    ?>
     <table class=listTable>
+        <tr>
+        <td>
+            <a HREF="javascript:toggleLayer('saveformat')"><u><strong><?php echo $msgstr["r_guardar"]?></strong></u></a>
+            <div id=saveformat><br> &nbsp;
+                <span title="<?php echo $msgstr["pftnameenter"]?>"><?php echo $msgstr["name"]?></span>
+                <input type=text name=nombre size=20 maxlength=30 value='' title="<?php echo $msgstr["pftnameenter"]?>"> &nbsp; &nbsp;
+
+                <?php echo $msgstr["description"]?>
+                <input type=text size=50 maxlength=50 name=descripcion value=''> &nbsp; 
+
+                <button class="bt-green" type="button"
+                    title="<?php echo $msgstr["saveinfolder"]?>:&nbsp;<?php echo $arrHttp["base"]."/". $arrHttp["Dir"]?>/"
+                    onclick="javascript:GuardarFormato()">
+                    <i class="far fa-save"></i> </button>
+            </div>
+        </td>
+        </tr>
+    </table>
+    <?php
+}
+ //=============GENERATE OUTPUT============= 
+if ($arrHttp["Opcion"]!="new"){?>
+    <!-- GENERATE OUTPUT -->
+    <table >
 	<tr>
     <td>
         <a HREF="javascript:toggleLayer('testformat')"><u><strong><?php echo $msgstr["generateoutput"]?></strong></u></a>
@@ -836,11 +858,12 @@ if ($arrHttp["Opcion"]!="new"){ //=============GENERATE OUTPUT============= ?>
                     <?php echo $msgstr["r_hasta"]?>: <input type=text name=to size=10>
                     &nbsp;<?php echo $msgstr["maxmfn"]?>:&nbsp;<?php echo $arrHttp["MAXMFN"] ?>
                     &nbsp; &nbsp; 
-                    <button class="bt-yellow" type="button"
+                    <button class="bt-gray" type="button"
                         title="<?php echo $msgstr["borrar"]?>" onclick='javascript:BorrarRango()'>
-                        <i class="fas fa-trash"></i> <?php echo $msgstr["borrar"]?></button>
+                        <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?></button>
                 </td>
                 </tr>
+                <tr><td></td><td><hr class="color-gray-100"><br></td></tr>
                 <?php // check if there are preselected records
                 if (isset($arrHttp["seleccionados"])){
                 ?>
@@ -854,66 +877,85 @@ if ($arrHttp["Opcion"]!="new"){ //=============GENERATE OUTPUT============= ?>
                 </td>
                 <td>
                     <input type=text name=seleccionados size=100 value=<?php echo $sel?>>
+                &nbsp;
+                    <button class="bt-gray" type="button"
+                        title="<?php echo $msgstr["borrar"]?>" onclick='javascript:BorrarSeleccionados()'>
+                        <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?></button>
                 </td>
                 </tr>
+                <tr><td></td><td><hr class="color-gray-100"><br></td></tr>
                 <?php } ?>
                 <tr> <!-- row 3 record selection by Search -->
                 <td><?php echo $msgstr["r_recsel"]?><br>
                     <b><?php echo $msgstr["r_busqueda"]?></b>
                 </td>
                 <td>
-                <?php // proces a possible search expression table
-                unset($fp);
-                if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab"))
-                    $fp = file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab");
-                else
-                    if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/search_expr.tab"))
-                        $fp = file($db_path.$arrHttp["base"]."/pfts/".$lang_db."/search_expr.tab");
-                if (isset($fp)){
-                    ?>
-                    <?php echo $msgstr["copysearch"]?> :&nbsp;
-                    <select name=Expr  onChange=CopiarExpresion()>
-                        <option value=''>
-                        <?php
-                        foreach ($fp as $value){
-                            $value=trim($value);
-                            if ($value!=""){
-                                $pp=explode('|',$value);
-                                ?>
-                                <option value='<?php echo $pp[1]?>'><?php echo $pp[0]?></option>
+                <table>
+                    <tr><td colspan=2>
+                        <?php // proces a possible search expression table
+                        unset($fp);
+                        if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab"))
+                            $fp = file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab");
+                        else
+                            if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/search_expr.tab"))
+                                $fp = file($db_path.$arrHttp["base"]."/pfts/".$lang_db."/search_expr.tab");
+                        if (isset($fp)){
+                            ?>
+                            <?php echo $msgstr["copysearch"]?> :&nbsp;
+                            <select name=Expr  onChange=CopiarExpresion()>
+                                <option value=''>
                                 <?php
-                            }
+                                foreach ($fp as $value){
+                                    $value=trim($value);
+                                    if ($value!=""){
+                                        $pp=explode('|',$value);
+                                        ?>
+                                        <option value='<?php echo $pp[1]?>'><?php echo $pp[0]?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select> &nbsp; &nbsp;
+                            <?php
                         }
                         ?>
-                    </select> &nbsp; &nbsp;
+                        <button class="bt-green" type="button"
+                            title="<?php echo $msgstr["pftcreatesrcexpr"]?>"
+                            onclick='javascript:Buscar()'>
+                            <i class="far fa-plus-square"></i> <?php echo $msgstr["pftcreatesrcexpr"]?></button>
+                        </td>
+                    </tr>
+                    <tr><td>
+                        <textarea rows=2 cols=100 name=Expresion><?php if ($Expresion!="") echo $Expresion?></textarea>
+                    </td>
+                    <td> &nbsp;
+                        <button class="bt-gray" type="button"
+                            title="<?php echo $msgstr["borrar"]?>" onclick='javascript:BorrarExpresion()'>
+                            <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?></button>
+                    </td>
+                    </tr>
                     <?php
-                }
-                ?>
-                <input type=button onclick='javascript:Buscar()' value='<?php echo $msgstr["pftcreatesrcexpr"];?>' >
-                <br>
-                <textarea rows=2 cols=100 name=Expresion><?php if ($Expresion!="") echo $Expresion?></textarea>
-                <br>&nbsp; &nbsp;
-                <button class="bt-yellow" type="button"
-                    title="<?php echo $msgstr["borrar"]?>" onclick='javascript:BorrarExpresion()'>
-                    <i class="fas fa-trash"></i> <?php echo $msgstr["borrar"]?></button>
-                <?php
-                if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
-                    isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])  or
-                    isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or
-                    isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_SAVEXPR"])){
-                    ?> &nbsp; &nbsp;
-                    <input type=button onclick="javascript:toggleLayer('savesearch')" value='<?php echo $msgstr["savesearch"];?>' >
-                    
-                    <div id=savesearch style="text-align:right"><?php echo $msgstr["r_desc"]?>:
-                        <input type=text name=Descripcion size=40>&nbsp; &nbsp;
-                        <input type=button value="<?php echo $msgstr["save"]?>" onclick=GuardarBusqueda()>
-                    </div>
-                    <?php
-                }
-                ?>
+                    if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
+                        isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])  or
+                        isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or
+                        isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_SAVEXPR"])){
+                        ?>
+                        <tr><td>
+                            <button class="bt-green" type="button"
+                                title="<?php echo $msgstr["savesearch"]?>"
+                                onclick="javascript:GuardarBusqueda()">
+                                <i class="far fa-save"></i> <?php echo $msgstr["savesearch"]?></button>
+                            <?php echo $msgstr["r_desc"].": " ?>
+                            <input type=text name=Descripcion size=40>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </table>
                 </td>
-                </tr>  <!-- row 4 sort key -->
-                <tr>
+                </tr>
+                <tr><td></td><td><hr class="color-gray-100"><br></td></tr>
+                <tr>  <!-- row 4 sort key -->
                 <td><b><?php echo $msgstr["sortkey"]?></b></td>
                 <td><?php echo $msgstr["sortkeycopy"]?> :&nbsp;
                     <select name=sort  onChange=CopySortKey()>
@@ -943,63 +985,46 @@ if ($arrHttp["Opcion"]!="new"){ //=============GENERATE OUTPUT============= ?>
                         isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or
                         isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EDSORT"])){
                         ?>
-                        <input type=button value="<?php echo $msgstr["sortkeycreate"]?>" onclick=CreateSortKey()>
+                        <button class="bt-green" type="button"
+                            title="<?php echo $msgstr["sortkeycreate"]?>"
+                            onclick='javascript:CreateSortKey()'>
+                            <i class="far fa-plus-square"></i> <?php echo $msgstr["sortkeycreate"]?></button>
                     <?php  }
                     ?>
                     <br>
                     <input type=text name=sortkey size=70>
                 </td>
                 </tr>
+                <tr><td></td><td><hr class="color-gray-100"><br></td></tr>
                 <tr>  <!-- row 5 send to -->
                 <td style="border-bottom:none">
                     <strong><?php echo $msgstr["sendto"]?></strong>:
                 </td>
-                <td style="border-bottom:none">
-                    <a href="javascript:EnviarForma('WP')"><?php echo $msgstr["word"]?></a>
-                    &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
-                    <a href="javascript:EnviarForma('TB')"><?php echo $msgstr["wsproc"]?></a>
-                    &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
-                    <a href="javascript:EnviarForma('P')"><?php echo $msgstr["vistap"]?></a>
-                    &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;
-                    <a href="javascript:EnviarForma('TXT')"><?php echo $msgstr["pftplain"]?></a>
+                <td>
+                    <button class="bt-blue" type="button"
+                        title="<?php echo $msgstr["vistap"]?>"
+                        onclick="javascript:EnviarForma('P')">
+                        <i class="far fa-eye"></i> <?php echo $msgstr["vistap"]?></button> &nbsp;
+                    <button class="bt-blue" type="button"
+                        title="<?php echo $msgstr["word"]?>"
+                        onclick="javascript:EnviarForma('WP')">
+                        <i class="far fa-file-word"></i> <?php echo $msgstr["word"]?></button> &nbsp;
+                    <button class="bt-blue" type="button"
+                        title="<?php echo $msgstr["wsproc"]?>"
+                        onclick="javascript:EnviarForma('TB')">
+                        <i class="far fa-file-excel"></i> <?php echo $msgstr["wsproc"]?></button> &nbsp;
+                    <button class="bt-blue" type="button"
+                        title="<?php echo $msgstr["pftplain"]?>"
+                        onclick="javascript:EnviarForma('TXT')">
+                        <i class="far fa-file-alt"></i> <?php echo $msgstr["pftplain"]?></button>
                 </td>
             </table>
         </div>
     </td></tr>
     </table>
 
-<?php  // =========== Save format ===========
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"])
-    or isset($_SESSION["permiso"]["CENTRAL_EDPFT"])
-    or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])
-    or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_EDPFT"])){
-    $save="Y";
-    ?>
-    <table class=listTable>
-        <tr>
-        <td>
-            <a HREF="javascript:toggleLayer('saveformat')"><u><strong><?php echo $msgstr["r_guardar"]?></strong></u></a>
-            <div id=saveformat><br> &nbsp;
-                <span title="<?php echo $msgstr["pftnameenter"]?>"><?php echo $msgstr["name"]?></span>
-                <input type=text name=nombre size=20 maxlength=30 value='' title="<?php echo $msgstr["pftnameenter"]?>"> &nbsp; &nbsp;
-
-                <?php echo $msgstr["description"]?>
-                <input type=text size=50 maxlength=50 name=descripcion value=''> &nbsp; 
-
-                <button class="bt-green" type="button"
-                    title="<?php echo $msgstr["saveinfolder"]?>:&nbsp;<?php echo $arrHttp["base"]."/". $arrHttp["Dir"]?>/"
-                    onclick="javascript:GuardarFormato()">
-                    <i class="far fa-save"></i> </button>
-            </div>
-        </td>
-        </tr>
-    </table>
-    <?php
-}else{
-    $save="N";
-}
+<?php
 /*  End of the tables with collapsing content. */
-echo "\n<script>save='$save'</script>\n";
 if (!isset($arrHttp["Modulo"]))
 	if ($encabezado=="s")
 		echo "&nbsp; &nbsp;<a href=menu_modificardb.php?Opcion=".$arrHttp["Opcion"]."&base=".$arrHttp["base"].">".$msgstr["cancel"]. "</a><p>";
@@ -1035,7 +1060,7 @@ if (!isset($arrHttp["Modulo"]))
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 	<input type=hidden name=Expresion value="">
 	<input type=hidden name=Descripcion value="">
-</form>	<p>
+</form>
 <form name=sortkey method=post action=sortkey_edit.php target=sortkey>
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 	<input type=hidden name=encabezado value=s>
