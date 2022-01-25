@@ -143,11 +143,11 @@ function ChangeLang(){
 <?php
 
 if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["LOGO"]))) {
-	echo "<img src='/assets/images/uploads/".$def["LOGO"]."?".time()."' title='";
+	echo "<img src='/assets/images/uploads/".$def["LOGO"]."' title='";
 	if (isset($institution_name)) echo $institution_name;
 	echo "'>";
 } else {
-	echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
+	echo "<img src='/assets/images/logoabcd.png' title='ABCD'>";
 }
 
 ?>

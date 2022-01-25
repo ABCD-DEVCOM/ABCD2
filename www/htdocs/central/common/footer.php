@@ -98,9 +98,9 @@
                 	}
 
                     if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["RESPONSIBLE_LOGO"]))) {
-                    	echo "<img src='/assets/images/uploads/".$def["RESPONSIBLE_LOGO"]."?".time()."' title='".$responsible."'>";
+                    	echo "<img src='/assets/images/uploads/".$def["RESPONSIBLE_LOGO"]."' title='".$responsible."'>";
                     } else {
-                    	echo "<img src='/assets/images/distributorLogo.png?".time()."' title='ABCD Community'>";
+                    	echo "<img src='/assets/images/distributorLogo.png' title='ABCD Community'>";
                     }
                     ?>
 
