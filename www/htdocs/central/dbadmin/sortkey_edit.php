@@ -1,6 +1,7 @@
 <?php
 /*
 20220121 fho4abcd backbutton-> close button + div-helper + improve html + bug in enter value wih
+20220125 fho4abcd Do not show institutional info to avoid logout from popup+improved button+footer
 */
 
 session_start();
@@ -122,14 +123,6 @@ function Enviar(){
 	document.eacfrm.submit()
 }
 </script>
-<?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
-?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
         <?php echo $msgstr["sortkeycreate"]." (".$arrHttp["base"].")" ?>
@@ -190,14 +183,13 @@ for ($i=$ix;$i<$ix+5;$i++){
         <a href='javascript:Agregar("accent")'><?php echo $msgstr["add"]?></a>
 </div>
 
-<?php
-if (isset($arrHttp["encabezado"]))
-	echo "<input type=hidden name=encabezado value=s>\n";
-?>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<p><br><input type=submit value=<?php echo $msgstr["update"]?> onclick=javascript:Enviar()>
 <input type=hidden name=ValorCapturado>
+<p><br> <button class="bt-green" type="button"
+            title="<?php echo $msgstr["update"]?>"
+            onclick='javascript:Enviar()'>
+            <i class="far fa-save"></i> <?php echo $msgstr["update"]?></button>
+
 </form>
 </div></div>
-</body>
-</html>
+<?php include "../common/footer.php";

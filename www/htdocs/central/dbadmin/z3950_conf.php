@@ -3,6 +3,7 @@
 20210711 fho4abcd Rewrite: Improve html&layout, div-helper
 20211216 fho4abcd Backbutton by included file
 20220108 fho4abcd Improve layout&text
+20220124 fho4abcd Ensure current database is present at exit
 */
 
 /**
@@ -46,6 +47,7 @@ $Permiso=$_SESSION["permiso"];
 $sep='|';
 $db=explode($sep,$arrHttp["base"]);
 $db=$db[0];
+$arrHttp["base"]=$db;
 if(!isset($arrHttp["cipar"])) $arrHttp["cipar"]=$db.".par";
 $ciparamp="&amp;cipar=".$arrHttp["cipar"];
 include("../common/header.php");
