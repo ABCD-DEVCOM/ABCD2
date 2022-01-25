@@ -9,6 +9,7 @@
 2021-11-04 fho4abcd Replace vmx_fullinv.php by fullinv.php.
 20211216 fho4abcd Backbutton by included file, removed redundant help
 20220107 fho4abcd Removed opcion parameter for text import/export. Smaller textblocks
+20220124 fho4abcd No back button if institutional info not shown
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -102,6 +103,8 @@ function EnviarForma(Opcion,Mensaje){
 <?php
 if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	include("../common/institutional_info.php");
+} else {
+    $arrHttp["encabezado"]="";
 }
 ?>
 <div class="sectionInfo">
@@ -109,7 +112,7 @@ if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	<?php echo $msgstr["mantenimiento"]?>
     </div>
     <div class="actions">
-    <?php include "../common/inc_back.php";?>
+    <?php if ($arrHttp["encabezado"]=="s") include "../common/inc_back.php";?>
     </div>
 		<div class="spacer">&#160;</div>
 	</div>
