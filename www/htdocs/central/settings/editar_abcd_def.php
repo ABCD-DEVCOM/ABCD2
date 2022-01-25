@@ -23,6 +23,10 @@ include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
+
+//directory where the images go
+$target_dir = "../../assets/images/uploads/";
+
 if (!isset($_SESSION["login"])or $_SESSION["profile"]!="adm" ){
 	echo "<script>
 	      alert('".$msgstr["invalidright"]."')
@@ -46,7 +50,9 @@ if ($handle = opendir($l)) {
     }
     closedir($handle);
 }
-//================= PHP function ==========
+
+
+//================= Function to read the abcd.def file ==========
 function LeerIniFile($ini_vars,$ini,$tipo){
 global $msg_path, $msgstr;
 
@@ -58,7 +64,7 @@ global $msg_path, $msgstr;
  		    continue;
  		}else{
  			echo "<tr>
- 			<td>
+ 			<td style='vertical-align: top;'>
  			".$msgstr['set_'.$key]."
  			</td>
  			<td>";
@@ -66,7 +72,7 @@ global $msg_path, $msgstr;
 		switch ($Opt["it"]){
 			case "color":
 				$opc=explode(";",$Opt["Label"]);
-		   		echo "<input type=color placeholder=\"#00ff00\" data-value=\"#00ff00\" name=ini_$key size=";
+		   		echo "<input type='color' class='mt-5' placeholder='".$Opt["default"]."' data-value='".$Opt["default"]."' name=ini_$key id=ini_$key size=";
 		   		if (isset($Opt["size"]))
 		   			echo trim($Opt["size"]);
 				else
@@ -79,7 +85,8 @@ global $msg_path, $msgstr;
 					echo $Opt["default"];
 				}
 
-				echo "'> <small>".$Opt["Label"]."</small>";
+				echo "'>";
+				echo "<small>".$Opt["Label"]."</small> &nbsp;<button type=\"button\" clss=\" bt bt-sm bt-gray\" onclick=\"return cleanSet('".$Opt["default"]."','ini_".$key."')\" title=\"Reset\"><i class=\"fas fa-eraser\"></i></button> ";
 				break;  			
 		   	case "text":
 		   		echo "<input type=text name=ini_$key size=";
@@ -135,8 +142,8 @@ global $msg_path, $msgstr;
 		   		if (isset($ini[$key])) echo $ini[$key];
 		   		echo '> <small> Max: 2MB </small>';
 
-				if (!isset($ini[$key])) {
-					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" id="'.$Opt["ID"].'"/>'.$file_value.'</div>';
+		 				if ((!isset($ini[$key])) or (empty($arrHttp[$key]))) {
+				echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" id="'.$Opt["ID"].'"/>'.$file_value.'</div>';
 				} else {
 					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" src=../../assets/images/uploads/'.$file_value.' id="'.$Opt["ID"].'"/> '.$file_value.'</div>';
 				}
@@ -162,13 +169,21 @@ global $msg_path, $msgstr;
 }
 //============= end function ========
 ?>
-<body >
+
+<body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
+
 <script language="javascript" type="text/javascript">
+
 function Enviar(){
-//	document.maintenance.ini_LOGO.value=this.files[0].name;
-//	document.maintenance.ini_RESPONSIBLE_LOGO.value=this.files[0].name;
 	document.maintenance.submit()
+}
+
+//Function that resets the colour values
+function cleanSet(v,campo){
+    document.getElementById(campo).value = v
+    console.log(v);
+    return false;
 }
 </script>
 
@@ -182,26 +197,17 @@ switch ($set_mod){
 	case "abcd_styles":
 		$ini_vars=array(
 					"STYLES" => array("it"=>"title","Label"=>$msgstr["set_logo_css"]),
-
-					"LOGO" => array("it"=>"file","Options"=>"","ID"=>"LOGO"),
-
+					"LOGO" => array("it"=>"file","Options"=>"","default"=>"","ID"=>"LOGO"),
 					"INSTITUTION_NAME" => array("it"=>"text","Options"=>""),
 					"INSTITUTION_URL" => array("it"=>"text","Options"=>""),
-
 					"RESPONSIBLE_NAME" => array("it"=>"text","Options"=>""),
 					"RESPONSIBLE_URL" => array("it"=>"text","Options"=>""),
-
-					"RESPONSIBLE_LOGO" => array("it"=>"file","Options"=>"","ID"=>"RESPONSIBLE_LOGO"),
-						
+					"RESPONSIBLE_LOGO" => array("it"=>"file","Options"=>"","default"=>"","ID"=>"RESPONSIBLE_LOGO"),				
 					"LEGEND3" => array("it"=>"text","Options"=>""),
-
 					"URL3" => array("it"=>"text","Options"=>""),
 					"CSS_NAME" => array("it"=>"text","Options"=>""),
-
-		     		"COLORS" => array("it"=>"title","Label"=>"<hr size=2>".$msgstr["set_colors"]),
-		 			
+		     		"COLORS" => array("it"=>"title","Label"=>"<hr size=2>".$msgstr["set_colors"]),	 			
 					"BODY_BACKGROUND" => array("it"=>"color","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)"),
-
 					"COLOR_LINK" => array("it"=>"color","default"=>"#336699","Label"=>" Default: #336699 or (R: 51, G: 102, B: 153)"),
 					"HEADING" => array("it"=>"color","default"=>"#003366","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)"),
 					"HEADING_FONTCOLOR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)" ),
@@ -357,13 +363,11 @@ if (file_exists($file)){
 	}
 }
 
-
-function uplodimages($fieldname,$fileimg) {
-global $fieldname,$fp;
-
 /* UPLOAD IMAGE */
+function uplodimages($fieldname,$fileimg) {
+global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir;
 
-$target_dir = "../../assets/images/uploads/";
+
 $target_file = $target_dir.basename($_FILES[$fileimg]["name"]);
 
 
@@ -371,10 +375,6 @@ $temp = explode(".", $target_file);
 $newfilename = $fieldname.'.'. end($temp);
 
 $target_file = $target_dir.basename($newfilename);
-
-
-//$target_file  = str_replace(" ", "_", $target_file );
-
 
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -394,8 +394,9 @@ if(isset($_POST["submit"])) {
 // Check if file already exists
 /*
 if (file_exists($target_file)) {
-  echo "Sorry, file already exists.";
-  $uploadOk = 0;
+	fwrite($fp,$fieldname."=".$def[$fieldname]."\n");	
+  //echo "Sorry, file already exists.";
+  //$uploadOk = 0;
 }
 */
 
@@ -408,34 +409,33 @@ if ($_FILES[$fileimg]["size"] > 2097152) {
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
-  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+ // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed."."<br>";
   $uploadOk = 0;
 }
 
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
-  echo "Sorry, your file was not uploaded.";
+  echo $msgstr["set_notsentfile"]."<br>";;
 // if everything is ok, try to upload file
 } else {
 
   if (move_uploaded_file($_FILES[$fileimg]["tmp_name"], $target_file)) {
-    echo "The file ". htmlspecialchars( basename( $_FILES[$fileimg]["name"])). " has been uploaded.<br>";
+    echo $msgstr["set_thefile"]."&nbsp;<b>".htmlspecialchars( basename( $_FILES[$fileimg]["name"]))."</b>&nbsp;".$msgstr["set_has_been_upload"]."<br>";
 
   } else {
-    echo "Sorry, there was an error uploading your file.";
+    echo $msgstr["set_error_upload"]."<br>";;
        fwrite($fp,$fieldname."=".$fileimg."\n");
   }
 }	
 
-/* ENF IMAGE UPLOAD */
-
 }
-
-
+/* END IMAGE UPLOAD */
 
 if (!isset($ini["DIRTREE_EXT"]) and $arrHttp["Opcion"]!="css")
 	$ini["DIRTREE_EXT"]="*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,";
 ?>
+
+
 <div class="middle">
 	<div class="formContent" >
 
@@ -490,12 +490,12 @@ if (!isset($arrHttp["Accion"])){
             }
 
                     $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
-					
+
+
 					foreach ($fileslist as $fileimg){
    						$fieldname=substr($fileimg, strlen("ini_"));
 
    						if ($_FILES[$fileimg]["name"]) {
-						//$file_name = str_replace(" ", "_",$_FILES[$fileimg]["name"]);   
 
 						$temp = explode(".", $_FILES[$fileimg]["name"]);
 						$newfilename = $fieldname.'.'. end($temp);
@@ -503,18 +503,19 @@ if (!isset($arrHttp["Accion"])){
 
    						fwrite($fp,$fieldname."=".$file_name ."\n");
    					} else {
-   						fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
-   					}	
+						fwrite($fp,$fieldname."=".$def[$fieldname]."\n");	
+					}
 
-   						uplodimages($fieldname,$fileimg);  
-					
+   						uplodimages($fieldname,$fileimg);  			
 
 					}
 
-
+/*
             if ($arrHttp["Opcion"]=="abcd_def" and !isset($arrHttp["ini_LEGEND2"])){
                 fwrite($fp,"LEGEND2=\n");
             }
+
+*/            
             if (isset($arrHttp["mod_TITLE"])){
                 echo "[MODULOS]<BR>";
                 fwrite($fp,"[MODULOS]\n");
@@ -523,9 +524,6 @@ if (!isset($arrHttp["Accion"])){
                         $key=substr($key,4);
                         echo $key."=".$arrHttp["mod_".$key]."<br>";
                         fwrite($fp,$key."=".trim($arrHttp["mod_".$key])."\n");
-
-
-
 
                     }
                 }
@@ -540,7 +538,6 @@ if (!isset($arrHttp["Accion"])){
 </form>
 </div>
 </div>
-
 
 <?php include("../common/footer.php");?>
 
