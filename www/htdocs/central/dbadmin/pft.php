@@ -4,6 +4,7 @@
 2021-06-14 fho4abcd remove password+lineends
 2022-01-20 fho4abcd new look buttons+Remove some nested tables+cleanup html+repair bugs
 2022-01-25 fho4abcd more new look buttons, shift Generate output to the bottom, improve generate output layout
+2022-01-26 fho4abcd Open preview in larger window and after all checks passed.
 */
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -449,7 +450,6 @@ function EnviarForma(vp){
 	if (vp=="P") {
 		document.forma1.vp.value="S"
 		document.forma1.target="VistaPrevia"
-		msgwin=window.open("","VistaPrevia","width=400,top=0,left=0,resizable, status, scrollbars")
 	}else{
 		document.forma1.vp.value=vp
 		document.forma1.target=""
@@ -492,6 +492,9 @@ function EnviarForma(vp){
 		alert("<?php echo $msgstr["r_selreg"]?>")
 		return
 	}
+	if (vp=="P") {
+		msgwin=window.open("","VistaPrevia","width=600,top=0,left=0,resizable, status, scrollbars")
+    }
 
   	document.forma1.submit()
   	msgwin.focus()
