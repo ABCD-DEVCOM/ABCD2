@@ -1,6 +1,7 @@
 <?php
 /*
 20220121 fho4abcd buttons+html cleanup+div-helper
+20220126 fho4abcd allow empty lines in worksheet table
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -204,10 +205,12 @@ if ($fp) {
 						echo "<td><select name=cell$j"."_".$i.">
 						<option value=\"\"></option>-- ";
 						foreach ($fmt as $f){
-							$xxtm=explode('|',$f);
-							$xselected="";
-							if ($xxtm[0].".fmt"==$l[0]) $xselected=" selected";
-							echo "<option value=\"".$xxtm[0].".fmt\"$xselected>".trim($xxtm[1])." (".$xxtm[0].")\n";
+                            if(trim($f)!="") {
+                                $xxtm=explode('|',$f);
+                                $xselected="";
+                                if ($xxtm[0].".fmt"==$l[0]) $xselected=" selected";
+                                echo "<option value=\"".$xxtm[0].".fmt\"$xselected>".trim($xxtm[1])." (".$xxtm[0].")\n";
+                            }
 						}
 						echo "</select></td>";
 					}else{
@@ -241,8 +244,10 @@ for ($k=$j+1;$k<$j+8;$k++){
 			echo "<td><select name=cell$k"."_".$i.">
 			<option value=\"\"></option> ";
 			foreach ($fmt as $f){
-				$xxtm=explode('|',$f);
-				echo "<option value=\"".$xxtm[0].".fmt\">".trim($xxtm[1])." (".$xxtm[0].")\n";
+                if(trim($f)!="") {
+                    $xxtm=explode('|',$f);
+                    echo "<option value=\"".$xxtm[0].".fmt\">".trim($xxtm[1])." (".$xxtm[0].")\n";
+                }
 			}
 			echo "</select></td>";
 		}else{
