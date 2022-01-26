@@ -1,4 +1,7 @@
 <?php
+/*
+20220125 fho4abcd home button replaces back button + div-helper + more  and better translation
+*/
 global $arrHttp;
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -152,6 +155,7 @@ if (isset($arrHttp["pft"])) $_SESSION["PFT"]=$arrHttp["pft"];
 include("../common/header.php");
 
 echo "
+<body>
 <script>
 function Continuar(){
     if (confirm(\"".$msgstr["borrartodo"]."\")==true ) {
@@ -182,47 +186,38 @@ function ActualizarListaBases(bd,desc){
 }
 echo "
 </script>
-<body>
 ";
 if (isset($arrHttp["encabezado"]))
 	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
-
-			<div class=\"breadcrumb\"><h5>".
-				$msgstr["fdt"]." " .$msgstr["database"]. ": " . $arrHttp["base"]."</h5>
-			</div>
-
-			<div class=\"actions\">
-	";
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["createdb"].": " . $arrHttp["base"]?>
+    </div>
+	<div class="actions">
+<?php
 $arrHttp["Opcion"]="new";
 if ($arrHttp["Opcion"]=="new"){
 	if (isset($arrHttp["encabezado"]) ){
-		echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
+		include "../common/inc_home.php";
 	}else{
-		 echo "<a href=menu_creardb.php class=\"defaultButton backButton\">";
+        $backtoscript="menu_creardb.php";
+		include "../common/inc_back.php";
 	}
 }else{
 	if (isset($arrHttp["encabezado"]))
 		$encabezado="&encabezado=s";
 	else
 		$encabezado="";
-	echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
+    $backtoscript="menu_modificardb.php";
+    include "../common/inc_back.php";
 }
-echo "
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
-
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/crearbd_new_create.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/crearbd_new_create.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: crearbd_new_create.php</font></div>";
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+$ayuda="crearbd_new_create.html"; include "../common/inc_div-helper.php";
 echo "
 <div class=\"middle form\">
 			<div class=\"formContent\">
@@ -393,8 +388,6 @@ echo "<p><a href=iah_edit_db.php?encabezado=s&base=".$arrHttp["base"].">".$msgst
 
 echo "</div></div>";
 include("../common/footer.php");
-echo "</body></html>";
 unset($_SESSION["CISIS"]);
 unset($_SESSION["dc_import"]);
-die;
 ?>
