@@ -1,4 +1,7 @@
 <?php
+/*
+20220126 fho4abcd div-helper,backbutton, clean html
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -19,36 +22,26 @@ include("../common/header.php");
 echo "<body>" ;
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
-
 ?>
 <div class="sectionInfo">
-
-			<div class="breadcrumb">
-				<?php echo "<h5>".$msgstr["fst"]." " .$msgstr["database"].": ".$arrHttp["base"]."</h5>"?>
-			</div>
-
-			<div class="actions">
-<?php echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s\" class=\"defaultButton backButton\">";
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
-			</div>
-			<div class="spacer">&#160;</div>
+    <div class="breadcrumb">
+        <?php echo $msgstr["advsearch"]." &rarr; " .$msgstr["database"].": ".$arrHttp["base"]?>
+    </div>
+    <div class="actions">
+        <?php
+        $backtoscript="menu_modificardb.php";
+        include "../common/inc_back.php";
+        include "../common/inc_home.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
 <?php }?>
+<?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-			<div class="formContent">
-
-<?php echo "<font size=1> &nbsp; &nbsp; Script: advancedsearch_update.php</font>"?>
-<br><br>
-<dd><table border=0>
-	<tr>
-		<TD>
-			<p><h4><?php echo $arrHttp["base"]. "/pfts/".$_SESSION["lang"]."/".$arrHttp["archivo"]." ".$msgstr["updated"]?></h4><P>
-		</TD>
-</table>
+    <div class="formContent">
+    <br><br>
+    <h4><?php echo $arrHttp["base"]. "/pfts/".$_SESSION["lang"]."/".$arrHttp["archivo"]." ".$msgstr["updated"]?></h4>
 </div></div>
 <?php include("../common/footer.php");?>
-</body>
-</html>
+

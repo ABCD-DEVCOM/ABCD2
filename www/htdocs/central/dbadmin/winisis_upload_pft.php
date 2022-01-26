@@ -1,4 +1,7 @@
 <?php
+/*
+20220125 fho4abcd buttons+div-helper + update to php7: ereg_replace->preg_replace
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -27,52 +30,40 @@ global $arrHttp,$msgstr;
 }
 
 include("../common/header.php");
-if (isset($arrHttp["encabezado"]))
+?>
+<body>
+<?php
+if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
+    $encabezado="&encabezado=s";
+} else {
+    $encabezado="";
+}
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+    <?php echo $msgstr["winisisdb"].": " . $arrHttp["base"]?>
+    </div>
+	<div class="actions">
+    <?php
+    $backtoscript="winisis_upload_fst.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado;
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php $ayuda="winisis_upload_pft.html"; include "../common/inc_div-helper.php";?>
 
-			<div class=\"breadcrumb\"><h5>".
-				$msgstr["winisisdb"].": " . $arrHttp["base"]."</h5>
-			</div>
-
-			<div class=\"actions\">
-	";
-if (isset($arrHttp["encabezado"]))
-		$encabezado="&encabezado=s";
-	else
-		$encabezado="";
-echo "<a href=winisis_upload_fst.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado." class=\"defaultButton backButton\">";
-
-echo "
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["cancel"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
-
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/winisis_upload_pft.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/winisis_upload_pft.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: winisis_upload_pft.php</font></div>";
-
-echo "
-<div class=\"middle form\">
-			<div class=\"formContent\">";
-
+<div class="middle form">
+    <div class="formContent">"
+<?php
 $files = $_FILES;
 if ($files['userfile']['size']) {
       // clean up file name
       	$name=$files['userfile']["size"];
-   		$name = ereg_replace("[^a-z0-9._]", "",
-       	str_replace(" ", "_",
-       	str_replace("%20", "_", strtolower($name)
-   			)
-      		)
-        );
+        $name=str_replace(" ", "_", str_replace("%20", "_", strtolower($name)));
+		$name=preg_replace("[^a-z0-9._]", "",$name);
       	$fp=file($files['userfile']['tmp_name']);
        	$Pft="";
         foreach($fp as $linea) $Pft.=$linea;
