@@ -1,4 +1,0 @@
-discovery.*=/var/opt/ABCD/bases/discovery/data/discovery.*
-discovery.pft=/var/opt/ABCD/bases/discovery/pfts/en/discovery.pft
-prologoact.pft=/var/opt/ABCD/bases/www/prologoact.pft
-epilogoact.pft=/var/opt/ABCD/bases/www/epilogoact.pft

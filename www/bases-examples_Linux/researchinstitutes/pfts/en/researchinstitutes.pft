@@ -1,6 +1,0 @@
-'<table border=0 width=90%>'
-if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>ID/URI</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
-if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Institute name</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
-if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>Address</b></td><td valign=top><font face=arial size=2>'(if p(v3) then | |v3^a,| |v3^b,| |v3^c,| |v3^d,| |v3^e,| |v3^f,| |v3^g, if iocc<>nocc(v3) then '<br>' fi fi/),'</td>' fi/
-if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Institute description</b></td><td valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
-'</table><p>'

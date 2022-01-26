@@ -1,5 +1,0 @@
-'<table border=0 width=90%>'
-if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Identifier</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
-if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Resource</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
-if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Description</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
-'</table><p>'
