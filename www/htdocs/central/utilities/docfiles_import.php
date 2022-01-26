@@ -19,6 +19,7 @@
 20220103 fho4abcd Revised collection structure.Improved tag processing
 20220104 fho4abcd Added exif
 20220110 fho4abcd Added record type indicator+remove maxparts and exifimagedesc (duplicate of dc:description)
+20220126 fho4abcd Added option to use ID to make filenames unique
 **
 ** The field-id's in this file have a default, but can be configured
 ** Effect is that this code can be used for databases with other field-id's
@@ -285,8 +286,12 @@ else if ($impdoc_cnfcnt==2) {
         <div style="color:green"><?php echo $msgstr["dd_optionmsg"];?></div>
         <table cellspacing=2 cellpadding=2>
         <tr>
+            <td><?php echo $msgstr["dd_addid"];?></td>
+            <td><input type=checkbox id=addid name="addid" value=1 checked></td>
+            <td style='color:blue'><?php echo $msgstr["dd_imp_unique"];?></td>
+        </tr><tr>
             <td><?php echo $msgstr["dd_addtimestamp"];?></td>
-            <td><input type=checkbox id=addtimestamp name="addtimestamp" value=1 checked></td>
+            <td><input type=checkbox id=addtimestamp name="addtimestamp" value=1 ></td>
             <td style='color:blue'><?php echo $msgstr["dd_imp_unique"];?></td>
         </tr><tr>
             <td><?php echo $msgstr["dd_truncfilename"];?></td>
@@ -369,7 +374,10 @@ else if ($impdoc_cnfcnt==2) {
 else if ($impdoc_cnfcnt==3) {
     echo "<h3>".$msgstr["dd_imp_step"]." 3: ".$msgstr["dd_imp_step_exec"]."</h3>";
     $retval=0;
-    $addtimestamp=$arrHttp["addtimestamp"];
+    $addtimestamp=0;
+    $addid=0;
+    if (isset($arrHttp["addtimestamp"])) $addtimestamp=$arrHttp["addtimestamp"];
+    if (isset($arrHttp["addid"]))        $addid       =$arrHttp["addid"];
     $tikajar=$arrHttp["tikajar"];
     $textmode=$arrHttp["textmode"];
     $truncsize="";
@@ -420,7 +428,7 @@ else if ($impdoc_cnfcnt==3) {
             set_time_limit($seconds_per_file);
             tolog("<li>".$msgstr["dd_imp_proctimelimit"]." ".$seconds_per_file." ".$msgstr["dd_imp_seconds"]."</li>");
             // Import file
-            $retval=import_action($fileList[$i], $addtimestamp, $truncsize, $tikajar, $textmode, $splitmax, $splittarget,
+            $retval=import_action($fileList[$i], $addtimestamp, $addid, $truncsize, $tikajar, $textmode, $splitmax, $splittarget,
                                   $arrHttp["base"], $numrecsOK);
             $processed=$i;
             if ($retval==0) {
@@ -505,7 +513,7 @@ include "../common/footer.php";
 //
 // =========================== Functions ================
 //  - import_action     : imports an uploaded file
-//  - next_cn_number    : returns the next control number
+//  - next_cn_number    : returns the next control number(=ID)
 //  - convert_component : returns sanitized path component
 //  - convert_field     : returns sanitized mx field
 //  - convert_name      : returns sanitized filename
@@ -518,7 +526,7 @@ include "../common/footer.php";
 //  - tolog             : writes information to screen and/or logfile
 //
 // ====== import_action =============================
-function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $textmode, $splitmax, $splittarget, $basename, &$numrecsOK) {
+function import_action($full_imp_path, $addtimestamp, $addid, $truncsize, $tikajar, $textmode, $splitmax, $splittarget, $basename, &$numrecsOK) {
 /*
 ** Imports the given file in ImportRepo/... into the collection
 ** The metadata of this file is stored in an ABCD record.
@@ -526,6 +534,7 @@ function import_action($full_imp_path, $addtimestamp, $truncsize, $tikajar, $tex
 **
 ** In: $full_imp_path = Full filename in <collection>/ImportRepo/...
 ** In: $addtimestamp  = Indicator to add a timestamp to the filename (0/1)
+** In: $addid         = Indicator to add the record id to the filename (0/1)
 ** In: $truncsize     = Number of characters in core file name (""=unlimited)
 ** In: $tikajar       = Name of actual tika jar in cgi-bin
 ** In: $textmode      = Indicator for tika: m=meta, t=text, h=html, x=xhtml
@@ -575,13 +584,20 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
        }
     }
     /*
+    ** Get parameters for the filename conversion
+    */
+    if ( next_cn_number($basename,$c_id)!=0 ){
+        return(1);
+    }
+
+    /*
     ** Modify the filename. Name and extension 
     ** - Replace characters to enable usage in url (name+ext)
     ** - Split in name and extension (more extensions will be created)
-    ** - Add timestamp for uniqueness (only name)
+    ** - Add timestamp and/or ID for uniqueness (only name)
     ** - Truncate excessive long names(only name)
     */
-    if ( convert_name($orgfilename, $addtimestamp, $truncsize, $docname, $docext) !=0 ) return(1);
+    if ( convert_name($orgfilename, $addtimestamp, $addid, $c_id, $truncsize, $docname, $docext) !=0 ) return(1);
     if ( convert_field($orgfilename, $def_c_source) !=0 ) return(1);
     /*
     ** - Construct the name of the tika generated target (html) file
@@ -749,7 +765,7 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     ** - c_htmlSrcURL  : computed after split
     ** - c_sections    : by the section name
     ** - c_url         : by /docs/<collection>/<sectionname>/<docname>.<doc_ext>
-    ** - c_id          : by next_cn_number
+    ** - c_id          : by next_cn_number (already set at filename conversion)
     ** - c_dateadded   : by current data&time
     ** - c_htmlfilesize: computed after split
     ** - c_doctext     : Reserved for future actions
@@ -760,11 +776,6 @@ global $cisis_ver, $cgibin_path, $coldocfull, $colsrcfull, $db_path, $msgstr, $m
     if ($sectionname!="") $c_url.="/".$sectionname;
     $c_url.="/".$docname;
     if ($docext!="") $c_url.=".".$docext;
-    if ( next_cn_number($basename,$c_id)!=0 ){
-        unlink($tikafile);
-        rename($docpath, $full_imp_path);
-        return(1);
-    }
     $c_dateadded=date("Y-m-d H:i:s");
     $c_doctext="";
     /*
@@ -1122,23 +1133,27 @@ function convert_field($orgtext, &$cnvtext){
 ** 
 ** - Names in lowercase to be valid for windows/linux (and exports/imports)
 ** - Replace characters to enable usage in url and windows/linux filename restrictions
-** - Add timestamp for uniqueness (only for the filename)
+** - Add timestamp and/or ID for uniqueness (only for the filename)
 ** - Truncate excessive long names(only for the filename)
+** - Note that on windows unicode names to process by Gload will get an extra conversion
 **
 ** In  : $orgfilename  = Full or partial filename
 ** In  : $addtimestamp = 0:no stamp, 1: add stamp
+** In  : $addid        = 0:no id, 1: add id
+** In  : $c_id         = The value of the ID (supposed to be control number)
 ** In  : $truncsize    = Number of characters in base name (""=unlimited)
 ** Out : $filename     = PATHINFO_FILENAME  (processed)
 ** Out : $extension    = PATHINFO_EXTENSION (processed)
 **
 ** Return : 0=OK, 1=NOT-OK
 */
-function convert_name($orgfilename, $addtimestamp, $truncsize, &$filename, &$extension){
+function convert_name($orgfilename, $addtimestamp, $addid, $c_id, $truncsize, &$filename, &$extension){
     global $msgstr;
     $filename="";
     $extension="";
     if ($orgfilename=="") return 0;
     $time_sep="__";
+    $id_sep="__";
     $replacechar= "_";
     /*
     ** Convert and cleanup of the filename
@@ -1173,6 +1188,9 @@ function convert_name($orgfilename, $addtimestamp, $truncsize, &$filename, &$ext
         $timeformat="ymdHis";
         if( mb_strlen($filename,$name_encoding)>5)$timeformat="His";
         $filename=$filename.$time_sep.date($timeformat);
+    }
+    if ($addid==1) {
+        $filename.=$id_sep.$c_id;
     }
     return(0);
 }
