@@ -3,6 +3,7 @@
 2021-03-02 fho4abcd Replaced helper code fragment by included file
 2021-08-29 fho4abcd Removed document import (the code made a new record)
 2021-08-29 fho4abcd Restored edit button. lineends
+2022-01-27 fho4abcd Do not show empty buttons for calls by test scripts
 */
 
 //echo $arrHttp["ventana"];
@@ -19,46 +20,30 @@ if (!isset($fmt_test) and !isset($arrHttp["ventana"])){
     $wiki_help="Entrada_de_datos";
     include "../common/inc_div-helper.php";
 }
-?>
+// The test options do not use buttons, nor the javascripts in this file
+if (isset($fmt_test)) goto LAST
 
+?>
 	<div class="middle form">
 		<div class="formContent">
-
 <?php if (!isset($arrHttp["ventana"])){
 ?>
 <script language ="javascript" type="text/javascript">
 
-
 function scrollingDetector(){
-
-if (navigator.appName == "Microsoft Internet Explorer")
-
-{
-
-//alert(document.documentElement.scrollTop);
-
-document.getElementById("myDiv").style.top = document.documentElement.scrollTop;
-
+    if (navigator.appName == "Microsoft Internet Explorer")
+    {
+    //alert(document.documentElement.scrollTop);
+    document.getElementById("myDiv").style.top = document.documentElement.scrollTop;
+    }
+     // For FireFox
+    else{ document.getElementById("myDiv").style.top = window.pageYOffset + "px";      }
 }
-
-
-
- // For FireFox
-
-else{ document.getElementById("myDiv").style.top = window.pageYOffset + "px";      }
-
-
-
-}
-
 
 
 function startScrollingDetector()
-
 {
-
-setInterval("scrollingDetector()",1000);
-
+    setInterval("scrollingDetector()",1000);
 }
 startScrollingDetector()
 
@@ -201,4 +186,7 @@ startScrollingDetector()
 			Ctrl.checked=true
 	}
 </script>
+<?php
+// here the including script continues 
+LAST:
 
