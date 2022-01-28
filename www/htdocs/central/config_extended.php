@@ -2,13 +2,9 @@
 /* Modifications
 20210801 fho4abcd Check valid values unicode (0/1), lineends
 20210801 fho4abcd MULTIPLE_DB_FORMATS always "Y
+20220128 fho4abcd Remove MULTIPLE_DB_FORMATS
 */
 //SE LEEN PARÁMETROS ADICIONALES DE abcd.def
-// MULTIPLE_DB_FORMATS always "Y". Can be removed if all code has removed this parameter
-if (isset($_SESSION))
-    $_SESSION["MULTIPLE_DB_FORMATS"]="Y";
-else
-    $MULTIPLE_DB_FORMATS="Y";
 
 if (!isset($dirtree)) $dirtree=0;
 if (isset($def["DIRTREE"]))
