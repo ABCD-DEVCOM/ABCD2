@@ -149,6 +149,7 @@ fmtplsselect=Please select a worksheet
 fmtcreated=Data entry worksheet created
 fmtmisdes=Missing worksheet Description
 fmtmisname=Missing worksheet Name
+fmtupdate=Update FMT
 fmtupdated=The dataentry Worksheet has been updated
 fn=Field name
 folderne=Folder does not exists
