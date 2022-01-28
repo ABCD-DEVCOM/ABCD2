@@ -48,24 +48,24 @@ include ("$app_path/lang/lang.php");
 
 		<!-- Favicons -->
 		
-		<link rel="mask-icon" href="assets/images/favicons/favicon.svg">
-    	<link rel="icon" type="image/svg+xml" href="assets/images/favicons/favicon.svg" color="#fff">
+		<link rel="mask-icon" href="/assets/images/favicons/favicon.svg">
+    	<link rel="icon" type="image/svg+xml" href="/assets/images/favicons/favicon.svg" color="#fff">
 
-    	<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png">
-    	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png">
+    	<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+    	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
 
-    	<link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/favicon-60x60.png">
-    	<link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/favicon-76x76.png">
-    	<link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/favicon-120x120.png">
-    	<link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/favicon-152x152.png">
-    	<link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/favicon-180x180.png">
+    	<link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/favicon-60x60.png">
+    	<link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/favicon-76x76.png">
+    	<link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/favicon-120x120.png">
+    	<link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/favicon-152x152.png">
+    	<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">
 
 		<title>ABCD</title>
 		<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+		<link rel="stylesheet" rev="stylesheet" href="/assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
 
 		<!--FontAwesome-->
-		<link href="../../assets/css/all.min.css" rel="stylesheet"> 
+		<link href="/assets/css/all.min.css" rel="stylesheet"> 
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie.css" type="text/css" media="screen"/>
 		<![endif]-->
@@ -82,7 +82,7 @@ include ("$app_path/lang/lang.php");
 	}
 </style>
 
-<script src=<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
+<script src=/<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
 
 <script language=javascript>
 
@@ -157,7 +157,7 @@ include ("$app_path/common/css_settings.php");
 		<div class="actions"></div>
 		<div class="spacer">&#160;</div>
 	</div>
-<form name="administra" onsubmit="javascript:return false" method="post" action="<?php echo $app_path?>/common/inicio.php">
+<form name="administra" onsubmit="javascript:return false" method="post" action="/<?php echo $app_path?>/common/inicio.php">
 <input type="hidden" name="Opcion" value="admin">
 <input type="hidden" name="cipar" value="acces.par">
 	<div class="middle login">
