@@ -8,6 +8,7 @@
 20210507 fho4abcd Activated workaround to cope with mixed cisis versions
 20210610 fho4abcd Removed workaround
 20210813 fho4abcd Improve include path
+20220128 fho4abcd remove MULTIPLE_DB_FORMAT
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 global $ABCD_scripts_path,$app_path;
@@ -22,45 +23,43 @@ parse_str($query, $arr_query);
 $actual_db=$arr_query["base"];
 $charset_db="";
 
-if (isset($_SESSION["MULTIPLE_DB_FORMATS"]) and $_SESSION["MULTIPLE_DB_FORMATS"]=="Y" or isset($MULTIPLE_DB_FORMATS) and $MULTIPLE_DB_FORMATS=="Y"){
+// Always read dr_path.def
+if (file_exists($db_path.$actual_db."/dr_path.def")){
+    $def_db = parse_ini_file($db_path.$actual_db."/dr_path.def");
+}
+If (!isset($def_db["CISIS_VERSION"]))$def_db["CISIS_VERSION"]="";
+if (!isset($def_db["UNICODE"]))	     $def_db["UNICODE"]=$def["UNICODE"];
+$cisis_ver="";
+if (isset($def_db["CISIS_VERSION"]) and $def_db["CISIS_VERSION"]!="16-60" )
+    $cisis_ver=$def_db["CISIS_VERSION"];
+if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
+    $unicode='ansi';
+    $charset="ISO-8859-1";
+} else {
+    $unicode='utf8';
+    $charset="UTF-8";
+}
 
-    if (file_exists($db_path.$actual_db."/dr_path.def")){
-        $def_db = parse_ini_file($db_path.$actual_db."/dr_path.def");
-    }
-    If (!isset($def_db["CISIS_VERSION"]))$def_db["CISIS_VERSION"]="";
-    if (!isset($def_db["UNICODE"]))	     $def_db["UNICODE"]=$def["UNICODE"];
-    $cisis_ver="";
-    if (isset($def_db["CISIS_VERSION"]) and $def_db["CISIS_VERSION"]!="16-60" )
-        $cisis_ver=$def_db["CISIS_VERSION"];
-    if ( !isset($def_db["UNICODE"]) or $def_db["UNICODE"] == "ansi" || $def_db["UNICODE"] == '0' ) {
-        $unicode='ansi';
-        $charset="ISO-8859-1";
-    } else {
-        $unicode='utf8';
-        $charset="UTF-8";
-    }
+if ($cisis_ver!="") {
+    $cisis_ver.="/";
+}
 
-    if ($cisis_ver!="") {
-        $cisis_ver.="/";
-    }
-
-    if ($postMethod == '1'){
-        $wxisUrl=$server_url."/cgi-bin/";
-        if ($unicode!="")
-            $wxisUrl.="$unicode/";
-        if ($cisis_ver!=""){
-            $wxisUrl.=$cisis_ver.$wxis_exec;
-        }else{
-            $wxisUrl.="".$wxis_exec;
-        }	  
-        $Wxis=""; // POST method used
+if ($postMethod == '1'){
+    $wxisUrl=$server_url."/cgi-bin/";
+    if ($unicode!="")
+        $wxisUrl.="$unicode/";
+    if ($cisis_ver!=""){
+        $wxisUrl.=$cisis_ver.$wxis_exec;
     }else{
-        $wxisUrl="";
-        $Wxis=$cgibin_path;
-        if ($unicode!="") $Wxis.="$unicode/";
-        if ($cisis_ver!="") $Wxis.=$cisis_ver."/";
-        $Wxis.=$wxis_exec;   //GET method is used
-    }
+        $wxisUrl.="".$wxis_exec;
+    }	  
+    $Wxis=""; // POST method used
+}else{
+    $wxisUrl="";
+    $Wxis=$cgibin_path;
+    if ($unicode!="") $Wxis.="$unicode/";
+    if ($cisis_ver!="") $Wxis.=$cisis_ver."/";
+    $Wxis.=$wxis_exec;   //GET method is used
 }
 
 
