@@ -1,4 +1,7 @@
 <?php
+/*
+20220129 fho4abcd div-helper+backbutton+improve logic+translation
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -6,32 +9,19 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include ("../config.php");
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
 include("../lang/soporte.php");
 $lang=$_SESSION["lang"];
 $Permiso=$_SESSION["permiso"];
 $archivo="";
-if (isset($arrHttp["fmt"])) {
-	$archivo=$arrHttp["fmt"].".fmt";
-	$file=$arrHttp["fmt"];
-	$url="fmt.php";
-	$lista="formatos.wks";
-	$titulo=$msgstr["fmt"];
-}
 if (isset($arrHttp["pft"])){
 	$file=$arrHttp["pft"];
 	$url="pft.php";
 	$archivo=$arrHttp["pft"].".pft";
 	$lista="formatos.dat";
-	$titulo=$msgstr["pft"];
 	$arrHttp["path"]="/pfts/".$_SESSION["lang"];
-}
-if (isset($arrHttp["tab"])){
-	$archivo=$arrHttp["tab"];
-	$lista="";
-    $titulo=$msgstr["it_tb"];
-	$url="";
 }
 include("../common/header.php");
 ?>
@@ -46,60 +36,50 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $arrHttp["base"].": ".$msgstr["delete"].". $titulo: ".$archivo?>
+    <?php echo $msgstr["pft"]." - ". $msgstr["delete"].": ".$archivo." (".$arrHttp["base"].")"?>
 	</div>
-
 	<div class="actions">
-<?php
-	 echo "<a href=\"pft.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-?>
-<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-<span><strong><?php echo $msgstr["back"]?></strong></span>
-</a>
-			</div>
-			<div class="spacer">&#160;</div>
+    <?php
+        $backtoscript="pft.php";
+        include "../common/inc_back.php";
+        include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<?php  echo "<font color=white>&nbsp; &nbsp; Script: pft_delete.php" ?></font>
-	</div>
+<?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-			<div class="formContent">
-<center><font face=verdana color=red>File:
-<?php echo "$archivo</h4>";
+<div class="formContent">
+<?php
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+
 if ($archivo!=""){
-	$res=unlink($db_path.$arrHttp["base"].$arrHttp["path"]."/$archivo");
-	if ($res==0){
-		echo "$archivo: The file could not be deleted";
+    $basearchivo=$arrHttp["base"].$arrHttp["path"]."/".$archivo;
+    if (file_exists($db_path.$basearchivo)) {
+        $res=unlink($db_path.$basearchivo);
+    }else{
+        $res=true;
+    }
+	if ($res==false){
+		echo "<h2 style='color:red'>".$msgstr["archivo"]." ".$basearchivo.": ".$msgstr["nodeleted"]."</h2>";
 	}else{
-		echo "$archivo: Deleted!!!";
+		echo "<h2>".$msgstr["archivo"]." ".$basearchivo.": ".$msgstr["eliminados"]."</h2>";
 	}
 	if ($lista!=""){
 		$salida="";
-		$fp=file($db_path.$arrHttp["base"]."/".$arrHttp["path"]."/$lista");
+        $baselista=$arrHttp["base"].$arrHttp["path"]."/".$lista;
+		$fp=file($db_path.$baselista);
 		foreach ($fp as $value){
 			$value=trim($value);
 			$v=explode('|',$value);
 			if ($v[0]!=$file) $salida.=$value."\n";
 		}
-           $fp=fopen($db_path.$arrHttp["base"]."/".$arrHttp["path"]."/$lista","w");
-           fwrite($fp,$salida);
-           fclose($fp);
-           echo "<p>$lista: Updated!!!";
+        $fp=fopen($db_path.$baselista,"w");
+        fwrite($fp,$salida);
+        fclose($fp);
+        echo "<h3>".$msgstr["archivo"]." ".$baselista.": ".$msgstr["updated"]."</h3>";
 	}
 }
-if ($encabezado!=""){
-	if (isset($arrHttp["pft"]) or $url!=""){
-		echo "<script>
-			url='".$url."'
-
-			if ( top.frames.length>0){
-				if (top.ModuloActivo==\"Catalogar\")
-					document.writeln(\"<p><a href=javascript:top.Menu('imprimir')>".$msgstr["back"]."</a>\")
-				else
-					document.writeln(\"<p><a href=\"+url+\"?base=".$arrHttp["base"].">".$msgstr["back"]."</a>\")
-			}
-			</script>
-			";
-	}
-}
+echo "</div></div>";
+include "../common/footer.php";
 ?>
