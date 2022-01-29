@@ -5,6 +5,7 @@
 2022-01-20 fho4abcd new look buttons+Remove some nested tables+cleanup html+repair bugs
 2022-01-25 fho4abcd more new look buttons, shift Generate output to the bottom, improve generate output layout
 2022-01-26 fho4abcd Open preview in larger window and after all checks passed.
+2022-01-29 fho4abcd Improve setting of encabezado+create language folder if it does not exist
 */
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -28,6 +29,7 @@ include ("../lang/dbadmin.php");
 function LeerArchivos($Dir,$Ext){
 // se leen los archivos con la extensión .pft
 $the_array = Array();
+if (!file_exists($Dir)) mkdir($Dir);
 $handle = opendir($Dir);
 while (false !== ($file = readdir($handle))) {
    if ($file != "." && $file != "..") {
@@ -52,7 +54,7 @@ if (strpos($arrHttp["base"],"|")===false){
 if (!isset($arrHttp["Opcion"]))$arrHttp["Opcion"]="";
 
 if (isset($arrHttp["encabezado"]))
-	$encabezado="&encabezado=s";
+	$encabezado="s";
 else
 	$encabezado="";
 
