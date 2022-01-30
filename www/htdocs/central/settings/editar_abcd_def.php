@@ -25,7 +25,7 @@ include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 
 //directory where the images go
-$target_dir = "../../assets/images/uploads/";
+$target_dir = "../../uploads/";
 
 if (!isset($_SESSION["login"])or $_SESSION["profile"]!="adm" ){
 	echo "<script>
@@ -52,27 +52,67 @@ if ($handle = opendir($l)) {
 }
 
 
+// Databases list
+
+$lista_bases=array();
+if (file_exists($db_path."bases.dat")){
+	$fp = file($db_path."bases.dat");
+	foreach ($fp as $linea){
+		$linea=trim($linea);
+		if ($linea!="") {
+			$ix=strpos($linea,"|");
+			$llave=trim(substr($linea,0,$ix));
+			$lista_bases[$llave]=trim(substr($linea,$ix+1));
+		}
+	}
+}
+
+function databases() {
+	global $lista_bases, $arrHttp, $database_list_v, $database_list_n;
+	$i=-1;
+	$output="";
+	foreach ($lista_bases as $keydb => $value) {
+		$xselected="";
+		$value=trim($value);
+		$t=explode('|',$value);
+		if (isset($Permiso["db_".$keydb]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+			if (isset($arrHttp["base"]) and $arrHttp["base"]==$keydb or count($lista_bases)==1) $xselected=" selected";
+			//print_r ($keydb.";");
+			$output.=$keydb.";";
+			//$database_list_n=$t[0].";";
+		}
+	}
+	return $output;
+}
+
+$databases_codes=databases();
+
+
 //================= Function to read the abcd.def file ==========
 function LeerIniFile($ini_vars,$ini,$tipo){
-global $msg_path, $msgstr;
+global $msg_path, $msgstr, $target_dir, $def;
 
-	if ($tipo==1) $pref="ini_"; else $pref="mod_";
+	if ($tipo==1) 
+		$pref="ini_"; 
+	else $pref="mod_";
 	foreach ($ini_vars as $key=>$Opt){
 
 		if ($Opt["it"]=="title"){
- 		    echo "<tr><th colspan=2>".$Opt["Label"]."</th></tr>\n";
+ 		  echo "</table></div><button type=\"button\" class=\"accordion\">".$Opt["Label"]."</button><div class=\"panel\"><table class=\"striped\" cellspacing=8 width=80% align=center >\n";
  		    continue;
  		}else{
  			echo "<tr>
- 			<td style='vertical-align: top;'>
+ 			<td width=200px>
  			".$msgstr['set_'.$key]."
  			</td>
  			<td>";
 		}
 		switch ($Opt["it"]){
+
+			// Field type color
 			case "color":
 				$opc=explode(";",$Opt["Label"]);
-		   		echo "<input type='color' class='mt-5' placeholder='".$Opt["default"]."' data-value='".$Opt["default"]."' name=ini_$key id=ini_$key size=";
+		   		echo "<input type='color' class='m-1' placeholder='".$Opt["default"]."' data-value='".$Opt["default"]."' name=ini_$key id=ini_$key size=";
 		   		if (isset($Opt["size"]))
 		   			echo trim($Opt["size"]);
 				else
@@ -84,10 +124,11 @@ global $msg_path, $msgstr;
 				} else {
 					echo $Opt["default"];
 				}
-
 				echo "'>";
-				echo "<small>".$Opt["Label"]."</small> &nbsp;<button type=\"button\" clss=\" bt bt-sm bt-gray\" onclick=\"return cleanSet('".$Opt["default"]."','ini_".$key."')\" title=\"Reset\"><i class=\"fas fa-eraser\"></i></button> ";
+				echo "<small></small> &nbsp;<button type=\"button\" clss=\" bt bt-sm bt-gray\" onclick=\"return cleanSet('".$Opt["default"]."','ini_".$key."')\" title=".$Opt["Label"]."><i class=\"fas fa-eraser\"></i></button> ";
 				break;  			
+
+			// Field type text
 		   	case "text":
 		   		echo "<input type=text name=ini_$key size=";
 		   		if (isset($Opt["size"]))
@@ -95,31 +136,79 @@ global $msg_path, $msgstr;
 				else
 					echo "100";
 		   		echo " value='";
-		   		if (isset($ini[$key])) echo $ini[$key];
-				echo "'>";
+		   		if (isset($ini[$key])) 
+		   			echo $ini[$key];
+		   		echo "' ";
+				echo " placeholder='";
+				if (isset($Opt["placeholder"])) {
+		   			echo $Opt["placeholder"];
+				}
+		   		echo "'>";
 				break;
+
+			// Field type radio
 			case "radio":
 				$opc=explode(";",$Opt["Options"]);
-				foreach ($opc as $o){
-					echo "<input type=radio name=ini_$key value='$o' ";
-					if (isset($ini[$key])){
+				$label=explode(";",$Opt["Label"]);				
+				foreach (array_combine($opc, $label) as $o => $l) {
+					echo "&nbsp;<input type=radio name=ini_$key value='$o' ";
+					if (isset($ini[$key]))   {
 						if ($ini[$key]==$o)
 							echo " checked";
+						
 					}
-					echo "> $o &nbsp; &nbsp;";
+					echo ">";
+						if (isset($Opt["Label"])) {  
+						echo  "<label>".$l ."</label>&nbsp;";
+						} else {
+						echo "<label>".$o."</label>&nbsp;";
+					 }
 				}
 				break;
+
+			// Field type select
+			case "select":
+				$opc=explode(";",$Opt["Options"]);
+				$label=explode(";",$Opt["Label"]);			
+				echo "<select name='ini_$key'>";	
+				echo "<option></option>";
+				foreach (array_combine($opc, $label) as $o => $l) {
+					echo "<option value='".$o."'"; 
+					if (isset($ini[$key])){
+						if ($ini[$key]==$o)
+							echo " selected";
+					}
+					echo ">";			
+						if (isset($Opt["Label"])) {  
+						echo $l."</option>";
+						} else {
+						echo $o."</option>";
+					 }
+				}
+				echo "</select>";
+				break;				
+			
+			// Field type checkbox
 			case "check":
 				$opc=explode(";",$Opt["Options"]);
-				foreach ($opc as $o){
+				$label=explode(";",$Opt["Label"]);
+
+				foreach (array_combine($opc, $label) as $o => $l) {
 					echo "<input type=checkbox name=$pref$key value='$o' ";
-					if (isset($ini[$key])){
+					if (isset($ini[$key]))  {
 						if ($ini[$key]==$o)
 							echo " checked";
 					}
-					echo "> $o &nbsp; &nbsp;";
+					echo ">";
+						if (isset($Opt["Label"])) {  
+						echo  "<label>".$l."</label>&nbsp;";
+						} else {
+						echo "<label>".$o."</label>&nbsp;";
+					 }
 				}
-                break;
+        break;
+
+        // Field type hidden        
 		   	case "hidden":
 		   		echo "\n<input type=hidden name=ini_$key size=";
 		   		if (isset($Opt["size"]))
@@ -131,46 +220,77 @@ global $msg_path, $msgstr;
 				echo "'>\r\n";
 				break;                
 
+
+				// Field type file
 		   	case "file":
-				if (isset($ini[$key])){  
-					$file_value=$ini[$key];
+		   		if ((isset($ini[$key])) && (!empty($ini[$key])) ) {
+					$file_value= $ini[$key];
 				} else {
-					$file_value="";
+					$file_value= $Opt["default"];
 				}
-
-		   		echo '<input type="file" name=ini_'.$key.' id=ini_'.$key.' accept="image/png, image/jpeg , image/jpg" onchange="preview_image'.$Opt["ID"].'(event)" value=';
+		   	echo "<input type=\"file\" name=ini_".$key." id=ini_".$key." accept=\"image/png, image/jpeg , image/jpg\" onchange=\"preview_image ('".$key."',event)\" class='bt bt-light' ";
+		   		echo " value='";
 		   		if (isset($ini[$key])) echo $ini[$key];
-		   		echo '> <small> Max: 2MB </small>';
+				echo "'>\r\n";
+		   		echo "<small>  Max: 2MB </small>";
 
-		 				if ((!isset($ini[$key])) or (empty($arrHttp[$key]))) {
-				echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" id="'.$Opt["ID"].'"/>'.$file_value.'</div>';
+			 		if ( (!isset($key)) OR (empty($ini[$key])) ) {
+				echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" id="'.$Opt["ID"].'"/>'.$file_value.'</div> ';
 				} else {
-					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" src=../../assets/images/uploads/'.$file_value.' id="'.$Opt["ID"].'"/> '.$file_value.'</div>';
+					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" src='.$target_dir.$file_value.' id="'.$Opt["ID"].'"/> </div>';
 				}
-
-				echo "
-					<script type='text/javascript'>
-					function preview_image".$Opt["ID"]."(event) {
-					 var reader = new FileReader();
-					 reader.onload = function()  {
-					  var output = document.getElementById('".$Opt["ID"]."');
-					  output.src = reader.result;
-					 }
-					 reader.readAsDataURL(event.target.files[0]);
-					}
-					</script>";
-
 				break;						
 
 
 		}
-		echo "</td></tr>";
+		echo "</td>";
+		echo "<td width=200>";
+		if (isset($Opt["Tip"])) {
+			echo "<small>".$Opt["Tip"]."</small>";
+		}
+
+		echo"</td>";
+		echo "</tr>";
 	}
 }
 //============= end function ========
 ?>
 
+<style type="text/css">
+
+
+
+.accordion {
+	margin: auto;
+	margin: auto !important;
+  background-color: var(--abcd-light);
+  color: var(--abcd-blue);
+  cursor: pointer;
+  padding: 8px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc; 
+}
+
+.panel {
+  padding: 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+
+</style>
+
 <body>
+
+
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 
 <script language="javascript" type="text/javascript">
@@ -181,10 +301,22 @@ function Enviar(){
 
 //Function that resets the colour values
 function cleanSet(v,campo){
-    document.getElementById(campo).value = v
+    document.getElementById(campo).value = v;
+    //document.getElementById(campo).fileupload.value=v;
     console.log(v);
     return false;
 }
+
+function preview_image(campo, event) {
+ var reader = new FileReader();
+ reader.onload = function()  {
+  var output = document.getElementById(campo);
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+
+
 </script>
 
 <?php
@@ -192,64 +324,87 @@ include("../common/institutional_info.php");
 
 $set_mod = $arrHttp["Opcion"];
 
+global $database_list;
+
 switch ($set_mod){
 
 	case "abcd_styles":
 		$ini_vars=array(
-					"STYLES" => array("it"=>"title","Label"=>$msgstr["set_logo_css"]),
-					"LOGO" => array("it"=>"file","Options"=>"","default"=>"","ID"=>"LOGO"),
-					"INSTITUTION_NAME" => array("it"=>"text","Options"=>""),
-					"INSTITUTION_URL" => array("it"=>"text","Options"=>""),
-					"RESPONSIBLE_NAME" => array("it"=>"text","Options"=>""),
-					"RESPONSIBLE_URL" => array("it"=>"text","Options"=>""),
-					"RESPONSIBLE_LOGO" => array("it"=>"file","Options"=>"","default"=>"","ID"=>"RESPONSIBLE_LOGO"),				
-					"LEGEND3" => array("it"=>"text","Options"=>""),
-					"URL3" => array("it"=>"text","Options"=>""),
-					"CSS_NAME" => array("it"=>"text","Options"=>""),
-		     		"COLORS" => array("it"=>"title","Label"=>"<hr size=2>".$msgstr["set_colors"]),	 			
-					"BODY_BACKGROUND" => array("it"=>"color","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)"),
-					"COLOR_LINK" => array("it"=>"color","default"=>"#336699","Label"=>" Default: #336699 or (R: 51, G: 102, B: 153)"),
-					"HEADING" => array("it"=>"color","default"=>"#003366","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)"),
-					"HEADING_FONTCOLOR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)" ),
-					"SECTIONINFO" => array("it"=>"color","default"=>"#336699","Label"=>" Default: #336699 or (R: 51, G: 102, B: 153)"),
-					"SECTIONINFO_FONTCOLOR" => array("it"=>"color","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)"),
-					"TOOLBAR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)"),
-					"HELPER" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)"),
-					"HELPER_FONTCOLOR" => array("it"=>"color","default"=>"#666666","Label"=>" Default: #666666 or (R: 102, G: 102, B: 102)"),
-					"FOOTER" => array("it"=>"color","default"=>"#003366","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)"),
-					"FOOTER_FONTCOLOR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)"),
-					"BG_WEB" => array("it"=>"text","Options"=>""),
-					"FRAME_1H" => array("it"=>"text","Options"=>""),
-					"FRAME_2H" => array("it"=>"text","Options"=>""),
-					"CIRCULATION"=>array("it"=>"title","Label"=>"<hr>".$msgstr["loantit"]),
-					"CALENDAR" => array("it"=>"radio","Options"=>"Y;N"),
-					"RESERVATION" => array("it"=>"radio","Options"=>"Y;N"),
-					"LOAN_POLICY" => array("it"=>"check","Options"=>"BY_USER"),
-					"EMAIL" => array("it"=>"radio","Options"=>"Y;N"),
-					"AC_SUSP" => array("it"=>"radio","Options"=>"Y;N"),
-					"ASK_LPN" => array("it"=>"radio","Options"=>"Y;N"),
-					"ILLOAN" => array("it"=>"radio","Options"=>"Y;N"),		
+					// Identification and sites of the institution
+					"IDENTIFICATION" => array("it"=>"title","Label"=>$msgstr["set_identification"]),
 
+					"INSTITUTION_NAME" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_INSTITUTION_NAME_PH"],"Tip"=>$msgstr["set_TIP_INSTITUTION_NAME"]),
+					"INSTITUTION_URL" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_INSTITUTION_URL_PH"],"Tip"=>$msgstr["set_TIP_INSTITUTION_URL"]),
+
+					"RESPONSIBLE_NAME" => array("it"=>"text","Options"=>"","size"=>"70","placeholder"=>$msgstr["set_RESPONSIBLE_NAME_PH"],"Tip"=>$msgstr["set_TIP_RESPONSIBLE_NAME"]),
+					"RESPONSIBLE_URL" => array("it"=>"text","Options"=>"","size"=>"70","placeholder"=>$msgstr["set_RESPONSIBLE_URL_PH"],"Tip"=>$msgstr["set_TIP_RESPONSIBLE_URL"]),					
+
+					"ADDITIONAL_LINK_TITLE" => array("it"=>"text","Options"=>"","size"=>"70","placeholder"=>$msgstr["set_ADDITIONAL_LINK_TITLE_PH"],"Tip"=>$msgstr["set_TIP_ADDITIONAL_LINK_TITLE"]),
+					"URL_ADDITIONAL_LINK" => array("it"=>"text","Options"=>"","size"=>"70","placeholder"=>$msgstr["set_URL_ADDITIONAL_LINK_PH"],"Tip"=>$msgstr["set_TIP_URL_ADDITIONAL_LINK"]),
+
+					// Local settings
+					"LOCAL_SET" => array("it"=>"title","Label"=>$msgstr["set_local"]),
+					"MAIN_DATABASE"  => array("it"=>"select","Options"=>$databases_codes,"Label"=>$databases_codes,"Tip"=>$msgstr["set_TIP_MAIN_DATABASE"]),
+					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_MAIN_DATABASE"]),
+					"DEFAULT_DBLANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
+					"DATE_FORMAT" => array("it"=>"text","size"=>"50","placeholder"=>"DD/MM/YY","Tip"=>$msgstr["set_TIP_DEFAULT_DBLANG"]),
+
+					"NEW_WINDOW" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_NEW_WINDOW"]),
+
+
+					// Logos
+					"STYLES" => array("it"=>"title","Label"=>$msgstr["set_logo_css"],"Tip"=>$msgstr["set_TIP_INSTITUTION_NAME"]),
+					"LOGO_DEFAULT" => array("it"=>"check","Options"=>"Y","Label"=>"Yes","Tip"=>$msgstr["set_TIP_LOGO_DEFAULT"]),
+					"LOGO" => array("it"=>"file","Options"=>"","Label"=>"Reset","default"=>"","ID"=>"LOGO","Tip"=>$msgstr["set_TIP_LOGO"]),
+
+					"RESPONSIBLE_LOGO_DEFAULT" => array("it"=>"check","Options"=>"Y","Label"=>"Yes","Tip"=>$msgstr["set_TIP_RESPONSIBLE_LOGO_DEFAULT"]),
+					"RESPONSIBLE_LOGO" => array("it"=>"file","Options"=>"","Label"=>"Reset","default"=>"","ID"=>"RESPONSIBLE_LOGO","Tip"=>$msgstr["set_TIP_RESPONSIBLE_LOGO"]),	
+
+					// Colours
+		     	"COLORS" => array("it"=>"title","Label"=>$msgstr["set_colors"]),	 			
+					"BODY_BACKGROUND" => array("it"=>"color","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)","Tip"=>$msgstr["set_TIP_BODY_BACKGROUND"]),
+					"COLOR_LINK" => array("it"=>"color","default"=>"#336699","Label"=>" Default #336699 or (R: 51, G: 102, B: 153)","Tip"=>$msgstr["set_TIP_COLOR_LINK"]),
+					"HEADING" => array("it"=>"color","default"=>"#003366","Label"=>" Default #003366 or (R: 0, G: 51, B: 102)","Tip"=>$msgstr["set_TIP_HEADING"]),
+					"HEADING_FONTCOLOR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default: #f8f8f8 or (R: 248, G: 248, B: 248)" ,"Tip"=>$msgstr["set_TIP_HEADING_FONTCOLOR"]),
+					"SECTIONINFO" => array("it"=>"color","default"=>"#336699","Label"=>" Default #336699 or (R: 51, G: 102, B: 153)","Tip"=>$msgstr["set_TIP_SECTIONINFO"]),
+					"SECTIONINFO_FONTCOLOR" => array("it"=>"color","default"=>"#ffffff","Label"=>" Default #ffffff or (R: 255, G: 255, B: 255)","Tip"=>$msgstr["set_TIP_SECTIONINFO_FONTCOLOR"]),
+					"TOOLBAR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default #f8f8f8 or (R: 248, G: 248, B: 248)","Tip"=>$msgstr["set_TIP_TOOLBAR"]),
+					"HELPER" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default #f8f8f8 or (R: 248, G: 248, B: 248)","Tip"=>$msgstr["set_TIP_HELPER"]),
+					"HELPER_FONTCOLOR" => array("it"=>"color","default"=>"#666666","Label"=>" Default #666666 or (R: 102, G: 102, B: 102)","Tip"=>$msgstr["set_TIP_HELPER_FONTCOLOR"]),
+					"FOOTER" => array("it"=>"color","default"=>"#003366","Label"=>" Default: #003366 or (R: 0, G: 51, B: 102)","Tip"=>$msgstr["set_TIP_FOOTER"]),
+					"FOOTER_FONTCOLOR" => array("it"=>"color","default"=>"#f8f8f8","Label"=>" Default #f8f8f8 or (R: 248, G: 248, B: 248)","Tip"=>$msgstr["set_TIP_FOOTER_FONTCOLOR"]),
+					"BG_WEB" => array("it"=>"color","Options"=>"","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)","Tip"=>$msgstr["set_TIP_BG_WEB"]),
+					
+					//Circulation module settings
+					"CIRCULATION"=>array("it"=>"title","Label"=>$msgstr["loantit"]),
+					"CALENDAR" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CALENDAR"]),
+					"RESERVATION" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_RESERVATION"]),
+					"LOAN_POLICY" => array("it"=>"check","Options"=>"BY_USER","Label"=>"By user","Tip"=>$msgstr["set_TIP_LOAN_POLICY"]),
+					"EMAIL" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_EMAIL"]),
+					"AC_SUSP" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_AC_SUSP"]),
+					"ASK_LPN" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_AC_SUSP"]),
+					"ILLOAN" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_ILLOAN"]),		
+
+					// Security
 					"SECURITY" => array("it"=>"title","Label"=>$msgstr["set_security"]),
-  					"UNICODE" => array("it"=>"radio","Options"=>"0;1"),
-					"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed),
-					"DEFAULT_LANG"  => array("it"=>"radio","Options"=>$lang_dir),
-					"MULTIPLE_DB_FORMATS" => array("it"=>"radio","Options"=>"Y;N"),
-					"DIRTREE" => array("it"=>"radio","Options"=>"Y;N"),
-					"DIRTREE_EXT"=> array("it"=>"text","Options"=>""),
-					"PROFILES_PATH"=> array("it"=>"text","Options"=>""),
-					"SECURE_PASSWORD_LENGTH" => array("it"=>"text","Options"=>"","size"=>1),
-					"SECURE_PASSWORD_LEVEL" => array("it"=>"radio","Options"=>"0;1;2;3;4;5"),
+  				"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
+					"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed,"Label"=>$cisis_versions_allowed,"Tip"=>$msgstr["set_TIP_CISIS_VERSION"]),
 
+					"REG_LOG" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_REG_LOG"]),
+					"DIRTREE" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_DIRTREE"]),
+					"DIRTREE_EXT"=> array("it"=>"text","Options"=>"","size"=>"70","Tip"=>$msgstr["set_TIP_DIRTREE_EXT"]),
+					"CHANGE_PASSWORD" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CHANGE_PASSWORD"]),					
+					"SECURE_PASSWORD_LENGTH" => array("it"=>"text","Options"=>"","size"=>1,"Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LENGTH"]),
+					"SECURE_PASSWORD_LEVEL" => array("it"=>"radio","Options"=>"0;1;2;3;4;5","Label"=>"0;1;2;3;4;5","Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LEVEL"]),
 
-                     "MODULES" => array("it"=>"title","Label"=>"<HR size=2>"),
 					);
-
-		$mod_vars=array("TITLE" => array("it"=>"text","Options"=>""),
+	/*
+	          "MODULES" => array("it"=>"title","Label"=>"<HR size=2>"),
+	$mod_vars=array("TITLE" => array("it"=>"text","Options"=>""),
 						"SCRIPT" => array("it"=>"text","Options"=>""),
 						"BUTTON" => array("it"=>"text","Options"=>""),
-						"SELBASE" => array("it"=>"radio","Options"=>"Y;N")
-						);
+						"SELBASE" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No")
+						);*/
 		$file=$db_path."abcd.def";
 		$help="abcd.def";
 		break;
@@ -297,6 +452,7 @@ switch ($set_mod){
 	<div class="actions">
 <?php
 
+
 switch ($arrHttp["Opcion"]){
 	case "abcd_styles":
 		$backtoscript="../settings/conf_abcd.php?reinicio=s";
@@ -330,6 +486,8 @@ echo "</div>
 	<div class=\"spacer\">&#160;</div>
 	</div>";
 include "../common/inc_div-helper.php";
+
+
 
 $ini=array();
 $modulo=array();
@@ -367,9 +525,11 @@ if (file_exists($file)){
 function uplodimages($fieldname,$fileimg) {
 global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir;
 
-
+if (!file_exists($target_dir)) {
+    mkdir($target_dir, 0777, true);
+}
+	
 $target_file = $target_dir.basename($_FILES[$fileimg]["name"]);
-
 
 $temp = explode(".", $target_file);
 $newfilename = $fieldname.'.'. end($temp);
@@ -377,6 +537,7 @@ $newfilename = $fieldname.'.'. end($temp);
 $target_file = $target_dir.basename($newfilename);
 
 $uploadOk = 1;
+
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 // Check if image file is a actual image or fake image
@@ -423,7 +584,7 @@ if ($uploadOk == 0) {
     echo $msgstr["set_thefile"]."&nbsp;<b>".htmlspecialchars( basename( $_FILES[$fileimg]["name"]))."</b>&nbsp;".$msgstr["set_has_been_upload"]."<br>";
 
   } else {
-    echo $msgstr["set_error_upload"]."<br>";;
+    echo $msgstr["set_error_upload"]."<br>";
        fwrite($fp,$fieldname."=".$fileimg."\n");
   }
 }	
@@ -448,28 +609,23 @@ if (isset($arrHttp["base"]))
 
 if (!isset($arrHttp["Accion"])){
 	echo "<input type=hidden name=Accion value=\"actualizar\">\n";
-	echo "<table cellspacing=8 width=90% align=center >";
+	echo "<div class=\"panel\"><table class=\"striped\" cellspacing=8 width=80% align=center >";
 
 	LeerIniFile($ini_vars,$ini,"1");
 	foreach ($ini as $key=>$val){
 		if (!isset($ini_vars[$key]) and trim($val)!="") echo "<tr><td>$key</td><td><input type=text name=ini_$key value=\"$val\"></td></tr>";
 	}
 
+/*
 	if ($arrHttp["Opcion"]=="abcd_styles"){
 		echo "<tr><td colspan=2><strong>[MODULOS]</strong></td></tr>";
 		LeerIniFile($mod_vars,$modulo,2);
 	}
+*/
 ?>
-	<tr>
-	<td></td>
-	<td>
-		<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
-		<a class="bt bt-gray" href="../settings/conf_abcd.php?reinicio=s"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
-	</td>
-	</tr>
 
-</table>
-
+</table></div>
+</form>
 <?php	
 }else{
     if ($arrHttp["Accion"]=="actualizar"){
@@ -491,19 +647,22 @@ if (!isset($arrHttp["Accion"])){
 
                     $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
 
-
 					foreach ($fileslist as $fileimg){
+
    						$fieldname=substr($fileimg, strlen("ini_"));
 
-   						if ($_FILES[$fileimg]["name"]) {
-
+   						//if (isset($_FILES[$fileimg]["name"])) {
+   					if ($_FILES[$fileimg]["name"]) {
 						$temp = explode(".", $_FILES[$fileimg]["name"]);
 						$newfilename = $fieldname.'.'. end($temp);
 						$file_name  = $newfilename;
-
+						if (isset($file_name))
    						fwrite($fp,$fieldname."=".$file_name ."\n");
    					} else {
-						fwrite($fp,$fieldname."=".$def[$fieldname]."\n");	
+						//fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
+						if (isset($def[$fieldname]))
+						fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
+
 					}
 
    						uplodimages($fieldname,$fileimg);  			
@@ -535,9 +694,27 @@ if (!isset($arrHttp["Accion"])){
     }
 }
 ?>
-</form>
+		<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
+		<a class="bt bt-gray" href="../settings/conf_abcd.php?reinicio=s"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
 </div>
 </div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
 
 <?php include("../common/footer.php");?>
 

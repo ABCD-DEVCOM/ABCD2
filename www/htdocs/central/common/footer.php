@@ -43,23 +43,16 @@
 				</span>				
 
 				<?php 
+				if ((isset($def["URL_ADDITIONAL_LINK"])) && (isset($def["ADDITIONAL_LINK_TITLE"]))) {
 
-				if(isset($def["TEXT1"])){
-					$text1 = $def["TEXT1"];
+					$url1 = $def["URL_ADDITIONAL_LINK"];
+					
+					echo "<span><small><a href=".$def["URL_ADDITIONAL_LINK"]." target=_blank>".$def["ADDITIONAL_LINK_TITLE"]."</a></small></span>";					
 
+				} elseif (isset($def["URL_ADDITIONAL_LINK"])) {
+					echo "<span><small><a href=".$def["URL_ADDITIONAL_LINK"]." target=_blank>".$def["URL_ADDITIONAL_LINK"]."</a></small></span>";	
 				} else {
-					$text1 = "ONLY FOR TESTING - NOT FOR DISTRIBUTION";
-				}
-
-
-				if ((isset($def["URL1"])) && (isset($def["TEXT1"]))) {
-					$url1 = $def["URL1"];
-					echo "<span><small><a href=".$def["URL1"]." target=_blank>".$def["TEXT1"]."</a></small></span>";					
-
-				} elseif (isset($def["URL1"])) {
-					echo "<span><small><a href=".$def["URL1"]." target=_blank>".$def["URL1"]."</a></small></span>";	
-				} else {
-					$url1 = "";
+					echo "<span><small><a href=\"https://github.com/ABCD-DEVCOM/ABCD2\" target=_blank>ONLY FOR TESTING - NOT FOR DISTRIBUTION</a></small></span>";
 				}
 
 
@@ -78,11 +71,12 @@
 				}
 
 ?>
-				<span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-0 + ... &rarr; 2022-01-22</small></span>
+				<span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-0 + ... &rarr; 2022-01-30</small></span>
 			</div>
 
                 <div class="distributorLogo">
-                    <a  href="<?php 
+
+                   <a  href="<?php 
                     if (isset($def["RESPONSIBLE_URL"])) {
                         	echo $def["RESPONSIBLE_URL"];
                         } else {
@@ -96,9 +90,10 @@
                 	} else {
                     	$responsible = "ABCD Community";
                 	}
-
-                    if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["RESPONSIBLE_LOGO"]))) {
-                    	echo "<img src='/assets/images/uploads/".$def["RESPONSIBLE_LOGO"]."?".time()."' title='".$responsible."'>";
+					if (isset($def['RESPONSIBLE_LOGO_DEFAULT'])) {
+						echo "<img src='/assets/images/distributorLogo.png?".time()."' title='$institution_name'>";
+					} elseif ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["RESPONSIBLE_LOGO"]))) {
+                    	echo "<img src='/uploads/".$def["RESPONSIBLE_LOGO"]."?".time()."' title='".$responsible."'>";
                     } else {
                     	echo "<img src='/assets/images/distributorLogo.png?".time()."' title='ABCD Community'>";
                     }

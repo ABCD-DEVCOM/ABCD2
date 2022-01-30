@@ -12,6 +12,7 @@
 2021-11-11 fho4abcd: Remove ffi
 2021-11-23 fho4abcd: Allow trailing backslash for $db_path
 2021-11-28 fho4abcd: Ensure trailing slash in ABCD_path
+2022-01-29 rogercgui Added custom abcd.def parameters.
 */
 
 ini_set('error_reporting', E_ALL);
@@ -57,25 +58,15 @@ if (isset($_REQUEST["db_path"])) {    //PARA PERMITIR MANEJAR VARIAS CARPETAS BA
 	if (isset($_SESSION)) $_SESSION["db_path"]=$db_path; //CUANDO VIENE DEL OPAC NO SE TRABAJA CON SESIONES
 }
 
-// Other local settings to be configured
-$open_new_window="N";                   // Open the Central module in a new window for avoiding the use of the browse buttons
-$context_menu="Y";                      // allow opening right-click menu
-$config_date_format="DD/MM/YY";         // USED FOR ALL THE DATE FUNCTIONS. DD=DAYS, MM=MONTH, AA=YEAR. USE / AS SEPARATOR
-$app_path="central";                    // Folder with the administration module
-$inventory_numeric ="N";                // This variable erases the left zeroes in the inventory number
-$max_inventory_length=1;                // Add Zeroes to the left for reaching the max length of the inventory number
-$max_cn_length=1;                       // Add Zeroes to the left for reaching the max length of the control number
-$log="Y";                               // switch on logging of the actions, a subfolder 'log' needs to exist in database-directory
-$lang="en";                             // default language
-$lang_db="en";                          // Default langue for the databases definition
-$change_password="Y";                   //allow change password
-$ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
 
 // *** NO CHANGES NEEDED BELOW HERE
 // Ensure db_path has trailing / or \.
 if ( (substr($db_path, strlen($db_path)-1,1) <> "/") AND (substr($db_path, strlen($db_path)-1,1) <> "\\")) $db_path.="/";
 
+
 // Construction of executable path and URL                             
+
+$app_path="central";                    // Folder with the administration module
 $wxis_exec="wxis".$exe_ext;                // name and extension of wxis executable
 $mx_exec="mx".$exe_ext;                    // name and extension of mx executable
 $msg_path=$db_path;                        // path where the message-files are stored, typical the database-directory
@@ -121,19 +112,84 @@ if (!file_exists($db_path."abcd.def")){
     die;
 }
  
+
 if (isset($_SESSION["MULTIPLE_DB_FORMATS"])) unset($_SESSION["MULTIPLE_DB_FORMATS"]);
 $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
+
+// Other local settings to be configured
+               
+$inventory_numeric ="N";                // This variable erases the left zeroes in the inventory number
+$max_inventory_length=1;                // Add Zeroes to the left for reaching the max length of the inventory number
+$max_cn_length=1;                       // Add Zeroes to the left for reaching the max length of the control number
+
+                       
+
+$ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");    //extensions allowed for uploading files (used in dataentry/)
+
 
 if (isset($def["INSTITUTION_NAME"])){
 	$institution_name=$def["INSTITUTION_NAME"];  // Institution name defined by abcd.def 'INSTITUTION_NAME'
 } else {
-	$institution_name="ABCD";
+	$institution_name="Only for testing - not for distribution";
 }
+
+
+//Sets the default system language, if absent the system detects the browser language, if none of the previous options are valid, the default language is English.
+
+if (isset($def["DEFAULT_LANG"])){
+	$lang=$def["DEFAULT_LANG"];
+} else {
+	$lang='en';
+}
+
+// Default langue for the databases definition
+if (isset($def["DEFAULT_DBLANG"])){
+	$lang_db=$def["DEFAULT_DBLANG"];
+} else {
+	$lang_db=$lang;
+}
+
+
+// USED FOR ALL THE DATE FUNCTIONS. DD=DAYS, MM=MONTH, AA=YEAR. USE / AS SEPARATOR
+if (isset($def["DATE_FORMAT"])){
+	$config_date_format=$def["DATE_FORMAT"];
+} else {
+	$config_date_format="DD/MM/YY";
+}
+
+
+// Open the Central module in a new window for avoiding the use of the browse buttons
+if (isset($def["NEW_WINDOW"])=="Y"){
+	$open_new_window=$def["NEW_WINDOW"];  
+} else {
+	$open_new_window="N";
+}
+
 
 if (isset($def["UNICODE"]) and $def["UNICODE"]==1)
 	$meta_encoding="UTF-8";
 else
 	$meta_encoding="ISO-8859-1";
+
+
+//allow change password
+if ((isset($def["REG_LOG"])) && ($def["REG_LOG"]=="N")) {
+	$log="N"; 
+	$def["REG_LOG"]=$log;	
+} else {
+	$log="Y"; 
+	$def["REG_LOG"]=$log;
+}
+               
+
+
+if ((isset($def["CHANGE_PASSWORD"])) && ($def["CHANGE_PASSWORD"]=="N")) {
+	$change_password="N"; 
+	$def["CHANGE_PASSWORD"]=$change_password;	
+} else {
+	$change_password="Y"; 
+	$def["CHANGE_PASSWORD"]=$change_password;
+}
 
 
 
@@ -158,8 +214,8 @@ header('Content-type: text/html; charset=$charset');
 
 if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
 
-//SE CAMBIA EL LENGUAJE POR DEFECTO POR EL QUE SE ESTABLEZCA EN abcd.def
-if (isset($def["DEFAULT_LANG"])) $lang=$def["DEFAULT_LANG"];
+
+
 
 if (isset($def["CISIS_VERSION"]) and $def["CISIS_VERSION"]!="16-60" and $def["CISIS_VERSION"]!="" ){
 	$cisis_ver=$def["CISIS_VERSION"];

@@ -8,6 +8,42 @@
 20220119 fho4abcd add empty value in language menu to indicate to no language matches
 20220122 rogercgui Default logo is displayed if institution image is absent
 */
+
+
+$lista_bases=array();
+if (file_exists($db_path."bases.dat")){
+	$fp = file($db_path."bases.dat");
+	foreach ($fp as $linea){
+		$linea=trim($linea);
+		if ($linea!="") {
+			$ix=strpos($linea,"|");
+			$llave=trim(substr($linea,0,$ix));
+			$lista_bases[$llave]=trim(substr($linea,$ix+1));
+		}
+	}
+}
+
+
+function database_list() {
+	global $lista_bases, $arrHttp, $def;
+	$i=-1;
+	foreach ($lista_bases as $key => $value) {
+		$xselected="";
+		$value=trim($value);
+		$t=explode('|',$value);
+		if (isset($Permiso["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+			
+			if ((isset($def['MAIN_DATABASE'])) && $def['MAIN_DATABASE']==$key) {
+				$xselected=" selected";
+				//echo "<option value=\"$key|adm|$value\" $xselected>".$t[0]."\n";
+			} elseif (isset($arrHttp["base"]) and $arrHttp["base"]==$key or count($lista_bases)==1) 
+				$xselected=" selected";
+				echo "<option value=\"$key|adm|$value\" $xselected>".$t[0]."\n";
+		}
+	}
+
+}
+
 ?>
 
 <script>
@@ -142,8 +178,10 @@ function ChangeLang(){
 		
 <?php
 
-if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["LOGO"]))) {
-	echo "<img src='/assets/images/uploads/".$def["LOGO"]."?".time()."' title='";
+if (isset($def['LOGO_DEFAULT'])) {
+	echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
+} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
+	echo "<img src='/uploads/".$def["LOGO"]."?".time()."' title='";
 	if (isset($institution_name)) echo $institution_name;
 	echo "'>";
 } else {
@@ -157,36 +195,25 @@ if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["LOGO"]))) {
 		<?php	
 			global $central;
 			if ($central=="Y") {
-						if ($_SESSION["MODULO"]=="catalog")  {
-		?>
-							<form name="admin" action="../dataentry/inicio_main.php" method="post">
-							<input type=hidden name=encabezado value=s>
-							<input type=hidden name=retorno value="../common/inicio.php">
-							<input type=hidden name=modulo value=catalog>
-							<input type=hidden name=screen_width>
-							<?php if (isset($arrHttp["newindow"]))
-							echo "<input type=hidden name=newindow value=Y>\n";?>
-								<label><?php echo $msgstr["seleccionar"]?></label>
-								<select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)">
-									<option value=""></option>
-									<?php
-									$i=-1;
-									foreach ($lista_bases as $key => $value) {
-										$xselected="";
-										$value=trim($value);
-										$t=explode('|',$value);
-										if (isset($Permiso["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
-											if (isset($arrHttp["base"]) and $arrHttp["base"]==$key or count($lista_bases)==1) $xselected=" selected";
-											echo "<option value=\"$key|adm|$value\" $xselected>".$t[0]."\n";
-										}
-									}
-									?>
-								</select>
-							</form>
-			
+				if ($_SESSION["MODULO"]=="catalog")  {
+			?>
+					<form name="admin" action="../dataentry/inicio_main.php" method="post">
+					<input type=hidden name=encabezado value=s>
+					<input type=hidden name=retorno value="../common/inicio.php">
+					<input type=hidden name=modulo value=catalog>
+					<input type=hidden name=screen_width>
+					<?php if (isset($arrHttp["newindow"]))
+					echo "<input type=hidden name=newindow value=Y>\n";?>
+						<label><?php echo $msgstr["seleccionar"]?></label>
+						<select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)">
+							<option value=""></option>
+							<?php database_list(); ?>
+						</select>
+					</form>
 
-		<?php
-					} 
+
+			<?php
+			} 
 
 		}
 
@@ -222,6 +249,7 @@ if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["LOGO"]))) {
 
 					}
 					if (!isset($t[1])) $t[1]="";
+					$database_list=$key;
 					echo "<option value=\"$key|adm|".$t[1]."\" $xselected>".$t[0]."\n";
 				}
 			}

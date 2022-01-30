@@ -16,7 +16,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head profile="http://www.w3.org/2005/10/profile">
-		<title>ABCD <?php if (isset($subtitle))  echo $subtitle?></title>
+		<title>ABCD <?php if (isset($institution_name))  echo "| ".$institution_name?></title>
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $content_charset?>" />
