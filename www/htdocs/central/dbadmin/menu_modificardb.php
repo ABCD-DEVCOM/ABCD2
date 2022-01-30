@@ -115,7 +115,7 @@ function Update(Option){
 			document.update_base.format.value="recdel_val"
 			break;
 		case "bases":
-			document.update_base.action="databases_list.php"
+			document.update_base.action="../settings/databases_list.php"
 			break;
 		case "par":
 			document.update_base.action="editpar.php"
@@ -123,7 +123,7 @@ function Update(Option){
 					break;
 		case "dr_path":
 			document.update_base.Opcion.value="dr_path"
-			document.update_base.action="editar_abcd_def.php"
+			document.update_base.action="..settings/editar_abcd_def.php"
 			break;
 		case "search_catalog":
 			document.update_base.action="advancedsearch.php"

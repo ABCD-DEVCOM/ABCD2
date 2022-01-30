@@ -138,12 +138,14 @@ include ("$app_path/common/css_settings.php");
 		<div class="institutionalInfo">
 			<?php
 
-			if ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["LOGO"]))) {
-				echo "<img src='/assets/images/uploads/".$def["LOGO"]."' title='";
+			if (isset($def['LOGO_DEFAULT'])) {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
+			} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
+				echo "<img src='/uploads/".$def["LOGO"]."?".time()."' title='";
 				if (isset($institution_name)) echo $institution_name;
 				echo "'>";
 			} else {
-				echo "<img src='/assets/images/logoabcd.png' title='ABCD Community'>";
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
 			}
 
 			?>

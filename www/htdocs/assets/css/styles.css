@@ -45,16 +45,6 @@ LABEL {
 	cursor: pointer;
 }
 
-table {
-  border-collapse: separate;
-   border-spacing: 3px;
-/*  width: auto;*/
-
-}
-
-th, td {
-  text-align: left;
-}
 
 
 input,
@@ -247,9 +237,7 @@ a.menuButton span {
 	border-radius: 4px;
 }
 
-table.alert:before {
-	display: none;
-}
+
 
 .alert:before {
 	font-family: "Font Awesome 5 Free";
@@ -2358,4 +2346,35 @@ nav ul {
   content: "";
   clear: both;
   display: table;
+}
+
+/* Tables  */
+
+table {
+  border-collapse: separate;
+   border-spacing: 3px;
+/*  width: auto;*/
+
+}
+
+th, td {
+  text-align: left;
+}
+
+
+table.alert:before {
+	display: none;
+}
+
+
+.striped {
+	border-spacing: 0px;
+}
+
+.striped tr:nth-child(even) {
+  background-color: var(--abcd-gray-200);
+}	
+
+.striped tr td {
+  padding: .5rem;
 }

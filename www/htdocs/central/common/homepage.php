@@ -35,6 +35,7 @@ if (isset($arrHttp["modulo"])) {
 	$_SESSION["MODULO"]=$arrHttp["modulo"];
 
 }
+/*
 $lista_bases=array();
 if (file_exists($db_path."bases.dat")){
 	$fp = file($db_path."bases.dat");
@@ -47,6 +48,7 @@ if (file_exists($db_path."bases.dat")){
 		}
 	}
 }
+*/
 $central="";
 $circulation="";
 $acquisitions="";
