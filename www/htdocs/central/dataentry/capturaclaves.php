@@ -1,6 +1,7 @@
 <?php
 /*
 20220112 fh04abcd line-ends+improved html+layout like in alfa (buttons,letters left)+removed duplicates from output
+20220131 fh04abcd Removed duplicates from output (better)
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -98,7 +99,9 @@ if ($cisis_ver=="unicode/"){
     $Pref=utf8_encode($Pref);
     $ver="&cisis_ver=".$cisis_ver;
 }
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&autoridades=S&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".urlencode($Prefijo)."&pref=".urlencode($Pref)."&postings=".$arrHttp["postings"]."&formato_e=".urlencode($Formato).$ver;
+
+$query ="&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&autoridades=S&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"];
+$query.="&prefijo=".urlencode($Prefijo)."&pref=".urlencode($Pref)."&postings=".$arrHttp["postings"]."&formato_e=".urlencode($Formato).$ver;
 //echo "query=".$query."<br>";
 //echo "unencoded Formato&rarr;".$Formato."&larr;, length=".strlen($Formato)."<br>";
 $IsisScript=$xWxis."ifp_slashm.xis";
@@ -442,8 +445,9 @@ switch($arrHttp["index"]){
 		echo "<td width=95% valign=top>";
 		echo "
 			<Select name=autoridades multiple size=22 style=\"width:".$width."px\" onclick=javascript:ObtenerTerminos()>\n";
+        $f0_prev="";
 		foreach ($contenido as $linea){
-            // format is extrahandbooks$$$extrahandbooks###SE_HANDBOOKS%%%1  -> 
+            // format is extrahandbooks$$$extrahandbooks###SE_HANDBOOKS%%%1
 			if (trim($linea)!=""){
 				$ll=explode('###',$linea);
 				$pp=explode('%%%',$ll[1]);
@@ -453,7 +457,7 @@ switch($arrHttp["index"]){
 				if (substr($f[0],0,1)=="^") $f[0]=substr($f[0],2);
 				if (strlen($f[0])>60-strlen($arrHttp["prefijo"]) and $pp[1]>1){
 					BuscarClavesLargas($ll[1]);
-				}else if ($f[0]!=""){
+				}else if ($f[0]!="" && $f[0]!=$f0_prev){
 					echo "<option value=\"";
 					echo trim($f[1]);
 					echo "\"";
@@ -461,7 +465,8 @@ switch($arrHttp["index"]){
 					echo ">";
 			        echo trim($f[0]);
 			        echo "</option>\n";
-			   }
+                    $f0_prev=$f[0];
+                }
             }
 		}
 		echo "</select></td>";
@@ -590,6 +595,7 @@ global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path;
 	$IsisScript=$xWxis."ifp_slashm.xis";
 	include("../common/wxis_llamar.php");
 	$cont = array_unique ($contenido);
+    $f0_prev="";
 	foreach ($cont as $linea ){
 		if (trim($linea)!=""){
 			$ll=explode('###',$linea);
@@ -597,16 +603,18 @@ global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path;
 			if (isset($f[2])) $f[1]=$f[2];
 			if (!isset($f[1])) $f[1]=$f[0];
 			if (substr($f[0],0,1)=="^") $f[0]=substr($f[0],2);
-			echo "<option value=\"";
-			echo $f[1];
-			echo "\"";
-			echo " title=\"".$f[1]."\"";
-			echo ">";
-			echo $f[0];
-			echo "</option>";
-		}
+			if ($f[0]!="" && $f[0]!=$f0_prev){
+                echo "<option value=\"";
+                echo $f[1];
+                echo "\"";
+                echo " title=\"".$f[1]."\"";
+                echo ">";
+                echo $f[0];
+                echo "</option>";
+                $f0_prev=$f[0];
+            }
+        }
 	}
-
 }
 
 
