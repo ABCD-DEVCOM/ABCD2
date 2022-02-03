@@ -2,6 +2,7 @@
 /* Modifications
 20210614 fho4abcd remove password+lineends
 20211215 fho4abcd Backbutton & helper by included file
+20220203 fh04abcd Typo + improve folder selection and do not screw up $arrHttp["base"]
 */
 /*
  This program is free software; you can redistribute it and/or
@@ -184,7 +185,6 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^E_STRICT);
 $arrHttp=Array();
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
-if (isset($arrHttp["base"])) $_SESSION["dir_base"]=trim($arrHttp["base"]);
 if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
     isset($_SESSION["permiso"]["CENTRAL_EXDBDIR"])) or
     (isset($_SESSION["permiso"][$_SESSION["dir_base"]."_CENTRAL_ALL"]) or
@@ -194,17 +194,12 @@ if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
 }else{
 	header("Location: ../common/error_page.php") ;
 }
-if (isset($arrHttp["base"])){
-	$_SESSION["root_base"]=$_REQUEST["base"];
-	if (isset($arrHttp["folder"])){
-
-		$_SESSION["dir_base"]=$_REQUEST["folder"];
-	}else{
-		$_SESSION["dir_base"]= trim($arrHttp["base"]);
-		echo $arrHttp["base"];
-	}
-}
 include("../config.php");
+$_SESSION["root_base"]=$db_path;
+$_SESSION["dir_base"]="";
+if (isset($arrHttp["folder"])){
+    $_SESSION["dir_base"]=$_REQUEST["folder"];
+}
 $backtoscript="../dbadmin/menu_mantenimiento.php";
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 
@@ -215,7 +210,13 @@ $_SESSION['Upload_Extension']="*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*
 $_POST['FILE_EXTENSION']="*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,";
 if (isset($def["DIRTREE_EXT"]))
 	$_POST['FILE_EXTENSION']=$def["DIRTREE_EXT"];
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>"; die;
+// debug dumps
+/*    foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+    echo "Session:<br>";
+    foreach ($_SESSION as $var=>$value) echo "$var = $value<br>";
+    echo "<br>root_base=".$_SESSION["root_base"]."<br>dir_base=". $_SESSION["dir_base"]."<br>"; 
+*/
+//
 $_POST['File_Extension']=$_POST['FILE_EXTENSION'];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
@@ -247,7 +248,7 @@ global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding, $backto
     <?php include "../common/inc_back.php";?>
     </div>
     <div class="spacer">&#160;</div>
-</div>";
+</div>
 <?php include "../common/inc_div-helper.php"; ?>
 <div class="middle form">
     <div class="formContent">

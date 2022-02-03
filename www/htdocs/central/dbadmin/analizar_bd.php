@@ -1,4 +1,7 @@
 <?php
+/*
+20220203 fho4abcd Only back & div-helper modified. This script is currently not used but might be usefull after Improvment
+*/
 set_time_limit(0);
 session_start();
 
@@ -20,39 +23,28 @@ if (!isset($_SESSION["login"])){
 }
 $Permiso=$_SESSION["permiso"];
 ?>
-
-<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
-<script language="javascript" type="text/javascript">
-
-</script>
 <body >
-<?php
-	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">Analizar contenido de base de datos
-			</div>
-			<div class=\"actions\">
+<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 
-	";
-echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/distribucion.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/analizar_bd";
+include("../common/institutional_info.php");
 ?>
-</font>
-</div>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        Analizar contenido de base de datos
+    </div>
+    <div class="actions">
+        <?php
+        include "../common/inc_back.php";
+        ?>
+    </div>
+	<div class="spacer">&#160;</div>
+	</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
 <div class="middle">
-	<div class="formContent" >
+<div class="formContent" >
 <form name=generar method=post>
 <input type=hidden name=ok value=ok>
 <?php if (!isset($_REQUEST["ok"]))
@@ -63,10 +55,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/analizar_bd";
 </form>
 </div>
 </div>
-<?php include("../common/footer.php");?>
-</body>
-</html>
 <?php
+include("../common/footer.php");
+
+//================= functions ==============
 function Ask_Confirmation(){
 	echo "<div style='margin: 20px 40px 10px 200px; width:400px '>";
 	echo "Este proceso analiza el contenido de una base de datos para determinar qué campos y subcampos se están utilizando.  Puede tardar varios minutos por lo que no debe presionar ninguna tecla hasta obtener el mensaje

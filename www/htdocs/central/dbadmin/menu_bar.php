@@ -25,6 +25,7 @@
 20211216 fho4abcd Remove duplicate copiesocurrenciesreport
 20211217 fho4abcd Remove duplicate addcopiesdatabase,addloanobject,addloanobjectcopies
 20211228 fho4abcd Separate duplicate barcode entries
+20220203 fho4abcd Improve dirtree calls
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -138,17 +139,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.action="../utilities/barcode_search.php"
 			break;
 		case "dirtree": //EXPLORE DATABASE DIRECTORY
-			switch (Mensaje){
-				case "par":
-				case "www":
-				case "wrk":
-					document.admin.folder.value=Mensaje
-					document.admin.base.value=base
-					break;
-				default:
-					document.admin.base.value=base
-					break;
-			}
+            document.admin.folder.value=Mensaje
+            document.admin.base.value=base
 			document.admin.action="dirtree.php";
 			break;
 		case "addcopiesdatabase":    //Marino Script
@@ -352,7 +344,8 @@ function EnviarFormaMNT(Opcion,Mensaje){
   <li><a href="#"><?php echo $msgstr["explore"];?></A>
     <ul>
 
-    	<li><a href='Javascript:EnviarFormaMNT("dirtree","<?php echo $msgstr["expbases"]?>")'><?php echo $msgstr["expbases"]?></a></li>
+    	<li><a href='Javascript:EnviarFormaMNT("dirtree","")'><?php echo $msgstr["expbases"]?></a></li>
+    	<li><a href='Javascript:EnviarFormaMNT("dirtree","<?php echo $arrHttp['base']?>")'><?php echo $msgstr["explore"]." ".$arrHttp['base']?></a></li>
 	    <li><a href="#"><?php echo $msgstr["explore_sys_folders"]?></a>
 	    <ul>
 			<li><a href='Javascript:EnviarFormaMNT("dirtree","par")'><?php echo "par"?></a></li>

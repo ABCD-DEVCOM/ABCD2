@@ -1,4 +1,7 @@
 <?php
+/*
+20220203 fho4abcd backbutton+div-helper
+*/
 //ASSIGN CONTROL NUMBERS TO A DATABASE
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -18,6 +21,39 @@ if (!isset($arrHttp["base"]) or $arrHttp["base"]==""){
 }
 $base =$arrHttp["base"];
 $cipar =$arrHttp["base"].".par";
+
+if (isset($arrHttp["encabezado"]))
+	$encabezado="&encabezado=S";
+else
+	$encabezado="";
+include("../common/header.php");
+?>
+<body>
+<?php
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
+	$encabezado="&encabezado=s";
+}
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["assigncn"].": ".$arrHttp["base"];?>
+    </div>
+	<div class="actions">
+    <?php
+    $ayuda="control_number.html";
+    $backtoscript="assign_control_number.php";
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php include "../common/inc_div-helper.php";?>
+<div class="middle form">
+<div class="formContent">
+<?php
+
 //GET THE MAX MFN
 $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
@@ -32,50 +68,8 @@ foreach($contenido as $linea) {
 	  	}
 	}
 }
-
-if (isset($arrHttp["encabezado"]))
-	$encabezado="&encabezado=S";
-else
-	$encabezado="";
 LeerFdt($arrHttp["base"]);
 $db_addto=$arrHttp["base"];
-include("../common/header.php");
-echo "<body>\n";
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}
-echo "<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">
-";
-echo $msgstr["assigncn"].": ".$arrHttp["base"];
-echo "	</div>
-	<div class=\"actions\">
-";
-
-$ayuda="control_number.html";
-if (isset($arrHttp["encabezado"])){
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"])){
-		echo "<a href=\"assign_control_number.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>
-		";
-	}else{
-		echo "<a href=\"../common/inicio.php?reinicio=s&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-		<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>
-		";
-	}
-}
-
-?>
-</div>
-
-<div class="spacer">&#160;</div>
-</div>
-<div class="middle form">
-	<div class="formContent">
-<?php
 echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 
 //se lee la FDT de la base de datos para determinar el campo donde se almacena el número de control
@@ -85,8 +79,10 @@ if ($tag_ctl==""){
 	echo "<h4>".$msgstr["missingctl"]."</h4>";
 }else{
 	echo "Tag for the control number: $tag_ctl<br>";
-	echo "<table>";
-	echo "<th>Mfn</th><th>".$msgstr["cn"]."</th>";
+	?>
+    <table>
+	<tr><th>Mfn</th><th><?php echo $msgstr["cn"]?></th></tr>
+    <?php
 	for ($Mfn=$arrHttp["Mfn"];$Mfn<=$arrHttp["to"];$Mfn++){
 		$control=ProximoNumero($arrHttp["base"]);
 		$tag_ctl=trim($tag_ctl);
@@ -96,27 +92,37 @@ if ($tag_ctl==""){
 		$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=$Mfn&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
 		include("../common/wxis_llamar.php");
 		echo "<tr><td>$Mfn</td><td>$control</td>" ;
-		echo "<td>";
+		//echo "<td>";
 		//foreach ($contenido as $value) {
 		//	if (trim($value)!="")
 		//		echo "---$value<br>";
 		//}
-		echo "</td>";
+		//echo "</td>";
+        echo "</tr>";
 		flush();
     	ob_flush();
 	}
-
-	echo "<form name=forma1 action=assign_control_number.php method=post>
-	<input type=hidden name=base value=".$arrHttp["base"].">
-	<input type=hidden name=to value=".$Mfn.">
-	<input type=hidden name=encabezado value=s>";
-	if ($Mfn<$tag["MAXMFN"])
-		echo "<input type=submit name=go value=".$msgstr["continuar"].">";
-    echo "
+    ?>
+    </table>
+	<form name=forma1 action=assign_control_number.php method=post>
+	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+	<input type=hidden name=from value=<?php echo $Mfn?>>
+	<input type=hidden name=to value=<?php echo $Mfn+$arrHttp["to"]-$arrHttp["Mfn"]?>>
+	<input type=hidden name=encabezado value=s>
+    <?php
+	if (($Mfn)<=$tag["MAXMFN"]){
+        ?>
+		<input type=submit name=go value=<?php echo $msgstr["continuar"]?>>
+    <?php } ?>
 	</form>
-	";
+	<?php
 }
-
+?>
+</div>
+</div>
+<?php
+include "../common/footer.php";
+// =================== Functions ==============================
 function LeerFdt($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$msgstr;
 // se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática y el prefijo con el cual se indiza el número de control

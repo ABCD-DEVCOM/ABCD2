@@ -1,6 +1,7 @@
 <?php
 /*
 ** 20220112 fho4abcd make it work again+backbutton+helper+clean html
+** 20220129 fho4abcd Detect copy from default in stead of current. More feedback
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -86,7 +87,8 @@ switch ($arrHttp["Opcion"]){
 include("../common/footer.php");
 //======================================================
 function  GuardarWks(){
-global $arrHttp,$msgstr,$db_path;
+global $arrHttp,$msgstr,$db_path,$lang_db,$backtoscript;
+    $newnamebase=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["name"].".fmt";
     $newname=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["name"].".fmt";
 	$err="N";
 	if (!isset($arrHttp["name"]) or trim($arrHttp["name"])==""){
@@ -98,21 +100,36 @@ global $arrHttp,$msgstr,$db_path;
 		$err="S";
 	}
 	if($err=="N" and !preg_match('/^[a-z0-9-_]+$/',$arrHttp["name"])) {
-		echo "<br>".$msgstr["invalidfilename"];
+		echo "<h3 style='color:red'>".$arrHttp["name"]." &rarr; ".$msgstr["invalidfilename"]."</h3>";
    		$err="S";
 	}
 	if ($err=="N"){
 		if (file_exists($newname)){
-			echo $msgstr["fileexists"];
+			echo "<h3 style='color:red'>".$arrHttp["name"]." &rarr; ".$msgstr["fileexists"]."</h3>";
 			$err="S";
 		}
 	}
+    $fmt_currentbase=$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["fmt_name"].".fmt";
+    $fmt_current=$db_path.$fmt_currentbase;
+    $fmt_default=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["fmt_name"].".fmt";
+    // It is unknown if the copy is initiated from lang_db. That cannot work
+    if (!file_exists($fmt_current)) {
+        if (file_exists($fmt_default)) {
+            $err="B";
+            echo "<h3 style='color:red'>".$fmt_currentbase."&rarr;".$msgstr["ne"]."<br>";
+            echo $msgstr["fmtcopybyedit"]."</h3>";
+        } else {
+            $err="S";
+            echo "<h3 style='color:red'>".$fmt_currentbase."&rarr;".$msgstr["ne"]."</h3>";
+        }
+    }
 	if ($err=="S"){
 		echo "<p><a href=javascript:Regresar()>".$msgstr["back"]."</a>";
+    } else if ($err=="B") {
+        include "../common/inc_back.php";
 	} else {
-        // copy the file
-        copy($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["fmt_name"].".fmt",$newname);
-        echo "<p>".$msgstr["created"].": ".$newname."</p>";
+        copy($fmt_current,$newname);
+        echo "<p>".$msgstr["created"].": ".$newnamebase."</p>";
         // Update formatos.wks
         $wksname="formatos.wks";
         $wkspath=$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$wksname;

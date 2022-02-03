@@ -232,8 +232,11 @@ unch_append=Unchecked = Append records
 unch_wxis=Unchecked = Use WXIS
 updatedfile=Updated file
 upload_conf_errmsg=May be a configuration error for file uploads. Check log files and php.ini.
-upload_logout=Logout recommended
 upload_exceed=Exceeded
+upload_logout=Logout recommended
+upload_overwrite=Overwrite existing file ?
+upload_size=Size
+upload_status=Status
 uni_no=No
 uni_yes=Yes
 validate=Validate
