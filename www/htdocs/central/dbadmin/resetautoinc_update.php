@@ -1,4 +1,6 @@
 <?php
+/*
+20220203 fho4abcd backbutton,div-helper
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -58,16 +60,14 @@ if (isset($file) and file_exists($file)){
 }
 
 include("../common/header.php");
-echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>"
 ?>
+<body>
+<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <?php
-echo "<body>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
-
-
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -75,28 +75,20 @@ if (isset($arrHttp["encabezado"])) {
 		if (isset($arrHttp["base"])) echo": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php
-if ($arrHttp["Opcion"]=="inventory")
-	echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
-else
-	echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
+        <?php
+        if ($arrHttp["Opcion"]!="inventory"){
+            $backtoscript="../dbadmin/menu_mantenimiento.php";
+            include "../common/inc_back.php";
+        }
+        include "../common/inc_home.php";
+    ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies_configuration.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<?php include "../common/inc_div-helper.php";?>
+<div class="middle form">
+<div class="formContent">
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/copies_configuration.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: resetautoinc_update.php</font>\n";
-echo "
-	</div>
-<div class=\"middle form\">
-	<div class=\"formContent\">";
 if ($arrHttp["Opcion"]=="copies"){
 	$fp=file($db_path."bases.dat");
 	$new=fopen($db_path."bases.dat","w");
@@ -126,5 +118,4 @@ if ($arrHttp["Opcion"]=="copies"){
 }
 echo "</div></div>";
 include("../common/footer.php");
-echo "</body></html>";
 ?>

@@ -1,4 +1,7 @@
 <?php
+/*
+20220203 fho4abcd backbutton+div-helper
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -57,18 +60,14 @@ function Update(Option){
 			<?php echo $msgstr["chk_dbdef"]. ": " . $arrHttp["base"]; ?>
 		</div>
 		<div class="actions">
-			<a href="../dbadmin/menu_modificardb.php?reinicio=s&base=<?php echo $arrHttp["base"];?>&encabezado=<?php echo $arrHttp["encabezado"];?>" class="defaultButton backButton">
-			<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-			<span><strong><?php echo $msgstr["back"];?></strong></span></a>
+            <?php
+                $backtoscript="../dbadmin/menu_modificardb.php";
+                include "../common/inc_back.php";
+			?>
 		</div>
 		<div class="spacer">&#160;</div>
 	</div>
-
-	<div class="helper">
-		<?php
-			echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=\"\" target=_blank>". $msgstr["help"].": abcdwiki.net</a>";
-		?>
-	</div>
+    <?php include "../common/inc_div-helper.php";?>
 
 	<div class="middle">
 		<div class="formContent">
