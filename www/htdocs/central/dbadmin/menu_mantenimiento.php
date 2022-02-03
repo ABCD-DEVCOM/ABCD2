@@ -7,6 +7,7 @@
 20210415 fho4abcd use charset from config.php
 20210803 fho4abcd added language file
 20211214 fho4abcd Backbutton by included file
+20220203 fho4abcd better reaction if no database is given
 */
 session_start();
 
@@ -96,7 +97,7 @@ include("menu_bar.php");
 	    if ( isset($arrHttp["base"])){
 	        echo "<span>".$arrHttp["base"]."</span>";
 	    }
-	    echo "<span>".$msgstr["dbnex"];
+	    echo "<span>".$msgstr["dbnex"]."<br></span>";
 	    $arrHttp["MAXMFN"]="?"."</span>";
 	}
 	echo "<span>".$charset."</span>";
