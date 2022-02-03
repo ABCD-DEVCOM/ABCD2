@@ -2,6 +2,7 @@
 /* Modifications
 20211216 fho4abcd Backbutton & helper by included file. improve html
 20220112 fho4abcd fmt.php->fmt_adm.php
+20220202 fho4abcd improved text strings, more translations
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -173,7 +174,7 @@ if (isset($arrHttp["encabezado"])) {
     <div class="breadcrumb"><?php echo $msgstr["updbdef"]. ": " . $arrHttp["base"]?>
     </div>
     <div class="actions">
-    <?php include "../common/inc_back.php"; ?>
+    <?php include "../common/inc_home.php"; ?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
@@ -219,9 +220,11 @@ foreach ($fp as $value){
 			<?php
 // SI ES UN REGISTRO MARC SE INCLUYE LA OPCION PARA MANEJO DE LOS TIPOS DE REGISTRO DE ACUERDO AL LEADER
 			if ($ldr=="s" ){
-				echo "<li><a href=javascript:Update(\"leader\")>". $msgstr["ft_ldr"]."</a></li>";
-				echo "<li><a href=javascript:Update(\"fixedmarc\")>Type of recors. Fixed field structure</a></li>";
-				echo "<li><a href=javascript:Update(\"fixedfield\")>". $msgstr["typeofrecords"]." - Assign worksheets</a></li>";
+                ?>
+				<li><a href=javascript:Update("leader")><?php echo $msgstr["ft_ldr"]?></a></li>
+				<li><a href=javascript:Update("fixedmarc")><?php echo "MARC-".$msgstr["typeofrecord_ff"]?></a></li>
+				<li><a href=javascript:Update("fixedfield")><?php echo "MARC-".$msgstr["typeofrecord_aw"]?></a></li>
+                <?php
 			}
 			?>
 			<li><a href=javascript:Update("fst")><?php echo $msgstr["fst"]?></a></li>
@@ -230,7 +233,7 @@ foreach ($fp as $value){
 			<?php
 			if (!isset($ldr) or $ldr!="s" )
 // SI NO ES UN REGISTRO MARC SE INCLUYE EL MANEJO DE LOS TIPOS DE REGISTRO NO MARC
-			    echo "<li><a href=javascript:Update(\"typeofrecs\")>".$msgstr["typeofrecords"]."</a></li>";
+			    echo "<li><a href=javascript:Update(\"typeofrecs\")>".$msgstr["typeofrecord_aw"]."</a></li>";
 			?>
 
 			<li><a href=javascript:Update("recval")><?php echo $msgstr["recval"]?></a></li>

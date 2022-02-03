@@ -1,6 +1,7 @@
 <?php
 /*
 20220128 fho4abcd improve back buttons + rewrite code to show more info+improve update of formatos.wks
+20220202 fho4abcd improve back for fixed field
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -38,7 +39,7 @@ if (isset($arrHttp["fmt_name"])) $isfdt=false;
     <div class="actions">
         <?php    
         if (isset($arrHttp["Fixed_field"])) {
-            $backtoscript ="<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado;
+                $backtoscript ="fixed_marc.php?base=". $arrHttp["base"].$encabezado;
                 include "../common/inc_back.php";
                 include "../common/inc_home.php";
         } else {

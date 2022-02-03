@@ -116,6 +116,7 @@ freesearch_3=Please select the fields to be included in the free search
 help=Help
 hide=Hide
 if=Inverted File
+incolumn=in column
 indice=Index
 indicede=Index of
 inicio=Home

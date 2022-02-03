@@ -4,6 +4,7 @@
 20210914 fho4abcd Improved error message display&handling in case of upload errors
 20211215 fho4abcd Backbutton by included file
 20211216 fho4abcd Backbutton by included file improved
+20220201 fho4abcd Repair upload, translate strings, new style buttons, improve back
 */
 /*
 ** Upload a file from the users environment into the working area of the ABCD base
@@ -30,20 +31,20 @@ include("../lang/soporte.php");
 */
 $contents_error= error_get_last();
 $backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
+$backtoscript=$backtoscript."?backtoscript=".$backtoscript;
 $inframe=1;                      // The default runs in a frame
 $uplwrk_cnfcnt=0;
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["uplwrk_cnfcnt"])) $uplwrk_cnfcnt=$arrHttp["uplwrk_cnfcnt"];
 if ( !isset($arrHttp["base"])) $arrHttp["base"]=""; // In case of upload errors destroying this option
-
 $wrk="wrk";
 $wrkfull=$db_path.$wrk;
 $OK=" &rarr; OK";
 $NOT_OK=" &rarr; <b><font color=red>NOT OK</font></b>";
 ?>
 <body>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script language=javascript src="../dataentry/js/lr_trim.js"></script>
 <script language=javascript>
 var win
 function Upload(){
@@ -58,7 +59,7 @@ function Reselect(){
 	document.uplwrk_continuar.submit()
 }
 function Continue(){
-    document.uplwrk_continuar.action='<?php echo $backtourl;?>'
+    document.uplwrk_continuar.action='<?php echo $backtoscript;?>'
 	document.uplwrk_continuar.submit()
 }
 </script>
@@ -72,6 +73,7 @@ if ($inframe!=1 or $arrHttp["base"]=="") include "../common/institutional_info.p
 	</div>
 	<div class="actions">
     <?php include "../common/inc_back.php";?>
+    <?php if ($inframe!=1) include "../common/inc_home.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -114,7 +116,7 @@ if ($uplwrk_cnfcnt<=0) {  /* - First screen: Select the iso file -*/
             <td>&nbsp;<?php echo $wrk;?></td>
         </tr>
          <tr>
-            <td>Overwrite existing file?</td>
+            <td><?php echo $msgstr["upload_overwrite"]?></td>
             <td><input type=checkbox name=overwrite></td>
         </tr>
        <tr>
@@ -123,7 +125,8 @@ if ($uplwrk_cnfcnt<=0) {  /* - First screen: Select the iso file -*/
         </tr>
     </table>
     <br>
-    <input type=submit value=<?php echo $msgstr["subir"];?> onclick=Upload()>
+        <a href="javascript:Upload()" class="bt bt-blue" title='<?php echo $msgstr["subir"]?>'>
+        <i class="fas fa-file-upload"></i>&nbsp;<?php echo $msgstr["subir"];?></a>
     </form>
 <?php
     // Check that wrk exists and is writable
@@ -155,11 +158,11 @@ else if ($uplwrk_cnfcnt==2)
     if (isset($myfiles)) $filecount = count($myfiles["name"]);
     if ( $filecount>0 ) { // if no files uploaded the first entry gives error 4
         ?>
-        <table  bgcolor=#e7e7e7 cellspacing=1 cellpadding=4 border=1>
+        <table bgcolor=#e7e7e7 cellspacing=1 cellpadding=4 >
         <tr><th><?php echo $msgstr["archivo"];?></th>
             <th><?php echo $msgstr["type"];?></th>
-            <th>Size</th>
-            <th>Status</th>
+            <th><?php echo $msgstr["upload_size"];?></th>
+            <th><?php echo $msgstr["upload_status"];?></th>
         </tr>
         <?php
         $numerrors=0;
@@ -194,10 +197,10 @@ else if ($uplwrk_cnfcnt==2)
                 $uploaderrortxt.="</font>";
             }
             ?>
-            <tr><td><?php echo $myfiles["name"][$i];?></td>
-                <td><?php echo $myfiles["type"][$i];?></td>
-                <td align=right><?php echo number_format($myfiles["size"][$i],0,',','.');?></td>
-                <td align=right><?php echo $uploaderrortxt;?></td>
+            <tr><td bgcolor=white><?php echo $myfiles["name"][$i];?></td>
+                <td bgcolor=white><?php echo $myfiles["type"][$i];?></td>
+                <td bgcolor=white align=right><?php echo number_format($myfiles["size"][$i],0,',','.');?></td>
+                <td bgcolor=white align=right><?php echo $uploaderrortxt;?></td>
             </tr>
             <?php
         }
@@ -250,9 +253,11 @@ else if ($uplwrk_cnfcnt==2)
             <input type=hidden name=base value='<?php echo $arrHttp["base"];?>'>
             <input type=hidden name=uplwrk_cnfcnt value=''>
             <input type=hidden name=inframe value='<?php echo $inframe?>'>
-            <input type=button value='<?php echo $msgstr["selfile"];?>' onclick=Reselect()>
+            <a href="javascript:Reselect()" class="bt bt-gray" title='<?php echo $msgstr["selfile"]?>'>
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp;<?php echo $msgstr["selfile"];?></a>
             &nbsp;&nbsp;&nbsp;
-            <input type=button value='<?php echo $msgstr["continuar"];?>' onclick=Continue()>
+            <a href="javascript:Continue()" class="bt bt-green" title='<?php echo $msgstr["continuar"]?>'>
+                <i class="fas fa-forward"></i>&nbsp;<?php echo $msgstr["continuar"];?></a>
        </form>
        </div>
         <?php
