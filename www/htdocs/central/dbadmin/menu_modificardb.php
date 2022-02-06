@@ -202,6 +202,8 @@ if (file_exists($dir_fdt.$selbase.".fdt")) {
 	$fp=file($dir_fdt.$selbase.".fdt");
 } else {
 	$fp=file($db_path.$selbase."/def/".$lang_db."/".$selbase.".fdt");
+}
+
 $ldr="";
 foreach ($fp as $value){
 	$value=trim($value);
@@ -213,7 +215,7 @@ foreach ($fp as $value){
 		}
 	}
 }
-}
+
 
 }
 
