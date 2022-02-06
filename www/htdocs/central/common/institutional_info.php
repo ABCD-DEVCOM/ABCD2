@@ -9,6 +9,24 @@
 20220122 rogercgui Default logo is displayed if institution image is absent
 */
 
+if (isset($_SESSION["nombre"])) {
+	$name = $_SESSION["nombre"];
+} else {
+	$name = "";
+}
+
+if (isset($_SESSION["profile"])) {
+	$profile = $_SESSION["profile"];
+} else {
+	$profile = "";
+}
+
+if (isset($_SESSION["login"])) {
+	$login = $_SESSION["login"];
+} else {
+	$login = "";
+}
+
 
 $lista_bases=array();
 if (file_exists($db_path."bases.dat")){
@@ -181,7 +199,7 @@ function ChangeLang(){
 if (isset($def['LOGO_DEFAULT'])) {
 	echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
 } elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
-	echo "<img src='/uploads/".$def["LOGO"]."?".time()."' title='";
+	echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
 	if (isset($institution_name)) echo $institution_name;
 	echo "'>";
 } else {
@@ -287,8 +305,9 @@ if (isset($def['LOGO_DEFAULT'])) {
 			}			
 				if ($circulation=="Y" or $acquisitions=="Y" or $central=="Y"){
 				if ($central=="Y") {
-				if ($_SESSION["MODULO"]=="catalog") $style_cat="active";
-				global $msgstr;
+				if ($_SESSION["MODULO"]=="catalog") 
+					$style_cat="active";
+			
 		  	?>		
             <li>
            <form>
@@ -301,7 +320,8 @@ if (isset($def['LOGO_DEFAULT'])) {
             <li>
 		  	<?php
 		   	if ($circulation=="Y") {
-		  		if ($_SESSION["MODULO"]=="loan") $style_loan="active";
+		  		if ($_SESSION["MODULO"]=="loan") 
+		  			$style_loan="active";
 		  	?>
             	<form>
             		<button class="bt-mod bt-loan <?php echo $style_loan;?>" type="submit" name=modulo value="loan" onclick="Modulo();" title="<?php echo $msgstr["modulo"]." ".$msgstr["prestamo"];?>"></button>
@@ -313,7 +333,8 @@ if (isset($def['LOGO_DEFAULT'])) {
             <li>
             <?php
 		  	if ($acquisitions=="Y") {
-		  		if ($_SESSION["MODULO"]=="acquisitions") $style_acq="active";
+		  		if ($_SESSION["MODULO"]=="acquisitions") 
+		  			$style_acq="active";
 			  	}
 			?>
             	<form>
@@ -402,7 +423,7 @@ if (isset($def['LOGO_DEFAULT'])) {
             </li>
                 <li>
                 	<a class="bt-charset" href="#" title="
-                	<?php echo $_SESSION["nombre"]?> (<?php echo $_SESSION["profile"]?>)
+                	<?php echo $name;?> (<?php echo $profile; ?>)
 <?php  $dd=explode("/",$db_path);
                				if (isset($dd[count($dd)-2]) and $dd[count($dd)-2]!=""){
 			   					$da=$dd[count($dd)-2];
@@ -410,7 +431,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 							}else{
 							echo $db_path;
 						}?>"><i class="fas fa-user"></i>
-                		<?php echo $_SESSION["login"]?>
+                		<?php echo $login;?>
 
 
 					</a>

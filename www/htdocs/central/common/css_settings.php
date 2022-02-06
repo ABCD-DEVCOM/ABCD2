@@ -5,6 +5,29 @@
 * 2022-01-21 rogercgui added "else" by class
 */
 
+
+if (isset($def['DIRECTORY_SYSTEM_UPLOADS'])) {
+	$folder_logo = $def['DIRECTORY_SYSTEM_UPLOADS'];
+} else {
+	$folder_logo="";
+}
+
+//If option 1 = htdocs/uploads; If option 2 = bases/par/uploads
+switch ($folder_logo){
+	case "1":
+		$folder_logo="/uploads/";
+		break;
+	case "2":
+		$folder_logo="/docs/uploads/";
+		break;
+	default:
+		echo '';
+		break;
+}
+
+
+
+
 echo "<style>\n";
 	
 	if ((isset($def["BODY_BACKGROUND"])) && (!empty($def["BODY_BACKGROUND"]))) {
