@@ -442,28 +442,33 @@ switch ($set_mod){
 		break;
 
 	case "dr_path":
-		$ini_vars=array("UNICODE" => array("it"=>"radio","Options"=>"0;1"),
-						"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed),
-						"DIGDOCS"=>array("it"=>"title","Label"=>"<hr size=2>"."DIGITAL DOCUMENTS"),
-						"COLLECTION" => array("it"=>"text","Options"=>""),
-						"INVENTORY"=>array("it"=>"title","Label"=>"<hr size=2>"."INVENTORY"),
-						"inventory_numeric" => array("it"=>"radio","Options"=>"Y;N"),
-						"max_inventory_length" => array("it"=>"text","Options"=>""),
-						"max_cn_length" => array("it"=>"text","Options"=>""),
-						"barcode" => array("it"=>"radio","Options"=>"Y;N"),
-						"barcode1reg" => array("it"=>"radio","Options"=>"Y;N"),
-						"dirtree" => array("it"=>"radio","Options"=>"Y;N"),
-						"TESAURUS"=>array("it"=>"title","Label"=>"<hr size=2>"."TESAURUS"),
-						"tesaurus" => array("it"=>"text","Options"=>""),
-						"prefix_search_tesaurus" => array("it"=>"text","Options"=>""),
-						"OTHER"=>array("it"=>"title","Label"=>"<hr size=2>"."OTHER"),
-						"DIRTREE_EXT" => array("it"=>"text","Options"=>""),
-						"leader"      => array("it"=>"text","Options"=>""),
-						"STYLES"=>array("it"=>"title","Label"=>"<hr size=2>"."STYLES"),
-						"CSS_NAME" => array("it"=>"text","Options"=>""),
-						"LOGO" => array("it"=>"file","Options"=>""),
-						"DIGITAL"=>array("it"=>"title","Label"=>"<hr size=2>"."LINKED DOCUMENTS"),
-						"ROOT" => array("it"=>"text","Options"=>""),
+		$ini_vars=array(
+						"GENERAL" => array("it"=>"title","Label"=>$msgstr["set_general_db"]),
+						"ROOT" => array("it"=>"text","size"=>"70","placeholder"=>$db_path,"Tip"=>$msgstr["set_TIP_ROOT"]),											
+						"COLLECTION" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
+						"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
+						"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed,"Label"=>$cisis_versions_allowed,"Tip"=>$msgstr["set_TIP_CISIS_VERSION"]),
+						
+
+
+						"INVENTORY"=>array("it"=>"title","Label"=>"Inventory"),
+						"barcode" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_barcode"]),
+						"inventory_numeric" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_inventory_numeric"]),						
+						"max_inventory_length" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_max_inventory_length"]),
+						"max_cn_length" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_max_cn_length"]),
+
+						"barcode1reg" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>""),
+						
+						
+						"TESAURUS"=>array("it"=>"title","Label"=>"Tesaurus"),
+						"tesaurus" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
+						"prefix_search_tesaurus" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
+						
+						"OTHER"=>array("it"=>"title","Label"=>"Other"),
+						"DIRTREE" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_DIRTREE"]),					
+						"DIRTREE_EXT"=> array("it"=>"text","Options"=>"","size"=>"70","Tip"=>$msgstr["set_TIP_DIRTREE_EXT"]),
+						"leader"=> array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
+
 						);
 		$file=$db_path.$arrHttp["base"]."/dr_path.def";
 		$help=$arrHttp["base"].": dr_path.def";
@@ -499,7 +504,7 @@ switch ($arrHttp["Opcion"]){
 		break;
 	case "dr_path":
 
-		$backtoscript="menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s";
+		$backtoscript="../dbadmin/menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s";
 		include "../common/inc_back.php";
 
 		break;

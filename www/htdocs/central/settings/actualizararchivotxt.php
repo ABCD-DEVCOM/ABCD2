@@ -31,7 +31,7 @@ include("../common/header.php");
 if (isset($arrHttp["retorno"]))
 	$retorno=$arrHttp["retorno"];
 else
-	$retorno="menu_modificardb.php?encabezado=s$base";
+	$retorno="../dbadmin/menu_modificardb.php?encabezado=s$base";
 ?>
 <body>
 <?php
@@ -41,17 +41,17 @@ if (isset($arrHttp["encabezado"])){
 <div class="sectionInfo">
 
 			<div class="breadcrumb">
-				<?php echo "<h5>"." " .$msgstr["database"];
+				<?php echo $msgstr["database"];
 				if (isset($arrHttp["base"])) echo ": ".$arrHttp["base"];
-				echo "</h5>"?>
+				?>
 			</div>
 
 			<div class="actions">
-<?php echo "<a href=\"$retorno\" class=\"defaultButton backButton\">";
-?>
-					<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["back"]?></strong></span>
-				</a>
+				<?php
+					$backtoscript=$retorno;
+					include "../common/inc_back.php";
+				?>
+
 			</div>
 			<div class="spacer">&#160;</div>
 </div>
@@ -73,11 +73,13 @@ echo $file." ".$msgstr["updated"]?></h4>
 			        document.writeln(\"<a href=javascript:self.close()>".$msgstr["close"]."</a>\")
 			</script>
          ";
+
+echo $retorno;
+echo '<meta http-equiv="refresh" content="0; URL='.$retorno.'">';
 ?>
 		</TD>
+
+
 </table>
 </div></div>
 <?php include("../common/footer.php")?>
-
-</body>
-</html>

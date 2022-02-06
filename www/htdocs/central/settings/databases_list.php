@@ -17,7 +17,7 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Editar(){
-	msgwin=window.open("../dbadmin/editararchivotxt.php?archivo=bases.dat&desde=menu$encabezado&desde=menu","editpar","width=600, height=500, resizable, scrollbars")
+	msgwin=window.open("editararchivotxt.php?archivo=bases.dat&desde=menu$encabezado&desde=menu","editpar","width=600, height=500, resizable, scrollbars")
 	msgwin.focus()
 
 }
@@ -68,7 +68,7 @@ echo " Script: databases_list.php";
 <form name=forma1 action=actualizararchivotxt.php method=post onsubmit='javascript:return false'>
 <input type=hidden name=txt>
 <input type=hidden name=archivo value='bases.dat'>
-<input type=hidden name=retorno value=conf_abcd.php>
+<input type=hidden name=retorno value=databases_list.php>
 <input type=hidden name=encabezado value=s>
 <br><center>
 <table border=0>
