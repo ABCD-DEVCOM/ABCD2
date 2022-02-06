@@ -24,7 +24,7 @@ unset($fp);
 ?>
 </head>
 <body>
-<A NAME=INICIO>
+
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -40,42 +40,37 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php
 if (isset($arrHttp["encabezado"]))
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
+	$backtoscript= "menu_modificardb.php?base=".$arrHttp["base"].$encabezado;
+	include "../common/inc_back.php";
 ?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/iah_edit_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "\<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/iah_edit_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_save.php";
+
+$ayuda="iah_edit_db.html";
+include "../common/inc_div-helper.php";
+
 ?>
-</font>
-	</div>
 <div class="middle form">
 	<div class="formContent">
 
 
-<?php
-$arrHttp["ValorCapturado"]= stripslashes($arrHttp["ValorCapturado"]);
-echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
-$file=$db_path."par/".strtoupper($arrHttp["base"]).".def";
-$fp=fopen($file,"w");
-if (!$fp){
-	echo "Cannot open the file $file for writing";
-	die;
-}
-$res=fwrite($fp,$arrHttp["ValorCapturado"]);
+	<?php
+	$arrHttp["ValorCapturado"]= stripslashes($arrHttp["ValorCapturado"]);
+	echo "<pre>".$arrHttp["ValorCapturado"]."</pre>";
+	$file=$db_path."par/".strtoupper($arrHttp["base"]).".def";
+	$fp=fopen($file,"w");
+	if (!$fp){
+		echo "Cannot open the file $file for writing";
+		die;
+	}
+	$res=fwrite($fp,$arrHttp["ValorCapturado"]);
 
-fclose($fp);
-echo "<h2>".$msgstr["saved"];
-?>
-</form>
-</div></div>
+	fclose($fp);
+	echo "<h2>".$msgstr["saved"];
+	?>
+	</div>
+
+</div>
 <?php include("../common/footer.php");?>
-</body>
-</html>

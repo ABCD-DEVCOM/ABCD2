@@ -8,6 +8,7 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/iah_conf.php");
 include("../lang/lang.php");
@@ -81,7 +82,7 @@ unset($fp);
 <script>
 //NUMBER OF LANGUAGES DEFINED IN IAH.DEF.PHP
 n_lang=<?php echo count($lan_iah)."\n"?>
-<?
+<?php
 $ix=0;
 $rotulo_lan="";
 foreach ($lan_iah as $lan){
@@ -741,7 +742,7 @@ function Validar(){
 
 function Guardar(){
 	ret=Validar()
-	if (ret==true) document.iah_edit.submit()
+	if (ret==true) document.iah_edit.submit();
 }
 
 function BajarOpcion(){
@@ -770,7 +771,9 @@ function SubirOpcion(){
 </script>
 </head>
 <body>
-<A NAME=INICIO>
+
+
+
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -779,38 +782,41 @@ if (isset($arrHttp["encabezado"])){
 	$encabezado="";
 }
 ?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["iah-conf"].": ".strtoupper($arrHttp["base"]).".def"?>
+		<?php echo $msgstr["iah-conf"].": ".strtoupper($arrHttp["base"]).".def"?>
 	</div>
+
+
 	<div class="actions">
 <?php
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span></a>
-<?php if (isset($fst)){
-?>
+	$backtoscript= "menu_modificardb.php?base=".$arrHttp["base"].$encabezado;
+	include "../common/inc_back.php";
 
-		<a href="javascript:Guardar()" class="defaultButton saveButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["save"]?></strong></span></a>
-<?php }?>
+if (isset($fst)){
+	$savescript="javascript:Guardar()";	
+	include "../common/inc_save.php";
+}
+
+?>
 	</div>
+
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/iah_edit_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/iah_edit_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
+
+$ayuda="iah_edit_db.html";
+include "../common/inc_div-helper.php";
+
 ?>
-</font>
-	</div>
+
+
 <div class="middle form">
+	<a name=inicio>
 	<div class="formContent">
-	<form name=iah_edit method=post action=iah_save.php onsubmit="javascript:return false">
+	<form name=iah_edit method=post action="iah_save.php" onsubmit="javascript:return false">
 
 <?php
 	if (!isset($fst)) {

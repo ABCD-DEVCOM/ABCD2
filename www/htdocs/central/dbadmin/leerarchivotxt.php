@@ -47,7 +47,7 @@ if (!file_exists($db_path.$archivo)){
 }else{
 	$fp=file($db_path.$archivo);
 	echo "<h4>".$arrHttp["archivo"]." &nbsp; &nbsp;
-	<a href='editararchivotxt.php?archivo=".$archivo."'>".$msgstr["edit"]."</a> &nbsp;
+	<a href='../settings/editararchivotxt.php?archivo=".$archivo."'>".$msgstr["edit"]."</a> &nbsp;
 	<a href=javascript:self.close()>".$msgstr["close"]."</a>
 	</h4>
 	<xmp>";
