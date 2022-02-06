@@ -93,7 +93,7 @@
 					if (isset($def['RESPONSIBLE_LOGO_DEFAULT'])) {
 						echo "<img src='/assets/images/distributorLogo.png?".time()."' title='$institution_name'>";
 					} elseif ((isset($def["RESPONSIBLE_LOGO"])) && (!empty($def["RESPONSIBLE_LOGO"]))) {
-                    	echo "<img src='/uploads/".$def["RESPONSIBLE_LOGO"]."?".time()."' title='".$responsible."'>";
+                    	echo "<img src='".$folder_logo.$def["RESPONSIBLE_LOGO"]."?".time()."' title='".$responsible."'>";
                     } else {
                     	echo "<img src='/assets/images/distributorLogo.png?".time()."' title='ABCD Community'>";
                     }

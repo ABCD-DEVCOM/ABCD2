@@ -141,7 +141,7 @@ include ("$app_path/common/css_settings.php");
 			if (isset($def['LOGO_DEFAULT'])) {
 				echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
 			} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
-				echo "<img src='/uploads/".$def["LOGO"]."?".time()."' title='";
+				echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
 				if (isset($institution_name)) echo $institution_name;
 				echo "'>";
 			} else {

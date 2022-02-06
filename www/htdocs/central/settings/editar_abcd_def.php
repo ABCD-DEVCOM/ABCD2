@@ -8,11 +8,14 @@ linked documents
 2022-01-18 rogercgui added new user-configurable classes
 2022-01-24 rogercgui Included file renaming to avoid accumulation of images in the upload folder. Even without converting the extension the files will have fixed names.
 */
+
+
 session_start();
 
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
+
 //foreach ($_REQUEST AS $var=>$value)  echo "$var=>$value<br>";
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
@@ -24,8 +27,29 @@ include("../lang/soporte.php");
 include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 
-//directory where the images go
-$target_dir = "../../uploads/";
+
+if (isset($_REQUEST['ini_DIRECTORY_SYSTEM_UPLOADS'])) {
+	$target_dir=$_REQUEST['ini_DIRECTORY_SYSTEM_UPLOADS'];
+} elseif (isset($def['DIRECTORY_SYSTEM_UPLOADS'])) {
+	$target_dir = $def['DIRECTORY_SYSTEM_UPLOADS'];
+} else {
+	$target_dir="";
+}
+
+
+//If option 1 = htdocs/uploads; If option 2 = bases/par/uploads
+switch ($target_dir){
+	case "1":
+		$target_dir=$ABCD_scripts_path."uploads/";
+		break;
+	case "2":
+		$target_dir=$db_path."uploads/";
+		break;
+	default:
+		echo '<style>#STYLES { display: none; }</style>';
+		break;
+}
+
 
 if (!isset($_SESSION["login"])or $_SESSION["profile"]!="adm" ){
 	echo "<script>
@@ -53,7 +77,6 @@ if ($handle = opendir($l)) {
 
 
 // Databases list
-
 $lista_bases=array();
 if (file_exists($db_path."bases.dat")){
 	$fp = file($db_path."bases.dat");
@@ -90,15 +113,29 @@ $databases_codes=databases();
 
 //================= Function to read the abcd.def file ==========
 function LeerIniFile($ini_vars,$ini,$tipo){
-global $msg_path, $msgstr, $target_dir, $def;
+global $msg_path, $msgstr, $target_dir, $def, $folder_logo;
 
 	if ($tipo==1) 
 		$pref="ini_"; 
 	else $pref="mod_";
 	foreach ($ini_vars as $key=>$Opt){
 
+		if (isset($Opt["default"])) {
+			$defaultDef = $Opt["default"];
+		} else {
+			$defaultDef="";
+		}
+
+		if (isset($def[$key])) {
+			$valueDef = $def[$key]; 
+		}	elseif  (isset($ini[$key])) {
+			$valueDef = $ini[$key];
+		} else {
+			$valueDef = $defaultDef;
+		}
+
 		if ($Opt["it"]=="title"){
- 		  echo "</table></div><button type=\"button\" class=\"accordion\">".$Opt["Label"]."</button><div class=\"panel\"><table class=\"striped\" cellspacing=8 width=80% align=center >\n";
+ 		  echo "</table></div><button type=\"button\" class=\"accordion\" id=\"$key\">".$Opt["Label"]."</button><div class=\"panel\"><table class=\"striped\" cellspacing=8 width=80% align=center >\n";
  		    continue;
  		}else{
  			echo "<tr>
@@ -117,14 +154,7 @@ global $msg_path, $msgstr, $target_dir, $def;
 		   			echo trim($Opt["size"]);
 				else
 					echo "100";
-		   		echo " value='";
-		   		
-		   		if (isset($ini[$key])) {
-					echo $ini[$key];
-				} else {
-					echo $Opt["default"];
-				}
-				echo "'>";
+		   		echo " value=".$valueDef.">";
 				echo "<small></small> &nbsp;<button type=\"button\" clss=\" bt bt-sm bt-gray\" onclick=\"return cleanSet('".$Opt["default"]."','ini_".$key."')\" title=".$Opt["Label"]."><i class=\"fas fa-eraser\"></i></button> ";
 				break;  			
 
@@ -135,15 +165,12 @@ global $msg_path, $msgstr, $target_dir, $def;
 		   			echo trim($Opt["size"]);
 				else
 					echo "100";
-		   		echo " value='";
-		   		if (isset($ini[$key])) 
-		   			echo $ini[$key];
-		   		echo "' ";
-				echo " placeholder='";
-				if (isset($Opt["placeholder"])) {
-		   			echo $Opt["placeholder"];
-				}
-		   		echo "'>";
+		   		echo " value='".$valueDef."'";
+					if (isset($Opt["placeholder"])) {
+						echo " placeholder='".$Opt["placeholder"]."'";
+					}
+				if (isset($Opt["disabled"])) echo "disabled";
+		   		echo ">";
 				break;
 
 			// Field type radio
@@ -152,11 +179,8 @@ global $msg_path, $msgstr, $target_dir, $def;
 				$label=explode(";",$Opt["Label"]);				
 				foreach (array_combine($opc, $label) as $o => $l) {
 					echo "&nbsp;<input type=radio name=ini_$key value='$o' ";
-					if (isset($ini[$key]))   {
-						if ($ini[$key]==$o)
+						if ($valueDef==$o)
 							echo " checked";
-						
-					}
 					echo ">";
 						if (isset($Opt["Label"])) {  
 						echo  "<label>".$l ."</label>&nbsp;";
@@ -170,11 +194,11 @@ global $msg_path, $msgstr, $target_dir, $def;
 			case "select":
 				$opc=explode(";",$Opt["Options"]);
 				$label=explode(";",$Opt["Label"]);			
-				echo "<select name='ini_$key'>";	
+				echo "<select name='ini_$key' id='ini_$key' onchange=\"select('ini_".$key."')\">";	
 				echo "<option></option>";
 				foreach (array_combine($opc, $label) as $o => $l) {
 					echo "<option value='".$o."'"; 
-					if (isset($ini[$key])){
+					if (isset($ini[$key]))  {
 						if ($ini[$key]==$o)
 							echo " selected";
 					}
@@ -186,7 +210,7 @@ global $msg_path, $msgstr, $target_dir, $def;
 					 }
 				}
 				echo "</select>";
-				break;				
+				break;			
 			
 			// Field type checkbox
 			case "check":
@@ -195,10 +219,8 @@ global $msg_path, $msgstr, $target_dir, $def;
 
 				foreach (array_combine($opc, $label) as $o => $l) {
 					echo "<input type=checkbox name=$pref$key value='$o' ";
-					if (isset($ini[$key]))  {
-						if ($ini[$key]==$o)
+						if ($valueDef==$o)
 							echo " checked";
-					}
 					echo ">";
 						if (isset($Opt["Label"])) {  
 						echo  "<label>".$l."</label>&nbsp;";
@@ -215,9 +237,7 @@ global $msg_path, $msgstr, $target_dir, $def;
 		   			echo trim($Opt["size"]);
 				else
 					echo "100";
-		   		echo " value='";
-		   		if (isset($ini[$key])) echo $ini[$key];
-				echo "'>\r\n";
+		   		echo " value=".$valueDef."'>\r\n";
 				break;                
 
 
@@ -237,7 +257,7 @@ global $msg_path, $msgstr, $target_dir, $def;
 			 		if ( (!isset($key)) OR (empty($ini[$key])) ) {
 				echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" id="'.$Opt["ID"].'"/>'.$file_value.'</div> ';
 				} else {
-					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" src='.$target_dir.$file_value.' id="'.$Opt["ID"].'"/> </div>';
+					echo '<br><div class="mb-4"><img class="p-3 bg-gray-300 p-3 mt-3 " width="100" src='.$folder_logo.$file_value.' id="'.$Opt["ID"].'"/> </div>';
 				}
 				break;						
 
@@ -257,8 +277,6 @@ global $msg_path, $msgstr, $target_dir, $def;
 ?>
 
 <style type="text/css">
-
-
 
 .accordion {
 	margin: auto;
@@ -289,10 +307,7 @@ global $msg_path, $msgstr, $target_dir, $def;
 </style>
 
 <body>
-
-
-<script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
-
+<link rel="stylesheet" type="text/css" href="/assets/css/text-cursor.css">
 <script language="javascript" type="text/javascript">
 
 function Enviar(){
@@ -316,8 +331,18 @@ function preview_image(campo, event) {
  reader.readAsDataURL(event.target.files[0]);
 }
 
+function select(campo) {
+var e = document.getElementById(campo);
+var strUser = e.value;
+console.log(strUser);
+}
+
+
+
 
 </script>
+
+
 
 <?php
 include("../common/institutional_info.php");
@@ -331,6 +356,13 @@ switch ($set_mod){
 	case "abcd_styles":
 		$ini_vars=array(
 					// Identification and sites of the institution
+
+					// Security
+					"FOLDERS" => array("it"=>"title","Label"=>$msgstr["set_folders"]),
+
+					"MAIN_FOLDER" => array("it"=>"text","size"=>"70","placeholder"=>$ABCD_scripts_path,"Tip"=>$msgstr["set_TIP_MAIN_FOLDER"],"disabled"=>"disabled",),					
+					"DATABASES_FOLDER" => array("it"=>"text","size"=>"70","placeholder"=>$db_path,"Tip"=>$msgstr["set_TIP_DATABASES_FOLDER"],"disabled"=>"disabled",),
+					"DIRECTORY_SYSTEM_UPLOADS"  => array("it"=>"select","Options"=>"1;2","Label"=>$msgstr["set_MAIN_FOLDER"].";".$msgstr["set_DATABASES_FOLDER"],"Tip"=>$msgstr["set_TIP_DIRECTORY_SYSTEM_UPLOADS"]),							
 					"IDENTIFICATION" => array("it"=>"title","Label"=>$msgstr["set_identification"]),
 
 					"INSTITUTION_NAME" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_INSTITUTION_NAME_PH"],"Tip"=>$msgstr["set_TIP_INSTITUTION_NAME"]),
@@ -345,9 +377,9 @@ switch ($set_mod){
 					// Local settings
 					"LOCAL_SET" => array("it"=>"title","Label"=>$msgstr["set_local"]),
 					"MAIN_DATABASE"  => array("it"=>"select","Options"=>$databases_codes,"Label"=>$databases_codes,"Tip"=>$msgstr["set_TIP_MAIN_DATABASE"]),
-					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_MAIN_DATABASE"]),
-					"DEFAULT_DBLANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
-					"DATE_FORMAT" => array("it"=>"text","size"=>"50","placeholder"=>"DD/MM/YY","Tip"=>$msgstr["set_TIP_DEFAULT_DBLANG"]),
+					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
+					"DEFAULT_DBLANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_DBLANG"]),
+					"DATE_FORMAT" => array("it"=>"text","size"=>"50","placeholder"=>"DD/MM/YY","Tip"=>$msgstr["set_TIP_DATE_FORMAT"]),
 
 					"NEW_WINDOW" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_NEW_WINDOW"]),
 
@@ -476,18 +508,18 @@ switch ($arrHttp["Opcion"]){
 
 
 if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
-
 $savescript="javascript:Enviar()";
-
 include "../common/inc_save.php";	
 
 }
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
+
+?>
+  </div>
+	<div class="spacer">&#160;</div>
+	</div>
+
+<?php
 include "../common/inc_div-helper.php";
-
-
 
 $ini=array();
 $modulo=array();
@@ -525,8 +557,8 @@ if (file_exists($file)){
 function uplodimages($fieldname,$fileimg) {
 global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir;
 
-if (!file_exists($target_dir)) {
-    mkdir($target_dir, 0777, true);
+if (!is_dir($target_dir)) {
+    mkdir($target_dir);
 }
 	
 $target_file = $target_dir.basename($_FILES[$fileimg]["name"]);
@@ -563,7 +595,7 @@ if (file_exists($target_file)) {
 
 // Check file size
 if ($_FILES[$fileimg]["size"] > 2097152) {
-  echo "Sorry, your file is too large.";
+  echo $msgstr["set_ERROR_SIZE"];
   $uploadOk = 0;
 }
 
@@ -594,6 +626,85 @@ if ($uploadOk == 0) {
 
 if (!isset($ini["DIRTREE_EXT"]) and $arrHttp["Opcion"]!="css")
 	$ini["DIRTREE_EXT"]="*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,";
+
+
+
+
+function saveDef() {
+	global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir, $file, $help, $arrHttp;
+
+    echo '<pre  id="typewriter">';
+    echo "<b>".$msgstr["set_APPLY"]."</b><br>";
+    $fp=@fopen($file,"w");
+    if (!$fp) {
+
+    //Checks for errors	
+        $contents_error= error_get_last();
+        echo "<font color=red><b>".$msgstr["copenfile"]." ".$help."</b> : ".$contents_error["message"];
+    
+    } else { 
+
+    //Saves the parameters in the .def file
+
+        foreach ($arrHttp as $key=>$Opt){
+           if (substr($key,0,4)=="ini_"){
+                $key=substr($key,4);
+ 
+                echo $key."=".$arrHttp["ini_".$key]."<br>";
+                fwrite($fp,$key."=".trim($arrHttp["ini_".$key])."\n");
+            }
+        }
+                echo '<p id="cursor-line" class="visible">&gt;&gt; <span class="typed-cursor">&#9608;</span></p>';
+
+      // Upload and save file names. 
+      $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
+				foreach ($fileslist as $fileimg){
+ 				$fieldname=substr($fileimg, strlen("ini_"));
+		 				if (isset($_FILES[$fileimg]["name"])) {
+		 					if ($_FILES[$fileimg]["name"]) {
+							$temp = explode(".", $_FILES[$fileimg]["name"]);
+							$newfilename = $fieldname.'.'. end($temp);
+							$file_name  = $newfilename;
+							if (isset($file_name))
+		 						fwrite($fp,$fieldname."=".$file_name ."\n");
+		 					} else {
+							//fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
+							if (isset($def[$fieldname]))
+							fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
+							}
+							uplodimages($fieldname,$fileimg);  			
+					}
+			}
+
+
+        if (isset($arrHttp["mod_TITLE"])){
+            echo "[MODULOS]<BR>";
+            fwrite($fp,"[MODULOS]\n");
+            foreach ($arrHttp as $key=>$Opt){
+                if (substr($key,0,4)=="mod_"){
+                    $key=substr($key,4);
+                    echo $key."=".$arrHttp["mod_".$key]."<br>";
+                    fwrite($fp,$key."=".trim($arrHttp["mod_".$key])."\n");
+
+                }
+            }
+        }
+        fclose($fp);
+        
+
+
+        echo '<span class="string-highlight">'.$help." - ".$msgstr["updated"].'! </span>';
+        //echo "<a href=editar_abcd_def.php?Opcion=".$_REQUEST["Opcion"]."&base=".$_REQUEST["base"].">".$msgstr["edit"]."</a>";
+    }
+          echo "</pre>";
+}
+
+
+ function page_redirect()  {
+   echo '<meta http-equiv="refresh" content="5; URL=editar_abcd_def.php?Opcion=abcd_styles">';
+   exit; 
+ }
+
 ?>
 
 
@@ -601,105 +712,53 @@ if (!isset($ini["DIRTREE_EXT"]) and $arrHttp["Opcion"]!="css")
 	<div class="formContent" >
 
 
-<form name="maintenance" method="post" enctype="multipart/form-data">
+<form name="maintenance" method="post" enctype="multipart/form-data" action="editar_abcd_def.php" onsubmit="return false">
 <input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
+
 <?php
 if (isset($arrHttp["base"]))
 	echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
 
-if (!isset($arrHttp["Accion"])){
-	echo "<input type=hidden name=Accion value=\"actualizar\">\n";
-	echo "<div class=\"panel\"><table class=\"striped\" cellspacing=8 width=80% align=center >";
+if (!isset($arrHttp["Accion"])){ 
+ 	echo "<input type=hidden name=Accion value=\"actualizar\">\n";
+
+	echo "<div class=\"panel\"  id=\"panel\">";
+	echo "<table class=\"striped\" cellspacing=8 width=80% align=center >";
 
 	LeerIniFile($ini_vars,$ini,"1");
 	foreach ($ini as $key=>$val){
-		if (!isset($ini_vars[$key]) and trim($val)!="") echo "<tr><td>$key</td><td><input type=text name=ini_$key value=\"$val\"></td></tr>";
+		if (!isset($ini_vars[$key]) and trim($val)!="") 
+			echo "<tr><td>$key</td><td><input type=text name=ini_$key value=\"$val\"></td></tr>";
 	}
-
-/*
-	if ($arrHttp["Opcion"]=="abcd_styles"){
-		echo "<tr><td colspan=2><strong>[MODULOS]</strong></td></tr>";
-		LeerIniFile($mod_vars,$modulo,2);
-	}
-*/
 ?>
-
-</table></div>
+	</table>
+</div>
 </form>
-<?php	
-}else{
-    if ($arrHttp["Accion"]=="actualizar"){
-        $fp=@fopen($file,"w");
-        if (!$fp) {
-            $contents_error= error_get_last();
-            echo "<font color=red><b>".$msgstr["copenfile"]." ".$help."</b> : ".$contents_error["message"];
-        } else { 
-            foreach ($arrHttp as $key=>$Opt){
-               if (substr($key,0,4)=="ini_"){
-                    $key=substr($key,4);
-                    echo $key."=".$arrHttp["ini_".$key]."<br>";
-                    fwrite($fp,$key."=".trim($arrHttp["ini_".$key])."\n");
 
-  
-                }
-
-            }
-
-                    $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
-
-					foreach ($fileslist as $fileimg){
-
-   						$fieldname=substr($fileimg, strlen("ini_"));
-
-   						//if (isset($_FILES[$fileimg]["name"])) {
-   					if ($_FILES[$fileimg]["name"]) {
-						$temp = explode(".", $_FILES[$fileimg]["name"]);
-						$newfilename = $fieldname.'.'. end($temp);
-						$file_name  = $newfilename;
-						if (isset($file_name))
-   						fwrite($fp,$fieldname."=".$file_name ."\n");
-   					} else {
-						//fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
-						if (isset($def[$fieldname]))
-						fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
-
-					}
-
-   						uplodimages($fieldname,$fileimg);  			
-
-					}
-
-/*
-            if ($arrHttp["Opcion"]=="abcd_def" and !isset($arrHttp["ini_LEGEND2"])){
-                fwrite($fp,"LEGEND2=\n");
-            }
-
-*/            
-            if (isset($arrHttp["mod_TITLE"])){
-                echo "[MODULOS]<BR>";
-                fwrite($fp,"[MODULOS]\n");
-                foreach ($arrHttp as $key=>$Opt){
-                    if (substr($key,0,4)=="mod_"){
-                        $key=substr($key,4);
-                        echo $key."=".$arrHttp["mod_".$key]."<br>";
-                        fwrite($fp,$key."=".trim($arrHttp["mod_".$key])."\n");
-
-                    }
-                }
-            }
-            fclose($fp);
-            echo "<h4>$help ".$msgstr["updated"]."</h4>";
-            //echo "<a href=editar_abcd_def.php?Opcion=".$_REQUEST["Opcion"]."&base=".$_REQUEST["base"].">".$msgstr["edit"]."</a>";
-        }
-    }
-}
-?>
-		<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
+	<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
 		<a class="bt bt-gray" href="../settings/conf_abcd.php?reinicio=s"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
-</div>
+
+
+<?php	
+} else {
+	saveDef();
+?>
+
+<?php
+	echo '<script type="text/javascript" src="/assets/js/typing.js"></script>';
+	page_redirect();
+}
+
+?>
+	</div>	
+
+
 </div>
 
+
+ 
 <script>
+// The headings are the main lines of the accordions
 var acc = document.getElementsByClassName("accordion");
 var i;
 
@@ -716,5 +775,5 @@ for (i = 0; i < acc.length; i++) {
 }
 </script>
 
-<?php include("../common/footer.php");?>
 
+<?php include("../common/footer.php");?>

@@ -40,7 +40,7 @@ if (strpos($inc_backtourl, "encabezado=")===false) {
     }
 }
 ?>
-<a href="<?php echo $inc_backtourl?>" class="button_browse show" title='<?php echo $msgstr["cancel"]?>'>
+<a href="<?php echo $inc_backtourl?>" class="button_browse" title='<?php echo $msgstr["cancel"]?>'>
     <i class="far fa-window-close bt-red"></i>&nbsp;<?php echo $msgstr["cancel"]?></a>
 <?php
 unset($inc_backtourl);

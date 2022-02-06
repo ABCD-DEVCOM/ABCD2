@@ -17,7 +17,7 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Editar(){
-	msgwin=window.open("editararchivotxt.php?archivo=bases.dat&desde=menu$encabezado&desde=menu","editpar","width=600, height=500, resizable, scrollbars")
+	msgwin=window.open("../dbadmin/editararchivotxt.php?archivo=bases.dat&desde=menu$encabezado&desde=menu","editpar","width=600, height=500, resizable, scrollbars")
 	msgwin.focus()
 
 }
@@ -46,10 +46,11 @@ include("../common/institutional_info.php");
 <?php echo $msgstr["dblist"] ?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"conf_abcd.php\" class=\"defaultButton cancelButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["cancel"]?></strong></span></a>
+	<?php 
+		$backtoscript="conf_abcd.php";
+		include "../common/inc_back.php";
+	?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

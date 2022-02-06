@@ -49,7 +49,7 @@ if (strpos($inc_backtourl, "encabezado=")===false) {
     }
 }
 ?>
-<a href="<?php echo $inc_backtourl?>" class="button_browse show" title='<?php echo $msgstr["regresar"]?>'>
+<a href="<?php echo $inc_backtourl?>" class="button_browse" title='<?php echo $msgstr["regresar"]?>'>
     <i class="fas fa-arrow-circle-left"></i>&nbsp;<?php echo $msgstr["regresar"]?></a>
 <?php
 unset($inc_backtourl);
