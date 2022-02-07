@@ -8,6 +8,7 @@
 20211118 fho4abcd improvement for tags with/without leading zeros
 20211118 rogercgui edited line 	$it="password\""; $it="text\" onfocus=blur()";
 20211225 include field type number - $tipo=N
+20220207 html improvements
 */
 require_once("combo_inc.php");
 
@@ -750,8 +751,6 @@ if (!$ver){
    		if ($ix<count($filas)) echo "<br>";
   	}
  }
-
- echo "\n</td></xTABLE>\n";
 }
 
 
@@ -982,7 +981,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 						$it="password\"";
 						if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="") or
 						    (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!=""))
-						    	$it.=" onblur=\"pwd_Validation('tag$tag')\" ";
+						    	$it.=" onblur=\""."pwd_Validation('tag$tag')";// strange but correct. " is added later
 						$len=20;
 						if ($MD5==1) $campo="";
 						break;
@@ -1027,8 +1026,8 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   			if ($tipo=="AI") {
 	   				if (isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["ACQ_ALL"]) or isset($_SESSION["permiso"]["ACQ_RESETCN"])){
 	   					echo " <a class='bt-fdt-green' href=javascript:ChangeSeq($tag,\"$pref\")><i class=\"fas fa-plus\"></i> ".$msgstr["assign"]."</a>
-	   					&nbsp ";
-	   					echo "<a class='bt-fdt-help' href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-life-ring\"></i> ".$msgstr["help"]."</a>&nbsp &nbsp;";
+	   					&nbsp; ";
+	   					echo "<a class='bt-fdt-help' href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-life-ring\"></i> ".$msgstr["help"]."</a>&nbsp; &nbsp;";
 	   					if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])){
 							echo "<a class='bt-fdt-blue' href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-edit\"></i> ".$msgstr["edhlp"]."</a>";
 						}
@@ -1040,22 +1039,40 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
      			echo "<a class=\"bt-fdt\" href=dirs_explorer.php?Opcion=seleccionar&base=".$arrHttp["base"]."&tag=tag$tag target=_blank><i class=\"far fa-folder-open\" alt=\"".$msgstr["selfile"]."\" title=\"".$msgstr["selfile"]."\"></i></a>";
 	   		}
 	   		if ($tipo=="P" or $tipo=="PR"){
-	   		    echo "\n<script>tag_password='tag$tag'
-	   		    mandatory_password='".$mandatory. "'
-	   		    </script>\n";
-	   		    echo " <a class=\"bt-fdt\" href=javascript:DisplayPassword('tag$tag')><i class=\"far fa-eye\"></i> ".$msgstr["ver"]."</a>";
+                ?>
+	   		    <script>tag_password='tag<?php echo $tag;?>'
+	   		    mandatory_password='<?php echo $mandatory;?>'
+	   		    </script>
+                <a class="bt-fdt" href="javascript:DisplayPassword('tag<?php echo $tag?>')">
+                    <i class="far fa-eye"></i> <?php echo $msgstr["ver"]?></a>
+                <?php
 	   			if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="") or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="")){
-	   				echo "<br><small class=\"bt-disabled\">";
+	   				?>
+                    <br><small class="bt-disabled">
+                    <?php
 	   				if (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="")
 	   					echo $msgstr["pass_format_1"] ." ".$SECURE_PASSWORD_LENGTH." ".$msgstr["characters"].". ";
-	   				if (isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")
+	   				if (isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="" and $SECURE_PASSWORD_LEVEL>1)
 	   					echo $msgstr["pass_format_".$SECURE_PASSWORD_LEVEL];
-	   				echo  ' &nbsp;<span id="spnPwd" class="pwd_Strength" ></small><br />';
+	   				?>
+                    &nbsp; &nbsp;<span id="spnPwd" class="pwd_Strength"></span>
+                    </small><br>
+                    <?php
 	   			}
-	   			echo "</td><tr><td colspan=2></td><td class='table-fdt-three'>Confirm password</td><td><input tabindex='0' type=password size=$len name=confirm id=confirmpwd  value=\"$campo\"";
-	   			if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")  or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="") ) echo " onfocus=VerificarPassword('tag$tag')";
-	   			echo ">";
-	   			echo " <a class=\"bt-fdt\" href=javascript:DisplayPassword('confirmpwd')><i class=\"far fa-eye\"></i> ".$msgstr["ver"]."</a>";
+	   			?>
+                </td>
+                <tr><td colspan=2></td>
+                    <td class='table-fdt-three'><?php echo $msgstr["confirmpass"];?></td>
+                    <td><input tabindex='0' type=password size=<?php echo $len?> name=confirm id=confirmpwd  value="<?php echo $campo?>"
+                <?php
+	   			if ((isset($SECURE_PASSWORD_LEVEL) and $SECURE_PASSWORD_LEVEL!="")  or (isset($SECURE_PASSWORD_LENGTH) and $SECURE_PASSWORD_LENGTH!="") ) {
+                    echo " onfocus=\"VerificarPassword('tag$tag')\"";
+                }
+                ?>
+                >
+	   			<a class="bt-fdt" href="javascript:DisplayPassword('confirmpwd')">
+                    <i class="far fa-eye"></i> <?php echo $msgstr["ver"];?></a>
+                <?php
 	   		}
 
 	 }
@@ -1117,7 +1134,7 @@ Function PrepararFormato() {
 	$obligatorio="N";
 	echo "
 			<div id=\"loading\" style=opacity:0.95>
-				<p><p>
+				<br><br>
 				<table align=center>
 					<tr>
 						<td width=400>
@@ -1600,30 +1617,36 @@ Function PrepararFormato() {
        									}
 
        									//calendar attaches to existing form element
-       									echo "<input tabindex='0' type=text name=tag$tag id=tag$tag"."_c Xreadonly=\"1\"  value=\"$campo\" ";
-												
-												if ($iso_tag!="") echo " onChange='Javascript:DateToIso(this.value,document.forma1.$iso_tag)'";
-												
-												echo "/>
-												<a class=\"bt-fdt\" href=\"#\"><i class=\"far fa-calendar-alt\"  id=\"f_tag$tag\" title=\"Date selector\"></i></a>
-
-
-												 <script type=\"text/javascript\">
-											    Calendar.setup({
-
-											        inputField     :    \"tag$tag"."_c\",     // id of the input field
-											        ifFormat       :    \"";
-											        if ($config_date_format=="DD/MM/YY")    // format of the input field
-											        	echo "%d/%m/%Y";
-											        else
-											        	echo "%m/%d/%Y";
-											        echo "\",
-											        button         :    \"f_tag$tag\",  // trigger for the calendar (button ID)
-											        align          :    '',           // alignment (defaults to \"Bl\")
-											        singleClick    :    true
-											    });
-											</script>";
-
+                                        ?>
+       									<input tabindex='0' type=text name=tag<?php echo $tag;?>
+                                                id=tag<?php echo $tag;?>_c
+                                                value="<?php echo $campo?>"
+                                        <?php						
+                                        if ($iso_tag!="")
+                                            ?>
+                                            onChange='Javascript:DateToIso(this.value,document.forma1.<?php echo $iso_tag?>)'
+                                            <?php
+                                        
+                                        ?>
+                                        />
+                                        <a class="bt-fdt" href="#">
+                                            <i class="far fa-calendar-alt" id="f_tag<?php echo $tag;?>" title="Date selector"></i></a>
+                                        <script type="text/javascript">
+                                        Calendar.setup({
+                                            inputField     :    "tag<?php echo $tag?>_c",     // id of the input field
+                                            ifFormat       :
+                                            <?php
+                                            if ($config_date_format=="DD/MM/YY")    // format of the input field
+                                                echo "\"%d/%m/%Y\",\n";
+                                            else
+                                                echo "\"%m/%d/%Y\",\n";
+                                            ?>
+                                            button         :    "f_tag<?php echo $tag?>",  // trigger for the calendar (button ID)
+                                            align          :    '',           // alignment (defaults to \"Bl\")
+                                            singleClick    :    true
+                                        });
+                                        </script>
+                                        <?php
 	       							}else{
     	    							echo $campo;
        								}
@@ -1643,25 +1666,29 @@ Function PrepararFormato() {
        								echo "\n<td>\n";
        								if (!$ver) {
        									//calendar attaches to existing form element
-                                        echo "<input tabindex='0' type=text name=tag$tag id=tag$tag"."_c Xreadonly=\"1\"  value=\"$campo\"
-												 onChange='Javascript:DateToIso(this.value,document.forma1.tag$tag)'/> <a class=\"bt-fdt\" href=\"#\"><i class=\"far fa-calendar-alt\" id=\"f_tag$tag\" title=\"Date selector\"
-					     						  /></i></a>
-												 <script type=\"text/javascript\">
-											    Calendar.setup({
-
-											        inputField     :    \"tag$tag"."_c\",     // id of the input field
-											        ifFormat       :    \"";
-											        if ($config_date_format=="DD/MM/YY")    // format of the input field
-											        	echo "%d/%m/%Y";
-											        else
-											        	echo "%m/%d/%Y";
-											        echo "\",
-											        button         :    \"f_tag$tag\",  // trigger for the calendar (button ID)
-											        align          :    '',           // alignment (defaults to \"Bl\")
-											        singleClick    :    true
-											    });
-											</script>";
-
+                                        ?>
+                                        <input tabindex='0' type=text name=tag<?php echo $tag;?>
+                                                id=tag<?php echo $tag?>_c
+                                                value="<?php echo $campo?>"
+												onChange='Javascript:DateToIso(this.value,document.forma1.tag<?php echo $tag?>)'/>
+                                        <a class="bt-fdt" href="#">
+                                            <i class="far fa-calendar-alt" id="f_tag<?php echo $tag?>" title="Date selector"></i></a>
+                                        <script type="text/javascript">
+                                            Calendar.setup({
+                                                inputField     :    "tag<?php echo $tag;?>_c",     // id of the input field
+                                                ifFormat       :
+                                                <?php
+                                                if ($config_date_format=="DD/MM/YY")    // format of the input field
+                                                    echo "\"%d/%m/%Y\",\n";
+                                                else
+                                                    echo "\"%m/%d/%Y\",\n";
+                                                ?>
+                                                button         :    "f_tag<?php echo $tag?>",  // trigger for the calendar (button ID)
+                                                align          :    '',           // alignment (defaults to \"Bl\")
+                                                singleClick    :    true
+                                            });
+                                        </script>
+                                        <?php
 	       							}else{
     	    							echo $campo;
        								}
@@ -1844,7 +1871,7 @@ Function PrepararFormato() {
 				echo $msgstr["cerrar"];
 			}
 		}
-		echo "</div></div><p>\n";
+		echo "<br>\n";
 	if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/"."tesaurus.rel")){
 		include("../tesaurus/dataentry.php");
 		$tesaurus="S";

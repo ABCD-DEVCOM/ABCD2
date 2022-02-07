@@ -2,6 +2,8 @@
 /*
 20210914 fho4abcd modified size of popup window for upload
 20220116 fho4abcd modified size of popup window for capturaclaves
+20220202 fho4abcd modified size of popup window for picklist
+20220207 fh04abcd Improve html & backbutton 
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -624,7 +626,8 @@ function NuevaBusqueda(){
 	}
 
 }
-function CopiarHtml(Tag,Tipo,Mfn){         //tipo B=External HTM
+function CopiarHtml(Tag,Tipo,Mfn){
+        // tipo B=External HTM
 		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
 		msgwin.document.close();
 		msgwin.document.writeln("<html><title><?php echo $msgstr["uploadfile"]?></title><body link=black vlink=black bgcolor=white>\n");
@@ -987,7 +990,7 @@ function AgregarPicklist(tabla,Ctrl,valor){
 	document.agregarpicklist.picklist.value=tabla
 	document.agregarpicklist.Ctrl.value=Ctrl
 	document.agregarpicklist.valor.value=valor
-	msgwin=window.open("","Picklist","width=600,height=500,scrollbars, resizable")
+	msgwin=window.open("","Picklist","width=850,height=600,scrollbars, resizable")
 	document.agregarpicklist.submit()
 	msgwin.focus()
 }
@@ -1107,8 +1110,6 @@ function CheckInventory(tag,prefix){
 
 </script>
 
-
-<BODY>
 <span id="toolTipBox" width="200"></span>
 <?php
 if (isset($arrHttp["encabezado"])){
@@ -1117,40 +1118,45 @@ if (isset($arrHttp["encabezado"])){
 	
 	if ($arrHttp["Opcion"]=="ver"){
 		include("../common/institutional_info.php");
-		echo "<div class=\"sectionInfo\">
-				<div class=\"breadcrumb\">
-				</div>";
-		echo "<div class=\"actions\">
-			<a href=\"$retorno$return\" class=\"defaultButton backButton\">
-				<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-				<span><strong>".$msgstr["back"]."</strong></span>
-			</a>
+        ?>
+        <div class="sectionInfo">
+            <div class="breadcrumb">
+                <?php echo $msgstr["update_rec"]?>
+            </div>
+            <div class="actions">
+                <?php
+                $backtoscript=$retorno.$return;
+                include "../common/inc_back.php";
+                ?>
+                </div>
+                <div class="spacer">&#160;</div>
 		</div>
-		<div class=\"spacer\">&#160;</div>
-		</div>";
+        <?php
 	}else{
 		if (!isset($fmt_test)){
-
 			include("../common/institutional_info.php");
-			echo "<div class=\"sectionInfo\">
-				<div class=\"breadcrumb\">
-					";
-
-				if ($arrHttp["Mfn"]=="New") echo "<h3>". $msgstr["newoper"]."</h3>\n";
-				echo "</div>
-				<div class=\"actions\">
-					<a href=javascript:EnviarForma() class=\"defaultButton saveButton\">
-						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>".$msgstr["m_guardar"]."</strong></span>
-					</a>
-					<a href=\"$retorno$return\" class=\"defaultButton cancelButton\">
-						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>".$msgstr["cancelar"]."</strong></span>
-					</a>
+            ?>
+			<div class="sectionInfo">
+				<div class="breadcrumb">
+				<?php
+                    if ($arrHttp["Mfn"]=="New"){
+                        echo $msgstr["newoper"];
+                    } else {
+                        echo $msgstr["updateop"];
+                    }
+                ?>
 				</div>
-				<div class=\"spacer\">&#160;</div>
+				<div class="actions">
+                    <?php
+                    $backtoscript=$retorno.$return;
+                    $savescript="javascript:EnviarForma()";
+                    include "../common/inc_cancel.php";
+                    include "../common/inc_save.php";
+                    ?>
+                </div>
+				<div class="spacer">&#160;</div>
 			</div>
-			";
+            <?php
 		}
 	}
 }
@@ -1181,7 +1187,7 @@ if (isset($arrHttp["encabezado"])){
 
 <form name=guardar action=busqueda_guardar.php method=post target=guardar>
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-	<input type=hidden name=Expresion value=<?php echo $Expresion;?>>
+	<input type=hidden name=Expresion value="<?php echo $Expresion;?>">
 	<input type=hidden name=Descripcion value="">
 </form>
 
@@ -1203,7 +1209,7 @@ if (isset($arrHttp["encabezado"])){
 	echo "<input type=hidden name=footer value=".$arrHttp["footer"].">\n"; ?>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
-<input type=hidden name=wks value=<?php if (isset($arrHttp["wks"]))  echo $arrHttp["wks"]?>>
+<input type=hidden name=wks value="<?php if (isset($arrHttp["wks"]))  echo $arrHttp["wks"]?>">
 <?php
 if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
 if ($arrHttp["Opcion"]=="capturar" || $arrHttp["Opcion"]=="nuevo"){

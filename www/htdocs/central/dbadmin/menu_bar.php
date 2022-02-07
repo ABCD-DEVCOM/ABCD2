@@ -26,6 +26,7 @@
 20211217 fho4abcd Remove duplicate addcopiesdatabase,addloanobject,addloanobjectcopies
 20211228 fho4abcd Separate duplicate barcode entries
 20220203 fho4abcd Improve dirtree calls
+20220206 fho4abcd Remove dirtree to top folder (function is in Adminstration part)
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -344,8 +345,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
   <li><a href="#"><?php echo $msgstr["explore"];?></A>
     <ul>
 
-    	<li><a href='Javascript:EnviarFormaMNT("dirtree","")'><?php echo $msgstr["expbases"]?></a></li>
-    	<li><a href='Javascript:EnviarFormaMNT("dirtree","<?php echo $arrHttp['base']?>")'><?php echo $msgstr["explore"]." ".$arrHttp['base']?></a></li>
+    	<li><a href='Javascript:EnviarFormaMNT("dirtree","<?php echo $arrHttp['base']?>")'><?php echo $msgstr["db_explorefldr"]." ".$arrHttp['base']?></a></li>
 	    <li><a href="#"><?php echo $msgstr["explore_sys_folders"]?></a>
 	    <ul>
 			<li><a href='Javascript:EnviarFormaMNT("dirtree","par")'><?php echo "par"?></a></li>

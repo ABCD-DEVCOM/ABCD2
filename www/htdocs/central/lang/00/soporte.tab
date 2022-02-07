@@ -113,6 +113,7 @@ dspace_url=URL API/REST-Dspace repository
 dbbackrest=Backup/Restore
 dbmaintenance=DB Maintenance
 db_cp=Copy the database to another folder
+db_explorefldr=Explore database folder
 db_restore=Restore database
 dbn=Database name
 deldb=Delete database records before importing
