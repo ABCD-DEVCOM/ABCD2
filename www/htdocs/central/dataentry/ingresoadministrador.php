@@ -1,7 +1,10 @@
 <?php
+/*
+20220207 fho4abcd improve html, remove old style buttons for default settings
+*/
 include("scripts_dataentry.php");
 include("toolbar_record.php");
-echo "<table border=0 width=100% bgcolor=white><td width=1% bgcolor=white> </td><td width=99% bgcolor=white>" ;
+echo "<table border=0 width=100% bgcolor=white><tr><td width=1% bgcolor=white> </td><td width=99% bgcolor=white>" ;
 if (isset($arrHttp["error"])) echo $arrHttp["error"];
 $xnr="";
 $xtl="";
@@ -31,7 +34,7 @@ if (isset($arrHttp["wks_a"])){
 		echo "&nbsp; &nbsp; ".$msgstr["fmt"].": ".$arrHttp['wks'];
 	}
 }
-echo "&nbsp <a href=JavaScript:OpenAll()>".$msgstr["expand_colapse"]."</a>";
+echo "&nbsp; <a href=JavaScript:OpenAll()>".$msgstr["expand_colapse"]."</a>";
 // Se construye el índice de acceso a la hoja de entrada
 $ixIndice="S";
 if ($ixIndice=="S"){
@@ -52,17 +55,15 @@ if ($ixIndice=="S"){
 
 // Se inicializa el arreglo con los tags a leer de la base de datos
 PrepararFormato();
-
 echo "<script>
 is_marc='$is_marc'
 </script>
 ";
 if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se está haciendo el test de la hoja de entrada o creando valores por defecto
 
-	echo "<a name=FINAL>\n";
 	$db=$arrHttp["base"];
 	if (!$ver or isset($arrHttp["capturar"])){
-		echo "<dd><table border=0 cellspacing=5 cellpadding=10 bgcolor=white>\n";
+		echo "<dd><table border=0 cellspacing=5 cellpadding=10 bgcolor=white><tr>\n";
 		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
             echo "<td align=center bgcolor=white ><a href=\"javascript:CapturarRegistro()\"><img src=img/capturar.gif border=0 alt=\"".$msgstr["m_capturar"]."\"></a></td>\n";
 		}else{
@@ -75,16 +76,10 @@ if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se está
 				}
 			}
 		}
-		echo "</table>\n";
+		echo "</tr></table>\n";
 	}
 }
-if (isset($default_values)){
-	echo "<dd><table border=0 cellspacing=5 cellpadding=10>\n";
-	echo "<td align=center ><a href=\"javascript:EnviarValoresPorDefecto()\"><img src=img/barSave.png border=0 alt=\"".$msgstr["actualizar"]."\"></a></td>\n";
-	echo "<td align=center ><a href=javascript:CancelarActualizacion()><img src=img/barCancelEdit.png border=0 alt=\"".$msgstr["cancelar"]."\"></a></td>\n";
-	echo "</table>\n";
-}
-echo "</form>\n";
+echo "</form>";// end of previous form. Not the correct place but protects next form
 echo "<form method=post name=forma2 action=fmt.php >\n";
 if (isset($arrHttp["encabezado"])) {
 	 echo "<input type=hidden name=encabezado value=s>\n";
@@ -109,16 +104,6 @@ if (isset($arrHttp["Mfn"])){
 }
 echo "<input type=hidden name=ver value=S>\n";
 
-echo "</form></td></table>
-</div></div>\n";
-
-if (isset($arrHttp["encabezado"])) include("../common/footer.php");
-
-
-
-echo "</body>\n";
-echo "</html>\n";
-
-
+echo "</form>";
 
 ?>

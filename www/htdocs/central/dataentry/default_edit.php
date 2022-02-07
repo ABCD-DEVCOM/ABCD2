@@ -1,4 +1,7 @@
 <?php
+/*
+20220206 fho4abcd removed unused (and wrong) part. Implies no back button necessary,
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -12,38 +15,9 @@ include("../lang/admin.php");
 require_once ('plantilladeingreso.php');
 
 include("../common/header.php");
+// This script runs always inside a frame: no institutional info
 
-if (isset($arrHttp["encabezado"])){
-	echo "<body>";
-	include("../common/institutional_info.php");
-	if ($arrHttp["base"]=="users") $retorno="loans";
-	if ($arrHttp["base"]=="acces") $retorno="usersadm";
-	echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">
-				";
-			if ($arrHttp["Mfn"]=="New") echo "<h3>". $msgstr["newoper"]."</h3>\n";
-			echo "</div>
-			<div class=\"actions\">
-				<a href=\"../$retorno/browse.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-	</div>
- 	<div class=\"middle form\">
-		<div class=\"formContent\">
-		";
-}else{
-	echo "
-		<div class=\"middle form\">
-			<div class=\"formContent\">
-
-		";
-	}
-
+//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 if (isset($arrHttp["wks"])){
 	$wk=explode('|',$arrHttp["wks"])  ;
 	$arrHttp["wks"]=$wk[0];
@@ -95,9 +69,6 @@ PlantillaDeIngreso();
 include("dibujarhojaentrada.php");
 include("ingresoadministrador.php");
 
-echo "</div></div>\n";
-		include("../common/footer.php");
-		die;
-
-
+//echo "</div></div>\n";
+//include("../common/footer.php");
 ?>

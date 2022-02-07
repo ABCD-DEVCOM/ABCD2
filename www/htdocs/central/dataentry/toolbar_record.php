@@ -4,6 +4,7 @@
 2021-08-29 fho4abcd Removed document import (the code made a new record)
 2021-08-29 fho4abcd Restored edit button. lineends
 2022-01-27 fho4abcd Do not show empty buttons for calls by test scripts
+2022-02-07 fho4abcd buttons for default value option+ show buttons if applicable only
 */
 
 //echo $arrHttp["ventana"];
@@ -24,8 +25,6 @@ if (!isset($fmt_test) and !isset($arrHttp["ventana"])){
 if (isset($fmt_test)) goto LAST
 
 ?>
-	<div class="middle form">
-		<div class="formContent">
 <?php if (!isset($arrHttp["ventana"])){
 ?>
 <script language ="javascript" type="text/javascript">
@@ -43,17 +42,14 @@ function scrollingDetector(){
 
 function startScrollingDetector()
 {
-    setInterval("scrollingDetector()",1000);
+    if (document.getElementById("myDiv")){
+        setInterval("scrollingDetector()",1000);
+    }
 }
-startScrollingDetector()
+setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
 
 
 </script>
-<div id="myDiv" style="position:absolute; top:0px; right: 0;" >
-
-<table class="toolbar-edit-dataentry">
-<tr>	
-<td>
 <?php
 
 //CHECK IF THERE IS A VALIDATION FORMAT
@@ -64,7 +60,14 @@ startScrollingDetector()
 	}
 	$db=$arrHttp["base"];
     if (!isset($arrHttp["encabezado"])){
-        if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N") $_SESSION["TOOLBAR_RECORD"]="N";
+        ?>
+        <div id="myDiv" style="position:absolute; top:0px; right: 0;" >
+            <table class="toolbar-edit-dataentry">
+            <tr><td>
+        <?php
+        if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N"){
+            $_SESSION["TOOLBAR_RECORD"]="N";
+        }
 	 	switch ($arrHttp["Opcion"]){
 			case "ver":
 			case "leer":
@@ -77,16 +80,12 @@ startScrollingDetector()
 					unset( $_SESSION["TOOLBAR_RECORD"]);
 					break;
 				}
-?>
-
- 
-<label class="check_sec">
-  <input type="checkbox" name="sel_mfn" id="sel_mfn" onclick="top.SeleccionarRegistro(this)" value="<?php echo $arrHttp["Mfn"];?>">
-  <span class="checkmark"></span>
-</label>
-
-
-<?php
+                ?>
+                <label class="check_sec">
+                  <input type="checkbox" name="sel_mfn" id="sel_mfn" onclick="top.SeleccionarRegistro(this)" value="<?php echo $arrHttp["Mfn"];?>">
+                  <span class="checkmark"></span>
+                </label>
+                <?php
                 if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
 					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src='../../assets/svg/catalog/ic_fluent_document_edit_24_regular.svg' alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
                 }
@@ -131,12 +130,19 @@ startScrollingDetector()
 					if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tesaurus.rel"))
 						echo "<a href=javascript:RelacionesInversas('check') title=\"".$msgstr["tes_chkinvrel"]."\"><img src=img/import.gif alt=\"".$msgstr["tes_chkinvrel"]."\"></a>\n";
 				}
-	//          echo "<input type=button name=capturar value=\"".$msgstr["m_capturar"]."\">\n";
-	//			echo "<input type=button name=capturar value=\"".$msgstr["m_z3950"]."\">\n";
+                // echo "<input type=button name=capturar value=\"".$msgstr["m_capturar"]."\">\n";
+                // echo "<input type=button name=capturar value=\"".$msgstr["m_z3950"]."\">\n";
+				break;
+            case "valdef":
+				echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["cancel"]."\"><img src='../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1><a>\n";
+                echo " &nbsp; <a href='javascript:EnviarValoresPorDefecto()' title='".$msgstr["valdef_save"]."'><img src='../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg' alt=\"".$msgstr["m_guardar"]."\"></a>\n";
 				break;
 		}
+        ?>
+            </td></tr></table>
+        </div>
+        <?php
 	}
-	echo "</td></tr></table></div>\n";
 }
     if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
     	//$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
