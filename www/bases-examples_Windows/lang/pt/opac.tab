@@ -2,7 +2,7 @@ ONLINESTATMENT=Extrato online
 OpacHttp=URL para Opac (incluir o nome da pasta)
 WEBRENOVATION=Renovações da web
 WEBRESERVATION=Reservas na web
-Web_Dir=Estrada de acesso total ao Opac
+Web_Dir=Entrada de acesso total ao Opac
 add_topar=Lembre-se de atualizar o dbn.par
 afinar=defina melhor a sua pesquisa
 al=para o
@@ -224,4 +224,3 @@ xml_step1=Armazene a estrutura genérico para apresentação MARC/XML de registros
 xml_step2=Formato (.pft) para gerar a saída MARC / XML
 y=E
 yes=sim
-
