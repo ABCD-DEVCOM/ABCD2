@@ -1,4 +1,9 @@
 <?php
+/* Modifications
+2021-02-03 guilda execute in  opac_abcd/config  the option Statment, renovation and reserve -> Web renovation.
+2021-02-03 guilda Check the url and paths are OK, $CentralHttp defined in opac_abcd/php/config_opac.php specifies the url to be used to access the ABCD central/circulation module.
+2021-02-03 guilda In this way the same scripts used in central are used in the opac
+*/
 include ("tope_config.php");
 $wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
 $wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
