@@ -11,7 +11,8 @@ include ("../../central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP D
 if (isset($_SESSION["db_path"]))
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
 else
-	if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
+	if (isset($_REQUEST["db_path"])) 
+$db_path=$_REQUEST["db_path"];
 
 // Read language files from central
 include "../../central/lang/opac.php";

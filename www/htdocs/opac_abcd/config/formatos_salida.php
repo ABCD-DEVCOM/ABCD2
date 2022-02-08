@@ -5,14 +5,15 @@ $wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_formatos#F
 $wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_formatos#Formatos_para_la_presentación_de_los_resultados";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQUEST["lang"];
+if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
 		if ($value!=""){
 			$var=trim($var);
-			if (substr($var,0,9)=="conf_base"){				$x=explode('_',$var);
+			if (substr($var,0,9)=="conf_base"){
+				$x=explode('_',$var);
 				if ($x[3]==0)
 					if (substr($value,strlen($value)-4)==".pft") $value=substr($value,0,strlen($value[0])-5) ;
 				$linea[$x[2]][$x[3]]=$value;
@@ -20,16 +21,20 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQ
 		}
 	}
 	$ix=0;
-	foreach ($linea as $value){		$ix=$ix+1;
+	foreach ($linea as $value){
+		$ix=$ix+1;
 		$salida=$value[0].'|'.$value[1];
 		if (isset($_REQUEST["consolida"])){
 			if ($ix==$_REQUEST["consolida"])
 				$salida.='|Y';
 			else
 				$salida.='|';
-		}else{			$salida.='|';		}
+		}else{
+			$salida.='|';
+		}
 		fwrite($fout,$salida."\n");
-	}
+
+	}
 
 	//fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
@@ -37,9 +42,11 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQ
     if ($_REQUEST["base"]!="META") echo " (".$_REQUEST["base"].".par)";
     echo "</h3>";
 	echo "<br><br>";
-	if ($_REQUEST["base"]=="META"){		$msg="<i>[dbn]</i>";
+	if ($_REQUEST["base"]=="META"){
+		$msg="<i>[dbn]</i>";
 	}else{
-		$msg=$_REQUEST["base"];	}
+		$msg=$_REQUEST["base"];
+	}
 	foreach ($linea as $value){
 		echo "<strong><font face=courier size=4>".$value[0].".pft=%path_database%".$msg."/pfts/%lang%/".$value[0].".pft</font></strong><br>";
     }
@@ -47,11 +54,14 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQ
     die;
 }
 
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
+if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
+	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
 	copy($archivo,$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
-	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";}
+	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
+}
 
-?>
+
+?>
 <form name=indices method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
 <div id="page">
@@ -64,14 +74,18 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){	$archivo=$
 $archivo=$db_path."opac_conf/$lang/bases.dat";
 $fp=file($archivo);
 if ($_REQUEST["base"]=="META"){
-	Entrada("MetaSearch",$msgstr["metasearch"],$lang,"formatos.dat","META");}else{
-	foreach ($fp as $value){		if (trim($value)!=""){
-			$x=explode('|',$value);
+	Entrada("MetaSearch",$msgstr["metasearch"],$lang,"formatos.dat","META");
+}else{
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+
+			$x=explode('|',$value);
 			if ($x[0]!=$_REQUEST["base"]) continue;
 			echo "<p>";
 			Entrada(trim($x[0]),trim($x[1]),$lang,trim($x[0])."_formatos.dat",$x[0]);
 			break;
-		}	}
+		}
+	}
 }
 ?>
 </div>
@@ -95,12 +109,14 @@ include ("../php/footer.php");
 
 <script>
 function Copiarde(db,db_name,lang,file){
-	ln=eval("document."+db+"Frm.lang_copy")	document.copiarde.lang_copiar.value=ln.options[ln.selectedIndex].value
+	ln=eval("document."+db+"Frm.lang_copy")
+	document.copiarde.lang_copiar.value=ln.options[ln.selectedIndex].value
 	document.copiarde.db.value=db
 	document.copiarde.archivo.value=file
 	document.copiarde.submit()
 	//ln=document.bibloFrm.getElementById("lang_copy")
-	//alert(ln.name)}
+	//alert(ln.name)
+}
 </script>
 <?php
 function CopiarDe($iD,$name,$lang,$file){
@@ -173,13 +189,16 @@ global $msgstr,$db_path;
 					$size=30;
 			 	echo "<input type=text name=conf_base_".$row."_".$ix." value=\"$var\" size=$size>";
 
-			 	if ($size==30) {			 		echo "</td><td>";
+			 	if ($size==30) {
+			 		echo "</td><td>";
 			 		echo "<input type=radio name=consolida value=$row";
 			 		if (isset($v[2]) and $v[2]=="Y") echo " checked";
 			 		echo ">\n";
 			 		echo "</td><td>";
 				}
-			 	if ($size==30 and trim($v[0])!=""){			 		echo  " &nbsp; <a href=javascript:EditarPft('".$v[0]."')>".$msgstr["edit"]."</a>";			 	}
+			 	if ($size==30 and trim($v[0])!=""){
+			 		echo  " &nbsp; <a href=javascript:EditarPft('".$v[0]."')>".$msgstr["edit"]."</a>";
+			 	}
 				echo "</td>\n";
 			}
 			echo "</tr>\n";
@@ -194,7 +213,8 @@ global $msgstr,$db_path;
 		echo "<strong>$base/$lang/formatos.dat</strong><br>";
 		echo "<table bgcolor=#cccccc cellpadding=5>\n";
 		echo "<tr><th>Pft</th><th>".$msgstr["nombre"]."</th></tr>\n";
-		foreach ($fp_campos as $value) {			$value=trim($value);
+		foreach ($fp_campos as $value) {
+			$value=trim($value);
 			if ($value!=""){
 				$v=explode('|',$value);
 				echo "<tr><td>".$v[0]."</td><td>".$v[1]."</td></tr>\n";
@@ -207,7 +227,9 @@ global $msgstr,$db_path;
 }
 ?>
 <script>
-function EditarPft(Pft){	params ="scrollbars=auto,resizable=yes,status=no,location=no,toolbar=no,menubar=no,width=800,height=600,left=0,top=0"
+function EditarPft(Pft){
+	params ="scrollbars=auto,resizable=yes,status=no,location=no,toolbar=no,menubar=no,width=800,height=600,left=0,top=0"
 	msgwin=window.open("editar_pft.php?Pft="+Pft+"&base=<?php echo $_REQUEST["base"]."&lang=".$_REQUEST["lang"]."&db_path=".$_REQUEST["db_path"];?>",'pft',params)
-	msgwin.focus()}
+	msgwin.focus()
+}
 </script>

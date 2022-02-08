@@ -167,7 +167,8 @@ if (isset($_REQUEST["db_path"])) {
 	$_SESSION["db_path"]=$_REQUEST["db_path"];
 	$_SESSION["db_path_desc"]=$_REQUEST["db_path"];
 }
-if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
+if (isset($_REQUEST["lang"])) 
+	$_SESSION["lang"]=$lang;
 
 
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>"; die;
@@ -181,7 +182,7 @@ if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
 	if (isset($_SESSION["lang_init"]))
 		$l_init=$_SESSION["lang_init"];
 	else
-		$l_init=$_REQUEST["lang"];
+		$l_init=$lang;
 	echo "<li><a href=\"index.php?lang=".$l_init."\">".$msgstr["menu_1"]."</a></li>";?>
     <li><a href="#"><?php echo $msgstr["menu_2"];?></a>
       <ul>
@@ -199,15 +200,16 @@ if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
       </ul>
     </li>
 <?php
-if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat") and file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab")){
+if (file_exists($db_path."opac_conf/".$lang."/bases.dat") and file_exists($db_path."opac_conf/".$lang."/lang.tab")){
 ?>
     <li><a href="#"><?php echo $msgstr["db_configuration"] ?></a>
 <?php
 	echo "<ul>";
 
-	if (!file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){		echo "<font color=red>".$msgstr["missing"]."opac_conf/".$_REQUEST["lang"]."/bases.dat";
+	if (!file_exists($db_path."opac_conf/".$lang."/bases.dat")){
+		echo "<font color=red>".$msgstr["missing"]."opac_conf/".$lang."/bases.dat";
 	}else{
-		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
+		$fp=file($db_path."opac_conf/".$lang."/bases.dat");
 		$cuenta=0;
 		foreach ($fp as $value){
 			if (trim($value)!=""){
@@ -322,6 +324,6 @@ if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat") and file_e
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
 <input type=hidden name=base>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"]?>>
+<input type=hidden name=lang value=<?php echo $lang;?>>
 <input type=hidden name=db_path value=<?php echo $_REQUEST["db_path"]?>>
 </form>

@@ -9,7 +9,7 @@ IF (!isset($_SESSION["db_path"])){
 	$_SESSION["db_path"]=$_REQUEST["db_path"];
 }
 $db_path=$_SESSION["db_path"];
-$lang=$_REQUEST["lang"];
+
 header('Content-Type: text/html; charset=<?php echo $charset?>');
 
 
@@ -43,14 +43,20 @@ function EnviarForma(Proceso){
 	document.opciones_menu.submit()
 }
 
-function SeleccionarBase(Base){	document.forma1.action="procesos_base.php"	document.forma1.base.value=Base
-	document.forma1.submit()}
+function SeleccionarBase(Base){
+	document.forma1.action="procesos_base.php"
+	document.forma1.base.value=Base
+	document.forma1.submit()
+}
 
-function SeleccionarProceso(Proceso,Base){	document.opciones_menu.action=Proceso
+function SeleccionarProceso(Proceso,Base){
+	document.opciones_menu.action=Proceso
 	document.opciones_menu.base.value=Base
-	document.opciones_menu.submit()}
+	document.opciones_menu.submit()
+}
 
-function ShowHide(myDIV) {  var x = document.getElementById(myDIV);
+function ShowHide(myDIV) {
+  var x = document.getElementById(myDIV);
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {

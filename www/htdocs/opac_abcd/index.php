@@ -58,12 +58,14 @@ var user = getCookie("ORBITA");
 
 </script>
 <?php
-if (!file_exists("php/opac_dbpath.dat")){?>
-   <meta http-equiv = "refresh" content = "2; url = php/index.php" />
+if (!file_exists("php/opac_dbpath.dat")){
+?>
+   <meta http-equiv = "refresh" content = "0; url = php/index.php" />
 </head>
 </html>
 <?php
-}else {?>
+}else {
+?>
 
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="" />
