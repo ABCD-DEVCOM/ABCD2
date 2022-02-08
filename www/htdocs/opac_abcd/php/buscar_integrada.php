@@ -4,7 +4,7 @@ include("config_opac.php");
 include("leer_bases.php");
 include("presentar_registros.php");
 include('navegarpaginas.php');
-include("tope.php");
+include("head.php");
 $select_formato="";
 
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
@@ -17,7 +17,8 @@ if (isset($_REQUEST["Formato"])) {
 	}
 }
 function SelectFormato($base,$db_path,$msgstr){
-	$PFT="";
+
+	$PFT="";
 	$Formato="";
 	$archivo=$base."_formatos.dat";
 	if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$archivo)){
@@ -29,7 +30,9 @@ function SelectFormato($base,$db_path,$msgstr){
 	$select_formato=$msgstr["select_formato"]." <select name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
 	$primero="";
 	$encontrado="";
-	foreach ($fp as $linea){		if (trim($linea!="")){			$f=explode('|',$linea);
+	foreach ($fp as $linea){
+		if (trim($linea!="")){
+			$f=explode('|',$linea);
 			$f[0]=trim($f[0]);
 			if (substr($f[0],strlen($f[0])-4)==".pft") $f[0]=substr($f[0],0,strlen($f[0])-4);
 			$linea=$f[0].'|'.$f[1];
@@ -178,8 +181,11 @@ switch ($_REQUEST["Opcion"]){
 				$fav=file($db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab");
 			$ix=-1;
 			$exp_bb="";
-			foreach ($fav as $value){				$value=trim($value);
-				if ($value!=""){					$ix=$ix+1;					$v=explode('|',$value) ;
+			foreach ($fav as $value){
+				$value=trim($value);
+				if ($value!=""){
+					$ix=$ix+1;
+					$v=explode('|',$value) ;
 					$OP[$ix]=" ";
 					$CA[$ix]=$v[2];
 					if ($_REQUEST["prefijo"]==$v[2])
@@ -193,7 +199,8 @@ switch ($_REQUEST["Opcion"]){
 	          			$exp_bb=$EX[$ix];
 	          		else
 	          			$exp_bb.='~~~'.$EX[$ix];
-				}			}
+				}
+			}
 			$_REQUEST["Sub_Expresion"]=$exp_bb;
 			/*
 			if (isset($_REQUEST["Seleccionados"])){
@@ -356,7 +363,8 @@ foreach ($bd_list as $base=>$value){
 	$primeravez="S";
 	$total=0;
     $ix=$ix+1;
-	foreach ($resultado as $value_res) {		$total="";
+	foreach ($resultado as $value_res) {
+		$total="";
 		$value_res=trim($value_res);
 		if ($status=="Y"){
 			if (substr($value_res,0,7)=='MAXMFN:'){
@@ -374,9 +382,9 @@ foreach ($bd_list as $base=>$value){
 			if ($integrada=="")
 				$integrada=$base.'$$'.$total.'$$'.urlencode($_REQUEST["Expresion"]);
 			else
-				$integrada.='||'.$base.'$$'.$total.'$$'.urlencode($_REQUEST["Expresion"]);
+			$integrada.='||'.$base.'$$'.$total.'$$'.urlencode($_REQUEST["Expresion"]);
 			$total_base_seq[$base]=$ix;
-			$total_registros=$total_registros+$total;
+			$total_registros=(int)$total_registros+(int)$total;
 		}
    		$Expresion_base_seq[$base]=urlencode($_REQUEST["Expresion"]);
 
@@ -384,13 +392,14 @@ foreach ($bd_list as $base=>$value){
 
 }
 
-if (!isset($_REQUEST["mostrar_exp"])){	if ($Expresion!='$'){
-		echo "<div style=\"border:1px solid #CCCCCC; border-radius:15px;margin-top:10px; padding:5px 5px 5px 10px;\">";
+if (!isset($_REQUEST["mostrar_exp"])){
+	if ($Expresion!='$'){
+		echo "<div style=\"border:1px solid #CCCCCC; border-radius:3px;margin-top:10px; padding:5px 5px 5px 10px;\">";
 		echo "<strong>".$msgstr["su_consulta"]."</strong>";
 		echo " &nbsp; ";
 		echo str_replace('"','',PresentarExpresion($base));
 		if (!isset($_REQUEST["indice_base"]) or $_REQUEST["indice_base"]==0 or $_REQUEST["indice_base"]==1 ){
-        	echo "<br><div><a href=\"javascript:document.buscar.action='avanzada.php';document.buscar.submit();\"><img src=../images/filter.gif height=20px> ".$msgstr["afinar"]."</a>";
+        	echo "<br><div><a href=\"javascript:document.buscar.action='avanzada.php';document.buscar.submit();\"><i class=\"fa fa-filter\"></i> ".$msgstr["afinar"]."</a>";
 			if (!isset($_REQUEST["indice_base"]) or $_REQUEST["indice_base"]==1){
 				echo "&nbsp; <a href=\"javascript:document.buscar.indice_base.value=0;document.buscar.integrada.value='';document.buscar.coleccion.value='';document.buscar.submit();\">&nbsp; &nbsp; <img src=../images/expansion.png height=20px> ".$msgstr["buscar_en_todos"]."</a>";
 			}
@@ -406,18 +415,23 @@ if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQU
 	$int_tot=explode('||',$_REQUEST["integrada"]);
 	unset($total_base);
 	$total_registros=0;
-	foreach ($int_tot as $linea){		$l=explode('$$',$linea);
+	foreach ($int_tot as $linea){
+		$l=explode('$$',$linea);
 		$total_base[$l[0]]=$l[1];
 		$total_base_seq[$l[0]]=$l[1];
-		$total_registros=$total_registros+$l[1];
+		$total_registros=(int)$total_registros+(int)$l[1];
 		$Expresion_base_seq[$l[0]]=urlencode($_REQUEST["Expresion"]);
-	}}else{	$_REQUEST["integrada"]=$integrada;}
+
+	}
+}else{
+	$_REQUEST["integrada"]=$integrada;
+}
 $_REQUEST["integrada"]=urlencode($_REQUEST["integrada"]);
 $ix=0;
 $contador=0;
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 if (isset($total_base) and count($total_base)>0){
-	echo "<div style='border:1px solid #CCCCCC; border-radius:15px;margin-top:10px ; padding:5px 5px 5px 10px'><span class=tituloBase>".$msgstr["total_recup"].": $total_registros</span>";
+	echo "<div style='border:1px solid #CCCCCC; border-radius:3px;margin-top:10px ; padding:5px 5px 5px 10px'><span class=tituloBase>".$msgstr["total_recup"].": $total_registros</span>";
 	if (count($total_base)>1){
 		foreach ($total_base as $base=>$total){
 			echo "<br><a href=\"javascript:ProximaBase('$base')\">";
@@ -436,11 +450,18 @@ echo "<form name=continuar action=buscar_integrada.php method=post>\n";
 echo "<input type=hidden name=integrada value=\"$integrada\">";
 echo "<input type=hidden name=existencias>\n";
 echo "<input type=hidden name=facetas value=\"";
-if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {	echo $_REQUEST["facetas"];
+if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
+	echo $_REQUEST["facetas"];
 	$Expr_facetas=$_REQUEST["facetas"];
-}else{	$Expr_facetas="";}
+}else{
+	$Expr_facetas="";
+}
 echo "\">\n";
-if (isset($total_base) and count($total_base)>0 ){	if (isset($total_fac[$base])){		foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";	}	if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
+if (isset($total_base) and count($total_base)>0 ){
+	if (isset($total_fac[$base])){
+		foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";
+	}
+	if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
 		$base=$_REQUEST["base"];
 	else
 		$base=$primera_base;
@@ -471,19 +492,20 @@ if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores val
 if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
 echo "</form>\n";
 if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="S"){
-	echo "<br><br><center><div style=\"margin-top:0px; width:50%; margin-bottom:2px;margin-right:2px;margin-left:2px; border:2px solid #C4D1C0; vertical-align:top;text-align:left;padding:10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius:10px;\">";
+	echo "<br><br><center><div style=\"margin-top:0px; width:50%; margin-bottom:2px;margin-right:2px;margin-left:2px; border:2px solid #C4D1C0; vertical-align:top;text-align:left;padding:10px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius:3px;\">";
 	echo "<table align=center width=100% >";
 	$ix=-1;
 	$total_general=0;
 	foreach ($total_base as $base=>$total){
 		$ix=$ix+1;
-		$total_general=$total_general+$total;
+		$total_general=(int)$total_general+(int)$total;
+		
 		echo "<tr height=30px width=300px><td><a href=\"javascript:ProximaBase('".$base."')\">".$bd_list[$base]["titulo"]."</a></td><td align=right><a href=\"javascript:ProximaBase('".$base."')\">".$total."</a></td>";
 
 		echo "</tr>\n";
 	}
 	echo "<tr><td align=right><strong>".$msgstr["total_registros"]."</td>";
-	echo "<td align=right>$total_general</td></tr>";
+	echo "<td align=right>".$total_general."</td></tr>";
 	echo "</table>";
 	echo "</div>";
 
@@ -511,7 +533,8 @@ echo "</form>";
 $facetas="S";
 //echo $_REQUEST["base"];
 if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR $_REQUEST["prefijoindice"]=="")){
-	$archivo="";	if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat")){
+	$archivo="";
+	if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat")){
 		$archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat";
 	}else{
 		if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/facetas.dat"))
@@ -528,14 +551,19 @@ if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR
 <div id="SidenavFacetas" class="sidenav-facetas">
 <?php
   $fp=file($archivo);
-  foreach ($fp as $value){  	$value=trim($value);  	if ($value!=""){  		$x=explode('|',$value);
+  foreach ($fp as $value){
+  	$value=trim($value);
+  	if ($value!=""){
+  		$x=explode('|',$value);
   		echo "<a href='javascript:Facetas(\"$value\")'>".$x[0];
   		$IsisScript="opac/buscar.xis";
   		if ($Expresion=='$')
   			$ex=$x[1];
   		else
   			$ex=$x[1]." and " .$busqueda;
-  		if (isset($Expresion_col) and $Expresion_col!=""){  			$ex.=" and ".$Expresion_col;  		}
+  		if (isset($Expresion_col) and $Expresion_col!=""){
+  			$ex.=" and ".$Expresion_col;
+  		}
   		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
   			$bb=$_REQUEST["base"];
         else
@@ -543,15 +571,21 @@ if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR
        	$query = "&base=$bb&cipar=$db_path"."par/$bb".".par&Expresion=".urlencode($ex)."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
 		$resultado=wxisLlamar($bb,$query,$xWxis.$IsisScript);
 		$primeravez="S";
-		foreach ($resultado as $value) {			$value=trim($value);
-			if (trim($value)!=""){				if (substr($value,0,8)=="[TOTAL:]"){
+		foreach ($resultado as $value) {
+			$value=trim($value);
+			if (trim($value)!=""){
+				if (substr($value,0,8)=="[TOTAL:]"){
 					$primeravez="N";
 					echo " (". substr($value,8).")";
 					break;
-				}			}		}
+				}
+			}
+		}
 		if ($primeravez=="S") echo " (0)";
 		echo "</a>";
-  	}  }
+
+  	}
+  }
 ?>
 
   <br>

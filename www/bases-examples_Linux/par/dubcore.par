@@ -1,5 +1,5 @@
 dubcore.*=%path_database%dubcore/data/dubcore.*
-htmlgizmo.*=/var/opt/ABCD/bases/dubcore/data/htmlgizmo.*
+htmlgizmo.*=%path_database%dubcore/data/htmlgizmo.*
 dubcore.pft=%path_database%dubcore/pfts/en/dubcore.pft
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
@@ -8,3 +8,5 @@ STW=%path_database%dubcore/data/dubcore.stw
 isisac.tab=%path_database%isisactab_utf8.tab
 isisuc.tab=%path_database%isisuctab_utf8.tab
 ci_tempdir=%path_database%wrk
+autoridades_opac.pft=%path_database%opac/autoridades_opac.pft
+select_record.pft=%path_database%opac/select_record.pft

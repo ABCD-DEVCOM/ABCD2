@@ -1,9 +1,10 @@
 marc.*=%path_database%marc/data/marc.*
+marc.pft=%path_database%marc/pfts/%lang%/marc.pft
 prologoact.pft=%path_database%www/prologoact.pft
 prologo.pft=%path_database%www/prologo.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
 epilogo.pft=%path_database%www/epilogo.pft
-autoridades.pft=%path_database%marc/pfts/pt/autoridades.pft 
+autoridades.pft=%path_database%marc/pfts/pt/autoridades.pft
 isisac.tab=%path_database%marc/data/isisac.tab
 isisuc.tab=%path_database%marc/data/isisuc.tab
 STW=%path_database%marc/data/marc.stw
@@ -13,4 +14,5 @@ inven.pft=%path_database%copies/pfts/pt/inven.pft
 loanobject.*=%path_database%loanobjects/data/loanobjects.*
 loan.pft=%path_database%loanobjects/pfts/pt/loan.pft
 trans.*=%path_database%trans/data/trans.*
-
+autoridades_opac.pft=%path_database%opac/autoridades_opac.pft
+select_record.pft=%path_database%opac/select_record.pft

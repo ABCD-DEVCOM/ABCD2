@@ -40,7 +40,7 @@ else
 	$path=$db_path;
 
 // Process the language specific file
-$a=$path."lang/".$_SESSION["lang"]."/$msg_tab";
+$a=$path."lang/".$lang."/$msg_tab";
 if (file_exists($a)) {
 	$fp=file($a);
 	foreach($fp as $var=>$value){

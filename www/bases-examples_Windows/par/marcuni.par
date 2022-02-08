@@ -1,5 +1,5 @@
 marcuni.*=%path_database%marcuni/data/marcuni.*
-marcuni.pft=%path_database%marcuni/pfts/%lang%/marcuni.pft
+marcuni.pft=%path_database%marc/pfts/%lang%/marc.pft
 prologoact.pft=%path_database%www/prologoact.pft
 prologo.pft=%path_database%www/prologo.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
@@ -14,4 +14,5 @@ inven.pft=%path_database%copies/pfts/pt/inven.pft
 loanobject.*=%path_database%loanobjects/data/loanobjects.*
 loan.pft=%path_database%loanobjects/pfts/pt/loan.pft
 trans.*=%path_database%trans/data/trans.*
-
+autoridades_opac.pft=%path_database%opac/autoridades_opac.pft
+select_record.pft=%path_database%opac/select_record.pft

@@ -7,7 +7,7 @@ include("leer_bases.php");
 $indice_alfa="N";
 //$sidebar="N";
 $ActualDir=getcwd();
-include("tope.php");
+include("head.php");
 $Web_Dir=$CentralPath;
 $desde_web="Y";
 $desde_opac="Y";

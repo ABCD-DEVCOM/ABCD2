@@ -1,6 +1,6 @@
 <?php
 $path="../";
-include("tope.php");?>
+include("head.php");?>
 
 <?php
 $fp=file($path."data/bases.dat");

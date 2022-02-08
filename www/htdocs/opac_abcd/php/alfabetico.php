@@ -3,7 +3,7 @@
 $path="../";
 include("config_opac.php");
 include("leer_bases.php");
-include("tope.php");
+include("head.php");
 if (!isset($_REQUEST["prefijoindice"]) or $_REQUEST["prefijoindice"]=="") $_REQUEST["prefijoindice"]=$_REQUEST["prefijo"];
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 $index_alfa=array();

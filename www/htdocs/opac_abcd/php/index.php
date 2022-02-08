@@ -8,7 +8,7 @@ if (file_exists("opac_dbpath.dat")){
 			$l=explode('|',$linea);
 			if (isset($l[2]) and $l[2]!=""){
 				if ($_REQUEST["db_path"]==$l[0]){
-					$_REQUEST["lang"]=$l[2];
+					$lang=$l[2];
 				}
 			}
 		}
@@ -18,7 +18,7 @@ include("config_opac.php");
 $path="../";
 include("leer_bases.php");
 $primeraPagina="S";
-include("tope.php");
+include("head.php");
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
 /*
 function LeerRegistro($Expresion,$base){
@@ -54,16 +54,24 @@ document.cookie =  'ORBITA=;';
 </script>
 <?php
 }
-if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/sitio.info")){	$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/sitio.info");
-	foreach ($fp as $value){		$value=trim($value);		if ($value!=""){
-			if (substr($value,0,6)=="[LINK]"){				$home_link=substr($value,6);
+if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
+	$fp=file($db_path."opac_conf/".$lang."/sitio.info");
+	foreach ($fp as $value){
+		$value=trim($value);
+		if ($value!=""){
+			if (substr($value,0,6)=="[LINK]"){
+				$home_link=substr($value,6);
 				$hl=explode('|||',$home_link);
 				$home_link=$hl[0];
 				if (isset($hl[1]))
 					$height_link=$hl[1];
 				else
-					$height_link=800;				echo "<iframe frameborder=\"0\"  width=100% height=\"".$height_link  ."\"src=\"".$home_link."\")></iframe>";
-	            break;			}else{				if (substr($value,0,6)=="[TEXT]"){                    $archivo=trim($db_path."opac_conf/".$_REQUEST["lang"]."/".trim(substr($value,6)));
+					$height_link=800;
+				echo "<iframe frameborder=\"0\"  width=100% height=\"".$height_link  ."\"src=\"".$home_link."\")></iframe>";
+	            break;
+			}else{
+				if (substr($value,0,6)=="[TEXT]"){
+                    $archivo=trim($db_path."opac_conf/".$lang."/".trim(substr($value,6)));
 					if (file_exists($archivo)){
 						$fp_h=file($archivo);
 						foreach ($fp_h as $linea){
@@ -71,7 +79,10 @@ if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/sitio.info")){	$fp=fi
 						}
 					}
 				}
-			}		}	}
+			}
+		}
+	}
+
 }
 ?>
 				</div>

@@ -1,7 +1,7 @@
 <?php
 // Búsqueda libre
 $path="../";
-include("tope.php");
+include("head.php");
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 $OS="";
