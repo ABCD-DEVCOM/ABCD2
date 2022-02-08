@@ -7,28 +7,12 @@ error_reporting(E_ALL);
 //CHANGE THIS ////
 include ("../../central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
-//LOS SIGUIENTES PARÁMETROS ESTÁN DEFINIDOS EN EL CONFIG.PHP DE LA VERSIÓN 2.2. SE INCLUYEN AQUÍ PARA
-//COMPATIBILIDAD CON LA VERSION 1.6
-if (!isset($ABCD_scripts_path))
-	$ABCD_scripts_path="/abcd2.2/www/htdocs/";   //path donde están instalados los scripts de abcd
-if (!isset($server_url)){
-	$server_url="http://localhost:9091";       //El url qaue se usa para acceder a ABCD
-	$OpacHttp=$server_url;
-}
-
-if (!isset($_REQUEST["lang"]))
-	$_REQUEST["lang"]=$lang;
-else
-	$lang=$_REQUEST["lang"];
 
 if (isset($_SESSION["db_path"]))
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
 else
 	if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
-if (isset($_REQUEST["lang"])){
-	 $_SESSION["lang"]= $_REQUEST["lang"];
-	 $lang=$_REQUEST["lang"];
-}
+
 // Read language files from central
 include "../../central/lang/opac.php";
 
@@ -43,8 +27,8 @@ $styles="";
 $logo="../images/circulos.png";
 $link_logo="http://opac.abcdonline.info";
 $TituloPagina="ABCD - OPAC";
-$TituloEncabezado=" OPAC de ABCD";
-$footer='&nbsp; &copy; 2019, - Consulta bases de datos </p>';
+$TituloEncabezado=" OPAC ABCD";
+$footer='&nbsp; &copy; 2022, - Consulta bases de datos </p>';
 $multiplesBases="S";   //no se presenta acceso para cada una de las bases de datos
 $afinarBusqueda="S";   //permite afinar la expresion de búsqueda
 $IndicePorColeccion="N";  //Se mantienen indices separados para los términos de las colecciones

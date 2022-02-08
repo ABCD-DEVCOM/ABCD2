@@ -21,7 +21,7 @@ if (file_exists($a)) {
 	}
 }
 
-$a=$path."/lang/".$_REQUEST["lang"]."/opac.tab";
+$a=$path."/lang/".$lang."/opac.tab";
 if (file_exists($a)) {
 	$fp=file($a);
 	foreach($fp as $var=>$value){

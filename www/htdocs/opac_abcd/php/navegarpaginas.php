@@ -43,43 +43,69 @@ global $bd_list,$multiplesBases,$base,$msgstr;
 		echo  $bd_list[$base]["descripcion"]."<br>";
 		echo $msgstr["pagina"]." ".$_REQUEST["pagina"]." ".$msgstr["de"]." $paginas <br>";
 		echo $select_formato."<br>";
-		echo "<ul class=pagination>\n";
-		echo "<li><a href=javascript:ProximaPagina(1,1)><img src=../images/first.gif valign=middle alt='".$msgstr["primera_pag"]."' title='".$msgstr["primera_pag"]."'></a></li>\n";
-        echo "<li><a href=javascript:ProximaPagina($anterior,$pg)><img src=../images/left.gif valign=middle alt='".$msgstr["anterior"]."' title='".$msgstr["anterior"]."'></a></li>\n";
+?>
 
-  		if ($paginas>1){
-			while ($cuenta_p<20){
-				$cuenta_p=$cuenta_p+1;
-				$pg=($pagina-1)*25+1;
-				if ($pagina==$_REQUEST["pagina"])
-					$active=" class=active";
-				else
-					$active="";
+			<ul class=pagination>
+				<li><a href="javascript:ProximaPagina(1,1)">
+					<i class="fas fa-angle-double-left" title="<?php echo $msgstr["primera_pag"];?>" alt="<?php echo $msgstr["primera_pag"];?>"></i>
+					</a>
+				</li>
+        		<li>
+        			<a href=javascript:ProximaPagina(<?php echo $anterior;?>,<?php echo $pg;?>)>
+        				<i class="fas fa-chevron-left" title="<?php echo $$msgstr["anterior"];?>" alt="<?php echo $$msgstr["anterior"];?>"></i>
+        			</a>
+        		</li>
 
-				echo "<li><a $active href=javascript:ProximaPagina($pagina,$pg)>".$pagina."</li>";
-				$pagina=$pagina+1;
-				if ($pagina>$paginas) break;
-			}
-        }
 
-        $pagina=$_REQUEST["pagina"]+1;
-        if ($pagina>$paginas) $pagina=$paginas;
-        $pg=($pagina-1)*25+1;
-        echo "<li><a href=javascript:ProximaPagina($pagina,$pg)><img src=../images/right.gif valign=middle alt='".$msgstr["proximo"]."' title='".$msgstr["proximo"]."'></a></li>\n";
-		$pg=$totalRegistros-$count+1;
-		while ($pg<=0) $pg=$pg+1;
-		echo "<li><a href=javascript:ProximaPagina($paginas,$pg)><img src=../images/last.gif valign=middle alt='".$msgstr["ultima_pag"]."' title='".$msgstr["ultima_pag"]."'></a></li>\n";
-		echo "</ul>";
 
-		echo "<input type=hidden name=count value=".$_REQUEST["count"]." size=4>";
+<?php
+if ($paginas>1){
+while ($cuenta_p<20){
+	$cuenta_p=$cuenta_p+1;
+	$pg=($pagina-1)*25+1;
+	if ($pagina==$_REQUEST["pagina"])
+		$active=" class=active";
+	else
+		$active="";
 
+	echo "<li><a $active href=javascript:ProximaPagina($pagina,$pg)>".$pagina."</li>";
+	$pagina=$pagina+1;
+	if ($pagina>$paginas) break;
+}
+}
+
+$pagina=$_REQUEST["pagina"]+1;
+if ($pagina>$paginas) $pagina=$paginas;
+$pg=($pagina-1)*25+1;?>
+<li><a href="javascript:ProximaPagina(<?php echo $pagina; ?>,<?php echo $pg;?>)"><i class="fas fa-chevron-right" title="<?php echo $msgstr["proximo"];?>" alt="<?php echo $msgstr["proximo"];?>"></i></a></li>
+
+<?php
+$pg=$totalRegistros-$count+1;
+while ($pg<=0) $pg=$pg+1;
+?>
+<li>
+<a href=javascript:ProximaPagina(<?php echo $paginas;?>,<?php echo $pg;?>)>
+	<i class="fas fa-angle-double-right" title="<?php echo $msgstr["ultima_pag"];?>" alt="<?php echo $msgstr["ultima_pag"];?>"></i>				
+</a>
+</li>
+</ul>
+
+<input type="hidden" name="count" value="<?php echo $_REQUEST["count"];?>" size="4">
+
+
+
+<?php
 
        // if ($multiplesBases=="N"){
        // 	$paginas=1;
-       // 	$pg=1;       // 	echo "<p><br><input type=button id=search-submit value=\"Volver al inicio\" onclick=javascript:document.continuar.base.value='biblo';ProximaPagina($paginas,$pg)>";       // }
+       // 	$pg=1;
+       // 	echo "<p><br><input type=button id=search-submit value=\"Volver al inicio\" onclick=javascript:document.continuar.base.value='biblo';ProximaPagina($paginas,$pg)>";
+       // }
 		echo "\n</div>\n";
 		//echo "&nbsp; &nbsp;<input type=submit value='Continuar'>";
-	}else{		echo $select_formato."<br>";	}
+	}else{
+		echo $select_formato."<br>";
+	}
 
 	if (isset($_REQUEST["prefijoindice"])) {
 		echo "<p><br><input type=button id=search-submit value=\" &nbsp;".$msgstr["index_back"]."&nbsp; \" onclick=javascript:document.indice.submit()>\n";

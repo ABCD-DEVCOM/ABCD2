@@ -13,6 +13,7 @@
 2021-11-23 fho4abcd: Allow trailing backslash for $db_path
 2021-11-28 fho4abcd: Ensure trailing slash in ABCD_path
 2022-01-29 rogercgui Added custom abcd.def parameters.
+2022-02-08 rogercgui Added $_REQUEST["lang"] check to decrease the amount of $_REQUEST through the system. Languages should be triggered by the variable $lang
 */
 
 ini_set('error_reporting', E_ALL);
@@ -136,12 +137,13 @@ if (isset($def["INSTITUTION_NAME"])){
 
 //Sets the default system language, if absent the system detects the browser language, if none of the previous options are valid, the default language is English.
 
-if (isset($def["DEFAULT_LANG"])){
+if (isset($_REQUEST["lang"])){
+	 $lang= $_REQUEST["lang"];
+} elseif (isset($def["DEFAULT_LANG"])){
 	$lang=$def["DEFAULT_LANG"];
 } else {
 	$lang='en';
 }
-
 // Default langue for the databases definition
 if (isset($def["DEFAULT_DBLANG"])){
 	$lang_db=$def["DEFAULT_DBLANG"];

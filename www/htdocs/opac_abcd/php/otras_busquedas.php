@@ -1,13 +1,15 @@
 <?php
 include("config.php");
 include("leer_bases.php");
-include("tope.php");
+include("head.php");
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";
 if (isset($_REQUEST["base"])){
 	 echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"]."</span>";
 	 echo "<br>".$bd_list[$_REQUEST["base"]]["descripcion"]."<br>";
 	 $base=$_REQUEST["base"];
-}else{	$base="";}
+}else{
+	$base="";
+}
 unset($_bd_list);
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (!isset($_REQUEST["desde"])) $_REQUEST["desde"]=1;
@@ -54,5 +56,6 @@ para presentar el índice solicitado y a partir del mismo proceder a la recuperac
 <?php
 include("footer.php");
 
-
+
+
 ?>

@@ -3,7 +3,7 @@
 include("config.php");
 include("leer_bases.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>".urldecode($value)."<br>";
-include("tope.php");
+include("head.php");
 echo "<div id=\"search\" >";
 echo "<br><br><br>";
 echo "<input type=button Value='Regresar' onclick=javascript:history.back()><br>";

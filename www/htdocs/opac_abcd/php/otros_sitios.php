@@ -6,7 +6,7 @@ include("leer_bases.php");
 //if   (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" ) unset ($_REQUEST["base"]);
 $mostrar_libre="N";
 $titulo_pagina="N";
-include("tope.php");
+include("head.php");
 $value=file_get_contents($_REQUEST["sitio"]);
 echo $value;
 include("footer.php");

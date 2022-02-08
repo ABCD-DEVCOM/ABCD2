@@ -3,7 +3,7 @@ $mostrar_libre="N";
 $_REQUEST["submenu"]="N";
 include("config_opac.php");
 include("leer_bases.php");
-include("tope.php");
+include("head.php");
 
 include("Mobile_Detect.php");
 $detect = new Mobile_Detect();
@@ -58,12 +58,16 @@ document.onkeypress =
 <?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"]);
 	echo "</font><br>";
 //}
-if ($_REQUEST["Opcion"]=="libre"){?>           <font class=titulo2><?php echo $msgstr["unir_con"] ?><br>
+if ($_REQUEST["Opcion"]=="libre"){
+?>
+           <font class=titulo2><?php echo $msgstr["unir_con"] ?><br>
            <input type=radio value=and name=alcance id=and <?php if ($_REQUEST["alcance"]=="and") echo "checked"?>><font color=darkred><?php echo $msgstr["and"]?></font><br>
            <input type=radio value=or name=alcance id=or <?php if ($_REQUEST["alcance"]=="or") echo "checked"?>><font color=darkred><?php echo $msgstr["or"]?></font>
 			<br>
 
-<?php }else{	echo "<input type=hidden name=alcance>\n";}
+<?php }else{
+	echo "<input type=hidden name=alcance>\n";
+}
 
 echo "<p>";
 	if (isset($_REQUEST["Sub_Expresion"])){
@@ -74,9 +78,11 @@ echo "<p>";
 if ($detect->isMobile()) {
 	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <img src=../images/buttonm.gif> ".$msgstr["remover_sel"];
  	include("presentar_diccionario_movil.php");
-}else{	echo "<p>".$msgstr["dbl_clic"];
+}else{
+	echo "<p>".$msgstr["dbl_clic"];
 	include("presentar_diccionario_nomovil.php");
-}
+
+}
 ?>
 
 <?php
@@ -132,9 +138,11 @@ if (isset($_REQUEST["lang"]))
 
 <?php
 echo "<form name=regresar method=post action=avanzada.php>\n";
-foreach ($_REQUEST as $var=>$value){	echo "<input type=hidden name=$var value=";
+foreach ($_REQUEST as $var=>$value){
+	echo "<input type=hidden name=$var value=";
 	if (trim($value)!='""') echo urlencode($value);
-	echo ">\n";}
+	echo ">\n";
+}
 echo "</form>";
  include("footer.php");
 echo "\n<script>Opcion='";

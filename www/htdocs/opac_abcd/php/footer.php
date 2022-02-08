@@ -7,8 +7,10 @@
 
 <!--ESTO SE CAMBIO PARA PODER INSERTAR EL NUEVO FOOTER -->
 <?php
-if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/footer.info")){	$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/footer.info");
-	foreach ($fp as $value){		$value=trim($value);
+if (file_exists($db_path."opac_conf/".$lang."/footer.info")){
+	$fp=file($db_path."opac_conf/".$lang."/footer.info");
+	foreach ($fp as $value){
+		$value=trim($value);
 		if ($value!=""){
 			if (substr($value,0,6)=="[LINK]") {
 				$home_link=substr($value,6);
@@ -20,24 +22,32 @@ if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/footer.info")){	$fp=f
 					$height_link=800;
 				$footer="LINK";
 			}
-			if (substr($value,0,6)=="[TEXT]") {				$home_text=substr($value,6);
-				$footer="TEXT";			}
+			if (substr($value,0,6)=="[TEXT]") {
+				$home_text=substr($value,6);
+				$footer="TEXT";
+			}
 
-		}	}
-	switch($footer){		case "LINK":?>
+		}
+	}
+	switch($footer){
+		case "LINK":
+
+?>
 			<div>
 			<iframe src="<?php echo $home_link?>" frameborder="0" scrolling="no"  width=100% height="<?php echo $height_link?>" />
 			</iframe>
 			</div>
 <?php		break;
 		case "TEXT":
-			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$home_text");
+			$fp=file($db_path."opac_conf/".$lang."/$home_text");
 			foreach ($fp as $v) echo $v;
 			break;
 	}
-}else{	echo "<div id=\"footer\">\n";
+}else{
+	echo "<div id=\"footer\">\n";
 	echo $footer;
-	echo "</div>\n";}
+	echo "</div>\n";
+}
 ?>
 <!-- end #footer -->
 </body>
@@ -113,8 +123,8 @@ if (isset($_REQUEST["cipar"]))
 
 if (isset($_REQUEST["Pft"]))
 	echo "<input type=hidden name=Pft value=\"".$_REQUEST["Pft"]."\">\n";
-if (isset($_REQUEST["lang"]))
-	echo "<input type=hidden name=lang value=\"".$_REQUEST["lang"]."\">\n";
+if (isset($lang))
+	echo "<input type=hidden name=lang value=\"".$lang."\">\n";
 ?>
 </form>
 <?php
@@ -130,7 +140,11 @@ if (isset($_REQUEST["prefijo"])){
 		echo str_replace($_REQUEST["prefijo"],"",$_REQUEST["letra"]);
 	}
 	echo "\">\n";
-	if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){	}else{		if (isset($_REQUEST["base"]))     echo "<input type=hidden name= value=base".$_REQUEST["base"].">\n";	}
+	if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
+
+	}else{
+		if (isset($_REQUEST["base"]))     echo "<input type=hidden name= value=base".$_REQUEST["base"].">\n";
+	}
 
 	if (isset($_REQUEST["coleccion"])) echo "<input type=hidden name=coleccion value=\"".$_REQUEST["coleccion"]."\">\n";
 	if (isset($_REQUEST["alcance"])) echo "<input type=hidden name=alcance value=".$_REQUEST["alcance"].">\n";
@@ -171,7 +185,7 @@ echo "<input type=hidden name=Formato value=\"";
 if (isset($_REQUEST["Formato"])) echo $_REQUEST["Formato"];
 echo "\">\n";
 echo "<input type=hidden name=lang value=\"";
-if (isset($_REQUEST["lang"])) echo $_REQUEST["lang"];
+if (isset($lang)) echo $lang;
 echo "\">\n";
 ?>
 </form>
@@ -203,23 +217,25 @@ if (isset($_REQUEST["indice_base"])) echo "<input type=hidden name=indice_base v
 echo "<input type=hidden name=Formato value=\"";
 if (isset($_REQUEST["Formato"])) echo $_REQUEST["Formato"];
 echo "\">\n";
-if (isset($_REQUEST["lang"]))
-		echo "<input type=hidden name=lang value=\"".$_REQUEST["lang"]."\">\n";
+if (isset($lang))
+		echo "<input type=hidden name=lang value=\"".$lang."\">\n";
 ?>
 </form>
 <form name=changelanguage method=post action=index.php>
 
 <?php
-foreach ($_REQUEST as $key=>$value){	echo "<input type=hidden name=$key value='$value'>\n";}
-if (!isset($_REQUEST["lang"]))
+foreach ($_REQUEST as $key=>$value){
+	echo "<input type=hidden name=$key value='$value'>\n";
+}
+if (!isset($lang))
 	echo "<input type=hidden name=lang value=''>\n";
 
 ?>
 </form>
 
 <form name=inicio_menu method=post action=index.php>
-<?php if (isset($_REQUEST["lang"]))
-		echo "<input type=hidden name=lang value=\"".$_REQUEST["lang"]."\">\n";
+<?php if (isset($lang))
+		echo "<input type=hidden name=lang value=\"".$lang."\">\n";
 	if (isset($_REQUEST["db_path"]))
 		echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
 	if (isset($_REQUEST["modo"]))

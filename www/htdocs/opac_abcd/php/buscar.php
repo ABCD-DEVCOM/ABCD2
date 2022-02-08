@@ -2,10 +2,12 @@
 include("config_opac.php");
 $path="../";
 include("leer_bases.php");
-include("tope.php");
+include("head.php");
 include("presentar_registros.php");
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-if (!isset($_REQUEST["indice_base"])){	include ("submenu_bases.php");}else{
+if (!isset($_REQUEST["indice_base"])){
+	include ("submenu_bases.php");
+}else{
 ?>
 <div id="menu">
 		<a href="../index.php"><div class=inicio>Inicio</div></a>
@@ -45,14 +47,19 @@ function PrepararBusqueda(){
 			$formula=str_replace (" and ", $xand, $formula);
 			$f=explode("¬or¬",$formula);
 			$formula="";
-			foreach ($f as $value){				$value=trim($value);
-				if ($value!=""){					if (substr($value,0,1)=="\"")
+			foreach ($f as $value){
+				$value=trim($value);
+				if ($value!=""){
+					if (substr($value,0,1)=="\"")
 						$value=substr($value,0,1).$id.substr($value,1);
-					else						$value=$id.$value;
+					else
+						$value=$id.$value;
 					if ($formula=="")
 						$formula=$value;
 					else
-						$formula=$formula."¬or¬".$value;				}			}
+						$formula=$formula."¬or¬".$value;
+				}
+			}
 			/*$f=explode("¬and¬",$formula);
 			$formula="";
 			foreach ($f as $value){
@@ -101,7 +108,9 @@ function PrepararBusqueda(){
 	}
 	$formulabusqueda="";
 	for ($i=0;$i<count($expresion);$i++){
-		if (trim($expresion[$i])!=""){			//echo $expresion[$i].$operadores[$i]."<br>";			if ($formulabusqueda!=""){
+		if (trim($expresion[$i])!=""){
+			//echo $expresion[$i].$operadores[$i]."<br>";
+			if ($formulabusqueda!=""){
 				$formulabusqueda=$formulabusqueda.$OPER." (".$expresion[$i].")";
 				$OPER=$operadores[$i];
 			}else{
@@ -121,24 +130,29 @@ $desde=$_REQUEST["desde"];
 $count=$_REQUEST["count"];
 $Expresion="";
 $base=$_REQUEST["base"];
-switch ($_REQUEST["Opcion"]){	case "palabras":
+switch ($_REQUEST["Opcion"]){
+	case "palabras":
 		if (!isset($_REQUEST["Incluir"])) $_REQUEST["Incluir"]="and";
 		if (!isset($_REQUEST["Expresion"]) or $_REQUEST["Expresion"]=="" ){
 			 $Expresion='$';
 		}else{
 			$pal=explode(" ",$_REQUEST["Expresion"]);
-			foreach ($pal as $w){				if (trim($w)!=""){
+			foreach ($pal as $w){
+				if (trim($w)!=""){
 					if ($Expresion=="")
 						$Expresion=$_REQUEST["prefijo"].$w;
 					else
 						$Expresion.=" ".$_REQUEST["Incluir"]." ".$_REQUEST["prefijo"].$w;
-				}			}
+				}
+			}
 		}
 		break;
 	case "detalle":
-		if (!isset($_REQUEST["Expresion"]) or $_REQUEST["Expresion"]=="" ){			 $Expresion='$';
+		if (!isset($_REQUEST["Expresion"]) or $_REQUEST["Expresion"]=="" ){
+			 $Expresion='$';
 		}else{
-			$Expresion=$_REQUEST["Expresion"];        }
+			$Expresion=$_REQUEST["Expresion"];
+        }
 		break;
 	case "prepararbusqueda";
 		$Expresion=PrepararBusqueda();
@@ -155,19 +169,23 @@ switch ($_REQUEST["Opcion"]){	case "palabras":
 
 		$resultado=wxisLlamar($base,$query,"ifp.xis");
 		$inicio=strlen($_REQUEST["prefijo"]);
-		foreach ($resultado as $year){			$year=substr($year,$inicio);
+		foreach ($resultado as $year){
+			$year=substr($year,$inicio);
 			$ix=strpos($year,'|');
-			$arr_year[]=$year;		}
+			$arr_year[]=$year;
+		}
 
 		rsort($arr_year);
 		echo "<h3>Presentación por Año de publicación<p>Seleccione un año: <select name=fecha style=height:25px onchange=Buscar(this)>\n";
 		echo "<option value=''></option>\n";
-		foreach ($arr_year as $value){
+		foreach ($arr_year as $value){
+
 			$c=explode('|',$value);
 			echo "<option value=\"".$_REQUEST["prefijo"].$c[0]."\">".$c[0]."  (".$c[1].")</option>\n";
         }
 		echo "</select></h3>";
-		break;}
+		break;
+}
 $Formato="opac.pft";
 PresentarRegistros($base,$db_path,$Expresion,$Formato,$count,$desde,1);
 
@@ -218,12 +236,14 @@ if (isset($_REQUEST["integrada"])and trim($_REQUEST["integrada"])!=""){
 <?php
 include("footer.php");
 
-if (!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S") {    $Expresion=str_replace('"',"",$Expresion);
+if (!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S") {
+    $Expresion=str_replace('"',"",$Expresion);
 	echo "\n<SCRIPT LANGUAGE=\"JavaScript\">
 	highlightSearchTerms(\"$Expresion\");
 
 	</SCRIPT>\n";
-}
+
+}
 ?>
 <script>
 
