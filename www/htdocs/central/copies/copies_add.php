@@ -1,6 +1,7 @@
 <?php
 /*
 20210908 fho4abcd div-helper, cleanup html
+20220209 fho4abcd Improve helper+Backbutton+undefine variable
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -113,6 +114,7 @@ function AsignarTabla(){
 //READ THE FST OF THE BIBLIOGRAPHIC DATABASE IN ORDER TO GET THE TAG OF THE CONTROL FIELD
 $tag_ctl="";
 $error="";
+$err_copies="";
 LeerFst($db_addto);
 if ($tag_ctl!=""){
 	$Formato="v".$tag_ctl;
@@ -137,41 +139,39 @@ if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 }
 $urlcopies="";
 if (isset($arrHttp["db_copies"])) $urlcopies="&db_copies=Y";
- echo "
-	<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-			 $msgstr["m_addcopies"]."
-		</div>
-		<div class=\"actions\">\n";
-if ($err_copies!="Y" and $error==""){
-	if (isset($arrHttp["encabezado"])){
-				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-						<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>". $msgstr["cancel"]."</strong></span>
-					</a>";
-	}
-	?>
-			<a href='../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
-			if (isset($arrHttp["Formato"])) echo "&Formato=".$arrHttp["Formato"];
-			echo $urlcopies?>' class="defaultButton cancelButton">
-				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["cancelar"]?></strong></span>
-			</a>
-			<a href=javascript:EnviarForma() class="defaultButton saveButton">
-				<img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-			</a>
-	<?php
-}else{
 ?>
-	<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+         <?php echo $msgstr["m_addcopies"]?>
+    </div>
+    <div class="actions">
+    <?php
+    if ($err_copies!="Y" and $error==""){
+        if (isset($arrHttp["encabezado"])){
+            include "../common/inc_cancel.php";
+        }
+        ?>
+                <a href='../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
+                if (isset($arrHttp["Formato"])) echo "&Formato=".$arrHttp["Formato"];
+                echo $urlcopies?>' class="defaultButton cancelButton">
+                    <img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
+                    <span><strong><?php echo $msgstr["cancelar"]?></strong></span>
+                </a>
+                <a href=javascript:EnviarForma() class="defaultButton saveButton">
+                    <img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
+                    <span><strong><?php echo $msgstr["actualizar"]?></strong></span>
+                </a>
+        <?php
+    }else{
+        $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';
+        include "../common/inc_back.php";
+    }
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
 <?php
-}
-echo "	</div>
-		<div class=\"spacer\">&#160;</div>
-	</div>";
-
+$ayuda="copies/copies_add.html";
 include "../common/inc_div-helper.php";
 
 ?>

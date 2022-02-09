@@ -3,6 +3,7 @@
 20211216 fho4abcd Backbutton & helper by included file. improve html
 20220112 fho4abcd fmt.php->fmt_adm.php
 20220202 fho4abcd improved text strings, more translations
+20220209 fho4abcd Preserve base
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -42,6 +43,7 @@ if (strpos($selbase,"|")===false){
 
 }
 $base=$selbase;
+$arrHttp["base"]=$base;
 // VERIFICACION DE LA PERMISOLOTIA
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"]) or isset($_SESSION["permiso"][$base."_CENTRAL_MODIFYDEF"]) or isset($_SESSION["permiso"][$base."_CENTRAL_ALL"]) ){
 
@@ -221,7 +223,7 @@ foreach ($fp as $value){
 
 // AYUDA EN CONTEXTO E IDENTIFICACIÓN DEL SCRIPT QUE SE ESTÁ EJECUTANDO
 // OPCIONES DEL MENU
-    include "../common/inc_div-helper.php"
+    include "../common/inc_div-helper.php";
 ?>
 <div class="middle form">
 <div class="formContent">

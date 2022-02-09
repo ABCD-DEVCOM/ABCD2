@@ -1,4 +1,7 @@
 <?php
+/*
+20220209 fho4abcd div-helper, backButton
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -209,86 +212,78 @@ include("../common/footer.php");
 //=====================================
 
 function Print_page(){
-Global $arrHttp,$msgstr,$error,$meta_encoding;
-	$encabezado="";
-	include("../common/header.php");
-?>
-<script>
-function Show(CN,db){
-	msgwin=window.open("../dataentry/show.php?base="+db+"&Expresion="+CN,"show","width=600, height=600, resizable, scrollbars")
-	msgwin.focus()
-}
+    Global $arrHttp,$msgstr,$error,$meta_encoding;
+        $encabezado="";
+        include("../common/header.php");
+    ?>
+    <body>
+    <script>
+    function Show(CN,db){
+        msgwin=window.open("../dataentry/show.php?base="+db+"&Expresion="+CN,"show","width=600, height=600, resizable, scrollbars")
+        msgwin.focus()
+    }
 
-function Send(){
-	ValorCapturado=""
-	for (i=0;i<document.forma1.status.length-1;i++){
-		if (document.forma1.duplicated[i].value==""){
-			ind=document.forma1.status[i].selectedIndex
-			tobj=document.forma1.status[i].options[ind].value
-			copies[i]+="^o"+tobj
-			ValorCapturado+=copies[i]+"\n"
-		}
+    function Send(){
+        ValorCapturado=""
+        for (i=0;i<document.forma1.status.length-1;i++){
+            if (document.forma1.duplicated[i].value==""){
+                ind=document.forma1.status[i].selectedIndex
+                tobj=document.forma1.status[i].options[ind].value
+                copies[i]+="^o"+tobj
+                ValorCapturado+=copies[i]+"\n"
+            }
 
-	}
-	if (ValorCapturado==""){
-		alert("<?php echo $msgstr["exitems"]?>")
-		return
-	}
-	document.forma1.ValorCapturado.value=ValorCapturado
-	document.forma1.submit()
-}
-</script>
-<?php
-	echo "<body>
-	<form name=forma1 method=post action=loan_objects_update.php onsubmit='return false'>\n";
-	if (isset($arrHttp["encabezado"])){
-		include("../common/institutional_info.php");
-		$encabezado="&encabezado=s";
-	}
-?>
-<div class="sectionInfo">
-	<div class="breadcrumb">
-		<?php echo $msgstr["loanobjects"]?>
-	</div>
-	<div class="actions">
-		<?php
-		if (!isset($arrHttp["return"])){
-			$ret="../common/inicio.php?reinicio=s$encabezado";
-		}else{
-			$ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
-		}
+        }
+        if (ValorCapturado==""){
+            alert("<?php echo $msgstr["exitems"]?>")
+            return
+        }
+        document.forma1.ValorCapturado.value=ValorCapturado
+        document.forma1.submit()
+    }
+    </script>
+    <?php
+        echo "<form name=forma1 method=post action=loan_objects_update.php onsubmit='return false'>\n";
+        if (isset($arrHttp["encabezado"])){
+            include("../common/institutional_info.php");
+            $encabezado="&encabezado=s";
+        }
+    ?>
+    <div class="sectionInfo">
+        <div class="breadcrumb">
+            <?php echo $msgstr["loanobjects"]?>
+        </div>
+        <div class="actions">
+            <?php
+            if (!isset($arrHttp["return"])){
+                $ret="../common/inicio.php?reinicio=s$encabezado";
+            }else{
+                $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
+            }
+            $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';
+            include "../common/inc_back.php";
+            if ($error==""){
+            ?>
+            <a href=javascript:Send() class="defaultButton copiesdbaddButton">
+            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
+            <?php echo $msgstr["update"]?>
+            </a>
+            <?php
+            }
+            ?>
 
-		?>
-		<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
-		<?php if ($error==""){
-		?>
-		<a href=javascript:Send() class="defaultButton copiesdbaddButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<?php echo $msgstr["update"]?>
-		</a>
-		<?php
-		}
-		?>
-
-	</div>
-	<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies/loan_objects.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/copies/loan_objects.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: loan_objects_add.php</font>";
-echo "
-</div>
-<div class=\"middle form\">
-		<div class=\"formContent\">
-
-";
-if ($error!=""){
-	echo "<h4>".$msgstr[$error]."</h4>";
-}
+        </div>
+        <div class="spacer">&#160;</div>
+    </div>
+    <?php
+    include "../common/inc_div-helper.php";
+    ?>
+    <div class="middle form">
+        <div class="formContent">
+    <?php
+    if ($error!=""){
+        echo "<h4>".$msgstr[$error]."</h4>";
+    }
 }
 
 // ==================================================================================

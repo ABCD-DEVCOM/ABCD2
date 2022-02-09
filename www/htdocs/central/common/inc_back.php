@@ -4,6 +4,7 @@
 20211216 fho4abcd Add functionality for return script of the caller
 20220112 fho4abcd Do not add base= if there is already a base added
 20200120 fho4abcd Check if the url has already options
+20220209 fho4abcd Replace double quotes by single quotes
 
 Function  : Show the backbutton in the breadcrumb in div class actions
 Usage     : <?php include "../common/inc_back.php" ?>
@@ -48,6 +49,8 @@ if (strpos($inc_backtourl, "encabezado=")===false) {
         $inc_backtourl.="encabezado=".$arrHttp["encabezado"];
     }
 }
+// Replace double quotes by single quotes for the href below
+$inc_backtourl=str_replace('"',"'",$inc_backtourl);
 ?>
 <a href="<?php echo $inc_backtourl?>" class="button_browse" title='<?php echo $msgstr["regresar"]?>'>
     <i class="fas fa-arrow-circle-left"></i>&nbsp;<?php echo $msgstr["regresar"]?></a>
