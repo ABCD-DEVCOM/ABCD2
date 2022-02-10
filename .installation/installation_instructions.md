@@ -138,7 +138,7 @@ Start your favourite web browser and run ABCD with following URL's.
 - `https://localhost:9090/iah       ` : The iAH module. Login username `abcd`, password `adm`.
 - `https://localhost:9090/site      ` : The SITE module. No login
 - `https://localhost:9090/site/admin` : The SITE module. Login username `adm`, password `x`.
-- `https://localhost:9090/opac_abcd ` : The OPAC module. No login
+- `https://localhost:9090/opac ` : The OPAC module. No login
 
 Recommendation: Modify the passwords of the administrative users to avoid unexpected logins with too much privileges
 

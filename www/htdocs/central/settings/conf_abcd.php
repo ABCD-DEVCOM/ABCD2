@@ -102,6 +102,11 @@ include "../common/inc_div-helper.php";
 						<?php echo $msgstr["set_mail"];?>
 					</a>
 				</li>
+				<li>
+					<a href='opac/menu.php'>
+						OPAC
+					</a>
+				</li>				
 
 			<?php } ?>
             </ul>

@@ -1,0 +1,8 @@
+v15' - 'v20'|',                                                                       /*BD y No. de control del objeto reservado */
+'#REFER#','|'                                                                         /*Para insertar en este lugar la referencia bibliográfica*/
+v30*6.2,"/"v30*4.2,"/"v30.4,' 'v31, '  'v32,'|'                                       /*Fecha, hora y operdor de la reserva*/
+if v1='0' or v1='3' then if p(v40) and v40<mid(date,0,8) then,'<font color=red>' fi,
+fi, v60*6.2,"/"v60*4.2,"/"v60.4 '-', v40*6.2,"/"v40*4.2,"/"v40.4,'|',                 /*Fecha desde-hasta espera*/
+v130*6.2,"/"v130*4.2,"/"v130.4'|',                                                    /*Fecha de cancelación por el usuario o por un operador*/
+v200*6.2,"/"v200*4.2,"/"v200.4,'|',                                                   /*Fecha en que se procesó el préstamo*/
+v1/                                                                                   /*Situación*/
