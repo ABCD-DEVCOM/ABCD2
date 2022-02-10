@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../../central/common/error_page.php") ;
+}
+
 include("../php/config_opac.php");
 //echo $_SESSION["db_path"];
 //foreach ($_REQUEST AS $var=>$value) echo "$var=>$value<br>"; die;
@@ -9,11 +16,6 @@ IF (!isset($_SESSION["db_path"])){
 	$_SESSION["db_path"]=$_REQUEST["db_path"];
 }
 $db_path=$_SESSION["db_path"];
-
-header('Content-Type: text/html; charset=<?php echo $charset?>');
-
-
-//foreach ($_REQUEST AS $var=>$value)  echo "$var=$value<br>";
 ?>
 <script>
 actualScript="<?php echo $actualScript?>"
@@ -67,6 +69,13 @@ function ShowHide(myDIV) {
 </script>
 </head>
 <body  <?php if (isset($onload)) echo $onload?>>
+
+
+
+<?php
+include("../../central/common/institutional_info.php");
+?>
+
 <a name=inicio>
 <div id=centrado>
 <div id="header-wrapper">

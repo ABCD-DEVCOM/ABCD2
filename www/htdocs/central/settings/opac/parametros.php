@@ -3,32 +3,52 @@ include ("tope_config.php");
 $wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_configuraci%C3%B3n#Par.C3.A1metros_globales";
 $wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n#Par.C3.A1metros_globales";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$fp=fopen($db_path."/opac_conf/opac_abcd.def","w");	foreach ($_REQUEST as $var=>$value){		$value=trim($value);
-		if ($value!=""){			$var=trim($var);
-			if (substr($var,0,5)=="conf_"){				if (substr($var,5)=="OpacHttp"){					if (substr($value,strlen($value)-1,1)!="/"){						$value.="/";					}				}
+	$fp=fopen($db_path."/opac_conf/opac.def","w");
+	foreach ($_REQUEST as $var=>$value){
+		$value=trim($value);
+		if ($value!=""){
+			$var=trim($var);
+			if (substr($var,0,5)=="conf_"){
+				if (substr($var,5)=="OpacHttp"){
+					if (substr($value,strlen($value)-1,1)!="/"){
+						$value.="/";
+					}
+				}
 				echo substr($var,5)."=".$value."<br>";
-				fwrite($fp,substr($var,5)."=".$value."\n");			}		}	}
+				fwrite($fp,substr($var,5)."=".$value."\n");
+			}
+		}
+	}
 	fclose($fp);
-    echo "<p><font color=red>opac_conf/opac_abcd.def ".$msgstr["updated"]."</font><p>";
-	include("../php/footer.php");	die;}
+    echo "<p><font color=red>opac_conf/opac.def ".$msgstr["updated"]."</font><p>";
+	include("../../../opac/php/footer.php");
+	die;
+}
 $UNICODE="";
 $MULTIPLE_DB_FORMATS="";
 $WEBRESERVATION="";
 $WEBRENOVATION="";
 $ONLINESTATMENT="";
 $showhelp="";
-if (file_exists($db_path."abcd.def")){	$fp=file($db_path."abcd.def");
+if (file_exists($db_path."abcd.def")){
+	$fp=file($db_path."abcd.def");
 	foreach ($fp as $value){
 		$v=explode('=',$value);
-		switch($v[0]){			case "UNICODE";
+		switch($v[0]){
+			case "UNICODE";
 				$UNICODE=trim($v[1]);
 				break;
 			case "MULTIPLE_DB_FORMATS":
 				$MULTIPLE_DB_FORMATS=trim($v[1]);
-				break;		}	}}
-if (file_exists($db_path."opac_conf/opac_abcd.def")){	$fp=file($db_path."opac_conf/opac_abcd.def");
+				break;
+		}
+	}
+}
+if (file_exists($db_path."opac_conf/opac.def")){
+	$fp=file($db_path."opac_conf/opac.def");
 	foreach ($fp as $value){
-		if (trim($value)!=""){			$a=explode('=',$value);
+		if (trim($value)!=""){
+			$a=explode('=',$value);
 			switch ($a[0]){
 				case "Web_Dir":
 					$Web_Dir=trim($a[1]);
@@ -62,7 +82,8 @@ if (file_exists($db_path."opac_conf/opac_abcd.def")){	$fp=file($db_path."opac_c
 					break;
 				case "multiple_db_formats":
 					$multiple_db_formats=trim($a[1]);
-					break;
+					break;
+
 
 
 				case "footer":
@@ -79,7 +100,11 @@ if (file_exists($db_path."opac_conf/opac_abcd.def")){	$fp=file($db_path."opac_c
 					break;
 
 
-			}		}	}}
+
+			}
+		}
+	}
+}
 ?>
 <form name=parametros method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
@@ -95,7 +120,8 @@ if (!isset($Web_Dir) or $Web_Dir==""){
 	$ix=strrpos($Web_Dir,'/');
 	$Web_Dir=substr($Web_Dir,0,$ix+1);
 }
-if (!isset($OpacHttp)){	$OpacHttp=$_SERVER["HTTP_ORIGIN"].str_replace("config/parametros.php","",$_SERVER['REQUEST_URI']);
+if (!isset($OpacHttp)){
+	$OpacHttp=$_SERVER["HTTP_ORIGIN"].str_replace("config/parametros.php","",$_SERVER['REQUEST_URI']);
 }
 if (!isset($shortIcon))$shortIcon="";
 ?>
@@ -103,7 +129,7 @@ if (!isset($shortIcon))$shortIcon="";
 	<p>
     <h3>
     <?php
-    echo $msgstr["parametros"]." (opac_abcd.def) &nbsp;";
+    echo $msgstr["parametros"]." (opac.def) &nbsp;";
     include("wiki_help.php");
  ?>
     <table cellpading=5>
@@ -161,8 +187,11 @@ if (!isset($shortIcon))$shortIcon="";
         <tr>
     		<td valign=top><?php echo $msgstr["multiple_db_formats"];?></td>
     		<td valign=top><input type=checkbox name=multiple_db_formats value="Y"
-    		<?php if (isset($multiple_db_formats) and $multiple_db_format=="Y"){    			 	echo " checked ";
-    		      }else{    		      	if (isset($MULTIPLE_DB_FORMATS) and ($MULTIPLE_DB_FORMATS=="Y")) echo " checked";    		      }
+    		<?php if (isset($multiple_db_formats) and $multiple_db_format=="Y"){
+    			 	echo " checked ";
+    		      }else{
+    		      	if (isset($MULTIPLE_DB_FORMATS) and ($MULTIPLE_DB_FORMATS=="Y")) echo " checked";
+    		      }
     		?>
     		>
     		</td>
@@ -188,7 +217,7 @@ if (!isset($shortIcon))$shortIcon="";
 </form>
 <?php
 
-include ("../php/footer.php");
+include ("../../../opac/php/footer.php");
 ?>
 </div>
 </div>

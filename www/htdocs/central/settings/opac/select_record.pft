@@ -1,0 +1,16 @@
+'<div>'/
+'<script>
+cookie=getCookie("ORBITA")+"|"
+if (cookie.indexOf("c_',mstname,'_'f(mfn,1,0),'|")!=-1){
+	document.writeln("<input type=checkbox name=c_',mstname,'_'f(mfn,1,0)' id=c_'mstname'_'f(mfn,1,0)'  checked onclick=javascript:Seleccionar(this)> ")
+}else{
+	document.writeln("<input type=checkbox name=c_'mstname'_'f(mfn,1,0)' id=c_'mstname'_'f(mfn,1,0)' onclick=javascript:Seleccionar(this)> ")
+}
+</script>'/
+'<br style=line-height:8px;> </br>'
+'<br><a href=javascript:SendTo("print_one","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/print.png width=25 alt=print title=print></a>
+ <br><a href=javascript:SendTo("word","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/word.png width=25 alt=word title=word></a>
+ <br><a href=javascript:SendTo("xml","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/xml.png width=25 alt=xml title=xml></a>
+ <br><a href=javascript:SendTo("mail_one","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/mail.png width=25 alt=mail title=mail></a>
+ <br><a href=javascript:SendTo("reserve_one","c_',mstname,'_'f(mfn,1,0)'")><img src=../images/books.jpg width=25 alt=reserve title=reserve></a>'/
+'</div>'

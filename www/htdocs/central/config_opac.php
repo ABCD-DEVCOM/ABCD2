@@ -2,10 +2,10 @@
 /*
 20211224 fho4abcd Read default message file from central, with central processing, lineends
 */
-session_start();
+//session_start();
 error_reporting(E_ALL);
 //CHANGE THIS ////
-include ("../../central/config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
+include ("../../config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
 
 if (isset($_SESSION["db_path"]))
@@ -15,7 +15,8 @@ else
 $db_path=$_REQUEST["db_path"];
 
 // Read language files from central
-include "../../central/lang/opac.php";
+include "lang/opac.php";
+include "lang/admin.php";
 
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
@@ -33,8 +34,8 @@ $footer='&nbsp; &copy; 2022, - Consulta bases de datos </p>';
 $multiplesBases="S";   //no se presenta acceso para cada una de las bases de datos
 $afinarBusqueda="S";   //permite afinar la expresion de búsqueda
 $IndicePorColeccion="N";  //Se mantienen indices separados para los términos de las colecciones
-if (file_exists($db_path."/opac_conf/opac_abcd.def")){
-	$fp=file($db_path."/opac_conf/opac_abcd.def");
+if (file_exists($db_path."/opac_conf/opac.def")){
+	$fp=file($db_path."/opac_conf/opac.def");
 	foreach ($fp as $value){
 		$value=trim($value);
 		if ($value!=""){

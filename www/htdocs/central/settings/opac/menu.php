@@ -3,16 +3,23 @@
 date_default_timezone_set('America/New_York');
 if (isset($_REQUEST["conf_level"])) unset($_REQUEST["conf_level"]);
 include ("tope_config.php");
-if (isset($_REQUEST["lang_init"])){	$_SESSION["lang_init"]=$_REQUEST["lang_init"];
-	unset($_REQUEST["lang_init"]);}
+if (isset($_REQUEST["lang_init"])){
+	$_SESSION["lang_init"]=$_REQUEST["lang_init"];
+	unset($_REQUEST["lang_init"]);
+}
 $wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci.C3.B3n";
 $wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci.C3.B3n";
 if (isset($_REQUEST["lang"])) $lang=$_REQUEST["lang"];
 if (!isset($_SESSION["showhelp"])){
-	if (isset($_REQUEST["showhelp"])){		if ($_REQUEST["showhelp"]=="Y"){
+	if (isset($_REQUEST["showhelp"])){
+		if ($_REQUEST["showhelp"]=="Y"){
 			$_SESSION["showhelp"]="Y";
-		}else{			$_SESSION["showhelp"]="N";		}
-	}else{		$_SESSION["showhelp"]="N";	}
+		}else{
+			$_SESSION["showhelp"]="N";
+		}
+	}else{
+		$_SESSION["showhelp"]="N";
+	}
 }
 if ($_SESSION["showhelp"]=="Y")
 	$showhelp="block";
@@ -26,22 +33,33 @@ else
 	#wleft {
   		flex: 0 0 35%;
 	}
-	#wright {
+	#wright {
+
   		flex: 0 0 65%;
   		margin: auto;
 	}
 </style>
 <script>
 	function EnviarCopia(){
-		if (document.copiar_a.lang_to.options[document.copiar_a.lang_to.selectedIndex].value=="<?php echo $_REQUEST["lang"]?>"){			alert("<?php echo $msgstr["sel_o_l"]?>")
-			return false		}
-		if (document.copiar_a.replace_a[0].checked || document.copiar_a.replace_a[1].checked ){			document.copiar_a.submit()		}else{			alert("<?php echo $msgstr["missing"]." ".$msgstr["sustituir_archivos"];?>")
-			return false		}	}
+		if (document.copiar_a.lang_to.options[document.copiar_a.lang_to.selectedIndex].value=="<?php echo $_REQUEST["lang"]?>"){
+			alert("<?php echo $msgstr["sel_o_l"]?>")
+			return false
+		}
+		if (document.copiar_a.replace_a[0].checked || document.copiar_a.replace_a[1].checked ){
+			document.copiar_a.submit()
+		}else{
+			alert("<?php echo $msgstr["missing"]." ".$msgstr["sustituir_archivos"];?>")
+			return false
+		}
+	}
 </script>
 <?php
-if (!isset($_REQUEST["db_path"])){	$_REQUEST["db_path"]=$db_path;
-	$_REQUEST["db_path_desc"]="$db_path";}
-if (isset($_REQUEST["db_path"])) {	$_SESSION["db_path"]=$_REQUEST["db_path"];
+if (!isset($_REQUEST["db_path"])){
+	$_REQUEST["db_path"]=$db_path;
+	$_REQUEST["db_path_desc"]="$db_path";
+}
+if (isset($_REQUEST["db_path"])) {
+	$_SESSION["db_path"]=$_REQUEST["db_path"];
 	$_SESSION["db_path_desc"]=$_REQUEST["db_path"];
 }
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
@@ -63,7 +81,7 @@ global $llamada, $valortag,$maxmfn,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUr
 		$pass=md5($pass);
 	}
 	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$_REQUEST["login"]."&password=".$pass;
-	include($CentralPath."/common/wxis_llamar.php");
+	include("../../common/wxis_llamar.php");
 	 foreach ($contenido as $linea){
 	 	if ($ic==-1){
 	    	$ic=1;
@@ -159,9 +177,11 @@ Global $valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per
     			if ($value!=""){
     				$key=explode("=",$value);
     				$_SESSION["permiso"][$key[0]]=$key[1];
+
     			}
     		}
-    	}else{
+    	}else{
+
   			session_destroy();
   			?>
   			<form name=error method=post action=index.php>
@@ -209,7 +229,6 @@ Global $valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per
     }
 	$Permiso=$_SESSION["permiso"];
 
-
 ?>
 <div id="page">
 <?php
@@ -236,12 +255,21 @@ include("wiki_help.php");
 			<?php
 			echo "<ul>";
 
-			if (!file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){				echo "<font color=red>".$msgstr["missing"]."opac_conf/".$_REQUEST["lang"]."/bases.dat";			}else{				$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
+			if (!file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){
+				echo "<font color=red>".$msgstr["missing"]."opac_conf/".$_REQUEST["lang"]."/bases.dat";
+			}else{
+
+				$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
 				$cuenta=0;
-				foreach ($fp as $value){					if (trim($value)!=""){
-						$cuenta=$cuenta+1;						$x=explode('|',$value);						echo "<li><a href=\"javascript:SeleccionarBase('".$x[0]."')\">".$x[1]."</li>\n";
-					}				}
-			}
+				foreach ($fp as $value){
+					if (trim($value)!=""){
+						$cuenta=$cuenta+1;
+						$x=explode('|',$value);
+						echo "<li><a href=\"javascript:SeleccionarBase('".$x[0]."')\">".$x[1]."</li>\n";
+					}
+				}
+
+			}
 			if ($cuenta>1)
 				echo "<li><a href=\"javascript:SeleccionarBase('META')\"><strong>".$msgstr["metasearch"]."</strong></a></li>\n";
 
@@ -273,17 +301,18 @@ include("wiki_help.php");
 <br><br><br>
 <?php
 
-include ("../php/footer.php");
+include ("../../../opac/php/footer.php");
 ?>
 </div>
 </div>
 </body
 </html>
 <form name=forma1 method=post>
-<?php if (isset($_REQUEST["conf_level"])){	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
+<?php if (isset($_REQUEST["conf_level"])){
+	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
 <input type=hidden name=base>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"]?>>
+<input type=hidden name=lang value=<?php echo $lang;?>>
 <input type=hidden name=db_path value=<?php echo $_REQUEST["db_path"]?>>
 </form>
 

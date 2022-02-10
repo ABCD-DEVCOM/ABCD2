@@ -23,9 +23,11 @@ if (isset($_SESSION["db_path"]))
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
 else
 	if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
-if (isset($_REQUEST["lang"])){	 $_SESSION["lang"]= $_REQUEST["lang"];
+if (isset($_REQUEST["lang"])){
+	 $_SESSION["lang"]= $_REQUEST["lang"];
 	 $lang=$_REQUEST["lang"];
-}$actualScript=basename($_SERVER['PHP_SELF']);
+}
+$actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
 $CentralHttp=$server_url;
 $NovedadesDir="";
@@ -41,8 +43,8 @@ $footer='&nbsp; &copy; 2019, - Consulta bases de datos </p>';
 $multiplesBases="S";   //no se presenta acceso para cada una de las bases de datos
 $afinarBusqueda="S";   //permite afinar la expresion de búsqueda
 $IndicePorColeccion="N";  //Se mantienen indices separados para los términos de las colecciones
-if (file_exists($db_path."/opac_conf/opac_abcd.def")){
-	$fp=file($db_path."/opac_conf/opac_abcd.def");
+if (file_exists($db_path."/opac_conf/opac.def")){
+	$fp=file($db_path."/opac_conf/opac.def");
 	foreach ($fp as $value){
 		$value=trim($value);
 		if ($value!=""){
@@ -110,9 +112,11 @@ include("read_lang.php");
 $db_path=trim(urldecode($db_path));
 $ix=explode('/',$db_path);
 $xxp="";
-for ($i=1;$i<count($ix);$i++) {	$xxp.=$ix[$i];
+for ($i=1;$i<count($ix);$i++) {
+	$xxp.=$ix[$i];
 	if ($i!=count($ix)-1) $xxp.='/';
-}
+
+}
 
 if (!isset($diagnostico)){
 	if (!is_dir($db_path."opac_conf")) {
@@ -120,7 +124,8 @@ if (!isset($diagnostico)){
 		echo "<a href=//wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuración#Estructura_de_carpetas_y_archivos_de_configuraci.C3.B3n>".$msgstr["help"]."</a>";
         die;
 	}
-	if (!is_dir($db_path."opac_conf/$lang")) {		echo "<h3>".$msgstr["missing_folder"]."  $xxp opac_conf <font color=red>$lang</font><h3>";
+	if (!is_dir($db_path."opac_conf/$lang")) {
+		echo "<h3>".$msgstr["missing_folder"]."  $xxp opac_conf <font color=red>$lang</font><h3>";
 		echo "<a href=//wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci&oacute;n#Estructura_de_carpetas_y_archivos_de_configuraci.C3.B3n>".$msgstr["help"]."</a>";
 		die;
 	}

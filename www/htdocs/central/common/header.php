@@ -28,24 +28,24 @@
 
 		<!-- Favicons -->
 		
-		<link rel="mask-icon" href="../../assets/images/favicons/favicon.svg">
-    	<link rel="icon" type="image/svg+xml" href="../../assets/images/favicons/favicon.svg" color="#fff">
+		<link rel="mask-icon" href="/assets/images/favicons/favicon.svg">
+    	<link rel="icon" type="image/svg+xml" href="/assets/images/favicons/favicon.svg" color="#fff">
 
-    	<link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicons/favicon-32x32.png">
-    	<link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicons/favicon-16x16.png">
+    	<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+    	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
 
-    	<link rel="apple-touch-icon" sizes="60x60" href="../../assets/images/favicons/favicon-60x60.png">
-    	<link rel="apple-touch-icon" sizes="76x76" href="../../assets/images/favicons/favicon-76x76.png">
-    	<link rel="apple-touch-icon" sizes="120x120" href="../../assets/images/favicons/favicon-120x120.png">
-    	<link rel="apple-touch-icon" sizes="152x152" href="../../assets/images/favicons/favicon-152x152.png">
-    	<link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicons/favicon-180x180.png">
+    	<link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/favicon-60x60.png">
+    	<link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/favicon-76x76.png">
+    	<link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/favicon-120x120.png">
+    	<link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/favicon-152x152.png">
+    	<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">
 
 
 		<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="../../assets/css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+		<link rel="stylesheet" rev="stylesheet" href="/assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
 		<!--FontAwesome-->
 		
-		<link href="../../assets/css/all.min.css" rel="stylesheet"> 
+		<link href="/assets/css/all.min.css" rel="stylesheet"> 
 	
 		<!--load all styles -->
 		<!--[if IE]>

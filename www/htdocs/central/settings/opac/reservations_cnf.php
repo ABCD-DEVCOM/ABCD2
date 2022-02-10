@@ -1,7 +1,7 @@
 <?php
 /* Modifications
-2021-02-03 guilda execute in  opac_abcd/config  the option Statment, renovation and reserve -> Web renovation.
-2021-02-03 guilda Check the url and paths are OK, $CentralHttp defined in opac_abcd/php/config_opac.php specifies the url to be used to access the ABCD central/circulation module.
+2021-02-03 guilda execute in  opac/config  the option Statment, renovation and reserve -> Web renovation.
+2021-02-03 guilda Check the url and paths are OK, $CentralHttp defined in central/config_opac.php specifies the url to be used to access the ABCD central/circulation module.
 2021-02-03 guilda In this way the same scripts used in central are used in the opac
 */
 include ("tope_config.php");
@@ -47,9 +47,13 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 */
 $fp=file($db_path."/par/syspar.par");
-foreach ($fp as $value){	$value=trim($value);
-	if ($value!=""){		$x=explode('=',$value);
-		$syspar_array[$x[0]]=$x[1];	}}
+foreach ($fp as $value){
+	$value=trim($value);
+	if ($value!=""){
+		$x=explode('=',$value);
+		$syspar_array[$x[0]]=$x[1];
+	}
+}
 echo "<p>".$msgstr["ONLINESTATMENT"];
 if (!isset($ONLINESTATMENT) or $ONLINESTATMENT!="Y")
 	echo ": <font color=darkblue><strong>".$msgstr["is_not_set"]."</strong></font>";
@@ -70,11 +74,13 @@ if (!file_exists($db_path."par/reserve.par")){
 	echo "<br><font color=red>".$msgstr["missing"]." "."reserve.par</font>";
 }
 /*echo "<p><h3>".$msgstr["pft_res"]." (reserve database)</h3>";
-if (!is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){	echo "<font color=red><strong>",$msgstr["miss_folder"]." ".$db_path."reserve/pfts/".$_REQUEST["lang"];
+if (!is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){
+	echo "<font color=red><strong>",$msgstr["miss_folder"]." ".$db_path."reserve/pfts/".$_REQUEST["lang"];
 }
 
 if (is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){
-	echo "<strong>opac_reserve_h.txt</strong><p>";	echo "<xmp>";
+	echo "<strong>opac_reserve_h.txt</strong><p>";
+	echo "<xmp>";
 	echo $msgstr["tit_nc"]."\n";
 	echo $msgstr["tit_tit"]."\n";
 	echo $msgstr["tit_rdate"]."\n";
@@ -97,7 +103,9 @@ if (is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){
     echo "<input type=hidden name=Opcion value=Guardar>\n";
     echo "<input type=submit name=formating value=\"".$msgstr["save"]." ".$msgstr["pft_res"]." ".$msgstr["in"]." ";
     echo $db_path."reserve/pfts/".$_REQUEST["lang"]."\">";
-    echo "<form>\n";	//if (!file_exists($db_path."reserve/pfts/".$_REQUEST["lang"]))}
+    echo "<form>\n";
+	//if (!file_exists($db_path."reserve/pfts/".$_REQUEST["lang"]))
+}
 */
 
 

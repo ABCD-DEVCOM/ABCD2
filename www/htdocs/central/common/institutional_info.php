@@ -438,7 +438,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 				</li>
      
             <li>
-            	<a class="bt-exit" href="../common/logout.php"><img src="../../assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
+            	<a class="bt-exit" href="../common/logout.php"><img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
             </li>
         </ul>
     </nav>
