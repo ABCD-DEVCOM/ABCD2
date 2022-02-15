@@ -1,4 +1,7 @@
 <?php
+/*
+20220214 fho4abcd Do not use DOCUMENT_ROOT but the database base+ allow %path_database%
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -60,15 +63,23 @@ function NoImage(){	global $msgstr,$arrHttp;
 	die;}
 
 //foreach($arrHttp as $var=>$value) echo "$var=$value<br>";
+// =========== See equivalent code in dirs_explorer.php==========//
 $img_path="";
 if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
 	$def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
-	$img_path=trim($def["ROOT"]);
+    if (isset($def["ROOT"]) && trim($def["ROOT"]!="")){
+        $img_path=trim($def["ROOT"]);
+        $img_path=str_replace("%path_database%",$db_path,$img_path);
+        $name_path=$msgstr["root_from_dr"];
+        if (!file_exists($img_path)) mkdir($img_path,0770,true);
+    }
 }
-if ($img_path=="")
-    $img_path=getenv("DOCUMENT_ROOT")."/bases/".$arrHttp["base"]."/";
+if ($img_path==""){
+    $img_path=$db_path.$arrHttp["base"]."/";
+    $name_path="%path_database%".$arrHttp["base"]."/";
+}
 
-if (!is_dir($img_path)){	echo "<h3>".$msgstr["dirne"]."<h3>";
+if (!is_dir($img_path)){    echo "<h3>".$msgstr["dirne"]." (".$name_path.")</h3> ";
 	NoImage();
 	die;}
 

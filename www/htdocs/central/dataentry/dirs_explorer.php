@@ -2,6 +2,8 @@
 /*
 20210315 fho4abcd The destination form no longer fixed to "upload" but specified by option &targetForm=...&..
 20210914 fho4abcd Standard header+ use div_helper+better indicator dr_path+standard divs+move function to sanitize code
+20220214 fho4abcd Change DOCUMENT_ROOT in $db_path, better indicator for ROOT, allow %path_database%, don't show dr_path for explorar
+20220224 fho4abcd Function CopiarImagen: fixed form->supplied form + always close on trigger
 */
 session_start();
 
@@ -15,7 +17,6 @@ include("../config.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include("../common/header.php");
 if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
-$lang=$_SESSION["lang"];
 
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
@@ -29,6 +30,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db
 }
 echo "<body>";
 include "../common/inc_div-helper.php";
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
 // The default target form (where the selected folder will be set) for this script can be overridden by an an option
 $targetForm="upload";// the default form used by other apps
@@ -43,24 +45,24 @@ if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dbcp"){
 	$img_path=$db_path;
 	$expl->Set("root_dir",$img_path);
 	$name_path="";
-}else{
+}else{ //=========== See equivalent code in upload_img.php==========//
 	$arrHttp["desde"]="dataentry";
+    $img_path="";
 	if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
-		$def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
-		if (isset($def["ROOT"])){
-			$img_path=trim($def["ROOT"]);
-			$name_path="dr_path.def &rarr; ROOT";
-		}else{
-			$img_path=getenv("DOCUMENT_ROOT")."/bases/".$arrHttp["base"]."/";
-			$name_path="[DOCUMENT_ROOT]"."/bases/".$arrHttp["base"]."/";
-		}
-	}else{
-		$img_path=getenv("DOCUMENT_ROOT")."/bases/".$arrHttp["base"]."/";
-		$name_path="[DOCUMENT_ROOT]"."/bases/".$arrHttp["base"]."/";
+        $def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
+        if (isset($def["ROOT"]) && trim($def["ROOT"]!="")){
+            $img_path=trim($def["ROOT"]);
+            $img_path=str_replace("%path_database%",$db_path,$img_path);
+            $name_path=$msgstr["root_from_dr"];
+            if (!file_exists($img_path)) mkdir($img_path,0770,true);
+        }
+    }
+	if ($img_path=="") {
+		$img_path=$db_path.$arrHttp["base"]."/";
+		$name_path="%path_database%".$arrHttp["base"]."/";
 	}
-	if (isset($arrHttp["root"]))$img_path.=$arrHttp["root"];
     if (!is_dir($img_path)){
-		echo "<h3>".$name_path ." ".$msgstr["dirne"].".</h3> ";
+		echo "<h3>".$msgstr["dirne"]." (".$name_path.")</h3> ";
 		die;
 	}
 	$expl->Set("root_dir",$img_path);
@@ -83,10 +85,14 @@ if (trim($source)!=""){
 ?>
 <div class="middle form">
 <div class="formContent">
+<?php
+if ( $arrHttp["Opcion"]=="explorar"){
+    ?>
 <input type=radio name=sel value=""
     onclick="window.opener.document.<?php echo $targetForm;?>.storein.value='<?php echo $source;?>'; window.opener.focus(); self.close()" >
     <?php echo $name_path;?>
 <?php
+}
 //Now it's needed set path of icons
 //icons_dir - name of variable and it should be static!
 //icons/ - directory of icons
@@ -146,24 +152,25 @@ die;
 
 //==============function=========================
 function Encabezamiento(){
-global $tag,$msgstr,$arrHttp;
+global $tag,$msgstr,$arrHttp,$targetForm;
 
 ?>
 <title><?php echo $msgstr["explore"];?></title>
 <script>
 <?php if (isset($tag) and trim($tag)!=""){
-?>
+    ?>
 	function CopiarImagen(Img){
-		campo=window.opener.document.forma2.<?php echo $tag?>.value
+		campo=window.opener.document.<?php echo $targetForm;?>.<?php echo $tag?>.value
 		tag="<?php echo $tag?>"
 		t=tag.split("_");
 		if (campo=="")
-			 window.opener.document.forma2.<?php echo $tag?>.value=Img
+			 window.opener.document.<?php echo $targetForm;?>.<?php echo $tag?>.value=Img
 		else
-		     window.opener.document.forma2.<?php echo $tag?>.value=campo+"\r"+Img
+		     window.opener.document.<?php echo $targetForm;?>.<?php echo $tag?>.value=campo+"\r"+Img
 		if (t.length>1) self.close();
+        self.close() <!--always close-->
 	}
-<?php } ?>
+    <?php } ?>
 	function SelectedFolder(Folder){
 		alert(Folder)
 	}

@@ -4,6 +4,7 @@
 20220116 fho4abcd modified size of popup window for capturaclaves
 20220202 fho4abcd modified size of popup window for picklist
 20220207 fh04abcd Improve html & backbutton 
+20220214 fh04abcd Add form selectarchivo & javascript function SelectArchivo
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -617,6 +618,16 @@ function CapturarRegistro(){
 		document.enviararchivo.submit()
 	}
 
+	function SelectArchivo(Tag, Targetform){
+		document.selectarchivo.tag.value=Tag
+		document.selectarchivo.storein.value=top.img_dir
+        document.selectarchivo.Opcion.value="seleccionar"
+        document.selectarchivo.targetForm.value=Targetform
+		msgwin=window.open("","Select","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=750,top=300,left=5");
+		msgwin.focus()  ;
+		document.selectarchivo.submit()
+	}
+
 function NuevaBusqueda(){
 	if (Trim(document.forma1.nueva_b.value)!=""){
 		str=document.forma1.nueva_b.value;
@@ -1167,6 +1178,14 @@ if (isset($arrHttp["encabezado"])){
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 	<input type=hidden name=Tag>
 	<input type=hidden name=storein>
+</form>
+
+<form name=selectarchivo action=dirs_explorer.php method=post target=Select>
+	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+	<input type=hidden name=tag>
+	<input type=hidden name=storein>
+	<input type=hidden name=Opcion>
+    <input type=hidden name=targetForm>
 </form>
 
 <form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>

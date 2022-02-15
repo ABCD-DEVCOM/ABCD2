@@ -9,6 +9,7 @@
 20211118 rogercgui edited line 	$it="password\""; $it="text\" onfocus=blur()";
 20211225 include field type number - $tipo=N
 20220207 html improvements
+20220214 fho4abcd Replace link to dirs_explorer by javascript+ some html improvements
 */
 require_once("combo_inc.php");
 
@@ -552,7 +553,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
     					}else{
 	     					echo "<input tabindex='0' type=text name=tag".$Etq." id=tag".$Etq." size=$n class=td value=\"$campo\">";
     	 					echo "<a class=\"bt-fdt\" href=javascript:EnviarArchivo('tag$Etq')><i class=\"fas fa-upload\" alt=\"".$msgstr["uploadfile"]."\" title=\"".$msgstr["uploadfile"]."\"></i></a>";
-     						echo "<a class=\"bt-fdt\" href=dirs_explorer.php?Opcion=seleccionar&base=".$arrHttp["base"]."&tag=tag$Etq target=_blank><i class=\"far fa-folder-open\" alt=\"".$msgstr["selfile"]."\" title=\"".$msgstr["selfile"]."\"></i></a>";
+                            echo "<a class=\"bt-fdt\" href=javascript:SelectArchivo('tag$Etq','forma1')><i class=\"far fa-folder-open\" alt=\"".$msgstr["selfile"]."\" title=\"".$msgstr["selfile"]."\"></i></a>";
      					}
      					break;
      				case "K":
@@ -1025,18 +1026,17 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 
 	   			if ($tipo=="AI") {
 	   				if (isset($_SESSION["permiso"]["CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])  or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_RESETLCN"]) or isset($_SESSION["permiso"]["ACQ_ALL"]) or isset($_SESSION["permiso"]["ACQ_RESETCN"])){
-	   					echo " <a class='bt-fdt-green' href=javascript:ChangeSeq($tag,\"$pref\")><i class=\"fas fa-plus\"></i> ".$msgstr["assign"]."</a>
-	   					&nbsp; ";
-	   					echo "<a class='bt-fdt-help' href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-life-ring\"></i> ".$msgstr["help"]."</a>&nbsp; &nbsp;";
+	   					echo "\n <a class='bt-fdt-green' href='javascript:ChangeSeq($tag,\"$pref\")'><i class=\"fas fa-plus\"></i> ".$msgstr["assign"]."</a> &nbsp; ";
+	   					echo "\n<a class='bt-fdt-help' href='../documentacion/ayuda.php?help=".$_SESSION["lang"]."/autoincrement.html' target=_blank><i class=\"far fa-life-ring\"></i> ".$msgstr["help"]."</a>&nbsp; &nbsp;";
 	   					if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])){
-							echo "<a class='bt-fdt-blue' href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/autoincrement.html target=_blank><i class=\"far fa-edit\"></i> ".$msgstr["edhlp"]."</a>";
+							echo "\n<a class='bt-fdt-blue' href='../documentacion/edit.php?archivo=". $_SESSION["lang"]."/autoincrement.html' target=_blank><i class=\"far fa-edit\"></i> ".$msgstr["edhlp"]."</a>";
 						}
 	   				}
 	   			}
 	  		}
 			if ($tipo=="U" ) {
-				echo "<a class=\"bt-fdt\" href=javascript:EnviarArchivo('tag$tag')><i class=\"fas fa-upload\" alt=\"".$msgstr["uploadfile"]."\" title=\"".$msgstr["uploadfile"]."\"></i></a> ";
-     			echo "<a class=\"bt-fdt\" href=dirs_explorer.php?Opcion=seleccionar&base=".$arrHttp["base"]."&tag=tag$tag target=_blank><i class=\"far fa-folder-open\" alt=\"".$msgstr["selfile"]."\" title=\"".$msgstr["selfile"]."\"></i></a>";
+				echo "<a class=\"bt-fdt\" href=\"javascript:EnviarArchivo('tag$tag')\"><i class=\"fas fa-upload\" alt=\"".$msgstr["uploadfile"]."\" title=\"".$msgstr["uploadfile"]."\"></i></a> \n";
+     	 		echo "<a class=\"bt-fdt\" href=\"javascript:SelectArchivo('tag$tag','forma1')\"><i class=\"far fa-folder-open\" alt=\"".$msgstr["selfile"]."\" title=\"".$msgstr["selfile"]."\"></i></a>\n";
 	   		}
 	   		if ($tipo=="P" or $tipo=="PR"){
                 ?>

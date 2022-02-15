@@ -1,6 +1,7 @@
 <?php
 /*
 20210914 fho4abcd Send option "explorar" to the folder exploration, improve html
+20220214 fho4abcd message if no permission. Improved feedback message
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -19,7 +20,7 @@ if (!isset($_SESSION["permiso"]["CENTRAL_EDREC"]) and !isset($_SESSION["permiso"
 and !isset($_SESSION["permiso"]["CENTRAL_CREC"])  and !isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])
 and !isset($_SESSION["permiso"]["CENTRAL_ALL"])
 and !isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){
-	echo "<h4>".$msgstr[""]."</h4>";
+	echo "<h4>".$msgstr["invalidright"]."</h4>";
 	die;
 }
 ?>
@@ -33,13 +34,27 @@ function Explorar(){
 </script>
 <?php
 include "../common/inc_div-helper.php";
+$img_path="";
+if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
+	$def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
+    if (isset($def["ROOT"]) && trim($def["ROOT"]!="")){
+        $img_path=trim($def["ROOT"]);
+        $name_path=$msgstr["root_from_dr"];
+    }
+}
+if ($img_path==""){
+    $name_path="%path_database%".$arrHttp["base"]."/";
+}
+
 ?>
 <div class="middle form">
 <div class="formContent">
 <div align=center><h3><?php echo $msgstr["uploadfile"] ?></h3>
 <form name=upload action=upload_img.php method=POST enctype='multipart/form-data'>
 <table align=center>
-<tr><td></td><td style='color:blue';><?php echo $msgstr["empty_is_def"].". ".$msgstr["browse"]." ".$msgstr["to_change"];?></td></tr>
+<tr><td></td><td style='color:blue';>
+    <?php echo $msgstr["empty_is_def"]." (".$name_path.").<br>".$msgstr["browse"]." ".$msgstr["to_change"];?>
+</td></tr>
 <tr>
     <td><?php echo $msgstr["storein"]?></td>
     <td><input type=text name=storein size=40 value="<?php if (isset($arrHttp["storein"])) echo $arrHttp["storein"]?>" onfocus=blur()>
