@@ -4,6 +4,7 @@
 20220112 fho4abcd fmt.php->fmt_adm.php
 20220202 fho4abcd improved text strings, more translations
 20220209 fho4abcd Preserve base
+20220214 fho4abcd Marc menu items only for MARC
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -15,8 +16,6 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
-$lang=$_SESSION["lang"];
 include("../common/get_post.php");
 include("../config.php");
 // ARCHIVOS DE LENGUAJE
@@ -195,30 +194,27 @@ if (isset($arrHttp["encabezado"])) {
 </div>
 <?php
 
-$dir_fdt=$db_path.$selbase."/def/".$_SESSION["lang"]."/";
-
-if(is_dir($dir_fdt)) {
+$dir_fdt=$db_path.$selbase."/def/".$lang."/";
+$ldr="";
 
 // para verificar si en la FDT tiene el campo LDR Definido y ver si se presenta el tipo de registro MARC
-if (file_exists($dir_fdt.$selbase.".fdt")) {
-	$fp=file($dir_fdt.$selbase.".fdt");
-} else {
-	$fp=file($db_path.$selbase."/def/".$lang_db."/".$selbase.".fdt");
-}
+if (is_dir($dir_fdt)) {
+    if (file_exists($dir_fdt.$selbase.".fdt")) {
+        $fp=file($dir_fdt.$selbase.".fdt");
+    } else {
+        $fp=file($db_path.$selbase."/def/".$lang_db."/".$selbase.".fdt");
+    }
 
-$ldr="";
-foreach ($fp as $value){
-	$value=trim($value);
-	if (trim($value)!=""){
-		$fdt=explode('|',$value);
-		if ($fdt[0]=="LDR"){
-			$ldr="s";
-			break;
-		}
-	}
-}
-
-
+    foreach ($fp as $value){
+        $value=trim($value);
+        if (trim($value)!=""){
+            $fdt=explode('|',$value);
+            if ($fdt[0]=="LDR"){
+                $ldr="s";
+                break;
+            }
+        }
+    }
 }
 
 // AYUDA EN CONTEXTO E IDENTIFICACIÓN DEL SCRIPT QUE SE ESTÁ EJECUTANDO
@@ -238,14 +234,14 @@ foreach ($fp as $value){
 			<input type=hidden name=base value=<?php echo $selbase;?>>
 			<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
    
-            <h3><?php echo $msgstr["dbadmin_FDT_FMT"]?> (FDT e FMT)</h3>
+            <h3><?php echo $msgstr["dbadmin_FDT_FMT"]?> (FDT / FMT)</h3>
             <ul>
 				<li><a href='javascript:Update("fdt")'><?php echo $msgstr["fdt"]?></a></li>
 				<li><a href='javascript:Update("fdt_new")'><?php echo $msgstr["fdt"]. " (".$msgstr["wosubfields"].")"?></a></li>
 			<?php
 // SI ES UN REGISTRO MARC SE INCLUYE LA OPCION PARA MANEJO DE LOS TIPOS DE REGISTRO DE ACUERDO AL LEADER
 
-			if (isset($ldr)=="s" ){
+			if ($ldr=="s" ){
                 ?>
 				<li><a href=javascript:Update("leader")><?php echo $msgstr["ft_ldr"]?></a></li>
 				<li><a href=javascript:Update("fixedmarc")><?php echo "MARC-".$msgstr["typeofrecord_ff"]?></a></li>
