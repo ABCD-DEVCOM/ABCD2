@@ -5,6 +5,7 @@
 2021-08-29 fho4abcd Restored edit button. lineends
 2022-01-27 fho4abcd Do not show empty buttons for calls by test scripts
 2022-02-07 fho4abcd buttons for default value option+ show buttons if applicable only
+2022-02-14 fh04abcd small html improvements
 */
 
 //echo $arrHttp["ventana"];
@@ -122,11 +123,11 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
 			case "reintentar":
 				if ($OpcionDeEntrada!="captura_bd"){
 					if (isset($arrHttp["toolbar_record"]) and strtoupper($arrHttp["toolbar_record"])=="N"){
-                        echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src=img/toolbarCancelEdit.png alt='".$msgstr["m_cancelar"]."' border=1><a> &nbsp; \n";
+                        echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src=img/toolbarCancelEdit.png alt='".$msgstr["m_cancelar"]."' border=1></a> &nbsp; \n";
 					}else{
-				   		echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src='../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1><a>\n";
+				   		echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["m_cancelar"]."\"><img src='../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1></a>\n";
 					}
-					echo "<a href='javascript:EnviarForma()' title=\"".$msgstr["m_guardar"]."\"><img src='../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg' alt=\"".$msgstr["m_guardar"]."\"><a> &nbsp; \n";
+					echo "<a href='javascript:EnviarForma()' title=\"".$msgstr["m_guardar"]."\"><img src='../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg' alt=\"".$msgstr["m_guardar"]."\"></a> &nbsp; \n";
 					if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tesaurus.rel"))
 						echo "<a href=javascript:RelacionesInversas('check') title=\"".$msgstr["tes_chkinvrel"]."\"><img src=img/import.gif alt=\"".$msgstr["tes_chkinvrel"]."\"></a>\n";
 				}
@@ -134,7 +135,7 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
                 // echo "<input type=button name=capturar value=\"".$msgstr["m_z3950"]."\">\n";
 				break;
             case "valdef":
-				echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["cancel"]."\"><img src='../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1><a>\n";
+				echo " &nbsp; <a href='javascript:top.Menu(\"cancelar\")' title=\"".$msgstr["cancel"]."\"><img src='../../assets/svg/catalog/ic_fluent_pane_close_24_regular.svg' alt='".$msgstr["m_cancelar"]."'  border=1></a>\n";
                 echo " &nbsp; <a href='javascript:EnviarValoresPorDefecto()' title='".$msgstr["valdef_save"]."'><img src='../../assets/svg/catalog/ic_fluent_document_save_24_regular.svg' alt=\"".$msgstr["m_guardar"]."\"></a>\n";
 				break;
 		}

@@ -14,6 +14,7 @@
 2021-11-28 fho4abcd: Ensure trailing slash in ABCD_path
 2022-01-29 rogercgui Added custom abcd.def parameters.
 2022-02-08 rogercgui Added $_REQUEST["lang"] check to decrease the amount of $_REQUEST through the system. Languages should be triggered by the variable $lang
+2022-02-22 fho4abcd  Added check on $_SESSION["lang"] + set $_SESSION["lang"]. This works for old scripts & updated scripts (without any lang settings)
 */
 
 ini_set('error_reporting', E_ALL);
@@ -144,6 +145,10 @@ if (isset($_REQUEST["lang"])){
 } else {
 	$lang='en';
 }
+// If the session has a language: keep that
+if (isset($_SESSION["lang"])) $lang=$_SESSION["lang"];
+$_SESSION["lang"]=$lang;
+
 // Default langue for the databases definition
 if (isset($def["DEFAULT_DBLANG"])){
 	$lang_db=$def["DEFAULT_DBLANG"];

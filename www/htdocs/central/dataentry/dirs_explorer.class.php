@@ -2,6 +2,7 @@
 /* Modification
 20210315 fho4abcd The destination form no longer fixed to "upload" but specified by variable $targetForm.
 20210912 fho4abcd Improved handling of targetForm, replace help button by div-helper, sanitize html
+20220213 fho4abcd Don't show new folder while exploring
 */
 //*****************************************************************
 //** Author: Marius Buivydas                                     **
@@ -114,7 +115,7 @@ global $arrHttp,$img_path,$msgstr,$targetForm;
 		$cont_type="";
 	$source=stripslashes($source);
 	$path=stripslashes($path);
-	if ($arrHttp["Opcion"]!="mostrar"){
+	if ($arrHttp["Opcion"]!="mostrar" && $arrHttp["Opcion"]!="seleccionar"){
 		if ($source!="..")
 			echo "\n<strong>".$path.$source."</strong>\n";
         echo "<br>";

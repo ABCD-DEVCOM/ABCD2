@@ -1,6 +1,6 @@
 # BEGIN ABCD
 
-RewriteEngine On
+RewriteEngine Off
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
