@@ -7,6 +7,7 @@
 linked documents
 2022-01-18 rogercgui added new user-configurable classes
 2022-01-24 rogercgui Included file renaming to avoid accumulation of images in the upload folder. Even without converting the extension the files will have fixed names.
+2022-02-14 fho4abcd Texts for dr_path+ sequence for dr_path+improved table layout+removed redirect (too rigid for dr_path)
 */
 
 
@@ -17,10 +18,9 @@ if (!isset($_SESSION["permiso"])){
 }
 
 //foreach ($_REQUEST AS $var=>$value)  echo "$var=>$value<br>";
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include ("../config.php");
-$lang=$_SESSION["lang"];
+
 include("../common/header.php");
 include("../lang/admin.php");
 include("../lang/soporte.php");
@@ -89,7 +89,6 @@ if (file_exists($db_path."bases.dat")){
 		}
 	}
 }
-
 function databases() {
 	global $lista_bases, $arrHttp, $database_list_v, $database_list_n;
 	$i=-1;
@@ -135,7 +134,8 @@ global $msg_path, $msgstr, $target_dir, $def, $folder_logo;
 		}
 
 		if ($Opt["it"]=="title"){
- 		  echo "</table></div><button type=\"button\" class=\"accordion\" id=\"$key\">".$Opt["Label"]."</button><div class=\"panel\"><table class=\"striped\" cellspacing=8 width=80% align=center >\n";
+ 		  echo "</table></div><button type=\"button\" class=\"accordion\" id=\"$key\">".$Opt["Label"]."</button>";
+          echo "<div class=\"panel\"><table class=\"striped\"  align=center >\n";
  		    continue;
  		}else{
  			echo "<tr>
@@ -264,7 +264,7 @@ global $msg_path, $msgstr, $target_dir, $def, $folder_logo;
 
 		}
 		echo "</td>";
-		echo "<td width=200>";
+		echo "<td>";
 		if (isset($Opt["Tip"])) {
 			echo "<small>".$Opt["Tip"]."</small>";
 		}
@@ -444,10 +444,10 @@ switch ($set_mod){
 	case "dr_path":
 		$ini_vars=array(
 						"GENERAL" => array("it"=>"title","Label"=>$msgstr["set_general_db"]),
-						"ROOT" => array("it"=>"text","size"=>"70","placeholder"=>$db_path,"Tip"=>$msgstr["set_TIP_ROOT"]),											
-						"COLLECTION" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
-						"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
+						"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>$msgstr['set_yes'].";".$msgstr['set_no'],"Tip"=>$msgstr["set_TIP_UNICODE"]),
 						"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed,"Label"=>$cisis_versions_allowed,"Tip"=>$msgstr["set_TIP_CISIS_VERSION"]),
+						"ROOT" => array("it"=>"text","size"=>"70","placeholder"=>$db_path,"Tip"=>$msgstr["set_TIP_ROOT"].$arrHttp["base"]."/root/"),											
+						"COLLECTION" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_COLLECTION"].$arrHttp["base"]."/collection/"),
 						
 
 
@@ -457,17 +457,17 @@ switch ($set_mod){
 						"max_inventory_length" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_max_inventory_length"]),
 						"max_cn_length" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_max_cn_length"]),
 
-						"barcode1reg" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>""),
+						"barcode1reg" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_barcode1reg"]),
 						
 						
 						"TESAURUS"=>array("it"=>"title","Label"=>"Tesaurus"),
-						"tesaurus" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
-						"prefix_search_tesaurus" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
+						"tesaurus" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_tesaurus"]),
+						"prefix_search_tesaurus" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_prefix_search_tesaurus"]),
 						
 						"OTHER"=>array("it"=>"title","Label"=>"Other"),
 						"DIRTREE" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_DIRTREE"]),					
 						"DIRTREE_EXT"=> array("it"=>"text","Options"=>"","size"=>"70","Tip"=>$msgstr["set_TIP_DIRTREE_EXT"]),
-						"leader"=> array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>""),
+						"leader"=> array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_leader"]),
 
 						);
 		$file=$db_path.$arrHttp["base"]."/dr_path.def";
@@ -506,6 +506,7 @@ switch ($arrHttp["Opcion"]){
 
 		$backtoscript="../dbadmin/menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s";
 		include "../common/inc_back.php";
+		include "../common/inc_home.php";
 
 		break;
 }
@@ -642,46 +643,39 @@ function saveDef() {
     echo "<b>".$msgstr["set_APPLY"]."</b><br>";
     $fp=@fopen($file,"w");
     if (!$fp) {
-
-    //Checks for errors	
+        //Checks for errors	
         $contents_error= error_get_last();
         echo "<font color=red><b>".$msgstr["copenfile"]." ".$help."</b> : ".$contents_error["message"];
-    
     } else { 
-
-    //Saves the parameters in the .def file
-
+        //Saves the parameters in the .def file
         foreach ($arrHttp as $key=>$Opt){
            if (substr($key,0,4)=="ini_"){
                 $key=substr($key,4);
- 
                 echo $key."=".$arrHttp["ini_".$key]."<br>";
                 fwrite($fp,$key."=".trim($arrHttp["ini_".$key])."\n");
             }
         }
-                echo '<p id="cursor-line" class="visible">&gt;&gt; <span class="typed-cursor">&#9608;</span></p>';
+        echo '<p id="cursor-line" class="visible">&gt;&gt; <span class="typed-cursor">&#9608;</span></p><br>';
 
-      // Upload and save file names. 
-      $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
-				foreach ($fileslist as $fileimg){
- 				$fieldname=substr($fileimg, strlen("ini_"));
-		 				if (isset($_FILES[$fileimg]["name"])) {
-		 					if ($_FILES[$fileimg]["name"]) {
-							$temp = explode(".", $_FILES[$fileimg]["name"]);
-							$newfilename = $fieldname.'.'. end($temp);
-							$file_name  = $newfilename;
-							if (isset($file_name))
-		 						fwrite($fp,$fieldname."=".$file_name ."\n");
-		 					} else {
-							//fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
-							if (isset($def[$fieldname]))
-							fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
-							}
-							uplodimages($fieldname,$fileimg);  			
-					}
-			}
-
-
+        // Upload and save file names. 
+        $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
+        foreach ($fileslist as $fileimg){
+            $fieldname=substr($fileimg, strlen("ini_"));
+            if (isset($_FILES[$fileimg]["name"])) {
+                if ($_FILES[$fileimg]["name"]) {
+                    $temp = explode(".", $_FILES[$fileimg]["name"]);
+                    $newfilename = $fieldname.'.'. end($temp);
+                    $file_name  = $newfilename;
+                    if (isset($file_name))
+                        fwrite($fp,$fieldname."=".$file_name ."\n");
+                } else {
+                    //fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
+                    if (isset($def[$fieldname]))
+                    fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
+                }
+                uplodimages($fieldname,$fileimg);  			
+            }
+        }
         if (isset($arrHttp["mod_TITLE"])){
             echo "[MODULOS]<BR>";
             fwrite($fp,"[MODULOS]\n");
@@ -690,18 +684,15 @@ function saveDef() {
                     $key=substr($key,4);
                     echo $key."=".$arrHttp["mod_".$key]."<br>";
                     fwrite($fp,$key."=".trim($arrHttp["mod_".$key])."\n");
-
                 }
             }
         }
         fclose($fp);
         
-
-
         echo '<span class="string-highlight">'.$help." - ".$msgstr["updated"].'! </span>';
         //echo "<a href=editar_abcd_def.php?Opcion=".$_REQUEST["Opcion"]."&base=".$_REQUEST["base"].">".$msgstr["edit"]."</a>";
     }
-          echo "</pre>";
+    echo "</pre>";
 }
 
 
@@ -711,8 +702,6 @@ function saveDef() {
  }
 
 ?>
-
-
 <div class="middle">
 	<div class="formContent" >
 
@@ -740,27 +729,19 @@ if (!isset($arrHttp["Accion"])){
 </div>
 </form>
 
-	<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
-		<a class="bt bt-gray" href="../settings/conf_abcd.php?reinicio=s"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
-
+<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
+<a class="bt bt-gray" href="<?php echo $backtoscript;?>"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
 
 <?php	
 } else {
 	saveDef();
-?>
-
-<?php
 	echo '<script type="text/javascript" src="/assets/js/typing.js"></script>';
-	page_redirect();
+	//page_redirect();// Redirection is too rigid
 }
 
 ?>
 	</div>	
-
-
 </div>
-
-
  
 <script>
 // The headings are the main lines of the accordions
@@ -779,6 +760,5 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 </script>
-
 
 <?php include("../common/footer.php");?>
