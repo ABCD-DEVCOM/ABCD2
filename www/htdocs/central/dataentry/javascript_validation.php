@@ -1,4 +1,7 @@
 <?php
+/*
+2022014 fho4abcd Removed extended iso characters from comments
+*/
     //SE CONSTRUYE EL FORMATO DE VALIDACION
     echo "<script>\n" ;
 	echo "var fdt_val= new Array()\n";
@@ -55,7 +58,7 @@ function ValidarTexto(Ctrl,tipo,patron,nombre_c,obligatorio){
 					msg="- "+nombre_c+ " ("+tag+") "+"<?php echo $msgstr["js_dec_period"]?>"
                 }
    				break
-   			case "T":               //FECHA >= fecha del día
+   			case "T":               //FECHA >= fecha del dia
    				var expreg = /^(\d{4})([0][1-9]|[1][0-2])([0][1-9]|[12][0-9]|3[01])$/;
    				if (!expreg.test(valor) )  {
             		msg="- "+nombre_c+ " ("+tag+") "+"<?php echo $msgstr["js_inv_dateformat"]?>"
@@ -113,7 +116,7 @@ function ValidarEntrada(Ctrl,tipo,patron,nombre_c,obligatorio){
 		case "select-one":
 		case "select-multiple":
 			if (Ctrl.selectedIndex==-1 || Ctrl.selectedIndex==0)
-				mens=nombre_c+" ("+t[1]+") "+" debe seleccionar una opción\n"
+				mens=nombre_c+" ("+t[1]+") "+" debe seleccionar una opcion\n"
 			break
 		case "radio":
 		case "checkbox":
@@ -125,7 +128,7 @@ function ValidarEntrada(Ctrl,tipo,patron,nombre_c,obligatorio){
 				}
 			}
 			if (chk=="N"){
-				mens=nombre_c+" ("+t[1]+") "+" debe seleccionar una opción\n"
+				mens=nombre_c+" ("+t[1]+") "+" debe seleccionar una opcion\n"
 			}
 	}
 	return mens}
