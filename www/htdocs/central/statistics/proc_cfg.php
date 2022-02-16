@@ -1,10 +1,13 @@
 <?php
+/*
+20220215 fho4abcd bcak&save button,div-helper 
+*/
 session_start();
 if (!isset($_SESSION["permiso"])) die;
 include("../common/get_post.php");
 include ("../config.php");
-$lang=$_SESSION["lang"];
 // ARCHIVOD DE MENSAJES
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
@@ -18,7 +21,7 @@ $error_2="";
 $fields="";
 $cfg=array();
 $tabs="";
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tabs.cfg";
+$file=$db_path.$arrHttp["base"]."/def/".$lang."/tabs.cfg";
 if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tabs.cfg";
 if (!file_exists($file)){
 	$error_1="S";
@@ -34,7 +37,7 @@ if (!file_exists($file)){
 		}
 	}
 }
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tables.cfg";
+$file=$db_path.$arrHttp["base"]."/def/".$lang."/tables.cfg";
 if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tables.cfg";
 if (!file_exists($file)){
     $error_2="";
@@ -49,10 +52,11 @@ if (!file_exists($file)){
 		}
 	}
 }
-echo "<script>fields='$tabs'</script>\n";
 ?>
+<body>
+<script>fields='<?php echo $tabs;?>'</script>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-<script languaje=javascript>
+<script language=javascript>
 
 //LLEVA LA CUENTA DE TABLAS AGREGADAS A LA LISTA
 total=0
@@ -240,7 +244,6 @@ function Guardar(){
 }
 
 </script>
-<body>
 <?php
 if ($error_1=="S" and $error_2=="S")
 	$error="S";
@@ -254,30 +257,27 @@ if (isset($arrHttp["encabezado"])){
 	$encabezado="";
 }
 echo "<form name=stats method=post>";
-echo "<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["stats_conf"]." - ".$msgstr["exist_proc"].": ".$arrHttp["base"]."</div>
-	<div class=\"actions\">";
-if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){
-	$script="tables_generate.php";
-}else{
-	$script="../dbadmin/menu_modificardb.php";
-}
-	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>";
-if ($error==""){
-	echo "
-	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["save"]."</strong></span></a>";
-}
 ?>
-</div><div class="spacer">&#160;</div></div>
-<div class="helper">
-<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<font color=white>&nbsp; &nbsp; Script: proc_cfg.php
-</font>
-	</div>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr["stats_conf"]." - ".$msgstr["exist_proc"].": ".$arrHttp["base"];?>
+    </div>
+	<div class="actions">
+        <?php
+        if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
+            $backtoscript="tables_generate.php";
+        else
+            $backtoscript="../dbadmin/menu_modificardb.php";//old status where variables were defined in that script
+        include "../common/inc_back.php";
+        $savescript="javascript:Guardar()";
+        include "../common/inc_save.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
 <div class="middle form">
 	<div class="formContent">
 <?php
@@ -287,7 +287,7 @@ if ($error=="S"){
 	die;
 }
 //LECTURA DE LOS CUADROS Y TABLA YA DEFINIDOS
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/proc.cfg";
+$file=$db_path.$arrHttp["base"]."/def/".$lang."/proc.cfg";
 if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/proc.cfg";
 $total=-1;
 echo  "<div id=tabs>\n";
@@ -306,6 +306,7 @@ foreach ($fp as $value) {
 		$total++;
 		$tt=explode('||',$value);
 		echo "<table  width=800 bgcolor=#cccccc border=0 name=tbst>";
+        echo "<tr>";
 		echo "<td rowspan=3 bgcolor=white valign=top><a href=javascript:DeleteElement(".$total.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";
 		echo "<td width=300 bgcolor=white>".$msgstr["title"]."</td>";
 		echo "<td bgcolor=white><input type=text name=tit id=tit size=120 value=\"".$tt[0]."\"></td>";
@@ -338,9 +339,6 @@ foreach ($fp as $value) {
 
 echo "<script>total=$total</script>\n";
 ?>
-		<strong></strong>
-
-
         </div>
         <a href='javascript:AddElement()'><?php echo $msgstr["add"]?></a>
 	</div>
@@ -354,11 +352,9 @@ if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado valu
 if (isset($arrHttp["from"])) echo "<input type=hidden name=from value=".$arrHttp["from"].">\n";
 ?>
 </form>
-<?php
-include("../common/footer.php");
-?>
-</body>
-</html>
 <script>
 	if (total==-1) AgregarTabla()
 </script>
+<?php
+include("../common/footer.php");
+?>
