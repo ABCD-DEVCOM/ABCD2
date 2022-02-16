@@ -1,10 +1,14 @@
 <?php
+/*
+20220215 fho4abcd back&save button,div-helper + error if nothing found
+20220216 fho4abcd !! This code contains errors and requires debugging
+*/
 session_start();
 if (!isset($_SESSION["permiso"])) die;
 include("../common/get_post.php");
 include ("../config.php");
-$lang=$_SESSION["lang"];
 // ARCHIVOD DE MENSAJES
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
@@ -25,8 +29,8 @@ foreach ($fp as $value) {
 	$value=trim($value);
 	if ($value!=""){
 		$b=explode('|',$value);
-		if (file_exists($db_path.$b[0]."/def/".$_SESSION["lang"]."/proc.cfg")){
-			$fproc=file($db_path.$b[0]."/def/".$_SESSION["lang"]."/proc.cfg");
+		if (file_exists($db_path.$b[0]."/def/".$lang."/proc.cfg")){
+			$fproc=file($db_path.$b[0]."/def/".$lang."/proc.cfg");
 			$ix=-1;
 			foreach ($fproc as $procesos){
 				if (trim($procesos)!=""){
@@ -50,10 +54,9 @@ if (file_exists($file)){
 		}
 	}
 }
-//echo "<xmp>";print_r($bases_proc);echo"</xmp>" ;
-//die;
-echo "<script>fields='$tabs'</script>\n";
 ?>
+<body>
+<script>fields='<?php echo $tabs;?>'</script>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script languaje=javascript>
 
@@ -94,7 +97,6 @@ function Guardar(){
 }
 
 </script>
-<body>
 <?php
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
 if (isset($arrHttp["encabezado"])){
@@ -103,39 +105,39 @@ if (isset($arrHttp["encabezado"])){
 }else{
 	$encabezado="";
 }
-echo "<form name=stats method=post>";
-echo "<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["stats_conf"]." - ".$msgstr["stats_gen"]."</div>
-	<div class=\"actions\">";
-if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){
-	$script="tables_generate.php";
-}else{
-	$script="../dbadmin/menu_modificardb.php";
-}
-	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>";
-if ($error==""){
-	echo "
-	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["save"]."</strong></span></a>";
-}
 ?>
-</div><div class="spacer">&#160;</div></div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/stats/stats_config_tabs.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr["stats_conf"]." - ".$msgstr["stats_gen"];?>
+    </div>
+	<div class="actions">
+        <?php
+        if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
+            $backtoscript="tables_generate.php";
+        else
+            $backtoscript="../dbadmin/menu_modificardb.php";//old status where variables were defined in that script
+        include "../common/inc_back.php";
+        $savescript="javascript:Guardar()";
+        include "../common/inc_save.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/stats/stats_config_tabs.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: stats_gen_cfg.php";
+include "../common/inc_div-helper.php";
 ?>
-</font>
-	</div>
 <div class="middle form">
 	<div class="formContent">
 <?php
 //LECTURA DE LOS CUADROS Y TABLA YA DEFINIDOS
+if ( count($bases_proc)==0) {
+    echo $msgstr["no_procfiles_in_system"];
+    echo "</div></div>";
+    include("../common/footer.php");
+    die;
+}    
+echo "<form name=stats method=post>";
+
 echo "<table  width=800 bgcolor=#eeeeee border=0 name=tbst>\n";
 foreach ($bases_proc as $base=>$proc) {
 	echo "<tr><td>Database</td><td>$base</td></tr>";
@@ -169,6 +171,7 @@ echo "<script>total=$total</script>\n";
 	</div>
 </div>
 </form>
+<?php echo "<h4>Script under construction, so sorry</h4>";?>
 <form name=enviar method=post action=stats_gen_update.php>
 <input type=hidden name=base>
 <input type=hidden name=ValorCapturado>
@@ -177,11 +180,9 @@ if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado valu
 if (isset($arrHttp["from"])) echo "<input type=hidden name=from value=".$arrHttp["from"].">\n";
 ?>
 </form>
-<?php
-include("../common/footer.php");
-?>
-</body>
-</html>
 <script>
 	if (total==-1) AgregarTabla()
 </script>
+<?php
+include("../common/footer.php");
+?>

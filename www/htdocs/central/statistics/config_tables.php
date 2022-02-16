@@ -1,18 +1,23 @@
 <?php
+/*
+202202216 fho4abcd backbutton,div-helper
+*/
 session_start();
 if (!isset($_SESSION["permiso"])) die;
 include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
 // ARCHIVOD DE MENSAJES
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
 // ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
-<script languaje=javascript>
+<script language=javascript>
 //LEE LA FDT O LA FST
 function Ayuda(hlp){
 	switch (hlp){
@@ -242,7 +247,6 @@ function Guardar(){
 }
 
 </script>
-<body>
 <?php
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
 if (isset($arrHttp["encabezado"])){
@@ -251,29 +255,30 @@ if (isset($arrHttp["encabezado"])){
 }else{
 	$encabezado="";
 }
-echo "<form name=stats method=post>";
-echo "<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["stats_conf"]." - ".$msgstr["pre_tabs"].": ".$arrHttp["base"]."</div>
-	<div class=\"actions\">";
-if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
-	$script="tables_generate.php";
-else
-	$script="../dbadmin/menu_modificardb.php";
-	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>
-	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["save"]."</strong></span></a>";
 ?>
-</div><div class="spacer">&#160;</div></div>
-<div class="helper">
-<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp; &nbsp;
-<font color=white>&nbsp; &nbsp; Script: config_tables.php
-</font>
-	</div>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr["stats_conf"]." - ".$msgstr["pre_tabs"].": ".$arrHttp["base"];?>
+    </div>
+	<div class="actions">
+        <?php
+        if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
+            $backtoscript="tables_generate.php";
+        else
+            $backtoscript="../dbadmin/menu_modificardb.php";//old status where variables were defined in that script
+        include "../common/inc_back.php";
+        $savescript="javascript:Guardar()";
+        include "../common/inc_save.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
 <div class="middle form">
 	<div class="formContent">
+    <form name=stats method=post>
 		<table width=950  bgcolor=#bbbbbb border=0 cellpadding=0 >
 			<tr>
 			<td colspan=6 bgcolor=white><?php echo $msgstr["pre_tabs_pft"];?></td>
@@ -283,12 +288,12 @@ echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
 			<td width=255 valign=top><strong><?php echo $msgstr["title"]?></strong></td>
 			<td width=140 valign=top><strong><?php echo $msgstr["rows"]?></strong></td>
 			<td width=140 valign=top><strong><?php echo $msgstr["cols"]?></strong></td>
-			<td width=300><strong><?php echo $msgstr["pft_ext"]?></td>
+			<td width=300><strong><?php echo $msgstr["pft_ext"]?></strong></td>
 			<td nowrap valign=right ><?php echo $msgstr["date_in"]?></td>
             </tr>
 		</table>
-        <div id=rows>
- <?php
+    <div id=rows>
+    <?php
  	$total=-1;
  	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tables.cfg";
  	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tables.cfg";
@@ -336,21 +341,15 @@ echo "<img src=\"../../assets/images/defaultButton_iconBorder.gif\" />
  				echo "<td bgcolor=white nowrap valign=top>";
  				echo "<input type=radio name=date_in_$ix value='no_date' $sel1>".$msgstr["no_date"]. "<br>";
      			echo "<input type=radio name=date_in_$ix value='rows' $sel2>".$msgstr["rows"]. " <input type=radio name=date_in_$ix value='cols' $sel3>".$msgstr["cols"];
-               echo "</td></tr>";
+                echo "</td></tr>\n";
  			}
-
  	}
+    echo "</table>\n";
+    ?>
+    </div>
+    <a href="javascript:AddElement('rows')"><?php echo $msgstr["add"]?></a>
+    </form>
 
-
-    echo "</table>";
- ?>
-        </div>
-
-		<a href="javascript:AddElement('rows')"><?php echo $msgstr["add"]?></a>
-
-	</div>
-</div>
-</form>
 <form name=enviar method=post action=config_tables_update.php>
 <input type=hidden name=base>
 <input type=hidden name=ValorCapturado>
@@ -361,9 +360,9 @@ if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado valu
 if (isset($arrHttp["from"])) echo "<input type=hidden name=from value=".$arrHttp["from"].">\n";
 ?>
 </form>
+</div>
+</div>
 <?php
-include("../common/footer.php");
 echo "<script>total=$total</script>\n";
+include("../common/footer.php");
 ?>
-</body>
-</html>

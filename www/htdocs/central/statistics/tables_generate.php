@@ -1,6 +1,6 @@
 <?php
 /* Modifications
-20211216 fho4abcd Backbutton & helper by included file
+20211216 fho4abcd Backbutton & helper by included file+ improve date prefix
 */
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
@@ -19,8 +19,8 @@ $backtoscript="../common/inicio.php"; // The default return script
 $x=explode('|',$arrHttp["base"]);
 $arrHttp["base"]=$x[0];
 $date_prefix="";
-if (file_exists($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg")){
-	$fp=file($db_path."/".$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg");
+if (file_exists($db_path."/".$arrHttp["base"]."/def/".$lang."/date_prefix.cfg")){
+	$fp=file($db_path."/".$arrHttp["base"]."/def/".$lang."/date_prefix.cfg");
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$date_prefix=trim($value);
@@ -329,29 +329,11 @@ function Configure(Option){
 			document.configure.action="config_tables.php"
 			break
 		case "date_prefix":
-			document.forma1.date_prefix.style="border: 1px solid red;"
-			document.forma1.date_prefix.focus()
-			document.forma1.date_prefix.onclick=null
-			Ctrl=document.getElementById("label_dp")
-			if (Ctrl.innerHTML=="<?php echo $msgstr['save']?>"){
-				date_prefix=document.forma1.date_prefix.value
-				date_prefix=Trim(date_prefix)
-				if (date_prefix==""){
-					alert("<?php echo $msgstr['miss_dp']?>")
-					return
-				}
-				base="<?php echo $arrHttp["base"]?>"
-				msgwin=window.open("date_prefix_update.php?date_prefix="+date_prefix+"&base="+base,"dp","width=300,height=100")
-				Ctrl.innerHTML="<?php echo $msgstr['change']?>"
-				document.forma1.date_prefix.style="border: 0px solid white;"
-
-				document.forma1.date_prefix.blur()
-				document.forma1.date_prefix.onclick= function (){document.forma1.date_prefix.blur()}
-				return
-			}
-			Ctrl.innerHTML="<?php echo $msgstr['save']?>"
-			return
-			break
+            date_prefix=document.forma1.date_prefix.value
+            date_prefix=Trim(date_prefix)
+            document.configure.date_prefix.value=date_prefix
+			document.configure.action="date_prefix_update.php"
+            break
 	}
 	document.configure.submit()
 }
@@ -419,7 +401,7 @@ if (isset($arrHttp["encabezado"])){
     		"."<select name=proc  style=\"width:300px\">
     		<option value=''>";
     unset($fp);
-	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/proc.cfg";
+	$file=$db_path.$arrHttp["base"]."/def/".$lang."/proc.cfg";
 	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/proc.cfg";
 	if (!file_exists($file)){
 		$error="S";
@@ -452,7 +434,7 @@ if (isset($arrHttp["encabezado"])){
     		<select name=tables  style=\"width:300\">
     		<option value=''>";
     unset($fp);
-	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tabs.cfg";
+	$file=$db_path.$arrHttp["base"]."/def/".$lang."/tabs.cfg";
 	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tabs.cfg";
 	if (!file_exists($file)){
 		$error="S";
@@ -467,7 +449,7 @@ if (isset($arrHttp["encabezado"])){
 			}
 		}
 	}
-	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tables.cfg";
+	$file=$db_path.$arrHttp["base"]."/def/".$lang."/tables.cfg";
 	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tables.cfg";
 	if (!file_exists($file)){
 		$error="S";
@@ -502,7 +484,7 @@ if (isset($arrHttp["encabezado"])){
 
  <?php
  	unset($fp);
-	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/stat.cfg";
+	$file=$db_path.$arrHttp["base"]."/def/".$lang."/stat.cfg";
 	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/stat.cfg";
 	if (!file_exists($file)){
 		$error="S";
@@ -615,11 +597,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"
             <li><a href=javascript:Configure("stats_tab")><?php echo $msgstr["tab_list"]?></a></li>
             <li><a href=javascript:Configure("stats_proc")><?php echo $msgstr["exist_proc"]?></a></li>
             <li><a href=javascript:Configure("stats_gen")><?php echo $msgstr["stats_gen"]?></a><p></li>
-            <li>
-            <?php
-			echo $msgstr["date_pref"].": <input type=text name=date_prefix size=5 style='border:0px white;' onclick=javascript:blur() value=$date_prefix> ";
-			echo "<a href=javascript:Configure('date_prefix')><div id=label_dp style='display:inline;clear:both'>".$msgstr["change"]."</div></a>";
-			?>
+            <li><?php echo $msgstr["date_pref"];?>: <input type=text name=date_prefix size=5 value=<?php echo $date_prefix?>>
+                 <button class="bt-green" type="button" title="<?php echo $msgstr["savedateprefix"]?>" onclick="javascript:Configure('date_prefix')">
+                    <i class="far fa-save"></i> <?php echo $msgstr["savedateprefix"]?></button>
 			</li>
     	</ul>
     	</div>
@@ -636,6 +616,7 @@ if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"
 	<input type=hidden name=from value="statistics">
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 	<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
+    <input type=hidden name=date_prefix>
 </form>
 <?php
 include("../common/footer.php");
