@@ -1,6 +1,7 @@
 <?php
 /*
-20220215 fho4abcd back bautton+div-helper+sanitize html
+20220215 fho4abcd back backbutton+div-helper+sanitize html
+20220220 fho4abcd resolved small error
 */
 session_start();
 if (!isset($_SESSION["permiso"])) die;
@@ -17,6 +18,7 @@ include("../common/header.php");
 // LECTURA DE LA LISTA DE VARIABLES YA DEFINIDAS (STATS.CFG)
 $total=-1;
 $error="";
+$fields="";
 $cfg=array();
 $file=$db_path.$arrHttp["base"]."/def/".$lang."/stat.cfg";
 if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/stat.cfg";
@@ -25,7 +27,6 @@ if (!file_exists($file)){
 }else{
 	$fp=file($file);
 	//$ix=-1;
-	$fields="";
 	foreach ($fp as $value) {
 		$value=trim($value);
 		if ($value!=""){

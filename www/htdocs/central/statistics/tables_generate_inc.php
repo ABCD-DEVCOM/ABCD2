@@ -1,4 +1,7 @@
 <?php
+/*
+20220220 fho4abcd Removed option to search by date+extra translations
+*/
 function LeerVariables($db_path,$arrHttp,$lang_db){
 	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/stat.cfg";
 	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/stat.cfg";
@@ -161,7 +164,7 @@ function LosMasPrestados($tab,$maximo){
 		else
 			$total_cols=$total_cols+$value;
 	}
-	echo "<tr><td>Total</td><td>$total_cols</td></tr></table>\n";
+	echo "<tr><td>".$msgstr["total"]."</td><td>$total_cols</td></tr></table>\n";
 }
 
 function ConstruirFormato($arrHttp,$lang_db,$tab_vars,$db_path){
@@ -305,27 +308,6 @@ global $tabla,$tit_proc,$tabs,$tipo,$filter_date;
 function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){
 global $msgstr;
 	switch ($_REQUEST["Opcion"]){
-		case "FECHAS":
-			$file_date=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg";
-			if (!file_exists($file_date)){
-				echo $msgstr["miss_dp"];
-				die;
-			}
-			$fp=file($file_date);
-			foreach ($fp as $value){
-				$value=trim($value);
-				if ($value!=""){
-					$date_prefix=$value;
-					break;
-				}
-			}
-		    $Expresion=$date_prefix.$_REQUEST["year_from"];
-		    if (isset($_REQUEST["month_from"]))
-		    	$Expresion.=$_REQUEST["month_from"];
-			$Expresion=$Expresion;
-			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=buscar&Formato=".$Formato;
-			$query.="&Expresion=$Expresion";
-			break;
 		case "MFN":
 			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=rango&Formato=".$Formato;
 			$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
@@ -342,6 +324,7 @@ global $msgstr;
 }
 
 function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){
+    global $msgstr;
 	for ($i=0;$i<count($tab);$i++){
 		$t=explode("|",$tabs[$i]);
 		$tit=$t[0];
@@ -380,7 +363,7 @@ function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){
 		echo "<tr><th>$filas</th>";
 		if (isset($cols_label))
 			foreach ($cols_label as $key=>$c) echo "<th>$key</th>";
-		echo "<th>Total</th>\n";
+		echo "<th>".$msgstr["total"]."</th>\n";
 
 		echo "</tr>";
 	    $total_cols=array();
@@ -421,7 +404,7 @@ function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){
 			echo "</tr>\n";
 
 		}
-		echo "<tr><td>Total</td>";
+		echo "<tr><td>".$msgstr["total"]."</td>";
 		$tgen=0;
 		if (isset($cols_label)){
 			foreach ($cols_label as $ixcol){
