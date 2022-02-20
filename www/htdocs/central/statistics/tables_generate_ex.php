@@ -120,10 +120,6 @@ include "../common/inc_div-helper.php";
 <div class="middle form">
 	<div class="formContent">
 
-<dd><?php echo $msgstr["sendto"].": ";?>
-<a href='javascript:SendTo("W")'><?php echo $msgstr["wks"];?></a> &nbsp; | &nbsp;
-<a href='javascript:SendTo("D")'><?php echo $msgstr["doc"];?></a> &nbsp; | &nbsp;
-<a href='javascript:SendTo("P")'><?php echo $msgstr["prn"];?></a> &nbsp; | &nbsp;
 <div id=results>
 
 <script>Pie="<?php echo $Pie;?>"</script>
@@ -141,10 +137,16 @@ ConstruirSalida($tab,$tabs,$tipo,$rows,$cols);
 
 ?>
 </div></div>
-<dd><?php echo $msgstr["sendto"].": ";?>
-<a href='javascript:SendTo("W")'><?php echo $msgstr["wks"];?></a> &nbsp; | &nbsp;
-<a href='javascript:SendTo("D")'><?php echo $msgstr["doc"];?></a> &nbsp; | &nbsp;
-<a href='javascript:SendTo("P")'><?php echo $msgstr["prn"];?></a> &nbsp; | &nbsp;
+<?php echo $msgstr["sendto"].": ";?> &nbsp;
+<button class="bt-blue" type="button"
+    title="<?php echo $msgstr["wks"]?>" onclick='javascript:SendTo("W")'>
+    <i class="fa fa-file-excel"></i> <?php echo $msgstr["wks"]?></button> &nbsp;
+<button class="bt-blue" type="button"
+    title="<?php echo $msgstr["doc"]?>" onclick='javascript:SendTo("D")'>
+    <i class="fa fa-file-word"></i> <?php echo $msgstr["doc"]?></button> &nbsp;
+<button class="bt-blue" type="button"
+    title="<?php echo $msgstr["openwindow"]?>" onclick='javascript:SendTo("P")'>
+    <i class="fa fa-file-alt"></i> <?php echo $msgstr["openwindow"]?></button>
 <?php
 //if (!isset($arrHttp["proc"]))echo "<a href=javascript:SendTo(\"AG\")>".$msgstr["ag"]."</a> &nbsp; | &nbsp; ";
 //echo "<a href=javascript:SendTo(\"NAG\")>".$msgstr["nag"]."</a> &nbsp; | &nbsp; ";
