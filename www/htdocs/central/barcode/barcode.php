@@ -1,4 +1,7 @@
 <?php
+/*
+20220221 fho4abcd backbutton,divhelper, lineends, newlook for config links+improved feedback
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -11,23 +14,28 @@ $cm2em=2.37106301584;
 
 
 include ("../common/header.php");
+include ("../lang/reports.php");
 include ("../lang/soporte.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
-include ("../lang/reports.php");
 include ("configure.php");
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 function Enviar(){
-	document.forma1.target=""	if (document.forma1.output[0].checked || document.forma1.output[3].checked){		msgwin=window.open("","display","width=800,height=600,scrollbars,menubar,toolbar,resizable");
+	document.forma1.target=""
+	if (document.forma1.output[0].checked || document.forma1.output[3].checked){
+		msgwin=window.open("","display","width=800,height=600,scrollbars,menubar,toolbar,resizable");
 		document.forma1.target="display"
-		msgwin.focus()	}
-	document.forma1.submit()}
+		msgwin.focus()
+	}
+	document.forma1.submit()
+}
 function PorNumeroClasificacion(){
 	classification_from=Trim(document.forma1.classification_from.value)
-	classification_to=Trim(document.forma1.classification_to.value)    if (Trim(classification_from)=="" || Trim(classification_to)==""){
+	classification_to=Trim(document.forma1.classification_to.value)
+    if (Trim(classification_from)=="" || Trim(classification_to)==""){
     	alert("<?php echo $msgstr["range_classification_invalid"]?>")
     	return
     }
@@ -38,7 +46,8 @@ function PorNumeroClasificacion(){
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="clasificacion"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
 function PorNumeroControl(){
 	control_from=Trim(document.forma1.control_from.value)
@@ -54,9 +63,11 @@ function PorNumeroControl(){
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="control"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
-function PorNumeroInventario(){    inventory_from=Trim(document.forma1.inventory_from.value)
+function PorNumeroInventario(){
+    inventory_from=Trim(document.forma1.inventory_from.value)
 	inventory_to=Trim(document.forma1.inventory_to.value)
     if (Trim(inventory_from)=="" || Trim(inventory_to)==""){
     	alert("<?php echo $msgstr["range_inventory_invalid"]?>")
@@ -69,7 +80,8 @@ function PorNumeroInventario(){    inventory_from=Trim(document.forma1.inventor
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="inventario"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
 function PorListaInventario(){
     inventory_list=Trim(document.forma1.inventory_list.value)
@@ -80,15 +92,18 @@ function PorListaInventario(){
     	return
     }
     a=inventory_list.split(',')
-    if (a.length>100){    	alert("<?php echo $msgstr["list_inventory_invalid"]?>")
-    	return    }
+    if (a.length>100){
+    	alert("<?php echo $msgstr["list_inventory_invalid"]?>")
+    	return
+    }
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="lista_inventario"
     document.forma1.copies.value="<?php echo $copies?>"
 	Enviar()
 }
 
-function PorFechaIngreso(){    date_from=Trim(document.forma1.date_from.value)
+function PorFechaIngreso(){
+    date_from=Trim(document.forma1.date_from.value)
 	date_to=Trim(document.forma1.date_to.value)
     if (Trim(date_from)=="" || Trim(date_to)==""){
     	alert("<?php echo $msgstr["range_date_invalid"]?>")
@@ -101,13 +116,20 @@ function PorFechaIngreso(){    date_from=Trim(document.forma1.date_from.value)
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="date"
     document.forma1.copies.value="<?php echo $copies?>"
-	Enviar()}
+	Enviar()
+}
 
-function PorRangoMfn(){	mfn_from=Trim(document.forma1.mfn_from.value)
-	mfn_to=Trim(document.forma1.mfn_to.value)    if (Trim(mfn_from)=="" || Trim(mfn_to)=="" || mfn_from==0 || mfn_to==0 ){    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
-    	return    }
-    if (mfn_to<mfn_from){    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
-    	return    }
+function PorRangoMfn(){
+	mfn_from=Trim(document.forma1.mfn_from.value)
+	mfn_to=Trim(document.forma1.mfn_to.value)
+    if (Trim(mfn_from)=="" || Trim(mfn_to)=="" || mfn_from==0 || mfn_to==0 ){
+    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
+    	return
+    }
+    if (mfn_to<mfn_from){
+    	alert("<?php echo $msgstr["range_mfn_invalid"]?>")
+    	return
+    }
     document.forma1.base.value="<?php echo $arrHttp["base"]?>"
     document.forma1.Opcion.value="mfn"
     document.forma1.copies.value="<?php echo $copies?>"
@@ -132,41 +154,26 @@ function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repe
 	return
 }
 </script>
-<?php
-$ayuda="barcode.html";
-?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["barcode"].": ".$arrHttp["base"]?>
+        <?php echo $msgstr["barcode"].": ".$arrHttp["base"]?>
 	</div>
-
 	<div class="actions">
-<?php
-if (isset($arrHttp["Mfn"])){	echo "<a href=\"javascript:top.Menu('same')\" class=\"defaultButton backButton\">";}else{
-	echo "<a href=\"menu.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-}
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
-	</div>
+        <?php
+        if (isset($arrHttp["Mfn"])){
+            $backtoscript="javascript:top.Menu('same')";
+        }else{
+            $backtoscript="../barcode/menu.php";
+        }
+        include "../common/inc_back.php";
+        ?>
+    </div>
 	<div class="spacer">&#160;</div>
-	</div>
-
-
-
 </div>
-
-<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "&nbsp; &nbsp;<a href=\"http://abcdwiki.net/wiki/es/index.php?title=Etiquetas\" target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: barcode/barcode.php";
+<?php
+$ayuda="barcode.html";
+include "../common/inc_div-helper.php";
 ?>
-</font>
-</div>
 <div class="middle form">
 	<div class="formContent">
 <?php
@@ -174,21 +181,44 @@ echo "<font color=white>&nbsp; &nbsp; Script: barcode/barcode.php";
 $base_inventory=$arrHttp["base"];
 $base_classification=$arrHttp["base"];
 $bar_c=array();
-if (!file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/barcode.conf")){
+$shortfile=$arrHttp["base"]."/pfts/".$lang."/".$arrHttp["tipo"].".conf";
+if (!file_exists($db_path.$shortfile)){
 	echo "<h4>".$msgstr["barcode_conf"]."</h4>";
-	echo "<img src=../images/tools.png width=35 align=middle><a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=barcode><font size=3><strong>".$msgstr["configure"]." ".$msgstr["barcode"]."</strong></font></a><p>";
-	echo "<img src=../images/tools.png width=35 align=middle><a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=lomos><font size=3><strong>".$msgstr["configure"]." ".$msgstr["barcode_lomos"]."</strong></font></a><p>";
-	echo "<img src=../images/tools.png width=35 align=middle><a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=etiquetas><font size=3><strong>".$msgstr["configure"]." ".$msgstr["barcode_etiquetas"]."</strong></font></a><p>";
+    if ( $arrHttp["tipo"]=="barcode" ) {
+        ?>
+        <br> &nbsp; &nbsp; <i class="fa fa-cog"></i>
+            <a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=barcode>
+               <strong><?php echo $msgstr["configure"]." ".$msgstr["barcode"];?></strong></a>
+               &nbsp; &nbsp; &rarr; <?php echo $shortfile?>
+    <?php } elseif ($arrHttp["tipo"]=="lomos" ) {
+        ?>
+        <br> &nbsp; &nbsp; <i class="fa fa-cog"></i>
+            <a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=lomos>
+               <strong><?php echo $msgstr["configure"]." ".$msgstr["barcode_lomos"];?></strong></a>
+               &nbsp; &nbsp; &rarr; <?php echo $shortfile?>
+    <?php } else {
+        ?>
+        <br> &nbsp; &nbsp; <i class="fa fa-cog"></i>
+            <a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=etiquetas>
+               <strong><?php echo $msgstr["configure"]." ".$msgstr["barcode_etiquetas"];?></strong></a>
+               &nbsp; &nbsp; &rarr; <?php echo $shortfile?>
+    <?php
+    }
 	$err="Y";
-}else{	$err="";}
+}else{
+	$err="";
+}
 
-if ($err!=""){	echo "</div></div>";
+if ($err!=""){
+	echo "</div></div>";
 	include("../common/footer.php");
-	die;}
+	die;
+}
 
 echo "<form name=forma1 action=barcode_ex.php method=post onSubmit='javascript:return false'>";
-echo "<font size=3><strong>Tipo de etiqueta: ";
-switch ($arrHttp["tipo"]){	case "barcode":
+echo "<font size=3><strong>".$msgstr["barcode_type"].": ";
+switch ($arrHttp["tipo"]){
+	case "barcode":
 		echo $msgstr["barcode"];
 		break;
 	case "lomos":
@@ -198,22 +228,32 @@ switch ($arrHttp["tipo"]){	case "barcode":
 		echo $msgstr["barcode_etiquetas"];
 		break;
 }
-echo "</strong></font><p>";
-if (!isset($arrHttp["Mfn"]))
-	echo "<img src=../images/tools.png width=35 align=middle><a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=".$arrHttp["tipo"]."><font size=3><strong>".$msgstr["configure"]."</strong></font></a><p>";
-echo "<font size=3><strong>".$msgstr["sendto"].": "."</strong></font>";
-echo "&nbsp; &nbsp; <input type=radio name=output value=display checked >".$msgstr["display"];
-echo "&nbsp; &nbsp; <input type=radio name=output value=doc>".$msgstr["doc"];
-echo "&nbsp; &nbsp; <input type=radio name=output value=txt>".$msgstr["txt_file"];
-echo "&nbsp; &nbsp; <input type=radio name=output value=txt_print>".$msgstr["txt_print"];
-echo "<p>";
+
+echo "</strong></font><p>";
+if (!isset($arrHttp["Mfn"])) {
+    ?>
+    <i class="fa fa-cog"></i>
+    <a href=barcode_conf.php?base=<?php echo $arrHttp["base"];?>&tipo=<?php echo $arrHttp["tipo"];?>>
+       <strong><?php echo $msgstr["configure"];?></strong></a><br>
+    <?php
+}
+?>
+<br>
+<strong><?php echo $msgstr["sendto"].": ";?></strong>
+&nbsp; &nbsp; <input type=radio name=output value=display checked > <?php echo $msgstr["display"];?>
+&nbsp; &nbsp; <input type=radio name=output value=doc> <?php echo $msgstr["doc"];?>
+&nbsp; &nbsp; <input type=radio name=output value=txt> <?php echo $msgstr["txt_file"];?>
+&nbsp; &nbsp; <input type=radio name=output value=txt_print> <?php echo $msgstr["txt_print"];?>
+<br><br>
+<?php
 
 
 echo "<input type=hidden name=Indice>";
 echo "<input type=hidden name=base>";
 echo "<input type=hidden name=Opcion>";
 echo "<input type=hidden name=copies>";
-if (!isset($arrHttp["Mfn"])){	echo "<table><td valign=top>";
+if (!isset($arrHttp["Mfn"])){
+	echo "<table><td valign=top>";
 	echo "<font size=3><strong>".$msgstr["r_recsel"]."&nbsp; &nbsp; </strong></font>";
 	echo "</td><td>";
 	echo "<table>";
@@ -293,9 +333,11 @@ if (!isset($arrHttp["Mfn"])){	echo "<table><td valign=top>";
 	echo "<td><input type=submit name=mfn value=".$msgstr["entrar"]." onClick='javascript:PorRangoMfn()'></td>";
 	echo "</tr>";
 	echo "</tr>";
-}else{	echo "<input type=hidden name=mfn_from size=30 value=".$arrHttp["Mfn"].">\n";
+}else{
+	echo "<input type=hidden name=mfn_from size=30 value=".$arrHttp["Mfn"].">\n";
 	echo "<input type=hidden name=mfn_to size=30 value=".$arrHttp["Mfn"].">\n";
-	echo "<input type=submit name=mfn value=".$msgstr["entrar"]." onClick='javascript:PorRangoMfn()'>";}
+	echo "<input type=submit name=mfn value=".$msgstr["entrar"]." onClick='javascript:PorRangoMfn()'>";
+}
 echo "<input type=hidden name=tipo value=".$arrHttp["tipo"].">\n";
 echo "</form>";
 
@@ -305,7 +347,6 @@ echo "</table></td></table>";
 	</div>
 </div>
 <?php
-Include("../common/footer.php");
+include("../common/footer.php");
 ?>
-</Body>
-</Html>
+
