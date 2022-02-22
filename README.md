@@ -51,7 +51,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![Captura de tela 2021-07-03 14:44:08](https://user-images.githubusercontent.com/20482054/124362745-35c94300-dc0d-11eb-8dfb-c07b6b0b703f.png)
+![module_cataloging](https://user-images.githubusercontent.com/64411779/155194847-23ab0212-b310-41cf-942b-d11730b0a218.jpg)
 
 
 Acronym **ABCD** stands for:
