@@ -1,6 +1,7 @@
 <?php
 /*
 20220214 fho4abcd Do not use DOCUMENT_ROOT but the database base+ allow %path_database%
+20220224 fho4abcd solve indexing
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -50,6 +51,7 @@ if (!isset($ext_allowed)){	//extension allowed for uploading files (used in dat
 	$ext_allowed=array("jpg","gif","png","pdf","doc","docx","xls","xlsx","odt");}
 $lang=$_SESSION["lang"];
 include("../lang/admin.php");
+include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 
 function NoImage(){	global $msgstr,$arrHttp;
