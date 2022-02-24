@@ -2,6 +2,7 @@
 /*
 20210914 fho4abcd Send option "explorar" to the folder exploration, improve html
 20220214 fho4abcd message if no permission. Improved feedback message
+20220224 fho4abcd ensure traling / if root specified in dr_path
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -40,6 +41,9 @@ if (file_exists($db_path.$arrHttp["base"]."/dr_path.def")){
     if (isset($def["ROOT"]) && trim($def["ROOT"]!="")){
         $img_path=trim($def["ROOT"]);
         $name_path=$msgstr["root_from_dr"];
+        if (substr($img_path,-1)!="/" && substr($img_path,-1)!="\\" ) {
+            $img_path.="/";
+        }
     }
 }
 if ($img_path==""){
