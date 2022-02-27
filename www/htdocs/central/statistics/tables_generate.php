@@ -4,6 +4,7 @@
 20220220 fho4abcd Make search for MFN and by expression equal to Reports.
 20220220 fh04abcd The option to search by date is covered by expression (and better) : removed completely
 20220220 fh04abcd Removed global process: too much code fails. Unclear what it should do. Sanitized html
+20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
 */
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
@@ -281,9 +282,12 @@ if (isset($arrHttp["encabezado"])){
 
 	<div class="actions">
     <?php
-    if (isset($arrHttp["encabezado"])){
-        include "../common/inc_back.php";
-    }
+        if (isset($arrHttp["encabezado"])) {
+            include "../common/inc_back.php";
+        } else {
+            $backtoscript="../dataentry/inicio_main.php";
+            include "../common/inc_back.php";
+        }
     ?>
     </div>
     <div class="spacer">&#160;</div>

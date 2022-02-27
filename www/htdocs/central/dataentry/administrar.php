@@ -10,6 +10,7 @@
 20211216 fho4abcd Backbutton by included file, removed redundant help
 20220107 fho4abcd Removed opcion parameter for text import/export. Smaller textblocks
 20220124 fho4abcd No back button if institutional info not shown
+20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -112,7 +113,14 @@ if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	<?php echo $msgstr["mantenimiento"]?>
     </div>
     <div class="actions">
-    <?php if ($arrHttp["encabezado"]=="s") include "../common/inc_back.php";?>
+        <?php
+        if ($arrHttp["encabezado"]=="s") {
+            include "../common/inc_back.php";
+        } else {
+            $backtoscript="../dataentry/inicio_main.php";
+            include "../common/inc_back.php";
+        }
+        ?>
     </div>
 		<div class="spacer">&#160;</div>
 	</div>
