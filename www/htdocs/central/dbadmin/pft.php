@@ -6,6 +6,7 @@
 2022-01-25 fho4abcd more new look buttons, shift Generate output to the bottom, improve generate output layout
 2022-01-26 fho4abcd Open preview in larger window and after all checks passed.
 2022-01-29 fho4abcd Improve setting of encabezado+create language folder if it does not exist
+20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
 */
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -618,7 +619,10 @@ if ($arrHttp["Opcion"]=="new"){
 		}else{
             include("../common/inc_home.php");
 		}
-	} // end if encabezado
+	} else {
+        $backtoscript="../dataentry/inicio_main.php";
+        include "../common/inc_back.php";
+    }// end if encabezado
 }
 ?>
     </div>
