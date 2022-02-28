@@ -1,6 +1,6 @@
 <?php
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Verificar_la_configuraci.C3.B3n";
-$wiki_trad="wiki.abcdonline.info/OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Verificar_la_configuraci.C3.B3n";
+$wiki_help="OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Verificar_la_configuraci.C3.B3n";
+
 $config_php="";
 $db_path="";
 $abcd_scripts="";
@@ -52,19 +52,18 @@ if ($no_err>0) die;
 $no_err=0;
 $diagnostico="S";
 include ("tope_config.php");
+
+	include "../../common/inc_div-helper.php";
 ?>
 
-	<div id="page">
-	<h3>Diagnosis of OPAC settings
-		<?php
-		include ("wiki_help.php");
-		echo "<div style=\"float:left;position:relative;width:100%\">";
-		?>
-	</h3>
 
 <div class="middle form">
+
+   <h3>Diagnosis of OPAC settings</h3>
+
 	<div class="formContent">
 
+<div id="page">
 
 <?php
 
@@ -275,5 +274,7 @@ foreach ($dir_arr as $lang){
 
 ?>
 </div>
-
 </div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>

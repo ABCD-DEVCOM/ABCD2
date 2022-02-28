@@ -1,7 +1,8 @@
 <?php
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_configuraci%C3%B3n#Par.C3.A1metros_globales";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n#Par.C3.A1metros_globales";
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n#Par.C3.A1metros_globales";
+include "../../common/inc_div-helper.php";
+
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$fp=fopen($db_path."/opac_conf/opac.def","w");
 	foreach ($_REQUEST as $var=>$value){
@@ -124,14 +125,21 @@ if (!isset($OpacHttp)){
 	$OpacHttp=$_SERVER["HTTP_ORIGIN"].str_replace("config/parametros.php","",$_SERVER['REQUEST_URI']);
 }
 if (!isset($shortIcon))$shortIcon="";
+
 ?>
-<div id="page">
-	<p>
-    <h3>
+
+
+<div class="middle form">
+
+   <h3>
     <?php
-    echo $msgstr["parametros"]." (opac.def) &nbsp;";
-    include("wiki_help.php");
- ?>
+	    echo $msgstr["parametros"]." (opac.def) &nbsp;";
+	 ?>
+	</h3>
+
+	<div class="formContent">
+
+<div id="page">
     <table cellpading=5>
     	<tr><td colspan=2 bgcolor=#cccccc>&nbsp;</td></tr>
     	<tr>
@@ -212,14 +220,11 @@ if (!isset($shortIcon))$shortIcon="";
     	</tr>
     </table>
     <p>
-<input type=hidden name=Opcion value=Guardar>
-<input type=submit value="<?php echo $msgstr["save"];?>">
+<input type="hidden" name="Opcion" value="Guardar">
+<input type="submit" class="bt-green" value="<?php echo $msgstr["save"];?>">
 </form>
-<?php
+</div>
+</div>
+</div>
 
-include ("../../../opac/php/footer.php");
-?>
-</div>
-</div>
-</body
-</html>
+<?php include ("../../common/footer.php"); ?>

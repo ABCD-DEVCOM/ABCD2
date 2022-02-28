@@ -1,19 +1,19 @@
 <?php
 include("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n#Bases_de_datos_disponibles";
-$wiki_trad="wiki.abcdonline.info/OPAC-ABCD_configuraci%C3%B3n#Bases_de_datos_disponibles";
-//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n#Bases_de_datos_disponibles";
+include "../../common/inc_div-helper.php";
 ?>
-<div id="page">
-	<p>
-    <h3><?php echo $msgstr["databases"]?>
-    <?php
-    if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 
-    }else{
-    	include("wiki_help.php");
-	}
-	echo "<p>";
+
+<div class="middle form">
+
+   <h3><?php echo $msgstr["databases"]?></h3>
+
+	<div class="formContent">
+
+<div id="page">
+    <?php
+
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";  die;
 $def_base=array();
 $eliminar=array();
@@ -151,7 +151,7 @@ if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){
 				}
 				foreach ($alpha as $value){
 					$ix_lang=$ix_lang+1;
-					echo "<tD>";
+					echo "<td>";
 					$ix_00=strrpos($value,".");
 					$value=substr($value,0,$ix_00);
 					echo "<input type=checkbox name=langdb_".$value."_$ix value=\"$value\"";
@@ -201,10 +201,16 @@ for ($i=$ix;$i<$tope;$i++){
 	}
 	echo "</tr>";
 }
-echo "</table>";
-echo "<input type=submit value=\"".$msgstr["save"]."\">";
-echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
-echo "<input type=hidden name=Opcion value=Actualizar>";
+?>
+
+</table>
+
+<input type="submit" class="bt-green" value="<?php echo $msgstr["save"];?>" >
+
+<input type="hidden" name="lang" value="<?php echo $lang;?>" >
+<input type="hidden" name="Opcion" value="Actualizar" >
+
+<?php
 if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }
@@ -216,5 +222,5 @@ if (isset($_REQUEST["conf_level"])){
 include ("../../../opac/php/footer.php");
 ?>
 
-</body
+</body>
 </html>

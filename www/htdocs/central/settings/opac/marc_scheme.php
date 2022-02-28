@@ -1,17 +1,27 @@
 <?php
-$url_back="menu.php?";
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_MARCXML";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_MARCXML";
+$wiki_help="OPAC-ABCD_MARCXML";
+include "../../common/inc_div-helper.php";
+?>
+
+<div class="middle form">
+   <h3><?php 
+   		echo "<h3>".$msgstr["xml_marc"]."&nbsp;";
+		echo "<br>".$msgstr["xml_step1"]." &nbsp;";
+		?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+<?php
+
+
 //foreach ($_REQUEST as $var=>$value) echo "<xmp>$var=$value</xmp><br>";
 if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
 $db_path=$_SESSION["db_path"];
 echo "<form name=marc_scheme method=post>\n";
-echo "<div id=\"page\" style=\"min-height:400px\";>";
-echo "<h3>".$msgstr["xml_marc"]."&nbsp;";
-echo "<br>".$msgstr["xml_step1"]." &nbsp;";
 echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
 echo "<input type=hidden name=db_path value=".$db_path.">\n";
 echo "<input type=hidden name=Opcion value=Guardar>\n";
@@ -34,12 +44,16 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
-    include("wiki_help.php");
 	//DATABASES
 	echo "<div style=\"margin-left:40px;\">";
 	$archivo="marc.xml";
 	$fp=file($archivo);
-	echo "<textarea name=conf_marc rows=20 cols=100>";
+
+?>
+
+	<textarea class="col-12" name=conf_marc rows=20 cols=100>
+
+<?php
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			if (strpos($value,"subfield")>0)
@@ -48,14 +62,13 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 		}
 	}
     echo "</textarea>" ;
-    echo "<p>";
-	echo "<div><img src=../../../opac/images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit name=guardar value=\" ".$msgstr["save"]." opac_conf/marc_sch.xml \" style=\"font-size:15px;\"></div>";
-	echo "</form>";
-	echo "</div>";
 }
-include ("../../../opac/php/footer.php");
 ?>
+	<input type="submit" class="bt-green" name="guardar" value="<?php $msgstr["save"];?> opac_conf/marc_sch.xml"></div>
+	</form>
+
 </div>
 </div>
-</body
-</html>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
