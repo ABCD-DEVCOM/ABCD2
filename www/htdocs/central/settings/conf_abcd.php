@@ -103,7 +103,7 @@ include "../common/inc_div-helper.php";
 					</a>
 				</li>
 				<li>
-					<a href='opac/menu.php'>
+					<a href='opac/'>
 						OPAC
 					</a>
 				</li>				

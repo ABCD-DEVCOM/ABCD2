@@ -5,8 +5,8 @@ if (isset($_REQUEST["lang_init"])){
 	$_SESSION["lang_init"]=$_REQUEST["lang_init"];
 	unset($_REQUEST["lang_init"]);
 }
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci.C3.B3n";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci.C3.B3n";
+$wiki_help="OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci.C3.B3n";
+
 if (isset($_REQUEST["lang"])) $lang=$_REQUEST["lang"];
 if (!isset($_SESSION["showhelp"])){
 	if (isset($_REQUEST["showhelp"])){
@@ -27,7 +27,7 @@ else
 
 <script>
 	function EnviarCopia(){
-		if (document.copiar_a.lang_to.options[document.copiar_a.lang_to.selectedIndex].value=="<?php echo $_REQUEST["lang"]?>"){
+		if (document.copiar_a.lang_to.options[document.copiar_a.lang_to.selectedIndex].value=="<?php echo $lang;?>"){
 			alert("<?php echo $msgstr["sel_o_l"]?>")
 			return false
 		}
