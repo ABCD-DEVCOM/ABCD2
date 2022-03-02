@@ -48,40 +48,46 @@ Download the `tika` archive from https://tika.apache.org/download.html
 
 # Preparation
 
-The preparation phase ensures that a web server and PHP are installed. This chapter adresses some attention points specifically for of ABCD.  
-Multiple solutions exist to fullfill these functions ( native, XAMPP, WAMP, EasyPHP,...).
+The preparation phase ensures that a web server and PHP with the desired [prerequisites](#Prerequisites) are installed. This chapter adresses some attention points specifically for of ABCD.  
+Multiple solutions exist to fullfill these functions ( native, XAMPP, WAMP, EasyPHP,...). Due to the many solutions and options of these solutions it is required to read the solution documentation carefully. This guide gives only minimal directives.
 
 Good to know:
 - Integrated solutions offer multiple functions. ABCD requires only the web server and PHP
 - The firewall requires attention for the ABCD ports
 
-### Virtual host
+### Virtual host file
 The webserver serves an ABCD installation with a virtual configuration. With this technique multiple, completely different installations are possible.
 
 The example virtual host configuration files for [Linux](vhost_ABCD_9090_Linux.conf) and [Windows](vhost_ABCD_9090_Windows.conf)
 contain the values for a default ABCD installation.
+- These files are example files. MUST be examined and updated to serve your needs and match the actual webserver.
+- The virtual host file determines the protocol, port and server name for the ABCD installation.
+  - The port number is picked up by the ABCD installation
+  - The protocol (**http**/**https**) is picked up by the ABCD installation
+  - The **https** protocol is recommended. Take care of a certificate. To enable https: uncomment the lines with parameter names **SSL\***
+- The virtual host file determines the locations for the ABCD components. The defaults are different for Linux and Windows.
+The webserver adresses these folders with parameters:
+  - **DocumentRoot** : folder with ABCD PHP-scripts
+  - **ScriptAlias cgi-bin** : folder with executable files (e.g. CISIS, jar's,...)
+  - **Alias docs** : folder with database folders
+- The example virtual host file specifies a specific location for the logs of this virtual host. Must be an existing folder ! Create it if it does not exist.
+- The example virtual host file contains common PHP flags 
+
+
+### Virtual host file installation
+
 - Copy the example file to the webserver configuration. The file name can be arbitrarily chosen. 
 Example locations:  
-WAMP &rarr; `wamp/alias`,  
-XAMPP &rarr; `apache/conf/extra`,  
-native Ubuntu &rarr; `/etc/apache2/sites-available/`
-- This is an example file. It MUST be examined and updated to serve your needs and match the actual webserver.
-- The existence of the file must be made known to the server. Method depends on the installed webserver solution (edit `httpd.conf` or command `sudo a2ensite` /...)
+  - WAMP &rarr; `wamp/alias`,  
+  - XAMPP &rarr; `apache/conf/extra`,  
+  - native Ubuntu &rarr; `/etc/apache2/sites-available/`
+- The existence of the file must be made known to the server. Method depends on the installed webserver solution
+  - XAMPP &rarr; edit `httpd.conf` &rarr; `include conf/extra/vhost_ABCD_9090_Windows.conf`
+  - native Ubuntu &rarr; `sudo a2ensite vhost_ABCD_9090_Linux.conf`
+- Check configuration
+  - XAMPP &rarr; Start service and check log files
+  - native Ubuntu &rarr; `sudo apachectl -S` /  `sudo apachectl -t -D DUMP_MODULES` / `sudo systemctl start  apache2`
 
-The virtual host file determines the protocol, port and server name for the ABCD installation.
-- The port number is picked up by the ABCD installation
-- The protocol (**http**/**https**) is picked up by the ABCD installation
-- The **https** protocol is recommended. Take care of a certificate. To enable https: uncomment the lines with parameter names **SSL\***
-
-The virtual host file determines the locations for the ABCD components. The defaults are different for Linux and Windows.
-The webserver adresses these folders with parameters:
-- **DocumentRoot** : folder with ABCD PHP-scripts
-- **ScriptAlias cgi-bin** : folder with executable files (e.g. CISIS, jar's,...)
-- **Alias docs** : folder with database folders
-
-The vertual host file may specify a specific location for the logs of this virtual host. Must be an existing folder ! Create it if it does not exist.
-
-The virtual host file may contain PHP flags 
 
 <hr>
 
@@ -144,8 +150,10 @@ Start your favourite web browser and run ABCD with following URL's.
 - `https://localhost:9090/site/admin` : The SITE module. Login username `adm`, password `x`.
 - `https://localhost:9090/opac ` : The OPAC module. No login
 
+### Configure
 Recommendation: Modify the passwords of the administrative users to avoid unexpected logins with too much privileges
 
+### Help
 Additional help can be obtained by joining and using the e-mail based `ISIS-users discussion list`,
 - registering: http://lists.iccisis.org/listinfo/isis-users
 - using : mail to 'isis-users@iccisis.org'
