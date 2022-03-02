@@ -1,15 +1,26 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_MARCXML";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_MARCXML";
+$wiki_help="OPAC-ABCD_MARCXML";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["xml_marc"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
 $db_path=$_SESSION["db_path"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$lang=$_REQUEST["lang"];
+	$lang=$lang;
 	$archivo=$db_path.$_REQUEST["base"]."/pfts/marcxml.pft";
 	$fout=fopen($archivo,"w");
 	$Pft=$_REQUEST["Pft"];
@@ -20,10 +31,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
-?>
-	<div id="page" style="min-height:400px";>
-	    <h3><?php echo $msgstr["xml_marc"]." &nbsp";
-	    include("wiki_help.php");
+
 	//DATABASES
 	echo "<h4>".$msgstr["db"]." ".$_REQUEST["base"]."<p>";
 	echo "<strong>".$msgstr["xml_step2"]."</strong></h4>";
@@ -169,7 +177,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	echo "</textarea>";
     echo "<p><br>";
     echo $msgstr["try_mfn"]." <input type=text name=mfn size=5 id=mfn> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
-	echo "<div><img src=../../../opac/images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/marc2xml.pft\" \" onclick=document.marcxml.submit() style=\"font-size:15px;\"></div>";
+	echo "<div> &nbsp;<input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/marc2xml.pft\" \" onclick=document.marcxml.submit() style=\"font-size:15px;\"></div>";
 	?>
 	</form>
 	</div>
@@ -197,9 +205,11 @@ function Probar(){
 	}
 	document.marcxml.cookie.value="c_<?php echo $_REQUEST["base"]?>_"+mfn ;
 	document.marcxml.target="_blank";
-	document.marcxml.action="../php/sendtoxml.php";
+	document.marcxml.action="../../../opac/php/sendtoxml.php";
 	document.marcxml.submit();
 	document.marcxml.action="" ;
 }
 </script>
 
+
+<?php include ("../../common/footer.php"); ?>

@@ -1,19 +1,23 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD DCXML";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD DCXML";
+$wiki_help="OPAC-ABCD DCXML";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["xml_dc"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
-?>
-	<div id="page" style="min-height:400px";>
-	    <h3>
-	    <?php
-	        echo $msgstr["xml_dc"]?> &nbsp;
-<?php
-include("wiki_help.php");
+
 $db_path=$_SESSION["db_path"];
 $base=$_REQUEST["base"];
 $archivo=$db_path."opac_conf/$lang/bases.dat";
@@ -94,7 +98,7 @@ if (isset($_REQUEST["Opcion"])){
 		echo "<input type=hidden name=Opcion value=\"GuardarPft\">\n";
 		echo "<p>";
     	echo $msgstr["try_mfn"]." <input type=text name=mfn size=5 id=mfn> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
-		echo "<div><img src=../images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/dcxml.pft \" style=\"font-size:15px;\"></div>";
+		echo "<div><input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/dcxml.pft \" style=\"font-size:15px;\"></div>";
     	echo "</form>";
     }else{
     	if ($_REQUEST["Opcion"]=="GuardarPft"){
@@ -116,7 +120,6 @@ if (!isset($_REQUEST["Opcion"]) or ($_REQUEST["Opcion"]!="Guardar" and $_REQUEST
 	</div>
 <?php
 }
-include ("../../../opac/php/footer.php");
 ?>
 </div>
 </div>
@@ -137,7 +140,7 @@ global $msgstr,$db_path,$charset;
     }
     //echo $db_charset." - $charset<br>";
     echo "<br>".$msgstr["dc_step2"]."</h3>";
-	echo "<div  id='$base' style=\"border:1px solid;\">\n";
+	echo "<div  id='$base' \">\n";
 	echo "<div style=\"display: flex;\">";
 	$cuenta=0;
 	$fp_campos[$base]=file($db_path.$base."/def/".$_REQUEST["lang"]."/$base.fdt");
@@ -183,7 +186,7 @@ global $msgstr,$db_path,$charset;
 		}
 	}
 	echo "</table>\n";
-	echo "<p><div><img src=../images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab / ".$msgstr["dc_step3"]."\"  style=\"width:400px;height:60px;font-size:15px;white-space: normal\"></div>";
+	echo "<p><div><input type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab / ".$msgstr["dc_step3"]."\"  style=\"width:400px;height:60px;font-size:15px;white-space: normal\"></div>";
 	echo "</div>\n";
 	echo "<div style=\"flex: 1\">";
 
@@ -230,12 +233,11 @@ function Probar(){
 	}
 	document.dcpft.cookie.value="c_<?php echo $_REQUEST["base"]?>_"+mfn ;
 	document.dcpft.target="_blank";
-	document.dcpft.action="../php/sendtoxml.php";
+	document.dcpft.action="../../../opac/php/sendtoxml.php";
 	document.dcpft.submit();
 	document.dcpft.action="" ;
 }
 </script>
 
-}
-?>
 
+<?php include ("../../common/footer.php"); ?>

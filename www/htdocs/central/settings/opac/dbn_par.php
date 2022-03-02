@@ -1,21 +1,23 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
-//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-?>
-<div id="page" style="min-height:400px";>
-    <h3>
-    <?php
-    echo $msgstr["dbn_par"]." &nbsp ";
-    if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
-    	include("wiki_help.php");
-	}
-    ?>
+$wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
+include "../../common/inc_div-helper.php";
 
- <br>
+?>
+
+<div class="middle form">
+   <h3><?php  echo $msgstr["dbn_par"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
 <?php
+
+//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
+    if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
+	}
+
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$archivo=$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
@@ -116,7 +118,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 		$file=$db_path."par/$base.par";
 		echo "<strong>".$msgstr["edit"].": ". $file."</strong>";
-		echo "<div  style=\"border:1px solid; display:block;\">\n";
+		echo "<div  style=\"display:block;\">\n";
 		echo "<form name=savepar"."Frm method=post>\n";
 		echo "<input type=hidden name=Opcion value=Guardar>\n";
     	echo "<input type=hidden name=base value=$base>\n";
@@ -135,9 +137,4 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	}
 }
 die;
-include ("../../../opac/php/footer.php");
-?>
-</div>
-</div>
-</body
-</html>
+include ("../../common/footer.php"); ?>

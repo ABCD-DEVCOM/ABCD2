@@ -1,5 +1,12 @@
 <?php
-//include("../php/config_opac.php");
+// Read language files from central
+$charset="";
+$lang=$_REQUEST["lang"];
+$db_path=$_REQUEST["db_path"];
+
+include "../../lang/opac.php";
+include "../../lang/admin.php";
+
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$fp=fopen($_REQUEST["archivo"],"w");
 	fwrite($fp,$_REQUEST["Formato"]);
@@ -8,8 +15,11 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
     echo "<h2>".$_REQUEST["archivo"]." Updated!!</h2>";
 	die;
 }
+
+
 echo "Base: ".$_REQUEST["base"]."<br>";
 echo "Pft: " .$_REQUEST["Pft"].".pft<br>";
+echo "Lang: " .$lang."<br>";
 $base=$_REQUEST["base"];
 if (substr($_REQUEST["Pft"],strlen($_REQUEST["Pft"])-4)==".pft") $_REQUEST["Pft"]=substr($_REQUEST["Pft"],0,strlen($_REQUEST["Pft"])-4);
 $Pft=$_REQUEST["Pft"].".pft";

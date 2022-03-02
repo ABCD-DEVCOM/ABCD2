@@ -1,8 +1,19 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Facetas";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Facetas";
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#Facetas";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["facetas"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>"; DIE;
 $linea=array();
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
@@ -57,13 +68,9 @@ global $db_path,$msgstr;
 ?>
 <form name=indices method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
-<div id="page">
-    <h3>
+
+
 <?php
-echo $msgstr["facetas"]." &nbsp ";
-if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
-     include("wiki_help.php");
-}
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$archivo=$db_path."opac_conf/$lang/bases.dat";
@@ -86,14 +93,6 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 ?>
 </div>
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
-include ("../../../opac/php/footer.php");
-?>
-</div>
-</div>
-</body
-</html>
-<?php
 function Entrada($iD,$name,$lang,$file,$base){
 global $msgstr,$db_path;
 	echo "<form name=$iD"."Frm method=post>\n";
@@ -105,7 +104,7 @@ global $msgstr,$db_path;
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
 	echo "<strong>". $name. " ($base)</strong>";
-	echo "<div  id='$iD' style=\"width:100%; display: table;border:1px solid;\">\n";
+	echo "<div  id='$iD' style=\"width:100%; display: table;\">\n";
 	echo "<div style=\"display: table-row\">";
 	echo "<div style=\"display:table-cell;width:55%;text-align:left;margin-top:0;\">";
 	$cuenta=0;
@@ -173,4 +172,9 @@ global $msgstr,$db_path;
 	echo "</form></div><p>";
 }
 ?>
+
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
 
