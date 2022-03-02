@@ -1,29 +1,73 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
-include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_formatos#Formatos_para_la_presentación_de_los_resultados";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_formatos#Formatos_para_la_presentación_de_los_resultados";
-//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
+include ("tope_config.php");
+$wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["select_formato"];?>
+	</h3>
+	<div class="formContent">
+<div id="page">
+
+<?php
+//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
+
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
-	$fout=fopen($archivo,"w");
+
 	foreach ($_REQUEST as $var=>$value){
-		$value=trim($value);
-		if ($value!=""){
-			$var=trim($var);
-			if (substr($var,0,9)=="conf_base"){
-				$x=explode('_',$var);
-				if ($x[3]==0)
-					if (substr($value,strlen($value)-4)==".pft") $value=substr($value,0,strlen($value[0])-5) ;
-				$linea[$x[2]][$x[3]]=$value;
+		if (trim($value)!=""){
+			$code=explode("_",$var);
+			if ($code[0]=="conf"){
+				if ($code[1]=="lc"){
+					if (!isset($cod_idioma[$code[2]])){
+						$cod_idioma[$code[2]]=$value;
+					}
+				}else{
+
+					if (!isset($nom_idioma[$code[2]])){
+						$nom_idioma[$code[2]]=$value;
+						
+					}
+				}
 			}
 		}
 	}
+
+    $fout=fopen($archivo,"w");
+    $ix=0;
+	foreach ($cod_idioma as $key=>$value){
+	$ix=$ix+1;
+		if (isset($_REQUEST["consolida"])){
+			if ($ix==$_REQUEST["consolida"])
+				$salida ='|Y';
+			else
+				$salida ='|';
+		} else {
+			$salida ='|';
+		}
+
+		fwrite($fout,$value."|".$nom_idioma[$key].$salida."\n");
+
+//		echo $value."|".$nom_idioma[$key].$salida."<br>";
+	}
+	fclose($fout);
+    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+	die;
+
+
+/*
+echo "<br>".var_dump($codigo)."<br>";
+
 	$ix=0;
-	foreach ($linea as $value){
+	$vcols=array();
+	foreach ($codigo as $key=>$vcols){
+		echo $vcols[$key]."<br>";
 		$ix=$ix+1;
-		$salida=$value[0].'|'.$value[1];
+		$salida=$vcols;
 		if (isset($_REQUEST["consolida"])){
 			if ($ix==$_REQUEST["consolida"])
 				$salida.='|Y';
@@ -32,10 +76,12 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}else{
 			$salida.='|';
 		}
+		//$fout=fopen($archivo,"w");
+		echo "<b>".$salida."|".$codigo[$key]."<br>";
 		fwrite($fout,$salida."\n");
 
 	}
-
+*/
 	//fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
     echo "<p><h3>".$msgstr["add_topar"];
@@ -50,7 +96,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	foreach ($linea as $value){
 		echo "<strong><font face=courier size=4>".$value[0].".pft=%path_database%".$msg."/pfts/%lang%/".$value[0].".pft</font></strong><br>";
     }
-    include ("../../../opac/php/footer.php");
     die;
 }
 
@@ -67,8 +112,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
 <div id="page">
     <h3>
     <?php
-    echo $msgstr["select_formato"]." &nbsp ";
-    include("wiki_help.php");
 
 //DATABASES
 $archivo=$db_path."opac_conf/$lang/bases.dat";
@@ -120,7 +163,7 @@ function Copiarde(db,db_name,lang,file){
 </script>
 <?php
 function CopiarDe($iD,$name,$lang,$file){
-global $db_path;
+global $db_path, $archivo_conf;
 	echo "<br>copiar de: ";
 	echo "<select name=lang_copy onchange='Copiarde(\"$iD\",\"$name\",\"$lang\",\"$file\")' id=lang_copy > ";
 	echo "<option></option>\n";
@@ -139,7 +182,7 @@ global $msgstr,$db_path;
 	echo "<strong>". $name;
 	If ($base!="" and $base!="META") echo  " ($base)";
 	echo "</strong>";
-	echo "<div  id='$iD' style=\"border:1px solid; display:block;\">\n";
+	echo "<div  id='$iD' style=\" display:block;\">\n";
 	echo "<div style=\"display: flex;\">";
 	$cuenta=0;
 	if ($base!="" and $base!="META"){
@@ -169,40 +212,34 @@ global $msgstr,$db_path;
     if ($rows<3) $rows=3;
     for ($i=0;$i<$rows;$i++)
 		$fp[]='||';
+	$ix=0;	
+	$row=0;	
 	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 	echo "<tr><th>Pft</th><th>".$msgstr["nombre"]."</th><th>".$msgstr["pft_meta"]."</th></tr>\n";
-	$row=0;
-	foreach ($fp as $value) {
-		$value=trim($value);
-		if ($value!=""){
-			$ix=-1;
-			$row=$row+1;
-			$v=explode('|',$value);
-			echo "<tr>";
-			foreach ($v as $var){
-				$ix=$ix+1;
-				if ($ix>1) break;
-				echo "<td bgcolor=white>";
-		 		if ($ix==0)
-		 			$size=8;
-				else
-					$size=30;
-			 	echo "<input type=text name=conf_base_".$row."_".$ix." value=\"$var\" size=$size>";
 
-			 	if ($size==30) {
-			 		echo "</td><td>";
-			 		echo "<input type=radio name=consolida value=$row";
-			 		if (isset($v[2]) and $v[2]=="Y") echo " checked";
-			 		echo ">\n";
-			 		echo "</td><td>";
-				}
-			 	if ($size==30 and trim($v[0])!=""){
-			 		echo  " &nbsp; <a href=javascript:EditarPft('".$v[0]."')>".$msgstr["edit"]."</a>";
-			 	}
-				echo "</td>\n";
-			}
-			echo "</tr>\n";
+	foreach ($fp as $value) {
+
+	$row=$row+1;
+
+
+		if (trim($value)!=""){
+			$l=explode('|',$value);
+			$ix=$ix+1;
+			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
+			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[1])."\"></td>";
+	 		echo "<td>";
+			echo "<input type=radio name=consolida value=$row";
+			 if (isset($l[2]) and trim($l[2])=="Y") echo " checked";
+			echo ">\n";
+			echo "</td><td>";
+			echo  " &nbsp; <a href=javascript:EditarPft('".$l[0]."')>".$msgstr["edit"]."</a>";
+			echo "</td>\n";
+			echo "</tr>";
 		}
+
+
+
+
 	}
 	echo "<tr><td colspan=2 align=center> ";
 	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD."\"></td></tr>";
@@ -233,3 +270,6 @@ function EditarPft(Pft){
 	msgwin.focus()
 }
 </script>
+
+
+<?php include ("../../common/footer.php"); ?>
