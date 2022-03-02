@@ -22,7 +22,9 @@ Module EmpWeb (advanced loans module) has a completely different technology, it 
 
 ### Always required
 - A webserver. ABCD is tested with an Apache web server.
-In order to minimize security problems the latest version is recommended.
+In order to minimize security problems the latest version is recommended. ABCD requires for a minimal installation at least
+  - Module `mod_cgi`: To allow execution of CGI scripts
+  - Module `mod_rewrite` : To allow rewrite rules in the `.htaccess` file
 - A PHP processor. The unicode implementation of ABCD requires PHP 7.4.x.
 The default loaded extensions depend on the actual PHP processor. ABCD requires for a minimal installation at least
   - Extension `mbstring` : Multibyte support. To enable unicode.
@@ -30,6 +32,8 @@ The default loaded extensions depend on the actual PHP processor. ABCD requires 
 
 ### Optional requirements
 
+- Web server extensions
+  - Module `mod_ssl`  : Enables certificates and the https protocol
 - PHP Extensions
   - Extension `curl`  : Required if `DSpace bridge` is used (to download records from DSpace repositories)
   - Extension `ldap`  : Required if login with LDAP is used
@@ -44,7 +48,7 @@ Download the `tika` archive from https://tika.apache.org/download.html
 
 # Preparation
 
-The preparation phase ensures that a web server and PHP are installed. This chapter is adresses some attention points specifically for of ABCD.  
+The preparation phase ensures that a web server and PHP are installed. This chapter adresses some attention points specifically for of ABCD.  
 Multiple solutions exist to fullfill these functions ( native, XAMPP, WAMP, EasyPHP,...).
 
 Good to know:
