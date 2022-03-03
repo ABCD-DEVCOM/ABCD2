@@ -6,7 +6,7 @@ include "../../common/inc_div-helper.php";
 ?>
 
 <div class="middle form">
-   <h3><?php echo $msgstr["free_search"]?>
+   <h3><?php echo $msgstr["free_search"];?>
 	</h3>
 	<div class="formContent">
 
@@ -140,7 +140,7 @@ echo "<strong>". $name;
 	}
 $ix=0;	
   	echo "<table bgcolor=#cccccc cellpadding=5>\n";
-echo "<tr><th>".$msgstr["lang"]."</th><th>".$msgstr["lang_n"]."</th></tr>";
+echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>";
 if (file_exists($db_path."opac_conf/$lang/$file")){
 	$fp=file($db_path."opac_conf/$lang/$file");
 	foreach ($fp as $value){

@@ -1,11 +1,23 @@
 <?php
 include ("tope_config.php");
+$wiki_help="OPAC-ABCD_Apariencia#Pie_de_p.C3.A1gina";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["footer"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
 if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Pie_de_p.C3.A1gina";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Pie_de_p.C3.A1gina";
 
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>"; //die;
 
@@ -46,12 +58,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
 }
-?>
-
-<div id="page" style="margin-top:10px;padding:10px;">
-<h3><?php echo $msgstr["footer"]." &nbsp; ";
-include("wiki_help.php");
-echo "<p>";
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$file="footer.info";
@@ -121,17 +127,13 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	echo "</form>";
 }
 ?>
-</div>
+</div>    
+</div>    
+</div>    
 
-<br>
-<br>
-<?php
-include ("../../../opac/php/footer.php");
-?>
-</div>
-</div>
-</body
-</html>
+<?php include ("../../common/footer.php"); ?>
+
+
 <script>
 function checkform(){
 	cuenta=0;

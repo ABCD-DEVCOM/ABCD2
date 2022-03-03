@@ -1,69 +1,81 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Tipos_de_registro";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Tipos_de_registro";
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#Tipos_de_registro";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["tipos_registro"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQUEST["lang"];
+if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
+	$lang=$_REQUEST["lang"];
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
 		if ($value!=""){
 			$var=trim($var);
-			if (substr($var,0,9)=="conf_base"){				$x=explode('_',$var);
+			if (substr($var,0,9)=="conf_base"){
+				$x=explode('_',$var);
 				$linea[$x[2]][$x[3]]=$value;
 			}
 		}
 	}
-	foreach ($linea as $value){		ksort($value);
+	foreach ($linea as $value){
+		ksort($value);
 		$salida=$value[0].'|'.$value[1].'|'.$value[2];
 		fwrite($fout,$salida."\n");
-	}
+
+	}
 
 	fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
 
 }
 
-?>
+
+?>
 <form name=indices method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
-<div id="page">
-    <h3>
-    <?php
-    echo $msgstr["tipos_registro"]." &nbsp";
-    include("wiki_help.php")?></h3>
-   <br>
+
 <?php
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$archivo=$db_path."opac_conf/$lang/bases.dat";
 	$fp=file($archivo);
-	foreach ($fp as $value){		if (trim($value)!=""){
-			echo "<p>";			$x=explode('|',$value);
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			echo "<p>";
+			$x=explode('|',$value);
 			if ($x[0]!=$_REQUEST["base"])  continue;
 			Entrada(trim($x[0]),trim($x[1]),$lang,trim($x[0])."_colecciones.tab",$x[0]);
 			break;
-		}	}
+		}
+	}
 }
 ?>
 </div>
 </form>
-<?php
-include ("../php/footer.php");
-?>
+
 </div>
 </div>
-</body
-</html>
+
+<?php include ("../../common/footer.php"); ?>
 
 <?php
 function Entrada($iD,$name,$lang,$file,$base){
 global $msgstr,$db_path;
 	echo "<strong>". $name."</strong>";
-	echo "<div  id='$iD' style=\"border:1px solid; display:block;\">\n";
+	echo "<div  id='$iD' style=\"display:block;\">\n";
 	echo "<div style=\"display: flex;\">";
 	if ($base!=""){
 		if (file_exists($db_path.$base."/def/".$_REQUEST["lang"]."/typeofrecord.tab")){

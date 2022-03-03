@@ -1,25 +1,27 @@
 <?php
 include ("tope_config.php");
+$wiki_help="OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["horizontal_menu"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
  if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
-if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal";
+
 
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-
 
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>"; //die;
-
-/////////////////////////////////////////////////////////////////////
-
-
-?>
-<div id="page" style="margin-top:10px;padding:10px;">
-<h3><?php echo $msgstr["horizontal_menu"]." &nbsp; ";
-include("wiki_help.php");
-echo "<p>";
 $lang=$_REQUEST["lang"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
@@ -92,13 +94,9 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	echo "</form>";
 }
 ?>
-</div>
-<br>
-<br>
-<?php
-include ("../../../opac/php/footer.php");
-?>
-</div>
-</div>
-</body
-</html>
+
+</div>    
+</div>    
+</div>    
+
+<?php include ("../../common/footer.php"); ?>

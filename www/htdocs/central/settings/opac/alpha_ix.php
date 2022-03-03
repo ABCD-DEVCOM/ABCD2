@@ -1,20 +1,29 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#.C3.8Dndices_alfab.C3.A9ticos";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#.C3.8Dndices_alfab.C3.A9ticos";
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#.C3.8Dndices_alfab.C3.A9ticos";
+include "../../common/inc_div-helper.php";
+
 ?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["indice_alfa"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+
 <form name=indices method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
-<div id="page">
-    <h3>
+
+
 <?php
 	if (!isset($_SESSION["db_path"])){
 		echo "Session expired";die;
 	}
-	echo $msgstr["indice_alfa"]." &nbsp";
+
     if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar")
-		include("wiki_help.php");
+
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
 
@@ -77,13 +86,10 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]==""){
 ?>
 
 </div>
-<?php
-include ("../../../opac/php/footer.php");
-?>
 </div>
 </div>
-</body
-</html>
+
+<?php include ("../../common/footer.php"); ?>
 
 <form name=copiarde method=post>
 <input type=hidden name=db>
@@ -131,7 +137,7 @@ global $db_path;
 function Entrada($iD,$name,$lang,$file,$base){
 global $msgstr,$db_path;
 	echo "<strong>". $name."</strong></a>";
-	echo "<div  id='$iD' style=\"border:1px solid;\">\n";
+	echo "<div  id='$iD' >\n";
 	echo "<div style=\"display: flex;\">";
 	$cuenta_00=0;
 	if (!file_exists($db_path."opac_conf/$lang/$file")){

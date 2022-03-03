@@ -133,8 +133,21 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 		echo "</textarea>";
 		echo "<p><input type=submit value=\"".$msgstr["save"]." "."\">";
-		echo "</form></div><p>";
+		echo "</form></div>";
 	}
+
+?>
+
+</div>
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
+
+<?php	
 }
 die;
-include ("../../common/footer.php"); ?>
+?>
+
+
+

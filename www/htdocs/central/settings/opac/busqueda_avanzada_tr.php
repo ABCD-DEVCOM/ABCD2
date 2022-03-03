@@ -1,54 +1,67 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#B.C3.BAsqueda_avanzada_-_Tipos_de_registro";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#B.C3.BAsqueda_avanzada_-_Tipos_de_registro";
+$wiki_help="index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#B.C3.BAsqueda_avanzada_-_Tipos_de_registro";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["buscar_a"]." - ".$msgstr["tipos_registro"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){	$lang=$_REQUEST["lang"];
+if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
+	$lang=$_REQUEST["lang"];
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
 		if ($value!=""){
 			$var=trim($var);
-			if (substr($var,0,9)=="conf_base"){				$x=explode('_',$var);
+			if (substr($var,0,9)=="conf_base"){
+				$x=explode('_',$var);
 				$linea[$x[2]][$x[3]]=$value;
 			}
 		}
 	}
-	foreach ($linea as $value){		if (!isset($value[1])) $value[1]="";
+	foreach ($linea as $value){
+		if (!isset($value[1])) $value[1]="";
 
 		ksort($value);
 		$salida=$value[0].'|'.$value[1].'|'.$value[2];
 		fwrite($fout,$salida."\n");
-	}
+
+	}
 
 	fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
 
 }
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
+if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
+	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
 	copy($archivo,$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
-	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";}
+	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
+}
 
 
-?>
+
+?>
 <form name=indices method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
 <div id="page">
-    <h3>
-    <?php
-    echo $msgstr["buscar_a"]." - ".$msgstr["tipos_registro"]." &nbsp";
-    if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar")
-    	include("wiki_help.php")
-	?>
-   <br>
+
 <?php
 //DATABASES
 $archivo=$db_path."opac_conf/$lang/bases.dat";
 $fp=file($archivo);
-foreach ($fp as $value){	if (trim($value)!=""){
-		echo "<p>";		$x=explode('|',$value);
+foreach ($fp as $value){
+	if (trim($value)!=""){
+		echo "<p>";
+		$x=explode('|',$value);
 		if ($_REQUEST["base"]!=$x[0]) continue ;
 		if(!file_exists($db_path."opac_conf/$lang/".$x[0]."_colecciones.tab")){
 			echo "<h4>".$msgstr["nrt_defined"]." ".$x[0]."</h4><br>";
@@ -57,22 +70,25 @@ foreach ($fp as $value){	if (trim($value)!=""){
 		if(file_exists($db_path."opac_conf/$lang/".$x[0]."_colecciones.tab")){
 			$fpTm=file($db_path."opac_conf/$lang/".$x[0]."_colecciones.tab");
 			echo "<strong>".$x[1]."</strong><p>";
-			foreach ($fpTm as $coleccion){				if (trim($coleccion)!=""){					$c=explode('|',$coleccion);
+			foreach ($fpTm as $coleccion){
+				if (trim($coleccion)!=""){
+					$c=explode('|',$coleccion);
 					$TM=$c[0];
-					Entrada(trim($x[0]),trim($x[1]),$lang,trim($x[0])."_avanzada_$TM.tab",$c[1],$TM,$x[0]);				}			}
+					Entrada(trim($x[0]),trim($x[1]),$lang,trim($x[0])."_avanzada_$TM.tab",$c[1],$TM,$x[0]);
+				}
+			}
 
 		}
 	}
 }
 ?>
 </div>
-<?php
-include ("../php/footer.php");
-?>
+
 </div>
 </div>
-</body
-</html>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
 <?php
 function Entrada($iD,$name,$lang,$file,$nombre_c,$TM,$base){
 global $msgstr,$db_path;
@@ -137,7 +153,5 @@ global $msgstr,$db_path;
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
 <input type=hidden name=base>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"]?>>
+<input type=hidden name=lang value="<?php echo $lang;?>">
 </form>
-</body>
-</html>
