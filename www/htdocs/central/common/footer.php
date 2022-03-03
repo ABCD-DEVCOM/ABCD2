@@ -71,7 +71,7 @@
 				}
 
 ?>
-				<span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-0 + ... &rarr; 2022-01-30</small></span>
+				<span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-0 + ... &rarr; 2022-03-03</small></span>
 			</div>
 
                 <div class="distributorLogo">
