@@ -136,9 +136,9 @@ echo "<strong>". $name;
 	} else{
 		$fp=array('||');
 	}
-$ix=0;	
+$ix=3;	
   	echo "<table bgcolor=#cccccc cellpadding=5>\n";
-echo "<tr><th>".$msgstr["lang"]."</th><th>".$msgstr["lang_n"]."</th></tr>";
+	echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>";
 if (file_exists($db_path."opac_conf/$lang/$file")){
 	$fp=file($db_path."opac_conf/$lang/$file");
 	foreach ($fp as $value){

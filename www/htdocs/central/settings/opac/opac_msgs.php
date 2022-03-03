@@ -1,16 +1,24 @@
 <?php
-include("tope_config.php");
+include ("tope_config.php");
+$wiki_help="OPAC-ABCD_Apariencia#Mensajes_del_sistema";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["sys_msg"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
 if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Mensajes_del_sistema";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Mensajes_del_sistema";
-?>
-<div id="page">
-<h3><?php echo $msgstr["sys_msg"]." &nbsp; ";
-include("wiki_help.php");
-echo "<p>";
+
 if (isset($msg_path) and $msg_path!="")
 	$path=$msg_path;
 else
@@ -93,11 +101,10 @@ echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
 echo "<input type=hidden name=Opcion value=Actualizar>";
 ?>
 </form>
-</div>
-<?php
 
-include ("../../../opac/php/footer.php");
-?>
+</div>    
+</div>    
+</div>    
 
-</body
-</html>
+<?php include ("../../common/footer.php"); ?>
+

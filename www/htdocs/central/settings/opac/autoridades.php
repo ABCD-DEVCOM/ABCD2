@@ -1,17 +1,22 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Extracci.C3.B3n_de_claves_para_presentar_el_.C3.ADndice";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#Extracci.C3.B3n_de_claves_para_presentar_el_.C3.ADndice";
-//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#Extracci.C3.B3n_de_claves_para_presentar_el_.C3.ADndice";
+include "../../common/inc_div-helper.php";
 
 ?>
-<div id="page" style="min-height:400px";>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["aut_opac"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
 
 <?php
+
+//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	echo "<h3>".$msgstr["aut_opac"]."</h3>";
+
 	$archivo=$db_path.$_REQUEST["base"]."/pfts/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
@@ -29,8 +34,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	echo "<strong><font face=courier size=4>autoridaes_opac.pft=%path_database%".$_REQUEST["base"]."/pfts/autoridades_opac.pft</font></strong><br>";
 
 }else{
-	echo "<h3>".$msgstr["aut_opac"]." &nbsp;";
-	include("wiki_help.php");
 	$base=$_REQUEST["base"];
 	$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat";
 	$fp=file($archivo);
@@ -48,10 +51,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 include ("../../../opac/php/footer.php");
 ?>
-</div>
-</div>
-</body
-</html>
+
 <?php
 function ConstruirPft($db_path,$base){
 //A TRAVES DEL PREFIJO DEFINIDO PARA CADA INDICE (DBN.IX) SE LEE LA FST PARA DETERMINAR QUE CAMPOS A UTILIZAR
@@ -139,7 +139,7 @@ function ConstruirPft($db_path,$base){
 function Entrada($iD,$name,$lang,$file,$base){
 global $msgstr,$db_path;
 	echo "<strong>". $name."</strong>";
-	echo "<div  id='$iD' style=\"border:1px solid; display:block;\">\n";
+	echo "<div  id='$iD' style=\" display:block;\">\n";
 	echo "<div style=\"display: flex;\">";
 	echo "<div style=\"flex: 0 0 50%;\">";
 	echo "<form name=$iD"."Frm method=post>\n";
@@ -175,7 +175,7 @@ global $msgstr,$db_path;
 	}
 	echo "</textarea>";
 	echo "<p>";
-	echo  "<div><img src=../../../opac/images/arrow.jpg style=\"margin-top:-7px;vertical-align: middle;\"> &nbsp;<input type=submit value=\"".$msgstr["save"]." ".$iD."/pfts/autoridades_opac.pft\" style=\"font-size:15px;\"></div>";;
+	echo  "<div><input type=submit value=\"".$msgstr["save"]." ".$iD."/pfts/autoridades_opac.pft\" style=\"font-size:15px;\"></div>";;
 	echo "</form>";
 
 	echo "</div>";
@@ -222,7 +222,7 @@ global $msgstr,$db_path;
 			echo "</table>";
 		}
 		echo "</div></div>";
-		echo "<p>";
+
 	}
 }
 ?>

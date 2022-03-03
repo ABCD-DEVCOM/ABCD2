@@ -1,7 +1,18 @@
 <?php
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
+$wiki_help="OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["ONLINESTATMENT"]?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
 
 if (isset($Web_Dir)) {
 	$Web_Dir = '<p style="color:darkblue;"><b>'.$Web_Dir.'</b></p>';
@@ -20,12 +31,9 @@ if (isset($OpacHttp)) {
 <form name=parametros method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
 <input type=hidden name=lang value=<?php echo $_REQUEST["lang"];?>>
-<div id="page">
-	<p>
-    <h3>
+
     <?php
-    echo $msgstr["ONLINESTATMENT"]." &nbsp; ";
-    include("wiki_help.php");
+
 $fp=file($db_path."/par/syspar.par");
 foreach ($fp as $value){
 	$value=trim($value);
@@ -107,3 +115,10 @@ foreach ($base_array as $key=>$value){
 echo "<h4>".$msgstr["minf_loans"]." <a href=http://wiki.abcdonline.info/Configuraci%C3%B3n_del_sistema_de_pr%C3%A9stamos target=_blank><font color=blue>Loans configuration</font></a> in wiki.abcdonline.info</h4>";
 
 ?>
+
+
+</div>
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>

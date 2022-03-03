@@ -1,13 +1,27 @@
 <?php
-$url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
+$wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["base_home"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
 /*
 /*
-if (!isset($_REQUEST["db_path"])){	$_REQUEST["db_path"]=$db_path;
-	$_REQUEST["db_path_desc"]="$db_path";}
-if (isset($_REQUEST["db_path"])) {	$_SESSION["db_path"]=$_REQUEST["db_path"];
+if (!isset($_REQUEST["db_path"])){
+	$_REQUEST["db_path"]=$db_path;
+	$_REQUEST["db_path_desc"]="$db_path";
+}
+if (isset($_REQUEST["db_path"])) {
+	$_SESSION["db_path"]=$_REQUEST["db_path"];
 	$_SESSION["db_path_desc"]=$_REQUEST["db_path_desc"];
 }
 */
@@ -51,7 +65,8 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		if ($value!=""){
 			$var=trim($var);
 			$salida="";
-			switch($var){				case "home_link":
+			switch($var){
+				case "home_link":
 					$salida="[LINK]".$value;
 					break;
 				case "home_mfn":
@@ -59,8 +74,11 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 					break;
 				case "home_text":
 					$salida="[TEXT]".$value;
-					if (!file_exists($db_path."opac_conf/$lang/$value")){						echo "<font color=red size=2><strong>".$db_path."opac_conf/$lang/$value"." ".$msgstr["missing"]."</strong></font>"."<br>";					}
-					break;			}
+					if (!file_exists($db_path."opac_conf/$lang/$value")){
+						echo "<font color=red size=2><strong>".$db_path."opac_conf/$lang/$value"." ".$msgstr["missing"]."</strong></font>"."<br>";
+					}
+					break;
+			}
 			if ($salida!="") fwrite($fout,$salida."\n");
 		}
 	}
@@ -73,14 +91,22 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 <br>
 <?php
 
-if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){	echo "<h3>".$msgstr["base_home"]." ";
-	include("wiki_help.php");
+if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
+
 	$base="";
-	if (!file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){		echo "<font color=red>".$msgstr["missing"]."opac_conf/".$_REQUEST["lang"]."/bases.dat";	}else{		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
-		foreach ($fp as $value){			if (trim($value)!=""){				$x=explode('|',$value);
-				if ($_REQUEST["base"]!=$x[0]) continue;				$nombre_base=$x[1];
+	if (!file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){
+		echo "<font color=red>".$msgstr["missing"]."opac_conf/".$_REQUEST["lang"]."/bases.dat";
+	}else{
+		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
+		foreach ($fp as $value){
+			if (trim($value)!=""){
+				$x=explode('|',$value);
+				if ($_REQUEST["base"]!=$x[0]) continue;
+				$nombre_base=$x[1];
 				$base=$x[0];
-				echo "<h2>".$_REQUEST["base"]." - ".$nombre_base."</h2><br>";			}		}
+				echo "<h2>".$_REQUEST["base"]." - ".$nombre_base."</h2><br>";
+			}
+		}
 	}
 	if ($base!=""){
 		$file=$base."_home.info";
@@ -96,11 +122,16 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){	echo "<h3>"
        	$home_link="";
 		$home_mfn="";
 		$home_text="";
-		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$file")){			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$file");
-			foreach ($fp as $value){				$value=trim($value);
-				if ($value!=""){					if (substr($value,0,6)=="[LINK]") $home_link=substr($value,6);
+		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$file")){
+			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$file");
+			foreach ($fp as $value){
+				$value=trim($value);
+				if ($value!=""){
+					if (substr($value,0,6)=="[LINK]") $home_link=substr($value,6);
 					if (substr($value,0,5)=="[MFN]")  $home_mfn=substr($value,5);
-					if (substr($value,0,6)=="[TEXT]") $home_text=substr($value,6);				}			}
+					if (substr($value,0,6)=="[TEXT]") $home_text=substr($value,6);
+				}
+			}
 		}
 		echo "<table cellpadding=5>";
 		echo "<tr><td colspan=2>"."<font color=darkred size=3><strong>".$msgstr["sel_one"]."</strong></font></td></tr>";
@@ -121,26 +152,30 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){	echo "<h3>"
 }
 ?>
 </div>
-<br>
-<br>
-<?php
-include ("../php/footer.php");
-?>
 </div>
 </div>
-</body
-</html>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
+
+
+
 <script>
 function checkform(){
 	cuenta=0;
 	if (Trim(document.homeFrm.home_link.value)!="")
 		cuenta=cuenta+1
-	if (document.homeFrm.home_mfn.checked){		cuenta=cuenta+1	}
+	if (document.homeFrm.home_mfn.checked){
+		cuenta=cuenta+1
+	}
 
 	if (Trim(document.homeFrm.home_text.value)!="")
 		cuenta=cuenta+1
-	if (cuenta>1){		alert("<?php echo $msgstr["sel_one"]?>")
-		return false	}
+	if (cuenta>1){
+		alert("<?php echo $msgstr["sel_one"]?>")
+		return false
+	}
 	return true
-}
+
+}
 </script>

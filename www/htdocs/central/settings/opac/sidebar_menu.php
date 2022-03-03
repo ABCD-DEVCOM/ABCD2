@@ -1,22 +1,27 @@
 <?php
 include ("tope_config.php");
+$wiki_help="OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_desplegable_izquierdo";
+include "../../common/inc_div-helper.php";
+
+?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["sidebar_menu"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
+<?php
+
  if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-$wiki_help="wiki.abcdonline.info/index.php?desde=ayuda&title=OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_desplegable_izquierdo";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_desplegable_izquierdo";
 
 
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>"; //die;
 
-/////////////////////////////////////////////////////////////////////
-
-?>
-<div id="page" style="margin-top:10px;padding:10px;">
-<h3><?php echo $msgstr["sidebar_menu"]." &nbsp; ";
-include("wiki_help.php");
-echo "<p>";
 $lang=$_REQUEST["lang"];
 $link=array();
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
@@ -138,14 +143,12 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 
 ?>
 
-</div>
-<br>
-<br>
-<?php
-include ("../../../opac/php/footer.php");
-?>
 
-</body
+</div>    
+</div>    
+</div>    
+
+<?php include ("../../common/footer.php"); ?>
 </html>
 <?php
 function AgregarLineas($ix,$ixsec){

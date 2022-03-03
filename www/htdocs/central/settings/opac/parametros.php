@@ -22,7 +22,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	}
 	fclose($fp);
     echo "<p><font color=red>opac_conf/opac.def ".$msgstr["updated"]."</font><p>";
-	include("../../../opac/php/footer.php");
+	include ("../../common/footer.php"); 
 	die;
 }
 $UNICODE="";
@@ -141,7 +141,6 @@ if (!isset($shortIcon))$shortIcon="";
 
 <div id="page">
     <table cellpading=5>
-    	<tr><td colspan=2 bgcolor=#cccccc>&nbsp;</td></tr>
     	<tr>
     		<td><?php echo $msgstr["Web_Dir"];?></td>
     		<td valign=top><input type=text name=conf_Web_Dir size=100 value="<?php echo $Web_Dir?>"></td>
@@ -219,7 +218,7 @@ if (!isset($shortIcon))$shortIcon="";
     			<input type=radio name=conf_charset value=ISO-8859-1  <?php if (isset($charset) and $charset=="ISO-8859-1") echo " checked"?>> ISO-8859-1</td>
     	</tr>
     </table>
-    <p>
+    
 <input type="hidden" name="Opcion" value="Guardar">
 <input type="submit" class="bt-green" value="<?php echo $msgstr["save"];?>">
 </form>

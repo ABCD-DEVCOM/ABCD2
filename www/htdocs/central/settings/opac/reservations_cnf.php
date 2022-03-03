@@ -1,25 +1,32 @@
 <?php
+
 /* Modifications
 2021-02-03 guilda execute in  opac/config  the option Statment, renovation and reserve -> Web renovation.
 2021-02-03 guilda Check the url and paths are OK, $CentralHttp defined in central/config_opac.php specifies the url to be used to access the ABCD central/circulation module.
 2021-02-03 guilda In this way the same scripts used in central are used in the opac
 */
+
+
 include ("tope_config.php");
-$wiki_help="wiki.abcdonline.info/index.php?desde=help&title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
-$wiki_trad="wiki.abcdonline.info/index.php?title=OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
-//foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
+$wiki_help="OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
+include "../../common/inc_div-helper.php";
 
 ?>
+
+<div class="middle form">
+   <h3><?php echo $msgstr["WEBRESERVATION"];?>
+	</h3>
+	<div class="formContent">
+
+<div id="page">
+
 
 <form name=reserva method=post>
 <input type=hidden name=db_path value=<?php echo $db_path;?>>
 <input type=hidden name=lang value=<?php echo $_REQUEST["lang"];?>>
-<div id="page">
-	<p>
-    <h3>
+
     <?php
-    echo $msgstr["WEBRESERVATION"]." &nbsp;";
-    include("wiki_help.php");
+
 /*
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	echo "<p><h4>".$msgstr["save"]." ".$msgstr["pft_res"]." ".$msgstr["in"]." ";
@@ -112,3 +119,9 @@ if (is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){
 echo "<h4>".$msgstr["minf_reservations"]." <a href=http://wiki.abcdonline.info target=_blank><font color=blue>wiki.abcdonline.info</font></a></h4>";
 
 ?>
+
+</div>
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
