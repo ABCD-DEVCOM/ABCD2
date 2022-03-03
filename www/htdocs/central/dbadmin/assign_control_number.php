@@ -3,6 +3,7 @@
 20210613 fho4abcd remove password, lineends
 20211215 fho4abcd Backbutton by & helper by included file
 20220203 fho4abcd Cleanup code&html+translation+make it work after reinvoke
+20220303 rogercgui Corrected the absence of the variable in the function "EnviarFormaCN"
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -24,7 +25,8 @@ include("../lang/dbadmin.php");
 
 if (strpos($arrHttp["base"],"|")===false){
 
-}   else{
+} else{
+
 		$ix=strpos($arrHttp["base"],'^b');
 		$arrHttp["base"]=substr($arrHttp["base"],2,$ix-2);
 }
@@ -32,14 +34,16 @@ if (isset($arrHttp["encabezado"]))
 	$encabezado="&encabezado=s";
 else
 	$encabezado="";
+	$base =$arrHttp["base"];
+	$cipar =$arrHttp["base"].".par";
 
-$base =$arrHttp["base"];
-$cipar =$arrHttp["base"].".par";
-//GET THE MAX MFN
-$IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
-include("../common/wxis_llamar.php");
-$ix=-1;
+	//GET THE MAX MFN
+	$IsisScript=$xWxis."administrar.xis";
+	$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+
+	include("../common/wxis_llamar.php");
+	$ix=-1;
+
 foreach($contenido as $linea) {
 	$ix=$ix+1;
 	if ($ix>0) {
@@ -77,6 +81,7 @@ function BorrarRango(){
 function EnviarFormaCN(vp){
 	de=Trim(document.cnFrm.Mfn.value)
   	a=Trim(document.cnFrm.to.value)
+  	Maxmfn=<?php echo $tag["MAXMFN"];?>
   	if (de!="" || a!="") {
   		Se=""
 		var strValidChars = "0123456789";
@@ -171,7 +176,7 @@ echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 	</td>
 	<tr>
 		<td colspan=2 align=center>
-        <input type=submit name=enviar value="<?php echo $msgstr["send"]?>" onClick=javascript:EnviarFormaCN()>
+        <input type=submit name=enviar value="<?php echo $msgstr["send"]?>" onClick="javascript:EnviarFormaCN()">
         <br><br>
         <?php
 		echo $msgstr["lastcn"].": ".$last_cn."&nbsp; <a href=Javascript:Reset()>".$msgstr["resetcn"]."</a>";
