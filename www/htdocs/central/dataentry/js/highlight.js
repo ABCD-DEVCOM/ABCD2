@@ -1,3 +1,7 @@
+/*
+20220304 fho4abcd Test on undefined value in highlightSearchTerms
+20220304 fho4abcd Correct wrong replacements,more replacements
+*/
 function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag) 
 {
   // the highlightStartTag and highlightEndTag parameters are optional
@@ -14,19 +18,19 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
   var newText = "";
   var i = -1;
   var lcSearchTerm = searchTerm.toLowerCase();
-  lcSearchTerm  = lcSearchTerm.replace(/[čéęë]/ig, 'e');
-  lcSearchTerm  = lcSearchTerm.replace(/[ŕâäá]/ig, "a");
-  lcSearchTerm  = lcSearchTerm.replace(/[îďíě]/ig, "i");
-  lcSearchTerm  = lcSearchTerm.replace(/[ôöóň]/ig, "o");
-  lcSearchTerm  = lcSearchTerm.replace(/[ůűüú]/ig, "u");
+  lcSearchTerm  = lcSearchTerm.replace(/[èéęêë]/ig, 'e');
+  lcSearchTerm  = lcSearchTerm.replace(/[àâäá]/ig, "a");
+  lcSearchTerm  = lcSearchTerm.replace(/[îïíì]/ig, "i");
+  lcSearchTerm  = lcSearchTerm.replace(/[ôöóò]/ig, "o");
+  lcSearchTerm  = lcSearchTerm.replace(/[ùûůűüú]/ig, "u");
   lcSearchTerm  = lcSearchTerm.replace(/[,]/ig, "");
 
   var lcBodyText = bodyText.toLowerCase();
-  lcBodyText = lcBodyText.replace(/[čéęë]/ig, 'e');
-  lcBodyText = lcBodyText.replace(/[ŕâäá]/ig, "a");
-  lcBodyText = lcBodyText.replace(/[îďíě]/ig, "i");
-  lcBodyText = lcBodyText.replace(/[ôöóň]/ig, "o");
-  lcBodyText = lcBodyText.replace(/[ůűüú]/ig, "u");
+  lcBodyText = lcBodyText.replace(/[èéęêë]/ig, 'e');
+  lcBodyText = lcBodyText.replace(/[àâäá]/ig, "a");
+  lcBodyText = lcBodyText.replace(/[îïíì]/ig, "i");
+  lcBodyText = lcBodyText.replace(/[ôöóò]/ig, "o");
+  lcBodyText = lcBodyText.replace(/[ùûůűüú]/ig, "u");
     
   while (bodyText.length > 0) {
     i = lcBodyText.indexOf(lcSearchTerm, i+1);
@@ -41,11 +45,11 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
           newText += bodyText.substring(0, i) + highlightStartTag + bodyText.substr(i, searchTerm.length) + highlightEndTag;
           bodyText = bodyText.substr(i + searchTerm.length);
           lcBodyText = bodyText.toLowerCase();
-          lcBodyText = lcBodyText.replace(/[čéęë]/ig, 'e');
-        lcBodyText = lcBodyText.replace(/[ŕâäá]/ig, "a");
-        lcBodyText = lcBodyText.replace(/[îďíě]/ig, "i");
-        lcBodyText = lcBodyText.replace(/[ôöóň]/ig, "o");
-        lcBodyText = lcBodyText.replace(/[ůűüú]/ig, "u");
+          lcBodyText = lcBodyText.replace(/[èéęêë]/ig, 'e');
+        lcBodyText = lcBodyText.replace(/[àâäá]/ig, "a");
+        lcBodyText = lcBodyText.replace(/[îïíì]/ig, "i");
+        lcBodyText = lcBodyText.replace(/[ôöóò]/ig, "o");
+        lcBodyText = lcBodyText.replace(/[ùûůűüú]/ig, "u");
           i = -1;
         }
       }
@@ -99,7 +103,9 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
   document.body.innerHTML = bodyText;
 
   var textareDataentry = document.getElementById("nueva_b");
-  textareDataentry.innerHTML = textareDataentry.innerText.replace(/(<([^>]+)>)/gi, '');
+  if (textareDataentry!=null) {
+    textareDataentry.innerHTML = textareDataentry.innerText.replace(/(<([^>]+)>)/gi, '');
+  }
   
   return true;
 }
