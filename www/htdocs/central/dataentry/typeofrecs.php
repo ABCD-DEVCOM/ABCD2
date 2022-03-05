@@ -25,19 +25,16 @@
  *
  * == END LICENSE ==
 */
+
 session_start();
 include("../common/get_post.php");
 include("../config.php");
 include("../common/header.php");
 require_once ("../lang/admin.php");
-echo "<body>";
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/typeofrecs.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/typeofrecs.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo " Script: typeofrecs.php";
-	echo "</div>\n";
+
+$ayuda="typeofrecs.html";
+include ('../common/inc_div-helper.php');
+
 
 //READ THE DATAENTRY WORKSHEET TO DETERMINE THE AVAILABILITY FOR THE OPERATOR
 if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/formatos.wks")){
@@ -74,7 +71,7 @@ $fp=file($tr);
 	<div class="formContent">
 	<center>
 	<h3><?php echo $msgstr["typeofr"]?></h3>
-		<table cellspacing="12" width="30%">
+		<table width="30%">
 		<?php
 		$ix=0;
 		$tr="";
@@ -93,12 +90,14 @@ $fp=file($tr);
 			$ipos=strpos($cod,".");
 			$cod=substr($cod,0,$ipos);
 			if (isset($wks_p[$cod]))
-				echo "<tr><td><a class='button_browse edit' href=\"javascript:top.wks='".$value."|$tl|$nr';top.Menu('crear')\">".$ttm[3]." <i class='fas fa-arrow-right'></i></a></td></tr>\n";
+				echo "<tr><td><a class='bt bt-green' style='width:100%;' href=\"javascript:top.wks='".$value."|$tl|$nr';top.Menu('crear')\">".$ttm[3]." <i class='fas fa-arrow-right'></i></a></td></tr>\n";
 			}
 		}
 		}
 		?>
 		</table>
 	</div>
+
 </div>
 
+</center>
