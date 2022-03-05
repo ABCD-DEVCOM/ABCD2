@@ -16,6 +16,7 @@ body {
   text-align: var(--abcd-body-text-align);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background: var(--abcd-gray-100);
 }
 
 .areaTitulo{
@@ -31,10 +32,9 @@ body {
 
 #centrado {
 	width: 100%;
-
 	margin: 0px;
 	padding: 0;
-	background: #ffffff;
+
 
 }
 h1, h2, h3 {
@@ -997,3 +997,19 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
   color: white;
 }
 
+
+/*** search results ***/
+
+table.list-item-wrapper {
+	border: 1px solid var(--abcd-gray-200);
+    box-sizing: border-box;
+    border-radius: 0.3rem;;
+	width: 100%;
+	padding: 16px 0;
+	background-color: var(--abcd-white);
+	margin-bottom: 10px;
+}
+
+table tr td.side-item {
+	padding: 0 10px;
+}
