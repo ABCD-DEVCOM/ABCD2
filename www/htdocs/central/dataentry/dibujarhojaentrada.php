@@ -923,6 +923,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	 }
 	 if ($rep==1 and $numl==0) $numl=1;
 	 if ($numl==0) $numl=1;
+
 	 $valortag[$tag]=rtrim($valortag[$tag]);
 	 $dummy=explode("\n", $valortag[$tag]);
 	 $occurs=count($dummy);
@@ -932,8 +933,8 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   		if ($tipo!="I")echo $lin."";
 	  	}
 	 } else {
-
 	  		$campo=rtrim($valortag[$tag]);
+
 	  		//if ($ksc>0 && $campo!=""  and trim($delimsc)!="") $campo=DecodificaSubCampos($campo,$ksc,$subc,$delimsc);
 	  		if ($numl<count($dummy)) $numl=count($dummy);
 	  		if ($numl>30) {
@@ -956,14 +957,27 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 				else
 					$it="";
 				$maxlength=0;
-				if ($t[9]==0) $t[9]=100;
+				if ($t[9]==0) { 
+					$t[9]=100;
+				}
 				if ($t[9]!=""){
 			    	$lenf=explode('/',$t[9]);
 			    	$len=$lenf[0];
 			    	if (isset($lenf[1]))
 			    		$maxlength=$lenf[1];
 			    }
-	   			echo "<textarea rows=$numl cols=$len  name=tag$tag id=tag$tag $arrow $it";
+			    ?>
+
+	   			<textarea rows="<?php echo $numl;?>" cols="<?php echo $len;?>"  name="tag<?php echo $tag;?>" id="tag<?php echo $tag;?>" <?php echo $arrow;?> <?php echo $it;?>
+	   			
+	   			<?php
+	   			// Edited by rogercgui to send textarea 
+	   			if (isset($_REQUEST[$campo])) {
+	   				$campo = $_REQUEST[$campo];
+	   			} else {
+	   				$campo=$campo;
+	   			}
+
 	   			if ($maxlength>0){
 	   				echo " onKeyDown=\"textCounter(document.forma$ixforms.tag_".$tag.",document.forma$ixforms.rem$tag,$maxlength)\"
 					   	onKeyUp=\"textCounter(document.forma1.tag".$tag.",document.forma1.rem$tag,$maxlength)\"";
@@ -971,7 +985,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 					if (isset($t[20]) and $t[20]=="U")
    							echo " onKeyUp=\"CheckInventory($tag)\"";
    				}
-   				echo ">" .$campo."</textarea>";
+   				echo ">".$campo."</textarea>";
 	   			if ($maxlength>0)
 	   				echo "<input readonly type=\"text\" name=\"rem$tag\" size=\"3\" maxlength=\"$maxlength\" value=\"$maxlength\" class=charCount>".$msgstr["avalchars"]."\n";
 	  		}else{

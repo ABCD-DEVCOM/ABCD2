@@ -1,7 +1,6 @@
-'<font face="Arial" size=2>'/
 '<table border=0 width=600>'
 '<td class=textbody03 colspan=3>'
-'<table width=100%><td><font face=verdana color=red size=-1><b>Registro: ',f(mfn,1,0)'</a>',"&nbsp; &nbsp; ("v1001" / "v1002")" '</b></td>'/
+'<table width=100%><td><b>Registro: ',f(mfn,1,0)'</a>',"&nbsp; &nbsp; ("v1001" / "v1002")" '</b></td>'/
 (|<td align=right><a href="javascript:Prestar('|v990|')"><img src=img/prestar.gif border=0></a></td>|),
 '</table>
 </td>
@@ -66,7 +65,7 @@ fi,fi,fi,/
      " ("v250^a")",", "v260^a,", "v260^b,
 
 
-'</td><tr><td colspan=4><font size=2>
+'</td><tr><td colspan=4>
 <b>Existencias</b>: 
 (Cuando se indica <img src=img/delete.gif height=10 align=middle><font size=1> significa que el ejemplar no está disponible</font>)'/
 '$$EXISTENCIAS:'v990'$$'/
