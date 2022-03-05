@@ -6,7 +6,7 @@
     padding:0px;
 }
 </style>'/
-'<script type="text/javascript" src="/iah/js/highlight.js"></script>'
+'<script type="text/javascript" src="/central/dataentry/js/highlight.js"></script>'
 '<script>
     function CruzarABCD(Termino,Prefijo){
         top.browseby="search"
