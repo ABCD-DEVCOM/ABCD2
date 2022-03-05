@@ -25,6 +25,7 @@
  *
  * == END LICENSE ==
 */
+
 session_start();
 include("../common/get_post.php");
 include("../config.php");
