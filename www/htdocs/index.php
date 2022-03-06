@@ -19,9 +19,10 @@ $new_window=time();
 
 $lang_config=$lang; // save the configured language to preset it later
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
-	$lang=$_SESSION["lang"];
+	$lang=$lang;
 }else{
 	$arrHttp["lang"]=$lang;
 	$_SESSION["lang"]=$lang;
@@ -78,7 +79,7 @@ include ("$app_path/lang/lang.php");
 		margin: 0;
 	}
 	.middle {
-		height: 70vh;
+		height: 80vh;
 	}
 </style>
 
@@ -227,7 +228,7 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
                     if ($value!=""){
                         $l=explode('=',$value);
                         if ($l[0]!="lang"){
-                            if ($l[0]==$lang_config) $selected=" selected";
+                            if ($l[0]==$lang) $selected=" selected";
                             echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>\n";
                             $selected="";
                         }

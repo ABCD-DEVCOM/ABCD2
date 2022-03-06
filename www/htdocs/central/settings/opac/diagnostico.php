@@ -6,15 +6,20 @@ $db_path="";
 $abcd_scripts="";
 $url="";
 $no_err=0;
+
 $fp=file("../../config_opac.php");
 if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
 if (isset($_REQUEST["lang"])) $lang=$_REQUEST["lang"];
 $msg_err="";
 $primera_vez="";
+
 foreach ($fp as $value){
+
 	if ($config_php!="" and $abcd_scripts!="" and $url!="") break;
 	$value=trim($value);
+
 	if ($value!=""){
+
 		if (substr($value,0,7)=="include" and $config_php==""){
 			if ($config_php==""){
 				$ix=strpos($value,'"');
@@ -26,7 +31,7 @@ foreach ($fp as $value){
 					$ix=strpos($dir,'/config/index.php');
 					$dir=substr($dir,0,$ix);
 					header('Content-Type: text/html; charset="utf-8">');
-					echo "<Html>";
+					echo "<html>";
 					echo "<body>";
 					Encabezado();
 					echo "<font color=red face=arial size=4>Error. Script not found <strong>config_php</strong> in <strong>ABCD central folder</strong>.<br><br>";
@@ -65,33 +70,36 @@ include ("tope_config.php");
 
 <div id="page">
 
-<?php
+	<h4><?php echo $msgstr['cfg_chk'];?> config_opac.php</h4>
 
-echo "<h4>"."php/config_opac.php verification &nbsp; &nbsp;";
-echo "</h4>";
-echo "<br>Click here in order to check the parameter <strong><a href=$server_url target=_blank>server_url</a></strong><p>";
+	<p><?php echo $msgstr['cfg_click'] ?><strong> <a href="<?php echo $server_url;?>" target="_blank">$server_url</a></strong></p>
+
+
+<?php
 if (is_dir($ABCD_scripts_path)){
-	echo "path to <strong>$ABCD_scripts_path</strong> is ok<br>";
+	echo "<p>".$msgstr['cfg_pathto']." <strong>$ABCD_scripts_path</strong>  <i class=\"fas fa-check color-green\"></i></p>";
 
 }else{
-	echo "Error. Path not found <strong>$ABCD_scripts_path</strong>. ".'Please check the parameter <strong>$ABCD_scripts_path</strong> in /php/config_opac.php <br>';
+	echo "<p>".$msgstr['cfg_errorpath']." <strong>".$ABCD_scripts_path."</strong>".$msgstr['cfg_chk_param']."<strong>$ABCD_scripts_path</strong> in /php/config_opac.php </p>";
 	$no_err=$no_err+1;
 }
+
 $archivo=$ABCD_scripts_path."central/dataentry/wxis/opac";
+
 if (!is_dir($archivo)){
-	echo "<h2><font color=red>Fatal error. <font color=black>dataentry/wxis/opac<font color=red> folder not found";
+	echo "<p class='color-red'><b>".$msgstr['cfg_fatal']." dataentry/wxis/opac folder not found</b></p>";
 	die;
 }else{
-    echo "<br><strong>dataentry/wxis/opac</strong> folder OK";
+    echo "<p><strong>dataentry/wxis/opac</strong> <i class=\"fas fa-check color-green\"></i></p>";
 }
 if ($no_err<>0){
-	echo "<h2><font color=red>Fatal error. Verification ended</h2>";
+	echo "<p class='color-red'><b>".$msgstr['cfg_fatal']." ".$msgstr['cfg_ended']."</b></p>";
 	die;
 }
 $opac_conf="";
 $err="";
 
-echo "<hr><h3>Checking $db_path"."opac_conf folder</h3><p>";
+echo "<hr><h3>".$msgstr['cfg_chk_folder']." ".$db_path."opac_conf </h3><p>";
 $opac_conf=$db_path."opac_conf";
 if (!is_dir($opac_conf)){
 	echo   "Error. Missing $db_path"."opac_conf folder<br>";
@@ -102,12 +110,12 @@ if ($opac_conf!=""){
     if (!file_exists($opac_conf."/opac.def")){
 		echo "Error. opac.def missing<br>";
 	}else{
-		echo "opac.def OK<br>";
+		echo "opac.def <i class=\"fas fa-check color-green\"></i><br>";
 	}
 	if (!file_exists($opac_conf."/select_record.pft")){
 		echo "Error. select_record.pft missing (".$msgstr["rtb"].")<br>";
 	}else{
-		echo "select_record.pft (".$msgstr["rtb"].") OK<br>";
+		echo "select_record.pft (".$msgstr["rtb"].") <i class=\"fas fa-check color-green\"></i><br>";
 	}
 	$handle=opendir($opac_conf);
 	$arr_dir=readdir($handle);
@@ -123,7 +131,7 @@ if (count($dir_arr)==0){
 	$err="S";
 }
 foreach ($dir_arr as $lang){
-	echo "<br><h3>Checking <strong><font color=red>$lang</font></strong> folder</h3>";
+	echo "<br><h3>".$msgstr['cfg_chk_folder']." <strong><font color=red>$lang</font></strong></h3>";
 	if (!file_exists($opac_conf."/$lang/lang.tab")){
 		echo "Error. <strong>lang.tab</strong> missing<br>";
 		$err="S";
@@ -171,7 +179,7 @@ foreach ($dir_arr as $lang){
 					}
 				}
 			}
-			echo "<h4><font color=blue>Checking $base ($base_desc)</font></h4>";
+			echo "<hr><h3><font color=blue>".$msgstr['cfg_chk']." ".$base ." (".$base_desc.") - ".$lang."</font></h3>";
 			if (!is_dir($db_path.$base)){
 	 			echo "<font color=red size=3><strong>".$msgstr["missing_folder"]." $base ".$msgstr["in"]." $db_path</strong></font><br>";
 	 		}
@@ -188,49 +196,60 @@ foreach ($dir_arr as $lang){
 
 				}
 			}
-			echo "<strong>Verifying the parameters of the database (dr_path.def)</strong><br>";
+			echo "<p><strong>".$msgstr['cfg_param_db']."</strong></p>";
 			if (!isset($dr_parms["UNICODE"]))
-				echo "<font color=red>The UNICODE parameter is not set. Assumed ANSI</font><br>";
+				echo "<p class='color-red'>".$msgstr['cfg_empty_unicod']."</p>";
 			else
 				echo "UNICODE = ".$dr_parms["UNICODE"]."<BR>";
 	        if (!isset($dr_parms["CISIS_VERSION"]))
-				echo "<font color=red>The CISIS_VERSION parameter is not set. Assumed 16-60</font><br>";
+				echo "<p class='color-red'>The CISIS_VERSION parameter is not set. Assumed 16-60</p>";
 			else
 				echo "CISIS_VERSION = ".$dr_parms["CISIS_VERSION"]."<BR>";
 	        echo "<i>These parameters can be updated in the central module</i><br>";
 			echo "<BR><strong>"."Verifying the database configuration</strong><br>";
 			$archivo=$opac_conf."/$lang/$base".".def";
 			if (!file_exists($archivo)){
-				echo "Error. File <strong>$base".".def</strong> not found<br>";
+				echo $msgstr['cfg_file']." <strong>$base".".def</strong> <i class=\"fas fa-times color-red\"></i><br>";
 				$err="S";
 			}else{
-				echo "File $base".".def OK<br>";
+				echo $msgstr['cfg_file']." $base".".def <i class=\"fas fa-check color-green\"></i><br>";
 			}
 			$archivo=$opac_conf."/$lang/$base"."_libre.tab";
 			if (!file_exists($archivo)){
-				echo "Error. File <strong>$base"."_libre.tab</strong> (".$msgstr["free_search"].") not found<br>";
+				echo $msgstr['cfg_file']." <strong>$base"."_libre.tab</strong> (".$msgstr["free_search"].") <i class=\"fas fa-times color-red\"></i>";
+
+					if ($_SESSION['lang']==$lang) {
+						echo " <a href=javascript:SeleccionarProceso('busqueda_libre.php','$base')>".$msgstr['cfg_create']."</a>";
+					}
+				echo "</p>";	
+				
 				$err="S";
 			}else{
-				echo "File $base"."_libre.tab (".$msgstr["free_search"].")  OK<br>";
+				echo $msgstr['cfg_file']." $base"."_libre.tab (".$msgstr["free_search"].")  <i class=\"fas fa-check color-green\"></i><br>";
 			}
 			$archivo=$opac_conf."/$lang/$base"."_avanzada.tab";
 			if (!file_exists($archivo)){
-				echo "Error. File <strong>$base"."_avanzada.tab (".$msgstr["buscar_a"].")</strong> not found<br>";
+				echo $msgstr['cfg_file']." <strong>$base"."_avanzada.tab (".$msgstr["buscar_a"].")</strong> <i class=\"fas fa-times color-red\"></i>";
+
+					if ($_SESSION['lang']==$lang) {
+						echo " <a href=javascript:SeleccionarProceso('busqueda_avanzada.php','$base')>".$msgstr['cfg_create']."</a>";
+					}
+				echo "</p>";	
 				$err="S";
 			}else{
-				echo "File $base"."_avanzada.tab (".$msgstr["buscar_a"].") OK<br>";
+				echo $msgstr['cfg_file']." $base"."_avanzada.tab (".$msgstr["buscar_a"].") <i class=\"fas fa-check color-green\"></i><br>";
 			}
 			$archivo=$opac_conf."/$lang/$base"."_formatos.dat";
 			if (!file_exists($archivo)){
-				echo "Error. File <strong>$base"."_formatos.dat</strong> (".$msgstr["select_formato"].") not found<br>";
+				echo "File <strong>$base"."_formatos.dat</strong> (".$msgstr["select_formato"].") <i class=\"fas fa-times color-red\"></i><br>";
 				$err="S";
 			}else{
-				echo "File $base"."_formatos.dat (".$msgstr["select_formato"].")  OK<br>";
+				echo "File $base"."_formatos.dat (".$msgstr["select_formato"].")  <i class=\"fas fa-check color-green\"></i><br>";
 				echo "<p><strong>Checking formats in $base.par</strong><br>";
 				$pfts=file($archivo);
 				$pfts[]="autoridades_opac|";
 				$pfts[]="select_record|";
-				echo "<table border=1 cellpadding=5>";
+				echo '<table class="striped">';
 				echo "<tr><th>Format </th><th>$base.par</th><th>Format path</th></tr>";
 				foreach ($pfts as $linea){
 					$linea=trim($linea);

@@ -101,16 +101,26 @@ function Enviar(){
 	}
 }
 </script>
+<?php
+include ("../common/css_settings.php");
+?>
 </head>
 <body>
 	<div class="heading">
 		<div class="institutionalInfo">
-			<img src=<?php	if (isset($logo))
-						echo "$logo" ;
-					else
-						echo "../../assets/images/logoabcd.png";
-				 ?>
-			><h1><?php echo $institution_name?></h1>
+			<?php
+
+			if (isset($def['LOGO_DEFAULT'])) {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
+			} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
+				echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
+				if (isset($institution_name)) echo $institution_name;
+				echo "'>";
+			} else {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
+			}
+
+			?>
 		</div>
 		<div class="userInfo"></div>
 		<div class="spacer">&#160;</div>
@@ -160,7 +170,7 @@ function Enviar(){
 					<a href=javascript:DisplayPassword('confirmpwd')><?php echo $msgstr["ver"]?></a>
 				</div>
 				<div class="formRow">
-				<a href="javascript:Enviar()" class="bt-blue bt-sign">
+				<a href="javascript:Enviar()" class="bt bt-blue">
 					<?php echo $msgstr["chgpass"]?>
 				</a>
 
@@ -173,8 +183,3 @@ function Enviar(){
 </form>
 
 <?php include ("../common/footer.php");?>
-	</body>
-</html>
-
-
-

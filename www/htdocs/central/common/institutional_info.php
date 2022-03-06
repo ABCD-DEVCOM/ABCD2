@@ -189,6 +189,13 @@ function ChangeLang(){
 	}
 }
 
+	function CambiarLenguaje(){
+		if (document.cambiolang.lenguaje.selectedIndex>=0){
+               lang=document.cambiolang.lenguaje.options[document.cambiolang.lenguaje.selectedIndex].value
+               self.location.href="?reinicio=s&lang="+lang
+		}
+	}
+
 </script>
 
 <div class=heading>
@@ -349,15 +356,15 @@ if (isset($def['LOGO_DEFAULT'])) {
 				
 <?php if ($verify_selbase=="Y") { ?>
 
-<form name=OpcionesLang>
-			<input type=hidden name=base value="">
+<form name=cambiolang  class="language">
+			<input type=hidden name=base>
 			<input type=hidden name=cipar value="">
 			<input type=hidden name=marc value="">
 			<input type=hidden name=tlit value="">
 			<input type=hidden name=nreg value="">			
-            <select name="lenguaje"  onchange="ChangeLang()">
+            <select name="lenguaje"  onchange=CambiarLenguaje()>
             <?php
-            include "../common/inc_get-langtab.php";
+            include "inc_get-langtab.php";
             $a=get_langtab();
             $fp=file($a);
             $selected="";
@@ -382,7 +389,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 				<form name=cambiolang class="language">
 					<select name=lenguaje onchange=CambiarLenguaje() >
 				        <?php
-				        include "../common/inc_get-langtab.php";
+				        include "inc_get-langtab.php";
 				        $a=get_langtab();
 				        $fp=file($a);
 				        $selected="";
@@ -393,7 +400,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 				                $l=explode('=',$value);
 				                if ($l[0]!="lang"){
 			                    if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-			                    echo "<option title=".$msgstr[$l[0]]." value=$l[0] $selected>".$l[0]."</option>";
+			                    echo "<option value=$l[0] $selected>".$l[0]."</option>";
 			                    $selected="";
 				                }
 				            }
