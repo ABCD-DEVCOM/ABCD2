@@ -162,12 +162,7 @@ function Modulo(){
 	}
 }
 
-	function CambiarLenguaje(){
-		if (document.cambiolang.lenguaje.selectedIndex>=0){
-               lang=document.cambiolang.lenguaje.options[document.cambiolang.lenguaje.selectedIndex].value
-               self.location.href="inicio.php?reinicio=s&lang="+lang
-		}
-	}
+
 
 	function CambiarBaseAdministrador(Modulo){
 		db=""
