@@ -1,4 +1,7 @@
 <?php
+/*
+20220306 fho4abcd div-helper, added informational and error messages, moved functions to end of file
+*/
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 error_reporting(E_ALL);
@@ -79,8 +82,114 @@ switch($arrHttp["output"]){
 		break;
 }
 
+if ($arrHttp["output"]=="display"){
+    include ("../common/header.php");
+
+	echo "<body>";
+    include "../common/inc_div-helper.php";
+    ?>
+    <div class="middle form">
+        <div class="formContent">
+<?php
+
+}
+
+//SE LEE EL ARCHIVO DE CONFIGURACION
+$configfile=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["tipo"].".conf";
+$configfilefull=$db_path.$configfile;
+if (!file_exists($configfilefull)){
+	echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$configfile."<br>".$msgstr["barcode_conf"]."</div>";
+	echo "</div></div>";
+	include("../common/footer.php");
+	die;
+}
+if ($arrHttp["output"]=="display") echo "<div>".$configfile." ".$msgstr["doesexist"]."</div>";
+
+// Read the barcode configuration file
+$bar_c=array();
+$fp=file($configfilefull);
+if ($fp){
+	foreach ($fp as $conf){
+		$conf=trim($conf);
+		if ($conf!=""){
+			$a=explode('=',$conf,2);
+			$bar_c[$a[0]]=$a[1];
+		}
+	}
+}
+//CONVERT CM TO EM
+$bar_c["height"]=$bar_c["height"]*$cm2em;
+$bar_c["width"]=$bar_c["width"]*$cm2em;
+
+// Check if the pft is a file
+$ispftfile=false;
+if ($arrHttp["output"]=="txt" or $arrHttp["output"]=="txt_print"){
+	$bar_c["label_format"]=$bar_c["label_format_txt"];
+	if (substr($bar_c["label_format"],0,1)=='@'){
+		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
+        $ispftfile=true;
+    }
+}else{
+	if (substr($bar_c["label_format"],0,1)=='@'){
+		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
+        $ispftfile=true;
+    }
+}
+switch ($arrHttp["tipo"]){
+	case "barcode":
+		$Pft=trim($bar_c["label_format"])."/";
+		break;
+	case "lomos":
+		$Pft=trim($bar_c["label_format"])."/";
+		break;
+	case "etiquetas":
+		$Pft=trim($bar_c["label_format"])."/";
+		break;
+}
+// Check if the barcode pft file exists.
+if ( $ispftfile==true) {
+    //  Note that it starts with ",@" and ends with ",/";
+    $pftfilefull=substr($Pft,2);
+    $pftfilefull=substr($pftfilefull,0,-2);
+    $pftfile=substr($pftfilefull,strlen($db_path));
+    if (!file_exists($pftfilefull)){
+        echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$pftfilefull."<br>".$msgstr["barcode_conf"]."</div>";
+        echo "</div></div>";
+        include("../common/footer.php");
+        die;
+    } else {
+        if ($arrHttp["output"]=="display") echo "<div>".$pftfile." ".$msgstr["doesexist"]."</div>";
+    }
+}
+switch ($arrHttp["Opcion"]){
+	case "mfn":
+		MfnBarCode($arrHttp["base"],$arrHttp["mfn_from"],$arrHttp["mfn_to"],$bar_c,$Pft);
+		break;
+	case "clasificacion":
+		ClasificacionBarCode($arrHttp["base"],$arrHttp["classification_from"],$arrHttp["classification_to"],$bar_c,$Pft);
+    	break;
+    case "control":
+    	//ControlBarCode($arrHttp["base"],$arrHttp["control_from"],$arrHttp["control_to"],$fe_control,$copies,$pref_control,$arrHttp["output"]);
+    	break;
+    case "inventario":
+    	InventarioBarCode($arrHttp["base"],$arrHttp["inventory_from"],$arrHttp["inventory_to"],$bar_c,$Pft);
+		break;
+	case "date":
+    	//DateBarCode($arrHttp["base"],$arrHttp["date_from"],$arrHttp["date_to"],$fe_date,$copies,$pref_date,$arrHttp["output"]);
+		break;
+	case "lista_inventario":
+		InventarioLista($arrHttp["base"],$arrHttp["inventory_list"],$bar_c,$Pft);
+		break;
+
+}
+if ($arrHttp["output"]=="display"){
+	echo "</body></html>";
+}
+//================= Functions ==================
+
 function MostrarSalida($contenido,$medio="",$bar_c){
-global $arrHttp;
+global $arrHttp,$msgstr;
+    if ( count($contenido)==1 && $contenido[0]=="" ) echo "<div style='color:red'>".$msgstr["barcode_script_none"]."</div>";
 	if ($medio=="display" or $medio=="doc"){
 		$table_width=$bar_c["cols"]*$bar_c["width"];
 		if (isset($bar_c["cols"]) and $bar_c["cols"]>0){
@@ -171,12 +280,13 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 	$base=$base;
 	$cipar=$base.".par";
 	$Opcion="leer";
-	$login="xx";
-	$password="xx";
 	$IsisScript=$xWxis."leer_mfnrange.xis";
  	$query = "&base=$base&cipar=$db_path"."par/".$cipar. "&from=" . $from."&to=$to&Pft=$Pft";
+    if ($arrHttp["output"]=="display") echo "<div>".$msgstr["barcode_script"].": ".$IsisScript."</div>";
  	//echo $Pft;
 	include("../common/wxis_llamar.php");
+    if ( count($contenido)==1 && $contenido[0]=="" ) echo "<div style='color:red'>".$msgstr["barcode_script_empty"]."</div>";
+    
     /*foreach ($contenido as $value){
     	 echo "***".$value;
     }
@@ -261,91 +371,18 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
 						$inventario[$ni]=$ni;
 					}
 				}
-			}else{				$ni=$value;
+			}else{
+				$ni=$value;
 				if (!isset($inventario[$ni])){
 					$array_c[]=$value;
 					$inventario[$ni]=$ni;
-				}			}
+				}
+			}
 
 		}
 	}
 
 	MostrarSalida($array_c,$arrHttp["output"],$bar_c);
-}
-
-if ($arrHttp["output"]=="display"){
-	echo "<html><body>";
-}
-
-//SE LEE EL ARCHIVO DE CONFIGURACION
-if (!file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/barcode.conf")){
-	echo "<h4>".$msgstr["barcode_conf"]."</h4>";
-	$err="Y";
-}else{
-	$err="";
-}
-if ($err!=""){
-	echo "</div></div>";
-	include("../common/footer.php");
-	die;
-}
-$bar_c=array();
-$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["tipo"].".conf");
-if ($fp){
-	foreach ($fp as $conf){
-		$conf=trim($conf);
-		if ($conf!=""){
-			$a=explode('=',$conf,2);
-			$bar_c[$a[0]]=$a[1];
-		}
-	}
-}
-//CONVERT CM TO EM
-$bar_c["height"]=$bar_c["height"]*$cm2em;
-$bar_c["width"]=$bar_c["width"]*$cm2em;
-
-if ($arrHttp["output"]=="txt" or $arrHttp["output"]=="txt_print"){
-	$bar_c["label_format"]=$bar_c["label_format_txt"];
-	if (substr($bar_c["label_format"],0,1)=='@')
-		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
-}else{
-	if (substr($bar_c["label_format"],0,1)=='@')
-		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
-}
-switch ($arrHttp["tipo"]){
-	case "barcode":
-		$Pft=trim($bar_c["label_format"])."/";
-		break;
-	case "lomos":
-		$Pft=trim($bar_c["label_format"])."/";
-		break;
-	case "etiquetas":
-		$Pft=trim($bar_c["label_format"])."/";
-		break;
-}
-switch ($arrHttp["Opcion"]){
-	case "mfn":
-		MfnBarCode($arrHttp["base"],$arrHttp["mfn_from"],$arrHttp["mfn_to"],$bar_c,$Pft);
-		break;
-	case "clasificacion":
-		ClasificacionBarCode($arrHttp["base"],$arrHttp["classification_from"],$arrHttp["classification_to"],$bar_c,$Pft);
-    	break;
-    case "control":
-    	//ControlBarCode($arrHttp["base"],$arrHttp["control_from"],$arrHttp["control_to"],$fe_control,$copies,$pref_control,$arrHttp["output"]);
-    	break;
-    case "inventario":
-    	InventarioBarCode($arrHttp["base"],$arrHttp["inventory_from"],$arrHttp["inventory_to"],$bar_c,$Pft);
-		break;
-	case "date":
-    	//DateBarCode($arrHttp["base"],$arrHttp["date_from"],$arrHttp["date_to"],$fe_date,$copies,$pref_date,$arrHttp["output"]);
-		break;
-	case "lista_inventario":
-		InventarioLista($arrHttp["base"],$arrHttp["inventory_list"],$bar_c,$Pft);
-		break;
-
-}
-if ($arrHttp["output"]=="display"){
-	echo "</body></html>";
 }
 
 ?>
