@@ -1,6 +1,7 @@
 <?php
 /*
 20220221 fho4abcd backbutton,divhelper, lineends, newlook for config links+improved feedback
+20220306 fho4abcd improved base in url
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -187,19 +188,19 @@ if (!file_exists($db_path.$shortfile)){
     if ( $arrHttp["tipo"]=="barcode" ) {
         ?>
         <br> &nbsp; &nbsp; <i class="fa fa-cog"></i>
-            <a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=barcode>
+            <a href=barcode_conf.php?base="<?php echo $arrHttp["base"];?>"&tipo=barcode>
                <strong><?php echo $msgstr["configure"]." ".$msgstr["barcode"];?></strong></a>
                &nbsp; &nbsp; &rarr; <?php echo $shortfile?>
     <?php } elseif ($arrHttp["tipo"]=="lomos" ) {
         ?>
         <br> &nbsp; &nbsp; <i class="fa fa-cog"></i>
-            <a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=lomos>
+            <a href=barcode_conf.php?base="<?php echo $arrHttp["base"];?>"&tipo=lomos>
                <strong><?php echo $msgstr["configure"]." ".$msgstr["barcode_lomos"];?></strong></a>
                &nbsp; &nbsp; &rarr; <?php echo $shortfile?>
     <?php } else {
         ?>
         <br> &nbsp; &nbsp; <i class="fa fa-cog"></i>
-            <a href=barcode_conf.php?base=".$arrHttp["base"]."&tipo=etiquetas>
+            <a href=barcode_conf.php?base="<?php echo $arrHttp["base"];?>"&tipo=etiquetas>
                <strong><?php echo $msgstr["configure"]." ".$msgstr["barcode_etiquetas"];?></strong></a>
                &nbsp; &nbsp; &rarr; <?php echo $shortfile?>
     <?php
