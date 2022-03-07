@@ -187,8 +187,8 @@ switch ($_REQUEST["Opcion"]){
 					$ix=$ix+1;
 					$v=explode('|',$value) ;
 					$OP[$ix]=" ";
-					$CA[$ix]=$v[2];
-					if ($_REQUEST["prefijo"]==$v[2])
+					$CA[$ix]=$v[1];
+					if ($_REQUEST["prefijo"]==$v[1])
 						if (isset($_REQUEST["Seleccionados"]))
 							$EX[$ix]=$_REQUEST["Seleccionados"];
 						else

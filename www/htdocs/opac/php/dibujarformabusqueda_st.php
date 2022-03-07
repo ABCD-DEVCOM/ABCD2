@@ -1,6 +1,7 @@
 <?php
 
-function DibujarFormaBusqueda($Diccio){global $db_path,$msgstr;
+function DibujarFormaBusqueda($Diccio){
+global $db_path,$msgstr;
 	$mensaje="";
 	if (!isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
 		$mensaje=$msgstr["metasearch"];
@@ -16,51 +17,73 @@ function DibujarFormaBusqueda($Diccio){global $db_path,$msgstr;
 			}else{
 				$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab";
 			}
-		}else{			$mensaje=$msgstr["metasearch"];
+		}else{
+			$mensaje=$msgstr["metasearch"];
 			$archivo=$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab";
 		}
 	}
 	if (!file_exists($archivo)){
-		echo "<br><br><font color=red><h4>";		if ($mensaje!="")
-			echo $mensaje."<br>";		echo "No existe $archivo</font></h4>";
+		echo "<br><br><font color=red><h4>";
+		if ($mensaje!="")
+			echo $mensaje."<br>";
+		echo "No existe $archivo</font></h4>";
 		$fp=array();
 		$camposbusqueda=array();
-	}else{		$fp=file($archivo);	}
+	}else{
+		$fp=file($archivo);
+	}
     $EX=array();
 	$CA=array();
 	$OP=array();
 	$campos_tab="";
 	foreach ($fp as $linea){
-		if (trim($linea)!=""){			$l=explode('|',$linea);
+		if (trim($linea)!=""){
+			$l=explode('|',$linea);
 	    	if ($campos_tab=""){
-	    		$campos_tab=$l[2];
+	    		$campos_tab=$l[1];
 	    	}else{
-	    		$campos_tab.=' ~~~'.$l[2];
-	    	}			$camposbusqueda[]= rtrim($linea);
+	    		$campos_tab.=' ~~~'.$l[1];
+	    	}
+			$camposbusqueda[]= rtrim($linea);
 		}
 	}
    	$expb="";
    	$camb="";
    	if (isset($_REQUEST["prefijo"]) and isset( $_REQUEST["Campos"]) and $_REQUEST["prefijo"] == $_REQUEST["Campos"]) unset($_REQUEST["Campos"]);
-   	if (isset($_REQUEST["prefijoindice"]) and !isset($_REQUEST["prefijo"]) ) {   		$_REQUEST["prefijo"]=$_REQUEST["prefijoindice"];
-   		unset($_REQUEST["Campos"]);   	}
+   	if (isset($_REQUEST["prefijoindice"]) and !isset($_REQUEST["prefijo"]) ) {
+   		$_REQUEST["prefijo"]=$_REQUEST["prefijoindice"];
+   		unset($_REQUEST["Campos"]);
+   	}
 	if (!isset($_REQUEST["Campos"]) and isset($_REQUEST["Sub_Expresion"])){
-        foreach ($camposbusqueda as $linea){        	$x=explode('|',$linea);
-        	if ($x[2]==$_REQUEST["prefijo"]){
-        		if (substr(urldecode($_REQUEST["Sub_Expresion"]),0,1)=='"')        			$expb=$expb.$_REQUEST["Sub_Expresion"]." ~~~";
+        foreach ($camposbusqueda as $linea){
+        	$x=explode('|',$linea);
+        	if ($x[1]==$_REQUEST["prefijo"]){
+        		if (substr(urldecode($_REQUEST["Sub_Expresion"]),0,1)=='"')
+        			$expb=$expb.$_REQUEST["Sub_Expresion"]." ~~~";
         		else
         			$expb=$expb.'"'.$_REQUEST["Sub_Expresion"]."\" ~~~";
-        		$camb=$camb.$_REQUEST["prefijo"]." ~~~";        	}else{        		if ($expb==""){        			$expb="~~~";
-        			$camb=$x[2]." ~~~";        		}else{        			$expb=$expb." ~~~";
-        			$camb=$camb.$x[2]." ~~~";        		}
-        	}
+        		$camb=$camb.$_REQUEST["prefijo"]." ~~~";
+        	}else{
+        		if ($expb==""){
+        			$expb="~~~";
+        			$camb=$x[1]." ~~~";
+        		}else{
+        			$expb=$expb." ~~~";
+        			$camb=$camb.$x[1]." ~~~";
+        		}
+
+        	}
         }
         $_REQUEST["Sub_Expresion"]=$expb;
-        $_REQUEST["Campos"]=$camb;	}
-	if (isset($_REQUEST["Sub_Expresion"]) and $_REQUEST["Sub_Expresion"]!=""){		if (isset($_REQUEST["prefijoindice"]))			$_REQUEST["Sub_Expresion"]=str_replace($_REQUEST["prefijoindice"],"",$_REQUEST["Sub_Expresion"]);
+        $_REQUEST["Campos"]=$camb;
+	}
+	if (isset($_REQUEST["Sub_Expresion"]) and $_REQUEST["Sub_Expresion"]!=""){
+		if (isset($_REQUEST["prefijoindice"]))
+			$_REQUEST["Sub_Expresion"]=str_replace($_REQUEST["prefijoindice"],"",$_REQUEST["Sub_Expresion"]);
 		$EX=explode('~~~',urldecode($_REQUEST["Sub_Expresion"]));
 		$CA=explode('~~~',$_REQUEST["Campos"]);
-		if (isset($_REQUEST["Operadores"])){			$OP=explode('~~~',$_REQUEST["Operadores"]);
+		if (isset($_REQUEST["Operadores"])){
+			$OP=explode('~~~',$_REQUEST["Operadores"]);
 		}
 	}
 	echo "<script>\n";
@@ -105,7 +128,8 @@ function DibujarFormaBusqueda($Diccio){global $db_path,$msgstr;
 				</td>
 			</tr>";
 	$Diccio=0;
-	for ($jx=0;$jx<=$Tope;$jx++){   		if (isset($EX[$jx])) $EX[$jx]=Trim($EX[$jx]);
+	for ($jx=0;$jx<=$Tope;$jx++){
+   		if (isset($EX[$jx])) $EX[$jx]=Trim($EX[$jx]);
    		if (isset($OP[$jx])) $OP[$jx]=Trim($OP[$jx]);
    		if (isset($CA[$jx])) $CA[$jx]=Trim($CA[$jx]);
 		echo "<tr>
@@ -118,7 +142,7 @@ function DibujarFormaBusqueda($Diccio){global $db_path,$msgstr;
 			$c=explode('|',$camposbusqueda[$i]);
 
 			if ($i==$jx) $asel=" selected";
-		    echo "<OPTION value=\"".$c[2]."\" $asel>".$c[0]."</option>\n";
+		    echo "<OPTION value=\"".$c[1]."\" $asel>".$c[0]."</option>\n";
 		}
 		echo "		</SELECT></TD>\n";
 		//echo "<td width=20>xx<input type=\"button\" onclick=\"Diccionario($jx);\" class=\"button-diccionario\">";

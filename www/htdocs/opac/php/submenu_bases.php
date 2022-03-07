@@ -1,4 +1,10 @@
 <?php
+/*
+20220307 rogercgui fixed index $prefijo=$x[1];
+
+*/
+
+
 if (!isset($titulo_pagina)){
 	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
 	if (isset($_REQUEST["modo"])and  $_REQUEST["modo"]=="integrado"){
@@ -137,7 +143,7 @@ if (!file_exists($db_path."opac_conf/".$lang."/$archivo")){
 		$linea=trim($linea);
 		if ($linea!=""){
 			$x=explode('|',$linea);
-			$prefijo=$x[2];
+			$prefijo=$x[1];
 			break;
 		}
 	}
