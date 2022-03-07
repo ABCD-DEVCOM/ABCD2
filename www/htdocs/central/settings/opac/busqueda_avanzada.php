@@ -43,7 +43,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
     $fout=fopen($archivo_conf,"w");
 	foreach ($cod_idioma as $key=>$value){
-		fwrite($fout,$value."| |".$nom_idioma[$key]."\n");
+		fwrite($fout,$value."|".$nom_idioma[$key]."\n");
 	//	echo $value."|".$nom_idioma[$key]."<br>";
 	}
 	fclose($fout);
@@ -54,9 +54,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
-?>
-	<div id="page" style="min-height:400px";>
-	    <?php
 
 	//DATABASES
 	$archivo=$db_path."opac_conf/$lang/bases.dat";
@@ -146,7 +143,7 @@ if (file_exists($db_path."opac_conf/$lang/$file")){
 			$l=explode('|',$value);
 			$ix=$ix+1;
 			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
-			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[2])."\"></td>";
+			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[1])."\"></td>";
 			echo "</tr>";
 		}
 	}

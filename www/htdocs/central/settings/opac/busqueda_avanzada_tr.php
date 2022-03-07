@@ -11,42 +11,46 @@ include "../../common/inc_div-helper.php";
 	<div class="formContent">
 
 <div id="page">
-
 <?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
+if (!isset($_SESSION["db_path"])){
+	echo "Session expired";die;
+}
+
+$db_path=$_SESSION["db_path"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$lang=$_REQUEST["lang"];
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
-	$fout=fopen($archivo,"w");
+	
+	$archivo_conf=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+
 	foreach ($_REQUEST as $var=>$value){
-		$value=trim($value);
-		if ($value!=""){
-			$var=trim($var);
-			if (substr($var,0,9)=="conf_base"){
-				$x=explode('_',$var);
-				$linea[$x[2]][$x[3]]=$value;
+		if (trim($value)!=""){
+			$code=explode("_",$var);
+			if ($code[0]=="conf"){
+				if ($code[1]=="lc"){
+					if (!isset($cod_idioma[$code[2]])){
+						$cod_idioma[$code[2]]=$value;
+					}
+				}else{
+
+					if (!isset($nom_idioma[$code[2]])){
+						$nom_idioma[$code[2]]=$value;
+						
+					}
+				}
 			}
 		}
 	}
-	foreach ($linea as $value){
-		if (!isset($value[1])) $value[1]="";
 
-		ksort($value);
-		$salida=$value[0].'|'.$value[1].'|'.$value[2];
-		fwrite($fout,$salida."\n");
-
+    $fout=fopen($archivo_conf,"w");
+	foreach ($cod_idioma as $key=>$value){
+		fwrite($fout,$value."|".$nom_idioma[$key]."\n");
+	//	echo $value."|".$nom_idioma[$key]."<br>";
 	}
-
 	fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+	die;
 
 }
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
-	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
-	copy($archivo,$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
-	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
-}
-
 
 
 ?>
@@ -116,31 +120,18 @@ global $msgstr,$db_path;
 	}
 	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 	echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>\n";
+$ix=3;	
 	$row=0;
-	foreach ($fp as $value) {
-		$value=trim($value);
-		if ($value!=""){
-			$ix=-1;
-			$row=$row+1;
-			$v=explode('|',$value);
-			if (count($v)!=5) $v[]="";
-			echo "<tr>";
-			foreach ($v as $var){
-				$ix=$ix+1;
-				if ($ix>2) break;
-				if ($ix!=1){
-					echo "<td bgcolor=white>";
-			 		if ($ix==0)
-			 			$size=30;
-					else
-						$size=8;
-			 		echo "<input type=text name=conf_base_".$row."_".$ix." value=\"$var\" size=$size>";
-					echo "</td>\n";
-				}
-			}
-			echo "</tr>\n";
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$l=explode('|',$value);
+			$ix=$ix+1;
+			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
+			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[1])."\"></td>";
+			echo "</tr>";
 		}
 	}
+
 	echo "<tr><td colspan=2 align=center> ";
 	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD." - ".$TM."\"></td></tr>";
 	echo "</table>\n";

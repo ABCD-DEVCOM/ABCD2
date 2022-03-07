@@ -45,7 +45,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
     $fout=fopen($archivo_conf,"w");
 	foreach ($cod_idioma as $key=>$value){
-		fwrite($fout,$value."| |".$nom_idioma[$key]."\n");
+		fwrite($fout,$value."|".$nom_idioma[$key]."\n");
 	//	echo $value."|".$nom_idioma[$key]."<br>";
 	}
 	fclose($fout);

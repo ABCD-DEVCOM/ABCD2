@@ -1,4 +1,11 @@
 <?php
+/*
+
+20220307 rogercgui fixed indidex in line $camposbusqueda[$l[1]]=$l[0]; 
+
+*/
+
+
 function PresentarExistencias($Existencias){
 global $db_path,$xWxis,$msgstr;
 	$e=explode(';',$Existencias);
@@ -37,7 +44,7 @@ global $yaidentificado,$db_path,$msgstr;
 			foreach ($fp as $linea){
 				if (trim($linea)!=""){
 					$l=explode('|',$linea);
-					$camposbusqueda[$l[2]]=$l[0];
+					$camposbusqueda[$l[1]]=$l[0];
 				}
 			}
 		}
