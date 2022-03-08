@@ -1620,7 +1620,7 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 
 .table-fdt td, .table-fdt tbody tr td {
 	border-bottom: 1px solid var(--abcd-light);
-	vertical-align: top;
+	vertical-align: middle;
 	padding: 0.3rem;
 
 }

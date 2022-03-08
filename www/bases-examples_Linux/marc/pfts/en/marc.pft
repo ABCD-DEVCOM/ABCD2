@@ -1,6 +1,6 @@
 '<table width=90% border=0><td> </td>'
 '<td class=textbody03 colspan=3 >'
-'<font face=verdana color=red size=-1><b>Registro: ',f(mfn,1,0)'</a>',if P(v1001) and p(v1002) then "&nbsp; &nbsp; ("v1001" / "v1002")" fi, '</b></td>'/
+'<b>Record: ',f(mfn,1,0)'</a>',if P(v1001) and p(v1002) then "&nbsp; &nbsp; ("v1001" / "v1002")" fi, '</b></td>'/
 '<tr>'/
 '<td width=10>&nbsp;</td>'/
 '<font face="verdana" size=2>'/
@@ -50,7 +50,7 @@ fi,fi,fi,/
 '</TD>'
 '<td width=5>&nbsp;</td>'/
 '<td>'
-'<font face="verdana" size=2>'/
+
 if s(v100,v110,v111)<>'' then 
   if p(v100) then v100^a else if p(v110) then v110^a else v111^a fi fi,
   '<br>'/
@@ -74,12 +74,18 @@ if s(v20,v22,v88)<>'' then '<p>' fi,
 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISBN "v20^a"<br>"/
 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISSN "v22^a"<br>"/
 '<p>'/
-if p(v650) then 
-     '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-     (if p(v650) then proc('a1650¨',mhl,v650*2,'¨')/fi),mpl/
-	 (if p(v1650) then proc('a2650¨',replace(v1650,'. ','--'),'¨')/ fi)
-	 (if p(v2650) then replace(v2650,'; ','--'),if iocc<>nocc(v2650) then ';  '  fi fi) 
-fi,/
+if p(v650) then 
+
+     '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+
+     (if p(v650) then proc('a1650¨',mhl,v650*2,'¨')/fi),mpl/
+
+	 (if p(v1650) then proc('a2650¨',replace(v1650,'. ','--'),'¨')/ fi)
+
+	 (if p(v2650) then replace(v2650,'; ','--'),if iocc<>nocc(v2650) then ';  '  fi fi) 
+
+fi,/
+
 
 
 

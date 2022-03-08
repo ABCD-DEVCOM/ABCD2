@@ -1,7 +1,7 @@
 <?php
 /*
 
-20220307 rogercgui fixed indidex in line $camposbusqueda[$l[1]]=$l[0]; 
+20220307 rogercgui fixed index in line $camposbusqueda[$l[1]]=$l[0]; 
 
 */
 

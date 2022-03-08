@@ -31,7 +31,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 			}
 		}
 		if (trim($value["nombre"])!=""){
-			echo "<a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
+			echo "<br><a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
 			echo "<strong>".$value["titulo"]."</strong></a><br>\n";
 	    	if (file_exists($archivo)){
 	    		$fp=file($archivo);

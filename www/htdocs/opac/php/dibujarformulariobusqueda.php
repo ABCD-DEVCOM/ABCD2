@@ -10,11 +10,14 @@ function addRowTable(tableID,subC,accion,valdef) {
             initRow=0
             nfilas=rowCount
             var colCount = table.rows[initRow].cells.length;
-            for(var i=0; i<colCount; i++) {
+            for(var i=0; i<colCount; i++) {
+
                 var newcell = row.insertCell(i);
                 newcell.vAlign = 'top';
                 newcell.setAttribute("bgColor","#FFFFFF");
-                if (i==1) {                	newcell.innerHTML ="<input type=\"button\" onclick=\"Diccionario("+nfilas+");\" class=\"button-diccionario\">"                }else{
+                if (i==1) {
+                	newcell.innerHTML ="<input type=\"button\" onclick=\"Diccionario("+nfilas+");\" class=\"button-diccionario\">"
+                }else{
                	 	newcell.innerHTML = table.rows[initRow].cells[i].innerHTML;
                 }
 
@@ -25,7 +28,8 @@ function addRowTable(tableID,subC,accion,valdef) {
         	names[0]="camp"
         	names[1]="Sub_Expresiones"
         	names[2]="oper"
-            if (subC.length>0){	            for (i=0;i<subC.length;i++){
+            if (subC.length>0){
+	            for (i=0;i<subC.length;i++){
 	            	sc=""
 	                if (subC!="")
 	                	sc="_"+subC.substr(i,1)
@@ -112,16 +116,21 @@ function addRowTable(tableID,subC,accion,valdef) {
     			}else{
           			parent = parent .parentNode;
       			}
-			}
+			}
+
             var table = document.getElementById(tableID);
             var rowCount = table.rows.length;
 	if (rowCount>1){
     	var i=row.parentNode.parentNode.rowIndex;
     	document.getElementById(tableID).deleteRow(i);
-    }else{    	Ctrl=eval("document.forma1.Sub_Expresiones")    	Ctrl.value=""    }
+    }else{
+    	Ctrl=eval("document.forma1.Sub_Expresiones")
+    	Ctrl.value=""
+    }
 }
 
-function IniciarBusqueda(){	PrepararExpresion('buscar')
+function IniciarBusqueda(){
+	PrepararExpresion('buscar')
 }
 
 
@@ -132,9 +141,12 @@ function IniciarBusqueda(){	PrepararExpresion('buscar')
 function DibujarFormaBusqueda($Diccio){
 global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 	$ix=-1;
-	if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){		$archivo=$db_path."opac_conf/data/avanzada.tab";	}else{
+	if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
+		$archivo=$db_path."opac_conf/data/avanzada.tab";
+	}else{
 		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
-			if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){				$c=explode('|',$_REQUEST["coleccion"]);
+			if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
+				$c=explode('|',$_REQUEST["coleccion"]);
 				if (file_exists($db_path."opac_conf/".$_REQUEST["base"]."_avanzada_".$c[0].".tab"))
 					$archivo=$db_path."opac_conf/".$_REQUEST["base"]."_avanzada_".$c[0].".tab";
 				else
@@ -142,7 +154,9 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 			}else{
 				$archivo=$db_path."opac_conf/".$_REQUEST["base"]."_avanzada.tab";
 			}
-		}else{			$archivo=$db_path."opac_conf/avanzada.tab";		}
+		}else{
+			$archivo=$db_path."opac_conf/avanzada.tab";
+		}
 	}
 	$fp = file($archivo);
 	echo "<script>\n";
@@ -150,8 +164,10 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 
 	$Tope=1;  //significa que se van a colocar 7 cajas de texto con la expresión de búsqueda
 
-	foreach ($fp as $linea){		$linea=trim($linea);
-		if ($linea!=""){			$cc=explode('|',$linea);
+	foreach ($fp as $linea){
+		$linea=trim($linea);
+		if ($linea!=""){
+			$cc=explode('|',$linea);
 			if (!isset($cc[3]) or isset($cc[3]) and $cc[3]!="N"){
 				$camposbusqueda[]= $linea;
 				$ix=$ix+1;
@@ -162,9 +178,13 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 
 	if (isset($_REQUEST["Campos"])){
 		$c=count($CA);
-		for ($i=0;$i<$c;$i++){			if (trim($CA[$i])=="" and $i>0){				unset($CA[$i]);
+		for ($i=0;$i<$c;$i++){
+			if (trim($CA[$i])=="" and $i>0){
+				unset($CA[$i]);
 				unset($EX[$i]);
-				unset($OP[$i]);			}		}
+				unset($OP[$i]);
+			}
+		}
 	}
 	$Tope=count($CA);
 	if ($Tope==0) $Tope=1;
@@ -186,7 +206,9 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 		echo "<input type=hidden name=Pft value=\"".$_REQUEST["Pft"]."\">\n";
     echo "<div  style='float: left;  width: 440px; overflow: hidden; margin-top:5px;'>\n";
 	echo "<table border=0 valign=center cellpadding=0 cellspacing=3 id=id_900 >";
-    if ($Tope==1){    	if (count($EX)==0) $EX[]="";    }
+    if ($Tope==1){
+    	if (count($EX)==0) $EX[]="";
+    }
 	for ($jx=0;$jx<$Tope;$jx++){
 
 		$Diccio=$Diccio+1;
@@ -198,7 +220,7 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 
 		echo "<tr>
 				<td  valign=center width=160>";
-		echo "		<SELECT name=camp  id=tag900_0_o class=select-criterio>";
+		echo "		<select name=camp  id=tag900_0_o class=select-criterio>";
 		$asel="";
 		for ($i=0;$i<count($camposbusqueda);$i++){
 			$asel="";
@@ -210,10 +232,10 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
 					if ($i==$jx and !isset($CA[$jx]))
 						$asel=" selected";
 
-			    echo "<OPTION value=".$c[2].$asel.">".$c[0]."\n";
+			    echo "<option value=".$c[2].$asel.">".$c[0]."\n";
 			}
 		}
-		echo "		</SELECT></td>\n";
+		echo "		</select></td>\n";
 		echo "<td width=20><input type=\"button\" onclick=\"Diccionario($jx);\" class=\"button-diccionario\">";
    		echo "	</td>";
 
@@ -241,11 +263,11 @@ global $multiplesBases,$EX,$CA,$OP,$criterios,$db_path;
        		echo "<option value=and ";
        		if (!isset($OP[$jx]) or $OP[$jx]=="and" or $OP[$jx]=="")
        			echo " selected";
-       		echo ">y";
+       		echo ">AND";
        		echo "<option value=or ";
        		if (isset($OP[$jx]) and $OP[$jx]=="or")
        			echo " selected";
-       		echo ">o";
+       		echo ">OR";
        		echo "</select></td>";
  		}else {
        		echo "<td></td>";

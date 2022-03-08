@@ -172,11 +172,11 @@ global $db_path,$msgstr;
        		echo "<option value=and ";
        		if (!isset($OP[$jx]) or $OP[$jx]=="and" or $OP[$jx]=="")
        			echo " selected";
-       		echo ">y";
+       		echo ">AND";
        		echo "<option value=or ";
        		if (isset($OP[$jx]) and $OP[$jx]=="or")
        			echo " selected";
-       		echo ">o";
+       		echo ">OR";
        		echo "</select></td>";
  		}else {
        		echo "<td><input type=hidden name=oper id=oper_$jx></td>";
