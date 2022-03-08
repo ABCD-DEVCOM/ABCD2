@@ -142,8 +142,8 @@ if (file_exists($db_path."opac_conf/$lang/$file")){
 		if (trim($value)!=""){
 			$l=explode('|',$value);
 			$ix=$ix+1;
-			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
-			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[1])."\"></td>";
+			echo "<tr><td><input type=text name=conf_lc_".$ix." size=30 value=\"".trim($l[0])."\"></td>";
+			echo "<td><input type=text name=conf_ln_".$ix." size=5 value=\"".trim($l[1])."\"></td>";
 			echo "</tr>";
 		}
 	}
@@ -154,8 +154,8 @@ else
 	$tope=$ix+9;
 	$ix=9;
 for ($i=$ix;$i<$tope;$i++){
-	echo "<tr><td><input type=text name=conf_lc_".$i." size=5 value=\"\"></td>";
-	echo "<td><input type=text name=conf_ln_".$i." size=30 value=\"\"></td>";
+	echo "<tr><td><input type=text name=conf_lc_".$i." size=30 value=\"\"></td>";
+	echo "<td><input type=text name=conf_ln_".$i." size=5 value=\"\"></td>";
 	echo "</tr>";
 }
 	echo "</table>\n";

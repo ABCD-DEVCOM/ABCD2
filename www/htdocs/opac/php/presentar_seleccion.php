@@ -27,7 +27,7 @@ header('Content-Type: text/html; charset=".$charset."');
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
-	<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset?>" />
+<!--<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset?>" />-->
 	<title><?php echo $TituloPagina?></title>
 	<link href="../styles/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
 	<script src=../js/script_b.js?<?php echo time(); ?>></script>
@@ -57,7 +57,8 @@ header('Content-Type: text/html; charset=".$charset."');
 		document.regresar.action="buscar_integrada.php"
 		document.regresar.target=""
 	}
-	function SendToPrint(){		document.regresar.target=""
+	function SendToPrint(){
+		document.regresar.target=""
 		CerrarCorreo()
 		var x = document.getElementById("toolBar");
 		x.style.display = "none";

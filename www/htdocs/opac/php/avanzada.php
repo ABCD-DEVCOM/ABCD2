@@ -25,12 +25,12 @@ if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){
 
 	$base=$_REQUEST["base"];
 }
- echo "<p>";
+
 if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
 
 		$_REQUEST["coleccion"]=urldecode($_REQUEST["coleccion"]);
 		$col=explode('|',$_REQUEST["coleccion"]);
-        echo "<strong><i>".$col[1]."<i></strong>";
+        echo " (<strong><i>".$col[1]."<i></strong>)";
 
 }
  echo "</p>";

@@ -19,3 +19,4 @@
 97 5 '/SE_/', mpu,(v97/),(v94/) 
 111 5 '/ID=/', v111 
 112 5 '/OAI_DATE_/', v112 
+906 0 mpu,(if v96='text' then 'DC_TX' fi)/(if v96='image' then 'DC_IM' fi)
