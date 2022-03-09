@@ -233,7 +233,7 @@ if ($ixc>0 ){
             	$Existencias="";
             $Expresion=substr($Expresion,strlen($prefijo));
 			$url="<li><a href=javascript:Localizar(\"$Expresion\",\"$Existencias\")>";
-			echo	"$url"."<font color=black>".trim($b[0]);
+			echo	"$url"."<font color=black>".substr(trim($c[1]),strlen($prefijo))   ;
 			if ($prefijo!="TI_"){
 				if (isset($postings[$key]) and !isset($a[2]) ) {
 					echo "&nbsp;&nbsp;<font size=-1><i>[".$postings[$key]."]</i></font>";
