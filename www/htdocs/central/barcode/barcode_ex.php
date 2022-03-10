@@ -2,6 +2,7 @@
 /*
 20220306 fho4abcd div-helper, added informational and error messages, moved functions to end of file
 20220309 fho4abcd No "em" this is a relative unit, add link to barcode font script,add option border
+20220310 fho4abcd Better check for nothing returned.
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -185,7 +186,7 @@ if ($arrHttp["output"]=="display"){
 
 function MostrarSalida($contenido,$medio="",$bar_c){
 global $arrHttp,$msgstr;
-    if ( count($contenido)==1 && $contenido[0]=="" ) echo "<div style='color:red'>".$msgstr["barcode_script_none"]."</div>";
+    if ( $contenido==NULL OR (count($contenido)==1 && $contenido[0]=="" )) echo "<div style='color:red'>".$msgstr["barcode_script_none"]."</div>";
 	if ($medio=="display" or $medio=="doc"){
 		$table_width=$bar_c["cols"]*$bar_c["width"];
         // Always apply style to display and doc
@@ -276,6 +277,7 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 	$Opcion="leer";
 	$IsisScript=$xWxis."leer_mfnrange.xis";
  	$query = "&base=$base&cipar=$db_path"."par/".$cipar. "&from=" . $from."&to=$to&Pft=$Pft";
+    if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
     if ($arrHttp["output"]=="display") echo "<div>".$msgstr["barcode_script"].": ".$IsisScript."</div>";
  	//echo $Pft;
 	include("../common/wxis_llamar.php");
@@ -308,6 +310,7 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 	}
 	$IsisScript=$xWxis."imprime.xis";
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
+    if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
 	include("../common/wxis_llamar.php");
 	$inventario=array();
 	$array_c=array();
@@ -337,6 +340,7 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
     $to=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_to"]);
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario&prefijo=".$Prefijo."&hasta=".$to."&Pft=".$Pft;
 	$IsisScript=$xWxis."indice.xis";
+    if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
 	include("../common/wxis_llamar.php");
 	$contenido=implode("!!!",$contenido);
 	$contenido=explode('%%%',$contenido);
@@ -349,6 +353,8 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
     $to=trim($bar_c["inventory_number_pref"]).trim($arrHttp["inventory_to"])."ZZZ";
 	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario&prefijo=".urlencode($Prefijo)."&hasta=".urlencode($to)."&Pft=".urlencode($Pft);
 	$IsisScript=$xWxis."indice.xis";
+    if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
+    $array_c=array();
 	include("../common/wxis_llamar.php");
 	$contenido=implode("!!!",$contenido);
 	$contenido=explode('%%%',$contenido);
