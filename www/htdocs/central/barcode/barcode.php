@@ -3,6 +3,7 @@
 20220221 fho4abcd backbutton,divhelper, lineends, newlook for config links+improved feedback
 20220306 fho4abcd improved base in url
 20220310 fho4abcd Add option to specify a border
+20220310 fho4abcd Add option to show isiscript command summary
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -259,6 +260,13 @@ if (!isset($arrHttp["Mfn"])) {
     </td>
     <td>
         <input type=checkbox name=border title="<?php echo $msgstr['barcode_border_info']?>">
+    </td>
+    </tr><tr>
+    <td>
+        <strong><?php echo $msgstr["barcode_wxis_sum"];?></strong> &nbsp;
+    </td>
+    <td>
+        <input type=checkbox name=wxis_sum title="<?php echo $msgstr['barcode_wxis_sum_info']?>">
     </td>
 </table>
 <br><br>
