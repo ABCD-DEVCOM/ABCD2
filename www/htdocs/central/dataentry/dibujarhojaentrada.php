@@ -10,6 +10,7 @@
 20211225 include field type number - $tipo=N
 20220207 html improvements
 20220214 fho4abcd Replace link to dirs_explorer by javascript+ some html improvements
+20220309 rogercgui Included verification for variable $t17
 */
 require_once("combo_inc.php");
 
@@ -1231,8 +1232,11 @@ Function PrepararFormato() {
 				else
 					echo $titulo;
 				echo "</a>";
-				if (trim($t[17])!=""){
-					echo $hlp_tip[$t[17]];
+
+				if (isset($t[17])) {
+					if (trim($t[17])!=""){
+						echo $hlp_tip[$t[17]];
+					}
 				}
 				echo "<div id=\"myvar_$ivars\" style=\"$display;\" class=\"group-fields\">";
 				$ixant=$ivars;

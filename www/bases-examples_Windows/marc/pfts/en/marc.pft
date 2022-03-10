@@ -1,12 +1,11 @@
 '<table width=90% border=0>'
-'<td width=10><a href=javascript:LeerRegistro('f(Mfn,1,0)')><img src=../img/i_editar.gif border=0 alt="modificar este registro"></a></td>'/
+
 '<td class=textbody03 colspan=3 >'
 '<font face=verdana color=red size=-1><b>Registro: ',f(mfn,1,0)'</a>',"&nbsp; &nbsp; ("v1001" / "v1002")" '</b></td>'/
 '<tr>'/
 '<td width=10>&nbsp;</td>'/
 '<font face="verdana" size=2>'/
 '<td valign=top width=90 align=center>'/
-'<font face="verdana" size=2>'/
 
 if p(v50) then 
    '<script>'/
@@ -75,12 +74,18 @@ if s(v20,v22,v88)<>'' then '<p>' fi,
 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISBN "v20^a"<br>"/
 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISSN "v22^a"<br>"/
 '<p>'/
-if p(v650) then 
-     '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-     (if p(v650) then proc('a1650¨',mhl,v650*2,'¨')/fi),mpl/
-	 (if p(v1650) then proc('a2650¨',replace(v1650,'. ','--'),'¨')/ fi)
-	 (if p(v2650) then replace(v2650,'; ','--'),if iocc<>nocc(v2650) then ';  '  fi fi) 
-fi,/
+if p(v650) then 
+
+     '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+
+     (if p(v650) then proc('a1650¨',mhl,v650*2,'¨')/fi),mpl/
+
+	 (if p(v1650) then proc('a2650¨',replace(v1650,'. ','--'),'¨')/ fi)
+
+	 (if p(v2650) then replace(v2650,'; ','--'),if iocc<>nocc(v2650) then ';  '  fi fi) 
+
+fi,/
+
 
 
 

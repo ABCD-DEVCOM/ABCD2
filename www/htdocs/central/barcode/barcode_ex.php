@@ -1,6 +1,7 @@
 <?php
 /*
 20220306 fho4abcd div-helper, added informational and error messages, moved functions to end of file
+20220309 fho4abcd No "em" this is a relative unit, add link to barcode font script,add option border
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -20,7 +21,6 @@ include ("../lang/soporte.php");
 include ("../lang/reports.php");
 
 include ("configure.php");
-$cm2em=2.37106301584;
 if (!isset($arrHttp["output"])) $arrHttp["output"]="display";
 switch($arrHttp["output"]){
 	case "doc":
@@ -104,7 +104,6 @@ if (!file_exists($configfilefull)){
 	die;
 }
 if ($arrHttp["output"]=="display") echo "<div>".$configfile." ".$msgstr["doesexist"]."</div>";
-
 // Read the barcode configuration file
 $bar_c=array();
 $fp=file($configfilefull);
@@ -117,9 +116,6 @@ if ($fp){
 		}
 	}
 }
-//CONVERT CM TO EM
-$bar_c["height"]=$bar_c["height"]*$cm2em;
-$bar_c["width"]=$bar_c["width"]*$cm2em;
 
 // Check if the pft is a file
 $ispftfile=false;
@@ -192,25 +188,23 @@ global $arrHttp,$msgstr;
     if ( count($contenido)==1 && $contenido[0]=="" ) echo "<div style='color:red'>".$msgstr["barcode_script_none"]."</div>";
 	if ($medio=="display" or $medio=="doc"){
 		$table_width=$bar_c["cols"]*$bar_c["width"];
-		if (isset($bar_c["cols"]) and $bar_c["cols"]>0){
-			echo "<style>
+        // Always apply style to display and doc
+        ?>
+        <style>
 			.columna{
-    			border: 0px;
-    			table-layout: fixed;
-    			width: $table_width em;
+    			border-collapse: collapse;
+                border-spacing: 0px;
 			}
-
 			.td1 {
-    			border: 0px;
+    			<?php if (isset($arrHttp["border"])){?> border: 1px solid;<?php }?>
     			overflow: hidden;
-    			width: ".$bar_c["width"]."em;
-    			height: ".$bar_c["height"]."em;
+    			width: <?php echo $bar_c["width"]."cm";?>;
+    			height: <?php echo $bar_c["height"]."cm";?>;
 			}
-			</style>\n";
-			echo "\n<table class=columna>\n<tr>";
-		}else{
-			$bar_c["cols"]=0;
-		}
+        </style>
+        <table class=columna>
+        <tr>
+		<?php
 	}
 	$ncols=0;
 	$print="";
