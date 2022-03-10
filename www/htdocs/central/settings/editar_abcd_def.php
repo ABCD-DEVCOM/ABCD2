@@ -8,6 +8,7 @@ linked documents
 2022-01-18 rogercgui added new user-configurable classes
 2022-01-24 rogercgui Included file renaming to avoid accumulation of images in the upload folder. Even without converting the extension the files will have fixed names.
 2022-02-14 fho4abcd Texts for dr_path+ sequence for dr_path+improved table layout+removed redirect (too rigid for dr_path)
+2022-03-10 fho4abcd Remove unused option barcode1reg from dr_path
 */
 
 
@@ -456,8 +457,6 @@ switch ($set_mod){
 						"inventory_numeric" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_inventory_numeric"]),						
 						"max_inventory_length" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_max_inventory_length"]),
 						"max_cn_length" => array("it"=>"text","size"=>"70","placeholder"=>"","Tip"=>$msgstr["set_TIP_max_cn_length"]),
-
-						"barcode1reg" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_barcode1reg"]),
 						
 						
 						"TESAURUS"=>array("it"=>"title","Label"=>"Tesaurus"),

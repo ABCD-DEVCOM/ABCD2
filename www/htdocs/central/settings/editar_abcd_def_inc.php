@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-08-29 fho4abcd PDF-> Digital documents,no radiobutton. Digital documents-> linked documents
+2022-03-10 fho4abcd Remove unused option barcode1reg from dr_path
 */
 if (!isset($_SESSION["login"])or $_SESSION["profile"]!="adm" ){
 	echo "<script>
@@ -131,7 +132,6 @@ switch ($arrHttp["Opcion"]){
 						"max_inventory_length" => array("it"=>"text","Options"=>""),
 						"max_cn_length" => array("it"=>"text","Options"=>""),
 						"barcode" => array("it"=>"radio","Options"=>"Y;N"),
-						"barcode1reg" => array("it"=>"radio","Options"=>"Y;N"),
 						"dirtree" => array("it"=>"radio","Options"=>"Y;N"),
 						"TESAURUS"=>array("it"=>"title","Label"=>"<hr size=2>"."TESAURUS"),
 						"tesaurus" => array("it"=>"text","Options"=>""),
