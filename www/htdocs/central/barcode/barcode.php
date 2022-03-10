@@ -2,6 +2,7 @@
 /*
 20220221 fho4abcd backbutton,divhelper, lineends, newlook for config links+improved feedback
 20220306 fho4abcd improved base in url
+20220310 fho4abcd Add option to specify a border
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -11,7 +12,6 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include ("../config.php");
-$cm2em=2.37106301584;
 
 
 include ("../common/header.php");
@@ -236,15 +236,31 @@ if (!isset($arrHttp["Mfn"])) {
     <i class="fa fa-cog"></i>
     <a href=barcode_conf.php?base=<?php echo $arrHttp["base"];?>&tipo=<?php echo $arrHttp["tipo"];?>>
        <strong><?php echo $msgstr["configure"];?></strong></a><br>
+    <i class="fa fa-barcode"></i>
+    <a href=barcode_font.php?base=<?php echo $arrHttp["base"];?>>
+       <strong><?php echo $msgstr["barcode_font"];?></strong></a><br>
     <?php
 }
 ?>
 <br>
-<strong><?php echo $msgstr["sendto"].": ";?></strong>
-&nbsp; &nbsp; <input type=radio name=output value=display checked > <?php echo $msgstr["display"];?>
-&nbsp; &nbsp; <input type=radio name=output value=doc> <?php echo $msgstr["doc"];?>
-&nbsp; &nbsp; <input type=radio name=output value=txt> <?php echo $msgstr["txt_file"];?>
-&nbsp; &nbsp; <input type=radio name=output value=txt_print> <?php echo $msgstr["txt_print"];?>
+<table><tr>
+    <td>
+        <strong><?php echo $msgstr["sendto"].": ";?> &nbsp;</strong>
+    </td>
+    <td>
+        <input type=radio name=output value=display checked > <?php echo $msgstr["display"];?> &nbsp; &nbsp; 
+        <input type=radio name=output value=doc> <?php echo $msgstr["doc"];?> &nbsp; &nbsp; 
+        <input type=radio name=output value=txt> <?php echo $msgstr["txt_file"];?> &nbsp; &nbsp; 
+        <input type=radio name=output value=txt_print> <?php echo $msgstr["txt_print"];?>
+    </td>
+    </tr><tr>
+    <td>
+        <strong><?php echo $msgstr["barcode_border"];?></strong> &nbsp;
+    </td>
+    <td>
+        <input type=checkbox name=border title="<?php echo $msgstr['barcode_border_info']?>">
+    </td>
+</table>
 <br><br>
 <?php
 
