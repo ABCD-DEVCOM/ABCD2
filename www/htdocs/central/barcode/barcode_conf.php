@@ -1,6 +1,7 @@
 <?php
 /*
 20220220 fho4abcd Line-ends, newlook, back button&div-helper
+20220310 fho4abcd Translated error+cms->cm+do not show strange comment
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -27,7 +28,7 @@ function AbrirVentana(Url){
 function EditarFormato(Pft){
 	Pft=Trim(Pft.value)
 	if (Pft=="" || Pft.substr(0,1)!='@'){
-		alert("debe especificar el nombre del formato a utilizar, comenzando por @ y con la extensión .pft")
+		alert("<?php echo $msgstr['barcode_set_pft']?>")
 		return
 	}
 	Pft=Pft.substr(1)
@@ -155,7 +156,7 @@ if (isset($bar_c["inventory_number_display"])) echo $bar_c["inventory_number_dis
 echo "</textarea></td></tr>\n";
 
 echo "<tr><td bgcolor=white>".$msgstr["pft"]." <strong><font color=red>*</font></strong></td>";
-echo "<td bgcolor=white colspan=3><textarea name=tag_label_format cols=100 rows=3>";
+echo "<td bgcolor=white colspan=3><textarea name=tag_label_format cols=100 rows=2>";
 if (isset($bar_c["label_format"])) echo $bar_c["label_format"];
 echo "</textarea>";
 ?>
@@ -163,7 +164,7 @@ echo "</textarea>";
     title="<?php echo $msgstr["m_editdispform"]?>" onclick='javascript:EditarFormato(document.forma1.tag_label_format)'>
     <i class="fa fa-edit"></i> <?php echo $msgstr["m_editdispform"]?></button> &nbsp;
 <?php
-if ($arrHttp["tipo"]=="barcode") echo "<br>".$msgstr["inventory_barcode_format"];
+//if ($arrHttp["tipo"]=="barcode") echo "<br>".$msgstr["inventory_barcode_format"];
 echo "</td></tr>\n";
 
 echo "<tr><td bgcolor=white>".$msgstr["pft"]."<br>".$msgstr["sendto"]." <strong>TXT</strong>";"</td>";
@@ -180,12 +181,12 @@ echo "</td></tr>\n";
 echo "<tr><td bgcolor=white nowrap>".$msgstr["label_height"]." <strong><font color=red>*</font></strong></td>";
 echo "<td bgcolor=white colspan=3><input type=text name=tag_height size=10 value=";
 if (isset($bar_c["height"])) echo $bar_c["height"];
-echo ">cms</td></tr>\n";
+echo "> cm</td></tr>\n";
 
 echo "<tr><td bgcolor=white nowrap>".$msgstr["label_width"]." <strong><font color=red>*</font></strong></td>";
 echo "<td bgcolor=white colspan=3><input type=text name=tag_width size=10 value=";
 if (isset($bar_c["width"])) echo $bar_c["width"];
-echo "> cms</td></tr>\n";
+echo "> cm</td></tr>\n";
 echo "<tr><td bgcolor=white nowrap>".$msgstr["labels_row"]." <strong><font color=red>*</font></strong></td>";
 echo "<td bgcolor=white colspan=3><input type=text name=tag_cols size=10 value=";
 if (isset($bar_c["cols"])) echo $bar_c["cols"];
