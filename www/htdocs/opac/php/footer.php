@@ -26,6 +26,11 @@ if (file_exists($db_path."opac_conf/".$lang."/footer.info")){
 				$home_text=substr($value,6);
 				$footer="TEXT";
 			}
+			
+			if (substr($value,0,6)=="[HTML]") {
+				$home_text=substr($value,6);
+				$footer="HTML";
+			}			
 
 		}
 	}
@@ -39,9 +44,17 @@ if (file_exists($db_path."opac_conf/".$lang."/footer.info")){
 			</div>
 <?php		break;
 		case "TEXT":
-			$fp=file($db_path."opac_conf/".$lang."/$home_text");
-			foreach ($fp as $v) echo $v;
+			$fp=file($db_path."opac_conf/".$lang."/footer.info");
+			foreach ($fp as $v) {
+				echo str_replace("[TEXT]","",$v);
+			}
 			break;
+		case "HTML":
+			$fp=file($db_path."opac_conf/".$lang."/footer.info");
+			foreach ($fp as $v) {
+				echo str_replace("[HTML]","",$v);
+			}
+			break;			
 	}
 }else{
 	echo "<div id=\"footer\">\n";

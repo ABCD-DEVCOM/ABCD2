@@ -76,7 +76,7 @@ echo "<p>";
 			if (isset($_REQUEST["Diccio"]))$_REQUEST["Seleccionados"]=trim($SE[$_REQUEST["Diccio"]]);
 	}
 if ($detect->isMobile()) {
-	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <img src=../images/buttonm.gif> ".$msgstr["remover_sel"];
+	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["remover_sel"];
  	include("presentar_diccionario_movil.php");
 }else{
 	echo "<p>".$msgstr["dbl_clic"];

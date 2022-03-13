@@ -7,7 +7,8 @@ function showhide(what,what2){
 	var what = document.getElementById(what);
 	if (what.style.display=="none"){
 		what.style.display="inline";
-		if (arguments.length>1){			what2.src="../images/buttonm.gif"
+		if (arguments.length>1){
+			what2.src="../images/buttonm.gif"
 		}
 	}else{
 		what.style.display="none"
@@ -18,13 +19,17 @@ function showhide(what,what2){
 	}
 }
 
-function ProximaPagina(pagina,registro){	document.continuar.desde.value=registro
+function ProximaPagina(pagina,registro){
+	document.continuar.desde.value=registro
 	document.continuar.pagina.value=pagina
-	document.continuar.submit()}
+	document.continuar.submit()
+}
 
-function VerExistencias(base,kardex,inventario_r,inventario_k){	document.continuar.existencias.value=base+"|"+kardex+"|"+inventario_r+"|"+inventario_k
+function VerExistencias(base,kardex,inventario_r,inventario_k){
+	document.continuar.existencias.value=base+"|"+kardex+"|"+inventario_r+"|"+inventario_k
 	document.continuar.action="existencias.php"
-	document.continuar.submit()}
+	document.continuar.submit()
+}
 
 
 function BuscarBase(base){
@@ -47,14 +52,18 @@ function ProximaBase(base){
 	document.buscar.facetas.value=""
 	document.buscar.Formato.value=""
 	document.buscar.submit()
-}
 
-function CambiarFormato(){	Ctrl=document.getElementById("cambio_Pft")	ix=Ctrl.selectedIndex
+}
+
+function CambiarFormato(){
+	Ctrl=document.getElementById("cambio_Pft")
+	ix=Ctrl.selectedIndex
 	Formato=Ctrl.options[ix].value
 	document.continuar.Formato.value=Formato
 	document.continuar.desde.value=1
 	document.continuar.submit()
-}
+
+}
 
  function AbrirIndice(Letra){
   	document.diccionario.IR_A.value=Letra
@@ -63,12 +72,14 @@ function CambiarFormato(){	Ctrl=document.getElementById("cambio_Pft")	ix=Ctrl.
 
 function ObtenerTerminos(desde){
 	Expresion=""
-	Ctrl=eval("document.diccionario."+desde)	ix=Ctrl.options.length
+	Ctrl=eval("document.diccionario."+desde)
+	ix=Ctrl.options.length
 	if (Opcion=='libre')
 		delimitador='"'
 	else
 		delimitador='"'
-	for (i=0;i<ix;i++){
+
+	for (i=0;i<ix;i++){
 		if (Ctrl.options[i].selected || desde=="TerminosSeleccionados"){
 			if (Expresion=="")
 				Expresion=delimitador+Ctrl.options[i].value+delimitador
@@ -77,11 +88,13 @@ function ObtenerTerminos(desde){
 		}
 	}
 	return Expresion
-}
+
+}
 
 
 function CancelarDiccionario(retorno){
-	switch (retorno){		case 'A':
+	switch (retorno){
+		case 'A':
 			document.diccionario.action="avanzada.php"
 			document.diccionario.submit()
 			break
@@ -99,8 +112,11 @@ function CancelarDiccionario(retorno){
 			break
 		default:
 			document.diccionario.action=retorno
-			document.diccionario.submit()	}
-}
+			document.diccionario.submit()
+	}
+
+
+}
 
 function EjecutarBusquedaDiccionario(Accion){
 	Expresion=""
@@ -122,13 +138,16 @@ function EjecutarBusquedaDiccionario(Accion){
 			break
 		case 2:
 			document.diccionario.action="avanzada.php"
-			break	}
+			break
+	}
 	document.diccionario.submit()
 }
 
-function NavegarDiccionario(F,desde){	Seleccionados=""
+function NavegarDiccionario(F,desde){
+	Seleccionados=""
  	Seleccionados=ObtenerTerminos("TerminosSeleccionados")
- 	if (Seleccionados!=""){ 		document.diccionario.Seleccionados.value=Seleccionados
+ 	if (Seleccionados!=""){
+ 		document.diccionario.Seleccionados.value=Seleccionados
  	}
 	switch (desde){
 		case 4:
@@ -178,7 +197,8 @@ function CRUZARD(Prefijo,Termino,base){
 	document.buscar.Opcion.value="detalle"
 	document.buscar.prefijo.value=Prefijo
 	document.buscar.Sub_Expresion.value=Termino
-	document.buscar.submit()}
+	document.buscar.submit()
+}
 
 function CruzarABCD(Termino,Prefijo){
 	document.buscar.Expresion.value=""
@@ -217,18 +237,26 @@ function DiccionarioLibre(Nivel){
 		Ctrl=document.libre.coleccion
 		ixc=Ctrl.length
 		colec=""
-		if (ixc){			for (i=0;i<ixc;i++){				if (Ctrl[i].checked){					colec=Ctrl[i].value
-					break				}
-			}		}
+		if (ixc){
+			for (i=0;i<ixc;i++){
+				if (Ctrl[i].checked){
+					colec=Ctrl[i].value
+					break
+				}
+			}
+		}
 
-		if (colec!=""){			document.diccio_libre.coleccion.value=colec
+		if (colec!=""){
+			document.diccio_libre.coleccion.value=colec
 		}
 	}
-	if (document.getElementById('and').checked)
+
+	if (document.getElementById('and').checked)
 		document.diccio_libre.alcance.value=document.getElementById('and').value
 	else
 		document.diccio_libre.alcance.value=document.getElementById('or').value
-	document.diccio_libre.submit()}
+	document.diccio_libre.submit()
+}
 
 function Diccionario(jx){
     j=document.forma1.Sub_Expresiones.length
@@ -240,7 +268,7 @@ function Diccionario(jx){
 	a=dt[j]
 	diccio=a.split('|')
 	nombrec=diccio[0]
-	prefijo=diccio[2]
+	prefijo=diccio[1]
 	ArmarBusqueda()
 	document.diccio.Sub_Expresion.value=Expresion
 	document.diccio.Campos.value=Campos
@@ -252,7 +280,8 @@ function Diccionario(jx){
 
 }
 
-function ArmarBusqueda(){    Expresion=""
+function ArmarBusqueda(){
+    Expresion=""
 	Operadores=""
 	Campos=""
 	se = document.getElementById('tag900_0_n');
@@ -263,7 +292,8 @@ function ArmarBusqueda(){    Expresion=""
 		cc=document.forma1.camp.options[ixSel].value
 		Campos=cc
 		Operadores=""
-		return	}
+		return
+	}
 	for (i=0;i<j;i++){
 		if (document.forma1.Sub_Expresiones[i].value=="") document.forma1.Sub_Expresiones[i].value=" "
 		if (Expresion==""){
@@ -279,7 +309,8 @@ function ArmarBusqueda(){    Expresion=""
 		}else{
 			Campos=Campos+" ~~~ "+cc
 		}
-		if (i<j-1){			icampo=document.getElementById('oper_'+i)
+		if (i<j-1){
+			icampo=document.getElementById('oper_'+i)
 			if (icampo.type=="select-one"){
 				ixSel=document.forma1.oper[i].selectedIndex
 				cc=document.forma1.oper[i].options[ixSel].value
@@ -290,7 +321,8 @@ function ArmarBusqueda(){    Expresion=""
 				}
 			}
 		}
-	}}
+	}
+}
 
 function PrepararExpresion(Destino){
 //	AbrirVentanaResultados()
@@ -320,12 +352,14 @@ function Presentacion(base,Expresion,Pagina,Formato){
 	}
 	document.buscar.base.value=base
 	document.buscar.pagina.value=Pagina
-	switch (Formato){		case "galeria":
+	switch (Formato){
+		case "galeria":
 			document.buscar.action="slide_integrada.php";
 			break
 		case "ficha":
 			document.buscar.action="buscar_integrada.php";
-			break	}
+			break
+	}
 	//document.buscar.Opcion.value="integrada"
 	document.buscar.Expresion.value=Expresion
 	document.buscar.submit()
@@ -388,19 +422,24 @@ addLoadEvent(function() {
 	}
 );
 
-function ActivarIndice(titulo,columnas,Opcion,count,posting,prefijo,base){	document.activarindice.titulo.value=titulo
+function ActivarIndice(titulo,columnas,Opcion,count,posting,prefijo,base){
+	document.activarindice.titulo.value=titulo
 	document.activarindice.columnas.value=columnas
 	document.activarindice.Opcion.value=Opcion
 	document.activarindice.count.value=count
 	document.activarindice.posting.value=posting
 	document.activarindice.prefijo.value=prefijo
 	document.activarindice.base.value=base
-	document.activarindice.submit()}
+	document.activarindice.submit()
+}
 
 function ValidarUsuario(){
-	if (Trim(document.estado_de_cuenta.usuario.value)==""){		alert("Debe ingresar su código de usuario")
-		return	}
-	document.estado_de_cuenta.submit()}
+	if (Trim(document.estado_de_cuenta.usuario.value)==""){
+		alert("Debe ingresar su código de usuario")
+		return
+	}
+	document.estado_de_cuenta.submit()
+}
 
 /* Marcado y presentación de registros*/
 function getCookie(cname) {
@@ -423,19 +462,28 @@ function Seleccionar(Ctrl){
 	cookie=getCookie('ORBITA')
 	if (Ctrl.checked){
 		if (cookie!=""){
-		    c=cookie+"|"			if (c.indexOf(Ctrl.name+"|")==-1)				cookie=cookie+"|"+Ctrl.name		}else{			cookie=Ctrl.name		}
+		    c=cookie+"|"
+			if (c.indexOf(Ctrl.name+"|")==-1)
+				cookie=cookie+"|"+Ctrl.name
+		}else{
+			cookie=Ctrl.name
+		}
 	}else{
 		sel=Ctrl.name+"|"
 		c=cookie+"|"
 		n=c.indexOf(sel)
-		if (n!=-1){			cookie=cookie.substr(0,n)+ cookie.substr(n+sel.length)		}
-	}
+		if (n!=-1){
+			cookie=cookie.substr(0,n)+ cookie.substr(n+sel.length)
+		}
+
+	}
 	document.cookie="ORBITA="+cookie
 	Ctrl=document.getElementById("cookie_div")
 	Ctrl.style.display="inline-block"
 }
 
-function delCookie(){
+function delCookie(){
+
 	for (var i = 0; i < document.continuar.elements.length; i++){
     	element = document.continuar.elements[i];
     	switch (element.type){
@@ -452,17 +500,22 @@ function delCookie(){
 }
 
 
-function showCookie(cname){	cookie=getCookie(cname)
-	if (cookie==""){		alert(msgstr["rsel_no"])
-		return	}
+function showCookie(cname){
+	cookie=getCookie(cname)
+	if (cookie==""){
+		alert(msgstr["rsel_no"])
+		return
+	}
 	alert(document.buscar.lang.value)
     document.buscar.action="presentar_seleccion.php"
 	document.buscar.cookie.value=cookie
 
-	document.buscar.submit()}
+	document.buscar.submit()
+}
 
 function SendTo(Accion,Data){
-	switch (Accion){		case "word":
+	switch (Accion){
+		case "word":
 			document.buscar.action="sendtoword.php"
 			break
 		case "print_one":
@@ -472,7 +525,8 @@ function SendTo(Accion,Data){
 			document.buscar.action="presentar_seleccion.php"
 			break
 		case "reserve_one":
-		    if (WEBRESERVATION!="Y"){		    	alert(msgstr["reserv_no"])
+		    if (WEBRESERVATION!="Y"){
+		    	alert(msgstr["reserv_no"])
 		    	return
 		    }
 			document.buscar.action="presentar_seleccion.php"
@@ -480,16 +534,20 @@ function SendTo(Accion,Data){
 		case "xml":
 			document.buscar.action="sendtoxml.php"
 			document.buscar.target="_blank"
-			break	}
+			break
+	}
     document.buscar.Accion.value=Accion
 	document.buscar.cookie.value=Data
 	document.buscar.submit()
 }
 
 function ChangeLanguage(){
-	var lang = document.getElementById("lang");
+
+	var lang = document.getElementById("lang");
 	langcode=lang.options[lang.selectedIndex].value
-	for (i=0;i<document.forms.length;i++){		document.forms[i].lang.value=langcode	}
+	for (i=0;i<document.forms.length;i++){
+		document.forms[i].lang.value=langcode
+	}
 
 	document.changelanguage.action=actualScript
 	document.changelanguage.submit()
@@ -521,11 +579,16 @@ function closeNav() {
     document.getElementById("page").style.width = "95%";
 }
 
-function Facetas(Expresion){	document.buscar.facetas.value=Expresion
-	document.buscar.submit()}
+function Facetas(Expresion){
+	document.buscar.facetas.value=Expresion
+	document.buscar.submit()
+}
 
-function SolicitarPrestamo(CN,Base,otro){	document.buscar.action="../prestamos/prestamos.php"
+function SolicitarPrestamo(CN,Base,otro){
+	document.buscar.action="../prestamos/prestamos.php"
 	document.buscar.cookie.value=CN
 	document.buscar.submit()
 
-}
+
+
+}

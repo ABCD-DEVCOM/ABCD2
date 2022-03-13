@@ -86,7 +86,7 @@ if (isset($_REQUEST["Seleccionados"])){
 	$s=Explode('"',$_REQUEST["Seleccionados"]);
 	foreach ($s as $value){
 		if (trim($value)!=""){
-			echo "<tr><td valign=top><a href=# onclick=removeTerm(this)><img src=../images/buttonm.gif></a></td><td nowrap><input type=hidden name=TerminosSeleccionadosTxt id=TerminosSeleccionadosTxt value=\"".$value."\" >".$value."</td></tr>\n";
+			echo "<tr><td valign=top><a href=# onclick=removeTerm(this)><i class='fas fa-times'></i></a></td><td nowrap><input type=hidden name=TerminosSeleccionadosTxt id=TerminosSeleccionadosTxt value=\"".$value."\" >".$value."</td></tr>\n";
 		}
 	}
 }
@@ -142,14 +142,18 @@ function removeTerm(row){
     	document.getElementById(tableID).deleteRow(i);
 }
 
-function addTerm() {	var Ctrl = document.getElementsByName("terminosChk");
-    for (i=0;i<Ctrl.length;i++){    	if (Ctrl[i].checked){
-    		Termino=Ctrl[i].value    		Ctrl[i].checked=false        	table=document.getElementById("TerminosSeleccionadosTbl")
+function addTerm() {
+	var Ctrl = document.getElementsByName("terminosChk");
+    for (i=0;i<Ctrl.length;i++){
+    	if (Ctrl[i].checked){
+    		Termino=Ctrl[i].value
+    		Ctrl[i].checked=false
+        	table=document.getElementById("TerminosSeleccionadosTbl")
         	var rowCount = table.rows.length;
         	var newRow = table.insertRow(rowCount);
         	var newCell = newRow.insertCell(0);
         	newCell.vAlign = 'top';
-        	newCell.innerHTML = '<a href=# onclick=removeTerm(this)><img src=../images/buttonm.gif></a>'
+        	newCell.innerHTML = '<a href=# onclick=removeTerm(this)><i class="fas fa-times"></i></a>'
   			var newCell = newRow.insertCell(1);
   			newCell.innerHTML='<input type=hidden name=TerminosSeleccionadosTxt id=TerminosSeleccionadosTxt value="'+Termino+'" >'+Termino
         }

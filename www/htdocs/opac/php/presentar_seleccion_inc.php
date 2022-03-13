@@ -179,7 +179,7 @@ foreach ($seleccion as $base=>$value){
     echo "<hr style=\"border: 5px solid #cccccc;border-radius: 5px;\">";
 	echo "<div><h3>";
 	if (file_exists($db_path.$base."/pfts/dcxml.pft") or file_exists($db_path.$base."/pfts/marcxml.pft")){
-		echo "<a href=javascript:SendToXML(\"".$xml_base[$base]."\")><img src=../images/xml.png width=40 style=\"margin-top:-7px;vertical-align: middle;\"></a>&nbsp; &nbsp;";
+		echo "<a class='bt' href=javascript:SendToXML(\"".$xml_base[$base]."\")>XML</a>&nbsp; &nbsp;";
 	}
 	echo $bd_list[$base]["descripcion"]." ($base)</h3></div><br><br>";
 	$lista_mfn="";

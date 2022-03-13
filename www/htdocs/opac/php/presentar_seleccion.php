@@ -30,6 +30,14 @@ header('Content-Type: text/html; charset=".$charset."');
 <!--<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset?>" />-->
 	<title><?php echo $TituloPagina?></title>
 	<link href="../styles/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
+
+	<link href="/assets/css/colors.css" rel="stylesheet"> 
+	<link href="/assets/css/buttons.css" rel="stylesheet"> 
+	<link href="/assets/css/normalize.css" rel="stylesheet"> 
+
+	<!--FontAwesome-->
+	<link href="/assets/css/all.min.css" rel="stylesheet"> 
+
 	<script src=../js/script_b.js?<?php echo time(); ?>></script>
 	<script src=../js/highlight.js?<?php echo time(); ?>></script>
 	<script src=../js/lr_trim.js></script>
@@ -119,17 +127,19 @@ header('Content-Type: text/html; charset=".$charset."');
 	if ($accion!="mail_one" and $accion!="print_one" and $accion!="reserve_one"){
 	?>
 		<div id=toolBar style="margin:auto;text-align:center;width:400px;border:1px solid;padding:5px">
-			<a href=javascript:SendToPrint()><img src=../images/print.png width=40></a>&nbsp; &nbsp;
-			<a href=javascript:SendToWord()><img src=../images/word.png width=40></a>&nbsp; &nbsp;
+			<a class="bt" href="javascript:SendToPrint()"><i class="fas fa-print"></i></a>&nbsp; &nbsp;
+			<a class="bt" href="javascript:SendToWord()"><i class="far fa-file-word"></i></a>&nbsp; &nbsp;
 			<?php if (count($sel_db)==1){?>
 
 			<?php }?>
-			<a href=javascript:SendToISO()><img src=../images/iso.png width=40></a>&nbsp; &nbsp;
-			<a href=javascript:ShowHide("myMail")><img src=../images/mail.png width=40></a>&nbsp; &nbsp;
-			<?php if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y")
-				echo "<a href=javascript:ShowHide(\"myReserve\")><img src=../images/books.jpg width=40></a>&nbsp; &nbsp;"
+			<a class="bt" href="javascript:SendToISO()">ISO</a>&nbsp; &nbsp;
+			<a class="bt" href="javascript:ShowHide('myMail')"><i class="far fa-envelope"></i></a>&nbsp; &nbsp;
+			<?php if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y") { ?>
+				<a class="bt" href="javascript:ShowHide('myReserve')"><i class="fas fa-book"></i></a>&nbsp; &nbsp;
+			<?php
+			}
 			?>
-			<a href=javascript:document.regresar.submit()><img src=../images_config/defaultButton_back.png width=40></a>
+			<a class="bt bt-blue" href="javascript:document.regresar.submit()"><i class="fas fa-arrow-alt-circle-left"></i></a>
 		</div>
 	<br>
 	<?php } ?>
@@ -147,7 +157,14 @@ global $db_path,$Wxis,$xWxis;
 	include("wxis_llamar.php");
 	return $contenido;
 }
-include ("presentar_seleccion_inc.php");
+?>
+
+<div class="results">
+
+	<?php include ("presentar_seleccion_inc.php"); ?>
+
+</div>
+<?php
 If (isset($accion) and $accion=="print"){
 ?>
 <script>

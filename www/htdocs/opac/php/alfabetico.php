@@ -147,10 +147,20 @@ if (count($index_alfa)>1){
 			echo "  ";
 		}
 	}
-	echo "</div>";
-   echo "</td></tr>" ;
-    echo "<tr><td><input type=text name=ira size=15><a href=javascript:IrA()><Img src=../images/lupa.gif border=0></a></font></td>";
+	?>
+	</div>
+   </td>
+</tr>
+<tr>
+	<td>
+		<input type="text" name="ira" size="15">
+		<a class="bt bt-blue" href="javascript:IrA()">
+			<i class="fas fa-search"></i>
+		</a>
+	</font>
+	</td>
 
+<?php
 $comp="XXXXX";
 $cuenta=0;
 if (file_exists($db_path."opac_config/xxcolecciones.tab")){
@@ -251,16 +261,28 @@ if ($ixc>0 ){
 			}
 		}
 	}
-	echo "</ul>";
-	echo "</table><p><center><a href=javascript:history.back()><img src=../images/retroceder.gif border=0  valign=middle></a> &nbsp; &nbsp;";
-	echo "&nbsp; <a href=javascript:ContinuarIndice()><img src=../images/avanzar.gif border=0  valign=middle></a>";
-echo "</td></table>
-					</td>
+?>
+	</ul>
+	</table>
+	
+		<center>
+			<a class="bt bt-green" href="javascript:history.back()">
+				<i class="fas fa-angle-double-left"></i>
+			</a> 
+			<a class="bt bt-green" href=javascript:ContinuarIndice()>
+				<i class="fas fa-angle-double-right"></i>
+			</a>
+	</td>
+</table>
+
+</td>
 </table>
 
 </form>
+
 <script>
-ultimo='";
+ultimo="";
+<?php
 //$UltimoTermino=substr($mayorclave,strlen($_REQUEST["prefijo"]));
 $prefijo=$_REQUEST["prefijoindice"];
 
@@ -313,4 +335,7 @@ if (isset($_REQUEST["lang"])) echo "<input type=hidden name=lang value=\"".$_REQ
 	Ctrl=document.getElementById("collation")
 	Ctrl.style.display="block"
 </script>
-<?php } ?>
+<?php } 
+
+?>
+

@@ -209,6 +209,11 @@ a:hover {
     padding:0px;
 
 }
+
+#search-user {
+	width: 200px;
+}
+/*
 #search-user {
 	width: 200px;
 	height:20px;
@@ -235,7 +240,7 @@ a:hover {
 	border: 1px solid;
 	cursor: pointer;
 	outline:0;
-}
+}*/
 
 /* Menu */
 
@@ -557,9 +562,7 @@ a:hover {
 .select-criterio{
    background: transparent;
    border: 1px solid #cccccc;
-   font-size: 11px;
-   height: 20px;
-   //padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
    width: 150px;
 
 }
@@ -1012,4 +1015,20 @@ table.list-item-wrapper {
 
 table tr td.side-item {
 	padding: 0 10px;
+}
+
+a.bt-select {
+	display: inline-block;
+	text-decoration: none;
+    background-color: var(--abcd-white);
+    border: 1px solid var(--abcd-blue);
+    color: var(--abcd-blue);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+    touch-action: manipulation;
+    vertical-align: middle;
+    margin: 2px;
+    width: 10px;
+    padding: 6px;
 }
