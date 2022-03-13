@@ -9,6 +9,7 @@
 20210610 fho4abcd Removed workaround
 20210813 fho4abcd Improve include path
 20220128 fho4abcd remove MULTIPLE_DB_FORMAT
+20220313 fho4abcd Show alert in case of login errors
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 global $ABCD_scripts_path,$app_path;
@@ -99,7 +100,20 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
             }
         }
     }
-    if ($err_wxis!="") echo "<font color=red size=+1>$err_wxis</font>";
+    if ($err_wxis!="") {
+        echo "<font color=red size=+1>$err_wxis</font>";
+        // In case of a login show the problem to the user with an alert
+        // Without alert the login screen overwrites the error message.
+        // Not translated as more things can be wrong in this stage
+        // Do not die to enable login with the emergency login
+        if ($actual_db=="acces" && strpos($query,"login=")>0) {
+            ?>
+            <script>type="text/javascript">
+            alert("Hint: Unicode encoding and/or CISIS version might not match with database acces")
+            </script>
+            <?php
+        }
+    }
 }else{                      // GET-method used
     $query.="&path_db=".$db_path;
     putenv('REQUEST_METHOD=GET');
