@@ -118,8 +118,6 @@ global $db_path,$msgstr;
 	echo "	<tr>";
 	echo "		<td colspan=4 style='font-size:12px;' align=center>";
 	echo $msgstr["mensajeb"];
-//	echo "			Seleccione un campo de búsqueda e inserte términos de la información que desea localizar. ";
-//	echo "			Puede ingresar información en más de un campo. Haga clic sobre <img src=../images/diccionario.gif> para presentar el índice de términos recuperables.";
 	echo "		</td>
 			</tr>";
 	echo "	<tr>
@@ -146,10 +144,14 @@ global $db_path,$msgstr;
 		}
 		echo "		</SELECT></TD>\n";
 		//echo "<td width=20>xx<input type=\"button\" onclick=\"Diccionario($jx);\" class=\"button-diccionario\">";
-		echo "<td>";
-		echo "<a href=\"javascript:Diccionario($jx)\"><img src=../images/diccionario.gif alt=\"".$msgstr["indice"]."\" title=\"".$msgstr["indice"]."\"></a>";
-   		echo "	</td>";
-
+		
+?>
+		<td>
+		<a href="javascript:Diccionario(<?php echo $jx;?>)">
+			<i class="fas fa-book" alt="<?php echo $msgstr["indice"];?>" title="<?php echo $msgstr["indice"];?>"></i>
+		</a>
+   		</td>
+<?php
 
 		echo "	<td NOWRAP width=100><input type=text style='font-size:10px' size=80 name=Sub_Expresiones value='";
 		if (isset($_REQUEST["Seleccionados"])){

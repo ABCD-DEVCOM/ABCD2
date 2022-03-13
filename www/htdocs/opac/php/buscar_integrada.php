@@ -378,7 +378,9 @@ foreach ($bd_list as $base=>$value){
 			}
 		}
 		if ($total!=0){
-			$total_base[$base]=$total;
+			if ($total>0) {
+				$total_base[$base]=$total;
+			}
 			if ($integrada=="")
 				$integrada=$base.'$$'.$total.'$$'.urlencode($_REQUEST["Expresion"]);
 			else
@@ -387,7 +389,7 @@ foreach ($bd_list as $base=>$value){
 			$total_registros=(int)$total_registros+(int)$total;
 		}
    		$Expresion_base_seq[$base]=urlencode($_REQUEST["Expresion"]);
-
+   		
 	}
 
 }
@@ -413,10 +415,15 @@ if (!isset($_REQUEST["mostrar_exp"])){
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQUEST["integrada"]) and $_REQUEST["integrada"]!=""){
 	$_REQUEST["integrada"]=urldecode($_REQUEST["integrada"]);
 	$int_tot=explode('||',$_REQUEST["integrada"]);
+	
+
 	unset($total_base);
+
 	$total_registros=0;
 	foreach ($int_tot as $linea){
-		$l=explode('$$',$linea);
+	
+		$l=explode("$$",$linea);
+		if ($l[1]>1)
 		$total_base[$l[0]]=$l[1];
 		$total_base_seq[$l[0]]=$l[1];
 		$total_registros=(int)$total_registros+(int)$l[1];
@@ -426,18 +433,23 @@ if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQU
 }else{
 	$_REQUEST["integrada"]=$integrada;
 }
+
 $_REQUEST["integrada"]=urlencode($_REQUEST["integrada"]);
 $ix=0;
 $contador=0;
+
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 if (isset($total_base) and count($total_base)>0){
 	echo "<div style='border:1px solid #CCCCCC; border-radius:3px;margin-top:10px ; padding:5px 5px 5px 10px'><span class=tituloBase>".$msgstr["total_recup"].": $total_registros</span>";
 	if (count($total_base)>1){
+
 		foreach ($total_base as $base=>$total){
+
 			echo "<br><a href=\"javascript:ProximaBase('$base')\">";
-			if (isset($_REQUEST["base"]) and $_REQUEST["base"]==$base) echo "<strong><font color=darkred>";
+			//if (isset($_REQUEST["base"]) and $_REQUEST["base"]==$base)  
+			//	echo "<strong><font color=darkred>";
 			echo $bd_list[$base]["titulo"]."</a>: ".$total;
-			if (isset($_REQUEST["base"]) and $_REQUEST["base"]==$base) echo "</font></strong>";
+			//if (isset($_REQUEST["base"]) and $_REQUEST["base"]==$base) echo "</font></strong>";
 
 		}
 	}

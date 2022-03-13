@@ -25,8 +25,10 @@ if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
 
 
 $lang=$_REQUEST["lang"];
+
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$file_request=$_REQUEST["file"];
+	$archivo=$db_path."opac_conf/$lang/".$file_request;
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
@@ -40,32 +42,47 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 				case "home_text":
 					$salida="[TEXT]".$value;
 					if (trim($value)!=""){
-						if (!file_exists($db_path."opac_conf/$lang/$value") and trim($_REQUEST["editor1"])==""){
-							echo "<font color=red size=4><strong>".$db_path."opac_conf/$lang/$value"." ".$msgstr["missing"]."</strong></font>"."<br>";
+						if (!file_exists($db_path."opac_conf/$lang/$file_request") and trim($_REQUEST["editor1"])==""){
+							echo "<font color=red size=4><strong>".$db_path."opac_conf/$lang/$file_request"." ".$msgstr["missing"]."</strong></font>"."<br>";
 						}
-						if ($_REQUEST["editor1"]!=""){
-							$fck=fopen($db_path."opac_conf/".$_REQUEST["lang"]."/".$value,"w");
-							fwrite($fck,$_REQUEST["editor1"]);
-							fclose($fck);
+
+					}
+						break;
+					case "editor1":
+					$salida="[HTML]".$value;
+					if (trim($value)!=""){
+						if (!file_exists($db_path."opac_conf/$lang/$file_request") and trim($_REQUEST["editor1"])==""){
+							echo "<font color=red size=4><strong>".$db_path."opac_conf/$lang/$file_request"." ".$msgstr["missing"]."</strong></font>"."<br>";
 						}
+						//if ($_REQUEST["editor1"]!=""){
+							//$fck=fopen($db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["file"],"w");
+							//fwrite($fck,$value);
+							//fclose($fck);
+						//}
 					}
 					break;
 
+
 			}
-			if ($salida!="") fwrite($fout,$salida."\n");
+			if ($salida!="") 
+				fwrite($fout,$salida."\n");
 		}
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+    echo "<h2 class='color-green'>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</h2>";
 }
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$file="footer.info";
-	echo "<form name=home"."Frm method=post onSubmit=\"return checkform()\">\n";
-	echo "<input type=hidden name=db_path value=".$db_path.">";
-	echo "<input type=hidden name=Opcion value=Guardar>\n";
-    echo "<input type=hidden name=file value=\"$file\">\n";
-    echo "<input type=hidden name=lang value=\"$lang\">\n";
+?>	
+
+	<form name="homeFrm" method="post" onSubmit="return checkform()">
+	<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
+	<input type="hidden" name="Opcion" value="Guardar">
+  <input type="hidden" name="file" value="<?php echo $file;?>">
+  <input type="hidden" name="lang" value="<?php echo $lang;?>">
+  
+<?php
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
@@ -86,22 +103,45 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 					else
 						$height_link=800;
 				}
-				if (substr($value,0,6)=="[TEXT]") $home_text=substr($value,6);
+				if (substr($value,0,6)=="[TEXT]") { 
+						$home_text=substr($value,6);
+					}
 			}
 		}
 	}
-	echo "<table cellpadding=5>";
-	echo "<tr><td colspan=2>"."<font color=darkred size=3><strong>".$msgstr["sel_one"]."</strong></font></td></tr>";
-	echo "<tr><td valign=top nowrap>".$msgstr["base_home_link"]."<br>Ex:http://www.abcdonline.info</td>";
-	echo "<td>"."<input type=text name=home_link size=70 value=\"$home_link\">";
-	echo "&nbsp; ".$msgstr["frame_h"]." <input type=text name=height_link size=5 value=\"$height_link\">px</td></tr>";
-	echo "<tr><td valign=top>".$msgstr["base_home_text"]."</td>";
-	echo "<td>"."<input type=text size=100 name=home_text value=\"$home_text\"";
-	echo "><br><br>";
+
+?>
+
+<table>
+<tr>
+	<td colspan=2>
+		<font color=darkred size=3>
+			<strong><?php echo $msgstr["sel_one"];?></strong>
+		</font>
+	</td>
+</tr>
+<tr>
+	<td valign=top nowrap><?php echo $msgstr["base_home_link"];?>
+	<br>Ex:http://www.abcdonline.info
+</td>
+<td>
+	<input type="text" name="home_link" size=70 value="<?php echo $home_link;?>">
+&nbsp; <?php echo $msgstr["frame_h"];?>
+	<input type="text" name="height_link" size=5 value="<?php echo $height_link;?>">px
+</td>
+</tr>
+<tr>
+	<td valign=top>
+		<?php echo $msgstr["base_home_text"];?>
+	</td>
+	<td>
+		<input type="text" size="100" name="home_text" value="<?php echo $home_text;?>" ><br><br>
+<?php
+
 	$footer_html="";
 	if ($home_text!=""){
-		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$home_text)){
-			$footer_html=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$home_text);
+		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$file)){
+			$footer_html=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$file);
 			$footer_html=implode($footer_html);
 		}
 	}
@@ -111,20 +151,26 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 
 ?>
 <textarea cols="80" id="editor1" name="editor1" rows="10" <?php echo $footer_html?>></textarea>
-  <script>
-    CKEDITOR.replace('editor1', {
-      height: 260,
-      width: 800,
-    });
-  </script>
+	  <script>
+	    CKEDITOR.replace('editor1', {
+	      height: 260,
+	      width: 800,
+	    });
+	  </script>
+
+		</div>
+	</td>
+</tr>
+<tr>
+	<td colspan=2 align=center> 
+		<input type="submit" value="<?php echo $msgstr["save"]; ?>">
+	</td>
+</tr>
+</table>
+</form>
+
 <?php
 
-	echo "</div>";
-	echo "</td></tr>";
-	echo "<tr><td colspan=2 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]."\"></td></tr>";
-	echo "</table>";
-	echo "</form>";
 }
 ?>
 </div>    

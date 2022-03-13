@@ -1,7 +1,3 @@
-<?php
-
-?>
-
   <script>
 
 		function EnviarCorreo(){
@@ -22,7 +18,9 @@
 <p>
 <form name=correo action=correos.php method=post onSubmit='EnviarCorreo();return false'>
 <?php
-foreach ($_REQUEST as $var=>$value){	echo "<input type=hidden name=$var value=$value>\n";}
+foreach ($_REQUEST as $var=>$value){
+	echo "<input type=hidden name=$var value=$value>\n";
+}
 ?>
 <table>
 <tr><td><font size=2><?php echo $msgstr["to_mail"]?></font></td><td><input type=text name=email size=55><font color=red size=1></td>

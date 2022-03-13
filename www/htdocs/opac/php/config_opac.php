@@ -14,6 +14,12 @@ else
 	if (isset($_REQUEST["db_path"])) 
 $db_path=$_REQUEST["db_path"];
 
+if (!isset($_REQUEST["lang"]))
+	$_REQUEST["lang"]=$lang;
+else
+	$lang=$_REQUEST["lang"];
+
+
 // Read language files from central
 include "../../central/lang/opac.php";
 include "../../central/lang/admin.php";

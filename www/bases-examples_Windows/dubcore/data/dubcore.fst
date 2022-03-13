@@ -1,7 +1,11 @@
 1 5 '/TI_/', mpu,v1 
+1 5 '/TW_/', mpu,v1 
 2 5 '/CR_/', mpu, (v2/),(v57) 
+2 5 '/TW_/', mpu, (v2/),(v57) 
 3 5 '/SU_/', mpu, (v3/) 
+3 5 '/TW_/', mpu, (v3/) 
 4 8 '/DE_/', mpu, (v4/) 
+4 8 '/TW_/', mpu, (v4/) 
 5 5 '/PU_/', mpu,v5 
 6 5 '/CO_/', mpu, (v6/) 
 7 5 '/DA_/', mpu,v7 
@@ -19,3 +23,4 @@
 97 5 '/SE_/', mpu,(v97/),(v94/) 
 111 5 '/ID=/', v111 
 112 5 '/OAI_DATE_/', v112 
+906 0 mpu,(if v96='text' then 'DC_TX' fi)/(if v96='image' then 'DC_IM' fi)
