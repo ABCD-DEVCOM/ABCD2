@@ -1,4 +1,7 @@
 <?php
+/*
+20220313 fho4abcd Rewritten. Can run in normal window now, update of the file in this script
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -7,62 +10,80 @@ include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");;
 include("../lang/dbadmin.php");;
 $archivo=str_replace("\\","/",$arrHttp["archivo"]);
+$base="";
+$confirmcount=0;
+$backtoscript="databases_list.php";
+if (isset($arrHttp["base"])) $base=$arrHttp["base"];
+if (isset($arrHttp["confirmcount"])) $confirmcount=$arrHttp["confirmcount"];
+if (isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 include("../common/header.php");
 ?>
-
 <body>
+<script>
+function Enviar(){
+	document.update.submit()
+}
+</script>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-if (isset($arrHttp["retorno"]))
-	$retorno=$arrHttp["retorno"];
-else
-	$retorno="menu_modificardb.php?base=".$arrHttp["base"]."&encabezado=s";
+include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
-	<div class="breadcrumb">
-		<?php echo "<h5>"." " .$msgstr["database"].": ".$arrHttp["base"]."</h5>"?>
-	</div>
-	<div class="actions">
-<?php echo "<a href=\"$retorno\" class=\"defaultButton backButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span>
-		</a>
-	</div>
-	<div class="spacer">&#160;</div>
+    <div class="breadcrumb">
+    <?php echo $msgstr["dblist"] ?>
+    </div>
+    <div class="actions">
+		<?php
+        include "../common/inc_back.php";
+		include "../common/inc_home.php";
+        $savescript="javascript:Enviar()";
+        include "../common/inc_save.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
-<?php }?>
 <div class="middle form">
-	<div class="formContent">
-<br><br>
+<div class="formContent">
 <?php
-$ar=explode('/',$arrHttp["archivo"]);
-$xi=count($ar)-1;
-$file=$ar[$xi];
+// Write the file if this was a "next" run
+if ($confirmcount>0 ) {
+    $arrHttp["txt"]=stripslashes($arrHttp["txt"]);
+    $arrHttp["txt"]=str_replace("\"",'"',$arrHttp["txt"]);
+    $archivo=$arrHttp["archivo"];
+    $fp=fopen($db_path.$archivo,"w");
+    fputs($fp,$arrHttp["txt"]);
+    fclose($fp);
+    echo "<h4>";
+    if ($confirmcount%2==0) echo "&rarr; &nbsp; &nbsp; ";
+    echo $archivo." ".$msgstr["updated"];
+    if ($confirmcount%2==1) echo " &nbsp; &nbsp; &larr;";
+    echo "</h4>";
+}
+$confirmcount++;
+// Show and edit the filecontent
 if (file_exists($db_path.$archivo))
 	$fp=file($db_path.$archivo);
 else
 	$fp=array();
-echo "
-<form method=post action=actualizararchivotxt.php>
-<input type=hidden name=archivo value='".$arrHttp["archivo"]."'>";
-if (!isset($arrHttp["retorno"]))
-	echo "<font face=arial><h4>".$file." &nbsp; <a href=javascript:self.close()>".$msgstr["close"]."</a></h4>";
-echo "<textarea name=txt rows=20 cols=100 style=\"font-family:courier\";>";
+?>
+<form name=update method=post >
+<input type=hidden name=confirmcount value=<?php echo $confirmcount?>>
+<input type=hidden name=archivo value='<?php echo $arrHttp["archivo"];?>'>
+<input type=hidden name=base value="<?php echo $base;?>">
+<input type=hidden name=backtoscript value="<?php echo $backtoscript;?>">
+<textarea name=txt rows=20 cols=100 style="font-family:courier">
+<?php
 foreach ($fp as $value) echo $value;
-echo "</textarea>
-<br><input type=submit value=".$msgstr["update"].">";
-if (isset($arrHttp["retorno"]))
-	echo "<input type=hidden name=retorno value=\"".$arrHttp["retorno"]."\">\n";
-if (isset($arrHttp["encabezado"]))
-	echo "<input type=hidden name=encabezado value=\"".$arrHttp["encabezado"]."\">\n";
-if (isset($arrHttp["base"]))
-	echo "<input type=hidden name=base value=\"".$arrHttp["base"]."\">\n";
-echo "</form>
-</div></div>";
+?>
+</textarea>
+<br>
+<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
+<a class="bt bt-gray" href="<?php echo $backtoscript;?>"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
+
+</form>
+</div></div>
+<?php
 include("../common/footer.php");
-echo "</body></html>";
 ?>
