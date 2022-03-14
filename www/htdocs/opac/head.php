@@ -1,4 +1,5 @@
 <?php
+include("../central/config_opac.php");
 $modo="";
 if (isset($_REQUEST["base"]))
 	$actualbase=$_REQUEST["base"];
@@ -36,16 +37,16 @@ $meta_encoding=$charset;
 	<link href="/assets/css/buttons.css" rel="stylesheet"> 
 	<link href="/assets/css/normalize.css" rel="stylesheet"> 
 
-	<link href="../styles/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
-	<script src=../js/script_b.js?<?php echo time(); ?>></script>
-	<script src=../js/highlight.js?<?php echo time(); ?>></script>
-	<script src=../js/lr_trim.js></script>
-	<script src=../js/selectbox.js></script>
+	<link href="assets/styles/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
+	<script src=assets/js/script_b.js?<?php echo time(); ?>></script>
+	<script src=assets/js/highlight.js?<?php echo time(); ?>></script>
+	<script src=assets/js/lr_trim.js></script>
+	<script src=assets/js/selectbox.js></script>
 
 	<!--FontAwesome-->
 	<link href="/assets/css/all.min.css" rel="stylesheet"> 
 
-	<?php include ("../../central/common/css_settings.php"); ?>
+	<?php include ("../central/common/css_settings.php"); ?>
 
 <script>
 msgstr=Array()
@@ -63,7 +64,7 @@ actualScript="<?php echo $actualScript?>"
 <div id="header-wrapper">
 	<div id="header">
 		<div id="logo">
-			<a href="<?php echo $link_logo?>"><img src="<?php echo $logo?>"></a>
+			<a href="<?php echo $link_logo?>?lang=<?php echo $_REQUEST['lang']?>"><img src="<?php echo $logo?>"></a>
 		</div>
 
 	</div>

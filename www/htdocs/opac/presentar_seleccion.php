@@ -2,7 +2,7 @@
 session_name('orbitacn');
 
 $mostrar_menu="N";
-include("config_opac.php");
+include("../central/config_opac.php");
 include("leer_bases.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>".urldecode($value)."<br>";
 unset($_REQUEST["usuario"]);

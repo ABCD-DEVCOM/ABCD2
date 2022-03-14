@@ -18,6 +18,8 @@ if (!isset($Web_Dir)){
 $xis_path=$xWxis;
 $exe_path=$Wxis;
 
+
+
 //$xWxis=$xis_path;
 //$Wxis=$exe_path;
 //$db_path="/abcd/www/bases/demo_nocopies/";
@@ -96,11 +98,11 @@ if (substr(trim($ec_output),0,2)=="**" or strlen($ec_output)<100){
 }
 ?>
 </form>
-<form name=renovar action=<?php echo $CentralHttp?>/central/circulation/renovar_ex.php method=post onsubmit="javascript:return false">
+<form name=renovar action=<?php echo $CentralHttp;?>/central/circulation/renovar_ex.php method=post onsubmit="javascript:return false">
 <input type=hidden name=searchExpr>
 <input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
 <input type=hidden name=vienede value=<?php if (isset($arrHttp["vienede"])) echo $arrHttp["vienede"]?>>
-<input type=hidden name=db_path value=<?php echo $db_path?>>
+<input type=hidden name=db_path value="<?php echo $db_path;?>">
 <input type=hidden name=lang value=<?php echo $arrHttp["lang"]?>>
 <input type=hidden name=OpacHttp value=<?php echo $OpacHttp?>>
 <input type=hidden name=Web_Dir value=<?php echo $Web_Dir?>>
@@ -109,7 +111,7 @@ if (substr(trim($ec_output),0,2)=="**" or strlen($ec_output)<100){
 <input type=hidden name=Mfn>
 <input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
 <input type=hidden name=vienede value=<?php if (isset($arrHttp["vienede"])) echo $arrHttp["vienede"]?>>
-<input type=hidden name=db_path value=<?php echo $db_path?>>
+<input type=hidden name=db_path value="<?php echo $db_path?>">
 <input type=hidden name=lang value=<?php echo $arrHttp["lang"]?>>
 <input type=hidden name=Web_Dir value=<?php echo $Web_Dir?>>
 <input type=hidden name=OpacHttp value=<?php echo $OpacHttp?>>
@@ -140,7 +142,7 @@ if (isset($arrHttp["error"])){
 
 <?php
 chdir($Web_Dir);
-include($Web_Dir."/php/footer.php");
+include($Web_Dir."/footer.php");
 ?>
 
 <script>

@@ -1,5 +1,3 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
 <script>
 	document.cookie = 'ORBITA; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
 	document.cookie =  'ORBITA=;';
@@ -59,10 +57,12 @@ var user = getCookie("ORBITA");
 </script>
 <?php
 if (!file_exists("php/opac_dbpath.dat")){
+
+include "start.php";
+
 ?>
-   <meta http-equiv = "refresh" content = "0; url = php/index.php" />
-</head>
-</html>
+
+
 <?php
 }else {
 ?>

@@ -1,6 +1,6 @@
 <?php
 $mostrar_menu="N";
-include("config_opac.php");
+include("../central/config_opac.php");
 
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";die;
 
@@ -8,11 +8,13 @@ include("leer_bases.php");
 
 $desde=1;
 $count="";
-function wxisLlamar($base,$query,$IsisScript){
+
+function wxisLlamar($base,$query,$IsisScript){
 	global $db_path,$Wxis,$xWxis;
 	include("wxis_llamar.php");
 	return $contenido;
-}
+}
+
 if (isset($_REQUEST["sendto"]) and trim($_REQUEST["sendto"])!="")
 	$_REQUEST["cookie"]=$_REQUEST["sendto"] ;
 $list=explode("|",$_REQUEST["cookie"]);
@@ -57,20 +59,25 @@ foreach ($seleccion as $base=>$value){
 			$encabezado="<collection>\n";
 			$pie="</collection>\n";
 		}else{
-	}
+
+	}
 }
 $query = "&base=".$base."&cipar=$db_path"."par/$base".".par&Mfn=$lista_mfn&Formato=$Formato&lang=".$_REQUEST["lang"];
 //echo $query;die;
 $resultado=wxisLlamar($base,$query,$xWxis."opac/imprime_sel.xis");
 	//echo '<marc:collection xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">'."\n";
 	//echo "<!DOCTYPE dublinCore PUBLIC '-//OCLC//DTD Dublin core v.1//EN'> \n";
-if ($xml_head=="Y"){	echo "<?xml version=\"1.0\"?> \n";
-	$xml_head="N";}
+if ($xml_head=="Y"){
+	echo "<?xml version=\"1.0\"?> \n";
+	$xml_head="N";
+}
 echo $encabezado;
-foreach($resultado as $value)  {	$value=trim($value);
+foreach($resultado as $value)  {
+	$value=trim($value);
 	if (substr($value,0,8)=="[TOTAL:]") continue;
 	$value=utf8_encode($value);
-	echo str_replace('&','&amp;',$value);}
+	echo str_replace('&','&amp;',$value);
+}
 echo $pie;
 }
 

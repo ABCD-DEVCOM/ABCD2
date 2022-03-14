@@ -569,35 +569,181 @@ else
 //Getting the fields information
 $cnf=Vfield(strtolower($_POST['cnf']));
 $inf=Vfield(strtolower($_POST['inf']));
-$mlf=Vfield(strtolower($_POST['mlf']));
-$blf=Vfield(strtolower($_POST['blf']));
-$tomef=Vfield(strtolower($_POST['tomef']));
-$volumef=Vfield(strtolower($_POST['volumef']));
-$cpnumf=Vfield(strtolower($_POST['cpnumf']));
-$adf=Vfield(strtolower($_POST['adf']));
-$providerf=Vfield(strtolower($_POST['providerf']));
-$datef=Vfield(strtolower($_POST['datef']));
-$pricef=Vfield(strtolower($_POST['pricef']));
-$pof=Vfield(strtolower($_POST['pof']));
-$snf=Vfield(strtolower($_POST['snf']));
-$condf=Vfield(strtolower($_POST['condf']));
-$exchangef=Vfield(strtolower($_POST['exchangef']));
+
+if (isset($mlf)) {
+  $mlf=Vfield(strtolower($_POST['mlf']));
+} else {
+  $mlf="";
+}
+
+if (isset($blf)) {
+  $blf=Vfield(strtolower($_POST['blf']));
+} else {
+  $blf="";
+}
+
+if (isset($tomef)) {
+  $tomef=Vfield(strtolower($_POST['tomef']));
+} else {
+  $tomef="";
+}
+
+if (isset($volumef)) {
+  $volumef=Vfield(strtolower($_POST['volumef']));
+} else {
+  $volumef="";
+}
+
+if (isset($cpnumf)) {
+  $cpnumf=Vfield(strtolower($_POST['cpnumf']));
+} else {
+  $cpnumf="";
+}
+
+if (isset($adf)) {
+  $adf=Vfield(strtolower($_POST['adf']));
+} else {
+  $adf="";
+}
+
+if (isset($providerf)) {
+  $providerf=Vfield(strtolower($_POST['providerf']));
+} else {
+  $providerf="";
+}
+
+if (isset($datef)) {
+  $datef=Vfield(strtolower($_POST['datef']));
+} else {
+  $datef="";
+}
+
+if (isset($pricef)) {
+  $pricef=Vfield(strtolower($_POST['pricef']));
+} else {
+  $pricef="";
+}
+
+if (isset($pof)) {
+  $pof=Vfield(strtolower($_POST['pof']));
+} else {
+  $pof="";
+}
+
+if (isset($snf)) {
+  $snf=Vfield(strtolower($_POST['snf']));
+} else {
+  $snf="";
+}
+
+if (isset($condf)) {
+  $condf=Vfield(strtolower($_POST['condf']));
+} else {
+  $condf="";
+}
+
+if (isset($exchangef)) {
+  $exchangef=Vfield(strtolower($_POST['exchangef']));
+} else {
+  $exchangef="";
+}
+
+
 //Getting the subfields information
-$cnsf=RemovePico(strtolower($_POST['cnsf']));
-$insf=RemovePico(strtolower($_POST['insf']));
-$mlsf=RemovePico(strtolower($_POST['mlsf']));
-$blsf=RemovePico(strtolower($_POST['blsf']));
-$tomesf=RemovePico(strtolower($_POST['tomesf']));
-$volumesf=RemovePico(strtolower($_POST['volumesf']));
-$cpnumsf=RemovePico(strtolower($_POST['cpnumsf']));
-$adsf=RemovePico(strtolower($_POST['adsf']));
-$providersf=RemovePico(strtolower($_POST['providersf']));
-$datesf=RemovePico(strtolower($_POST['datesf']));
-$pricesf=RemovePico(strtolower($_POST['pricesf']));
-$posf=RemovePico(strtolower($_POST['posf']));
-$snsf=RemovePico(strtolower($_POST['snsf']));
-$condsf=RemovePico(strtolower($_POST['condsf']));
-$exchangesf=RemovePico(strtolower($_POST['exchangesf']));
+
+if (isset($cnsf)) {
+  $cnsf=RemovePico(strtolower($_POST['cnsf']));
+} else {
+  $cnsf="";
+}
+
+if (isset($insf)) {
+  $insf=RemovePico(strtolower($_POST['insf']));
+} else {
+  $insf="";
+}
+
+if (isset($mlsf)) {
+  $mlsf=RemovePico(strtolower($_POST['mlsf']));
+} else {
+  $mlsf="";
+}
+
+if (isset($blsf)) {
+  $blsf=RemovePico(strtolower($_POST['blsf']));
+} else {
+  $blsf="";
+}
+
+if (isset($tomesf)) {
+  $tomesf=RemovePico(strtolower($_POST['tomesf']));
+} else {
+  $tomesf="";
+}
+  
+if (isset($volumesf)) {
+  $volumesf=RemovePico(strtolower($_POST['volumesf']));
+} else {
+  $volumesf="";
+}
+
+if (isset($cpnumsf)) {
+  $cpnumsf=RemovePico(strtolower($_POST['cpnumsf']));
+} else {
+  $cpnumsf="";
+}
+
+if (isset($adsf)) {
+  $adsf=RemovePico(strtolower($_POST['adsf']));
+} else {
+  $adsf="";
+}
+
+if (isset($providersf)) {
+  $providersf=RemovePico(strtolower($_POST['providersf']));
+} else {
+  $providersf="";
+}
+
+if (isset($datesf)) {
+  $datesf=RemovePico(strtolower($_POST['datesf']));
+} else {
+  $datesf="";
+}
+
+if (isset($pricesf)) {
+  $pricesf=RemovePico(strtolower($_POST['pricesf']));
+} else {
+  $pricesf="";
+}
+
+if (isset($posf)) {
+  $posf=RemovePico(strtolower($_POST['posf']));
+} else {
+  $posf="";
+}
+
+if (isset($snsf)) {
+  $snsf=RemovePico(strtolower($_POST['snsf']));
+} else {
+  $snsf="";
+}
+
+if (isset($condsf)) {
+  $condsf=RemovePico(strtolower($_POST['condsf']));
+} else {
+  $condsf="";
+}
+
+if (isset($exchangesf)) {
+  $exchangesf=RemovePico(strtolower($_POST['exchangesf']));
+} else {
+  $exchangesf="";
+}
+
+
+
+
 //Concatenating the fields and subfields
 $cnfent="";
 $infent="";
