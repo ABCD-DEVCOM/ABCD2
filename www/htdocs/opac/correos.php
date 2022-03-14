@@ -1,4 +1,5 @@
-<?php include ("config_opac.php");
+<?php 
+include("../central/config_opac.php");
 header('Content-Type: text/html; charset=".$charset."');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -36,7 +37,8 @@ global $db_path,$Wxis,$xWxis;
 	return $contenido;
 }
 
-function SendPhpMail($to,$name,$body,$ini){global $enviados,$msgstr;
+function SendPhpMail($to,$name,$body,$ini){
+global $enviados,$msgstr;
 	$subject = $ini["SUBJECT"];
 // NOT SUGGESTED TO CHANGE THESE VALUES
 	$headers = 'From: ' . $ini[ "FROM" ] . PHP_EOL ;
@@ -93,9 +95,13 @@ $msgstr["mail_sent"]="Su solicitud ha sido enviada";
 
 $fp=file("correo.ini");
 
-foreach ($fp as $key=>$value){	$value=trim($value);
-	if ($value!=""){		$x=explode('=',$value);
-		$ini[$x[0]]=$x[1];	}}
+foreach ($fp as $key=>$value){
+	$value=trim($value);
+	if ($value!=""){
+		$x=explode('=',$value);
+		$ini[$x[0]]=$x[1];
+	}
+}
 $Expresion="";
 $icuenta=0;
 $desde=0;
@@ -116,7 +122,8 @@ foreach ($list as $value){
 }
 $mensaje="";
 echo "<hr style=\"border: 5px solid #cccccc;border-radius: 5px;\">";
-foreach ($seleccion as $base=>$value){	$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$base."_formatos.dat";
+foreach ($seleccion as $base=>$value){
+	$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$base."_formatos.dat";
     $fp=file($archivo);
     $primeravez="S";
     foreach ($fp as $ff){
@@ -155,7 +162,9 @@ if (!isset($ini["FROM"]) or trim($ini["FROM"])=="")
 
 if (isset($ini["TEST"])){
 	$to=$ini["TEST"];
-}else{	$to=$_REQUEST["email"];}
+}else{
+	$to=$_REQUEST["email"];
+}
 $name="Usuario Web";
 $body="Solicitud enviada por: <br>";
 $body.=$_REQUEST["email"]."<br>";
@@ -164,7 +173,9 @@ $body.="<p>"."Seleccionados:<br>".$mensaje;
 echo $body;
 if (isset($ini["PHPMAILER"]) and $ini["PHPMAILER"]=="phpmailer"){
 	SendMail($mail,$to,$name,$body,$ini);
-}else{	SendPhpMail($to,$name,$body,$ini);}
+}else{
+	SendPhpMail($to,$name,$body,$ini);
+}
 flush();
 
 echo "<form name=regresar action=buscar_integrada.php method=post>";

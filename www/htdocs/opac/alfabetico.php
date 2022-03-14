@@ -1,7 +1,7 @@
 <?php
 
 $path="../";
-include("config_opac.php");
+include("../central/config_opac.php");
 include("leer_bases.php");
 include("head.php");
 if (!isset($_REQUEST["prefijoindice"]) or $_REQUEST["prefijoindice"]=="") $_REQUEST["prefijoindice"]=$_REQUEST["prefijo"];

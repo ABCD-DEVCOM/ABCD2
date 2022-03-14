@@ -1,7 +1,7 @@
 <?php
 $mostrar_libre="N";
 $_REQUEST["submenu"]="N";
-include("config_opac.php");
+include("../central/config_opac.php");
 include("leer_bases.php");
 include("head.php");
 

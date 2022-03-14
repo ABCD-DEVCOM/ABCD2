@@ -1,5 +1,5 @@
 <?php
-include("config_opac.php");
+include("../central/config_opac.php");
 include("leer_bases.php");
 include("head.php");
 //echo "<div style=\"margin:0 auto;height:100%\">";

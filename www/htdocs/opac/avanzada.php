@@ -9,7 +9,7 @@ include("dibujarformabusqueda_st.php");
 // ------------------------------------------------------
 
 $path="../";
-include("config_opac.php");
+include("../central/config_opac.php");
 include("leer_bases.php");
 $indice_alfa="n";
 include("head.php");

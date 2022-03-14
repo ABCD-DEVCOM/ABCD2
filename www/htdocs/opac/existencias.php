@@ -1,6 +1,6 @@
 <?php
 
-include("config_opac.php");
+include("../central/config_opac.php");
 include("leer_bases.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>".urldecode($value)."<br>";
 $indice_alfa="n";

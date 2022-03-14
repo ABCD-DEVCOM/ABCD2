@@ -18,9 +18,10 @@ foreach ($fp as $value){
 	if ($config_php!="" and $abcd_scripts!="" and $url!="") break;
 	$value=trim($value);
 
+
 	if ($value!=""){
 
-		if (substr($value,0,7)=="include" and $config_php==""){
+		if (substr($value,0,8)=="include" and $config_php==""){
 			if ($config_php==""){
 				$ix=strpos($value,'"');
 				$config_php=substr($value,$ix+1);
@@ -28,14 +29,14 @@ foreach ($fp as $value){
 				$config_php=substr($config_php,0,$ix);
 				if (!file_exists($config_php)){
 					$dir= $_SERVER['PHP_SELF'];
-					$ix=strpos($dir,'/config/index.php');
+					$ix=strpos($dir,'/index.php');
 					$dir=substr($dir,0,$ix);
 					header('Content-Type: text/html; charset="utf-8">');
 					echo "<html>";
 					echo "<body>";
-					Encabezado();
+				
 					echo "<font color=red face=arial size=4>Error. Script not found <strong>config_php</strong> in <strong>ABCD central folder</strong>.<br><br>";
-					echo "Please check the <strong>include</strong> path in <strong><font color=black>$dir/php/config_opac.php</font></strong> ";
+					echo "Please check the <strong>include</strong> path in <strong><font color=black>central/config_opac.php</font></strong> ";
 					echo "(Actual include path: $config_php)<br><br>The <strong>include</strong> Must contain the full path to ABCD config.php script";
 					echo "<br><br><strong>See tutorial, item 5</strong>";
 					echo "<div id=\"help_01\" style=\"display:block;margin:auto;width:100%;xheight:150px; position:relative;border:1px solid black;\">

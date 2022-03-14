@@ -1,6 +1,6 @@
 <?php
 $mostrar_menu="N";
-include("config_opac.php");
+include("../central/config_opac.php");
 
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";//die;
 
@@ -8,11 +8,13 @@ include("leer_bases.php");
 
 $desde=1;
 $count="";
-function wxisLlamar($base,$query,$IsisScript){
+
+function wxisLlamar($base,$query,$IsisScript){
 global $db_path,$Wxis,$xWxis;
 	include("wxis_llamar.php");
 	return $contenido;
-}
+}
+
 if (isset($_REQUEST["sendto"]) and trim($_REQUEST["sendto"])!="")
 	$_REQUEST["cookie"]=$_REQUEST["sendto"] ;
 $list=explode("|",$_REQUEST["cookie"]);
@@ -49,8 +51,10 @@ foreach ($seleccion as $base=>$value){
 	//echo $query;//die;
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/export_txt.xis");
 
-	foreach($resultado as $value)  {		$value=trim($value);
-		echo str_replace('&','&amp;',$value."\n");	}
+	foreach($resultado as $value)  {
+		$value=trim($value);
+		echo str_replace('&','&amp;',$value."\n");
+	}
 	//echo "</record>\n";
 }
 

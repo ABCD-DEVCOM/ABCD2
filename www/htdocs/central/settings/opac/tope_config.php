@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION["permiso"])){
-	header("Location: ../common/error_page.php") ;
+	header("Location: ../../common/error_page.php") ;
 }
 
 include("../../config_opac.php");
@@ -16,10 +16,14 @@ IF (!isset($_SESSION["db_path"])){
 	$_SESSION["db_path"]=$_REQUEST["db_path"];
 }
 $db_path=$_SESSION["db_path"];
+
+
 ?>
 <script>
 actualScript="<?php echo $actualScript?>"
 </script>
+
+
 
 <?php
 
@@ -27,9 +31,9 @@ include("../../common/header.php");
 
 ?>
 
-	<script src= ../../../opac/js/script_b.js?<?php echo time(); ?>></script>
+	<script src= ../../../opac/assets/js/script_b.js?<?php echo time(); ?>></script>
 
-	<script src= ../../../opac/js/lr_trim.js></script>
+	<script src= ../../../opac/assets/js/lr_trim.js></script>
 	<style>
 		td{
 			font-size:12px;

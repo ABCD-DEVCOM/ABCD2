@@ -1,17 +1,19 @@
 <?php
 $mostrar_menu="N";
-include("config_opac.php");
+include("../central/config_opac.php");
 //header('Content-Type: text/html; charset=".$charset."');
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";//DIE;
 include("leer_bases.php");
 
 $desde=1;
 $count="";
-function wxisLlamar($base,$query,$IsisScript){
+
+function wxisLlamar($base,$query,$IsisScript){
 	global $db_path,$Wxis,$xWxis;
 	include("wxis_llamar.php");
 	return $contenido;
-}
+}
+
 if (isset($_REQUEST["sendto"]) and trim($_REQUEST["sendto"])!="")
 	$_REQUEST["cookie"]=$_REQUEST["sendto"] ;
 $list=explode("|",$_REQUEST["cookie"]);
@@ -47,7 +49,8 @@ foreach ($seleccion as $base=>$value){
 	echo "<hr style=\"border: 5px solid #cccccc;border-radius: 5px;\">";
 	echo "<h3>".$bd_list[$base]["descripcion"]." ($base)</h3><br><br>";
 	$lista_mfn="";
-	foreach ($value as $mfn){		if ($lista_mfn=="")
+	foreach ($value as $mfn){
+		if ($lista_mfn=="")
 			$lista_mfn="'$mfn'";
 		else
 			$lista_mfn.="/,'$mfn'";
@@ -73,9 +76,11 @@ foreach ($seleccion as $base=>$value){
 	$query = "&base=".$base."&cipar=$db_path"."par/$base".".par&Mfn=$lista_mfn&Formato=@$fconsolidado.pft&lang=".$_REQUEST["lang"];
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/imprime_sel.xis");
 
-	foreach($resultado as $salida)  {		$salida=trim($salida);
+	foreach($resultado as $salida)  {
+		$salida=trim($salida);
 		if (substr($salida,0,8)=="[TOTAL:]") continue;
-		echo $salida;	}
+		echo $salida;
+	}
 	echo "<br><br>";
 
 }

@@ -5,8 +5,12 @@
 //session_start();
 error_reporting(E_ALL);
 //CHANGE THIS ////
-include ("../../config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
+include ("config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
+if (!isset($_REQUEST["lang"]))
+	$_REQUEST["lang"]=$lang;
+else
+	$lang=$_REQUEST["lang"];
 
 if (isset($_SESSION["db_path"]))
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
@@ -21,12 +25,13 @@ include "lang/admin.php";
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
 $CentralHttp=$server_url;
+$Web_Dir=$ABCD_scripts_path."opac/";
 $NovedadesDir="";
 
 $showhide="Y";
 $galeria="NO";
 $styles="";
-$logo="../images/circulos.png";
+$logo="assets/images/circulos.png";
 $link_logo="http://opac.abcdonline.info";
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
@@ -63,10 +68,12 @@ if (file_exists($db_path."/opac_conf/opac.def")){
 					if (trim($v[1])!="")
 						$styles=$v[1];
 					break;
+/*
 				case "Web_Dir":
 					if (trim($v[1])!="")
 						$Web_Dir=$v[1];
 					break;
+*/
 				case "ONLINESTATMENT":
 					if (trim($v[1])!="")
 						$ONLINESTATMENT=$v[1];

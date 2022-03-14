@@ -1,5 +1,6 @@
 <?php
 include ("tope_config.php");
+
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n#Par.C3.A1metros_globales";
 include "../../common/inc_div-helper.php";
 
@@ -51,9 +52,10 @@ if (file_exists($db_path."opac_conf/opac.def")){
 		if (trim($value)!=""){
 			$a=explode('=',$value);
 			switch ($a[0]){
-				case "Web_Dir":
+			/*	case "Web_Dir":
 					$Web_Dir=trim($a[1]);
 					break;
+			*/
 				case "OpacHttp":
 					$OpacHttp=trim($a[1]);
 					break;
@@ -114,13 +116,16 @@ if (file_exists($db_path."opac_conf/opac.def")){
 if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }
-
+/*
 if (!isset($Web_Dir) or $Web_Dir==""){
 	$Web_Dir=getcwd();
 	$Web_Dir=str_replace('\\','/',$Web_Dir);
 	$ix=strrpos($Web_Dir,'/');
 	$Web_Dir=substr($Web_Dir,0,$ix+1);
-}
+}*/
+
+
+
 if (!isset($OpacHttp)){
 	$OpacHttp=$_SERVER["HTTP_ORIGIN"].str_replace("config/parametros.php","",$_SERVER['REQUEST_URI']);
 }
