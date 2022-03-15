@@ -1,17 +1,20 @@
-#|Sem ilustrações
+####|Sem ilustrações
 a|Ilustrações
 b|Mapas
 c|Retratos
 d|Gráficos
 e|Plantas/modelos
-f|Placas
+f|Estampas
 g|Música (partitura)
 h|Fac-símiles
 i|Escudos/Brasões
-j|Tabelas Genealógicas
+j|Árvore genealógica
 k|Formulários
-l|Amostras, estatísticas
-m|Vitrola, material fonético, etc.
+l|Amostras, tabelas estatísticas
+m|Gravações
 o|Fotografias
-p|Iluminações
- |Não se tentou codificar
+p|Transparências
+#|(Um vazio)
+##|(Dois vazios)
+###|(Três vazios)
+----|Não se tentou codificar
