@@ -1,9 +1,14 @@
-245:if a(v245) then '<b><font size=3 color=red>O campo 245 - Título principal - está faltando</font></b>' fi$$|$$true
+100:if p(v100) and s(v110, v111, v130)<>'' then 'Preencha apenas um autor como Entrada principal (1xx)' fi,$$|$$true
 ###
-100:if a(v100) and a(v110) and a(v111) then '<b><font size=3 color=red>Falta Entrada principal: campo 100, 110, 111 ou 130</font></b>' fi
-$$|$$false
+110:if p(v110) and s(v100, v111, v130)<>'' then 'Preencha apenas um autor como Entrada principal (1xx)' fi,$$|$$true
 ###
-8:if ss(1,6,v8)='aammdd' then '<b><font size=3 color=red>A data no campo fixo (008)=aammdd, alterar para a data de hoje no formato indicado</font></b>' fi$$|$$true
+111:if p(v111) and s(v100, v110, v130)<>'' then 'Preencha apenas um autor como Entrada principal (1xx)' fi,$$|$$true
+###
+130:if p(v130) and s(v100, v110, v111)<>'' then 'Preencha apenas um autor como Entrada principal (1xx)' fi,$$|$$true
+###
+245:if v245*0.1='0' and s(v100, v110, v111, v130)<>'' then 'Se h&aacute; Entrada principal (1xx) o indicador 1 do campo 245 deve ser 1.' fi,$$|$$true
+###
+773:if v3007='a' or v3007='b' and a(v773) then 'Preencher tamb&eacute;m o campo 773 - Entrada anal&iacute;tica' fi,$$|$$true
 ###
 :
 ###

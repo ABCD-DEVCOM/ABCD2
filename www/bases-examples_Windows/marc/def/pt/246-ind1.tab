@@ -1,4 +1,4 @@
-0|Nota, não é antrada secundária 
-1|Nota, é entrada secundária 
-2|Sem nota, não é entrada secundária 
-3|Sem nota, é entrada secundária
+0|Incluir nota, não gerar entrada secundária de título
+1|Incluir nota e entrada secundária de título
+2|Não incluir nota nem entrada secundária de título
+3|Não incluir nota, gerar entrada secundária de título

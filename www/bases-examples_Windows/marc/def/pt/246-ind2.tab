@@ -1,10 +1,10 @@
-#|Tipo não especificado
+#|Não há informação
 0|Parte do título
 1|Título paralelo
-2|Título distinto
+2|Título especial
 3|Outro título
-4|Título da capa
-5|Título da página de rosto adicional
-6|Título de partida
+4|Título de capa
+5|Título secundário na página de rosto
+6|Título explicativo
 7|Título corrente
-8|Título da lombada
+8|Título de lombada

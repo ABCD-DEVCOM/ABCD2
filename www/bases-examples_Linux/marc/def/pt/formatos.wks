@@ -1,9 +1,15 @@
-BK_a_LI|Material textual (Livro)|
-BK_a_TE|Tese/Dissertação|
-VM_g_MP|Material projetável|
-CF_m_AC|Recurso eletrônico (Arquivo de computador)|
-MP_e_MC|Material Cartográfico|
-SE_s_PE|Recurso contínuo (Periódico)|
-SE_s_AP|Recurso contínuo (Artigo de periódico)|
-VM_o_KI|Kit - Dois ou mais tipos publicados juntos)|
-VM_p_MM|Material misto - Varios tipos|
+BK_a_NL|Material textual
+VM_g_NL|Material projetável
+VM_k_NL|Material não projetável bidimensional
+VM_o_NL|Kit (dois ou mais tipos)
+MX_p_NL|Material misto
+VM_r_NL|Objeto tridimensional
+AM_t_NL|Material textual manuscrito
+CF_m_NL|Arquivo de Computador
+MP_e_NL|Material cartográfico
+MP_f_NL|Material cartográfico manuscrito
+MU_c_NL|Música impressa
+MU_d_NL|Música manuscrita
+MU_i_NL|Gravação de som não musical
+MU_j_NL|Gravação de som musical
+todos|Todos os campos
