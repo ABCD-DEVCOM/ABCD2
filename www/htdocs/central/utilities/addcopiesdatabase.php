@@ -326,7 +326,13 @@ win=window.open(mypage,myname,settings);}
 <?php
 $mx_max_mfn="$mx_path $db_path$base_ant/data/$base_ant count=1 " . ' "pft=f(maxmfn-1,0,0)"';
 exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
-$total  = $outmx_max_mfn[0];
+
+if (isset($outmx_max_mfn[0])) {
+  $total = $outmx_max_mfn[0];
+} else {
+  $total="<p class='color-red'>Error: Verify variable \$cgibin_path in config.php</p>";
+}
+
 echo '<script language="javascript">
    document.form1.to.value="'.$total.'";
    </script>';
