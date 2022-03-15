@@ -148,7 +148,7 @@ if (!isset($shortIcon))$shortIcon="";
     <table cellpading=5>
     	<tr>
     		<td><?php echo $msgstr["Web_Dir"];?></td>
-    		<td valign=top><input type=text name=conf_Web_Dir size=100 value="<?php echo $Web_Dir?>"></td>
+    		<td valign=top><input disabled type=text name=conf_Web_Dir size=100 value="<?php echo $Web_Dir?>"></td>
     	</tr>
     	<tr>
     		<td><?php echo $msgstr["OpacHttp"];?></td>
