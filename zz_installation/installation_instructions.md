@@ -55,11 +55,42 @@ Good to know:
 - Integrated solutions offer multiple functions. ABCD requires only the web server and PHP
 - The firewall requires attention for the ABCD ports
 
+### Check the web server and PHP
+Ensure that the webserver and PHP are installed correctly and that PHP has the required extensions
+
+### Download ABCD
+The code for ABCD contains example configuration files for the webserver.
+
+All code for ABCD is located in [GitHub ABCD-DEVCOM / ABCD2](https://github.com/ABCD-DEVCOM/ABCD2)  
+This repository contains shared code for Linux AND Windows and data specific for Linux OR Windows.
+The downloads contains all components.  
+
+1. Select option **Releases** on the right side of the window
+2. Scroll to the desired release and select **Assets**
+3. Select Source code (zip) or Source code (tar.gz)
+        
+### Unpack downloaded archive
+Use your favorite utility (zip/7zip/tar/...) to unpack the downloaded file. The folder structure
+will be:
+```
+<Release_name> --+-- empweb
+                 +-- www ----------+-- bases-examples_Linux
+                                   +-- bases-examples_Windows
+                                   +-- cgi-bin_Linux
+                                   +-- cgi-bin_Windows
+                                   +-- extra
+                                   +-- htdoc
+                 +-- zz_installation
+                 +-- zz_miscellaneous
+
+```
+
 ### Virtual host file
 The webserver serves an ABCD installation with a virtual configuration. With this technique multiple, completely different installations are possible.
 
 The example virtual host configuration files for [Linux](vhost_ABCD_9090_Linux.conf) and [Windows](vhost_ABCD_9090_Windows.conf)
 contain the values for a default ABCD installation.
+- These example files are located in ```<Release_name> --+-- zz_installation```
 - These files are example files. MUST be examined and updated to serve your needs and match the actual webserver.
 - The virtual host file determines the protocol, port and server name for the ABCD installation.
   - The port number is picked up by the ABCD installation
@@ -93,39 +124,24 @@ Example locations:
 
 # Install ABCD
 
-### Download
-All code for ABCD is located in [GitHub ABCD-DEVCOM / ABCD2](https://github.com/ABCD-DEVCOM/ABCD2)  
-This repository contains shared code for Linux AND Windows and data specific for Linux OR Windows.
-The downloads contains all components.  
-
-1. Select option **Releases** on the right side of the window
-2. Scroll to the desired release and select **Assets**
-3. Select Source code (zip) or Source code (tar.gz)
-        
-### Unpack downloaded archive
-Use your favorite utility (zip/7zip/tar/...) to unpack the downloaded file. The folder structure
-will be:
+### Preprocess the downloaded folders
+The ABCD code is downloaded in the preparation phase.
+Note the different actions for Windows and Linux platforms. 
 ```
-<Release_name> --+-- .development
-                 +-- .installation
-                 +-- empweb
-                 +-- www ----------+-- bases-examples_Linux
-                                   +-- bases-examples_Windows
-                                   +-- cgi-bin_Linux
-                                   +-- cgi-bin_Windows
-                                   +-- extra
-                                   +-- htdocs
-```
-Process the downloaded folders
-```
-.development           # Only used by developers: Delete
-.installation          # Contains this file and related files: Delete
 empweb                 # Contains the advanced loans module: Delete
 bases-examples_Linux   # Linux users:   Rename to "bases".   Windows users: Delete
 bases-examples_Windows # Windows users: Rename to "bases".   Linux users:   Delete
 cgi-bin_Linux          # Linux users:   Rename to "cgi-bin". Windows users: Delete
 cgi-bin_Windows        # Windows users: Rename to "cgi-bin". Linux users:   Delete
 extra                  # Contains c-source code: Delete
+htdocs                 # Contains ABCD
+zz_installation        # Contains this file, the "virtual host example files", and related files: Delete after installation
+zz_miscellaneous       # Only used by developers: Delete
+```
+The resulting set is:
+```
+bases                  # Folder with example databases
+cgi-bin                # Folder with executable programs
 htdocs                 # Contains ABCD
 ```
 
