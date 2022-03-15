@@ -26,6 +26,5 @@ deny from all
 satisfy all
 </files>
 
-php_value max_input_vars 2000
 
 # END ABCD
