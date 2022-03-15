@@ -986,8 +986,18 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){         //para ver si tiene activado el módulo de reservas se lee desde el abcd.def
 	        					$reservado=LocalizarReservas($control_number,$catalog_db,$arrHttp["usuario"],$items_prestados,$prefix_cn,$from_copies,$pft_ni);
 	        					//echo "<pre>";print_r($reservado); die;
-	        					$mfn_reserva=$reservado[1];
-	        					if (isset($reservado[3])) $tr=$reservado[3];
+	        					if (isset($reservado[1])) {
+	        						$mfn_reserva=$reservado[1];
+	        					} else {
+	        						$mfn_reserva="";
+	        					}
+
+	        					if (isset($reservado[3])){ 
+									$tr=$reservado[3];
+								} else {
+									$tr="";
+								}
+
 	        					if(isset($reservado[2]))
 	        						$codusuario_reserva=$reservado[2];
 	        					else
@@ -999,7 +1009,13 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        					$tr=1;
 	        				}
 	        				if (!isset($total_politica[$tipo_obj])) $total_politica[$tipo_obj]=0;
-	        				if ($reservado[0]=="continuar"){
+
+	        				if (isset($reservado[0])) {
+	        					$reservado_0=$reservado[0];
+	        				} else {
+	        					$reservado_0="";
+	        				}
+	        				if ($reservado_0=="continuar"){
 	        					//echo  "<p>np:".$np. " total_prestamos_usuario: $tprestamos_p total_prestamos_politica: ". $total_prestamos_politica ."  total_politica[$tipo_obj]: ". $total_politica[$tipo_obj]."<br>";
 	        					if ($np<$tprestamos_p and $total_politica[$tipo_obj]< $total_prestamos_politica ){
 	        						$total_politica[$tipo_obj]=$total_politica[$tipo_obj]+1;
