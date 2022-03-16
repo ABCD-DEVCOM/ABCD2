@@ -1,9 +1,9 @@
-currency=bs
-fine=2
+currency="BRL"
+fine=2.00
 [1]
 from=8:00
 f_ampm=am
-to=10:00
+to=10:10
 t_ampm=pm
 [2]
 from=8:00
@@ -13,7 +13,7 @@ t_ampm=pm
 [3]
 from=8:00
 f_ampm=am
-to=8:00
+to=10:00
 t_ampm=pm
 [4]
 from=8:00
@@ -26,8 +26,8 @@ f_ampm=am
 to=10:00
 t_ampm=pm
 [6]
-from=8:00
+from=08:00
 f_ampm=am
-to=12:00
-t_ampm=am
+to=10:00
+t_ampm=pm
 [0]
