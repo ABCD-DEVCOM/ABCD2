@@ -19,4 +19,6 @@ reserve|Circ - Reservations
 suspml|Circ - Suspensions and fines
 trans|Circ - Transactions Loans
 acces|Sys - Administration Users/Operators (acces) 
-unicode|Sys - UNICODE
+servers|Servers z3950
+stock|Stock
+unicode|UNICODE
