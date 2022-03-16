@@ -1,6 +1,7 @@
 <?php
 /*
 20220313 fho4abcd Rewritten. Can run in normal window now, update of the file in this script
+20220316 fho4abcd Only one update
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -39,7 +40,7 @@ include("../common/institutional_info.php");
         include "../common/inc_back.php";
 		include "../common/inc_home.php";
         $savescript="javascript:Enviar()";
-        include "../common/inc_save.php";
+        if ($confirmcount==0) include "../common/inc_save.php";
         ?>
     </div>
     <div class="spacer">&#160;</div>
@@ -47,42 +48,45 @@ include("../common/institutional_info.php");
 <div class="middle form">
 <div class="formContent">
 <?php
-// Write the file if this was a "next" run
-if ($confirmcount>0 ) {
+if ( $confirmcount==0 ) {
+    $confirmcount++;
+    // Show and edit the filecontent
+    if (file_exists($db_path.$archivo))
+        $fp=file($db_path.$archivo);
+    else
+        $fp=array();
+    ?>
+    <form name=update method=post >
+    <input type=hidden name=confirmcount value=<?php echo $confirmcount?>>
+    <input type=hidden name=archivo value='<?php echo $arrHttp["archivo"];?>'>
+    <input type=hidden name=base value="<?php echo $base;?>">
+    <input type=hidden name=backtoscript value="<?php echo $backtoscript;?>">
+<textarea name=txt rows=20 cols=100 style="font-family:courier">
+<?php
+//left adjusted code to ensure leftadjusted text content
+foreach ($fp as $value) echo $value;
+?>
+</textarea>
+    <br>
+    <a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
+    <a class="bt bt-gray" href="<?php echo $backtoscript;?>"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
+
+    </form>
+    <?php
+} else if ($confirmcount>0 ) {
+    // Write the file if this was a "next" run
     $arrHttp["txt"]=stripslashes($arrHttp["txt"]);
     $arrHttp["txt"]=str_replace("\"",'"',$arrHttp["txt"]);
+    $arrHttp["txt"]=str_replace(PHP_EOL.PHP_EOL,PHP_EOL,$arrHttp["txt"]);
     $archivo=$arrHttp["archivo"];
     $fp=fopen($db_path.$archivo,"w");
     fputs($fp,$arrHttp["txt"]);
     fclose($fp);
-    echo "<h4>";
-    if ($confirmcount%2==0) echo "&rarr; &nbsp; &nbsp; ";
+    echo "<h4 style='text-align:center'>";
     echo $archivo." ".$msgstr["updated"];
-    if ($confirmcount%2==1) echo " &nbsp; &nbsp; &larr;";
     echo "</h4>";
 }
-$confirmcount++;
-// Show and edit the filecontent
-if (file_exists($db_path.$archivo))
-	$fp=file($db_path.$archivo);
-else
-	$fp=array();
 ?>
-<form name=update method=post >
-<input type=hidden name=confirmcount value=<?php echo $confirmcount?>>
-<input type=hidden name=archivo value='<?php echo $arrHttp["archivo"];?>'>
-<input type=hidden name=base value="<?php echo $base;?>">
-<input type=hidden name=backtoscript value="<?php echo $backtoscript;?>">
-<textarea name=txt rows=20 cols=100 style="font-family:courier">
-<?php
-foreach ($fp as $value) echo $value;
-?>
-</textarea>
-<br>
-<a class="bt bt-green" href="javascript:Enviar()" ><i class="far fa-save"></i> <?php echo $msgstr["actualizar"]?></a>
-<a class="bt bt-gray" href="<?php echo $backtoscript;?>"><i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["cancel"]?></a>
-
-</form>
 </div></div>
 <?php
 include("../common/footer.php");
