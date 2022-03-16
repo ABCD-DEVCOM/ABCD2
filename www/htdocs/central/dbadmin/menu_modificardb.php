@@ -5,6 +5,7 @@
 20220202 fho4abcd improved text strings, more translations
 20220209 fho4abcd Preserve base
 20220214 fho4abcd Marc menu items only for MARC
+20220317 fho4abcd Layout, remove superfluous permission check, add barcode configuration
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -32,14 +33,11 @@ if (isset($arrHttp["base"])) {
 	$selbase="";
 }
 
-
-
 if (strpos($selbase,"|")===false){
 
 } else{
 		$ix=explode('|',$selbase);
 		$selbase=$ix[0];
-
 }
 $base=$selbase;
 $arrHttp["base"]=$base;
@@ -51,8 +49,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 	die;
 }
 
-
-
 // ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
 include("../common/header.php");
 
@@ -60,7 +56,7 @@ include("../common/header.php");
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
-<script languaje=javascript>
+<script language='javascript'>
 
 function Update(Option){
 	if (document.update_base.base.value==""){
@@ -68,26 +64,20 @@ function Update(Option){
 		return
 	}
 	switch (Option){
-		case "tes_config":
-			document.update_base.action="tes_config.php"
-			break
 		case "fdt":
 			document.getElementById('loading').style.display='block';
 			document.update_base.action="fdt.php"
 			document.update_base.type.value="bd"
-			<?php if (isset($arrHttp["encabezado"])) echo "document.update_base.encabezado.value=\"s\"\n"?>
 			break;
 		case "leader":
 			document.getElementById('loading').style.display='block';
 			document.update_base.action="fdt.php"
 			document.update_base.type.value="leader.fdt"
-			<?php if (isset($arrHttp["encabezado"])) echo "document.update_base.encabezado.value=\"s\"\n"?>
 			break;
 		case "fdt_new":
 			document.getElementById('loading').style.display='block';
 			document.update_base.action="fdt_short_a.php"
 			document.update_base.type.value="bd"
-			<?php if (isset($arrHttp["encabezado"])) echo "document.update_base.encabezado.value=\"s\"\n"?>
 			break;
 		case "fst":
 			document.getElementById('loading').style.display='block';
@@ -132,7 +122,6 @@ function Update(Option){
 		case "par":
 			document.update_base.action="editpar.php"
 			break;
-					break;
 		case "dr_path":
 			document.update_base.Opcion.value="dr_path"
 			document.update_base.action="../settings/editar_abcd_def.php"
@@ -166,13 +155,19 @@ function Update(Option){
         case "chk_dbdef":
         	document.update_base.action="chk_dbdef.php"
         	break
+        case "labeltab":
+        	document.update_base.action="../barcode/bcl_labeltab.php"
+        	break
+        case "labelconfig":
+        	document.update_base.action="../barcode/bcl_labelconfig.php"
+        	break
 	}
 	document.update_base.submit()
 }
 
 </script>
 <div id="loading">
-  <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
+  <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." >
 </div>
 <?php
 // ENCABEZAMIENTO DE LA PÁGINA
@@ -180,9 +175,6 @@ if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
-
-
-
 ?>
 <div class="sectionInfo">
     <div class="breadcrumb"><?php echo $msgstr["updbdef"]. ": " . $selbase?>
@@ -193,6 +185,7 @@ if (isset($arrHttp["encabezado"])) {
     <div class="spacer">&#160;</div>
 </div>
 <?php
+include "../common/inc_div-helper.php";
 
 $dir_fdt=$db_path.$selbase."/def/".$lang."/";
 $ldr="";
@@ -216,95 +209,98 @@ if (is_dir($dir_fdt)) {
         }
     }
 }
-
-// AYUDA EN CONTEXTO E IDENTIFICACIÓN DEL SCRIPT QUE SE ESTÁ EJECUTANDO
-// OPCIONES DEL MENU
-    include "../common/inc_div-helper.php";
 ?>
 <div class="middle form">
 <div class="formContent">
-<table width=400 align=center>
-	<tr>
-		<td>
-			<form name=update_base onSubmit="return false" method=post>
-			<input type=hidden name=Opcion value=update>
-			<input type=hidden name=type value="">
-			<input type=hidden name=modulo>
-			<input type=hidden name=format>
-			<input type=hidden name=base value=<?php echo $selbase;?>>
-			<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
-   
-            <h3><?php echo $msgstr["dbadmin_FDT_FMT"]?> (FDT / FMT)</h3>
-            <ul>
-				<li><a href='javascript:Update("fdt")'><?php echo $msgstr["fdt"]?></a></li>
-				<li><a href='javascript:Update("fdt_new")'><?php echo $msgstr["fdt"]. " (".$msgstr["wosubfields"].")"?></a></li>
-			<?php
-// SI ES UN REGISTRO MARC SE INCLUYE LA OPCION PARA MANEJO DE LOS TIPOS DE REGISTRO DE ACUERDO AL LEADER
+<form name=update_base onSubmit="return false" method=post>
+<input type=hidden name=Opcion value=update>
+<input type=hidden name=type value="">
+<input type=hidden name=modulo>
+<input type=hidden name=format>
+<input type=hidden name=base value=<?php echo $selbase;?>>
+<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
 
-			if ($ldr=="s" ){
-                ?>
-				<li><a href=javascript:Update("leader")><?php echo $msgstr["ft_ldr"]?></a></li>
-				<li><a href=javascript:Update("fixedmarc")><?php echo "MARC-".$msgstr["typeofrecord_ff"]?></a></li>
-				<li><a href=javascript:Update("fixedfield")><?php echo "MARC-".$msgstr["typeofrecord_aw"]?></a></li>
-                <?php
-			}
-			?>
-			<li><a href=javascript:Update("fmt_adm")><?php echo $msgstr["fmt"]?></a></li>
-			<?php
-			if (!isset($ldr) or $ldr!="s" )
-// SI NO ES UN REGISTRO MARC SE INCLUYE EL MANEJO DE LOS TIPOS DE REGISTRO NO MARC
-			    echo "<li><a href=javascript:Update(\"typeofrecs\")>".$msgstr["typeofrecord_aw"]."</a></li>";
-			?>			
-
-			</ul>			
-
-			<h3><?php echo $msgstr["dbadmin_INDEX"]?>  (FST)</h3>
-			<ul>
-				<li><a href=javascript:Update("fst")><?php echo $msgstr["fst"]?></a></li>
-			</ul>
-			
-
-			<h3><?php echo $msgstr["dbadmin_FORMAT"]?>  (PFT)</h3>
-			<ul>
-				<li><a href=javascript:Update("pft")><?php echo $msgstr["pft"]?></a></li>
-			</ul>
-
-
-			<h3><?php echo $msgstr["dbadmin_VALID"]?>  (VAL)</h3>
-			<ul>
-				<li><a href=javascript:Update("recval")><?php echo $msgstr["recval"]?></a></li>
-				<li><a href=javascript:Update("delval")><?php echo $msgstr["delval"]?></a></li>
-			</ul>
-
-			<h3><?php echo $msgstr["dbadmin_INTERNALSEARCH"]?></h3>
-			<ul>
-				<li><a href=javascript:Update("search_catalog")><?php echo $msgstr["advsearch"].": ".$msgstr["catalogacion"]?></a></li>
-				<li><a href=javascript:Update("search_circula")><?php echo $msgstr["advsearch"].": ".$msgstr["prestamo"]?></a></li>
-            </ul>	
-
-            <h3><?php echo $msgstr["dbadmin_EDIT_HELPS"]?></h3>
-            <ul>
-            	<li><a href=javascript:Update("help")><?php echo $msgstr["helpdatabasefields"]?></a></li>
-            	<li><a href=javascript:Update("tooltips")><?php echo $msgstr["database_tooltips"]?></a></li>
-            </ul>
-            
-            <h3><?php echo $msgstr["dbadmin_ADVANCED"]?></h3>
-            <ul>	
-            	<li><a href=javascript:Update("IAH")><?php echo $msgstr["iah-conf"]?></a></li>
-            	<li><a href=javascript:Update("tes_config")><?php echo $msgstr["tes_config"]?></a></li>
-            <?php if ($_SESSION["profile"]=="adm"){?>
-            	<li><a href=javascript:Update("chk_dbdef")><?php echo $msgstr["chk_dbdef"]?></a></li>
-				<li><a href=javascript:Update("dr_path")><?php echo $msgstr["dr_path.def"]?></a></li>
-			<?php } ?>
-			</ul>
-
-			<ul>
-				<li><a href=javascript:Update("par")><?php echo $msgstr["dbnpar"]?></a></li>
-            </ul>
-			</form>
-		</td>
+<table align=center class="striped">
+<tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_FDT_FMT"]?> (FDT / FMT)</h5>
+    </td><td>
+        <a href='javascript:Update("fdt")'><?php echo $msgstr["fdt"]?></a><br>
+        <a href='javascript:Update("fdt_new")'><?php echo $msgstr["fdt"]. " (".$msgstr["wosubfields"].")"?></a><br>
+        <?php
+        // SI ES UN REGISTRO MARC SE INCLUYE LA OPCION PARA MANEJO DE LOS TIPOS DE REGISTRO DE ACUERDO AL LEADER
+        if ($ldr=="s" ){
+            ?>
+            <a href='javascript:Update("leader")'><?php echo $msgstr["ft_ldr"]?></a><br>
+            <a href='javascript:Update("fixedmarc")'><?php echo "MARC-".$msgstr["typeofrecord_ff"]?></a><br>
+            <a href='javascript:Update("fixedfield")'><?php echo "MARC-".$msgstr["typeofrecord_aw"]?></a><br>
+            <?php
+        }
+        ?>
+        <a href='javascript:Update("fmt_adm")'><?php echo $msgstr["fmt"]?></a><br>
+        <?php
+        if (!isset($ldr) or $ldr!="s" ) {
+            // SI NO ES UN REGISTRO MARC SE INCLUYE EL MANEJO DE LOS TIPOS DE REGISTRO NO MARC
+            ?>
+            <a href='javascript:Update("typeofrecs")'><?php echo $msgstr["typeofrecord_aw"];?></a><br>
+            <?php
+        }
+        ?>			
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_INDEX"]?>  (FST)</h5>
+    </td><td>
+        <a href='javascript:Update("fst")'><?php echo $msgstr["fst"]?></a>
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_FORMAT"]?>  (PFT)</h5>
+    </td><td>
+        <a href='javascript:Update("pft")'><?php echo $msgstr["pft"]?></a>
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_VALID"]?>  (VAL)</h5>
+    </td><td>
+        <a href='javascript:Update("recval")'><?php echo $msgstr["recval"]?></a><br>
+        <a href='javascript:Update("delval")'><?php echo $msgstr["delval"]?></a>
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_INTERNALSEARCH"]?></h5>
+    </td><td>
+        <a href='javascript:Update("search_catalog")'><?php echo $msgstr["advsearch"].": ".$msgstr["catalogacion"]?></a><br>
+        <a href='javascript:Update("search_circula")'><?php echo $msgstr["advsearch"].": ".$msgstr["prestamo"]?></a>
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_EDIT_HELPS"]?></h5>
+    </td><td>
+        <a href='javascript:Update("help")'><?php echo $msgstr["helpdatabasefields"]?></a><br>
+        <a href='javascript:Update("tooltips")'><?php echo $msgstr["database_tooltips"]?></a>
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_BARCOLABEL"]?></h5>
+    </td><td>
+        <a href='javascript:Update("labeltab")'><?php echo $msgstr["barcode_table"]?></a><br>
+        <a href='javascript:Update("labelconfig")'><?php echo $msgstr["barcode_config"]?></a>
+    </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["dbadmin_ADVANCED"]?></h5>
+    </td><td>
+        <a href='javascript:Update("IAH")'><?php echo $msgstr["iah-conf"]?></a><br>
+        <a href='javascript:Update("tes_config")'><?php echo $msgstr["tes_config"]?></a><br>
+        <a href='javascript:Update("chk_dbdef")'><?php echo $msgstr["chk_dbdef"]?></a><br>
+        <a href='javascript:Update("dr_path")'><?php echo $msgstr["dr_path.def"]?></a><br>
+        <a href='javascript:Update("par")'><?php echo $msgstr["dbnpar"]?></a>
+    </td>
+</tr>
 </table>
-<br>
+</form>
+
 </div>
 </div>
 <?php

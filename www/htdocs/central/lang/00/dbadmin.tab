@@ -509,6 +509,7 @@ dbadmin_VALID=Record Validation
 dbadmin_INTERNALSEARCH=Internal search forms
 dbadmin_EDIT_HELPS=Editing the help files
 dbadmin_ADVANCED=Advanced settings
+dbadmin_BARCOLABEL=Label & Barcode
 dr_path.def=Advanced database settings (dr_path.def)
 sfcounterr=subfield count does not match
 sfgroup=Subfield entries must be preceeded with a Group entry
