@@ -1,5 +1,5 @@
-currency=bs
-fine=2
+currency="EUR"
+fine=1.00
 [1]
 from=8:00
 f_ampm=am

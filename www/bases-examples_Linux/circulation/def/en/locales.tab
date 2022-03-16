@@ -1,5 +1,5 @@
-currency=USh
-fine=500
+currency="USD"
+fine=2.00
 [1]
 from=8:00
 f_ampm=am
