@@ -2,6 +2,7 @@
 /*
 20211-04 fho4abcd Replace vmx_fullinv.php by fullinv.php.
 20211223 fho4abcd Backbutton &helper by included file + improve html
+20220316 fho4abcd Removed stock menu items.
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -71,18 +72,6 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"])or isset($_SESSION["permiso"]["CEN
 	<li><a href='barcode.php?base=<?php echo $arrHttp["base"]."&tipo=barcode"?>'><?php echo $msgstr["barcode"];?></a></li>
 	<li><a href='barcode.php?base=<?php echo $arrHttp["base"]."&tipo=lomos"?>'> <?php echo $msgstr["barcode_lomos"]?></a></li>
 	<li><a href='barcode.php?base=<?php echo $arrHttp["base"]."&tipo=etiquetas"?>'> <?php echo $msgstr["barcode_etiquetas"]?></a></li>
-	</ul>
-<?php }
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"])or isset($_SESSION["permiso"]["CENTRAL_INVENTORY"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_INVENTORY"])){
-?>
-	<h3><?php echo $msgstr["inventory"]?></h3>
-	<ul style="font-size:12px;line-height:18px">
-	<li><a href="javascript:EnviarFormaInventario('inventory_dbinit.php','','','')"><?php echo $msgstr["inventory_dbinit"]?></a></li>
-	<li><a href="javascript:EnviarFormaInventario('inventory_dbload.php','inicio','','')"><?php echo $msgstr["inventory_dbload"]?></a></li>
-	<li><a href="javascript:EnviarFormaInventario('../utilities/fullinv.php','','abcd_inventory','../barcode/menu.php')"><?php echo $msgstr["inventory_fullinv"]?></a></li>
-	<li><a href="javascript:EnviarFormaInventario('inventory_transload.php','inicio','','')"><?php echo $msgstr["inventory_transload"]?></a></li>
-	<li><a href="javascript:EnviarFormaInventario('inventory_itemsload.php','subir','','')"><?php echo $msgstr["inventory_itemsload"]?></a></li>
-	<!--li><a href=inventory_report.php?base=<?php echo $arrHttp["base"].">".$msgstr["inventory_report"]."</a></li\n";?>-->
 	</ul>
 <?php } ?>
 

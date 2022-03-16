@@ -7,6 +7,7 @@
 20211221 fho4abcd improved path to logout.php
 20220119 fho4abcd add empty value in language menu to indicate to no language matches
 20220122 rogercgui Default logo is displayed if institution image is absent
+20220316 fho4abcd Replace undefined $Permiso by $_SESSION["permiso"] to ensure correct databases list
 */
 
 if (isset($_SESSION["nombre"])) {
@@ -49,7 +50,7 @@ function database_list() {
 		$xselected="";
 		$value=trim($value);
 		$t=explode('|',$value);
-		if (isset($Permiso["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+		if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
 			
 			if ((isset($def['MAIN_DATABASE'])) && $def['MAIN_DATABASE']==$key) {
 				$xselected=" selected";
