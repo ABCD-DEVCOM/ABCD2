@@ -26,7 +26,7 @@ echo "<input type=hidden name=actualizar value=Actualizar>\n";
 echo "<input type=submit name=copiar value=".$msgstr["copiar"].">\n";
 echo "</form>\n";
 }
-include ("../../../opac/php/footer.php");
+include ("../../../opac/footer.php");
 ?>
 </div>
 </div>

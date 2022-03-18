@@ -88,7 +88,7 @@ echo "<input type=hidden name=Opcion value=Actualizar>";
 </div>
 <?php
 
-include ("../../../opac/php/footer.php");
+include ("../../../opac/footer.php");
 ?>
 
 </body

@@ -120,8 +120,8 @@ if (file_exists($db_path."opac_conf/".$lang."/$archivo")){
 		$val=trim($value);
 		if ($val!=""){
 			$v=explode('|',$val);
-			if (isset($v[3]) and trim($v[3])!="")
-				$columnas=$v[3];
+			if (isset($v[2]) and trim($v[2])!="")
+				$columnas=$v[2];
 			else
 				$columnas=1;
 

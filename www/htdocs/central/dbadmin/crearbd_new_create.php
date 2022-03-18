@@ -19,21 +19,26 @@ if (isset($_SESSION["UNICODE"])) {
 }
 include("../lang/dbadmin.php");
 
-if (isset($_SESSION["CISIS_VERSION"]))
+if (isset($_SESSION["CISIS_VERSION"])){
 	$_POST['CISIS_VERSION']=$_SESSION["CISIS_VERSION"];
-else
-	$_POST['CISIS_VERSION']="";
-if (isset($_SESSION["UNICODE"]))
-	$_POST['UNICODE']=$_SESSION["UNICODE"];
-else
-	$_POST['UNICODE']="";
-if (isset($_SESSION["DCIMPORT"]))
+} else { 
+	$_POST['CISIS_VERSION']="16-60";
+}
+
+if (isset($_SESSION["UNICODE"])) {
+	$UNICODE=$_REQUEST["UNICODE"];
+} else {
+	$UNICODE="0";
+}
+
+if (isset($_SESSION["DCIMPORT"])) {
 	$_POST['dcimport']=$_SESSION["DCIMPORT"];
-else
+} else {
 	$_POST['dcimport']="";
+}
 
 function MostrarPft(){
-global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
+global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path,$UNICODE;
 /*
 	if($_POST['CISIS_VERSION']!=''){
 		$OS=strtoupper(PHP_OS);
@@ -45,7 +50,7 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
 
 	echo "<p><font color=red>".$Wxis."</p>";
 */
-  	@ $fp = fopen($db_path.$arrHttp['base'].'/dr_path.def', "w");
+  @ $fp = fopen($db_path.$arrHttp['base'].'/dr_path.def', "w");
 	@  flock($fp, 2);
   	if (!$fp){
     	echo "<p><strong> Error ocurred in ISIS Script."
@@ -60,7 +65,7 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
 
  	$str="CISIS_VERSION=".$_POST['CISIS_VERSION']."\n";
    	fwrite($fp, $str);
-   	$str="UNICODE=".$_POST['UNICODE']."\n";
+   	$str="UNICODE=".$UNICODE."\n";
    	fwrite($fp, $str);
   	flock($fp, 3);
   	fclose($fp);
@@ -72,10 +77,11 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
        		."Please try again.</strong></p></body></html>";
     	exit;
   	}
-    if($_POST['UNICODE']=='1')
-  		$str="isisac.tab=%path_database%"."isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."isisuctab_utf8.tab\n";
-  	else
-  		$str="isisac.tab=%path_database%"."isisac.tab\n"."isisuc.tab=%path_database%"."isisuc.tab\n";
+    if($_POST['UNICODE']=='1'){
+      		$str="isisac.tab=%path_database%"."isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."isisuctab_utf8.tab\n";
+     } else {
+      	  		$str="isisac.tab=%path_database%"."isisac.tab\n"."isisuc.tab=%path_database%"."isisuc.tab\n";
+     }
  	fwrite($fp, $str);
   	flock($fp, 3);
   	fclose($fp);
@@ -310,7 +316,7 @@ $ce=CrearArchivo($filename,$contenido);
 
 //ARCHIVO DBN.DEF
 $filename=$db_path."par/".strtoupper($bd).".def";
-$contenido="[FILE_LOCATION]\n\nFILE DATABASE.*=%path_database%$bd/data/dbn.*";
+$contenido="[FILE_LOCATION]\n\nFILE DATABASE.*=%path_database%$bd/data/$bd.*";
 $ce=CrearArchivo($filename,$contenido);
 
 //ARCHIVO SHORTCUT.PFT
@@ -325,7 +331,7 @@ $ce=CrearArchivo($filename,$contenido);
 $file = $Dir."$base"."/";
 $newfile = $Dir."$bd"."/";
 
-echo "<P><b>";
+echo "<p><b>";
 $arrHttp["IsisScript"]="";
 $arrHttp["Opcion"]="inicializar";
 $arrHttp["cipar"]=$bd.".par";

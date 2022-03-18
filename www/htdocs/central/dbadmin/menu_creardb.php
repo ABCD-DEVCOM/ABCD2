@@ -46,7 +46,10 @@ function Validar(){
 	unicode=""
 	ix=document.forma1.UNICODE.length
 	for (i=0;i<ix;i++){
-		if (document.forma1.UNICODE[i].checked) unicode=document.forma1.UNICODE[i].value
+
+		if (document.forma1.UNICODE[i].checked) {
+			unicode=document.forma1.UNICODE[i].value
+		}
 	}
 	if (unicode==""){
 		alert("<?php echo $msgstr["falta"]." UNICODE"?>")
@@ -146,8 +149,8 @@ include("../common/inc_div-helper.php");
         <div id="formRow01" class="formRow">
             <label for="field01"><strong>UNICODE</strong></label>
             <div class="frDataFields">
-                <input type=radio name="UNICODE" value=0>&nbsp;<?php echo $msgstr["uni_no"]?>&nbsp;&nbsp;
-                <input type=radio name="UNICODE" value=1>&nbsp;<?php echo $msgstr["uni_yes"]?>
+                <input type="radio" name="UNICODE" value="0">&nbsp;<?php echo $msgstr["uni_no"]?>&nbsp;&nbsp;
+                <input type="radio" name="UNICODE" value="1">&nbsp;<?php echo $msgstr["uni_yes"]?>
                 <p>
             </div>
             <div class="spacer">&#160;</div>

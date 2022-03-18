@@ -18,46 +18,94 @@ include "../../common/inc_div-helper.php";
 
 
 <?php
+
 	if (!isset($_SESSION["db_path"])){
 		echo "Session expired";die;
 	}
 
-    if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar")
-
-//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
 
+foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$lang=$_REQUEST["lang"];
+
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
-	$fout=fopen($archivo,"w");
-	$linea=array();
+
 	foreach ($_REQUEST as $var=>$value){
-		$value=trim($value);
-		if ($value!=""){
-			$var=trim($var);
-			if (substr($var,0,9)=="conf_base"){
-				$x=explode('_',$var);
-				if (count($x)==4)
-					$linea[$x[2]][$x[3]]=$value;
+		if (trim($value)!=""){
+			$code=explode("_",$var);
+			if ($code[0]=="conf"){
+				if ($code[1]=="lc"){
+					if (!isset($field_ix[$code[2]])) {
+						$field_ix[$code[2]]=$value;
+					}
+				} elseif ($code[1]=="lp") {
+						if (!isset($pref_ix[$code[2]])) {
+						$pref_ix[$code[2]]=$value;
+					}
+				} elseif ($code[1]=="ln")  {
+					if (!isset($ln[$code[2]])) {
+						$ln[$code[2]]=$value;
+					} else {
+						$ln[$code[2]]="1";
+					}
+				} elseif ($code[1]=="df")  {
+					if (!isset($display[$code[2]])) {
+						$display[$code[2]]=$value;
+					} else {
+						$display[$code[2]]="";
+					}
+				}
 			}
 		}
 	}
-	foreach ($linea as $value){
-		if (!isset($value[2])) $value[2]="";
-		if (!isset($value[3])) $value[3]="1";
-		if (!isset($value[4])) $value[4]="";
 
-		$salida=$value[0].'|'.$value[1].'|'.$value[2].'|'.$value[3].'|'.$value[4];
-		echo $salida."<br>";
-		fwrite($fout,$salida."\n");
+    $fout=fopen($archivo,"w");
+	foreach ($field_ix as $key=>$value){
+		if (isset($pref_ix[$key])) { 
+			$prefix=$pref_ix[$key];
+		} else {
+			$prefix="";
+		}
+		
+		if (isset($ln[$key])) { 
+			$ncols=$ln[$key];
+		} else {
+			$ncols="";
+		}
 
+		if (isset($display[$key])) {
+			$d_all=$display[$key];
+		} else {
+			$d_all="";
+		}
+
+		fwrite($fout,$value."|".$prefix."|".$ncols."|".$d_all."\n");
+
+		//echo $value."|".$pref_ix[$key]."|".$ln[$key]."|".$display[$key]."<br>";
 	}
-
 	fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
-    if ($_REQUEST["base"]!="META")echo "<h4>".$msgstr["ira"]." <a href=\"javascript:SeleccionarProceso('autoridades.php','".$_REQUEST["base"]."')\">".$msgstr["aut_opac"]."</a></H4>";
+	die;
+
+
+//fclose($fout);
+    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+    echo "<p><h3>".$msgstr["add_topar"];
+    if ($_REQUEST["base"]!="META") echo " (".$_REQUEST["base"].".par)";
+    echo "</h3>";
+	echo "<br><br>";
+	if ($_REQUEST["base"]=="META"){
+		$msg="<i>[dbn]</i>";
+	}else{
+		$msg=$_REQUEST["base"];
+	}
+	foreach ($linea as $value){
+		echo "<strong><font face=courier size=4>".$value[0].".pft=%path_database%".$msg."/pfts/%lang%/".$value[0].".pft</font></strong><br>";
+    }
+    die;
 }
+
+
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
 	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
@@ -85,11 +133,6 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]==""){
 //;
 ?>
 
-</div>
-</div>
-</div>
-
-<?php include ("../../common/footer.php"); ?>
 
 <form name=copiarde method=post>
 <input type=hidden name=db>
@@ -164,35 +207,28 @@ global $msgstr,$db_path;
 
 	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 	echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th><th>".$msgstr["ix_cols"]."</th><th>".$msgstr["ix_postings"]."</th></tr>\n";
+		$ix=0;	
+	
 	$row=0;
 	foreach ($fp as $value) {
-		$value=trim($value);
-		if ($value!=""){
-			$ix=-1;
-			$row=$row+1;
-			$v=explode('|',$value);
-			if (count($v)!=5) $v[]="";
-			echo "<tr>";
-			foreach ($v as $var){
-				$ix=$ix+1;
-				if ($ix!=2){
-					echo "<td bgcolor=white>";
-				 	if ($ix!=4){
-				 		if ($ix==0)
-				 			$size=30;
-						else
-							$size=8;
-				 		echo "<input type=text name=conf_base_".$row."_".$ix." value=\"$var\" size=$size>";
-					}else{
-						echo "<input type=checkbox name=conf_base_".$row."_".$ix." value=ALL";
-						if ($var=="ALL") echo " checked";
-						echo ">";
-			 		};
-					echo "</td>\n";
-				}
-			}
-			echo "</tr>\n";
+	$row=$row+1;
+
+		if (trim($value)!=""){
+			$l=explode('|',$value);
+			$ix=$ix+1;
+			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
+			echo "<td><input type=text name=conf_lp_".$ix." size=30 value=\"".trim($l[1])."\"></td>";
+			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[2])."\"></td>";
+	 		echo "<td>";
+			echo "<input type=checkbox name=conf_df_".$ix." value=ALL";
+			 if (isset($l[3]) and trim($l[3])=="ALL") echo " checked";
+			echo ">\n";
+			echo "</td>";
+			echo "</tr>";
 		}
+
+
+
 	}
 	echo "<tr><td colspan=4 align=center> ";
 	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD." (opac_conf/$lang/$file)\"></td></tr>";
@@ -214,8 +250,10 @@ global $msgstr,$db_path;
 				}
 			}
 			echo "</table>";
+
 		}
 	}else{
+
 		if ($base=="META"){
 			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
 			foreach ($fp as $value){
@@ -261,3 +299,10 @@ global $msgstr,$db_path;
 
 }
 ?>
+
+
+</div>
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>

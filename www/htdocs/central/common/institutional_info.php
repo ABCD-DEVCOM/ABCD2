@@ -10,6 +10,9 @@
 20220316 fho4abcd Replace undefined $Permiso by $_SESSION["permiso"] to ensure correct databases list
 */
 
+include ("$ABCD_scripts_path/central/lang/admin.php");
+include ("$ABCD_scripts_path/central/lang/lang.php");	
+
 if (isset($_SESSION["nombre"])) {
 	$name = $_SESSION["nombre"];
 } else {
@@ -77,7 +80,7 @@ Entrando="S"
 
 function VerificarEdicion(Modulo){
 	 if(top.xeditar=="S"){
-		alert("<?php echo $msgstr["aoc"]?>")
+		alert("<?php echo $msgstr["aoc"];?>")
 		return
 	}
 }
