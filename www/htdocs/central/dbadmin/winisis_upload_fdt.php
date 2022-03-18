@@ -120,7 +120,10 @@ if (isset($files["userfile"]) && $files["userfile"]['size']) {
 	$name=$files["userfile"]['name'];
 	$fp=file($files["userfile"]['tmp_name']);
 	$Fdt="";
- 	foreach($fp as $linea) { $Fdt.=$linea}
+ 	foreach($fp as $linea) { 
+ 		$Fdt.=$linea;
+ 	}
+ 	
   	$Fdt_conv=CrearFdt($Fdt);
    	$_SESSION["FDT"]=$Fdt_conv;
     MostrarFdt($_SESSION["FDT"]);
