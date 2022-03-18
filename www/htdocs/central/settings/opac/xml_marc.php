@@ -183,12 +183,11 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	</div>
 <?php
 }
-include ("../../../opac/php/footer.php");
 ?>
 </div>
 </div>
-</body
-</html>
+
+
 <script>
 document.getElementById("mfn").onkeypress = function(e) {
   var key = e.charCode || e.keyCode || 0;
@@ -205,7 +204,7 @@ function Probar(){
 	}
 	document.marcxml.cookie.value="c_<?php echo $_REQUEST["base"]?>_"+mfn ;
 	document.marcxml.target="_blank";
-	document.marcxml.action="../../../opac/php/sendtoxml.php";
+	document.marcxml.action="../../../opac/sendtoxml.php";
 	document.marcxml.submit();
 	document.marcxml.action="" ;
 }

@@ -310,15 +310,14 @@ Global $valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per
 
 <?php } ?>
 </div>
-<br><br><br>
-<?php
+</div>
+</div>
+</div>
 
-include ("../../../opac/php/footer.php");
+<?php
+include ("../../common/footer.php");
 ?>
-</div>
-</div>
-</body
-</html>
+
 <form name=forma1 method=post>
 <?php if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";

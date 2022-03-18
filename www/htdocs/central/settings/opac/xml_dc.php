@@ -233,7 +233,7 @@ function Probar(){
 	}
 	document.dcpft.cookie.value="c_<?php echo $_REQUEST["base"]?>_"+mfn ;
 	document.dcpft.target="_blank";
-	document.dcpft.action="../../../opac/php/sendtoxml.php";
+	document.dcpft.action="../../../opac/sendtoxml.php";
 	document.dcpft.submit();
 	document.dcpft.action="" ;
 }

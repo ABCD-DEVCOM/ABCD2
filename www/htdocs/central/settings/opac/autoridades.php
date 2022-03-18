@@ -49,7 +49,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 
 
-include ("../../../opac/php/footer.php");
+include ("../../../opac/footer.php");
 ?>
 
 <?php

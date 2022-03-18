@@ -59,30 +59,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	die;
 
 
-/*
-echo "<br>".var_dump($codigo)."<br>";
-
-	$ix=0;
-	$vcols=array();
-	foreach ($codigo as $key=>$vcols){
-		echo $vcols[$key]."<br>";
-		$ix=$ix+1;
-		$salida=$vcols;
-		if (isset($_REQUEST["consolida"])){
-			if ($ix==$_REQUEST["consolida"])
-				$salida.='|Y';
-			else
-				$salida.='|';
-		}else{
-			$salida.='|';
-		}
-		//$fout=fopen($archivo,"w");
-		echo "<b>".$salida."|".$codigo[$key]."<br>";
-		fwrite($fout,$salida."\n");
-
-	}
-*/
-	//fclose($fout);
+//fclose($fout);
     echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
     echo "<p><h3>".$msgstr["add_topar"];
     if ($_REQUEST["base"]!="META") echo " (".$_REQUEST["base"].".par)";
@@ -134,14 +111,6 @@ if ($_REQUEST["base"]=="META"){
 </div>
 
 
-
-<?php
-include ("../../../opac/php/footer.php");
-?>
-</div>
-</div>
-</body
-</html>
 <form name=copiarde method=post>
 <input type=hidden name=db>
 <input type=hidden name=archivo>
@@ -270,6 +239,12 @@ function EditarPft(Pft){
 	msgwin.focus()
 }
 </script>
+
+</div>
+</div>
+</div>
+
+
 
 
 <?php include ("../../common/footer.php"); ?>

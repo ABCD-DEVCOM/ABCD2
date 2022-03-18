@@ -22,5 +22,5 @@ if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
 			<span><strong>". $msgstr["save"]."</strong></span>
 			</a>";
 }
-include ("../../../opac/php/footer.php");
+include ("../../../opac/footer.php");
 ?>

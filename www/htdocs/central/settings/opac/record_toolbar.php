@@ -33,7 +33,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	
 	echo "<br><br>";
 	
-	echo "<strong><font face=courier size=4>".$_REQUEST["archivo"]."=%path_database%"."opac_conf/".$_REQUEST["archivo"]."</font></strong><br>";
+	echo "<strong><font face=courier size=4>".$_REQUEST["archivo"]."=%path_database%"."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]."</font></strong><br>";
 }else{
 
 	echo "<form name=forma1 method=post>\n";
@@ -56,7 +56,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 ?>
 
-<input type="submit" class="bt-green" value="<?php echo $msgstr["save"]; ?> opac_conf/select_record.pft">
+<input type="submit" class="bt-green" value="<?php echo $msgstr["save"]; ?> opac_conf/<?php echo $_REQUEST["lang"];?>/select_record.pft">
 
 </form>
 	</div>

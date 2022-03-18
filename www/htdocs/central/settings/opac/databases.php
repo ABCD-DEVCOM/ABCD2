@@ -217,9 +217,11 @@ if (isset($_REQUEST["conf_level"])){
 ?>
 </form>
 </div>
+</div>
+</div>
+</div>
 <?php
-
-include ("../../../opac/php/footer.php");
+include ("../../common/footer.php");
 ?>
 
 </body>
