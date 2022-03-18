@@ -10,8 +10,8 @@
 20220316 fho4abcd Replace undefined $Permiso by $_SESSION["permiso"] to ensure correct databases list
 */
 
-include ("../lang/admin.php");
-include ("../lang/lang.php");	
+include ("$ABCD_scripts_path/central/lang/admin.php");
+include ("$ABCD_scripts_path/central/lang/lang.php");	
 
 if (isset($_SESSION["nombre"])) {
 	$name = $_SESSION["nombre"];
