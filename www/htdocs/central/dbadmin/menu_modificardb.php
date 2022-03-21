@@ -6,6 +6,7 @@
 20220209 fho4abcd Preserve base
 20220214 fho4abcd Marc menu items only for MARC
 20220317 fho4abcd Layout, remove superfluous permission check, add barcode configuration
+20220321 dho4abcd renamed barcode scripts
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -156,10 +157,10 @@ function Update(Option){
         	document.update_base.action="chk_dbdef.php"
         	break
         case "labeltab":
-        	document.update_base.action="../barcode/bcl_labeltab.php"
+        	document.update_base.action="../barcode/bcl_config_label_table.php"
         	break
         case "labelconfig":
-        	document.update_base.action="../barcode/bcl_labelconfig.php"
+        	document.update_base.action="../barcode/bcl_config_labels.php"
         	break
 	}
 	document.update_base.submit()

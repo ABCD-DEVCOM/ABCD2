@@ -14,7 +14,6 @@ include ("../common/header.php");
 include ("../lang/soporte.php");
 include ("../lang/admin.php");
 include ("../lang/reports.php");
-include ("configure.php");
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
@@ -25,10 +24,7 @@ function AbrirVentana(Url){
 }
 </script>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}
+include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -36,7 +32,7 @@ if (isset($arrHttp["encabezado"])){
 	</div>
 	<div class="actions">
         <?php
-            $backtoscript="../barcode/barcode.php?tipo=".$arrHttp["tipo"];
+            $backtoscript="../barcode/bcl_config_labels.php";
             include "../common/inc_back.php";
         ?>
 	</div>

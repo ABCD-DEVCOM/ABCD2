@@ -3,6 +3,7 @@
 20220306 fho4abcd div-helper, added informational and error messages, moved functions to end of file
 20220309 fho4abcd No "em" this is a relative unit, add link to barcode font script,add option border
 20220310 fho4abcd Better check for nothing returned.
+20220321fho4abcd adapt to new includes, renamed to bcl_labelshow_result
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -20,12 +21,14 @@ include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/soporte.php");
 include ("../lang/reports.php");
+$base=$arrHttp["base"];
 
-include ("configure.php");
+include ("inc_barcode_constants.php");
+include ("inc_barcode_configure.php");
 if (!isset($arrHttp["output"])) $arrHttp["output"]="display";
 switch($arrHttp["output"]){
 	case "doc":
-		$filename="barcode_".$arrHttp["base"].".doc";
+		$filename="barcode_".$base.".doc";
 		header('Content-Type: application/msword; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
    		header("Expires: 0");
@@ -42,7 +45,7 @@ switch($arrHttp["output"]){
 		$sheetIndex=-1;
 		break;
 	case "calc":
-	   	$filename="barcode_".$arrHttp["base"].".ods";
+	   	$filename="barcode_".$base.".ods";
 		header('Content-Type: application/vnd.oasis.opendocument.spreadsheet;  charset=windows-1252');
 		header("Content-Disposition: inline; filename=\"$filename\"");
    		header("Expires: 0");
@@ -50,7 +53,7 @@ switch($arrHttp["output"]){
    		header("Pragma: public");
    		break;
 	case "odt":
-		$filename="barcode_".$arrHttp["base"].".odt";
+		$filename="barcode_".$base.".odt";
 		header('Content-Type: application/vnd.oasis.opendocument.text;  charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
    		header("Expires: 0");
@@ -58,7 +61,7 @@ switch($arrHttp["output"]){
    		header("Pragma: public");
    		break;
 	case "csv":
-		$filename="barcode_".$arrHttp["base"].".csv";
+		$filename="barcode_".$base.".csv";
 		header('Content-Type: text/plain;  charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
    		header("Expires: 0");
@@ -66,7 +69,7 @@ switch($arrHttp["output"]){
    		header("Pragma: public");
     	break;
     case "txt":
-    	$filename="barcode_".$arrHttp["base"].".txt";
+    	$filename="barcode_".$base.".txt";
     	header('Content-Type: text/plain;  charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
    		header("Expires: 0");
@@ -96,7 +99,7 @@ if ($arrHttp["output"]=="display"){
 }
 
 //SE LEE EL ARCHIVO DE CONFIGURACION
-$configfile=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["tipo"].".conf";
+$configfile=$configfileprefix.$arrHttp["tipo"].".conf";
 $configfilefull=$db_path.$configfile;
 if (!file_exists($configfilefull)){
 	echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$configfile."<br>".$msgstr["barcode_conf"]."</div>";
@@ -123,12 +126,12 @@ $ispftfile=false;
 if ($arrHttp["output"]=="txt" or $arrHttp["output"]=="txt_print"){
 	$bar_c["label_format"]=$bar_c["label_format_txt"];
 	if (substr($bar_c["label_format"],0,1)=='@'){
-		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
+		$bar_c["label_format"]=",@".$db_path.$configfileprefix.substr($bar_c["label_format"],1).",";
         $ispftfile=true;
     }
 }else{
 	if (substr($bar_c["label_format"],0,1)=='@'){
-		$bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
+		$bar_c["label_format"]=",@".$db_path.$configfileprefix.substr($bar_c["label_format"],1).",";
         $ispftfile=true;
     }
 }
@@ -160,22 +163,22 @@ if ( $ispftfile==true) {
 }
 switch ($arrHttp["Opcion"]){
 	case "mfn":
-		MfnBarCode($arrHttp["base"],$arrHttp["mfn_from"],$arrHttp["mfn_to"],$bar_c,$Pft);
+		MfnBarCode($base,$arrHttp["mfn_from"],$arrHttp["mfn_to"],$bar_c,$Pft);
 		break;
 	case "clasificacion":
-		ClasificacionBarCode($arrHttp["base"],$arrHttp["classification_from"],$arrHttp["classification_to"],$bar_c,$Pft);
+		ClasificacionBarCode($base,$arrHttp["classification_from"],$arrHttp["classification_to"],$bar_c,$Pft);
     	break;
     case "control":
-    	//ControlBarCode($arrHttp["base"],$arrHttp["control_from"],$arrHttp["control_to"],$fe_control,$copies,$pref_control,$arrHttp["output"]);
+    	//ControlBarCode($base,$arrHttp["control_from"],$arrHttp["control_to"],$fe_control,$copies,$pref_control,$arrHttp["output"]);
     	break;
     case "inventario":
-    	InventarioBarCode($arrHttp["base"],$arrHttp["inventory_from"],$arrHttp["inventory_to"],$bar_c,$Pft);
+    	InventarioBarCode($base,$arrHttp["inventory_from"],$arrHttp["inventory_to"],$bar_c,$Pft);
 		break;
 	case "date":
-    	//DateBarCode($arrHttp["base"],$arrHttp["date_from"],$arrHttp["date_to"],$fe_date,$copies,$pref_date,$arrHttp["output"]);
+    	//DateBarCode($base,$arrHttp["date_from"],$arrHttp["date_to"],$fe_date,$copies,$pref_date,$arrHttp["output"]);
 		break;
 	case "lista_inventario":
-		InventarioLista($arrHttp["base"],$arrHttp["inventory_list"],$bar_c,$Pft);
+		InventarioLista($base,$arrHttp["inventory_list"],$bar_c,$Pft);
 		break;
 
 }
@@ -309,7 +312,7 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 		}
 	}
 	$IsisScript=$xWxis."imprime.xis";
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
+	$query = "&base=".$base ."&cipar=$db_path"."par/".$base.".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
 	include("../common/wxis_llamar.php");
 	$inventario=array();
@@ -338,7 +341,7 @@ function ClasificacionBarCode($base,$from,$to,$bar_c,$Pft){
 global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
     $Prefijo=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_from"]);
     $to=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_to"]);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario&prefijo=".$Prefijo."&hasta=".$to."&Pft=".$Pft;
+	$query = "&base=".$base ."&cipar=$db_path"."par/".$base.".par&Opcion=diccionario&prefijo=".$Prefijo."&hasta=".$to."&Pft=".$Pft;
 	$IsisScript=$xWxis."indice.xis";
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
 	include("../common/wxis_llamar.php");
@@ -351,7 +354,7 @@ function InventarioBarCode($base,$from,$to,$bar_c,$Pft){
 global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
     $Prefijo=trim($bar_c["inventory_number_pref"]).trim($arrHttp["inventory_from"]);
     $to=trim($bar_c["inventory_number_pref"]).trim($arrHttp["inventory_to"])."ZZZ";
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=diccionario&prefijo=".urlencode($Prefijo)."&hasta=".urlencode($to)."&Pft=".urlencode($Pft);
+	$query = "&base=".$base ."&cipar=$db_path"."par/".$base.".par&Opcion=diccionario&prefijo=".urlencode($Prefijo)."&hasta=".urlencode($to)."&Pft=".urlencode($Pft);
 	$IsisScript=$xWxis."indice.xis";
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
     $array_c=array();

@@ -1,6 +1,7 @@
 <?php
 /*
 20220309 fho4abcd Created
+20220320 fho4abcd modified for new configuration
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -18,11 +19,10 @@ include ("../common/header.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/soporte.php");
-include ("../lang/reports.php");
-$arrHttp["tipo"]="barcode";
-include ("configure.php");
+$base=$arrHttp["base"];
+echo "<body>";
+include("../common/institutional_info.php");
 ?>
-<body>
 <script>
 function Showfont(){
 	msgwin=window.open("","showfontform","width=800, height=600, scrollbars, resizable")
@@ -40,11 +40,11 @@ function Download(){
 </script>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["barcode"].": ".$arrHttp["base"]?>
+        <?php echo $msgstr["barcode_config"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
     <?php
-    $backtoscript="../barcode/barcode.php?tipo=barcode";
+    $backtoscript="../barcode/bcl_config_labels.php";
     include "../common/inc_back.php";
     ?>
     </div>
@@ -58,10 +58,12 @@ include "../common/inc_div-helper.php";
 <div class="formContent">
 <?php
 
-echo "<h3 style='text-align:center'>".$msgstr["barcode_font"]."</h3>";
+include "inc_barcode_constants.php";
+echo "<h3 style='text-align:center'>".$msgstr["barcode_font"].": ".$arrHttp["tipo"].$configfilesuffix;
+echo " (".$arrHttp['desc'].")</h3>";
 
 //SE LEE EL ARCHIVO DE CONFIGURACION
-$configfile=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["tipo"].".conf";
+$configfile=$configfileprefix.$arrHttp["tipo"].$configfilesuffix;
 $configfilefull=$db_path.$configfile;
 if (!file_exists($configfilefull)){
 	echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$configfile."<br>".$msgstr["barcode_conf"]."</div>";
@@ -87,7 +89,6 @@ if ($fp){
 // Check if the pft is a file
 $ispftfile=false;
 if (substr($bar_c["label_format"],0,1)=='@'){
-    $bar_c["label_format"]=",@".$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".substr($bar_c["label_format"],1).",";
     $ispftfile=true;
 }
 /*
@@ -95,13 +96,12 @@ if (substr($bar_c["label_format"],0,1)=='@'){
 ** Check if the barcode pft file exists.
 */
 if ( $ispftfile==true) {
-    $Pft=trim($bar_c["label_format"])."/";
-    //  Note that it starts with ",@" and ends with ",/";
-    $pftfilefull=substr($Pft,2);
-    $pftfilefull=substr($pftfilefull,0,-2);
-    $pftfile=substr($pftfilefull,strlen($db_path));
+    $pftfilename=trim($bar_c["label_format"]);
+    //  Note that it starts with "@"
+    $pftfile=$pftfileprefix.substr($pftfilename,1);
+    $pftfilefull=$db_path.$pftfile;
     if (!file_exists($pftfilefull)){
-        echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$pftfilefull."<br>".$msgstr["barcode_conf"]."</div>";
+        echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$pftfile."<br>".$msgstr["barcode_conf"]."</div>";
         echo "</div></div>";
         include("../common/footer.php");
         die;
@@ -146,7 +146,8 @@ if ( $font_pos_start!=false ) {
     $font_pos_end=stripos($pftcontent,"'",$font_pos_start);
 }
 if ( $font_pos_start==false or $font_pos_end==false ) {
-        echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["barcode_no_family"]."<br>".$msgstr["barcode_conf"]."</div>";
+    echo "<br><div style='color:red'>".$msgstr["error"].": ".$msgstr["barcode_no_family"]."</div>";
+    echo "<div style='color:blue'>".$msgstr["barcode_confif"]."</div>";
     echo "</div></div>";
     include("../common/footer.php");
     die;
