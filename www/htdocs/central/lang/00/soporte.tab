@@ -19,6 +19,7 @@ barcode_font_template=... font-family:'<b>font name</b>' ...
 barcode_get_font=Font files (*.TTF) can be downloaded from internet repositories.
 barcode_inst_font=Font files (*.TTF) must be installed on the client. Installation varies by platform (try double click first)
 barcode_inventory=Inventory No.
+barcode_lomos=Barcode spine/labels
 barcode_no_family=NO valid font-family detected
 barcode_not_selected=Please select a value to be downloaded
 barcode_set_pft=Please specify the name of the PFT file with the format to use, starting with @ and ending with .pft

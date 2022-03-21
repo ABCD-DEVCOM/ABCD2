@@ -10,6 +10,7 @@
 20210813 fho4abcd Improve include path
 20220128 fho4abcd remove MULTIPLE_DB_FORMAT
 20220313 fho4abcd Show alert in case of login errors
+20220321 fho4abcd Remove syspar addition in url (can be done by default par file)
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
 global $ABCD_scripts_path,$app_path;
@@ -67,9 +68,6 @@ if ($postMethod == '1'){
 if (isset($wxisUrl) and $wxisUrl!=""){  //POST method 
     $query.="&path_db=".$db_path;
     $url="IsisScript=$IsisScript$query&cttype=s";
-    if (file_exists($db_path."par/syspar.par"))
-        $url.="&syspar=$db_path"."par/syspar.par";
-
     parse_str($url, $arr_url);
     $postdata = http_build_query($arr_url);
     include $ABCD_scripts_path.$app_path."/common/inc_setup-stream-context.php";
@@ -96,7 +94,7 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
                 $contenido[]="<br><br><div style='color:blue'>The default temporary folder could not be used for some reason.<br>";
                 $contenido[]="Possible workaround: consider explicit definition of a temporary folder by adding a line like:<br>";
                 $contenido[]="<strong>&nbsp;&nbsp;&nbsp;ci_tempdir=%path_database%wrk</strong><br>";
-                $contenido[]="to file <b>par/syspar.par</b> or file <b>par/&lt;dbname&gt;.par</b>.</div>";
+                $contenido[]="to file <b>&lt;dbname&gt;.par</b>.</div>";
             }
         }
     }
@@ -136,8 +134,6 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
             }
         }
     }
-    if (file_exists($db_path."par/syspar.par"))
-        $query.="&syspar=$db_path"."par/syspar.par";
     putenv('QUERY_STRING='."?xx=".$query);
     exec("\"".$Wxis."\" IsisScript=$IsisScript",$contenido);
     foreach ($contenido as $value) {

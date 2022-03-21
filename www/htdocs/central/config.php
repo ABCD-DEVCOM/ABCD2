@@ -15,6 +15,7 @@
 2022-01-29 rogercgui Added custom abcd.def parameters.
 2022-02-08 rogercgui Added $_REQUEST["lang"] check to decrease the amount of $_REQUEST through the system. Languages should be triggered by the variable $lang
 2022-02-22 fho4abcd  Added check on $_SESSION["lang"] + set $_SESSION["lang"]. This works for old scripts & updated scripts (without any lang settings)
+2022-03-21 fho4abcd  Added variable to set the par folder
 */
 
 ini_set('error_reporting', E_ALL);
@@ -79,6 +80,9 @@ $xWxis=$ABCD_path."www/htdocs/$app_path/dataentry/wxis/";    // path to the wxis
 $unicode="";
 $institution_name="";
 $cisis_ver=""; // initialisation of $cisis_ver as empty = default standard CISIS-version
+$base="";
+if (isset($arrHttp["base"])) $base=$arrHttp["base"]; // The base folder (if any)
+$actparfolder="par/";                                // The folder where the <bases>.par file is located
 
 // Check existence of locations/files
 // These checks are not bulletproof: succesfull check does not guarantee correct configuration
@@ -115,7 +119,6 @@ if (!file_exists($db_path."abcd.def")){
 }
  
 
-if (isset($_SESSION["MULTIPLE_DB_FORMATS"])) unset($_SESSION["MULTIPLE_DB_FORMATS"]);
 $def = parse_ini_file($db_path."abcd.def",true);      // read variables from abcd.def
 
 // Other local settings to be configured

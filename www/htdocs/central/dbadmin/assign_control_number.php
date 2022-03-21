@@ -3,6 +3,8 @@
 20210613 fho4abcd remove password, lineends
 20211215 fho4abcd Backbutton by & helper by included file
 20220203 fho4abcd Cleanup code&html+translation+make it work after reinvoke
+20220303 rogercgui Corrected the absence of the variable in the function "EnviarFormaCN"
+20220321 fho4abcd Reinstalled absence of variable. Use new par variable
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -22,24 +24,19 @@ include("../lang/dbadmin.php");
 //
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
-if (strpos($arrHttp["base"],"|")===false){
-
-}   else{
-		$ix=strpos($arrHttp["base"],'^b');
-		$arrHttp["base"]=substr($arrHttp["base"],2,$ix-2);
-}
 if (isset($arrHttp["encabezado"]))
 	$encabezado="&encabezado=s";
-else
+else {
 	$encabezado="";
+}
 
-$base =$arrHttp["base"];
-$cipar =$arrHttp["base"].".par";
 //GET THE MAX MFN
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+$query = "&base=".$base . "&cipar=$db_path".$actparfolder.$base.".par&Opcion=status";
+
 include("../common/wxis_llamar.php");
 $ix=-1;
+
 foreach($contenido as $linea) {
 	$ix=$ix+1;
 	if ($ix>0) {
@@ -51,7 +48,7 @@ foreach($contenido as $linea) {
 }
 
 //GET LAST CONTROL NUMBER
-$archivo=$db_path.$arrHttp["base"]."/data/control_number.cn";
+$archivo=$db_path.$base."/data/control_number.cn";
 if (!file_exists($archivo)){
 	$fp=fopen($archivo,"w");
 	$res=fwrite($fp,"");
@@ -77,6 +74,7 @@ function BorrarRango(){
 function EnviarFormaCN(vp){
 	de=Trim(document.cnFrm.Mfn.value)
   	a=Trim(document.cnFrm.to.value)
+  	Maxmfn=<?php echo $tag["MAXMFN"];?>
   	if (de!="" || a!="") {
   		Se=""
 		var strValidChars = "0123456789";
@@ -98,12 +96,11 @@ function EnviarFormaCN(vp){
     	}
     	de=Number(de)
     	a=Number(a)
-    	if (de<=0 || a<=0 || de>a ||a>a){
+    	if (de<=0 || a<=0 || de>a ||a>Maxmfn){
 	    	alert("<?php echo $msgstr["numfr"]?>")
 	    	return
 		}
 	}
-
   	document.cnFrm.submit()
 }
 
@@ -115,7 +112,7 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-    <?php echo $msgstr["assigncn"].": ".$arrHttp["base"]?>
+    <?php echo $msgstr["assigncn"].": ".$base?>
 	</div>
 	<div class="actions">
     <?php
@@ -123,8 +120,8 @@ if (isset($arrHttp["encabezado"])){
 	if (isset($arrHttp["encabezado"])){
 		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
             isset($_SESSION["permiso"]["CENTRAL_MODIFYDEF"]) or
-            isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_MODIFYDEF"]) or
-            isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])){
+            isset($_SESSION["permiso"][$base."_CENTRAL_MODIFYDEF"]) or
+            isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])){
             $backtoscript="../dbadmin/menu_mantenimiento.php";
 		}else{
             $backtoscript="../common/inicio.php";
@@ -142,8 +139,8 @@ echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 ?>
     <form name=cnFrm method=post action=assign_control_number_ex.php onsubmit="Javascript:return false">
     <input type=hidden name=encabezado value=s>
-    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-    <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
+    <input type=hidden name=base value=<?php echo $base?>>
+    <input type=hidden name=cipar value=<?php echo $base?>.par>
 	<table width=100% cellpadding=5>
 	<tr>
 		<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
@@ -183,7 +180,7 @@ echo "<center><h3>".$msgstr["assigncn"]."</h3></center>";
 </div>
 </div>
 <form name=reset_nc method=post action=reset_control_number.php>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+<input type=hidden name=base value=<?php echo $base?>>
 <input type=hidden name=encabezado value=s>
 </form>
 <script>function Reset(){
