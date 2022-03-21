@@ -7,6 +7,7 @@
 2021-08-29 fho4abcd Replaced document import
 2021-12-09 fho4abcd Improved sizeof popup for alfa
 2021-12-12 fho4abcd Improved sizeof popup for alfa (for breadcrumb)
+2022-03-20 fho4abcd Cleanup barcode, new target bcl_labelshow.php
 */
 //error_reporting(E_ALL);
 session_start();
@@ -425,13 +426,7 @@ function Menu(Opcion){
 			top.main.location="administrar.php?base="+base+"&cipar="+cipar+seleccion
 			break;
 		case "barcode":
-			<?php if (isset($_SESSION["BARCODE_SIMPLE"])){
-			    echo "top.main.location=\"../barcode_font/barcode_menu.php?base=\"+base+\"&cipar=\"+cipar";
-			} else{
-				echo "top.main.location=\"../barcode/menu.php?base=\"+base+\"&cipar=\"+cipar";
-			}
-			echo "\n";
-			?>
+			top.main.location="../barcode/bcl_labelshow.php?base="+base;
 			break;
 		case "barcode_this":
 			BarcodeThis()

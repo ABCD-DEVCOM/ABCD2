@@ -1,10 +1,3 @@
-barcode=Barcode
-barcode_conf=Please configure the barcode configuration file(s)
-barcode_etiquetas=Barcode labels
-barcode_inventory=Inventory No.
-barcode_label=Spine, labels and barcodes
-barcode_lomos=Barcode spine/labels
-barcode_type=Label type
 byclass_num=by classification number
 bycontrol_num=by control number
 byinput_date=by input date of the copy
