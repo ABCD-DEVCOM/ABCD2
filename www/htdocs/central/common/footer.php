@@ -4,6 +4,7 @@
 20210610 fho4abcd update date. Remove wiki (done by URL1 and all pages
 20210626 fho4abcd MOve logo from css to php +span to title.
 20220316 fho4abcd remove duplicate target,empty lines, confusing spacing in html
+20220322 fho4abcd date&release comment
 */
 require_once (dirname(__FILE__)."/../config.php");
 $def = parse_ini_file($db_path."abcd.def");
@@ -57,7 +58,7 @@ $def = parse_ini_file($db_path."abcd.def");
             $text2 = "TEXT2";
         }
 ?>
-        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-0 + ... &rarr; 2022-03-16</small></span>
+        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2022-03-22</small></span>
     </div>
         <div class="distributorLogo">
            <a  href="<?php 
