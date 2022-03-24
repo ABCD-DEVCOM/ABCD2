@@ -31,7 +31,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 	}
 	echo "<p><h3>".$msgstr["add_topar"]."<br>";
-	echo "<strong><font face=courier size=4>autoridaes_opac.pft=%path_database%".$_REQUEST["base"]."/pfts/autoridades_opac.pft</font></strong><br>";
+	echo "<strong><font face=courier size=4>autoridades_opac.pft=%path_database%".$_REQUEST["base"]."/pfts/autoridades_opac.pft</font></strong><br>";
 
 }else{
 	$base=$_REQUEST["base"];
@@ -57,7 +57,7 @@ function ConstruirPft($db_path,$base){
 //A TRAVES DEL PREFIJO DEFINIDO PARA CADA INDICE (DBN.IX) SE LEE LA FST PARA DETERMINAR QUE CAMPOS A UTILIZAR
 //PARA LA ELABORACION DE AUTORIDADES_OPAC.PFT
 	$autoridades_pft="";
-	$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/$base.ix";
+	$archivo=$db_path.$base."/opac/".$_REQUEST["lang"]."/$base.ix";
 	if (!file_exists($archivo)) {
 	}else{
 		$fp=file($archivo);
@@ -181,8 +181,8 @@ global $msgstr,$db_path;
 	echo "</div>";
 
 	echo "<div style=\"flex: 1;border=1px solid\">";
-	$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/$base.ix";
-	$ar="opac_conf/".$_REQUEST["lang"]."/$base.ix";
+	$archivo=$db_path.$base."/opac/".$_REQUEST["lang"]."/$base.ix";
+	$ar=$base."/opac/".$_REQUEST["lang"]."/$base.ix";
 	if (!file_exists($archivo)){
 		echo "<font color=red>".$msgstr["missing"]."$ar</font><p>";
 	}

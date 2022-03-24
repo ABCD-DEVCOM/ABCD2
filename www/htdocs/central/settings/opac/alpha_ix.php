@@ -25,10 +25,11 @@ include "../../common/inc_div-helper.php";
 
 
 
-foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
+//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$archivo=$db_path.$base."/opac/$lang/".$_REQUEST["file"];
+
 
 	foreach ($_REQUEST as $var=>$value){
 		if (trim($value)!=""){
@@ -84,12 +85,12 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		//echo $value."|".$pref_ix[$key]."|".$ln[$key]."|".$display[$key]."<br>";
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+    echo "<p><font color=red>".$base."/opac/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
 	die;
 
 
 //fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+    echo "<p><font color=red>".$base."/opac/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
     echo "<p><h3>".$msgstr["add_topar"];
     if ($_REQUEST["base"]!="META") echo " (".$_REQUEST["base"].".par)";
     echo "</h3>";
@@ -183,27 +184,36 @@ global $msgstr,$db_path;
 	echo "<div  id='$iD' >\n";
 	echo "<div style=\"display: flex;\">";
 	$cuenta_00=0;
-	if (!file_exists($db_path."opac_conf/$lang/$file")){
+
+	if ($base=="META") {
+		$file_ix=$db_path."/opac_conf/".$lang."/".$file;
+	} else {
+		$file_ix=$db_path.$base."/opac/".$lang."/".$file;
+	}
+
+
+	if (!file_exists($file_ix)){
 		$fp=array();
 		for ($i=0;$i<5;$i++)
 			$fp[]='|||';
 		$ix="N";
 	}else{
-		$fp=file($db_path."opac_conf/$lang/$file");
+		$fp=file($file_ix);
 		for ($i=0;$i<5;$i++)
 			$fp[]='|||';
 		$ix="Y";
 	}
+   
     echo "<div style=\"flex: 0 0 50%;\">";
-	echo "<form name=$iD"."Frm method=post>\n";
-	echo "<input type=hidden name=Opcion value=Guardar>\n";
+	 echo "<form name=$iD"."Frm method=post>\n";
+	 echo "<input type=hidden name=Opcion value=Guardar>\n";
     echo "<input type=hidden name=base value=$base>\n";
     echo "<input type=hidden name=file value=\"$file\">\n";
     echo "<input type=hidden name=lang value=\"$lang\">\n";
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-	echo "<strong>opac_conf/$lang/$file</strong><br>";
+	echo "<strong>$base/opac/$lang/$file</strong><br>";
 
 	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 	echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th><th>".$msgstr["ix_cols"]."</th><th>".$msgstr["ix_postings"]."</th></tr>\n";
@@ -259,11 +269,11 @@ global $msgstr,$db_path;
 			foreach ($fp as $value){
 				$v=explode("|",$value);
 				$bd_ix=$v[0];
-				if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$bd_ix.ix")){
+				if (file_exists($db_path.$bd_ix."/opac/".$_REQUEST["lang"]."/$bd_ix.ix")){
 					echo "<p><strong><font color=darkred>".$msgstr["indice_alfa"]." &nbsp$bd_ix.ix</font></strong>";
 					echo "<table bgcolor=#cccccc cellpadding=5>\n";
 					echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th><th>".$msgstr["ix_cols"]."</th><th>".$msgstr["ix_postings"]."</th></tr>\n";
-					$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$bd_ix.ix");
+					$fp=file($db_path.$bd_ix."/opac/".$_REQUEST["lang"]."/$bd_ix.ix");
 					foreach($fp as $linea){
 						$l=explode('|',$linea);
 						if (count($l)!=5) $l[]="";
@@ -288,7 +298,7 @@ global $msgstr,$db_path;
 						echo "</tr>\n";
 					}
 					echo "</table>";
-				}else{
+				} else {
 					echo "<font color=red><strong>".$msgstr["missing"]." ".$msgstr["indice_alfa"]." &nbsp$bd_ix.ix</strong></font><p>";
 				}
 			}

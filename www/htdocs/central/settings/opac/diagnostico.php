@@ -102,11 +102,28 @@ $err="";
 
 echo "<hr><h3>".$msgstr['cfg_chk_folder']." ".$db_path."opac_conf </h3><p>";
 $opac_conf=$db_path."opac_conf";
+
+
 if (!is_dir($opac_conf)){
 	echo   "Error. Missing $db_path"."opac_conf folder<br>";
 	$opac_conf="";
 }
+
+echo "<p><strong>bases.dat</strong><br>";
+$fp=file($opac_conf."/$lang/bases.dat");
+foreach ($fp as $base_dat){
+	if (trim($base_dat)!="")
+		echo "$base_dat<br>";
+		$b=explode('|',$base_dat);
+		$base=$b[0];
+		$base_desc=$b[1];	
+		$opac_db[$b[0]]=$db_path.$base."/opac/";	
+} // exibe lista de bases
+
+echo "<hr>";
+
 $dir_arr=array();
+
 if ($opac_conf!=""){
     if (!file_exists($opac_conf."/opac.def")){
 		echo "Error. opac.def missing<br>";
@@ -121,17 +138,25 @@ if ($opac_conf!=""){
 	$handle=opendir($opac_conf);
 	$arr_dir=readdir($handle);
 	while (false !== ($entry = readdir($handle))) {
+		echo $opac_conf;
 		if (is_dir($opac_conf."/$entry")){
 			if ($entry!="." and $entry!="..")
 				$dir_arr[]=$entry;
 		}
 	}
 }
+
 if (count($dir_arr)==0){
 	echo "Error: No languages defined<br>";
 	$err="S";
 }
-foreach ($dir_arr as $lang){
+
+
+
+
+
+foreach ($dir_arr as $lang) {
+ 
 	echo "<br><h3>".$msgstr['cfg_chk_folder']." <strong><font color=red>$lang</font></strong></h3>";
 	if (!file_exists($opac_conf."/$lang/lang.tab")){
 		echo "Error. <strong>lang.tab</strong> missing<br>";
@@ -154,42 +179,53 @@ foreach ($dir_arr as $lang){
 	}else{
 		echo "<p><strong>bases.dat</strong><br>";
 		$fp=file($opac_conf."/$lang/bases.dat");
-		foreach ($fp as $base_dat){
-			if (trim($base_dat)!="")
-				echo "$base_dat<br>";
-		}
-		foreach ($fp as $base_dat){
-            $base_dat=trim($base_dat);
-            if ($base_dat=="") continue;
-			$b=explode('|',$base_dat);
-			$base=$b[0];
+		
 
-			$base_desc=$b[1];
+
+		foreach ($fp as $base_dat) {
+
+           
+            //$base_dat=trim($base_dat);
+            //if ($base_dat=="") continue;
+			//$b=explode('|',$base_dat);
+			
+			//$base=$b[0];
+			//$base_desc=$b[1];
+
 			//Se lee el archivo .par
 			$par_array=array();
 			$archivo=$db_path."par/$base.par";
 			if (!file_exists($archivo)){
 				echo "Error: ".$msgstr["missing"]." $archivo<br>";
-			}else{
+			} else {
 				$par=file($archivo);
 				foreach($par as $value) {
 					$value=trim($value);
 					if ($value!=""){
 						$p=explode('=',$value);
 						$par_array[$p[0]]=$p[1];
+
 					}
 				}
 			}
+
+			$opac_db=$db_path.$base."/opac/";
+			
 			echo "<hr><h3><font color=blue>".$msgstr['cfg_chk']." ".$base ." (".$base_desc.") - ".$lang."</font></h3>";
+			
 			if (!is_dir($db_path.$base)){
 	 			echo "<font color=red size=3><strong>".$msgstr["missing_folder"]." $base ".$msgstr["in"]." $db_path</strong></font><br>";
 	 		}
+
 	 		$file_dr=$db_path.$base."/dr_path.def";
 	 		$dr_parms=array();
+			
 			if (file_exists($file_dr)){
 				$fp_dr=file($file_dr);
+
 				foreach ($fp_dr as $dr_line) {
 					$dr_line=trim($dr_line);
+
 					if ($dr_line!=""){
 						$drl=explode("=",$dr_line);
 						$dr_parms[$drl[0]]=$drl[1];
@@ -197,6 +233,7 @@ foreach ($dir_arr as $lang){
 
 				}
 			}
+			
 			echo "<p><strong>".$msgstr['cfg_param_db']."</strong></p>";
 			if (!isset($dr_parms["UNICODE"]))
 				echo "<p class='color-red'>".$msgstr['cfg_empty_unicod']."</p>";
@@ -205,17 +242,19 @@ foreach ($dir_arr as $lang){
 	        if (!isset($dr_parms["CISIS_VERSION"]))
 				echo "<p class='color-red'>The CISIS_VERSION parameter is not set. Assumed 16-60</p>";
 			else
-				echo "CISIS_VERSION = ".$dr_parms["CISIS_VERSION"]."<BR>";
+				echo "CISIS_VERSION = ".$dr_parms["CISIS_VERSION"]."<br>";
 	        echo "<i>These parameters can be updated in the central module</i><br>";
 			echo "<BR><strong>"."Verifying the database configuration</strong><br>";
-			$archivo=$opac_conf."/$lang/$base".".def";
+			$archivo=$opac_db."$lang/$base".".def";
+			
 			if (!file_exists($archivo)){
 				echo $msgstr['cfg_file']." <strong>$base".".def</strong> <i class=\"fas fa-times color-red\"></i><br>";
 				$err="S";
-			}else{
+			} else {
 				echo $msgstr['cfg_file']." $base".".def <i class=\"fas fa-check color-green\"></i><br>";
 			}
-			$archivo=$opac_conf."/$lang/$base"."_libre.tab";
+
+			$archivo=$opac_db."$lang/$base"."_libre.tab";
 			if (!file_exists($archivo)){
 				echo $msgstr['cfg_file']." <strong>$base"."_libre.tab</strong> (".$msgstr["free_search"].") <i class=\"fas fa-times color-red\"></i>";
 
@@ -228,7 +267,7 @@ foreach ($dir_arr as $lang){
 			}else{
 				echo $msgstr['cfg_file']." $base"."_libre.tab (".$msgstr["free_search"].")  <i class=\"fas fa-check color-green\"></i><br>";
 			}
-			$archivo=$opac_conf."/$lang/$base"."_avanzada.tab";
+			$archivo=$opac_db."$lang/$base"."_avanzada.tab";
 			if (!file_exists($archivo)){
 				echo $msgstr['cfg_file']." <strong>$base"."_avanzada.tab (".$msgstr["buscar_a"].")</strong> <i class=\"fas fa-times color-red\"></i>";
 
@@ -240,7 +279,7 @@ foreach ($dir_arr as $lang){
 			}else{
 				echo $msgstr['cfg_file']." $base"."_avanzada.tab (".$msgstr["buscar_a"].") <i class=\"fas fa-check color-green\"></i><br>";
 			}
-			$archivo=$opac_conf."/$lang/$base"."_formatos.dat";
+			$archivo=$opac_db."$lang/$base"."_formatos.dat";
 			if (!file_exists($archivo)){
 				echo "File <strong>$base"."_formatos.dat</strong> (".$msgstr["select_formato"].") <i class=\"fas fa-times color-red\"></i><br>";
 				$err="S";
@@ -282,7 +321,8 @@ foreach ($dir_arr as $lang){
 
 			echo "</table>";
 			echo "<p><strong>Checking XML configuration</strong><p>" ;
-			$archivo=$opac_conf."/marc_sch.xml";
+			$archivo=$opac_db."marc_sch.xml";
+			//echo $archivo;
 			if (!file_exists($archivo)){
 				echo "XML default marc schema not configured";
 				die;
