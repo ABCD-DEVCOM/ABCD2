@@ -18,7 +18,7 @@ global $db_path,$Wxis,$xWxis;
 }
 if (isset($_REQUEST["db_path"]))
 	$db_path=$_REQUEST["db_path"];
-$query = "&cipar=$db_path"."par/".$_REQUEST["base"]. ".par&Expresion=".$_REQUEST["Expresion"]."&Opcion=buscar&base=".$_REQUEST["base"]."&Formato=".$_REQUEST["Formato"]."&lang=".$_REQUEST["lang"];
+$query = "&cipar=$db_path".$actparfolder."/".$_REQUEST["base"]. ".par&Expresion=".$_REQUEST["Expresion"]."&Opcion=buscar&base=".$_REQUEST["base"]."&Formato=".$_REQUEST["Formato"]."&lang=".$_REQUEST["lang"];
 $IsisScript=$xWxis."opac/buscar.xis";
 $contenido=WxisLLamar($_REQUEST["base"],$query,$IsisScript);
 foreach($contenido as $linea) {

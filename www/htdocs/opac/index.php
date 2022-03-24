@@ -56,7 +56,7 @@ var user = getCookie("ORBITA");
 
 </script>
 <?php
-if (!file_exists("php/opac_dbpath.dat")){
+if (!file_exists("opac_dbpath.dat")){
 
 include "start.php";
 
@@ -79,8 +79,8 @@ include "start.php";
 
 <form name=inicio method=post action=php/index.php>
 <?php
-if (file_exists("php/opac_dbpath.dat")){
-		$fp=file("php/opac_dbpath.dat");
+if (file_exists("opac_dbpath.dat")){
+		$fp=file("opac_dbpath.dat");
 		echo "DATABASE DIR: <select name=db_path id=db_path>\n";
 		foreach ($fp as $value){
 			if (trim($value)!=""){

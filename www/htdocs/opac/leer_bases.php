@@ -22,7 +22,7 @@ foreach ($fp as $value){
 		$ixb=$ixb+1;
 		$seq_bases[$ixb]=$v[0];
 		$desc_bd="";
-		$fr_01=file($db_path."opac_conf/".$lang."/".$v[0].".def");
+		$fr_01=file($db_path.$v[0]."/opac/".$lang."/".$v[0].".def");
 		foreach ($fr_01 as $bd_text){
 			if (trim($bd_text)!=""){
 				$desc_bd.=$bd_text;

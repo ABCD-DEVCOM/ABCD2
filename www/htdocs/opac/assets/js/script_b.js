@@ -8,12 +8,12 @@ function showhide(what,what2){
 	if (what.style.display=="none"){
 		what.style.display="inline";
 		if (arguments.length>1){
-			what2.src="../images/buttonm.gif"
+			what2.src="assets/images/buttonm.gif"
 		}
 	}else{
 		what.style.display="none"
 		if (arguments.length>1){
-			what2.src="../images/buttonp.gif"
+			what2.src="assets/images/buttonp.gif"
 		}
 		//document.getElementById(what2).src=Open.src
 	}

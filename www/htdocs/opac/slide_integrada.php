@@ -1,4 +1,11 @@
 <?php
+/**************** Modifications ****************
+
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
+
+
+***********************************************/
+
 $path="../";
 include("config.php");
 include("leer_bases.php");
@@ -33,7 +40,7 @@ $Formato="slide_show.pft";
 $ix=0;
 $contador=0;
 $base=$_REQUEST["base"];
-$query = "&base=$base&cipar=$db_path"."par/$base.par&Expresion=".urlencode($Expresion)."&Formato=$Formato&count=$count&from=$desde";
+$query = "&base=$base&cipar=$db_path".$actparfolder."/$base.par&Expresion=".urlencode($Expresion)."&Formato=$Formato&count=$count&from=$desde";
 $resultado=wxisLlamar($base,$query,$xWxis."buscar.xis");
 $salida="";
 

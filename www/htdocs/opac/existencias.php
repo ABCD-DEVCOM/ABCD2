@@ -13,7 +13,7 @@ $base=$ex[0];
 $kardex=$ex[1];
 $Expresion=$ex[2];
 $Inventario=$ex[3];
-$query = "&base=$base&cipar=$db_path"."par/$base.par&Expresion=".urlencode($Expresion)."&count=1&from=1&Formato=$Formato&Existencias=S";
+$query = "&base=$base&cipar=$db_path".$actparfolder."/$base.par&Expresion=".urlencode($Expresion)."&count=1&from=1&Formato=$Formato&Existencias=S";
 echo $query;
 $IsisScript="opac/buscar.xis";
 $resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -25,7 +25,7 @@ foreach ($resultado as $value){
 	}
 }
 echo "<table id=existencias>";
-$query = "&base=$kardex&cipar=$db_path"."par/$kardex.par&Expresion=$Inventario"."&Formato=@inven_detalle.pft";
+$query = "&base=$kardex&cipar=$db_path".$actparfolder."/$kardex.par&Expresion=$Inventario"."&Formato=@inven_detalle.pft";
 $IsisScript="opac/buscar.xis";
 $base="kardex";
 $resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);

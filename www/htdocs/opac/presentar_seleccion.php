@@ -29,7 +29,7 @@ header('Content-Type: text/html; charset=".$charset."');
 	<meta name="description" content="" />
 <!--<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset?>" />-->
 	<title><?php echo $TituloPagina?></title>
-	<link href="../styles/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
+	<link href="assets/styles/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
 
 	<link href="/assets/css/colors.css" rel="stylesheet"> 
 	<link href="/assets/css/buttons.css" rel="stylesheet"> 
@@ -38,10 +38,10 @@ header('Content-Type: text/html; charset=".$charset."');
 	<!--FontAwesome-->
 	<link href="/assets/css/all.min.css" rel="stylesheet"> 
 
-	<script src=../js/script_b.js?<?php echo time(); ?>></script>
-	<script src=../js/highlight.js?<?php echo time(); ?>></script>
-	<script src=../js/lr_trim.js></script>
-	<script src=../js/selectbox.js></script>
+	<script src=assets/js/script_b.js?<?php echo time(); ?>></script>
+	<script src=assets/js/highlight.js?<?php echo time(); ?>></script>
+	<script src=assets/js/lr_trim.js></script>
+	<script src=assets/js/selectbox.js></script>
 	<script>
 	function SendToWord(){
 		document.regresar.action="sendtoword.php"

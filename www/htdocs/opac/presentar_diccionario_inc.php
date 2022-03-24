@@ -1,5 +1,5 @@
 <?php
-global $terBd,$db_path,$LastKey,$bd_list,$path,$xWxis,$charset;
+global $terBd,$db_path,$LastKey,$bd_list,$path,$xWxis,$charset, $actparfolder;
 	$Prefijo=$_REQUEST["prefijo"];
 	$LastKey="";
 //  Se determinan las últimas claves presentadas para continuar con el recorrido del diccionario
@@ -34,7 +34,7 @@ global $terBd,$db_path,$LastKey,$bd_list,$path,$xWxis,$charset;
     		}else{
     			$hasta="count=100";
     		}
-			$query = "&base=$bd&cipar=$db_path"."par/$bd".".par&Formato=opac.pft&Opcion=diccionario&prefijo=$Prefijo&campo=Palabras&Diccio=$diccio&$hasta";
+			$query = "&base=$bd&cipar=$db_path".$actparfolder."/$bd".".par&Formato=opac.pft&Opcion=diccionario&prefijo=$Prefijo&campo=Palabras&Diccio=$diccio&$hasta";
 			//echo "</select><p>$bd,$query,$xWxis"."opac/ifp.xis"."<br>";
 			$contenido=wxisLlamar($bd,$query,$xWxis."opac/ifp.xis");
 			foreach ($contenido as $t){

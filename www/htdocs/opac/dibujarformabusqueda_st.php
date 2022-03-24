@@ -9,19 +9,27 @@ global $db_path,$msgstr;
 	}else{
 		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
 			if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
+
 				$c=explode('|',$_REQUEST["coleccion"]);
-				if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab"))
-					$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab";
-				else
-					$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_col.tab";
+				
+				if (file_exists($db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab")) {
+					$archivo=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab";
+				} else { 
+					$archivo=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_col.tab";
+				}
+			
 			}else{
-				$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab";
+			
+				$archivo=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab";
+			
 			}
+		
 		}else{
 			$mensaje=$msgstr["metasearch"];
 			$archivo=$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab";
 		}
 	}
+
 	if (!file_exists($archivo)){
 		echo "<br><br><font color=red><h4>";
 		if ($mensaje!="")
