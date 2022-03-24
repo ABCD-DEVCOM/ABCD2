@@ -1,4 +1,11 @@
 <?php
+/**************** Modifications ****************
+
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
+
+
+***********************************************/
+
 $mostrar_menu="N";
 include("../central/config_opac.php");
 
@@ -47,7 +54,7 @@ foreach ($seleccion as $base=>$value){
 			$lista_mfn.="/,'$mfn'";
 	}
 	//$lista_mfn.="/,";
-	$query = "&base=".$base."&cipar=$db_path"."par/$base".".par&Seleccionados=$lista_mfn&Opcion=seleccionados&lang=".$_REQUEST["lang"];
+	$query = "&base=".$base."&cipar=$db_path".$actparfolder."/$base".".par&Seleccionados=$lista_mfn&Opcion=seleccionados&lang=".$_REQUEST["lang"];
 	//echo $query;//die;
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/export_txt.xis");
 

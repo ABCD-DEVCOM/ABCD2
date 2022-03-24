@@ -18,7 +18,7 @@ include "../../common/inc_div-helper.php";
 $linea=array();
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$lang=$_REQUEST["lang"];
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$archivo=$db_path.$base."/opac/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
@@ -44,9 +44,9 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 }
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
-	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
-	copy($archivo,$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
-	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
+	$archivo=$db_path.$base."/opac/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
+	copy($archivo,$db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
+	echo "<p><font color=red>".$db_path.$base."/opac/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
 }
 
 function CopiarDe($iD,$name,$lang,$file){
@@ -108,18 +108,26 @@ global $msgstr,$db_path;
 	echo "<div style=\"display: table-row\">";
 	echo "<div style=\"display:table-cell;width:55%;text-align:left;margin-top:0;\">";
 	$cuenta=0;
+	
 	if ($base!="" and $base!="META"){
 	    $fp_campos=file($db_path.$base."/data/$base.fst");
 	    $cuenta=count($fp_campos);
     }
 
-	if (!file_exists($db_path."opac_conf/$lang/$file")){
+if ($base!="" and $base!="META"){
+	$file_av=$db_path.$base."/opac/$lang/$file";
+} else {
+	$file_av=$db_path."/opac_conf/$lang/$file";
+}
+
+
+	if (!file_exists($file_av)){
 		$fp=array();
 		for ($i=0;$i<10;$i++){
 			$fp[]="|";
 		}
 	}else{
-		$fp=file($db_path."opac_conf/$lang/$file");
+		$fp=file($file_av);
 		$fp[]='|';
 		$fp[]='|';
 		$fp[]='|';

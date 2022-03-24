@@ -163,7 +163,7 @@ if (count($index_alfa)>1){
 <?php
 $comp="XXXXX";
 $cuenta=0;
-if (file_exists($db_path."opac_config/xxcolecciones.tab")){
+if (file_exists($db_path."opac_config/colecciones.tab")){
 	echo "<tr><td align=right>Filtrar por colección: </td>";
 		echo "<td><xselect name=coleccion onchange='javascript:document.buscar.Expresion.value=\"\";IrA();'>
 		<option value=''></option>\n";
@@ -280,22 +280,21 @@ if ($ixc>0 ){
 
 </form>
 
-<script>
-ultimo="";
 <?php
 //$UltimoTermino=substr($mayorclave,strlen($_REQUEST["prefijo"]));
 $prefijo=$_REQUEST["prefijoindice"];
+$primero=urlencode(substr($primerTermino,strlen($prefijo)));
+?>
 
+<script>
 
-echo urlencode(substr($UltimoTermino,strlen($prefijo)));
-//echo $UltimoTermino;
-echo "'
-primero='";
-echo urlencode(substr($primerTermino,strlen($prefijo)));
-echo "'
+ultimo="<?php echo urlencode(substr($UltimoTermino,strlen($prefijo)));?>";
+
+primero="<?php echo $primero;?>";
+
 </script>
 
-";
+<?php
 }
 ?>
 

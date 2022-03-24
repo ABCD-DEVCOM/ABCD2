@@ -19,7 +19,8 @@ include "../../common/inc_div-helper.php";
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$fp=file($_REQUEST["archivo"]);
-	$archivo=$db_path."opac_conf/".$_REQUEST["archivo"];
+	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["archivo"];
+	echo $archivo;
 	$fout=fopen($archivo,"w");
 	foreach ($fp as $value){
 		fwrite($fout,$value);
@@ -44,7 +45,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$fp=file($archivo);
 ?>
 
-	<textarea class="col-12" readonly cols=100 rows=10>
+	<textarea class="col-12" cols=100 rows=10>
 <?php
 	foreach ($fp as $value){
 		echo "$value";

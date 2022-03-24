@@ -16,7 +16,7 @@ include "../../common/inc_div-helper.php";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$archivo=$db_path.$base."/opac/$lang/".$_REQUEST["file"];
 
 	foreach ($_REQUEST as $var=>$value){
 		if (trim($value)!=""){
@@ -77,9 +77,9 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
-	$archivo=$db_path."opac_conf/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
-	copy($archivo,$db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
-	echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
+	$archivo=$db_path.$base."/opac/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
+	copy($archivo,$db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
+	echo "<p><font color=red>".$db_path.$base."/opac/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
 }
 
 
@@ -136,7 +136,7 @@ global $db_path, $archivo_conf;
 	echo "<br>copiar de: ";
 	echo "<select name=lang_copy onchange='Copiarde(\"$iD\",\"$name\",\"$lang\",\"$file\")' id=lang_copy > ";
 	echo "<option></option>\n";
-	$fp=file($db_path."opac_conf/$lang/lang.tab");
+	$fp=file($db_path.$base."/opac/$lang/lang.tab");
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$a=explode("=",$value);
@@ -155,7 +155,14 @@ global $msgstr,$db_path;
 	echo "<div style=\"display: flex;\">";
 	$cuenta=0;
 	if ($base!="" and $base!="META"){
-	    $fp_campos=file($db_path.$base."/pfts/".$_REQUEST["lang"]."/formatos.dat");
+
+		$file_campos=$db_path.$base."/pfts/".$_REQUEST["lang"]."/formatos.dat";
+	    
+	    if(file_exists($file_campos)) {
+			$fp_campos=file($file_campos);
+		} else {
+			$fp_campos=file($db_path.$base."/pfts/en/formatos.dat");	    	
+		}
 
 	    $cuenta=count($fp_campos);
     }
@@ -168,12 +175,12 @@ global $msgstr,$db_path;
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-	echo "<strong>opac_conf/$lang/$file</strong><br>";
+	echo "<strong>$base/opac/$lang/$file</strong><br>";
 	echo "<font color=red><strong>".$msgstr["no_pft_ext"]."</strong></font><br>";
 	$cuenta_00=0;
 
-		if (file_exists($db_path."opac_conf/$lang/$file")){
-			$fp=file($db_path."opac_conf/$lang/$file");
+		if (file_exists($db_path.$base."/opac/$lang/$file")){
+			$fp=file($db_path.$base."/opac/$lang/$file");
 			$cuenta_00=count($fp);
 		}
 
@@ -190,7 +197,6 @@ global $msgstr,$db_path;
 
 	$row=$row+1;
 
-
 		if (trim($value)!=""){
 			$l=explode('|',$value);
 			$ix=$ix+1;
@@ -205,16 +211,14 @@ global $msgstr,$db_path;
 			echo "</td>\n";
 			echo "</tr>";
 		}
-
-
-
-
 	}
+
 	echo "<tr><td colspan=2 align=center> ";
 	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD."\"></td></tr>";
 	echo "</table>\n";
 	echo "</div>\n";
 	echo "<div style=\"flex: 1\">";
+
 	if ($cuenta>0){
 		echo "<strong>$base/$lang/formatos.dat</strong><br>";
 		echo "<table bgcolor=#cccccc cellpadding=5>\n";

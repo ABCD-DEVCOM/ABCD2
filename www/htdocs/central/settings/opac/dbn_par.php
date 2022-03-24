@@ -48,7 +48,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 				$par_array[$p[0]]=$p[1];
 			}
 		}
-		$archivo=$db_path."opac_conf/$lang/$base"."_formatos.dat";
+		$archivo=$db_path.$base."/opac/$lang/$base"."_formatos.dat";
 		if (!file_exists($archivo)){
 			echo "Error. File <strong>$base"."_formatos.dat</strong> (".$msgstr["select_formato"].") not found<br>";
 			$err="S";
@@ -76,7 +76,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 						}
 						echo "</td>";
 						if ($pft_name=="select_record")
-							$path=$db_path."opac_conf/$pft_name.pft";
+							$path=$db_path."opac_conf/$lang/$pft_name.pft";
 						else
 							if ($pft_name=="autoridades_opac")
 							    $path=$db_path.$base."/pfts/autoridades_opac.pft";
@@ -104,7 +104,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 				$value=trim($value);
 				if ($value!=""){
 					if ($value=="select_record"){
-						$par_array[$value.".pft"]="%path_database%opac_conf/$value.pft";
+						$par_array[$value.".pft"]="%path_database%opac_conf/%lang%/$value.pft";
 					}else{
 						if ($value=="autoridades_opac")
 							$par_array[$value.".pft"]="%path_database%$base/pfts/$value.pft";

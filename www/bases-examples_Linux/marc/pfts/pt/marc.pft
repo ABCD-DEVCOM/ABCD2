@@ -369,12 +369,6 @@ if p(v510^b) then v510^b,'.' ,fi
 
 '<!-- FIM Analíticas 773 -->'
 
-'<!-- Itens na loanobjects -->'
-
-if ref(['loanobjects'] l(['loanobjects'],"CN_MARC_"v1),v959^i,)<>'' then '<tr class="mrc"><th class="mrc">Itens</th><td class="mrc">'ref(['loanobjects'] l(['loanobjects'],"CN_MARC_"v1),v959^i+|; |,)
-'</td></tr>' fi,
-
-'<!-- FIM Itens na loanobjects -->'
 
 '</table>'
 

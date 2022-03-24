@@ -41,6 +41,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 	}
 
+
     $fout=fopen($archivo_conf,"w");
 	foreach ($cod_idioma as $key=>$value){
 		fwrite($fout,$value."|".$nom_idioma[$key]."\n");
@@ -51,7 +52,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	die;
 
 }
-
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 
@@ -94,7 +94,6 @@ echo "<strong>". $name;
 	$cuenta=0;
 	if ($base!="" and $base!="META"){
 	    $fp_campos[$base]=file($db_path.$base."/pfts/".$_REQUEST["lang"]."/camposbusqueda.tab");
-
 	    $cuenta=count($fp_campos);
     }
     if ($base!="" and $base=="META"){
@@ -126,8 +125,9 @@ echo "<strong>". $name;
 	}
 	echo "<strong>opac_conf/$lang/$file</strong><br>";
 	$cuenta_00=0;
-	if (file_exists($db_path."opac_conf/$lang/$file")){
-		$fp=file($db_path."opac_conf/$lang/$file");
+
+	if (file_exists($db_path.$base."/opac/$lang/$file")){
+		$fp=file($db_path.$base."/opac/$lang/$file");
 		$cuenta_00=count($fp);
 		if ($cuenta_00==0) $fp=array('||');
 	} else{
@@ -136,8 +136,17 @@ echo "<strong>". $name;
 $ix=3;	
   	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 	echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>";
-if (file_exists($db_path."opac_conf/$lang/$file")){
-	$fp=file($db_path."opac_conf/$lang/$file");
+
+if ($base!="" and $base!="META"){
+	$file_av=$db_path.$base."/opac/$lang/$file";
+} else {
+	$file_av=$db_path."/opac_conf/$lang/$file";
+}
+
+
+if (file_exists($file_av)){
+	$fp=file($file_av);
+	
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$l=explode('|',$value);

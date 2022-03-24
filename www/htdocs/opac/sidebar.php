@@ -13,8 +13,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	echo "<ul>\n";
 
 	foreach ($bd_list as $key => $value){
-		$archivo=$db_path."opac_conf/".$lang."/".$key."_colecciones.tab";
-
+		$archivo=$db_path.$key."/opac/".$lang."/".$key."_colecciones.tab";
 		$ix=0;
 		$value_info="";
 		$home_link="*";

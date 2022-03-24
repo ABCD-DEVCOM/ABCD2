@@ -5,12 +5,14 @@
 </a>'
 
 '<script>
-cookie=getCookie("ORBITA")+"|"
+cookie=getCookie("ORBITA")+"|";
 
 console.log(cookie.indexOf("c_',mstname,'_'f(mfn,1,0),'|"));
 
-if (cookie.indexOf("c_',mstname,'_'f(mfn,1,0),'|")!=-1)
+if (cookie.indexOf("c_',mstname,'_'f(mfn,1,0),'|")!=-1){
     document.getElementById("c_'mstname'_'f(mfn,1,0)'").setAttribute("checked", "checked");
-else
+} else {
     document.getElementById("c_'mstname'_'f(mfn,1,0)'").removeAttribute("checked", "");
+}
+
 </script>'/

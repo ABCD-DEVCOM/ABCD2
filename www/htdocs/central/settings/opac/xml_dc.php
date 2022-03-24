@@ -41,7 +41,7 @@ if (isset($_REQUEST["Opcion"])){
 		echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 		echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
 		echo "<input type=hidden name=cookie>\n";
-		$archivo=$db_path."opac_conf/".$_REQUEST["base"]."_dcxml.tab";
+		$archivo=$db_path.$base."/opac/".$_REQUEST["base"]."_dcxml.tab";
 		$lang=$_REQUEST["lang"];
 		$fout=fopen($archivo,"w");
 		$pft="";
@@ -154,8 +154,8 @@ global $msgstr,$db_path,$charset;
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-    if (file_exists($db_path."opac_conf/".$base."_dcxml.tab")){
-		$dc_scheme=$db_path."opac_conf/".$base."_dcxml.tab";
+    if (file_exists($db_path.$base."/opac/".$base."_dcxml.tab")){
+		$dc_scheme=$db_path.$base."/opac/".$base."_dcxml.tab";
 	}else{
 		if (file_exists($db_path."opac_conf/dc_sch.xml"))
 			$dc_scheme=$db_path."opac_conf/dc_sch.xml";

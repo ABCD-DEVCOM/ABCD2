@@ -1,4 +1,11 @@
 <?php
+/**************** Modifications ****************
+
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
+
+
+***********************************************/
+
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
 include("../central/config_opac.php");
 include("leer_bases.php");
@@ -21,8 +28,8 @@ function SelectFormato($base,$db_path,$msgstr){
 	$PFT="";
 	$Formato="";
 	$archivo=$base."_formatos.dat";
-	if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$archivo)){
-		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$archivo);
+	if (file_exists($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo)){
+		$fp=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo);
 	}else{
 		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
 		die;
@@ -176,7 +183,7 @@ switch ($_REQUEST["Opcion"]){
 			}
 		}else{
             if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
-				$fav=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab");
+				$fav=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab");
 			else
 				$fav=file($db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab");
 			$ix=-1;
@@ -259,10 +266,11 @@ switch ($_REQUEST["Opcion"]){
 		}
         break;
 }
-if ($Expresion=="") $Expresion='$';
-$_REQUEST["Expresion"]=$Expresion;
-
-
+if ($Expresion=="") { 
+	$Expresion='$';
+} else {
+	$_REQUEST["Expresion"]=$Expresion;
+}
 
 if (isset($_REQUEST["prefijo"]) or $_REQUEST["Opcion"]=="detalle") {
 	$formula=explode('$#$',$Expresion);
@@ -332,7 +340,7 @@ foreach ($bd_list as $base=>$value){
        	$cipar=$base;
     if (($Expresion=="" or $Expresion=='$') and (!isset($Expresion_col) or $Expresion_col=="") ){
        	$status="Y";
-       	$query = "&base=$base" . "&cipar=$db_path"."par/".$base.".par&Opcion=status&lang=".$_REQUEST["lang"];
+       	$query = "&base=$base" . "&cipar=$db_path".$actparfolder."/".$base.".par&Opcion=status&lang=".$_REQUEST["lang"];
        	$IsisScript="opac/status.xis";
        	$busqueda_decode["$base"]='$';
     }else{
@@ -356,7 +364,7 @@ foreach ($bd_list as $base=>$value){
         else
         	$busqueda_decode[$base]=$busqueda;
         if ($busqueda_decode[$base]=="") $busqueda_decode[$base]='$';
-		$query = "&base=$base&cipar=$db_path"."par/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
+		$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
 	}
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -580,7 +588,7 @@ if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR
   			$bb=$_REQUEST["base"];
         else
         	$bb=$primera_base;
-       	$query = "&base=$bb&cipar=$db_path"."par/$bb".".par&Expresion=".urlencode($ex)."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
+       	$query = "&base=$bb&cipar=$db_path".$actparfolder."/$bb".".par&Expresion=".urlencode($ex)."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
 		$resultado=wxisLlamar($bb,$query,$xWxis.$IsisScript);
 		$primeravez="S";
 		foreach ($resultado as $value) {

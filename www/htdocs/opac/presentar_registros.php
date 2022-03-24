@@ -7,7 +7,7 @@
 
 
 function PresentarExistencias($Existencias){
-global $db_path,$xWxis,$msgstr;
+global $db_path,$xWxis,$msgstr, $actparfolder;
 	$e=explode(';',$Existencias);
 	$base=$e[1];
 	echo "<table id=existencias>";
@@ -26,7 +26,7 @@ global $db_path,$xWxis,$msgstr;
 }
 
 function PresentarExpresion($base){
-global $yaidentificado,$db_path,$msgstr;
+global $yaidentificado,$db_path,$msgstr,  $actparfolder;
 	if (isset($_REQUEST["Sub_Expresion"])) {
 		if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 			$col=explode('|',$_REQUEST["coleccion"]);
@@ -110,7 +110,7 @@ global $yaidentificado,$db_path,$msgstr;
 }
 
 function PresentarRegistros($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
-global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr;
+global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="")
     	$cipar=$_REQUEST["cipar"];
     else

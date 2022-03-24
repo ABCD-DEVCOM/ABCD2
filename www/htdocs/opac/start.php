@@ -1,4 +1,11 @@
 <?php
+/**************** Modifications ****************
+
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
+
+
+***********************************************/
+
 $_REQUEST["modo"]="integrado";
 if (file_exists("opac_dbpath.dat")){
 	$fp=file("opac_dbpath.dat");
@@ -14,8 +21,9 @@ if (file_exists("opac_dbpath.dat")){
 		}
 	}
 }
+
 include("../central/config_opac.php");
-$path="../";
+
 include("leer_bases.php");
 $primeraPagina="S";
 include("head.php");
@@ -26,7 +34,7 @@ function LeerRegistro($Expresion,$base){
 	$Formato="opac";
 	$salida="";
 	if (trim($Expresion)!=""){
-		$query = "&base=$base&cipar=$db_path"."par/$base.par&Expresion=".urlencode($Expresion)."&count=1&from=1&Formato=$Formato";
+		$query = "&base=$base&cipar=$db_path".$actparfolder."/$base.par&Expresion=".urlencode($Expresion)."&count=1&from=1&Formato=$Formato";
 		$resultado=wxisLlamar($base,$query,$xWxis."buscar.xis");
 		foreach ($resultado as $value) {
 			$value=trim($value);

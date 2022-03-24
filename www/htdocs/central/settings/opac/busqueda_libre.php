@@ -22,7 +22,7 @@ if (!isset($_SESSION["db_path"])){
 $db_path=$_SESSION["db_path"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	
-	$archivo_conf=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$archivo_conf=$db_path.$_REQUEST['base']."/opac/$lang/".$_REQUEST["file"];
 
 	foreach ($_REQUEST as $var=>$value){
 		if (trim($value)!=""){
@@ -131,8 +131,8 @@ echo "<strong>". $name;
 	}
 	echo "<strong>opac_conf/$lang/$file</strong><br>";
 	$cuenta_00=0;
-	if (file_exists($db_path."opac_conf/$lang/$file")){
-		$fp=file($db_path."opac_conf/$lang/$file");
+	if (file_exists($db_path.$base."/opac/$lang/$file")){
+		$fp=file($db_path.$base."/opac/$lang/$file");
 		$cuenta_00=count($fp);
 		if ($cuenta_00==0) $fp=array('||');
 	} else{
@@ -141,8 +141,19 @@ echo "<strong>". $name;
 $ix=0;	
   	echo "<table bgcolor=#cccccc cellpadding=5>\n";
 echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>";
-if (file_exists($db_path."opac_conf/$lang/$file")){
-	$fp=file($db_path."opac_conf/$lang/$file");
+
+
+if ($base!="" and $base!="META"){
+	$file_av=$db_path.$base."/opac/$lang/$file";
+} else {
+	$file_av=$db_path."/opac_conf/$lang/$file";
+}
+
+
+if (file_exists($file_av)){
+	$fp=file($file_av);
+
+	
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$l=explode('|',$value);

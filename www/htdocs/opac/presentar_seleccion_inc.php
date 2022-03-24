@@ -1,7 +1,13 @@
 <?php
+/**************** Modifications ****************
 
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
+
+
+***********************************************/
+	
 function DeterminarReservasActivas($db_path,$base,$lang,$msgstr,$Ctrl){
-global $arrHttp,$xWxis;
+global $arrHttp,$xWxis, $actparfolder;
 	$data="";
 	$Disp_format="rsvr.pft";
 	$Pft=$db_path."reserve/pfts/".$lang."/".$Disp_format;
@@ -25,7 +31,7 @@ global $arrHttp,$xWxis;
 //echo $Expresion." ";
 //echo "<a href=\"javascript:Eliminar('$Expresion')\">eliminar</a>";
 	$Expresion=urlencode($Expresion);
-	$query = "&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Opcion=buscar&Formato=".$Pft;
+	$query = "&base=reserve&cipar=$db_path".$actparfolder."/reserve.par&Expresion=$Expresion&Opcion=buscar&Formato=".$Pft;
 	if ($Sort==""){
 		$IsisScript=$xWxis."opac/buscar.xis";
 	}else{
@@ -38,7 +44,7 @@ global $arrHttp,$xWxis;
 }
 
 function PresentarRegistros($base,$db_path,$Lista_Mfn){
-global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp;
+global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actparfolder, $num_control;
 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!=""){
 	    	$cipar=$_REQUEST["cipar"];
 	   } else {
@@ -68,7 +74,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp;
     	}
     }
     $Pft="";
-    $archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$base."_formatos.dat";
+    $archivo=$db_path.$base."/opac/".$_REQUEST["lang"]."/".$base."_formatos.dat";
     $fp=file($archivo);
     $primeravez="S";
     foreach ($fp as $ff){
@@ -91,7 +97,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp;
    	$Pft=$Fmt_reserva.'`#$$$#`,';
     $Pft.=$Fmt_control.'`#$$$#`,';
 	$Pft.="@".$fconsolidado.".pft,";
-	$query = "&base=$base&cipar=$db_path"."par/$cipar.par&Mfn=$Lista_Mfn&Formato=$Pft&Opcion=buscar&lang=".$_REQUEST["lang"];
+	$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Mfn=$Lista_Mfn&Formato=$Pft&Opcion=buscar&lang=".$_REQUEST["lang"];
 	//echo "$query<br>";
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/imprime_sel.xis");
 
@@ -136,7 +142,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp;
 			if (isset($f[3]))
 				$reverse="ON";
 			$IsisScript=$xWxis."opac/buscar.xis";
-			$query = "&cipar=$db_path"."par/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$_REQUEST["lang"];
+			$query = "&cipar=$db_path".$actparfolder."/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$_REQUEST["lang"];
 			if ($reverse!=""){
 				$query.="&reverse=On";
 			}

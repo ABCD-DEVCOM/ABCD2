@@ -1,4 +1,11 @@
 <?php
+/**************** Modifications ****************
+
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
+
+
+***********************************************/
+
 $mostrar_menu="N";
 include("../central/config_opac.php");
 //header('Content-Type: text/html; charset=".$charset."');
@@ -43,7 +50,7 @@ foreach ($list as $value){
 }
 
 	echo "<html>";
-  	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$charset\">";
+  	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
   	echo "<body>";
 foreach ($seleccion as $base=>$value){
 	echo "<hr style=\"border: 5px solid #cccccc;border-radius: 5px;\">";
@@ -55,7 +62,7 @@ foreach ($seleccion as $base=>$value){
 		else
 			$lista_mfn.="/,'$mfn'";
 	}
-	$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$base."_formatos.dat";
+	$archivo=$db_path.$base."/opac/".$_REQUEST["lang"]."/".$base."_formatos.dat";
     $fp=file($archivo);
     $primeravez="S";
     foreach ($fp as $ff){
@@ -73,7 +80,7 @@ foreach ($seleccion as $base=>$value){
     		}
     	}
     }
-	$query = "&base=".$base."&cipar=$db_path"."par/$base".".par&Mfn=$lista_mfn&Formato=@$fconsolidado.pft&lang=".$_REQUEST["lang"];
+	$query = "&base=".$base."&cipar=$db_path".$actparfolder."/$base".".par&Mfn=$lista_mfn&Formato=@$fconsolidado.pft&lang=".$_REQUEST["lang"];
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/imprime_sel.xis");
 
 	foreach($resultado as $salida)  {

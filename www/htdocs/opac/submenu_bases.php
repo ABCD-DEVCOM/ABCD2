@@ -52,10 +52,10 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N"){
 		$archivo="";
 		if (isset($_REQUEST["modo"])){
-			IF ($_REQUEST["modo"]=="integrado"){
-				$archivo=$db_path."opac_conf/".$lang."/indice.ix";
+			if ($_REQUEST["modo"]=="integrado"){
+				$archivo=$db_path."/opac_conf/".$lang."/indice.ix";
 			}else{
-				$archivo=$db_path."opac_conf/".$lang."/".$_REQUEST["base"].".ix";
+				$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"].".ix";
 			}
 		}
 		if (file_exists($archivo)){
@@ -98,6 +98,8 @@ if ($multiplesBases=="S" and isset($_REQUEST["base"])){
 	$base="";
 	$dbname="";
 }
+
+
 if (isset($Home))
 	   echo "<li><a href=$Home>Home</a></li>\n";
 $multipleBases="S";
@@ -105,17 +107,22 @@ $multipleBases="S";
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
 	$archivo="indice.ix";
 	$base="";
+	$file_ix=$db_path."opac_conf/".$lang."/".$archivo;
 }else{
 	if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 		$col=explode("|",$_REQUEST["coleccion"]);
 		$archivo=$_REQUEST["base"].'_'.$col[0].".ix";
+		$file_ix=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$archivo;
 	}else{
 		$archivo=$_REQUEST["base"].".ix";
+		$file_ix=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$archivo;
 	}
+
 	$base=$_REQUEST["base"];
 }
-if (file_exists($db_path."opac_conf/".$lang."/$archivo")){
-	$fp=file($db_path."opac_conf/".$lang."/$archivo");
+
+if (file_exists($file_ix)){
+	$fp=file($file_ix);
 	foreach ($fp as $value){
 		$val=trim($value);
 		if ($val!=""){
@@ -135,10 +142,11 @@ if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){
 	$archivo=$_REQUEST["base"]."_libre.tab";
 }
 //echo $archivo;
-if (!file_exists($db_path."opac_conf/".$lang."/$archivo")){
+if (!file_exists($db_path.$base."/opac/".$lang."/$archivo")){
 	$prefijo="TW_";
 }else{
-	$fp=file($db_path."opac_conf/".$lang."/$archivo");
+	$fp=file($db_path.$base."/opac/".$lang."/$archivo");
+
 	foreach ($fp as $linea){
 		$linea=trim($linea);
 		if ($linea!=""){
@@ -148,6 +156,7 @@ if (!file_exists($db_path."opac_conf/".$lang."/$archivo")){
 		}
 	}
 }
+
 ?>
 
 		</ul>
