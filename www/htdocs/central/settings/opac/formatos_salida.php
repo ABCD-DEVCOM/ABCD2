@@ -16,7 +16,7 @@ include "../../common/inc_div-helper.php";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
-	$archivo=$db_path.$base."/opac/$lang/".$_REQUEST["file"];
+	$archivo_conf=$db_path.$_REQUEST['base']."/opac/$lang/".$_REQUEST["file"];
 
 	foreach ($_REQUEST as $var=>$value){
 		if (trim($value)!=""){
@@ -37,7 +37,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 	}
 
-    $fout=fopen($archivo,"w");
+    $fout=fopen($archivo_conf,"w");
     $ix=0;
 	foreach ($cod_idioma as $key=>$value){
 	$ix=$ix+1;
@@ -55,7 +55,10 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 //		echo $value."|".$nom_idioma[$key].$salida."<br>";
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+?>
+<p class="color-green"><strong><?php echo $archivo_conf." ".$msgstr["updated"];?></strong></p>
+
+<?php
 	die;
 
 
@@ -77,8 +80,8 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
-	$archivo=$db_path.$base."/opac/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
-	copy($archivo,$db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
+	$archivo_conf=$db_path.$base."/opac/".$_REQUEST["lang_copiar"]."/".$_REQUEST["archivo"];
+	copy($archivo_conf,$db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["archivo"]);
 	echo "<p><font color=red>".$db_path.$base."/opac/$lang/".$_REQUEST["archivo"]." ".$msgstr["copiado"]."</font>";
 }
 
@@ -91,8 +94,8 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
     <?php
 
 //DATABASES
-$archivo=$db_path."opac_conf/$lang/bases.dat";
-$fp=file($archivo);
+$archivo_conf=$db_path."opac_conf/$lang/bases.dat";
+$fp=file($archivo_conf);
 if ($_REQUEST["base"]=="META"){
 	Entrada("MetaSearch",$msgstr["metasearch"],$lang,"formatos.dat","META");
 }else{

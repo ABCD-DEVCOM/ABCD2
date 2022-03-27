@@ -18,7 +18,7 @@ include "../../common/inc_div-helper.php";
 $linea=array();
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$lang=$_REQUEST["lang"];
-	$archivo=$db_path.$base."/opac/$lang/".$_REQUEST["file"];
+	$archivo=$db_path.$_REQUEST['base']."/opac/$lang/".$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
@@ -40,7 +40,11 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	}
 
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+?>
+
+<p class="color-green"><strong><?php echo $archivo." ".$msgstr["updated"];?></strong></p>
+
+<?php
 
 }
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){

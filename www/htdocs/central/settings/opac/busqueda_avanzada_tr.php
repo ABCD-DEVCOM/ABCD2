@@ -20,7 +20,7 @@ if (!isset($_SESSION["db_path"])){
 $db_path=$_SESSION["db_path"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	
-	$archivo_conf=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$archivo_conf=$db_path.$_REQUEST['base']."/opac/$lang/".$_REQUEST["file"];
 
 	foreach ($_REQUEST as $var=>$value){
 		if (trim($value)!=""){
@@ -47,7 +47,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	//	echo $value."|".$nom_idioma[$key]."<br>";
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+    echo "<p><font color=red>". $_REQUEST['base']."/opac/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
 	die;
 
 }
@@ -97,23 +97,24 @@ foreach ($fp as $value){
 function Entrada($iD,$name,$lang,$file,$nombre_c,$TM,$base){
 global $msgstr,$db_path;
 	echo "<strong>". $name." - ".$nombre_c."</strong></a>";
-	echo "<div  id='$iD$TM' style=\"border:1px solid; display:block;\">\n";
+	echo "<div  id='$iD$TM' style=\"border-bottom:1px solid; display:block;\">\n";
 	echo "<form name=$iD$TM"."Frm method=post>\n";
 	echo "<input type=hidden name=Opcion value=Guardar>\n";
-    echo "<input type=hidden name=base value=$iD>\n";
-    echo "<input type=hidden name=file value=\"$file\">\n";
-    echo "<input type=hidden name=lang value=\"$lang\">\n";
-    if (isset($_REQUEST["conf_level"])){
+   echo "<input type=hidden name=base value=$iD>\n";
+   echo "<input type=hidden name=file value=\"$file\">\n";
+   echo "<input type=hidden name=lang value=\"$lang\">\n";
+   
+   if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-	echo "<strong>opac_conf/$lang/$file</strong><br>";
-	if (!file_exists($db_path."opac_conf/$lang/$file")){
+	echo "<strong>".$_REQUEST['base']."/opac/".$lang."/".$file."</strong><br>";
+	if (!file_exists($db_path.$_REQUEST['base']."/opac/$lang/$file")){
 		$fp=array();
 		for ($i=0;$i<10;$i++){
 			$fp[]="||";
 		}
 	}else{
-		$fp=file($db_path."opac_conf/$lang/$file");
+		$fp=file($db_path.$_REQUEST['base']."/opac/$lang/$file");
 		$fp[]='||';
 		$fp[]='||';
 		$fp[]='||';

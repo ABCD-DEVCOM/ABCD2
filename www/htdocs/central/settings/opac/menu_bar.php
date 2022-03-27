@@ -105,8 +105,8 @@ if (file_exists($db_path."opac_conf/".$lang."/bases.dat") and file_exists($db_pa
 				$base=$x[0];
 				echo "<ul>";
 				?>
-            	<li><a href="javascript:SeleccionarProceso('busqueda_libre.php','<?php echo $base?>')"><?php echo $msgstr["free_search"];?></a></li>
-				<li><a href="javascript:SeleccionarProceso('busqueda_avanzada.php','<?php echo $base?>')"><?php echo $msgstr["buscar_a"];?></a></li>
+            	<li><a href="javascript:SeleccionarProceso('edit_form-search.php','<?php echo $base?>','libre')"><?php echo $msgstr["free_search"];?></a></li>
+				<li><a href="javascript:SeleccionarProceso('edit_form-search.php','<?php echo $base?>','avanzada')"><?php echo $msgstr["buscar_a"];?></a></li>
 				<li><a href="javascript:SeleccionarProceso('formatos_salida.php','<?php echo $base?>')"><?php echo $msgstr["select_formato"];?></a></li>
 				<li><a href="javascript:SeleccionarProceso('dbn_par.php','<?php echo $base?>')"><?php echo $msgstr["dbn_par"];?></a></li>
 				<li><a href="javascript:SeleccionarProceso('facetas_cnf.php','<?php echo $base?>')"><?php echo $msgstr["facetas"];?></a></li>
@@ -132,10 +132,10 @@ if (file_exists($db_path."opac_conf/".$lang."/bases.dat") and file_exists($db_pa
 			echo "<li><a href=#><strong>".$msgstr["metasearch"]."</strong></a>";
 			echo "<ul>";
 		?>
-  			<li><a href="javascript:SeleccionarProceso('busqueda_libre.php','META')"><?php echo $msgstr["free_search"];?></a></li>
-			<li><a href="javascript:SeleccionarProceso('busqueda_avanzada.php','META')"><?php echo $msgstr["buscar_a"];?></a></li>
-    		<li><a href="javascript:SeleccionarProceso('facetas_cnf.php','META')"><?php echo $msgstr["facetas"];?></a></li>
-    		<li><a href="javascript:SeleccionarProceso('alpha_ix.php','META')"><?php echo $msgstr["indice_alfa"];?></a></li>
+  			<li><a href="javascript:SeleccionarProceso('edit_form-search.php','META','libre')"><?php echo $msgstr["free_search"];?></a></li>
+			<li><a href="javascript:SeleccionarProceso('edit_form-search.php','META','avanzada')"><?php echo $msgstr["buscar_a"];?></a></li>
+    		<li><a href="javascript:SeleccionarProceso('facetas_cnf.php','META','')"><?php echo $msgstr["facetas"];?></a></li>
+    		<li><a href="javascript:SeleccionarProceso('alpha_ix.php','META','')"><?php echo $msgstr["indice_alfa"];?></a></li>
     		</ul></li>
 <?php }
 }
@@ -204,11 +204,15 @@ if (file_exists($db_path."opac_conf/".$lang."/bases.dat") and file_exists($db_pa
 		</nav>
         </form>
 </div>
-<form name=opciones_menu method=post>
+<form name="opciones_menu" method="post">
+
 <?php if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
-<input type=hidden name=base>
-<input type=hidden name=lang value=<?php echo $lang;?>>
-<input type=hidden name=db_path value=<?php echo $_REQUEST["db_path"]?>>
+
+<input type="hidden" name="base">
+<input type="hidden" name="lang" value="<?php echo $lang;?>">
+<input type="hidden" name="o_conf">
+<input type="hidden" name="db_path" value="<?php echo $_REQUEST["db_path"]?>">
+
 </form>
