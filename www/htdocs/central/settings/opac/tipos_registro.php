@@ -16,7 +16,7 @@ include "../../common/inc_div-helper.php";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$archivo=$db_path.$_REQUEST['base']."/opac/$lang/".$_REQUEST["file"];
 	foreach ($_REQUEST as $var=>$value){
 		if (trim($value)!=""){
 			$code=explode("_",$var);
@@ -50,7 +50,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 
 	fclose($fout);
-    echo "<h4 class='color-green'>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</h4>";
+    echo "<h4 class='color-green'>".$archivo." ".$msgstr["updated"]."</h4>";
 	die;
 }
 ?>
@@ -106,13 +106,13 @@ global $msgstr,$db_path;
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
 	echo "<strong>opac_conf/$lang/$file</strong><br>";
-	if (!file_exists($db_path."opac_conf/$lang/$file")){
+	if (!file_exists($db_path.$_REQUEST['base']."/opac/$lang/$file")){
 		$fp=array();
 		for ($i=0;$i<8;$i++){
 			$fp[]="||";
 		}
 	}else{
-		$fp=file($db_path."opac_conf/$lang/$file");
+		$fp=file($db_path.$_REQUEST['base']."/opac/$lang/$file");
 		$fp[]='||';
 		$fp[]='||';
 		$fp[]='||';

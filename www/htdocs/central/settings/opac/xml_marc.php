@@ -26,7 +26,11 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$Pft=$_REQUEST["Pft"];
 	fwrite($fout,$Pft."\n");
 	fclose($fout);
-    echo "<p><h3><font color=red>". $_REQUEST["base"]."/pfts/marc2xml.pft"." ".$msgstr["updated"]."</font></h3>";
+?>
+
+<p class="color-green"><strong><?php echo $archivo." ".$msgstr["updated"];?></strong></p>
+
+<?php
     die;
 }
 

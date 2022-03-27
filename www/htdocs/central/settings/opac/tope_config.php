@@ -52,9 +52,10 @@ function SeleccionarBase(Base){
 	document.forma1.submit()
 }
 
-function SeleccionarProceso(Proceso,Base){
+function SeleccionarProceso(Proceso,Base,Conf){
 	document.opciones_menu.action=Proceso
 	document.opciones_menu.base.value=Base
+	document.opciones_menu.o_conf.value=Conf
 	document.opciones_menu.submit()
 }
 

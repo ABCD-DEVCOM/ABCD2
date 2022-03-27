@@ -19,7 +19,7 @@ include "../../common/inc_div-helper.php";
 
 <?php
 
-include($ABCD_scripts_path."opac/php/leer_bases.php");
+include($ABCD_scripts_path."opac/leer_bases.php");
 ?>
 <style>
 	#wwrapper {

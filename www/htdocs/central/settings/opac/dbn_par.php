@@ -15,11 +15,9 @@ include "../../common/inc_div-helper.php";
 <?php
 
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-    if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
-	}
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$archivo=$_REQUEST["file"];
+	$archivo=	$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
@@ -28,14 +26,16 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 			if ($var=="conf_dbnpar"){
 				fwrite($fout,$value."\n");
 				fclose($fout);
-				echo "<p><font color=red>". $_REQUEST["file"]." ".$msgstr["updated"]."</font><p>";
+			?>
+				<p class="color-green"><strong><?php echo $archivo." ".$msgstr["updated"];?></strong></p>
+			<?php
 			}
 		}
 	}
 
 }else{
 	$base=$_REQUEST["base"];
-	$archivo=$db_path."par/$base.par";
+	$archivo=$db_path.$base."/$base.par";
 	if (!file_exists($archivo)){
 		echo "Error: missing $archivo<br>";
 	}else{
@@ -116,7 +116,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 			}
 			echo "<hr>";
 		}
-		$file=$db_path."par/$base.par";
+		$file=$db_path.$base."/$base.par";
 		echo "<strong>".$msgstr["edit"].": ". $file."</strong>";
 		echo "<div  style=\"display:block;\">\n";
 		echo "<form name=savepar"."Frm method=post>\n";
