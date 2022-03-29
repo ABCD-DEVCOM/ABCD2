@@ -1,12 +1,12 @@
 dubcore.*=%path_database%dubcore/data/dubcore.*
+htmlgizmo.*=%path_database%dubcore/data/htmlgizmo.*
 dubcore.pft=%path_database%dubcore/pfts/en/dubcore.pft
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
 autoridades.pft=%path_database%/dubcore/pfts/en/autoridades.pft
 STW=%path_database%dubcore/data/dubcore.stw
+isisac.tab=%path_database%isisactab_utf8.tab
+isisuc.tab=%path_database%isisuctab_utf8.tab
 ci_tempdir=%path_database%wrk
-actab=%path_database%isisactab_utf8.tab
-uctab=%path_database%isisuctab_utf8.tab
-htmlgizmo.*=%path_database%dubcore/data/htmlgizmo.*
-autoridades_opac.pft=%path_database%opac/autoridades_opac.pft
-select_record.pft=%path_database%opac/select_record.pft
+autoridades_opac.pft=%path_database%dubcore/pfts/autoridades_opac.pft
+select_record.pft=%path_database%opac_conf/%lang%/select_record.pft
