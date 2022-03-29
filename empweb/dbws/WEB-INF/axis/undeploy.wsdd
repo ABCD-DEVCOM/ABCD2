@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<undeployment name="test" xmlns="http://xml.apache.org/axis/wsdd/">
-  <service name="PucvObjectsService"/>
-  <service name="PucvUsersService"/>
-  <service name="EmpObjectsService"/>
-  <service name="EmpUsersService"/>
-</undeployment>
-
