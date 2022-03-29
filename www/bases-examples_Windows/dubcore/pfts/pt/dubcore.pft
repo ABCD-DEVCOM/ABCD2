@@ -38,10 +38,10 @@ if p(v110) then '<tr><td ><b>Part nr</b></td><td>'v110' of 'f(npost('ID='v111),0
  
 /* Next attributes are from the parent record (may be the current record, we don't care) */
 REF(  L('ID=',v111),
-    if p(v1) then '<tr><td><b>TÌtulo</b></td><td>'v1+|<br>|,'</td>' fi/
+    if p(v1) then '<tr><td><b>T√≠tulo</b></td><td>'v1+|<br>|,'</td>' fi/
     if p(v2) then '<tr><td><b>Autor</b></td><td>'v2+|<br>|,'</td>' fi/
     if p(v3) then '<tr><td><b>Assunto / palavras-chave</b></td><td>'v3+|<br>|,'</td>' fi/
-    if p(v4) then '<tr><td><b>DescriÁ„o</b></td><td>'v4+|<br>|,'</td>' fi/
+    if p(v4) then '<tr><td><b>Descri√ß√£o</b></td><td>'v4+|<br>|,'</td>' fi/
     if p(v5) then '<tr><td><b>Editor</b></td><td>'v5+|<br>|,'</td>' fi/
     if p(v6) then '<tr><td><b>Contribuidor/ colaborador</b></td><td>'v6+|<br>|,'</td>' fi/
     if p(v7) then '<tr><td><b>Data</b></td><td>'v7+|<br>|,'</td>' fi/
@@ -50,18 +50,18 @@ REF(  L('ID=',v111),
     if p(v10) then '<tr><td><b>Identifier</b></td><td>'v10+|<br>|,'</td>' fi/
     if p(v11) then '<tr><td><b>Fonte</b></td><td>'v11+|<br>|,'</td>' fi/
     if p(v12) then '<tr><td><b>Idioma</b></td><td>'v12+|<br>|,'</td>' fi/
-    if p(v13) then '<tr><td><b>RelaÁ„o</b></td><td>'v13+|<br>|,'</td>' fi/
+    if p(v13) then '<tr><td><b>Rela√ß√£o</b></td><td>'v13+|<br>|,'</td>' fi/
     if p(v14) then '<tr><td><b>Cobertura</b></td><td>'v14+|<br>|,'</td>' fi/
     if p(v15) then '<tr><td><b>Gerenciamento de Direitos autorais</b></td><td>'v15+|<br>|,'</td>' fi/
 
     if p(v50) then '<tr><td><b>Altura da imagem</b></td><td>'v50+|<br>|,'</td>' fi/
     if p(v51) then '<tr><td><b>Largura da imagem</b></td><td>'v51+|<br>|,'</td>' fi/
-    if p(v52) then '<tr><td><b>ResoluÁ„o X</b></td><td>'v52+|<br>|,'</td>' fi/
-    if p(v53) then '<tr><td><b>ResoluÁ„o Y</b></td><td>'v53+|<br>|,'</td>' fi/
+    if p(v52) then '<tr><td><b>Resolu√ß√£o X</b></td><td>'v52+|<br>|,'</td>' fi/
+    if p(v53) then '<tr><td><b>Resolu√ß√£o Y</b></td><td>'v53+|<br>|,'</td>' fi/
     if p(v54) then '<tr><td><b>Tipo de cena</b></td><td>'v54+|<br>|,'</td>' fi/
-    if p(v56) then '<tr><td><b>Coment·rios</b></td><td>'v56+|<br>|,'</td>' fi/
+    if p(v56) then '<tr><td><b>Coment√°rios</b></td><td>'v56+|<br>|,'</td>' fi/
     if p(v57) then '<tr><td><b>Artista</b></td><td>'v57+|<br>|,'</td>' fi/
-    if p(v58) then '<tr><td><b>Direitos de cÛpia</b></td><td>'v58+|<br>|,'</td>' fi/
+    if p(v58) then '<tr><td><b>Direitos de c√≥pia</b></td><td>'v58+|<br>|,'</td>' fi/
     if p(v59) then '<tr><td><b>Make</b></td><td>'v59+|<br>|,'</td>' fi/
     if p(v60) then '<tr><td><b>Model</b></td><td>'v60+|<br>|,'</td>' fi/
     if p(v61) then '<tr><td><b>GPS Altitude Ref</b></td><td>'v61+|<br>|,'</td>' fi/
@@ -71,7 +71,7 @@ REF(  L('ID=',v111),
     if p(v65) then '<tr><td><b>GPS Longitude Ref</b></td><td>'v65+|<br>|,'</td>' fi/
     if p(v66) then '<tr><td><b>GPS Longitude</b></td><td>'v66+|<br>|,'</td>' fi/
 
-    if p(v97) then '<tr><td><b>SeÁ„o</b></td><td>'v97,'</td>' fi/
+    if p(v97) then '<tr><td><b>Se√ß√£o</b></td><td>'v97,'</td>' fi/
 )
 /*
 ** If there is a HTML or image URL: display the text or the picture
@@ -108,10 +108,10 @@ REF(  L('ID=',v111),
 
 
     /*
-    ** As seguintes linhas para mostrar a URL somente apÛs o login
+    ** As seguintes linhas para mostrar a URL somente ap√≥s o login
     */
     
-    /* REMOVA O COMENT¡RIO PARA EXIBIR A OP«√O DE LOGIN
+    /* REMOVA O COMENT√ÅRIO PARA EXIBIR A OP√á√ÉO DE LOGIN
     if p(v98) then 
     '<tr>
         <td>
@@ -143,7 +143,7 @@ REF(  L('ID=',v111),
     fi,
     */
 
-    if p(v112) then '<tr><td><b>Data de criaÁ„o</b></td><td>'v112+|<br>|,'</td>' fi/
+    if p(v112) then '<tr><td><b>Data de cria√ß√£o</b></td><td>'v112+|<br>|,'</td>' fi/
 )
 if p(v96) then '<tr><td><b>Tipo de registro</b></td><td>'v96+|<br>|,'</td>' fi/
 if p(v997) then '<tr><td><b>Tamanho do HTML</b></td><td>'v997+|<br>|,'</td>' fi/
@@ -157,7 +157,7 @@ if p(v997) then '<tr><td><b>Tamanho do HTML</b></td><td>'v997+|<br>|,'</td>' fi/
 if p(v110) and val(v110)<2 then 
 '<tr><td><b>View parts</b></td><td>'
 '<a href="/cgi-bin/utf8/bigisis/wxis/iah/scripts/?IsisScript=iah.xis&lang=en&reverse=off&base=dubcore&nextAction=lnk&exprSearch=',s(mpu,v111,mpl),'&indexSearch=ID"',
-'" target=new>Clique aqui para mais revisıes em nova guia</a><br>',
+'" target=new>Clique aqui para mais revis√µes em nova guia</a><br>',
 '</td>',
 fi,
 

@@ -1,0 +1,31 @@
+[FILE_LOCATION]
+
+FILE DATABASE.*=%path_database%dubcore/data/dubcore.*
+FILE standard.pft=%path_database%dubcore/pfts/%lang%/dubcore.pft
+FILE SHORTCUT.IAH=%path_database%dubcore/pfts/%lang%/shortcut.pft
+FILE GXML=%path_database%/opt/ABCD/www/cgi-bin/bigisis/gizmo/gXML.*
+
+[INDEX_DEFINITION]
+
+INDEX Tw=^1Palabras^2Palabras^3Words^4Mots^d*^xTW ^yDATABASE^uTW_^mTW_
+INDEX Ti=^1TÌtulos^2TÌtulos^3Titles^4Titres^xTI ^yDATABASE^uTI_^mTI_
+INDEX AU=^1autores^2autores^3authors^4auteurs^xAU ^yDATABASE^uAU=^mAU_
+
+[APPLY_GIZMO]
+
+
+[FORMAT_NAME]
+
+FORMAT standard.pft=^1defecto^2defecto^3default^4d√©faut
+FORMAT DEFAULT=standard.pft
+
+[HELP_FORM]
+
+
+[PREFERENCES]
+
+AVAILABLE FORMS=F,A
+SEND RESULT BY EMAIL=ON
+NAVIGATION BAR=OFF
+DOCUMENTS PER PAGE=20
+FEATURES=XML
