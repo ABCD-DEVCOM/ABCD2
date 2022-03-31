@@ -16,6 +16,7 @@
 2022-02-08 rogercgui Added $_REQUEST["lang"] check to decrease the amount of $_REQUEST through the system. Languages should be triggered by the variable $lang
 2022-02-22 fho4abcd  Added check on $_SESSION["lang"] + set $_SESSION["lang"]. This works for old scripts & updated scripts (without any lang settings)
 2022-03-21 fho4abcd  Added variable to set the par folder
+2022-03-31 fho4abcd  Replace fixed localhost by detection of the server name
 */
 
 ini_set('error_reporting', E_ALL);
@@ -25,8 +26,10 @@ $cisis_versions_allowed="16-60;bigisis";
 // URL for internal server actions, with autodetected protocol and port
 // Note: protocol/port are determined by server config vhosts file. (also if defaults are used)
 $protocol="http:"; // default protocol
+$servername="localhost";//default host name
 if ( isset($_SERVER['HTTPS']) and $_SERVER['HTTPS']=="on") $protocol="https:";
-$server_url=$protocol."//localhost:".$_SERVER['SERVER_PORT'];
+if ( isset($_SERVER['SERVER_NAME']) ) $servername=$_SERVER['SERVER_NAME'];
+$server_url=$protocol."//".$servername.":".$_SERVER['SERVER_PORT'];
 
 $postMethod=1;      // if set to '1' (or true) ABCD will use POST-method; if set to '0' the GET-method will be used. Use with caution
 $dirtree=1;         // USE THIS PARAMETER TO SHOW THE ICON THAT ALLOWS THE BASES FOLDER EXPLORATION
