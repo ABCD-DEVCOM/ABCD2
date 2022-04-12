@@ -70,7 +70,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 			<br><hr>
 	        <form name=estado_de_cuenta action=opac_statment_call.php method=post onsubmit="ValidarUsuario();return false">
 	         <h3><?php echo $msgstr["ecta"]?></h3>
-			&nbsp;<input type="text" name="usuario" id="search-user" size=50 value="" placeholder=" <?php echo $msgstr["user_id"]?>" />
+			&nbsp;<input type="text" name="usuario" id="search-user" value="" placeholder=" <?php echo $msgstr["user_id"]?>" />
 		    <?php if (isset($_REQUEST["db_path"]))
 					echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
 				  if (isset($lang))

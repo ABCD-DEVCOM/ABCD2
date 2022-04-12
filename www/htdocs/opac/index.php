@@ -1,107 +1,117 @@
-<script>
-	document.cookie = 'ORBITA; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
-	document.cookie =  'ORBITA=;';
+<?php
+/**************** Modifications ****************
 
-/* Marcado y presentación de registros*/
-function getCookie(cname) {
-    var name = cname+"=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
+2022-03-23 rogercgui change the folder /par to the variable $actparfolder
 
-function Seleccionar(Ctrl){
-	cookie=getCookie('ORBITA')
-	if (Ctrl.checked){
-		if (cookie!=""){
-		    c=cookie+"|"
-			if (c.indexOf(Ctrl.name+"|")==-1)
-				cookie=cookie+"|"+Ctrl.name
-		}else{
-			cookie=Ctrl.name
+
+***********************************************/
+
+$_REQUEST["modo"]="integrado";
+if (file_exists("opac_dbpath.dat")){
+	$fp=file("opac_dbpath.dat");
+	foreach ($fp as $linea){
+		$linea=trim($linea);
+		if ($linea!=""){
+			$l=explode('|',$linea);
+			if (isset($l[2]) and $l[2]!=""){
+				if ($_REQUEST["db_path"]==$l[0]){
+					$lang=$l[2];
+				}
+			}
 		}
-	}else{
-		sel=Ctrl.name+"|"
-		c=cookie+"|"
-		n=c.indexOf(sel)
-		if (n!=-1){
-			cookie=cookie.substr(0,n)+ cookie.substr(n+sel.length)
-		}
-
 	}
-	document.cookie="ORBITA="+cookie
-	Ctrl=document.getElementById("cookie_div")
-	Ctrl.style.display="inline-block"
 }
 
-function delCookie(){
-  	document.cookie =  'ORBITA=;';
+include("../central/config_opac.php");
 
+include("leer_bases.php");
+$primeraPagina="S";
+include("head.php");
+//foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
+/*
+function LeerRegistro($Expresion,$base){
+	global $db_path,$xWxis;
+	$Formato="opac";
+	$salida="";
+	if (trim($Expresion)!=""){
+		$query = "&base=$base&cipar=$db_path".$actparfolder."/$base.par&Expresion=".urlencode($Expresion)."&count=1&from=1&Formato=$Formato";
+		$resultado=wxisLlamar($base,$query,$xWxis."buscar.xis");
+		foreach ($resultado as $value) {
+			$value=trim($value);
+			if (substr($value,0,7)=='[TOTAL:'){
+				continue;
+			}else{
+		       $salida.=$value;
+			}
+		}
+	}
+	return $salida;
 }
-var user = getCookie("ORBITA");
-  if (user != "") {
-    alert("Welcome again " + user);
-  } else {
 
-    }
+*/
 
+?>
+
+	<div class="post">
+		<div style="clear: both;">&nbsp;</div>
+				<div class="entry">
+<?php if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){
+?>
+<script>
+document.cookie =  'ORBITA=;';
 </script>
 <?php
-if (!file_exists("opac_dbpath.dat")){
-
-include "start.php";
-
-?>
-
-
-<?php
-}else {
-?>
-
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
-	<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset?>" />
-	<title>OPAC-ABCD</title>
-
-
-</head>
-<body>
-
-<form name=inicio method=post action=php/index.php>
-<?php
-if (file_exists("opac_dbpath.dat")){
-		$fp=file("opac_dbpath.dat");
-		echo "DATABASE DIR: <select name=db_path id=db_path>\n";
-		foreach ($fp as $value){
-			if (trim($value)!=""){
-				$v=explode('|',$value);
-				$v[0]=trim($v[0]);
-				echo "<Option value=".trim($v[0]).">".$v[1]."\n";
+}
+if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
+	$fp=file($db_path."opac_conf/".$lang."/sitio.info");
+	foreach ($fp as $value){
+		$value=trim($value);
+		if ($value!=""){
+			if (substr($value,0,6)=="[LINK]"){
+				$home_link=substr($value,6);
+				$hl=explode('|||',$home_link);
+				$home_link=$hl[0];
+				if (isset($hl[1]))
+					$height_link=$hl[1];
+				else
+					$height_link=800;
+				echo "<iframe frameborder=\"0\"  width=100% height=\"".$height_link  ."\"src=\"".$home_link."\")></iframe>";
+	            break;
+			}else{
+				if (substr($value,0,6)=="[TEXT]"){
+                    $archivo=trim($db_path."opac_conf/".$lang."/".trim(substr($value,6)));
+					if (file_exists($archivo)){
+						$fp_h=file($archivo);
+						foreach ($fp_h as $linea){
+							echo "$linea";
+						}
+					}
+				}
 			}
-
 		}
-		echo "</select>";
 	}
-    echo "<P>";
 
-    echo '<select name=lang >';
-	//$fp=file($a);
-	echo "<option value=en>english</option>";
-	echo "<option value=es>spanish</option>";
-	echo "<option value=es_utf8>spanish UTF-8</option>";
+}
 ?>
-</SELECT>
-<input type=hidden name=primeravez value=Y>
-<input type=submit value=go>
-</form>
-<?php } ?>
+				</div>
+	</div>
+
+<?php include("footer.php");?>
+
+<script>
+function resizer(id)
+{
+
+var doc=document.getElementById(id).contentWindow.document;
+var body_ = doc.body, html_ = doc.documentElement;
+
+var height = Math.max( body_.scrollHeight, body_.offsetHeight, html_.clientHeight, html_.scrollHeight, html_.offsetHeight );
+var width  = Math.max( body_.scrollWidth, body_.offsetWidth, html_.clientWidth, html_.scrollWidth, html_.offsetWidth );
+
+document.getElementById(id).style.height=height;
+document.getElementById(id).style.width=width;
+
+}
+
+
+</script>
