@@ -165,6 +165,7 @@ a:hover {
 	border:1px solid #CCCCCC;
 	border-radius: 3px;
 	padding:5px 5px 5px 10px;
+  background: #f1f1f1;
 }
 
 #search {

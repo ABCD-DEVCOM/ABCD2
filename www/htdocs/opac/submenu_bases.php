@@ -8,8 +8,10 @@
 if (!isset($titulo_pagina)){
 	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
 	if (isset($_REQUEST["modo"])and  $_REQUEST["modo"]=="integrado"){
-		echo "<span class=tituloBase>".$msgstr["todos_c"]."</STRONG>";
-		echo "<input type=hidden name=modo value=integrado>\n";
+	?>	
+		<span class="tituloBase"><?php echo $msgstr["todos_c"];?></span>
+		<input type="hidden" name="modo" value="integrado">
+	<?php
 	}else{
 		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
 			echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"];
@@ -24,21 +26,28 @@ if (!isset($titulo_pagina)){
 	echo "</span>";
 }
 if (!isset($mostrar_libre) or $mostrar_libre!="N"){
+?>
 
-	echo "<div id=searchBox>
-		<form method=\"post\" action=\"buscar_integrada.php\" name=libre>
-		<div id=\"search\" >\n";
-	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-	if (isset($lang))     echo "<input type=hidden name=lang value=".$lang.">\n";
+	<div id="searchBox">
+	
+	<form method="post" action="buscar_integrada.php" name="libre">
+		<div id="search" >
+
+	<?php
+	if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
+	if (isset($lang)) echo "<input type=hidden name=lang value=".$lang.">\n";
     if (isset($_REQUEST["Formato"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["Formato"].">\n";
     if (isset($_REQUEST["indice_base"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["indice_base"].">\n";
 	if (isset($_REQUEST["base"]))echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
 	if (isset($_REQUEST["modo"]))echo "<input type=hidden name=modo value=".$_REQUEST["modo"].">\n";
 	?>
+
 	<div class="form-search">
-			<input type="text" name="Sub_Expresion" id="search-text" value="" placeholder="<?php echo $msgstr["search"]?>  ..."/>
-			<button type="submit" class="bt-green" ><?php echo $msgstr["search"]?></button>
-	</div>
+		<input type="text" name="Sub_Expresion" id="search-text" value="" placeholder="<?php echo $msgstr["search"]?>  ..."/>
+		<button type="submit" class="bt-green" >
+			<i class="fa fa-search"></i> <?php echo $msgstr["search"]?>
+		</button>
+	</div> <!--/form-search-->
 	
 	<?php
 		if (!isset($BusquedaAvanzada) or isset($BusquedaAvanzada) and $BusquedaAvanzada=="S"){
@@ -60,7 +69,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 		}
 		if (file_exists($archivo)){
 		?>	
-			<button type="button" class="bt-blue" onclick="showhide('sub_menu')"><?php echo $msgstr["indice_alfa"];?></button>
+			<button type="button" class="bt-blue" onclick="showhide('sub_menu')"> <?php echo $msgstr["indice_alfa"];?></button>
 		
 		<?php
 		}
@@ -68,18 +77,18 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 ?>
 	</div><!--/form-search-->
 	</div>
+
 	<div id="more">
-		<table>
-			<td valign=top>
-           		<input type=button height=50 value="<?php echo $msgstr["diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
-       		</td>
-       		<td>
-       			<font class=titulo2><?php echo $msgstr["resultados_inc"]?><br></font>
-	        	<input type=radio value=and name=alcance id=and><font class=titulo2><?php echo $msgstr["todas_p"]?><br>
-	        	<input type=radio value=or name=alcance id=or  checked><?php echo $msgstr["algunas_p"]?></font>
-   	    	</td>
-   		</table>
-   	</div>
+   		<input type=button height=50 value="<?php echo $msgstr["diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
+
+		<p class=titulo2><?php echo $msgstr["resultados_inc"]?>: 
+     	<input type=radio value=and name=alcance id=and>
+    	<label class=titulo2><?php echo $msgstr["todas_p"]?></label>
+    	<input type=radio value=or name=alcance id=or  checked>
+    	<label><?php echo $msgstr["algunas_p"]?></label></p>
+   	</div><!--/more-->
+
+
 <?php
 }
 if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N") {
@@ -161,23 +170,23 @@ if (!file_exists($db_path.$base."/opac/".$lang."/$archivo")){
 
 		</ul>
 	</div>
-    	<input type=hidden name=Opcion value=libre>
-   		<input type=hidden name=prefijo value=<?php echo $prefijo;?>
+    	<input type="hidden" name="Opcion" value="libre">
+   		<input type="hidden" name="prefijo" value="<?php echo $prefijo;?>" >
    		<input type=hidden name=resaltar value="S">
    		<?php if (isset($_REQUEST["coleccion"])) {
    			echo "<input type=hidden name=coleccion value=\"".$_REQUEST["coleccion"]."\">\n";
    		}
    		?>
    	</form>
+
    	<div style="clear:both;"></div>
 
 <?php
 }
+
 if ($actualScript=="index.php") {
 	unset($_REQUEST["base"]);
 }
-
-
-echo "</div>";
 ?>
 
+</div><!--/searchBox-->
