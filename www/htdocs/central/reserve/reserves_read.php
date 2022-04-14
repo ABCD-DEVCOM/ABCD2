@@ -1,5 +1,5 @@
 <?php
-include ("../lang/opac.php");
+include ("$ABCD_scripts_path/central/lang/opac.php");
 function MostrarRegistroCatalografico($dbname,$CN){
 global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db,$CentralPath;
 	$pref_cn="";
@@ -116,15 +116,20 @@ v1/    ";
 		$value=trim($value);
 		if ($value!=""){
 			$val=explode('$|$',$value);
+			if (isset($val[1])) $val1=$val[1]; else $val1=""; 
 			$vv=explode('|',$val[0]);
+			if (isset($vv[1])) $vv1=$vv[1]; else $vv1=""; 
+			if (isset($vv[6])) $vv6=$vv[6]; else $vv6="";
+			if (isset($vv[7])) $vv7=$vv[7]; else $vv7="";
+			
 			$mfn=$vv[0];
-			$fecha_hasta=$vv[1];
+			$fecha_hasta=$vv1;
 			$usuario_reserva=$vv[2];
-			$base_datos=$vv[6];
-			$no_control=$vv[7];
+			$base_datos=$vv6;
+			$no_control=$vv7;
 			if ($fecha_hasta!="" and $fecha_hasta<date("Ymd")) continue;
 			$reservas_activas=$reservas_activas+1;
-			$value=$val[1];
+			$value=$val1;
 			$r=explode('|',$value);
 			$cuenta=$cuenta+1;
 			if ($cuenta==1){

@@ -10,6 +10,8 @@
 20220316 fho4abcd Replace undefined $Permiso by $_SESSION["permiso"] to ensure correct databases list
 */
 
+global $ABCD_scripts_path;
+
 include ("$ABCD_scripts_path/central/lang/admin.php");
 include ("$ABCD_scripts_path/central/lang/lang.php");	
 
