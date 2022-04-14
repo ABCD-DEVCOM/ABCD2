@@ -47,7 +47,6 @@ function Enviar(){
 
 </script>
 <?php
-echo "<>\n";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";

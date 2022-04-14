@@ -34,6 +34,8 @@ Fileformat: lines with <key>=<message>
 - Files do not have an indicator of their encoding (and may use mixed encodings).
   A user indicator (like a filename with suffix "utf8") is not (yet) trusted in this code release
 */
+
+global $lang,$charset;
 if (isset($msg_path) and $msg_path!="")
 	$path=$msg_path;
 else

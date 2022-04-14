@@ -133,6 +133,16 @@ global $locales,$config_date_format;;
 			if (trim($linea)!=""){
 				$p=explode("^",$linea);
 
+				if (isset($p[0])) $p0=$p[0]; else $p0=""; 
+				if (isset($p[2])) $p2=$p[2]; else $p2="";
+				if (isset($p[3])) $p3=$p[3]; else $p3="";
+				if (isset($p[4])) $p4=$p[4]; else $p4="";
+				if (isset($p[5])) $p5=$p[5]; else $p5="";
+				if (isset($p[11])) $p11=$p[11]; else $p11="";
+				if (isset($p[12])) $p12=$p[12]; else $p12="";
+				if (isset($p[13])) $p13=$p[13]; else $p13="";
+				if (isset($p[18])) $p18=$p[18]; else $p18="";				
+
 				$np=$np+1;
 				$fuente="";
 				$mora=0;
@@ -151,10 +161,12 @@ global $locales,$config_date_format;;
 					$ec_output.=$msgstr["loaned"];
 				else
 					$ec_output.=$msgstr["returned"];
-				$ec_output.="</td>
 
-					<td bgcolor=white nowrap align=center valign=top>".$p[0]."</td>".
-					"<td bgcolor=white nowrap align=center valign=top>".$p[12]."(".$p[13].")</td><td bgcolor=white valign=top>".$p[2]."</td><td bgcolor=white align=center valign=top>". $p[3]. "</td><td bgcolor=white nowrap align=center valign=top>".$p[4]."</td><td nowrap bgcolor=white align=center valign=top>$fuente".$p[5]."</td><td align=center bgcolor=white valign=top>". $p[18]."</td><td align=center bgcolor=white valign=top>". $p[11]."</td></tr>";
+
+
+				$ec_output.="</td>
+					<td bgcolor=white nowrap align=center valign=top>".$p0."</td>".
+					"<td bgcolor=white nowrap align=center valign=top>".$p12."(".$p13.")</td><td bgcolor=white valign=top>".$p2."</td><td bgcolor=white align=center valign=top>". $p3. "</td><td bgcolor=white nowrap align=center valign=top>".$p4."</td><td nowrap bgcolor=white align=center valign=top>$fuente".$p5."</td><td align=center bgcolor=white valign=top>". $p18."</td><td align=center bgcolor=white valign=top>". $p11."</td></tr>";
         	}
 		}
 		$ec_output.= "</table></dd>";
