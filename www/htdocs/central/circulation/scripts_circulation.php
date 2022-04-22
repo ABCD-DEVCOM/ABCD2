@@ -130,6 +130,7 @@ function DevolverRenovar(Proceso) {
 		}
 }
 
+/*
 function PagarMultas(Accion){
 	Mfn=""
 	switch (nMultas){
@@ -155,6 +156,7 @@ function PagarMultas(Accion){
 	document.multas.Tipo.value="M"
 	document.multas.submit()
 }
+*/
 
 function DeleteSuspentions(Accion){
 	Mfn=""
