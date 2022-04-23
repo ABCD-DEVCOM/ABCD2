@@ -223,3 +223,32 @@ global $locales,$arrHttp,$CentralPath;
 
 	if (($nmulta!=0 or $nsusp!=0) and (isset($arrHttp["inventory"]) or isset($arrHttp["reserve"]))) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
 ?>
+
+<script type="text/javascript">
+
+function PagarMultas(Accion){
+	Mfn=""
+	switch (nMultas){
+		case 1:
+			if (document.ecta.pay.checked){
+            	Mfn=document.ecta.pay.value
+			}
+			break
+		default:
+			for (i=0;i<nMultas;i++){
+				if (document.ecta.pay[i].checked){
+					Mfn+=document.ecta.pay[i].value+"|"
+				}
+			}
+			break
+	}
+	if (Mfn==""){
+		alert("<?php echo $msgstr["selfine"]?>")
+		return
+	}
+	document.multas.Mfn.value=Mfn
+	document.multas.Accion.value=Accion
+	document.multas.Tipo.value="M"
+	document.multas.submit()
+}	
+</script>
