@@ -2,6 +2,7 @@
 /*
 20210908 fho4abcd div-helper, cleanup html
 20220209 fho4abcd Improve helper+Backbutton+undefine variable
+20220424 rogercgui add backbutton and save button
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -150,17 +151,20 @@ if (isset($arrHttp["db_copies"])) $urlcopies="&db_copies=Y";
         if (isset($arrHttp["encabezado"])){
             include "../common/inc_cancel.php";
         }
-        ?>
-                <a href='../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
-                if (isset($arrHttp["Formato"])) echo "&Formato=".$arrHttp["Formato"];
-                echo $urlcopies?>' class="defaultButton cancelButton">
-                    <img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-                    <span><strong><?php echo $msgstr["cancelar"]?></strong></span>
-                </a>
-                <a href=javascript:EnviarForma() class="defaultButton saveButton">
-                    <img src=../../assets/images/defaultButton_iconBorder.gif alt="" title="" />
-                    <span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-                </a>
+
+
+				$backtocancelscript="../dataentry/fmt.php?base=".$db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
+				if (isset($arrHttp["Formato"])) $backtocancelscript.="&Formato=".$arrHttp["Formato"];
+				
+				$backtocancelscript.=$urlcopies;
+				include "../common/inc_cancel.php" ?>
+
+
+				<?php 
+
+				$savescript="javascript:EnviarForma()";
+				include "../common/inc_save.php" ?>
+
         <?php
     }else{
         $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';

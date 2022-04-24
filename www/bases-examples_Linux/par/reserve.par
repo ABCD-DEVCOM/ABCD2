@@ -3,3 +3,4 @@ biblo.*=%path_database%biblo/data/biblo.*
 reserve.pft=%path_database%reserve/pfts/es/reserve.pft
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
+users.*=%path_database%users/data/users.*

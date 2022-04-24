@@ -279,9 +279,12 @@ A.singleButton .sb_rb {
 
 /*#heading classes */
 .heading {
+	display: flex;
 	background-color: var(--abcd-steel-blue);
 	height: 45px;
 	width: 100%;
+
+
 }
 
 
@@ -322,9 +325,8 @@ A.singleButton .sb_rb {
 	margin-right: 15%;
 	padding: 0;
 	height: 45px;
-	display: inline-block;
 	position: absolute;
-	width: 29%;
+	width: 39%;
 	vertical-align: middle;
 }
 
@@ -334,7 +336,6 @@ A.singleButton .sb_rb {
 	color: var(--abcd-white);
 	vertical-align: middle;
 	margin: 12px auto 0 30px;
-	width: 10%;
 	font-size: 1rem;
 }
 
@@ -344,7 +345,7 @@ select.heading-database {
 	 vertical-align: top;
 	 background: var(--abcd-gray-200);
 	 color: var(--abcd-steel-blue);
-	 width: 70%;
+	 width: 60%;
 	 border: none;
 	 border-radius: inherit;
 	 float: right;
@@ -389,21 +390,21 @@ nav.heading-nav ul {
 nav.heading-nav ul li {
 	display:inline-block;
 	vertical-align: top;
-/*	background-color: var(--abcd-steel-blue);*/
 	float: left;
 	}
 
 nav.heading-nav a {
-/*	background-color: var(--abcd-steel-blue);*/
-	display: block;	
-	color: var(--abcd-white);
-	height: 45px;
-	line-height: 60px;
-	text-decoration:none;
-	border: none;
-	padding: 0 8px;
-	vertical-align: top;
-	box-shadow: none;
+
+    display: flex;
+    color: var(--abcd-white);
+    height: 45px;
+    line-height: 60px;
+    text-decoration: none;
+    border: none;
+    padding: 0 8px;
+    vertical-align: top;
+    box-shadow: none;
+    align-items: center;
 }
 
 nav.heading-nav a img {
@@ -427,8 +428,6 @@ nav.heading-nav select {
 }
 
 nav.heading-nav select option {
-	background: var(--abcd-info);
-	color: var(--abcd-steel-blue);
 	padding: 5px;
 }
 
@@ -484,6 +483,7 @@ nav.heading-nav ul ul ul li {
 	background-position: center;
 	border-top-right-radius: 0.3rem;
 	border-top-left-radius: 0.3rem;				
+  box-shadow: none;
 }
 
 .bt-cat {
@@ -512,15 +512,6 @@ nav.heading-nav ul ul ul li {
 	background-image: url(../svg/ic_fluent_cart_24_filled.svg);
 }
 
-li a.bt-charset,li a.bt-charset:hover {
-	padding: 0px 8px;
-	cursor: default;
-	transform: none;
-	box-shadow: none;
-	margin-top: -6px;
-  font-size: 12px;
-}
-
 nav.heading-nav a.bt-exit {
 	background-color: var(--abcd-danger);
 	border: none;
@@ -532,10 +523,6 @@ li a.bt-exit:hover {
 	border: none;
 }
 
-.userInfo, .userInfo A, .language, .language A {
-	font-size: 0.7rem;
-	color: var(--abcd-white);
-}
 
 .lang:active {
     border: 1px solid #000;
@@ -2197,7 +2184,7 @@ nav {
   display: block;
   text-align: center;
   width:100%;
-  background: var(--abcd-blue);
+
 }
 nav ul {
   margin: 0;
@@ -2255,7 +2242,6 @@ nav ul {
 	background-color: var(--abcd-light);
 }
 .nav li li a {
-  margin-top: 1px;
   background: var(--abcd-white);
   color: var(--abcd-gray-dark);
   border-bottom: 1px solid #a7a6aa;
@@ -2278,7 +2264,6 @@ nav ul {
   white-space: nowrap;
   z-index: 1;
   left: -99999em;
-  background: var(--abcd-white);
 }
 .nav > li:hover > ul {
   left: auto;

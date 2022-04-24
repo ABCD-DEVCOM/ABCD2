@@ -2,7 +2,6 @@
 table.users {
 	width: 90%;
 	border: 0;
-	font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
 }
 
 table.users tr td {

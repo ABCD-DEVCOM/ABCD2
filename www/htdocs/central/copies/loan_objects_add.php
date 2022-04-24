@@ -263,12 +263,10 @@ function Print_page(){
             $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';
             include "../common/inc_back.php";
             if ($error==""){
-            ?>
-            <a href=javascript:Send() class="defaultButton copiesdbaddButton">
-            <img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-            <?php echo $msgstr["update"]?>
-            </a>
-            <?php
+
+            $savescript="javascript:Send()";
+            include "../common/inc_save.php"; 
+
             }
             ?>
 
