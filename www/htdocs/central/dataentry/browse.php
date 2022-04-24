@@ -498,6 +498,7 @@ if (!isset($arrHttp["return"])){
          <img src="../../assets/svg/browse/ic_fluent_people_settings_24_regular.svg" /></a>
     <?php } ?>
 
+
     <a href="javascript:advancedSearch()" class="bt-tool" title="<?php echo $msgstr["advsearch"];?>">
         <img src="../../assets/svg/browse/ic_fluent_database_search_24_regular.svg">
     </a>
@@ -542,7 +543,7 @@ if (!isset($arrHttp["return"])){
         <input type="hidden" name="print_content" value="<?php echo $breadcrumb;?>">
         <input type="hidden" name="pft" value="<?php echo $Formato_html;?>">
         <input type="hidden" name="vp" value="TB">
-        <a class="bt-tool" onclick="document.spreadsheet.submit" title="<?php echo $msgstr["wsproc"]?>">
+        <a class="bt-tool" onclick="EnviarForma('TB')" title="<?php echo $msgstr["wsproc"]?>">
             <img src="../../assets/svg/browse/file_excel_outline_icon_139604.svg">
         </a>
      </form>  
@@ -758,6 +759,7 @@ function advancedSearch(){
     base = '<?php echo $arrHttp["base"]?>'
     cipar = base+".par"
     Url ="../dataentry/buscar.php?Opcion=formab&prologo=prologoact&Target=s&Tabla=cGlobal&base="+base+"&cipar="+cipar
+    //Url ="../dataentry/buscar.php?Opcion=formab&prologo=prologoact&Target=s&Tabla=cGlobal&base="+base+"&cipar="+cipar
     msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
     msgwin.focus()
 }
