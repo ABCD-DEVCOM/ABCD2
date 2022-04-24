@@ -25,6 +25,9 @@
  *
  * == END LICENSE ==
 */
+
+include("../config.php");
+
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 if (isset($arrHttp["error"])){
@@ -46,8 +49,8 @@ if (isset($arrHttp["db_inven"])){
 	$dbinv=explode('|',$arrHttp["db_inven"]);
 	$_SESSION["loans_dbinven"]=$dbinv[0];
 }
-include("../config.php");
-//include("../config_loans.php");              // BORRADO EL 07/03/2013
+
+
 
 $lang=$_SESSION["lang"];
 //require_once ("../common/ldap.php");
@@ -1119,15 +1122,12 @@ global $prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_na
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<?php
-	echo "<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: usuarios_prestamos_presentar.php </font>
-		</div>";
-// prestar, reservar o renovar
+
+<?php 
+$ayuda="circulation/loan.html";
+include "../common/inc_div-helper.php";
 ?>
+
 <div class="middle form">
 	<div class="formContent">
 <form name=ecta>
