@@ -235,7 +235,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 					<input type=hidden name=screen_width>
 					<?php if (isset($arrHttp["newindow"]))
 					echo "<input type=hidden name=newindow value=Y>\n";?>
-						<label><?php echo $msgstr["seleccionar"]?></label>
+						<label><?php echo $msgstr["db_list"]?> </label>
 						<select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)">
 							<option value=""></option>
 							<?php database_list(); ?>
@@ -262,7 +262,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 			<input type=hidden name=tlit value="">
 			<input type=hidden name=nreg value="">
 			<input type=hidden name=lang value="">
-			<label><?php echo $msgstr["seleccionar"]?></label>
+			<label><?php echo $msgstr["db_list"]?></label>
 			<select class="heading-database" name="baseSel" onchange="CambiarBase()" onclick="VerificarEdicion()">
 			<option value=""></option>
 			<?php
@@ -357,74 +357,50 @@ if (isset($def['LOGO_DEFAULT'])) {
 				}
 			?>	            	
             </li>
- <?php } ?>
+ <?php 
+	} 
+
+	global $circulation, $acquisitions;
+	if  (($central=="Y") or  ($circulation=="Y")or ($acquisitions=="Y"))  {
+
+ ?>
             <li>
-				
-<?php if ($verify_selbase=="Y") { ?>
+			
+				<form name="cambiolang"  class="language">
 
-<form name=cambiolang  class="language">
-			<input type=hidden name=base>
-			<input type=hidden name=cipar value="">
-			<input type=hidden name=marc value="">
-			<input type=hidden name=tlit value="">
-			<input type=hidden name=nreg value="">			
-            <select name="lenguaje"  onchange=CambiarLenguaje()>
-            <?php
-            include "inc_get-langtab.php";
-            $a=get_langtab();
-            $fp=file($a);
-            $selected="";
-            echo "<option title='' value=''"."</option>";
-            foreach ($fp as $value){
-                $value=trim($value);
-                if ($value!=""){
-                    $l=explode('=',$value);
-                    if ($l[0]!="lang"){
-                        if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-                        echo "<option value=$l[0] $selected>".$l[0]."</option>";
-                        $selected="";
-                    }
-                }
-            }
-            ?>
-            </select>
-</form>
+						<?php if ($verify_selbase=="Y") { ?>
+							<input type="hidden" name="base">
+							<input type="hidden" name="cipar" value="">
+							<input type="hidden" name="marc" value="">
+							<input type="hidden" name="tlit" value="">
+							<input type="hidden" name="nreg" value="">	
+						<?php }  ?>
 
-
-<?php } elseif ($central=="Y") { ?>
-				<form name=cambiolang class="language">
-					<select name=lenguaje onchange=CambiarLenguaje() >
-				        <?php
-				        include "inc_get-langtab.php";
-				        $a=get_langtab();
-				        $fp=file($a);
-				        $selected="";
-                        echo "<option title='' value=''"."</option>";
-				        foreach ($fp as $value){
-				            $value=trim($value);
-				            if ($value!=""){
-				                $l=explode('=',$value);
-				                if ($l[0]!="lang"){
-			                    if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-			                    echo "<option value=$l[0] $selected>".$l[0]."</option>";
-			                    $selected="";
+				            <select name="lenguaje"  onchange="CambiarLenguaje()">
+				            <?php
+				            include "inc_get-langtab.php";
+				            $a=get_langtab();
+				            $fp=file($a);
+				            $selected="";
+				            echo "<option title='' value=''"."</option>";
+				            foreach ($fp as $value){
+				                $value=trim($value);
+				                if ($value!=""){
+				                    $l=explode('=',$value);
+				                    if ($l[0]!="lang"){
+				                        if ($l[0]==$_SESSION["lang"]) $selected=" selected";
+				                        echo "<option value=$l[0] $selected title='$l[1]'>".$l[0]."</option>";
+				                        $selected="";
+				                    }
 				                }
 				            }
-				        }
-				        ?>
-				    </select>
+				            ?>
+				            </select>
 				</form>
-    
-<?php } ?>
-
-
-
-
-
-
-
 
             </li>
+<?php } ?>
+
             <li>
             	<a class="bt-charset" href="#"><?php if ( isset( $charset )) {
 		                  echo $charset;
@@ -434,21 +410,22 @@ if (isset($def['LOGO_DEFAULT'])) {
 		            ?>	
             	</a>
             </li>
-                <li>
-                	<a class="bt-charset" href="#" title="
-                	<?php echo $name;?> (<?php echo $profile; ?>)
-<?php  $dd=explode("/",$db_path);
-               				if (isset($dd[count($dd)-2]) and $dd[count($dd)-2]!=""){
-			   					$da=$dd[count($dd)-2];
-			   					echo $da;
-							}else{
-							echo $db_path;
-						}?>"><i class="fas fa-user"></i>
-                		<?php echo $login;?>
+
+            <li>
+            	<a class="bt-charset" href="#" title="
+            	<?php echo $name;?> (<?php echo $profile; ?>)
+				<?php  $dd=explode("/",$db_path);
+           				if (isset($dd[count($dd)-2]) and $dd[count($dd)-2]!=""){
+		   					$da=$dd[count($dd)-2];
+		   					echo $da;
+						}else{
+						echo $db_path;
+					}?>"><i class="fas fa-user"> </i>  
+            		<?php echo $login;?>
 
 
-					</a>
-				</li>
+				</a>
+			</li>
      
             <li>
             	<a class="bt-exit" href="../common/logout.php"><img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>

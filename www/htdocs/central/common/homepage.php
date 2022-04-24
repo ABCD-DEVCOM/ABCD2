@@ -335,7 +335,7 @@ global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
 if (isset($arrHttp['base'])) {
 	$baseSelect = $arrHttp['base'];
 } else {
-	$baseSelect = "[".$msgstr["seleccionar"]."]";
+	$baseSelect = "";
 }
 
 ?>
