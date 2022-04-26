@@ -5,6 +5,7 @@
 2021-08-30 fho4abcd Cleanup html, lineends, resolved undefined variable tag_s
 2022-01-11 rogercgui add new backbutton
 2022-01-12 fho4abcd Removed nested tables and unused code&copcions+test in pop-up
+2022-04-25 rogercgui Add encabezado in forma1
 **
 ** Do not get confused by a file with the same name in central/dataentry.
 ** This file is to create and modify worksheets (with the extension .fmt)
@@ -196,6 +197,8 @@ include "../common/inc_div-helper.php";
 <input type=hidden name=fmt_name>
 <input type=hidden name=fmt_desc>
 <input type=hidden name=ret_script value=fmt_adm.php>
+
+<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
 
 <table style="margin-left:auto;margin-right:auto">
     <tr>
