@@ -28,6 +28,7 @@ echo "<body>\n";
 	<div class="actions">
 
 		<?php 
+		unset ($arrHttp["base"]);
 		$backtoscript="javascript:top.Menu('same')";
 		include "../common/inc_back.php";
 		?>
