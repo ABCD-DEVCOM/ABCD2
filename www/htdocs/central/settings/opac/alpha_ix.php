@@ -13,8 +13,8 @@ include "../../common/inc_div-helper.php";
 <div id="page">
 
 
-<form name=indices method=post>
-<input type=hidden name=db_path value=<?php echo $db_path;?>>
+<form name="indice"s method="post">
+<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
 
 
 <?php
@@ -28,7 +28,7 @@ include "../../common/inc_div-helper.php";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
-	$archivo=$db_path.$base."/opac/$lang/".$_REQUEST["file"];
+	$archivo_conf=$db_path.$_REQUEST['base']."/opac/$lang/".$_REQUEST["file"];
 
 
 	foreach ($_REQUEST as $var=>$value){
@@ -60,7 +60,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 	}
 
-    $fout=fopen($archivo,"w");
+    $fout=fopen($archivo_conf,"w");
 	foreach ($field_ix as $key=>$value){
 		if (isset($pref_ix[$key])) { 
 			$prefix=$pref_ix[$key];
@@ -85,8 +85,12 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		//echo $value."|".$pref_ix[$key]."|".$ln[$key]."|".$display[$key]."<br>";
 	}
 	fclose($fout);
-    echo "<p><font color=red>".$base."/opac/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
-	die;
+?>
+
+<p class="color-green"><strong><?php echo $archivo_conf." ".$msgstr["updated"];?></strong></p>
+
+<?php
+   die;
 
 
 //fclose($fout);
