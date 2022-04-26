@@ -1,64 +1,64 @@
-H||General data|0|0||||||||||||0||
-AI|2|Control number|0|0|||X||10|||CN_|v2|v2||0||
-F|4|Type of lit.|0|0|||X||2|P|tag4.tab|||||1||
-F|6|Record level|0|0|||X||4|||||||1||
-F|9|Type of material|0|1|||X||30|D||TM_|@autoridades.pft|||0||
-F|3|Topographic Sign.|0|abcde|/////|X|||D||ST_|@autoridades.pft|||1||
-F|104|Physical location|0|1|||X|||D|biblo|UB_|@autoridades.pft|||0||
-F|30|Name of journal|0|0|||X||D||TA_|@autoridades.pft||||1||
-F|29|Institutional publisher|0|0|||X||D||CD_|@autoridades.pft||||1||
-F|35|ISSN|0|0|||X||D||ISSN_|@autoridades.pft||||1||
-F|38|Publisher|0|1|||X|||D||ED_|@autoridades.pft|||1||
-F|39|City|0|0|||X||30|D||CD_|@autoridades.pft|||1||
-F|40|Country|0|0|||X||20|D||PA_|@autoridades.pft|||0||
-F|41|Edition|0|0|||X|||||||||1||
-F|20|Pages|0|0|||X||30|||||||1||
-F|43|Date|0|0|||X||20|||||||1||
-F|44|Date/ISO|0|0|||X|||||||||1||
-F|22|Series|0|1|n|,|X|||D||SE_|@autoridades.pft|||0||
-F|42|Inf. descript.|0|0|||X||30|||||||1||
-F|73|Ref. bib.|0|0|||X|||||||||1||
-F|47|ISBN|0|1|||X||30|||||||1||
-F|63|Tyoe of carrier|0|0|||X|||||||||1||
-F|21|Total copies|0|0|||X|||||||||0||
-F|62|Distribution|0|0|||X|||||||||0||
-H||Contents|0|0||||||||||||1||
-F|64|Lang. of text|0|0|||X||30|D||LA_|@autoridades.pft|||1||
-F|66|Other lang.|0|1|||X|||D||LA_|@autoridades.pft|||0||
-F|74|Period : from|0|0|||X|1.5|30|||||||0||
-F|75|Period : until|0|0|||X|1.5||||||||0||
-F|76|Descriptors|0|1|||X|1.5||D||MA_|@autoridades.pft|||1||
-F|80|Primary theme|0|1|||X|||D||CP_|@autoridades.pft|||1||
-F|81|Secondary them|0|1|||X|||D||CS_|@autoridades.pft|||1||
-F|77|Stat. data|0|1|||X|||D||DE_|@autoridades.pft|||1||
-F|82|Geogr. descriptors|0|1|||X|||D|biblo|DG_|@autoridades.pft|||0||
-F|85|Div.Ad. and reg|0|1|||X|||D||DA_|@autoridades.pft|||0||
-F|86|Acronyms|0|1|||X|||D|biblo|SG_|@autoridades.pft|||0||
-F|87|Other sec. entries|0|1|||X|||D|biblo|OES_|@autoridades.pft|||0||
-F|37|Notes on content|0|1|||X|2||||||||0||
-F|68|Adm. notes|0|1|||X|2||||||||1||
-H||Abstract|0|0||||||||||||0||
-F|72|Abstract|0|1|||A|10|200|||||||1||
-H||ToC|0|0||||||||||||0||
-F|36|ToC|0|1|||X|10||||||||0||
-H||Objects|0|0||||||||||||0||
-F|800|Image|0|1|d||U|||||||||0||
-F|810|Text|0|1|d||U|||||||||0||
-F|820|Sound|0|1|d||U|||||||||0||
-F|830|Video|0|1|d||U|||||||||0||
-F|840|WWW|0|1|d||X|||||||||0||
-H||Copies|0|0||||||||||||0||
-T|101|Copies|0|1|nmlofprqykwz||X|||||||||0||
-S||No.Inv. ^n|0|0|||X|||||||||0||
-S||Volume|0|0|||X|||||||||0||
-S||Ex.|0|0|||X|||||||||0||
-S||Physical location|0|0|||X|||D||!L|@autoridades.pft|||0||
-S||Acquisition mode|0|0|||X|||D||!X|@autoridades.pft|||0||
-S||Acquisition date|0|0|||X|||||||||0||
-S||Provider|0|0|||X|||D||!Y|@autoridades.pft|||0||
-S||Local currency|0|0|||X|||||||||0||
-S||Other currency|0|0|||X|||||||||0||
-S||Notes|0|0|||X|||||||||0||
-S||Date of entry|0|0|||X|||||||||0||
-S||Documentalist|0|0|||X|||||||||0||
-OD|980|Operator and date|0|0||||||||||||0||
+H||General data|0|0||||||||||||0||0|0|||
+F|2|Control number|0|0|||AI||10|||CN_|v2|v2||0||0|0|||
+F|4|Type of lit.|0|0|||X||2|P|tag4.tab|||||1||0|0|||
+F|6|Record level|0|0|||X||4|||||||1||0|0|||
+F|9|Type of material|0|1|||X||30|D||TM_|@autoridades.pft|||0||0|0|||
+F|3|Topographic Sign.|0|1||X|X|||D||ST_|@autoridades.pft||1|0||0|0|||
+F|104|Physical location|0|1|||X|||D|biblo|UB_|@autoridades.pft|||0||0|0|||
+F|30|Name of journal|0|0|||X|||D||TA_|@autoridades.pft|||1||0|0|||
+F|29|Institutional publisher|0|0|||X|||D||CD_|@autoridades.pft|||1||0|0|||
+F|35|ISSN|0|0|||X|||D||ISSN_|@autoridades.pft|||1||0|0|||
+F|38|Publisher|0|1|||X|||D||ED_|@autoridades.pft|||1||0|0|||
+F|39|City|0|0|||X||30|D||CD_|@autoridades.pft|||1||0|0|||
+F|40|Country|0|0|||X||20|D||PA_|@autoridades.pft|||0||0|0|||
+F|41|Edition|0|0|||X|||||||||1||0|0|||
+F|20|Pages|0|0|||X||30|||||||1||0|0|||
+F|43|Date|0|0|||X||20|||||||1||0|0|||
+F|44|Date/ISO|0|0|||X|||||||||1||0|0|||
+F|22|Series|0|1||,|X|||D||SE_|@autoridades.pft|||0||0|0|||
+F|42|Inf. descript.|0|0|||X||30|||||||1||0|0|||
+F|73|Ref. bib.|0|0|||X|||||||||1||0|0|||
+F|47|ISBN|0|1|||X||30|||||||1||0|0|||
+F|63|Tyoe of carrier|0|0|||X|||||||||1||0|0|||
+F|21|Total copies|0|0|||X|||||||||0||0|0|||
+F|62|Distribution|0|0|||X|||||||||0||0|0|||
+H||Contents|0|0||||||||||||1||0|0|||
+F|64|Lang. of text|0|0|||X||30|D||LA_|@autoridades.pft|||1||0|0|||
+F|66|Other lang.|0|1|||X|||D||LA_|@autoridades.pft|||0||0|0|||
+F|74|Period : from|0|0|||X|1.5|30|||||||0||0|0|||
+F|75|Period : until|0|0|||X|1.5||||||||0||0|0|||
+F|76|Descriptors|0|1|||X|1.5||D||MA_|@autoridades.pft|||1||0|0|||
+F|80|Primary theme|0|1|||X|||D||CP_|@autoridades.pft|||1||0|0|||
+F|81|Secondary them|0|1|||X|||D||CS_|@autoridades.pft|||1||0|0|||
+F|77|Stat. data|0|1|||X|||D||DE_|@autoridades.pft|||1||0|0|||
+F|82|Geogr. descriptors|0|1|||X|||D|biblo|DG_|@autoridades.pft|||0||0|0|||
+F|85|Div.Ad. and reg|0|1|||X|||D||DA_|@autoridades.pft|||0||0|0|||
+F|86|Acronyms|0|1|||X|||D|biblo|SG_|@autoridades.pft|||0||0|0|||
+F|87|Other sec. entries|0|1|||X|||D|biblo|OES_|@autoridades.pft|||0||0|0|||
+F|37|Notes on content|0|1|||X|2||||||||0||0|0|||
+F|68|Adm. notes|0|1|||X|2||||||||1||0|0|||
+H||Abstract|0|0||||||||||||0||0|0|||
+F|72|Abstract|0|1|||A|10|200|||||||1||0|0|||
+H||ToC|0|0||||||||||||0||0|0|||
+F|36|ToC|0|1|||X|10||||||||0||0|0|||
+H||Objects|0|0||||||||||||0||0|0|||
+F|800|Image|0|1|||U|||||||||0||0|0|||
+F|810|Text|0|1|||U|||||||||0||0|0|||
+F|820|Sound|0|1|||U|||||||||0||0|0|||
+F|830|Video|0|1|||U|||||||||0||0|0|||
+F|840|WWW|0|1|||X|||||||||0||0|0|||
+H||Copies|0|0||||||||||||0||0|0|||
+T|101|Copies|0|1|nmlofprqykwz||X|||||||||0||0|0|||
+S||No.Inv. ^n|0|0|n||X|||||||||0||0|0|||
+S||Volume|0|0|m||X|||||||||0||0|0|||
+S||Ex.|0|0|l||X|||||||||0||0|0|||
+S||Physical location|0|0|o||X|||D||L_|@autoridades.pft|||0||0|0|||
+S||Acquisition mode|0|0|f||X|||D||X_|@autoridades.pft|||0||0|0|||
+S||Acquisition date|0|0|p||X|||||||||0||0|0|||
+S||Provider|0|0|r||X|||D||Y_|@autoridades.pft|||0||0|0|||
+S||Local currency|0|0|q||X|||||||||0||0|0|||
+S||Other currency|0|0|y||X|||||||||0||0|0|||
+S||Notes|0|0|k||X|||||||||0||0|0|||
+S||Date of entry|0|0|w||X|||||||||0||0|0|||
+S||Documentalist|0|0|z||X|||||||||0||0|0|||
+F|980|Operator and date|0|0|||OD|||||||||0||0|0|||
