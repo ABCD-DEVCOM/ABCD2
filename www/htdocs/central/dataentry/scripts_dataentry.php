@@ -326,7 +326,7 @@ function ChangeSeq(ix,prefix){
 	msgwin.document.writeln("<input type=hidden name=prefix value="+prefix+">")
 	msgwin.document.writeln("<input type=hidden name=tag value="+ix+">")
 	msgwin.document.writeln("new control number <input type=text size=20 name=cn value=''>")
-	msgwin.document.writeln("<input type=submit value=send>")
+	msgwin.document.writeln("<input class='btn btn-blue' type=submit value=send>")
 	msgwin.document.writeln("</form>")
 	msgwin.focus()
 }

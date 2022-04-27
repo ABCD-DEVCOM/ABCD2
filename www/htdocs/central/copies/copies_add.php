@@ -155,18 +155,17 @@ if (isset($arrHttp["db_copies"])) $urlcopies="&db_copies=Y";
 
 				$backtocancelscript="../dataentry/fmt.php?base=".$db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
 				if (isset($arrHttp["Formato"])) $backtocancelscript.="&Formato=".$arrHttp["Formato"];
-				
-				$backtocancelscript.=$urlcopies;
-				include "../common/inc_cancel.php" ?>
+					$backtocancelscript.=$urlcopies;
+					include "../common/inc_cancel.php" ?>
 
 
 				<?php 
-
 				$savescript="javascript:EnviarForma()";
 				include "../common/inc_save.php" ?>
 
         <?php
     }else{
+    	unset ($arrHttp["base"]);
         $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';
         include "../common/inc_back.php";
     }

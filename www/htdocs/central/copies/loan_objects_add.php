@@ -260,8 +260,12 @@ function Print_page(){
             }else{
                 $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
             }
-            $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';
-            include "../common/inc_back.php";
+            ?>
+<a href="javascript:top.toolbarEnabled=top.Menu('same')" class="button_browse" title='<?php echo $msgstr["cancel"]?>'>
+    <i class="far fa-window-close bt-red"></i>&nbsp;<?php echo $msgstr["cancel"]?>
+</a>
+         
+            <?php
             if ($error==""){
 
             $savescript="javascript:Send()";
