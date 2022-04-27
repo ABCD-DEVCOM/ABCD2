@@ -1,6 +1,6 @@
 F|1|Id do Objeto|0|0|||RO|||||||||0||0|0|||
 F|10|Base de dados|0|0|||RO||20|P|%path_database%acquisitions.dat|||||0||0|0|||
-F|30|Número de inventário|0|1|||AI||20|||CN_||||0||0|0|||
+F|30|Número de inventário|0|1|||X||20|||||||0||0|0|||
 F|200|Status|0|0|ab||R||2|P|status_copy.tab|||||0||0|0|||
 F|35|Biblioteca Central|0|0|||S|||P|libraries.tab|||||0||0|0|||
 F|40|Biblioteca Setorial|0|0|||X|||||||||0||0|0|||

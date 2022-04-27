@@ -982,13 +982,10 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 	   			if ($maxlength>0){
 	   				echo " onKeyDown=\"textCounter(document.forma$ixforms.tag_".$tag.",document.forma$ixforms.rem$tag,$maxlength)\"
 					   	onKeyUp=\"textCounter(document.forma1.tag".$tag.",document.forma1.rem$tag,$maxlength)\"";
-				}else{
-					if (isset($t[20]) and $t[20]=="U")
-   							echo " onKeyUp=\"CheckInventory($tag)\"";
-   				}
-   				echo ">".$campo."</textarea>";
+				}
+   				echo ' onKeyUp="CheckInventory()" >' .$campo. "</textarea>";
 	   			if ($maxlength>0)
-	   				echo "<input readonly type=\"text\" name=\"rem$tag\" size=\"3\" maxlength=\"$maxlength\" value=\"$maxlength\" class=charCount>".$msgstr["avalchars"]."\n";
+	   				echo "<input aaa readonly type=\"text\" name=\"rem$tag\" size=\"3\" maxlength=\"$maxlength\" value=\"$maxlength\" class=charCount>".$msgstr["avalchars"]."\n";
 	  		}else{
 	   			if ($len==0) $len="100";
 				switch ($tipo){

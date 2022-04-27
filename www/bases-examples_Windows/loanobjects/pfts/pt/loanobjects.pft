@@ -1,0 +1,30 @@
+'<b>ID do obj.: </b>'v1'<br>'/,
+'<b>Título : </b>',
+select v10
+case 'marc' : 
+ref->marc(l->marc("CN_"v1),v245^a,'</b><br>'
+'<b>Número de chamada.: </b>',v50,'</b><br>')
+case 'biblo' :
+ref->biblo(l->biblo("CN_"v1),v18,'</b><br>'
+'<b>Número de chamada.: </b>',v86,'</b><br>')
+endsel,
+
+'<b>Banco de dados: </b>'v10,/
+'<table border=1 cellspacing=5>'
+'<tr>'
+'<th>Inventário</th>
+<th>Biblioteca Principal</th>
+<th>Biblioteca setorial</th>
+<th>Tipo de objeto</th>
+<th>Volume</th>
+<th>Tomo</th>'
+
+('<tr>',
+'<td valign=top>'v959^i,' </td>'/
+'<td valign=top>'v959^l,' </td>'/
+'<td valign=top>'v959^b,' </td>'/
+'<td valign=top>'v959^o,' </td>'/
+'<td valign=top>'v959^v,' </td>'/
+'<td valign=top>'v959^t,' </td>'/)
+'</table>'
+'<hr>'/
