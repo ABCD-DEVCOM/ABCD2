@@ -103,26 +103,31 @@ if (isset($arrHttp["encabezado"])){
 		}else{
 			$ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
 		}
-		?>
-		<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span>
-		<a href=loan_objects_add.php?cn=<?php echo $arrHttp["Expresion"]?>&base=<?php echo $arrHttp["base"]?> class="defaultButton copiesdbaddButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["addloansdb"]?></strong></span>
-		</a>
+
+
+?>
+
+<a href="javascript:top.toolbarEnabled=top.Menu('same')" class="button_browse" title='<?php echo $msgstr["cancel"]?>'>
+    <i class="far fa-window-close bt-red"></i>&nbsp; <?php echo $msgstr["cancel"]?>
+</a>
+
+<?php 
+$savescript='loan_objects_add.php?cn='.$arrHttp["Expresion"].'&base='.$arrHttp["base"];
+include "../common/inc_save.php";
+?>
+
 
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies/copies_edit_browse.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/copies/copies_edit_browse.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: copies_edit_browse.php</font>\n";
+$ayuda="copies/copies_edit_browse.html";
+include "../common/inc_div-helper.php";
+
 ?>
-	</div>
+
+
 
 		<div class="middle form">
 		<div class="formContent">
