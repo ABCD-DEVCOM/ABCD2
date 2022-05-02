@@ -45,6 +45,7 @@ if (trim($c)==""){
 				$ixc=1;
 				$v=explode('$$$',$value);
 				$arrHttp["Mfn"]=$v[0];
+				if (isset($v[1]))
 				$value=$v[1];
 			}
 			$inv=explode('|',$value);
@@ -102,6 +103,7 @@ $ix=0;
 foreach ($old_c as $value){
     if ($ix==0){
     	$t=explode('$$$',$value);
+    	if (isset($t[1]))
     	$value=$t[1];
     	$t=explode('|',$value);
     	$ix=1;
@@ -194,11 +196,10 @@ Global $arrHttp,$msgstr,$cn,$db,$meta_encoding;
 		<?php echo $msgstr["loanobjects"]?>
 	</div>
 	<div class="actions">
-		<?php 
-		$backtoscript="javascript:top.Menu('same' )";
-		include "../common/inc_back.php";
+<a href="javascript:top.toolbarEnabled=top.Menu('same')" class="button_browse" title='<?php echo $msgstr["regresar"]?>'>
+    <i class="fas fa-arrow-circle-left"></i>&nbsp;<?php echo $msgstr["regresar"]?>
+</a>
 
-		?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>

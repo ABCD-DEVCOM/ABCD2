@@ -8,6 +8,7 @@
 20220119 fho4abcd add empty value in language menu to indicate to no language matches
 20220122 rogercgui Default logo is displayed if institution image is absent
 20220316 fho4abcd Replace undefined $Permiso by $_SESSION["permiso"] to ensure correct databases list
+20220501 rogercgui Improved the language change option - in the core module the selected database was lost when the language was changed. add base = document.cambiolang.base.value;
 */
 
 global $ABCD_scripts_path;
@@ -197,8 +198,9 @@ function ChangeLang(){
 
 	function CambiarLenguaje(){
 		if (document.cambiolang.lenguaje.selectedIndex>=0){
-               lang=document.cambiolang.lenguaje.options[document.cambiolang.lenguaje.selectedIndex].value
-               self.location.href="?reinicio=s&lang="+lang
+			base = document.cambiolang.base.value;
+            lang=document.cambiolang.lenguaje.options[document.cambiolang.lenguaje.selectedIndex].value
+            self.location.href="?base="+base+"&reinicio=s&lang="+lang
 		}
 	}
 
@@ -249,8 +251,8 @@ if (isset($def['LOGO_DEFAULT'])) {
 		}
 
 		global $verify_selbase;
+		
 		if ($verify_selbase=="Y") {
-
 			if ($_SESSION["mfn_admin"]=="1") {
 
 		?>
@@ -361,20 +363,23 @@ if (isset($def['LOGO_DEFAULT'])) {
 	} 
 
 	global $circulation, $acquisitions;
-	if  (($central=="Y") or  ($circulation=="Y")or ($acquisitions=="Y"))  {
+	if  (($central=="Y") or  ($circulation=="Y") or ($acquisitions=="Y") or ($verify_selbase=="Y"))  {
+		if (isset($_REQUEST['base'])) {
+			$selbase = $_REQUEST['base'];
+		} else {
+			$selbase="";
+		}
 
  ?>
             <li>
 			
 				<form name="cambiolang"  class="language">
 
-						<?php if ($verify_selbase=="Y") { ?>
-							<input type="hidden" name="base">
+							<input type="hidden" name="base" value="<?php echo $selbase; ?>">
 							<input type="hidden" name="cipar" value="">
 							<input type="hidden" name="marc" value="">
 							<input type="hidden" name="tlit" value="">
 							<input type="hidden" name="nreg" value="">	
-						<?php }  ?>
 
 				            <select name="lenguaje"  onchange="CambiarLenguaje()">
 				            <?php
