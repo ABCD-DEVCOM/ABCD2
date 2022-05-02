@@ -114,7 +114,7 @@ link=Conectado com
 link_logo=Logotipo do link de URL
 loan_conf=Configuração do extrato de conta, renovação e reserva
 mas_terminos=Mais termos
-mensajeb=Selecione um campo de pesquisa e insira alguns termos de pesquisa para os dados que você está tentando localizar. <br> Clique em <img src =../images/dictionary.gif> para exibir o dicionário de termos para o campo selecionado.
+mensajeb=Selecione um campo de pesquisa e insira alguns termos de pesquisa para os dados que você está tentando localizar. <br> Clique no dicionário para exibir o dicionário de termos para o campo selecionado.
 menu=Menu
 menu_1=Sair
 menu_2=Geral
@@ -173,7 +173,7 @@ sel_o_l=Você deve selecionar outro idioma para fazer a cópia
 sel_one=Selecione uma opção
 sel_term=Selecione seus termos de pesquisa
 select_formato=Formato de apresentação
-send=Mandar
+send=Enviar
 shortIcon=Ícone curto
 show_help=Mostrar páginas de ajuda
 show_hide=Aparecer esconder
@@ -224,4 +224,5 @@ xml_step1=Armazene a estrutura genérico para apresentação MARC/XML de registr
 xml_step2=Formato (.pft) para gerar a saída MARC / XML
 y=E
 yes=sim
+cfg_chk=Conferindo
 
