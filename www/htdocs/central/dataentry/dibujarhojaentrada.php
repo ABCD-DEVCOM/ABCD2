@@ -188,10 +188,9 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 							echo " onKeyDown=\"textCounter(document.forma1.tag".$Etq.",document.forma1.rem$Etq,$maxlength)\"
 					   			   onKeyUp=\"textCounter(document.forma1.tag".$Etq.",document.forma1.rem$Etq,$maxlength)\"";
    						}
-   						if (isset($t[20]) and $t[20]=="U") {
-   							//echo "duplcheck called on field $Etq!<BR>";
+
+   						if (isset($t[20]) and $t[20]=="U")
    							echo " onKeyUp=\"CheckInventory($Etq)\"";
-   						}
    						echo "> " .$campo."</textarea>";
    						if ($maxlength!=0){
 	         				echo "\n<script>max_l['$Etq']=$maxlength</script>\n";
@@ -200,16 +199,18 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	   							$lengthmax=$maxlength;
 	   						else
 	   							$lengthmax=$maxlength-$lengthmax;
-	   						echo "<br><span align=right><input tabindex='0' type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."</span>\n";
+	   						echo "<br><span align=right><input type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."</span>\n";
                     	}
 					}else{
 						if ($maxlength!=0)
 							echo "<a style=\"text-decoration:none\" onMouseover=\"ddrivetip(document.forma1.tag".$Etq.".value,'linen',200 )\"; onMouseout=\"hideddrivetip()\"; onclick=\"hideddrivetip()\">";
-						echo "<input tabindex='0' type=text name=tag".$Etq." size=$n";
+						echo "<input type=text name=tag".$Etq." size=$n";
 						if ($maxlength!=0) echo " maxlength=$maxlength";
 						echo " class=td value=\"$campo\">";
 						if ($maxlength!=0) echo "</a>";
 					}
+   					
+
 					if ($t[10]=="D" or $t[10]=="T"){
 						$sc_col="";
 						$separa=";";
