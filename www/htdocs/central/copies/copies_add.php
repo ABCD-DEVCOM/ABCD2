@@ -189,7 +189,9 @@ include "../common/inc_div-helper.php";
 <div id="my_id" style="display: none;margin:0 auto;width:100%; height:100%;position:relative;overflow:hidden; background:#FFFFFF;text-align:center"><br><br><br><img src=../dataentry/img/preloader.gif></div>
 
 <div class="middle form" id="middleForm">
+
 <div name="INE" id="INE" style="color:#990000; display:none; font-style:italic; font-weight:bold;"></div>
+
 <input type=hidden name=INVA id=INVA value="<?php echo $arrHttp["Mfn"]?>~">
 
 <?php
@@ -198,27 +200,33 @@ if ($error!=""){
 	echo "<dd><h4>".$msgstr[$error]."</h4>";
 	die;
 }
+
 if ($err_copies=="Y"){
 	echo "<script>top.toolbarEnabled=\"\"</script>\n";
 	echo "<dd><h4>".$msgstr["err_cannotaddcopies"]."</h4>";
 	die;
 }
-echo "\n<div class=\"searchBox\">\n";
 
-echo "<label for=\"addCopies\">
-		<strong>". $msgstr["numcopies"]."</strong>
+?>
+	<div class="searchBox">
+		<label for="addCopies">
+			<strong><?php echo $msgstr["numcopies"];?></strong>
 		</label>
-		<input type=\"text\" size=11 maxlength=2 name=\"copies\" id=\"copies\" value=\"\"/>
-		&nbsp; &nbsp; &nbsp;";
+		<input type="text" size="11" maxlength="2" name="copies" id="copies" value="" >
+		&nbsp; &nbsp; &nbsp;
 
-echo "<a href=\"javascript:Show('copies','CN_".$db_addto."_".$valortag[1]."')\">". $msgstr["dispcopies"]."</a>
-<!--		<input type=checkbox value=Y checked name=createloans>
-		<label for=\"regCopies\">
-			<strong>".$msgstr["regcopies"]."</strong>
-		</label>  --> ";
-echo "</div>
-	<div class=\"formContent\" id=\"formContent\">";
+	<a class="bt-sm bt-default" href="javascript:Show('copies','CN_<?php echo $db_addto;?>_<?php echo $valortag[1];?>')">
+		<?php echo $msgstr["dispcopies"];?>		
+	</a>
 
+	<!--	<input type=checkbox checked value=Y  name=createloans>
+		<label for="regCopies">
+			<strong><?php echo $msgstr["regcopies"]?></strong>
+		</label>--> 
+</div>
+
+	<div class="formContent" id="formContent">
+<?php
 $arrHttp["cipar"]="copies.par";
 $fmt_test="S";
 $arrHttp["wks"]="new.fmt";
@@ -234,24 +242,24 @@ PrepararFormato();
 </form>
 	</div>
 </div>
-<form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>
-   <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-   <input type=hidden name=picklist>
-   <input type=hidden name=Ctrl>
-   <input type=hidden name=valor>
-   <input type=hidden name=desde value=dataentry>
+
+<form name="agregarpicklist" action="../dbadmin/picklist_edit.php" method="post" target="Picklist">
+   <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+   <input type="hidden" name="picklist">
+   <input type="hidden" name="Ctrl">
+   <input type="hidden" name="valor">
+   <input type="hidden" name="desde" value="dataentry">
 </form>
 
-<form name=refrescarpicklist action=../dbadmin/picklist_refresh.php method=post target=Picklist>
-   <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-   <input type=hidden name=picklist>
-   <input type=hidden name=Ctrl>
-   <input type=hidden name=valor>
-   <input type=hidden name=desde value=dataentry>
+<form name="refrescarpicklist" action="../dbadmin/picklist_refresh.php" method="post" target="Picklist">
+   <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+   <input type="hidden" name="picklist">
+   <input type="hidden" name="Ctrl">
+   <input type="hidden" name="valor">
+   <input type="hidden" name="desde" value="dataentry">
 </form>
 
 <?php
-// ==================================================================================
 
 function LeerFst($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
@@ -312,11 +320,21 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr;
 	}
 }
 ?>
-<script language=javascript>
+
+<script type="text/javascript">
+	const textarea = document.querySelector('textarea')
+textarea.onkeypress = (event) => {
+  const keyCode = event.keyCode
+  if (keyCode === 13) {
+  	document.getElementById("copies").disabled = true;
+    console.log('Field number of copies has been blocked!');
+  }
+}
+
 document.forma1.tag200[2].disabled = true;
-function CheckInventory(tag)
-{
-CheckInventoryDup(document.getElementById("tag30").value,1);
+function CheckInventory(tag) {
+	// Function in the acquisitions/javascript.php file
+	CheckInventoryDup(document.getElementById("tag30").value,1);
 }
 </script>
 <?php include("../common/footer.php"); ?>
