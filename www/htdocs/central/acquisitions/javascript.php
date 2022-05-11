@@ -17,19 +17,19 @@ function Show(Db,Key){
 	msgwin=window.open("../dataentry/show.php?base="+Db+"&Expresion="+Key,"","width=600, height=600, resizable, scrollbars")
 	msgwin.focus
 }
+
 function DateToIso(From,To){
 	d=From.split('/')
 	<?php echo "dateformat=\"$config_date_format\"\n" ?>
 	if (dateformat="DD/MM/YY"){
 		iso=d[2]+d[1]+d[0]
-	}else{
+	} else {
 		iso=d[2]+d[0]+d[1]
 	}
 	To.value=iso
 }
 
-function ChangeSeq(ix,prefix){
-
+function ChangeSeq(ix,prefix) {
 	msgwin=window.open("","CHANGE","width=400, height=200, scrollbars=yes")
 	msgwin.document.writeln("<b><?php echo $msgstr["database"]."</b>: ". $arrHttp["base"]?>")
 	msgwin.document.writeln("<form name=cn method=post action=../dataentry/changeseq.php>")
@@ -43,7 +43,7 @@ function ChangeSeq(ix,prefix){
 	msgwin.focus()
 }
 
-function EnviarForma(){
+function EnviarForma() {
 	enviar=Validar()
 	if (enviar=="N") return
 	Msg=""
@@ -56,6 +56,7 @@ function EnviarForma(){
 	}
 	document.forma1.submit()
 }
+
 function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){
 
 	Ctrl_activo=xI
@@ -131,7 +132,7 @@ function FormarValorCapturado(){
 	}
 	document.forma1.check_select.value=ValorCapturado
 }
-<!--//Ajax funtion to declare an XMLHttpRequest object
+//Ajax funtion to declare an XMLHttpRequest object
 function getXMLHTTPRequest() {
 try {
 req = new XMLHttpRequest();
@@ -148,61 +149,46 @@ req = new XMLHttpRequest();
 }
 return req;
 }
-// -->//XMLHttpRequest object instance
  var http = getXMLHTTPRequest();
-<!--//----------------------------------------------------------------------------------------------
+
 
 function CheckInventoryDup(invnumber,type){
-  if (http.readyState == 4 || http.readyState == 0)
-  	{
+  if (http.readyState == 4 || http.readyState == 0)  	{
   var myurl = 'check_dup_copies.php';//define la url
   myRand = parseInt(Math.random()*999999999999999);// es para que la info no vaya a la cache sino al servidor
   var modurl = myurl+"?invnum="+invnumber+"&rand="+myRand;//crea la nueva url
   http.open("GET", modurl);//define tipo de convercion
-  http.onreadystatechange = function(){ResponseCheckInventoryDup(type);}//es lo que queremos q se ejecute
+  http.onreadystatechange = function(){ ResponseCheckInventoryDup(type);}//es lo que queremos q se ejecute
   http.send(null);//se ejecuta la funcion
   }
   else
     setTimeout('CheckInventoryDup('+invnumber+','+type+')', 1000);
 }
 
-function ResponseCheckInventoryDup(type)
-{
+function ResponseCheckInventoryDup(type) {
 if (http.readyState == 4)
-	  if(http.status == 200)
-	    {
+	  if(http.status == 200) {
 		  if (http.responseText!="") {
-		   if (type==2)
-		   {
+		   if (type==2) {
 		    document.getElementById("INVA").value=http.responseText;
 
-		    if (http.responseText==(document.forma1.Mfn.value+'~') || http.responseText=="~")
-			 {
+		    if (http.responseText==(document.forma1.Mfn.value+'~') || http.responseText=="~") {
 		       document.getElementById("INE").style.display='none';
-		     }
-		     else
-		     {
-		       document.getElementById("INE").innerHTML='</br>    <?php echo $msgstr["errSCopy"];?></br></br></br>';
+		     } else {
+		       document.getElementById("INE").innerHTML='</br><?php echo $msgstr["errSCopy"];?></br></br></br>';
 		       document.getElementById("INE").style.display='block';
 		     }
-		   }
-		   else
-		   {
-		     if (http.responseText=="~")
-			 {
+		   } else {
+		     if (http.responseText=="~") {
 			 document.getElementById("INE").style.display='none';
 			 document.getElementById("INVA").value=http.responseText;
-			 }
-			 else
-			 {
-		       document.getElementById("INE").innerHTML='</br>    <?php echo $msgstr["errSCopy"];?></br></br></br>';
+			 } else {
+		       document.getElementById("INE").innerHTML='</br><?php echo $msgstr["errSCopy"];?></br></br></br>';
 			   document.getElementById("INVA").value=http.responseText;
 		       document.getElementById("INE").style.display='block';
 		     }
 		   }
-	      }
-		  else
-		  {
+	      } else {
 		   alert("Ha ocurrido un error: "+http.statusText);
 		  }
         }
@@ -222,8 +208,7 @@ function DoRemoveFromLoUpdatingStatus(Db,Cn,Inv,Mfn){
     setTimeout('DoRemoveFromLoUpdatingStatus('+Db+','+Cn+','+Inv+','+Mfn+')', 1000);
 }
 
-function ResponseDoRemoveFromLoUpdatingStatus(Mfn)
-{
+function ResponseDoRemoveFromLoUpdatingStatus(Mfn) {
 if (http.readyState == 4)
 	  if(http.status == 200)
 	    {
@@ -236,8 +221,5 @@ if (http.readyState == 4)
 		  }
         }
 }
-
-
-
 
 </script>
