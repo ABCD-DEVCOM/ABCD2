@@ -66,7 +66,7 @@ a[class^="bt-"] {
 
 
 
-.bt, 
+.bt, .bt-sm
 input[type=button]:hover,
 input[type=submit]:hover,
 button:hover,
@@ -146,10 +146,11 @@ button.bt-lg {
   padding:.8rem 2rem;
 }
 
-.bt-sm {
+.bt-sm, a.bt-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   border-radius: 0.2rem;
+  text-decoration: none;
 }
 
 
