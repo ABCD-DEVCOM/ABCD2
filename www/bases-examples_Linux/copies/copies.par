@@ -1,9 +1,11 @@
 copies.*=%path_database%copies/data/copies.*
-copies.pft=%path_database%copies/pfts/encopies.pft
+loanobjects.*=%path_database%loanobjects/data/loanobjects.*
+STW=%path_database%copies/data/copies.stw
+copies.pft=%path_database%copies/pfts/%lang%/copies.pft
 biblo.*=%path_database%biblo/data/biblo.*
 stock.*=%path_database%stock/data/stock.*
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
 isisac.tab=%path_database%copies/data/isisac.tab
 isisuc.tab=%path_database%copies/data/isisuc.tab
-STW=%path_database%copies/data/copies.stw
+users.*=%path_database%users/data/users.*
