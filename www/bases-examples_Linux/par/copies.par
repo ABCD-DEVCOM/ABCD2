@@ -1,4 +1,5 @@
 copies.*=%path_database%copies/data/copies.*
+loanobjects.*=%path_database%loanobjects/data/loanobjects.*
 STW=%path_database%copies/data/copies.stw
 copies.pft=%path_database%copies/pfts/%lang%/copies.pft
 biblo.*=%path_database%biblo/data/biblo.*
