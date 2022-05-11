@@ -160,9 +160,9 @@ function CheckInventoryDup(invnumber,type){
   http.open("GET", modurl);//define tipo de convercion
   http.onreadystatechange = function(){ ResponseCheckInventoryDup(type);}//es lo que queremos q se ejecute
   http.send(null);//se ejecuta la funcion
-  }
-  else
+  } else {
     setTimeout('CheckInventoryDup('+invnumber+','+type+')', 1000);
+  }
 }
 
 function ResponseCheckInventoryDup(type) {
