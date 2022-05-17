@@ -296,7 +296,7 @@ include("../common/institutional_info.php");
 	            echo $fp;
 	       } else {
 	           if (file_exists($db_path."/circulation/def/en/currencies.tab"))
-	           $fp = file($db_path."/circulation/def/en/currencies.tab");
+	           $fp = file($db_path."/circulation/def/".$_REQUEST['lang']."/currencies.tab");
 	        echo $fp;
 	       }
 	    if (isset($fp)){

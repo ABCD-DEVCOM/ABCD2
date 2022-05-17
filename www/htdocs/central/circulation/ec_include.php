@@ -106,7 +106,7 @@ if (isset($arrHttp["usuario"])){
 	    if (isset($arrHttp["reserve"])){
 			$ec_output.="</td></table>";
 		}
-		$ec_output.="\n<script>nMultas=0;nSusp=0;nNota=0;</script>\n" ;
+		//$ec_output.="\n<script>nMultas=0;nSusp=0;nNota=0;</script>\n" ;
 		include("sanctions_read.php");
 		$ec_output.=$sanctions_output;
 
