@@ -376,7 +376,7 @@ foreach  ($type_items as $var=>$value){
     	elem = document.getElementById("type_e");
     	html='<table class="listTable" width=100% border=0>';
     	html+="<tr><td></td><td align=right>"
-    	html+="<p align=right><a class='bt-blue' href=javascript:Aceptar_Item("+index+")><i class='far fa-save'></i> <?php echo $msgstr["acc_changes"]?></a>&nbsp &nbsp;  <a class='bt-gray' href=javascript:Cancelar()><i class='fas fa-times'></i> <?php echo $msgstr["can_changes"]?></a>"
+    	html+="<p align=right><a class='bt bt-blue' href=javascript:Aceptar_Item("+index+")><i class='far fa-save'></i> <?php echo $msgstr["acc_changes"]?></a>&nbsp &nbsp;  <a class='bt bt-gray' href=javascript:Cancelar()><i class='fas fa-times'></i> <?php echo $msgstr["can_changes"]?></a>"
     	html+="</td></tr>"
     	cell=sel.split('|')
     	for (var c in RT){
@@ -472,7 +472,7 @@ foreach  ($type_items as $var=>$value){
     	}
     	elem.innerHTML = html+"</table>"
     	elem = document.getElementById("acciones")
-    	elem.innerHTML = "<a class='bt-blue' href=javascript:Aceptar_Item("+index+")><i class='far fa-save'></i> <?php echo $msgstr["acc_changes"]?></a>&nbsp &nbsp; <a class='bt-gray' href=javascript:Cancelar()><i class='fas fa-times'></i> <?php echo $msgstr["can_changes"]?></a>"
+    	elem.innerHTML = "<a class='bt bt-blue' href=javascript:Aceptar_Item("+index+")><i class='far fa-save'></i> <?php echo $msgstr["acc_changes"]?></a>&nbsp &nbsp; <a class='bt bt-gray' href=javascript:Cancelar()><i class='fas fa-times'></i> <?php echo $msgstr["can_changes"]?></a>"
 
 	}
 
@@ -566,8 +566,8 @@ foreach  ($type_items as $var=>$value){
 	  	}
     	elem.innerHTML = html+"</table>"
     	elem = document.getElementById("acciones");
-        html="<a class='bt-blue' href=javascript:Enviar()><i class='far fa-save'></i> <?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;"
-    	html+="<a class='bt-gray' href=configure_menu.php?encabezado=s><i class='fas fa-times'></i> <?php echo $msgstr["cancel"]?></a></td></tr>"
+        html="<a class='bt bt-blue' href=javascript:Enviar()><i class='far fa-save'></i> <?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;"
+    	html+="<a class='bt bt-gray' href=configure_menu.php?encabezado=s><i class='fas fa-times'></i> <?php echo $msgstr["cancel"]?></a></td></tr>"
         elem.innerHTML = html
 
 	}
@@ -689,39 +689,39 @@ function ValidarFecha(Fecha){
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["typeofitems"]."
-			</div>
-			<div class=\"actions\">\n";
-
-				echo "<a href=javascript:Verificar() class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["cancel"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/policy.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/policy.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo " Script: loanobjects.php";
-
-echo"</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">";
-
 ?>
 
-    <form name=forma1>
-  	<a class="bt-blue" href="javascript:NuevoTipo()" ><i class="fas fa-plus"></i> <?php echo $msgstr["crear"]?></a>
-    <div id="type_e"> </div>
+		<div class="sectionInfo">
+			<div class="breadcrumb">
+				<?php echo $msgstr["typeofitems"];?>
+			</div>
+			<div class="actions">
 
-    <div id=acciones>
-    <a href=javascript:Enviar()><?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-    <a href=configure_menu.php?encabezado=s><?php echo $msgstr["cancel"]?></a>
+				<?php 
+					$inc_backtourl="javascript:Verificar();";
+					include "../common/inc_back.php";
+				 ?>
+			</div>
+			<div class="spacer">&#160;</div>
+		</div>
+
+
+		<?php 
+		$ayuda="circulation/policy.html";
+		include "../common/inc_div-helper.php";
+		?>
+
+		<div class="middle form">
+			<div class="formContent">
+
+    		<form name="forma1">
+  				<a class="bt bt-blue" href="javascript:NuevoTipo()" ><i class="fas fa-plus"></i> <?php echo $msgstr["crear"]?></a>
+    			
+    			<div id="type_e"></div>
+
+    			<div id="acciones">
+    			<a href="javascript:Enviar()"><?php echo $msgstr["update"]?></a>
+    			<a href="configure_menu.php?encabezado=s"><?php echo $msgstr["cancel"]?></a>
     </div>
 
 

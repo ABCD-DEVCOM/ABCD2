@@ -38,10 +38,11 @@ echo "<body>";
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<a href="javascript:self.close()" class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span>
-		</a>
+		<?php 
+		$inc_backtourl="javascript:self.close();";
+		include "../common/inc_back.php";
+		 ?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
