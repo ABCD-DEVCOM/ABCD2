@@ -13,7 +13,7 @@ Este é um lançamento oficial.
 Este capítulo contém as diferenças com a [Versão 2.2 beta](#Version-220-beta)
 
 ### Novo visual
-A interface do usuário do módulo central é modernizada.
+A interface do usuário do módulo central foi modernizada.
 Novos botões e novas cores farão com que o ABCD pareça melhor.
 Muitos formulários também foram redesenhados para torná-los mais claros ou com melhor aparência.
 
