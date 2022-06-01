@@ -17,7 +17,7 @@ A interface do usuário do módulo central foi modernizada.
 Novos botões e novas cores farão com que o ABCD pareça melhor.
 Muitos formulários também foram redesenhados para torná-los mais claros ou com melhor aparência.
 
-O logotipo da ABCD é alterado.
+O logotipo da ABCD foi alterado.
 Esses logotipos são acompanhados por alterações nos arquivos .css.
 Os arquivos de logotipo e folha de estilo são armazenados em cache pela maioria dos navegadores e isso pode resultar em visualizações distorcidas para todos os usuários.    
 Solução: &rarr; No navegador da web: Vá para o site da sua instalação do ABCD, pressione Ctrl F5 e reinicie o navegador.
