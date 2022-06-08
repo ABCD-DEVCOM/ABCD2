@@ -99,16 +99,16 @@ header('Content-Type: text/html; charset=".$charset."');
 	}
 
 	</script>
-	<body>
-	<div id="header-wrapper">
-	<div id="header">
-		<div id="logo">
-			<h1><a href="<?php echo $link_logo?>"><img src=<?php echo $logo?>></a></h1>
+<body>
+	<header id="header-wrapper">
+		<div id="header">
+			<div id="logo">
+				<h1><a href="<?php echo $link_logo?>"><img src=<?php echo $logo?>></a></h1>
+			</div>
 		</div>
-	</div>
-</div>
-<div id="wrapper">
+	</header>
 
+<div id="wrapper">
 	<div id="page" style='float:left;width:90%'>
 		<div id="content" style='float:left;width:90%'>
 		<br>
@@ -179,18 +179,16 @@ If (isset($accion) and $accion=="print"){
 }
 ?>
 
-
 </div>
 <?php
 //}
 ?>
-</div>
-</div>
-<br><br><br>
-</body>
+			</div>
+		</div>
+	</body>
 </html>
+
 <script>
 Total_No=<?php echo $Total_No?>;
 contador=<?php echo $contador?>;
-
 </script>

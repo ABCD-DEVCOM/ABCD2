@@ -81,11 +81,15 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	<div id="more">
    		<input type=button height=50 value="<?php echo $msgstr["diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
 
-		<p class=titulo2><?php echo $msgstr["resultados_inc"]?>: 
-     	<input type=radio value=and name=alcance id=and>
-    	<label class=titulo2><?php echo $msgstr["todas_p"]?></label>
-    	<input type=radio value=or name=alcance id=or  checked>
-    	<label><?php echo $msgstr["algunas_p"]?></label></p>
+		<p class=titulo2>
+			<?php echo $msgstr["resultados_inc"]?>: 
+     		
+     		<input type=radio value=and name=alcance id=and>
+    		<label class=titulo2><?php echo $msgstr["todas_p"]?> </label>
+    		
+    		<input type=radio value=or name=alcance id=or  checked>
+    		<label><?php echo $msgstr["algunas_p"]?></label>
+    	</p>
    	</div><!--/more-->
 
 

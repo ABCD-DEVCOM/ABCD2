@@ -20,13 +20,13 @@ header('Content-Type: text/html; charset=".$charset."');
 	<title><?php echo $TituloPagina?></title>
 </head>
 <body>
-<div id="header-wrapper">
+<header id="header-wrapper">
 	<div id="header">
 		<div id="logo">
 			<h1><a href="<?php echo $link_logo?>"><img src=<?php echo $logo?>></a></h1>
 		</div>
 	</div>
-</div>
+</header>
 <div id="wrapper">
 
 	<div id="page" style='float:left;width:90%'>
