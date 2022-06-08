@@ -1,4 +1,4 @@
-<div id="sidebar" class="sidebar">
+<aside id="sidebar" class="sidebar">
 <?php
 if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 
@@ -107,7 +107,8 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 }
 ?>
 <br><br><br>
-</div>
+</aside>
+
 </div>
 <form name=bi action=buscar_integrada.php method=post>
 <input type=hidden name=base>

@@ -116,56 +116,64 @@ actualScript="<?php echo $actualScript?>"
 
 </script>
 </head>
-<body  <?php if (isset($onload)) echo $onload?>>
-<a name=inicio>
-<div id="header-wrapper">
+<body <?php if (isset($onload)) echo $onload?>>
+<header id="header-wrapper" >
 	<div id="header">
 		<div id="logo">
-			<a href="<?php echo $link_logo?>?lang=<?php echo $_REQUEST['lang']?>"><img src="<?php echo $logo?>"></a>
+			<a name="inicio" href="<?php echo $link_logo?>?lang=<?php echo $_REQUEST['lang']?>"><img src="<?php echo $logo?>"></a>
 		</div>
 
 	</div>
-	 <div class=areaTitulo><span class=tituloBase><?php echo $TituloEncabezado;if (isset($_REQUEST["db_path"])) echo "  ".$_REQUEST["db_path"]?></span>
-	 <br>
-	 <?php echo $charset;
-	 if (file_exists("opac_dbpath.dat")) echo "<br><a href=../index.php>Cambiar carpeta bases</a>";
-	 ?>
+	 <div class="areaTitulo">
+	 	<div class=tituloBase>
+	 		<?php 
+	 		echo $TituloEncabezado;
+	 		if (isset($_REQUEST["db_path"])) 
+	 			echo "  ".$_REQUEST["db_path"];
+	 		?>
+	 			
+	 	</div>
+	 	<div>
+	 	 <?php echo $charset;
+	 		if (file_exists("opac_dbpath.dat")) 
+	 			echo "<a href=../index.php>Cambiar carpeta bases</a>";
+	 	 ?>
+	 	 </div>
 	 </div>
-</div>
+</header>
 <?php
 if (!file_exists($db_path."opac_conf/$lang/lang.tab")){
 	echo $msgstr["missing"]." ".$db_path."opac_conf/$lang/lang.tab";
 	die;
 }
 if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu=="S")){
-	echo "
-	<div id=\"menu-wrapper\">
-	<div id=\"menu\">
-		<ul>
-			<li><a href=\"javascript:openNav()\">&#9776; ".$msgstr["menu"]."</a></li>";
-
-        echo "<li><a href=\"javascript:document.inicio_menu.submit()\">".$msgstr["inicio"]."</a></li>";
-
-	if (file_exists($db_path."opac_conf/".$lang."/menu.info")){
-		$fp=file($db_path."opac_conf/".$lang."/menu.info");
-		foreach ($fp as $value){
-			$value=trim($value);
-			if ($value!=""){
-				$x=explode('|',$value);
-				echo "<li><a href=\"".$x[1]."\"";
-				if (isset($x[2])and $x[2]=="Y") echo " target=_blank";
-				echo ">".$x[0]."</a></li>";
-			}
-		}
-	}
-
 ?>
+	<div id="menu-wrapper">
+	<div id="menu">
+		<ul>
+			<li><a href="javascript:openNav()">&#9776;<?php echo $msgstr["menu"];?></a></li>
+			<li><a href="javascript:document.inicio_menu.submit()"><?php echo $msgstr["inicio"]?></a></li>
+			<?php
+				if (file_exists($db_path."opac_conf/".$lang."/menu.info")){
+					$fp=file($db_path."opac_conf/".$lang."/menu.info");
+					foreach ($fp as $value){
+						$value=trim($value);
+						if ($value!=""){
+							$x=explode('|',$value);
+							echo "<li><a href=\"".$x[1]."\"";
+							if (isset($x[2])and $x[2]=="Y") echo " target=_blank";
+							echo ">".$x[0]."</a></li>";
+						}
+					}
+				}
+
+			?>
 		</ul>
 	</div>
-	<div id=right>
+	<div id="right">
 		<div id="language">
 
-			<select name=lang onchange=ChangeLanguage() id=lang>
+			<select name="lang" onchange="ChangeLanguage()" id="lang">
 				<?php
 					$fp=file($db_path."opac_conf/$lang/lang.tab");
 					foreach ($fp as $value){
