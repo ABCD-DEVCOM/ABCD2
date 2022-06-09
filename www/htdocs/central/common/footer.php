@@ -11,7 +11,7 @@ $def = parse_ini_file($db_path."abcd.def");
 //print_r($def);
 ?>
 
-<div class="footer">
+<footer class="footer">
     <div class="systemInfo">
         <span class="institutionName">
             <a href="<?php 
@@ -84,7 +84,7 @@ $def = parse_ini_file($db_path."abcd.def");
             ?></a>
         </div>
     <div class="spacer">&#160;</div>
-</div>
+</footer>
 
 </body>
 </html>
