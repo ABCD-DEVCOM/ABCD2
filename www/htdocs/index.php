@@ -31,10 +31,9 @@ if (isset($_SESSION["lang"])){
 include ("$app_path/lang/admin.php");
 include ("$app_path/lang/lang.php");	
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang;?>">
+<html lang="<?php echo $lang;?>" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang;?>">
 
 <head profile="http://www.w3.org/2005/10/profile">
 		<meta http-equiv="Expires" content="-1" />
@@ -42,7 +41,7 @@ include ("$app_path/lang/lang.php");
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<meta http-equiv="Content-Language" content="pt-br" />
+		<meta http-equiv="Content-Language" content="<?php echo $lang;?>" />
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
@@ -135,7 +134,7 @@ include ("$app_path/common/css_settings.php");
 ?>
 </head>
 <body>
-	<div class="heading">
+	<header class="heading">
 		<div class="institutionalInfo">
 			<?php
 
@@ -154,7 +153,7 @@ include ("$app_path/common/css_settings.php");
 		<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding?></div>
 
 		<div class="spacer">&#160;</div>
-	</div>
+	</header>
 	<div class="sectionInfo">
 		<div class="breadcrumb"></div>
 		<div class="actions"></div>
