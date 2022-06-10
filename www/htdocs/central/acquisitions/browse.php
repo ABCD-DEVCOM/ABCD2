@@ -276,7 +276,7 @@ $archivo_field=$db_path.$ABCD_base."/pfts/".$ABCD_lang."/tb".$ABCD_base.".pft";
 
 //Function created to display the information of the columns
 function read_collumns($archivo_tit) {
-    global $ABCD_reverse;
+    global $ABCD_reverse, $db_path, $ABCD_base, $ABCD_lang;
 
     switch ($ABCD_reverse) {
     case "On":
@@ -739,7 +739,7 @@ function Crear(){
 
 
 function Mostrar(Mfn){
-    msgwin=window.open("show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
+    msgwin=window.open("../dataentry/show.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&encabezado=s&Opcion=editar","show","width=600,height=400,scrollbars, resizable")
     msgwin.focus()
 }
 
