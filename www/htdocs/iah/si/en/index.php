@@ -1,11 +1,10 @@
-<?php
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html>
 
-<HTML>
-<HEAD>
+<head>
+	
 <?php
 $db_path="/var/opt/ABCD/bases/";
 if (!file_exists($db_path."abcd.def")){
@@ -26,7 +25,7 @@ header($hdr);
     <TITLE>ABCD iAH - Search Interface</TITLE>
 	<script language="JavaScript">
 		function startIAH(base){
-            var aux="/cgi-bin/". $cisis_ver . "wxis/iah/scripts/?IsisScript=iah.xis&lang=en&base=" + base;
+            var aux="/cgi-bin/"+<?php echo $cisis_ver;?>+"wxis/iah/scripts/?IsisScript=iah.xis&lang=en&base=" + base;
 			this.location=aux;
 		}
 	</script>
@@ -41,7 +40,7 @@ header($hdr);
   <BODY BGCOLOR="#eoebeb" link="green" vlink="green">
 
    	<div align="right">
-		[ <a href="../pt/index.htm">português</a> | <a href="../es/index.htm">español</a> | english ]
+		[ <a href="../pt/index.htm">portuguï¿½s</a> | <a href="../es/index.htm">espaï¿½ol</a> | english ]
 	</div>
 
     <TABLE WIDTH="550" HEIGHT="410" BORDER="0" ALIGN="center" cellspacing="8">
