@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2022-06-10 rogercgui Replaced the "split" function as obsolete: http://php.adamharvey.name/manual/en/function.split.php
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -16,7 +19,7 @@ $arrHttp["base"]="suggestions";
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 foreach ($arrHttp as $var => $value) {
 	if (substr($var,0,3)=="tag" ){
-		$tag=split("_",$var);
+		$tag=str_split("_",$var);
 		if (isset($variables[$tag[0]])){
 			$variables[$tag[0]].="\n".$value;
 			$valortag[substr($tag[0],3)].="\n".$value;

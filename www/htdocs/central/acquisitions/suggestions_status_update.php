@@ -45,7 +45,7 @@ die;
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
 global $arrHttp;
-
+		$occ="";
 		if (substr($var,0,3)=="tag") {
 			$ixpos=strpos($var,"_");
 			if ($ixpos!=0) {

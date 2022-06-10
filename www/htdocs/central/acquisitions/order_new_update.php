@@ -6,15 +6,18 @@ if (!isset($_SESSION["permiso"])){
 include("../config.php");
 include("../lang/admin.php");
 include("../lang/acquisitions.php");
+include("../common/get_post.php");
 $ValorCapturado="";
 foreach ($_GET as $var => $value) {
 	VariablesDeAmbiente($var,$value);
 }
-if (count($arrHttp)==0){
+/*
+if (count($arrHttp)==""){
 	foreach ($_POST as $var => $value) {
 		VariablesDeAmbiente($var,$value);
 	}
-}
+}*/
+
 foreach ($arrHttp as $var => $value) {
 	if (substr($var,0,3)=="tag" ){
 		$tag=explode("_",$var);

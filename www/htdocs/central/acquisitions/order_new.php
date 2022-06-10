@@ -157,8 +157,8 @@ function switchMenu(obj) {
 	text-align:left;
 	margin:0 auto;
 	width:100%;
-	xmin-height:10px;
-	xborder:1px solid #ccc;
+	min-height:10px;
+	border:1px solid #ccc;
 	padding:0px;
 }
 
@@ -191,6 +191,9 @@ include("../common/institutional_info.php");
 	<?php
 		$backtoscript="order_new_menu.php";
 		include "../common/inc_back.php";
+
+		$savescript="javascript:EnviarForma()";
+		include "../common/inc_save.php";		
 	?>
 
 	</div>

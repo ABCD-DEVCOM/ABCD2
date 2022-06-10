@@ -8,7 +8,8 @@ include("../common/get_post.php");
 $ValorCapturado="";
 $arrHttp=array();
 foreach ($_GET as $var => $value) {
-	$value=trim($value);	if ($value!="")	VariablesDeAmbiente($var,$value);
+	$value=trim($value);
+	if ($value!="")	VariablesDeAmbiente($var,$value);
 }
 if (count($arrHttp)==0){
 
@@ -26,7 +27,8 @@ $xnr="";
 $arrHttp["wks"]="decision.fmt";
 include("../dataentry/plantilladeingreso.php");
 include("../dataentry/actualizarregistro.php");
-foreach ($arrHttp as $var => $value) {	if (substr($var,0,3)=="tag" ){
+foreach ($arrHttp as $var => $value) {
+	if (substr($var,0,3)=="tag" ){
 		$tag=explode("_",$var);
 		if (isset($variables[$tag[0]])){
 			$variables[$tag[0]].="\n".$value;
@@ -39,18 +41,24 @@ foreach ($arrHttp as $var => $value) {	if (substr($var,0,3)=="tag" ){
 
 }
 PlantillaDeIngreso();
-foreach ($vars as $linea){	$l=explode('|',$linea);
-	if (!isset($variables["tag".$l[1]])) {		$valortag[$l[1]]="";
-		$variables["tag".$l[1]]="";	}}
+foreach ($vars as $linea){
+	$l=explode('|',$linea);
+	if (!isset($variables["tag".$l[1]])) {
+		$valortag[$l[1]]="";
+		$variables["tag".$l[1]]="";
+	}
+}
 ActualizarRegistro();
 $see_all="";
 if (isset($arrHttp["see_all"])) $see_all="&see_all=Y";
 header("Location: decision.php?base=".$arrHttp["base"]."&sort=".$arrHttp["sort"].$see_all);
 die;
 //------------------------------------------------------
-function VariablesDeAmbiente($var,$value){
-global $arrHttp;
-		if (substr($var,0,3)=="tag") {			$ixpos=strpos($var,"_");
+	function VariablesDeAmbiente($var,$value){
+	global $arrHttp;
+	$occ="";
+		if (substr($var,0,3)=="tag") {
+			$ixpos=strpos($var,"_");
 			if ($ixpos!=0) {
 				$occ=explode("_",$var);
 				$value="^".trim($occ[2]).$value;

@@ -44,7 +44,7 @@ float: left;
 margin: 10px 10px 5px 5px;
 }
 headerDiv a:hover {
-color: #;
+background-color: #ccc;
 }
 </style>
 <script src=../dataentry/js/lr_trim.js></script>
@@ -108,7 +108,7 @@ include "../common/inc_div-helper.php";
 <div class="middle form">
 			<div class="formContent">
 <?php
-// se lee el formato de la fecha utilizando la configuración de préstamos
+// se lee el formato de la fecha utilizando la configuraciï¿½n de prï¿½stamos
 $locales=explode('/',$config_date_format);
 switch ($locales[0]){
 	case "DD":
@@ -136,8 +136,8 @@ foreach ($exp as $value){
 	$value=trim($value);
 	if ($value!=""){
 		$e=explode('_',$value);
-		$Mfn[$value]=$value;  // se hace un arreglo que tiene el MFN y el número de la ocurrencia
-		$value="MFN_".$e[0];  // se construye la expresión de búsqueda
+		$Mfn[$value]=$value;  // se hace un arreglo que tiene el MFN y el nï¿½mero de la ocurrencia
+		$value="MFN_".$e[0];  // se construye la expresiï¿½n de bï¿½squeda
 		if ($Expresion==""){
 			$Expresion=$value;
 		}else{
@@ -239,11 +239,12 @@ foreach ($order as $prov=>$linea){
 echo "</table>";
 
 ?>
-<form method=post name=forma1 action=order_update.php onSubmit="javascript:return false">
-<input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn_sel"]?>">
-<input type=hidden name=order value="<?php echo $purchase?>">
-</form>
-</div></div>
+	<form method=post name=forma1 action=order_update.php onSubmit="javascript:return false">
+	<input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn_sel"]?>">
+	<input type=hidden name=order value="<?php //echo $purchase;?>">
+	</form>
+	</div>
+</div>
 <?php
 include("../common/footer.php");
 ?>

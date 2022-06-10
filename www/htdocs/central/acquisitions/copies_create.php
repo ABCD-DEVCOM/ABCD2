@@ -1,6 +1,6 @@
 <?php
 //
-// Crea en la base de datos copias los ítems procedentes de una orden de compra
+// Crea en la base de datos copias los ï¿½tems procedentes de una orden de compra
 // INSERT IN COPIES DATABASE THE ITEMS RECEIVED FROM A PURCHASE ORDER
 //
 session_start();
@@ -38,7 +38,7 @@ include "../common/inc_div-helper.php";
 			<div class="formContent">
 <?php
 
-// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática
+// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeraciï¿½n automï¿½tica
 $archivo=$db_path.$arrHttp["database"]."/def/".$_SESSION["lang"]."/".$arrHttp["database"].".fdt";
 if (file_exists($archivo)){
 	$fp=file($archivo);
@@ -90,7 +90,7 @@ echo "<br>".$msgstr["database"].": ".$arrHttp["database"];
 echo "<br>".$msgstr["date_receival"].": ".$arrHttp["date"];
 echo "</h3>";
 
-// Se verifica si esa orden de compra-recomendación-cotización ya ha sido actrualizada
+// Se verifica si esa orden de compra-recomendaciï¿½n-cotizaciï¿½n ya ha sido actrualizada
 //$res=BuscarCopias($arrHttp["database"],$arrHttp["order"],$arrHttp["suggestion"],$arrHttp["bidding"]);
 $res=0;
 if ($res==0){   // si no existen las copias, se crean
@@ -155,7 +155,7 @@ if ($res==0){   // si no existen las copias, se crean
 	}
 	echo "<hr>";
 }else{
-// ya se cargó esa orden de compra - recomendacion-cotización en la base de datos
+// ya se cargï¿½ esa orden de compra - recomendacion-cotizaciï¿½n en la base de datos
 	$Expresion='ORDER_'.$arrHttp["order"].'_'.$arrHttp["suggestion"].'_'.$arrHttp["bidding"];
 	echo "<h3>".$msgstr["orderloaded"]." ($res) &nbsp; <a href=../dataentry/show.php?base=copies&Expresion=$Expresion target=_blank>".$msgstr["search"]."</a></h3>";
 
@@ -183,9 +183,9 @@ global $db_path;
 	$perms=fileperms($archivo);
 
 	if (is_writable($archivo)){
-	//se protege el archivo con el número secuencial
+	//se protege el archivo con el nï¿½mero secuencial
 		chmod($archivo,0555);
-	// se lee el último número asignado y se le agrega 1
+	// se lee el ï¿½ltimo nï¿½mero asignado y se le agrega 1
 		$fp=file($archivo);
 		$cn=implode("",$fp);
 		$cn=$cn+1;
@@ -202,8 +202,8 @@ global $db_path;
 	}
 }
 
-function BuscarCopias($database,$order,$suggestion,$bidding){
-global $xWxis,$db_path,$wxisUrl,$Wxis;
+function BuscarCopias($order,$suggestion,$bidding){
+global $xWxis,$db_path;
 	$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
 	$IsisScript= $xWxis."ifp.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=diccionario&prefijo=$Prefijo&campo=1";
@@ -215,7 +215,7 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			if ($pre==$Prefijo){
 				$l=explode('|',$linea);
 				return $l[1];
-				break;
+			//	break;
 			}
 		}
 	}
@@ -224,7 +224,7 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 
 
 function PurchaseOrderUpdate(){
-global $arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
+global $arrHttp,$xWxis,$db_path;
 	$Db="purchaseorder";
 	$Expresion="ON_".$arrHttp["order"] ;
 	$formato="(v50/)";
