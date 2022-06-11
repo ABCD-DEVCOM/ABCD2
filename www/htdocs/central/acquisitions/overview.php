@@ -76,7 +76,7 @@ if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
 include("../common/header.php");
 
 
-// Se determina el total de registros según cada status del proceso
+// Se determina el total de registros segï¿½n cada status del proceso
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&prefijo=STA_&Opcion=diccionario";
 $IsisScript=$xWxis."ifp.xis";
 include("../common/wxis_llamar.php");
@@ -236,7 +236,7 @@ $archivo_field=$db_path.$ABCD_base."/pfts/".$ABCD_lang."/tb".$ABCD_base.".pft";
 
 //Function created to display the information of the columns
 function read_collumns($archivo_tit) {
-    global $ABCD_reverse;
+    global $ABCD_reverse, $db_path, $ABCD_base, $ABCD_lang, $ABCD_base;
 
     switch ($ABCD_reverse) {
     case "On":
@@ -397,9 +397,8 @@ function generate_table($contenido, $first_post, $last_post,$show,$total_lines,$
 
 <style type="text/css">
 	a.<?php echo $Expresion;?> {
-		font-weight: bold;
+        font-weight: bold;
 	}
-
 </style>
 
 <body>

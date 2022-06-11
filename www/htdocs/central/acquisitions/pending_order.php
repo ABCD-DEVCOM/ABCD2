@@ -35,12 +35,12 @@ function Editar(Mfn){
 
 function Delete(Mfn){
 		if (xEliminar==""){
-			alert("".$msgstr["confirmdel"]."")
+			alert("<?php echo $msgstr["confirmdel"];?>")
 			xEliminar="1"
 			Mfn_eliminar=Mfn
 		}else{
 			if (Mfn_eliminar!=Mfn){
-				alert("".$msgstr["mfndelchanged"]."")
+				alert("<?php echo $msgstr["mfndelchanged"];?>")
 				xEliminar=""
                 return
 			}
@@ -56,9 +56,9 @@ $index="pv_order.pft";
 $tit="pv_order_tit.tab";
 include("../common/institutional_info.php");
 
-// Se ubican todas las solicitudes que estén pendientes (STATUS=0)
-// se asigna el formato correspondiente a la clave de clasificación
-// se lee el título de las columnas de la tabla
+// Se ubican todas las solicitudes que estan pendientes (STATUS=0)
+// se asigna el formato correspondiente a la clave de clasificacion
+// se lee el titulo de las columnas de la tabla
 
 $Formato_order=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$index" ;
 if (!file_exists($Formato_order)) $Formato_order=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$index" ;
@@ -160,7 +160,7 @@ function EnviarForma(){
 	foreach ($recom as $value){
 
 		$r=explode('|',$value);
-//		if ($r[8]=="OK")    // Se verifica si ya existe una órden para ese proveedor y ese objeto
+//		if ($r[8]=="OK")    // Se verifica si ya existe una ï¿½rden para ese proveedor y ese objeto
 //			$check="NO";
 //		else
 			$check="SI";
@@ -206,4 +206,3 @@ function EnviarForma(){
  <input type=hidden name=retorno value=../acquisitions/pending_order.php>
  <input type=hidden name=Mfn>
 </form>
-</body></html>

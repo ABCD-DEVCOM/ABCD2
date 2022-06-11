@@ -35,7 +35,7 @@ if (isset($arrHttp["wks_a"])){
 	}
 }
 echo "&nbsp; <a href=JavaScript:OpenAll()>".$msgstr["expand_colapse"]."</a>";
-// Se construye el índice de acceso a la hoja de entrada
+// Se construye el Indice de acceso a la hoja de entrada
 $ixIndice="S";
 if ($ixIndice=="S"){
 	$cuenta=0;
@@ -59,11 +59,16 @@ echo "<script>
 is_marc='$is_marc'
 </script>
 ";
-if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se está haciendo el test de la hoja de entrada o creando valores por defecto
+if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se esta haciendo el test de la hoja de entrada o creando valores por defecto
 
 	$db=$arrHttp["base"];
 	if (!$ver or isset($arrHttp["capturar"])){
-		echo "<dd><table border=0 cellspacing=5 cellpadding=10 bgcolor=white><tr>\n";
+		?>
+		</div>
+		<div style="margin-top: 30px;">
+		<table border=0 cellspacing=5 cellpadding=10 bgcolor=white>
+			<tr>
+		<?php
 		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
             echo "<td align=center bgcolor=white ><a href=\"javascript:CapturarRegistro()\"><img src=img/capturar.gif border=0 alt=\"".$msgstr["m_capturar"]."\"></a></td>\n";
 		}else{
@@ -76,7 +81,11 @@ if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se está
 				}
 			}
 		}
-		echo "</tr></table>\n";
+		?>
+			</tr>
+		</table>
+		</div>
+		<?php
 	}
 }
 echo "</form>";// end of previous form. Not the correct place but protects next form

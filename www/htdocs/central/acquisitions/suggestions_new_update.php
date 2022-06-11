@@ -9,7 +9,7 @@ include("../lang/admin.php");
 include("../lang/acquisitions.php");
 //include("../dataentry/autoincrement.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-	// se procesan los valores que vienen de la página
+	// se procesan los valores que vienen de la p?gina
 $ValorCapturado="";
 foreach ($_GET as $var => $value) {
 	VariablesDeAmbiente($var,$value);
@@ -92,15 +92,11 @@ if ($cn!=""){
 	die;
 }
 die;
-?>
-
-
-<?php
 
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
 global $arrHttp;
-
+$occ="";
 		if (substr($var,0,3)=="tag") {
 			$ixpos=strpos($var,"_");
 			if ($ixpos!=0) {
@@ -138,7 +134,7 @@ function VerificarPermisos($perms){
 	    // Socket
 	    $info = 's';
 	} elseif (($perms & 0xA000) == 0xA000) {
-	    // Enlace Simbólico
+	    // Enlace Simbolico
 	    $info = 'l';
 	} elseif (($perms & 0x8000) == 0x8000) {
 	    // Regular
@@ -160,7 +156,7 @@ function VerificarPermisos($perms){
 	    $info = 'u';
 	}
 
-	// Dueño
+	// Due?o
 	$info .= (($perms & 0x0100) ? 'r' : '-');
 	$info .= (($perms & 0x0080) ? 'w' : '-');
 	$info .= (($perms & 0x0040) ?
@@ -185,5 +181,3 @@ function VerificarPermisos($perms){
 
 }
 ?>
-
-

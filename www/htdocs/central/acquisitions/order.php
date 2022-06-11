@@ -28,9 +28,9 @@ include("../common/institutional_info.php");
 $arrHttp["base"]="suggestions";
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
-// Se ubican todas las solicitudes que estén pendientes (STATUS=0)
-// se asigna el formato correspondiente a la clave de clasificación
-// se lee el título de las columnas de la tabla
+// Se ubican todas las solicitudes que estï¿½n pendientes (STATUS=0)
+// se asigna el formato correspondiente a la clave de clasificaciï¿½n
+// se lee el tï¿½tulo de las columnas de la tabla
 switch($arrHttp["sort"]){
 	case "TI":      //title
 		$index="ti_order.pft";
@@ -44,11 +44,9 @@ switch($arrHttp["sort"]){
 		$index="da_order.pft";
 		$tit="da_order_tit.tab";
 		break;
-		break;
 	case "SN":      // date of approval
 		$index="sn_order.pft";
 		$tit="sn_order_tit.tab";
-		break;
 		break;
 	case "OP":
 		$index="op_order.pft";

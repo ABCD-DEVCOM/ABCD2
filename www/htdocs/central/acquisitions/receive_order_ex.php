@@ -62,7 +62,7 @@ include "../common/inc_div-helper.php";
 <div class="middle form">
 			<div class="formContent">
 <?php
-// Se localiza la Órden de compra
+// Se localiza la ï¿½rden de compra
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/receiving.pft" ;
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/receiving.pft" ;
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&Expresion=ON_".$arrHttp["searchExpr"]."&Formato=@$Formato&Opcion=buscar";
@@ -75,7 +75,7 @@ $Mfn_order=$linea[2];
 $provider=$linea[3];
 $closed=trim($linea[4]);
 $l=explode('^^',$linea[1]);
-// se obtiene la información correspondiente a los objetos ya actualizados para evitar la duplicación  (campo 500 de purchaseorder)
+// se obtiene la informaciï¿½n correspondiente a los objetos ya actualizados para evitar la duplicaciï¿½n  (campo 500 de purchaseorder)
 print $linea[0];
 if ($closed!=""){
 	print "<font color=darkred size=+2><strong>".$msgstr["orderclosed"]."</strong></font>";
@@ -196,7 +196,7 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
 			break;
 		}
 	}
-	// Si no se ha definido el tag para el número de control en la fdt, se produce un error
+	// Si no se ha definido el tag para el nï¿½mero de control en la fdt, se produce un error
 	if ($tag_ctl==""){
 		echo "<h2>".$msgstr["missingctl"]."</h2>";
 		die;
@@ -204,11 +204,11 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
 }
 
 
-function LeerFdt($base){
-global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
-// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática y el prefijo con el cual se indiza el número de control
+function LeerFdt($base) {
+global $tag_ctl, $pref_ctl, $db_path, $lang_db, $msgstr, $archivo;
+// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeraciï¿½n automï¿½tica y el prefijo con el cual se indiza el nï¿½mero de control
     return;
-	$archivo=$db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
+	//$archivo = $db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
 	if (file_exists($archivo)){
 		$fp=file($archivo);
 	}else{
@@ -220,8 +220,8 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
 		    die;
 		 }
 	}
-	$tag_ctl="";
-	$pref_ctl="";
+	//$tag_ctl="";
+	//$pref_ctl="";
 	foreach ($fp as $linea){
 		$l=explode('|',$linea);
 		if ($l[0]=="AI"){
@@ -229,7 +229,7 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
 			$pref_ctl=$l[12];
 		}
 	}
-	// Si no se ha definido el tag para el número de control en la fdt, se produce un error
+	// Si no se ha definido el tag para el nï¿½mero de control en la fdt, se produce un error
 	if ($tag_ctl=="" or $pref_ctl==""){
 		echo "<h2>".$msgstr["missingctl"]."</h2>";
 		die;

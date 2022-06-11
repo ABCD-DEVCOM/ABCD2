@@ -44,7 +44,7 @@ float: left;
 margin: 10px 10px 5px 5px;
 }
 headerDiv a:hover {
-color: #;
+background-color: #ccc;
 }
 </style>
 <script src=../dataentry/js/lr_trim.js></script>
@@ -121,9 +121,10 @@ include("../common/wxis_llamar.php");
 foreach ($contenido as $value) echo "$value\n";
 
 ?>
+
 <form method=post name=forma1 action=order_update.php onSubmit="javascript:return false">
 <input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
-<input type=hidden name=order value="<?php echo $purchase?>">
+<input type=hidden name=order value="<?php //echo $purchase;?>">
 <dd><dd><?php echo $msgstr["date"]?>: <input type=text name=tag450_1 value="<?php echo $fecha?>" size=10> &nbsp;
 <input type=submit value=<?php echo $msgstr["submit"]?> onclick=EnviarForma()>  </dd></dd>
 

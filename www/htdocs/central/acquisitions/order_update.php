@@ -57,9 +57,11 @@ foreach ($linea as $i=>$value){
 				case "controln":       		// CONTROL NUMBER
 					$subc="^i";
 					break;
+				/*	
 				case "controln":       		// ITEMS RECEIVED
-					$subc="^j";
+					$subc="^f";
 					break;
+				*/
 				case "tome":            	// TOME
 					$subc="^l";
 					break;             		// VOLUME
@@ -149,7 +151,7 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			if ($pre==$Prefijo){
 				$l=explode('|',$linea);
 				return $l[1];
-				break;
+			//	break;
 			}
 		}
 	}
