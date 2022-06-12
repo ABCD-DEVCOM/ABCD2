@@ -1,6 +1,7 @@
 <?php
 /*
 20220316 fho4abcd Created
+20220612 fho4abcd improved type
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -62,7 +63,7 @@ function EnviarL(rows){
     document.labeltableform.submit();
 }
 function IsAlfaNum(sText){
-   var ValidChars = "0123456789abcdefghijklmnopqrstuwwxyz";
+   var ValidChars = "0123456789abcdefghijklmnopqrstuvwxyz";
    var IsValid=true;
    var Char;
    for (itag = 0; itag < sText.length && IsValid == true; itag++){
