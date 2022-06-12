@@ -174,7 +174,7 @@ function EnviarForma(){
 	}
 	if (kardex=="KARDEX"){
 		if (Trim(document.inventorysearch.year.value)=="" || Trim(document.inventorysearch.numero.value)=="" ){
-			alert("Debe especificar el año, el número y opcionalmente el volumen")
+			alert("Debe especificar el aï¿½o, el nï¿½mero y opcionalmente el volumen")
 			return
 		}
 	}
@@ -264,7 +264,7 @@ function AbrirIndice(Tipo,xI){
 			break
 		case "U":
 <?php
-# Se lee el prefijo y el formato para extraer el código de usuario
+# Se lee el prefijo y el formato para extraer el cï¿½digo de usuario
 $us_tab=LeerPft("loans_uskey.tab","users");
 $t=explode("\n",$us_tab);
 $codigo=LeerPft("loans_uskey.pft","users");
@@ -387,9 +387,9 @@ if (file_exists($db_path."loans.dat")){
 	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
         <div id=kardex style="display:none;">
             <br>
-			Año: <input type=text name=year size=4>
+			Aï¿½o: <input type=text name=year size=4>
 			Volumen:<input type=text name=volumen size=8>
-			Número:<input type=text name=numero size=8>
+			Nï¿½mero:<input type=text name=numero size=8>
 		</div>
 		</td>
 <?php

@@ -1,4 +1,4 @@
-<?
+<?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -142,9 +142,8 @@ switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
 
 die;
 
-//==========================================================
 function UserData($user){
-global $db_path,$Wxis,$wxisUrl,$xWxis;
+global $db_path,$Wxis,$wxisUrl,$xWxis,$lang_db;
 	$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/tbuser.pft";
     if (!isset($formato_us)) $formato_us=$db_path."users/loans/".$lang_db."/tbuser.pft";
    	$query = "&Expresion=CO_".$user."&base=users&cipar=$db_path/par/users.par&Formato=".$formato_us;

@@ -26,7 +26,7 @@
  * == END LICENSE ==
 */
 session_start();
-// Situación de un objeto
+// Situaciï¿½n de un objeto
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -51,7 +51,7 @@ include("calendario_read.php");
 include("locales_read.php");
 
 function LeerTransacciones($inventario){
-global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
+global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$lang_db;
 	$tr_prestamos=array();
 	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
 	if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
@@ -110,7 +110,7 @@ echo "
 	</div>
 <div class=\"middle form\">
 	<div class=\"formContent\">";
-//SE LEEN LAS TRANSACCIONES DE PRÉSTAMO
+//SE LEEN LAS TRANSACCIONES DE PRï¿½STAMO
 	$trans=LeerTransacciones($arrHttp["inventory"]);
 	if (count($trans)==0){
 		echo "<h2>".$msgstr["no_transactions"]."<h2>";

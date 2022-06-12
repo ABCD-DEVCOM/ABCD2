@@ -48,7 +48,7 @@ global $db_path,$lang_db;
 
 	return $tferi;
 }
-//funcion que devuelve el último día de un mes y año dados
+//funcion que devuelve el ï¿½ltimo dï¿½a de un mes y aï¿½o dados
 function ultimoDia($mes,$ano){
     $ultimo_dia=28;
     while (checkdate($mes,$ultimo_dia + 1,$ano)){
@@ -115,7 +115,7 @@ global $arrHttp,$msgstr;
 	$numero_dia = calcula_numero_dia_semana(1,$mes,$ano);
 	//echo "Numero del dia de demana del primer: $numero_dia <br>";
 
-	//calculo el último dia del mes
+	//calculo el ï¿½ltimo dia del mes
 	$ultimo_dia = ultimoDia($mes,$ano);
 
 	//escribo la primera fila de la semana
@@ -131,7 +131,7 @@ global $arrHttp,$msgstr;
 	}
 	echo "</tr>";
 
-	//recorro todos los demás días hasta el final del mes
+	//recorro todos los demï¿½s dï¿½as hasta el final del mes
 	$numero_dia = 0;
 	while ($dia_actual <= $ultimo_dia){
 		//si estamos a principio de la semana escribo el <TR>
@@ -140,14 +140,14 @@ global $arrHttp,$msgstr;
 		echo "<td align=center bgcolor=#B0D1EF class=td><INPUT type=checkbox name=dias ".dia_feri($dia_actual,$mes).">$dia_actual</td>";
 		$dia_actual=$dia_actual+1;
 		$numero_dia=$numero_dia+1;
-		//si es el uñtimo de la semana, me pongo al principio de la semana y escribo el </tr>
+		//si es el uï¿½timo de la semana, me pongo al principio de la semana y escribo el </tr>
 		if ($numero_dia == 7){
 			$numero_dia = 0;
 			echo "</tr>";
 		}
 	}
 
-	//compruebo que celdas me faltan por escribir vacias de la última semana del mes
+	//compruebo que celdas me faltan por escribir vacias de la ï¿½ltima semana del mes
 	for ($i=$numero_dia;$i<7;$i++){
 		echo "<td></td>";
 	}
@@ -209,7 +209,7 @@ echo '>'.$msgstr["m10"].'
 		<option value="11" ';
 if ($mes==11)
 	echo "selected";
-echo '>'.$msgsr['m11'].'
+echo '>'.$msgstr['m11'].'
 		<option value="12" ';
 if ($mes==12)
     echo "selected";
@@ -256,7 +256,7 @@ echo '
 }
 
 function Calendario($tipo_lis){
-global $arrHttp,$db_path;
+global $arrHttp,$db_path,$lang_db;
 
 	$mes_guarda="";
 	$mes=$arrHttp["mes"];

@@ -7,7 +7,7 @@ if (!isset($_SESSION["login"])){
 
 
 function LeerLocales(){
-global $db_path,$locales,$config_date_format;
+global $db_path,$locales,$config_date_format, $lang_db;
 	if (file_exists($db_path."circulation/def/".$_SESSION["lang"]."/locales.tab")){
 		$locales=parse_ini_file($db_path."circulation/def/".$lang_db."/locales.tab",true);
 	}
@@ -116,13 +116,13 @@ function IsValidTime(timeStr,Day) {
 
 function Guardar(){
 
-//Validación de la abreviatura de la moneda
+//Validaciï¿½n de la abreviatura de la moneda
 	if (Trim(document.forma1.currency.value)==""){
 		alert("<?php echo $msgstr["ab_mlocal"]?>")
 		return
 	}
 
-//Validación de los días laborables y el horario
+//Validaciï¿½n de los dï¿½as laborables y el horario
 
 	if (document.forma1.mon.checked){
 		Day="<?php echo $msgstr["mon"]?>"

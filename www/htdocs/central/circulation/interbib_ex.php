@@ -51,15 +51,15 @@ include("fecha_de_devolucion.php");
 include ('../dataentry/leerregistroisispft.php');
 require_once("../circulation/grabar_log.php");
 include("leer_pft.php");
-//Calendario de días feriados
+//Calendario de dï¿½as feriados
 include("calendario_read.php");
 //Horario de la biblioteca, unidades de multa, moneda
 include("locales_read.php");
-// se leen las politicas de préstamo y la tabla de tipos de usuario
+// se leen las politicas de prï¿½stamo y la tabla de tipos de usuario
 include("loanobjects_read.php");
-// se lee la configuración de la base de datos de usuarios
+// se lee la configuraciï¿½n de la base de datos de usuarios
 include("borrowers_configure_read.php");
-# Se lee el prefijo y el formato para extraer el código de usuario
+# Se lee el prefijo y el formato para extraer el cï¿½digo de usuario
 $us_tab=LeerPft("loans_uskey.tab","users");
 $t=explode("\n",$us_tab);
 $uskey=$t[0];
@@ -97,7 +97,7 @@ if ($Formato!=""){
 
 
 function ProcesarPrestamo($usuario,$inventario,$signatura,$item,$usrtype,$copies,$ppres,$prefix_in,$prefix_cn,$mfn_reserva,$codusuario_reserva,$tr,$user_data,$agreement){
-global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_list,$arrHttp,$ILL;
+global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_list,$arrHttp,$ILL,$lang_db;
 	$item_data=explode('||',$item);
 	$nc=$inventario;                  // Control number of the object
 	$bib_db=$_REQUEST["base"];
@@ -150,7 +150,7 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	$ValorCapturado.="<100 0>".$item."</100>";
 	if (isset($_SESSION["library"])) $ValorCapturado.="<150 0>".$_SESSION["library"]."</150>";
 	$ValorCapturado.="<400 0>".$ppres."</400>";
-	if (isset($item_data[8]))  // Información complementaria del item
+	if (isset($item_data[8]))  // Informaciï¿½n complementaria del item
 		$ValorCapturado.="<410 0>".$item_data["8"]."</410>";
 	if (trim($user_data)!="")
 		$ValorCapturado.="<420 0>".$user_data."</420>"; //informacion complementaria del usuario
@@ -244,7 +244,7 @@ $nmulta=0;
 $cont="";
 $np=0;
 $nv=0;
-include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los préstamos pendientes
+include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los prï¿½stamos pendientes
 if ($nsusp!=0 or $nmulta!=0) {
 	$cont="N";
 	unset($arrHttp["inventory"]);
@@ -256,7 +256,7 @@ if (count($prestamos)>0) {
 	}
 	$ec_output.= "</strong><p>";
 }
-//Se obtiene el código, tipo y vigencia del usuario
+//Se obtiene el cï¿½digo, tipo y vigencia del usuario
 $formato=$pft_uskey.'\'$$\''.$pft_ustype.'\'$$\''.$pft_usvig.'\'$$\''.$pft_usmore;
 $formato=urlencode($formato);
 $query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path"."par/users.par&Pft=$formato";
@@ -315,14 +315,14 @@ if ($msgsusp!=""){
 	ProduceOutput($ec_output,"");
 	die;
 }
-//OJO AGREGARLE AL TIPO DE USUARIO SI SE LE PUEDEN PRESTAR CUANDO ESTÁ VENCIDO
+//OJO AGREGARLE AL TIPO DE USUARIO SI SE LE PUEDEN PRESTAR CUANDO ESTï¿½ VENCIDO
 if ($nv>0 and isset($arrHttp["inventory"])){
 	$ec_output.= "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
 	ProduceOutput($ec_output,"");
 	die;
 }
 //////////////////////////////////////////////////////////////////
-// Si viene desde la opción de prestar, se localiza el número de inventario solicitado
+// Si viene desde la opciï¿½n de prestar, se localiza el nï¿½mero de inventario solicitado
 
 $xnum_p=$np;
 $prestamos_este=0;
@@ -351,12 +351,12 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 			$ec_output.="<td bgcolor=white></td>".$este_prestamo;
  			//ProduceOutput($ec_output,"");
 		}else{
-		//se extrae la información del número de control del título y la base de datos catalográfica a la cual pertenece
+		//se extrae la informaciï¿½n del nï¿½mero de control del tï¿½tulo y la base de datos catalogrï¿½fica a la cual pertenece
 			$control_number="";
 
 			$catalog_db=$arrHttp["base"];
     		$tipo_obj=trim($ILL);      //Tipo de objeto
-// se lee la configuración de la base de datos de objetos de préstamos
+// se lee la configuraciï¿½n de la base de datos de objetos de prï¿½stamos
 			$arrHttp["db"]="$catalog_db";
 			$este_prestamo.="<td bgcolor=white valign=top align=center></td>";
             require_once("databases_configure_read.php");
@@ -407,7 +407,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 				$fecha_d=date("Ymd");
 				if (trim($fechal_usuario)!=""){
 					if ($fecha_d>$fechal_usuario){
-						$este_prestamo.= "fecha límite del usuario ";
+						$este_prestamo.= "fecha lï¿½mite del usuario ";
 						$norenovar="S";
 						$cont="N";
 						//die;
@@ -418,19 +418,19 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 				$fechal_objeto=$obj[16];
 				if (trim($fechal_objeto)!=""){
 					if ($fecha_d>$fechal_objeto){
-						$este_prestamo.= "fecha límite del objeto ";
+						$este_prestamo.= "fecha lï¿½mite del objeto ";
 						$cont="N";
 						$este_prestamo.="<hr>";
 					}
 				}
 			}
 
-			//SE VERIFICA SI EL USUARIO TIENE PRÉSTAMOS VENCIDOS
+			//SE VERIFICA SI EL USUARIO TIENE PRï¿½STAMOS VENCIDOS
             if ($nv>0 and isset($arrHttp["inventory"]) and $obj[12]!="Y" and $obj[13]!="Y"){
 				$este_prestamo.= "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
 				$cont="N";
 			}
-			//Se verifica si el usuario puede recibir más préstamos en total
+			//Se verifica si el usuario puede recibir mï¿½s prï¿½stamos en total
 			//SE ASIGNA EL TOTAL DE PRESTAMOS QUE PUEDE RECIBIR UN USUARIO  SEGUN EL TIPO DE OBJETO  (calculado en loanobjects_read.php)
 			if (isset($tipo_u[$userdata[1]]))
 				$tprestamos_p=$tipo_u[$userdata[1]];
@@ -438,14 +438,14 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 				$tprestamos_p=99999;
 			if (trim($tprestamos_p)=="")    $tprestamos_p=99999;
 			if ($cont=="Y"){
-		// Se localiza el registro catalográfico utilizando los datos anteriores
+		// Se localiza el registro catalogrï¿½fico utilizando los datos anteriores
 
 	 			if ($cont=="Y"){
 		    		$obj_store="^a".$_REQUEST["tag100_a"]."^b".$_REQUEST["tag100_b"];
 					$titulo=$_REQUEST["tag100_b"];
 					if (isset($arrHttp["comments"]))
 		    			$titulo.=" <font color=darkred>".$arrHttp["comments"]."</font>";
-					$signatura=$arrHttp["inventory"];     //signatura topográfica
+					$signatura=$arrHttp["inventory"];     //signatura topogrï¿½fica
 		    		$este_prestamo.= "<td bgcolor=white valign=top>$titulo</td>";
 		    		$este_prestamo.= "<td bgcolor=white valign=top>";
 		    		if (trim($ppres)==""){
@@ -458,7 +458,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 						$grabar="Y";
 					}
 					$este_prestamo.="</td>";
-	// se verifica si el ejemplar está prestado
+	// se verifica si el ejemplar estï¿½ prestado
 	        		if ($cont=="Y"){
 	        			$msg="";
 	        			$ec_output.="<td bgcolor=white valign=top>";
@@ -632,7 +632,7 @@ if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S"){
 	}
 }
 
-//SE VERIFICA SI ALGUNO DE LOS EJEMPLARES DEVUELTOS ESTÁ RESERVADO
+//SE VERIFICA SI ALGUNO DE LOS EJEMPLARES DEVUELTOS ESTï¿½ RESERVADO
 if (isset($arrHttp["lista_control"])) {
 	$rn=explode(";",$arrHttp["lista_control"]);
 	$res=array();
@@ -677,7 +677,7 @@ if (isset($arrHttp["renovado"]) and $arrHttp["renovado"]=="S"){
 
 }
 
-//SE IMPRIMEN LOS RECIBOS DE PRÉSTAMOS
+//SE IMPRIMEN LOS RECIBOS DE PRï¿½STAMOS
 if (count($recibo_arr)>0) {
 	ImprimirRecibo($recibo_arr);
 }
