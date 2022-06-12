@@ -27,6 +27,7 @@
 20211228 fho4abcd Separate duplicate barcode entries
 20220203 fho4abcd Improve dirtree calls
 20220206 fho4abcd Remove dirtree to top folder (function is in Adminstration part)
+20220609 fho4abcd Add module to configure digital document types
 */
 $lang=$_SESSION["lang"];
 unset($_SESSION["Browse_Expresion"]);
@@ -232,6 +233,11 @@ function EnviarFormaMNT(Opcion,Mensaje){
 			document.admin.cipar.value=base+".par"
 			document.admin.action="../utilities/docfiles_config.php"
 			break;
+		case "docfilesconfigrct":
+			document.admin.base.value=base
+			document.admin.cipar.value=base+".par"
+			document.admin.action="../utilities/docfiles_config_rct.php"
+			break;
 		case "docfilesrepair":
 			document.admin.base.value=base
 			document.admin.cipar.value=base+".par"
@@ -297,6 +303,7 @@ function EnviarFormaMNT(Opcion,Mensaje){
         <li><a href='Javascript:EnviarFormaMNT("docbatchimport","<?php echo $msgstr["dd_batchimport"]?>")'><?php echo $msgstr["dd_batchimport"]?></a></li>
         <li><a href='#'>&nbsp;</a></li>
         <li><a href='Javascript:EnviarFormaMNT("docfilesconfig","<?php echo $msgstr["dd_config"]?>")'><?php echo $msgstr["dd_config"]?></a></li>
+        <li><a href='Javascript:EnviarFormaMNT("docfilesconfigrct","<?php echo $msgstr["dd_configrct"]?>")'><?php echo $msgstr["dd_configrct"]?></a></li>
         <li><a href='Javascript:EnviarFormaMNT("docfilesrepair","<?php echo $msgstr["dd_repair"]?>")'><?php echo $msgstr["dd_repair"]?></a></li>
     </ul>
   </li>

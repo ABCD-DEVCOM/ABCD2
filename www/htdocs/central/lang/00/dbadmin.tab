@@ -83,6 +83,7 @@ dboper=Database operator
 dcdspace=DSpace bridge : downloading records from repository to ABCD
 dd_batchimport=Import document(s)
 dd_config=Configure documents module
+dd_configrct=Configure document types
 dd_repair=Repair database content
 dd_upload=Upload document(s)
 de= of
