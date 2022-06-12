@@ -8,7 +8,7 @@ die;
 
 include("fecha_de_devolucion.php");
 
-//función para calcular la diferencia de tiempo entre dos fecha
+//funcion para calcular la diferencia de tiempo entre dos fecha
 function dateDiff($dformat, $endDate, $beginDate)
 {
 
@@ -46,12 +46,12 @@ foreach ($contenido as $linea){
 $error="";
 //echo "Mfn=$Mfn<p>" ;
 if ($Total==0){
-	$error="&error=Ejemplar no está prestado";
+	$error="&error=Ejemplar no estï¿½ prestado";
 	Regresar($error);
 	die;
 }
 
-// se extrae la información del ejemplar a devolver
+// se extrae la informaciï¿½n del ejemplar a devolver
 	$p=explode('|',$prestamo);
 	$cod_usuario=$p[1];
 	$inventario=$p[0];
@@ -63,29 +63,29 @@ if ($Total==0){
 	$tipo_objeto=$p[7];
 	$referencia=$p[8];
 
-	// se lee la política de préstamos
+	// se lee la politica de prestamos
 	include("loanobjects_read.php");
 	// se lee el calendario
 	include("calendario_read.php");
-	// se lee la configuración local
+	// se lee la configuracion local
 	include("locales_read.php");
 
 	// se incluye la rutina para calcular la fecha de devolucion
 
 
-	//se determina la política a aplicar
+	//se determina la politica a aplicar
 	$politica=$politica[$tipo_objeto][$tipo_usuario];
 	$p=explode('|',$politica);
 	$lapso=$p[3];
 	$unidad=$p[5];
-//	echo "<p>Fecha de devolución programada: ".substr($fecha_d,6,2)."/".substr($fecha_d,4,2)."/".substr($fecha_d,0,4)." ".$hora_d."<br>";
-	//Se calcula la fecha de devolución real en base a la política
+//	echo "<p>Fecha de devolucion programada: ".substr($fecha_d,6,2)."/".substr($fecha_d,4,2)."/".substr($fecha_d,0,4)." ".$hora_d."<br>";
+	//Se calcula la fecha de devolucion real en base a la politica
 	$df=explode('/',$config_date_format);
 	$newdate = date($df[0]."/".$df[1]."/".$df[2]." h:i:s A");
 
 //	echo "<p>Fecha de devolucion real= $newdate<p>$lapso";
 
-	// se calcula la diferencia entre la fecha programada y la fecha real de devolución
+	// se calcula la diferencia entre la fecha programada y la fecha real de devolucion
 	$newdate=date("m/d/Y h:i:s A");
 	//echo "----$newdate---";
 	$unidad="D";
@@ -105,13 +105,13 @@ if ($Total==0){
 			break;
 	}
     if ($atraso>0){
-    	$error="&error=Está atrasado. No se puede renovar";
+    	$error="&error=Estï¿½ atrasado. No se puede renovar";
     	Regresar($error);
     	die;
     }
-// Se pasa la fecha de préstamo y devolución anteriores al campo 200
+// Se pasa la fecha de prestamo y devolucion anteriores al campo 200
 	$f_ant="^a".$fecha_p."^b".$hora_p."^c".$fecha_d."^d".$hora_p;
-//se calcula la nueva fecha de devolución
+//se calcula la nueva fecha de devolucion
 	$fecha_dev=FechaDevolucion($lapso,$unidad,"");
 	$fecha_pres=date("Ymd h:i:s A");
 	$ixp=strpos($fecha_dev," ");
@@ -149,9 +149,4 @@ global $arrHttp,$cod_usuario;
 	}
 	die;
 }
-
-
-
-
-
 ?>
