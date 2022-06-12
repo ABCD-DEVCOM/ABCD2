@@ -16,7 +16,7 @@ include ("../common/llamar_wxis_inc.php");
 include("leer_relaciones.php");
 $actual_rel=explode('$$$',$arrHttp["rel_text"]) ;
 $anterior_rel=explode('*$',$arrHttp["ant_text"]);
-$terminoenproceso=$arrHttp["termino"]
+$terminoenproceso=$arrHttp["termino"];
 $Formato="";
 foreach ($rels as $value){
 	$Formato.="("."|".$value["tag"]."_|"."v".$value["tag"]."/),";
@@ -59,7 +59,7 @@ foreach($contenido as $value) {
 				if (strtoupper($termino)==strtoupper($rels_inversa)) $agregar="N";
 
 		}
-		if ($agregar=="S") echo "<font color=red>Agregar relación</font><br>";
+		if ($agregar=="S") echo "<font color=red>Agregar relaciï¿½n</font><br>";
 	}
 
 }
