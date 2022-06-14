@@ -6,6 +6,7 @@
 2021-04-30 fho4abcd Language selection menu equal to menubases.php+ moved language selection to included file
 2021-05-04 fho4abcd Language selection: Enable selection of first menu item
 2022-01-23 rogercgui Option "CABCD" points to settings
+2022-06-13 fho4abcd Removed unused Modulo + html in correct order + clean code
 */
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
 unset($_SESSION["root_base"]);
@@ -31,24 +32,10 @@ $modulo_anterior="";
 if (isset($_SESSION["MODULO"]))
 	$modulo_anterior=$_SESSION["MODULO"];
 
+// next statement may switch the current module
 if (isset($arrHttp["modulo"])) {
 	$_SESSION["MODULO"]=$arrHttp["modulo"];
-
 }
-/*
-$lista_bases=array();
-if (file_exists($db_path."bases.dat")){
-	$fp = file($db_path."bases.dat");
-	foreach ($fp as $linea){
-		$linea=trim($linea);
-		if ($linea!="") {
-			$ix=strpos($linea,"|");
-			$llave=trim(substr($linea,0,$ix));
-			$lista_bases[$llave]=trim(substr($linea,$ix+1));
-		}
-	}
-}
-*/
 $central="";
 $circulation="";
 $acquisitions="";
@@ -69,7 +56,6 @@ foreach ($_SESSION["permiso"] as $key=>$value){
 	}
 	if (substr($key,0,5)=="CIRC_")  	$circulation="Y";
 	if (substr($key,0,4)=="ACQ_")  		$acquisitions="Y";
-
 }
 // Se determina el nombre de la página de ayuda a mostrar
 if (!isset($_SESSION["MODULO"])) {
@@ -142,153 +128,124 @@ function ActivarModulo(Url,base){
 	}
 	Url="../"+Url+base
 	top.location.href=Url
-
 }
-function Modulo(){
-	Opcion=document.cambiolang.modulo.options[document.cambiolang.modulo.selectedIndex].value
-	switch (Opcion){
-		case "loan":
-			top.location.href="../common/change_module.php?modulo=loan"
-			break
-		case "acquisitions":
-			top.location.href="../common/change_module.php?modulo=acquisitions"
-			break
+function CambiarBaseAdministrador(Modulo){
+    db=""
+    if (Modulo!="traducir"){
+        ix=document.admin.base.selectedIndex
+        if (ix<1){
+            alert("<?php echo $msgstr["seldb"]?>")
+            return
+        }
+        db=document.admin.base.options[ix].value
+        b=db.split('|')
+        db=b[0]
+    }
+    switch(Modulo){
+        case 'table':
+            document.admin.action="../dataentry/browse.php"
+            break
+        case "resetautoinc":
+            if (db+"_CENTRAL_RESETLCN" in perms || "CENTRAL_RESETLCN" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
+                document.admin.action="../dbadmin/resetautoinc.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+        case "toolbar":
+            document.admin.action="../dataentry/inicio_main.php";
+            break;
+        case "utilitarios":
 
-		case "catalog":
-			top.location.href="../common/change_module.php?modulo=catalog"
-			break
-
-
-	}
+            if (db+"_CENTRAL_DBUTILS" in perms || "CENTRAL_DBUTILS" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms ){
+                document.admin.action="../dbadmin/menu_mantenimiento.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+        case "estructuras":
+            if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
+                document.admin.action="../dbadmin/menu_modificardb.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+        case "reportes":
+            if (db+"_CENTRAL_PREC" in perms || "CENTRAL_PREC" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
+                document.admin.action="../dbadmin/pft.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+        case "traducir":
+            if (db+"_CENTRAL_TRANSLATE" in perms || "CENTRAL_TRANSLATE" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
+                document.admin.action="../dbadmin/menu_traducir.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+        case "stats":
+            if (db+"_CENTRAL_STATGEN" in perms || "CENTRAL_STATGEN" in perms || "CENTRAL_STATGEN" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
+                document.admin.action="../statistics/tables_generate.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+        case "z3950":
+            if (db+"_CENTRAL_Z3950CONF" in perms || "CENTRAL_Z3950CONF" in perms || "CENTRAL_ALL" in perms || db+"CENTRAL_ALL" in perms){
+                document.admin.action="../dbadmin/z3950_conf.php";
+            }else{
+                alert("<?php echo $msgstr["invalidright"];?>")
+                return;
+            }
+            break;
+    }
+    document.admin.submit();
 }
-
-
-
-	function CambiarBaseAdministrador(Modulo){
-		db=""
-		if (Modulo!="traducir"){
-			ix=document.admin.base.selectedIndex
-		    if (ix<1){
-		    	alert("<?php echo $msgstr["seldb"]?>")
-		    	return
-		    }
-		    db=document.admin.base.options[ix].value
-		    b=db.split('|')
-		    db=b[0]
-		}
-	    switch(Modulo){
-			case 'table':
-				document.admin.action="../dataentry/browse.php"
-				break
-	    	case "resetautoinc":
-	    		if (db+"_CENTRAL_RESETLCN" in perms || "CENTRAL_RESETLCN" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
-	    	   		document.admin.action="../dbadmin/resetautoinc.php";
-	    		}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-	    		break;
-	    	case "toolbar":
-	    		document.admin.action="../dataentry/inicio_main.php";
-	    		break;
-			case "utilitarios":
-
-				if (db+"_CENTRAL_DBUTILS" in perms || "CENTRAL_DBUTILS" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms ){
-					document.admin.action="../dbadmin/menu_mantenimiento.php";
-				}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-                break;
-   			case "estructuras":
-   				if (db+"_CENTRAL_MODIFYDEF" in perms || "CENTRAL_MODIFYDEF" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
-					document.admin.action="../dbadmin/menu_modificardb.php";
-				}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-                break;
-    		case "reportes":
-    			if (db+"_CENTRAL_PREC" in perms || "CENTRAL_PREC" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
-					document.admin.action="../dbadmin/pft.php";
-				}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-                break;
-    		case "traducir":
-    			if (db+"_CENTRAL_TRANSLATE" in perms || "CENTRAL_TRANSLATE" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
-					document.admin.action="../dbadmin/menu_traducir.php";
-				}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-                break;
-    		case "stats":
-    			if (db+"_CENTRAL_STATGEN" in perms || "CENTRAL_STATGEN" in perms || "CENTRAL_STATGEN" in perms || "CENTRAL_ALL" in perms || db+"_CENTRAL_ALL" in perms){
-					document.admin.action="../statistics/tables_generate.php";
-				}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-    			break;
-    		case "z3950":
-    			if (db+"_CENTRAL_Z3950CONF" in perms || "CENTRAL_Z3950CONF" in perms || "CENTRAL_ALL" in perms || db+"CENTRAL_ALL" in perms){
-					document.admin.action="../dbadmin/z3950_conf.php";
-				}else{
-	    			alert("<?php echo $msgstr["invalidright"];?>")
-	    			return;
-	    		}
-    			break;
-	    }
-		document.admin.submit();
-	}
-
-	function FuncionesAdministracion(Accion){
-		switch (Accion){
-			case "CBD":
-				document.admFrm.action="../dbadmin/menu_creardb.php"
-				document.admFrm.encabezado.value="s"
-				break;
-           	case "AUSR":
-				document.admFrm.action="../dbadmin/users_adm.php"
-				document.admFrm.encabezado.value="s"
-				document.admFrm.base.value="acces"
-				document.admFrm.cipar.value="acces.par"
-				break;
-			case "RNU":
-				document.admFrm.action="../dbadmin/reset_inventory_number.php"
-				document.admFrm.encabezado.value="s"
-				break;
-   			case "CABCD":
-				document.admFrm.action="../settings/conf_abcd.php"
-				document.admFrm.Opcion.value="abcd_def"
-				break;
-			case "DIRTREE":
-				document.admFrm.action="../dbadmin/dirtree.php"
-				document.admFrm.encabezado.value="s"
-				document.admFrm.retorno.value="inicio"
-				break;
-
-
-
-		}
-		document.admFrm.submit()
-	}
-
-
-	</script>
-
-
-
-
+function FuncionesAdministracion(Accion){
+    switch (Accion){
+        case "CBD":
+            document.admFrm.action="../dbadmin/menu_creardb.php"
+            document.admFrm.encabezado.value="s"
+            break;
+        case "AUSR":
+            document.admFrm.action="../dbadmin/users_adm.php"
+            document.admFrm.encabezado.value="s"
+            document.admFrm.base.value="acces"
+            document.admFrm.cipar.value="acces.par"
+            break;
+        case "RNU":
+            document.admFrm.action="../dbadmin/reset_inventory_number.php"
+            document.admFrm.encabezado.value="s"
+            break;
+        case "CABCD":
+            document.admFrm.action="../settings/conf_abcd.php"
+            document.admFrm.Opcion.value="abcd_def"
+            break;
+        case "DIRTREE":
+            document.admFrm.action="../dbadmin/dirtree.php"
+            document.admFrm.encabezado.value="s"
+            document.admFrm.retorno.value="inicio"
+            break;
+    }
+    document.admFrm.submit()
+}
+var perms= new Array();
+<?php
+foreach ($_SESSION["permiso"] as $key=>$value){
+	echo "perms['$key']='$value';\n";
+}
+?>
+</script>
 <?php
 require_once ('institutional_info.php');
-
 ?>
-
-
-
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<strong><?php echo $msgstr["inicio"]." - $module_name"?></strong>
@@ -298,10 +255,15 @@ require_once ('institutional_info.php');
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-
 <?php $wiki_help="";include "inc_div-helper.php"?>
-
 <div class="middle homepage">
+    <form name=admFrm method=post accept-charset=utf-8>
+        <input type=hidden name=Opcion>
+        <input type=hidden name=encabezado>
+        <input type=hidden name=base>
+        <input type=hidden name=retorno>
+        <input type=hidden name=cipar>
+    </form>
 <?php
 $Permiso=$_SESSION["permiso"];
 switch ($_SESSION["MODULO"]){
@@ -315,21 +277,13 @@ switch ($_SESSION["MODULO"]){
 		MenuAcquisitionsAdministrator();
 		break;
 }
-echo "		</div>";
+echo "</div>";
 include("footer.php");
-echo "<form name=admFrm method=post>
-<input type=hidden name=Opcion>
-<input type=hidden name=encabezado>
-<input type=hidden name=base>
-<input type=hidden name=retorno>
-<input type=hidden name=cipar>
-</form>";
-
 
 ///---------------------------------------------------------------
 
 function AdministratorMenu(){
-global $msgstr,$db_path,$arrHttp,$lista_bases,$Permiso,$dirtree,$def;
+global $msgstr,$db_path,$arrHttp,$Permiso,$dirtree,$def;
 	$_SESSION["MODULO"]="catalog";
 
 if (isset($arrHttp['base'])) {
@@ -337,30 +291,14 @@ if (isset($arrHttp['base'])) {
 } else {
 	$baseSelect = "";
 }
-
 ?>
-
-			<div class="mainBox" >
-				<div class="boxContent catalogSection">
-					<div class="sectionTitle">
-					<img src="../../assets/svg/catalog/ic_fluent_database_24_regular.svg">
-						<h1><?php echo $msgstr["database"]?>  <?php echo $baseSelect;?></h1>
-					</div>
-					<div class="sectionButtons">
-
-
-
-					<input type=hidden name=encabezado value=s>
-					<input type=hidden name=retorno value="../common/inicio.php">
-					<input type=hidden name=modulo value=catalog>
-					<input type=hidden name=screen_width>
-					<?php if (isset($arrHttp["newindow"]))
-					echo "<input type=hidden name=newindow value=Y>\n";?>
-
-
-					</form>
-	
-		
+    <div class="mainBox" >
+        <div class="boxContent catalogSection">
+            <div class="sectionTitle">
+            <img src="../../assets/svg/catalog/ic_fluent_database_24_regular.svg">
+                <h1><?php echo $msgstr["database"]?>  <?php echo $baseSelect;?></h1>
+            </div>
+            <div class="sectionButtons">	
 <?php
 if (isset($def["MODULOS"])){
 	if (isset($def["MODULOS"]["SELBASE"])  ){
@@ -368,10 +306,9 @@ if (isset($def["MODULOS"])){
 	}else{
 		$base_sel="";
 	}
-?>
+    ?>
 	<a href="javascript:ActivarModulo('<?php echo $def["MODULOS"]["SCRIPT"]."','$base_sel";?>')" class="menuButton <?php echo $def["MODULOS"]["BUTTON"]?>">
-
-		<span><strong><?php echo $def["MODULOS"]["TITLE"]?></strong></span>
+        <span><strong><?php echo $def["MODULOS"]["TITLE"]?></strong></span>
 	</a>
 <?php
 }
@@ -379,29 +316,24 @@ if (isset($def["MODULOS"])){
 				<a href="javascript:CambiarBaseAdministrador('toolbar')" class="menuButton DataEntry ">
 					<span><strong><?php echo $msgstr["dataentry"]?></strong></span>
 				</a>
-
 				<a href="javascript:CambiarBaseAdministrador('stats')" class="menuButton CatstatButton">
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
-
 				<a href="javascript:CambiarBaseAdministrador('reportes')" class="menuButton reportButton">
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
-
 				<a href="javascript:CambiarBaseAdministrador('estructuras')" class="menuButton update_databaseButton">
 					<span><strong><?php echo $msgstr["updbdef"]?></strong></span>
 				</a>
-
 				<a href="javascript:CambiarBaseAdministrador('utilitarios')" class="menuButton utilsButton">
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
-
 				<a href="javascript:CambiarBaseAdministrador('z3950')"  class="menuButton z3950Button">
 					<span><strong><?php echo $msgstr["z3950"]?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>
-			</div>
+        </div>
 	</div>
 <?php
 
@@ -409,41 +341,40 @@ if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"])  or isset
   or isset($Permiso["CENTRAL_RESETLIN"])  or isset($Permiso["CENTRAL_TRANSLATE"])  or isset($Permiso["CENTRAL_EXDBDIR"]))
 {
 ?>
-
-			<div class="mainBox" >
-				<div class="boxContent catalogSection">
-					<div class="sectionTitle">
-					<img src="../../assets/svg/catalog/ic_fluent_settings_24_regular.svg">
-						<h1><?php echo $msgstr["admtit"]?></h1>
-					</div>
-					<div class="sectionButtons">
-<?Php
+    <div class="mainBox" >
+        <div class="boxContent catalogSection">
+            <div class="sectionTitle">
+            <img src="../../assets/svg/catalog/ic_fluent_settings_24_regular.svg">
+                <h1><?php echo $msgstr["admtit"]?></h1>
+            </div>
+            <div class="sectionButtons">
+<?php
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_CRDB"]) or isset($Permiso["ADM_CRDB"])){
 ?>
-                    <a href="javascript:FuncionesAdministracion('CBD')" class="menuButton databaseButton">
-					<span><strong><?php echo $msgstr["createdb"]?></strong></span></a>
-<?Php
+                <a href="javascript:FuncionesAdministracion('CBD')" class="menuButton databaseButton">
+                <span><strong><?php echo $msgstr["createdb"]?></strong></span></a>
+<?php
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_USRADM"]) or isset($Permiso["ADM_USRADM"])){
 ?>
 				<a href="../dataentry/browse.php?showdeleted=yes&encabezado=s&base=acces&cipar=acces.par" class="menuButton CataluserButton">
 					<span><strong><?php echo $msgstr["usuarios"]?></strong></span>
 				</a>
-<?Php
+<?php
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_RESETLIN"])){
 ?>
 				<a href="javascript:FuncionesAdministracion('RNU')" class="menuButton resetButton">
 					<span><strong><?php echo $msgstr["resetinv"]?></strong></span>
 				</a>
-<?Php
+<?php
 }
 if (isset($Permiso["CENTRAL_ALL"])  or isset($Permiso["CENTRAL_TRANSLATE"])){
 ?>
 				<a href="javascript:CambiarBaseAdministrador('traducir')" class="menuButton translateButton">
 					<span><strong><?php echo $msgstr["translate"]?></strong></span>
 				</a>
-<?Php
+<?php
 }
 if ($_SESSION["profile"]=="adm"){
 ?>
@@ -459,14 +390,12 @@ if ($dirtree==1 or $dirtree=="Y"){
 				<a href="javascript:FuncionesAdministracion('DIRTREE')" class="menuButton CatexploreButton">
 					<span><strong><?php echo $msgstr["expbases"]?></strong></span>
 				</a>
-<?Php }
+<?php }
 }?>
-					</div>
-					<div class="spacer">&#160;</div>
-				</div>
-			</div>
-
-
+            </div>
+            <div class="spacer">&#160;</div>
+        </div>
+    </div>
 <?php
 	}
 }
@@ -481,14 +410,4 @@ function MenuAcquisitionsAdministrator(){
 function MenuLoanAdministrator(){
    include("menucirculation.php");
 }
-echo "\n<script>\n";
-echo "var perms= new Array()\n";
-foreach ($_SESSION["permiso"] as $key=>$value){
-	echo "perms['$key']='$value';\n";
-}
-echo "</script>\n";
 ?>
-<script>
-screen_width=window.screen.availWidth
-document.admin.screen_width.value=screen_width
-</script>

@@ -8,6 +8,7 @@
 20210803 fho4abcd added language file
 20211214 fho4abcd Backbutton by included file
 20220203 fho4abcd better reaction if no database is given
+20220613 fho4abcd Removed unused frame
 */
 session_start();
 
@@ -125,22 +126,6 @@ include("menu_bar.php");
 	?>
 	</div>
 
-<iframe src="blank.html" class="menumantenimento" name="ABCD_Frame" id="ABCD_Frame"></iframe>
-
-
-    <script>
-    // Selecting the iframe element
-    var iframe = document.getElementById("ABCD_Frame");
-   
-    // Adjusting the iframe height onload event
-    iframe.onload = function(){
-    	var janela = iframe.contentWindow.document.body.scrollHeight
-	   	var valorfolga = 150;
-        var folga = janela + valorfolga;
-        iframe.style.height = folga + 'px';
-
-    }
-    </script>
 
 	</div> <!--./formContent-->
 </div> <!--./middle form-->
