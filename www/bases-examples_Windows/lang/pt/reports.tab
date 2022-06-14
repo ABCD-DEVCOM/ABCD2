@@ -1,9 +1,3 @@
-barcode=Código de barras
-barcode_conf=Você deve configurar o arquivo barcode.conf
-barcode_etiquetas=Etiquetas
-barcode_inventory=Balanço
-barcode_label=Etiquetas e códigos de barras
-barcode_lomos=Lombada
 byclass_num=por número de classificação
 bycontrol_num=por nª de controle
 byinput_date=pela data de entrada do registro
