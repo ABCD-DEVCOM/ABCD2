@@ -176,6 +176,9 @@ end_process=Fim do processo
 entervalcomb=Por favor, insira uma combinação válida
 error=Erro
 error_create_folder=Erro na criação da pasta.
+error_gizmodb="htmlgizmo.*=..." Não especifica um banco de dados existente em htmlgizmo
+error_gizmofp="htmlgizmo.*=..." Não pode ser especificado com %database_path%
+error_gizmospec="htmlgizmo.*=..." Deve ser especificado em
 error_gizmonoiso=Erro: Nenhum arquivo .iso encontrado em
 every=Cada
 examplefor=Exemplo de entrada em
@@ -188,12 +191,22 @@ extension=Extensão
 extensions=Extensões
 feedback=Nível de feedback	
 filesfound=Arquivos encontrados
+gizmocreate=Criar Gizmo
+gizmocreate_options=Definir opções Gizmo
+gizmodbname=Nome do banco de dados do gizmo
 gizmolocatefolder=Localizar pasta com arquivos de dados a serem importados no banco de dados do gizmo
+gizmonametitle=Nome do arquivo (sem extensão)
+gizmonamederived=Um valor vazio utilizará o nome de arquivo selecionado
+gizmoreselect=Selecione novamente	
 g_newval=Novo valor
+htmlfield=Campos HTML
+intotag=em etiqueta temporária	
+inv_slashm=Indexação com /m. As listas de picking com tipo DB no FDT podem não mostrar os resultados esperados
 invertincomplete=A indexação não será completa
 invertloads=A computação do arquivo invertido carrega o conteúdo do arquivo indicado na etiqueta
 importado=importado
 import_process_ok=Resultado do processo de importação: OK	
+incremental=Use indexação incremental
 initok=Os registros da base de dados foram apagados
 inv_file_ext=Extensão de arquivo inválida. Extensões válidas são:
 isismustmatch=A versão isis e a codificação do banco de dados e do gizmo devem corresponder
