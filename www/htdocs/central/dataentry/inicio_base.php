@@ -72,7 +72,7 @@ $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["base
 if (!file_exists($archivo)){
     $archivo=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["base"].".pft";
     if (!file_exists($archivo))
-		$warning="<br><h6>".$msgstr["warning"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/def/".$_SESSION['lang']."/".$arrHttp["base"].".pft";
+		$warning="<br><h6>".$msgstr["warning"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/pfs/".$_SESSION['lang']."/".$arrHttp["base"].".pft";
 }
 
 
@@ -187,7 +187,7 @@ if (!isset($arrHttp["inicio"])){   //indica que no se van a colocar los formatos
 	}
 }
 
-//Se lee la fdt para determinar el prefijo y el formato de extracción del campo del índice de la entrada principal
+//Se lee la fdt para determinar el prefijo y el formato de extraccion del campo del indice de la entrada principal
 unset($fp);
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
 if (file_exists($archivo)){
@@ -275,5 +275,3 @@ if (file_exists($db_path.$arrHttp["base"]."/modulos.dat")) {
 </div>
 </center>
 <?php include("../common/footer.php");?>
-</body>
-</html>

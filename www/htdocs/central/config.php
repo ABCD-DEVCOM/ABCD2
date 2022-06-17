@@ -167,7 +167,7 @@ if (isset($def["DEFAULT_DBLANG"])){
 if (isset($def["DATE_FORMAT"])){
 	$config_date_format=$def["DATE_FORMAT"];
 } else {
-	$config_date_format="DD/MM/YY";
+	$config_date_format="d/m/Y";
 }
 
 
