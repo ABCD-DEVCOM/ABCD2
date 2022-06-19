@@ -8,6 +8,7 @@
 2021-12-09 fho4abcd Improved sizeof popup for alfa
 2021-12-12 fho4abcd Improved sizeof popup for alfa (for breadcrumb)
 2022-03-20 fho4abcd Cleanup barcode, new target bcl_labelshow.php
+2022-06-19 fho4abcd Corrected html + removed unreachable js code + removed unreachable frameset
 */
 //error_reporting(E_ALL);
 session_start();
@@ -43,12 +44,7 @@ if (isset($arrHttp["newindow"]))
 
 
 /////   INICIO DEL PROGRAMA ////////
-
-
-
 $query="";
-
-
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
 
 if (isset($arrHttp["base"])){
@@ -60,38 +56,39 @@ if (isset($arrHttp["base"])){
 	if (isset($base_x[1])) $bdright= $base_x[1];
 	if (isset($base_x[2])) $bddesc=$base_x[2];
 }
-	if (isset($arrHttp["lang"])){
-		 $_SESSION["lang"]=$arrHttp["lang"];
-	}else{
-		$arrHttp["lang"]=$_SESSION['lang'];
-	}
-	include ("../lang/admin.php");
-	if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
-	$Permiso=$_SESSION["permiso"];
-	if (!isset($_SESSION["permiso"])){
-		echo "Missing user rights";
-		session_destroy();
-		die;
-	}
-    foreach ($Permiso as $key=>$value){
-    	if (substr($key,0,3)=="db_"){
-    		$bases=substr($key,3);
-    		break;
-    	}
+if (isset($arrHttp["lang"])){
+     $_SESSION["lang"]=$arrHttp["lang"];
+}else{
+    $arrHttp["lang"]=$_SESSION['lang'];
+}
+include ("../lang/admin.php");
+if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
+$Permiso=$_SESSION["permiso"];
+if (!isset($_SESSION["permiso"])){
+    echo "Missing user rights";
+    session_destroy();
+    die;
+}
+foreach ($Permiso as $key=>$value){
+    if (substr($key,0,3)=="db_"){
+        $bases=substr($key,3);
+        break;
     }
-	$arrHttp["base"]=$bases;
-	if (!isset($bdright)) $bdright="";
-	if (!isset($db_copies)) $db_copies="";
-	if (!isset($bddesc)) $bddesc="";
-	if (!isset($bd)) $bd="";
-    include "../common/header.php";
+}
+$arrHttp["base"]=$bases;
+if (!isset($bdright)) $bdright="";
+if (!isset($db_copies)) $db_copies="";
+if (!isset($bddesc)) $bddesc="";
+if (!isset($bd)) $bd="";
+include "../common/header.php";
 ?>
-	<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
+<body>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
 
-	<script type="text/javascript">
-		self.resizeTo(screen.availWidth,screen.availHeight)
-		self.moveTo(0,0)
-		self.focus();
+<script type="text/javascript">
+    self.resizeTo(screen.availWidth,screen.availHeight)
+    self.moveTo(0,0)
+    self.focus();
 
 	<?php
 		if (isset($_SESSION["newindow"])) {
@@ -171,23 +168,9 @@ function PrenderEdicion(){
 	return
 }
 
-
 function TipoDeRegistro(){
 	top.main.location.href="typeofrecs.php?base="+base
 	return
-	top.frames[2].document.writeln("<html><body style='font-family:arial'>")
-	top.main.document.writeln("<center><br><br>")
-	top.main.document.writeln("<h4><?php echo $msgstr["typeofr"]?></h4><table>")
-	tr=typeofrecord.split('$$$')
-	ix=tr.length
-	for (i=0;i<ix;i++){
-		if (Trim(tr[i])!=""){
-			linea=tr[i].split('|')
-			top.main.document.writeln("<tr><td><a href=\"javascript:top.wks='"+tr[i]+"|"+tl+"|"+nr+"';top.Menu('crear')\"><span style='font-size:10px;font-family:arial'>"+linea[3]+"</span></a></td>")
-		}
-	}
-	top.main.document.writeln("</table></body></html>")
-	top.main.document.close()
 }
 
 function AddCopies(){
@@ -797,11 +780,6 @@ function Menu(Opcion){
 
 	}
 
-function Unload(){
-	self.location.href="unload.php"
-	alert("Fin de Sesión")
-}
-
 </script>
 
 <style type="text/css">
@@ -810,29 +788,19 @@ function Unload(){
 	}
 </style>
 
-
-</head>
-
 <div id="body" style="height: 100%; overflow: hidden;">
-
-<?php
-if (isset($arrHttp["base"])){
+    <?php
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
-
     ?> 
-	<iframe scrolling="no" name="encabezado" id="encabezado" class="dataentry-header" src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>" frameborder="0" ></iframe>
-	<iframe scrolling="no" name=menu id=menu class="dataentry-menu"  src="" style="width: 100%; height: 78px; position: relative;" frameborder="0" allowfullscreen wmode="transparent"></iframe>
-	<iframe name="main" id="main" src="" style="border: none; width: 100%;  position: relative;"></iframe>
-    <?php
-	}else{
-    ?>
-	<frame scrolling="no" name="encabezado" class="dataentry-header"  src="menubases.php?iOpcion=Menu_o&base=acces&cipar=cipar.par&Mfn=<?php echo $arrHttp["Mfn"];?>" SCROLLING=no >
-	<frame name="menu" class="dataentry-menu" src="blank.html" scrolling=no>
-	<frame name="main" id="main" src="homepage.htm" scrolling=yes>
-    <?php
-    }
-    ?>
-
+	<iframe name="encabezado" id="encabezado" class="dataentry-header" scrolling="no" frameborder="0"
+        src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>">
+    </iframe>
+	<iframe name="menu"       id="menu"       class="dataentry-menu"   scrolling="no" frameborder="0" allowfullscreen wmode="transparent"
+        src="" style="width: 100%; height: 78px; position: relative;">
+    </iframe>
+	<iframe name="main"       id="main"
+        src="" style="width: 100%;               position: relative; border: none; ">
+    </iframe>
 </div>
 
 <script>
@@ -854,3 +822,5 @@ if (isset($arrHttp["base"])){
 		//alert (folga);
     }
 </script>
+</body>
+</html>

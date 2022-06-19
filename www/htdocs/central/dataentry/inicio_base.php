@@ -3,6 +3,7 @@
 2021-03-02 fho4abcd Replaced helper code fragment by included file
 2021-03-15 fho4abcd Replaced dbinfo code by included file
 2021-04-15 fho4abcd use charset from config.php
+2022-06-19 fho4abcd corrected html + translations + removed display of <base>/modulos.dat (unknown file)
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -23,8 +24,7 @@ if (!isset($arrHttp["base"])) die;
 
 include("../common/header.php");
 ?>
-
-
+<body>
 <script>
 	function CreateFiles() {
 	document.CreateFiles.action="../dbadmin/chk_dbdef.php"
@@ -34,17 +34,15 @@ include("../common/header.php");
 }
 </script>
 
-<form name="CreateFiles" onSubmit="return false" method="post">
+<form name="CreateFiles" onSubmit="return false" method="post" accept-charset=utf-8>
 	<input type=hidden name="encabezado" value="s">
 	<input type=hidden name="base" value="<?php echo $arrHttp["base"]?>">
 </form>	
 
-
-<body>
 <?php $wiki_help="Entrada_de_datos";include "../common/inc_div-helper.php"?>
 
 <div class="middle" style="">
-			<div class="formContent">
+    <div class="formContent">
 
 <?php
 
@@ -72,7 +70,7 @@ $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["base
 if (!file_exists($archivo)){
     $archivo=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["base"].".pft";
     if (!file_exists($archivo))
-		$warning="<br><h6>".$msgstr["warning"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/pfs/".$_SESSION['lang']."/".$arrHttp["base"].".pft";
+		$warning="<br><h6>".$msgstr["warning"]."... ".$msgstr["misfile"]." ".$arrHttp["base"]."/pfts/".$_SESSION['lang']."/".$arrHttp["base"].".pft";
 }
 
 
@@ -242,7 +240,7 @@ if (html=='' && top.HTML==''){        //No changes in the toolbar
 
 echo "<center><b>".$msgstr["bd"].": ".$arrHttp["base"]."</b>";
 echo "<br><strong>$charset</strong>" ;
-echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</b></font>";
+echo "<br><b><font color=darkred>". $msgstr["maxmfn"].": ".$arrHttp["MAXMFN"]."</font></b>";
 
 if ($arrHttp["BD"]=="N")
 	echo "<p>".$msgstr["database"]." ".$msgstr["ne"];
@@ -257,21 +255,14 @@ if ($arrHttp["EXCLUSIVEWRITELOCK"]!=0) {
 echo $warning;
 
 if ($wxisUrl!=""){
-	echo "<p>CISIS version: $wxisUrl</p>";
+	echo "<p>".$msgstr['showisisversion'].": ".$wxisUrl."</p>";
 }else{
 	$ix=strpos($Wxis,"cgi-bin");
 	$wxs=substr($Wxis,$ix);
     echo "<p>CISIS version: ".$wxs."</p>";
 }
-if (file_exists($db_path.$arrHttp["base"]."/modulos.dat")) {
-	$fp=file($db_path.$arrHttp["base"]."/modulos.dat");
-	foreach ($fp as $value){
-		$v=explode("|",$value);
-		echo "<a href=\"".$v[1]."\">".$v[0]."</a>\n";
-	}
-}
 ?>
-</div>
-</div>
 </center>
+</div>
+</div>
 <?php include("../common/footer.php");?>
