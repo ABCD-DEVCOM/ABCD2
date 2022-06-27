@@ -6,7 +6,7 @@
 '<br>'/
 '<font face=verdana color=red size=-1><b>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
 '<table   class=td2 border=0>'/
-'	<td class=td_N bgcolor=#f9f9f9 valign=top>Nom d'utilisateur</td>'/
+'	<td class=td_N bgcolor=#f9f9f9 valign=top>Nom utilisateuro</td>'/
 '	<td  bgcolor=#f9f9f9 class=td>'v10'</td>'/
 '	<tr>'/
 '	<td class=td_N bgcolor=#f9f9f9 valign=top>Identifiant</td>'/
@@ -15,7 +15,7 @@
 '	<td  class=td_N bgcolor=#f9f9f9 valign=top>Mot de passe</td>'/
 '	<td  bgcolor=#f9f9f9 class=td>'v30'</td>'/
 '	<tr>'/
-'	<td  class=td_N bgcolor=#f9f9f9 valign=top>Bases de données disponibles</td>'/
+'	<td  class=td_N bgcolor=#f9f9f9 valign=top>Bases de données disponible</td>'/
 '	<td  bgcolor=#f9f9f9 class=td>'v100+|; |,'</td>'/
 
 '</table>'/
@@ -24,3 +24,4 @@
 '</script>'/
 '</body>'/
 '</html>'/
+
