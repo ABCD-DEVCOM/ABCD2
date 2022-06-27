@@ -1,6 +1,7 @@
 <?php
 /*
-20220316 fho4abcd Created
+20220612 fho4abcd Created
+20220627 fh04abcd Typo in title + improve error check
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -59,7 +60,6 @@ function Enviar(rows){
             }
         }
         if ( !IsAlfaNum(mime) ) {
-            alert("<?php echo $msgstr['dd_error_inv_chars']?>: "+mime);
             err=true
             continue
         }
@@ -73,6 +73,7 @@ function IsAlfaNum(sText){
    for (itag = 0; itag < sText.length && IsValid == true; itag++){
       Char = sText.charAt(itag);
       if (ValidChars.indexOf(Char) == -1){
+         alert("<?php echo $msgstr['dd_error_inv_chars']?>: "+mime+"\n ('"+Char+"')");
          IsValid = false;
       }
    }
@@ -109,7 +110,7 @@ if (!isset($_SESSION["permiso"]["CENTRAL_ALL"]) and
 // File $recConfigFull is created if not present
 include "../utilities/inc_coll_chk_init.php";
 // Read the record type configuration file if this is the first call
-echo "<h3 style='text-align:center'>".$msgstr["dd_imp_step_check_mime"]."</h3>";
+echo "<h3 style='text-align:center'>".$msgstr["dd_imp_check_mime"]."</h3>";
 
 if ( $confirmcount==0) {
     $confirmcount=1;
