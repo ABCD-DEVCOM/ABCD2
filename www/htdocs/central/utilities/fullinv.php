@@ -23,7 +23,8 @@
 20211215 fho4abcd Backbutton by included file
 20220103 fho4abcd Use relative path for digital documents in stead of full path,othe config file name
 20220108 fho4abcd Add home button
-29220117 fho4abcd Add blue message if /m is used
+20220117 fho4abcd Add blue message if /m is used
+20220620 fho4abcd Accept charset=utf-8
 */
 /**
  * @desc:      Create database index
@@ -134,7 +135,7 @@ $showbutton=
 if(isset($_REQUEST['fst'])) $fst=$_REQUEST['fst'];
 if(!isset($fst)) { // The form sets the fst: the first action of this php
 ?>
-    <form name=maintenance action='' method='post'>
+    <form name=maintenance action='' method='post' accept-charset=utf-8>
         <input type=hidden name=backtoscript value="<?php echo $backtoscript ?>">
         <input type=hidden name=inframe value="<?php echo $inframe ?>">
     <table cellspacing=5 align=center>
