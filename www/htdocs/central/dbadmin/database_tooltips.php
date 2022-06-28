@@ -1,6 +1,7 @@
 <?php
 /*
 20220203 fho4abcd back button, div-helper
+20220628 fho4abcd Remove import/export with excel
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -54,10 +55,6 @@ if (file_exists($archivo)){
 		}
 
 	}
-}
-if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="xls"){
-	EnviarAxls($fdt,$tooltip,$base);
-	die;
 }
 
 
@@ -127,22 +124,7 @@ if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="Importar"){
       </form>
     <?php
         die;
-        }else{
-            $nombre = $_FILES['archivo']['name'];
-            $nombre_tmp = $_FILES['archivo']['tmp_name'];
-            $file=$db_path."wrk/" . $nombre;
-            if (file_exists($file)){
-                copy($file,$file."bak");
-            }
-            move_uploaded_file($nombre_tmp,$db_path."wrk/" . $nombre);
-            $tooltip=ImportarHoja($file,$tooltip);
-        }
-}
-if (!isset($arrHttp["Opcion"]) or isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]!="importado"){
-    ?>
-    <a href=database_tooltips.php?Opcion=xls&base=<?php echo $base?>><?php echo $msgstr["sendto"]." ".$msgstr["wks"]?></a>
-    &nbsp; &nbsp;
-    <?php
+    }
 }
 ?>
 <a href=database_tooltips.php?Opcion=Importar&base=<?php echo $base?>><?php echo $msgstr["import_ods"]?></a><br>
@@ -162,67 +144,3 @@ if (!isset($arrHttp["Opcion"]) or isset($arrHttp["Opcion"]) and $arrHttp["Opcion
 </div>
 <?php
 include("../common/footer.php");
-
-//============================== functions =======================
-function ImportarHoja($file,$fdt){
-
-/** PHPExcel_IOFactory */
-	require_once '../Classes/PHPExcel/IOFactory.php';
-
-	$objReader = PHPExcel_IOFactory::createReader('OOCalc');
-	$objPHPExcel = $objReader->load("$file");
-	$objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
-	foreach ($objWorksheet->getRowIterator() as $row) {
-		$rowIndex = $row->getRowIndex ();
-		if ($rowIndex==1) continue;
-		$cellIterator = $row->getCellIterator();
-  		$cellIterator->setIterateOnlyExistingCells(false);
-  		$id=utf8_decode($objWorksheet->getCell('A' . $rowIndex));
-  		$value=utf8_decode($objWorksheet->getCell('B' . $rowIndex));
-  		if ($value=="") continue;
-  		$fdt[$id]=$value;
-  	}
-  	return $fdt;
-}
-
-function EnviarAxls($fdt,$tooltip,$base){
-	require_once ('../Classes/PHPExcel.php');
-	// Create new PHPExcel object
-	$objPHPExcel = new PHPExcel();
-	$objPHPExcel->setActiveSheetIndex(0);
-
-	$objPHPExcel->getActiveSheet()->setCellValue('A1', "Campo");
-	$objPHPExcel->getActiveSheet()->setCellValue('B1', "Ayuda");
-
-	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-	$objPHPExcel->getActiveSheet()->getStyle('D1')->getAlignment()->setWrapText(true);
-
-	$ix=1;
-	foreach($fdt as $key=>$value) {
-		$ix=$ix+1;
-		if (!isset($tooltip[$key])) {
-			$tooltip[$key]="";
-		}
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$ix, $key);
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$ix,utf8_encode($tooltip[$key]));
-		$objPHPExcel->getActiveSheet()->getStyle('B'.$ix)->getAlignment()->setWrapText(true);
-		$objPHPExcel->getActiveSheet()->getStyle('A'.$ix)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-		$objPHPExcel->getActiveSheet()->getStyle('B'.$ix)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-	}
-
-	// Rename sheet
-	$title="tooltips_".$base.".xls";
-	$objPHPExcel->getActiveSheet()->setTitle('tooltips');
-	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-	// Redirect output to a client’s web browser (Excel2007)
-	header('Content-Type: application/vnd.ms-excel');
-
-	header('Content-Disposition: attachment;filename="'.$title.'"');
-	header('Content-Charset: iso-8859-1');
-	header('Cache-Control: max-age=0');
-
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-	$objWriter->save('php://output');
-	exit;
-}

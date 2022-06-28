@@ -3,7 +3,8 @@
 20220306 fho4abcd div-helper, added informational and error messages, moved functions to end of file
 20220309 fho4abcd No "em" this is a relative unit, add link to barcode font script,add option border
 20220310 fho4abcd Better check for nothing returned.
-20220321fho4abcd adapt to new includes, renamed to bcl_labelshow_result
+20220321 fho4abcd adapt to new includes, renamed to bcl_labelshow_result
+20220628 fho4abcd removed unused output options (e.g Excel)
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -39,35 +40,6 @@ switch($arrHttp["output"]){
 		#echo '   xmlns:w="urn:schemas-microsoft-com:office:word"' . "\n";
 		#echo '   xmlns="http://www.w3.org/TR/REC-html40">' . "\n";
 		break;
-	case "xls":
-		include('../Classes/PHPExcel.php');
-		$objPHPExcel = new PHPExcel();
-		$sheetIndex=-1;
-		break;
-	case "calc":
-	   	$filename="barcode_".$base.".ods";
-		header('Content-Type: application/vnd.oasis.opendocument.spreadsheet;  charset=windows-1252');
-		header("Content-Disposition: inline; filename=\"$filename\"");
-   		header("Expires: 0");
-   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-   		header("Pragma: public");
-   		break;
-	case "odt":
-		$filename="barcode_".$base.".odt";
-		header('Content-Type: application/vnd.oasis.opendocument.text;  charset=windows-1252');
-		header("Content-Disposition: attachment; filename=\"$filename\"");
-   		header("Expires: 0");
-   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-   		header("Pragma: public");
-   		break;
-	case "csv":
-		$filename="barcode_".$base.".csv";
-		header('Content-Type: text/plain;  charset=windows-1252');
-		header("Content-Disposition: attachment; filename=\"$filename\"");
-   		header("Expires: 0");
-   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-   		header("Pragma: public");
-    	break;
     case "txt":
     	$filename="barcode_".$base.".txt";
     	header('Content-Type: text/plain;  charset=windows-1252');
