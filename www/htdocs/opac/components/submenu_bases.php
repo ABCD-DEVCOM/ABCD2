@@ -145,7 +145,7 @@ if (file_exists($file_ix)){
 			else
 				$columnas=1;
 
-			echo "<li><a href='Javascript:ActivarIndice(\"".str_replace("'","´",$v[0])."\",$columnas,\"inicio\",90,1,\"".$v[1]."\",\""."$base\")'>".$v[0]."</a></li>\n";
+			echo "<li><a href='Javascript:ActivarIndice(\"".str_replace("'","ï¿½",$v[0])."\",$columnas,\"inicio\",90,1,\"".$v[1]."\",\""."$base\")'>".$v[0]."</a></li>\n";
 		}
 	}
 }

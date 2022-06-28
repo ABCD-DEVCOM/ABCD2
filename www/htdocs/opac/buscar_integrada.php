@@ -3,7 +3,6 @@
 
 2022-03-23 rogercgui change the folder /par to the variable $actparfolder
 
-
 ***********************************************/
 
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
@@ -34,6 +33,7 @@ function SelectFormato($base,$db_path,$msgstr){
 		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
 		die;
 	}
+
 	$select_formato=$msgstr["select_formato"]." <select name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
 	$primero="";
 	$encontrado="";
@@ -45,7 +45,7 @@ function SelectFormato($base,$db_path,$msgstr){
 			$linea=$f[0].'|'.$f[1];
 			if ($PFT==""){
 				$PFT=trim($linea);
-			}else{
+			} else {
 				$PFT.='$$$'.trim($linea);
 			}
 			if (!isset($_REQUEST["Formato"]) and $primero==""){
@@ -54,9 +54,10 @@ function SelectFormato($base,$db_path,$msgstr){
 			if (isset($_REQUEST["Formato"]) and $_REQUEST["Formato"]==$f[0]){
 				$xselected=" selected";
 				$encontrado="Y";
-			}else
+			}else {
 				$xselected="";
-			$select_formato.= "<option value=".$f[0]." $xselected>".$f[1]."</option>\n";
+				$select_formato.= "<option value=".$f[0]." $xselected>".$f[1]."</option>\n";
+			}
 		}
 	}
 	$select_formato.="</select>";
@@ -304,7 +305,7 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 if ($Expresion!='$' or isset($Expresion_col)){
 	if (isset($expr_coleccion)  and !isset($yaidentificado)){
 		echo "<div style='margin-top:30px;display: block;width:100%;font-size:12px;'>";
-		echo "<span class=tituloBase>Colección: $expr_coleccion</span>";
+		echo "<span class=tituloBase>Colecciï¿½n: $expr_coleccion</span>";
 		echo "</div>";
 	}
 
@@ -550,75 +551,10 @@ if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 }
 if (isset($_REQUEST["db_path"]))  echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 echo "</form>";
-$facetas="S";
-//echo $_REQUEST["base"];
-if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR $_REQUEST["prefijoindice"]=="")){
-	$archivo="";
-	if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat")){
-		$archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat";
-	}else{
-		if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/facetas.dat"))
-			$archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/"."facetas.dat";
-	}
-	if ($archivo!=""){
-		$fp=file($archivo);
-		if (count($fp)>0){
 
-?>
-<div class="side-bar-facetas">
-  <a href="#" class="facetas"  onclick="openNavFacetas()"><?php echo $msgstr["facetas"]?></a>
-</div>
-<div id="SidenavFacetas" class="sidenav-facetas">
-<?php
-  $fp=file($archivo);
-  foreach ($fp as $value){
-  	$value=trim($value);
-  	if ($value!=""){
-  		$x=explode('|',$value);
-  		echo "<a href='javascript:Facetas(\"$value\")'>".$x[0];
-  		$IsisScript="opac/buscar.xis";
-  		if ($Expresion=='$')
-  			$ex=$x[1];
-  		else
-  			$ex=$x[1]." and " .$busqueda;
-  		if (isset($Expresion_col) and $Expresion_col!=""){
-  			$ex.=" and ".$Expresion_col;
-  		}
-  		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
-  			$bb=$_REQUEST["base"];
-        else
-        	$bb=$primera_base;
-       	$query = "&base=$bb&cipar=$db_path".$actparfolder."/$bb".".par&Expresion=".urlencode($ex)."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
-		$resultado=wxisLlamar($bb,$query,$xWxis.$IsisScript);
-		$primeravez="S";
-		foreach ($resultado as $value) {
-			$value=trim($value);
-			if (trim($value)!=""){
-				if (substr($value,0,8)=="[TOTAL:]"){
-					$primeravez="N";
-					echo " (". substr($value,8).")";
-					break;
-				}
-			}
-		}
-		if ($primeravez=="S") echo " (0)";
-		echo "</a>";
+include_once ('components/facets.php');
 
-  	}
-  }
-?>
-
-  <br>
-  <a href="javascript:void(0)" onclick="closeNavFacetas()" >&times; <?php echo $msgstr["close"]?></a><
-  <br><br><br><br>
-</div>
-
-<?php
-		}
-	}
-}
-
-echo "<P id='back-top'><a href=#inicio><span></span></a></p>";
+echo "<p id='back-top'><a href=#inicio><span></span></a></p>";
 
 include("footer.php");
 if (!isset($_REQUEST["base"]))$base="";
@@ -634,5 +570,5 @@ if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
 
 ?>
 <script>
-WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION?>"
+	WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION?>"
 </script>

@@ -3,7 +3,6 @@
 
 2022-03-23 rogercgui change the folder /par to the variable $actparfolder
 
-
 ***********************************************/
 
 $_REQUEST["modo"]="integrado";
@@ -27,40 +26,19 @@ include("../central/config_opac.php");
 include("leer_bases.php");
 $primeraPagina="S";
 include("head.php");
-//foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
-/*
-function LeerRegistro($Expresion,$base){
-	global $db_path,$xWxis;
-	$Formato="opac";
-	$salida="";
-	if (trim($Expresion)!=""){
-		$query = "&base=$base&cipar=$db_path".$actparfolder."/$base.par&Expresion=".urlencode($Expresion)."&count=1&from=1&Formato=$Formato";
-		$resultado=wxisLlamar($base,$query,$xWxis."buscar.xis");
-		foreach ($resultado as $value) {
-			$value=trim($value);
-			if (substr($value,0,7)=='[TOTAL:'){
-				continue;
-			}else{
-		       $salida.=$value;
-			}
-		}
-	}
-	return $salida;
-}
-
-*/
 
 ?>
 
-	<div class="post">
-		<div style="clear: both;">&nbsp;</div>
-				<div class="entry">
-<?php if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){
-?>
-<script>
-document.cookie =  'ORBITA=;';
-</script>
-<?php
+<div class="post">
+    <div style="clear: both;">&nbsp;</div>
+    <div class="entry">
+        <?php 
+			if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){
+		?>
+        <script>
+        	document.cookie = 'ORBITA=;';
+        </script>
+        <?php
 }
 if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 	$fp=file($db_path."opac_conf/".$lang."/sitio.info");
@@ -93,25 +71,20 @@ if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 
 }
 ?>
-				</div>
-	</div>
+    </div>
+</div>
 
 <?php include("footer.php");?>
 
 <script>
-function resizer(id)
-{
-
-var doc=document.getElementById(id).contentWindow.document;
-var body_ = doc.body, html_ = doc.documentElement;
-
-var height = Math.max( body_.scrollHeight, body_.offsetHeight, html_.clientHeight, html_.scrollHeight, html_.offsetHeight );
-var width  = Math.max( body_.scrollWidth, body_.offsetWidth, html_.clientWidth, html_.scrollWidth, html_.offsetWidth );
-
-document.getElementById(id).style.height=height;
-document.getElementById(id).style.width=width;
-
+function resizer(id) {
+    var doc = document.getElementById(id).contentWindow.document;
+    var body_ = doc.body;
+    html_ = doc.documentElement;
+    var height = Math.max(body_.scrollHeight, body_.offsetHeight, html_.clientHeight, html_.scrollHeight, html_
+        .offsetHeight);
+    var width = Math.max(body_.scrollWidth, body_.offsetWidth, html_.clientWidth, html_.scrollWidth, html_.offsetWidth);
+    document.getElementById(id).style.height = height;
+    document.getElementById(id).style.width = width;
 }
-
-
 </script>
