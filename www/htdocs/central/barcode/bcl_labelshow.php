@@ -1,6 +1,7 @@
 <?php
 /*
 20220320 fho4abcd Created
+20220630 fho4abcd Improved back button
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -26,7 +27,10 @@ function Top_bcl_config_label_table(){
     <div class="breadcrumb"><?php echo $msgstr["bcl_show_print"]?>
     </div>
     <div class="actions">
-    <?php include "../common/inc_back.php"; ?>
+    <?php
+    $backtoscript="../dataentry/inicio_main.php";
+    include "../common/inc_back.php";
+    ?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
