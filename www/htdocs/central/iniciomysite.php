@@ -33,8 +33,7 @@ function LeerRegistro() {
 $llave_pft="";
 $myllave ="";
 global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$empwebservicequerylocation,$empwebserviceusersdb,$db,$EmpWeb,$MD5,$converter_path,$vectorAbrev;
-if ($EmpWeb=="1")
-{
+if ($EmpWeb=="1") {
 //USING the Emweb Module to login to MySite module
       $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
       $proxyport = isset($_POST['proxyport']) ? $_POST['proxyport'] : '';
@@ -100,47 +99,56 @@ if ($EmpWeb=="1")
 
 
       }
-}//if ($EmpWeb=="1")
-else
-{
-//echo "Central Loans used<BR>";  die;
-//USING the Central Module to login to MySite module
-//Get the user and pass
-$checkuser=$arrHttp["login"];
-if ($MD5==0) $checkpass=$arrHttp["password"];
-else
-$checkpass=md5($arrHttp["password"]);
-//Search the users database
-$mx=$converter_path." ".$db_path."users/data/users \"pft=if v600='".$checkuser."' then if v610='".$checkpass."' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
-//echo "mxcommand=$mx<BR>";//die;
-$outmx=array();
-exec($mx,$outmx,$banderamx);
-$textoutmx="";
-for ($i = 0; $i < count($outmx); $i++) {
-$textoutmx.=substr($outmx[$i], 0);
-}
-if ($textoutmx!="")
-{
-$splittxt=explode("|",$textoutmx);
-$myuser = $checkuser;
-$db = "users";
-$myllave = $splittxt[0]."|";
-$myllave .= "1|";
-$myllave .= $splittxt[1]."|";
-$valortag[40] = $splittxt[2]."\n";
-$vectorAbrev['id']=$splittxt[0];
-$vectorAbrev['name']=$splittxt[1];
-$vectorAbrev['userClass']=$splittxt[4]."(".$splittxt[3].")";
-$vectorAbrev['expirationDate']=$splittxt[5];
-$vectorAbrev['photo']=$splittxt[6];
-$currentdatem=date("Ymd");
-if ($splittxt[5]!="") if ($currentdatem>$splittxt[5]) $myllave="";
-}
+
+} else {
+	//echo "Central Loans used<BR>";  die;
+	//USING the Central Module to login to MySite module
+	//Get the user and pass
+	
+	$checkuser=$arrHttp["login"];
+	if ($MD5==0) {
+		$checkpass=$arrHttp["password"];
+	}else{
+		$checkpass=md5($arrHttp["password"]);
+	}
+
+	//Search the users database
+	$mx=$converter_path." ".$db_path."users/data/users \"pft=if v600='".$checkuser."' then if v610='".$checkpass."' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
+
+	//echo "mxcommand=$mx<BR>";
+	//mxcommand=/ABCD2/www/cgi-bin_Windows/ansi/mx /ABCD2/www/bases-examples_Windows/users/data/users "pft=if v600='rosa' then if v610='rosa' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi" now
+	//die;
+
+	$outmx=array();
+	exec($mx,$outmx,$banderamx);
+	$textoutmx="";
+
+	for ($i = 0; $i < count($outmx); $i++) {
+		$textoutmx.=substr($outmx[$i], 0); 
+	} if ($textoutmx!="") {
+		$splittxt=explode("|",$textoutmx);
+		$myuser = var_dump($checkuser);
+		$db = "users";
+		$myllave = $splittxt[0]."|";
+		$myllave .= "1|";
+		$myllave .= $splittxt[1]."|";
+		//echo "<h1>".$myllave."</h1>";
+		$valortag[40] = $splittxt[2]."\n";
+		$vectorAbrev['id']=$splittxt[0];
+		$vectorAbrev['name']=$splittxt[1];
+		$vectorAbrev['userClass']=$splittxt[4]."(".$splittxt[3].")";
+		$vectorAbrev['expirationDate']=$splittxt[5];
+		$vectorAbrev['photo']=$splittxt[6];
+		$currentdatem=date("Ymd");
+	} elseif (
+		$currentdatem>$splittxt[5]) {
+		$myllave="";
+	}
 }
 //echo "myllave=$myllave<BR>";
 	  return $myllave;
 
-}
+}// END LeerRegistro()
 
 function VerificarUsuario(){
 Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
@@ -465,10 +473,11 @@ if (isset($arrHttp["action"]))
 
       	}	
 		
-        if($use_ldap)		
+        if($use_ldap) {		
 		    VerificarUsuarioLDAP();
-		else	
+		} else	{ 
       	    VerificarUsuario();		
+		}
       
 
       	$_SESSION["lang"]=$arrHttp["lang"];
@@ -486,8 +495,16 @@ if (isset($arrHttp["action"]))
 
 //}
 
+?>
 
-//print_r ($msgstr);
+
+<script>
+	document.cookie = "user=<?php echo $arrHttp["login"]?>; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/";
+</script>
+
+
+<?php
+	//print_r ($msgstr);
 include("homepagemysite.php");
 
 ?>

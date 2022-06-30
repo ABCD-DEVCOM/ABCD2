@@ -82,22 +82,19 @@
 						<input type="hidden" name="sendto">
 						<input type="hidden" name="Accion">
 						<input type="hidden" name="facetas" value="<?php if (isset($_REQUEST["facetas"])) echo $_REQUEST["facetas"]; ?>">
-						<?php if (isset($_REQUEST["db_path"])) ?>
-						<input type="hidden" name="db_path" value="<?php echo $_REQUEST["db_path"]; ?>">
-						<?php if (isset($_REQUEST["alcance"])) ?>
-						<input type="hidden" name="alcance" value="<?php echo $_REQUEST["alcance"]; ?>">
-						<?php if (isset($_REQUEST["integrada"])) ?>
-						<input type="hidden" name="integrada" value="<?php echo $_REQUEST["integrada"]; ?>">
-						<?php if (isset($_REQUEST["modo"])) ?>
-						<input type="hidden" name="modo" value="<?php echo $_REQUEST["modo"]; ?>">
+						<?php if (isset($_REQUEST["db_path"])) echo	'<input type="hidden" name="db_path" value="'.$_REQUEST["db_path"].'">';?>
+						<?php if (isset($_REQUEST["alcance"])) echo	'<input type="hidden" name="alcance" value="<?php echo $_REQUEST["alcance"]; ?>">';?>
+						<?php if (isset($_REQUEST["integrada"])) echo '<input type="hidden" name="integrada" value="<?php echo $_REQUEST["integrada"]; ?>">';?>
+						<?php if (isset($_REQUEST["modo"])) '<input type="hidden" name="modo" value="<?php echo $_REQUEST["modo"]; ?>">';?>
 						<input type="hidden" name="indice_base" value="<?php if (isset($_REQUEST["indice_base"])) echo $_REQUEST["indice_base"];?>" >
 						<?php
 						if (isset($_REQUEST["lista_bases"])) echo "<input type=hidden name=lista_bases value=\"" . $_REQUEST["lista_bases"] . "\">\n";
 						if (isset($_REQUEST["diccionario"])) echo "<input type=hidden name=diccionario value=DICCIONARIO>\n";
 						if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"" . $_REQUEST["Formato"] . "\">\n";
-						?> <input type=hidden name=base value="<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"] ?>">
-						<input type=hidden name=Opcion value="<?php if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"] ?>">
-						<input type=hidden name=Expresion value="<?php if (isset($_REQUEST["Expresion"])) echo urlencode($_REQUEST["Expresion"]) ?>">
+						?> 
+						<input type="hidden" name="base" value="<?php if (isset($_REQUEST["base"])) echo $_REQUEST["base"] ?>">
+						<input type="hidden" name="Opcion" value="<?php if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"] ?>">
+						<input type="hidden" name="Expresion" value="<?php if (isset($_REQUEST["Expresion"])) echo urlencode($_REQUEST["Expresion"]) ?>">
 						<?php
 						echo  "<input type=hidden name=desde value=\"";
 						if (isset($proximo)) echo $proximo;

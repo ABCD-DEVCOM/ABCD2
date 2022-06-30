@@ -128,6 +128,7 @@ $meta_encoding = $charset;
 		<div class="areaTitulo">
 			<div class=tituloBase>
 				<?php
+				echo $_COOKIE['user']."<br>";
 				echo $TituloEncabezado;
 				if (isset($_REQUEST["db_path"]))
 					echo "  " . $_REQUEST["db_path"];
@@ -150,7 +151,7 @@ $meta_encoding = $charset;
 
 	include_once 'components/topbar.php';
 
-		if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("sidebar.php");
+		if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
 		?>
 
 		<div id="page">
