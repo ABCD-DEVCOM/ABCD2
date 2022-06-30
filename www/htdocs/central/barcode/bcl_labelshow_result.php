@@ -5,6 +5,7 @@
 20220310 fho4abcd Better check for nothing returned.
 20220321 fho4abcd adapt to new includes, renamed to bcl_labelshow_result
 20220628 fho4abcd removed unused output options (e.g Excel)
+20220630 fho4abcd Improve html, remove unused options
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -27,6 +28,7 @@ $base=$arrHttp["base"];
 include ("inc_barcode_constants.php");
 include ("inc_barcode_configure.php");
 if (!isset($arrHttp["output"])) $arrHttp["output"]="display";
+
 switch($arrHttp["output"]){
 	case "doc":
 		$filename="barcode_".$base.".doc";
@@ -54,20 +56,15 @@ switch($arrHttp["output"]){
    		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
    		header("Pragma: public");
    		break;
-	default:
-		break;
-}
-
-if ($arrHttp["output"]=="display"){
-    include ("../common/header.php");
-
-	echo "<body>";
-    include "../common/inc_div-helper.php";
-    ?>
-    <div class="middle form">
+	default: // the display option
+        include ("../common/header.php");
+        echo "<body>";
+        include "../common/inc_div-helper.php";
+        ?>
+        <div class="middle form">
         <div class="formContent">
-<?php
-
+        <?php
+		break;
 }
 
 //SE LEE EL ARCHIVO DE CONFIGURACION
@@ -79,7 +76,11 @@ if (!file_exists($configfilefull)){
 	include("../common/footer.php");
 	die;
 }
-if ($arrHttp["output"]=="display") echo "<div>".$configfile." ".$msgstr["doesexist"]."</div>";
+if ($arrHttp["output"]=="display") {
+    ?>
+    <div><?php echo $configfile." ".$msgstr["doesexist"]?></div>
+    <?php
+}
 // Read the barcode configuration file
 $bar_c=array();
 $fp=file($configfilefull);
@@ -107,17 +108,7 @@ if ($arrHttp["output"]=="txt" or $arrHttp["output"]=="txt_print"){
         $ispftfile=true;
     }
 }
-switch ($arrHttp["tipo"]){
-	case "barcode":
-		$Pft=trim($bar_c["label_format"])."/";
-		break;
-	case "lomos":
-		$Pft=trim($bar_c["label_format"])."/";
-		break;
-	case "etiquetas":
-		$Pft=trim($bar_c["label_format"])."/";
-		break;
-}
+$Pft=trim($bar_c["label_format"])."/";
 // Check if the barcode pft file exists.
 if ( $ispftfile==true) {
     //  Note that it starts with ",@" and ends with ",/";
@@ -130,7 +121,11 @@ if ( $ispftfile==true) {
         include("../common/footer.php");
         die;
     } else {
-        if ($arrHttp["output"]=="display") echo "<div>".$pftfile." ".$msgstr["doesexist"]."</div>";
+        if ($arrHttp["output"]=="display"){
+            ?>
+            <div><?php echo $pftfile." ".$msgstr["doesexist"]?></div>
+            <?php
+        }
     }
 }
 switch ($arrHttp["Opcion"]){
@@ -140,14 +135,8 @@ switch ($arrHttp["Opcion"]){
 	case "clasificacion":
 		ClasificacionBarCode($base,$arrHttp["classification_from"],$arrHttp["classification_to"],$bar_c,$Pft);
     	break;
-    case "control":
-    	//ControlBarCode($base,$arrHttp["control_from"],$arrHttp["control_to"],$fe_control,$copies,$pref_control,$arrHttp["output"]);
-    	break;
     case "inventario":
     	InventarioBarCode($base,$arrHttp["inventory_from"],$arrHttp["inventory_to"],$bar_c,$Pft);
-		break;
-	case "date":
-    	//DateBarCode($base,$arrHttp["date_from"],$arrHttp["date_to"],$fe_date,$copies,$pref_date,$arrHttp["output"]);
 		break;
 	case "lista_inventario":
 		InventarioLista($base,$arrHttp["inventory_list"],$bar_c,$Pft);
@@ -155,7 +144,11 @@ switch ($arrHttp["Opcion"]){
 
 }
 if ($arrHttp["output"]=="display"){
-	echo "</body></html>";
+    ?>
+	</div>
+    </div>
+    </body></html>
+<?php
 }
 //================= Functions ==================
 
@@ -166,6 +159,7 @@ global $arrHttp,$msgstr;
 		$table_width=$bar_c["cols"]*$bar_c["width"];
         // Always apply style to display and doc
         ?>
+
         <style>
 			.columna{
     			border-collapse: collapse;
@@ -223,24 +217,27 @@ global $arrHttp,$msgstr;
 		echo "</tr></table>";
 	}
 	if ($medio=="txt_print"){
-	$salida=explode(PHP_EOL,$print);
-	echo "<script>lineas=Array();i=-1;\n";
-	foreach ($salida as $linea){
-		echo "i=i+1\n";
-		echo "lineas[i]=\"$linea\"\n";
-	}
-		?>
-	msgwin=window.open("","recibo","width=400, height=300, scrollbars, resizable")
-	for (j=0;j<=i;j++){
-		msgwin.document.writeln(lineas[j])
-	}
-	msgwin.document.close()
-	msgwin.focus()
-	msgwin.print()
-	msgwin.close()
-	self.close();
-</script>
-<?php
+        $salida=explode(PHP_EOL,$print);
+        ?>
+        <script>
+        <?php
+        echo "lineas=Array();i=-1;\n";
+        foreach ($salida as $linea){
+            echo "i=i+1\n";
+            echo "lineas[i]=\"$linea\"\n";
+        }
+            ?>
+        msgwin=window.open("","recibo","width=400, height=300, scrollbars, resizable")
+        for (j=0;j<=i;j++){
+            msgwin.document.writeln(lineas[j])
+        }
+        msgwin.document.close()
+        msgwin.focus()
+        msgwin.print()
+        msgwin.close()
+        self.close();
+        </script>
+        <?php
 	}
 }
 
@@ -356,8 +353,6 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
 
 		}
 	}
-
 	MostrarSalida($array_c,$arrHttp["output"],$bar_c);
 }
-
 ?>

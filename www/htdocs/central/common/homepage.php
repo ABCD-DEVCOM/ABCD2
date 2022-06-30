@@ -7,6 +7,7 @@
 2021-05-04 fho4abcd Language selection: Enable selection of first menu item
 2022-01-23 rogercgui Option "CABCD" points to settings
 2022-06-13 fho4abcd Removed unused Modulo + html in correct order + clean code
+2022-06-30 fho4abcd Add backtoscript to explore databases folder
 */
 //PARA ELIMINAR LAS VARIABLES DE SESSION DEL DIRTREE
 unset($_SESSION["root_base"]);
@@ -229,7 +230,7 @@ function FuncionesAdministracion(Accion){
             document.admFrm.Opcion.value="abcd_def"
             break;
         case "DIRTREE":
-            document.admFrm.action="../dbadmin/dirtree.php"
+            document.admFrm.action="../dbadmin/dirtree.php?backtoscript=/central/common/inicio.php"
             document.admFrm.encabezado.value="s"
             document.admFrm.retorno.value="inicio"
             break;
