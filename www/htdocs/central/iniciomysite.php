@@ -9,6 +9,7 @@ session_start();
 require_once ("config.php");
 require_once('../isisws/nusoap.php');
 require_once ("common/ldap.php");
+
 $converter_path=$cisis_path."mx";
 //echo "converter_path=".$converter_path."<BR>";
 
@@ -27,7 +28,7 @@ $valortag = Array();
 
 function LeerRegistro() {
 
-// la variable $llave permite retornar alguna marca que esté en el formato de salida
+// la variable $llave permite retornar alguna marca que estï¿½ en el formato de salida
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
@@ -57,7 +58,7 @@ if ($EmpWeb=="1") {
       //print_r($result);
       //die;
 
-      //Esto se ha complejizado con el asunto de la incorporación de mas de una base de datos
+      //Esto se ha complejizado con el asunto de la incorporaciï¿½n de mas de una base de datos
 
       if (is_array($result['queryResult']['databaseResult']['result']['userCollection']))
       {
@@ -65,13 +66,13 @@ if ($EmpWeb=="1") {
 
         if (is_array($vectoruno['user']))
         {
-          //Hay una sola base y ahí está el usuario
+          //Hay una sola base y ahï¿½ estï¿½ el usuario
           $myuser = $vectoruno['user'];
           $db = $empwebserviceusersdb;
         }
         else if (is_array($vectoruno[0]))
         {
-          // hay un vector de dbnames, hay que encontrar en cual de ellos está el user, si está en mas de uno
+          // hay un vector de dbnames, hay que encontrar en cual de ellos estï¿½ el user, si estï¿½ en mas de uno
           // joderse, se toma el primero
           foreach ($vectoruno as $elementos)
           {
@@ -86,8 +87,7 @@ if ($EmpWeb=="1") {
 
         // Con el myuser recuperado me fijo si es que el passwd coincide
 
-        if (($myuser['password']==$arrHttp["password"]) &&  (strlen($arrHttp["password"])>3))
-        {
+        if (($myuser['password']==$arrHttp["password"]) &&  (strlen($arrHttp["password"])>3)) {
               $vectorAbrev=$myuser;
               //print_r($vectorAbrev);
               //die;
@@ -127,7 +127,7 @@ if ($EmpWeb=="1") {
 		$textoutmx.=substr($outmx[$i], 0); 
 	} if ($textoutmx!="") {
 		$splittxt=explode("|",$textoutmx);
-		$myuser = var_dump($checkuser);
+	//	$myuser = var_dump($checkuser);
 		$db = "users";
 		$myllave = $splittxt[0]."|";
 		$myllave .= "1|";
@@ -308,7 +308,7 @@ function Session($llave){
 
 function LeerRegistroLDAP() {
 
-// la variable $llave permite retornar alguna marca que esté en el formato de salida
+// la variable $llave permite retornar alguna marca que estï¿½ en el formato de salida
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
@@ -441,8 +441,7 @@ require_once("lang/lang.php");
 
 
 
-if (isset($arrHttp["action"]))
-{
+if (isset($arrHttp["action"])) {
     if ($arrHttp["action"]!='clear')
     {
       $_SESSION["action"]=$arrHttp["action"];

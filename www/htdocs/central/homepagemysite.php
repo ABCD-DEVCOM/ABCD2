@@ -1,5 +1,6 @@
 <?php
 include("common/header.php");
+
 require_once("lang/lang.php");
 
 $query="";
@@ -24,7 +25,7 @@ function getUserStatus() {
 if ($EmpWeb=="1") {
 
 //USING the Emweb Module 
-	  $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
+	$proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
     $proxyport = isset($_POST['proxyport']) ? $_POST['proxyport'] : '';
     $proxyusername = isset($_POST['proxyusername']) ? $_POST['proxyusername'] : '';
     $proxypassword = isset($_POST['proxypassword']) ? $_POST['proxypassword'] : '';
@@ -144,10 +145,10 @@ if ($EmpWeb=="1") {
 //USING the Central Module
 // Prestamos
 //Search the trans database
-echo "---------------".$_SESSION["userid"]."------------------";
+//echo "---------------".$_SESSION["userid"]."------------------";
 $mxl=$converter_path." ".$db_path."trans/data/trans \"pft=if v20='".$userid."' then if v1='P' then v10,'|',v30,' ',v35,'|',v40,' ',v45,'|',mfn,'|',v80,'|',if p(v200) then (v200,'+-+'), fi,'|+~+', fi fi\" now";
 
-echo "<h1>".$mxl."</h1>";
+//echo "<h1>".$mxl."</h1>";
 exec($mxl,$outmxl,$banderamxl);
 $textoutmx="";
 for ($i = 0; $i < count($outmxl); $i++) {
@@ -895,9 +896,9 @@ $vectorAbrev["database"]=$_SESSION["cdb"];
 
 </head>
 
-<body class="yui-skin-sam">
-    <div class="headingmysite">
-        <div class="institutionalInfo">
+<body>
+<div class=heading>
+    <div class="institutionalInfo">
             <h1><?php echo $institution_name?></h1>
             <h2>ABCD</h2>
         </div>
@@ -1068,7 +1069,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases,$dataarr;
                         <table>
                             <tr>
                                 <td rowspan="4">
-                                    <img src="../photoproxy.php?imgid=users/<?php echo $dataarr["photo"] ?>"
+                                    <img style="max-width:150px;" src="common/show_image.php?image=images/<?php echo $dataarr["photo"] ?>&base=users"
                                         alt="PICTURE" />
                                 </td>
                                 <td rowspan="4">&nbsp;</td>
