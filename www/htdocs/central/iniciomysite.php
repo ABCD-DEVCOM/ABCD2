@@ -153,9 +153,9 @@ if ($EmpWeb=="1") {
 function VerificarUsuario(){
 Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
  	$llave=LeerRegistro();
-//echo "llave=$llave<BR>";
+//echo "llave = $llave<BR>";
  	if ($llave!=""){
-  		$res=preg_split("~|~",$llave);
+  		$res=explode('|',trim($llave));
   		$userid=$res[0];
   		$_SESSION["mfn_admin"]=$res[1];
   		$mfn=$res[1];
@@ -284,7 +284,7 @@ global $max_cn_length;
 
 function Session($llave){
  Global $arrHttp,$valortag,$Path,$xWxis,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
- 
+ echo "<h1>".$res[2]."</h1>";
        
         $res=split("\|",$llave);
 		$mfn=$res[2];
@@ -480,17 +480,17 @@ if (isset($arrHttp["action"])) {
       
 
       	$_SESSION["lang"]=$arrHttp["lang"];
-		if (!empty($arrHttp["id"]))
-		{
+		if (!empty($arrHttp["id"])) {
 		$_SESSION["action"]='reserve';
 		$_SESSION["recordId"]=$arrHttp["id"];
 		$_SESSION["cdb"]=$arrHttp["cdb"];
-		}
+		} else {
         $_SESSION["userid"]=$userid;
       	$_SESSION["login"]=$arrHttp["login"];
       	$_SESSION["permiso"]="mysite".$userid;
       	$_SESSION["nombre"]=$nombre;
         $_SESSION["db"]=$db;
+		}
 
 //}
 

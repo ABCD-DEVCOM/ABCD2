@@ -8,10 +8,12 @@
 
   require_once ("../lang/mysite.php");
   require_once("../lang/lang.php");
- $myresult=$msgstr["failed_operation"];$legend="";$image="mysite/img/flag.png";$success = false;
+ 
+ $myresult=$msgstr["failed_operation"];
+ $legend="";$image="mysite/img/flag.png";
+ $success = false;
 
-if ($EmpWeb=="Y")
-{
+if ($EmpWeb=="1") {
 //USING the Emweb Module 
 
       // Webservice call
@@ -54,7 +56,7 @@ if ($EmpWeb=="Y")
       $params = array ($user,$copyId,$userdb,$objdb,$myextension);
 
       //print_r($params);
-      // Acá obtengo los datos generales
+      // Acï¿½ obtengo los datos generales
       $result = $client->call('renewalSingle', $params, 'http://kalio.net/empweb/engine/trans/v1' , '');
 
        //print_r($result);
@@ -135,14 +137,17 @@ $usertype=substr($splittxt[1],0,-1);
 //Geting the loan policy
 $LoanPolicy="";
 $fp=file($db_path."circulation/def/".$lang."/typeofitems.tab");
-foreach ($fp as $value)
-{
+foreach ($fp as $value) {
 $val=explode('|',$value);
+$LoanPolicy = $value;
+
+
 if ((trim(strtoupper($val[0]))==trim(strtoupper($copytype))) and (trim($val[1])==trim($usertype)))
 	{
 		$LoanPolicy=$value;							
 	}
 }
+
 $splitpolicies=explode("|",$LoanPolicy);
 $allowrenewals=$splitpolicies[6];
 $loanterm=$splitpolicies[5];
