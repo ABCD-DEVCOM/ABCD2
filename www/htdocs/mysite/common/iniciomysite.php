@@ -6,9 +6,9 @@
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
 session_start();
-require_once ("config.php");
-require_once('../isisws/nusoap.php');
-require_once ("common/ldap.php");
+require_once ("../../central/config.php");
+require_once('../../isisws/nusoap.php');
+require_once ("../../central/common/ldap.php");
 
 $converter_path=$cisis_path."mx";
 //echo "converter_path=".$converter_path."<BR>";
@@ -278,7 +278,7 @@ global $max_cn_length;
   	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$cipar."&login=".$arrHttp["login"]."&Mfn=" .$mfn."&Opcion=".$opcion."$stw&ValorCapturado=".$ValorCapturado;
   	
 
-	include("common/wxis_llamar.php");
+	include("../../central/common/wxis_llamar.php");
    
 }
 
@@ -423,7 +423,7 @@ function VerificarUsuarioLDAP(){
 
 
 $query="";
-include("common/get_post.php");
+include("../../central/common/get_post.php");
 
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>";die;
 
@@ -436,8 +436,8 @@ if (isset($arrHttp["lang"])){
     $_SESSION["lang"]=$lang;
 }
 
-require_once("lang/mysite.php");
-require_once("lang/lang.php");
+require_once("../../central/lang/mysite.php");
+require_once("../../central/lang/lang.php");
 
 
 

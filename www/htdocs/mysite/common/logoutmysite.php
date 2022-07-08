@@ -1,11 +1,12 @@
 <?php
 session_start();
-include("../config.php");
+require_once "../../central/config.php";
+
 
 if (isset($_SESSION["HOME"]))
 	$retorno=$_SESSION["HOME"];
 else
-	$retorno="../../indexmysite.php";
+	$retorno="/mysite";
 $_SESSION=array();
 unset($_SESSION);
 session_unset();

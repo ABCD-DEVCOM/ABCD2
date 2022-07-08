@@ -1,10 +1,10 @@
 <?php
-include "common/header.php";
+include "../../central/common/header.php";
 
-require_once "lang/lang.php";
+require_once "../../central/lang/lang.php";
 
 $query = "";
-include "common/get_post.php";
+include "../../central/common/get_post.php";
 
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>";
 
@@ -21,118 +21,8 @@ function fechaAsString($fecha) {
 function getUserStatus() {
     global $empwebservicequerylocation, $empwebserviceusersdb, $userid, $EmpWeb, $converter_path, $db_path, $vectorAbrev, $lang;
 
-    if ($EmpWeb == "1") {
+    if ($EmpWeb == "0") {
 
-        //USING the Emweb Module
-        $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
-        $proxyport = isset($_POST['proxyport']) ? $_POST['proxyport'] : '';
-        $proxyusername = isset($_POST['proxyusername']) ? $_POST['proxyusername'] : '';
-        $proxypassword = isset($_POST['proxypassword']) ? $_POST['proxypassword'] : '';
-        $useCURL = isset($_POST['usecurl']) ? $_POST['usecurl'] : '0';
-        $client = new nusoap_client($empwebservicequerylocation, false, $proxyhost, $proxyport, $proxyusername, $proxypassword);
-
-        $err = $client->getError();
-
-        if ($err) {
-            echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
-            echo '<h2>Debug</h2><pre>' . htmlspecialchars($client->getDebug(), ENT_QUOTES) . '</pre>';
-            exit();
-        }
-
-        $params = array('id' => $_SESSION["userid"], 'database' => $empwebserviceusersdb);
-
-        // Here I obtain the general data
-
-        $result = $client->call('searchUsersById', $params, 'http://kalio.net/empweb/schema/userstatus/v1', '');
-        //print_r($result);
-        //die;
-
-        if (is_array($result['queryResult']['databaseResult']['result']['userCollection'])) {
-            $vectoruno = $result['queryResult']['databaseResult']['result']['userCollection'];
-            //print_r($vectoruno);
-
-            if (is_array($vectoruno['user'])) {
-                //There is only one database and there is the user
-                $vectorAbrev = $vectoruno['user'];
-                //$mydb =  $empwebserviceusersdb;
-                $mydb = $vectoruno['!dbname'];
-            } elseif (is_array($vectoruno[0])) {
-                // hay un vector de dbnames, hay que encontrar en cual de ellos est� el user, si est� en mas de uno
-                // joderse, se toma el primero
-
-                foreach ($vectoruno as $elementos) {
-                    if (is_array($elementos['user'])) {
-                        //print_r($elementos);
-                        $mydb = $elementos['!dbname'];
-                        $vectorAbrev = $elementos['user'];
-                    }
-                }
-                //die;
-            }
-        }
-
-        //echo "MYDB=".$mydb;
-
-        // Incredibly there is data that is recovered with the bdd from which the user exits.
-        // y otros que se recuperan buscando sobre '*'. TODO-Ver que carajo es eso...
-
-        $params = array('id' => $_SESSION["userid"], 'database' => $mydb);
-        $resulta = $client->call('getUserStatus', $params, 'http://kalio.net/empweb/schema/userstatus/v1', '');
-
-        //print_r($resulta);
-        //echo "<br>";
-
-        $params = array('id' => $_SESSION["userid"], 'database' => '*');
-        $resultb = $client->call('getUserStatus', $params, 'http://kalio.net/empweb/schema/userstatus/v1', '');
-
-        //print_r($resultb);
-
-        $resultc = array_merge($resulta['userStatus'], $resultb['userStatus']);
-        $resultactual['userStatus'] = $resultc;
-
-        // Prestamos
-        if (is_array($resultactual['userStatus']['loans'])) {
-
-            if ($resultactual['userStatus']['loans']['loan']['userId'] != '') {
-                $vectorAbrev['loans'] = $resultactual['userStatus']['loans'];
-            } else {
-                $vectorAbrev['loans'] = $resultactual['userStatus']['loans']['loan'];
-            }
-
-        }
-
-        // Suspensiones
-        if (is_array($resultactual['userStatus']['suspensions'])) {
-
-            if ($resultactual['userStatus']['suspensions']['suspension']['userId'] != '') {
-                $vectorAbrev['suspensions'] = $resultactual['userStatus']['suspensions'];
-            } else {
-                $vectorAbrev['suspensions'] = $resultactual['userStatus']['suspensions']['suspension'];
-            }
-
-        }
-
-        // Reservas
-        if (is_array($resultactual['userStatus']['waits'])) {
-            if ($resultactual['userStatus']['waits']['wait']['userId'] != '') {
-                $vectorAbrev['waits'] = $resultactual['userStatus']['waits'];
-            } else {
-                $vectorAbrev['waits'] = $resultactual['userStatus']['waits']['wait'];
-            }
-        }
-
-        //Multas
-        if (is_array($resultactual['userStatus']['fines'])) {
-            if ($resultactual['userStatus']['fines']['fine']['userId'] != '') {
-                $vectorAbrev['fines'] = $resultactual['userStatus']['fines'];
-            } else {
-                $vectorAbrev['fines'] = $resultactual['userStatus']['fines']['fine'];
-            }
-
-        }
-
-        //print_r($vectorAbrev['waits']);
-    } else {
         //USING the Central Module
         // Prestamos
         //Search the trans database
@@ -274,83 +164,7 @@ function getUserStatus() {
 function getRecordStatus() {
     global $empwebservicequerylocation, $empwebserviceobjectsdb, $userid, $EmpWeb, $converter_path, $db_path, $lang;
 
-    if ($EmpWeb == "Y") {
-        //USING the Emweb Module
-
-        $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
-        $proxyport = isset($_POST['proxyport']) ? $_POST['proxyport'] : '';
-        $proxyusername = isset($_POST['proxyusername']) ? $_POST['proxyusername'] : '';
-        $proxypassword = isset($_POST['proxypassword']) ? $_POST['proxypassword'] : '';
-        $useCURL = isset($_POST['usecurl']) ? $_POST['usecurl'] : '0';
-        $client = new nusoap_client($empwebservicequerylocation, false,
-            $proxyhost, $proxyport, $proxyusername, $proxypassword);
-
-        $err = $client->getError();
-        if ($err) {
-            echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
-            echo '<h2>Debug</h2><pre>' . htmlspecialchars($client->getDebug(), ENT_QUOTES) . '</pre>';
-            exit();
-        }
-
-        $params = array('queryParam' => array("query" => array('recordId' => $_SESSION["recordId"])), 'database' => $empwebserviceobjectsdb);
-        $result = $client->call('searchObjects', $params, 'http://kalio.net/empweb/engine/query/v1', '');
-
-        $resumen = $result["queryResult"]["databaseResult"]["result"]["modsCollection"]["mods"];
-
-        $vectorAbrev["id"] = $_SESSION["recordId"];
-        $vectorAbrev["title"] = $resumen["titleInfo"]["title"];
-        $vectorAbrev["publisher"] = $resumen["originInfo"]["publisher"];
-        $vectorAbrev["year"] = $resumen["originInfo"]["dateIssued"];
-
-        if ($resumen["extension"]["holdingsInfo"]["copies"]["copy"]["copyId"] != "") {
-            $vectorAbrev["copies"]["info"] = 1;
-        } else {
-            $vectorAbrev["copies"]["info"] = count($resumen["extension"]["holdingsInfo"]["copies"]["copy"]);
-
-            $opciones = array();
-            foreach ((array) $resumen["extension"]["holdingsInfo"]["copies"]["copy"] as $elemento) {
-                if ($elemento["volumeId"]) {
-                    array_push($opciones, $elemento["volumeId"]);
-                }
-
-            }
-
-            //Opciones para volúmen
-            if (count($opciones) > 0) {
-                $vectorAbrev["copies"]["options"] = $opciones;
-            }
-        }
-
-        $buffer = "";
-
-        // Autores heterogeneo
-        if ($resumen["name"]["namePart"] != "") {
-            $buffer = $resumen["name"]["namePart"];
-        } else {
-
-            for ($i = 0; $i < count($resumen["name"]); $i++) {
-                $buffer .= $resumen["name"][$i]["namePart"] . " / ";
-            }
-        }
-
-        $vectorAbrev["authors"] = $buffer;
-
-        //Copias heterogeneas
-
-        //print_r($resumen);
-
-        if ($resumen["extension"]["holdingsInfo"]["copies"]["copy"]["copyLocation"] != "") {
-            $vectorAbrev["library"] = $resumen["extension"]["holdingsInfo"]["copies"]["copy"]["copyLocation"];
-            $vectorAbrev["objectType"][0] = $resumen["extension"]["holdingsInfo"]["copies"]["copy"]["objectCategory"];
-        } elseif ($resumen["extension"]["holdingsInfo"]["copies"]["copy"][0]["copyLocation"] != "") {
-            $vectorAbrev["library"] = $resumen["extension"]["holdingsInfo"]["copies"]["copy"][0]["copyLocation"];
-            $miscopias = $resumen["extension"]["holdingsInfo"]["copies"]["copy"];
-            $i = 0;
-            foreach ($miscopias as $copia) {
-                $vectorAbrev["objectType"][$i++] = $copia["objectCategory"];
-            }
-        }
-    } else {
+    if ($EmpWeb == "0")  {
         //USING the Central Module
         $vectorAbrev["id"] = $_SESSION["recordId"];
         //Get the record info
@@ -631,28 +445,20 @@ function getRecordStatus() {
         <meta http-equiv="keywords" content="" />
         <meta http-equiv="description" content="" />
         <!-- Stylesheets -->
-        <link rel="stylesheet" type="text/css" href="mysite/yui/build/fonts/fonts-min.css" />
-        <link rel="stylesheet" type="text/css" href="mysite/yui/build/button/assets/skins/sam/button.css" />
-        <link rel="stylesheet" type="text/css" href="mysite/yui/build/container/assets/skins/sam/container.css" />
-        <script type="text/javascript" src="mysite/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+        <link rel="stylesheet" type="text/css" href="yui/build/fonts/fonts-min.css" />
+        <link rel="stylesheet" type="text/css" href="yui/build/button/assets/skins/sam/button.css" />
+        <link rel="stylesheet" type="text/css" href="yui/build/container/assets/skins/sam/container.css" />
+        <script type="text/javascript" src="yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 
-        <script type="text/javascript" src="mysite/yui/build/connection/connection-min.js"></script>
-        <script type="text/javascript" src="mysite/yui/build/element/element-min.js"></script>
-        <script type="text/javascript" src="mysite/yui/build/button/button-min.js"></script>
-        <script type="text/javascript" src="mysite/yui/build/dragdrop/dragdrop-min.js"></script>
-        <script type="text/javascript" src="mysite/yui/build/container/container-min.js"></script>
+        <script type="text/javascript" src="yui/build/connection/connection-min.js"></script>
+        <script type="text/javascript" src="yui/build/element/element-min.js"></script>
+        <script type="text/javascript" src="yui/build/button/button-min.js"></script>
+        <script type="text/javascript" src="yui/build/dragdrop/dragdrop-min.js"></script>
+        <script type="text/javascript" src="yui/build/container/container-min.js"></script>
 
 
         <!-- Stylesheets -->
-        <link rel="stylesheet" rev="stylesheet" href="css/templatemysite.css" type="text/css" media="screen" />
-
-
-        <!--[if IE]>
-                <link rel="stylesheet" rev="stylesheet" href="css/bugfixes_ie.css" type="text/css" media="screen"/>
-            <![endif]-->
-        <!--[if IE 6]>
-                <link rel="stylesheet" rev="stylesheet" href="css/bugfixes_ie6.css" type="text/css" media="screen"/>
-            <![endif]-->
+        <link rel="stylesheet" rev="stylesheet" href="/assets/css/templatemysite.css" type="text/css" media="screen" />
 
         <script languaje=javascript>
         YAHOO.namespace("example.container");
@@ -909,7 +715,7 @@ function getRecordStatus() {
             failure: handleFailure
         };
 
-        var sUrl = "mysite/queryobjectservice.php";
+        var sUrl = "queryobjectservice.php";
 
 
         function makeRequest() {
@@ -962,7 +768,7 @@ function getRecordStatus() {
             <div class="userInfo">
                 <span><?php echo $_SESSION["nombre"] ?></span>,
                 <?php echo $_SESSION["permiso"] ?> |
-                <a href="dataentry/logoutmysite.php"
+                <a href="logoutmysite.php"
                     class="button_logout"><span><?php echo $msgstr["logout"] ?></span></a>
             </div>
             <div class="language">
@@ -1034,7 +840,7 @@ if (file_exists($a)) {
             <div id="dialog1">
                 <div class="hd"><?php echo $msgstr["reservationcancel"] ?></div>
                 <div class="bd">
-                    <form id="formreservation" method="POST" action="mysite/cancelreservation.php">
+                    <form id="formreservation" method="POST" action="cancelreservation.php">
                         <label for="observations"><?php echo $msgstr["observations"] ?></label>
                         <textarea name="observations"></textarea>
                         <input type="hidden" id="waitid" name="waitid" />
@@ -1047,7 +853,7 @@ if (file_exists($a)) {
             <div id="dialog2">
                 <div class="hd"><?php echo $msgstr["loanrenewal"] ?></div>
                 <div class="bd">
-                    <form id="formrenovation" method="POST" action="mysite/loanrenovation.php">
+                    <form id="formrenovation" method="POST" action="loanrenovation.php">
                         <label for="observations"><?php echo $msgstr["renewalconfirm"] ?></label>
                         <input type="hidden" id="copyId" name="copyId" />
                         <input type="hidden" id="userId" name="userId" />
@@ -1069,7 +875,7 @@ if (file_exists($a)) {
             <div id="dialog3">
                 <div class="hd"><?php echo $msgstr["makereservation"] ?></div>
                 <div class="bd">
-                    <form id="formreserves" method="POST" action="mysite/reserve.php">
+                    <form id="formreserves" method="POST" action="reserve.php">
                         <label for="observations"><?php echo $msgstr["reservationconfirm"] ?></label>
 
                         <input type="hidden" id="userId" name="userId" />
@@ -1100,7 +906,7 @@ if (isset($_SESSION["action"]) and $_SESSION["action"] == 'reserve') {
 
 echo "		</div>
         </div>";
-include "common/footermysite.php";
+include "footermysite.php";
 echo "	</body>
     </html>";
 
@@ -1126,7 +932,7 @@ function MenuFinalUser()
                             <tr>
                                 <td rowspan="4">
                                     <img style="max-width:150px;"
-                                        src="common/show_image.php?image=images/<?php echo $dataarr["photo"] ?>&base=users"
+                                        src="../../central/common/show_image.php?image=images/<?php echo $dataarr["photo"] ?>&base=users"
                                         alt="PICTURE" />
                                 </td>
                                 <td rowspan="4">&nbsp;</td>
@@ -1158,7 +964,7 @@ function MenuFinalUser()
 
             </div>
             <div class="spacer"> </div>
-            <?php if (isset($dataaar["suspensions"])) echo $dataarr["suspensions"]; ?>
+            <?php if (isset($dataarr["suspensions"])) echo $dataarr["suspensions"]; ?>
 
             <div id="secondBox" class="mainBox"
                 style="height: <?php $x = 250;if (count($dataarr["suspensions"]) > 0) {
@@ -1238,7 +1044,7 @@ if (!empty($dataarr["suspensions"])) {
 
                         <span>
                             <h3><?php echo $msgstr["actualloans"]; ?>
-                                <?php if (!empty($dataaar["loans"])) {
+                                <?php if (!empty($dataar["loans"])) {
         echo count($dataarr["loans"]);
     }
     ?></h3>

@@ -1,6 +1,7 @@
 <?php
 
-        require_once (dirname(__FILE__)."/../config.php");
+        require_once "../../central/config.php";
+
         $def = parse_ini_file($db_path."abcd.def");
         //print_r($def);
         ?>

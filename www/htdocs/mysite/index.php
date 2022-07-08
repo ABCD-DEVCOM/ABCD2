@@ -2,8 +2,8 @@
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
-include("central/config.php");
-include("$app_path/common/get_post.php");
+include("../central/config.php");
+include("../$app_path/common/get_post.php");
 $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
@@ -18,8 +18,8 @@ if (isset($_SESSION["lang"])){
 	$_SESSION["lang"]=$lang;
 }
 
-include ("$app_path/lang/admin.php");
-include ("$app_path/lang/lang.php");
+include ("../$app_path/lang/admin.php");
+include ("../$app_path/lang/lang.php");
 ?>
 <!DOCTYPE html>
 
@@ -70,7 +70,7 @@ include ("$app_path/lang/lang.php");
     </style>
 
 
-    <script src=/<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
+    <script src=../<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
     <script languaje=javascript>
     document.onkeypress =
         function(evt) {
@@ -98,7 +98,7 @@ include ("$app_path/lang/lang.php");
     }
     </script>
     <?php
-include ("$app_path/common/css_settings.php");
+include ("../$app_path/common/css_settings.php");
 ?>	
 </head>
 
@@ -129,7 +129,7 @@ include ("$app_path/common/css_settings.php");
         <div class="spacer">&#160;</div>
     </div>
 
-    <form name="administra" onsubmit="javascript:return false" method="post" action="central/iniciomysite.php">
+    <form name="administra" onsubmit="javascript:return false" method="post" action="common/iniciomysite.php">
         <input type="hidden" name="Opcion" value="admin">
         <input type="hidden" name="cipar" value="acces.par">
         <input type="hidden" name="lang" value="<?php echo $arrHttp["lang"];?>">

@@ -1,9 +1,10 @@
 <?php
 
-require_once('../../isisws/nusoap.php');
-require_once ("../config.php");
+require_once "../../central/config.php";
+require_once '../../isisws/nusoap.php';
 
-if ($EmpWeb=="Y")
+
+if ($EmpWeb=="1")
 {
 //USING the Emweb Module 
 $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';

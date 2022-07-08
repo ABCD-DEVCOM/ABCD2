@@ -3,33 +3,20 @@
   require_once ("../config.php");
   require_once('../../isisws/nusoap.php');
 
+  session_start();
+  $lang=$_SESSION["lang"];
 
-
-  /*if (isset($arrHttp["lang"])){
-	$_SESSION["lang"]=$arrHttp["lang"];
-	$lang=$arrHttp["lang"];
-  }else{
-  	if (!isset($_SESSION["lang"]))
-      $_SESSION["lang"]=$lang;
-  } */
-
- session_start();
- $lang=$_SESSION["lang"];
- require_once ("../lang/mysite.php");
- require_once("../lang/lang.php");
+  require_once ("../lang/mysite.php");
+  require_once("../lang/lang.php");
  
-      $myresult=$msgstr["failed_operation"];
-      $legend="";
-      $image="mysite/img/flag.png";
-      $success = false;
- 
- if ($EmpWeb=="Y")
-{
+ $myresult=$msgstr["failed_operation"];
+ $legend="";$image="img/flag.png";
+ $success = false;
+
+if ($EmpWeb=="1") {
 //USING the Emweb Module 
 
- if (!isset($_SESSION["permiso"])) die;
-
-     //Invocación al web-service
+      // Webservice call
 
       $proxyhost = isset($_POST['proxyhost']) ? $_POST['proxyhost'] : '';
       $proxyport = isset($_POST['proxyport']) ? $_POST['proxyport'] : '';
@@ -46,39 +33,33 @@
           	exit();
       }
 
+
+      $copyId = new soapval('copyId','',$_REQUEST["copyId"]);
       $user = new soapval('userId','',$_REQUEST["userId"]);
-      $record = new soapval('recordId','',$_REQUEST["recordId"]);
-      $volume= new soapval('volumeId','',$_REQUEST["volumeId"]);
-      $category = new soapval('objectCategory','',$_REQUEST["objectCategory"]);
       $userdb = new soapval('userDb','',$_REQUEST["db"]);
       $objdb = new soapval('objectDb','',$empwebserviceobjectsdb);
-      $library = new soapval('objectLocation','',$_REQUEST["library"]);
-      //$from = new soapval('startDate','','20090322131211');
+
 
       $param1 = array ( "name" => "operatorLocation" );
       $myparam1 = new soapval ('param','',$_REQUEST["library"],'http://kalio.net/empweb/engine/trans/v1',false,$param1);
 
       $param1 = array ( "name" => "operatorId" );
-      $myparam2 = new soapval ('param','','mysite',false,false,$param1);
+      $myparam2 = new soapval ('param','','mysite','http://kalio.net/empweb/engine/trans/v1',false,$param1);
 
-      //$param1 = array ( "name" => "acceptEndDate" );
-      //$myparam3 = new soapval ('param','','20090323131211',false,false,$param1);
+      $param1 = array ( "name" => "desktopOrWS" );
+      $myparam3 = new soapval ('param','','ws','http://kalio.net/empweb/engine/trans/v1',false,$param1);
 
-      $myparams = new soapval ('params','',array($myparam1,$myparam2));
+      $myparams = new soapval ('params','',array($myparam1,$myparam2,$myparam3));
       $myextension = new soapval ('transactionExtras','',$myparams,'','');
 
 
-      $params = array ($user,$record,$volume,$category,$userdb,$objdb,$library,$from,$myextension);
+      $params = array ($user,$copyId,$userdb,$objdb,$myextension);
 
       //print_r($params);
-      // Acá obtengo los datos generales
-      $result = $client->call('waitSingle', $params, 'http://kalio.net/empweb/engine/trans/v1' , '');
+      // Acï¿½ obtengo los datos generales
+      $result = $client->call('renewalSingle', $params, 'http://kalio.net/empweb/engine/trans/v1' , '');
 
-      //echo "Databse". $_REQUEST["db"];
-      //print_r($result);
-
-
-      //print_r($result);
+       //print_r($result);
 
       for ($i=0;$i<sizeof($result['transactionResult']['processResult']);$i++)
       {
@@ -120,18 +101,23 @@
 
       $resultbuff=serialize($result);
       include_once("legends.php");
-
 }
 else
 {
 //USING the Central Module
 $converter_path=$cisis_path."mx";
-$user = $_REQUEST["userId"];
-$copy = $_REQUEST["recordId"];
-$copytype = $_REQUEST["objectCategory"];  
-$usertype = $_REQUEST["usertype"];
-$mydatabase=$_REQUEST["database"];
-
+$copyid=$_REQUEST["copyId"];
+$userid=$_REQUEST["userId"];
+$copytype=$_REQUEST["copytype"];
+$usertype=$_REQUEST["usertype"];
+$loanid=$_REQUEST["loanid"];
+$cantrenewals=$_REQUEST["cantrenewals"];
+$suspensions=$_REQUEST["suspensions"];
+$fines=$_REQUEST["fines"];
+$endDate=$_REQUEST["endatev"];
+//Get the loanid
+$splittxt=explode(" ",$loanid);
+$loanid=$splittxt[1];
 //Get the document type
 $objtype="";
 $fp=file($db_path."circulation/def/".$lang."/items.tab");
@@ -144,100 +130,89 @@ if (trim($val[1])==trim($copytype))
 		$objtype=$val[0];							
 	}
 }
-$copytype=$objtype;	
+$copytype=$objtype;
 //Get the user type
 $splittxt=explode("(",$usertype);
 $usertype=substr($splittxt[1],0,-1);
 //Geting the loan policy
 $LoanPolicy="";
 $fp=file($db_path."circulation/def/".$lang."/typeofitems.tab");
-foreach ($fp as $value)
-{
+foreach ($fp as $value) {
 $val=explode('|',$value);
+$LoanPolicy = $value;
+
+
 if ((trim(strtoupper($val[0]))==trim(strtoupper($copytype))) and (trim($val[1])==trim($usertype)))
 	{
 		$LoanPolicy=$value;							
 	}
 }
+
 $splitpolicies=explode("|",$LoanPolicy);
-$allowreserve=$splitpolicies[11];
+$allowrenewals=$splitpolicies[6];
 $loanterm=$splitpolicies[5];
 $loanlong=$splitpolicies[3];
 $date="";
 if ($loanterm=='H') $date=date("Ymd h:i:s"); else $date=date("Ymd");
-if ($allowreserve=="Y") 
+//If the loan is not overdue
+if ($date<=$endDate)
 {
-//Check for user suspensions
-$mxs=$converter_path." ".$db_path."suspml/data/suspml \"pft=if v20='".$user."' then if v1='S' then if v10='0' then mfn, fi fi fi\" now";
-exec($mxs,$outmxs,$banderamxs);
+//Check if the user is allow to renewal
+if ($allowrenewals>0)
+{
+//Check if the user does not exceed the renewal limit
+if ($cantrenewals<$allowrenewals)
+{
+//Check if the user does not have suspensions
+if ($suspensions==0)
+{
+//Check if the user does not have fines
+if ($fines==0)
+{
+//Check if the document is reserved
+//Get the database and the CN from the trans database
+$mx=$converter_path." ".$db_path."trans/data/trans \"pft=v98,'+-+',v95\" from=".$loanid." count=1 now";
+exec($mx,$outmx,$banderamx);
 $textoutmx="";
-for ($i = 0; $i < count($outmxs); $i++) {
-$textoutmx.=substr($outmxs[$i], 0);
+for ($i = 0; $i < count($outmx); $i++) {
+$textoutmx.=substr($outmx[$i], 0);
 }
-if ($textoutmx=='')
-{
-//Check for user fines
-$mxm=$converter_path." ".$db_path."suspml/data/suspml \"pft=if v20='".$user."' then if v1='M' then if v10='0' then mfn, fi fi fi\" now";
-exec($mxm,$outmxm,$banderamxm);
-$textoutmxm="";
-for ($i = 0; $i < count($outmxm); $i++) {
-$textoutmxm.=substr($outmxm[$i], 0);
-}
-if ($textoutmxm=='')
-{
-//Check for the document been reserved
-$mxrv=$converter_path." ".$db_path."reserve/data/reserve \"pft=if v15='".$mydatabase."' then if v20='".$copy."' then if v1='0' then mfn, fi fi fi\" now";
-exec($mxrv,$outmxrv,$banderamxrv);
-$textoutmxrv="";
-for ($i = 0; $i < count($outmxrv); $i++) {
-$textoutmxrv.=substr($outmxrv[$i], 0);
-}
-if ($textoutmxrv=='')
-{
-//Check for loansoverdues
-$outmxl=array();
-if ($loanterm=='H')
-{
-//Take the date and time of return
-//Search the trans database
-$mxl=$converter_path." ".$db_path."trans/data/trans \"pft=if v20='".$user."' then if v1='P' then v40,' ',v45'+~+', fi fi\" now";
-exec($mxl,$outmxl,$banderamxl);
-}
-else
-{
-//Take the date of return
-$mxl=$converter_path." ".$db_path."trans/data/trans \"pft=if v20='".$user."' then if v1='P' then v40,'+~+', fi fi\" now";
-exec($mxl,$outmxl,$banderamxl);
-}
+$splittxt=explode("+-+",$textoutmx);
+$db=$splittxt[0];
+$cn=$splittxt[1];
+//Cehck if the db-cn is reserve in the reserve database
+$mxr=$converter_path." ".$db_path."reserve/data/reserve \"pft=if v1='0' then if v20='".$cn."' then if v15='".$db."' then mfn,'+-+', fi fi fi\" now";
+exec($mxr,$outmxr,$banderamxr);
 $textoutmx="";
-for ($i = 0; $i < count($outmxl); $i++) {
-$textoutmx.=substr($outmxl[$i], 0);
+for ($i = 0; $i < count($outmxr); $i++) {
+$textoutmx.=substr($outmxr[$i], 0);
 }
-$loansflag=0;
-$splittxt=explode("+~+",$textoutmx);
-foreach($splittxt as $onedate)
+$splittxt=explode("+-+",$textoutmx);
+//If the document is not reserved
+if ($splittxt[0]=="")
 {
-if ($onedate!='') if ($date>$onedate) $loansflag=1;
-}
-if ($loansflag==0)
+//Do the renewal
+$time="";$timeto="";$dateto="";
+if ($loanterm=="H") 
 {
 $date=date("Ymd");
 $time=date("h:i:s");
-//Place the reserve
-$mxa=$converter_path." null \"proc='<1>0</1><10>".$user."</10><12>".$usertype."</12><15>".$mydatabase."</15><20>".$copy."</20><30>".$date."</30><31>".$time."</31>'\" append=".$db_path."reserve/data/reserve count=1 now";
-exec($mxa,$outmxa,$banderamxa);
-
+$timeto=date("Ymd h:i:s",strtotime("+$loanlong hours"));
+$splittxt=explode(" ",$timeto);
+$dateto=$splittxt[0];
+$timeto=$splittxt[1];
 }
 else
 {
-//The loan is overdue
-$legend=$msgstr["loanoverduer"];
+$dateto=date("Ymd",strtotime("+$loanlong days"));
 }
+$mxa=$converter_path." ".$db_path."trans/data/trans \"proc='<200>^a".$date."^b".$time."^c".$dateto."^d".$timeto."^e".$userid."</200>'\" from=".$loanid." count=1 copy=".$db_path."trans/data/trans now";
+exec($mxa,$outmxa,$banderamxa);
 }
 else
 {
 //The document is reserved
-$legend=$msgstr["documentreservedr"];
+$legend=$msgstr["documentreserved"];
 }
 }
 else
@@ -254,23 +229,35 @@ $legend=$msgstr["user_suspended"];
 }
 else
 {
-//The user can not reserve
-$legend=$msgstr["notallowreserve"];
-} 
-	  
- 
-	     
-if (strlen($legend)==0) $success=true;
+//The user had reached the renewal limit
+$legend=$msgstr["renewallimitreached"];
+}
+}
+else
+{
+//The user can not renewal
+$legend=$msgstr["notallowrenewals"];
+}
+}
+else //If the loan is overdue
+{
+//The loan is overdue
+$legend=$msgstr["loanoverdue"];
 }
 
+
+
+if (strlen($legend)==0) $success=true;
+
+}
 
       if ($success)
       {
             $myresult=$msgstr["success_operation"];
             if (strlen($legend)>0)
-                $image="mysite/img/important.png";
+                $image="img/important.png";
             else
-                $image="mysite/img/clean.png";
+                $image="img/clean.png";
 
       }
 
@@ -280,11 +267,5 @@ if (strlen($legend)==0) $success=true;
       echo "<td><h2>".utf8_encode($myresult)."</h2></td></tr><tr><td colspan=2><h3>".utf8_encode($legend)."</h3></td>";
       echo "</tr></table></div>";
 
-      //echo $client->request;
-
-
-
-
-      //print_r ($result);
 
 ?>
