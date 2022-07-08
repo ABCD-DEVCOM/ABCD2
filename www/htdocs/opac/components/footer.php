@@ -1,7 +1,7 @@
 				<!-- end #content -->
 
 				</div>
-				<a name=final>
+				<a name="final">
 					</div>
 
 					<!--ESTO SE CAMBIO PARA PODER INSERTAR EL NUEVO FOOTER -->
@@ -67,7 +67,7 @@
 					<?php
 					if (!isset($_REQUEST["modo"])) $_REQUEST["modo"] = "";
 					if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php")
-						$dir = "php/";
+						$dir = "/";
 
 					else
 						$dir = "";
@@ -83,9 +83,9 @@
 						<input type="hidden" name="Accion">
 						<input type="hidden" name="facetas" value="<?php if (isset($_REQUEST["facetas"])) echo $_REQUEST["facetas"]; ?>">
 						<?php if (isset($_REQUEST["db_path"])) echo	'<input type="hidden" name="db_path" value="'.$_REQUEST["db_path"].'">';?>
-						<?php if (isset($_REQUEST["alcance"])) echo	'<input type="hidden" name="alcance" value="<?php echo $_REQUEST["alcance"]; ?>">';?>
-						<?php if (isset($_REQUEST["integrada"])) echo '<input type="hidden" name="integrada" value="<?php echo $_REQUEST["integrada"]; ?>">';?>
-						<?php if (isset($_REQUEST["modo"])) '<input type="hidden" name="modo" value="<?php echo $_REQUEST["modo"]; ?>">';?>
+						<?php if (isset($_REQUEST["alcance"])) echo	'<input type="hidden" name="alcance" value="'.$_REQUEST["alcance"].'">';?>
+						<?php if (isset($_REQUEST["integrada"])) echo '<input type="hidden" name="integrada" value="'.$_REQUEST["integrada"].'">';?>
+						<?php if (isset($_REQUEST["modo"])) '<input type="hidden" name="modo" value="'.$_REQUEST["modo"].'">';?>
 						<input type="hidden" name="indice_base" value="<?php if (isset($_REQUEST["indice_base"])) echo $_REQUEST["indice_base"];?>" >
 						<?php
 						if (isset($_REQUEST["lista_bases"])) echo "<input type=hidden name=lista_bases value=\"" . $_REQUEST["lista_bases"] . "\">\n";
@@ -205,8 +205,8 @@
 						<input type="hidden" name="prefijo" value="TW_">
 						<input type="hidden" name="Opcion" value="libre">
 						<?php
-						if (isset($_REQUEST["facetas"])) echo '<input type="hidden" name="facetas" value="$_REQUEST["facetas"]">\n';
-						if (isset($_REQUEST["db_path"])) echo '<input type="hidden" name="db_path" value="$_REQUEST["db_path"]">\n';
+						if (isset($_REQUEST["facetas"])) echo '<input type="hidden" name="facetas" value="'.$_REQUEST["facetas"].'">';
+						if (isset($_REQUEST["db_path"])) echo '<input type="hidden" name="db_path" value="'.$_REQUEST["db_path"].'">\n';
 
 						echo '<input type="hidden" name="alcance" value="';
 						if (isset($_REQUEST["alcance"])) echo $_REQUEST["alcance"];
