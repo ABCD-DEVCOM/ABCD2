@@ -134,7 +134,7 @@ include ("../$app_path/common/css_settings.php");
         <input type="hidden" name="cipar" value="acces.par">
         <input type="hidden" name="lang" value="<?php echo $arrHttp["lang"];?>">
         <input type="hidden" name="id" value="<?php if (!empty($_GET['id'])) echo $_GET['id'];?>">
-        <input type="hidden" name="cdb" value="<?php echo $_GET['cdb'];?>">
+        <input type="hidden" name="cdb" value="<?php if (!empty($_GET['cdb'])) echo $_GET['cdb'];?>">
 
         <div class="middle login">
             <div class="loginForm">
@@ -188,7 +188,7 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
                 </div>
             </div>
     </form>
-    <?php include ("central/common/footermysite.php");?>
+    <?php include ("common/footermysite.php");?>
 </body>
 
 </html>

@@ -28,6 +28,9 @@ function getUserStatus() {
         //Search the trans database
         //echo "---------------".$_SESSION["userid"]."------------------";
         $mxl = $converter_path . " " . $db_path . "trans/data/trans \"pft=if v20='" . $userid . "' then if v1='P' then v10,'|',v30,' ',v35,'|',v40,' ',v45,'|',mfn,'|',v80,'|',if p(v200) then (v200,'+-+'), fi,'|+~+', fi fi\" now";
+        
+        //COMENTAR RCG
+        echo "<h1>".$mxl."</h1>";
 
         exec($mxl, $outmxl, $banderamxl);
         $textoutmx = "";
@@ -96,6 +99,10 @@ function getUserStatus() {
         // Suspensiones
         //Search the suspml database
         $mxs = $converter_path . " " . $db_path . "suspml/data/suspml \"pft=if v20='" . $userid . "' then if v1='S' then if v10='0' then v30,'|',v60,'|',v100,'+~+', fi fi fi\" now";
+        
+                //COMENTAR RCG
+        echo "<h1>".$mxs."</h1>";
+
         exec($mxs, $outmxs, $banderamxs);
         $textoutmx = "";
         for ($i = 0; $i < count($outmxs); $i++) {
@@ -899,6 +906,7 @@ if (file_exists($a)) {
 // Llamado ppal
 if (isset($_SESSION["action"]) and $_SESSION["action"] == 'reserve') {
     MenuReserves(getRecordStatus());
+   
 } else {
     $dataarr = getUserStatus();
     MenuFinalUser();
@@ -910,8 +918,7 @@ include "footermysite.php";
 echo "	</body>
     </html>";
 
-function MenuFinalUser()
-{
+function MenuFinalUser() {
     global $arrHttp, $msgstr, $db_path, $valortag, $lista_bases, $dataarr;
     ?>
             <div id="firstBox" class="mainBox">
