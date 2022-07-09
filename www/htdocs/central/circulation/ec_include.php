@@ -25,24 +25,24 @@
  *
  * == END LICENSE ==
 */
-// se determina si el préstamo está vencido
+// se determina si el prÃ©stamo estÃ¡ vencido
 function compareDate ($FechaP,$lapso_p){
 global $locales,$config_date_format;
 //Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
 	$f_date=explode('/',$config_date_format);
 	switch ($f_date[0]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,0,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,0,2);
 			break;
 	}
 	switch ($f_date[1]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,3,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,3,2);
 			break;
 	}
@@ -65,7 +65,7 @@ global $locales,$config_date_format;
 
 include ("dias_vencimiento.php");
 if (isset($arrHttp["usuario"])){
-// se presenta la  información del usuario
+// se presenta la  informaciï¿½n del usuario
 	$formato_us="";
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
 		$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp_web.pft";
@@ -127,7 +127,7 @@ if (isset($arrHttp["usuario"])){
 				$prestamos[]=$linea;
 			}
 		}
-		$nv=0;   //número de préstamos vencidos
+		$nv=0;   //nÃºmero de prÃ©stamos vencidos
 		$np=0;   //Total libros en poder del usuario
 	   // echo "<pre>".print_r($politica);
 		if (count($prestamos)>0) {
@@ -150,8 +150,8 @@ if (isset($arrHttp["usuario"])){
 					$array_p=explode('$$$',$linea);
 					$Fecha_vencimiento=$array_p[0];
 					$p=explode("^",$array_p[1]);
-					//SI LA POLITICA SE GRABÓ CON EL REGISTRO DE LA TRANSACCION, ENTONCE SE APLICA ESA
-					// DE OTRA FORMA SE UBICA LA POLÍTICA LEÍDA DE LA TABLA
+					//SI LA POLITICA SE GRABA CON EL REGISTRO DE LA TRANSACCION, ENTONCE SE APLICA ESA
+					// DE OTRA FORMA SE UBICA LA POLiTICA LEIDA DE LA TABLA
 					if (isset($p[17]) and trim($p[17])!=""){
 						$politica_este=explode('|',$p[17]);
 						$politica_str=$p[17];
@@ -175,7 +175,7 @@ if (isset($arrHttp["usuario"])){
 						$mora="0";
 						if ($dif<0) {
 							if ($lapso_p=="D"){
-								$mora=floor(abs($dif)/(60*60*24));    //cuenta de préstamos vencidos
+								$mora=floor(abs($dif)/(60*60*24));    //cuenta de prÃ©stamos vencidos
 							}else{
 								$fulldays=floor(abs($dif)/(60*60*24));
 								$fullhours=floor((abs($dif)-($fulldays*60*60*24))/(60*60));
