@@ -7,6 +7,7 @@
 2021-06-14 fho4abcd Do not set password in $_SESSION + lineends
 2021-08-12 fho4abcd Give message if profiles/adm is missing for emergency user
 2022-01-19 fho4abcd Set default language if none supplied
+2022-07-10 fho4abcd Prepare for .par file in database folder+ no password to llamar_wxis.php
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -21,14 +22,14 @@ require_once ("ldap.php");
 $valortag = Array();
 
 function CambiarPassword($Mfn,$new_password){
-global $xWxis,$Wxis,$db_path,$wxisUrl,$MD5;
+global $xWxis,$Wxis,$db_path,$wxisUrl,$MD5,$actparfolder;
 	if (isset($MD5) and $MD5==1 ){
 		$new_password=md5($new_password);
 	}
 	$ValorCapturado="d30<30 0>".$new_password."</30>";
 	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."actualizar.xis";
-  	$query = "&base=acces&cipar=$db_path"."par/acces.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
+  	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
     include("wxis_llamar.php");
 }
 function LeerRegistro() {
@@ -36,7 +37,7 @@ function LeerRegistro() {
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
-global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5;
+global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5,$actparfolder;
     $ic=-1;
 	$tag= "";
 	$IsisScript=$xWxis."login.xis";
@@ -44,7 +45,8 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	if (!isset($MD5) or  $MD5!=0){
 		$pass=md5($pass);
 	}
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
+    if ($actparfolder=="/")$actparfolder="acces/"; // initial value can be empty
+	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$arrHttp["login"];
 	include("wxis_llamar.php");
 	$llave_ret="";
 	 foreach ($contenido as $linea){
@@ -174,13 +176,14 @@ function LeerRegistroLDAP() {
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
-global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5;
+global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5,$actparfolder;
     $ic=-1;
 	$tag= "";
 	$IsisScript=$xWxis."loginLDAP.xis";
 
 
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"];
+    if ($actparfolder=="/")$actparfolder="acces/"; // initial value can be empty
+	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$arrHttp["login"];
 	include("wxis_llamar.php");
 
 

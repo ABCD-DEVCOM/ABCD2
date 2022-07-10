@@ -11,8 +11,9 @@
 20220128 fho4abcd remove MULTIPLE_DB_FORMAT
 20220313 fho4abcd Show alert in case of login errors
 20220321 fho4abcd Remove syspar addition in url (can be done by default par file)
+20220710 fho4abcd Remove rubbish+clean error for POST+improve GET+no exception for dump by login+better pop-up text
 */
-global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$MULTIPLE_DB_FORMATS,$charset,$cgibin_path,$postMethod,$mx_exec,$meta_encoding,$page_encoding,$def,$arrHttp,$charset;
+global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$charset,$cgibin_path,$postMethod,$meta_encoding,$def,$arrHttp;
 global $ABCD_scripts_path,$app_path;
 unset($contenido);  // This array will get the text of the result
 $err_wxis="";       // An empty variable indicates that no error occurred
@@ -23,7 +24,6 @@ if (isset($arrHttp["lock"]) and $arrHttp["lock"]=="S"){
 
 parse_str($query, $arr_query);
 $actual_db=$arr_query["base"];
-$charset_db="";
 
 // Always read dr_path.def
 if (file_exists($db_path.$actual_db."/dr_path.def")){
@@ -64,8 +64,8 @@ if ($postMethod == '1'){
     $Wxis.=$wxis_exec;   //GET method is used
 }
 
-
-if (isset($wxisUrl) and $wxisUrl!=""){  //POST method 
+// Run using POST method 
+if (isset($wxisUrl) and $wxisUrl!=""){
     $query.="&path_db=".$db_path;
     $url="IsisScript=$IsisScript$query&cttype=s";
     parse_str($url, $arr_url);
@@ -82,19 +82,25 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
         $contenido[] = ""; // do not break code that does not check correct
     } else {
         $con=explode("\n",$result);
-        $ix=0;
         $contenido=array();
         foreach ($con as $value) {
+            $contenido[]=$value;
             if (substr($value,0,4)=="WXIS"){
                 $err_wxis.=$value."<br>";
-            }
-            //echo "<div>wxisll ".$value."</div>";
-            $contenido[]=$value;
-            if (substr($value,0,4)=="WXIS" && strpos($value,"|tmpnam|")>0 ) {
-                $contenido[]="<br><br><div style='color:blue'>The default temporary folder could not be used for some reason.<br>";
-                $contenido[]="Possible workaround: consider explicit definition of a temporary folder by adding a line like:<br>";
-                $contenido[]="<strong>&nbsp;&nbsp;&nbsp;ci_tempdir=%path_database%wrk</strong><br>";
-                $contenido[]="to file <b>&lt;dbname&gt;.par</b>.</div>";
+                $err_hint="&rarr; Multiple causes may exist. Suggested hints:<br>&rarr; ";
+                if ( strpos($value,"|tmpnam|")>0 ) {
+                    $err_wxis.=$err_hint."The default temporary folder could not be used.<br>";
+                    $contenido[]="<br><br><div style='color:blue'>The default temporary folder could not be used for some reason.<br>";
+                    $contenido[]="Possible workaround: consider explicit definition of a temporary folder by adding a line like:<br>";
+                    $contenido[]="<strong>&nbsp;&nbsp;&nbsp;ci_tempdir=%path_database%wrk</strong><br>";
+                    $contenido[]="to file <b>&lt;dbname&gt;.par</b>.</div>";
+                }
+                if ( strpos($value,"|Invalid operand class")>0 ) $err_wxis.=$err_hint."Check the existence and protection of the ".$actual_db.".par file<br>";
+                if ( strpos($value,"|dbxopen:")>0 ) {
+                    $err_wxis.=$err_hint."Check location of the ".$actual_db." folder and its content<br>";
+                    $err_wxis.="&rarr; "."Check the content of the ".$actual_db.".par file<br>";
+                }
+                $err_wxis.="query=".$query."<br>";
             }
         }
     }
@@ -104,33 +110,31 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
         // Without alert the login screen overwrites the error message.
         // Not translated as more things can be wrong in this stage
         // Do not die to enable login with the emergency login
-        if ($actual_db=="acces" && strpos($query,"login=")>0) {
+        if (strpos($query,"login=")>0) {
             ?>
             <script>type="text/javascript">
-            alert("Hint: Unicode encoding and/or CISIS version might not match with database acces")
+            alert("Hint: Use central/test/wxis.php to debug problems with the database containing login information (<?php echo $actual_db;?>)")
             </script>
             <?php
         }
     }
-}else{                      // GET-method used
+}else{ // Run using GET method 
     $query.="&path_db=".$db_path;
     putenv('REQUEST_METHOD=GET');
     $q=explode("&",$query);
     $query="";
-
+    /*
+    ** Cleanup the query string
+    ** Remove leading/trailing white space
+    ** Ensure that the first parameter gets an &
+    */
     foreach ($q as $value){
         if (trim($value!="")){
             $ix=strpos($value,"=");
             if ($ix>0){
                 $key=substr($value,0,$ix);
                 $par=substr($value,$ix+1);
-                if ($key=="cipar"){
-                    if (!file_exists($par)){
-                        $par="";
-                    }
-                }
-                if ($par!="")
-                    $query.="&".$key."=".$par;
+                $query.="&".$key."=".$par;
             }
         }
     }
@@ -143,11 +147,21 @@ if (isset($wxisUrl) and $wxisUrl!=""){  //POST method
     }
     if ($err_wxis!="") {
         echo "<font color=red size=+1>$err_wxis</font>";
+        // In case of a login show the problem to the user with an alert
+        // Without alert the login screen overwrites the error message.
+        // Not translated as more things can be wrong in this stage
+        // Do not die to enable login with the emergency login
+        if (strpos($query,"login=")>0) {
+            ?>
+            <script>type="text/javascript">
+            alert("Hint: Use central/test/wxis.php to debug problems with the database containing login information (<?php echo $actual_db;?>)")
+            </script>
+            <?php
+        }
     }
 }
-
+// Convert to UTF-8 if necessary
 $cset=strtoupper($meta_encoding);
-//echo $page_encoding." ".$cset." $unicode<P>";
 unset($cont_cnv);
 if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
     foreach ($contenido as $value){
@@ -155,6 +169,7 @@ if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
     }
     if (isset($cont_cnv))$contenido=$cont_cnv;
 }
+/////////// logging /////////
 // Write a line for this action to the log file
 if (is_writable($db_path."log") && is_dir($db_path."log")){
     $fp=fopen($db_path."log/log_".date("Ymd").".log","a");
@@ -168,13 +183,8 @@ if (is_writable($db_path."log") && is_dir($db_path."log")){
     }
     $out.=$_SERVER["PHP_SELF"]."\t";
     $out.=$IsisScript."\t";
-    if ( strpos($IsisScript,"login.xis")==false) { 
-        // dump query string of not used by login.xis
-        $out.=str_replace("\n"," ",urldecode($query))."\t";
-    } else {
-        // do not dump credentials info for login.xis
-        $out.="credentials_hidden_in_log\t";
-    }
+    // dump query string
+    $out.=str_replace("\n"," ",urldecode($query))."\t";
     if (isset($cisis_ver) ){
         $out.="cisis_ver=".$cisis_ver;
     } else {
