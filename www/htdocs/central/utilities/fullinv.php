@@ -25,6 +25,7 @@
 20220108 fho4abcd Add home button
 20220117 fho4abcd Add blue message if /m is used
 20220620 fho4abcd Accept charset=utf-8
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 /**
  * @desc:      Create database index
@@ -113,7 +114,7 @@ $bd=$db_path.$base;
 <?php
 // Ensure that the parameter file exists
 $ciparfile=$arrHttp["base"].".par";
-$fullciparpath=$db_path."par/".$ciparfile;
+$fullciparpath=$db_path.$actparfolder.$ciparfile;
 if (!file_exists($fullciparpath)){
     echo "<h3 style='color:red'>".$fullciparpath.": ".$msgstr["notreadable"]."</h3>";
 }
@@ -224,10 +225,10 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         $uctabdeffile="isisuctab_utf8.tab";
     }
     /*
-    ** Read parameters from par/<basename>.par file.
+    ** Read parameters from $actparfolder<basename>.par file.
     ** The existence of the file is already checked at script start : error message here only an if to prevent many errors
     */
-    $fullciparpath=$db_path."par/".$arrHttp["base"].".par";
+    $fullciparpath=$db_path.$actparfolder.$arrHttp["base"].".par";
     if (file_exists($fullciparpath)){
         $def_cipar = parse_ini_file($fullciparpath);
         /*
@@ -319,7 +320,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     */
     $htmlgizmopar="";
     if ( $gizmorequired==1) {
-        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;".$msgstr["examplefor"]." par/".$base.".par &rArr;&nbsp;htmlgizmo.*=";
+        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;".$msgstr["examplefor"].$actparfolder.$base.".par &rArr;&nbsp;htmlgizmo.*=";
         $htmlgizmoexample.=$db_path.$base."/data/htmlgizmo.*</span>";
         if (isset($def_cipar["htmlgizmo.*"])) {
             // The .par exists and there is a gizmo entry
@@ -340,7 +341,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
             }
         } else {
             // The .par does not exist or has no gizmo entry
-            $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path."par/".$base.".par</span>";
+            $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path.$actparfolder.$base.".par</span>";
             $htmlgizmopar.=$htmlgizmoexample;
         }
     }

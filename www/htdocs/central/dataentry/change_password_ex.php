@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-06-14 fho4abcd Do not set password in $_SESSION + lineends
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -26,7 +27,7 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	if (isset($MD5) and $MD5==1){
 		$pass=md5($pass);
 	}
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
+	$query = "&base=acces&cipar=$db_path".$actparfolder.acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
 	include("wxis_llamar.php");
 
 	 foreach ($contenido as $linea){

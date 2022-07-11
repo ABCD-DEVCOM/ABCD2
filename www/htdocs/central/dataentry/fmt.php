@@ -5,6 +5,7 @@
 2021-06-10 fho4abcd Remove password argument
 2021-07-07 fho4abcd Improve leader reformat (was broken since update to OPAC)
 2021-07-22 fho4abcd Repair PHP errors due to previous (Improve leader format...)
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -154,7 +155,7 @@ global $valortag,$arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl;
 	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."z3950_cnv.xis";
 	$Pft=urlencode($Pft);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&ValorCapturado=".$ValorCapturado."&Pft=$Pft";
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&ValorCapturado=".$ValorCapturado."&Pft=$Pft";
 	include("../common/wxis_llamar.php");
 	$res=implode("\n",$contenido);
 	$res=explode("$$^^$$",$res);
@@ -180,7 +181,7 @@ global $valortag,$arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl;
 }
 
 function EjecutarBusqueda(){
-global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$msgstr,$registro,$Expresion,$Total_Search;
+global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$msgstr,$registro,$Expresion,$Total_Search,$actparfolder;
 	$Expresion=trim($arrHttp["Expresion"]);
 	//if (substr($Expresion,0,1)!='"') $Expresion='"'.$Expresion.'"';
 	$arrHttp["Expresion"]=$Expresion;
@@ -199,7 +200,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	$registro="";
 	$IsisScript=$xWxis."buscar_ingreso.xis";
 	$Expresion=str_replace('¨',"'",$Expresion);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".urlencode($Expresion)."&count=1&from=".$arrHttp["from"]."&Formato=$Formato&prologo=@prologoact.pft&epilogo=@epilogoact.pft";
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Expresion=".urlencode($Expresion)."&count=1&from=".$arrHttp["from"]."&Formato=$Formato&prologo=@prologoact.pft&epilogo=@epilogoact.pft";
 	include("../common/wxis_llamar.php");
     $ficha_bib=$contenido;
     if ($arrHttp["Formato"]=="") $arrHttp["Formato"]="ALL";
@@ -239,7 +240,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	 			if (isset($f[3]))
 	 				$reverse="ON";
 	 			$IsisScript=$xWxis."buscar.xis";
- 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
+ 				$query = "&cipar=$db_path".$actparfolder.$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
 
 				if ($reverse!=""){
 					$query.="&reverse=On";

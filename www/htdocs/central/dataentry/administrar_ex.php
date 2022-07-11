@@ -2,6 +2,7 @@
 /* Modifications
 20210311 fho4abcd Replaced helper code fragment by included file + minor html corrections + dont die always
 20211216 fho4abcd Backbutton by included file, removed redundant help
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -18,20 +19,20 @@ include("../lang/soporte.php");
 $backtoscript="../dataentry/administrar.php"; // The default return script
 
 function MostrarPft(){
-global $arrHttp,$xWxis,$Wxis,$db_path,$wxisUrl;
+global $arrHttp,$xWxis,$Wxis,$db_path,$wxisUrl,$actparfolder;
 	$IsisScript=$xWxis.$arrHttp["IsisScript"];
 	if (!isset($arrHttp["from"])) $arrHttp["from"]="";
 	if (!isset($arrHttp["count"])) $arrHttp["count"]="";
- 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&from=".$arrHttp["from"]."&count=".$arrHttp["count"];
+ 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&from=".$arrHttp["from"]."&count=".$arrHttp["count"];
   	include("../common/wxis_llamar.php");
     return $contenido;
 
 }
 
 function VerStatus(){
-	global $arrHttp,$xWxis,$OS,$Wxis,$db_path,$wxisUrl;
+	global $arrHttp,$xWxis,$OS,$Wxis,$db_path,$wxisUrl,$actparfolder;
 	$IsisScript=$xWxis."administrar.xis";
-	$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=status";
+	$query = "&base=".$arrHttp["base"] . "&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=status";
  	include("../common/wxis_llamar.php");
 	return $contenido;
 }
@@ -133,12 +134,12 @@ switch ($arrHttp["Opcion"]) {
 		  			echo "$linea\n";
 		  		}
 		 	}
-			$fp=fopen($db_path."par/".$arrHttp["base"].".par","r");
+			$fp=fopen($db_path.$actparfolder.$arrHttp["base"].".par","r");
 			if (!$fp){
 				echo $arrHttp["base"].".par"." ".$msgstr["falta"];
 				die;
 			}
-			$fp=file($db_path."par/".$arrHttp["base"].".par");
+			$fp=file($db_path.$actparfolder.$arrHttp["base"].".par");
 			foreach($fp as $value){
 				$ixpos=strpos($value,'=');
 				if ($ixpos===false){

@@ -1,12 +1,13 @@
 <?php
 /* Modifications
 2021-06-10 fho4abcd Remove unused password argument
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$Formato,$allow="") {global $OS,$valortag,$lang_db,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion,$def;
-global $record_protection,$password_protection;
+global $record_protection,$password_protection,$actparfolder;
 	$query="";
 	if (isset($arrHttp["lock"])){    	$IsisScript=$xWxis."lock.xis";
-    	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
+    	$query = "&base=" . $base . "&cipar=$db_path".$actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
     	include("../common/wxis_llamar.php");
     	$res=implode("|",$contenido);
     	$res=explode("|",$res);
@@ -16,7 +17,7 @@ global $record_protection,$password_protection;
     $query="";
     if (isset($arrHttp["unlock"])){
     	$IsisScript=$xWxis."unlock.xis";
-    	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
+    	$query = "&base=" . $base . "&cipar=$db_path".$actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
     	include("../common/wxis_llamar.php");
     	$res=implode("",$contenido);
     	$res=trim($res);
@@ -66,7 +67,7 @@ global $record_protection,$password_protection;
   	if ($record_protection!="")
   	    $Pft.='"$$_$$"V'.$record_protection;
 	$IsisScript=$xWxis."leer.xis";
-	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$Opcion."&login=".$login."&password=dummy";
+	$query = "&base=" . $base . "&cipar=$db_path".$actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$Opcion."&login=".$login."&password=dummy";
 
 	if ($Formato!="")
 		$query.="&Formato=".$arrHttp["Formato"];
@@ -137,7 +138,7 @@ global $record_protection,$password_protection;
 
 function LeerRegistroFormateado($Formato) {
 
-global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$MaxMfn,$record_deleted,$def;
+global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$MaxMfn,$record_deleted,$def,$actparfolder;
 	if (!isset($arrHttp["Formato"])) $arrHttp["Formato"]="";
  	if ($Formato=="" or (isset($arrHttp["Formato"]) and $arrHttp["Formato"]=="ALL")) { 		$Formato="ALL";
  		$arrHttp["Formato"]="ALL";
@@ -148,7 +149,7 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
  	}
 
  	$IsisScript=$xWxis."buscar.xis";
- 	$query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$arrHttp["Opcion"]."&base=" .$arrHttp["base"]."&Formato=$Formato";
+ 	$query = "&cipar=$db_path".$actparfolder.$arrHttp["cipar"]. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$arrHttp["Opcion"]."&base=" .$arrHttp["base"]."&Formato=$Formato";
 	include("../common/wxis_llamar.php");
 	$salida="";
 	$record_deleted="N";
@@ -193,7 +194,7 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
  				}else{
  					$pft_ref=$db_path.$bd_ref."/pfts/".$lang_db."/" .$pft_ref;
         		}
- 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
+ 				$query = "&cipar=$db_path".$actparfolder.$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
 				if ($reverse!=""){					$query.="&reverse=On";				}
 				$debug_x=1;
 				include("../common/wxis_llamar.php");

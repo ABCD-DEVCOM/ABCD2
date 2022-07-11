@@ -4,6 +4,7 @@
 20210623 fho4abcd Replaced helper code fragment by included file, improve backbutton, add page title, small html improvements
 20210623 fho4abcd Expand echo into html (readability), translate string, enable click on MFN for all situations
 20211216 fho4abcd Backbutton by included file
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 
 session_start();
@@ -22,8 +23,8 @@ $backtoscript="../dataentry/c_global.php"; // The default return script
 
 /* ===================================================== */
 function CambiarCampo($Mfn,$ValorCapturado,$Tag){
-global $xWxis,$db_path,$Wxis,$arrHttp,$wxisUrl;
-   	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Mfn=$Mfn&count=1";
+global $xWxis,$db_path,$Wxis,$arrHttp,$wxisUrl,$actparfolder;
+   	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Mfn=$Mfn&count=1";
  	$query.="&login=".$arrHttp["login"]."&ValorCapturado=".urlencode($ValorCapturado);
  	$contenido="";
  	$IsisScript=$xWxis."actualizar_cg.xis";
@@ -328,7 +329,7 @@ if ($arrHttp["Opcion"]=="rango"){						//se construye el rango de Mfn's a proces
 	$hasta=$arrHttp["to"];
 	$ixMfn=0;
 }else{
-	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
 	$query.="&Formato=mfn/&Expresion=".urlencode(stripslashes($arrHttp["Expresion"]))."&Opcion=".$arrHttp["Opcion"];
 	$IsisScript=$xWxis."act_tabla.xis";
 	include("../common/wxis_llamar.php");
@@ -347,7 +348,7 @@ if ($arrHttp["Opcion"]=="rango"){						//se construye el rango de Mfn's a proces
 
 foreach ($arr_mfn as $Mfn){
  	$IxMfn=$IxMfn+1;
-  	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Mfn=$Mfn&count=1";
+  	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Mfn=$Mfn&count=1";
 	$query.="&Formato=".urlencode($Formato)."&Opcion=rango";
 	$contenido="";
 	$IsisScript=$xWxis."act_tabla.xis";

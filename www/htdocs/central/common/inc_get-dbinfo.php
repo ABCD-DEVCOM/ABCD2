@@ -3,6 +3,7 @@
 20210312 fho4abcd Created
 20210319 fho4abcd Print error if par/<dbname>.par is missing (to understand the error thrown by wxis_llamar.php
 20210322 fho4abcd Comment
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 /*
 ** Execute function get_dbinfo
@@ -23,7 +24,7 @@
 */
 // 
 function get_dbinfo () {
-    global $arrHttp, $xWxis, $db_path;
+    global $arrHttp, $xWxis, $db_path, $actparfolder;
     if ( !isset($arrHttp["base"]) or $arrHttp["base"]=="undefined" or $arrHttp["base"]==""){
     ?>
     <H3><font color=red>This script: <br><?php echo __FILE__;?><br>
@@ -34,7 +35,7 @@ function get_dbinfo () {
          die;
     }
     $IsisScript=$xWxis."administrar.xis";
-    $fullciparpath=$db_path."par/".$arrHttp["base"].".par";
+    $fullciparpath=$db_path.$actparfolder.$arrHttp["base"].".par";
     if (!file_exists($fullciparpath)){
         echo "<h3><font color=red>".$fullciparpath.": Does not exist</font></h3>";
     }

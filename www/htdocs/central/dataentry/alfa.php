@@ -4,6 +4,7 @@
 20211212 fho4abcd Add TOP button + keep pref if db is switched + add breadcrumb to help the db manager+resolve script errors
 20220114 fho4abcd Reshuffle code to enable visible output. Replace ifp.xis by ifp_slashm.xis:output if indexed with slashm
                   Don't make entries unique(they are unique)+Use correct prefix in case of copy
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 /*
 ** Functionality:
@@ -109,7 +110,7 @@ if (substr($formato_e,0,1)=="@"){
 }else{
     $Formato=$formato_e;
 }
-$query ="&base=".$base ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"];
+$query ="&base=".$base ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"];
 $query.="&prefijo=".urlencode($prefijo)."&pref=".$pref."&formato_e=".urlencode($Formato)."&bymfn=S";
 //echo $query;
 include("../common/wxis_llamar.php");
