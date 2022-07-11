@@ -74,7 +74,7 @@ if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
     </div>
 </div>
 
-<?php include("footer.php");?>
+<?php include("components/footer.php");?>
 
 <script>
 function resizer(id) {
