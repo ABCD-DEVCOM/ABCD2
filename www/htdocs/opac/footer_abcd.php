@@ -8,8 +8,10 @@
 
 		<?php
 		$file="./data/".$_REQUEST["lang"]."/footer.info";
-		if (file_exists($file)){			$fp=file($file);
-			foreach($fp as $linea) echo $linea;		}else{
+		if (file_exists($file)){
+			$fp=file($file);
+			foreach($fp as $linea) echo $linea;
+		}else{
 			echo $footer;
 		}
 		?>
@@ -23,7 +25,7 @@
 <?php
 if (!isset($_REQUEST["modo"])) $_REQUEST["modo"]="";
 if (basename($_SERVER["SCRIPT_FILENAME"])=="index.php")
-	$dir="php/";
+	$dir="/";
 
 else
 	$dir="";
@@ -38,7 +40,7 @@ else
 <?php
 if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 if (isset($_REQUEST["alcance"]))     echo "<input type=hidden name=alcance value=".$_REQUEST["alcance"].">\n";
-if (isset($_REQUEST["integrada"]))   echo "<input type=hidden name=integrada value=\"".$_REQUEST["integrada"]."\">";
+if (isset($_REQUEST["integrada"]))   echo "<input type=hidden name=integrada value=".$_REQUEST["integrada"]."\n">";
 if (isset($_REQUEST["modo"]))        echo "<input type=hidden name=modo value=\"".$_REQUEST["modo"]."\">";
 echo "<input type=hidden name=indice_base value=\"";
 if (isset($_REQUEST["indice_base"])) echo $_REQUEST["indice_base"];
@@ -103,7 +105,11 @@ if (isset($_REQUEST["prefijo"])){
 		echo str_replace($_REQUEST["prefijo"],"",$_REQUEST["letra"]);
 	}
 	echo "\">\n";
-	if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){	}else{		if (isset($_REQUEST["base"]))     echo "<input type=hidden name= value=base".$_REQUEST["base"].">\n";	}
+	if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
+
+	}else{
+		if (isset($_REQUEST["base"]))     echo "<input type=hidden name= value=base".$_REQUEST["base"].">\n";
+	}
 
 	if (isset($_REQUEST["coleccion"])) echo "<input type=hidden name=coleccion value=\"".$_REQUEST["coleccion"]."\">\n";
 	if (isset($_REQUEST["alcance"])) echo "<input type=hidden name=alcance value=".$_REQUEST["alcance"].">\n";
@@ -181,7 +187,9 @@ if (isset($_REQUEST["lang"]))
 <form name=changelanguage method=post action=index.php>
 
 <?php
-foreach ($_REQUEST as $key=>$value){	echo "<input type=hidden name=$key value='$value'>\n";}
+foreach ($_REQUEST as $key=>$value){
+	echo "<input type=hidden name=$key value='$value'>\n";
+}
 if (!isset($_REQUEST["lang"]))
 	echo "<input type=hidden name=lang value=''>\n";
 

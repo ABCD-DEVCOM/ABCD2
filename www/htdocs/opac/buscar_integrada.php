@@ -3,14 +3,13 @@
 
 2022-03-23 rogercgui change the folder /par to the variable $actparfolder
 
-
 ***********************************************/
 
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
 include("../central/config_opac.php");
 include("leer_bases.php");
 include("presentar_registros.php");
-include('navegarpaginas.php');
+include('components/nav_pages.php');
 include("head.php");
 $select_formato="";
 
@@ -34,6 +33,7 @@ function SelectFormato($base,$db_path,$msgstr){
 		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
 		die;
 	}
+
 	$select_formato=$msgstr["select_formato"]." <select name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
 	$primero="";
 	$encontrado="";
@@ -45,7 +45,7 @@ function SelectFormato($base,$db_path,$msgstr){
 			$linea=$f[0].'|'.$f[1];
 			if ($PFT==""){
 				$PFT=trim($linea);
-			}else{
+			} else {
 				$PFT.='$$$'.trim($linea);
 			}
 			if (!isset($_REQUEST["Formato"]) and $primero==""){
@@ -54,9 +54,10 @@ function SelectFormato($base,$db_path,$msgstr){
 			if (isset($_REQUEST["Formato"]) and $_REQUEST["Formato"]==$f[0]){
 				$xselected=" selected";
 				$encontrado="Y";
-			}else
+			}else {
 				$xselected="";
-			$select_formato.= "<option value=".$f[0]." $xselected>".$f[1]."</option>\n";
+				$select_formato.= "<option value=".$f[0]." $xselected>".$f[1]."</option>\n";
+			}
 		}
 	}
 	$select_formato.="</select>";
@@ -304,7 +305,7 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 if ($Expresion!='$' or isset($Expresion_col)){
 	if (isset($expr_coleccion)  and !isset($yaidentificado)){
 		echo "<div style='margin-top:30px;display: block;width:100%;font-size:12px;'>";
-		echo "<span class=tituloBase>Colección: $expr_coleccion</span>";
+		echo "<span class=tituloBase>Colecciï¿½n: $expr_coleccion</span>";
 		echo "</div>";
 	}
 
@@ -403,23 +404,11 @@ foreach ($bd_list as $base=>$value){
 }
 
 if (!isset($_REQUEST["mostrar_exp"])){
-	if ($Expresion!='$'){
-		echo "<div style=\"border:1px solid #CCCCCC; border-radius:3px;margin-top:10px; padding:5px 5px 5px 10px;\">";
-		echo "<strong>".$msgstr["su_consulta"]."</strong>";
-		echo " &nbsp; ";
-		echo str_replace('"','',PresentarExpresion($base));
-		if (!isset($_REQUEST["indice_base"]) or $_REQUEST["indice_base"]==0 or $_REQUEST["indice_base"]==1 ){
-        	echo "<br><div><a href=\"javascript:document.buscar.action='avanzada.php';document.buscar.submit();\"><i class=\"fa fa-filter\"></i> ".$msgstr["afinar"]."</a>";
-			if (!isset($_REQUEST["indice_base"]) or $_REQUEST["indice_base"]==1){
-				echo "&nbsp; <a href=\"javascript:document.buscar.indice_base.value=0;document.buscar.integrada.value='';document.buscar.coleccion.value='';document.buscar.submit();\">&nbsp; &nbsp; <img src=../images/expansion.png height=20px> ".$msgstr["buscar_en_todos"]."</a>";
-			}
-		}
-		echo "</div>";
-	}
-
-
-	if ($Expresion!='$') echo "</div>";
+	// Inserts the search refinement option by opening the advanced form
+	include_once 'components/refine_search.php';
 }
+
+
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQUEST["integrada"]) and $_REQUEST["integrada"]!=""){
 	$_REQUEST["integrada"]=urldecode($_REQUEST["integrada"]);
 	$int_tot=explode('||',$_REQUEST["integrada"]);
@@ -447,24 +436,8 @@ $ix=0;
 $contador=0;
 
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
-if (isset($total_base) and count($total_base)>0){
-	echo "<div style='border:1px solid #CCCCCC; border-radius:3px;margin-top:10px ; padding:5px 5px 5px 10px'><span class=tituloBase>".$msgstr["total_recup"].": $total_registros</span>";
-	if (count($total_base)>1){
 
-		foreach ($total_base as $base=>$total){
-
-			echo "<br><a href=\"javascript:ProximaBase('$base')\">";
-			//if (isset($_REQUEST["base"]) and $_REQUEST["base"]==$base)  
-			//	echo "<strong><font color=darkred>";
-			echo $bd_list[$base]["titulo"]."</a>: ".$total;
-			//if (isset($_REQUEST["base"]) and $_REQUEST["base"]==$base) echo "</font></strong>";
-
-		}
-	}
-	echo "</div>\n";
-}
-
-echo "<p>";
+include_once 'components/total_bases.php';
 
 echo "<form name=continuar action=buscar_integrada.php method=post>\n";
 echo "<input type=hidden name=integrada value=\"$integrada\">";
@@ -502,34 +475,22 @@ if (isset($total_base) and count($total_base)>0 ){
 	}else{
 	}
 }
-echo "<table width=100%><td width=100% align=center>";
+
 echo "<input type=hidden name=Expresion value=\"".urlencode($Expresion)."\">\n";
 NavegarPaginas($contador,$count,$desde,$select_formato);
-echo "</td>";
-echo "</table>";
+
+
 if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";
 if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"".$_REQUEST["Operadores"]."\">\n";
 if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
 echo "</form>\n";
-if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="S"){
-	echo "<br><br><center><div style=\"margin-top:0px; width:50%; margin-bottom:2px;margin-right:2px;margin-left:2px; border:2px solid #C4D1C0; vertical-align:top;text-align:left;padding:10px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius:3px;\">";
-	echo "<table align=center width=100% >";
-	$ix=-1;
-	$total_general=0;
-	foreach ($total_base as $base=>$total){
-		$ix=$ix+1;
-		$total_general=(int)$total_general+(int)$total;
-		
-		echo "<tr height=30px width=300px><td><a href=\"javascript:ProximaBase('".$base."')\">".$bd_list[$base]["titulo"]."</a></td><td align=right><a href=\"javascript:ProximaBase('".$base."')\">".$total."</a></td>";
 
-		echo "</tr>\n";
-	}
-	echo "<tr><td align=right><strong>".$msgstr["total_registros"]."</td>";
-	echo "<td align=right>".$total_general."</td></tr>";
-	echo "</table>";
-	echo "</div>";
 
-}
+// Inserts the total results per database in the footer.
+include_once 'components/total_bases_footer.php';
+
+
+
 if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 	if ((!isset($total_base) or count($total_base)==0) ){
 		echo "<div style='border: 1px solid;width: 98%; margin:0 auto;text-align:center'>";
@@ -550,77 +511,13 @@ if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 }
 if (isset($_REQUEST["db_path"]))  echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 echo "</form>";
-$facetas="S";
-//echo $_REQUEST["base"];
-if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR $_REQUEST["prefijoindice"]=="")){
-	$archivo="";
-	if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat")){
-		$archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_facetas.dat";
-	}else{
-		if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/facetas.dat"))
-			$archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/"."facetas.dat";
-	}
-	if ($archivo!=""){
-		$fp=file($archivo);
-		if (count($fp)>0){
 
-?>
-<div class="side-bar-facetas">
-  <a href="#" class="facetas"  onclick="openNavFacetas()"><?php echo $msgstr["facetas"]?></a>
-</div>
-<div id="SidenavFacetas" class="sidenav-facetas">
-<?php
-  $fp=file($archivo);
-  foreach ($fp as $value){
-  	$value=trim($value);
-  	if ($value!=""){
-  		$x=explode('|',$value);
-  		echo "<a href='javascript:Facetas(\"$value\")'>".$x[0];
-  		$IsisScript="opac/buscar.xis";
-  		if ($Expresion=='$')
-  			$ex=$x[1];
-  		else
-  			$ex=$x[1]." and " .$busqueda;
-  		if (isset($Expresion_col) and $Expresion_col!=""){
-  			$ex.=" and ".$Expresion_col;
-  		}
-  		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
-  			$bb=$_REQUEST["base"];
-        else
-        	$bb=$primera_base;
-       	$query = "&base=$bb&cipar=$db_path".$actparfolder."/$bb".".par&Expresion=".urlencode($ex)."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
-		$resultado=wxisLlamar($bb,$query,$xWxis.$IsisScript);
-		$primeravez="S";
-		foreach ($resultado as $value) {
-			$value=trim($value);
-			if (trim($value)!=""){
-				if (substr($value,0,8)=="[TOTAL:]"){
-					$primeravez="N";
-					echo " (". substr($value,8).")";
-					break;
-				}
-			}
-		}
-		if ($primeravez=="S") echo " (0)";
-		echo "</a>";
+include_once ('components/facets.php');
 
-  	}
-  }
-?>
+echo "<p id='back-top'><a href=#inicio><span></span></a></p>";
 
-  <br>
-  <a href="javascript:void(0)" onclick="closeNavFacetas()" >&times; <?php echo $msgstr["close"]?></a><
-  <br><br><br><br>
-</div>
+include("components/footer.php");
 
-<?php
-		}
-	}
-}
-
-echo "<P id='back-top'><a href=#inicio><span></span></a></p>";
-
-include("footer.php");
 if (!isset($_REQUEST["base"]))$base="";
 $Exp_b=PresentarExpresion($_REQUEST["base"]);
 if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
@@ -634,5 +531,5 @@ if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
 
 ?>
 <script>
-WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION?>"
+	WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION?>"
 </script>

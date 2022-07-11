@@ -68,16 +68,20 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
     	//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 ?>
 			<br><hr>
-	        <form name=estado_de_cuenta action=opac_statment_call.php method=post onsubmit="ValidarUsuario();return false">
-	         <h3><?php echo $msgstr["ecta"]?></h3>
-			&nbsp;<input type="text" name="usuario" id="search-user" value="" placeholder=" <?php echo $msgstr["user_id"]?>" />
+	        <!-- Login form -->
+	        <form name="estado_de_cuenta" action="opac_statment_call.php" method="post" onsubmit="ValidarUsuario();return false">
+	        
+	        <label><?php echo $msgstr["ecta"]?></label>
+			<input type="text" name="usuario" id="search-user" value="" placeholder=" <?php echo $msgstr["user_id"]?>" />
+			<input type="password" name="senha" id="search-user" value="" placeholder=" <?php echo "Senha"?>" />
+		    
 		    <?php if (isset($_REQUEST["db_path"]))
 					echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
 				  if (isset($lang))
 					echo "<input type=hidden name=lang value=\"".$lang."\">\n";
 			?>
-			<input type=hidden name=vienede value=ecta_web>
-		    <input type="submit" id="search-user-submit" value="<?php echo $msgstr["send"]?>" border=0 />
+			<input type="hidden" name="vienede" value="ecta_web">
+		    <input type="submit" id="search-user-submit" value="<?php echo $msgstr["send"]?>" >
 			</form>
 			<hr>
 <?php
