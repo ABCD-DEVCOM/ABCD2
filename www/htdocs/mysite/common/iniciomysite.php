@@ -170,11 +170,11 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     	}		
  	}else{ 
 		if ($arrHttp["id"]!="") echo "<script>
- 		self.location.href=\"../indexmysite.php?id=".$arrHttp["id"]."&cdb=".$arrHttp["cdb"]."&login=N&lang=".$lang."\";
+ 		self.location.href=\"../index.php?id=".$arrHttp["id"]."&cdb=".$arrHttp["cdb"]."&login=N&lang=".$lang."\";
  		</script>";
 		else
 		echo "<script>
- 		self.location.href=\"../indexmysite.php?login=N&lang=".$lang."\";
+ 		self.location.href=\"../index.php?login=N&lang=".$lang."\";
  		</script>";
   		die;
  	}
