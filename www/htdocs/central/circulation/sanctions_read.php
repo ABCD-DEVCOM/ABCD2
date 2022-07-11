@@ -1,23 +1,23 @@
 <?php
-// se determina si la suspensión está vencida
+// se determina si la suspensiï¿½n estï¿½ vencida
 
 function PrepararFechaSanciones($FechaP){
 global $locales,$config_date_format;
 //Se convierte la fecha al formato de fecha local
 	$df=explode('/',$config_date_format);
 	switch ($df[0]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,6,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,6,2);
 			break;
 	}
 	switch ($df[1]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,4,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,4,2);
 			break;
 	}
@@ -41,6 +41,7 @@ global $locales,$arrHttp,$CentralPath;
 }//end Compare Date
 
 // se leen las suspensiones
+	global $locales;
 	$sanctions_output="" ;
 	$formato_obj="v1'|',v10'|',v20'|',v30'|',v40'|',v50' ".$locales['currency']."|',v60'|',mhl,v100'|',f(mfn,1,0),'|',v110,'|'v120/";
 	if (isset($Expr_b)){
@@ -69,7 +70,7 @@ global $locales,$arrHttp,$CentralPath;
 			case "S":
 				if (isset($p[6])){
 					if ($p[1]==0){
-						$dif= CalculaVencimiento ($p[6]);   // se verifica si la suspensión está vigente
+						$dif= CalculaVencimiento ($p[6]);   // se verifica si la suspensiï¿½n estï¿½ vigente
 						if ($dif>=0){
 							$susp[]=$linea;
 							$nsusp=$nsusp+1;
@@ -105,7 +106,7 @@ global $locales,$arrHttp,$CentralPath;
 		}else{
 			$sanctions_output.="<th>".$msgstr["operator_date_created"]."</th>";
 			if (isset($Expr_b))
-				$sanctions_output.= "<th>Situación</th><th>Cancelado/Pagado</th>";
+				$sanctions_output.= "<th>Situaciï¿½n</th><th>Cancelado/Pagado</th>";
 		}
 		//$sanctions_output.=
 		foreach ($susp_total as $linea) {
@@ -155,7 +156,7 @@ global $locales,$arrHttp,$CentralPath;
 		}else{
 			$sanctions_output.="<th>".$msgstr["operator_date_created"]."</th>";
 			if (isset($Expr_b))
-				$sanctions_output.= "<th>Situación</th><th>Cancelado/Pagado</th>";
+				$sanctions_output.= "<th>Situaciï¿½n</th><th>Cancelado/Pagado</th>";
 		}
 		foreach ($multa as $linea) {
 			if (trim($linea)!=""){
