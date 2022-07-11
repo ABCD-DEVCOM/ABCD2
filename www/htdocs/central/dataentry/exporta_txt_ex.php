@@ -14,6 +14,7 @@
 2021-05-27 fho4abcd Show always footer. Check permissions work folder. Translations
 2021-06-05 fho4abcd Export without marc without isotag. Export with marc with iso=marc + isotag.
 20211216 fho4abcd Backbutton by included file
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 
 global $arrHttp;
@@ -159,8 +160,8 @@ function LeerTablaCnv(){
 ** - $fullpath : outputfile specification. Note that wxis does not always write this file
 */
 function Exportar($Pft, $fullpath){
-    global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl;
-    $query = "&base=" . $arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["cipar"]."&Formato=".urlencode($Pft);
+    global $Wxis,$xWxis,$db_path,$arrHttp,$msgstr,$separador,$wxisUrl,$actparfolder;
+    $query = "&base=" . $arrHttp["base"] . "&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Formato=".urlencode($Pft);
     if (isset($arrHttp["Mfn"]) and trim($arrHttp["Mfn"])!="") {
     	$query.="&Opcion=rango&Mfn=" . $arrHttp["Mfn"]."&to=".$arrHttp["to"];
     }else{
@@ -217,7 +218,6 @@ function ExportarMX( $fullpath){
     }
     $strINV.= $fullpath;
 
-    //$strINV.= " cipar=".$db_path."par/".$arrHttp["base"].".par";
     // Enter the range
     if (isset($arrHttp["Mfn"]) and trim($arrHttp["Mfn"]) !="") {
         $strINV.=" from=".$arrHttp["Mfn"]." to=".$arrHttp["to"];

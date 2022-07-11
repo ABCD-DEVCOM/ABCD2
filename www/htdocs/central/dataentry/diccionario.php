@@ -7,6 +7,7 @@
 20211212 fho4abcd Buttons like alfa.php:new Up button, goto field moved down, added enter button,shorter text in buttons, added hover text+removed footer
 20211222 fho4abcd Correct search after redisplay for next list
 20220116 fho4abcd ifp.xis-> ifp_slashm. other "enter" button
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 // Show the dictionary of terms in the database
 
@@ -229,7 +230,7 @@ if ($showsend or $showsearch) {
 // To present the dictionary of terms
 
 function PresentarDiccionario(){
-global $arrHttp,$terBd,$xWxis,$db_path,$Wxis,$wxisUrl,$cisis_ver,$prefijo;
+global $arrHttp,$terBd,$xWxis,$db_path,$Wxis,$wxisUrl,$cisis_ver,$prefijo,$actparfolder;
 
     if ($arrHttp["Opcion"]=="ir_a"){
         $arrHttp["LastKey"]=$prefijo.$arrHttp["IrA"];
@@ -240,7 +241,7 @@ global $arrHttp,$terBd,$xWxis,$db_path,$Wxis,$wxisUrl,$cisis_ver,$prefijo;
     else
         $LastKey="";
     $IsisScript= $xWxis."ifp_slashm.xis";
-    $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&prefijo=".$prefijo."&LastKey=".$LastKey;
+    $query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=".$arrHttp["Opcion"]."&prefijo=".$prefijo."&LastKey=".$LastKey;
     $contenido=array();
     include("../common/wxis_llamar.php");
     $mayorclave="";

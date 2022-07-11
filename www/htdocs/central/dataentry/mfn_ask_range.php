@@ -4,6 +4,7 @@
 20210311 fho4abcd html move body + sanitize html & javascript
 20210613 fho4abcd remove password
 20211216 fho4abcd Backbutton by included file
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -46,7 +47,7 @@ $backtoscript="../dataentry/administrar.php"; // The default return script
 
 //GET THE MAX MFN
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+$query = "&base=".$arrHttp["base"] . "&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {

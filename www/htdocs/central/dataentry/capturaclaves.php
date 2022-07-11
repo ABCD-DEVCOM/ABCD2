@@ -2,17 +2,18 @@
 /*
 20220112 fh04abcd line-ends+improved html+layout like in alfa (buttons,letters left)+removed duplicates from output
 20220131 fh04abcd Removed duplicates from output (better)
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
-include ("../config.php");
 if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){
 	$arrHttp["base"]=$_REQUEST["baseactiva"];
 	$arrHttp["cipar"]=$arrHttp["base"].".par";
 }
+include ("../config.php");
 
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -100,7 +101,7 @@ if ($cisis_ver=="unicode/"){
     $ver="&cisis_ver=".$cisis_ver;
 }
 
-$query ="&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&autoridades=S&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"];
+$query ="&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&autoridades=S&Opcion=autoridades"."&tagfst=".$arrHttp["tagfst"];
 $query.="&prefijo=".urlencode($Prefijo)."&pref=".urlencode($Pref)."&postings=".$arrHttp["postings"]."&formato_e=".urlencode($Formato).$ver;
 //echo "query=".$query."<br>";
 //echo "unencoded Formato&rarr;".$Formato."&larr;, length=".strlen($Formato)."<br>";
@@ -580,12 +581,12 @@ if (isset($arrHttp["baseactiva"])){
 <?php
 //=============  Functions ===============
 function BuscarClavesLargas($Termino){
-global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path;
+global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path,$actparfolder;
 
 	$Termino=str_replace($arrHttp["pref"],"",$Termino);
 	$Termino=urlencode($Termino);
 	$contenido="";
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&autoridades=S&Opcion=autoridades";
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&autoridades=S&Opcion=autoridades";
     $query.= "&tagfst=".substr($arrHttp["tagfst"],3);
     $query.= "&prefijo=".strtoupper($arrHttp["pref"]).$Termino;
     $query.= "&to=".strtoupper($arrHttp["pref"]).$Termino."ZZ";

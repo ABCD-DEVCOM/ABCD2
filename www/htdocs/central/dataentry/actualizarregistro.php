@@ -1,13 +1,14 @@
 <?php
 /*
 20211119 rogercgui settings from "if (isset($output) and trim($output)!="")
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 
 
 include("verificar_eliminacion.php");
 
 function ValidarDuplicados($tag,$subc,$prefijo,$valor,$titulo){
-global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$fdt,$msgstr,$def;
+global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$fdt,$msgstr,$def,$actparfolder;
 	$c_ant=array();
 	$occ=explode("\n",$valor);
 	$Expresion="";
@@ -41,7 +42,7 @@ global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$fdt,$msgstr,$def;
 	if ($subc!="") $sc='^'.$subc;
 	$Pft="(mfn'|'v$tag"."$sc/)/";
 	$IsisScript=$xWxis."buscar_ingreso.xis";
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".$Expresion."&Pft=$Pft";
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Expresion=".$Expresion."&Pft=$Pft";
 	include("../common/wxis_llamar.php");
 
 	foreach ($contenido as $value) {
@@ -92,7 +93,7 @@ $tabla = Array();
 
 global $vars,$cipar,$from,$base,$ValorCapturado,$arrHttp,$ver,$valortag,$fdt,$tagisis,$cn,$msgstr,$tm,$lang_db,$MD5;
 global $xtl,$xnr,$Mfn,$FdtHtml,$xWxis,$variables,$db_path,$Wxis,$default_values,$rec_validation,$wxisUrl,$validar,$tm;
-global $max_cn_length,$def;
+global $max_cn_length,$def,$actparfolder;
 
 	$variables_org=$variables;
 	$ValorCapturado="";
@@ -488,7 +489,7 @@ global $max_cn_length,$def;
 			$stw="&stw=".$db_path."stw.tab";
 		else
 			$stw="";
-  	$query = "&base=".$base ."&cipar=$db_path"."par/".$cipar."&login=".$_SESSION["login"]."&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$arrHttp["Opcion"]."$stw&ValorCapturado=".$ValorCapturado;
+  	$query = "&base=".$base ."&cipar=$db_path".$actparfolder.$cipar."&login=".$_SESSION["login"]."&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$arrHttp["Opcion"]."$stw&ValorCapturado=".$ValorCapturado;
 
   	if (isset($arrHttp["wks"])) $query.="&wks=".$arrHttp["wks"];
   	if (isset($arrHttp["Validar"])){
