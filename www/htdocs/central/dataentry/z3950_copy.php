@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20220711 fho4abcd Use $actparfolder as location for .par files
+*/
 /**    modificado
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -71,7 +74,7 @@ foreach ($fp as $value) {	$value=trim($value);	if ($value!=""){		$ix=strpos($
 }
 $IsisScript=$xWxis."z3950_cnv.xis";
 $Pft=urlencode($Pft);
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&ValorCapturado=".$ValCap."&Pft=$Pft";
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&ValorCapturado=".$ValCap."&Pft=$Pft";
 include("../common/wxis_llamar.php");
 
 //foreach ($contenido as $value)  echo "$value<br>";die;

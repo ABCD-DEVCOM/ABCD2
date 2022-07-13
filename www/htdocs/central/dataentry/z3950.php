@@ -3,6 +3,7 @@
 2021-07-11 fh04abcd Rewrite: Improve html, header, div-helper, undefined indexes, add error message
 2022-01-06 fho4abcd backbuttun via included file
 2022-01-08 fho4abcd add home button
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -132,14 +133,20 @@ include ("../common/inc_get-dbinfo.php");// sets MAXMFN
 </h4>
 <?php
 // query for the hosts here so any error will be displayed
+$loc_actparfolder=$actparfolder;
+if ($actparfolder!="par/") {
+    // recompute $actparfolder for the database servers
+    $loc_actparfolder="servers/";
+}
+
 $Pft="v1'|'v2'|'v3'|'v4'|'v5/";
-$query = "&base=servers&cipar=".$db_path."par/servers.par&from=1&Formato=$Pft&Opcion=rango";
+$query = "&base=servers&cipar=".$db_path.$loc_actparfolder."servers.par&from=1&Formato=$Pft&Opcion=rango";
 $IsisScript=$xWxis."imprime.xis";
 include("../common/wxis_llamar.php");
 if ($err_wxis!=""){
     echo "<font color=red size=+1>";
     echo "Check existence and configuration of database 'servers'<br>";
-    echo "&rarr; dr_path.def &nbsp;&nbsp;&rarr;  par/servers.par<br>";
+    echo "&rarr; dr_path.def &nbsp;&nbsp;&rarr;  ".$loc_actparfolder."servers.par<br>";
     echo "</font>";
 }
 ?>
