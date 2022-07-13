@@ -1,4 +1,7 @@
 <?php
+/*
+20220712 fho4abcd Use $actparfolder as location for .par files
+*/
 
 $llamada="";
 $maxmfn=0;
@@ -33,14 +36,14 @@ function LeerRegistro() {
 // la variable $llave permite retornar alguna marca que esté en el formato de salida
 // identificada entre $$LLAVE= .....$$
  $llave_pft="";
- global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$lang_db,$def;
+ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$lang_db,$def,$actparfolder;
  $IsisScript=$xWxis.$arrHttp["IsisScript"];
  $tags=array_keys($arrHttp);
  $query = "";
  foreach ($tags as $linea){
   if ($linea!="IsisScript"){
   	if ($linea=="cipar")
-  		$query.= '&'.$linea."=$db_path"."par/". $arrHttp[$linea];
+  		$query.= '&'.$linea."=$db_path".$actparfolder. $arrHttp[$linea];
   	else
    		$query.='&'.$linea."=". $arrHttp[$linea];
   }
@@ -94,12 +97,12 @@ function LeerRegistro() {
 
 function LeerRegistroMfn($base,$cipar,$from,$maxmfn,$Opcion,$userid,$pathwxis,$IsisScript) {
 
-global $valortag,$OS,$xWxis,$arrHttp,$db_path,$Wxis,$wxisUrl,$def;
+global $valortag,$OS,$xWxis,$arrHttp,$db_path,$Wxis,$wxisUrl,$def,$actparfolder;
 	if (!isset($arrHttp["Formato"]))  $arrHttp["Formato"]="";
 	if (!isset($arrHttp["prologo"]))  $arrHttp["prologo"]="";
 	if (!isset($arrHttp["epilogo"]))  $arrHttp["epilogo"]="";
 	$IsisScript=$xWxis."ingreso.xis";
-   	$query =  "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"] . "&to=" . $arrHttp["Mfn"]. "&Formato=" . $arrHttp["Formato"] . "&prologo=".$arrHttp["prologo"]."&epilogo=".$arrHttp["epilogo"]."&Opcion=".$Opcion."&base=" .$base."&userid=".$userid;
+   	$query =  "&cipar=$db_path".$actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"] . "&to=" . $arrHttp["Mfn"]. "&Formato=" . $arrHttp["Formato"] . "&prologo=".$arrHttp["prologo"]."&epilogo=".$arrHttp["epilogo"]."&Opcion=".$Opcion."&base=" .$base."&userid=".$userid;
 	include("../common/wxis_llamar.php");
    	$tag= "";
    	$ic=-1;

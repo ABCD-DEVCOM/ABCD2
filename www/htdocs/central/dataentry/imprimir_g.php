@@ -1,6 +1,7 @@
 <?php
 /*
 20220117 fho4abcd Improve html+divhelper+ typo in the range processing
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 /*
 ** This module is located in central/dataentry as it is referenced from several sources
@@ -79,7 +80,7 @@ if (isset($arrHttp["guardarformato"])){
 
 }
 
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
 if (isset($Expresion)) $query.="&Expresion=".$Expresion;
 $query.="&Opcion=$Opcion&Word=S&Formato=".$Formato;
 
@@ -155,7 +156,7 @@ foreach ($ficha as $linea){
  					$pft_ref=$db_path.$bd_ref."/pfts/".$lang_db."/" .$pft_ref;
         		}
 	 			$IsisScript=$xWxis."imprime.xis";
- 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
+ 				$query = "&cipar=$db_path".$actparfolder.$bd_ref. ".par&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
 				include("../common/wxis_llamar.php");
 				$ixcuenta=0;
 				foreach($contenido as $linea_alt){

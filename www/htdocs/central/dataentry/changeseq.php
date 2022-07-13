@@ -1,6 +1,7 @@
 <?php
 /*
 2021-11-24 rogercgui checks if $arrHttp["prefix"] exists
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 
 session_start();
@@ -28,7 +29,7 @@ if (isset($arrHttp["prefix"])) {
 
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["base"].".pft" ;
 $Expresion=$cn_prefix.$arrHttp["cn"];
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&Expresion=$Expresion&Formato=@$Formato&Opcion=buscar";
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par"."&Expresion=$Expresion&Formato=@$Formato&Opcion=buscar";
 $IsisScript=$xWxis."imprime.xis";
 include("../common/wxis_llamar.php");
 $cont_database=implode('',$contenido);

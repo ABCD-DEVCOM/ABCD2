@@ -1,4 +1,7 @@
 <?php
+/*
+20220713 fho4abcd Use $actparfolder as location for .par files
+*/
 session_start();
 include("../common/get_post.php");
 include("../config.php");
@@ -27,8 +30,8 @@ global $Wxis,$xWxis,$db_path;
 }
 
 function GenerarSalida($Mfn,$count,$Pft,$sel_mfn){
-global $arrHttp,$xWxis,$db_path;
-	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Mfn=$Mfn&count=$count";
+global $arrHttp,$xWxis,$db_path,$actparfolder;
+	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Mfn=$Mfn&count=$count";
   	if ($Pft=="") $Pft=$arrHttp["search"].'#';
 	$query.="&Formato=".urlencode($Pft.'/')."&Opcion=rango";
 	$contenido="";
@@ -300,7 +303,7 @@ if (!isset($arrHttp["Expresion"])){
 	}
 }else{
 
-	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
 	$query.="&Expresion=".urlencode(stripslashes($arrHttp["Expresion"]))."&Opcion=".$arrHttp["Opcion"];
 	$query.="&from=$desde&Mfn=$desde&count=$count";
 	if ($arrHttp["tipob"]=="pft"){
