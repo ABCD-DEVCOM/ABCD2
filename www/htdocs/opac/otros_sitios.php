@@ -9,7 +9,7 @@ $titulo_pagina="N";
 include("head.php");
 $value=file_get_contents($_REQUEST["sitio"]);
 echo $value;
-include("footer.php");
+include("components/footer.php");
 
 
 ?>

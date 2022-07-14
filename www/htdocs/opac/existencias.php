@@ -39,7 +39,7 @@ foreach ($resultado as $value){
 echo "</table>";
 echo "<input type=button id=search-submit Value='Regresar' onclick=javascript:history.back()><br>";
 if (isset($_REQUEST["prefijoindice"]) and $_REQUEST["prefijoindice"]!="") {
-		echo "<p><input type=button id=search-submit value=\" &nbsp;Volver al índice&nbsp; \" onclick=javascript:document.indice.submit()>\n";
+		echo "<p><input type=button id=search-submit value=\" &nbsp;Volver al ï¿½ndice&nbsp; \" onclick=javascript:document.indice.submit()>\n";
 	}
 echo "<form name=continuar action=buscar_integrada.php method=post>\n";
 foreach ($_REQUEST as $key=>$value){
@@ -48,6 +48,6 @@ foreach ($_REQUEST as $key=>$value){
 echo "</form>";
 ?>
 <?php
-include("footer.php");
+include("components/footer.php");
 
 ?>

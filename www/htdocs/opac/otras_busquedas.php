@@ -20,13 +20,13 @@ $Expresion="";
 ?>
 
 <p>
-<h4><strong>Búsqueda libre</strong></h4>
+<h4><strong>Bï¿½squeda libre</strong></h4>
     	<form method="post" action="buscar_integrada.php" name=diccio>
 			<br><strong>Alcance</strong></br>
 			<font class=titulo2>Incluir en los resultados las referencias que contengan<br>
-			<input type=radio value=and name=alcance id=and checked>Todos los términos de búsqueda (and)<br>
-			<input type=radio value=or name=alcance id=or>Alguno(s) de los términos de búsqueda (or)</font>
-			<br><strong>Términos de búsqueda</strong></br>
+			<input type=radio value=and name=alcance id=and checked>Todos los tï¿½rminos de bï¿½squeda (and)<br>
+			<input type=radio value=or name=alcance id=or>Alguno(s) de los tï¿½rminos de bï¿½squeda (or)</font>
+			<br><strong>Tï¿½rminos de bï¿½squeda</strong></br>
 	        <input type=hidden name=prefijo value=TW_>
 	  		<input type=hidden name=Opcion value=libre>
 	  		<input type=hidden name=base value=<?php if (isset($_REQUEST["base"]))echo $_REQUEST["base"]?>>
@@ -35,11 +35,11 @@ $Expresion="";
 			<input type="button" id="search-submit" value="Consultar diccionario" onclick="javascript:DiccionarioLibre('1')"/>
 		</form>
 		<p><br><br><br>
-		<hr>Seleccione del menú el tipo de búsqueda que desea realizar:
+		<hr>Seleccione del menï¿½ el tipo de bï¿½squeda que desea realizar:
 		<p><ul class=submenu>
-			<LI>Búsqueda libre: Permite localizar información a partir de términos generales en cualquiera de los campos de la base de datos<br><br></li>
-			<li>Búsqueda avanzada: Permite realizar búsquedas más precisas, a través de la construcción de sub-expresiones dentro de los diferentes campos de la base de datos<br><br></li>
-			<li>Índices de
+			<LI>Bï¿½squeda libre: Permite localizar informaciï¿½n a partir de tï¿½rminos generales en cualquiera de los campos de la base de datos<br><br></li>
+			<li>Bï¿½squeda avanzada: Permite realizar bï¿½squedas mï¿½s precisas, a travï¿½s de la construcciï¿½n de sub-expresiones dentro de los diferentes campos de la base de datos<br><br></li>
+			<li>ï¿½ndices de
 <?php
 $fp=file($path."data/$base.ix");
 foreach ($fp as $value){
@@ -50,11 +50,11 @@ foreach ($fp as $value){
 	}
 }
 ?>
-para presentar el índice solicitado y a partir del mismo proceder a la recuperación de los registros</li>
+para presentar el ï¿½ndice solicitado y a partir del mismo proceder a la recuperaciï¿½n de los registros</li>
 		</ul>
 <br><br>
 <?php
-include("footer.php");
+include("components/footer.php");
 
 
 

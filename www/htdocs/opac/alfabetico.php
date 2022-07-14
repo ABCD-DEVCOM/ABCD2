@@ -164,7 +164,7 @@ if (count($index_alfa)>1){
 $comp="XXXXX";
 $cuenta=0;
 if (file_exists($db_path."opac_config/colecciones.tab")){
-	echo "<tr><td align=right>Filtrar por colección: </td>";
+	echo "<tr><td align=right>Filtrar por colecciï¿½n: </td>";
 		echo "<td><xselect name=coleccion onchange='javascript:document.buscar.Expresion.value=\"\";IrA();'>
 		<option value=''></option>\n";
 		$fp=file($path."data/".$_REQUEST["lang"]."/colecciones.tab");
@@ -298,7 +298,7 @@ primero="<?php echo $primero;?>";
 }
 ?>
 
-<?php include("footer.php")?>
+<?php include("components/footer.php")?>
 <form name=indiceAlfa method=post action=alfabetico.php>
 <input type=hidden name=alfa value="<?php if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]!="") echo $_REQUEST["alfa"]?>">
 <input type=hidden name=titulo value="<?php echo $_REQUEST["titulo"]?>">

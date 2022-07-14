@@ -61,7 +61,7 @@ if ($hasta>$contador) $hasta=$contador;
 if ($contador>1){
 	echo "<br>Mostrando del $desde al ".$hasta;
 }
-echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imágenes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
+echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imï¿½genes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
 echo "&nbsp; &nbsp; <input type=button id=\"search-submit\" value=\" Ver ficha descriptiva \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','ficha')\"><br>";
 echo "<p></div>";
 
@@ -117,6 +117,6 @@ if (isset($total_base) and count($total_base)>1){
 	echo "</table>";
 	echo "</div>";
 }
-include("footer.php");
+include("components/footer.php");
 
 ?>
