@@ -128,7 +128,7 @@ $meta_encoding = $charset;
 		<div class="areaTitulo">
 			<div class=tituloBase>
 				<?php
-				echo $_COOKIE['user']."<br>";
+				if (isset($_COOKIE['user'])) echo $_COOKIE['user']."<br>";
 				echo $TituloEncabezado;
 				if (isset($_REQUEST["db_path"]))
 					echo "  " . $_REQUEST["db_path"];
