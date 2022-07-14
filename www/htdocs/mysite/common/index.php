@@ -504,6 +504,6 @@ if (isset($arrHttp["action"])) {
 
 <?php
 	//print_r ($msgstr);
-include("homepagemysite.php");
+include("ms-home.php");
 
 ?>

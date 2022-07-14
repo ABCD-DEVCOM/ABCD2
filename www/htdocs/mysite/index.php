@@ -127,7 +127,7 @@ include ("../$app_path/common/css_settings.php");
         <div class="spacer">&#160;</div>
     </div>
 
-    <form name="administra" onsubmit="javascript:return false" method="post" action="common/iniciomysite.php">
+    <form name="administra" onsubmit="javascript:return false" method="post" action="common/index.php">
         <input type="hidden" name="Opcion" value="admin">
         <input type="hidden" name="cipar" value="acces.par">
         <input type="hidden" name="lang" value="<?php echo $arrHttp["lang"];?>">
