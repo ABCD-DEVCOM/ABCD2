@@ -1,6 +1,6 @@
-activesuspensions=Active Suspensions:
-actualloans=Actual Loans:
-actualreserves=Actual Reservations:
+activesuspensions=Active Suspensions
+actualloans=Actual Loans
+actualreserves=Actual Reservations
 alertnocateg=It's not possible to make reservation for publications without category or location (library)
 amount=Amount
 authors=Authors:
