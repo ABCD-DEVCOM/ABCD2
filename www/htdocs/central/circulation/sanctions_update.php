@@ -1,7 +1,11 @@
 <?php
-///////////////////////////////////////////////////////////////
-// Update sanctions in database
-//////////////////////////////////////////////////////////////
+/**
+ * Update sanctions in database
+ * 2022-07-14 rogercgui add $actparfolder variable;
+ *
+ **/
+
+
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -17,7 +21,7 @@ include("../lang/prestamo.php");
 //die;
 // se leen los valores locales para convertir la fecha a ISO
 include("locales_read.php");
-// Se lee el calendario de días hábiles
+// Se lee el calendario de dï¿½as hï¿½biles
 include("calendario_read.php");
 
 include("fecha_de_devolucion.php");
@@ -25,25 +29,25 @@ include("fecha_de_devolucion.php");
 $FechaP=$arrHttp["date"];
 $df=explode('/',$config_date_format);
 switch ($df[0]){
-	case "DD":
+	case "d":
 		$dia=substr($FechaP,0,2);
 		break;
-	case "MM":
+	case "m":
 		$mes=substr($FechaP,0,2);
 		break;
 }
 switch ($df[1]){
-	case "DD":
+	case "d":
 		$dia=substr($FechaP,3,2);
 		break;
-	case "MM":
+	case "m":
 		$mes=substr($FechaP,3,2);
 		break;
 }
 $year=substr($FechaP,6,4);
 $fecha_desde= $year.$mes.$dia;
 
-// se calcula la fecha de vencimiento de la sanción sumando los días de suspensión
+// se calcula la fecha de vencimiento de la sanciï¿½n sumando los dï¿½as de suspensiï¿½n
 if ($arrHttp["type"]=="S"){
 
 }
@@ -71,7 +75,7 @@ switch ($arrHttp["type"]){
       	if (isset($arrHttp["comments"])) $ValorCapturado.="<100 0>".$arrHttp["comments"]."</100>";
       	break;
 	case "S":
-	// se calcula la fecha en que vence la suspensión
+	// se calcula la fecha en que vence la suspensiï¿½n
 		$fecha_v=FechaDevolucion($arrHttp["units"],"D",$arrHttp["date"]);
         $cod_trans="N";
 		$tipor="S";                      						//v1
@@ -88,7 +92,7 @@ switch ($arrHttp["type"]){
 $ValorCapturado.="<120>".$_SESSION["login"]."^d".date("Ymd h:i A")."</120>";
 $ValorCapturado=urlencode($ValorCapturado);
 $IsisScript=$xWxis."crear_registro.xis";
-$query = "&base=suspml&cipar=$db_path"."par/suspml.par&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado;
+$query = "&base=suspml&cipar=$db_path".$actparfolder."suspml.par&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado;
 
 if (file_exists($db_path."logtrans/data/logtrans.mst")){
 	require_once("../circulation/grabar_log.php");
