@@ -66,8 +66,8 @@ document.onkeypress =
   };
 
 function ColocarFecha(){
-// si es una suspensión, se coloca la fecha a partir del vencimiento de la última suspensión
-// si es una multa, se coloca la fecha del día
+// si es una suspensiï¿½n, se coloca la fecha a partir del vencimiento de la ï¿½ltima suspensiï¿½n
+// si es una multa, se coloca la fecha del dï¿½a
 	ix=document.sanctions.type.selectedIndex
 	if (ix<1){
 		alert("<?php echo $msgstr["missst"]?>")
@@ -134,10 +134,10 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 	<div class="formContent">
 <form name=sanctions method=post action=sanctions_update.php onSubmit="return false">
 <?php
-// se presenta la  información del usuario
+// se presenta la  informaciï¿½n del usuario
 	$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp.pft";
     if (!isset($formato_us)) $formato_us=$db_path."users/loans/".$lang_db."/loans_usdisp.pft";
-   	$query = "&Expresion=CO_".$arrHttp["usuario"]."&base=users&cipar=$db_path/par/users.par&Formato=".$formato_us;
+   	$query = "&Expresion=CO_".$arrHttp["usuario"]."&base=users&cipar=".$db_path.$actparfolder."users.par&Formato=".$formato_us;
 	$contenido="";
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
@@ -148,7 +148,7 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 	$fecha_exp="";
 	$fecha_dia=PrepararFechaSanciones(date("Ymd"));
 	$fecha_exp=$fecha_dia;
-	if (count($susp)>0 and $AC_SUSP=="Y"){          // se determina el vencimiento de la última sanción
+	if (count($susp)>0 and $AC_SUSP=="Y"){          // se determina el vencimiento de la ï¿½ltima sanciï¿½n
 		$sancion=$susp[count($susp)-1];
 		$p=explode("|",$sancion);
 		if ($p[6]>$fecha_dia){
@@ -157,7 +157,7 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 			$fecha_exp=PrepararFechaSanciones($exp_date);
 		}
 	}
-//se determina la fecha de la próxima suspensión en base al vencimiento de la última suspensión
+//se determina la fecha de la prï¿½xima suspensiï¿½n en base al vencimiento de la ï¿½ltima suspensiï¿½n
 	echo "<script>\n";
 	echo "fecha_dia='".$fecha_dia."'\n";
 	echo "fecha_susp='".$fecha_exp."'";
@@ -186,7 +186,7 @@ foreach ($fp as $value) {
            	<strong><?php echo $msgstr["date"]?></strong>
      	</td>
      	<td>
-<!-- Se coloca la fecha de expiración a partir de la fecha de la última suspensión -->
+<!-- Se coloca la fecha de expiraciï¿½n a partir de la fecha de la ï¿½ltima suspensiï¿½n -->
      		<input type="text" name="date" value="" size=10 ONFOCUS="this.blur()"/>
 		</td>
 	<tr>

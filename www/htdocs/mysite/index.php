@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
@@ -27,14 +28,11 @@ include ("../$app_path/lang/lang.php");
 
 <head>
 
-    <title>ABCD-MySite plug in</title>
+    <title>ABCD | MySite</title>
     <meta http-equiv="Expires" content="-1" />
     <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
     <meta name="robots" content="all" />
-    <meta http-equiv="keywords" content="" />
-    <meta http-equiv="description" content="" />
     <!-- Favicons -->
 
     <link rel="mask-icon" href="/assets/images/favicons/favicon.svg">
@@ -71,6 +69,7 @@ include ("../$app_path/lang/lang.php");
 
 
     <script src=../<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
+
     <script languaje=javascript>
     document.onkeypress =
         function(evt) {
@@ -88,7 +87,6 @@ include ("../$app_path/lang/lang.php");
     function Enviar() {
         login = Trim(document.administra.login.value)
         password = Trim(document.administra.password.value)
-        //sas=document.administra.startas.selectedIndex
         if (login == "" || password == "") {
             alert("<?php echo $msgstr["datosidentificacion"]?>")
             return
@@ -99,7 +97,7 @@ include ("../$app_path/lang/lang.php");
     </script>
     <?php
 include ("../$app_path/common/css_settings.php");
-?>	
+?>
 </head>
 
 <body class="mysite">
@@ -129,7 +127,7 @@ include ("../$app_path/common/css_settings.php");
         <div class="spacer">&#160;</div>
     </div>
 
-    <form name="administra" onsubmit="javascript:return false" method="post" action="common/iniciomysite.php">
+    <form name="administra" onsubmit="javascript:return false" method="post" action="common/index.php">
         <input type="hidden" name="Opcion" value="admin">
         <input type="hidden" name="cipar" value="acces.par">
         <input type="hidden" name="lang" value="<?php echo $arrHttp["lang"];?>">
@@ -143,8 +141,14 @@ include ("../$app_path/common/css_settings.php");
                     <?php
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		echo "
-					<div class=\"helper alert\">".$msgstr["menu_noau"]."
-					</div>
+			<div class=\"helper alert\">".$msgstr["menu_noau"]."
+			</div>
+		";
+}
+if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
+		echo "
+			<div class=\"helper success\">".$msgstr["pswchanged"]."
+			</div>
 		";
 }
 ?>
@@ -153,11 +157,12 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
                         <?php
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		echo "
-						<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry inputAlert\" onfocus=\"this.className = 'textEntry superTextEntry inputAlert textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry inputAlert';\" />\n";
+			<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry inputAlert\" onfocus=\"this.className = 'textEntry superTextEntry inputAlert textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry inputAlert';\" />\n";
 }else{
 		echo "
-						<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry\" onfocus=\"this.className = 'textEntry superTextEntry textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry';\" />\n";
+			<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry\" onfocus=\"this.className = 'textEntry superTextEntry textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry';\" />\n";
 }
+
 ?>
                     </div>
                     <div class="formRow">
@@ -165,30 +170,65 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
                         <input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry"
                             onfocus="this.className = 'textEntry superTextEntry textEntryFocus';"
                             onblur="this.className = 'textEntry superTextEntry';" />
+                        <?php if (isset($change_password) and $change_password=="Y") echo "<br><a href=javascript:CambiarClave()>". $msgstr["chgpass"]."</a>\n";?>
                     </div>
                     <div id="formRow3" class="formRow formRowFocus">
+                        <?php
+        // Check if the language from the browser is present
+        $a=$msg_path."lang/$lang/lang.tab";
+        if (!file_exists($a)){
+            // switch to configured language if browser language is not present
+            echo "<div>".$msgstr["flang"].": ".$a."<br>";
+            echo $msgstr["using_config"]." '".$lang_config."'<br>&nbsp;</div>";
+            $lang=$lang_config;
+        }
+        // Check if the language file is present
+        $a=$msg_path."lang/$lang/lang.tab";
+        if (!file_exists($a)){
+            echo "<div style='color:red'>".$msgstr["fatal"].": ".$msgstr["flang"].": ".$a."</div>";
+            die;
+        }
+        ?>
 
 
                     </div>
+                    <div class="formRow"><br>
+                        <?php
+if (file_exists("dbpath.dat")){
+	global $db_path;
+	$fp=file("dbpath.dat");
+	echo $msgstr["database_dir"].': <select class="textEntry singleTextEntry" name=db_path>\n';
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$v=explode('|',$value);
+			$v[0]=trim($v[0]);
+			echo "<option value=".trim($v[0]).">".$v[1]."\n";
+		}
+
+	}
+	echo "</select>";
+} else {
+	echo '<input type="hidden" name="db_path" value="'.$db_path.'">';
+}
+?>
+
+                    </div>
+
                     <div class="formRow">
                         <input type="checkbox" name="setCookie" id="setCookie" value="" />
                         <label for="setCookie" class="inline">Lembrar a senha neste computador</label>
                     </div>
-                    <div class="submitRow">
-                        <div class="frLeftColumn">
-                            <a href="#">esqueceu a senha?</a>
-                        </div>
-                        <div class="formRow">
-                            <a href="javascript:Enviar()" class="bt bt-blue">
-                                <?php echo $msgstr["entrar"]?>
-                            </a>
-                        </div>
+                    <div class="formRow">
+                        <a href="javascript:Enviar()" class="bt bt-blue">
+                            <?php echo $msgstr["entrar"]?>
+                        </a>
                     </div>
-
                 </div>
-            </div>
-    </form>
-    <?php include ("common/footermysite.php");?>
-</body>
 
+            </div>
+        </div>
+    </form>
+    
+</body>
+<?php include ("common/footermysite.php");?>
 </html>

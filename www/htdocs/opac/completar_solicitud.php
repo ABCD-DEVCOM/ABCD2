@@ -14,7 +14,7 @@ $desde_opac="Y";
 $_REQUEST["vienede"]="orbita";
 chdir($CentralPath."reserve");
 include ('reservar_ex.php');
-include($ActualDir."/footer.php");
+include($ActualDir."/components/footer.php");
 
 
 

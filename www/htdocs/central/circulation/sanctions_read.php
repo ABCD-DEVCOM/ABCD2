@@ -1,4 +1,11 @@
 <?php
+/**
+ * 2022-07-14 rogercgui add $actparfolder variable; 
+ * 
+ * 
+ * 
+ **/	
+
 // se determina si la suspensi�n est� vencida
 
 function PrepararFechaSanciones($FechaP){
@@ -53,7 +60,8 @@ global $locales,$arrHttp,$CentralPath;
 			$Expresion="(TR_S_".$arrHttp["usuario"]." or "."TR_M_".$arrHttp["usuario"]." or "."TR_N_".$arrHttp["usuario"].") and ST_0";
 		}
    	}
-   	$query = "&Expresion=$Expresion"."&base=suspml&cipar=$db_path"."par/suspml.par&Pft=".$formato_obj;
+
+   	$query = "&Expresion=$Expresion"."&base=suspml&cipar=$db_path".$actparfolder."suspml.par&Pft=".$formato_obj;
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	if (isset($CentralPath) and $CentralPath!="")
 		include($CentralPath."common/wxis_llamar.php");

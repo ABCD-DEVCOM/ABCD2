@@ -144,7 +144,7 @@ foreach ($_REQUEST as $var=>$value){
 	echo ">\n";
 }
 echo "</form>";
- include("footer.php");
+ include("components/footer.php");
 echo "\n<script>Opcion='";
 if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];
 echo "'\n</script>\n";

@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-// Para presentar el diccionario de términos consolidado
+// Para presentar el diccionario de tï¿½rminos consolidado
 include("dibujarformabusqueda_st.php");
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ foreach ($_REQUEST as $var=>$value){
 }
 echo "</form>";
 
-include("footer.php");
+include("components/footer.php");
 
 
 ?>

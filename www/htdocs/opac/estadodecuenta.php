@@ -16,6 +16,6 @@ echo "<input type=button Value='Regresar' onclick=javascript:history.back()><br>
 echo "</div>"
 ?>
 <?php
-include("footer.php");
+include("components/footer.php");
 
 ?>
