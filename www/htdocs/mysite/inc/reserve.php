@@ -33,8 +33,8 @@
                                         <td><?php echo fechaAsString($reserve["expirationDate"]) ?></td>
                                         <td><?php echo $reserve["location"] ?></td>
                                         <td>
-                                            <input class="btn btn-danger" type="button" value="<?php echo $msgstr["cancel"]; ?>"
-                                                OnClick="javascript:CancelReservation('<?php echo $reserve["!id"] ?>')" />
+                                            <button type="button"  class="btn btn-danger" id="renew"
+                                                OnClick="CancelReservation('<?php echo $reserve["!id"] ?>')" data-bs-toggle="modal" data-bs-target="#abcdModal"><?php echo $msgstr["cancel"]; ?></button>
                                         </td>
                                     </tr>
            
@@ -46,3 +46,8 @@
 </div>
 
                             <?php }?>
+                            
+<form name="formreservation" id="formreservation" method="POST" action="../cancelreservation.php" target="CheckOK">
+  <input type="hidden" id="waitid" name="waitid"/>
+  <input type="hidden" id="userid" name="userid"/>
+</form>

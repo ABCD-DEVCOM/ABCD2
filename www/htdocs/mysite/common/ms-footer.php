@@ -1,3 +1,4 @@
+
 <?php
 
         $def = parse_ini_file($db_path."abcd.def");
@@ -48,7 +49,29 @@
 
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="abcdModal" tabindex="-1" aria-labelledby="abcdModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="ratio ratio-16x9">
+            <iframe src=""  name="CheckOK"></iframe>
+        </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" OnClick="document.location.reload(true);">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="../assets/js/bootstrap.bundle.min.js" ></script>
-<script src="../assets/js/dashboard.js">
+
+<script>
+	document.cookie = "user=<?php echo $arrHttp["login"]?>; SameSite=None; Secure; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/";
+</script>
+
 </body>
 </html>

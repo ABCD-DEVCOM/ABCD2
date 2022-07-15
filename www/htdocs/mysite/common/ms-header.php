@@ -8,9 +8,13 @@ unset($query);
 include '../../central/common/get_post.php';
 require 'ms-functions.php';
 
+include '../inc/user.php';
+
+$dataarr = getUserStatus();
+
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="<?php echo $lang;?>">
 
 <head>
@@ -134,13 +138,13 @@ require 'ms-functions.php';
 
 
     function CancelReservation(idTrans) {
-        document.forms["formreservation"].waitid.value = idTrans;
-        document.forms["formreservation"].userid.value = "<?php echo $_SESSION["userid"]; ?>";
+        document.formreservation.waitid.value = idTrans;
+        document.formreservation.userid.value = "<?php echo $_SESSION["userid"]; ?>";
+        document.formreservation.submit()
     }
 
 
     function LoanRenovation(idTrans, library) {
-        console.log('RENOVA');
         document.formrenovation.copyId.value = idTrans;
         document.formrenovation.userId.value = "<?php echo $_SESSION["userid"]; ?>";
         document.formrenovation.db.value = "<?php echo $_SESSION["db"]; ?>";
@@ -237,7 +241,7 @@ if (isset($def['LOGO_DEFAULT'])) {
 </form>
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="logoutmysite.php"><?php echo $msgstr["logout"] ?>
+      <a class="nav-link px-3" href="ms-logout.php" onclick="WriteCookie()"><?php echo $msgstr["logout"] ?>
 </a>
     </div>
     

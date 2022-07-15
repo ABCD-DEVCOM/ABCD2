@@ -278,10 +278,8 @@ if (strlen($legend)==0) $success=true;
       echo "</tr></table></div>";
 
       //echo $client->request;
-
-
-
-
       //print_r ($result);
 
 ?>
+
+
