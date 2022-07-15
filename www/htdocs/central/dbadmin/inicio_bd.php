@@ -4,6 +4,7 @@
 20210317 fho4abcd Replaced helper code fragment by included file, removed some unused code
 20210324 fho4abcd Reprogrammed, improved feedback
 20211215 fho4abcd Backbutton by included file
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -82,7 +83,7 @@ include "../common/inc_div-helper.php";
 // Not all very likely to occur, but better safe than sorry
 $errors=0;
 $databasefolder=$db_path.$arrHttp["base"];
-$parfullname   =$db_path."par/".$arrHttp["base"].".par";
+$parfullname   =$db_path.$actparfolder.$arrHttp["base"].".par";
 if (!file_exists($databasefolder)){
     echo "<h3><font color=red>".$databasefolder.": ".$msgstr["folderne"]."</font></h3>";
     $errors++;
@@ -134,7 +135,7 @@ if ($arrHttp["confirmcount"]<2) {
 }
 // This part will be excuted the second invocation. 
 
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=inicializar";
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=inicializar";
 $IsisScript=$xWxis."administrar.xis";
 // the actual initialisation
 include("../common/wxis_llamar.php");

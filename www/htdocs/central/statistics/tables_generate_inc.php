@@ -1,6 +1,7 @@
 <?php
 /*
 20220220 fho4abcd Removed option to search by date+extra translations
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 function LeerVariables($db_path,$arrHttp,$lang_db){
 	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/stat.cfg";
@@ -306,15 +307,15 @@ global $tabla,$tit_proc,$tabs,$tipo,$filter_date;
 }
 
 function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){
-global $msgstr;
+global $msgstr,$actparfolder;
 	switch ($_REQUEST["Opcion"]){
 		case "MFN":
-			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=rango&Formato=".$Formato;
+			$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=rango&Formato=".$Formato;
 			$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
 			break;
 		case "BUSQUEDA":
 			$Expresion=urlencode($arrHttp["Expresion"]);
-			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=buscar&Formato=".$Formato;
+			$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=buscar&Formato=".$Formato;
 			$query.="&Expresion=$Expresion";
 			break;
 	}

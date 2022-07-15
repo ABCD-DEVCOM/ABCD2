@@ -1,6 +1,7 @@
 <?php
 /*
 20220123 fho4abcd buttons+div-helper
+20220715 fho4abcd Use $actparfolder as location for .par files, note only acces databases
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -308,10 +309,14 @@ global $db_path,$msgstr,$encabezado;
 }
 
 function DeleteProfile(){
-global $db_path,$msgstr,$lang_db,$arrHttp,$xWxis,$wxisUrl,$Wxis;
+global $actparfolder, $db_path,$msgstr,$lang_db,$arrHttp,$xWxis,$wxisUrl,$Wxis;
 // READ ACCES DATABASE AND FIND IF THE PROFILE IS IN USE
+    if ($actparfolder!="par/") {
+        // recompute $actparfolder for the current base
+        $loc_actparfolder="acces/";
+    }
 	$IsisScript=$xWxis."leer_mfnrange.xis";
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&Pft=v40^a/";
+	$query = "&base=acces&cipar=$db_path".$loc_actparfolder."acces.par"."&Pft=v40^a/";
 	include("../common/wxis_llamar.php");
 	 foreach ($contenido as $linea){
 	 	if (trim($linea)==$arrHttp["profile"]){

@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20211216 fho4abcd Backbutton & helper by included file. Improve html
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 global $arrHttp;
 session_start();
@@ -39,7 +40,7 @@ if (isset($arrHttp["encabezado"])){
     <div class="formContent">
 <?php
 $par="";
-$fp=file($db_path."par/".$arrHttp["base"].".par");
+$fp=file($db_path.$actparfolder.$arrHttp["base"].".par");
 foreach ($fp as $value) $par.=trim($value)."\n";
 ?>
 <form name="db" action="editpar_update.php" method="post">
