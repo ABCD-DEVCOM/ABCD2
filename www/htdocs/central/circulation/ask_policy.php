@@ -47,19 +47,19 @@ include ('../dataentry/leerregistroisispft.php');
 require_once("../circulation/grabar_log.php");
 include("leer_pft.php");
 
-//Calendario de días feriados
+//Calendario de dï¿½as feriados
 include("calendario_read.php");
 
 //Horario de la biblioteca, unidades de multa, moneda
 include("locales_read.php");
 
-// se leen las politicas de préstamo y la tabla de tipos de usuario
+// se leen las politicas de prï¿½stamo y la tabla de tipos de usuario
 include("loanobjects_read.php");
 
-// se lee la configuración de la base de datos de usuarios
+// se lee la configuraciï¿½n de la base de datos de usuarios
 include("borrowers_configure_read.php");
 
-# Se lee el prefijo y el formato para extraer el código de usuario
+# Se lee el prefijo y el formato para extraer el cï¿½digo de usuario
 $us_tab=LeerPft("loans_uskey.tab","users");
 $t=explode("\n",$us_tab);
 $uskey=$t[0];
@@ -93,7 +93,7 @@ global $copies_title,$msgstr,$obj;
 						$comp_01.=" ".$c[6];
 					if (isset($c[7]))
 						$comp_01.=" ".$c[7];
-					if ($nc_us[10]==$user){    //SE VERFICA SI LA COPIA ESTÁ EN PODER DEL USUARIO
+					if ($nc_us[10]==$user){    //SE VERFICA SI LA COPIA ESTï¿½ EN PODER DEL USUARIO
 						if ($comp_01==$comp and $obj[14]!="Y"){
 							if ($msg=="")
 								$msg= $msgstr["duploan"];
@@ -116,10 +116,10 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 	// 10:codigo de usuario
 	// 30:Fecha reserva
 	// 31:Hora de reserva
-	// 40:Fecha límite de retiro
+	// 40:Fecha lï¿½mite de retiro
 	// 60:Fecha de asignacion de la reserva
-	// 130:Fecha de cancelación de la reserva
-	// 200:Fecha en que se ejecutó la reserva y se prestó el item al usuario
+	// 130:Fecha de cancelaciï¿½n de la reserva
+	// 200:Fecha en que se ejecutï¿½ la reserva y se prestï¿½ el item al usuario
 	$Pft=urlencode("f(mfn,6,0)'|'v10'|'v30'|'v31'|'v40'|'v60'|'v130'|'v200,'|',v1/");
 	$Expresion=urlencode("CN_".$catalog_db."_".$control_number." AND (ST_3 or ST_0)");
 	$query="&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Pft=$Pft";
@@ -134,10 +134,10 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 			$Mfn=$r[0];
 			$fecha_reserva=$r[2];
 			$hora_reserva=$r[3];
-			$fecha_cancelacion=$r[6];  //Fecha en la cual el operador canceló la reserva
-			$fecha_limite=$r[4];      //Fecha hasta la cual la reserva asignada está disponible
-			$fecha_asignacion=$r[5];  //Fecha en la cual se asignó la reserva
-			$fecha_prestamo=$r[7];    //Fecha en la cual se prestó el objeto reservado
+			$fecha_cancelacion=$r[6];  //Fecha en la cual el operador cancelï¿½ la reserva
+			$fecha_limite=$r[4];      //Fecha hasta la cual la reserva asignada estï¿½ disponible
+			$fecha_asignacion=$r[5];  //Fecha en la cual se asignï¿½ la reserva
+			$fecha_prestamo=$r[7];    //Fecha en la cual se prestï¿½ el objeto reservado
 			$status=$r[8];
 			//SE BUSCAN LAS RESERVAS ASIGNADAS
 			if ($fecha_cancelacion!=""  or $fecha_prestamo!="") continue;
@@ -184,7 +184,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 		$catalog_db="loanobjects";
 		$pft_ni="(v959/)";
 	}else{
-		//SE LEE EL PREFIJO A UTILIZAR PARA LOCALIZAR EL OBJETO A TRAVÉS DE SU NÚMERO DE INVENTARIO
+		//SE LEE EL PREFIJO A UTILIZAR PARA LOCALIZAR EL OBJETO A TRAVï¿½S DE SU Nï¿½MERO DE INVENTARIO
 		$Expresion=$prefix_cn.$control_number;
 		$catalog_db=strtolower($catalog_db);
 		$pft_ni="(".$pft_ni."/)";
@@ -198,7 +198,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 			$obj[]=$value;
 	}
 	$disponibilidad=count($obj)-$items_prestados;
-	//SI HAY EJEMPLARES DISPONIBLES VEMOS SI SE LE PUEDE PRESTAR AL USUARIO PORQUE ESTÁ EN ALGUN LUGAR LA COLA DE RESERVAS ASIGNADAS
+	//SI HAY EJEMPLARES DISPONIBLES VEMOS SI SE LE PUEDE PRESTAR AL USUARIO PORQUE ESTï¿½ EN ALGUN LUGAR LA COLA DE RESERVAS ASIGNADAS
 	if ($disponibilidad-1>0){
 		foreach ($reservas_3 as $value){
 			 if (trim($value)!=""){
@@ -210,7 +210,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 		}
 	}
 
-	//SI HAY EJEMPLARES DISPONIBLES VEMOS SI SE LE PUEDE PRESTAR AL USUARIO PORQUE ESTÁ EN ALGUN LUGAR LA COLA DE RESERVAS PENDIENTES
+	//SI HAY EJEMPLARES DISPONIBLES VEMOS SI SE LE PUEDE PRESTAR AL USUARIO PORQUE ESTï¿½ EN ALGUN LUGAR LA COLA DE RESERVAS PENDIENTES
 	if ($disponibilidad-1>0){
 		foreach ($reservas_0 as $value){
 			 if (trim($value)!=""){
@@ -222,12 +222,12 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 		}
 	}
 
-	//SI EL USUARIO NO ESTÁ EN NINGUNA DE LAS COLAS DE RESERVA
+	//SI EL USUARIO NO ESTï¿½ EN NINGUNA DE LAS COLAS DE RESERVA
 	//SE LE RESTA A LA DISPONIBILIDAD LAS RESERVAS ASIGNADAS Y LAS RESERVAS PENDIENTES
 
 	$disponibilidad=$disponibilidad-count($reservas_3)-count($reservas_0);
 
-	//SI QUEDAN EJEMPLARES DISPONIBLES, SE LE DA EL PRÉSTAMO AL USUARIO
+	//SI QUEDAN EJEMPLARES DISPONIBLES, SE LE DA EL PRï¿½STAMO AL USUARIO
 	if ($disponibilidad>0){
 		return array("continuar",0);
 	}
@@ -235,7 +235,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 }
 
 
-// Se localiza el número de control en la base de datos bibliográfica
+// Se localiza el nï¿½mero de control en la base de datos bibliogrï¿½fica
 function ReadCatalographicRecord($control_number,$db,$inventory){
 global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$titulo,$prefix_in,$prefix_cn,$multa,$pft_storobj,$lang_db;
 	//Read the FDT of the database for extracting the prefix used for indexing the control number
@@ -254,15 +254,15 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 	}
 	if ($control_number=="")
 		$Expresion=$prefix_in.$inventory;
-	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
+	// Se extraen las variables necesarias para extraer la informaciï¿½n del tï¿½tulo al cual pertenece el ejemplar
 	// se toman de databases_configure_read.php
-	// pft_totalitems= pft para extraer el número total de ejemplares del título
-	// pft_in= pft para extraer el número de inventario
-	// pft_nc= pft para extraer el número de clasificación
+	// pft_totalitems= pft para extraer el nï¿½mero total de ejemplares del tï¿½tulo
+	// pft_in= pft para extraer el nï¿½mero de inventario
+	// pft_nc= pft para extraer el nï¿½mero de clasificaciï¿½n
 	// pft_typeofr= pft para extraer el tipo de registro
 
 	$formato_ex="'||'".$pft_nc."'||'".$pft_typeofr."'###',";
-	//se ubica el título en la base de datos de objetos de préstamo
+	//se ubica el tï¿½tulo en la base de datos de objetos de prï¿½stamo
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 	$Expresion=urlencode($Expresion);
 	$formato_obj=$db_path."$db/loans/".$_SESSION["lang"]."/loans_display.pft";
@@ -285,15 +285,15 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 	return $total;
 }
 
-// Se localiza el número de inventario en la base de datos de objetos  de préstamo
+// Se localiza el nï¿½mero de inventario en la base de datos de objetos  de prï¿½stamo
 function LocalizarInventario($inventory){
 global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$copies_title,$prefix_in,$multa;
     $Expresion=$prefix_in.$inventory;
-	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
+	// Se extraen las variables necesarias para extraer la informaciï¿½n del tï¿½tulo al cual pertenece el ejemplar
 	// se toman de databases_configure_read.php
-	// pft_totalitems= pft para extraer el número total de ejemplares del título
-	// pft_in= pft para extraer el número de inventario
-	// pft_nc= pft para extraer el número de clasificación
+	// pft_totalitems= pft para extraer el nï¿½mero total de ejemplares del tï¿½tulo
+	// pft_in= pft para extraer el nï¿½mero de inventario
+	// pft_nc= pft para extraer el nï¿½mero de clasificaciï¿½n
 	// pft_typeofr= pft para extraer el tipo de registro
 
 	//READ LOANOBJECT DATABASE TO GET THE RECORD WITH THE ITEMS OF THE TITLE
@@ -452,14 +452,14 @@ $nsusp=0;
 $cont="";
 $np=0;
 $nv=0;
-include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los préstamos pendientes
+include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los prï¿½stamos pendientes
 if ($nmulta!=0 or $nsusp!=0) {
 	$cont="N";
 	unset($arrHttp["inventory"]);
 }
 if (count($prestamos)>0) $ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a> | <a href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a></strong><p>";
 
-//Se obtiene el código, tipo y vigencia del usuario
+//Se obtiene el cï¿½digo, tipo y vigencia del usuario
 $formato=$pft_uskey.'\'$$\''.$pft_ustype.'\'$$\''.$pft_usvig;
 $formato=urlencode($formato);
 $query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path"."par/users.par&Pft=$formato";
@@ -480,7 +480,7 @@ if (trim($user)==""){
 	die;
 }else{
     if (isset($arrHttp["ecta"])){
-    	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){      //para ver si tiene activado el módulo de reservas. Se lee desde el abcd.def
+    	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){      //para ver si tiene activado el mï¿½dulo de reservas. Se lee desde el abcd.def
 			$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
 			$reserves_user=$reserves_arr[0];
 		}else{
@@ -516,13 +516,13 @@ if ($msgsusp!=""){
 	ProduceOutput($ec_output,"");
 	die;
 }
-//OJO AGREGARLE AL TIPO DE USUARIO SI SE LE PUEDEN PRESTAR CUANDO ESTÁ VENCIDO
+//OJO AGREGARLE AL TIPO DE USUARIO SI SE LE PUEDEN PRESTAR CUANDO ESTï¿½ VENCIDO
 if ($nv>0 and isset($arrHttp["inventory"])){
 	$ec_output.= "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
 	ProduceOutput($ec_output,"");
 	die;
 }
-//Se verifica si puede recibir más préstamos
+//Se verifica si puede recibir mï¿½s prï¿½stamos
 if ($np>=$tipo_u[strtoupper($userdata[1])] and trim($tipo_u[strtoupper($userdata[1])])!="" ){
 	$ec_output.= "<font color=red><h3>".$msgstr["allowloans"].": ".$tipo_u[strtoupper($userdata[1])].". ".$msgstr["nomoreloans"]."</h3></font>";
 	ProduceOutput($ec_output,"");
@@ -530,7 +530,7 @@ if ($np>=$tipo_u[strtoupper($userdata[1])] and trim($tipo_u[strtoupper($userdata
 }
 
 //////////////////////////////////////////////////////////////////
-// Si viene desde la opción de prestar, se localiza el número de inventario solicitado
+// Si viene desde la opciï¿½n de prestar, se localiza el nï¿½mero de inventario solicitado
 
 $xnum_p=$np;
 $prestamos_este=0;
@@ -570,14 +570,14 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 			$ec_output.="<td bgcolor=white></td>".$este_prestamo;
  			//ProduceOutput($ec_output,"");
 		}else{
-		//se extrae la información del número de control del título y la base de datos catalográfica a la cual pertenece
+		//se extrae la informaciï¿½n del nï¿½mero de control del tï¿½tulo y la base de datos catalogrï¿½fica a la cual pertenece
 			$tt=explode('||',$item);
 			$control_number=$tt[0];
 
 			$catalog_db=strtolower($tt[1]);
     		$tipo_obj=trim($tt[5]);      //Tipo de objeto
 
-// se lee la configuración de la base de datos de objetos de préstamos
+// se lee la configuraciï¿½n de la base de datos de objetos de prï¿½stamos
 			$arrHttp["db"]="$catalog_db";
 			$este_prestamo.="<td bgcolor=white valign=top align=center>$control_number  ($catalog_db)</td>";
             require_once("databases_configure_read.php");
@@ -601,15 +601,15 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
             }
 			$fechal_usuario="";
 			$fechal_objeto="";
-			//SE VERIFICA SI EL USUARIO TIENE PRÉSTAMOS VENCIDOS
+			//SE VERIFICA SI EL USUARIO TIENE PRï¿½STAMOS VENCIDOS
             if ($nv>0 and isset($arrHttp["inventory"]) and $obj[12]!="Y" and $obj[13]!="Y"){
 				$este_prestamo.= "<font color=red><h3>".$msgstr["useroverdued"]."</h3></font>";
 				$cont="N";
 			}
-			//Se verifica si el usuario puede recibir más préstamos en total
+			//Se verifica si el usuario puede recibir mï¿½s prï¿½stamos en total
 			//SE ASIGNA EL TOTAL DE PRESTAMOS QUE PUEDE RECIBIR UN USUARIO  SEGUN EL TIPO DE OBJETO  (calculado en loanobjects_read.php)
 			if ($cont=="Y"){
-		// Se localiza el registro catalográfico utilizando los datos anteriores
+		// Se localiza el registro catalogrï¿½fico utilizando los datos anteriores
 				$ref_cat=ReadCatalographicRecord($control_number,$catalog_db,$arrHttp["inventory"]);
 
 	 			if ($ref_cat==0){      //The catalographic record is not found
@@ -626,28 +626,28 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 		    		$obj_store=$tt[1];
 					$tt=explode('||',$tt[0]);
 					$titulo=$tt[0];
-					if (isset($arrHttp["year"]))    $titulo.=" Año:".$arrHttp["year"];
+					if (isset($arrHttp["year"]))    $titulo.=" Aï¿½o:".$arrHttp["year"];
 					if (isset($arrHttp["volumen"])) $titulo.=" Volumen:".$arrHttp["volumen"];
-					if (isset($arrHttp["numero"]))  $titulo.=" Número:".$arrHttp["numero"];
+					if (isset($arrHttp["numero"]))  $titulo.=" Nï¿½mero:".$arrHttp["numero"];
 					if (isset($arrHttp["comments"]))
 		    			$titulo.=" <font color=darkred>".$arrHttp["comments"]."</font>";
-					$signatura=$tt[1];     //signatura topográfica
+					$signatura=$tt[1];     //signatura topogrï¿½fica
 		    		$este_prestamo.= "<td bgcolor=white valign=top>$titulo</td>";
 		    		$este_prestamo.= "<td bgcolor=white valign=top>";
 		    		$grabar="Y";
 					$este_prestamo.="</td>";
 
-	// se verifica si el ejemplar está prestado
+	// se verifica si el ejemplar estï¿½ prestado
 					$tr_prestamos=LocalizarTransacciones($arrHttp["inventory"],"TR",$catalog_db);
 					$items_prestados=count($tr_prestamos);
 					$Opcion="";
 					$msg="";
 					$msg_1="";
-					if (count($tr_prestamos)>0){   // Si ya existe una transacción de préstamo para ese número de inventario, el ejemplar está prestado
+					if (count($tr_prestamos)>0){   // Si ya existe una transacciï¿½n de prï¿½stamo para ese nï¿½mero de inventario, el ejemplar estï¿½ prestado
 						$cont="N";
 						$msg.="<font color=red>".$msgstr["itemloaned"]."<br></font>";
 	        		}
-					//SE VERIFICA SI EL USUARIO YA TIENE UN MISMO EJEMPLAR, VOLUMEN Y TOMO DE ESE TÍTULO Y SI SE LE PERMITE O NO
+					//SE VERIFICA SI EL USUARIO YA TIENE UN MISMO EJEMPLAR, VOLUMEN Y TOMO DE ESE Tï¿½TULO Y SI SE LE PERMITE O NO
 					//$var=PrestamoMismoObjeto($control_number,$arrHttp["usuario"],$catalog_db);
 					//$msg_1=$var[0];
 					$msg_1="";
@@ -663,8 +663,8 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        			$msg="";
 	        			$ec_output.="<td bgcolor=white valign=top>";
 	        			if ($grabar=="Y"){
-	        				//SE LOCALIZA SI EL TITULO ESTÁ RESERVADO
-	        				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){         //para ver si tiene activado el módulo de reservas se lee desde el abcd.def
+	        				//SE LOCALIZA SI EL TITULO ESTï¿½ RESERVADO
+	        				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){         //para ver si tiene activado el mï¿½dulo de reservas se lee desde el abcd.def
 	        					$reservado=LocalizarReservas($control_number,$catalog_db,$arrHttp["usuario"],$items_prestados,$prefix_cn,$from_copies,$pft_ni);
 	        					$mfn_reserva=$reservado[1];
 	        				}else{
@@ -733,9 +733,9 @@ function Prestar(){
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
 <div class="helper">
 <?php
