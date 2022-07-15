@@ -1,12 +1,12 @@
 <?php
 
-  require_once ("../../central/config.php");
-  require_once('../../isisws/nusoap.php');
+  require_once ("../central/config.php");
+  require_once('../isisws/nusoap.php');
 
  session_start();
  $lang=$_SESSION["lang"];
- require_once ("../../central/lang/mysite.php");
- require_once("../../central/lang/lang.php");
+ require_once ("../central/lang/mysite.php");
+ require_once("../central/lang/lang.php");
  
  if (!isset($_SESSION["permiso"])) die;
 $legend="";$success = false;$myresult=$msgstr["failed_operation"];$image="img/flag.png";

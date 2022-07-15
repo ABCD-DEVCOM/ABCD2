@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'ms-header.php'; ?>
 <div class="container-fluid">
   <div class="row">
 
@@ -9,8 +9,8 @@
         <h1 class="h2"><?php echo $msgstr["userstatus"];?></h1>
       </div>
         <?php
-            include '../inc/user.php';
-            $dataarr = getUserStatus();
+            
+  
             MenuFinalUser();
         ?>
                         <?php include '../inc/suspensions.php';?>

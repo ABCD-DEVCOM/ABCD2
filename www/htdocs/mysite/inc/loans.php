@@ -58,9 +58,8 @@
                                             <?php echo $loan["location"] ?>
                                         </td>
                                         <td>
-                                            <input type="button"  class="btn btn-primary" id="renew"
-                                                value="<?php echo $msgstr["makerenewal"]; ?>"
-                                                OnClick="javascript:LoanRenovation('<?php echo $loan["copyId"] ?>','<?php echo $loan["location"] ?>')">
+                                            <button type="button"  class="btn btn-primary" id="renew"
+                                                OnClick="javascript:LoanRenovation('<?php echo $loan["copyId"] ?>','<?php echo $loan["location"] ?>')" data-bs-toggle="modal" data-bs-target="#abcdModal"><?php echo $msgstr["makerenewal"]; ?></button>
                                         </td>
                                     </tr>
                                         <?php
@@ -74,3 +73,17 @@
     }
 
     ?>
+
+                <form name="formrenovation" id="formrenovation" method="POST" action="../loanrenovation.php" target="CheckOK">
+                    <input type="hidden" id="copyId" name="copyId"/>
+                    <input type="hidden" id="userId" name="userId"/>
+                    <input type="hidden" id="db" name="db"/>
+                    <input type="hidden" id="library" name="library"/>
+					<input type="hidden" id="usertype" name="usertype"/>
+					<input type="hidden" id="copytype" name="copytype"/>
+					<input type="hidden" id="loanid" name="loanid"/>
+					<input type="hidden" id="cantrenewals" name="cantrenewals"/>
+					<input type="hidden" id="suspensions" name="suspensions"/>
+					<input type="hidden" id="fines" name="fines"/>
+					<input type="hidden" id="endatev" name="endatev"/>
+                </form>
