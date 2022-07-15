@@ -12,6 +12,14 @@ include '../inc/user.php';
 
 $dataarr = getUserStatus();
 
+if (isset($_SESSION["lang"])){
+	$arrHttp["lang"]=$_SESSION["lang"];
+	$lang=$lang;
+}else{
+	$arrHttp["lang"]=$lang;
+	$_SESSION["lang"]=$lang;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +33,20 @@ $dataarr = getUserStatus();
     <meta name="robots" content="all" />
 
     <title>ABCD MySite</title>
+
+    <!-- Favicons -->
+
+    <link rel="mask-icon" href="/assets/images/favicons/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicons/favicon.svg" color="#fff">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
+
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/favicon-60x60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/favicon-76x76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/favicon-120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/favicon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">    
 
     <!--Bootstrap-->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />

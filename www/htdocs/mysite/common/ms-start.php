@@ -13,22 +13,34 @@ require_once ("../../central/common/ldap.php");
 $converter_path=$cisis_path."mx";
 //echo "converter_path=".$converter_path."<BR>";
 
-$page="";
-if (isset($_REQUEST['GET']))
-	$page = $_REQUEST['GET'];
-else
-	if (isset($_REQUEST['POST'])) $page = $_REQUEST['POST'];
+if (isset($arrHttp["lang"])){
+	$_SESSION["lang"]=$arrHttp["lang"];
+	$lang=$arrHttp["lang"];
+}else{
+	if (!isset($_SESSION["lang"]))
+    $_SESSION["lang"]=$lang;
+}
 
-//if (!(preg_match('^[a-z_./]*$', $page) && !preg_match("\\.\\.", $page))) {
-	// Abort the script
-//	die("Invalid request");
-//}
+
+$page="";
+if (isset($_REQUEST['GET'])){
+	$page = $_REQUEST['GET'];
+} else {
+	if (isset($_REQUEST['POST'])) 
+	$page = $_REQUEST['POST'];
+}
+
+if (!( preg_match('/^[a-z_.]*$/', $page)))  {
+	 //Abort the script
+	die("Invalid request");
+}
+
 $valortag = Array();
 
 
 function LeerRegistro() {
 
-// la variable $llave permite retornar alguna marca que est� en el formato de salida
+// la variable $llave permite retornar alguna marca que está en el formato de salida
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
@@ -58,23 +70,30 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 
 	for ($i = 0; $i < count($outmx); $i++) {
 		$textoutmx.=substr($outmx[$i], 0); 
-	} if ($textoutmx!="") {
+		
+	} 
+		$currentdatem=date("Ymd");
+
+	if ($textoutmx!="")  {
 		$splittxt=explode("|",$textoutmx);
 	//	$myuser = var_dump($checkuser);
 		$db = "users";
-		$myllave = $splittxt[0]."|";
-		$myllave .= "1|";
-		$myllave .= $splittxt[1]."|";
-		//echo "<h1>".$myllave."</h1>";
 		$valortag[40] = $splittxt[2]."\n";
 		$vectorAbrev['id']=$splittxt[0];
 		$vectorAbrev['name']=$splittxt[1];
 		$vectorAbrev['userClass']=$splittxt[4]."(".$splittxt[3].")";
 		$vectorAbrev['expirationDate']=$splittxt[5];
-		$vectorAbrev['photo']=$splittxt[6];
-		$currentdatem=date("Ymd");
-	} elseif (
-		$currentdatem>$splittxt[5]) {
+		$vectorAbrev['photo']=$splittxt[6];		
+
+		//Checks the expiration date of the user's registration
+		if ($currentdatem < $vectorAbrev['expirationDate']) {
+			$myllave = $splittxt[0]."|";
+			$myllave .= "1|";
+			$myllave .= $splittxt[1]."|";
+	}
+
+	} elseif ($currentdatem > $vectorAbrev['expirationDate']) {
+		echo "<p onload='common/ms-logout.php'>...</p>";
 		$myllave="";
 	}
 
@@ -102,8 +121,8 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     		$Permiso.=substr($value,0,$ix)."|";
     	}		
  	}else{ 
-		if ($arrHttp["id"]!="") echo "<script>
- 		self.location.href=\"../index.php?id=".$arrHttp["id"]."&cdb=".$arrHttp["cdb"]."&login=N&lang=".$lang."\";
+		if ($userid!="") echo "<script>
+ 		self.location.href=\"../index.php?id=".$userid."&cdb=".$arrHttp["cdb"]."&login=N&lang=".$lang."\";
  		</script>";
 		else
 		echo "<script>
@@ -263,29 +282,27 @@ $textoutmx.=substr($outmx[$i], 0);
 }
 
 
-if ($textoutmx!="")
-{
-$splittxt=explode("|",$textoutmx);
-$myuser = $checkuser;
-//OJO
-$db = "users";
-$myllave = $splittxt[0]."|";
-$myllave .= $splittxt[1]."|";
-$myllave .= "1|";
-$myllave .= $splittxt[2]."|";
-$valortag[40] = $splittxt[3]."\n";
-$vectorAbrev['id']=$splittxt[1];
-$vectorAbrev['name']=$splittxt[2];
-$vectorAbrev['userClass']=$splittxt[5]."(".$splittxt[4].")";
-$vectorAbrev['expirationDate']=$splittxt[6];
-$currentdatem=date("Ymd");
-if ($splittxt[6]!="") if ($currentdatem>$splittxt[6]) $myllave="";
-}
+if ($textoutmx!="") {
+	$splittxt=explode("|",$textoutmx);
+	$myuser = $checkuser;
 
-    
+	//OJO
+	$db = "users";
+	$myllave = $splittxt[0]."|";
+	$myllave .= $splittxt[1]."|";
+	$myllave .= "1|";
+	$myllave .= $splittxt[2]."|";
+	$valortag[40] = $splittxt[3]."\n";
+	$vectorAbrev['id']=$splittxt[1];
+	$vectorAbrev['name']=$splittxt[2];
+	$vectorAbrev['userClass']=$splittxt[5]."(".$splittxt[4].")";
+	$vectorAbrev['expirationDate']=$splittxt[6];
+	$currentdatem=date("Ymd");
+	if ($splittxt[6]!="") if ($currentdatem>$splittxt[6]) $myllave=""; 
+}
 	 return $myllave;
 
-}
+} //LeerRegistroLDAP()
 
 function VerificarUsuarioLDAP(){
     Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password,$MD5,$lang,$ldap_usr_dom;
@@ -348,7 +365,7 @@ function VerificarUsuarioLDAP(){
   		  die;
 		}
 	  
-}
+} //VerificarUsuarioLDAP()
 
 /////
 /////   INICIO DEL PROGRAMA
@@ -361,13 +378,6 @@ include("../../central/common/get_post.php");
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>";die;
 
 
-if (isset($arrHttp["lang"])){
-	$_SESSION["lang"]=$arrHttp["lang"];
-	$lang=$arrHttp["lang"];
-}else{
-	if (!isset($_SESSION["lang"]))
-    $_SESSION["lang"]=$lang;
-}
 
 require_once("../../central/lang/mysite.php");
 require_once("../../central/lang/lang.php");
@@ -390,11 +400,6 @@ if (isset($arrHttp["action"])) {
 	$arrHttp["login"]=$_SESSION["login"];
 	}
 }
-
-
-
-
-
 //if (!$_SESSION["userid"] || !$_SESSION["permiso"]=="mysite".$_SESSION["userid"]) {
 
       	if (isset($arrHttp["reinicio"])){
@@ -423,6 +428,7 @@ if (isset($arrHttp["action"])) {
       	$_SESSION["permiso"]="mysite".$userid;
       	$_SESSION["nombre"]=$nombre;
         $_SESSION["db"]=$db;
+        $lang=$arrHttp["lang"];
 		}
 
 //}
