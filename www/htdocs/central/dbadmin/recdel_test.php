@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -26,7 +29,7 @@ foreach ($vc as $var=>$value) {
 	$formato.= $value  ;
 }
 $formato=urlencode(trim($formato));
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"];
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"];
 $IsisScript=$xWxis."leer_mfnrange.xis";
 include("../common/wxis_llamar.php");
 ?>

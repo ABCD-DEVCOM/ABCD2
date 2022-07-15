@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20211216 fho4abcd Backbutton & helper by included file. Improve html, remove xmp tag
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -41,11 +42,11 @@ include "../common/inc_div-helper.php";
 <?php
 echo $arrHttp["par"];
 echo "</pre>";
-$fp=fopen($db_path."par/".$arrHttp["base"].".par","w");
+$fp=fopen($db_path.$actparfolder.$arrHttp["base"].".par","w");
 fwrite($fp,$arrHttp["par"]);
 fclose($fp);
 
-echo "<h4>".$arrHttp["base"].".par ".$msgstr["updated"]."</h4>";
+echo "<h4>".$actparfolder.$arrHttp["base"].".par ".$msgstr["updated"]."</h4>";
 echo "
 </div>
 </div>

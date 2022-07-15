@@ -1,6 +1,7 @@
 <?php
 /*
 20220125 fho4abcd home button replaces back button + div-helper + more  and better translation
+20220713 fho4abcd Use $actparfolder as location for .par and .def files + improve setting of UNICODE
 */
 global $arrHttp;
 session_start();
@@ -26,7 +27,7 @@ if (isset($_SESSION["CISIS_VERSION"])){
 }
 
 if (isset($_SESSION["UNICODE"])) {
-	$UNICODE=$_REQUEST["UNICODE"];
+	$UNICODE=$_SESSION["UNICODE"];
 } else {
 	$UNICODE="0";
 }
@@ -38,7 +39,7 @@ if (isset($_SESSION["DCIMPORT"])) {
 }
 
 function MostrarPft(){
-global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path,$UNICODE;
+global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path,$UNICODE,$actparfolder;
 /*
 	if($_POST['CISIS_VERSION']!=''){
 		$OS=strtoupper(PHP_OS);
@@ -70,14 +71,14 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path,$UNICODE;
   	flock($fp, 3);
   	fclose($fp);
 
-  	@ $fp = fopen($db_path.'par/'.$arrHttp['base'].".par", "a");
+  	@ $fp = fopen($db_path.$actparfolder.$arrHttp['base'].".par", "a");
 	@  flock($fp, 2);
   	if (!$fp){
     	echo "<p><strong> Error ocurred in ISIS Script."
        		."Please try again.</strong></p></body></html>";
     	exit;
   	}
-    if($_POST['UNICODE']=='1'){
+    if($UNICODE=='1'){
       		$str="isisac.tab=%path_database%"."isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."isisuctab_utf8.tab\n";
      } else {
       	  		$str="isisac.tab=%path_database%"."isisac.tab\n"."isisuc.tab=%path_database%"."isisuc.tab\n";
@@ -87,7 +88,7 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path,$UNICODE;
   	fclose($fp);
 
  	$IsisScript=$xWxis."inicializar_bd.xis";
- 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+ 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
  	include("../common/wxis_llamar.php");
 	foreach ($contenido as $linea){
 	   	echo "$linea\n";
@@ -308,14 +309,14 @@ $contenido.="\n".$bd."|".$descripcion;
 $ce=CrearArchivo($filename,$contenido);
 
 //Archivo .par
-$filename=$db_path."par/$bd.par";
+$filename=$db_path.$actparfolder."$bd.par";
 $contenido="$bd.*=%path_database%"."$bd/data/$bd.*\n";
 $contenido.="$bd.pft=%path_database%"."$bd/pfts/".$_SESSION["lang"]."/$bd.pft\n";
 $contenido.="prologoact.pft=%path_database%"."www/prologoact.pft\nepilogoact.pft=%path_database%"."www/epilogoact.pft\n";
 $ce=CrearArchivo($filename,$contenido);
 
 //ARCHIVO DBN.DEF
-$filename=$db_path."par/".strtoupper($bd).".def";
+$filename=$db_path.$actparfolder.strtoupper($bd).".def";
 $contenido="[FILE_LOCATION]\n\nFILE DATABASE.*=%path_database%$bd/data/$bd.*";
 $ce=CrearArchivo($filename,$contenido);
 

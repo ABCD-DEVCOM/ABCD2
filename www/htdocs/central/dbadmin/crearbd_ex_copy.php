@@ -5,6 +5,7 @@
 20211112 fho4abcd remove debug, copy extra files, do not update content of stw,iso,tab, do not create command files
 20211122 fho4abcd Improve create of dbn.par: works now with actab/uctab. More files copied/renamed. Add testbutton. Sanitize html.
 20211215 fho4abcd Backbutton by included file
+20220713 fho4abcd Use $actparfolder as location for .par files, note different databases
 */
 /*
 ** Copies a database to a new folder
@@ -234,12 +235,18 @@ if ($arrHttp["checkdup"]==1 ) {
     }
 
     /*
-    ** Copy & update par/[dbn].par
+    ** Copy & update <db>/[dbn].par
     ** Note that existing actab/uctab entries (old or new) will not be copied
     ** They can be wrong (due to change of ansi<->utf8
     */
-    $oldfile=$db_path."par/$base_old.par";
-    $newfile=$db_path."par/$base_new.par";
+    $loc_actparfolder=$actparfolder;
+    if ($actparfolder!="par/") {
+        // recompute $actparfolder for the current base
+        $loc_actparfolderold=$base_old."/";
+        $loc_actparfoldernew=$base_new."/";
+    }
+    $oldfile=$db_path.$loc_actparfolderold."$base_old.par";
+    $newfile=$db_path.$loc_actparfoldernew."$base_new.par";
     // The show button gives the content of the parameter file
     $showbutton=
         '<a href="../utilities/show_par_file.php?par_file='.$newfile.'" target=testshow onclick=OpenWindow()>'.$msgstr["show"].' &lt;dbn&gt;.par</a>';
@@ -274,7 +281,7 @@ if ($arrHttp["checkdup"]==1 ) {
         $contenido.=$actabline.PHP_EOL;
     } 
     else {
-        echo "<span style='color:blue'>".$msgstr["parmfile"].": par/".$base_new.".par ".$msgstr["parmdefault"]."<br>";
+        echo "<span style='color:blue'>".$msgstr["parmfile"].": ".$loc_actparfoldernew.$base_new.".par ".$msgstr["parmdefault"]."<br>";
         echo "&rarr; <b>actab=</b> <br></span>";
     }
     if (isset($olductab) ) {
@@ -282,7 +289,7 @@ if ($arrHttp["checkdup"]==1 ) {
         $contenido.=$uctabline.PHP_EOL;
     } 
     else {
-        echo "<span style='color:blue'>".$msgstr["parmfile"].": par/".$base_new.".par ".$msgstr["parmdefault"]."<br>";
+        echo "<span style='color:blue'>".$msgstr["parmfile"].": ".$loc_actparfoldernew.$base_new.".par ".$msgstr["parmdefault"]."<br>";
         echo "&rarr; <b>uctab=</b> <br></span>";
     }
     CrearArchivo($newfile,$contenido);
@@ -362,10 +369,10 @@ if ($arrHttp["checkdup"]==1 ) {
 
     // this one does not work
     // $IsisScript=$xWxis."inicializar_bd.xis";
-    // $query = "&base=".$base_new."&cipar=$db_path"."par/".$base_new.".par";
+    // $query = "&base=".$base_new."&cipar=$db_path"."<db>/".$base_new.".par";
 
     echo "<br>";
-    $query = "&base=".$base_new."&cipar=$db_path"."par/".$base_new.".par"."&Opcion=inicializar";
+    $query = "&base=".$base_new."&cipar=$db_path".$loc_actparfoldernew.$base_new.".par"."&Opcion=inicializar";
     $IsisScript=$xWxis."administrar.xis";
     include("../common/wxis_llamar.php");
     foreach ($contenido as $linea){

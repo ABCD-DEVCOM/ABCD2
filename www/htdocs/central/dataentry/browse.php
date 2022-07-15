@@ -1,14 +1,17 @@
 <?php 
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 error_reporting(E_ALL);
 session_start();
 
+include("../common/get_post.php");
 include ("../config.php");
 
 if (!isset($_SESSION["permiso"])){
     header("Location: ../common/error_page.php") ;
 }
 
-include("../common/get_post.php");
 
 //include for translate
 include("../lang/dbadmin.php");
@@ -20,7 +23,7 @@ include("../lang/opac.php");
 $ABCD_lang = $_SESSION["lang"];
 $ABCD_permission = $_SESSION["permiso"];
 $ABCD_base = $arrHttp['base'];
-$ABCD_cipar = $db_path."par/".$ABCD_base.".par";
+$ABCD_cipar = $db_path.$actparfolder.$ABCD_base.".par";
 
 //$Formato
 $table_browser="tb".$ABCD_base."";

@@ -1,6 +1,7 @@
 <?php
 /*
 20220203 fho4abcd backbutton+div-helper
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 //ASSIGN CONTROL NUMBERS TO A DATABASE
 session_start();
@@ -56,7 +57,7 @@ if (isset($arrHttp["encabezado"])){
 
 //GET THE MAX MFN
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"].".par&Opcion=status";
+$query = "&base=".$arrHttp["base"] . "&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -89,7 +90,7 @@ if ($tag_ctl==""){
 		$ValorCapturado="d".$tag_ctl."<".$tag_ctl." 0>".$control."</".$tag_ctl.">";
 		$ValorCapturado=urlencode($ValorCapturado);
 		$IsisScript=$xWxis."actualizar.xis";
-		$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=$Mfn&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
+		$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=$Mfn&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
 		include("../common/wxis_llamar.php");
 		echo "<tr><td>$Mfn</td><td>$control</td>" ;
 		//echo "<td>";
