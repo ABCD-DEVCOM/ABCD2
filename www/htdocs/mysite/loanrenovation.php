@@ -166,9 +166,9 @@ if (strlen($legend)==0) $success=true;
       if ($success) {
             $myresult=$msgstr["success_operation"];
             if (strlen($legend)>0)
-                $image="img/important.png";
+                $image="assets/img/important.png";
             else
-                $image="img/clean.png";
+                $image="assets/img/clean.png";
 
       }
 
