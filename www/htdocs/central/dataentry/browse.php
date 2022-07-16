@@ -1,6 +1,6 @@
 <?php 
 /*
-20220715 fho4abcd Use $actparfolder as location for .par files
+20220715 fho4abcd Use $actparfolder as location for .par files + show message and errors while deleting records
 */
 error_reporting(E_ALL);
 session_start();
@@ -123,7 +123,7 @@ if (isset($arrHttp["unlock"]) and $arrHttp["Mfn"]!="New"){
             $IsisScript=$xWxis."eliminarregistro.xis";
         else
             $IsisScript=$xWxis."unlock.xis";
-        $query = "&base=" . $arrHttp["base"] . "&cipar=$db_path"."par/".$arrHttp["base"]. ".par&Mfn=" . $arrHttp["Mfn"]."&login=".$_SESSION["login"];
+        $query = "&base=" . $arrHttp["base"] . "&cipar=$db_path".$actparfolder.$arrHttp["base"]. ".par&Mfn=" . $arrHttp["Mfn"]."&login=".$_SESSION["login"];
         include("../common/wxis_llamar.php");
         $res=implode("",$contenido);
         $res=trim($res);
@@ -557,7 +557,10 @@ if (!isset($arrHttp["return"])){
     </a>
 </div>
 </div><!--./sectionInfo-->
-
+<?php if (isset($arrHttp["error"])) {
+    echo "<div><font color=red>".$arrHttp["error"]."</font></div>";
+}
+?>
 <div class="middle list">
     <div class="searchBoxBrowser">        
         <div class="f_left">    

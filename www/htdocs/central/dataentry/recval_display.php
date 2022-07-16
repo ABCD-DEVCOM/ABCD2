@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-06-10 fho4abcd Remove password argument, lineends
+20220715 fho4abcd Use $actparfolder as location for .par files + improve html, add div-helper
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -36,6 +37,13 @@ include("../common/get_post.php");
 include ("../config.php");
 
 include("../lang/admin.php");
+include("../common/header.php");
+?>
+<title><?php echo $msgstr["rval"]?></title>
+
+<body>
+
+<?php include "../common/inc_div-helper.php";
 
 
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
@@ -147,19 +155,13 @@ if ($rec_validation==""){
 	die;
 }
 $formato=urlencode($rec_validation);
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&proc=<3333>R</3333>";
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&proc=<3333>R</3333>";
 $IsisScript=$xWxis."leer_mfnrange.xis";
 include("../common/wxis_llamar.php");
 ?>
-<html>
-<title><?php echo $msgstr["rval"]?></title>
-
-<body>
+<span class=title><?php $msgstr["rval"]." ($pftval)"?></span>
+<br>
 <?php
-
-echo "<span class=title>".$msgstr["rval"]." ($pftval)</span>";
-echo " <font size=1 face=arial> &nbsp; &nbsp; Script: dataentry/recval_display.php</font>";
-echo "<P>";
 $recval_pft="";
 $res=implode("\n",$contenido);
 $linea=explode('$$$$',$res);
@@ -184,12 +186,14 @@ foreach ($linea as $v_value){
 		}
     }
 }
-
-echo "</table>";
-echo "<span class=textbody03>";
-if ($ixerror==0) echo "<font color=red>No errors</font><p>" ;
-echo nl2br($recval_pft);
-echo "<p><a href=javascript:self.close()>close window</a><br><br>";
-echo "</body>
-</html>";
 ?>
+</table>
+<br>
+<?php
+if ($ixerror==0) echo "<font color=red>No errors</font>" ;
+echo nl2br($recval_pft);
+?>
+<br><a href=javascript:self.close()>close window</a>
+<br><br>
+</body>
+</html>

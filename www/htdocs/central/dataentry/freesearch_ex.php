@@ -1,10 +1,12 @@
 <?php
 /*
 20220713 fho4abcd Use $actparfolder as location for .par files
+20220716 fho4abcd div-helper, remove unused functions, improve html
 */
 session_start();
 include("../common/get_post.php");
 include("../config.php");
+$lang=$_SESSION["lang"];
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -72,7 +74,7 @@ global $arrHttp,$xWxis,$db_path,$actparfolder;
 	   			$val=explode('____$$$',$valor);
 	   			echo "<tr>";
 	   			echo "<td bgcolor=white valign=top>";
-				echo "<input type=checkbox name=sel_mfn  value=".$xcampos[2]." onclick=SelecReg(this)";
+				echo "<input type=checkbox name=sel_mfn  value='".urlencode($xcampos[2])."' onclick=SelecReg(this)";
 				if (isset($sel_mfn[$xcampos[1]])) echo " checked";
 				echo "></td>";
 				echo "<td bgcolor=white valign=top>".$cuenta."/".$arrHttp["total"]."</td>";
@@ -134,11 +136,6 @@ function SelecReg(Ctrl){
 	top.SeleccionarRegistro(Ctrl)
 }
 
-function Presentar(Mfn){
-	url="leer_all.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["base"]?>.par&Mfn="+Mfn+"&count=1"
-	msgwin=window.open(url,"SEE","width=400,height=400,resizable,scrollbars")
-	msgwin.focus()
-}
 function EnviarForma(){
 	if ((Trim(document.forma1.from.value)=="" || Trim(document.forma1.to.value)=="") && Trim(document.forma1.Expresion.value)=="" && Trim(document.forma1.seleccionados.value)==""){
 		alert("<?php echo $msgstr["cg_selrecords"]?>")
@@ -173,21 +170,11 @@ function EnviarForma(){
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/freesearch.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/freesearch.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "&nbsp; &nbsp; &nbsp; <a href=\"http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas#B.C3.BAsqueda_Libre\" target=_blank>abcdwiki</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: dataentry/freesearch_ex.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
+<?php $ayuda="freesearch.html";include "../common/inc_div-helper.php" ?>
+<div class="middle form">
+<div class="formContent">
 	<form name=tabla>
-	";
+<?php
 
 $base =$arrHttp["base"];
 $cipar =$arrHttp["cipar"];
@@ -262,15 +249,7 @@ $count=$arrHttp["count"];
 		echo $msgstr["cg_search"].": ".$arrHttp["Expresion"]."<br>";
 	}
 	echo "<strong>".$msgstr["cg_locate"].": ".$arrHttp["search"]."</strong>";
-	echo "</div>";
-?>
-<center>
-<table bgcolor=#cccccc cellspacing=1 border=0 cellpadding=5>
-<tr><td bgcolor=white align=center><input type=checkbox name=chkall onclick=CheckAll()></td><td bgcolor=white align=center> </td><td bgcolor=white align=center>Mfn</td><td bgcolor=white align=center>
-    </td>
-</tr>
-
-<?php
+	echo "</div></center>";
 $arr_mfn=array();
 $sel_mfn=array();
 if (isset($arrHttp["seleccionados"])){
@@ -362,10 +341,18 @@ if (!isset($arrHttp["Expresion"])){
 
 	$Opcion="busqueda";
 }
-echo $msgstr["registros"]."=$total";
+echo "<center>".$msgstr["registros"]." = ".$total."</center>";
 $tope=count($arr_mfn);
 
 $cuenta=$desde-1;
+?>
+<center>
+<table bgcolor=#cccccc cellspacing=1 border=0 cellpadding=5>
+<tr><td bgcolor=white align=center><input type=checkbox name=chkall onclick=CheckAll()></td>
+    <td bgcolor=white align=center> </td><td bgcolor=white align=center>Mfn</td><td bgcolor=white align=center></td>
+</tr>
+
+<?php
 
 if (isset($arrHttp["Expresion"])){
 	foreach ($arr_mfn as $Mfn){
@@ -425,23 +412,22 @@ if ($Opcion=="rango" or $Opcion=="busqueda"){
 		$hasta=1;
 	}
 
-	echo "<p><font face=arial size=1>".$msgstr["cg_nxtr"].
-	" <input type=text size=5 name=from value='".$hasta."'>,".$msgstr["cg_read"]."
-	&nbsp;<input type=text size=5 name=count value=".$count."> ".$msgstr["cg_morer"]."
-	<p><input type=submit value=\"".$msgstr["continuar"]."\" onclick=EnviarForma() ><br>";
-}
-echo "<input type=hidden name=total value=$total>\n";
-?>
-</td>
+	?><br>
+        <font face=arial size=1><?php echo $msgstr["cg_nxtr"]?></font>
+        <input type=text size=5 name=from value='<?php echo $hasta?>'>&nbsp;
+        <font face=arial size=1><?php echo $msgstr["cg_read"]?></font>&nbsp;
+        <input type=text size=5 name=count value='<?php echo $count?>'>
+        <font face=arial size=1><?php echo $msgstr["cg_morer"]?></font>
+        <br>
+        <input type=submit value='<?php echo $msgstr["continuar"]?>' onclick=EnviarForma() ><br>
+<?php }?>
+<input type=hidden name=total value=<?php echo $total?>>
+</center>
 </form>
-</table>
 
-<p>
 </div>
 </div>
 <?php include("../common/footer.php")?>
-</body>
-</html>
 <script>
 	Ctrl=document.tabla.sel_mfn
 	for (i=0;i<Ctrl.length;i++){

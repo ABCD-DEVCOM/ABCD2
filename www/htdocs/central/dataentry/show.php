@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -69,9 +72,9 @@ if (!isset($arrHttp["to"])) $arrHttp["to"]="20";
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/$Pft" ;
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/$Pft"  ;
 if (isset($arrHttp["Mfn"]))
-	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=@$Formato&Opcion=rango";
+	$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=@$Formato&Opcion=rango";
 else
-	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&Expresion=".urlencode($arrHttp["Expresion"])."&Formato=@$Formato&Total=s&Opcion=buscar&from=".$arrHttp["from"]."&to=".$arrHttp["to"];
+	$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par"."&Expresion=".urlencode($arrHttp["Expresion"])."&Formato=@$Formato&Total=s&Opcion=buscar&from=".$arrHttp["from"]."&to=".$arrHttp["to"];
 if (isset($arrHttp["sort"])){
 	$IsisScript=$xWxis."sort.xis";
 	$query.="&sort=".$arrHttp["sort"];
