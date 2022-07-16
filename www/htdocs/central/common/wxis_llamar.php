@@ -12,6 +12,7 @@
 20220313 fho4abcd Show alert in case of login errors
 20220321 fho4abcd Remove syspar addition in url (can be done by default par file)
 20220710 fho4abcd Remove rubbish+clean error for POST+improve GET+no exception for dump by login+better pop-up text
+20220716 fho4abcd Add IsisScript value to errormessage
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$charset,$cgibin_path,$postMethod,$meta_encoding,$def,$arrHttp;
 global $ABCD_scripts_path,$app_path;
@@ -100,6 +101,7 @@ if (isset($wxisUrl) and $wxisUrl!=""){
                     $err_wxis.=$err_hint."Check location of the ".$actual_db." folder and its content<br>";
                     $err_wxis.="&rarr; "."Check the content of the ".$actual_db.".par file<br>";
                 }
+                $err_wxis.="IsisScript=".$IsisScript."<br>";
                 $err_wxis.="query=".$query."<br>";
             }
         }

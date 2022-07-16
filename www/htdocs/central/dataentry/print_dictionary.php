@@ -1,4 +1,7 @@
 <?php
+/*
+20220713 fho4abcd Use $actparfolder as location for .par files
+*/
 ini_set('session.gc_maxlifetime',44400);
 session_start();
 set_time_limit(0);
@@ -11,7 +14,7 @@ include ("../config.php");
 
 function BuscarClavesLargas($Termino){
 global $arrHttp,$Formato,$xWxis,$Wxis,$wxisUrl,$db_path;
-	$contenido="";	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["pref"]).$Termino."&to=".strtoupper($arrHttp["pref"]).$Termino."&pref=".strtoupper($arrHttp["pref"])."&postings=ALL&formato_e=".urlencode($Formato);
+	$contenido="";	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["pref"]).$Termino."&to=".strtoupper($arrHttp["pref"]).$Termino."&pref=".strtoupper($arrHttp["pref"])."&postings=ALL&formato_e=".urlencode($Formato);
 	$IsisScript=$xWxis."ifp.xis";
 	include("../common/wxis_llamar.php");
 	$cont = array_unique ($contenido);
@@ -47,7 +50,7 @@ if (substr($arrHttp["Formato"],0,1)=="@" and $arrHttp["baseactiva"]==$arrHttp["b
 	$Formato="@".$Formato;
 }else
 	$Formato=$arrHttp["Formato"];
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"])."&postings=".$arrHttp["postings"]."&formato_e=".urlencode($Formato)."&to=".strtoupper($arrHttp["prefijo"])."ZZZZZZ";
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=autoridades"."&tagfst=".substr($arrHttp["tagfst"],3)."&prefijo=".strtoupper($arrHttp["prefijo"])."&pref=".strtoupper($arrHttp["pref"])."&postings=".$arrHttp["postings"]."&formato_e=".urlencode($Formato)."&to=".strtoupper($arrHttp["prefijo"])."ZZZZZZ";
 $IsisScript=$xWxis."ifp.xis";
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);

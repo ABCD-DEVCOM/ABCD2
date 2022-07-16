@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 set_time_limit(0);
 session_start();
@@ -73,7 +76,7 @@ if (isset($arrHttp["guardarformato"])){
 
 }
 
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
 if (isset($Expresion)) $query.="&Expresion=".$Expresion;
 $query.="&Opcion=$Opcion&Word=S&Formato=".$Formato;
 if (isset($arrHttp["seleccionados"])){
@@ -200,7 +203,7 @@ foreach ($ficha as $linea){
  					$pft_ref=$db_path.$bd_ref."/pfts/".$lang_db."/" .$pft_ref;
         		}
 	 			$IsisScript=$xWxis."imprime.xis";
- 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
+ 				$query = "&cipar=$db_path".$actparfolder.$bd_ref. ".par&count=9999&Expresion=".$expr_ref."&Opcion=buscar&base=" .$bd_ref."&Formato=@$pft_ref.pft";
 				include("../common/wxis_llamar.php");
 				$ixcuenta=0;
 				

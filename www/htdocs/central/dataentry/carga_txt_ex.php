@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 //Procesa el archivo TXT y lo carga en base de datos
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -152,7 +155,7 @@ Global $separador,$arrHttp,$db_path;
 
 
 function ActualizarRegistro($base,$ValorCapturado){
-global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr;
+global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr,$actparfolder;
 	$ValorCapturado=urlencode($ValorCapturado);
 
 	$Mfn="New";
@@ -160,7 +163,7 @@ global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr;
 	$IsisScript=$xWxis."crear_registro.xis";
 	$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["base"];
 	if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["base"];
-	$query = "&base=$base&cipar=".$db_path."par/$base.par" ."&login=".$_SESSION["login"]."&Mfn=$Mfn"."&Formato=$Formato"."&ValorCapturado=".$ValorCapturado;
+	$query = "&base=$base&cipar=".$db_path.$actparfolder."$base.par" ."&login=".$_SESSION["login"]."&Mfn=$Mfn"."&Formato=$Formato"."&ValorCapturado=".$ValorCapturado;
 	$contenido="";
     include("../common/wxis_llamar.php");
 	foreach ($contenido as $linea){
