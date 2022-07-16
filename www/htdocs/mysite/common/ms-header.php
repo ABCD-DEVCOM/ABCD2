@@ -243,7 +243,7 @@ if (isset($_SESSION["lang"])){
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
 <?php
 if (isset($def['LOGO_DEFAULT'])) {
-    echo '<img class="bi me-2" height="32" role="img" src="/assets/images/logoabcd.png?' . time() . '" title="$institution_name">';
+    echo '<img class="bi me-2" height="32" role="img" src="../assets/img/png/logo_abcd_232x68px.png?' . time() . '" title="$institution_name">';
 } elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
     echo '<img class="bi me-2" height="32" role="img" src="' . $folder_logo . $def["LOGO"] . '?' . time() . '" title="';
     if (isset($institution_name)) {
@@ -251,16 +251,24 @@ if (isset($def['LOGO_DEFAULT'])) {
     }
     echo "'>";
 } else {
-    echo '<img class="bi me-2" height="32" role="img" src="/assets/images/logoabcd.png?' . time() . '" title="ABCD">';
+    echo '<img class="bi me-2" height="32" role="img" src="../assets/img/png/logo_abcd_232x68px.png?' . time() . '" title="ABCD">';
 }
 ?>
   </a>
   <button class="navbar-toggler position-absolute d-md-none collapsed rounded-0 py-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-<form class="nav col-12 col-lg mb-2 mx-md-2 justify-content-center mb-md-0" role="search">
-    <input type="search" class="form-control form-control-dark rounded-1" placeholder="Search..." aria-label="Search">
+
+<form class="nav col-12 col-lg mb-2 mx-md-2 justify-content-center mb-md-0" method="post" action="/opac/buscar_integrada.php" name="libre" target="_blank">
+  <input type="hidden" name="lang" value="en">
+  <input type="hidden" name="modo" value="integrado">
+  <input type="hidden" value="and" name="alcance" id="and">
+  <input type="hidden" name="Opcion" value="libre">
+  <input type="hidden" name="prefijo" value="TW_">
+  <input type="hidden" name="resaltar" value="S">
+  <input type="search" class="form-control form-control-dark rounded-1"  name="Sub_Expresion" id="search-text" value="" placeholder="Search..." aria-label="Search">
 </form>
+  
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
       <a class="nav-link px-3" href="ms-logout.php" onclick="WriteCookie()"><?php echo $msgstr["logout"] ?>

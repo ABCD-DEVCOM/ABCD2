@@ -9,13 +9,12 @@
                             <div class="card mb-5 table-responsive">
                                 <table class="table table-striped table-responsive">
                                     <tr>
-                                        <th>#</th>
+                                        <th><?php echo $msgstr["operation"]; ?></th>
                                         <th><?php echo $msgstr["publication"]; ?></th>
                                         <th><?php echo $msgstr["reserveddate"]; ?></th>
                                         <th><?php echo $msgstr["avaiblefrom"]; ?></th>
                                         <th><?php echo $msgstr["avaibleuntil"]; ?></th>
                                         <th><?php echo $msgstr["library"]; ?></th>
-                                        <th><?php echo $msgstr["operation"]; ?></th>
                                     </tr>
                                     <?php
 
@@ -25,17 +24,18 @@
             ?>
                                     <tr>
                                         <td>
-                                            <p><span class="badge text-bg-primary"> <?php echo $reserve["recordId"] ?></td></span></p>
+                                            <p><span class="badge text-bg-primary"> <?php echo $reserve["recordId"] ?></span></p>
+                                                <button type="button"  class="btn btn-danger" id="renew"
+                                                OnClick="CancelReservation('<?php echo $reserve["!id"] ?>')" data-bs-toggle="modal" data-bs-target="#abcdModal"><?php echo $msgstr["cancel"]; ?></button>
                                         </td>
-                                        <td><p><?php getInfoBiblio($CN_item, $DB_item);?></p></td>
+                                        <td>
+                                            <p><?php getInfoBiblio($CN_item, $DB_item);?></p>
+
+                                        </td>
                                         <td><?php echo fechaAsString($reserve["date"]) ?></td>
                                         <td><?php echo fechaAsString($reserve["confirmedDate"]) ?></td>
                                         <td><?php echo fechaAsString($reserve["expirationDate"]) ?></td>
                                         <td><?php echo $reserve["location"] ?></td>
-                                        <td>
-                                            <button type="button"  class="btn btn-danger" id="renew"
-                                                OnClick="CancelReservation('<?php echo $reserve["!id"] ?>')" data-bs-toggle="modal" data-bs-target="#abcdModal"><?php echo $msgstr["cancel"]; ?></button>
-                                        </td>
                                     </tr>
            
 

@@ -114,7 +114,7 @@ include ("../$app_path/lang/lang.php");
     <link href="assets/css/signin.css?<?php echo time();?>" rel="stylesheet" />
 
     <!--FontAwesome-->
-    <link href="assets/css/all.min.css" rel="stylesheet">
+    <link href="/assets/css/all.min.css" rel="stylesheet">
 
 
     <script src=../<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
@@ -172,11 +172,11 @@ include ("../$app_path/lang/lang.php");
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control" placeholder="name@example.com" name="login" id="user">
+      <input type="text" class="form-control" placeholder="name@example.com" name="login" id="user"  autocomplete="username">
       <label for="floatingInput"><?php echo $msgstr["userid"]?></label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" placeholder="Password" name="password" id="pwd">
+      <input type="password" class="form-control" placeholder="Password" name="password" id="pwd" autocomplete="current-password">
       <label for="floatingPassword"><?php echo $msgstr["password"]?></label>
     
     </div>
