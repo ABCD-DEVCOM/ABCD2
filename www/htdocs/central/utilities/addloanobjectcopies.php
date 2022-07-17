@@ -1,6 +1,7 @@
 <?php
 /*
 20211215 fho4abcd Backbutton by & helper by included file
+20220717 fho4abcd Use $actparfolder as location for .par files. Special for copies & loanobjects
 */
 /**
  * @program:   ABCD - ABCD-Central-Utility - http://abcd.netcat.be/
@@ -371,6 +372,10 @@ $field=trim($field);
 if ($field[0]=='^') return str_replace( '^','',$field);
 return $field;
 }
+
+$parloanobjectsfolder=$actparfolder;
+if ( $actparfolder!="par/") $parloanobjectsfolder="loanobjects/";
+
 if (isset($_POST["submit"]))
 {
 $from=$_POST['from'];
@@ -409,7 +414,8 @@ if ($blsf=="") $blfent=$blf; else $blfent=$blf."^".$blsf;
 if ($tomesf=="") $tomefent=$tomef; else $tomefent=$tomef."^".$tomesf;
 if ($volumesf=="") $volumefent=$volumef; else $volumefent=$volumef."^".$volumesf;
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Opcion=status";
+
+$query = "&base=loanobjects&cipar=$db_path".$parloanobjectsfolder."loanobjects.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -459,7 +465,7 @@ $mxinv=$converter_path." ".$db_path."loanobjects/data/loanobjects fst=@".$db_pat
 exec($mxinv, $outputmxinv,$banderamxinv);
 //End of Loanobjects Work----------------------------------------------------------------------
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Opcion=status";
+$query = "&base=loanobjects&cipar=$db_path".$parloanobjectsfolder."loanobjects.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {

@@ -6,6 +6,7 @@
 20220321 fho4abcd adapt to new includes, renamed to bcl_labelshow_result
 20220628 fho4abcd removed unused output options (e.g Excel)
 20220630 fho4abcd Improve html, remove unused options
+20220717 fho4abcd Use $actparfolder as location for .par files
 */
 set_time_limit(0);
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -243,12 +244,12 @@ global $arrHttp,$msgstr;
 
 
 function MfnBarCode($base,$from,$to,$bar_c,$Pft){
-global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
+global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp,$actparfolder;
 	$base=$base;
 	$cipar=$base.".par";
 	$Opcion="leer";
 	$IsisScript=$xWxis."leer_mfnrange.xis";
- 	$query = "&base=$base&cipar=$db_path"."par/".$cipar. "&from=" . $from."&to=$to&Pft=$Pft";
+ 	$query = "&base=$base&cipar=$db_path".$actparfolder.$cipar. "&from=" . $from."&to=$to&Pft=$Pft";
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
     if ($arrHttp["output"]=="display") echo "<div>".$msgstr["barcode_script"].": ".$IsisScript."</div>";
  	//echo $Pft;
@@ -265,7 +266,7 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 
 }
 function InventarioLista($base,$lista,$bar_c,$Pft){
-global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
+global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp,$actparfolder;
 	$Expresion="";
 	$inv=explode(",",$lista);
     $comp=array();
@@ -281,7 +282,7 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 		}
 	}
 	$IsisScript=$xWxis."imprime.xis";
-	$query = "&base=".$base ."&cipar=$db_path"."par/".$base.".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
+	$query = "&base=".$base ."&cipar=$db_path".$actparfolder.$base.".par&Expresion=".urlencode($Expresion)."&Opcion=buscar&count=100&Pft=".urlencode($Pft);
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
 	include("../common/wxis_llamar.php");
 	$inventario=array();
@@ -307,10 +308,10 @@ global $xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$arrHttp;
 }
 
 function ClasificacionBarCode($base,$from,$to,$bar_c,$Pft){
-global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
+global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$actparfolder;
     $Prefijo=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_from"]);
     $to=trim($bar_c["classification_number_pref"]).trim($arrHttp["classification_to"]);
-	$query = "&base=".$base ."&cipar=$db_path"."par/".$base.".par&Opcion=diccionario&prefijo=".$Prefijo."&hasta=".$to."&Pft=".$Pft;
+	$query = "&base=".$base ."&cipar=$db_path".$actparfolder.$base.".par&Opcion=diccionario&prefijo=".$Prefijo."&hasta=".$to."&Pft=".$Pft;
 	$IsisScript=$xWxis."indice.xis";
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
 	include("../common/wxis_llamar.php");
@@ -320,10 +321,10 @@ global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
 }
 
 function InventarioBarCode($base,$from,$to,$bar_c,$Pft){
-global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db;
+global $arrHttp,$xWxis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$actparfolder;
     $Prefijo=trim($bar_c["inventory_number_pref"]).trim($arrHttp["inventory_from"]);
     $to=trim($bar_c["inventory_number_pref"]).trim($arrHttp["inventory_to"])."ZZZ";
-	$query = "&base=".$base ."&cipar=$db_path"."par/".$base.".par&Opcion=diccionario&prefijo=".urlencode($Prefijo)."&hasta=".urlencode($to)."&Pft=".urlencode($Pft);
+	$query = "&base=".$base ."&cipar=$db_path".$actparfolder.$base.".par&Opcion=diccionario&prefijo=".urlencode($Prefijo)."&hasta=".urlencode($to)."&Pft=".urlencode($Pft);
 	$IsisScript=$xWxis."indice.xis";
     if (isset($arrHttp["wxis_sum"]))echo $msgstr["barcode_wxis_cmd"].": ".$IsisScript." &rarr; ".urldecode($query);
     $array_c=array();

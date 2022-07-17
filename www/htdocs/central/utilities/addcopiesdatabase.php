@@ -1,6 +1,7 @@
 <?php
 /*
 20211215 fho4abcd Backbutton by & helper by included file
+20220717 fho4abcd Use $actparfolder as location for .par files. Special for copies & loanobjects
 */
 /**
  * @program:   ABCD - ABCD-Central-Utility - http://abcd.netcat.be/
@@ -562,6 +563,13 @@ $field=trim($field);
 if ($field[0]=='^') return str_replace( '^','',$field);
 return $field;
 }
+
+
+$parcopiesfolder=$actparfolder;
+if ( $actparfolder!="par/") $parcopiesfolder="copies/";
+$parloanobjectsfolder=$actparfolder;
+if ( $actparfolder!="par/") $parloanobjectsfolder="loanobjects/";
+
 if (isset($_POST["submit"]))
 {
 $from=$_POST['from'];
@@ -782,7 +790,7 @@ if ($snsf=="") $snfent=$snf; else $snfent=$snf."^".$snsf;
 if ($condsf=="") $condfent=$condf; else $condfent=$condf."^".$condsf;
 if ($exchangesf=="") $exchangefent=$exchangef; else $exchangefent=$exchangef."^".$exchangesf;
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=status";
+$query = "&base=copies&cipar=$db_path".$parcopiesfolder."copies.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -797,7 +805,7 @@ foreach($contenido as $linea) {
 }
 $cantcopiersbefore=(int) $tag["MAXMFN"];
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Opcion=status";
+$query = "&base=loanobjects&cipar=$db_path".$parloanobjectsfolder."loanobjects.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -1022,7 +1030,7 @@ exec($mxchcopies, $outputchcopie,$banderamxchcopie);
 
 //End of Loanobjects Work----------------------------------------------------------------------
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=status";
+$query = "&base=copies&cipar=$db_path".$parcopiesfolder."copies.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -1039,7 +1047,7 @@ $cantcopiersafter=(int) $tag["MAXMFN"];
 $cantadd=$cantcopiersafter-$cantcopiersbefore;
 echo '<br /><span style="color: blue"><b>&nbsp;&nbsp;'.$cantadd.' copies added from the database records</b></span>';
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Opcion=status";
+$query = "&base=loanobjects&cipar=$db_path".$parloanobjectsfolder."loanobjects.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {

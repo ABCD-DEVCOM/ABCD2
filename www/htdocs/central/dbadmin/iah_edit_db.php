@@ -1,4 +1,7 @@
 <?php
+/*
+20220717 fho4abcd Use $actparfolder as location for .par & def files
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -827,13 +830,13 @@ include "../common/inc_div-helper.php";
     echo "<input type=hidden name=ValorCapturado value=\"\">\n";
     if (isset($arrHttp["encabezado"]))
     	echo "<input type=hidden name=encabezado value=s>\n";
-	if (file_exists($db_path."par/".strtoupper($arrHttp["base"]).".def")){
-		$db_def=parse_ini_file ($db_path."par/".strtoupper($arrHttp["base"]).".def",true,INI_SCANNER_RAW);
+	if (file_exists($db_path.$actparfolder.strtoupper($arrHttp["base"]).".def")){
+		$db_def=parse_ini_file ($db_path.$actparfolder.strtoupper($arrHttp["base"]).".def",true,INI_SCANNER_RAW);
 		$msg="";
 	}else{         //CONFIGURE A NEW DATABASE
-		$msg="<font color=red><strong>".$msgstr["newfile"]." bases/par/".$arrHttp["base"].".def. ".$msgstr["reminder"]."</strong></font><p>";
+		$msg="<font color=red><strong>".$msgstr["newfile"]." bases/".$actparfolder.$arrHttp["base"].".def. ".$msgstr["reminder"]."</strong></font><p>";
 	}
-//	echo $db_path."par/".strtoupper($arrHttp["base"]).".def" ;
+//	echo $db_path.$actparfolder.strtoupper($arrHttp["base"]).".def" ;
 //	echo "<pre>"; echo print_r($db_def); echo "</pre>";
 	if (!isset($db_def["FILE_LOCATION"]["FILE DATABASE.*"]))
 		$db_def["FILE_LOCATION"]["FILE DATABASE.*"]="%path_database%".$arrHttp["base"]."/data/".$arrHttp["base"].".*";
