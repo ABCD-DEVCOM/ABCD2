@@ -1,4 +1,7 @@
 <?php
+/*
+20220717 fho4abcd Use $actparfolder as location for .par & def files
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -59,7 +62,7 @@ include "../common/inc_div-helper.php";
 	<?php
 	$arrHttp["ValorCapturado"]= stripslashes($arrHttp["ValorCapturado"]);
 	echo "<pre>".$arrHttp["ValorCapturado"]."</pre>";
-	$file=$db_path."par/".strtoupper($arrHttp["base"]).".def";
+	$file=$db_path.$actparfolder.strtoupper($arrHttp["base"]).".def";
 	$fp=fopen($file,"w");
 	if (!$fp){
 		echo "Cannot open the file $file for writing";

@@ -2,6 +2,7 @@
 /* Modifications
 20210718 fho4abcd div-helper,html,translations
 20211215 fho4abcd Backbutton by included file
+20220717 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -212,10 +213,10 @@ $(document).ready(function()
 
 <?php
 function TotalItems(){
- global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr,$base_ant;
+ global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr,$base_ant,$actparfolder;
  
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=".$base_ant."&cipar=$db_path"."par/".$base_ant.".par&Opcion=status";
+$query = "&base=".$base_ant."&cipar=$db_path".$actparfolder.$base_ant.".par&Opcion=status";
 include("../common/wxis_llamar.php");
 	$ix=-1;
 	foreach($contenido as $linea) {

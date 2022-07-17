@@ -1,4 +1,7 @@
 <?php
+/*
+20220716 fho4abcd Use $actparfolder as location for .par files + div-helper + new style close button
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -9,6 +12,7 @@ include("../common/header.php");
 if (!isset($_SESSION['lang'])) $_SESSION["lang"]="es";
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 $vc=explode("\n",$arrHttp["ValorCapturado"]);
@@ -38,7 +42,7 @@ foreach ($Pft as $value){
 	$Html[$ixt]="<tr><td bgcolor=white valign=top>".$value["TAG"]."</td><td bgcolor=white valign=top><font face=\"courier new\">".$value["PFT"]."</td>";
 }
 $formato=urlencode(trim($formato));
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"];
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"];
 $IsisScript=$xWxis."leer_mfnrange.xis";
 include("../common/wxis_llamar.php");
 ?>
@@ -48,18 +52,15 @@ include("../common/wxis_llamar.php");
 	<div class="breadcrumb">
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
-?>
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["close"]?></strong></span></a>
+    <?php include "../common/inc_close.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php"?>
 <div class="middle form">
 	<div class="formContent">
 <?php
 
-echo "<h5>&nbsp; &nbsp; Script: dbadmin/recval_test.php</h5>";
 $recval_pft="";
 $recval_pft=implode("<BR>",$contenido);
 if (!strpos($recval_pft,'execution error')===false){
@@ -89,7 +90,6 @@ foreach ($t as $salida){
 			echo "<td bgcolor=white>&nbsp;</td>";
 	}
 }
-echo "<tr><td colspan=3><a href=javascript:self.close() class=>".$msgstr["close"]."</a></td></tr>";
 echo "</table>";
 
 echo "</div></div></body>

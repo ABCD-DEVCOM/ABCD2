@@ -2,6 +2,7 @@
 /* Modifications
 20211114 fho4abcd created
 20211215 fho4abcd Backbutton by included file+ add gizmo to .par file
+20220717 fho4abcd Use $actparfolder as location for .par files + improve .par content (parameterized path in stead of full path)
 */
 /*
 ** Creates a gizmo database in the data folder of the current database
@@ -89,7 +90,7 @@ include "../common/inc_div-helper.php"
 ** The sources for the gizmo are .iso files in folder <database>/data
 */
 $gizmofullfolder=$db_path.$arrHttp["base"]."/data";
-$parfile=$db_path."par/$base.par";
+$parfile=$db_path.$actparfolder.$base.".par";
 
 // The test button gives the mx_path to the test window
 $testbutton=
@@ -176,7 +177,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
     ** Step 1: update the .par file: add /update the entry for this gizmo
     */
     $gizmokey=$gizmoname.".*";
-    $parfile=$db_path."par/$base.par";
+    $parfile=$db_path.$actparfolder.$base.".par";
     $fp=file($parfile);
     $contenido="";
     $tokens=array();
@@ -193,7 +194,7 @@ if ($confirmcount<=0) {  /* - First screen: Select the iso file -*/
             $contenido.=$value;
         }
     }
-    $contenido.=$gizmokey."=".$db_path.$base."/data/".$gizmokey;
+    $contenido.=PHP_EOL.$gizmokey."="."%path_database%".$base."/data/".$gizmokey;
 	$handle = fopen($parfile, 'w');
     fwrite($handle, $contenido);
     fclose($handle);

@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2021-07-18 fho4abcd Show error if curl is not installed. Errors to screen and not to file
+20220717 fho4abcd Use $actparfolder as location for .par files
 */
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
@@ -519,11 +520,11 @@ class Repository_api
 
 	function InitializeBD(){
 	
-	    global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr;
+	    global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr,$actparfolder;
 		$db = $this->bd_abcd;
 		$arrHttp["base"] = $db;
 		
-		$query = "&base=".$db."&cipar=$db_path"."par/".$db.".par"."&Opcion="."inicializar";
+		$query = "&base=".$db."&cipar=$db_path".$actparfolder.$db.".par"."&Opcion="."inicializar";
 		$arrHttp["IsisScript"]="administrar.xis";
 		$IsisScript=$xWxis.$arrHttp["IsisScript"];
 		
@@ -551,7 +552,7 @@ class Repository_api
 
 		global $lang,$vars,$cipar,$from,$base,$ValorCapturado,$arrHttp,$ver,$valortag,$fdt,$tagisis,$cn,$msgstr,$tm,$lang_db,$MD5;
 		global $xtl,$dataentry,$xnr,$Mfn,$FdtHtml,$xWxis,$variables,$db_path,$Wxis,$default_values,$rec_validation,$wxisUrl,$validar,$tm;
-		global $max_cn_length,$listItemsReal,$listItemsRepo;
+		global $max_cn_length,$listItemsReal,$listItemsRepo,$actparfolder;
 
 			$variables_org=$variablesD;
 			$ValorCapturado="";
@@ -653,7 +654,7 @@ class Repository_api
 					
 		 
 			
-			 $query = "&base=".$base."&cipar=$db_path"."par/".$cipar."&login=abcd&Mfn=" .$mfn."&Opcion=".$opcion."$stw&ValorCapturado=".$ValorCapturado;
+			 $query = "&base=".$base."&cipar=$db_path".$actparfolder.$cipar."&login=abcd&Mfn=" .$mfn."&Opcion=".$opcion."$stw&ValorCapturado=".$ValorCapturado;
 			 include("../common/wxis_llamar.php");
 			
 		   	}
