@@ -1,5 +1,10 @@
 <?php
+session_start();
+
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
+
+//var_dump($_SESSION);
+
 $modo = "";
 if (isset($_REQUEST["base"]))
 	$actualbase = $_REQUEST["base"];
@@ -8,7 +13,7 @@ else
 if (isset($_REQUEST["xmodo"]) and $_REQUEST["xmodo"] != "") {
 	unset($_REQUEST["base"]);
 	$modo = "integrado";
-}
+} 
 
 function wxisLlamar($base, $query, $IsisScript)
 {
@@ -127,13 +132,12 @@ $meta_encoding = $charset;
 		</div>
 		<div class="areaTitulo">
 			<div class=tituloBase>
-				<?php
-				if (isset($_COOKIE['user'])) echo $_COOKIE['user']."<br>";
-				echo $TituloEncabezado;
-				if (isset($_REQUEST["db_path"]))
-					echo "  " . $_REQUEST["db_path"];
-				?>
-
+				<?php 
+				if (isset($_SESSION['nombre'])){ 
+					echo utf8_encode($_SESSION['nombre']);
+				} else {
+					echo '<a href="/mysite?mode=opac">Sign</a>';
+				}?>
 			</div>
 			<div>
 				<?php echo $charset;

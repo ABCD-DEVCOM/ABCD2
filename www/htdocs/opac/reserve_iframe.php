@@ -1,8 +1,3 @@
-<?php
-
-
-?>
-
   <script>
 
 		function EnviarReserva(){
@@ -27,7 +22,8 @@
 <form name=enviarreserva action=opac_statment_ex.php method=post onSubmit='EnviarReserva();return false' target=_top>
 <?php
 
-foreach ($_REQUEST as $key=>$value){	if ($key!="items_por_reservar")
+foreach ($_REQUEST as $key=>$value){
+	if ($key!="items_por_reservar")
 		echo "<input type=hidden name=$key value=\"$value\">\n";
 }
 ?>
@@ -37,7 +33,9 @@ foreach ($_REQUEST as $key=>$value){	if ($key!="items_por_reservar")
 <tr><td><font size=2><?php echo $msgstr["user_id"]?>: </td><td><input type=text name=usuario size=30></td>
 <tr><td colspan=2 align=center><br><input type=submit value=" <?php echo $msgstr["send"]?> ">
 <?php
-if ($accion=="reserve_one"){	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";}
+if ($accion=="reserve_one"){
+	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";
+}
 ?>
 </td></table>
 </form>

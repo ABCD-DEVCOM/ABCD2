@@ -38,7 +38,7 @@ if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."
                         $bb = $_REQUEST["base"];
                     else
                         $bb = $primera_base;
-                    $query = "&base=$bb&cipar=$db_path" . $actparfolder . "/$bb" . ".par&Expresion=" . urlencode($ex) . "&from=1&count=1&Opcion=buscar&lang=" . $_REQUEST["lang"];
+                    $query = "&base=".$bb."&cipar=".$db_path.$actparfolder.$bb.".par&Expresion=" . urlencode($ex) . "&from=1&count=1&Opcion=buscar&lang=" . $_REQUEST["lang"];
                     $resultado = wxisLlamar($bb, $query, $xWxis . $IsisScript);
                     $primeravez = "S";
                     foreach ($resultado as $value) {
