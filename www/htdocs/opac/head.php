@@ -1,9 +1,10 @@
 <?php
 session_start();
+//var_dump($_SESSION);
 
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
 
-//var_dump($_SESSION);
+
 
 $modo = "";
 if (isset($_REQUEST["base"]))
@@ -44,7 +45,7 @@ $meta_encoding = $charset;
 	<link href="/assets/css/buttons.css" rel="stylesheet">
 	<link href="/assets/css/normalize.css" rel="stylesheet">
 
-	<link href="assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
+	<link href="/opac/assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
 	<script src=/opac/assets/js/script_b.js?<?php echo time(); ?>></script>
 	<script src=/opac/assets/js/highlight.js?<?php echo time(); ?>></script>
 	<script src=/opac/assets/js/lr_trim.js></script>
@@ -126,7 +127,7 @@ $meta_encoding = $charset;
 	<header id="header-wrapper">
 		<div id="header">
 			<div id="logo">
-				<a name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $_REQUEST['lang'] ?>"><img src="<?php echo $logo ?>"></a>
+				<a name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $_REQUEST['lang'] ?>"><img src="/opac/<?php echo $logo ?>"></a>
 			</div>
 
 		</div>
@@ -159,11 +160,11 @@ $meta_encoding = $charset;
 		?>
 
 		<div id="page">
-			<div id="content" <?php if (isset($desde) and $desde = "ecta")
-									echo "style='float:left;border: #cccccc 1px solid;border-radius:15px; background: red;'"; ?>>
-
+			<div id="content" <?php if (isset($desde) and $desde = "ecta") ?>>
 				<?php
+				//Display search form when not on a user's screen
 				if (!isset($indice_alfa)) 
 				include("components/submenu_bases.php");
 				$_REQUEST["base"] = $actualbase;
 				?>
+			</div>

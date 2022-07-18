@@ -2,7 +2,6 @@
 <?php
 if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 
-
 echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a>";
 
     $primeravez="S";
@@ -64,28 +63,6 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	}
 
 
-    if (isset($ONLINESTATMENT)){
-    	//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-?>
-			<br><hr>
-	        <!-- Login form -->
-	        <form name="estado_de_cuenta" action="opac_statment_call.php" method="post" onsubmit="ValidarUsuario();return false">
-	        
-	        <label><?php echo $msgstr["ecta"]?></label>
-			<input type="text" name="usuario" id="search-user" value="" placeholder=" <?php echo $msgstr["user_id"]?>" />
-			<input type="password" name="senha" id="search-user" value="" placeholder=" <?php echo "Senha"?>" />
-		    
-		    <?php if (isset($_REQUEST["db_path"]))
-					echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
-				  if (isset($lang))
-					echo "<input type=hidden name=lang value=\"".$lang."\">\n";
-			?>
-			<input type="hidden" name="vienede" value="ecta_web">
-		    <input type="submit" id="search-user-submit" value="<?php echo $msgstr["send"]?>" >
-			</form>
-			<hr>
-<?php
-	}
 	if (file_exists($db_path."opac_conf/".$lang."/side_bar.info")){
 		$fp=file($db_path."opac_conf/".$lang."/side_bar.info");
 		$sec_name="";
@@ -110,22 +87,22 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	}
 }
 ?>
-<br><br><br>
 </aside>
 
 </div>
-<form name=bi action=buscar_integrada.php method=post>
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion>
-<input type=hidden name=coleccion>
-<input type=hidden name=Expresion>
-<input type=hidden name=titulo_c>
-<input type=hidden name=resaltar>
-<input type=hidden name=submenu>
-<input type=hidden name=Pft>
-<input type=hidden name=mostrar_exp>
-<input type=hidden name=home>
+
+<form name="bi" action="buscar_integrada.php" method="post">
+<input type="hidden" name="base">
+<input type="hidden" name="cipar">
+<input type="hidden" name="Opcion">
+<input type="hidden" name="coleccion">
+<input type="hidden" name="Expresion">
+<input type="hidden" name="titulo_c">
+<input type="hidden" name="resaltar">
+<input type="hidden" name="submenu">
+<input type="hidden" name="Pft">
+<input type="hidden" name="mostrar_exp">
+<input type="hidden" name="home">
 <?php
 echo "<input type=hidden name=modo value=\"";
 if (isset($_REQUEST["modo"])) echo $_REQUEST["modo"];

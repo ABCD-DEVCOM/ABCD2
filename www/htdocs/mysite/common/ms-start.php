@@ -3,34 +3,25 @@
 2021-06-14 fho4abcd Do not set/get password in/from $_SESSION 
 */
 
+session_start();
+
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
+
 $arrHttp=Array();
 
-    session_start([
-    'cookie_lifetime' => 86400,
-    'read_and_close' => true,
-]);
-
-
-$session_id = session_id();
-
-$secure = true; // if you only want to receive the cookie over HTTPS
-$httponly = true; // prevent JavaScript access to session cookie
-$samesite = 'lax';
-
-
-$lifetime = 86400;
-session_start();
-setcookie(session_name(), session_id(), time() + $lifetime);
-
-
-//echo "<h1>".$session_id."</h1>";
+// Cookies variables
+$abcd_cookie_options = array (
+                'expires' => time() + 60*60*24*30,
+                'path' => '/',
+                'domain' => ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false, // leading dot for compatibility or use subdomain
+                'secure' => true,     // or false
+                'httponly' => true,    // or false
+                'samesite' => 'None' // None || Lax  || Strict
+                );
+setcookie(session_name(), session_id(), $abcd_cookie_options);   
 
 //var_dump($_COOKIE);
-
-//var_dump(session_get_cookie_params());
-
-
+//var_dump($_SESSION);
 
 require_once ("../../central/config.php");
 require_once('../../isisws/nusoap.php');
@@ -474,21 +465,21 @@ if (isset($arrHttp["action"])) {
       	    VerificarUsuario();		
 		}
       
-/*
-      	$arrHttp["lang"]=$_SESSION["lang"];
+
+      	
 		if (!empty($arrHttp["id"])) {
 		$_SESSION["action"]='reserve';
 		$_SESSION["recordId"]=$arrHttp["id"];
 		$_SESSION["cdb"]=$arrHttp["cdb"];
 		} else {
-        $_SESSION["userid"]=$userid;
-      	if (isset($arrHttp["login"])) $arrHttp["login"]=$_SESSION["login"];
-      	$_SESSION["permiso"]="mysite".$userid;
-      	$_SESSION["nombre"]=$nombre;
+        if (isset($lang)) $_SESSION["lang"]=$lang;
+        if (isset($userid)) $_SESSION["userid"]=$userid;
+      	if (isset($arrHttp["login"])) $_SESSION["login"]=$arrHttp["login"];
+      	if (isset($userid)) $_SESSION["permiso"]="mysite".$userid;
+      	if (isset($nombre)) $_SESSION["nombre"]=$nombre;
         $_SESSION["db"]=$db;
-        $lang=$arrHttp["lang"];
 		}
-*/
+
 //}
 
 ?>

@@ -73,7 +73,7 @@ if (isset($_REQUEST["modo"]))
 </form>
 <?php
 if (isset($_REQUEST["prefijoindice"])){
-	echo "<form name=indice action=alfabetico.php method=post>\n";
+	echo "<form name='indice' action='components/alfabetico.php' method='post'>\n";
 	foreach ($_REQUEST as $var=>$value){
 		if ($var!="letra" and $var!="count")
 			echo "<input type=hidden name=$var value=\"$value\">\n";
@@ -87,7 +87,7 @@ if (isset($_REQUEST["prefijoindice"])){
 	echo "</form>\n";
 }
 ?>
-<form name=activarindice method=post action=alfabetico.php>
+<form name=activarindice method=post action=components/alfabetico.php>
 <input type="hidden" name="titulo">
 <input type="hidden" name="columnas">
 <input type="hidden" name="Opcion">

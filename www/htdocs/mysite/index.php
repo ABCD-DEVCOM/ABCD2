@@ -7,15 +7,6 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 } 
 
-if (isset($_SESSION['userid']) && $_SESSION['permiso']==='mysite01') {
-  echo "SIM";
-}
-
-$session_id = session_id();
-//echo "<h1>" . $session_id . "</h1>";
-
-
-
 // unset($_SESSION["db_path"]);
 
 $new_window=time();

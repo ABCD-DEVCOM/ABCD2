@@ -17,8 +17,7 @@
 	</script>
 
 
-<p align=center>
-<strong><?php echo $msgstr["reserve"]?></strong></p>
+<p><?php echo $msgstr["reserve"]?></p>
 <form name=enviarreserva action=opac_statment_ex.php method=post onSubmit='EnviarReserva();return false' target=_top>
 <?php
 
@@ -29,15 +28,15 @@ foreach ($_REQUEST as $key=>$value){
 ?>
 <input type=hidden name=mostrar_reserva value=Y>
 <input type=hidden name=items_por_reservar>
-<table align=center>
-<tr><td><font size=2><?php echo $msgstr["user_id"]?>: </td><td><input type=text name=usuario size=30></td>
-<tr><td colspan=2 align=center><br><input type=submit value=" <?php echo $msgstr["send"]?> ">
+
+<?php echo $msgstr["user_id"];?>
+<input type="hidden" name="usuario" value="<?php echo $_SESSION["userid"]?>">
+<input type=submit value="<?php echo $msgstr["send"]?>" >
 <?php
 if ($accion=="reserve_one"){
-	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";
+	echo "<input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";
 }
 ?>
-</td></table>
 </form>
 
 <?php

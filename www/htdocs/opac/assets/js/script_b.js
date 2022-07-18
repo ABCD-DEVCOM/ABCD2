@@ -151,7 +151,7 @@ function NavegarDiccionario(F,desde){
  	}
 	switch (desde){
 		case 4:
-/* Más términos */
+/* Mï¿½s tï¿½rminos */
 			document.diccionario.Navegacion.value="mas terminos"
 			document.diccionario.submit()
 			break
@@ -435,13 +435,13 @@ function ActivarIndice(titulo,columnas,Opcion,count,posting,prefijo,base){
 
 function ValidarUsuario(){
 	if (Trim(document.estado_de_cuenta.usuario.value)==""){
-		alert("Debe ingresar su código de usuario")
+		alert("Debe ingresar su cï¿½digo de usuario")
 		return
 	}
 	document.estado_de_cuenta.submit()
 }
 
-/* Marcado y presentación de registros*/
+/* Marcado y presentaciï¿½n de registros*/
 function getCookie(cname) {
     var name = cname+"=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -506,10 +506,9 @@ function showCookie(cname){
 		alert(msgstr["rsel_no"])
 		return
 	}
-	alert(document.buscar.lang.value)
+	//alert(document.buscar.lang.value)
     document.buscar.action="presentar_seleccion.php"
 	document.buscar.cookie.value=cookie
-
 	document.buscar.submit()
 }
 
