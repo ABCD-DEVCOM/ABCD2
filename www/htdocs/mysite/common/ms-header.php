@@ -1,5 +1,4 @@
 <?php
-//include '../../central/common/header.php';
 require '../../central/config.php';
 require '../../central/lang/lang.php';
 

@@ -1,9 +1,23 @@
 <?php
-session_start();
-$_SESSION=array();
-unset($_SESSION["db_path"]);
-include("../central/config.php");
-include("../$app_path/common/get_post.php");
+
+include "../central/config.php";
+include "../$app_path/common/get_post.php";
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+} 
+
+if (isset($_SESSION['userid']) && $_SESSION['permiso']==='mysite01') {
+  echo "SIM";
+}
+
+$session_id = session_id();
+//echo "<h1>" . $session_id . "</h1>";
+
+
+
+// unset($_SESSION["db_path"]);
+
 $new_window=time();
 
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";

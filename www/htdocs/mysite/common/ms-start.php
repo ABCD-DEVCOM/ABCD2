@@ -5,7 +5,33 @@
 
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
+
+    session_start([
+    'cookie_lifetime' => 86400,
+    'read_and_close' => true,
+]);
+
+
+$session_id = session_id();
+
+$secure = true; // if you only want to receive the cookie over HTTPS
+$httponly = true; // prevent JavaScript access to session cookie
+$samesite = 'lax';
+
+
+$lifetime = 86400;
 session_start();
+setcookie(session_name(), session_id(), time() + $lifetime);
+
+
+//echo "<h1>".$session_id."</h1>";
+
+//var_dump($_COOKIE);
+
+//var_dump(session_get_cookie_params());
+
+
+
 require_once ("../../central/config.php");
 require_once('../../isisws/nusoap.php');
 require_once ("../../central/common/ldap.php");
@@ -38,6 +64,8 @@ if (!( preg_match('/^[a-z_.]*$/', $page)))  {
 $valortag = Array();
 
 
+
+
 function LeerRegistro() {
 
 // la variable $llave permite retornar alguna marca que está en el formato de salida
@@ -50,17 +78,38 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 	//USING the Central Module to login to MySite module
 	//Get the user and pass
 	
-	$checkuser=$arrHttp["login"];
-	if ($MD5==0) {
-		$checkpass=$arrHttp["password"];
-	}else{
-		$checkpass=md5($arrHttp["password"]);
+
+
+
+if (isset($_COOKIE["user"])) {
+	$checkuser = $_COOKIE["user"];
+
+    $mx = $converter_path . " " . $db_path . "users/data/users \"pft=if v600='" . $checkuser . "' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620,fi\" now";
+
+} elseif (isset($arrHttp["login"])) {
+	$checkuser = $arrHttp["login"];
+
+	if ($MD5 == 0) {
+		$checkpass = $arrHttp["password"];
+	} else {
+		$checkpass = md5($arrHttp["password"]);
 	}
 
 	//Search the users database
-	$mx=$converter_path." ".$db_path."users/data/users \"pft=if v600='".$checkuser."' then if v610='".$checkpass."' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
+	$mx = $converter_path . " " . $db_path . "users/data/users \"pft=if v600='" . $checkuser . "' then if v610='" . $checkpass . "' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
 
-	//echo "mxcommand=$mx<BR>";
+} else {
+		echo "<script>
+ 		self.location.href=\"../index.php?login=N&lang=" . $_SESSION['lang'] . "\";
+ 		</script>";
+
+}
+
+
+
+
+
+//	echo "mxcommand=$mx<BR>";
 	//mxcommand=/ABCD2/www/cgi-bin_Windows/ansi/mx /ABCD2/www/bases-examples_Windows/users/data/users "pft=if v600='rosa' then if v610='rosa' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi" now
 	//die;
 
@@ -93,7 +142,10 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 	}
 
 	} elseif ($currentdatem > $vectorAbrev['expirationDate']) {
-		echo "<p onload='common/ms-logout.php'>...</p>";
+		echo "<script>
+ 		self.location.href=\"../index.php?login=N&lang=" . $lang . "\";
+ 		</script>";
+
 		$myllave="";
 	}
 
@@ -101,6 +153,9 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 	  return $myllave;
 
 }// END LeerRegistro()
+
+
+
 
 function VerificarUsuario(){
 Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
@@ -121,13 +176,16 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     		$Permiso.=substr($value,0,$ix)."|";
     	}		
  	}else{ 
-		if ($userid!="") echo "<script>
+		if ($userid!="") {
+		
+		echo "<script>
  		self.location.href=\"../index.php?id=".$userid."&cdb=".$arrHttp["cdb"]."&login=N&lang=".$lang."\";
  		</script>";
-		else
+		 }else{
 		echo "<script>
  		self.location.href=\"../index.php?login=N&lang=".$lang."\";
  		</script>";
+		 }
   		die;
  	}
 }
@@ -416,21 +474,21 @@ if (isset($arrHttp["action"])) {
       	    VerificarUsuario();		
 		}
       
-
-      	$_SESSION["lang"]=$arrHttp["lang"];
+/*
+      	$arrHttp["lang"]=$_SESSION["lang"];
 		if (!empty($arrHttp["id"])) {
 		$_SESSION["action"]='reserve';
 		$_SESSION["recordId"]=$arrHttp["id"];
 		$_SESSION["cdb"]=$arrHttp["cdb"];
 		} else {
         $_SESSION["userid"]=$userid;
-      	$_SESSION["login"]=$arrHttp["login"];
+      	if (isset($arrHttp["login"])) $arrHttp["login"]=$_SESSION["login"];
       	$_SESSION["permiso"]="mysite".$userid;
       	$_SESSION["nombre"]=$nombre;
         $_SESSION["db"]=$db;
         $lang=$arrHttp["lang"];
 		}
-
+*/
 //}
 
 ?>

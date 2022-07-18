@@ -9,6 +9,18 @@ else
 	$retorno="/mysite";
 $_SESSION=array();
 unset($_SESSION);
+unset($_COOKIE);
+// unset cookies
+if (isset($_SERVER['HTTP_COOKIE'])) {
+    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+    foreach ($cookies as $cookie) {
+        $parts = explode('=', $cookie);
+        $name = trim($parts[0]);
+        setcookie($name, '', time() - 1000);
+        setcookie($name, '', time() - 1000, '/');
+    }
+}
+
 session_unset();
 session_destroy();
 ?>
@@ -18,14 +30,16 @@ session_destroy();
 
       <script>
        
-            function WriteCookie() {
-               var now = new Date();
-               now.setMonth( now.getMonth() - 1 );
-               cookievalue = escape(document.myform.customer.value) + ";"
+const deleteAllCookies = () => {
+  const cookies = document.cookie.split(";");
 
-               document.cookie="name=" + cookievalue;
-               document.cookie = "expires=" + now.toUTCString() + ";"
-               document.write("Setting Cookies : " + "name=" + cookievalue );
-            }
+  for (const cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+}
+
+deleteAllCookies()
          
       </script>
