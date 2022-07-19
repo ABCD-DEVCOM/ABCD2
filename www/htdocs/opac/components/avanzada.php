@@ -1,7 +1,5 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-// Para presentar el diccionario de t�rminos consolidado
-include("dibujarformabusqueda_st.php");
 
 //////////////////////////////////////////////////////////////////////////////////////
 // ------------------------------------------------------
@@ -13,6 +11,10 @@ include("../../central/config_opac.php");
 include("../leer_bases.php");
 $indice_alfa="n";
 include("../head.php");
+
+// Para presentar el diccionario de terminos consolidado
+include("dibujarformabusqueda_st.php");
+
 //foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado")
 	if (isset($_REQUEST["base"])) unset($_REQUEST["base"]);
@@ -37,26 +39,24 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
 ?>
 
 <?php
- echo "<font class=tituloBase>".$msgstr["buscar_a"]."</font>";
+ echo $msgstr["buscar_a"];
 
-$Diccio=-1;
+ $Diccio=-1;
 DibujarFormaBusqueda($Diccio);
-echo "
 
-
-</div>";
 ?>
-<div style=margin-top:20px;><input type=button id=search-submit value='<?php echo $msgstr["back"]?>' onclick="javascript:history.back()"></div>
+
+
+<input type="button" id="search-submit" value="<?php echo $msgstr["back"]?>" onclick="javascript:history.back()">
+
+<form name="back" method="post" action="buscar_integrada.php">
 <?php
-echo "<form name=back method=post action=buscar_integrada.php>\n";
 foreach ($_REQUEST as $var=>$value){
 	echo "<input type=hidden name=$var value=";
 	if (trim($value)!='""') echo urlencode($value);
 	echo ">\n";
 }
 echo "</form>";
-
-include("footer.php");
 
 
 ?>

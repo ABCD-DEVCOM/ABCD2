@@ -1,9 +1,9 @@
 <?php
-
-$path="../";
-include("../../central/config_opac.php");
-include("../leer_bases.php");
 include("../head.php");
+$path="../";
+//include("../../central/config_opac.php");
+//include("../inc/leer_bases.php");
+
 if (!isset($_REQUEST["prefijoindice"]) or $_REQUEST["prefijoindice"]=="") $_REQUEST["prefijoindice"]=$_REQUEST["prefijo"];
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 $index_alfa=array();
@@ -163,6 +163,8 @@ if (count($index_alfa)>1){
 <?php
 $comp="XXXXX";
 $cuenta=0;
+
+
 if (file_exists($db_path."opac_config/colecciones.tab")){
 	echo "<tr><td align=right>Filtrar por colecci�n: </td>";
 		echo "<td><xselect name=coleccion onchange='javascript:document.buscar.Expresion.value=\"\";IrA();'>

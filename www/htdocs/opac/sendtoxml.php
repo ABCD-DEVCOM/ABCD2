@@ -4,7 +4,7 @@ include("../central/config_opac.php");
 
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";die;
 
-include("leer_bases.php");
+include("inc/leer_bases.php");
 
 $desde=1;
 $count="";

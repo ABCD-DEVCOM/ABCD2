@@ -3,14 +3,14 @@ session_start();
 //var_dump($_SESSION);
 
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
-
-
-
+include($_SERVER['DOCUMENT_ROOT']."/opac/inc/leer_bases.php");
 $modo = "";
-if (isset($_REQUEST["base"]))
+if (isset($_REQUEST["base"])){
 	$actualbase = $_REQUEST["base"];
-else
+ }else {
 	$actualbase = "";
+}
+
 if (isset($_REQUEST["xmodo"]) and $_REQUEST["xmodo"] != "") {
 	unset($_REQUEST["base"]);
 	$modo = "integrado";
@@ -124,6 +124,7 @@ $meta_encoding = $charset;
 </head>
 
 <body>
+
 	<header id="header-wrapper">
 		<div id="header">
 			<div id="logo">
@@ -154,17 +155,27 @@ $meta_encoding = $charset;
 		die;
 	}
 
-	include_once 'components/topbar.php';
+		
+//Layout
 
-		if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
-		?>
+// NAVBARTOP
+		include_once 'components/topbar.php';
 
+// SIDEBAR
+
+if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
+?>
 		<div id="page">
 			<div id="content" <?php if (isset($desde) and $desde = "ecta") ?>>
 				<?php
 				//Display search form when not on a user's screen
-				if (!isset($indice_alfa)) 
-				include("components/submenu_bases.php");
+				if (!isset($indice_alfa)) {
+				// Exibe form de busca
+				include("components/search_free.php");
 				$_REQUEST["base"] = $actualbase;
+			} else {
+				//include 'components/avanzada.php';
+			}
 				?>
 			</div>
+	--- /opac/head.php --- 

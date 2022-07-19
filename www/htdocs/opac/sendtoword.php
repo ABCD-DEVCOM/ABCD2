@@ -10,7 +10,7 @@ $mostrar_menu="N";
 include("../central/config_opac.php");
 //header('Content-Type: text/html; charset=".$charset."');
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";//DIE;
-include("leer_bases.php");
+include("inc/leer_bases.php");
 
 $desde=1;
 $count="";

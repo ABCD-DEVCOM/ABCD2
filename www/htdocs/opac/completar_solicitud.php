@@ -3,7 +3,7 @@ if (isset($_REQUEST["Opcion"])) $_REQUEST["Opcion_Original"]=$_REQUEST["Opcion"]
 //foreach ($_REQUEST as $var=>$value)  echo "$var=$value<br>";//die;
 include("../central/config_opac.php");
 $Actual_path=$db_path;
-include("leer_bases.php");
+include("inc/leer_bases.php");
 $indice_alfa="N";
 //$sidebar="N";
 $ActualDir=getcwd();

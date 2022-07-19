@@ -7,7 +7,7 @@
 
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
 include("../central/config_opac.php");
-include("leer_bases.php");
+include("inc/leer_bases.php");
 include("presentar_registros.php");
 include('components/nav_pages.php');
 include("head.php");

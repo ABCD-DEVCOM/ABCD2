@@ -95,7 +95,7 @@ function ObtenerTerminos(desde){
 function CancelarDiccionario(retorno){
 	switch (retorno){
 		case 'A':
-			document.diccionario.action="avanzada.php"
+			document.diccionario.action="components/avanzada.php"
 			document.diccionario.submit()
 			break
 		case 'B':
@@ -103,7 +103,7 @@ function CancelarDiccionario(retorno){
 			document.diccionario.submit()
 			break;
 		case 'C':
-			document.diccionario.action="avanzada.php"
+			document.diccionario.action="components/avanzada.php"
 			document.diccionario.submit()
 			break
 		case 'D':
@@ -225,7 +225,7 @@ function LimpiarBusqueda() {
 }
 
 function BusquedaAvanzada(){
-	document.diccio.action="avanzada.php"
+	document.diccio.action="components/avanzada.php"
     document.diccio.Opcion.value="integrada"
 	document.diccio.submit()
 }

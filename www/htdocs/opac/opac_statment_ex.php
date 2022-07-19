@@ -6,10 +6,8 @@
 
 ***********************************************/
 
-session_name("orbitacn");
-session_start();
 include("../central/config_opac.php");
-include("leer_bases.php");
+include("inc/leer_bases.php");
 include($CentralPath."common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
 if (isset($_REQUEST["lang"]))
@@ -282,7 +280,7 @@ foreach ($_REQUEST as $key=>$value){
 echo "</form>";
 
 
-session_destroy();
+//session_destroy();
 
 ?>
 <script>

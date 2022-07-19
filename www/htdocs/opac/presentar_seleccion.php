@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-session_name('orbitacn');
+//session_name('orbitacn');
 
 var_dump($_SESSION);
 
 $mostrar_menu="N";
 include("../central/config_opac.php");
-include("leer_bases.php");
+include("inc/leer_bases.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>".urldecode($value)."<br>";
 unset($_REQUEST["usuario"]);
 $desde=1;

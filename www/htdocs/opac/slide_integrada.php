@@ -5,10 +5,6 @@
 
 
 ***********************************************/
-
-$path="../";
-include("config.php");
-include("leer_bases.php");
 include("head.php");
 include("navegarpaginas.php");
 

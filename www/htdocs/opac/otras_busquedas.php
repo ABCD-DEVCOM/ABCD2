@@ -1,7 +1,6 @@
 <?php
-include("config.php");
-include("leer_bases.php");
 include("head.php");
+include("inc/leer_bases.php");
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";
 if (isset($_REQUEST["base"])){
 	 echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"]."</span>";

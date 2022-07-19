@@ -9,7 +9,7 @@ function PresentarDiccionario(){
 
 
 	}else{
-		//echo "<font size=2>No hay más términos en este diccionario<p>
+		//echo "<font size=2>No hay mï¿½s tï¿½rminos en este diccionario<p>
 
 		//	</html>";
 	}
@@ -186,7 +186,7 @@ function EjecutarBusquedaDiccionarioMovil(Accion){
 	Expresion=""
 	Seleccionados=ObtenerTerminosMovil("TerminosSeleccionadosTxt")
 	if (Seleccionados==""){
-		alert("Favor seleccionar los términos de búsqueda")
+		alert("Favor seleccionar los tï¿½rminos de bï¿½squeda")
 		return false
 	}
 	Expresion=Seleccionados
@@ -202,7 +202,7 @@ function EjecutarBusquedaDiccionarioMovil(Accion){
 			document.diccionario.action="buscar_integrada.php"
 			break
 		case 2:
-			document.diccionario.action="avanzada.php"
+			document.diccionario.action="components/avanzada.php"
 			break
 	}
 	document.diccionario.submit()
@@ -216,7 +216,7 @@ function NavegarDiccionarioMovil(F,desde){
  	}
 	switch (desde){
 		case 4:
-/* Más términos */
+/* Mï¿½s tï¿½rminos */
 			document.diccionario.Navegacion.value="mas terminos"
 			document.diccionario.submit()
 			break

@@ -1,6 +1,4 @@
 <?php
-include("../central/config_opac.php");
-include("leer_bases.php");
 include("head.php");
 //echo "<div style=\"margin:0 auto;height:100%\">";
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";

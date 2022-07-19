@@ -91,7 +91,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 
 </div>
 
-<form name="bi" action="buscar_integrada.php" method="post">
+<form name="bi" action="/opac/buscar_integrada.php" method="post">
 <input type="hidden" name="base">
 <input type="hidden" name="cipar">
 <input type="hidden" name="Opcion">
@@ -118,7 +118,7 @@ if (isset($lang))
 <script>
 function BuscarIntegrada(base,modo,Opcion,Expresion,Coleccion,titulo_c,resaltar,submenu,Pft,mostrar_exp){
 
-	if (mostrar_exp!="") document.bi.action="inicio_base.php"
+	if (mostrar_exp!="") document.bi.action="../inicio_base.php"
 	document.bi.base.value=base
 	document.bi.Opcion.value=Opcion
 	document.bi.modo.value=modo

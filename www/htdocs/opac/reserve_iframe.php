@@ -29,7 +29,7 @@ foreach ($_REQUEST as $key=>$value){
 <input type=hidden name=mostrar_reserva value=Y>
 <input type=hidden name=items_por_reservar>
 
-<?php echo $msgstr["user_id"];?>
+<?php echo $msgstr["user_id"];?> <?php echo $_SESSION["userid"]?>
 <input type="hidden" name="usuario" value="<?php echo $_SESSION["userid"]?>">
 <input type=submit value="<?php echo $msgstr["send"]?>" >
 <?php

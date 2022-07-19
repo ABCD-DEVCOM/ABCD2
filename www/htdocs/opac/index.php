@@ -4,42 +4,15 @@
 2022-03-23 rogercgui change the folder /par to the variable $actparfolder
 
 ***********************************************/
-
 $_REQUEST["modo"]="integrado";
-if (file_exists("opac_dbpath.dat")){
-	$fp=file("opac_dbpath.dat");
-	foreach ($fp as $linea){
-		$linea=trim($linea);
-		if ($linea!=""){
-			$l=explode('|',$linea);
-			if (isset($l[2]) and $l[2]!=""){
-				if ($_REQUEST["db_path"]==$l[0]){
-					$lang=$l[2];
-				}
-			}
-		}
-	}
-}
-
 include("../central/config_opac.php");
-
-include("leer_bases.php");
 $primeraPagina="S";
-include("head.php");
 
+include("head.php");
 ?>
 
-<div class="post">
-    <div style="clear: both;">&nbsp;</div>
-    <div class="entry">
-        <?php 
-			if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){
-		?>
-        <script>
-        	document.cookie = 'ORBITA=;';
-        </script>
-        <?php
-}
+<?php
+// Iframe do site embedado
 if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 	$fp=file($db_path."opac_conf/".$lang."/sitio.info");
 	foreach ($fp as $value){
@@ -71,8 +44,6 @@ if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 
 }
 ?>
-    </div>
-</div>
 
 <?php include("components/footer.php");?>
 
