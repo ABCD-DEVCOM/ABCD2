@@ -250,3 +250,5 @@
 							echo "<input type=hidden name=modo value=\"" . $_REQUEST["modo"] . "\">\n";
 						?>
 					</form>
+
+					--- footer.php ---

@@ -13,7 +13,7 @@ $desde_web="Y";
 $desde_opac="Y";
 $_REQUEST["vienede"]="orbita";
 chdir($CentralPath."reserve");
-include ('reservar_ex.php');
+//include ('reservar_ex.php');
 include($ActualDir."/components/footer.php");
 
 

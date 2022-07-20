@@ -6,16 +6,25 @@
 
 ***********************************************/
 
+
+
 include("../central/config_opac.php");
 include("inc/leer_bases.php");
+
+
 include($CentralPath."common/get_post.php");
+
+var_dump($_SESSION);
+
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
-if (isset($_REQUEST["lang"]))
-	$lang=$_REQUEST["lang"];
-else
-	$lang="es";
+if (isset($_REQUEST['lang'])){
+	$lang=$_REQUEST['lang'];
+} else {
+	$lang=$_SESSION['lang'];
+}
+
 $lang_db=$lang;
-$_SESSION["lang"]=$lang;
+
 if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
 include($CentralPath."lang/admin.php");
 include($CentralPath."lang/prestamo.php");
@@ -28,7 +37,7 @@ global $Wxis,$xWxis,$db_path,$CentralPath,$actparfolder;
 	$formato_us=$Pft_tipou."/@".$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp.pft";
    	$query = "&Expresion=CO_".$_REQUEST["usuario"]."&base=users&cipar=$db_path".$actparfolder."/users.par&Formato=".$formato_us;
    	$base="user";
-   	$contenido=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");
+  	$contenido=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");
     $ec_output="";
 	foreach ($contenido as $linea){
 		$linea=trim($linea);
@@ -130,21 +139,18 @@ function Renovar() {
 <td>
 <strong><h3><?php echo $msgstr["ecta"]?></h3></strong><p>
 
-<form name=ecta id=ecta>
+<form name="ecta" id="ecta">
 <?php
-
-
 include($CentralPath."circulation/leer_pft.php");
 
-// se lee la configuraci�n local
-
+// se lee la configuración local
 include($CentralPath."circulation/calendario_read.php");
 include($CentralPath."circulation/locales_read.php");
-// SE LEE LA RUTINA PARA CALCULAR EL L�MITE DE LA SUSPENSION
+// SE LEE LA RUTINA PARA CALCULAR EL LIMITE DE LA SUSPENSION
 include($CentralPath."circulation/fecha_de_devolucion.php");
-// se leen las politicas de pr�stamo
+// se leen las politicas de préstamo
 include($CentralPath."circulation/loanobjects_read.php");
-// se lee la configuraci�n de la base de datos de usuarios
+// se lee la configuración de la base de datos de usuarios
 include($CentralPath."circulation/borrowers_configure_read.php");
 
 $user=LeerCodigoUsuario();
@@ -158,6 +164,7 @@ if ($user==''){
 		echo "<p><strong>Usuario no existe</strong></p>";
     }
 }
+
 //SE LEE EL MAXIMO DE RENOVACIONES PERMITIDAS DE ACUERDO AL TIPO DE USUARIO
 $fp=file($db_path."circulation/def/".$_REQUEST["lang"]."/typeofusers.tab");
 foreach ($fp as $value){
@@ -178,6 +185,8 @@ $ec_output="";
 $arrHttp["vienede"]="orbita";
 $desde_opac="Y";
 $ecta_web="N";
+
+
 include($CentralPath."circulation/ec_include.php");
 
 if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
@@ -215,7 +224,7 @@ if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
 		echo "<br><font color=red><strong>".$msgstr["no_more_reservations"]."</strong></font>";
 	}
 }
-$arrHttp["lang"]="es";
+
 ?>
 </form>
 <form name=renovar action=renovar_ex.php method=post>

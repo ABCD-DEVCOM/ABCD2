@@ -150,9 +150,8 @@ header('Content-Type: text/html; charset=".$charset."');
 	<div id="myMail" style="display:<?php if ($accion=="mail_one") echo "block"; else echo "none";?>;margin:auto;width:600px;xheight:150px; position:relative;border:1px solid black;">
 		<?php include("correo_iframe.php");?>
 	</div>
-	<div id="myReserve" style="display:<?php if ($accion=="reserve_one") echo "block"; else echo "none";?>;margin:auto;width:600px;xheight:150px; position:relative;border:1px solid black;">
 			<?php include("reserve_iframe.php")?>;
-	</div>
+	
 
 <?php
 echo "<strong><font size=3 color=darkred>".$msgstr["records_selected"]."</font></strong><br><br>";
