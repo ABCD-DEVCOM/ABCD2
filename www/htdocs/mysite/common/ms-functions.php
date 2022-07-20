@@ -120,7 +120,7 @@ function getUserStatus() {
     //Reservas
 
     //Search the reserve database
-    $mxr = $converter_path . " " . $db_path . "reserve/data/reserve \"pft=if v10='" . $userid . "' then if v1<>'1' then if v1<>'4' then mfn,'|',v30,' ',v31,'|',v60,'|',v15,'|',v20,'|',v40,'|','+~+', fi fi fi\" now";
+    $mxr = $converter_path . " " . $db_path . "reserve/data/reserve \"pft=if v10='" . $userid . "' then if v1='0' then if v1<>'4' then mfn,'|',v30,' ',v31,'|',v60,'|',v15,'|',v20,'|',v40,'|','+~+', fi fi fi\" now";
     
     exec($mxr, $outmxr);
     $textoutmx = "";

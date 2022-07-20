@@ -1,17 +1,20 @@
 <?php
-/*
-
-20220307 rogercgui fixed index in line $camposbusqueda[$l[1]]=$l[0]; 
-
-*/
+/***
+ * 
+ * 2022-03-07 rogercgui fixed index in line $camposbusqueda[$l[1]]=$l[0]; 
+ * 2022-07-19 rogercgui change the folder /par to the variable $actparfolder
+ * 
+ */
 
 
 function PresentarExistencias($Existencias){
 global $db_path,$xWxis,$msgstr, $actparfolder;
 	$e=explode(';',$Existencias);
 	$base=$e[1];
-	echo "<table id=existencias>";
-	$query = "&base=".$base."&cipar=$db_path/par/".$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$_REQUEST["lang"];
+	?>
+	<table id=existencias>SSSSSSSSS
+	<?php
+	$query = "&base=".$base."&cipar=".$db_path."/".$actparfolder.$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$_REQUEST["lang"];
 	$IsisScript="opac/buscar.xis";
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -173,7 +176,7 @@ if (Trim(cookie)!=""){
 					echo "<p>";
 				}
 				if (isset($galeria) and $galeria=="S"){
-					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imágenes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
+					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imï¿½genes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
 					echo "&nbsp; &nbsp; <input type=button id=\"search-submit\" value=\" Ver ficha descriptiva \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','ficha')\"><br>";
 				}
    				echo "</strong><p>\n</div>\n";

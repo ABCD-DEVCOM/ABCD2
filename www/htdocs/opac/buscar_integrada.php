@@ -514,7 +514,11 @@ echo "</form>";
 
 include_once ('components/facets.php');
 
-echo "<p id='back-top'><a href=#inicio><span></span></a></p>";
+?>
+
+<p id="back-top"><a href="#inicio"><span></span></a></p>
+
+<?php
 
 include("components/footer.php");
 
@@ -522,11 +526,12 @@ if (!isset($_REQUEST["base"]))$base="";
 $Exp_b=PresentarExpresion($_REQUEST["base"]);
 if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
     $Expresion=str_replace('"',"",$Exp_b);
-	echo "\n<SCRIPT LANGUAGE=\"JavaScript\">
-	highlightSearchTerms(\"$Expresion\");
+?>	
+	<script>
+	highlightSearchTerms("<?php echo $Expresion;?>");
+	</script>
 
-	</SCRIPT>\n";
-
+<?php
 }
 
 ?>
