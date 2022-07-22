@@ -1,31 +1,36 @@
 <?php
 session_start();
-//var_dump($_SESSION);
+// var_dump($_SESSION);
+$_SESSION['username']=$_COOKIE['user'];
+
+unset($_SESSION['login']);
+// unset($_COOKIE['login']);
 
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
 include($_SERVER['DOCUMENT_ROOT']."/opac/inc/leer_bases.php");
 $modo = "";
 if (isset($_REQUEST["base"])){
 	$actualbase = $_REQUEST["base"];
- }else {
+ } else {
 	$actualbase = "";
 }
 
-if (isset($_REQUEST["xmodo"]) and $_REQUEST["xmodo"] != "") {
+if (isset($_REQUEST["modo"]) and $_REQUEST["modo"] != "") {
 	unset($_REQUEST["base"]);
 	$modo = "integrado";
-} 
+}
 
-function wxisLlamar($base, $query, $IsisScript)
-{
+function wxisLlamar($base, $query, $IsisScript) {
 	global $db_path, $Wxis, $xWxis;
 	include("wxis_llamar.php");
 	return $contenido;
 }
+
 //include ("get_ip_address.php");
 header('Content-Type: text/html; charset=".$charset."');
 $meta_encoding = $charset;
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html>
@@ -156,13 +161,12 @@ $meta_encoding = $charset;
 	}
 
 		
-//Layout
-
+// Layout
 // NAVBARTOP
 		include_once 'components/topbar.php';
 
-// SIDEBAR
 
+// SIDEBAR
 if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
 ?>
 		<div id="page">

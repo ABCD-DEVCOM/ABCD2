@@ -28,7 +28,7 @@ if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 					$height_link=800;
 				echo "<iframe frameborder=\"0\"  width=100% height=\"".$height_link  ."\"src=\"".$home_link."\")></iframe>";
 	            break;
-			}else{
+			} else {
 				if (substr($value,0,6)=="[TEXT]"){
                     $archivo=trim($db_path."opac_conf/".$lang."/".trim(substr($value,6)));
 					if (file_exists($archivo)){

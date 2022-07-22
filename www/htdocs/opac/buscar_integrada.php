@@ -331,15 +331,22 @@ foreach ($bd_list as $base=>$value){
 			}
 		}
 	}
-	if (isset($Expresion_col))
+	if (isset($Expresion_col)){
 		$busqueda=$Expresion_col;
-	else
+	} else {
 		$busqueda=$Expresion;
- 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="" )
+	}
+ 	
+	 
+
+	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="" ) {
        	$cipar=$_REQUEST["cipar"];
- 	else
+ 	} else {
        	$cipar=$base;
-    if (($Expresion=="" or $Expresion=='$') and (!isset($Expresion_col) or $Expresion_col=="") ){
+	}
+
+   
+	if (($Expresion=="" or $Expresion=='$') and (!isset($Expresion_col) or $Expresion_col=="") ){
        	$status="Y";
        	$query = "&base=$base" . "&cipar=$db_path".$actparfolder."/".$base.".par&Opcion=status&lang=".$_REQUEST["lang"];
        	$IsisScript="opac/status.xis";
@@ -353,17 +360,20 @@ foreach ($bd_list as $base=>$value){
        	if (file_exists($db_path.$base."/dr_path.def")){
    			$def_db = parse_ini_file($db_path.$base."/dr_path.def");
    		}
-       	if (!isset($def_db["UNICODE"]) )
+	       	if (!isset($def_db["UNICODE"]) ){
        		$cset_db="ANSI";
-       	else
-       		if ($def_db["UNICODE"]==0)
-       			$cset_db= "ANSI";
-       		else
-       			$cset_db="UTF-8";
-        if ($cset=="UTF-8" and $cset_db=="ANSI")
+       	} elseif ($def_db["UNICODE"]==0){
+			$cset_db= "ANSI";
+       	} else {
+       		$cset_db="UTF-8";
+		}	
+
+        if ($cset=="UTF-8" and $cset_db=="ANSI"){
         	$busqueda_decode[$base]=utf8_decode($busqueda);
-        else
+        } else {
         	$busqueda_decode[$base]=$busqueda;
+		}
+
         if ($busqueda_decode[$base]=="") $busqueda_decode[$base]='$';
 		$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
 	}
