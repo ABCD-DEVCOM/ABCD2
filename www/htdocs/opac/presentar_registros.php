@@ -12,7 +12,7 @@ global $db_path,$xWxis,$msgstr, $actparfolder;
 	$e=explode(';',$Existencias);
 	$base=$e[1];
 	?>
-	<table id=existencias>SSSSSSSSS
+	<table id=existencias>
 	<?php
 	$query = "&base=".$base."&cipar=".$db_path."/".$actparfolder.$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$_REQUEST["lang"];
 	$IsisScript="opac/buscar.xis";
@@ -126,8 +126,13 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
     }else{
     	$exFacetas="";
     }
-    $ff_pft="'<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
+    
+	//$ff_pft="'aaa<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
+	
+	$ff_pft="'<hr>',@select_record.pft,,@".$Formato.".pft,";
+	
 	$query = "&base=$base&cipar=$db_path"."par/$cipar.par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$_REQUEST["lang"];
+	
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="") $query.="&Existencias=N";
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");
 	$primeravez="S";
