@@ -175,8 +175,9 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 				//Display search form when not on a user's screen
 				if (!isset($indice_alfa)) {
 				// Exibe form de busca
-				include("components/search_free.php");
+				
 				$_REQUEST["base"] = $actualbase;
+				include("components/search_free.php");
 			} else {
 				//include 'components/avanzada.php';
 			}
