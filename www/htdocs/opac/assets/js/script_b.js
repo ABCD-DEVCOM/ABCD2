@@ -515,7 +515,7 @@ function showCookie(cname){
 function SendTo(Accion,Data){
 	switch (Accion){
 		case "word":
-			document.buscar.action="sendtoword.php"
+			document.buscar.action="modules/export/sendtoword.php"
 			break
 		case "print_one":
 			document.buscar.action="presentar_seleccion.php"
@@ -531,7 +531,7 @@ function SendTo(Accion,Data){
 			document.buscar.action="presentar_seleccion.php"
 			break
 		case "xml":
-			document.buscar.action="sendtoxml.php"
+			document.buscar.action="modules/export/sendtoxml.php"
 			document.buscar.target="_blank"
 			break
 	}

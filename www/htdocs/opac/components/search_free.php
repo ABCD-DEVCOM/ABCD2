@@ -4,10 +4,9 @@
  * 
  */
 
-
 if (!isset($titulo_pagina)){
 	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
-	if (isset($_REQUEST["modo"])and  $_REQUEST["modo"]=="integrado"){
+	if (isset($modo) and  $modo=="integrado"){
 	?>	
 		<span class="tituloBase"><?php echo $msgstr["todos_c"];?></span>
 		<input type="hidden" name="modo" value="integrado">
@@ -39,7 +38,7 @@ if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value
     if (isset($_REQUEST["Formato"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["Formato"].">\n";
     if (isset($_REQUEST["indice_base"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["indice_base"].">\n";
 	if (isset($_REQUEST["base"]))echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
-	if (isset($_REQUEST["modo"]))echo "<input type=hidden name=modo value=".$_REQUEST["modo"].">\n";
+	if (isset($modo))echo "<input type=hidden name=modo value=".$modo.">\n";
 	?>
 
 	<div class="form-search">
@@ -60,8 +59,8 @@ if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value
 
 	if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N"){
 		$archivo="";
-		if (isset($_REQUEST["modo"])){
-			if ($_REQUEST["modo"]=="integrado"){
+		if (isset($modo)){
+			if ($modo=="integrado"){
 				$archivo=$db_path."/opac_conf/".$lang."/indice.ix";
 			}else{
 				$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"].".ix";
@@ -117,7 +116,7 @@ if (isset($Home))
 	   echo "<li><a href=$Home>Home</a></li>\n";
 $multipleBases="S";
 
-if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
+if (isset($modo) and $modo=="integrado"){
 	$archivo="indice.ix";
 	$base="";
 	$file_ix=$db_path."opac_conf/".$lang."/".$archivo;

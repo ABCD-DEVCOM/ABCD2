@@ -49,7 +49,7 @@ if ($_REQUEST["Opcion"]!="directa"){
 
 if (isset($rec_pag)) $_REQUEST["count"] = $rec_pag;
 if (!isset($_REQUEST["desde"]) or trim($_REQUEST["desde"])=="" ) $_REQUEST["desde"]=1;
-if (!isset($_REQUEST["count"]) or trim($_REQUEST["count"])=="")  $_REQUEST["count"]=25;
+if (!isset($_REQUEST["count"]) or trim($_REQUEST["count"])=="")  $_REQUEST["count"]=10;
 $desde=$_REQUEST["desde"];
 $count=$_REQUEST["count"];
 
@@ -315,7 +315,7 @@ foreach ($bd_list as $base=>$value){
        	//echo "$base<br>";
        	$facetas=array();
        	$IsisScript="opac/buscar.xis";
-       	$cset=strtoupper($meta_encoding);
+       	$cset=strtoupper($charset);
        	if (file_exists($db_path.$base."/dr_path.def")){
    			$def_db = parse_ini_file($db_path.$base."/dr_path.def");
    		}
@@ -334,8 +334,9 @@ foreach ($bd_list as $base=>$value){
 		}
 
         if ($busqueda_decode[$base]=="") $busqueda_decode[$base]='$';
-		$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
+		$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
 	}
+
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
 	$primeravez="S";
@@ -448,7 +449,7 @@ if (isset($total_base) and count($total_base)>0 ){
 		 $_REQUEST["pagina"] =1 ;
 		 echo "<hr>";
 
-		 $contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
+		 //$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 
 	}
 }
@@ -460,10 +461,11 @@ NavegarPaginas($contador,$count,$desde,$select_formato);
 if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";
 if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"".$_REQUEST["Operadores"]."\">\n";
 if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
+?>
+</form>
 
 
-echo "</form>\n";
-
+<?php
 
 // Inserts the total results per database in the footer.
 include_once 'components/total_bases_footer.php';

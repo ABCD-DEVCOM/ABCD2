@@ -118,7 +118,7 @@ if (isset($lang))
 <script>
 function BuscarIntegrada(base,modo,Opcion,Expresion,Coleccion,titulo_c,resaltar,submenu,Pft,mostrar_exp){
 
-	if (mostrar_exp!="") document.bi.action="../inicio_base.php"
+	if (mostrar_exp!="") document.bi.action="/opac/inicio_base.php"
 	document.bi.base.value=base
 	document.bi.Opcion.value=Opcion
 	document.bi.modo.value=modo

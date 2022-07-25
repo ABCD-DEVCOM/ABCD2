@@ -1,50 +1,61 @@
 <?php
 session_start();
-// var_dump($_SESSION);
-$_SESSION['username']=$_COOKIE['user'];
 
+if (isset($_COOKIE['user'])) {
+	$_SESSION['username']=$_COOKIE['user'];
+}
 unset($_SESSION['login']);
-// unset($_COOKIE['login']);
 
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
 include($_SERVER['DOCUMENT_ROOT']."/opac/inc/leer_bases.php");
 $modo = "";
+
 if (isset($_REQUEST["base"])){
 	$actualbase = $_REQUEST["base"];
  } else {
 	$actualbase = "";
 }
 
-if (isset($_REQUEST["modo"]) and $_REQUEST["modo"] != "") {
-	unset($_REQUEST["base"]);
-	$modo = "integrado";
-}
-
 function wxisLlamar($base, $query, $IsisScript) {
 	global $db_path, $Wxis, $xWxis;
-	include("wxis_llamar.php");
+	include($_SERVER['DOCUMENT_ROOT']."/opac/wxis_llamar.php");
 	return $contenido;
 }
 
-//include ("get_ip_address.php");
+include ("inc/get_ip_address.php");
 header('Content-Type: text/html; charset=".$charset."');
 $meta_encoding = $charset;
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html>
-
 <head>
+	<title><?php echo $TituloPagina ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
+
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" />
 	<?php if (isset($shortIcon) and $shortIcon != "") {
-		echo "<link rel=\"shortcut icon\" href=\"<?php echo $ShorcutIcon?>\" type=\"image/x-icon\">\n";
+		echo "<link rel=\"shortcut icon\" href=\"<?php echo $ShorcutIcon;?>\" type=\"image/x-icon\">\n";
+	} else {
+	?>
+		<!-- Favicons -->
+		<link rel="mask-icon" href="/assets/images/favicons/favicon.svg">
+    	<link rel="icon" type="image/svg+xml" href="/assets/images/favicons/favicon.svg" color="#fff">
+
+    	<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+    	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
+
+    	<link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/favicon-60x60.png">
+    	<link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/favicon-76x76.png">
+    	<link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/favicon-120x120.png">
+    	<link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/favicon-152x152.png">
+    	<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">
+
+	<?php
 	}
 	?>
-	<title><?php echo $TituloPagina ?></title>
+
 
 	<link href="/assets/css/colors.css" rel="stylesheet">
 	<link href="/assets/css/buttons.css" rel="stylesheet">
@@ -103,17 +114,6 @@ $meta_encoding = $charset;
 			Ctrl = document.getElementById("cookie_div")
 			Ctrl.style.display = "inline-block"
 		}
-
-		function delCookie() {
-			document.cookie = 'ORBITA=;';
-
-		}
-		var user = getCookie("ORBITA");
-		if (user != "") {
-			alert("Welcome again " + user);
-		} else {
-
-		}
 	</script>
 
 
@@ -168,6 +168,12 @@ $meta_encoding = $charset;
 
 // SIDEBAR
 if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
+
+if (!isset($_REQUEST["modo"])) {
+	unset($_REQUEST["base"]);
+	$modo = "integrado";
+}
+
 ?>
 		<div id="page">
 			<div id="content" <?php if (isset($desde) and $desde = "ecta") ?>>
@@ -183,4 +189,5 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 			}
 				?>
 			</div>
+
 	--- /opac/head.php --- 

@@ -4,7 +4,8 @@
 2022-03-23 rogercgui change the folder /par to the variable $actparfolder
 
 ***********************************************/
-$_REQUEST["modo"]="integrado";
+
+
 include("../central/config_opac.php");
 $primeraPagina="S";
 
