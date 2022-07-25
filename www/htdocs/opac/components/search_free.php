@@ -1,8 +1,8 @@
 <?php
-/*
-20220307 rogercgui fixed index $prefijo=$x[1];
-
-*/
+/**
+ * 20220307 rogercgui fixed index $prefijo=$x[1];
+ * 
+ */
 
 
 if (!isset($titulo_pagina)){
@@ -34,8 +34,8 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 		<div id="search" >
 
 	<?php
-	if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-	if (isset($lang)) echo "<input type=hidden name=lang value=".$lang.">\n";
+if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
+	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
     if (isset($_REQUEST["Formato"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["Formato"].">\n";
     if (isset($_REQUEST["indice_base"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["indice_base"].">\n";
 	if (isset($_REQUEST["base"]))echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";

@@ -22,50 +22,10 @@ if (isset($_REQUEST["Formato"])) {
 		if (substr($_REQUEST["Formato"],strlen($_REQUEST["Formato"])-4)==".pft") $_REQUEST["Formato"]=substr($_REQUEST["Formato"],0,strlen($_REQUEST["Formato"])-4);
 	}
 }
-function SelectFormato($base,$db_path,$msgstr){
 
-	$PFT="";
-	$Formato="";
-	$archivo=$base."_formatos.dat";
-	if (file_exists($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo)){
-		$fp=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo);
-	}else{
-		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
-		die;
-	}
+// Displays a field to select the display format.
+include 'components/pft_select.php';
 
-	$select_formato=$msgstr["select_formato"]." <select name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
-	$primero="";
-	$encontrado="";
-	foreach ($fp as $linea){
-		if (trim($linea!="")){
-			$f=explode('|',$linea);
-			$f[0]=trim($f[0]);
-			if (substr($f[0],strlen($f[0])-4)==".pft") $f[0]=substr($f[0],0,strlen($f[0])-4);
-			$linea=$f[0].'|'.$f[1];
-			if ($PFT==""){
-				$PFT=trim($linea);
-			} else {
-				$PFT.='$$$'.trim($linea);
-			}
-			if (!isset($_REQUEST["Formato"]) and $primero==""){
-				$primero=$f[0];
-			}
-			if (isset($_REQUEST["Formato"]) and $_REQUEST["Formato"]==$f[0]){
-				$xselected=" selected";
-				$encontrado="Y";
-			}else {
-				$xselected="";
-				$select_formato.= "<option value=".$f[0]." $xselected>".$f[1]."</option>\n";
-			}
-		}
-	}
-	$select_formato.="</select>";
-	if ($encontrado!="Y")
-		$_REQUEST["Formato"]=$primero;
-	$Formato=$_REQUEST["Formato"];
-	return array($select_formato,$Formato);
-}
 
 if (isset($_REQUEST["prefijoindice"])) $_REQUEST["mostrar_exp"]="N";
 if (!isset($_REQUEST["Opcion"])) die;
@@ -85,9 +45,8 @@ if ($_REQUEST["Opcion"]!="directa"){
 	//foreach ($_REQUEST as $key=>$value) $_REQUEST[$key]=urldecode($value);
 
 	if (isset($_REQUEST["Sub_Expresion"]))$_REQUEST["Sub_Expresion"] =str_replace('\\','',$_REQUEST["Sub_Expresion"]);
-}else{
-
 }
+
 if (isset($rec_pag)) $_REQUEST["count"] = $rec_pag;
 if (!isset($_REQUEST["desde"]) or trim($_REQUEST["desde"])=="" ) $_REQUEST["desde"]=1;
 if (!isset($_REQUEST["count"]) or trim($_REQUEST["count"])=="")  $_REQUEST["count"]=25;
@@ -322,7 +281,7 @@ if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='';
 
 //echo "<p>$Expresion</p>";
 
-////////
+
 foreach ($bd_list as $base=>$value){
 	if (!isset($_REQUEST["modo"]) or $_REQUEST["modo"]!="integrado"){
 		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="" ){
@@ -448,30 +407,39 @@ $contador=0;
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 
 include_once 'components/total_bases.php';
+?>
 
-echo "<form name=continuar action=buscar_integrada.php method=post>\n";
-echo "<input type=hidden name=integrada value=\"$integrada\">";
-echo "<input type=hidden name=existencias>\n";
-echo "<input type=hidden name=facetas value=\"";
+<?php 
+
 if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
 	echo $_REQUEST["facetas"];
 	$Expr_facetas=$_REQUEST["facetas"];
 }else{
 	$Expr_facetas="";
 }
-echo "\">\n";
+
+?>
+
+
+<form name="continuar" action="buscar_integrada.php" method="post">
+<input type="hidden" name="integrada" value="<?php echo $integrada;?>">
+<input type="hidden" name="existencias">
+<input type="hidden" name="facetas" value="<?php echo $Expr_facetas;?>">
+
+<?php
 if (isset($total_base) and count($total_base)>0 ){
 	if (isset($total_fac[$base])){
 		foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";
 	}
-	if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
+	if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
 		$base=$_REQUEST["base"];
-	else
-		$base=$primera_base;
+	} else{
+		$base=$primera_base;	
+	}	
+
 	$frm_sel=SelectFormato($base,$db_path,$msgstr);
 	$select_formato=$frm_sel[0];
 	$Formato=$frm_sel[1];
-
 	$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 	$desde=$desde+$count;
 
@@ -482,7 +450,6 @@ if (isset($total_base) and count($total_base)>0 ){
 
 		 $contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 
-	}else{
 	}
 }
 
@@ -493,37 +460,24 @@ NavegarPaginas($contador,$count,$desde,$select_formato);
 if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";
 if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"".$_REQUEST["Operadores"]."\">\n";
 if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
+
+
 echo "</form>\n";
 
 
 // Inserts the total results per database in the footer.
 include_once 'components/total_bases_footer.php';
 
+// Activated when the search has no results
+include_once 'components/no_results.php';
 
 
-if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
-	if ((!isset($total_base) or count($total_base)==0) ){
-		echo "<div style='border: 1px solid;width: 98%; margin:0 auto;text-align:center'>";
-		echo "<p><br> <font color=red>".$msgstr["no_rf"]."</font>";
+if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
+?>
+</form>
 
-		if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
-			echo " ". $msgstr["en"]." ";
-			$cc=explode('|',$_REQUEST["coleccion"]);
-			echo "<strong>".$cc[1]."</strong><br>";
-
-		}else{
-			if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")echo " <strong>".$bd_list[$_REQUEST["base"]]["titulo"]."</strong>";
-		}
-		echo "<br>".$msgstr["p_refine"];
-
-		echo "</div>\n";
-	}
-}
-if (isset($_REQUEST["db_path"]))  echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-echo "</form>";
-
+<?php
 include_once ('components/facets.php');
-
 ?>
 
 <p id="back-top"><a href="#inicio"><span></span></a></p>
