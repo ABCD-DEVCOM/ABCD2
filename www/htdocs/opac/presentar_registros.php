@@ -126,6 +126,21 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
     }else{
     	$exFacetas="";
     }
+
+	    	if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y"){
+			$ract=DeterminarReservasActivas($db_path,$x[1],$_REQUEST["lang"],$msgstr,$no_control);
+			$nreserv=0;
+			foreach ($ract as $xx) {
+				$xx=trim($xx);
+				if ($xx!=""){
+					if (substr($xx,0,8)=="[TOTAL:]") continue;
+					$nreserv=$nreserv+1;
+				}
+			}
+			if ($nreserv>0){
+				$msg_reserv="<br><font color=blue><strong>Este título tiene $nreserv reserva(s) pendiente(s)</strong></font><br>";
+			}
+		}
     
 	//$ff_pft="'aaa<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
 	

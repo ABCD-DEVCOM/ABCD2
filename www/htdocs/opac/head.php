@@ -21,7 +21,7 @@ function wxisLlamar($base, $query, $IsisScript) {
 	include($_SERVER['DOCUMENT_ROOT']."/opac/wxis_llamar.php");
 	return $contenido;
 }
-
+//include $_SERVER['DOCUMENT_ROOT']."/opac/functions.php";
 include ("inc/get_ip_address.php");
 header('Content-Type: text/html; charset=".$charset."');
 $meta_encoding = $charset;
@@ -169,7 +169,7 @@ $meta_encoding = $charset;
 // SIDEBAR
 if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
 
-if (!isset($_REQUEST["modo"])) {
+if (isset($_REQUEST["modo"])) {
 	unset($_REQUEST["base"]);
 	$modo = "integrado";
 }

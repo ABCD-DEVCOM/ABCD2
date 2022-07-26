@@ -453,9 +453,9 @@ if (isset($total_base) and count($total_base)>0 ){
 
 	}
 }
-
+$totalRegistros=$contador;
 echo "<input type=hidden name=Expresion value=\"".urlencode($Expresion)."\">\n";
-NavegarPaginas($contador,$count,$desde,$select_formato);
+NavegarPaginas($totalRegistros,$count,$desde,$select_formato);
 
 
 if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";

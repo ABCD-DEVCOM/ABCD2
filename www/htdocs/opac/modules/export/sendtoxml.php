@@ -1,17 +1,17 @@
 <?php
 $mostrar_menu="N";
-include("../central/config_opac.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
 
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";die;
 
-include("inc/leer_bases.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/opac/inc/leer_bases.php");
 
 $desde=1;
 $count="";
 
 function wxisLlamar($base,$query,$IsisScript){
 	global $db_path,$Wxis,$xWxis;
-	include("wxis_llamar.php");
+	include($_SERVER['DOCUMENT_ROOT'] . "/opac/wxis_llamar.php");
 	return $contenido;
 }
 
