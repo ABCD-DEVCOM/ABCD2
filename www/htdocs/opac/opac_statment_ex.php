@@ -172,10 +172,11 @@ foreach ($fp as $value){
 	if ($value!=""){
 		$xx_u=explode('|',$value."||");
 		if ($xx_u[0]==$tipo_u){
-			if (isset($xx_u[3]))
+			if (isset($xx_u[3])){
 				$max_rsvr=$xx_u[3];
-			else
+			} else {
 				$max_rsvr=3;
+			}
 			break;
 		}
 	}
