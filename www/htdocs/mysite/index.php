@@ -55,7 +55,7 @@ include ("../$app_path/lang/lang.php");
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">
 
     <!--Bootstrap-->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.min.css?<?php echo time();?>" rel="stylesheet" />
     
 <meta name="theme-color" content="#712cf9">
 
@@ -119,7 +119,7 @@ include ("../$app_path/lang/lang.php");
     <link href="assets/css/signin.css?<?php echo time();?>" rel="stylesheet" />
 
     <!--FontAwesome-->
-    <link href="/assets/css/all.min.css" rel="stylesheet">
+    <link href="/assets/css/all.min.css?<?php echo time();?>" rel="stylesheet">
 
 
     <script src=../<?php echo $app_path?>/dataentry/js/lr_trim.js></script>

@@ -11,6 +11,8 @@ include '../inc/user.php';
 
 $dataarr = getUserStatus();
 
+$_SESSION['photo']=$dataarr['photo'];
+
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
 	$lang=$lang;
@@ -48,7 +50,7 @@ if (isset($_SESSION["lang"])){
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">    
 
     <!--Bootstrap-->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap.min.css?<?php echo time();?>" rel="stylesheet" />
 
 
     <!-- Stylesheets -->

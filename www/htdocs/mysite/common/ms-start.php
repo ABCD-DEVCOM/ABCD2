@@ -123,7 +123,8 @@ if (isset($_COOKIE["user"])) {
 		$vectorAbrev['name']=$splittxt[1];
 		$vectorAbrev['userClass']=$splittxt[4]."(".$splittxt[3].")";
 		$vectorAbrev['expirationDate']=$splittxt[5];
-		$vectorAbrev['photo']=$splittxt[6];		
+		$vectorAbrev['photo']=$splittxt[6];
+		
 
 		//Checks the expiration date of the user's registration
 		if ($currentdatem < $vectorAbrev['expirationDate']) {

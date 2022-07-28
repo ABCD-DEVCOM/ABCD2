@@ -26,7 +26,7 @@ body {
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0; /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  /*box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);*/
 }
 
 @media (max-width: 767.98px) {
@@ -97,3 +97,6 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+
+
