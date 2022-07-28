@@ -16,13 +16,6 @@ include($CentralPath."common/get_post.php");
 
 var_dump($_SESSION);
 
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
-if (isset($_REQUEST['lang'])){
-	$lang=$_REQUEST['lang'];
-} else {
-	$lang=$_SESSION['lang'];
-}
-
 $lang_db=$lang;
 
 if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
@@ -33,8 +26,8 @@ $desde_web="Y";
 function LeerCodigoUsuario(){
 global $Wxis,$xWxis,$db_path,$CentralPath,$actparfolder;
 	$tipo_u="";
-	$Pft_tipou="'[TIPOU:]',@".$db_path."users/loans/".$_SESSION["lang"]."/loans_ustype.pft,/";
-	$formato_us=$Pft_tipou."/@".$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp.pft";
+	$Pft_tipou="'[TIPOU:]',@".$db_path."users/loans/".$lang."/loans_ustype.pft,/";
+	$formato_us=$Pft_tipou."/@".$db_path."users/loans/".$lang."/loans_usdisp.pft";
    	$query = "&Expresion=CO_".$_REQUEST["usuario"]."&base=users&cipar=$db_path".$actparfolder."/users.par&Formato=".$formato_us;
    	$base="user";
   	$contenido=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");

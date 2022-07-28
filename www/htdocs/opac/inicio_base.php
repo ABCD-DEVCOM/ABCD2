@@ -7,8 +7,8 @@ if (isset($_REQUEST["home"])){
 		echo "<iframe frameborder=\"0\" id=idf width=100% height=2000   src=".substr($_REQUEST["home"],6)."></iframe>";
 	}
 	if (substr($_REQUEST["home"],0,6)=="[TEXT]"){
-		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".substr($_REQUEST["home"],6))){
-			$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/".substr($_REQUEST["home"],6));
+		if (file_exists($db_path."opac_conf/".$lang."/".substr($_REQUEST["home"],6))){
+			$fp=file($db_path."opac_conf/".$lang."/".substr($_REQUEST["home"],6));
 			foreach ($fp as $value){
 				echo "$value<br>";
 			}

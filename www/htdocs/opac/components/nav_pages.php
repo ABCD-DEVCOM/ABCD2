@@ -1,5 +1,4 @@
 <?php
-
 function NavegarPaginas($totalRegistros,$count,$desde,$select_formato){
 global $bd_list,$multiplesBases,$base,$msgstr;
 	if (!isset($_REQUEST["pagina"]) or $_REQUEST["pagina"]=="" ){

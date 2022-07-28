@@ -4,11 +4,12 @@
  */
 
 function SelectFormato($base,$db_path,$msgstr){
+	global $lang;
 	$PFT="";
 	$Formato="";
 	$archivo=$base."_formatos.dat";
-	if (file_exists($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo)){
-		$fp=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo);
+	if (file_exists($db_path.$base."/opac/".$lang."/".$archivo)){
+		$fp=file($db_path.$base."/opac/".$lang."/".$archivo);
 	}else{
 		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
 		die;

@@ -14,7 +14,7 @@ global $db_path,$xWxis,$msgstr, $actparfolder;
 	?>
 	<table id="existencias">
 	<?php
-	$query = "&base=".$base."&cipar=".$db_path."/".$actparfolder.$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$_REQUEST["lang"];
+	$query = "&base=".$base."&cipar=".$db_path."/".$actparfolder.$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$lang;
 	$IsisScript="opac/buscar.xis";
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -29,17 +29,17 @@ global $db_path,$xWxis,$msgstr, $actparfolder;
 }
 
 function PresentarExpresion($base){
-global $yaidentificado,$db_path,$msgstr,  $actparfolder;
+global $yaidentificado,$db_path,$msgstr, $actparfolder, $lang;
 	if (isset($_REQUEST["Sub_Expresion"])) {
 		if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 			$col=explode('|',$_REQUEST["coleccion"]);
-			$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$base."_avanzada_".$col[0].".tab";
-			if (!file_exists($archivo)) $archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/$base"."_avanzada.tab";
+			$archivo=$db_path."opac_conf/".$lang."/".$base."_avanzada_".$col[0].".tab";
+			if (!file_exists($archivo)) $archivo=$db_path."opac_conf/".$lang."/$base"."_avanzada.tab";
 		}else{
 			if ($base!="")
-				$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/$base"."_avanzada.tab";
+				$archivo=$db_path."opac_conf/".$lang."/$base"."_avanzada.tab";
 			else
-			    $archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab";
+			    $archivo=$db_path."opac_conf/".$lang."/avanzada.tab";
 		}
 		$camposbusqueda=array();
 		if (file_exists($archivo)) {
@@ -113,7 +113,7 @@ global $yaidentificado,$db_path,$msgstr,  $actparfolder;
 }
 
 function PresentarRegistros($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
-global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
+global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, $lang;
 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="")
     	$cipar=$_REQUEST["cipar"];
     else
@@ -128,7 +128,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
     }
 
 	    	if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y"){
-			$ract=DeterminarReservasActivas($db_path,$x[1],$_REQUEST["lang"],$msgstr,$no_control);
+			$ract=DeterminarReservasActivas($db_path,$x[1],$lang,$msgstr,$no_control);
 			$nreserv=0;
 			foreach ($ract as $xx) {
 				$xx=trim($xx);
@@ -146,7 +146,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
 	
 	$ff_pft="'<hr>',@select_record.pft,,@".$Formato.".pft,";
 	
-	$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$_REQUEST["lang"];
+	$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$lang;
 
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="") $query.="&Existencias=N";
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");
@@ -216,7 +216,7 @@ if (Trim(cookie)!=""){
 	 			if (isset($f[3]))
 	 				$reverse="ON";
 	 			$IsisScript=$xWxis."opac/buscar.xis";
-				$query = "&cipar=$db_path"."par/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$_REQUEST["lang"];
+				$query = "&cipar=$db_path"."par/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$lang;
 				if ($reverse!=""){
 					$query.="&reverse=On";
 				}

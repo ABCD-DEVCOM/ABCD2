@@ -49,7 +49,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actpa
 	        $cipar=$base;
 	   }
 
-	$Pft_reserva=$db_path.$base."/loans/".$_REQUEST["lang"]."/opac_reserve.pft";   
+	$Pft_reserva=$db_path.$base."/loans/".$lang."/opac_reserve.pft";   
 
     $Fmt_reserva="";
     if (file_exists($Pft_reserva)){
@@ -62,7 +62,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actpa
 
 
 
-    $Pft_control=$db_path."$base/loans/".$_REQUEST["lang"]."/loans_cn.pft";
+    $Pft_control=$db_path."$base/loans/".$lang."/loans_cn.pft";
     $Fmt_control="";
     if (file_exists($Pft_control)){
     	$fp_r=file($Pft_control);
@@ -72,7 +72,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actpa
     	}
     }
     $Pft="";
-    $archivo=$db_path.$base."/opac/".$_REQUEST["lang"]."/".$base."_formatos.dat";
+    $archivo=$db_path.$base."/opac/".$lang."/".$base."_formatos.dat";
     $fp=file($archivo);
     $primeravez="S";
     foreach ($fp as $ff){
@@ -95,7 +95,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actpa
    	$Pft=$Fmt_reserva.'`#$$$#`,';
     $Pft.=$Fmt_control.'`#$$$#`,';
 	$Pft.="@".$fconsolidado.".pft,";
-	$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Mfn=$Lista_Mfn&Formato=$Pft&Opcion=buscar&lang=".$_REQUEST["lang"];
+	$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Mfn=$Lista_Mfn&Formato=$Pft&Opcion=buscar&lang=".$lang;
 	//echo "$query<br>";
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/imprime_sel.xis");
 
@@ -140,7 +140,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actpa
 			if (isset($f[3]))
 				$reverse="ON";
 			$IsisScript=$xWxis."opac/buscar.xis";
-			$query = "&cipar=$db_path".$actparfolder."/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$_REQUEST["lang"];
+			$query = "&cipar=$db_path".$actparfolder."/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$lang;
 			if ($reverse!=""){
 				$query.="&reverse=On";
 			}
