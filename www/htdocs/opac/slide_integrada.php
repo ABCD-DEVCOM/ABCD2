@@ -6,7 +6,7 @@
 
 ***********************************************/
 include("head.php");
-include("navegarpaginas.php");
+include("components/nav_pages.php");
 
 include ("slide_show.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>$value<br>";
@@ -36,7 +36,7 @@ $Formato="slide_show.pft";
 $ix=0;
 $contador=0;
 $base=$_REQUEST["base"];
-$query = "&base=$base&cipar=$db_path".$actparfolder."/$base.par&Expresion=".urlencode($Expresion)."&Formato=$Formato&count=$count&from=$desde";
+$query = "&base=$base&cipar=$db_path".$actparfolder.$base.".par&Expresion=".urlencode($Expresion)."&Formato=$Formato&count=$count&from=$desde";
 $resultado=wxisLlamar($base,$query,$xWxis."buscar.xis");
 $salida="";
 
@@ -57,7 +57,7 @@ if ($hasta>$contador) $hasta=$contador;
 if ($contador>1){
 	echo "<br>Mostrando del $desde al ".$hasta;
 }
-echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria im�genes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
+echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imagenes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
 echo "&nbsp; &nbsp; <input type=button id=\"search-submit\" value=\" Ver ficha descriptiva \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','ficha')\"><br>";
 echo "<p></div>";
 
@@ -74,7 +74,9 @@ foreach ($s as $linea){
 		$ficha[]=str_replace("'"," ",$dummy);
 	}
 }
-SlideShow($image,$titulo,$ficha);
+
+if ( (isset($image)) and (isset($titulo)) and (isset($ficha)) ) SlideShow($image,$titulo,$ficha);
+
 $desde=$desde+$count;
 if ($desde>=$contador) $desde=1;
 echo "<hr>";
@@ -88,7 +90,8 @@ if (isset($_REQUEST["lista_bases"]) and $_REQUEST["lista_bases"]!="" ){
 }
 echo "<form name=continuar action=slide_integrada.php method=post>\n";
 echo "<input type=hidden name=Expresion value=\"".urlencode($Expresion)."\">\n";
-NavegarPaginas($totalRegistros,$count,$desde);
+NavegarPaginas($totalRegistros,$count,$desde,$Formato);
+
 
 echo "</td>";
 
