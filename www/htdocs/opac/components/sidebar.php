@@ -1,16 +1,21 @@
-<aside id="sidebar" class="sidebar">
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3 sidebar-sticky">
 <?php
 if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 
-echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a>";
 
     $primeravez="S";
     // if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]!=""){
 		echo "<h2>".$msgstr["catalog"]."</h2>\n";
 	//}
 
-	echo "<ul>\n";
+?>
+        <ul class="nav flex-column">
 
+<?php
+		/*
 	foreach ($bd_list as $key => $value){
 		$archivo=$db_path.$key."/opac/".$lang."/".$key."_colecciones.tab";
 		$ix=0;
@@ -29,7 +34,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 			}
 		}
 		if (trim($value["nombre"])!=""){
-			echo "<br><a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
+			echo "<a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
 			echo "<strong>".$value["titulo"]."</strong></a><br>\n";
 	    	if (file_exists($archivo)){
 	    		$fp=file($archivo);
@@ -61,7 +66,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	     }
 
 	}
-
+*/
 
 	if (file_exists($db_path."opac_conf/".$lang."/side_bar.info")){
 		$fp=file($db_path."opac_conf/".$lang."/side_bar.info");
@@ -70,13 +75,12 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 			$value=trim($value);
 			if ($value!=""){
 				if (substr($value,0,9)=="[SECCION]"){
-					if ($sec_name!="")  echo "</ul>";
+					if ($sec_name!="") 
 					$sec_name=substr($value,9);
-					echo "<hr><h2>$sec_name</h2>";
-					echo "<ul>";
+					echo '<li class="nav-item"><a class="nav-link">'.$sec_name.'</a></li>';
 				}else{
 					$l=explode('|',$value);
-					echo "<li><a href=\"".$l[1]."\"";
+					echo '<li class="nav-item"><a class="nav-link"  href=\"'.$l[1].'\"';
 					if (isset($l[2]) and $l[2]=="Y") echo " target=_blank";
 					echo ">".$l[0]."</a></li>\n";
 				}
@@ -87,9 +91,8 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	}
 }
 ?>
-</aside>
 
-</div>
+
 
 <form name="bi" action="/opac/buscar_integrada.php" method="post">
 <input type="hidden" name="base">
@@ -138,3 +141,6 @@ function BuscarIntegrada(base,modo,Opcion,Expresion,Coleccion,titulo_c,resaltar,
 	document.bi.submit()
 }
 </script>
+
+      </div>
+    </nav>

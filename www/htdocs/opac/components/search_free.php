@@ -4,59 +4,37 @@
  * 
  */
 
-if (!isset($titulo_pagina)){
-	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
-	if (isset($modo) and  $modo=="integrado"){
-	?>	
-		<span class="tituloBase"><?php echo $msgstr["todos_c"];?></span>
-		<input type="hidden" name="modo" value="integrado">
-	<?php
-	}else{
-		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
-			echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"];
-			$yaidentificado="S";
-			if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="") {
-				$_REQUEST["coleccion"]=urldecode($_REQUEST["coleccion"]);
-				$cc=explode('|',$_REQUEST["coleccion"]);
-				echo "<br><i>".$cc[1]."</i>";
-			}
-		}
-	}
-	echo "</span>";
-}
-if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 ?>
 
-	<div id="searchBox">
-	
-	<form method="post" action="buscar_integrada.php" name="libre">
-		<div id="search" >
-
-	<?php
-if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
-    if (isset($_REQUEST["Formato"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["Formato"].">\n";
-    if (isset($_REQUEST["indice_base"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["indice_base"].">\n";
-	if (isset($_REQUEST["base"]))echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
-	if (isset($modo))echo "<input type=hidden name=modo value=".$modo.">\n";
-	?>
-
-	<div class="form-search">
-		<input type="text" name="Sub_Expresion" id="search-text" value="" placeholder="<?php echo $msgstr["search"]?>  ..."/>
-		<button type="submit" class="bt-green" >
-			<i class="fa fa-search"></i> <?php echo $msgstr["search"]?>
-		</button>
-	</div> <!--/form-search-->
-	
+  <div class="container-fluid shadow">
+    <div class="row">
+      <div class="bg-light col-md-3 col-lg-2">
+    <nav class="col-md-12 col-lg-12 bg-light d-xl-inline sidebar">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-md-column flex-xl-row">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              Free Search
+            </a>
+          </li>
 	<?php
 		if (!isset($BusquedaAvanzada) or isset($BusquedaAvanzada) and $BusquedaAvanzada=="S"){
-	?>
-
-	<div class="form-search">
-			<button type="button" class="bt-blue" onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();"/><?php echo $msgstr["buscar_a"]?></button>
+	?>		  
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();">
+              <span data-feather="home" class="align-text-bottom"></span>
+              <?php echo $msgstr["buscar_a"]?>
+            </a>
+          </li>
+<?php } ?>		  
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="javascript:DiccionarioLibre(0)">
+              <span data-feather="file" class="align-text-bottom"></span>
+              <?php echo $msgstr["diccionario"]?>
+            </a>
+          </li>
 	<?php
-	}
-
 	if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N"){
 		$archivo="";
 		if (isset($modo)){
@@ -68,28 +46,159 @@ if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value
 		}
 		if (file_exists($archivo)){
 		?>	
-			<button type="button" class="bt-blue" onclick="showhide('sub_menu')"> <?php echo $msgstr["indice_alfa"];?></button>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showhide('sub_menu')">
+              <span data-feather="file" class="align-text-bottom"></span>
+              <?php echo $msgstr["indice_alfa"];?>
+            </a>
+          </li>			
 		
 		<?php
 		}
 	}
+?>		  
+        </ul>
+    
+      </div>
+    </nav>
+      </div>
+
+      <div class="bg-light col-md-9 col-lg-10">
+
+	  <?php
+if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 ?>
-	</div><!--/form-search-->
-	</div>
 
-	<div id="more">
-   		<input type=button height=50 value="<?php echo $msgstr["diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
+		<form method="post" action="buscar_integrada.php" name="libre">
 
-		<p class=titulo2>
+	<?php
+	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
+	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
+    if (isset($_REQUEST["Formato"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["Formato"].">\n";
+    if (isset($_REQUEST["indice_base"]))echo "<input type=hidden name=indice_base value=".$_REQUEST["indice_base"].">\n";
+	if (isset($_REQUEST["base"]))echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
+	if (isset($modo))echo "<input type=hidden name=modo value=".$modo.">\n";
+	?>		
+        <div class="input-group p-xl-5 p-md-4">
+          <input type="text" class="form-control form-control-lg" name="Sub_Expresion" id="search-text"
+            placeholder="<?php echo $msgstr["search"]?>..." aria-label="<?php echo $msgstr["search"]?>..." aria-describedby="button-addon2">
+			
+
+<?php
+if (!isset($titulo_pagina)){
+	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
+	if (isset($modo) and  $modo=="integrado"){
+	?>	
+	<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false"><?php echo $msgstr["todos_c"];?></button>
+		<input type="hidden" name="modo" value="integrado">
+	<?php
+	}else{
+		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
+			echo '<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">'.$bd_list[$_REQUEST["base"]]["titulo"];
+			$yaidentificado="S";
+			if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="") {
+				$_REQUEST["coleccion"]=urldecode($_REQUEST["coleccion"]);
+				$cc=explode('|',$_REQUEST["coleccion"]);
+				echo "<i>".$cc[1]."</i>";
+			}
+		}
+	}
+	echo "</button>";
+}
+?>
+
+
+              <ul class="dropdown-menu">
+				<input type="hidden" name="modo" value="integrado">
+<?php
+	foreach ($bd_list as $key => $value){
+		$archivo=$db_path.$key."/opac/".$lang."/".$key."_colecciones.tab";
+		$ix=0;
+		$value_info="";
+		$home_link="*";
+		if (file_exists($db_path."opac_conf/".$lang."/".$key."_home.info")){
+			$home_info=file($db_path."opac_conf/".$lang."/".$key."_home.info");
+			foreach ($home_info as $value_info){
+				$value_info=trim($value_info);
+				if ($value_info!=""){
+					if (substr($value_info,0,6)=="[LINK]") $home_link=$value_info;
+					if (substr($value_info,0,6)=="[TEXT]") $home_link=$value_info;
+					if (substr($value_info,0,5)=="[MFN]")  $home_link="";
+				}
+				//echo "**$value_info<br>";
+			}
+		}
+		if (trim($value["nombre"])!=""){
+			echo "<a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
+			echo "<strong>".$value["titulo"]."</strong></a><br>\n";
+	    	if (file_exists($archivo)){
+	    		$fp=file($archivo);
+	    		echo "<ul>\n";
+
+	    		foreach ($fp as $colec){
+	          		$colec=trim($colec);
+	          		if ($colec!=""){
+	          			$v=explode('|',$colec);
+	          			$ix=$ix+1;
+	          			if ($v[0]!='<>'){
+							if (isset($IndicePorColeccion) and $IndicePorColeccion=="S")
+								$cipar="_".strtolower($v[0]);
+							else
+								$cipar="";
+							echo "<li>";
+							echo "<a href='javascript:BuscarIntegrada(\"$key\",\"1B\",\"libre\",\"\",\"$colec\",\"\",\"\",\"\",\"\",\"\")'>";
+							//echo "<a href=\"buscar_integrada.php?base=$key&cipar=$key".$cipar."&coleccion=$colec&Opcion=libre\">"
+			          		echo $v[1]."</a></li>\n";
+	          			}else{
+		          				//echo "<li>".$v[1]."</i></label></a></li>\n";
+		        		}
+		          	}
+	          	}
+	          	echo "</ul>\n";
+	    	}else{
+	    		//echo "</li>\n";
+	   		}
+	     }
+
+	}
+?>
+                <li><a class="dropdown-item" href="#"><?php echo $msgstr["todos_c"];?></a></li>
+                <li><a class="dropdown-item" href="#">MARC</a></li>
+                <li><a class="dropdown-item" href="#">Dublin Core</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+              </ul>
+          <button class="btn btn-success" type="button" id="button-addon2"><?php echo $msgstr["search"]?></button>
+        </div>
+		<div class="row mx-5 py-3">
 			<?php echo $msgstr["resultados_inc"]?>: 
-     		
-     		<input type="radio" value="and" name="alcance" id="and">
-    		<label class="titulo2"><?php echo $msgstr["todas_p"]?> </label>
-    		
-    		<input type="radio" value="or" name="alcance" id="or"  checked>
-    		<label><?php echo $msgstr["algunas_p"]?></label>
-    	</p>
-   	</div><!--/more-->
+     		<div class="form-check">
+     			<input class="form-check-input" type="radio" value="and" name="alcance" id="and">
+    			<label class="form-check-label"><?php echo $msgstr["todas_p"]?> </label>
+			</div>
+			<div class="form-check">
+    			<input class="form-check-input" type="radio" value="or" name="alcance" id="or"  checked>
+    			<label class="form-check-label"><?php echo $msgstr["algunas_p"]?></label>
+			</div>
+   		</div><!--/more-->		
+      </div>
+	  
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
 
 
 <?php

@@ -1,9 +1,5 @@
 				<!-- end #content -->
 
-				</div>
-				<a name="final">
-					</div>
-
 					<!--ESTO SE CAMBIO PARA PODER INSERTAR EL NUEVO FOOTER -->
 					<?php
 					if (file_exists($db_path . "opac_conf/" . $lang . "/footer.info")) {
@@ -61,9 +57,7 @@
 					}
 					?>
 					<!-- end #footer -->
-					</body>
 
-					</html>
 					<?php
 					if (!isset($_REQUEST["modo"])) $_REQUEST["modo"] = "";
 					if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php")
@@ -250,5 +244,13 @@
 							echo "<input type=hidden name=modo value=\"" . $_REQUEST["modo"] . "\">\n";
 						?>
 					</form>
+
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+  </body>
+</html>					
 
 					--- footer.php ---

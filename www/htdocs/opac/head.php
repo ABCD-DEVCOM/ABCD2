@@ -30,7 +30,7 @@ $meta_encoding = $charset;
 <html>
 <head>
 	<title><?php echo $TituloPagina ?></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 
@@ -56,12 +56,63 @@ $meta_encoding = $charset;
 	}
 	?>
 
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
-	<link href="/assets/css/colors.css" rel="stylesheet">
-	<link href="/assets/css/buttons.css" rel="stylesheet">
-	<link href="/assets/css/normalize.css" rel="stylesheet">
 
-	<link href="/opac/assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>	
+
+	<link href="/opac/assets/css/dashboard.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
 	<script src=/opac/assets/js/script_b.js?<?php echo time(); ?>></script>
 	<script src=/opac/assets/js/highlight.js?<?php echo time(); ?>></script>
 	<script src=/opac/assets/js/lr_trim.js></script>
@@ -129,65 +180,69 @@ $meta_encoding = $charset;
 </head>
 
 <body>
+<?php 
+if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
+	echo $msgstr["missing"] . " " . $db_path . "opac_conf/$lang/lang.tab";
+	die;
+}
+?>
+<header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow text-bg-light">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
+    <img class="bi me-2" height="32" role="img" src="/opac/<?php echo $logo ?>" title="ABCD">
+  </a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+    data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-	<header id="header-wrapper">
-		<div id="header">
-			<div id="logo">
-				<a name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $_REQUEST['lang'] ?>"><img src="/opac/<?php echo $logo ?>"></a>
-			</div>
+  <?php include_once 'components/topbar.php'; ?>
 
-		</div>
-		<div class="areaTitulo">
-			<div class=tituloBase>
-				<?php 
-				if (isset($_SESSION['nombre'])){ 
-					echo utf8_encode($_SESSION['nombre']);
-				} else {
-					echo '<a href="/mysite?mode=opac">Sign</a>';
-				}?>
-			</div>
-			<div>
-				<?php echo $charset;
-				if (file_exists("opac_dbpath.dat"))
-					echo "<a href=../index.php>Cambiar carpeta bases</a>";
-				?>
-			</div>
-		</div>
-	</header>
-	<?php
-	if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
-		echo $msgstr["missing"] . " " . $db_path . "opac_conf/$lang/lang.tab";
-		die;
-	}
-
-		
-// Layout
-// NAVBARTOP
-		include_once 'components/topbar.php';
+</header>
 
 
-// SIDEBAR
-if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
+<?php
 
 if (isset($_REQUEST["modo"])) {
 	unset($_REQUEST["base"]);
 	$modo = "integrado";
 }
 
+
+//Display search form when not on a user's screen
+if (!isset($indice_alfa)) {
+// Exibe form de busca
+
+$_REQUEST["base"] = $actualbase;
+include("components/search_free.php");
+} else {
+//include 'components/avanzada.php';
+}
+
+
+
+// SIDEBAR
+if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
+
+
+
 ?>
-		<div id="page">
-			<div id="content" <?php if (isset($desde) and $desde = "ecta") ?>>
-				<?php
-				//Display search form when not on a user's screen
-				if (!isset($indice_alfa)) {
-				// Exibe form de busca
-				
-				$_REQUEST["base"] = $actualbase;
-				include("components/search_free.php");
-			} else {
-				//include 'components/avanzada.php';
-			}
-				?>
-			</div>
+
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar" class="align-text-bottom"></span>
+            This week
+          </button>
+        </div>
+      </div>
+
+
 
 	--- /opac/head.php --- 
