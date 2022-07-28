@@ -1,20 +1,20 @@
 <?php
 if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
 ?>
-<div class="col-3">
-    <select name="lang" class="form-select form-select-sm bg-primary text-white align-self-end" onchange="ChangeLanguage()" id="lang">
-        <?php
-        $fp = file($db_path . "opac_conf/$lang/lang.tab");
-        foreach ($fp as $value) {
-            if (trim($value) != "") {
-                $a = explode("=", $value);
-                echo "<option value=" . $a[0];
-                if ($lang == $a[0]) echo " selected";
-                echo ">" . trim($a[1]) . "</option>";
+    <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <select name="lang" class="form-select form-select-sm bg-primary text-white align-self-end" onchange="ChangeLanguage()" id="lang">
+            <?php
+            $fp = file($db_path . "opac_conf/$lang/lang.tab");
+            foreach ($fp as $value) {
+                if (trim($value) != "") {
+                    $a = explode("=", $value);
+                    echo "<option value=" . $a[0];
+                    if ($lang == $a[0]) echo " selected";
+                    echo ">" . trim($a[1]) . "</option>";
+                }
             }
-        }
-        ?>
-    </select>
+            ?>
+        </select>
     </div>
 
       <ul class="nav nav-pills">
@@ -36,19 +36,40 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
         }
 
         ?>
-            <li class="nav-item">
+
                 <?php 
                 if (isset($_SESSION['nombre'])){ 
-                echo '<a class="nav-link text-white" href="#"'.utf8_encode($_SESSION['nombre']).'</a>';
-                } else {
-                echo '<a class="nav-link text-white" href="/mysite?mode=opac">Sign</a>';
-                }?>
-            </li>
+                ?>    
 
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" data-bs-placement="left" href="#" role="button" aria-expanded="false">
+            <?php if(isset($_SESSION["photo"])) { ?>
+            <img src="/central/common/show_image.php?image=images/<?php echo $_SESSION["photo"];?>&base=users" alt="mdo" width="32" height="32" class="rounded-circle">
+            <? } else { ?>
+            <img src="/central/common/show_image.php?image=images/default-user-image.png&base=users" alt="mdo" width="32" height="32" class="rounded-circle">
+            <? } ?>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="#"><?php echo utf8_encode($_SESSION['nombre']);?></a></li>
+       <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/mysite/common/index.php#reserves">Reserves</a></li>
+      <li><a class="dropdown-item" href="/mysite/common/index.php#loans">Loans</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="/mysite/common/index.php#">My Account</a></li>
+    </ul>
+  </li>
             </ul>
 
+                <?php
+                } else {
+?>   
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a href="/mysite?mode=opac" class="nav-link text-white"  aria-expanded="false">
+            Sign
+          </a>
+        </li>
+    </ul>
 
-
-    <?php
-}
-    ?>
+        <?php } ?>
+    <?php } ?>

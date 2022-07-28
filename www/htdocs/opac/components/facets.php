@@ -1,5 +1,4 @@
 <?php 
-$facetas="S";
 
 if (isset($_REQUEST["base"]) and $_REQUEST["base"] != ""){
     $bb = $_REQUEST["base"];
@@ -7,30 +6,33 @@ if (isset($_REQUEST["base"]) and $_REQUEST["base"] != ""){
     $bb = $primera_base;
 }
 
-if (isset($facetas) and $facetas=="S" and (!isset($_REQUEST["prefijoindice"]) OR $_REQUEST["prefijoindice"]=="")){
+if (isset($facetas) and $facetas=="Y" and (!isset($_REQUEST["prefijoindice"]) OR $_REQUEST["prefijoindice"]=="")){
     $archivo="";
-if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$bb."_facetas.dat")){
-    $archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/".$bb."_facetas.dat";
+if (file_exists($db_path."/opac_conf/".$lang."/".$bb."_facetas.dat")){
+    $archivo=$db_path."/opac_conf/".$lang."/".$bb."_facetas.dat";
     }else{
-    if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/facetas.dat"))
-        $archivo=$db_path."/opac_conf/".$_REQUEST["lang"]."/"."facetas.dat";
+    if (file_exists($db_path."/opac_conf/".$lang."/facetas.dat"))
+        $archivo=$db_path."/opac_conf/".$lang."/"."facetas.dat";
     }
 
     if ($archivo!=""){
         $fp=file($archivo);
     if (count($fp)>0){
 ?>
-        <div class="side-bar-facetas">
-            <a href="#" class="facetas" onclick="openNavFacetas()"><?php echo $msgstr["facetas"] ?></a>
-        </div>
-        <div id="SidenavFacetas" class="sidenav-facetas">
-            <?php
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+          <span><?php echo $msgstr["facetas"]; ?></span>
+          <a class="link-secondary" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle" class="align-text-bottom"></span>
+          </a>
+        </h6>	
+
+<?php
             $fp = file($archivo);
             foreach ($fp as $value) {
                 $value = trim($value);
                 if ($value != "") {
                     $x = explode('|', $value);
-                    echo "<li><a href='javascript:Facetas(\"$value\")'>" . $x[0];
+                    echo '<li class="nav-item"><a class="nav-link" href="javascript:Facetas('.$value.')">' . $x[0];
                     $IsisScript = "opac/buscar.xis";
                     if ($Expresion == '$'){
                         $ex = $x[1];
@@ -43,7 +45,7 @@ if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$bb."_facetas.dat")
                     }
 
                 if (isset($bb)=="") {
-                    $query = "&base=".$bb."&cipar=".$db_path.$actparfolder.$bb.".par&Expresion=" . urlencode($ex) . "&from=1&count=1&Opcion=buscar&lang=" . $_REQUEST["lang"];
+                    $query = "&base=".$bb."&cipar=".$db_path.$actparfolder.$bb.".par&Expresion=" . urlencode($ex) . "&from=1&count=1&Opcion=buscar&lang=" . $lang;
                     $resultado = wxisLlamar($bb, $query, $xWxis . $IsisScript);
                 } else {
                     $resultado=array();
@@ -67,10 +69,6 @@ if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$bb."_facetas.dat")
             }
             ?>
 
-            <br>
-            <a href="javascript:void(0)" onclick="closeNavFacetas()">&times; <?php echo $msgstr["close"] ?></a>
-
-        </div>
 <?php
 
 		}

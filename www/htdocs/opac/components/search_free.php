@@ -191,28 +191,18 @@ if (!isset($titulo_pagina)){
 
   </div>
 
-
-
-
-
-
-
-
-
-
-
 <?php
 }
 if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N") {
 ?>
 
-<div style="clear:both;"></div>
+
     <div id="sub_menu" style="display: none;" name=sub_menu>
 		<ul>
 <?php
 
 $php_path="";
-if ($multiplesBases=="S" and isset($_REQUEST["base"])){
+if ($multiplesBases=="Y" and isset($_REQUEST["base"])){
 	$base="base=".$_REQUEST["base"];
 	$dbname=$_REQUEST["base"];
 }else{
@@ -223,7 +213,7 @@ if ($multiplesBases=="S" and isset($_REQUEST["base"])){
 
 if (isset($Home))
 	   echo "<li><a href=$Home>Home</a></li>\n";
-$multipleBases="S";
+	   $multiplesBases = "Y";
 
 if (isset($modo) and $modo=="integrado"){
 	$archivo="indice.ix";
@@ -291,8 +281,6 @@ if (!file_exists($db_path.$base."/opac/".$lang."/$archivo")){
    		?>
    	</form>
 
-   	<div style="clear:both;"></div>
-
 <?php
 }
 
@@ -300,5 +288,3 @@ if ($actualScript=="index.php") {
 	unset($_REQUEST["base"]);
 }
 ?>
-
-</div><!--/searchBox-->

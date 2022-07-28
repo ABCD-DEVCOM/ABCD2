@@ -104,7 +104,7 @@ if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N") {
 <?php
 
 $php_path="";
-if ($multiplesBases=="S" and isset($_REQUEST["base"])){
+if ($multiplesBases=="Y" and isset($_REQUEST["base"])){
 	$base="base=".$_REQUEST["base"];
 	$dbname=$_REQUEST["base"];
 }else{
