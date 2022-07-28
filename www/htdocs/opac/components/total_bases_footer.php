@@ -1,5 +1,5 @@
 <?php
-if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="S") {
+if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="Y") {
     ?>
 
 <div style="width:100%;border:1px solid #cccccc; padding:10px; border-radius: 4px;">
