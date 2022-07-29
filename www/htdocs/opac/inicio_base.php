@@ -1,5 +1,5 @@
 <?php
-include("head.php");
+include("common/opac-head.php");
 //echo "<div style=\"margin:0 auto;height:100%\">";
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
 if (isset($_REQUEST["home"])){
@@ -18,7 +18,7 @@ if (isset($_REQUEST["home"])){
 }
 //echo "</div>";
 
-include("components/footer.php");
+include("common/opac-footer.php");
 ?>
 
 <script>

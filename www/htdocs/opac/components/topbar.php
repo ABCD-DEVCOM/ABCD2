@@ -56,6 +56,7 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
       <li><a class="dropdown-item" href="/mysite/common/index.php#loans">Loans</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="/mysite/common/index.php#">My Account</a></li>
+      <li><a class="dropdown-item" href="/opac/common/opac-logout.php">Log Out</a></li>
     </ul>
   </li>
             </ul>

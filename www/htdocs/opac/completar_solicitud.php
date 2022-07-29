@@ -7,7 +7,7 @@ include("inc/leer_bases.php");
 $indice_alfa="N";
 //$sidebar="N";
 $ActualDir=getcwd();
-include("head.php");
+include("common/opac-head.php");
 $Web_Dir=$CentralPath;
 $desde_web="Y";
 $desde_opac="Y";
@@ -35,7 +35,7 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 
 <?php
 include ('reservar_ex.php');
-include($ActualDir."/components/footer.php");
+include($ActualDir."/common/opac-footer.php");
 
 
 

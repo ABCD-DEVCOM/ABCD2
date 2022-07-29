@@ -50,7 +50,7 @@ global $Wxis,$xWxis,$db_path,$CentralPath,$actparfolder,$lang;
 //$sidebar="N";
 $desde="ecta";
 $indice_alfa="N";
-include("head.php");
+include("common/opac-head.php");
 ?>
 
 
@@ -310,5 +310,5 @@ function CompletarSolicitud(){
 }
 </script>
 <?php
-include("components/footer.php");
+include("common/opac-footer.php");
 ?>

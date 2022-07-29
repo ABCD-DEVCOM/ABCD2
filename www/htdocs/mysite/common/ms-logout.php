@@ -3,10 +3,11 @@ session_start();
 require_once "../../central/config.php";
 
 
-if (isset($_SESSION["HOME"]))
+if (isset($_SESSION["HOME"])){
 	$retorno=$_SESSION["HOME"];
-else
+} else {
 	$retorno="/mysite";
+}
 $_SESSION=array();
 unset($_SESSION);
 unset($_COOKIE);
@@ -42,4 +43,4 @@ const deleteAllCookies = () => {
 
 deleteAllCookies()
          
-      </script>
+</script>

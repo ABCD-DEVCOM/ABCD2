@@ -9,7 +9,7 @@
 include("../central/config_opac.php");
 $primeraPagina="S";
 
-include("head.php");
+include("common/opac-head.php");
 ?>
 
 <?php
@@ -46,7 +46,7 @@ if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 }
 ?>
 
-<?php include("components/footer.php");?>
+<?php include("common/opac-footer.php");?>
 
 <script>
 function resizer(id) {

@@ -4,7 +4,7 @@ include("../central/config_opac.php");
 include("leer_bases.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>".urldecode($value)."<br>";
 $indice_alfa="n";
-include("head.php");
+include("common/opac-head.php");
 echo "<input type=button Value='Regresar' onclick=javascript:history.back()><br>";
 foreach ($_REQUEST as $key=>$value) $_REQUEST[$key]=urldecode($value);
 $Formato="@opac.pft";
@@ -48,6 +48,6 @@ foreach ($_REQUEST as $key=>$value){
 echo "</form>";
 ?>
 <?php
-include("components/footer.php");
+include("common/opac-footer.php");
 
 ?>

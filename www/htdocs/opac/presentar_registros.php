@@ -111,7 +111,7 @@ global $yaidentificado,$db_path,$msgstr, $actparfolder, $lang;
 	return $Exp_b;
 }
 
-function PresentarRegistros($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
+function PresentarRegistros_search($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
 global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, $lang;
 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="")
     	$cipar=$_REQUEST["cipar"];
@@ -142,8 +142,9 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 		}
     
 	//$ff_pft="'aaa<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
-	
-	$ff_pft="'<hr>',@select_record.pft,,@".$Formato.".pft,";
+
+	$ff_pft=",@select_record.pft,";
+	$ff_pft.=",@".$Formato.".pft,";
 	
 	$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$lang;
 
@@ -195,12 +196,11 @@ if (Trim(cookie)!=""){
 					echo "<p>";
 				}
 				if (isset($galeria) and $galeria=="S"){
-					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria im�genes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
+					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imagenes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
 					echo "&nbsp; &nbsp; <input type=button id=\"search-submit\" value=\" Ver ficha descriptiva \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','ficha')\"><br>";
 				}
    				echo "</strong><p>\n</div>\n";
       			$primeravez="N";
-      			echo '<div id="results" >';
 			}
 		}else{
 			if (substr($value,0,6)=='$$REF:'){
@@ -230,7 +230,6 @@ if (Trim(cookie)!=""){
 		}
 
 	}
-	 echo "</div>\n";
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="" ){
 			PresentarExistencias($_REQUEST["Existencias"]);
 	}

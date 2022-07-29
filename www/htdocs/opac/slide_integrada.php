@@ -5,7 +5,7 @@
 
 
 ***********************************************/
-include("head.php");
+include("common/opac-head.php");
 include("components/nav_pages.php");
 
 include ("slide_show.php");
@@ -116,6 +116,6 @@ if (isset($total_base) and count($total_base)>1){
 	echo "</table>";
 	echo "</div>";
 }
-include("components/footer.php");
+include("common/opac-footer.php");
 
 ?>

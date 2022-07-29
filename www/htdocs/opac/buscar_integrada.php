@@ -10,7 +10,7 @@ include("../central/config_opac.php");
 include("inc/leer_bases.php");
 
 include('components/nav_pages.php');
-include("head.php");
+include("common/opac-head.php");
 
 
 
@@ -394,7 +394,7 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2"><?php echo $msgstr["su_consulta"];?> <small>( <?php echo str_replace('"','',PresentarExpresion($base)); ?> ) </small></h1>
+        <h2 class="h2"><?php echo $msgstr["su_consulta"];?> <small>( <?php echo str_replace('"','',PresentarExpresion($base)); ?> ) </small></h2>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -479,7 +479,7 @@ if (isset($total_base) and count($total_base)>0 ){
 	$frm_sel=SelectFormato($base,$db_path,$msgstr);
 	$select_formato=$frm_sel[0];
 	$Formato=$frm_sel[1];
-	$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
+	$contador=PresentarRegistros_search($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 	$desde=$desde+$count;
 
 	if ($desde>=$contador and isset($total_base) and count($total_base)==2 and $multiplesBases=="N") {
@@ -503,9 +503,6 @@ if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresi
 
 <?php
 
-// Inserts the total results per database in the footer.
-include_once 'components/total_bases_footer.php';
-
 // Activated when the search has no results
 include_once 'components/no_results.php';
 
@@ -515,14 +512,8 @@ if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=".$
 </form>
 
 <?php
-//include_once ('components/facets.php');
-?>
 
-<p id="back-top"><a href="#inicio"><span></span></a></p>
-
-<?php
-
-include("components/footer.php");
+include("common/opac-footer.php");
 
 if (!isset($_REQUEST["base"]))$base="";
 $Exp_b=PresentarExpresion($_REQUEST["base"]);

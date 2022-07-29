@@ -5,7 +5,7 @@ $path="../";
 include("../../central/config_opac.php");
 include("../leer_bases.php");
 $indice_alfa="n";
-include("../head.php");
+include("../common/opac-head.php");
 
 // Para presentar el diccionario de terminos consolidado
 include("dibujarformabusqueda_st.php");

@@ -1,5 +1,5 @@
 <?php
-include("head.php");
+include("common/opac-head.php");
 include("inc/leer_bases.php");
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";
 if (isset($_REQUEST["base"])){
@@ -53,7 +53,7 @@ para presentar el �ndice solicitado y a partir del mismo proceder a la recuper
 		</ul>
 <br><br>
 <?php
-include("components/footer.php");
+include("common/opac-footer.php");
 
 
 

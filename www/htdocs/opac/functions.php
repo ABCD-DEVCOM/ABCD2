@@ -42,7 +42,7 @@ global $arrHttp,$xWxis, $actparfolder;
 }
 
 function PresentarRegistros($base,$db_path,$Lista_Mfn){
-global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actparfolder, $num_control;
+global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr,$arrHttp, $actparfolder, $num_control, $lang;
 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!=""){
 	    	$cipar=$_REQUEST["cipar"];
 	   } else {

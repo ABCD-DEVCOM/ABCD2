@@ -38,19 +38,20 @@ global $bd_list,$multiplesBases,$base,$msgstr;
 		}else{
 			$pg=($anterior)*25+1;
 		}
-		echo "\n<div style='width:100%;margin:0 auto;text-align:center; font-size:12px;'>\n";
+		echo '<nav aria-label="...">';
 		echo  $bd_list[$base]["descripcion"]."<br>";
 		echo $msgstr["pagina"]." ".$_REQUEST["pagina"]." ".$msgstr["de"]." $paginas <br>";
 		echo $select_formato."<br>";
 ?>
 
-			<ul class=pagination>
-				<li><a href="javascript:ProximaPagina(1,1)">
-					<i class="fas fa-angle-double-left" title="<?php echo $msgstr["primera_pag"];?>" alt="<?php echo $msgstr["primera_pag"];?>"></i>
+			 <ul class="pagination">
+				<li class="page-item">
+					<a class="page-link" href="javascript:ProximaPagina(1,1)">
+						<i class="fas fa-angle-double-left" title="<?php echo $msgstr["primera_pag"];?>" alt="<?php echo $msgstr["primera_pag"];?>"></i>
 					</a>
 				</li>
-        		<li>
-        			<a href=javascript:ProximaPagina(<?php echo $anterior;?>,<?php echo $pg;?>)>
+        		<li class="page-item">
+        			<a class="page-link" href=javascript:ProximaPagina(<?php echo $anterior;?>,<?php echo $pg;?>)>
         				<i class="fas fa-chevron-left" title="<?php echo $$msgstr["anterior"];?>" alt="<?php echo $$msgstr["anterior"];?>"></i>
         			</a>
         		</li>
@@ -63,11 +64,11 @@ while ($cuenta_p<20){
 	$cuenta_p=$cuenta_p+1;
 	$pg=($pagina-1)*25+1;
 	if ($pagina==$_REQUEST["pagina"])
-		$active=" class=active";
+		$active="active";
 	else
 		$active="";
 
-	echo "<li><a $active href=javascript:ProximaPagina($pagina,$pg)>".$pagina."</li>";
+	echo '<li class="page-item"><a class="page-link '.$active.'"  href=javascript:ProximaPagina('.$pagina.','.$pg.')>'.$pagina.'</a></li>';
 	$pagina=$pagina+1;
 	if ($pagina>$paginas) break;
 }
@@ -76,14 +77,18 @@ while ($cuenta_p<20){
 $pagina=$_REQUEST["pagina"]+1;
 if ($pagina>$paginas) $pagina=$paginas;
 $pg=($pagina-1)*25+1;?>
-<li><a href="javascript:ProximaPagina(<?php echo $pagina; ?>,<?php echo $pg;?>)"><i class="fas fa-chevron-right" title="<?php echo $msgstr["proximo"];?>" alt="<?php echo $msgstr["proximo"];?>"></i></a></li>
+<li class="page-item">
+	<a class="page-link" href="javascript:ProximaPagina(<?php echo $pagina; ?>,<?php echo $pg;?>)">
+		<i class="fas fa-chevron-right" title="<?php echo $msgstr["proximo"];?>" alt="<?php echo $msgstr["proximo"];?>"></i>
+	</a>
+</li>
 
 <?php
 $pg=$totalRegistros-$count+1;
 while ($pg<=0) $pg=$pg+1;
 ?>
-<li>
-<a href=javascript:ProximaPagina(<?php echo $paginas;?>,<?php echo $pg;?>)>
+<li class="page-item">
+<a class="page-link" href="javascript:ProximaPagina(<?php echo $paginas;?>,<?php echo $pg;?>)">
 	<i class="fas fa-angle-double-right" title="<?php echo $msgstr["ultima_pag"];?>" alt="<?php echo $msgstr["ultima_pag"];?>"></i>				
 </a>
 </li>

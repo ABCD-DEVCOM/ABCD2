@@ -1,8 +1,5 @@
 <?php
-include("head.php");
-//session_start();
-
-//var_dump($_SESSION);
+include("common/opac-head.php");
 
 $mostrar_menu="N";
 //include("inc/leer_bases.php");
@@ -15,11 +12,11 @@ if (isset($_REQUEST["sendto"]) and $_REQUEST["sendto"]!="") $_REQUEST["cookie"]=
 $list=explode("|",$_REQUEST["cookie"]);
 $ll=explode("_",$list[0]);
 if (isset($_REQUEST["Accion"])) $accion=trim($_REQUEST["Accion"]);
-if (isset($_REQUEST["db_path"]))
+if (isset($_REQUEST["db_path"])){
 	$ptdb='&db_path='.$_REQUEST["db_path"];
-else
+} else {
 	$ptdb="";
-//header('Content-Type: text/html; charset=".$charset."');
+}
 
 
 ?>
@@ -81,12 +78,13 @@ else
 	}
 
 	</script>
+
 <body>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2"><?php echo "<strong>".$msgstr["records_selected"]."</strong>"; ?></h2>	
 
 
-<div id="wrapper">
-	<div id="page" >
-		<div id="content">
 	<?php
 	$list=explode('|',$_REQUEST["cookie"]);
 	foreach ($list as $value){
@@ -99,22 +97,27 @@ else
 
 	if ($accion!="mail_one" and $accion!="print_one" and $accion!="reserve_one"){
 	?>
-		<div id=toolBar style="margin:auto;text-align:center;width:400px;border:1px solid;padding:5px">
-			<a class="bt" href="javascript:SendToPrint()"><i class="fas fa-print"></i></a>&nbsp; &nbsp;
-			<a class="bt" href="javascript:SendToWord()"><i class="far fa-file-word"></i></a>&nbsp; &nbsp;
+	<div class="btn-toolbar mb-2 mb-md-0">
+		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+			<div class="btn-group me-2">
+			<a class="btn btn-sm btn-outline-secondary" href="javascript:SendToPrint()"><i class="fas fa-print"></i></a>
+			<a class="btn btn-sm btn-outline-secondary" href="javascript:SendToWord()"><i class="far fa-file-word"></i></a>
 			<?php if (count($sel_db)==1){?>
 
 			<?php }?>
-			<a class="bt" href="javascript:SendToISO()">ISO</a>&nbsp; &nbsp;
-			<a class="bt" href="javascript:ShowHide('myMail')"><i class="far fa-envelope"></i></a>&nbsp; &nbsp;
+			<a class="btn btn-sm btn-outline-secondary" href="javascript:SendToISO()">ISO</a>
+			<a class="btn btn-sm btn-outline-secondary" href="javascript:ShowHide('myMail')"><i class="far fa-envelope"></i></a>
 			<?php if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y") { ?>
-				<a class="bt" href="javascript:ShowHide('myReserve')"><i class="fas fa-book"></i></a>&nbsp; &nbsp;
+				<a class="btn btn-sm btn-outline-secondary" href="javascript:ShowHide('myReserve')"><i class="fas fa-book"></i></a>
 			<?php
 			}
 			?>
-			<a class="bt bt-blue" href="javascript:document.regresar.submit()"><i class="fas fa-arrow-alt-circle-left"></i></a>
+			</div>
+			<a class="btn btn-sm btn-outline-secondary" href="javascript:document.regresar.submit()"><i class="fas fa-arrow-alt-circle-left"></i></a>
 		</div>
-	<br>
+	</div>
+	</div>
+	
 	<?php } ?>
 
 	<div id="myMail" style="display:<?php if ($accion=="mail_one") echo "block"; else echo "none";?>;margin:auto;width:600px;xheight:150px; position:relative;border:1px solid black;">
@@ -123,9 +126,7 @@ else
 
 	<?php include("modules/reserve/reserve_iframe.php")?>
 	
-<?php
-	echo "<strong>".$msgstr["records_selected"]."</strong>";
-?>
+
 
 <?php include ("presentar_seleccion_inc.php"); ?>
 

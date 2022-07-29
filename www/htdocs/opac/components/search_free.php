@@ -80,7 +80,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	if (isset($_REQUEST["base"]))echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
 	if (isset($modo))echo "<input type=hidden name=modo value=".$modo.">\n";
 
-	if (isset($_REQUEST['Expresion'])) {
+	if (isset($Expresion)) {
 		$Sub_Expresion_val = str_replace('%22','',$_SESSION['Expresion']);
 		$Sub_Expresion_val = str_replace('TW_','',$Sub_Expresion_val);
 	} else {
@@ -175,15 +175,17 @@ if (!isset($titulo_pagina)){
                         id="button-addon2"><?php echo $msgstr["search"]?></button>
                 </div>
                 <div class="row mx-5 py-3">
-                    <?php echo $msgstr["resultados_inc"]?>:
-                    <div class="form-check">
+					<div class="col-auto">
+                    <?php echo $msgstr["resultados_inc"]?>: 
+                    <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" value="and" name="alcance" id="and">
                         <label class="form-check-label"><?php echo $msgstr["todas_p"]?> </label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" value="or" name="alcance" id="or" checked>
                         <label class="form-check-label"><?php echo $msgstr["algunas_p"]?></label>
                     </div>
+                </div>
                 </div>
                 <!--/more-->
         </div>

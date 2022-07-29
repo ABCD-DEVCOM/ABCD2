@@ -468,22 +468,21 @@ function Seleccionar(Ctrl){
 		}else{
 			cookie=Ctrl.name
 		}
-	}else{
+	} else {
 		sel=Ctrl.name+"|"
 		c=cookie+"|"
 		n=c.indexOf(sel)
 		if (n!=-1){
 			cookie=cookie.substr(0,n)+ cookie.substr(n+sel.length)
 		}
-
 	}
-	document.cookie="ORBITA="+cookie
-	Ctrl=document.getElementById("cookie_div")
-	Ctrl.style.display="inline-block"
+	document.cookie="ORBITA="+cookie;
+	Ctrl=document.getElementById("cookie_div");
+	Ctrl.style.display="inline-block";
 }
 
-function delCookie(){
 
+function delCookie(){
 	for (var i = 0; i < document.continuar.elements.length; i++){
     	element = document.continuar.elements[i];
     	switch (element.type){

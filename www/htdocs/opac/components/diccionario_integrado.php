@@ -3,7 +3,7 @@ $mostrar_libre="N";
 $_REQUEST["submenu"]="N";
 include("../../central/config_opac.php");
 include("../leer_bases.php");
-include("../head.php");
+include("../common/opac-head.php");
 
 include("../Mobile_Detect.php");
 $detect = new Mobile_Detect();
@@ -14,16 +14,18 @@ if (isset($_REQUEST["criterios"])){
 	$retorno="D";
 }else{
 	if (isset($_REQUEST["lista_bases"])){
-		if ($_REQUEST["Opcion"]=="libre")
+		if ($_REQUEST["Opcion"]=="libre"){
 			$retorno="../index.php";
-		else
+		} else {
 			$retorno="A";
+		}
 
-	 }else{
-	 	if ($_REQUEST["Opcion"]=="libre")
+	 } else {
+	 	if ($_REQUEST["Opcion"]=="libre"){
 			$retorno="B";
-		else
+		} else {
 			$retorno="C";
+		}
   	}
 }
 ?>
@@ -42,15 +44,10 @@ document.onkeypress =
 </script>
 
 <?php
-
-
-
 // ------------------------------------------------------
 // INICIO DEL PROGRAMA
 // ------------------------------------------------------
-
 ?>
-
 
     <form name="diccionario" method="post" action="diccionario_integrado.php">
     <div style=margin-top:20px;>
@@ -148,7 +145,7 @@ foreach ($_REQUEST as $var=>$value){
 	echo ">\n";
 }
 echo "</form>";
- include("footer.php");
+ include("common/opac-footer.php");
 echo "\n<script>Opcion='";
 if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];
 echo "'\n</script>\n";
