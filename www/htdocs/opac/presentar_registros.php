@@ -6,7 +6,6 @@
  * 
  */
 
-
 function PresentarExistencias($Existencias){
 global $db_path,$xWxis,$msgstr, $actparfolder;
 	$e=explode(';',$Existencias);
@@ -165,11 +164,11 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 				if ($proximo>$total) $proximo=$total+1;
 
                 if (!isset($yaidentificado) or $yaidentificado=="" or $exFacetas!=""){
-                	echo "<span class=tituloBase>";
+                	echo "<h5>";
 					echo $bd_list[$base]["titulo"]."<br> ";
 					if ($facetas!="")
 						echo "<font color=darkred>".$total . " ".$f[0] ." ".$msgstr["found"]."</font><br>";
-					echo "</span>";
+					echo "</h5>";
 				}
 				$mostrando=$proximo-1;
 				if ($total>0 and $count<999){

@@ -8,7 +8,7 @@
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
 include("../central/config_opac.php");
 include("inc/leer_bases.php");
-include("presentar_registros.php");
+
 include('components/nav_pages.php');
 include("head.php");
 
@@ -394,7 +394,7 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2"><?php echo $msgstr["su_consulta"];?> <small>( <?php echo str_replace('"','',PresentarExpresion($base)); ?> ) </small></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -410,10 +410,7 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 
 
 <?php
-if (!isset($_REQUEST["mostrar_exp"])){
-	// Inserts the search refinement option by opening the advanced form
-	include_once 'components/refine_search.php';
-}
+
 
 
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQUEST["integrada"]) and $_REQUEST["integrada"]!=""){
@@ -445,9 +442,13 @@ $contador=0;
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 
 include_once 'components/total_bases.php';
-?>
 
-<?php 
+
+if (!isset($_REQUEST["mostrar_exp"])){
+	// Inserts the search refinement option by opening the advanced form
+	include_once 'components/refine_search.php';
+}
+
 
 if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
 	echo $_REQUEST["facetas"];
@@ -484,8 +485,6 @@ if (isset($total_base) and count($total_base)>0 ){
 	if ($desde>=$contador and isset($total_base) and count($total_base)==2 and $multiplesBases=="N") {
 		 $desde=1;
 		 $_REQUEST["pagina"] =1 ;
-		 echo "<hr>";
-
 		 //$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 
 	}
@@ -529,9 +528,11 @@ if (!isset($_REQUEST["base"]))$base="";
 $Exp_b=PresentarExpresion($_REQUEST["base"]);
 if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
     $Expresion=str_replace('"',"",$Exp_b);
+	
 ?>	
 	<script>
 	highlightSearchTerms("<?php echo $Expresion;?>");
+	console.log("<?php echo $Expresion;?>");
 	</script>
 
 <?php

@@ -6,6 +6,8 @@ if (isset($_COOKIE['user'])) {
 }
 unset($_SESSION['login']);
 
+//var_dump($_SESSION);
+
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
 include($_SERVER['DOCUMENT_ROOT']."/opac/inc/leer_bases.php");
 $modo = "";
