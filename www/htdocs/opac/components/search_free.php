@@ -4,6 +4,8 @@
  * 
  */
 include("presentar_registros.php");
+
+$_REQUEST["modo"]="integrado";
 ?>
 
 <div class="container-fluid shadow">
@@ -97,7 +99,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 
 if (!isset($titulo_pagina)){
 	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
-	if (isset($_REQUEST["modo"])and  $_REQUEST["modo"]=="integrado"){
+	if (isset($_REQUEST["modo"]) and  $_REQUEST["modo"]=="integrado"){
 	?>
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><?php echo $msgstr["todos_c"];?></button>
