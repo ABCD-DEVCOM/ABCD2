@@ -45,9 +45,9 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
     <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" data-bs-placement="left" href="#" role="button" aria-expanded="false">
             <?php if(isset($_SESSION["photo"])) { ?>
             <img src="/central/common/show_image.php?image=images/<?php echo $_SESSION["photo"];?>&base=users" alt="mdo" width="32" height="32" class="rounded-circle">
-            <? } else { ?>
+            <?php } else { ?>
             <img src="/central/common/show_image.php?image=images/default-user-image.png&base=users" alt="mdo" width="32" height="32" class="rounded-circle">
-            <? } ?>
+            <?php } ?>
     </a>
     <ul class="dropdown-menu dropdown-menu-end">
       <li><a class="dropdown-item" href="#"><?php echo utf8_encode($_SESSION['nombre']);?></a></li>
