@@ -33,7 +33,7 @@ if (isset($facetas) and $facetas=="Y" and (!isset($_REQUEST["prefijoindice"]) OR
                 $value = trim($value);
                 if ($value != "") {
                     $x = explode('|', $value);
-                    echo '<li class="nav-item"><a class="nav-link" href="javascript:Facetas('.$value.')">' . $x[0];
+                    echo '<li class="nav-item"><a class="nav-link" href="javascript:Facetas(\''.$value.'\')">' . $x[0];
                     $IsisScript = "opac/buscar.xis";
                     if ($Expresion == '$')
                         $ex = $x[1];
