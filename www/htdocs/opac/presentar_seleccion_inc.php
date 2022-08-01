@@ -23,12 +23,11 @@ foreach ($list as $value){
 	}
 }
 foreach ($seleccion as $base=>$value){
-    echo "<hr style=\"border: 5px solid #cccccc;border-radius: 5px;\">";
-	echo "<div><h3>";
+	echo '<div class="card card-body mb-2"> <h3>';
 	if (file_exists($db_path.$base."/pfts/dcxml.pft") or file_exists($db_path.$base."/pfts/marcxml.pft")){
 		echo "<a class='bt' href=javascript:SendToXML(\"".$xml_base[$base]."\")>XML</a>&nbsp; &nbsp;";
 	}
-	echo $bd_list[$base]["descripcion"]." ($base)</h3></div><br><br>";
+	echo $bd_list[$base]["descripcion"]." ($base)</h3></div>";
 	$lista_mfn="";
 	/*foreach ($value as $mfn){
 		if ($lista_mfn=="")
@@ -37,6 +36,7 @@ foreach ($seleccion as $base=>$value){
 			$lista_mfn.="/,'$mfn'";
 	}*/
 	foreach ($value as $mfn){
+		echo '<div class="card card-body mb-2">';
 		$lista_mfn="'$mfn'";
 		$contador=$contador+1;
  		$salida=PresentarRegistros($base,$db_path,$lista_mfn);
@@ -50,7 +50,7 @@ foreach ($seleccion as $base=>$value){
 			$_REQUEST["cookie"]=str_replace($item,'',$_REQUEST["cookie"]);
 		}
     	if ($msg_rsvr!="NO" and isset($WEBRESERVATION) and $WEBRESERVATION=="Y"){
-			$ract=DeterminarReservasActivas($db_path,$x[1],$lang,$msgstr,$no_control);
+			$ract=DeterminarReservasActivas($db_path,$x[1],$lang,$msgstr,$mfn);
 			$nreserv=0;
 			foreach ($ract as $xx) {
 				$xx=trim($xx);
@@ -60,10 +60,12 @@ foreach ($seleccion as $base=>$value){
 				}
 			}
 			if ($nreserv>0){
-				echo "<br><font color=blue><strong>Este título tiene $nreserv reserva(s) pendiente(s)</strong></font><br>";
+				echo "<br><font color=blue><strong>Este titulo tiene $nreserv reserva(s) pendiente(s)</strong></font><br>";
 			}
 		}
+
 		echo $salida[0];
+		echo '</div>';
 	}
 }
 
