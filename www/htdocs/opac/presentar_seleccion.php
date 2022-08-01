@@ -81,7 +81,7 @@ if (isset($_REQUEST["db_path"])){
 
 <body>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom bg-white sticky-top">
         <h2 class="h2"><?php echo "<strong>".$msgstr["records_selected"]."</strong>"; ?></h2>	
 
 
@@ -156,6 +156,6 @@ if ($accion=="reserve_one"){
 ?>
 
 <script>
-Total_No=<?php echo $Total_No?>;
-contador=<?php echo $contador?>;
+Total_No=<?php echo $Total_No;?>;
+contador=<?php echo $contador;?>;
 </script>

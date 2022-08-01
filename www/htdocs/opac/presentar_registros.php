@@ -143,8 +143,10 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
     
 	//$ff_pft="'aaa<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
 
-	$ff_pft=",@select_record.pft,";
-	$ff_pft.=",@".$Formato.".pft,";
+	$ff_pft="'<div class=\"card mb-2\"><h5 class=\"card-header\">'";
+	$ff_pft.=",@select_record.pft,'</h5>'";
+	$ff_pft.="'<div class=\"card-body\">',@".$Formato.".pft,";
+	$ff_pft.="'</div></div>'";
 	
 	$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$lang;
 
@@ -161,7 +163,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 			$total=trim(substr($value,8));
 			if ($primeravez=="S"){
 				$proximo=$desde+$count;
-                echo "\n<div align=left style='margin-top:0px'>\n ";
+                echo "\n<div class=\"card my-3 p-2 sticky-top\">\n ";
 				if ($proximo>$total) $proximo=$total+1;
 
                 if (!isset($yaidentificado) or $yaidentificado=="" or $exFacetas!=""){
@@ -177,12 +179,17 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 					if (!isset($control_entrada) or $control_entrada==1){
 ?>
 						&nbsp; &nbsp;
-						<div id=cookie_div>
-							<a href="javascript:showCookie('ORBITA')"><input type=button value="<?php echo $msgstr["mostrar_rsel"]?>" title="<?php echo $msgstr["mostrar_rsel"]?>"></a>
-							<a href="javascript:delCookie('')"><input type=button value="<?php echo $msgstr["quitar_rsel"]?>" title="<?php echo $msgstr["quitar_rsel"]?>"></a>
+						<div id="cookie_div">
+							<a class="btn btn-success" href="javascript:showCookie('ORBITA')">
+								<?php echo $msgstr["mostrar_rsel"];?>
+							</a>
+							<a class="btn btn-danger" href="javascript:delCookie('')">
+								<?php echo $msgstr["quitar_rsel"]?>
+							</a>
 						</div>
-<?php 				}
-?>
+
+
+        <?php 	} ?>
 <script>
 cookie=getCookie('ORBITA')
 Ctrl=document.getElementById("cookie_div")
