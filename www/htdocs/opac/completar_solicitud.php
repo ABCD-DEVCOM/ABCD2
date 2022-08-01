@@ -11,7 +11,7 @@ include("common/opac-head.php");
 $Web_Dir=$CentralPath;
 $desde_web="Y";
 $desde_opac="Y";
-$_REQUEST["vienede"]="orbita";
+$_REQUEST["vienede"]="ORBITA";
 chdir($CentralPath."reserve");
 
 // SIDEBAR
@@ -34,7 +34,7 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
       </div>
 
 <?php
-include ('reservar_ex.php');
+include($_SERVER['DOCUMENT_ROOT'] . "/mysite/reserve/index.php");
 include($ActualDir."/common/opac-footer.php");
 
 

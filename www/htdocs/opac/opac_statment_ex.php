@@ -211,7 +211,7 @@ if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
 	if ((isset($def["WEBRENOVATION"]) and $def["WEBRENOVATION"]=="Y")){
 		if (count($prestamos)>0 and !isset($_REQUEST["mostrar_reserva"])) {
 			echo  "<strong><input type=button onclick=javascript:Renovar() id=renovar value=\"".$msgstr["renew"]."\"></strong><p>";
-			if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita")
+			if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ORBITA")
 				if (isset($msgstr["iah_usuario_msgecta"])) echo $msgstr["iah_usuario_msgecta"];
 		}
 	}
