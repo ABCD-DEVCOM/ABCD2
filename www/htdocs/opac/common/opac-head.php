@@ -6,6 +6,8 @@ if (isset($_COOKIE['user'])) {
 }
 unset($_SESSION['login']);
 
+//echo session_id();
+
 //var_dump($_SESSION);
 
 include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
@@ -25,7 +27,7 @@ function wxisLlamar($base, $query, $IsisScript) {
 	return $contenido;
 }
 //include $_SERVER['DOCUMENT_ROOT']."/opac/functions.php";
-include ("inc/get_ip_address.php");
+include ($_SERVER['DOCUMENT_ROOT'] . "/opac/inc/get_ip_address.php");
 header('Content-Type: text/html; charset=".$charset."');
 $meta_encoding = $charset;
 ?>
@@ -59,7 +61,7 @@ $meta_encoding = $charset;
 	}
 	?>
 
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/opac/assets/css/bootstrap.min.css" rel="stylesheet">
 
 
     <style>
@@ -125,9 +127,6 @@ $meta_encoding = $charset;
 	<link href="/assets/css/all.min.css" rel="stylesheet">
 
 	<script>
-		document.cookie = 'ORBITA; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
-		document.cookie = 'ORBITA=;';
-
 		/* Marcado y presentación de registros*/
 		function getCookie(cname) {
 			var name = cname + "=";
@@ -189,7 +188,7 @@ if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
 	die;
 }
 ?>
-<header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow text-bg-light">
+<header class="navbar navbar-dark  bg-primary flex-md-nowrap p-0 shadow text-bg-light">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
     <img class="bi me-2" height="32" role="img" src="/opac/<?php echo $logo ?>" title="ABCD">
   </a>
@@ -198,7 +197,7 @@ if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <?php include_once 'components/topbar.php'; ?>
+  <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/opac/components/topbar.php'; ?>
 
 </header>
 
@@ -216,10 +215,14 @@ if (!isset($indice_alfa)) {
 // Exibe form de busca
 
 $_REQUEST["base"] = $actualbase;
-include("components/search_free.php");
-} else {
-//include 'components/avanzada.php';
+
+//$_REQUEST["action"]="";
+
+if ((!isset($_REQUEST["action"])) or $_REQUEST["action"]!="advanced") {
+include $_SERVER['DOCUMENT_ROOT'] . '/opac/components/search_free.php';
+} elseif ($_REQUEST["action"]=="advanced") {
+include $_SERVER['DOCUMENT_ROOT'] . '/opac/components/avanzada.php';
 }
 
-
+}
 

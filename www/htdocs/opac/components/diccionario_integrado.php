@@ -1,8 +1,7 @@
 <?php
 $mostrar_libre="N";
 $_REQUEST["submenu"]="N";
-include("../../central/config_opac.php");
-include("../leer_bases.php");
+
 include("../common/opac-head.php");
 
 include("../Mobile_Detect.php");
@@ -78,7 +77,7 @@ echo "<p>";
 	}
 if ($detect->isMobile()) {
 	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["remover_sel"];
- 	include("presentar_diccionario_movil.php");
+ 	include("../presentar_diccionario_movil.php");
 }else{
 	echo "<p>".$msgstr["dbl_clic"];
 	include("../presentar_diccionario_nomovil.php");
@@ -145,7 +144,7 @@ foreach ($_REQUEST as $var=>$value){
 	echo ">\n";
 }
 echo "</form>";
- include("common/opac-footer.php");
+ include($_SERVER['DOCUMENT_ROOT'] . "/opac/common/opac-footer.php");
 echo "\n<script>Opcion='";
 if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];
 echo "'\n</script>\n";

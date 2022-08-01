@@ -1,21 +1,6 @@
 <?php
 if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
 ?>
-    <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <select name="lang" class="form-select form-select-sm bg-primary text-white align-self-end" onchange="ChangeLanguage()" id="lang">
-            <?php
-            $fp = file($db_path . "opac_conf/$lang/lang.tab");
-            foreach ($fp as $value) {
-                if (trim($value) != "") {
-                    $a = explode("=", $value);
-                    echo "<option value=" . $a[0];
-                    if ($lang == $a[0]) echo " selected";
-                    echo ">" . trim($a[1]) . "</option>";
-                }
-            }
-            ?>
-        </select>
-    </div>
 
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="javascript:document.inicio_menu.submit()" class="nav-link text-white" aria-current="page"><?php echo $msgstr["inicio"] ?></a></li>
@@ -51,6 +36,19 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
     </a>
     <ul class="dropdown-menu dropdown-menu-end">
       <li><a class="dropdown-item" href="#"><?php echo utf8_encode($_SESSION['nombre']);?></a></li>
+      <li>        <select name="lang" class="form-select form-select-sm  align-self-end" onchange="ChangeLanguage()" id="lang">
+            <?php
+            $fp = file($db_path . "opac_conf/$lang/lang.tab");
+            foreach ($fp as $value) {
+                if (trim($value) != "") {
+                    $a = explode("=", $value);
+                    echo "<option value=" . $a[0];
+                    if ($lang == $a[0]) echo " selected";
+                    echo ">" . trim($a[1]) . "</option>";
+                }
+            }
+            ?>
+        </select></li>
        <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" href="/mysite/common/index.php#reserves">Reserves</a></li>
       <li><a class="dropdown-item" href="/mysite/common/index.php#loans">Loans</a></li>
@@ -65,11 +63,25 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
                 } else {
 ?>   
     <ul class="nav nav-pills">
+
         <li class="nav-item">
           <a href="/mysite?mode=opac" class="nav-link text-white"  aria-expanded="false">
             Sign
           </a>
         </li>
+            <li><select name="lang" class="form-select form-select-sm bg-primary text-white align-self-end" onchange="ChangeLanguage()" id="lang">
+            <?php
+            $fp = file($db_path . "opac_conf/$lang/lang.tab");
+            foreach ($fp as $value) {
+                if (trim($value) != "") {
+                    $a = explode("=", $value);
+                    echo "<option value=" . $a[0];
+                    if ($lang == $a[0]) echo " selected";
+                    echo ">" . trim($a[1]) . "</option>";
+                }
+            }
+            ?>
+        </select></li>
     </ul>
 
         <?php } ?>

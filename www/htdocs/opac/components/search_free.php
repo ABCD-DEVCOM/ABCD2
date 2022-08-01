@@ -3,12 +3,12 @@
  * 20220307 rogercgui fixed index $prefijo=$x[1];
  * 
  */
-include("presentar_registros.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/opac/presentar_registros.php");
 
-$_REQUEST["modo"]="integrado";
+//$_REQUEST["modo"]="integrado";
 ?>
 
-<div class="container-fluid shadow">
+<div class="container-fluid">
     <div class="row">
         <div class="bg-light col-md-3 col-lg-2">
             <nav class="col-md-12 col-lg-12 bg-light d-xl-inline sidebar">
@@ -17,15 +17,14 @@ $_REQUEST["modo"]="integrado";
                         <li class="nav-item">
                             <a class="nav-link active" href="#">
                                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
-                                Free Search
+                                <?php echo $msgstr["free_search"];?>
                             </a>
                         </li>
                         <?php
 		if (!isset($BusquedaAvanzada) or isset($BusquedaAvanzada) and $BusquedaAvanzada=="S"){
 	?>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page"
-                                onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();">
+                            <a class="nav-link" aria-current="page" href="?action=advanced">
                                 <span data-feather="home" class="align-text-bottom"></span>
                                 <?php echo $msgstr["buscar_a"]?>
                             </a>
@@ -33,7 +32,7 @@ $_REQUEST["modo"]="integrado";
                         <?php } ?>
                         <li class="nav-item">
                             <a class="nav-link" href="#" onclick="javascript:DiccionarioLibre(0)">
-                                <span data-feather="file" class="align-text-bottom"></span>
+                                <span data-feather="diccionario" class="align-text-bottom"></span>
                                 <?php echo $msgstr["diccionario"]?>
                             </a>
                         </li>
@@ -99,7 +98,8 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 
 if (!isset($titulo_pagina)){
 	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
-	if (isset($_REQUEST["modo"]) and  $_REQUEST["modo"]=="integrado"){
+
+	if (!isset($_REQUEST["modo"])){
 	?>
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><?php echo $msgstr["todos_c"];?></button>

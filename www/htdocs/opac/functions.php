@@ -29,7 +29,7 @@ global $arrHttp,$xWxis, $actparfolder;
 //echo $Expresion." ";
 //echo "<a href=\"javascript:Eliminar('$Expresion')\">eliminar</a>";
 	$Expresion=urlencode($Expresion);
-	$query = "&base=reserve&cipar=$db_path".$actparfolder."/reserve.par&Expresion=$Expresion&Opcion=buscar&Formato=".$Pft;
+	$query = "&base=reserve&cipar=$db_path".$actparfolder."reserve.par&Expresion=$Expresion&Opcion=buscar&Formato=".$Pft;
 	if ($Sort==""){
 		$IsisScript=$xWxis."opac/buscar.xis";
 	}else{

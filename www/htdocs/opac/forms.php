@@ -137,7 +137,7 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
-<form name="diccio_libre" action="diccionario_integrado.php" method="post">
+<form name="diccio_libre" action="components/diccionario_integrado.php" method="post">
 	<input type="hidden" name="lista_bases" value="">
 	<input type="hidden" name="prefijo" value="TW_">
 	<input type="hidden" name="Opcion" value="libre">

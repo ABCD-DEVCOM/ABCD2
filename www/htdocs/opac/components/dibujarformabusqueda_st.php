@@ -1,32 +1,94 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="bg-light col-md-3 col-lg-2">
+            <nav class="col-md-12 col-lg-12 bg-light d-xl-inline sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-md-column flex-xl-row">
+                        <li class="nav-item">
+                            <a class="nav-link" href="?action=free">
+                                <span data-feather="shopping-cart" class="align-text-bottom"></span>
+                                <?php echo $msgstr["free_search"];?>
+                            </a>
+                        </li>
+                        <?php
+		if (!isset($BusquedaAvanzada) or isset($BusquedaAvanzada) and $BusquedaAvanzada=="S"){
+	?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                                onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();" href="#">
+                                <span data-feather="home" class="align-text-bottom"></span>
+                                <?php echo $msgstr["buscar_a"]?>
+                            </a>
+                        </li>
+                        <?php } ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="javascript:DiccionarioLibre(0)">
+                                <span data-feather="diccionario" class="align-text-bottom"></span>
+                                <?php echo $msgstr["diccionario"]?>
+                            </a>
+                        </li>
+                        <?php
+	if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N"){
+		$archivo="";
+		if (isset($modo)){
+			if ($modo=="integrado"){
+				$archivo=$db_path."/opac_conf/".$lang."/indice.ix";
+			}else{
+				$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"].".ix";
+			}
+		}
+		if (file_exists($archivo)){
+		?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showhide('sub_menu')">
+                                <span data-feather="file" class="align-text-bottom"></span>
+                                <?php echo $msgstr["indice_alfa"];?>
+                            </a>
+                        </li>
+
+                        <?php
+		}
+	}
+?>
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+
+        <div class="bg-light col-md-9 col-lg-10">
+
 <?php
 
 function DibujarFormaBusqueda($Diccio){
-global $db_path,$msgstr;
+global $db_path,$msgstr,$lang;
 	$mensaje="";
+	$_REQUEST["modo"]="integrado";
 	if (!isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado"){
 		$mensaje=$msgstr["metasearch"];
-		$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab";
+		$archivo=$db_path."opac_conf/".$lang."/avanzada.tab";
 	}else{
 		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
 			if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 
 				$c=explode('|',$_REQUEST["coleccion"]);
 				
-				if (file_exists($db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab")) {
-					$archivo=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab";
+				if (file_exists($db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab")) {
+					$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"]."_avanzada_".$c[0].".tab";
 				} else { 
-					$archivo=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada_col.tab";
+					$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"]."_avanzada_col.tab";
 				}
 			
 			}else{
 			
-				$archivo=$db_path.$_REQUEST["base"]."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab";
+				$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"]."_avanzada.tab";
 			
 			}
 		
 		}else{
 			$mensaje=$msgstr["metasearch"];
-			$archivo=$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab";
+			$archivo=$archivo=$db_path."opac_conf/".$lang."/avanzada.tab";
 		}
 	}
 
@@ -106,80 +168,108 @@ global $db_path,$msgstr;
 
 	$Tope=7;  //significa que se van a colocar 7 cajas de texto con la expresión de búsqueda
 	$Tope=$ix;
-	echo "</script>\n";
-	echo '<div id=registro STYLE="text-align:center;">';
-	echo "<form method=post name=forma1 action=avanzada.php onSubmit=\"Javascript:return false\">\n";
+?>
+
+	</script>
+	
+
+
+	
+	<div id="registro" >
+	
+	<p><?php echo $msgstr["mensajeb"]; ?></p>
+
+	<form method="post" class="row g-3" name="forma1" action="avanzada.php" onSubmit="Javascript:return false">
+	
+	<?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
+	if (isset($lang))     echo "<input type=hidden name=lang value=".$lang.">\n";
 	if (isset($_REQUEST["modo"]))     echo "<input type=hidden name=modo value=".$_REQUEST["modo"].">\n";
 	if (isset($_REQUEST["base"]))     echo "<input type=hidden name=base value=".$_REQUEST['base'].">\n";
 	if (isset($_REQUEST["coleccion"])) echo "<input type=hidden name=coleccion value=\"".$_REQUEST["coleccion"]."\">";
 	if (isset($_REQUEST["indice_base"]))     echo "<input type=hidden name=base value=".$_REQUEST['indice_base'].">\n";
 	if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"".$_REQUEST["Formato"]."\">\n";
-	echo "<input type=hidden name=Opcion value=avanzada>\n";
-	echo "<input type=hidden name=resaltar value=S>\n";
-	echo "<input type=hidden name=Campos value=\"\">\n";
-	echo "<input type=hidden name=Operadores value=\"\">\n";
-	echo "<input type=hidden name=Expresion value=\"\">\n";
-	echo "<input type=hidden name=llamado_desde value=\"avanzada.php\">\n";
-	echo "<table border=0 valign=center cellpadding=0 cellspacing=3 width=680>";
-	echo "	<tr>";
-	echo "		<td colspan=4 style='font-size:12px;' align=center>";
-	echo $msgstr["mensajeb"];
-	echo "		</td>
-			</tr>";
-	echo "	<tr>
-				<td bgcolor=#222222 colspan=2><font face=verdana size=1 color=white><b>".$msgstr["campo"]."</b></td>";
-	echo "		<td bgcolor=#222222 colspan=2><font face=verdana size=1 color=white><b>".$msgstr["expr_b"]."</b>
-				</td>
-			</tr>";
+	?>
+	<input type="hidden" name="Opcion" value="avanzada">
+	<input type="hidden" name="resaltar" value="S">
+	<input type="hidden" name="Campos" value="">
+	<input type="hidden" name="Operadores" value="">
+	<input type="hidden" name="Expresion" value="">
+	<input type="hidden" name="llamado_desde" value="avanzada.php">
+
+  <div class="col-md-4">
+    <label for="inputCity" class="form-label"><?php echo $msgstr["campo"];?></label>
+  </div>
+  <div class="col-md-6">
+    <label for="inputState" class="form-label"><?php echo $msgstr["expr_b"];?></label>
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">#</label>
+  </div>
+	
+
+	<?php	
 	$Diccio=0;
 	for ($jx=0;$jx<=$Tope;$jx++){
    		if (isset($EX[$jx])) $EX[$jx]=Trim($EX[$jx]);
    		if (isset($OP[$jx])) $OP[$jx]=Trim($OP[$jx]);
    		if (isset($CA[$jx])) $CA[$jx]=Trim($CA[$jx]);
-		echo "<tr>
-				<td  valign=center width=155>";
-		echo "		<SELECT name=camp class=select-criterio>";
-		$asel="";
+	?>	
+		
+		<div class="col-md-4">
+			<div class="input-group">
+				<select name="camp" class="form-select form-select-sm">
+		
+			<?php	
+			$asel="";
 
 		for ($i=0;$i<count($camposbusqueda);$i++){
 			$asel="";
 			$c=explode('|',$camposbusqueda[$i]);
 
 			if ($i==$jx) $asel=" selected";
-		    echo "<OPTION value=\"".$c[1]."\" $asel>".$c[0]."</option>\n";
+		    echo "<option value=\"".$c[1]."\" $asel>".$c[0]."</option>\n";
 		}
-		echo "		</SELECT></TD>\n";
-		//echo "<td width=20>xx<input type=\"button\" onclick=\"Diccionario($jx);\" class=\"button-diccionario\">";
+		?>
+
+				</select>
 		
-?>
-		<td>
-		<a href="javascript:Diccionario(<?php echo $jx;?>)">
+		
+		<a class="btn btn-primary btn-sm" href="javascript:Diccionario(<?php echo $jx;?>)">
 			<i class="fas fa-book" alt="<?php echo $msgstr["indice"];?>" title="<?php echo $msgstr["indice"];?>"></i>
 		</a>
-   		</td>
-<?php
+			</div>
+   		</div>
 
-		echo "	<td NOWRAP width=100><input type=text style='font-size:10px' size=80 name=Sub_Expresiones value='";
+		<?php		
+		
 		if (isset($_REQUEST["Seleccionados"])){
 			if ($_REQUEST["Diccio"]==$jx){
-			     if ($_REQUEST["Seleccionados"]!='""') echo $_REQUEST["Seleccionados"];
+			     if ($_REQUEST["Seleccionados"]!='""') {$Sub_Expr=$_REQUEST["Seleccionados"];}
 			}else{
                 if (isset($EX[$jx])){
-					if ($EX[$jx]!='""') echo $EX[$jx];
+					if ($EX[$jx]!='""') {$Sub_Expr=$EX[$jx];}
 				}
 			}
 		}else{
 			if (isset($EX[$jx])){
-				if ($EX[$jx]!='""')echo $EX[$jx];
+				if ($EX[$jx]!='""') {$Sub_Expr=$EX[$jx];}
 			}
 		}
+		
+		?>
 
-		echo "'></td>\n";
+		<div class="col-md-6">
+			<input class="form-control form-control-sm" type="text" name="Sub_Expresiones" value='<?php echo $Sub_Expr;?>'>
+		</div>
+
+		<?php
 		if ($jx<$Tope){
-       		echo "<td NOWRAP><select name=oper id=oper_$jx size=1 style='font-size:12px'>";
-       		echo "<option value=and ";
+			?>
+       		<div class="col-md-2">
+				<select class="form-select form-select-sm" name="oper" id="oper_<?php echo $jx;?>" >
+       		<?php
+				echo "<option value=and ";
        		if (!isset($OP[$jx]) or $OP[$jx]=="and" or $OP[$jx]=="")
        			echo " selected";
        		echo ">AND";
@@ -187,32 +277,32 @@ global $db_path,$msgstr;
        		if (isset($OP[$jx]) and $OP[$jx]=="or")
        			echo " selected";
        		echo ">OR";
-       		echo "</select></td>";
+       		echo "</select></div>";
  		}else {
-       		echo "<td><input type=hidden name=oper id=oper_$jx></td>";
+       		echo "<div class=\"col-md-2\"><input type=hidden name=oper id=oper_$jx></div>";
     	}
 
 
 	}
-	echo "<tr height=10>\n";
-	echo "	<td colspan=5 align=center class=menu></td>\n";
-	echo "<tr>\n";
-	echo "<tr height=10>\n";
-	echo "	<td colspan=5 align=center>";
-	echo "		<br><TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 width=560>";
+	?>
+		</div>
 
-	echo "<td align=center><input type=button onclick=javascript:PrepararExpresion() value='".$msgstr["search"]."'> &nbsp; &nbsp;
-	      <input type=button onclick=javascript:LimpiarBusqueda() value='".$msgstr["limpiar"]."'>";
-    echo "<div style='overflow: hidden;text-align:left; float:right;display:block;' id='mensajes'></div> </td>\n";
-	echo "			</TABLE>
-				</td>
-			</tr>
-		</table>\n";
+		<div class="col-md-12 my-2">
+	    	<input class="btn btn-success" type="button" onclick="javascript:PrepararExpresion()" value="<?php echo $msgstr["search"];?>">
+			<input class="btn btn-light" type="button" onclick="javascript:LimpiarBusqueda()" value="<?php echo $msgstr["limpiar"];?>">
+   
+	
+		    <div style='overflow: hidden;text-align:left; float:right;display:block;' id='mensajes'></div>
+		</div>		
 
-	echo "</form>";
-	echo "<form name=diccio method=post action=diccionario_integrado.php>";
+
+	</form>
+
+
+	<form name="diccio" method="post" action="/opac/components/diccionario_integrado.php">
+<?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
+	if (isset($lang))     echo "<input type=hidden name=lang value=".$lang.">\n";
 	if (isset($_REQUEST["base"])) echo "<input type=hidden name=base value=".$_REQUEST['base'].">";
 	if (isset($_REQUEST["modo"])) echo "<input type=hidden name=modo value=".$_REQUEST['modo'].">";
 	if (isset($_REQUEST["indice_base"])) echo "<input type=hidden name=indice_base value=".$_REQUEST['indice_base'].">";

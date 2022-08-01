@@ -338,7 +338,7 @@ function PrepararExpresion(Destino){
 	mensajes.innerHTML="<img src=../images/loading.gif>"
 	document.diccio.Sub_Expresion.value=Expresion
 	document.diccio.Operadores.value=Operadores
-	document.diccio.action="buscar_integrada.php"
+	document.diccio.action="/opac/buscar_integrada.php"
 	document.diccio.submit()
 }
 
@@ -435,13 +435,13 @@ function ActivarIndice(titulo,columnas,Opcion,count,posting,prefijo,base){
 
 function ValidarUsuario(){
 	if (Trim(document.estado_de_cuenta.usuario.value)==""){
-		alert("Debe ingresar su c�digo de usuario")
+		alert("Debe ingresar su codigo de usuario")
 		return
 	}
 	document.estado_de_cuenta.submit()
 }
 
-/* Marcado y presentaci�n de registros*/
+/* Marcado y presentacion de registros*/
 function getCookie(cname) {
     var name = cname+"=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -492,7 +492,7 @@ function delCookie(){
   		}
 	}
   	document.cookie =  'ORBITA=;';
-	alert (msgstr["no_rsel"])
+	//alert (msgstr["no_rsel"])
 	Ctrl=document.getElementById("cookie_div")
 	Ctrl.style.display="none"
 
@@ -541,7 +541,7 @@ function SendTo(Accion,Data){
 
 function ChangeLanguage(){
 
-	var lang = document.getElementById("lang");
+	//var lang = document.getElementById("lang");
 	langcode=lang.options[lang.selectedIndex].value
 	for (i=0;i<document.forms.length;i++){
 		document.forms[i].lang.value=langcode
@@ -586,7 +586,4 @@ function SolicitarPrestamo(CN,Base,otro){
 	document.buscar.action="../prestamos/prestamos.php"
 	document.buscar.cookie.value=CN
 	document.buscar.submit()
-
-
-
 }

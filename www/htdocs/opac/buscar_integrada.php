@@ -272,17 +272,7 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 		$Expresion_col=$coleccion[2].$coleccion[0];
 	}
 }
-//echo $Expresion_col." , $expre_coleccion";
-//if (isset($_REQUEST["titulo_c"])) echo "<p><span class=titulo3>".urldecode($_REQUEST["titulo_c"])."</span></p>";
 
-if ($Expresion!='$' or isset($Expresion_col)){
-	if (isset($expr_coleccion)  and !isset($yaidentificado)){
-		echo "<div style='margin-top:30px;display: block;width:100%;font-size:12px;'>";
-		echo "<span class=tituloBase>Colecci�n: $expr_coleccion</span>";
-		echo "</div>";
-	}
-
-}
 
 //if (isset($_REQUEST["titulo_c"]) and $_REQUEST["titulo_c"]!="") echo "<p><span class=titulo3>".urldecode($_REQUEST["titulo_c"])."</span></p>";
 
@@ -410,7 +400,15 @@ if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !is
 
 
 <?php
+//echo $Expresion_col." , $expre_coleccion";
+//if (isset($_REQUEST["titulo_c"])) echo "<p><span class=titulo3>".urldecode($_REQUEST["titulo_c"])."</span></p>";
 
+if ($Expresion!='$' or isset($Expresion_col)){
+	if (isset($expr_coleccion)  and !isset($yaidentificado)){
+		echo "<h3>Coleccion: $expr_coleccion</h3>";
+	}
+
+}
 
 
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQUEST["integrada"]) and $_REQUEST["integrada"]!=""){
@@ -435,13 +433,17 @@ if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado" and isset($_REQU
 	$_REQUEST["integrada"]=$integrada;
 }
 
+include_once 'components/total_bases.php';
+
 $_REQUEST["integrada"]=urlencode($_REQUEST["integrada"]);
 $ix=0;
 $contador=0;
 
+
+
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 
-include_once 'components/total_bases.php';
+
 
 
 if (!isset($_REQUEST["mostrar_exp"])){
