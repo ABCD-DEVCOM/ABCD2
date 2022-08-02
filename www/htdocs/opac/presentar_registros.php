@@ -208,6 +208,7 @@ if (Trim(cookie)!=""){
 				}
    				echo "</strong><p>\n</div>\n";
       			$primeravez="N";
+				echo '<div id="results" >';
 			}
 		}else{
 			if (substr($value,0,6)=='$$REF:'){
@@ -237,6 +238,7 @@ if (Trim(cookie)!=""){
 		}
 
 	}
+	echo "</div>\n";
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="" ){
 			PresentarExistencias($_REQUEST["Existencias"]);
 	}

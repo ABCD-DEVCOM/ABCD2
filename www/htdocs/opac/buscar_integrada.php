@@ -510,23 +510,27 @@ include_once 'components/no_results.php';
 
 
 if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
-?>
-</form>
-
-<?php
-
-include("common/opac-footer.php");
 
 if (!isset($_REQUEST["base"]))$base="";
 $Exp_b=PresentarExpresion($_REQUEST["base"]);
 if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
     $Expresion=str_replace('"',"",$Exp_b);
 	
-?>	
+
+?>
+</form>
 	<script>
+			console.log("<?php echo $Expresion;?>");
 	highlightSearchTerms("<?php echo $Expresion;?>");
-	console.log("<?php echo $Expresion;?>");
+
 	</script>
+<?php
+
+include("common/opac-footer.php");
+
+
+?>	
+
 
 <?php
 }

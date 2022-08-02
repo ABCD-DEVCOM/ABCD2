@@ -189,8 +189,8 @@ if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
 }
 ?>
 <header class="navbar navbar-dark  bg-primary flex-md-nowrap p-0 shadow text-bg-light">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
-    <img class="bi me-2" height="32" role="img" src="/opac/<?php echo $logo ?>" title="ABCD">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="javascript:document.inicio_menu.submit()">
+    <img class="bi me-2" height="32" role="img" src="/opac/<?php echo $logo;?>" title="ABCD">
   </a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">

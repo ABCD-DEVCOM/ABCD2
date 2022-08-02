@@ -11,7 +11,7 @@ $detect = new Mobile_Detect();
 //die;
 if (isset($_REQUEST["criterios"])){
 	$retorno="D";
-}else{
+} else {
 	if (isset($_REQUEST["lista_bases"])){
 		if ($_REQUEST["Opcion"]=="libre"){
 			$retorno="../index.php";
@@ -48,22 +48,41 @@ document.onkeypress =
 // ------------------------------------------------------
 ?>
 
-    <form name="diccionario" method="post" action="diccionario_integrado.php">
-    <div style=margin-top:20px;>
-		<input type=button id=search-submit value=" <?php echo $msgstr["back"]?>"  onclick="document.regresar.submit();">
-	</div>
-    <p><font class=titulo3>
-		<?php echo $msgstr["diccio"]." "?>
-		<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"]);
-	echo "</font><br>";
-//}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2 class="h2"><?php echo $msgstr["diccio"]." "?></h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
 
+          <button type="button" class="btn btn-sm btn-primary" onclick="document.regresar.submit();">
+            <span data-feather="calendar" class="align-text-bottom"></span>
+            <?php echo $msgstr["back"]?>
+          </button>
+        </div>
+      </div>
+
+    <form name="diccionario" method="post" action="diccionario_integrado.php">
+
+    <p><?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"]);?></p>
+
+<?php
 if ($_REQUEST["Opcion"]=="libre"){
+	$_REQUEST["alcance"]="or";
 ?>
-        <font class=titulo2><?php echo $msgstr["unir_con"] ?><br>
-        <input type=radio value=and name=alcance id=and <?php if ($_REQUEST["alcance"]=="and") echo "checked"?>><font color=darkred><?php echo $msgstr["and"]?></font><br>
-        <input type=radio value=or name=alcance id=or <?php if ($_REQUEST["alcance"]=="or") echo "checked"?>><font color=darkred><?php echo $msgstr["or"]?></font>
-	<br>
+        <h5><?php echo $msgstr["unir_con"];?></h5>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="alcance" id="and" <?php if ($_REQUEST["alcance"]=="and") echo "checked"?>>
+  <label class="form-check-label" for="alcance1">
+    <?php echo $msgstr["and"]?>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="alcance" id="or" <?php if ($_REQUEST["alcance"]=="or") echo "checked"?>>
+  <label class="form-check-label" for="alcance2">
+    <?php echo $msgstr["or"]?>
+  </label>
+</div>
+
 
 <?php }else{
 	echo "<input type=hidden name=alcance>\n";
@@ -77,10 +96,10 @@ echo "<p>";
 	}
 if ($detect->isMobile()) {
 	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["remover_sel"];
- 	include("../presentar_diccionario_movil.php");
+ 	include("presentar_diccionario_movil.php");
 }else{
 	echo "<p>".$msgstr["dbl_clic"];
-	include("../presentar_diccionario_nomovil.php");
+	include("presentar_diccionario_nomovil.php");
 
 }
 ?>
@@ -130,23 +149,26 @@ if (isset($_REQUEST["db_path"]))
 if (isset($_REQUEST["lang"]))
 	echo "<input type=hidden name=lang value=".urlencode($_REQUEST['lang']).">\n";
 ?>
-<input type=hidden name=resaltar value="<?php echo $_REQUEST["resaltar"]?>">
-<input type=hidden name=prefijo value="<?php echo $_REQUEST["prefijo"]?>">
-<input type=hidden name=Opcion value="<?php echo $_REQUEST["Opcion"]?>">
-<input type=hidden name=Seleccionados>
+	<input type="hidden" name="resaltar" value="<?php echo $_REQUEST["resaltar"]?>">
+	<input type="hidden" name="prefijo" value="<?php echo $_REQUEST["prefijo"]?>">
+	<input type="hidden" name="Opcion" value="<?php echo $_REQUEST["Opcion"]?>">
+	<input type="hidden" name="Seleccionados">
 </form>
 
+
+<form name="regresar" method="post" action="avanzada.php">
 <?php
-echo "<form name=regresar method=post action=avanzada.php>\n";
 foreach ($_REQUEST as $var=>$value){
 	echo "<input type=hidden name=$var value=";
 	if (trim($value)!='""') echo urlencode($value);
 	echo ">\n";
 }
-echo "</form>";
- include($_SERVER['DOCUMENT_ROOT'] . "/opac/common/opac-footer.php");
-echo "\n<script>Opcion='";
-if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];
-echo "'\n</script>\n";
 ?>
+</form>
 
+<?php
+ include($_SERVER['DOCUMENT_ROOT'] . "/opac/common/opac-footer.php");
+?>
+<script>
+Opcion='<?php if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];?>';
+</script>

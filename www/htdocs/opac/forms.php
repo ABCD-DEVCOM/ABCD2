@@ -177,7 +177,7 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
-<form name="inicio_menu" method="post" action="index.php">
+<form name="inicio_menu" method="post" action="/opac/index.php">
 	<?php if (isset($lang))
 		echo "<input type=hidden name=lang value=\"" . $lang . "\">\n";
 	if (isset($_REQUEST["db_path"]))

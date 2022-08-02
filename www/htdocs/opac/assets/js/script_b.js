@@ -131,13 +131,13 @@ function EjecutarBusquedaDiccionario(Accion){
 		case 0:
 			document.diccionario.Opcion.value="buscar_diccionario"
 			document.diccionario.Sub_Expresion.value=Expresion;
-			document.diccionario.action="buscar_integrada.php"
+			document.diccionario.action="/opac/buscar_integrada.php"
 			break
 		case 1:
-			document.diccionario.action="buscar_integrada.php"
+			document.diccionario.action ="/opac/buscar_integrada.php"
 			break
 		case 2:
-			document.diccionario.action="avanzada.php"
+			document.diccionario.action ="/opac/components/avanzada.php"
 			break
 	}
 	document.diccionario.submit()
