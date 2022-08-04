@@ -202,7 +202,7 @@ function EjecutarBusquedaDiccionarioMovil(Accion){
 			document.diccionario.action="buscar_integrada.php"
 			break
 		case 2:
-			document.diccionario.action="components/avanzada.php"
+			document.diccionario.action="components/search_advanced.php"
 			break
 	}
 	document.diccionario.submit()

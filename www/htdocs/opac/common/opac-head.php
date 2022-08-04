@@ -221,7 +221,7 @@ $_REQUEST["base"] = $actualbase;
 if ((!isset($_REQUEST["action"])) or $_REQUEST["action"]!="advanced") {
 include $_SERVER['DOCUMENT_ROOT'] . '/opac/components/search_free.php';
 } elseif ($_REQUEST["action"]=="advanced") {
-include $_SERVER['DOCUMENT_ROOT'] . '/opac/components/avanzada.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/opac/components/search_advanced.php';
 }
 
 }

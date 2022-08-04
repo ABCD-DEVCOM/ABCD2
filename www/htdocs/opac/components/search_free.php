@@ -10,68 +10,16 @@ include($_SERVER['DOCUMENT_ROOT'] . "/opac/presentar_registros.php");
 
 <div class="container-fluid">
     <div class="row">
-        <div class="bg-light col-md-3 col-lg-2">
-            <nav class="col-md-12 col-lg-12 bg-light d-xl-inline sidebar">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-md-column flex-xl-row">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                <span data-feather="shopping-cart" class="align-text-bottom"></span>
-                                <?php echo $msgstr["free_search"];?>
-                            </a>
-                        </li>
-                        <?php
-		if (!isset($BusquedaAvanzada) or isset($BusquedaAvanzada) and $BusquedaAvanzada=="S"){
-	?>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="?action=advanced">
-                                <span data-feather="home" class="align-text-bottom"></span>
-                                <?php echo $msgstr["buscar_a"]?>
-                            </a>
-                        </li>
-                        <?php } ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="javascript:DiccionarioLibre(0)">
-                                <span data-feather="diccionario" class="align-text-bottom"></span>
-                                <?php echo $msgstr["diccionario"]?>
-                            </a>
-                        </li>
-                        <?php
-	if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N"){
-		$archivo="";
-		if (isset($modo)){
-			if ($modo=="integrado"){
-				$archivo=$db_path."/opac_conf/".$lang."/indice.ix";
-			}else{
-				$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"].".ix";
-			}
-		}
-		if (file_exists($archivo)){
-		?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="showhide('sub_menu')">
-                                <span data-feather="file" class="align-text-bottom"></span>
-                                <?php echo $msgstr["indice_alfa"];?>
-                            </a>
-                        </li>
 
-                        <?php
-		}
-	}
-?>
-                    </ul>
+		<?php include 'nav_forms.php' ?>
 
-                </div>
-            </nav>
-        </div>
-
-        <div class="bg-light col-md-9 col-lg-10">
+        <div class="bg-light col-md col-lg">
 
             <?php
 if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 ?>
 
-            <form method="post" action="buscar_integrada.php" name="libre">
+            <form name="libre" method="post" action="buscar_integrada.php" >
 
                 <?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";

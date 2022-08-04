@@ -10,7 +10,7 @@
             ?>
 
 			<p>
-	        <a href="javascript:document.buscar.action='avanzada.php';document.buscar.submit();">
+	        <a href="javascript:document.buscar.action='search_advanced.php';document.buscar.submit();">
 	            <i class="fa fa-filter"></i><?php echo $msgstr["afinar"];?>
 	        </a>
 	        <?php    

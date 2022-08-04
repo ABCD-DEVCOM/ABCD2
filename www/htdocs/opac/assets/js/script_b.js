@@ -95,7 +95,7 @@ function ObtenerTerminos(desde){
 function CancelarDiccionario(retorno){
 	switch (retorno){
 		case 'A':
-			document.diccionario.action="components/avanzada.php"
+			document.diccionario.action="components/search_advanced.php"
 			document.diccionario.submit()
 			break
 		case 'B':
@@ -103,7 +103,7 @@ function CancelarDiccionario(retorno){
 			document.diccionario.submit()
 			break;
 		case 'C':
-			document.diccionario.action="components/avanzada.php"
+			document.diccionario.action="components/search_advanced.php"
 			document.diccionario.submit()
 			break
 		case 'D':
@@ -137,7 +137,7 @@ function EjecutarBusquedaDiccionario(Accion){
 			document.diccionario.action ="/opac/buscar_integrada.php"
 			break
 		case 2:
-			document.diccionario.action ="/opac/components/avanzada.php"
+			document.diccionario.action ="/opac/components/search_advanced.php"
 			break
 	}
 	document.diccionario.submit()
@@ -225,7 +225,7 @@ function LimpiarBusqueda() {
 }
 
 function BusquedaAvanzada(){
-	document.diccio.action="components/avanzada.php"
+	document.diccio.action="components/search_advanced.php"
     document.diccio.Opcion.value="integrada"
 	document.diccio.submit()
 }

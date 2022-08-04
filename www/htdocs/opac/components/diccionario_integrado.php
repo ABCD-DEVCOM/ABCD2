@@ -156,7 +156,7 @@ if (isset($_REQUEST["lang"]))
 </form>
 
 
-<form name="regresar" method="post" action="avanzada.php">
+<form name="regresar" method="post" action="search_advanced.php">
 <?php
 foreach ($_REQUEST as $var=>$value){
 	echo "<input type=hidden name=$var value=";

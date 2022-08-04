@@ -1,63 +1,9 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="bg-light col-md-3 col-lg-2">
-            <nav class="col-md-12 col-lg-12 bg-light d-xl-inline sidebar">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-md-column flex-xl-row">
-                        <li class="nav-item">
-                            <a class="nav-link" href="?action=free">
-                                <span data-feather="shopping-cart" class="align-text-bottom"></span>
-                                <?php echo $msgstr["free_search"];?>
-                            </a>
-                        </li>
-                        <?php
-		if (!isset($BusquedaAvanzada) or isset($BusquedaAvanzada) and $BusquedaAvanzada=="S"){
-	?>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                                onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();" href="#">
-                                <span data-feather="home" class="align-text-bottom"></span>
-                                <?php echo $msgstr["buscar_a"]?>
-                            </a>
-                        </li>
-                        <?php } ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="javascript:DiccionarioLibre(0)">
-                                <span data-feather="diccionario" class="align-text-bottom"></span>
-                                <?php echo $msgstr["diccionario"]?>
-                            </a>
-                        </li>
-                        <?php
-	if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N"){
-		$archivo="";
-		if (isset($modo)){
-			if ($modo=="integrado"){
-				$archivo=$db_path."/opac_conf/".$lang."/indice.ix";
-			}else{
-				$archivo=$db_path.$_REQUEST["base"]."/opac/".$lang."/".$_REQUEST["base"].".ix";
-			}
-		}
-		if (file_exists($archivo)){
-		?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="showhide('sub_menu')">
-                                <span data-feather="file" class="align-text-bottom"></span>
-                                <?php echo $msgstr["indice_alfa"];?>
-                            </a>
-                        </li>
+<?php include 'nav_forms.php' ?>
 
-                        <?php
-		}
-	}
-?>
-                    </ul>
-
-                </div>
-            </nav>
-        </div>
-
-        <div class="bg-light col-md-9 col-lg-10">
+        <div class="bg-light col-md col-lg">
 
 <?php
 
@@ -179,7 +125,7 @@ global $db_path,$msgstr,$lang;
 	
 	<p><?php echo $msgstr["mensajeb"]; ?></p>
 
-	<form method="post" class="row g-3" name="forma1" action="avanzada.php" onSubmit="Javascript:return false">
+	<form method="post" class="row g-3" name="forma1" action="search_advanced.php" onSubmit="Javascript:return false">
 	
 	<?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
@@ -195,7 +141,7 @@ global $db_path,$msgstr,$lang;
 	<input type="hidden" name="Campos" value="">
 	<input type="hidden" name="Operadores" value="">
 	<input type="hidden" name="Expresion" value="">
-	<input type="hidden" name="llamado_desde" value="avanzada.php">
+	<input type="hidden" name="llamado_desde" value="search_advanced.php">
 
   <div class="col-md-4">
     <label for="inputCity" class="form-label"><?php echo $msgstr["campo"];?></label>
@@ -315,7 +261,7 @@ global $db_path,$msgstr,$lang;
 	echo "<input type=hidden name=campo value=\"\">";
 	echo "<input type=hidden name=id value=\"\">";
 	echo "<input type=hidden name=Diccio value=\"\">";
-	echo "<input type=hidden name=llamado_desde value='avanzada.php'>\n";
+	echo "<input type=hidden name=llamado_desde value='search_advanced.php'>\n";
 
 	echo "</form>";
 
