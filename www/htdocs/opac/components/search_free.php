@@ -101,8 +101,8 @@ if (!isset($titulo_pagina)){
 
 	if (!isset($_REQUEST["modo"])){
 	?>
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false"><?php echo $msgstr["todos_c"];?></button>
+                    <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false" title="<?php echo $msgstr["todos_c"];?>"><span class="visually-hidden"><?php echo $msgstr["todos_c"];?></span></button>
                     <input type="hidden" name="modo" value="integrado">
                     <?php
 	}else{

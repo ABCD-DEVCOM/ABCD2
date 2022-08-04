@@ -519,17 +519,14 @@ if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
 
 ?>
 </form>
+
+
 	<script>
 			console.log("<?php echo $Expresion;?>");
 	highlightSearchTerms("<?php echo $Expresion;?>");
 
 	</script>
-<?php
 
-include("common/opac-footer.php");
-
-
-?>	
 
 
 <?php
@@ -539,3 +536,5 @@ include("common/opac-footer.php");
 <script>
 	WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION?>"
 </script>
+
+<?php include("common/opac-footer.php");?>	

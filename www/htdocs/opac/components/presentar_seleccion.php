@@ -1,5 +1,5 @@
 <?php
-include("common/opac-head.php");
+include("../common/opac-head.php");
 
 $mostrar_menu="N";
 //include("inc/leer_bases.php");
@@ -121,10 +121,10 @@ if (isset($_REQUEST["db_path"])){
 	<?php } ?>
 
 	<div id="myMail" style="display:<?php if ($accion=="mail_one") echo "block"; else echo "none";?>;margin:auto;width:600px;xheight:150px; position:relative;border:1px solid black;">
-		<?php include("modules/mail/correo_iframe.php");?>
+		<?php include("../modules/mail/correo_iframe.php");?>
 	</div>
 
-	<?php include("modules/reserve/reserve_iframe.php")?>
+	<?php include("../modules/reserve/reserve_iframe.php")?>
 	
 
 

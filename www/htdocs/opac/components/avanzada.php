@@ -13,9 +13,9 @@ if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado")
 
 if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){
 	$base="";
-	 echo "<span class=tituloBase>".$msgstr["todos_c"]."</span>";
+	 echo "<h2>".$msgstr["todos_c"]."</h2>";
 }else{
-	 echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"]."</span>";
+	 echo "<h2>".$bd_list[$_REQUEST["base"]]["titulo"]."</h2>";
 
 	$base=$_REQUEST["base"];
 }

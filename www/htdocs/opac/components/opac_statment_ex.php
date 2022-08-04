@@ -8,8 +8,8 @@
 
 
 
-include("../central/config_opac.php");
-include("inc/leer_bases.php");
+include("../common/opac-head.php");
+//include("inc/leer_bases.php");
 
 
 include($CentralPath."common/get_post.php");
@@ -50,7 +50,6 @@ global $Wxis,$xWxis,$db_path,$CentralPath,$actparfolder,$lang;
 //$sidebar="N";
 $desde="ecta";
 $indice_alfa="N";
-include("common/opac-head.php");
 ?>
 
 
@@ -310,5 +309,5 @@ function CompletarSolicitud(){
 }
 </script>
 <?php
-include("common/opac-footer.php");
+include("../common/opac-footer.php");
 ?>

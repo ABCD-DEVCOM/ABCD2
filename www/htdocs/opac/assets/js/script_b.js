@@ -499,15 +499,16 @@ function delCookie(){
 }
 
 
-function showCookie(cname){
-	cookie=getCookie(cname)
-	if (cookie==""){
+function showCookie(cname) {
+	cookie = getCookie(cname)
+	if (cookie == "") {
 		alert(msgstr["rsel_no"])
 		return
 	}
 	//alert(document.buscar.lang.value)
-    document.buscar.action="presentar_seleccion.php"
-	document.buscar.cookie.value=cookie
+	document.buscar.action = "components/presentar_seleccion.php"
+	document.buscar.cookie.value = cookie
+
 	document.buscar.submit()
 }
 
