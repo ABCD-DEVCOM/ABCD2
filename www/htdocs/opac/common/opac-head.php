@@ -22,8 +22,8 @@ if (isset($_REQUEST["base"])){
 }
 
 function wxisLlamar($base, $query, $IsisScript) {
-	global $db_path, $Wxis, $xWxis;
-	include($_SERVER['DOCUMENT_ROOT']."/opac/wxis_llamar.php");
+	global $db_path, $Wxis, $xWxis, $ABCD_scripts_path;
+	include($ABCD_scripts_path."central/common/wxis_llamar.php");
 	return $contenido;
 }
 //include $_SERVER['DOCUMENT_ROOT']."/opac/functions.php";

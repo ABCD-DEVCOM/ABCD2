@@ -39,8 +39,8 @@ header('Content-Type: text/html; charset=".$charset."');
 //foreach ($_REQUEST as $var=>$value)  echo "$var=$value<br>";
 
 function wxisLlamar($base,$query,$IsisScript){
-global $db_path,$Wxis,$xWxis;
-	include("wxis_llamar.php");
+global $db_path, $Wxis, $xWxis, $ABCD_scripts_path;
+	include($ABCD_scripts_path."central/common/wxis_llamar.php");
 	return $contenido;
 }
 
