@@ -265,13 +265,13 @@ function AbrirTesauro(Tag,base,prefijo){
 <br><center>
 <table>
 	<td align=center>
-		<a class="bt-blue" href=javascript:AceptarCambios()><i class="fas fa-check"></i> <?php echo $msgstr["aceptar"]?></a>
+		<a class="bt bt-blue" href=javascript:AceptarCambios()><i class="fas fa-check"></i> <?php echo $msgstr["aceptar"]?></a>
 	</td>
 	<td  align=center>
-		<a class="bt-green" href=javascript:ActualizarForma()><i class="fas fa-share"></i> <?php echo $msgstr["actualizar"]?></a>
+		<a class="bt bt-green" href=javascript:ActualizarForma()><i class="fas fa-share"></i> <?php echo $msgstr["actualizar"]?></a>
 	</td>
 	<td align=center>
-		<a class="bt-gray" href="javascript:self.close()"><i class="fas fa-times"></i> <?php echo $msgstr["cancelar"]?></a>
+		<a class="bt bt-gray" href="javascript:self.close()"><i class="fas fa-times"></i> <?php echo $msgstr["cancelar"]?></a>
 	</td>
 </table>
 <script language=javascript>
