@@ -9,6 +9,7 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
+
 if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){
 	$arrHttp["base"]=$_REQUEST["baseactiva"];
 	$arrHttp["cipar"]=$arrHttp["base"].".par";
@@ -357,10 +358,11 @@ function AbrirTesauro(Tes,Index){
 echo "function AbrirIndice(Termino){
 		Prefijo='".$arrHttp["pref"]."'+Termino
 		Pref='".$arrHttp["pref"]."'
+		document.Lista.base.value='".$arrHttp["base"]."'		
+		document.Lista.cipar.value='".$arrHttp["cipar"]."'		
 		document.Lista.prefijo.value=Prefijo
 		document.Lista.pref.value=Pref
 		document.Lista.submit()
-
 	}
 
 function AgregarRegistro(){
@@ -395,7 +397,7 @@ if (isset($arrHttp["width"])){
 <div><b><?php echo $msgstr["termsdict"]?>: &nbsp;
 <?php
 if (!isset($tesau[$arrHttp["base"]]["name"])){
-    if (isset($arrHttp["baseactive"]))
+    if (isset($arrHttp["baseactiva"]))
         if ($arrHttp["baseactiva"]!=$arrHttp["base"]) echo $arrHttp["base"]." - ";
 }else{
     echo $tesau[$arrHttp["base"]]["name"]." - ";
