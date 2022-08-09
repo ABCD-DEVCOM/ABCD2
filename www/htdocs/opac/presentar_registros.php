@@ -113,10 +113,11 @@ global $yaidentificado,$db_path,$msgstr, $actparfolder, $lang;
 
 function PresentarRegistros_search($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
 global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, $lang;
-	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="")
+	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!=""){
     	$cipar=$_REQUEST["cipar"];
-    else
+    } else {
        	$cipar=$base;
+	}
     if ($facetas!=""){
 		$f=explode('|',$facetas);
 		$exFacetas=$f[1];
@@ -141,7 +142,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 			}
 		}
     
-	//$ff_pft="'aaa<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
+	//$ff_pft="'<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
 
 	$ff_pft="'<div class=\"card mb-2\"><h5 class=\"card-header\">'";
 	$ff_pft.=",@select_record.pft,'</h5>'";

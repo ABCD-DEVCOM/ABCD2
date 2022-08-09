@@ -300,7 +300,7 @@ primero="<?php echo $primero;?>";
 }
 ?>
 
-<?php include("common/opac-footer.php")?>
+<?php include("../common/opac-footer.php")?>
 <form name=indiceAlfa method=post action=alfabetico.php>
 <input type=hidden name=alfa value="<?php if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]!="") echo $_REQUEST["alfa"]?>">
 <input type=hidden name=titulo value="<?php echo $_REQUEST["titulo"]?>">
