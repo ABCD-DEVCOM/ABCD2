@@ -39,36 +39,44 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 $script_php="../circulation/usuario_prestamos_presentar.php";
-//echo $script_php;
-//date_default_timezone_set('UTC');
-$debug="";
 
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
+$debug="";
 
 if (isset($arrHttp["db_inven"])){
 	$dbinv=explode('|',$arrHttp["db_inven"]);
 	$_SESSION["loans_dbinven"]=$dbinv[0];
 }
 
+if (isset($_SESSION["login"])) {
+    $login = $_SESSION["login"];
+} else {
+    $login = "";
+}
 
-
-$lang=$_SESSION["lang"];
 //require_once ("../common/ldap.php");
+
 include("../lang/admin.php");
 include("../lang/prestamo.php");
 include("fecha_de_devolucion.php");
 include ('../dataentry/leerregistroisispft.php');
+
 require_once("../circulation/grabar_log.php");
+
 include("leer_pft.php");
+
 //Calendario de días feriados
 include("calendario_read.php");
+
 //Horario de la biblioteca, unidades de multa, moneda
 include("locales_read.php");
+
 // se leen las politicas de préstamo y la tabla de tipos de usuario
 include("loanobjects_read.php");
+
 // se lee la configuración de la base de datos de usuarios
 include("borrowers_configure_read.php");
-# Se lee el prefijo y el formato para extraer el código de usuario
+
+// Se lee el prefijo y el formato para extraer el código de usuario
 $us_tab=LeerPft("loans_uskey.tab","users");
 $t=explode("\n",$us_tab);
 $uskey=$t[0];
@@ -87,8 +95,8 @@ $recibo_arr=array();
 $recibo_list=array();
 $Formato="";
 
-if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst")){
-		$Formato=$db_path."trans/pfts/".$_SESSION["lang"]."/receipts.lst";
+if (file_exists($db_path."trans/pfts/".$lang."/receipts.lst")){
+		$Formato=$db_path."trans/pfts/".$lang."/receipts.lst";
 	}else{
 		if (file_exists($db_path."trans/pfts/".$lang_db."/receipts.lst")){
 			$Formato=$db_path."trans/pfts/".$lang_db."/receipts.lst";
@@ -105,7 +113,7 @@ if ($Formato!=""){
 }
 
 function PrestamoMismoObjeto($control_number,$user,$base_origen){
-global $copies_title,$msgstr,$obj;
+global $copies_title,$msgstr,$obj,$lang;
 	$msg="";
 	$tr_prestamos=LocalizarTransacciones($control_number,"ON",$base_origen);
 	$items_prestados=count($tr_prestamos);
@@ -142,7 +150,7 @@ global $copies_title,$msgstr,$obj;
 }
 
 function Disponibilidad($control_number,$catalog_db,$items_prestados,$prefix_cn,$copies,$pft_ni){
-global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
+global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl,$lang,$actparfolder;
 	//DETERMINAMOS EL TOTAL DE EJEMPLARES QUE TIENE EL TITULO
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 	if ($copies=="Y"){
@@ -159,7 +167,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 			$pft_ni.="(".$ni_pft[1]."/)";
 
 	}
-	$query = "&Opcion=disponibilidad&base=$catalog_db&cipar=$db_path"."par/$catalog_db.par&Expresion=".$Expresion."&Pft=".urlencode($pft_ni);
+	$query = "&Opcion=disponibilidad&base=$catalog_db&cipar=$db_path".$actparfolder."$catalog_db.par&Expresion=".$Expresion."&Pft=".urlencode($pft_ni);
 	include("../common/wxis_llamar.php");
 	$obj=array();
 	foreach ($contenido as $value){
@@ -172,7 +180,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 }
 
 function LocalizarReservas($control_number,$catalog_db,$usuario,$items_prestados,$prefix_cn,$copies,$pft_ni) {
-global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
+global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl,$lang,$actparfolder;
 
 // SE DETERMINA EL NUMERO DE EJEMPLARES DISPONIBLES
 	$disponibilidad=Disponibilidad($control_number,$catalog_db,$items_prestados,$prefix_cn,$copies,$pft_ni);
@@ -189,7 +197,7 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 	// 1: Situación de la reserva
 	$Pft=urlencode("f(mfn,6,0)'|'v10'|'v30'|'v31'|'v40'|'v60'|'v130'|'v200,'|',v1/");
 	$Expresion=urlencode("CN_".$catalog_db."_".$control_number." AND (ST_3 or ST_0)");
-	$query="&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Pft=$Pft";
+	$query="&base=reserve&cipar=$db_path".$actparfolder."reserve.par&Expresion=$Expresion&Pft=$Pft";
 	include("../common/wxis_llamar.php");
 
 	$reservas=array();
@@ -295,12 +303,12 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 }
 
 function ActualizarReserva($diap,$horap){
-global $db_path,$lang_db;
+global $db_path,$lang_db,$lang,$login;
 	$ValorCapturado ="d1d200d201d202<1 0>4</1>";
-	$ValorCapturado.="<200 0>$diap</200><201 0>$horap</201><202 0>".$_SESSION["login"]."</202>";
-	$ValorCapturado=urlencode($ValorCapturado);
-	if (file_exists($db_path."reserve/pfts/".$_SESSION["lang"]."/reserve.pft")){
-		$Formato=$db_path."reserve/pfts/".$_SESSION["lang"]."/reserve";
+	$ValorCapturado.="<200 0>".$diap."</200><201 0>".$horap."</201><202 0>".$login."</202>";
+	$ValorCapturado.=urlencode($ValorCapturado);
+	if (file_exists($db_path."reserve/pfts/".$lang."/reserve.pft")){
+		$Formato=$db_path."reserve/pfts/".$lang."/reserve";
 	}else{
 		if (file_exists($db_path."reserve/pfts/".$lang_db."/reserve.pft")){
 			$Formato=$db_path."reserve/pfts/".$lang_db."/reserve";
@@ -313,7 +321,7 @@ global $db_path,$lang_db;
 }
 
 function ProcesarPrestamo($usuario,$inventario,$signatura,$item,$usrtype,$copies,$ppres,$prefix_in,$prefix_cn,$mfn_reserva,$codusuario_reserva,$tr,$user_data){
-global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_list,$arrHttp;
+global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_list,$arrHttp,$actparfolder,$lang,$login;
 	$item_data=explode('||',$item);
 	$nc=$item_data[0];                  // Control number of the object
 	$bib_db=$item_data[1];
@@ -328,7 +336,7 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 		$Expresion=$prefix_cn.$nc;
 	}
     $bib_db=strtolower($bib_db);
-	$query = "&Opcion=disponibilidad&base=$bib_db&cipar=$db_path"."par/$bib_db.par&Expresion=".$Expresion."&Pft=".urlencode($item);
+	$query = "&Opcion=disponibilidad&base=".$bib_db."&cipar=".$db_path.$actparfolder.$bib_db.".par&Expresion=".$Expresion."&Pft=".urlencode($item);
 	include("../common/wxis_llamar.php");
 	$obj="";
 	foreach ($contenido as $value){
@@ -381,10 +389,11 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	//if ($obj[5]=="H")
 	$ValorCapturado.="<35 0>".$horap."</35>";
 	$ValorCapturado.="<40 0>".$diad."</40>";
-	if ($obj[5]=="H")
+	if ($obj[5]=="H") {
 		$ValorCapturado.="<45 0>".$horad."</45>";
-	else
-		$horad="";
+	}else{
+		$ValorCapturado.="<45 0></45>";
+	}
 	$ValorCapturado.="<70 0>".$usrtype."</70>";
 	if (isset($arrHttp["using_pol"])){
 		$pp=explode('|',$arrHttp["using_pol"]);
@@ -401,7 +410,7 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 		$ValorCapturado.="<410 0>".$item_data["8"]."</410>";
 	if (trim($user_data)!="")
 		$ValorCapturado.="<420 0>".$user_data."</420>"; //informacion complementaria del usuario
-	$ValorCapturado.="<120 0>^a".$_SESSION["login"]."^b".date("Ymd h:i A")."^tP</120>";
+	$ValorCapturado.="<120 0>^a".$login."^b".date("Ymd h:i A")."^tP</120>";
 	if (isset($arrHttp["comments"]))
 		$ValorCapturado.="<300 0>".$arrHttp["comments"]."</300>";
 	$ValorCapturado=urlencode($ValorCapturado);
@@ -409,8 +418,8 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 	$Formato="";
 	$recibo="";
 	if (isset($recibo_list["pr_loan"])){
-		if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/r_loan.pft")){
-			$Formato=$db_path."trans/pfts/".$_SESSION["lang"]."/r_loan";
+		if (file_exists($db_path."trans/pfts/".$lang."/r_loan.pft")){
+			$Formato=$db_path."trans/pfts/".$lang."/r_loan";
 		}else{
 			if (file_exists($db_path."trans/pfts/".$lang_db."/r_loan.pft")){
 				$Formato=$db_path."trans/pfts/".$lang_db."/r_loan";
@@ -421,7 +430,9 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 		$Formato="&Formato=$Formato";
 		$Pft="mfn/";
 	}
-	$query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."$Formato&ValorCapturado=".$ValorCapturado;
+	$query = "&base=trans&cipar=$db_path".$actparfolder."trans.par&login=".$login."$Formato&ValorCapturado=".$ValorCapturado;
+
+
 
 	//Se graba el log de prestamos
 	if (file_exists($db_path."logtrans/data/logtrans.mst")){
@@ -434,8 +445,12 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 		$datos_trans["TIPO_USUARIO"]=$usrtype;
 		$datos_trans["FECHA_PROGRAMADA"]=$diad;
 		$ValorCapturado=GrabarLog("A",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"RETORNAR");
-        if ($ValorCapturado!="") $query.="&logtrans=".$ValorCapturado;
+        if ($ValorCapturado!="") {
+			$query.="&logtrans=".$ValorCapturado;
+		}
+		
 	}
+
 	if ($codusuario_reserva!="" and $codusuario_reserva==$usuario){
 		$res=ActualizarReserva($diap,$horap);
 	    $query.=$res."&Mfn_reserva=$mfn_reserva";
@@ -446,7 +461,7 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 			$datos_trans["TIPO_OBJETO"]=$item_data[5];
 			$datos_trans["CODIGO_USUARIO"]=$usuario;
 			$datos_trans["TIPO_USUARIO"]=$usrtype;
-			$ValorCapturado=GrabarLog("F",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"");
+			$ValorCapturado=GrabarLog("F",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"",$login);
 			if ($ValorCapturado!="") $query.="&logtrans_1=".$ValorCapturado;
 		}
 
@@ -469,7 +484,7 @@ global $db_path,$Wxis,$wxisUrl,$xWxis,$pr_loan,$pft_storobj,$recibo_arr,$recibo_
 
 // Se localiza el número de control en la base de datos bibliográfica
 function ReadCatalographicRecord($control_number,$db,$inventory){
-global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$titulo,$prefix_in,$prefix_cn,$multa,$pft_storobj,$lang_db;
+global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$titulo,$prefix_in,$prefix_cn,$multa,$pft_storobj,$lang_db,$lang,$actparfolder;
 	//Read the FDT of the database for extracting the prefix used for indexing the control number
     $pft_typeofr=str_replace('~',',',$pft_typeofr);
 	if (isset($arrHttp["db_inven"])){
@@ -498,11 +513,11 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 	//se ubica el título en la base de datos de objetos de préstamo
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 	$Expresion=urlencode($Expresion);
-	$formato_obj=$db_path."$db/loans/".$_SESSION["lang"]."/loans_display.pft";
+	$formato_obj=$db_path."$db/loans/".$lang."/loans_display.pft";
 	if (!file_exists($formato_obj)) $formato_obj=$db_path.$db. "/loans/".$lang_db."/loans_display.pft";
 	//$formato_obj.=", /".urlencode($formato_ex).urlencode($pft_storobj);
     $formato_obj.=urlencode(", /".$formato_ex.$pft_storobj);
-	$query = "&Opcion=disponibilidad&base=$db&cipar=$db_path"."par/$db.par&Expresion=".$Expresion."&Pft=@$formato_obj";
+	$query = "&Opcion=disponibilidad&base=$db&cipar=$db_path".$actparfolder."$db.par&Expresion=".$Expresion."&Pft=@$formato_obj";
 	include("../common/wxis_llamar.php");
 	$total=0;
 	$titulo="";
@@ -520,7 +535,7 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 
 // Se localiza el número de inventario en la base de datos de objetos  de préstamo
 function LocalizarInventario($inventory){
-global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$copies_title,$prefix_in,$multa;
+global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$copies_title,$prefix_in,$multa,$lang,$actparfolder;
 
     $Expresion=$prefix_in.$inventory;
 	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
@@ -593,7 +608,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
     // control number||database||inventory||main||branch||type||volume||tome
 	}
 	$formato_obj=urlencode($formato_ex);
-	$query = "&Opcion=disponibilidad&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&Expresion=".$Expresion."&Pft=$formato_obj";
+	$query = "&Opcion=disponibilidad&base=".$arrHttp["base"]."&cipar=".$db_path.$actparfolder.$arrHttp["base"].".par&Expresion=".$Expresion."&Pft=".$formato_obj;
 	include("../common/wxis_llamar.php");
 	$total=0;
 	$copies_title=array();
@@ -627,9 +642,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 
 //se busca el numero de control en el archivo de transacciones para ver si el usuario tiene otro ejemplar prestado
 function LocalizarTransacciones($control_number,$prefijo,$base_origen){
-global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
+global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$actparfolder,$lang;
 	$tr_prestamos=array();
-	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
+	$formato_obj=$db_path."trans/pfts/".$lang."/loans_display.pft";
 	if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
 	$query = "&Expresion=".$prefijo."_P_".$control_number;
 	if (isset($arrHttp["year"]) or isset($arrHttp["volumen"])){
@@ -638,7 +653,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
 		if (isset($arrHttp["volumen"])) $query.="V:".$arrHttp["volumen"];
 		if (isset($arrHttp["numero"])) $query.="N:".$arrHttp["numero"];
 	}
-	$query.="&base=trans&cipar=$db_path"."par/trans.par&Formato=".$formato_obj;
+	$query.="&base=trans&cipar=$db_path".$actparfolder."trans.par&Formato=".$formato_obj;
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
 	$prestamos=array();
@@ -717,7 +732,7 @@ if (isset($arrHttp["usuario"])){
 	//Se obtiene el código, tipo y vigencia del usuario
 	$formato=$pft_uskey.'\'$$\''.$pft_ustype.'\'$$\''.$pft_usvig.'\'$$\''.$pft_usmore;
 	$formato=urlencode($formato);
-	$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path"."par/users.par&Pft=$formato";
+	$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=".$db_path.$actparfolder."users.par&Pft=".$formato;
 	$contenido="";
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
@@ -1098,10 +1113,8 @@ if ($reserves_user!="")
 ProduceOutput($ec_output,"");
 
 function ProduceOutput($ec_output,$reservas){
-global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php;
-global $prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_name,$logo,$ILL,$meta_encoding;
+global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php,$lang,$prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_name,$logo,$ILL,$meta_encoding;
 	include("../common/header.php");
-    echo "<body>";
  	include("../common/institutional_info.php");
  	include("../circulation/scripts_circulation.php");
 // 	if ($recibo!=""){
@@ -1130,7 +1143,7 @@ include "../common/inc_div-helper.php";
 
 <div class="middle form">
 	<div class="formContent">
-<form name=ecta>
+<form name="ecta">
 <?php
 	if ($xnum_p=="") $xnum_p=0;
 	$ec_output.= "</form>";
@@ -1185,7 +1198,7 @@ include "../common/inc_div-helper.php";
 					$Formato="v10,' ',mdl,v100'<br>'";
 					$Formato="&Pft=$Formato";
 					$IsisScript=$xWxis."leer_mfnrange.xis";
-					$query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn&to=$Mfn$Formato";
+					$query = "&base=trans&cipar=$db_path".$actparfolder."trans.par&from=$Mfn&to=$Mfn$Formato";
 					include("../common/wxis_llamar.php");
 					foreach ($contenido as $value){
 						echo $value;
@@ -1255,8 +1268,8 @@ include "../common/inc_div-helper.php";
 		foreach ($r as $Mfn){
 			if ($Mfn!=""){
 				$Formato="";
-				if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/$fs.pft")){
-					$Formato=$db_path."trans/pfts/".$_SESSION["lang"]."/$fs";
+				if (file_exists($db_path."trans/pfts/".$lang."/$fs.pft")){
+					$Formato=$db_path."trans/pfts/".$lang."/$fs";
 				}else{
 					if (file_exists($db_path."trans/pfts/".$lang_db."/$fs.pft")){
 						$Formato=$db_path."trans/pfts/".$lang_db."/$fs";
@@ -1265,7 +1278,7 @@ include "../common/inc_div-helper.php";
 				if ($Formato!="") {
                 	$Formato="&Formato=$Formato";
 					$IsisScript=$xWxis."leer_mfnrange.xis";
-					$query = "&base=trans&cipar=$db_path"."par/trans.par&from=$Mfn&to=$Mfn$Formato";
+					$query = "&base=trans&cipar=$db_path".$actparfolder."trans.par&from=$Mfn&to=$Mfn$Formato";
 					include("../common/wxis_llamar.php");
 					$recibo="";
 					foreach ($contenido as $value){
@@ -1280,7 +1293,7 @@ include "../common/inc_div-helper.php";
 		}
 	}
 	if ($xnum_p==0 and $nmulta==0 and $nsusp==0){
-		if (file_exists($db_path."trans/pfts/".$_SESSION["lang"]."/r_solvency.pft"))
+		if (file_exists($db_path."trans/pfts/".$lang."/r_solvency.pft"))
 			echo "<a href=javascript:ImprimirSolvencia('".$arrHttp["usuario"]."')>".$msgstr["solvencia"]."</a>";
 	}
 ?>
