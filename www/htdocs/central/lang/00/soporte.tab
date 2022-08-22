@@ -155,6 +155,7 @@ copyfolder=Copy folder
 copyfrom=Copy from
 copyloanobjects=Copy/Loan objects
 cpdb=Copy definition from
+createdemptyfile=Created empty file
 createdfile=Created file
 createdfolder=Created folder
 create_gizmo=Create gizmo database

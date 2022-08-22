@@ -1,6 +1,7 @@
 <?php
 /*
 20220717 fho4abcd Use $actparfolder as location for .par & def files
+20220822 fho4abcd Improve checks&feedback if INDEX name is empty, skip if name&def are empty
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -24,7 +25,9 @@ if (strpos($arrHttp["base"],"|")===false){
 }
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include("../common/header.php");
-
+?>
+<body>
+<?php
 function AddKey($preliteral,$value){
 global $search_ix;
 	$ix=-1;
@@ -590,6 +593,10 @@ function Validar(){
 			alert("<?php echo $msgstr["indexdef"]?>: <?php echo $msgstr["missindconf"]?>")
 			return
 		}
+		if (def!="" && name==""){
+			alert("<?php echo $msgstr["indexdef"]?>: <?php echo $msgstr["missindex"]?>")
+			return
+		}
 // CHECK IF THE MAIN INDEX IS DEFINED
 		ixpos=def.indexOf("^d")
 		if (ixpos!=-1){
@@ -617,12 +624,14 @@ function Validar(){
 			}
 		}
 //CHECK IF AT LEAST ONE NAME IS SUPPLIED FOR THE INDEX
-        val_res=CheckNames(def)
-        if (!val_res) {
-        	alert("<?php echo $msgstr["misslang"]?> "+name)
-        	return false
+        if (name!=""&&def!=""){
+            val_res=CheckNames(def)
+            if (!val_res) {
+                alert("<?php echo $msgstr["misslang"]?> "+name)
+                return false
+            }
+            if (name+def!="") index_str+=name+"="+def+"\n"
         }
-		if (name+def!="") index_str+=name+"="+def+"\n"
 	}
     if (tmain==0 || tmain>1){
     	alert("<?php echo $msgstr["missdup_d"]?>")
@@ -772,11 +781,6 @@ function SubirOpcion(){
 	document.iah_edit.preferences.selectedIndex=ix-1
 }
 </script>
-</head>
-<body>
-
-
-
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -895,7 +899,7 @@ include "../common/inc_div-helper.php";
 	<a href=#APPLY_GIZMO>[APPLY GIZMO]</A>&nbsp;&nbsp;<a href=#FORMAT_NAME>[FORMAT NAME]</A>&nbsp;&nbsp;<A HREF=#HELP_FORM>[HELP FORM]</A>
 	&nbsp;&nbsp;<A HREF=#PREFERENCES>[PREFERENCES]</A>
 	</DIV>";
-	echo "<a href=javascript:ValidateForm()>".$msgstr["validate"]."</a>";
+	echo "<br><a href=javascript:ValidateForm()>".$msgstr["validate"]."</a>";
 
 	foreach ($db_def as $var=>$value){
         $var=trim($var);
