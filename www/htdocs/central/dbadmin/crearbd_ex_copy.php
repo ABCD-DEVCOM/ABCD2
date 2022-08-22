@@ -6,6 +6,8 @@
 20211122 fho4abcd Improve create of dbn.par: works now with actab/uctab. More files copied/renamed. Add testbutton. Sanitize html.
 20211215 fho4abcd Backbutton by included file
 20220713 fho4abcd Use $actparfolder as location for .par files, note different databases
+20220822 fho4abcd Repair bug if .par files are located in the par folder + better reaction on missing ROOT/COLLECTION folder +
+20220822 fho4abcd Button to show dr_path.def + copy <DBN>.par + less empty lines in dr_path.def
 */
 /*
 ** Copies a database to a new folder
@@ -151,6 +153,7 @@ if ($arrHttp["checkdup"]==1 ) {
     $contenido=trim($contenido);
     $contenido.="\n".$base_new."|".$descripcion;
     CrearArchivo($filename,$contenido);
+    echo("<br>");
 
     /*
     ** Copy & update dr_path.def or create a new with default settings
@@ -182,21 +185,35 @@ if ($arrHttp["checkdup"]==1 ) {
                     if ( $oldunicode>1) $oldunicode=1;
                 }
             } else if ($tokens0=="COLLECTION" && $tokens1!="" ) {
-                $issetCOLL=true;
-                $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
-                $colfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
-                $colfolderfull=str_replace($base_old,"$base_new",$colfolderfull);
-                $colfolderfull=trim($colfolderfull);
-                if ( substr($colfolderfull,-1)=="/") $colfolderfull=substr($colfolderfull,0,-1);
+                $oldcolfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
+                if ( file_exists($oldcolfolderfull) && is_dir($oldcolfolderfull) ) {
+                    $issetCOLL=true;
+                    $contenido.=str_replace($base_old,"$base_new",$value);
+                    $colfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
+                    $colfolderfull=str_replace($base_old,"$base_new",$colfolderfull);
+                    $colfolderfull=trim($colfolderfull);
+                    if ( substr($colfolderfull,-1)=="/") $colfolderfull=substr($colfolderfull,0,-1);
+                } else{
+                    echo "<span style='color:blue'>".$msgstr["col_folder_org"].": ".$oldcolfolderfull;
+                    echo "<br>&rarr; ".$msgstr["notreadable"];
+                    echo "<br>&rarr; ".$msgstr["col_folder_no_actions"]."</span><br>";
+                }
             } else if ($tokens0=="ROOT" && $tokens1!="" ) {
-                $issetROOT=true;
-                $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
-                $rootfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
-                $rootfolderfull=str_replace($base_old,"$base_new",$rootfolderfull);
-                $rootfolderfull=trim($rootfolderfull);
-                if ( substr($rootfolderfull,-1)=="/") $rootfolderfull=substr($rootfolderfull,0,-1);
+                $oldrootfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
+                if ( file_exists($oldrootfolderfull) && is_dir($oldrootfolderfull) ) {
+                    $issetROOT=true;
+                    $contenido.=str_replace($base_old,"$base_new",$value);
+                    $rootfolderfull=str_replace("%path_database%",$db_path."/",$tokens1);
+                    $rootfolderfull=str_replace($base_old,"$base_new",$rootfolderfull);
+                    $rootfolderfull=trim($rootfolderfull);
+                    if ( substr($rootfolderfull,-1)=="/") $rootfolderfull=substr($rootfolderfull,0,-1);
+                } else{
+                    echo "<span style='color:blue'>".$msgstr["root_folder_org"].": ".$oldrootfolderfull;
+                    echo "<br>&rarr; ".$msgstr["notreadable"];
+                    echo "<br>&rarr; ".$msgstr["root_folder_no_actions"]."</span><br>";
+                }
             } else {
-                $contenido.=str_replace($base_old,"$base_new",$value).PHP_EOL;
+                $contenido.=str_replace($base_old,"$base_new",$value);
             }
         }
         if (!$issetCISIS)   $contenido.="CISIS_VERSION=".$arrHttp["CISIS_VERSION"].PHP_EOL;
@@ -233,14 +250,20 @@ if ($arrHttp["checkdup"]==1 ) {
             echo "<b>".$msgstr["createdfolder"]."</b> ".$rootfolderfull."<br>";
         }
     }
+    $showbutton_dr_path=
+        '<a href="../utilities/show_par_file.php?par_file='.$newfile.'" target=testshow onclick=OpenWindow()>'.$msgstr["show"].' dr_path.def</a>';
+    echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton_dr_path<br><br>";
 
     /*
     ** Copy & update <db>/[dbn].par
     ** Note that existing actab/uctab entries (old or new) will not be copied
     ** They can be wrong (due to change of ansi<->utf8
     */
-    $loc_actparfolder=$actparfolder;
-    if ($actparfolder!="par/") {
+    if ($actparfolder=="par/") {
+        // set actparfolders to par/
+        $loc_actparfolderold=$actparfolder;
+        $loc_actparfoldernew=$actparfolder;
+    } else {
         // recompute $actparfolder for the current base
         $loc_actparfolderold=$base_old."/";
         $loc_actparfoldernew=$base_new."/";
@@ -293,7 +316,27 @@ if ($arrHttp["checkdup"]==1 ) {
         echo "&rarr; <b>uctab=</b> <br></span>";
     }
     CrearArchivo($newfile,$contenido);
-    echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton<br>";
+    echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton<br><br>";
+    
+    /*
+    ** Copy and update the iah.def file
+    ** The actparfolder is set by the code for the .par file
+    */
+    $oldfile=$db_path.$loc_actparfolderold.strtoupper($base_old).".def";
+    $newfile=$db_path.$loc_actparfoldernew.strtoupper($base_new).".def";
+    if (file_exists($oldfile)) {
+        // The show button gives the content of the iah.def file
+        $showbutton_iah=
+            '<a href="../utilities/show_par_file.php?par_file='.$newfile.'" target=testshow onclick=OpenWindow()>'.$msgstr["show"].' &lt;DBN&gt;.def</a>';
+        $fp=file($oldfile);
+        $contenido="";
+        foreach ($fp as $value){
+            $contenido.=str_replace($base_old,"$base_new",$value);
+        }
+        CrearArchivo($newfile,$contenido);
+        echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton_iah<br>";
+    }
+    
 
 
     // Copy .tab files in the database topfolder. Do not change the name
@@ -386,7 +429,9 @@ if ($arrHttp["checkdup"]==1 ) {
             break;
         }
     }
+    echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton_dr_path<br>";
     echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton<br>";
+    if (isset($showbutton_iah))echo "&nbsp;&nbsp;&nbsp;&nbsp;$showbutton_iah<br>";
 }
 ?>
 </div>
