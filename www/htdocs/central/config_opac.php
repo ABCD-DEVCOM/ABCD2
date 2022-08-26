@@ -21,14 +21,11 @@ $Web_Dir=$ABCD_scripts_path."opac/";
 $NovedadesDir="";
 
 $lang_config=$lang; // save the configured language to preset it later
-$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
-if (isset($_SESSION["lang"])){
-	$arrHttp["lang"]=$_SESSION["lang"];
-	$lang=$lang;
+if (isset($_REQUEST["lang"])){
+	$lang=$_REQUEST["lang"];
 }else{
-	$arrHttp["lang"]=$lang;
-	$_SESSION["lang"]=$lang;
+	$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 }
 
 include ($CentralPath."/lang/opac.php");

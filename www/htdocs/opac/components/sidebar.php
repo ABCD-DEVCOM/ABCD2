@@ -1,17 +1,32 @@
-<aside id="sidebar" class="sidebar">
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3 sidebar-sticky"> 
+		<ul class="nav flex-column">
 <?php
+
+include_once ($_SERVER['DOCUMENT_ROOT'] . '/opac/components/facets.php');
+
 if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
 
 
-echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a>";
-
     $primeravez="S";
     // if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]!=""){
-		echo "<h2>".$msgstr["catalog"]."</h2>\n";
-	//}
+?>		
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+          <span><?php echo $msgstr["catalog"]; ?></span>
+          <a class="link-secondary" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle" class="align-text-bottom"></span>
+          </a>
+        </h6>	
+<?php
+		//}
 
-	echo "<ul>\n";
+?>
+       
 
+<?php
+		/*
 	foreach ($bd_list as $key => $value){
 		$archivo=$db_path.$key."/opac/".$lang."/".$key."_colecciones.tab";
 		$ix=0;
@@ -30,7 +45,7 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 			}
 		}
 		if (trim($value["nombre"])!=""){
-			echo "<br><a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
+			echo "<a href='javascript:BuscarIntegrada(\"$key\",\"\",\"libre\",\"\$\",\"\",\"\",\"\",\"\",\"\",\"$home_link\")'>";
 			echo "<strong>".$value["titulo"]."</strong></a><br>\n";
 	    	if (file_exists($archivo)){
 	    		$fp=file($archivo);
@@ -62,26 +77,8 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	     }
 
 	}
+*/
 
-
-    if (isset($ONLINESTATMENT)){
-    	//foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-?>
-			<br><hr>
-	        <form name=estado_de_cuenta action=opac_statment_call.php method=post onsubmit="ValidarUsuario();return false">
-	         <h3><?php echo $msgstr["ecta"]?></h3>
-			&nbsp;<input type="text" name="usuario" id="search-user" value="" placeholder=" <?php echo $msgstr["user_id"]?>" />
-		    <?php if (isset($_REQUEST["db_path"]))
-					echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
-				  if (isset($lang))
-					echo "<input type=hidden name=lang value=\"".$lang."\">\n";
-			?>
-			<input type=hidden name=vienede value=ecta_web>
-		    <input type="submit" id="search-user-submit" value="<?php echo $msgstr["send"]?>" border=0 />
-			</form>
-			<hr>
-<?php
-	}
 	if (file_exists($db_path."opac_conf/".$lang."/side_bar.info")){
 		$fp=file($db_path."opac_conf/".$lang."/side_bar.info");
 		$sec_name="";
@@ -89,13 +86,12 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 			$value=trim($value);
 			if ($value!=""){
 				if (substr($value,0,9)=="[SECCION]"){
-					if ($sec_name!="")  echo "</ul>";
+					if ($sec_name!="") 
 					$sec_name=substr($value,9);
-					echo "<hr><h2>$sec_name</h2>";
-					echo "<ul>";
+					echo '<li class="nav-item"><a class="nav-link">'.$sec_name.'</a></li>';
 				}else{
 					$l=explode('|',$value);
-					echo "<li><a href=\"".$l[1]."\"";
+					echo '<li class="nav-item"><a class="nav-link"  href=\"'.$l[1].'\"';
 					if (isset($l[2]) and $l[2]=="Y") echo " target=_blank";
 					echo ">".$l[0]."</a></li>\n";
 				}
@@ -106,54 +102,9 @@ echo "<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&
 	}
 }
 ?>
-<br><br><br>
-</aside>
 
-</div>
-<form name=bi action=buscar_integrada.php method=post>
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion>
-<input type=hidden name=coleccion>
-<input type=hidden name=Expresion>
-<input type=hidden name=titulo_c>
-<input type=hidden name=resaltar>
-<input type=hidden name=submenu>
-<input type=hidden name=Pft>
-<input type=hidden name=mostrar_exp>
-<input type=hidden name=home>
-<?php
-echo "<input type=hidden name=modo value=\"";
-if (isset($_REQUEST["modo"])) echo $_REQUEST["modo"];
-echo "\">\n";
-if (isset($_REQUEST["integrada"]))
-	echo "<input type=hidden name=integrada value=\"".str_replace('"','&quot;',$_REQUEST["integrada"])."\">\n";
-if (isset($_REQUEST["db_path"]))
-	echo "<input type=hidden name=db_path value=\"".str_replace('"','&quot;',$_REQUEST["db_path"])."\">\n";
-if (isset($lang))
-	echo "<input type=hidden name=lang value=\"".str_replace('"','&quot;',$lang)."\">\n";
-?>
-</form>
-<script>
-function BuscarIntegrada(base,modo,Opcion,Expresion,Coleccion,titulo_c,resaltar,submenu,Pft,mostrar_exp){
 
-	if (mostrar_exp!="") document.bi.action="inicio_base.php"
-	document.bi.base.value=base
-	document.bi.Opcion.value=Opcion
-	document.bi.modo.value=modo
-	document.bi.home.value=mostrar_exp
-	if (Opcion=="libre"){
-		document.bi.coleccion.value=Coleccion
-		document.bi.Expresion.value=Expresion
-	}
-	if (Opcion=="directa"){
-		document.bi.Expresion.value=Expresion
-		document.bi.titulo_c.value=titulo_c
-		document.bi.resaltar.value=resaltar
-		document.bi.submenu.value=submenu
-		document.bi.Pft.value=Pft
-		document.bi.mostrar_exp.value=mostrar_exp
-	}
-	document.bi.submit()
-}
-</script>
+
+
+      </div>
+    </nav>

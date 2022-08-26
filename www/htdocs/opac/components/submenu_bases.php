@@ -54,7 +54,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	?>
 
 	<div class="form-search">
-			<button type="button" class="bt-blue" onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();"/><?php echo $msgstr["buscar_a"]?></button>
+			<button type="button" class="bt-blue" onclick="javascript:document.libre.action='search_advanced.php';document.libre.submit();"/><?php echo $msgstr["buscar_a"]?></button>
 	<?php
 	}
 
@@ -104,7 +104,7 @@ if (!isset($_REQUEST["submenu"]) or $_REQUEST["submenu"]!="N") {
 <?php
 
 $php_path="";
-if ($multiplesBases=="S" and isset($_REQUEST["base"])){
+if ($multiplesBases=="Y" and isset($_REQUEST["base"])){
 	$base="base=".$_REQUEST["base"];
 	$dbname=$_REQUEST["base"];
 }else{
