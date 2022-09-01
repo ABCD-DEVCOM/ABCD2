@@ -1,6 +1,7 @@
 <?php
 /*
 20211224 fho4abcd Read default message file from central, with central processing, lineends
+20220831 rogercgui Included the variable $opac_path to allow changing the Opac root directory
 */
 //session_start();
 error_reporting(E_ALL);
@@ -13,6 +14,7 @@ if (isset($_SESSION["db_path"])){
 	$db_path=$_REQUEST["db_path"];
 }
 
+$opac_path="opac_v2";
 
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
@@ -35,7 +37,7 @@ $galeria="Y";
 $styles="";
 $facetas="Y";
 $logo="assets/img/logoabcd.png";
-$link_logo="/opac";
+$link_logo="/".$opac_path;
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
 $footer='&copy; 2022 - Consulta bases de dados';

@@ -1,6 +1,7 @@
 <?php
-include("common/opac-head.php");
-include("inc/leer_bases.php");
+include("config.php");
+include("leer_bases.php");
+include("head.php");
 //foreach ($_REQUEST as $key=>$value) echo "$key=$value<br>";
 if (isset($_REQUEST["base"])){
 	 echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"]."</span>";
@@ -53,7 +54,7 @@ para presentar el �ndice solicitado y a partir del mismo proceder a la recuper
 		</ul>
 <br><br>
 <?php
-include("common/opac-footer.php");
+include("components/footer.php");
 
 
 

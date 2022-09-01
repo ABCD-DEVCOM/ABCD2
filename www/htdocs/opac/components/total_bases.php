@@ -1,16 +1,16 @@
-<div class="py-3">
 <?php
 if (isset($total_base) and count($total_base)>0){
     ?>
-
-    <h5><?php echo $msgstr["total_recup"];?>: <?php echo $total_registros;?></h5>
+	<div style='border:1px solid #CCCCCC; border-radius:4px; margin-top:10px ; padding: 10px'>
+        <span class=tituloBase><?php echo $msgstr["total_recup"];?>: <?php echo $total_registros;?></span>
 	<?php
         if (count($total_base)>1){
 		foreach ($total_base as $base=>$total){
-			echo '<h6><a class="btn btn-light" href="javascript:ProximaBase(\''.$base.'\')">';
-			echo $bd_list[$base]["titulo"].' <span class="badge text-bg-primary">'.$total.'</span></a></h6>';
+			echo "<br><a href=\"javascript:ProximaBase('$base')\">";
+			echo $bd_list[$base]["titulo"]."</a>: ".$total;
 		}
 	}
+?>    
+	</div>
+<?php
 }
-?>
-</div>

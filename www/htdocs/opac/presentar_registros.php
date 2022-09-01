@@ -1,19 +1,17 @@
 <?php
-/***
- * 
- * 2022-03-07 rogercgui fixed index in line $camposbusqueda[$l[1]]=$l[0]; 
- * 2022-07-19 rogercgui change the folder /par to the variable $actparfolder
- * 
- */
+/*
+
+20220307 rogercgui fixed index in line $camposbusqueda[$l[1]]=$l[0]; 
+
+*/
+
 
 function PresentarExistencias($Existencias){
 global $db_path,$xWxis,$msgstr, $actparfolder;
 	$e=explode(';',$Existencias);
 	$base=$e[1];
-	?>
-	<table id="existencias">
-	<?php
-	$query = "&base=".$base."&cipar=".$db_path."/".$actparfolder.$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$lang;
+	echo "<table id=existencias>";
+	$query = "&base=".$base."&cipar=$db_path/par/".$e[1].".par&Expresion=".$e[3]."&Formato=inven_detalle.pft&lang=".$_REQUEST["lang"];
 	$IsisScript="opac/buscar.xis";
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -28,17 +26,17 @@ global $db_path,$xWxis,$msgstr, $actparfolder;
 }
 
 function PresentarExpresion($base){
-global $yaidentificado,$db_path,$msgstr, $actparfolder, $lang;
+global $yaidentificado,$db_path,$msgstr,  $actparfolder;
 	if (isset($_REQUEST["Sub_Expresion"])) {
 		if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 			$col=explode('|',$_REQUEST["coleccion"]);
-			$archivo=$db_path."opac_conf/".$lang."/".$base."_avanzada_".$col[0].".tab";
-			if (!file_exists($archivo)) $archivo=$db_path."opac_conf/".$lang."/$base"."_avanzada.tab";
+			$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/".$base."_avanzada_".$col[0].".tab";
+			if (!file_exists($archivo)) $archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/$base"."_avanzada.tab";
 		}else{
 			if ($base!="")
-				$archivo=$db_path."opac_conf/".$lang."/$base"."_avanzada.tab";
+				$archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/$base"."_avanzada.tab";
 			else
-			    $archivo=$db_path."opac_conf/".$lang."/avanzada.tab";
+			    $archivo=$db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab";
 		}
 		$camposbusqueda=array();
 		if (file_exists($archivo)) {
@@ -111,13 +109,12 @@ global $yaidentificado,$db_path,$msgstr, $actparfolder, $lang;
 	return $Exp_b;
 }
 
-function PresentarRegistros_search($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
-global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, $lang;
-	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!=""){
+function PresentarRegistros($base,$db_path,$Expresion,$Formato,$count,$desde,$indice_base,$contador,$bd_list,$facetas){
+global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
+	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="")
     	$cipar=$_REQUEST["cipar"];
-    } else {
+    else
        	$cipar=$base;
-	}
     if ($facetas!=""){
 		$f=explode('|',$facetas);
 		$exFacetas=$f[1];
@@ -126,31 +123,8 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
     }else{
     	$exFacetas="";
     }
-
-	    	if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y"){
-			$ract=DeterminarReservasActivas($db_path,$x[1],$lang,$msgstr,$no_control);
-			$nreserv=0;
-			foreach ($ract as $xx) {
-				$xx=trim($xx);
-				if ($xx!=""){
-					if (substr($xx,0,8)=="[TOTAL:]") continue;
-					$nreserv=$nreserv+1;
-				}
-			}
-			if ($nreserv>0){
-				$msg_reserv="<br><font color=blue><strong>Este t√≠tulo tiene $nreserv reserva(s) pendiente(s)</strong></font><br>";
-			}
-		}
-    
-	//$ff_pft="'<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
-
-	$ff_pft="'<div class=\"card mb-2\"><h5 class=\"card-header\">'";
-	$ff_pft.=",@select_record.pft,'</h5>'";
-	$ff_pft.="'<div class=\"card-body\">',@".$Formato.".pft,";
-	$ff_pft.="'</div></div>'";
-	
-	$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$lang;
-
+    $ff_pft="'<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
+	$query = "&base=$base&cipar=$db_path"."par/$cipar.par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$_REQUEST["lang"];
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="") $query.="&Existencias=N";
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");
 	$primeravez="S";
@@ -164,15 +138,15 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 			$total=trim(substr($value,8));
 			if ($primeravez=="S"){
 				$proximo=$desde+$count;
-                echo "\n<div class=\"card my-3 p-2 shadow-sm sticky-top\">\n ";
+                echo "\n<div align=left style='margin-top:0px'>\n ";
 				if ($proximo>$total) $proximo=$total+1;
 
                 if (!isset($yaidentificado) or $yaidentificado=="" or $exFacetas!=""){
-                	echo "<h5>";
+                	echo "<span class=tituloBase>";
 					echo $bd_list[$base]["titulo"]."<br> ";
 					if ($facetas!="")
 						echo "<font color=darkred>".$total . " ".$f[0] ." ".$msgstr["found"]."</font><br>";
-					echo "</h5>";
+					echo "</span>";
 				}
 				$mostrando=$proximo-1;
 				if ($total>0 and $count<999){
@@ -180,17 +154,12 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder, 
 					if (!isset($control_entrada) or $control_entrada==1){
 ?>
 						&nbsp; &nbsp;
-						<div id="cookie_div">
-							<a class="btn btn-success mt-1" href="javascript:showCookie('ORBITA')">
-								<i class="bi bi-eye"></i> <?php echo $msgstr["mostrar_rsel"];?>
-							</a>
-							<a class="btn btn-danger mt-1" href="javascript:delCookie('')">
-								<i class="bi bi-trash"></i> <?php echo $msgstr["quitar_rsel"]?>
-							</a>
+						<div id=cookie_div>
+							<a href="javascript:showCookie('ORBITA')"><input type=button value="<?php echo $msgstr["mostrar_rsel"]?>" title="<?php echo $msgstr["mostrar_rsel"]?>"></a>
+							<a href="javascript:delCookie('')"><input type=button value="<?php echo $msgstr["quitar_rsel"]?>" title="<?php echo $msgstr["quitar_rsel"]?>"></a>
 						</div>
-
-
-        <?php 	} ?>
+<?php 				}
+?>
 <script>
 cookie=getCookie('ORBITA')
 Ctrl=document.getElementById("cookie_div")
@@ -204,12 +173,12 @@ if (Trim(cookie)!=""){
 					echo "<p>";
 				}
 				if (isset($galeria) and $galeria=="S"){
-					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imagenes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
+					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria im·genes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
 					echo "&nbsp; &nbsp; <input type=button id=\"search-submit\" value=\" Ver ficha descriptiva \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','ficha')\"><br>";
 				}
    				echo "</strong><p>\n</div>\n";
       			$primeravez="N";
-				echo '<div id="results" >';
+      			echo '<div id="results" >';
 			}
 		}else{
 			if (substr($value,0,6)=='$$REF:'){
@@ -224,7 +193,7 @@ if (Trim(cookie)!=""){
 	 			if (isset($f[3]))
 	 				$reverse="ON";
 	 			$IsisScript=$xWxis."opac/buscar.xis";
-				$query = "&cipar=$db_path"."par/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$lang;
+				$query = "&cipar=$db_path"."par/$bd_ref.par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&count=90000&lang=".$_REQUEST["lang"];
 				if ($reverse!=""){
 					$query.="&reverse=On";
 				}
@@ -239,7 +208,7 @@ if (Trim(cookie)!=""){
 		}
 
 	}
-	echo "</div>\n";
+	 echo "</div>\n";
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="" ){
 			PresentarExistencias($_REQUEST["Existencias"]);
 	}

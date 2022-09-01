@@ -95,7 +95,7 @@ function ObtenerTerminos(desde){
 function CancelarDiccionario(retorno){
 	switch (retorno){
 		case 'A':
-			document.diccionario.action="components/search_advanced.php"
+			document.diccionario.action="avanzada.php"
 			document.diccionario.submit()
 			break
 		case 'B':
@@ -103,7 +103,7 @@ function CancelarDiccionario(retorno){
 			document.diccionario.submit()
 			break;
 		case 'C':
-			document.diccionario.action="components/search_advanced.php"
+			document.diccionario.action="avanzada.php"
 			document.diccionario.submit()
 			break
 		case 'D':
@@ -131,13 +131,13 @@ function EjecutarBusquedaDiccionario(Accion){
 		case 0:
 			document.diccionario.Opcion.value="buscar_diccionario"
 			document.diccionario.Sub_Expresion.value=Expresion;
-			document.diccionario.action="/opac/buscar_integrada.php"
+			document.diccionario.action="buscar_integrada.php"
 			break
 		case 1:
-			document.diccionario.action ="/opac/buscar_integrada.php"
+			document.diccionario.action="buscar_integrada.php"
 			break
 		case 2:
-			document.diccionario.action ="/opac/components/search_advanced.php"
+			document.diccionario.action="avanzada.php"
 			break
 	}
 	document.diccionario.submit()
@@ -151,7 +151,7 @@ function NavegarDiccionario(F,desde){
  	}
 	switch (desde){
 		case 4:
-/* Mï¿½s tï¿½rminos */
+/* Más términos */
 			document.diccionario.Navegacion.value="mas terminos"
 			document.diccionario.submit()
 			break
@@ -225,7 +225,7 @@ function LimpiarBusqueda() {
 }
 
 function BusquedaAvanzada(){
-	document.diccio.action="components/search_advanced.php"
+	document.diccio.action="avanzada.php"
     document.diccio.Opcion.value="integrada"
 	document.diccio.submit()
 }
@@ -338,7 +338,7 @@ function PrepararExpresion(Destino){
 	mensajes.innerHTML="<img src=../images/loading.gif>"
 	document.diccio.Sub_Expresion.value=Expresion
 	document.diccio.Operadores.value=Operadores
-	document.diccio.action="/opac/buscar_integrada.php"
+	document.diccio.action="buscar_integrada.php"
 	document.diccio.submit()
 }
 
@@ -435,13 +435,13 @@ function ActivarIndice(titulo,columnas,Opcion,count,posting,prefijo,base){
 
 function ValidarUsuario(){
 	if (Trim(document.estado_de_cuenta.usuario.value)==""){
-		alert("Debe ingresar su codigo de usuario")
+		alert("Debe ingresar su código de usuario")
 		return
 	}
 	document.estado_de_cuenta.submit()
 }
 
-/* Marcado y presentacion de registros*/
+/* Marcado y presentación de registros*/
 function getCookie(cname) {
     var name = cname+"=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -468,21 +468,22 @@ function Seleccionar(Ctrl){
 		}else{
 			cookie=Ctrl.name
 		}
-	} else {
+	}else{
 		sel=Ctrl.name+"|"
 		c=cookie+"|"
 		n=c.indexOf(sel)
 		if (n!=-1){
 			cookie=cookie.substr(0,n)+ cookie.substr(n+sel.length)
 		}
+
 	}
-	document.cookie="ORBITA="+cookie;
-	Ctrl=document.getElementById("cookie_div");
-	Ctrl.style.display="inline-block";
+	document.cookie="ORBITA="+cookie
+	Ctrl=document.getElementById("cookie_div")
+	Ctrl.style.display="inline-block"
 }
 
-
 function delCookie(){
+
 	for (var i = 0; i < document.continuar.elements.length; i++){
     	element = document.continuar.elements[i];
     	switch (element.type){
@@ -492,22 +493,22 @@ function delCookie(){
   		}
 	}
   	document.cookie =  'ORBITA=;';
-	//alert (msgstr["no_rsel"])
+	alert (msgstr["no_rsel"])
 	Ctrl=document.getElementById("cookie_div")
 	Ctrl.style.display="none"
 
 }
 
 
-function showCookie(cname) {
-	cookie = getCookie(cname)
-	if (cookie == "") {
+function showCookie(cname){
+	cookie=getCookie(cname)
+	if (cookie==""){
 		alert(msgstr["rsel_no"])
 		return
 	}
-	//alert(document.buscar.lang.value)
-	document.buscar.action = "components/presentar_seleccion.php"
-	document.buscar.cookie.value = cookie
+	alert(document.buscar.lang.value)
+    document.buscar.action="presentar_seleccion.php"
+	document.buscar.cookie.value=cookie
 
 	document.buscar.submit()
 }
@@ -515,7 +516,7 @@ function showCookie(cname) {
 function SendTo(Accion,Data){
 	switch (Accion){
 		case "word":
-			document.buscar.action="modules/export/sendtoword.php"
+			document.buscar.action="sendtoword.php"
 			break
 		case "print_one":
 			document.buscar.action="presentar_seleccion.php"
@@ -531,7 +532,7 @@ function SendTo(Accion,Data){
 			document.buscar.action="presentar_seleccion.php"
 			break
 		case "xml":
-			document.buscar.action="modules/export/sendtoxml.php"
+			document.buscar.action="sendtoxml.php"
 			document.buscar.target="_blank"
 			break
 	}
@@ -542,7 +543,7 @@ function SendTo(Accion,Data){
 
 function ChangeLanguage(){
 
-	//var lang = document.getElementById("lang");
+	var lang = document.getElementById("lang");
 	langcode=lang.options[lang.selectedIndex].value
 	for (i=0;i<document.forms.length;i++){
 		document.forms[i].lang.value=langcode
@@ -587,4 +588,7 @@ function SolicitarPrestamo(CN,Base,otro){
 	document.buscar.action="../prestamos/prestamos.php"
 	document.buscar.cookie.value=CN
 	document.buscar.submit()
+
+
+
 }

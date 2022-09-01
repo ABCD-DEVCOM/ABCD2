@@ -43,7 +43,7 @@ The advanced and free search files need to follow the pattern of the databases' 
 *   opac\_loanobjects.pft
 *   select\_record.pft
 
-## Configuring a database in Opac
+## Setting up a database in Opac
 
 The configuration files for a database enabled to be displayed in Opac must be present along with the database in a folder called Opac/lang: **/bases/dbName/opac/lang/**
 

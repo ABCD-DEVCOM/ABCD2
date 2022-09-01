@@ -16,3 +16,4 @@ loan.pft=%path_database%loanobjects/pfts/pt/loan.pft
 trans.*=%path_database%trans/data/trans.*
 autoridades_opac.pft=%path_database%marc/pfts/autoridades_opac.pft
 select_record.pft=%path_database%opac_conf/%lang%/select_record.pft
+select_record_v2.pft=%path_database%opac_conf/%lang%/select_record_v2.pft

@@ -1,16 +1,16 @@
 	<?php
     if ($Expresion!='$'){
     ?>
-<div class="card">
-  <div class="card-body">
+	<div style="border:1px solid #CCCCCC; border-radius: 4px;margin-top:10px; padding:10px;">
 	    <strong><?php echo $msgstr["su_consulta"];?></strong>
 
 	    <?php echo str_replace('"','',PresentarExpresion($base));
 		if (!isset($_REQUEST["indice_base"]) or $_REQUEST["indice_base"]==0 or $_REQUEST["indice_base"]==1 ){
             ?>
 
-			<p>
-	        <a href="javascript:document.buscar.action='search_advanced.php';document.buscar.submit();">
+	    <br>
+	    <div>
+	        <a href="javascript:document.buscar.action='avanzada.php';document.buscar.submit();">
 	            <i class="fa fa-filter"></i><?php echo $msgstr["afinar"];?>
 	        </a>
 	        <?php    
@@ -24,9 +24,8 @@
             }
 		}
 	    ?>
-		</p>
-  </div>
-</div>
 
+	    </div>
+	</div>
 	<?php
     }
