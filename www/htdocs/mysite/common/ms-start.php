@@ -3,9 +3,26 @@
 2021-06-14 fho4abcd Do not set/get password in/from $_SESSION 
 */
 
-global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
-$arrHttp=Array();
 session_start();
+
+global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
+
+$arrHttp=Array();
+
+// Cookies variables
+$abcd_cookie_options = array (
+                'expires' => time() + 60*60*24*30,
+                'path' => '/',
+                'domain' => ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false, // leading dot for compatibility or use subdomain
+                'secure' => true,     // or false
+                'httponly' => true,    // or false
+                'samesite' => 'None' // None || Lax  || Strict
+                );
+setcookie(session_name(), session_id(), $abcd_cookie_options);   
+
+//var_dump($_COOKIE);
+//var_dump($_SESSION);
+
 require_once ("../../central/config.php");
 require_once('../../isisws/nusoap.php');
 require_once ("../../central/common/ldap.php");
@@ -38,6 +55,8 @@ if (!( preg_match('/^[a-z_.]*$/', $page)))  {
 $valortag = Array();
 
 
+
+
 function LeerRegistro() {
 
 // la variable $llave permite retornar alguna marca que está en el formato de salida
@@ -50,17 +69,38 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 	//USING the Central Module to login to MySite module
 	//Get the user and pass
 	
-	$checkuser=$arrHttp["login"];
-	if ($MD5==0) {
-		$checkpass=$arrHttp["password"];
-	}else{
-		$checkpass=md5($arrHttp["password"]);
+
+
+
+if (isset($_COOKIE["user"])) {
+	$checkuser = $_COOKIE["user"];
+
+    $mx = $converter_path . " " . $db_path . "users/data/users \"pft=if v600='" . $checkuser . "' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620,fi\" now";
+
+} elseif (isset($arrHttp["login"])) {
+	$checkuser = $arrHttp["login"];
+
+	if ($MD5 == 0) {
+		$checkpass = $arrHttp["password"];
+	} else {
+		$checkpass = md5($arrHttp["password"]);
 	}
 
 	//Search the users database
-	$mx=$converter_path." ".$db_path."users/data/users \"pft=if v600='".$checkuser."' then if v610='".$checkpass."' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
+	$mx = $converter_path . " " . $db_path . "users/data/users \"pft=if v600='" . $checkuser . "' then if v610='" . $checkpass . "' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi\" now";
 
-	//echo "mxcommand=$mx<BR>";
+} else {
+		echo "<script>
+ 		self.location.href=\"../index.php?login=N&lang=" . $_SESSION['lang'] . "\";
+ 		</script>";
+
+}
+
+
+
+
+
+//	echo "mxcommand=$mx<BR>";
 	//mxcommand=/ABCD2/www/cgi-bin_Windows/ansi/mx /ABCD2/www/bases-examples_Windows/users/data/users "pft=if v600='rosa' then if v610='rosa' then v20,'|',v30,'|',v10,'|',v10^a,'|',v10^b,'|',v18,'|',v620 fi,fi" now
 	//die;
 
@@ -83,7 +123,8 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 		$vectorAbrev['name']=$splittxt[1];
 		$vectorAbrev['userClass']=$splittxt[4]."(".$splittxt[3].")";
 		$vectorAbrev['expirationDate']=$splittxt[5];
-		$vectorAbrev['photo']=$splittxt[6];		
+		$vectorAbrev['photo']=$splittxt[6];
+		
 
 		//Checks the expiration date of the user's registration
 		if ($currentdatem < $vectorAbrev['expirationDate']) {
@@ -93,7 +134,10 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 	}
 
 	} elseif ($currentdatem > $vectorAbrev['expirationDate']) {
-		echo "<p onload='common/ms-logout.php'>...</p>";
+		echo "<script>
+ 		self.location.href=\"../index.php?login=N&lang=" . $lang . "\";
+ 		</script>";
+
 		$myllave="";
 	}
 
@@ -101,6 +145,9 @@ global $llamada,$valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path
 	  return $myllave;
 
 }// END LeerRegistro()
+
+
+
 
 function VerificarUsuario(){
 Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$userid,$lang;
@@ -121,13 +168,16 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     		$Permiso.=substr($value,0,$ix)."|";
     	}		
  	}else{ 
-		if ($userid!="") echo "<script>
+		if ($userid!="") {
+		
+		echo "<script>
  		self.location.href=\"../index.php?id=".$userid."&cdb=".$arrHttp["cdb"]."&login=N&lang=".$lang."\";
  		</script>";
-		else
+		 }else{
 		echo "<script>
  		self.location.href=\"../index.php?login=N&lang=".$lang."\";
  		</script>";
+		 }
   		die;
  	}
 }
@@ -417,18 +467,18 @@ if (isset($arrHttp["action"])) {
 		}
       
 
-      	$_SESSION["lang"]=$arrHttp["lang"];
+      	
 		if (!empty($arrHttp["id"])) {
 		$_SESSION["action"]='reserve';
 		$_SESSION["recordId"]=$arrHttp["id"];
 		$_SESSION["cdb"]=$arrHttp["cdb"];
 		} else {
-        $_SESSION["userid"]=$userid;
-      	$_SESSION["login"]=$arrHttp["login"];
-      	$_SESSION["permiso"]="mysite".$userid;
-      	$_SESSION["nombre"]=$nombre;
+        if (isset($lang)) $_SESSION["lang"]=$lang;
+        if (isset($userid)) $_SESSION["userid"]=$userid;
+      	if (isset($arrHttp["login"])) $_SESSION["login"]=$arrHttp["login"];
+      	if (isset($userid)) $_SESSION["permiso"]="mysite".$userid;
+      	if (isset($nombre)) $_SESSION["nombre"]=$nombre;
         $_SESSION["db"]=$db;
-        $lang=$arrHttp["lang"];
 		}
 
 //}

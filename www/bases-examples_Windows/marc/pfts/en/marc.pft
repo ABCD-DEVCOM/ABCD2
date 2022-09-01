@@ -1,10 +1,8 @@
-'<table width=90% border=0>'
-
+'<table width=90% border=0><td> </td>'
 '<td class=textbody03 colspan=3 >'
-'<font face=verdana color=red size=-1><b>Registro: ',f(mfn,1,0)'</a>',"&nbsp; &nbsp; ("v1001" / "v1002")" '</b></td>'/
+'<b>Record: ',f(mfn,1,0)'</a>',if P(v1001) and p(v1002) then "&nbsp; &nbsp; ("v1001" / "v1002")" fi, '</b></td>'/
 '<tr>'/
 '<td width=10>&nbsp;</td>'/
-'<font face="verdana" size=2>'/
 '<td valign=top width=90 align=center>'/
 
 if p(v50) then 
@@ -19,7 +17,7 @@ if p(v50) then
 '      }'/ 
       'document.write(""+a+"")'/
    '</script>'/
-else 
+else ,
 if p(v84) then 
    '<script>'/
      'a="'v84*2'"'/
@@ -50,7 +48,7 @@ fi,fi,fi,/
 '</TD>'
 '<td width=5>&nbsp;</td>'/
 '<td>'
-'<font face="verdana" size=2>'/
+
 if s(v100,v110,v111)<>'' then 
   if p(v100) then v100^a else if p(v110) then v110^a else v111^a fi fi,
   '<br>'/
@@ -123,27 +121,18 @@ if p(v111) then
      if s(v650,v653,v700,v710,v711,v100,v110)<>'' then '; &nbsp;  ' fi,
      (v111^a+|; &nbsp;  |,) /
 fi,/
-'<br>'
-'<br>'
-if p(v852) then '<b> Ubicación: </b> ',
+
+if p(v852) then 
+	'<br><br>' '<b> Ubicación: </b> ',
    (v852^a+|; |)/ fi,
 
-'<br>'
-if p(v920)  then 
-	'<a href=http://srvidormsi.multimedium.com/ucab/texto/'v920^*'>'v920^d'</a><br>'/
-fi,
-if p(v910)  then 
-	'<a href=http://srvidormsi.multimedium.com/ucab/imagen/'v910^*'>'v910^d'</a><br>'/
-fi,
-'<p>'
 
 '</td>'/
 '</table>'/
-'<br>'
+
 /
 
 
 '<font class=texto_n>'/
 
 '</table>'
-'<br>'

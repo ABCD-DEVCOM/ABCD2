@@ -1,5 +1,5 @@
 '<table>
-<td width=150><<img width="150px" src=../common/show_image.php?image='v620'&base=users/images></td><td>'
+<td width=150><<img width="150px" src=/central/common/show_image.php?image='v620'&base=users/images></td><td>'
 "<strong>"v30,'</strong><br>'
 'Type utilisateur : 'v10^*," - "v10^b
 '<br>Code usager :'v20,

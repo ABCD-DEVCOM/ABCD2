@@ -197,7 +197,7 @@ a:hover {
     margin: 0px 0px 0px 0px;
     width: 30px;
     border:0px;
-	background: url(./images/buscar.png)  no-repeat;
+	background: url(./img/buscar.png)  no-repeat;
 	cursor: pointer;
 }
 
@@ -230,7 +230,7 @@ a:hover {
 	border: none;
 	padding:0px;
 	color: #FFFFFF;
-	background: url(../images/search.png)  no-repeat;
+	background: url(../img/search.png)  no-repeat;
 	outline:0;
 	cursor: pointer;
 }
@@ -569,7 +569,7 @@ a:hover {
 }
 
 input.button-del {
-    background: url(./images/delete.png); /* 16px x 16px */
+    background: url(./img/delete.png); /* 16px x 16px */
     background-color: transparent; /* make the button transparent */
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 0px 0px;  /* equivalent to 'top left' */
@@ -581,7 +581,7 @@ input.button-del {
 }
 
 input.button-diccionario {
-    background: url(./images/diccionario.gif); /* 16px x 16px */
+    background: url(./img/diccionario.gif); /* 16px x 16px */
     background-color: transparent; /* make the button transparent */
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 0px 0px;  /* equivalent to 'top left' */
@@ -728,7 +728,7 @@ div.tabContent.hide { display: none; }
 	border: none;
 	padding:5px;
 	color: #FFFFFF;
-	background: url(./images/help.png)  no-repeat;
+	background: url(./img/help.png)  no-repeat;
 	outline:0;
 	cursor: pointer;/* align the text vertically centered */
 }
@@ -739,7 +739,7 @@ div.tabContent.hide { display: none; }
 	border: none;
 	padding:5px;
 	color: #FFFFFF;
-	background: url(./images/informacion.png)  no-repeat;
+	background: url(./img/informacion.png)  no-repeat;
 	outline:0;
 	cursor: pointer;/* align the text vertically centered */
 }
@@ -838,7 +838,7 @@ div.tabContent.hide { display: none; }
 	height: 30px;
 	display: block;
 	margin-bottom: 7px;
-	background: #ddd url(../images/up-arrow.png) no-repeat center center;
+	background: #ddd url(../img/up-arrow.png) no-repeat center center;
 
 	/* rounded corners */
 	-webkit-border-radius: 3px;
@@ -917,7 +917,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 	height: 30px;
 	display: block;
 	margin-bottom: 7px;
-	background: #ddd url(./images/down-arrow.png) no-repeat center center;
+	background: #ddd url(./img/down-arrow.png) no-repeat center center;
 
 	/* rounded corners */
 	-webkit-border-radius: 3px;

@@ -3,9 +3,7 @@
 '<b>Record: ',f(mfn,1,0)'</a>',if P(v1001) and p(v1002) then "&nbsp; &nbsp; ("v1001" / "v1002")" fi, '</b></td>'/
 '<tr>'/
 '<td width=10>&nbsp;</td>'/
-'<font face="verdana" size=2>'/
 '<td valign=top width=90 align=center>'/
-'<font face="verdana" size=2>'/
 
 if p(v50) then 
    '<script>'/
@@ -138,4 +136,3 @@ if p(v852) then
 '<font class=texto_n>'/
 
 '</table>'
-'<br>'

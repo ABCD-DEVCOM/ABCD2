@@ -121,14 +121,13 @@ $meta_encoding = $charset;
 	<header id="header-wrapper">
 		<div id="header">
 			<div id="logo">
-				<a name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $_REQUEST['lang'] ?>"><img src="<?php echo $logo ?>"></a>
+				<a name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $lang; ?>"><img src="<?php echo $logo ?>"></a>
 			</div>
 
 		</div>
 		<div class="areaTitulo">
 			<div class=tituloBase>
 				<?php
-				if (isset($_COOKIE['user'])) echo $_COOKIE['user']."<br>";
 				echo $TituloEncabezado;
 				if (isset($_REQUEST["db_path"]))
 					echo "  " . $_REQUEST["db_path"];

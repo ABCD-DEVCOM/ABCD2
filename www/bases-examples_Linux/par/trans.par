@@ -1,6 +1,8 @@
 trans.*=%path_database%trans/data/trans.*
+logtrans.*=%path_database%logtrans/data/logtrans.*
+reserve.*=%path_database%reserve/data/reserve.*
+copies.*=%path_database%copies/data/copies.*
+loanobjects.*=%path_database%loanobjects/data/loanobjects.*
 suspml.*=%path_database%suspml/data/suspml.*
 prologoact.pft=%path_database%www/prologoact.pft
 epilogoact.pft=%path_database%www/epilogoact.pft
-users.*=%path_database%users/data/users.*
-

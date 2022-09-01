@@ -1,26 +1,20 @@
 <?php
 /*
 20211224 fho4abcd Read default message file from central, with central processing, lineends
+20220831 rogercgui Included the variable $opac_path to allow changing the Opac root directory
 */
 //session_start();
 error_reporting(E_ALL);
 //CHANGE THIS ////
 include ("config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
-if (!isset($_REQUEST["lang"]))
-	$_REQUEST["lang"]=$lang;
-else
-	$lang=$_REQUEST["lang"];
-
-if (isset($_SESSION["db_path"]))
+if (isset($_SESSION["db_path"])){
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
-else
-	if (isset($_REQUEST["db_path"])) 
-$db_path=$_REQUEST["db_path"];
+} elseif (isset($_REQUEST["db_path"]))  {
+	$db_path=$_REQUEST["db_path"];
+}
 
-// Read language files from central
-include "lang/opac.php";
-include "lang/admin.php";
+$opac_path="opac_v2";
 
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
@@ -28,16 +22,28 @@ $CentralHttp=$server_url;
 $Web_Dir=$ABCD_scripts_path."opac/";
 $NovedadesDir="";
 
-$showhide="Y";
-$galeria="NO";
+$lang_config=$lang; // save the configured language to preset it later
+
+if (isset($_REQUEST["lang"])){
+	$lang=$_REQUEST["lang"];
+}else{
+	$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+}
+
+include ($CentralPath."/lang/opac.php");
+include ($CentralPath."/lang/admin.php");
+
+$galeria="Y";
 $styles="";
-$logo="assets/images/circulos.png";
-$link_logo="http://opac.abcdonline.info";
+$facetas="Y";
+$logo="assets/img/logoabcd.png";
+$link_logo="/".$opac_path;
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
-$footer='&nbsp; &copy; 2022, - Consulta bases de datos </p>';
-$multiplesBases="S";   //no se presenta acceso para cada una de las bases de datos
-$afinarBusqueda="S";   //permite afinar la expresion de búsqueda
+$footer='&copy; 2022 - Consulta bases de dados';
+
+$multiplesBases="Y";   //no se presenta acceso para cada una de las bases de datos
+$afinarBusqueda="Y";   //permite afinar la expresion de búsqueda
 $IndicePorColeccion="N";  //Se mantienen indices separados para los términos de las colecciones
 if (file_exists($db_path."/opac_conf/opac.def")){
 	$fp=file($db_path."/opac_conf/opac.def");
@@ -102,10 +108,6 @@ if (file_exists($db_path."/opac_conf/opac.def")){
 	}
 	unset($fp);
 }
-if ($showhide=="Y")
-	$showhide_help="block";
-else
-	$showhide_help="none";
 
 $db_path=trim(urldecode($db_path));
 $ix=explode('/',$db_path);
@@ -113,19 +115,7 @@ $xxp="";
 for ($i=1;$i<count($ix);$i++) {
 	$xxp.=$ix[$i];
 	if ($i!=count($ix)-1) $xxp.='/';
-
 }
 
-if (!isset($diagnostico)){
-	if (!is_dir($db_path."opac_conf")) {
-		echo "<h3>".$msgstr["missing_folder"]." <font color=red>opac_conf</font> in $xxp</h4>";
-		echo "<a href=//wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuración#Estructura_de_carpetas_y_archivos_de_configuraci.C3.B3n>".$msgstr["help"]."</a>";
-        die;
-	}
-	if (!is_dir($db_path."opac_conf/$lang")) {
-		echo "<h3>".$msgstr["missing_folder"]."  $xxp opac_conf <font color=red>$lang</font><h3>";
-		echo "<a href=//wiki.abcdonline.info/index.php?title=OPAC-ABCD_configuraci&oacute;n#Estructura_de_carpetas_y_archivos_de_configuraci.C3.B3n>".$msgstr["help"]."</a>";
-		die;
-	}
-}
+
 ?>
