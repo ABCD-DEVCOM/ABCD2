@@ -17,7 +17,7 @@ if (!isset($_SESSION["permiso"])){
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
 include("../lang/prestamo.php");
-include("../lang/opac.php");
+include("../lang/profile.php");
 
 //Fields
 $ABCD_lang = $_SESSION["lang"];
@@ -626,7 +626,7 @@ if (!isset($arrHttp["return"])){
         <div class="f_left">
              <h2>
                <?php
-                 echo $msgstr["total_recup"].": ".$total_lines." ".$msgstr["registros"];
+                 echo $total_lines." ".$msgstr["registros"];
                 ?>
             </h2>
 

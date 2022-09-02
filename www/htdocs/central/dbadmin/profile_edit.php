@@ -288,9 +288,9 @@ global $db_path,$msgstr,$encabezado;
 						<?php echo $p[1]." (".$p[0].")";?>
 					</td>
 					<td>
-						<a class="button_browse show" href="profile_edit.php?profile=<?php echo $p[0].$encabezado;?>&Opcion=edit">
+						<a class="bt bt-blue show" href="profile_edit.php?profile=<?php echo $p[0].$encabezado;?>&Opcion=edit">
 							<i class="far fa-edit"></i> <?php echo $msgstr["EDIT"];?>
-						<a class="button_browse delete" href="javascript:DeleteProfile('<?php echo $p[0];?>')">
+						<a class="bt bt-red delete" href="javascript:DeleteProfile('<?php echo $p[0];?>')">
 							<i class="far fa-trash-alt"></i> <?php echo $msgstr["delete"];?>
 						</a>
 					</td>
@@ -301,7 +301,7 @@ global $db_path,$msgstr,$encabezado;
 ?>
 		</table>
 		<br>
-		<a class="button_browse edit" href="profile_edit.php?Opcion=new&encabezado=s">
+		<a class="bt bt-blue edit" href="profile_edit.php?Opcion=new&encabezado=s">
 			<i class="fas fa-plus"></i> <?php echo $msgstr["new"];?>
 		</a>
 
