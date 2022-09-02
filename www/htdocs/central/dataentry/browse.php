@@ -18,7 +18,6 @@ include("../lang/dbadmin.php");
 include("../lang/admin.php");
 include("../lang/prestamo.php");
 include("../lang/profile.php");
-//include("../lang/opac.php");
 
 //Fields
 $ABCD_lang = $_SESSION["lang"];
