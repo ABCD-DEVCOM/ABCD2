@@ -345,7 +345,7 @@ function CambiarLenguaje(){
                             echo $db_path;
                         }
                         echo '"';
-                    ?>><i class="fas fa-user"> <?php echo $login;?> </i> 
+                    ?>><i class="fas fa-user"></i>&nbsp;<?php echo $login;?> 
                 </a>
             </li>
 
