@@ -7,6 +7,7 @@
 2022-01-26 fho4abcd Open preview in larger window and after all checks passed.
 2022-01-29 fho4abcd Improve setting of encabezado+create language folder if it does not exist
 20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
+20220918 fho4abcd Explode base before config.php (to get correct value for $actparfolder)
 */
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -16,6 +17,9 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+$x=explode('|',$arrHttp["base"]);
+$arrHttp["base"]=$x[0];
+
 include ("../config.php");
 if (isset($_SESSION["UNICODE"])) {
 	IF ($_SESSION["UNICODE"]==1)

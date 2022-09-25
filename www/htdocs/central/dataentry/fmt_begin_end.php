@@ -1,6 +1,7 @@
 <?php
-// BEGIN CODE
-// END CODE
+/* Modifications
+20220924 fho4abcd Use $actparfolder as location for .par files
+*/
 
 if (isset($arrHttp["wk_tipom_1"]))
 	$pref=strtolower($arrHttp["wk_tipom_1"]);
@@ -52,7 +53,7 @@ if (file_exists($archivo)){
 						  $val_vc=trim(substr($valx,$ixpos+1));
 						  $ValorCapturado="<$tag_vc 0>$val_vc</$tag_vc>";					}
 					$ValorCapturado=$ValorCapturado."<3333 0>0</3333>";
-					$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&ValorCapturado=".$ValorCapturado."&";
+					$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&ValorCapturado=".$ValorCapturado."&";
 
 					$IsisScript=$xWxis."z3950_cnv.xis";
 					break;
@@ -61,7 +62,7 @@ if (file_exists($archivo)){
 						    $ValorCapturado.="<3333 0>".$arrHttp["Mfn"]."</3333>";
 						else
 							 $ValorCapturado.="<3333 0>".$arrHttp["Mfn"]."</3333>";					}
-					$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&ValorCapturado=".$ValorCapturado;
+					$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&ValorCapturado=".$ValorCapturado;
 					$IsisScript=$xWxis."z3950_cnv.xis";			}
 			break;
 		case ".end":

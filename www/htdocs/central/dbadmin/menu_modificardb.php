@@ -148,7 +148,7 @@ function Update(Option){
 			document.update_base.action="database_tooltips.php"
 			break
         case "help":
-        	document.update_base.action="help_ed.php"
+        	document.update_base.action="../documentacion/help_ed.php"
         	break
         case "tes_config":
         	document.update_base.action="tes_config.php"
