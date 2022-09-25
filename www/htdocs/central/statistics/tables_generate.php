@@ -5,6 +5,7 @@
 20220220 fh04abcd The option to search by date is covered by expression (and better) : removed completely
 20220220 fh04abcd Removed global process: too much code fails. Unclear what it should do. Sanitized html
 20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
+20220918 fho4abcd Explode base before config.php (to get correct value for $actparfolder)
 */
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
@@ -13,11 +14,6 @@
 
 session_start();
 include("../common/get_post.php");
-include ("../config.php");
-include ("../lang/admin.php");
-include ("../lang/dbadmin.php");
-include ("../lang/statistics.php");
-$backtoscript="../common/inicio.php"; // The default return script
 
 //foreach ($arrHttp as $key => $value) echo "$key = $value <br>";
 //SE EXTRAE EL NOMBRE DE LA BASE DE DATOS
@@ -29,6 +25,12 @@ if (isset($arrHttp["encabezado"]))
 	$encabezado="&encabezado=S";
 else
 	$encabezado="";
+
+include ("../config.php");
+include ("../lang/admin.php");
+include ("../lang/dbadmin.php");
+include ("../lang/statistics.php");
+$backtoscript="../common/inicio.php"; // The default return script
 
 
 //HEADER DEL LA PÁGINA HTML Y ARCHIVOS DE ESTIVO
