@@ -6,7 +6,8 @@
 20220209 fho4abcd Preserve base
 20220214 fho4abcd Marc menu items only for MARC
 20220317 fho4abcd Layout, remove superfluous permission check, add barcode configuration
-20220321 dho4abcd renamed barcode scripts
+20220321 fho4abcd renamed barcode scripts
+20220926 fho4abcd add statistic configuration. top/down buttons
 */
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -162,6 +163,18 @@ function Update(Option){
         case "labelconfig":
         	document.update_base.action="../barcode/bcl_config_labels.php"
         	break
+		case "stats_var":
+			document.update_base.action="config_vars.php"
+			break
+		case "stats_tab":
+			document.update_base.action="tables_cfg.php"
+			break
+		case "stats_proc":
+			document.update_base.action="proc_cfg.php"
+			break
+		case "stats_pft":
+			document.update_base.action="config_tables.php"
+			break
 	}
 	document.update_base.submit()
 }
@@ -177,6 +190,7 @@ if (isset($arrHttp["encabezado"])) {
 	$encabezado="&encabezado=s";
 }
 ?>
+<div id="top"></div>
 <div class="sectionInfo">
     <div class="breadcrumb"><?php echo $msgstr["updbdef"]. ": " . $selbase?>
     </div>
@@ -247,7 +261,10 @@ if (is_dir($dir_fdt)) {
             <?php
         }
         ?>			
+    </td><td> &nbsp; &nbsp; 
+    <a class="bt bt-blue" href="#bottom"><i class="fa fa-arrow-down"></i></a>
     </td>
+
 </tr><tr>
     <td>
         <h5><?php echo $msgstr["dbadmin_INDEX"]?>  (FST)</h5>
@@ -298,12 +315,24 @@ if (is_dir($dir_fdt)) {
         <a href='javascript:Update("dr_path")'><?php echo $msgstr["dr_path.def"]?></a><br>
         <a href='javascript:Update("par")'><?php echo $msgstr["dbnpar"]?></a>
     </td>
+</tr><tr>
+    <td>
+        <h5><?php echo $msgstr["stats_conf"]?></h5>
+    </td><td>
+        <a href='javascript:Update("stats_var")'><?php echo $msgstr["stat_cfg_vars"]?></a><br>
+        <a href='javascript:Update("stats_pft")'><?php echo $msgstr["def_pre_tabs"]?></a><br>
+        <a href='javascript:Update("stats_tab")'><?php echo $msgstr["stat_cfg_tabs"]?></a><br>
+        <a href='javascript:Update("stats_proc")'><?php echo $msgstr["stat_cfg_procs"]?></a><br>
+    </td><td> &nbsp; &nbsp; 
+    <a class="bt bt-blue" href="#top"><i class="fas fa-arrow-up"></i></a>
+    </td>
 </tr>
 </table>
 </form>
 
 </div>
 </div>
+<div id="bottom"></div>
 <?php
 // PIE DE PÁGINA
 include("../common/footer.php");

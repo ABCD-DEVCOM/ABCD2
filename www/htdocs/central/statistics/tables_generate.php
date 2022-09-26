@@ -6,6 +6,7 @@
 20220220 fh04abcd Removed global process: too much code fails. Unclear what it should do. Sanitized html
 20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
 20220918 fho4abcd Explode base before config.php (to get correct value for $actparfolder)
+20220926 fh04abcd Make search expression buttons work + translations + Remove obsolete code
 */
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
@@ -41,16 +42,7 @@ include ("../common/inc_get-dbinfo.php");// sets $arrHttp["MAXMFN"]
 <body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <style type=text/css>
-
-div#statsgen{
-	margin: 0px 20px 0px 20px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #000000;
-}
-
 div#useextproc{
-
 	display: none;
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -59,7 +51,6 @@ div#useextproc{
 }
 
 div#useextable{
-
 	display: none;
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -69,7 +60,6 @@ div#useextable{
 
 div#createtable{
 <?php if ($arrHttp["Opcion"]!="new") echo "display: none;\n"?>
-
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -77,14 +67,6 @@ div#createtable{
 }
 
 div#generate{
-	display: none;
-	margin: 0px 20px 0px 20px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #000000;
-}
-
-div#pftedit{
 	display: none;
 	margin: 0px 20px 0px 20px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -105,13 +87,6 @@ div#configure{
 TipoFormato=""
 C_Tag=Array()
 var strValidChars = "0123456789$";
-
-
-function AbrirVentana(Archivo){
-	xDir=""
-	msgwin=window.open(xDir+"ayudas/"+Archivo,"Ayuda","menu=no, resizable,scrollbars")
-	msgwin.focus()
-}
 
 function EsconderVentana( whichLayer ){
 var elem, vis;
@@ -156,22 +131,6 @@ function toggleLayer( whichLayer ){
 	if( vis.display == '' && elem.offsetWidth != undefined && elem.offsetHeight != undefined )
 		vis.display = ( elem.offsetWidth != 0 && elem.offsetHeight != 0 ) ? 'block':'none';
 	vis.display = ( vis.display == '' || vis.display == 'block' ) ? 'none':'block';
-}
-function IsNumeric(data){
-
-   	//  test strString consists of valid characters listed above
-   	for (i = 0; i < data.length; i++){
-    	strChar = data.charAt(i);
-    	if (strValidChars.indexOf(strChar) == -1){
-    		return false
-
-    	}
-    }
-    return true
-}
-
-function BorrarExpresion(){
-	document.forma1.Expresion.value=''
 }
 
 function EnviarForma(Desde){
@@ -238,13 +197,6 @@ function EnviarForma(Desde){
 	document.forma1.submit();
 }
 
-function Buscar(){
-	base=document.forma1.base.value
-	cipar=document.forma1.cipar.value
-  	Url="../dataentry/buscar.php?Opcion=formab&Target=s&Tabla=Expresion&base="+base+"&cipar="+cipar
-  	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
-	msgwin.focus()
-}
 
 function Configure(Option){
 	if (document.configure.base.value==""){
@@ -269,6 +221,36 @@ function Configure(Option){
 			break
 	}
 	document.configure.submit()
+}
+<!-- functions for record selection/output generation. Identical for PFT -->
+function Buscar(){
+	base=document.forma1.base.value
+	cipar=document.forma1.cipar.value
+  	Url="../dataentry/buscar.php?Opcion=formab&Target=s&Tabla=Expresion&base="+base+"&cipar="+cipar
+  	msgwin=window.open(Url,"Buscar","menu=no, resizable,scrollbars,width=750,height=400")
+	msgwin.focus()
+}
+function CopiarExpresion(){
+	Expr=document.forma1.Expr.options[document.forma1.Expr.selectedIndex].value
+	document.forma1.Expresion.value=Expr
+}
+function GuardarBusqueda(){
+	document.savesearch.Expresion.value=Trim(document.forma1.Expresion.value)
+	if (document.savesearch.Expresion.value==""){
+		alert("<?php echo $msgstr["faltaexpr"]?>")
+		return
+	}
+	Descripcion=document.forma1.Descripcion.value
+	if (Trim(Descripcion)==""){
+		alert("<?php echo $msgstr["errsave"]?>")
+		return
+	}
+	document.savesearch.Descripcion.value=Descripcion
+	var winl = (screen.width-300)/2;
+	var wint = (screen.height-200)/2;
+	msgwin=window.open("","savesearch","menu=no,status=yes,width=300, height=200,left="+winl+",top="+wint)
+	msgwin.focus()
+	document.savesearch.submit()
 }
 </script>
 <?php
@@ -300,13 +282,6 @@ include "../common/inc_div-helper.php";
 
 <div class="middle form">
 <div class="formContent">
-<table class=listTable>
-    <tr>
-	<td style="text-align:center">
-		<?php echo "<strong>".$msgstr["stats"].": ".$arrHttp["base"]."</strong>";?>
-   </td>
-   </tr>
-</table>
 
 <form name=forma1 method=post action=tables_generate_ex.php onsubmit="Javascript:return false">
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";?>
@@ -316,8 +291,7 @@ include "../common/inc_div-helper.php";
 <input type=hidden name=Accion>
 
 <!-- USAR UN PROCESO PRE-DEFINIDO/ USE PROCESS -->
-
-&nbsp; <A HREF="javascript:toggleLayer('useextproc')"> <strong><?php echo $msgstr["exist_proc"];?></strong></a>
+&nbsp; <A HREF="javascript:toggleLayer('useextproc')"> <strong><?php echo $msgstr["stat_use_exist_pr"];?></strong></a>
 <div id=useextproc><br>
     <select name=proc  style="width:300px">
         <option value=''>
@@ -384,12 +358,12 @@ include "../common/inc_div-helper.php";
 </div>
 <p>
 <!-- CONSTRUIR UNA TABLA SELECCIONANDO FILAS Y COLUMNAS / CREATE TABLE -->
-&nbsp; <A HREF="javascript:toggleLayer('createtable')"><strong><?php echo $msgstr["create_tb"]?></strong></a>
+&nbsp; <A HREF="javascript:toggleLayer('createtable')"><strong><?php echo $msgstr["stat_create_tmp_tb"]?></strong></a>
 <div id=createtable>
 <table>
     <tr>
     <td>
-        <strong><?php echo $msgstr["rows"]?></strong><br>
+        <strong><?php echo $msgstr["stat_rows_by"]?></strong><br>
         <Select name=rows style="width:250px">
         <option value=""></option>
         <?php
@@ -412,7 +386,7 @@ include "../common/inc_div-helper.php";
         </select>
     </td>
     <td>
-        <strong><?php echo $msgstr["cols"]?></strong><br>
+        <strong><?php echo $msgstr["stat_cols_by"]?></strong><br>
         <Select name=cols style="width:250px">
         <option value=""></option>
         <?php
@@ -431,7 +405,7 @@ include "../common/inc_div-helper.php";
 </div>
 <p>
 <!-- SELECCION DE LOS REGISTROS  / RECORD SELECTION-->
-&nbsp; <A HREF="javascript:toggleLayer('generate')"><strong><?php echo $msgstr["r_recsel"]?></strong></a>
+&nbsp; <A HREF="javascript:toggleLayer('generate')"><strong><?php echo $msgstr["generateoutput"]?></strong></a>
 <div id=generate><p>
     <table>
         <tr> <!-- row 1 record selection by MFN range -->
@@ -487,7 +461,7 @@ include "../common/inc_div-helper.php";
                 <button class="bt-green" type="button"
                     title="<?php echo $msgstr["pftcreatesrcexpr"]?>"
                     onclick='javascript:Buscar()'>
-                    <i class="far fa-plus-square"></i> <?php echo $msgstr["pftcreatesrcexpr"]?></button>
+                    <i class="far fa-plus-square"></i> &nbsp;<?php echo $msgstr["pftcreatesrcexpr"]?></button>
                 </td>
             </tr>
             <tr><td>
@@ -509,7 +483,7 @@ include "../common/inc_div-helper.php";
                     <button class="bt-green" type="button"
                         title="<?php echo $msgstr["savesearch"]?>"
                         onclick="javascript:GuardarBusqueda()">
-                        <i class="far fa-save"></i> <?php echo $msgstr["savesearch"]?></button>
+                        <i class="far fa-save"></i> &nbsp;<?php echo $msgstr["savesearch"]?></button>
                     <?php echo $msgstr["r_desc"].": " ?>
                     <input type=text name=Descripcion size=40>
                 </td>
@@ -519,9 +493,13 @@ include "../common/inc_div-helper.php";
         </table>
         </td>
         </tr>
-        <tr><td></td><td><hr class="color-gray-100"><br></td></tr>
     </table>
 </div>
+</form>
+<form name=savesearch action=../dataentry/busqueda_guardar.php method=post target=savesearch>
+	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+	<input type=hidden name=Expresion value="">
+	<input type=hidden name=Descripcion value="">
 </form>
 
 <?php
@@ -531,10 +509,10 @@ if (isset($_SESSION["permiso"]["CENTRAL_STATCONF"]) or isset($_SESSION["permiso"
     &nbsp; <a href="javascript:toggleLayer('configure')"> <strong><?php echo $msgstr["stats_conf"]?></strong></a>
     <div id=configure>
     <ul>
-        <li><a href='javascript:Configure("stats_var")'><?php echo $msgstr["var_list"]?></a></li>
+        <li><a href='javascript:Configure("stats_var")'><?php echo $msgstr["stat_cfg_vars"]?></a></li>
         <li><a href='javascript:Configure("stats_pft")'><?php echo $msgstr["def_pre_tabs"]?></a></li>
-        <li><a href='javascript:Configure("stats_tab")'><?php echo $msgstr["tab_list"]?></a></li>
-        <li><a href='javascript:Configure("stats_proc")'><?php echo $msgstr["exist_proc"]?></a></li>
+        <li><a href='javascript:Configure("stats_tab")'><?php echo $msgstr["stat_cfg_tabs"]?></a></li>
+        <li><a href='javascript:Configure("stats_proc")'><?php echo $msgstr["stat_cfg_procs"]?></a></li>
         <!--<li><a href='javascript:Configure("stats_gen")'><?php echo $msgstr["stats_gen"]?></a><p></li>-->
     </ul>
     </div>

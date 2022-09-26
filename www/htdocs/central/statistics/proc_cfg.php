@@ -1,6 +1,7 @@
 <?php
 /*
-20220215 fho4abcd bcak&save button,div-helper 
+20220215 fho4abcd back&save button,div-helper
+20220926 fho4abcd translations
 */
 session_start();
 if (!isset($_SESSION["permiso"])) die;
@@ -244,6 +245,11 @@ function Guardar(){
 }
 
 </script>
+<style>
+td {
+  padding: 5px;
+}
+</style>
 <?php
 if ($error_1=="S" and $error_2=="S")
 	$error="S";
@@ -260,7 +266,7 @@ echo "<form name=stats method=post>";
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["stats_conf"]." - ".$msgstr["exist_proc"].": ".$arrHttp["base"];?>
+        <?php echo $msgstr["stats"]." - ".$msgstr["stat_cfg_procs"].": ".$arrHttp["base"];?>
     </div>
 	<div class="actions">
         <?php
@@ -283,7 +289,7 @@ include "../common/inc_div-helper.php";
 <?php
 // SI FALTA EL ARCHIVO TABS.CFG SE DETIENE LA EJECUCIÓN
 if ($error=="S"){
-	echo "<h4>".$msgstr["mis_tabscfg"]."</h4> (<a href=tables_generate.php?base=".$arrHttp["base"]."$encabezado>".$msgstr["stats"]." - ".$msgstr["tab_list"]. "</a>)";
+	echo "<h4>".$msgstr["mis_tabscfg"]."</h4> (<a href=tables_generate.php?base=".$arrHttp["base"]."$encabezado>".$msgstr["stats"]." - ".$msgstr["stat_cfg_tabs"]. "</a>)";
 	die;
 }
 //LECTURA DE LOS CUADROS Y TABLA YA DEFINIDOS
@@ -305,10 +311,10 @@ foreach ($fp as $value) {
 	if ($value!=""){
 		$total++;
 		$tt=explode('||',$value);
-		echo "<table  width=800 bgcolor=#cccccc border=0 name=tbst>";
+		echo "<table  bgcolor=#cccccc border=0 name=tbst>";
         echo "<tr>";
 		echo "<td rowspan=3 bgcolor=white valign=top><a href=javascript:DeleteElement(".$total.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";
-		echo "<td width=300 bgcolor=white>".$msgstr["title"]."</td>";
+		echo "<td bgcolor=white>".$msgstr["title"]."</td>";
 		echo "<td bgcolor=white><input type=text name=tit id=tit size=120 value=\"".$tt[0]."\"></td>";
    		echo "<tr><td bgcolor=white valign=top>".$msgstr["tab_list"]."</td><td bgcolor=white>";
    		echo "<strong>".$msgstr["sel_multiple"]."</strong><br>";

@@ -1,6 +1,7 @@
 <?php
 /*
 20220215 fho4abcd backbutton,div-helper,improve html, remove obsolete code
+20220926 fho4abcd translations
 */
 session_start();
 if (!isset($_SESSION["permiso"])) die;
@@ -199,7 +200,7 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["stats_conf"]." - ".$msgstr["var_list"].": ".$arrHttp["base"];?>
+        <?php echo $msgstr["stats"]." - ".$msgstr["stat_cfg_vars"].": ".$arrHttp["base"];?>
     </div>
 	<div class="actions">
         <?php
