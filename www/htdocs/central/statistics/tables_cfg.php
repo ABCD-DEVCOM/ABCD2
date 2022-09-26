@@ -2,6 +2,7 @@
 /*
 20220215 fho4abcd back backbutton+div-helper+sanitize html
 20220220 fho4abcd resolved small error
+20220926 fho4abcd translations,resolve undefined variable, layout
 */
 session_start();
 if (!isset($_SESSION["permiso"])) die;
@@ -243,6 +244,11 @@ function Guardar(){
 }
 
 </script>
+<style>
+td {
+  padding: 5px;
+}
+</style>
 <?php
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
 if (isset($arrHttp["encabezado"])){
@@ -254,7 +260,7 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["stats_conf"]." - ".$msgstr["tab_list"].": ".$arrHttp["base"];?>
+        <?php echo $msgstr["stats"]." - ".$msgstr["stat_cfg_tabs"].": ".$arrHttp["base"];?>
     </div>
 	<div class="actions">
         <?php
@@ -304,17 +310,17 @@ foreach ($fp as $value) {
 		$total++;
 		$t=explode('|',$value);
         ?>
-		<table  width=800 bgcolor=#cccccc border=0 name=tbst>
+		<table  bgcolor=#cccccc border=0 name=tbst>
         <tr>
             <td rowspan=4 bgcolor=white valign=top>
                 <a href=javascript:DeleteElement(<?php echo $total;?>)>
                     <img src=../dataentry/img/toolbarDelete.png alt="<?php echo $msgstr["delete"];?>" title="<?php echo $msgstr["delete"];?>"></a>
             </td>
-            <td width=300 bgcolor=white><?php echo $msgstr["title"];?></td>
+            <td bgcolor=white><?php echo $msgstr["title"];?></td>
             <td bgcolor=white><input type=text name=tit size=120 value="<?php echo $t[0];?>"></td>
         </tr>
    		<tr>
-            <td bgcolor=white><?php echo $msgstr["rows"];?></td>
+            <td bgcolor=white><?php echo $msgstr["stat_rows_by"];?></td>
             <td bgcolor=white>
                 <select name=rows>
                 <option></option>
@@ -331,7 +337,7 @@ foreach ($fp as $value) {
             </td>
         </tr>
         <tr>
-            <td bgcolor=white><?php echo $msgstr["cols"];?></td>
+            <td bgcolor=white><?php echo $msgstr["stat_cols_by"];?></td>
             <td bgcolor=white>
                 <select name=cols>
                 <option></option>
@@ -350,8 +356,8 @@ foreach ($fp as $value) {
         </tr>
         </table><br>
         <script>
-            MarcarSeleccion(document.stats.rows,$total,'<?php echo $t[1];?>')
-            MarcarSeleccion(document.stats.cols,$total,'<?php echo $t[2];?>')
+            MarcarSeleccion(document.stats.rows,<?php echo $total ?>,'<?php echo $t[1];?>')
+            MarcarSeleccion(document.stats.cols,<?php echo $total ?>,'<?php echo $t[2];?>')
         </script>
         <?php
 	}

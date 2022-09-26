@@ -1,6 +1,7 @@
 <?php
 /*
 20220215 fho4abcd backbutton,div-helper
+20220926 fho4abcd translations
 */
 
 session_start();
@@ -30,7 +31,7 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["stats_conf"]." - ".$msgstr["exist_proc"].": ".$arrHttp["base"];?>
+        <?php echo $msgstr["stats"]." - ".$msgstr["stat_cfg_procs"].": ".$arrHttp["base"];?>
     </div>
 	<div class="actions">
         <?php
