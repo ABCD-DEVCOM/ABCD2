@@ -4,6 +4,7 @@
 2022-01-06 fho4abcd backbuttun via included file
 2022-01-08 fho4abcd add home button
 20220713 fho4abcd Use $actparfolder as location for .par files
+20220929 fho4abcd Error message if yaz not loaded or server db not present. Remove close button
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -132,6 +133,17 @@ include ("../common/inc_get-dbinfo.php");// sets MAXMFN
     ?>
 </h4>
 <?php
+$error=0;
+$serversfolder=$db_path."servers";
+if ( !file_exists($serversfolder)) {
+    $error++;
+    echo "<font color=red><b>".$msgstr["missing_serversdb"]." ".$msgstr["folderne"].": ".$serversfolder."</b></font><br>";
+}
+if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
+    $error++;
+    echo "<font color=red><b>".$msgstr["z3950_yaz_missing"]."</b></font><br>";
+}
+
 // query for the hosts here so any error will be displayed
 $loc_actparfolder=$actparfolder;
 if ($actparfolder!="par/") {
@@ -160,7 +172,7 @@ if ($err_wxis!=""){
         <td class=td bgcolor=lightgrey>
             <?php echo $msgstr["connectto"]?>:
         </td>
-        <td class=td bgcolor=lightgrey>
+        <td class=td>
             <select name="host">
             <?php
             foreach ($contenido as $value) {
@@ -178,8 +190,8 @@ if ($err_wxis!=""){
         // File def/z3950,cnv contains the name and filename of specific conversion tables
         $archivo=$db_path.$arrHttp["base"]."/def/z3950.cnv";
         if (file_exists($archivo)){
-            ?><tr><td><?php
-            echo $msgstr["z3950_tab"].": ";
+            ?><tr><td bgcolor=lightgrey><?php
+            echo $msgstr["z3950_cnv_table"].": ";
             ?></td><td>
             <select name=cnvtab>
                 <option></option>"
@@ -251,15 +263,17 @@ if ($err_wxis!=""){
 
 	</table>
 <input type=hidden name=isbn_l value="">
-<br><?php echo $msgstr["show"]?> <input type=text name=number value="10" size=4> <?php echo $msgstr["registros"]?>.
-&nbsp; &nbsp; &nbsp; <?php echo $msgstr["z3950_retray"]?> <input type=text name=reintentar value="10" size=2> <?php echo $msgstr["z3950_times"]?>
-&nbsp;<p><input type="submit" name="action" onclick=Isbn() value="<?php echo $msgstr["busqueda"]?>"><input type=hidden name=start value="1">&nbsp; &nbsp;
+<br>
+<?php echo $msgstr["show"]?> &nbsp;<input type=text name=number value="10" size=4> <?php echo $msgstr["registros"]?>.&nbsp; &nbsp; &nbsp; 
+    <?php echo $msgstr["z3950_retray"]?> <input type=text name=reintentar value="10" size=2> <?php echo $msgstr["z3950_times"]?>
+<br><br>
+<a class="bt bt-green" type="button" name="action" onclick=Isbn()><i class="fas fa-search"></i>  <?php echo $msgstr["busqueda"]?></a>
+<input type=hidden name=start value="1">&nbsp; &nbsp;
 <input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
 
 <?php
 if (isset($arrHttp["Mfn"])) echo "<input type=hidden name=Mfn value=".$arrHttp["Mfn"].">\n"; //COPY TO AN EXISTENT RECORD
 if (isset($arrHttp["test"])){
-	echo "<input type=submit value='".$msgstr["cerrar"]."' onclick=javascript:self.close()>\n";
 	echo "<input type=hidden name=test value=Y>\n";
 
 }
@@ -269,5 +283,4 @@ if (isset($arrHttp["test"])){
 
 </div>
 </div>
-<?php include ("../common/footer.php")
-?>
+<?php include ("../common/footer.php")?>

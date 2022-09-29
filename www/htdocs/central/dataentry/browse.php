@@ -1,6 +1,7 @@
 <?php 
 /*
 20220715 fho4abcd Use $actparfolder as location for .par files + show message and errors while deleting records
+20220929 fho4abcd Remove encabezado in return (is sometimes undefined)
 */
 error_reporting(E_ALL);
 session_start();
@@ -478,7 +479,7 @@ if (!isset($arrHttp["return"])){
     if (isset($arrHttp["modulo"])) $ret.="&modulo=".$arrHttp["modulo"];
     if (isset($base)) $ret.="&base=".$base;
 }else{
-    $ret=str_replace("|","?",$arrHttp["return"])."&encabezado=".$arrHttp["encabezado"];
+    $ret=str_replace("|","?",$arrHttp["return"]);
 }
 
 ?>

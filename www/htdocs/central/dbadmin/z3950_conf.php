@@ -4,6 +4,7 @@
 20211216 fho4abcd Backbutton by included file
 20220108 fho4abcd Improve layout&text
 20220124 fho4abcd Ensure current database is present at exit
+20220929 fho4abcd Improve layout, new style buttons, add error messages if yaz not loaded or servers db not present
 */
 
 /**
@@ -92,18 +93,32 @@ include("../common/institutional_info.php");
 
 <div class="middle form">
 <div class="formContent">
+<?php
+$error=0;
+$serversfolder=$db_path."servers";
+if ( !file_exists($serversfolder)) {
+    $error++;
+    echo "<font color=red><b>".$msgstr["missing_serversdb"]." ".$msgstr["folderne"].": ".$serversfolder."</b></font><br>";
+}
+if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
+    $error++;
+    echo "<font color=red><b>".$msgstr["z3950_yaz_missing"]."</b></font><br>";
+}
+
+?>
 <form name=forma1>
 <table>
     <tr><td>
-        <li><a href='../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db?>'><?php echo $msgstr["z3950_servers"]?></a><br><br></li>
+        <a class="bt bt-blue" href='../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db?>'><?php echo $msgstr["z3950_servers"]?></a><br><br>
     </td></tr>
     <tr><td>
-        <li><?php echo $msgstr["z3950_cnv"]?>
+        <h4><?php echo $msgstr["z3950_cnv"]?>
         </td><td>
         <table>
             <tr>
             <td>
-                <a href='z3950_conversion.php?base=<?php echo $db?>'><?php echo $msgstr["new"]." ".$msgstr["z3950_tab"]?></a>
+                <a class="bt bt-green" href='z3950_conversion.php?base=<?php echo $db?>'>
+                    <i class="far fa-plus-square"></i> &nbsp;<?php echo $msgstr["z3950_new_table"]?></a>
             </td>
             <tr><td>
             <?php
@@ -119,20 +134,22 @@ include("../common/institutional_info.php");
                     }
                     ?>
                 </select> &nbsp;
-                <a href=javascript:Edit()><?php echo $msgstr["edit"]?></a> | <a href=javascript:Delete()><?php echo $msgstr["delete"]?></a>
+                <a class="bt bt-green" href=javascript:Edit()><i class="far fa-edit"></i> &nbsp;<?php echo $msgstr["edit"]?></a>
+                <a class="bt bt-red" href=javascript:Delete()><i class="fas fa-trash"></i> &nbsp;<?php echo $msgstr["delete"]?></a>
                 <?php
             }
             ?>
             </td></tr><tr>
             <td>
-                <a href='z3950_diacritics_edit.php?base=<?php echo $db?>'><?php echo $msgstr["z3950_diacritics"]?></a>
+                <a class="bt bt-gray" href='z3950_diacritics_edit.php?base=<?php echo $db?>'><?php echo $msgstr["z3950_diacritics"]?></a>
             </td>
             </tr>
         </table>
         </td>
     </tr>
     <tr><td>
-        <li><a href='../dataentry/z3950.php?base=<?php echo $db.$ciparamp?>&test=Y&Opcion=test&backtoscript=../dbadmin/z3950_conf.php' ><?php echo $msgstr["test"]?></a></li>
+        <a class="bt bt-blue" href='../dataentry/z3950.php?base=<?php echo $db.$ciparamp?>&test=Y&Opcion=test&backtoscript=../dbadmin/z3950_conf.php' >
+            <?php echo $msgstr["test"].": ". $msgstr["catz3950"];?></a>
     </td></tr>
 </table>
 </form>
@@ -145,5 +162,3 @@ include("../common/institutional_info.php");
 <input type=hidden name=descr>
 <form>
 <?php include("../common/footer.php")?>
-</body>
-</html>
