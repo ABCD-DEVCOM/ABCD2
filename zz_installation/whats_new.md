@@ -3,14 +3,18 @@ This text is intended for the end-user and database managers.
 
 Each main chapter contains the information of a release with respect to an older version
 
-- [Latest information](#Version-220)
-- [Version 2.2 beta](#Version-220-beta)
+
+<ul>
+<li><a href="#Version-220">Latest information</a></li>
+<li><a href="#Version-220-beta">Version 2.2 beta</a></li>
+<li><a href="##Version-2.1b-/2.0f">Version 2.1b /2.0f</a></li>
+</ul>
 
 <hr>
 
 # Version 2.2.0
 This is an official release.
-This chapter contains the differences with [Version 2.2 beta](#Version-220-beta)
+This chapter contains the **major** differences with [Version 2.2 beta](#Version-220-beta)
 
 ### New look
 The user interface of the central module is modernized.
@@ -90,6 +94,7 @@ Form `Set Import Options` has two fields to mitigate this problem.
   Modification may result in indexing problems.
   - `Granularity`: The target file size to be used for import.
   The split algorithm will split the data on a "good" point (e.g. not in the middle of a word) near the target file size 
+- Third party package `tika` is no longer bundled with ABCD. The code will show informative messages if the package is needed but not installed
 
 ### Generate Inverted files / Indexing
 The functionality and interface of this utility is modified
@@ -134,8 +139,27 @@ Note that ISO-8859-1 language files will be translated on the fly to UTF-8 in ca
   - This action allows for comparison between the tables of different languages.
   - This action shows that some tables might have duplicate entries.
 
+### Barcode
+The barcode configuration is redesigned.
+- The configuration options are available in `Update database definitions -> line: Label & Barcode`
+- The barcode label names `barcode,lomos/etiquetas` are no longer fixed in code. They are now defined in file `<dbname>/<lang>/listoflabels.tab`.
+Modification by option `Table with label & barcode names`. 
+There is a button to insert the legacy labels originally fixed in code to support upgrading of old installations.
+- Option `Configure label/barcode` shows for each defined barcode/label name two options:
+  - `Configure label/barcode` for the configuration of the label.
+  - `Barcode font` to check the configuration, show examples of the generated barcode and download more barcode fonts.
+
+- The barcode icon in the `Date entry` menu gives in configured situations only access to the `Show/print' functionality`.
+Incorrect configuration inhibits the `Show/print` functionality and shows links to the configuration options.
+- The barcode icon in the `Date entry` menu gives no longer access to the `Stock taking` functionality 
+
 ### Minor modifications
 - Improved screen for searching using the dictionary
+- Login errors caused by wrong `unicode` settings show an alert. This is mitigated by `acces/drpath.def` with the correct settings for the installation
+- The `prologact.pft`'s referenced `iah/js/highlight.js`. This is corrected to `central/dataentry/js/highlight.js`
+- New folder `<bases>/log` is intended for webserver log files. This location must be configured in the webserver.
+- The majority of scripts shows a unified information section at the top of the page with 'help' information and the correct script name.
+- The `Back` functionality no longer performs a browser back function but returns now to the correct script with correct parameters.
 
 ### Architectural changes
 The code has dozens of changes to make it more robust, error resistant, improve feedback and corrections to generate valid HTML.
@@ -143,12 +167,16 @@ The code has dozens of changes to make it more robust, error resistant, improve 
 Major milestones:
 - The code is compliant with PHP 7.4.
 - **`https`** is accepted by the code. This protocol is recommended for security.
-- Support for `Secs` (Serials Control System) had to be terminated due termination of maintenance for essential plug-ins.
 - Isis database architectures `16-60` and `bigisis` are supported for Linux and Windows for charactersets `ISO-8859-1` and `UTF-8`.
 This was already the case for Linux.  
 For Windows the `bigisis` support is improved and support for `FFI` is terminated.
-- Third party package `tika` is no longer bundled with ABCD. The code will show informative messages if the package is needed but not installed
+- A significant number of obsolete PHP scripts is deleted.
 
+### Removed functionality
+- Support for `Secs` (Serials Control System) had to be terminated due termination of maintenance for essential plug-ins.
+- `EmpWeb` has no development anymore and is considered 'stable' enough to be put in another repo separately.
+The directory has been moved to the https://github.com/ABCD-Community/EmpWeb repository.
+- `Statistics` pie-chart code relied on Adobe Flash. This product is no longer supported and the code in ABCD is removed
 
 <hr>
 
@@ -169,7 +197,9 @@ This is corrected in the example databases
 
 ### Architectural changes
 Milestones
-- A new module called `OPAC`is introduced. This module is intended to replace the 'iAH' module
+- A new module called `OPAC`is introduced. This module is intended to replace the `iAH` module
+- The ABCD downloads do no longer include software prerequisites. Installation of the webserver, PHP,... is no longer documented in ABCD.
+
 <hr>
 
 # Version 2.1b /2.0f

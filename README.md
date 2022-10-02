@@ -33,13 +33,7 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#download">Download</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+    <li><a href="#installation">Installation</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -81,8 +75,7 @@ existing advanced softwares, mostly having already shown their potential in dema
 applications (within the Virtual Health Library context), were adopted and adapted into ABCD - that is why the
 original names such as iAH, SeCS (both developed by BIREME) and EmpWeb (Empréstimos en Web) developed
 originally by KALIO ltda. of Uruguay and amply tested in Valparaiso at the University) are maintained. These main
-parts are shown, with their hierarchical relationships, at the second level in the following picture and subsequently
-discussed briefly :
+parts are shown, with their hierarchical relationships, at the second level in the following picture:
 
 ![estructure_ABCD-1024x576](https://user-images.githubusercontent.com/20482054/124363175-28618800-dc10-11eb-85c9-b2630cfaaad3.jpg)
 
@@ -93,46 +86,24 @@ discussed briefly :
 ABCD is being written using the languages.
 * [PHP](https://www.php.net/)
 * [CISIS](https://wiki.bireme.org/pt/index.php/CISIS)
-* [Java](https://www.java.com/)
+* [HTML](https://en.wikipedia.org/wiki/HTML)
+* [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 
 
+<!-- DOWNLOAD and Install -->
+## Installation
+ABCD is supported on **Windows** and **Linux**  
+[Download the latest ABCD release](https://abcd-community.org/dowloads/)  
+[Download all code from GitHub ABCD-DEVCOM / ABCD2](https://github.com/ABCD-DEVCOM/ABCD2)  
+ 
 
-<!-- DOWNLOAD -->
-## Download
-[Download the latest version](https://abcd-community.org/dowloads/)
+Installation prerequisites and installation procedure vary by version and by installed components.
+See [Installation folder](https://github.com/ABCD-DEVCOM/ABCD2/tree/master/zz_installation) for detailed instructions and material.
+Note that the ABCD downloads do not include software prerequisites
 
+[Download EmpWeb](https://github.com/ABCD-Community/EmpWeb)
 
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-
-* [Windows or Linux Apache 2.2.x](https://www.apache.org/)
-* [PHP 5.2.x](https://www.php.net/)
-* [PHP-YAZ module](https://www.php.net/manual/pt_BR/intro.yaz.php)
-* [Mysql 5.1 or newer (Only for EmpWeb)](https://www.mysql.com/downloads/)
-* [Java JDK 1.5 (Only for EmpWeb and Linux)](https://www.java.com/)
-
-
-
-### Installation
-
-**Windows**
-
-* ABCD can be installed in XAMP or WAMP, unpacked in the htdocs folder.
-
-**Linux**
-
-* It can be installed under apache, unpacked in the html directory of the server.
-
-**Note:** 
-
-* The "bases" folder should preferably be located on the level above the html folder.
-
-**Read the detailed instructions in the links:**
-
-* [Installattion instructions](https://github.com/ABCD-DEVCOM/ABCD2/blob/master/.installation/installation_instructions.md)
-
+`EmpWeb` has additional prerequisites (SQL,Java). Details in the repository.
 
 
 
@@ -146,7 +117,7 @@ Our demo version is synchronized with the development in the Github repository, 
 We will soon make a more stable demo version available in parallel with development for comparison
 
 Instructions
-To enter the modules, you shall follow the instructions bellow:
+To enter the modules, you shall follow the instructions below:
 
 
 ***ABCD – Administration*** – http://demo.abcd-community.org/
