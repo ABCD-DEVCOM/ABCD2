@@ -66,6 +66,8 @@ The menu is reordered. New options in the Utilities menu:
 This option is particularly usefull for databases with HTML fields.
 - `Export/Import -> Match ISO file with FDT`: This options reads an existing ISO file from an other look-alike database and writes a new ISO file.
 This file contains only fields found in the current database FDT.
+- `Export/Import -> DSpace bridge: download records`: This option was present in earlier versions and restored.
+Layout and error processing are improved. Option is only visible for database `dcdspace`.
 - `Convert ISO <-> UTF-8 -> Convert database text files to UTF-8`: Converts a user selected set of files from ISO to UTF-8.
 Intended for FDT,FST and other database configuration files.
 This is the replacement of `Convert ABCD to Unicode`

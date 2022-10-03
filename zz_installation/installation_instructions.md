@@ -15,7 +15,6 @@ ABCD requires several other components for its operations. Component CISIS (the 
 Some integrated components are also distributed with ABCD.
 
 Other components are indicated as prerequisites and not distributed with ABCD.  
-Module EmpWeb (advanced loans module) has a completely different technology, it is put outside the ABCD-www folder and needs to be configured according to the instructions in its own manual.
 <hr>
 
 # Prerequisites
@@ -73,13 +72,12 @@ The downloads contains all components.
 Use your favorite utility (zip/7zip/tar/...) to unpack the downloaded file. The folder structure
 will be:
 ```
-<Release_name> --+-- empweb
-                 +-- www ----------+-- bases-examples_Linux
+<Release_name> --+-- www ----------+-- bases-examples_Linux
                                    +-- bases-examples_Windows
                                    +-- cgi-bin_Linux
                                    +-- cgi-bin_Windows
                                    +-- extra
-                                   +-- htdoc
+                                   +-- htdocs
                  +-- zz_installation
                  +-- zz_miscellaneous
 
@@ -128,7 +126,6 @@ Example locations:
 The ABCD code is downloaded in the preparation phase.
 Note the different actions for Windows and Linux platforms. 
 ```
-empweb                 # Contains the advanced loans module: Delete
 bases-examples_Linux   # Linux users:   Rename to "bases".   Windows users: Delete
 bases-examples_Windows # Windows users: Rename to "bases".   Linux users:   Delete
 cgi-bin_Linux          # Linux users:   Rename to "cgi-bin". Windows users: Delete
