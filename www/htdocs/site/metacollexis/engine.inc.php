@@ -1,4 +1,4 @@
-<?
+<?php
 
 //==============================================================================
 function GoSearch($target_node, $sourceList_node, $expression = ""){
