@@ -28,6 +28,8 @@ if ( $check_login ){
 }
 
 $xmlContent = BVSDocXml("root",$checked['xml']);
+
+echo $xmlContent;
 //$_REQUEST['debug']=1;
 if ( isset($_REQUEST['debug']) ){
 //echo ' debug !';
@@ -40,8 +42,7 @@ if ( isset($checked['portal']) ){
     $xsl_params['portal'] = $checked['portal'];
 }
 
-if ( isset($xslSave) )
-{
+if ( isset($xslSave) ) {
     $xslSave = "../" . $checked['xslSave'];
 
     try {

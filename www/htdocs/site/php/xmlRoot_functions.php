@@ -3,49 +3,52 @@
 function check_parameters(){
     global $checked, $xml, $xsl, $xslSave, $xmlSave, $page, $lang;
 
-    if ( isset($_GET['xml']) && !preg_match("/^[a-z][a-z\/]+.xml$/", $_GET['xml']) )
+    if ( isset($_GET['xml']) && !preg_match("/^[a-z][a-z\/]+.xml$/", $_GET['xml']) ){
         die("invalid parameter 1");
-    else
+    }else{
         $checked['xml'] = $xml;
+    }
 
-    if ( !preg_match("/^[a-z][a-zA-Z\/\_\-]+.xsl$/", $xsl) )
+    if ( !preg_match("/^[a-z][a-zA-Z\/\_\-]+.xsl$/", $xsl) ){
         die("invalid parameter 2");
-    else
+    }else{
         $checked['xsl'] = $xsl;
+    }
 
-    if ( isset($xmlSave) && !preg_match("/.xml$/", $xmlSave) )
+    if ( isset($xmlSave) && !preg_match("/.xml$/", $xmlSave) ){
         die("invalid parameter 3: $xmlSave");
-    else
+    }else{
         $checked['xmlSave'] = $xmlSave;
+    }
 
-    if ( isset($xslSave) && !preg_match("/.xsl$/", $xslSave) )
+    if ( isset($xslSave) && !preg_match("/.xsl$/", $xslSave) ){
         die("invalid parameter 4");
-    else
+    }else{
         $checked['xslSave'] = $xslSave;
+    }
 
-    if ( isset($page) && !preg_match("/^[a-zA-Z\_\-]+$/", $page) )
+    if ( isset($page) && !preg_match("/^[a-zA-Z\_\-]+$/", $page) ){
         die("invalid parameter 5");
-    else
+    }else{
         $checked['page'] = $page;
+    }
 
-    if ( !preg_match('/^[a-z][a-z](-[a-z][a-z])?$/',$lang) )
+    if ( !preg_match('/^[a-z][a-z](-[a-z][a-z])?$/',$lang) ){
         die("invalid lang parameter 6");
-    else
+    }else{
         $checked['lang'] = $lang;
-
+    }
 }
 
-function cgiValue ( $key, $value )
-{
+function cgiValue ( $key, $value ) {
     return $key . "=" . $value . "<br/>";
 }
 
-function debugCGI ( $httpVars )
-{
+function debugCGI ( $httpVars ) {
     $returnVars = "";
     reset($httpVars);
-    while ( list($key,$value) = each($httpVars) )
-    {
+   // while ( list($key,$value) = each($httpVars) )   {
+    foreach ($httpVars as $key => $value) {     
         if ( gettype($value) == "array" ) {
             foreach ($value as $item) {
                 $returnVars .= cgiValue($key,$item);
@@ -57,8 +60,7 @@ function debugCGI ( $httpVars )
     print($returnVars);
 }
 
-function debug ( $debug )
-{
+function debug ( $debug ) {
     global $xmlContent;
 
     $debug = strtoupper($debug);
@@ -70,17 +72,14 @@ function debug ( $debug )
 
 }
 
-function xmlKeyValue ( $key, $value )
-{
+function xmlKeyValue ( $key, $value ) {
     $value = str_replace("&amp;","&",stripslashes($value));
     $value = str_replace("&","&amp;",$value);
     return "         <" . $key . ">" . $value . "</" . $key . ">\n";
 }
 
-function xmlHttpVars ( $mainElement, $httpVars )
-{
+function xmlHttpVars ( $mainElement, $httpVars ) {
     $xmlVars = "";
-
     if ( count($httpVars) == 0 ) {
         return $xmlVars;
     }
@@ -88,8 +87,8 @@ function xmlHttpVars ( $mainElement, $httpVars )
     $xmlVars = "      <" . $mainElement . ">\n";
 
     reset($httpVars);
-    while ( list($key,$value) = each($httpVars) )
-    {
+    //while ( list($key,$value) = each($httpVars) )   {
+    foreach ($httpVars as $key => $value) {            
         if ( gettype($value) == "array" ) {
             foreach ($value as $item) {
                 $xmlVars .= xmlKeyValue($key,$item);
@@ -120,8 +119,7 @@ function xmlHttpInfo ( $mainElement ){
     return $xmlCgi;
 }
 
-function xmlDefineInfo ( $mainElement )
-{
+function xmlDefineInfo ( $mainElement ) {
     global $def;
 
     $xml = "   <" . $mainElement . ">\n";
@@ -135,8 +133,7 @@ function xmlDefineInfo ( $mainElement )
 }
 
 
-function normalizeDocURL ( $docURL )
-{
+function normalizeDocURL ( $docURL ) {
     global $def;
 
     $parsedURL = parse_url($docURL);
@@ -181,8 +178,7 @@ function getXmlDoc ( $docURL, $removeHeader )
 }
 
 
-function xmlRemoveHeader($xml)
-{
+function xmlRemoveHeader($xml) {
     /* remove xml processing instruction */
     $xml = trim($xml);
     if ( strncasecmp($xml, "<?xml", 5) == 0 )
@@ -197,8 +193,7 @@ function xmlRemoveHeader($xml)
 }
 
 
-function BVSDocXml ( $rootElement, $xml )
-{
+function BVSDocXml ( $rootElement, $xml ) {
     $content = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
     $content .= "<" . $rootElement . ">\n";
     $content .= xmlHttpInfo("http-info");
