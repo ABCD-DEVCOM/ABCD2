@@ -47,8 +47,8 @@ function cgiValue ( $key, $value ) {
 function debugCGI ( $httpVars ) {
     $returnVars = "";
     reset($httpVars);
-   // while ( list($key,$value) = each($httpVars) )   {
-    foreach ($httpVars as $key => $value) {     
+    while ( list($key,$value) = each($httpVars) )   {
+   // foreach ($httpVars as $key => $value) {     
         if ( gettype($value) == "array" ) {
             foreach ($value as $item) {
                 $returnVars .= cgiValue($key,$item);
@@ -87,8 +87,8 @@ function xmlHttpVars ( $mainElement, $httpVars ) {
     $xmlVars = "      <" . $mainElement . ">\n";
 
     reset($httpVars);
-    //while ( list($key,$value) = each($httpVars) )   {
-    foreach ($httpVars as $key => $value) {            
+    while ( list($key,$value) = each($httpVars) )   {
+    //foreach ($httpVars as $key => $value) {            
         if ( gettype($value) == "array" ) {
             foreach ($value as $item) {
                 $xmlVars .= xmlKeyValue($key,$item);

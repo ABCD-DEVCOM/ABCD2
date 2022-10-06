@@ -15,6 +15,7 @@ $xslSave = $_REQUEST['xslSave'];
 $xmlSave = $_REQUEST['xmlSave'];
 
 check_parameters();
+
 $check_login = false;
 if (preg_match("/(adm.xml)|(users.xml)/i",$checked['xml'])  ){
     $checked['xml'] = file_get_contents(DEFAULT_DATA_PATH . $checked['xml']);
@@ -29,7 +30,7 @@ if ( $check_login ){
 
 $xmlContent = BVSDocXml("root",$checked['xml']);
 
-echo $xmlContent;
+//echo $xmlContent;
 //$_REQUEST['debug']=1;
 if ( isset($_REQUEST['debug']) ){
 //echo ' debug !';
@@ -42,7 +43,8 @@ if ( isset($checked['portal']) ){
     $xsl_params['portal'] = $checked['portal'];
 }
 
-if ( isset($xslSave) ) {
+if ( isset($xslSave) )
+{
     $xslSave = "../" . $checked['xslSave'];
 
     try {
@@ -85,11 +87,10 @@ if ( isset($xslSave) ) {
 $xslTransform = SITE_PATH . $checked['xsl'];
 
 if ( $debug == "XSL" ) { die($xslContent); }
-if ( $debug == "XML" ) { die($xmlContent); }
+//if ( $debug == "XML" ) { die($xmlContent); }
 
 if ( isset($checked['xsl']) ){
-    print(processTransformation($xmlContent,$xslTransform,$xsl_params) );
-//echo "xmlRoot ok!"; var_dump($xsl_params); die;
+    print( processTransformation($xmlContent,$xslTransform,$xsl_params) );
 } else {
     print($xmlContent);
 }
