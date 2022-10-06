@@ -1,8 +1,11 @@
 <?php
     $DirNameLocal=dirname(__FILE__).'/';
-    include_once($DirNameLocal."./include.php");
+    
+    include_once("$DirNameLocal."."/include.php");
 
     $site = parse_ini_file($localPath['ini'] . "bvs.ini", true);
+
+    //var_dump($site);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -34,7 +37,7 @@
 
                 <div class="secondColumn">
                     <?php include($localPath['html'] . "/metasearch.html"); ?>
-                    <div class="centerLeftColumn">
+                     <div class="centerLeftColumn">
                         <?php
                          foreach ($site["col2"] as $id=>$file){
                             $html = $localPath['html'] . $file . ".html";
