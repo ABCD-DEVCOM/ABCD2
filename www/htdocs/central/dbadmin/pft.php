@@ -8,6 +8,7 @@
 2022-01-29 fho4abcd Improve setting of encabezado+create language folder if it does not exist
 20220227 fho4abcd Always show backbutton. Other back if institutional info not shown
 20220918 fho4abcd Explode base before config.php (to get correct value for $actparfolder)
+20221102 fho4abcd Cancel button acts now the same as the back button
 */
 
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -627,6 +628,7 @@ if ($arrHttp["Opcion"]=="new"){
         $backtoscript="../dataentry/inicio_main.php";
         include "../common/inc_back.php";
     }// end if encabezado
+    $backtocancelscript=$backtoscript;
 }
 ?>
     </div>
@@ -1040,7 +1042,7 @@ if ($arrHttp["Opcion"]!="new"){?>
 /*  End of the tables with collapsing content. */
 if (!isset($arrHttp["Modulo"]))
 	if ($encabezado=="s")
-		echo "&nbsp; &nbsp;<a href=menu_modificardb.php?Opcion=".$arrHttp["Opcion"]."&base=".$arrHttp["base"].">".$msgstr["cancel"]. "</a><p>";
+		echo "&nbsp; &nbsp;<a href=".$backtocancelscript."?Opcion=".$arrHttp["Opcion"]."&base=".$arrHttp["base"].">".$msgstr["cancel"]. "</a><p>";
 }else{
     ?>
     <button class="bt-green" type="button"

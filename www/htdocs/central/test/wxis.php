@@ -8,6 +8,7 @@
 /*
 20210402 fho4abcd Added test with context
 20220710 fho4abcd More and improved checks, improved html and readbility, fixed security problem, option to vary some parameters
+20221028 fho4abcd Show value of $postMethod + count number of entries with any expiration date (check is left to the user)
 */
 ?>
 <!DOCTYPE html>
@@ -62,6 +63,7 @@ if ($tstphp_step==0){
     ?>
     <div>This form allows testing with deviations from the configuration<br></div>
     <div>No checks on the validity of your entries here<br></div>
+    <div>Configuration parameter $postMethod = <?php echo $postMethod?>. (0=GET, 1=POST)<br></div>
     <form name=setvalues action='' method='post' accept-charset=utf-8>
         <input type=hidden name="tstphp_step" value="2" >
         <input type=hidden name="emerg_login" value="" >
@@ -178,15 +180,21 @@ if ($wxisUrl!=""){
     <?php
     include("../common/wxis_llamar.php");
     $tstphp_numentries=0;
+    $testphp_numexp=0;
     if (sizeof($contenido)>=1 && !empty($contenido[0])) {
         ?><xmp><?php
         foreach ($contenido as $linea){
             echo "$linea";
             if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;;
+            $lineparts=explode(" ",$linea);
+            if ( sizeof($lineparts) > 3 && $lineparts[3]=="60"){
+                $testphp_numexp++;
+            }
         }
         ?></xmp><?php
     }
     echo "<font color=purple>".$tstphp_numentries." entries found for User name (login) = ".$tstphp_loginname."</font><br>";
+    echo "<font color=purple>".$testphp_numexp." entries found with non-empty expiration date field [60]</font><br>";
 } else {
     echo "<div><font color=purple>Variable \$wxisUrl is empty. No tests of <b>wxis</b> by an URL</font></div><br>";
 }
@@ -286,13 +294,19 @@ if ($Wxis!=""){
     unset($contenido);
     include("../common/wxis_llamar.php");
     $tstphp_numentries=0;
+    $testphp_numexp=0;
     if (sizeof($contenido)>=1 && !empty($contenido[0])) {
         foreach ($contenido as $linea){
             echo "$linea";
-            if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;;
+            if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;
+            $lineparts=explode(" ",$linea);
+            if ( sizeof($lineparts) > 3 && $lineparts[3]=="60"){
+                $testphp_numexp++;
+            }
         }
     }
     echo "<font color=purple>".$tstphp_numentries." entries found for User name (login) = ".$tstphp_loginname."</font><br>";
+    echo "<font color=purple>".$testphp_numexp." entries found with non-empty expiration date field [60]</font><br>";
 }
 }
 ?>

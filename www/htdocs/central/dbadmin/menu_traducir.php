@@ -4,6 +4,7 @@
 20210521 fho4abcd Added OPAC compare+replace componente by table (makes equal code)
 20210829 fho4abcd Added missing importdoc compare+replace componente by table
 20211216 fho4abcd Backbutton by included file
+20221030 fho4abcd Added translations for odds, mysite. Use moduleButton for modules
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -18,6 +19,8 @@ include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/iah_conf.php");
 include("../lang/importdoc.php");
+include("../lang/mysite.php");
+include("../lang/odds.php");
 include("../lang/prestamo.php");
 include("../lang/profile.php");
 include("../lang/soporte.php");
@@ -73,14 +76,20 @@ include "../common/inc_div-helper.php";
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton decisionButton">
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
-                <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton  databaseButton">
-					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
-				</a>
-				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton  databaseButton">
-					<span><strong><?php echo "OPAC"?></strong></span>
-				</a>
 				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab" class="menuButton  userButton">
 					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
+				</a>
+                <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton  moduleButton">
+					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
+				</a>
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=mysite.tab" class="menuButton  moduleButton">
+					<span><strong><?php echo $msgstr["mysite"]?></strong></span>
+				</a>
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=odds.tab" class="menuButton  moduleButton">
+					<span><strong><?php echo $msgstr["odds"]?></strong></span>
+				</a>
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton  moduleButton">
+					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>
@@ -121,14 +130,20 @@ include "../common/inc_div-helper.php";
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton decisionButton">
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
-                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton databaseButton">
-					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
-				</a>
-                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton databaseButton">
-					<span><strong><?php echo "OPAC"?></strong></span>
-				</a>
 				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab" class="menuButton userButton">
 					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton moduleButton">
+					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=mysite.tab" class="menuButton moduleButton">
+					<span><strong><?php echo $msgstr["mysite"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=odds.tab" class="menuButton moduleButton">
+					<span><strong><?php echo $msgstr["odds"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton moduleButton">
+					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>

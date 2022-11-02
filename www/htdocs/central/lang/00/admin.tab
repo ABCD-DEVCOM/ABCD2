@@ -180,6 +180,7 @@ maxmfn=Last MFN
 mensajeb=Select a search field and enter some search terms for the data you are trying to locate. Click on Index to display the terms dictionary for the field selected.
 menu_canc=You must select the edit option before cancelling the record editing
 menu_edit=You must select the edit option before updating the record
+menu_ex_noau=Unauthorized or Expired User
 menu_noau=Unauthorized User
 mfndelchanged=You clicked on another MFN when confirming the record deletion
 mis_mx_path=Missing the parameter MXPATH in abcd.def

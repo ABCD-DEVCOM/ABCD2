@@ -13,6 +13,7 @@
 20220321 fho4abcd Remove syspar addition in url (can be done by default par file)
 20220710 fho4abcd Remove rubbish+clean error for POST+improve GET+no exception for dump by login+better pop-up text
 20220716 fho4abcd Add IsisScript value to errormessage
+20221028 fho4abcd Log stamp in 24 hour format
 */
 global $def_db,$server_url, $wxis_exec, $wxisUrl, $unicode,$charset,$cgibin_path,$postMethod,$meta_encoding,$def,$arrHttp;
 global $ABCD_scripts_path,$app_path;
@@ -175,7 +176,7 @@ if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
 // Write a line for this action to the log file
 if (is_writable($db_path."log") && is_dir($db_path."log")){
     $fp=fopen($db_path."log/log_".date("Ymd").".log","a");
-    $out=date('Ymd h:i:s')."\t";
+    $out=date('Ymd H:i:s')."\t";
     if( isset($_SESSION['login'])) {
         // this is the logged in name
         $out.=$_SESSION['login']."\t";
