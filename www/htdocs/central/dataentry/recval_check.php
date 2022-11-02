@@ -1,4 +1,7 @@
 <?php
+/*
+20220929 fho4abcd Use $actparfolder as location for .par files
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -72,7 +75,7 @@ if (file_exists($file_val)){
 		$Mfn_val=$arrHttp["Mfn"];
 
 	$VC_val=urlencode("<3333 0>".$Mfn_val."</3333>".$ValorCapturado);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&ValorCapturado=".$VC_val;
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&ValorCapturado=".$VC_val;
 	$IsisScript=$xWxis."z3950_cnv.xis";
 	include("../common/wxis_llamar.php");
 	$recval_pft="";

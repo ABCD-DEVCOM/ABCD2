@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2022-11-02 fho4abcd actparfolder
+*/
 session_start();
 
 
@@ -40,8 +43,8 @@ else
 	$pref=$prefijo;
 $prefix_search_tesaurus=$pref;
 $IsisScript=$xWxis."ifp.xis";
-
-$query ="&base=$tesaurus&cipar=$db_path"."par/$tesaurus".".par&Opcion=autoridades&prefijo=$prefijo&pref=$pref&formato_e=".urlencode($Formato);
+if ($actparfolder!="par/") $actparfolder="$tesaurus/";
+$query ="&base=$tesaurus&cipar=$db_path".$actparfolder.$tesaurus.".par&Opcion=autoridades&prefijo=$prefijo&pref=$pref&formato_e=".urlencode($Formato);
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);
 $subtitle= " Tesaurus";
