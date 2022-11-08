@@ -208,7 +208,7 @@ function inprocess($label, $status = "run") {
 					s.writeln('  <body id="popUp">');
 					s.writeln('  <table width="320" height="120">');
 					s.writeln('   <tr valign="middle">');
-					s.writeln('  	<td>Consultando <b><? echo $label ?></b> </td>');
+					s.writeln('  	<td>Consultando <b><?php echo $label ?></b> </td>');
 					s.writeln('   </tr>');			
 					s.writeln('  </table>');			
 					s.writeln('  </body>');	

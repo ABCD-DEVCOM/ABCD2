@@ -1,0 +1,16 @@
+'<table border=0 align=center>'
+	'<tr widh=50% >'
+		'<td width=25%>Title</td>'
+		'<td>'v200^a, if p(v200^d) then ' = ' v200^d fi , if p(v200^e) then ' : ', v200^e fi, '</td>'
+	'</tr>'
+	
+	'<tr>'
+		'<td>Author(s)</td>'
+		'<td>'v700^a, ", ", v700^b, if p(v710) then if p(v700) then ' - ' v710^a else v710^a fi fi, '</td>'
+	'</tr>'
+
+	'<tr>'
+		'<td>Address</td>'
+		'<td>'v210^a, if p(v210^c) then ' : ' v210^c fi , if p(v210^d) then ' : ', v210^d fi, '</td>'
+	'</tr>'
+'</table>

@@ -1,4 +1,8 @@
 <?php
+/*
+20220717 fho4abcd Use $actparfolder as location for .par & def files
+20220822 fho4abcd Create shortcut.pft files if needed
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -9,6 +13,7 @@ $lang=$_SESSION["lang"];
 
 include("../lang/iah_conf.php");
 include("../lang/dbadmin.php");
+include("../lang/soporte.php");
 
 if (strpos($arrHttp["base"],"|")===false){
 
@@ -24,12 +29,14 @@ unset($fp);
 ?>
 </head>
 <body>
-<A NAME=INICIO>
+
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -38,40 +45,85 @@ if (isset($arrHttp["encabezado"])){
 	<div class="actions">
 <?php
 if (isset($arrHttp["encabezado"]))
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
+	$backtoscript= "menu_modificardb.php?base=".$arrHttp["base"].$encabezado;
+	include "../common/inc_back.php";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/iah_edit_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "\<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/iah_edit_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_save.php";
+
+$ayuda="iah_edit_db.html";
+include "../common/inc_div-helper.php";
+
 ?>
-</font>
-	</div>
 <div class="middle form">
 	<div class="formContent">
 
 
-<?php
-$arrHttp["ValorCapturado"]= stripslashes($arrHttp["ValorCapturado"]);
-echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
-$file=$db_path."par/".strtoupper($arrHttp["base"]).".def";
-$fp=fopen($file,"w");
-if (!$fp){	echo "Cannot open the file $file for writing";
-	die;}
-$res=fwrite($fp,$arrHttp["ValorCapturado"]);
+	<?php
+	$arrHttp["ValorCapturado"]= stripslashes($arrHttp["ValorCapturado"]);
+	echo "<pre>".$arrHttp["ValorCapturado"]."</pre>";
+	$file=$db_path.$actparfolder.strtoupper($arrHttp["base"]).".def";
+	$fp=fopen($file,"w");
+	if (!$fp){
+		echo "Cannot open the file $file for writing";
+		die;
+	}
+	$res=fwrite($fp,$arrHttp["ValorCapturado"]);
 
-fclose($fp);
-echo "<h2>".$msgstr["saved"];
-?>
-</form>
-</div></div>
+	fclose($fp);
+	echo "<h3>".$msgstr["saved"]." ".$file."</h3>";
+    /*
+    ** Write an initial shortcut.pft if required and possible
+    ** This might need the languages
+    */
+    $iah_def=parse_ini_file("../../iah/scripts/iah.def.php");
+    $iah_lang=explode(',',$iah_def["AVAILABLE LANGUAGES"]);
+    // Get the value of FILE SHORTCUT.IAH
+    $db_def=parse_ini_file ($file,true,INI_SCANNER_RAW);
+	if (isset($db_def["FILE_LOCATION"]["FILE SHORTCUT.IAH"])){
+        $shortcut_iah=$db_def["FILE_LOCATION"]["FILE SHORTCUT.IAH"];
+        // replace %path_database%
+        $shortcut_iah=str_replace("%path_database%",$db_path."/",$shortcut_iah);
+        // Check for %lang%
+        if ( strpos($shortcut_iah,"%lang%") === false) {
+            // No language indicator: use the filename
+            CrearArchivo($shortcut_iah);
+        } else {
+            foreach ($iah_lang as $value){
+                $lan_iah=trim($value);
+                // replace %lang%
+                $shortcut_iah_lang=str_replace("%lang%",$lan_iah."/",$shortcut_iah);
+                CrearArchivo($shortcut_iah_lang);
+            }
+        }
+                
+    }
+	?>
+	</div>
+
+</div>
 <?php include("../common/footer.php");?>
-</body>
-</html>
+<?php
+/* ----------------------------------------------*/
+function CrearArchivo($filename){
+    global $msgstr;
+    if (file_exists($filename)) {
+        echo $msgstr["fileexists"].": '".$filename."'<br>";
+        return(0);
+    }
+	if (!$handle = fopen($filename, 'w')) {
+        echo "<span style='color:red'>".$msgstr["copenfile"]." '".$filename."'</span><br>";
+        return -1;
+   	}
+    // Write the content to our opened file.
+    if (fwrite($handle, '') === FALSE) {
+        echo "<span style='color:red'>".$msgstr["cwritefile"]." '".$filename."'</span><br>";
+        return -1;
+    }
+    fclose($handle);
+    echo "<b>".$msgstr["createdemptyfile"]."</b> '".$filename."'<br>";
+    return 0;
+}
+?>

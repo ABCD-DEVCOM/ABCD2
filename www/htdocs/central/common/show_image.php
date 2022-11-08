@@ -8,7 +8,7 @@
 		$def = parse_ini_file($db_path.$arrHttp["base"]."/dr_path.def");
 		$img_path=trim($def["ROOT"]);
 	}else{
-		$img_path=getenv("DOCUMENT_ROOT")."/bases/".$arrHttp["base"]."/";
+		$img_path=$db_path.$arrHttp["base"]."/";
 	}
   	$filename=$arrHttp["image"];
   	//$filename=strtolower($filename);// file name is changed to lowercase
@@ -48,12 +48,16 @@
 
 	 }
 	$img=$img_path.$arrHttp["image"];
-	if (!file_exists($img)){		echo $img." Not found";
-		die;	}
+	if (!file_exists($img)){
+		echo $img." Not found";
+		die;
+	}
 	header("Content-type: $cont_type");
 	header('Content-Disposition: inline; filename="'.$img.'"');
 
-  	//if (!file_exists($img)){  	///	$img=$img_path."/noimage.jpg";  	//}
+  	//if (!file_exists($img)){
+  	///	$img=$img_path."/noimage.jpg";
+  	//}
   	$img=file($img);
 	$imagen="";
 	foreach ($img as $value)  $imagen.=$value;

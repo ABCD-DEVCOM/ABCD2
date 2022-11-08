@@ -1,4 +1,7 @@
 <?php
+/*
+20220127 fho4abcd div-helper, buttons
+*/
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"]) and !isset($_REQUEST["moodle"])){
@@ -26,33 +29,32 @@ foreach ($t as $value){
 	}
 	//echo "$value<br>";
 }
-$fmt_test="S";
+$fmt_test="S";// required by included files
 $fondocelda="white";
 
 include("../common/header.php");
+?>
+<body>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+    <?php echo $msgstr["test"]." &rarr; "."FDT"." / "."FMT";?>
+    </div>
+    <div class="actions">
+    <?php
+    include "../common/inc_close.php";
+    ?>
+	</div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
 echo "<script>
 base='".$arrHttp["base"]."'
 </script>
 ";
 //include("../common/institutional_info.php");
 //include ("scripts_dataentry.php");
-echo "
-
-
-<div class=\"helper\">
-<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/fdt_test.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fdt_test.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: fdt_test.php";
-echo "</font>
-	</div>
-
-<div class=\"middle form\">
-			<div class=\"formContent\">";
+include "../common/inc_div-helper.php";
+if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0; // required by included files
 include("../dataentry/dibujarhojaentrada.php");
-echo "</div>";
 include("../dataentry/ingresoadministrador.php");
-
-
-
-
 ?>

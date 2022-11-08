@@ -9,7 +9,7 @@ include("../lang/admin.php");
 include("../lang/acquisitions.php");
 //include("../dataentry/autoincrement.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-	// se procesan los valores que vienen de la página
+	// se procesan los valores que vienen de la p?gina
 $ValorCapturado="";
 foreach ($_GET as $var => $value) {
 	VariablesDeAmbiente($var,$value);
@@ -44,7 +44,7 @@ foreach ($arrHttp as $var => $value) {
 ActualizarRegistro();
 
 	include("../common/header.php");
-	echo "<body>\n";
+
 	include("../common/institutional_info.php");
 ?>
 	<div class="sectionInfo">
@@ -52,40 +52,51 @@ ActualizarRegistro();
 			<?php echo $msgstr["suggestions"].": ".$msgstr["purchase"]?>
 		</div>
 		<div class="actions">
-			<?php include("suggestions_menu.php")?>
-		</div>
-		<div class="spacer">&#160;</div>
-	</div>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/suggestions_new_update.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/suggestions_new_update.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: suggestions_new_update.php</font>\n";
 
-	?>
+		</div>
+			<?php include("suggestions_menu.php")?>
 	</div>
+
+<?php
+$ayuda="acquisitions/suggestions_new_update.html";
+include "../common/inc_div-helper.php";
+?>
+
 	<div class="middle form">
 		<div class="formContent">
+
+
+<script type="text/javascript">
+	setTimeout(function(){
+            top.location.href = '<?php echo "../acquisitions/overview.php" ?>';
+         }, 1000);
+</script>
+
 <?php
 if ($cn!=""){
-	$arrHttp["Formato"]=$arrHttp["base"];	echo LeerRegistroFormateado($arrHttp["Formato"]);
+	$arrHttp["Formato"]=$arrHttp["base"];
+	echo LeerRegistroFormateado($arrHttp["Formato"]);
 }else{
 	echo "<h5>".$msgstr["noseq"]."</h5>";
 	$url="";
     echo "<form name=enviar method=post action=suggestions_new_update.php>\n";
-    foreach ($arrHttp as $var=>$value) {    	echo "<input type=hidden name=$var value=\"$value\">\n";    }
+    foreach ($arrHttp as $var=>$value) {
+    	echo "<input type=hidden name=$var value=\"$value\">\n";
+    }
     echo "<input type=submit value=\"".$msgstr["tryagain"]."\">
 
     </form>";
-    echo "<p>$url";//	$permisos=VerificarPermisos($perms);
+    echo "<p>$url";
+//	$permisos=VerificarPermisos($perms);
 //	echo $permisos."<p>";
-	die;}
+	die;
+}
 die;
+
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
 global $arrHttp;
-
+$occ="";
 		if (substr($var,0,3)=="tag") {
 			$ixpos=strpos($var,"_");
 			if ($ixpos!=0) {
@@ -118,11 +129,12 @@ global $arrHttp;
 }
 
 
-function VerificarPermisos($perms){	if (($perms & 0xC000) == 0xC000) {
+function VerificarPermisos($perms){
+	if (($perms & 0xC000) == 0xC000) {
 	    // Socket
 	    $info = 's';
 	} elseif (($perms & 0xA000) == 0xA000) {
-	    // Enlace Simbólico
+	    // Enlace Simbolico
 	    $info = 'l';
 	} elseif (($perms & 0x8000) == 0x8000) {
 	    // Regular
@@ -144,7 +156,7 @@ function VerificarPermisos($perms){	if (($perms & 0xC000) == 0xC000) {
 	    $info = 'u';
 	}
 
-	// Dueño
+	// Due?o
 	$info .= (($perms & 0x0100) ? 'r' : '-');
 	$info .= (($perms & 0x0080) ? 'w' : '-');
 	$info .= (($perms & 0x0040) ?
@@ -166,5 +178,6 @@ function VerificarPermisos($perms){	if (($perms & 0xC000) == 0xC000) {
 	            (($perms & 0x0200) ? 'T' : '-'));
 
  	return $info;
-}
+
+}
 ?>

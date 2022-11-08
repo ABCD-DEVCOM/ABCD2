@@ -1,0 +1,12 @@
+'<font face=arial size=2><b>Centro de documentacion de ABCD</b>. Return receipt<br>'
+"User code: "v20,'<br>',
+'Loan date: ' v30*6.2,'-',v30*4.2,'-',v30.4'<br>',
+'Return date: 'v40*6.2,'-',v40*4.2,'-',v40.4'<br>',
+'Actual return date: 'v500*6.2,'-',v500*4.2,'-',v500.4'<br>',
+'Title: 'v100^a,'<br><br>',
+if npost(['suspml'],'TR_S_'v20)<>0 then 'You have active suspensions<br>'  fi
+if npost(['suspml'],'TR_M_'v20)<>0 then 'You have active fines<br>'  fi	
+
+'_______________________________'
+
+/

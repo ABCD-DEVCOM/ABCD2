@@ -39,14 +39,17 @@ include("../lang/prestamo.php");
 
 foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
-function LeerRegistro($Pft,$base){global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
+function LeerRegistro($Pft,$base){
+global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
 	if (isset($arrHttp["Mfn"])){
-		echo urldecode($Pft)."<p>";		$IsisScript=$xWxis."leer_mfnrange.xis";
+		echo urldecode($Pft)."<p>";
+		$IsisScript=$xWxis."leer_mfnrange.xis";
 		$query = "&base=$base&cipar=$db_path"."par/$base".".par&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Pft=$Pft";
 		include("../common/wxis_llamar.php");
 		foreach ($contenido as $value) echo "$value<br>";
 
-	}}
+	}
+}
 
 include("../common/header.php");
 echo "<div class=\"sectionInfo\">
@@ -56,7 +59,7 @@ echo "<div class=\"sectionInfo\">
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["cancel"]."</strong></span>
 				</a>
 			</div>

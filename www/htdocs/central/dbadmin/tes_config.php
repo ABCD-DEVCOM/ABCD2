@@ -1,12 +1,12 @@
 <?php
 /* Modifications
 2021-01-05 guilda Added $msgstr["regresar"]
+2022-02-01 fho4abcd buttons+div-helper+convert echo to html+correct USE/UF sequence
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 //foreach ($_REQUEST  as $key=>$value)  echo "$key=$value<br>";
 include ("../config.php");
@@ -37,66 +37,64 @@ $PREFIXPERM="";
 $TERMPFT="";
 $DISPLAYPFT="";
 ?>
-
+<body >
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language="javascript" type="text/javascript">
-function Enviar(){	document.maintenance.submit()}
-</script>
-<body >
-<?php
-
-	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["tes_config"]. ": " . $arrHttp["base"]."
-			</div>
-			<div class=\"actions\">
-
-	";
-echo "<a href=\"../dbadmin/menu_modificardb.php?reinicio=s&base=".$arrHttp["base"]."&encabezado=".$arrHttp["encabezado"]."\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["regresar"]."</strong></span></a>";
-if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
-	echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
-	echo "
-			<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-			<span><strong>". $msgstr["save"]."</strong></span>
-			</a>";
+function Enviar(){
+	document.maintenance.submit()
 }
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-?>
-<div class="helper">
+</script>
 <?php
-echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Tesauros target=_blank>". $msgstr["help"].": abcdwiki.net</a>";
-
+include("../common/institutional_info.php");
 ?>
-</font>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["tes_config"]. ": " . $arrHttp["base"] ?>
+    </div>
+    <div class="actions">
+        <?php
+        $backtoscript="../dbadmin/menu_modificardb.php";
+        include "../common/inc_back.php";
+        include "../common/inc_home.php";
+        if (!isset($arrHttp["Accion"]) or $arrHttp["Accion"]!=="actualizar"){
+            $savescript="javascript:Enviar()";
+            include "../common/inc_save.php";
+        }
+        ?>
+    </div>
+	<div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php";
+?>
 <div class="middle">
-	<div class="formContent" >
+<div class="formContent" >
 <form name=maintenance method=post>
 <input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
 <input type=hidden name=encabezado value=<?php echo $arrHttp["encabezado"]?>>
+<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 
+<h2 style='text-align:center'><?php echo $msgstr["tes_config"]?></h2>
 <?php
-echo "<center><strong><font style='font-size:14px;'>".$msgstr["tes_config"]."</font></strong></center>";
 $ini=array();
 $modulo=array();
 $mod="";
 $prefix="";$ref="";$term="";$nt="";$bt="";$rt="";$rt_inv="";$use="";$uf="";$prefixalpha="";$prefixperm="";$termpft="";$displaypft="";
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tesaurus.rel";
-if (file_exists($file)){
-	$fp=file($file);
+
+$thesaurusfilebase=$arrHttp["base"]."/def/".$lang."/tesaurus.rel";
+$datfilebase=$arrHttp["base"]."/def/".$lang."/".$arrHttp["base"].".dat";
+
+$thesaurusfile=$db_path.$thesaurusfilebase;
+$datfile=$db_path.$datfilebase;
+if (file_exists($thesaurusfile)){
+	$fp=file($thesaurusfile);
 	foreach ($fp as $key=>$value){
 		$value=trim($value);
 		$value=preg_replace('/\s\s+/',' ',$value);
 		if ($value!=""){
 			$v=explode(" ",$value);
 			$v[0]=strtoupper(trim($v[0]));
-			switch ($v[0]){				case "PREFIX":
+			switch ($v[0]){
+				case "PREFIX":
 					$prefix=trim($v[1]);
 					break;
 				case "REF":
@@ -114,18 +112,22 @@ if (file_exists($file)){
 					$rt_inv=trim($v[2]);
 					break;
 				case "USE":
-					$uf=trim($v[1]);
-					$use=trim($v[2]);
-					break;			}
+					$use=trim($v[1]);
+					$uf=trim($v[2]);
+					break;
+			}
 		}
 	}
 }
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".dat";
-if (file_exists($file)){
-	$fp=file($file);
-	foreach ($fp as $key=>$value){		$value=trim($value);
-		if ($value!=""){			$v=explode('=',$value);
-			switch ($v[0]){				case "alpha_prefix":
+
+if (file_exists($datfile)){
+	$fp=file($datfile);
+	foreach ($fp as $key=>$value){
+		$value=trim($value);
+		if ($value!=""){
+			$v=explode('=',$value);
+			switch ($v[0]){
+				case "alpha_prefix":
 					$prefixalpha=$v[1];
 					break;
 				case "perm_prefix":
@@ -136,105 +138,97 @@ if (file_exists($file)){
 					break;
 				case "display":
 					$displaypft=$v[1];
-					break;			}		}
+					break;
+			}
+		}
 	}
 }
-if (isset($arrHttp["base"]))
-	echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
-if (!isset($arrHttp["Accion"])){	echo "<input type=hidden name=Accion value=\"actualizar\">\n";	echo "<table cellspacing=5 width=600 border=0 align=center style='font-size:20px;'>";
-	echo "<td></td><td colspan=4><font style='font-size:14px;'><strong>".$msgstr["tag"]."</strong></font></td>\n";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_descriptor"];
-	echo "</td>";
-	echo "<td colspan=4>";
-	echo "<input type=text name=tag_term value='$term' size=5>";
-	echo "</td></tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_nodescriptor"];
-	echo "</td>";
-	echo "<td colspan=4>";
-	echo "<input type=text name=tag_ref value='$ref' size=5>";
-	echo "</td></tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_prefix"];
-	echo "</td>";
-	echo "<td colspan=4>";
-    echo "<input type=text name=tag_prefix value=\"$prefix\" size=5>";
-	echo "</td></tr>";
-	echo "<tr><td colspan=5><p><font style='font-size:14px;'><strong>";
-	echo $msgstr["tes_invrel"]."</strong></font>";
-	echo "</td>";
-	echo "<tr><td><font style='font-size:14px;'><strong>".$msgstr["tes_term"]."</font></strong></td>";
-	echo "<td><font style='font-size:14px;'><strong>".$msgstr["tag"]."</font></strong></td>";
-	echo "<td>&nbsp; &nbsp;</td><td><font style='font-size:14px;'><strong>".$msgstr["tes_invrel"]."</font></strong></td>";
-	echo "<td><font style='font-size:14px;'><strong>".$msgstr["tag"]."</font></strong></td>";
-	echo "</tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_bt"]." (".$msgstr["tes_BT"].")</td>";
-	echo "<td><input type=text name=tag_bt size=3 value=".$bt."></td>";
-	echo "<td> </td>";
-	echo "<td style='font-size:12px;'>";
-	echo $msgstr["tes_nt"]." (".$msgstr["tes_NT"].")</td>";
-	echo "<td><input type=text name=tag_nt size=3 value=".$nt."></td>";
-	echo "</tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_rt"]." (".$msgstr["tes_RT"].")</td>";
-	echo "<td><input type=text name=tag_rt size=3 value=".$rt."></td>";
-	echo "<td> </td>";
-	echo "<td style='font-size:12px;'>";
-	echo $msgstr["tes_rt"]." (".$msgstr["tes_RT"].")</td>";
-	echo "<td><input type=text name=tag_rt_inv size=3 value=".$rt_inv."></td>";
-	echo "</tr>";
-	echo "<tr>";
-	echo "<td style='font-size:12px;'>";
-	echo $msgstr["tes_use"]." (".$msgstr["tes_USE"].")</td>";
-	echo "<td><input type=text name=tag_use size=3 value=".$use."></td>";
-	echo "<td> </td>";
-	echo "<td style='font-size:12px;'>";
-	echo $msgstr["tes_uf"]." (".$msgstr["tes_UF"].")</td>";
-	echo "<td><input type=text name=tag_uf size=3 value=".$uf."></td>";
-	echo "</tr>";
-	echo "</table>\n";
-	echo "<p>";
-	echo "<table cellspacing=5 width=600 border=0 align=center style='font-size:20px;'>";
-	echo "<tr><td colspan=2><font style='font-size:14px;'><strong>".$msgstr["tes_accesscnf"]."</strong></font></td></tr>\n";
-	echo "<tr><td width=172 style='font-size:12px;' >";
-	echo $msgstr["tes_accessalpha"];
-	echo "</td>";
-	//echo "<td width=100> &nbsp; &nbsp; </td>";
-	echo "<td width=328>";
-	echo "<input type=text name=tag_prefixalpha value='$prefixalpha' size=5>";
-	echo "</td></tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_accessperm"];
-	echo "</td>";
-	//echo "<td> &nbsp; &nbsp; </td>";
-	echo "<td>";
-	echo "<input type=text name=tag_prefixperm value='$prefixperm' size=5>";
-	echo "</td></tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_termpft"];
-	echo "</td>";
-	//echo "<td> &nbsp; &nbsp; </td>";
-	echo "<td>";
-	echo "<input type=text name=tag_termpft value='$termpft' size=50>";
-	echo "</td></tr>";
-	echo "<tr><td style='font-size:12px;'>";
-	echo $msgstr["tes_displaypft"];
-	echo "</td>";
-	//echo "<td> &nbsp; &nbsp; </td>";
-	echo "<td>";
-	echo "<input type=text name=tag_displaypft value='$displaypft' size=5>";
-	echo "</td></tr>";
-	echo "</table>\n";
+// Next part is executed at the first invocation
+if (!isset($arrHttp["Accion"])){
+    ?>
+	<input type=hidden name=Accion value="actualizar">
+	<table cellspacing=5 width=600 border=0 align=center style='font-size:20px;'>
+    <tr>
+        <th></th>
+        <th colspan=4><?php echo $msgstr["tag"]?></th>
+    </tr>
+	<tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_descriptor"];?></td>
+        <td colspan=4><input type=text name=tag_term value='<?php echo $term?>' size=5></td>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_nodescriptor"];?></td>
+        <td colspan=4><input type=text name=tag_ref value='<?php echo $ref?>' size=5></td>
+    </tr>
+	<tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_prefix"];?></td>
+        <td colspan=4><input type=text name=tag_prefix value="<?php echo $prefix?>" size=5></td>
+    </tr>
+	<tr><th colspan=5><?php echo $msgstr["tes_invrel"]?></th></tr>
+    <tr>
+        <th><?php echo $msgstr["tes_term"]?></th>
+        <th><?php echo $msgstr["tag"]?></th>
+        <th>&nbsp; &nbsp;</th>
+        <th><?php echo $msgstr["tes_invrel"]?></th>
+        <th><?php echo $msgstr["tag"]?></th>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_bt"]." (".$msgstr["tes_BT"].")"?></td>
+        <td><input type=text name=tag_bt size=3 value="<?php echo $bt?>"></td>
+        <td> </td>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_nt"]." (".$msgstr["tes_NT"].")"?></td>
+        <td><input type=text name=tag_nt size=3 value="<?php echo $nt?>"></td>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_rt"]." (".$msgstr["tes_RT"].")"?></td>
+        <td><input type=text name=tag_rt size=3 value="<?php echo $rt?>"></td>
+        <td> </td>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_rt"]." (".$msgstr["tes_RT"].")"?></td>
+        <td><input type=text name=tag_rt_inv size=3 value="<?php echo $rt_inv?>"></td>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_use"]." (".$msgstr["tes_USE"].")"?></td>
+        <td><input type=text name=tag_use size=3 value="<?php echo $use?>"></td>
+        <td> </td>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_uf"]." (".$msgstr["tes_UF"].")"?></td>
+        <td><input type=text name=tag_uf size=3 value="<?php echo $uf?>"></td>
+    </tr>
+    </table>
+    <p>
+    <table cellspacing=5 width=600 border=0 align=center style='font-size:20px;'>
+    <tr>
+        <th colspan=2><?php echo $msgstr["tes_accesscnf"]?></th>
+    </tr>
+	<tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_accessalpha"]?></td>
+        <td><input type=text name=tag_prefixalpha value='<?php echo $prefixalpha?>' size=5></td>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_accessperm"]?></td>
+        <td><input type=text name=tag_prefixperm value='<?php echo $prefixperm?>' size=5></td>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_termpft"]?></td>
+        <td><input type=text name=tag_termpft value='<?php echo $termpft?>' size=50></td>
+    </tr>
+    <tr>
+        <td style='font-size:12px;'><?php echo $msgstr["tes_displaypft"];?></td>
+        <td><input type=text name=tag_displaypft value='<?php echo $displaypft?>' size=5></td>
+    </tr>
+    </table>
+    <?php
 }else{
-$PREFIXALPHA="";
-$PREFIXPERM="";
-$TERMPFT="";
-$DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
-		$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tesaurus.rel";
-	   	$fp=fopen($file,"w");
-	    foreach ($arrHttp as $key=>$Opt){	    	if (substr($key,0,4)=="tag_"){	    		$key=trim(substr($key,4));	    		switch ($key){
+    // update/create of the config files
+    $PREFIXALPHA="";
+    $PREFIXPERM="";
+    $TERMPFT="";
+    $DISPLAYPFT="";
+	if ($arrHttp["Accion"]=="actualizar"){
+	   	$fp=fopen($thesaurusfile,"w");
+	    foreach ($arrHttp as $key=>$Opt){
+	    	if (substr($key,0,4)=="tag_"){
+	    		$key=trim(substr($key,4));
+	    		switch ($key){
 	    			case "prefix":
 	    				$PREFIX=$Opt;
 	    				break;
@@ -243,7 +237,8 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    				break;
 	    			case "ref":
 	    				$REF=$Opt;
-	    				break;	    			case "nt":
+	    				break;
+	    			case "nt":
 	    				$NT=$Opt;
 	    				break;
 	    			case"bt":
@@ -263,7 +258,8 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    				break;
 	    		}
 
-	    	}	    }
+	    	}
+	    }
 	    if ($PREFIX!="") fwrite($fp,"PREFIX ".$PREFIX."\n");
 	    if ($TERM!="")   fwrite($fp,"TERM   ".$TERM."\n");
 	    if ($REF!="")    fwrite($fp,"REF    ".$REF."\n");
@@ -271,13 +267,14 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    if ($RT!="")     fwrite($fp,"RT     ".$RT. "  ".$RT_INV."  RT\n");
 	    if ($USE!="")    fwrite($fp,"USE    ".$USE."  ".$UF.    "  UF\n");
 	    fclose($fp);
-	    echo "<h4>$file ".$msgstr["updated"]."</h4>";
-	    $file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".dat";
-	    $fp=fopen($file,"w");
+	    echo "<h4>$thesaurusfilebase ".$msgstr["updated"]."</h4>";
+
+	    $fp=fopen($datfile,"w");
 	    foreach ($arrHttp as $key=>$Opt){
 	    	if (substr($key,0,4)=="tag_"){
 	    		$key=trim(substr($key,4));
-	    		switch ($key){	    			case "prefixalpha":
+	    		switch ($key){
+	    			case "prefixalpha":
 	    				$PREFIXALPHA=$Opt;
 	    				break;
 	    			case "prefixperm":
@@ -297,12 +294,12 @@ $DISPLAYPFT="";	if ($arrHttp["Accion"]=="actualizar"){
 	    if ($TERMPFT!="")     fwrite($fp,"alpha_pft="   .$TERMPFT."\n");
 	    if ($DISPLAYPFT!="")  fwrite($fp,"display="     .$DISPLAYPFT."\n");
 		fclose($fp);
-	    echo "<h4>$file ".$msgstr["updated"]."</h4>";
-	}}
+	    echo "<h4>$datfilebase ".$msgstr["updated"]."</h4>";
+	}
+}
 ?>
 </form>
 </div>
 </div>
 <?php include("../common/footer.php");?>
-</body>
-</html>
+

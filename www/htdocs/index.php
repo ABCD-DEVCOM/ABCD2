@@ -3,9 +3,12 @@
 2021-01-04 fho4abcd Removed login encryption
 2021-01-04 fh04abcd Corrected "languaje" --> language
 2021-02-07 fho4abcd Configured Logo url now used without prefix and strip. Works now according to wiki
-2021-02-27 fho4abcd png favicon works better in bookmarks. 
+2021-02-27 fho4abcd png favicon works better in bookmarks.
+2021-08-10 fho4abcd Do not crash if first language file (from the browser) is missing. Visible message if no file found
+2022-01-19 rogercgui Include css_settings.php
+2022-01-19 fho4abcd Configured language is preset in the language selection
+20220122 rogercgui Default logo is displayed if institution image is absent
 */
-
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
@@ -14,41 +17,72 @@ include("$app_path/common/get_post.php");
 $new_window=time();
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
+$lang_config=$lang; // save the configured language to preset it later
+$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+
 if (isset($_SESSION["lang"])){
 	$arrHttp["lang"]=$_SESSION["lang"];
-	$lang=$_SESSION["lang"];
+	$lang=$lang;
 }else{
 	$arrHttp["lang"]=$lang;
 	$_SESSION["lang"]=$lang;
 }
-include ("$app_path/lang/admin.php");
-include ("$app_path/lang/lang.php");
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
+include ("$app_path/lang/admin.php");
+include ("$app_path/lang/lang.php");	
+?>
+<!DOCTYPE html>
+
+<html lang="<?php echo $lang;?>" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang;?>">
 
 <head profile="http://www.w3.org/2005/10/profile">
 		<meta http-equiv="Expires" content="-1" />
 		<meta http-equiv="pragma" content="no-cache" />
-		<META http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
-		<meta http-equiv="Content-Language" content="pt-br" />
+		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $meta_encoding;?>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<meta http-equiv="Content-Language" content="<?php echo $lang;?>" />
 		<meta name="robots" content="all" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
-        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+
+		<!-- Favicons -->
+		
+		<link rel="mask-icon" href="/assets/images/favicons/favicon.svg">
+    	<link rel="icon" type="image/svg+xml" href="/assets/images/favicons/favicon.svg" color="#fff">
+
+    	<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicons/favicon-32x32.png">
+    	<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicons/favicon-16x16.png">
+
+    	<link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/favicon-60x60.png">
+    	<link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/favicon-76x76.png">
+    	<link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/favicon-120x120.png">
+    	<link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/favicon-152x152.png">
+    	<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/favicon-180x180.png">
 
 		<title>ABCD</title>
 		<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/template.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" rev="stylesheet" href="/assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+
+		<!--FontAwesome-->
+		<link href="/assets/css/all.min.css" rel="stylesheet"> 
 		<!--[if IE]>
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie.css" type="text/css" media="screen"/>
 		<![endif]-->
 		<!--[if IE 6]>
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
-<script src=<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
+<style type="text/css">
+	html, body {
+		height: 100vh;
+		margin: 0;
+	}
+	.middle {
+		height: 80vh;
+	}
+</style>
+
+<script src=/<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
 
 <script language=javascript>
 
@@ -69,8 +103,8 @@ function CambiarClave(){
 	document.cambiarPass.password.value=Trim(document.administra.password.value)
 	ix=document.administra.lang.selectedIndex
 	document.cambiarPass.lang.value=document.administra.lang.options[ix].value
-	ix=document.administra.db_path.selectedIndex
-	document.cambiarPass.db_path.value=document.administra.db_path.options[ix].value
+	ix=document.administra.db_path.value
+	document.cambiarPass.db_path.value=document.administra.db_path.value
 	document.cambiarPass.submit()
 }
 function Enviar(){
@@ -95,35 +129,42 @@ function Enviar(){
 }
 
 </script>
+<?php
+include ("$app_path/common/css_settings.php");
+?>
 </head>
 <body>
-	<div class="heading">
+	<header class="heading">
 		<div class="institutionalInfo">
-			<img src=<?php	if (isset($logo))
-						echo "$logo" ;
-					else
-						echo "central/images/logoabcd.jpg";
-				 ?>
-			><h1><?php echo $institution_name?></h1>
+			<?php
+
+			if (isset($def['LOGO_DEFAULT'])) {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
+			} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
+				echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
+				if (isset($institution_name)) echo $institution_name;
+				echo "'>";
+			} else {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
+			}
+
+			?>
 		</div>
-		<div class="userInfo"><?php echo $meta_encoding?></div>
+		<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding?></div>
 
 		<div class="spacer">&#160;</div>
-	</div>
+	</header>
 	<div class="sectionInfo">
 		<div class="breadcrumb"></div>
 		<div class="actions"></div>
 		<div class="spacer">&#160;</div>
 	</div>
-<form name=administra onsubmit="javascript:return false" method=post action=<?php echo $app_path?>/common/inicio.php>
-<input type=hidden name=Opcion value=admin>
-<input type=hidden name=cipar value=acces.par>
+<form name="administra" onsubmit="javascript:return false" method="post" action="/<?php echo $app_path?>/common/inicio.php">
+<input type="hidden" name="Opcion" value="admin">
+<input type="hidden" name="cipar" value="acces.par">
 	<div class="middle login">
 		<div class="loginForm">
-			<div class="boxTop">
-				<div class="btLeft">&#160;</div>
-				<div class="btRight">&#160;</div>
-			</div>
+
 		<div class="boxContent">
 <?php
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
@@ -134,7 +175,7 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 }
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
 		echo "
-			<div class=\"helper alert\">".$msgstr["pswchanged"]."
+			<div class=\"helper success\">".$msgstr["pswchanged"]."
 			</div>
 		";
 }
@@ -149,54 +190,69 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		echo "
 			<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry\" onfocus=\"this.className = 'textEntry superTextEntry textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry';\" />\n";
 }
+
 ?>
 		</div>
+
 		<div class="formRow">
 			<label for="pwd"><?php echo $msgstr["password"]?></label>
 			<input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
 		   <?php if (isset($change_password) and $change_password=="Y") echo "<br><a href=javascript:CambiarClave()>". $msgstr["chgpass"]."</a>\n";?>
 		</div>
 		<div id="formRow3" class="formRow formRowFocus">
-			<label ><?php echo $msgstr["lang"]?></label> <select name=lang class="textEntry singleTextEntry">
-<?php
-
- 	$a=$msg_path."lang/$lang/lang.tab";
-
- 	if (file_exists($a)){
-		$fp=file($a);
-		$selected="";
-		foreach ($fp as $value){
-			$value=trim($value);
-			if ($value!=""){
-				$l=explode('=',$value);
-				if ($l[0]!="lang"){
-					if ($l[0]==$_SESSION["lang"]) $selected=" selected";
-					echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>";
-					$selected="";
-				}
-			}
-		}
-	}else{
-		echo $msgstr["flang"].$db_path."lang/".$_SESSION["lang"]."/lang.tab";
-		die;
-	}
-?>
+        <?php
+        // Check if the language from the browser is present
+        $a=$msg_path."lang/$lang/lang.tab";
+        if (!file_exists($a)){
+            // switch to configured language if browser language is not present
+            echo "<div>".$msgstr["flang"].": ".$a."<br>";
+            echo $msgstr["using_config"]." '".$lang_config."'<br>&nbsp;</div>";
+            $lang=$lang_config;
+        }
+        // Check if the language file is present
+        $a=$msg_path."lang/$lang/lang.tab";
+        if (!file_exists($a)){
+            echo "<div style='color:red'>".$msgstr["fatal"].": ".$msgstr["flang"].": ".$a."</div>";
+            die;
+        }
+        ?>
+			<label ><?php echo $msgstr["lang"]?></label> 
+			<select name=lang class="textEntry singleTextEntry" onchange="this.submit()">
+                <option value=''></option>
+                <?php
+                $fp=file($a);
+                $selected="";
+                foreach ($fp as $value){
+                    $value=trim($value);
+                    if ($value!=""){
+                        $l=explode('=',$value);
+                        if ($l[0]!="lang"){
+                            if ($l[0]==$lang) $selected=" selected";
+                            echo "<option value=$l[0] $selected>".$msgstr[$l[0]]."</option>\n";
+                            $selected="";
+                        }
+                    }
+                }
+                ?>
 			</select>
 		</div>
 		<div class="formRow"><br>
 <?php
 if (file_exists("dbpath.dat")){
+	global $db_path;
 	$fp=file("dbpath.dat");
-	echo $msgstr["database_dir"].": <select name=db_path>\n";
+	echo $msgstr["database_dir"].': <select class="textEntry singleTextEntry" name=db_path>\n';
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$v=explode('|',$value);
 			$v[0]=trim($v[0]);
-			echo "<Option value=".trim($v[0]).">".$v[1]."\n";
+			echo "<option value=".trim($v[0]).">".$v[1]."\n";
 		}
 
 	}
-	echo "</select><p>";
+	echo "</select>";
+} else {
+	echo '<input type="hidden" name="db_path" value="'.$db_path.'">';
 }
 ?>
 			<input type="checkbox" name="newindow" value=
@@ -208,32 +264,23 @@ else
 ?> />
 			<label for="setCookie" class="inline"><?php echo $msgstr["openwindow"]?></label>
 		</div>
-		<div class="submitRow">
-			<div class="frLeftColumn"></div>
-			<div class="frRightColumn">
-				<a href="javascript:Enviar()" class="defaultButton goButton">
-				<img src="<?php echo $app_path?>/images/icon/defaultButton_next.png" alt="" title="" />
-					<span><strong><?php echo $msgstr["entrar"]?></strong></span>
+		<div class="formRow">
+				<a href="javascript:Enviar()" class="bt bt-blue">
+					<?php echo $msgstr["entrar"]?> 
 				</a>
-			</div>
-			<div class="spacer">&#160;</div>
 		</div>
-		<div class="spacer">&#160;</div>
 	</div>
-	<div class="boxBottom">
-		<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
-	</div>
+
 </div>
 </div>
 </form>
-<form name=cambiarPass action="<?php echo $app_path?>/dataentry/change_password.php" method=post>
-<input type=hidden name=login>
-<input type=hidden name=password>
-<input type=hidden name=lang>
-<input type=hidden name=db_path>
-<input type=hidden name=Opcion value=chgpsw>
+<form name="cambiarPass" action="<?php echo $app_path?>/dataentry/change_password.php" method="post">
+	<input type="hidden" name="login">
+	<input type="hidden" name="password">
+	<input type="hidden" name="lang">
+	<input type="hidden" name="db_path">
+	<input type="hidden" name="Opcion" value="chgpsw">
 </form>
+
 <?php include ("$app_path/common/footer.php");?>
-	</body>
-</html>
+

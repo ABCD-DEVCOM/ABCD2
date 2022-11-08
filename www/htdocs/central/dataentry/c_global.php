@@ -2,8 +2,9 @@
 /* Modifications
 20210312 fho4abcd Replaced helper code fragment by included file
 20210312 fho4abcd html move body + sanitize html
+20210623 fho4abcd Rewrite:pop-up to second screen, remove historical remains, code readability.
+20211216 fho4abcd Backbutton by included file
 */
-//error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -16,22 +17,35 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include("../config.php");
-
-
-
 include ("../lang/soporte.php");
 include ("../lang/admin.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+include("../common/header.php");
+/*
+** Set defaults for the return script,frame info and more
+*/
+$backtoscript="../dataentry/administrar.php"; // The default return script
+$confirmcount   =0;
+$errors         =0;
+$base           =$arrHttp["base"];
+$cipar          =$arrHttp["base"]."par";
+$fromval="";
+$toval="";
+$expresionval="";
+if (isset($arrHttp["confirmcount"]))$confirmcount=$arrHttp["confirmcount"];
+if (isset($arrHttp["from"]))        $fromval=Trim($arrHttp["from"]);
+if (isset($arrHttp["to"]))          $toval=Trim($arrHttp["to"]);
+if (isset($arrHttp["Expresion"]))   $expresionval=Trim($arrHttp["Expresion"]);
 
-$base =$arrHttp["base"];
-$cipar =$arrHttp["base"]."par";
+
+// Read the fdt
 include("leer_fdt.php");
 
 $Fdt_unsorted=LeerFdt($base);
 $Fdt=array();
-foreach ($Fdt_unsorted as $value){	$f=explode('|',$value);
-	$Fdt[$f[2]]=$value;}
-
+foreach ($Fdt_unsorted as $value){
+	$f=explode('|',$value);
+	$Fdt[$f[2]]=$value;
+}
 ksort($Fdt);
 
 if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
@@ -41,259 +55,24 @@ if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
   	$Opcion="rango";
   	$Expresion="";
 }
-include("../common/header.php");
 ?>
 <body>
-<style>
-.myLayersClass { position: absolute; visibility: hidden; xdisplay:none }
-.Botones { position: relative; visibility: hidden; xdisplay:none }
-</style>
 <script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
 <script language="JavaScript" type="text/javascript" src=js/windowdhtml.js></script>
-<script languaje=javascript>
-
-function toggleLayer(whichLayer)
-{
-if (document.getElementById)
-{
-// this is the way the standards work
-var style2 = document.getElementById(whichLayer).style;
-style2.display = style2.display? "":"block";
+<script language="JavaScript">
+function Confirmar(){
+	document.forma1.confirmcount.value++;
+	document.getElementById('preloader').style.visibility='visible'
+	document.forma1.submit()
 }
-else if (document.all)
-{
-// this is the way old msie versions work
-var style2 = document.all[whichLayer].style;
-style2.display = style2.display? "":"block";
+function Cancel(){
+	document.getElementById('preloader').style.visibility='visible'
+	document.checked.submit()
 }
-else if (document.layers)
-{
-// this is the way nn4 works
-var style2 = document.layers[whichLayer].style;
-style2.display = style2.display? "":"block";
-}
-}
-
-
-
-// quick browser tests
-var ns4 = (document.layers) ? true : false;
-var ie4 = (document.all && !document.getElementById) ? true : false;
-var ie5 = (document.all && document.getElementById) ? true : false;
-var ns6 = (!document.all && document.getElementById) ? true : false;
-
-
-function MostrarLista(Tag){
-  	if (document.forma1.global_C.selectedIndex==-1){
-		alert("<?php echo $msgstr["cg_sel"]?>")
-		return
-	}
-	ix=document.forma1.global_C.selectedIndex
-	fst=document.forma1.global_C.options[ix].value
-	t=fst.split("|")
-
-	if (t[1]==""){
-	  	alert("<?php echo $msgstr["cg_sinindice"]?>")
-	  	return
-	}
-	Separa=""
-	Separa="&delimitador="+Separa
-	Prefijo=Separa+"&tagfst="+t[0]+"&prefijo="+t[1]
-	ancho=200
-	url_indice="capturaclaves.php?opcion=autoridades&base=<?php echo $arrHttp['base']?>&cipar=<?php echo $arrHttp['base']?>.par&Tag="+Tag+Prefijo
-	loadwindow(url_indice,380,425)
-	return
-}
-
-function ConfirmarCambio(){	msgwin=window.open("","cg","width=750,height=300,scrollbars,resizable")
-	msgwin.focus()
-	msgwin.document.close()
-	msgwin.document.writeln("<html><title><?php echo $msgstr["mnt_globalc"] ?></title><body><?php echo $msgstr["mnt_globalc"] ?><p>")
-	msgwin.document.writeln("<font face=arial size=2")
-	msgwin.document.writeln("<strong><?php echo $msgstr["r_recsel"]?>:</strong><br>")
-	if ((Trim(document.forma1.from.value)=="" || Trim(document.forma1.to.value)=="") && Trim(document.forma1.Expresion.value)==""){		msgwin.document.writeln("<strong><font color=red><?php echo $msgstr["cg_selrecords"]?>:</strong><br>")
-		return	}
-	if (Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!=""){
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_from"]?></i>: "+document.forma1.from.value+"<br>")
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_to"]?></i>: "+document.forma1.to.value+"<br>")
-	}
-	if (Trim(document.forma1.Expresion.value)!="")
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_search"]?></i>: "+document.forma1.Expresion.value+"<br>")
-	if ((Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") && Trim(document.forma1.Expresion.value)!=""){
-		msgwin.document.writeln("<strong><font color=red><?php echo $msgstr["cg_selrecords"]?>:</strong><br>")
-		return
-	}
-    ix_csel=document.forma1.global_C.selectedIndex
-	campo_sel=document.forma1.global_C.options[ix_csel].text
-	if (ix_csel==0 && Trim(campo_sel)==""){		msgwin.document.writeln("<p><strong><font color=red><?php echo $msgstr["cg_sel"]?></strong>")
-		die;	}
-	if (ix_csel>0){
-		msgwin.document.writeln("<strong><?php echo $msgstr["cg_selfield"]?></strong>: "+campo_sel+"<br>")
-	}
-	//if (Trim(document.forma1.listdel.value)!="")
-	//	msgwin.document.writeln("<strong><?php echo $msgstr["cg_selfield"]?></strong>: "+document.forma1.listdel.value+"<br>")
-	mov=""
-	for (i=0;i<document.forma1.tipoc.length;i++){
-	  	if(document.forma1.tipoc[i].checked) mov=document.forma1.tipoc[i].value
-	}
-	xtipo_mov=""
-	switch (mov){
-	  	case "agregar":
-	  		xtipo_mov="<?php echo $msgstr["cg_add"]?>"
-	  		break
-	  	case "agregarocc":
-	  		xtipo_mov="<?php echo $msgstr["cg_addocc"]?>"
-	  		break
-	  	case "modificar":
-	  		xtipo_mov="<?php echo $msgstr["cg_modify"]?>"
-	  		break
-	  	case "modificarocc":
-	  		xtipo_mov="<?php echo $msgstr["cg_modifyocc"]?>"
-	  		break
-	  	case "dividir":
-	  		xtipo_mov="<?php echo $msgstr["cg_split"]?>"
-	  		break
-	 	case "mover":
-	  		xtipo_mov="<?php echo $msgstr["cg_move"]?>"
-	  		break
-	  	case "eliminar":
-	  		xtipo_mov="<?php echo $msgstr["cg_delete"]?>"
-	  		break
-	 	case "eliminarocc":
-	 		xtipo_mov="<?php echo $msgstr["cg_deleteocc"]?>"
-	 		break
-	}
-    if (xtipo_mov==""){    	msgwin.document.writeln("<strong><font color=red><?php echo $msgstr["cg_tipoc"]?> </strong>")
-    	return    }else{    	msgwin.document.writeln("<strong><?php echo $msgstr["cg_tipoc"]?>:"+xtipo_mov+" </strong>")    }
-	if (mov!="mover" && mov!="dividir"){
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_scope"]?></i>: ")
-		if (document.forma1.tipoa[0].checked)
-			msgwin.document.writeln("<?php echo $msgstr["cg_field"]?><br>")
-		else
-			msgwin.document.writeln("<?php echo $msgstr["cg_part"]?><br>")
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_valactual"]?></i>: "+document.forma1.actual.value+"<br>")
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_nuevoval"]?></i>: "+document.forma1.nuevo.value+"<br>")
-	}
-
-	if (mov=="mover" || mov=="dividir"){
-		ix_csel=document.forma1.nuevotag.selectedIndex
-		campo_sel=document.forma1.nuevotag.options[ix_csel].text
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_moveto"]?></i>: ")
-		msgwin.document.writeln(campo_sel+"<br>")
-	}
-	if (mov =="dividir"){
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_delimiter"]?></i>: "+document.forma1.separar.value+"<br>")
-		msgwin.document.writeln("<i><?php echo $msgstr["cg_found"]?></i>: ")
-		if (document.forma1.posicion[0].checked)
-			msgwin.document.writeln("<?php echo $msgstr["cg_before"]?>")
-		else
-		    msgwin.document.writeln("<?php echo $msgstr["cg_after"]?>")
-	}
-	msgwin.document.writeln("<p><a href='javascript:window.opener.document.forma1.submit();self.close()'>Continuar</a>")
-	msgwin.document.writeln("&nbsp; &nbsp; &nbsp;<a href='javascript:self.close()'>Cancelar</a>")
-	msgwin.document.writeln("</body></html>")
-}
-
-function EnviarForma(){
-    res=ConfirmarCambio()
-}
-function EjecutarCambio(){	Se=""
-	de=Trim(document.forma1.from.value)
-	a=Trim(document.forma1.to.value)
-    if (de!="" || a!=""){
-		var strValidChars = "0123456789";
-		blnResult=true
-   	//  test strString consists of valid characters listed above
-   		for (i = 0; i < de.length; i++){
-    		strChar = de.charAt(i);
-    		if (strValidChars.indexOf(strChar) == -1){
-    			alert("<?php echo $msgstr["cg_rangoinval"]?>")
-	    		return false
-    		}
-    	}
-    	for (i = 0; i < a.length; i++){
-    		strChar = a.charAt(i);
-    		if (strValidChars.indexOf(strChar) == -1){
-    			alert("<?php echo $msgstr["cg_rangoinval"]?>")
-	    		return false
-    		}
-    	}
-    	de=Number(de)
-    	a=Number(a)
-    	if (de<=0 || a<=0 || de>a ||a>top.maxmfn){
-	    	alert("<?php echo $msgstr["cg_rangoinval"]?>")
-	    	return false
-		}
-	}
-	if (de=="" && a=="" && Trim(document.forma1.Expresion.value)=="" ){		alert("<?php echo $msgstr["cg_selrecords"]?>")
-	    return false	}
-	ix_csel=document.forma1.global_C.selectedIndex
-	if (ix_csel==-1 ){
-		alert("<?php echo $msgstr["cg_sel"]?>")
-		return false
-	}
-	campo_sel=document.forma1.global_C.options[ix_csel].value
-	cc_sel=campo_sel.split('|')
-	if (cc_sel[3]=="AI"|| cc_sel[9]=="AI"){      //POR EL CAMBIO QUE SE HIZO EN EL FDT DEL TIPO DE CAMPO POR EL TIPO DE ENTRADA		if (!confirm("<?php echo $msgstr["cn_sel"]?>"))
-			return	}
-	x_d=Trim(document.forma1.actual.value)
-	x_h=Trim(document.forma1.nuevo.value)
-	mov=""
-	for (i=0;i<document.forma1.tipoc.length;i++){
-	  	if(document.forma1.tipoc[i].checked) mov=document.forma1.tipoc[i].value
-	}
-	if (mov==""){
-	  	alert("<?php echo $msgstr["cg_tipoc"]?>")
-	  	return false
-	}
-	switch (mov){
-	  	case "agregar":
-	  	case "agregarocc":
-	  		if (x_h==""){
-			    alert("<?php echo $msgstr["cg_selcontenido"]?>")
-			    return false
-			}
-	  		break
-	  	case "modificar":
-	  	case "modificarocc":
-	  		if (x_h=="" ){
-			//    alert("<?php echo $msgstr["cg_modificar"]?>")
-			//    return false
-			}
-	  		break
-	  	case "dividir":
-	  		if (Trim(document.forma1.separar.value)==""){
-	  			alert("<?php echo $msgstr["cg_separador"]?>")
-	  			return false
-	  		}
-	  		if (document.forma1.nuevo.selectedindex==-1){
-				alert("<?php echo $msgstr["cg_colocar"]?>")
-				return false
-			}
-			xpos=""
-			for (i=0;i<document.forma1.posicion.length;i++){
-	  			if(document.forma1.posicion[i].checked) xpos=document.forma1.posicion[i].value
-			}
-			if (xpos==""){
-				alert("<?php echo $msgstr["cg_posicion"]?>")
-				return false
-			}
-	  	case "eliminar":
-	  		break
-	 	case "eliminarocc":
-	 		if (x_d==""){
-	 			if (!confirm("<?php echo $msgstr["cg_delallocc"]?>")){
-			   	 	return false
-				}
-			}
-
-
-	}
-	res=ConfirmarCambio()
-
-	document.forma1.MaxMfn.value=top.maxmfn
-
-
+function Execute(){
+	document.getElementById('preloader').style.visibility='visible'
+    document.checked.action='c_global_ex.php'
+	document.checked.submit()
 }
 
 function Buscar(){
@@ -315,132 +94,399 @@ function Buscar(){
 <?php echo $msgstr["cg_titulo"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"administrar.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
 <?php $ayuda="cglobal.html"; include "../common/inc_div-helper.php"; ?>
 <div class="middle form">
+    <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
+          style="visibility:hidden;position:absolute;top:30%;left:45%;border:2px solid;"/>
 <div class="formContent">
 <div align=center>
-<form name=forma1 method=post action=c_global_ex.php onsubmit="Javascript:return false">
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
-<input type=hidden name=MaxMfn>
-<input type=hidden name=Opcion value=<?php echo $Opcion?>>
+<?php
+if ($confirmcount==0) {
+    /*
+    ** First screen with all parameters
+    ** Note that the first sreen is also shown to modify the value after check with second screen
+    */
+    // defaults for radio buttons
+    $rad_agregar="";
+    $rad_modificar="";
+    $rad_eliminar="";
+    $rad_agregarocc="";
+    $rad_modificarocc="";
+    $rad_eliminarocc="";
+    $rad_dividir="";
+    $rad_mover="";
+    if ( isset($arrHttp["tipoc"])) {
+        if ($arrHttp["tipoc"] == "agregar" )      $rad_agregar="checked";
+        if ($arrHttp["tipoc"] == "modificar" )    $rad_modificar="checked";
+        if ($arrHttp["tipoc"] == "eliminar" )     $rad_eliminar="checked";
+        if ($arrHttp["tipoc"] == "agregarocc" )   $rad_agregarocc="checked";
+        if ($arrHttp["tipoc"] == "modificarocc" ) $rad_modificarocc="checked";
+        if ($arrHttp["tipoc"] == "eliminarocc" )  $rad_eliminarocc="checked";
+        if ($arrHttp["tipoc"] == "dividir" )      $rad_dividir="checked";
+        if ($arrHttp["tipoc"] == "mover" )        $rad_mover="checked";
+    }
+    $rad_frase="checked"; //default
+    $rad_cadena="";
+    if ( isset($arrHttp["tipoa"])) {
+        $rad_frase="";
+        if ($arrHttp["tipoa"] == "frase" )  $rad_frase="checked";
+        if ($arrHttp["tipoa"] == "cadena" ) $rad_cadena="checked";
+    }
+    $rad_antes=""; 
+    $rad_despues="";
+    if ( isset($arrHttp["posicion"])) {
+        if ($arrHttp["posicion"] == "antes" )  $rad_antes="checked";
+        if ($arrHttp["posicion"] == "despues" )$rad_despues="checked";
+    }
+    include ("../common/inc_get-dbinfo.php");// sets MAXMFN
+    ?>
+    <form name=forma1 method=post >
+    <input type=hidden name=confirmcount value=0>
+    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+    <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
+    <input type=hidden name=MaxMfn value=<?php echo $arrHttp["MAXMFN"]?>>
+    <input type=hidden name=Opcion value=<?php echo $Opcion?>>
 
-<table cellpading=5 cellspacing=5 border=0 width=600>
-	<tr>
-	<td align=center bgcolor=#cccccc colspan=3><?php echo $msgstr["r_recsel"]?> <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#SEL' target=_blank><img src=img/barHelp.png border=0 height=12></a></td>
-
-	<tr>
-		<td  align=left><?php echo $msgstr["cg_rango"]?> </td>
-		<td align=left><?php echo $msgstr["cg_from"]?>:<input type=text name=from size=10></td>
-		<td  align=left><?php echo $msgstr["cg_to"]?>: <input type=text name=to size=10>
-		<script>document.writeln(" (<?php echo $msgstr["cg_maxmfn"]?>: "+top.maxmfn+")")</script></td>
-	<TR><td colspan=3><hr></td>
-	<tr>
-		<td  align=left valign=top><a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle border=0><?php echo $msgstr["cg_search"]?> </a></td>
-        <TD colspan=2 align=left><?php echo $msgstr["expresion"]?><br>
-		<textarea rows=1 cols=80 name=Expresion><?php  	if (isset($arrHttp["Expresion"]))echo $Expresion;?></textarea>
-		</td>
-
-	<tr>
-		<td valign=top align=right><br><?php echo $msgstr["cg_selfield"]?></td>
-		<td align=left colspan=2><br>
-			<Select name=global_C><option></option>
+    <table cellpadding=3 cellspacing=5 border=0 width=600>
+        <tr>
+            <td align=center bgcolor=#cccccc colspan=3><?php echo $msgstr["r_recsel"]?> <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#SEL' target=_blank><img src=img/barHelp.png border=0 height=12></a></td>
+        </tr>
+        <tr>
+            <td align=left><?php echo $msgstr["cg_rango"]?> </td>
+            <td align=left><?php echo $msgstr["cg_from"]?>: <input type=text name=from size=10 value='<?php echo $fromval?>'></td>
+            <td align=left><?php echo $msgstr["cg_to"]?>: <input type=text name=to size=10 value='<?php echo $toval?>'>
+            <?php echo " ( ".$msgstr["cg_maxmfn"].": ".$arrHttp["MAXMFN"].")";?></td>
+        </tr>
+        <tr>
+            <td colspan=3><hr></td>
+        </tr>
+        <tr>
+            <td  align=left valign=top><a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle ><?php echo $msgstr["cg_search"]?> </a></td>
+            <td colspan=2 align=left>
+                <?php echo $msgstr["expresion"]?><br>
+                <textarea rows=1 cols=80 name=Expresion><?php if (isset($arrHttp["Expresion"]))echo $Expresion;?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td valign=top align=right><br><?php echo $msgstr["cg_selfield"]?></td>
+            <td align=left colspan=2><br>
+                <select name=global_C><option></option>
+                    <?php foreach ($Fdt as $linea){
+                            $t=explode('|',$linea);
+                            $tval=$t[1].'|'.$t[5].'|'.$t[6].'|'.$t[0];
+                            $tname=$t[2]." (".$t[1].")";
+                            if ($t[5]!="") $tname.=" (".$t[5].")";
+                            $tselected="";
+                            if (isset($arrHttp["global_C"]) && $arrHttp["global_C"]==$tval) $tselected="selected";
+                    ?>
+                    <option value='<?php echo $tval?>' <?php echo $tselected;?>> <?php echo $tname;?></option>
+                    <?php
+                        }
+                    ?>
+                </select>
+                <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#CAMPO' target=_blank><img src=img/barHelp.png border=0 height=15></a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan=3 align=center bgcolor=#cccccc>
+                <?php echo $msgstr["cg_tipoc"]?>&nbsp;
+                <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#TIPO_CAMBIO' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
+                <table>
+                    <tr>
+                        <td><input type=radio name=tipoc value="agregar" <?php echo $rad_agregar;?>><?php echo $msgstr["cg_add"]?></td>
+                        <td><input type=radio name=tipoc value="modificar" <?php echo $rad_modificar;?>><?php echo $msgstr["cg_modify"]?></td>
+                        <td><input type=radio name=tipoc value="eliminar" <?php echo $rad_eliminar;?>><?php echo $msgstr["cg_delete"]?></td>
+                    </tr><tr>
+                        <td><input type=radio name=tipoc value="agregarocc" <?php echo $rad_agregarocc;?>><?php echo $msgstr["cg_addocc"]?></td>
+                        <td><input type=radio name=tipoc value="modificarocc" <?php echo $rad_modificarocc;?>><?php echo $msgstr["cg_modifyocc"]?></td>
+                        <td><input type=radio name=tipoc value="eliminarocc" <?php echo $rad_eliminarocc;?>><?php echo $msgstr["cg_deleteocc"]?></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo "<font color=darkred>".$msgstr["cg_modify"]." / " .$msgstr["cg_modifyocc"]."</font>"?></td>
+            <td><?php echo $msgstr["cg_scope"].": ";?><input type=radio name=tipoa value="frase" <?php echo $rad_frase;?>><?php echo $msgstr["cg_field"]?></td>
+            <td><?php echo $msgstr["cg_scope"].": ";?><input type=radio name=tipoa value="cadena" <?php echo $rad_cadena;?>><?php echo $msgstr["cg_part"]?></td>
+        </tr>
+        <tr>
+            <td colspan=3 align=left width=100%>
+                <table>
+                    <tr>
+                        <td valign=top bgcolor=#cccccc><?php echo $msgstr["cg_valactual"]?>  <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#VALOR' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
+                        <input type=text name=actual size=100 value='<?php if (isset($arrHttp["actual"]))echo $arrHttp["actual"];?>'>
+                        </td>
+                    </tr><tr>
+                        <td><?php echo $msgstr["cg_nuevoval"]?>:  <a href='../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/cglobal.html#NUEVO_VALOR' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
+                        <input type=text name=nuevo size=100 value='<?php if (isset($arrHttp["nuevo"]))echo $arrHttp["nuevo"];?>'>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3 align=center bgcolor=#cccccc>
+                <?php echo $msgstr["cg_tipoc"]?><br>
+                <input type=radio name=tipoc value="mover" <?php echo $rad_mover;?>><?php echo $msgstr["cg_move"]?>&nbsp;
+                <input type=radio name=tipoc value="dividir" <?php echo $rad_dividir;?>><?php echo $msgstr["cg_split"]?>&nbsp;
+                <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#DIVIDIR' target=_blank><img src=img/barHelp.png border=0 height=12></a>&nbsp; &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3 >
+                <table border=0 align=center>
+                   <tr>
+                        <td align=left><?php echo $msgstr["cg_moveto"]?></td>
+                        <td align=left>
+                            <select name=nuevotag>
+                                <option value=""><?php echo $msgstr["cg_splitdel"]?></option>
 <?php foreach ($Fdt as $linea){
-		$t=explode('|',$linea);
-   		echo "<option value='".$t[1].'|'.$t[5].'|'.$t[6].'|'.$t[0]."'>".$t[2]." (".$t[1].")";
-   		if ($t[5]!="") echo " (".$t[5].")";
-   		echo "\n";
-  	}
+        $t=explode('|',$linea);
+        $tval=$t[1]."|".trim(substr($linea,46,2))."|".trim(substr($linea,59));
+        $tname=$t[2]." (".$t[1].")";
+        $tselected="";
+        if (isset($arrHttp["nuevotag"]) && $arrHttp["nuevotag"]==$tval) $tselected="selected";
+ ?>
+                                <option value='<?php echo $tval?>' <?php echo $tselected;?>> <?php echo $tname;?></option>
+<?php
+    }
 ?>
-					</select> <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#CAMPO' target=_blank><img src=img/barHelp.png border=0 height=15></a>
-					<br>
-					</td>
-
-	<tr><td colspan=4>&nbsp;</td>
-	<tr>
-		<td  colspan=4 align=center bgcolor=#cccccc>
-                <?php echo $msgstr["cg_tipoc"]?>  <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#TIPO_CAMBIO' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
-				<table>
-                <tr>
-					<td><input type=radio name=tipoc value="agregar"><?php echo $msgstr["cg_add"]?></td>
-					<td><input type=radio name=tipoc value="modificar"><?php echo $msgstr["cg_modify"]?></td>
-					<td><input type=radio name=tipoc value="eliminar"><?php echo $msgstr["cg_delete"]?></td>
-		        </tr><tr>
-		        	<td><input type=radio name=tipoc value="agregarocc"><?php echo $msgstr["cg_addocc"]?></td>
-					<td><input type=radio name=tipoc value="modificarocc"><?php echo $msgstr["cg_modifyocc"]?></td>
-					<td><input type=radio name=tipoc value="eliminarocc"><?php echo $msgstr["cg_deleteocc"]?></td>
-                </tr>
-				</table>
-		</td>
-		<tr>
-		<td colspan=4>
-		<?php echo "<font color=darkred>".$msgstr["cg_modify"]." / " .$msgstr["cg_modifyocc"]."</font><br>".$msgstr["cg_scope"]?>:
-						<input type=radio name=tipoa value="frase" checked><?php echo $msgstr["cg_field"]?>&nbsp; &nbsp; &nbsp;
-						<input type=radio name=tipoa value="cadena"><?php echo $msgstr["cg_part"]?>&nbsp; &nbsp; &nbsp;
-		</td></tr>
-
-	    <tr>
-		<td  colspan=4 align=left width=100%>
-			<table>
-				<tr>
-					<td   valign=top  bgcolor=#cccccc><?php echo $msgstr["cg_valactual"]?>  <a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#VALOR' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
-					<input type=text name=actual size=100>
-					</td>
-				</tr><tr>
-					<td ><?php echo $msgstr["cg_nuevoval"]?>:  <a href='../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/cglobal.html#NUEVO_VALOR' target=_blank><img src=img/barHelp.png border=0 height=12></a><br>
-					<input type=text name=nuevo size=100><!-- <a href=javascript:MostrarLista("nuevo")><img src=img/barSearch.png height=24 align=middle border=0></a>-->
-					</td>
-                </tr>
-			</table>
-		</td>
-	<tr>
-		<td  colspan=4 align=center bgcolor=#cccccc>
-				<input type=radio name=tipoc value="dividir"><?php echo $msgstr["cg_split"]?>&nbsp;
-				<input type=radio name=tipoc value="mover"><?php echo $msgstr["cg_move"]?>&nbsp;
-				<a href='../documentacion/ayuda.php?help=<?php echo$_SESSION["lang"]?>/cglobal.html#DIVIDIR' target=_blank><img src=img/barHelp.png border=0 height=12></a>&nbsp; &nbsp;
-		</td>
-	</tr><tr>
-		<td colspan=4 >
-		<table border=0>
-			<tr>
-			<td align=left><?php echo $msgstr["cg_delimiter"]?></td><td align=left><input type=text name=separar value=""></td>
-			<tr>
-			<td align=left><?php echo $msgstr["cg_moveto"]?></td><td align=left><Select name=nuevotag>
-			<option value=""><?php echo $msgstr["cg_splitdel"]?>
-<?php foreach ($Fdt as $linea){
-		$t=explode('|',$linea);
-   		echo "<option value='".$t[1]."|".trim(substr($linea,46,2))."|".trim(substr($linea,59))."'>".$t[2]." (".$t[1].")\n";  	}
+                            </select>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td><?php echo $msgstr["cg_found"]?></td>
+                        <td>
+                            <input type=radio name=posicion value=antes <?php echo $rad_antes;?>><?php echo $msgstr["cg_before"]?>&nbsp;
+                            <input type=radio name=posicion value=despues <?php echo $rad_despues;?>><?php echo $msgstr["cg_after"]?>&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align=left><?php echo $msgstr["cg_delimiter"]?></td>
+                        <td align=left><input type=text name=separar value='<?php if (isset($arrHttp["separar"]))echo $arrHttp["separar"];?>'></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr><td colspan=3 bgcolor=#cccccc>&nbsp;</td>
+    </table>
+    <p>
+        <input type=button value=<?php echo $msgstr["cg_execute"]?> onClick=Confirmar()>
+        &nbsp; &nbsp; &nbsp;
+        <input type=reset value=<?php echo $msgstr["cg_borrar"]?>>
+    </p>
+    </form>
+<?php
+} else if ($confirmcount==1) {
+    /*
+    ** Second screen checks the values of the first screen and shows confirmation info
+    ** In case of errors the only button is to go back to the first screen
+    ** If no errors occurred the execution is possible
+    */
+    echo "<h3>".$msgstr["cg_titulo"]."</h3>";
+    // some defaults
+    if ( !isset($arrHttp["actual"])) $arrHttp["actual"]="";
+    if ( !isset($arrHttp["nuevo"]))  $arrHttp["nuevo"]="";
+    if ( !isset($arrHttp["separar"]))$arrHttp["separar"]="";
+    // error message if invalid or duplicate selection is done
+    if ( $expresionval=="" ) {
+        if ( ($fromval=="" && $toval=="") || ($fromval!="" && $toval=="") || ($fromval=="" && $toval!="") ) {
+            echo ("<strong style='color:red'>".$msgstr["cg_selrecords"]."</strong><br>");
+            $errors++;
+        }
+    } else {
+        if ( $fromval!="" || $toval!="" ) {
+            echo ("<strong style='color:red'>".$msgstr["cg_selrecords"]."</strong><br>");
+            $errors++;
+        }
+    }
+    // error message if range is not integer or > maxmfn
+    if ( $fromval!="" && $toval!="") {
+        if ( !is_numeric($fromval) || !is_numeric($toval)) {
+            echo ("<strong style='color:red'>".$msgstr["cg_rangoinval"]."</strong><br>");
+            $errors++;
+        } else if ( intval($toval)<intval($fromval)) {
+            echo ("<strong style='color:red'>".$msgstr["cg_rangoinval"]."</strong><br>");
+            $errors++;
+        } else if (intval($toval) > intval($arrHttp["MaxMfn"])) {
+            echo ("<strong style='color:red'>".$msgstr["cg_rangoinval"]."</strong><br>");
+            $errors++;
+        }
+    }
+    // error message if source field is missing
+    if ( !isset($arrHttp["global_C"]) || $arrHttp["global_C"]=="" ) {
+		echo ("<strong style='color:red'>".$msgstr["cg_sel"]."</strong><br>");
+        $arrHttp["global_C"]="";
+		$errors++;;
+    }
+    // error message if global change type is missing
+    if ( !isset($arrHttp["tipoc"])) {
+		echo ("<strong style='color:red'>".$msgstr["cg_tipoc"]."</strong><br>");
+        $arrHttp["tipoc"]="";
+		$errors++;;
+    }
+    // error message if change Split Field has no information how to do that
+    if ($arrHttp["tipoc"]=="dividir") {
+        if ( !isset($arrHttp["posicion"]) ) {
+            echo ("<strong style='color:red'>".$msgstr["cg_posicion"]."</strong><br>");
+            $arrHttp["posicion"]="";
+            $errors++;
+        }
+        if ( $arrHttp["separar"]=="" ) {
+            echo ("<strong style='color:red'>".$msgstr["cg_separador"]."</strong><br>");
+            $arrHttp["separar"]="";
+            $errors++;
+        }
+    }
+    // error message if addition does not specify a target
+    if ( ($arrHttp["tipoc"]=="agregar" || $arrHttp["tipoc"]=="agregarocc") && $arrHttp["nuevo"]=="" ) {
+		echo ("<strong style='color:red'>".$msgstr["cg_selcontenido"]."</strong> (<i>".$msgstr["cg_nuevoval"]."</i>)<br>");
+		$errors++;;
+    }
+    // Warning if all occurrences are deleted
+    if ($arrHttp["tipoc"]=="eliminarocc") {
+        if ( $arrHttp["actual"]=="" ) {
+            echo ("<strong style='color:blue'>".$msgstr["cg_delallocc"]."</strong><br>");
+        }
+    }
+    // Determine the readable selected field name and the target field name
+    $tname_target=$msgstr["cg_splitdel"];
+    $tname_current="";
+    foreach ($Fdt as $linea){
+            $t=explode('|',$linea);
+            $tval=$t[1].'|'.$t[5].'|'.$t[6].'|'.$t[0];
+            $tname=$t[2]." (".$t[1].")";
+            if ($t[5]!="") $tname.=" (".$t[5].")";
+            if ($arrHttp["global_C"]==$tval) $tname_current=$tname;
+            $tvaltarget=$t[1]."|".trim(substr($linea,46,2))."|".trim(substr($linea,59));
+            $tnametarget=$t[2]." (".$t[1].")";
+            if ( isset($arrHttp["nuevotag"]) ) {
+                if ($arrHttp["nuevotag"]==$tvaltarget) $tname_target=$tnametarget;
+            }
+    }
+    // Determine the readable text of the change type
+    $change_type="";
+    switch ($arrHttp["tipoc"]){
+	  	case "agregar":
+	  		$change_type=$msgstr["cg_add"];
+	  		break;
+	  	case "agregarocc":
+	  		$change_type=$msgstr["cg_addocc"];
+	  		break;
+	  	case "modificar":
+	  		$change_type=$msgstr["cg_modify"];
+	  		break;
+	  	case "modificarocc":
+	  		$change_type=$msgstr["cg_modifyocc"];
+	  		break;
+	  	case "dividir":
+	  		$change_type=$msgstr["cg_split"];
+	  		break;
+	 	case "mover":
+	  		$change_type=$msgstr["cg_move"];
+	  		;
+	  	case "eliminar":
+	  		$change_type=$msgstr["cg_delete"];
+	  		break;
+	 	case "eliminarocc":
+	 		$change_type=$msgstr["cg_deleteocc"];
+	 		break;
+    }
+    // determine the subtext of the primary change type information
+    $prim1="";
+    $prim2="";
+    if ($arrHttp["tipoc"]!="mover" && $arrHttp["tipoc"]!="dividir") {
+        $prim1=$msgstr["cg_scope"];
+        if ( $arrHttp["tipoa"]== "frase") $prim2=$msgstr["cg_field"];
+        if ( $arrHttp["tipoa"]== "cadena")$prim2=$msgstr["cg_part"];
+    }
+    if ($arrHttp["tipoc"]=="mover" || $arrHttp["tipoc"]=="dividir") {
+        $prim1=$msgstr["cg_moveto"];
+        $prim2=$tname_target;
+    }
+    ?>
+    <br>
+    <table cellpadding=3 cellspacing=0  style='text-align:left'>
+    <tr>   <!--row with info about record selection -->
+        <td style='background-color:#cccccc;'><b><?php echo $msgstr["r_recsel"];?></b></td>
+         <?php if ($fromval!="") { ?>
+            <td><?php echo $msgstr["cg_rango"]?></td>
+            <td><?php echo $msgstr["cg_from"].": ". $fromval;?></td>
+            <td><?php echo $msgstr["cg_to"].": ". $toval;?></td>
+         <?php } else {?>
+            <td><?php echo $msgstr["expresion"]?></td>
+            <td><?php echo $expresionval;?></td>
+            <td></td>
+         <?php } ?>
+    </tr><tr>  <!-- row with info about selected field -->
+        <td style='background-color:#cccccc;'><b><?php echo $msgstr["cg_selfield"];?></b></td>
+        <td><?php echo $tname_current;?></td>
+        <td></td>
+        <td></td>
+    </tr><tr>  <!-- row with primary info about change type -->
+        <td style='background-color:#cccccc;'><b><?php echo $msgstr["cg_tipocs"];?></b?</td>
+        <td><?php echo $change_type;?></td>
+        <td><?php echo $prim1.": ". $prim2?></td>
+        <td></td>
+    </tr>
+    <?php // the  secondary info about the change requires php
+    if ($arrHttp["tipoc"]!="mover" && $arrHttp["tipoc"]!="dividir") {
+        ?>
+         <tr>  <!-- rows with secondary info about change type -->
+            <td style='background-color:#cccccc;'></td>
+            <td colspan=2><i><?php echo $msgstr["cg_valactual"]?></i></td>
+            <td>&rarr;<?php echo $arrHttp["actual"];?>&larr;</td>
+         </tr><tr>
+            <td style='background-color:#cccccc;'></td>
+            <td colspan=2><i><?php echo $msgstr["cg_nuevoval"]?></i></td>
+            <td>&rarr;<?php echo $arrHttp["nuevo"];?>&larr;</td>
+         </tr>
+       <?php
+    } else if ($arrHttp["tipoc"]=="dividir" ) {
+        $second="";
+        if ( $arrHttp["posicion"]=="antes") $second=$msgstr["cg_before"];
+        if ( $arrHttp["posicion"]=="despues") $second=$msgstr["cg_after"];
+        ?>
+         <tr>  <!-- row with secondary info about change type -->
+            <td style='background-color:#cccccc;'></td>
+            <td><i><?php echo $msgstr["cg_found"]?></i></td>
+            <td><?php echo $second;?></td>
+            <td>&rarr;<?php echo $arrHttp["separar"];?>&larr;</td>
+         </tr>
+        <?php
+    }
+    ?>
+    </table>
+    <form name=checked  method=post >
+        <?php
+        foreach ($_REQUEST as $var=>$value){
+            if ( $var!= "confirmcount" ){
+                // some values may contain quotes or other "non-standard" values
+                $value=htmlspecialchars($value);
+                echo "<input type=hidden name=$var value=\"$value\">\n";
+            }
+        }
+        ?>
+        <p> <?php if ( $errors==0 ) {?>
+                <input type=button value='<?php echo $msgstr["procesar"];?>' onclick=Execute()>
+            <?php } ?>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type=button value='<?php echo $msgstr["cancelar"];?>' onclick=Cancel()>
+        </p>
+    </form>
+    <?php
+}
 ?>
-</select></td>
-        <tr><td></td>
-        <td ><?php echo $msgstr["cg_found"]?><input type=radio name=posicion value=antes><?php echo $msgstr["cg_before"]?> <input type=radio name=posicion value=despues><?php echo $msgstr["cg_after"]?> 
-		</td>
-		</table>
-		</td>
-	<TR><td colspan=3 bgcolor=#cccccc>&nbsp;</td>
-</table>
-<p><input type=submit value=<?php echo $msgstr["cg_execute"]?> onClick=javascript:EnviarForma()>
-&nbsp; &nbsp; &nbsp; <input type=reset value=<?php echo $msgstr["cg_borrar"]?>>&nbsp; &nbsp; &nbsp;
-</form>
 </div>
 </div>
 </div>
-<script>
-if (top.CG_actual.value!="") document.forma1.actual.value=top.CG_actual
-if (top.CG_nuevo.value!="") document.forma1.nuevo.value=top.CG_nuevo
-
-</script>
 <?php
 include("../common/footer.php");
 ?>
-
-</body>
-</html>
 

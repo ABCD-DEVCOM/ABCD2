@@ -1,46 +1,46 @@
-  |Proje√ß√£o n√£o especificada  
-aa|Proje√ß√£o de Aitoff 
-ab|Gn√¥mica 
-ac|Azimutal Igual √Årea de Lambert  
-ad|Ortogr√°fica 
-ae|Azimutal eq√ºidistante 
-af|Esterogr√°fica 
-ag|Geral vertical near-sided  
-am|Esterogr√°fica modificada para o Alasca
-an|Trim√©trica de Chamberlin 
-ap|Esterogr√°fica polar  
-au|Azimutal, tipo espec√≠fico desconhecido 
-az|Azimutal, outra 
-ba|Proje√ß√£o de Gall  
-bb|Homologr√°fica de Goode 
-bc|Igual √°rea cil√≠ndrica de Lambert 
-bd|Proje√ß√£o de Mercator  
-be|Proje√ß√£o segundo Miller  
-bf|Proje√ß√£o de Mollweide  
-bg|Sinuosoidal  
-bh|Proje√ß√£o transversal de Mercator  
-bi|Proje√ß√£o de Gauss-Kruger 
-bj|Eq√ºiretangular 
-bo|Obl√≠qua de Mercantor 
-br|Proje√ß√£o de Robinson  
-bs|Espa√ßo obl√≠quo de Mercantor
-bu|Cil√≠ndrica, tipo espec√≠fico desconhecido
-bz|Cil√≠ndrica, outra 
-ca|Igual √Årea de Alber 
-cb|Proje√ß√£o de Bonne 
-cc|Conformal c√¥nica de Lambert 
-ce|Eq√ºidistante c√¥nica
-cp|Polic√¥nica
-cu|C√¥nica, Tipo espec√≠fico desconhecido 
-cz|C√¥nica, outra
-da|Armadillo 
-db|Butterfly 
-dc|Proje√ß√£o de Eckert 
-dd|Proje√ß√£o homolosine de Goode 
-de|Bipolar obl√≠qua conformal c√¥nica de Miller
-df|Proje√ß√£o Van Der Grinten
-dg|Proje√ß√£o de Dimaxion
-dh|Cordiforme 
-dl|Lambert conformal 
+#|ProjeÁ„o n„o especificada
+aa|ProjeÁ„o de Aitoff
+ab|GnÙmica
+ac|Azimutal Igual ¡rea de Lambert
+ad|Ortogr·fica
+ae|Azimutal eq¸idistante
+af|Esterogr·fica
+ag|Geral vertical near-sided
+am|Esterogr·fica modificada para o Alasca
+an|TrimÈtrica de Chamberlin
+ap|Esterogr·fica polar
+au|Azimutal, tipo especÌfico desconhecido
+az|Azimutal, outra
+ba|ProjeÁ„o de Gall
+bb|Homologr·fica de Goode
+bc|Igual ·rea cilÌndrica de Lambert
+bd|ProjeÁ„o de Mercator
+be|ProjeÁ„o segundo Miller
+bf|ProjeÁ„o de Mollweide
+bg|Sinuosoidal
+bh|ProjeÁ„o transversal de Mercator
+bi|ProjeÁ„o de Gauss-Kruger
+bj|Eq¸iretangular
+bo|OblÌqua de Mercantor
+br|ProjeÁ„o de Robinson
+bs|EspaÁo oblÌquo de Mercantor
+bu|CilÌndrica, tipo especÌfico desconhecido
+bz|CilÌndrica, outra
+ca|Igual ¡rea de Alber
+cb|ProjeÁ„o de Bonne
+cc|Conformal cÙnica de Lambert
+ce|Eq¸idistante cÙnica
+cp|PolicÙnica
+cu|CÙnica, Tipo especÌfico desconhecido
+cz|CÙnica, outra
+da|Armadillo
+db|Butterfly
+dc|ProjeÁ„o de Eckert
+dd|ProjeÁ„o homolosine de Goode
+de|Bipolar oblÌqua conformal cÙnica de Miller
+df|ProjeÁ„o Van Der Grinten
+dg|ProjeÁ„o de Dimaxion
+dh|Cordiforme
+dl|Lambert conformal
 zz|Outra
-  |N√£o se tentou codificar	
+--|N„o se tentou codificar

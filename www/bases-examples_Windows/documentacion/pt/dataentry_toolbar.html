@@ -1,0 +1,235 @@
+<p><font face="arial"><font size="2">Uma vez selecionada a base de dados, use os seguintes recursos para a revis&atilde;o, entrada e edi&ccedil;&atilde;o de registros:</font></font></p>
+
+<p>
+
+<table cellspacing="1" cellpadding="5" width="95%" align="left" bgcolor="#0000cc">
+
+    <tbody>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><input size="1" /></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Ir para um registro espec&iacute;fico.<br />
+
+            Coloque na caixa o n&uacute;mero do registro (MFN) para o qual deseja avan&ccedil;ar e pressione <strong><em>Enter</em></strong> </font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barArrowLeft2.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Ir para o primeiro registro da base de dados</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barArrowLeft.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Ir para o registro anterior ao atual</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barArrowRight.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Ir para o registro posterior ao atual</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barArrowRight2.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Ir para o &uacute;ltimo registro da base de dados</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><select name="browse">
+
+            <option value="browse" selected="selected">browse</option>
+
+            </select><font face="Arial"></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Permite mudar a forma como se realiza o percorrer (browse) dos registros, seja sequencial por &nbsp;MFN ou atrav&eacute;s dos resultados de uma consulta</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barOrder.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Apresenta uma lista alfab&eacute;tica dos termos identificados&nbsp;pela entrada principal&nbsp;definida na FDT</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barSearch.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Permite aplicar expressões de busca na base de dados para a sele&ccedil;&atilde;o de registros. Uma vez recuperados os registros, os mesmos podem ser visualizados na tela e modificados, utilizando as planilhas de entrada de dados existentes</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barNew.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Use esta op&ccedil;&atilde;o para criar novos registros na base de dados. Se foram definidos&nbsp;diferentes tipos de registro, será apresentada a lista de tipos dispon&iacute;veis para que o usuário selecione o tipo de registro correspondente</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial"><img alt="" src="../../php/dataentry/img/barCopy.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Permite capturar registros de outra base de dados</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><img alt="" src="../../php/dataentry/img/z3950.png" /></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Permite capturar registros de outras bases de dados, atrav&eacute;s do protocolo Z39.50 </font></td>
+
+        </tr>
+
+        <tr>
+
+            <td valign="top" align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barEdit.png" /></font></td>
+
+            <td bgcolor="#ffffff">
+
+            <p><font face="Arial" size="2">Editar o registro apresentado na janela. Se o registro estiver sendo atualizado por outro operador, irá emitir uma mensagem indicando esta situa&ccedil;&atilde;o e n&atilde;o será habilitada a edi&ccedil;&atilde;o solicitada.</font></p>
+
+            <p>O bloqueio de registro acontece, em geral, no processo de entrada, como parte do mecanismo de prote&ccedil;&atilde;o de atualiza&ccedil;&atilde;o dos dados. Isto &eacute;, quando um usuário solicita modificar (editar) um registro, o mesmo &eacute; bloqueado para que n&atilde;o possa ser modificado por outro usuário simultaneamente. Quando o registro &eacute; atualizado, &eacute; desbloqueado e se torna dispon&iacute;vel para outros usuários.</p>
+
+            <p>Se o ciclo de atualiza&ccedil;&atilde;o n&atilde;o for completado, ou seja, o registro n&atilde;o for salvo  e nem a edi&ccedil;&atilde;o cancelada (botões salvar ou cancelar da barra de ferramentas), o registro permanece bloqueado por um tempo (4 horas) para os demais usuários.</p>
+
+            <p>Existem duas maneiras de eliminar o bloqueio antes de esgotar o tempo acima referido:</p>
+
+            <ol>
+
+                <li>Se o mesmo operador que bloqueou o registro pede nova edi&ccedil;&atilde;o, será dado o direito &agrave; atualiza&ccedil;&atilde;o do registro, podendo salvar ou cancelar a edi&ccedil;&atilde;o para liberar o registro.</li>
+
+                <li>Outra forma de desbloquear o registro &eacute; utilizando a op&ccedil;&atilde;o "Desbloquear registros" do menu <strong>Utilitários </strong>da barra de ferramentas.&nbsp;Somente o &nbsp;Administrador do&nbsp;Sistema ou o Administrador da Base de&nbsp;Dados tem acesso a esta op&ccedil;&atilde;o. </li>
+
+            </ol>
+
+            <p>&nbsp;</p>
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barSave.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Salvar o registro que está sendo editado</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barCancelEdit.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Cancelar a edi&ccedil;&atilde;o do registro</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barDelete.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Excluir o registro visualizado na janela</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/barPrint.png" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Facilita a obten&ccedil;&atilde;o de produtos. Acessa a base de dados, quer pelo n&uacute;mero de registro (MFN), ou atrav&eacute;s de expressões de pesquisa. Para a apresenta&ccedil;&atilde;o dos registros pode ser utilizado qualquer um dos formatos existentes ou criar novos formulários de visualiza&ccedil;&atilde;o. O resultado pode ser visualizado na tela ou enviado para um processador de texto.</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><img alt="" src="../../php/dataentry/img/barTool.png" /></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2">Fun&ccedil;ões administrativas (exporta&ccedil;&atilde;o, importa&ccedil;&atilde;o, mudan&ccedil;as globais, desbloqueio de bases de dados e registros).</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><img alt="" src="../../php/dataentry/img/grafico.gif" /></td>
+
+            <td bgcolor="#ffffff"><font size="2">Apresenta op&ccedil;ões para a obten&ccedil;&atilde;o de estat&iacute;sticas sobre a base de dados</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><img alt="" src="../../php/dataentry/img/toolbarHelp.png" />&nbsp;</td>
+
+            <td bgcolor="#ffffff">&nbsp;Mostra esta ajuda</td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><img alt="" src="../../php/dataentry/img/toolbarHome.png" /></td>
+
+            <td bgcolor="#ffffff">Volta ao menu principal do ABCD</td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><font face="Arial" size="2"><img alt="" src="../../php/dataentry/img/recordvalidation_p.gif" /></font></td>
+
+            <td bgcolor="#ffffff"><font face="Arial" size="2"><strong>Valida&ccedil;&atilde;o do registro</strong>: Se, como parte das estruturas da base de dados, foi definido um formato para a valida&ccedil;&atilde;o dos registros, junto com a exibi&ccedil;&atilde;o do registro &eacute; apresentado um link que permite aplicar o formato de valida&ccedil;&atilde;o, a fim de detectar eventuais &nbsp;inconsist&ecirc;ncias geradas no processo de entrada de dados.</font></td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><strong>Menu de formatos de sa&iacute;da</strong>&nbsp;</td>
+
+            <td bgcolor="#ffffff">
+
+            <p>&nbsp;<font size="2">Neste menu s&atilde;o apresentados os formatos de exibi&ccedil;&atilde;o (PFT), elaborados pelo administrador da base de dados. No final da lista s&atilde;o mostrados dois formatos adicionais:</font></p>
+
+            <ul>
+
+                <li><font size="2">Sem formato, o que indica que os campos ser&atilde;o apresentados em forma de tabela, identificados com as etiquetas (TAG's) definidas na FDT</font></li>
+
+                <li><font size="2">Tudo, que apresenta o registro sem qualquer edi&ccedil;&atilde;o. &Eacute; equivalente ao formato ALL das estruturas CDS/ISIS.</font></li>
+
+            </ul>
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td align="center" width="50" bgcolor="#d4d0c8"><strong>Menu de planilhas de&nbsp; entrada</strong></td>
+
+            <td bgcolor="#ffffff">Apresenta as planilhas de entrada de dados adicionais que foram definidas pelo administrador da base de dados. Quando se seleciona uma planilha de entrada de dados a partir da lista, ela fica ativa para os processos de cria&ccedil;&atilde;o e edi&ccedil;&atilde;o de registros.</td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+</p>

@@ -1,4 +1,8 @@
 <?php
+/*
+20220717 fho4abcd Use $actparfolder as location for .par & def files
+20220822 fho4abcd Improve checks&feedback if INDEX name is empty, skip if name&def are empty
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -8,6 +12,7 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/iah_conf.php");
 include("../lang/lang.php");
@@ -20,8 +25,11 @@ if (strpos($arrHttp["base"],"|")===false){
 }
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 include("../common/header.php");
-
-function AddKey($preliteral,$value){global $search_ix;
+?>
+<body>
+<?php
+function AddKey($preliteral,$value){
+global $search_ix;
 	$ix=-1;
 	$ix1=-1;
 	$value=trim($value);
@@ -32,17 +40,23 @@ function AddKey($preliteral,$value){global $search_ix;
 		if (strlen($pref)<4){
 			$end_str=substr($pref,strlen($pref)-1,1);
 			if ($end_str=="_"  or $end_str=="="){
-				if (isset($search_ix[$pref])){					$search_ix[$pref].="%%%%%%%%".$value;				}else{					$search_ix[$pref]=$value;				}
+				if (isset($search_ix[$pref])){
+					$search_ix[$pref].="%%%%%%%%".$value;
+				}else{
+					$search_ix[$pref]=$value;
+				}
 			}
 		}
 	}
-}
+
+}
 
 //READ THE FST OF THE DATABASE
 $file=$db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst";
 unset($fst);
 $search_ix=array();
-if (file_exists($file)){	$fst=file($file);
+if (file_exists($file)){
+	$fst=file($file);
 	foreach ($fst as $value){
 		AddKey("|",$value);
 		AddKey("'",$value);
@@ -51,7 +65,8 @@ if (file_exists($file)){	$fst=file($file);
 	echo "<script>
 	fst=new Array()\n";
 	foreach ($search_ix as $key=>$value) echo "fst['$key']=\"".str_replace('"','&quot;',$value)."\"\n";
-	echo "</script>\n";}
+	echo "</script>\n";
+}
 
 
 
@@ -61,7 +76,8 @@ $iah_lang=explode(',',$iah_def["AVAILABLE LANGUAGES"]);
 $ix=0;
 foreach ($iah_lang as $value){
 	$ix=$ix+1;
-	$lan_iah[$ix]=trim($value);}
+	$lan_iah[$ix]=trim($value);
+}
 unset($fp);
 
 
@@ -72,12 +88,13 @@ unset($fp);
 <script>
 //NUMBER OF LANGUAGES DEFINED IN IAH.DEF.PHP
 n_lang=<?php echo count($lan_iah)."\n"?>
-<?
+<?php
 $ix=0;
 $rotulo_lan="";
 foreach ($lan_iah as $lan){
 	$ix=$ix+1;
-	$rotulo_lan.='^'.$ix."<font color=red><i>".$msgstr[$lan]."</i></font>";}
+	$rotulo_lan.='^'.$ix."<font color=red><i>".$msgstr[$lan]."</i></font>";
+}
 echo "rotulo_lan='&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$rotulo_lan'\n";
 ?>
 IndexId=""
@@ -95,7 +112,9 @@ Index_el=new Array()
 
 <?php
 $ix=-1;
-foreach ($lan_iah as $key=>$value) {	echo "Index_el[\"$key\"]=\"$value\"\n";}?>
+foreach ($lan_iah as $key=>$value) {
+	echo "Index_el[\"$key\"]=\"$value\"\n";
+}?>
 Index_el["d"]="<?php echo $msgstr["d"]?>"
 Index_el["f"]="<?php echo $msgstr["f"]?>"
 Index_el["t"]="<?php echo $msgstr["t"]?>"
@@ -109,16 +128,20 @@ Index_el["m"]="<?php echo $msgstr["m"]?>"
 function seeElement(ele){
 	msgwin=window.open("","fst")
 	msgwin.document.close()
-//	msgwin.document.writeln("<font face='courier new'>")	for (i in fst){		lin=fst[i]
+//	msgwin.document.writeln("<font face='courier new'>")
+	for (i in fst){
+		lin=fst[i]
 		re=/%%%%%%%%/gi
 		lin=lin.replace(re,"<br>&nbsp;&nbsp;&nbsp;")
 		re=/&quot;/gi
 		lin=lin.replace(re,'"')
-		msgwin.document.writeln(lin+"<br>")	}
+		msgwin.document.writeln(lin+"<br>")
+	}
 }
 
 
-function AceptarIndice(Id){
+function AceptarIndice(Id){
+
 	VC=""
 	for(i=0;i<msgwin.document.index.incampo.length;i++){
 		type=msgwin.document.index.incampo[i].type
@@ -126,7 +149,13 @@ function AceptarIndice(Id){
 		subc=msgwin.document.index.incampo[i].id
 
 		if (type=="radio"){
-			if (msgwin.document.index.incampo[i].checked){			}else{				campo=""			}		}
+			if (msgwin.document.index.incampo[i].checked){
+
+			}else{
+				campo=""
+			}
+
+		}
 		if (type=="checkbox"){
 			if (msgwin.document.index.incampo[i].checked){
 
@@ -134,13 +163,19 @@ function AceptarIndice(Id){
 				campo=""
 			}
 		}
-		if (subc<9)			 VC+="^"+subc+campo		else
-			if (Trim(campo)!="") VC+="^"+subc+campo	}
+		if (subc<9)
+			 VC+="^"+subc+campo
+		else
+			if (Trim(campo)!="") VC+="^"+subc+campo
+	}
 	elemento=returnObjById("index_cont_"+IndexId )
 	elemento.value=VC
-	msgwin.close()}
+	msgwin.close()
+}
 
-function Ver(Archivo){	switch (Archivo){		case "fdt":
+function Ver(Archivo){
+	switch (Archivo){
+		case "fdt":
 			url="fdt_leer.php?base=<?php echo $arrHttp["base"]?>"
 			break
 		case "fst":
@@ -148,7 +183,8 @@ function Ver(Archivo){	switch (Archivo){		case "fdt":
 			break
 	}
 	msgres=window.open(url,Archivo,"resizable, scrollbars,menu=no,status=yes,width=500,height=600,left=0")
-	msgres.focus()}
+	msgres.focus()
+}
 
 function returnObjById( id )
 {
@@ -176,8 +212,10 @@ function EditIndex(Id){
     etq=returnObjById(idEl)
     Tit=Trim(etq.value)
     T=Tit.split(" ")
-    if (T.length==1 || Trim(T[1])==""){    	alert("<?php echo $msgstr["err_ix"]?>")
-    	return    }
+    if (T.length==1 || Trim(T[1])==""){
+    	alert("<?php echo $msgstr["err_ix"]?>")
+    	return
+    }
 	msgwin=window.open("","Index","resizable, scrollbars,menu=no,status=yes,width=780,height=550")
 	msgwin.focus()
 	msgwin.document.close()
@@ -193,7 +231,9 @@ function EditIndex(Id){
 	msgwin.document.writeln("<form name=index>\n<table width=100% bgcolor=#eeeeff>");
 	msgwin.document.writeln("<tr><td colspan=2 bgcolor=white><?php echo $msgstr["iah_lang"]?></td>")
 	ele=new Array()
-	<?php foreach ($lan_iah as $key=>$value) {		echo "ele[\"$key\"]=\"\"\n";	}
+	<?php foreach ($lan_iah as $key=>$value) {
+		echo "ele[\"$key\"]=\"\"\n";
+	}
 	?>
 	ele["d"]=""
 	ele["f"]=""
@@ -207,7 +247,8 @@ function EditIndex(Id){
         elemento=returnObjById("index_cont_"+Id)
 		dato=elemento.value
     //    alert(dato)
-		while(dato!=""){			xpos=dato.indexOf("^")
+		while(dato!=""){
+			xpos=dato.indexOf("^")
 			if (xpos>=0){
 				xpos1=dato.indexOf("^",xpos+1)
 				if (xpos1<0){
@@ -224,20 +265,25 @@ function EditIndex(Id){
 	for (subc in ele){
 		size=""
 		salida=""
-		switch (subc){			case "t":				select_s=""
+		switch (subc){
+			case "t":
+				select_s=""
 				select_h=""
 				select_n=""
-				switch (ele[subc]){					case "short":
+				switch (ele[subc]){
+					case "short":
 						select_s=" checked"
 						break
 					case "hidden":
 						select_h=" checked"
 						break
-				}				msgwin.document.write("<tr><td bgcolor=white><font color=red>^"+subc+"</font> "+Index_el[subc]+"</td><td bgcolor=white>")
+				}
+				msgwin.document.write("<tr><td bgcolor=white><font color=red>^"+subc+"</font> "+Index_el[subc]+"</td><td bgcolor=white>")
 				msgwin.document.write("<input type=radio value=\"short\" name=incampo id="+subc+select_s+"><?php echo $msgstr["short"]?>")
 				msgwin.document.write("<input type=radio value=\"hidden\" name=incampo id="+subc+select_h+"><?php echo $msgstr["hidden"]?>")
 				msgwin.document.writeln("<input type=radio value=\"\" name=incampo id="+subc+select_n+"><?php echo $msgstr["none"]?></td>")
-				break;			case "d" :
+				break;
+			case "d" :
 				fchecked=""
 				if (ele[subc]=="*") fchecked=" checked"
 				msgwin.document.write("<tr><td bgcolor=white width=550><font color=red>^"+subc+"</font> "+Index_el[subc]+"</td><td bgcolor=white><input type=checkbox value=\"*\" name=incampo id="+subc+fchecked+"></td>")
@@ -308,7 +354,10 @@ function DeleteElement(ix,IdSec){
 	Ctrl_2=returnObjById( Ctrl_2 )
 	Ctrl=eval("document.iah_edit."+Name+"_tag")
 	ixLength=Ctrl.length
-	if (ixLength<3){		if (ix==0 && IdSec==1){		}else{
+	if (ixLength<3){
+		if (ix==0 && IdSec==1){
+
+		}else{
 			Ctrl_1.value=""
 			Ctrl_2.value=""
 		}
@@ -332,16 +381,20 @@ function DeleteElement(ix,IdSec){
 
 }
 
-function DrawElement(Val_1,Val_2,ixE,ixSec,Name){	xhtml ="<br><input type=text name=\""+Name+"_tag\"  value=\""+Val_1+"\" id="+Name+"_tag_"+ixE+">: "
+function DrawElement(Val_1,Val_2,ixE,ixSec,Name){
+	xhtml ="<br><input type=text name=\""+Name+"_tag\"  value=\""+Val_1+"\" id="+Name+"_tag_"+ixE+">: "
     xhtml+="<input type=text name=\""+Name+"_cont\" value=\""+Val_2+"\" size=90 id="+Name+"_cont_"+ixE+"> "
     if (ixSec==2){
     	xhtml+="<a href='javascript:EditIndex("+ixE+")'><?php echo$msgstr["edit"]?></a>&nbsp;|";
     }
-    if (ixSec==1 && ixE==0){    }else{
+    if (ixSec==1 && ixE==0){
+
+    }else{
     	xhtml+=" <a href=javascript:DeleteElement("+ixE+","+ixSec+")><?php echo $msgstr["delete"]?></a>\n";
     }
 
-    return xhtml}
+    return xhtml
+}
 
 function DrawElementHelp(Val_1,Val_2,Val_3,ixE,ixSec,Name){
 	xhtml="<br><select name=help_tag><option value=''</option>";
@@ -371,7 +424,8 @@ function DrawElementHelp(Val_1,Val_2,Val_3,ixE,ixSec,Name){
 
 function AddElement(IdSec){
 	seccion=returnObjById( IdSec )
-	switch(IdSec){		case 1:
+	switch(IdSec){
+		case 1:
 			Ctrl_1=eval("document.iah_edit.file_tag")
 			Ctrl_2=eval("document.iah_edit.file_cont")
 			Str_1="FILE"
@@ -409,7 +463,8 @@ function AddElement(IdSec){
 			Str_1=""
 			Str_2=""
 			Name="help"
-			break	}
+			break
+	}
 	ixLength=Ctrl_1.length
 	last=ixLength-1
 	ant=returnObjById(Name+"_tag_"+last)
@@ -447,24 +502,35 @@ function AddHelp(IdSec){
 
 }
 
-function CheckNames(def){//DETECTS IF AT LEAST A NAME IS ENTERED IN THE LENGUAGE SUBFIELDS (^1 ^2 ...)
+function CheckNames(def){
+//DETECTS IF AT LEAST A NAME IS ENTERED IN THE LENGUAGE SUBFIELDS (^1 ^2 ...)
 	str_lan=""
-	for (i_lang=1;i_lang<=n_lang;i_lang++){		ix_lang=def.indexOf('^'+i_lang)
+	for (i_lang=1;i_lang<=n_lang;i_lang++){
+		ix_lang=def.indexOf('^'+i_lang)
 		if (ix_lang!=-1)
 			ix2=def.indexOf('^',ix_lang+1)
 			if (ix2!=-1){
-				ix_lang=ix_lang+2				str_name=def.substr(ix_lang,ix2-ix_lang)
-				if (Trim(str_name)!="") str_lan="yes"			}	}
+				ix_lang=ix_lang+2
+				str_name=def.substr(ix_lang,ix2-ix_lang)
+				if (Trim(str_name)!="") str_lan="yes"
+			}
+	}
     if (str_lan=="")
     	return false
     else
     	return true
-}
 
-function ValidateForm(){	ret=Validar()
-	if (ret){		alert("<?php echo $msgstr["noerrors"]?>")	}}
+}
 
-function Validar(){	file=[]
+function ValidateForm(){
+	ret=Validar()
+	if (ret){
+		alert("<?php echo $msgstr["noerrors"]?>")
+	}
+}
+
+function Validar(){
+	file=[]
 	index=[]
 	format=[]
 	gizmo=[]
@@ -476,21 +542,30 @@ function Validar(){	file=[]
 	n=document.iah_edit.file_tag.length
 	FILE_LOC=""
 	file_str=""
-	for (i=0;i<n;i++){		name=document.iah_edit.file_tag[i].value;
+	for (i=0;i<n;i++){
+		name=document.iah_edit.file_tag[i].value;
 		path=document.iah_edit.file_cont[i].value
 		name=Trim(name)
 
-		if (name.substr(0,4)!="FILE") {			name="FILE "+name
-			document.iah_edit.file_tag[i].value=name		}
-		if (Trim(name)=="FILE"){			alert("<?php echo $msgstr["filelocation"]?>: <?php echo $msgstr["missfile"]?>")
-			return		}
-		if (path.indexOf('[pft]')>0){			alert("<?php echo $msgstr["filelocation"]?>: <?php echo $msgstr["misspft"]?>")
-			return  false		}
+		if (name.substr(0,4)!="FILE") {
+			name="FILE "+name
+			document.iah_edit.file_tag[i].value=name
+		}
+		if (Trim(name)=="FILE"){
+			alert("<?php echo $msgstr["filelocation"]?>: <?php echo $msgstr["missfile"]?>")
+			return
+		}
+		if (path.indexOf('[pft]')>0){
+			alert("<?php echo $msgstr["filelocation"]?>: <?php echo $msgstr["misspft"]?>")
+			return  false
+		}
 		logic_name=name
     	FILE_LOC+="$$$"+logic_name+"$$$"
 		path=Trim(path)
-		if (path.substr(0,15)!="%path_database%"){			path="%path_database%"+path
-			document.iah_edit.file_cont[i].value=path		}
+		if (path.substr(0,15)!="%path_database%"){
+			path="%path_database%"+path
+			document.iah_edit.file_cont[i].value=path
+		}
 
 		if (name+path!="") file_str+=name+"="+path+"\n"
 	}
@@ -514,36 +589,54 @@ function Validar(){	file=[]
 		}
 
 		def=Trim(def)
-		if (def=="" && name!=""){			alert("<?php echo $msgstr["indexdef"]?>: <?php echo $msgstr["missindconf"]?>")
-			return		}
+		if (def=="" && name!=""){
+			alert("<?php echo $msgstr["indexdef"]?>: <?php echo $msgstr["missindconf"]?>")
+			return
+		}
+		if (def!="" && name==""){
+			alert("<?php echo $msgstr["indexdef"]?>: <?php echo $msgstr["missindex"]?>")
+			return
+		}
 // CHECK IF THE MAIN INDEX IS DEFINED
 		ixpos=def.indexOf("^d")
-		if (ixpos!=-1){			tmain++		}
+		if (ixpos!=-1){
+			tmain++
+		}
 
 
 // CHECK IF ALL ^y EXISTS AND IF DEFINED IN FILE_LOCATION
 
 		ixpos=def.indexOf('^y')
-		if (ixpos!=-1){			ixpos=ixpos+2
+		if (ixpos!=-1){
+			ixpos=ixpos+2
 			arch=def.substr(ixpos)
 			ixend=arch.indexOf('^')
 			if (ixend==-1) ixend=arch.length
 			if (Trim(arch.substr(0,ixend))!=""){
 				arch="FILE "+arch.substr(0,ixend)
-				if (FILE_LOC.indexOf("$$$"+arch+"$$$")==-1){					arch_01=arch+".*"
-					if (FILE_LOC.indexOf("$$$"+arch_01+"$$$")==-1) {						alert(arch+ " <?php $msgstr["missfileloc"]?>")
+				if (FILE_LOC.indexOf("$$$"+arch+"$$$")==-1){
+					arch_01=arch+".*"
+					if (FILE_LOC.indexOf("$$$"+arch_01+"$$$")==-1) {
+						alert(arch+ " <?php $msgstr["missfileloc"]?>")
 						return false
 					}
-				}			}
+				}
+			}
 		}
 //CHECK IF AT LEAST ONE NAME IS SUPPLIED FOR THE INDEX
-        val_res=CheckNames(def)
-        if (!val_res) {        	alert("<?php echo $msgstr["misslang"]?> "+name)
-        	return false        }
-		if (name+def!="") index_str+=name+"="+def+"\n"
+        if (name!=""&&def!=""){
+            val_res=CheckNames(def)
+            if (!val_res) {
+                alert("<?php echo $msgstr["misslang"]?> "+name)
+                return false
+            }
+            if (name+def!="") index_str+=name+"="+def+"\n"
+        }
 	}
-    if (tmain==0 || tmain>1){    	alert("<?php echo $msgstr["missdup_d"]?>")
-    	return false    }
+    if (tmain==0 || tmain>1){
+    	alert("<?php echo $msgstr["missdup_d"]?>")
+    	return false
+    }
 
 
 
@@ -555,8 +648,10 @@ function Validar(){	file=[]
 		name=Trim(document.iah_edit.gizmo_tag[i].value);
 		def=document.iah_edit.gizmo_cont[i].value
 		def=Trim(def)
-		if((name=="" || def=="") && name+def!=""){			alert("<?php echo $msgstr["gizmo"]?>: <?php echo $msgstr["missfileloc"]?>")
-			return false		}
+		if((name=="" || def=="") && name+def!=""){
+			alert("<?php echo $msgstr["gizmo"]?>: <?php echo $msgstr["missfileloc"]?>")
+			return false
+		}
 		if (def!=""){
 // Se localiza si el formato hace referencia a algún archivo para localizarlo en FILE_LOCATION
 			if (FILE_LOC.indexOf("$$$FILE "+def+".*$$$")==-1){
@@ -591,7 +686,8 @@ function Validar(){	file=[]
 
 //CHECK IF AT LEAST ONE NAME IS SUPPLIED FOR THE FORMAT
 
-			if (name_pft.indexOf('.pft')!=-1){        		val_res=CheckNames(def_pft)
+			if (name_pft.indexOf('.pft')!=-1){
+        		val_res=CheckNames(def_pft)
         		if (!val_res) {
         			alert("<?php echo $msgstr["misslang"]?> "+name_pft)
         			return false
@@ -622,7 +718,8 @@ function Validar(){	file=[]
   	ValorCapturado+="AVAILABLE FORMS="
     str_val=""
     for (i=0;i<document.iah_edit.preferences.length;i++){
-    	if (document.iah_edit.preferences[i].selected) {    		str_val+=document.iah_edit.preferences[i].value+","
+    	if (document.iah_edit.preferences[i].selected) {
+    		str_val+=document.iah_edit.preferences[i].value+","
     	}
     }
     if (str_val!="")  str_val=str_val.substr(0,str_val.length-1)
@@ -646,15 +743,18 @@ function Validar(){	file=[]
 	if (document.iah_edit.features_xml.checked)
 		ValorCapturado+="XML"
     ValorCapturado+= "\nSEARCH UCTAB="+document.iah_edit.uctab.value;
-    if (document.iah_edit.UNICODE.checked){    	ValorCapturado+= "\nUNICODE=ON";    }
+    if (document.iah_edit.UNICODE.checked){
+    	ValorCapturado+= "\nUNICODE=ON";
+    }
     ValorCapturado+="\n";
 
 	document.iah_edit.ValorCapturado.value=ValorCapturado
 	return true
 }
 
-function Guardar(){	ret=Validar()
-	if (ret==true) document.iah_edit.submit()
+function Guardar(){
+	ret=Validar()
+	if (ret==true) document.iah_edit.submit();
 }
 
 function BajarOpcion(){
@@ -681,59 +781,66 @@ function SubirOpcion(){
 	document.iah_edit.preferences.selectedIndex=ix-1
 }
 </script>
-</head>
-<body>
-<A NAME=INICIO>
 <?php
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 ?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["iah-conf"].": ".strtoupper($arrHttp["base"]).".def"?>
+		<?php echo $msgstr["iah-conf"].": ".strtoupper($arrHttp["base"]).".def"?>
 	</div>
+
+
 	<div class="actions">
 <?php
-	echo "<a href=\"menu_modificardb.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
+	$backtoscript= "menu_modificardb.php?base=".$arrHttp["base"].$encabezado;
+	include "../common/inc_back.php";
+
+if (isset($fst)){
+	$savescript="javascript:Guardar()";	
+	include "../common/inc_save.php";
+}
+
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"]?></strong></span></a>
-<?php if (isset($fst)){?>
-		<a href="javascript:Guardar()" class="defaultButton saveButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["save"]?></strong></span></a>
-<?php }?>
 	</div>
+
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/iah_edit_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/iah_edit_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
-?>
-</font>
-	</div>
-<div class="middle form">
-	<div class="formContent">
-	<form name=iah_edit method=post action=iah_save.php onsubmit="javascript:return false">
 
 <?php
-	if (!isset($fst)) {		echo "<h1>".$msgstr["missing"]." bases/".$arrHttp["base"]."/data/".$arrHttp["base"].".fst</h1>";
-		die;	}
+
+$ayuda="iah_edit_db.html";
+include "../common/inc_div-helper.php";
+
+?>
+
+
+<div class="middle form">
+	<a name=inicio>
+	<div class="formContent">
+	<form name=iah_edit method=post action="iah_save.php" onsubmit="javascript:return false">
+
+<?php
+	if (!isset($fst)) {
+		echo "<h1>".$msgstr["missing"]." bases/".$arrHttp["base"]."/data/".$arrHttp["base"].".fst</h1>";
+		die;
+	}
 	echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
     echo "<input type=hidden name=ValorCapturado value=\"\">\n";
     if (isset($arrHttp["encabezado"]))
     	echo "<input type=hidden name=encabezado value=s>\n";
-	if (file_exists($db_path."par/".strtoupper($arrHttp["base"]).".def")){
-		$db_def=parse_ini_file ($db_path."par/".strtoupper($arrHttp["base"]).".def",true,INI_SCANNER_RAW);
+	if (file_exists($db_path.$actparfolder.strtoupper($arrHttp["base"]).".def")){
+		$db_def=parse_ini_file ($db_path.$actparfolder.strtoupper($arrHttp["base"]).".def",true,INI_SCANNER_RAW);
 		$msg="";
 	}else{         //CONFIGURE A NEW DATABASE
-		$msg="<font color=red><strong>".$msgstr["newfile"]." bases/par/".$arrHttp["base"].".def. ".$msgstr["reminder"]."</strong></font><p>";	}
-//	echo $db_path."par/".strtoupper($arrHttp["base"]).".def" ;
+		$msg="<font color=red><strong>".$msgstr["newfile"]." bases/".$actparfolder.$arrHttp["base"].".def. ".$msgstr["reminder"]."</strong></font><p>";
+	}
+//	echo $db_path.$actparfolder.strtoupper($arrHttp["base"]).".def" ;
 //	echo "<pre>"; echo print_r($db_def); echo "</pre>";
 	if (!isset($db_def["FILE_LOCATION"]["FILE DATABASE.*"]))
 		$db_def["FILE_LOCATION"]["FILE DATABASE.*"]="%path_database%".$arrHttp["base"]."/data/".$arrHttp["base"].".*";
@@ -745,12 +852,21 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 		$db_def["FILE_LOCATION"]["FILE GXML"]="%path_database%gizmo/gXML.*";
 	if (!isset($db_def["INDEX_DEFINITION"])){
 		$desc="";
-		foreach ($lan_iah as $key=>$lang){			$desc.='^'.$key;		}
+		foreach ($lan_iah as $key=>$lang){
+			$desc.='^'.$key;
+		}
 
-		if (isset($search_ix) and count($search_ix)>0 ){			$d="^d*";			foreach ($search_ix as $key=>$value){				$pref=$key;				$str_pref=strtoupper(substr($pref,0,1)).strtolower(substr($pref,1));
-				$str_pref_end=substr($pref,0,strlen($pref)-1);				$db_def["INDEX_DEFINITION"]["INDEX ".strtoupper(substr($str_pref_end,0,1)).strtolower(substr($str_pref_end,1))]=$desc."$d^x".strtoupper($str_pref_end)." ^u".strtoupper($key)."^yDATABASE^m$key";
-				$d="";			}
-		}else{
+		if (isset($search_ix) and count($search_ix)>0 ){
+			$d="^d*";
+			foreach ($search_ix as $key=>$value){
+				$pref=$key;
+				$str_pref=strtoupper(substr($pref,0,1)).strtolower(substr($pref,1));
+				$str_pref_end=substr($pref,0,strlen($pref)-1);
+				$db_def["INDEX_DEFINITION"]["INDEX ".strtoupper(substr($str_pref_end,0,1)).strtolower(substr($str_pref_end,1))]=$desc."$d^x".strtoupper($str_pref_end)." ^u".strtoupper($key)."^yDATABASE^m$key";
+				$d="";
+			}
+
+		}else{
 			$db_def["INDEX_DEFINITION"]["INDEX Tw"]="";
 			$db_def["INDEX_DEFINITION"]["INDEX "]="";
 		}
@@ -759,10 +875,12 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 		$db_def["APPLY_GIZMO"][0]="";
 		$db_def["APPLY_GIZMO"][1]="";
 	}
-	if (!isset($db_def["FORMAT_NAME"]["FORMAT standard.pft"])){		$desc="";
+	if (!isset($db_def["FORMAT_NAME"]["FORMAT standard.pft"])){
+		$desc="";
 		foreach ($lan_iah as $key=>$lang){
 			$desc.='^'.$key;
-		}		$db_def["FORMAT_NAME"]["FORMAT standard.pft"]=$desc;
+		}
+		$db_def["FORMAT_NAME"]["FORMAT standard.pft"]=$desc;
 	}
 	if (!isset($db_def["FORMAT_NAME"]["FORMAT DEFAULT"]))
 		$db_def["FORMAT_NAME"]["FORMAT DEFAULT"]="standard.pft";
@@ -771,7 +889,8 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 		$db_def["HELP_FORM"][1]="";
 	}
 	if (!isset($db_def["PREFERENCES"])){
-		$db_def["PREFERENCES"][]="";	}
+		$db_def["PREFERENCES"][]="";
+	}
 	echo "<A NAME=INICIO>";
 //    echo "<a href=iah_def_edit_txt.php?base=".$arrHttp["base"].$encabezado.">".$msgstr["edit_txt"]."</a> | ";
 
@@ -780,15 +899,17 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 	<a href=#APPLY_GIZMO>[APPLY GIZMO]</A>&nbsp;&nbsp;<a href=#FORMAT_NAME>[FORMAT NAME]</A>&nbsp;&nbsp;<A HREF=#HELP_FORM>[HELP FORM]</A>
 	&nbsp;&nbsp;<A HREF=#PREFERENCES>[PREFERENCES]</A>
 	</DIV>";
-	echo "<a href=javascript:ValidateForm()>".$msgstr["validate"]."</a>";
+	echo "<br><a href=javascript:ValidateForm()>".$msgstr["validate"]."</a>";
 
-	foreach ($db_def as $var=>$value){        $var=trim($var);
+	foreach ($db_def as $var=>$value){
+        $var=trim($var);
 		echo "<br><A NAME=$var><p><strong>[$var]</strong>&nbsp;&nbsp;&nbsp;<A href=#INICIO>".$msgstr["top"]."</a>";
 		switch ($var){
 			case "FILE_LOCATION":
 				$id=-1;
 				echo "<div id=1 style='line-height:200%'>\n";
-				foreach ($value as $v1=>$v2){					$id=$id+1;
+				foreach ($value as $v1=>$v2){
+					$id=$id+1;
 			    	echo "<br><input type=text name=\"file_tag\"  value=\"$v1\" id=file_tag_$id>=<input type=text name=\"file_cont\" value=\"$v2\" size=90 id=file_cont_$id>";
 			    	if ($id!=0) echo "&nbsp;<a href=javascript:DeleteElement($id,1)>".$msgstr["delete"]."</a>\n";
 
@@ -816,7 +937,8 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 					$ix=$ix+1;
 					echo '^'.$ix."<font color=red><i>".$msgstr[trim($l)]."</i></font>";
 				}
-				foreach ($value as $v1=>$v2){					$id=$id+1;
+				foreach ($value as $v1=>$v2){
+					$id=$id+1;
 			   		echo "<br><input type=text name=\"index_tag\" value=\"$v1\" id=index_tag_$id>= <input type=text name=\"index_cont\" value=\"$v2\" size=90 id=index_cont_$id> <a href='javascript:EditIndex($id)'>".$msgstr["edit"]."</a> | <a href=javascript:DeleteElement($id,2)>".$msgstr["delete"]."</a>\n";
 			   		echo "&nbsp;<a href=\"javascript:seeElement('$v2')\">".$msgstr["see"]."</a>\n";
 			    }
@@ -824,20 +946,27 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 			    	$id=$id+1;
 			    	echo "<br><input type=text name=\"index_tag\" value=\"$v1\" id=index_tag_$id>= <input type=text name=\"index_cont\" value=\"$v2\" size=90 id=index_cont_$id> <a href='javascript:EditIndex($id)'>".$msgstr["edit"]."</a> | <a href=javascript:DeleteElement($id,2)>".$msgstr["delete"]."</a>\n";
 			    }
-			    if ($id==0){			    	$id=$id+1;
-			    	echo "<br><input type=text name=\"index_tag\" value=\"$v1\" id=index_tag_$id>= <input type=text name=\"index_cont\" value=\"$v2\" size=90 id=index_cont_$id> <a href='javascript:EditIndex($id)'>".$msgstr["edit"]."</a> | <a href=javascript:DeleteElement($id,2)>".$msgstr["delete"]."</a>\n";			    }
+			    if ($id==0){
+			    	$id=$id+1;
+			    	echo "<br><input type=text name=\"index_tag\" value=\"$v1\" id=index_tag_$id>= <input type=text name=\"index_cont\" value=\"$v2\" size=90 id=index_cont_$id> <a href='javascript:EditIndex($id)'>".$msgstr["edit"]."</a> | <a href=javascript:DeleteElement($id,2)>".$msgstr["delete"]."</a>\n";
+			    }
 			    echo "</div>\n";
 			    echo "<a href=javascript:AddElement(2)>".$msgstr["add"]."</a>\n<br>";
 			    break;
 			case "APPLY_GIZMO":
 				$id=-1;
 				echo "<div id=3 style='line-height:200%'>\n";
-				foreach ($value as $v1=>$v2){					if ($v1=="0" or $v1=="1") $v1="";					$id=$id+1;
+				foreach ($value as $v1=>$v2){
+					if ($v1=="0" or $v1=="1") $v1="";
+					$id=$id+1;
 			    	echo "<br><input type=text name=\"gizmo_tag\" value=\"$v1\" id=gizmo_tag_$id>= <input type=text name=\"gizmo_cont\" value=\"$v2\" id=gizmo_cont_$id size=90> &nbsp;<a href=javascript:DeleteElement($id,3)>".$msgstr["delete"]."</a>\n";
 			    }
-			    if ($id==-1){			    	$id=$id+1;
-			    	echo "<br><input type=text name=\"gizmo_tag\" value=\"\" id=gizmo_tag_$id>= <input type=text name=\"gizmo_cont\" value=\"\" id=gizmo_cont_$id size=90> &nbsp;<a href=javascript:DeleteElement($id,3)>".$msgstr["delete"]."</a>\n";			    }
-			    if ($id==0){			    	$id=$id+1;
+			    if ($id==-1){
+			    	$id=$id+1;
+			    	echo "<br><input type=text name=\"gizmo_tag\" value=\"\" id=gizmo_tag_$id>= <input type=text name=\"gizmo_cont\" value=\"\" id=gizmo_cont_$id size=90> &nbsp;<a href=javascript:DeleteElement($id,3)>".$msgstr["delete"]."</a>\n";
+			    }
+			    if ($id==0){
+			    	$id=$id+1;
 			    	echo "<br><input type=text name=\"gizmo_tag\" value=\"\" id=gizmo_tag_$id>= <input type=text name=\"gizmo_cont\" value=\"\" id=gizmo_cont_$id size=90>&nbsp;<a href=javascript:DeleteElement($id,3)>".$msgstr["delete"]."</a>\n";
 			    }
 			    echo "</div>";
@@ -853,12 +982,15 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 					$ix=$ix+1;
 					echo '^'.$ix."<font color=red><i>".$msgstr[trim($l)]."</i></font>";
 				}
-				foreach ($value as $v1=>$v2){                    if ($v1=="0" or $v1=="1") $v1="";
+				foreach ($value as $v1=>$v2){
+                    if ($v1=="0" or $v1=="1") $v1="";
                     $id=$id+1;
 			    	echo "<br><input type=text name=\"format_tag\" value=\"$v1\" id=format_tag_$id>= <input type=text name=\"format_cont\" value=\"$v2\" size=90 id=format_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,4)>".$msgstr["delete"]."</a>\n";
 			    }
-                if ($id==-1){                	$id=$id+1;
-			    	echo "<br><input type=text name=\"format_tag\" value=\"\" id=format_tag_$id>: <input type=text name=\"format_cont\" value=\"\" size=90 id=format_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,4)>".$msgstr["delete"]."</a>\n";                }
+                if ($id==-1){
+                	$id=$id+1;
+			    	echo "<br><input type=text name=\"format_tag\" value=\"\" id=format_tag_$id>: <input type=text name=\"format_cont\" value=\"\" size=90 id=format_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,4)>".$msgstr["delete"]."</a>\n";
+                }
                 if ($id==0){
                 	$id=$id+1;
 			    	echo "<br><input type=text name=\"format_tag\" value=\"\" id=format_tag_$id>: <input type=text name=\"format_cont\" value=\"\" size=90 id=format_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,4)>".$msgstr["delete"]."</a>\n";
@@ -870,16 +1002,20 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 				echo "<div id=5 style='line-height:200%'>\n";
 				$id=-1;
                 $lang_form="";
-				foreach ($value as $v1=>$v2){					if ($v1=="0" or $v1=="1") $v1="";
+				foreach ($value as $v1=>$v2){
+					if ($v1=="0" or $v1=="1") $v1="";
 					$id=$id+1;
 					echo "<br>";
 					echo "<select name=help_tag><option value=''</option>";
 					echo "<option value='HELP FORM'";
-					if (substr($v1,0,9)=="HELP FORM") {						echo " selected";
-						$lang_form=trim(substr($v1,10));					}
+					if (substr($v1,0,9)=="HELP FORM") {
+						echo " selected";
+						$lang_form=trim(substr($v1,10));
+					}
 					echo ">HELP FORM</OPTION>";
 					echo "<option value='NOTE FORM'";
-					if (substr($v1,0,9)=="NOTE FORM") {						echo " selected";
+					if (substr($v1,0,9)=="NOTE FORM") {
+						echo " selected";
 						$lang_form=trim(substr($v1,10));
 					}
 					echo ">NOTE FORM</OPTION>";
@@ -899,7 +1035,8 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 			    	echo "<input type=text name=\"lang_form\" value=\"$lang_form\" id=lan_form_$id size=2>= <input type=text name=\"help_cont\" value=\"$v2\" size=90 id=help_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,5)>".$msgstr["delete"]."</a>\n";
 			    	$lang_form="";
 			    }
-			    if ($id==-1){			    	$id=$id+1;
+			    if ($id==-1){
+			    	$id=$id+1;
 			    	echo "<br>";
 					echo "<select name=help_tag><option value=''</option>";
 					echo "<option value='HELP FORM'>HELP FORM</OPTION>";
@@ -907,7 +1044,8 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 					echo "<option value='HELP INDEX'>HELP INDEX</OPTION>";
 					echo "<option value='NOTE INDEX'>NOTE INDEX</OPTION>";
 					echo "</select>";
-			    	echo "<input type=text name=\"lang_form\" value=\"\" id=lang_form_$id size=2>= <input type=text name=\"help_cont\" value=\"\" size=90 id=help_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,5)>".$msgstr["delete"]."</a>\n";			    }
+			    	echo "<input type=text name=\"lang_form\" value=\"\" id=lang_form_$id size=2>= <input type=text name=\"help_cont\" value=\"\" size=90 id=help_cont_$id> &nbsp;<a href=javascript:DeleteElement($id,5)>".$msgstr["delete"]."</a>\n";
+			    }
 			    if ($id==0){
 			    	$id=$id+1;
 			    	echo "<br>";
@@ -975,9 +1113,15 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 							break;
 					}
 				}
-                if ($uctab==""){                	if (file_exists($db_path.$arrHttp["base"]."/data/isisuc.tab")) {                		$uctab=$db_path.$arrHttp["base"]."/data/isisuc.tab";                	}else{                		if (file_exists($db_path."isisuc.tab")) {
+                if ($uctab==""){
+                	if (file_exists($db_path.$arrHttp["base"]."/data/isisuc.tab")) {
+                		$uctab=$db_path.$arrHttp["base"]."/data/isisuc.tab";
+                	}else{
+                		if (file_exists($db_path."isisuc.tab")) {
                 			$uctab=$db_path."isisuc.tab";
-                		}                	}                }
+                		}
+                	}
+                }
 				echo "<table border=0 cellspacing=5>";
 				echo "<tr><td valign=top>Available Forms: </td>";
 				echo "              <td valign=middle><a href=javascript:SubirOpcion()>".$msgstr["up"]."</a>  | <a href=javascript:BajarOpcion()>".$msgstr["down"]."</a><br><select name=preferences size=3 multiple>";
@@ -986,14 +1130,20 @@ echo "&nbsp; &nbsp;<font color=white>&nbsp; &nbsp; Script: iah_edit_db.php";
 				$pref["F"]="free";
 				$pref["B"]="basic";
 				$pref["A"]="advanced";
-				if (!isset($adForm)){					$af=$pref;
-				}else{					foreach ($adForm as $value){						$af[$value]=$pref[$value];
-						$sel[$value]=" selected";					}
-				}
+				if (!isset($adForm)){
+					$af=$pref;
+				}else{
+					foreach ($adForm as $value){
+						$af[$value]=$pref[$value];
+						$sel[$value]=" selected";
+					}
+
+				}
 				if (!isset($af["F"])) $af["F"]=$pref["F"];
 				if (!isset($af["B"])) $af["B"]=$pref["B"];
 				if (!isset($af["A"])) $af["A"]=$pref["A"];
-				foreach ($af as $key=>$value){					echo "<option value=$key";
+				foreach ($af as $key=>$value){
+					echo "<option value=$key";
 					if (isset($sel[$key])) echo " selected";
 					echo ">".$msgstr[$value]."</option>\n";
 				}

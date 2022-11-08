@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-06-14 fho4abcd Do not set password in $_SESSION + lineends
+20220711 fho4abcd Use $actparfolder as location for .par files
+*/
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
 session_start();
@@ -20,15 +24,19 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	$tag= "";
 	$IsisScript=$xWxis."login.xis";
 	$pass=$arrHttp["password"];
-	if (isset($MD5) and $MD5==1){		$pass=md5($pass);	}
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
+	if (isset($MD5) and $MD5==1){
+		$pass=md5($pass);
+	}
+	$query = "&base=acces&cipar=$db_path".$actparfolder.acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
 	include("wxis_llamar.php");
 
 	 foreach ($contenido as $linea){
 
-	 	if ($ic==-1){	    	$ic=1;
+	 	if ($ic==-1){
+	    	$ic=1;
 	    	$pos=strpos($linea, '##LLAVE=');
-	    	if (is_integer($pos)) {	     		$llave_pft=substr($linea,$pos+8);
+	    	if (is_integer($pos)) {
+	     		$llave_pft=substr($linea,$pos+8);
 	     		$pos=strpos($llave_pft, '##');
 	     		$llave_pft=substr($llave_pft,0,$pos);
 			}
@@ -68,27 +76,36 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
   		else
   			$fecha="";
   		$today=date("Ymd");
-  		if (trim($fecha)!=""){  			if ($today>$fecha){
+  		if (trim($fecha)!=""){
+  			if ($today>$fecha){
   				header("Location: ../../index.php?login=N");
-  				die;  			}  		}
+  				die;
+  			}
+  		}
   		$value=substr($value,2);
   		$ix=strpos($value,'^');
   		$Perfil=substr($value,0,$ix);
-    	if (!file_exists($db_path."par/profiles/".$Perfil)){    		echo "missing ". $db_path."par/profiles/".$Perfil;
-    		die;    	}
+    	if (!file_exists($db_path."par/profiles/".$Perfil)){
+    		echo "missing ". $db_path."par/profiles/".$Perfil;
+    		die;
+    	}
     	$profile=file($db_path."par/profiles/".$Perfil);
     	unset($_SESSION["profile"]);
     	unset($_SESSION["permiso"]);
     	unset($_SESSION["login"]);
     	$_SESSION["profile"]=$Perfil;
     	$_SESSION["login"]=$arrHttp["login"];
-    	foreach ($profile as $value){    		$value=trim($value);
-    		if ($value!=""){    			$key=explode("=",$value);
-    			$_SESSION["permiso"][$key[0]]=$key[1];    		}
+    	foreach ($profile as $value){
+    		$value=trim($value);
+    		if ($value!=""){
+    			$key=explode("=",$value);
+    			$_SESSION["permiso"][$key[0]]=$key[1];
+    		}
     	}
 
  	}else{
- 		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){ 			$Perfil="adm";
+ 		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){
+ 			$Perfil="adm";
  			unset($_SESSION["profile"]);
     		unset($_SESSION["permiso"]);
     		unset($_SESSION["login"]);
@@ -103,7 +120,8 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     				$_SESSION["permiso"][$key[0]]=$key[1];
     			}
     		}
-    	}else{ 			echo "<script>
+    	}else{
+ 			echo "<script>
  			self.location.href=\"../../index.php?login=N\";
  			</script>";
   			die;
@@ -140,7 +158,6 @@ include("../lang/acquisitions.php");
 		VerificarUsuario();
 		$_SESSION["lang"]=$arrHttp["lang"];
 		$_SESSION["login"]=$arrHttp["login"];
-		$_SESSION["password"]=$arrHttp["password"];
 		$_SESSION["nombre"]=$nombre;
 
 	}

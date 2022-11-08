@@ -1,0 +1,65 @@
+<p><font face="Arial"><strong>Tipos de registro</strong></font></p>
+<p>Si la estructura de base de datos contempla diferentes tipos de registro, esta situación debe ser estructurada bajo ABCD.</p>
+<p>ABCD define dos formas diferentes para manejar los tipos de registro:</p>
+<ol>
+    <li>Para estructuras MARC</li>
+    <li>Para estructuras no MARC</li>
+</ol>
+<p><font face="Arial"><strong>Tipos de Registro (estructuras Marc)</strong></font></p>
+<p><font face="Arial" size="2">Esta opción ayuda a definir los tipos de registro que van a ser manejados por la base de datos cuando la misma utiliza el formato MARC. ABCD identifica que una base de datos está estructurada en formato MARC cuando en la tabla de definición de campos se ha incluído el campo tipo LEADER (LDR). La estructura del campo Leader se encuentra en un archivo denominado leader.fdt, ubicado en la carpeta def de la base de datos, la cual identifica los siguientes campos:</font></p>
+<blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+<p><font size="2">3005 Estado del registro<br />
+3006 Tipo de registro<br />
+3007 Nivel bibliográfico<br />
+3017&nbsp;Nivel de codificación<br />
+3018 Descripción de la forma de catalogación</font></p>
+</blockquote>
+<p><font face="Arial"></font></p>
+<p><font size="2"></font></p>
+<p><font face="Arial" size="2">El tipo de registro se obtiene del campo <strong>3006 </strong>del Leader y ayuda a identificar el formato del campo fijo a ser utilizado en la descripción bibliográfica del título.</font></p>
+<p><font size="2">El formato del campo fijo asociado a cada tipo de registro&nbsp;se almacena en una estructura similar a la FDT y se presentan en el procedimiento de ingreso dependiendo del tipo de registro seleccionado en el Leader.</font></p>
+<p><font size="2">Para definir tipos de registro en las estructuras MARC, proceda como sigue:</font></p>
+<ol>
+    <li><font size="2">Active la opción <strong>Tipos de registro: marc</strong> en el módulo de actualización de las definiciones de bases de datos</font></li>
+    <li><font size="2"><font size="2">Coloque en la casillas identificada como <strong>etiqueta1&nbsp;</strong>la etiqueta del campo del Leader donde se almacena el tipo de registro (3006). Deje la casilla correspondiente a&nbsp;<strong>etiqueta2</strong> en blanco</font></font></li>
+    <li><font size="2">Bajo la columna&nbsp;<strong>Hoja de entrada de datos</strong>&nbsp;coloque el nombre de la estructura que contiene la descripción del campo fijo correspondiente al tipo de registro que está describiendo. Use el vínculo edit para editar o crear la estructura correspondiente. Este vínculo le abrirá el editor de FDT ya que el campo fijo se mantiene en una estructura similar a la Tabla de Definición de Campos de la base de datos</font></li>
+    <li><font size="2">Coloque en la columna correspondiente a <strong>Etiqueta 1 Valor</strong> el valor que puede tomar el campo 3006<strong>&nbsp;</strong>para asociarle ese tipo de registro. Deje la columna <strong>Etiqueta 2 Valor </strong>en blanco</font></li>
+    <li><font size="2"><font size="2">Coloque bajo la columna <strong>Tipo de registro, Descripción</strong> la descripción del tipo de registro, tal como aparecerá el momento de creación para selección del tipo correspondiente</font>&nbsp;</font></li>
+    <li><font size="2">Repita los pasos 2-6 hasta agotar los tipos de registro que desea definir</font></li>
+</ol>
+<p><font size="2">Al finalizar haga clic sobre el botón <strong>Actualizar</strong></font></p>
+<p><font size="2">Los tipos de registro definidos se almacenarán en la carpeta <strong>def</strong> de la base de datos, bajo el lenguaje activo al momento de la creación, con el nombre <font face="Arial"><strong>typeofrecord.tab</strong></font></font></p>
+<p><hr />
+</p>
+<p><strong><font face="Arial"></font></strong></p>
+<p><strong><font face="Arial" size="3">Tipos de registro (estructuras no&nbsp;MARC)</font></strong></p>
+<p><font face="Arial" size="2">Esta opción ayuda a definir los tipos de registro que van a ser manejados por la base de datos cuando la misma no utiliza el formato MARC.</font></p>
+<p><font face="Arial" size="2">Para estos efectos se requiere definir el tipo de registro y asignar que campos de la base de datos (máximo dos) almacenan los valores a ser utilizados&nbsp;para identificar el tipo que corresponde al registro en proceso de creación o edición.</font></p>
+<p><font face="Arial" size="2">Para definir los tipos de registro se requieren 2 componentes:</font></p>
+<ol>
+    <li><font face="Arial" size="2">Identificar el campo (tag)&nbsp;de la base de datos del cual se va a obtener (o a almacenar en caso de un nuevo registro) el tipo de registro correspondiente a la información que se está registrando. La versión actual de ABCD permite definir hasta dos campos a partir de cuyo contenido se determinará el tipo de registros y, en consecuencia, la&nbsp; hoja de entrada a ser utilizada para el ingreso o la edición del registro</font> </li>
+    <li><font face="Arial" size="2">Describir los tipos de registro teniendo en cuenta los siguientes parámetros:</font>
+    <ul>
+        <li><font face="Arial" size="2">Nombre de la tabla de definición (FMT) que contiene los elementos a ser utilizados para construir el formulario de ingreso para capturar los datos</font></li>
+        <li><font face="Arial" size="2">Valor que tienen los campos identificados en (1)&nbsp;para que sean considerados pertenecientes a ese tipo de registro</font> </li>
+        <li><font face="Arial" size="2">Descripción del tipo de registro, la cual se presentará al operador al momento de ingreso para que proceda a la selección del tipo correspondiente</font> </li>
+    </ul>
+    </li>
+</ol>
+<p><font face="Arial" size="2">A fin de mantener la consistencia en la parametrización de ABCD, los campos fijos se definen a través de una&nbsp;<strong>FMT</strong> que contiene la lista de los campos (tags) de la&nbsp; <strong>FDT </strong>de la base de datos que se requieren para construir el formato de ingreso. Como solo se mantiene el tag de los campos, éstos heredarán automáticamente las características definidas en la <strong>FDT </strong>de la base de datos.</font></p>
+<p><font face="Arial" size="2">Para asignar los tipos de registro se requiere definir previamente las hojas de entrada que estarán vinculadas a cada tipo (ver Hojas de entrada&nbsp;de datos&nbsp;(FMT).</font></p>
+<p><font size="2">Si va a definir tipos de registro paras una base de datos que no cumple con la norma MARC, haga lo siguiente:</font></p>
+<ol>
+    <li><font size="2">Coloque en las casillas identificadas como <strong>etiqueta1 </strong>y <strong>etiqueta2</strong> las etiquetas de los campos que van a utilizarse para identicar el tipo de registro. La segunda etiqueta es opcional</font></li>
+    <li><font size="2">Seleccione de la columna <strong>Hoja de entrada</strong> la hoja de entrada que va a utilizar para ingresar el tipo de registro. Esta hoja de entrada debe definirse previamente&nbsp;con la opción <strong>Crear/Editar hojas de entrada</strong></font></li>
+    <li><font size="2">Coloque el valor que tendrá el campo identificado en <strong>etiqueta1 valor </strong>para identificar el tipo de registro</font></li>
+    <li><font size="2"><font size="2">Coloque el valor que tendrá el campo identificado en <strong>etiqueta2 valor </strong>para identificar el tipo de registro (opcional)</font></font></li>
+    <li><font size="2">Coloque bajo la columna <strong>Tipo de registro, Descripción </strong>la descripción del tipo de registro, tal como aparecerá el momento de creación para selección del tipo correspondiente</font></li>
+    <li><font size="2">Repita los pasos 2-5 tantas veces como tipos de registro existan en la base de datos</font></li>
+    <li><font size="2">Al finalizar, haga clic sobre <strong>Actualizar</strong></font></li>
+</ol>
+<p><font size="2">Los tipos de registro definidos se almacenarán en la carpeta <strong>def</strong> de la base de datos, bajo el lenguaje activo al momento de la creación, con el nombre <font face="Arial"><strong>typeofrecord.tab</strong></font></font></p>
+<p>&nbsp;</p>
+<p><font face="Arial" size="2"></font></p>
+&nbsp;
+<p>&nbsp;</p>

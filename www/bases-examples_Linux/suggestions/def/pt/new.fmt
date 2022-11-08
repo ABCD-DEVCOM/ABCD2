@@ -1,28 +1,23 @@
-1
-2
-3
-5
-6
-4
-16
-17
-18
-21
-29
-H||Série|0|0||||||||||||0|
-30
-31
-32
-H||Outros dados|0|0||||||||||||0|
-35
-47
-38
-39
-40
-41
-H||Recomendado por|0|0||||||||||||0|
-200
-210
-211
-220
-
+H||Identificação do objeto|0|0||||||||||||0||0|0|||
+F|10|Tipo de aquisição proposta|0|0|ab||R||5|P|%path_database%copies/def/pt/acquiredby.tab|||||0||0|0|||
+F|1|Número da proposta|0|0|||AI|||||CN_|v1|v1||0||0|0|||
+F|2|Status|0|0|||S||4|P|status.tab||||0|0||0|0|||
+F|3|Sobre a aquisição|0|0|||R||1|P|typeacquisition.tab|||||0||0|0|||
+F|5|Acervo relacionado|0|0|||S||20|P|%path_database%acquisitions.dat|||||0||0|0|||
+F|6|Identificação do objeto|0|0|||S||20|P|type.tab|||||0||0|0|||
+F|16|Autor pessoal|0|0|||X||80|||||||0||0|0|||
+F|17|Autor entidade|0|0|||X||80|||||||0||0|0|||
+F|18|Título|0|0|||X||80|||||||0||0|0|||
+F|21|Volume|0|0|||X||10|||||||0||0|0|||
+F|22|Tomo|0|0|||X||10|||||||0||0|0|||
+F|35|ISSN|0|0|||X|||||||||0||0|0|||
+F|47|ISBN|0|0|||X|||||||||0||0|0|||
+F|38|Editora|0|0|||X|||||||||0||0|0|||
+F|39|Cidade|0|0|||X|||||||||0||0|0|||
+F|40|País|0|0|||X|||||||||0||0|0|||
+F|41|Edição|0|0|||X|||||||||0||0|0|||
+H||Recomendado por|0|0||||||||||||0||0|0|||
+F|200|Pessoa/Departamento|0|0|||X|||||||||0||0|0|||
+F|210|Data|0|0|||D||10|||||||0||0|0|||
+F|211|Date ISO|0|0|||ISO||10|||||||0||0|0|||
+F|220|Número de cópias|0|0|||X||5|||||||0||0|0|||

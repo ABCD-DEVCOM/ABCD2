@@ -1,0 +1,11 @@
+(if p(v300) then mpu,v1[1],mpl,
+	'|',f(mfn,1,0),'_',f(iocc,1,0),
+	'|'v1[1],
+	'|'v18[1],if s(v16[1],v17[1])<>'' then ' / ',v16[1],|  |v17[1],fi,,
+	'|',v300^g 
+	'|',v300^a,
+	'|',v300^r,
+	'|',v300^b,
+	'|',v300^c,| |v300^d,,
+	'|',if npost(['bon de commande'],'RNBN_',mpu,s(v1[1]),'_'v300^r)<>0 then 'OK' fi,
+fi/)

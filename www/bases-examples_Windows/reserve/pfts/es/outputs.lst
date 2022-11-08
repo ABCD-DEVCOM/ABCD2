@@ -1,0 +1,2 @@
+RS01|reserve_01.pft|Código de usuario#Tipo usuario#Nombre#Base de datos#Número de control#Referencia#Fecha reserva#Hora reserva#Operador#Fecha cancelación#Fecha préstamo#|v15,v20|ST_0|Reservas||
+RS04|tbres_01.pft|Usuario#Fecha reserva#||ST_0|Esperas vencidas||

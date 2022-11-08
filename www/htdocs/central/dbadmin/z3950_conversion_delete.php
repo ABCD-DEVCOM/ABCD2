@@ -1,61 +1,69 @@
 <?php
-
+/*
+20220108 fho4abcd backButton+ div helper+improve html
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
 include ("../config.php");
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 //foreach($arrHttp as $var=>$value) echo "$var=$value<br>";
-//die;
-if (isset($arrHttp["encabezado"]))
-	$encabezado="&encabezado=S";
-else
-	$encabezado="";
 $lang=$_SESSION["lang"];
-
+$backtoscript="../dbadmin/z3950_conf.php";
+
 include("../common/header.php");
 echo "<body>";
-if (isset($arrHttp["encabezado"])){
-    	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
-echo "
-	<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["z3950"].": ".$msgstr["z3950_cnv"]." (".$arrHttp["base"].")</div>
-	<div class=\"actions\">\n";
-echo "<a href=z3950_conf.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>". $msgstr["back"]."</strong></span>
-		</a>
-		</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>";
-echo "<div class=\"middle form\">
-			<div class=\"formContent\">";
-echo "<font size=1 face=arial> &nbsp; &nbsp; Script: z3950_conversion_delete.php</font>";
-$file=$db_path.$arrHttp["base"]."/def/".$arrHttp["Table"];
+include("../common/institutional_info.php");
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["z3950"].": ".$msgstr["z3950_tab"]." (".$arrHttp["base"].")" ?>
+	</div>
+
+	<div class="actions">
+    <?php
+    $savescript="javascript:Enviar()";
+	include "../common/inc_back.php";
+	include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php $ayuda="z3950_conf.html"; include "../common/inc_div-helper.php";?>
+
+<div class="middle form">
+<div class="formContent">
+<div style="text-align:center">
+<?php
+$tabfile=$arrHttp["base"]."/def/".$arrHttp["Table"];
+$file=$db_path.$tabfile;
+
 if (file_exists($file)){
 	$res=unlink($file);
 	if (!$res){
-		echo $msgstr["nodeleted"];
+		echo $tabfile.": ".$msgstr["nodeleted"]."<br><br>";
 	}
+    else {
+		echo $tabfile.": ".$msgstr["eliminados"]."<br><br>";
+    }
 }
-$fp=file($db_path.$arrHttp["base"]."/def/z3950.cnv");
+$cnvfile=$arrHttp["base"]."/def/z3950.cnv";
+$fp=file($db_path.$cnvfile);
 foreach ($fp as $value) $sal[]=$value;
-$out=fopen($db_path.$arrHttp["base"]."/def/z3950.cnv","w");
+
+$out=fopen($db_path.$cnvfile,"w");
 foreach ($sal as $value){
 	$t=explode('|',$value);
 	if (trim($t[0])!=trim($arrHttp["Table"]))
 		$res=fwrite($out,$value);
 }
 fclose($out);
-echo "<center><h4>z3950.cnv: ".$msgstr["updated"];
-echo "</h4></center></div></div>";
+?>
+<h4><?php echo $cnvfile.": ".$msgstr["updated"]?></h4>
+</div></div></div>
+<?php
 include("../common/footer.php");
-echo "</body>
-</html>";
 ?>

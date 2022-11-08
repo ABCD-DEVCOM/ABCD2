@@ -6,14 +6,18 @@ if (!isset($_SESSION["permiso"])){
 include("../config.php");
 include("../lang/admin.php");
 include("../lang/acquisitions.php");
+include("../common/get_post.php");
 $ValorCapturado="";
-foreach ($_GET as $var => $value) {	VariablesDeAmbiente($var,$value);
+foreach ($_GET as $var => $value) {
+	VariablesDeAmbiente($var,$value);
 }
-if (count($arrHttp)==0){
+/*
+if (count($arrHttp)==""){
 	foreach ($_POST as $var => $value) {
 		VariablesDeAmbiente($var,$value);
 	}
-}
+}*/
+
 foreach ($arrHttp as $var => $value) {
 	if (substr($var,0,3)=="tag" ){
 		$tag=explode("_",$var);
@@ -68,31 +72,37 @@ else
 			<?php echo $msgstr["purchase"].": ".$msgstr["new"]?>
 		</div>
 		<div class="actions">
-			<?php if ($err==""){			?>
-			<a href=../common/inicio.php?reinicio=s&encabezado=s&base=<?php echo $arrHttp["base"]?> class="defaultButton backButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["back"]?></strong></span>
-			</a>			<?php }?>
+			<?php if ($err==""){
+			?>
+
+	<?php
+		$backtoscript="../common/inicio.php";
+		include "../common/inc_back.php";
+	 }
+
+	 ?>
 		</div>
 		<div class="spacer">&#160;</div>
 	</div>
-	<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/suggestions_new_update.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/order_new_update.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: order_new_update.php</font>\n";
-	?>
-	</div>
+$ayuda="acquisitions/suggestions_new_update.html";
+include "../common/inc_div-helper.php";
+?>
+
 	<div class="middle form">
 		<div class="formContent">
 <?php
-	if ($err==""){		$arrHttp["Formato"]="purchaseorder";
+	if ($err==""){
+		$arrHttp["Formato"]="purchaseorder";
 		$regSal=LeerRegistroFormateado($arrHttp["Formato"]);
-		echo $regSal;	}else{
-		echo "<h4>$err</h4>" ;
+		echo $regSal;
+	}else{
+
+		echo "<h4>$err</h4>" ;
 		echo "<p><a href=javascript:document.forma2.submit()>".$msgstr["back"]."</a>";
-	}
+
+	}
 echo "<form name=forma2 method=post action=order_new.php>\n";
 echo "<input type=hidden name=wks value=".$arrHttp["wks"].">";
 echo "<input type=hidden name=base value=".$arrHttp["base"].">";

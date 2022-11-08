@@ -1,0 +1,18 @@
+Type of record
+Accesion number
+Volume
+Tome
+Borrower code
+Loan date
+Loan hour
+Return date
+Return hour
+Borrower type
+Object type
+Classification number
+Control number
+Database
+Object description
+Operator and loan date
+Operator and return date
+Renewals

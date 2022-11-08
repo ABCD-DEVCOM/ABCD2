@@ -1,0 +1,83 @@
+<html>
+
+    <head>
+
+        <title></title>
+
+    </head>
+
+    <body>
+
+        <p><font face="Arial" size="2"><strong>Users' database setup </strong></font></p>
+
+        <p><font face="Arial" size="2">This option is used to set up the system's database with those users entitled to access the loan service </font></p>
+
+        <p><font face="Arial" size="2">Required parameters </font></p>
+
+        <p>
+
+        <table cellspacing="5" cellpadding="5" width="95%" summary="" border="0">
+
+            <tbody>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">Prefix to obtain user's  number </font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">It specifies the prefix to be placed in front of the user's  number in order to locate the appropriate information in the users' database. It is stored in the users's database <strong>def</strong> folder under the name.<strong><font color="#ff0000"> loans_uskey.tab</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT to extract users'  number </font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">This extraction format is applied to obtain the user's number, once the user's register has been found.<font face="Arial"> It is stored in the users's database <strong>def</strong> folder under the name</font><strong><font color="#ff0000"> loans_uskey.pft</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT to extract user's type </font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">Loan policies are applied depending on the type of user and type of item to be lent. This extraction format is applied to extract the type of user.<font face="Arial"><font size="2"> It is stored in the users's database <font face="Arial"><strong>def</strong> folder</font> under the name</font></font><strong> <font color="#ff0000">loans_ustype.tab</font></strong></font></font></td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT to extract user's validity</font></td>
+
+                    <td valign="top">
+
+                    <p><font face="Arial" size="2">User's validity can be <font color="#000000">set</font> applying this format.It should include a message and a code, separated by the | character..<br />
+
+                    The following codes have been established:</font></p>
+
+                    <p><font face="Arial" size="2">0=Valid user <br />
+
+                    1=Invalid user </font></p>
+
+                    <p><font face="Arial"><font face="Arial"><font size="2"> It is stored in the users's database </font><font face="Arial"><font size="2"><font face="Arial"><font size="2"><font face="Arial"><strong>def</strong> folder</font></font></font></font></font><font size="2"> under the name</font></font><font size="2"><strong><font color="#ff0000"> loans_usvig.tab</font></strong></font></font></p>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td valign="top"><font face="Arial" size="2">PFT to display user's information</font></td>
+
+                    <td valign="top"><font face="Arial"><font size="2">This extraction format displays user's information in order to issue state accounts and other reports related to loans management. </font><font face="Arial"><font size="2"> It is stored in the users's database </font><font face="Arial"><font size="2"><font face="Arial"><font size="2"><font face="Arial"><strong>def</strong> folder</font></font></font></font></font><font size="2"> under the name</font></font><font face="Arial"><font size="2"></font></font><font size="2"><strong> loans_usdisp.tab</strong></font><font size="2"><strong><font color="#ff0000"></font></strong></font></font></td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        </p>
+
+    </body>
+
+</html>

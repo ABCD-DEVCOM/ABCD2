@@ -29,8 +29,11 @@ document.onkeypress =
     return true;
   }
 
-function EnviarForma(Proceso){	if (Trim(document.usersearch.code.value)=="" && Trim(document.inventorysearch.inventory.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]."/".$msgstr["inventory"]?>")
-		return	}
+function EnviarForma(Proceso){
+	if (Trim(document.usersearch.code.value)=="" && Trim(document.inventorysearch.inventory.value)==""){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]."/".$msgstr["inventory"]?>")
+		return
+	}
 	if (Proceso==""){
 		if (Trim(document.usersearch.code.value)!=""){
 			document.EnviarFrm.usuario.value=document.usersearch.usercode.value
@@ -42,7 +45,8 @@ function EnviarForma(Proceso){	if (Trim(document.usersearch.code.value)=="" && 
 			}
 		}
 	}else{
-		switch (Proceso){			case "U":
+		switch (Proceso){
+			case "U":
 				document.EnviarFrm.usuario.value=document.usersearch.usercode.value
 				document.EnviarFrm.action="usuario_prestamos_presentar.php"
 				break
@@ -50,7 +54,8 @@ function EnviarForma(Proceso){	if (Trim(document.usersearch.code.value)=="" && 
 				document.EnviarFrm.inventory.value=document.inventorysearch.inventory.value
 				document.EnviarFrm.action="numero_inventario.php"
 				document.EnviarFrm.submit()
-				break		}
+				break
+		}
 	}
 	document.EnviarFrm.submit()
 }
@@ -89,12 +94,13 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -125,7 +131,8 @@ if ($_SESSION["permiso"]=="loanadm"){
 		</td></table>
 	</form>
 	</div>
-	<div class=\"spacer\">&#160;</div>
+	<div class="spacer">&#160;</div>
+	<div class="formContent">
 	<div class="searchBox">
 	<form name=inventorysearch action=numero_inventario.php method=post onsubmit="javascript:return false">
 	<table width=100%>
@@ -144,6 +151,7 @@ if ($_SESSION["permiso"]=="loanadm"){
 	<br><br><dd>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]?>
 </div>
+</div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
 <input type=hidden name=usuario value="">
@@ -151,9 +159,11 @@ if ($_SESSION["permiso"]=="loanadm"){
 </form>
 <?php include("../common/footer.php");
 echo "</body></html>" ;
-if (isset($arrHttp["error"]) and $arrHttp["inventory"]!=""){	echo "
+if (isset($arrHttp["error"]) and $arrHttp["inventory"]!=""){
+	echo "
 	<script>
 	alert('".$arrHttp["inventory"].": El número de inventario no está prestado')
 	</script>
-	";}
+	";
+}
 ?>

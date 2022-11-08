@@ -29,9 +29,11 @@ global $arrHttp,$db_path,$lang_db;
     return $pft;
 }
 
-function LeerNumeroClasificacion($base){global $db_path,$lang_db;
+function LeerNumeroClasificacion($base){
+global $db_path,$lang_db;
 	$prefix_nc="";
-	$prefix_in="";	$archivo=$db_path.$base."/loans/".$_SESSION["lang"]."/loans_conf.tab";
+	$prefix_in="";
+	$archivo=$db_path.$base."/loans/".$_SESSION["lang"]."/loans_conf.tab";
 	if (!file_exists($archivo)) $archivo=$db_path.$base."/loans/".$lang_db."/loans_conf.tab";
 	$fp=file_exists($archivo);
 	if ($fp){
@@ -49,9 +51,11 @@ function LeerNumeroClasificacion($base){global $db_path,$lang_db;
 		}
 	}
 	$prefijos=array($prefix_in,$prefix_nc);
-	return $prefijos;}
+	return $prefijos;
+}
 
-function DibujarSelectBases($fp){global $msgstr,$arrHttp,$copies;
+function DibujarSelectBases($fp){
+global $msgstr,$arrHttp,$copies;
 	echo "<table width=100% border=0 bgcolor=white>";
 ?>
 
@@ -94,17 +98,20 @@ function DibujarSelectBases($fp){global $msgstr,$arrHttp,$copies;
 	}
 ?>
 		</select>
-		<input type=submit value="<?php echo $msgstr["adsearch"]?>" onclick=BusquedaAvanzada("<?php echo $copies?>")></td></table>
+		<input type=submit class="bt-green" value="<?php echo $msgstr["adsearch"]?>" onclick=BusquedaAvanzada("<?php echo $copies?>")></td></table>
 
-<?php}
+<?php
+}
 ?>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
 
 base_selec=""
 function EnviarForma(){
-	if (Trim(document.inventorysearch.control.value)=="" && Trim(document.inventorysearch.inventory_sel.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["control_n"].' / '.$msgstr["inventory"]?>")
-		return	}
+	if (Trim(document.inventorysearch.control.value)=="" && Trim(document.inventorysearch.inventory_sel.value)==""){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["control_n"].' / '.$msgstr["inventory"]?>")
+		return
+	}
 	if (Trim(document.inventorysearch.control.value)!="" && Trim(document.inventorysearch.inventory_sel.value)!=""){
 		alert("<?php echo $msgstr["onlyone"]?>")
 		return
@@ -120,15 +127,19 @@ function EnviarForma(){
 		document.inventorysearch.action="situacion_de_un_objeto_db_ex.php"
 	else
     	document.inventorysearch.action="situacion_de_un_objeto_ex.php";
-   /* if (Trim(document.inventorysearch.inventory_sel.value)!=""){    	INV=escape(document.inventorysearch.inventory_sel.value)
+   /* if (Trim(document.inventorysearch.inventory_sel.value)!=""){
+    	INV=escape(document.inventorysearch.inventory_sel.value)
 	<?php if (isset($inventory_numeric) and $inventory_numeric =="Y")
 		echo "INV=parseInt(document.inventorysearch.inventory_sel.value,10)\n";
 	?>
 
-		document.inventorysearch.inventory_sel.value=INV    } */
-	document.inventorysearch.submit()}
+		document.inventorysearch.inventory_sel.value=INV
+    } */
+	document.inventorysearch.submit()
+}
 
-function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){		Ctrl_activo=xI
+function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){
+		Ctrl_activo=xI
 		lang="en"
 	    Separa="&delimitador="+Separa
 	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo
@@ -138,7 +149,8 @@ function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repe
 		msgwin.focus()
 }
 
-function VerSiLoanObjects(){	bd_sel=document.inventorysearch.db.selectedIndex
+function VerSiLoanObjects(){
+	bd_sel=document.inventorysearch.db.selectedIndex
 	if (bd_sel<=0){
 		alert("<?php echo $msgstr["seldb"]?>")
 		return
@@ -146,11 +158,16 @@ function VerSiLoanObjects(){	bd_sel=document.inventorysearch.db.selectedIndex
 	bd_a=document.inventorysearch.db.options[bd_sel].value
 	b=bd_a.split('|')
 	bd=b[0]
-	if (bd=="loanobjects"){		self.location.href="situacion_de_un_objeto.php?base=loanobjects"
-		return	}}
+	if (bd=="loanobjects"){
+		self.location.href="situacion_de_un_objeto.php?base=loanobjects"
+		return
+	}
+}
 
-function AbrirIndice(Ix,Ctrl){	library=""
-	switch (Ix){		case "S":
+function AbrirIndice(Ix,Ctrl){
+	library=""
+	switch (Ix){
+		case "S":
 		      <?php if (isset($_SESSION["library"])) echo "library='".$_SESSION["library"]."_'\n";?>
 		case "SC":
             bd_sel=document.inventorysearch.db.selectedIndex
@@ -168,9 +185,11 @@ function AbrirIndice(Ix,Ctrl){	library=""
 				prefijo=b[2]
 				formato=b[3]
 				repetible=1
-			}else{				prefijo=b[4]
+			}else{
+				prefijo=b[4]
 				formato=b[5]
-				repetible=0			}
+				repetible=0
+			}
 			prefijo=prefijo+library
 			AbrirIndiceAlfabetico(Ctrl,prefijo,"","",bd,bd+".par","3",1,repetible,"ifp")
 			break
@@ -201,12 +220,16 @@ function PresentarDiccionario(){
 		document.diccionario.submit()
 		msgwin.focus()
 	}
-function BusquedaAvanzada(copies) {        switch (copies){        	case "N":
+function BusquedaAvanzada(copies) {
+        switch (copies){
+        	case "N":
         		Ctrl=eval("document.inventorysearch.db")
         		break;
         	case "Y":
         		Ctrl=eval("document.busqueda.db")
-        		break        }		 bd_sel=Ctrl.selectedIndex
+        		break
+        }
+		 bd_sel=Ctrl.selectedIndex
 		if (bd_sel<=0){
 			alert("<?php echo $msgstr["seldb"]?>")
 			return
@@ -217,7 +240,10 @@ function BusquedaAvanzada(copies) {        switch (copies){        	case "N":
 		bd=b[0]
 		document.busqueda.base.value=bd
 		document.busqueda.copies.value=copies
-		document.busqueda.submit()}
+		document.busqueda.submit()
+
+
+}
 </script>
 <?php
 $encabezado="";
@@ -226,25 +252,25 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["ecobj"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/object_statment.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/object_statment.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: situacion_de_un_objeto.php</font>\n";
 
-?>
-</div>
+
+<?php
+$ayuda="object_statment.html";
+include "../common/inc_div-helper.php";
+?> 	
+
+
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 		<form name=inventorysearch  method=post onsubmit="javascript:return false">
 <?php
@@ -256,25 +282,32 @@ if (file_exists($db_path."loans.dat")){
 	$fp=file($db_path."loans.dat");
 	$sel_base="Y";
 	$copies="N";
-}else{	$file=file($db_path."bases.dat");
-	foreach ($file as $val){		$val=trim($val);		if ($val!=""){			$ff=explode('|',$val);
+}else{
+	$file=file($db_path."bases.dat");
+	foreach ($file as $val){
+		$val=trim($val);
+		if ($val!=""){
+			$ff=explode('|',$val);
 			if (isset($ff[2])){
-				if ($ff[2]=="Y"){					$sel_base="N";
-					$copies="Y";				}
+				if ($ff[2]=="Y"){
+					$sel_base="N";
+					$copies="Y";
+				}
 			}
-			if (file_exists($db_path.trim($ff[0])."/loans/".$_SESSION["lang"]."/loans_display.pft")){				$fp[]=$val;			}		}	}}
+			if (file_exists($db_path.trim($ff[0])."/loans/".$_SESSION["lang"]."/loans_display.pft")){
+				$fp[]=$val;
+			}
+		}
+	}
+}
 ?>
 <script><?php echo 'base_selec="'.$sel_base.'";'; echo 'copies="'.$copies.'"'?></script>
-<?php if ($copies=="N") {
+<?php if ($copies=="N") {
+
 	DibujarSelectBases($fp);
 }
 ?>
-
-
-
-
 	<input type=hidden name=inventory>
-
 		<table width=100% border=0>
 			<td width=150>
 				<label for="searchExpr">
@@ -282,8 +315,8 @@ if (file_exists($db_path."loans.dat")){
 			</label>
 			</td><td>
 				<textarea name="inventory_sel" id="inventory_sel" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" rows=5 cols=50/></textarea>
-				<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
-				<input type="submit" name="buscar" value="<?php echo $msgstr["search"]?>" class="submit" onclick="javascript:EnviarForma()"/>
+				<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
+				<input type="submit" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
 			</td>
 		</table>
 	</div>
@@ -296,8 +329,8 @@ if (file_exists($db_path."loans.dat")){
 		</label>
 		</td><td>
 		<input type="text" name="control" id="control" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="submit" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "SC"; else echo "C";?>',document.inventorysearch.control)"/>
-		<input type="submit" name="ok" value="<?php echo $msgstr["search"]?>" class="submit" onClick=EnviarForma() />
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="Y") echo "SC"; else echo "C";?>',document.inventorysearch.control)"/>
+		<input type="submit" name="ok" value="<?php echo $msgstr["search"]?>" class="bt-green" onClick=EnviarForma() />
 		</td></table>
 	<p>
 
@@ -307,14 +340,16 @@ if (file_exists($db_path."loans.dat")){
 	<?php echo "<input type=hidden name=copies value=$copies>\n";?>
 	<input type=hidden name=base value="<?php if (isset($arrHttp["base"]))echo $arrHttp["base"]?>">
 	<?php if ($copies=="Y") {
-		DibujarSelectBases($fp);
+
+		DibujarSelectBases($fp);
 	}
 	?>
 
 	</form>
-	<br><br><br><br>
+
 	</div>
 
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php if (isset($arrHttp["base"])) echo $arrHttp["base"]?>">
@@ -335,6 +370,5 @@ if (file_exists($db_path."loans.dat")){
 	<input type=hidden name=Expresion>
 </form>
 <?php include("../common/footer.php");
-echo "</body></html>" ;
 
 ?>

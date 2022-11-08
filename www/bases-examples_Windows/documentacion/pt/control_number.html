@@ -1,0 +1,17 @@
+<!-- saved from url=(0022)http://internet.e-mail -->
+<strong>Atribui&ccedil;&atilde;o de um n&uacute;mero de controle aos registros de uma base de dados</strong><br />
+<br />
+<strong><br />
+</strong>Esta op&ccedil;&atilde;o permite atribuir de forma automática um número sequencial consecutivo, aos registros de uma base de dados.<br />
+<br />
+Na FDT deve definir o campo de controle,&nbsp;como tipo de campo "Autoincrement". Se vai ser utilizado para o processo de inventario através do sistema de aquisi&ccedil;&otilde;es, deve indicar o prefixo <strong>NC_ </strong>na FST. <br />
+<br />
+A numera&ccedil;&atilde;o &eacute; gravada no arquivo <strong>control_number.cn</strong>, armazenado na pasta <strong>data</strong> da base de dados correspondente. Neste arquivo &eacute; gravado o  último número atribu&iacute;do no processo de entrada dos registros. Para modificar a sequencia de atribui&ccedil;&atilde;o deste número, use a op&ccedil;&atilde;o <strong>Restabelecer número de invent&aacute;rio ou número de controle</strong> contida na página de inicio do módulo de cataloga&ccedil;&atilde;o.<br />
+<br />
+Quando se solicita a atribui&ccedil;&atilde;o automática do número de controle, &eacute; exibida uma janela onde  se coloca a faixa de Mfns aos quais ser&aacute; atribu&iacute;do este número. Tenha em conta que se coloca uma faixa de mfn's demasiado ampla, o tempo empregado para a atribui&ccedil;&atilde;o dos números pode causar um "time out" no servidor e o processo pode ser  interrompido.<br />
+<br />
+Neste caso, revise a sa&iacute;da exibida, revise o &uacute;ltimo mfn processado e reinicie o processo a partir do pr&oacute;ximo MFN.<br />
+<br />
+Dado que este processo atualiza todos os registros da faixa especificada, &eacute; recomendado suspender todos os processos de entrada e edi&ccedil;&atilde;ode registros at&eacute; que o mesmo tenha sido completado.<br />
+<br />
+Recomenda-se reorganizar a base de dados em seguida, j&aacute; que o tamanho em  bytes da mesma pode ser duplicado, produto da atualiza&ccedil;&atilde;o dos registros. Igualmente, deve-se gerar o arquivo invertido.<br />

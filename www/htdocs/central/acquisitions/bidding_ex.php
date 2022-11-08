@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument
+*/
+
 //
 // Presenta una sugerencia presentada desde el script bidding.php anterior para la inserción de los datos de las cotizaciones
 // DISPLAYS FOR EDITING THE SUGGESTIONS SELECTED FROM THE LIST SHOWN IN BIDDING.PHP IN ORDER TO UPDATE THE BIDDING DATA
@@ -23,7 +27,8 @@ include("javascript.php");
 ?>
 <script>
 
-function Validar(){	j=document.forma1.elements.length-1
+function Validar(){
+	j=document.forma1.elements.length-1
 	occ=""
 	a=""
 	r=""
@@ -33,10 +38,13 @@ function Validar(){	j=document.forma1.elements.length-1
 		campo=document.forma1.elements[i]
 		nombre=campo.name
 		//Se verifica si la información de la cotización de cada proveedor está completa
-		if (nombre.substr(3,3)=="300"){			t=nombre.split("_")
+		if (nombre.substr(3,3)=="300"){
+			t=nombre.split("_")
 			if (occ=="" ) occ=t[1]
 			if (occ!=t[1]){
-				if (a+r+b+c!=""){					if (a=="")   {						alert(occ+"-"+"<?php echo $msgstr["err300a"]?>")
+				if (a+r+b+c!=""){
+					if (a=="")   {
+						alert(occ+"-"+"<?php echo $msgstr["err300a"]?>")
 						return "N"
 					}
 					if (r=="")   {
@@ -50,12 +58,15 @@ function Validar(){	j=document.forma1.elements.length-1
 					if (c=="")   {
 						alert(occ+"-"+"<?php echo $msgstr["err300c"]?>")
 						return "N"
-					}				}
+					}
+				}
 				occ=t[1]
 				a=Trim(campo.value)
 				b=""
-				c=""			}else{
-				switch (t[2]){					case "a":
+				c=""
+			}else{
+				switch (t[2]){
+					case "a":
 						a=Trim(campo.value)
 						break
 					case "r":
@@ -66,8 +77,12 @@ function Validar(){	j=document.forma1.elements.length-1
 						break
 					case "c":
 						c=Trim(campo.value)
-						break				}			}
-		}else{			if (a+b+c!=""){
+						break
+				}
+
+			}
+		}else{
+			if (a+b+c!=""){
 					if (a=="")   {
 						alert(t[1]+"-"+"<?php echo $msgstr["err300a"]?>")
 						return "N"
@@ -80,15 +95,19 @@ function Validar(){	j=document.forma1.elements.length-1
 						alert(t[1]+"-"+"<?php echo $msgstr["err300c"]?>")
 						return "N"
 					}
-			}		}
+			}
+		}
 	}
-	if (Trim(document.forma1.tag330.value)==""){		alert("<?php echo $msgstr["err330"]?>")
-		return "N"	}
+	if (Trim(document.forma1.tag330.value)==""){
+		alert("<?php echo $msgstr["err330"]?>")
+		return "N"
+	}
 	if (Trim(document.forma1.tag331.value)==""){
 		alert("<?php echo $msgstr["err331"]?>")
 		return "N"
 	}
-	return "Y"}
+	return "Y"
+}
 
 </script>
 <?php
@@ -103,28 +122,21 @@ if (isset($arrHttp["see_all"])) $see_all="&see_all=Y"
 		<?php echo $msgstr["suggestions"].": ".$msgstr["bidding"]?>
 	</div>
 	<div class="actions">
-		<a href=bidding.php?encabezado=s&base=<?php echo $arrHttp["base"]."&sort=".$arrHttp["sort"].$see_all?> class="defaultButton cancelButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["cancel"]?></strong></span>
-		</a>
-		<a href=javascript:EnviarForma() class="defaultButton saveButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-		</a>
+
+		<?php
+		$backtoscript="bidding.php";
+		$savescript="javascript:EnviarForma()";
+		include "../common/inc_back.php";
+		include "../common/inc_save.php";
+		?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/bidding_ex.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/bidding_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: bidding_ex.php</font>\n";
+$ayuda="acquisitions/bidding_ex.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
-
-
-
 
 <div class="middle form">
 			<div class="formContent">
@@ -149,8 +161,8 @@ ConstruyeWorksheetFmt();
 //Se lee el registro que va a ser editado
 $arrHttp["lock"] ="S";
 $maxmfn=$arrHttp["Mfn"];
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"","");
-echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../images/zoom.png></a> &nbsp;<strong>".$valortag[18]."<br>Copias aprobadas:".$valortag[240]."</strong><br>";
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"");
+echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../../assets/images/zoom.png></a> &nbsp;<strong>".$valortag[18]."<br>Copias aprobadas:".$valortag[240]."</strong><br>";
 echo "<br>";
 if ($res=="LOCKREJECTED") {
 	echo "<script>

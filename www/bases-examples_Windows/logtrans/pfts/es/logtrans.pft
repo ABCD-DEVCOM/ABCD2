@@ -1,0 +1,37 @@
+'<table border=0 width=800>'
+if p(v1) then '<tr><td width=20% valign=top nowrap><font face=arial size=2><b>Tipo de transacción</b></td><td valign=top><font face=arial size=2>'
+select v1
+    case 'A':'Prestamo'
+    case 'B':'Devolución'
+    case 'C':'Renovación'
+    case 'D':'Reserva registrada'
+    case 'E':'Reserva en espera'
+    case 'F':'Reserva atendida'
+    case 'G':'Cancelación reserva (Operador)'
+    case 'H':'Cancelación reserva (Usuario)'
+    case 'I':'Multa por atraso'
+    case 'J':'Multa por sanción'
+    case 'K':'Cancelación multa'
+    case 'L':'Pago de multa'
+    case 'M':'Suspensión por atraso'
+    case 'N':'Suspensión por sanción'
+    case 'O':'Cancelación suspensión por operador'
+    case 'P':'Login operador'
+    case 'Q':'Logout operador'
+    case 'R':'Cancelación multa por operador'
+endsel
+' ('
+v1')</td>' fi/
+
+if p(v20) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha transacción</b></td><td valign=top><font face=arial size=2>'v20+|<br>|,'</td>' fi/
+if p(v30) then '<tr><td width=20% valign=top><font face=arial size=2><b>Hora transacción</b></td><td valign=top><font face=arial size=2>'v30+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=20% valign=top><font face=arial size=2><b>Id. del operador</b></td><td valign=top><font face=arial size=2>'v40+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>Base de datos de objetos usada</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v100) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de control</b></td><td valign=top><font face=arial size=2>'v100+|<br>|,'</td>' fi/
+if p(v110) then '<tr><td width=20% valign=top><font face=arial size=2><b>Número de inventario</b></td><td valign=top><font face=arial size=2>'v110+|<br>|,'</td>' fi/
+if p(v120) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de objeto</b></td><td valign=top><font face=arial size=2>'v120+|<br>|,'</td>' fi/
+if p(v200) then '<tr><td width=20% valign=top><font face=arial size=2><b>Código del usuario</b></td><td valign=top><font face=arial size=2>'v200+|<br>|,'</td>' fi/
+if p(v210) then '<tr><td width=20% valign=top><font face=arial size=2><b>Tipo de usuario</b></td><td valign=top><font face=arial size=2>'v210+|<br>|,'</td>' fi/
+if p(v300) then '<tr><td width=20% valign=top><font face=arial size=2><b>Fecha programada</b></td><td valign=top><font face=arial size=2>'v300+|<br>|,'</td>' fi/
+if p(v310) then '<tr><td width=20% valign=top><font face=arial size=2><b>Días de atraso</b></td><td valign=top><font face=arial size=2>'v310+|<br>|,'</td>' fi/
+'</table><p>'

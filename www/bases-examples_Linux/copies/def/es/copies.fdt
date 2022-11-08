@@ -1,7 +1,7 @@
 F|1|No. control|0|0|||RO|||||||||0||
 F|10|Base datos|0|0|||S||20|P|%path_database%acquisitions.dat|||||0||
 F|20|Signatura|0|0|||X|||||||||0||
-AI|30|Inventario|0|1|||X||20|||||||0||
+F|30|Inventario|0|1|||X||20|||||||0||
 F|200|Situación|0|0|ab||R||2|P|status_copy.tab|||||0||
 F|35|Biblioteca princ.|0|0|||S|||P|libraries.tab|||||0||
 F|40|Biblioteca sec.|0|0|||X|||||||||0||

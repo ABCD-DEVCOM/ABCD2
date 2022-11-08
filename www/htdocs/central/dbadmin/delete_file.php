@@ -1,4 +1,6 @@
 <?php
+/*
+20220202 fho4abcd buttons, div-helper
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -32,6 +34,7 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include ("../config.php");
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
 include("../lang/soporte.php");
@@ -41,12 +44,14 @@ $archivo="";
 if (isset($arrHttp["fmt"])) {
 	$archivo=$arrHttp["fmt"].".fmt";
 	$file=$arrHttp["fmt"];
-	$url="fmt.php";	$lista="formatos.wks";
+	$url="fmt.php";
+	$lista="formatos.wks";
 	$titulo=$msgstr["fmt"];
 }
 if (isset($arrHttp["pft"])){
 	$file=$arrHttp["pft"];
-	$url="pft.php";	$archivo=$arrHttp["pft"].".pft";
+	$url="pft.php";
+	$archivo=$arrHttp["pft"].".pft";
 	$lista="formatos.dat";
 	$titulo=$msgstr["pft"];
 	$arrHttp["path"]="/pfts/".$_SESSION["lang"];
@@ -70,45 +75,53 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $arrHttp["base"].": ".$msgstr["delete"].". $titulo: ".$archivo?>
+        <?php echo $arrHttp["base"].": ".$msgstr["delete"].". $titulo: ".$archivo?>
 	</div>
-
 	<div class="actions">
-<?php
-	 echo "<a href=\"pft.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-?>
-<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-<span><strong><?php echo $msgstr["back"]?></strong></span>
-</a>
-			</div>
-			<div class="spacer">&#160;</div>
+        <?php
+        if ($url!="") {
+            $backtoscript=$url;
+            include "../common/inc_back.php";
+        } else {// the fdt "browse"can delete a file. This is in a separate window-> only close
+            include "../common/inc_close.php";
+        }
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<?php echo "<font color=white>&nbsp; &nbsp; Script: delete_file.php" ?></font>
-	</div>
+<?php include "../common/inc_div-helper.php";
+?>
 <div class="middle form">
 			<div class="formContent">
 <center><font face=verdana color=red>
-<?php echo "<h4>".$msgstr["file"].": $archivo</h4>--";
+<?php echo "<h4>".$msgstr["file"].": $archivo</h4> &rarr;&nbsp;";
+//foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";die;
 if ($archivo!=""){
 	$a=$db_path.$arrHttp["base"]."/".$arrHttp["path"]."/".$_SESSION["lang"]."/$archivo";
 	if (!file_exists($a )) $a=$db_path.$arrHttp["base"]."/".$arrHttp["path"]."/".$lang_db."/$archivo";
 	$res=unlink($a);
-	if ($res==0){		echo $msgstr["nodeleted"];
-	}else{		echo $msgstr["deleted"];
+	if ($res==0){
+		echo $msgstr["nodeleted"];
+	}else{
+		echo $msgstr["deleted"];
 		if ($lista!=""){
-			$salida="";			$fp=file($db_path.$arrHttp["base"]."/".$arrHttp["path"]."/$lista");
-			foreach ($fp as $value){				$value=trim($value);
+			$salida="";
+			$fp=file($db_path.$arrHttp["base"]."/".$arrHttp["path"]."/$lista");
+			foreach ($fp as $value){
+				$value=trim($value);
 				$v=explode('|',$value);
-				if ($v[0]!=$file) $salida.=$value."\n";			}
+				if ($v[0]!=$file) $salida.=$value."\n";
+			}
             $fp=fopen($db_path.$arrHttp["base"]."/".$arrHttp["path"]."/$lista","w");
             fwrite($fp,$salida);
             fclose($fp);
             echo "<p>$lista: ".$msgstr["updated"];
-		}	}
+		}
+	}
 }
 if ($encabezado!=""){
-	if (isset($arrHttp["pft"]) or $url!=""){		echo "<script>
+	if (isset($arrHttp["pft"]) or $url!=""){
+		echo "<script>
 			url='".$url."'
 
 			if ( top.frames.length>0){
@@ -119,5 +132,6 @@ if ($encabezado!=""){
 			}
 			</script>
 			";
-	}}
+	}
+}
 ?>

@@ -1,7 +1,8 @@
 <?php
 function GrabarLog($movimiento,$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,$accion=""){
 	if (!isset($_SESSION["login"])) return;
-	if (file_exists($db_path."logtrans/data/logtrans.mst")){		$IsisScript=$xWxis."actualizar.xis";
+	if (file_exists($db_path."logtrans/data/logtrans.mst")){
+		$IsisScript=$xWxis."actualizar.xis";
 		$ValorCapturado="<1 0>$movimiento</1>";
 		$ValorCapturado.="<20 0>".date("Y/m/d")."</20>";
 		$ValorCapturado.="<30 0>".date("h:i:s")."</30>";
@@ -37,7 +38,9 @@ function GrabarLog($movimiento,$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,$acci
 			include("../common/wxis_llamar.php");
 		}
 			//foreach ($contenido as $value) echo "$value<br>";die;
-   }else{   		return "";   }
+   }else{
+   		return "";
+   }
 
 }
 ?>

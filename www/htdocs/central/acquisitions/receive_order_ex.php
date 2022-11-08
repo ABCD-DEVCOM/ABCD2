@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove unused include
+*/
+
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -14,7 +18,6 @@ include("../common/get_post.php");
 $arrHttp["base"]="purchaseorder";
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 //die;
-include ('../dataentry/leerregistroisis.php');
 
 include("../common/header.php");
 
@@ -25,11 +28,16 @@ include("../common/header.php");
 //Actualiza las copias de la base de datos
 function Update(elem){
 	activeForm=eval("document.frm"+elem)
-	if (activeForm.received.value==""){		alert("<?php echo $msgstr["misscr"]?>")
-		return	}
-	if (activeForm.received.value*1.0>activeForm.copies_req.value*1.0){		alert("<?php echo $msgstr["invcr"]?>")
-		return	}
-	activeForm.submit()}
+	if (activeForm.received.value==""){
+		alert("<?php echo $msgstr["misscr"]?>")
+		return
+	}
+	if (activeForm.received.value*1.0>activeForm.copies_req.value*1.0){
+		alert("<?php echo $msgstr["invcr"]?>")
+		return
+	}
+	activeForm.submit()
+}
 </script>
 <?php
 $encabezado="";
@@ -45,19 +53,16 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/receive_order_ex.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/receive_order_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: receive_order_ex.php</font>\n";
+$ayuda="acquisitions/receive_order_ex.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
 
 <div class="middle form">
 			<div class="formContent">
 <?php
-// Se localiza la Órden de compra
+// Se localiza la ï¿½rden de compra
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/receiving.pft" ;
 if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/receiving.pft" ;
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&Expresion=ON_".$arrHttp["searchExpr"]."&Formato=@$Formato&Opcion=buscar";
@@ -70,9 +75,11 @@ $Mfn_order=$linea[2];
 $provider=$linea[3];
 $closed=trim($linea[4]);
 $l=explode('^^',$linea[1]);
-// se obtiene la información correspondiente a los objetos ya actualizados para evitar la duplicación  (campo 500 de purchaseorder)
+// se obtiene la informaciï¿½n correspondiente a los objetos ya actualizados para evitar la duplicaciï¿½n  (campo 500 de purchaseorder)
 print $linea[0];
-if ($closed!=""){	print "<font color=darkred size=+2><strong>".$msgstr["orderclosed"]."</strong></font>";}else{
+if ($closed!=""){
+	print "<font color=darkred size=+2><strong>".$msgstr["orderclosed"]."</strong></font>";
+}else{
 	echo "<br><font class=\"textEntry\"><b>".$msgstr["date_receival"].": </b>".$arrHttp["date"]."</font>"  ;
 }
 echo "<table cellspacing=4  border=0 class=statTable>";
@@ -81,9 +88,13 @@ echo "<tr><th width=610>".$msgstr["item"]."</th><th width=90 align=center nowrap
 $ix=0;
 foreach ($l as $val) {
 	$val=trim($val);
-	if (trim($val)!=""){		$ix=$ix+1;
-		$cell=explode('|',$val);
-		if (isset($cell[5]) and trim($cell[5])!="") {			LeerFst($cell[5]);		}
+	if (trim($val)!=""){
+		$ix=$ix+1;
+
+		$cell=explode('|',$val);
+		if (isset($cell[5]) and trim($cell[5])!="") {
+			LeerFst($cell[5]);
+		}
 		echo "\n<form name=frm$ix method=post action=receive_order_update.php>\n";
 		echo "<input type=hidden name=Mfn_order value=$Mfn_order>\n";
 		echo "<input type=hidden name=date value=".$arrHttp["date"].">\n";
@@ -123,10 +134,13 @@ foreach ($l as $val) {
 		echo "</td><td align=center><select name=typeofobj>";
 		$fp=file($db_path."suggestions/def/".$lang."/typeacquisition.tab");
 		if ((int)$cell[7]!=0) $cell[6]="C";
-		foreach ($fp as $value){			$ta=explode("|",$value);
-			$selected="";			echo "<option value=".$ta[0];
+		foreach ($fp as $value){
+			$ta=explode("|",$value);
+			$selected="";
+			echo "<option value=".$ta[0];
 			if ($cell[6]==$ta[0]) $selected= " selected";
-			echo "$selected>".$ta[1];		}
+			echo "$selected>".$ta[1];
+		}
 		echo "</select></td>\n";
 		$ref="";
 		if (isset($obj_rec[$cell[3]][$cell[4]]["posts"])){
@@ -137,10 +151,12 @@ foreach ($l as $val) {
 		echo "<td align=center>";
 		echo "<input type=hidden name=objectid value=\"".$cell[7]."\">";
 		echo $cell[7]."</td>\n";
-		if ((int)$cell[10]<(int)$cell[1])			if ($closed=="")
+		if ((int)$cell[10]<(int)$cell[1])
+			if ($closed=="")
 				echo "<td align=center><a href=javascript:Update($ix)>".$msgstr["update"]."</a></td>";
 		echo "</form>\n";
-	}};
+	}
+};
 echo "</table>";
 if ($closed==""){
 	echo "<form name=close action=close_order.php>\n";
@@ -180,7 +196,7 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
 			break;
 		}
 	}
-	// Si no se ha definido el tag para el número de control en la fdt, se produce un error
+	// Si no se ha definido el tag para el nï¿½mero de control en la fdt, se produce un error
 	if ($tag_ctl==""){
 		echo "<h2>".$msgstr["missingctl"]."</h2>";
 		die;
@@ -188,10 +204,11 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
 }
 
 
-function LeerFdt($base){global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
-// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática y el prefijo con el cual se indiza el número de control
+function LeerFdt($base) {
+global $tag_ctl, $pref_ctl, $db_path, $lang_db, $msgstr, $archivo;
+// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeraciï¿½n automï¿½tica y el prefijo con el cual se indiza el nï¿½mero de control
     return;
-	$archivo=$db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
+	//$archivo = $db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
 	if (file_exists($archivo)){
 		$fp=file($archivo);
 	}else{
@@ -203,8 +220,8 @@ function LeerFdt($base){global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
 		    die;
 		 }
 	}
-	$tag_ctl="";
-	$pref_ctl="";
+	//$tag_ctl="";
+	//$pref_ctl="";
 	foreach ($fp as $linea){
 		$l=explode('|',$linea);
 		if ($l[0]=="AI"){
@@ -212,10 +229,11 @@ function LeerFdt($base){global $tag_ctl,$pref_ctl,$arrHttp,$db_path;
 			$pref_ctl=$l[12];
 		}
 	}
-	// Si no se ha definido el tag para el número de control en la fdt, se produce un error
+	// Si no se ha definido el tag para el nï¿½mero de control en la fdt, se produce un error
 	if ($tag_ctl=="" or $pref_ctl==""){
 		echo "<h2>".$msgstr["missingctl"]."</h2>";
 		die;
-	}}
+	}
+}
 
 ?>

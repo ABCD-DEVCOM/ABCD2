@@ -1,0 +1,146 @@
+<font size="2"><strong><font face="Arial" size="2">Parâmetros requeridos para configurar a base de dados com os itens destinados ao empréstimo</font></strong><br />
+<br />
+<br />
+</font>
+<link href="file:///C:UsersDianaAppDataLocalTempmsohtml1clip_filelist.xml" rel="File-List" /><!--[if gte mso 9]><xml><w:WordDocument><w:View>Normal</w:View><w:Zoom>0</w:Zoom><w:HyphenationZone>21</w:HyphenationZone><w:PunctuationKerning /><w:ValidateAgainstSchemas /><w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid><w:IgnoreMixedContent>false</w:IgnoreMixedContent><w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText><w:Compatibility><w:BreakWrappedTables /><w:SnapToGridInCell /><w:WrapTextWithPunct /><w:UseAsianBreakRules /><w:DontGrowAutofit /></w:Compatibility><w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel></w:WordDocument></xml><![endif]--><!--[if gte mso 9]><xml><w:LatentStyles DefLockedState="false" LatentStyleCount="156"></w:LatentStyles></xml><![endif]--><style type="text/css"><!--/* Style Definitions */p.MsoNormal, li.MsoNormal, div.MsoNormal{mso-style-parent:"";margin:0cm;margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:12.0pt;font-family:"Times New Roman";mso-fareast-font-family:"Times New Roman";}@page Section1{size:612.0pt 792.0pt;margin:70.85pt 3.0cm 70.85pt 3.0cm;mso-header-margin:36.0pt;mso-footer-margin:36.0pt;mso-paper-source:0;}div.Section1{page:Section1;}--></style><!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Tabla normal";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;mso-style-noshow:yes;mso-style-parent:"";mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}table.MsoTableGrid{mso-style-name:"Tabla con cuadr�cula";mso-tstyle-rowband-size:0;mso-tstyle-colband-size:0;border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext;mso-para-margin:0cm;mso-para-margin-bottom:.0001pt;mso-pagination:widow-orphan;font-size:10.0pt;font-family:"Times New Roman";mso-ansi-language:#0400;mso-fareast-language:#0400;mso-bidi-language:#0400;}</style><![endif]-->
+<p style="" class="MsoNormal"><font size="2"><strong><span style="font-size: 11pt; font-family: Arial;">
+<link rel="File-List" href="file:///C:%5CUsers%5CDiana%5CAppData%5CLocal%5CTemp%5Cmsohtml1%5C01%5Cclip_filelist.xml" /><!--[if gte mso 9]><xml>Normal021falsefalsefalseMicrosoftInternetExplorer4</xml><![endif]--><!--[if gte mso 9]><![endif]--><style type="text/css"><!--/* Style Definitions */p.MsoNormal, li.MsoNormal, div.MsoNormal{mso-style-parent:"";margin:0cm;margin-bottom:.0001pt;font-size:12.0pt;"Times New Roman";mso-fareast-"Times New Roman";}@page Section1{size:612.0pt 792.0pt;margin:70.85pt 3.0cm 70.85pt 3.0cm;}div.Section1{page:Section1;}--></style><!--[if gte mso 10]><style>/* Style Definitions */table.MsoNormalTable{mso-style-name:"Tabla normal";mso-style-parent:"";font-size:10.0pt;"Times New Roman";}table.MsoTableGrid{mso-style-name:"Tabla con cuadrícula";border:solid windowtext 1.0pt;font-size:10.0pt;"Times New Roman";}</style><![endif]-->
+<table width="80%" cellspacing="0" cellpadding="0" border="1" align="" summary="">
+    <tbody>
+        <tr>
+            <td width="288" valign="top">
+            <div>Parâmetro</div>
+            </td>
+            <td width="288" valign="top">
+            <div>Exemplo</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Pft para exibir a informação bibliográfica do objeto (loans_display.pft)</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>V50^a,” “v245^a,”&nbsp;“d260,v260^a, …</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Pft para armazenar a informação   do título na base de dados de transações (para    visualização e estatísticas)</span></p>
+            <div>(loans_store.pft)</div>
+            </td>
+            <td width="288" valign="top">
+            <div>&nbsp;`^a`,v250^a,’^b’,v245^a,’^c’v260^c ….</div>
+            <p><span>&nbsp;&nbsp; </span><span>O objetivo deste formato é construir um campo com   subcampos que contenha a informação bibliográfica que será armazenada   como parte da transação do empréstimo. O resultado produzido pelo   formato é armazenado no campo 100 do arquivo de transações de empréstimo   (<strong>trans)</strong></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Pft para extrair a informação   da base de dados de transações (loans_show.pft)</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>Mhl, v100, </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div><strong>Por implementar:</strong></div>
+<p><span>Si el registro bibliográfico contiene las existencias, esto es, no se trabaja con loanobject, se requieren adicionalmente los siguientes parámetros:</span></p>
+<table width="80%" cellspacing="0" cellpadding="0" border="1" align="" summary="">
+    <tbody>
+        <tr>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Prefixo a utilizar para localizar   um número de inventário (loans_conf.tab)</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>NI=</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Prefixo a utilizar para localizar   un número de classificação (loans_conf.tab)</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>SN_</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Pft para extrair o número de   classificação (loans_conf_tab)</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>V50^a</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Tag do campo com as cópias   (loans_conf.tab)</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>900</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Formato para extrair o tipo de   material</span></p>
+            </td>
+            <td width="288" valign="top">
+            <p><span>If   iocc=1 then ‘R’ else ‘L’ fi</span></p>
+            <p><span>O resultado deste formato deVe   ser um dos tipos de objeto considerados na política de empréstimos</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <p><span>Formato para extrair o número de   inventário</span></p>
+            </td>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <div>Formato para extrair o volume</div>
+            </td>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td width="288" valign="top">
+            <div>Formato para extrair a cópia</div>
+            </td>
+            <td width="288" valign="top">
+            <div>&nbsp;</div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+</span></strong></font></p>
+<p style="" class="MsoNormal"><font size="2"><span style="font-size: 11pt; font-family: Arial;"><o:p></o:p></span></font></p>
+<font size="2"><br />
+<br />
+</font>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><font face="Arial" size="2">Você pode usar o link <strong>Testar</strong> e inserir o MFN para aplicar os formatos apropriados para a base de dados de empréstimos.</font></p>
+<p><font face="Arial" size="2">Para salvar os formatos, clique em <strong>Salvar</strong> </font></p>

@@ -14,8 +14,10 @@ if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
 <html>
 <link rel="STYLESHEET" type="text/css" href="../css/styles.css">
 <style>
-	td{		font-family:arial;
-		font-size:10px;	}
+	td{
+		font-family:arial;
+		font-size:10px;
+	}
 </style>
 <?php echo "<font size=1 face=arial color=white>Script: fdt_leer.php</font><br>"?>
  <b><font face=arial size=1 color=white><?php echo $msgstr["advsearch"].". ".$msgstr["database"]?>: <?php echo $arrHttp["base"]?>
@@ -24,7 +26,8 @@ if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
 			<td><?php echo $msgstr["prefix"]?></td><td><?php echo $msgstr["description"]?></td>
 <?php
 $archivo=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab";
-if (file_exists($archivo)){	$fp=file($archivo);
+if (file_exists($archivo)){
+	$fp=file($archivo);
 }else{
 	$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/camposbusqueda.tab";
 	if (file_exists($archivo)){

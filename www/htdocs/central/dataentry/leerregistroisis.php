@@ -1,20 +1,34 @@
 <?php
-
-function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$password,$Formato,$allow="") {global $OS,$valortag,$lang_db,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion,$def;
-global $record_protection,$password_protection;
+/* Modifications
+2021-06-10 fho4abcd Remove unused password argument
+20220711 fho4abcd Use $actparfolder as location for .par files
+20220713 fho4abcd Add workaround for $actparfolder for different base folders.
+*/
+function LeerRegistro($base,$cipar,$from,&$maxmfn,$Opcion,$login,$Formato,$allow="") {
+global $OS,$valortag,$lang_db,$tl,$nr,$xWxis,$arrHttp,$session_id,$msgstr,$db_path,$Wxis,$wxisUrl,$deleted_record,$protect_record,$clave_proteccion,$def;
+global $record_protection,$password_protection,$actparfolder;
 	$query="";
-	if (isset($arrHttp["lock"])){    	$IsisScript=$xWxis."lock.xis";
-    	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
+    $loc_actparfolder=$actparfolder;
+    if ($actparfolder!="par/") {
+        // recompute $actparfolder for the current base
+        $loc_actparfolder=$base."/";
+    }
+	if (isset($arrHttp["lock"])){
+    	$IsisScript=$xWxis."lock.xis";
+    	$query = "&base=" . $base . "&cipar=$db_path".$actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
     	include("../common/wxis_llamar.php");
     	$res=implode("|",$contenido);
     	$res=explode("|",$res);
     	$res=trim($res[0]);
-    	if ($res!="LOCKGRANTED") {    		return $res;    	}
-    }
+    	if ($res!="LOCKGRANTED") {
+    		return $res;
+    	}
+
+    }
     $query="";
     if (isset($arrHttp["unlock"])){
     	$IsisScript=$xWxis."unlock.xis";
-    	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
+    	$query = "&base=" . $base . "&cipar=$db_path".$actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"]."&login=".$login;
     	include("../common/wxis_llamar.php");
     	$res=implode("",$contenido);
     	$res=trim($res);
@@ -29,12 +43,14 @@ global $record_protection,$password_protection;
 	else
 		$fpTm=file("$db_path$base/def/".$lang_db."/$base.fdt");
 	$Pft="";
-	if (!$fpTm){		echo "<font color=red>".$msgstr["falta"]." $archivo";
+	if (!$fpTm){
+		echo "<font color=red>".$msgstr["falta"]." $archivo";
 		echo "<script>
 			if (top.window.frames.length>0) top.xeditar=''\n";
 
 		echo "</script>\n";
-		die;	}
+		die;
+	}
 	$protect_record="";
 	$record_protection="";
 	$password_protection="";
@@ -42,20 +58,31 @@ global $record_protection,$password_protection;
 		if (trim($linea)!="") {
 			$t=explode('|',$linea);
 			if ($t[7]=="PR") $protect_record=$t[1];
-			if ($t[7]=="RP") {				$record_protection=$t[1];				$password_protection=$t[15];
+			if ($t[7]=="RP") {
+				$record_protection=$t[1];
+				$password_protection=$t[15];
 			}
 			if ($t[0]=="LDR"){
 				$leader_tab="$db_path$base/def/".$_SESSION["lang"]."/leader.fdt";
 				if (file_exists($leader_tab))
 					$fpLeader = file($leader_tab);
 				else
-					$fpLeader=file("$db_path$base/def/".$lang_db."/leader.fdt");				if ($fpLeader){					foreach ($fpLeader as $tagLeader){						if (trim($tagLeader)!=""){							$tlead=explode("|",$tagLeader);
+					$fpLeader=file("$db_path$base/def/".$lang_db."/leader.fdt");
+				if ($fpLeader){
+					foreach ($fpLeader as $tagLeader){
+						if (trim($tagLeader)!=""){
+							$tlead=explode("|",$tagLeader);
 							if ($tlead[0]!="LDR")
 								$Pft.="if p(v".$tlead[1].") then '".$tlead[1]." 'v".$tlead[1]."'____$$$' fi,";
-						}					}				}			}
+						}
+					}
+				}
+			}
 
-  			if ($t[0]!="S" and $t[0]!="H" and $t[0]!="L" and $t[0]!="LDR"){  				if (trim($t[1])!="")
-  					$Pft.="(if p(v".$t[1].") then '".$t[1]." 'v".$t[1]."'____$$$' fi),";  			}
+  			if ($t[0]!="S" and $t[0]!="H" and $t[0]!="L" and $t[0]!="LDR"){
+  				if (trim($t[1])!="")
+  					$Pft.="(if p(v".$t[1].") then '".$t[1]." 'v".$t[1]."'____$$$' fi),";
+  			}
   		}
 
   	}
@@ -64,7 +91,7 @@ global $record_protection,$password_protection;
   	if ($record_protection!="")
   	    $Pft.='"$$_$$"V'.$record_protection;
 	$IsisScript=$xWxis."leer.xis";
-	$query = "&base=" . $base . "&cipar=$db_path"."par/".$cipar. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$Opcion."&login=".$login."&password=".$password;
+	$query = "&base=" . $base . "&cipar=$db_path".$loc_actparfolder.$cipar. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$Opcion."&login=".$login."&password=dummy";
 
 	if ($Formato!="")
 		$query.="&Formato=".$arrHttp["Formato"];
@@ -75,18 +102,24 @@ global $record_protection,$password_protection;
 	unset($cont);
     $cont=implode("",$contenido);
     $cont=trim($cont);
-    if (substr($cont,0,7)=="MAXMFN:"){    	$ix=strpos($cont,'##');
+    if (substr($cont,0,7)=="MAXMFN:"){
+    	$ix=strpos($cont,'##');
     	$maxmfn=substr($cont,7,$ix-7);
 		$arrHttp["Maxmfn"]=$maxmfn;
-    	$cont=substr($cont,$ix+2);    }
+    	$cont=substr($cont,$ix+2);
+    }
     $c=explode('$$_$$',$cont);
-    if (isset($c[1])){    	$clave_proteccion=$c[1];
-    }else{    	$clave_proteccion="";    }
+    if (isset($c[1])){
+    	$clave_proteccion=$c[1];
+    }else{
+    	$clave_proteccion="";
+    }
     $contenido=explode('____$$$',$c[0]);
  	$valortag=array();
  	$ic=2;
  	foreach($contenido as $linea){
- 		if (trim($linea)!=""){		 	if ($ic==-1){
+ 		if (trim($linea)!=""){
+		 	if ($ic==-1){
 				$linea=trim(substr($linea,0,strlen($linea)-4));
 				$arr=explode('##',$linea);
 		   		$mfn=substr(trim($arr[1]),4);
@@ -122,7 +155,8 @@ global $record_protection,$password_protection;
 		}
 	}
 
- 	if (isset($valortag[1102])){	 	if ($valortag[1102]==1) {
+ 	if (isset($valortag[1102])){
+	 	if ($valortag[1102]==1) {
 		 	echo "<h1>".$msgstr["recdel"]."</h1>";
 		 	$record_deleted="Y";
 	 		return;
@@ -135,18 +169,21 @@ global $record_protection,$password_protection;
 
 function LeerRegistroFormateado($Formato) {
 
-global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$MaxMfn,$record_deleted,$def;
+global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_db,$MaxMfn,$record_deleted,$def,$actparfolder;
 	if (!isset($arrHttp["Formato"])) $arrHttp["Formato"]="";
- 	if ($Formato=="" or (isset($arrHttp["Formato"]) and $arrHttp["Formato"]=="ALL")) { 		$Formato="ALL";
+ 	if ($Formato=="" or (isset($arrHttp["Formato"]) and $arrHttp["Formato"]=="ALL")) {
+ 		$Formato="ALL";
  		$arrHttp["Formato"]="ALL";
  	}else{
- 		if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/" .$Formato.".pft")){ 			$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/" .$Formato;
- 		}else{ 			$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/" .$Formato;
+ 		if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/" .$Formato.".pft")){
+ 			$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/" .$Formato;
+ 		}else{
+ 			$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/" .$Formato;
         }
  	}
 
  	$IsisScript=$xWxis."buscar.xis";
- 	$query = "&cipar=$db_path"."par/".$arrHttp["cipar"]. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$arrHttp["Opcion"]."&base=" .$arrHttp["base"]."&Formato=$Formato";
+ 	$query = "&cipar=$db_path".$actparfolder.$arrHttp["cipar"]. "&Mfn=" . $arrHttp["Mfn"]."&Opcion=".$arrHttp["Opcion"]."&base=" .$arrHttp["base"]."&Formato=$Formato";
 	include("../common/wxis_llamar.php");
 	$salida="";
 	$record_deleted="N";
@@ -164,9 +201,11 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
 		 	}
 		}
 		$salida.= "</xmp></font>";
-	 }else{        $cont=$contenido;
+	 }else{
+        $cont=$contenido;
 	  	foreach ($contenido as $linea) {
-	  		$lines=trim($linea);	  		if (substr($linea,0,6)=='$$REF:'){
+	  		$lines=trim($linea);
+	  		if (substr($linea,0,6)=='$$REF:'){
 	 			$ref=substr($linea,6);
 	 			$f=explode(",",$ref);
 	 			$bd_ref=trim($f[0]);
@@ -179,9 +218,16 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
 	 				$expr_ref=trim(substr($expr_ref,$ixp+1));
 	 				$b_rel=explode('$$',$expr_ref);
 	 				$expr_ref="";
-	 				foreach ($b_rel as $xx){	 					$xxy=$pref_rel.$xx;
-	 					if ($expr_ref==""){	 						$expr_ref=$xxy;	 					}else{	 						$expr_ref.=' or '.$xxy;	 					}
-	 				}	 			}
+	 				foreach ($b_rel as $xx){
+	 					$xxy=$pref_rel.$xx;
+	 					if ($expr_ref==""){
+	 						$expr_ref=$xxy;
+	 					}else{
+	 						$expr_ref.=' or '.$xxy;
+	 					}
+
+	 				}
+	 			}
 	 			$reverse="";
 	 			if (isset($f[3]) and $f[3]=="reverse")
 	 				$reverse="ON";
@@ -191,8 +237,10 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
  				}else{
  					$pft_ref=$db_path.$bd_ref."/pfts/".$lang_db."/" .$pft_ref;
         		}
- 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
-				if ($reverse!=""){					$query.="&reverse=On";				}
+ 				$query = "&cipar=$db_path".$actparfolder.$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
+				if ($reverse!=""){
+					$query.="&reverse=On";
+				}
 				$debug_x=1;
 				include("../common/wxis_llamar.php");
 				$ixcuenta=0;
@@ -211,7 +259,8 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
 					ksort($SS);
 					foreach ($SS as $linea_alt)
 						$salida.= "$linea_alt\n";
-				}	  		}else{
+				}
+	  		}else{
 	  			if (strpos($linea,'$$DELETED')===false){
 			 		$salida.= $linea."\n";
 		 		}else{

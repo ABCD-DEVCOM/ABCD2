@@ -13,7 +13,8 @@ $arrHttp["ValorCapturado"]= htmlspecialchars_decode ($arrHttp["ValorCapturado"])
 $arrHttp["ValorCapturado"]= stripslashes ($arrHttp["ValorCapturado"]);
 $t=explode("\n",$arrHttp["ValorCapturado"]);
 $fp=fopen($db_path."circulation/def/".$_SESSION["lang"]."/items.tab","w");
-foreach ($t as $value){	fwrite($fp,stripslashes($value)."\n");
+foreach ($t as $value){
+	fwrite($fp,stripslashes($value)."\n");
 }
 include("../common/header.php");
 
@@ -27,7 +28,7 @@ include("../common/institutional_info.php");
 
 	<div class="actions">
 		<a href="configure_menu.php" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span>
 		</a>
 	</div>

@@ -1,4 +1,9 @@
 <?php
+/*
+20210908 fho4abcd div-helper, cleanup html
+20220209 fho4abcd Improve helper+Backbutton+undefine variable
+20220424 rogercgui add backbutton and save button
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -15,32 +20,11 @@ include("../lang/acquisitions.php");
 $db_addto=$arrHttp["base"];
 $arrHttp["base"]="copies";
 include("../common/header.php");
+
+echo "<body>";
 include("../acquisitions/javascript.php");
-
-//READ THE FST OF THE BIBLIOGRAPHIC DATABASE IN ORDER TO GET THE TAG OF THE CONTROL FIELD
-$tag_ctl="";
-$error="";
-LeerFst($db_addto);
-if ($tag_ctl!=""){
-	$Formato="v".$tag_ctl;
-
-	//READ THE BIBLIOGRAPHIC RECORD TO GET THE CONTROL NUMBER
-
-	$query = "&base=".$db_addto."&cipar=$db_path"."par/".$db_addto.".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato&Opcion=rango";
-	$IsisScript=$xWxis."imprime.xis";
-	include("../common/wxis_llamar.php");
-	$valortag[1]=implode("",$contenido);
-//print 'valortag1='.$valortag[1].'<p>';
-	if ($valortag[1]=="")     //CHECK IF THE RECORD HAS CONTROL NUMBER
-		$err_copies="Y";
-	else
-		$err_copies="N";
-
-//READ THE FDT OF THE COPIES DATABASE TO SEE IF THE INVENTORY NUMBER IS AUTOINCREMENT
-	LeerFdt("copies");
-}
-
 ?>
+
 <script language=javascript>
 top.toolbarEnabled="N"
 function Validar(){
@@ -127,58 +111,73 @@ function AsignarTabla(){
 	}
 }
 </script>
-<body>
 <?php
+//READ THE FST OF THE BIBLIOGRAPHIC DATABASE IN ORDER TO GET THE TAG OF THE CONTROL FIELD
+$tag_ctl="";
+$error="";
+$err_copies="";
+LeerFst($db_addto);
+if ($tag_ctl!=""){
+	$Formato="v".$tag_ctl;
+
+	//READ THE BIBLIOGRAPHIC RECORD TO GET THE CONTROL NUMBER
+
+	$query = "&base=".$db_addto."&cipar=$db_path"."par/".$db_addto.".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato&Opcion=rango";
+	$IsisScript=$xWxis."imprime.xis";
+	include("../common/wxis_llamar.php");
+	$valortag[1]=implode("",$contenido);
+//print 'valortag1='.$valortag[1].'<p>';
+	if ($valortag[1]=="")     //CHECK IF THE RECORD HAS CONTROL NUMBER
+		$err_copies="Y";
+	else
+		$err_copies="N";
+
+//READ THE FDT OF THE COPIES DATABASE TO SEE IF THE INVENTORY NUMBER IS AUTOINCREMENT
+	LeerFdt("copies");
+}
 if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	include("../common/institutional_info.php");
 }
 $urlcopies="";
 if (isset($arrHttp["db_copies"])) $urlcopies="&db_copies=Y";
- echo "
-	<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-			 $msgstr["m_addcopies"]."
-		</div>
-		<div class=\"actions\">\n";
-if ($err_copies!="Y" and $error==""){
-	if (isset($arrHttp["encabezado"])){
-				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>". $msgstr["cancel"]."</strong></span>
-					</a>";
-	}
-	?>
-			<a href=../dataentry/fmt.php?base=<?php echo $db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
-			if (isset($arrHttp["Formato"])) echo "&Formato=".$arrHttp["Formato"];
-			echo $urlcopies?> class="defaultButton cancelButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["cancelar"]?></strong></span>
-			</a>
-			<a href=javascript:EnviarForma() class="defaultButton saveButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-			</a>
-	<?php
-}else{
 ?>
-	<a href='javascript:top.toolbarEnabled="";top.Menu("same")' class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" /><?php echo $msgstr["back"]?></a>
-<?php
-}
-echo "	</div>
-		<div class=\"spacer\">&#160;</div>
-	</div>";
-?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/copies/copies_add.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/copies/copies_add.html target=_blank>".$msgstr["edhlp"]."</a>";
- echo "<font color=white>&nbsp; &nbsp; Script: copies/copies_add.php";
-?>
-</font>
-	</div>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+         <?php echo $msgstr["m_addcopies"]?>
+    </div>
+    <div class="actions">
+    <?php
+    if ($err_copies!="Y" and $error==""){
+        if (isset($arrHttp["encabezado"])){
+            include "../common/inc_cancel.php";
+        }
 
+
+				$backtocancelscript="../dataentry/fmt.php?base=".$db_addto."&cipar=$db_addto.par&Opcion=ver&ver=S&Mfn=".$arrHttp["Mfn"];
+				if (isset($arrHttp["Formato"])) $backtocancelscript.="&Formato=".$arrHttp["Formato"];
+					$backtocancelscript.=$urlcopies;
+					include "../common/inc_cancel.php" ?>
+
+
+				<?php 
+				$savescript="javascript:EnviarForma()";
+				include "../common/inc_save.php" ?>
+
+        <?php
+    }else{
+    	unset ($arrHttp["base"]);
+        $backtoscript='javascript:top.toolbarEnabled="";top.Menu("same")';
+        include "../common/inc_back.php";
+    }
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+$ayuda="copies/copies_add.html";
+include "../common/inc_div-helper.php";
+
+?>
 <form method=post name=forma1 action=copies_add_add.php onSubmit="javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"].".par"?>>
@@ -190,7 +189,9 @@ if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
 <div id="my_id" style="display: none;margin:0 auto;width:100%; height:100%;position:relative;overflow:hidden; background:#FFFFFF;text-align:center"><br><br><br><img src=../dataentry/img/preloader.gif></div>
 
 <div class="middle form" id="middleForm">
+
 <div name="INE" id="INE" style="color:#990000; display:none; font-style:italic; font-weight:bold;"></div>
+
 <input type=hidden name=INVA id=INVA value="<?php echo $arrHttp["Mfn"]?>~">
 
 <?php
@@ -199,27 +200,33 @@ if ($error!=""){
 	echo "<dd><h4>".$msgstr[$error]."</h4>";
 	die;
 }
+
 if ($err_copies=="Y"){
 	echo "<script>top.toolbarEnabled=\"\"</script>\n";
 	echo "<dd><h4>".$msgstr["err_cannotaddcopies"]."</h4>";
 	die;
 }
-echo "\n<div class=\"searchBox\">\n";
 
-echo "<label for=\"addCopies\">
-		<strong>". $msgstr["numcopies"]."</strong>
+?>
+	<div class="searchBox">
+		<label for="addCopies">
+			<strong><?php echo $msgstr["numcopies"];?></strong>
 		</label>
-		<input type=\"text\" size=11 maxlength=2 name=\"copies\" id=\"copies\" value=\"\"/>
-		&nbsp; &nbsp; &nbsp;";
+		<input type="text" size="11" maxlength="2" name="copies" id="copies" value="" >
+		&nbsp; &nbsp; &nbsp;
 
-echo "<a href=javascript:Show('copies','CN_".$db_addto."_".$valortag[1]."')>". $msgstr["dispcopies"]."</a>
-<!--		<input type=checkbox value=Y checked name=createloans>
-		<label for=\"regCopies\">
-			<strong>".$msgstr["regcopies"]."</strong>
-		</label>  --> ";
-echo "</div>
-	<div class=\"formContent\" id=\"formContent\">";
+	<a class="bt-sm bt-default" href="javascript:Show('copies','CN_<?php echo $db_addto;?>_<?php echo $valortag[1];?>')">
+		<?php echo $msgstr["dispcopies"];?>		
+	</a>
 
+	<!--	<input type=checkbox checked value=Y  name=createloans>
+		<label for="regCopies">
+			<strong><?php echo $msgstr["regcopies"]?></strong>
+		</label>--> 
+</div>
+
+	<div class="formContent" id="formContent">
+<?php
 $arrHttp["cipar"]="copies.par";
 $fmt_test="S";
 $arrHttp["wks"]="new.fmt";
@@ -231,31 +238,28 @@ ConstruyeWorksheetFmt();
 include("../dataentry/dibujarhojaentrada.php");
 PrepararFormato();
 
-?>
+?></div>
 </form>
 	</div>
 </div>
-<?php include("../common/footer.php"); ?>
-</body>
-</html>
-<form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>
-   <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-   <input type=hidden name=picklist>
-   <input type=hidden name=Ctrl>
-   <input type=hidden name=valor>
-   <input type=hidden name=desde value=dataentry>
+
+<form name="agregarpicklist" action="../dbadmin/picklist_edit.php" method="post" target="Picklist">
+   <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+   <input type="hidden" name="picklist">
+   <input type="hidden" name="Ctrl">
+   <input type="hidden" name="valor">
+   <input type="hidden" name="desde" value="dataentry">
 </form>
 
-<form name=refrescarpicklist action=../dbadmin/picklist_refresh.php method=post target=Picklist>
-   <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-   <input type=hidden name=picklist>
-   <input type=hidden name=Ctrl>
-   <input type=hidden name=valor>
-   <input type=hidden name=desde value=dataentry>
+<form name="refrescarpicklist" action="../dbadmin/picklist_refresh.php" method="post" target="Picklist">
+   <input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+   <input type="hidden" name="picklist">
+   <input type="hidden" name="Ctrl">
+   <input type="hidden" name="valor">
+   <input type="hidden" name="desde" value="dataentry">
 </form>
 
 <?php
-// ==================================================================================
 
 function LeerFst($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;
@@ -316,10 +320,22 @@ global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr;
 	}
 }
 ?>
-<script language=javascript>
+
+<script type="text/javascript">
+	const textarea = document.querySelector('textarea')
+textarea.onkeypress = (event) => {
+  const keyCode = event.keyCode
+  if (keyCode === 13) {
+  	document.getElementById("copies").disabled = true;
+    console.log('Field number of copies has been blocked!');
+  }
+}
+
 document.forma1.tag200[2].disabled = true;
-function CheckInventory(tag)
-{
-CheckInventoryDup(document.getElementById("tag30").value,1);
+function CheckInventory(tag) {
+	// Function in the acquisitions/javascript.php file
+	CheckInventoryDup(document.getElementById("tag30").value,1);
 }
 </script>
+<?php include("../common/footer.php"); ?>
+

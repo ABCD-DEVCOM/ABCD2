@@ -1,4 +1,7 @@
 <?php
+/*
+20220202 fho4abcd buttons+div-helper
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -17,13 +20,15 @@ $lang=$_SESSION["lang"];
 include("../common/header.php");
 
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language=javascript>
 //THIS VARIABLE IS FOR TESTING THE VALIDATION PFT
 var pos_val=0
 
 
-function Enviar(){	ValorCapturado=document.recval.format.value
+function Enviar(){
+	ValorCapturado=document.recval.format.value
 	document.recval.ValorCapturado.value=ValorCapturado
 	document.recval.target=""
 	document.recval.action="recval_save.php"
@@ -48,48 +53,41 @@ function Test(Tag){
 	msgwin.focus()
 
 }
-
-
 </script>
-</head>
-<body>
 <?php
 if (isset($arrHttp["encabezado"])){
     include("../common/institutional_info.php");
     $encabezado="&encabezado=s";
-}else{	$encabezado="";}
+}else{
+	$encabezado="";
+}
 if (isset($arrHttp["wks"])){
 	$arrHttp["wks"]=urldecode($arrHttp["wks"]);
 	$w=explode('|',$arrHttp["wks"]);
-}else{	$w[0]=$arrHttp["base"].".fdt";
-	$w[3]="";}
-echo "
-	<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".
-	$msgstr[$arrHttp['format']].": ".$arrHttp["base"]." (".$w[0]." ".$w[3].")
-	</div>
-	<div class=\"actions\">\n";
-echo "<a href=\"menu_modificardb.php?Opcion=update&type=&base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["cancel"]."</strong></span>
-	</a>
-	</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
-
+}else{
+	$w[0]=$arrHttp["base"].".fdt";
+	$w[3]="";
+}
 ?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/recval.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/recval.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: recdel_val.php";
-?>
-</font>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr[$arrHttp['format']].": ".$arrHttp["base"]." (".$w[0]." ".$w[3].")";?>
+	</div>
+	<div class="actions">
+        <?php
+            $backtocancelscript="menu_modificardb.php?Opcion=update";
+            include "../common/inc_cancel.php";
+            include "../common/inc_home.php";
+        ?>
+	</div>
+	<div class="spacer">&#160;</div>
 </div>
- <div class="middle form">
-	<div class="formContent">
-
+<?php
+$ayuda="recval.html";
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+<div class="formContent">
 
 <form name=recval  method=post onsubmit="javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
@@ -102,40 +100,44 @@ if (file_exists($archivo)){
 	$fp=file($archivo);
 	foreach ($fp as $value){
 		if (trim($value)!=""){
-			$pft[]=$value;		}
+			$pft[]=$value;
+		}
 	}
-}else{	$pft[]="";}
-echo "<center>";
-echo "<div id=rows>\n";
-echo "<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1>";
-echo "<tr><td nowrap>".$msgstr[$arrHttp["format"]]."</td></tr>";
-$ix=-1;
-echo "<tr><td bgcolor=white><textarea cols=80 rows=5 name=format>";
-if (isset($pft)){
-	foreach ($pft as $value){		echo $value;
-		echo "\n";
-	}
-
+}else{
+	$pft[]="";
 }
-echo "</textarea></td></tr>";
-
-echo "</table></div>";
-
-
-echo "<tr><td bgcolor=white>";
-echo $msgstr["testmfn"];
-echo "&nbsp; <input type=text size=5 name=Mfn> <a href=javascript:Test()>".$msgstr["test"]."</a>  &nbsp; &nbsp;";
-echo "</td><td colspan=3  bgcolor=white><img src=../dataentry/img/toolbarSave.png> &nbsp;";
-
-echo "<a href=javascript:Enviar()>".$msgstr["save"]."&nbsp;</a> (recdel_val.pft)  &nbsp; &nbsp ";
-echo "<input type=hidden name=fn value=recdel_val.pft>";
-
-
-
-echo "</td></table>";
-echo "<input type=hidden name=ValorCapturado>";
-echo "</form>"
 ?>
+
+<table border=0 bgcolor=#cccccc cellpadding=3 cellspacing=1 style='margin-left:auto;margin-right:auto;'>
+<tr><td nowrap><?php echo $msgstr[$arrHttp["format"]];?></td></tr>
+<tr><td bgcolor=white>
+    <textarea cols=80 rows=5 name=format><?php
+        if (isset($pft)){
+            foreach ($pft as $value){
+                echo $value;
+                echo "\n";
+            }
+        }
+        ?>
+    </textarea>
+</td></tr>
+</table>
+<table style='margin-left:auto;margin-right:auto;'>
+<tr><td>
+<?php echo $msgstr["testmfn"];?> &nbsp;
+<input type=text size=5 name=Mfn>
+<a class='bt bt-gray' href=javascript:Test()> <i class='fas fa-vial'></i> <?php echo $msgstr["test"]?></a>
+</td>
+<td> &nbsp; &nbsp; &nbsp; &nbsp; </td>
+<td>
+<a class='bt bt-green' href=javascript:Enviar()><i class='far fa-save'></i> <?php echo $msgstr["save"]?></a>  (recdel_val.pft)
+</td>
+</tr>
+</table>
+<input type=hidden name=fn value=recdel_val.pft>
+<input type=hidden name=ValorCapturado>
+</form>
+
 <form name=test  method=post action=recval_test.php target=RecvalTest>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=Mfn>
@@ -143,4 +145,4 @@ echo "</form>"
 </form>
 </div></div>
 <?php include("../common/footer.php");?>
-</body></html>
+

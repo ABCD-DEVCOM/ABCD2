@@ -3,6 +3,8 @@
 20210317 fho4abcd Created from dbadmin/administrar_ex.php to avoid confusion with other files with that name
 20210317 fho4abcd Replaced helper code fragment by included file, removed some unused code
 20210324 fho4abcd Reprogrammed, improved feedback
+20211215 fho4abcd Backbutton by included file
+20220713 fho4abcd Use $actparfolder as location for .par files
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -67,13 +69,7 @@ if ($inframe!="1") include "../common/institutional_info.php";
         <?php echo $msgstr["maintenance"]." " .$msgstr["database"].": ".$arrHttp["base"]?>
     </div>
     <div class="actions">
-<?php 
-// Show 'back' button,
-$backtourl=$backtoscript."?base=".$arrHttp["base"];
-echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-    <span><strong>".$msgstr["regresar"]."</strong></span></a>";
-?>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -87,7 +83,7 @@ include "../common/inc_div-helper.php";
 // Not all very likely to occur, but better safe than sorry
 $errors=0;
 $databasefolder=$db_path.$arrHttp["base"];
-$parfullname   =$db_path."par/".$arrHttp["base"].".par";
+$parfullname   =$db_path.$actparfolder.$arrHttp["base"].".par";
 if (!file_exists($databasefolder)){
     echo "<h3><font color=red>".$databasefolder.": ".$msgstr["folderne"]."</font></h3>";
     $errors++;
@@ -139,7 +135,7 @@ if ($arrHttp["confirmcount"]<2) {
 }
 // This part will be excuted the second invocation. 
 
-$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=inicializar";
+$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=inicializar";
 $IsisScript=$xWxis."administrar.xis";
 // the actual initialisation
 include("../common/wxis_llamar.php");
@@ -155,4 +151,3 @@ foreach ($contenido as $linea){
 <?php
 	include("../common/footer.php");
 ?>
-</body></html>

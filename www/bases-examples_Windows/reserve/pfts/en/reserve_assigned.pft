@@ -1,0 +1,8 @@
+'#FROM: reservas@msinfo.info#'/
+'#SUBJECT: Asignación de reserva#'/
+'Sr(a): ' ref(['users']l(['users']'CO_'v10),v30,,"#TO:"V160"#"),   /*Nombre y correo  El correo debe estar precedido por #MAIL:  y terminar en #. Solo se permite un correo*/
+'<br>Le ha sido asignada la reserva que tenía sobre el título<br>'
+'<p><b>#REFER#</b></font>'
+'<br>la cual estará vigente en lapso del '
+v60*6.2,"/"v60*4.2,"/"v60.4, " al "D40,v40*6.2,"/"v40*4.2,"/"v40.4 
+/

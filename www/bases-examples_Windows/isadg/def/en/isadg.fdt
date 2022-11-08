@@ -1,0 +1,35 @@
+H||Área de Identificación|0|0||||||||||||0||
+F|11|11 Código(s) de Referencia|0|0|||X|||||||||0||
+F|12|12 Título|0|0|||X|||||||||0||
+F|13|13 Fecha(s)|0|0|||X|||||||||0||
+F|14|14 Nivel de Descripción|0|0|||X|||||||||0||
+F|15|15 Unidad de Descripción|0|1|||X|||||||||0||
+H||Área de Contexto|0|0||||||||||||0||
+F|21|21 Nombre del Productor|0|0|||X|||||||||0||
+F|22|22 Historia Institucional|0|1|||X|||||||||0||
+F|23|23 Historia Archivística|0|1|||X|||||||||0||
+F|24|24 Forma de Ingreso|0|0|||X|||||||||0||
+H||Área de Contenido y Estructura|0|0||||||||||||0||
+F|31|31 Alcance y Contenido|0|0|||S|||P|alcance.tab|||||0||
+F|32|32 Valor/Selecc/Eliminación|0|1|||X|||||||||0||
+F|33|33 Nuevos Ingresos|0|0|||X|||||||||0||
+F|34|34 Organización|0|0|||X|||||||||0||
+H||Área de Condiciones de Acceso y Uso|0|0||||||||||||0||
+F|41|41 Condiciones de Acceso|0|0|||S|||P|acceso.tab|||||0||
+F|42|42 Condiciones de Reprod.|0|0|||X|||||||||0||
+F|43|43 Lengua de la Document.|0|1|||X|||||||||0||
+F|44|44 Caract. Físicas y Técnicas|0|0|||X|||||||||0||
+F|45|45 Instrumento de Descripción|0|1|||S|||P|instrumento.tab|||||0||
+H||Área de Documentación Asociada|0|0||||||||||||0||
+F|51|51 Existencia de Originales|0|1|||X|||||||||0||
+F|52|52 Existencia de Copias|0|1|||X|||||||||0||
+F|53|53 Unidades de Descri. Relac.|0|1|||X|||||||||0||
+F|54|54 Notas de Publicaciones|0|1|||X|||||||||0||
+H||Área de Notas|0|0||||||||||||0||
+F|61|61 Notas|0|1|||X|||||||||0||
+H||Área de Control de la Decripción|0|0||||||||||||0||
+F|71|71 Nota del Archivero|0|1|||X|||||||||0||
+F|72|72 Reglas o Normas|0|0|||S|||P|normas.tab|||||0||
+F|73|73 Fecha(s) de la Descrip.|0|0|||D|||||||||0||
+F|80|80 Recurso Digital|0|1|d||U|||||||||0||
+OD|100|Operador y Fecha|0|1|||X|3||||||||0||

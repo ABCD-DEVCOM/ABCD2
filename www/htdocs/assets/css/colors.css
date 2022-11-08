@@ -1,0 +1,315 @@
+/*
+* This style sheet is designed to assist ABCD developers and database managers in choosing colours in an agile way.
+* At the root a wide palette of colours is defined that can be triggered anywhere in the system.
+* You can assign background colours, text colours or just select a colour for some element.
+* 
+* In the root, colours follow the --abcd prefix to avoid conflicts with possible frameworks that may be used by the system manager.
+* To assign a colour to text use, for example:
+* <h1 class="color-blue">Blue text</h1>
+*/
+
+/* Specific colours of the basic layout */
+
+/*
+* ABCD standard colours
+*
+* Change colors in:  http://localhost:9090/central/settings/editar_abcd_def.php;
+* or
+* bases/abcd.def
+* 
+  --blue-abcd: #003366; /* HEADING
+  --bgmoduleInfo: #336699;
+  --bgsectionInfo:  var(--bgmoduleInfo); /* SECTIONINFO
+  --cat-color: #CCCCFF;
+  --acq-color: #96EAC8;
+  --loan-color: #99FFCC;
+*/
+
+/*
+* Various colours for use in display formats, buttons and other graphic elements.
+* Not all colours are in use, but are available for database managers to use.
+* The way to use is:
+* class { color: var(abcd-blue) }
+* or
+* style="color: var(abcd-blue)" /*inline
+*/
+
+
+:root {
+  --abcd-steel-blue: #4682b4;
+  --abcd-blue: #0066FF;
+  --abcd-indigo: #6600FF;
+  --abcd-purple: #6633CC;
+  --abcd-pink: #CC3399;
+  --abcd-red: #CC3333;
+  --abcd-orange: #FF6600;
+  --abcd-yellow: #FFCC00;
+  --abcd-green: #009966;
+  --abcd-teal: #33CC99;
+  --abcd-cyan: #00CCFF;
+  --abcd-white: #ffffff;
+  --abcd-gray: #666666;
+  --abcd-gray-dark: #333333;
+  --abcd-gray-100: #F8F8F8;
+  --abcd-gray-200: #DCDCDC;
+  --abcd-gray-300: #D3D3D3;
+  --abcd-gray-400: #C8C8C8;
+  --abcd-gray-500: #BEBEBE;
+  --abcd-gray-600: #A0A0A0;
+  --abcd-gray-700: #495057;
+  --abcd-gray-800: #333333;
+  --abcd-gray-900: #212529;
+  --abcd-primary: #0066FF;
+  --abcd-success: #198754;
+  --abcd-info: #00CCFF;
+  --abcd-warning: #FFCC00;
+  --abcd-danger: #CC3333;
+  --abcd-light: var(--abcd-gray-100);
+  --abcd-dark: #212529;
+  --abcd-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --abcd-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --abcd-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --abcd-body-font-family: var(--abcd-font-sans-serif);
+  --abcd-body-font-size: 0.9rem;
+  --abcd-body-font-weight: 400;
+  --abcd-body-line-height: 1.5;
+  --abcd-body-color: #212529;
+  --abcd-body-bg: var(--abcd-white);
+}
+
+
+
+/* FONT COLORS  */
+
+/* Use <p class="color-red">Text</p>  */
+
+.color-blue-abcd { 
+  color: var(--blue-abcd);
+}
+.color-bgmoduleInfo { 
+  color: var(--bgmoduleInfo );
+}
+.color-toolbar-abcd { 
+  color: var(--toolbar-abcd);
+}
+.color-cat-color { 
+  color: var(--cat-color);
+}
+.color-acq-color { 
+  color: var(--acq-color);
+}
+.color-loan-color { 
+  color: var(--loan-color);
+}
+.color-blue { 
+  color: var(--abcd-blue);
+}
+.color-indigo { 
+  color: var(--abcd-indigo);
+}
+.color-purple { 
+  color: var(--abcd-purple);
+}
+.color-pink { 
+  color: var(--abcd-pink);
+}
+.color-red { 
+  color: var(--abcd-red);
+}
+.color-orange { 
+  color: var(--abcd-orange);
+}
+.color-yellow { 
+  color: var(--abcd-yellow);
+}
+.color-green { 
+  color: var(--abcd-green);
+}
+.color-teal { 
+  color: var(--abcd-teal);
+}
+.color-cyan { 
+  color: var(--abcd-cyan);
+}
+.color-white { 
+  color: var(--abcd-white );
+}
+.color-gray { 
+  color: var(--abcd-gray);
+}
+.color-gray-dark { 
+  color: var(--abcd-gray-dark );
+}
+.color-gray-100 { 
+  color: var(--abcd-gray-100);
+}
+.color-gray-200 { 
+  color: var(--abcd-gray-200);
+}
+.color-gray-300 { 
+  color: var(--abcd-gray-300);
+}
+.color-gray-400 { 
+  color: var(--abcd-gray-400);
+}
+.color-gray-500 { 
+  color: var(--abcd-gray-500);
+}
+.color-gray-600 { 
+  color: var(--abcd-gray-600);
+}
+.color-gray-700 { 
+  color: var(--abcd-gray-700);
+}
+.color-gray-800 { 
+  color: var(--abcd-gray-800);
+}
+.color-gray-900 { 
+  color: var(--abcd-gray-900);
+}
+.color-primary  { 
+  color: var(--abcd-primary );
+}
+.color-success  { 
+  color: var(--abcd-success );
+}
+.color-info { 
+  color: var(--abcd-info);
+}
+.color-warning  { 
+  color: var(--abcd-warning );
+}
+.color-danger { 
+  color: var(--abcd-danger);
+}
+.color-light  { 
+  color: var(--abcd-light );
+}
+.color-dark { 
+  color: var(--abcd-dark);
+}
+.color-body-color { 
+  color: var(--abcd-body-color);
+}
+.color-body-bg { 
+  color: var(--abcd-body-b);
+}
+
+
+
+/* BACKGROUND COLORS  */
+
+/* Use <p class="bg-red">Text</p>  */
+/* Combine <p class="bg-red color-white">Text</p>  */
+
+.bg-blue-abcd { 
+  background: var(--blue-abcd);
+}
+.bg-bgmoduleInfo { 
+  background: var(--bgmoduleInfo );
+}
+.bg-toolbar-abcd { 
+  background: var(--toolbar-abcd);
+}
+.bg-cat-color { 
+  background: var(--cat-color);
+}
+.bg-acq-color { 
+  background: var(--acq-color);
+}
+.bg-loan-color { 
+  background: var(--loan-color);
+}
+.bg-blue { 
+  background: var(--abcd-blue);
+}
+.bg-indigo { 
+  background: var(--abcd-indigo);
+}
+.bg-purple { 
+  background: var(--abcd-purple);
+}
+.bg-pink { 
+  background: var(--abcd-pink);
+}
+.bg-red { 
+  background: var(--abcd-red);
+}
+.bg-orange { 
+  background: var(--abcd-orange);
+}
+.bg-yellow { 
+  background: var(--abcd-yellow);
+}
+.bg-green { 
+  background: var(--abcd-green);
+}
+.bg-teal { 
+  background: var(--abcd-teal);
+}
+.bg-cyan { 
+  background: var(--abcd-cyan);
+}
+.bg-white { 
+  background: var(--abcd-white );
+}
+.bg-gray { 
+  background: var(--abcd-gray);
+}
+.bg-gray-dark { 
+  background: var(--abcd-gray-dark );
+}
+.bg-gray-100 { 
+  background: var(--abcd-gray-100);
+}
+.bg-gray-200 { 
+  background: var(--abcd-gray-200);
+}
+.bg-gray-300 { 
+  background: var(--abcd-gray-300);
+}
+.bg-gray-400 { 
+  background: var(--abcd-gray-400);
+}
+.bg-gray-500 { 
+  background: var(--abcd-gray-500);
+}
+.bg-gray-600 { 
+  background: var(--abcd-gray-600);
+}
+.bg-gray-700 { 
+  background: var(--abcd-gray-700);
+}
+.bg-gray-800 { 
+  background: var(--abcd-gray-800);
+}
+.bg-gray-900 { 
+  background: var(--abcd-gray-900);
+}
+.bg-primary  { 
+  background: var(--abcd-primary );
+}
+.bg-success  { 
+  background: var(--abcd-success );
+}
+.bg-info { 
+  background: var(--abcd-info);
+}
+.bg-warning  { 
+  background: var(--abcd-warning );
+}
+.bg-danger { 
+  background: var(--abcd-danger);
+}
+.bg-light  { 
+  background: var(--abcd-light );
+}
+.bg-dark { 
+  background: var(--abcd-dark);
+}
+.bg-body-color { 
+  background: var(--abcd-body-color);
+}
+.bg-body-bg { 
+  background: var(--abcd-body-b);
+  }

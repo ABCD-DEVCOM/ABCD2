@@ -11,8 +11,10 @@ include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 include ("../lang/prestamo.php");
 
-if (!isset($_SESSION["login"])){	echo $msgstr["sessionexpired"];
-	die;}
+if (!isset($_SESSION["login"])){
+	echo $msgstr["sessionexpired"];
+	die;
+}
 include("../common/header.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 
@@ -26,11 +28,15 @@ include("../common/institutional_info.php");
 ?>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script>
-	function LeerFst(base){		msgwin=window.open("../dbadmin/fst_leer.php?base="+base,"fst","width=400,height=400,resizable,scrollbars=yes")
-		msgwin.focus()	}
+	function LeerFst(base){
+		msgwin=window.open("../dbadmin/fst_leer.php?base="+base,"fst","width=400,height=400,resizable,scrollbars=yes")
+		msgwin.focus()
+	}
 	function Guardar(){
-		if (Trim(document.forma1.code.value)==""){			alert("<?php echo $msgstr["falta"]. " ".$msgstr["o_code"]?>")
-			return		}
+		if (Trim(document.forma1.code.value)==""){
+			alert("<?php echo $msgstr["falta"]. " ".$msgstr["o_code"]?>")
+			return
+		}
 
         if (Trim(document.forma1.pft.value)==""){
 			alert("<?php echo $msgstr["falta"]. " ".$msgstr["o_pft_name"]?>")
@@ -52,20 +58,22 @@ include("../common/institutional_info.php");
 			alert("<?php echo $msgstr["falta"]. " ".$msgstr["o_title"]?>")
 			return
 		}
-		document.forma1.submit()	}
+		document.forma1.submit()
+	}
 </script>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 	<?php echo $msgstr["new_report"]?>
 	</div>
 	<div class="actions">
-		<a href="menu.php" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"];?></strong></span></a>
-		<a href=javascript:Guardar() class="defaultButton saveButton">
-			<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-			<span><strong><?php echo $msgstr["update"]?></strong></span>
-		</a>
+		<?php
+		$inc_backtourl="../output_circulation/menu.php";
+		include "../common/inc_back.php";
+
+		$inc_save="javascript:Guardar()";
+		include "../common/inc_save.php";
+		?>
+
 	</div>
 
 <div class="spacer">&#160;</div>
@@ -82,7 +90,7 @@ echo "<font color=white>&nbsp; &nbsp; Script: output_circulation/print_add.php";
 <form name=forma1 method=post action=print_add_ex.php>
 <div class="middle form">
 	<div class="formContent">
-	<table bgcolor=#cccccc >
+	<table>
 <?php
 	$base[]="trans";
 	$base[]="suspml";
@@ -105,19 +113,24 @@ echo "<font color=white>&nbsp; &nbsp; Script: output_circulation/print_add.php";
 	$bd="";
 	if (isset($arrHttp["base"]) and isset($arrHttp["codigo"])){
 		$bd=$arrHttp["base"];
-		if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){			$fp=file($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst");
+		if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){
+			$fp=file($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst");
 			$ix=0;
-			foreach ($fp as $value){				$value=trim($value);
-				if (substr($value,0,2)!="//") {					$t=explode("|",$value);
+			foreach ($fp as $value){
+				$value=trim($value);
+				if (substr($value,0,2)!="//") {
+					$t=explode("|",$value);
 
-					if ($t[0]==$arrHttp["codigo"]){						$code=$t[0];
+					if ($t[0]==$arrHttp["codigo"]){
+						$code=$t[0];
 						$pft_name=$t[1];
 						$rows=$t[2];
 						$sort=$t[3];
 						$search=$t[4];
 						$title=$t[5];
 						if (isset($t[6])){
-							switch ($t[6]){								case "DATE":
+							switch ($t[6]){
+								case "DATE":
 									$ask_date=$t[6];
 
 									break;
@@ -129,10 +142,17 @@ echo "<font color=white>&nbsp; &nbsp; Script: output_circulation/print_add.php";
 									break;
 								case "ITEMTYPE":
 									$ask_itemtype=$t[6];
-									break;							}
-						}else{						}
+									break;
+							}
+						}else{
+
+						}
 						if (isset($t[7])) $tag=$t[7];
-						break;					}				}			}		}
+						break;
+					}
+				}
+			}
+		}
 	}
 	echo "<tr><td bgcolor=white width=200>".$msgstr["database"]."</td>";
 	echo "<td bgcolor=white>";
@@ -227,8 +247,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: output_circulation/print_add.php";
 
 </table>
 <p>";
-   if (isset($arrHttp["codigo"])){   	   echo $msgstr["saveas"];
-   	   echo "&nbsp;&nbsp;<input type=text name=saveas size=15>&nbsp;";   }
+   if (isset($arrHttp["codigo"])){
+   	   echo $msgstr["saveas"];
+   	   echo "&nbsp;&nbsp;<input type=text name=saveas size=15>&nbsp;";
+   }
 ?>
 
 </form>

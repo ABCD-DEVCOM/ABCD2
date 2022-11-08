@@ -2,6 +2,10 @@
 /* Modifications
 2021-03-20 guilda Error when searching due to quoting
 2021-04-23 fho4abcd Line endings,body tag
+2021-06-10 fho4abcd Remove password argument
+2021-07-07 fho4abcd Improve leader reformat (was broken since update to OPAC)
+2021-07-22 fho4abcd Repair PHP errors due to previous (Improve leader format...)
+20220711 fho4abcd Use $actparfolder as location for .par files
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -151,7 +155,7 @@ global $valortag,$arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl;
 	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."z3950_cnv.xis";
 	$Pft=urlencode($Pft);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&ValorCapturado=".$ValorCapturado."&Pft=$Pft";
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&ValorCapturado=".$ValorCapturado."&Pft=$Pft";
 	include("../common/wxis_llamar.php");
 	$res=implode("\n",$contenido);
 	$res=explode("$$^^$$",$res);
@@ -177,7 +181,7 @@ global $valortag,$arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl;
 }
 
 function EjecutarBusqueda(){
-global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$msgstr,$registro,$Expresion,$Total_Search;
+global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$msgstr,$registro,$Expresion,$Total_Search,$actparfolder;
 	$Expresion=trim($arrHttp["Expresion"]);
 	//if (substr($Expresion,0,1)!='"') $Expresion='"'.$Expresion.'"';
 	$arrHttp["Expresion"]=$Expresion;
@@ -196,7 +200,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	$registro="";
 	$IsisScript=$xWxis."buscar_ingreso.xis";
 	$Expresion=str_replace('¨',"'",$Expresion);
-	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Expresion=".urlencode($Expresion)."&count=1&from=".$arrHttp["from"]."&Formato=$Formato&prologo=@prologoact.pft&epilogo=@epilogoact.pft";
+	$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Expresion=".urlencode($Expresion)."&count=1&from=".$arrHttp["from"]."&Formato=$Formato&prologo=@prologoact.pft&epilogo=@epilogoact.pft";
 	include("../common/wxis_llamar.php");
     $ficha_bib=$contenido;
     if ($arrHttp["Formato"]=="") $arrHttp["Formato"]="ALL";
@@ -236,7 +240,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	 			if (isset($f[3]))
 	 				$reverse="ON";
 	 			$IsisScript=$xWxis."buscar.xis";
- 				$query = "&cipar=$db_path"."par/".$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
+ 				$query = "&cipar=$db_path".$actparfolder.$bd_ref. ".par&Expresion=".$expr_ref."&Opcion=buscar&base=".$bd_ref."&Formato=$pft_ref&prologo=NNN&count=90000";
 
 				if ($reverse!=""){
 					$query.="&reverse=On";
@@ -545,7 +549,6 @@ if ($arrHttp["Opcion"]=="ver" or $arrHttp["Opcion"]=="cancelar" or $arrHttp["Opc
 }
 
 $arrHttp["login"]=$_SESSION["login"];
-$arrHttp["password"]=$_SESSION["password"];
 
 
 $arrHttp["Notificacion"]="N";
@@ -571,8 +574,11 @@ if (file_exists($db_path.$arrHttp["base"]."/def/".$lang_db."/typeofrecord.tab"))
 foreach ($arrHttp as $var => $value) {
 	if (substr($var,0,3)=="tag" ){
 		$tag=explode("_",$var);
-		if (count($tag)>1){
-			if (isset($lid) and (substr($tag[0],3)>=$lid[0] and substr($tag[0],3)<=$lid[1] or (count($tmLeader)>0 and (substr($tag[0],3)==$tmLeader[0] or substr($tag[0],3)==$tmLeader[1])))){  //IF LEADER, REFORMAT THE FIELD FOR ELIMINATING |
+		if (count($tag)>0){ //IF LEADER, REFORMAT THE FIELD FOR ELIMINATING |
+			if ( isset($lid) and substr($tag[0],3)>=$lid[0] and substr($tag[0],3)<=$lid[1]  or
+                 isset($tmLeader) and count($tmLeader)>0 and
+                    (substr($tag[0],3)==$tmLeader[0] or isset($tmLeader[1]) and substr($tag[0],3)==$tmLeader[1])
+                ) {  
 				$v=explode('|',$value);
 				$value=$v[0];
 			}
@@ -608,7 +614,6 @@ $base =$arrHttp["base"];
 $cipar =$arrHttp["cipar"];
 if (isset($arrHttp["Mfn"]))$Mfn=$arrHttp["Mfn"];
 $login=$arrHttp["login"];
-$password=$arrHttp["password"];
 if (!isset($arrHttp["ver"])) $arrHttp["ver"]="";
 if ($arrHttp["ver"]=="S") {
 
@@ -790,7 +795,7 @@ switch ($arrHttp["Opcion"]) {
 	        	if ($arrHttp["Formato"]!=""){
 	        		echo "<table width=100%><td width=10></td><td><font size+1>$registro.</td></table>";
 	        	}else{
-	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 	        		echo $arrHttp["Opcion"]." ".$clave_proteccion;
             		$ver=true;
             		if (isset($arrHttp["wks"])){
@@ -832,7 +837,7 @@ switch ($arrHttp["Opcion"]) {
 	        	if ($arrHttp["Formato"]!=""){
 	        		echo "<div id=results>".$registro."</div>";
 	        	}else{
-	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
             		$ver=true;
             		if (isset($arrHttp["wks"])){
 					}else{
@@ -887,17 +892,17 @@ switch ($arrHttp["Opcion"]) {
 	case "presentar_captura":
         $ver="";
         if (isset($arrHttp["cnvtabsel"])){
-        	$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,$password,"");
+        	$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,"");
         	CambiarFormatoRegistro();
         }else{
-			$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,$password,"");
+			$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,"");
        	}
        	$arrHttp["Mfn"]="New";
    	 	$arrHttp["Opcion"]="crear";
         break;
 	case "captura_bd":
         $ver="S";
-		$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,$password,"");
+		$res=LeerRegistro($arrHttp["basecap"],$arrHttp["ciparcap"],$arrHttp["Mfn"],$maxmfn,"editar",$login,"");
   	 	$arrHttp["Opcion"]="crear";
   	 	$arrHttp["capturar"]="S";
         break;
@@ -907,7 +912,7 @@ switch ($arrHttp["Opcion"]) {
 		if (top.window.frames.length>0) top.PrenderEdicion()
 		</script>\n";
 		if (isset($arrHttp["Mfn"]) and $arrHttp["Mfn"]!="New")
-			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"editar",$arrHttp["login"],$password,"");
+			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"editar",$arrHttp["login"],"");
 //		echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
 		CargarMatriz($arrHttp["ValorCapturado"]);
 		$arrHttp["Opcion"]="crear";
@@ -930,7 +935,7 @@ switch ($arrHttp["Opcion"]) {
         	break;
         }
 		$arrHttp["unlock"] ="S";
-		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 
 		if (isset($arrHttp["Formato"]) and $arrHttp["Formato"]!=""){
         	include("scripts_dataentry.php");
@@ -947,9 +952,9 @@ switch ($arrHttp["Opcion"]) {
 			}
 			die;
 		}else{
-			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 			unset($arrHttp["unlock"]);
-			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],$password,"");
+			$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
             $ver=true;
             if (isset($arrHttp["wks"])){
 			}else{
@@ -962,7 +967,7 @@ switch ($arrHttp["Opcion"]) {
 	    $arrHttp["lock"] ="S";
     case "password_ok":
 	case "leer":
-		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$arrHttp["login"],$password,"");
+		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$arrHttp["login"],"");
 		//echo "**".$password_protection;die;
 
 		if ($clave_proteccion!="" and $_SESSION["profile"]!="adm"
@@ -1072,7 +1077,7 @@ if ($actualizar=="SI"){
 	$ver="S";
 	reset($valortag);
 	if (!isset($arrHttp["Formato"])or $arrHttp["Formato"]==""){
-		$regSal=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$login,$password,$arrHttp["Formato"]);
+		$regSal=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$login,$arrHttp["Formato"]);
     	$arrHttp["Notificacion"]="N";
 		require_once('ingresoadministrador.php');
 	}else{

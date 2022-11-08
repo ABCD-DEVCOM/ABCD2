@@ -1,0 +1,40 @@
+'{\fonttbl \f0\froman Times New Roman; \f1\fswiss Arial;}'
+'\li0\fi0\li3000\fi-2400\f1\sf8\par '
+
+if p(v90) 
+   then 
+  '\cf5\fs38\b Suspendido \b0\par ',
+fi,
+
+if a(v1)
+     then
+    '\f0\fs28\cf5\b ',
+     v30, ' - c.i. :  'v35,
+
+'\ATXbrdr8 \par\ATXbrdr0 '
+ '\b0\fs26\cf1 ',
+
+       "\par Carnet: \tab\b "v20,      
+       "\par\b0 Tipo de usuario: \tab\b "v10,
+       "\par\b0 Lugar de trabajo:\tab\b "v40,
+       "\par\b0 Ubicación: \tab\b "v45,
+       "\par\b0 Renovación: \tab\b "v16,
+       "\par\b0 Vencimiento:\tab\b "v17,
+       "\par\b0 Teléfono: \tab\b "v140+|; |,
+       "\par\b0 Fax:\i0\tab\b "v150+|; |,
+       "\par\b0 E-mail: \tab\b "v160+|; |,
+       "\par\b0 Dirección Física: \b\tab "d100,(|\tab |+v100+|\par |),
+       "\par\b0 Dirección Postal: \b\tab "d110,(|\tab |+v110+|\par |),
+       "\par\b0 Areas de interés: \b\tab "d210,(v210+|; |),
+fi,
+
+if v1='P' 
+       then 
+        '\li300\fi-300\fs20\ql ',
+        '\cf9\b ',"("v800^n") -"v800^c,'\b0\cf0 ',
+        "  "v800^*,|, |v800^b," / "v800^t," : "v800^e,", "v800^y.4,
+        " Ej. "v800^l,'\par ',
+        '\qr\cf3 Fecha Préstamo:\cf0 ',v800^p*6.2,"-"v800^p*4.2,"-"v800^p.4,
+        '\cf3   Fecha Devolución:  \cf9 ',v800^h*6.2,"-"v800^h*4.2,"-"v800^h.4
+fi,
+

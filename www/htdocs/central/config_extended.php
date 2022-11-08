@@ -1,11 +1,11 @@
 <?php
+/* Modifications
+20210801 fho4abcd Check valid values unicode (0/1), lineends
+20210801 fho4abcd MULTIPLE_DB_FORMATS always "Y
+20220128 fho4abcd Remove MULTIPLE_DB_FORMATS
+*/
 //SE LEEN PARÁMETROS ADICIONALES DE abcd.def
-if (isset($def["MULTIPLE_DB_FORMATS"]) and $def["MULTIPLE_DB_FORMATS"]=="Y"){  //PARA PROCESAR BASES DE DATOS CON DIFERENTES VERSIONES EN LA MISMA CARPETA BASES
-   if (isset($_SESSION))
-   		$_SESSION["MULTIPLE_DB_FORMATS"]="Y";
-   else
-   		$MULTIPLE_DB_FORMATS="Y";
-}
+
 if (!isset($dirtree)) $dirtree=0;
 if (isset($def["DIRTREE"]))
  	$dirtree=$def["DIRTREE"];
@@ -68,7 +68,7 @@ IF (isset($def["OPACHTTP"])){
 
 //se lee el archivo dr_path.def para ver las configuraciones locales de la base de datos
 if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
-//echo "base-specific parameters read<BR>";
+    //echo "base-specific parameters read<BR>";
 	$selected_base= $_REQUEST["base"];
 	$check=explode('|',$selected_base);
 	$db_name=$check[0];
@@ -76,10 +76,19 @@ if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
 	if (file_exists($db_path.$db_name."/dr_path.def")){
 		$def_db = parse_ini_file($db_path.$db_name."/dr_path.def");
 		//SE MODIFICAN LOS PARÁMETROS EXISTENTES EN EL abcd.def
-		if (isset($def_db["UNICODE"]))
-			 $def["UNICODE"]=$def_db["UNICODE"];
-		else
-			 $def["UNICODE"]=$unicode;
+		if (isset($def_db["UNICODE"])){
+            // older databases may have currently unsupported entries for UNICODE
+            // this error message may corrupt html (and translation is not yet available at this point)
+            if ($def_db["UNICODE"]!="0" and $def_db["UNICODE"]!="1" ) {
+                echo "<div style='color:red'><b>ERROR dr_path.def: Invalid value for UNICODE '".$def_db["UNICODE"]."'.<br>";
+                echo "Value must be 0 or 1. This is a serious error with serious side effects!! Please correct this first.<br>";
+                echo "Update database definitions &rarr; dr_path.def</div>";
+            } else {
+                $def["UNICODE"]=$def_db["UNICODE"];
+            }
+		} else {
+			$def["UNICODE"]=$unicode;
+        }
 		if (isset($def_db["CISIS_VERSION"]))
 			 $def["CISIS_VERSION"]=$def_db["CISIS_VERSION"];
 		else
@@ -100,8 +109,10 @@ if (isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
   		if (isset($def_db["tesaurus"]))                 $tesaurus=$def_db["tesaurus"];
     	if (isset($def_db["prefix_search_tesaurus"]))   $prefix_search_tesaurus=$def_db["prefix_search_tesaurus"];
  		if (isset($def_db["leader"]))                   $LEADER_TAG=$def_db["leader"];
-	}else{		$def["UNICODE"]=$unicode;
-		$def["CISIS_VERSION"]=$cisis_ver;	}
+	}else{
+		$def["UNICODE"]=$unicode;
+		$def["CISIS_VERSION"]=$cisis_ver;
+	}
 
 }
 //No se muestra la base de datos de operadores en la lista de bases de datos disponibles

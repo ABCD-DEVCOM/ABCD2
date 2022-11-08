@@ -53,18 +53,22 @@ function getElement(psID) {
 
 function SendTo(Opcion){
 
-	switch(Opcion){		default:
+	switch(Opcion){
+		default:
 			if (Opcion=="P"){
 				msgwin=window.open("","STATS","")
 				msgwin.focus()
 			}else{
 				document.sendto.target=""
-			}			seccion=returnObjById( "results" )
+			}
+			seccion=returnObjById( "results" )
 			html=seccion.innerHTML
-			document.sendto.html.value=html			document.sendto.Opcion.value=Opcion
+			document.sendto.html.value=html
+			document.sendto.Opcion.value=Opcion
 			document.sendto.submit()
 			if (Opcion=="P") msgwin.focus()
-	}}
+	}
+}
 </script>
 <body>
 
@@ -77,7 +81,7 @@ function SendTo(Opcion){
 <?php
 
 	echo "<a href=\"tables_generate.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+	<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 <span><strong>".$msgstr["back"]."</strong></span></a>
 	";
 
@@ -146,20 +150,23 @@ foreach ($proc_gen as $base=>$proc){
 		$a=explode('||',$value);
 		if ($a[0]==trim($proc)){
 			$_REQUEST["proc"]=$value;
-			$arrHttp["proc"]=$value;			$Formato=ConstruirFormato($arrHttp,$lang_db,$tab_vars,$db_path);
+			$arrHttp["proc"]=$value;
+			$Formato=ConstruirFormato($arrHttp,$lang_db,$tab_vars,$db_path);
 			$contenido=SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis);
 		//foreach ($contenido as $value)  echo "$value<br>";
 			LeerRegistros($contenido);
 			//TABLAS
 			ConstruirSalida($tab,$tabs,$tipo,$rows,$cols);
-		}    }
+		}
+    }
 }
 
 
 
 
 echo "</div></div>";
-echo "<dd>".$msgstr["sendto"].": ";echo "<a href=javascript:SendTo(\"W\")>".$msgstr["wks"]."</a> &nbsp; | &nbsp; ";
+echo "<dd>".$msgstr["sendto"].": ";
+echo "<a href=javascript:SendTo(\"W\")>".$msgstr["wks"]."</a> &nbsp; | &nbsp; ";
 echo "<a href=javascript:SendTo(\"D\")>".$msgstr["doc"]."</a> &nbsp; | &nbsp; ";
 echo "<a href=javascript:SendTo(\"P\")>".$msgstr["prn"]."</a> &nbsp; | &nbsp; ";
 //if (!isset($arrHttp["proc"]))echo "<a href=javascript:SendTo(\"AG\")>".$msgstr["ag"]."</a> &nbsp; | &nbsp; ";

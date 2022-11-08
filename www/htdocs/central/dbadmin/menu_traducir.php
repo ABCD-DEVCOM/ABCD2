@@ -1,4 +1,11 @@
 <?php
+/* Modified
+20210521 fho4abcd Replaced helper code fragment by included file
+20210521 fho4abcd Added OPAC compare+replace componente by table (makes equal code)
+20210829 fho4abcd Added missing importdoc compare+replace componente by table
+20211216 fho4abcd Backbutton by included file
+20221030 fho4abcd Added translations for odds, mysite. Use moduleButton for modules
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -7,168 +14,139 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
-
-
-
-include("../lang/prestamo.php");
-include("../lang/admin.php");
-include("../lang/soporte.php");
-include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
+include("../lang/admin.php");
+include("../lang/dbadmin.php");
 include("../lang/iah_conf.php");
+include("../lang/importdoc.php");
+include("../lang/mysite.php");
+include("../lang/odds.php");
+include("../lang/prestamo.php");
 include("../lang/profile.php");
-if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
+include("../lang/soporte.php");
 include("../common/header.php");
-$encabezado="";
-echo "<body>\n";
-if (isset($arrHttp["encabezado"])){
-	$encabezado="&encabezado=s";
-   	include("../common/institutional_info.php");
-}else{	$encabezado="";}
-echo "
-	<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".
-	$msgstr["translate"]."
-	</div>
-	<div class=\"actions\">\n";
-if (isset($arrHttp["encabezado"])){
-	echo "<a href=\"../common/inicio.php?reinicio=s";
-	if (isset($arrHttp["base"]))echo "&base=".$arrHttp["base"];
-	echo "\" class=\"defaultButton backButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>". $msgstr["back"]."</strong></span>
-		</a>
-	";
-}
-echo "</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>";
+$backtoscript="../common/inicio.php?reinicio=s"; // The default return script
+if (isset($arrHttp["base"]))$backtoscript.="&base=".$arrHttp["base"];
+
+echo "<body>";
+include("../common/institutional_info.php");
+
 ?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_traducir.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<div class="sectionInfo">
+	<div class="breadcrumb"><?php echo $msgstr["translate"];?></div>
+	<div class="actions">
+    <?php include "../common/inc_back.php"; ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/menu_traducir.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_traducir.php";
+include "../common/inc_div-helper.php";
 ?>
-</font>
-	</div>
 <div class="middle homepage">
-	<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-		<div class="boxTop">
-			<div class="btLeft">&#160;</div>
-			<div class="btRight">&#160;</div>
-		</div>
-		<div class="boxContent titleSection">
+	<div class="mainBox" >
+		<div class="boxContent catalogSection">
 			<div class="sectionTitle">
-				<h4><strong><?php echo $msgstr["traducir"]?></strong></h4>
-				<?php echo $msgstr["lang"].": ".$_SESSION["lang"]."<br>";?>
-				<!--h3><a href="convert_utf8.php"><?php echo $msgstr["convert_utf8"]?></a></h3-->
+			<img src="../../assets/svg/catalog/ic_fluent_globe_24_regular.svg">
+				<h1><?php echo $msgstr["traducir"]?>  <?php echo $msgstr["lang"].": ".$_SESSION["lang"];?></h1>
 			</div>
 			<div class="sectionButtons">
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=admin.tab<?php echo $encabezado?>" class="menuButton  listButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=admin.tab" class="menuButton  DataEntry">
 					<span><strong><?php echo $msgstr["catalogacion"]?></strong></span>
 				</a>
 
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=dbadmin.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=dbadmin.tab" class="menuButton  databaseButton">
 					<span><strong><?php echo $msgstr["dbadmin"]?></strong></span>
 				</a>
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=soporte.tab<?php echo $encabezado?>" class="menuButton  utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=soporte.tab" class="menuButton  utilsButton">
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
-    			<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=prestamo.tab<?php echo $encabezado?>" class="menuButton  importButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=importdoc.tab" class="menuButton  utilsButton">
+					<span><strong><?php echo $msgstr["dd_documents"]?></strong></span>
+				</a>
+    			<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton  loanButton">
 					<span><strong><?php echo $msgstr["prestamo"]?></strong></span>
 				</a>
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=reports.tab<?php echo $encabezado?>" class="menuButton  reportsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=reports.tab" class="menuButton  reportsButton">
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
-				 <a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=statistics.tab<?php echo $encabezado?>" class="menuButton  statButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				 <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton  statButton">
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=acquisitions.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton decisionButton">
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
-                <a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=iah_conf.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab" class="menuButton  userButton">
+					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
+				</a>
+                <a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton  moduleButton">
 					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
 				</a>
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=opac.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=mysite.tab" class="menuButton  moduleButton">
+					<span><strong><?php echo $msgstr["mysite"]?></strong></span>
+				</a>
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=odds.tab" class="menuButton  moduleButton">
+					<span><strong><?php echo $msgstr["odds"]?></strong></span>
+				</a>
+				<a href="../lang/translate.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton  moduleButton">
 					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
-				<a href="translate.php?lang=<?php echo $_SESSION["lang"]?>&componente=profile.tab<?php echo $encabezado?>" class="menuButton  userButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
-				</a>
 			</div>
 			<div class="spacer">&#160;</div>
-		</div>
-		<div class="boxBottom">
-			<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
 		</div>
 	</div>
 
-	<div class="mainBox" onmouseover="this.className = 'mainBox mainBoxHighlighted';" onmouseout="this.className = 'mainBox';">
-		<div class="boxTop">
-			<div class="btLeft">&#160;</div>
-			<div class="btRight">&#160;</div>
+
+<div class="mainBox" >
+	<div class="boxContent catalogSection">
+		<div class="sectionTitle">
+		<img src="../../assets/svg/catalog/ic_fluent_branch_compare_24_regular.svg">
+			<h1><?php echo $msgstr["compare_trans"]?></h1>
 		</div>
-		<div class="boxContent titleSection">
-			<div class="sectionTitle">
-				<h4><strong><?php echo $msgstr["compare_trans"]?></strong></h4>
-			</div>
-			<div class="sectionButtons">
-				<a href="../lang/compare_admin.php?table=admin.tab<?php echo $encabezado?>" class="menuButton  listButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+		<div class="sectionButtons">
+
+				<a href="../lang/compare_admin.php?table=admin.tab" class="menuButton DataEntry">
 					<span><strong><?php echo $msgstr["catalogacion"]?></strong></span>
 				</a>
 
-				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=dbadmin.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=dbadmin.tab" class="menuButton databaseButton">
 					<span><strong><?php echo $msgstr["dbadmin"]?></strong></span>
 				</a>
-				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=soporte.tab<?php echo $encabezado?>" class="menuButton  utilsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=soporte.tab" class="menuButton utilsButton">
 					<span><strong><?php echo $msgstr["maintenance"]?></strong></span>
 				</a>
-    				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab<?php echo $encabezado?>" class="menuButton  importButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=importdoc.tab" class="menuButton utilsButton">
+					<span><strong><?php echo $msgstr["dd_documents"]?></strong></span>
+				</a>
+    			<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=prestamo.tab" class="menuButton loanButton">
 					<span><strong><?php echo $msgstr["prestamo"]?></strong></span>
 				</a>
-				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=reports.tab<?php echo $encabezado?>" class="menuButton  reportsButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=reports.tab" class="menuButton reportsButton">
 					<span><strong><?php echo $msgstr["reports"]?></strong></span>
 				</a>
-				 <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab<?php echo $encabezado?>" class="menuButton  statButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=statistics.tab" class="menuButton statButton">
 					<span><strong><?php echo $msgstr["statistics"]?></strong></span>
 				</a>
-				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=acquisitions.tab" class="menuButton decisionButton">
 					<span><strong><?php echo $msgstr["acquisitions"]?></strong></span>
 				</a>
-                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab<?php echo $encabezado?>" class="menuButton  databaseButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
+				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab" class="menuButton userButton">
+					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=iah_conf.tab" class="menuButton moduleButton">
 					<span><strong><?php echo $msgstr["iah-conf"]?></strong></span>
 				</a>
-				<a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=profile.tab<?php echo $encabezado?>" class="menuButton  userButton">
-					<img src="../images/mainBox_iconBorder.gif" alt="" title="" />
-					<span><strong><?php echo $msgstr["profiles"]?></strong></span>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=mysite.tab" class="menuButton moduleButton">
+					<span><strong><?php echo $msgstr["mysite"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=odds.tab" class="menuButton moduleButton">
+					<span><strong><?php echo $msgstr["odds"]?></strong></span>
+				</a>
+                <a href="../lang/compare_admin.php?lang=<?php echo $_SESSION["lang"]?>&table=opac.tab" class="menuButton moduleButton">
+					<span><strong><?php echo "OPAC"?></strong></span>
 				</a>
 			</div>
 			<div class="spacer">&#160;</div>
-		</div>
-		<div class="boxBottom">
-			<div class="bbLeft">&#160;</div>
-			<div class="bbRight">&#160;</div>
 		</div>
 	</div>
 
@@ -180,6 +158,3 @@ echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/menu_traducir.php";
 </form>
 </div>
 <?php include("../common/footer.php");?>
-
-</body>
-</html>

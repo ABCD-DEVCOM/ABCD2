@@ -6,7 +6,7 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include("../config.php");
 
-include("../common/header.php")
+include("../common/header.php");
 require_once ("../lang/admin.php");
 ?>
 <script language=javascript>
@@ -87,8 +87,8 @@ while (list ($key, $val) = each ($the_array)) {
 </td>
 <tr>
 <td valign=top >
-<Font size=1 face=arial color=red>Eliminar: <font color=#222222>elimina la expresión<br>
-<Font size=1 face=arial color=red>clic sobre el nombre de la búsqueda pasa la expresión al formulario
+<Font size=1 face=arial color=red>Eliminar: <font color=#222222>elimina la expresiï¿½n<br>
+<Font size=1 face=arial color=red>clic sobre el nombre de la bï¿½squeda pasa la expresiï¿½n al formulario
 </td>
 </table>
 

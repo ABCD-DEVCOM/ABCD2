@@ -1,25 +1,15 @@
 <?php
 /* Modifications
 2021-02-09 fho4abcd Original name for dhtmlX.js
+2011-11-25 fho4abcd Validate tags on int value, not on string (e.g. 1==001->error) + improve html
 */
 session_start();
 include("../common/get_post.php");
 include ("../config.php");
-if (isset($arrHttp["UNICODE"])) {
-	if ($arrHttp["UNICODE"]==1)
-		$meta_encoding="UTF-8";
-	else
-		$meta_encoding="ISO-8859-1";
-}else{
-	if (isset($_SESSION["UNICODE"])) {
-		IF ($_SESSION["UNICODE"]==1)
-			$meta_encoding="UTF-8";
-		else
-			$meta_encoding="ISO-8859-1";
-	}
-}
+
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");// for indexes in institutionalinfo
 include("../lang/dbadmin.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
@@ -56,7 +46,9 @@ if ($arrHttp["Opcion"]=="new"){
 	include("../common/header.php");
 
 ?>
-	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
+<body>
+
+	<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 	<script languaje=javascript>
@@ -276,10 +268,10 @@ function Validate(Opcion){
     var height = screen.availHeight
 	msgwin=window.open("","Fdt","width="+width+", height="+height+" resizable=yes, scrollbars=yes, menu=yes")
     msgwin.document.writeln("<html>")
-    msgwin.document.writeln("<style>BODY{font-family: 'Trebuchet MS', Arial, Verdana, Helvetica; font-size: 8pt;}")
+    msgwin.document.writeln("<style>BODY{font-size: 8pt;}")
     msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
     msgwin.document.writeln("</style>")
-	msgwin.document.writeln("<body><table bgcolor=#CCCCCC>")
+	msgwin.document.writeln("<body><table bgcolor=#F5F5F5>")
 	EncabezarFilas("row")
 	cols=mygrid.getColumnCount()
 	rows=mygrid.getRowsNum()
@@ -426,18 +418,19 @@ function Validate(Opcion){
 					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["tagreq"]?>"+" ** "+cell_type+"<br>"
 				}
 				if (cell_tag!="") {
-                    if (fdt_tag.indexOf("|"+cell_tag+"|")==-1){
-						fdt_tag+="|"+cell_tag+"|"
-					}else{
-						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["duptag"]?>"+"<br>"
-					}
 					if (IsNumeric(cell_tag)==false){
 						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
-					}
-					tt= parseInt(cell_tag )
-					if (tt<1 || tt>999){
-						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
-					}
+					} else {
+                        tt= parseInt(cell_tag )
+                        if (tt<1 || tt>999){
+                            msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
+                        }
+                        if (fdt_tag.indexOf("|"+tt+"|")==-1){
+                            fdt_tag+="|"+tt+"|"
+                        }else{
+                            msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["duptag"]?>"+"<br>"
+                        }
+                    }
               	}
 			}
 			if (cell_type=="S"){    // se determina que el subcampo esté precedido por un tipo T o por TB  o por M
@@ -522,7 +515,7 @@ function Validate(Opcion){
 		msg+="<?php echo $msgstr["errmainentry"]?>"
 	}
 	if (msg!=""){
-		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>&nbsp &nbsp;')
+		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>nbsp; &nbsp;')
     	msgwin.document.writeln('<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank>edit help file</a>')
 		msgwin.document.writeln("<p>"+msg)
 		msgwin.focus()
@@ -682,7 +675,6 @@ function doOnCellEdit(stage,rowId,cellInd){
 }
 </script>
 
-<body>
 <div id="loading">
   <img id="loading-image" src="../dataentry/img/preloader.gif" alt="Loading..." />
 </div>
@@ -751,57 +743,65 @@ if (isset($arrHttp["encabezado"])){
 
 	echo "</div><div class=\"actions\">";
 	if (!isset($arrHttp["moodle"])){
+
 		if ($arrHttp["Opcion"]=="new"){
 			if (isset($arrHttp["encabezado"])){
-				echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton cancelButton\">";
+
+				$backtoscript = "../common/inicio.php?reinicio=s";
+				include "../common/inc_back.php";
 			}else{
-				 echo "<a href=menu_creardb.php class=\"defaultButton cancelButton\">";
+				$backtoscript = "menu_creardb.php";
+				include "../common/inc_back.php";				
 			}
-		}else{
-			if (isset($arrHttp["encabezado"]))
+		} else {
+			if (isset($arrHttp["encabezado"])) {
 				$encabezado="&encabezado=s";
-			else
+			} else {
 				$encabezado="";
+			}
+
 			if (isset($arrHttp["Fixed_field"])){
-				echo "<a href=fixed_marc.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";
-			}else{
-				if (!isset($arrHttp["ventana"]))
-					echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton cancelButton\">";
-				else
-					echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
+
+				$backtoscript = "fixed_marc.php?base=". $arrHttp["base"].$encabezado;
+				include "../common/inc_back.php";
+
+			} else {
+				if (!isset($arrHttp["ventana"])) {
+				
+				$backtoscript = "menu_modificardb.php?base=". $arrHttp["base"].$encabezado;
+				include "../common/inc_back.php";
+
+				} else { 
+
+				$backtoscript = "javascript:self.close()";
+				include "../common/inc_back.php";
+
 			}
 		}
-		echo "
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>". $msgstr["cancel"]."</strong></span>
-					</a>
-				</div>
-				<div class=\"spacer\">&#160;</div>
-		</div>";
-	}else{
-		echo "</div>
-				<div class=\"spacer\">&#160;</div>
-		</div>";
+
 	}
 
-?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if ((isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) and !isset($arrHttp["moodle"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/fdt.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/fdt.php";
-?>
-</font>
-	</div>
-	<div class="middle form">
-		<div class="formContent">
-			<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+}//isset($arrHttp["moodle"]
+		?>
+				</div>
+				<div class="spacer">&#160;</div>
+		</div>
 
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
- &nbsp; &nbsp; <font color=darkred size=1><strong><?php echo $msgstr['double_click']?></strong></font>
-	<table  style="width:100%; height:200" id=tblToGrid class="dhtmlxGrid">
+
+<?php 
+$ayuda = "fdt.html";
+include "../common/inc_div-helper.php";
+?>
+
+<div class="middle form">
+		<div class="formContent">
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span>
+	
+<div class="row">
+<table  style="width:100%; height:300px;" id="tblToGrid" class="dhtmlxGrid">
 <?php
 echo "<tr>";
 $tope=0;
@@ -848,7 +848,7 @@ if (isset($fp)){
       		}
 			$i=$i+1;
 			$irow=$i+1;
-			$linkr="<a href=javascript:EditarFila(\"".$irow."\",$i)><font size=1>$irow</a>";
+			$linkr="<a href='javascript:EditarFila(\"".$irow."\",$i)'><font size=1>$irow</font></a>";
 			echo "<td type=\"link\">$linkr</td>";
 			if ($t[0]=="F" or $t[0]=="S"){
 				if (trim($t[7])=="") $t[7]="X";
@@ -857,12 +857,12 @@ if (isset($fp)){
 			for ($ix=0;$ix<21;$ix++) if (!isset($t[$ix])) $t[$ix]="";
 			if (trim($t[0])!="H" and trim($t[0])!="L"){
 				if ($t[10]=="")
-					$pick="<a href=javascript:Picklist(\"".$t[1].".tab\",$i)><font size=1>browse</a>";
+					$pick="<a href='javascript:Picklist(\"".$t[1].".tab\",$i)'><font size=1>browse</font></a>";
 				else
-		    		$pick="<a href=javascript:Picklist(\"".$t[10]."\",$i)><font size=1>browse</a>";
+		    		$pick="<a href='javascript:Picklist(\"".$t[10]."\",$i)'><font size=1>browse</font></a>";
 			}
 			$irow=$i+1;
-			$linkr="<a href=javascript:EditarFila(\"".$irow."\",$i)><font size=1>$irow</a>";
+			$linkr="<a href='javascript:EditarFila(\"".$irow."\",$i)'><font size=1>$irow</font></a>";
 			if (!isset($t[16])) $t[16]="";
 			$ixt=-1;
 			//"link,coro,ed,ed,ch,ch,ed,ed,coro,ed,ed,coro,ed,ed,link,ed,ed,ed,ch,ed,ch,ch,coro,ed"
@@ -942,12 +942,13 @@ if (isset($fp)){
 ?>
 
 	</table>
-	<a href=javascript:Test()><?php echo $msgstr["test"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a href=javascript:List()><?php echo $msgstr["list"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a href=javascript:Validate()><?php echo $msgstr["validate"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
+</div>		
+	<a class="bt bt-blue" href=javascript:Test()><?php echo $msgstr["test"]?></a>
+	<a class="bt bt-blue" href=javascript:List()><?php echo $msgstr["list"]?></a>
+	<a class="bt bt-blue" href=javascript:Validate()><?php echo $msgstr["validate"]?></a>
 	<?php
 	if (!isset($arrHttp["moodle"]))
-		echo "<a href=javascript:Enviar()>". $msgstr["update"]."</a>";?>&nbsp; &nbsp; &nbsp; &nbsp;
+		echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>
 
 <script>
 	var mygrid = new dhtmlXGridFromTable('tblToGrid');
@@ -1045,6 +1046,7 @@ if (isset($fp)){
 
 </script>
 <br><br>
+</div></div>
 </form>
 <form name=forma1 action=fdt_update.php method=post>
 <?php if (isset($arrHttp["fmt_name"])){
@@ -1087,11 +1089,6 @@ if (isset($fp)){
 <input type=hidden name=row>
 <input type=hidden name=type>
 </form>
-</div>
-</div>
-<?php include ("../common/footer.php");?>
-</body>
-</html>
 <script>
 <?php
 $xar=explode(".",$xarch);
@@ -1103,3 +1100,6 @@ else
 
 document.getElementById('loading').style.display='none';
 </script>
+
+<?php include ("../common/footer.php");?>
+

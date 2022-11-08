@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove unused include
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -12,9 +15,6 @@ include("../lang/admin.php");
 
 include("../common/get_post.php");
 $arrHttp["base"]="purchaseorder";
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
-//die;
-include ('../dataentry/leerregistroisis.php');
 
 include("../common/header.php");
 ?>
@@ -44,7 +44,7 @@ float: left;
 margin: 10px 10px 5px 5px;
 }
 headerDiv a:hover {
-color: #;
+background-color: #ccc;
 }
 </style>
 <script src=../dataentry/js/lr_trim.js></script>
@@ -63,7 +63,8 @@ function toggle(showHideDiv, switchTextDiv) {
 	}
 }
 
-function EnviarForma(){	alert('not developed yet')
+function EnviarForma(){
+	alert('not developed yet')
 	return false
 }
 </script>
@@ -81,30 +82,26 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/pending_order_ex.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/pending_order_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: pending_order_ex.php</font>\n";
+$ayuda="acquisitions/pending_order_ex.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
-
-
-
 
 <div class="middle form">
 			<div class="formContent">
 <?php
 
 $locales=explode('/',$config_date_format);
-switch ($locales[0]){	case "DD":
+switch ($locales[0]){
+	case "DD":
 		$date1="d";
 		break;
 	case "MM":
 		$date1="m";
 		break;
-}switch ($locales[1]){
+}
+switch ($locales[1]){
 	case "DD":
 		$date2="d";
 		break;
@@ -124,9 +121,10 @@ include("../common/wxis_llamar.php");
 foreach ($contenido as $value) echo "$value\n";
 
 ?>
+
 <form method=post name=forma1 action=order_update.php onSubmit="javascript:return false">
 <input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
-<input type=hidden name=order value="<?php echo $purchase?>">
+<input type=hidden name=order value="<?php //echo $purchase;?>">
 <dd><dd><?php echo $msgstr["date"]?>: <input type=text name=tag450_1 value="<?php echo $fecha?>" size=10> &nbsp;
 <input type=submit value=<?php echo $msgstr["submit"]?> onclick=EnviarForma()>  </dd></dd>
 

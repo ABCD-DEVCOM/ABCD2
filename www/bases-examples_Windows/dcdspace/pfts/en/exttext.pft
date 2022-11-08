@@ -1,0 +1,4 @@
+'document text : ',
+'<a href="',replace(v96,'/opt/ABCD/www/htdocs',''),'"
+onclick="window.open(`',replace(v96,'/opt/ABCD/www/htdocs',''),'`, `newwindow`, `width=600, height=500`, `scrollbars=yes, resizable=yes`);
+return false;">' replace(v96,'/opt/ABCD/www/htdocs',''),'</a>'

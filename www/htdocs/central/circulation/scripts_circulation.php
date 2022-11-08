@@ -130,6 +130,7 @@ function DevolverRenovar(Proceso) {
 		}
 }
 
+/*
 function PagarMultas(Accion){
 	Mfn=""
 	switch (nMultas){
@@ -155,6 +156,7 @@ function PagarMultas(Accion){
 	document.multas.Tipo.value="M"
 	document.multas.submit()
 }
+*/
 
 function DeleteSuspentions(Accion){
 	Mfn=""
@@ -216,11 +218,14 @@ function  DeleteReserve(Mfn){
 	document.reservas.submit()
 }
 
-function AlertReserve(Mfn){	alert("<?php echo $msgstr["cancel_and_assign"]?>")
-	return}
+function AlertReserve(Mfn){
+	alert("<?php echo $msgstr["cancel_and_assign"]?>")
+	return
+}
 
 function  CancelReserve(Mfn,base,ncontrol){
-	if (confirm("<?php echo $msgstr["areysure"]?>")){		document.reservas.base_reserve.value=base
+	if (confirm("<?php echo $msgstr["areysure"]?>")){
+		document.reservas.base_reserve.value=base
 		document.reservas.ncontrol.value=ncontrol
 		document.reservas.Accion.value="cancel"
 		document.reservas.Mfn_reserve.value=Mfn
@@ -236,11 +241,16 @@ function  AssignReserve(Mfn){
 	document.reservas.submit()
 }
 
-function Eliminar(Expresion){	document.eliminar.Expresion.value=Expresion	document.eliminar.submit()}
+function Eliminar(Expresion){
+	document.eliminar.Expresion.value=Expresion
+	document.eliminar.submit()
+}
 
-function ImprimirSolvencia(){	msgwin=window.open("","solvencia","width=1000,height=400,resizable,scrollbars")
+function ImprimirSolvencia(){
+	msgwin=window.open("","solvencia","width=1000,height=400,resizable,scrollbars")
 	msgwin.focus()
-	document.solvencia.submit()}
+	document.solvencia.submit()
+}
 </script>
 
 <form name=reservas method=post action=../reserve/delete_reserve.php>

@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <p>
+      <strong><font face="Arial">Validation des enregistrements</font></strong>
+    </p>
+    <p>
+      <font face="Arial" size="2">La fonction de validation des enregistrements 
+      permet de définir un fichier PFT qui sera utilisé à la demande pour vérifier 
+      la justesse des données entrées pour chaque champ, aussi bien pour un nouvel
+      enregistrement que pour un existant.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Pour cela, un formulaire contenant tous les champs
+      définis dans le fichier de TDC sera affiché, avec une zone de texte pour spécifier
+      le format de validation à appliquer individuellement à chaque champ. A côté, 
+      une case à cocher est aussi affichée (<input type="checkbox" value="on">)
+      qui agit sur la sauvegarde de l'enregistrement après validation&nbsp;: quand un enregistrement 
+      est saisi ou modifié et la case cochée, il ne sera pas sauvegardé si l'un 
+      des champs vérifiés n'est pas conforme aux critères de validation.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Lors de la saisie de données, en utilisant toutes
+      ces informations, ABCD génère un format où les validations partielles sont
+      fusionnées. Ce format est appliqué à l'enregistrement et affiche des messages 
+      sous la forme de littéraux inconditionnels, lesquels notifieront les résultats
+      de la validation à l'opérateur.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Une fois le formulaire de validation généré, 
+      les options suivantes sont affichées à la fin de la page&nbsp;:</font>
+    </p>
+    <p>
+      <font face="Arial" size="2"><strong>Appliquer à un MFN&nbsp;:</strong> applique le 
+      format de validation au MFN requis et montre le résultat. Entrez le MFN de 
+      l'enregistrement souhaité et cliquez sur <strong>Appliquer</strong>.</font>
+    </p>
+    <p>
+      <font face="Arial" size="2"><strong>Mettre-à-jour&nbsp;:</strong> enregistre 
+      le format de validation défini dans le sous-répertoire <strong>def</strong>
+      de la base de données correspondante. Ce fichier porte le même nom que la 
+      base de données avec l'extension <strong>.val</strong>, et a le format suivant&nbsp;:
+      (exemple)&nbsp;:</font>
+    </p>
+    <p>
+      <font face="Courier New"><strong><font color=
+      "maroon">20:</font></strong>if a(v20) then `le champ 20 est manquant` fi<br>
+      <strong><font color="maroon">510:</font></strong>"le champ 510 est manquant
+      "n510<br>
+      <strong><font color="maroon">900:</font></strong>if a(v900) then `le champ
+      900 est manquant` fi</font>
+    </p>
+    <p>
+      <font face="Arial" size="2">Le numéro de champ est placé au début du format
+      de validation afin de faciliter les modifications, si nécessaire.
+      Le format affichera un texte qui sera présenté à l'opérateur quand il 
+      nécessitera la validation de l'enregistrement.</font>
+    </p>
+  </body>
+</html>

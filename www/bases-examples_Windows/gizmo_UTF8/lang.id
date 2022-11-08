@@ -1,0 +1,531 @@
+!ID 000001
+!v001!en
+!v002!^iEnglish^eInglÈs^pInglÍs
+!ID 000002
+!v001!pt
+!v002!^iPortuguese^ePortuguÈs^pPortuguÍs
+!ID 000003
+!v001!es
+!v002!^iSpanish^eEspaÒol^pEspanhol
+!ID 000004
+!v001!fr
+!v002!^iFrench^eFrancÈs^pFrancÍs
+!ID 000005
+!v001!ab
+!v002!^iAbkhaz^eAbkhazian^pAbkhazian
+!ID 000006
+!v001!ak
+!v002!^iAkan^eAkan^pAcan
+!ID 000007
+!v001!aa
+!v002!^iAfar^eAfar^pAfar
+!ID 000008
+!v001!af
+!v002!^iAfrikaans^eAfricano^pAfricano
+!ID 000009
+!v001!ay
+!v002!^iAymara^eAymar·^pAimar·
+!ID 000010
+!v001!am
+!v002!^iAmharic^eAmh·rico^pAm·rico
+!ID 000011
+!v001!ar
+!v002!^iArabic^eArabe^p¡rabe, Ar·bico
+!ID 000012
+!v001!as
+!v002!^iAssamese^eAssamÈs^pAssamÈs
+!ID 000013
+!v001!av
+!v002!^iAvaric^eAvar^pAvar
+!ID 000014
+!v001!ae
+!v002!^iAvestan^eAvestan^pAvÈstico
+!ID 000015
+!v001!az
+!v002!^iAzerbaijani^eAzerbaijani^pAzerbaidjano
+!ID 000016
+!v001!ba
+!v002!^iBashkir^eBashkir^pBachquir
+!ID 000017
+!v001!bm
+!v002!^iBambara^eBambara^pBambara
+!ID 000018
+!v001!bn
+!v002!^iBengali^eBengalÌ^pBengali
+!ID 000019
+!v001!be
+!v002!^iBelarusian^eBielorruso^pBielo-Russo
+!ID 000020
+!v001!bh
+!v002!^iBihari^eBihari^pBihari
+!ID 000021
+!v001!bi
+!v002!^iBislama^eBislama^pBislama
+!ID 000022
+!v001!bs
+!v002!^iBosnian^eBosnio^pBosnio
+!ID 000023
+!v001!br
+!v002!^iBreton^eBretÛn^pBret„o
+!ID 000024
+!v001!bg
+!v002!^iBulgarian^eB˙lgaro^pB˙lgaro
+!ID 000025
+!v001!ks
+!v002!^iKashmiri^eCachemiro^pCachemiriano
+!ID 000026
+!v001!kn
+!v002!^iKannada^eKannada^pCanada
+!ID 000027
+!v001!kr
+!v002!^iKanuri^eKanuri^pCanuri
+!ID 000028
+!v001!kk
+!v002!^iKazakh^eKazakh^pCasaque
+!ID 000029
+!v001!ca
+!v002!^iCatalan^eCatal·n^pCatal„o
+!ID 000030
+!v001!ch
+!v002!^iChamorro^eChamorro^pChamorro
+!ID 000031
+!v001!kg
+!v002!^iKongo^eKongo, Congo^pCongo
+!ID 000032
+!v001!ko
+!v002!^iKorean^eCoreano^pCoreano
+!ID 000033
+!v001!kw
+!v002!^iCornish^eCÛrnico^pCÛrnico
+!ID 000034
+!v001!co
+!v002!^iCorsican^eCorso^pCorso
+!ID 000035
+!v001!cr
+!v002!^iCree^eCree^pCree
+!ID 000036
+!v001!ku
+!v002!^iKurdish^eKurdo, Curdo^pCurdo
+!ID 000037
+!v001!da
+!v002!^iDanish^eDanÈs^pDinamarquÍs
+!ID 000038
+!v001!dv
+!v002!^iDivehi^eDivehi^pDivehi
+!ID 000039
+!v001!dz
+!v002!^iDzongkha^eDzongkha^pDzongkha
+!ID 000040
+!v001!gd
+!v002!^iScottish Gaelic^eGaÈlico escocÈs^pEscocÍs GaÈlico
+!ID 000041
+!v001!cu
+!v002!^iChurch Slavic^eEslavo lit˙rgico, viejo eslavo^pEslavo Eclesi·tico
+!ID 000042
+!v001!sl
+!v002!^iSlovenian^eEsloveno^pEsloveno
+!ID 000043
+!v001!eo
+!v002!^iEsperanto^eEsperanto^pEsperanto
+!ID 000044
+!v001!et
+!v002!^iEstonian^eEstonio^pEstoniano
+!ID 000045
+!v001!ee
+!v002!^iEwe^eEwe^pEwe
+!ID 000046
+!v001!fo
+!v002!^iFaroese^eFaroÈs^pFaroÈs
+!ID 000047
+!v001!fj
+!v002!^iFijian^eFijiano^pFijian
+!ID 000048
+!v001!fi
+!v002!^iFinnish^eFinÈs o finlandÈs^pFinlandÍs
+!ID 000049
+!v001!fy
+!v002!^iFrisian^eFrisiano o frisÛn^pFrisiano o frisÛn
+!ID 000050
+!v001!ff
+!v002!^iFula^eFulani, Peul, Fulfulde^pFula
+!ID 000051
+!v001!gl
+!v002!^iGalician^eGallego^pGallego
+!ID 000052
+!v001!gn
+!v002!^iGuarani^eGuaranÌ^pGuarani
+!ID 000053
+!v001!gu
+!v002!^iGujarati^eGujarati^pGuzerate
+!ID 000054
+!v001!ha
+!v002!^iHausa^eHausa^pHaussa
+!ID 000055
+!v001!he
+!v002!^iHebrew^eHebreo^pHebraico
+!ID 000056
+!v001!hz
+!v002!^iHerero^eHerero^pHerero
+!ID 000057
+!v001!hi
+!v002!^iHindi^eHindi^pHindi
+!ID 000058
+!v001!ho
+!v002!^iHiri Motu^eHiri Motu^pHiri Motu
+!ID 000059
+!v001!hu
+!v002!^iHungarian^eH˙ngaro^pH˙ngaro
+!ID 000060
+!v001!ig
+!v002!^iIgbo^eIgbo^pIgbo
+!ID 000061
+!v001!yi
+!v002!^iYiddish^eYiddish^pIÌdiche
+!ID 000062
+!v001!id
+!v002!^iIndonesian^eIndonesio^pIndonesio
+!ID 000063
+!v001!ia
+!v002!^iInterlingua (International Auxiliary Language Association)^eInterlingua (AsociaciÛn para un Lenguaje Auxiliar Internacional)^pInterlÌngua
+!ID 000064
+!v001!ie
+!v002!^iInterlingue^eInterlingue^pInterlingue
+!ID 000065
+!v001!iu
+!v002!^iInuktitut^eInuktitut^pInuktitut
+!ID 000066
+!v001!ik
+!v002!^iInupiaq^eInupiak o inuit^pInupiak o inuit
+!ID 000067
+!v001!yo
+!v002!^iYoruba^eYoruba^pIoruba
+!ID 000068
+!v001!ga
+!v002!^iIrish^eIrish^pIrlandÍs
+!ID 000069
+!v001!it
+!v002!^iItalian^eItaliano^pItaliano
+!ID 000070
+!v001!ja
+!v002!^iJapanese^eJaponÈs^pJaponÍs
+!ID 000071
+!v001!jv
+!v002!^iJavanese^eJavanÈs^pJavanÍs
+!ID 000072
+!v001!kl
+!v002!^iKal‚tdlisut^eKal‚tdlisut^pKal‚tdlisut
+!ID 000073
+!v001!km
+!v002!^iKhmer^eKhmer^pKhmer
+!ID 000074
+!v001!kv
+!v002!^iKomi^eKomi^pKomi
+!ID 000075
+!v001!kj
+!v002!^iKuanyama^eKuanyama^pKuanyama
+!ID 000076
+!v001!lo
+!v002!^iLao^eLaosiano^pLaosiano
+!ID 000077
+!v001!la
+!v002!^iLatin^eLatÌn^pLatim
+!ID 000078
+!v001!lv
+!v002!^iLatvian^eLetÛn^pLet„o
+!ID 000079
+!v001!ln
+!v002!^iLingala^eLingala^pLingala
+!ID 000080
+!v001!lt
+!v002!^iLithuanian^eLituano^pLituano
+!ID 000081
+!v001!lu
+!v002!^iLuba-Katanga^eLuba-Katanga^pLuba
+!ID 000082
+!v001!lg
+!v002!^iGanda^eGanda, Luganda^pLuganda
+!ID 000083
+!v001!lb
+!v002!^iLetzeburgesch^eLuxemburguÈs^pLuxemburguÍs
+!ID 000084
+!v001!ml
+!v002!^iMalayalam^eMalayalam^pMalaiala
+!ID 000085
+!v001!mg
+!v002!^iMalagasy^eMalgache^pMalgaxe
+!ID 000086
+!v001!mt
+!v002!^iMaltese^eMaltÈs^pMaltÍs
+!ID 000087
+!v001!gv
+!v002!^iManx^eManx o manÈs^pManx
+!ID 000088
+!v001!mr
+!v002!^iMarathi^eMaratÌ^pMarati, Marata
+!ID 000089
+!v001!mh
+!v002!^iMarshallese^eMarshallÈs^pMarshall
+!ID 000090
+!v001!mo
+!v002!^iMoldavian^eMoldavo^pMold·vio
+!ID 000091
+!v001!mn
+!v002!^iMongolian^eMongol^pMongol
+!ID 000092
+!v001!na
+!v002!^iNauru^eNauru^pNauru
+!ID 000093
+!v001!nv
+!v002!^iNavajo^eNavajo^pNavajo
+!ID 000094
+!v001!nr
+!v002!^iNdebele (South Africa)^eNdebele (Sud·frica)^pNdebele (Sud·frica)
+!ID 000095
+!v001!nd
+!v002!^iNdebele (Zimbabwe)^eNdebele (Zimbabwe)^pNdebele (Zimbabwe)
+!ID 000096
+!v001!ng
+!v002!^iNdonga^eNdonga^pNdonga
+!ID 000097
+!v001!ne
+!v002!^iNepali^eNepalÌ^pNepali
+!ID 000098
+!v001!ny
+!v002!^iNyanja^eNyanja^pNianja
+!ID 000099
+!v001!no
+!v002!^iNorwegian^eNoruego^pNorueguÍs
+!ID 000100
+!v001!oc
+!v002!^iOccitan (post-1500)^eOccitan (a partir de 1500)^pOccitan (a partir de 1500)
+!ID 000101
+!v001!oj
+!v002!^iOjibwa^eOjibwa^pOjibwa
+!ID 000102
+!v001!or
+!v002!^iOriya^eOriya^pOri·
+!ID 000103
+!v001!om
+!v002!^iOromo^eOromo^pOromo
+!ID 000104
+!v001!os
+!v002!^iOssetic^eOssetic^pOsseto
+!ID 000105
+!v001!pi
+!v002!^iPali^ePali^pP·li
+!ID 000106
+!v001!pa
+!v002!^iPanjabi^ePanjabi, punjabi o penjabi^pPandjabi
+!ID 000107
+!v001!pl
+!v002!^iPolish^ePolaco^pPolonÍs
+!ID 000108
+!v001!ps
+!v002!^iPushto^ePushto, pashto^pPushto
+!ID 000109
+!v001!qu
+!v002!^iQuechua^eQuechua^pQuÌchua
+!ID 000110
+!v001!ki
+!v002!^iKikuyu^eKikuyu^pQuicuiu
+!ID 000111
+!v001!rw
+!v002!^iKinyarwanda^eKinyarwanda^pQuiniaruanda
+!ID 000112
+!v001!ky
+!v002!^iKyrgyz^eKyrgyz^pQuirquiz
+!ID 000113
+!v001!rm
+!v002!^iRaeto-Romance^eReto romance, romanche^pRÈtico
+!ID 000114
+!v001!rn
+!v002!^iRundi^eRundi, kirundi^pRundi
+!ID 000115
+!v001!ru
+!v002!^iRussian^eRuso^pRusso
+!ID 000116
+!v001!se
+!v002!^iNorthern Sami^eSami del Norte^pSami del Norte
+!ID 000117
+!v001!sm
+!v002!^iSamoan^eSamoano^pSamoano
+!ID 000118
+!v001!sg
+!v002!^iSango (Ubangi Creole)^eSango (Ubangi criollo)^pSango
+!ID 000119
+!v001!sa
+!v002!^iSanskrit^eS·nscrito^pS‚nscrito
+!ID 000120
+!v001!sc
+!v002!^iSardinian^eSardo^pSardo
+!ID 000121
+!v001!sn
+!v002!^iShona^eShona^pShona
+!ID 000122
+!v001!sd
+!v002!^iSindhi^eSindhi^pSindi
+!ID 000123
+!v001!si
+!v002!^iSinhalese^eSingalÈs^pSingalÈs
+!ID 000124
+!v001!so
+!v002!^iSomali^eSomalÌ^pSomali
+!ID 000125
+!v001!st
+!v002!^iSotho^eSoto^pSoto
+!ID 000126
+!v001!sw
+!v002!^iSwahili^eSuahili^pSuaili
+!ID 000127
+!v001!su
+!v002!^iSundanese^eSudanÈs^pSudanÍs
+!ID 000128
+!v001!sv
+!v002!^iSwedish^eSueco^pSueco
+!ID 000129
+!v001!ss
+!v002!^iSwazi^eSwazi^pSwazi
+!ID 000130
+!v001!tg
+!v002!^iTajik^eTajik^pTadjique
+!ID 000131
+!v001!tl
+!v002!^iTagalog^eTagalo^pTagalo
+!ID 000132
+!v001!ty
+!v002!^iTahitian^eTahitiano^pTahitian
+!ID 000133
+!v001!ta
+!v002!^iTamil^eTamil^pT‚mil
+!ID 000134
+!v001!tt
+!v002!^iTatar^eTatar^pT·taro
+!ID 000135
+!v001!ce
+!v002!^iChechen^eChechÈn^pTchetcheno
+!ID 000136
+!v001!cv
+!v002!^iChuvash^eChuvash^pTchuvache
+!ID 000137
+!v001!te
+!v002!^iTelugu^eTelugu^pTelugo
+!ID 000138
+!v001!th
+!v002!^iThai^eThai^pThai
+!ID 000139
+!v001!ti
+!v002!^iTigrinya^eTigriÒa^pTigrina
+!ID 000140
+!v001!to
+!v002!^iTongan^eTonganÈs^pTonga (ilhas)
+!ID 000141
+!v001!ts
+!v002!^iTsonga^eTsonganÈs^pTsonga
+!ID 000142
+!v001!tn
+!v002!^iTswana^eTswanano^pTswanano
+!ID 000143
+!v001!tw
+!v002!^iTwi^eTwi^pTui
+!ID 000144
+!v001!tr
+!v002!^iTurkish^eTurco^pTurco
+!ID 000145
+!v001!tk
+!v002!^iTurkmen^eTurcomano^pTurcomano
+!ID 000146
+!v001!uk
+!v002!^iUkrainian^eUcraniano^pUcraniano
+!ID 000147
+!v001!ug
+!v002!^iUighur^eUigur^pUigur
+!ID 000148
+!v001!ur
+!v002!^iUrdu^eUrdu^pUrdu
+!ID 000149
+!v001!uz
+!v002!^iUzbek^eUzbeco^pUzbeque
+!ID 000150
+!v001!ve
+!v002!^iVenda^eVenda^pVenda
+!ID 000151
+!v001!vi
+!v002!^iVietnamese^eVietnamita^pVietnamÍs
+!ID 000152
+!v001!vo
+!v002!^iVolapÅk^eVolapuk^pVolapuk
+!ID 000153
+!v001!wo
+!v002!^iWolof^eWolof^pWolof
+!ID 000154
+!v001!xh
+!v002!^iXhosa^eXhosa^pXosa
+!ID 000155
+!v001!za
+!v002!^iZhuang^eZhuang^pZhuang
+!ID 000156
+!v001!zu
+!v002!^iZulu^eZul˙^pZulu
+!ID 000157
+!v001!bo
+!v002!^iTibetan^eTibetano^pTibetano
+!ID 000158
+!v001!cs
+!v002!^iCzech^eCheco^pTcheco
+!ID 000159
+!v001!cy
+!v002!^iWelsh^eGalÈs^pGalÍs
+!ID 000160
+!v001!de
+!v002!^iGerman^eAlem·n^pAlem„o
+!ID 000161
+!v001!el
+!v002!^iGreek^eGrego^pGrego
+!ID 000162
+!v001!eu
+!v002!^iBasque^eVasco^pBasco
+!ID 000163
+!v001!fa
+!v002!^iPersian^ePersa^pPersa
+!ID 000164
+!v001!hr
+!v002!^iCroatian^eCroata^pCroata
+!ID 000165
+!v001!hy
+!v002!^iArmenian^eArmÈnio^pArmÍnio
+!ID 000166
+!v001!is
+!v002!^iIcelandic^eIslandÈs^pIslandÍs
+!ID 000167
+!v001!ka
+!v002!^iGeorgian^eGeorgiano^pGeorgiano
+!ID 000168
+!v001!mk
+!v002!^iMacedonian^eMacedonio^pMacedÙnio
+!ID 000169
+!v001!mi
+!v002!^iMaori^eMaori^pMaori
+!ID 000170
+!v001!ms
+!v002!^iMalay^eMalai^pMalai
+!ID 000171
+!v001!my
+!v002!^iBurmese^eBurmÈs^pBirmanÍs
+!ID 000172
+!v001!nl
+!v002!^iDutch^eHolandÈs^pHolandÍs
+!ID 000173
+!v001!ro
+!v002!^iRomanian^eRomeno^pRomeno
+!ID 000174
+!v001!sk
+!v002!^iSlovak^eEslovaco^pEslovaco
+!ID 000175
+!v001!sq
+!v002!^iAlbanian^eAlbanÈs^pAlbanÍs
+!ID 000176
+!v001!sr
+!v002!^iSerbian^eServio^pSÈrvio
+!ID 000177
+!v001!zh
+!v002!^iChinese^eChinÈs^pChinÍs

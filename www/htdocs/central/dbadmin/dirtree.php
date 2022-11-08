@@ -1,4 +1,10 @@
 <?php
+/* Modifications
+20210614 fho4abcd remove password+lineends
+20211215 fho4abcd Backbutton & helper by included file
+20220203 fho4abcd Typo + improve folder selection and do not screw up $arrHttp["base"]
+20220630 fho4abcd Back to Home if $arrHttp["base"] not set or lost. Loosing is easy due to the dozens of forms.Improve html
+*/
 /*
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -180,23 +186,24 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^E_STRICT);
 $arrHttp=Array();
 include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
-if (isset($arrHttp["base"])) $_SESSION["dir_base"]=trim($arrHttp["base"]);
 if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
     isset($_SESSION["permiso"]["CENTRAL_EXDBDIR"])) or
     (isset($_SESSION["permiso"][$_SESSION["dir_base"]."_CENTRAL_ALL"]) or
     isset($_SESSION["permiso"][$_SESSION["dir_base"]."CENTRAL_EXDBDIR"]))
     )
-{}else{
+{
+}else{
 	header("Location: ../common/error_page.php") ;
 }
-if (isset($arrHttp["base"])){	$_SESSION["root_base"]=$_REQUEST["base"];
-	if (isset($arrHttp["folder"])){
-		$_SESSION["dir_base"]=$_REQUEST["folder"];
-	}else{		$_SESSION["dir_base"]= trim($arrHttp["base"]);
-		echo $arrHttp["base"];
-	}
-}
 include("../config.php");
+$_SESSION["root_base"]=$db_path;
+$_SESSION["dir_base"]="";
+if (isset($arrHttp["folder"])){
+    $_SESSION["dir_base"]=$_REQUEST["folder"];
+}
+$backtoscript="../dbadmin/menu_mantenimiento.php";
+if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
+
 $_POST["Server_Path"]=$db_path;
 if (isset($_SESSION["dir_base"])) $_POST["Server_Path"].=trim($_SESSION["dir_base"]);
 $_SESSION["Server_Path"]=$_POST["Server_Path"];
@@ -204,15 +211,19 @@ $_SESSION['Upload_Extension']="*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*
 $_POST['FILE_EXTENSION']="*.def,*.iso,*.png,*.gif,*.jpg,*.pdf,*.xrf,*.mst,*.n01,*.n02,*.l01,*.l02,*.cnt,*.ifp,*.fmt,*.fdt,*.pft,*.fst,*.tab,*.txt,*.par,*.html,*.zip,";
 if (isset($def["DIRTREE_EXT"]))
 	$_POST['FILE_EXTENSION']=$def["DIRTREE_EXT"];
-//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>"; die;
+// debug dumps
+/*    foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+    echo "Session:<br>";
+    foreach ($_SESSION as $var=>$value) echo "$var = $value<br>";
+    echo "<br>root_base=".$_SESSION["root_base"]."<br>dir_base=". $_SESSION["dir_base"]."<br>"; 
+*/
+//
 $_POST['File_Extension']=$_POST['FILE_EXTENSION'];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 $lang=$_SESSION["lang"];
-$_POST['username']=$_SESSION["login"];
-$_POST['password']=$_SESSION["password"];
 $_SESSION['autentified']=true;
-//echo "<pre>"; print_r($_SESSION); ECHO "</pre>";
 
 global $encabezado;
 $encabezado="";
@@ -220,42 +231,36 @@ if (!isset($_REQUEST["ACTION"])) $_REQUEST["ACTION"]="";
 if ($_REQUEST["ACTION"]!="downloadfile1"){
 	include("../common/header.php");
 	if (isset($arrHttp["encabezado"])){
-		$encabezado="&encabezado=s";	}
+		$encabezado="&encabezado=s";
+	}
 	EncabezadoPagina();
-	//echo "<link rel=\"STYLESHEET\" type=\"text/css\" href=\"../css/".$css_name."template.css\">";
 }
 
 function EncabezadoPagina(){
-global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding;	echo "<Body>";
-    //if (isset($arrHttp["encabezado"]))
-    	include("../common/institutional_info.php");
-     echo "
-		<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-				$msgstr["expbases"]."
-		</div>
-		<div class=\"actions\">\n";
-
-		if (!isset($_SESSION["root_base"]))
-			echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\"> ";
-		else
-			echo "<a href=\"menu_mantenimiento.php?base=".$_SESSION["root_base"]."\" class=\"defaultButton backButton\"> ";
-		echo"  <img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>";
-	echo "
-		</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>";
-
-	 echo "
-	 	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/dirtree.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;
-    ";
-    echo "<font color=white>&nbsp; &nbsp; Script: dirtree.php</font></div>";
-
-     echo "<div class=\"middle form\">
-			<div class=\"formContent\">";}
+global $arrHttp,$msgstr,$institution_name,$logo,$db_path,$meta_encoding, $backtoscript;
+	echo "<Body>";
+    include("../common/institutional_info.php");
+?>
+<div class="sectionInfo">
+<div class="breadcrumb">
+        <?php echo $msgstr["expbases"]?>
+</div>
+    <div class="actions">
+    <?php
+    if (isset($arrHttp["base"]) && $arrHttp["base"]!="") {
+        include "../common/inc_back.php";
+    } else {
+        include "../common/inc_home.php";
+    }
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php include "../common/inc_div-helper.php"; ?>
+<div class="middle form">
+    <div class="formContent">
+<?php
+}
 
 Function BUILD_DIRECTORY_TREE($SOURCE, $PREVIOUS) {
 /*
@@ -564,7 +569,7 @@ confirm the operation.
     $CURRENT_FILE = BUILD_PATH($NODE);
     Echo $CURRENT_FILE;
     ?>
-            </H3></Td>
+            </H3></font></center></Td>
         </Tr>
         <Tr>
             <Td>
@@ -589,6 +594,7 @@ confirm the operation.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -665,6 +671,7 @@ structure from the server to the client computer , can be opened or saved.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
                 </Td>
             </Tr>
         </Table>
@@ -871,6 +878,7 @@ different button options.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
     </Table>
@@ -936,6 +944,7 @@ between a different button options.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -984,6 +993,7 @@ operation.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1035,6 +1045,7 @@ the name of the new directory with a form.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1062,6 +1073,7 @@ phase. The client must confirm the operation.
     <?php
     Echo $CURRENT_DIR . "</h3>";
     ?>
+                </font></center>
             </Td>
         </Tr>
         <Tr>
@@ -1132,7 +1144,9 @@ confirm the operation.
     $CURRENT_DIR = BUILD_PATH($NODE);
     Echo $CURRENT_DIR;
     ?>
-            </H3></Td>
+                </H3>
+                </font></center>
+            </Td>
         </Tr>
         <Tr>
             <Td>
@@ -1156,6 +1170,7 @@ confirm the operation.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1253,7 +1268,9 @@ the new name for the selected directory with a form.
     Echo $CURRENT_DIR;
 
     ?>
-            </H3></Td>
+                </H3>
+                </font></center>
+            </Td>
         </Tr>
         <Tr>
             <Td>
@@ -1279,6 +1296,7 @@ the new name for the selected directory with a form.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1303,15 +1321,14 @@ checking phase.
                 <Center>
                 <Font FACE=tahoma>
                 <H3>Old Name Directory:
-    <?php
-    Echo $_SESSION['Folder_Name'] [$_SESSION['Node']] . "</h3>";
-
-    ?>
+                <?php
+                Echo $_SESSION['Folder_Name'] [$_SESSION['Node']] . "</h3>";
+                ?>
                 <H3>New Name Directory:
-    <?php
-    Echo $RENAME_DIR . "</h3>";
-
-    ?>
+                <?php
+                Echo $RENAME_DIR . "</h3>";
+                ?>
+                </font></center>
             </Td>
         </Tr>
         <Tr>
@@ -1381,12 +1398,13 @@ confirm the operation.
                 <Center>
                 <Font FACE=tahoma>
                 <H3>Current Filename :
-    <?php
-    $CURRENT_FILE = BUILD_PATH($NODE);
-    Echo $CURRENT_FILE;
-
-    ?>
-            </H3></Td>
+                <?php
+                $CURRENT_FILE = BUILD_PATH($NODE);
+                Echo $CURRENT_FILE;
+                ?>
+                </H3>
+                </font></center>
+            </Td>
         </Tr>
         <Tr>
             <Td>
@@ -1409,6 +1427,7 @@ confirm the operation.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1432,9 +1451,10 @@ checking phase.
                 <Center>
                 <Font FACE=tahoma>
                 <H3>FileName:
-    <?php
-    Echo $CURRENT_FILE . "</h3>";
-    ?>
+                <?php
+                Echo $CURRENT_FILE . "</h3>";
+                ?>
+                </font></center>
             </Td>
         </Tr>
         <Tr>
@@ -1497,11 +1517,13 @@ must confirm the operation.
                 <Center>
                 <Font FACE=tahoma>
                 <H3>Current Filename :
-    <?php
-    $CURRENT_FILE = BUILD_PATH($NODE);
-    Echo $CURRENT_FILE;
-    ?>
-            </H3></Td>
+                <?php
+                $CURRENT_FILE = BUILD_PATH($NODE);
+                Echo $CURRENT_FILE;
+                ?>
+                </H3>
+                </font></center>
+            </Td>
         </Tr>
         <Tr>
             <Td>
@@ -1524,6 +1546,7 @@ must confirm the operation.
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1547,9 +1570,10 @@ the checking phase.
                 <Center>
                 <Font FACE=tahoma>
                 <H3>FileName:
-    <?php
-    Echo $CURRENT_FILE . "</h3>";
-    ?>
+                <?php
+                Echo $CURRENT_FILE . "</h3>";
+                ?>
+                </font></center>
             </Td>
         </Tr>
         <Tr>
@@ -1624,11 +1648,13 @@ the new name for the selected file with a form
                 <Center>
                 <Font FACE=tahoma>
                 <H3>Current Filename :
-    <?php
-    $CURRENT_FILE = BUILD_PATH($NODE);
-    Echo $CURRENT_FILE;
-    ?>
-            </H3></Td>
+                <?php
+                $CURRENT_FILE = BUILD_PATH($NODE);
+                Echo $CURRENT_FILE;
+                ?>
+                </H3>
+                </font></center>
+            </Td>
         </Tr>
         <Tr>
             <Td>
@@ -1654,6 +1680,7 @@ the new name for the selected file with a form
                         </Tr>
                     </Table>
                 </Form>
+                </font></center>
             </Td>
         </Tr>
    </Table>
@@ -1677,13 +1704,14 @@ checking phase.
                 <Center>
                 <Font FACE=tahoma>
                 <H3>Old FileName:
-    <?php
-    Echo $_SESSION['Folder_Name'] [$_SESSION['Node']] . "</h3>";
-    ?>
+                <?php
+                Echo $_SESSION['Folder_Name'] [$_SESSION['Node']] . "</h3>";
+                ?>
                 <H3>New FileName:
-    <?php
-    Echo $RENAME_FILE . "</h3>";
-    ?>
+                <?php
+                Echo $RENAME_FILE . "</h3>";
+                ?>
+                </font></center>
             </Td>
         </Tr>
         <Tr>
@@ -1790,56 +1818,56 @@ sendmail_from = address@your_ip_server.com
     <form name="emailform" method="post" ACTION="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
         <table width=100% border="<?php echo $borde;?>" bordercolor="<?php echo $bordercolor;?>" cellpadding="0" cellspacing="0" bgcolor="<?php echo $bodycolor;?>" class=td>
            <tr>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
 
                             <Td VALIGN=top><P><center>Compress File before Send <Input TYPE="radio" VALUE="compress" CHECKED NAME="ACTIONEMAIL"> YES <Input TYPE="radio" VALUE="nocompress" NAME="ACTIONEMAIL"> NO</center></P></Td>
 
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
                 <td>
                     <center><input type="text" name="your_name" size="61" value="Your Name" onfocus="switchvalue(this,'Your Name');" onblur="switchvalue(this,'Your Name');">
                 </td>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
                 <td >
                     <center><input type="text" name="your_email" size="61" value="Your E-mail" onfocus="switchvalue(this,'Your E-mail');" onblur="switchvalue(this,'Your E-mail');">
                 </td>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
                 <td >
                     <center><input type="text" name="target_name" size="61" value="Target Name" onfocus="switchvalue(this,'Target Name');" onblur="switchvalue(this,'Target Name');">
                 </td>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
                 <td >
                     <center><input type="text" name="target_email" size="61" value="Target E-mail" onfocus="switchvalue(this,'Target E-mail');" onblur="switchvalue(this,'Target E-mail');">
                 </td>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             </tr>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
                 <td>
                     <center><input type="text" name="matter" size="61" value="the matter of the message" onfocus="switchvalue(this,'the matter of the message');" onblur="switchvalue(this,'the matter of the message');">
                 </td>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             <tr>
-                <Td>&nbsp</Td>
-                <Td>&nbsp</Td>
-                <Td>&nbsp</Td>
+                <Td>&nbsp;</Td>
+                <Td>&nbsp;</Td>
+                <Td>&nbsp;</Td>
             </tr>
             <TR>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
                 <td valign="top" rowspan="5">
                     <center><textarea name="email_message" cols="46" rows="7" onfocus="switchvalue(this,'Your Message');" onblur="switchvalue(this,'Your Message');">Your Message</textarea>
                 </td>
-                <td>&nbsp</td>
+                <td>&nbsp;</td>
             </TR>
             <input type="hidden" name="attached" value="<?php echo $REALFILE?>">
             <Input TYPE="hidden" NAME="FILE_EXTENSION" VALUE="<?php echo $_SESSION['File_Extension'];?>">
@@ -1851,16 +1879,16 @@ sendmail_from = address@your_ip_server.com
             <tr></tr>
             <Tr>
                 <Td align=right><Input TYPE="button" VALUE="    Cancel   " ONCLICK="javascript:history.back()"></Td>
-                <Td>&nbsp</Td>
+                <Td>&nbsp;</Td>
                 <Td align=left><Input TYPE="Submit" NAME="send" VALUE="   SEND   "></Td>
             </Tr>
             <Tr>
                 <Td><Noscript>Use your BACK ARROW button of your BROWSER NAVIGATOR to GO BACK</Noscript></Td>
             </Tr>
             <tr>
-                <Td>&nbsp</Td>
-                <Td>&nbsp</Td>
-                <Td>&nbsp</Td>
+                <Td>&nbsp;</Td>
+                <Td>&nbsp;</Td>
+                <Td>&nbsp;</Td>
             </tr>
         </table>
     </form>
@@ -1898,9 +1926,10 @@ smtp server something like "smtp.your_ip_server.com"
                 <Center>
                 <Font FACE=tahoma>
                 <H3>FileName:
-    <?php
-    Echo $CURRENT_FILE . "</h3>";
-    ?>
+                <?php
+                Echo $CURRENT_FILE . "</h3>";
+                ?>
+                </font></center>
             </Td>
         </Tr>
         <Tr>
@@ -2250,20 +2279,20 @@ global $encabezado;
     echo "<p><CENTER><table border='' bgcolor=$BGC cellpadding='0' cellspacing='0' class=td>";
     echo "
     <tr bgcolor=$BGC>
-        <td>&nbsp</td>
+        <td>&nbsp;</td>
        <td>
           <H3><b><font color=$FGC>FileName</font></b></H3>
        </td>
        <td ALIGN=RIGHT>
           <H3><b><font color=$FGC>Size</font></b></H3>
        </td>
-       <td>&nbsp</td>
-       <td>&nbsp</td>
-       <td>&nbsp</td>
+       <td>&nbsp;</td>
+       <td>&nbsp;</td>
+       <td>&nbsp;</td>
        <td>
           <H3><b><font color=$FGC>Date:Time</font></b></H3>
        </td>
-        <td>&nbsp</td>
+        <td>&nbsp;</td>
     </tr>";
     for ($i = 1; $i <= $numberentries; $i++) {
         // Read central dir entry
@@ -2273,12 +2302,12 @@ global $encabezado;
         $filenamelen = fread($fp, $arcfilenamelen);
         $arcfiledatetime = MSDOS_TIME_TO_UNIX($arcfiledate, $arcfiletime);
         echo "<tr BGCOLOR=$FGC>";
-        ECHO "<td>&nbsp</td>";
+        ECHO "<td>&nbsp;</td>";
         // Print FileName
         if ($arcfileattr == 16) {
             echo "<td><font color='$BGC'>";
             echo "<b>" . $filenamelen . "</b>";
-            echo "</td></font>";
+            echo "</font></td>";
         } else {
             echo "<td ><font color='$BGC'>";
             echo "...." . basename($filenamelen);
@@ -2288,7 +2317,7 @@ global $encabezado;
         if ($arcfileattr == 16) {
             echo "<td><font color='$BGC'>";
             echo "<B>Folder</B>";
-            echo "</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td>";
+            echo "</font></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
         } else {
             echo "<td align=right><font color='$BGC'>";
             If ($arcfilesize > 0) {
@@ -2309,15 +2338,15 @@ global $encabezado;
                         $DES_BYTES = "bytes";
                 } // switch
             } Else {
-                Echo "&nbsp";
+                Echo "&nbsp;";
                 $DES_BYTES = "";
             }
-            echo "</Td>";
-            echo "<Td>&nbsp</Td>";
-            echo "<td ALIGN=left><Font COLOR=$BGC>$DES_BYTES</Td>";
-            echo "<Td ALIGN=right><Font COLOR=$BGC>&nbsp</Td>";
+            echo "</font></Td>";
+            echo "<Td>&nbsp;</Td>";
+            echo "<td ALIGN=left><Font COLOR=$BGC>$DES_BYTES</font></Td>";
+            echo "<Td ALIGN=right><Font COLOR=$BGC>&nbsp;</font></Td>";
         }
-        echo '</td></font>';
+        echo '</td>';
         // Print FileDate column
         echo "<td><font color=$BGC>";
         if ($arcfileattr == 16) {
@@ -2325,8 +2354,8 @@ global $encabezado;
         } ELSE {
             echo date("d/m/y H:i", $arcfiledatetime);
         }
-        echo '</td></font>';
-        ECHO "<td>&nbsp</td>";
+        echo '</font></td>';
+        ECHO "<td>&nbsp;</td>";
         echo '</tr>';
     }
     echo "
@@ -2474,19 +2503,19 @@ This function write the header of the dirtreeview table inside the web html page
     <Table ALIGN="center" CELLPADDING="0" CELLSPACING="0" BGCOLOR="<?php $BGC;?>" class=td>
         <Tr>
             <Td VALIGN="top"><font size=1>
-                <A HREF=<?php echo $_SERVER['PHP_SELF'];?>?ACTION=refresh&NODE=<?php echo $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>>
+                <A HREF="<?php echo $_SERVER['PHP_SELF'];?>?ACTION=refresh&NODE=<?php echo $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>">
                 <Img SRC="img/dirtree/tree_refresh0.gif" alt="Rebuild the Treeview" BORDER=0>
-                <Font SIZE="1" COLOR="<?php echo $FGC;?>"><B>Refresh</A>
-                <A HREF=<?php echo $_SERVER['PHP_SELF'];?>?ACTION=filter&NODE=<?php echo $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>>
+                <Font SIZE="1" COLOR="<?php echo $FGC;?>"><B>Refresh</b></font></A>
+                <A HREF="<?php echo $_SERVER['PHP_SELF'];?>?ACTION=filter&NODE=<?php echo $_SESSION['Last_Node'];?>&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>">
                 <Img SRC="img/dirtree/tree_filter.gif" alt="File Filter Extension Criteria" BORDER=0>
-                <Font SIZE="1" COLOR="<?php echo $FGC;  ?>"><B>File Filter =</A>
-    <?php
-    If ($_SESSION['File_Extension'] == "") {
-        Echo "*.*";
-    } Else {
-        Echo $_SESSION['File_Extension'];
-    }
-    ?>
+                <Font SIZE="1" COLOR="<?php echo $FGC;  ?>"><B>File Filter =</b></font></A>
+                <?php
+                If ($_SESSION['File_Extension'] == "") {
+                    Echo "*.*";
+                } Else {
+                    Echo $_SESSION['File_Extension'];
+                }
+                ?>
             </Td>
         </Tr>
      </Table>
@@ -2507,17 +2536,19 @@ This function write the subheader of the dirtreeview table in the web html page.
     ?>
     <Table ALIGN="center" CELLSPACING="0" CELLPADDING="0" class=td border=0>
         <Tr BGCOLOR="<?php echo $BGC;?>" ALIGN="center" VALIGN="top">
-            <Td><B><I><Font COLOR="<?php echo $FGC;?>">FOLDERS</Td>
-            <Td>&nbsp</Td>
-            <Td><B><I><Font COLOR="<?php echo $FGC;?>">FILES</Td>
-            <Td>&nbsp</Td>
-            <Td><B><I><Font COLOR="<?php echo $FGC;?>">FILENAMES</Td>
-            <Td>&nbsp</Td>
-            <Td COLSPAN=4><a alt="Show Bytes, Kbytes, Mbytes" href=<?php echo $_SERVER['PHP_SELF'].$encabezado;?>&ACTION=size><B><I><Font COLOR="<?php echo $FGC;?>">SIZE</a></Td>
-            <Td>&nbsp</Td>
-            <Td>&nbsp</Td>
-            <Td><B><I><Font COLOR="<?php echo $FGC;?>">LAST DATE</Td>
-            <Td>&nbsp</Td>
+            <Td><B><I><Font COLOR="<?php echo $FGC;?>">&nbsp;FOLDERS</font></i></b></Td>
+            <Td>&nbsp;</Td>
+            <Td><B><I><Font COLOR="<?php echo $FGC;?>">&nbsp;FILES</font></i></b></Td>
+            <Td>&nbsp;</Td>
+            <Td><B><I><Font COLOR="<?php echo $FGC;?>">&nbsp;FILENAMES</font></i></b></Td>
+            <Td>&nbsp;</Td>
+            <Td COLSPAN=4>
+                <a alt="Show Bytes, Kbytes, Mbytes" href=<?php echo $_SERVER['PHP_SELF'].$encabezado;?>&ACTION=size><B><I><Font COLOR="<?php echo $FGC;?>">&nbsp;SIZE</font></i></b></a>
+            </Td>
+            <Td>&nbsp;</Td>
+            <Td>&nbsp;</Td>
+            <Td><B><I><Font COLOR="<?php echo $FGC;?>">&nbsp;LAST DATE</font></i></b></Td>
+            <Td>&nbsp;</Td>
         </Tr>
         <Br>
     <?php
@@ -2536,17 +2567,18 @@ This function write the data in the column folder of the dirtreeview table.
     ?>
     <Tr>
         <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?php echo $FGC;?>">
-    <?php
-    If ($_SESSION['Children_Subdirs'][$NODE] != 0) {
-        // number of subdirs
-        echo $_SESSION['Children_Subdirs'][$NODE];
-    } Else {
-        Echo "&nbsp";
-    }
-    ?>
+        <?php
+        If ($_SESSION['Children_Subdirs'][$NODE] != 0) {
+            // number of subdirs
+            echo $_SESSION['Children_Subdirs'][$NODE];
+        } Else {
+            Echo "&nbsp;";
+        }
+        ?>
+        </font>
         </Td>
         <Td BGCOLOR="<?php echo $BGC;
-    ?>">&nbsp</Td>
+    ?>">&nbsp;</Td>
     <?php
 } //end function
 
@@ -2567,15 +2599,17 @@ This function write the data in the column files of the dirtreeview table.
         // number of files
         Echo $_SESSION['Children_Files'] [$NODE];
     } Else {
-        Echo "&nbsp";
+        Echo "&nbsp;";
     }
     ?>
-   </Td>
-   <Td BGCOLOR="<?php echo $BGC;?>">&nbsp</Td>
-   <?php
+    </font>
+    </Td>
+    <Td BGCOLOR="<?php echo $BGC;?>">&nbsp;</Td>
+    <?php
 } //end function
 
-Function COLUMN_FILENAMES_ROOT($BGC, $FGC) {global $encabezado;
+Function COLUMN_FILENAMES_ROOT($BGC, $FGC) {
+global $encabezado;
 /*
 This function write the data in the column filenames exclusively for the first
 row of the dirtreeview table. (root dir).
@@ -2589,15 +2623,16 @@ row of the dirtreeview table. (root dir).
     ?>
     <Td BGCOLOR="<?php echo $BGC;
     ?>" NOWRAP><Font COLOR="<?php echo $FGC;?>">
-    <A HREF=<?php echo $_SERVER['PHP_SELF'];?>?ACTION=collapseall&NODE=0&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>>
+    <A HREF="<?php echo $_SERVER['PHP_SELF'];?>?ACTION=collapseall&NODE=0&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>">
     <Img SRC="img/dirtree/tree_minus_end.gif" alt="Collapse All" HEIGHT="18" WIDTH="18" BORDER="0" VSPACE="0" HSPACE="0" ALIGN="left"></A>
-    <A HREF=<?php echo $_SERVER['PHP_SELF'];?>?ACTION=dirfunction&NODE=0&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>>
+    <A HREF="<?php echo $_SERVER['PHP_SELF'];?>?ACTION=dirfunction&NODE=0&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>">
     <Img SRC="img/dirtree/tree_upload.gif" alt="Directory Functions" HEIGHT="18" WIDTH="18" BORDER="0" VSPACE="0" HSPACE="0" ALIGN="left"></A>
-    <A HREF=<?php echo $_SERVER['PHP_SELF'];?>?ACTION=expandall&NODE=0&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>>
+    <A HREF="<?php echo $_SERVER['PHP_SELF'];?>?ACTION=expandall&NODE=0&FILE_EXTENSION=<?php echo $_SESSION['File_Extension'].$encabezado;?>">
     <Img SRC="img/dirtree/tree_root.gif" alt="Expand All" BORDER="0" HEIGHT="20" WIDTH="20" VSPACE="0" HSPACE="0" ALIGN="left">
     <b><?php echo BASENAME($_SESSION['Server_Path']);?></b></A>
+    </font>
     </Td>
-    <Td BGCOLOR="<?php echo $BGC;?>">&nbsp</Td>
+    <Td BGCOLOR="<?php echo $BGC;?>">&nbsp;</Td>
     <?php
 } //end function
 
@@ -2752,8 +2787,8 @@ This function write the data in the column filenames of the dirtreeview table.
 	}
 	Echo "<img SRC='img/dirtree/tree_space.gif' height='18' width='9' border='0' vspace='0' hspace='0' align='left'>";
     Echo $_SESSION['Folder_Name'] [$NODE];
-    Echo "</td>";
-    Echo "<td bgcolor=" . $BGC . ">&nbsp</td>";
+    Echo "</font></td>";
+    Echo "<td bgcolor=" . $BGC . ">&nbsp;</td>";
 } //end function
 
 Function COLUMN_SIZE($NODE, $BGC, $FGC) {
@@ -2770,8 +2805,8 @@ variable $_SESSION['Display_Size']
         $FGC = "BLUE";
     }
     ?>
-   <Td BGCOLOR="<?php echo $BGC;?>">&nbsp</Td>
-   <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="right" VALIGN="top" valign=center><Font COLOR="<?php echo $FGC;?>">
+   <Td BGCOLOR="<?php echo $BGC;?>">&nbsp;</Td>
+   <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="right" VALIGN="top" ><Font COLOR="<?php echo $FGC;?>">
    <?php
     // filesize
     $DATO=$_SESSION['Numbytes'][$NODE];
@@ -2807,7 +2842,7 @@ variable $_SESSION['Display_Size']
                 IF ($NODE!=0){
                     ECHO STR_REPEAT(chr(124), $Y)."</FONT>";
                 }ELSE{
-                    ECHO "&nbsp"."</FONT>";
+                    ECHO "&nbsp;"."</FONT>";
                 }
                 $DES_BYTES = "";
                 break;
@@ -2824,15 +2859,16 @@ variable $_SESSION['Display_Size']
                 $DES_BYTES = "bytes";
         } // switch
     } Else {
-        Echo "&nbsp";
+        Echo "&nbsp;";
         $DES_BYTES = "";
     }
     ?>
+    </font>
    </Td>
    <Td BGCOLOR="<?php echo $BGC;
-    ?>">&nbsp</Td>
-   <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="left" valign=top><Font COLOR="<?php echo $FGC;?>"><?php echo $DES_BYTES;?></Td>
-   <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="right"><Font COLOR="<?php echo $FGC;?>">&nbsp</Td>
+    ?>">&nbsp;</Td>
+   <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="left" valign=top><Font COLOR="<?php echo $FGC;?>"><?php echo $DES_BYTES;?></font></Td>
+   <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="right"><Font COLOR="<?php echo $FGC;?>">&nbsp;</font></Td>
    <?php
 } //end function
 
@@ -2847,7 +2883,7 @@ This function write the data in the column filedate of the dirtreeview table.
         $FGC = "RED";
     }
     ?>
-        <Td BGCOLOR="<?php echo $BGC;?>">&nbsp</Td>
+        <Td BGCOLOR="<?php echo $BGC;?>">&nbsp;</Td>
         <Td BGCOLOR="<?php echo $BGC;?>" ALIGN="right" VALIGN="top"><Font COLOR="<?php echo $FGC;?>">
    <?php
     If ($NODE != 0 ) {
@@ -2855,12 +2891,12 @@ This function write the data in the column filedate of the dirtreeview table.
        if (is_long($_SESSION['File_Date'][$NODE]))
 	   	echo (DATE("d/m/y H:i", $_SESSION['File_Date'][$NODE])) ;
     } Else {
-        Echo "&nbsp";
+        Echo "&nbsp;";
     }
     ?>
-        </Td>
+        </font></Td>
         <Td BGCOLOR="<?php echo $BGC;
-    ?>">&nbsp</Td>
+    ?>">&nbsp;</Td>
    </Tr>
    <?php
 } //end function
@@ -2877,7 +2913,7 @@ This function write the data in the footer of the dirtreeview table.
     }
     ?>
         <Tr BGCOLOR="<?php echo $BGC;?>" ALIGN="center" VALIGN="top">
-            <Td COLSPAN="14"><B><I><Font COLOR="<?php echo $FGC;?>">This page has been created in <?php echo NUMBER_FORMAT($_SESSION['Total_Time'], 2, ',', '.');?> seconds</Td>
+            <Td COLSPAN="14"><B><I><Font COLOR="<?php echo $FGC;?>">This page has been created in <?php echo NUMBER_FORMAT($_SESSION['Total_Time'], 2, ',', '.');?> seconds</font></Td>
         </Tr>
     </Table>
     <Br>
@@ -2901,9 +2937,6 @@ This function write the data in the footer of any web html page.
 //Modificado Guilda Ascencio
 	echo "</div></div>\n";
 	if (isset($arrHttp["encabezado"])) include("../common/footer.php");
-	echo "
-    </Body>
-</Html>";
 } //end function
 
 Function LOGIN($TEXTO) {

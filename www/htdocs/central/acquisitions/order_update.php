@@ -57,9 +57,11 @@ foreach ($linea as $i=>$value){
 				case "controln":       		// CONTROL NUMBER
 					$subc="^i";
 					break;
+				/*	
 				case "controln":       		// ITEMS RECEIVED
-					$subc="^j";
+					$subc="^f";
 					break;
+				*/
 				case "tome":            	// TOME
 					$subc="^l";
 					break;             		// VOLUME
@@ -90,14 +92,12 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/order_update.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/order_update.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: order_update.php</font>\n";
+$ayuda="acquisitions/order_update.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <div class="middle form">
 	<div class="formContent">
 <?php
@@ -113,7 +113,7 @@ if ($npost==0){
 	$IsisScript=$xWxis."acquisitions/order_create.xis";
 	$pft=$db_path."purchaseorder/pfts/".$_SESSION["lang"]."/purchaseorder.pft";
 	if (!file_exists($pft)) $pft=$db_path."purchaseorder/pfts/".$lang_db."/purchaseorder.pft";
-	$query = "&base=".$base ."&cipar=$db_path"."par/".$cipar."&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado."&order_no=".$arrHttp["order_no"]."&order_date=".$arrHttp["order_date"]."&Mfnsuggestion=".$Mfnsuggestion;
+	$query = "&base=".$base ."&cipar=$db_path"."par/".$cipar."&login=".$_SESSION["login"]."&Mfn=New&Opcion=crear&ValorCapturado=".$ValorCapturado."&order_no=".$arrHttp["order_no"]."&order_date=".$arrHttp["order_date"];
 	$query.="&Formato_o=@$pft";
 	$pft=$db_path."suggestions/pfts/".$_SESSION["lang"]."/suggestions.pft";
 	if (!file_exists($pft)) $pft=$db_path."suggestions/pfts/".$lang_db."/suggestions.pft";
@@ -151,7 +151,7 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			if ($pre==$Prefijo){
 				$l=explode('|',$linea);
 				return $l[1];
-				break;
+			//	break;
 			}
 		}
 	}

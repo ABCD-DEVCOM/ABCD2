@@ -1,4 +1,8 @@
 <?php
+/*
+20220220 fho4abcd Removed option to search by date+extra translations
+20220713 fho4abcd Use $actparfolder as location for .par files
+*/
 function LeerVariables($db_path,$arrHttp,$lang_db){
 	$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/stat.cfg";
 	if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/stat.cfg";
@@ -20,13 +24,16 @@ global $trow,$tcol,$rows,$cols,$tabs,$tab,$tipo,$filter_date;
 		if (trim($value)!="" and trim($value)!='$$$$'){
 			$rec=explode('****',$value);
             $i=-1;
-			foreach ($rec as $linea){				$i=$i+1;
-				if (isset($_REQUEST["year_from"]) and trim($_REQUEST["year_from"])!=""){					$fecha_comp=$_REQUEST["year_from"];
+			foreach ($rec as $linea){
+				$i=$i+1;
+				if (isset($_REQUEST["year_from"]) and trim($_REQUEST["year_from"])!=""){
+					$fecha_comp=$_REQUEST["year_from"];
 					if (isset($_REQUEST["month_from"]) and $_REQUEST["month_from"]!="")
 						$fecha_comp.=$_REQUEST["month_from"];
 					$fecha_comp=str_replace('$',"",$fecha_comp);
 					$len=strlen($fecha_comp);
-				}
+
+				}
                 $linea=trim($linea);
 				$x=explode('|',$tabs[$i]);
 				$trow=$x[1];
@@ -35,7 +42,8 @@ global $trow,$tcol,$rows,$cols,$tabs,$tab,$tipo,$filter_date;
 				else
 					$tcol="";
 				$row_col=explode('¬¬¬¬¬',$linea);
-				foreach ($row_col as $rrcc){					if(trim($rrcc)=="") continue;
+				foreach ($row_col as $rrcc){
+					if(trim($rrcc)=="") continue;
 					$rrcc.='$$$$';
 					$t=explode('$$$$',$rrcc);
                     $descartar="";
@@ -98,7 +106,8 @@ function Frecuencia($rc){
 
 // SE CONSTRUYE EL FORMATO PARA LA TABLA DE CONTINGENCIA
 function Contingencia($tabla_L,$tab_vars){
-	$filter_d="";	$lmp="";
+	$filter_d="";
+	$lmp="";
 	$excluir="";
 // SE LEE LA LISTA DE VARIABLES PARA FORMAR LA TABLA
 	$tabla_L=urldecode($tabla_L);
@@ -112,11 +121,13 @@ function Contingencia($tabla_L,$tab_vars){
 			if ($tabla[1]== $t[0]){
 				$pft_row=$t[1];
 				if(isset($t[2])and $t[2]=="LMP"){
-					$lmp=$t{2};
+					$lmp=$t[2];
 					$excluir=$t[3];
-				}else{					if (isset($t[2]) and $t[2]=="true")
+				}else{
+					if (isset($t[2]) and $t[2]=="true")
 						$filter_d="rows";
-				}
+
+				}
 			}
 		}
 	}
@@ -154,7 +165,7 @@ function LosMasPrestados($tab,$maximo){
 		else
 			$total_cols=$total_cols+$value;
 	}
-	echo "<tr><td>Total</td><td>$total_cols</td></tr></table>\n";
+	echo "<tr><td>".$msgstr["total"]."</td><td>$total_cols</td></tr></table>\n";
 }
 
 function ConstruirFormato($arrHttp,$lang_db,$tab_vars,$db_path){
@@ -189,18 +200,21 @@ global $tabla,$tit_proc,$tabs,$tipo,$filter_date;
 			$proc=explode("|",urldecode($_REQUEST["proc"]));
 			$tit_proc="**";
 			$Formulas="";
-			foreach ($proc as $value){				if ($tit_proc=="**"){
+			foreach ($proc as $value){
+				if ($tit_proc=="**"){
 					$tit_proc=$value;
 				}else{
 					$PFT="";
 					$value=trim($value);
-					if ($value!=""){
+					if ($value!=""){
+
 						$txx=explode('{{',$value);
 						$value=$txx[0];
 						if(isset($txx[1])) $PFT="PFT";
 						$tabs[]=$tabla[$value];
 
-	                    if ($PFT=="PFT"){	                    	$For=explode('|',$tabla[$value]);
+	                    if ($PFT=="PFT"){
+	                    	$For=explode('|',$tabla[$value]);
 							$Formato=str_replace("/","'¬¬¬¬¬'",$For[3]);
 							$tipo[]=$For[1].'|'.$For[2];
 							if (isset($For[4])) $filter_date[]=$For[4];
@@ -292,29 +306,16 @@ global $tabla,$tit_proc,$tabs,$tipo,$filter_date;
 	return $Formato;
 }
 
-function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){global $msgstr;
+function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){
+global $msgstr,$actparfolder;
 	switch ($_REQUEST["Opcion"]){
-		case "FECHAS":
-			$file_date=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/date_prefix.cfg";
-			if (!file_exists($file_date)){				echo $msgstr["miss_dp"];
-				die;			}
-			$fp=file($file_date);
-			foreach ($fp as $value){				$value=trim($value);				if ($value!=""){					$date_prefix=$value;
-					break;				}			}
-		    $Expresion=$date_prefix.$_REQUEST["year_from"];
-		    if (isset($_REQUEST["month_from"]))
-		    	$Expresion.=$_REQUEST["month_from"];
-			$Expresion=$Expresion;
-			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=buscar&Formato=".$Formato;
-			$query.="&Expresion=$Expresion";
-			break;
 		case "MFN":
-			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=rango&Formato=".$Formato;
+			$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=rango&Formato=".$Formato;
 			$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
 			break;
 		case "BUSQUEDA":
 			$Expresion=urlencode($arrHttp["Expresion"]);
-			$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"]."&Opcion=buscar&Formato=".$Formato;
+			$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Opcion=buscar&Formato=".$Formato;
 			$query.="&Expresion=$Expresion";
 			break;
 	}
@@ -323,7 +324,10 @@ function SeleccionarRegistros($arrHttp,$db_path,$Formato,$xWxis){global $msgstr
 	return $contenido;
 }
 
-function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){	for ($i=0;$i<count($tab);$i++){		$t=explode("|",$tabs[$i]);
+function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){
+    global $msgstr;
+	for ($i=0;$i<count($tab);$i++){
+		$t=explode("|",$tabs[$i]);
 		$tit=$t[0];
 		$lmp="";$maximo="";
 		$x=explode('|',$tipo[$i]);
@@ -360,7 +364,7 @@ function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){	for ($i=0;$i<count($tab
 		echo "<tr><th>$filas</th>";
 		if (isset($cols_label))
 			foreach ($cols_label as $key=>$c) echo "<th>$key</th>";
-		echo "<th>Total</th>\n";
+		echo "<th>".$msgstr["total"]."</th>\n";
 
 		echo "</tr>";
 	    $total_cols=array();
@@ -401,14 +405,17 @@ function ConstruirSalida($tab,$tabs,$tipo,$rows,$cols){	for ($i=0;$i<count($tab
 			echo "</tr>\n";
 
 		}
-		echo "<tr><td>Total</td>";
+		echo "<tr><td>".$msgstr["total"]."</td>";
 		$tgen=0;
 		if (isset($cols_label)){
 			foreach ($cols_label as $ixcol){
 				echo "<td>".$total_cols[$ixcol]."</td>";
 				$tgen=$tgen+$total_cols[$ixcol];
 			}
-		}else{			echo "<td>".$total_cols[0]."</td>";			$tgen=$tgen+$total_cols[0];		}
+		}else{
+			echo "<td>".$total_cols[0]."</td>";
+			$tgen=$tgen+$total_cols[0];
+		}
 		if (isset($cols_label)){
 			echo "<td>$tgen</td>";
 		}

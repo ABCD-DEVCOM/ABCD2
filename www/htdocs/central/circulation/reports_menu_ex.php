@@ -1,4 +1,4 @@
-<?
+<?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -10,12 +10,15 @@ include("../config.php");
 include ("../lang/admin.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
-if (isset($arrHttp["Expresion"])){	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
+if (isset($arrHttp["Expresion"])){
+	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
 	if (strpos('"',$arrHttp["Expresion"])==0) {
     	$arrHttp["Expresion"]=str_replace('"','',$arrHttp["Expresion"]);
 	}
-	$Expresion=urlencode($arrHttp["Expresion"]);}
-switch ($arrHttp["Opcion"]){	case "vence":
+	$Expresion=urlencode($arrHttp["Expresion"]);
+}
+switch ($arrHttp["Opcion"]){
+	case "vence":
 		$arrHttp["pft"]="mov";
 		break;
 	case "suspen":
@@ -23,9 +26,12 @@ switch ($arrHttp["Opcion"]){	case "vence":
 		break;
 	case "fine":
 		$arrHttp["pft"]="susp";
-		break;}
+		break;
+}
 $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["pft"].".pft";
-if (!file_exists($Formato)){	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["pft"].".pft";}
+if (!file_exists($Formato)){
+	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["pft"].".pft";
+}
 if (file_exists($Formato)) $Formato="@".$Formato;
 // READ THE HEADINGS, IF ANY
 $heading="<strong>".$arrHttp["title"]."</strong>";
@@ -33,7 +39,8 @@ $head=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["pft"]."
 if (!file_exists($head)){
 	$head=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["pft"].".tab";
 }
-if (file_exists($head)){	$fp=file($head);
+if (file_exists($head)){
+	$fp=file($head);
 	$head=implode('',$fp);
 	$h=explode('|',$head);
 	foreach ($h as $value)
@@ -79,7 +86,9 @@ foreach ($contenido as $linea){
 			break;
 	}
 }
-$data.="\n</table>";switch ($arrHttp["vp"]){	case "WP":
+$data.="\n</table>";
+switch ($arrHttp["vp"]){
+	case "WP":
     	$filename=$arrHttp["base"].".doc";
 		header('Content-Type: application/msword; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
@@ -133,9 +142,8 @@ switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
 
 die;
 
-//==========================================================
 function UserData($user){
-global $db_path,$Wxis,$wxisUrl,$xWxis;
+global $db_path,$Wxis,$wxisUrl,$xWxis,$lang_db;
 	$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/tbuser.pft";
     if (!isset($formato_us)) $formato_us=$db_path."users/loans/".$lang_db."/tbuser.pft";
    	$query = "&Expresion=CO_".$user."&base=users&cipar=$db_path/par/users.par&Formato=".$formato_us;
@@ -146,11 +154,13 @@ global $db_path,$Wxis,$wxisUrl,$xWxis;
 	$c=explode("|",$cont);
 	$output="";
 	foreach ($c as $linea){
-		$linea=trim($linea);		if ($linea!="")
+		$linea=trim($linea);
+		if ($linea!="")
 			$output.= "<td bgcolor=white valign=top>".$linea."</td>";
 	}
 	if ($output=="") $output="<td>&nbsp;</td><td>&nbsp;</td>";
-	return $output;}
+	return $output;
+}
 
 function FormatDate ($FechaP){
 global $locales,$config_date_format;

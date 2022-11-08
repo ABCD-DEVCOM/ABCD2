@@ -1,0 +1,52 @@
+<p><strong>Decisión del proceso de cotización</strong></p>
+<p>En este punto del proceso, las recomendaciones aprobadas ya deben tener la lista de proveedores a los cuales se les solicitó cotización.&nbsp; Para localizar estas recomendaciones se aplica la siguiente expresión de búsqueda:&nbsp; <strong>STA_1 or STA_3</strong> <strong>or STA_4</strong>, con lo que se recuperan las recomendaciones aprobadas (estatus=1) o las recomendaciones en proceso de cotización (estatus=3), o aquellas recomendaciones que ya tienen al menos un proveedor seleccionado (estatus=4).</p>
+<p>La información que se presenta es la siguiente:</p>
+<ul>
+    <li>No. secuencial de la recomendación </li>
+    <li>Datos del objeto solicitado</li>
+    <li>Fecha de aprobación de la recomendación</li>
+    <li>Número de copias aprobadas</li>
+    <li>Datos de los proveedores&nbsp;a los cuales se les ha aprobado la&nbsp;compra&nbsp;de las copias del objeto
+    <ul>
+        <li>Nombre del proveedor</li>
+        <li>Fecha de la aprobación</li>
+        <li>Precio de cada copia del objeto</li>
+        <li>Número de copias a adquirir</li>
+        <li>Observaciones</li>
+    </ul>
+    </li>
+</ul>
+<p>Haga clic sobre <img alt="" src="../../php/images/edit.png" />&nbsp;para suministrar los datos de los proveedores a los cuales se les ha aprobado la compra del objeto</p>
+<p>Haga clic sobre <img alt="" src="../../php/images/zoom.png" />&nbsp;para revisar los datos de la recomendación.</p>
+<p>La información se puede desplegar ordenada por <strong>Título</strong>,<strong>&nbsp; Fecha de aprobación de la recomendación</strong>, &nbsp; <strong>Nombre de la persona o institución que realizó la recomendación</strong></p>
+<p>Cada una de estas posibilidades está asociada a un formato definido, el cual se especifica a continuación:</p>
+<p>
+<table cellspacing="1" cellpadding="1" border="1" width="400" summary="">
+    <tbody>
+        <tr>
+            <td><strong>Orden de presentación</strong></td>
+            <td><strong>Formatos utilizados</strong></td>
+        </tr>
+        <tr>
+            <td>Título</td>
+            <td>
+            <p>ti_decision.pft<br />
+            ti_decision_tit.tab</p>
+            </td>
+        </tr>
+        <tr>
+            <td>Fecha inicio cotización </td>
+            <td>da_decision.pft<br />
+            da_decision_tit.tab</td>
+        </tr>
+        <tr>
+            <td>Recomendado por</td>
+            <td>rb_decision.pft<br />
+            rb_decision_tit.tab</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>Puede enviar el cuadro resumen, en forma de documento o de hoja de cálculo, utilizando las opciones que se muestran bajo <strong>Enviar a</strong></p>
+<p>Una vez que las recomendaciones tienen al menos un proveedor aprobado se puede pasar al proceso de emisión de la órden de compra. Para ello haga clic sobre <strong>Menu</strong> y bajo el sub-menú <strong>Órdenes de compra </strong>seleccione&nbsp; la opción <strong>Crear órden </strong>&nbsp; <br />
+</p>

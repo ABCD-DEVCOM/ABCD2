@@ -1,6 +1,8 @@
 <?php
 /* Modification
 20210315 fho4abcd The destination form no longer fixed to "upload" but specified by variable $targetForm.
+20210912 fho4abcd Improved handling of targetForm, replace help button by div-helper, sanitize html
+20220213 fho4abcd Don't show new folder while exploring
 */
 //*****************************************************************
 //** Author: Marius Buivydas                                     **
@@ -113,10 +115,11 @@ global $arrHttp,$img_path,$msgstr,$targetForm;
 		$cont_type="";
 	$source=stripslashes($source);
 	$path=stripslashes($path);
-	if ($arrHttp["Opcion"]!="mostrar"){		if ($source!="..")
-			echo "<strong>".$path.$source."</strong><br>";
+	if ($arrHttp["Opcion"]!="mostrar" && $arrHttp["Opcion"]!="seleccionar"){
+		if ($source!="..")
+			echo "\n<strong>".$path.$source."</strong>\n";
+        echo "<br>";
 		echo "<a href=javascript:CrearCarpeta()>".$msgstr["new_folder"]."</a>";
-		echo "&nbsp; <a href='http://isisabcd.pbworks.com/w/page/Explorar-carpeta' target=_blank>".$msgstr["online_help"]."</a><p>";
 	}
 	if ($type=="file"){
 	   if ($cont_type=="")
@@ -195,19 +198,25 @@ global $arrHttp,$img_path,$msgstr,$targetForm;
 	           for ($i;$i<count($turinys["tipas"]);$i++)
 			     {
 			       if ($turinys["tipas"][$i]=="dir")
-				     {
+				     { 
 					   if ($Opcion=="explorar" and $turinys["pavadinimas"][$i]!=".."){
 					   		$sel_dir=$this->root_dir;
 					   		$sel_dir=str_replace($img_path,"",$sel_dir);
 					   		$sel_dir.=$turinys["pavadinimas"][$i];
 					   		$sel_dir=str_replace("//","/",$sel_dir);
-					   		echo "<input type=radio name=sel value='".$turinys["pavadinimas"][$i]."' onclick=\"window.opener.document.".$targetForm.".storein.value='".$sel_dir."';window.opener.focus();self.close()\">";
+					   		echo "\n<input type=radio name=sel value='".$turinys["pavadinimas"][$i]."' onclick=\"window.opener.document.".$targetForm.".storein.value='".$sel_dir."';window.opener.focus();self.close()\">";
 						}
-					   	echo "<img src=\"".$this->icons_dir.$this->dir_icon."\">";
-					   if ($i==1 and $turinys["pavadinimas"][$i]=="..")
-					     {echo "&nbsp; <a href=\"?source=".$turinys["pavadinimas"][$i]."&amp;Opcion=$Opcion&amp;tag=$tag&amp;base=".$arrHttp["base"]."&amp;desde=".$arrHttp["desde"]."&amp;type=dir&amp;kryptis=atgal&amp;path=$path\"&Opcion=$Opcion>".$turinys["pavadinimas"][$i]."</a> <br>";}
-					   else
-			   	         {echo "&nbsp; <a href=\"?source=".$turinys["pavadinimas"][$i]."&amp;Opcion=$Opcion&amp;tag=$tag&amp;base=".$arrHttp["base"]."&amp;desde=".$arrHttp["desde"]."&amp;type=dir&amp;kryptis=pirmyn&amp;path=$path\"&Opcion=$Opcion>".$turinys["pavadinimas"][$i]."</a> <br>";}
+					   	echo "\n&nbsp;<img style='position:relative;top:4px' src=\"".$this->icons_dir.$this->dir_icon."\">";
+                        if ($i==1 and $turinys["pavadinimas"][$i]=="..") {
+                            $newkrypt="atgal";
+                        } else {
+                            $newkrypt="pirmyn";
+                        }
+                        ?>
+&nbsp;
+<a href="?source=<?php echo $turinys["pavadinimas"][$i]?>&amp;Opcion=<?php echo $Opcion;?>&amp;tag=<?php echo $tag;?>&amp;base=<?php echo $arrHttp["base"]?>&amp;desde=<?php echo $arrHttp["desde"];?>&amp;targetForm=<?php echo $targetForm;?>&amp;type=dir&amp;kryptis=<?php echo $newkrypt;?>&amp;path=<?php echo $path;?>" >
+<?php echo $turinys["pavadinimas"][$i];?></a><br>
+                        <?php
 					 }
 				   else
 				     {

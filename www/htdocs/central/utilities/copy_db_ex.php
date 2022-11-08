@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20211216 fho4abcd Backbutton & helper by included file. Improve html
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -36,6 +39,7 @@ include("../common/get_post.php");
 $arrHttp["copyname"] =str_replace(".mst","",$arrHttp["copyname"]);
 include("../config.php");
 $lang=$_SESSION["lang"];
+$backtoscript="../dbadmin/menu_mantenimiento.php";
 
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
@@ -86,30 +90,20 @@ foreach ($_REQUEST as $var=>$value){
 </div>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["db_cp"].": ".$arrHttp["base"]?>
+    <?php echo $msgstr["db_cp"].": ".$arrHttp["base"]?>
 	</div>
-	<div class="actions">
-<?php echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <div class="actions">
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
 <?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/copy_db.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/copy_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo " &nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Copiar_la_base_de_datos' target=_blank>AbcdWiki</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: utilities/copy_db_ex.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
+$ayuda="copy_db.html";
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+<div class="formContent">
+<?php
 $err="";
 $from=$db_path.$arrHttp["base"]."/data/".$arrHttp["base"];
 $to=$arrHttp["storein"];
@@ -160,11 +154,7 @@ if ($err==""){
 ?>
 </div>
 </div>
-</center>
 <?php
-
 include("../common/footer.php");
 ?>
 
-</body>
-</html>

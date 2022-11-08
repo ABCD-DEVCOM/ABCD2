@@ -2,6 +2,7 @@
 /* Modifications
 2021-02-08 fho4abcd Remove code in comment
 2021-02-09 fho4abcd Original name for dhtmlX.js
+2022-02-02 fho4abcd back button, div-helper
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -11,12 +12,16 @@ include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 //foreach ($arrHttp as $var=>$value)echo "$var=$value<br>";
 
 //echo $archivo;
 include("../common/header.php");
+?>
+<body>
+<?php
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
@@ -75,7 +80,7 @@ if (strpos($arrHttp["picklist"],'../')!==false){
 				if (cell.indexOf('|')!=-1){
 					fila=i+1
 					columna=j+1
-					alert("caracter inválido | en la fila "+fila+" columna "+columna)
+					alert("<?php echo $msgstr['invalpipe']?> "+fila+", <?php echo $msgstr['incolumn']?> "+columna)
 					return
 				}
 				if (j==0)
@@ -101,51 +106,34 @@ if (strpos($arrHttp["picklist"],'../')!==false){
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
  	<script  src="../dataentry/js/lr_trim.js"></script>
 
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["picklist"]. ": " . $arrHttp["base"]." - ".$arrHttp["picklist"]?>
+    </div>
+    <div class="actions">
+    <?php
+    if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="fixed_marc"){
+        // This thread is in a "normal" window
+        $backtoscript="fixed_marc.php?base=".$arrHttp["base"].$encabezado;
+        include "../common/inc_back.php";
+        include "../common/inc_home.php";
+    }else{
+        // This thread is in a pop-up window
+        // The close button is large but does only close.
+        include "../common/inc_close.php";
+    }
+    $savescript="javascript:Enviar()";
+    include "../common/inc_save.php";
+    ?></div>
+    <div class="spacer">&#160;</div>
+</div>
 <?php
-echo "
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["picklist"]. ": " . $arrHttp["base"]." - ".$arrHttp["picklist"]."
-			</div>
-			<div class=\"actions\">
-
-	";
-if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="fixed_marc"){
-	echo "<a href=\"fixed_marc.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton cancelButton\">";
-}else{
-	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry"){
-       echo "<a href=javascript:self.close() class=\"defaultButton cancelButton\">";
-	}else
-	 	echo "<a href=\"javascript:Cancelar()\" class=\"defaultButton cancelButton\">";
-}
-
-echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["cancel"]."</strong></span>
-				</a>";
-echo "<a href=\"javascript:Enviar()\" class=\"defaultButton saveButton\">";
-echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["save"]."</strong></span>
-				</a>";
-echo "			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>
-
-<div class=\"helper\">
-<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/picklist_tab.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/picklist_tab.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: picklist_edit.php" ;
-
-
+$ayuda="picklist_tab.html";
+include "../common/inc_div-helper.php";
 ?>
-</font>
-	</div>
- <div class="middle form">
-			<div class="formContent">
+<div class="middle form">
+<div class="formContent">
 	<table width="100%">
-
         <tr>
         	<td>
         		<b><?php echo $msgstr["picklistname"].": " .$arrHttp["picklist"]?></b> &nbsp; &nbsp;
@@ -163,7 +151,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: picklist_edit.php" ;
 			<td>
 				<div id="gridbox" xwidth="780px" height="200px" style="background-color:white;overflow:hidden"></div>
 			</td>
-
 		</tr>
 		<tr>
 			<td>
@@ -226,14 +213,11 @@ echo "<font color=white>&nbsp; &nbsp; Script: picklist_edit.php" ;
 
  	}
 ?>
-
-
-
 	mygrid.clearSelection()
 	mygrid.setSizes();
     </script>
 <br><br>
-</form>
+
 <form name=forma2 action=picklist_save.php method=post onsubmit="return false">
 <input type=hidden name=ValorCapturado>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>

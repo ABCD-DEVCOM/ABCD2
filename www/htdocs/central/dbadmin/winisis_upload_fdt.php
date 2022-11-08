@@ -1,4 +1,7 @@
 <?php
+/*
+20220125 fho4abcd buttons+div-helper
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -65,9 +68,10 @@ global $arrHttp,$msgstr;
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
 include("../common/header.php");
-if (isset($arrHttp["encabezado"]))
-	include("../common/institutional_info.php");
-echo "<script language=\"JavaScript\" type=\"text/javascript\"  src=\"../dataentry/js/lr_trim.js\"></script>\n";
+?>
+<body>
+<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
+<?php
 echo "<script languaje=javascript>
 function EnviarForma(){
 	if (Trim(document.winisis.userfile.value)==''){
@@ -83,71 +87,70 @@ function EnviarForma(){
 	document.winisis.submit()
 }
 </script>";
-echo "
-	<div class=\"sectionInfo\">
 
-			<div class=\"breadcrumb\"><h5>".
-				$msgstr["winisisdb"].": " . $arrHttp["base"]."</h5>
-			</div>
-
-			<div class=\"actions\">
-	";
 if (isset($arrHttp["encabezado"]))
-		$encabezado="&encabezado=s";
-	else
-		$encabezado="";
-echo "<a href=winisis.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado." class=\"defaultButton backButton\">";
-echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
+	include("../common/institutional_info.php");
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["winisisdb"].": " . $arrHttp["base"]?>
+    </div>
+    <div class="actions">
+    <?php
+    if (isset($arrHttp["encabezado"]))
+            $encabezado="&encabezado=s";
+        else
+            $encabezado="";
+        
+    $backtoscript="winisis.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado;
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php $ayuda="winisis_upload_fdt.html"; include "../common/inc_div-helper.php"?>
 
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/winisis_upload_fdt.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/winisis_upload_fdt.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: winisis_upload_fdt.php</font></div>";
-
-echo "
-<div class=\"middle form\">
-			<div class=\"formContent\">";
+<div class="middle form">
+    <div class="formContent">
+<?php
 $files = $_FILES;
-if ($files["userfile"]['size']) {
+if (isset($files["userfile"]) && $files["userfile"]['size']) {
       // clean up file name
 	$name=$files["userfile"]['name'];
 	$fp=file($files["userfile"]['tmp_name']);
 	$Fdt="";
- 	foreach($fp as $linea) $Fdt.=$linea;
+ 	foreach($fp as $linea) { 
+ 		$Fdt.=$linea;
+ 	}
+ 	
   	$Fdt_conv=CrearFdt($Fdt);
    	$_SESSION["FDT"]=$Fdt_conv;
     MostrarFdt($_SESSION["FDT"]);
-}else{	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);}
+}else{
+	if (isset($_SESSION["FDT"])) MostrarFdt($_SESSION["FDT"]);
+}
 $_SESSION["DESC"]=$arrHttp["desc"];
 unset ($_SESSION["FST"]);
 unset ($_SESSION["PFT"]);
-
-
-echo "
-<form action=winisis_upload_fst.php method=POST enctype=multipart/form-data name=winisis onsubmit='javascript:EnviarForma();return false'>
+?>
+<form action=winisis_upload_fst.php method=POST enctype='multipart/form-data' name=winisis onsubmit='javascript:EnviarForma();return false'>
 <input type=hidden name=Opcion value=FDT>
-<input type=hidden name=base value=".$arrHttp["base"].">
-<input type=hidden name=desc value=\"".$arrHttp["desc"]."\"> ";
-if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
-echo "<dd><table bgcolor=#eeeeee>
+<input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
+<input type=hidden name=desc value="<?php echo $arrHttp["desc"]?>">
+<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
+?>
+<dd><table bgcolor=#eeeeee>
 <tr>
-<tr><td class=title>".$msgstr["subir"]." ".$arrHttp["base"]. ".fst</td>
+<tr><td class=title><?php echo $msgstr["subir"]." ".$arrHttp["base"].".fst";?></td>
 
 <tr><td><input name=userfile type=file size=50></td><td></td>
-<tr><td>  <input type=submit value='".$msgstr["subir"]."'></td>
+<tr><td>  <input type=submit value='<?php echo $msgstr["subir"]?>'></td>
 </table></dd>
 <p>
-</form>";
-echo "<dd><a href=menu_creardb.php?base=".$arrHttp["base"]."$encabezado>".$msgstr["cancel"]."</a> &nbsp; &nbsp;
-	<a href=winisis.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]);
+</form>
+<dd><a href=menu_creardb.php?base="<?php echo $arrHttp["base"].$encabezado?>"><?php echo $msgstr["cancel"]?></a> &nbsp; &nbsp;
+	<a href=winisis.php?base="<?php echo $arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]);
 	if (isset($arrHttp["encabezado"]))echo "&encabezado=s";
 	echo ">".$msgstr["back"]."</a> &nbsp; &nbsp; &nbsp; &nbsp;
 	</dd>";

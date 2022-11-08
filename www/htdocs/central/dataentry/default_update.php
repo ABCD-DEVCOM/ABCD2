@@ -1,4 +1,7 @@
 <?php
+/*
+20220207 fho4abcd div-helper
+*/
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -9,9 +12,9 @@ include("../config.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
 include("../lang/admin.php");
-echo "<html><title>Test FDT</title>
-<link rel=stylesheet href=../styles/basic.css type=text/css>\n";
-echo "<font size=1 face=arial> &nbsp; &nbsp; Script: default_update.php<BR>";
+include("../common/header.php");
+// This script runs always inside a frame: no institutional info
+include "../common/inc_div-helper.php";
 global $ValorCapturado;
 include("actualizarregistro.php");
 require_once ('plantilladeingreso.php');
@@ -110,7 +113,7 @@ if (isset($arrHttp["check_select"])){
 	}
 
 $_SESSION["valdef"]=$ValorCapturado;
-echo "<br><br><center><h1>".$msgstr["valdef"]." ".$msgstr["actualizados"]."</h1>";
+echo "<br><br><center><h2>".$msgstr["valdef"]." ".$msgstr["actualizados"]."</h2>";
 
 
 

@@ -1,0 +1,18 @@
+'<strong>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
+'<table   class=td2 border=0>'/
+'	<td valign=top>Name of user</td>'/
+'	<td>'v10'</td>'/
+'	<tr>'/
+'	<td valign=top>Login</td>'/
+'	<td>'v20'</td>'/
+'	<tr>'/
+'	<td>Password</td>'/
+'	<td>'v30'</td>'/
+'   <tr>'/
+'	<td>Permissions</td>'/
+'	<td valign=top>'(|<br>|+v40^a,| (|v40^b|)|)'</td>'/
+'	<tr>'/
+'	<td  valign=top>Available databases</td>'/
+'	<td >'(|<br>|+v100^a,| (|v100^b|)|),'</td>'/
+
+'</table>'/

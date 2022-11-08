@@ -129,8 +129,19 @@ global $locales,$config_date_format;;
 		<table width=95% bgcolor=#cccccc>
 		<th> </th><th>".$msgstr["inventory"]."</th><th>".$msgstr["control_n"]."</th><th>".$msgstr["reference"]."</th><th>".$msgstr["typeofitems"]."</th><th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["actual_dev"]."</th><th>".$msgstr["renewals"]."</th>";
 
-		foreach ($prestamos as $linea) {			if (trim($linea)!=""){
+		foreach ($prestamos as $linea) {
+			if (trim($linea)!=""){
 				$p=explode("^",$linea);
+
+				if (isset($p[0])) $p0=$p[0]; else $p0=""; 
+				if (isset($p[2])) $p2=$p[2]; else $p2="";
+				if (isset($p[3])) $p3=$p[3]; else $p3="";
+				if (isset($p[4])) $p4=$p[4]; else $p4="";
+				if (isset($p[5])) $p5=$p[5]; else $p5="";
+				if (isset($p[11])) $p11=$p[11]; else $p11="";
+				if (isset($p[12])) $p12=$p[12]; else $p12="";
+				if (isset($p[13])) $p13=$p[13]; else $p13="";
+				if (isset($p[18])) $p18=$p[18]; else $p18="";				
 
 				$np=$np+1;
 				$fuente="";
@@ -150,10 +161,12 @@ global $locales,$config_date_format;;
 					$ec_output.=$msgstr["loaned"];
 				else
 					$ec_output.=$msgstr["returned"];
-				$ec_output.="</td>
 
-					<td bgcolor=white nowrap align=center valign=top>".$p[0]."</td>".
-					"<td bgcolor=white nowrap align=center valign=top>".$p[12]."(".$p[13].")</td><td bgcolor=white valign=top>".$p[2]."</td><td bgcolor=white align=center valign=top>". $p[3]. "</td><td bgcolor=white nowrap align=center valign=top>".$p[4]."</td><td nowrap bgcolor=white align=center valign=top>$fuente".$p[5]."</td><td align=center bgcolor=white valign=top>". $p[18]."</td><td align=center bgcolor=white valign=top>". $p[11]."</td></tr>";
+
+
+				$ec_output.="</td>
+					<td bgcolor=white nowrap align=center valign=top>".$p0."</td>".
+					"<td bgcolor=white nowrap align=center valign=top>".$p12."(".$p13.")</td><td bgcolor=white valign=top>".$p2."</td><td bgcolor=white align=center valign=top>". $p3. "</td><td bgcolor=white nowrap align=center valign=top>".$p4."</td><td nowrap bgcolor=white align=center valign=top>$fuente".$p5."</td><td align=center bgcolor=white valign=top>". $p18."</td><td align=center bgcolor=white valign=top>". $p11."</td></tr>";
         	}
 		}
 		$ec_output.= "</table></dd>";
@@ -161,14 +174,18 @@ global $locales,$config_date_format;;
     $Expr_b= "TRANS_S_".$arrHttp["usuario"]." or TRANS_M_".$arrHttp["usuario"]." or TRANS_N_".$arrHttp["usuario"];
 	include("sanctions_read.php");
 
-	if ($sanctions_output!=""){		if ($nmulta!=0 or $nsusp!=0) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
-		$ec_output.=$sanctions_output;	}
+	if ($sanctions_output!=""){
+		if ($nmulta!=0 or $nsusp!=0) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
+		$ec_output.=$sanctions_output;
+	}
 
 $reserves="";
 if (!isset($reserve_active) or isset($reserve_active)and $reserve_active!="N"){
 	$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"],"N"," ");
 	$reserves=$reserves_arr[0];
-	if (trim($reserves)!=""){		 $reserves="<p><strong>".$msgstr["reserves"]."</strong>".$reserves;	}
+	if (trim($reserves)!=""){
+		 $reserves="<p><strong>".$msgstr["reserves"]."</strong>".$reserves;
+	}
 }
 
 ProduceOutput($ec_output.$reserves);
@@ -183,12 +200,13 @@ global $msgstr,$arrHttp,$reservas_p,$signatura,$posicion_cola,$msg_1,$cont,$inst
 ?>
 <script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
 <body>
+<?php include("submenu_prestamo.php");?>	
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["bo_history"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -208,7 +226,6 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulation/borrower_history_ex.ph
 echo $ec_output;
 echo "</div></div>\n";
 include("../common/footer.php");
-echo "</body>
-</html>" ;
+
 }  //END FUNCTION PRODUCEOUTPUT
 ?>

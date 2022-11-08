@@ -27,7 +27,7 @@ include("../common/institutional_info.php");
 
 	<div class="actions">
 		<a href="configure_menu.php" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["back"]?></strong></span>
 		</a>
 	</div>

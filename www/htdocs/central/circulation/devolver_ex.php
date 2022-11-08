@@ -109,7 +109,8 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 	$asignadas=0;
 	foreach ($contenido as $value) {
 		$value=trim($value);
-		if (trim($value)!=""){			$r=explode('|',$value);
+		if (trim($value)!=""){
+			$r=explode('|',$value);
 			$fecha_asignacion=$r[2];     //fecha en la cual se asignó el objeto a un usuario de reserva
 			$fecha_validez=$r[3];        //fecha hasta la cual se espera la reserva
 			$fecha_cancelacion=$r[4];    //fecha en la cual un operador anuló una reserva
@@ -117,12 +118,15 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 
 			$Mfn=$r[0];
 			$Usuario=$r[1];
-			if ($fecha_asignacion!=""){				if ($fecha_validez>=$hoy){
+			if ($fecha_asignacion!=""){
+				if ($fecha_validez>=$hoy){
 					$asignadas=$asignadas+1;
 					continue;
 				}
 			}
-			if (($fecha_asignacion!="" and $fecha_validez<=$hoy) or $fecha_cancelacion!="" or $fecha_prestamo!=""){				continue;			}
+			if (($fecha_asignacion!="" and $fecha_validez<=$hoy) or $fecha_cancelacion!="" or $fecha_prestamo!=""){
+				continue;
+			}
 			$por_asignar[$r[6]." ".$r[7]]=$value;
 		}
 	}
@@ -150,8 +154,10 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 		$ValorCapturado=urlencode($ValorCapturado);
   		$string_act=$ValorCapturado;
   		return array($Usuario,$string_act,$Mfn,$fecha_anulacion,$tipo_usuario,$base_datos,$ncontrol,$asignadas);
-  	}else{  		if ($asignadas>0)
-  			return array($Usuario,$string_act,$Mfn,$fecha_anulacion,$tipo_usuario,$base_datos,$ncontrol,$asignadas);  	}
+  	}else{
+  		if ($asignadas>0)
+  			return array($Usuario,$string_act,$Mfn,$fecha_anulacion,$tipo_usuario,$base_datos,$ncontrol,$asignadas);
+  	}
 
 }
 
@@ -160,7 +166,9 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 include("sanctions_inc.php");
 
 ///////////
-if (isset($arrHttp["vienede"])){   // viene del estado de cuenta	$items=explode('$$',trim(urldecode($arrHttp["searchExpr"])));}else{
+if (isset($arrHttp["vienede"])){   // viene del estado de cuenta
+	$items=explode('$$',trim(urldecode($arrHttp["searchExpr"])));
+}else{
 	$items=explode("\n",trim(urldecode($arrHttp["searchExpr"])));
 }
 $resultado="";
@@ -185,10 +193,18 @@ foreach ($items as $num_inv){
 		$IsisScript=$xWxis."buscar_ingreso.xis";
 		include("../common/wxis_llamar.php");
 		$Total=0;
-		foreach ($contenido as $linea){			$linea=trim($linea);
+		foreach ($contenido as $linea){
+			$linea=trim($linea);
 			if ($linea!="") {
 				$l=explode('|$',$linea);
-				if (substr($linea,0,6)=="[MFN:]"){					$Mfn=trim(substr($linea,6));				}else{					if (substr($linea,0,8)=="[TOTAL:]"){						$Total=trim(substr($linea,8));					}else{						$prestamo=$linea;					}
+				if (substr($linea,0,6)=="[MFN:]"){
+					$Mfn=trim(substr($linea,6));
+				}else{
+					if (substr($linea,0,8)=="[TOTAL:]"){
+						$Total=trim(substr($linea,8));
+					}else{
+						$prestamo=$linea;
+					}
 				}
 			}
 		}
@@ -222,7 +238,8 @@ foreach ($items as $num_inv){
 			include_once("locales_read.php");
 
 			//se determina la política a aplicar
-			if ($ppres==""){				if (isset($politica[strtoupper($tipo_objeto)][strtoupper($tipo_usuario)])){
+			if ($ppres==""){
+				if (isset($politica[strtoupper($tipo_objeto)][strtoupper($tipo_usuario)])){
 	    			$ppres=$politica[strtoupper($tipo_objeto)][strtoupper($tipo_usuario)];
 				}
 				if (trim($ppres)==""){
@@ -269,7 +286,8 @@ foreach ($items as $num_inv){
 						$Formato=$db_path."trans/pfts/".$lang_db."/r_return";
 					}
 				}
-				if ($Formato!="") {	                $Formato="&Formato=$Formato";
+				if ($Formato!="") {
+	                $Formato="&Formato=$Formato";
 				}
 			}
 			$query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&ValorCapturado=".$ValorCapturado."$Formato";
@@ -287,7 +305,8 @@ foreach ($items as $num_inv){
 			//echo "$bd $ncontrol $allow_reservation";
 			$user_reserved[1]="";
             if ($allow_reservation=="Y"){
-	            if (!isset($reserve_active) or (isset($reserve_active) and $reserve_active!="N") ){						$user_reserved=ReservesAssign("CN_".$bd."_".$ncontrol,$espera_renovacion);
+	            if (!isset($reserve_active) or (isset($reserve_active) and $reserve_active!="N") ){
+						$user_reserved=ReservesAssign("CN_".$bd."_".$ncontrol,$espera_renovacion);
 						$reservas_activadas.=$user_reserved[0].";";
 						if ($user_reserved[2]!="")  {
 							$query.="&reserva=".$user_reserved[1]."&Mfn_reserva=".$user_reserved[2];
@@ -300,12 +319,16 @@ foreach ($items as $num_inv){
 
 			$atraso=compareDate ($fecha_d);
 
-			if ($politica==""){				$error="&error=".$msgstr["nopolicy"]." $tipo_usuario / $tipo_objeto";			}else{
-				if ($Mfn_reserva!="" or (isset($user_reserved[7]) and $user_reserved[7]!="")){					if ($u_suspension_r>0)
+			if ($politica==""){
+				$error="&error=".$msgstr["nopolicy"]." $tipo_usuario / $tipo_objeto";
+			}else{
+				if ($Mfn_reserva!="" or (isset($user_reserved[7]) and $user_reserved[7]!="")){
+					if ($u_suspension_r>0)
 						$u_suspension=$u_suspension_r;
 					else
 						if ($u_multa_r>0)
-							$u_multa=$u_multa_r;				}
+							$u_multa=$u_multa_r;
+				}
 				if ($u_multa>0 or $u_suspension>0){
 					if ($atraso<0){
 						//Se determina si la multa es por días calendario o se toman en cuenta los feriados
@@ -373,7 +396,9 @@ if (isset($arrHttp["reserve"])){
 	$reserve="";
 }
 if (isset($arrHttp["vienede"]) or isset($arrHtp["reserve"])){
-	header("Location: usuario_prestamos_presentar.php?devuelto=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);}else{
+	header("Location: usuario_prestamos_presentar.php?devuelto=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);
+}else{
+
 	header("Location: devolver.php?devuelto=S&encabezado=s$error$cu&rec_dev=$Mfn_rec&resultado=$resultado&errores=$errores"."&lista_control=".$cn_l."&reservas=".$reservas_activadas);
 }
 die;

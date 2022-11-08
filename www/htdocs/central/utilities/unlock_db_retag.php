@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20210412 fho4abcd Rewrite(helper code fragment,integrate confirm, show status, correct execution&feedback,..)
+20211215 fho4abcd Backbutton by included file
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -51,12 +52,7 @@ include "../common/institutional_info.php";
         <?php echo $msgstr["maintenance"]." &rarr; ".$msgstr["mnt_unlock"];?>
 	</div>
 	<div class="actions">
-        <?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-        ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -115,6 +111,5 @@ if (!isset($arrHttp["confirmcount"])) {
 <?php
 include("../common/footer.php");
 ?>
-</body></html>
 
 

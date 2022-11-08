@@ -1,4 +1,5 @@
 <?php
+include ("$ABCD_scripts_path/central/lang/opac.php");
 function MostrarRegistroCatalografico($dbname,$CN){
 global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db,$CentralPath;
 	$pref_cn="";
@@ -41,12 +42,15 @@ global $db_path,$lang_db,$arrHttp,$desde_opac,$msgstr;
 	$archivo="";
 
 	//if (isset($arrHttp["vienede"]) and ($arrHttp["vienede"]=="IAH_RESERVA" or $arrHttp["vienede"]=="orbita")){
-	if (isset($desde_opac) and $desde_opac=="Y"){		$fp=array($msgstr["tit_nc"],$msgstr["tit_tit"],$msgstr["tit_rdate"],$msgstr["tit_wait"],$msgstr["tit_fcan"],$msgstr["tit_fpres"],$msgstr["tit_status"]);
+	if (isset($desde_opac) and $desde_opac=="Y"){
+		$fp=array($msgstr["tit_nc"],$msgstr["tit_tit"],$msgstr["tit_rdate"],$msgstr["tit_wait"],$msgstr["tit_fcan"],$msgstr["tit_fpres"],$msgstr["tit_status"]);
 	}else{
-		if ($archivo==""){			if (file_exists($db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr_h.txt")){
+		if ($archivo==""){
+			if (file_exists($db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr_h.txt")){
 				$archivo=$db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr_h.txt";
 				$fp=file($archivo);
-			}else{				$fp=array($msgstr["tit_nc"],$msgstr["tit_tit"],$msgstr["tit_rdate"],$msgstr["tit_wait"],$msgstr["tit_fcan"],$msgstr["tit_fpres"],$msgstr["tit_status"]);
+			}else{
+				$fp=array($msgstr["tit_nc"],$msgstr["tit_tit"],$msgstr["tit_rdate"],$msgstr["tit_wait"],$msgstr["tit_fcan"],$msgstr["tit_fpres"],$msgstr["tit_status"]);
 			}
 		}
 	}
@@ -62,7 +66,8 @@ global $db_path,$lang_db,$arrHttp,$desde_opac,$msgstr;
 			$salida.= "<td><strong> $value</strong></td>";
 		}
 	}
-	if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" and $arrHttp["vienede"]!="orbita")){		$salida.= "<td class=\"action\" bgcolor=white>&nbsp;</td></tr>\n";
+	if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" and $arrHttp["vienede"]!="orbita")){
+		$salida.= "<td class=\"action\" bgcolor=white>&nbsp;</td></tr>\n";
 	}
 	return $salida;
 }
@@ -73,9 +78,11 @@ global $CentralPath;
 
 	$reservas_u="";
 	$Formato="";
-	$Pft="";	$Expresion=urlencode($usuario.$status);
+	$Pft="";
+	$Expresion=urlencode($usuario.$status);
 	$IsisScript=$xWxis."cipres_usuario.xis";
-	if (isset($desde_opac) and $desde_opac=="Y"){		$Formato="v15' - 'v20'|',                                                                       /*BD y No. de control del objeto reservado */
+	if (isset($desde_opac) and $desde_opac=="Y"){
+		$Formato="v15' - 'v20'|',                                                                       /*BD y No. de control del objeto reservado */
 '#REFER#','|'                                                                         /*Para insertar en este lugar la referencia bibliográfica*/
 v30*6.2,\"/\"v30*4.2,\"/\"v30.4,' 'v31, '  'v32,'|'                                       /*Fecha, hora y operdor de la reserva*/
 if v1='0' or v1='3' then if p(v40) and v40<mid(date,0,8) then,'<font color=red>' fi,
@@ -87,8 +94,10 @@ v1/    ";
 	}else{
 		if (file_exists($db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr.pft")){
 			$Formato="@".$db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr.pft";
-		}else{			echo $msgstr["falta"]." ".$db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr.pft";
-			die;		}
+		}else{
+			echo $msgstr["falta"]." ".$db_path."reserve/pfts/".$_SESSION["lang"]."/rsvr.pft";
+			die;
+		}
 	}
 	$Formato=urlencode("f(mfn,1,0)'|'v40'|'v10,'|'v30'|'v130,'|',v200'|',v15'|',v20,'$|$',$Formato");
 		//v40 fecha hasta la cual se espera una reserva asignada
@@ -105,16 +114,22 @@ v1/    ";
     	include("../common/wxis_llamar.php");
 	foreach ($contenido as $value) {
 		$value=trim($value);
-		if ($value!=""){			$val=explode('$|$',$value);
+		if ($value!=""){
+			$val=explode('$|$',$value);
+			if (isset($val[1])) $val1=$val[1]; else $val1=""; 
 			$vv=explode('|',$val[0]);
+			if (isset($vv[1])) $vv1=$vv[1]; else $vv1=""; 
+			if (isset($vv[6])) $vv6=$vv[6]; else $vv6="";
+			if (isset($vv[7])) $vv7=$vv[7]; else $vv7="";
+			
 			$mfn=$vv[0];
-			$fecha_hasta=$vv[1];
+			$fecha_hasta=$vv1;
 			$usuario_reserva=$vv[2];
-			$base_datos=$vv[6];
-			$no_control=$vv[7];
+			$base_datos=$vv6;
+			$no_control=$vv7;
 			if ($fecha_hasta!="" and $fecha_hasta<date("Ymd")) continue;
 			$reservas_activas=$reservas_activas+1;
-			$value=$val[1];
+			$value=$val1;
 			$r=explode('|',$value);
 			$cuenta=$cuenta+1;
 			if ($cuenta==1){
@@ -127,7 +142,8 @@ v1/    ";
    				if ($linea=="#REFER#"){
 					$reservas_u.="<td  bgcolor=white valign=top>";
 					$reservas_u.=MostrarRegistroCatalografico($base_datos,$no_control);
-				}else{					if (isset($desde_opac) and $desde_opac=="Y")
+				}else{
+					if (isset($desde_opac) and $desde_opac=="Y")
 						if ($cuenta_s<2 or $cuenta_s>4) continue;
 					$reservas_u.="<td  bgcolor=white valign=top nowrap>";
 					$reservas_u.=$linea;
@@ -140,8 +156,11 @@ v1/    ";
 				$img_url="../";
 			//if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" or $arrHttp["vienede"]!="orbita")){
 				$reservas_u.="<td  bgcolor=white valign=top nowrap>";
-	 			if ((isset($arrHttp["vienede"]) and $arrHttp["vienede"])!="orbita"  and $fecha_hasta!=""){                    $reservas_u.="&nbsp;<a href=javascript:AlertReserve(".$mfn.",'','')><img src=$img_url"."dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";				}else{
-			    	if (isset($vv[4]) and trim($vv[4])==""){			    		if (isset($delete) and $delete =="N") $accion="N";
+	 			if ((isset($arrHttp["vienede"]) and $arrHttp["vienede"])!="orbita"  and $fecha_hasta!=""){
+                    $reservas_u.="&nbsp;<a href=javascript:AlertReserve(".$mfn.",'','')><img src=$img_url"."dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";
+				}else{
+			    	if (isset($vv[4]) and trim($vv[4])==""){
+			    		if (isset($delete) and $delete =="N") $accion="N";
 			    		if (isset($_REQUEST["mostrar_reserva"]) and $_REQUEST["mostrar_reserva"]=="parcial")
 			    			$accion="N";
 			    		if ($accion=="S" and (!isset($arrHttp["vienede"]) or $arrHttp["vienede"]=="ecta_web")){
@@ -163,7 +182,8 @@ v1/    ";
 		}
 	}
 	if ($reservas_u!="")  $reservas_u.="</table>\n";
-	return $reservas_u;}
+	return $reservas_u;
+}
 
 function ReservesRead($usuario,$accion="S",$status=" and (ST_0 or ST_3)",$Opciones=""){
 global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn,$config_date_format,$reservas_activas,$cuenta;

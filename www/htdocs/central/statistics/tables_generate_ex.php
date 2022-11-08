@@ -1,4 +1,7 @@
 <?php
+/*
+202202216 fho4abcd backbutton,div-helper
+*/
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
 // ==================================================================================================
@@ -7,6 +10,7 @@ session_start();
 include("../common/get_post.php");
 include ("../config.php");
 include ("../lang/statistics.php");
+include ("../lang/admin.php");
 
 //HEADER DEL LA PÁGINA HTML Y ARCHIVOS DE ESTIVO
 include("../common/header.php");
@@ -14,8 +18,10 @@ include("../common/header.php");
 
 //foreach ($_REQUEST as $var=>$value) echo "$var=>".urldecode($value)."<br>";
 //die;
- include("tables_generate_inc.php");
-
+?>
+<body>
+<?php
+include("tables_generate_inc.php");
 
 if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
@@ -71,45 +77,40 @@ function getElement(psID) {
 
 function SendTo(Opcion){
 
-	switch(Opcion){		default:
+	switch(Opcion){
+		default:
 			if (Opcion=="P"){
 				msgwin=window.open("","STATS","")
 				msgwin.focus()
 			}else{
 				document.sendto.target=""
-			}			seccion=returnObjById( "results" )
+			}
+			seccion=returnObjById( "results" )
 			html=seccion.innerHTML
-			document.sendto.html.value=html			document.sendto.Opcion.value=Opcion
+			document.sendto.html.value=html
+			document.sendto.Opcion.value=Opcion
 			document.sendto.submit()
 			if (Opcion=="P") msgwin.focus()
-	}}
+	}
+}
 </script>
-<body>
 
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
+        <?php echo $msgstr["stats"].": ".$arrHttp["base"]?>
 	</div>
-
 	<div class="actions">
+        <?php
+        $backtoscript="tables_generate.php";
+        include "../common/inc_back.php";
+        include "../common/inc_home.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
 <?php
-
-	echo "<a href=\"tables_generate.php?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-<span><strong>".$msgstr["back"]."</strong></span></a>
-	";
-
-
+include "../common/inc_div-helper.php";
 ?>
-</div>
-
-<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
-<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<font color=white>&nbsp; &nbsp; Script: tables_generate_ex.php
-</font>
-</div>
 <form name=forma1 method=post onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
@@ -118,15 +119,11 @@ function SendTo(Opcion){
 ?>
 <div class="middle form">
 	<div class="formContent">
+
+<div id=results>
+
+<script>Pie="<?php echo $Pie;?>"</script>
 <?php
-
-echo "<dd>".$msgstr["sendto"].": ";
-echo "<a href=javascript:SendTo(\"W\")>".$msgstr["wks"]."</a> &nbsp; | &nbsp; ";
-echo "<a href=javascript:SendTo(\"D\")>".$msgstr["doc"]."</a> &nbsp; | &nbsp; ";
-echo "<a href=javascript:SendTo(\"P\")>".$msgstr["prn"]."</a> &nbsp; | &nbsp; ";
-echo "<div id=results>";
-
-echo "\n<script>Pie=\"$Pie\"</script>\n";
 $tab=array();
 $total_r=0;
 $total_c=0;
@@ -138,17 +135,24 @@ LeerRegistros($contenido);
 //echo "<pre>";print_r($tab); echo "</pre>";
 ConstruirSalida($tab,$tabs,$tipo,$rows,$cols);
 
-
-echo "</div></div>";
-echo "<dd>".$msgstr["sendto"].": ";echo "<a href=javascript:SendTo(\"W\")>".$msgstr["wks"]."</a> &nbsp; | &nbsp; ";
-echo "<a href=javascript:SendTo(\"D\")>".$msgstr["doc"]."</a> &nbsp; | &nbsp; ";
-echo "<a href=javascript:SendTo(\"P\")>".$msgstr["prn"]."</a> &nbsp; | &nbsp; ";
+?>
+</div></div>
+<?php echo $msgstr["sendto"].": ";?> &nbsp;
+<button class="bt-blue" type="button"
+    title="<?php echo $msgstr["wks"]?>" onclick='javascript:SendTo("W")'>
+    <i class="fa fa-file-excel"></i> <?php echo $msgstr["wks"]?></button> &nbsp;
+<button class="bt-blue" type="button"
+    title="<?php echo $msgstr["doc"]?>" onclick='javascript:SendTo("D")'>
+    <i class="fa fa-file-word"></i> <?php echo $msgstr["doc"]?></button> &nbsp;
+<button class="bt-blue" type="button"
+    title="<?php echo $msgstr["openwindow"]?>" onclick='javascript:SendTo("P")'>
+    <i class="fa fa-file-alt"></i> <?php echo $msgstr["openwindow"]?></button>
+<?php
 //if (!isset($arrHttp["proc"]))echo "<a href=javascript:SendTo(\"AG\")>".$msgstr["ag"]."</a> &nbsp; | &nbsp; ";
 //echo "<a href=javascript:SendTo(\"NAG\")>".$msgstr["nag"]."</a> &nbsp; | &nbsp; ";
-echo "<p>";
 ?>
+<p>
 </div>
-</center>
 </form>
 
 <!-- FORMA PARA ENVIAR LA SALIDA A UNA HOJA DE CALCULO O A UN DOCUMENTO-->
@@ -174,11 +178,4 @@ if (isset($arrHttp["to"]))
 echo "</form>";
 //PIE DE PAGINA
 include("../common/footer.php");
-
-//unset($_SESSION['matriz']);
-//$_SESSION['matriz'] = $arreglo;
-
 ?>
-</body>
-</html>
-

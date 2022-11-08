@@ -1,0 +1,60 @@
+<b>Pour ajouter des copies aux objets </b><br>
+<br>
+Les objets auxquels serait inventé des copies <b>doivent posséder un champ
+intitulé </b>&nbsp;<b>&quot;Numéro de Contrôle&quot;</b> qui doit être
+défini dans la FDT avec le type&quot;autoincrement&quot; et avoir un
+index dans la FST avec &quot;NC_&quot; un préfixe.
+Ce champ de la FDT est utilisé comme un champ relationnel entre un objet et leurs
+copies. <br>
+<br>
+Les copies des objets de toutes les
+bases de données convergent dans une base de données intitulée <b>&quot;copies&quot;</b>&nbsp; 
+
+et maintient un numéro unique&nbsp;d'inventaire 
+pour chaque copie. <br>
+<br>
+Pour l'attribution du numéro séquentiel de contrôle&nbsp; dans 
+chaque registre, le fichier <b>control_number.cn</b> est utilisé, 
+il est situé dans le dossier&nbsp; <b>données</b>de 
+la base de données correspondante. Chaque base de données bibliographique possède 
+sa propre séquence de numéro de contrôle. Pour cette raison, dans la 
+base de données<b> &quot;copies&quot; &nbsp;</b>est
+stocké le nom de la base de données en relation avec la copie pour garantir la 
+récupération correcte de l'information bibliographique dès que c'est 
+nécessaire. <br>
+
+<br>
+Quand l'entrée de nouvelles copies est demandée, 
+un formulaire est présenté pour l'entrée de l'information correspondate.
+<br>
+<br>
+Ecrivez dans le carré, le nombre de copies
+souhaité à ajouter à l'objet sélectionné. Utilisez le lien <b>&quot;</b><b>Voir 
+toutes les copies&quot;</b> pour montrer toutes 
+les copies entrées pour cet objet. <br>
+<br>
+Completez les données correspondantes et quand c'est terminé faites 
+cliquez sur <b>&quot;Mettre à jour&quot;</b>. <br>
+<br>
+Seront crées dans la base de données <b>
+
+&quot;des copies&quot;</b>le nombre d'enregistrements demandés selon la 
+valeur <b>&quot;Nombre de copies&quot;</b>. 
+L'information des registres créés prendra la
+forme des données entrées. Le numéro d'inventaire sera augmenté 
+automatiquement en prenant comme point de départ la valeur stockée&nbsp; 
+dans les fichiers <b>control_number.cn</b> stockée dans le dossier <b>bases/copies/données</b> 
+.<br>
+<br>
+Utilisez l'option <b>&quot;Rétablir le numéro de contrôle ou d'inventaire&quot;</b> du 
+menu principal du catalogage si pour des raisons il y a besoin de 
+restituer le numéro d'inventaire suivant pour attribuer des 
+copies ou pour les objets d'une base de données
+particulière.<br />
+
+<br />
+<br />
+<font size="2"><font face="Arial"><br />
+<br />
+<br />
+</font></font>

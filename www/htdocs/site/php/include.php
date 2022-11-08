@@ -25,11 +25,13 @@ if (USE_SERVER_PATH == true){
 }
 
 
-if (stripos($_SERVER["SERVER_SOFTWARE"],"Win")== 0)
-$def = @parse_ini_file("../ABCD-site-lin.conf");
-else
-$def = @parse_ini_file("../ABCD-site-win.conf");
+if (stripos($_SERVER["SERVER_SOFTWARE"],"Win")== 0){
+    $def = @parse_ini_file("../ABCD-site-lin.conf");
+} else {
+    $def = @parse_ini_file("../ABCD-site-win.conf");
+}
 
+/*
 if( isset($def["SHOW_ERRORS"]) && $def["SHOW_ERRORS"] == true ){
     error_reporting( E_ALL ^E_NOTICE );
     ini_set('display_errors', true);
@@ -37,6 +39,7 @@ if( isset($def["SHOW_ERRORS"]) && $def["SHOW_ERRORS"] == true ){
     error_reporting( 0 );
     ini_set('display_errors', false);
 }
+*/
 
 // Parse language
 $lang = '';
@@ -45,8 +48,7 @@ if(isset($_REQUEST["lang"])) {
 } else if(isset($_COOKIE["clientLanguage"])) {
     $lang = $_COOKIE["clientLanguage"];
 } else if(isset($def["ACCEPT_LANGUAGES"])){
-    preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)s*(;s*qs*=s*(1|0.[0-9]+))?/i',
-                                       $_SERVER['HTTP_ACCEPT_LANGUAGE'], $lang);
+    preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)s*(;s*qs*=s*(1|0.[0-9]+))?/i',$_SERVER['HTTP_ACCEPT_LANGUAGE'], $lang);
     if(isset($lang[1][1])){
         if(preg_match("/\\b{$lang[1][1]}\\b/", $def["ACCEPT_LANGUAGES"])){
             $lang = $lang[1][1];
@@ -61,23 +63,44 @@ if(!isset($_COOKIE["clientLanguage"]) || $_COOKIE["clientLanguage"] != $lang) {
 }
 
 // URL parameters security filter
+
+
 $checked  = array();
 
-if (isset($_GET["component"]) && !preg_match("/^[0-9]+$/", $_GET["component"]))
-    die("404 - Component not Found");
-else
-    $checked['component'] = $_GET["component"];
+if (isset($_REQUEST["component"])) {
+    $site_component=$_REQUEST["component"];
+} else {
+    $site_component="";
+}
 
-if (isset($_GET["item"]) && !preg_match("/^[0-9]+$/", $_GET["item"]))
-    die("404 - Item not Found");
-else
-    $checked['item'] = $_GET["item"];
+if (isset($site_component) && !preg_match("/^[0-9]+$/", $site_component)){
+  //  die("404 - Component not Found");
+}else{
+    $checked['component'] = $site_component;
+}
 
-if (isset($_GET["id"]) && !preg_match("/^[0-9]+$/", $_GET["id"]))
-    die("404 - File Not Found");
-else
-    $checked['id'] = $_GET["id"];
+if (isset($_REQUEST["item"])) {
+    $site_item=$_REQUEST["item"];
+} else {
+    $site_item="";
+}
 
+if (isset($site_item) && !preg_match("/^[0-9]+$/", $site_item)){
+//    die("404 - Item not Found");
+}else{
+    $checked['item'] = $site_item;}
+
+if (isset($_REQUEST["id"])) {
+    $site_id=$_REQUEST["id"];
+} else {
+    $site_id="";
+}
+    
+if (isset($site_id) && !preg_match("/^[0-9]+$/", $site_id)){
+//    die("404 - File Not Found");
+}else{
+    $checked['id'] = $site_id;
+}
 //$checked['lang'] = 'en';
 $checked['lang'] = $lang;
 
@@ -108,6 +131,10 @@ if ( !isset($def['SERVICES_SERVER']) ){
 $localPath['html']= $def['DATABASE_PATH'] . "html/" . $checked['lang'] . "/";
 $localPath['xml'] = $def['DATABASE_PATH'] . "xml/" . $checked['lang'] . "/";
 $localPath['ini'] = $def['DATABASE_PATH'] . "ini/" . $checked['lang'] . "/";
+
+//echo "<h1>";
+//var_dump($localPath);
+//echo "</h1>";
 
 unset($database);
 ?>

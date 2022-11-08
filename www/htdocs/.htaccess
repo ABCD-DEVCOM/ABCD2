@@ -1,0 +1,30 @@
+# BEGIN ABCD
+
+RewriteEngine Off
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+# Disable directory browsing
+Options All -Indexes
+
+
+# Deny access to config.php file
+<files config.php>
+order allow,deny
+deny from all
+</files>
+
+
+# Deny access to all .htaccess files
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+
+# END ABCD

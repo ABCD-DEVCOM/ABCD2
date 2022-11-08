@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files + repair undefined variable + return errors to browse
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -32,12 +35,14 @@ if (file_exists($archivo.".pft")){
 	}
 }
 $err_del="";
+$res="";
 if ($verify=="Y") $res=VerificarEliminacion($archivo);
 if ($res==""){
-	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=" . $arrHttp["Mfn"]."&Opcion=eliminar";
+	$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&login=".$_SESSION["login"]."&Mfn=" . $arrHttp["Mfn"]."&Opcion=eliminar";
 	$IsisScript=$xWxis."eliminarregistro.xis";
 	include("../common/wxis_llamar.php");
-}else{	$err_del="&error="."$res";}
+    if ($err_wxis!="") $err_del="&error=".urlencode($_SERVER['PHP_SELF']." :<br><br>".$err_wxis);
+}else{	$err_del="&error=".urlencode($res);;}
 $encabezado="";
 if (isset($arrHttp["encabezado"]))
 	$encabezado="?encabezado=s";
@@ -52,7 +57,7 @@ if (isset($arrHttp["retorno"])){
 	die;
 }else{
 	$retorno="../dataentry/browse.php";
-	header("Location:$retorno$encabezado"."&base=".$arrHttp["base"]."&return=".$arrHttp["return"]."&from=".$arrHttp["from"].$err_del);
+	header("Location:$retorno$encabezado"."&base=".$arrHttp["base"]."&return="."&from=".$arrHttp["from"].$err_del);
 }
 
 

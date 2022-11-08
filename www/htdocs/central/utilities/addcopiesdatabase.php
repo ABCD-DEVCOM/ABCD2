@@ -1,4 +1,8 @@
 <?php
+/*
+20211215 fho4abcd Backbutton by & helper by included file
+20220717 fho4abcd Use $actparfolder as location for .par files. Special for copies & loanobjects
+*/
 /**
  * @program:   ABCD - ABCD-Central-Utility - http://abcd.netcat.be/
  * @copyright:  Copyright (C) 2015 BIREME/PAHO/WHO - VLIR/UOS
@@ -34,36 +38,30 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../common/header.php");
 $converter_path=$mx_path;
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 $base_ant=$arrHttp["base"];
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+
 echo "<body onunload=win.close()>\n";
+echo "<script src=../dataentry/js/lr_trim.js></script>";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }
-echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".$msgstr["addCPfromDB_mx"].": " . $base_ant."
-			</div>
-			<div class=\"actions\">";
-if (isset($arrHttp["encabezado"])){
-echo "<a href=\"menu_extra.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-}
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_addcopiesdatabase.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<div class="sectionInfo">
+    <div class="breadcrumb"><?php echo $msgstr["addCPfromDB_mx"].": " . $base_ant?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php";?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_addcopiesdatabase.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: addcopiesdatabase.php</font>";
-?>
+include "../common/inc_div-helper.php";?>
 <script language="javascript">
 function AlterEntry(opcion)
 {
@@ -329,7 +327,13 @@ win=window.open(mypage,myname,settings);}
 <?php
 $mx_max_mfn="$mx_path $db_path$base_ant/data/$base_ant count=1 " . ' "pft=f(maxmfn-1,0,0)"';
 exec($mx_max_mfn,$outmx_max_mfn,$banderamx_max_mfn);
-$total  = $outmx_max_mfn[0];
+
+if (isset($outmx_max_mfn[0])) {
+  $total = $outmx_max_mfn[0];
+} else {
+  $total="<p class='color-red'>Error: Verify variable \$cgibin_path in config.php</p>";
+}
+
 echo '<script language="javascript">
    document.form1.to.value="'.$total.'";
    </script>';
@@ -559,6 +563,13 @@ $field=trim($field);
 if ($field[0]=='^') return str_replace( '^','',$field);
 return $field;
 }
+
+
+$parcopiesfolder=$actparfolder;
+if ( $actparfolder!="par/") $parcopiesfolder="copies/";
+$parloanobjectsfolder=$actparfolder;
+if ( $actparfolder!="par/") $parloanobjectsfolder="loanobjects/";
+
 if (isset($_POST["submit"]))
 {
 $from=$_POST['from'];
@@ -572,35 +583,181 @@ else
 //Getting the fields information
 $cnf=Vfield(strtolower($_POST['cnf']));
 $inf=Vfield(strtolower($_POST['inf']));
-$mlf=Vfield(strtolower($_POST['mlf']));
-$blf=Vfield(strtolower($_POST['blf']));
-$tomef=Vfield(strtolower($_POST['tomef']));
-$volumef=Vfield(strtolower($_POST['volumef']));
-$cpnumf=Vfield(strtolower($_POST['cpnumf']));
-$adf=Vfield(strtolower($_POST['adf']));
-$providerf=Vfield(strtolower($_POST['providerf']));
-$datef=Vfield(strtolower($_POST['datef']));
-$pricef=Vfield(strtolower($_POST['pricef']));
-$pof=Vfield(strtolower($_POST['pof']));
-$snf=Vfield(strtolower($_POST['snf']));
-$condf=Vfield(strtolower($_POST['condf']));
-$exchangef=Vfield(strtolower($_POST['exchangef']));
+
+if (isset($mlf)) {
+  $mlf=Vfield(strtolower($_POST['mlf']));
+} else {
+  $mlf="";
+}
+
+if (isset($blf)) {
+  $blf=Vfield(strtolower($_POST['blf']));
+} else {
+  $blf="";
+}
+
+if (isset($tomef)) {
+  $tomef=Vfield(strtolower($_POST['tomef']));
+} else {
+  $tomef="";
+}
+
+if (isset($volumef)) {
+  $volumef=Vfield(strtolower($_POST['volumef']));
+} else {
+  $volumef="";
+}
+
+if (isset($cpnumf)) {
+  $cpnumf=Vfield(strtolower($_POST['cpnumf']));
+} else {
+  $cpnumf="";
+}
+
+if (isset($adf)) {
+  $adf=Vfield(strtolower($_POST['adf']));
+} else {
+  $adf="";
+}
+
+if (isset($providerf)) {
+  $providerf=Vfield(strtolower($_POST['providerf']));
+} else {
+  $providerf="";
+}
+
+if (isset($datef)) {
+  $datef=Vfield(strtolower($_POST['datef']));
+} else {
+  $datef="";
+}
+
+if (isset($pricef)) {
+  $pricef=Vfield(strtolower($_POST['pricef']));
+} else {
+  $pricef="";
+}
+
+if (isset($pof)) {
+  $pof=Vfield(strtolower($_POST['pof']));
+} else {
+  $pof="";
+}
+
+if (isset($snf)) {
+  $snf=Vfield(strtolower($_POST['snf']));
+} else {
+  $snf="";
+}
+
+if (isset($condf)) {
+  $condf=Vfield(strtolower($_POST['condf']));
+} else {
+  $condf="";
+}
+
+if (isset($exchangef)) {
+  $exchangef=Vfield(strtolower($_POST['exchangef']));
+} else {
+  $exchangef="";
+}
+
+
 //Getting the subfields information
-$cnsf=RemovePico(strtolower($_POST['cnsf']));
-$insf=RemovePico(strtolower($_POST['insf']));
-$mlsf=RemovePico(strtolower($_POST['mlsf']));
-$blsf=RemovePico(strtolower($_POST['blsf']));
-$tomesf=RemovePico(strtolower($_POST['tomesf']));
-$volumesf=RemovePico(strtolower($_POST['volumesf']));
-$cpnumsf=RemovePico(strtolower($_POST['cpnumsf']));
-$adsf=RemovePico(strtolower($_POST['adsf']));
-$providersf=RemovePico(strtolower($_POST['providersf']));
-$datesf=RemovePico(strtolower($_POST['datesf']));
-$pricesf=RemovePico(strtolower($_POST['pricesf']));
-$posf=RemovePico(strtolower($_POST['posf']));
-$snsf=RemovePico(strtolower($_POST['snsf']));
-$condsf=RemovePico(strtolower($_POST['condsf']));
-$exchangesf=RemovePico(strtolower($_POST['exchangesf']));
+
+if (isset($cnsf)) {
+  $cnsf=RemovePico(strtolower($_POST['cnsf']));
+} else {
+  $cnsf="";
+}
+
+if (isset($insf)) {
+  $insf=RemovePico(strtolower($_POST['insf']));
+} else {
+  $insf="";
+}
+
+if (isset($mlsf)) {
+  $mlsf=RemovePico(strtolower($_POST['mlsf']));
+} else {
+  $mlsf="";
+}
+
+if (isset($blsf)) {
+  $blsf=RemovePico(strtolower($_POST['blsf']));
+} else {
+  $blsf="";
+}
+
+if (isset($tomesf)) {
+  $tomesf=RemovePico(strtolower($_POST['tomesf']));
+} else {
+  $tomesf="";
+}
+  
+if (isset($volumesf)) {
+  $volumesf=RemovePico(strtolower($_POST['volumesf']));
+} else {
+  $volumesf="";
+}
+
+if (isset($cpnumsf)) {
+  $cpnumsf=RemovePico(strtolower($_POST['cpnumsf']));
+} else {
+  $cpnumsf="";
+}
+
+if (isset($adsf)) {
+  $adsf=RemovePico(strtolower($_POST['adsf']));
+} else {
+  $adsf="";
+}
+
+if (isset($providersf)) {
+  $providersf=RemovePico(strtolower($_POST['providersf']));
+} else {
+  $providersf="";
+}
+
+if (isset($datesf)) {
+  $datesf=RemovePico(strtolower($_POST['datesf']));
+} else {
+  $datesf="";
+}
+
+if (isset($pricesf)) {
+  $pricesf=RemovePico(strtolower($_POST['pricesf']));
+} else {
+  $pricesf="";
+}
+
+if (isset($posf)) {
+  $posf=RemovePico(strtolower($_POST['posf']));
+} else {
+  $posf="";
+}
+
+if (isset($snsf)) {
+  $snsf=RemovePico(strtolower($_POST['snsf']));
+} else {
+  $snsf="";
+}
+
+if (isset($condsf)) {
+  $condsf=RemovePico(strtolower($_POST['condsf']));
+} else {
+  $condsf="";
+}
+
+if (isset($exchangesf)) {
+  $exchangesf=RemovePico(strtolower($_POST['exchangesf']));
+} else {
+  $exchangesf="";
+}
+
+
+
+
 //Concatenating the fields and subfields
 $cnfent="";
 $infent="";
@@ -633,7 +790,7 @@ if ($snsf=="") $snfent=$snf; else $snfent=$snf."^".$snsf;
 if ($condsf=="") $condfent=$condf; else $condfent=$condf."^".$condsf;
 if ($exchangesf=="") $exchangefent=$exchangef; else $exchangefent=$exchangef."^".$exchangesf;
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=status";
+$query = "&base=copies&cipar=$db_path".$parcopiesfolder."copies.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -648,7 +805,7 @@ foreach($contenido as $linea) {
 }
 $cantcopiersbefore=(int) $tag["MAXMFN"];
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Opcion=status";
+$query = "&base=loanobjects&cipar=$db_path".$parloanobjectsfolder."loanobjects.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -873,7 +1030,7 @@ exec($mxchcopies, $outputchcopie,$banderamxchcopie);
 
 //End of Loanobjects Work----------------------------------------------------------------------
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=status";
+$query = "&base=copies&cipar=$db_path".$parcopiesfolder."copies.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {
@@ -890,7 +1047,7 @@ $cantcopiersafter=(int) $tag["MAXMFN"];
 $cantadd=$cantcopiersafter-$cantcopiersbefore;
 echo '<br /><span style="color: blue"><b>&nbsp;&nbsp;'.$cantadd.' copies added from the database records</b></span>';
 $IsisScript=$xWxis."administrar.xis";
-$query = "&base=loanobjects&cipar=$db_path"."par/loanobjects.par&Opcion=status";
+$query = "&base=loanobjects&cipar=$db_path".$parloanobjectsfolder."loanobjects.par&Opcion=status";
 include("../common/wxis_llamar.php");
 $ix=-1;
 foreach($contenido as $linea) {

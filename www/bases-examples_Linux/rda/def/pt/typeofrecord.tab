@@ -1,10 +1,16 @@
 3006 3007
-BK_a_LI.fmt|a|m|<b>Material textual (Livro)</b>
-BK_a_TE.fmt|t|m|<b>Material textual (Tese/Disserta√ß√£o)</b>
-VM_g_MP.fmt|g|m|<b>Material projet√°vel</b>
-CF_m_AC.fmt|m|m|<b>Recuso eletr√¥nico (Arquivo de computador)</b>
-MP_e_MC.fmt|e|m|<b>Material cartogr√°fico</b>
-SE_s_PE.fmt|s|s|<b>Recuso cont√≠nuo (Peri√≥pdico)</b>
-SE_s_AP.fmt|s|b|<b>Recuso cont√≠nuo (Arigo de peri√≥dico)</b>
-VM_o_KI.fmt|o|m|<b>Kit (dois ou mais tipos publicados juntos)</b>
-VM_p_MM.fmt|p|c|<b>Material misto (v√°rios tipos)</b>
+BK_a_LI.fmt|a|m|Material textual (livro)
+BK_t_TE.fmt|t|m|Tese/DissertaÁ„o
+MS_j_CD.fmt|j|m|Audio-CD
+PM_g_DVD.fmt|g|m|DVD-video
+PM_g_PM.fmt|g|m|Outro recurso projetado
+CF_m_AC.fmt|m|m|Recurso eletrÙnico (arquivo de computador)
+MP_e_MC.fmt|e|m|Recurso cartogr·fico
+NM_c_MN.fmt|c|m|M˙sica notada
+GR_k_PO.fmt|k|m|Recurso gr·fico bidimensional
+GR_r_OB.fmt|r|m|Recurso tridimensional (artefato ou objeto)
+VM_o_KI.fmt|o|m|Kit (dois ou mais tipos publicados juntos)
+MM_p_MM.fmt|p|c|Material Misto - V·rios tipos
+SE_s_PE.fmt|a|s|Jornal
+SE_s_AP.fmt|a|b|Artigo de periÛdico
+BC_a_LC.fmt|a|a|CapÌtulo de livro

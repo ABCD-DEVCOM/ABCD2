@@ -38,7 +38,7 @@ include("../lang/prestamo.php");
 include("leer_pft.php");
 //foreach ($arrHttp as $var => $value) echo "$var = $value<br>"; //die;
 
-// SE LEE LOS PARÁMETROS DE CONFIGURACIÓN
+// SE LEE LOS PARï¿½METROS DE CONFIGURACIï¿½N
 if (isset($arrHttp["db_inven"])){
 //IF NO LOANOBJECTS READ THE PFT FOR EXTRACTING THEN INVENTORY NUMBER AND THE TYPE OF RECORD
 	$bd_sel=$arrHttp["db_inven"];
@@ -110,17 +110,20 @@ if (isset($arrHttp["Opcion"])){
 
 
 
-function wxisLLamar($query,$base,$IsisScript){global $db_path,$Wxis,$xWxis,$wxisUrl;
-	$IsisScript=$xWxis.$IsisScript;	include("../common/wxis_llamar.php");
-	return $contenido;}
+function wxisLLamar($query,$base,$IsisScript){
+global $db_path,$Wxis,$xWxis,$wxisUrl;
+	$IsisScript=$xWxis.$IsisScript;
+	include("../common/wxis_llamar.php");
+	return $contenido;
+}
 
 function ProcesarPrestamo($usercode,$inventory,$referencia,$typeofuser,$typeofloan,$control_number,$db){
-global $db_path;
+global $db_path, $item_data, $arrHttp;
 	$ValorCapturado="<1 0>X</1>";
 	$ValorCapturado.="<10 0>".trim($inventory)."</10>";	// INVENTORY NUMBER
 	if (isset($item_data[6])) $ValorCapturado.="<12 0>".$item_data[6]."</12>";         	// VOLUME
 	if (isset($item_data[7])) $ValorCapturado.="<15 0>".$item_data[7]."</15>";          // TOME
-	if (isset($arrHttp["year"]))    $ValorCapturado.="<17 0>".$arrHttp["year"]."</17>";       // AÑO REVISTA
+	if (isset($arrHttp["year"]))    $ValorCapturado.="<17 0>".$arrHttp["year"]."</17>";       // Aï¿½O REVISTA
 	if (isset($arrHttp["volumen"])) $ValorCapturado.="<18 0>".$arrHttp["volumen"]."</18>";    // VOLUMEN REVISTA
 	if (isset($arrHttp["numero"]))  $ValorCapturado.="<19 0>".$arrHttp["numero"]."</19>";     // NUMERO REVISTA
 	$ValorCapturado.="<20 0>".$usercode."</20>";
@@ -139,16 +142,17 @@ global $db_path;
 	$ValorCapturado=urlencode($ValorCapturado);
     $query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."&Pft=mfn/&ValorCapturado=".$ValorCapturado;
     $contenido= wxisLLamar($query,"trans","crear_registro.xis");
-    return $contenido;}
+    return $contenido;
+}
 
 function LocalizarInventario($inventory){
 global $db_path,$arrHttp,$pft_totalitems,$pft_ni,$copies_title,$prefix_in,$formato_obj;
     $Expresion=$prefix_in.$inventory;
-	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
+	// Se extraen las variables necesarias para extraer la informacion del titulo al cual pertenece el ejemplar
 	// se toman de databases_configure_read.php
-	// pft_totalitems= pft para extraer el número total de ejemplares del título
-	// pft_in= pft para extraer el número de inventario
-	// pft_nc= pft para extraer el número de clasificación
+	// pft_totalitems= pft para extraer el numero total de ejemplares del titulo
+	// pft_in= pft para extraer el numero de inventario
+	// pft_nc= pft para extraer el numero de clasificaciï¿½n
 	// pft_typeofr= pft para extraer el tipo de registro
 
 	//READ LOANOBJECT DATABASE TO GET THE RECORD WITH THE ITEMS OF THE TITLE
@@ -156,7 +160,9 @@ global $db_path,$arrHttp,$pft_totalitems,$pft_ni,$copies_title,$prefix_in,$forma
 	if (isset($arrHttp["db_inven"])){
 		$dbi=explode('|',$arrHttp["db_inven"]);
 		$dbi_base=$dbi[0];
-	}else{		$dbi_base="loanobjects";	}
+	}else{
+		$dbi_base="loanobjects";
+	}
 	$query = "&Opcion=disponibilidad&base=$dbi_base&cipar=$db_path"."par/$dbi_base.par&Expresion=".$Expresion."&Pft=$formato_obj";
 	$contenido=wxisLlamar($query,$dbi_base,"loans/prestamo_disponibilidad.xis");
 	$total=0;
@@ -209,15 +215,15 @@ global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_n
 	if ($control_number=="")
 		$Expresion=$prefix_in.$inventory;
 //    echo $Expresion;
-	// Se extraen las variables necesarias para extraer la información del título al cual pertenece el ejemplar
+	// Se extraen las variables necesarias para extraer la informacion del titulo al cual pertenece el ejemplar
 	// se toman de databases_configure_read.php
-	// pft_totalitems= pft para extraer el número total de ejemplares del título
-	// pft_in= pft para extraer el número de inventario
-	// pft_nc= pft para extraer el número de clasificación
+	// pft_totalitems= pft para extraer el numero total de ejemplares del titulo
+	// pft_in= pft para extraer el numero de inventario
+	// pft_nc= pft para extraer el numero de clasificaciï¿½n
 	// pft_typeofr= pft para extraer el tipo de registro
 
 	$formato_ex="'||'".$pft_nc."'||'".$pft_typeofr."'###',";
-	//se ubica el título en la base de datos de objetos de préstamo
+	//se ubica el titulo en la base de datos de objetos de prï¿½stamo
 	$Expresion=urlencode($Expresion);
 	$formato_obj=$db_path."$db/loans/".$_SESSION["lang"]."/loans_display.pft";
 	if (!file_exists($formato_obj)) $formato_obj=$db_path.$db. "/loans/".$lang_db."/loans_display.pft";
@@ -248,16 +254,21 @@ $fp=file_exists($archivo);
 $sala=array();
 if ($fp){
 	$fp=file($archivo);
-	foreach ($fp as $value){		$value=trim($value);
-		if ($value!=""){			$v=explode('=',$value);
-			$sala[$v[0]]=$v[1];		}
+	foreach ($fp as $value){
+		$value=trim($value);
+		if ($value!=""){
+			$v=explode('=',$value);
+			$sala[$v[0]]=$v[1];
+		}
 	}
 }
 
 include("../common/header.php");
 ?>
 <style>
-	td{		font-size:12px;	}
+	td{
+		font-size:12px;
+	}
 </style>
 <?php
 $encabezado="";
@@ -270,7 +281,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"sala.php?base=".$a[0]."\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>";
 				echo "
@@ -302,12 +313,12 @@ foreach ($invent as $arrHttp["inventory"]){
 		echo "<td bgcolor=white valign=top></td><td bgcolor=white valign=top></td><td bgcolor=white><font color=red>".$msgstr["copynoexists"]."</font></td>";
 		$cont="N";
 	}else{
-	//se extrae la información del número de control del título y la base de datos catalográfica a la cual pertenece
+	//se extrae la informacion del numero de control del titulo y la base de datos catalogrï¿½fica a la cual pertenece
 		$tt=explode('||',$item);
 		$control_number=$tt[0];
 		$catalog_db=strtolower($tt[1]);
    		$tipo_obj=trim($tt[5]);      //Tipo de objeto
-// se lee la configuración de la base de datos de objetos de préstamos
+// se lee la configuraciï¿½n de la base de datos de objetos de prï¿½stamos
 		$arrHttp["db"]="$catalog_db";
 		echo "<td bgcolor=white valign=top align=center>$control_number  ($catalog_db)</td>";
         require_once("databases_configure_read.php");
@@ -325,7 +336,7 @@ foreach ($invent as $arrHttp["inventory"]){
 			$obj_store=$tt[1];
 			$tt=explode('||',$tt[0]);
 			$titulo=$tt[0];
-			     //signatura topográfica
+			     //signatura topogrï¿½fica
 			if (!isset($sala["usercode"])) $sala["usercode"]="";
 			if (!isset($sala["typeofuser"])) $sala["typeofuser"]="";
 			if (!isset($sala["typeofloan"])) $sala["typeofloan"]="";

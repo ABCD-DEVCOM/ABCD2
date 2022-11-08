@@ -3,6 +3,9 @@
 2021-01-05 fho4abcd Modified comment for button with incorrect reference. This restores button bar.
 2021-05-03 fho4abcd Correct header. Ensures that encoding fits with db encoding+header with DOCTYPE
 2021-05-03 fho4abcd Rewrite html: standardized & improved layout
+2021-08-02 fho4abcd Import PDF in menu bar
+2021-08-29 fho4abcd Modified Import PDF into Upload Document
+2021-12-08 fho4abcd Quick search layout + some translations + translation/modify edit pft button+removed some dividers.Code layout more readable
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -15,46 +18,45 @@ include("../common/header.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
 $db=$arrHttp["base"];
-   		$fst_file=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
-   		$prefix_W="";
-   		foreach ($fst_file as $value){
-   			if (trim($value)!=""){
-   				$fst[]=trim($value);
+$fst_file=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
+$prefix_W="";
+foreach ($fst_file as $value){
+    if (trim($value)!=""){
+        $fst[]=trim($value);
+    }
+}
+// Create the label + dropdown + icon for the quick serach
+$pal="";
+if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
+    $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
 
-   			}
-   		}
-   		$pal="";
-   	    if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
-	   		$fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
+    $pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:100px\">";
+    foreach ($fpb as $value){
+        if (trim($value)!=""){
+            $y=explode('|',$value);
+            $y[2]=trim($y[2]);
+            foreach ($fst as $linea){
+                if (stripos($linea,$y[2])>0){
+                    $y[2]=$y[2].'|';
+                    $linea=str_replace("  "," ",$linea);
+                    $it=explode(" ",$linea);
+                    if ($it[1]==8)
+                        $y[2].='W';
+                    break;
+                }
 
-	   		$pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:100px\">";
-	   		foreach ($fpb as $value){
-	   			if (trim($value)!=""){
-	   				$y=explode('|',$value);
-					$y[2]=trim($y[2]);
-	   				foreach ($fst as $linea){
-	   					if (stripos($linea,$y[2])>0){
-	   						$y[2]=$y[2].'|';
-	   						$linea=str_replace("  "," ",$linea);
-	   						$it=explode(" ",$linea);
-	   						if ($it[1]==8)
-	   							$y[2].='W';
-	   						break;
-	   					}
+            }
+            $pal.="<option value=".trim($y[2]).">".trim($y[0]);
+        }
 
-	   				}
-	   				$pal.="<option value=".trim($y[2]).">".trim($y[0]);
-	   			}
-
-	   		}
-	   		$pal.="</select><a style=\"position:relative;bottom:-4px\" href=javascript:Diccionario()><img src=img/search.gif ></a>";
-	   		unset($fpb);
-	  	}
-
-
+    }
+    $pal.="</select>";
+    $pal.="<a class='btn-toolbar-blue' href=javascript:Diccionario() title='".$msgstr["m_quicksrc"]."'><i class='fab fa-searchengin'></i></a>";
+    unset($fpb);
+}
 ?>
 
-<body bgcolor=#EDF3F3 text=#000000 LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 >
+<body class="toolbar-dataentry">
 <script>permiso='<?php echo $_SESSION["permiso"]["profilename"]?>'</script>
 
 <script>
@@ -74,19 +76,15 @@ document.onkeypress =
        			top.Menu('ira')
        			break
        }
-
 	}
-
     return true;
   };
 
 function FocoEn(Ctrl){
 	Ctrl_activo=Ctrl
-
 }
 
 function Diccionario(){
-
 	ix=document.forma1.blibre.selectedIndex
 	Prefijo=document.forma1.blibre.options[ix].value
 	p=Prefijo.split('|')
@@ -101,11 +99,9 @@ function Diccionario(){
 	document.diccio.id.value=p[1]
 	document.diccio.Diccio.value="document.forma1.busqueda_palabras"
 	document.diccio.submit()
-
 }
 
 function Buscar(Prefijo){
-
 	ix=document.forma1.blibre.selectedIndex
 	Prefijo=document.forma1.blibre.options[ix].value
 	EB=Trim(document.forma1.busqueda_palabras.value)
@@ -115,9 +111,9 @@ function Buscar(Prefijo){
 	p=Prefijo.split('|')
 	Prefijo=p[0]
 	if (p[1]=="W"){
-		EB=EB.replace(/,/g,' ')
-	    EB=EB.replace(/\./g,' ')
-    	EB=EB.replace(/-/g,' ')
+        EB=EB.replace(/,/g,' ')
+        EB=EB.replace(/\./g,' ')
+        EB=EB.replace(/-/g,' ')
 		EB=EB.replace(/  /g,' ')
 		p=EB.split(" ")
 		for (term in p){
@@ -136,13 +132,7 @@ function Buscar(Prefijo){
 }
 function AbrirAyuda(){
 	msgwin=window.open("../documentacion/ayuda.php?help="+lang+"/dataentry_toolbar.html","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
-		msgwin.focus()
-
-}
-
-function AyudaBusqueda(){
-	msgwin=window.open("http://abcdwiki.net/wiki/es/index.php?title=B%C3%BAsquedas","Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=500,top=10,left=5")
-	msgwin.focus()
+    msgwin.focus()
 }
 
 function EditarFormato(){
@@ -163,7 +153,6 @@ function EditarFormato(){
 
 		}
 	}
-
 }
 
 function GenerarDespliegue(){
@@ -174,7 +163,6 @@ function GenerarDespliegue(){
 	}
 	if(top.xeditar=="S"){
 		alert("<?php echo $msgstr["aoc"]?>")
-
 		return
 	}
 	i=document.forma1.formato.selectedIndex
@@ -192,12 +180,9 @@ function GenerarWks(){
 	base=top.base
 	if (base==""){
 		alert("<?php echo $msgstr["seldb"]?>")
-
 	}
 	if(top.xeditar=="S"){
 		alert("<?php echo $msgstr["aoc"]?>")
-
-
 	}
 	i=document.forma1.wks.selectedIndex
 	if (i==-1){
@@ -206,11 +191,8 @@ function GenerarWks(){
 	  	top.wks=document.forma1.wks.options[i].value
 	}
 }
-
-
 </script>
 <form name=forma1 onsubmit="return false" method=post>
-<link rel="STYLESHEET" type="text/css" href="js/dhtmlXToolbar.css">
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js"></script>
@@ -224,170 +206,151 @@ function GenerarWks(){
    	  	 }
 		if (isset($FRAME_2H) and $FRAME_2H!="") $TH=$FRAME_2H;
 ?>
-<table style="background-color:#d4d0c8;width:100%;cellpadding:0;cellspacing:0" height=<?php echo $TH?> >
-<tr><td width=75% valign=middle><!-- left cell with first table-->
-    <table  cellpadding=0 cellspacing=0 style="float:left" >
-        <tr>
-            <td><!-- Cell goto record -->
-                &nbsp;<?php echo $msgstr["m_ir"]?>
-                &nbsp;<input type=text  name=ir_a size=15 value='' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
-                &nbsp;
-            </td>
-            
-            <td><!-- Cell search on term+free search-->
-                <?php echo $msgstr["buscar"]." ".$pal;?>
-                &nbsp; &nbsp;
-                <input type=text  name=busqueda_palabras onfocus="FocoEn('blibre')" size=40 value=''>
-                <a style="position:relative;bottom:-4px" href=Javascript:AyudaBusqueda()><img src=img/question.gif ></a>
-            </td>
-        </tr>
-        <tr height=35 ><!-- row and cell with toolbar object -->
-            <td valign=center colspan=2>
-                <div id="toolbarBox" style="height:30;position:relative"></div>
-            </td>
-        </tr>
-    </table>
-</td>
-<td  width=25%  valign=middle><!-- right cell with second table-->
-    <table cellspacing=0 cellpadding=0 style="float:right">
-        <tr>
-        <?php if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
-                  isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
-                  isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
-                  isset($_SESSION["permiso"][$db."_CENTRAL_EDPFT"])){
-        ?>
-        <td rowspan=2 valign=top>
-            <a href=javascript:EditarFormato()><img src=img/barEdit.png alt="edit display format" title="edit display format" border=0></a>
-        </td>
-        <?php } ?>
-        <td align=right>
-            <font style="font-size:7pt"><?php echo $msgstr["displaypft"]?>:</font>
-        </td>
-        <td>
-            <select name=formato onChange=Javascript:GenerarDespliegue()  style="width:90;font-size:8pt;font-family:arial narrow">
+
+<!--SETS UP THE DATA ENTRY TOOLBAR-->
+<table class="toolbar-dataentry" style="height=<?php echo $TH;?>" >
+    <tr> <!-- row with cells for the toolbar top row-->
+        <td class="ph-10">
+        <!-- goto record -->
+        <label><?php echo $msgstr["m_ir"]?></label>
+        <input type=text  name=ir_a size=15 value='' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
+        <!-- quick search -->
+        &nbsp; &nbsp;
+        <label><?php echo $msgstr["buscar"]?></label><?php echo " ".$pal;?>
+        <input style="width:30%;" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''>
+
+        <div class="GenerarWks">	
+            <label><?php echo $msgstr["displaypft"]?>: </label>
+            <select name=formato onChange="Javascript:GenerarDespliegue()">
             </select>
+
+            <?php
+            if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
+                isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
+                isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
+                isset($_SESSION["permiso"][$db."_CENTRAL_EDPFT"])){
+                ?>
+                <a class="btn-toolbar-blue" href="javascript:EditarFormato()">
+                    <i class="fas fa-edit" alt="edit display format" title="<?php echo $msgstr["m_editdispform"];?>"></i>
+                </a>
+            <?php } ?>
+
+        </div>
         </td>
-        </tr>
-        <tr>
-        <td align=right>
-            <font style="font-size:7pt"><?php echo $msgstr["fmt"]?>:&nbsp; </font>
+    </tr>
+    <tr><!-- row and cell with toolbar object -->
+        <td class="ph-10">
+            <div id="toolbarBox" style="position:relative"></div>
+            <div class="GenerarWks">
+                <label><?php echo $msgstr["fmt"]?>: </label>
+                <select name="wks" onChange="Javascript:GenerarWks()"></select>
+            </div>
         </td>
-        <td>
-            <select name=wks onChange=Javascript:GenerarWks() style="width:90;font-size:8pt;font-family:arial narrow">
-            </select>
-        </td>
-        </tr>
-    </table>
-</td></tr></table>
+    </tr>
+</table>
+
+
+
 <script>
-
-	//horisontal toolbar
-	toolbar=new dhtmlXToolbarObject("toolbarBox","400","24","ABCD");
-	toolbar.setOnClickHandler(onButtonClick);
-	toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowLeft2.png',18,24,1,'0_primero','<?php echo $msgstr["m_primero"]?>'))
-    toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowLeft.png',18,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
-    toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowRight.png',18,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
-    toolbar.addItem(new dhtmlXImageButtonObject('img/barArrowRight2.png',18,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
-	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_0'))
+    //horizontal toolbar
+    toolbar=new dhtmlXToolbarObject("toolbarBox","400","24","ABCD");
+    toolbar.setOnClickHandler(onButtonClick);
+    toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_arrow_previous_24_regular.svg',24,24,1,'0_primero','<?php echo $msgstr["m_primero"]?>'))
+    toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_left_24_regular.svg',24,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
+    toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_right_24_regular.svg',24,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
+    toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_arrow_next_24_regular.svg',24,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
     toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',100,100,''))
-   //	toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>','browse',100,100,''))
+    //    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>','browse',100,100,''))
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
-    toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarSearch.png","20","20",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
-    toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarSearchHistory.png","20","20",5,"search_history","<?php echo $msgstr["m_history"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_clipboard_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
 
-   <?php if (isset($tesaurus)) {?>
-   	 toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarTesaurus.gif","20","20",5,"tesaurus","<?php echo $msgstr["m_tesaurus"]?>"))
-	<?php }?>
-	 toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarfreesearch.jpg","20","20",5,"1_busquedalibre","<?php echo $msgstr["m_busquedalibre"]?>"))
-	toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarOrder.png","20","20",6,"1_alfa","<?php echo $msgstr["m_indice"]?>"))
-	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_2'))
-	<?php
+    <?php if (isset($tesaurus)) {
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_notebook_24_regular.svg","24","24",5,"tesaurus","<?php echo $msgstr["m_tesaurussrc"]?>"))
+    <?php }?>
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_database_search_24_regular.svg","24","24",5,"1_busquedalibre","<?php echo $msgstr["m_busquedalibre"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_search_24_regular.svg","24","24",6,"1_alfa","<?php echo $msgstr["m_indiceaz"]?>"))
+    toolbar.addItem(new dhtmlXToolbarDividerXObject('div_2'))
 
-	//CHECK IF THE DATABASE ACCEPT IMPORT pdf
-	$pdf="";
-  	if (isset($def["IMPORTPDF"]))
-		$pdf=trim($def["IMPORTPDF"]);
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
-	?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarNew.png","16","16",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
-	<?php
-		if ($pdf=="Y"){
+    <?php
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_document_add_24_regular.svg","24","24",7,"2_nuevo","<?php echo $msgstr["m_crear"]?>"))
+    <?php }
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CAPTURE"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_CAPTURE"])){
     ?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/import.gif","16","16",7,"2_nuevoHTML","<?php echo "IMPORT DOC"?>"))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_document_copy_24_regular.svg","24","24",9,"2_capturar","<?php echo $msgstr["m_capturar"]?>"))
+    <?php }
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CREC"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_CREC"])) {
+            //CHECK IF THE DATABASE ACCEPT IMPORT documents
+            $collection="";
+            if (isset($def_db["COLLECTION"]))         $collection=trim($def_db["COLLECTION"]);
+            if ($collection!=""){
+            ?>
+            toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_arrow_upload_24_regular.svg","24","24",7,"2_nuevoDoc","<?php echo $msgstr["dd_upload"]?>"))
+    <?php } }
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_Z3950CAT"])){
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_arrow_download_24_regular.svg","24","24",19,"2_z3950","<?php echo $msgstr["m_z3950"]?>"))
+    <?php }
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_VALDEF"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_VALDEF"])){
+        ?>
+        toolbar.addItem(new dhtmlXSelectButtonObject('defaultval',',editdv,deletedv','<?php echo $msgstr["valdef"]?>,<?php echo $msgstr["editar"]?>,<?php echo $msgstr["eliminar"]?>','',80,80,''))
+    <?php }
+        if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
+            and (isset($_SESSION["BARCODE"])or isset($_SESSION["BARCODE_SIMPLE"]))){
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_barcode_scanner_24_regular.svg","24","24",13,"barcode","<?php echo "barcode"?>"))
+    <?php }
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
+            isset($_SESSION["permiso"]["CENTRAL_PREC"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
+            isset($_SESSION["permiso"][$db."_CENTRAL_PREC"])){
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_print_24_regular.svg","24","24",12,"3_imprimir","<?php echo $msgstr["m_reportes"]?>"))
+        /*toolbar.addItem(new dhtmlXImageButtonObject("img/mail_p.png","26","24",14,"email","<?php echo $msgstr["m_email"]?>"))*/
+    <?php }
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"])      or
+            isset($_SESSION["permiso"]["CENTRAL_UTILS"])    or
+            isset($_SESSION["permiso"]["CENTRAL_IMPEX"])    or
+            isset($_SESSION["permiso"]["CENTRAL_GLOBC"])    or
+            isset($_SESSION["permiso"]["CENTRAL_IMPORT"])   or
+            isset($_SESSION["permiso"]["CENTRAL_EXPORT"])   or
+            isset($_SESSION["permiso"]["CENTRAL_COPYDB"])   or
+            isset($_SESSION["permiso"]["CENTRAL_UNLOCKDB"]) or
+            isset($_SESSION["permiso"]["CENTRAL_LISTBKREC"])   or
+            isset($_SESSION["permiso"]["CENTRAL_UNLOCKDBREC"]) or
+            isset($_SESSION["permiso"]["CENTRAL_FULLINV"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])    or
+            isset($_SESSION["permiso"][$db."_CENTRAL_UTILS"])  or
+            isset($_SESSION["permiso"][$db."_CENTRAL_IMPEX"])  or
+            isset($_SESSION["permiso"][$db."_CENTRAL_GLOBC"])  or
+            isset($_SESSION["permiso"][$db."_CENTRAL_IMPORT"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_EXPORT"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_COPYDB"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_UNLOCKDB"])  or
+            isset($_SESSION["permiso"][$db."_CENTRAL_LISTBKREC"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_FULLINV"]) or
+            isset($_SESSION["permiso"][$db."_CENTRAL_UNLOCKDBREC"])
+            ){
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_toolbox_24_regular.svg","20","20",13,"config","<?php echo $msgstr["mantenimiento"]?>"))
+    <?php }?>
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_arrow_sync_24_regular.svg","20","20",14,"refresh_db","<?php echo $msgstr["refresh_db"]?>"))
+    toolbar.addItem(new dhtmlXToolbarDividerXObject('div_5'))
 
-	<?php } }
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_CAPTURE"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_CAPTURE"])){
-	?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarCopy.png","18","24",9,"2_capturar","<?php echo $msgstr["m_capturar"]?>"))
-	<?php }
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_Z3950CAT"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_Z3950CAT"])){
-	?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/z3950.png","18","16",19,"2_z3950","<?php echo $msgstr["m_z3950"]?>"))
-	<?php }
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_VALDEF"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_VALDEF"])){
-	?>
-		toolbar.addItem(new dhtmlXToolbarDividerXObject('xedit'))
-		toolbar.addItem(new dhtmlXSelectButtonObject('defaultval',',editdv,deletedv','<?php echo $msgstr["valdef"]?>,<?php echo $msgstr["editar"]?>,<?php echo $msgstr["eliminar"]?>','',80,80,''))
-		toolbar.addItem(new dhtmlXToolbarDividerXObject('div_5'))
-	<?php }
-	if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
-	    and (isset($_SESSION["BARCODE"])or isset($_SESSION["BARCODE_SIMPLE"]))){
-	?>
+    <?php $select="";
+        if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_STATGEN"])  or isset($_SESSION["permiso"]["CENTRAL_STATCONF"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])   or isset($_SESSION["permiso"][$db."_CENTRAL_STATGEN"])  or isset($_SESSION["permiso"][$db."_CENTRAL_STATCONF"])){
+        ?>
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_data_usage_24_regular.svg","20","20",13,"stats","<?php echo $msgstr["estadisticas"]?>"))
+    <?php }?>
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_question_circle_24_regular.svg","20","20",14,"5_ayuda","<?php echo $msgstr["m_ayuda"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_home_24_regular.svg","20","20",14,"home","<?php echo $msgstr["inicio"]?>"))
+    toolbar.showBar();
 
-	toolbar.addItem(new dhtmlXImageButtonObject("img/barcode.png","20","24",13,"barcode","<?php echo "barcode"?>"))
-	<?php
-	}
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
-	    isset($_SESSION["permiso"]["CENTRAL_PREC"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_PREC"])){
-	?>
-		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarPrint.png","20","24",12,"3_imprimir","<?php echo $msgstr["m_reportes"]?>"))
-		/*toolbar.addItem(new dhtmlXImageButtonObject("img/mail_p.png","26","24",14,"email","<?php echo $msgstr["m_email"]?>"))*/
-	<?php }
-	if (isset($_SESSION["permiso"]["CENTRAL_ALL"])      or
-	    isset($_SESSION["permiso"]["CENTRAL_UTILS"])    or
-	    isset($_SESSION["permiso"]["CENTRAL_IMPEX"])    or
-	    isset($_SESSION["permiso"]["CENTRAL_GLOBC"])    or
-	    isset($_SESSION["permiso"]["CENTRAL_IMPORT"])   or
-	    isset($_SESSION["permiso"]["CENTRAL_EXPORT"])   or
-	    isset($_SESSION["permiso"]["CENTRAL_COPYDB"])   or
-	    isset($_SESSION["permiso"]["CENTRAL_UNLOCKDB"]) or
-	    isset($_SESSION["permiso"]["CENTRAL_LISTBKREC"])   or
-	    isset($_SESSION["permiso"]["CENTRAL_UNLOCKDBREC"]) or
-	    isset($_SESSION["permiso"]["CENTRAL_FULLINV"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])    or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_UTILS"])  or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_IMPEX"])  or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_GLOBC"])  or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_IMPORT"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_EXPORT"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_COPYDB"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_UNLOCKDB"])  or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_LISTBKREC"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_FULLINV"]) or
-	    isset($_SESSION["permiso"][$db."_CENTRAL_UNLOCKDBREC"])
-	    ){
-	?>
-
-		toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarTool.png","20","24",13,"config","<?php echo $msgstr["mantenimiento"]?>"))
-	<?php }?>
-	toolbar.addItem(new dhtmlXImageButtonObject("img/refresh0.gif","20","24",14,"refresh_db","<?php echo $msgstr["refresh_db"]?>"))
-	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_5'))
-
-<?php $select="";
-if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_STATGEN"])  or isset($_SESSION["permiso"]["CENTRAL_STATCONF"])  or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])   or isset($_SESSION["permiso"][$db."_CENTRAL_STATGEN"])  or isset($_SESSION["permiso"][$db."_CENTRAL_STATCONF"])){
-?>
-	toolbar.addItem(new dhtmlXImageButtonObject("img/grafico.gif","24","24",13,"stats","<?php echo $msgstr["estadisticas"]?>"))
-<?PHP }?>
-	toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarHelp.png","16","24",14,"5_ayuda","<?php echo $msgstr["m_ayuda"]?>"))
-	toolbar.addItem(new dhtmlXToolbarDividerXObject('div_6'))
-
-	toolbar.addItem(new dhtmlXImageButtonObject("img/toolbarHome.png","16","24",14,"home","<?php echo $msgstr["inicio"]?>"))
-	toolbar.showBar();
 	function onButtonClick(itemId,itemValue){
-
 		switch (itemId){
 			<?php echo $select;?>
 			case "select":
@@ -475,8 +438,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
 			case "2_nuevo":
 				top.Menu('nuevo')
 				break
-			case "2_nuevoHTML":
-				top.Menu("importarHTML")
+			case "2_nuevoDoc":
+				top.Menu("importarDoc")
 				break
 			case "2_editar":
 				top.Menu('editar')
@@ -539,15 +502,11 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CE
     			break
 		}
 	};
-
-
 </script>
-
 </form>
 
 <script>
     top.ModuloActivo="catalog"
-
 </script>
 
 <script>
@@ -667,6 +626,7 @@ if (isset($arrHttp["inicio"]) and $arrHttp["inicio"]=="s"){
 }
 ?>
 </script>
+
 <form name=editpft method=post action=../dbadmin/leertxt.php target=editpft>
 <input type=hidden name=desde value=dataentry>
 <input type=hidden name=base>

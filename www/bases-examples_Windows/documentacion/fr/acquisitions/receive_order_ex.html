@@ -1,0 +1,25 @@
+La commande émise est presentée, en spécifiant la liste des objets qui la compose. Pour chaque objet
+les données suivantes sont montrées : <br /> 
+<ul> 
+	<li>Référence de l'objet</li> 
+	<li>Nombre de copies acquises </li> 
+	<li>Prix unitaire de chaque copie<br /> </li> 
+	<li>Numéro de recommandation de l'endroit où l'acquisition de l'objet est demandée <br /> </li> 	<li>Citation de la référence qui a généré le bon de commande<br /> </li> 
+	<li>Base de données dans laquelle sera classé (nouveau) ou est classé (copies) l'objet <br /> </li> 
+	<li>Type d'acquisition : nouveau ou copies<br /> </li> 
+	<li>Identification de l'objet, dans la cas où le type d'acquisition correspond aux copies</li> 
+</ul> 
+Cette information est obtenue en appliquant <b>receiving.pft</b>
+dans l'enregistrement situé sur<b>base de données</b> du bon de commande<br /> <br /> 
+
+S'il est nécessaire, il est possible de modifier les valeurs au nombre de copies et
+le prix unitaire. Cliquez sur <b>next</b> pour traiter l'objet.<br /> <br /> 
+quand ce format est construit une recherche est faite dans la base de données de classemment à laquelle appartient l'objet, en utilisant la clé ID de l'objet donnée dans le bon de commande. Pour déterminer si l'objet existe, le format <b>receiving.pft</b> 
+
+contient la commande suivante : <br /> <br /> 
+<font face="Courier New">if s(v500^d)&lt;&gt;'' then f(npost([v500^d],'NC_'v500^c),1,0) fi/fi</font>)<p>
+
+Cela se fait ainsi, si l'objet qui est en train d'être traité contient l'information de classement de la base de données&nbsp; et le numéro de contrôle en provenance de l'enregistrement auquel appartient les copies acquises, alors, correspondant 
+&quot;postings&quot; sont situés dans la base de données de classement et si le résultat n'est 
+pas zéro, alors, il est supposé que l'objet existe déjà et le lien est fourni
+pour sa révision avant de continuer avec le traitement.</p>

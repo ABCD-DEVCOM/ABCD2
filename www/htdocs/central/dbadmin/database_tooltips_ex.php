@@ -1,4 +1,6 @@
 <?php
+/*
+20220203 fho4abcd back button+div-helper*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -14,8 +16,11 @@ include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 include("../common/header.php");
+$base=$arrHttp["base"];
+
 ?>
-<script languaje=javascript>
+<body>
+<script language=javascript>
 function AbrirVentana(Html){
 	msgwin=window.open("../documentacion/ayuda.php?help=<?php echo $lang?>/"+Html,"Ayuda","")
 	msgwin.focus()
@@ -27,51 +32,43 @@ function Edit(Html){
 </script>
 <?php
 include("../common/institutional_info.php");
-echo " <body>
-	<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">"."<h5>".
-				$msgstr["tradyudas"]."</h5>
-			</div>
-			<div class=\"actions\">
-
-	";
-
-echo "<a href=\"menu_modificardb.php?encabezado=s&base=".$arrHttp["base"]."\" class=\"defaultButton backButton\">";
-echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>";
-echo "			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
-
- ?>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/trad_ayudas.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/trad_ayudas.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: dbadmin/database_tooltips.php";
 ?>
-</font>
-	</div>
- <div class="middle form">
-			<div class="formContent">
-
-
-<body>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["database_tooltips"].": ".$base?>
+    </div>
+    <div class="actions">
+        <?php
+            $backtoscript="menu_modificardb.php";
+            include "../common/inc_back.php";
+            include "../common/inc_home.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+$ayuda="trad_ayudas.html";
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+<div class="formContent">
 <form name=update action=database_tooltips_ex.php method=post>
 <?php
 $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab";
 $fp=fopen($archivo,"w");
-foreach ($arrHttp as $key=>$value){	$value=trim($value);
+foreach ($arrHttp as $key=>$value){
+	$value=trim($value);
 	if ($value!=""){
 		if (substr($key,0,3)=="tag"){
-			$key=substr($key,3);			$value=str_replace("\n","",$value);
+			$key=substr($key,3);
+			$value=str_replace("\n","",$value);
 			$value=str_replace("\r","",$value);
-			fwrite($fp,$key."=".$value."\n");		}	}}
+			fwrite($fp,$key."=".$value."\n");
+		}
+	}
+}
 fclose($fp);
-echo "<h2>".$arrHttp["base"]."/def/".$_SESSION["lang"]."/help.tab: ".$msgstr["updated"]."</h2>";
+echo "<h2>".$base."/def/".$_SESSION["lang"]."/help.tab: ".$msgstr["updated"]."</h2>";
 echo "</div></div>";
 include("../common/footer.php");
 ?>

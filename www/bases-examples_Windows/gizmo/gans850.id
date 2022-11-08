@@ -1,0 +1,570 @@
+!ID 000001
+!v001!161
+!v002!173
+!v011!asc
+!v021!asc
+!v050!exclamacao invertida
+!ID 000002
+!v001!162
+!v002!189
+!v011!asc
+!v021!asc
+!v050!cents (simbolo monetario)
+!ID 000003
+!v001!163
+!v002!156
+!v011!asc
+!v021!asc
+!v050!libra (simbolo monetario)
+!ID 000004
+!v001!164
+!v002!207
+!v011!asc
+!v021!asc
+!v050!currency (simbolo monetario)
+!ID 000005
+!v001!165
+!v002!190
+!v011!asc
+!v021!asc
+!v050!yene (simbolo monetario)
+!ID 000006
+!v001!166
+!v002!221
+!v011!asc
+!v021!asc
+!v050!caractere pipe
+!ID 000007
+!v001!167
+!v002!245
+!v011!asc
+!v021!asc
+!v050!paragrafo (textos de direito)
+!ID 000008
+!v001!168
+!v002!249
+!v011!asc
+!v021!asc
+!v050!trema
+!ID 000009
+!v001!169
+!v002!184
+!v011!asc
+!v021!asc
+!v050!copyrirgth
+!ID 000010
+!v001!170
+!v002!166
+!v011!asc
+!v021!asc
+!v050!ordinal feminino
+!ID 000011
+!v001!171
+!v002!174
+!v011!asc
+!v021!asc
+!v050!aspa angular esquerda (abre marcacao)
+!ID 000012
+!v001!172
+!v002!170
+!v011!asc
+!v021!asc
+!v050!not (simbolo logico)
+!ID 000013
+!v001!173
+!v002!240
+!v011!asc
+!v021!asc
+!v050!hifen
+!ID 000014
+!v001!174
+!v002!169
+!v011!asc
+!v021!asc
+!v050!marca registrada
+!ID 000015
+!v001!175
+!v002!238
+!v011!asc
+!v021!asc
+!v050!sobrelinha
+!ID 000016
+!v001!176
+!v002!248
+!v011!asc
+!v021!asc
+!v050!grau
+!ID 000017
+!v001!177
+!v002!241
+!v011!asc
+!v021!asc
+!v050!mais ou menos
+!ID 000018
+!v001!178
+!v002!253
+!v011!asc
+!v021!asc
+!v050!elevado ao quadrado
+!ID 000019
+!v001!179
+!v002!252
+!v011!asc
+!v021!asc
+!v050!elevado ao cubo
+!ID 000020
+!v001!180
+!v002!239
+!v011!asc
+!v021!asc
+!v050!agudo (diacritico)
+!ID 000021
+!v001!181
+!v002!230
+!v011!asc
+!v021!asc
+!v050!micro (letra grega)
+!ID 000022
+!v001!182
+!v002!244
+!v011!asc
+!v021!asc
+!v050!break line
+!ID 000023
+!v001!183
+!v002!250
+!v011!asc
+!v021!asc
+!v050!ponto central
+!ID 000024
+!v001!184
+!v002!247
+!v011!asc
+!v021!asc
+!v050!cedilha (diacritico)
+!ID 000025
+!v001!185
+!v002!251
+!v011!asc
+!v021!asc
+!v050!elevado a primeira
+!ID 000026
+!v001!186
+!v002!167
+!v011!asc
+!v021!asc
+!v050!ordinal masculino
+!ID 000027
+!v001!187
+!v002!175
+!v011!asc
+!v021!asc
+!v050!aspa angular direita (fecha marcacao)
+!ID 000028
+!v001!188
+!v002!172
+!v011!asc
+!v021!asc
+!v050!fracao um quarto
+!ID 000029
+!v001!189
+!v002!171
+!v011!asc
+!v021!asc
+!v050!fracao meio
+!ID 000030
+!v001!190
+!v002!243
+!v011!asc
+!v021!asc
+!v050!fracao tres quartos
+!ID 000031
+!v001!191
+!v002!168
+!v011!asc
+!v021!asc
+!v050!interrogacao invertida
+!ID 000032
+!v001!192
+!v002!183
+!v011!asc
+!v021!asc
+!v050!A grave maiusculo
+!ID 000033
+!v001!193
+!v002!181
+!v011!asc
+!v021!asc
+!v050!A agudo maiusuclo
+!ID 000034
+!v001!194
+!v002!182
+!v011!asc
+!v021!asc
+!v050!A circunflexo maiusculo
+!ID 000035
+!v001!195
+!v002!199
+!v011!asc
+!v021!asc
+!v050!A til maiusculo
+!ID 000036
+!v001!196
+!v002!142
+!v011!asc
+!v021!asc
+!v050!A trema maiusculo
+!ID 000037
+!v001!197
+!v002!143
+!v011!asc
+!v021!asc
+!v050!A bola maiusculo
+!ID 000038
+!v001!198
+!v002!146
+!v011!asc
+!v021!asc
+!v050!AE maiusculo
+!ID 000039
+!v001!199
+!v002!128
+!v011!asc
+!v021!asc
+!v050!C cedilha maiusculo
+!ID 000040
+!v001!200
+!v002!212
+!v011!asc
+!v021!asc
+!v050!E grave maiusculo
+!ID 000041
+!v001!201
+!v002!144
+!v011!asc
+!v021!asc
+!v050!E agudo maiusculo
+!ID 000042
+!v001!202
+!v002!210
+!v011!asc
+!v021!asc
+!v050!E circunflexo maiusculo
+!ID 000043
+!v001!203
+!v002!211
+!v011!asc
+!v021!asc
+!v050!E trema maiusculo
+!ID 000044
+!v001!204
+!v002!222
+!v011!asc
+!v021!asc
+!v050!I grave maiusculo
+!ID 000045
+!v001!205
+!v002!214
+!v011!asc
+!v021!asc
+!v050!I agudo maiusculo
+!ID 000046
+!v001!206
+!v002!215
+!v011!asc
+!v021!asc
+!v050!I circunflexo maiusculo
+!ID 000047
+!v001!207
+!v002!216
+!v011!asc
+!v021!asc
+!v050!I trema maiusculo
+!ID 000048
+!v001!208
+!v002!209
+!v011!asc
+!v021!asc
+!v050!Eth maiusculo (Iceandic)
+!ID 000049
+!v001!209
+!v002!165
+!v011!asc
+!v021!asc
+!v050!N til maiusculo
+!ID 000050
+!v001!210
+!v002!227
+!v011!asc
+!v021!asc
+!v050!O grave maiusculo
+!ID 000051
+!v001!211
+!v002!224
+!v011!asc
+!v021!asc
+!v050!O agudo maiusculo
+!ID 000052
+!v001!212
+!v002!226
+!v011!asc
+!v021!asc
+!v050!O circunflexo maiusculo
+!ID 000053
+!v001!213
+!v002!229
+!v011!asc
+!v021!asc
+!v050!O til maiusculo
+!ID 000054
+!v001!214
+!v002!153
+!v011!asc
+!v021!asc
+!v050!O trema maiusculo
+!ID 000055
+!v001!215
+!v002!158
+!v011!asc
+!v021!asc
+!v050!multiplicacao (simbolo matematico)
+!ID 000056
+!v001!216
+!v002!157
+!v011!asc
+!v021!asc
+!v050!O cortado maiusculo
+!ID 000057
+!v001!217
+!v002!235
+!v011!asc
+!v021!asc
+!v050!U grave maiusculo
+!ID 000058
+!v001!218
+!v002!233
+!v011!asc
+!v021!asc
+!v050!U agudo maiusculo
+!ID 000059
+!v001!219
+!v002!234
+!v011!asc
+!v021!asc
+!v050!U circunflexo maiusculo
+!ID 000060
+!v001!220
+!v002!154
+!v011!asc
+!v021!asc
+!v050!U trema maiusculo
+!ID 000061
+!v001!221
+!v002!237
+!v011!asc
+!v021!asc
+!v050!Y agudo maiusculo
+!ID 000062
+!v001!222
+!v002!232
+!v011!asc
+!v021!asc
+!v050!Thorn maiusculo (Icelandic)
+!ID 000063
+!v001!223
+!v002!225
+!v011!asc
+!v021!asc
+!v050!beta (ligaduca idioma alemao)
+!ID 000064
+!v001!224
+!v002!133
+!v011!asc
+!v021!asc
+!v050!a grave minusculo
+!ID 000065
+!v001!225
+!v002!160
+!v011!asc
+!v021!asc
+!v050!a agudo minusculo
+!ID 000066
+!v001!226
+!v002!131
+!v011!asc
+!v021!asc
+!v050!a circunflexo minusculo
+!ID 000067
+!v001!227
+!v002!198
+!v011!asc
+!v021!asc
+!v050!a til minusculo
+!ID 000068
+!v001!228
+!v002!132
+!v011!asc
+!v021!asc
+!v050!a trema minusculo
+!ID 000069
+!v001!229
+!v002!134
+!v011!asc
+!v021!asc
+!v050!a bola minusculo
+!ID 000070
+!v001!230
+!v002!145
+!v011!asc
+!v021!asc
+!v050!ae minusculo
+!ID 000071
+!v001!231
+!v002!135
+!v011!asc
+!v021!asc
+!v050!c cedilha minusculo
+!ID 000072
+!v001!232
+!v002!138
+!v011!asc
+!v021!asc
+!v050!e grave minusculo
+!ID 000073
+!v001!233
+!v002!130
+!v011!asc
+!v021!asc
+!v050!e agudo minusculo
+!ID 000074
+!v001!234
+!v002!136
+!v011!asc
+!v021!asc
+!v050!e circunflexo minusculo
+!ID 000075
+!v001!235
+!v002!137
+!v011!asc
+!v021!asc
+!v050!e trema minusculo
+!ID 000076
+!v001!236
+!v002!141
+!v011!asc
+!v021!asc
+!v050!i grave minusculo
+!ID 000077
+!v001!237
+!v002!161
+!v011!asc
+!v021!asc
+!v050!i agudo minusculo
+!ID 000078
+!v001!238
+!v002!140
+!v011!asc
+!v021!asc
+!v050!i circunflexo minusculo
+!ID 000079
+!v001!239
+!v002!139
+!v011!asc
+!v021!asc
+!v050!i trema minusculo
+!ID 000080
+!v001!240
+!v002!208
+!v011!asc
+!v021!asc
+!v050!eth minusculo (Icelandic)
+!ID 000081
+!v001!241
+!v002!164
+!v011!asc
+!v021!asc
+!v050!n til minusculo
+!ID 000082
+!v001!242
+!v002!149
+!v011!asc
+!v021!asc
+!v050!o grave minusculo
+!ID 000083
+!v001!243
+!v002!162
+!v011!asc
+!v021!asc
+!v050!o agudo minusculo
+!ID 000084
+!v001!244
+!v002!147
+!v011!asc
+!v021!asc
+!v050!o circunflexo minusculo
+!ID 000085
+!v001!245
+!v002!228
+!v011!asc
+!v021!asc
+!v050!o til minusculo
+!ID 000086
+!v001!246
+!v002!148
+!v011!asc
+!v021!asc
+!v050!o trema minusculo
+!ID 000087
+!v001!247
+!v002!246
+!v011!asc
+!v021!asc
+!v050!divisao (simbolo matematico)
+!ID 000088
+!v001!248
+!v002!155
+!v011!asc
+!v021!asc
+!v050!o cortado minusculo
+!ID 000089
+!v001!249
+!v002!151
+!v011!asc
+!v021!asc
+!v050!u grave minusculo
+!ID 000090
+!v001!250
+!v002!163
+!v011!asc
+!v021!asc
+!v050!u agudo minusculo
+!ID 000091
+!v001!251
+!v002!150
+!v011!asc
+!v021!asc
+!v050!u circunflexo minusculo
+!ID 000092
+!v001!252
+!v002!129
+!v011!asc
+!v021!asc
+!v050!u trema minusuclo
+!ID 000093
+!v001!253
+!v002!236
+!v011!asc
+!v021!asc
+!v050!y agudo minusculo
+!ID 000094
+!v001!254
+!v002!231
+!v011!asc
+!v021!asc
+!v050!thorn minusculo (Icelandic)
+!ID 000095
+!v001!255
+!v002!152
+!v011!asc
+!v021!asc
+!v050!y trema minusculo

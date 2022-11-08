@@ -1,0 +1,6 @@
+logtrans.*=%path_database%logtrans/data/logtrans.*
+suspml.*=%path_database%suspml/data/suspml.*
+
+
+
+

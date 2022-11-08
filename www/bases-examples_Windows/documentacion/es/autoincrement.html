@@ -1,0 +1,22 @@
+<p><strong>Generación automática del número de control de los registros de una base de datos.<br />
+<br />
+</strong>Esta opción permite asignar en forma automática un número secuencial consecutivo, a los registros de una base de datos.<br />
+<br />
+En la FDT se define el campo de control,&nbsp;como tipo de campo "Autoincrement". En la definición del campo debe incluirse el prefijo con el cual se indiza en la lista invertida y los formatos de presentación y extracción correspondientes.<br />
+<br />
+La numeración se lleva en el archivo <strong>control_number.cn</strong> el cual se almacena en la carpeta <strong>data</strong> de la base de datos correspondiente. En ese archivo se almacena el último número asignado en el proceso de ingreso de registros.</p>
+<p>En el formulario de ingreso del registro no puede insertarse información directamente en el campo del número de control y la asignación del número puede hacerse por uno de los siguientes métodos:</p>
+<ol>
+    <li>Si se deja el campo en blanco, al momento de almacenar el registro se determina el próximo número a asignar y el mismo se graba en el campo correspondiente</li>
+    <li>Si se quiere asignar directamente un número de control se puede seguir el siguiente procedimiento:
+    <ul>
+        <li>Haga clic sobre el vínculo <strong>Asignar</strong> que se muestra contiguo a la casilla de ingreso del campo con el número de control.</li>
+        <li>Se abre una nueva ventana para que se introduzca el número de control a asignar</li>
+        <li>Haga clic sobre <strong>Enviar </strong>para validar si el número de control no existe. </li>
+        <li>Si la validación es exitosa (el número de control no existe), se pasa el valor al formulario de ingreso</li>
+        <li>Si la validación no es exitosa (el número de control existe) se presenta el registro que lo tiene asignado. Haga clic sobre <strong>Regresar</strong> para asignar otro número o sobre <strong>Cerrar </strong>para cerrar la ventana</li>
+    </ul>
+    </li>
+    <li>Para borrar la casilla del número de control, haga clic sobre <strong>Asignar, </strong>deje el número de control en blanco y luego haga clic sobre <strong>Enviar</strong></li>
+</ol>
+<p>&nbsp;</p>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<CENTER>
+	<TABLE WIDTH=90% CELLPADDING=2 CELLSPACING=2 STYLE="page-break-before: always">
+		<TR>
+			<TD>
+				<P><STRONG><FONT FACE="arial"><FONT SIZE=2>Conversion table for
+				exporting the database to a TXT file with tags</FONT></FONT></STRONG></P>
+				<P ALIGN=JUSTIFY><FONT FACE="arial"><FONT SIZE=2>The conversion
+				table is used both to export and import records, applying in each
+				case the following features:</FONT></FONT></P>
+				<P ALIGN=JUSTIFY><FONT FACE="arial"><FONT SIZE=2>Use the box
+				</FONT></FONT><FONT FACE="arial"><FONT SIZE=2><B>Delimited with
+				Tab</B></FONT></FONT> <FONT FACE="arial"><FONT SIZE=2>to import
+				an Excel sheet saved as TXT. In this case the column </FONT></FONT><FONT FACE="arial"><FONT SIZE=2><B>Tag
+				in the TXT file</B></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=2>
+				must</FONT></FONT><FONT FACE="arial"><FONT SIZE=2> contain the
+				number of the column (starting with 1) where the corresponding
+				field is located in the exported Excel sheet.</FONT></FONT></P>
+				<P STYLE="margin-bottom: 0in"><FONT FACE="arial"><FONT SIZE=2>The
+				conversion table contains the following columns:</FONT></FONT></P>
+				<P STYLE="margin-bottom: 0in"><BR>
+				</P>
+				<TABLE WIDTH=90% CELLPADDING=2 CELLSPACING=2 BGCOLOR="#cccccc">
+					<TR>
+						<TD VALIGN=TOP BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Tag in the TXT file</FONT></FONT></P>
+						</TD>
+						<TD BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Tag which identifies the
+							field in the input or output TXT file. The tags have to start
+							with </FONT></FONT><STRONG><FONT FACE="arial"><FONT SIZE=2>$$</FONT></FONT></STRONG>
+							<FONT FACE="arial"><FONT SIZE=2>and end with </FONT></FONT><STRONG><FONT FACE="arial"><FONT SIZE=2>:</FONT></FONT></STRONG></P>
+						</TD>
+					</TR>
+					<TR>
+						<TD VALIGN=TOP BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Tag</FONT></FONT></P>
+						</TD>
+						<TD BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Tag of the field in the
+							database</FONT></FONT></P>
+						</TD>
+					</TR>
+					<TR>
+						<TD VALIGN=TOP BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Subfields</FONT></FONT></P>
+						</TD>
+						<TD BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Subfield delimiters. If the
+							first subfield doesn't have any delimiter, leave a blank space</FONT></FONT></P>
+						</TD>
+					</TR>
+					<TR>
+						<TD VALIGN=TOP BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Replace by</FONT></FONT></P>
+						</TD>
+						<TD BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>If a field has subfields,
+							indicate the characters which will be used in the text to
+							replace the subfield marks here. The first character of this list
+							would replace the first subfield in the list of subfields. If
+							the first subfield is not going to be replaced by any
+							delimiter, leave a blank space</FONT></FONT></P>
+						</TD>
+					</TR>
+					<TR>
+						<TD VALIGN=TOP BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Occurrences separator</FONT></FONT></P>
+						</TD>
+						<TD BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Indicate the character
+							which will separate the occurrences of a repeatable field here</FONT></FONT></P>
+						</TD>
+					</TR>
+					<TR>
+						<TD VALIGN=TOP BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>Extraction format</FONT></FONT></P>
+						</TD>
+						<TD BGCOLOR="#ffffff">
+							<P><FONT FACE="arial"><FONT SIZE=2>This format operates on the
+							record to produce the output of the associated field. The
+							application of the extraction format is only executed during
+							the exporting process. If you provide subfield delimiters plus
+							the extraction format, the last one is the one to be applied
+							in the process (not implemented yet).</FONT></FONT></P>
+						</TD>
+					</TR>
+				</TABLE>
+			</TD>
+		</TR>
+	</TABLE>
+</CENTER>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

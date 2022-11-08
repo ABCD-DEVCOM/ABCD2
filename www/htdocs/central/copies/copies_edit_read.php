@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument
+2022-05-01 rogercgui Included new cancel and save buttons
+*/
 session_start();
 include("../common/get_post.php");
 include("../config.php");
@@ -21,7 +25,7 @@ $arrHttp["lock"] ="S";
 $arrHttp["opcion"]="leer";
 $maxmfn=0;
 
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,"editar",$_SESSION["login"],"","");
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,"editar",$_SESSION["login"],"");
 if ($res=="LOCKREJECTED") {
 	echo "<script>
 	alert('".$arrHttp["Mfn"].": ".$msgstr["reclocked"]."')
@@ -93,35 +97,31 @@ function AsignarTabla(){
 if (isset($arrHttp["encabezado"]) and $arrHttp["encabezado"]=="s"){
 	include("../common/institutional_info.php");
 }
-echo "
-	<div class=\"sectionInfo\">
-		<div class=\"breadcrumb\">".
-			 $msgstr["m_editcopy"]."
+?>
+	<div class="sectionInfo">
+		<div class="breadcrumb">
+			 <?php echo $msgstr["m_editcopy"]; ?>
 		</div>
-		<div class=\"actions\">\n";
-?>
-			<a href=<?php echo $arrHttp["retorno"]?> class="defaultButton cancelButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["cancelar"]?></strong></span>
-			</a>
-			<a href=javascript:EnviarForma() class="defaultButton saveButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-			</a>
-<?php
-echo "	</div>
-		<div class=\"spacer\">&#160;</div>
-	</div>";
-?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/copies_add.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/acquisitions/copies_add.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: copies_edit_read.php";
-?>
-</font>
+		<div class="actions">
+				<a href="<?php echo $arrHttp["retorno"];?>" class="button_browse" title='<?php echo $msgstr["cancel"]?>'>
+				    <i class="far fa-window-close bt-red"></i>&nbsp;<?php echo $msgstr["cancel"]?>
+				</a>
+
+				<?php
+				$savescript="javascript:EnviarForma()";
+				include "../common/inc_save.php"; 
+				?>
+			</div>
+		<div class="spacer">&#160;</div>
 	</div>
+
+
+<?php
+$ayuda="acquisitions/copies_add.html";
+include "../common/inc_div-helper.php";
+?>
+
+
 
 <form method=post name=forma1 action=copies_update.php onSubmit="javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>

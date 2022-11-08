@@ -1,4 +1,8 @@
 <?php
+/*
+20220424 rogercgui add backbutton and inc-helper
+*/
+
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -22,21 +26,24 @@ echo "<body>\n";
 		<?php echo $arrHttp["base"].": ".$msgstr["createcopies"]?>
 	</div>
 	<div class="actions">
-    	<a href="javascript:top.Menu('same')" class="defaultButton backButton">
-				<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-				<span><strong><?php echo $msgstr["back"]?></strong></span>
-			</a>
+
+		<?php 
+		unset ($arrHttp["base"]);
+		$backtoscript="javascript:top.Menu('same')";
+		include "../common/inc_back.php";
+		?>
+
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/copies_create.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/copies_create.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: copies_add_add.php</font>\n";
-?>
-	</div>
+
+
+<?php 
+
+$ayuda="/acquisitions/copies_create.html";
+include "../common/inc_div-helper.php" ?>
+
+
 <div class="middle form">
 			<div class="formContent">
 <?php
@@ -65,16 +72,23 @@ $cont_database=$contenido;
 if (isset($arrHttp["copies"])) echo "<br>".$msgstr["copies_no"].": ".$arrHttp["copies"];
 
 $Mfn="";
-if (isset($arrHttp["tag30"])  and !isset($arrHttp["copies"])){	$inven=explode("\n",$arrHttp["tag30"]);
+if (isset($arrHttp["tag30"])  and !isset($arrHttp["copies"])){
+	$inven=explode("\n",$arrHttp["tag30"]);
 	unset($arrHttp["tag30"]);
-	foreach ($inven as $cn) {		if (trim($cn)!="")
-			CrearCopia(trim($cn),$max_inventory_length);	}}else{
+	foreach ($inven as $cn) {
+		if (trim($cn)!="")
+			CrearCopia(trim($cn),$max_inventory_length);
+	}
+}else{
 	for ($ix=1;$ix<=$arrHttp["copies"];$ix++ ){
 		echo "<hr>";
-		if (isset($arrHttp["tag30"])){			if ($ix==1)
+		if (isset($arrHttp["tag30"])){
+			if ($ix==1)
 				$cn=$arrHttp["tag30"];
 			else
-				$cn=$cn+1;		}else{			$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
+				$cn=$cn+1;
+		}else{
+			$cn=ProximoNumero("copies");   // GENERATE THE INVENTORY NUMBER
 		}
 		CrearCopia($cn,$max_inventory_length);
 	}
@@ -165,7 +179,10 @@ global $db_path;
 
 function BuscarCopias($inventario){
 global $xWxis,$db_path,$wxisUrl,$Wxis;
-	if ($inventario!=""){		$Prefijo="IN_".$inventario;	}else{		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
+	if ($inventario!=""){
+		$Prefijo="IN_".$inventario;
+	}else{
+		$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
 	}
 	$IsisScript= $xWxis."ifp.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=diccionario&prefijo=$Prefijo&campo=1";
@@ -181,7 +198,8 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;
 			}
 		}
 	}
-	return 0;}
+	return 0;
+}
 
 function LeerFst($base){
 global $tag_ctl,$pref_ctl,$arrHttp,$db_path,$AI,$lang_db,$msgstr,$error;

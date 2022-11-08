@@ -1,0 +1,32 @@
+/*
+2022-01-17 rogercgui add colors.css and buttons.css
+2022-01-24 rogercgui add normalize to reset css
+*/
+
+@import url(./normalize.css);
+
+/* System colour library */
+@import url(./colors.css);
+
+/* Button library */
+@import url(./buttons.css);
+
+/* System structure */
+@import url(./layout.css);
+
+/* Paddings */
+@import url(./spaces.css);
+
+/* Visual styles: borders, fonts, application of colours, shadows and animations */
+@import url(./styles.css);
+
+/* style rule: para correção de erros para float */
+DIV.spacer {
+	font-size: 1px !important;
+	margin: 0px !important;
+	padding: 0px !important;
+	float: none !important;
+	clear: both !important;
+	width: 100% !important;
+	height: 1px !important;
+}

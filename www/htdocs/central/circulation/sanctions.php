@@ -83,8 +83,10 @@ document.onkeypress =
   }
 
 function EnviarForma(){
-	if (Trim(document.usersearch.usuario.value)=="" ){		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]?>")
-		return	}
+	if (Trim(document.usersearch.usuario.value)=="" ){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]?>")
+		return
+	}
 	document.usersearch.action="sanctions_ex.php"
 	document.usersearch.submit()
 }
@@ -119,24 +121,26 @@ include("../common/institutional_info.php");
 $link_u="";
 if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="") $link_u="&usuario=".$arrHttp["usuario"];
 ?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/sanctions.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: sanctions.php</font>\n";
-?>
-	</div>
+$ayuda="sanctions.html";
+include "../common/inc_div-helper.php";
+?> 	
+
+
 <div class="middle list">
+	<div class="formContent">
 	<div class="searchBox">
 	<form name=usersearch action="" method=post onsubmit="javascript:return false">
 	<input type=hidden name=Indice>
@@ -148,16 +152,17 @@ echo "<font color=white>&nbsp; &nbsp; Script: sanctions.php</font>\n";
 		</td><td>
 		<input type="text" name="usuario" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';" />
 
-		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="submit" onClick="AbrirIndice('U',document.usersearch.usuario)" />
-		<input type="submit" name="buscar" value="<?php echo $msgstr["search"]?>" xclass="submitAdvanced" onclick="EnviarForma()"/>
+		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="bt-blue" onClick="AbrirIndice('U',document.usersearch.usuario)" />
+		<input type="submit" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="EnviarForma()"/>
 		</td>
 	</table>
 	</form>
 	</div>
-	<div class=\"spacer\">&#160;</div>
+	<div class="spacer">&#160;</div>
 	<dd>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]?>
 	</div>
+</div>
 </div>
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
@@ -165,5 +170,5 @@ echo "<font color=white>&nbsp; &nbsp; Script: sanctions.php</font>\n";
 <input type=hidden name=inventory>
 </form>
 <?php include("../common/footer.php");
-echo "</body></html>" ;
+
 ?>

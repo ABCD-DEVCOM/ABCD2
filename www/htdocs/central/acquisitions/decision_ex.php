@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument
+*/
 //
 //Presenta una sugerencia, seleccionada de la lista anterior, para que sean insertados los datos de la aprobación
 //
@@ -23,18 +26,25 @@ include("javascript.php");
 ?>
 <script>
 
-function Validar(){/*
+function Validar(){
+/*
 	tipo_adq="";   //TIPO DE ADQUISICION
 	if (document.forma1.tag3[0].checked || document.forma1.tag3[1].checked)
 		tipo_adq="OK"
-	else{		alert("<?php echo $msgstr["err3"]?>")
-		return "N"	}
-	if (document.forma1.tag5.selectedIndex<=0){   //BASE DE DATOS		alert("<?php echo $msgstr["err5"]?>")
-		return "N"	}
+	else{
+		alert("<?php echo $msgstr["err3"]?>")
+		return "N"
+	}
+	if (document.forma1.tag5.selectedIndex<=0){   //BASE DE DATOS
+		alert("<?php echo $msgstr["err5"]?>")
+		return "N"
+	}
 	//NUMERO DE CONTROL
 	nc=Trim(document.forma1.tag6.value)
-	if (nc=="" && document.forma1.tag3[1].checked){		alert("<?php echo $msgstr["err6"]?>")
-		return "N"	}
+	if (nc=="" && document.forma1.tag3[1].checked){
+		alert("<?php echo $msgstr["err6"]?>")
+		return "N"
+	}
 	if (nc!="" && document.forma1.tag3[0].checked){
 		alert("<?php echo $msgstr["err6_1"]?>")
 		return "N"
@@ -190,28 +200,23 @@ if (isset($arrHttp["see_all"])) $see_all="&see_all=Y"
 		<?php echo $msgstr["suggestions"].": ".$msgstr["decision"]?>
 	</div>
 	<div class="actions">
-		<a href=decision.php?encabezado=s&base=<?php echo $arrHttp["base"]."&sort=".$arrHttp["sort"].$see_all?> class="defaultButton cancelButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["cancel"]?></strong></span>
-		</a>
-		<a href=javascript:EnviarForma() class="defaultButton saveButton">
-			<img src=../images/defaultButton_iconBorder.gif alt="" title="" />
-			<span><strong><?php echo $msgstr["actualizar"]?></strong></span>
-		</a>
+
+
+	<?php
+		$backtoscript="decision.php";
+		$savescript="javascript:EnviarForma()";
+		include "../common/inc_back.php";
+		include "../common/inc_save.php";
+	?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/decision_ex.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/decision_ex.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: decision_ex.php</font>\n";
+$ayuda="acquisitions/decision_ex.html";
+include "../common/inc_div-helper.php";
+
 ?>
-	</div>
-
-
-
 
 <div class="middle form">
 			<div class="formContent">
@@ -237,8 +242,8 @@ ConstruyeWorksheetFmt();
 //Se lee el registro que va a ser editado
 $arrHttp["lock"] ="S";
 $maxmfn=$arrHttp["Mfn"];
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"","");
-echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../images/zoom.png></a> &nbsp;<strong>".$valortag[18]."</strong><br>";
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$_SESSION["login"],"");
+echo "<a href=../dataentry/show.php?Mfn=".$arrHttp["Mfn"]."&base=".$arrHttp["base"]." target=_blank><img src=../../assets/images/zoom.png></a> &nbsp;<strong>".$valortag[18]."</strong><br>";
 echo "<br>";
 if ($res=="LOCKREJECTED") {
 	echo "<script>

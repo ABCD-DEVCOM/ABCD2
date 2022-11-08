@@ -4,6 +4,10 @@
 2021-01-05 LeerRegistro compares the password
 2021-04-21 fho4abcd Show a an emergency user name if applicable
 2021-04-30 fho4abcd Do not switch language if selection is empty
+2021-06-14 fho4abcd Do not set password in $_SESSION + lineends
+2021-08-12 fho4abcd Give message if profiles/adm is missing for emergency user
+2022-01-19 fho4abcd Set default language if none supplied
+2022-07-10 fho4abcd Prepare for .par file in database folder+ no password to llamar_wxis.php
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -17,11 +21,15 @@ require_once ("ldap.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";die;
 $valortag = Array();
 
-function CambiarPassword($Mfn,$new_password){global $xWxis,$Wxis,$db_path,$wxisUrl,$MD5;
-	if (isset($MD5) and $MD5==1 ){		$new_password=md5($new_password);	}
-	$ValorCapturado="d30<30 0>".$new_password."</30>";	$ValorCapturado=urlencode($ValorCapturado);
+function CambiarPassword($Mfn,$new_password){
+global $xWxis,$Wxis,$db_path,$wxisUrl,$MD5,$actparfolder;
+	if (isset($MD5) and $MD5==1 ){
+		$new_password=md5($new_password);
+	}
+	$ValorCapturado="d30<30 0>".$new_password."</30>";
+	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."actualizar.xis";
-  	$query = "&base=acces&cipar=$db_path"."par/acces.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
+  	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
     include("wxis_llamar.php");
 }
 function LeerRegistro() {
@@ -29,13 +37,16 @@ function LeerRegistro() {
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
-global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5;
+global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5,$actparfolder;
     $ic=-1;
 	$tag= "";
 	$IsisScript=$xWxis."login.xis";
 	$pass=$arrHttp["password"];
-	if (!isset($MD5) or  $MD5!=0){		$pass=md5($pass);	}
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"]."&password=".$pass;
+	if (!isset($MD5) or  $MD5!=0){
+		$pass=md5($pass);
+	}
+    if ($actparfolder=="/")$actparfolder="acces/"; // initial value can be empty
+	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$arrHttp["login"];
 	include("wxis_llamar.php");
 	$llave_ret="";
 	 foreach ($contenido as $linea){
@@ -87,16 +98,21 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
   		else
   			$fecha="";
   		$today=date("Ymd");
-  		if (trim($fecha)!=""){  			if ($today>$fecha){
+  		if (trim($fecha)!=""){
+  			if ($today>$fecha){
   				header("Location: ../../index.php?login=N");
-  				die;  			}  		}
+  				die;
+  			}
+  		}
   		//$value=substr($value,2);
   		$ix0=strpos($value,'^');
   		$ix0=$ix0+2;
   		$ix=strpos($value,'^',$ix0);
   		$Perfil=substr($value,$ix0,$ix-$ix0);
-    	if (!file_exists($db_path."par/profiles/".$Perfil)){    		echo "missing ". $db_path."par/profiles/".$Perfil;
-    		die;    	}
+    	if (!file_exists($db_path."par/profiles/".$Perfil)){
+    		echo "missing ". $db_path."par/profiles/".$Perfil;
+    		die;
+    	}
     	$profile=file($db_path."par/profiles/".$Perfil);
     	unset($_SESSION["profile"]);
     	unset($_SESSION["permiso"]);
@@ -105,19 +121,30 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     	$_SESSION["login"]=$arrHttp["login"];
     	foreach ($profile as $value){
     		$value=trim($value);
-    		if ($value!=""){    			$key=explode("=",$value);
-    			$_SESSION["permiso"][$key[0]]=$key[1];    		}
+    		if ($value!=""){
+    			$key=explode("=",$value);
+    			$_SESSION["permiso"][$key[0]]=$key[1];
+    		}
     	}
         if (isset($valortag[70])){
         	$library=$valortag[70];
         	$_SESSION["library"]=$library;
-        }else{        	unset ($_SESSION["library"]);        }
+        }else{
+        	unset ($_SESSION["library"]);
+        }
  	}else{
- 		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){ 			$Perfil="adm";
+        // This is the emergency login
+ 		if ($arrHttp["login"]==$adm_login and $arrHttp["password"]==$adm_password){
+ 			$Perfil="adm";
   		    $nombre="!!Emergency/Emergencia!!"; // The displayed name of the emergency user
  			unset($_SESSION["profile"]);
     		unset($_SESSION["permiso"]);
     		unset($_SESSION["login"]);
+            if (!file_exists($db_path."par/profiles/".$Perfil)){
+                echo "Missing file: ". $db_path."par/profiles/".$Perfil."<br>";
+                echo "The emergency user needs administrator privileges";
+                die;
+            }
  			$profile=file($db_path."par/profiles/".$Perfil);
     		$_SESSION["profile"]=$Perfil;
     		$_SESSION["login"]=$arrHttp["login"];
@@ -130,9 +157,12 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     			}
     		}
     	}else{
- 			echo "<script>\n";
- 			if (isset($_SESSION["HOME"])) 				echo "self.location.href=\"".$_SESSION["HOME"]."?login=N\"\n";
- 			else 				echo "self.location.href=\"../../index.php?login=N\";\n";
+
+ 			echo "<script>\n";
+ 			if (isset($_SESSION["HOME"]))
+ 				echo "self.location.href=\"".$_SESSION["HOME"]."?login=N\"\n";
+ 			else
+ 				echo "self.location.href=\"../../index.php?login=N\";\n";
 
  			echo "</script>\n";
   			die;
@@ -146,13 +176,14 @@ function LeerRegistroLDAP() {
 // identificada entre $$LLAVE= .....$$
 
 $llave_pft="";
-global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5;
+global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_path,$wxisUrl,$MD5,$actparfolder;
     $ic=-1;
 	$tag= "";
 	$IsisScript=$xWxis."loginLDAP.xis";
 
 
-	$query = "&base=acces&cipar=$db_path"."par/acces.par"."&login=".$arrHttp["login"];
+    if ($actparfolder=="/")$actparfolder="acces/"; // initial value can be empty
+	$query = "&base=acces&cipar=$db_path".$actparfolder."acces.par&login=".$arrHttp["login"];
 	include("wxis_llamar.php");
 
 
@@ -361,9 +392,12 @@ include("../lang/acquisitions.php");
 		VerificarUsuarioLDAP();
 	else
 		VerificarUsuario();
-		$_SESSION["lang"]=$arrHttp["lang"];
+        if (isset($arrHttp["lang"]) && $arrHttp["lang"]!="") {
+            $_SESSION["lang"]=$arrHttp["lang"];
+        } else {
+            $_SESSION["lang"]=$lang;
+        }
 		$_SESSION["login"]=$arrHttp["login"];
-		$_SESSION["password"]=$arrHttp["password"];
 		$_SESSION["nombre"]=$nombre;
 
 	}
@@ -390,12 +424,15 @@ include("../lang/acquisitions.php");
     	die;
     }
 	$Permiso=$_SESSION["permiso"];
-	if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="chgpsw"){		CambiarPassword($arrHttp["Mfn"],$arrHttp["new_password"]);
+	if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="chgpsw"){
+		CambiarPassword($arrHttp["Mfn"],$arrHttp["new_password"]);
 		if (isset($_SESSION["HOME"]))
 			$retorno=$_SESSION["HOME"];
 		else
 			$retorno="../../index.php";
-		header("Location: $retorno?login=P");	}else{		if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
+		header("Location: $retorno?login=P");
+	}else{
+		if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
 		include("homepage.php");
 	}
 ?>

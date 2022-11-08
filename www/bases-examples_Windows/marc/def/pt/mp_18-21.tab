@@ -1,0 +1,17 @@
+####|Não há relevo
+a|Contorno do relevo
+b|Sombreado
+c|Gradiente e matizes batimétricas
+d|Hachuras
+e|Batimetria/Sondagens
+f|Linhas de forma 
+g|Altitudes localizadas
+i|Pictórico
+j|Formas de relevo
+k|Batimetria/Isolinhas
+m|Indicação de afloramentos rochosos
+z|Outros
+#|(Um vazio)
+##|(Dois vazios)
+###|(Três vazios)
+----|Não se tentou codificar

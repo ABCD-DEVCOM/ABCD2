@@ -1,0 +1,21 @@
+<p><strong>Creación de una nueva recomendación</strong></p>
+<p>Las recomendacions que ingresan en la base de datos se numeran secuencialmente a efectos de crear relaciones&nbsp;con las otras bases de datos del módulo de adquisiciones. Esta numeración se realiza a través del archivo <strong>control_number.cn</strong> localizado en la carpeta <strong>bases/suggestions/data.</strong></p>
+<p>Si se trabaja en multiusuario, es necesario evitar que dos estaciones de trabajo puedan generar el mismo número. Para ello se procede como sigue:</p>
+<ol>
+    <li>Se verifica si el archivo <strong>control_number.cn </strong>tiene o no&nbsp;la propiedad <strong>solo lectura</strong></li>
+    <li>Si no tiene la propiedad <strong>solo lectura</strong> entonces:
+    <ul>
+        <li>se protege el archivo para que otra estación no&nbsp; pueda leerlo</li>
+        <li>se lee el último número secuencial asignado y se le suma 1</li>
+        <li>se&nbsp;saca una copia del archivo <strong>control_number.cn </strong>(&nbsp;<strong>control_number.bak</strong>)</li>
+        <li>se agrega el número secuencial al campo del número de control del registro</li>
+        <li>se graba en el archivo <strong>control_number.cn</strong> el último número secuencial asignado</li>
+        <li>se desprotege el archivo&nbsp;<strong>control_number.cn </strong>para que otra estación pueda crear un registro nuevo</li>
+    </ul>
+    </li>
+    <li>Si el archivo <strong>control_number.cn</strong>&nbsp; tiene la propiedad&nbsp;&nbsp;<strong>solo lectura</strong> se avisa esta situación al operador y se provee un vínculo para intentar de nuevo la asignación del número secuencial</li>
+</ol>
+<p>Si luego de varios intentos no se consigue asignar el número secuencial, el Administrador del Sistema debe verificar los permisos del archivo&nbsp;&nbsp;<strong>control_number.cn</strong>&nbsp; y, de ser necesario, modificarle la permisología para proveer de nuevo el acceso.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

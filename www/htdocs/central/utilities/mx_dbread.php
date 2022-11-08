@@ -3,6 +3,8 @@
 2021-03-29 fho4abcd Replaced helper code fragment by included file
 2021-03-29 fho4abcd Improved html & code:Removed ghost code, correct display of « »
 2021-04-18 fho4abcd Improved backbutton:send also &inframe and if necessary &backtoscript
+2021-08-02 fho4abcd Remove $inframe. Make standalone call possible
+20211215 fho4abcd Backbutton by included file improved
 */
 /*
 ** Shows the content of a .iso file or a .mst file by mx
@@ -51,10 +53,8 @@ include("../lang/soporte.php");
 ** Old code might not send specific info.
 ** Set defaults for the return script and frame info
 */
-$backtoscript="../dataentry/administrar.php"; // The default return script
-$inframe=1;                      // The default runs in a frame
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
 if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
-if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 
 include("../common/header.php");
 
@@ -159,21 +159,15 @@ function EnviarFormaMX(){
 }
 </script>
 <?php
-// If outside a frame: show institutional info
-if ($inframe!=1) include "../common/institutional_info.php";
+// Show institutional info
+include "../common/institutional_info.php";
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 <?php echo $msgstr["mx_dbread"]?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
-        if (isset($arrHttp["backtoscript_org"])) $backtourl.="&backtoscript=".$arrHttp["backtoscript_org"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php"; ?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -326,5 +320,3 @@ echo "<input type=submit value=\"".$msgstr["continuar"]."\">";
 include("../common/footer.php");
 ?>
 
-</body>
-</html>

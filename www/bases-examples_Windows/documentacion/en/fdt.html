@@ -1,0 +1,341 @@
+<xmeta charset="utf-8" http-equiv="Content-Type" content="text/html"></xmeta><xmeta charset="iso-8859-1" http-equiv="Content-Type" content="text/html;"></xmeta>
+<p>&nbsp;</p>
+<h3 style="COLOR: red"><font face="Arial" size="2"><strong><a name="top"></a>&nbsp;</strong><big><strong>Definition of a database structure<br />
+</strong></big></font></h3>
+<p><font face="Arial" size="2"><strong><a href="#editor">How to use the editor</a> </strong></font></p>
+<p><font face="Arial" size="2"><strong><a href="#FDT">The Field Definition Table</a><br />
+<br />
+<a href="#picklist">How to define a list of pre-defined values (Pick lists) or to access authority files</a> </strong></font></p>
+<hr />
+<p><font face="Arial" size="2"><strong><a class="FCK__AnchorC FCK__AnchorC" name="FDT"><big>Field Definition Table (FDT)</big></a><big> </big></strong></font></p>
+<p><font face="Arial" size="2">The FDT contains the structure of the database; in the case of ABCD it also contains extra elements for the data-entry form. </font></p>
+<p><font face="Arial" size="2"><font size="2">In addition to the standard definition elements provided by ISIS/DOS and WinISIS, extra elements - based on HTML-codes - for the data-entry form are included, dealing with the type of field, the editing of subfields, terminology control by authority lists, thesaurus or simple menus (Pick lists), the presentation of the field in the worksheet, etc. </font></font><font face="Arial" size="2">It has the following format : </font></p>
+<p><font size="2">
+<table cellspacing="5" cellpadding="1" width="100%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top"><font face="Arial" size="2"><strong>Tag</strong></font></td>
+            <td>
+            <p><font face="Arial" size="2"><strong>Description</strong></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Field Properties&nbsp; </strong></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2"><font face="Arial">Data-entry type</font></font></td>
+            <td>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">Specifies the type of component in the FDT to be described, with the following options :</font></p>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="arial" size="2">Field<br />
+            </font><font face="arial" size="2">Subfield<br />
+            Group (Repeatable field with subfields)<br />
+            Record Leader (MARC)<br />
+            Fixed field (MARC)</font><font face="arial" size="2"><br />
+            Load document with link<br />
+            Operator and creation date of the record<br />
+            Autoincrement<br />
+            </font><font face="arial" size="2"><font face="arial" size="2">Heading<br />
+            Line</font></font></p>
+            </blockquote>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Field (F)</strong><br />
+            This entry deals with a field in the database</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Subfield (S)</strong><br />
+            This entry deals with the description of a subfield. All subfields defined in the field have to be described here with their details.&nbsp;With this information a new window will open during data-entry with the subfields presented as separate units, avoiding the need to enter the subfield delimiters of CDS/ISIS databases. In addition, the use of repeated subfields is allowed and the subfield sequence can be moved within the form in order to support easier application of the Formatting Language.&nbsp;</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Group (T)<br />
+            </strong>This entry type is recommended for editing repeatable fields with subfields.<font face="Arial" size="2">&nbsp;It allows editing of the subfields with a box for each separate subfield.</font> Following an entry of type <strong>Group</strong> define the subfields that make up the field.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Record leader of the MARC-format (LDR)<br />
+            </strong>This field contains the Marc Leader information, specified as follows :</font></p>
+            <blockquote dir="ltr" style="MARGIN-RIGHT: 0px">
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">3005 Record status<br />
+            3006 Record type<br />
+            3007 Bibliographic level<br />
+            3017&nbsp;Coding level<br />
+            3018 Description of the cataloging format</font></p>
+            </blockquote>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">The value of field 3006 assigns the type of fixed field associated with the record.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2">The structure of the leader is stored in a file named <strong>leader.fdt</strong>, found in the folder <strong>def</strong> of the database.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Fixed field - Marc (M)<br />
+            </strong></font><font face="Arial" size="2">This field type indicates that a fixed field should be inserted in the data-entry form, depending on the record type selected in the <strong>Leader. </strong>The structure of a fixed field is based on a <strong>Field Definition Table (FDT), </strong>which can be accessed through the option <strong>Record types (Marc) </strong>in the menu for <strong>Database definition update</strong>. The option <strong>Record Types (Marc)</strong>&nbsp;is presented in the update menu when the presence of a <strong>LDR</strong> field type is detected in the <strong>FDT</strong> of the database.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Header&nbsp; (H)<br />
+            </strong>Use this entry to put separators in between groups of fields in the data-entry and display formats and to allow navigation within the data-entry form.</font></p>
+            <p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><strong>Line (L)</strong><br />
+            This adds a separation line in the data-entry form. It also can include a URL to refer to a page which should be presented at the moment of displaying the data.</font></p>
+            <p><font face="Arial"><font size="2"><strong>Load document with link (U)</strong><br />
+            Allows a document to be loaded on the server and linked to the actual record. In the actual version of <strong>ABCD </strong>it is necessary to define a folder named </font></font><font face="Arial" size="2"><em></em><strong>bases</strong> in the root of&nbsp;<strong>ABCD</strong>, with a subfolder named according to the database where the images/documents will be stored. This folder should have write access rights. Another way of loading files is by FTP. The display format of the records should contain the URL of these files in order to include them in the display.</font></p>
+            <p><font face="Arial" size="2"><strong>Date, time and operator creating the record<br />
+            </strong>In this field the date, time and login of the operator creating the record will be stored. If no subfields are specified, respectively a, b and c will be used.</font></p>
+            <p><font face="Arial" size="2"><strong>Autoincrement</font><br />
+            </strong><font face="Arial" size="2">A unique sequential number will be assigned automatically by <strong>ABCD</strong>  when storing the record.</font></p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Tag</font></td>
+            <td valign="top">
+            <p><font size="2"><font face="Arial">Numerical value identifying the field in the record. These values go from 1 to 999, except for the field <strong>Leader</strong> which&nbsp;accepts tags with up to 4 digits.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Title</font></td>
+            <td valign="top"><font face="Arial"><font size="2">Title or description of the field as it will appear in the data-entry or output formats.</font></font></td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">I = Principal entry</font></p>
+            </td>
+            <td valign="top">
+            <p><font size="2"><font face="Arial">Marks if this field is the record`s principal entry.&nbsp;</font></font><font size="2"><font face="Arial">This field will then be displayed in the list associated with the button <img alt="" align="textTop" src="../../central/img/sort-01.gif" /> for quick identification of a record.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">R = Repeatable</font></p>
+            </td>
+            <td valign="top"><font face="Arial"><font size="2">Indicates if this field is repeatable.</font></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Subfields</font></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">Insert the subfields (by their identifiers) of the field here. The first subfield can be omitted, but then put the character <strong>-</strong> (hyphen) to indicate this.</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Pre-literals</font></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">Special characters to be used as pre-literals in the subfields of the FST and the output formats.&nbsp;If the first subfield has no identifier, the character <strong>- </strong>(hyphen) should be used.</font></font></p>
+            <p><font face="Arial" size="2">If this value is given, when entering data, ABCD will replace the delimiters of the subfields with these pre-literals to present the field in the data-entry form. When the record is written, the pre-literals will be replaced by the subfield delimiters. This way the data-entry for fields with few subfields can be made easier, e.g. &nbsp; the name of an expert Name, Firstname will still be stored as &nbsp; Name^nFirstname or ^aName^nFirstname, depending on the data specified in this parameter for <strong>Subfields&nbsp;</strong>and<strong> Pre-literals</strong>.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Data entry</strong></font>&nbsp;&nbsp;&nbsp;&nbsp; <strong><font color="#800000"></font></strong></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Entry type</font></td>
+            <td valign="top">
+            <p><font size="2"><strong><font face="Arial"></font></strong><br />
+            <font face="Arial">This value is used to generate the entry-box with the HTML-coding to capture the field. The following possibilities are accepted :</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Date (D): </strong>Will activate a JavaScript control to offer date selection from a calendar.</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>ISO date:<br />
+            </strong>When you define a <strong>Date </strong>field in your entry form 	
+and immediately after this you place an <strong>ISO date</strong> field then, 	
+the value inserted in the date field is automatically converted to the equivalent ISO and placed in this field. This is used in conjunction with the parameter <span lang="EN-US" style="FONT-SIZE: 11pt; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: ES; mso-bidi-language: AR-SA"><strong>$config_date_format </strong></font><font face="Arial" size="2">	
+This configuration is in the config script.php</span></font><br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Selection of several options&nbsp;(C):</strong> Checkbox&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" checked="checked" value="on" /><br />
+            If wanted, the number of columns to present the options can be defined, putting the value corresponding to the <strong>columns</strong><br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Selection of one option&nbsp;(O):</strong> Radio button&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" checked="checked" value="on" /><br />
+            If wanted, the number of columns to present the options can be defined, putting the value corresponding to the <strong>columns</strong></font></font><font face="Arial"><font size="2"><br />
+            <br />
+            </font></font><font face="Arial"><font size="2"><strong>Single selection (S):</strong> Single Selection&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</font></font><select>
+            <option value="1" selected="selected">Option 1</option>
+            </select>&nbsp; <font face="Arial" size="2">To be used when only one option from a list can be seleccted.<br />
+            <br />
+            </font><font face="Arial"><font size="2"><strong>Multiple selection (M):</strong> Multiple selection&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</font></font><select multiple="multiple" size="2">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            </select>&nbsp;<br />
+            <font face="Arial" size="2">To be used when more than one value from a list can be selected. In this case the field needs to be identified as repeatable.</font></p>
+            <p><font face="Arial"><font size="2"><strong>Html Area (A)</strong>: Insert an HTML editor to allow editing of text with HTML-coding.</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>External HTML (<font face="Arial"><font size="2"><strong>E):</strong>&nbsp;</font></font></strong> Insert an HTML editor, in this case the data will not be stored in the database but in an external file which will be linked to the record (to be implemented)&nbsp;</font></font></p>
+            <p><font face="Arial"><font size="2"><strong>Upload</font>&nbsp;file&nbsp;(U):</strong><font face="Arial" size="2"> Display a JavaScript control to allow files to be loaded to the server and create a link accordingly</font></p>
+            <p><font face="Arial"><font size="2"><strong>Text area &nbsp;(X):</strong> Text/Text area:&nbsp;</font></font><font face="Arial"><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input /></p>
+            <p><strong>Text area with fixed length (XF):</strong>&nbsp; Displays a text box where a limited number of characters may be entered in the field. The number of characters should be entered in the box for <strong>columns</strong></p>
+            <p><strong>Table (TB): </strong>Allows repeatable fields with subfields, displayed as a table to be edited. In addition, the number of occurrences can be defined, by putting this number in the box for <strong>rows</strong></p>
+            <p><strong>Password (P)</strong>: The input box will be filled with * to hide the contents of this special field.</p>
+            <p><strong>Read only</strong>: Use this type of entry when you submit a protected field &nbsp;in the capture form: it can be displayed but cannot be changed.</font></font></p>
+
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><span class="t"><font face="Arial" size="2">Rows</font></span></td>
+            <td valign="top">
+            <p><font face="Arial"><font size="2">If the entry type is <strong>T </strong>(Group), specify the number of rows (occurrences) allowed for this field. If omitted and the field contains 0 occurrences, 10 rows will be shown. If occurrences already exist, they will be shown with 5 more rows available.</font></font></p>
+            <p><font face="Arial" size="2">If the entry type is <strong>X </strong>(Text area) or <strong>A</strong> (Html area), specify the maximum number of lines to display in the box. If the type is T (group), a &nbsp;TextBox &nbsp; is shown. Also with type T, when the number of rows is higher than 1 a text area is shown. If the type is A (HTML area), define the size of the window where the HTML-editor will be presented.</font></p>
+            <p><font face="Arial" size="2">If the type is <strong>M</strong>&nbsp;(Multiple Select), specify how many options in the list will be opened.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Columns</font></td>
+            <td valign="top">
+            
+            <p><font face="Arial" size="2">If the value of <strong>Enter as</strong>&nbsp;is <strong>X </strong>(Textbox/Text area) or <strong>A</strong> (HTML area), specify the maximum number of columns (characters) to be presented in the lines of the text area.</font></p>
+            <p><font face="Arial" size="2">If the &nbsp;value of <strong>Enter as</strong> is&nbsp;<strong>T</strong> (Repeatable fields with subfields), the number of columns will define the number of subfields defined.</font></p>
+            <p><font face="Arial" size="2">If the&nbsp;value of <strong>Enter as</strong> is <strong>O </strong>(radio button) or <strong>C</strong> (checkbox) specify the number of options to put in each line</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" colspan="2"><font face="Arial" color="#800000"><strong>Selection List</strong></font>&nbsp;&nbsp; <font face="Arial"><font color="#800000"></font></font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Type</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Control list to be used to manage the field terminology, with the following options:</font></p>
+            <p><font face="Arial"><font size="2"><strong>D</strong>&nbsp;= database<br />
+            <strong>P</strong> = Pick list<br />
+            <strong>T</strong> = Thesaurus</font></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Name</font></td>
+            <td valign="top"><font face="Arial" size="2">Name of the database to be used for authority controls, or file with the Pick List options</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Prefix</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">If the&nbsp;<strong><span>type</span></strong>&nbsp; is&nbsp;<strong>D</strong>, or <strong>T</strong>, gives the prefix to be used to get the terms of the database given in the <strong>authority_name</strong>. The prefix is applied to the IF and from the posting takes the information directly from the corresponding field of the first record indicated by the MFN-component of the posting.</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Display format</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Format to be used to display the field indicated by the IF (with the prefix given) in the selection list. If the extraction format includes various fields with different tags, the name of the format to be used or the format itself can be put here. This format has to be written following a pre-defined structure in order to be correctly interpreted. See the example here used for the authority files of the MARC database : @autoridades.pft</font></p>
+            <p><font face="Arial" size="2">This format has the following structure:<br />
+            <br />
+            <font face="Courier New">select e3<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+            ...<br />
+            <br />
+            ...<br />
+            <br />
+            endsel</font></font></p>
+            <p><font face="Arial" size="2">The `variable` used in this &nbsp;<strong>case </strong>-construction of the command <strong>&lt;&nbsp;select&nbsp;&gt;</strong>&nbsp;identifies the <strong>Id</strong> assigned to the field in the FST; next the format  to be used to display the field in the selection list is specified and, subsequently, prefixed by `$$$`, the format to be used to display the field and transfer it to the data-entry form. If omitted, the display format will be used as the extraction format.</font></p>
+            <p><font face="Arial" size="2">Summing up, the procedure functions as follows:</font></p>
+            <ol>
+                <li><font face="Arial" size="2">The prefix supplied is used to access the IF and to fill the <strong>select box</strong> in HTML. With the tag <strong>&lt;option&gt;</strong> select the box that stores the posting information.</font> </li>
+                <li><font face="Arial" size="2">When the user selects a term, the information on: Mfn, Id, Occurrence and Position is noted.</font> </li>
+                <li><font face="Arial" size="2">Using the MFN the record in which this term occurs is opened and the extraction format is applied using the <strong>ID&nbsp; </strong>and the <strong>Occurrence </strong>of the posting to locate the term requested in the record. <strong><em>Note: if the field is repeatable, it is mandatory to use the post-literal&nbsp;&nbsp;% in the FST to make sure that the occurrences are counted in the posting.</em></strong></font> </li>
+                <li><font face="Arial" size="2">The term is extracted from the record as entered in the database&nbsp;and placed in the corresponding window of the data-entry form.</font> </li>
+            </ol>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Extract as</font></td>
+            <td valign="top"><font face="Arial" size="2">Format to be used to take values from the database and from the field located in the IF using the given prefix. If the display format is a pre-defined format (@xxxx) and follows the instruction to separate the display format from the extraction format by <strong>$$$, </strong>this part should be left empty.</font></td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">Help-messages</font></td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Mark this box if the field has a help-page. To write such a help-message, use the option <strong>Help-pages for the fields of the database </strong>which is part of the menu <strong>Update database definitions</strong></font></p>
+            <p><font face="Arial" size="2">The help-pages are stored in the folder <strong>bases/<em>dbn/</em>ayudas, </strong>where <strong><em>dbn</em></strong> represents the name of the database.</font></p>
+            <p>&nbsp;&nbsp;</p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><font face="Arial" size="2">URL for the help message</font></td>
+            <td valign="top"><font face="Arial" size="2">If the aids for the field can be found through a traceable web page, place the URL in this box. This URL will apply to all subsequent fields until a new URL is supplied.</font></td>
+        </tr>
+    </tbody>
+</table>
+</font></p>
+<p>&nbsp;</p>
+<p>&nbsp; </p>
+<hr />
+<p>&nbsp;</p>
+<p><font face="Arial" size="2"><strong><a name="editor"></a><big>How to use the editor&nbsp;</big> </strong><a href="#top">(TOP)</a></font></p>
+<p><font face="Arial" size="2">	You can increase or decrease the width of the columns by placing the cursor in the title area of the table, over the dividing line of the column which you want to change, by dragging the divider to the right or left you can make the column wider or narrower.</font></p>
+<p><font face="Arial" size="2">Use the key&nbsp;<em><strong>[Tab]</strong></em> to navigate through the cells.</font></p>
+<p><font face="Arial" size="2">Use the arrows&nbsp;<strong><em>[UP / DOWN]&nbsp;</em></strong>to navigate through the rows.</font></p>
+<p><font face="Arial" size="2"><strong><em>Double-click </em></strong>or&nbsp;<strong><em>[F2]</em></strong> to start editing a cell</font></p>
+<p><em><strong>[Enter]</strong></em><font face="Arial" size="2">&nbsp;or&nbsp;&nbsp;</font><em><strong><font face="Arial" size="2"> [Escape]&nbsp;&nbsp; </font></strong></em><font face="Arial" size="2">to stop editing a cell.</font></p>
+<p><font face="Arial" size="2"><strong><em>Add a row before&nbsp;&nbsp; </em></strong>allows a row before the selected one to be added.</font></p>
+<p><font face="Arial" size="2"><strong><em>Delete selected row</em></strong>&nbsp;&nbsp; removes the selected row.</font></p>
+<p><font face="Arial" size="2"><strong><em>Organize FDT&nbsp;&nbsp; </em></strong>allows the fields defined in the table to be moved (to be implemented)</font></p>
+<p><font face="Arial" size="2"><strong><em>Test</em></strong>&nbsp;&nbsp; displays an example of the form based on the elements defined.</font></p>
+<p><font face="Arial" size="2"><strong><em>List&nbsp;&nbsp;</em></strong> displays the FDT being edited in a new window.</font></p>
+<p><font face="Arial" size="2"><strong><em>Validate </em></strong>Reviews the structure of the FDT and displays a list of errors (if any).</font></p>
+<p><font face="Arial" size="2"><em><strong>Update</strong></em>&nbsp;&nbsp; validates and stores the FDT (if there are no errors!)</font></p>
+<p><font face="Arial" size="2"><em><strong>Cancel</strong></em>&nbsp;&nbsp; cancels all changes made.</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p><font face="Arial"><a name="picklist"></a><strong><big>Tables&nbsp;(Pick lists)&nbsp;and authority files</big></strong></font><big>&nbsp;<strong><font face="Arial" size="2"> </font></strong><a href="#top"><font face="Arial" size="2">(TOP)</font></a></big></p>
+<p>&nbsp;</p>
+<p><font face="arial" size="2">To define the tables or authority lists associated with the fields, select from the column &nbsp;<strong>Selection list-Type</strong>&nbsp;the type &nbsp;of file to be used for the authority control.&nbsp; To continue click on &nbsp;<strong><em>browse</em></strong> to get the possibilities provided for each case&nbsp;&nbsp;</font></p>
+<p>
+<table cellspacing="5" cellpadding="0" width="100%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td valign="top">
+            <p><font face="Arial" size="2">Type</font></p>
+            </td>
+            <td valign="top">
+            <p><font face="Arial" size="2">Control list&nbsp;to be used to control the field`s terminology, with the following options :</font></p>
+            <div><font face="Arial" size="2"><strong>D</strong></font><font face="Arial" size="2">&nbsp;= database<br />
+            <strong><span>P</span></strong> = Pick list<br />
+            <strong>T</strong> = Thesaurus</font></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Name</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Name of the database to be used for the authority control, or the file with the Pick list options</font></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Prefix</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">If the&nbsp;<strong><span>type</span></strong>&nbsp; is&nbsp;<strong>D</strong>, or <strong>T</strong>, gives the prefix to be used to get the terms of the database given in the <strong>authority_name</strong>. The prefix is applied to the IF and from the posting takes the information directly from the corresponding field of the first record pointed to by the MFN-component of the posting.</font></div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Display format</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2">Format to be used to display the field pointed to by the IF (with the prefix given) in the selection list. If the extraction format includes various fields with different tags, the name of the format to be used or the format itself can be put here. This format has to be written following a pre-defined pattern in order to be correctly interpreted. </font></div>
+            <div><font face="Arial" size="2">See the example here used for the authority files of the MARC database : @autoridades.pft:</font></div>
+            <div><font face="Arial" size="2"><br />
+            </font><font face="Arial" size="2"><span style="FONT-FAMILY: Courier New">select e3<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b<br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+            ...<br />
+            ...<br />
+            endsel<br />
+            </span></font></div>
+            <div><font face="Arial" size="2">The variable associated with the &nbsp;<strong>case </strong> statement, identifies:<br />
+<ul>
+                <li><font face="Arial" size="2">the ID assigned to the field in the FST</font> </li>
+                <li><font face="Arial" size="2">the format to use to display the field in the selection list, and <br />
+
+                </font></li>
+                <li><font face="Arial" size="2">preceded by `$$$`, the format to use to transfer the field to the data-entry form. In this way it is possible to transfer the complete field (as entered) or&nbsp;to make modifications of the field or of the subfields. If the extraction format is omitted, the display format will be used as an extraction format.</font></li>
+            </ul>
+            </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+            <div><font face="Arial" size="2">Extract as</font></div>
+            </td>
+            <td valign="top">
+            <div><font face="Arial" size="2"><font size="2">Format to be used to take values from the database and from the field located in the IF using the prefix given. If the display format is a pre-defined format (@xxxx) and follows the instruction to separate the display format from the extraction format by <strong>$$$, </strong>this part should be left empty.</font></font></div><br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<span id="1198937684424E" style="DISPLAY: none">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

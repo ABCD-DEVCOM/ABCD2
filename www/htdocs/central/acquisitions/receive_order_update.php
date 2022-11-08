@@ -38,14 +38,12 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/receive_order_update.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/receive_order_update.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: receive_order_update.php</font>\n";
+$ayuda="acquisitions/receive_order_update.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <div class="middle form">
 			<div class="formContent">
 <?php
@@ -67,21 +65,21 @@ if (isset($arrHttp["objectid"]) and trim($arrHttp["objectid"])!=""){
 
 
 // IF IS A NEW OBJETCT RECOLECT DATA FOR CREATING A RECORD IN THE BIBLIOGRAPHIC DATABASE
-if ($arrHttp["typeofobj"]=="N"){   // si el objeto es nuevo y el número de objeto no existe en la base de datos
+if ($arrHttp["typeofobj"]=="N"){   // si el objeto es nuevo y el nï¿½mero de objeto no existe en la base de datos
     echo "<h4>".$msgstr["newobject"].". ".$msgstr["database"].": ".$arrHttp["database"]."<BR>";
 	echo $msgstr["precatal"]."</h4>";
 	echo "<form name=catalog method=post action=object_create.php onsubmit='return false'>\n";
 //IF THE PURCHASE ORDER WAS GENERATED FROM A SUGGESTIONS, GET THE SUGGESTION FOR RECOLECTING THE PRE-CATALOGATION
 	$valortag=array();
 	if (isset($arrHttp["suggestion"])){
-		$res=EjecutarBusqueda("CN_".$arrHttp["suggestion"],"suggestions");     // se localiza la recomendación para sacar los datos de pre-catalogacion
+		$res=EjecutarBusqueda("CN_".$arrHttp["suggestion"],"suggestions");     // se localiza la recomendaciï¿½n para sacar los datos de pre-catalogacion
 		if ($res==0){
 			echo "<h4>".$msgstr["suggestions"].": ".$arrHttp["suggestion"]." ".$msgstr["notfound"]."</h4>";
 			die;
 		}
 	}else{
 //IF THERE IS NO SUGGESTION GET THE DATA FROM THE PURCHASEORDER DATABASE
-        $res=EjecutarBusqueda("ON_".$arrHttp["order"],"purchaseorder");     // se localiza la recomendación para sacar los datos de pre-catalogacion
+        $res=EjecutarBusqueda("ON_".$arrHttp["order"],"purchaseorder");     // se localiza la recomendaciï¿½n para sacar los datos de pre-catalogacion
 		if ($res==0){
 			echo "<h4>".$msgstr["purchaseorder"].": ".$arrHttp["suggestion"]." ".$msgstr["notfound"]."</h4>";
 			die;
@@ -106,7 +104,7 @@ if ($arrHttp["typeofobj"]=="C"){
 		echo "</h4>";
 	}else{
 		echo $cont_database;
-//		echo " &nbsp; <a href=show.php?base=".$arrHttp["database"]."&Expresion=CN_".$arrHttp["objectid"]." target=_blank>"."<img src=../images/zoom.png></a>";
+//		echo " &nbsp; <a href=show.php?base=".$arrHttp["database"]."&Expresion=CN_".$arrHttp["objectid"]." target=_blank>"."<img src=../../assets/images/zoom.png></a>";
 
 		echo "\n<form name=copies method=post action=copies_create.php>\n";
 		foreach ($arrHttp as $var=>$value){
@@ -136,7 +134,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
     }
 	$Expresion=urlencode(trim($Expresion));
 //	$Expresion=str_replace("\'","'",$Expresion);
-	$contenido="";
+//	$contenido="";
 	$registro="";
 	$IsisScript=$xWxis."buscar_ingreso.xis";
 	$query = "&base=$Db&cipar=$db_path"."par/$Db.par&Expresion=".$Expresion."&count=1&from=1&Formato=$formato";
@@ -153,7 +151,7 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 					if($total==0){
 						echo "Total: 0";
 						return $total;
-						die;
+					//	die;
 					}
 				}else{
 					$registro.=$linea."\n";
@@ -191,9 +189,9 @@ global $db_path;
 	}
 	$perms=fileperms($archivo);
 	if (is_writable($archivo)){
-	//se protege el archivo con el número secuencial
+	//se protege el archivo con el nï¿½mero secuencial
 		chmod($archivo,0555);
-	// se lee el último número asignado y se le agrega 1
+	// se lee el ï¿½ltimo nï¿½mero asignado y se le agrega 1
 		$fp=file($archivo);
 		$cn=implode("",$fp);
 		$cn=$cn+1;

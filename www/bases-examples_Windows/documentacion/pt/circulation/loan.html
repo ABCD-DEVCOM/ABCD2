@@ -1,0 +1,70 @@
+<font face="Arial" size="2"><strong>Empréstimos</strong><br />
+<br />
+Indique o  código de usu&aacute;rio e o  número de invent&aacute;rio do objeto que deseja localizar. Pode utilizar a op&ccedil;&atilde;o <strong>Listar</strong> para obter uma lista alfabética dos usu&aacute;rios ou dos números de invent&aacute;rio armazenados na base de dados <strong>loanobjects</strong>. Clique em  <strong>Emprestar </strong>para ativar o processo de empréstimo.<br />
+<br />
+Com o código de usu&aacute;rio indicado:<br />
+</font>
+<ol>
+    <li><font face="Arial" size="2">&Eacute; acessada a base de usu&aacute;rios (users) e se aplica o formato definido na configura&ccedil;&atilde;o para exibir seus dados (loans_usdisp.pft). E tamb&eacute;m &eacute;  determinado: tipo de usu&aacute;rio e vig&ecirc;ncia,&nbsp; se este último par&acirc;metro foi definido na configura&ccedil;&atilde;o de  políticas<br />
+  </font></li>
+    <li><font face="Arial" size="2">&Eacute; lida a  base de dados de suspens&otilde;es e multas (suspml) para verificar a situa&ccedil;&atilde;o do usu&aacute;rio</font></li>
+    <li><font face="Arial" size="2">&Eacute; lida a  base de dados de transa&ccedil;&otilde;es para determinar os empréstimos em poder do usu&aacute;rio e se existe atrasos na data de devolu&ccedil;&atilde;o<br />
+  </font></li>
+    <li><font face="Arial" size="2">&Eacute; lida a  base de dados de reservas para determinar se o usu&aacute;rio tem alguma c&oacute;pia reservada <br />
+  </font></li>
+</ol>
+<font face="Arial" size="2">Com o número de invent&aacute;rio:<br />
+</font>
+<ol>
+    <li><font face="Arial" size="2">&Eacute; lida a  base de dados de objetos  emprestados (loanobjects) para determinar as características do objeto a emprestar, o número de controle do título e a base de dados onde está catalogado o objeto. Com estes dois últimos valores, &eacute; lida a base de dados catalográfica para obter a informa&ccedil;&atilde;o do título cuja c&oacute;pia está sendo processada</font></li>
+    <li><font face="Arial" size="2">&Eacute; lida a  base de dados de reservas para determinar a situa&ccedil;&atilde;o de reserva da c&oacute;pia solicitada<br />
+  </font></li>
+    <li><font face="Arial" size="2">&Eacute;  determinado se o usu&aacute;rio tem outra c&oacute;pia emprestada do mesmo título revisando a exist&ecirc;ncia do título em loanobjects contra a informa&ccedil;&atilde;o obtida da base de datos de transa&ccedil;&otilde;es</font></li>
+</ol>
+<font face="Arial" size="2">Localiza-se a política a aplicar com base no tipo de usu&aacute;rio e o tipo de objeto que se está emprestando.</font> <font size="2"><font face="Arial">Aplicam-se as regras levando-se em conta os seguintes par&acirc;metros:<br />
+</font></font>
+<ol>
+    <li><font face="Arial" size="2">A data de vig&ecirc;ncia do usu&aacute;rio</font></li>
+    <li><font face="Arial" size="2">Se o usu&aacute;rio tem multas ou está suspenso</font></li>
+    <li><font face="Arial" size="2">O número de empréstimos em poder del usu&aacute;rio</font></li>
+    <li><font face="Arial" size="2">Se o  usu&aacute;rio tem empréstimos vencidos</font></li>
+    <li><font face="Arial" size="2">Se o usu&aacute;rio j&aacute; tem outro exemplar do mesmo título</font></li>
+    <li><font face="Arial" size="2">A data de vig&ecirc;ncia do objeto</font></li>
+</ol>
+<font size="2"><font face="Arial">Se todas as regras da pol&iacute;tica est&atilde;o corretas, &eacute;  calculada a data de  vencimento com base no calend&aacute;rio de dias, feriados e &eacute; atribu&iacute;do o empréstimo ao usu&aacute;rio, gravando-se um registro na base de dados de transa&ccedil;&otilde;es (trans).<br />
+<br />
+Em caso de inobserv&acirc;ncia das regras da pol&iacute;tica, &eacute; emitida   mensagem </font><font size="2"><font face="Arial">correspondente</font></font> <font face="Arial">e n&atilde;o ser&aacute; concedido o empr&eacute;stimo ao usu&aacute;rio que  solicitou a c&oacute;pia.<br />
+<br />
+<br />
+<strong>Renova&ccedil;&otilde;es<br />
+<br />
+</strong>A renova&ccedil;&atilde;o de um empr&eacute;stimo pode ser efetuada quando &eacute; analisado o estado da conta do usu&aacute;rio ou usando a op&ccedil;&atilde;o prevista para este fim nos menus do m&oacute;dulo de circula&ccedil;&atilde;o.<br />
+<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2">Através do estado de conta do usu&aacute;rio<br />
+  Selecione o empréstimo que deseja renovar e clique em  <strong>Renovar.</strong> ABCD investigará se a política aceita renova&ccedil;&otilde;es (com base no tipo de usu&aacute;rio e no tipo de objeto) e em caso positivo, quantas s&atilde;o permitidas. Se esta etapa &eacute; superada, modifica-se as datas de empr&eacute;stimo e de  devolu&ccedil;&atilde;o. As datas atuais de empr&eacute;stimo e devolu&ccedil;&atilde;o s&atilde;o passadas para o campo 200 da base de dados de transa&ccedil;&otilde;es, com o objetivo de manter o hist&oacute;rico de empr&eacute;stimos e para a elabora&ccedil;&atilde;o de estat&iacute;sticas</font></li>
+</ul>
+<ul>
+    <li><font face="Arial" size="2">Utilizando a op&ccedil;&atilde;o <strong>Renovar<br />
+  </strong>Insira o n&uacute;mero de invent&aacute;rio do empr&eacute;stimo que deseja renovar. Com  esta informa&ccedil;&atilde;o ABCD realiza uma busca na base de trans&ccedil;&otilde;es para obter os dados de empr&eacute;stimo, o c&oacute;digo do usu&aacute;rio e  selecionar a política a aplicar para o processo de renova&ccedil;&atilde;o. Uma vez obtidos estes valores, procede de maneira igual que ao passo anterior.</font></li>
+</ul>
+<br />
+<font size="2"><font face="Arial"><strong>Devolu&ccedil;&otilde;es</strong><br />
+<br />
+A devolu&ccedil;&atilde;o de um empr&eacute;stimo pode ser realizada pela conta do usu&aacute;rio ou utilizando a op&ccedil;&atilde;o para este fim presente nos menus de circula&ccedil;&atilde;o<br />
+<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2">Através do estado da conta del usu&aacute;rio<br />
+  Selecione o empr&eacute;stimo que deseja devolver e clique em <strong>Devolver.</strong> Com a informa&ccedil;&atilde;o correspondente ao tipo de usu&aacute;rio e o tipo de objeto, ABCD determinará a política do objeto e determinará se h&aacute; atraso na devolu&ccedil;&atilde;o. Em caso positivo, poderá gerar uma multa ou suspender o usu&aacute;rio, de acordo com o estabelecido na respectiva  política. As suspens&otilde;es e multas s&atilde;o armazenadas na base de dados <strong>suspml</strong>.</font></li>
+</ul>
+<font face="Arial" size="2"></font>
+<ul>
+    <li><font face="Arial" size="2">Utilizando a op&ccedil;&atilde;o <strong>Devolver</strong></font><br />
+  <font face="Arial" size="2">Insira o  número de invent&aacute;rio do empréstimo que deseja devolver. Com esta informa&ccedil;&atilde;o ABCD realiza uma busca na base de transa&ccedil;&otilde;es para obter os dados de empréstimo, o código do usu&aacute;rio e selecionar a política a aplicar para o processo de devolu&ccedil;&atilde;o. Uma vez obtidos estes valores, procede de maneira igual que ao passo anterior.</font></li>
+</ul>
+<font size="2"><font face="Arial"><br />
+<br />
+<br />
+</font></font>

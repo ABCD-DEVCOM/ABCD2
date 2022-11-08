@@ -56,9 +56,12 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$config_date_format;
     $Expresion="CN_".$cn;
     $Pft="";
     $archivo=$db_path."loanobjects/pfts/".$_SESSION["lang"]."/sob.pft";
-    if (file_exists($archivo)){    	$fp=file($archivo);
-    	foreach ($fp as $value) $Pft.=$value." ";    }
-    if ($Pft==""){    	$Pft="(if P(v959) then v1[1]'|'v10[1]'|'v959^i,'|',v959^l,'|',v959^b,'|',v959^v,'|',v959^t,'|',v959^o,'| ',ref(['trans']l(['trans'],'TR_P_'v959^i),v20, ref(['users']l(['users']'CO_'v20),' - 'v30),'|',";
+    if (file_exists($archivo)){
+    	$fp=file($archivo);
+    	foreach ($fp as $value) $Pft.=$value." ";
+    }
+    if ($Pft==""){
+    	$Pft="(if P(v959) then v1[1]'|'v10[1]'|'v959^i,'|',v959^l,'|',v959^b,'|',v959^v,'|',v959^t,'|',v959^o,'| ',ref(['trans']l(['trans'],'TR_P_'v959^i),v20, ref(['users']l(['users']'CO_'v20),' - 'v30),'|',";
     	switch (substr($config_date_format,0,2)){
 		    case "DD":
 		    	$Pft.= "v40*6.2,'/',v40*4.2,'/',v40.4";
@@ -78,7 +81,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$config_date_format;
 	include("../common/wxis_llamar.php");
 	$loanobjects=array();
 	$ix=0;
-	foreach ($contenido as $linea){		$linea=trim($linea);
+	foreach ($contenido as $linea){
+		$linea=trim($linea);
 		if ($linea!="" and substr($linea,0,8)!='$$TOTAL:')
 			$loanobjects[]=$linea;
 
@@ -206,7 +210,7 @@ $reserves=0;
 	</div>
 	<div class="actions">
 		<a href="situacion_de_un_objeto.php?base=".$arrHttp["base"]."&encabezado=s" class="defaultButton backButton">
-			<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+			<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 			<span><?php echo $msgstr["back"]?></strong></span>
 		</a>
 	</div>
@@ -239,17 +243,22 @@ else
 $codigos=explode("\n",$arrHttp["inventory"]);
 $archivo=$db_path."loanobjects/pfts/".$_SESSION["lang"]."/sob_h.txt";
 $tit_tabla="";
-if (file_exists($archivo)) {	$fp=file($archivo);
-	foreach ($fp as $value) {		if($tit_tabla=="")
+if (file_exists($archivo)) {
+	$fp=file($archivo);
+	foreach ($fp as $value) {
+		if($tit_tabla=="")
 		  	$tit_tabla.=$value;
 		else
-			$tit_tabla.='$$$'.$value;	}}else{
+			$tit_tabla.='$$$'.$value;
+	}
+}else{
 	$tit_tabla=$msgstr["inventory"].'$$$'.$msgstr["main_lib"].'$$$'.$msgstr["branch_lib"].'$$$'.$msgstr["volume"].'$$$'.$msgstr["tome"].'$$$'.$msgstr["typeofitems"].'$$$'.$msgstr["usercode"].'$$$'.$msgstr["devdate"];
 }
 $t_obj=explode('$$$',$tit_tabla);
 $ncols_tit=count($t_obj);
 
-foreach ($codigos as $cod_inv){	$mensaje="";
+foreach ($codigos as $cod_inv){
+	$mensaje="";
 	$cod_inv=trim($cod_inv);
 	if ($cod_inv=="")continue;
 	if (strpos($lista_control_no,";".$cod_inv.";")!==false)
@@ -263,7 +272,8 @@ foreach ($codigos as $cod_inv){	$mensaje="";
 		$primera_vez="S";
 		foreach ($ejemp as $eje){
 			$tit=$eje[0];
-       		if (trim($tit)!=""){				$t=explode('|',$tit);
+       		if (trim($tit)!=""){
+				$t=explode('|',$tit);
 				$catalog_db=strtolower($t[1]);
 				$control_no=$t[0];
 				If (trim($catalog_db)!="" and $primera_vez=="S"){
@@ -303,10 +313,13 @@ foreach ($codigos as $cod_inv){	$mensaje="";
 Function ShowItems($item,$codigos,$Opcion,$lista_control_no,$cols){
 global $msgstr,$mensaje;
 	$lista_inv="";
-	if (isset($item[1])){		$nota="";
-		if ($item[1]=="*") {			$item[1]=$item[0];
+	if (isset($item[1])){
+		$nota="";
+		if ($item[1]=="*") {
+			$item[1]=$item[0];
 			$nota="<font color=red> (*) </font>";
-			$mensaje="S";		}
+			$mensaje="S";
+		}
 		$l1=explode('|',$item[1]);
 		//$l1=explode('$$$',$l[2]);
 		$inv=$l1[2];
@@ -316,7 +329,9 @@ global $msgstr,$mensaje;
 		foreach ($l1 as $value){
 
 			$ixcols=$ixcols+1;
-			if ($ixcols>2){				$ixt=$ixt+1;	            echo "<td bgcolor=white valign=top>";
+			if ($ixcols>2){
+				$ixt=$ixt+1;
+	            echo "<td bgcolor=white valign=top>";
 	            if ($value=="")
 	            	echo "&nbsp;";
 	          	else
@@ -324,9 +339,12 @@ global $msgstr,$mensaje;
 	            echo "$nota </td>";
 	            $nota="";
 	         }
-		}
-		if($ixt<$cols){			for ($i=$ixt;$i<$cols;$i++)
-				echo "<td bgcolor=white>&nbsp;</td>";		}
+
+		}
+		if($ixt<$cols){
+			for ($i=$ixt;$i<$cols;$i++)
+				echo "<td bgcolor=white>&nbsp;</td>";
+		}
 		$lista_inv.=";".$inv.";";
     }else{
 	    if (isset($item[0])){

@@ -2,6 +2,8 @@
 /* Modifications
 20210323 fho4abcd Replaced helper code fragment by included file
 20210324 fho4abcd Reprogrammed, decent error processing, improved feedback and backbutton
+20211215 fho4abcd Backbutton by included file
+20220715 fho4abcd Use $actparfolder as location for .par files. Not strictly necessary: containing folder is deleted. Back to Home
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -69,14 +71,7 @@ if ($inframe!="1") include "../common/institutional_info.php";
         <?php echo $msgstr["mnt_ebd"]." " .$msgstr["database"].": ".$arrHttp["base"]?>
     </div>
     <div class="actions">
-<?php 
-// Show 'back' button, This depends on the stage: if the deletion is done go back to home.
-$backtourl=$backtoscript."?base=".$arrHttp["base"];
-if ($arrHttp["confirmcount"]>=2) $backtourl="/central/common/inicio.php";
-echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-    <span><strong>".$msgstr["regresar"]."</strong></span></a>";
-?>
+    <?php include "../common/inc_home.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -90,8 +85,8 @@ include  "../common/inc_div-helper.php";
 // Set up and perform necessay checks
 $errors=0;
 $databasefolder =$db_path.$arrHttp["base"];
-$parfullname    =$db_path."par/".$arrHttp["base"].".par";
-$deffullname    =$db_path."par/".strtoupper($arrHttp["base"]).".def";
+$parfullname    =$db_path.$actparfolder.$arrHttp["base"].".par";
+$deffullname    =$db_path.$actparfolder.strtoupper($arrHttp["base"]).".def";
 $fullbasesdotdat=$db_path."bases.dat";
 
 //Check that the database is not protected. This is a real error
@@ -171,5 +166,4 @@ echo "<h4>".$msgstr["end_process"].": ".$errors." error(s).</h4>";
 </div>
 <?php
 include("../common/footer.php");
-echo "</body></html>\n";
 ?>

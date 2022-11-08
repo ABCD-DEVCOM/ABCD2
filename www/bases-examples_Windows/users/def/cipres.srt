@@ -1,0 +1,3 @@
+Tipo de usuario                        10 [10] [v10]                                 
+Dependencia                            30 [45] [v45]                                 
+Apellidos y nombres                    30 [30] [v30]                        

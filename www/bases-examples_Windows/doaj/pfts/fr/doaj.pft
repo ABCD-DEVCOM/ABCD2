@@ -1,0 +1,17 @@
+'<table border=0 width=90%>'
+if p(v1) then '<tr><td width=20% valign=top><font face=arial size=2><b>Title</b></td><td valign=top><font face=arial size=2>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=20% valign=top><font face=arial size=2><b>Title Alternative</b></td><td valign=top><font face=arial size=2>'v2+|<br>|,'</td>' fi/
+if p(v3) then '<tr><td width=20% valign=top><font face=arial size=2><b>URL</b></td><td valign=top><font face=arial size=2>''<a href="'v3'"><font face=arial size=3><b>'v3,'</b></a>''</td>' fi/
+if p(v4) then '<tr><td width=20% valign=top><font face=arial size=2><b>Publisher</b></td><td valign=top><font face=arial size=2>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td width=20% valign=top><font face=arial size=2><b>Language</b></td><td valign=top><font face=arial size=2>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=20% valign=top><font face=arial size=2><b>ISSN</b></td><td valign=top><font face=arial size=2>'v6+|<br>|,'</td>' fi/
+if p(v7) then '<tr><td width=20% valign=top><font face=arial size=2><b>EISSN</b></td><td valign=top><font face=arial size=2>'v7+|<br>|,'</td>' fi/
+if p(v8) then '<tr><td width=20% valign=top><font face=arial size=2><b>Keywords</b></td><td valign=top><font face=arial size=2>'v8+|<br>|,'</td>' fi/
+if p(v9) then '<tr><td width=20% valign=top><font face=arial size=2><b>StartYear</b></td><td valign=top><font face=arial size=2>'v9+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=20% valign=top><font face=arial size=2><b>EndYear</b></td><td valign=top><font face=arial size=2>'v10+|<br>|,'</td>' fi/
+if p(v11) then '<tr><td width=20% valign=top><font face=arial size=2><b>Year added</b></td><td valign=top><font face=arial size=2>'v11+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td width=20% valign=top><font face=arial size=2><b>Subjects</b></td><td valign=top><font face=arial size=2>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=20% valign=top><font face=arial size=2><b>Country</b></td><td valign=top><font face=arial size=2>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td width=20% valign=top><font face=arial size=2><b>Publ.Fee</b></td><td valign=top><font face=arial size=2>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=20% valign=top><font face=arial size=2><b>Add. Info</b></td><td valign=top><font face=arial size=2>'v15+|<br>|,'</td>' fi/
+'</table><p>'

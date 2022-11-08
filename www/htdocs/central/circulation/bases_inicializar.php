@@ -32,7 +32,7 @@ echo "
 			</div>
 			<div class=\"actions\">
                 <a href=\"menu_mantenimiento.php\" class=\"defaultButton backButton\">
-                <img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+                <img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 	           <span><strong>". $msgstr["back"]."</strong></span></a>
             </div>
 	       <div class=\"spacer\">&#160;</div>
@@ -55,7 +55,8 @@ $IsisScript=$xWxis."administrar.xis";
 $query = "&base=".$bd."&cipar=$db_path"."par/".$bd.".par&Opcion=inicializar";
 include("../common/wxis_llamar.php");
 echo "<p>$bd :";
-foreach ($contenido as $value) echo "$value<br>";?>
+foreach ($contenido as $value) echo "$value<br>";
+?>
 </div>
 </div>
 <?php include("../common/footer.php");?>

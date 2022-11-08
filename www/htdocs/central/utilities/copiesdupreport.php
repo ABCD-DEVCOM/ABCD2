@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+20211216 fho4abcd Backbutton & helper by included file. Improve html
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -8,6 +11,7 @@ if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/acquisitions.php");
 include("../common/header.php");
@@ -17,33 +21,28 @@ $OS=strtoupper(PHP_OS);
 $converter_path=$cisis_path."mx";
 $base_ant=$arrHttp["base"];
 $arrHttp["base"]="loanobjects";
-echo "<script src=../dataentry/js/lr_trim.js></script>";
+$backtoscript="../dbadmin/menu_mantenimiento.php";
+
 echo "<body onunload=win.close()>\n";
+echo "<script src=../dataentry/js/lr_trim.js></script>";
 if (isset($arrHttp["encabezado"])) {
 	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";	
 }
-echo "<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">Create duplicate copies report: " . $base_ant."
-			</div>
-			<div class=\"actions\">";
-if (isset($arrHttp["encabezado"])){
-echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$base_ant."&encabezado=s\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>". $msgstr["back"]."</strong></span></a>";
-}
-echo "</div>
-	<div class=\"spacer\">&#160;</div>
-	</div>";
 ?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/menu_mantenimiento_copiesdupreport.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+<div class="sectionInfo">
+    <div class="breadcrumb">
+    <?php echo $msgstr["CPdupreport_mx"].": " . $base_ant;?>
+    </div>
+    <div class="actions">
+    <?php include "../common/inc_back.php"; ?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/menu_mantenimiento_copiesdupreport.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: copiesdupreport.php</font>";
+$ayuda="menu_mantenimiento_copiesdupreport.html";
+include "../common/inc_div-helper.php";
 ?>
-</div>	
 <script type="text/JavaScript" language="javascript">
 function Save(file)
 {

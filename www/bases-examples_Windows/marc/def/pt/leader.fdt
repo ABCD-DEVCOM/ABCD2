@@ -1,0 +1,7 @@
+LDR|3000|Leader|0|0||||||||||||1||
+S|3005|Status do registro|0|0|||X||1|P|ldr_05.tab|||||0||
+S|3006|Tipo de registro|0|0|||X||1|P|ldr_06.tab|||||0||
+S|3007|Nível bibliográfico|0|0|||X||1|P|ldr_07.tab|||||0||
+S|3017|Nível de catalogação|0|0|||X||1|P|ldr_17.tab|||||0||
+S|3018|Forma de catalogação descritiva|0|0|||X||1|P|ldr_18.tab|||||0||
+S|3019|Registro de recursos em várias partes|0|0|||X||1|P|ldr_19.tab|||||0||

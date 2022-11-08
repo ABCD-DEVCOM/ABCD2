@@ -1,4 +1,8 @@
 <?php
+/*
+20220125 fho4abcd home button replaces back button + div-helper + more  and better translation
+20220713 fho4abcd Use $actparfolder as location for .par and .def files + improve setting of UNICODE
+*/
 global $arrHttp;
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -16,21 +20,26 @@ if (isset($_SESSION["UNICODE"])) {
 }
 include("../lang/dbadmin.php");
 
-if (isset($_SESSION["CISIS_VERSION"]))
+if (isset($_SESSION["CISIS_VERSION"])){
 	$_POST['CISIS_VERSION']=$_SESSION["CISIS_VERSION"];
-else
-	$_POST['CISIS_VERSION']="";
-if (isset($_SESSION["UNICODE"]))
-	$_POST['UNICODE']=$_SESSION["UNICODE"];
-else
-	$_POST['UNICODE']="";
-if (isset($_SESSION["DCIMPORT"]))
+} else { 
+	$_POST['CISIS_VERSION']="16-60";
+}
+
+if (isset($_SESSION["UNICODE"])) {
+	$UNICODE=$_SESSION["UNICODE"];
+} else {
+	$UNICODE="0";
+}
+
+if (isset($_SESSION["DCIMPORT"])) {
 	$_POST['dcimport']=$_SESSION["DCIMPORT"];
-else
+} else {
 	$_POST['dcimport']="";
+}
 
 function MostrarPft(){
-global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
+global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path,$UNICODE,$actparfolder;
 /*
 	if($_POST['CISIS_VERSION']!=''){
 		$OS=strtoupper(PHP_OS);
@@ -42,7 +51,7 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
 
 	echo "<p><font color=red>".$Wxis."</p>";
 */
-  	@ $fp = fopen($db_path.$arrHttp['base'].'/dr_path.def', "w");
+  @ $fp = fopen($db_path.$arrHttp['base'].'/dr_path.def', "w");
 	@  flock($fp, 2);
   	if (!$fp){
     	echo "<p><strong> Error ocurred in ISIS Script."
@@ -57,28 +66,29 @@ global $arrHttp,$xWxis,$db_path,$Wxis,$mx_path;
 
  	$str="CISIS_VERSION=".$_POST['CISIS_VERSION']."\n";
    	fwrite($fp, $str);
-   	$str="UNICODE=".$_POST['UNICODE']."\n";
+   	$str="UNICODE=".$UNICODE."\n";
    	fwrite($fp, $str);
   	flock($fp, 3);
   	fclose($fp);
 
-  	@ $fp = fopen($db_path.'par/'.$arrHttp['base'].".par", "a");
+  	@ $fp = fopen($db_path.$actparfolder.$arrHttp['base'].".par", "a");
 	@  flock($fp, 2);
   	if (!$fp){
     	echo "<p><strong> Error ocurred in ISIS Script."
        		."Please try again.</strong></p></body></html>";
     	exit;
   	}
-    if($_POST['UNICODE']=='1')
-  		$str="isisac.tab=%path_database%"."isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."isisuctab_utf8.tab\n";
-  	else
-  		$str="isisac.tab=%path_database%"."isisac.tab\n"."isisuc.tab=%path_database%"."isisuc.tab\n";
+    if($UNICODE=='1'){
+      		$str="isisac.tab=%path_database%"."isisactab_utf8.tab\n"."isisuc.tab=%path_database%"."isisuctab_utf8.tab\n";
+     } else {
+      	  		$str="isisac.tab=%path_database%"."isisac.tab\n"."isisuc.tab=%path_database%"."isisuc.tab\n";
+     }
  	fwrite($fp, $str);
   	flock($fp, 3);
   	fclose($fp);
 
  	$IsisScript=$xWxis."inicializar_bd.xis";
- 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["cipar"];
+ 	$query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
  	include("../common/wxis_llamar.php");
 	foreach ($contenido as $linea){
 	   	echo "$linea\n";
@@ -152,6 +162,7 @@ if (isset($arrHttp["pft"])) $_SESSION["PFT"]=$arrHttp["pft"];
 include("../common/header.php");
 
 echo "
+<body>
 <script>
 function Continuar(){
     if (confirm(\"".$msgstr["borrartodo"]."\")==true ) {
@@ -182,47 +193,38 @@ function ActualizarListaBases(bd,desc){
 }
 echo "
 </script>
-<body>
 ";
 if (isset($arrHttp["encabezado"]))
 	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
-
-			<div class=\"breadcrumb\"><h5>".
-				$msgstr["fdt"]." " .$msgstr["database"]. ": " . $arrHttp["base"]."</h5>
-			</div>
-
-			<div class=\"actions\">
-	";
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["createdb"].": " . $arrHttp["base"]?>
+    </div>
+	<div class="actions">
+<?php
 $arrHttp["Opcion"]="new";
 if ($arrHttp["Opcion"]=="new"){
 	if (isset($arrHttp["encabezado"]) ){
-		echo "<a href=\"../common/inicio.php?reinicio=s\" class=\"defaultButton backButton\">";
+		include "../common/inc_home.php";
 	}else{
-		 echo "<a href=menu_creardb.php class=\"defaultButton backButton\">";
+        $backtoscript="menu_creardb.php";
+		include "../common/inc_back.php";
 	}
 }else{
 	if (isset($arrHttp["encabezado"]))
 		$encabezado="&encabezado=s";
 	else
 		$encabezado="";
-	echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].$encabezado." class=\"defaultButton backButton\">";
+    $backtoscript="menu_modificardb.php";
+    include "../common/inc_back.php";
 }
-echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
-
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/crearbd_new_create.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/crearbd_new_create.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: crearbd_new_create.php</font></div>";
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+$ayuda="crearbd_new_create.html"; include "../common/inc_div-helper.php";
 echo "
 <div class=\"middle form\">
 			<div class=\"formContent\">
@@ -307,15 +309,15 @@ $contenido.="\n".$bd."|".$descripcion;
 $ce=CrearArchivo($filename,$contenido);
 
 //Archivo .par
-$filename=$db_path."par/$bd.par";
+$filename=$db_path.$actparfolder."$bd.par";
 $contenido="$bd.*=%path_database%"."$bd/data/$bd.*\n";
 $contenido.="$bd.pft=%path_database%"."$bd/pfts/".$_SESSION["lang"]."/$bd.pft\n";
 $contenido.="prologoact.pft=%path_database%"."www/prologoact.pft\nepilogoact.pft=%path_database%"."www/epilogoact.pft\n";
 $ce=CrearArchivo($filename,$contenido);
 
 //ARCHIVO DBN.DEF
-$filename=$db_path."par/".strtoupper($bd).".def";
-$contenido="[FILE_LOCATION]\n\nFILE DATABASE.*=%path_database%$bd/data/dbn.*";
+$filename=$db_path.$actparfolder.strtoupper($bd).".def";
+$contenido="[FILE_LOCATION]\n\nFILE DATABASE.*=%path_database%$bd/data/$bd.*";
 $ce=CrearArchivo($filename,$contenido);
 
 //ARCHIVO SHORTCUT.PFT
@@ -330,7 +332,7 @@ $ce=CrearArchivo($filename,$contenido);
 $file = $Dir."$base"."/";
 $newfile = $Dir."$bd"."/";
 
-echo "<P><b>";
+echo "<p><b>";
 $arrHttp["IsisScript"]="";
 $arrHttp["Opcion"]="inicializar";
 $arrHttp["cipar"]=$bd.".par";
@@ -393,8 +395,6 @@ echo "<p><a href=iah_edit_db.php?encabezado=s&base=".$arrHttp["base"].">".$msgst
 
 echo "</div></div>";
 include("../common/footer.php");
-echo "</body></html>";
 unset($_SESSION["CISIS"]);
 unset($_SESSION["dc_import"]);
-die;
 ?>

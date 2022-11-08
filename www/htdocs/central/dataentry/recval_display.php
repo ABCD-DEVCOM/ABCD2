@@ -1,4 +1,8 @@
 <?php
+/* Modifications
+2021-06-10 fho4abcd Remove password argument, lineends
+20220715 fho4abcd Use $actparfolder as location for .par files + improve html, add div-helper
+*/
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -33,6 +37,13 @@ include("../common/get_post.php");
 include ("../config.php");
 
 include("../lang/admin.php");
+include("../common/header.php");
+?>
+<title><?php echo $msgstr["rval"]?></title>
+
+<body>
+
+<?php include "../common/inc_div-helper.php";
 
 
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
@@ -44,7 +55,7 @@ include("leerregistroisis.php");
 $maxmfn=0;
 $arrHttp["Opcion"]="leer";
 $arrHttp["Formato"]="ALL";
-$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],"","","");
+$res=LeerRegistro($arrHttp["base"],$arrHttp["base"].".par",$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],"","");
 
 //READ THE FILE WITH THE TYPE OR RECORDS, IF ANY
 unset ($tm);
@@ -62,7 +73,8 @@ if ($tor!=""){
 	$fp = file($tor);
 	$ix=0;
 	$tm[]="";
-	foreach ($fp as $linea){		$linea=trim($linea);
+	foreach ($fp as $linea){
+		$linea=trim($linea);
 		if ($linea!=""){
 			if ($ix==0){
 				$ij=strpos($linea," ");
@@ -87,14 +99,20 @@ if (isset($valortag[$tl])){
 if (isset($valortag[$nr])){
 	if ($nr!="") $nr=strtolower($valortag[$nr]);
 }
-if ($tl!="") {	$pftval=$tl."_".$nr."_".$arrHttp["base"].".val";
+if ($tl!="") {
+	$pftval=$tl."_".$nr."_".$arrHttp["base"].".val";
 	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
-	if (!file_exists($archivo))		$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
-	if (!file_exists($archivo)){		$pftval=$arrHttp["base"].".val";
-		$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;	}
+	if (!file_exists($archivo))
+		$archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
+	if (!file_exists($archivo)){
+		$pftval=$arrHttp["base"].".val";
+		$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
+	}
 
-}else{	$pftval=$arrHttp["base"].".val";
-	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;}
+}else{
+	$pftval=$arrHttp["base"].".val";
+	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$pftval;
+}
 if (!file_exists($archivo))  $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$pftval;
 //echo $arrHttp["base"]."/def/".$lang_db."/".$pftval."<br>";
 $rec_validation="";
@@ -106,7 +124,8 @@ if (file_exists($archivo)){
 	$fp=explode('###',$fp_str);
 	$ix_fatal=-1;
 	foreach($fp as $value){
-		$value=str_replace('$%|%$',' ',$value);		$value=trim($value);
+		$value=str_replace('$%|%$',' ',$value);
+		$value=trim($value);
 		if ($value!="") {
 			$ix=strpos($value,':');
 			if ($ix===false){
@@ -131,29 +150,26 @@ if (file_exists($archivo)){
 //	echo $rec_validation;
 
 }
-if ($rec_validation==""){	echo "<h4>".$msgstr["recvalempty"]."</H4>";
-	die;}
+if ($rec_validation==""){
+	echo "<h4>".$msgstr["recvalempty"]."</H4>";
+	die;
+}
 $formato=urlencode($rec_validation);
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&proc=<3333>R</3333>";
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&proc=<3333>R</3333>";
 $IsisScript=$xWxis."leer_mfnrange.xis";
 include("../common/wxis_llamar.php");
 ?>
-<html>
-<title><?php echo $msgstr["rval"]?></title>
-
-<body>
+<span class=title><?php $msgstr["rval"]." ($pftval)"?></span>
+<br>
 <?php
-
-echo "<span class=title>".$msgstr["rval"]." ($pftval)</span>";
-echo " <font size=1 face=arial> &nbsp; &nbsp; Script: dataentry/recval_display.php</font>";
-echo "<P>";
 $recval_pft="";
 $res=implode("\n",$contenido);
 $linea=explode('$$$$',$res);
 echo "<table>";
 $ix_fatal=-1;
 $ixerror=0;
-foreach ($linea as $v_value){	$v_value=trim($v_value);
+foreach ($linea as $v_value){
+	$v_value=trim($v_value);
 	$ix_fatal=$ix_fatal+1;
 	if ($v_value!=""){
 		$v_ix=strpos($v_value,':');
@@ -170,12 +186,14 @@ foreach ($linea as $v_value){	$v_value=trim($v_value);
 		}
     }
 }
-
-echo "</table>";
-echo "<span class=textbody03>";
-if ($ixerror==0) echo "<font color=red>No errors</font><p>" ;
-echo nl2br($recval_pft);
-echo "<p><a href=javascript:self.close()>close window</a><br><br>";
-echo "</body>
-</html>";
 ?>
+</table>
+<br>
+<?php
+if ($ixerror==0) echo "<font color=red>No errors</font>" ;
+echo nl2br($recval_pft);
+?>
+<br><a href=javascript:self.close()>close window</a>
+<br><br>
+</body>
+</html>

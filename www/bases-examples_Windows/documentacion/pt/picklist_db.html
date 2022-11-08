@@ -1,0 +1,89 @@
+<p><font face="Arial"><font size="2"><strong>Captura de têrmos através de um arquivo de autoridades ou utilizando a terminología já ingressada na base de dados</strong></font></font></p>
+
+<p><font face="Arial"><font size="2">Com esta opção pode capturar têrmos a partir de outra base de dados, por exemplo, uma base de dados de autoridades, ou a partir da mesma base de dados, por exemplo, para normalizar autores, descritores, editoras, etc.<br /></font></font></p>
+
+<p><font face="Arial"><font size="2">O acesso aos termos da base de dados associada é feito através do arquivo invertido. Em consequência, se requer definir sub-dicionários no interior do dicionário de têrmos, com a atribuição de prefixos aos campos indexados.<br />
+
+</font></font></p>
+
+<p><font face="Arial"><font size="2">Através do prefixo indicado na FDT se acessa aos postings das chaves obtendo o Mfn do registro. Usa-se o MFN do primeiro posting da chave para acessar o registro e sobre o qual se aplica 2 formatos: <br /></font></font></p>
+
+<ul>
+
+    <li><strong><font size="2"><font face="Arial">formato de exibição</font></font></strong></li>
+
+    <li><font face="Arial"><font size="2"><strong>formato de extração</strong></font></font></li>
+
+</ul>
+
+<p><font size="2"><font face="Arial">O <strong>formato de exibição</strong> se aplica sobre o registro obtido através do posting, a fim de determinar a forma como será exibido o campo na lista de seleção apresentada ao usuário, enquanto que o <strong>formato de extração</strong> se utiliza para extrair o campo e transferí-lo ao registro. A lista é construída com o elemento &lt;select&gt; da linguagem HTML e as opções do menú de seleção são preenchidas daa siguinte maneira:<br />
+
+&lt;option value="</font></font><font face="Arial"><font size="2"><strong>formato de extração</strong>"&gt;</font></font><strong><font size="2"><font face="Arial">formato de exibição</font></font></strong><font size="2"><font face="Arial">&lt;/option&gt;</font></font></p>
+
+<p><font size="2">Então, quando o usuário clica sobre um têrmo, a cadeia associada como <strong>formato de extração</strong> é transferida ao registro</font><br />
+
+<font size="2"><font face="Arial"><br />
+
+Os formatos mencionados podem ter toda a complexidade da linguagem de formatação do CDS/Isis. Para formatos muito complicados recomenda-se colocar como formato de extração um formato (PFT) previamente criado, utilizando a forma @xxxxxx.pft para incorporar o formato onde seja requerido. Neste caso, o formato de extração e o formato de exibição são incluídos no formato @xxxxxx.pft, separados con $$$. Deve-se utilizar o comando <strong>select</strong> da linguagem de formatação para aplicar o formato de acordo com a ID do campo recuperado no arquivo invertido.<br />
+
+<br />
+
+Ejemplo:<br />
+
+</font></font></p>
+
+<p dir="ltr" style="MARGIN-RIGHT: 0px"><font face="Arial" size="2"><font face="Courier New">select e3<br />
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 1:&nbsp;&nbsp; v1<br />
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 100: v100^a,`$$$`v100^a<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 600: v600^a,`$$$`v600^a<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 700: v700^a,`$$$`v700^a</font></font><font face="Arial"><font face="Courier New"><br />
+
+<font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 110: v110^a,`$$$`v110<br />
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 111: v111^a,`$$$`v111<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 245: v245^a,`$$$`f(mfn,1,0)<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 260: v260^a," : "v260^b,</font></font></font><font face="Arial"><font face="Courier New" size="2">`$$$`v260</font></font><br />
+
+<font face="Arial" size="2"><font face="Courier New">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; case 270: v270<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 340: v340<br />
+
+...<br />
+
+<br />
+
+...<br />
+
+<br />
+
+endsel</font></font></p>
+
+<p><font face="Arial" size="2">A variável associada a case, identifica o Id assignado ao campo na FST; em seguida especifica o formato a utilizar para a exibição do campo na lista de seleção e, em seguida, precedido por `$$$`, o formato a utilizar para exibir o campo e transferí-lo à tela de entrada. Se formato de extração é omitido, usa-se o formato de exibição como formato de extração.</font></p>
+
+<p><font size="2">O ID do campo é obtido através do posting obtido com o prefixo. Por esta razão, é possível exibir uma lista de seleção que contemple vários campos, por exemplo, todos os autores pessoais do formato Marc (100,600,700).</font></p>
+
+<p><font size="2">Neste caso, todos os campos serão indexados com o mesmo prefixo, porém o ID deve coincidir com a tag do campo para que extraia corretamente da base de dados, ao aplicar o formato de extração correspondente</font></p>
+
+<p><font size="2">Por exemplo, para exibir todos os autores do formato MARC, de acordo com o formato de extração mostrado anteriormente (@xxxxx.pft) a FST para indexação deverá especificar:</font></p>
+
+<p><font size="2">100 0 "AU_"v100^a/<br />
+
+<font size="2">600 0 (| AU_| v600^a|%|/)<br />
+
+<font size="2">700 0 (| AU_| v700^a|%|/)</font></font></font></p>
+
+<p><font size="2">Note a utilização do % no caso de campos repetitivos para gerar o número da ocorrência, já que a exibição das listas usa o componente do posting que identifica o número da ocorrência para extrair corretamente o campo.</font></p>
+
+<p><font size="2"></font></p>
+
+<br />
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>

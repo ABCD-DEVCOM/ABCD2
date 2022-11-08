@@ -1,0 +1,16 @@
+3006 3007
+BK_a_LI.fmt|a|m|Textual material (book)
+BK_t_TE.fmt|t|m|Thesis / Dissertation
+MS_j_CD.fmt|j|m|Audio-CD
+PM_g_DVD.fmt|g|m|DVD-video
+PM_g_PM.fmt|g|m|Other projected resource
+CF_m_AC.fmt|m|m|Electronic resource (computer file)
+MP_e_MC.fmt|e|m|Cartographic resource
+NM_c_MN.fmt|c|m|Notated music
+GR_k_PO.fmt|k|m|Two-dimensional graphical resource
+GR_r_OB.fmt|r|m|Three-dimensional resource (artefact or object)
+VM_o_KI.fmt|o|m|Kit (two or more types published together)
+MM_p_MM.fmt|p|c|Mixed Material - Various types
+SE_s_PE.fmt|a|s|Journal
+SE_s_AP.fmt|a|b|Journal article
+BC_a_LC.fmt|a|a|Book chapter

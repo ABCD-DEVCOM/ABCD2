@@ -22,35 +22,13 @@
 		<meta name="robots" CONTENT="NONE" />
 		<meta http-equiv="keywords" content="" />
 		<meta http-equiv="description" content="" />
-		<!-- Stylesheets -->
-		<!--link rel="stylesheet" rev="stylesheet" href="../css/<?php echo $css_name?>template.css" type="text/css" media="screen"/-->
-		<!--[if IE]>
-			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie.css" type="text/css" media="screen"/>
-		<![endif]-->
-		<!--[if IE 6]>
-			<link rel="stylesheet" rev="stylesheet" href="../css/bugfixes_ie6.css" type="text/css" media="screen"/>
-		<![endif]-->
+		<link rel="stylesheet" rev="stylesheet" href="../../assets/css/<?php echo $css_name?>template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+		<!--FontAwesome-->
+		
+		<link href="../../assets/css/all.min.css" rel="stylesheet"> 
+	
 <?php
 include ("css_settings.php");
-
 ?>
-<?php if (isset($context_menu) and $context_menu=="N"){?>
-<script>
 
- var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-  if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
-  function mischandler(){
-   return false;
- }
-  function mousehandler(e){
- 	var myevent = (isNS) ? e : event;
- 	var eventbutton = (isNS) ? myevent.which : myevent.button;
-    if((eventbutton==2)||(eventbutton==3)) return false;
- }
- document.oncontextmenu = mischandler;
- document.onmousedown = mousehandler;
- document.onmouseup = mousehandler;
-
-  </script>
-<?php }?>
 </head>

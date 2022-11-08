@@ -27,8 +27,10 @@ include("leer_fdt.php");
 
 $Fdt_unsorted=LeerFdt($base);
 $Fdt=array();
-foreach ($Fdt_unsorted as $value){	$f=explode('|',$value);
-	$Fdt[$f[1]]=$value;}
+foreach ($Fdt_unsorted as $value){
+	$f=explode('|',$value);
+	$Fdt[$f[1]]=$value;
+}
 
 ksort($Fdt);
 
@@ -45,32 +47,50 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
 <script language=javascript>
 
-function EnviarForma(){	buscar=""	if (document.forma1.tipob[0].checked)
+function EnviarForma(){
+	buscar=""
+	if (document.forma1.tipob[0].checked)
 		buscar="valor"
 	if (document.forma1.tipob[1].checked)
 		buscar="pft"
-	if (buscar==""){		alert("<?php echo $msgstr["cg_txtpft"]?>")
-		return  false	}
+	if (buscar==""){
+		alert("<?php echo $msgstr["cg_txtpft"]?>")
+		return  false
+	}
     if ((Trim(document.forma1.from.value)=="" || Trim(document.forma1.to.value)=="") && Trim(document.forma1.Expresion.value)=="" && Trim(document.forma1.seleccionados.value)==""){
 		alert("<?php echo $msgstr["cg_selrecords"]?>")
 		return  false
 	}
-	if (Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") {		if (Trim(document.forma1.from.value)=="" || (document.forma1.to.value)==""){			alert("<?php echo $msgstr["cg_selrecords"]?>")
-			return false		}
+	if (Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") {
+		if (Trim(document.forma1.from.value)=="" || (document.forma1.to.value)==""){
+			alert("<?php echo $msgstr["cg_selrecords"]?>")
+			return false
+		}
 		if (document.forma1.to.value>top.maxmfn || document.forma1.from.value>top.maxmfn || document.forma1.to.value<=0
-		    || document.forma1.from.value<=0 ||  document.forma1.from.value>document.forma1.to.value ){			alert("<?php echo $msgstr["numfr"]?>")
-			return false		}	}
-	if ((Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") && Trim(document.forma1.Expresion.value)!=""){		alert("<?php echo $msgstr["cg_selrecords"]?>")
-		return false	}
+		    || document.forma1.from.value<=0 ||  document.forma1.from.value>document.forma1.to.value ){
+			alert("<?php echo $msgstr["numfr"]?>")
+			return false
+		}
+	}
+	if ((Trim(document.forma1.from.value)!="" || Trim(document.forma1.to.value)!="") && Trim(document.forma1.Expresion.value)!=""){
+		alert("<?php echo $msgstr["cg_selrecords"]?>")
+		return false
+	}
 	fields=""
 	if (buscar=="valor"){
-		for (i=0;i<document.forma1.free_C.options.length;i++){			if (document.forma1.free_C.options[i].selected){				tag=document.forma1.free_C.options[i].value
+		for (i=0;i<document.forma1.free_C.options.length;i++){
+			if (document.forma1.free_C.options[i].selected){
+				tag=document.forma1.free_C.options[i].value
 				t=tag.split('|')
-				fields=fields+t[0]+";"			}		}
+				fields=fields+t[0]+";"
+			}
+		}
 
 	}
-	if (fields=="" && buscar=="valor") {		alert("<?php echo $msgstr["freesearch_3"]?>")
-		return	}
+	if (fields=="" && buscar=="valor") {
+		alert("<?php echo $msgstr["freesearch_3"]?>")
+		return
+	}
 	if (Trim(document.forma1.search.value)==""){
 		alert("<?php echo $msgstr["err_search"]?>")
 		return
@@ -111,7 +131,7 @@ function Buscar(){
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
 <input type=hidden name=MaxMfn>
 <input type=hidden name=fields>
-</form>
+
 <div align=center>
 <table cellpadding=2 cellspacing=5 border=0 width=600>
 
@@ -176,6 +196,7 @@ function Buscar(){
 
 </table>
 <p><input type=submit value=<?php echo $msgstr["cg_execute"]?> onClick=javascript:EnviarForma()></p>
+</form>
 </div>
 </div>
 </div>

@@ -1,0 +1,214 @@
+'<style>
+table.users {
+	width: 90%;
+	border: 0;
+	font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+
+table.users tr td {
+	border: 0;
+}
+
+table.users tr:nth-child(even) {
+	background-color: #f2f2f2;
+
+
+}
+
+table.users tr td.label {
+	width: 200px;
+		padding: 8px 8px;
+}
+
+
+img.users-avatar {
+	width: 150px;
+	border: 1px solid #000;
+	padding: 8px;
+}
+div.avatar {
+	width:150px;
+	height: 150px;
+	border: 8px solid #fff;
+	background-image: url(../common/show_image.php?image=images/'v620'&base=users);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+
+div.no-avatar {
+	width:150px;
+	height: 150px;
+	border: 8px solid #fff;
+	background-image: url(../common/show_image.php?image=/images/default-user-image.png&base=users);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+}
+</style>'
+
+
+'<table class="users">'
+
+'<tr>'
+'<td rowspan="21" valign="top" width="150">'
+if p(v620) then
+	'<div class="avatar"></div>'
+
+else 
+	'<div class="no-avatar"></div>'
+fi
+'</td>'
+'<td></td>'
+'<td></td>'
+'</tr>'
+
+if p(v10) then 
+'<tr>'
+'<td class="label"><b>Tipo de usuário</b></td>'
+'<td class="label">'mdl,v10+|<br>|,mpl,'</td>'
+'</tr>' 
+fi/
+
+if p(v12) then 
+'<tr>'
+'<td class="label"><b>Gênero</b></td>'
+'<td class="label">'v12^*, ". "v12^b,mpl,'</td>'
+'</tr>' 
+fi/
+
+if p(v15) then 
+'<tr>'
+'<td class="label"><b>Validade do cadastro</b></td>'
+'<td class="label">'v15+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v18) then 
+'<tr>'
+'<td class="label"><b>Validade do cadastro (ISO)</b></td>'
+'<td class="label">'v18+|<br>|,'</td>'
+'</tr>'  
+fi/
+
+if p(v20) then 
+'<tr>'
+'<td class="label"><b>Código do usuário</b></td>'
+'<td class="label">'v20+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v30) then 
+'<tr>'
+'<td class="label"><b>Nome</b></td>'
+'<td class="label">'v30+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v35) then 
+'<tr>'
+'<td class="label"><b>Identidade</b></td>'
+'<td class="label">'v35+|<br>|,'</td>'
+'</tr>'  
+fi/
+
+if p(v40) then 
+'<tr>'
+'<td class="label"><b>Local de trabalho</b></td>'
+'<td class="label">'v40+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v45) then 
+'<tr>'
+'<td class="label"><b>Local</b></td>'
+'<td class="label">'v45+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v47) then 
+'<tr>'
+'<td class="label"><b>Adm. Nível 1</b></td>'
+'<td class="label">'v47+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v49) then 
+'<tr>'
+'<td class="label"><b>Adm. Nível 2</b></td>'
+'<td class="label">'v49+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v100) then
+ '<tr>'
+'<td class="label"><b>Endereço</b></td>'
+'<td class="label">'v100+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v110) then
+'<tr>'
+'<td class="label"><b>CEP</b></td>'
+'<td class="label">'v110+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v120) then 
+'<tr>'
+'<td class="label"><b>Cidade</b></td>'
+'<td class="label">'v120+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v130) then 
+'<tr>'
+'<td class="label"><b>País</b></td>
+<td class="label">'v130+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v140) then 
+'<tr>'
+'<td class="label"><b>Telefone</b></td>'
+'<td class="label">'v140+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v150) then '<tr>'
+'<td class="label"><b>Fax</b></td>'
+'<td class="label">'v150+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v160) then 
+'<tr>'
+'<td class="label"><b>E-mail</b></td>'
+'<td class="label">'v160+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+if p(v600) then 
+'<tr>'
+'<td  class="label"><b>Login</b></td>
+<td class="label">'v600+|<br>|,'</td>'
+'</tr>' 
+fi/
+
+if p(v610) then 
+'<tr>'
+'<td class="label"><b>Senha</b></td>
+<td class="label">'v610+|<br>|,'</td>'
+'</tr>' 
+fi/
+
+if p(v620) then 
+'<tr>'
+'<td class="label"><b>Foto</b></td>
+<td class="label">'v620+|<br>|,'</td>' 
+'</tr>' 
+fi/
+
+'</table>'

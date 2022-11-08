@@ -1,24 +1,29 @@
 <?php
+/*
+20220925 fho4abcd repair save,add header,new style buttons, clean html
+*/
 session_start();
-$arrHttp=Array();
+if (!isset($_SESSION["permiso"])){
+	header("Location: ../common/error_page.php") ;
+}
 include("../common/get_post.php");
 include("../config.php");
 $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 unset($fp);
+$helpfile="tag_".$arrHttp["help"].".html";
 $archivo_in="";
-$archivo=$db_path.$arrHttp["base"]."/ayudas/".$_SESSION["lang"]."/"."tag_".$arrHttp["help"].".html";
+$archivo=$db_path.$arrHttp["base"]."/ayudas/".$_SESSION["lang"]."/".$helpfile;
 $archivo_save=$archivo;
 if (file_exists($archivo)){
-	$archivo_in=$arrHttp["base"]."/ayudas/".$_SESSION["lang"]."/"."tag_".$arrHttp["help"].".html";
+	$archivo_in=$arrHttp["base"]."/ayudas/".$_SESSION["lang"]."/".$helpfile;
 	$fp=file($archivo);
 }else{
-	$archivo=$db_path.$arrHttp["base"]."/ayudas/".$lang_db."/"."tag_".$arrHttp["help"].".html";
-
+	$archivo=$db_path.$arrHttp["base"]."/ayudas/".$lang_db."/".$helpfile;
 	if (file_exists($archivo)){
 		$fp=file($archivo);
-        $archivo_in=$arrHttp["base"]."/ayudas/".$lang_db."/"."tag_".$arrHttp["help"].".html";
+        $archivo_in=$arrHttp["base"]."/ayudas/".$lang_db."/".$helpfile;
 	}
 }
 $texto="";
@@ -28,15 +33,11 @@ if (isset($fp)){
 }
 $texto=str_replace("'","`",$texto);
 
-//
+include("../common/header.php");
 ?>
-<html>
-	<head>
-		<title><?php echo $msgstr["helpdatabasefields"]?></title>
-	</head>
-
-		<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
-		<script type="text/javascript">
+<body>
+<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
 // FCKeditor_OnComplete is a special function that is called when an editor
 // instance is loaded ad available to the API. It must be named exactly in
 // this way.
@@ -117,23 +118,34 @@ function GetLength()
 
 	alert( 'Actual text length (without HTML markups): ' + iLength + ' characters' ) ;
 }
-		</script>
-	</head>
-	<body>
-    <a href=http://docs.fckeditor.net/FCKeditor_2.x/Users_Guide/Quick_Reference target=_blank><?php echo $msgstr["fckeditor"]?></a>
-		<form action="save_help_db.php" method="post"  name=FCKfrm onSubmit="Enviar();return false">
-
-			<textarea cols="100%" id="editor1" name=FCK rows="20" ><?php echo str_replace('',$app_path.'/',$texto)?></textarea>
-			<input type=hidden name=Opcion>
-			<input type=hidden name=archivo value="<?echo $archivo_save?>">
-			<br>
-			<input type="submit" value="<?php echo $msgstr["save"]?>" onClick=javascript:document.FCKfrm.Opcion.value="Revisar">  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-		</form>
-		<div>&nbsp;</div>
-	</body>
-</html>
-<script>
-		CKEDITOR.replace( 'editor1', {
-			height: 260
-		} );
 </script>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["edithelpfile"].": ".$helpfile?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
+<div class="formContent">
+    <form action="save_help_db.php" method="post"  name=FCKfrm onSubmit="Enviar();return false">
+        <textarea cols="100%" id="editor1" name=FCK ><?php echo str_replace('',$app_path.'/',$texto)?></textarea>
+        <input type=hidden name=Opcion>
+        <input type=hidden name=archivo value="<?php echo $archivo_save?>">
+        <br>
+        <a class="bt bt-red" href="javascript:window.close();">
+            <i class="far fa-window-close"></i> &nbsp;<?php echo $msgstr["close"]?></a>
+        <a class="bt bt-blue" href=http://docs.fckeditor.net/FCKeditor_2.x/Users_Guide/Quick_Reference target=_blank>
+            <?php echo $msgstr["fckeditor"]?></a>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <button class="bt bt-green" type="submit"  onClick='javascript:document.FCKfrm.Opcion.value="Revisar"'>
+            <i class="far fa-save"></i> &nbsp;<?php echo $msgstr["save"]?></button>
+    </form>
+    <div>&nbsp;</div>
+</div>
+<script>
+    <!-- sets the initial heigth of the textbox -->
+    CKEDITOR.replace( 'editor1', {
+        height: 260
+    } );
+</script>
+</body>
+</html>

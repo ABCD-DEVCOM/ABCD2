@@ -1,4 +1,8 @@
 <?php
+/*
+20220108 fho4abcd backButton+ div helper+improve html
+*/
+
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -28,7 +32,7 @@
 session_start();
 include("../common/get_post.php");
 include ("../config.php");
-
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
 include("../lang/soporte.php");
@@ -36,63 +40,46 @@ if (!isset($_SESSION["permiso"])) die;
 $lang=$_SESSION["lang"];
 $Permiso=$_SESSION["permiso"];
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-$sep='^';
-$db=explode($sep,$arrHttp["base"]);
-if (isset($db[1]))
-	$db=substr($db[1],1);
-else
-	$db=$arrHttp["base"];
+$backtoscript="../dbadmin/z3950_conf.php";
+$db=$arrHttp["base"];
 include("../common/header.php");
 ?>
+<body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language=javascript>
 function Enviar(){
-	if (Trim(document.cnv.namecnvtb.value)=="" || Trim(document.cnv.descr.value)==""){		alert("<?php echo $msgstr["namecnvtamiss"]?>")
-		return	}
+	if (Trim(document.cnv.namecnvtb.value)=="" || Trim(document.cnv.descr.value)==""){
+		alert("<?php echo $msgstr["namecnvtamiss"]?>")
+		return
+	}
 	document.cnv.target=""
 	document.cnv.action="z3950_conversion_update.php"
 	document.cnv.submit()
 
 }
 </script>
-<body>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
+include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["z3950"].": ".$msgstr["z3950_cnv"]." (".$arrHttp["base"].")" ?>
+    <?php echo $msgstr["z3950"].": ".$msgstr["z3950_tab"]." (".$arrHttp["base"].")" ?>
 	</div>
 
 	<div class="actions">
-<?php
-	echo "<a href=z3950_conf.php?base=".$arrHttp["base"]."$encabezado class=\"defaultButton backButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["back"]."</strong></span>
-		</a>\n";
-	echo "<a href=javascript:Enviar() class=\"defaultButton saveButton\">
-		<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-		<span><strong>".$msgstr["save"]."</strong></span>
-		</a>\n";
-?>
-			</div>
-			<div class="spacer">&#160;</div>
+    <?php
+    $savescript="javascript:Enviar()";
+	include "../common/inc_save.php";
+	include "../common/inc_back.php";
+	include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/z3950_conf.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/z3950_conf.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: z3950_conversion.php </font>";
-?>
-	</div>
+<?php $ayuda="z3950_conf.html"; include "../common/inc_div-helper.php";?>
+
 <div class="middle form">
-	<div class="formContent">
+<div class="formContent">
 <form name=cnv  method=post onsubmit="javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=fn value=z3950.cnv>
@@ -147,7 +134,8 @@ foreach ($fp as $value){
 
 echo "</table><p><dd>";
 echo $msgstr["namecnvtb"].":";
-if (!isset($arrHttp["Table"])){	echo  "<input type=text name=namecnvtb size=30> &nbsp &nbsp;";
+if (!isset($arrHttp["Table"])){
+	echo  "<input type=text name=namecnvtb size=30> &nbsp &nbsp;";
 	echo $msgstr["description"].": ";
 	echo "<input type=text name=descr size=30>\n";
 }else{
@@ -155,12 +143,13 @@ if (!isset($arrHttp["Table"])){	echo  "<input type=text name=namecnvtb size=30>
 	echo $msgstr["description"].": ";
 	echo "<input type=text name=descr size=30 value='".$arrHttp["descr"]."'>\n";
 }
-echo "<a href=javascript:Enviar()>".$msgstr["update"]."</a>  &nbsp; &nbsp";
-if (!isset($arrHttp["encabezado"])) echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].">".$msgstr["cancel"]."</a>";
-echo "</form>";
+echo " &nbsp; ";
+include "../common/inc_save.php";
 ?>
-	</div>
+<a href='<?php echo $backtoscript."?base=".$arrHttp["base"]?>' class="bt bt-red" title='<?php echo $msgstr["cancel"]?>'>
+    <i class="fas fa-backspace"></i>&nbsp;<?php echo $msgstr["cancel"]?></a>
+
+</form>
+</div>
 </div>
 <?php include("../common/footer.php")?>
-</body>
-</html>

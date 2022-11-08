@@ -1,10 +1,14 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files + return wxis error
+*/
 function VerificarEliminacion($archivo){
-global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$msgstr,$lang_db;
+global $arrHttp,$db_path,$Wxis,$xWxis,$wxisUrl,$msgstr,$lang_db,$actparfolder;
     $Formato=$archivo;
 	$IsisScript=$xWxis."leer_mfnrange.xis";
-	$query="&base=".$arrHttp["base"]."&cipar=$db_path"."par/".$arrHttp["base"].".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato";
+	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par"."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"]."&Formato=$Formato";
 	include("../common/wxis_llamar.php");
+    if ($err_wxis!="") return $_SERVER['PHP_SELF']." :<br><br>".$err_wxis;
 	$res=implode("",$contenido);
 	$salida="";
 	$res=trim($res);

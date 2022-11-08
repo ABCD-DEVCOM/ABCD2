@@ -1,0 +1,53 @@
+<p><strong>Solicitud de Cotizaciones</strong></p>
+<p>En este proceso se muestran tanto las recomendaciones aprobadas como aquellas que están en proceso de cotización. La fórmula de búsqueda que se aplica sobre la base de datos es:<strong>&nbsp; STA_1 or STA_3</strong>, lo cual ubica los registros cuyo status sea <strong>1=aprobado</strong> o <strong>3=en cotización</strong> </p>
+<p>Se muestra la siguiente información:</p>
+<ul>
+    <li>Número secuencial asignado en forma automática a la recomendación</li>
+    <li>Fecha de aprobacíón de la recomendación</li>
+    <li>Número de copias aprobadas</li>
+    <li>Título del objeto</li>
+    <li>Fecha de inicio del proceso de cotización</li>
+    <li>Proveedores seleccionados:
+    <ul>
+        <li>Nombre del proveedor</li>
+        <li>Número de copias solicitadas</li>
+        <li>Monto cotizado</li>
+        <li>Observaciones</li>
+        <li>Seleccionado (Si/No)</li>
+        <li>Fecha de la selección</li>
+        <li>Fecha ISO de la selección</li>
+        <li>Número de la órden de pago emitida</li>
+    </ul>
+    </li>
+</ul>
+<p>Los registros obtenidos se pueden clasificar según tres criterios, y para cada criterio existe un formato (PFT) que permite presentar la información en el órden seleccionado y proveer las etiquetas de la columna de la tabla:</p>
+<p>
+<table cellspacing="1" cellpadding="1" width="90%" summary="" border="1">
+    <tbody>
+        <tr>
+            <td bgcolor="#cc99ff"><font size="3"><strong>Órden de presentación</strong></font></td>
+            <td bgcolor="#cc99ff"><font size="3"><strong>Formato de despliegue</strong></font></td>
+            <td bgcolor="#cc99ff"><font size="3"><strong>Título de las columnas</strong></font></td>
+        </tr>
+        <tr>
+            <td>Título del objeto</td>
+            <td>ti_bidding.pft</td>
+            <td>ti_bidding_tit.tab</td>
+        </tr>
+        <tr>
+            <td>Recomendado por</td>
+            <td>rb_bidding.pft</td>
+            <td>rb_bidding_tit.tab</td>
+        </tr>
+        <tr>
+            <td>Fecha de aprobación </td>
+            <td>da_bidding.pft</td>
+            <td>da_bidding_tit.tab</td>
+        </tr>
+    </tbody>
+</table>
+</p>
+<p>Haga clic sobre <img alt="" src="../../php/images/edit.png" />&nbsp; para editar una solicitud, a efectos de llenar los datos referentes a la&nbsp; solicitud de cotización del objeto.</p>
+<p>Haga clic sobre <img alt="" src="../../php/images/zoom.png" />&nbsp; para presentar los datos de la recomendación y aprobación de compra&nbsp;objeto</p>
+<p>Puede enviar esta salida a un procesador de palabras, o a un procesador de hojas de cálculo, utilizando los vínculos que se muestran en el menú de acciones ubicado en la franja superior. En este caso, la salida que se prepara contempla una fila por cada proveedor seleccionado en el proceso de cotización de un objeto; esto es, si un objeto posee tres proveedores, el objeto presentará tres filas en la tabla. Esto facilitará el agrupamiento de las solicitudes en base al proveedor.</p>
+<p>&nbsp;</p>

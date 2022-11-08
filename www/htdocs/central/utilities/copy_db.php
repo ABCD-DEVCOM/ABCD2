@@ -1,4 +1,7 @@
 <?php
+/*
+20211215 fho4abcd Backbutton & helper by included file
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -12,6 +15,8 @@ include("../lang/dbadmin.php");
 include("../lang/soporte.php");
 
 $db=$arrHttp["base"];
+$backtoscript="../dbadmin/menu_mantenimiento.php"; // The default return script
+
 if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or  isset($_SESSION["permiso"]["CENTRAL_ALL"])
     or isset($_SESSION["permiso"][$db."_CENTRAL_DBUTILS"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])){
 }else{
@@ -31,10 +36,14 @@ function Explorar(){
     msgwin.focus()
 }
 function EnviarForma(){
-	if (Trim(document.upload.storein.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["folder_name"]?>")
-		return	}
-	if (Trim(document.upload.copyname.value)==""){		alert("<?php echo $msgstr["falta"]." ".$msgstr["cp_name"]?>")
-		return	}
+	if (Trim(document.upload.storein.value)==""){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["folder_name"]?>")
+		return
+	}
+	if (Trim(document.upload.copyname.value)==""){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["cp_name"]?>")
+		return
+	}
 	dbn=Trim(document.upload.copyname.value)
 	var alphaExp = /^[a-zA-Z_0123456789-]+$/;
     if(dbn.match(alphaExp)){
@@ -47,9 +56,12 @@ function EnviarForma(){
    	document.upload.submit()
 }
 
-function Limpiar(){	fld=Trim(document.upload.storein.value)
-	if (fld.substr(0,1)=="/"){		fld=fld.substring(1)
-		document.upload.storein.value=fld	}
+function Limpiar(){
+	fld=Trim(document.upload.storein.value)
+	if (fld.substr(0,1)=="/"){
+		fld=fld.substring(1)
+		document.upload.storein.value=fld
+	}
 }
 </script>
 </head>
@@ -59,29 +71,13 @@ function Limpiar(){	fld=Trim(document.upload.storein.value)
 <?php echo $msgstr["db_cp"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=\"../dbadmin/menu_mantenimiento.php?base=".$arrHttp["base"]."\"  class=\"defaultButton backButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/copy_db.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/copy_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo " &nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Copiar_la_base_de_datos' target=_blank>AbcdWiki</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: utilities/copy_db.php</font>";
-
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
-?>
+<?php include "../common/inc_div-helper.php";?>
+<div class="middle form">
+<div class="formContent">
 <p>
 <?php echo $msgstr["db_cp"].": ".$arrHttp["base"]?>
 <form name=upload method=post action=copy_db_ex.php onsubmit="EnviarForma();return false;">
@@ -100,6 +96,3 @@ echo "
 <?php
 include("../common/footer.php");
 ?>
-
-</body>
-</html>

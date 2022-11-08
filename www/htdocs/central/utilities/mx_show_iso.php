@@ -2,6 +2,7 @@
 /* Modifications
 2021-04-20 fho4abcd Created from readiso_mx and reduce functionality to iso files
 2021-04-26 fho4abcd Check line endings
+20211216 fho4abcd Backbutton by included file.
 */
 /*
 ** Shows the content of an .iso file o file by mx
@@ -83,13 +84,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 <?php echo "...".$msgstr["show"]." ".$msgstr["cnv_iso"]?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"]."&inframe=".$inframe;
-        if (isset($arrHttp["backtoscript_org"])) $backtourl.="&backtoscript=".$arrHttp["backtoscript_org"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -226,9 +221,6 @@ foreach ($contenido as $value) {
 </div>
 </div>
 <?php
-
 include("../common/footer.php");
 ?>
 
-</body>
-</html>

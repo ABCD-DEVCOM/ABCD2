@@ -65,23 +65,29 @@ document.onkeypress =
     return true;
   };
 
-function ColocarFecha(){// si es una suspensión, se coloca la fecha a partir del vencimiento de la última suspensión
-// si es una multa, se coloca la fecha del día
+function ColocarFecha(){
+// si es una suspensiï¿½n, se coloca la fecha a partir del vencimiento de la ï¿½ltima suspensiï¿½n
+// si es una multa, se coloca la fecha del dï¿½a
 	ix=document.sanctions.type.selectedIndex
-	if (ix<1){		alert("<?php echo $msgstr["missst"]?>")
-		return	}
+	if (ix<1){
+		alert("<?php echo $msgstr["missst"]?>")
+		return
+	}
 	type=document.sanctions.type.options[ix].value
-	switch(type){		case "S":
+	switch(type){
+		case "S":
 			document.sanctions.date.value=fecha_susp
 			break
 		case "M":
 		case "N":
 			document.sanctions.date.value=fecha_dia
-			break	}
+			break
+	}
 	document.sanctions.units.focus()
 }
 
-function EnviarForma(){	ix=document.sanctions.type.selectedIndex
+function EnviarForma(){
+	ix=document.sanctions.type.selectedIndex
 	if (ix<1){
 		alert("<?php echo $msgstr["missst"]?>")
 		return
@@ -89,11 +95,17 @@ function EnviarForma(){	ix=document.sanctions.type.selectedIndex
 	if (Trim(document.sanctions.date.value=="")){
 		alert("<?php echo $msgstr["missdt"]?>")
 		return
-	}	if (Trim(document.sanctions.units.value)=="" && (document.sanctions.type.options[ix].value=="M" || document.sanctions.type.options[ix].value=="S") ){		alert("<?php echo $msgstr["missper"]?>")
-		return	}
-	if (Trim(document.sanctions.reason.value)==""){		alert("<?php echo $msgstr["missreason"]?>")
-		return	}
-	document.sanctions.submit();}
+	}
+	if (Trim(document.sanctions.units.value)=="" && (document.sanctions.type.options[ix].value=="M" || document.sanctions.type.options[ix].value=="S") ){
+		alert("<?php echo $msgstr["missper"]?>")
+		return
+	}
+	if (Trim(document.sanctions.reason.value)==""){
+		alert("<?php echo $msgstr["missreason"]?>")
+		return
+	}
+	document.sanctions.submit();
+}
 
 </script>
 <?php
@@ -101,18 +113,20 @@ function EnviarForma(){	ix=document.sanctions.type.selectedIndex
 echo "<body>";
  include("../common/institutional_info.php");
 ?>
+<?php include("submenu_prestamo.php");?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["suspend"]."/".$msgstr["fine"]?>
 	</div>
 	<div class="actions">
-		<?php include("submenu_prestamo.php");?>
+		
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
 <div class="helper">
 <?php echo "<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>".$msgstr["edhlp"]."</a>";
+if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
+	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>".$msgstr["edhlp"]."</a>";
 echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 ?>
 	</div>
@@ -120,10 +134,10 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 	<div class="formContent">
 <form name=sanctions method=post action=sanctions_update.php onSubmit="return false">
 <?php
-// se presenta la  información del usuario
+// se presenta la  informaciï¿½n del usuario
 	$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp.pft";
     if (!isset($formato_us)) $formato_us=$db_path."users/loans/".$lang_db."/loans_usdisp.pft";
-   	$query = "&Expresion=CO_".$arrHttp["usuario"]."&base=users&cipar=$db_path/par/users.par&Formato=".$formato_us;
+   	$query = "&Expresion=CO_".$arrHttp["usuario"]."&base=users&cipar=".$db_path.$actparfolder."users.par&Formato=".$formato_us;
 	$contenido="";
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
@@ -134,7 +148,8 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 	$fecha_exp="";
 	$fecha_dia=PrepararFechaSanciones(date("Ymd"));
 	$fecha_exp=$fecha_dia;
-	if (count($susp)>0 and $AC_SUSP=="Y"){          // se determina el vencimiento de la última sanción		$sancion=$susp[count($susp)-1];
+	if (count($susp)>0 and $AC_SUSP=="Y"){          // se determina el vencimiento de la ï¿½ltima sanciï¿½n
+		$sancion=$susp[count($susp)-1];
 		$p=explode("|",$sancion);
 		if ($p[6]>$fecha_dia){
 			$exp_date=mktime(0,0,0,substr($p[6],4,2),substr($p[6],6,2)+1,substr($p[6],0,4));
@@ -142,7 +157,7 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 			$fecha_exp=PrepararFechaSanciones($exp_date);
 		}
 	}
-//se determina la fecha de la próxima suspensión en base al vencimiento de la última suspensión
+//se determina la fecha de la prï¿½xima suspensiï¿½n en base al vencimiento de la ï¿½ltima suspensiï¿½n
 	echo "<script>\n";
 	echo "fecha_dia='".$fecha_dia."'\n";
 	echo "fecha_susp='".$fecha_exp."'";
@@ -159,8 +174,10 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 $file=$db_path."suspml/def/".$_SESSION["lang"]."/sanctions.tab";
 if (!file_exists($file)) $file=$db_path."suspml/def/".$lang_db."/sanctions.tab";
 $fp=file($file);
-foreach ($fp as $value) {	$val=explode('|',$value);
-	echo "<option value='".$val[0]."'>".$val[1]."\n";}
+foreach ($fp as $value) {
+	$val=explode('|',$value);
+	echo "<option value='".$val[0]."'>".$val[1]."\n";
+}
 ?>
 			</select>
         </td>
@@ -169,7 +186,7 @@ foreach ($fp as $value) {	$val=explode('|',$value);
            	<strong><?php echo $msgstr["date"]?></strong>
      	</td>
      	<td>
-<!-- Se coloca la fecha de expiración a partir de la fecha de la última suspensión -->
+<!-- Se coloca la fecha de expiraciï¿½n a partir de la fecha de la ï¿½ltima suspensiï¿½n -->
      		<input type="text" name="date" value="" size=10 ONFOCUS="this.blur()"/>
 		</td>
 	<tr>

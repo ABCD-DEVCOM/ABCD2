@@ -1,5 +1,6 @@
 /*
 20210503 fho4abcd minimum nbsp and size 1px in dhtmlXToolbarDivider*
+20211208 fho4abcd width of dhtmlXToolbarDividerXObject to 15 (was 1)
 */
  function dhtmlXToolbarObject(htmlObject,width,height,name,vMode){
  this.width=width;this.height=height;
@@ -197,7 +198,6 @@
  var div=document.createElement("div");
  div.innerHTML='<table cellpadding="0" cellspacing="1" class="'+this.tableCSS+'" style="display:none" width="'+this.width+'" height="'+this.height+'"><tbody>'+
  '<tr>'+
- '<td width="'+(this.gecko?5:3)+'px"><div class="toolbarHandle">&nbsp;</div></td>'+
  '<td class="'+this.titleCSS+'" style="display:none">'+this.name+'</td>'+
  '<td></td>'+
  '<td align="right" width="100%" class="'+this.titleCSS+'" style="display:none">'+this.name+'</td>'+
@@ -307,7 +307,7 @@
  this.topNod=0;
  if(id)this.id=id;else this.id=0;
  td=document.createElement("td");
- this.topNod=td;td.align="center";td.style.paddingRight="2";td.style.paddingLeft="2";td.width="4px";
+ this.topNod=td;td.align="center";td.style.paddingRight="2";td.style.paddingLeft="2";td.width="15px";
  td.innerHTML="<div class='toolbarDivider'>&nbsp;</div >";
  if(!document.all){td.childNodes[0].style.width="1px";td.style.padding="0 0 0 0";td.style.margin="0 0 0 0";}
  return this;

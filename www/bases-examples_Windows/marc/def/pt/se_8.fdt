@@ -1,0 +1,22 @@
+M|8|Campo Fixo (008)|0|0||||||||||||1|
+S||00-05 Data de entrada|0|0|||X||6|||||||0|
+S||06-06 Tipo de Data/Status de publicação|0|0|||X||1|P|008_06.tab|||||0|
+S||07-10 Data 1|0|0|||X||4|||||||0|
+S||11-14 Data 2|0|0|||X||4|||||||0|
+S||15-17 Lugar de pub./prod./exec.|0|0|||X||3|P|countries_008.tab|||||0|
+S||18-18 Frequência da publicação|0|1|||X||1|P|se_18.tab|||||0|
+S||19-19 Regularidade|0|1|||X||1|P|se_19.tab|||||0|
+S||20-20 Não usado|0|0|||X||1|P|undefined1.tab|||||0|
+S||21-21 Tipo de periódico/seriado original|0|1|||X||1|P|se_21.tab|||||0|
+S||22-22 Forma do original|0|0|||X||1|P|form_item.tab|||||0|
+S||23-23 Forma do periódico/seriado|0|0|||X||1|P|form_item.tab|||||0|
+S||24-24 Natureza da obra|0|1|||X||1|P|nature_contents_1.tab|||||0|
+S||25-27 Natureza do conteúdo|0|1|||X||3|P|nature_contents_3.tab|||||0|
+S||28-28 Publicação governamental|0|0|||X||1|P|pub_gov.tab|||||0|
+S||29-29 Publicação de evento|0|0|||X||1|P|conference.tab|||||0|
+S||30-32 Não usado|0|0|||X||3|P|undefined3.tab|||||0|
+S||33-33 Alfabeto original ou escrita do título|0|0|||X||1|P|se_33.tab|||||0|
+S||34-34 Entrada convencionada|0|0|||X||1|P|se_34.tab|||||0|
+S||35-37 Idioma|0|0|||X||3|P|languages.tab|||||0|
+S||38-38 Modificação do registro|0|0|||X||1|P|008_38.tab|||||0|
+S||39-39 Fonte de catalogação|0|0|||X||1|P|008_39.tab|||||0|

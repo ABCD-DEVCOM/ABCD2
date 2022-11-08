@@ -1,0 +1,23 @@
+('<table><tr><td valign=top align=center width=50>'
+      '*INV*'V900^n'*INV*'
+      if a(v82[1]) and a(v84[1]) then ' ' fi,
+      if p(v82^a[1]) then 
+        v82^a[1], |.|v82^b[1],|<br>|v82^c[1],|<br>|v82^d[1],"<br>"v82^e[1], 
+      else 
+        v82^b[1],|<br>|v82^c[1],|<br>|v82^d[1],|<br>|v82^e[1] , 
+      fi,
+      '<br>' 
+      if a(v900^m) and a(v900^e) then 
+        |Ej. |v900^l, 
+      else 
+        if a(v900^m) and p(v900^e) then 
+           |T. |v900^e,| Ej. |v900^l 
+        else 
+           if p(v900^m) then 
+               |Vol. |v900^m, | T. |v900^e,|  Ej. |v900^l / 
+           fi,
+        fi,
+      fi,
+      '</td><td valign=top width=220><br>'v100^a[1] if p(v100^a[1]) then '<br>' fi,v245^a,'</td><td width=50 valign=top align=right>'V900^n'</TD></tr>
+  </table>%%%'/
+)

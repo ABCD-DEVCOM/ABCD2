@@ -1,6 +1,6 @@
 <?php
 //
-// Crea en la base de datos copias los ítems procedentes de una orden de compra
+// Crea en la base de datos copias los ï¿½tems procedentes de una orden de compra
 // INSERT IN COPIES DATABASE THE ITEMS RECEIVED FROM A PURCHASE ORDER
 //
 session_start();
@@ -28,19 +28,17 @@ include("../common/institutional_info.php");
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/acquisitions/copies_create.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
+
 <?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/acquisitions/copies_create.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: copies_create.php</font>\n";
+$ayuda="acquisitions/copies_create.html";
+include "../common/inc_div-helper.php";
 ?>
-	</div>
+
 <div class="middle form">
 			<div class="formContent">
 <?php
 
-// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeración automática
+// se lee la FDT para conseguir la etiqueta del campo donde se coloca la numeraciï¿½n automï¿½tica
 $archivo=$db_path.$arrHttp["database"]."/def/".$_SESSION["lang"]."/".$arrHttp["database"].".fdt";
 if (file_exists($archivo)){
 	$fp=file($archivo);
@@ -92,7 +90,7 @@ echo "<br>".$msgstr["database"].": ".$arrHttp["database"];
 echo "<br>".$msgstr["date_receival"].": ".$arrHttp["date"];
 echo "</h3>";
 
-// Se verifica si esa orden de compra-recomendación-cotización ya ha sido actrualizada
+// Se verifica si esa orden de compra-recomendaciï¿½n-cotizaciï¿½n ya ha sido actrualizada
 //$res=BuscarCopias($arrHttp["database"],$arrHttp["order"],$arrHttp["suggestion"],$arrHttp["bidding"]);
 $res=0;
 if ($res==0){   // si no existen las copias, se crean
@@ -104,14 +102,21 @@ if ($res==0){   // si no existen las copias, se crean
 	$fp=file($status);
 	$ix=0;
 	$st="^a0";
-	foreach ($fp as $stats){		$stats=trim($stats);
-		if ($stats!=""){			if ($ix==0) {
-				$stats=explode('|',$stats);				$st='^a'.$stats[0].'^b'.$stats[1];
-				break;			}		}
-    }
+	foreach ($fp as $stats){
+		$stats=trim($stats);
+		if ($stats!=""){
+			if ($ix==0) {
+				$stats=explode('|',$stats);
+				$st='^a'.$stats[0].'^b'.$stats[1];
+				break;
+			}
+		}
+    }
+
 	$Mfn="";
 	for ($ix=1;$ix<=$arrHttp["received"];$ix++ ){
-		echo "<hr>";		$cn=ProximoNumero("copies");
+		echo "<hr>";
+		$cn=ProximoNumero("copies");
 		echo "<p>".$msgstr["createcopies"].": $ix";
 		echo "<br>".$msgstr["inventory"].": $cn";
 		$ValorCapturado="<1 0>" .$arrHttp["objectid"]."</1>"; 												//CONTROL NUMBER
@@ -146,12 +151,15 @@ if ($res==0){   // si no existen las copias, se crean
 				if (trim($linea!="")) echo $linea."\n";
 			}
 		}
-	}
+
+	}
 	echo "<hr>";
 }else{
-// ya se cargó esa orden de compra - recomendacion-cotización en la base de datos
+// ya se cargï¿½ esa orden de compra - recomendacion-cotizaciï¿½n en la base de datos
 	$Expresion='ORDER_'.$arrHttp["order"].'_'.$arrHttp["suggestion"].'_'.$arrHttp["bidding"];
-	echo "<h3>".$msgstr["orderloaded"]." ($res) &nbsp; <a href=../dataentry/show.php?base=copies&Expresion=$Expresion target=_blank>".$msgstr["search"]."</a></h3>";}
+	echo "<h3>".$msgstr["orderloaded"]." ($res) &nbsp; <a href=../dataentry/show.php?base=copies&Expresion=$Expresion target=_blank>".$msgstr["search"]."</a></h3>";
+
+}
 echo "<p><a href=receive_order_ex.php?searchExpr=".$arrHttp["order"]."&base=purchaseorder&date=".$arrHttp["date"]."&isodate=".$arrHttp["isodate"];
 echo ">purchase order</a>";
 
@@ -175,9 +183,9 @@ global $db_path;
 	$perms=fileperms($archivo);
 
 	if (is_writable($archivo)){
-	//se protege el archivo con el número secuencial
+	//se protege el archivo con el nï¿½mero secuencial
 		chmod($archivo,0555);
-	// se lee el último número asignado y se le agrega 1
+	// se lee el ï¿½ltimo nï¿½mero asignado y se le agrega 1
 		$fp=file($archivo);
 		$cn=implode("",$fp);
 		$cn=$cn+1;
@@ -194,8 +202,9 @@ global $db_path;
 	}
 }
 
-function BuscarCopias($database,$order,$suggestion,$bidding){
-global $xWxis,$db_path,$wxisUrl,$Wxis;	$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
+function BuscarCopias($order,$suggestion,$bidding){
+global $xWxis,$db_path;
+	$Prefijo='ORDER_'.$order.'_'.$suggestion.'_'.$bidding;
 	$IsisScript= $xWxis."ifp.xis";
 	$query = "&base=copies&cipar=$db_path"."par/copies.par&Opcion=diccionario&prefijo=$Prefijo&campo=1";
 	$contenido=array();
@@ -206,15 +215,16 @@ global $xWxis,$db_path,$wxisUrl,$Wxis;	$Prefijo='ORDER_'.$order.'_'.$suggestion
 			if ($pre==$Prefijo){
 				$l=explode('|',$linea);
 				return $l[1];
-				break;
+			//	break;
 			}
 		}
 	}
-	return 0;}
+	return 0;
+}
 
 
 function PurchaseOrderUpdate(){
-global $arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
+global $arrHttp,$xWxis,$db_path;
 	$Db="purchaseorder";
 	$Expresion="ON_".$arrHttp["order"] ;
 	$formato="(v50/)";
@@ -231,19 +241,26 @@ global $arrHttp,$xWxis,$Wxis,$wxisUrl,$db_path;
     }
     $ValorCapturado="";
     $Eliminar="";
-    foreach ($order as $value){    	$ix=$ix+1;
+    foreach ($order as $value){
+    	$ix=$ix+1;
     	if (trim($value)!=""){
 	    	if ($ix==$arrHttp["occ"]){
 	    		$ix1=strpos($value,"^f");
 	    		if ($ix1===false){
 	    			$value.="^f".$arrHttp["received"];
-	    		}else{    				$p=explode('^',$value);
+	    		}else{
+    				$p=explode('^',$value);
     				$value="";
-    				foreach ($p as $sc){    					$delim=substr($sc,0,1);
+    				foreach ($p as $sc){
+    					$delim=substr($sc,0,1);
     					$subc=substr($sc,1);
-    					if ($delim=="f"){    						$subc=(int)$subc + (int)$arrHttp["received"];    					}
-    					$value.='^'.$delim.$subc;    				}
-	    		}
+    					if ($delim=="f"){
+    						$subc=(int)$subc + (int)$arrHttp["received"];
+    					}
+    					$value.='^'.$delim.$subc;
+    				}
+
+	    		}
 	    	}
 	    	if ($ValorCapturado==""){
 	    		$Eliminar="d50";

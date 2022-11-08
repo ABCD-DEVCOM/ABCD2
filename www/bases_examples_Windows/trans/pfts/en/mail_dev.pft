@@ -1,6 +1,0 @@
-ref ([ 'users'] l ([ 'users'] 'CO_'v20), v160' | 'v30,)' $$$ <p>
-       Please note that you must stop by the library to return the following material: <p> '
-       mhl,v100, '<br>'
-       'Loan Date:' v30 * 6.2, '-', v30 * 4.2, '-', v30.4, '<br>'
-       'Return Date', v40 * 6.2, '-', v40 * 4.2, '-', v40.4, '<p>'
-       /

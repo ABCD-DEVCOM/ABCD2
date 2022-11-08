@@ -1,0 +1,121 @@
+'<marc:record>'/
+'<marc:leader>''----',v3005,,v3006,,v3007,'--------------',v3017,,v3018,,v3019,'</marc:leader>'/
+if p(v001) then '<marc:controlfield tag="001">'v001'</marc:controlfield>'/ fi,
+if p(v003) then '<marc:controlfield tag="003">'v003'</marc:controlfield>'/ fi,
+if p(v005) then '<marc:controlfield tag="005">'v005'</marc:controlfield>'/ fi,
+if p(v007) then '<marc:controlfield tag="007">'v007'</marc:controlfield>'/ fi,
+if p(v008) then '<marc:controlfield tag="008">'v008'</marc:controlfield>'/ fi,
+(if p(v010) then 
+     '<marc:datafield tag="010" ind1=" " ind2=" ">'/
+     if p(v010^a) then 
+         '<marc:subfield code="a">'v010^a'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v028) then 
+     '<marc:datafield tag="028" ind1=" " ind2=" ">'/
+     if p(v028^a) then 
+         '<marc:subfield code="a">'v028^a'</marc:subfield>'/
+     fi,
+     if p(v028^b) then 
+         '<marc:subfield code="b">'v028^b'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v040) then 
+     '<marc:datafield tag="040" ind1=" " ind2=" ">'/
+     if p(v040^a) then 
+         '<marc:subfield code="a">'v040^a'</marc:subfield>'/
+     fi,
+     if p(v040^c) then 
+         '<marc:subfield code="c">'v040^c'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v050) then 
+     '<marc:datafield tag="050" ind1=" " ind2=" ">'/
+     if p(v050^a) then 
+         '<marc:subfield code="a">'v050^a'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v245) then 
+     '<marc:datafield tag="245" ind1="'v245*0.1'" ind2="'v245*1.1'">'/
+     if p(v245^a) then 
+         '<marc:subfield code="a">'v245^a'</marc:subfield>'/
+     fi,
+     if p(v245^h) then 
+         '<marc:subfield code="h">'v245^h'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v260) then 
+     '<marc:datafield tag="260" ind1="'v260*0.1'" ind2="'v260*1.1'">'/
+     if p(v260^a) then 
+         '<marc:subfield code="a">'v260^a'</marc:subfield>'/
+     fi,
+     if p(v260^b) then 
+         '<marc:subfield code="b">'v260^b'</marc:subfield>'/
+     fi,
+     if p(v260^c) then 
+         '<marc:subfield code="c">'v260^c'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v300) then 
+     '<marc:datafield tag="300" ind1="'v300*0.1'" ind2="'v300*1.1'">'/
+     if p(v300^a) then 
+         '<marc:subfield code="a">'v300^a'</marc:subfield>'/
+     fi,
+     if p(v300^b) then 
+         '<marc:subfield code="b">'v300^b'</marc:subfield>'/
+     fi,
+     if p(v300^c) then 
+         '<marc:subfield code="c">'v300^c'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v511) then 
+     '<marc:datafield tag="511" ind1=" " ind2=" ">'/
+     if p(v511^a) then 
+         '<marc:subfield code="a">'v511^a'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v505) then 
+     '<marc:datafield tag="505" ind1="'v505*0.1'" ind2="'v505*1.1'">'/
+     if p(v505^a) then 
+         '<marc:subfield code="a">'v505^a'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v500) then 
+     '<marc:datafield tag="500" ind1="'v500*0.1'" ind2="'v500*1.1'">'/
+     if p(v500^a) then 
+         '<marc:subfield code="a">'v500^a'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v650) then 
+     '<marc:datafield tag="650" ind1="'v650*0.1'" ind2="'v650*1.1'">'/
+     if p(v650^a) then 
+         '<marc:subfield code="a">'v650^a'</marc:subfield>'/
+     fi,
+     if p(v650^y) then 
+         '<marc:subfield code="y">'v650^y'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+(if p(v700) then 
+     '<marc:datafield tag="700" ind1="'v700*0.1'" ind2="'v700*1.1'">'/
+     if p(v700^a) then 
+         '<marc:subfield code="a">'v700^a'</marc:subfield>'/
+     fi,
+     if p(v700^d) then 
+         '<marc:subfield code="d">'v700^d'</marc:subfield>'/
+     fi,
+     '</marc:datafield>'/
+fi/),
+'</marc:record>'/
+
+

@@ -1,0 +1,72 @@
+<font size="2"><font face="Arial">Este módulo trabalhaa com as seguintes bases de dados:<br />
+<br />
+<strong>users <br />
+</strong></font></font>
+<blockquote><font size="2"><font face="Arial">Base de dados de usu&aacute;rios</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>loanobjects <br />
+</strong></font></font>
+<blockquote>
+  <p><font size="2"><font face="Arial">Base de dados com as diferentes c&oacute;pias dos objetos que est&atilde;o dispon&iacute;veis para empr&eacute;stimo. <br />
+    <br />
+  Existe uma &uacute;nica base de dados loanobjects que reflete o estoque de todos os cat&aacute;logos definidos no ABCD</font>. </font><font face="Arial" size="2">Cada c&oacute;pia &eacute; identificada através de um número único ou número de invent&aacute;rio. Al&eacute;m disso. armazena o n&uacute;mero de controle do objeto, o volume e o tomo da c&oacute;pia para estabelecer as diferen&ccedil;as entre as c&oacute;pias de um mesmo objeto; o nome da base de dados onde est&aacute; catalogado para identifica&ccedil;&atilde;o da c&oacute;pia; e o tipo de objeto atribu&iacute;do &agrave; c&oacute;pia para efeitos de aplica&ccedil;&atilde;o da pol&iacute;tica de empr&eacute;stimos.</font></p>
+  <p><font size="2" face="Arial">Cada objeto representa um registro da base de dados <strong>loanobjects</strong> e as c&oacute;pias do mesmo s&atilde;o armazenadas como ocorr&ecirc;ncias de um campo repetitivo.</font></p>
+  <p><font size="2" face="Arial">Esta base de dados &eacute; atualizada a partir da cataloga&ccedil;&atilde;o, onde &eacute; permitido transferir os registros de invent&aacute;rio da base de dados <strong>copies</strong> para a base de dados <strong>loanobjetcs</strong>. </font><font size="2"><br />
+    <br />
+  </font></p>
+</blockquote>
+<font size="2"><font face="Arial"><strong>Base de dados do catálogo (cepal, marc, etc)</strong> <br />
+</font></font>
+<blockquote><font size="2"><font face="Arial">Descri&ccedil;&atilde;o bibliogr&aacute;fica dos objetos dispon&iacute;veis para empr&eacute;stimo. A liga&ccedil;&atilde;o entre o cat&aacute;logo e suas c&oacute;pias &eacute; realizada atrav&eacute;s do n&uacute;mero de controle do objeto.</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>trans </strong><br />
+</font></font>
+<blockquote><font size="2"><font face="Arial">Transa&ccedil;&otilde;es de empr&eacute;stimos, renova&ccedil;&otilde;es e devolu&ccedil;&otilde;es</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>suspml </strong><br />
+</font></font>
+<blockquote><font size="2"><font face="Arial">Suspens&otilde;es e  multas registradas aos usu&aacute;rios</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>reserva&nbsp; </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Reservas</font><br />
+</font></blockquote><font size="2"><font face="Arial"><br />
+O menu principal do modulo de Circula&ccedil;&atilde;o e Empr&eacute;stimo cont&eacute;m as seguintes se&ccedil;&otilde;es:<br />
+<br />
+<strong>Transacciones<br />
+<br />
+</strong>Esta se&ccedil;&atilde;o define as transa&ccedil;&otilde;es dispon&iacute;veis:<br />
+<br />
+</font></font>
+<ul>
+    <li><font size="2"><strong>Emprestar</strong><br />
+    Através do c&oacute;digo do usu&aacute;rio e do n&uacute;mero de invent&aacute;rio se acessa a base de dados <strong>users</strong> e <strong>loanobjects</strong> para determinar o tipo de usu&aacute;rio e o tipo de objeto. Al&eacute;m disso, &eacute; verificado se o usu&aacute;rio tem multas ou suspens&otilde;es pendentes realizando uma busca na base de dados <strong>suspml</strong>, ou se tem empr&eacute;stimos pendentes, realizando uma busca na base  de dados <strong>trans</strong>. Com estes valores &eacute; determinada a  política de empréstimos a aplicar e calculada a data de devolu&ccedil;&atilde;o<br />
+    </font></li>
+    <li><font size="2"><strong>Devolver</strong><br />
+    &Eacute; utilizado o n&uacute;mero de invent&aacute;rio para  localizar na base de dados <strong>trans</strong> a  c&oacute;pia que se deseja devolver. Se h&aacute; atraso na data de devolu&ccedil;&atilde;o, &eacute; calculada a san&ccedil;&atilde;o que &eacute; indicada pela pol&iacute;tica de empr&eacute;stimos e a mesma &eacute; salva na base de dados  <strong>suspml<br />
+    </strong></font></li>
+    <li><font size="2"><strong>Renovar</strong><br />
+    &Eacute; utilizado o  número de invent&aacute;rio para localizar na base de dados <strong>trans </strong>a c&oacute;pia que se deseja renovar. </font><font size="2"> Al&eacute;m disso, &eacute; verificado se o usu&aacute;rio tem pendentes multas e/ou suspens&otilde;es realizando uma busca na  base de dados <strong>suspml</strong>, ou se tem  outros empréstimos pendentes, realizando uma busca na  base de dados <strong>trans</strong>. Com estes valores se determina a política de renova&ccedil;&atilde;o a aplicar e se calcula a nova data de devolu&ccedil;&atilde;o<br />
+    </font></li>
+    <li><font size="2"><strong>Suspender/Multar</strong><br />
+    Indica-se o código do usu&aacute;rio que se deseja suspender/multar e os dados correspondentes.<br />
+    </font></li>
+    <li><font size="2"><strong>Estado da conta de um usu&aacute;rio</strong><br />
+    Exibe a listagem de empréstimos, suspens&otilde;es e/ou multas pendentes para um usu&aacute;rio<br />
+  </font></li>
+    <li><font size="2"><strong>Situación de un objeto</strong><br />
+    Exibe todas as c&oacute;pias de um objeto, indicando aquelas que est&atilde;o em poder de algum usu&aacute;rio </font></li>
+</ul>
+<font size="2"><font face="Arial"><strong><br />
+Bases de Dados<br />
+<br />
+</strong>Esta se&ccedil;&atilde;o, para o uso do Administrador de Empréstimos,  permite ter acesso direto &agrave;s  bases de dados suportadas pelo  módulo de circula&ccedil;&atilde;o<br />
+<strong><br />
+<br />
+Administra&ccedil;&atilde;o<br />
+<br />
+</strong></font></font>
+<ul>
+    <li><font size="2">Relat&oacute;rios<br />
+    </font></li>
+    <li><font size="2">Estatísticas</font></li>
+    <li><font size="2">Configura&ccedil;&atilde;o<br />
+  </font></li>
+</ul>
+<font size="2"><font face="Arial"><strong><br />
+</strong></font></font>

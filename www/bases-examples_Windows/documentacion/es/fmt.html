@@ -1,0 +1,48 @@
+<meta http-equiv="Content-Type" content="text/html;xcharset=utf-8" />
+<p><font face="Arial" size="2"></font></p>
+<p><font face="Arial" size="2"><strong>Formatos de Entrada</strong></font></p>
+<p><font face="Arial" size="2">El sistema mantiene un formato de entrada por defecto, construído a través de la <strong>.FDT</strong>. Pueden elaborarse otros formatos de entrada los cuales incluyen solo los tags de los campos a incroporar ya que el resto de las características se toman directamente de la <strong>FDT</strong></font></p>
+<p><span style="COLOR: #3366ff"><strong><font face="Arial" size="2">Generar formato de ingreso (FMT)</font></strong></span></p>
+<p><font face="Arial" size="2">Permite generar hojas de entrada adicionales las cuales pueden ser seleccionadas&nbsp;al momento de carga de&nbsp;información utilizando el menú desplegable&nbsp;Workseet&nbsp;presente en el marco superior de la ventana de ABCD.</font></p>
+<p><font face="Arial"><font size="2"><strong>Crear un nuevo&nbsp;formato de ingreso:<br />
+</strong><br />
+Seleccione de la lista de campos&nbsp;aquellos que van a formar parte de la&nbsp;hoja de ingreso . Para seleccionar un campo puede:</font></font></p>
+<ul>
+    <li><font face="Arial" size="2">Hacer doble clic sobre&nbsp;el&nbsp;campo respectivo</font> </li>
+    <li><font face="Arial" size="2">Hacer clic sobre un campo y luego extender la selección&nbsp;mediante&nbsp;las teclas&nbsp;[Shift]&nbsp;&nbsp;o&nbsp;&nbsp;[Ctrl-Shift]&nbsp;y luego hacer clic sobre la flecha que apunta hacia la derecha</font> </li>
+    <li><font face="Arial" size="2">Para copiar todos los campos a la hoja de entrada, haga clic sobre&nbsp;la doble flecha que apunta a la derecha</font>&nbsp; </li>
+</ul>
+<p><font face="Arial" size="2">Para eliminar campos de la hoja de entrada puede:</font></p>
+<ul>
+    <li><font face="Arial" size="2">Hacer doble clic sobre&nbsp;el&nbsp;campo respectivo</font> </li>
+    <li><font face="Arial" size="2">Hacer clic sobre un campo y luego extender la selección&nbsp;mediante&nbsp;las teclas&nbsp;[Shift]&nbsp;&nbsp;o&nbsp;&nbsp;[Ctrl-Shift]&nbsp;y luego hacer clic sobre la flecha&nbsp;</font>que apunta hacia la izquierda&nbsp; </li>
+    <li><font face="Arial" size="2">Para&nbsp;eliminar todos los campos a la hoja de entrada, haga clic sobre&nbsp;la doble flecha que apunta hacia la izquierda</font>&nbsp; </li>
+</ul>
+<p><font face="Arial" size="2">Los campos extraídos de la hoja de entrada volverán al final de&nbsp;la ventana contentia de&nbsp;la lista de campos</font></p>
+<p><font face="Arial" size="2">Use los botones </font><input type="button" name="subir" value="subir" /><font face="Arial" size="2">&nbsp;o </font><input type="button" name="bajar" value="bajar" /><font face="Arial" size="2">&nbsp;para posicionar los campos en la hoja de entrada.</font></p>
+<p><font face="Arial" size="2">Use el vínculo<em> Vista previa</em> <img alt="" src="../../php/dataentry/img/preview.gif" /> para&nbsp;presentar el&nbsp;formato de entrada en construcción </font></p>
+<p><font face="Arial" size="2">Cuando termine el&nbsp; formato, proceda almacenarlo incluyendo en el campo&nbsp;nombre el nombre del archivo donde se almacenará y en&nbsp;descripción una breve descripción del formato generado. El&nbsp;nombre del formato&nbsp;solo puede contener letras, números y el caracter _. Además siempre debe comenzar por una letra.&nbsp;No se aceptan espacios&nbsp; ni caracteres especiales. La&nbsp;descripción debe ser razonablemente corta de forma tal que pueda visualizarse correctamente en el menú&nbsp;Worksheet ubicado en el marco superior de la ventana principal de&nbsp;ABCD.</font></p>
+<p><font face="Arial" size="2"></font></p>
+<p><strong><font face="Arial" size="2">Modificar un formato de ingreso ya existente</font></strong></p>
+<p><font face="Arial" size="2">Seleccione del menú desplegable el formato que desea editar y luego haga clic sobre&nbsp;<strong><u>Editar</u></strong>. Con la información del formato se llenará la ventana&nbsp;&nbsp;<strong>Campos seleccionados. </strong>Siga las instrucciones mencionadas anteriormente para agregar o eliminar campos del formato.</font></p>
+<p><strong><font face="Arial" size="2">Eliminar un formato de ingreso ya existente</font></strong></p>
+<p><font face="Arial" size="2">Seleccione del menú desplegable el formato que desea eliminar y luego haga clic sobre&nbsp;<u><strong>Eliminar</strong></u>.</font></p>
+<font face="Arial" size="2"><hr />
+<p>&nbsp;</p>
+<p><font face="Arial" size="2">Los formatos elaborados de almacenan en la carpeta&nbsp;<strong>def </strong>del directorio de la base de datos, con la extensión <strong>.fmt</strong>. La lista de los formatos vigentes se mantiene en el archivo&nbsp;<strong>formatos.wks</strong> en el cual figura una línea para cada formato almacenado donde se separan con el caracter&nbsp;<strong>|</strong> el nombre y la descripción del mismo.</font></p>
+<p><font face="Arial" size="2">Ejemplo de un formato generado:</font></p>
+<p><font face="Courier New" size="2">H||Entradas principales|0|0|||||||||||<br />
+100<br />
+110<br />
+111<br />
+240<br />
+242<br />
+245<br />
+246<br />
+250<br />
+260<br />
+300<br />
+310</font></p>
+<p><font face="Arial" size="2">Como puede observarse,&nbsp;la hoja de entrada&nbsp;generado incluye las líneas de la FDT del típo <strong>H </strong>(encabezamiento) o <strong>L </strong>(línea divisoria) y las etiquetas de los campos seleccionados. Esto significa que los cambios realizados&nbsp;en la FDT&nbsp;posteriormente a la generación de las hojas de entrada, serán presentados al momento de selección del la hoja de entrada correspondiente.</font></p>
+<p><font face="Arial"><font size="2">El archivo&nbsp;<strong>formatos.wks</strong>&nbsp;&nbsp; es leído para rellenar el menú desplegable&nbsp;<strong>Worksheet. </strong></font></font><font face="Arial" size="2">Al crearse o eliminarse un formato, se actualiza en forma automática el menú desplegable <strong>Worksheet </strong>incluído en el marco superior de la ventana principal.</font></p>
+</font>

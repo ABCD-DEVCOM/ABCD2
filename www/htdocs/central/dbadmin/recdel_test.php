@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -15,7 +18,10 @@ $vc=explode("\n",$arrHttp["ValorCapturado"]);
 $Pft=array();
 $ix=-1;
 $formato="";
-foreach ($vc as $var=>$value) {	$value=trim($value);	if (substr($value,0,1)=="@"){		$pft_file=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".trim(substr($value,1));
+foreach ($vc as $var=>$value) {
+	$value=trim($value);
+	if (substr($value,0,1)=="@"){
+		$pft_file=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".trim(substr($value,1));
 		if (!file_exists($pft_file)) $pft_file=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".trim(substr($value,1));
 		$formato="@".$pft_file;
 		break;
@@ -23,7 +29,7 @@ foreach ($vc as $var=>$value) {	$value=trim($value);	if (substr($value,0,1)=="
 	$formato.= $value  ;
 }
 $formato=urlencode(trim($formato));
-$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"];
+$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&Pft=".$formato."&from=".$arrHttp["Mfn"]."&to=".$arrHttp["Mfn"];
 $IsisScript=$xWxis."leer_mfnrange.xis";
 include("../common/wxis_llamar.php");
 ?>
@@ -35,7 +41,7 @@ include("../common/wxis_llamar.php");
 	<div class="actions">
 <?php echo "<a href=\"javascript:self.close()\" class=\"defaultButton cancelButton\">";
 ?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
+		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
 		<span><strong><?php echo $msgstr["close"]?></strong></span></a>
 	</div>
 	<div class="spacer">&#160;</div>

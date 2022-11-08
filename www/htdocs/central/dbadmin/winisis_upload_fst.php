@@ -1,4 +1,7 @@
 <?php
+/*
+20220125 fho4abcd buttons+div-helper + update to php7: ereg_replace->preg_replace
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -33,14 +36,14 @@ $fdt=array();
 	echo "<dd><h3>" .$arrHttp["base"].".fst Uploaded</h3></dd>";
 }
 
-
-
-
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
 include("../common/header.php");
-echo "<script language=\"JavaScript\" type=\"text/javascript\"  src=\"../dataentry/js/lr_trim.js\"></script>\n";
-echo "<script languaje=javascript>
+?>
+<body>
+<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
+<?php
+echo "<script language=javascript>
 function EnviarForma(){
 	if (Trim(document.winisis.userfile.value)==''){
 		alert('".$msgstr["missing"]." ".$msgstr["pft"]."')
@@ -55,58 +58,46 @@ function EnviarForma(){
 	document.winisis.submit()
 }
 </script>";
-if (isset($arrHttp["encabezado"]))
+if (isset($arrHttp["encabezado"])){
 	include("../common/institutional_info.php");
-echo "
-	<div class=\"sectionInfo\">
-
-			<div class=\"breadcrumb\"><h5>".
-				$msgstr["winisisdb"].": " . $arrHttp["base"]."</h5>
-			</div>
-
-			<div class=\"actions\">
-	";
-if (isset($arrHttp["encabezado"]))
-		$encabezado="&encabezado=s";
-	else
-		$encabezado="";
-echo "<a href=winisis_upload_fdt.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado." class=\"defaultButton backButton\">";
-echo "
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-	</div>";
-
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/winisis_upload_fst.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/winisis_upload_fst.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: winisis_upload_fst.php</font></div>";
-
-echo "
-<div class=\"middle form\">
-			<div class=\"formContent\">";
+    $encabezado="&encabezado=s";
+} else {
+    $encabezado="";
+}
+?>
+<div class="sectionInfo">
+    <div class="breadcrumb">
+        <?php echo $msgstr["winisisdb"].": " . $arrHttp["base"]?>
+    </div>
+    <div class="actions">
+    <?php
+    $backtoscript="winisis_upload_fdt.php?base=".$arrHttp["base"]."&nombre=".$arrHttp["base"]."&desc=".urlencode($arrHttp["desc"]).$encabezado;    
+    include "../common/inc_back.php";
+    include "../common/inc_home.php";
+    ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php $ayuda="winisis_upload_fst.html"; include "../common/inc_div-helper.php";?>
+<div class="middle form">
+    <div class="formContent">
+<?php
 if (!isset($_SESSION["FST"])){
 	$files = $_FILES;
-	if ($files['userfile']['size']) {
+	if (isset($files["userfile"]) && $files['userfile']['size']) {
       // clean up file name
       	$name=$files['userfile']['name'];
-		$name = ereg_replace("[^a-z0-9._]", "",
-  			str_replace(" ", "_",
-  			str_replace("%20", "_", strtolower($name)
-		)
- 			)
-   		);
+        $name=str_replace(" ", "_", str_replace("%20", "_", strtolower($name)));
+		$name=preg_replace("[^a-z0-9._]", "",$name);
  		$fp=file($files['userfile']['tmp_name']);
   		$Fst="";
    		foreach($fp as $linea) $Fst.=$linea;
 		CrearFst($Fst);
 		$_SESSION["FST"]=$Fst;
 	}
-}else{	CrearFst($_SESSION["FST"]);}
+}else{
+	CrearFst($_SESSION["FST"]);
+}
 echo "
 <form name=winisis action=winisis_upload_pft.php method=POST enctype=multipart/form-data onsubmit='javascript:EnviarForma();return false'>
 <input type=hidden name=Opcion value=PFT>

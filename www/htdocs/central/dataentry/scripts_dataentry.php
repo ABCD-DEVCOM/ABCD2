@@ -1,4 +1,12 @@
-<?php if (!isset($_SESSION["permiso"])){
+<?php
+/*
+20210914 fho4abcd modified size of popup window for upload
+20220116 fho4abcd modified size of popup window for capturaclaves
+20220202 fho4abcd modified size of popup window for picklist
+20220207 fh04abcd Improve html & backbutton 
+20220214 fh04abcd Add form selectarchivo & javascript function SelectArchivo
+*/
+if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 ?>
@@ -34,27 +42,8 @@
 </style>
 
 <style type="text/css">
-#wrapper {
-	text-align:left;
-	margin:0 auto;
-	width:100%;
-	xmin-height:10px;
-	xborder:1px solid #ccc;
-	padding:0px;
-}
 
-
-a {
-
-	cursor:pointer;
-}
-
-
-#myvar {
-	border:1px solid #ccc;
-	background:#ffffff;
-	padding:2px;
-}
+/*
 input,textarea {
     border: 1px solid #CCCCCC;
     -webkit-box-shadow:
@@ -69,7 +58,7 @@ input,textarea {
     padding: 2px;
     background: rgba(255,255,255,0.5);
     margin: 0 0 0px 0;
-}
+}*/
 </style>
 
 <!-- Estilos para el tooltip -->
@@ -107,8 +96,60 @@ a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radi
 
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/textcounter.js?<?php echo time(); ?>"></script>
 
-<?php if (file_exists("../dataentry/js/".$arrHttp["base"].".js"))
+<?php 
+
+		global $Expresion;
+
+if (file_exists("../dataentry/js/".$arrHttp["base"].".js"))
 	echo "<script language=\"JavaScript\" type=\"text/javascript\" src=".$arrHttp["base"].".js></script>\n";
+
+
+
+//Treatment of the search expression
+if (isset($arrHttp["Expresion"])){
+    $arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
+    $Expresion=trim($arrHttp["Expresion"]);
+    $Expresion=str_replace("  "," ",$Expresion);
+    $Expresion=str_replace("  "," ",$Expresion);
+    $Expresion=str_replace('("',"",$Expresion);
+    $Expresion=str_replace('")',"",$Expresion);
+    $xor="¬or¬";
+    $xand="¬and¬";
+    $Expresion=str_replace (" {", "{", $Expresion);
+    $Expresion=str_replace (" or ", $xor, $Expresion);
+    $Expresion=str_replace ("+", $xor, $Expresion);
+    $Expresion=str_replace (" and ", $xand, $Expresion);
+    $Expresion=str_replace ("*", $xand, $Expresion);
+    $nse=-1;
+    while (is_integer(strpos($Expresion,'"'))){
+        $nse=$nse+1;
+        $pos1=strpos($Expresion,'"');
+        $xpos=$pos1+1;
+        $pos2=strpos($Expresion,'"',$xpos);
+        $subex[$nse]=trim(substr($Expresion,$xpos,$pos2-$xpos));
+        if ($pos1==0){
+            $Expresion="{".$nse."}".substr($Expresion,$pos2+1);
+        }else{
+            $Expresion=substr($Expresion,0,$pos1-1)."{".$nse."}".substr($Expresion,$pos2+1);
+        }
+    }
+
+   $Expresion=str_replace(" ","*",$Expresion);
+
+    while (is_integer(strpos($Expresion,"{"))){
+        $pos1=strpos($Expresion,"{");
+        $pos2=strpos($Expresion,"}");
+        $ix=substr($Expresion,$pos1+1,$pos2-$pos1-1);
+        if ($pos1==0){
+            $Expresion=$subex[$ix].substr($Expresion,$pos2+1);
+        }else{
+            $Expresion=substr($Expresion,0,$pos1)." ".$subex[$ix]." ".substr($Expresion,$pos2+1);
+        }
+    }
+    $Expresion=str_replace ("¬", " ", $Expresion);
+    $Expresion=urlencode($Expresion);
+}
+
 
 ?>
 
@@ -146,6 +187,7 @@ function switchMenu(obj,ixsec) {
 		}
 	}
 	function GuardarBusqueda(){
+
 		Descripcion=document.forma1.Descripcion.value
 		if (Trim(Descripcion)==""){
 			alert("<?php echo $msgstr["errsave"]?>")
@@ -172,8 +214,10 @@ ValorCapturado=""
 Val_text=""
 
 	function DateToIso(From,To){
-		if (Trim(From)=="") {			To.value=""
-			return		}
+		if (Trim(From)=="") {
+			To.value=""
+			return
+		}
         d=new Array()
 		d[0]=""
 		d[1]=""
@@ -255,11 +299,17 @@ function AlmacenarTerminoEnCampo(){
 	alert(Ctrl_activo.name)
 }
 
-function AbrirVentana(Nombre){	msgwin=window.open("",Nombre,"width=800,height=600,scrollbars,resizable")
-	msgwin.focus()}
+function AbrirVentana(Nombre){
+	msgwin=window.open("",Nombre,"width=800,height=600,scrollbars,resizable")
+	msgwin.focus()
+}
 
-function ConfirmarAccion(url,target){	if (confirm('<?php echo $msgstr["seguro"] ?>?')){		msgwin=window.open(url,target,"width=800,height=600,scrollbars,resizable")
-		msgwin.focus()	}}
+function ConfirmarAccion(url,target){
+	if (confirm('<?php echo $msgstr["seguro"] ?>?')){
+		msgwin=window.open(url,target,"width=800,height=600,scrollbars,resizable")
+		msgwin.focus()
+	}
+}
 
 function DesplegarArchivo(Tag){
 
@@ -276,14 +326,15 @@ function ChangeSeq(ix,prefix){
 	msgwin.document.writeln("<input type=hidden name=prefix value="+prefix+">")
 	msgwin.document.writeln("<input type=hidden name=tag value="+ix+">")
 	msgwin.document.writeln("new control number <input type=text size=20 name=cn value=''>")
-	msgwin.document.writeln("<input type=submit value=send>")
+	msgwin.document.writeln("<input class='btn btn-blue' type=submit value=send>")
 	msgwin.document.writeln("</form>")
 	msgwin.focus()
 }
 
 
 
-function RelacionesInversas(Accion){	rel_text="";
+function RelacionesInversas(Accion){
+	rel_text="";
 	j=document.forma1.elements.length-1
 	termino=""
 	for (ielem=0;ielem<=j;ielem++){
@@ -295,9 +346,11 @@ function RelacionesInversas(Accion){	rel_text="";
 				nombre=nombre.substr(3)
 				nn=nombre.split('_')
 				tag=nn[0]
-				if (tag==tag_termino) {					termino=campo.value
+				if (tag==tag_termino) {
+					termino=campo.value
 				}else{
-					if (tag==tag_refer) {						termino=campo.value
+					if (tag==tag_refer) {
+						termino=campo.value
 					}else{
 		            	if (tag in tag_rel){
 		            		c=campo.value
@@ -313,25 +366,33 @@ function RelacionesInversas(Accion){	rel_text="";
   			}
 		}
 	}
-    if (termino==""){    	alert("<?php $msgstr["tes_missterm"]?>")
+    if (termino==""){
+    	alert("<?php $msgstr["tes_missterm"]?>")
     	return
     }
 	ant_text=""
-	for (tag in val_rel_ant){		ant_text+='$*$'+tag+"_"+val_rel_ant[tag]	}
-	switch (Accion){		case "check": msgwin=window.open("../tesaurus/actualizar_relaciones.php?base="+top.base+"&Opcion=check&Mfn=1&rel_text="+rel_text+"&ant_text="+ant_text+"&termino="+termino,"Tesaurus","width=500,height=400")
+	for (tag in val_rel_ant){
+		ant_text+='$*$'+tag+"_"+val_rel_ant[tag]
+	}
+	switch (Accion){
+		case "check": msgwin=window.open("../tesaurus/actualizar_relaciones.php?base="+top.base+"&Opcion=check&Mfn=1&rel_text="+rel_text+"&ant_text="+ant_text+"&termino="+termino,"Tesaurus","width=500,height=400")
 						break
 		case "update": return [rel_text,ant_text,termino]
 						break
 	}
-}
 
-
+}
+
+
+
 function FormarValorCapturado(){
-	if (tesaurus=="S"){		tes=RelacionesInversas('update')
+	if (tesaurus=="S"){
+		tes=RelacionesInversas('update')
 		rel_text=tes[0]
 		ant_text=tes[1]
 		termino=tes[2]
-		msgwin=window.open("../tesaurus/actualizar_relaciones.php?base="+top.base+"&Opcion=update&Mfn=1&rel_text="+rel_text+"&ant_text="+ant_text+"&termino="+termino,"Tesaurus","width=500,height=400")	}
+		msgwin=window.open("../tesaurus/actualizar_relaciones.php?base="+top.base+"&Opcion=update&Mfn=1&rel_text="+rel_text+"&ant_text="+ant_text+"&termino="+termino,"Tesaurus","width=500,height=400")
+	}
 	j=document.forma1.elements.length-1
 	ValorCapturado=""
 	VC=new Array()
@@ -410,8 +471,13 @@ function FormarValorCapturado(){
 	return true
 }
 
-function EnviarForma(){	if (tag_password!=""){		Ctrl=eval("document.forma1."+tag_password)		if (Ctrl.value!=document.forma1.confirm.value){			alert("<?php echo $msgstr["passconfirm"]?>")
-			return		}
+function EnviarForma(){
+	if (tag_password!=""){
+		Ctrl=eval("document.forma1."+tag_password)
+		if (Ctrl.value!=document.forma1.confirm.value){
+			alert("<?php echo $msgstr["passconfirm"]?>")
+			return
+		}
 		res=VerificarPassword(tag_password)
 		pwd=document.getElementById(tag_password);
 
@@ -423,10 +489,15 @@ function EnviarForma(){	if (tag_password!=""){		Ctrl=eval("document.forma1."+t
 			    return
 			}
 		}
-	}	if (fdt_validation=='Y'){		mensaje=ValidarCampos_FDT()
-		if (mensaje!=""){			alert(mensaje)
+	}
+
+	if (fdt_validation=='Y'){
+		mensaje=ValidarCampos_FDT()
+		if (mensaje!=""){
+			alert(mensaje)
 			enviar=false
-			return		}
+			return
+		}
 	}
 	enviar=true
 	Msg=""
@@ -503,7 +574,8 @@ function CapturarRegistro(){
 		Url="../tesaurus/index.php?base=<?php echo $arrHttp["base"]?>&Tag="+Tag
 		myleft=screen.width-450
 		msgwin=window.open(Url,"Tesauro","width=450, height=530,  scrollbars, status, resizable location=no, left="+myleft)
-		msgwin.focus()	}
+		msgwin.focus()
+	}
 
 	function AbrirIndiceAlfabetico(xI,Prefijo,Subc,Separa,db,cipar,tag,postings,Repetible,Formato){
 		Ctrl_activo=xI
@@ -512,8 +584,10 @@ function CapturarRegistro(){
 			xlen=p[1].length
 			p[1]=p[1].substring(0,xlen-1)
 			Sub_Prefijo=eval("document.forma1.tag"+p[1])
-			if (Sub_Prefijo.value==""){				alert("Debe especificar el contenido del campo 100")
-				return			}
+			if (Sub_Prefijo.value==""){
+				alert("Debe especificar el contenido del campo 100")
+				return
+			}
 			Prefijo=p[0]+Sub_Prefijo.value+"-"
 		}
 		baseactiva="<?php echo $arrHttp["base"]?>"
@@ -521,9 +595,9 @@ function CapturarRegistro(){
 	    document.forma1.Indice.value=xI
 	    Separa="&delimitador="+Separa
 	    Prefijo=Separa+"&tagfst="+tag+"&prefijo="+Prefijo
-	    myleft=screen.width-600
+	    myleft=screen.width-800
 		url_indice="../dataentry/capturaclaves.php?opcion=autoridades&base="+db+"&cipar="+cipar+"&Tag="+tag+Prefijo+"&postings="+postings+"&lang="+lang+"&repetible="+Repetible+"&Formato="+Formato+"&subcampos="+Subc+"&baseactiva="+baseactiva
-		msgwin=window.open(url_indice,"Indice","width=650, height=530,  scrollbars, status, resizable location=no, left="+myleft)
+		msgwin=window.open(url_indice,"Indice","width=680, height=690,  scrollbars, status, resizable, location=no, left="+myleft)
 		msgwin.focus()
 		return
 	}
@@ -539,17 +613,32 @@ function CapturarRegistro(){
 	function EnviarArchivo(Tag){
 		document.enviararchivo.Tag.value=Tag
 		document.enviararchivo.storein.value=top.img_dir
-		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
+		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=750,top=300,left=5");
 		msgwin.focus()  ;
 		document.enviararchivo.submit()
 	}
 
+	function SelectArchivo(Tag, Targetform){
+		document.selectarchivo.tag.value=Tag
+		document.selectarchivo.storein.value=top.img_dir
+        document.selectarchivo.Opcion.value="seleccionar"
+        document.selectarchivo.targetForm.value=Targetform
+		msgwin=window.open("","Select","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=750,top=300,left=5");
+		msgwin.focus()  ;
+		document.selectarchivo.submit()
+	}
+
 function NuevaBusqueda(){
-	if (Trim(document.forma1.nueva_b.value)!=""){		str=document.forma1.nueva_b.value;
+	if (Trim(document.forma1.nueva_b.value)!=""){
+		str=document.forma1.nueva_b.value;
 		var res = str.replace(/"/g,"")
 		top.Expresion=str
-		top.Menu("ejecutarbusqueda")	}}
-function CopiarHtml(Tag,Tipo,Mfn){         //tipo B=External HTM
+		top.Menu("ejecutarbusqueda")
+	}
+
+}
+function CopiarHtml(Tag,Tipo,Mfn){
+        // tipo B=External HTM
 		msgwin=window.open("","Upload","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=750,height=180,top=100,left=5");
 		msgwin.document.close();
 		msgwin.document.writeln("<html><title><?php echo $msgstr["uploadfile"]?></title><body link=black vlink=black bgcolor=white>\n");
@@ -570,7 +659,9 @@ function CopiarHtml(Tag,Tipo,Mfn){         //tipo B=External HTM
 		msgwin.focus()  ;
 	}
 
-function Undelete(Mfn){	top.Menu("editar")}
+function Undelete(Mfn){
+	top.Menu("editar")
+}
 
 function SetFckeditor(Ctrl,html){
     var oEditor = FCKeditorAPI.GetInstance(Ctrl) ;
@@ -585,7 +676,8 @@ function SetFckeditor(Ctrl,html){
 		alert( 'You must be on WYSIWYG mode!' ) ;
 
 
-}
+
+}
 
 
 
@@ -597,12 +689,18 @@ function SetFckeditor(Ctrl,html){
 		subcOrg=""
 		function Organizar(tag,subC){
 			tagOrg=tag
-			subcOrg=subC			document.getElementById('loading').style.display='block';			tableID="id_"+tag
+			subcOrg=subC
+			document.getElementById('loading').style.display='block';
+			tableID="id_"+tag
             var table = document.getElementById(tableID);
             var rowCount = table.rows.length;
             var valores=new Array()
-            for (irow=0;irow<rowCount-2;irow++){            	valores[irow]=""            	if (subC.length>0){
-	            	for (i=0;i<subC.length;i++){	            		sc="_"+subC.substr(i,1)	          	        newName="tag"+tag+"_"+irow+sc
+            for (irow=0;irow<rowCount-2;irow++){
+            	valores[irow]=""
+            	if (subC.length>0){
+	            	for (i=0;i<subC.length;i++){
+	            		sc="_"+subC.substr(i,1)
+	          	        newName="tag"+tag+"_"+irow+sc
 	          	        Ctrl=eval("document.forma1."+newName)
 	          	        switch (Ctrl.type){
 		            		case "text":
@@ -628,12 +726,20 @@ function SetFckeditor(Ctrl,html){
 				x=valores[irow].split('|$|')
 				optText=""
 				ixvLength=x.length
-				for (iv=0;iv<ixvLength;iv++){					if (Trim(x[iv])!=""){						optText+="^"+subC.substr(iv,1)+x[iv]					}				}
+				for (iv=0;iv<ixvLength;iv++){
+					if (Trim(x[iv])!=""){
+						optText+="^"+subC.substr(iv,1)+x[iv]
+					}
+				}
     			newOpt.text = optText
     			newOpt.value = valores[irow];
-            }		}
+            }
+		}
 
-		function OrganizarSalir(accion){			var Sel = document.getElementById("reorg");			switch (accion){				case "cancelar":
+		function OrganizarSalir(accion){
+			var Sel = document.getElementById("reorg");
+			switch (accion){
+				case "cancelar":
 					Sel.options.length=0
 					document.getElementById('loading').style.display='none';
 					break
@@ -669,8 +775,11 @@ function SetFckeditor(Ctrl,html){
 		          	}
 					Sel.options.length=0
 					document.getElementById('loading').style.display='none';
-					break			}		}
-		function RowClean(linea,subC){			t=linea.split("_");
+					break
+			}
+		}
+		function RowClean(linea,subC){
+			t=linea.split("_");
 			tag=t[0]
 			row=t[1];
 			if (subC.length>0){
@@ -704,14 +813,20 @@ function SetFckeditor(Ctrl,html){
 		            }
 		       	}
 			}
-		}
 
-        function addRow(tableID,subC,accion,valdef) {        	vd=valdef.split("$$$")
+		}
+
+        function addRow(tableID,subC,accion,valdef) {
+        	vd=valdef.split("$$$")
         	va_def=new Array()
-        	for (xvd in vd){        		ll0=vd[xvd]
-        		if (Trim(ll0)!=""){        			vd1=ll0.split("|")
+        	for (xvd in vd){
+        		ll0=vd[xvd]
+        		if (Trim(ll0)!=""){
+        			vd1=ll0.split("|")
         			va_def[vd1[0]]=vd1[1]
-        		}        	}
+        		}
+
+        	}
             tag=tableID
             tableID="id_"+tag
             var table = document.getElementById(tableID);
@@ -740,7 +855,9 @@ function SetFckeditor(Ctrl,html){
                 while (celda.indexOf(oldName) != -1){
                 	celda=celda.replace(oldName,newName)
                 }
-                if (celda.indexOf("Javascript:DateToIso(")!=-1){                	celda=celda.replace("_0_","_"+nfilas+"_")                }
+                if (celda.indexOf("Javascript:DateToIso(")!=-1){
+                	celda=celda.replace("_0_","_"+nfilas+"_")
+                }
 
                 newcell.innerHTML=celda
             }
@@ -809,7 +926,9 @@ function SetFckeditor(Ctrl,html){
 		                        Ctrl_new.checked = Ctrl_old.checked;
 		                 		break;
 		            	}
-		       		}
+
+
+		       		}
 	            }
 			}else{
 				newName="tag"+tag+"_"+nfilas
@@ -843,26 +962,32 @@ function SetFckeditor(Ctrl,html){
             }
         }
 
-function AgregarOperador(tag){	Ctrl=eval("document.forma1."+tag)	Ctrl.value='<?php echo $_SESSION['login']?>'}
+function AgregarOperador(tag){
+	Ctrl=eval("document.forma1."+tag)
+	Ctrl.value='<?php echo $_SESSION['login']?>'
+}
 
 function AgregarFecha(tag){
 	Ctrl=eval("document.forma1."+tag)
 	Ctrl.value='<?php echo date('Ymd')?>'
 }
 
-function CalendarSetup(i_inputField,i_ifFormat,i_button,i_align,i_singleClick){	Calendar.setup({
+function CalendarSetup(i_inputField,i_ifFormat,i_button,i_align,i_singleClick){
+	Calendar.setup({
 		inputField     :    i_inputField,     // id of the input field
 		ifFormat       :    i_ifFormat,
 		button         :    i_button,  // trigger for the calendar (button ID)
 		align          :    i_align,           // alignment (defaults to \"Bl\")
 		singleClick    :    true
-							  });}
+							  });
+}
 
     </SCRIPT>
 
 <script type="text/javascript">
 
-function RefrescarPicklist(tabla,Ctrl,valor){	ValorOpcion=valor
+function RefrescarPicklist(tabla,Ctrl,valor){
+	ValorOpcion=valor
 	document.refrescarpicklist.picklist.value=tabla
 	document.refrescarpicklist.Ctrl.value=Ctrl
 	document.refrescarpicklist.valor.value=valor
@@ -872,12 +997,14 @@ function RefrescarPicklist(tabla,Ctrl,valor){	ValorOpcion=valor
 }
 
 function AgregarPicklist(tabla,Ctrl,valor){
-	ValorOpcion=valor	document.agregarpicklist.picklist.value=tabla
+	ValorOpcion=valor
+	document.agregarpicklist.picklist.value=tabla
 	document.agregarpicklist.Ctrl.value=Ctrl
 	document.agregarpicklist.valor.value=valor
-	msgwin=window.open("","Picklist","width=600,height=500,scrollbars, resizable")
+	msgwin=window.open("","Picklist","width=850,height=600,scrollbars, resizable")
 	document.agregarpicklist.submit()
-	msgwin.focus()}
+	msgwin.focus()
+}
 
 //SE ACTUALIZA EL SELECT CON LA TABLA ACTUALIADA
 ValorTabla=""
@@ -895,19 +1022,24 @@ function AsignarTabla(){
 		if (op[0]=="")
 			op[0]=op[1]
 		if (op[1]=="")
-			op[1]=op[0]		var newOpt =Sel.appendChild(document.createElement('option'));
+			op[1]=op[0]
+		var newOpt =Sel.appendChild(document.createElement('option'));
     	newOpt.text = op[1];
     	newOpt.value = op[0];
     	if (op[0]==ValorOpcion)
-    		newOpt.selected=true	}
+    		newOpt.selected=true
+	}
 }
 
-function SeleccionarRegistro(Mfn){	if (document.forma1.chkmfn.checked){		if (top.RegistrosSeleccionados.indexOf('|'+Mfn+'-')==-1){
+function SeleccionarRegistro(Mfn){
+	if (document.forma1.chkmfn.checked){
+		if (top.RegistrosSeleccionados.indexOf('|'+Mfn+'-')==-1){
 			top.RegistrosSeleccionados+='|'+Mfn+"-"
 		}
 	}else{
-		top.RegistrosSeleccionados=top.RegistrosSeleccionados.replace('|'+Mfn+'-','')	}
-}
+		top.RegistrosSeleccionados=top.RegistrosSeleccionados.replace('|'+Mfn+'-','');
+	}
+}
 
 //MANEJO DEL COMBOBOX
 // This is the function that refreshes the list after a keypress.
@@ -989,48 +1121,53 @@ function CheckInventory(tag,prefix){
 
 </script>
 
-
-<BODY>
 <span id="toolTipBox" width="200"></span>
 <?php
 if (isset($arrHttp["encabezado"])){
-// Si se est� creando un registro desde el script browse.php
+
+//IF A RECORD IS BEING CREATED FROM THE BROWSE.PHP SCRIPT	
+	
 	if ($arrHttp["Opcion"]=="ver"){
 		include("../common/institutional_info.php");
-		echo "<div class=\"sectionInfo\">
-				<div class=\"breadcrumb\">
-				</div>";
-		echo "<div class=\"actions\">
-			<a href=\"$retorno$return\" class=\"defaultButton backButton\">
-				<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-				<span><strong>".$msgstr["back"]."</strong></span>
-			</a>
+        ?>
+        <div class="sectionInfo">
+            <div class="breadcrumb">
+                <?php echo $msgstr["update_rec"]?>
+            </div>
+            <div class="actions">
+                <?php
+                $backtoscript=$retorno.$return;
+                include "../common/inc_back.php";
+                ?>
+                </div>
+                <div class="spacer">&#160;</div>
 		</div>
-		<div class=\"spacer\">&#160;</div>
-		</div>";
+        <?php
 	}else{
 		if (!isset($fmt_test)){
-
 			include("../common/institutional_info.php");
-			echo "<div class=\"sectionInfo\">
-				<div class=\"breadcrumb\">
-					";
-
-				if ($arrHttp["Mfn"]=="New") echo "<h3>". $msgstr["newoper"]."</h3>\n";
-				echo "</div>
-				<div class=\"actions\">
-					<a href=javascript:EnviarForma() class=\"defaultButton saveButton\">
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>".$msgstr["m_guardar"]."</strong></span>
-					</a>
-					<a href=\"$retorno$return\" class=\"defaultButton cancelButton\">
-						<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-						<span><strong>".$msgstr["cancelar"]."</strong></span>
-					</a>
+            ?>
+			<div class="sectionInfo">
+				<div class="breadcrumb">
+				<?php
+                    if ($arrHttp["Mfn"]=="New"){
+                        echo $msgstr["newoper"];
+                    } else {
+                        echo $msgstr["updateop"];
+                    }
+                ?>
 				</div>
-				<div class=\"spacer\">&#160;</div>
+				<div class="actions">
+                    <?php
+                    $backtoscript=$retorno.$return;
+                    $savescript="javascript:EnviarForma()";
+                    include "../common/inc_cancel.php";
+                    include "../common/inc_save.php";
+                    ?>
+                </div>
+				<div class="spacer">&#160;</div>
 			</div>
-			";
+            <?php
 		}
 	}
 }
@@ -1041,6 +1178,14 @@ if (isset($arrHttp["encabezado"])){
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 	<input type=hidden name=Tag>
 	<input type=hidden name=storein>
+</form>
+
+<form name=selectarchivo action=dirs_explorer.php method=post target=Select>
+	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+	<input type=hidden name=tag>
+	<input type=hidden name=storein>
+	<input type=hidden name=Opcion>
+    <input type=hidden name=targetForm>
 </form>
 
 <form name=agregarpicklist action=../dbadmin/picklist_edit.php method=post target=Picklist>
@@ -1061,7 +1206,7 @@ if (isset($arrHttp["encabezado"])){
 
 <form name=guardar action=busqueda_guardar.php method=post target=guardar>
 	<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-	<input type=hidden name=Expresion value="<?php echo urlencode($arrHttp["Expresion"])?>">
+	<input type=hidden name=Expresion value="<?php echo $Expresion;?>">
 	<input type=hidden name=Descripcion value="">
 </form>
 
@@ -1083,7 +1228,7 @@ if (isset($arrHttp["encabezado"])){
 	echo "<input type=hidden name=footer value=".$arrHttp["footer"].">\n"; ?>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
-<input type=hidden name=wks value=<?php if (isset($arrHttp["wks"]))  echo $arrHttp["wks"]?>>
+<input type=hidden name=wks value="<?php if (isset($arrHttp["wks"]))  echo $arrHttp["wks"]?>">
 <?php
 if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
 if ($arrHttp["Opcion"]=="capturar" || $arrHttp["Opcion"]=="nuevo"){

@@ -1,0 +1,14 @@
+a|Material textual|bk_8.fdt 
+c|Música impressa|mu_8.fdt
+d|Música manuscrita|mu_8.fdt
+e|Material cartogáfico|mp_8.fdt  
+f|Material cartográfico manuscrito|mp_8.fdt 
+g|Material projetável|vm_8.fdt
+i|Gravação de som não musical|mu_8.fdt 
+j|Gravação de som musical|mu_8.fdt 
+k|Material não projetável bidimensional|vm_8.fdt
+m|Arquivo de computador|cf_8.fdt
+o|Kit (dois ou mais tipos)|vm_8.fdt
+p|Material misto|mx_8.fdt 
+r|Objeto tridimensional|vm_8.fdt
+t|Material textual manuscrito|bk_8.fdt 

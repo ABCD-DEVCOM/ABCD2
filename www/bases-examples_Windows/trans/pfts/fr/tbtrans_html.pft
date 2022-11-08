@@ -1,0 +1,1 @@
+'<tr><td>',if v1='X' then 'Return' else 'Loan' fi,'</td><td>'v10,'</td><td>',v20'</td><td>',v30'</td><td><font size=1>',v35.5,v35*8'</td><td>',v40'</td><td><font size=1>',v45.5,v45*8'</td><td>',v70'</td><td>',v80'</td><td><font size=1>',mdl,v100'</td></tr>'/

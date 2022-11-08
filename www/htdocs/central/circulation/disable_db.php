@@ -51,7 +51,8 @@ global $db_path,$arrHttp,$msgstr;
 			$loans_dat=array();
 			if (file_exists($db_path."loans.dat")){
 				$fp=file($db_path."loans.dat");
-				foreach ($fp as $base){					$base=trim($base);
+				foreach ($fp as $base){
+					$base=trim($base);
 					if ($base!=""){
 						$b=explode("|",$base);
 						$loans_dat[$b[0]]=$b[1];
@@ -96,7 +97,7 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 			</div>

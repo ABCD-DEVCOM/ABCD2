@@ -1,8 +1,8 @@
 <?php
-//
-// Graba en la base de datos suggestions la sugerencia actualizada con la información de los proveedores
+/*
+// Graba en la base de datos suggestions la sugerencia actualizada con la informaciÃ³n de los proveedores
 // STORES IN SUGGESTIONS DATABASE THE SUGGESTIONA UPDATED WITH THE BIDDING INFORMATION
-//
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -13,7 +13,8 @@ include("../common/get_post.php");
 $ValorCapturado="";
 $arrHttp=array();
 foreach ($_GET as $var => $value) {
-	$value=trim($value);	if ($value!="")	VariablesDeAmbiente($var,$value);
+	$value=trim($value);
+	if ($value!="")	VariablesDeAmbiente($var,$value);
 }
 if (count($arrHttp)==0){
 
@@ -31,7 +32,8 @@ $xnr="";
 $arrHttp["wks"]="bidding.fmt";
 include("../dataentry/plantilladeingreso.php");
 include("../dataentry/actualizarregistro.php");
-foreach ($arrHttp as $var => $value) {//	echo "$var=$value<br>";
+foreach ($arrHttp as $var => $value) {
+//	echo "$var=$value<br>";
 	if (substr($var,0,3)=="tag" ){
 		$tag=explode("_",$var);
 		if (isset($variables[$tag[0]])){
@@ -60,7 +62,9 @@ die;
 //------------------------------------------------------
 function VariablesDeAmbiente($var,$value){
 global $arrHttp;
-		if (substr($var,0,3)=="tag") {			$ixpos=strpos($var,"_");
+		if (substr($var,0,3)=="tag") {
+			$ixpos=strpos($var,"_");
+			$occ="";
 			if ($ixpos!=0) {
 				$occ=explode("_",$var);
 				$value="^".trim($occ[2]).$value;

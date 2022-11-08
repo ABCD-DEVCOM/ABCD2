@@ -25,24 +25,24 @@
  *
  * == END LICENSE ==
 */
-// se determina si el préstamo está vencido
+// se determina si el prÃ©stamo estÃ¡ vencido
 function compareDate ($FechaP,$lapso_p){
 global $locales,$config_date_format;
 //Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
 	$f_date=explode('/',$config_date_format);
 	switch ($f_date[0]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,0,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,0,2);
 			break;
 	}
 	switch ($f_date[1]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,3,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,3,2);
 			break;
 	}
@@ -50,8 +50,12 @@ global $locales,$config_date_format;
 	$exp_date=$year."-".$mes."-".$dia;
 
 	$ixTime=strpos($FechaP," ");
-	if ($lapso_p=="H") {		$exp_date.=substr($FechaP,$ixTime);
-		$todays_date = date("Y-m-d h:i A");	}else{		$todays_date = date("Y-m-d");	}
+	if ($lapso_p=="H") {
+		$exp_date.=substr($FechaP,$ixTime);
+		$todays_date = date("Y-m-d h:i A");
+	}else{
+		$todays_date = date("Y-m-d");
+	}
 	$today = strtotime($todays_date);
 	$expiration_date = strtotime($exp_date);
 	$diff=$expiration_date-$today;
@@ -61,9 +65,10 @@ global $locales,$config_date_format;
 
 include ("dias_vencimiento.php");
 if (isset($arrHttp["usuario"])){
-// se presenta la  información del usuario
+// se presenta la  informaciï¿½n del usuario
 	$formato_us="";
-	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){		$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp_web.pft";
+	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
+		$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp_web.pft";
 		if (!file_exists($formato_us)) $formato_us="";
 	}
 	if ($formato_us==""){
@@ -77,12 +82,15 @@ if (isset($arrHttp["usuario"])){
 		include($CentralPath."common/wxis_llamar.php");
 	else
 		include("../common/wxis_llamar.php");
-	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){		$c=implode("\n",$contenido);
+	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
+		$c=implode("\n",$contenido);
 		if (trim($c)=="")
-			$ec_output="**";	}
+			$ec_output="**";
+	}
 	if ($ec_output!="**"){
 		if (isset($arrHttp["reserve"])){
-			$ec_output.="<table border=0>";
+
+			$ec_output.="<table border=0>";
 			$ec_output.="<td align=right valign=top>";
 			$ec_output.="<br>".$msgstr["reserve"];
 			$copies="";
@@ -92,12 +100,13 @@ if (isset($arrHttp["usuario"])){
 							</a>";
 			$ec_output.="</td><td>";
 		}
-		foreach ($contenido as $linea){			$ec_output.= $linea."\n";
+		foreach ($contenido as $linea){
+			$ec_output.= $linea."\n";
 		}
 	    if (isset($arrHttp["reserve"])){
 			$ec_output.="</td></table>";
 		}
-		$ec_output.="\n<script>nMultas=0;nSusp=0;nNota=0;</script>\n" ;
+		//$ec_output.="\n<script>nMultas=0;nSusp=0;nNota=0;</script>\n" ;
 		include("sanctions_read.php");
 		$ec_output.=$sanctions_output;
 
@@ -114,13 +123,15 @@ if (isset($arrHttp["usuario"])){
 			include("../common/wxis_llamar.php");
 		$prestamos=array();
 		foreach ($contenido as $linea){
-			if (trim($linea)!=""){				$prestamos[]=$linea;
+			if (trim($linea)!=""){
+				$prestamos[]=$linea;
 			}
 		}
-		$nv=0;   //número de préstamos vencidos
+		$nv=0;   //nÃºmero de prÃ©stamos vencidos
 		$np=0;   //Total libros en poder del usuario
 	   // echo "<pre>".print_r($politica);
-		if (count($prestamos)>0) {			$ec_output.= "\n<strong>".$msgstr["loans"]."</strong>
+		if (count($prestamos)>0) {
+			$ec_output.= "\n<strong>".$msgstr["loans"]."</strong>
 			<table width=100% bgcolor=#cccccc>";
 			if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
 				$ec_output.="<td> </td>";
@@ -139,13 +150,15 @@ if (isset($arrHttp["usuario"])){
 					$array_p=explode('$$$',$linea);
 					$Fecha_vencimiento=$array_p[0];
 					$p=explode("^",$array_p[1]);
-					//SI LA POLITICA SE GRABÓ CON EL REGISTRO DE LA TRANSACCION, ENTONCE SE APLICA ESA
-					// DE OTRA FORMA SE UBICA LA POLÍTICA LEÍDA DE LA TABLA
-					if (isset($p[17]) and trim($p[17])!=""){						$politica_este=explode('|',$p[17]);
+					//SI LA POLITICA SE GRABA CON EL REGISTRO DE LA TRANSACCION, ENTONCE SE APLICA ESA
+					// DE OTRA FORMA SE UBICA LA POLiTICA LEIDA DE LA TABLA
+					if (isset($p[17]) and trim($p[17])!=""){
+						$politica_este=explode('|',$p[17]);
 						$politica_str=$p[17];
 					}else{
 						$politica_este=explode('|',$politica[strtoupper($p[3])][strtoupper($p[6])]);
-						$politica_str=$politica[strtoupper($p[3])][strtoupper($p[6])];					}
+						$politica_str=$politica[strtoupper($p[3])][strtoupper($p[6])];
+					}
 	                $lapso_p=$politica_este[5];
 	                $obj_ec=strtoupper($politica_este[0]);
 	                if (isset( $total_politica[$obj_ec]))
@@ -161,7 +174,9 @@ if (isset($arrHttp["usuario"])){
 						$fuente="";
 						$mora="0";
 						if ($dif<0) {
-							if ($lapso_p=="D"){								$mora=floor(abs($dif)/(60*60*24));    //cuenta de préstamos vencidos							}else{
+							if ($lapso_p=="D"){
+								$mora=floor(abs($dif)/(60*60*24));    //cuenta de prÃ©stamos vencidos
+							}else{
 								$fulldays=floor(abs($dif)/(60*60*24));
 								$fullhours=floor((abs($dif)-($fulldays*60*60*24))/(60*60));
 								$fullminutes=floor((abs($dif)-($fulldays*60*60*24)-($fullhours*60*60))/60);
@@ -170,7 +185,8 @@ if (isset($arrHttp["usuario"])){
 							}
 						    $fuente="<font color=red>";
 						    if ($mora>0){
-						    	if ($politica_este[12]!="Y") $nv=$nv+1;						    }
+						    	if ($politica_este[12]!="Y") $nv=$nv+1;
+						    }
 						}
 					}
 
@@ -205,12 +221,16 @@ if (isset($arrHttp["usuario"])){
 					$ec_output.="</td>";
 					if (!isset($desde_opac)) $ec_output.="<td bgcolor=white align=center valign=top>". $p[3]. "</td>";
 					$ec_output.="<td bgcolor=white nowrap align=center valign=top>".$p[4]."</td><td nowrap bgcolor=white align=center valign=top>$fuente";
-					if ($lapso_p=="D"){						 	$ixd=strpos($p[5]," ");
+					if ($lapso_p=="D"){
+						 	$ixd=strpos($p[5]," ");
 						 	if ($ixd>0){
 						 		$ec_output.=  trim(substr($p[5],0,$ixd));
 							}else{
 						 		$ec_output.=  $p[5];
-							}						 }else{						 	$ec_output.=  $p[5];						 }
+							}
+						 }else{
+						 	$ec_output.=  $p[5];
+						 }
 						 if ($mora>0){
 							if ($CALENDAR_S=="Y"){
 								$now = date("Ymd"); // or your date as well
@@ -220,8 +240,12 @@ if (isset($arrHttp["usuario"])){
 									$fecha_d=substr($fecha_d,0,$ix);
 								$datediff = strtotime($now) - strtotime($fecha_d);
 								$dias_vencido= floor($datediff/(60*60*24));
-							}else{						 		$dias_vencido=DiasVencimiento($Fecha_vencimiento);
-							}						 }else{						 	$dias_vencido=0;						 }
+							}else{
+						 		$dias_vencido=DiasVencimiento($Fecha_vencimiento);
+							}
+						 }else{
+						 	$dias_vencido=0;
+						 }
 						 $ec_output.=  "</td><td align=center bgcolor=white valign=top>".$dias_vencido." ".$lapso_p."</td><td align=center bgcolor=white valign=top>". $p[11]."</td></tr>\n";
 	        	}
 			}

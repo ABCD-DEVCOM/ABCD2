@@ -1,0 +1,65 @@
+<font size="2"><font face="Arial">Este módulo trabaja con las siguientes bases de datos:<br />
+<br />
+<strong>users <br />
+</strong></font></font><blockquote><font size="2"><font face="Arial">Base de datos de usuarios</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>loanobjects <br />
+</strong></font></font><blockquote><font size="2"><font face="Arial">Base de datos con las diferentes copias de los objetos que están disponibles para préstamo. <br />
+<br />
+Existe una sola base de datos loanobjects que refleja las existencias de todos los catálogos definidos bajo ABCD</font>. </font><font face="Arial" size="2">Cada copia se identifica a través de un número único o número de inventario. </font><font size="2">Almacena además el número de control del objeto, </font><font size="2">el volúmen y el tomo de la copia a efectos de establecer las diferencias entre las copias de un mismo objeto;&nbsp;</font><font size="2"> el nombre de la base de datos donde está catalogado, a efectos de identificación de la copia;&nbsp; y el tipo de objeto asignado a la copia a efectos de aplicación de la política de préstamos. <br />
+<br />
+Cada objeto representa un registro en la base de datos <strong>loanobjects</strong> y las copias del mismo se almacenan como ocurrencias de un campo repetible.<br />
+<br />
+Esta base de datos se actualiza desde el procedimiento de catalogación donde se permite transferir los registros de inventario desde la base de datos <strong>copies</strong> hacia la base de datos <strong>loanobjects</strong><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>Base de datos de catálogo (cepal, marc, etc)</strong> <br />
+</font></font><blockquote><font size="2"><font face="Arial">Descripción bibliográfica de los objetos disponibles para préstamo. El vínculo entre el catálogo y sus existencias se realiza a través del número de control del objeto</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>trans </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Transacciones de préstamos, renovaciones y devoluciones</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>suspml </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Suspensiones y multas registradas a los usuarios</font><br />
+</font></blockquote><font size="2"><font face="Arial"><strong>reserva&nbsp; </strong><br />
+</font></font><blockquote><font size="2"><font face="Arial">Reservas</font><br />
+</font></blockquote><font size="2"><font face="Arial"><br />
+El menú principal del menú del módulo de Circulación y Préstamos contiene la siguientes secciones:<br />
+<br />
+<strong>Transacciones<br />
+<br />
+</strong>Esta sección define las transacciones disponibles:<br />
+<br />
+</font></font>
+<ul>
+    <li><font size="2"><strong>Prestar</strong><br />
+    A través el código del usuario y del número de inventario del objeto se acceden las bases de datos <strong>users </strong>y <strong>loanobjects</strong> a fin de determinar el tipo de usuario y el tipo de objeto. Se verifica además si el usuario tiene pendientes multas y/o suspensiones realizando una búsqueda sobre la base de datos <strong>suspml</strong>, o si tiene préstamos pendientes, realizando una búsqueda sobre la base de datos <strong>trans</strong>. Con estos valores se determina la política de préstamos a aplicar y se calcula la fecha de devolución<br />
+    </font></li>
+    <li><font size="2"><strong>Devolver</strong><br />
+    Se utiliza el número de inventario para localizar en la base de datos <strong>trans</strong> la copia que se desea devolver. Si hay atraso en la fecha de devolución se calcula la sanción que indique la política y la misma se guarda en la base de datos <strong>suspml<br />
+    </strong></font></li>
+    <li><font size="2"><strong>Renovar</strong><br />
+    Se utiliza el número de inventario para localizar en la base de datos <strong>trans </strong>la copia que se desea renovar. </font><font size="2"> Se verifica además si el usuario tiene pendientes multas y/o suspensiones realizando una búsqueda sobre la base de datos <strong>suspml</strong>, o si tiene otros préstamos pendientes, realizando una búsqueda sobre la base de datos <strong>trans</strong>. Con estos valores se determina la política de renovación a aplicar y se calcula la nueva fecha de devolución<br />
+    <strong></strong></font></li>
+    <li><font size="2"><strong>Suspender/Multar</strong><br />
+    Se suministra el código del usuario que se desea suspender/multar y los datos correspondientes.<br />
+    </font></li>
+    <li><font size="2"><strong>Estado de cuenta de un usuario</strong><br />
+    Presenta la lista de préstamos, suspensiones y/o multas pendientes para un usuario<br />
+    </font></li>
+    <li><font size="2"><strong>Situación de un objeto</strong><br />
+    Presenta todas las copias de un objeto, indicando aquellas que están en poder de algún usuario </font></li>
+</ul>
+<font size="2"><font face="Arial"><strong><br />
+Bases de Datos<br />
+<br />
+</strong>Esta sección, para el uso del Administrador de Préstamos,&nbsp; le permite tener acceso directo a las bases de datos soportadas por el módulo de circulación<br />
+<strong><br />
+<br />
+Administración<br />
+<br />
+</strong></font></font>
+<ul>
+    <li><font size="2">Reportes<br />
+    </font></li>
+    <li><font size="2">Estadísticas</font></li>
+    <li><font size="2">Configuración<br />
+    </font></li>
+</ul>
+<font size="2"><font face="Arial"><strong><br />
+</strong></font></font>

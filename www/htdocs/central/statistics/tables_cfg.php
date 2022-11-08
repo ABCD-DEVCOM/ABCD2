@@ -1,26 +1,37 @@
 <?php
+/*
+20220215 fho4abcd back backbutton+div-helper+sanitize html
+20220220 fho4abcd resolved small error
+20220926 fho4abcd translations,resolve undefined variable, layout
+*/
 session_start();
 if (!isset($_SESSION["permiso"])) die;
 include("../common/get_post.php");
 include ("../config.php");
-$lang=$_SESSION["lang"];
 // ARCHIVOD DE MENSAJES
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/statistics.php");
 
-// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILOinclude("../common/header.php");
+// ENCABEZAMIENTO HTML Y ARCHIVOS DE ESTILO
+include("../common/header.php");
 
 // LECTURA DE LA LISTA DE VARIABLES YA DEFINIDAS (STATS.CFG)
 $total=-1;
 $error="";
+$fields="";
 $cfg=array();
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/stat.cfg";
+$file=$db_path.$arrHttp["base"]."/def/".$lang."/stat.cfg";
 if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/stat.cfg";
-if (!file_exists($file)){	$error="S";}else{	$fp=file($file);
+if (!file_exists($file)){
+	$error="S";
+}else{
+	$fp=file($file);
 	//$ix=-1;
-	$fields="";
-	foreach ($fp as $value) {		$value=trim($value);
-		if ($value!=""){			$t=explode('|',$value);
+	foreach ($fp as $value) {
+		$value=trim($value);
+		if ($value!=""){
+			$t=explode('|',$value);
 			$fields.=trim($t[0]);
 			if (isset($t[2]) and $t[2]=="LMP") $fields.='%'."LMP";
 			$fields.="||";
@@ -29,28 +40,37 @@ if (!file_exists($file)){	$error="S";}else{	$fp=file($file);
 		}
 	}
 }
-echo "<script>fields='$fields'</script>\n";
 ?>
+<body>
+<script>fields='<?php echo $fields?>'</script>
+
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-<script languaje=javascript>
+<script language=javascript>
 
 //LLEVA LA CUENTA DE TABLAS AGREGADAS A LA LISTA
 total=0
 
 
 //MARCA EL SELECT DE LAS FILAS Y COLUMNAS DE LAS TABLAS YA DEFINIDAS
-function IndexSelected(Ctrl,Var){	ix=Ctrl.length
+function IndexSelected(Ctrl,Var){
+	ix=Ctrl.length
 	for (i=0;i<ix;i++){
 		v=Trim(Ctrl.options[i].text)
-		if (v==Var) {			Ctrl.options[i].selected=true
-			i=999		}
-	}}
+		if (v==Var) {
+			Ctrl.options[i].selected=true
+			i=999
+		}
+
+	}
+}
 
 function MarcarSeleccion(Ctrl,nvars,Var){
-	if (nvars==0){		IndexSelected(Ctrl,Var)
+	if (nvars==0){
+		IndexSelected(Ctrl,Var)
 	}else{
 		IndexSelected(Ctrl[nvars],Var)
-	}}
+	}
+}
 
 //PARA AGREGAR NUEVAS VARIABLES A LA LISTA
 function returnObjById( id )
@@ -81,10 +101,12 @@ function DrawElement(ixEl,Title,ixRow,ixCol){
     nuevo+="<tr><td bgcolor=white><?php echo $msgstr["rows"]?></td><td bgcolor=white><select name=rows><option></option>"
     f=fields.split('||')
     ix0=0
-    for (var opt in f){    	ix0++
+    for (var opt in f){
+    	ix0++
     	selected=""
     	if (ix0==ixRow) selected=" selected"
-    	nuevo+="<option value=\""+f[opt]+"\""+selected+">"+f[opt]+"</option>\n"    }
+    	nuevo+="<option value=\""+f[opt]+"\""+selected+">"+f[opt]+"</option>\n"
+    }
     nuevo+="</select></td>"
     nuevo+="<tr><td bgcolor=white><?php echo $msgstr["cols"]?></td><td bgcolor=white><select name=cols><option></option>"
     ix0=0
@@ -159,7 +181,8 @@ function AddElement(){
 
 //RECOLECTA LOS VALORES DE LA PAGINA Y ENVIA LA FORMA
 
-function Guardar(){	ValorCapturado=""
+function Guardar(){
+	ValorCapturado=""
 	base="<?php echo $arrHttp["base"]?>"
 	total=document.stats.tit.length
 	if (total==0){
@@ -169,29 +192,37 @@ function Guardar(){	ValorCapturado=""
 		ix=document.stats.rows.selectedIndex
 		if (ix>0) row=Trim(document.stats.rows.options[ix].value)
 		ix=document.stats.cols.selectedIndex
-		if (ix>0) col=Trim(document.stats.cols.options[ix].value)		if (titulo!="" && row=="" && col==""){			alert("<?php echo $msgstr["sel_rc"]?>")   //SELECCIONAR VARIABLE PARA LAS FILAS O LAS COLUMNAS
-			return;		}
+		if (ix>0) col=Trim(document.stats.cols.options[ix].value)
+		if (titulo!="" && row=="" && col==""){
+			alert("<?php echo $msgstr["sel_rc"]?>")   //SELECCIONAR VARIABLE PARA LAS FILAS O LAS COLUMNAS
+			return;
+		}
 		if (titulo=="" && (row!="" || col!="")){
 			alert("<?php echo $msgstr["sel_tit"]?>")   //INDICAR EL TITULO DEL CUADRO
 			return;
 		}
 		ValorCapturado=titulo+"|"+row+"|"+col
-	}else{		for (i=0;i<total;i++){
+	}else{
+		for (i=0;i<total;i++){
 			row=""
-			col=""			titulo=Trim(document.stats.tit[i].value)
+			col=""
+			titulo=Trim(document.stats.tit[i].value)
 			ix=document.stats.rows[i].selectedIndex
             rr_len=0
             cc_len=0
-			if (ix>0) {				row=Trim(document.stats.rows[i].options[ix].value)
+			if (ix>0) {
+				row=Trim(document.stats.rows[i].options[ix].value)
 				rr=row.split('%');
 				row=rr[0]
 				rr_len=rr.length;
 			}
 			ix=document.stats.cols[i].selectedIndex
-			if (ix>0){				col=Trim(document.stats.cols[i].options[ix].value)
+			if (ix>0){
+				col=Trim(document.stats.cols[i].options[ix].value)
 				cc=col.split('%');
 				col=cc[0]
-				cc_len=cc.length;			}
+				cc_len=cc.length;
+			}
 			if (titulo!="" && row=="" && col==""){
 				alert("<?php echo $msgstr["sel_rc"]?>")   //SELECCIONAR VARIABLE PARA LAS FILAS O LAS COLUMNAS
 				return;
@@ -200,59 +231,74 @@ function Guardar(){	ValorCapturado=""
 				alert("<?php echo $msgstr["sel_tit"]?>")   //INDICAR EL TITULO DEL CUADRO
 				return;
 			}
-			if (col!="" && rr_len>1 || cc_len>1){				alert("Los mas prestados solo puede aparecer como fila")
-				return			}
+			if (col!="" && rr_len>1 || cc_len>1){
+				alert("Los mas prestados solo puede aparecer como fila")
+				return
+			}
 			if (titulo!="") ValorCapturado+=titulo+"|"+row+"|"+col+"\n"
-		}	}
+		}
+	}
 	document.enviar.base.value=base
 	document.enviar.ValorCapturado.value=ValorCapturado
-	document.enviar.submit()}</script>
-<body>
+	document.enviar.submit()
+}
+
+</script>
+<style>
+td {
+  padding: 5px;
+}
+</style>
 <?php
 // VERIFICA SI VIENE DEL TOOLBAR O NO PARA COLOCAR EL ENCABEZAMIENTO
-if (isset($arrHttp["encabezado"])){	include("../common/institutional_info.php");
+if (isset($arrHttp["encabezado"])){
+	include("../common/institutional_info.php");
 	$encabezado="&encabezado=s";
 }else{
 	$encabezado="";
 }
-echo "<form name=stats method=post>";
-echo "<div class=\"sectionInfo\">
-	<div class=\"breadcrumb\">".$msgstr["stats_conf"]." - ".$msgstr["tab_list"].": ".$arrHttp["base"]."</div>
-	<div class=\"actions\">";
-if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics"){
-	$script="tables_generate.php";
-}else{
-	$script="../dbadmin/menu_modificardb.php";
-}
-	echo "<a href=\"$script?base=".$arrHttp["base"]."$encabezado\" class=\"defaultButton backButton\">";
-echo "<img src=\"../images/defaultButton_iconBorder.gif\" />
-	<span><strong>".$msgstr["back"]."</strong></span></a>";
-if ($error==""){	echo "
-	<a href=\"javascript:Guardar()\" class=\"defaultButton saveButton\">
-	<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-	<span><strong>".$msgstr["save"]."</strong></span></a>";
-}
 ?>
-</div><div class="spacer">&#160;</div></div>
-<div class="helper">
-<a href=http://abcdwiki.net/wiki/es/index.php?title=Estad%C3%ADsticas target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<font color=white>&nbsp; &nbsp; Script: tables_cfg.php
-</font>
-	</div>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+        <?php echo $msgstr["stats"]." - ".$msgstr["stat_cfg_tabs"].": ".$arrHttp["base"];?>
+    </div>
+	<div class="actions">
+        <?php
+        if (isset($arrHttp["from"]) and $arrHttp["from"]=="statistics")
+            $backtoscript="tables_generate.php";
+        else
+            $backtoscript="../dbadmin/menu_modificardb.php";//old status where variables were defined in that script
+        include "../common/inc_back.php";
+        $savescript="javascript:Guardar()";
+        include "../common/inc_save.php";
+        ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+$ayuda="stats_config_tabs.html";
+include "../common/inc_div-helper.php";
+?>
 <div class="middle form">
 	<div class="formContent">
 <?php
 // SI FALTA EL ARCHIVO STATS.CFG SE DETIENE LA EJECUCIÓN
-if ($error=="S"){	echo "<h4>".$msgstr["mis_statscfg"]." (<a href=index.php?base=".$arrHttp["base"]."$encabezado>".$msgstr["stats"]." - ".$msgstr["var_list"]. "</a>)</h4>";
-	die;}
+if ($error=="S"){
+    $urlforvardef="../statistics/config_vars.php?base=".$arrHttp["base"]."&Opcion=Update&from=statistics".$encabezado;
+	echo "<h4>".$msgstr["mis_statscfg"]." (<a href='".$urlforvardef."'>".$msgstr["stats"]." - ".$msgstr["var_list"]. "</a>)</h4>";
+	die;
+}
 //LECTURA DE LOS CUADROS Y TABLA YA DEFINIDOS
-$file=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/tabs.cfg";
+$file=$db_path.$arrHttp["base"]."/def/".$lang."/tabs.cfg";
 if (!file_exists($file)) $file=$db_path.$arrHttp["base"]."/def/".$lang_db."/tabs.cfg";
 $total=-1;
+echo "<form name=stats method=post>";
 echo  "<div id=tabs>\n";
 if (file_exists($file)){
 	$fp=file($file);
-}else{	$fp=array();}
+}else{
+	$fp=array();
+}
 $cuenta=count($fp);
 if (count($fp)<3){
  	$fp[]="||||||";
@@ -260,47 +306,66 @@ if (count($fp)<3){
 }
 foreach ($fp as $value) {
 	$value=trim($value);
-	if ($value!=""){		$total++;
+	if ($value!=""){
+		$total++;
 		$t=explode('|',$value);
-		echo "<table  width=800 bgcolor=#cccccc border=0 name=tbst>";
-		echo "<td rowspan=4 bgcolor=white valign=top><a href=javascript:DeleteElement(".$total.")><img src=../dataentry/img/toolbarDelete.png alt=\"".$msgstr["delete"]."\" text=\"".$msgstr["delete"]."\"></a></td>\n";
-		echo "<td width=300 bgcolor=white>".$msgstr["title"]."</td>";
-		echo "<td bgcolor=white><input type=text name=tit size=120 value=\"".$t[0]."\"></td></tr>";
-		echo "<!--tr><td bgcolor=white>ID</td><td bgcolor=white><input type=text name=id size=10 value='";
-		if (isset($t[3])) echo $t[3];
-		echo "'></td></tr-->";
-   		echo "<tr><td bgcolor=white>".$msgstr["rows"]."</td><td bgcolor=white><select name=rows><option></option>";
-   		$f=explode('||',$fields);
-   		foreach ($f as $opt_x) {
-   			$opt=explode('%',$opt_x);   			$selected="";
-   			if ($opt[0]==$t[1]) $selected=" selected";
-   			echo "<option value=\"$opt_x\" $selected>".$opt[0]."</option>\n";   		}
-   		echo "</select></td>";
-   		echo "<tr><td bgcolor=white>".$msgstr["cols"]."</td><td bgcolor=white><select name=cols><option></option>";
-   		$f=explode('||',$fields);
-   		foreach ($f as $opt_x) {
-   			$selected="";
-   			$opt=explode('%',$opt_x);
-   			$selected="";
-   			if ($opt[0]==$t[2]) $selected=" selected";
-   			echo "<option value=\"$opt_x\" $selected>".$opt[0]."</option>\n";
-   		}
-           echo "</table><br>";
-           echo "<script>MarcarSeleccion(document.stats.rows,$total,'".$t[1]."')
-           MarcarSeleccion(document.stats.cols,$total,'".$t[2]."')
-           </script>\n";
+        ?>
+		<table  bgcolor=#cccccc border=0 name=tbst>
+        <tr>
+            <td rowspan=4 bgcolor=white valign=top>
+                <a href=javascript:DeleteElement(<?php echo $total;?>)>
+                    <img src=../dataentry/img/toolbarDelete.png alt="<?php echo $msgstr["delete"];?>" title="<?php echo $msgstr["delete"];?>"></a>
+            </td>
+            <td bgcolor=white><?php echo $msgstr["title"];?></td>
+            <td bgcolor=white><input type=text name=tit size=120 value="<?php echo $t[0];?>"></td>
+        </tr>
+   		<tr>
+            <td bgcolor=white><?php echo $msgstr["stat_rows_by"];?></td>
+            <td bgcolor=white>
+                <select name=rows>
+                <option></option>
+                <?php
+                $f=explode('||',$fields);
+                foreach ($f as $opt_x) {
+                    $opt=explode('%',$opt_x);
+                    $selected="";
+                    if ($opt[0]==$t[1]) $selected=" selected";
+                    echo "<option value=\"$opt_x\" $selected>".$opt[0]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor=white><?php echo $msgstr["stat_cols_by"];?></td>
+            <td bgcolor=white>
+                <select name=cols>
+                <option></option>
+                <?php
+                $f=explode('||',$fields);
+                foreach ($f as $opt_x) {
+                    $selected="";
+                    $opt=explode('%',$opt_x);
+                    $selected="";
+                    if ($opt[0]==$t[2]) $selected=" selected";
+                    echo "<option value=\"$opt_x\" $selected>".$opt[0]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+        </tr>
+        </table><br>
+        <script>
+            MarcarSeleccion(document.stats.rows,<?php echo $total ?>,'<?php echo $t[1];?>')
+            MarcarSeleccion(document.stats.cols,<?php echo $total ?>,'<?php echo $t[2];?>')
+        </script>
+        <?php
 	}
 }
-
-
 echo "<script>total=$total</script>\n";
 ?>
-		<strong></strong>
-
-
         </div>
         <a href='javascript:AddElement()'><?php echo $msgstr["add"]?></a>
-
 	</div>
 </div>
 </form>
@@ -313,12 +378,9 @@ if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado valu
 if (isset($arrHttp["from"])) echo "<input type=hidden name=from value=".$arrHttp["from"].">\n";
 ?>
 </form>
-<?php
-include("../common/footer.php");
-?>
-
-</body>
-</html>
 <script>
 	if (total==-1) AddElement()
 </script>
+<?php
+include("../common/footer.php");
+?>

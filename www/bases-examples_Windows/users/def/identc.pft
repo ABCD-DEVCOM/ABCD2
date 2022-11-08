@@ -1,0 +1,18 @@
+'\ATX {\fonttbl\f0\fswiss Arial;} ',
+   '\par\fs20\ql ',
+
+'\b 'v30^*,", "v30^b,'\b0 ',
+"\par "v47/
+"\par Tlf: "v140+|; |/
+(if p(v90) then
+  '\par - Suspendido el ',v90^f*6.2,|-|v90^f*4.2,|-|v90^f.4,' hasta el ',v90^b*6.2,|-|v90^b*4.2,|-|v90^b.4,
+  |. |v90^m,|. |v90^n,'\par ',
+fi/)
+if p(v190) then '\par\b\cf12 Histórico de suspensiones:\b0\cf0 '/ fi
+
+(if p(v190) then
+    '\par - Suspendido el ',v190^f*6.2,|-|v190^f*4.2,|-|v190^f.4,' hasta el ',v190^b*6.2,|-|v190^b*4.2,|-|v190^b.4,
+  |. |v190^m,|. |v190^n,
+fi/)
+
+'\par ----------------'

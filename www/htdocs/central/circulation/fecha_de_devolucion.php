@@ -40,7 +40,9 @@ global $feriados,$locales,$notrabaja,$config_date_format,$CALENDAR_S;
 		case "D":
             if ($fecha_inicio==""){
 				$dev= date("Y-m-d",strtotime("+0 days"));
-	        }else{	        	$dev= date("Y-m-d",strtotime($fecha_inicio."+0 days"));	        }
+	        }else{
+	        	$dev= date("Y-m-d",strtotime($fecha_inicio."+0 days"));
+	        }
 
 	        $ix=strpos($dev," ");
 	        if (!$ix===false)
@@ -58,8 +60,10 @@ global $feriados,$locales,$notrabaja,$config_date_format,$CALENDAR_S;
     $ii=0;
     while ($d<$lapso){
     	$ii=$ii+1;
-    	if ($ii>5000) {    		echo "check script fecha_devolucion.php";
-    		die;    	}
+    	if ($ii>5000) {
+    		echo "check script fecha_devolucion.php";
+    		die;
+    	}
     	$total_days++;
     	$fdev=date("Y-m-d",strtotime($dev."+$total_days days"));
     	$timeStamp=strtotime($fdev);
@@ -77,7 +81,9 @@ global $feriados,$locales,$notrabaja,$config_date_format,$CALENDAR_S;
     		if (!isset($locales[$dia_sem]["from"])) {
     			$df=$df+1;
     			$dia_sem="F";
-    		}else{    			$d++;    		}
+    		}else{
+    			$d++;
+    		}
     	}
     }
     $lapso=$lapso+$df-1;

@@ -39,12 +39,14 @@ include("../lang/prestamo.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 $b=explode('|',$arrHttp["base"]);
 $arrHttp["base"]=$b[0];
-switch ($b[1]){	case "Y":
+switch ($b[1]){
+	case "Y":
 		$arrHttp["loan_option"]="copies";
 		break;
 	default:
 		$arrHttp["loan_option"]="nocopies";
-		break;}
+		break;
+}
 
 $prefix_in="";
 $prefix_cn="";
@@ -61,7 +63,8 @@ function LeerPft($pft_name){
 global $arrHttp,$db_path,$lang_db;
 	$pft="";
 	$archivo=$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/$pft_name";
-	if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/loans/".$lang_db."/$pft_name";	$fp=file_exists($archivo);
+	if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/loans/".$lang_db."/$pft_name";
+	$fp=file_exists($archivo);
 	if ($fp){
 		$fp=file($archivo);
 		foreach ($fp as $value){
@@ -69,20 +72,27 @@ global $arrHttp,$db_path,$lang_db;
 		}
 
 	}
-    return $pft;}
+    return $pft;
+}
 
 
 $archivo=$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_conf.tab";
 if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/loans/".$lang_db."/loans_conf.tab";
 $fp=file_exists($archivo);
-if ($fp){	$fp=file($archivo);
-	foreach ($fp as $value){		$ix=strpos($value," ");
+if ($fp){
+	$fp=file($archivo);
+	foreach ($fp as $value){
+		$ix=strpos($value," ");
 		$tag=trim(substr($value,0,$ix));
-		switch($tag){			case "IN": $prefix_in=trim(substr($value,$ix));
+		switch($tag){
+			case "IN": $prefix_in=trim(substr($value,$ix));
 				break;
 			case "NC":
 				$prefix_nc=trim(substr($value,$ix));
-				break;		}	}}
+				break;
+		}
+	}
+}
 $pft_totalitems=LeerPft("loans_totalitems.pft");
 $pft_in=LeerPft("loans_inventorynumber.pft");
 $pft_nc=LeerPft("loans_cn.pft");
@@ -97,19 +107,26 @@ include("../common/header.php");
 <script>
 function Guardar(){
 	ix=document.forma1.base.selectedIndex
-	if (ix<1){		alert("<?php echo $msgstr["seldb"]?>")
-		return	}
+	if (ix<1){
+		alert("<?php echo $msgstr["seldb"]?>")
+		return
+	}
 	document.forma1.action="databases_configure_update.php"
 	document.forma1.target="_self";
-    document.forma1.submit()}
+    document.forma1.submit()
+}
 
 function Test(){
-	if (document.forma1.Mfn.value==""){		alert("<?php echo $msgstr["test_mfn_err"]?>")
-		return	}
+	if (document.forma1.Mfn.value==""){
+		alert("<?php echo $msgstr["test_mfn_err"]?>")
+		return
+	}
     msgwin_t=window.open("","TestPft","")
-    msgwin_t.focus()	document.forma1.action="databases_configure_test.php"
+    msgwin_t.focus()
+	document.forma1.action="databases_configure_test.php"
 	document.forma1.target="TestPft";
-	document.forma1.submit()}
+	document.forma1.submit()
+}
 </script>
 <?php
 $encabezado="";
@@ -122,11 +139,11 @@ echo "
 			<div class=\"actions\">\n";
 
 				echo "<a href=\"databases.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>". $msgstr["back"]."</strong></span>
 				</a>
 				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
+					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
 					<span><strong>".$msgstr["update"]."</strong></span>
 				</a>
 			</div>
@@ -166,7 +183,8 @@ if ($arrHttp["base"]!="loanobjects"){
 		</table>
 		<input type=hidden name=link_copies value=N>
 		";
-	}else{		echo "
+	}else{
+		echo "
 		<table>
 		<tr><td valign=top>1. ".$msgstr["pft_obj"]."<br><br>(loans_display.pft</td><td><textarea rows=5 cols=80 name=bibref>".$pft_dispobj."</textarea></td>
 		<tr><td valign=top>2. ".$msgstr["pft_store"]."<br><br>(loans_store.pft)</td><td><textarea rows=5 cols=80 name=bibstore>".$pft_storobj."</textarea></td>

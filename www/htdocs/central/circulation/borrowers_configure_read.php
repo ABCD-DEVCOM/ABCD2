@@ -50,16 +50,20 @@ $bd="users";
 $uskey="";
 $archivo=$db_path.$bd."/loans/".$_SESSION["lang"]."/loans_uskey.tab";
 if (!file_exists($archivo)) $archivo=$db_path.$bd."/loans/".$lang_db."/loans_uskey.tab";
-if (!file_exists($archivo)){	echo $msgstr["missing"]. " ".$archivo;
-	die;}
+if (!file_exists($archivo)){
+	echo $msgstr["missing"]. " ".$archivo;
+	die;
+}
 $fp=file($archivo);
 $ix=0;
 $uskey="CO_";
 $usname="NO_";
 $uspft="v30";
-foreach ($fp as $value){	$ix++;
+foreach ($fp as $value){
+	$ix++;
 	$value=trim($value);
-	switch ($ix){		case 1:
+	switch ($ix){
+		case 1:
 			$uskey=$value;
 			break;
 		case 2:
@@ -67,7 +71,9 @@ foreach ($fp as $value){	$ix++;
 			break;
 		case 3:
 			$uspft=$value;
-			break;	}}
+			break;
+	}
+}
 $pft_uskey=LeerPft_Borrowers("loans_uskey.pft");     // pft para leer el código de usuario
 $pft_ustype=LeerPft_Borrowers("loans_ustype.pft");   // pft para leer el tipo de usuario
 $pft_usvig=LeerPft_Borrowers("loans_usvig.pft");     // pft para leer la vigencia del usuario

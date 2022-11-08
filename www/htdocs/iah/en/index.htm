@@ -1,12 +1,12 @@
 <HTML>
 <HEAD>
-[pft]if s(mpu,v5001,mpl) = 'dubcore' then[/pft]
 
 	<script language="JavaScript" src="../action.js"></script>
     <TITLE>ABCD iAH - Search Interface</TITLE>
 	<script language="JavaScript">
-		function startIAH(base){
-            var aux="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=en&base=" + base;
+		function startIAH(cisisexe,base){
+//            var aux="/cgi-bin/ansi/wxis/iah/scripts/?IsisScript=iah.xis&lang=en&base=" + base;
+              var aux="/cgi-bin/" + cisisexe + "/iah/scripts/?IsisScript=iah.xis&lang=en&base=" + base;
 			this.location=aux;
 		}
 	</script>
@@ -33,7 +33,7 @@
 	  </TR>
 	  <TR>
 	    <TD VALIGN="top">
-			<a href="javascript:startIAH('MARC')">MARC21</a>
+			<a href="javascript:startIAH('ansi/wxis','MARC')">MARC21</a>
 		</TD>
 		<TD VALIGN="top" align="justify">
 			MARC21 library catalogue
@@ -41,7 +41,7 @@
 	  </TR>
 	  <TR>
 	    <TD VALIGN="top">
-			<a href="javascript:startIAH('DUBCORE')">DublinCore</a>
+			<a href="javascript:startIAH('utf8/bigisis/wxis','DUBCORE')">DublinCore</a>
 		</TD>
 		<TD VALIGN="top" align="justify">
 			Example Dublin Core repository database with full-text

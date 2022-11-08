@@ -1,4 +1,7 @@
 <?php
+/*
+20220715 fho4abcd Use $actparfolder as location for .par files
+*/
 //Procesa el archivo TXT y lo carga en base de datos
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -21,26 +24,14 @@ set_time_limit(0);
 <?php echo $msgstr["cnv_import"]." ".$msgstr["cnv_txt"]?>
 	</div>
 	<div class="actions">
-<?php echo "<a href=javascript:self.close()  class=\"defaultButton cancelButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["cerrar"]?></strong></span></a>
+    <?php include "../common/inc_close.php"?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
+<?php $ayuda="txt2isis.html";include "../common/inc_div-helper.php" ?>
+<div class="middle form">
+<div class="formContent">
 <?php
-echo "
-	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/txt2isis.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/txt2isis.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: carga_txt_ex.php</font>";
-	echo "
-
-	</div>
-	 <div class=\"middle form\">
-			<div class=\"formContent\">
-	";
 
 // se incluye la rutina que convierte los rótulos a tags isis
 include ("rotulos2tags.php");
@@ -56,13 +47,15 @@ function Delimited($rotulos,$registro){
 	 		}
 	 	}
 	 	$ix=0;
-	 	foreach ($t as $val) {
+	 	foreach ($t as $val) {
+
 	 		$ix=$ix+1;
 	 		if (trim($val)!="")
 	 			if (isset($tag[$ix])){
 	 				$salida[$tag[$ix]]=str_replace("\n"," ",$val);
 	 				$salida[$tag[$ix]]=str_replace("\r"," ",$val);
-	 			}	 	}
+	 			}
+	 	}
 	}
  	return $salida;
 }
@@ -105,7 +98,8 @@ global $arrHttp;
 		if (isset($rotulo[$key][4])) $rep=$rotulo[$key][4];
 		if (isset($rotulo[$key][5])) $formato=$rotulo[$key][5];
 		if (is_array($linea)){
-			foreach ($linea as $value){				if (trim($value)!=""){
+			foreach ($linea as $value){
+				if (trim($value)!=""){
 					if (trim($rep)!=""){
 						$sal=explode($rep,$value);
 						foreach ($sal as $campo){
@@ -119,7 +113,9 @@ global $arrHttp;
 				}
 
 			}
-        }else{        	$ValorCapturado.="<$key 0>".trim($linea)."</".$key.">";        }
+        }else{
+        	$ValorCapturado.="<$key 0>".trim($linea)."</".$key.">";
+        }
 	}
 	ActualizarRegistro($base,$ValorCapturado);
 
@@ -159,7 +155,7 @@ Global $separador,$arrHttp,$db_path;
 
 
 function ActualizarRegistro($base,$ValorCapturado){
-global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr;
+global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr,$actparfolder;
 	$ValorCapturado=urlencode($ValorCapturado);
 
 	$Mfn="New";
@@ -167,7 +163,7 @@ global $arrHttp,$Wxis,$xWxis,$db_path,$wxisUrl,$lang_db,$msgstr;
 	$IsisScript=$xWxis."crear_registro.xis";
 	$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["base"];
 	if (!file_exists($Formato)) $Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["base"];
-	$query = "&base=$base&cipar=".$db_path."par/$base.par" ."&login=".$_SESSION["login"]."&Mfn=$Mfn"."&Formato=$Formato"."&ValorCapturado=".$ValorCapturado;
+	$query = "&base=$base&cipar=".$db_path.$actparfolder."$base.par" ."&login=".$_SESSION["login"]."&Mfn=$Mfn"."&Formato=$Formato"."&ValorCapturado=".$ValorCapturado;
 	$contenido="";
     include("../common/wxis_llamar.php");
 	foreach ($contenido as $linea){
@@ -211,9 +207,14 @@ if (trim($value)!="") {
 	//echo urldecode($HTTP_POST_VARS[$var]);
 	if ($separador!='[TABS]'){
 		$variables=explode($separador,$value);
-	}else{		$variables=explode("\n",$value);	}
-	foreach($variables as $registro){		$noLocalizados="";
-		if ($separador=='[TABS]'){        	$salida=Delimited($rotulo,$registro);		}else{
+	}else{
+		$variables=explode("\n",$value);
+	}
+	foreach($variables as $registro){
+		$noLocalizados="";
+		if ($separador=='[TABS]'){
+        	$salida=Delimited($rotulo,$registro);
+		}else{
 			$salida=Rotulos2Tags($rotulo,$registro,$separador);
 		}
 		if (count($salida)>0){
@@ -221,10 +222,16 @@ if (trim($value)!="") {
 			if (!isset($arrHttp["Actualizar"])) {
 				echo "<br>";
 				foreach ($salida as $key=>$value){
-					if (is_array($value)){					 	foreach ($value as $campo){					 		 echo $rotulo[$key][1]." ".$campo."<br>";					 	}
-					}else{						echo $rotulo[$key][1]." ".$value."<br>";					}
+					if (is_array($value)){
+					 	foreach ($value as $campo){
+					 		 echo $rotulo[$key][1]." ".$campo."<br>";
+					 	}
+					}else{
+						echo $rotulo[$key][1]." ".$value."<br>";
+					}
 
-				}			}
+				}
+			}
 			if (isset($arrHttp["Actualizar"])) ProcesarBD($arrHttp["base"],$salida,$rotulo);
 		}
 		if (trim($noLocalizados)!="") {
@@ -236,13 +243,14 @@ if (trim($value)!="") {
 
 if (!isset($arrHttp["Actualizar"])){
 	echo "<p><strong>".$msgstr["bd"].": ".$arrHttp["base"]."</strong> <input type=submit value=".$msgstr["actualizar"].">";
-} else{	echo "<P><a href=javascript:self.close()>".$msgstr["cerrar"]."</a> &nbsp; &nbsp;";
-	echo "<a href=javascript:RefreshDB()>".$msgstr["reopendb"]."</a>";}
-echo "</form>
+} else{
+	echo "<P><a href=javascript:self.close()>".$msgstr["cerrar"]."</a> &nbsp; &nbsp;";
+	echo "<a href=javascript:RefreshDB()>".$msgstr["reopendb"]."</a>";
+}
+?>
+</form>
 </div>
 </div>
-</body>
-</html>";
-
-die;
+<?php
+include "../common/footer.php"
 ?>

@@ -1,0 +1,26 @@
+Se presenta la órden emitida, especificando la lista de objetos que la componen. Para cada objeto se muestran los datos de:<br />
+<ul>
+    <li>Referencia del objeto</li>
+    <li>Número de copias adquiridas<br />
+    </li>
+    <li>Precio unitario de cada copia<br />
+    </li>
+    <li>Número de la recomendación donde se solicitó la adquisición del objeto<br />
+    </li>
+    <li>Referencia de la cotización que generó la órden de compra<br />
+    </li>
+    <li>Base de datos donde se catalogará (nuevo) o está catalogado (copias) el objeto<br />
+    </li>
+    <li>Tipo de adquisición: nuevo o copias<br />
+    </li>
+    <li>Identificación del objeto, en caso de que el tipo de adquisición corresponda a copias</li>
+</ul>
+Esta información se obtiene aplicando el formato <strong>receiving.pft</strong> sobre el registro localizado en la base de datos <strong>purchaseorder</strong><br />
+<br />
+De ser necesario, se modifican los valores correspondientes a número de copias y precio unitario. Se da clic sobre <strong>continuar</strong> para procesar el objeto.<br />
+<br />
+Cuando se construye este formato se hace una búsqueda en la base de datos catalográfica a la cual pertenece el objeto, utilizando como clave el Id. del objeto suministrado en la órden de compra. Para determinar si el objeto existe, el formato receiving.pft incluye el siguiente comando:<br />
+<br />
+<p><font face="Courier New">if s(v500^d)&lt;&gt;'' then f(npost([v500^d],'NC_'v500^c),1,0) fi/fi</font>)</p>
+<p>Esto es, si el objeto que se está procesando incluye la información de la base de datos catalográfica y el número de control del registro al cual pertenecen las copias adquiridas, entonces, se localizan los "postings" correspondientes en la base de datos catalográfica y si el resultado no es cero, entonces, se asume que ya el objeto existe y se provee un vínculo para que pueda ser revisado antes de continuar con el proceso.</p>
+<p>&nbsp;</p>

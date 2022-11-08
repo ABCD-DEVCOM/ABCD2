@@ -6,6 +6,8 @@
 2021-03-15 fho4abcd Add operation in/out of a frame + correct "backto" url
 2021-03-25 fho4abcd Enable export by MX (includes option for marc leader data)
 2021-03-27 fho4abcd add path to return script
+2021-06-05 fho4abcd Always preselect mx for iso. translations
+20211215 fho4abcd Backbutton by included file
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $arrHttp;
@@ -180,12 +182,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 	</div>
 	<div class="actions">
-<?php
-        $backtourl=$backtoscript."?base=".$arrHttp["base"];
-        echo "<a href='$backtourl'  class=\"defaultButton backButton\">";
-?>
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["regresar"]?></strong></span></a>
+    <?php include "../common/inc_back.php";?>
 	</div>
 	<div class="spacer">&#160;</div>
 </div>
@@ -270,22 +267,23 @@ include ("../common/inc_get-dbinfo.php");// sets MAXMFN
 <td>
     <table>
     <?php
+    if ($arrHttp["tipo"]=="iso"){ //only  for iso export
+        $checkmx="checked"; //mx is better
+    }
     if ($arrHttp["tipo"]=="iso"){ //only show for iso export
         // Check if files exist <dbname>/def/<lang>/leader.fdt
         $leaderfiles=glob($db_path.$arrHttp["base"]."/def/*/leader.fdt");
-        $checkmx="";    
         if ( count($leaderfiles)>0) {
-            $checkmx="checked";    
     ?>
     <tr>
          <td><?php echo $msgstr["cnv_export"]." ".$msgstr["ft_ldr"];?></td>
-         <td><input type='checkbox' name='usemarcformat' checked value="on" ><font color=blue>MARC 'leader.fdt' detected</font></td>
+         <td><input type='checkbox' name='usemarcformat' checked value="on" ><font color=blue><?php echo $msgstr["marcleader_detected"]?></font></td>
     </tr>
     <?php }
     ?>
     <tr>
          <td><?php echo $msgstr["exportiso_mx"];?></td>
-         <td><input type='checkbox' name='usemx' <?php echo $checkmx ?> value="on" ><font color=blue>Default WXIS</font></td>
+         <td><input type='checkbox' name='usemx' <?php echo $checkmx ?> value="on" ><font color=blue><?php echo $msgstr["unch_wxis"]?></font></td>
     </tr>
     <?php }
     ?> 

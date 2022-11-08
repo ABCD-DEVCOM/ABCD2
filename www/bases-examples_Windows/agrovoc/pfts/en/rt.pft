@@ -1,0 +1,8 @@
+'<table border=0 width=90%>'
+
+if p(v8) then 
+`<a href='javascript:CruzarABCD("`v8`","ND_")'>`v8`</a><br>`
+else 
+`<a href='javascript:CruzarABCD("`v1`","DE_")'>`v1`</a><br>`
+fi/
+'</table><p>'

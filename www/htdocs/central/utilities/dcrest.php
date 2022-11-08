@@ -1,5 +1,8 @@
 <?php
-
+/* Modifications
+2021-07-18 fho4abcd Show error if curl is not installed. Errors to screen and not to file
+20220717 fho4abcd Use $actparfolder as location for .par files
+*/
 global $Permiso, $arrHttp,$valortag,$nombre,$userid,$db,$vectorAbrev;
 $arrHttp=Array();
 //session_start();
@@ -62,7 +65,19 @@ class Repository_api
 	   
         $resultado = array();
         $request_url =  $this->rest_url. $endpoint;
+        if (!function_exists("curl_init")){
+            echo "<div style='color:red;font-size:large;font-weight:bold'>".
+            "The PHP curl package is not present<br>".
+            "Please install and configure it</div>";
+        }
         $ch = curl_init();
+        if ( $ch===false or $ch==0) {
+            $curl_error= error_get_last();
+            echo "<div style='color:red;font-size:large;font-weight:bold'>".
+            "Error initiating curl package:<br>".$curl_error.
+            "</div>";
+            die;
+        }
 		
 
 		if($ch == false)
@@ -100,27 +115,19 @@ class Repository_api
 		  }*/
 		
        if (curl_errno($ch)) {
-
-            $fp = fopen("Mylog.txt", "a+");
-            fwrite($fp, "> Error Curl [" . curl_error($ch) . "]\n");
-            fclose($fp);
-
+            echo "<div style='color:red;font-size:large;font-weight:bold'>".
+            "Error detected by Curl: [".curl_error($ch).
+            "]</div>";
         } else {
-             $resultado = json_decode($response, true);
-							 
+            $resultado = json_decode($response, true);				 
             if (JSON_ERROR_NONE !== json_last_error()) {
-
-                $fp = fopen("Mylog.txt", "a+");
-                fwrite($fp, "> Error JSON [" . json_last_error()."] \n");
-                fclose($fp);
+                echo "<div style='color:red;font-size:large;font-weight:bold'>".
+                "Error detected by JSON: [".json_last_error().
+                "]</div>";
             }
         }
-
         curl_close($ch);
-
-        return $resultado;	  
-		  
-		 
+        return $resultado;	   
     }
  
     function get_TotalItems(){
@@ -513,11 +520,11 @@ class Repository_api
 
 	function InitializeBD(){
 	
-	    global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr;
+	    global $arrHttp,$OS,$xWxis,$wxisUrl,$db_path,$Wxis,$msgstr,$actparfolder;
 		$db = $this->bd_abcd;
 		$arrHttp["base"] = $db;
 		
-		$query = "&base=".$db."&cipar=$db_path"."par/".$db.".par"."&Opcion="."inicializar";
+		$query = "&base=".$db."&cipar=$db_path".$actparfolder.$db.".par"."&Opcion="."inicializar";
 		$arrHttp["IsisScript"]="administrar.xis";
 		$IsisScript=$xWxis.$arrHttp["IsisScript"];
 		
@@ -545,7 +552,7 @@ class Repository_api
 
 		global $lang,$vars,$cipar,$from,$base,$ValorCapturado,$arrHttp,$ver,$valortag,$fdt,$tagisis,$cn,$msgstr,$tm,$lang_db,$MD5;
 		global $xtl,$dataentry,$xnr,$Mfn,$FdtHtml,$xWxis,$variables,$db_path,$Wxis,$default_values,$rec_validation,$wxisUrl,$validar,$tm;
-		global $max_cn_length,$listItemsReal,$listItemsRepo;
+		global $max_cn_length,$listItemsReal,$listItemsRepo,$actparfolder;
 
 			$variables_org=$variablesD;
 			$ValorCapturado="";
@@ -647,7 +654,7 @@ class Repository_api
 					
 		 
 			
-			 $query = "&base=".$base."&cipar=$db_path"."par/".$cipar."&login=abcd&Mfn=" .$mfn."&Opcion=".$opcion."$stw&ValorCapturado=".$ValorCapturado;
+			 $query = "&base=".$base."&cipar=$db_path".$actparfolder.$cipar."&login=abcd&Mfn=" .$mfn."&Opcion=".$opcion."$stw&ValorCapturado=".$ValorCapturado;
 			 include("../common/wxis_llamar.php");
 			
 		   	}

@@ -1,0 +1,70 @@
+<font face="Arial" size="2"><strong>Préstamos</strong><br />
+<br />
+Suministre el código de usuario y el número de inventario del objeto que desea localizar. Puede utilizar la opción <strong>Listar</strong> para obtener una lista alfabética de los usuarios o de los números de inventario almacenados en la base de datos <strong>loanobjects</strong>. Haga clic sobre <strong>Prestar </strong>para activar el procedimiento de préstamo.<br />
+<br />
+Con el código de usuario suministrado:<br />
+</font>
+<ol>
+    <li><font face="Arial" size="2">Se accede la base de datos de usuarios (users) y se aplica el formato definido en la configuración para extraer sus datos (loans_usdisp.pft). Adicionalmente se determina: tipo de usuario y vigencia,&nbsp; si este último parámetro fue definido en la configuración de las políticas<br />
+    </font></li>
+    <li><font face="Arial" size="2">Se lee la base de datos de suspensiones y multas (suspml) para verificar la situación del usuario</font></li>
+    <li><font face="Arial" size="2">Se lee la base de datos de transacciones para determinar los préstamos en poder del usuario y si existe morosidad en la fecha de devolución<br />
+    </font></li>
+    <li><font face="Arial" size="2">Se lee la base de datos de reservas para determinar si el usuario tiene alguna copia reservada <br />
+    </font></li>
+</ol>
+<font face="Arial" size="2">Con el número de inventario:<br />
+</font>
+<ol>
+    <li><font face="Arial" size="2">Se lee la base de datos de objetos de préstamo (loanobjects) para determinar las características del objeto a prestar, el número de control del título y la base de datos donde está catalogado el objeto.&nbsp; Con estos dos últimos valores se lee la base de datos catalográfica para obtener la información del título cuya copia se está procesando</font></li>
+    <li><font face="Arial" size="2">Se lee la base de datos de reservas para determinar si la situación de reserva de la copia solicitada<br />
+    </font></li>
+    <li><font face="Arial" size="2">Se determina si el usuario tiene otra copia prestada del mismo título revisando las existencias del título en loanobjects contra la información obtenida de la base de datos de transacciones</font></li>
+</ol>
+<font face="Arial" size="2">Se localiza la política a aplicar en base al tipo de usuario y a tipo de objeto que se está prestando.</font> <font size="2"><font face="Arial">Se aplican las reglas tomando en cuenta los siguientes parámetros:<br />
+</font></font>
+<ol>
+    <li><font face="Arial" size="2">La fecha de vigencia del usuario</font></li>
+    <li><font face="Arial" size="2">Si el usuario tiene multas o está suspendido</font></li>
+    <li><font face="Arial" size="2">El número de préstamos en poder del usuario</font></li>
+    <li><font face="Arial" size="2">Si el usuario tiene préstamos vencidos</font></li>
+    <li><font face="Arial" size="2">Si el usuario ya tiene otro ejemplar del mismo título</font></li>
+    <li><font face="Arial" size="2">La fecha de vigencia del objeto</font></li>
+</ol>
+<font size="2"><font face="Arial">Si se cumplen todas las reglas de la política, se calcula la fecha de vencimiento en base al calendario de días feriados y se le asigna el préstamo al usuario, grabandose un registro en la base de datos de transacciones (trans).<br />
+<br />
+Si no se cumplen las reglas de la política se emite el mensaje correspondiente y no se adjudica al usuario la copia solicitada.<br />
+<br />
+<br />
+<strong>Renovaciones<br />
+<br />
+</strong>La renovación de un prestamo puede realizarse&nbsp; cuando se despliega el estado de cuenta del usuario o utilizando la opción prevista para tales efectos en los menues del módulo de circulación.<br />
+<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2">A través del estado de cuenta del usuario<br />
+    Seleccione el préstamo que desea renovar y haga clic sobre <strong>Renovar.</strong> ABCD investigará si la política acepta renovaciones (en base al tipo de usuario y a tipo de objeto) y en caso positivo, cuántas se permiten. Si se supera la prueba se modifican las fechas de préstamo y de devolución del préstamo. En la base de datos de transacciones se pasa al campo 200 las fechas actuales de préstamo y devolución, a efectos de mantener la historia del préstamo y para la elaboración de las estadísticas</font></li>
+</ul>
+<ul>
+    <li><font face="Arial" size="2">Utilizando la opción <strong>Renovar<br />
+    </strong>Suministre el número de inventario del préstamo que desea renovar. Con esta información ABCD realiza una búsqueda en la base de transacciones a efectos de obtener los datos del préstamo,&nbsp; el código del usuario, y seleccionar la política a aplicar para el proceso de renovación. Una vez obtenidos estos valores procede igual que en el paso anterior.</font></li>
+</ul>
+<br />
+<font size="2"><font face="Arial"><strong>Devoluciones</strong><br />
+<br />
+La devolución de un préstamo puede realizarse desde el estado de cuenta del usuario o utilizando la opción que para tales efectos de presenta en los menues del módulo de circulación<br />
+<br />
+</font></font>
+<ul>
+    <li><font face="Arial" size="2">A través del estado de cuenta del usuario<br />
+    Seleccione el préstamo que desea devolver y haga clic sobre <strong>Devolver.</strong> Con la información correspondiente al tipo de usuario y al tipo de objeto, ABCD determinará la política del objeto y determinará si hay atraso en la devolución. En caso afirmativo podrá generar una multa o suspender al usuario, de acuerdo con lo que se establezca en la política respectiva. Las suspensiones y multas se almacenan en la base de datos <strong>suspml</strong>.</font></li>
+</ul>
+<font face="Arial" size="2"></font>
+<ul>
+    <li><font face="Arial" size="2">Utilizando la opción <strong>Devolver</strong></font><br />
+    <font face="Arial" size="2">Suministre el número de inventario del préstamo que desea devolver. Con esta información ABCD realiza una búsqueda en la base de transacciones a efectos de obtener los datos del préstamo, el código del usuario y seleccionar la política a aplicar para el proceso de devolución. Una vez obtenidos estos valores procede igual que en el paso anterior.</font></li>
+</ul>
+<font size="2"><font face="Arial"><br />
+<br />
+<br />
+</font></font>

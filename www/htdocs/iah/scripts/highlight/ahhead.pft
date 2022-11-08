@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="',v5000^d,'css/stylesheet.css" type="text/css" media="screen" />
 
 <!-- Para resaltar los términos de búsqueda -->
-    <script type="text/javascript" src="'v5000^d,'js/highlight.js"></script>
+    <script type="text/javascript" src="'v5000^d,'../central/dataentry/js/highlight.js"></script>
 <!--  -->
 
 <!-- Para incluir los scripts definidos en ABCD -->
