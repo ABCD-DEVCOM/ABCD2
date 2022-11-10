@@ -788,21 +788,21 @@ A.importButton IMG {
 /* CATALOG */
 
 A.DataEntry {
-	background: url('../svg/catalog/ic_fluent_form_new_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_form_new_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);	
 }
 
 A.CatstatButton {
-	background: url('../svg/catalog/ic_fluent_data_usage_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_data_usage_32_regular_cat.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);	
 }
 
 A.reportButton  {
-	background: url('../svg/catalog/ic_fluent_print_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_print_32_regular_cat.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);	
@@ -816,56 +816,56 @@ A.origendatabaseButton {
 }
 
 A.utilsButton {
-	background: url('../svg/catalog/ic_fluent_toolbox_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_toolbox_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.z3950Button {
-	background: url('../svg/catalog/ic_fluent_arrow_download_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_arrow_download_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.update_databaseButton {
-	background: url('../svg/catalog/ic_fluent_content_settings_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_content_settings_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.databaseButton {
-	background: url('../svg/catalog/ic_fluent_database_plus_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_database_plus_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);	
 }
 
 A.CataluserButton {
-	background: url('../svg/catalog/ic_fluent_people_settings_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_people_settings_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.resetButton {
-	background: url('../svg/catalog/ic_fluent_arrow_reset_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_arrow_reset_32_regular_cat.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.translateButton {
-	background: url('../svg/catalog/ic_fluent_globe_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_globe_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.CatexploreButton {
-	background: url('../svg/catalog/ic_fluent_folder_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_folder_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
@@ -880,107 +880,100 @@ A.CatexploreButton {
 
 /* CIRCULATION  */
 A.exploreButton {
-	background: url('../svg/circ/ic_fluent_key_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_key_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.toolsButton {
-	background: url('../svg/circ/ic_fluent_settings_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_settings_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.userButton {
-	background: url('../svg/circ/ic_fluent_people_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_people_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
-A.statButton {
-	background: url('../svg/circ/ic_fluent_book_pulse_32_regular.svg') no-repeat left;
+A.statButton, A.receivingButton {
+	background: url('../svg/main/main_book_pulse_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);	
 }
 
-A.receivingButton  {
-	background: url('../svg/circ/ic_fluent_book_pulse_32_regular.svg') no-repeat left;
-	background-size: 44px;
-	background-position: 10px;
-	background-color: var(--abcd-white);
-}
-
 A.loanButton {
-	background: url('../svg/circ/ic_fluent_arrow_routing_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_arrow_routing_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.returnButton {
-	background: url('../svg/circ/ic_fluent_arrow_wrap_32_filled.svg') no-repeat left;
+	background: url('../svg/main/main_arrow_wrap_32_filled.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.renewButton {
-	background: url('../svg/circ/ic_fluent_arrow_sync_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_arrow_sync_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.sanctionsButton {
-	background: url('../svg/circ/ic_fluent_person_money_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_person_money_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.statusitemButton {
- 	background: url('../svg/circ/ic_fluent_book_question_mark_32_regular.svg') no-repeat left;
+ 	background: url('../svg/main/main_book_question_mark_32_regular.svg') no-repeat left;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.userstatmentButton {
- 	background: url('../svg/circ/ic_fluent_person_accounts_32_regular.svg') no-repeat left;
+ 	background: url('../svg/main/main_person_accounts_32_regular.svg') no-repeat left;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.userhistoryButton {
- 	background: url('../svg/circ/ic_fluent_person_info_32_regular.svg') no-repeat left;
+ 	background: url('../svg/main/main_person_info_32_regular.svg') no-repeat left;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.transactionsButton {
- 	background: url('../svg/circ/ic_fluent_arrow_swap_32_filled.svg') no-repeat left;
+ 	background: url('../svg/main/main_arrow_swap_32_filled.svg') no-repeat left;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.statisticsusersButton {
- 	background: url('../svg/circ/ic_fluent_people_list_32_regular.svg') no-repeat left;
+ 	background: url('../svg/main/main_people_list_32_regular.svg') no-repeat left;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.statisticsanctionsButton {
- 	background: url('../svg/circ/ic_fluent_money_calculator_32_regular.svg') no-repeat center;
+ 	background: url('../svg/main/main_money_calculator_32_regular_circ.svg') no-repeat center;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.reportsButton {
- 	background: url('../svg/circ/ic_fluent_data_usage_32_regular.svg') no-repeat left;
+ 	background: url('../svg/main/main_data_usage_32_regular.svg') no-repeat left;
  	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 A.reserveButton {
-	background: url('../svg/circ/ic_fluent_book_clock_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_book_clock_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
@@ -1030,94 +1023,99 @@ A.loanpolicyButton {
 
 /* END CIRCULATION  */
 
+/* CONFIG CIRCULATION  */
+
+
+/* END CONFIG CIRCULATION  */
+
 
 /* ACQUISITIONS */
 A.resumeButton {
-	background: url('../svg/acq/ic_fluent_document_landscape_data_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_document_landscape_data_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.newsuggestionButton {
- 	background: url('../svg/acq/ic_fluent_person_chat_32_regular.svg') no-repeat center;
+ 	background: url('../svg/main/main_person_chat_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.approvedsuggestionsButton {
- 	background: url('../svg/acq/ic_fluent_document_checkmark_32_regular.svg') no-repeat center;
+ 	background: url('../svg/main/main_document_checkmark_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.biddingButton {
-	background: url('../svg/acq/ic_fluent_money_calculator_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_money_calculator_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.decisionButton {
-	background: url('../svg/acq/ic_fluent_cart_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_cart_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.createpurchaseorderButton {
- 	background: url('../svg/acq/ic_fluent_table_add_32_regular.svg') no-repeat center;
+ 	background: url('../svg/main/main_table_add_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.requisitionButton {
-	background: url('../svg/acq/ic_fluent_print_add_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_print_add_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.pendingButton {
-	background: url('../svg/acq/ic_fluent_document_bullet_list_clock_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_document_bullet_list_clock_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.ACQreceivingButton  {
-	background: url('../svg/acq/ic_fluent_receipt_add_32_regular.svg') no-repeat left;
+	background: url('../svg/main/main_receipt_add_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.suggestButton {
-	background: url('../svg/acq/ic_fluent_person_feedback_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_person_feedback_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.providersButton {
- 	background: url('../svg/acq/ic_fluent_building_shop_32_regular.svg') no-repeat center;
+ 	background: url('../svg/main/main_building_shop_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.copiesdbButton {
-	background: url('../svg/acq/ic_fluent_table_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_table_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
 
 A.ACQresetButton {
-	background: url('../svg/acq/ic_fluent_arrow_reset_32_regular.svg') no-repeat center;
+	background: url('../svg/main/main_arrow_reset_32_regular.svg') no-repeat center;
 	background-size: 44px;
 	background-position: 10px;
 	background-color: var(--abcd-white);
