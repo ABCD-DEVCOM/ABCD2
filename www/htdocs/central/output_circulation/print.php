@@ -314,7 +314,7 @@ switch ($arrHttp["vp"]){
 	</div>
 	<div class="actions">
 		<?php
-		$inc_backtourl="../output_circulation/menu.php";
+		$backtoscript="menu.php";
 		include "../common/inc_back.php";
 		?>
 	</div>
