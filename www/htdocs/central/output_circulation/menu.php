@@ -3,7 +3,9 @@
 20210613 fho4abcd Use inc_div_helper.some html improvements
 */
 
-//error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -17,9 +19,10 @@ include ("../lang/prestamo.php");
 if (!isset($_SESSION["login"])){
 	echo $msgstr["sessionexpired"];
 	die;
+
 }
 include("../common/header.php");
-echo "<body>";
+
 
 function SolicitarExpresion($base){
 global $msgstr,$arrHttp,$db_path,$lang_db;
@@ -194,19 +197,22 @@ include("../common/institutional_info.php");
 <div class="spacer">&#160;</div>
 </div>
 <?php include "../common/inc_div-helper.php" ?>
-<form name=forma1 method=post action=print.php>
-<input type=hidden name=codigo>
-<input type=hidden name=base>
-<input type=hidden name=vp>
+
+<form name="forma1" method="post" action="print.php">
+<input type="hidden" name="codigo">
+<input type="hidden" name="base">
+<input type="hidden" name="vp">
 <div class="middle form">
 	<div class="formContent">
 
 <?php
-	$base[]="trans";
-	$base[]="suspml";
+	$base = array("trans","suspml", "reserve");
+
+/*
 	if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
-		$base[]="reserve";
+			$base = array("reserve");
 	}
+*/
 	foreach ($base as $bd){
 		if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){
 			$fp=file($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst");
