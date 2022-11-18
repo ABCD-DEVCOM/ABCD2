@@ -23,7 +23,7 @@ if p(v21) then '<tr><td width=20% valign=top><font face=arial size=2><b>Waiver p
 if p(v22) then '<tr><td width=20% valign=top><font face=arial size=2><b>Digital archiving policy or program(s)</b></td><td valign=top><font face=arial size=2>'v22+|<br>|,'</td>' fi/
 if p(v23) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving: national library</b></td><td valign=top><font face=arial size=2>'v23+|<br>|,'</td>' fi/
 if p(v24) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving: other</b></td><td valign=top><font face=arial size=2>'v24+|<br>|,'</td>' fi/
-if p(v25) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving infomation URL</b></td><td valign=top><font face=arial size=2>'v25+|<br>|,'</td>' fi/
+if p(v25) then '<tr><td width=20% valign=top><font face=arial size=2><b>Archiving information URL</b></td><td valign=top><font face=arial size=2>'v25+|<br>|,'</td>' fi/
 if p(v26) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal full-text crawl permission</b></td><td valign=top><font face=arial size=2>'v26+|<br>|,'</td>' fi/
 if p(v27) then '<tr><td width=20% valign=top><font face=arial size=2><b>Permanent article identifiers</b></td><td valign=top><font face=arial size=2>'v27+|<br>|,'</td>' fi/
 if p(v28) then '<tr><td width=20% valign=top><font face=arial size=2><b>Journal provides download statistics</b></td><td valign=top><font face=arial size=2>'v28+|<br>|,'</td>' fi/
