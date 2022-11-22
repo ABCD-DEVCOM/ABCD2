@@ -12,6 +12,7 @@
 20220613 fho4abcd Removed unused functions Modulo(gave errors) + ChangeLang + AbrirAyuda + rename Cambiarbase:avoid confusion with duplicates
     display language menu value in "best" characterset +
     remove BOM (Byte Order Mark) if present on first line of language file
+20221122 rogercgui Removed $session_mfn_admin=="1" in line 181 because it displayed the list of bases in data entry only for MFN 1 of the Acces database
 */
 
 global $ABCD_scripts_path;
@@ -178,7 +179,8 @@ function CambiarLenguaje(){
     }
 
     global $verify_selbase;
-    if (($verify_selbase=="Y") && ($_SESSION["mfn_admin"]=="1")) {
+    if (($verify_selbase=="Y")) {
+    //if (($verify_selbase=="Y") && ($session_mfn_admin=="1")) {
         ?>
         <form name=OpcionesMenu accept-charset=utf-8>
         <input type=hidden name=base value="">
