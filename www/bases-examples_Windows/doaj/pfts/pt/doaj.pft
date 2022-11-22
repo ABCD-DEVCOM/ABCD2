@@ -1,0 +1,59 @@
+'<table>'
+if p(v1) then '<tr><td width=30% valign=top><b>Título do periódico</b></td><td valign=top>'v1+|<br>|,'</td>' fi/
+if p(v2) then '<tr><td width=30% valign=top><b>URL do Periódico</b></td><td valign=top><a target="_blank" href='v2'>'v2+|</a><br>|,'</td>' fi/
+if p(v3) then '<tr><td width=30% valign=top><b>Título alternativo</b></td><td valign=top>'v3+|<br>|,'</td>' fi/
+if p(v4) then '<tr><td width=30% valign=top><b>ISSN (versão impressa)</b></td><td valign=top>'v4+|<br>|,'</td>' fi/
+if p(v5) then '<tr><td width=30% valign=top><b>E-ISSN (versão online)</b></td><td valign=top>'v5+|<br>|,'</td>' fi/
+if p(v6) then '<tr><td width=30% valign=top><b>Editora</b></td><td valign=top>'v6+|<br>|,'</td>' fi/
+if p(v7) then '<tr><td width=30% valign=top><b>Sociedade ou instituição</b></td><td valign=top>'v7+|<br>|,'</td>' fi/
+if p(v8) then '<tr><td width=30% valign=top><b>Plataforma, host ou agregador</b></td><td valign=top>'v8+|<br>|,'</td>' fi/
+if p(v9) then '<tr><td width=30% valign=top><b>País da editora</b></td><td valign=top>'v9+|<br>|,'</td>' fi/
+if p(v10) then '<tr><td width=30% valign=top><b>Encargos de processamento de artigos de periódicos (APCs)</b></td><td valign=top>'v10+|<br>|,'</td>' fi/
+if p(v11) then '<tr><td width=30% valign=top><b>URL de informações da APC</b></td><td valign=top><a target="_blank" href='v11'>'v11+|</a><br>|,'</td>' fi/
+if p(v12) then '<tr><td width=30% valign=top><b>quantidade APC</b></td><td valign=top>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=30% valign=top><b>Moeda</b></td><td valign=top>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td width=30% valign=top><b>Taxa de submissão de artigo de revista</b></td><td valign=top>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=30% valign=top><b>URL da taxa de envio</b></td><td valign=top><a target="_blank" href='v15'>'v15+|</a><br>|,'</td>' fi/
+if p(v16) then '<tr><td width=30% valign=top><b>Valor da taxa de enviot</b></td><td valign=top>'v16+|<br>|,'</td>' fi/
+if p(v17) then '<tr><td width=30% valign=top><b>Moeda da taxa de inscrição</b></td><td valign=top>'v17+|<br>|,'</td>' fi/
+if p(v18) then '<tr><td width=30% valign=top><b>Número de artigos publicados no último ano civil</b></td><td valign=top>'v18+|<br>|,'</td>' fi/
+if p(v19) then '<tr><td width=30% valign=top><b>URL com informações do número de artigos</b></td><td valign=top>'v19+|<br>|,'</td>' fi/
+if p(v20) then '<tr><td width=30% valign=top><b>Política de isenção de periódicos (para autores de países em desenvolvimento, etc.)</b></td><td valign=top>'v20+|<br>|,'</td>' fi/
+if p(v21) then '<tr><td width=30% valign=top><b>URL de informações da política de isenção</b></td><td valign=top><a target="_blank" href='v21'>'v21+|</a><br>|,'</td>' fi/
+if p(v22) then '<tr><td width=30% valign=top><b>Política ou programa(s) de arquivamento digital</b></td><td valign=top>'v22+|<br>|,'</td>' fi/
+if p(v23) then '<tr><td width=30% valign=top><b>Arquivo: biblioteca nacional</b></td><td valign=top>'v23+|<br>|,'</td>' fi/
+if p(v24) then '<tr><td width=30% valign=top><b>Arquivamento: outro</b></td><td valign=top>'v24+|<br>|,'</td>' fi/
+if p(v25) then '<tr><td width=30% valign=top><b>URL de informações de arquivamento</b></td><td valign=top><a target="_blank" href='v25'>'v25+|</a><br>|,'</td>' fi/
+if p(v26) then '<tr><td width=30% valign=top><b>Permissão de rastreamento de texto completo do periódico</b></td><td valign=top>'v26+|<br>|,'</td>' fi/
+if p(v27) then '<tr><td width=30% valign=top><b>Identificadores de artigos permanentes</b></td><td valign=top>'v27+|<br>|,'</td>' fi/
+if p(v28) then '<tr><td width=30% valign=top><b>O jornal fornece estatísticas de download</b></td><td valign=top>'v28+|<br>|,'</td>' fi/
+if p(v29) then '<tr><td width=30% valign=top><b>URL de informações de estatísticas de download</b></td><td valign=top><a target="_blank" href='v29'>'v29+|</a><br>|,'</td>' fi/
+if p(v30) then '<tr><td width=30% valign=top><b>Periódico do primeiro ano com conteúdo online de Acesso Livre</b></td><td valign=top>'v30+|<br>|,'</td>' fi/
+if p(v31) then '<tr><td width=30% valign=top><b>Formatos de texto completo</b></td><td valign=top>'v31+|<br>|,'</td>' fi/
+if p(v32) then '<tr><td width=30% valign=top><b>Palavras-chave</b></td><td valign=top>'v32+|<br>|,'</td>' fi/
+if p(v33) then '<tr><td width=30% valign=top><b>Linguagem de texto completo</b></td><td valign=top>'v33+|<br>|,'</td>' fi/
+if p(v34) then '<tr><td width=30% valign=top><b>URL para a página do Conselho Editorial</b></td><td valign=top><a target="_blank" href='v25'>'v34+|</a><br>|,'</td>' fi/
+if p(v35) then '<tr><td width=30% valign=top><b>Processo de revisão</b></td><td valign=top>'v35+|<br>|,'</td>' fi/
+if p(v36) then '<tr><td width=30% valign=top><b>Análise da URL de informações do processo</b></td><td valign=top><a target="_blank" href='v36'>'v36+|</a><br>|,'</td>' fi/
+if p(v37) then '<tr><td width=30% valign=top><b>URL for journal-s aims & scope</b></td><td valign=top><a target="_blank" href='v37'>'v37+|</a><br>|,'</td>' fi/
+if p(v38) then '<tr><td width=30% valign=top><b>URL for journal-s instructions for authors</b></td><td valign=top><a target="_blank" href='v38'>'v38+|</a><br>|,'</td>' fi/
+if p(v39) then '<tr><td width=30% valign=top><b>Política de triagem de plágio de periódico</b></td><td valign=top>'v39+|<br>|,'</td>' fi/
+if p(v40) then '<tr><td width=30% valign=top><b>URL de informação de plágio</b></td><td valign=top><a target="_blank" href='v40'>'v40+|</a><br>|,'</td>' fi/
+if p(v41) then '<tr><td width=30% valign=top><b>Número médio de semanas entre submissão e publicação</b></td><td valign=top>'v41+|<br>|,'</td>' fi/
+if p(v42) then '<tr><td width=30% valign=top><b>URL for journal-s Open Access statement</b></td><td valign=top><a target="_blank" href='v42'>'v42+|</a><br>|,'</td>' fi/
+if p(v43) then '<tr><td width=30% valign=top><b>Machine-readable CC licensing information embedded or displayed in</b></td><td valign=top>'v43+|<br>|,'</td>' fi/
+if p(v44) then '<tr><td width=30% valign=top><b>URL para uma página de exemplo com informações de licenciamento incorporadas</b></td><td valign=top><a target="_blank" href='v44'>'v44+|</a><br>|,'</td>' fi/
+if p(v45) then '<tr><td width=30% valign=top><b>Licença do periódico</b></td><td valign=top>'v45+|<br>|,'</td>' fi/
+if p(v46) then '<tr><td width=30% valign=top><b>Atributos da licença</b></td><td valign=top>'v46+|<br>|,'</td>' fi/
+if p(v47) then '<tr><td width=30% valign=top><b>URL para termos de licença</b></td><td valign=top><a target="_blank" href='v47'>'v47+|</a><br>|,'</td>' fi/
+if p(v48) then '<tr><td width=30% valign=top><b>Esta revista permite a reutilização irrestrita em conformidade com Boai?</b></td><td valign=top>'v48+|<br>|,'</td>' fi/
+if p(v49) then '<tr><td width=30% valign=top><b>Diretório de políticas de depósito</b></td><td valign=top>'v49+|<br>|,'</td>' fi/
+if p(v50) then '<tr><td width=30% valign=top><b>O autor detém direitos autorais sem restrições</b></td><td valign=top>'v50+|<br>|,'</td>' fi/
+if p(v51) then '<tr><td width=30% valign=top><b>URL de informações de direitos autorais</b></td><td valign=top><a target="_blank" href='v51'>'v51+|</a><br>|,'</td>' fi/
+if p(v52) then '<tr><td width=30% valign=top><b>O autor possui direitos de publicação sem restriçõess</b></td><td valign=top>'v52+|<br>|,'</td>' fi/
+if p(v53) then '<tr><td width=30% valign=top><b>URL de informações sobre direitos de publicação de publicação</b></td><td valign=top><a target="_blank" href='v53'>'v53+|</a><br>|,'</td>' fi/
+if p(v54) then '<tr><td width=30% valign=top><b>DOAJ Seal</b></td><td valign=top>'v54+|<br>|,'</td>' fi/
+if p(v55) then '<tr><td width=30% valign=top><b>Tick: Aceito depois de março de 2014</b></td><td valign=top>'v55+|<br>|,'</td>' fi/
+if p(v56) then '<tr><td width=30% valign=top><b>Adicionado na data</b></td><td valign=top>'v56+|<br>|,'</td>' fi/
+if p(v57) then '<tr><td width=30% valign=top><b>Assuntos</b></td><td valign=top>'v57+|<br>|,'</td>' fi/
+'</table><p>'

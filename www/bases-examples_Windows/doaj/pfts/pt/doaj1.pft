@@ -1,0 +1,11 @@
+if p(v1) then '<br><font face=arial size=2><b>'v1,'</b>' fi/,
+if p(v3) then '<a href="'v3'"><font face=arial size=3><b>'v3,'</b></a>' else 
+if p(v4) then '<br><font face=arial size=2>'"(",v4")",fi fi/
+if p(v5) then '<br><font face=arial size=2><b>Publisher: </b><font face=arial size=2>'v5, fi/
+if p(v6) then '<br><font face=arial size=2><b>Language: </b><font face=arial size=2>'v6+|  --  |, fi/
+if p(v7) then '<br><font face=arial size=2><i>ISSN: </i><font face=arial size=2>'v7, fi,
+if size(v8)>1 then x1,'  ---  <font face=arial size=2><i>EISSN: </i><font face=arial size=2>'v8, fi,
+if p(v11) then '<font face=arial size=2><i>  ---  Available: </i><font face=arial size=2>'v11,'-', fi,
+if p(v9) then '<font face=arial size=2>'v9,fi,
+if p(v10) then '<br><font face=arial size=2><b>Keyword</b>: <font face=arial size=2>'v10+|  --  |, fi/
+'<tr><td colspan=2><hr></td>'/
