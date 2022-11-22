@@ -8,4 +8,3 @@ Usage     : <?php include "../common/inc_close.php" ?>
 ?>
 <a href="javascript:self.close()" class="bt bt-red" title='<?php echo $msgstr["cerrar"]?>'>
     <i class="far fa-window-close"></i>&nbsp;<?php echo $msgstr["cerrar"]?></a>
-<?php
