@@ -107,7 +107,11 @@ include "../common/inc_div-helper.php";
 						OPAC
 					</a>
 				</li>				
-
+				<li>
+					<a href='Javascript:Ejecutar("../settings/abcd_stats.php","")'>
+						<?php echo "ABCD Health";?>
+					</a>
+				</li>
 			<?php } ?>
             </ul>
 			</form>
