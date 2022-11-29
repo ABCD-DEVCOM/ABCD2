@@ -2,7 +2,10 @@
 /*
 
 */
+
+
 session_start();
+//ini_set('memory_limit', '1024M');   
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
@@ -17,9 +20,6 @@ include("../common/header.php");
 $base="";
 $confirmcount=0;
 $backtoscript="conf_abcd.php";
-if (isset($arrHttp["base"])) $base=$arrHttp["base"];
-if (isset($arrHttp["confirmcount"])) $confirmcount=$arrHttp["confirmcount"];
-
 
 function show_phpinfo() {
     ob_start();
@@ -53,10 +53,7 @@ $lista_bases=array();
 $i="1";
 if (file_exists($db_path."bases.dat")){
     $fp = file($db_path."bases.dat");
-    $IsisScript=$xWxis."leer_all.xis";
-    $tstphp_numentries=0;
-    $testphp_numexp=0;
-    $counter = 0;
+    $IsisScript=$xWxis."administrar.xis";
     
     foreach ($fp as $linea){
         $linea=trim($linea);
@@ -65,21 +62,27 @@ if (file_exists($db_path."bases.dat")){
             $llave=trim(substr($linea,0,$ix));
             $lista_bases[$llave]=trim(substr($linea,$ix+1));
             $ABCD_cipar = $db_path.$actparfolder.$llave.".par";
-            $query = "&base=".$llave."&cipar=".$ABCD_cipar;
+            $query = "&base=".$llave."&cipar=".$ABCD_cipar."&Opcion=status";
             $dr_path = $db_path.$llave."/dr_path.def";
             include("../common/wxis_llamar.php");
             
             echo "<tr><td>".$i++."</td>";
             echo "<td>".$llave."</td><td>".$lista_bases[$llave]."</td>";
 
-            foreach ($contenido as $linea){
-                // echo "$linea";
-                $text[]=$linea;
+    $dbinfo_ix=-1;
+    if (isset($contenido )) {
+        foreach($contenido as $dbinfo_linea) {
+            $dbinfo_ix=$dbinfo_ix+1;
+            if ($dbinfo_ix>0) {
+                if (trim($dbinfo_linea)!=""){
+                    $dbinfo_a=explode(":",$dbinfo_linea);
+                    if (isset($dbinfo_a[1])) $arrHttp[$dbinfo_a[0]]=$dbinfo_a[1];
+                }
             }
-        $text = implode(" ", $text);
-        echo "<td>".substr_count($text, 'mfn=')."</td>"; // 2        
-        unset ($text);
-        
+        }
+    }
+
+   echo "<td>".$arrHttp["MAXMFN"]."</td>"; // 2        
 
 if (file_exists($dr_path)) {
     $dr_path_def = parse_ini_file($dr_path,true);
@@ -187,7 +190,88 @@ include "../common/inc_div-helper.php"
 </table>
 
 
+
 <hr>
+
+<h1>Environment</h1>
+
+<table class="striped table">
+    <tr>
+        <th>Extension</th>
+        <th>Info</th>
+        <th>Status</th>
+    </tr>    
+ <tr>
+    <td>mbstring</td>
+    <td>Multibyte support. To enable unicode.</td>
+    <td><?php if (extension_loaded('mbstring')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+
+<tr>
+    <td>gd</td>
+    <td>Image functions. The name depends on the PHP implementation</td>
+    <td><?php if (extension_loaded('gd')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+ <tr>
+    <td>gd2</td>
+    <td>Image functions. The name depends on the PHP implementation</td>
+    <td><?php if (extension_loaded('gd2')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+ <tr>
+    <td>curl</td>
+    <td>Required if DSpace bridge is used (to download records from DSpace repositories)</td>
+    <td><?php if (extension_loaded('curl')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+ <tr>
+    <td>ldap</td>
+    <td>Required if login with LDAP is used</td>
+    <td><?php if (extension_loaded('ldap')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+ <tr>
+    <td>xmlrpc</td>
+    <td>Required if Site is used</td>
+    <td><?php if (extension_loaded('xmlrpc')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+ <tr>
+    <td>xsl</td>
+    <td>Required if Site is used</td>
+    <td><?php if (extension_loaded('xsl')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+ <tr>
+    <td>yaz</td>
+    <td>Required if Z39.50 client is used (to download records via the Z39.50 communication protocol)</td>
+    <td><?php if (extension_loaded('yaz')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+</tr>
+</table>
+
+<?php 
+
+//print_r(implode('<br> ', get_loaded_extensions()));
+//echo extension_loaded('gd2');
+
+/**
+ * mbstring
+ * gd
+ * gd2
+ * curl
+ * ldap
+ * xmlrpc
+ * xsl
+ * yaz
+ ***/
+
+/*
+$all = extension_loaded('mbstring'); 
+    foreach($all as $i) { 
+        $ext = new ReflectionExtension($i); 
+        $ver = $ext->getVersion(); 
+        echo "$i - $ver" . PHP_EOL . "<br>";
+    }
+*/
+
+ ?>
+
+ <hr>
 
 <h1>Server Info</h1>
 
