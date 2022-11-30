@@ -160,16 +160,62 @@ include "../common/inc_div-helper.php"
 <div class="middle form">
 <div class="formContent">
 
+<h1>Server overview</h1>
 
-<pre>
-    URL: <?php echo $server_url;?>
+<table>
+<tr>
+    <th>URL:</th><td><?php echo $server_url;?></td>
+</tr>
+<tr>
+    <th>Dir Database:</th><td><?php echo $db_path;?></td>
+</tr>
+<tr>
+    <th>Scripts ABCD:</th><td><?php echo $ABCD_scripts_path;?></td>
+</tr>
+<tr>
+    <th>Cgi-bin path:</th><td><?php echo $cgibin_path;?></td>
+</tr>
+<tr>
+    <th>Hostname:</th><td><?php echo gethostname();?></td>
+</tr>
+<tr>
+    <th>DB List:</th><td><?php echo $db_path."bases.dat"; ?></td>
+</tr>
+</table>
 
-    Dir Database: <?php echo $db_path;?>
+<?php
+$ip_server = $_SERVER['SERVER_ADDR'];
+echo "Server IP Address is: $ip_server";
+?>
 
-    Hostname: <?php echo gethostname();?>
+<hr>
 
-    DB List: <?php echo $db_path."bases.dat"; ?>
-</pre>
+<h1>Disk Space</h1>
+
+ <?php
+
+    $bytes_free = disk_free_space(".");
+    $bytes_total = disk_total_space(".");
+    $bytes_used = $bytes_total - $bytes_free;
+    
+    $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+    $base = 1024;
+
+    $class_free = min((int)log($bytes_free , $base) , count($si_prefix) - 1);
+    $class_total = min((int)log($bytes_total , $base) , count($si_prefix) - 1);
+    $class_used = min((int)log($bytes_used , $base) , count($si_prefix) - 1);
+
+    $total_disk = sprintf('%1.2f' , $bytes_total / pow($base,$class_total)) . ' ' . $si_prefix[$class_total] . '<br />';
+    $free_disk = sprintf('%1.2f' , $bytes_free / pow($base,$class_free)) . ' ' . $si_prefix[$class_free] . '<br />';
+    $used_disk = sprintf('%1.2f' , $bytes_used / pow($base,$class_used)) . ' ' . $si_prefix[$class_used] . '<br />';
+ ?>
+
+<table>
+<tr><th>Total</th><td><?php echo $total_disk;?></td></tr>    
+<tr><th>Used</th><td><?php echo $free_disk;?></td></tr>    
+<tr><th>Free</th><td><?php echo $used_disk;?></td></tr>    
+</table>
+
 
 <hr>
 
@@ -273,10 +319,9 @@ $all = extension_loaded('mbstring');
 
  <hr>
 
-<h1>Server Info</h1>
 
-<?php show_phpinfo(); ?>
-    
+
+
 </div>
 
 
