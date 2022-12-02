@@ -338,3 +338,5 @@ status_inf_ldap=Required if login with LDAP is used
 status_inf_xmlrpc=Required if Site is used
 status_inf_xsl=Required if Site is used
 status_inf_yaz=Required if Z39.50 client is used (to download records via the Z39.50 communication protocol)
+status_inf_v=Version
+status_all_ext=Enabled Extensions

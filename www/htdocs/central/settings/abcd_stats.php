@@ -307,11 +307,11 @@ $ip_server = getHostByName(php_uname('n'));
 </table>
 
 
-<h1>All Extensions</h1>
+<h1><?php echo $msgstr["status_all_ext"];?></h1>
 <table class="striped table">
 <tr>
-    <th>Name</name>
-    <th>Version</th>
+    <th><?php echo $msgstr["status_extension"];?></name>
+    <th><?php echo $msgstr["status_inf_v"];?></th>
 </tr>
 
 
