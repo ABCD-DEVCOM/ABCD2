@@ -106,12 +106,22 @@ include "../common/inc_div-helper.php";
 					<a href='opac/'>
 						OPAC
 					</a>
-				</li>				
+				</li>	
+				
+				<?php
+				$script_abcd_stats = 'abcd_stats.php';
+				if (file_exists($script_abcd_stats)) {
+				?>					
 				<li>
 					<a href='Javascript:Ejecutar("../settings/abcd_stats.php","")'>
-						<?php echo "ABCD Health";?>
+						<?php echo $msgstr["s_e_overview"];?>
 					</a>
 				</li>
+				<?php
+				} 
+				?>
+
+
 			<?php } ?>
             </ul>
 			</form>

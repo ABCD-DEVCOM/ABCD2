@@ -1,8 +1,11 @@
 <?php
 /*
-
+* This script was created to display an overview about the environment where ABCD is installed.
+* Running it allows you to see the total records of all databases, their encodings and the absence of main files.
+* It is also possible to detect databases with execution errors.
+* This file can be deleted if it poses a risk to the server.´
+* 2022-12-02 rogercgui Publish the first version of this script
 */
-
 
 session_start();
 //ini_set('memory_limit', '1024M');   
@@ -11,12 +14,13 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include("../config.php");
-$lang=$_SESSION["lang"];
 
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
+include("../lang/soporte.php");
+
 include("../common/header.php");
+
 $base="";
 $confirmcount=0;
 $backtoscript="conf_abcd.php";
@@ -48,7 +52,7 @@ function show_phpinfo() {
 
 
 function all_databases_list() {
-global $db_path, $xWxis, $actparfolder;
+global $db_path, $xWxis, $actparfolder, $msgstr;
 $lista_bases=array();
 $i="1";
 if (file_exists($db_path."bases.dat")){
@@ -99,15 +103,15 @@ if (file_exists($dr_path)) {
     if (isset($dr_path_def["COLLECTION"])) {
         echo $dr_path_def["COLLECTION"];
     } else {
-        echo "No Collection";
+       echo $msgstr["status_collection_no"];
     }
 echo "</td>";
 
 } else {
     $dr_path_def = "";
-    echo "<td>Not exist dr_path.def</td>";
-    echo "<td>Not exist dr_path.def</td>";
-    echo "<td>Not exist dr_path.def</td>";
+    echo "<td>".$msgstr['status_no_file']."</td>";
+    echo "<td>".$msgstr['status_no_file']."</td>";
+    echo "<td>".$msgstr['status_no_file']."</td>";
 }
         }
     }
@@ -143,7 +147,7 @@ include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-    ABCD Status
+        <?php echo $msgstr["s_e_overview"]; ?>
 	</div>
 	<div class="actions">
 	<?php 
@@ -155,42 +159,58 @@ include("../common/institutional_info.php");
 	<div class="spacer">&#160;</div>
 </div>
 <?php
-include "../common/inc_div-helper.php"
+include "../common/inc_div-helper.php";
+
+
+if ($_SERVER['SERVER_ADDR']!="::1"){
+$ip_server = $_SERVER['SERVER_ADDR'];
+} else {
+$ip_server = getHostByName(php_uname('n'));
+}
+
+
 ?>
 <div class="middle form">
 <div class="formContent">
 
-<h1>Server overview</h1>
+<h1><?php echo $msgstr["status_server"]; ?></h1>
 
 <table>
 <tr>
     <th>URL:</th><td><?php echo $server_url;?></td>
 </tr>
 <tr>
-    <th>Dir Database:</th><td><?php echo $db_path;?></td>
+    <th><?php echo $msgstr["status_dir_database"]; ?>:</th><td><?php echo $db_path;?></td>
+</tr>
+<tr>
+    <th><?php echo $msgstr["status_db_list"];?>:</th><td><?php echo $db_path."bases.dat"; ?></td>
 </tr>
 <tr>
     <th>Scripts ABCD:</th><td><?php echo $ABCD_scripts_path;?></td>
 </tr>
 <tr>
-    <th>Cgi-bin path:</th><td><?php echo $cgibin_path;?></td>
+    <th><?php echo $msgstr["status_path_cgi_bin"];?>:</th><td><?php echo $cgibin_path;?></td>
 </tr>
 <tr>
     <th>Hostname:</th><td><?php echo gethostname();?></td>
 </tr>
 <tr>
-    <th>DB List:</th><td><?php echo $db_path."bases.dat"; ?></td>
+    <th><?php echo $msgstr["status_os"];?>:</th><td><?php echo getHostByName(php_uname('s')); ?></td>
+</tr>
+<tr>
+    <th><?php echo $msgstr["status_machine"];?>:</th><td><?php echo getHostByName(php_uname('m')); ?></td>
+</tr>
+
+<tr>
+    <th><?php echo $msgstr["status_ip"];?>:</th><td><?php echo $ip_server; ?></td>
 </tr>
 </table>
 
-<?php
-$ip_server = $_SERVER['SERVER_ADDR'];
-echo "Server IP Address is: $ip_server";
-?>
+
 
 <hr>
 
-<h1>Disk Space</h1>
+<h1><?php echo $msgstr["status_disk"];?></h1>
 
  <?php
 
@@ -211,117 +231,107 @@ echo "Server IP Address is: $ip_server";
  ?>
 
 <table>
-<tr><th>Total</th><td><?php echo $total_disk;?></td></tr>    
-<tr><th>Used</th><td><?php echo $free_disk;?></td></tr>    
-<tr><th>Free</th><td><?php echo $used_disk;?></td></tr>    
+<tr><th><?php echo $msgstr["status_total_disk"];?>: </th><td><?php echo $total_disk;?></td></tr>    
+<tr><th><?php echo $msgstr["status_used_disk"];?>: </th><td><?php echo $free_disk;?></td></tr>    
+<tr><th><?php echo $msgstr["status_free_disk"];?>: </th><td><?php echo $used_disk;?></td></tr>    
 </table>
 
 
 <hr>
 
-<h1>Databases</h1>
+<h1><?php echo $msgstr["status_databases"];?></h1>
 <table class="striped table">
     <tr>
         <th>#</th>
-        <th>Database</th>
-        <th>Database description</th>
-        <th>Total records</th>
-        <th>dr_path</th>
-        <th>Codification</th>
-        <th>Collection</th>
+        <th><?php echo $msgstr["status_database"];?></th>
+        <th><?php echo $msgstr["status_database_desc"];?></th>
+        <th><?php echo $msgstr["status_total_mfns"];?></th>
+        <th><?php echo $msgstr["status_dr_path"];?></th>
+        <th><?php echo $msgstr["status_encoding"];?></th>
+        <th><?php echo $msgstr["status_collection"];?></th>
     </tr>        
-
-<?php echo all_databases_list(); ?>
-
+    <?php echo all_databases_list(); ?>
 </table>
-
-
 
 <hr>
 
-<h1>Environment</h1>
+<h1><?php echo $msgstr["status_environment"];?></h1>
 
-<table class="striped table">
+<table width="100%" class="striped table">
     <tr>
-        <th>Extension</th>
-        <th>Info</th>
-        <th>Status</th>
+        <th><?php echo $msgstr["status_extension"];?></th>
+        <th><?php echo $msgstr["status_ext_info"];?></th>
+        <th><?php echo $msgstr["status_ext_status"];?></th>
     </tr>    
  <tr>
     <td>mbstring</td>
-    <td>Multibyte support. To enable unicode.</td>
-    <td><?php if (extension_loaded('mbstring')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_mbstring"];?></td>
+    <td><?php if (extension_loaded('mbstring')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
 
 <tr>
     <td>gd</td>
-    <td>Image functions. The name depends on the PHP implementation</td>
-    <td><?php if (extension_loaded('gd')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_gd"];?></td>
+    <td><?php if (extension_loaded('gd')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
  <tr>
     <td>gd2</td>
-    <td>Image functions. The name depends on the PHP implementation</td>
-    <td><?php if (extension_loaded('gd2')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_gd2"];?></td>
+    <td><?php if (extension_loaded('gd2')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
  <tr>
     <td>curl</td>
-    <td>Required if DSpace bridge is used (to download records from DSpace repositories)</td>
-    <td><?php if (extension_loaded('curl')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_curl"];?></td>
+    <td><?php if (extension_loaded('curl')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
  <tr>
     <td>ldap</td>
-    <td>Required if login with LDAP is used</td>
-    <td><?php if (extension_loaded('ldap')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_ldap"];?></td>
+    <td><?php if (extension_loaded('ldap')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
  <tr>
     <td>xmlrpc</td>
-    <td>Required if Site is used</td>
-    <td><?php if (extension_loaded('xmlrpc')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_xmlrpc"];?></td>
+    <td><?php if (extension_loaded('xmlrpc')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
  <tr>
     <td>xsl</td>
-    <td>Required if Site is used</td>
-    <td><?php if (extension_loaded('xsl')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_xsl"];?></td>
+    <td><?php if (extension_loaded('xsl')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
  <tr>
     <td>yaz</td>
-    <td>Required if Z39.50 client is used (to download records via the Z39.50 communication protocol)</td>
-    <td><?php if (extension_loaded('yaz')==1 )echo "Ok!"; else echo "Missing!"; ?></td>
+    <td><?php echo $msgstr["status_inf_yaz"];?></td>
+    <td><?php if (extension_loaded('yaz')==1 )echo "Ok!"; else echo $msgstr["status_ext_install"]; ?></td>
 </tr>
 </table>
 
+
+<h1>All Extensions</h1>
+<table class="striped table">
+<tr>
+    <th>Name</name>
+    <th>Version</th>
+</tr>
+
+
 <?php 
-
-//print_r(implode('<br> ', get_loaded_extensions()));
-//echo extension_loaded('gd2');
-
-/**
- * mbstring
- * gd
- * gd2
- * curl
- * ldap
- * xmlrpc
- * xsl
- * yaz
- ***/
-
-/*
-$all = extension_loaded('mbstring'); 
+$all = get_loaded_extensions(); 
     foreach($all as $i) { 
         $ext = new ReflectionExtension($i); 
         $ver = $ext->getVersion(); 
-        echo "$i - $ver" . PHP_EOL . "<br>";
+        echo "<tr><td>".$i."</td><td> - ".$ver."</td>" . PHP_EOL . "</tr>";
     }
-*/
-
  ?>
-
- <hr>
-
-
-
+</table>
 
 </div>
+</div>
+
+
+<?php
+include("../common/footer.php");
+?>
+
 
 
