@@ -467,7 +467,7 @@ A.menuButton {
 	}
 
 	.formHead, .formContent {
-	/*	padding: 20px;*/
+		padding: 20px;
 		justify-content: flex-start;
 	}
 

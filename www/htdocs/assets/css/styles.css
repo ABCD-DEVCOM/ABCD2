@@ -23,7 +23,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
+/*
 h1, .h1 {
   font-size: calc(0.375rem + 0.5vw);
 }
@@ -31,7 +31,7 @@ h1, .h1 {
   h1, .h1 {
     font-size: 0.8rem;
   }
-}
+}*/
 
 a {
 	color: var(--abcd-steel-blue);
