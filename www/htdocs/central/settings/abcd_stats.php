@@ -5,6 +5,7 @@
 * It is also possible to detect databases with execution errors.
 * This file can be deleted if it poses a risk to the server.´
 * 2022-12-02 rogercgui Publish the first version of this script
+* 2022=12-04 fho4abcd Improvement for $actparfolder not equal to standard par/
 */
 
 session_start();
@@ -65,6 +66,7 @@ if (file_exists($db_path."bases.dat")){
             $ix=strpos($linea,"|");
             $llave=trim(substr($linea,0,$ix));
             $lista_bases[$llave]=trim(substr($linea,$ix+1));
+            if ( $actparfolder!="par/") $actparfolder=$llave."/";
             $ABCD_cipar = $db_path.$actparfolder.$llave.".par";
             $query = "&base=".$llave."&cipar=".$ABCD_cipar."&Opcion=status";
             $dr_path = $db_path.$llave."/dr_path.def";
