@@ -1,6 +1,7 @@
 /* 2021-03-01 fho4abcd : deleted overruled font-family, font-size
 ** 2021-06-26 fho4abcd Move distributor logo to php
 ** 2021-12-23 fho4abcd Restored background mydiv (line 1577) to view the action buttons in fmt (disappeared after previous commit)
+** 2022-12-11 fho4abcd Add moduleButton
 */
 /* GENERAL STYLES */
 
@@ -821,6 +822,12 @@ A.utilsButton {
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
+A.moduleButton {
+	background: url('../svg/main/main_module_32_regular.svg') no-repeat center;
+	background-size: 44px;
+	background-position: 10px;
+	background-color: var(--abcd-white);
+}
 
 A.z3950Button {
 	background: url('../svg/main/main_arrow_download_32_regular.svg') no-repeat center;
@@ -896,14 +903,14 @@ A.userButton {
 	background: url('../svg/main/main_people_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
-	background-color: var(--abcd-white);
+	background-color: var(--abcd-white);	
 }
 
 A.statButton, A.receivingButton {
 	background: url('../svg/main/main_book_pulse_32_regular.svg') no-repeat left;
 	background-size: 44px;
 	background-position: 10px;
-	background-color: var(--abcd-white);	
+	background-color: var(--abcd-white);
 }
 
 A.loanButton {
