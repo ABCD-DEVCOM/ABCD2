@@ -13,6 +13,7 @@
     display language menu value in "best" characterset +
     remove BOM (Byte Order Mark) if present on first line of language file
 20221122 rogercgui Removed $session_mfn_admin=="1" in line 181 because it displayed the list of bases in data entry only for MFN 1 of the Acces database
+20221128 fho4abcd if $module_odds is set: show language dropdown & do not show logout
 */
 
 global $ABCD_scripts_path;
@@ -274,7 +275,7 @@ function CambiarLenguaje(){
         }
     } 
     global $circulation, $acquisitions;
-    if  (($central=="Y") or  ($circulation=="Y") or ($acquisitions=="Y") or ($verify_selbase=="Y"))  {
+    if  (($central=="Y") or  ($circulation=="Y") or ($acquisitions=="Y") or ($verify_selbase=="Y") or isset($module_odds))  {
         if (isset($_REQUEST['base'])) {
             $selbase = $_REQUEST['base'];
         } else {
@@ -352,7 +353,9 @@ function CambiarLenguaje(){
             </li>
 
             <li>
+            <?php if (!isset($module_odds)) { ?>
                 <a class="bt-exit" href="../common/logout.php"><img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
+            <?php }?>
             </li>
         </ul>
     </nav>
