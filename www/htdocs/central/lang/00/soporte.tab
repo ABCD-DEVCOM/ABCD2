@@ -291,6 +291,7 @@ testmx=Test
 tolinux=Delete carriage return (Windows -> Linux)
 transferido=Uploaded
 unch_append=Unchecked = Append records
+unch_noleaderimport=Unchecked = No import of MARC-Leader information
 unch_wxis=Unchecked = Use WXIS
 updatedfile=Updated file
 upload_conf_errmsg=May be a configuration error for file uploads. Check log files and php.ini.
@@ -299,6 +300,7 @@ upload_logout=Logout recommended
 upload_overwrite=Overwrite existing file ?
 upload_size=Size
 upload_status=Status
+useimportisotag=Use option 'isotag1'
 uni_no=No
 uni_yes=Yes
 validate=Validate
