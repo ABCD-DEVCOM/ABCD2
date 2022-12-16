@@ -11,6 +11,7 @@
 20210624 fho4abcd Import only if second screen was executed (and not immediately during list presentation)
 20210802 fho4abcd Make Show file work the first time
 20211214 fho4abcd Backbutton by included file
+20221216 fho4abcd Add button to import marc leader information
 */
 global $arrHttp;
 set_time_limit(0);
@@ -144,6 +145,10 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
               <td><input type=checkbox name=delrec></td>
               <td><font color=blue><?php echo $msgstr["unch_append"]?></font></td>
           </tr><tr>
+              <td><?php echo $msgstr["useimportisotag"]?></td>
+              <td><input type=checkbox name=importisotag></td>
+              <td><font color=blue><?php echo $msgstr["unch_noleaderimport"]?></font></td>
+          </tr><tr>
               <td></td><td><input type=button value='START' onclick=Confirmar()></td><td></td>
          </tr>       
         </table>
@@ -171,7 +176,12 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
 	else
 		$accion=" append";
 
-    $strINV=$mx_path." iso=$fullisoname $accion=".$db_path.$base."/data/".$base."  -all now 2>&1";
+    if (isset($arrHttp["importisotag"]))
+        $importisotag="isotag1=3000";
+    else
+        $importisotag="";
+
+    $strINV=$mx_path." iso=$fullisoname $accion=".$db_path.$base."/data/".$base." $importisotag  -all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){

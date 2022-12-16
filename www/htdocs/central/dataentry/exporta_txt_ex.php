@@ -15,6 +15,7 @@
 2021-06-05 fho4abcd Export without marc without isotag. Export with marc with iso=marc + isotag.
 20211216 fho4abcd Backbutton by included file
 20220711 fho4abcd Use $actparfolder as location for .par files
+20221216 fho4abcd No longer use 'marc=' in command. The outisotag1=3000 seems sufficient
 */
 
 global $arrHttp;
@@ -212,10 +213,6 @@ function ExportarMX( $fullpath){
     global $mx_path,$db_path,$arrHttp,$msgstr;
     $strINV = $mx_path." db=".$db_path.$arrHttp["base"]."/data/".$arrHttp["base"];
     $strINV.= " iso=";
-    // Enter the marc special
-    if (isset($arrHttp["usemarcformat"]) and $arrHttp["usemarcformat"]=="on") {
-        $strINV.="marc=";
-    }
     $strINV.= $fullpath;
 
     // Enter the range
