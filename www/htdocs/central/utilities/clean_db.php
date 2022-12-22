@@ -3,6 +3,7 @@
 20210414 fho4abcd Rewrite(helper code fragment,add confirm, correct error checks,html code..)
 20210605 fho4abcd Remove isotag1. Improves operation for standard db's.Translations
 20211215 fho4abcd Backbutton by included file
+20221222 fho4abcd Add outisotag1=3000/isotag1=3000 to export/import to preserve leaderinfo
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -102,7 +103,7 @@ if (!isset($arrHttp["confirmcount"])) {
     if (file_exists($fullisoname)) {
         unlink($fullisoname);
     }
-    $strINV=$mx_path." ".$bd_mst." iso=$fullisoname  -all now 2>&1";
+    $strINV=$mx_path." ".$bd_mst." iso=$fullisoname  outisotag1=3000 -all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){
@@ -121,7 +122,7 @@ if (!isset($arrHttp["confirmcount"])) {
     }
 
     //importing iso
-    $strINV=$mx_path." iso=$fullisoname create=".$db_path.$base."/data/".$base."  -all now 2>&1";
+    $strINV=$mx_path." iso=$fullisoname create=".$db_path.$base."/data/".$base."  isotag1=3000 -all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){

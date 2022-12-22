@@ -6,6 +6,7 @@
 2021-07-07 fho4abcd Improve leader reformat (was broken since update to OPAC)
 2021-07-22 fho4abcd Repair PHP errors due to previous (Improve leader format...)
 20220711 fho4abcd Use $actparfolder as location for .par files
+20221222 fho4abcd Translations+new style buttons for search dialog. Add div-helper
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -97,7 +98,7 @@ include("../common/header.php");
 
 function InsertarEnlaces($base){
 	// inserta enlaces para desplegar la fdt, fst y formulario de búsqueda avanzada
-	echo "&nbsp; &nbsp; <a href=../dbadmin/fst_leer.php?base=$base target=_blank>FST</a>";
+	echo "&nbsp; &nbsp; <a class='bt bt-blue' href=../dbadmin/fst_leer.php?base=$base target=_blank>FST</a>";
 }
 
 function ReadWorksheetsRights(){
@@ -771,15 +772,18 @@ switch ($arrHttp["Opcion"]) {
         	if (!isset($_SESSION["Expresion"][$arrHttp["base"]][$arrHttp["Expresion"]]))
         		$_SESSION["Expresion"][$arrHttp["base"]][$arrHttp["Expresion"]]=$resultado; */
         if ($resultado=="0"){
+            include "../common/inc_div-helper.php";
         	$arrHttp["Opcion"]=="ninguna";
         	echo "	<div class=\"middle form\">
 						<div class=\"formContent\">
 						<table width=100%><td width=10></td><td>\n";
 			//if ($wxisUrl!="") echo $wxisUrl."<br>";
 
-			echo "<font face=arial style=font-size:10px>".$msgstr["expresion"].":<textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea><a href=javascript:NuevaBusqueda()>Buscar</a></font>";
+			echo $msgstr["expresion"].":<br>";
+            echo "<textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea>";
+            echo "<br><a class='bt bt-green' href=javascript:NuevaBusqueda()>".$msgstr["buscar"]."</a>";
 			InsertarEnlaces($arrHttp["base"]);
-			echo "<h4>Records:".$resultado."</h4></div></div>\n";
+			echo "<h4>".$msgstr["selected_records"].": ".$resultado."</h4></div></div>\n";
 			$arrHttp["Mfn"] =1;
 	        ColocarMfn();
 	        echo "</td></table>";
