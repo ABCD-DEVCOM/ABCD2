@@ -62,7 +62,7 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
 	$db=$arrHttp["base"];
     if (!isset($arrHttp["encabezado"])){
         ?>
-        <div id="myDiv" style="position:absolute; top:0px; right: 0;" >
+        <div id="myDiv" style="position:absolute; top:0px; right: 0; z-index: 99999999999;" >
             <table class="toolbar-edit-dataentry">
             <tr><td>
         <?php
