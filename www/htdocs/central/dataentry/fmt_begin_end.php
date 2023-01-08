@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20220924 fho4abcd Use $actparfolder as location for .par files
+20230106 fho4abcd debug parameter for ActualizarRegistro +
 */
 
 if (isset($arrHttp["wk_tipom_1"]))
@@ -67,7 +68,7 @@ if (file_exists($archivo)){
 			break;
 		case ".end":
 			$end_code="S";   // CREATE A DUMMY RECORD AND APLY THE VALIDATION FORMAT
-			ActualizarRegistro();
+			ActualizarRegistro("fmt_begin_end");
 			unset($end_code);
 			if ($arrHttp["Mfn"]=="New")
 			   	$ValorCapturado.="<3333 0>0</3333>";

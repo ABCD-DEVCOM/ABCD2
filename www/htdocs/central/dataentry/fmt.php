@@ -7,6 +7,9 @@
 2021-07-22 fho4abcd Repair PHP errors due to previous (Improve leader format...)
 20220711 fho4abcd Use $actparfolder as location for .par files
 20221222 fho4abcd Translations+new style buttons for search dialog. Add div-helper
+20230106 fho4abcd Don't set arrHttp values to **INVALID** if they contain the string "script"+
+                  debug parameter for ActualizarRegistro +
+                  check existence of indexvalue in creation of wks values in case "reintentar"
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -72,7 +75,7 @@ require_once("../common/get_post.php");
 if (isset($_REQUEST["Expresion"])) $_REQUEST["Expresion"]=urldecode($_REQUEST["Expresion"]);
 
 
-//echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
+// debug if (isset($arrHttp["ValorCapturado"])) echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
 //die;
 require_once("../config.php");
 
@@ -440,9 +443,9 @@ global $arrHttp,$variables;
 		}else{
 			if (trim($value)!="") {
 				$arrHttp[$var]=$value;
-				if (stripos($value,"script")!==false){
-					$arrHttp[$var]="**INVALID**";
-				}
+				//if (stripos($value,"script")!==false){// unknown why this check is here. Breaks also legal entries
+				//	$arrHttp[$var]="**INVALID**";
+				//}
 			}
 		}
 
@@ -594,7 +597,7 @@ foreach ($arrHttp as $var => $value) {
    	}
 
 }
-//foreach ($variables as $key => $value) echo "$key=$value<br>";die;
+// debug foreach ($variables as $key => $value) echo "$key=$value<br>";
 
 // Si la opcion es copiar_captura, se cambia la base de datos para poder leer los archivos de definición
 
@@ -641,9 +644,7 @@ if (isset ($arrHttp["Opcion"]))  {
 }
 
 //--------------------------------------------------------------------------
-
-
-// se lee el archivo con los tipos de registro
+// Read file with record types
 unset ($tm);
 $tor="";
 if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
@@ -652,8 +653,8 @@ if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
 	if (file_exists($db_path.$base."/def/".$lang_db."/typeofrecord.tab"))
 		$tor=$db_path.$base."/def/".$lang_db."/typeofrecord.tab";
 }
-//se carga la tabla de tipos de registro
-// $tl and $nr are the tags where the type of record is stored
+// the record types table is loaded
+// $tl and $nr are the leader tags where the type of record is stored
 if ($tor!=""){
 	$fp = file($tor);
 	$ix=0;
@@ -697,7 +698,7 @@ if (!isset($arrHttp["Formato"])) $arrHttp["Formato"]="";
 if ($arrHttp["Opcion"]=="ver" and $arrHttp["Formato"]=="") $arrHttp["Opcion"]="leer";
 $recdel="";
 $reintentar="";
-//echo $arrHttp["Opcion"];
+// debug echo "<br>switch option=".$arrHttp["Opcion"]."<br>";
 switch ($arrHttp["Opcion"]) {
 	case "reintentar":           // IF A VALIDATION ERROR OCCURS THE RECORD IS REDISPLAYED
     case "save":
@@ -710,11 +711,9 @@ switch ($arrHttp["Opcion"]) {
 			}
     	}
 		CargarMatriz($arrHttp["ValorCapturado"]);
-		//echo "<xmp>";
-//var_dump($variables);
-//echo "</xmp>";
-
-		if (isset($tm) and !isset($arrHttp["wks"])){   //para ver si hay tipo de material  y no viene fijado anteriormente
+		// debug echo "<xmp>";var_dump($variables);echo "</xmp>";
+        // debug echo "<br>worksheet=".$arrHttp["wks"];
+		if (isset($tm) and !isset($arrHttp["wks"])){   //to see if there is a type of material and it is not previously set
 			foreach ($tm as $linea){
 				$tym=explode('|',trim($linea));
 				if (!isset($valortag[$tl])){
@@ -725,7 +724,8 @@ switch ($arrHttp["Opcion"]) {
 					break;
 				}
 				if (isset($tym[1]) and isset($tym[2])){
-					if ($valortag[$tl]==$tym[1] and $tym[2]==""  or $valortag[$tl]==$tym[1] and $valortag[$nr]==$tym[2]) {
+					if ($valortag[$tl]==$tym[1] and $tym[2]==""  or
+                        $valortag[$tl]==$tym[1] and isset($valortag[$nr]) and $valortag[$nr]==$tym[2]) {
 						$arrHttp["wks_a"]=$linea;
 						$arrHttp["wks"]=$tym[0];
 						$arrHttp["wk_tipom_1"]=$tym[1];
@@ -1024,7 +1024,7 @@ switch ($arrHttp["Opcion"]) {
 		include ("scripts_dataentry.php");
         echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
-		$res=ActualizarRegistro(1);
+		$res=ActualizarRegistro("fmt_A");
 		if (trim($res)=="DELETED"){
 			echo "<h4>".$arrHttp["Mfn"]." ". $msgstr["recdel"]."</h4>";
 			$record_deleted="Y";
@@ -1075,7 +1075,7 @@ if ($actualizar=="SI"){
 	$nuevo="";
 	if ($arrHttp["Mfn"]=="New") $nuevo="s";
 
-	$regSal=ActualizarRegistro();
+	$regSal=ActualizarRegistro("fmt_B");
 	if ($nuevo=="s") $arrHttp["Maxmfn"]=$arrHttp["Mfn"];
 	$arrHttp["Opcion"]="ver";
 	$ver="S";

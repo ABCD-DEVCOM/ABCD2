@@ -1,6 +1,7 @@
 <?php
 /*
 20220929 fho4abcd Use $actparfolder as location for .par files
+20221219 fho4abcd Improve html syntax
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -98,11 +99,12 @@ if (file_exists($file_val)){
 				}else{
 					$output.=  "<td>&nbsp;</td>";
 				}
+                $output.="</tr>"."\n";
 			}
 	    }
 	}
 	if (trim($output)!="") {
-		$output="<table class='alert'><tr><td>".$output."<td></tr></table>";
+		$output="<table class='alert'>".$output."</table>"."\n";
 	}
 }else{
 	$output="";
