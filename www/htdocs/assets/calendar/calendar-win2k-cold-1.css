@@ -3,26 +3,24 @@
 .calendar {
   position: relative;
   display: none;
-  border-top: 2px solid #fff;
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
-  border-left: 2px solid #fff;
-  font-size: 11px;
+  border: 1px solid rgb(136, 114, 233);
+  border-radius: 4px;
+  font-size: 12px;
   color: #000;
   cursor: default;
-  background: #c8d0d4;
+  background: #bfdfef;
   font-family: tahoma,verdana,sans-serif;
+-webkit-box-shadow: 10px 10px 22px -13px rgba(133, 133, 133, 1);
+  -moz-box-shadow: 10px 10px 22px -13px rgba(133, 133, 133, 1);
+  box-shadow: 10px 10px 22px -13px rgba(133, 133, 133, 1);
 }
 
 .calendar table {
-  border-top: 1px solid #000;
-  border-right: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  border-left: 1px solid #000;
-  font-size: 11px;
+  border: none;
+  font-size: 12px;
   color: #000;
   cursor: default;
-  background: #c8d0d4;
+  background: #f7f7f7;
   font-family: tahoma,verdana,sans-serif;
 }
 
@@ -30,11 +28,9 @@
 
 .calendar .button { /* "<<", "<", ">", ">>" buttons have this class */
   text-align: center;
-  padding: 1px;
-  border-top: 1px solid #fff;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  border-left: 1px solid #fff;
+  font-size: 12px;
+  padding: 1px 3px;
+  border: 1px solid rgb(40, 34, 162);
 }
 
 .calendar .nav {
@@ -68,12 +64,11 @@
 }
 
 .calendar thead .hilite { /* How do the buttons in header appear when hover */
-  border-top: 2px solid #fff;
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
-  border-left: 2px solid #fff;
-  padding: 0px;
-  background-color: #d8e0e4;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-left: 1px solid #fff;
+  background-color: #ffffff;
 }
 
 .calendar thead .active { /* Active (pressed) buttons in header */
