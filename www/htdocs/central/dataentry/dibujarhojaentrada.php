@@ -1634,8 +1634,8 @@ Function PrepararFormato() {
 
        									//calendar attaches to existing form element
                                         ?>
-       									<input tabindex='0' type=text name=tag<?php echo $tag;?>
-                                                id=tag<?php echo $tag;?>_c
+       									<input tabindex="0" type="text" name="tag<?php echo $tag;?>"
+                                                id="tag<?php echo $tag;?>_c"
                                                 value="<?php echo $campo?>"
                                         <?php						
                                         if ($iso_tag!="")
@@ -1645,8 +1645,8 @@ Function PrepararFormato() {
                                         
                                         ?>
                                         />
-                                        <a class="bt-fdt" href="#">
-                                            <i class="far fa-calendar-alt" id="f_tag<?php echo $tag;?>" title="Date selector"></i></a>
+                                        <a class="bt-fdt" id="f_tag<?php echo $tag;?>">
+                                            <i class="far fa-calendar-alt"  title="Date selector"></i></a>
                                         <script type="text/javascript">
                                         Calendar.setup({
                                             inputField     :    "tag<?php echo $tag?>_c",     // id of the input field
@@ -1683,12 +1683,12 @@ Function PrepararFormato() {
        								if (!$ver) {
        									//calendar attaches to existing form element
                                         ?>
-                                        <input tabindex='0' type=text name=tag<?php echo $tag;?>
-                                                id=tag<?php echo $tag?>_c
+                                        <input tabindex="0" type="text" name="tag<?php echo $tag;?>"
+                                                id="tag<?php echo $tag?>_c"
                                                 value="<?php echo $campo?>"
 												onChange='Javascript:DateToIso(this.value,document.forma1.tag<?php echo $tag?>)'/>
-                                        <a class="bt-fdt" href="#">
-                                            <i class="far fa-calendar-alt" id="f_tag<?php echo $tag?>" title="Date selector"></i></a>
+                                        <a class="bt-fdt" id="f_tag<?php echo $tag?>">
+                                            <i class="far fa-calendar-alt"  title="Date selector"></i></a>
                                         <script type="text/javascript">
                                             Calendar.setup({
                                                 inputField     :    "tag<?php echo $tag;?>_c",     // id of the input field
