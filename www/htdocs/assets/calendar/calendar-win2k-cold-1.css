@@ -68,7 +68,7 @@
   border-right: 1px solid #000;
   border-bottom: 1px solid #000;
   border-left: 1px solid #fff;
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 .calendar thead .active { /* Active (pressed) buttons in header */
