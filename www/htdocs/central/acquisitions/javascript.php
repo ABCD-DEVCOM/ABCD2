@@ -21,10 +21,12 @@ function Show(Db,Key){
 function DateToIso(From,To){
 	d=From.split('/')
 	<?php echo "dateformat=\"$config_date_format\"\n" ?>
-	if (dateformat="DD/MM/YY"){
+	if (dateformat="DD/MM/YY") || (dateformat="d/m/Y") {
 		iso=d[2]+d[1]+d[0]
+		console.log(iso)
 	} else {
 		iso=d[2]+d[0]+d[1]
+		console.log(iso)
 	}
 	To.value=iso
 }

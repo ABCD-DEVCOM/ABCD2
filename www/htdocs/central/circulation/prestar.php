@@ -138,7 +138,7 @@ function DateToIso(From,To){
 		}
 		<?php echo "dateformat=\"$config_date_format\"\n" ?>
 
-		if (dateformat=="DD/MM/YY"){
+		if (dateformat=="d/m/Y"){
 			iso=d[2]+d[1]+d[0]
 		}else{
 			iso=d[2]+d[0]+d[1]
@@ -308,6 +308,7 @@ include "../common/inc_div-helper.php";
 <form name=inventorysearch action=usuario_prestamos_presentar.php method=post onsubmit="javascript:return false">
 <input type=hidden name=loan_policy value=<?php echo $LOAN_POLICY?>>
 <input type=hidden name=Opcion value=prestar>
+<input type="hidden" name="lang" value="<?php echo $lang;?>">
 <input type=hidden name=inventory>
 <div class="middle list">
 
@@ -374,22 +375,23 @@ if (file_exists($db_path."loans.dat")){
 		<label for="searchExpr">
 			<strong><?php echo $msgstr["inventory"]?></strong>
 		</label>
-		</td><td>
+		</td>
+		<td>
 		<?php if (isset($LOAN_POLICY) and $LOAN_POLICY=="BY_USER"  ){
 				echo "<input type=text name=\"inventory_sel\" id=\"inventory_sel\" value=\"";
 				if (isset($arrHttp["inventory_sel"])) echo $arrHttp["inventory_sel"];
-				echo "\" class=\"textEntry\" onfocus=\"this.className = 'textEntry';\"  onblur=\"this.className = 'textEntry';\">\n";
+				echo ">\n";
 			  }else{
-				echo "<textarea name=\"inventory_sel\" id=\"inventory_sel\" class=\"textEntry\" onfocus=\"this.className = 'textEntry';\"  onblur=\"this.className = 'textEntry';\" rows=5 cols=50/></textarea>\n";
+				echo "<textarea name=\"inventory_sel\" id=\"inventory_sel\" rows=5 cols=50/></textarea>\n";
 	 		  }
 
 	?>
-	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
+	    <input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt bt-blue" onclick="javascript:AbrirIndice('<?php if ($sel_base=="S") echo "S"; else echo "I";?>',document.inventorysearch.inventory_sel);return false"/>
         <div id=kardex style="display:none;">
             <br>
-			A�o: <input type=text name=year size=4>
+			Ano: <input type=text name=year size=4>
 			Volumen:<input type=text name=volumen size=8>
-			N�mero:<input type=text name=numero size=8>
+			Numero:<input type=text name=numero size=8>
 		</div>
 		</td>
 <?php
@@ -440,15 +442,17 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="")
 ?>
  onclick="document.inventorysearch.usuario.value=''"/>
 
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
+		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt bt-blue" onclick="javascript:AbrirIndice('U',document.inventorysearch.usuario)"/></td>
 
-		<tr><br><td>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["comments"]?></strong>
-		</label></td><td><br><input type=text name=comments   size=100 maxlength=100>
-		<input type="submit" name="prestar" value="<?php echo $msgstr["loan"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
-
-		</td></table>
+		<tr>
+		<td>
+			<label for="searchExpr"> <strong><?php echo $msgstr["comments"]?></strong></label>
+		</td>
+		<td>
+			<input type=text name=comments   size=100 maxlength=100>
+			<input type="submit" name="prestar" value="<?php echo $msgstr["loan"]?>" class="bt bt-green" onclick="javascript:EnviarForma()"/>
+		</td>
+	</table>
         <?php echo $msgstr["clic_en"]." <i>[".$msgstr["loan"]."]</i> ".$msgstr["para_c"]?>
 
 	</div>

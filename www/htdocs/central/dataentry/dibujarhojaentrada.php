@@ -30,10 +30,11 @@ function AsociarVinculo($linea){
 
 function Calendario($campo,$type_de,$iso_tag,$Etq){
 global $config_date_format;
-	if ($config_date_format=="DD/MM/YY")    // format of the input field
+	if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y"))   { // format of the input field{
        	$date_format= "%d/%m/%Y";
- 	else
+ 	} else {
        	$date_format= "%m/%d/%Y";
+	}
 	echo "<!-- calendar attaches to existing form element -->
 		<input tabindex='0' type=text size=10 name=tag$Etq id=tag$Etq value='";
 		if (trim($campo)!="") echo $campo;
@@ -165,10 +166,11 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 			echo "<tr><td width=20>";
 			switch($t[7]){
 				case "ISO":
-					if ($config_date_format=="DD/MM/YY")    // format of the input field
+					if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {   // format of the input field
 				        	$date_format= "%d/%m/%Y";
-				        else
+				        } else {
 				        	$date_format= "%m/%d/%Y";
+						}
 					echo "<!-- calendar attaches to existing form element -->
 							<input tabindex='0' type=text size=8 name=tag$Etq id=tag$Etq value='";
 							if (trim($campo)!="") echo $campo;
@@ -1652,10 +1654,11 @@ Function PrepararFormato() {
                                             inputField     :    "tag<?php echo $tag?>_c",     // id of the input field
                                             ifFormat       :
                                             <?php
-                                            if ($config_date_format=="DD/MM/YY")    // format of the input field
+                                            if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {   // format of the input field
                                                 echo "\"%d/%m/%Y\",\n";
-                                            else
+                                            } else {
                                                 echo "\"%m/%d/%Y\",\n";
+											}
                                             ?>
                                             button         :    "f_tag<?php echo $tag?>",  // trigger for the calendar (button ID)
                                             align          :    '',           // alignment (defaults to \"Bl\")
@@ -1694,10 +1697,11 @@ Function PrepararFormato() {
                                                 inputField     :    "tag<?php echo $tag;?>_c",     // id of the input field
                                                 ifFormat       :
                                                 <?php
-                                                if ($config_date_format=="DD/MM/YY")    // format of the input field
+                                                if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {   // format of the input field
                                                     echo "\"%d/%m/%Y\",\n";
-                                                else
+                                                } else {
                                                     echo "\"%m/%d/%Y\",\n";
+												}
                                                 ?>
                                                 button         :    "f_tag<?php echo $tag?>",  // trigger for the calendar (button ID)
                                                 align          :    '',           // alignment (defaults to \"Bl\")

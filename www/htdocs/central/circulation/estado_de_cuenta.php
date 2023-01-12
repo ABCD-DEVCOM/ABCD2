@@ -242,24 +242,26 @@ include "../common/inc_div-helper.php";
 </div>
 </div>
 
-<form name=EnviarFrm method=post>
-<input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
-<input type=hidden name=usuario value="">
-<input type=hidden name=inventory>
-<input type=hidden name=ecta value=Y>
+<form name="EnviarFrm" method="post">
+<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+<input type="hidden" name="usuario" value="">
+<input type="hidden" name="inventory">
+<input type="hidden" name="ecta" value="Y">
+<input type="hidden" name="lang" value="<?php echo $lang;?>">
 <?php if (isset($arrHttp["reserve"])){
 	echo "<input type=hidden name=reserve value=S>\n";
 }
 ?>
 </form>
 <form name=output method=post>
-<input type=hidden name=base value=reserve>
-<input type=hidden name=code>
-<input type=hidden name=name>
-<input type=hidden name=user>
-<input type=hidden name=sort>
-<input type=hidden name=retorno value=../circulation/estado_de_cuenta.php>
-<input type=hidden name=reserva value="S">
+<input type="hidden" name="base" value="reserve">
+<input type="hidden" name="code">
+<input type="hidden" name="name">
+<input type="hidden" name="user">
+<input type="hidden" name="sort">
+<input type="hidden" name="retorno" value="../circulation/estado_de_cuenta.php">
+<input type="hidden" name="lang" value="<?php echo $lang;?>">
+<input type="hidden" name="reserva" value="S">
 </form>
 <?php include("../common/footer.php");
 echo "</body></html>" ;

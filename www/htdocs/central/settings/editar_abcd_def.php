@@ -380,7 +380,7 @@ switch ($set_mod){
 					"MAIN_DATABASE"  => array("it"=>"select","Options"=>$databases_codes,"Label"=>$databases_codes,"Tip"=>$msgstr["set_TIP_MAIN_DATABASE"]),
 					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
 					"DEFAULT_DBLANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_DBLANG"]),
-					"DATE_FORMAT" => array("it"=>"text","size"=>"50","placeholder"=>"DD/MM/YY","Tip"=>$msgstr["set_TIP_DATE_FORMAT"]),
+					"DATE_FORMAT" => array("it"=>"text","size"=>"50","placeholder"=>$config_date_format,"Tip"=>$msgstr["set_TIP_DATE_FORMAT"]),
 
 					"NEW_WINDOW" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_NEW_WINDOW"]),
 
