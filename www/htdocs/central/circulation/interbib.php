@@ -370,10 +370,11 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 				   Calendar.setup({
        					inputField     :    \"date"."_c\",     // id of the input field
 						ifFormat       :    \"";
-						if ($config_date_format=="DD/MM/YY")    // format of the input field
+						if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {    // format of the input field
 						   	echo "%d/%m/%Y";
-						else
+						} else {
 							echo "%m/%d/%Y";
+						}
 						echo "\",
 						    button         :    \"f_date\",  // trigger for the calendar (button ID)
 						   	align          :    '',           // alignment (defaults to \"Bl\")

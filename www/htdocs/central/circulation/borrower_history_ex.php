@@ -47,19 +47,25 @@ function compareDate ($FechaP){
 global $locales,$config_date_format;
 //Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
 	$f_date=explode('/',$config_date_format);
+
+	var_dump($f_date);
+	echo $FechaP;
 	switch ($f_date[0]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,0,2);
 			break;
-		case "MM":
-			$mes=substr($FechaP,0,2);
+		case "m":
+			$mes=substr($FechaP,2,2);
 			break;
 	}
+
+	echo $mes;
+
 	switch ($f_date[1]){
-		case "DD":
+		case "d":
 			$dia=substr($FechaP,3,2);
 			break;
-		case "MM":
+		case "m":
 			$mes=substr($FechaP,3,2);
 			break;
 	}

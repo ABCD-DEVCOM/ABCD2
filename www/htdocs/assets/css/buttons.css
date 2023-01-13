@@ -12,7 +12,6 @@ button {
   border-width: 0.1rem;
   box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
   margin: 3px;
-  width: auto;
   padding: 0.375rem 0.75rem;
   border-radius: 0.3rem;
   text-decoration: none;
@@ -64,9 +63,19 @@ a[class^="bt-"] {
   border-radius: 0.3rem;
 }
 
+[class^="bt-fdt"] {
+  height: 10px;
+  padding: 8px;
+  display: inline;
+  vertical-align: middle;
+  margin: 0px 2px;
+}
 
 
-.bt, .bt-sm
+
+.bt, 
+input[type=submit].bt, 
+.bt-sm
 input[type=button]:hover,
 input[type=submit]:hover,
 button:hover,
@@ -80,7 +89,10 @@ a.bt:hover,
 /* COLORS  */
 
 .bt-default,
-.bt.bt-default {
+.bt.bt-default,
+input[type=button].bt-default,
+input[type=submit].bt-default,
+input[type=reset].bt-default {
   background-color: var(--abcd-gray-200);
   border-color: var(--abcd-gray-500);
   border-style: solid;
@@ -89,7 +101,10 @@ a.bt:hover,
 }
 
 
-.bt-red {
+.bt-red,
+input[type=button].bt-red,
+input[type=submit].bt-red,
+input[type=reset].bt-red {
   background-color: var(--abcd-red);
   border-color: var(--abcd-red);
   border-style: solid;
@@ -97,7 +112,10 @@ a.bt:hover,
   color: var(--abcd-white);
 }
 
-.bt-green {
+.bt-green, 
+input[type=button].bt-green,
+input[type=submit].bt-green,
+input[type=reset].bt-green {
   background-color: var(--abcd-green);
   border-color: var(--abcd-green);
   border-style: solid;
@@ -105,7 +123,10 @@ a.bt:hover,
   color: var(--abcd-white);
 }
 
-.bt-yellow {
+.bt-yellow,
+input[type=button].bt-yellow,
+input[type=submit].bt-yellow,
+input[type=reset].bt-yellow {
   background-color: var(--abcd-yellow);
   border-color: var(--abcd-yellow);
   border-style: solid;
@@ -113,7 +134,10 @@ a.bt:hover,
   color: var(--abcd-gray-dark);
 }
 
-.bt-blue {
+.bt-blue,
+input[type=button].bt-blue,
+input[type=submit].bt-blue,
+input[type=reset].bt-blue {
   background-color: var(--abcd-blue);
   border-color: var(--abcd-blue);
   border-style: solid;
@@ -121,7 +145,10 @@ a.bt:hover,
   color: var(--abcd-white);
 }
 
-.bt-gray {
+.bt-gray,
+input[type=button].bt-gray,
+input[type=submit].bt-gray,
+input[type=reset].bt-gray {
   background-color: var(--abcd-gray);
   border-color: var(--abcd-gray);
   border-style: solid;
@@ -129,7 +156,10 @@ a.bt:hover,
   color: var(--abcd-white);
 }
 
-.bt-dark {
+.bt-dark,
+input[type=button].bt-dark,
+input[type=submit].bt-dark,
+input[type=reset].bt-dark {
   background-color: var(--abcd-dark);
   border-color: var(--abcd-dark);
   border-style: solid;
@@ -142,15 +172,35 @@ a.bt:hover,
 
 .bt-lg,
 .bt.bt-lg,
-button.bt-lg {
+button.bt-lg,
+input[type=button].bt-lg,
+input[type=submit].bt-lg,
+input[type=reset].bt-lg {
   padding:.8rem 2rem;
 }
 
-.bt-sm, a.bt-sm {
+.bt-sm, 
+a.bt-sm,
+input[type=button].bt-sm,
+input[type=submit].bt-sm,
+input[type=reset].bt-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   border-radius: 0.2rem;
   text-decoration: none;
+}
+
+
+.bt-block,
+a.bt-block,
+input[type=button].bt-block,
+input[type=submit].bt-block,
+input[type=reset].bt-block {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  text-decoration: none;
+  display: block;
 }
 
 
@@ -161,4 +211,65 @@ button.bt-lg {
   margin: 0 3px;
   filter: invert(99%) sepia(100%) saturate(4%) hue-rotate(
 61deg) brightness(105%) contrast(100%);
+}
+
+
+/** Dataentry Buttons **/ 
+
+
+.bt-fdt {
+  text-decoration: none;
+  background-color: var(--abcd-white);
+  border: 1px solid var(--abcd-blue);
+  color: var(--abcd-blue);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 10px;
+
+}
+
+.bt-fdt-help {
+  text-decoration: none;
+  background-color: var(--abcd-white);
+  border: 1px solid var(--abcd-cyan);
+  color: var(--abcd-cyan);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+  touch-action: manipulation;
+  vertical-align: middle;
+
+}
+
+.bt-fdt-question {
+  text-decoration: none;
+  background-color: var(--abcd-white);
+  border: 1px solid var(--abcd-cyan);
+  color: var(--abcd-cyan);
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.bt-fdt-blue {
+  text-decoration: none;
+  background-color: var(--abcd-blue);
+  border: 1px solid var(--abcd-blue);
+  color: var(--abcd-white);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.bt-fdt-green {
+  text-decoration: none;
+  background-color: var(--abcd-success);
+  border: 1px solid var(--abcd-success);
+  color: var(--abcd-white);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: normal;
 }

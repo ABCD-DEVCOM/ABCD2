@@ -51,9 +51,11 @@ if (isset($arrHttp["code"]) and $arrHttp["code"] =="reassign")
 else
 	$Nombre=$msgstr[$arrHttp["name"]];
 
-function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
+function LlamarWxis($IsisScript,$query){
+global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
-	return $contenido;}
+	return $contenido;
+}
 
 function MostrarRegistroCatalografico($dbname,$CN){
 global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
@@ -92,20 +94,24 @@ include("../common/header.php");
 include("../common/institutional_info.php");
 include("../circulation/scripts_circulation.php");
 ?>
-	<div class="sectionInfo">
+
+<div class="sectionInfo">
 	<div class="breadcrumb">
+		<?php echo $Nombre;
+		?>
 	</div>
 	<div class="actions">
-		<a href="../circulation/estado_de_cuenta.php?reserve=S" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"];?></strong></span></a>
+		<?php 
+		$backtoscript="../circulation/estado_de_cuenta.php?reserve=S";
+		include "../common/inc_back.php"; ?>
 	</div>
+<?php include("../circulation/submenu_prestamo.php");?>
+</div>
 
-<div class="spacer">&#160;</div>
 <div class="middle form">
 	<div class="formContent">
 <?php
-echo "<H3>$Nombre ";
+echo "<H3>";
 echo "<br>".$msgstr["o_issued"].": ".date("d-m-Y")."</h3>";
 echo "<p><table border=0 width=80% bgcolor=#cccccc>";
 
@@ -131,7 +137,8 @@ if (file_exists($archivo)){
 		}
 	}
 	$fp=file($archivo);
-	foreach ($fp as $value){		if (trim($value)!=""){
+	foreach ($fp as $value){
+		if (trim($value)!=""){
 			$t=explode("|",$value);
 			foreach($t as $head){
 				echo "<td>$head</td>";
@@ -151,8 +158,10 @@ if (!file_exists($Pft)){
 	$Pft=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$Disp_format;
 	if (!file_exists($Pft)){
 		$Pft=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$Disp_format;
-		if (!file_exists($pft)){			echo $msgerr= $Disp_format. " ** ".$msgstr["falta"];
-			die;		}
+		if (!file_exists($pft)){
+			echo $msgerr= $Disp_format. " ** ".$msgstr["falta"];
+			die;
+		}
 	}
 }
 $Pft=urlencode("v15`$$$`V20`$$$`V10, `$$$`V30,`$$$`V40,`$$$`V1".'`$$$`f(mfn,1,0)`$$$`,@'.$Pft);
@@ -162,9 +171,11 @@ $Pft=urlencode("v15`$$$`V20`$$$`V10, `$$$`V30,`$$$`V40,`$$$`V1".'`$$$`f(mfn,1,0)
 //v40: Esperar hasta
 //v1:  Situacion
 switch ($arrHttp["code"]){
-	case "today":		$fecha=date("Ymd");
+	case "today":
+		$fecha=date("Ymd");
 		$Expresion="(ST_0 or ST_3) and FA_$fecha";
-		$ec="S";        break;
+		$ec="S";
+        break;
   	case "actives":
   		$Expresion="(ST_0)";
   		$ec="S";
@@ -188,10 +199,13 @@ switch ($arrHttp["code"]){
   	case "reassign":
   		$Expresion="ST_0 and CN_".$arrHttp["base_reserve"]."_".$arrHttp["ncontrol"];
   		$ec="S";
-  		break;
+  		break;
+
 }
 $Sort="";
-if (isset($arrHttp["sort"])){	switch ($arrHttp["sort"]) {		case "name":
+if (isset($arrHttp["sort"])){
+	switch ($arrHttp["sort"]) {
+		case "name":
 			$Sort="ref(['users']l(['users']'CO_'v10),v30)";
 			break;
 		case "date_reservation":
@@ -202,12 +216,15 @@ if (isset($arrHttp["sort"])){	switch ($arrHttp["sort"]) {		case "name":
 			break;
 		case "date_loaned":
 			$Sort="v200";
-			break;	}}
+			break;
+	}
+}
 if (isset($arrHttp["user"])) $Expresion.=" and CU_".$arrHttp["user"];
 echo $Expresion." ";
 echo "<a href=\"javascript:Eliminar('$Expresion')\">eliminar</a>";
 $Expresion=urlencode($Expresion);
-if ($ec=="S"){	echo "<td>".$msgstr["vence"]."</td>"."<td>".$msgstr["suspen"]."</td>"."<td>".$msgstr["multas"]."</td><td></td>";
+if ($ec=="S"){
+	echo "<td>".$msgstr["vence"]."</td>"."<td>".$msgstr["suspen"]."</td>"."<td>".$msgstr["multas"]."</td><td></td>";
 }
 $query = "&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Opcion=buscar&Formato=".$Pft;
 if ($Sort==""){
@@ -222,7 +239,8 @@ $key_comp="";
 $found=0;
 foreach ($contenido as $value){
 	$value=trim($value);
-	if ($value!=""){		$v=explode('$$$',$value);
+	if ($value!=""){
+		$v=explode('$$$',$value);
 		$found=$found+1;
 		//SE LEEN LA BASE DE DATOS Y EL NÚMERO DE CONTROL PARA UBICAR EL TÍTULO Y DETERMINAR LOS EJEMPLARES DISPONIBLES
 		$bd=$v[0];
@@ -277,9 +295,13 @@ foreach ($contenido as $value){
 		}
 		$reservas=explode("|",$v[7]);
 		echo "<tr>";
-		foreach ($reservas as $rr){			if (trim($rr)=="#REFER#"){
+		foreach ($reservas as $rr){
+			if (trim($rr)=="#REFER#"){
 				echo "<td bgcolor=white valign=top>$Referencia</td>";
-			}else{				echo "<td bgcolor=white valign=top nowrap>$rr</td>";			}		}
+			}else{
+				echo "<td bgcolor=white valign=top nowrap>$rr</td>";
+			}
+		}
 		if ($ec=="S"){
 			echo "<td bgcolor=white valign=top width=10 align=center>" ;
 			if ($vencidos==0) $vencidos="";
@@ -289,30 +311,41 @@ foreach ($contenido as $value){
 			echo "</td>";
 		}
 		echo "<td bgcolor=white nowrap valign=top>";
-		if ($esperar_hasta!="" and $status!=4 ){			if (date("Ymd")>$esperar_hasta ){				if ($status!=1 and $status!=2) echo "<font color=red>".$msgstr["rs03"]."</font>";
-			}else{				if ($status !=1 and $status!=2){					echo '<a href=javascript:SendMail("assigned",'.$Mfn.') alt="'.$msgstr["mail_notif_res_assign"].'" title="'.$msgstr["mail_notif_res_assign"].'"><img src=../dataentry/img/mail_p.png></a>';			    	echo "&nbsp; <a href=\"javascript:PrintReserve('assigned',".$Mfn.")\"><img src=../dataentry/img/toolbarPrint.png></a>";
+		if ($esperar_hasta!="" and $status!=4 ){
+			if (date("Ymd")>$esperar_hasta ){
+				if ($status!=1 and $status!=2) echo "<font color=red>".$msgstr["rs03"]."</font>";
+			}else{
+				if ($status !=1 and $status!=2){
+					echo '<a href=javascript:SendMail("assigned",'.$Mfn.') alt="'.$msgstr["mail_notif_res_assign"].'" title="'.$msgstr["mail_notif_res_assign"].'"><img src=../dataentry/img/mail_p.png></a>';
+			    	echo "&nbsp; <a href=\"javascript:PrintReserve('assigned',".$Mfn.")\"><img src=../dataentry/img/toolbarPrint.png></a>";
 				}
-			}		}
+			}
+		}
 		if ($arrHttp["code"]!="attended" and $arrHttp["code"]!="cancelled")
 			echo "&nbsp;<a href=javascript:CancelReserve(".$Mfn.",'".$bd."','".$Control_no."')><img src=../dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";
-		if ($arrHttp["code"]=="reassign"){			echo "&nbsp;<a href=javascript:AssignReserve(".$Mfn.")><img src=../dataentry/img/barEdit.png height=16 alt='".$msgstr["rs02"]."' title='".$msgstr["rs02"]."'></a>";
+		if ($arrHttp["code"]=="reassign"){
+			echo "&nbsp;<a href=javascript:AssignReserve(".$Mfn.")><img src=../dataentry/img/barEdit.png height=16 alt='".$msgstr["rs02"]."' title='".$msgstr["rs02"]."'></a>";
 		}
 		echo "</td>";
 		echo "</tr>";
-	}}
+	}
+}
 if ($key_comp!=""){
 	echo "</form>";
 }
 ?>
 </table>
 <?php
-if ($found==0){	echo "<h2>".$msgstr["nfres"]."</h2>";}
+if ($found==0){
+	echo "<h2>".$msgstr["nfres"]."</h2>";
+}
 ?>
-</div></div>
-<font size=1 color=#cccccc>reserve_01.pft - tit_reserve_01.tab
-</body>
+</div>
 
-</html>
+</div>
+<font size=1 color=#cccccc>reserve_01.pft - tit_reserve_01.tab
+
+<?php include '../common/footer.php';?>
 
 
 
