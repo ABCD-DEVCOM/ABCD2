@@ -273,3 +273,10 @@ input[type=reset].bt-block {
   font-size: 12px;
   font-weight: normal;
 }
+
+.bt-hour {
+  height: 24px;
+  padding: 4px 0;
+  margin-left: auto;
+  float: right;
+}
