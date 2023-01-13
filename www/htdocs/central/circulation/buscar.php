@@ -93,7 +93,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
 	return $prestamos;
 }
 
-// Se localiza el n�mero de inventario en la base de datos de objetos  de pr�stamo
+// Se localiza el numero de inventario en la base de datos de objetos  de prestamo
 function LocalizarCopiasLoanObjects($control_number){
 global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$politica,$msgstr;
     $Expresion="CN_".$arrHttp["base"]."_".$control_number;
@@ -103,7 +103,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$politica,$msgstr;
 
 	$formato_ex="v1'||'v10'||'v30'||',v200^a,|-|v200^b/";
 	$formato_obj=urlencode($formato_ex);
-	//se ubican las copias del t�tulo
+	//se ubican las copias del titulo
 	$Expresion=urlencode($Expresion);
 	$query = "&Opcion=disponibilidad&base=copies&cipar=$db_path"."par/copies.par&Expresion=".$Expresion."&Pft=$formato_ex";
 	include("../common/wxis_llamar.php");

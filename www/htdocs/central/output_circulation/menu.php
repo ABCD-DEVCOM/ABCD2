@@ -102,7 +102,7 @@ global $config_date_format;
 
 //
 ?>
-<!-- calendar stylesheet -->
+
   <link rel="stylesheet" type="text/css" media="all" href="/assets/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
   <script type="text/javascript" src="/assets/calendar/calendar.js"></script>

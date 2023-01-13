@@ -187,7 +187,7 @@ foreach ($items as $num_inv){
 		$num_inv="TR_P_".$num_inv;
 		if (!isset($arrHttp["base"])) $arrHttp["base"]="trans";
 		//EL CAMPO 81 TIENE EL TIPO DE OBJETO DE LA CONVERSIÓN DESDE PRESTA
-		$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$',v40,'|$'v400,'|$'v500,'|$',v95,'|$',v98/";
+		$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v60'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$',v40,'|$'v400,'|$'v500,'|$',v95,'|$',v98/";
 		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&count=1&Expresion=".$num_inv."&Pft=$Formato";
 		$contenido="";
 		$IsisScript=$xWxis."buscar_ingreso.xis";
@@ -358,7 +358,7 @@ foreach ($items as $num_inv){
 				$datos_trans["CODIGO_USUARIO"]=$cod_usuario;
 				$datos_trans["TIPO_USUARIO"]=$tipo_usuario;
 				$datos_trans["FECHA_PROGRAMADA"]=$fecha_d;
-				$datos_trans["ATRASO"]=$dias_atraso;
+				$datos_trans["ATRASO"]=$atraso;
 				$ValorCapturado=GrabarLog("B",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"RETORNAR");
 				if ($ValorCapturado!="") $query.="&logtrans=".$ValorCapturado;
 			}
@@ -396,7 +396,7 @@ if (isset($arrHttp["reserve"])){
 	$reserve="";
 }
 if (isset($arrHttp["vienede"]) or isset($arrHtp["reserve"])){
-	header("Location: usuario_prestamos_presentar.php?devuelto=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);
+	header("Location: usuario_prestamos_presentar.php?devuelto=S&lang=".$lang."&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);
 }else{
 
 	header("Location: devolver.php?devuelto=S&encabezado=s$error$cu&rec_dev=$Mfn_rec&resultado=$resultado&errores=$errores"."&lista_control=".$cn_l."&reservas=".$reservas_activadas);

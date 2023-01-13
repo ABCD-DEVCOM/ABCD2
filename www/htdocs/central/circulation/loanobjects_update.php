@@ -17,32 +17,44 @@ include("../lang/prestamo.php");
 include("../common/header.php");
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["policy"]."
-			</div>
-			<div class=\"actions\">\n";
+?>
 
-				echo "<a href=\"loanobjects.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">\n";
+<div class="sectionInfo">
+	<div class="breadcrumb">
+		<?php echo $msgstr["policy"];?>
+	</div>
+	<div class="actions">
+
+		<?php
+		$backtoscript="loanobjects.php?encabezado=s";
+		include "../common/inc_back.php";
+		?>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
+	<div class="middle form">
+			<div class="formContent">
+
+<?php			
 $archivo=$db_path."circulation/def/".$_SESSION["lang"]."/typeofitems.tab";
+
 if (!file_exists($archivo)) $archivo=$db_path."circulation/def/".$lang_db."/typeofitems.tab";
+
 $fp=fopen($archivo,"w");
+
 $ValorCapturado=urldecode($arrHttp["ValorCapturado"]);
+
 fwrite($fp,$ValorCapturado);
+
 fclose($fp);
-echo "<h4>circulation/def/".$_SESSION["lang"]."/typeofitems.tab<strong>". $msgstr["saved"]." </strong></h4>";
-echo "</div></div>";
+?>
+
+<h4>circulation/def/<?php echo $_SESSION["lang"];?>/typeofitems.tab</h4>
+<h2 class="alert"><?php echo $msgstr["saved"];?></h2>
+
+</div>
+	</div>
+
+<?php
 include("../common/footer.php");
-echo "
-</body>
-</html>";
 ?>
