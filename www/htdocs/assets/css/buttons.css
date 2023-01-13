@@ -12,7 +12,6 @@ button {
   border-width: 0.1rem;
   box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
   margin: 3px;
-  width: auto;
   padding: 0.375rem 0.75rem;
   border-radius: 0.3rem;
   text-decoration: none;
@@ -189,6 +188,19 @@ input[type=reset].bt-sm {
   font-size: 0.875rem;
   border-radius: 0.2rem;
   text-decoration: none;
+}
+
+
+.bt-block,
+a.bt-block,
+input[type=button].bt-block,
+input[type=submit].bt-block,
+input[type=reset].bt-block {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  text-decoration: none;
+  display: block;
 }
 
 

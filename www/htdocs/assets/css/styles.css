@@ -50,7 +50,6 @@ LABEL {
 
 input,
 button,
-select,
 optgroup,
 textarea,
 button {
@@ -82,12 +81,17 @@ INPUT.textEntry,
 TEXTAREA, 
 input[type=text],
 input[type=number],
-input[type=button], 
 select {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
 	box-sizing: border-box;
 	margin: 1px 0;
+border-radius: 3px;
+	color: var(--abcd-gray-900);
+	box-shadow: none;
+	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+	-moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+	box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 }
 
 input[type=text], 
@@ -1622,7 +1626,7 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 .table-fdt > tbody > tr > td > input[type=password], 
 .table-fdt > tbody > tr > td > input[type=radio], 
 .table-fdt > tbody > tr > td > textarea, 
-.table-fdt > tbody > tr > td > select {
+.table-fdt > tbody > tr > td > select{
 	margin: 0.2rem 0.1rem;
 	font-size: 13px;
 	color: var(--abcd-gray-900);
@@ -1631,6 +1635,18 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
   	-moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
   	box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+
+}
+
+.formContent  input[type=text],
+.formContent textarea {
+	margin: 0.2rem 0.1rem;
+	color: var(--abcd-gray-900);
+	box-shadow: none;
+	padding: 8px;
+	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+	-moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+	box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 
 }
 
