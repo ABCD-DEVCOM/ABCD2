@@ -1082,7 +1082,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 						$ec_output.="<td bgcolor=white valign=top >$msg";
 
 						if (count($devolucion)>0) {
-							if (substr($config_date_format,0,2)=="DD"){
+							if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {
 								$ec_output.=substr($devolucion[0],6,2)."/".substr($devolucion[0],4,2)."/".substr($devolucion[0],0,4);
 							}else{
 								$ec_output.=substr($devolucion[0],4,2)."/".substr($devolucion[0],6,2)."/".substr($devolucion[0],0,4);
@@ -1300,20 +1300,24 @@ include "../common/inc_div-helper.php";
 
 <?php
 if (isset($arrHttp["reservaWeb"]) and $arrHttp["reservaWeb"]=="xY"){
-	echo "<form method=post action=../output_circulation/rsweb.php>\n";
-	echo "<input type=hidden name=base value=reserve>\n";
-	echo "<input type=hidden name=code value=actives_web>\n";
-    echo "<input type=hidden name=name value=rsweb>\n";
-    echo "<input type=hidden name=retorno value=../circulation/estado_de_cuenta.php>\n";
-    echo "<input type=hidden name=reserva value=S>\n";
-    echo "<input type=hidden name=reservaWeb value=Y>\n";
-    echo "<p><input type=submit name=rsv_p value=\"Reservas web\" style='font-size:27px;border-radius:20px;background color:#cccccc; font-color=black'\"><p>";
-    echo "</form>";
+?>	
+	<form method="post" action="../output_circulation/rsweb.php">
+	<input type="hidden" name="base" value="reserve">
+	<input type="hidden" name="code" value="actives_web">
+    <input type="hidden" name="name" value="rsweb">
+    <input type="hidden" name="retorno" value="../circulation/estado_de_cuenta.php">
+    <input type="hidden" name="reserva" value="S">
+    <input type="hidden" name="reservaWeb" value="Y">
+    <input type="submit" name=rsv_p value="Reservas web" style="font-size:27px;border-radius:20px;background color:#cccccc; font-color=black">
+    </form>
+<?php
 }
-echo "</div></div>\n";
-include("../common/footer.php");?>
-</body>
-</html>
+?>
+	</div>
+</div>
+
+<?php include("../common/footer.php");?>
+
 
 <?php
 	if (isset($msg_error_0)){
@@ -1347,9 +1351,9 @@ function ImprimirRecibo($recibo_arr){
 }
 
 ?>
-<form name=reservacion method=post action="../reserve/reservar_ex.php">
-<input type=hidden name=encabezado  value="s">
-<input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
+<form name="reservacion" method="post" action="../reserve/reservar_ex.php">
+<input type="hidden" name="encabezado"  value="s">
+<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
 <?php if (isset($arrHttp["reserve"])) echo "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
       if (isset($arrHttp["base"]))  echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
 	  if (isset($control_number))   {
@@ -1359,14 +1363,14 @@ function ImprimirRecibo($recibo_arr){
 </form>
 
 
-<form name=busqueda action=../reserve/buscar.php method=post>
-<input type=hidden name=base>
-<input type=hidden name=desde value=reserva>
-<input type=hidden name=count value=1>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion value=formab>
-<input type=hidden name=copies value=<?php if (isset($copies)) echo $copies ?>>
-<input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
+<form name="busqueda" action="../reserve/buscar.php" method="post">
+<input type="hidden" name="base">
+<input type="hidden" name="desde" value="reserva">
+<input type="hidden" name="count" value="1">
+<input type="hidden" name="cipar">
+<input type="hidden" name="Opcion" value="formab">
+<input type="hidden" name="copies" value="<?php if (isset($copies)) echo $copies ?>">
+<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
 
 </form>
 
