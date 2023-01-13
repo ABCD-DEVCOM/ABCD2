@@ -73,4 +73,36 @@ if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["C
 		<a class="bt-tool" href="../common/inicio.php?reinicio=s&modulo=loan">
 			<img src="../../assets/svg/circ/ic_fluent_home_24_regular.svg">
 		</a>
+
+<style>
+.bt-hour {
+	height: 24px;
+    padding: 4px 0;
+	margin-left: auto;
+	float: right;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+    setInterval(timestamp, 1000);
+});
+
+function timestamp() {
+    $.ajax({
+        url: 'http://localhost/timestamp.php',
+        success: function(data) {
+            $('#timestamp').html(data);
+        },
+    });
+}
+</script>
+
+		<span title="<?php echo date_default_timezone_get();?>" class="bt-hour">
+		<?php 
+		global $config_date_format;
+		$newDate = date($config_date_format, strtotime(date('Ymd')));
+		echo $newDate." - ".date('h:i A');?>
+		</span>
+
 </div>

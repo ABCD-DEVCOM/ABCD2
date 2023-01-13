@@ -30,7 +30,6 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 
-//date_default_timezone_set('UTC');
 $debug="";
 if (!isset($_SESSION["login"])) die;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
@@ -46,9 +45,11 @@ include("../reserve/reserves_read.php");
 $bd=$arrHttp["base"];
 $Nombre=$msgstr[$arrHttp["code"]];
 
-function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
+function LlamarWxis($IsisScript,$query){
+global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
-	return $contenido;}
+	return $contenido;
+}
 include("../common/header.php");
 include("../common/institutional_info.php");
 
@@ -78,13 +79,17 @@ if (!file_exists($rows)){
 $data="";
 if (!file_exists($rows)){
 	$msgerr= $rows. " ** ".$msgstr["falta"];
-}else{	$fp=file($rows);
-	foreach ($fp as $value){		if (trim($value)!=""){			$t=explode("|",$value);
+}else{
+	$fp=file($rows);
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$t=explode("|",$value);
 			foreach($t as $head){
 				echo "<td>$head</td>";
 			}
 			break;
-		}	}
+		}
+	}
 	echo "<td>".$msgstr["vence"]."</td>"."<td>".$msgstr["suspen"]."</td>"."<td>".$msgstr["multas"]."</td><td></td><tr>";
 }
 $Disp_format="reserve_01.pft";
@@ -107,7 +112,8 @@ if ($Sort==""){
 $contenido=LlamarWxis($IsisScript,$query);
 
 foreach ($contenido as $value){
-	$value=trim($value);	if ($value!=""){
+	$value=trim($value);
+	if ($value!=""){
 		$v=explode('$$$',$value);
 		//SE LEEN LOS PRESTAMOS PENDIENTES DEL USUARIO PARA EXTRAER LA FECHA DE DEVOLUCION
 		$arrHttp["usuario"]=$v[0];
@@ -118,9 +124,14 @@ foreach ($contenido as $value){
 		$IsisScript=$xWxis."cipres_usuario.xis";
 		$pp=LlamarWxis($IsisScript,$query);
 		$vencidos=0;
-		foreach ($pp as $prestamo)  {			$prestamo=trim($prestamo);			if ($prestamo!=""){				if ($prestamo<date("Ymd")){
+		foreach ($pp as $prestamo)  {
+			$prestamo=trim($prestamo);
+			if ($prestamo!=""){
+				if ($prestamo<date("Ymd")){
 					$vencidos=$vencidos+1;
-				}			}		}
+				}
+			}
+		}
 		//SE LEEN LAS SUSPENSIONES DEL USUARIO
 		$Expresion="(TR_S_".$arrHttp["usuario"]." or TR_M_".$arrHttp["usuario"].")";
 		$query = "&Expresion=$Expresion&base=suspml&cipar=$db_path"."par/suspml.par&Pft=v1'|',v60/";
@@ -128,21 +139,27 @@ foreach ($contenido as $value){
 		$total_multa=0;
 		$total_susp=0;
 		$sm=LlamarWxis($IsisScript,$query);
-		foreach ($sm as $suspml)  {			$suspm=trim($suspml);
-			if ($suspml!=""){				$vdate=explode('|',$suspml);
-				switch ($vdate[0]){					case "S":
+		foreach ($sm as $suspml)  {
+			$suspm=trim($suspml);
+			if ($suspml!=""){
+				$vdate=explode('|',$suspml);
+				switch ($vdate[0]){
+					case "S":
 						if ($vdate[1]>=date("Ymd"))
 							$total_susp=$total_susp+1;
 						break;
 					case "M":
 						$total_multa=$total_multa+1;
-						break;				}
-			}		}
+						break;
+				}
+			}
+		}
 		$reservas=explode("|",$v[3]);
 		echo "<tr>";
 		foreach ($reservas as $rr){
 			echo "<td bgcolor=white valign=top>$rr</td>";
-		}		echo "<td bgcolor=white valign=top width=10 align=center>" ;
+		}
+		echo "<td bgcolor=white valign=top width=10 align=center>" ;
 		echo "$vencidos</td><td bgcolor=white valign=top width=10 align=center>$total_susp</td><td bgcolor=white valign=top align=center>$total_multa</td>";
 		echo "</td>";
 		echo "<td bgcolor=white nowrap valign=top>";
@@ -150,7 +167,8 @@ foreach ($contenido as $value){
 		echo "&nbsp;<a href=javascript:CancelReserve(".$Mfn.")><img src=../dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";
 		echo "</td>";
 		echo "</tr>";
-	}}
+	}
+}
 
 ?>
 </table>
@@ -168,7 +186,8 @@ foreach ($contenido as $value){
 ?>
 </form>
 <script>
-function  DeleteReserve(Mfn){	document.reservas.Accion.value="delete"
+function  DeleteReserve(Mfn){
+	document.reservas.Accion.value="delete"
 	document.reservas.Mfn_reserve.value=Mfn
 	document.reservas.submit()
 }

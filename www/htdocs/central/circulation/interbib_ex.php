@@ -33,7 +33,6 @@ if (!isset($_SESSION["permiso"])){
 }
 $script_php="../circulation/interbib_ex.php";
 //echo $script_php;
-//date_default_timezone_set('UTC');
 $debug="";
 
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";

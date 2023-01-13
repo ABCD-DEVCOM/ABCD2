@@ -1,6 +1,5 @@
 <?php
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
-date_default_timezone_set('America/New_York');
 if (isset($_REQUEST["conf_level"])) unset($_REQUEST["conf_level"]);
 include ("tope_config.php");
 if (isset($_REQUEST["lang_init"])){
