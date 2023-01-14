@@ -66,8 +66,8 @@ document.onkeypress =
   };
 
 function ColocarFecha(){
-// si es una suspensi�n, se coloca la fecha a partir del vencimiento de la �ltima suspensi�n
-// si es una multa, se coloca la fecha del d�a
+// si es una suspension, se coloca la fecha a partir del vencimiento de la ultima suspension
+// si es una multa, se coloca la fecha del dia
 	ix=document.sanctions.type.selectedIndex
 	if (ix<1){
 		alert("<?php echo $msgstr["missst"]?>")
@@ -113,7 +113,7 @@ function EnviarForma(){
 echo "<body>";
  include("../common/institutional_info.php");
 ?>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["suspend"]."/".$msgstr["fine"]?>
@@ -121,7 +121,7 @@ echo "<body>";
 	<div class="actions">
 		
 	</div>
-	<div class="spacer">&#160;</div>
+<?php include("submenu_prestamo.php");?>
 </div>
 <div class="helper">
 <?php echo "<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
@@ -132,9 +132,11 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 	</div>
 <div class="middle form">
 	<div class="formContent">
-<form name=sanctions method=post action=sanctions_update.php onSubmit="return false">
+<form name="sanctions" method="post" action="sanctions_update.php" onSubmit="return false">
+	<input name="lang" value="<?php echo $_SESSION["lang"];?>">
 <?php
-// se presenta la  informaci�n del usuario
+
+// se presenta la  informacion del usuario
 	$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp.pft";
     if (!isset($formato_us)) $formato_us=$db_path."users/loans/".$lang_db."/loans_usdisp.pft";
    	$query = "&Expresion=CO_".$arrHttp["usuario"]."&base=users&cipar=".$db_path.$actparfolder."users.par&Formato=".$formato_us;
@@ -186,7 +188,7 @@ foreach ($fp as $value) {
            	<strong><?php echo $msgstr["date"]?></strong>
      	</td>
      	<td>
-<!-- Se coloca la fecha de expiraci�n a partir de la fecha de la �ltima suspensi�n -->
+<!-- Se coloca la fecha de expiracion a partir de la fecha de la ultima suspension -->
      		<input type="text" name="date" value="" size=10 ONFOCUS="this.blur()"/>
 		</td>
 	<tr>
@@ -212,23 +214,20 @@ foreach ($fp as $value) {
 		</td>
 	<tr>
 		<td colspan=2>
-			<input type="submit" name="update" value="<?php echo $msgstr["update"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
+			<input class="bt bt-green" type="submit" name="update" value="<?php echo $msgstr["update"]?>" xclass="submitAdvanced" onclick="javascript:EnviarForma()"/>
         </td>
 </table>
-<?php
-echo "<input type=hidden name=usuario value=".$arrHttp["usuario"].">\n";
-echo "</form>";
-echo "<form name=devolver action=devolver_ex.php>
-<input type=hidden name=searchExpr>
-<input type=hidden name=usuario value=".$arrHttp["usuario"].">
-<input type=hidden name=vienede value=ecta>
+
+<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"];?>" >
 </form>
-</div></div>
-";
 
+<form name="devolver" action="devolver_ex.php">
+<input type="hidden" name="searchExpr">
+<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"];?>" >
+<input type="hidden" name="vienede" value="ecta">
+</form>
 
+</div>
+</div>
 
-include("../common/footer.php")
-?>
-</body>
-</html>
+<?php include("../common/footer.php"); ?>
