@@ -31,7 +31,6 @@ if (!isset($_SESSION["permiso"])){
 }
 $script_php="../output_circulation/rs01.php";
 
-//date_default_timezone_set('UTC');
 $debug="";
 if (!isset($_SESSION["login"])) die;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";

@@ -25,15 +25,17 @@ include("../common/header.php");
 
 
 function SolicitarExpresion($base){
-global $msgstr,$arrHttp,$db_path,$lang_db;
-?>
-&nbsp; <A HREF="javascript:Buscar('<?php echo $base?>')"><u><strong><?php echo $msgstr["r_busqueda"]?></strong></u></a>
-			<br>
-			<textarea rows=2 cols=100 name=Expresion_<?php echo $base?>></textarea>
-			<a href=javascript:BorrarExpresion("<?php echo $base?>") class=boton><?php echo $msgstr["borrar"]?></a>
-<?php
+	global $msgstr;
+	?>
+	<a class="bt bt-blue" href="javascript:Buscar('<?php echo $base?>')"><?php echo $msgstr["r_busqueda"]?></a><br>
+	<textarea rows="2" cols="100" name="Expresion_<?php echo $base?>"></textarea>
+	<a class="bt bt-red" href="javascript:BorrarExpresion("<?php echo $base?>")"><?php echo $msgstr["borrar"]?></a>
+	<?php
 }
+?>
 
+
+<?php
 function SelectUserType($Ctrl){
 global $db_path;
 	echo "<select name=select_$Ctrl><option></Option>";
@@ -62,23 +64,26 @@ global $db_path;
 
 function SetCalendar($Ctrl){
 global $config_date_format;
-	if ($config_date_format=="DD/MM/YY")    // format of the input field
+	if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {
 		$date_format= "%d/%m/%Y";
- 	else
+	} else{
 		$date_format= "%m/%d/%Y";
-	echo "<!-- calendar attaches to existing form element -->
-	<input type=text size=10 name=date_$Ctrl id=date_$Ctrl value=''";
-   //  echo " onChange='Javascript:DateToIso(this.value,document.forma1.date)'";
-	echo "/> $config_date_format
-	<a href='javascript:CalendarSetup(\"date_$Ctrl\",\"$date_format\",\"f_date_$Ctrl\", \"\",true )'>
- 	<img src=\"../dataentry/img/calendar.gif\" id=\"f_date_$Ctrl\" style=\"cursor: pointer;\" title=\"Date selector\"
-    /></a>
-    <script type=\"text/javascript\">
+	}
+	?>
+	<!-- calendar attaches to existing form element -->
+	<input type="text" placeholder="<?php echo $config_date_format;?>" size="10" name="date_<?php echo $Ctrl;?>" id="date_<?php echo $Ctrl;?>" value="" onChange="Javascript:DateToIso(this.value,document.forma1.date)" >
+
+	<a class="bt bt-gray bt-sm" id="f_date_<?php echo $Ctrl;?>" href="javascript:CalendarSetup('date_<?php echo $Ctrl;?>','$date_format','f_date_<?php echo $Ctrl;?>', '',true )">
+	<i class="far fa-calendar-alt"   style="cursor: pointer;" title="Date selector"></i>
+	</a>
+
+    <script type="text/javascript">
+	<?php echo"
 	    Calendar.setup({
 
 	        inputField     :    \"date_$Ctrl\",     // id of the input field
 	        ifFormat       :    \"";
-	        if ($config_date_format=="DD/MM/YY")    // format of the input field
+	        if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y"))    // format of the input field
 	        	echo "%d/%m/%Y";
 	        else
 	        	echo "%m/%d/%Y";
@@ -97,7 +102,7 @@ global $config_date_format;
 
 //
 ?>
-<!-- calendar stylesheet -->
+
   <link rel="stylesheet" type="text/css" media="all" href="/assets/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
   <script type="text/javascript" src="/assets/calendar/calendar.js"></script>
@@ -106,6 +111,7 @@ global $config_date_format;
   <!-- the following script defines the Calendar.setup helper function, which makes
        adding a calendar a matter of 1 or 2 lines of code. -->
   <script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
+
 <script>
 	function BorrarExpresion(base){
 		Ctrl=eval("document.forma1.Expresion_"+base)
@@ -217,15 +223,14 @@ include("../common/institutional_info.php");
 		if (file_exists($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst")){
 			$fp=file($db_path."$bd/pfts/".$_SESSION["lang"]."/outputs.lst");
 			sort($fp);
-			echo "<p>";
-			echo "<strong>".$msgstr["basedatos"].": ".$bd."</strong>";
-			echo "<ul>";
+			echo "<h3>".$msgstr["basedatos"].": ".$bd."</h3>";
+
 			foreach ($fp as $value){
 				$value=trim($value);
 				if ($value=="") continue;
 				if (substr($value,0,2)=="//") continue;
 				$l=explode('|',$value);
-				echo "<li><input type=radio name=RN value=\"$bd|$l[0]|$l[1]\">(".$l[0].") ".$l[5]."\n";
+				echo "<br><input type=radio name=RN value=\"$bd|$l[0]|$l[1]\"> (".$l[0].") ".$l[5]."\n";
 				if (isset($l[6])){
 					switch ($l[6]){
 						case "DATE":
@@ -243,34 +248,41 @@ include("../common/institutional_info.php");
 							SelectItemType($l[0]);
 							break;
 					}
-
+				
 				}
 
 			}
+?>
 
-			echo " </ul>";
-			SolicitarExpresion($bd);
-			echo "<p>";
-			echo " ".$msgstr["sendto"].": ";
-			echo "<a href=javascript:Imprimir(\"display\")>".$msgstr["ver"]."</a> | ";
-			echo "<a href=javascript:Imprimir(\"TB\")>".$msgstr["wsproc"]."</a> | ";
-			echo "<a href=javascript:Imprimir(\"WP\")>".$msgstr["word"]."</a>";
-			echo "&nbsp; &nbsp;<a href=javascript:Editar()><font color=red>".$msgstr["editar"]."</font></a>";
-			echo "<hr size=5>";
+<div class="exprSearch">
+ <?php SolicitarExpresion($bd);?>
+</div>
+			<div class="w-10">
+			<?php echo " ".$msgstr["sendto"].": ";?>
+			<a class="bt bt-blue" href=javascript:Imprimir("display")> <i class="far fa-eye"></i> <?php echo $msgstr["ver"];?></a>
+			<a class="bt bt-blue" href=javascript:Imprimir("TB")> <i class="far fa-file-excel"></i> <?php echo $msgstr["wsproc"];?></a>
+			<a class="bt bt-blue" href=javascript:Imprimir("WP")> <i class="far fa-file-word"></i> <?php echo $msgstr["word"];?></a>
+			<a class="bt bt-gray" href=javascript:Editar()> <i class="far fa-edit"></i> <?php echo $msgstr["editar"];?></a>
+			</div>
+			<hr size=5>
+<?php
 		}
 	}
 ?>
-<p>
 
-<p>
-<a href=print_add.php><?php echo $msgstr["new"]?></a>
+
+<a class="bt bt-green" href=print_add.php> <i class="fa fa-plus"></i> <?php echo $msgstr["new"]?></a>
 
 </form>
-<p>
+
+
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+
 <?php
 include("../common/footer.php");
 ?>
-</body>
-</html>

@@ -305,6 +305,7 @@ switch ($arrHttp["vp"]){
 	}
 </script>
 ";
+include ("../common/footer.php");
 }
 
 ?>
@@ -318,19 +319,23 @@ switch ($arrHttp["vp"]){
 		include "../common/inc_back.php";
 		?>
 	</div>
+	<div class="spacer">&#160;</div>
+	</div>
 
-<div class="spacer">&#160;</div>
 <div class="middle form">
 	<div class="formContent">
 
 <?php
 	if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $arrHttp["vp"]!="TB" and $arrHttp["vp"]!="TXT" ){
-		echo "<form name=forma1  action=correo.php method=post>\n";
-		echo "<input type=checkbox name=chkall onchange=Seleccionar()> ".$msgstr["selall"];
-		echo "&nbsp &nbsp <input type=button name=generar value='".$msgstr["mailgenerate"]."' onclick=GenerarCorreos()>";
-		echo " &nbsp; <a href=../dbadmin/leertxt.php?base=trans&desde=recibos&archivo=mail_dev.pft target=_blank>".$msgstr["edit"].": mail_dev.pft</a>";
+		?>
+		<form name="forma1"  action="correo.php" method="post">
+		<input type="checkbox" name="chkall" onchange="Seleccionar()"> <?php echo $msgstr["selall"];?>
+		<input type="button" name="generar" value="<?php echo $msgstr["mailgenerate"];?>" onclick="GenerarCorreos()">
+		<a href="../dbadmin/leertxt.php?base=trans&desde=recibos&archivo=mail_dev.pft" target=_blank><?php echo $msgstr["edit"];?>: mail_dev.pft</a>
+	<?php
 	}
 	echo $encab;
+
 	break;
 }
 echo $data;
@@ -338,9 +343,13 @@ if (isset($def["EMAIL"]) and $def["EMAIL"]=="Y" and $arrHttp["vp"]!="WP" and $ar
 	echo "<input type=hidden name=contactos>\n";
 	echo "</form>\n";
 }
-if ($arrHttp["vp"]!="TB")
-	echo "</body></html>";
 
-die;
+
+
+//if ($arrHttp["vp"]!="TB")
+
+//die;
 
 ?>
+	</div>
+</div>

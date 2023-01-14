@@ -31,7 +31,6 @@ if (!isset($_SESSION["permiso"])){
 }
 $script_php="../output_circulation/rsweb.php";
 
-//date_default_timezone_set('UTC');
 $debug="";
 if (!isset($_SESSION["login"])){
 	echo "falta login"; die;

@@ -86,19 +86,19 @@ include("../common/header.php");
 include("../common/institutional_info.php");
 include("../circulation/scripts_circulation.php");
 ?>
-<body>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["co_history"]?>
 	</div>
 	<div class="actions">
-		<a href="item_history.php" class="defaultButton backButton">
-			<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-			<span><?php echo $msgstr["back"]?></strong></span>
-		</a>
+	<?php
+		$backtoscript="item_history.php";
+		include "../common/inc_back.php"
+	?>
 	</div>
-	<div class="spacer">&#160;</div>
+	<?php include("../circulation/submenu_prestamo.php");?>
 </div>
+
 <div class="helper">
 <a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/item_history.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
 <?php
@@ -116,7 +116,10 @@ echo "
 		echo "<h2>".$msgstr["no_transactions"]."<h2>";
 	}else{
 		echo "<table cellpadding=5>\n";
-		echo "<tr><th> </th><th>".$msgstr["inventory"]."</th><th>".$msgstr["usercode"]."</th>";
+		echo "<tr>";
+		echo "<th></th>";
+		echo "<th>".$msgstr["inventory"]."</th>";
+		echo "<th>".$msgstr["usercode"]."</th>";
 		echo "<th>".$msgstr["reference"]."</th>";
 		echo "<th>".$msgstr["usertype"]."</th>";
 		echo "<th>".$msgstr["typeofitems"]."</th>";
@@ -124,14 +127,16 @@ echo "
 		echo "<th>".$msgstr["devdate"]."</th>";
 		echo "<th>".$msgstr["actual_dev"]."</th>";
 		echo "<th>".$msgstr["renewals"]."</th>";
+	
 		foreach ($trans as $value) {
 			$t=explode('^',$value);
 			echo "<tr>\n";
 			echo "<td>";
-			if ($t[16]=="P")
+			if ($t[16]=="P") {
 				echo $msgstr["loaned"];
-			else
+			} else {
 				echo $msgstr["returned"];
+			}	
 			echo "</td>";
 			echo "<td>".$t[0]."</td>";
 			echo "<td>".$t[10]."</td>";
@@ -140,7 +145,11 @@ echo "
 			echo "<td align=center>".$t[3]."</td>";
 			echo "<td>".$t[4]."</td>";
 			echo "<td>".$t[5]."</td>";
-			echo "<td>".$t[18]."</td>";
+			echo "<td>";
+			$date_real_d = $t[8];
+			$newDate = date($config_date_format, strtotime($date_real_d));  
+			echo $newDate;
+			echo "</td>";
 			echo "<td>".$t[11]."</td>";
 			echo "</tr>\n";
 		}

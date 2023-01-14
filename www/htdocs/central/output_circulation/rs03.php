@@ -30,7 +30,6 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 
-//date_default_timezone_set('UTC');
 $debug="";
 if (!isset($_SESSION["login"])) die;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
@@ -48,9 +47,11 @@ include("../reserve/reserves_read.php");
 $bd=$arrHttp["base"];
 $Nombre=$msgstr[$arrHttp["code"]];
 
-function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
+function LlamarWxis($IsisScript,$query){
+global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
-	return $contenido;}
+	return $contenido;
+}
 
 function LeerBasesDat($db_path){
 global $ix_nb,$base_sel;
@@ -172,7 +173,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$politica,$msgstr,$lang_db;
 				$l=explode('||',$linea);
 				if (isset($prestamos[$l[0]])){
 					$f_dev= $prestamos[$l[0]];
-					if ($f_dev!=""){						$prestados=$prestados+1;					}
+					if ($f_dev!=""){
+						$prestados=$prestados+1;
+					}
 				}else{
 					$f_dev="";
 				}
@@ -192,7 +195,8 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$tr_prestamos;
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
 	$prestamos=array();
-	foreach ($contenido as $linea){		if (trim($linea)!=""){
+	foreach ($contenido as $linea){
+		if (trim($linea)!=""){
 			$lp=explode('^',$linea);
 			$prestamos[$lp[0]]=$lp[4];
         }
@@ -200,7 +204,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$tr_prestamos;
 	return $prestamos;
 }
 
-function BuscarEjemplaresDisponibles($base,$Control,$copies){global $arrHttp;	$prestamos=LocalizarTransacciones ($Control,"TC");
+function BuscarEjemplaresDisponibles($base,$Control,$copies){
+global $arrHttp;
+	$prestamos=LocalizarTransacciones ($Control,"TC");
 	switch ($copies){
 		case "S":
 			// SE DETERMINA LA DISPONIBILIDAD DE LOS EJEMPLARES DESDE LOANOBJECTS
@@ -218,7 +224,9 @@ function BuscarEjemplaresDisponibles($base,$Control,$copies){global $arrHttp;	
 	foreach ($items[0] as $value)
 		echo $value;
 
-    return count($disponibles)- $prestados;}
+    return count($disponibles)- $prestados;
+
+}
 
 include("../common/header.php");
 include("../common/institutional_info.php");
@@ -254,13 +262,18 @@ $data="";
 $ixcols=0;
 if (!file_exists($rows)){
 	$msgerr= $rows. " ** ".$msgstr["falta"];
-}else{	$fp=file($rows);
-	foreach ($fp as $value){		if (trim($value)!=""){			$t=explode("|",$value);
-			foreach($t as $head){				$ixcols++;
+}else{
+	$fp=file($rows);
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$t=explode("|",$value);
+			foreach($t as $head){
+				$ixcols++;
 				echo "<td>$head</td>";
 			}
 			break;
-		}	}
+		}
+	}
 	echo "<td>".$msgstr["vence"]."</td>"."<td>".$msgstr["suspen"]."</td>"."<td>".$msgstr["multas"]."</td><td></td><tr>";
     $ixcols=$ixcols+6;
 }
@@ -284,7 +297,10 @@ if ($Sort==""){
 $contenido=LlamarWxis($IsisScript,$query);
 
 $key_comp="";
-foreach ($contenido as $value){	$value=trim($value);	if ($value!=""){		$v=explode('$$$',$value);
+foreach ($contenido as $value){
+	$value=trim($value);
+	if ($value!=""){
+		$v=explode('$$$',$value);
 		//SE LEEN LA BASE DE DATOS Y EL NÚMERO DE CONTROL PARA UBICAR EL TÍTULO Y DETERMINAR LOS EJEMPPLARES DISPONIBLES
 		$bd=$v[0];
 		$Control_no=$v[1];
@@ -292,7 +308,8 @@ foreach ($contenido as $value){	$value=trim($value);	if ($value!=""){		$v=exp
 		$fecha_anulacion=$v[3];
 		if ($fecha_anulacion>date("Ymd")) continue;
 		if ($bd.$Control_no!=$key_comp){
-			if ($key_comp!=""){			}
+			if ($key_comp!=""){
+			}
 			$key_comp=$bd.$Control_no;
 		}
 		$Mfn=$v[4];
@@ -332,9 +349,12 @@ foreach ($contenido as $value){	$value=trim($value);	if ($value!=""){		$v=exp
 			}
 		}
 		$reservas=explode("|",$v[5]);
-		if ($fecha_anulacion<date("Ymd")){		}
+		if ($fecha_anulacion<date("Ymd")){
+
+		}
 		foreach ($reservas as $rr){
-			echo "<td bgcolor=white valign=top>$rr</td>";		}
+			echo "<td bgcolor=white valign=top>$rr</td>";
+		}
 		echo "<td bgcolor=white valign=top width=10 align=center>" ;
 		if ($vencidos==0) $vencidos="";
 		if ($total_susp==0) $total_susp="";
@@ -345,7 +365,8 @@ foreach ($contenido as $value){	$value=trim($value);	if ($value!=""){		$v=exp
 		echo "&nbsp;<a href=javascript:CancelReserve(".$Mfn.")><img src=../dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";
 		echo "</td>";
 		echo "</tr>";
-	}}
+	}
+}
 if ($key_comp!=""){
 	echo "</form>";
 }
@@ -364,7 +385,8 @@ if ($key_comp!=""){
 <?php if (isset($arrHttp["reserve"])) echo "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";?>
 </form>
 <script>
-function  DeleteReserve(Mfn){	document.reservas.Accion.value="delete"
+function  DeleteReserve(Mfn){
+	document.reservas.Accion.value="delete"
 	document.reservas.Mfn_reserve.value=Mfn
 	document.reservas.submit()
 }

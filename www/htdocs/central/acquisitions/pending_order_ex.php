@@ -109,7 +109,6 @@ switch ($locales[1]){
 		$date2="m";
 		break;
 }
-date_default_timezone_set('UTC');
 $formato_fecha="$date1-$date2-Y";
 $fecha=date($formato_fecha);
 //
