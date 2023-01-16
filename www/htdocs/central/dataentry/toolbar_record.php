@@ -6,6 +6,7 @@
 2022-01-27 fho4abcd Do not show empty buttons for calls by test scripts
 2022-02-07 fho4abcd buttons for default value option+ show buttons if applicable only
 2022-02-14 fh04abcd small html improvements
+2023-01-16 fho4abcd hover text for checkbox
 */
 
 //echo $arrHttp["ventana"];
@@ -82,9 +83,9 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
 					break;
 				}
                 ?>
-                <label class="check_sec">
+                <label class="check_sec"> 
                   <input type="checkbox" name="sel_mfn" id="sel_mfn" onclick="top.SeleccionarRegistro(this)" value="<?php echo $arrHttp["Mfn"];?>">
-                  <span class="checkmark"></span>
+                  <span class="checkmark" title='<?php echo $msgstr["selected_records_add"]?>'></span>
                 </label>
                 <?php
                 if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {

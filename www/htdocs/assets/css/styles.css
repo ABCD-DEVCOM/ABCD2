@@ -2,6 +2,7 @@
 ** 2021-06-26 fho4abcd Move distributor logo to php
 ** 2021-12-23 fho4abcd Restored background mydiv (line 1577) to view the action buttons in fmt (disappeared after previous commit)
 ** 2022-12-11 fho4abcd Add moduleButton
+** 2023-01-16 fho4abcd InstitutionalInfo:removed width. heading-database:improved layout and added attention entry. table.toolbar-dataentry:increased width
 */
 /* GENERAL STYLES */
 
@@ -295,7 +296,7 @@ A.singleButton .sb_rb {
 
 .institutionalInfo {
 	float: left;
-	width: 35%;
+	/*width: 35%;*/
 	padding: 2px 10px;
 	height: 40px;
 }
@@ -308,7 +309,7 @@ A.singleButton .sb_rb {
 }
 
 
-.institutionalInfo>H1, .institutionalInfo H2 {
+/*.institutionalInfo>H1, .institutionalInfo H2 { probably not used
 	letter-spacing: 0.03rem;
 	color: var(--abcd-white);
 	font-weight: normal;
@@ -320,7 +321,7 @@ A.singleButton .sb_rb {
 	margin-left: 20%;
 	vertical-align: middle;
 	position: relative;
-}
+}*/
 
 .heading-database {
 	display: inline-block;
@@ -333,6 +334,7 @@ A.singleButton .sb_rb {
 	position: absolute;
 	width: 39%;
 	vertical-align: middle;
+    text-align:right;
 }
 
 
@@ -340,7 +342,7 @@ A.singleButton .sb_rb {
 	display: inline-block;
 	color: var(--abcd-white);
 	vertical-align: middle;
-	margin: 12px auto 0 30px;
+	margin: 12px 10px 0 30px;
 	font-size: 1rem;
 }
 
@@ -357,19 +359,21 @@ select.heading-database {
 	 padding: 8px;
 	 height: 35px;
 	 border-radius: 3px;
-	 box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
+	 box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;
 	 font-weight: 600;
 	 font-size: 14px;
 	text-align: left;
 }
-
+select.heading-database-att{
+    background: var(--abcd-yellow);
+    color: var(--abcd-red);
+}
 select.heading-database option {
 	 background: var(--abcd-white);
 	 color: var(--abcd-steel-blue);
-
 }
 
-nav.heading-nav, {
+/*nav.heading-nav, {has syntax error
 	position: relative;
 	top: 0;
 	margin-top: 0;
@@ -379,7 +383,7 @@ nav.heading-nav, {
 	vertical-align: top;
 	background-color: var(--abcd-steel-blue);
 	float: right;
-}
+}*/
 
 nav.heading-nav ul {
 	float: right;
@@ -1357,7 +1361,7 @@ div.toolbar-dataentry  {
 
 table.toolbar-dataentry select, table.toolbar-dataentry input {
 	font-size: 12px;
-	width: 100px;
+	width: 150px;
 }
 
 table.toolbar-dataentry a {
@@ -1633,8 +1637,8 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	padding: 8px;
 	box-shadow: none;
 	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
-  	-moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
-  	box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+  -moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
+  box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 
 }
 
