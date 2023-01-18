@@ -1,4 +1,4 @@
-welcome=Oá! [day] [month] [year]
+welcome=Olá! [dia] [mês] [ano] 
 title=Serviço de entrega de documentos on-line
 subtitle=Os campos marcados com * são obrigatórios
 name=Nome
@@ -25,7 +25,8 @@ odds=Serviço de entrega de documentos on-line
 odds_cre_rec1=Registro criado
 odds_cre_rec2=na base de dados
 odds_doesnotexist=não existe
-odds_id_min=Comprimento mínimo de
+odds_id=ID
+odds_id_min=Tamanho mínimo de
 odds_forattr=para o atributo
 odds_form=Formulário de solicitação
 odds_form_st=Pedido de armazenamento em banco de dados
