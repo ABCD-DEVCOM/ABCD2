@@ -5,6 +5,7 @@
 20220202 fho4abcd modified size of popup window for picklist
 20220207 fh04abcd Improve html & backbutton 
 20220214 fh04abcd Add form selectarchivo & javascript function SelectArchivo
+20230119 fho4abcd Removed commented style section
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -37,28 +38,8 @@ if (!isset($_SESSION["permiso"])){
 	margin: 10px 10px 5px 5px;
 	}
 	headerDiv a:hover {
-	color: #;
+	color: #ff0000;
 	}
-</style>
-
-<style type="text/css">
-
-/*
-input,textarea {
-    border: 1px solid #CCCCCC;
-    -webkit-box-shadow:
-      inset 0 0 4px  rgba(0,0,0,0.1),
-            0 0 4px rgba(0,0,0,0.1);
-    -moz-box-shadow:
-      inset 0 0 4px  rgba(0,0,0,0.1),
-            0 0 4px rgba(0,0,0,0.1);
-    box-shadow:
-      inset 0 0 4px  rgba(0,0,0,0.1),
-            0 0 4px rgba(0,0,0,0.1);
-    padding: 2px;
-    background: rgba(255,255,255,0.5);
-    margin: 0 0 0px 0;
-}*/
 </style>
 
 <!-- Estilos para el tooltip -->
@@ -69,7 +50,7 @@ a.tooltip:hover {text-decoration:none;}
 a.tooltip span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; line-height:16px; }
 a.tooltip:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#eeeeee;}
 .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;} /*CSS3 extras*/
-a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+a.tooltip span { border-radius:4px; -webkit-border-radius: 4px;  -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
 </style>
 
 <!-- calendar stylesheet -->
