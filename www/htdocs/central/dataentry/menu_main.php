@@ -6,6 +6,7 @@
 2021-08-02 fho4abcd Import PDF in menu bar
 2021-08-29 fho4abcd Modified Import PDF into Upload Document
 2021-12-08 fho4abcd Quick search layout + some translations + translation/modify edit pft button+removed some dividers.Code layout more readable
+2023-01-19 fho4abcd Menu "default" to buttons + removed unused size parameters
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -30,7 +31,7 @@ $pal="";
 if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
     $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
 
-    $pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:100px\">";
+    $pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" >";
     foreach ($fpb as $value){
         if (trim($value)!=""){
             $y=explode('|',$value);
@@ -197,18 +198,9 @@ function GenerarWks(){
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js"></script>
 <script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
-<?php if (isset($_SESSION["screen_width"])){
-	      	$SW=$_SESSION["screen_width"];
-	      	$TH=90;
-   	  	 }else{
-   	  	 	$SW=1200;
-   	  	 	$TH=90;
-   	  	 }
-		if (isset($FRAME_2H) and $FRAME_2H!="") $TH=$FRAME_2H;
-?>
 
 <!--SETS UP THE DATA ENTRY TOOLBAR-->
-<table class="toolbar-dataentry" style="height=<?php echo $TH;?>" >
+<table class="toolbar-dataentry" >
     <tr> <!-- row with cells for the toolbar top row-->
         <td class="ph-10">
         <!-- goto record -->
@@ -259,8 +251,7 @@ function GenerarWks(){
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_left_24_regular.svg',24,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_right_24_regular.svg',24,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_arrow_next_24_regular.svg',24,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
-    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',100,100,''))
-    //    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>','browse',100,100,''))
+    toolbar.addItem(new dhtmlXSelectButtonObject('<?php echo $msgstr["browse"]?>',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',120,100,''))
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_clipboard_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
@@ -294,9 +285,14 @@ function GenerarWks(){
         ?>
         toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_arrow_download_24_regular.svg","24","24",19,"2_z3950","<?php echo $msgstr["m_z3950"]?>"))
     <?php }
+        ?>
+        toolbar.addItem(new dhtmlXToolbarDividerXObject('div_3'))
+    <?php
         if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_VALDEF"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_VALDEF"])){
         ?>
-        toolbar.addItem(new dhtmlXSelectButtonObject('defaultval',',editdv,deletedv','<?php echo $msgstr["valdef"]?>,<?php echo $msgstr["editar"]?>,<?php echo $msgstr["eliminar"]?>','',80,80,''))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_template_20_regular.svg","24","24",13,"editdv","<?php echo $msgstr["editar"].' '.$msgstr["valdef"]?>"))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_template_20_filled.svg","24","24",13,"deletedv","<?php echo $msgstr["eliminar"].' '.$msgstr["valdef"]?>"))
+        toolbar.addItem(new dhtmlXToolbarDividerXObject('div_4'))
     <?php }
         if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
             isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
@@ -394,11 +390,12 @@ function GenerarWks(){
 						top.Listar_pos=-1
 				}
 				break
-			case "defaultval":
-				top.Menu(itemValue)
-				var item=top.menu.toolbar.getItem('defaultval');
-				item.selElement.options[0].selected =true
-				break
+			case "editdv":
+				top.Menu('editdv')
+				break;
+			case "deletedv":
+				top.Menu('deletedv')
+				break;
 			case "database":
 				top.Menu('database')
 				break;

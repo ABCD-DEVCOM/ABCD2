@@ -1,4 +1,6 @@
-/* The main calendar widget.  DIV containing a table. */
+/* The main calendar widget.  DIV containing a table. 
+** 2023-01-19 fho4abcd Removed unknown -moz-box-shadow
+*/
 
 .calendar {
   position: relative;
@@ -11,7 +13,6 @@
   background: #bfdfef;
   font-family: tahoma,verdana,sans-serif;
 -webkit-box-shadow: 10px 10px 22px -13px rgba(133, 133, 133, 1);
-  -moz-box-shadow: 10px 10px 22px -13px rgba(133, 133, 133, 1);
   box-shadow: 10px 10px 22px -13px rgba(133, 133, 133, 1);
 }
 

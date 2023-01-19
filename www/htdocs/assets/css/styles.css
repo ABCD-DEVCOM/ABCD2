@@ -3,6 +3,7 @@
 ** 2021-12-23 fho4abcd Restored background mydiv (line 1577) to view the action buttons in fmt (disappeared after previous commit)
 ** 2022-12-11 fho4abcd Add moduleButton
 ** 2023-01-16 fho4abcd InstitutionalInfo:removed width. heading-database:improved layout and added attention entry. table.toolbar-dataentry:increased width
+** 2023-01-19 fho4abcd Removed unknown -webkit-text-size-adjust,-moz-box-shadow. bad !important
 */
 /* GENERAL STYLES */
 
@@ -10,7 +11,6 @@
 html {
   font-family: sans-serif;
   line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 
@@ -22,7 +22,6 @@ body {
   line-height: var(--abcd-body-line-height);
   color: var(--abcd-body-color);
   text-align: var(--abcd-body-text-align);
-  -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 /*
@@ -91,7 +90,6 @@ border-radius: 3px;
 	color: var(--abcd-gray-900);
 	box-shadow: none;
 	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
-	-moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 	box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 }
 
@@ -101,7 +99,6 @@ input[type=number] {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
   -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
-  -moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
   box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
 	box-sizing: border-box;
 	margin: 1px 0;
@@ -115,7 +112,6 @@ textarea.par {
 	border: 1px solid #a7a6aa;
 	padding: 3px;
   -webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
-  -moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
   box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
 	box-sizing: border-box;
 	margin: 1px 0;
@@ -1637,7 +1633,6 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	padding: 8px;
 	box-shadow: none;
 	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
-  -moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
   box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 
 }
@@ -1649,7 +1644,6 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	box-shadow: none;
 	padding: 8px;
 	-webkit-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
-	-moz-box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 	box-shadow: inset 1px 1px 3px 0.1px var(--abcd-gray-500);
 
 }
@@ -1891,7 +1885,7 @@ TD.showSTitle .collectionMode A.selected:hover {
   background-color: var(--abcd-success);
   color: var(--abcd-white);
   font-weight: bold;
-  border: 1px solid var(--abcd-white);!important;
+  border: 1px solid var(--abcd-white);
 
 }
 

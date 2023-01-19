@@ -10,6 +10,7 @@
 20230106 fho4abcd Don't set arrHttp values to **INVALID** if they contain the string "script"+
                   debug parameter for ActualizarRegistro +
                   check existence of indexvalue in creation of wks values in case "reintentar"
+20230119 fho4abcd Remove scripts in saved display+improve html for saved display
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -1087,16 +1088,17 @@ if ($actualizar=="SI"){
 	}else{
 		$regSal=LeerRegistroFormateado($arrHttp["Formato"]);
 	}
-	include ("scripts_dataentry.php");
 	if (!isset($record_deleted)) $record_deleted="N";
-	if ($record_deleted=="N")
-		include("toolbar_record.php");
-
- 	echo $regSal;
-	echo "</div></div></div>";
-	if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N"))
+	if ($record_deleted=="N")include("toolbar_record.php");
+    echo "<div class='middle form'>\n";
+    echo "<div class='formContent'>\n";
+    echo "<dd><table><tr><td width=20> </td><td>";
+    echo $regSal;
+    echo "</td></tr></table></dd>\n" ;
+    echo "</div></div>";
+    if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N")){
 		include("../common/footer.php");
-
+    }
 }else{
 //se lee la fdt de la base de datos
 	if ($arrHttp["Opcion"]=="crear" or $arrHttp["Opcion"]=="capturar") {
