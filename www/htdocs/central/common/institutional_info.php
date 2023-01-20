@@ -15,6 +15,7 @@
 20221122 rogercgui Removed $session_mfn_admin=="1" in line 181 because it displayed the list of bases in data entry only for MFN 1 of the Acces database
 20221128 fho4abcd if $module_odds is set: show language dropdown & do not show logout
 20230116 fho4abcd moved initial db selection code in one function+visual warning if none is selected. Some cleanup of unused code
+20230120 fho4abcd Added hovered titles
 */
 
 global $ABCD_scripts_path;
@@ -327,7 +328,7 @@ function CambiarLenguaje(){
                     <input type="hidden" name="tlit" value="">
                     <input type="hidden" name="nreg" value="">  
 
-                    <select name="lenguaje"  onchange="CambiarLenguaje()">
+                    <select name="lenguaje"  onchange="CambiarLenguaje()" title='<?php echo $msgstr["seleccionar"]." ".$msgstr["lang"]?>' >
                     <?php
                     include "inc_get-langtab.php";
                     $a=get_langtab();
@@ -364,7 +365,7 @@ function CambiarLenguaje(){
 <?php } ?>
 
             <li>
-                <a class="bt-charset" href="#"><?php if ( isset( $charset )) {
+                <a class="bt-charset" title='<?php echo $msgstr["page_encoding"];?>' href="#"><?php if ( isset( $charset )) {
                           echo $charset;
                       } else {
                           echo $meta_encoding;
@@ -391,7 +392,8 @@ function CambiarLenguaje(){
 
             <li>
             <?php if (!isset($module_odds)) { ?>
-                <a class="bt-exit" href="../common/logout.php"><img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
+                <a class="bt-exit" href="../common/logout.php" title='<?php echo $msgstr["logout"];?>' >
+                <img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
             <?php }?>
             </li>
         </ul>

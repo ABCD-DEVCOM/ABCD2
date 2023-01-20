@@ -7,6 +7,7 @@
 2021-08-29 fho4abcd Modified Import PDF into Upload Document
 2021-12-08 fho4abcd Quick search layout + some translations + translation/modify edit pft button+removed some dividers.Code layout more readable
 2023-01-19 fho4abcd Menu "default" to buttons + removed unused size parameters
+2023-01-20 fho4abcd Use better buttons for "default".
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -290,8 +291,8 @@ function GenerarWks(){
     <?php
         if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_VALDEF"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_VALDEF"])){
         ?>
-        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_template_20_regular.svg","24","24",13,"editdv","<?php echo $msgstr["editar"].' '.$msgstr["valdef"]?>"))
-        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_template_20_filled.svg","24","24",13,"deletedv","<?php echo $msgstr["eliminar"].' '.$msgstr["valdef"]?>"))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_template_24_regular.svg","24","24",13,"editdv","<?php echo $msgstr["editar"].' '.$msgstr["valdef"]?>"))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_trace_template_24_regular.svg","24","24",13,"deletedv","<?php echo $msgstr["eliminar"].' '.$msgstr["valdef"]?>"))
         toolbar.addItem(new dhtmlXToolbarDividerXObject('div_4'))
     <?php }
         if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
