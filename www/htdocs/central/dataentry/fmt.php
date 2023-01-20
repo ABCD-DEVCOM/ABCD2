@@ -11,6 +11,7 @@
                   debug parameter for ActualizarRegistro +
                   check existence of indexvalue in creation of wks values in case "reintentar"
 20230119 fho4abcd Remove scripts in saved display+improve html for saved display
+20230120 fh04abcd Improved html+remove edit scripts if display is not in edit mode+defaults for $tl and $nr
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -656,6 +657,8 @@ if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
 }
 // the record types table is loaded
 // $tl and $nr are the leader tags where the type of record is stored
+$tl="";
+$nr="";
 if ($tor!=""){
 	$fp = file($tor);
 	$ix=0;
@@ -679,10 +682,6 @@ if ($tor!=""){
 		}
 
 	}
-}else{
-	$tl="";
-	$nr="";
-
 }
 $i=-1;
 $ValorCapturado="";
@@ -777,7 +776,7 @@ switch ($arrHttp["Opcion"]) {
         	$arrHttp["Opcion"]=="ninguna";
         	echo "	<div class=\"middle form\">
 						<div class=\"formContent\">
-						<table width=100%><td width=10></td><td>\n";
+						<table width=100%><td>\n";
 			//if ($wxisUrl!="") echo $wxisUrl."<br>";
 
 			echo $msgstr["expresion"].":<br>";
@@ -798,7 +797,7 @@ switch ($arrHttp["Opcion"]) {
 	        if ($resultado!="no"){        //resultado=no indica que ya se formateo el registro
 	        	$ver="s";
 	        	if ($arrHttp["Formato"]!=""){
-	        		echo "<table width=100%><td width=10></td><td><font size+1>$registro.</td></table>";
+	        		echo "<table width=100%><tr><td><font size+1>$registro.</td></table>";
 	        	}else{
 	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 	        		echo $arrHttp["Opcion"]." ".$clave_proteccion;
@@ -838,7 +837,7 @@ switch ($arrHttp["Opcion"]) {
 	        }else{
 	        	$ver="s";
 	        	//echo "<br><input type=checkbox value=".$arrHttp["Mfn"]." onclick=javascript:SeleccionarRegistro(".$arrHttp["Mfn"].")> ".$msgstr["seleccionar"];
-	        	echo "<table width=100%><td width=20></td><td>";
+	        	echo "<table width=100%><tr><td>";
 	        	if ($arrHttp["Formato"]!=""){
 	        		echo "<div id=results>".$registro."</div>";
 	        	}else{
@@ -859,8 +858,6 @@ switch ($arrHttp["Opcion"]) {
 			die;
        	break;
 	case "ver":    //Presenta el registro con el formato seleccionado
-        include("scripts_dataentry.php");
-
 		$salida= LeerRegistroFormateado($arrHttp["Formato"]);
 
 		if ($record_deleted=="N") include("toolbar_record.php");
@@ -868,7 +865,7 @@ switch ($arrHttp["Opcion"]) {
         echo "	<div class=\"middle form\">
 					<div class=\"formContent\">\n";
 		//echo "<br><input type=checkbox name=chkmfn value=".$arrHttp["Mfn"]." onclick=javascript:SeleccionarRegistro(".$arrHttp["Mfn"].")> ".$msgstr["seleccionar"];
-		echo "<dd><table><td width=20> </td><td>";
+		echo "<dd><table><tr><td>";
 		echo $salida;
 		echo "</td></table></dd>" ;
 		echo "<script>
@@ -924,7 +921,6 @@ switch ($arrHttp["Opcion"]) {
 		break;
 	case "cancelar":
         if ($arrHttp["Mfn"]=="New") {
-        	include ("scripts_dataentry.php");
         	include("toolbar_record.php");
        		echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
@@ -943,12 +939,13 @@ switch ($arrHttp["Opcion"]) {
 		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 
 		if (isset($arrHttp["Formato"]) and $arrHttp["Formato"]!=""){
-        	include("scripts_dataentry.php");
         	include("toolbar_record.php");
         	echo "<div class=\"middle form\">
-			<div class=\"formContent\">";
-			echo LeerRegistroFormateado($arrHttp["Formato"]);
-        	echo "</form></div></div></div>\n";
+			<div class=\"formContent\">\n";
+            echo "<dd><table><tr><td>";
+            echo LeerRegistroFormateado($arrHttp["Formato"]);
+            echo "</td></tr></table></dd>\n" ;
+            echo "</div></div>";
         	if (!isset($arrHttp["ventana"])){
 				if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N"))
 				    include("../common/footer.php");
@@ -1092,7 +1089,7 @@ if ($actualizar=="SI"){
 	if ($record_deleted=="N")include("toolbar_record.php");
     echo "<div class='middle form'>\n";
     echo "<div class='formContent'>\n";
-    echo "<dd><table><tr><td width=20> </td><td>";
+    echo "<dd><table><tr><td>";
     echo $regSal;
     echo "</td></tr></table></dd>\n" ;
     echo "</div></div>";
