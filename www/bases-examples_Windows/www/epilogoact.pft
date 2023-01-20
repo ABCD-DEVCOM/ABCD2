@@ -10,7 +10,4 @@
 if v3000.1='"' then s0:=(v3000*4+| |) else s0:=(v3000*3+| |) fi,
 s0:=(replace(s0,'"','')),
 '<SCRIPT LANGUAGE="JavaScript">highlightSearchTerms("',s(s0),'");</SCRIPT>'
-'</form>
-</body>
-</html>'
 
