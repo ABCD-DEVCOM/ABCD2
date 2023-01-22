@@ -9,6 +9,7 @@
 2021-12-12 fho4abcd Improved sizeof popup for alfa (for breadcrumb)
 2022-03-20 fho4abcd Cleanup barcode, new target bcl_labelshow.php
 2022-06-19 fho4abcd Corrected html + removed unreachable js code + removed unreachable frameset
+2023-01-22 fho4abcd Improved height of iframe main. Moved css of iframes to css file
 */
 //error_reporting(E_ALL);
 session_start();
@@ -781,7 +782,7 @@ function Menu(Opcion){
 	}
 
 </script>
-
+<!--effect is no overall scrollbar-->
 <style type="text/css">
 	*, html {
 		height: 100%;
@@ -792,34 +793,31 @@ function Menu(Opcion){
     <?php
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
     ?> 
-	<iframe name="encabezado" id="encabezado" class="dataentry-header" scrolling="no" frameborder="0"
+	<iframe name="header" id="header" class="dataentry-header" 
         src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>">
     </iframe>
-	<iframe name="menu"       id="menu"       class="dataentry-menu"   scrolling="no" frameborder="0" allowfullscreen wmode="transparent"
-        src="" style="width: 100%; height: 78px; position: relative;">
+	<iframe name="menu" id="menu"   class="dataentry-menu"
+        src="" >
     </iframe>
-	<iframe name="main"       id="main"
-        src="" style="width: 100%;               position: relative; border: none; ">
+	<iframe name="main" id="main"   class="dataentry-main";
+        src="" >
     </iframe>
 </div>
 
 <script>
     // Selecting the iframe element
-    var iframeEncabezado = document.getElementById("encabezado");
+    var iframeHeader = document.getElementById("header");
     var iframeMenu = document.getElementById("menu");
     var iframeMain = document.getElementById("main");
    
     // Adjusting the iframeMain height onload event
     iframeMain.onload = function() {
-    	var Todobody = window.screen.height;
-    	var encabezado = iframeEncabezado.contentWindow.document.body.scrollHeight
+    	var Todobody = window.innerHeight;
+    	var header = iframeHeader.contentWindow.document.body.scrollHeight
     	var menu = iframeMenu.contentWindow.document.body.scrollHeight
-    	var janela = iframeMain.contentWindow.document.body.scrollHeight
-	   	var toolbar = (encabezado + menu) * 2;
-	   	var valorfolga = -toolbar;
-        var folga = Todobody - toolbar;
+        var folga = Todobody - header - menu;
         iframeMain.style.height = folga + 'px';
-		//alert (folga);
+		//alert ("todobody="+Todobody+" toolbar="+toolbar+" folga="+folga);
     }
 </script>
 </body>

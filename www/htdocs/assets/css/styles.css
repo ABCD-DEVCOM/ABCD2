@@ -4,6 +4,7 @@
 ** 2022-12-11 fho4abcd Add moduleButton
 ** 2023-01-16 fho4abcd InstitutionalInfo:removed width. heading-database:improved layout and added attention entry. table.toolbar-dataentry:increased width
 ** 2023-01-19 fho4abcd Removed unknown -webkit-text-size-adjust,-moz-box-shadow. bad !important
+** 2023-01-22 fho4abcd iframe settings in this file + adjust size of table-fdt-three
 */
 /* GENERAL STYLES */
 
@@ -1305,17 +1306,25 @@ iframe.dataentry-header {
 	height: 45px; 
 	width: 100%;
 	border: none;
-
 }
 
-.dataentry-menu {
-		border-bottom: 1px solid var(--abcd-gray-300);
+iframe.dataentry-menu {
+    position:relative;
+    height:77px;
+    width:100%;
+    border:none;
+    border-bottom: 1px solid var(--abcd-gray-300);
+}
+iframe.dataentry-main {
+    position:relative;
+    width:100%;
+    border:none;
 }
 
 
 body.toolbar-dataentry {
 	background: var(--abcd-light);
-	margin: 6px;
+	margin: 0px;
 	color: var(--abcd-steel-blue);
 }
 
@@ -1687,7 +1696,7 @@ td.table-fdt-one {
 
 /* NAME OF FIELD */
 .table-fdt-three {
-	width: 150px;
+	min-width: 150px;
 	font-size: 12px;
 }
 
