@@ -6,6 +6,7 @@
 ** 2023-01-19 fho4abcd Removed unknown -webkit-text-size-adjust,-moz-box-shadow. bad !important
 ** 2023-01-22 fho4abcd iframe settings in this file + adjust size of table-fdt-three
 ** 2023-01-27 fho4abcd split table.toolbar-dataentry, remove commented style entries
+** 2023-01-27 fho4abcd typo, remove invalid options
 */
 /* GENERAL STYLES */
 html {
@@ -149,11 +150,6 @@ A.defaultButton:hover IMG {
 
 A.defaultButton SPAN {
 	cursor: pointer;
-
-}
-
-A.defaultButton STRONG {
-
 }
 
 /* #menuButton classes */
@@ -168,9 +164,7 @@ A.menuButton {
 	user-select: none;
 	-webkit-user-select: none;
 	touch-action: manipulation;
-	vertical-align: bottom;
 	border-radius: 0.3rem;
-
 }
 
 A.menuButton:hover  {
@@ -197,7 +191,6 @@ a.menuButton span {
 
 .helper, .helper a {
 	color: var(--abcd-gray);
-
 }
 
 .helper:before {
@@ -435,7 +428,6 @@ nav.heading-nav ul ul ul li {
 .bt-cat.active {
 	box-shadow: rgba(0, 0, 0, .1) inset 0 2px 4px 0;		
 	background-image: url(../svg/ic_fluent_book_database_24_filled.svg);
-
 }
 
 .bt-loan {
@@ -647,9 +639,8 @@ li a.bt-exit:hover {
 }
 
 .homepage .mainBox .boxContent .sectionButtons {
-    justify-content: center;
     margin: 40px auto;
-    width: 55%;
+    width: 60%;
 }
 
 .homepage .mainBox .boxContent .sectionButtons A.defaultButton {
@@ -686,7 +677,6 @@ li a.bt-exit:hover {
 
 .homepage .mainBox .helpSection .sectionIcon {
 	background: url('../images/icon/mainBox_helpSection.png') no-repeat center;
-
 }	
 
 .homepage .mainBox .boxContent .searchTitles .stInput LABEL {
@@ -1690,7 +1680,6 @@ TD.showSTitle .collectionMode A.selected:hover {
 .login .loginForm .boxContent, .formContent {
 	background-color: var(--abcd-white);
 	border: 1px solid var(--abcd-gray-200);
-	box-sizing: border-box;
 	border-radius: 0.3rem;
 }
 /* #END Login */
@@ -1730,7 +1719,6 @@ TD.showSTitle .collectionMode A.selected:hover {
   color: var(--abcd-white);
   font-weight: bold;
   border: 1px solid var(--abcd-white);
-
 }
 
 .navpage span:hover:not(.current) {
@@ -1762,7 +1750,6 @@ a.button:hover {
   width: 50%;
 }
 
-/
 .button_browse, a.button_browse, .submit {
 	border-radius: 3px;
 	text-decoration: none;
@@ -2023,7 +2010,6 @@ nav ul {
 table {
   border-collapse: separate;
    border-spacing: 3px;
-
 }
 
 th, td {

@@ -8,6 +8,8 @@
 2022-01-19 rogercgui Include css_settings.php
 2022-01-19 fho4abcd Configured language is preset in the language selection
 20220122 rogercgui Default logo is displayed if institution image is absent
+20230127 fho4abcd Removed unused function, login fail can be caused by expiration: improve message content
+                  Removed inline fixed size (clashed often with footer position). Removed unused div sectioninfo
 */
 session_start();
 $_SESSION=array();
@@ -72,16 +74,6 @@ include ("$app_path/lang/lang.php");
 		<!--[if IE 6]>
 			<link rel="stylesheet" rev="stylesheet" href="<?php echo $app_path?>/css/bugfixes_ie6.css" type="text/css" media="screen"/>
 		<![endif]-->
-<style type="text/css">
-	html, body {
-		height: 100vh;
-		margin: 0;
-	}
-	.middle {
-		height: 80vh;
-	}
-</style>
-
 <script src=/<?php echo $app_path?>/dataentry/js/lr_trim.js></script>
 
 <script language=javascript>
@@ -95,9 +87,7 @@ document.onkeypress =
 			return true;
 	}
 
-function UsuarioNoAutorizado(){
-	alert("<?php echo $msgstr["menu_noau"]?>")
-}
+
 function CambiarClave(){
 	document.cambiarPass.login.value=Trim(document.administra.login.value)
 	document.cambiarPass.password.value=Trim(document.administra.password.value)
@@ -154,11 +144,6 @@ include ("$app_path/common/css_settings.php");
 
 		<div class="spacer">&#160;</div>
 	</header>
-	<div class="sectionInfo">
-		<div class="breadcrumb"></div>
-		<div class="actions"></div>
-		<div class="spacer">&#160;</div>
-	</div>
 <form name="administra" onsubmit="javascript:return false" method="post" action="/<?php echo $app_path?>/common/inicio.php">
 <input type="hidden" name="Opcion" value="admin">
 <input type="hidden" name="cipar" value="acces.par">
@@ -169,7 +154,7 @@ include ("$app_path/common/css_settings.php");
 <?php
 if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 		echo "
-			<div class=\"helper alert\">".$msgstr["menu_noau"]."
+			<div class=\"helper alert\">".$msgstr["menu_ex_noau"]."
 			</div>
 		";
 }
