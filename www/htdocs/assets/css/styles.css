@@ -5,10 +5,9 @@
 ** 2023-01-16 fho4abcd InstitutionalInfo:removed width. heading-database:improved layout and added attention entry. table.toolbar-dataentry:increased width
 ** 2023-01-19 fho4abcd Removed unknown -webkit-text-size-adjust,-moz-box-shadow. bad !important
 ** 2023-01-22 fho4abcd iframe settings in this file + adjust size of table-fdt-three
+** 2023-01-27 fho4abcd split table.toolbar-dataentry, remove commented style entries
 */
 /* GENERAL STYLES */
-
-
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -25,15 +24,6 @@ body {
   text-align: var(--abcd-body-text-align);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-/*
-h1, .h1 {
-  font-size: calc(0.375rem + 0.5vw);
-}
-@media (min-width: 1200px) {
-  h1, .h1 {
-    font-size: 0.8rem;
-  }
-}*/
 
 a {
 	color: var(--abcd-steel-blue);
@@ -46,8 +36,6 @@ a img {
 LABEL {
 	cursor: pointer;
 }
-
-
 
 input,
 button,
@@ -64,7 +52,6 @@ button {
 
 }
 
-
 .formContent > * >.formContent {
 	border: none;
 	border-width: 0;
@@ -75,7 +62,6 @@ button {
 .middle.form > * > .middle.form{
 	background: var(--abcd-white);
 }
-
 
 select.textEntry, 
 INPUT.textEntry, 
@@ -103,7 +89,6 @@ input[type=number] {
   box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
 	box-sizing: border-box;
 	margin: 1px 0;
-/*color: var(--abcd-blue);*/
 	font-size: 12px;
 	line-height: 18px;
 }
@@ -135,8 +120,6 @@ SELECT.singleTextEntry {
 	margin: 2px;
 }
 
-
-
 .row {
     --abcd-gutter-x: 1.5rem;
     display: flex;
@@ -153,10 +136,7 @@ SELECT.singleTextEntry {
 }
 
 
-
-
 /* ABCD CLASSIC */
-
 /* #defaultButton classes */
 A.defaultButton {
 	text-decoration: none;
@@ -166,7 +146,6 @@ A.defaultButton {
 A.defaultButton:hover IMG {
 	background-color: #4E617C;
 }
-
 
 A.defaultButton SPAN {
 	cursor: pointer;
@@ -212,15 +191,11 @@ a.menuButton span {
 	color: var(--abcd-steel-blue);
 }
 
-
-
-
 .inputAlert {
 	background: #f3eeb5 url('../images/icon/singleButton_alert.gif') no-repeat center right !important;
 }
 
 .helper, .helper a {
-/*background: var(--abcd-light);*/
 	color: var(--abcd-gray);
 
 }
@@ -240,8 +215,6 @@ a.menuButton span {
 	border-radius: 4px;
 }
 
-
-
 .alert:before {
 	font-family: "Font Awesome 5 Free";
 	content: "\f071";
@@ -249,7 +222,6 @@ a.menuButton span {
 	margin-right: 10px;
 	display: inline-block;
 }
-
 
 .success {
   color: var(--abcd-white);
@@ -266,8 +238,6 @@ a.menuButton span {
 	margin-right: 10px;
 }
 
-
-
 A.singleButton .sb_lb {
 	background: url('../images/singleButton_lb.gif') no-repeat top left;
 }
@@ -277,19 +247,14 @@ A.singleButton .sb_rb {
 }
 
 /* #END #defaultButton classes */
-
 /* #specific classes */
-
 /*#heading classes */
 .heading {
 	display: flex;
 	background-color: var(--abcd-steel-blue);
 	height: 45px;
 	width: 100%;
-
-
 }
-
 
 .institutionalInfo {
 	float: left;
@@ -305,21 +270,6 @@ A.singleButton .sb_rb {
 	height: 32px;
 }
 
-
-/*.institutionalInfo>H1, .institutionalInfo H2 { probably not used
-	letter-spacing: 0.03rem;
-	color: var(--abcd-white);
-	font-weight: normal;
-	margin-left: 50px;
-	height: 40px;
-}
-.institutionalInfo H1 {
-	margin-top: 10px;
-	margin-left: 20%;
-	vertical-align: middle;
-	position: relative;
-}*/
-
 .heading-database {
 	display: inline-block;
 }
@@ -333,7 +283,6 @@ A.singleButton .sb_rb {
 	vertical-align: middle;
     text-align:right;
 }
-
 
 .heading-database form label {
 	display: inline-block;
@@ -369,18 +318,6 @@ select.heading-database option {
 	 background: var(--abcd-white);
 	 color: var(--abcd-steel-blue);
 }
-
-/*nav.heading-nav, {has syntax error
-	position: relative;
-	top: 0;
-	margin-top: 0;
-	display: inline;
-	padding: 0;
-	margin: 0;
-	vertical-align: top;
-	background-color: var(--abcd-steel-blue);
-	float: right;
-}*/
 
 nav.heading-nav ul {
 	float: right;
@@ -420,7 +357,6 @@ nav.heading-nav a img {
 
 nav.heading-nav select {
 	text-transform: uppercase;
-	/*background-color: var(--abcd-steel-blue);*/
 	display: block;	
 	color: var(--abcd-white);
 	height: 43px;
@@ -537,7 +473,6 @@ li a.bt-exit:hover {
 
 
 /* #END #heading classes */
-
 /*#sectionInfo classes */
 
 .breadcrumb {
@@ -606,11 +541,9 @@ li a.bt-exit:hover {
 	text-decoration: underline;
 }
 
-
 /*#END #footer classes */
 
 /*#homepage classes */
-
 
 .homepage .mainBox .boxTop {
 	background: url('../images/mainBox_boxTop_bg.gif') repeat-x top left;
@@ -672,7 +605,6 @@ li a.bt-exit:hover {
 	background: url('../images/mainBoxHighlighted_bbRight.gif') no-repeat bottom left;
 }
 
-
 .homepage .mainBox .boxContent .sectionTitle {
 	display: inline-block;
 	width: 100%;
@@ -696,7 +628,6 @@ li a.bt-exit:hover {
 	vertical-align: middle;
 }
 
-
 .homepage .mainBox .loanSection {
 	background: url('../svg/circ/bg_loan.svg') no-repeat left top;
 	background-size: 150px;
@@ -715,19 +646,19 @@ li a.bt-exit:hover {
 	background-color: var(--abcd-white);
 }
 
-	.homepage .mainBox .boxContent .sectionButtons {
-		justify-content: center;
-		margin: 40px auto;
-		width: 55%;
-	}
+.homepage .mainBox .boxContent .sectionButtons {
+    justify-content: center;
+    margin: 40px auto;
+    width: 55%;
+}
 
-	.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
-		margin-top: 3px;
-	}
-	.homepage .mainBox .boxContent {
-		min-height: 101px;
-		padding: 30px 10px;
-	}
+.homepage .mainBox .boxContent .sectionButtons A.defaultButton {
+    margin-top: 3px;
+}
+.homepage .mainBox .boxContent {
+    min-height: 101px;
+    padding: 30px 10px;
+}
 
 .homepage .mainBox .titleSection .sectionIcon {
 	background: url('../images/database.png') no-repeat center;
@@ -753,12 +684,10 @@ li a.bt-exit:hover {
 	background: url('../images/icon/mainBox_maskSection.png') no-repeat center;
 }
 
-
 .homepage .mainBox .helpSection .sectionIcon {
 	background: url('../images/icon/mainBox_helpSection.png') no-repeat center;
 
 }	
-
 
 .homepage .mainBox .boxContent .searchTitles .stInput LABEL {
 	color: #4c4c4c;
@@ -773,14 +702,12 @@ li a.bt-exit:hover {
 	background-color: var(--abcd-white);
 }
 
-
 /*#END #homepage classes */
 
 /* #buttons background classes */
 A.listButton IMG {
 	background: url('../images/icon/defaultButton_list.png') no-repeat center;
 }
-
 
 A.newButton IMG {
 	background: url('../images/icon/ascii.png') no-repeat center;
@@ -790,9 +717,7 @@ A.importButton IMG {
 	background: url('../images/icon/defaultButton_import.png') no-repeat center;
 }
 
-
 /* CATALOG */
-
 A.DataEntry {
 	background: url('../svg/main/main_form_new_32_regular.svg') no-repeat left;
 	background-size: 44px;
@@ -882,12 +807,7 @@ A.CatexploreButton {
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
-
-
-
 /* END CATALOG */
-
-
 
 
 /* CIRCULATION  */
@@ -1032,14 +952,10 @@ A.loanpolicyButton {
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
-
 /* END CIRCULATION  */
 
 /* CONFIG CIRCULATION  */
-
-
 /* END CONFIG CIRCULATION  */
-
 
 /* ACQUISITIONS */
 A.resumeButton {
@@ -1132,7 +1048,6 @@ A.ACQresetButton {
 	background-position: 10px;
 	background-color: var(--abcd-white);
 }
-
 /* END ACQUISITIONS */
 
 A.pdfButton IMG {
@@ -1169,11 +1084,6 @@ A.purchaseorderButton IMG{
  	background: url('../images/icon/purchaseorder.png') no-repeat center;
 }
 
-
-
-
-
-
 A.receiptsButton IMG{
  	background: url('../images/icon/receipts.png') no-repeat center;
 }
@@ -1181,8 +1091,6 @@ A.homeButton IMG{
  	background: url('../../images/icon/home.png') no-repeat center;
 }
 /*#END #buttons background classes */
-
-
 
 .statTable {
 	border-collapse: collapse;
@@ -1199,7 +1107,6 @@ A.homeButton IMG{
 }
 
 /* Table Browser */
-
 .listTable {
 	border-collapse: collapse;
 	border-spacing: 0px;
@@ -1263,15 +1170,7 @@ A.homeButton IMG{
 /*#END #listTable classes */
 
 /* TABLE IN DIBUJARHOJADEENTRADA */
-
 /*TOOLBAR*/
-
-/*
-.ABCD_menubases iframe:hover {
-	position: relative;
-	background: red;
-}
-*/
 
 div.ABCD_menu {
 	z-index: 99999999;
@@ -1298,8 +1197,6 @@ div.ABCD_menu:hover{
     pointer-events: initial; 
 }
 
-
-
 iframe.dataentry-header {
 	z-index: 999999999;
 	position: relative; 
@@ -1320,7 +1217,6 @@ iframe.dataentry-main {
     width:100%;
     border:none;
 }
-
 
 body.toolbar-dataentry {
 	background: var(--abcd-light);
@@ -1364,7 +1260,11 @@ div.toolbar-dataentry  {
 	vertical-align: middle;
 }
 
-table.toolbar-dataentry select, table.toolbar-dataentry input {
+table.toolbar-dataentry input {
+	font-size: 12px;
+	width: 100px;
+}
+table.toolbar-dataentry select {
 	font-size: 12px;
 	width: 150px;
 }
@@ -1398,7 +1298,6 @@ table.toolbar-dataentry a {
 	cursor:pointer;
 }
 
-
 .buttonTextDisabled {
 	color: gray;
 }
@@ -1410,8 +1309,6 @@ table.toolbar-dataentry a {
 	padding: 4px 0;
 	text-align-last: center;
 }
-
-
 
 .defaultButtonOver, .toolbar-dataentry .bt-tool:hover  {
 	border-radius: 3px;
@@ -1438,50 +1335,8 @@ table.toolbar-dataentry a {
 }
 
 .icongray {
-/*	border : solid 1px var(--abcd-steel-blue);*/
 	cursor : default;
 }
-/*
-.btn-toolbar-blue i {
-	box-sizing: border-box;
-	padding: 3px 4px;
-	text-decoration: none;
-	background-color: var(--abcd-blue);
-	border: 1px solid var(--abcd-blue);
-	color: var(--abcd-white);
-	cursor: pointer;
-	font-size: 15px;
-	vertical-align: middle;
-}
-*/
-
-/*
-.toolbarDivider {
-	background-color : var(--abcd-white);
-	border-right : solid var(--abcd-white)FFF 1px;
-	height : 100%;
-	margin-bottom : 2px;
-	margin-top : 1px;
-	overflow : hidden;
-	vertical-align : middle;
-}
-
-.toolbarDividerY {
-	background-color : var(--abcd-steel-blue);
-	border-bottom : none;
-	border-top : none;
-	height : 2px;
-	overflow : hidden;
-	width : 100%;
-}
-
-
-.toolbarName{
-	letter-spacing : 3px;
-	padding-left : 10px;
-	padding-right : 10px;
-}
-*/
 
 table.toolbarTable, table.toolbar-edit-dataentry {
 	border-spacing: 0;
@@ -1494,12 +1349,9 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	padding : 0px;
 	table-layout : fixed;
 }
-
-
 /*END TOOLBAR*/
 
 /* SECOND TOOLBAR */
-
 #myDiv{
 	margin-right: 5px;
 	padding: 0 10px;
@@ -1592,8 +1444,6 @@ table.toolbarTable, table.toolbar-edit-dataentry {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
-
 /* END SECOND TOOLBAR */
 
 .table-fdt {
@@ -1629,7 +1479,6 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 	padding: 0.3rem;
 
 }
-
 
 .table-fdt > tbody > tr > td > input[type=text], 
 .table-fdt > tbody > tr > td > input[type=password], 
@@ -1688,7 +1537,6 @@ td.table-fdt-one {
 	min-width: 50px;
 }
 
-
 /* BUTTONS */
 .table-fdt-two {
 	min-width: 130px;
@@ -1708,8 +1556,6 @@ td.table-fdt-one {
   overflow-y: hidden;
 }
 
-
-
 .badge {
   display: inline-block;
   padding: 0.35em 0.65em;
@@ -1722,7 +1568,6 @@ td.table-fdt-one {
   vertical-align: baseline;
   border-radius: 0.25rem;
 }
-
 
 #wrapper {
 	text-align:left;
@@ -1742,20 +1587,13 @@ td.table-fdt-one {
 	border:1px solid #ccc;
 	padding:2px;
 }
-
-
 /* END TABLE IN DIBUJARHOJADEENTRADA */
 
-
-
-
 /*#form classes */
-
 .formHead {
 	background: #d8dade;
 }
 /* ABCD ADDED*/
-
 
 /*   */
 .formHead H4 {
@@ -1855,12 +1693,9 @@ TD.showSTitle .collectionMode A.selected:hover {
 	box-sizing: border-box;
 	border-radius: 0.3rem;
 }
-
 /* #END Login */
 
-
 /*NAVPAGE OF BROWSER.PHP*/
-
 .navpage {
 	float: right;
 	margin-right: 50px;
@@ -1902,11 +1737,9 @@ TD.showSTitle .collectionMode A.selected:hover {
     background-color: #ddd;
     border-radius: 3px;
 }
-
 /*END NAVPAGE OF BROWSER.PHP*/
 
 /* BUTTONS 2021  */
-
 a.button {
   background-color: #04AA6D;
   color: white;
@@ -1929,23 +1762,7 @@ a.button:hover {
   width: 50%;
 }
 
-/*
-.button_browse, a.button_browse, .submit, input[type=submit], input[type=button], input[type=reset]{
-	border-radius: 3px;
-	text-decoration: none;
-	box-sizing: border-box;
-	color: var(--abcd-white);
-	outline: 0;
-	padding: 5px 13px;
-	transform: translateY(0);
-	transition: transform 150ms, box-shadow 150ms;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	margin: 3px;
-}
-*/
-
+/
 .button_browse, a.button_browse, .submit {
 	border-radius: 3px;
 	text-decoration: none;
@@ -1961,22 +1778,10 @@ a.button:hover {
 	margin: 3px;
 }
 
-
 .button_browse:hover {
 	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
 	transform: translateY(-2px);
 }
-
-/*
-.button_browse.show, .submit, input[type=submit], input[type=button] {
-	background: var(--abcd-blue);
-	color: var(--abcd-light);
-	border-color: var(--abcd-blue);
-	text-decoration: none;
-
-}
-*/
-
 
 .button_browse.show {
 	color: var(--abcd-white);
@@ -2002,40 +1807,6 @@ a.button:hover {
 	border: 1px solid #000;
 }
 
-
-/*
-.bt, 
-input[type=button].bt,
-input[type=submit].bt {
-	margin: 3px;
-	width: auto;
-	padding: 5px 13px;
-	border-radius: 3px;
-	text-decoration: none;
-	cursor: pointer;
-	outline: 0;
-	text-align: center;	
-	outline: 0;
-	transform: translateY(0);
-	transition: transform 150ms, box-shadow 150ms;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;	
-}
-
-.bt:hover, .bt-lg:hover {
-	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
-	transform: translateY(-2px);
-}
-
-.bt-lg {
-	border-radius: 3px;
-	padding: 10px 25px;
-}
-*/
-
-
-
 /* Change styles for cancel button and delete button on extra small screens */
 @media screen and (max-width: 300px) {
   .btn_ok {
@@ -2060,45 +1831,7 @@ A.singleButton, .submitAdvanced {
 A.singleButton {
 	padding: 10px 15px;
 }
-/*
 
-a[class^="bt-"] {	
-	transform: translateY(0);
-	transition: transform 150ms, box-shadow 150ms;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	text-decoration: none;
-}
-
-A.singleButton:hover, .submitAdvanced:hover, a[class^="bt-"]:hover {
-	box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
-	transform: translateY(-2px);
-}
-
-.bt-gray {
-	background-color: var(--abcd-gray);
-	border: 1px solid var(--abcd-gray);
-	color: var(--abcd-white);
-}
-
-.bt-orange {
-	background-color: var(--abcd-orange);
-	border: 1px solid var(--abcd-orange);
-	color: var(--abcd-white);
-}
-
-
-.bt-disabled {
-	text-decoration: none;
-	background-color: var(--abcd-white);
-	border: 1px solid var(--abcd-light);
-	color: var(--abcd-gray);
-	cursor: default;
-	outline: 0;
-	padding: 10px 25px;
-}
-*/
 .group-fields {
 	background-color: var(--abcd-white);
 	border: 1px solid var(--abcd-light);
@@ -2108,7 +1841,6 @@ A.singleButton:hover, .submitAdvanced:hover, a[class^="bt-"]:hover {
 }
 
 /* STYLE OF /dbadmin/menu_mantenimiento.php */
-
 div.log_base {
 	width: 100%;
 	color: var(--abcd-gray);
@@ -2167,8 +1899,6 @@ nav ul {
 }
 .nav li {
   position: relative;
-
-
 }
 .nav > li {
   float: left;
@@ -2254,7 +1984,6 @@ nav ul {
   right: 10px;
 }
 
-
 /* Add padding and center-align text to the container */
 .container {
   padding: 45px 16px;
@@ -2283,8 +2012,6 @@ nav ul {
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-
-
 /* Clear floats */
 .clearfix::after {
   content: "";
@@ -2293,11 +2020,9 @@ nav ul {
 }
 
 /* Tables  */
-
 table {
   border-collapse: separate;
    border-spacing: 3px;
-/*  width: auto;*/
 
 }
 
