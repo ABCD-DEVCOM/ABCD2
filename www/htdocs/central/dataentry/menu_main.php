@@ -8,6 +8,7 @@
 2021-12-08 fho4abcd Quick search layout + some translations + translation/modify edit pft button+removed some dividers.Code layout more readable
 2023-01-19 fho4abcd Menu "default" to buttons + removed unused size parameters
 2023-01-20 fho4abcd Use better buttons for "default".
+2023-01-27 fho4abcd Layout improvements+more titles. Moved code for field dropdown to inline
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -26,35 +27,6 @@ foreach ($fst_file as $value){
     if (trim($value)!=""){
         $fst[]=trim($value);
     }
-}
-// Create the label + dropdown + icon for the quick serach
-$pal="";
-if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
-    $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
-
-    $pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" >";
-    foreach ($fpb as $value){
-        if (trim($value)!=""){
-            $y=explode('|',$value);
-            $y[2]=trim($y[2]);
-            foreach ($fst as $linea){
-                if (stripos($linea,$y[2])>0){
-                    $y[2]=$y[2].'|';
-                    $linea=str_replace("  "," ",$linea);
-                    $it=explode(" ",$linea);
-                    if ($it[1]==8)
-                        $y[2].='W';
-                    break;
-                }
-
-            }
-            $pal.="<option value=".trim($y[2]).">".trim($y[0]);
-        }
-
-    }
-    $pal.="</select>";
-    $pal.="<a class='btn-toolbar-blue' href=javascript:Diccionario() title='".$msgstr["m_quicksrc"]."'><i class='fab fa-searchengin'></i></a>";
-    unset($fpb);
 }
 ?>
 
@@ -206,17 +178,52 @@ function GenerarWks(){
         <td class="ph-10">
         <!-- goto record -->
         <label><?php echo $msgstr["m_ir"]?></label>
-        <input type=text  name=ir_a size=15 value='' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
+        <input type=text  name=ir_a size=15 value='' title='Enter record number' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
         <!-- quick search -->
         &nbsp; &nbsp;
-        <label><?php echo $msgstr["buscar"]?></label><?php echo " ".$pal;?>
-        <input style="width:30%;" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''>
+        <label><?php echo $msgstr["buscar"]?></label><?php
+        // Create the label + dropdown + icon for the quick serach
+        if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
+            $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
+            ?>
+            <select name=blibre onchange="document.forma1.busqueda_palabras.value=''" title='<?php echo $msgstr["selcampob"];?>'>
+            <?php
+            foreach ($fpb as $value){
+                if (trim($value)!=""){
+                    $y=explode('|',$value);
+                    $y[2]=trim($y[2]);
+                    foreach ($fst as $linea){
+                        if (stripos($linea,$y[2])>0){
+                            $y[2]=$y[2].'|';
+                            $linea=str_replace("  "," ",$linea);
+                            $it=explode(" ",$linea);
+                            if ($it[1]==8)
+                                $y[2].='W';
+                            break;
+                        }
+
+                    }
+                    ?>
+                    <option value="<?php echo trim($y[2])?>" ><?php echo trim($y[0]);?></option>
+                    <?php
+                }
+            }
+            unset($fpb);
+            ?>
+            </select>
+            <a class='btn-toolbar-blue' href=javascript:Diccionario()>
+                <i class='fab fa-searchengin' title="<?php echo $msgstr["m_quicksrcwith"]?>"></i>
+            </a>
+            <?php
+        }
+        ?>
+        <input style="width:25%;" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''
+            title="<?php echo $msgstr["m_enterterms"];?>">
 
         <div class="GenerarWks">	
-            <label><?php echo $msgstr["displaypft"]?>: </label>
+            <label><?php echo $msgstr["displaypft"]?> </label>
             <select name=formato onChange="Javascript:GenerarDespliegue()">
             </select>
-
             <?php
             if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
                 isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
@@ -227,15 +234,14 @@ function GenerarWks(){
                     <i class="fas fa-edit" alt="edit display format" title="<?php echo $msgstr["m_editdispform"];?>"></i>
                 </a>
             <?php } ?>
-
         </div>
         </td>
     </tr>
-    <tr><!-- row and cell with toolbar object -->
+    <tr><!-- row and cell with toolbar object + worksheet select-->
         <td class="ph-10">
             <div id="toolbarBox" style="position:relative"></div>
             <div class="GenerarWks">
-                <label><?php echo $msgstr["fmt"]?>: </label>
+                <label><?php echo $msgstr["fmt"]?> </label>
                 <select name="wks" onChange="Javascript:GenerarWks()"></select>
             </div>
         </td>

@@ -188,7 +188,7 @@ entervalcomb=Please enter a valid combination
 error=Error
 error_create_folder=Error creating folder
 error_gizmodb="htmlgizmo.*=..." Does not specify an existing htmlgizmo database
-error_gizmofp="htmlgizmo.*=..." Cannot be specified with %database_path%
+error_gizmofp="htmlgizmo.*=..." Cannot be specified with %path_database%
 error_gizmospec="htmlgizmo.*=..." Must be specified in
 error_gizmonoiso=Error: No .iso files found in
 every=Every

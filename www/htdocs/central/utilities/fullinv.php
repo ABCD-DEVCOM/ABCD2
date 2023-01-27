@@ -26,6 +26,7 @@
 20220117 fho4abcd Add blue message if /m is used
 20220620 fho4abcd Accept charset=utf-8
 20220711 fho4abcd Use $actparfolder as location for .par files
+20220127 fho4abcd Improve gizmo help text
 */
 /**
  * @desc:      Create database index
@@ -320,7 +321,8 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     */
     $htmlgizmopar="";
     if ( $gizmorequired==1) {
-        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;".$msgstr["examplefor"].$actparfolder.$base.".par &rArr;&nbsp;htmlgizmo.*=";
+        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;".$msgstr["examplefor"].": ";
+        $htmlgizmoexample.=$actparfolder.$base.".par &rArr;&nbsp;htmlgizmo.*=";
         $htmlgizmoexample.=$db_path.$base."/data/htmlgizmo.*</span>";
         if (isset($def_cipar["htmlgizmo.*"])) {
             // The .par exists and there is a gizmo entry
