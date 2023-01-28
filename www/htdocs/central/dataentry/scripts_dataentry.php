@@ -215,7 +215,7 @@ Val_text=""
 		}
 		<?php echo "dateformat=\"$config_date_format\"\n" ?>
 
-		if (dateformat=="DD/MM/YY"){
+		if (dateformat=="DD/MM/YY" || dateformat=="d/m/Y") {
 			iso=d[2]+d[1]+d[0]
 		}else{
 			iso=d[2]+d[0]+d[1]
