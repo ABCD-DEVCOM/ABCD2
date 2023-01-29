@@ -9,6 +9,7 @@
 2023-01-19 fho4abcd Menu "default" to buttons + removed unused size parameters
 2023-01-20 fho4abcd Use better buttons for "default".
 2023-01-27 fho4abcd Layout improvements+more titles. Moved code for field dropdown to inline
+2023-01-29 fho4abcd quick fix to make browse by menu work again
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -258,7 +259,7 @@ function GenerarWks(){
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_left_24_regular.svg',24,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_right_24_regular.svg',24,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_arrow_next_24_regular.svg',24,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
-    toolbar.addItem(new dhtmlXSelectButtonObject('<?php echo $msgstr["browse"]?>',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',120,100,''))
+    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',120,100,''))
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_clipboard_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
