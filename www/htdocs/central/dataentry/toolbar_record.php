@@ -7,6 +7,7 @@
 2022-02-07 fho4abcd buttons for default value option+ show buttons if applicable only
 2022-02-14 fh04abcd small html improvements
 2023-01-16 fho4abcd hover text for checkbox
+2023-02-03 fho4abcd Mark checkbox if in list of checked records, Remove wrong script
 */
 
 //echo $arrHttp["ventana"];
@@ -84,9 +85,16 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
 				}
                 ?>
                 <label class="check_sec"> 
-                  <input type="checkbox" name="sel_mfn" id="sel_mfn" onclick="top.SeleccionarRegistro(this)" value="<?php echo $arrHttp["Mfn"];?>">
+                  <input type="checkbox" name="sel_mfn" id="sel_mfn" onclick="top.SeleccionarRegistro(this)" value="<?php echo $arrHttp["Mfn"];?>" >
                   <span class="checkmark" title='<?php echo $msgstr["selected_records_add"]?>'></span>
                 </label>
+                <script>
+                var selecttop=top.main.document.getElementById("sel_mfn");
+                var checkvalue=top.SeleccionarRegistroCheck(<?php echo $arrHttp["Mfn"];?>);
+                if (checkvalue==true){
+                    selecttop.setAttribute("checked",true);
+                }
+                </script>
                 <?php
                 if (isset($_SESSION["permiso"]["CENTRAL_EDREC"]) or isset($_SESSION["permiso"][$db."_CENTRAL_EDREC"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])) {
 					echo " &nbsp;<a href=\"javascript:top.Menu('editar')\" title=\"".$msgstr["m_editar"]."\"><img src='../../assets/svg/catalog/ic_fluent_document_edit_24_regular.svg' alt=\"".$msgstr["m_editar"]."\" style=\"border:0;\"></a>  &nbsp;\n";
@@ -179,22 +187,6 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
  		}
     }
 
-//    echo $arrHttp["Opcion"];
-?>
-<script>
-	if (top.browseby=="search")
-		select_Mfn='_'+top.Mfn_Search+'_'
-	else
-		select_Mfn='_'+top.mfn+'_'
-	if (top.RegistrosSeleccionados.indexOf(select_Mfn)!=-1){
-		Ctrl=top.main.document.getElementById("sel_mfn")
-		if (Ctrl.checked)
-			Ctrl.checked=false
-		else
-			Ctrl.checked=true
-	}
-</script>
-<?php
 // here the including script continues 
 LAST:
 

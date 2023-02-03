@@ -6,6 +6,7 @@
 20220207 fh04abcd Improve html & backbutton 
 20220214 fh04abcd Add form selectarchivo & javascript function SelectArchivo
 20230119 fho4abcd Removed commented style section
+20230203 fho4abcd Removed unused function SeleccionarRegistro
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -1009,16 +1010,6 @@ function AsignarTabla(){
     	newOpt.value = op[0];
     	if (op[0]==ValorOpcion)
     		newOpt.selected=true
-	}
-}
-
-function SeleccionarRegistro(Mfn){
-	if (document.forma1.chkmfn.checked){
-		if (top.RegistrosSeleccionados.indexOf('|'+Mfn+'-')==-1){
-			top.RegistrosSeleccionados+='|'+Mfn+"-"
-		}
-	}else{
-		top.RegistrosSeleccionados=top.RegistrosSeleccionados.replace('|'+Mfn+'-','');
 	}
 }
 
