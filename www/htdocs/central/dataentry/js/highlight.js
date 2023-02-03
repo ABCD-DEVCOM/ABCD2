@@ -1,6 +1,7 @@
 /*
 20220304 fho4abcd Test on undefined value in highlightSearchTerms
 20220304 fho4abcd Correct wrong replacements,more replacements
+20230202 fho4abcd Return without processing if search string= ""
 */
 function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag) 
 {
@@ -74,6 +75,7 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
   // the entire phrase that was entered; otherwise, we will split the
   // search string so that each word is searched for and highlighted
   // individually
+  if (searchText=="") return true;
   if (treatAsPhrase) {
     searchArray = [searchText];
   } else {

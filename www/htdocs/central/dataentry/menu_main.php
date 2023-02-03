@@ -10,6 +10,7 @@
 2023-01-20 fho4abcd Use better buttons for "default".
 2023-01-27 fho4abcd Layout improvements+more titles. Moved code for field dropdown to inline
 2023-01-29 fho4abcd quick fix to make browse by menu work again
+2023-02-03 fho4abcd Improve browse by, add code for selected records
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -259,7 +260,12 @@ function GenerarWks(){
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_left_24_regular.svg',24,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_right_24_regular.svg',24,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_arrow_next_24_regular.svg',24,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
-    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',120,100,''))
+    selectobj=new dhtmlXSelectButtonObject('browseby',
+        'mfn,search,selected_records,undo_selected',
+        'Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>',
+        'browse',120,100,'<?php echo $msgstr["browse"]?>')
+        toolbar.addItem(selectobj)
+    selectobj.setSelected('mfn')
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_clipboard_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
@@ -356,21 +362,21 @@ function GenerarWks(){
 
 	function onButtonClick(itemId,itemValue){
 		switch (itemId){
-			<?php echo $select;?>
-			case "select":
+			case "browseby":
 				switch (itemValue){
 					case "mfn":
 						top.browseby="mfn"
 						top.mfn=top.Mfn_Search -1
-						top.maxmfn=999999999
 						if (top.mfn<=0) top.mfn=1
 						top.Menu("proximo")
 						break
 					case "search":
 						if (top.Expresion==""){
 							alert("<?php echo $msgstr["faltaexpr"]?>")
-							var item=top.menu.toolbar.getItem('select');
-    						item.selElement.options[0].selected =true
+							var item=top.menu.toolbar.getItem('browseby');
+							item.selElement.options[0].selected =true
+							top.browseby="mfn"
+							top.Menu("proximo")
 							return
 						}
 						top.browseby="search"
@@ -381,8 +387,10 @@ function GenerarWks(){
 					case "selected_records":
 						if (top.RegistrosSeleccionados==""){
 							alert("<?php echo $msgstr["no_sel_records"]?>")
-							var item=top.menu.toolbar.getItem('select');
-    						item.selElement.options[0].selected =true
+							var item=top.menu.toolbar.getItem('browseby');
+							item.selElement.options[0].selected =true
+							top.browseby="mfn"
+							top.Menu("proximo")
 							return
 						}
 						top.browseby="selected_records"
@@ -391,11 +399,16 @@ function GenerarWks(){
 						top.Menu("proximo")
 						break
 					case "undo_selected":
-						top.RegistrosSeleccionados=""
-						alert("Ya no hay registros seleccionados")
+						if(top.RegistrosSeleccionados=="") {
+							alert("<?php echo $msgstr["s_no_mfn"]." ".$msgstr["bmfn"];?>");
+						} else {
+							top.RegistrosSeleccionados=""
+							alert("<?php echo $msgstr["s_mfn_cleared"]." ".$msgstr["bmfn"];?>");
+						}
+						var item=top.menu.toolbar.getItem('browseby');
+						item.selElement.options[0].selected =true
 						top.browseby="mfn"
-
-						top.Listar_pos=-1
+						top.Menu("proximo")
 				}
 				break
 			case "editdv":

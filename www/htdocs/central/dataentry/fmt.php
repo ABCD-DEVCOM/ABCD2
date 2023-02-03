@@ -12,6 +12,7 @@
                   check existence of indexvalue in creation of wks values in case "reintentar"
 20230119 fho4abcd Remove scripts in saved display+improve html for saved display
 20230120 fh04abcd Improved html+remove edit scripts if display is not in edit mode+defaults for $tl and $nr
+20230130 fho4abcd Improve setting of browseby menu. Code for showing record value improved and extended for selected records
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -306,10 +307,10 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	}
 
 	echo "<script>
-	var item=top.menu.toolbar.getItem('select');
-    item.selElement.options[2].selected =true \n";
+	var item=top.menu.toolbar.getItem('browseby');
+    item.selElement.options[1].selected =true \n";
     if (!isset($arrHttp["cambiolang"]))  // Si se dibuja el formulario luego de un cambio de lenguaje, no se actualiza la casilla ir_a porque da un error en javascript
-    	echo "top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.Max_Search.toString()\n";
+    	echo "top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.Max_Search.toString()";
     echo "</script>\n";
 	if ($arrHttp["Formato"]!="ALL"){
 		return "no";
@@ -389,27 +390,44 @@ function ColocarMfn(){
 global $arrHttp;
     $arrHttp["Mfn"]=str_replace("<","",$arrHttp["Mfn"]); //Ojo: Averiguar porque se trae el <
 	if (!isset($arrHttp["ventana"])){
-		echo "<script>
+        ?> <script>
+        var currentMfn=<?php echo $arrHttp["Mfn"];?>;
+        var Listar_pos=0;
 		if (top.window.frames.length>0){
-		\n";
-
-
-		echo "if (top.browseby==\"search\"){
-				top.mfn=".$arrHttp["Mfn"]."\n
-				top.Mfn_Search=".$arrHttp["Mfn"]."\n";
-			if (!isset($arrHttp["cambiolang"])) echo "top.menu.document.forma1.ir_a.value=top.Search_pos.toString()+'/'+top.Max_Search.toString()\n";
-		echo "	}else{ ";
-				if ($arrHttp["Mfn"]!="New"){
-
-					if (isset($arrHttp["Mfn"])) echo "top.mfn=".$arrHttp["Mfn"]."\n";
-					if (isset($arrHttp["Maxmfn"])) echo "top.maxmfn=".$arrHttp["Maxmfn"]."\n";
+            if (top.browseby=="search"){
+				top.mfn=currentMfn;
+				top.Mfn_Search=currentMfn;
+                <?php if (!isset($arrHttp["cambiolang"])) { ?>
+                    top.menu.document.forma1.ir_a.value=top.Search_pos.toString()+'/'+top.Max_Search.toString();
+                <?php } ?>
+            }else if (top.browseby=="selected_records"){
+  					RegSel=top.RegistrosSeleccionados.replace(/__/g,"_")
+  					if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
+  					SelLen=RegSel.length
+  					if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
+  					ss=RegSel.split("_")
+                    sslength=ss.length
+                    for (let i=0; i<sslength; i++) {
+                        if (ss[i]==currentMfn){
+                            Listar_pos=i+1;
+                            break;
+                        }
+                    } 
+                <?php if (!isset($arrHttp["cambiolang"])) { ?>
+                    top.menu.document.forma1.ir_a.value=Listar_pos.toString()+'/'+ss.length;
+                <?php } ?>
+            }else{
+				if (currentMfn.toString()!="New"){
+					top.mfn=currentMfn;
+					<?php if (isset($arrHttp["Maxmfn"])) { ?>top.maxmfn=<?php echo $arrHttp["Maxmfn"]?>;<?php } ?>
             	}
-					if (!isset($arrHttp["cambiolang"])) echo "top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.maxmfn.toString()\n";
-        	echo "}
-        	}\n";
-			echo "</script>\n
-
-		";
+				<?php if (!isset($arrHttp["cambiolang"])) { ?>
+                    top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.maxmfn.toString();
+                <?php } ?>
+        	}
+        }
+        </script>
+        <?php
 	}
 }
 
@@ -697,7 +715,6 @@ $OpcionDeEntrada=$arrHttp["Opcion"];
 if (!isset($arrHttp["Formato"])) $arrHttp["Formato"]="";
 if ($arrHttp["Opcion"]=="ver" and $arrHttp["Formato"]=="") $arrHttp["Opcion"]="leer";
 $recdel="";
-$reintentar="";
 // debug echo "<br>switch option=".$arrHttp["Opcion"]."<br>";
 switch ($arrHttp["Opcion"]) {
 	case "reintentar":           // IF A VALIDATION ERROR OCCURS THE RECORD IS REDISPLAYED
@@ -864,17 +881,9 @@ switch ($arrHttp["Opcion"]) {
 		$arrHttp["Opcion"]=="ninguna";
         echo "	<div class=\"middle form\">
 					<div class=\"formContent\">\n";
-		//echo "<br><input type=checkbox name=chkmfn value=".$arrHttp["Mfn"]." onclick=javascript:SeleccionarRegistro(".$arrHttp["Mfn"].")> ".$msgstr["seleccionar"];
 		echo "<dd><table><tr><td>";
 		echo $salida;
 		echo "</td></table></dd>" ;
-		echo "<script>
-		Mfn_sel=".$arrHttp["Mfn"]."
-		if (top.RegistrosSeleccionados.indexOf('|'+Mfn_sel+'-')!=-1){
-			//document.forma1.chkmfn.checked=true    //ACTIVAR CUANDO SE HAGA LA SELECCION DE REGISTROS
-		}
-		</script>
-		" ;
 //SE AVERIGUA SE SE VA A LEER LA INFORMACIÓN DE OTRA BASE DE DATOS
 		if (isset($record_deleted) and $record_deleted=="Y"){
 			echo "<a href=javascript:Undelete(".$arrHttp["Mfn"].")>undelete</a>";
