@@ -6,6 +6,7 @@
 20211111 fho4abcd set locale (required by basename)
 20211215 fho4abcd Backbutton by included file
 20211230 fho4abcd new names standard subfolders
+20230207 fho4abcd Dropdown section list improved: do not show type folder and set autocomplete to off to prevent (old,wrong)prediction
 */
 /*
 ** Upload a file from the users environment into the digital document area of ABCD
@@ -118,14 +119,14 @@ if ($upldoc_cnfcnt<=0) {
     // Sections are subfolders of the collection, recursive and without the standard foldernames
     include "../utilities/inc_list-folder.php";
     $fileList=array();
-    $retval = list_folder("folders", $fullcolpath, $fileList);
+    $retval = list_folder("folders", $coldocfull, $fileList);
     if ($retval!=0) die;
     // Construct the html datalist, used as dropdown for the input of a section
     echo "<datalist id='sections'>";
     for ($i=0; $i<count($fileList);$i++){
         $section=$fileList[$i];
         // strip leading path + slash, so we have only the sub(/sub..) folder name
-        $section=substr($section,strlen($fullcolpath)+1);
+        $section=substr($section,strlen($coldocfull)+1);
         echo "<option>".$section."</option>";
     }
     echo "</datalist>";
@@ -142,7 +143,7 @@ if ($upldoc_cnfcnt<=0) {
         </tr>
         <tr>
             <td><?php echo $msgstr["dd_section"];?></td>
-            <td><input name='section' type="text" list="sections" style="background-color:white" title='<?php echo $msgstr["dd_sectionhlp"]?>'><td>
+            <td><input name='section' type="text" list="sections" autocomplete=off style="background-color:white" title='<?php echo $msgstr["dd_sectionhlp"]?>'><td>
         </tr>
          <tr>
             <td><?php echo $msgstr["dd_overwrite"];?></td>
