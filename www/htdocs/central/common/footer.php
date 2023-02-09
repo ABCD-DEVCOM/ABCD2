@@ -58,7 +58,7 @@ $def = parse_ini_file($db_path."abcd.def");
             $text2 = "TEXT2";
         }
 ?>
-        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2022-12-10</small></span>
+        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2023-02-09</small></span>
     </div>
         <div class="distributorLogo">
            <a  href="<?php 
