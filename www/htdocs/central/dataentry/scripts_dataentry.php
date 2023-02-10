@@ -7,6 +7,7 @@
 20220214 fh04abcd Add form selectarchivo & javascript function SelectArchivo
 20230119 fho4abcd Removed commented style section
 20230203 fho4abcd Removed unused function SeleccionarRegistro
+20230210 fho4abcd Improve text in breadcrumb
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -1123,9 +1124,9 @@ if (isset($arrHttp["encabezado"])){
 				<div class="breadcrumb">
 				<?php
                     if ($arrHttp["Mfn"]=="New"){
-                        echo $msgstr["newoper"];
+                        echo $msgstr["newrecindb"]." ".$arrHttp["base"];
                     } else {
-                        echo $msgstr["updateop"];
+                        echo $msgstr["updaterecindb"]." ".$arrHttp["base"];
                     }
                 ?>
 				</div>

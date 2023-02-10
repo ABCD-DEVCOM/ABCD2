@@ -1,5 +1,6 @@
-'<strong>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
+'<b>&nbsp; Mfn: ',f(mfn,1,0),'</b>'/
 '<table   class=td2 border=0>'/
+'	<tr>'/
 '	<td valign=top>Nom de l`utilisateur</td>'/
 '	<td>'v10'</td>'/
 '	<tr>'/

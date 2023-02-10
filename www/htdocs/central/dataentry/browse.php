@@ -2,6 +2,7 @@
 /*
 20220715 fho4abcd Use $actparfolder as location for .par files + show message and errors while deleting records
 20220929 fho4abcd Remove encabezado in return (is sometimes undefined)
+20230210 fho4abcd Improve pop-up for new record icon
 */
 error_reporting(E_ALL);
 session_start();
@@ -495,7 +496,7 @@ if (!isset($arrHttp["return"])){
     </div><!--.actions-->
     <div class="toolbar-dataentry" >
     <a href="javascript:Crear()" class="bt-tool" title="<?php echo $msgstr["crear"]?>">
-        <img src="../../assets/svg/browse/ic_fluent_database_plus_24_regular.svg" alt="" title="" />
+        <img src="../../assets/svg/browse/ic_fluent_database_plus_24_regular.svg" />
     </a> 
     <?php if ($ABCD_base=='acces') { ?>
     <a class="bt-tool" href="../dbadmin/profile_edit.php?encabezado=s" title="<?php echo $msgstr["profiles"];?>">

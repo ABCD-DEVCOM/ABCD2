@@ -8,6 +8,7 @@
 2022-02-14 fh04abcd small html improvements
 2023-01-16 fho4abcd hover text for checkbox
 2023-02-03 fho4abcd Mark checkbox if in list of checked records, Remove wrong script
+2023-02-10 fho4abcd Move div-helper and javascript inside correct if.
 */
 
 //echo $arrHttp["ventana"];
@@ -22,38 +23,11 @@ if (!isset($fmt_test) and !isset($arrHttp["ventana"])){
 	  	}
 	}
     $wiki_help="Entrada_de_datos";
-    include "../common/inc_div-helper.php";
 }
 // The test options do not use buttons, nor the javascripts in this file
-if (isset($fmt_test)) goto LAST
+if (isset($fmt_test)) goto LAST;
 
-?>
-<?php if (!isset($arrHttp["ventana"])){
-?>
-<script language ="javascript" type="text/javascript">
-
-function scrollingDetector(){
-    if (navigator.appName == "Microsoft Internet Explorer")
-    {
-    //alert(document.documentElement.scrollTop);
-    document.getElementById("myDiv").style.top = document.documentElement.scrollTop;
-    }
-     // For FireFox
-    else{ document.getElementById("myDiv").style.top = window.pageYOffset + "px";      }
-}
-
-
-function startScrollingDetector()
-{
-    if (document.getElementById("myDiv")){
-        setInterval("scrollingDetector()",1000);
-    }
-}
-setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
-
-
-</script>
-<?php
+if (!isset($arrHttp["ventana"])){
 
 //CHECK IF THERE IS A VALIDATION FORMAT
 	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".val";
@@ -63,7 +37,28 @@ setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
 	}
 	$db=$arrHttp["base"];
     if (!isset($arrHttp["encabezado"])){
+        include "../common/inc_div-helper.php";
         ?>
+        <script language ="javascript" type="text/javascript">
+        function scrollingDetector(){
+            if (navigator.appName == "Microsoft Internet Explorer")
+            {
+            //alert(document.documentElement.scrollTop);
+            document.getElementById("myDiv").style.top = document.documentElement.scrollTop;
+            }
+             // For FireFox
+            else{ document.getElementById("myDiv").style.top = window.pageYOffset + "px";      }
+        }
+
+        function startScrollingDetector()
+        {
+            if (document.getElementById("myDiv")){
+                setInterval("scrollingDetector()",1000);
+            }
+        }
+        setTimeout(startScrollingDetector,1000)<!-- page must be loaded -->
+        </script>
+
         <div id="myDiv" style="position:absolute; top:0px; right: 0; z-index: 99999999999;" >
             <table class="toolbar-edit-dataentry">
             <tr><td>
