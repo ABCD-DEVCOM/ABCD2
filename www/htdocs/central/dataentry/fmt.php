@@ -13,6 +13,7 @@
 20230119 fho4abcd Remove scripts in saved display+improve html for saved display
 20230120 fh04abcd Improved html+remove edit scripts if display is not in edit mode+defaults for $tl and $nr
 20230130 fho4abcd Improve setting of browseby menu. Code for showing record value improved and extended for selected records
+20230210 fho4abcd Show backbutton of actualized record for non-dataentry cases (e.g. acces/users/...). Remove unused cases
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -537,10 +538,6 @@ if (isset($arrHttp["wks"])){
 		$arrHttp["wk_tag_tipom_2"]=$wk[5]; // Tag correspondiente al Tipo de registro 2
 	else
 		$arrHttp["wk_tag_tipom_2"]="";
-
-
-}else{
-
 }
 echo "\n<script>top.toolbarEnabled=\"\"\n</script>";
 
@@ -553,7 +550,6 @@ if (isset($arrHttp["retorno"])){
 }
 if (isset($arrHttp["return"])){
           $retorno.="&return=".$arrHttp["return"];
-
 }
 if (isset($arrHttp["from"])){
 		$retorno.="&from=".$arrHttp["from"];
@@ -564,8 +560,6 @@ if (isset($arrHttp["Status"])){    // value=1 indicates record deleted
 // end settings
 
 if ($arrHttp["Opcion"]=="ver" or $arrHttp["Opcion"]=="cancelar" or $arrHttp["Opcion"]=="buscar" or ($arrHttp["Opcion"]=="actualizar") or $arrHttp["Opcion"]=="save" ) {
-
-
 		if (isset($arrHttp["sort"]))
 			$sort="&sort=".$arrHttp["sort"];
 		else
@@ -626,9 +620,7 @@ if ($arrHttp["Opcion"]=="captura_bd") {
 	$ciparcap=$arrHttp["cipar"];
 	$arrHttp["base"]=$arrHttp["basecap"];
 	$arrHttp["cipar"]=$arrHttp["ciparcap"];
-
 }
-
 
 
 //Esta variable es para almacenar las tablas que hay que generar con JavaScript
@@ -640,7 +632,6 @@ if (isset($arrHttp["Mfn"]))$Mfn=$arrHttp["Mfn"];
 $login=$arrHttp["login"];
 if (!isset($arrHttp["ver"])) $arrHttp["ver"]="";
 if ($arrHttp["ver"]=="S") {
-
 	$ver=true;
 } else {
 	$ver=false;
@@ -649,17 +640,12 @@ $capturar="NO";
 $actualizar="N";
 
 if (isset ($arrHttp["Opcion"]))  {
-	if ($arrHttp["Opcion"]=="actualizar" || $arrHttp["Opcion"]=="actualizarregistrousuario" || $arrHttp["Opcion"]=="save") $actualizar="SI";
-	if ($arrHttp["Opcion"]=="crear") {
-
-		$actualizar="SI";
-
-	}
-// si se seleccionó la opción nuevo en el menú superior, se transforma a crear para poder crear el nuevo registro
+	if ($arrHttp["Opcion"]=="actualizar" || $arrHttp["Opcion"]=="save") $actualizar="SI";
+	if ($arrHttp["Opcion"]=="crear") $actualizar="SI";
+    // si se seleccionó la opción nuevo en el menú superior, se transforma a crear para poder crear el nuevo registro
 	if ($arrHttp["Opcion"]=="nuevo" or $arrHttp["Opcion"]=="nuevoregistro" ||$arrHttp["Opcion"]=="nuevoregistrousuario") {
 		$Mfn="New";
 		$arrHttp["Opcion"]="crear";
-
 	}
 }
 
@@ -1022,12 +1008,9 @@ switch ($arrHttp["Opcion"]) {
 		if (!isset($arrHttp["encabezado"]))ColocarMfn();
 
 		break;
-	case "nuevoregistro":
-		break;
 	case "actualizar":
 		break;
 	case "eliminar":
-	case "actualizarregistrousuario":
 		include ("scripts_dataentry.php");
         echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
@@ -1046,10 +1029,6 @@ switch ($arrHttp["Opcion"]) {
 		}
         echo "\n<script>if (top.window.frames.length>0) top.ApagarEdicion()</script>
         </div></div></body></html>\n";
-		return;
-		break;
-	case "usuariomodifica":
-		PresentarFormulario("actualizacion");
 		return;
 		break;
 	default:
@@ -1094,8 +1073,30 @@ if ($actualizar=="SI"){
 	}else{
 		$regSal=LeerRegistroFormateado($arrHttp["Formato"]);
 	}
+    // Show the toolbar for further edits on this record
+    // The included file shows only the toolbar in case "encabezado" is not set:not set in the dataentry menu
 	if (!isset($record_deleted)) $record_deleted="N";
 	if ($record_deleted=="N")include("toolbar_record.php");
+    // Outside the dataentry menus there is a need for breadcrumb, actions (back) and helper
+    if (isset($arrHttp["encabezado"])) {
+        include("../common/institutional_info.php");
+        ?>
+    <div class="sectionInfo">
+        <div class="breadcrumb">
+        <?php echo $msgstr["update_rec"]?>
+        </div>
+        <div class="actions">
+            <?php
+                //$backtoscript="../dataentry/inicio_main.php";
+                include "../common/inc_back.php";
+            ?>
+        </div>
+            <div class="spacer">&#160;</div>
+        </div>
+        <?php
+        unset ($wiki_help);
+        include "../common/inc_div-helper.php";
+    }
     echo "<div class='middle form'>\n";
     echo "<div class='formContent'>\n";
     echo "<dd><table><tr><td>";
