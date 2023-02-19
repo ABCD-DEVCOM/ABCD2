@@ -28,12 +28,14 @@ if (isset($_SESSION["permiso"]["CENTRAL_DBUTILS"]) or  isset($_SESSION["permiso"
 include("../common/header.php");
 include("../common/institutional_info.php");
 ?>
-<script language="javascript1.2" src="../dataentrt/js/lr_trim.js"></script>
+<script language="javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 
 function Explorar(){
 	msgwin=window.open("../dataentry/dirs_explorer.php?desde=dbcp&Opcion=explorar&base=<?php echo $arrHttp["base"]?>&tag=document.forma1.dbfolder","explorar","width=400,height=600,top=0,left=0,resizable,scrollbars,menu")
-    msgwin.focus()
+   	console.log("OK");
+
+	msgwin.focus()
 }
 function EnviarForma(){
 	if (Trim(document.upload.storein.value)==""){
@@ -45,6 +47,7 @@ function EnviarForma(){
 		return
 	}
 	dbn=Trim(document.upload.copyname.value)
+		
 	var alphaExp = /^[a-zA-Z_0123456789-]+$/;
     if(dbn.match(alphaExp)){
 
@@ -52,6 +55,7 @@ function EnviarForma(){
         alert("<?php echo $msgstr["invalidfilename"]?>");
         return
     }
+
     Limpiar()
    	document.upload.submit()
 }
@@ -77,22 +81,26 @@ function Limpiar(){
 </div>
 <?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-<div class="formContent">
-<p>
-<?php echo $msgstr["db_cp"].": ".$arrHttp["base"]?>
-<form name=upload method=post action=copy_db_ex.php onsubmit="EnviarForma();return false;">
-<table><tr><td>
-<?php echo $msgstr["cp_folder"];?></td><td>
-<input type=text name=storein size=30 onclick=javascript:blur()> <a href=javascript:Explorar()><?php echo $msgstr["explore"]?></a><br>
-<tr><td><?php echo $msgstr["cp_name"];?></td><td><input type=text name=copyname></td>
-</table>
-<input type=checkbox name=reorganize> <?php echo $msgstr["cp_reorganize"];?>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<p><input type=submit value=<?php echo $msgstr["procesar"]?>>
-</form>
+
+	<div class="formContent">
+
+		<form name="upload" method="post" action="copy_db_ex.php" onsubmit="EnviarForma();return false;">
+
+			<label><?php echo $msgstr["cp_folder"];?></label>
+			<input type="text" name="storein" size="30" onclick="javascript:blur()"> 
+			<a class="bt bt-blue" href="javascript:Explorar()"> <?php echo $msgstr["explore"];?></a>
+			<br/>
+
+			<label><?php echo $msgstr["cp_name"];?></label><input type="text" name="copyname">
+			<br />
+			<input type="checkbox" name="reorganize"> <label><?php echo $msgstr["cp_reorganize"];?></label>
+			<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+
+			<br />
+			<input class="bt-green" type="submit" value="<?php echo $msgstr["procesar"]?>">
+
+		</form>
+	</div>
 </div>
-</div>
-</center>
-<?php
-include("../common/footer.php");
-?>
+
+<?php include("../common/footer.php"); ?>
