@@ -40,7 +40,7 @@ $logo="assets/img/logoabcd.png";
 $link_logo="/".$opac_path;
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
-$footer='&copy; 2022 - Consulta bases de dados';
+$footer='&copy; 2023 - Consulta bases de dados';
 
 $multiplesBases="Y";   //no se presenta acceso para cada una de las bases de datos
 $afinarBusqueda="Y";   //permite afinar la expresion de búsqueda
@@ -102,6 +102,9 @@ if (file_exists($db_path."/opac_conf/opac.def")){
 						if (substr($OpacHttp,strlen($OpacHttp)-1,1)!="/")
 							$OpacHttp.="/";
 					}
+					break;
+				case "shortIcon":
+				    $shortIcon=trim($v[1]);
 					break;
 			}
 		}

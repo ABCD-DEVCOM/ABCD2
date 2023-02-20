@@ -438,10 +438,13 @@ $contador=0;
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 
 include_once 'components/total_bases.php';
+?>
 
-echo "<form name=continuar action=buscar_integrada.php method=post>\n";
-echo "<input type=hidden name=integrada value=\"$integrada\">";
-echo "<input type=hidden name=existencias>\n";
+<form name="continuar" action="buscar_integrada.php" method="post">
+<input type="hidden" name="integrada" value="<?php echo $integrada;?>">
+<input type="hidden" name="existencias">
+
+<?php
 echo "<input type=hidden name=facetas value=\"";
 if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
 	echo $_REQUEST["facetas"];
@@ -451,16 +454,18 @@ if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
 }
 echo "\">\n";
 if (isset($total_base) and count($total_base)>0 ){
+
 	if (isset($total_fac[$base])){
 		foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";
 	}
+
 	if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
 		$base=$_REQUEST["base"];
 	else
 		$base=$primera_base;
-	$frm_sel=SelectFormato($base,$db_path,$msgstr);
-	$select_formato=$frm_sel[0];
-	$Formato=$frm_sel[1];
+		$frm_sel=SelectFormato($base,$db_path,$msgstr);
+		$select_formato=$frm_sel[0];
+		$Formato=$frm_sel[1];
 
 	$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 	$desde=$desde+$count;
@@ -490,7 +495,6 @@ echo "</form>\n";
 include_once 'components/total_bases_footer.php';
 
 
-
 if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 	if ((!isset($total_base) or count($total_base)==0) ){
 		echo "<div style='border: 1px solid;width: 98%; margin:0 auto;text-align:center'>";
@@ -509,27 +513,36 @@ if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 		echo "</div>\n";
 	}
 }
+
 if (isset($_REQUEST["db_path"]))  echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 echo "</form>";
 
 include_once ('components/facets.php');
+?>
 
-echo "<p id='back-top'><a href=#inicio><span></span></a></p>";
 
+<p id="back-top">
+	<a href="#inicio"><span></span></a>
+</p>
+
+<?php
 include("components/footer.php");
 
 if (!isset($_REQUEST["base"]))$base="";
+
 $Exp_b=PresentarExpresion($_REQUEST["base"]);
+
 if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
     $Expresion=str_replace('"',"",$Exp_b);
-	echo "\n<SCRIPT LANGUAGE=\"JavaScript\">
-	highlightSearchTerms(\"$Expresion\");
+?>	
+	<script language="JavaScript">
+		highlightSearchTerms("<?php echo $Expresion;?>")
+	</script>
 
-	</SCRIPT>\n";
-
+<?php
 }
 
 ?>
 <script>
-	WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION?>"
+	WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION; ?>"
 </script>
