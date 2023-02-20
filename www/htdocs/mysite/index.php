@@ -202,7 +202,7 @@ include ("../$app_path/lang/lang.php");
       </label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="Enviar()"><?php echo $msgstr["entrar"];?></button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022 | <?php echo $meta_encoding?></p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2023 | <?php echo $meta_encoding?></p>
 
 <?php
 if (file_exists("dbpath.dat")){

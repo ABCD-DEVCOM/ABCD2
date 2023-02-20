@@ -46,7 +46,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/opac2">
+            <a class="nav-link" aria-current="page" href="/opac">
               <span data-feather="home" class="align-text-bottom"></span>
               Search the collection
             </a>
