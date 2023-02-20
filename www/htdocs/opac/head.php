@@ -30,7 +30,9 @@ $meta_encoding = $charset;
 	<meta name="description" content="" />
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" />
 	<?php if (isset($shortIcon) and $shortIcon != "") {
-		echo "<link rel=\"shortcut icon\" href=\"<?php echo $ShorcutIcon?>\" type=\"image/x-icon\">\n";
+	?>
+		<link rel="icon" type="image/x-icon" href="<?php echo $shortIcon;?>">
+	<?php
 	}
 	?>
 	<title><?php echo $TituloPagina ?></title>
