@@ -14,12 +14,12 @@ if (isset($_SESSION["db_path"])){
 	$db_path=$_REQUEST["db_path"];
 }
 
-$opac_path="opac_v2";
+$opac_path="opac/";
 
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
 $CentralHttp=$server_url;
-$Web_Dir=$ABCD_scripts_path."opac/";
+$Web_Dir=$ABCD_scripts_path.$opac_path;
 $NovedadesDir="";
 
 $lang_config=$lang; // save the configured language to preset it later
@@ -40,11 +40,11 @@ $logo="assets/img/logoabcd.png";
 $link_logo="/".$opac_path;
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
-$footer='&copy; 2023 - Consulta bases de dados';
+$footer='&copy; 2023 - Consultation databases';
 
-$multiplesBases="Y";   //no se presenta acceso para cada una de las bases de datos
-$afinarBusqueda="Y";   //permite afinar la expresion de búsqueda
-$IndicePorColeccion="N";  //Se mantienen indices separados para los términos de las colecciones
+$multiplesBases="Y";   //No access is presented for each of the databases
+$afinarBusqueda="Y";   //Allows you to refine search expression
+$IndicePorColeccion="N";  //Separate indices are maintained for the terms of the collections
 if (file_exists($db_path."/opac_conf/opac.def")){
 	$fp=file($db_path."/opac_conf/opac.def");
 	foreach ($fp as $value){

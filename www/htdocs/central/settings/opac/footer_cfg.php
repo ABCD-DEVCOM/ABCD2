@@ -104,8 +104,13 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 						$height_link=800;
 				}
 				if (substr($value,0,6)=="[TEXT]") { 
-						$home_text=substr($value,6);
-					}
+						$footer_file=substr($value,6);
+			} else {
+					$footer_file="";
+				}
+				if (substr($value,0,6)=="[HTML]") { 
+					$content_html=substr($value,5);
+				} 
 			}
 		}
 	}
@@ -122,7 +127,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 </tr>
 <tr>
 	<td valign=top nowrap><?php echo $msgstr["base_home_link"];?>
-	<br>Ex:http://www.abcdonline.info
+	<br>Ex: https://abcd-community.org
 </td>
 <td>
 	<input type="text" name="home_link" size=70 value="<?php echo $home_link;?>">
@@ -135,22 +140,21 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 		<?php echo $msgstr["base_home_text"];?>
 	</td>
 	<td>
-		<input type="text" size="100" name="home_text" value="<?php echo $home_text;?>" ><br><br>
+		<input type="text" size="100" name="home_text" value="<?php echo $footer_file;?>" ><br><br>
 <?php
 
 	$footer_html="";
-	if ($home_text!=""){
+	if (isset($content_html)){
 		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$file)){
 			$footer_html=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$file);
 			$footer_html=implode($footer_html);
 		}
 	}
-
 	echo "<div style=\"position:relative;display:block;\" id=ckeditorFrm> ";
 	echo "<script src=\"$server_url/".$app_path."/ckeditor/ckeditor.js\"></script>";
 
 ?>
-<textarea cols="80" id="editor1" name="editor1" rows="10" <?php echo $footer_html?>></textarea>
+<textarea cols="80" id="editor1" name="editor1" rows="10"><?php echo substr($footer_html,8);?></textarea>
 	  <script>
 	    CKEDITOR.replace('editor1', {
 	      height: 260,
