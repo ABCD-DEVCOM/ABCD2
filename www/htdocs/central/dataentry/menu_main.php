@@ -169,10 +169,10 @@ function GenerarWks(){
 }
 </script>
 <form name=forma1 onsubmit="return false" method=post>
-<script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js"></script>
-<script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js"></script>
-<script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js"></script>
-<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js?<?php echo time();?>"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js?<?php echo time();?>"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js?<?php echo time();?>"></script>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js?<?php echo time();?>"></script>
 
 <!--SETS UP THE DATA ENTRY TOOLBAR-->
 <table class="toolbar-dataentry" >
