@@ -2,10 +2,12 @@
 /*
 20211224 fho4abcd Read default message file from central, with central processing, lineends
 20220831 rogercgui Included the variable $opac_path to allow changing the Opac root directory
+20230223 fho4abcd Check for existence of config.php
 */
 //session_start();
 error_reporting(E_ALL);
-//CHANGE THIS ////
+//CHANGE THIS //// 
+include ("config_inc_check.php");
 include ("config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
 if (isset($_SESSION["db_path"])){

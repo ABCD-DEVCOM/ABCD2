@@ -10,10 +10,12 @@
 20220122 rogercgui Default logo is displayed if institution image is absent
 20230127 fho4abcd Removed unused function, login fail can be caused by expiration: improve message content
                   Removed inline fixed size (clashed often with footer position). Removed unused div sectioninfo
+20230223 fho4abcd Check for existence of config.php
 */
 session_start();
 $_SESSION=array();
 unset($_SESSION["db_path"]);
+include("central/config_inc_check.php");
 include("central/config.php");
 include("$app_path/common/get_post.php");
 $new_window=time();

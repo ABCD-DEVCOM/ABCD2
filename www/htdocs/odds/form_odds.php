@@ -3,6 +3,7 @@
 This is the page with the logic to display the main form of ODDS
 Modifications:
 20221210 fho4abcd Full rewrite (use msgstr,....)
+20230223 fho4abcd Check for existence of config.php
 */
 session_start(); 
 //The check for logged in is not done here (also no timeout etc)
@@ -15,6 +16,7 @@ if (isset($arrHttp["lang"]) and $arrHttp["lang"]!=""){
 	if (!isset($_SESSION["lang"])) $_SESSION["lang"]=$lang;
 }
 
+include("../central/config_inc_check.php");
 include("../central/config.php");
 $lang=$_SESSION["lang"];
 
