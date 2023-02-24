@@ -24,7 +24,7 @@ Other components are indicated as prerequisites and not distributed with ABCD.
 In order to minimize security problems the latest version is recommended. ABCD requires for a minimal installation at least
   - Module `mod_cgi`: To allow execution of CGI scripts
   - Module `mod_rewrite` : To allow rewrite rules in the `.htaccess` file
-- A PHP processor. The unicode implementation of ABCD requires PHP 7.4.x.
+- A PHP processor. The unicode implementation of ABCD requires PHP 7.4.x. ABCD is not tested on PHP 8 (yet)
 The default loaded extensions depend on the actual PHP processor. ABCD requires for a minimal installation at least
   - Extension `mbstring` : Multibyte support. To enable unicode.
   - Extension `gd` or `gd2` : Image functions. The name depends on the PHP implementation
@@ -148,10 +148,13 @@ The virtual host file specifies the folder names for the ABCD installation.
 2. Copy the content of **cgi-bin** to the folder specified by parameter **ScriptAlias**
 3. Copy the content of **bases** to the folder specified by parameter **docs**
 4. If the Digital Document feature is used: Copy the downloaded tika jar to the folder specified by parameter **ScriptAlias**
-5. For Linux installations
+5. Create central configuration file. Git archives no longer supply this configuration file
+   - Copy **htdocs/central/config.php.template** to **htdocs/central/config.php**
+   - Edit **htdocs/central/config.php** to reflect your local situation and save it. This file is not overwritten by a version update.
+6. For Linux installations
    - Change ownership of the folders to the owner/group of the webserver (`chown -R ...`)
    - Change protection of the folders to correct values (`chmod -R ...`)
-6. Restart the webserver/web server service
+7. Restart the webserver/web server service
 
 ### Run
 Start your favourite web browser and run ABCD with following URL's.
@@ -171,3 +174,4 @@ Additional help can be obtained by joining and using the e-mail based `ISIS-user
 - registering: http://lists.iccisis.org/listinfo/isis-users
 - using : mail to 'isis-users@iccisis.org'
 
+Join the forums at https://abcd-community.org/
