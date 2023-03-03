@@ -10,9 +10,9 @@
            ' ]'
         fi,
 '        </p>
-        <p>Search engine: <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=pt&component=28&item=3"><b>iAH</b></a> v',v5000^v,' powered by <a href="http://bvsmodelo.bvsalud.org/php/level.php?lang=pt&component=28&item=2">WWWISIS</a>
+        <p>Search engine: <a href="https://abcd-community.github.io/en/opac-iah/"><b>iAH</b></a> v',v5000^v,' powered by <a href="https://abcd-community.github.io/en/abcd-technology/isis-script/">WWWISIS</a>
         </p>
-        <p>ABCD iAH by BIREME, PAHO/OPS</p>
+        <p>ABCD iAH by ABCD Community</p>
         </div>
     </div>
 '/
