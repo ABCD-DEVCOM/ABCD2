@@ -1,4 +1,9 @@
 <?php
+/**
+ * 20230305 rogercgui Adds the variable $actparfolder;
+ * 20230305 rogercgui Fixes bug in the absence of the file camposbusqueda.tab;
+*/
+
 include ("tope_config.php");
 $wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
 include "../../common/inc_div-helper.php";
