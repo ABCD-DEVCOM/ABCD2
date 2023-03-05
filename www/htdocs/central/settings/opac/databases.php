@@ -1,4 +1,9 @@
 <?php
+/*
+20230305 rogercgui Adds the variable $actparfolder;
+
+*/
+
 include("tope_config.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n#Bases_de_datos_disponibles";
 include "../../common/inc_div-helper.php";
@@ -6,9 +11,7 @@ include "../../common/inc_div-helper.php";
 
 
 <div class="middle form">
-
-   <h3><?php echo $msgstr["databases"]?></h3>
-
+	<h3><?php echo $msgstr["databases"]?></h3>
 	<div class="formContent">
 
 <div id="page">
@@ -57,7 +60,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 	 		echo "Database:$value<br><font color=red size=3><strong>".$msgstr["missing_folder"]." $value ".$msgstr["in"]." $db_path</strong></font><br>";
 	 	    $eliminar[$key]="S";
 	 	}
-	 	if (!file_exists($db_path."par/$value.par")){
+	 	if (!file_exists($db_path.$actparfolder."/$value.par")){
 	 		echo "Database:$value<br><font color=red size=3><strong>".$msgstr["missing"]." $value.par</strong></font><br>";
             $eliminar[$key]="S";
 	 	}
@@ -66,10 +69,18 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 	if (isset($cod_base)){
 	    foreach ($cod_base as $key=>$value){
             if (isset($eliminar[$key]) and $eliminar[$key]=="S") continue;
-			$fout=fopen($db_path."opac_conf/".$_REQUEST["lang"]."/$value.def","w");
+			$file_db=$value.".def";
+			$folfer_db=$db_path.$value."/opac/".$_REQUEST["lang"]."/";
+
+			if (!file_exists($folfer_db)) {
+    			mkdir($folfer_db, 0777, true);
+			}
+
+			$fout=fopen($folfer_db.$file_db,"w");
+			
 			if (!isset($def_base["$key"]))  $def_base["$key"]="";
-			fwrite($fout, $def_base["$key"]);
-			echo "<h3>".$_REQUEST["lang"]."/$value.def"." ".$msgstr["updated"]."</h3><br>";
+				fwrite($fout, $def_base["$key"]);
+				echo "<h3>".$folfer_db." <span class='color-green'>".$msgstr["updated"]."</span></h3><br>";
 			fclose($fout);
 		}
 	}
@@ -84,13 +95,14 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 			}
 		}
 	}
-    $fout=fopen($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat","w");
+	$folder_dat=$db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat";
+    $fout=fopen($folder_dat,"w");
 	foreach ($cod_base as $key=>$value){
 		if (isset($eliminar[$key]) and $eliminar[$key]=="S") continue;
 		fwrite($fout,$value."|".$nom_base[$key]."\n");
 	}
 	fclose($fout);
-	echo "<h3>".$_REQUEST["lang"]."/bases.dat"." ".$msgstr["updated"]."</h3>";
+	echo "<h3>".$folder_dat." <span class='color-green'>".$msgstr["updated"]."</span></h3>";
 	die;
 }
 ?>
@@ -223,6 +235,3 @@ if (isset($_REQUEST["conf_level"])){
 <?php
 include ("../../common/footer.php");
 ?>
-
-</body>
-</html>

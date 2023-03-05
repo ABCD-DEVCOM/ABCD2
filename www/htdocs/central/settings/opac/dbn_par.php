@@ -1,4 +1,9 @@
 <?php
+/*
+20230305 rogercgui Adds the variable $actparfolder;
+
+*/
+
 include ("tope_config.php");
 $wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#Edici.C3.B3n_del_dbn.par";
 include "../../common/inc_div-helper.php";
@@ -17,7 +22,7 @@ include "../../common/inc_div-helper.php";
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$archivo=	$_REQUEST["file"];
+	$archivo=$_REQUEST["file"];
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
@@ -35,7 +40,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 }else{
 	$base=$_REQUEST["base"];
-	$archivo=$db_path.$base."/$base.par";
+	$archivo=$db_path.$actparfolder."$base.par";
 	if (!file_exists($archivo)){
 		echo "Error: missing $archivo<br>";
 	}else{
@@ -99,7 +104,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 			echo "</table>";
 		}
 		if (count($pft_noinc)>0){
-			Echo "<hr><h4>Adding missing files to $base.par</h4>";
+			echo "<hr><h4>Adding missing files to $base.par</h4>";
 			foreach ($pft_noinc as $value){
 				$value=trim($value);
 				if ($value!=""){
@@ -116,7 +121,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 			}
 			echo "<hr>";
 		}
-		$file=$db_path.$base."/$base.par";
+		$file=$db_path.$actparfolder."$base.par";
 		echo "<strong>".$msgstr["edit"].": ". $file."</strong>";
 		echo "<div  style=\"display:block;\">\n";
 		echo "<form name=savepar"."Frm method=post>\n";
@@ -132,7 +137,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 			echo "$key=$value\n";
 		}
 		echo "</textarea>";
-		echo "<p><input type=submit value=\"".$msgstr["save"]." "."\">";
+		echo "<p><input class='bt-green' type=submit value=\"".$msgstr["save"]." "."\">";
 		echo "</form></div>";
 	}
 

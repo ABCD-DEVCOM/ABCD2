@@ -1,4 +1,8 @@
 <?php
+/**
+ * 20230305 rogercgui Fixes bug in the absence of .fdt file in the language in use;
+ */
+
 include ("tope_config.php");
 $wiki_help="OPAC-ABCD DCXML";
 include "../../common/inc_div-helper.php";
@@ -143,8 +147,17 @@ global $msgstr,$db_path,$charset;
 	echo "<div  id='$base' \">\n";
 	echo "<div style=\"display: flex;\">";
 	$cuenta=0;
-	$fp_campos[$base]=file($db_path.$base."/def/".$_REQUEST["lang"]."/$base.fdt");
-    $cuenta=count($fp_campos);
+
+	$fdt_db=$db_path.$base."/def/".$_REQUEST["lang"]."/$base.fdt";
+    
+	if (file_exists($fdt_db)) {
+		$fp_campos[$base]=file($fdt_db);
+	} else {
+		 $fp_campos[$base]=file($db_path.$base."/def/en/$base.fdt");
+	}
+
+	
+	$cuenta=count($fp_campos);
     echo "<div style=\"flex: 0 0 50%;\">";
 	echo "<form name=$base"."Frm method=post>\n";
 	echo "<input type=hidden name=Opcion value=Guardar>\n";
@@ -186,7 +199,7 @@ global $msgstr,$db_path,$charset;
 		}
 	}
 	echo "</table>\n";
-	echo "<p><div><input type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab / ".$msgstr["dc_step3"]."\"  style=\"width:400px;height:60px;font-size:15px;white-space: normal\"></div>";
+	echo "<p><div><input class='bt-green' type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab / ".$msgstr["dc_step3"]."\"  style=\"width:400px;height:60px;font-size:15px;white-space: normal\"></div>";
 	echo "</div>\n";
 	echo "<div style=\"flex: 1\">";
 
