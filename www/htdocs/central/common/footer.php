@@ -8,6 +8,7 @@
 */
 require_once (dirname(__FILE__)."/../config.php");
 $def = parse_ini_file($db_path."abcd.def");
+include "css_settings.php";
 //print_r($def);
 ?>
 
@@ -58,7 +59,7 @@ $def = parse_ini_file($db_path."abcd.def");
             $text2 = "TEXT2";
         }
 ?>
-        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2023-02-09</small></span>
+        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2023-03-05</small></span>
     </div>
         <div class="distributorLogo">
            <a  href="<?php 
@@ -81,6 +82,7 @@ $def = parse_ini_file($db_path."abcd.def");
             } else {
                 echo "<img src='/assets/images/distributorLogo.png?".time()."' title='ABCD Community'>";
             }
+   
             ?></a>
         </div>
     <div class="spacer">&#160;</div>
