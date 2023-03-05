@@ -20,7 +20,7 @@ if (isset($_REQUEST["home"])){
 }
 //echo "</div>";
 
-include("footer.php");
+include("components/footer.php");
 ?>
 
 <script>
