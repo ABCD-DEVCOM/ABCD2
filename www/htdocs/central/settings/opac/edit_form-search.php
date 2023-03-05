@@ -93,11 +93,19 @@ echo "<strong>". $name;
 	echo "<div  id='$iD' >\n";
 	echo "<div style=\"display: flex;\">";
 	$cuenta=0;
-	if ($base!="" and $base!="META"){
-	    $fp_campos[$base]=file($db_path.$base."/pfts/".$_REQUEST["lang"]."/camposbusqueda.tab");
+	$file_fieldsearch=$db_path.$base."/pfts/".$_REQUEST["lang"]."/camposbusqueda.tab";
+	
+	if (file_exists($file_fieldsearch)) {
+		$fp_campos[$base]=file($file_fieldsearch);
+	} else {
+		 $fp_campos[$base]="";
+	}
+
+if ($base!="" and $base!="META"){
 	    $cuenta=count($fp_campos);
-    }
-    if ($base!="" and $base=="META"){
+	}
+
+	if ($base!="" and $base=="META"){
     	$fpbases=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
     	foreach ($fpbases as $value) {
     		$v=explode('|',$value);
@@ -175,27 +183,31 @@ for ($i=$ix;$i<$tope;$i++){
 	echo "</tr>";
 }
 	echo "</table>\n";
-	echo "<input type=submit value=\"".$msgstr["save"]." ".$iD."_".$_REQUEST['o_conf'].".tab\"></td></tr>";
+	echo "<input class='bt-green' type=submit value=\"".$msgstr["save"]." ".$iD."_".$_REQUEST['o_conf'].".tab\"></td></tr>";
 	echo "</div>\n";
 	
 
 	echo "<div style=\"flex: 1\">";
+
 	if ($cuenta>0){
-		foreach ($fp_campos as $key=>$value_campos){
-			echo "<strong>$key/$lang/camposbusqueda.tab (central ABCD)</strong><br>";
-			echo "<table bgcolor=#cccccc cellpadding=5>\n";
-			echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>\n";
-			foreach ($value_campos as $value) {
-				$v=explode('|',$value);
-				echo "<tr><td>".$v[0]."</td><td>".$v[2]."</td></tr>\n";
+			foreach ($fp_campos as $key=>$value_campos){
+				echo "<strong>$key/$lang/camposbusqueda.tab (central ABCD)</strong><br>";
+				echo "<table bgcolor=#cccccc cellpadding=5>\n";
+				echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>\n";
+				if (!empty($value_campos)) 
+				foreach ($value_campos as $value) {
+					$v=explode('|',$value);
+					echo "<tr><td>".$v[0]."</td><td>".$v[2]."</td></tr>\n";
+				}
+				echo "</table>";
 			}
-			echo "</table>";
 		}
 	}
+
+	
 	echo "</div></div>";
 	echo "</form>";
 
-}
 ?>
 
 </div>
