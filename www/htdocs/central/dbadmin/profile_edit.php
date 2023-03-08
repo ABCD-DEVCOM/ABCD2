@@ -575,7 +575,7 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 				$j=1;
 				$checked="";
 				if (isset($profile_usr[$mod."_".$usr_p]) and $profile_usr[$mod."_".$usr_p]=="Y") $checked=" checked";
-				echo "<td width=33%><input type=checkbox name=$mod"."_".$usr_p." $checked $onclick value=Y>aa<label> ".$msgstr[$usr_p]."</label></td>\n";
+				echo "<td width=33%><input type=checkbox name=$mod"."_".$usr_p." $checked $onclick value=Y><label> ".$msgstr[$usr_p]."</label></td>\n";
 				$onclick="";
 				if ($i>2){
 					$i=0;
