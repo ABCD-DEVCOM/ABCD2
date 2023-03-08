@@ -75,6 +75,36 @@ if ((isset($def["HEADING"])) && (!empty($def["HEADING"]))) {
 		background-color: #003366;
 	}\n";
 }
+
+if ((isset($def["HEADING_FONTCOLOR"])) && (!empty($def["HEADING_FONTCOLOR"]))) {
+	echo "
+	.heading, 
+	nav.heading-nav ul li, 
+	nav.heading-nav a, 
+	nav.heading-nav select,
+	.heading-database,
+	.bt-cat,
+	.bt-loan,
+	.bt-acq,
+	.modal {
+		color: ".$def["HEADING_FONTCOLOR"].";
+	}\n";
+} else {
+	echo "
+	.heading, 
+	.heading-database,
+	nav.heading-nav ul li, 
+	nav.heading-nav a, 
+	nav.heading-nav select,
+	.bt-cat,
+	.bt-loan,
+	.bt-acq,
+	.modal {
+		color: #ffffff;
+	}\n";
+}
+
+
 if ((isset($def["TOOLBAR"])) && (!empty($def["TOOLBAR"]))) {
 	echo "
 	div.toolbar-dataentry,
