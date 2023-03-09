@@ -861,10 +861,12 @@ switch ($arrHttp["Opcion"]) {
 			die;
        	break;
 	case "ver":    //Presenta el registro con el formato seleccionado
+		include ("scripts_dataentry.php");
 		$salida= LeerRegistroFormateado($arrHttp["Formato"]);
-
+		if ($arrHttp["Opcion"]!="actualizar" and $record_deleted=="Y") include "../common/inc_div-helper.php";
 		if ($record_deleted=="N") include("toolbar_record.php");
 		$arrHttp["Opcion"]=="ninguna";
+		
         echo "	<div class=\"middle form\">
 					<div class=\"formContent\">\n";
 		echo "<dd><table><tr><td>";
@@ -872,7 +874,7 @@ switch ($arrHttp["Opcion"]) {
 		echo "</td></table></dd>" ;
 //SE AVERIGUA SE SE VA A LEER LA INFORMACIÓN DE OTRA BASE DE DATOS
 		if (isset($record_deleted) and $record_deleted=="Y"){
-			echo "<a href=javascript:Undelete(".$arrHttp["Mfn"].")>undelete</a>";
+			echo "<a href=javascript:Undelete(".$arrHttp['Mfn'].")>".$msgstr["undelete"]."</a>";
 		}
 		if (!isset($arrHttp["capturar"])){
 			ColocarMfn();
@@ -1012,6 +1014,7 @@ switch ($arrHttp["Opcion"]) {
 		break;
 	case "eliminar":
 		include ("scripts_dataentry.php");
+		include "../common/inc_div-helper.php";
         echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
 		$res=ActualizarRegistro("fmt_A");
@@ -1095,8 +1098,9 @@ if ($actualizar=="SI"){
         </div>
         <?php
         unset ($wiki_help);
-        include "../common/inc_div-helper.php";
+		include "../common/inc_div-helper.php";
     }
+
     echo "<div class='middle form'>\n";
     echo "<div class='formContent'>\n";
     echo "<dd><table><tr><td>";
