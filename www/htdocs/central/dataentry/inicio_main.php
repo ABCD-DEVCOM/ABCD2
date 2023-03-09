@@ -833,6 +833,7 @@ function Menu(Opcion){
 <style type="text/css">
 	*, html {
 		height: 100%;
+		line-height: 0px;
 	}
 </style>
 

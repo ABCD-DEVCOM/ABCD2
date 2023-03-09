@@ -157,7 +157,7 @@ global $record_protection,$password_protection,$actparfolder;
 
  	if (isset($valortag[1102])){
 	 	if ($valortag[1102]==1) {
-		 	echo "<h1>".$msgstr["recdel"]."</h1>";
+		 	echo "<h4>".$msgstr["recdel"]."</h4>";
 		 	$record_deleted="Y";
 	 		return;
 	 	}
@@ -264,7 +264,7 @@ global $valortag,$xWxis,$arrHttp,$tagisis,$msgstr,$db_path,$Wxis,$wxisUrl,$lang_
 	  			if (strpos($linea,'$$DELETED')===false){
 			 		$salida.= $linea."\n";
 		 		}else{
-		  			$salida.= "<h1> ".$arrHttp["Mfn"]." ".$msgstr["recdel"]."</h1>";
+		  			$salida.= "<h4> ".$arrHttp["Mfn"]." ".$msgstr["recdel"]."</h4>";
 		  			$record_deleted="Y";
 				}
 		 	}
