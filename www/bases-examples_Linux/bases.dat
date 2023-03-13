@@ -1,17 +1,17 @@
+marc|MARC|Y
+marcuni|MARC-UTF8|Y
+dubcore|DublinCore Repository
+isadg|ISAD(G): International Standard Archival Description
+rda|RDA: Resource Description & Access|Y
 agrovoc|Agrovoc Thesaurus
 biblo|Cepal|Y
 dcdspace|dSpace Bridge
 doaj|DOAJ: Directory of Open Access Journals
-dubcore|DublinCore Repository
 experts|Experts
-isadg|ISAD(G): International Standard Archival Description
 projects|Projects
-marc|MARC|Y
-marcuni|MARCUNI|Y
-rda|RDA: Resource Description & Access|Y
-suggestions|Acq - Suggestions
 providers|Acq - Providers
 purchaseorder|Acq - Purchase Orders
+suggestions|Acq - Suggestions (Acquisitions)
 copies|Circ - Collection inventory
 loanobjects|Circ - Loan objects
 users|Circ - Patrons
@@ -19,4 +19,3 @@ reserve|Circ - Reservations
 suspml|Circ - Suspensions and fines
 trans|Circ - Transactions Loans
 acces|Sys - Administration Users/Operators (acces)
-unicode|Sys - UNICODE
