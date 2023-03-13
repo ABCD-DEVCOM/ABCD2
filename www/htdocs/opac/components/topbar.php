@@ -4,7 +4,7 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
     <nav id="menu-wrapper">
         <div id="menu">
             <ul>
-                <li><a href="javascript:openNav()">&#9776;<?php echo $msgstr["menu"]; ?></a></li>
+                <li><a href="javascript:openNav()">&#9776; <?php echo $msgstr["menu"]; ?></a></li>
                 <li><a href="javascript:document.inicio_menu.submit()"><?php echo $msgstr["inicio"] ?></a></li>
                 <?php
                 if (file_exists($db_path . "opac_conf/" . $lang . "/menu.info")) {

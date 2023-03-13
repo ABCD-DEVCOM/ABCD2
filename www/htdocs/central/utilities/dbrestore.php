@@ -29,29 +29,32 @@ global $msgstr,$arrHttp;
 	echo "<input type=hidden name=confirmar>";
 	echo "<h4>".$msgstr["db_restore"]."</h4>";
 	echo "<h4>".$arrHttp["copyname"]." => ".$arrHttp["base"]."<h4>";
-	echo "<input type=button name=continuar value=\"".$msgstr["continuar"]."\" onclick=Confirmar()>";
+	echo "<input class='bt-green' type=button name=continuar value=\"".$msgstr["continuar"]."\" onclick=Confirmar()>";
 	echo "&nbsp; &nbsp;<input type=button name=cancelar value=\"".$msgstr["cancelar"]."\" onclick=Regresar()>";
 	echo "</body></html>";
     die;
 }
 
 Function Explorar(){
-global $msgstr;
-	echo "<form name=upload method=post onsubmit=\"EnviarFormaUpload();return false;\">";
+global $msgstr, $arrHttp;
+?>
+	<form name="upload" method="post" onsubmit="EnviarFormaUpload();return false;">
+	<label><?php echo $msgstr["mx_folder"];?>
+	<input type="text" name="storein" size="30" onclick="javascript:blur()"> 
+    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+
+	<?php
+	/*
 	foreach ($_REQUEST as $var=>$value){
 		echo "<input type=hidden name=$var value=\"$value\">\n";
-	}
-	echo "
-	<table><tr><td valign=top>
-	";
-	echo $msgstr["mx_folder"];
-	echo "</td><td>
-<input type=text name=storein size=30 onclick=javascript:blur()> <a href=javascript:Explorar()>";
-	echo $msgstr["explore"];
-	echo "</a><br>";
-	echo "<p><input type=submit value=".$msgstr["procesar"].">\n
-	<td></tr></table>\n
-	</form>";
+	}*/
+	?>
+	
+	<a class="bt bt-blue" href="javascript:Explorar()"> <?php echo $msgstr["explore"];?></a>
+	<input class="bt-green" type="submit" value="<?php echo $msgstr["procesar"];?>">
+	</form>
+
+<?php 
     die;
 }
 
@@ -87,13 +90,13 @@ global $msgstr;
 		die;
 	}
 	closedir($handle);
-	echo "<p><input type=submit value=".$msgstr["procesar"].">\n";
+	echo "<br><input class='bt-green' type=submit value=".$msgstr["procesar"].">\n";
 	echo "</form></body></html>";
 	die;
 }
 ?>
 <body>
-<script language="javascript1.2" src="../dataentry/js/lr_trim.js"></script>
+<script language="javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
 function Explorar(){
 	msgwin=window.open("../dataentry/dirs_explorer.php?desde=dbcp&Opcion=explorar&base=<?php echo $db_path?>&mx=s&tag=document.forma1.dbfolder","explorar","width=400,height=600,top=0,left=0,resizable,scrollbars,menu")
@@ -147,7 +150,7 @@ function FullInv(){
 </div>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-	<?php echo $msgstr["db_restore"].": ".$arrHttp["base"]?>
+	<?php echo $msgstr["db_restore"]; if (isset($arrHttp["base"])) echo ": ".$arrHttp["base"];?>
 	</div>
 	<div class="actions">
     <?php include "../common/inc_back.php";?>
@@ -212,7 +215,7 @@ if ($res==1){
 if ($err==""){
 	echo "<h4>".$msgstr["copied"]."</h4>";
 	echo "<input type=hidden name=encabezado value=Y>\n";
-	echo "<a href=javascript:FullInv()>".$msgstr["mnt_gli"]."</a>";
+	echo "<a class='bt bt-green' href=javascript:FullInv()>".$msgstr["mnt_gli"]."</a>";
 }else{
 	echo "<h4>".$msgstr["not_copied"]."</h4>";
 }

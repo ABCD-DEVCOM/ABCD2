@@ -1,4 +1,5 @@
 trans.*=%path_database%trans/data/trans.*
+users.*=%path_database%users/data/users.*
 logtrans.*=%path_database%logtrans/data/logtrans.*
 reserve.*=%path_database%reserve/data/reserve.*
 copies.*=%path_database%copies/data/copies.*

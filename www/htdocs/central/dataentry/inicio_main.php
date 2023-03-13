@@ -9,6 +9,8 @@
 2021-12-12 fho4abcd Improved sizeof popup for alfa (for breadcrumb)
 2022-03-20 fho4abcd Cleanup barcode, new target bcl_labelshow.php
 2022-06-19 fho4abcd Corrected html + removed unreachable js code + removed unreachable frameset
+2023-01-22 fho4abcd Improved height of iframe main. Moved css of iframes to css file
+2023-02-03 fho4abcd Make selected records work, sort selected records. Enter record number works now also for search and selected records
 */
 //error_reporting(E_ALL);
 session_start();
@@ -234,20 +236,39 @@ function ValidarIrA(){
 		return false
 	}
 	blnResult=true
-   	//  test strString consists of valid characters listed above
-   	for (i = 0; i < xmfn.length; i++){
-    	strChar = xmfn.charAt(i);
-    	if (strValidChars.indexOf(strChar) == -1){
-    		blnResult = false;
-    	}
-    }
+	//  test strString consists of valid characters listed above
+	for (i = 0; i < xmfn.length; i++){
+		strChar = xmfn.charAt(i);
+		if (strValidChars.indexOf(strChar) == -1){
+			blnResult = false;
+		}
+	}
 	if (blnResult==false){
 		alert("<?php echo $msgstr["especificarvaln"]?>")
 		return false
 	}
-	if (xmfn>maxmfn){
-	  	alert("<?php echo $msgstr["numfr"]?>")
-	  	return false
+	if (browseby=="search") {
+		if (xmfn>Max_Search){
+			alert("<?php echo $msgstr["numfr"]?>"+" ("+xmfn+">"+Max_Search+")")
+			return false
+		}
+	}
+	else if (browseby=="selected_records") {
+		RegSel=RegistrosSeleccionados.replace(/__/g,"_")
+		if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
+		SelLen=RegSel.length
+		if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
+		ss=RegSel.split("_")
+		if (xmfn>ss.length){
+			alert("<?php echo $msgstr["numfr"]?>"+" ("+xmfn+">"+ss.length+")")
+			return false
+		}
+	}
+	else {
+		if (xmfn>maxmfn){
+			alert("<?php echo $msgstr["numfr"]?>"+" ("+xmfn+">"+maxmfn+")")
+			return false
+		}
 	}
 	return xmfn
 }
@@ -261,6 +282,24 @@ function SeleccionarRegistro(Ctrl){
 	}else{
 		RegistrosSeleccionados=RegistrosSeleccionados.replace(select_Mfn,"")
 	}
+	RegSel=RegistrosSeleccionados.replace(/__/g,"_")
+	if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
+	SelLen=RegSel.length
+	if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
+	ss=RegSel.split("_")
+	ss.sort();
+	RegistrosSeleccionados="";
+	for (let i=0; i<ss.length; i++) {
+		RegistrosSeleccionados+="_"+ss[i]+"_";
+	}
+}
+function SeleccionarRegistroCheck(value){
+	chk_mfn=value
+	select_Mfn='_'+chk_mfn+'_'
+	if (RegistrosSeleccionados.indexOf(select_Mfn)==-1){
+		return false;
+	}
+	return true;
 }
 
 
@@ -317,14 +356,6 @@ function Menu(Opcion){
     if (Opcion!="actualizar" && Opcion!="editar" && Opcion!="eliminar" && Opcion!="z3950") xeditar=""
 
  	if (Opcion!="eliminar") xeliminar=0
-
-	if (browseby=="search"){
-		tope=Max_Search
-
-	}else{
-		tope=maxmfn
-	}
-
 	switch (Opcion) {
 
 		case "importarDoc":
@@ -486,9 +517,12 @@ function Menu(Opcion){
 			msgwin=window.open("capturar_main.php?base="+base+"&cipar="+cipar+"&formato_e="+formato_ix+"&prefijo="+prefijo_indice+"&formatoactual="+FormatoActual+"&fc=cap&html=ayuda_captura.html","capturar")
 			msgwin.focus()
            	break
-  		case 'proximo':
+  		case 'proximo'://next record
+   			Opcion="leer"
+   			buscar=""
   			switch (browseby){
   				case 'search':
+					tope=Max_Search
   					mfn=Search_pos
   					Search_pos=Search_pos+1
   					if (Search_pos>tope )
@@ -497,7 +531,6 @@ function Menu(Opcion){
    					mfn++
    					if (mfn>tope) mfn=tope
   					break
-
   				case 'selected_records':
   					if (Trim(RegistrosSeleccionados)=="")
   						return
@@ -516,40 +549,35 @@ function Menu(Opcion){
    					tope=ss.length
    					break
    				default:
+					tope=maxmfn
    					if (mfn<=0) mfn=0
    					mfn++
    					if (mfn>tope) mfn=tope
    					break
   			}
+   			top.menu.document.forma1.ir_a.value=mfn+"/"+tope
+   			break
+  		case 'anterior'://previous record
    			Opcion="leer"
    			buscar=""
-   			if (tope!=999999999)
-   				xtop="/"+tope
-   			else
-   				xtop=""
-   			top.menu.document.forma1.ir_a.value=mfn+xtop
-   			break
-  		case 'anterior':
   			switch (browseby){
   				case 'search':
+ 					tope=Max_Search
   					mfn=Search_pos
   					Search_pos=Search_pos-1
   					if (Search_pos<=0) Search_pos=1
   					if (mfn<=0) mfn=1
    					if (mfn>1) mfn=mfn-1
   					break
-
   				case 'selected_records':
   					if (Trim(RegistrosSeleccionados)=="")
   						return
   					Listar_pos=Listar_pos-1
   					if (Listar_pos<0) Listar_pos=0
   					RegSel=RegistrosSeleccionados.replace(/__/g,"_")
-  					if (RegSel.substr(0,1)=="_")
-  						RegSel=RegSel.substr(1)
+  					if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
   					SelLen=RegSel.length
-  					if (RegSel.substr(SelLen-1,1)=="_")
-  						RegSel=RegSel.substr(0,SelLen-1)
+  					if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
   					ss=RegSel.split("_")
   					mfn=ss[Listar_pos]
    					tope=ss.length
@@ -561,66 +589,74 @@ function Menu(Opcion){
    					if (mfn>tope) mfn=tope
    					break
   			}
-
-   			Opcion="leer"
-   			buscar=""
    			top.menu.document.forma1.ir_a.value=mfn+"/"+tope
    			break
-  		case 'primero':
-   			mfn=1
-   			buscar=""
+  		case 'primero':// first record
    			Opcion="leer"
+   			buscar=""
    			switch (browseby){
    				case 'search':
-   					Search_pos=mfn
+					tope=Max_Search
+   					Search_pos=1
+  					mfn=Search_pos
    					break
    				case 'selected_records':
    					if (Trim(RegistrosSeleccionados)=="")
   						return
   					RegSel=RegistrosSeleccionados.replace(/__/g,"_")
-  					if (RegSel.substr(0,1)=="_")
-  						RegSel=RegSel.substr(1)
+  					if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
   					SelLen=RegSel.length
-  					if (RegSel.substr(SelLen-1,1)=="_")
-  						RegSel=RegSel.substr(0,SelLen-1)
+  					if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
   					ss=RegSel.split("_")
   					Listar_pos=0
   					mfn=ss[0]
    					tope=ss.length
    					break
+   				default:
+   					tope=maxmfn
+					mfn=1
+   					if (mfn>1) mfn=mfn-1
+   					if (mfn<=0) mfn=1
+   					if (mfn>tope) mfn=tope
+   					break
    			}
    			top.menu.document.forma1.ir_a.value=mfn+"/"+tope
    			break
-  		case 'ultimo':
-   			mfn=tope
+  		case 'ultimo'://last record
    			Opcion="leer"
    			buscar=""
    			switch (browseby){
    				case 'search':
-   					Search_pos=mfn
+					tope=Max_Search
+   					Search_pos=Max_Search
+                    mfn=Max_Search
    					break
    				case 'selected_records':
    					if (Trim(RegistrosSeleccionados)=="")
   						return
   					RegSel=RegistrosSeleccionados.replace(/__/g,"_")
-  					if (RegSel.substr(0,1)=="_")
-  						RegSel=RegSel.substr(1)
+  					if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
   					SelLen=RegSel.length
-  					if (RegSel.substr(SelLen-1,1)=="_")
-  						RegSel=RegSel.substr(0,SelLen-1)
+  					if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
   					ss=RegSel.split("_")
   					Listar_pos=ss.length-1
   					mfn=ss[ss.length-1]
    					tope=ss.length-1
+   					break
+   				default:
+   					tope=maxmfn
+					mfn=tope
    					break
    			}
    			top.menu.document.forma1.ir_a.value=mfn+"/"+tope
    			break
    		case "same":
    			Opcion="leer"
-            buscar=""
-   			if (browseby=='search') //Search_pos=Mfn_Search
-   			top.menu.document.forma1.ir_a.value=mfn+"/"+tope
+			buscar=""
+   			if (browseby=='search') {//Search_pos=Mfn_Search
+                tope=Max_Search
+                top.menu.document.forma1.ir_a.value=mfn+"/"+tope
+            }
    			break
   		case 'eliminar':
 			if (mfn==0){
@@ -661,15 +697,26 @@ function Menu(Opcion){
    			break
   		case 'ira':
   		  	xmfn=ValidarIrA()
+			if ( !xmfn) break;
 			buscar=""
-  			if (xmfn){
-	  			if (ConFormato==true){
-            		Opcion="ver"
-        		}else{
-         			Opcion="leer"
-     			}
+			Opcion="leer"
+			if ( browseby=="search" ) {
+					tope=Max_Search
+					Search_pos=Number(xmfn);
+					mfn=Search_pos+Number(xmfn);
+			} else if (browseby=="selected_records") {
+				RegSel=top.RegistrosSeleccionados.replace(/__/g,"_")
+				if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
+				SelLen=RegSel.length
+				if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
+				ss=RegSel.split("_")
+				sslength=ss.length
+				mfn=ss[xmfn-1]
+				tope=ss.length
+			} else {
 				mfn=xmfn
-  		 	}
+				tope=xmfn
+			}
   			break
   		case 'refresh_db':
 			top.main.location.href="../dataentry/inicio_base.php?base="+base+"&cipar="+base+".par"
@@ -707,8 +754,9 @@ function Menu(Opcion){
          		Opcion="leer"
      		}
 
-            if (mfn<=0) mfn=1
-            if (tope==0) return
+			if (mfn<=0) mfn=1
+			if (typeof tope === 'undefined')return
+			if (tope==0) return
             if (browseby=="mfn" || browseby=="selected_records"){
   		 		top.main.document.location.href="../dataentry/fmt.php?Opcion="+Opcion+"&base="+base+"&cipar="+cipar+"&Mfn="+mfn+"&ver=S"+FormatoActual+works+urlcopies
   			}else{
@@ -781,10 +829,11 @@ function Menu(Opcion){
 	}
 
 </script>
-
+<!--effect is no overall scrollbar-->
 <style type="text/css">
 	*, html {
 		height: 100%;
+		line-height: 0px;
 	}
 </style>
 
@@ -792,34 +841,31 @@ function Menu(Opcion){
     <?php
 	if (!isset($arrHttp["Mfn"])) $arrHttp["Mfn"]=0;
     ?> 
-	<iframe name="encabezado" id="encabezado" class="dataentry-header" scrolling="no" frameborder="0"
+	<iframe name="header" id="header" class="dataentry-header" 
         src="menubases.php?inicio=s&Opcion=Menu_o&base=<?php echo $bd;?>&cipar=<?php echo $bd;?>.par&Mfn=<?php echo $arrHttp['Mfn'];?>&base_activa=<?php echo $bd;?>&per=<?php echo $bdright;?>">
     </iframe>
-	<iframe name="menu"       id="menu"       class="dataentry-menu"   scrolling="no" frameborder="0" allowfullscreen wmode="transparent"
-        src="" style="width: 100%; height: 78px; position: relative;">
+	<iframe name="menu" id="menu"   class="dataentry-menu"
+        src="" >
     </iframe>
-	<iframe name="main"       id="main"
-        src="" style="width: 100%;               position: relative; border: none; ">
+	<iframe name="main" id="main"   class="dataentry-main";
+        src="" >
     </iframe>
 </div>
 
 <script>
     // Selecting the iframe element
-    var iframeEncabezado = document.getElementById("encabezado");
+    var iframeHeader = document.getElementById("header");
     var iframeMenu = document.getElementById("menu");
     var iframeMain = document.getElementById("main");
    
     // Adjusting the iframeMain height onload event
     iframeMain.onload = function() {
-    	var Todobody = window.screen.height;
-    	var encabezado = iframeEncabezado.contentWindow.document.body.scrollHeight
+    	var Todobody = window.innerHeight;
+    	var header = iframeHeader.contentWindow.document.body.scrollHeight
     	var menu = iframeMenu.contentWindow.document.body.scrollHeight
-    	var janela = iframeMain.contentWindow.document.body.scrollHeight
-	   	var toolbar = (encabezado + menu) * 2;
-	   	var valorfolga = -toolbar;
-        var folga = Todobody - toolbar;
+        var folga = Todobody - header - menu;
         iframeMain.style.height = folga + 'px';
-		//alert (folga);
+		//alert ("todobody="+Todobody+" toolbar="+toolbar+" folga="+folga);
     }
 </script>
 </body>

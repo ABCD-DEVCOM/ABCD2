@@ -721,7 +721,8 @@ if ($nsusp!=0 or $nmulta!=0) {
 	unset($arrHttp["inventory"]);
 }
 if (count($prestamos)>0) {
-	$ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a> | <a href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a>";
+	$ec_output.= "<strong><a class='bt bt-green' href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a>
+	<a class='bt bt-blue' href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a>";
 	if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 		$ec_output.=" ".$msgstr["days"]."<input type=text name=lpn size=4>";
 	}
@@ -1082,7 +1083,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 						$ec_output.="<td bgcolor=white valign=top >$msg";
 
 						if (count($devolucion)>0) {
-							if (substr($config_date_format,0,2)=="DD"){
+							if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {
 								$ec_output.=substr($devolucion[0],6,2)."/".substr($devolucion[0],4,2)."/".substr($devolucion[0],0,4);
 							}else{
 								$ec_output.=substr($devolucion[0],4,2)."/".substr($devolucion[0],6,2)."/".substr($devolucion[0],0,4);
@@ -1107,7 +1108,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 
 }
 
-if ($prestamos_este>0) $ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a></strong>\n";
+if ($prestamos_este>0) $ec_output.= "<strong><a class='bt bt-green' href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a></strong>\n";
 if ($reserves_user!="")
 	$ec_output.="<p><!--strong>".$msgstr["reserves"]." <font color=red>(user)</font></strong><br -->".$reserves_user."<p>";
 ProduceOutput($ec_output,"");
@@ -1125,15 +1126,14 @@ global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$
 ?>
 
 <body>
-<?php include("submenu_prestamo.php");?>
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		
 	</div>
-	<div class="spacer">&#160;</div>
+<?php include("submenu_prestamo.php");?>
 </div>
 
 <?php 
@@ -1150,29 +1150,36 @@ include "../common/inc_div-helper.php";
 	$ec_output.="<script>
 		np=$xnum_p
 		</script>\n";
-	$ec_output.= "<form name=devolver action=devolver_ex.php method=post>
-	<input type=hidden name=searchExpr>
-	<input type=hidden name=usuario value=".$arrHttp["usuario"].">
-	<input type=hidden name=vienede value=ecta>
-	<input type=hidden name=lpn>\n";
-	if (isset($arrHttp["reserve"])) $ec_output.= "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
-	$ec_output.= "</form>
-	<form name=solvencia action=solvencia.php method=post target=solvencia>
-	<input type=hidden name=usuario value=\"".$arrHttp["usuario"]."\">
-	</form>
 
-	<form name=multas action=multas_eliminar_ex.php method=post>
-	<input type=hidden name=Accion>
-	<input type=hidden name=usuario value=".$arrHttp["usuario"].">
-	<input type=hidden name=Tipo>
-	<input type=hidden name=Mfn value=\"\">";
+
+	$ec_output.= "<form name='devolver' action='devolver_ex.php' method='post'>
+	<input type='hidden' name='searchExpr'>
+	<input type='hidden' name='usuario' value='".$arrHttp["usuario"]."'>
+	<input type='hidden' name='vienede' value='ecta'>
+	<input type='hidden' name='lang' value='".$lang."'>	
+	<input type='hidden' name='lpn'>\n";
 	if (isset($arrHttp["reserve"])) $ec_output.= "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
-	$ec_output.= "</form>
-	<br>
-	";
+	$ec_output.= "</form>";
+
+
+	$ec_output.= "<form name='solvencia' action='solvencia.php' method='post' target='solvencia'>
+	<input type='hidden' name='lang' value='".$lang."'>	
+	<input type=hidden name=usuario value=\"".$arrHttp["usuario"]."\">
+	</form>";
+
+	$ec_output.= "<form name=multas action=multas_eliminar_ex.php method=post>
+	<input type='hidden' name='Accion'>
+	<input type='hidden' name='lang' value='".$lang."'>	
+	<input type='hidden' name='usuario' value=".$arrHttp["usuario"].">
+	<input type='hidden' name='Tipo'>
+	<input type='hidden' name='Mfn' value=\"\">";
+	if (isset($arrHttp["reserve"])) $ec_output.= "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
+	$ec_output.= "</form>";
+
 	echo $ec_output;
+	
 	if ($reservas !=""){
-		echo "<P><font color=red><strong>".$msgstr["total_copies"].": ".count($copies_title).". ".$msgstr["item_reserved"]."</strong></font><br>";
+		echo "<p><font color=red><strong>".$msgstr["total_copies"].": ".count($copies_title).". ".$msgstr["item_reserved"]."</strong></font><br>";
 		echo $reservas ;
 	}
 
@@ -1300,20 +1307,24 @@ include "../common/inc_div-helper.php";
 
 <?php
 if (isset($arrHttp["reservaWeb"]) and $arrHttp["reservaWeb"]=="xY"){
-	echo "<form method=post action=../output_circulation/rsweb.php>\n";
-	echo "<input type=hidden name=base value=reserve>\n";
-	echo "<input type=hidden name=code value=actives_web>\n";
-    echo "<input type=hidden name=name value=rsweb>\n";
-    echo "<input type=hidden name=retorno value=../circulation/estado_de_cuenta.php>\n";
-    echo "<input type=hidden name=reserva value=S>\n";
-    echo "<input type=hidden name=reservaWeb value=Y>\n";
-    echo "<p><input type=submit name=rsv_p value=\"Reservas web\" style='font-size:27px;border-radius:20px;background color:#cccccc; font-color=black'\"><p>";
-    echo "</form>";
+?>	
+	<form method="post" action="../output_circulation/rsweb.php">
+	<input type="hidden" name="base" value="reserve">
+	<input type="hidden" name="code" value="actives_web">
+    <input type="hidden" name="name" value="rsweb">
+    <input type="hidden" name="retorno" value="../circulation/estado_de_cuenta.php">
+    <input type="hidden" name="reserva" value="S">
+    <input type="hidden" name="reservaWeb" value="Y">
+    <input type="submit" name=rsv_p value="Reservas web" style="font-size:27px;border-radius:20px;background color:#cccccc; font-color=black">
+    </form>
+<?php
 }
-echo "</div></div>\n";
-include("../common/footer.php");?>
-</body>
-</html>
+?>
+	</div>
+</div>
+
+<?php include("../common/footer.php");?>
+
 
 <?php
 	if (isset($msg_error_0)){
@@ -1347,9 +1358,9 @@ function ImprimirRecibo($recibo_arr){
 }
 
 ?>
-<form name=reservacion method=post action="../reserve/reservar_ex.php">
-<input type=hidden name=encabezado  value="s">
-<input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
+<form name="reservacion" method="post" action="../reserve/reservar_ex.php">
+<input type="hidden" name="encabezado"  value="s">
+<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
 <?php if (isset($arrHttp["reserve"])) echo "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
       if (isset($arrHttp["base"]))  echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
 	  if (isset($control_number))   {
@@ -1359,14 +1370,14 @@ function ImprimirRecibo($recibo_arr){
 </form>
 
 
-<form name=busqueda action=../reserve/buscar.php method=post>
-<input type=hidden name=base>
-<input type=hidden name=desde value=reserva>
-<input type=hidden name=count value=1>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion value=formab>
-<input type=hidden name=copies value=<?php if (isset($copies)) echo $copies ?>>
-<input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
+<form name="busqueda" action="../reserve/buscar.php" method="post">
+<input type="hidden" name="base">
+<input type="hidden" name="desde" value="reserva">
+<input type="hidden" name="count" value="1">
+<input type="hidden" name="cipar">
+<input type="hidden" name="Opcion" value="formab">
+<input type="hidden" name="copies" value="<?php if (isset($copies)) echo $copies ?>">
+<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
 
 </form>
 

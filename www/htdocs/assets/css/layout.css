@@ -1,5 +1,6 @@
 /*
 ** 2021-06-26 fho4abcd Improve distributor logo styles
+** 2023-01-19 fho4abcd Removed bad !important and }} syntax error
 */
 /* general styles */
 body, html {
@@ -467,7 +468,7 @@ A.menuButton {
 	}
 
 	.formHead, .formContent {
-	/*	padding: 20px;*/
+		padding: 20px;
 		justify-content: flex-start;
 	}
 
@@ -904,7 +905,7 @@ right: 15px;
 .abcd-sidebar{
 	box-sizing: inherit;
 	height:100%;
-	position:relative;!important;
+	position:relative;
 	z-index:1;
 	overflow: initial;
 }
@@ -934,7 +935,7 @@ right: 15px;
 .abcd-btn,.abcd-button{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .abcd-disabled,.abcd-btn:disabled,.abcd-button:disabled{cursor:not-allowed;opacity:0.3}.abcd-disabled *,:disabled *{pointer-events:none}
 .abcd-dropdown-hover:hover > .abcd-button:first-child,.abcd-dropdown-click:hover > .abcd-button:first-child{background-color:#ccc;color:#000}
-.abcd-dropdown-hover.abcd-mobile,.abcd-dropdown-hover.abcd-mobile .abcd-btn,.abcd-dropdown-hover.abcd-mobile .abcd-button,.abcd-dropdown-click.abcd-mobile,.abcd-dropdown-click.abcd-mobile .abcd-btn,.abcd-dropdown-click.abcd-mobile .abcd-button{width:100%}}
+.abcd-dropdown-hover.abcd-mobile,.abcd-dropdown-hover.abcd-mobile .abcd-btn,.abcd-dropdown-hover.abcd-mobile .abcd-button,.abcd-dropdown-click.abcd-mobile,.abcd-dropdown-click.abcd-mobile .abcd-btn,.abcd-dropdown-click.abcd-mobile .abcd-button{width:100%}
 .abcd-button:hover{
 	color:#000!important;
 	background-color:#ccc!important;

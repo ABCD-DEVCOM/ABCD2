@@ -67,7 +67,7 @@ global $copies,$ix_nb,$base_sel;
 		$copies="N";
 		$bases_p=SeleccionarLoansDat($db_path,$msgstr);
 	}else{
-		$copies="S";
+		$copies="Y";
 		$bases_p=SeleccionarBasesDat($db_path,$msgstr);
 	}
 	return $bases_p;
@@ -117,7 +117,8 @@ function EnviarForma(){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]?>")
 		return
 	}
-    document.forma1.submit()}
+    document.forma1.submit()
+}
 
 function AbrirIndice(Tipo,xI){
 	Ctrl_activo=xI
@@ -221,6 +222,4 @@ if (isset($arrHttp["usuario"]) and $arrHttp["usuario"]!="")
 
 </form>
 <?php include("../common/footer.php");
-echo "</body></html>" ;
-
 ?>

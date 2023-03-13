@@ -6,6 +6,11 @@
 2021-08-02 fho4abcd Import PDF in menu bar
 2021-08-29 fho4abcd Modified Import PDF into Upload Document
 2021-12-08 fho4abcd Quick search layout + some translations + translation/modify edit pft button+removed some dividers.Code layout more readable
+2023-01-19 fho4abcd Menu "default" to buttons + removed unused size parameters
+2023-01-20 fho4abcd Use better buttons for "default".
+2023-01-27 fho4abcd Layout improvements+more titles. Moved code for field dropdown to inline
+2023-01-29 fho4abcd quick fix to make browse by menu work again
+2023-02-03 fho4abcd Improve browse by, add code for selected records
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -24,35 +29,6 @@ foreach ($fst_file as $value){
     if (trim($value)!=""){
         $fst[]=trim($value);
     }
-}
-// Create the label + dropdown + icon for the quick serach
-$pal="";
-if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
-    $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
-
-    $pal="<select name=blibre onchange=\"document.forma1.busqueda_palabras.value='';\" style=\"width:100px\">";
-    foreach ($fpb as $value){
-        if (trim($value)!=""){
-            $y=explode('|',$value);
-            $y[2]=trim($y[2]);
-            foreach ($fst as $linea){
-                if (stripos($linea,$y[2])>0){
-                    $y[2]=$y[2].'|';
-                    $linea=str_replace("  "," ",$linea);
-                    $it=explode(" ",$linea);
-                    if ($it[1]==8)
-                        $y[2].='W';
-                    break;
-                }
-
-            }
-            $pal.="<option value=".trim($y[2]).">".trim($y[0]);
-        }
-
-    }
-    $pal.="</select>";
-    $pal.="<a class='btn-toolbar-blue' href=javascript:Diccionario() title='".$msgstr["m_quicksrc"]."'><i class='fab fa-searchengin'></i></a>";
-    unset($fpb);
 }
 ?>
 
@@ -193,37 +169,63 @@ function GenerarWks(){
 }
 </script>
 <form name=forma1 onsubmit="return false" method=post>
-<script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js"></script>
-<script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js"></script>
-<script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js"></script>
-<script language="JavaScript" type="text/javascript" src="js/lr_trim.js"></script>
-<?php if (isset($_SESSION["screen_width"])){
-	      	$SW=$_SESSION["screen_width"];
-	      	$TH=90;
-   	  	 }else{
-   	  	 	$SW=1200;
-   	  	 	$TH=90;
-   	  	 }
-		if (isset($FRAME_2H) and $FRAME_2H!="") $TH=$FRAME_2H;
-?>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXProtobar.js?<?php echo time();?>"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXToolbar.js?<?php echo time();?>"></script>
+<script language="JavaScript" type="text/javascript" src="js/dhtmlXCommon.js?<?php echo time();?>"></script>
+<script language="JavaScript" type="text/javascript" src="js/lr_trim.js?<?php echo time();?>"></script>
 
 <!--SETS UP THE DATA ENTRY TOOLBAR-->
-<table class="toolbar-dataentry" style="height=<?php echo $TH;?>" >
+<table class="toolbar-dataentry" >
     <tr> <!-- row with cells for the toolbar top row-->
         <td class="ph-10">
         <!-- goto record -->
         <label><?php echo $msgstr["m_ir"]?></label>
-        <input type=text  name=ir_a size=15 value='' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
+        <input type=text  name=ir_a size=15 value='' title='Enter record number' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
         <!-- quick search -->
         &nbsp; &nbsp;
-        <label><?php echo $msgstr["buscar"]?></label><?php echo " ".$pal;?>
-        <input style="width:30%;" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''>
+        <label><?php echo $msgstr["buscar"]?></label><?php
+        // Create the label + dropdown + icon for the quick serach
+        if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
+            $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
+            ?>
+            <select name=blibre onchange="document.forma1.busqueda_palabras.value=''" title='<?php echo $msgstr["selcampob"];?>'>
+            <?php
+            foreach ($fpb as $value){
+                if (trim($value)!=""){
+                    $y=explode('|',$value);
+                    $y[2]=trim($y[2]);
+                    foreach ($fst as $linea){
+                        if (stripos($linea,$y[2])>0){
+                            $y[2]=$y[2].'|';
+                            $linea=str_replace("  "," ",$linea);
+                            $it=explode(" ",$linea);
+                            if ($it[1]==8)
+                                $y[2].='W';
+                            break;
+                        }
+
+                    }
+                    ?>
+                    <option value="<?php echo trim($y[2])?>" ><?php echo trim($y[0]);?></option>
+                    <?php
+                }
+            }
+            unset($fpb);
+            ?>
+            </select>
+            <a class='btn-toolbar-blue' href=javascript:Diccionario()>
+                <i class='fab fa-searchengin' title="<?php echo $msgstr["m_quicksrcwith"]?>"></i>
+            </a>
+            <?php
+        }
+        ?>
+        <input style="width:25%;" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''
+            title="<?php echo $msgstr["m_enterterms"];?>">
 
         <div class="GenerarWks">	
-            <label><?php echo $msgstr["displaypft"]?>: </label>
+            <label><?php echo $msgstr["displaypft"]?> </label>
             <select name=formato onChange="Javascript:GenerarDespliegue()">
             </select>
-
             <?php
             if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or
                 isset($_SESSION["permiso"]["CENTRAL_EDPFT"]) or
@@ -234,15 +236,14 @@ function GenerarWks(){
                     <i class="fas fa-edit" alt="edit display format" title="<?php echo $msgstr["m_editdispform"];?>"></i>
                 </a>
             <?php } ?>
-
         </div>
         </td>
     </tr>
-    <tr><!-- row and cell with toolbar object -->
+    <tr><!-- row and cell with toolbar object + worksheet select-->
         <td class="ph-10">
             <div id="toolbarBox" style="position:relative"></div>
             <div class="GenerarWks">
-                <label><?php echo $msgstr["fmt"]?>: </label>
+                <label><?php echo $msgstr["fmt"]?> </label>
                 <select name="wks" onChange="Javascript:GenerarWks()"></select>
             </div>
         </td>
@@ -259,8 +260,12 @@ function GenerarWks(){
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_left_24_regular.svg',24,24,2,'0_anterior','<?php echo $msgstr["m_anterior"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_ios_arrow_right_24_regular.svg',24,24,3,'0_siguiente','<?php echo $msgstr["m_siguiente"]?>'))
     toolbar.addItem(new dhtmlXImageButtonObject('../../assets/svg/catalog/ic_fluent_arrow_next_24_regular.svg',24,24,4,'0_ultimo','<?php echo $msgstr["m_ultimo"]?>'))
-    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search,selected_records,undo_selected','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>','browse',100,100,''))
-    //    toolbar.addItem(new dhtmlXSelectButtonObject('select',',mfn,search','<?php echo $msgstr["browse"]?>,Mfn,<?php echo $msgstr["busqueda"]?>','browse',100,100,''))
+    selectobj=new dhtmlXSelectButtonObject('browseby',
+        'mfn,search,selected_records,undo_selected',
+        'Mfn,<?php echo $msgstr["busqueda"]?>,<?php echo $msgstr["selected_records"]?>,<?php echo $msgstr["undo_selected"]?>',
+        'browse',120,100,'<?php echo $msgstr["browse"]?>')
+        toolbar.addItem(selectobj)
+    selectobj.setSelected('mfn')
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_1'))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_search_24_regular.svg","24","24",5,"1_buscar","<?php echo $msgstr["m_buscar"]?>"))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_clipboard_search_24_regular.svg","24","24",5,"search_history","<?php echo $msgstr["m_history"]?>"))
@@ -294,9 +299,14 @@ function GenerarWks(){
         ?>
         toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_arrow_download_24_regular.svg","24","24",19,"2_z3950","<?php echo $msgstr["m_z3950"]?>"))
     <?php }
+        ?>
+        toolbar.addItem(new dhtmlXToolbarDividerXObject('div_3'))
+    <?php
         if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_VALDEF"]) or isset($_SESSION["permiso"][$db."_CENTRAL_ALL"])  or isset($_SESSION["permiso"][$db."_CENTRAL_VALDEF"])){
         ?>
-        toolbar.addItem(new dhtmlXSelectButtonObject('defaultval',',editdv,deletedv','<?php echo $msgstr["valdef"]?>,<?php echo $msgstr["editar"]?>,<?php echo $msgstr["eliminar"]?>','',80,80,''))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_template_24_regular.svg","24","24",13,"editdv","<?php echo $msgstr["editar"].' '.$msgstr["valdef"]?>"))
+        toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_trace_template_24_regular.svg","24","24",13,"deletedv","<?php echo $msgstr["eliminar"].' '.$msgstr["valdef"]?>"))
+        toolbar.addItem(new dhtmlXToolbarDividerXObject('div_4'))
     <?php }
         if ((isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_BARCODE"]) or
             isset($_SESSION["permiso"][$db."_CENTRAL_ALL"]) or isset($_SESSION["permiso"][$db."_CENTRAL_BARCODE"]))
@@ -352,21 +362,21 @@ function GenerarWks(){
 
 	function onButtonClick(itemId,itemValue){
 		switch (itemId){
-			<?php echo $select;?>
-			case "select":
+			case "browseby":
 				switch (itemValue){
 					case "mfn":
 						top.browseby="mfn"
 						top.mfn=top.Mfn_Search -1
-						top.maxmfn=999999999
 						if (top.mfn<=0) top.mfn=1
 						top.Menu("proximo")
 						break
 					case "search":
 						if (top.Expresion==""){
 							alert("<?php echo $msgstr["faltaexpr"]?>")
-							var item=top.menu.toolbar.getItem('select');
-    						item.selElement.options[0].selected =true
+							var item=top.menu.toolbar.getItem('browseby');
+							item.selElement.options[0].selected =true
+							top.browseby="mfn"
+							top.Menu("proximo")
 							return
 						}
 						top.browseby="search"
@@ -377,8 +387,10 @@ function GenerarWks(){
 					case "selected_records":
 						if (top.RegistrosSeleccionados==""){
 							alert("<?php echo $msgstr["no_sel_records"]?>")
-							var item=top.menu.toolbar.getItem('select');
-    						item.selElement.options[0].selected =true
+							var item=top.menu.toolbar.getItem('browseby');
+							item.selElement.options[0].selected =true
+							top.browseby="mfn"
+							top.Menu("proximo")
 							return
 						}
 						top.browseby="selected_records"
@@ -387,18 +399,24 @@ function GenerarWks(){
 						top.Menu("proximo")
 						break
 					case "undo_selected":
-						top.RegistrosSeleccionados=""
-						alert("Ya no hay registros seleccionados")
+						if(top.RegistrosSeleccionados=="") {
+							alert("<?php echo $msgstr["s_no_mfn"]." ".$msgstr["bmfn"];?>");
+						} else {
+							top.RegistrosSeleccionados=""
+							alert("<?php echo $msgstr["s_mfn_cleared"]." ".$msgstr["bmfn"];?>");
+						}
+						var item=top.menu.toolbar.getItem('browseby');
+						item.selElement.options[0].selected =true
 						top.browseby="mfn"
-
-						top.Listar_pos=-1
+						top.Menu("proximo")
 				}
 				break
-			case "defaultval":
-				top.Menu(itemValue)
-				var item=top.menu.toolbar.getItem('defaultval');
-				item.selElement.options[0].selected =true
-				break
+			case "editdv":
+				top.Menu('editdv')
+				break;
+			case "deletedv":
+				top.Menu('deletedv')
+				break;
 			case "database":
 				top.Menu('database')
 				break;

@@ -5,6 +5,9 @@
 20220202 fho4abcd modified size of popup window for picklist
 20220207 fh04abcd Improve html & backbutton 
 20220214 fh04abcd Add form selectarchivo & javascript function SelectArchivo
+20230119 fho4abcd Removed commented style section
+20230203 fho4abcd Removed unused function SeleccionarRegistro
+20230210 fho4abcd Improve text in breadcrumb
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -37,28 +40,8 @@ if (!isset($_SESSION["permiso"])){
 	margin: 10px 10px 5px 5px;
 	}
 	headerDiv a:hover {
-	color: #;
+	color: #ff0000;
 	}
-</style>
-
-<style type="text/css">
-
-/*
-input,textarea {
-    border: 1px solid #CCCCCC;
-    -webkit-box-shadow:
-      inset 0 0 4px  rgba(0,0,0,0.1),
-            0 0 4px rgba(0,0,0,0.1);
-    -moz-box-shadow:
-      inset 0 0 4px  rgba(0,0,0,0.1),
-            0 0 4px rgba(0,0,0,0.1);
-    box-shadow:
-      inset 0 0 4px  rgba(0,0,0,0.1),
-            0 0 4px rgba(0,0,0,0.1);
-    padding: 2px;
-    background: rgba(255,255,255,0.5);
-    margin: 0 0 0px 0;
-}*/
 </style>
 
 <!-- Estilos para el tooltip -->
@@ -69,18 +52,18 @@ a.tooltip:hover {text-decoration:none;}
 a.tooltip span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; line-height:16px; }
 a.tooltip:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#eeeeee;}
 .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;} /*CSS3 extras*/
-a.tooltip span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+a.tooltip span { border-radius:4px; -webkit-border-radius: 4px;  -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
 </style>
 
 <!-- calendar stylesheet -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dataentry/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+  <link rel="stylesheet" type="text/css" media="all" href="/assets/calendar/calendar-win2k-cold-1.css?<?php echo time();?>" title="win2k-cold-1" />
   <!-- main calendar program -->
-  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/assets/calendar/calendar.js?<?php echo time();?>"></script>
   <!-- language for the calendar -->
-  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/assets/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
   <!-- the following script defines the Calendar.setup helper function, which makes
        adding a calendar a matter of 1 or 2 lines of code. -->
-  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/assets/calendar/calendar-setup.js?<?php echo time();?>"></script>
 
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/campos.js?<?php echo time(); ?>></script>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/windowdhtml.js></script>
@@ -234,7 +217,7 @@ Val_text=""
 		}
 		<?php echo "dateformat=\"$config_date_format\"\n" ?>
 
-		if (dateformat=="DD/MM/YY"){
+		if (dateformat=="DD/MM/YY" || dateformat=="d/m/Y") {
 			iso=d[2]+d[1]+d[0]
 		}else{
 			iso=d[2]+d[0]+d[1]
@@ -1031,16 +1014,6 @@ function AsignarTabla(){
 	}
 }
 
-function SeleccionarRegistro(Mfn){
-	if (document.forma1.chkmfn.checked){
-		if (top.RegistrosSeleccionados.indexOf('|'+Mfn+'-')==-1){
-			top.RegistrosSeleccionados+='|'+Mfn+"-"
-		}
-	}else{
-		top.RegistrosSeleccionados=top.RegistrosSeleccionados.replace('|'+Mfn+'-','');
-	}
-}
-
 //MANEJO DEL COMBOBOX
 // This is the function that refreshes the list after a keypress.
 // The maximum number to show can be limited to improve performance with
@@ -1151,9 +1124,9 @@ if (isset($arrHttp["encabezado"])){
 				<div class="breadcrumb">
 				<?php
                     if ($arrHttp["Mfn"]=="New"){
-                        echo $msgstr["newoper"];
+                        echo $msgstr["newrecindb"]." ".$arrHttp["base"];
                     } else {
-                        echo $msgstr["updateop"];
+                        echo $msgstr["updaterecindb"]." ".$arrHttp["base"];
                     }
                 ?>
 				</div>

@@ -1,5 +1,6 @@
-'<strong>&nbsp; Mfn: ',f(mfn,1,0),'</b></td>'/
+'<b>&nbsp; Mfn: ',f(mfn,1,0),'</b>'/
 '<table   class=td2 border=0>'/
+'	<tr>'/
 '	<td valign=top>Name of user</td>'/
 '	<td>'v10'</td>'/
 '	<tr>'/
@@ -8,7 +9,7 @@
 '	<tr>'/
 '	<td>Password</td>'/
 '	<td>'v30'</td>'/
-'   <tr>'/
+'	<tr>'/
 '	<td>Profile</td>'/
 '	<td valign=top>'(|<br>|+v40^a,| (|v40^b|)|)'</td>'/
 '	<tr>

@@ -76,14 +76,14 @@ $sel_base="N";
 ?>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <!-- calendar stylesheet -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dataentry/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+  <link rel="stylesheet" type="text/css" media="all" href="/assets/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
-  <script  language="JavaScript" type="text/javascript"" src="../dataentry/calendar/calendar.js"></script>
+  <script  language="JavaScript" type="text/javascript"" src="/assets/calendar/calendar.js"></script>
   <!-- language for the calendar -->
-  <script  language="JavaScript" type="text/javascript" src="../dataentry/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
+  <script  language="JavaScript" type="text/javascript" src="/assets/calendar/lang/calendar-<?php echo $_SESSION["lang"]?>.js"></script>
   <!-- the following script defines the Calendar.setup helper function, which makes
        adding a calendar a matter of 1 or 2 lines of code. -->
-  <script language="JavaScript" type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
+  <script language="JavaScript" type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
 <script>
 kardex=""
 
@@ -370,10 +370,11 @@ if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 				   Calendar.setup({
        					inputField     :    \"date"."_c\",     // id of the input field
 						ifFormat       :    \"";
-						if ($config_date_format=="DD/MM/YY")    // format of the input field
+						if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {    // format of the input field
 						   	echo "%d/%m/%Y";
-						else
+						} else {
 							echo "%m/%d/%Y";
+						}
 						echo "\",
 						    button         :    \"f_date\",  // trigger for the calendar (button ID)
 						   	align          :    '',           // alignment (defaults to \"Bl\")

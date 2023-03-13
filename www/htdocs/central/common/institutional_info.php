@@ -12,6 +12,10 @@
 20220613 fho4abcd Removed unused functions Modulo(gave errors) + ChangeLang + AbrirAyuda + rename Cambiarbase:avoid confusion with duplicates
     display language menu value in "best" characterset +
     remove BOM (Byte Order Mark) if present on first line of language file
+20221122 rogercgui Removed $session_mfn_admin=="1" in line 181 because it displayed the list of bases in data entry only for MFN 1 of the Acces database
+20221128 fho4abcd if $module_odds is set: show language dropdown & do not show logout
+20230116 fho4abcd moved initial db selection code in one function+visual warning if none is selected. Some cleanup of unused code
+20230120 fho4abcd Added hovered titles
 */
 
 global $ABCD_scripts_path;
@@ -46,24 +50,70 @@ if (file_exists($db_path."bases.dat")){
         }
     }
 }
+if (count($lista_bases)<1) echo "<div style='color:red'>".$msgstr["db_nodbs"].$db_path."bases.dat"."</div>";
 
 function database_list() {
-    global $lista_bases, $arrHttp, $def;
-    $i=-1;
+    /*
+    ** Show the list of databases with the goal to select one.
+    ** A selected database is communicated via $arrHttp["base"]. Input & output
+    ** If no database is set an extra option is shown in another color to attend the operator on this status
+    */
+    global $lista_bases, $arrHttp, $def, $msgstr;
+    // Check first if there is a selected database in the list of shown databases
+    $xselected="";
+    $xdatabase="";
+    $nrinlist=0;
+    foreach ($lista_bases as $key => $value) {
+        $value=trim($value);
+        $t=explode('|',$value);
+        if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
+            if ((isset($def['MAIN_DATABASE'])) && $def['MAIN_DATABASE']==$key) {
+                $xselected=" selected";
+            } elseif (isset($arrHttp["base"]) and $arrHttp["base"]==$key){
+                $xselected=" selected";
+            }
+            $nrinlist++;
+            $xdatabase=$key;
+        }
+    }
+    // The case that the list is only one entry
+    if ( $xselected=="" && $xdatabase!="" && $nrinlist==1) {
+        $arrHttp["base"]=$xdatabase;
+        $xselected="notblank";
+    }
+    ?>
+    <label for=base><?php echo $msgstr["db_current"]?> </label>
+    <?php
+    if ( $xselected=="" ) {
+        //The case that no database is selected. Show <select>+warning <option>
+        ?>
+        <select class="heading-database heading-database-att" name=base  id="selbase" onchange="doReload(this.value)" >
+            <option value='' disabled selected style='display:none'><?php echo $msgstr['db_clck_selectdb']?></option>;
+        <?php
+    } else {
+        // All other cases (a selected database) need only the <select> statement
+        // But for some odd reason the selected keyword does not work if if applied to the first option
+        // This why an empty dummy is added
+        ?>
+        <select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)" >
+            <option value='' disabled ></option>;
+        <?php
+    }
+    // Show the database names and preselect if a applicable
     foreach ($lista_bases as $key => $value) {
         $xselected="";
         $value=trim($value);
         $t=explode('|',$value);
         if (isset($_SESSION["permiso"]["db_".$key]) or isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])){
-            
             if ((isset($def['MAIN_DATABASE'])) && $def['MAIN_DATABASE']==$key) {
                 $xselected=" selected";
-                //echo "<option value=\"$key|adm|$value\" $xselected>".$t[0]."\n";
-            } elseif (isset($arrHttp["base"]) and $arrHttp["base"]==$key or count($lista_bases)==1) 
+            } elseif (isset($arrHttp["base"]) and $arrHttp["base"]==$key ){
                 $xselected=" selected";
-                echo "<option value=\"$key|adm|$value\" $xselected>".$t[0]."\n";
+            }
+            echo "<option value=\"$key|adm|$value\" $xselected>".$t[0]."</option>\n";
         }
     }
+    echo "</select>";
 }
 ?>
 
@@ -116,9 +166,6 @@ function CambiarBaseInst(){
     top.Search_pos=0
     lang=document.OpcionesMenu.lang.value
     switch (top.ModuloActivo){
-        case "dbadmin":
-            top.menu.location.href="../dbadmin/index.php?base="+base
-            break;
         case "catalog":
             i=document.OpcionesMenu.baseSel.selectedIndex
             document.OpcionesMenu.baseSel.options[i].text
@@ -165,20 +212,16 @@ function CambiarLenguaje(){
                 <input type=hidden name=retorno value="../common/inicio.php">
                 <input type=hidden name=modulo value=catalog>
                 <input type=hidden name=screen_width>
-                <?php if (isset($arrHttp["newindow"]))
-                echo "<input type=hidden name=newindow value=Y>\n";?>
-                <label><?php echo $msgstr["db_list"]?> </label>
-                <select class="heading-database" name=base  id="selbase" onchange="doReload(this.value)">
-                    <option value=""></option>
-                    <?php database_list(); ?>
-                </select>
+                <?php if (isset($arrHttp["newindow"])) echo "<input type=hidden name=newindow value=Y>\n";
+                database_list();
+                ?>
             </form>
         <?php
         }
     }
 
     global $verify_selbase;
-    if (($verify_selbase=="Y") && ($_SESSION["mfn_admin"]=="1")) {
+    if (($verify_selbase=="Y")) {
         ?>
         <form name=OpcionesMenu accept-charset=utf-8>
         <input type=hidden name=base value="">
@@ -187,11 +230,10 @@ function CambiarLenguaje(){
         <input type=hidden name=tlit value="">
         <input type=hidden name=nreg value="">
         <input type=hidden name=lang value="">
-        <label><?php echo $msgstr["db_list"]?></label>
+        <label><?php echo $msgstr["db_current"]?></label>
         <select class="heading-database" name="baseSel" onchange="CambiarBaseInst()" onclick="VerificarEdicion()">
-        <option value=""></option>
+        <option value="" disabled></option>
         <?php
-        $i=-1;
         $hascopies="";
         foreach ($lista_bases as $key => $value) {
             $xselected="";
@@ -204,7 +246,6 @@ function CambiarLenguaje(){
                     }
                 }
                 if (!isset($t[1])) $t[1]="";
-                $database_list=$key;
                 echo "<option value=\"$key|adm|".$t[1]."\" $xselected>".$t[0]."\n";
             }
         }
@@ -272,7 +313,7 @@ function CambiarLenguaje(){
         }
     } 
     global $circulation, $acquisitions;
-    if  (($central=="Y") or  ($circulation=="Y") or ($acquisitions=="Y") or ($verify_selbase=="Y"))  {
+    if  (($central=="Y") or  ($circulation=="Y") or ($acquisitions=="Y") or ($verify_selbase=="Y") or isset($module_odds))  {
         if (isset($_REQUEST['base'])) {
             $selbase = $_REQUEST['base'];
         } else {
@@ -287,7 +328,7 @@ function CambiarLenguaje(){
                     <input type="hidden" name="tlit" value="">
                     <input type="hidden" name="nreg" value="">  
 
-                    <select name="lenguaje"  onchange="CambiarLenguaje()">
+                    <select name="lenguaje"  onchange="CambiarLenguaje()" title='<?php echo $msgstr["seleccionar"]." ".$msgstr["lang"]?>' >
                     <?php
                     include "inc_get-langtab.php";
                     $a=get_langtab();
@@ -324,7 +365,7 @@ function CambiarLenguaje(){
 <?php } ?>
 
             <li>
-                <a class="bt-charset" href="#"><?php if ( isset( $charset )) {
+                <a class="bt-charset" title='<?php echo $msgstr["page_encoding"];?>' href="#"><?php if ( isset( $charset )) {
                           echo $charset;
                       } else {
                           echo $meta_encoding;
@@ -350,7 +391,10 @@ function CambiarLenguaje(){
             </li>
 
             <li>
-                <a class="bt-exit" href="../common/logout.php"><img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
+            <?php if (!isset($module_odds)) { ?>
+                <a class="bt-exit" href="../common/logout.php" title='<?php echo $msgstr["logout"];?>' >
+                <img src="/assets/svg/ic_fluent_sign_out_24_regular.svg"></a>
+            <?php }?>
             </li>
         </ul>
     </nav>

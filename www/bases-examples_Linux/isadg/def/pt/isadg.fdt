@@ -1,0 +1,36 @@
+H||1 Área de identificação|0|0||||||||||||0||0|0|||
+F|11|1.1 Código de referência|0|0|||X|||||||||1||0|0|||
+F|12|1.2 Título|0|0|||X||100|||||||1||0|0|||
+F|13|1.3 Data(s)|0|0|||D|||||||||1||0|0|||
+F|14|1.4 Nível de descrição|0|0|||SRO|||P|nivel.tab|||||1||0|0|||
+F|15|1.5 Dimensão e suporte|0|1|||X|||||||||1||0|0|||
+H||2 Área de contextualização|0|0||||||||||||0||0|0|||
+F|21|2.1 Nome(s) do(s) produtor(es)|0|0|||X|||||||||1||0|0|||
+F|22|2.2 História administrativa/Biografia|0|1|||X|||||||||1||0|0|||
+F|23|2.3 História arquivística|0|1|||X|||||||||1||0|0|||
+F|24|2.4 Procedência|0|0|||X|||||||||1||0|0|||
+H||3 Área de conteúdo e estrutura|0|0||||||||||||0||0|0|||
+F|31|3.1 Âmbito e conteúdo|0|0|||S|||P|alcance.tab|||||1||0|0|||
+F|32|32 Avaliação, eliminação e temporalidade|0|1|||X|||||||||1||0|0|||
+F|33|33 Incorporações|0|0|||X|||||||||1||0|0|||
+F|34|34 Sistema de arranjo|0|0|||X|||||||||1||0|0|||
+H||Condições de Acesso e Área de Uso|0|0||||||||||||0||0|0|||
+F|41|41 Condições de acesso|0|0|||S|||P|acceso.tab|||||1||0|0|||
+F|42|42 Condições de reprodução|0|0|||X|||||||||1||0|0|||
+F|43|43 Idioma da documentação|0|1|||X|||||||||1||0|0|||
+F|44|44 Características físicas e requisitos técnicos|0|0|||X|||||||||1||0|0|||
+F|45|45 Instrumentos de pesquisa|0|1|||S|||P|instrumento.tab|||||1||0|0|||
+H||Área de Fontes Relacionadas|0|0||||||||||||0||0|0|||
+F|51|51 Existência e localização dos originais|0|1|||X|||||||||1||0|0|||
+F|52|52 Existência e localização de cópias|0|1|||X|||||||||1||0|0|||
+F|53|53 Unidades de descrição relacionadas|0|1|||X|||||||||1||0|0|||
+F|54|54 Nota sobre publicação|0|1|||X|||||||||1||0|0|||
+H||Área de Notas|0|0||||||||||||0||0|0|||
+F|61|61 Notas sobre conservação|0|1|||X|||||||||1||0|0|||
+F|62|62 Notas gerais|0|1|||X|||||||||1||0|0|||
+H||Área de controle da descrição|0|0||||||||||||0||0|0|||
+F|71|71 Nota do arquivista|0|1|||X|||||||||1||0|0|||
+F|72|72 Regras ou convenções|0|0|||S|||P|normas.tab|||||1||0|0|||
+F|73|73 Data(s) da(s) descrição(ões)|0|0|||D|||||||||1||0|0|||
+F|80|80 Recurso Digital|0|1|d||U|||||||||0||0|0|||
+F|100|Operador e Data|0|1|||OD|3||||||||0||0|0|||

@@ -30,6 +30,21 @@ for padding: 1rem use:
 
 <img src="img.jpg" class="p-3">
 
+-------------------------------------------------
+
+# Width classes
+
+w-1=10%
+w-2=20%
+w-3=30%
+w-4=40%
+w-5=50%
+w-6=60%
+w-7=70%
+w-8=80%
+w-9=90%
+w-10=100
+
 */
 
 /* MARGIN X Y */
@@ -446,4 +461,44 @@ for padding: 1rem use:
 
 .ps-5 {
   padding-left: 3rem !important;
+}
+
+.w-1 { 
+  width: 10%;
+}
+
+.w-2 {
+  width: 20%;
+}
+
+.w-3 {
+  width: 30%;
+}
+
+.w-4 {
+  width: 40%;
+}
+
+.w-5 {
+  width: 50%;
+}
+
+.w-6 {
+  width: 60%;
+}
+
+.w-7 {
+  width: 70%;
+}
+
+.w-8 {
+  width: 80%;
+}
+
+.w-9 {
+  width: 90%;
+}
+
+.w-10 {
+  width: 100%;
 }

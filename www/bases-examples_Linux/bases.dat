@@ -1,7 +1,7 @@
 agrovoc|Agrovoc Thesaurus
 biblo|Cepal|Y
 dcdspace|dSpace Bridge
-doajuni|DOAJ: Directory of Open Access Journals
+doaj|DOAJ: Directory of Open Access Journals
 dubcore|DublinCore Repository
 experts|Experts
 isadg|ISAD(G): International Standard Archival Description
@@ -18,5 +18,5 @@ users|Circ - Patrons
 reserve|Circ - Reservations
 suspml|Circ - Suspensions and fines
 trans|Circ - Transactions Loans
-acces|Sys - Administration Users/Operators (acces) 
+acces|Sys - Administration Users/Operators (acces)
 unicode|Sys - UNICODE

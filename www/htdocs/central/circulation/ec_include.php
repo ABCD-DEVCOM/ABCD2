@@ -95,7 +95,7 @@ if (isset($arrHttp["usuario"])){
 			$ec_output.="<br>".$msgstr["reserve"];
 			$copies="";
 			$ec_output.=SeleccionarBaseDeDatos($db_path,$msgstr);
-			$ec_output.="<br><a href=\"javascript:Reservar('".$arrHttp["usuario"]."')\">
+			$ec_output.="<br><a class='bt bt-green' href=\"javascript:Reservar('".$arrHttp["usuario"]."')\">
 								".$msgstr["reserve"]."
 							</a>";
 			$ec_output.="</td><td>";
@@ -106,7 +106,7 @@ if (isset($arrHttp["usuario"])){
 	    if (isset($arrHttp["reserve"])){
 			$ec_output.="</td></table>";
 		}
-		//$ec_output.="\n<script>nMultas=0;nSusp=0;nNota=0;</script>\n" ;
+		$ec_output.="\n<script>nMultas='';nSusp='';nNota='';</script>\n" ;
 		include("sanctions_read.php");
 		$ec_output.=$sanctions_output;
 

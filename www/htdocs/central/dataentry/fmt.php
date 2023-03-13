@@ -6,6 +6,14 @@
 2021-07-07 fho4abcd Improve leader reformat (was broken since update to OPAC)
 2021-07-22 fho4abcd Repair PHP errors due to previous (Improve leader format...)
 20220711 fho4abcd Use $actparfolder as location for .par files
+20221222 fho4abcd Translations+new style buttons for search dialog. Add div-helper
+20230106 fho4abcd Don't set arrHttp values to **INVALID** if they contain the string "script"+
+                  debug parameter for ActualizarRegistro +
+                  check existence of indexvalue in creation of wks values in case "reintentar"
+20230119 fho4abcd Remove scripts in saved display+improve html for saved display
+20230120 fh04abcd Improved html+remove edit scripts if display is not in edit mode+defaults for $tl and $nr
+20230130 fho4abcd Improve setting of browseby menu. Code for showing record value improved and extended for selected records
+20230210 fho4abcd Show backbutton of actualized record for non-dataentry cases (e.g. acces/users/...). Remove unused cases
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -71,7 +79,7 @@ require_once("../common/get_post.php");
 if (isset($_REQUEST["Expresion"])) $_REQUEST["Expresion"]=urldecode($_REQUEST["Expresion"]);
 
 
-//echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
+// debug if (isset($arrHttp["ValorCapturado"])) echo "<xmp>".$arrHttp["ValorCapturado"]."</xmp>";
 //die;
 require_once("../config.php");
 
@@ -97,7 +105,7 @@ include("../common/header.php");
 
 function InsertarEnlaces($base){
 	// inserta enlaces para desplegar la fdt, fst y formulario de búsqueda avanzada
-	echo "&nbsp; &nbsp; <a href=../dbadmin/fst_leer.php?base=$base target=_blank>FST</a>";
+	echo "&nbsp; &nbsp; <a class='bt bt-blue' href=../dbadmin/fst_leer.php?base=$base target=_blank>FST</a>";
 }
 
 function ReadWorksheetsRights(){
@@ -300,10 +308,10 @@ global $arrHttp,$db_path,$xWxis,$Wxis,$valortag,$tl,$nr,$Mfn,$wxisUrl,$lang_db,$
 	}
 
 	echo "<script>
-	var item=top.menu.toolbar.getItem('select');
-    item.selElement.options[2].selected =true \n";
+	var item=top.menu.toolbar.getItem('browseby');
+    item.selElement.options[1].selected =true \n";
     if (!isset($arrHttp["cambiolang"]))  // Si se dibuja el formulario luego de un cambio de lenguaje, no se actualiza la casilla ir_a porque da un error en javascript
-    	echo "top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.Max_Search.toString()\n";
+    	echo "top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.Max_Search.toString()";
     echo "</script>\n";
 	if ($arrHttp["Formato"]!="ALL"){
 		return "no";
@@ -383,27 +391,44 @@ function ColocarMfn(){
 global $arrHttp;
     $arrHttp["Mfn"]=str_replace("<","",$arrHttp["Mfn"]); //Ojo: Averiguar porque se trae el <
 	if (!isset($arrHttp["ventana"])){
-		echo "<script>
+        ?> <script>
+        var currentMfn=<?php echo $arrHttp["Mfn"];?>;
+        var Listar_pos=0;
 		if (top.window.frames.length>0){
-		\n";
-
-
-		echo "if (top.browseby==\"search\"){
-				top.mfn=".$arrHttp["Mfn"]."\n
-				top.Mfn_Search=".$arrHttp["Mfn"]."\n";
-			if (!isset($arrHttp["cambiolang"])) echo "top.menu.document.forma1.ir_a.value=top.Search_pos.toString()+'/'+top.Max_Search.toString()\n";
-		echo "	}else{ ";
-				if ($arrHttp["Mfn"]!="New"){
-
-					if (isset($arrHttp["Mfn"])) echo "top.mfn=".$arrHttp["Mfn"]."\n";
-					if (isset($arrHttp["Maxmfn"])) echo "top.maxmfn=".$arrHttp["Maxmfn"]."\n";
+            if (top.browseby=="search"){
+				top.mfn=currentMfn;
+				top.Mfn_Search=currentMfn;
+                <?php if (!isset($arrHttp["cambiolang"])) { ?>
+                    top.menu.document.forma1.ir_a.value=top.Search_pos.toString()+'/'+top.Max_Search.toString();
+                <?php } ?>
+            }else if (top.browseby=="selected_records"){
+  					RegSel=top.RegistrosSeleccionados.replace(/__/g,"_")
+  					if (RegSel.substr(0,1)=="_") RegSel=RegSel.substr(1)
+  					SelLen=RegSel.length
+  					if (RegSel.substr(SelLen-1,1)=="_") RegSel=RegSel.substr(0,SelLen-1)
+  					ss=RegSel.split("_")
+                    sslength=ss.length
+                    for (let i=0; i<sslength; i++) {
+                        if (ss[i]==currentMfn){
+                            Listar_pos=i+1;
+                            break;
+                        }
+                    } 
+                <?php if (!isset($arrHttp["cambiolang"])) { ?>
+                    top.menu.document.forma1.ir_a.value=Listar_pos.toString()+'/'+ss.length;
+                <?php } ?>
+            }else{
+				if (currentMfn.toString()!="New"){
+					top.mfn=currentMfn;
+					<?php if (isset($arrHttp["Maxmfn"])) { ?>top.maxmfn=<?php echo $arrHttp["Maxmfn"]?>;<?php } ?>
             	}
-					if (!isset($arrHttp["cambiolang"])) echo "top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.maxmfn.toString()\n";
-        	echo "}
-        	}\n";
-			echo "</script>\n
-
-		";
+				<?php if (!isset($arrHttp["cambiolang"])) { ?>
+                    top.menu.document.forma1.ir_a.value=top.mfn.toString()+'/'+top.maxmfn.toString();
+                <?php } ?>
+        	}
+        }
+        </script>
+        <?php
 	}
 }
 
@@ -439,9 +464,9 @@ global $arrHttp,$variables;
 		}else{
 			if (trim($value)!="") {
 				$arrHttp[$var]=$value;
-				if (stripos($value,"script")!==false){
-					$arrHttp[$var]="**INVALID**";
-				}
+				//if (stripos($value,"script")!==false){// unknown why this check is here. Breaks also legal entries
+				//	$arrHttp[$var]="**INVALID**";
+				//}
 			}
 		}
 
@@ -513,10 +538,6 @@ if (isset($arrHttp["wks"])){
 		$arrHttp["wk_tag_tipom_2"]=$wk[5]; // Tag correspondiente al Tipo de registro 2
 	else
 		$arrHttp["wk_tag_tipom_2"]="";
-
-
-}else{
-
 }
 echo "\n<script>top.toolbarEnabled=\"\"\n</script>";
 
@@ -529,7 +550,6 @@ if (isset($arrHttp["retorno"])){
 }
 if (isset($arrHttp["return"])){
           $retorno.="&return=".$arrHttp["return"];
-
 }
 if (isset($arrHttp["from"])){
 		$retorno.="&from=".$arrHttp["from"];
@@ -540,8 +560,6 @@ if (isset($arrHttp["Status"])){    // value=1 indicates record deleted
 // end settings
 
 if ($arrHttp["Opcion"]=="ver" or $arrHttp["Opcion"]=="cancelar" or $arrHttp["Opcion"]=="buscar" or ($arrHttp["Opcion"]=="actualizar") or $arrHttp["Opcion"]=="save" ) {
-
-
 		if (isset($arrHttp["sort"]))
 			$sort="&sort=".$arrHttp["sort"];
 		else
@@ -593,7 +611,7 @@ foreach ($arrHttp as $var => $value) {
    	}
 
 }
-//foreach ($variables as $key => $value) echo "$key=$value<br>";die;
+// debug foreach ($variables as $key => $value) echo "$key=$value<br>";
 
 // Si la opcion es copiar_captura, se cambia la base de datos para poder leer los archivos de definición
 
@@ -602,9 +620,7 @@ if ($arrHttp["Opcion"]=="captura_bd") {
 	$ciparcap=$arrHttp["cipar"];
 	$arrHttp["base"]=$arrHttp["basecap"];
 	$arrHttp["cipar"]=$arrHttp["ciparcap"];
-
 }
-
 
 
 //Esta variable es para almacenar las tablas que hay que generar con JavaScript
@@ -616,7 +632,6 @@ if (isset($arrHttp["Mfn"]))$Mfn=$arrHttp["Mfn"];
 $login=$arrHttp["login"];
 if (!isset($arrHttp["ver"])) $arrHttp["ver"]="";
 if ($arrHttp["ver"]=="S") {
-
 	$ver=true;
 } else {
 	$ver=false;
@@ -625,24 +640,17 @@ $capturar="NO";
 $actualizar="N";
 
 if (isset ($arrHttp["Opcion"]))  {
-	if ($arrHttp["Opcion"]=="actualizar" || $arrHttp["Opcion"]=="actualizarregistrousuario" || $arrHttp["Opcion"]=="save") $actualizar="SI";
-	if ($arrHttp["Opcion"]=="crear") {
-
-		$actualizar="SI";
-
-	}
-// si se seleccionó la opción nuevo en el menú superior, se transforma a crear para poder crear el nuevo registro
+	if ($arrHttp["Opcion"]=="actualizar" || $arrHttp["Opcion"]=="save") $actualizar="SI";
+	if ($arrHttp["Opcion"]=="crear") $actualizar="SI";
+    // si se seleccionó la opción nuevo en el menú superior, se transforma a crear para poder crear el nuevo registro
 	if ($arrHttp["Opcion"]=="nuevo" or $arrHttp["Opcion"]=="nuevoregistro" ||$arrHttp["Opcion"]=="nuevoregistrousuario") {
 		$Mfn="New";
 		$arrHttp["Opcion"]="crear";
-
 	}
 }
 
 //--------------------------------------------------------------------------
-
-
-// se lee el archivo con los tipos de registro
+// Read file with record types
 unset ($tm);
 $tor="";
 if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
@@ -651,8 +659,10 @@ if (file_exists($db_path.$base."/def/".$_SESSION["lang"]."/typeofrecord.tab")){
 	if (file_exists($db_path.$base."/def/".$lang_db."/typeofrecord.tab"))
 		$tor=$db_path.$base."/def/".$lang_db."/typeofrecord.tab";
 }
-//se carga la tabla de tipos de registro
-// $tl and $nr are the tags where the type of record is stored
+// the record types table is loaded
+// $tl and $nr are the leader tags where the type of record is stored
+$tl="";
+$nr="";
 if ($tor!=""){
 	$fp = file($tor);
 	$ix=0;
@@ -676,10 +686,6 @@ if ($tor!=""){
 		}
 
 	}
-}else{
-	$tl="";
-	$nr="";
-
 }
 $i=-1;
 $ValorCapturado="";
@@ -695,8 +701,7 @@ $OpcionDeEntrada=$arrHttp["Opcion"];
 if (!isset($arrHttp["Formato"])) $arrHttp["Formato"]="";
 if ($arrHttp["Opcion"]=="ver" and $arrHttp["Formato"]=="") $arrHttp["Opcion"]="leer";
 $recdel="";
-$reintentar="";
-//echo $arrHttp["Opcion"];
+// debug echo "<br>switch option=".$arrHttp["Opcion"]."<br>";
 switch ($arrHttp["Opcion"]) {
 	case "reintentar":           // IF A VALIDATION ERROR OCCURS THE RECORD IS REDISPLAYED
     case "save":
@@ -709,11 +714,9 @@ switch ($arrHttp["Opcion"]) {
 			}
     	}
 		CargarMatriz($arrHttp["ValorCapturado"]);
-		//echo "<xmp>";
-//var_dump($variables);
-//echo "</xmp>";
-
-		if (isset($tm) and !isset($arrHttp["wks"])){   //para ver si hay tipo de material  y no viene fijado anteriormente
+		// debug echo "<xmp>";var_dump($variables);echo "</xmp>";
+        // debug echo "<br>worksheet=".$arrHttp["wks"];
+		if (isset($tm) and !isset($arrHttp["wks"])){   //to see if there is a type of material and it is not previously set
 			foreach ($tm as $linea){
 				$tym=explode('|',trim($linea));
 				if (!isset($valortag[$tl])){
@@ -724,7 +727,8 @@ switch ($arrHttp["Opcion"]) {
 					break;
 				}
 				if (isset($tym[1]) and isset($tym[2])){
-					if ($valortag[$tl]==$tym[1] and $tym[2]==""  or $valortag[$tl]==$tym[1] and $valortag[$nr]==$tym[2]) {
+					if ($valortag[$tl]==$tym[1] and $tym[2]==""  or
+                        $valortag[$tl]==$tym[1] and isset($valortag[$nr]) and $valortag[$nr]==$tym[2]) {
 						$arrHttp["wks_a"]=$linea;
 						$arrHttp["wks"]=$tym[0];
 						$arrHttp["wk_tipom_1"]=$tym[1];
@@ -771,15 +775,18 @@ switch ($arrHttp["Opcion"]) {
         	if (!isset($_SESSION["Expresion"][$arrHttp["base"]][$arrHttp["Expresion"]]))
         		$_SESSION["Expresion"][$arrHttp["base"]][$arrHttp["Expresion"]]=$resultado; */
         if ($resultado=="0"){
+            include "../common/inc_div-helper.php";
         	$arrHttp["Opcion"]=="ninguna";
         	echo "	<div class=\"middle form\">
 						<div class=\"formContent\">
-						<table width=100%><td width=10></td><td>\n";
+						<table width=100%><td>\n";
 			//if ($wxisUrl!="") echo $wxisUrl."<br>";
 
-			echo "<font face=arial style=font-size:10px>".$msgstr["expresion"].":<textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea><a href=javascript:NuevaBusqueda()>Buscar</a></font>";
+			echo $msgstr["expresion"].":<br>";
+            echo "<textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea>";
+            echo "<br><a class='bt bt-green' href=javascript:NuevaBusqueda()>".$msgstr["buscar"]."</a>";
 			InsertarEnlaces($arrHttp["base"]);
-			echo "<h4>Records:".$resultado."</h4></div></div>\n";
+			echo "<h4>".$msgstr["selected_records"].": ".$resultado."</h4></div></div>\n";
 			$arrHttp["Mfn"] =1;
 	        ColocarMfn();
 	        echo "</td></table>";
@@ -793,7 +800,7 @@ switch ($arrHttp["Opcion"]) {
 	        if ($resultado!="no"){        //resultado=no indica que ya se formateo el registro
 	        	$ver="s";
 	        	if ($arrHttp["Formato"]!=""){
-	        		echo "<table width=100%><td width=10></td><td><font size+1>$registro.</td></table>";
+	        		echo "<table width=100%><tr><td><font size+1>$registro.</td></table>";
 	        	}else{
 	        		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 	        		echo $arrHttp["Opcion"]." ".$clave_proteccion;
@@ -833,7 +840,7 @@ switch ($arrHttp["Opcion"]) {
 	        }else{
 	        	$ver="s";
 	        	//echo "<br><input type=checkbox value=".$arrHttp["Mfn"]." onclick=javascript:SeleccionarRegistro(".$arrHttp["Mfn"].")> ".$msgstr["seleccionar"];
-	        	echo "<table width=100%><td width=20></td><td>";
+	        	echo "<table width=100%><tr><td>";
 	        	if ($arrHttp["Formato"]!=""){
 	        		echo "<div id=results>".$registro."</div>";
 	        	}else{
@@ -854,28 +861,20 @@ switch ($arrHttp["Opcion"]) {
 			die;
        	break;
 	case "ver":    //Presenta el registro con el formato seleccionado
-        include("scripts_dataentry.php");
-
+		include ("scripts_dataentry.php");
 		$salida= LeerRegistroFormateado($arrHttp["Formato"]);
-
+		if ($arrHttp["Opcion"]!="actualizar" and $record_deleted=="Y") include "../common/inc_div-helper.php";
 		if ($record_deleted=="N") include("toolbar_record.php");
 		$arrHttp["Opcion"]=="ninguna";
+		
         echo "	<div class=\"middle form\">
 					<div class=\"formContent\">\n";
-		//echo "<br><input type=checkbox name=chkmfn value=".$arrHttp["Mfn"]." onclick=javascript:SeleccionarRegistro(".$arrHttp["Mfn"].")> ".$msgstr["seleccionar"];
-		echo "<dd><table><td width=20> </td><td>";
+		echo "<dd><table><tr><td>";
 		echo $salida;
 		echo "</td></table></dd>" ;
-		echo "<script>
-		Mfn_sel=".$arrHttp["Mfn"]."
-		if (top.RegistrosSeleccionados.indexOf('|'+Mfn_sel+'-')!=-1){
-			//document.forma1.chkmfn.checked=true    //ACTIVAR CUANDO SE HAGA LA SELECCION DE REGISTROS
-		}
-		</script>
-		" ;
 //SE AVERIGUA SE SE VA A LEER LA INFORMACIÓN DE OTRA BASE DE DATOS
 		if (isset($record_deleted) and $record_deleted=="Y"){
-			echo "<a href=javascript:Undelete(".$arrHttp["Mfn"].")>undelete</a>";
+			echo "<a href=javascript:Undelete(".$arrHttp['Mfn'].")>".$msgstr["undelete"]."</a>";
 		}
 		if (!isset($arrHttp["capturar"])){
 			ColocarMfn();
@@ -919,7 +918,6 @@ switch ($arrHttp["Opcion"]) {
 		break;
 	case "cancelar":
         if ($arrHttp["Mfn"]=="New") {
-        	include ("scripts_dataentry.php");
         	include("toolbar_record.php");
        		echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
@@ -938,12 +936,13 @@ switch ($arrHttp["Opcion"]) {
 		$res=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,"leer",$arrHttp["login"],"");
 
 		if (isset($arrHttp["Formato"]) and $arrHttp["Formato"]!=""){
-        	include("scripts_dataentry.php");
         	include("toolbar_record.php");
         	echo "<div class=\"middle form\">
-			<div class=\"formContent\">";
-			echo LeerRegistroFormateado($arrHttp["Formato"]);
-        	echo "</form></div></div></div>\n";
+			<div class=\"formContent\">\n";
+            echo "<dd><table><tr><td>";
+            echo LeerRegistroFormateado($arrHttp["Formato"]);
+            echo "</td></tr></table></dd>\n" ;
+            echo "</div></div>";
         	if (!isset($arrHttp["ventana"])){
 				if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N"))
 				    include("../common/footer.php");
@@ -1011,16 +1010,14 @@ switch ($arrHttp["Opcion"]) {
 		if (!isset($arrHttp["encabezado"]))ColocarMfn();
 
 		break;
-	case "nuevoregistro":
-		break;
 	case "actualizar":
 		break;
 	case "eliminar":
-	case "actualizarregistrousuario":
 		include ("scripts_dataentry.php");
+		include "../common/inc_div-helper.php";
         echo "<div class=\"middle form\">
 			<div class=\"formContent\">";
-		$res=ActualizarRegistro(1);
+		$res=ActualizarRegistro("fmt_A");
 		if (trim($res)=="DELETED"){
 			echo "<h4>".$arrHttp["Mfn"]." ". $msgstr["recdel"]."</h4>";
 			$record_deleted="Y";
@@ -1035,10 +1032,6 @@ switch ($arrHttp["Opcion"]) {
 		}
         echo "\n<script>if (top.window.frames.length>0) top.ApagarEdicion()</script>
         </div></div></body></html>\n";
-		return;
-		break;
-	case "usuariomodifica":
-		PresentarFormulario("actualizacion");
 		return;
 		break;
 	default:
@@ -1071,7 +1064,7 @@ if ($actualizar=="SI"){
 	$nuevo="";
 	if ($arrHttp["Mfn"]=="New") $nuevo="s";
 
-	$regSal=ActualizarRegistro();
+	$regSal=ActualizarRegistro("fmt_B");
 	if ($nuevo=="s") $arrHttp["Maxmfn"]=$arrHttp["Mfn"];
 	$arrHttp["Opcion"]="ver";
 	$ver="S";
@@ -1083,16 +1076,40 @@ if ($actualizar=="SI"){
 	}else{
 		$regSal=LeerRegistroFormateado($arrHttp["Formato"]);
 	}
-	include ("scripts_dataentry.php");
+    // Show the toolbar for further edits on this record
+    // The included file shows only the toolbar in case "encabezado" is not set:not set in the dataentry menu
 	if (!isset($record_deleted)) $record_deleted="N";
-	if ($record_deleted=="N")
-		include("toolbar_record.php");
+	if ($record_deleted=="N")include("toolbar_record.php");
+    // Outside the dataentry menus there is a need for breadcrumb, actions (back) and helper
+    if (isset($arrHttp["encabezado"])) {
+        include("../common/institutional_info.php");
+        ?>
+    <div class="sectionInfo">
+        <div class="breadcrumb">
+        <?php echo $msgstr["update_rec"]?>
+        </div>
+        <div class="actions">
+            <?php
+                //$backtoscript="../dataentry/inicio_main.php";
+                include "../common/inc_back.php";
+            ?>
+        </div>
+            <div class="spacer">&#160;</div>
+        </div>
+        <?php
+        unset ($wiki_help);
+		include "../common/inc_div-helper.php";
+    }
 
- 	echo $regSal;
-	echo "</div></div></div>";
-	if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N"))
+    echo "<div class='middle form'>\n";
+    echo "<div class='formContent'>\n";
+    echo "<dd><table><tr><td>";
+    echo $regSal;
+    echo "</td></tr></table></dd>\n" ;
+    echo "</div></div>";
+    if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N")){
 		include("../common/footer.php");
-
+    }
 }else{
 //se lee la fdt de la base de datos
 	if ($arrHttp["Opcion"]=="crear" or $arrHttp["Opcion"]=="capturar") {

@@ -96,7 +96,7 @@ if ( $arrHttp["Opcion"]=="explorar"){
 //Now it's needed set path of icons
 //icons_dir - name of variable and it should be static!
 //icons/ - directory of icons
-$expl->Set("icons_dir","img/dir_explorer/");
+$expl->Set("icons_dir","/assets/images/");
 
 
 //Now it's needed to set files of icons for various file types

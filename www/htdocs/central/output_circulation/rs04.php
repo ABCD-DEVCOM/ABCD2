@@ -30,7 +30,6 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 
-//date_default_timezone_set('UTC');
 $debug="";
 if (!isset($_SESSION["login"])) die;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
@@ -78,9 +77,11 @@ global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db;
 	return $salida;
 }
 
-function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
+function LlamarWxis($IsisScript,$query){
+global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
-	return $contenido;}
+	return $contenido;
+}
 include("../common/header.php");
 include("../common/institutional_info.php");
 
@@ -110,13 +111,17 @@ if (!file_exists($rows)){
 $data="";
 if (!file_exists($rows)){
 	$msgerr= $rows. " ** ".$msgstr["falta"];
-}else{	$fp=file($rows);
-	foreach ($fp as $value){		if (trim($value)!=""){			$t=explode("|",$value);
+}else{
+	$fp=file($rows);
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$t=explode("|",$value);
 			foreach($t as $head){
 				echo "<td>$head</td>";
 			}
 			break;
-		}	}
+		}
+	}
 }
 $Disp_format="tbreserve.pft";
 $Pft=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$Disp_format;
@@ -138,7 +143,8 @@ if ($Sort==""){
 $contenido=LlamarWxis($IsisScript,$query);
 
 foreach ($contenido as $value){
-	$value=trim($value);	if ($value!=""){
+	$value=trim($value);
+	if ($value!=""){
 		$r=explode("|",$value);
 		echo  "<tr>\n";
 				echo  "<td  bgcolor=white valign=top width=80>".$r[4]."</td>"; //codigo usuario
@@ -164,7 +170,8 @@ foreach ($contenido as $value){
 				echo "</td>";
 				echo "</tr>";
 
-	}}
+	}
+}
 
 ?>
 </table>
@@ -182,7 +189,8 @@ foreach ($contenido as $value){
 ?>
 </form>
 <script>
-function  DeleteReserve(Mfn){	document.reservas.Accion.value="delete"
+function  DeleteReserve(Mfn){
+	document.reservas.Accion.value="delete"
 	document.reservas.Mfn_reserve.value=Mfn
 	document.reservas.submit()
 }

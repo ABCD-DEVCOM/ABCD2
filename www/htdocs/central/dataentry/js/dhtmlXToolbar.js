@@ -1,6 +1,11 @@
 /*
+** Background documentation on https://docs.dhtmlx.com/suite5.html details on https://docs.dhtmlx.com/api__refs__dhtmlxtoolbar.html
+** Note: this code is old, modified and API names are modified
+** Note: The original css is not used at all
 20210503 fho4abcd minimum nbsp and size 1px in dhtmlXToolbarDivider*
 20211208 fho4abcd width of dhtmlXToolbarDividerXObject to 15 (was 1)
+20230119 fho4abcd Show "id" as title in dhtmlXSelectButtonObject (shown when hovering over item)+ solved css error in dhtmlXToolbarDividerXObject
+20230130 fho4abcd Add tooltip parameter to dhtmlXSelectButtonObject and show as title (better solution ss previous), keep id of object
 */
  function dhtmlXToolbarObject(htmlObject,width,height,name,vMode){
  this.width=width;this.height=height;
@@ -307,7 +312,7 @@
  this.topNod=0;
  if(id)this.id=id;else this.id=0;
  td=document.createElement("td");
- this.topNod=td;td.align="center";td.style.paddingRight="2";td.style.paddingLeft="2";td.width="15px";
+ this.topNod=td;td.align="center";td.style.paddingRight="2px";td.style.paddingLeft="2px";td.width="15px";
  td.innerHTML="<div class='toolbarDivider'>&nbsp;</div >";
  if(!document.all){td.childNodes[0].style.width="1px";td.style.padding="0 0 0 0";td.style.margin="0 0 0 0";}
  return this;
@@ -370,7 +375,7 @@
 
 
 
- function dhtmlXSelectButtonObject(id,valueList,displayList,action,width,height,className)
+ function dhtmlXSelectButtonObject(id,valueList,displayList,action,width,height,tooltip,className)
 {
  if(id.tagName=="SelectButton")
 {
@@ -401,7 +406,8 @@
  this.action=0;
  this.persAction=0;
  this.selElement=0;
- if(id)this.id=id;else this.id=0;
+ this.tooltip=tooltip||"";
+if(id)this.id=id;else this.id=0;
 
 
 
@@ -413,6 +419,8 @@
  this.selElement=sel;
  sel.onchange=this.a1;
  sel.objectNode=this;
+ sel.title=this.tooltip;
+ sel.id=id;
  if(className)sel.className=className;
  if(width)sel.style.width="100%";
  var temp1=valueList.split(",");
@@ -443,13 +451,20 @@
  this.selElement.disabled=false;
 };
 
+ dhtmlXSelectButtonObject.prototype.getIndexByValue=function(value){
+ for(var i=0;i<this.selElement.options.lenght;i++)
+{
+ if(this.selElement.options[i].value==value)
+ return i;
+};
+ return -1;
+};
 
 
  dhtmlXSelectButtonObject.prototype.a1=function(){
  if((!this.objectNode.persAction)||(this.objectNode.persAction(this.objectNode.selElement.value)))
  if(this.objectNode.action){this.objectNode.action(this.objectNode.id,this.objectNode.selElement.value);}
 };
-
 
  dhtmlXSelectButtonObject.prototype.addOption=function(value,display){
  this.selElement.options[this.selElement.options.length]=new Option(display,value);
@@ -471,18 +486,14 @@
 };
 
  dhtmlXSelectButtonObject.prototype.setSelected=function(value){
- var z=getIndexByValue(value);
- if(z>=0)this.selElement.options[i].selected=true;
+ var z= -1
+ for(var i=0;i<this.selElement.options.length;i++)
+ {
+ if(this.selElement.options[i].value==value)  z=i;
+ };
+ if(z>=0)this.selElement.options[z].selected=true;
 };
 
- dhtmlXSelectButtonObject.prototype.getIndexByValue=function(value){
- for(var i=0;i<this.selElement.options.lenght;i++)
-{
- if(this.selElement.options[i].value==value)
- return i;
-};
- return -1;
-};
 
 
 

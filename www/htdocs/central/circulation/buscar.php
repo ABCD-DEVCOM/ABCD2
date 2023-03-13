@@ -93,7 +93,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
 	return $prestamos;
 }
 
-// Se localiza el n�mero de inventario en la base de datos de objetos  de pr�stamo
+// Se localiza el numero de inventario en la base de datos de objetos  de prestamo
 function LocalizarCopiasLoanObjects($control_number){
 global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$politica,$msgstr;
     $Expresion="CN_".$arrHttp["base"]."_".$control_number;
@@ -103,7 +103,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$politica,$msgstr;
 
 	$formato_ex="v1'||'v10'||'v30'||',v200^a,|-|v200^b/";
 	$formato_obj=urlencode($formato_ex);
-	//se ubican las copias del t�tulo
+	//se ubican las copias del titulo
 	$Expresion=urlencode($Expresion);
 	$query = "&Opcion=disponibilidad&base=copies&cipar=$db_path"."par/copies.par&Expresion=".$Expresion."&Pft=$formato_ex";
 	include("../common/wxis_llamar.php");
@@ -346,13 +346,10 @@ global $config_date_format,$arrHttp;
 		echo "<td bgcolor=white>".$p[2]."</td>";
 		echo "<td bgcolor=white>";
 		$date = new DateTime($p[3]);
-	    switch (substr($config_date_format,0,2)){
-	    	case "DD":
-	    		echo $date->format("d/m/Y");
-	    		break;
-	    	default:
-	    		echo $date->format("m/d/Y");
-	    		break;
+	    if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {
+	    	echo $date->format("d/m/Y");
+		} else {
+	    	echo $date->format("m/d/Y");
 	    }
 	    echo "</td>";
 	    $comentarios=$p[4];

@@ -33,7 +33,6 @@ if (!isset($_SESSION["permiso"])){
 }
 $script_php="../circulation/interbib_ex.php";
 //echo $script_php;
-//date_default_timezone_set('UTC');
 $debug="";
 
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
@@ -506,7 +505,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 						$ec_output.="<td bgcolor=white valign=top >$msg";
 
 						if (count($devolucion)>0) {
-							if (substr($config_date_format,0,2)=="DD"){
+							if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {
 								$ec_output.=substr($devolucion[0],6,2)."/".substr($devolucion[0],4,2)."/".substr($devolucion[0],0,4);
 							}else{
 								$ec_output.=substr($devolucion[0],4,2)."/".substr($devolucion[0],6,2)."/".substr($devolucion[0],0,4);

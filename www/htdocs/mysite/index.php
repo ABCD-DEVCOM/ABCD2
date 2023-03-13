@@ -1,5 +1,9 @@
 <?php
-
+/* Modifications
+20221029 fho4abcd Removed unused function, login fail can be caused by expiration: improve message content
+20230223 fho4abcd Check for existence of config.php
+*/
+include("../central/config_inc_check.php");
 include "../central/config.php";
 include "../$app_path/common/get_post.php";
 
@@ -29,7 +33,7 @@ include ("../$app_path/lang/lang.php");
 ?>
 <!DOCTYPE html>
 
-<html lang="<?php echo $lang;?>" lang="<?php echo $lang;?>">
+<html lang="<?php echo $lang;?>">
 
 <head>
 
@@ -134,10 +138,6 @@ include ("../$app_path/lang/lang.php");
             return true;
         }
 
-    function UsuarioNoAutorizado() {
-        alert("<?php echo $msgstr["menu_noau"]?>")
-    }
-
     function Enviar() {
         login = Trim(document.administra.login.value)
         password = Trim(document.administra.password.value)
@@ -188,7 +188,7 @@ include ("../$app_path/lang/lang.php");
 
     <?php
     if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
-	    echo '<div class="alert alert-warning" role="alert">'.$msgstr["menu_noau"].'</div>';
+	    echo '<div class="alert alert-warning" role="alert">'.$msgstr["menu_ex_noau"].'</div>';
     }
 
     if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
@@ -202,7 +202,7 @@ include ("../$app_path/lang/lang.php");
       </label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="Enviar()"><?php echo $msgstr["entrar"];?></button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022 | <?php echo $meta_encoding?></p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2023 | <?php echo $meta_encoding?></p>
 
 <?php
 if (file_exists("dbpath.dat")){

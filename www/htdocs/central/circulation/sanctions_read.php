@@ -193,9 +193,9 @@ global $locales,$arrHttp,$CentralPath;
 		}else{
 			if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELFINE"])){
         		if (!isset($Expr_b)) {
-	        		$sanctions_output.="<a href=javascript:PagarMultas('P')>".$msgstr["pay"]."</a> &nbsp; | &nbsp; " ;
-	        		$sanctions_output.="<a href=javascript:PagarMultas('C')>".$msgstr["cancel"]."</a> &nbsp; | &nbsp; " ;
-	        		$sanctions_output.="<a href=javascript:PagarMultas('D')>".$msgstr["delete"]."</a><p>";
+	        		$sanctions_output.="<a class='bt bt-green' href=javascript:PagarMultas('P')>".$msgstr["pay"]."</a>" ;
+	        		$sanctions_output.="<a class='bt bt-gray' href=javascript:PagarMultas('C')>".$msgstr["cancel"]."</a>" ;
+	        		$sanctions_output.="<a class='bt bt-red' href=javascript:PagarMultas('D')>".$msgstr["delete"]."</a>";
 	       		}
     		}
     	}

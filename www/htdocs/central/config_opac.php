@@ -2,10 +2,12 @@
 /*
 20211224 fho4abcd Read default message file from central, with central processing, lineends
 20220831 rogercgui Included the variable $opac_path to allow changing the Opac root directory
+20230223 fho4abcd Check for existence of config.php
 */
 //session_start();
 error_reporting(E_ALL);
-//CHANGE THIS ////
+//CHANGE THIS //// 
+include ("config_inc_check.php");
 include ("config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
 if (isset($_SESSION["db_path"])){
@@ -14,12 +16,12 @@ if (isset($_SESSION["db_path"])){
 	$db_path=$_REQUEST["db_path"];
 }
 
-$opac_path="opac_v2";
+$opac_path="opac/";
 
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
 $CentralHttp=$server_url;
-$Web_Dir=$ABCD_scripts_path."opac/";
+$Web_Dir=$ABCD_scripts_path.$opac_path;
 $NovedadesDir="";
 
 $lang_config=$lang; // save the configured language to preset it later
@@ -40,11 +42,11 @@ $logo="assets/img/logoabcd.png";
 $link_logo="/".$opac_path;
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
-$footer='&copy; 2022 - Consulta bases de dados';
+$footer='&copy; 2023 - Consultation databases';
 
-$multiplesBases="Y";   //no se presenta acceso para cada una de las bases de datos
-$afinarBusqueda="Y";   //permite afinar la expresion de búsqueda
-$IndicePorColeccion="N";  //Se mantienen indices separados para los términos de las colecciones
+$multiplesBases="Y";   //No access is presented for each of the databases
+$afinarBusqueda="Y";   //Allows you to refine search expression
+$IndicePorColeccion="N";  //Separate indices are maintained for the terms of the collections
 if (file_exists($db_path."/opac_conf/opac.def")){
 	$fp=file($db_path."/opac_conf/opac.def");
 	foreach ($fp as $value){
@@ -102,6 +104,9 @@ if (file_exists($db_path."/opac_conf/opac.def")){
 						if (substr($OpacHttp,strlen($OpacHttp)-1,1)!="/")
 							$OpacHttp.="/";
 					}
+					break;
+				case "shortIcon":
+				    $shortIcon=trim($v[1]);
 					break;
 			}
 		}

@@ -1,0 +1,39 @@
+'<table class="table">'/
+'<tr><td colspan=2 valign=top><b>1 ÁREA DE DESCRIÇÃO</b></td>'/
+if p(v11) then '<tr><td width=30% valign=top><b>1.1 Código(s) de Referência</b></td><td valign=top>'v11+|<br>|,'</td>' fi/
+if p(v12) then '<tr><td width=30% valign=top><b>1.2 Título</b></td><td valign=top>'v12+|<br>|,'</td>' fi/
+if p(v13) then '<tr><td width=30% valign=top><b>1.3 Data(s)</b></td><td valign=top>'v13+|<br>|,'</td>' fi/
+if p(v14) then '<tr><td width=30% valign=top><b>1.4 Nivel de Descrição</b></td><td valign=top>'v14+|<br>|,'</td>' fi/
+if p(v15) then '<tr><td width=30% valign=top><b>1.5 Unidade de Descrição</b></td><td valign=top>'v15+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><b>2 ÁREA DE CONTEXTO</b></td>'/
+if p(v21) then '<tr><td width=30% valign=top><b>2.1 Nome do produtor</b></td><td valign=top>'v21+|<br>|,'</td>' fi/
+if p(v22) then '<tr><td width=30% valign=top><b>2.2 Historia Institucional</b></td><td valign=top>'v22+|<br>|,'</td>' fi/
+if p(v23) then '<tr><td width=30% valign=top><b>2.3 História do arquivo</b></td><td valign=top>'v23+|<br>|,'</td>' fi/
+if p(v24) then '<tr><td width=30% valign=top><b>2.4 Forma de ingresso</b></td><td valign=top>'v24+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><b>3 ÁREA DE CONTEÚDO E ESTRUTURA</b></td>'/
+if p(v31) then '<tr><td width=30% valign=top><b>3.1 Alcance e Conteúdo</b></td><td valign=top>'v31+|<br>|,'</td>' fi/
+if p(v32) then '<tr><td width=30% valign=top><b>3.2 Valor/Selecc/Eliminación</b></td><td valign=top>'v32+|<br>|,'</td>' fi/
+if p(v33) then '<tr><td width=30% valign=top><b>3.3 Novos ingressos</b></td><td valign=top>'v33+|<br>|,'</td>' fi/
+if p(v34) then '<tr><td width=30% valign=top><b>3.4 Organização</b></td><td valign=top>'v34+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><b>4 ÁREA DE CONDIÇÕES DE ACCESO E USO</b></td>'/
+if p(v41) then '<tr><td width=30% valign=top><b>4.1 Condições de Acesso</b></td><td valign=top>'v41+|<br>|,'</td>' fi/
+if p(v42) then '<tr><td width=30% valign=top><b>4.2 Condições de Reprod.</b></td><td valign=top>'v42+|<br>|,'</td>' fi/
+if p(v43) then '<tr><td width=30% valign=top><b>4.3 Idioma do Documento</b></td><td valign=top>'v43+|<br>|,'</td>' fi/
+if p(v44) then '<tr><td width=30% valign=top><b>4.4 Caract. Físicas e Técnicas</b></td><td valign=top>'v44+|<br>|,'</td>' fi/
+if p(v45) then '<tr><td width=30% valign=top><b>4.5 Instrumento de Descrição</b></td><td valign=top>'v45+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><b>5 ÁREA DE DOCUMENTACIÓN ASOCIADA</b></td>'/
+if p(v51) then '<tr><td width=30% valign=top><b>5.1 Existência de Original</b></td><td valign=top>'v51+|<br>|,'</td>' fi/
+if p(v52) then '<tr><td width=30% valign=top><b>5.2 Existência de Copias</b></td><td valign=top>'v52+|<br>|,'</td>' fi/
+if p(v53) then '<tr><td width=30% valign=top><b>5.3 Unidades de Descri. Relac.</b></td><td valign=top>'v53+|<br>|,'</td>' fi/
+if p(v54) then '<tr><td width=30% valign=top><b>5.4 Notas de Publicações</b></td><td valign=top>'v54+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><b>6 ÁREA DE NOTAS</b></td>'/
+if p(v61) then '<tr><td width=30% valign=top><b>6.1 Notas</b></td><td valign=top>'v61+|<br>|,'</td>' fi/
+'<tr><td colspan=2 valign=top><b>7 Área de controle da descrição</b></td>'/
+if p(v71) then '<tr><td width=30% valign=top><b>7.1 Nota do arquivista</b></td><td valign=top>'v71+|<br>|,'</td>' fi/
+if p(v72) then '<tr><td width=30% valign=top><b>7.2 Regras ou normas</b></td><td valign=top>'v72+|<br>|,'</td>' fi/
+if p(v73) then '<tr><td width=30% valign=top><b>7.3 Data(s) da Descrição</b></td><td valign=top>'v73+|<br>|,'</td>' fi/
+(if p(v80) then '<tr><td width=30% valign=top><b>Expediente Digital</b></td>
+   <td valign=top><a href="../../../../bases/isadg/'v80^*'" target=top>'/
+   if p(v80^d) then v80^d else "Visualizar Documento " v80^* fi'</a><br>' fi/)
+if p(v100) then '<tr><td width=30% valign=top><b>Operador e data </b></td><td valign=top>'v100+|<br>|,'</td>' fi/
+'</table><p>'

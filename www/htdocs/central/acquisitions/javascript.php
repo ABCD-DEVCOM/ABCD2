@@ -1,13 +1,13 @@
 <script src=../dataentry/js/lr_trim.js></script>
 <!-- calendar stylesheet -->
-  <link rel="stylesheet" type="text/css" media="all" href="../dataentry/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+  <link rel="stylesheet" type="text/css" media="all" href="/assets/calendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
   <!-- main calendar program -->
-  <script type="text/javascript" src="../dataentry/calendar/calendar.js"></script>
+  <script type="text/javascript" src="/assets/calendar/calendar.js"></script>
   <!-- language for the calendar -->
-  <script type="text/javascript" src="../dataentry/calendar/lang/calendar-en.js"></script>
+  <script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
   <!-- the following script defines the Calendar.setup helper function, which makes
        adding a calendar a matter of 1 or 2 lines of code. -->
-  <script type="text/javascript" src="../dataentry/calendar/calendar-setup.js"></script>
+  <script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
 
 <script>
 
@@ -21,10 +21,12 @@ function Show(Db,Key){
 function DateToIso(From,To){
 	d=From.split('/')
 	<?php echo "dateformat=\"$config_date_format\"\n" ?>
-	if (dateformat="DD/MM/YY"){
+	if (dateformat="DD/MM/YY") || (dateformat="d/m/Y") {
 		iso=d[2]+d[1]+d[0]
+		console.log(iso)
 	} else {
 		iso=d[2]+d[0]+d[1]
+		console.log(iso)
 	}
 	To.value=iso
 }

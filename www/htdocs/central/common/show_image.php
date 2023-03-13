@@ -1,4 +1,9 @@
 <?php
+/**
+ * 2023-01-04 rogercgui Uncommented line 19 "$filename=strtolower.."Reason: files with the uppercase extension are not working on updated Linux servers.
+ * 
+ * **/
+
 	session_start();
     include("../common/get_post.php");
   	include("../config.php");
@@ -11,7 +16,7 @@
 		$img_path=$db_path.$arrHttp["base"]."/";
 	}
   	$filename=$arrHttp["image"];
-  	//$filename=strtolower($filename);// file name is changed to lowercase
+  	$filename=strtolower($filename);// file name is changed to lowercase
     $f_ext = pathinfo($filename, PATHINFO_EXTENSION); //gets extension of file
 	switch ($f_ext) //known file types
 	 {

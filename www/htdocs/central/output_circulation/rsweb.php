@@ -31,9 +31,10 @@ if (!isset($_SESSION["permiso"])){
 }
 $script_php="../output_circulation/rsweb.php";
 
-//date_default_timezone_set('UTC');
 $debug="";
-if (!isset($_SESSION["login"])){	echo "falta login"; die;}
+if (!isset($_SESSION["login"])){
+	echo "falta login"; die;
+}
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 if (!isset($arrHttp["base"])) $arrHttp["base"]="reserve";
@@ -50,7 +51,8 @@ $bd=$arrHttp["base"];
 //Se lee el bases.dat de central para verificar si la base de datos trabaja con copies
 $fpBases=file($db_path."bases.dat");
 $with_copies=array();
-foreach ($fpBases as $value) {	$value=trim($value);
+foreach ($fpBases as $value) {
+	$value=trim($value);
 	if ($value!=""){
 		$vbd=explode('|',$value);
 		if (isset($vbd[2]) and $vbd[2]=="Y"){
@@ -58,9 +60,11 @@ foreach ($fpBases as $value) {	$value=trim($value);
 		}
 	}
 }
-function LlamarWxis($IsisScript,$query){global $db_path,$Wxis,$wxisUrl,$xWxis;
+function LlamarWxis($IsisScript,$query){
+global $db_path,$Wxis,$wxisUrl,$xWxis;
 	include("../common/wxis_llamar.php");
-	return $contenido;}
+	return $contenido;
+}
 
 function DeterminarReservasActivas($db_path,$base,$lang,$msgstr,$Ctrl,$fecha_r,$usuario){
 global $arrHttp,$xWxis,$Wxis;
@@ -89,12 +93,16 @@ global $arrHttp,$xWxis,$Wxis;
 	$ix=0;
 	$salida="";
 	foreach ($contenido as $value){
-		$value=trim($value);		$vv=explode('$$$',$value);
-		if (isset($vv[2]) and isset($vv[3])){			$ix=$ix+1;
+		$value=trim($value);
+		$vv=explode('$$$',$value);
+		if (isset($vv[2]) and isset($vv[3])){
+			$ix=$ix+1;
 			if ($ix==1 and $vv[2]==$usuario) return "";
 			$fecha=substr($vv[3],6,2)."/".substr($vv[3],4,2)."/".substr($vv[3],0,4);
-			$salida.= "<tr><td>".$vv[2]."</td><td>".$fecha."</td></tr>\n";		}
-	}
+			$salida.= "<tr><td>".$vv[2]."</td><td>".$fecha."</td></tr>\n";
+		}
+
+	}
 	if ($salida!="")
 		$salida="<table><th>Usuario</th><th>F.reserva</th>".$salida."</table>";
     return $salida;
@@ -136,7 +144,9 @@ global $db_path,$lang_db,$prefix_nc,$prefix_in;
 					break;
 			}
 		}
-	}else{		$prefix_nc="CN_";	}
+	}else{
+		$prefix_nc="CN_";
+	}
 }
 
 //se busca el numero de control en el archivo de transacciones para ver si el usuario tiene otro ejemplar prestado
@@ -229,7 +239,8 @@ global $msgstr,$arrHttp,$db_path,$xWxis,$tagisis,$Wxis,$wxisUrl,$lang_db,$Pft_ni
 	$query = "&base=$dbname&cipar=$db_path"."par/".$dbname.".par&Expresion=".$Expresion."&Formato=$formato_obj";
 	include("../common/wxis_llamar.php");
 	$salida="";
-	foreach ($contenido as $value){		if (substr($value,0,8)!="[TOTAL:]" and substr($value,0,6)!="[MFN:]" and trim($value)!="")
+	foreach ($contenido as $value){
+		if (substr($value,0,8)!="[TOTAL:]" and substr($value,0,6)!="[MFN:]" and trim($value)!="")
 			$salida.=$value;
 	}
 	if (isset($with_copies[$dbname]) and $with_copies[$dbname]=="Y"){
@@ -256,20 +267,7 @@ include("../common/header.php");
 
 include("../common/institutional_info.php");
 include("../circulation/scripts_circulation.php");
-?>
-	<div class="sectionInfo">
-	<div class="breadcrumb">
-	</div>
-	<div class="actions">
-		<a href="../circulation/estado_de_cuenta.php?reserve=S" class="defaultButton backButton">
-		<img src="../images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["back"];?></strong></span></a>
-	</div>
 
-<div class="spacer">&#160;</div>
-<div class="middle form">
-	<div class="formContent">
-<?php
 switch ($arrHttp["code"]){
 	case "today":
 		$fecha=date("Ymd");
@@ -294,7 +292,27 @@ switch ($arrHttp["code"]){
   		break;
 
 }
-echo "<H3>$Nombre ";
+?>
+
+
+<div class="sectionInfo">
+	<div class="breadcrumb">
+		<?php echo $Nombre;
+		?>
+	</div>
+	<div class="actions">
+		<?php 
+		$backtoscript="../circulation/estado_de_cuenta.php?reserve=S";
+		include "../common/inc_back.php"; ?>
+	</div>
+<?php include("../circulation/submenu_prestamo.php");?>
+</div>
+
+<div class="middle form">
+	<div class="formContent">
+<?php
+
+echo "<H3> ";
 echo "<br>".$msgstr["o_issued"].": ".date("d-m-Y")."</h3>";
 echo "<p><table border=0 width=80% bgcolor=#cccccc>";
 $ec="S";
@@ -350,8 +368,10 @@ if (!file_exists($Pft)){
 	$Pft=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$Disp_format;
 	if (!file_exists($Pft)){
 		$Pft=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$Disp_format;
-		if (!file_exists($pft)){			echo $msgerr= $Disp_format. " ** ".$msgstr["falta"];
-			die;		}
+		if (!file_exists($pft)){
+			echo $msgerr= $Disp_format. " ** ".$msgstr["falta"];
+			die;
+		}
 	}
 }
 $Pft=urlencode("v15`$$$`V20`$$$`V10, `$$$`V30,`$$$`V40,`$$$`V1".'`$$$`f(mfn,1,0)`$$$`,@'.$Pft);
@@ -371,7 +391,8 @@ if (isset($arrHttp["user"])) $Expresion.=" and CU_".$arrHttp["user"];
 echo $Expresion;
 $Expresion=urlencode($Expresion);
 
-if ($ec=="S"){	echo "<td>".$msgstr["vence"]."</td>"."<td>".$msgstr["suspen"]."</td>"."<td>".$msgstr["multas"]."</td>"."<td>".$msgstr["reserve"]."</td><td></td>";
+if ($ec=="S"){
+	echo "<td>".$msgstr["vence"]."</td>"."<td>".$msgstr["suspen"]."</td>"."<td>".$msgstr["multas"]."</td>"."<td>".$msgstr["reserve"]."</td><td></td>";
 }
 $query = "&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Opcion=buscar&Formato=".$Pft;
 if ($Sort==""){
@@ -384,9 +405,11 @@ $contenido=LlamarWxis($IsisScript,$query);
 
 $key_comp="";
 $found=0;
-foreach ($contenido as $value){	$value=trim($value);
+foreach ($contenido as $value){
+	$value=trim($value);
 	if ($value!=""){
-		$v=explode('$$$',$value);
+
+		$v=explode('$$$',$value);
 		$found=$found+1;
 		//SE LEEN LA BASE DE DATOS Y EL NÚMERO DE CONTROL PARA UBICAR EL TÍTULO Y DETERMINAR LOS EJEMPLARES DISPONIBLES
 		$bd=$v[0];
@@ -447,28 +470,40 @@ foreach ($contenido as $value){	$value=trim($value);
 		$ixt=0;
 
 		foreach ($reservas as $rr){
-			$fecha_de_reserva="";			if (trim($rr)=="#REFER#"){
+			$fecha_de_reserva="";
+			if (trim($rr)=="#REFER#"){
 				echo "<td bgcolor=white valign=top>".$Referencia[0]."<br>ejemplares:<br>";
 				echo "<table bgcolor=#cccccc><td bgcolor=white><strong>".$msgstr["inventory"]."</strong></td><td bgcolor=white><strong>".$msgstr["devdate"]."</strong></td>";
 				foreach ($Referencia[1] as $value) {
 					$value=trim($value);
-					if ($value=="" or substr($value,0,6)=="[MFN:]" or substr($value,0,8)=="[TOTAL:]")  continue;					echo "<tr><td bgcolor=white>$value</td>";
+					if ($value=="" or substr($value,0,6)=="[MFN:]" or substr($value,0,8)=="[TOTAL:]")  continue;
+					echo "<tr><td bgcolor=white>$value</td>";
 					echo "<td bgcolor=white>";
 					if (isset($Referencia[2][$value])){
 						$x=explode('^',$Referencia[2][$value]);
-						$fdev=$x[9];						echo substr($fdev,0,4)."-".substr($fdev,4,2)."-".substr($fdev,6,2);
-					}else{						if ($vencidos==0 and $total_susp==0 and $total_multa==0){							if (isset($with_copies[$bd]) and $with_copies[$bd]=="Y")
+						$fdev=$x[9];
+						echo substr($fdev,0,4)."-".substr($fdev,4,2)."-".substr($fdev,6,2);
+					}else{
+						if ($vencidos==0 and $total_susp==0 and $total_multa==0){
+							if (isset($with_copies[$bd]) and $with_copies[$bd]=="Y")
 								$copies="Y";
 							else
-								$copies="N";							echo "<a href='javascript:Prestar(\"".$value."\",\"".$arrHttp["usuario"]."\",\"".$bd."\",\"".$prefix_in."\",\"(".$Pft_ni."/)\",\"$copies\")'>Prestar</a>";
-                        }					}
-					echo "</td>";					echo "</tr>";				}
+								$copies="N";
+							echo "<a href='javascript:Prestar(\"".$value."\",\"".$arrHttp["usuario"]."\",\"".$bd."\",\"".$prefix_in."\",\"(".$Pft_ni."/)\",\"$copies\")'>Prestar</a>";
+                        }
+					}
+					echo "</td>";
+					echo "</tr>";
+				}
 				echo "</table>";
 				echo "</td>";
 			}else{
 				$ixt=$ixt+1;
 				if ($ixt>5) continue;
-				IF ($ixt==2) $rr=str_replace(",",'<br>',$rr);				echo "<td bgcolor=white valign=top nowrap>$rr</td>";			}		}
+				IF ($ixt==2) $rr=str_replace(",",'<br>',$rr);
+				echo "<td bgcolor=white valign=top nowrap>$rr</td>";
+			}
+		}
 		if ($ec=="S"){
 			echo "<td bgcolor=white valign=top width=10 align=center>" ;
 			if ($vencidos==0) $vencidos="";
@@ -478,58 +513,78 @@ foreach ($contenido as $value){	$value=trim($value);
 			//echo "</td>";
 		}
 		echo "<td bgcolor=white nowrap valign=top>";
-		if ($esperar_hasta!=""){			if (date("Ymd")>$esperar_hasta ){				 echo "<font color=red>".$msgstr["rs03"]."</font><br>";
+		if ($esperar_hasta!=""){
+			if (date("Ymd")>$esperar_hasta ){
+				 echo "<font color=red>".$msgstr["rs03"]."</font><br>";
             }
      	}
 
      	$rsrv_act=DeterminarReservasActivas($db_path,$v[0],$lang,$msgstr,$v[1],$fecha_reserva,$arrHttp["usuario"]);
-     	echo $rsrv_act;		echo "</td><td bgcolor=white nowrap valign=top>";
+     	echo $rsrv_act;
+		echo "</td>";
+		echo "<td bgcolor=white nowrap valign=top>";
 		if ($vencidos=="" and $total_susp=="" and $total_multa=="")
-			echo '<a href=javascript:SendMail("assigned",'.$Mfn.') alt="'.$msgstr["mail_notif_res_assign"].'" title="'.$msgstr["mail_notif_res_assign"].'"><img src=../dataentry/img/mail_p.png></a>';		else
+			echo '<a href=javascript:SendMail("assigned",'.$Mfn.') alt="'.$msgstr["mail_notif_res_assign"].'" title="'.$msgstr["mail_notif_res_assign"].'"><img src=../dataentry/img/mail_p.png></a>';
+		else
 			echo "<img src=../dataentry/img/mail_p.png>";
 		echo "&nbsp; <a href=\"javascript:PrintReserve('assigned',".$Mfn.")\"><img src=../dataentry/img/toolbarPrint.png></a>";
 		echo "&nbsp;<a href=javascript:CancelReserve(".$Mfn.",'".$bd."','".$Control_no."')><img src=../dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";
-		if ($arrHttp["code"]=="reassign"){			echo "&nbsp;<a href=javascript:AssignReserve(".$Mfn.")><img src=../dataentry/img/barEdit.png height=16 alt='".$msgstr["rs02"]."' title='".$msgstr["rs02"]."'></a>";
+		if ($arrHttp["code"]=="reassign"){
+			echo "&nbsp;<a href=javascript:AssignReserve(".$Mfn.")><img src=../dataentry/img/barEdit.png height=16 alt='".$msgstr["rs02"]."' title='".$msgstr["rs02"]."'></a>";
 		}
 		echo "</td>";
 		echo "</tr>";
-	}}
+	}
+}
 if ($key_comp!=""){
 	echo "</form>";
 }
 ?>
 </table>
+
 <?php
-if ($found==0){	echo "<h2>".$msgstr["nfres"]."</h2>";}
+if ($found==0){
+	echo "<h2>".$msgstr["nfres"]."</h2>";
+}
 
 ?>
-</div></div>
-<font size=1 color=#cccccc><?php echo "$Disp_format - $tit_format"?>
+</div>
+
+</div>
+
+<font size=1 color=#cccccc><?php //echo "$Disp_format - $tit_format"?></font>
 </body>
 
 </html>
-<form name=prestar method=post action=<?php
-if (isset($LOAN_POLICY) AND $LOAN_POLICY=="BY_USER")	echo "../circulation/ask_policy.php>";
+
+
+<form name="prestar" method="post" action="<?php
+if (isset($LOAN_POLICY) AND $LOAN_POLICY=="BY_USER")
+	echo "../circulation/ask_policy.php>";
 else
     echo "../circulation/usuario_prestamos_presentar.php>";
-?>
-<input type=hidden name=usuario>
-<input type=hidden name=inventory>
-<input type=hidden name=inventory_sel>
-<input type=hidden name=Opcion value=prestar>
-<input type=hidden name=db_inven>
-<input type=hidden name=reservaWeb value=Y>
-<input type=hidden name=loan_policy value=<?php if (isset($LOAN_POLICY)) ECHO $LOAN_POLICY?>>
-<input type=hidden name=copies>
+?>" >
+	<input type="hidden" name="usuario">
+	<input type="hidden" name="inventory">
+	<input type="hidden" name="inventory_sel">
+	<input type="hidden" name="Opcion" value="prestar">
+	<input type="hidden" name="db_inven">
+	<input type="hidden" name="reservaWeb" value="Y">
+	<input type="hidden" name="loan_policy" value="<?php if (isset($LOAN_POLICY)) ECHO $LOAN_POLICY?>">
+	<input type="hidden" name="copies">
 </form>
+
 <script>
-function Prestar(inventario,usuario,base,prefijo,formato,copies){	document.prestar.usuario.value=usuario
+function Prestar(inventario,usuario,base,prefijo,formato,copies){
+	document.prestar.usuario.value=usuario
 	document.prestar.inventory.value=inventario
 	document.prestar.inventory_sel.value=inventario
 	if (copies=="Y") base="loanobjects"
 	document.prestar.db_inven.value=base+"||"+prefijo+"|ifp|"+formato
 	document.prestar.copies.value=copies
-	document.prestar.submit()}
+	document.prestar.submit()
+}
 </script>
 
 
+<?php include '../common/footer.php';?>

@@ -8,7 +8,7 @@ global $copies,$ix_nb,$base_sel;
 		$copies="N";
 		$bases_p=SeleccionarLoansDat($db_path,$msgstr);
 	}else{
-		$copies="S";
+		$copies="Y";
 		$bases_p=SeleccionarBasesDat($db_path,$msgstr);
 	}
 	$sel_base= "

@@ -10,7 +10,6 @@ session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
-if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 include("../common/get_post.php");
 include("../config.php");
 include("../config_loans.php");
@@ -21,7 +20,7 @@ include("../lang/prestamo.php");
 //die;
 // se leen los valores locales para convertir la fecha a ISO
 include("locales_read.php");
-// Se lee el calendario de d�as h�biles
+// Se lee el calendario de dias habiles
 include("calendario_read.php");
 
 include("fecha_de_devolucion.php");
@@ -47,7 +46,7 @@ switch ($df[1]){
 $year=substr($FechaP,6,4);
 $fecha_desde= $year.$mes.$dia;
 
-// se calcula la fecha de vencimiento de la sanci�n sumando los d�as de suspensi�n
+// se calcula la fecha de vencimiento de la sancion sumando los dias de suspension
 if ($arrHttp["type"]=="S"){
 
 }
@@ -69,13 +68,14 @@ switch ($arrHttp["type"]){
 		$cod_usuario=$arrHttp["usuario"];                  		//v20
  		$concepto=$arrHttp["reason"];    						//v40
     	$fecha=$fecha_desde;	              					//v30
-      	$monto=$arrHttp["units"]*$locales["fine"];              //v50
+      	//$monto=$arrHttp["units"]*$locales["fine"];              //v50
+      	$monto=$arrHttp["units"];              //v50
       	$unidades_multa=$arrHttp["units"];
       	$ValorCapturado="<1 0>".$tipor."</1><10 0>".$status."</10><20 0>".$cod_usuario."</20><30 0>".$fecha."</30><40 0>".$concepto."</40><50 0>".$monto."</50>";
       	if (isset($arrHttp["comments"])) $ValorCapturado.="<100 0>".$arrHttp["comments"]."</100>";
       	break;
 	case "S":
-	// se calcula la fecha en que vence la suspensi�n
+	// se calcula la fecha en que vence la suspension
 		$fecha_v=FechaDevolucion($arrHttp["units"],"D",$arrHttp["date"]);
         $cod_trans="N";
 		$tipor="S";                      						//v1

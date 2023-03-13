@@ -30,7 +30,6 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 
-//date_default_timezone_set('UTC');
 $debug="";
 if (!isset($_SESSION["login"])) die;
 if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";

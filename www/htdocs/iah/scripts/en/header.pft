@@ -14,13 +14,13 @@ if p(v5030) or p(v5040) then
                         ,(
                             if v9021 <> v5021[1] then,
                                 '<a href="'getenv('SCRIPT_NAME')v5000^d[1],'scripts/?IsisScript=',v5000^s[1],'&base=',v5003[1],'&lang=',v9021,'&form=',v6000[1],|&pathLibrary=|v5050[1],|&restriction1=|v7001[1],'">'
-                                    if v9021 = 'pt' then 'português' fi,
-                                    if v9021 = 'es' then 'español' fi,
+                                    if v9021 = 'pt' then 'portugu�s' fi,
+                                    if v9021 = 'es' then 'espa�ol' fi,
                                     if v9021 = 'en' then 'english' fi,
-                                    if v9021 = 'fr' then 'français' fi,
+                                    if v9021 = 'fr' then 'fran�ais' fi,
                                     if v9021 = 'am' then 'amharic' fi,
                                     if v9021 = 'du' then 'dutch' fi,
-/*                                   if v9021 = 'ma' then 'मराठी' fi,*/
+/*                                   if v9021 = 'ma' then '?????' fi,*/
                                   '</a>',
 
                                 if iocc < nocc(v9021) then,
