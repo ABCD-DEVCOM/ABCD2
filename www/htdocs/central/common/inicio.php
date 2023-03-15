@@ -14,6 +14,7 @@ $arrHttp=Array();
 session_start();
 unset( $_SESSION["TOOLBAR_RECORD"]);
 include("get_post.php");
+//echo "arrHttp_dbpath=". $arrHttp["db_path"]."<BR>";
 if (isset($arrHttp["db_path"]))
 	$_SESSION["DATABASE_DIR"]=$arrHttp["db_path"];
 require_once ("../config.php");
@@ -50,16 +51,22 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	include("wxis_llamar.php");
 	$llave_ret="";
 	 foreach ($contenido as $linea){
+
 	 	if ($ic==-1){
+			$ic=1;
 	 		$pos=strpos($linea, '##LLAVE=');
 	    	if (is_integer($pos)) {
 	     		$llave_pft=substr($linea,$pos+8);
 	     		$ll=explode('|',$llave_pft);
 	     		if ($ll[0]==$pass){
-	     			$ic=1;
 	     			$llave_ret=$llave_pft;
 	     			$valortag=array();
-	     		}
+	     		} else {
+					$llave_pft=substr($linea,$pos+8);
+					$pos=strpos($llave_pft, '##');
+					$llave_pft=substr($llave_pft,0,$pos);
+					$llave_ret=$llave_pft;
+				}
 			}
 		}else{
 			$linea=trim($linea);
@@ -75,7 +82,7 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 		}
 
 	}
-    return $llave_ret;
+	return $llave_ret;
 
 }
 
@@ -374,6 +381,7 @@ else
 if (isset($arrHttp["lang"]) and $arrHttp["lang"]!=""){
 	$_SESSION["lang"]=$arrHttp["lang"];
 	$lang=$arrHttp["lang"];
+
 }else{
 	if (!isset($_SESSION["lang"])) $_SESSION["lang"]=$lang;
 }
@@ -399,6 +407,7 @@ include("../lang/acquisitions.php");
         }
 		$_SESSION["login"]=$arrHttp["login"];
 		$_SESSION["nombre"]=$nombre;
+//echo "Session=" ; var_dump($_SESSION); die;
 
 	}
 	if (!isset($_SESSION["permiso"])){
@@ -435,4 +444,4 @@ include("../lang/acquisitions.php");
 		if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
 		include("homepage.php");
 	}
-?>
+
