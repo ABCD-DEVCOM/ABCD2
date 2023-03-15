@@ -5,6 +5,7 @@
 20210613 fho4abcd remove password
 20211216 fho4abcd Backbutton by included file
 20220711 fho4abcd Use $actparfolder as location for .par files
+20230314 fho4abcd Allow for large charactersize inputfield. Improve html and style
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -140,17 +141,19 @@ if (isset($arrHttp["encabezado"])){
 <input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
 ?>
-	<table width=600 cellpadding=5>
+	<table cellpadding=5>
 	<tr>
-		<td colspan=2 align=center height=1 bgcolor=#eeeeee><?php echo $msgstr["r_recsel"]?></td>
+		<td colspan=2 bgcolor=#cccccc><?php echo $msgstr["r_recsel"]?></td>
 	<tr>
-		<td  align=center colspan=2><strong><?php echo $msgstr["r_mfnr"]?></strong>: &nbsp; &nbsp; &nbsp;
+		<td colspan=2><?php echo $msgstr["r_mfnr"]?><br></td>
+    </tr>
+    <tr><td width=50%>
 		<?php echo $msgstr["r_desde"].": <input type=text name=Mfn size=10 value=";
 		if (isset($arrHttp["to"]))
 			echo $arrHttp["to"]+1;
 		else
 			echo "1";
-		echo ">&nbsp; &nbsp; &nbsp; &nbsp;";
+		echo "></td><td width=50%>";
 		echo $msgstr["r_hasta"].": <input type=text name=to size=10 value=\"";
 		if (isset($arrHttp["to"])){
 			$count=$arrHttp["to"]-$arrHttp["from"]+1;
@@ -164,10 +167,12 @@ if (isset($arrHttp["encabezado"])){
 		echo "\">";
 		echo "&nbsp;".$msgstr["maxmfn"].": ".$tag["MAXMFN"];
 		?>
-		&nbsp; &nbsp; &nbsp; <a href=javascript:BorrarRango() class=boton><?php echo $msgstr["borrar"]?></a>
-	</td>
-	<tr>
-		<td colspan=2 align=center><input type=submit name=enviar value="<?php echo $msgstr["cg_execute"]?>" onClick=javascript:EnviarForma()></td>
+		&nbsp; &nbsp; &nbsp; <a href="javascript:BorrarRango()" class=boton> <?php echo $msgstr["borrar"]?></a>
+        </td>
+    </tr>
+	<tr><td colspan=2>
+        <input type=submit name=enviar class="bt bt-green" value="<?php echo $msgstr["cg_execute"]?>" onClick=javascript:EnviarForma()>
+        </td>
 </table>
 </form>
 </div>
