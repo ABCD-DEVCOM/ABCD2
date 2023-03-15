@@ -3,6 +3,7 @@ name: Docker Image CI
 on:
   push:
     branches: [ "master" ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ "master" ]
 
@@ -19,7 +20,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: name/app
+        images: edsz14/abcd-isis
         
     - name: Login to DockerHub
       if: github.event_name != 'pull_request'
@@ -34,5 +35,6 @@ jobs:
         context: .
         file: docker/abcd/Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.meta.outputs.tags }}
+        #tags: edsz14/abcd-isis:latest
