@@ -7,6 +7,7 @@
 ** 2023-01-22 fho4abcd iframe settings in this file + adjust size of table-fdt-three
 ** 2023-01-27 fho4abcd split table.toolbar-dataentry, remove commented style entries
 ** 2023-01-27 fho4abcd typo, remove invalid options
+** 2023-03-16 fho4abcd moved some px to rem, small enhancements
 */
 /* GENERAL STYLES */
 html {
@@ -90,8 +91,6 @@ input[type=number] {
   box-shadow: inset 1px 1px 3px 0.1px var(--abcd-light);
 	box-sizing: border-box;
 	margin: 1px 0;
-	font-size: 12px;
-	line-height: 18px;
 }
 
 textarea.par {
@@ -116,7 +115,6 @@ INPUT.singleTextEntry,
 TEXTAREA.singleTextEntry,
 SELECT.singleTextEntry {
 	height: 2.3rem ;
-  line-height: 1.25rem;
   width: 90%;
 	margin: 2px;
 }
@@ -1252,12 +1250,11 @@ div.toolbar-dataentry  {
 }
 
 table.toolbar-dataentry input {
-	font-size: 12px;
-	width: 100px;
+	font-size: 0.8rem;
+	width: 6rem;
 }
 table.toolbar-dataentry select {
-	font-size: 12px;
-	width: 150px;
+	font-size: 0.8rem;
 }
 
 table.toolbar-dataentry a {
@@ -1477,7 +1474,6 @@ table.toolbarTable, table.toolbar-edit-dataentry {
 .table-fdt > tbody > tr > td > textarea, 
 .table-fdt > tbody > tr > td > select{
 	margin: 0.2rem 0.1rem;
-	font-size: 13px;
 	color: var(--abcd-gray-900);
 	padding: 8px;
 	box-shadow: none;
@@ -1536,7 +1532,6 @@ td.table-fdt-one {
 /* NAME OF FIELD */
 .table-fdt-three {
 	min-width: 150px;
-	font-size: 12px;
 }
 
 /* INPUT FORM */
@@ -1877,7 +1872,7 @@ nav ul {
   color: var(--abcd-white);
   text-decoration: none;
   padding: 0.8em 1.8em;
-  font-size: 80%;
+  font-size: 90%;
   position: relative;
 }
 .nav{
