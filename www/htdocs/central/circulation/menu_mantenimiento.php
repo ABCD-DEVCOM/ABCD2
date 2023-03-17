@@ -81,9 +81,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulacion/menu_mantenimiento.php
 	<tr>
 		<td>
 
-		<input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
-             <br>
+		<?php if (isset($arrHttp["base"])) echo '<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">' ?>
 			<ul>
+			<li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].":".$msgstr["trans"]?>","trans")'>Recalcular multas</a></li>
+			
 			<li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].":".$msgstr["trans"]?>","trans")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["trans"]?> (trans)</a></li>
 			<?php
 				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
