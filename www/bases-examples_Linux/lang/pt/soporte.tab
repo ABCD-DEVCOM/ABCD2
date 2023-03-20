@@ -297,6 +297,7 @@ upload_exceed=Excedido
 upload_logout=Logout recomendado
 upload_overwrite=Sobregravar arquivo existente?
 upload_size=Tamanho
+upload_status=Status 
 useimportisotag=Usar opção 'isotag1'
 uni_no=Não
 uni_yes=Sim
