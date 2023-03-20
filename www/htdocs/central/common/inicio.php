@@ -18,7 +18,10 @@ include("get_post.php");
 if (isset($arrHttp["db_path"]))
 	$_SESSION["DATABASE_DIR"]=$arrHttp["db_path"];
 require_once ("../config.php");
-require_once ("ldap.php");
+
+if ($use_ldap=="1") require_once ("ldap.php");
+
+
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";die;
 $valortag = Array();
 
