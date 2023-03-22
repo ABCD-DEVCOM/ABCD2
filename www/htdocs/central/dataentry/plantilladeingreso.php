@@ -198,10 +198,14 @@ global $arrHttp,$valortag,$tm,$vars,$base,$fdt,$tab_prop,$msgstr,$tagisis,$db_pa
 	}else{
 		$comp="";
 		$tipom="";
-		if (isset($valortag[trim($tl)]))
-			$tipom=$valortag[trim($tl)];
-		if (isset($valortag[trim($nr)]))
-			$tipom.=$valortag[trim($nr)];
+
+		$trin_tl=trim((string) $tl);
+		$trin_nr=trim((string) $nr);
+
+		if (isset($valortag[$trin_tl]))
+			$tipom=$valortag[$trin_tl];
+		if (isset($valortag[$trin_nr]))
+			$tipom.=$valortag[$trin_nr];
 		if ($tipom=="")
 			$tipom=$arrHttp["base"].".fdt";
 		$tipom=strtolower($tipom);
