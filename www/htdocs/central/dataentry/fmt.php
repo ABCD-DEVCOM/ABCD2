@@ -14,6 +14,7 @@
 20230120 fh04abcd Improved html+remove edit scripts if display is not in edit mode+defaults for $tl and $nr
 20230130 fho4abcd Improve setting of browseby menu. Code for showing record value improved and extended for selected records
 20230210 fho4abcd Show backbutton of actualized record for non-dataentry cases (e.g. acces/users/...). Remove unused cases
+20230321 rogercgui Updates compatibility for PHP versions higher than 8xx: $tag=(int)trim(substr($linea,0,4))*(int)1;
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -1117,7 +1118,7 @@ if ($actualizar=="SI"){
 			$fp=explode('$$$',$_SESSION["valdef"]);
 			foreach ($fp as $linea){
 				$linea=rtrim($linea);
-				$tag=trim(substr($linea,0,4))*1;
+				$tag=(int)trim(substr($linea,0,4))*(int)1;
 				if (trim(substr($linea,4))!=""){
 					if (!isset($valortag[$tag]))
 						$valortag[$tag]=substr($linea,4);
