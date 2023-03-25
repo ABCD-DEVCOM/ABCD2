@@ -7,7 +7,7 @@
 ** Included before inclusion of config.php in some key files (no need to include everywhere)
 */
 $def_config_file="central/config.php";
-$def_config_file_full=$_SERVER["DOCUMENT_ROOT"]."/".$def_config_file;
+$def_config_file_full=realpath(__DIR__ . '/../')."/".$def_config_file;
 $def_config_file_template=$def_config_file.".template";
 if (!is_readable($def_config_file_full) || filesize($def_config_file_full)<=0) {
     ?>
