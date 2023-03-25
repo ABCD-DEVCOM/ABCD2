@@ -201,6 +201,8 @@ foreach ($seleccion as $base=>$value){
  		$salida=PresentarRegistros($base,$db_path,$lista_mfn);
  		//var_dump($salida);
 		//Se determinan las reservas que ya tiene el título
+		echo "<div class=\"card my-2\">
+				<div class=\"card-body\">";
 		$msg_rsvr=$salida[1];
 		$no_control=$salida[2];
 		$items_por_reservar.="c_".$base."_".$no_control.'|';
@@ -223,6 +225,7 @@ foreach ($seleccion as $base=>$value){
 			}
 		}
 		echo $salida[0];
+		echo "</div></div>";
 	}
 }
 echo "<form method=post name=forma1 action=buscar_integrada.php onSubmit=\"Javascript:return false\">\n";
