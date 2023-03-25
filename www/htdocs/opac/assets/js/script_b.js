@@ -506,7 +506,7 @@ function showCookie(cname){
 		alert(msgstr["rsel_no"])
 		return
 	}
-	alert(document.buscar.lang.value)
+	console.log(document.buscar.lang.value)
     document.buscar.action="presentar_seleccion.php"
 	document.buscar.cookie.value=cookie
 
@@ -552,7 +552,7 @@ function ChangeLanguage(){
 	document.changelanguage.action=actualScript
 	document.changelanguage.submit()
 }
-
+/*
 function openNavFacetas() {
   document.getElementById("SidenavFacetas").style.width = "200px";
 }
@@ -560,17 +560,7 @@ function openNavFacetas() {
 function closeNavFacetas() {
   document.getElementById("SidenavFacetas").style.width = "0";
 }
-
-function openNav() {
-	if (document.getElementById("page").style.marginLeft == "250px"){
-		closeNav()
-		return
-	}
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById("sidebar").style.marginLeft = "0px";
-    document.getElementById("page").style.marginLeft = "250px";
-    document.getElementById("page").style.width = "80%";
-}
+*/
 
 function closeNav() {
     document.getElementById("sidebar").style.width = "0";
