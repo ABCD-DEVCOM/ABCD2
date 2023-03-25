@@ -128,7 +128,7 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
 
 $i=1;	
 $ff_pft="'
-<div class=\"card my-2\">
+<div class=\"card my-2\" id=\"".$base."'mfn'\">
   <div class=\"card-body\">
     <div class=\"card-title\">
     ',@select_record.pft,/'
