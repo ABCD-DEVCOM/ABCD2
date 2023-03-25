@@ -1,5 +1,6 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'] . "/central/config_opac.php");
+include realpath(__DIR__ . '/../central/config_opac.php');
+
 $modo = "";
 if (isset($_REQUEST["base"]))
 	$actualbase = $_REQUEST["base"];
@@ -10,22 +11,30 @@ if (isset($_REQUEST["xmodo"]) and $_REQUEST["xmodo"] != "") {
 	$modo = "integrado";
 }
 
-function wxisLlamar($base, $query, $IsisScript)
-{
+function wxisLlamar($base, $query, $IsisScript) {
 	global $db_path, $Wxis, $xWxis;
 	include("wxis_llamar.php");
 	return $contenido;
 }
-//include ("get_ip_address.php");
-header('Content-Type: text/html; charset=".$charset."');
-$meta_encoding = $charset;
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html>
+
+
+//include ("get_ip_address.php");
+//header('Content-Type: text/html; charset=".$charset."');
+header("Cache-Control: no cache");
+session_cache_limiter("private_no_expire");
+
+$meta_encoding = $charset;
+$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
+
+session_start(); 
+?>
+<?php ?>
+<!doctype html>
+<html lang="<?php echo $lang; ?>">
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<meta http-equiv="content-type" content="text/html; charset=<?php echo $charset ?>" />
@@ -36,16 +45,12 @@ $meta_encoding = $charset;
 	}
 	?>
 	<title><?php echo $TituloPagina ?></title>
-
-	<link href="/assets/css/colors.css" rel="stylesheet">
-	<link href="/assets/css/buttons.css" rel="stylesheet">
-	<link href="/assets/css/normalize.css" rel="stylesheet">
-
-	<link href="assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
-	<script src=/opac/assets/js/script_b.js?<?php echo time(); ?>></script>
-	<script src=/opac/assets/js/highlight.js?<?php echo time(); ?>></script>
-	<script src=/opac/assets/js/lr_trim.js></script>
-	<script src=/opac/assets/js/selectbox.js></script>
+	<link href="<?php echo $OpacHttp;?>assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo $OpacHttp;?>assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
+	<script src="<?php echo $OpacHttp;?>assets/js/script_b.js?<?php echo time(); ?>"></script>
+	<script src="<?php echo $OpacHttp;?>assets/js/highlight.js?<?php echo time(); ?>"></script>
+	<script src="<?php echo $OpacHttp;?>assets/js/lr_trim.js"></script>
+	<script src="<?php echo $OpacHttp;?>assets/js/selectbox.js"></script>
 
 	<!--FontAwesome-->
 	<link href="/assets/css/all.min.css" rel="stylesheet">
@@ -120,47 +125,51 @@ $meta_encoding = $charset;
 </head>
 
 <body>
-	<header id="header-wrapper">
-		<div id="header">
-			<div id="logo">
-				<a name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $lang; ?>"><img src="<?php echo $logo ?>"></a>
-			</div>
 
-		</div>
-		<div class="areaTitulo">
-			<div class=tituloBase>
-				<?php
-				echo $TituloEncabezado;
-				if (isset($_REQUEST["db_path"]))
-					echo "  " . $_REQUEST["db_path"];
-				?>
 
-			</div>
-			<div>
-				<?php echo $charset;
-				if (file_exists("opac_dbpath.dat"))
-					echo "<a href=../index.php>Cambiar carpeta bases</a>";
-				?>
-			</div>
-		</div>
-	</header>
+
+
+<!--<header  id="header"  class="d-flex flex-wrap justify-content-center p-3 mb-4 border-bottom">-->
+<header class="navbar navbar-primary sticky-top p-1 mb-3 d-flex shadow bg-white">
+  <div class="container">
+    <a id="logo" name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $lang; ?>" class="navbar-brand p-0 me-0 me-lg-2">
+	<?php if (isset($logo)) { ?>
+    	<img class="p-2" style="max-height:70px;" src="<?php echo $logo ?>" title="<?php echo $TituloEncabezado;?>">
+    <?php } else { ?>	
+		<span class="fs-4"><?php echo $TituloEncabezado;?></span>
+	<?php } ?>	
+    </a>
+
+	<?php
+		include_once 'components/topbar.php';
+		if (isset($_REQUEST["db_path"])) echo "  " . $_REQUEST["db_path"];
+		if (file_exists("opac_dbpath.dat")) echo "<a href=../index.php>Cambiar carpeta bases</a>";
+	?>
+
 	<?php
 	if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
 		echo $msgstr["missing"] . " " . $db_path . "opac_conf/$lang/lang.tab";
 		die;
 	}
+	?>
+  </div>
+</header>
 
-	include_once 'components/topbar.php';
+<div class="container">
+<main>
 
-		if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php");
-		?>
+<div class="row">
 
-		<div id="page">
-			<div id="content" <?php if (isset($desde) and $desde = "ecta")
-									echo "style='float:left;border: #cccccc 1px solid;border-radius:15px; background: red;'"; ?>>
+	<div class="col-md-3">
+		<?php if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php"); ?>
+	</div>
 
-				<?php
+	<div id="page" class="col-md-9">
+		<div id="content" <?php if (isset($desde) and $desde = "ecta"); ?>>
+
+			<?php
 				if (!isset($indice_alfa)) 
-				include("components/submenu_bases.php");
+				include("components/search_free.php");
 				$_REQUEST["base"] = $actualbase;
 				?>
+		

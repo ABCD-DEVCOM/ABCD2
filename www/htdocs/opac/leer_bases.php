@@ -13,6 +13,9 @@ $fp=file($db_path."opac_conf/".$lang."/bases.dat");
 $bd_list=array();
 $seq_bases=array();
 $ixb=-1;
+
+
+
 foreach ($fp as $value){
 	$val=trim($value);
 	if ($val!=""){
@@ -25,6 +28,7 @@ foreach ($fp as $value){
 		$fr_01=file($db_path.$v[0]."/opac/".$lang."/".$v[0].".def");
 		foreach ($fr_01 as $bd_text){
 			if (trim($bd_text)!=""){
+
 				$desc_bd.=$bd_text;
 			}
 		}

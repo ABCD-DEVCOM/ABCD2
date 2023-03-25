@@ -123,7 +123,22 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
     }else{
     	$exFacetas="";
     }
-    $ff_pft="'<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
+    
+	//$ff_pft="'<table class=list-item-wrapper><tr><td valign=top class=side-item width=30>',@select_record.pft,/'</td><td valign=top>'/,"."@".$Formato.".pft,/'</td></tr></table>'";
+
+$i=1;	
+$ff_pft="'
+<div class=\"card my-2\">
+  <div class=\"card-body\">
+    <div class=\"card-title\">
+    ',@select_record.pft,/'
+  </div>
+
+    '/,"."@".$Formato.".pft,/'
+  </div>
+</div>'";
+	
+
 	$query = "&base=$base&cipar=$db_path"."par/$cipar.par&Expresion=".urlencode($Expresion).$exFacetas."&Formato=$ff_pft&count=$count&from=$desde&Opcion=buscar&lang=".$_REQUEST["lang"];
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="") $query.="&Existencias=N";
 	$resultado=wxisLlamar($base,$query,$xWxis."opac/buscar.xis");
@@ -138,47 +153,58 @@ global $total_registros,$xWxis,$galeria,$yaidentificado,$msgstr, $actparfolder;
 			$total=trim(substr($value,8));
 			if ($primeravez=="S"){
 				$proximo=$desde+$count;
-                echo "\n<div align=left style='margin-top:0px'>\n ";
+
 				if ($proximo>$total) $proximo=$total+1;
 
-                if (!isset($yaidentificado) or $yaidentificado=="" or $exFacetas!=""){
-                	echo "<span class=tituloBase>";
-					echo $bd_list[$base]["titulo"]."<br> ";
+				if (!isset($yaidentificado) or $yaidentificado=="" or $exFacetas!=""){
+                	?>
+					<h5><?php echo $bd_list[$base]["titulo"];?></h5>
+					<?php
 					if ($facetas!="")
-						echo "<font color=darkred>".$total . " ".$f[0] ." ".$msgstr["found"]."</font><br>";
-					echo "</span>";
+						echo "<p>".$total . " ".$f[0] ." ".$msgstr["found"]."</p>";
 				}
 				$mostrando=$proximo-1;
 				if ($total>0 and $count<999){
-					echo $msgstr["mostrando_del"]." $desde ".$msgstr["al"]." $mostrando ".$msgstr["de"]. " $total ".$msgstr["registros"];
-					if (!isset($control_entrada) or $control_entrada==1){
-?>
-						&nbsp; &nbsp;
-						<div id=cookie_div>
-							<a href="javascript:showCookie('ORBITA')"><input type=button value="<?php echo $msgstr["mostrar_rsel"]?>" title="<?php echo $msgstr["mostrar_rsel"]?>"></a>
-							<a href="javascript:delCookie('')"><input type=button value="<?php echo $msgstr["quitar_rsel"]?>" title="<?php echo $msgstr["quitar_rsel"]?>"></a>
-						</div>
-<?php 				}
-?>
-<script>
-cookie=getCookie('ORBITA')
-Ctrl=document.getElementById("cookie_div")
-if (Trim(cookie)!=""){
-	Ctrl.style.display="inline-block"
-}else{
-	Ctrl.style.display="none"
-}
-</script>
-<?php 			} else{
-					echo "<p>";
-				}
+					?>
+
+					<h6>
+						<?php echo $msgstr["mostrando_del"]." $desde ".$msgstr["al"]." $mostrando ".$msgstr["de"]. " $total ".$msgstr["registros"];?>
+					</h6>
+
+						<?php if (!isset($control_entrada) or $control_entrada==1){ ?>
+							&nbsp; &nbsp;
+							<div id="cookie_div" class="card row">
+								<div class="card-body">
+									<a class="btn btn-success" href="javascript:showCookie('ORBITA')" title="<?php echo $msgstr["mostrar_rsel"]?>"><?php echo $msgstr["mostrar_rsel"]?></a>
+									<a class="btn btn-light" href="javascript:delCookie('')"  title="<?php echo $msgstr["quitar_rsel"]?>"><?php echo $msgstr["quitar_rsel"]?></a>
+								</div>
+							</div>
+						<?php } ?>
+
+						<script>
+						cookie=getCookie('ORBITA')
+						Ctrl=document.getElementById("cookie_div")
+						if (Trim(cookie)!=""){
+							Ctrl.style.display="inline-block"
+						}else{
+							Ctrl.style.display="none"
+						}
+						</script>
+
+				<?php 
+				} else { echo "<p></p>"; }
+
 				if (isset($galeria) and $galeria=="S"){
 					echo "<br><input type=button id=\"search-submit\" value=\" Ver galeria imágenes \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','galeria')\">";
 					echo "&nbsp; &nbsp; <input type=button id=\"search-submit\" value=\" Ver ficha descriptiva \" onclick=\"javascript:Presentacion('".$_REQUEST["base"]."','".urlencode($_REQUEST["Expresion"])."','".$_REQUEST["pagina"]."','ficha')\"><br>";
 				}
-   				echo "</strong><p>\n</div>\n";
-      			$primeravez="N";
-      			echo '<div id="results" >';
+				?>
+
+				<?php $primeravez="N"; ?>
+
+				<div id="results" >
+	
+				<?php
 			}
 		}else{
 			if (substr($value,0,6)=='$$REF:'){
@@ -208,7 +234,10 @@ if (Trim(cookie)!=""){
 		}
 
 	}
-	 echo "</div>\n";
+	?>
+		</div><!--/id="results"-->
+	
+	<?php
 	if (isset($_REQUEST["Existencias"]) and $_REQUEST["Existencias"]!="" ){
 			PresentarExistencias($_REQUEST["Existencias"]);
 	}
@@ -223,3 +252,4 @@ if (Trim(cookie)!=""){
 }
 
 ?>
+

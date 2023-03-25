@@ -21,7 +21,8 @@ if (file_exists("opac_dbpath.dat")){
 	}
 }
 
-include("../central/config_opac.php");
+include realpath(__DIR__ . '/../central/config_opac.php');
+
 
 include("leer_bases.php");
 $primeraPagina="S";

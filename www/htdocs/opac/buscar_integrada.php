@@ -23,7 +23,6 @@ if (isset($_REQUEST["Formato"])) {
 	}
 }
 function SelectFormato($base,$db_path,$msgstr){
-
 	$PFT="";
 	$Formato="";
 	$archivo=$base."_formatos.dat";
@@ -34,7 +33,7 @@ function SelectFormato($base,$db_path,$msgstr){
 		die;
 	}
 
-	$select_formato=$msgstr["select_formato"]." <select name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
+	$select_formato=$msgstr["select_formato"]." <select class=\"form-select\" name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
 	$primero="";
 	$encontrado="";
 	foreach ($fp as $linea){
@@ -67,6 +66,8 @@ function SelectFormato($base,$db_path,$msgstr){
 	return array($select_formato,$Formato);
 }
 
+
+
 if (isset($_REQUEST["prefijoindice"])) $_REQUEST["mostrar_exp"]="N";
 if (!isset($_REQUEST["Opcion"])) die;
 
@@ -85,14 +86,16 @@ if ($_REQUEST["Opcion"]!="directa"){
 	//foreach ($_REQUEST as $key=>$value) $_REQUEST[$key]=urldecode($value);
 
 	if (isset($_REQUEST["Sub_Expresion"]))$_REQUEST["Sub_Expresion"] =str_replace('\\','',$_REQUEST["Sub_Expresion"]);
-}else{
+	}
 
-}
-if (isset($rec_pag)) $_REQUEST["count"] = $rec_pag;
-if (!isset($_REQUEST["desde"]) or trim($_REQUEST["desde"])=="" ) $_REQUEST["desde"]=1;
-if (!isset($_REQUEST["count"]) or trim($_REQUEST["count"])=="")  $_REQUEST["count"]=25;
-$desde=$_REQUEST["desde"];
-$count=$_REQUEST["count"];
+	if (isset($rec_pag)) $_REQUEST["count"] = $rec_pag;
+	if (!isset($_REQUEST["desde"]) or trim($_REQUEST["desde"])=="" ) $_REQUEST["desde"]=1;
+	if (!isset($_REQUEST["count"]) or trim($_REQUEST["count"])=="")  $_REQUEST["count"]=$npages;
+
+
+
+	$desde=$_REQUEST["desde"];
+	$count=$_REQUEST["count"];
 
 
 if (isset($_REQUEST["Opcion"]) and ($_REQUEST["Opcion"]=="diccionario")){
@@ -179,9 +182,8 @@ switch ($_REQUEST["Opcion"]){
 	            	$OP[]="";
 	            	$CA[]=$_REQUEST["prefijo"];
 				}
-			}else{
-
 			}
+			
 		}else{
             if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
 				$fav=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab");
@@ -189,6 +191,7 @@ switch ($_REQUEST["Opcion"]){
 				$fav=file($db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab");
 			$ix=-1;
 			$exp_bb="";
+
 			foreach ($fav as $value){
 				$value=trim($value);
 				if ($value!=""){
@@ -234,6 +237,7 @@ switch ($_REQUEST["Opcion"]){
 						$expre=explode(' ',$EX[$ix]);
 					}else{
 						$expre=explode('"',$EX[$ix]);
+						$expre=explode(' ',$EX[$ix]);
 					}
         	    }else{
 					$expre=explode('"',$EX[$ix]);
@@ -242,7 +246,7 @@ switch ($_REQUEST["Opcion"]){
 				foreach ($expre as $exp){
 					$exp=rtrim($exp);
 					if ($exp!=""){
-						$exp='"'.trim($CA[$ix]).$exp.'"';
+						$exp='"'.trim((string)$CA[$ix]).$exp.'"';
 						if ($sub_expre==""){
 							$sub_expre=$exp;
 						}else{
@@ -305,7 +309,7 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 if ($Expresion!='$' or isset($Expresion_col)){
 	if (isset($expr_coleccion)  and !isset($yaidentificado)){
 		echo "<div style='margin-top:30px;display: block;width:100%;font-size:12px;'>";
-		echo "<span class=tituloBase>Colecci�n: $expr_coleccion</span>";
+		echo "<span class=tituloBase>$expr_coleccion</span>";
 		echo "</div>";
 	}
 
@@ -378,7 +382,7 @@ foreach ($bd_list as $base=>$value){
 		if ($status=="Y"){
 			if (substr($value_res,0,7)=='MAXMFN:'){
 				$total=trim(substr($value_res,7));
-                if ($primera_base=="") $primera_base=$base;
+                if ($primera_base=="")  $primera_base=$base;
 			}
 		}else{
 			if (substr($value_res,0,8)=='[TOTAL:]'){
@@ -402,6 +406,8 @@ foreach ($bd_list as $base=>$value){
 	}
 
 }
+
+$_SESSION['primera_base']=$primera_base;
 
 if (!isset($_REQUEST["mostrar_exp"])){
 	// Inserts the search refinement option by opening the advanced form
@@ -440,58 +446,73 @@ if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 include_once 'components/total_bases.php';
 ?>
 
-<form name="continuar" action="buscar_integrada.php" method="post">
-<input type="hidden" name="integrada" value="<?php echo $integrada;?>">
-<input type="hidden" name="existencias">
+
+	<form name="continuar" action="buscar_integrada.php" method="get">
+		<input type="hidden" name="integrada" value="<?php echo $integrada;?>">
+		<input type="hidden" name="existencias">
+
+		<?php
+		echo "<input type=hidden name=facetas value=\"";
+		if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
+			echo $_REQUEST["facetas"];
+			$Expr_facetas=$_REQUEST["facetas"];
+		}else{
+			$Expr_facetas="";
+		}
+		echo "\">\n";
+		if (isset($total_base) and count($total_base)>0 ){
+
+			if (isset($total_fac[$base])){
+				foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";
+			}
+
+			if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
+				$base=$_REQUEST["base"];
+			else
+				$base=$primera_base;
+				$frm_sel=SelectFormato($base,$db_path,$msgstr);
+				$select_formato=$frm_sel[0];
+				$Formato=$frm_sel[1];
+
+			$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
+			$desde=$desde+$count;
+
+			if ($desde>=$contador and isset($total_base) and count($total_base)==2 and $multiplesBases=="N") {
+				$desde=1;
+				$_REQUEST["pagina"] =1 ;
+				echo "<hr>";
+
+				$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
+
+			}else{
+			}
+		}
+
+		echo "<input type=hidden name=Expresion value=\"".urlencode($Expresion)."\">\n";
+
+
+		NavegarPaginas($contador,$count,$desde,$select_formato); 
+
+
+		if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";
+		if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"".$_REQUEST["Operadores"]."\">\n";
+		if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
+	?>
+
+
+
+
+				
+
+
+	</form>
+
 
 <?php
-echo "<input type=hidden name=facetas value=\"";
-if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
-	echo $_REQUEST["facetas"];
-	$Expr_facetas=$_REQUEST["facetas"];
-}else{
-	$Expr_facetas="";
-}
-echo "\">\n";
-if (isset($total_base) and count($total_base)>0 ){
-
-	if (isset($total_fac[$base])){
-		foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";
-	}
-
-	if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
-		$base=$_REQUEST["base"];
-	else
-		$base=$primera_base;
-		$frm_sel=SelectFormato($base,$db_path,$msgstr);
-		$select_formato=$frm_sel[0];
-		$Formato=$frm_sel[1];
-
-	$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
-	$desde=$desde+$count;
-
-	if ($desde>=$contador and isset($total_base) and count($total_base)==2 and $multiplesBases=="N") {
-		 $desde=1;
-		 $_REQUEST["pagina"] =1 ;
-		 echo "<hr>";
-
-		 $contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
-
-	}else{
-	}
-}
-
-echo "<input type=hidden name=Expresion value=\"".urlencode($Expresion)."\">\n";
-NavegarPaginas($contador,$count,$desde,$select_formato);
-
-
-if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";
-if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"".$_REQUEST["Operadores"]."\">\n";
-if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
-echo "</form>\n";
-
-
 // Inserts the total results per database in the footer.
+
+
+
 include_once 'components/total_bases_footer.php';
 
 
@@ -520,7 +541,6 @@ echo "</form>";
 include_once ('components/facets.php');
 ?>
 
-
 <p id="back-top">
 	<a href="#inicio"><span></span></a>
 </p>
@@ -528,7 +548,7 @@ include_once ('components/facets.php');
 <?php
 include("components/footer.php");
 
-if (!isset($_REQUEST["base"]))$base="";
+if (!isset($_REQUEST["base"])) $base="";
 
 $Exp_b=PresentarExpresion($_REQUEST["base"]);
 
@@ -539,10 +559,8 @@ if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
 		highlightSearchTerms("<?php echo $Expresion;?>")
 	</script>
 
-<?php
-}
+<?php } ?>
 
-?>
-<script>
-	WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION; ?>"
-</script>
+	<script>
+		WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION; ?>"
+	</script>
