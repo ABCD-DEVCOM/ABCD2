@@ -1,3 +1,13 @@
+<header class="navbar navbar-primary sticky-top p-1 mb-3 d-flex shadow bg-white">
+  <div class="container">
+    <a id="logo" name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $lang; ?>" class="navbar-brand p-0 me-0 me-lg-2">
+	<?php if (isset($logo)) { ?>
+    	<img class="p-2" style="max-height:70px;" src="<?php echo $logo ?>" title="<?php echo $TituloEncabezado;?>">
+    <?php } else { ?>	
+		<span class="fs-4"><?php echo $TituloEncabezado;?></span>
+	<?php } ?>	
+    </a>
+
 <?php
 if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
 ?>
@@ -18,7 +28,9 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
                         }
                     }
                 }
-        
+
+            if (file_exists("opac_dbpath.dat")) echo '<li class="nav-item"><a  class="nav-link" href="../index.php">Cambiar carpeta bases</a></li>';
+
         ?>
 
 
@@ -50,3 +62,12 @@ if (!isset($mostrar_menu) or (isset($mostrar_menu) and $mostrar_menu == "S")) {
 }
     ?>
     </nav>
+
+    	<?php
+	if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
+		echo $msgstr["missing"] . " " . $db_path . "opac_conf/$lang/lang.tab";
+		die;
+	}
+	?>
+  </div>
+</header>
