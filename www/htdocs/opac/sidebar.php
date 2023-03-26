@@ -1,3 +1,4 @@
+<div class="col-md-3">
 <aside id="sidebar" class="sidebar">
 <?php
 if (!isset($_REQUEST["existencias"]) or trim($_REQUEST["existencias"])=="" ){
@@ -161,3 +162,4 @@ function BuscarIntegrada(base,modo,Opcion,Expresion,Coleccion,titulo_c,resaltar,
 	document.bi.submit()
 }
 </script>
+</div>
