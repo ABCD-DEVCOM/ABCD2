@@ -21,25 +21,43 @@
 		}
 	</script>
 
+<div class="py-3 my-3">
+	<h3><?php echo $msgstr["reserve"]?></h3>
+</div>
 
-<p align=center>
-<strong><?php echo $msgstr["reserve"]?></strong></p>
 <form name=enviarreserva action=opac_statment_ex.php method=post onSubmit='EnviarReserva();return false' target=_top>
+	<input type="hidden" name="mostrar_reserva" value="Y">
+	<input type="hidden" name="items_por_reservar">
+
 <?php
 
-foreach ($_REQUEST as $key=>$value){	if ($key!="items_por_reservar")
+foreach ($_REQUEST as $key=>$value){
+	if ($key!="items_por_reservar")
 		echo "<input type=hidden name=$key value=\"$value\">\n";
 }
 ?>
-<input type=hidden name=mostrar_reserva value=Y>
-<input type=hidden name=items_por_reservar>
-<table align=center>
-<tr><td><font size=2><?php echo $msgstr["user_id"]?>: </td><td><input type=text name=usuario size=30></td>
-<tr><td colspan=2 align=center><br><input type=submit value=" <?php echo $msgstr["send"]?> ">
+
+<div class="row g-3 py-2">
+
+	<div class="col-auto">
+		<label><?php echo $msgstr["user_id"]?>: </label>
+	</div>
+
+	<div class="col-auto">
+		<input class="form-control" type="text" name="usuario" size="30">
+	</div>
+
+	<div class="col-auto">
+		<input class="btn btn-success" type="submit" value="<?php echo $msgstr["send"]?> ">
+	</div>
+</div>
+
 <?php
-if ($accion=="reserve_one"){	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";}
+if ($accion=="reserve_one"){
+	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";
+}
 ?>
-</td></table>
+
 </form>
 
 <?php

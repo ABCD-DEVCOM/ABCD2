@@ -11,7 +11,7 @@ include("head.php");
 $Web_Dir=$CentralPath;
 $desde_web="Y";
 $desde_opac="Y";
-$_REQUEST["vienede"]="orbita";
+$_REQUEST["vienede"]="ABCD";
 chdir($CentralPath."reserve");
 include ('reservar_ex.php');
 include($ActualDir."/components/footer.php");

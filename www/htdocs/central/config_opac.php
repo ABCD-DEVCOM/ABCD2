@@ -7,8 +7,10 @@
 //session_start();
 error_reporting(E_ALL);
 //CHANGE THIS //// 
-include ("config_inc_check.php");
-include ("config.php");   //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
+$opac_path="opac/";
+
+include realpath(__DIR__ . '/../central/config_inc_check.php');
+include realpath(__DIR__ . '/../central/config.php'); //CAMINO DE ACCESO HACIA EL CONFIG.PHP DE ABCD
 
 if (isset($_SESSION["db_path"])){
 	$db_path=$_SESSION["db_path"];   //si hay multiples carpetas de bases de datos
@@ -16,7 +18,7 @@ if (isset($_SESSION["db_path"])){
 	$db_path=$_REQUEST["db_path"];
 }
 
-$opac_path="opac/";
+
 
 $actualScript=basename($_SERVER['PHP_SELF']);
 $CentralPath=$ABCD_scripts_path.$app_path."/";
@@ -38,7 +40,10 @@ include ($CentralPath."/lang/admin.php");
 $galeria="Y";
 $styles="";
 $facetas="Y";
-$logo="assets/img/logoabcd.png";
+
+if (empty($_REQUEST['NUM_PAGES'])) $npages="5";
+
+//$logo="assets/img/logoabcd.png";
 $link_logo="/".$opac_path;
 $TituloPagina="ABCD - OPAC";
 $TituloEncabezado=" OPAC ABCD";
@@ -94,6 +99,10 @@ if (file_exists($db_path."/opac_conf/opac.def")){
 					if (trim($v[1])!="")
 						$WEBRENOVATION=$v[1];
 					break;
+				case "NUM_PAGES":
+					if (trim($v[1])!="")
+						$npages=$v[1];
+					break;
 				case "SHOWHELP":
 					if (trim($v[1])!="")
 						$showhide=$v[1];
@@ -121,6 +130,8 @@ for ($i=1;$i<count($ix);$i++) {
 	$xxp.=$ix[$i];
 	if ($i!=count($ix)-1) $xxp.='/';
 }
+
+
 
 
 ?>

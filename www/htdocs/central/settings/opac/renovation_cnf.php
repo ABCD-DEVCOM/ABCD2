@@ -46,8 +46,8 @@ if (!is_dir($ABCD_scripts_path)) {
 	else{
 		$actualDir=getcwd();
 		chdir($CentralPath."circulation");
-		if (!file_exists("opac_statment_orbita.php")){
-			echo "missing ".getcwd(). "opac_statment_orbita.php<p>";
+		if (!file_exists("opac_statment_call.php")){
+			echo "<p>missing ".getcwd(). "opac_statment_call.php</p>";
 		}
 
 	}

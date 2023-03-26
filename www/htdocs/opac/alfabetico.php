@@ -1,9 +1,9 @@
 <?php
-
 $path="../";
 include("../central/config_opac.php");
 include("leer_bases.php");
 include("head.php");
+
 if (!isset($_REQUEST["prefijoindice"]) or $_REQUEST["prefijoindice"]=="") $_REQUEST["prefijoindice"]=$_REQUEST["prefijo"];
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 $index_alfa=array();
@@ -104,26 +104,48 @@ if (isset($_REQUEST["prefijoindice"]) and $_REQUEST["Opcion"]!="fecha"){
 	$Prefijo=$_REQUEST["prefijoindice"];
 	include("mostrar_indice.php");
 }
-echo "<br><div id=\"indices\" style=\"width:90%\">";
-echo "<span class=tituloBase><strong>".$_REQUEST["titulo"]."</strong></span><br><br>";
+
+?>
+
+<div id="indices">
+
+<h6><?php echo $_REQUEST["titulo"]?></h6>
+
+
+<?php
 $alfa_actual=$_REQUEST["titulo"];
 $ixc=count($terminos);
-echo "<table id=\"tabla_indices\"  border=0><td>".$msgstr["ira"];
+?>
 
+	
+
+<div class="form-floating">
+<?php
 if (count($index_alfa)>1){
-   	echo "<select name=alfabeto onchange=CambiarAlfabeto()>\n";
-	foreach ($index_alfa as $alfabeto){
-		if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]==$alfabeto){
-			$selected=" selected";
-		}else{
-			$selected="";
+?>
+   	<select class="form-select" name="alfabeto" onchange="CambiarAlfabeto()" id="floatingSelect"	>
+	<?php
+		foreach ($index_alfa as $alfabeto){
+			if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]==$alfabeto){
+				$selected=" selected";
+			}else{
+				$selected="";
+			}
+			echo "<option value=\"$alfabeto\" $selected>$alfabeto</option>\n";
 		}
-		echo "<option value=\"$alfabeto\" $selected>$alfabeto</option>\n";
-	}
-	echo "</select><br>";
+	?>
+	</select>
+	<label  for="floatingSelect"><?php echo $msgstr["ira"];?></label>
+
+</div>
+<?php	
  }
- 	echo "<div id=collation name=collation style=\"position:relative;\">";
- 	$ixndiv=-1;
+ ?>
+
+ 	<div id="collation" name="collation" style=\"position:relative;\" class="row py-3">
+
+	<?php
+	$ixndiv=-1;
 	foreach ($index_alfa as $alfabeto){
 		$ixndiv=$ixndiv+1;
 		if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]==$alfabeto)
@@ -134,7 +156,7 @@ if (count($index_alfa)>1){
 		$file_al=file($db_path."opac_conf/alpha/$meta_encoding/".$alfabeto.".tab");
 		foreach ($file_al as $l_ix){
 			$l_ix=trim($l_ix);
-			echo "<a href=\"javascript:Indice('$l_ix')\">$l_ix</a> ";
+			echo "<a class=\"btn btn-outline-primary btn-sm m-1\" href=\"javascript:Indice('$l_ix')\">$l_ix</a> ";
 			echo "  ";
 		}
 		echo "</div>";
@@ -149,16 +171,19 @@ if (count($index_alfa)>1){
 	}
 	?>
 	</div>
-   </td>
-</tr>
-<tr>
-	<td>
-		<input type="text" name="ira" size="15">
-		<a class="bt bt-blue" href="javascript:IrA()">
-			<i class="fas fa-search"></i>
+
+
+<div class="row py-3">
+	<div class="col-md-8">
+		<input class="form-control" type="text" name="ira" size="15">
+	</div>
+
+	<div  class="col-md-4">
+		<a class="btn btn-success" href="javascript:IrA()">
+			<i class="fas fa-search"></i> <?php echo $msgstr["search"]?>
 		</a>
-	</font>
-	</td>
+	</div>
+</div>
 
 <?php
 $comp="XXXXX";
@@ -199,7 +224,7 @@ if ($ixc>0 ){
 	$tope=count($terminos);
 	$nfilas=$tope;
 	$cuenta=0;
-	echo "<ul>";
+	echo "<ul class=\"list-group\">";
 	$primeraVez="S";
 	$total_terminos=0;
 	foreach ($terminos as $key=>$linea){
@@ -242,21 +267,21 @@ if ($ixc>0 ){
             else
             	$Existencias="";
             $Expresion=substr($Expresion,strlen($prefijo));
-			$url="<li><a href=javascript:Localizar(\"$Expresion\",\"$Existencias\")>";
-			echo	"$url"."<font color=black>".substr(trim($c[1]),strlen($prefijo))   ;
+			$url="<li class=\"list-group-item list-group-item-action\"><a href=javascript:Localizar(\"$Expresion\",\"$Existencias\")>";
+			echo	"$url".substr(trim($c[1]),strlen($prefijo))   ;
 			if ($prefijo!="TI_"){
 				if (isset($postings[$key]) and !isset($a[2]) ) {
-					echo "&nbsp;&nbsp;<font size=-1><i>[".$postings[$key]."]</i></font>";
+					echo "&nbsp;&nbsp;<font size=-1><i>[".$postings[$key]."]</i>";
 				}
 
 			}
 
 			echo "</a>";
-			echo "</font></li>\n";
+			echo "</li>\n";
         }
 		if ($_REQUEST["columnas"]==2){
 			if ($cuenta>=$tope/2) {
-				echo "</ul></td><td width=50% valign=top><ul>";
+				echo "</ul></td><td width=50% valign=top><ul class=\"list-group\">";
 				$cuenta=0;
 			}
 		}
@@ -266,10 +291,10 @@ if ($ixc>0 ){
 	</table>
 	
 		<center>
-			<a class="bt bt-green" href="javascript:history.back()">
+			<a class="btn btn-outline-primary" href="javascript:history.back()">
 				<i class="fas fa-angle-double-left"></i>
 			</a> 
-			<a class="bt bt-green" href=javascript:ContinuarIndice()>
+			<a class="btn btn-outline-primary" href=javascript:ContinuarIndice()>
 				<i class="fas fa-angle-double-right"></i>
 			</a>
 	</td>

@@ -4,7 +4,7 @@ include("../common/get_post.php");
 if (!isset($arrHttp["desde"]) or isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){
 
 }
-IF (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ORBITA") {
+IF (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD") {
 	$session["login"]="WEB";
 	$session["permiso"]="WEB";
 }else{
@@ -56,7 +56,7 @@ if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA"){
 }
 
 
-if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") {
+if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD") {
 	$_SESSION["lang"]=$_REQUEST["lang"];
 	$lang=$_REQUEST["lang"];
 	$session["login"]="WEB";
@@ -413,7 +413,7 @@ if ($cont=="S" and isset($arrHttp["reservados"])){
 		}
 	}
 }
-if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vienede"]!="orbita" )){
+if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vienede"]!="ABCD" )){
 	include ("reserves_read.php");
 	$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
 	$user_reserves=$reserves_arr[0];
@@ -429,8 +429,8 @@ if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vie
    </div>
 </div>
 <?php
-	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") Regresar();
-	if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vienede"]!="IAH_RESERVA") and $arrHttp["vienede"]!="orbita"){
+	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD") Regresar();
+	if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vienede"]!="IAH_RESERVA") and $arrHttp["vienede"]!="ABCD"){
 		include("../common/footer.php");
 	}else{
 	//	echo "<p>";

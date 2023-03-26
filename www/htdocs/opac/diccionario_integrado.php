@@ -51,30 +51,44 @@ document.onkeypress =
 
 ?>
 
+<div id="page" class="col-md-9">
 
-    <form name=diccionario method=post action=diccionario_integrado.php>
-    <div style=margin-top:20px;><input type=button id=search-submit value=" <?php echo $msgstr["back"]?>"  onclick="document.regresar.submit();"></div>
-    <p><font class=titulo3><?php echo $msgstr["diccio"]." "?>
-<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"]);
-	echo "</font><br>";
-//}
+<form name="diccionario" method="post" action="diccionario_integrado.php">
+
+<div>
+	<input class="btn btn-light" type=button id=search-submit value=" <?php echo $msgstr["back"]?>"  onclick="document.regresar.submit();">
+</div>
+
+
+<h2><?php echo $msgstr["diccio"]." "?></h2>
+
+<?php 
+
+if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"]);
+
 if ($_REQUEST["Opcion"]=="libre"){
 ?>
-           <font class=titulo2><?php echo $msgstr["unir_con"] ?><br>
-           <input type=radio value=and name=alcance id=and <?php if ($_REQUEST["alcance"]=="and") echo "checked"?>><font color=darkred><?php echo $msgstr["and"]?></font><br>
-           <input type=radio value=or name=alcance id=or <?php if ($_REQUEST["alcance"]=="or") echo "checked"?>><font color=darkred><?php echo $msgstr["or"]?></font>
-			<br>
+	<label><?php echo $msgstr["unir_con"] ?></label>
+
+	<div class="form-check">
+		<input class="form-check-input" type="radio" value="and" name="alcance" id="and" <?php if ($_REQUEST["alcance"]=="and") echo "checked"?>>
+		<label class="form-check-label"><?php echo $msgstr["and"]?></label>
+	</div>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" value="or" name="alcance" id="or" <?php if ($_REQUEST["alcance"]=="or") echo "checked"?>>
+		<label class="form-check-label"><?php echo $msgstr["or"]?></label>
+	</div>
 
 <?php }else{
 	echo "<input type=hidden name=alcance>\n";
 }
 
-echo "<p>";
 	if (isset($_REQUEST["Sub_Expresion"])){
 		$SE=explode('~~~',$_REQUEST["Sub_Expresion"]);
 		if (!isset($_REQUEST["Seleccionados"]))
 			if (isset($_REQUEST["Diccio"]))$_REQUEST["Seleccionados"]=trim($SE[$_REQUEST["Diccio"]]);
 	}
+	
 if ($detect->isMobile()) {
 	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["remover_sel"];
  	include("presentar_diccionario_movil.php");
@@ -84,6 +98,10 @@ if ($detect->isMobile()) {
 
 }
 ?>
+
+
+
+
 
 <?php
 $_REQUEST["resaltar"]="S";
@@ -135,6 +153,10 @@ if (isset($_REQUEST["lang"]))
 <input type=hidden name=Opcion value="<?php echo $_REQUEST["Opcion"]?>">
 <input type=hidden name=Seleccionados>
 </form>
+
+
+</div>
+
 
 <?php
 echo "<form name=regresar method=post action=avanzada.php>\n";

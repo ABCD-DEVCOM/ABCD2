@@ -36,7 +36,7 @@ include("../config.php");
 if (isset($_REQUEST["Web_Dir"])){
 /* para leer el db_path */
 	$Web_Dir=$_REQUEST["Web_Dir"];
-	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita"){
+	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD"){
 		$xis_path=$xWxis;
 		$exe_path=$Wxis;
 		include($Web_Dir."php/config_opac.php");
@@ -45,7 +45,7 @@ if (isset($_REQUEST["Web_Dir"])){
 	}
 }
 if (isset($_REQUEST["OpacHttp"]))  $OpacHttp=$_REQUEST["OpacHttp"];
-if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="ecta_web" and $arrHttp["vienede"]!="orbita") ){
+if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="ecta_web" and $arrHttp["vienede"]!="ABCD") ){
 	if (!isset($_SESSION["permiso"])){
 		header("Location: ../common/error_page.php") ;
 	}
@@ -70,7 +70,7 @@ $us_tab=LeerPft("loans_uskey.tab","users");
 $t=explode("\n",$us_tab);
 $uskey=$t[0];
 
-if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita"){
+if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD"){
 	require_once("../circulation/grabar_log.php");
 }else{
 	require_once("../circulation/grabar_log.php");
@@ -207,7 +207,7 @@ foreach ($items as $num_inv){
 			$ppres=$p[10];            //Loan policy
 			$num_ctrl=$p[11];         // N�mero de control
 			$catalog_db=$p[12];           // Nombre de la base de datos
-			if ($catalog_db=="" and isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita"){
+			if ($catalog_db=="" and isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD"){
 				$catalog_db="biblo";
 			}
 
@@ -438,10 +438,10 @@ if (isset($arrHttp["reserve"])){
 if (isset($arrHttp["vienede"])){
 	switch ($arrHttp["vienede"]){
 		case "ecta_web":
-			header("Location: $OpacHttp"."php/opac_statment_call.php?usuario=$cod_usuario$error&vienede=".$arrHttp["vienede"]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path");
+			header("Location: $OpacHttp"."opac_statment_call.php?usuario=$cod_usuario$error&vienede=".$arrHttp["vienede"]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path");
     		break;
-    	case "orbita";
-    		$url=$OpacHttp."/php/opac_statment_call.php?usuario=".$_REQUEST["usuario"]."$error&vienede=".$arrHttp["vienede"]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path";
+    	case "ABCD";
+    		$url=$OpacHttp."opac_statment_call.php?usuario=".$_REQUEST["usuario"]."$error&vienede=".$arrHttp["vienede"]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path";
     		header("Location: ".$url);
     		break;
     	default:
@@ -458,12 +458,12 @@ global $arrHttp,$cod_usuario,$db_path,$lang;
     $resultado="";
     if (isset($arrHttp["vienede"])){
     	switch ($arrHttp["vienede"]){
-    		case "orbita":
-    			$url=$OpacHttp."/php/opac_statment_call.php?usuario=".$_REQUEST["usuario"]."$error&vienede=".$_REQUEST["vienede."]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path";
+    		case "ABCD":
+    			$url=$OpacHttp."opac_statment_call.php?usuario=".$_REQUEST["usuario"]."$error&vienede=".$_REQUEST["vienede."]."&lang=$lang&resultado=".urlencode($resultado)."&db_path=$db_path";
     			header("Location: ".$url);
     			break;
     		case "ecta_web":
-    			header("Location:$OpacHttp"."php/opac_statment_call.php?usuario=$cod_usuario$error&vienede=".$_REQUEST["vienede"]."&db_path=$db_path&lang=$lang");
+    			header("Location:$OpacHttp"."opac_statment_call.php?usuario=$cod_usuario$error&vienede=".$_REQUEST["vienede"]."&db_path=$db_path&lang=$lang");
     			break;
     		case "renovar":
     		default:
@@ -477,6 +477,6 @@ global $arrHttp,$cod_usuario,$db_path,$lang;
 ?>
 <form name="retorno" action="opac_statment_ex.php" method="post">
 <input type="hidden" name="usuario" value="<?php echo $cod_usuario;?>">
-<input type="hidden" name="vienede" value="orbita">
+<input type="hidden" name="vienede" value="ABCD">
 <input type="hidden" name="lang" value="<?php echo $lang;?>">
 <input type="hidden" name="resultado" value="<?php echo $resultado;?>">

@@ -106,9 +106,16 @@ global $db_path,$msgstr;
 
 	$Tope=7;  //significa que se van a colocar 7 cajas de texto con la expresión de búsqueda
 	$Tope=$ix;
-	echo "</script>\n";
-	echo '<div id=registro STYLE="text-align:center;">';
-	echo "<form method=post name=forma1 action=avanzada.php onSubmit=\"Javascript:return false\">\n";
+?>
+
+</script>
+
+
+<div id="registro">
+
+<form method="post" name="forma1" action="avanzada.php" onSubmit="Javascript:return false">
+
+	<?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
 	if (isset($_REQUEST["modo"]))     echo "<input type=hidden name=modo value=".$_REQUEST["modo"].">\n";
@@ -116,31 +123,39 @@ global $db_path,$msgstr;
 	if (isset($_REQUEST["coleccion"])) echo "<input type=hidden name=coleccion value=\"".$_REQUEST["coleccion"]."\">";
 	if (isset($_REQUEST["indice_base"]))     echo "<input type=hidden name=base value=".$_REQUEST['indice_base'].">\n";
 	if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"".$_REQUEST["Formato"]."\">\n";
-	echo "<input type=hidden name=Opcion value=avanzada>\n";
-	echo "<input type=hidden name=resaltar value=S>\n";
-	echo "<input type=hidden name=Campos value=\"\">\n";
-	echo "<input type=hidden name=Operadores value=\"\">\n";
-	echo "<input type=hidden name=Expresion value=\"\">\n";
-	echo "<input type=hidden name=llamado_desde value=\"avanzada.php\">\n";
-	echo "<table border=0 valign=center cellpadding=0 cellspacing=3 width=680>";
-	echo "	<tr>";
-	echo "		<td colspan=4 style='font-size:12px;' align=center>";
-	echo $msgstr["mensajeb"];
-	echo "		</td>
-			</tr>";
-	echo "	<tr>
-				<td bgcolor=#222222 colspan=2><font face=verdana size=1 color=white><b>".$msgstr["campo"]."</b></td>";
-	echo "		<td bgcolor=#222222 colspan=2><font face=verdana size=1 color=white><b>".$msgstr["expr_b"]."</b>
-				</td>
-			</tr>";
+?>
+	<input type="hidden" name="Opcion" value="avanzada">
+	<input type="hidden" name="resaltar" value=S>
+	<input type="hidden" name="Campos" value="">
+	<input type="hidden" name="Operadores" value="">
+	<input type="hidden" name="Expresion" value="">
+	<input type="hidden" name="llamado_desde" value="avanzada.php">
+
+
+
+	<p><?php echo $msgstr["mensajeb"]; ?></p>
+
+<div id="searchBox" class="p-2 mb-4 bg-light rounded-3">
+
+
+	<div class="row">
+		<div class="col-2"><?php echo $msgstr["campo"]; ?></div>
+		<div class="col-10"><?php echo $msgstr["expr_b"]; ?></div>
+
+	</div>
+
+<?php
 	$Diccio=0;
 	for ($jx=0;$jx<=$Tope;$jx++){
    		if (isset($EX[$jx])) $EX[$jx]=Trim($EX[$jx]);
    		if (isset($OP[$jx])) $OP[$jx]=Trim($OP[$jx]);
    		if (isset($CA[$jx])) $CA[$jx]=Trim($CA[$jx]);
-		echo "<tr>
-				<td  valign=center width=155>";
-		echo "		<SELECT name=camp class=select-criterio>";
+?>		
+	<div class="row">
+		<div class="col-3">
+			<select name="camp" class="form-select">
+
+<?php
 		$asel="";
 
 		for ($i=0;$i<count($camposbusqueda);$i++){
@@ -148,37 +163,46 @@ global $db_path,$msgstr;
 			$c=explode('|',$camposbusqueda[$i]);
 
 			if ($i==$jx) $asel=" selected";
-		    echo "<OPTION value=\"".$c[1]."\" $asel>".$c[0]."</option>\n";
+		    echo "<option value=\"".$c[1]."\" $asel>".$c[0]."</option>\n";
 		}
-		echo "		</SELECT></TD>\n";
-		//echo "<td width=20>xx<input type=\"button\" onclick=\"Diccionario($jx);\" class=\"button-diccionario\">";
-		
 ?>
-		<td>
-		<a href="javascript:Diccionario(<?php echo $jx;?>)">
+		
+			</select>
+		</div>
+		
+		<div class="col-auto">
+		<a class="btn btn-sm btn-light" href="javascript:Diccionario(<?php echo $jx;?>)">
 			<i class="fas fa-book" alt="<?php echo $msgstr["indice"];?>" title="<?php echo $msgstr["indice"];?>"></i>
 		</a>
-   		</td>
-<?php
+   		</div>
 
-		echo "	<td NOWRAP width=100><input type=text style='font-size:10px' size=80 name=Sub_Expresiones value='";
-		if (isset($_REQUEST["Seleccionados"])){
-			if ($_REQUEST["Diccio"]==$jx){
-			     if ($_REQUEST["Seleccionados"]!='""') echo $_REQUEST["Seleccionados"];
-			}else{
-                if (isset($EX[$jx])){
-					if ($EX[$jx]!='""') echo $EX[$jx];
+		<div class="col-6">
+			<?php echo'<input class="form-control" type="text" size="80" name="Sub_Expresiones" value="';
+			if (isset($_REQUEST["Seleccionados"])){
+					if ($_REQUEST["Diccio"]==$jx){
+						if ($_REQUEST["Seleccionados"]!='""') echo $_REQUEST["Seleccionados"];
+					} else {
+						if (isset($EX[$jx])){
+							if ($EX[$jx]!='""') echo $EX[$jx];
+						}
+					}
+				}else{
+					if (isset($EX[$jx])){
+						if ($EX[$jx]!='""')echo $EX[$jx];
+					}
 				}
-			}
-		}else{
-			if (isset($EX[$jx])){
-				if ($EX[$jx]!='""')echo $EX[$jx];
-			}
-		}
+				echo '" >';
+		?>
+		</div>
 
-		echo "'></td>\n";
+		<?php
 		if ($jx<$Tope){
-       		echo "<td NOWRAP><select name=oper id=oper_$jx size=1 style='font-size:12px'>";
+		?>	
+       	
+		<div class="col-2">
+			<select name="oper" id="oper_<?php echo $jx;?>" size="1" class="form-select form-select-sm">
+
+			<?php
        		echo "<option value=and ";
        		if (!isset($OP[$jx]) or $OP[$jx]=="and" or $OP[$jx]=="")
        			echo " selected";
@@ -189,47 +213,49 @@ global $db_path,$msgstr;
        		echo ">OR";
        		echo "</select></td>";
  		}else {
-       		echo "<td><input type=hidden name=oper id=oper_$jx></td>";
+       		echo "<td><input type=hidden name=oper id=oper_$jx>";
     	}
-
+echo "	</div>
+</div>";
 
 	}
-	echo "<tr height=10>\n";
-	echo "	<td colspan=5 align=center class=menu></td>\n";
-	echo "<tr>\n";
-	echo "<tr height=10>\n";
-	echo "	<td colspan=5 align=center>";
-	echo "		<br><TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 width=560>";
+?>
 
-	echo "<td align=center><input type=button onclick=javascript:PrepararExpresion() value='".$msgstr["search"]."'> &nbsp; &nbsp;
-	      <input type=button onclick=javascript:LimpiarBusqueda() value='".$msgstr["limpiar"]."'>";
-    echo "<div style='overflow: hidden;text-align:left; float:right;display:block;' id='mensajes'></div> </td>\n";
-	echo "			</TABLE>
-				</td>
-			</tr>
-		</table>\n";
 
-	echo "</form>";
-	echo "<form name=diccio method=post action=diccionario_integrado.php>";
+
+
+		<input class="btn btn-success" type="button" onclick="javascript:PrepararExpresion()" value="<?php echo $msgstr["search"];?>">
+	    <input class="btn btn-light" type="button" onclick="javascript:LimpiarBusqueda()" value="<?php echo $msgstr["limpiar"];?>">
+
+    	<div style='overflow: hidden;text-align:left; float:right;display:block;' id='mensajes'></div>
+
+
+
+	</form>
+
+	
+<form name="diccio" method="post" action="diccionario_integrado.php">
+<?php
 	if (isset($_REQUEST["db_path"]))     echo "<input type=hidden name=db_path value=".$_REQUEST["db_path"].">\n";
 	if (isset($_REQUEST["lang"]))     echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
 	if (isset($_REQUEST["base"])) echo "<input type=hidden name=base value=".$_REQUEST['base'].">";
 	if (isset($_REQUEST["modo"])) echo "<input type=hidden name=modo value=".$_REQUEST['modo'].">";
 	if (isset($_REQUEST["indice_base"])) echo "<input type=hidden name=indice_base value=".$_REQUEST['indice_base'].">";
 	if (isset($_REQUEST["coleccion"])) echo "<input type=hidden name=coleccion value=\"".$_REQUEST['coleccion']."\">";
-	echo "<input type=hidden name=Sub_Expresion>";
-	echo "<input type=hidden name=Campos>";
-	echo "<input type=hidden name=Operadores>";
-	echo "<input type=hidden name=Opcion value=avanzada>";
-	echo "<input type=hidden name=prefijo value=\"\">";
-	echo "<input type=hidden name=campo value=\"\">";
-	echo "<input type=hidden name=id value=\"\">";
-	echo "<input type=hidden name=Diccio value=\"\">";
-	echo "<input type=hidden name=llamado_desde value='avanzada.php'>\n";
+?>
+	<input type="hidden" name="Sub_Expresion">
+	<input type="hidden" name="Campos">
+	<input type="hidden" name="Operadores">
+	<input type="hidden" name="Opcion" value="avanzada">
+	<input type="hidden" name="prefijo" value="">
+	<input type="hidden" name="campo" value="">
+	<input type="hidden" name="id" value="">
+	<input type="hidden" name="Diccio" value="">
+	<input type="hidden" name="llamado_desde" value="avanzada.php">
 
-	echo "</form>";
+	</form>
 
-
+<?php
 }
 
 

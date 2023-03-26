@@ -12,7 +12,10 @@ $path="../";
 include("../central/config_opac.php");
 include("leer_bases.php");
 $indice_alfa="n";
+
 include("head.php");
+
+
 //foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
 if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado")
 	if (isset($_REQUEST["base"])) unset($_REQUEST["base"]);
@@ -36,27 +39,26 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
  echo "</p>";
 ?>
 
+
+ <h4><?php echo $msgstr["buscar_a"]; ?></h4>
+	<?php
+		$Diccio=-1;
+		DibujarFormaBusqueda($Diccio);
+	?>
+</div>
+
+<div class="row mt-3">
+	<input class="btn btn-light" type="button" id="search-submit" value="<?php echo $msgstr["back"]?>" onclick="javascript:history.back()">
+</div>
+
+<form name="back" method="post" action="buscar_integrada.php">
 <?php
- echo "<font class=tituloBase>".$msgstr["buscar_a"]."</font>";
-
-$Diccio=-1;
-DibujarFormaBusqueda($Diccio);
-echo "
-
-
-</div>";
+	foreach ($_REQUEST as $var=>$value){
+		echo "<input type=hidden name=$var value=";
+		if (trim($value)!='""') echo urlencode($value);
+		echo ">\n";
+	}
 ?>
-<div style=margin-top:20px;><input type=button id=search-submit value='<?php echo $msgstr["back"]?>' onclick="javascript:history.back()"></div>
-<?php
-echo "<form name=back method=post action=buscar_integrada.php>\n";
-foreach ($_REQUEST as $var=>$value){
-	echo "<input type=hidden name=$var value=";
-	if (trim($value)!='""') echo urlencode($value);
-	echo ">\n";
-}
-echo "</form>";
+</form>
 
-include("components/footer.php");
-
-
-?>
+<?php include("components/footer.php"); ?>

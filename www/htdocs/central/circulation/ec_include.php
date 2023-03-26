@@ -26,6 +26,7 @@
  * == END LICENSE ==
 */
 // se determina si el préstamo está vencido
+$FechaP=date('Ymd');
 function compareDate ($FechaP,$lapso_p){
 global $locales,$config_date_format;
 //Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
@@ -131,8 +132,8 @@ if (isset($arrHttp["usuario"])){
 		$np=0;   //Total libros en poder del usuario
 	   // echo "<pre>".print_r($politica);
 		if (count($prestamos)>0) {
-			$ec_output.= "\n<strong>".$msgstr["loans"]."</strong>
-			<table width=100% bgcolor=#cccccc>";
+			$ec_output.= "\n<br><h4>".$msgstr["loans"]."</h4><hr>
+			<table width=100%  class='table mt-10'>";
 			if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
 				$ec_output.="<td> </td>";
 			}
@@ -198,8 +199,9 @@ if (isset($arrHttp["usuario"])){
 
 						if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
 							$ec_output.="<td  bgcolor=white valign=top nowrap>";
-							$ec_output.="$xnum_p";
-							$ec_output.= "<input type=checkbox name=chkPr_".$xnum_p." value=$mora  id='".$p[0]."'>";
+							$ec_output.= '<div class="form-check">';
+							$ec_output.= "<input class=\"form-check-input\"  type=checkbox name=chkPr_".$xnum_p." value=$mora  id='".$p[0]."'>";
+							$ec_output.='<label class="form-check-label" for="flexCheckDefault"> '.$xnum_p.'</label></div>';
 						}
 						$ec_output.= "<input type=hidden name=politica value=\"".$politica_str."\"> \n";
 

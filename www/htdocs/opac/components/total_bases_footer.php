@@ -2,7 +2,8 @@
 if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="S") {
     ?>
 
-<div style="width:100%;border:1px solid #cccccc; padding:10px; border-radius: 4px;">
+<div class="card">
+  <div class="card-body">
     <?php
 	$ix=-1;
 	$total_general=0;
@@ -24,6 +25,7 @@ if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $
             <?php echo $msgstr["total_registros"];?> : <?php echo $total_general;?>
         </strong>
     </p>
+  </div>
 </div>
 <?php
 }

@@ -41,7 +41,7 @@ global $db_path,$lang_db,$arrHttp,$desde_opac,$msgstr;
 	// se lee la tabla con los títulos de las columnas
 	$archivo="";
 
-	//if (isset($arrHttp["vienede"]) and ($arrHttp["vienede"]=="IAH_RESERVA" or $arrHttp["vienede"]=="orbita")){
+	//if (isset($arrHttp["vienede"]) and ($arrHttp["vienede"]=="IAH_RESERVA" or $arrHttp["vienede"]=="ABCD")){
 	if (isset($desde_opac) and $desde_opac=="Y"){
 		$fp=array($msgstr["tit_nc"],$msgstr["tit_tit"],$msgstr["tit_rdate"],$msgstr["tit_wait"],$msgstr["tit_fcan"],$msgstr["tit_fpres"],$msgstr["tit_status"]);
 	}else{
@@ -66,7 +66,7 @@ global $db_path,$lang_db,$arrHttp,$desde_opac,$msgstr;
 			$salida.= "<td><strong> $value</strong></td>";
 		}
 	}
-	if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" and $arrHttp["vienede"]!="orbita")){
+	if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" and $arrHttp["vienede"]!="ABCD")){
 		$salida.= "<td class=\"action\" bgcolor=white>&nbsp;</td></tr>\n";
 	}
 	return $salida;
@@ -154,9 +154,9 @@ v1/    ";
 				$img_url=$CentralHttp."/central/";
 			else
 				$img_url="../";
-			//if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" or $arrHttp["vienede"]!="orbita")){
+			//if (!isset($arrHttp["vienede"]) or ($arrHttp["vienede"]!="IAH_RESERVA" or $arrHttp["vienede"]!="ABCD")){
 				$reservas_u.="<td  bgcolor=white valign=top nowrap>";
-	 			if ((isset($arrHttp["vienede"]) and $arrHttp["vienede"])!="orbita"  and $fecha_hasta!=""){
+	 			if ((isset($arrHttp["vienede"]) and $arrHttp["vienede"])!="ABCD"  and $fecha_hasta!=""){
                     $reservas_u.="&nbsp;<a href=javascript:AlertReserve(".$mfn.",'','')><img src=$img_url"."dataentry/img/toolbarCancelEdit.png alt='".$msgstr["cancel"]."' title='".$msgstr["cancel"]."'></a>";
 				}else{
 			    	if (isset($vv[4]) and trim($vv[4])==""){
