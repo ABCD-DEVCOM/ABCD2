@@ -60,7 +60,6 @@ primer_indice="<?php echo $primer_indice?>"
 			document.indiceAlfa.action="buscar_integrada.php"
 			document.indiceAlfa.Existencias.value=Existencias
 			document.indiceAlfa.submit()
-			console.log(Sub_Expresion);
 		}
 
 		function IrA(){
