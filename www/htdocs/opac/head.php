@@ -141,8 +141,6 @@ $sidebar="Y";
 
 						<?php
 							if (!isset($indice_alfa)) 
-								$_REQUEST["base"] = $actualbase;
 								include("components/search_free.php");
-							
+								$_REQUEST["base"] = $actualbase;
 							?>
-		
