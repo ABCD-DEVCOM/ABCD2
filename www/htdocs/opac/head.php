@@ -53,7 +53,7 @@ $sidebar="Y";
 	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/highlight.js?<?php echo time(); ?>"></script>
 	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/lr_trim.js"></script>
 	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/selectbox.js"></script>
-	<script type='text/javascript' src='<?php echo $OpacHttp;?>assets/js/jquery-3.6.4.min.js?<?php echo time(); ?>' id='jquery-core-js'></script>
+	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/jquery-3.6.4.min.js?<?php echo time(); ?>"></script>
 
 	<!--FontAwesome-->
 	<link href="/assets/css/all.min.css" rel="stylesheet">
