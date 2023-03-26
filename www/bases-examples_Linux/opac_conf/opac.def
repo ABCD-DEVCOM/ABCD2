@@ -1,7 +1,7 @@
 OpacHttp=http://localhost:9090/opac/
 logo=assets/img/logoabcd.png
-link_logo=/opac
 shortIcon=/assets/images/favicons/favicon.png
+link_logo=/opac
 TituloPagina=ABCD - OPAC
 footer=2023 - ABCD OPAC
 ONLINESTATMENT=Y
