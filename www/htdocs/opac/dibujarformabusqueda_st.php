@@ -104,7 +104,7 @@ global $db_path,$msgstr;
 		}
 	}
 
-	$Tope=7;  //significa que se van a colocar 7 cajas de texto con la expresión de búsqueda
+	$Tope=7;  //significa que se van a colocar 7 cajas de texto con la expresiï¿½n de bï¿½squeda
 	$Tope=$ix;
 ?>
 

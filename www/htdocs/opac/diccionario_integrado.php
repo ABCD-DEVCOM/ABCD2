@@ -51,20 +51,13 @@ document.onkeypress =
 
 ?>
 
-<div id="page" class="col-md-9">
+<div id="page" class="col">
+	<h2><?php echo $msgstr["diccio"]." "?></h2><hr>
 
-<form name="diccionario" method="post" action="diccionario_integrado.php">
-
-<div>
-	<input class="btn btn-light" type=button id=search-submit value=" <?php echo $msgstr["back"]?>"  onclick="document.regresar.submit();">
-</div>
-
-
-<h2><?php echo $msgstr["diccio"]." "?></h2>
+	<form name="diccionario" method="post" action="diccionario_integrado.php">
 
 <?php 
-
-if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"]);
+if (isset($_REQUEST["campo"])) echo "<h4>".$_REQUEST["campo"]."</h4>";
 
 if ($_REQUEST["Opcion"]=="libre"){
 ?>
@@ -79,9 +72,8 @@ if ($_REQUEST["Opcion"]=="libre"){
 		<label class="form-check-label"><?php echo $msgstr["or"]?></label>
 	</div>
 
-<?php }else{
-	echo "<input type=hidden name=alcance>\n";
-}
+<?php } else { echo "<input type=hidden name=alcance>\n"; 
+	}
 
 	if (isset($_REQUEST["Sub_Expresion"])){
 		$SE=explode('~~~',$_REQUEST["Sub_Expresion"]);
@@ -93,7 +85,7 @@ if ($detect->isMobile()) {
 	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["remover_sel"];
  	include("presentar_diccionario_movil.php");
 }else{
-	echo "<p>".$msgstr["dbl_clic"];
+	echo "<p>".$msgstr["dbl_clic"]."</p>";
 	include("presentar_diccionario_nomovil.php");
 
 }
@@ -148,12 +140,15 @@ if (isset($_REQUEST["db_path"]))
 if (isset($_REQUEST["lang"]))
 	echo "<input type=hidden name=lang value=".urlencode($_REQUEST['lang']).">\n";
 ?>
-<input type=hidden name=resaltar value="<?php echo $_REQUEST["resaltar"]?>">
-<input type=hidden name=prefijo value="<?php echo $_REQUEST["prefijo"]?>">
-<input type=hidden name=Opcion value="<?php echo $_REQUEST["Opcion"]?>">
-<input type=hidden name=Seleccionados>
+<input type="hidden" name="resaltar" value="<?php echo $_REQUEST["resaltar"]?>">
+<input type="hidden" name="prefijo" value="<?php echo $_REQUEST["prefijo"]?>">
+<input type="hidden" name="Opcion" value="<?php echo $_REQUEST["Opcion"]?>">
+<input type="hidden" name="Seleccionados">
 </form>
 
+<div class="row m-3">
+	<input class="btn btn-light" type=button id=search-submit value=" <?php echo $msgstr["back"]?>"  onclick="document.regresar.submit();">
+</div>
 
 </div>
 

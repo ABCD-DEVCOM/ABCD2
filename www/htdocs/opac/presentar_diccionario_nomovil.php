@@ -17,12 +17,11 @@ include("presentar_diccionario_inc.php");
 
 }
 ?>
-
 		<div class="row g-3 py-3">
-			<div class="col-md-8">
+			<div class="col-md-10">
   				<input class="form-control" type="text" name="IR_A" size="15" placeholder="<?php echo $msgstr["search"]?> ..." >
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-2">
 				<input class="btn btn-success" type=button value="<?php echo $msgstr["ira"]?>" onclick="javascript:NavegarDiccionario(this,3)" id=search-submit>
 				<input type=hidden name=campo value="<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"])?>">
 			</div>
@@ -33,13 +32,10 @@ include("presentar_diccionario_inc.php");
 
 		<div class="row g-3">
 
-		<div class="col-md-5">
-
+		<div class="col-md-6">
+			<h6><?php echo $_REQUEST['campo'];?></h6>
    			<select class="form-select"  name="terminos"  multiple="multiple"  size="10"  onDblClick="moveSelectedOptions(document.diccionario.terminos,document.diccionario.TerminosSeleccionados,false)">
-
-			<?php
-			PresentarDiccionario();
-			?>
+				<?php PresentarDiccionario(); ?>
 			</select>
 
 
@@ -47,40 +43,40 @@ include("presentar_diccionario_inc.php");
 			
 			<div id="indice">
 
-				<a class="btn btn-light" href=javascript:AbrirIndice('')>0-9</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('A')>A</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('B')>B</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('C')>C</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('D')>D</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('E')>E</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('F')>F</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('G')>G</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('H')>H</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('I')>I</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('J')>J</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('K')>K</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('L')>L</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('M')>M</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('N')>N</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('O')>O</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('P')>P</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('Q')>Q</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('R')>R</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('S')>S</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('T')>T</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('U')>U</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('V')>V</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('W')>W</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('X')>X</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('Y')>Y</a>&nbsp;
-				<a  class="btn btn-light" href=javascript:AbrirIndice('Z')>Z</a>
+				<a class="btn btn-light m-1" href=javascript:AbrirIndice('')>0-9</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('A')>A</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('B')>B</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('C')>C</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('D')>D</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('E')>E</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('F')>F</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('G')>G</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('H')>H</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('I')>I</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('J')>J</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('K')>K</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('L')>L</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('M')>M</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('N')>N</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('O')>O</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('P')>P</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('Q')>Q</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('R')>R</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('S')>S</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('T')>T</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('U')>U</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('V')>V</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('W')>W</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('X')>X</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('Y')>Y</a>&nbsp;
+				<a  class="btn btn-light m-1" href=javascript:AbrirIndice('Z')>Z</a>
 	  		</div>
 
    			<input type=hidden value="<?php echo $LastKey?>" NAME="LastKey">
 		</div>
 
 
- 		<div class="col-md-1">
+ 		<div class="col-md-1 pt-5">
  			<input class="btn btn-primary my-2" type="button" value="&gt;" id="search-submit" onClick="moveSelectedOptions(document.diccionario.terminos,document.diccionario.TerminosSeleccionados,false)">
  			<input  class="btn btn-primary" type="button" value="&lt;" id="search-submit" onclick="moveSelectedOptions(document.diccionario.TerminosSeleccionados,document.diccionario.terminos,false)">
 		</div>
