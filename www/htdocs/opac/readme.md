@@ -51,6 +51,7 @@ The configuration files for a database enabled to be displayed in Opac must be p
 *   dbName.ix
 *   dbName.lang
 *   dbName\_avanzada.tab
+*   dbName\_avanzada_col.tab
 *   dbName\_facetas.dat
 *   dbName\_formatos.dat
 *   dbName\_libre.tab
@@ -64,3 +65,9 @@ The configuration files for a database enabled to be displayed in Opac must be p
 Files to search by collection type, where the \_\[letter\] suffix is related to the first column of the dbName\_collections.tab file
 
 *   dbName\_avanzada\_\[letter\].tab
+
+
+### Use the variable $sidebar to show or hide the sidebar:
+
+$sidebar=N // hide the bar
+$sidebar=Y // shows the sidebar
