@@ -191,9 +191,3 @@ if (isset($_REQUEST["prefijo"])) {
 
 <script src="<?php echo $OpacHttp;?>assets/js/bootstrap.bundle.min.js"></script>
 
-
-
-<script>
-	console.log('<?php var_dump($_REQUEST)?>')
-	console.log('<?php var_dump($_SESSION)?>')
-</script>
