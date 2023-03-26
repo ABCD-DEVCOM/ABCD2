@@ -1,3 +1,43 @@
 li.page-item > a.page-link > i.fas {
     line-height: inherit;
 }
+
+
+/* SCROLL-TO-TOP */
+
+.smoothscroll-top {
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    text-align: center;
+    z-index: 99;
+    color: #fff;
+    background-color: var(--bs-blue);
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    right: 25px;
+    bottom: -25px;
+    border-radius: 5px;
+    transition: all .5s ease-in-out;
+    transition-delay: .2s
+}
+
+.smoothscroll-top:hover {
+    background-color: #671f6c;
+    color: #fff;
+    transition: all .2s ease-in-out;
+    transition-delay: 0s
+}
+
+.smoothscroll-top.show {
+    visibility: visible;
+    cursor: pointer;
+    opacity: 1;
+    bottom: 25px
+}
+
+.smoothscroll-top i.fa {
+    line-height: inherit
+}
