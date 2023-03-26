@@ -5,7 +5,7 @@
 </a>'
 
 '<script>
-cookie=getCookie("ORBITA")+"|";
+cookie=getCookie("ABCD")+"|";
 
 console.log(cookie.indexOf("c_',mstname,'_'f(mfn,1,0),'|"));
 
