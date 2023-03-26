@@ -175,14 +175,14 @@ $ff_pft="'
 							&nbsp; &nbsp;
 							<div id="cookie_div" class="card row">
 								<div class="card-body">
-									<a class="btn btn-success" href="javascript:showCookie('ORBITA')" title="<?php echo $msgstr["mostrar_rsel"]?>"><?php echo $msgstr["mostrar_rsel"]?></a>
+									<a class="btn btn-success" href="javascript:showCookie('ABCD')" title="<?php echo $msgstr["mostrar_rsel"]?>"><?php echo $msgstr["mostrar_rsel"]?></a>
 									<a class="btn btn-light" href="javascript:delCookie('')"  title="<?php echo $msgstr["quitar_rsel"]?>"><?php echo $msgstr["quitar_rsel"]?></a>
 								</div>
 							</div>
 						<?php } ?>
 
 						<script>
-						cookie=getCookie('ORBITA')
+						cookie=getCookie('ABCD')
 						Ctrl=document.getElementById("cookie_div")
 						if (Trim(cookie)!=""){
 							Ctrl.style.display="inline-block"
