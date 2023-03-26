@@ -25,7 +25,9 @@ setcookie(session_name(), session_id(), $abcd_cookie_options);
 
 require_once ("../../central/config.php");
 require_once('../../isisws/nusoap.php');
-require_once ("../../central/common/ldap.php");
+
+
+if ($use_ldap=="1") require_once ("../../central/common/ldap.php");
 
 $converter_path=$cisis_path."mx";
 //echo "converter_path=".$converter_path."<BR>";
