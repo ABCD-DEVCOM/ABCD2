@@ -3,7 +3,7 @@
 include("../central/config_opac.php");
 chdir($CentralPath."circulation");
 $desde_opac="Y";
-$vienede="orbita";
+$vienede="ABCD";
 include ('reservar_anular.php');
 
 ?>

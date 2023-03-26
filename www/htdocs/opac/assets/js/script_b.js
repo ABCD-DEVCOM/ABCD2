@@ -459,7 +459,7 @@ function getCookie(cname) {
 }
 
 function Seleccionar(Ctrl){
-	cookie=getCookie('ORBITA')
+	cookie=getCookie('ABCD')
 	if (Ctrl.checked){
 		if (cookie!=""){
 		    c=cookie+"|"
@@ -477,7 +477,7 @@ function Seleccionar(Ctrl){
 		}
 
 	}
-	document.cookie="ORBITA="+cookie
+	document.cookie="ABCD="+cookie
 	Ctrl=document.getElementById("cookie_div")
 	Ctrl.style.display="inline-block"
 }
@@ -492,7 +492,7 @@ function delCookie(){
         	break;
   		}
 	}
-  	document.cookie =  'ORBITA=;';
+  	document.cookie =  'ABCD=;';
 	alert (msgstr["no_rsel"])
 	Ctrl=document.getElementById("cookie_div")
 	Ctrl.style.display="none"
@@ -506,7 +506,6 @@ function showCookie(cname){
 		alert(msgstr["rsel_no"])
 		return
 	}
-	console.log(document.buscar.lang.value)
     document.buscar.action="presentar_seleccion.php"
 	document.buscar.cookie.value=cookie
 

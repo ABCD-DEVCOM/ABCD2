@@ -1,5 +1,5 @@
 <?php
-session_name('orbitacn');
+session_name('ABCDcn');
 
 $mostrar_menu="N";
 include("../central/config_opac.php");

@@ -6,7 +6,7 @@
 
 ***********************************************/
 
-session_name("orbitacn");
+session_name("ABCDcn");
 session_start();
 include("../central/config_opac.php");
 include("leer_bases.php");
@@ -177,7 +177,7 @@ foreach ($fp as $value){
 }
 
 $ec_output="";
-$arrHttp["vienede"]="orbita";
+$arrHttp["vienede"]="ABCD";
 $desde_opac="Y";
 $ecta_web="N";
 include($CentralPath."circulation/ec_include.php");
@@ -193,7 +193,7 @@ if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
 	if ((isset($def["WEBRENOVATION"]) and $def["WEBRENOVATION"]=="Y")){
 		if (count($prestamos)>0 and !isset($_REQUEST["mostrar_reserva"])) {
 			echo  "<strong><input type=button onclick=javascript:Renovar() id=renovar value=\"".$msgstr["renew"]."\"></strong><p>";
-			if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita")
+			if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD")
 				if (isset($msgstr["iah_usuario_msgecta"])) echo $msgstr["iah_usuario_msgecta"];
 		}
 	}
@@ -223,14 +223,14 @@ $arrHttp["lang"]="es";
 <form name=renovar action=renovar_ex.php method=post>
 <input type=hidden name=searchExpr>
 <input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
-<input type=hidden name=vienede value=orbita>
+<input type=hidden name=vienede value=ABCD>
 <!--input type=hidden name=DB_PATH value=<?php echo $arrHttp["DB_PATH"]?>-->
 <input type=hidden name=lang value=<?php echo $arrHttp["lang"]?>>
 </form>
 <form name=anular method=post action=reservar_anular.php>
 <input type=hidden name=Mfn>
 <input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
-<input type=hidden name=vienede value=orbita>
+<input type=hidden name=vienede value=ABCD>
 <!--input type=hidden name=DB_PATH value=<?php echo $arrHttp["DB_PATH"]?>-->
 <input type=hidden name=lang value=<?php echo $arrHttp["lang"]?>>
 <?php

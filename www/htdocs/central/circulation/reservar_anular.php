@@ -17,6 +17,6 @@ $Mfn=$arrHttp["Mfn"];
 	$query = "&base=reserve&cipar=$db_path"."par/reserve.par&login=web&Mfn=".$Mfn."&ValorCapturado=".$ValorCapturado;
 	include("../common/wxis_llamar.php");
 
-header("Location:$OpacHttp"."php/opac_statment_call.php?usuario=".$arrHttp["usuario"]."&vienede=ecta_web&db_path=$db_path&lang=$lang");
+header("Location:$OpacHttp"."opac_statment_call.php?usuario=".$arrHttp["usuario"]."&vienede=ecta_web&db_path=$db_path&lang=$lang");
 
 ?>

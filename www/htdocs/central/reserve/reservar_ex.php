@@ -4,16 +4,21 @@ include("../common/get_post.php");
 if (!isset($arrHttp["desde"]) or isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){
 
 }
-IF (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") {	$session["login"]="WEB";
+IF (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD") {
+	$session["login"]="WEB";
 	$session["permiso"]="WEB";
-}else{	session_start();
+}else{
+	session_start();
 	if (!isset($_SESSION["permiso"])){
 		header("Location: ../common/error_page.php") ;
-	}}
+	}
+}
 if (!isset($desde_opac)) include("../config.php");
 if (isset($Actual_path))  $db_path=$Actual_path ;
 
-if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA"){	$_SESSION["login"]="IAH";
+if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA"){
+
+	$_SESSION["login"]="IAH";
 	$_SESSION["lang"]="es";
 	$script_php="../circulation/opac_statment_ex.php";
 ?>
@@ -34,13 +39,16 @@ if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA"){	$_SESSION[
 	}
 	</style>
 <?php
-	if (isset($logo_opac))echo "<img src=".$logo_opac.">";}else{	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){		include("../common/header.php");
+	if (isset($logo_opac))echo "<img src=".$logo_opac.">";
+}else{
+	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){
+		include("../common/header.php");
 	// RESERVA DESDE EL SISTEMA DE PRESTAMOS
 
 		if (!isset($_SESSION["permiso"])){
 			header("Location: ../common/error_page.php") ;
 		}
-		$script_php="../circulation/estado_de_cuenta.php";
+		$script_php="../circulation/estado_de_cuenta.php";ABCD
 		if (!isset($_SESSION["login"])) die;
 		if (!isset($_SESSION["lang"]))  $_SESSION["lang"]="en";
 		include("../common/institutional_info.php");
@@ -48,7 +56,8 @@ if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="IAH_RESERVA"){	$_SESSION[
 }
 
 
-if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") {	$_SESSION["lang"]=$_REQUEST["lang"];
+if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") {
+	$_SESSION["lang"]=$_REQUEST["lang"];
 	$lang=$_REQUEST["lang"];
 	$session["login"]="WEB";
 }
@@ -96,7 +105,8 @@ foreach ($fp as $value) {
 }
 
 //SE DETERMINA EL ESTADO DE CUENTA DE LAS RESERVAS DEL USUARIO
-function ReadUsersReservations($user_code){global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
+function ReadUsersReservations($user_code){
+global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
 	$Expresion="CU_".$user_code." and (ST_0 or ST_3)";
 	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
 	$Expresion=urlencode($Expresion);
@@ -105,14 +115,21 @@ function ReadUsersReservations($user_code){global $db_path,$Wxis,$xWxis,$wxisUr
 	include("../common/wxis_llamar.php");
 	$user_reserves=array();
 	$total_reserves=0;
-	foreach ($contenido as $linea){		$linea=trim($linea);
-		if (trim($linea)!="" and substr($linea,0,8)!='$$TOTAL:'){			$l=explode('|',$linea);
-			if (trim($l[4])=="" and trim($l[5])=="" ){				if ($l[7]!="" and $l[7]<date("Ymd")) continue;				$total_reserves=$total_reserves+1;
+	foreach ($contenido as $linea){
+		$linea=trim($linea);
+		if (trim($linea)!="" and substr($linea,0,8)!='$$TOTAL:'){
+			$l=explode('|',$linea);
+			if (trim($l[4])=="" and trim($l[5])=="" ){
+				if ($l[7]!="" and $l[7]<date("Ymd")) continue;
+				$total_reserves=$total_reserves+1;
 				if (isset($arrHttp["base"]) and $l[1]==$arrHttp["base"] or !isset($arrHttp["base"]))
-					$user_reserves[$l[2]]=$l[3];			}
+					$user_reserves[$l[2]]=$l[3];
+			}
+
 		}
 	}
-	return array($user_reserves,$total_reserves);}
+	return array($user_reserves,$total_reserves);
+}
 
 
 
@@ -129,14 +146,16 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$prefix_cn,$lang_db,$permitir_res
 		$formato_obj=$formato_reserva;
 		$query = "&Opcion=disponibilidad&base=". strtolower($db)."&cipar=$db_path"."par/$db.par&Expresion=".$Expresion."&Pft=@$formato_obj";
 		include("../common/wxis_llamar.php");
-		foreach ($contenido as $linea){			if (trim($linea)=="NO"){
+		foreach ($contenido as $linea){
+			if (trim($linea)=="NO"){
 				$permitir_reserva="N";
 				break;
 			}
 		}
 	}
 	$formato_obj=$db_path."$db/loans/".$_SESSION["lang"]."/loans_display.pft";
-	if (!file_exists($formato_obj)) {		$formato_obj=$db_path."$db/loans/".$lang_db."/loans_display.pft";
+	if (!file_exists($formato_obj)) {
+		$formato_obj=$db_path."$db/loans/".$lang_db."/loans_display.pft";
 	}
 	$query = "&Opcion=disponibilidad&base=". strtolower($db)."&cipar=$db_path"."par/$db.par&Expresion=".$Expresion."&Pft=@$formato_obj";
 	include("../common/wxis_llamar.php");
@@ -154,8 +173,13 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$prefix_cn,$lang_db,$permitir_res
 	return $titulo;
 }
 
-function ActualizarRegistro($arrHttp,$value,$type_user,$referencia,$fecha_anulacion){global $db_path,$Wxis,$wxisUrl,$xWxis,$msgstr,$session;
-    if (isset($session)){    	$login=$session["login"];    }else{    	$login=$_SESSION["login"];    }
+function ActualizarRegistro($arrHttp,$value,$type_user,$referencia,$fecha_anulacion){
+global $db_path,$Wxis,$wxisUrl,$xWxis,$msgstr,$session;
+    if (isset($session)){
+    	$login=$session["login"];
+    }else{
+    	$login=$_SESSION["login"];
+    }
 	$ValorCapturado ="<1 0>"."0"."</1>";
 	$ValorCapturado.="<10 0>".$arrHttp["usuario"]."</10>";
 	$ValorCapturado.="<12 0>".$type_user."</12>";
@@ -180,28 +204,35 @@ function ActualizarRegistro($arrHttp,$value,$type_user,$referencia,$fecha_anulac
 	}
 	$contenido=array();
 	include("../common/wxis_llamar.php");
-	foreach ($contenido as $res){		$r=explode('|',$res);
-		$cn=$r[2];	   	if (trim($res)!=""){
+	foreach ($contenido as $res){
+		$r=explode('|',$res);
+		$cn=$r[2];
+	   	if (trim($res)!=""){
 	   		echo "$referencia<strong><font color=red>".$msgstr["reserved"]."</font></strong><hr>";
 	   	}else{
 	   		echo "$referencia<strong><font color=red>".$msgstr["notreserved"]."</font></strong><hr>";
 	   	}
 	}
-}
+
+}
 
 function Regresar(){
-global $arrHttp,$msgstr;	echo "<form name=regresar action=buscar_integrada.php method=post>\n";
-	foreach ($arrHttp as $var=>$value){		 echo "<input type=hidden name=$var value=\"".$value."\">\n";
+global $arrHttp,$msgstr;
+	echo "<form name=regresar action=buscar_integrada.php method=post>\n";
+	foreach ($arrHttp as $var=>$value){
+		 echo "<input type=hidden name=$var value=\"".$value."\">\n";
 	}
 	echo "<input type=submit value=".$msgstr["back"].">\n";
-	echo "</form>";}
+	echo "</form>";
+}
 
 include("../circulation/scripts_circulation.php");
 
 ?>
 </head>
 <body <?php if (isset($BG_web)) echo $BG_web?>>
-<?php if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){?>
+<?php if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserva"){
+?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["reserve"]?>
@@ -277,9 +308,12 @@ if ($nv>0){
 }
 
 //SE REVISA LA VIGENCIA DEL USUARIO
-if ($vigency_user!=""){	if ($vigency_user<date('Ymd')){		echo "<font color=red><strong>".$msgstr["limituserdate"]."</strong></font>";
+if ($vigency_user!=""){
+	if ($vigency_user<date('Ymd')){
+		echo "<font color=red><strong>".$msgstr["limituserdate"]."</strong></font>";
 		$cont="N";
-	}}
+	}
+}
 
 $ur=ReadUsersReservations($arrHttp["usuario"]);
 //var_dump($ur);
@@ -305,17 +339,21 @@ $user_reservations=$ur[0];
 $total_reservas=$ur[1];
 
 $reservas_procesadas=0;
-if ($cont=="S" and isset($arrHttp["reservados"])){	echo "<br><br>";
+if ($cont=="S" and isset($arrHttp["reservados"])){
+	echo "<br><br>";
 	$por_reservar=explode('|',$arrHttp["reservados"]);
 
 	//YA LO TIENE PRESTADO
 	$reservados=array();
 	$noreservados=array();
 
-	foreach ($por_reservar as $pr){		$continuar="";		if (trim($pr)!=""){
+	foreach ($por_reservar as $pr){
+		$continuar="";
+		if (trim($pr)!=""){
 			$ppr_0=explode(';;',$pr);
 			$control_number=$ppr_0[0];
-			if (isset($ppr_0[1])) {				$arrHttp["base"]=$ppr_0[1];
+			if (isset($ppr_0[1])) {
+				$arrHttp["base"]=$ppr_0[1];
 				$arrHttp["db"]=$arrHttp["base"];
 			}
 			require_once("../circulation/databases_configure_read.php");
@@ -325,34 +363,46 @@ if ($cont=="S" and isset($arrHttp["reservados"])){	echo "<br><br>";
 
 			if ($permitir_reserva=="N"){
 				echo $salida_catalogo."<font color=red>".$control_number." ".$msgstr["cannot_be_reserved"]."</font><hr>";
-				$continuar="N";
+				$continuar="N";ABCD
 				continue;
 			}
-			foreach ($prestamos as $value) {				$p=explode('^',$value);
-				if ($control_number==$p[1]){					$aceptar="N";
-					break;				}
+			foreach ($prestamos as $value) {
+				$p=explode('^',$value);
+				if ($control_number==$p[1]){
+					$aceptar="N";
+					break;
+				}
 			}
 			if ($aceptar=="S")
 				$reservados[]=trim($pr);
 			else{
 				echo "$salida_catalogo<font color=red style=line-height:30px> ".$msgstr["duploan"]."</font><hr>";
-				$continuar="N";
-			}			if (count($reservados)>0 and $continuar==""){    	        $cont="N";
-				if (count($user_reservations)>0){				//SE DETERMINA SI YA EL USUARIO TIENE UNA RESERVA DE ESE TITULO
+				$continuar="N";ABCD
+			}ABCD
+			if (count($reservados)>0 and $continuar==""){
+    	        $cont="N";
+				if (count($user_reservations)>0){
+				//SE DETERMINA SI YA EL USUARIO TIENE UNA RESERVA DE ESE TITULO
 					if (isset($user_reservations[$control_number])){
-						echo "<br>". $salida_catalogo;						echo "<font color=red>".$msgstr["yareservado"]." (";
+						echo "<br>". $salida_catalogo;
+						echo "<font color=red>".$msgstr["yareservado"]." (";
 						$f=$user_reservations[$control_number];
 						if ($config_date_format=="DD/MM/YY")
 							echo substr($f,6,2).'-'.substr($f,4,2).'-'.substr($f,0,4);
 						else
 							echo substr($f,4,2).'-'.substr($f,6,2).'-'.substr($f,0,4);
-						echo ")</font><hr>";					}else{						$cont="S";					}
-				}else{					$cont="S";
+						echo ")</font><hr>";
+					}else{
+						$cont="S";
+					}
+				}else{
+					$cont="S";
 				}
 				if ($cont=="S"){
 					$reservas_procesadas=$reservas_procesadas+1;
 
-					if ($reservas_permitidas-($total_reservas+1)<0){						echo "<br>". $salida_catalogo;
+					if ($reservas_permitidas-($total_reservas+1)<0){
+						echo "<br>". $salida_catalogo;
 						echo "<font color=red>".$msgstr["no_more_reservations"]."</font><hr>";
 					}else{
 			        	ActualizarRegistro($arrHttp,$control_number,$type_user,$salida_catalogo,"");
@@ -368,7 +418,9 @@ if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vie
 	$reserves_arr=ReservesRead("CU_".$arrHttp["usuario"]);
 	$user_reserves=$reserves_arr[0];
 	if (trim($user_reserves)!=""){
-		if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="IAH_RESERVA"){			echo "<p><strong><font color=darkred>".$msgstr["reserves"]."</font></strong><br>".$msgstr["reserves_confirm"];		}else{
+		if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="IAH_RESERVA"){
+			echo "<p><strong><font color=darkred>".$msgstr["reserves"]."</font></strong><br>".$msgstr["reserves_confirm"];
+		}else{
 			echo "<p><strong><font color=darkred>".$msgstr["reserves"]."</font></strong><br>".$user_reserves;
 		}
 	}
@@ -380,7 +432,9 @@ if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vie
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="orbita") Regresar();
 	if (!isset($arrHttp["vienede"]) or (isset($arrHttp["vienede"]) and $arrHttp["vienede"]!="IAH_RESERVA") and $arrHttp["vienede"]!="orbita"){
 		include("../common/footer.php");
-	}else{	//	echo "<p>";
+	}else{
+	//	echo "<p>";
 	//	echo "&nbsp; &nbsp;<input type=button name=cerrar value='".$msgstr["cerrar"]."' onclick=javascript:self.close()>";
-	}
+
+	}
 ?>
