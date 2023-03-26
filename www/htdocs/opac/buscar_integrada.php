@@ -539,13 +539,7 @@ if (isset($_REQUEST["db_path"]))  echo "<input type=hidden name=db_path value=".
 echo "</form>";
 
 include_once ('components/facets.php');
-?>
 
-<p id="back-top">
-	<a href="#inicio"><span></span></a>
-</p>
-
-<?php
 include("components/footer.php");
 
 if (!isset($_REQUEST["base"])) $base="";
