@@ -28,6 +28,8 @@ $meta_encoding = $charset;
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
 
 session_start(); 
+
+$sidebar="Y";
 ?>
 <?php ?>
 <!doctype html>
@@ -47,17 +49,18 @@ session_start();
 	<title><?php echo $TituloPagina ?></title>
 	<link href="<?php echo $OpacHttp;?>assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<?php echo $OpacHttp;?>assets/css/styles.css?<?php echo time(); ?>" rel="stylesheet" type="text/css" media="screen" />
-	<script src="<?php echo $OpacHttp;?>assets/js/script_b.js?<?php echo time(); ?>"></script>
-	<script src="<?php echo $OpacHttp;?>assets/js/highlight.js?<?php echo time(); ?>"></script>
-	<script src="<?php echo $OpacHttp;?>assets/js/lr_trim.js"></script>
-	<script src="<?php echo $OpacHttp;?>assets/js/selectbox.js"></script>
+	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/script_b.js?<?php echo time(); ?>"></script>
+	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/highlight.js?<?php echo time(); ?>"></script>
+	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/lr_trim.js"></script>
+	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/selectbox.js"></script>
+	<script type='text/javascript' src='<?php echo $OpacHttp;?>assets/js/jquery-3.6.4.min.js?<?php echo time(); ?>' id='jquery-core-js'></script>
 
 	<!--FontAwesome-->
 	<link href="/assets/css/all.min.css" rel="stylesheet">
 
 	<script>
-		document.cookie = 'ORBITA; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
-		document.cookie = 'ORBITA=;';
+		document.cookie = 'ABCD; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
+		document.cookie = 'ABCD=;';
 
 		/* Marcado y presentación de registros*/
 		function getCookie(cname) {
@@ -77,7 +80,7 @@ session_start();
 		}
 
 		function Seleccionar(Ctrl) {
-			cookie = getCookie('ORBITA')
+			cookie = getCookie('ABCD')
 			if (Ctrl.checked) {
 				if (cookie != "") {
 					c = cookie + "|"
@@ -95,16 +98,16 @@ session_start();
 				}
 
 			}
-			document.cookie = "ORBITA=" + cookie
+			document.cookie = "ABCD=" + cookie
 			Ctrl = document.getElementById("cookie_div")
 			Ctrl.style.display = "inline-block"
 		}
 
 		function delCookie() {
-			document.cookie = 'ORBITA=;';
+			document.cookie = 'ABCD=;';
 
 		}
-		var user = getCookie("ORBITA");
+		var user = getCookie("ABCD");
 		if (user != "") {
 			alert("Welcome again " + user);
 		} else {
@@ -125,51 +128,21 @@ session_start();
 </head>
 
 <body>
+	<?php  include_once 'components/topbar.php';?>
 
+	<div class="container">
+		<main>
 
+		<div class="d-flex flex-row col-md-12">
+			<?php if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and ($sidebar!="N")) include("components/sidebar.php"); ?>
+			
+				<div id="page" class="col">
+					<div class="col-md-12" id="content" <?php if (isset($desde) and $desde = "ecta"); ?>>
 
-
-<!--<header  id="header"  class="d-flex flex-wrap justify-content-center p-3 mb-4 border-bottom">-->
-<header class="navbar navbar-primary sticky-top p-1 mb-3 d-flex shadow bg-white">
-  <div class="container">
-    <a id="logo" name="inicio" href="<?php echo $link_logo ?>?lang=<?php echo $lang; ?>" class="navbar-brand p-0 me-0 me-lg-2">
-	<?php if (isset($logo)) { ?>
-    	<img class="p-2" style="max-height:70px;" src="<?php echo $logo ?>" title="<?php echo $TituloEncabezado;?>">
-    <?php } else { ?>	
-		<span class="fs-4"><?php echo $TituloEncabezado;?></span>
-	<?php } ?>	
-    </a>
-
-	<?php
-		include_once 'components/topbar.php';
-		if (isset($_REQUEST["db_path"])) echo "  " . $_REQUEST["db_path"];
-		if (file_exists("opac_dbpath.dat")) echo "<a href=../index.php>Cambiar carpeta bases</a>";
-	?>
-
-	<?php
-	if (!file_exists($db_path . "opac_conf/$lang/lang.tab")) {
-		echo $msgstr["missing"] . " " . $db_path . "opac_conf/$lang/lang.tab";
-		die;
-	}
-	?>
-  </div>
-</header>
-
-<div class="container">
-<main>
-
-<div class="row">
-
-	<div class="col-md-3">
-		<?php if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and !isset($sidebar)) include("components/sidebar.php"); ?>
-	</div>
-
-	<div id="page" class="col-md-9">
-		<div id="content" <?php if (isset($desde) and $desde = "ecta"); ?>>
-
-			<?php
-				if (!isset($indice_alfa)) 
-				include("components/search_free.php");
-				$_REQUEST["base"] = $actualbase;
-				?>
+						<?php
+							if (!isset($indice_alfa)) 
+								$_REQUEST["base"] = $actualbase;
+								include("components/search_free.php");
+							
+							?>
 		
