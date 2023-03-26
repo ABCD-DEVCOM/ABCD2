@@ -151,7 +151,7 @@ function NavegarDiccionario(F,desde){
  	}
 	switch (desde){
 		case 4:
-/* Más términos */
+/* MÃ¡s tÃ©rminos */
 			document.diccionario.Navegacion.value="mas terminos"
 			document.diccionario.submit()
 			break
@@ -273,7 +273,7 @@ function Diccionario(jx){
 	document.diccio.Sub_Expresion.value=Expresion
 	document.diccio.Campos.value=Campos
 	document.diccio.Operadores.value=Operadores
-	document.diccio.campo.value=escape(nombrec)
+	document.diccio.campo.value=nombrec
 	document.diccio.prefijo.value=prefijo
 	document.diccio.Diccio.value=jx
 	document.diccio.submit()
@@ -435,13 +435,13 @@ function ActivarIndice(titulo,columnas,Opcion,count,posting,prefijo,base){
 
 function ValidarUsuario(){
 	if (Trim(document.estado_de_cuenta.usuario.value)==""){
-		alert("Debe ingresar su código de usuario")
+		alert("Debe ingresar su cÃ³digo de usuario")
 		return
 	}
 	document.estado_de_cuenta.submit()
 }
 
-/* Marcado y presentación de registros*/
+/* Marcado y presentaciÃ³n de registros*/
 function getCookie(cname) {
     var name = cname+"=";
     var decodedCookie = decodeURIComponent(document.cookie);
