@@ -66,6 +66,7 @@
 					}
 					?>
 					<!-- end #footer -->
+					
 					</body>
 
 
@@ -75,6 +76,9 @@
 	<script type='text/javascript' src="<?php echo $OpacHttp;?>assets/js/slick.min.js?<?php echo time(); ?>"></script>
 
 <script>
+
+console.log('OPAC ABCD Version: 1.1.0-beta 20230326');
+
 jQuery(function(){
     jQuery(document).on( 'scroll', function(){
         if (jQuery(window).scrollTop() > 100) {
