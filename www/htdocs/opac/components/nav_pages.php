@@ -129,7 +129,7 @@ while ($pg<=0) $pg=$pg+1;
        // if ($multiplesBases=="N"){
        // 	$paginas=1;
        // 	$pg=1;
-       // 	echo "<p><br><input type=button id=search-submit value=\"Volver al inicio\" onclick=javascript:document.continuar.base.value='biblo';ProximaPagina($paginas,$pg)>";
+       // 	echo "<br><input type=button id=search-submit value=\"Volver al inicio\" onclick=javascript:document.continuar.base.value='biblo';ProximaPagina($paginas,$pg)>";
        // }
 		echo "\n</div>\n";
 		//echo "&nbsp; &nbsp;<input type=submit value='Continuar'>";
@@ -137,8 +137,9 @@ while ($pg<=0) $pg=$pg+1;
 		echo $select_formato."<br>";
 	}
 
-	if (isset($_REQUEST["prefijoindice"])) {
-		echo "<p><br><input type=button id=search-submit value=\" &nbsp;".$msgstr["index_back"]."&nbsp; \" onclick=javascript:document.indice.submit()>\n";
+	if (isset($_REQUEST["prefijoindice"])) { ?>
+		<input  class="btn btn-secondary" type="button" id="search-submit" value="<?php echo $msgstr["index_back"];?>" onclick="javascript:document.indice.submit()">
+	<?php
 	}
 }
 
