@@ -52,6 +52,7 @@ recordid=ID do registro:
 renewalconfirm=Deseja renovar o empréstimo indicado?
 renewallimitreached=Você atingiu o número máximo de renovações permitidas.
 reservationcancel=Cancelar Renovação
+reservationcanceled=Reseva cancelada
 reservationconfirm=Deseja realizar uma reserva da publicação indicada?
 reserveddate=Reservado a
 result=Resultado da transação
