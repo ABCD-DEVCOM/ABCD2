@@ -136,7 +136,7 @@ $sidebar="Y";
 		<div class="d-flex flex-row col-md-12">
 			<?php if ((!isset($_REQUEST["existencias"]) or $_REQUEST["existencias"] == "") and ($sidebar!="N")) include("components/sidebar.php"); ?>
 			
-				<div id="page" class="col">
+				<div id="page" class="container">
 					<div class="col-md-12" id="content" <?php if (isset($desde) and $desde = "ecta"); ?>>
 
 						<?php
