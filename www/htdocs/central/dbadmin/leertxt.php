@@ -4,9 +4,12 @@ if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
 }
 include("../common/get_post.php");
+
 include ("../config.php");
 include ("../lang/admin.php");
 include ("../lang/dbadmin.php");
+
+include("../common/header.php");
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
@@ -19,7 +22,7 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
 //die;
-echo "<font face=arial size=1>Script: leertxt.php";
+echo "Script: leertxt.php";
 
 $fp="";
 if (isset($arrHttp["archivo"])) {
@@ -43,16 +46,20 @@ if (isset($arrHttp["archivo"])) {
 	if ($len>0)
 		$arrHttp["archivo"]=substr($arrHttp["archivo"],0,$len);
 	$file=$db_path.$arrHttp["base"]."/$folder/".$_SESSION["lang"]."/" .$arrHttp["archivo"].".pft";
-	if (file_exists($file)){        $fp=file($file);
+	if (file_exists($file)){
+        $fp=file($file);
 	}else{
 		$file=$db_path.$arrHttp["base"]."/$folder/".$lang_db."/" .$arrHttp["archivo"].".pft";
 		$fp=file($file);
 	}
 
-	if (!$fp){		if ($arrHttp["desde"]!="recibos"){
+	if (!$fp){
+		if ($arrHttp["desde"]!="recibos"){
   			echo $msgstr["misfile"]." ". $arrHttp["archivo"];
 		}else{
-			$file=$db_path.$arrHttp["base"]."/$folder/".$_SESSION["lang"]."/" .$arrHttp["archivo"].".pft";			$fp=array();		}
+			$file=$db_path.$arrHttp["base"]."/$folder/".$_SESSION["lang"]."/" .$arrHttp["archivo"].".pft";
+			$fp=array();
+		}
 	}
 }else{
 
@@ -72,8 +79,10 @@ if (isset($arrHttp["archivo"])) {
 <meta http-equiv="content-script-type" content="text/javascript">
 <script languaje=javascript>
 
-function ActualizarFormato(){	document.forma1.action="pft_update.php"
-	document.forma1.submit()}
+function ActualizarFormato(){
+	document.forma1.action="pft_update.php"
+	document.forma1.submit()
+}
 function Enviar(){
 	window.opener.document.forma1.pft.value=document.forma1.pftedit.value
 	if (heading=="Y")
@@ -81,39 +90,44 @@ function Enviar(){
 	window.opener.EsconderVentana('createformat')
 	window.opener.toggleLayer('createformat')
 //CHECK THE OPENER FORM WITH THE TYPE OF OUTPUT
-	switch (type){		case "CT":
+	switch (type){
+		case "CT":
 			window.opener.document.forma1.tipof[2].checked =true
 			break
 		case "CD":
 			window.opener.document.forma1.tipof[3].checked =true
-			break	}
+			break
+	}
 	self.close()
 }
 </script>
 
-<body><font color=black>
-<form name=forma1 action=leertxt.php method=post><p>
-<?php
-if (isset($arrHttp["base"]))	echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
-if (isset($arrHttp["desde"]))
-	echo "<input type=hidden name=desde value=".$arrHttp["desde"].">\n";
-if (isset($arrHttp["archivo"]))
-	echo "<input type=hidden name=nombre value=".$arrHttp["archivo"].">\n";
-if (isset($arrHttp["descripcion"]))
-	echo "<input type=hidden name=descripcion value=".$arrHttp["descripcion"].">\n";
+<body>
 
-echo $msgstr["edit"]." ".$msgstr["pft"].": ".$arrHttp["archivo"];
-if (isset($arrHttp["archivo"])) {
-//    echo   " Al terminar de clic sobre </font> <b>enviar</b> <font color=black> para almacenar los cambios</span>  <br>";
-  }else{
-  	echo "<br><font color=red>".$msgstr["pftwd1"]." <a href=javascript:Enviar()><strong>".$msgstr["send"]."</strong></a> ".$msgstr["pftwd2"]."</span>";
-  }
-?>
+<form name="forma1" action="leertxt.php" method="post">
+	<?php
+	if (isset($arrHttp["base"]))
+		echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
+	if (isset($arrHttp["desde"]))
+		echo "<input type=hidden name=desde value=".$arrHttp["desde"].">\n";
+	if (isset($arrHttp["archivo"]))
+		echo "<input type=hidden name=nombre value=".$arrHttp["archivo"].">\n";
+	if (isset($arrHttp["descripcion"]))
+		echo "<input type=hidden name=descripcion value=".$arrHttp["descripcion"].">\n";
 
-<input type=hidden name=Opcion>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=descripcion value="<?php echo $arrHttp["descripcion"]?>">
-&nbsp;<textarea name=pftedit rows=30 cols=100% style="width:100%" nowrap>
+	echo $msgstr["edit"]." ".$msgstr["pft"].": ".$arrHttp["archivo"];
+	if (isset($arrHttp["archivo"])) {
+	//    echo   " Al terminar de clic sobre </font> <b>enviar</b> <font color=black> para almacenar los cambios</span>  <br>";
+	}else{
+		echo "<br><font color=red>".$msgstr["pftwd1"]." <a href=javascript:Enviar()><strong>".$msgstr["send"]."</strong></a> ".$msgstr["pftwd2"]."</span>";
+	}
+	?>
+
+<input type="hidden" name="Opcion">
+<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+<input type="hidden" name="descripcion" value="<?php echo $arrHttp["descripcion"]?>">
+
+<textarea name="pftedit" rows="30" style="width:99%" nowrap>
 <?php
 	foreach ($fp as $linea){
   		echo str_replace('&','&amp;',$linea);
@@ -124,13 +138,19 @@ if (isset($arrHttp["archivo"])) {
 
 <?php
 // READ HEADINGS (IF ANY)
+
+$fp=array($fp);
 reset($fp);
+
 $file=str_replace($arrHttp["archivo"].".pft",$arrHttp["archivo"]."_h.txt",$file);
 $head="";
 $cols="";
-if (file_exists($file)){	$fp=file($file);
+if (file_exists($file)){
+	$fp=file($file);
 	$cols="Y";
-	foreach ($fp as $lin){		if (trim($lin)!="")	$head.=$lin;	}
+	foreach ($fp as $lin){
+		if (trim($lin)!="")	$head.=$lin;
+	}
 }
 if ($cols=="Y")
 	echo $msgstr["r_heading"].":<br> <textarea name=headings rows=10 cols=30  nowrap>$head</textarea>";
@@ -140,14 +160,18 @@ heading=\"".$cols."\"
 if (isset($arrHttp["desde"]) and ($arrHttp["desde"]=="dataentry" or $arrHttp["desde"]=="recibos")){
 ?>
 <br>
-<a href=javascript:ActualizarFormato()><h2><?php   echo $msgstr["update"]?></h2></a><?php}else{
+<a class="bt bt-green" href=javascript:ActualizarFormato()><?php echo $msgstr["update"]?></a>
+<?php
+}else{
 ?>
 <br>
-<a href=javascript:Enviar()><h2><?php   echo $msgstr["send"]?></h2></a>
+<a class="bt bt-green" href=javascript:Enviar()><?php echo $msgstr["send"]?></a>
 <?php } ?>
 </form>
 <br>
-Fields defined in the FDT <a href=fdt_leer.php?base=<?php echo $arrHttp["base"]?> target=_blank>Full window</a><br>
+
+<h3>Fields defined in the FDT <a class="bt bt-default" href=fdt_leer.php?base=<?php echo $arrHttp["base"]?> target=_blank>Full window</a></h3>
+
 <iframe height=60% width=60%  scrolling=yes src=fdt_leer.php?base=<?php echo $arrHttp["base"]?>></iframe>
 </body>
 </html>
