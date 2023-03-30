@@ -7,7 +7,7 @@
 20220322 fho4abcd date&release comment
 */
 require_once (dirname(__FILE__)."/../config.php");
-$def = parse_ini_file($db_path."abcd.def");
+$def = parse_ini_file($db_path."/abcd.def");
 include "css_settings.php";
 //print_r($def);
 ?>
@@ -59,7 +59,7 @@ include "css_settings.php";
             $text2 = "TEXT2";
         }
 ?>
-        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2023-03-05</small></span>
+        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2023-03-28</small></span>
     </div>
         <div class="distributorLogo">
            <a  href="<?php 
