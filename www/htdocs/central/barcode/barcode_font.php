@@ -62,8 +62,11 @@ include "inc_barcode_constants.php";
 echo "<h3 style='text-align:center'>".$msgstr["barcode_font"].": ".$arrHttp["tipo"].$configfilesuffix;
 echo " (".$arrHttp['desc'].")</h3>";
 
+
+
 //SE LEE EL ARCHIVO DE CONFIGURACION
 $configfile=$configfileprefix.$arrHttp["tipo"].$configfilesuffix;
+
 $configfilefull=$db_path.$configfile;
 if (!file_exists($configfilefull)){
 	echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$configfile."<br>".$msgstr["barcode_conf"]."</div>";
@@ -71,7 +74,7 @@ if (!file_exists($configfilefull)){
 	include("../common/footer.php");
 	die;
 }
-echo "<div>".$configfile." ".$msgstr["doesexist"]."</div>";
+//echo "<div>".$configfile." ".$msgstr["doesexist"]."</div>";
 
 // Read the barcode configuration file
 $bar_c=array();
@@ -101,12 +104,12 @@ if ( $ispftfile==true) {
     $pftfile=$pftfileprefix.substr($pftfilename,1);
     $pftfilefull=$db_path.$pftfile;
     if (!file_exists($pftfilefull)){
+        echo "<div>".$pftfile." ".$msgstr["doesexist"]."</div>";
         echo "<div style='color:red'>".$msgstr["error"].": ".$msgstr["misfile"]." &rarr; ".$pftfile."<br>".$msgstr["barcode_conf"]."</div>";
         echo "</div></div>";
         include("../common/footer.php");
         die;
     } else {
-        echo "<div>".$pftfile." ".$msgstr["doesexist"]."</div>";
         // Read the pft file into one string
         $pftcontent = file_get_contents($pftfilefull);
         //echo $pftcontent."<br>";
