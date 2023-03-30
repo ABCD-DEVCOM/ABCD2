@@ -45,15 +45,13 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 		?>
 
 <div class="row g-3">
-	<div class="col-md-6">
-		<input class="form-control" type="text" name="Sub_Expresion" id="search-text" value="<?php if (isset($_REQUEST['Sub_Expresion'])) echo $_REQUEST['Sub_Expresion'];?>" placeholder="<?php echo $msgstr["search"]?>  ..."/>
-	</div>
-
-
 	<div class="col-md-3">
 		<?php include 'components/dropdown_db.php'; ?>
 	</div>
 
+	<div class="col-md-6">
+		<input class="form-control" type="text" name="Sub_Expresion" id="search-text" value="<?php if (isset($_REQUEST['Sub_Expresion'])) echo $_REQUEST['Sub_Expresion'];?>" placeholder="<?php echo $msgstr["search"]?>  ..."/>
+	</div>
 	
 	<div class="col-md-3">
 		<button type="submit"  class="btn btn-success mb-3 w-100"><i class="fa fa-search"></i> <?php echo $msgstr["search"]?></button>
