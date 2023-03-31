@@ -78,15 +78,15 @@ include "../common/inc_div-helper.php";
 <div class="middle form">
 			<div class="formContent">
 
-<form method=post name=forma1 action=suggestions_status_update.php onSubmit="javascript:return false">
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"].".par"?>>
-<input type=hidden name=sort value=<?php echo $arrHttp["sort"]?>>
-<input type=hidden name=ValorCapturado value="">
-<input type=hidden name=check_select value="">
-<input type=hidden name=Indice value="">
-<input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
-<input type=hidden name=valor value="">
+<form method="post" name="forma1" action="suggestions_status_update.php" onSubmit="javascript:return false">
+<input type="hidden" name="base" value=<?php echo $arrHttp["base"]?>>
+<input type="hidden" name="cipar" value=<?php echo $arrHttp["base"].".par"?>>
+<input type="hidden" name="sort" value=<?php echo $arrHttp["sort"]?>>
+<input type="hidden" name="ValorCapturado" value="">
+<input type="hidden" name="check_select" value="">
+<input type="hidden" name="Indice" value="">
+<input type="hidden" name="Mfn" value="<?php echo $arrHttp["Mfn"]?>">
+<input type="hidden" name="valor" value="">
 <?php
 if (isset($arrHttp["see_all"])) echo "<input type=hidden name=see_all value=\"S\"> ";
 $fmt_test="S";
