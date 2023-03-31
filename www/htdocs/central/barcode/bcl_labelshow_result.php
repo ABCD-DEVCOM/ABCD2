@@ -79,7 +79,7 @@ if (!file_exists($configfilefull)){
 }
 if ($arrHttp["output"]=="display") {
     ?>
-    <div><?php echo $configfile." ".$msgstr["doesexist"]?></div>
+    <div><?php //echo $configfile." ".$msgstr["doesexist"]?></div>
     <?php
 }
 // Read the barcode configuration file
@@ -124,7 +124,7 @@ if ( $ispftfile==true) {
     } else {
         if ($arrHttp["output"]=="display"){
             ?>
-            <div><?php echo $pftfile." ".$msgstr["doesexist"]?></div>
+            <div><?php //echo $pftfile." ".$msgstr["doesexist"]?></div>
             <?php
         }
     }
@@ -153,7 +153,7 @@ if ($arrHttp["output"]=="display"){
 }
 //================= Functions ==================
 
-function MostrarSalida($contenido,$medio="",$bar_c){
+function MostrarSalida($contenido,$medio,$bar_c){
 global $arrHttp,$msgstr;
     if ( $contenido==NULL OR (count($contenido)==1 && $contenido[0]=="" )) echo "<div style='color:red'>".$msgstr["barcode_script_none"]."</div>";
 	if ($medio=="display" or $medio=="doc"){
