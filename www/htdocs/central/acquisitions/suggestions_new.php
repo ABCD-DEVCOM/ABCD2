@@ -101,7 +101,7 @@ include("../common/institutional_info.php");
 	margin: 10px 10px 5px 5px;
 	}
 	headerDiv a:hover {
-	color: #;
+	color: #ccc;
 	}
 </style>
 
@@ -110,8 +110,7 @@ include("../common/institutional_info.php");
 	text-align:left;
 	margin:0 auto;
 	width:100%;
-	xmin-height:10px;
-	xborder:1px solid #ccc;
+	min-height:10px;
 	padding:0px;
 }
 
@@ -166,24 +165,26 @@ include "../common/inc_div-helper.php";
 
 <div class="middle form">
 	<div class="formContent">
-<form method=post name=forma1 action=suggestions_new_update.php onSubmit="javascript:return false">
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"].".par"?>>
-<input type=hidden name=ValorCapturado value="">
-<input type=hidden name=check_select value="">
-<input type=hidden name=Indice value="">
-<input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
-<input type=hidden name=valor value="">
-<?php
-$fmt_test="S";
-$arrHttp["wks"]="new.fmt";
-include("../dataentry/plantilladeingreso.php");
-ConstruyeWorksheetFmt();
-include("../dataentry/dibujarhojaentrada.php");
-PrepararFormato();
-?>
- </form>
+		<form method=post name=forma1 action=suggestions_new_update.php onSubmit="javascript:return false">
+		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+		<input type=hidden name=cipar value=<?php echo $arrHttp["base"].".par"?>>
+		<input type=hidden name=ValorCapturado value="">
+		<input type=hidden name=check_select value="">
+		<input type=hidden name=Indice value="">
+		<input type=hidden name=Mfn value="<?php echo $arrHttp["Mfn"]?>">
+		<input type=hidden name=valor value="">
+		<?php
+		$fmt_test="S";
+		$arrHttp["wks"]="new.fmt";
+		include("../dataentry/plantilladeingreso.php");
+		ConstruyeWorksheetFmt();
+		include("../dataentry/dibujarhojaentrada.php");
+		PrepararFormato();
+		?>
+		</form>
 	</div>
+</div>
+</div>
 </div>
 </div>
 <?php include("../common/footer.php");?>

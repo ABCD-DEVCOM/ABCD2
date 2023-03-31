@@ -264,12 +264,12 @@ foreach ($items as $num_inv){
 				$espera_renovacion=$p[18];
 			$allow_reservation=$p[11];
 			if (trim($espera_renovacion)=="") $espera_renovacion=2;
-			$lapso=$p[3];
-			$unidad=$p[5];
-			$u_multa= $p[7];      //unidades de multa
-			$u_multa_r= $p[8];    //unidades de multa si el libro está reservado
-			$u_suspension=$p[9];  //unidades de suspensión
-			$u_suspension_r=$p[10];  //unidades de suspensión si el libro está reservado
+			if (isset($p[3])) $lapso=$p[3];
+			if (isset($p[5])) $unidad=$p[5];
+			if (isset($p[7])) $u_multa= $p[7];      //unidades de multa
+			if (isset($p[8])) $u_multa_r= $p[8];    //unidades de multa si el libro está reservado
+			if (isset($p[9])) $u_suspension=$p[9];  //unidades de suspensión
+			if (isset($p[10])) $u_suspension_r=$p[10];  //unidades de suspensión si el libro está reservado
 			//echo $u_multa_r." ".$u_suspension_r;die;
 		    $devolucion=date("Ymd");
 			$ValorCapturado="d1<1 0>X</1><500 0>$devolucion</500>";

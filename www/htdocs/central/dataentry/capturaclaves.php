@@ -546,15 +546,15 @@ if ($primeravez=="S") {
 	if (isset($arrHttp["ba_repetible"])) echo "<input type=hidden name=ba_repetible value=".$arrHttp["ba_repetible"].">\n";
 }
 ?>
-<input type=hidden name=base>
-<input type=hidden name=cipar>
-<input type=hidden name=Formato value='<?php echo $arrHttp["Formato"]?>'>
-<input type=hidden name=Tag value='<?php echo $arrHttp["Tag"]?>'>
-<input type=hidden name=pref value='<?php echo $arrHttp["pref"]?>'>
-<input type=hidden name=prefijo value='<?php echo $arrHttp["prefijo"]?>'>
-<input type=hidden name=repetible value='<?php echo $arrHttp["repetible"]?>'>
-<input type=hidden name=postings value='<?php echo $arrHttp["postings"]?>'>
-<input type=hidden name=index value='<?php if (isset($arrHttp["index"])) echo $arrHttp["index"]?>'>
+<input type="hidden" name="base">
+<input type="hidden" name="cipar">
+<input type="hidden" name="Formato" value='<?php echo $arrHttp["Formato"]?>'>
+<input type="hidden" name="Tag" value='<?php echo $arrHttp["Tag"]?>'>
+<input type="hidden" name="pref" value='<?php echo $arrHttp["pref"]?>'>
+<input type="hidden" name="prefijo" value='<?php echo $arrHttp["prefijo"]?>'>
+<input type="hidden" name="repetible" value='<?php echo $arrHttp["repetible"]?>'>
+<input type="hidden" name="postings" value='<?php echo $arrHttp["postings"]?>'>
+<input type="hidden" name="index" value='<?php if (isset($arrHttp["index"])) echo $arrHttp["index"]?>'>
 <?php
 if (isset($arrHttp["tesauro"])){
 	echo "<input type=hidden name=tesauro value=".$arrHttp["tesauro"].">\n";

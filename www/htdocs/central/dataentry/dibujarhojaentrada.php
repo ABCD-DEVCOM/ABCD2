@@ -1099,7 +1099,7 @@ global $ixicampo,$valortag,$arrHttp,$Path,$Marc,$db_path,$lang_db,$msgstr,$MD5,$
 
 Function PrepararFormato() {
 	global $msgstr,$vars,$ver,$fondocelda,$valortag,$ixicampo,$base,$cipar,$arrHttp,$FdtHtml,$Html_ingreso,$tagisis,$db_path,$lang_db,$default_values;
-    global $config_date_format,$base_fdt,$is_marc,$reintentar,$tag_tipol,$tag_nivel_r,$OpcionDeEntrada;
+    global $config_date_format,$base_fdt,$is_marc,$reintentar,$tag_tipol,$tag_nivel_r,$OpcionDeEntrada, $tag;
     global $term_prefix,$term_tag,$refer_tag;
 ?>    <!--div name="INE" id="INE" style="color:#990000; display:none; font-style:italic; font-weight:bold;"></div>
 <input type=hidden name=INVA id=INVA value="<?php echo $arrHttp["Mfn"]?>~"-->
@@ -1176,10 +1176,10 @@ Function PrepararFormato() {
 		$help_url="";
  		$linea=$vars[$ivars];
 		$t=explode('|',$linea);
-		$titulo=$t[2];
-		$len=$t[9];
-		$rep=$t[4];
-		$tag=$t[1];
+		if (isset($t[2])) $titulo=$t[2];
+		if (isset($t[9])) $len=$t[9];
+		if (isset($t[4])) $rep=$t[4];
+		if (isset($t[1])) $tag=$t[1];
         
 	//	if (isset($rels[$tag]["tag"])) continue;
 		$delrep="";
@@ -1286,15 +1286,15 @@ Function PrepararFormato() {
 						$t[0]="F";
 				    	$t[7]="AI";
 			}
-            $tag=$t[1];
-  			$subc=rtrim($t[5]);
-  			$edit_subc=rtrim($t[6]);
-			$nsc=strlen(rtrim($t[5]));
+            if (isset($t[1])) $tag=$t[1];
+  			if (isset($t[5])) $subc=rtrim($t[5]);
+  			if (isset($t[6])) $edit_subc=rtrim($t[6]);
+			if (isset($t[5])) $nsc=strlen(rtrim($t[5]));
 			$ksc="";
-			$titulo=$t[2];
-			$entryType=$t[7];
+			if (isset($t[2])) $titulo=$t[2];
+			if (isset($t[7])) $entryType=$t[7];
 			$tipo_e="";
-			if ($t[7]=="TB") $tipo_e="TB";
+			if (isset($t[7])) if ($t[7]=="TB") $tipo_e="TB";
 			if ($tipo=="L"){
 				//$lin01=$titulo;
        			//if ($lin01=="") $lin01="&nbsp;";

@@ -22,8 +22,11 @@ include("../common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include ('../dataentry/leerregistroisis.php');
 
+
 include("../common/header.php");
 include("javascript.php");
+
+
 ?>
 <script>
 
@@ -171,6 +174,7 @@ if ($res=="LOCKREJECTED") {
 	die;
 }
 echo "<b>Mfn: ".$arrHttp["Mfn"]."</b><br>";
+include ('../dataentry/scripts_dataentry.php');
 include("../dataentry/dibujarhojaentrada.php");
 PrepararFormato();
 ?>

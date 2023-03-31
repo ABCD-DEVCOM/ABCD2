@@ -123,19 +123,30 @@ echo "function AbrirIndice(Termino){
 	}
 
 </script>\n";
+
+if (isset($arrHttp["width"])){
+	$width=$arrHttp["width"];
+}else{
+	$width="600px";
+}
 ?>
 	</head>
 	<body LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" >
 
-	<font color=black size=1 face=arial><?php echo $msgstr["ayudaterminos"]?>
-	<center>
-	<table cellpadding=0 cellspacing=0 border=1 width=100%>
-			<form method=post name=Lista onSubmit="javascript:return false">
-	<td  bgcolor=#cccccc align=center><font size=1 face="arial"><?php for ($i=65;$i<91;$i++ ) echo "<a href=javascript:AbrirIndice('".chr($i)."')>".chr($i)."</a>&nbsp; "?></td>
+<p class="p-3"><?php echo $msgstr["ayudaterminos"]?></p>
+
+	<form method=post name=Lista onSubmit="javascript:return false">
+
+	<table cellpadding=0 cellspacing=0 border=0 width=90%>
 	<tr>
-	<td width=95% valign=top>
-	<Select name=autoridades multiple size=20 style="width:460px" onchange=javascript:ObtenerTerminos()>
-	<option></option>
+		<td width="5%" align="center" >
+			<?php for ($i=65;$i<91;$i++ ){?>
+				<a class="bt-sm" href="javascript:AbrirIndice('<?php echo chr($i)?>')"><?php echo chr($i)?></a><br>
+			<?php } ?>
+		</td>
+
+		<td width="95%" valign="top">
+			<Select name="autoridades" multiple size="15" style="width:<?php echo $width;?>;" onclick="javascript:ObtenerTerminos()">
 <?php
 
 	foreach ($contenido as $linea){
@@ -170,8 +181,25 @@ echo "function AbrirIndice(Termino){
 	</select></td>
 
 	</table>
-	<table cellpadding=0 cellspacing=0 border=0 width=100% bgcolor=#cccccc>
-		<td><a href=Javascript:Continuar() class=boton><font size=1><?php echo $msgstr["continuar"]?></a></td>
-		<td class=menusec2><font size=1><?php echo $msgstr["avanzara"]?>: <input type=text name=ira size=15 value=""><a href=Javascript:IrA() onKeyPress="codes(event)" ><img src=../dataentry/img/ira.gif border=0 align=ABSBOTTOM></a></td>
-	</table>
-	</form></body></html>
+
+		<table cellpadding="0" cellspacing="0" border="0" width="100%" >
+			<tr>
+			<td colspan=2><!--full width required to avoid wrap in all languages-->
+				<a href="javascript:AbrirIndice(' ')" class="bt bt-gray" title='<?php echo $msgstr["src_top"]?>'>
+					<i class="fas fa-chevron-circle-up" title="<?php echo $msgstr["continuar"]?>"></i> 
+				</a>
+				<a href="javascript:Continuar()" class="bt bt-gray" title='<?php echo $msgstr["masterms"]?>'>
+					<i class="fas fa-chevron-circle-down"></i>
+				</a>
+				&nbsp;
+				<?php echo $msgstr["avanzara"]?>
+				<input type=text name=ira size=5 value="" onKeyPress="codes(event)" title="<?php echo $msgstr["src_advance"];?>">
+				<a href=Javascript:IrA() class="bt bt-gray" title='<?php echo $msgstr["src_enter"]?>'>
+					<i class="fas fa-angle-right"></i></a>
+			</td>
+			</tr>
+		</table>
+
+	</form>
+</body>
+</html>

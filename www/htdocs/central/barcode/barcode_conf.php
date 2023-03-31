@@ -119,6 +119,7 @@ else {
     foreach ($fp as $conf){
         $conf=trim($conf);
         if ($conf!=""){
+            //foreach ($fp as $var=>$value) echo "$var=$value<br>";
             $a=explode('=',$conf,2);
             $bar_c[$a[0]]=$a[1];
         }
@@ -132,7 +133,7 @@ echo " (".$arrHttp['desc'].")</h3>";
 <input type=hidden name=tag_copies value=<?php echo $copies?>>
 <input type=hidden name=base value=<?php echo $base?>>
 <input type=hidden name=tipo value=<?php echo $arrHttp["tipo"]?>>
-<table bgcolor=#cccccc cellpadding=10>
+<table bgcolor=#cccccc cellpadding=5>
 <?php
 if (trim($copies)!="")
 	echo "<tr><td bgcolor=white >".$msgstr["copies_link"]."</td><td bgcolor=white>$copies</td>";
@@ -202,12 +203,14 @@ if (trim($copies)!="")
 
 </table>
 
-<strong><font color=red>(*) <?php echo $msgstr["labels_mandatory"]?></font></strong><br>
-<a href=javascript:AbrirVentana("../dbadmin/fdt_leer.php?base=<?php echo $base?>")>FDT</a>
+<p class="color-red"><b>(*) <?php echo $msgstr["labels_mandatory"]?></b></p>
+
+<a class="bt bt-default" href="javascript:AbrirVentana("../dbadmin/fdt_leer.php?base=<?php echo $base; ?>")">FDT</a>
 &nbsp; &nbsp;
-<a href=javascript:AbrirVentana("../dbadmin/fst_leer.php?base=<?php echo $base?>")>FST</a>
+<a class="bt bt-default" href="javascript:AbrirVentana("../dbadmin/fst_leer.php?base=<?php echo $base; ?>")" >FST</a>
 <br><br>
-<input type=submit value=<?php echo $msgstr["update"]?> onClick=Javascript:Enviar()>
+
+<input class="bt bt-green" type="submit" value="<?php echo $msgstr["update"]?>" onClick=Javascript:Enviar()>
 
 </form>
 <form name=editpft method=post action=../dbadmin/leertxt.php target=editpft>
