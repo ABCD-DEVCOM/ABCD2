@@ -1,7 +1,0 @@
-20220204 12:10:52	abcd	/central/common/inicio.php	/ABCD2/www/htdocs/central/dataentry/wxis/login.xis	credentials_hidden_in_log	cisis_ver=
-20220204 12:16:07	abcd(ini)	/central/common/inicio.php	/ABCD2/www/htdocs/central/dataentry/wxis/login.xis	credentials_hidden_in_log	cisis_ver=
-20220204 12:18:09	abcd(ini)	/central/common/inicio.php	/ABCD2/www/htdocs/central/dataentry/wxis/login.xis	credentials_hidden_in_log	cisis_ver=
-20220204 12:18:21	abcd	/central/dataentry/inicio_base.php	/ABCD2/www/htdocs/central/dataentry/wxis/administrar.xis	&base=lilacs&cipar=/ABCD2/www/bases-examples_Windows/par/lilacs.par&Opcion=status&path_db=/ABCD2/www/bases-examples_Windows/	cisis_ver=
-20220204 12:18:42	abcd	/central/dataentry/fmt.php	/ABCD2/www/htdocs/central/dataentry/wxis/unlock.xis	&base=lilacs&cipar=/ABCD2/www/bases-examples_Windows/par/lilacs.par&Mfn=1&login=abcd&path_db=/ABCD2/www/bases-examples_Windows/	cisis_ver=
-20220204 12:18:42	abcd	/central/dataentry/fmt.php	/ABCD2/www/htdocs/central/dataentry/wxis/unlock.xis	&base=lilacs&cipar=/ABCD2/www/bases-examples_Windows/par/lilacs.par&Mfn=1&login=abcd&path_db=/ABCD2/www/bases-examples_Windows/	cisis_ver=
-20220204 12:18:43	abcd	/central/dataentry/fmt.php	/ABCD2/www/htdocs/central/dataentry/wxis/buscar.xis	&cipar=/ABCD2/www/bases-examples_Windows/par/lilacs.par&Mfn=1&Opcion=cancelar&base=lilacs&Formato=/ABCD2/www/bases-examples_Windows/lilacs/pfts/es/lilacs&path_db=/ABCD2/www/bases-examples_Windows/	cisis_ver=
