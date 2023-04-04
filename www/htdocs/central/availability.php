@@ -1,8 +1,14 @@
 <?php
-include("common/header.php");
-require_once ("config.php");
-$def = parse_ini_file($db_path."abcd.def");
+/**
+ * 20230404 rogercgui Update of this script following the standards used in ABCD version 2.2
+ */
+
+
+include("config_inc_check.php");
+include("config.php");
 include("common/get_post.php");
+include("common/header.php");
+
 
 if (isset($arrHttp["lang"])){
 	$_SESSION["lang"]=$arrHttp["lang"];
@@ -11,32 +17,55 @@ if (isset($arrHttp["lang"])){
 	if (!isset($_SESSION["lang"]))
     $_SESSION["lang"]=$lang;
 }
-require_once ("lang/mysite.php");
+
 require_once("lang/lang.php");
-if ($EmpWeb == '0') {                            //Central Loans
+require_once ("lang/mysite.php");
+
+include ("common/css_settings.php");
 ?>
-
-<html>
-<head>
-	<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="css/template.css" type="text/css" media="screen"/>
-
 </head>
-<body class="mysite">
+	<header class="heading">
+		<div class="institutionalInfo">
+			<?php
 
-<div class="headingmysite">
-    <div class="institutionalInfo">
-				<h1><?php echo $def["LEGEND2"]; ?></h1>
-				<h2>ABCD</h2>
-			</div>
+			if (isset($def['LOGO_DEFAULT'])) {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
+			} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
+				echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
+				if (isset($institution_name)) echo $institution_name;
+				echo "'>";
+			} else {
+				echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
+			}
 
-			<div class="userInfo">
+			?>
+		</div>
+		<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding?></div>
 
-			</div>
-			<div class="spacer">&#160;</div>
+		<div class="spacer">&#160;</div>
+	</header>
 
+<div class="sectionInfo">
+	<div class="breadcrumb">
+            <?php 
+
+            if (isset($def["INSTITUTION_NAME"])) {
+                echo $def["INSTITUTION_NAME"]; 
+            } else {
+                echo "ABCD" ;
+            }?>
+	</div>
+	<div class="actions"></div>
+    <div class="spacer">&#160;</div>
 </div>
+
+<div class="middle form">
+
 <?php
+
+
+if ($EmpWeb == '0') {                            //Central Loans
+
     //Search for the data in the loanobjects database 
 	$Expresion="CONTROL_".$_GET["copyId"];
 	$IsisScript= $xWxis."buscar_ingreso.xis";
@@ -47,18 +76,21 @@ if ($EmpWeb == '0') {                            //Central Loans
 	foreach ($contenido as $linea){		
 		if (trim($linea)!=""){	
 			$splitbycopy=explode("~",$linea);
-			$tcopias.=$splitbycopy[1];						
+            if (isset($splitbycopy[1])) $tcopias.=$splitbycopy[1];					
 		}
 	}
 	$copias=explode("|",$tcopias);
 	if (count($copias)>7) echo '<div style="background:#FFFFFF; width:100; height:100">';
-	else echo '<div style="background:#FFFFFF; width:100; height:160px">';
-	if (count($copias)==1) echo '</br><table><tr><td></td><td>'.$msgstr["centralnocopies"]."</td></tr></table>";
+	//else echo '<div style="background:#FFFFFF; width:100; height:160px">';
+	if (count($copias)==1) 
+        echo '<h2 class="color-red">'.$msgstr["centralnocopies"]."</h2>";
+
+    
 	else
 	{	
 ?>
 
-<table>
+<table class="striped">
      <tr>
         <td width="85px"><b><?php echo $msgstr["inventory"]; ?></b></td>
         <td width="80px"><b><?php echo $msgstr["volume"]; ?></b></td>
@@ -82,7 +114,7 @@ if ($EmpWeb == '0') {                            //Central Loans
 		 foreach ($contenido as $lineaT){	
 			 if (trim($lineaT)!="") {
 			 $splitbycopy=explode("~",$lineaT);
-			 $Copyloant.=$splitbycopy[1];
+            if (isset($splitbycopy[1])) $Copyloant.=$splitbycopy[1];
 			 }
 		 }
 		 $loans=explode("|",$Copyloant);
@@ -102,38 +134,18 @@ if ($EmpWeb == '0') {                            //Central Loans
         }       	
 	 ?>
 </table>
-<hr />
 <?php
 	 }//else if (count($copias)==0)
 	 ?>
-</div>
-		<div class="footermysite">
-			<div class="systemInfo">
-				<strong style="color:#FFFFFF">ABCD <?php echo $def["VERSION"] ?></strong>
-				<span style="color:#FFFFFF"><?php echo $def["LEGEND1"]; ?></span>
-				<a href="<?php echo $def["URL1"]; ?>" target=_blank style="color:#FFFFFF"><?php echo $def["URL1"]; ?></a>
-			</div>
-			<div class="distributorLogo">
-				<a href="<?php echo $def["URL2"]; ?>" target=_blank><span><?php echo $def["LEGEND2"]; ?></span></a>
-			</div>
-			<div class="spacer">&#160;</div>
-		</div>	
 
-</body>
-</html>
 <?php
-}
-else          // if EmpWeb
-{
+
+
+// WITH EMPWEB
+} else {
 ?>
 
-<html>
-<head>
-	<!-- Stylesheets -->
-		<link rel="stylesheet" rev="stylesheet" href="css/template.css" type="text/css" media="screen"/>
 
-</head>
-<body class="mysite">
 <script>
     function callMySite(id)
     {
@@ -146,22 +158,9 @@ else          // if EmpWeb
     }
 </script>
 
-<div class="headingmysite">
-    <div class="institutionalInfo">
-				<h1>ABCD</h1>
-				<h2>EmpWeb</h2>
-			</div>
 
-			<div class="userInfo">
-
-			</div>
-			<div class="spacer">&#160;</div>
-
-</div>
-<div class="middle homepage">
 <?php
 require_once('../isisws/nusoap.php');
-require_once ("config.php");
 
 //set_time_limit(60);
 
@@ -269,8 +268,6 @@ if (is_array($miscopias))
 
 <br/>
 
-<hr />
-<br/>
 <?php
   if (is_array($copias))
   {
@@ -279,30 +276,20 @@ if (is_array($miscopias))
     <input type="button" value="<?php echo $msgstr["makereservation"]; ?>" onClick="javascript:callMySite('<?php echo $_REQUEST["copyId"] ?>')"/>
     <input type="button" value="<?php echo $msgstr["close"]; ?>" onClick="javascript:self.close()"/>
 </div>
-<?php
- }
+
+<?php  } ?>
 
 
 
-?>
 
+<?php } ?>
 
 
 </div>
-		<div class="footermysite">
-			<div class="systemInfo">
-				<strong>ABCD <?php echo $def["VERSION"] ?></strong>
-				<span><?php echo $def["LEGEND1"]; ?></span>
-				<a href="<?php echo $def["URL1"]; ?>" target=_blank><?php echo $def["URL1"]; ?></a>
-			</div>
-			<div class="distributorLogo">
-				<a href="<?php echo $def["URL2"]; ?>" target=_blank><span><?php echo $def["LEGEND2"]; ?></span></a>
-			</div>
-			<div class="spacer">&#160;</div>
-		</div>	
+  </div>
+  </div>
 
-</body>
-</html>
+
 <?php
-}
+include("common/footer.php");
 ?>
