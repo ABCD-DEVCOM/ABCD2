@@ -25,6 +25,7 @@
  *
  * == END LICENSE ==
 */
+
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -131,33 +132,31 @@ function Test(){
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["sourcedb"].". ".$msgstr["loan"].". ".$msgstr["configure"]."
-			</div>
-			<div class=\"actions\">\n";
+?>
 
-				echo "<a href=\"databases.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["update"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_databases_configure.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_databases_configure.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/databases_configure.php </font>";
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["sourcedb"].". ".$msgstr["loan"].". ".$msgstr["configure"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="/circulation/loans_databases_configure.html";
+    $backtocancelscript="databases.php?encabezado=s";
+	$savescript="javascript:Guardar()";
+    include "../common/inc_cancel.php";
+    include "../common/inc_save.php";
 
-echo"</div>
-	<div class=\"middle form\">
-		<div class=\"formContent\">";
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+<div class="middle form">
+		<div class="formContent">
+<?php
 echo "<h5>".$msgstr["database"].": ".$arrHttp["base"]." &nbsp; &nbsp;[<a href=../dbadmin/fst_leer.php?base=".$arrHttp["base"]." target=_blank>Open FST</a>]"."  &nbsp; &nbsp;[<a href=../dbadmin/fdt_leer.php?base=".$arrHttp["base"]." target=_blank>Open FDT</a>]"."</h5>";
 echo "<form name=forma1 action=databases_configure_update.php method=post>\n";
 echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";

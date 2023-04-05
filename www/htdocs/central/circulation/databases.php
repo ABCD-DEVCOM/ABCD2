@@ -64,45 +64,56 @@ function Deshabilitar(){
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["sourcedb"]."
-			</div>
-			<div class=\"actions\">\n";
+?>
 
-				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_databases.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
- 	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_databases.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: circulation/databases.php";
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["sourcedb"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="/circulation/loans_databases.html";
+    $backtoscript="configure_menu.php?encabezado=s";
+    include "../common/inc_back.php";
 
-echo " </div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">";
-if (file_exists($db_path."loans.dat")){
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+		<div class="middle form">
+			<div class="formContent">
+<?php
+$_loans_dat=$db_path."loans.dat";
+if (file_exists($_loans_dat)){
 	$loans_dat=" checked";
 }else{
 	$loans_dat="";
 }
-echo "<p><form name=forma1 action=databases_configure.php >\n";
-echo "<!--p><h3>".$msgstr["loan_option"].": ";
-echo "<input type=radio name=loan_option value=copies>".$msgstr["with_copies"]."&nbsp; &nbsp; ";
-echo "<input type=radio name=loan_option value=nocopies $loans_dat>".$msgstr["no_copies"]."&nbsp; &nbsp; ";
-echo "</h3 -->";
-echo "<p><h3>".$msgstr["seldbdoc"]."</h3>";
+?>
 
-echo "<table><td valign=top>";
-echo $msgstr["database"];
-echo ": <select name=base>
-<option value=''>\n";
+<form name="forma1" action="databases_configure.php" >
+<!--
+<h3><?php echo $msgstr["loan_option"];?></h3>
+<input type=radio name=loan_option value=copies><?php echo $msgstr["with_copies"];?>
+<input type=radio name=loan_option value=nocopies $loans_dat><?php echo $msgstr["no_copies"];?>
+<hr>
+-->
+
+<h3><?php echo $msgstr["seldbdoc"];?></h3>
+
+<table class="w-10">
+	<td valign=top>
+	<label>
+		<?php echo $msgstr["database"];?>
+	</label>
+<select name="base">
+<option value=""></option>
+
+<?php
 $fp=file($db_path."bases.dat");
 $bases_p=array();
 $ya_elegida="";
@@ -111,7 +122,6 @@ foreach ($fp as $value){
 	if ($value!=""){
 		$b=explode('|',$value);
 		if ($b[0]=="trans" or $b[0]=="suspml" or $b[0]=="copies" or $b[0]=="users" or $b[0]=="reserve" or $b[0]=="suggestions" or $b[0]=="purchaseorder" or $b[0]=="loanobjects"){
-
 		}else{
 			$archivo="";
 			if (!isset($b[2])) $b[2]="N";
@@ -125,14 +135,22 @@ foreach ($fp as $value){
 		}
 	}
 }
-echo "</select></td>";
-echo "<td valign=top>".$msgstr["alreadysel"].": <br>$ya_elegida";
-
-echo "</td>";
-echo "<tr><td valign=top align=right><h2><a href=javascript:Continuar()>".$msgstr["continue"]."</a> &nbsp; &nbsp" ;
-echo " | &nbsp; &nbsp; <a href=javascript:Deshabilitar()>".$msgstr["disable"]."</a> ";
-echo "</h2></td></table></form></div></div>";
-include("../common/footer.php");
-echo "</body></html>" ;
-
 ?>
+	</select>
+</td>
+
+<td valign="top">
+	<h3><?php echo $msgstr["alreadysel"];?>:</h3> 
+<?php echo $ya_elegida;?>
+</td>
+<tr>
+	<td valign=top align=right>
+		<a class="bt bt-green" href="javascript:Continuar()"><?php echo $msgstr["continue"];?></a>
+		<a class="bt bt-default" href="javascript:Deshabilitar()"><?php echo $msgstr["disable"];?></a>
+	</td>
+</table>
+</form>
+</div>
+</div>
+
+<?php include("../common/footer.php");?>

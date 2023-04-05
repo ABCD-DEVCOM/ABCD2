@@ -121,49 +121,110 @@ function Test(){
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".$msgstr["bconf"]." (".$arrHttp["base"].")
-			</div>
-			<div class=\"actions\">\n";
-
-				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["update"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: borrowers_configure.php";
-echo "</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\"> ";
-echo "<p><h5>".$msgstr["database"].": ".$arrHttp["base"]." &nbsp; &nbsp;[<a href=../dbadmin/fst_leer.php?base=".$arrHttp["base"]." target=_blank>Open FST</a>]"."  &nbsp; &nbsp;[<a href=../dbadmin/fdt_leer.php?base=".$arrHttp["base"]." target=_blank>Open FDT</a>]"."</h5>";
-echo "<form name=forma1 action=borrowers_configure.php method=post>\n";
-echo "<input type=hidden name=base value=".$arrHttp["base"].">\n";
-echo "
-<table>
-<tr><td valign=top>1. ".$msgstr["uskey"]." (loans_uskey.tab)</td><td valign=top><input type=text name=uskey value=\"".$uskey."\"></td>
-<tr><td valign=top>2. ".$msgstr["usname"]." (loans_uskey.tab)</td><td valign=top><input type=text name=usname value=\"".$usname."\"></td>
-<tr><td valign=top>3. ".$msgstr["uspft"]." (loans_uskey.tab)</td><td valign=top><input type=text name=uspft value=\"".$uspft."\"></td>
-<tr><td valign=top>4. ".$msgstr["pft_uskey"]." (loans_uskey.pft)</td><td valign=top><textarea rows=2 cols=80 name=pft_uskey>".$pft_uskey."</textarea></td>
-<tr><td valign=top>5. ".$msgstr["pft_ustype"] ." (loans_ustype.pft)</td><td valign=top><textarea rows=2 cols=80 name=pft_ustype>".$pft_ustype."</textarea></td>
-<tr><td valign=top>6. ".$msgstr["pft_usvig"] ." (loans_usvig.pft)</td><td valign=top><textarea rows=2 cols=80 name=pft_usvig>".$pft_usvig."</textarea></td>
-<tr><td valign=top>7. ".$msgstr["pft_usdisp"] ." (loans_usdisp.pft)</td><td valign=top><textarea rows=6 cols=80 name=pft_usdisp>".$pft_usdisp."</textarea></td>
-<tr><td valign=top>7. ".$msgstr["pft_usmore"] ." (loans_usmore.pft)</td><td valign=top><textarea rows=6 cols=80 name=pft_usmore>".$pft_usmore."</textarea></td>
-</table>
-";
-echo "&nbsp; &nbsp;<a href=javascript:Test()>".$msgstr["test"]."</a>
-Mfn: <input type=text name=Mfn size=10>&nbsp; &nbsp;
-</form></div></div>";
-include("../common/footer.php");
-echo "</body></html>" ;
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["sourcedb"].". ".$msgstr["loan"].". ".$msgstr["configure"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="/circulation/loans_borrowers_configure.html";
+    $backtocancelscript="configure_menu.php?encabezado=s";
+	$savescript="javascript:Guardar()";
+    include "../common/inc_cancel.php";
+    include "../common/inc_save.php";
 
 ?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+		<div class="middle form">
+			<div class="formContent">
+				<h4><?php echo $msgstr["database"].": ".$arrHttp["base"];?>
+					<a class="bt bt-default" href="../dbadmin/fst_leer.php?base=<?php echo $arrHttp["base"];?>" target="_blank">Open FST</a>
+					<a class="bt bt-default" href="../dbadmin/fdt_leer.php?base=<?php echo $arrHttp["base"];?>" target="_blank">Open FDT</a>
+				</h4>
+
+				<form name="forma1" action="borrowers_configure.php" method="post">
+					<input type="hidden" name="base" value="<?php echo $arrHttp["base"];?>">
+
+					<table>
+						<tr>
+							<td valign="top">
+								<label>1. <?php echo $msgstr["uskey"];?> (loans_uskey.tab)</label>
+							</td>
+							<td valign=top>
+								<input type="text" name="uskey" value="<?php echo $uskey;?>">
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<label>2. <?php echo $msgstr["usname"];?> (loans_uskey.tab)</label>
+							</td>
+							<td valign="top">
+								<input type="text" name="usname" value="<?php echo $usname;?>">
+							</td>
+						</tr>
+						<tr>
+							<td valign=top>
+								<label>3. <?php echo $msgstr["uspft"];?> (loans_uskey.tab)</label>
+							</td>
+							<td valign=top>
+								<input type="text" name="uspft" value="<?php echo $uspft;?>">
+							</td>
+						</tr>
+						<tr>
+							<td valign=top>
+								<label>4. <?php echo $msgstr["pft_uskey"];?> (loans_uskey.pft)</label>
+							</td>
+							<td valign=top>
+								<textarea rows="2" cols="80" name="pft_uskey"><?php echo $pft_uskey;?></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td valign=top>
+								<label>5. <?php echo $msgstr["pft_ustype"];?> (loans_ustype.pft)</label>
+							</td>
+							<td valign=top>
+								<textarea rows="2" cols="80" name="pft_ustype"><?php echo $pft_ustype;?></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td valign=top>
+								<label>6. <?php echo $msgstr["pft_usvig"];?> (loans_usvig.pft)</label>
+							</td>
+							<td valign=top>
+								<textarea rows="2" cols="80" name="pft_usvig"><?php echo $pft_usvig;?></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td valign=top>
+								<label>7. <?php echo $msgstr["pft_usdisp"];?> (loans_usdisp.pft)</label>
+							</td>
+							<td valign=top>
+								<textarea rows="6" cols="80" name="pft_usdisp"><?php echo $pft_usdisp;?></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td valign=top>
+								<label>8. <?php echo $msgstr["pft_usmore"];?> (loans_usmore.pft)</label>
+							</td>
+							<td valign=top>
+								<textarea rows="6" cols="80" name="pft_usmore"><?php echo $pft_usmore;?></textarea>
+							</td>
+						</tr>
+					</table>
+
+
+					<a class="bt bt-default" href="javascript:Test()"><?php echo $msgstr["test"];?></a>
+					<label>Mfn:</label> 
+					<input type="text" name="Mfn" size="10">
+		</form>
+	</div>
+
+</div>
+
+<?php include("../common/footer.php"); ?>

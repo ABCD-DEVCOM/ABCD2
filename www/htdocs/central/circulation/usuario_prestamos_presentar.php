@@ -1114,7 +1114,7 @@ if ($reserves_user!="")
 ProduceOutput($ec_output,"");
 
 function ProduceOutput($ec_output,$reservas){
-global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php,$lang,$prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_name,$logo,$ILL,$meta_encoding;
+global $msgstr,$msg_error_0,$arrHttp,$signatura,$msg_1,$cont,$institution_name,$lang_db,$copies_title,$link_u,$recibo_arr,$db_path,$Wxis,$xWxis,$wxisUrl,$script_php,$lang,$prestamos_este,$xnum_p,$reserve_active,$nmulta,$nsusp,$cisis_ver,$css_name,$logo,$ILL,$meta_encoding, $actparfolder;
 	include("../common/header.php");
  	include("../common/institutional_info.php");
  	include("../circulation/scripts_circulation.php");
