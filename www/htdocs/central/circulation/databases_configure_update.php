@@ -142,24 +142,31 @@ global $msgstr,$db_path,$arrHttp;
 include("../common/header.php");
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["sourcedb"].". ".$msgstr["loan"].". ".$msgstr["configure"]."
-			</div>
-			<div class=\"actions\">\n";
+?>
 
-				echo "<a href=\"databases.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">
-			<font size=3>\n";
 
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["sourcedb"].". ".$msgstr["loan"].". ".$msgstr["configure"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_databases_configure.html";
+    $backtoscript="databases.php?encabezado=s";
+    include "../common/inc_back.php";
+
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+		<div class="middle form">
+			<div class="formContent">
+
+<?php
 $object_db=$arrHttp["base"];
 
 if ($object_db!="loanobjects"){
