@@ -49,8 +49,8 @@ global $locales,$arrHttp,$CentralPath;
 
 // se leen las suspensiones
 	global $locales;
-	$sanctions_output="" ;
-	$formato_obj="v1'|',v10'|',v20'|',v30'|',v40'|',v50' ".$locales['currency']."|',v60'|',mhl,v100'|',f(mfn,1,0),'|',v110,'|'v120/";
+	$sanctions_output="";
+	$formato_obj="v1'|',v10'|',v20'|',v30'|',v40'|',v50'|',v60'|',mhl,v100'|',f(mfn,1,0),'|',v110,'|'v120/";
 	if (isset($Expr_b)){
 		$Expresion=$Expr_b;
 	}else{

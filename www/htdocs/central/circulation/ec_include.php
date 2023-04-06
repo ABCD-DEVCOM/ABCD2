@@ -184,7 +184,9 @@ if (isset($arrHttp["usuario"])){
 								$mora=$fulldays*24+$fullhours;
 								//echo "<br>** $fulldays, $fullhours , $fullminutes";
 							}
-						    $fuente="<font color=red>";
+						    $fuente="<b class='color-red'>";
+							// Valor da multa
+							//echo ($mora-1)*2;
 						    if ($mora>0){
 						    	if ($politica_este[12]!="Y") $nv=$nv+1;
 						    }
@@ -253,7 +255,6 @@ if (isset($arrHttp["usuario"])){
 			}
 			$ec_output.= "</table>\n";
 
-			$ec_output.= "</dd>";
 	        $ec_output.= "<script>
 			np=$np
 			nv=$nv

@@ -72,9 +72,10 @@ global $arrHttp,$msgstr;
 
 	//tomo el nombre del mes que hay que imprimir
 	$nombre_mes=$msgstr["m".$mes];
-	echo "<center><br><font class=td5a> &nbsp; &nbsp;  &nbsp; &nbsp; ".$msgstr["holydays"]."&nbsp; &nbsp;  &nbsp; &nbsp; </font><br>";
+
+	echo "<center>".$msgstr["holydays"]."<br>";
 	//construyo la cabecera de la tabla
-    echo "<table width=200 cellspacing=3 cellpadding=2 border=0><tr><td colspan=7 align=center class=tit>";
+    echo "<table width=300 cellspacing=3 cellpadding=2 border=0><tr><td colspan=7 align=center class=tit>";
 	echo "<table width=100% cellspacing=2 cellpadding=2 border=0><tr><td align=center class=tit2>";
 	//calculo el mes y ano del mes anterior
 	$mes_anterior = $mes - 1;

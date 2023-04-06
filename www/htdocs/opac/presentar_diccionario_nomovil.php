@@ -23,7 +23,7 @@ include("presentar_diccionario_inc.php");
 			</div>
 			<div class="col-md-2">
 				<input class="btn btn-success" type=button value="<?php echo $msgstr["ira"]?>" onclick="javascript:NavegarDiccionario(this,3)" id=search-submit>
-				<input type=hidden name=campo value="<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"])?>">
+				<input type="hidden" name="campo" value="<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"])?>">
 			</div>
 		</div>
 			
@@ -33,7 +33,7 @@ include("presentar_diccionario_inc.php");
 		<div class="row g-3">
 
 		<div class="col-md-6">
-			<h6><?php echo $_REQUEST['campo'];?></h6>
+			<?php if (isset($_REQUEST["campo"])) echo "<h6>".$_REQUEST["campo"]."</h6>";?>
    			<select class="form-select"  name="terminos"  multiple="multiple"  size="10"  onDblClick="moveSelectedOptions(document.diccionario.terminos,document.diccionario.TerminosSeleccionados,false)">
 				<?php PresentarDiccionario(); ?>
 			</select>

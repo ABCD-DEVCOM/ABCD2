@@ -86,63 +86,108 @@ function Editar(Pft){
 }
 
 </script>
-<body>
+
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["receipts"]?>
+    <?php echo $msgstr["receipts"]?>
 	</div>
 	<div class="actions">
-		<a href="configure_menu.php" class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo  $msgstr["back"]?></strong></span>
-		</a>
-		<a href=javascript:Guardar() class="defaultButton saveButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo $msgstr["update"]?></strong></span>
-		</a>
-	</div>
-	<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
+<?php
+	$ayuda="/circulation/loans_typeofusers.html";
+    $backtocancelscript="configure_menu.php?encabezado=s";
+	$savescript="javascript:Guardar()";
+    include "../common/inc_cancel.php";
+    include "../common/inc_save.php";
 
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: circulation/receipts.php";
 ?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php"; ?>
+
+
+
 <div class="middle form">
 	<div class="formContent">
-	<form name=receipts action=receipts_ex.php method=post>
-	<table>
-<?php
-echo "<tr><td colspan=3><strong>".$msgstr["receipts_select"]."</td></tr>\n";
-echo "<tr><td>".$msgstr["loan"]."</td><td><input type=checkbox name=pr_loan value='$pr_loan' $chk_loan>$pr_loan";
-echo "<td><a href=javascript:Editar('$pr_loan')>".$msgstr["edit"]."</a>";
-echo "</td>\n";
-echo "<tr><td>".$msgstr["return"]."</td><td><input type=checkbox name=pr_return value='$pr_return' $chk_return>$pr_return</td>";
-echo "<td><a href=javascript:Editar('$pr_return')>".$msgstr["edit"]."</a>";
-echo "</td>\n";
-echo "<tr><td>".$msgstr["fine"]."</td><td><input type=checkbox name=pr_fine value='$pr_fine' $chk_fine>$pr_fine</td>";
-echo "<td><a href=javascript:Editar('$pr_fine')>".$msgstr["edit"]."</a>";
-echo "</td>\n";
-echo "<tr><td>".$msgstr["statment"]."</td><td><input type=checkbox name=pr_statment value='$pr_statment' $chk_statment>$pr_statment</td>";
-echo "<td><a href=javascript:Editar('$pr_statment')>".$msgstr["edit"]."</a>";
-echo "</td>\n";
-echo "<tr><td>".$msgstr["solvency"]."</td><td><input type=checkbox name=pr_solvency value='$pr_solvency' $chk_solvency>$pr_solvency</td>";
-echo "<td><a href=javascript:Editar('$pr_solvency')>".$msgstr["edit"]."</a>";
-echo "</td>";
-?>
+
+	<h3><?php echo $msgstr["receipts_select"];?></h3>
+
+	<form name="receipts" action="receipts_ex.php" method="post">
+	<table class="table striped">
+
+
+	<tr>
+		<td><?php echo $msgstr["loan"];?></td>
+		<td>
+			<input type="checkbox" name="pr_loan" value="<?php echo $pr_loan;?>" <?php echo $chk_loan;?> >
+			<?php echo $pr_loan;?>
+		<td>
+			<a class="bt bt-blue" href="javascript:Editar('<?php echo $pr_loan;?>')">
+				<i class="fas fa-edit"></i> <?php echo $msgstr["edit"];?>
+			</a>
+		</td>
+	<tr>
+		<td>
+			<?php echo $msgstr["return"];?>
+		</td>
+		<td>
+			<input type="checkbox" name="pr_return" value='<?php echo $pr_return;?>' <?php echo $chk_return;?>>
+			<?php echo $pr_return;?>
+		</td>
+		<td>
+			<a class="bt bt-blue" href=javascript:Editar('<?php echo $pr_return;?>')>
+				<i class="fas fa-edit"></i> <?php echo $msgstr["edit"];?></a>
+		</td>
+	
+	<tr>
+		<td>
+			<?php echo $msgstr["fine"];?>
+		</td>
+		<td>
+			<input type="checkbox" name="pr_fine" value='<?php echo $pr_fine;?>' <?php echo $chk_fine;?>>
+			<?php echo $pr_fine;?>
+		</td>
+		<td>
+			<a class="bt bt-blue" href=javascript:Editar('<?php echo $pr_fine;?>')>
+				<i class="fas fa-edit"></i> <?php echo $msgstr["edit"];?>
+			</a>
+		</td>
+	<tr>
+		<td>
+			<?php echo $msgstr["statment"];?>
+		</td>
+		<td>
+			<input type="checkbox" name="pr_statment" value='<?php echo $pr_statment;?>' <?php echo $chk_statment;?> > 
+			<label><?php echo $pr_statment;?></label>
+		</td>
+		<td>
+			<a class="bt bt-blue" href=javascript:Editar('<?php echo $pr_statment;?>')>
+				<i class="fas fa-edit"></i> <?php echo $msgstr["edit"];?>
+			</a>
+		</td>
+	<tr>
+		<td>
+			<?php echo $msgstr["solvency"];?>
+		</td>
+		<td>
+			<input type="checkbox" name="pr_solvency" value='<?php echo $pr_solvency;?>' <?php echo $chk_solvency;?> >
+			<label><?php echo $pr_solvency;?></label>
+		</td>
+		<td>
+			<a class="bt bt-blue" href="javascript:Editar('<?php echo $pr_solvency;?>')">
+				<i class="fas fa-edit"></i> <?php echo $msgstr["edit"];?>
+			</a>
+	</td>
 	</table>
     </form>
 	</div>
 </div>
-</center>
-<?php
-include("../common/footer.php");
-?>
-</body>
-</html>
+
+
+<?php include("../common/footer.php"); ?>
+
+
 <form name=editar action=../dbadmin/leertxt.php target=editar method=post>
 <input type=hidden name=base value=trans>
 <input type=hidden name=cipar value=trans.par>

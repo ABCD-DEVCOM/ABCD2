@@ -34,80 +34,98 @@ foreach ($arrHttp as $var=>$value){
 }
 fclose($fp);
 ?>
-<body>
+
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
-<?php echo $msgstr["receipts"]?>
+    <?php echo $msgstr["receipts"]?>
 	</div>
 	<div class="actions">
-		<a href="receipts.php?base=trans" class="defaultButton backButton">
-		<img src="../../assets/images/defaultButton_iconBorder.gif" alt="" title="" />
-		<span><strong><?php echo  $msgstr["back"]?></strong></span>
-		</a>
-	</div>
-	<div class="spacer">&#160;</div>
-</div>
-<div class="helper">
+<?php
+    $backtoscript="receipts.php?base=trans";
+    include "../common/inc_back.php";
 
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/<?php echo $ayuda?> target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/".$ayuda." target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/receipts_ex.php";
-?></font>
+?>
+    </div>
+    <div class="spacer">&#160;</div>
 </div>
+<?php include "../common/inc_div-helper.php"; ?>
+
+
 <div class="middle form">
 	<div class="formContent">
+
+	<h3><?php echo $msgstr["receipts"];?></h3>
 	<form name=receipts action=receipts_ex.php method=post onsubmit="return false">
 
 	<table cellpadding=10>
-<?php
+		<tr>
+			<td>
+				<?php echo $msgstr["loan"];?>
+			</td>
+			<td>
+				<?php if (isset($activated["pr_loan"])){ ?>
+					<i class="fas fa-check-square color-green"></i>
+				<?php } else { ?>
+				<?php if (isset($error["pr_loan"])) 
+					echo "<span class='color-red'>".$msgstr["falta"]." ".$pft_val["pr_loan"]."</span>";
+					} ?>
+			</td>
+		<tr>
+			<td>
+				<?php echo $msgstr["return"];?>
+			</td>
+			<td>
+				<?php if (isset($activated["pr_return"])){ ?>
+					<i class="fas fa-check-square color-green"></i>
+				<?php } else { ?>
+				<?php if (isset($error["pr_return"])) 
+					echo "<span class='color-red'>".$msgstr["falta"]." ".$pft_val["pr_return"]."</span>";
+					} ?>
+			</td>
+		<tr>
+			<td>
+				<?php echo $msgstr["fine"];?>
+			</td>
+			<td>
 
-echo "<tr><td colspan=3><strong>".$msgstr["receipts"]."</td></tr>\n";
-echo "<tr><td>".$msgstr["loan"]."</td><td>";
-if (isset($activated["pr_loan"])){
-	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
-}else{
-	if (isset($error["pr_loan"])) echo $msgstr["falta"]." ".$pft_val["pr_loan"];
+			<?php if (isset($activated["pr_fine"])){ ?>
+				<i class="fas fa-check-square color-green"></i>
+				<?php } else { ?>
+				<?php  if (isset($error["pr_fine"])) echo "<span class='color-red'>".$msgstr["falta"]." ".$pft_val["pr_fine"]."</span>";
+			}
+			?>
+		</td>
+	<tr>
+		<td>
+			<?php echo $msgstr["statment"];?>
+		</td>
+		<td>
+		<?php if (isset($activated["pr_statment"])){ ?>
+			<i class="fas fa-check-square color-green"></i>
+		<?php } else { ?>
+		<?php if (isset($error["pr_statment"])) echo "<span class='color-red'>".$msgstr["falta"]." ".$pft_val["pr_statment"]."</span>";
 }
-echo "</td>\n";
-echo "<tr><td>".$msgstr["return"]."</td><td>";
-if (isset($activated["pr_return"])){
-	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
-}else{
-	if (isset($error["pr_return"])) echo $msgstr["falta"]." ".$pft_val["pr_return"];
-}
-echo "</td>\n";
-echo "<tr><td>".$msgstr["fine"]."</td><td>";
-if (isset($activated["pr_fine"])){
-	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
-}
-else{
-	if (isset($error["pr_fine"])) echo $msgstr["falta"]." ".$pft_val["pr_fine"];
-}
-echo "</td>\n";
-echo "<tr><td>".$msgstr["statment"]."</td><td>";
-if (isset($activated["pr_statment"])){
-	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
-}else{
-	if (isset($error["pr_statment"])) echo $msgstr["falta"]." ".$pft_val["pr_statment"];
-}
-echo "</td>\n";
-echo "<tr><td>".$msgstr["solvency"]."</td><td>";
-if (isset($activated["pr_solvency"])){
-	echo  "<img src=\"../dataentry/img/recordvalidation_p.gif\">";
-}else{
-	if (isset($error["pr_solvency"])) echo $msgstr["falta"]." ".$pft_val["pr_solvency"];
-}
-echo "</td>";
 ?>
+		</td>
+	<tr>
+		<td>
+			<?php echo $msgstr["solvency"];?>
+		</td>
+		<td>
+		<?php if (isset($activated["pr_solvency"])){ ?>
+			<i class="fas fa-check-square color-green"></i>
+		<?php } else { ?>
+	
+		<?php if (isset($error["pr_solvency"])) echo "<span class='color-red'>".$msgstr["falta"]." ".$pft_val["pr_solvency"]."</span>";
+}
+?>		
+		</td>
+		</tr>
 	</table>
     </form>
 	</div>
 </div>
-</center>
-<?php
-include("../common/footer.php");
-?>
-</body>
-</html>
 
+
+<?php include("../common/footer.php"); ?>

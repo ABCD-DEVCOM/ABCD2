@@ -22,7 +22,7 @@ $rows_title=array();
 	$rows_title[1]=$msgstr["description"];
 include("../common/header.php");
 ?>
-<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
+<link rel="stylesheet" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
@@ -86,38 +86,40 @@ include("../common/header.php");
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["typeofitems"]."
-			</div>
-			<div class=\"actions\">\n";
-
-				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-				<a href=javascript:Enviar() class=\"defaultButton saveButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["update"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-       	<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_typeofitems.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_typeofitems.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: circulation/typeofitems.php";
-echo "</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">";
 ?>
-		<br>
-			<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["typeofitems"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="/circulation/loans_typeofitems.html";
+    $backtocancelscript="configure_menu.php?encabezado=s";
+	$savescript="javascript:Enviar()";
+    include "../common/inc_cancel.php";
+    include "../common/inc_save.php";
 
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+		<div class="middle form">
+			<div class="formContent">
+		<br>
+			<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
+				<?php echo $msgstr["addrowbef"]?>
+			</a>
+
+			<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">
+				<?php echo $msgstr["addrowaf"]?>
+			</a>
+			<a class="bt bt-default mb-2" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
+				<?php echo $msgstr["remselrow"]?>
+			</a>
 
 	<table  style="width:600; height:400px" id=tblToGrid class="dhtmlxGrid">
 <?php
@@ -181,21 +183,16 @@ echo "</div>
 	//mygrid.setColWidth(0,50)
 
 </script>
-<br><br>
-</form>
-<form name=forma1 action=typeofitems_update.php method=post>
-<input type=hidden name=ValorCapturado>
-<input type=hidden name=desc>
-<input type=hidden name=Opcion value=>
-<input type=hidden name=base value=users>
 </form>
 
+<form name="forma1" action="typeofitems_update.php" method="post">
+	<input type="hidden" name="ValorCapturado">
+	<input type="hidden" name="desc">
+	<input type="hidden" name="Opcion" value="">
+	<input type="hidden" name="base" value="users">
+</form>
 
+</div>
+</div>
 
-<?php
-
-echo "</div>";
-include("../common/footer.php");
-echo "</body></html>" ;
-
-?>
+<?php include("../common/footer.php"); ?>
