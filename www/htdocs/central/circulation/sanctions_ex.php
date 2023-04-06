@@ -108,11 +108,7 @@ function EnviarForma(){
 }
 
 </script>
-<?php
-
-echo "<body>";
- include("../common/institutional_info.php");
-?>
+<?php  include("../common/institutional_info.php"); ?>
 
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -133,7 +129,7 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 <div class="middle form">
 	<div class="formContent">
 <form name="sanctions" method="post" action="sanctions_update.php" onSubmit="return false">
-	<input name="lang" value="<?php echo $_SESSION["lang"];?>">
+	<input type="hidden" name="lang" value="<?php echo $_SESSION["lang"];?>">
 <?php
 
 // se presenta la  informacion del usuario
