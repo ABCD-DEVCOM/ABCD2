@@ -82,35 +82,38 @@ function Guardar(){
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".$msgstr["sala"]." - ".$msgstr["configure"]."
-			</div>
-			<div class=\"actions\">\n";
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["sala"]." - ".$msgstr["configure"];?>
+	</div>
+	<div class="actions">
+<?php
+	$wiki_help="Pr%C3%A9stamo_en_sala";
+    $backtocancelscript="configure_menu.php?encabezado=s";
 
-				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>";
-				if (!isset($arrHttp["actualizar"]))
-					echo "
-				<a href=javascript:Guardar() class=\"defaultButton saveButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["update"]."</strong></span>
-				</a>";
-				echo "
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_borrowers_configure.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Pr%C3%A9stamo_en_sala target=_blank>abcdwiki.net</a>";
-echo " Script: circulation/sala_configure.php";
-echo "</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\"> ";
-echo "<form name=forma1 action=sala_configure.php method=post>\n";
+	$savescript="javascript:Guardar()";
+
+	include "../common/inc_cancel.php";
+
+	if (!isset($arrHttp["actualizar"]))
+		include "../common/inc_save.php";
+
+    
+
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+		<div class="middle form">
+			<div class="formContent">
+		<form name="forma1" action="sala_configure.php" method="post">	
+
+<?php
 if (isset($arrHttp["actualizar"]) and $arrHttp["actualizar"]=="Y"){
 	Actualizar();
 }else{
@@ -128,8 +131,8 @@ if (isset($arrHttp["actualizar"]) and $arrHttp["actualizar"]=="Y"){
 	echo "\"></td>
 	</table>\n";
 }
-echo "</form></div></div>";
-include("../common/footer.php");
-echo "</body></html>" ;
-
 ?>
+	</form>
+</div>
+</div>
+<?php include("../common/footer.php"); ?>

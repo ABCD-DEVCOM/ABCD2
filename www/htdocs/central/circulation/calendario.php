@@ -83,45 +83,35 @@ function Dias_Fe(Tipo) {
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["calendar"]."
-			</div>
-			<div class=\"actions\">\n";
-if (isset($arrHttp["ver"])){
-	  echo "<a href=javascript:self.close() class=\"defaultButton cancelButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["cancel"]."</strong></span>
-				</a>\n";
-}else{
-				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>\n";
-}
-echo "
-				<a href=javascript:Dias_Fe(0) class=\"defaultButton saveButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["update"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/calendario.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-		echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/calendario.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " calendario.php ";
-echo "</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"middle homepage\">";
-
-Calendario("feriados.tab");
-
-echo "<BR><BR><BR></CENTER></DIV></div>";
-include("../common/footer.php");
-
 ?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["typeofusers"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="/circulation/calendario.html";
+    $backtocancelscript="self.close()";
+	$savescript="javascript:Dias_Fe(0)";
+	$backtoscript="configure_menu.php?encabezado=s";
+
+	if (isset($arrHttp["ver"])){
+    	include "../common/inc_cancel.php";
+	}else{
+		include "../common/inc_back.php";
+
+    include "../common/inc_save.php";
+	}
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+ 
+<?php include "../common/inc_div-helper.php"; ?>
+
+<div class="middle form">
+	<div class="formContent">
+		<?php Calendario("feriados.tab"); ?>
+	</div>
+</div>
+<?php include("../common/footer.php"); ?>

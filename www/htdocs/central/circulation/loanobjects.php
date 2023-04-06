@@ -698,7 +698,7 @@ include("../common/institutional_info.php");
 			<div class="actions">
 
 				<?php 
-					$inc_backtourl="javascript:Verificar();";
+					$backtoscript="configure_menu.php?encabezado=s";
 					include "../common/inc_back.php";
 				 ?>
 			</div>

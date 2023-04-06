@@ -89,41 +89,42 @@ include("../common/header.php");
 <?php
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["typeofusers"]."
-			</div>
-			<div class=\"actions\">\n";
-
-				echo "
-
-					<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-				<a href=javascript:Enviar() class=\"defaultButton saveButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>".$msgstr["update"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/loans_typeofusers.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_typeofusers.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo " Script: circulation/typeofusers.php";
-echo "  </div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">";
 ?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["typeofusers"];?>
+	</div>
+	<div class="actions">
+<?php
+	$ayuda="/circulation/loans_typeofusers.html";
+    $backtocancelscript="configure_menu.php?encabezado=s";
+	$savescript="javascript:Enviar()";
+    include "../common/inc_cancel.php";
+    include "../common/inc_save.php";
+
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+		<div class="middle form">
+			<div class="formContent">
 		<br>
-			<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+			<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
+				<?php echo $msgstr["addrowbef"]?>
+			</a>
 
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
+			<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">
+				<?php echo $msgstr["addrowaf"]?>
+			</a>
+			<a class="bt bt-default mb-2" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
+				<?php echo $msgstr["remselrow"]?>
+			</a>
 
-	<table   id=tblToGrid class="dhtmlxGrid" style="height:400px">
+	<table id=tblToGrid class="dhtmlxGrid" style="height:400px">
 <?php
 	echo "<tr>";
 	foreach ($rows_title as $cell) echo "<td>".str_replace(","," ",$cell)."</td>\n";
@@ -167,8 +168,8 @@ echo "  </div>
 ?>
 
 	</table>
-	<a href=javascript:Enviar()><?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
-	<a href=configure_menu.php?encabezado=s><?php echo $msgstr["cancel"]?></a>
+	<a class="bt bt-green" href=javascript:Enviar()><?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;
+	<a class="bt bt-default" href=configure_menu.php?encabezado=s><?php echo $msgstr["cancel"]?></a>
 	<script>
 
     nfilas=<?php echo $nfilas."\n"?>
