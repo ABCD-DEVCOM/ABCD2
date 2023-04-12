@@ -1,8 +1,8 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
- * @file:      usuario_prestamos_presentar.php
+ * @file:      panel_loans.php
  * @desc:      Analyzes the user and item for establishing the loan policy
  * @author:    Guilda Ascencio
  * @since:     20091203
@@ -73,41 +73,9 @@ $valortag = Array();
 
 $ec_output="" ;
 
-function PrestamoMismoObjeto($control_number,$user,$base_origen){
-global $copies_title,$msgstr,$obj;
-	$msg="";
-	$tr_prestamos=LocalizarTransacciones($control_number,"ON",$base_origen);
-	$items_prestados=count($tr_prestamos);
-	if ($items_prestados>0){
-		foreach($tr_prestamos as $value){
-			if (trim($value)!=""){
-				$nc_us=explode('^',$value);
-		   		$pi=$nc_us[0];                                   //GET INVENTORY NUMBER OF THE LOANED OBJECT
-		   		$pv=$nc_us[14];                                  //GET THE VOLUME OF THE LOANED OBJECT
-		   		$pt=$nc_us[15];                                  //GET THE TOME OF THE LOANED OBJECT
-				$comp=$pi." ".$pv." ".$pt;
-				foreach ($copies_title as $cop){
-					$c=explode('||',$cop);
-					$comp_01=$c[2];
-					if (isset($c[6]))
-						$comp_01.=" ".$c[6];
-					if (isset($c[7]))
-						$comp_01.=" ".$c[7];
-					if ($nc_us[10]==$user){    //SE VERFICA SI LA COPIA EST� EN PODER DEL USUARIO
-						if ($comp_01==$comp and $obj[14]!="Y"){
-							if ($msg=="")
-								$msg= $msgstr["duploan"];
-							else
-								$msg.="<br>".$msgstr["duploan"];
-						}
-					}
-				}
-			}
-	    }
+include("functions.php");
 
-	}
-	return array($msg,$items_prestados);
-}
+/*
 
 function LocalizarReservas($control_number,$catalog_db,$usuario,$items_prestados,$prefix_cn,$copies,$pft_ni) {
 global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
@@ -235,55 +203,6 @@ global $xWxis,$Wxis,$db_path,$msgstr,$wxisUrl;
 }
 
 
-// Se localiza el n�mero de control en la base de datos bibliogr�fica
-function ReadCatalographicRecord($control_number,$db,$inventory){
-global $Expresion,$db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$pft_typeofr,$titulo,$prefix_in,$prefix_cn,$multa,$pft_storobj,$lang_db;
-	//Read the FDT of the database for extracting the prefix used for indexing the control number
-	$pft_typeofr=str_replace('~',',',$pft_typeofr);
-	if (isset($arrHttp["db_inven"])){
-		$dbi=explode("|",$arrHttp["db_inven"]);
-	}else{
-		$dbi[0]="loanobjects";
-	}
-
-	if (isset($arrHttp["db_inven"]) and $dbi[0]!="loanobjects"){
-
-		$Expresion=trim($prefix_cn).trim($control_number);
-	}else{
-	    $Expresion="CN_".trim($control_number);
-	}
-	if ($control_number=="")
-		$Expresion=$prefix_in.$inventory;
-	// Se extraen las variables necesarias para extraer la informaci�n del t�tulo al cual pertenece el ejemplar
-	// se toman de databases_configure_read.php
-	// pft_totalitems= pft para extraer el n�mero total de ejemplares del t�tulo
-	// pft_in= pft para extraer el n�mero de inventario
-	// pft_nc= pft para extraer el n�mero de clasificaci�n
-	// pft_typeofr= pft para extraer el tipo de registro
-
-	$formato_ex="'||'".$pft_nc."'||'".$pft_typeofr."'###',";
-	//se ubica el t�tulo en la base de datos de objetos de pr�stamo
-	$IsisScript=$xWxis."loans/prestamo_disponibilidad.xis";
-	$Expresion=urlencode($Expresion);
-	$formato_obj=$db_path."$db/loans/".$_SESSION["lang"]."/loans_display.pft";
-	if (!file_exists($formato_obj)) $formato_obj=$db_path.$db. "/loans/".$lang_db."/loans_display.pft";
-	//$formato_obj.=", /".urlencode($formato_ex).urlencode($pft_storobj);
-    $formato_obj.=urlencode(", /".$formato_ex.$pft_storobj);
-	$query = "&Opcion=disponibilidad&base=$db&cipar=$db_path"."par/$db.par&Expresion=".$Expresion."&Pft=@$formato_obj";
-	include("../common/wxis_llamar.php");
-	$total=0;
-	$titulo="";
-	foreach ($contenido as $linea){
-		$linea=trim($linea);
-		if (trim($linea)!=""){
-			if (substr($linea,0,8)=='$$TOTAL:')
-				$total=trim(substr($linea,8));
-			else
-				$titulo.=$linea."\n";
-		}
-	}
-	return $total;
-}
 
 // Se localiza el n�mero de inventario en la base de datos de objetos  de pr�stamo
 function LocalizarInventario($inventory){
@@ -379,44 +298,12 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$pft_totalitems,$pft_ni,$pft_nc,$
 	$ret=array($total,$item);
 	return $ret ;
 }
-
-//se busca el numero de control en el archivo de transacciones para ver si el usuario tiene otro ejemplar prestado
-function LocalizarTransacciones($control_number,$prefijo,$base_origen){
-global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr;
-	$tr_prestamos=array();
-	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
-	if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
-	$query = "&Expresion=".$prefijo."_P_".$control_number;
-	if (isset($arrHttp["year"]) or isset($arrHttp["volumen"])){
-		$query.="_";
-		if (isset($arrHttp["year"])) $query.="A:".$arrHttp["year"];
-		if (isset($arrHttp["volumen"])) $query.="V:".$arrHttp["volumen"];
-		if (isset($arrHttp["numero"])) $query.="N:".$arrHttp["numero"];
-	}
-
-	$query.="&base=trans&cipar=$db_path"."par/trans.par&Formato=".$formato_obj;
-	$IsisScript=$xWxis."cipres_usuario.xis";
-	include("../common/wxis_llamar.php");
-	$prestamos=array();
-	foreach ($contenido as $linea){
-		if (trim($linea)!=""){
-			$l=explode('^',$linea);
-			if (isset($l[13])){
-				if ($base_origen==$l[13])
-					$tr_prestamos[]=$linea;
-			}else{
-				$tr_prestamos[]=$linea;
-			}
-        }
-	}
-	return $tr_prestamos;
-}
+*/
 
 
 // ------------------------------------------------------
 // INICIO DEL PROCESO
 //--------------------------------------------------------------
-///////////////////////////////////////////////////////////////////////////////////////////
 
 // ARE THE COPIES IN THE COPIES DATABASE OR IN THE BIBLIOGRAPHIC DATABASE?
 
@@ -459,11 +346,10 @@ if ($nmulta!=0 or $nsusp!=0) {
 }
 if (count($prestamos)>0) $ec_output.= "<strong><a href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a> | <a href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a></strong><p>";
 
-//Se obtiene el c�digo, tipo y vigencia del usuario
+//Se obtiene el codigo, tipo y vigencia del usuario
 $formato=$pft_uskey.'\'$$\''.$pft_ustype.'\'$$\''.$pft_usvig;
 $formato=urlencode($formato);
-$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path"."par/users.par&Pft=$formato";
-$contenido="";
+$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path".$actparfolder."users.par&Pft=$formato";
 $IsisScript=$xWxis."cipres_usuario.xis";
 include("../common/wxis_llamar.php");
 $user="";
@@ -522,7 +408,7 @@ if ($nv>0 and isset($arrHttp["inventory"])){
 	ProduceOutput($ec_output,"");
 	die;
 }
-//Se verifica si puede recibir m�s pr�stamos
+//Se verifica si puede recibir mas prestamos
 if ($np>=$tipo_u[strtoupper($userdata[1])] and trim($tipo_u[strtoupper($userdata[1])])!="" ){
 	$ec_output.= "<font color=red><h3>".$msgstr["allowloans"].": ".$tipo_u[strtoupper($userdata[1])].". ".$msgstr["nomoreloans"]."</h3></font>";
 	ProduceOutput($ec_output,"");
@@ -530,7 +416,7 @@ if ($np>=$tipo_u[strtoupper($userdata[1])] and trim($tipo_u[strtoupper($userdata
 }
 
 //////////////////////////////////////////////////////////////////
-// Si viene desde la opci�n de prestar, se localiza el n�mero de inventario solicitado
+// Si viene desde la opcion de prestar, se localiza el numero de inventario solicitado
 
 $xnum_p=$np;
 $prestamos_este=0;
@@ -570,14 +456,14 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 			$ec_output.="<td bgcolor=white></td>".$este_prestamo;
  			//ProduceOutput($ec_output,"");
 		}else{
-		//se extrae la informaci�n del n�mero de control del t�tulo y la base de datos catalogr�fica a la cual pertenece
+		//se extrae la informacion del numero de control del titulo y la base de datos catalografica a la cual pertenece
 			$tt=explode('||',$item);
 			$control_number=$tt[0];
 
 			$catalog_db=strtolower($tt[1]);
     		$tipo_obj=trim($tt[5]);      //Tipo de objeto
 
-// se lee la configuraci�n de la base de datos de objetos de pr�stamos
+// se lee la configuracion de la base de datos de objetos de prestamos
 			$arrHttp["db"]="$catalog_db";
 			$este_prestamo.="<td bgcolor=white valign=top align=center>$control_number  ($catalog_db)</td>";
             require_once("databases_configure_read.php");
@@ -586,18 +472,31 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
     		$userdata[1]=trim(strtoupper($userdata[1]));
             $pol=array();
             if ($tipo_obj==""){
+	
             	$select_policy= "<select name=using_pol>";
 	    		foreach ($politica as $objeto){
 	    			foreach ($objeto as $value){
 	    				$o=explode('|',$value);
 	    				if (strtoupper($o[1])==strtoupper($userdata[1]))
-	    					$select_policy.="<Option value='$value'>".$tipo_item[strtoupper($o[0])]." (".$o[0].")"."</option>\n";
+	    					$select_policy.="<option value='$value'>".$tipo_item[strtoupper($o[0])]." (".$o[0].")"."</option>\n";
 	    			}
 	    		}
 	    		$select_policy.= "</select>\n";
-	    		$select_policy.=" <input type=button name=prestar value=\"".$msgstr["loan"]."\" onclick=Javascript:Prestar()>";
+	    	$select_policy.=" <input type=button name=prestar value=\"".$msgstr["loan"]."\" onclick=Javascript:Prestar()>";
+			
             }else{
-            	$select_policy="$tipo_obj";
+
+				foreach ($politica as $objeto){
+	    			foreach ($objeto as $value){
+	    				$o=explode('|',$value);
+						if (strtoupper($o[1])==strtoupper($userdata[1]) and  $tipo_obj==strtoupper($o[0])) 
+						$select_policy='<input type="hidden" name="fine_v" value="'.$o[7].'" >';
+	    			}
+	    		}
+
+			 	$select_policy.="<input type=\"hidden\" name=\"using_pol\" value=\"$tipo_obj\" >";
+				$select_policy.=" <input class='bt bt-green' type=button name=prestar value=\"".$msgstr["loan"]."\" onclick=Javascript:Prestar()>";
+
             }
 			$fechal_usuario="";
 			$fechal_objeto="";
@@ -722,32 +621,35 @@ global $prestamos_este,$xnum_p,$reserve_active,$meta_encoding;
 ?>
 <script>
 function Prestar(){
-	document.ecta.action="usuario_prestamos_presentar.php"
+	document.ecta.action="panel_loans.php"
 	document.ecta.submit()
 	return
 }
 </script>
-<body>
+
+
+
 <div class="sectionInfo">
 	<div class="breadcrumb">
 		<?php echo $msgstr["statment"]?>
 	</div>
 	<div class="actions">
-		
+
 	</div>
 	<?php include("submenu_prestamo.php");?>
 </div>
-<div class="helper">
+
+
 <?php
-echo "<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/loan.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/loan.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/ask_policy.php </font>
-	</div>";
-?>
+$ayuda="/circulation/loan.html";
+include "../common/inc_div-helper.php";
+?> 	
+
 <div class="middle form">
 	<div class="formContent">
-<form name=ecta action=usuario_prestamo_presentar.php method=post>
+
+
+<form name="ecta" action="usuario_prestamo_presentar.php" method="post">
 
 <?php
 foreach ($_REQUEST as $var=>$value){
@@ -764,6 +666,7 @@ $ec_output.= "<form name=devolver action=devolver_ex.php method=post>
 <input type=hidden name=usuario value=".$arrHttp["usuario"].">
 <input type=hidden name=vienede value=ecta>\n";
 if (isset($arrHttp["reserve"])) $ec_output.= "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";
+
 $ec_output.= "</form>
 <form name=multas action=multas_eliminar_ex.php method=post>
 <input type=hidden name=Accion>
@@ -781,9 +684,10 @@ if ($reservas !=""){
 }
 }
 ?>
-</div></div>
+	</div>
+</div>
+
+
 <?php include("../common/footer.php");?>
-</body>
-</html>
 
 
