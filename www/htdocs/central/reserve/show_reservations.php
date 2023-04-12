@@ -78,7 +78,7 @@ echo $reserves_arr[0];
 <input type=hidden name=Mfn_reserve>
 <input type=hidden name=Accion>
 <input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
-<input type=hidden name=retorno value="../circulation/usuario_prestamos_presentar.php">
+<input type=hidden name=retorno value="../circulation/panel_loans.php">
 <?php if (isset($arrHttp["reserve"])) echo "<input type=hidden name=reserve value=".$arrHttp["reserve"].">\n";?>
 </form>
 <script>

@@ -1,29 +1,11 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @file:      browse.php
  * @desc:      Browse the loan's databases
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
+ * @version:   2.2
 */
 session_start();
 include("../common/get_post.php");
@@ -42,7 +24,6 @@ include("../lang/prestamo.php");
 $Permiso=$_SESSION["permiso"];
 
 include("../common/header.php");
-include("../common/institutional_info.php");
 include("../dataentry/formulariodebusqueda.php");
 include("../reserve/reserves_read.php");
 //SE LEE LA CONFIGURACION LAS POLITICAS DE PRESTAMO
@@ -309,22 +290,22 @@ global $config_date_format,$arrHttp;
 				$l1=explode('||',$l[0]);
 				$inv=$l1[2];
 				echo "<tr>";
-				echo "<td bgcolor=white>";
+				echo "<td>";
 				echo $inv."</td>";
-				echo "<td bgcolor=white>".$l[4]."</td>";
-				echo "<td bgcolor=white>".$l[5]."</td>";
-				echo "<td bgcolor=white>".$l[3]."</td>";
+				echo "<td>".$l[4]."</td>";
+				echo "<td>".$l[5]."</td>";
+				echo "<td>".$l[3]."</td>";
     	    	$status=$l[5];
 				break;
 			case "N":
 				$l1=explode('||',$item[1]);
 				$inv=$l1[0];
 				echo "<tr>";
-				echo "<td bgcolor=white>";
+				echo "<td>";
 				echo $inv."</td>";
-				echo "<td bgcolor=white>&nbsp;</td>";
-				echo "<td bgcolor=white>&nbsp;</td>";
-				echo "<td bgcolor=white>".$l1[1]."</td>";
+				echo "<td>&nbsp;</td>";
+				echo "<td>&nbsp;</td>";
+				echo "<td>".$l1[1]."</td>";
 	        	$status="";
 				break;
 			}
@@ -333,18 +314,18 @@ global $config_date_format,$arrHttp;
 	    if (isset($item[0])){
 	    	$l=explode('||',$item[0]);
 	    	$inv=$l[2];
-	    	echo "<tr><td bgcolor=white>".$l[2]."</td>";
-	    	echo "<td bgcolor=white>&nbsp;</td>";
-	    	echo "<td bgcolor=white>&nbsp;</td>";
-	    	echo "<td bgcolor=white>&nbsp;</td>";
+	    	echo "<tr><td>".$l[2]."</td>";
+	    	echo "<td>&nbsp;</td>";
+	    	echo "<td>&nbsp;</td>";
+	    	echo "<td>&nbsp;</td>";
 	    	$status=$l[3];
 
 		}
 	}
 	if (isset($prestamos[$inv])){
 		$p=explode('$$$',$prestamos[$inv]);
-		echo "<td bgcolor=white>".$p[2]."</td>";
-		echo "<td bgcolor=white>";
+		echo "<td>".$p[2]."</td>";
+		echo "<td>";
 		$date = new DateTime($p[3]);
 	    if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {
 	    	echo $date->format("d/m/Y");
@@ -354,16 +335,16 @@ global $config_date_format,$arrHttp;
 	    echo "</td>";
 	    $comentarios=$p[4];
 	}else{
-		echo "<td bgcolor=white>&nbsp;</td>";
-	    echo "<td bgcolor=white>&nbsp;</td>";
+		echo "<td>&nbsp;</td>";
+	    echo "<td>&nbsp;</td>";
 	}
-	echo "<td bgcolor=white>";
+	echo "<td>";
 	if (isset($item[0])) {
 		$l=explode('||',$item[0]);
 		echo $l[3];
 	}
 	echo "</td>";
-	echo "<td bgcolor=white>$comentarios</td>";
+	echo "<td>$comentarios</td>";
 
 }
 
@@ -543,33 +524,12 @@ function Enviar(){
 }
 </script>
 <body>
-<?php include("../circulation/submenu_prestamo.php");?>
-<div class="sectionInfo">
-	<div class="breadcrumb">
-		<?php echo $msgstr["ecobj"];
-		if (isset($arrHttp["base"]))
-			echo " - ".$arrHttp["base"];
-		else
-			echo " - ".$base_sel;
-		?>
-	</div>
-	<div class="actions">
 
-
-	</div>
-	<div class="spacer">&#160;</div>
-</div>
 <?php if (!isset($arrHttp["base"])){
-?>
-<div class="helper">
-	<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/circulation/reserva.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/reserva.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: reserve/buscar.php</font>
-	</div>";
+
  }
 if ($arrHttp["Opcion"]!="formab")
-	echo "<div class=\"middle form\">
-		<div class=\"formContent\">";
+
 
 
 
@@ -638,13 +598,14 @@ if (!isset($arrHttp["base"])){
 
 			DibujarFormaBusqueda();
 			?>
-<form name=basedatos action=situacion_de_un_objeto.php method=post>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
-<input type=hidden name=copies value=<?php echo $arrHttp["copies"]?>>
-<input type=hidden name=ecta value=Y>
-<input type=hidden name=count value=1>
-<input type=hidden name=Opcion value=formab>
+
+<form name="basedatos" action="situacion_de_un_objeto.php" method="post">
+<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+<input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]?>.par">
+<input type="hidden" name="copies" value="<?php echo $arrHttp["copies"]?>">
+<input type="hidden" name="ecta" value="Y">
+<input type="hidden" name="count" value="1">
+<input type="hidden" name="Opcion" value="formab">
 
 </form><?php
 			//die;
@@ -659,32 +620,25 @@ if (!isset($arrHttp["base"])){
 
 }
 echo "</div></div>";
-if ($arrHttp["Opcion"]!="formab") include("../common/footer.php");
 ?>
 
 
 
 
-<form name=busqueda action=buscar.php method=post>
-<input type=hidden name=base>
-<input type=hidden name=desde value=reserva>
-<input type=hidden name=count value=1>
-<input type=hidden name=cipar>
-<input type=hidden name=Opcion value=formab>
-<input type=hidden name=copies value=<?php echo $arrHttp["copies"]?>>
+<form name="busqueda" action="buscar.php" method="post">
+	<input type="hidden" name="base">
+	<input type="hidden" name="desde" value="reserva">
+	<input type="hidden" name="count" value="1">
+	<input type="hidden" name="cipar">
+	<input type="hidden" name="Opcion" value="formab">
+	<input type="hidden" name="copies" value=<?php echo $arrHttp["copies"]?>>
 </form>
 
-<form name=regresar action=buscar.php method=post>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
-<input type=hidden name=copies value=<?php echo $arrHttp["copies"]?>>
-<input type=hidden name=ecta value=Y>
-<input type=hidden name=count value=1>
-<input type=hidden name=Opcion value=formab>
+<form name="regresar" action="buscar.php" method="post">
+	<input type="hidden" name="base" value="<?php echo $arrHttp["base"]?>">
+	<input type="hidden" name="cipar" value="<?php echo $arrHttp["base"]?>.par">
+	<input type="hidden" name="copies" value="<?php echo $arrHttp["copies"]?>">
+	<input type="hidden" name="ecta" value="Y">
+	<input type="hidden" name="count" value="1">
+	<input type="hidden" name="Opcion" value="formab">
 </form>
-
-
-</body>
-</Html>
-
-

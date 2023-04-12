@@ -1,29 +1,11 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @file:      situacion_de_un_objeto_db_ex.php
  * @desc:      Shows the status of the items of an bibliographic record when the items are defined inside the bilbiographic record
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
+ * @version:   2.2
 */
 session_start();
 // Situaci�n de un objeto
@@ -83,39 +65,16 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$lang_db;
 // INICIO DEL PROGRAMA
 // ------------------------------------------------------
 include("../common/header.php");
-include("../common/institutional_info.php");
 include("../circulation/scripts_circulation.php");
-?>
-<div class="sectionInfo">
-	<div class="breadcrumb">
-		<?php echo $msgstr["co_history"]?>
-	</div>
-	<div class="actions">
-	<?php
-		$backtoscript="item_history.php";
-		include "../common/inc_back.php"
-	?>
-	</div>
-	<?php include("../circulation/submenu_prestamo.php");?>
-</div>
 
-<div class="helper">
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/item_history.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/item_history.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: item_history_ex.php</font>\n";
 
-echo "
-	</div>
-<div class=\"middle form\">
-	<div class=\"formContent\">";
 //SE LEEN LAS TRANSACCIONES DE PR�STAMO
 	$trans=LeerTransacciones($arrHttp["inventory"]);
 	if (count($trans)==0){
 		echo "<h2>".$msgstr["no_transactions"]."<h2>";
 	}else{
-		echo "<table cellpadding=5>\n";
+		echo '<button class="bt bt-blue" onclick="window.print()"><i class="fas fa-print"></i>'.$msgstr['print'].'</button>';
+		echo "<table class='table striped'>\n";
 		echo "<tr>";
 		echo "<th></th>";
 		echo "<th>".$msgstr["inventory"]."</th>";
@@ -156,8 +115,4 @@ echo "
 		echo "</table>";
 	}
 
-echo "<p>";
-echo "</div></div>";
-include("../common/footer.php");
-echo "</body></html>";
 ?>

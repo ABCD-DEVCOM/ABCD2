@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      databases_configure_read.php
  * @desc:      Reads the pfts which determines the configuration of an bibliographic database

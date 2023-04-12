@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      devolver_ex.php
  * @desc:      Returns a loan
@@ -26,7 +26,8 @@
  * == END LICENSE ==
 */
 // se determina si el préstamo está vencido
-function compareDate ($FechaP){
+
+function compareDate_ex ($FechaP){
 global $locales,$arrHttp;
 	$dia=substr($FechaP,6,2);
 	$mes=substr($FechaP,4,2);
@@ -59,7 +60,8 @@ include("../circulation/calendario_read.php");
 include("../circulation/locales_read.php");
 include ("../circulation/fecha_de_devolucion.php");   //Para calcular si la reserva está vencida
 require_once("../circulation/grabar_log.php");
-include ("../circulation/dias_vencimiento.php");
+
+
 //Se averiguan los recibos que hay que imprimir
 $recibo_list=array();
 $Formato="";
@@ -81,8 +83,9 @@ if ($Formato!=""){
 }
 
 
+
 function ReservesAssign($key,$espera){
-global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
+global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn,$actparfolder;
 	$Expresion=$key." and (ST_0 or ST_3)";
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	$Pft="f(mfn,1,0),'|',v10,'|'v60,'|',v40,'|',v130,'|',v200,'|'v30,'|',v31,'|'v12,'|'v15,'|'v20/";
@@ -165,6 +168,7 @@ global $xWxis,$Wxis,$wxisUrl,$db_path,$msgstr,$arrHttp,$reservas_u_cn;
 
 include("sanctions_inc.php");
 
+
 ///////////
 if (isset($arrHttp["vienede"])){   // viene del estado de cuenta
 	$items=explode('$$',trim(urldecode($arrHttp["searchExpr"])));
@@ -187,8 +191,8 @@ foreach ($items as $num_inv){
 		$num_inv="TR_P_".$num_inv;
 		if (!isset($arrHttp["base"])) $arrHttp["base"]="trans";
 		//EL CAMPO 81 TIENE EL TIPO DE OBJETO DE LA CONVERSIÓN DESDE PRESTA
-		$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v60'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$',v40,'|$'v400,'|$'v500,'|$',v95,'|$',v98/";
-		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&count=1&Expresion=".$num_inv."&Pft=$Formato";
+		$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$',v40,'|$'v400,'|$'v500,'|$',v95,'|$',v98,'|$',v85/";
+		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&count=1&Expresion=".$num_inv."&Pft=$Formato";
 		$contenido="";
 		$IsisScript=$xWxis."buscar_ingreso.xis";
 		include("../common/wxis_llamar.php");
@@ -230,6 +234,11 @@ foreach ($items as $num_inv){
 				$ppres=$p[10];
 			$ncontrol=$p[12];
 			$bd=$p[13];
+			$politica_este=explode('|',$p[14]);
+			$politica_str=$politica_este[7];
+
+			echo "<script>alert('".$politica_str."')</script>";
+
 			// se lee la política de préstamos
 			include_once("loanobjects_read.php");
 			// se lee el calendario
@@ -317,7 +326,7 @@ foreach ($items as $num_inv){
 			}
 			// si está atrasado se procesan las multas y suspensiones
 
-			$atraso=compareDate ($fecha_d);
+			$atraso=compareDate_ex ($fecha_d);
 
 			if ($politica==""){
 				$error="&error=".$msgstr["nopolicy"]." $tipo_usuario / $tipo_objeto";
@@ -344,7 +353,7 @@ foreach ($items as $num_inv){
 						else
 							$ur_7="";
 						//echo " $fecha_d ,$atraso,".$arrHttp["usuario"].",$inventario,$ppres,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$referencia,$Mfn_reserva,".$user_reserved[7];die;
-						Sanciones($fecha_d,$atraso,$arrHttp["usuario"],$inventario,$ppres,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$referencia,$Mfn_reserva,$ur_7);
+						Sanciones($fecha_d,$atraso,$arrHttp["usuario"],$inventario,$ppres,$ncontrol,$bd,$tipo_usuario,$tipo_objeto,$politica_str,$referencia,$Mfn_reserva,$ur_7);
 						$resultado.=" ".$msgstr["overdue"];
 					}
 				}
@@ -358,7 +367,7 @@ foreach ($items as $num_inv){
 				$datos_trans["CODIGO_USUARIO"]=$cod_usuario;
 				$datos_trans["TIPO_USUARIO"]=$tipo_usuario;
 				$datos_trans["FECHA_PROGRAMADA"]=$fecha_d;
-				$datos_trans["ATRASO"]=$atraso;
+				$datos_trans["ATRASO"]=$dias_atraso;
 				$ValorCapturado=GrabarLog("B",$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"RETORNAR");
 				if ($ValorCapturado!="") $query.="&logtrans=".$ValorCapturado;
 			}
@@ -382,6 +391,9 @@ foreach ($items as $num_inv){
 		}
 	}
 }
+
+
+
 $cu="";
 $recibo="";
 
@@ -396,28 +408,11 @@ if (isset($arrHttp["reserve"])){
 	$reserve="";
 }
 if (isset($arrHttp["vienede"]) or isset($arrHtp["reserve"])){
-	header("Location: usuario_prestamos_presentar.php?devuelto=S&lang=".$lang."&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve);
+	header("Location: panel_loans.php?devuelto=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"]."&lista_control=".$cn_l.$reserve)."&real_fine=".$arrHttp["real_fine"];
 }else{
 
 	header("Location: devolver.php?devuelto=S&encabezado=s$error$cu&rec_dev=$Mfn_rec&resultado=$resultado&errores=$errores"."&lista_control=".$cn_l."&reservas=".$reservas_activadas);
 }
 die;
 
-function ImprimirRecibo($recibo_arr){
-	$salida="";
-	foreach ($recibo_arr as $Recibo){
-		$salida=$salida.$Recibo;
-	}
-?>
-<script>
-	msgwin=window.open("","recibo","width=400, height=300, scrollbars, resizable")
-	msgwin.document.write("<?php echo $salida?>")
-	msgwin.focus()
-	msgwin.print()
-	msgwin.close()
-</script>
-<?php
-}
-
-?>
 ?>

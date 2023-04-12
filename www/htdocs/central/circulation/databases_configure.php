@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      databases_configure.php
  * @desc:      Ask for the pfts which configure an bibliographic database
@@ -141,7 +141,7 @@ include("../common/institutional_info.php");
 	<div class="actions">
 <?php
 	$ayuda="/circulation/loans_databases_configure.html";
-    $backtocancelscript="databases.php?encabezado=s";
+    $backtocancelscript="adm_databases.php?encabezado=s";
 	$savescript="javascript:Guardar()";
     include "../common/inc_cancel.php";
     include "../common/inc_save.php";

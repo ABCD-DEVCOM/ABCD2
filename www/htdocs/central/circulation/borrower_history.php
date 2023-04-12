@@ -1,29 +1,11 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @file:      borrower_history.php
  * @desc:      Ask for the borrower for showing the transactions history
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
+ * @version:   2.2
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -91,7 +73,8 @@ function EnviarForma(Proceso){
 		return
 	}
 	document.EnviarFrm.usuario.value=document.usersearch.usercode.value
-	document.EnviarFrm.action="borrower_history_ex.php"
+	document.EnviarFrm.action="borrower_history_reports.php"
+	document.EnviarFrm.target="receiver"
 	document.EnviarFrm.submit()
 }
 
@@ -143,30 +126,30 @@ include "../common/inc_div-helper.php";
 ?> 	
 
 
-<div class="middle list">
-	<div class="formContent">
-	<div class="searchBox">
-	<form name=usersearch action="" method=post onsubmit="javascript:return false">
-	<input type=hidden name=Indice>
-	<table width=100%>
-		<td width=100>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["usercode"]?></strong>
-		</label>
-		</td><td>
-		<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';" />
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
 
-		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="bt-blue" onClick="javascript:AbrirIndice('U',document.usersearch.usercode)" />
-		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma('U')"/>
-		</td></table>
+	<h4><?php echo $msgstr["usercode"]?></h4>
+	<form name="usersearch" action="" method=post onsubmit="javascript:return false" target="results">
+	<input type="hidden" name="Indice">
+	
+		<button type="button" name="index" title="<?php echo $msgstr["list"]?>" class="bt-blue col-2 p-2 m-0" onClick="javascript:AbrirIndice('U',document.usersearch.usercode)" /><i class="fa fa-search"></i></button>
+
+		<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="w-8 p-2 m-0" />
+
+		<button type="button" name="buscar" title="<?php echo $msgstr["search"]?>" class="bt-green w-10 mt-2" onclick="javascript:EnviarForma('U')"/><?php echo $msgstr["search"]?> <i class="fas fa-arrow-right"></i></button>
 	</form>
-	</div>
-	<div class="spacer">&#160;</div>
-	<dd>
+	<small>
 		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]?>
-	</dd>
+	</small>
+	</div>
+
+	<div class="formContent col-9 m-2">
+		<iframe class="iframe w-10" height="600px" name="receiver" id="receiver" frameborder="0"></iframe>
+	</div>
 </div>
-</div>
+
+
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
 <input type=hidden name=usuario value="">
@@ -181,4 +164,8 @@ if (isset($arrHttp["error"]) and $arrHttp["inventory"]!=""){
 	</script>
 	";
 }
+
+if (isset($arrHttp['usuario'])) echo "<script> window.onload = function(){
+  EnviarForma('U');
+}</script>";
 ?>

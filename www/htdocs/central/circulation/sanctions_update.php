@@ -28,17 +28,21 @@ include("fecha_de_devolucion.php");
 $FechaP=$arrHttp["date"];
 $df=explode('/',$config_date_format);
 switch ($df[0]){
+	case "DD":
 	case "d":
 		$dia=substr($FechaP,0,2);
 		break;
+	case "MM":
 	case "m":
 		$mes=substr($FechaP,0,2);
 		break;
 }
 switch ($df[1]){
+	case "DD":
 	case "d":
 		$dia=substr($FechaP,3,2);
 		break;
+	case "MM":
 	case "m":
 		$mes=substr($FechaP,3,2);
 		break;
@@ -109,5 +113,5 @@ if (file_exists($db_path."logtrans/data/logtrans.mst")){
     if ($ValorCapturado!="") $query.="&logtrans=".$ValorCapturado;
 }
 include("../common/wxis_llamar.php");
-header("Location: usuario_prestamos_presentar.php?base=users&usuario=".$arrHttp["usuario"]);
+header("Location: panel_loans.php?base=users&usuario=".$arrHttp["usuario"]);
 ?>

@@ -1,29 +1,12 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
- * @file:      loanobjects.php
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org
+ * @file:      adm_loanobjects.php
  * @desc:      Reads and update the loan policy
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
+ * @version:   2.2
  *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -58,10 +41,14 @@ if (file_exists($archivo)){
 	$fp[0]='||||';
 
 }
-foreach ($fp as $value){	$value=trim($value);	if ($value!=""){		$t=explode('|',$value);
+foreach ($fp as $value){
+	$value=trim($value);
+	if ($value!=""){
+		$t=explode('|',$value);
 		if (!isset($t[1]) or trim($t[1]=="")) $t[1]=$t[0];
 		$type_users[$t[0]]=$t[1];
-	}}
+	}
+}
 unset($fp);
 $archivo=$db_path."circulation/def/".$_SESSION["lang"]."/items.tab";
 if (!file_exists($archivo)) $archivo=$db_path."circulation/def/".$lang_db."/items.tab";
@@ -71,7 +58,8 @@ if (file_exists($archivo)){
 	$fp[0]='||';
 
 }
-foreach ($fp as $value){	$value=trim($value);
+foreach ($fp as $value){
+	$value=trim($value);
 	if ($value!=""){
 		$t=explode('|',$value);
 		$type_items[$t[0]]=$t[1];
@@ -93,7 +81,8 @@ echo "
 var item=new Array()
 ";
 $ix=-1;
-foreach ($fp_items as $value) {	if (trim($value)!=""){
+foreach ($fp_items as $value) {
+	if (trim($value)!=""){
 		$ix=$ix+1;
 		echo "
 		item[$ix]=\"".trim($value)."\"\n" ;
@@ -109,14 +98,18 @@ echo "</script>\n";
 	var RT_A=new Array()
 
 <?php
-foreach ($rows_title as $var=>$value){	echo "RT['$var']=\"$value\"\n";}
+foreach ($rows_title as $var=>$value){
+	echo "RT['$var']=\"$value\"\n";
+}
 
 foreach ($rows_title_a as $var=>$value){
 	echo "RT_A['$var']=\"$value\"\n";
 }
 
 echo "var TU=new Array()\n";
-foreach  ($type_users as $var=>$value){	echo "TU['$var']=\"$value\"\n";}
+foreach  ($type_users as $var=>$value){
+	echo "TU['$var']=\"$value\"\n";
+}
 echo "var TI=new Array()\n";
 foreach  ($type_items as $var=>$value){
 	echo "TI['$var']=\"$value\"\n";
@@ -124,26 +117,38 @@ foreach  ($type_items as $var=>$value){
 ?>
 	Accion=""
 
-    function NuevoTipo(){       	sel="||||||||||||||||||||||"
+    function NuevoTipo(){
+       	sel="||||||||||||||||||||||"
        	Accion="nuevo"
-       	Redraw(sel)    }
+       	Redraw(sel)
+    }
 
-    function ModificarTipo(){    	i=document.forma1.item.selectedIndex
-    	if (i==0) {    		Cancelar()
-    		return    	}
-    	sel=document.forma1.item.options[i].value    	Accion="modificar"
-    	Redraw(sel)    }
+    function ModificarTipo(){
+    	i=document.forma1.item.selectedIndex
+    	if (i==0) {
+    		Cancelar()
+    		return
+    	}
+    	sel=document.forma1.item.options[i].value
+    	Accion="modificar"
+    	Redraw(sel)
+    }
 
 	function Cancelar(){
-		elem = document.getElementById("acciones");		html="<a href=javascript:Enviar()><?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;"
-    	html+="<a href=configure_menu.php?encabezado=s><?php echo $msgstr["cancel"]?></a>"        elem.innerHTML = html
+		elem = document.getElementById("acciones");
+		html="<a href=javascript:Enviar()><?php echo $msgstr["update"]?></a>&nbsp; &nbsp; &nbsp; &nbsp;"
+    	html+="<a href=configure_menu.php?encabezado=s><?php echo $msgstr["cancel"]?></a>"
+        elem.innerHTML = html
         elem = document.getElementById("type_e");
         elem.innerHTML = ""
         Redraw_Table()
-	}
 
-	function Eliminar(index){		item.splice(index,1)
-		Redraw_Table()	}
+	}
+
+	function Eliminar(index){
+		item.splice(index,1)
+		Redraw_Table()
+	}
 
 	function Agregar(index){
 		item.splice(index,0,"||||||||||||||||||||||||")
@@ -155,7 +160,8 @@ foreach  ($type_items as $var=>$value){
 	function Editar_Tabla(index){
 		sel=item[index]
     	Accion="modificar"
-    	Redraw(sel,index)	}
+    	Redraw(sel,index)
+	}
 
     function Aceptar_Item(Index){
     	xItem=""
@@ -168,16 +174,20 @@ foreach  ($type_items as $var=>$value){
     	xItem=tipo_material
 
     	i=document.forma1.tipo_u.selectedIndex
-    	if (i<0){    		alert("debe seleccionar el tipo de usuario")
-    		return    	}
+    	if (i<0){
+    		alert("debe seleccionar el tipo de usuario")
+    		return
+    	}
     	tipo_usuario=Trim(document.forma1.tipo_u.options[i].value)
     	xItem+='|'+tipo_usuario
 
 
 
     	x=Trim(document.forma1.nr.value)
-    	if (x==""){    		alert("<?php echo $msgstr["falta"].$rows_title[2]?>")
-    		return    	}
+    	if (x==""){
+    		alert("<?php echo $msgstr["falta"].$rows_title[2]?>")
+    		return
+    	}
     	xItem+='|'+x
 
 		x=Trim(document.forma1.waiting.value)
@@ -204,16 +214,20 @@ foreach  ($type_items as $var=>$value){
         Cancelar()
         Redraw_Table()
     }
-	function Redraw(sel,index){    	elem = document.getElementById("type_e");
+	function Redraw(sel,index){
+    	elem = document.getElementById("type_e");
     	html='<p><br><table class="listTable" width=10>';
     	cell=sel.split('|')
     	for (var c in RT){
     		html+="<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\"><td>"+RT[c]+"</td><td>"
-    		switch (c){    			case "0":
+    		switch (c){
+    			case "0":
     				html+="<select name=tipo_m>\n"
     				for (a in TI){
     					selected=""
-    					if (cell[c]==a) selected=" selected"    					html+="<option value=\""+a+"\""+selected+">"+TI[a]    				}
+    					if (cell[c]==a) selected=" selected"
+    					html+="<option value=\""+a+"\""+selected+">"+TI[a]
+    				}
     				html+="</select></td>"
     				break
     			case "1":
@@ -248,7 +262,8 @@ foreach  ($type_items as $var=>$value){
 	function Redraw_Table(){
     	elem = document.getElementById("type_e");
     	html='<br><table class="listTable" border=1 width=100%>';
-    	for (var c in RT_A){    		html+= "<th>"+RT_A[c]+"</th>"
+    	for (var c in RT_A){
+    		html+= "<th>"+RT_A[c]+"</th>"
     	}
     	for (i=0;i<item.length;i++){
             sel=item[i]
@@ -322,12 +337,14 @@ foreach  ($type_items as $var=>$value){
 	}
 
 	function Enviar(){
-		ValorCapturado=""		for (i=0;i<item.length;i++){
+		ValorCapturado=""
+		for (i=0;i<item.length;i++){
             ValorCapturado+=item[i]+"\n"
   		}
   		document.forma2.ValorCapturado.value=escape(ValorCapturado)
   		document.forma2.submit()
-	}
+
+	}
 
 /**
  * DHTML date validation script. Courtesy of SmartWebby.com (http://www.smartwebby.com/dhtml/)

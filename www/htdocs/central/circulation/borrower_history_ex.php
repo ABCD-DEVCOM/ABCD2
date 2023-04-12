@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      borrower_history.php
  * @desc:      Shows the transactions history of a borrower
@@ -39,6 +39,7 @@ include("../lang/prestamo.php");
 include("../reserve/reserves_read.php");
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 include("../common/header.php");
+
 echo "<body>";
  	include("../common/institutional_info.php");
 
@@ -47,24 +48,22 @@ function compareDate ($FechaP){
 global $locales,$config_date_format;
 //Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
 	$f_date=explode('/',$config_date_format);
-
-	var_dump($f_date);
-	echo $FechaP;
 	switch ($f_date[0]){
+		case "DD":
 		case "d":
 			$dia=substr($FechaP,0,2);
 			break;
+		case "MM":
 		case "m":
 			$mes=substr($FechaP,2,2);
 			break;
 	}
-
-	echo $mes;
-
 	switch ($f_date[1]){
+		case "DD":
 		case "d":
 			$dia=substr($FechaP,3,2);
 			break;
+		case "MM":
 		case "m":
 			$mes=substr($FechaP,3,2);
 			break;

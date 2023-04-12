@@ -1,0 +1,28 @@
+/* 
+    Modelo de impressão Termo de Quitação
+    Desenvolvido por: Roger C Guilherme
+*/
+
+'<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />'
+
+'<style>'
+'div.receipt { font-family: "Courier new", monospace;  float:left; width:80mm; height:33.9mm; margin:0; background-color:#FFFFFF; font-size:10pt; line-height:15pt;
+}
+'
+
+'</style>'
+
+'<div class="receipt w-10">'
+
+'<h3>-- Comprovante de quitação --</h3>'
+
+'<p>Esta intituição declara para os devidos fins que 'v30', não possui débitos pendentes de qualquer natureza até a presente data.</p>'
+
+if p(v10) then '<b>Tipo de usuário </b>'(if p(v10) then | |v10^a,| |v10^b, if iocc<>nocc(v10) then '<br>' fi fi/),'</td>' fi/
+if p(v15) then '<b>Data limite validade cartão: </b>'v15+|<br>|,'</td>' fi/
+if p(v20) then '<b>Código usuário: </b>'v20+|<br>|,'</td>' fi/
+if p(v30) then '<b>Sobrenomes e nomes: </b>'v30+|<br>|,'</td>' fi/
+if p(v35) then '<b>Cédula de identidade: </b>'v35+|<br>|,'</td>' fi/
+if p(v40) then '<b>Empresa/instituição de trabalho: </b>'v40+|<br>|,'</td>' fi/
+if p(v160) then '<b>E-mail: </b>'v160+|<br>|,'</td>' fi/

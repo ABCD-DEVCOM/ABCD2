@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      databases_configure_update.php
  * @desc:      Update the configuration of an bibliographic database
@@ -152,7 +152,7 @@ include("../common/institutional_info.php");
 	<div class="actions">
 <?php
 	$ayuda="../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/loans_databases_configure.html";
-    $backtoscript="databases.php?encabezado=s";
+    $backtoscript="adm_databases.php?encabezado=s";
     include "../common/inc_back.php";
 
 ?>

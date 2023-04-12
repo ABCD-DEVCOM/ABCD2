@@ -81,9 +81,9 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulacion/menu_mantenimiento.php
 	<tr>
 		<td>
 
-		<input type=hidden name=base value=<?php echo $arrHttp["base"]?>><font style="font-size:12px">
+		<input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
              <br>
-			<!--ul>
+			<ul>
 			<li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].":".$msgstr["trans"]?>","trans")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["trans"]?> (trans)</a></li>
 			<?php
 				if (!isset($reserve_active) or isset($reserve_active) and $reserve_active=="Y"){
@@ -91,10 +91,10 @@ echo "<font color=white>&nbsp; &nbsp; Script: circulacion/menu_mantenimiento.php
 			<?php } ?>
 			<li><a href='javascript:EnviarForma("inicializar","<?php echo $msgstr["mnt_ibd"].": ".$msgstr["suspen"]?>","suspml")'><?php echo $msgstr["mnt_ibd"].": ".$msgstr["suspen"]?> (suspml)</a></li>
 			<?php if (file_exists($db_path."logtrans/data/logtrans.mst")){
-				echo "<li><a href='javascript:EnviarForma(\"inicializar\",\"". $msgstr["mnt_ibd"].": ".$msgstr["logtrans"]."\",\"logtrans\")'>".$msgstr["mnt_ibd"].": ".$msgstr["logtrans"]." (logtrans)</a></li>";
+				echo "<!--<li><a href='javascript:EnviarForma(\"inicializar\",\"". $msgstr["mnt_ibd"].": ".$msgstr["logtrans"]."\",\"logtrans\")'>".$msgstr["mnt_ibd"].": ".$msgstr["logtrans"]." (logtrans)</a></li>";
 			}
 			?>
-			<!--li><a href='javascript:EnviarForma("inactivas","<?php echo $msgstr["susp_inac"]?>")'><?php echo $msgstr["susp_inac"]?></a></li-->
+			<li><a href='javascript:EnviarForma("inactivas","<?php echo $msgstr["susp_inac"]?>")'><?php echo $msgstr["susp_inac"]?></a></li-->
 
 			</ul-->
 

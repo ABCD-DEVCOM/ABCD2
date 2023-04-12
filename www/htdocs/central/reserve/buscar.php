@@ -779,7 +779,7 @@ if (!isset($arrHttp["base"])){
 
 			DibujarFormaBusqueda();
 ?>
-<form name="basedatos" action="../circulation/usuario_prestamos_presentar.php" method="post">
+<form name="basedatos" action="../circulation/panel_loans.php" method="post">
 <input type="hidden" name="base" value="users">
 <input type="hidden" name="usuario" value="<?php echo $_SESSION["user_reserve"]?>">
 <input type="hidden" name="reserve" value="S">

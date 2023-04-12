@@ -53,15 +53,15 @@ function checkSubmit(e,forma) {
    if(e && e.keyCode == 13) {
    		switch(forma){
    			case 1:
-   				EnviarForma('U')
+   				EnviarForma_status('U')
    				break
    			case 2:
-   				EnviarForma('I')
+   				EnviarForma_status('I')
    				break
    		}
    }
 }
-function EnviarForma(Proceso){
+function EnviarForma_status(Proceso){
 	if (Trim(document.usersearch.code.value)=="" && Trim(document.inventorysearch.inventory.value)==""){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]."/".$msgstr["inventory"]?>")
 		return
@@ -69,7 +69,7 @@ function EnviarForma(Proceso){
 	if (Proceso==""){
 		if (Trim(document.usersearch.code.value)!=""){
 			document.EnviarFrm.usuario.value=document.usersearch.usercode.value
-			document.EnviarFrm.action="usuario_prestamos_presentar.php"
+			document.EnviarFrm.action="panel_loans.php"
 		}else{
 			if (Trim(document.inventorysearch.inventory.value)!=""){
 				document.EnviarFrm.inventory.value=document.inventorysearch.inventory.value
@@ -80,7 +80,7 @@ function EnviarForma(Proceso){
 		switch (Proceso){
 			case "U":
 				document.EnviarFrm.usuario.value=document.usersearch.usercode.value
-				document.EnviarFrm.action="usuario_prestamos_presentar.php"
+				document.EnviarFrm.action="panel_loans.php"
 				break
 			case "I":
 				document.EnviarFrm.inventory.value=document.inventorysearch.inventory.value
@@ -89,6 +89,7 @@ function EnviarForma(Proceso){
 				break
 		}
 	}
+	document.EnviarFrm.target="_top"
 	document.EnviarFrm.submit()
 }
 
@@ -170,51 +171,38 @@ $ayuda="loan.html";
 include "../common/inc_div-helper.php";
 ?> 	
 
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
 
-<div class="middle list">
-	<div class="formContent">
-	<div class="searchBox" >
-	<form name=usersearch action="" method=post onsubmit="javascript:return false">
-	<input type=hidden name=Indice>
-	<table width=100%>
-		<td width=100>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["usercode"]?></strong>
-		</label>
-		</td><td>
-		<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="textEntry" onfocus="this.className = 'textEntry textEntryFocus';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,1)" />
+	<h4><?php echo $msgstr["usercode"]?></h4>
+	<form name="usersearch" action="" method="post" onsubmit="javascript:return false">
+	<input type="hidden" name="Indice">
 
-		<input type="button" name="index" value="<?php echo $msgstr["list"]?>" class="bt-blue" onClick="javascript:AbrirIndice('U',document.usersearch.usercode)" />
-		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma('U')"/>
-		</td></table>
+	<button type="button" name="index" title="<?php echo $msgstr["list"]?>" class="bt-blue col-2 p-2 m-0" onClick="AbrirIndice('U',document.usersearch.usercode)" /><i class="fa fa-search"></i></button>
+
+	<input type="text" name="usercode" id="code" value="<?php if (isset($arrHttp["usuario"])) echo $arrHttp["usuario"]?>" class="w-8 p-2 m-0" />
+
+	<button type="button" name="buscar" title="<?php echo $msgstr["search"]?>" class="bt-green w-10 mt-2" onclick="EnviarForma_status('U')" /><?php echo $msgstr["search"]?> <i class="fas fa-arrow-right"></i></button>
+	
 	</form>
-	</div>
-	<div class="spacer">&#160;</div>
+
+
 	<form name=inventorysearch action=numero_inventario.php method=post onsubmit="javascript:return false">
-<?php if (!isset($arrHttp["reserve"]) and !isset($arrHttp["reserve_ex"])){
-?>
 
-	<div class="searchBox">
-	<strong><i><?php echo $msgstr["ec_inv"]?></i></strong>
+	<?php if (!isset($arrHttp["reserve"]) and !isset($arrHttp["reserve_ex"])){ ?>
 
-	<table width=100%>
-		<td width=100>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["inventory"]?></strong>
-		</label>
-		</td><td>
-		<input type="text" name="inventory" id="searchExpr" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,2)" />
+	<p><?php echo $msgstr["ec_inv"]?></p>
 
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndice('I',document.inventorysearch.inventory)"/>
-		<input type="button" name="buscar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma('I')"/>
-		</td></table>
+		<h4><?php echo $msgstr["inventory"]?></h4>
 
+		<button type="button" name="index" title="<?php echo $msgstr["list"]?>" class="bt-blue col-2 p-2 m-0" onClick="AbrirIndice('I',document.inventorysearch.inventory)" /><i class="fa fa-search"></i></button>
 
-	</div>
+		<input type="text" name="inventory" id="searchExpr" value="" class="w-8 p-2 m-0" />
+
+		<button type="button" name="buscar" title="<?php echo $msgstr["search"]?>" class="bt-green w-10 mt-2" onclick="EnviarForma_status('I')" /><?php echo $msgstr["search"]?> <i class="fas fa-arrow-right"></i></button>
 
 <?php } ?>
-	<br><br><dd>
-		<?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"];
+	<small><?php echo $msgstr["clic_en"]." <i>".$msgstr["search"]."</i> ".$msgstr["para_c"]."</small>";
 
 		if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y")  {
 			echo "<p>";
@@ -240,6 +228,10 @@ include "../common/inc_div-helper.php";
 ?>
 </form>
 </div>
+
+	<div class="formContent col-9 m-2">
+		<iframe class="iframe w-10" height="600px" name="receiver" id="receiver" frameborder="0"></iframe>
+	</div>
 </div>
 
 <form name="EnviarFrm" method="post">

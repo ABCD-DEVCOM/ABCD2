@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - http://abcd-community.org
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      ec_include.php
  * @desc:      Display the user statment
@@ -25,48 +25,10 @@
  *
  * == END LICENSE ==
 */
-// se determina si el prÃ©stamo estÃ¡ vencido
-$FechaP=date('Ymd');
-function compareDate ($FechaP,$lapso_p){
-global $locales,$config_date_format;
-//Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
-	$f_date=explode('/',$config_date_format);
-	switch ($f_date[0]){
-		case "d":
-			$dia=substr($FechaP,0,2);
-			break;
-		case "m":
-			$mes=substr($FechaP,0,2);
-			break;
-	}
-	switch ($f_date[1]){
-		case "d":
-			$dia=substr($FechaP,3,2);
-			break;
-		case "m":
-			$mes=substr($FechaP,3,2);
-			break;
-	}
-	$year=substr($FechaP,6,4);
-	$exp_date=$year."-".$mes."-".$dia;
 
-	$ixTime=strpos($FechaP," ");
-	if ($lapso_p=="H") {
-		$exp_date.=substr($FechaP,$ixTime);
-		$todays_date = date("Y-m-d h:i A");
-	}else{
-		$todays_date = date("Y-m-d");
-	}
-	$today = strtotime($todays_date);
-	$expiration_date = strtotime($exp_date);
-	$diff=$expiration_date-$today;
-	return $diff;
 
-}//end Compare Date
-
-include ("dias_vencimiento.php");
 if (isset($arrHttp["usuario"])){
-// se presenta la  informaciï¿½n del usuario
+// se presenta la  informaci?n del usuario
 	$formato_us="";
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
 		$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp_web.pft";
@@ -76,7 +38,7 @@ if (isset($arrHttp["usuario"])){
 		$formato_us=$db_path."users/loans/".$_SESSION["lang"]."/loans_usdisp.pft";
 	    if (!file_exists($formato_us)) $formato_us=$db_path."users/loans/".$lang_db."/loans_usdisp.pft";
 	}
-   	$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path/par/users.par&Formato=".$formato_us;
+   	$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=".$db_path.$actparfolder."users.par&Formato=".$formato_us;
 	$contenido="";
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	if (isset($CentralPath) and $CentralPath!="")
@@ -84,6 +46,7 @@ if (isset($arrHttp["usuario"])){
 	else
 		include("../common/wxis_llamar.php");
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
+
 		$c=implode("\n",$contenido);
 		if (trim($c)=="")
 			$ec_output="**";
@@ -128,22 +91,22 @@ if (isset($arrHttp["usuario"])){
 				$prestamos[]=$linea;
 			}
 		}
-		$nv=0;   //nÃºmero de prÃ©stamos vencidos
+		$nv=0;   //número de préstamos vencidos
 		$np=0;   //Total libros en poder del usuario
 	   // echo "<pre>".print_r($politica);
 		if (count($prestamos)>0) {
-			$ec_output.= "\n<br><h4>".$msgstr["loans"]."</h4><hr>
-			<table width=100%  class='table mt-10'>";
+			$ec_output.= "\n<br><h3>".$msgstr["loans"]."</h3><hr>
+			<table class='table striped w-10'>";
 			if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
 				$ec_output.="<td> </td>";
 			}
 
-			$ec_output.="<th>".$msgstr["inventory"]."</th>";
+			$ec_output.="<tr><th>#</th><th>".$msgstr["inventory"]."</th>";
 			if (!isset($desde_opac)) $ec_output.="<th>".$msgstr["control_n"]."</th>";
 			$ec_output.="<th>".$msgstr["reference"]."</th>";
 			if (!isset($desde_opac) )
-				$ec_output.= "<th>".$msgstr["typeofitems"]."</th>";
-			$ec_output.="<th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["overdue"]."</th><th>".$msgstr["renewed"]."</th>\n";
+			$ec_output.= "<th>".$msgstr["typeofitems"]."</th>";
+			$ec_output.="<th>".$msgstr["loandate"]."</th><th>".$msgstr["devdate"]."</th><th>".$msgstr["overdue"]."</th><th>".$msgstr["renewed"]."</th><th>".$msgstr["estimated_fine"]."</th></tr>\n";
 	        $xnum_p=0;
 	        $total_politica=array();
 			foreach ($prestamos as $linea) {
@@ -155,10 +118,11 @@ if (isset($arrHttp["usuario"])){
 					// DE OTRA FORMA SE UBICA LA POLiTICA LEIDA DE LA TABLA
 					if (isset($p[17]) and trim($p[17])!=""){
 						$politica_este=explode('|',$p[17]);
-						$politica_str=$p[17];
+						$politica_str=$politica_este[7];
 					}else{
 						$politica_este=explode('|',$politica[strtoupper($p[3])][strtoupper($p[6])]);
 						$politica_str=$politica[strtoupper($p[3])][strtoupper($p[6])];
+			
 					}
 	                $lapso_p=$politica_este[5];
 	                $obj_ec=strtoupper($politica_este[0]);
@@ -176,7 +140,7 @@ if (isset($arrHttp["usuario"])){
 						$mora="0";
 						if ($dif<0) {
 							if ($lapso_p=="D"){
-								$mora=floor(abs($dif)/(60*60*24));    //cuenta de prÃ©stamos vencidos
+								$mora=floor(abs($dif)/(60*60*24));    //cuenta de préstamos vencidos
 							}else{
 								$fulldays=floor(abs($dif)/(60*60*24));
 								$fullhours=floor((abs($dif)-($fulldays*60*60*24))/(60*60));
@@ -184,9 +148,7 @@ if (isset($arrHttp["usuario"])){
 								$mora=$fulldays*24+$fullhours;
 								//echo "<br>** $fulldays, $fullhours , $fullminutes";
 							}
-						    $fuente="<b class='color-red'>";
-							// Valor da multa
-							//echo ($mora-1)*2;
+						    $fuente="<font color=red>";
 						    if ($mora>0){
 						    	if ($politica_este[12]!="Y") $nv=$nv+1;
 						    }
@@ -200,31 +162,31 @@ if (isset($arrHttp["usuario"])){
 						$np=$np+1;
 
 						if (!isset($ecta_web)  or (isset($ecta_web) and $ecta_web=="Y")){
-							$ec_output.="<td  bgcolor=white valign=top nowrap>";
+							$ec_output.="<td   valign=top nowrap>";
 							$ec_output.= '<div class="form-check">';
 							$ec_output.= "<input class=\"form-check-input\"  type=checkbox name=chkPr_".$xnum_p." value=$mora  id='".$p[0]."'>";
-							$ec_output.='<label class="form-check-label" for="flexCheckDefault"> '.$xnum_p.'</label></div>';
+							$ec_output.=' <label class="form-check-label" for="flexCheckDefault">'.$xnum_p.'</label></div>';
 						}
 						$ec_output.= "<input type=hidden name=politica value=\"".$politica_str."\"> \n";
 
 					}
 
                     	if (isset($_REQUEST["inventory_out"]) and strtoupper($_REQUEST["inventory_out"])==strtoupper($p[0])){
-                    		$inventory_out='<font color=red><strong>'.$p[0].'</strong></font>';
+                    		$inventory_out='<strong>'.$p[0].'</strong>';
                    	 	}else{
                     		$inventory_out=$p[0];
                   	  	}
 						$ec_output.="</td>";
 
-						$ec_output.="<td bgcolor=white nowrap align=center valign=top>".$inventory_out."</td>";
+						$ec_output.="<td nowrap align=center valign=top>".$inventory_out."</td>";
 					if (!isset($desde_opac)){
-						$ec_output.=	"<td bgcolor=white nowrap align=center valign=top>".$p[12]."(".$p[13].")</td>";
+						$ec_output.=	"<td nowrap align=center valign=top>".$p[12]."(".$p[13].")</td>";
 					}
-					$ec_output.="<td bgcolor=white valign=top>".$p[2];
+					$ec_output.="<td valign=top>".$p[2];
 					if (isset($p[19]) and $p[19]!="") $ec_output.= "<br><Font color=darkred>".$p[19]."</font>";
 					$ec_output.="</td>";
-					if (!isset($desde_opac)) $ec_output.="<td bgcolor=white align=center valign=top>". $p[3]. "</td>";
-					$ec_output.="<td bgcolor=white nowrap align=center valign=top>".$p[4]."</td><td nowrap bgcolor=white align=center valign=top>$fuente";
+					if (!isset($desde_opac)) $ec_output.="<td  align=center valign=top>". $p[3]. "</td>";
+					$ec_output.="<td nowrap align=center valign=top>".$p[4]."</td><td nowrap  align=center valign=top>$fuente";
 					if ($lapso_p=="D"){
 						 	$ixd=strpos($p[5]," ");
 						 	if ($ixd>0){
@@ -250,11 +212,20 @@ if (isset($arrHttp["usuario"])){
 						 }else{
 						 	$dias_vencido=0;
 						 }
-						 $ec_output.=  "</td><td align=center bgcolor=white valign=top>".$dias_vencido." ".$lapso_p."</td><td align=center bgcolor=white valign=top>". $p[11]."</td></tr>\n";
+
+						 if ($dias_vencido>0) {
+						 	$total_fine=$dias_vencido*$politica_str;
+						}else {
+							$total_fine=0;
+						}
+
+
+						 $ec_output.=  "</td><td align=center  valign=top>".$dias_vencido." ".$lapso_p."</td><td align=center  valign=top>". $p[11]."</td><td>".currency_local($total_fine)."</td></tr>\n";
+						 $ec_output.="<input type='hidden' name='real_fine' value='".$total_fine."'>";
 	        	}
 			}
 			$ec_output.= "</table>\n";
-
+			
 	        $ec_output.= "<script>
 			np=$np
 			nv=$nv

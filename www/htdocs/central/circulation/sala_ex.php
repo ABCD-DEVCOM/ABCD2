@@ -1,29 +1,11 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @file:      borrowers_configure.php
  * @desc:      Input the configuration of the borrowers (users) database
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
+ * @version:   2.2
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -272,30 +254,10 @@ include("../common/header.php");
 </style>
 <?php
 $encabezado="";
-include("../common/institutional_info.php");
 $a=explode('|',$_REQUEST["db_inven"]);
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".$msgstr["sala"]."
-			</div>
-			<div class=\"actions\">\n";
 
-				echo "<a href=\"sala.php?base=".$a[0]."\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>";
-				echo "
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"helper\">
-	<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/circulation/sala.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/circulation/sala.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp; <a href=http://abcdwiki.net/wiki/es/index.php?title=Pr%C3%A9stamo_en_sala target=_blank>abcdwiki.net</a>";
-echo "<font color=white>&nbsp; &nbsp; Script: circulation/sala_ex.php </font>";
-echo "</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\"> ";
+
+
 echo "\n<table bgcolor=#CCCCCC cellpadding=5 >";
 echo "<td>".$msgstr["inventory"]."</td><td>".$msgstr["control_n"]."</td><td>".$msgstr["reference"]."</td><td></td></tr>";
 $invent=explode("\n",trim(urldecode($arrHttp["inventory"])));
@@ -346,9 +308,4 @@ foreach ($invent as $arrHttp["inventory"]){
 		}
 	}
 }
-echo "</table></span>";
-echo "</div></div>";
-include("../common/footer.php");
-echo "</body></html>" ;
-
-?>
+echo "</table>";

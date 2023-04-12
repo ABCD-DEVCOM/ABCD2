@@ -47,9 +47,12 @@ include("../common/institutional_info.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 echo "<xmp>";
-$salida="; 0=domingo, 1=lunes, ...";
-$salida="currency=\"".$arrHttp["currency"]."\"\n";
-$salida.="fine=".$arrHttp["fine"]."\n";
+//$salida="; 0=domingo, 1=lunes, ...";
+$salida="";
+if (isset($arrHttp["currency"])) $salida.="currency=\"".$arrHttp["currency"]."\"\n";
+if (isset($arrHttp["decimals"])) $salida.="decimals=\"".$arrHttp["decimals"]."\"\n";
+if (isset($arrHttp["thousand"])) $salida.="thousand=\"".$arrHttp["thousand"]."\"\n";
+if (isset($arrHttp["fine"])) $salida.="fine=\"".$arrHttp["fine"]."\"\n";
 //  Se graba el horario 0=domingo, 1=lunes, ...
 $salida.= "[1]\n";
 if (isset($arrHttp["mon"])){

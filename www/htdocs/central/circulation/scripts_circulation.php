@@ -105,7 +105,9 @@ function DevolverRenovar(Proceso) {
 					atraso=Ctrl.value
 					fecha_d="<?php echo date("Ymd")?>"
 					politica=document.ecta.politica[i-1].value
+					
 					p=politica.split('|')
+					
 					if (Proceso=="R"){    // si es una renovación
 						res=EvaluarRenovacion(p,atraso,fecha_d,nMultas,i)
 						if (res)
@@ -130,7 +132,7 @@ function DevolverRenovar(Proceso) {
 		}
 }
 
-/*
+
 function PagarMultas(Accion){
 	Mfn=""
 	switch (nMultas){
@@ -156,7 +158,7 @@ function PagarMultas(Accion){
 	document.multas.Tipo.value="M"
 	document.multas.submit()
 }
-*/
+
 
 function DeleteSuspentions(Accion){
 	Mfn=""
@@ -253,19 +255,19 @@ function ImprimirSolvencia(){
 }
 </script>
 
-<form name=reservas method=post action=../reserve/delete_reserve.php>
-<input type=hidden name=Mfn_reserve>
-<input type=hidden name=Accion>
-<input type=hidden name=base_reserve>
-<input type=hidden name=ncontrol>
-<input type=hidden name=retorno value="<?php echo $script_php?>">
+<form name="reservas" method="post" action="../reserve/delete_reserve.php">
+<input type="hidden" name="Mfn_reserve">
+<input type="hidden" name="Accion">
+<input type="hidden" name="base_reserve">
+<input type="hidden" name="ncontrol">
+<?php if(isset($script_php))?> <input type="hidden" name="retorno" value="<?php echo $script_php;?>">
 <?php foreach ($arrHttp as $var=>$value)
 		if ($var!="Accion" and $var!="Mfn_reserve" and $var!="base_reserve" and $var!="retorno") echo "<input type=hidden name=$var value=\"".$value."\">\n";?>
 </form>
 
-<form name=eliminar method=post action=../reserve/delete_expression.php>
-<input type=hidden name=retorno value="<?php echo $script_php?>">
-<input type=hidden name=Expresion>
+<form name="eliminar" method="post" action="../reserve/delete_expression.php">
+<?php if(isset($script_php))?> <input type="hidden" name="retorno" value="<?php echo $script_php;?>">
+<input type="hidden" name="Expresion">
 <?php foreach ($arrHttp as $var=>$value) echo "<input type=hidden name=$var value=\"".$value."\">\n";?>
 
 </form>

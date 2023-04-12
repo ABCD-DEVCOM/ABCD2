@@ -4,7 +4,7 @@
 if (!isset($link_u)) $link_u="";
 if (isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_LOAN"])){
 ?>
-	<a class="bt-tool" href="../circulation/prestar.php?encabezado=s<?php echo $link_u?>" title="<?php echo $msgstr["loan"]?>">
+	<a class="bt-tool" href="../circulation/start-loans.php?encabezado=s<?php echo $link_u?>" title="<?php echo $msgstr["loan"]?>">
 		<img src="../../assets/svg/circ/ic_fluent_arrow_routing_24_regular.svg">
 	</a>
 	

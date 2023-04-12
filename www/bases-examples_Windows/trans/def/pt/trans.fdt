@@ -11,6 +11,7 @@ F|60|Data de devolução (real)|0|0|||X|||||||||0||0|0|||
 F|65|Hora de devolução (real)|0|0|||X|||||||||0||0|0|||
 F|70|Tipo de usuário|0|0|||X|||||||||0||0|0|||
 F|80|Tipo de Objeto|0|0|||X|||||||||0||0|0|||
+F|85|Valor base da multa|0|0|||X|||||||||0||0|0|||
 F|90|No. de Classificação|0|0|||X|||||||||0||0|0|||
 F|95|Número de controle do objeto|0|0|||X|||||||||0||0|0|||
 F|98|Base de dados|0|0|||X|||||||||0||0|0|||

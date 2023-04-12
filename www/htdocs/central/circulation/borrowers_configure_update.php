@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      borrowers_configure_update.php
  * @desc:      Saves the configuration of the borrowers (users) database
@@ -57,30 +57,40 @@ global $msgstr,$db_path;
 include("../common/header.php");
 $encabezado="";
 include("../common/institutional_info.php");
-echo "
-		<div class=\"sectionInfo\">
-			<div class=\"breadcrumb\">".
-				$msgstr["sourcedb"].". ".$msgstr["bconf"]."
-			</div>
-			<div class=\"actions\">\n";
+?>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+    <?php echo $msgstr["sourcedb"].". ".$msgstr["bconf"];?>
+	</div>
+	<div class="actions">
+<?php
+	$wiki_help="Configuración_del_sistema_de_préstamos";
+    $backtoscript="configure_menu.php?encabezado=s";
 
-				echo "<a href=\"configure_menu.php?encabezado=s\" class=\"defaultButton backButton\">
-					<img src=\"../../assets/images/defaultButton_iconBorder.gif\" alt=\"\" title=\"\" />
-					<span><strong>". $msgstr["back"]."</strong></span>
-				</a>
-			</div>
-			<div class=\"spacer\">&#160;</div>
-		</div>
-		<div class=\"middle form\">
-			<div class=\"formContent\">\n";
+	include "../common/inc_back.php";
 
+    
+
+?>
+    </div>
+    <div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+
+		<div class="middle form">
+			<div class="formContent">
+<?php
 $object_db=$arrHttp["base"];
 
 
 echo "<h5><font color=darkred>". $msgstr["uskey"]."</font></H5>";
+
 $Pft=$arrHttp["uskey"];
 $Pft.="\n".$arrHttp["usname"];
 $Pft.="\n".$arrHttp["uspft"];
+
 GuardarPft($Pft,$db_path.$arrHttp["base"]."/loans/".$_SESSION["lang"]."/loans_uskey.tab");
 
 echo "<h5><font color=darkred>". $msgstr["pft_uskey"]."</font></H5>";
@@ -107,5 +117,4 @@ if (isset($arrHttp["pft_usmore"])){
 
 ?>
 </div></div>
-</body>
-</html>
+<?php include("../common/footer.php");?>

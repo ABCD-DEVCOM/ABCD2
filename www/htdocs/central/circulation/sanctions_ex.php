@@ -1,29 +1,11 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @file:      sanctions_ex.php
  * @desc:      Stores suspenctions and fines
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
+ * @version:   2.2
 */
 ////////////////////////////////////////////////////////////////////////////////////
 //  Register suspensions and fines to a user
@@ -39,7 +21,10 @@ include("../config_loans.php");
 $lang=$_SESSION["lang"];
 include("../lang/prestamo.php");
 include("fecha_de_devolucion.php");
+//Horario de la biblioteca, unidades de multa, moneda
+include("locales_read.php");
 
+include("functions.php"); 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,7 +46,7 @@ document.onkeypress =
             : document.all ? event.keyCode
             : evt.keyCode;
 	if (c==13)
-		self.location.href='prestar.php?encabezado=s'
+		self.location.href='start-loans.php?encabezado=s'
     return true;
   };
 
@@ -104,30 +89,14 @@ function EnviarForma(){
 		alert("<?php echo $msgstr["missreason"]?>")
 		return
 	}
+	document.sanctions.target=top;
 	document.sanctions.submit();
 }
 
 </script>
-<?php  include("../common/institutional_info.php"); ?>
+<?php  //include("../common/institutional_info.php"); ?>
 
-<div class="sectionInfo">
-	<div class="breadcrumb">
-		<?php echo $msgstr["suspend"]."/".$msgstr["fine"]?>
-	</div>
-	<div class="actions">
-		
-	</div>
-<?php include("submenu_prestamo.php");?>
-</div>
-<div class="helper">
-<?php echo "<a href=../documentacion/ayuda.php?help=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>". $msgstr["help"]."</a>&nbsp &nbsp;";
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=". $_SESSION["lang"]."/circulation/sanctions.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
-?>
-	</div>
-<div class="middle form">
-	<div class="formContent">
+
 <form name="sanctions" method="post" action="sanctions_update.php" onSubmit="return false">
 	<input type="hidden" name="lang" value="<?php echo $_SESSION["lang"];?>">
 <?php
@@ -161,6 +130,7 @@ echo  "<font color=white>&nbsp; &nbsp; Script: sanctions_ex.php </font>";
 	echo "fecha_susp='".$fecha_exp."'";
 	echo "\n</script>\n";
 ?>
+
 <table>
 		<td>
 			<strong><?php echo $msgstr["sanctiontype"]?></strong>
@@ -226,4 +196,4 @@ foreach ($fp as $value) {
 </div>
 </div>
 
-<?php include("../common/footer.php"); ?>
+<?php //include("../common/footer.php"); ?>

@@ -28,7 +28,7 @@ include("../lang/prestamo.php");
 		}
 	}
 	if ($usuario!=""){
-		header("Location: usuario_prestamos_presentar.php?base=users&usuario=".$usuario."&inventory_out=".$arrHttp["inventory"]);
+		header("Location: panel_loans.php?base=users&usuario=".$usuario."&inventory_out=".$arrHttp["inventory"]);
 	}else{
 		header("Location: loan_return_reserve.php?base=users&error=S&inventory=".$arrHttp["inventory"]);
 	}

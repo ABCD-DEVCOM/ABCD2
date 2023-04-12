@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      renovar_ex.php
  * @desc:      Renews a loan
@@ -445,12 +445,12 @@ if (isset($arrHttp["vienede"])){
     		header("Location: ".$url);
     		break;
     	default:
-    		header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
+    		header("Location: panel_loans.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
 	}
 	die;
 }
 
-header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
+header("Location: panel_loans.php?renovado=S&encabezado=s&resultado=".urlencode($resultado)."$cu&rec_dev=$Mfn_rec"."&inventario=".$arrHttp["searchExpr"].$reserve);
 die;
 
 function Regresar($error,$OpacHttp){
@@ -467,7 +467,7 @@ global $arrHttp,$cod_usuario,$db_path,$lang;
     			break;
     		case "renovar":
     		default:
-    			header("Location: usuario_prestamos_presentar.php?renovado=S&encabezado=s&usuario=".$cod_usuario."$error");
+    			header("Location: panel_loans.php?renovado=S&encabezado=s&usuario=".$cod_usuario."$error");
 
     	}
     }

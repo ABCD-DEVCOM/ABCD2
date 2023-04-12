@@ -37,7 +37,7 @@ function EnviarForma(Proceso){
 	if (Proceso==""){
 		if (Trim(document.usersearch.code.value)!=""){
 			document.EnviarFrm.usuario.value=document.usersearch.usercode.value
-			document.EnviarFrm.action="usuario_prestamos_presentar.php"
+			document.EnviarFrm.action="panel_loans.php"
 		}else{
 			if (Trim(document.inventorysearch.inventory.value)!=""){
 				document.EnviarFrm.inventory.value=document.inventorysearch.inventory.value
@@ -48,7 +48,7 @@ function EnviarForma(Proceso){
 		switch (Proceso){
 			case "U":
 				document.EnviarFrm.usuario.value=document.usersearch.usercode.value
-				document.EnviarFrm.action="usuario_prestamos_presentar.php"
+				document.EnviarFrm.action="panel_loans.php"
 				break
 			case "I":
 				document.EnviarFrm.inventory.value=document.inventorysearch.inventory.value

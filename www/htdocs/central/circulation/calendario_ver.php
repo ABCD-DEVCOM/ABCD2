@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      calendario_ver.php
  * @desc:      Shows the calendar
@@ -61,7 +61,7 @@ function ultimoDia($mes,$ano){
 function mostrar_calendario($mes,$ano){
 global $arrHttp,$msgstr;
 
-	echo"<form name=tabla  method=post action=calendario.php>";
+	echo"<form name=tabla  method=post action=adm_calendario.php>";
 	echo "<input type=hidden name=cadena value=''>";
 
 	echo "<input type=hidden name=mes value=''>";

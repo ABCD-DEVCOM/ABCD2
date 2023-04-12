@@ -1,5 +1,6 @@
 currency="USD"
-fine=2.00
+decimals="2"
+thousand="."
 [1]
 from=8:00
 f_ampm=am
@@ -26,8 +27,4 @@ f_ampm=am
 to=10:00
 t_ampm=pm
 [6]
-from=8:00
-f_ampm=am
-to=12:00
-t_ampm=am
 [0]

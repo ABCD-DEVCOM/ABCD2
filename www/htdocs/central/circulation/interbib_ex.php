@@ -1,8 +1,8 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
- * @file:      usuario_prestamos_presentar.php
+ * @file:      panel_loans.php
  * @desc:      Analyzes the user and item for establishing the loan policy
  * @author:    Guilda Ascencio
  * @since:     20091203
@@ -722,7 +722,8 @@ if ($xnum_p==0 and $nmulta==0 and $nsusp==0){
 ?>
 </div></div>
 <?php
-include("../common/footer.php");?>
+include("../common/footer.php");
+include("functions.php");?>
 </body>
 </html>
 
@@ -736,24 +737,6 @@ if (isset($arrHttp["error"])){
 }  //END FUNCTION PRODUCEOUTPUT
 
 
-
-function ImprimirRecibo($recibo_arr){
-	$salida="";
-	foreach ($recibo_arr as $Recibo){
-		$salida=$salida.$Recibo;
-	}
-	$salida=str_replace('/','\/',$salida);
-?>
-<script>
-	msgwin=window.open("","recibo","width=400, height=300, scrollbars, resizable")
-	msgwin.document.write("<?php echo $salida?>")
-	msgwin.document.close()
-	msgwin.focus()
-	msgwin.print()
-	msgwin.close()
-</script>
-<?php
-}
 
 ?>
 <form name=reservacion method=post action="../reserve/reservar_ex.php">

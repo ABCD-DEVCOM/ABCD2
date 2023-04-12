@@ -1,30 +1,14 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @file:      devolver.php
  * @desc:      Ask for the item to be returned
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
+ * @version:   2.2
  *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
 */
+
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -41,22 +25,9 @@ include("../common/header.php");
 if (!isset($uskey)) $uskey="";
 $ec_output="";
 
-function ImprimirRecibo($Recibo){
-$Recibo=str_replace("</",'<\/',$Recibo);
-?>
 
-<script>
-	Recibo="<?php echo $Recibo?>"
-	msgwin=window.open("","recibo","width=400, height=300, scrollbars, resizable")
-	msgwin.document.write(Recibo)
-	msgwin.document.close()
-	msgwin.focus()
-	msgwin.print()
-	msgwin.close()
-</script>
-<?php
-}
 include("../circulation/scripts_circulation.php");
+include("../circulation/functions.php");
 ?>
 <script>
 document.onkeypress =
@@ -154,27 +125,21 @@ $ayuda="devolver.html";
 include "../common/inc_div-helper.php";
 ?>
 
-<div class="middle list">
-<div class="formContent">
-	<div class="searchBox">
-	<form name=inventorysearch action=devolver_ex.php method=post onsubmit="javascript:return false">
-	<table>
-		<tr>
-		<td width=100 valign=top>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["inventory"]?></strong>
-		</label>
-		</td><td valign=top>
-		<textarea name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" /></textarea>
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+
+	<form name="inventorysearch" action="devolver_ex.php" method="post" onsubmit="javascript:return false">
+	<h4><?php echo $msgstr["inventory"]?></h4>
+
+		<button type="button" name="list" title="<?php echo $msgstr["list"]?>" class="bt-blue w-10" onclick="javascript:AbrirIndiceAlfabetico();return false"/><i class="fa fa-search"></i> <?php echo $msgstr["list"]?></button>
+		<textarea name="inventory" id="inventory" value="" class="w-10" /></textarea>
         <input type=hidden name=base value=trans>
         <input type=hidden name=searchExpr>
-        </td><td valign=top>
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
-		<input type="submit" name="reservar" value="<?php echo $msgstr["return"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
-		</td></table>
-		<?php echo $msgstr["clic_en"]." <i>[".$msgstr["return"]."]</i> ".$msgstr["para_c"]?>
+		<button type="submit" name="reservar" title="<?php echo $msgstr["return"]?>" class="bt-green w-10" onclick="javascript:EnviarForma()"/><?php echo $msgstr["return"]?> <i class="fas fa-arrow-right"></i></button>
+		<small><?php echo $msgstr["clic_en"]." <i>[".$msgstr["return"]."]</i> ".$msgstr["para_c"]?></small>
 	</form>
 	</div>
+	<div class="formContent col-9 m-2">
 <?php
 if (isset($arrHttp["usuario"])){
    // include("ec_include.php");
@@ -185,7 +150,7 @@ if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp
 	foreach ($inven as $inventario){
 		if (trim($inventario)!=""){
 			$Mfn=trim($inventario);
-			echo "<p><font color=red>". $inventario." ".$msgstr["item"].": ".$msgstr["copynoexists"]." </font>";
+			echo "<h3 class='color-green'>". $inventario." ".$msgstr["item"].": ".$msgstr["copynoexists"]." </h3>";
 		}
 	}
 
@@ -195,7 +160,7 @@ if (isset($arrHttp["devuelto"]) and $arrHttp["devuelto"]=="S" and isset($arrHttp
 	$lista_mfn=explode(';',$arrHttp["resultado"]);
 	foreach ($lista_mfn as $Mfn){
 		if (trim($Mfn)!=""){
-			echo "<p><font color=red>".$msgstr["returned"]." ".$msgstr["item"].":  </font>";
+			echo "<h3 class='color-green'>".$msgstr["returned"]." ".$msgstr["item"].":  </h3>";
 			$Formato="v10,' ',mdl,v100'<br>'";
 			$Formato="&Pft=$Formato";
 			$IsisScript=$xWxis."leer_mfnrange.xis";
@@ -256,9 +221,10 @@ if (isset($arrHttp["rec_dev"])) {
 			}
 		}
 	}
-	if ($recibo!="") {
-		ImprimirRecibo($recibo);
-	}
+
+	$recibo_arr=$recibo;
+	if (!empty($recibo_arr)) ImprimirRecibo($recibo);
+
 }
 
 if (isset($arrHttp["error"])){
@@ -267,8 +233,10 @@ if (isset($arrHttp["error"])){
 			</script>
 	";
 }
-echo "</div>";
-echo "</div>";
-include("../common/footer.php");
-
 ?>
+
+	</div>
+	</div>
+</div>
+
+<?php include("../common/footer.php"); ?>
