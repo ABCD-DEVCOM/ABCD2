@@ -20,7 +20,7 @@ include("../lang/prestamo.php");
 include("grabar_log.php");
 
 function ProcesarRegistro($Accion,$Mfn,$trans){
-global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
+global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$actparfolder;
 	switch ($Accion){
 		case "P":   //PAGAR MULTA
 			$Accion="2";
@@ -30,13 +30,13 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
 			$Accion="1";
 			switch ($trans){
 				case "M":
-					$trans="K";   //Cancelaci�n de multa
+					$trans="K";   //Cancelacion de multa
 					break;
 				case "S":
-					$trans="O";   //Cancelaci�n de suspensi�n
+					$trans="O";   //Cancelacion de suspensi�n
 					break;
 				case "N":
-					$trans="O";   //Cancelaci�n de la nota
+					$trans="O";   //Cancelacion de la nota
 					break;
 			}
 			break;
@@ -45,9 +45,9 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
 	$ValorCapturado.="<110>".$_SESSION["login"]."^d".date("Ymd h:i A")."</110>";
 	$ValorCapturado=urlencode($ValorCapturado);
 	$IsisScript=$xWxis."actualizar_registro.xis";
-	$query = "&base=suspml&cipar=$db_path"."par/suspml.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
+	$query = "&base=suspml&cipar=".$db_path.$actparfolder."suspml.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&Opcion=actualizar&ValorCapturado=".$ValorCapturado;
 
-	//SE GRABA EL LOG CON LA CANCELACI�N DE LA MULTA O LA SUSPENSI�N
+	//SE GRABA EL LOG CON LA CANCELACION DE LA MULTA O LA SUSPENSI�N
 	if (file_exists($db_path."logtrans/data/logtrans.mst")){
 		$datos_trans["CODIGO_USUARIO"]=$arrHttp["usuario"];
 		$ValorCapturado=GrabarLog($trans,$datos_trans,$Wxis,$xWxis,$wxisUrl,$db_path,"RETORNAR");
@@ -58,10 +58,10 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp;
 }
 
 function EliminarRegistro($Mfn,$trans){
-global $db_path,$Wxis,$xWxis,$wxisUrl, $arrHttp;
-	$query = "&base=suspml&cipar=$db_path"."par/suspml.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=eliminar";
+global $db_path,$Wxis,$xWxis,$wxisUrl, $arrHttp,$actparfolder;
+	$query = "&base=suspml&cipar=".$db_path.$actparfolder."suspml.par&login=".$_SESSION["login"]."&Mfn=" . $Mfn."&Opcion=eliminar";
 	$IsisScript=$xWxis."eliminarregistro.xis";
-	//SE GRABA EL LOG CON LA CANCELACI�N DE LA MULTA O LA SUSPENSI�N
+	//SE GRABA EL LOG CON LA CANCELACION DE LA MULTA O LA SUSPENSI�N
 	if (file_exists($db_path."logtrans/data/logtrans.mst")){
 		switch($trans){
 			case "M":
@@ -104,5 +104,5 @@ if (isset($arrHttp["reserve"])){
 }else{
 	$reserve="";
 }
-header("Location: usuario_prestamos_presentar.php?base=users&usuario=".$arrHttp["usuario"].$reserve);
+header("Location: panel_loans.php?base=users&usuario=".$arrHttp["usuario"].$reserve);
 ?>
