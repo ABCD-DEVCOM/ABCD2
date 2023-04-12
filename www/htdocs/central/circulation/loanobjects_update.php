@@ -26,7 +26,7 @@ include("../common/institutional_info.php");
 	<div class="actions">
 
 		<?php
-		$backtoscript="loanobjects.php?encabezado=s";
+		$backtoscript="configure_menu.php?encabezado=s";
 		include "../common/inc_back.php";
 		?>
 	</div>

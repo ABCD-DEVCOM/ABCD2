@@ -28,6 +28,7 @@ function EnviarForma(){
 		alert("<?php echo $msgstr["falta"]." ".$msgstr["inventory"]." / ".$msgstr["usercode"]?>")
 		return
 	}
+    document.inventorysearch.target="receiver"
     document.inventorysearch.submit()
 }
 
@@ -58,27 +59,25 @@ $ayuda="item_history.html";
 include "../common/inc_div-helper.php";
 ?> 	
 
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
 
 <form name=inventorysearch action=item_history_ex.php method=post onsubmit="javascript:return false">
 <input type=hidden name=Opcion value=prestar>
-<div class="middle list">
-	<div class="formContent">
-	<div class="searchBox">
-	<table width=100% border=0>
-		<td width=150>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["inventory"]?></strong>
-		</label>
-		</td><td>
-		<input type="text" name="inventory" id="inventory" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';"  onKeyPress="return checkSubmit(event,1)" />
-		<input type="submit" name="reservar" value="<?php echo $msgstr["search"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
-		</td>
-	</table>
+		<h4><?php echo $msgstr["inventory"]?></h4>
+		<input type="text" name="inventory" id="inventory" value="" class="w-10" onKeyPress="return checkSubmit(event,1)" />
+
+		<button type="submit" name="reservar" title="<?php echo $msgstr["loan"]?>" class=" bt-green w-10" onclick="javascript:EnviarForma()"/> <?php echo $msgstr["search"]?> <i class="fas fa-arrow-right"></i></button>
+
+	</form>
+
+	</div>
+	<div class="formContent col-9 m-2">
+		<iframe class="iframe w-10" height="600px" name="receiver" id="receiver" frameborder="0"></iframe>
+	</div>
 	</div>
 </div>
-</div>
 
-</form>
-<?php include("../common/footer.php");
 
-?>
+
+<?php include("../common/footer.php"); ?>

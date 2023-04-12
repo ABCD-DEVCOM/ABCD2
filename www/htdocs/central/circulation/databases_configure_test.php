@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      databases_configure_test.php
  * @desc:      Tests the configuration of an bibliographic database
@@ -37,7 +37,7 @@ $lang=$_SESSION["lang"];
 include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 
-foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
+//foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
 
 function LeerRegistro($Pft,$base){
 global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
@@ -52,6 +52,7 @@ global $arrHttp,$Wxis,$xWxis,$wxisUrl,$db_path;
 }
 
 include("../common/header.php");
+include("../common/institutional_info.php");
 echo "<div class=\"sectionInfo\">
 			<div class=\"breadcrumb\">".
 				$msgstr["sourcedb"].". ".$msgstr["loan"].". ".$msgstr["configure"]."

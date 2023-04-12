@@ -20,7 +20,7 @@ function EnviarFormaUsuario(){
 		return
 	}
 	document.EnviarFrm.usuario.value=document.usersearch.usercode.value
-	document.EnviarFrm.action="usuario_prestamos_presentar.php"
+	document.EnviarFrm.action="panel_loans.php"
 	document.EnviarFrm.submit()
 }
 

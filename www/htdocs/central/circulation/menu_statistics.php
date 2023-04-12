@@ -1,6 +1,6 @@
 <?
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      menu_statistics.php
  * @desc:      Statistics menu for circulation module

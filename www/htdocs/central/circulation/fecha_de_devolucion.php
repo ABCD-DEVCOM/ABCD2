@@ -1,6 +1,6 @@
 <?php
 /**
- * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
+ * @program:   ABCD - ABCD-Central - https://abcd-community.org/
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      fecha_de_devolucion.php
  * @desc:      Return date calculation

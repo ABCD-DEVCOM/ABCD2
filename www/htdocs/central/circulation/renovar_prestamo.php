@@ -143,7 +143,7 @@ global $arrHttp,$cod_usuario;
 	else
 		$cu="&usuario=$cod_usuario";
 	if (isset($arrHttp["vienede"])){
-		header("Location: usuario_prestamos_presentar.php?encabezado=s$error$cu");
+		header("Location: panel_loans.php?encabezado=s$error$cu");
 	}else{
 		header("Location: renovar.php?encabezado=s$error$cu");
 	}

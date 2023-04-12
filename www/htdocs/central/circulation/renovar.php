@@ -85,42 +85,42 @@ include "../common/inc_div-helper.php";
 ?>
 
 
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
 
-<div class="middle list">
-<div class="formContent">
-	<div class="searchBox">
 	<form name=inventorysearch action=renovar_ex.php method=post onsubmit="javascript:return false">
 	<input type=hidden name=vienede value="renovar">
-	<table width=100%>
 		<?php
 if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 			echo "<tr><td><label for=lappso><strong>".$msgstr["days"]."</strong></td><td><input type=text name=lpn size=4></td></tr>";
 		}
 ?>
-		<td width=100>
-		<label for="searchExpr">
-			<strong><?php echo $msgstr["inventory"]?></strong>
-		</label>
-		</td><td>
-		<input type="text" name="searchExpr" id="searchExpr" value="" class="textEntry" onfocus="this.className = 'textEntry';"  onblur="this.className = 'textEntry';" />
+		<h4><?php echo $msgstr["inventory"]?></h4>
+
+		<button type="button" name="list" title="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndiceAlfabetico();return false"/><i class="fa fa-search"></i></button>
+		<input type="text" name="searchExpr" id="searchExpr" value="" class="col-9 p-2 m-0" />
         <input type=hidden name=base value=trans>
         <?php if (isset($arrHttp["usuario"])) echo "<input type=hidden name=usuario value=".$arrHttp["usuario"].">"?>
-		<input type="button" name="list" value="<?php echo $msgstr["list"]?>" class="bt-blue" onclick="javascript:AbrirIndiceAlfabetico();return false"/>
-		<input type="submit" name="renovar" value="<?php echo $msgstr["renew"]?>" class="bt-green" onclick="javascript:EnviarForma()"/>
-		</td>
+
+		<button type="submit" name="renovar" title="<?php echo $msgstr["renew"]?>" class="bt-green w-10 mt-2" onclick="javascript:EnviarForma()"/><?php echo $msgstr["renew"]?> <i class="fas fa-arrow-right"></i></button>
+	
 
 
-		</table>
-		<?php echo $msgstr["clic_en"]." <i>[".$msgstr["renew"]."]</i> ".$msgstr["para_c"]?>
+		<small><?php echo $msgstr["clic_en"]." <i>[".$msgstr["renew"]."]</i> ".$msgstr["para_c"]?></small>
 	</form>
-	</div>
-</div>
-</div>
+
 <form name=EnviarFrm method=post>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
 <input type=hidden name=usuario value="">
 
 </form>
+
+	</div>
+	<div class="formContent col-9 m-2">
+	</div>
+	</div>
+</div>
+
 <?php
 include("../common/footer.php");
 
