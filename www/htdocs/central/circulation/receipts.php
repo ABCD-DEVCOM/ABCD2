@@ -97,8 +97,9 @@ function Editar(Pft){
 	$ayuda="/circulation/loans_typeofusers.html";
     $backtocancelscript="configure_menu.php?encabezado=s";
 	$savescript="javascript:Guardar()";
+	include "../common/inc_save.php";
     include "../common/inc_cancel.php";
-    include "../common/inc_save.php";
+
 
 ?>
     </div>
