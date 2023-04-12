@@ -1,29 +1,28 @@
 <?php
-/**
- * 2022-07-14 rogercgui add $actparfolder variable; 
- * 
- * 
- * 
- **/	
+// se determina si la suspensión está vencida
 
-// se determina si la suspensiï¿½n estï¿½ vencida
+//include "functions.php";
 
 function PrepararFechaSanciones($FechaP){
-global $locales,$config_date_format;
+global $locales,$config_date_format;;
 //Se convierte la fecha al formato de fecha local
 	$df=explode('/',$config_date_format);
 	switch ($df[0]){
+		case "DD":
 		case "d":
 			$dia=substr($FechaP,6,2);
 			break;
+		case "MM":
 		case "m":
 			$mes=substr($FechaP,6,2);
 			break;
 	}
 	switch ($df[1]){
+		case "DD":
 		case "d":
 			$dia=substr($FechaP,4,2);
 			break;
+		case "MM":
 		case "m":
 			$mes=substr($FechaP,4,2);
 			break;
@@ -33,7 +32,6 @@ global $locales,$config_date_format;
 }
 
 function CalculaVencimiento ($FechaP){
-global $locales,$arrHttp,$CentralPath;
 //Se convierte la fecha a formato ISO (yyyymmaa) utilizando el formato de fecha local
 	$dia=substr($FechaP,6,2);
 	$mes=substr($FechaP,4,2);
@@ -48,8 +46,7 @@ global $locales,$arrHttp,$CentralPath;
 }//end Compare Date
 
 // se leen las suspensiones
-	global $locales;
-	$sanctions_output="";
+	$sanctions_output="" ;
 	$formato_obj="v1'|',v10'|',v20'|',v30'|',v40'|',v50'|',v60'|',mhl,v100'|',f(mfn,1,0),'|',v110,'|'v120/";
 	if (isset($Expr_b)){
 		$Expresion=$Expr_b;
@@ -60,31 +57,24 @@ global $locales,$arrHttp,$CentralPath;
 			$Expresion="(TR_S_".$arrHttp["usuario"]." or "."TR_M_".$arrHttp["usuario"]." or "."TR_N_".$arrHttp["usuario"].") and ST_0";
 		}
    	}
-
-   	$query = "&Expresion=$Expresion"."&base=suspml&cipar=$db_path".$actparfolder."suspml.par&Pft=".$formato_obj;
+   	$query = "&Expresion=$Expresion"."&base=suspml&cipar=$db_path"."par/suspml.par&Pft=".$formato_obj;
 	$IsisScript=$xWxis."cipres_usuario.xis";
-	if (isset($CentralPath) and $CentralPath!="")
-		include($CentralPath."common/wxis_llamar.php");
-	else
-		include("../common/wxis_llamar.php");
+	include("../common/wxis_llamar.php");
 	$susp=array();
-	$susp_historico=array();
 	$multa=array();
 	$nota=array();
-	$nsusp=0;
 	foreach ($contenido as $linea){
 		$p=explode('|',$linea);
 		switch($p[0]){
 			case "S":
-				if (isset($p[6])){
-					if ($p[1]==0){
-						$dif= CalculaVencimiento ($p[6]);   // se verifica si la suspensiï¿½n estï¿½ vigente
-						if ($dif>=0){
-							$susp[]=$linea;
-							$nsusp=$nsusp+1;
-						}else{
-							if (isset($Expr_b)){
-								$susp_historico[]=$linea;
+				if (isset($Expr_b)){
+					$susp[]=$linea;
+				}else{
+					if (isset($p[6])){
+						if ($p[1]==0){
+							$dif= CalculaVencimiento ($p[6]);   // se verifica si la suspensión está vigente
+							if ($dif>=0){
+								$susp[]=$linea;
 							}
 						}
 					}
@@ -102,10 +92,10 @@ global $locales,$arrHttp,$CentralPath;
 				break;
 		}
 	}
-	if (count($susp)+count($susp_historico)>0) {
-		$susp_total=array_merge($susp_historico, $susp);
-		$sanctions_output.= "<br><strong>".$msgstr["suspensions"]."</strong>
-		<table width=95% bgcolor=#cccccc> ";
+	$nsusp=0;
+	if (count($susp)>0) {
+		$sanctions_output.= "<h3>".$msgstr["suspensions"]."</h3><hr>
+		<table class='table striped w-10'> ";
 		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELSUS"]))
 		if (!isset($Expr_b)) $sanctions_output.="<th></th>";
 		$sanctions_output.= "<th>".$msgstr["date"]."</th><th>".$msgstr["cause"]."</th><th>".$msgstr["expire"]."</th><th>".$msgstr["comments"]."</th>";
@@ -114,23 +104,26 @@ global $locales,$arrHttp,$CentralPath;
 		}else{
 			$sanctions_output.="<th>".$msgstr["operator_date_created"]."</th>";
 			if (isset($Expr_b))
-				$sanctions_output.= "<th>Situaciï¿½n</th><th>Cancelado/Pagado</th>";
+				$sanctions_output.= "<th>Situación</th><th>Cancelado/Pagado</th>";
 		}
 		//$sanctions_output.=
-		foreach ($susp_total as $linea) {
+		foreach ($susp as $linea) {
 			$p=explode("|",$linea);
+			$nsusp=$nsusp+1;
 			$fecha1=PrepararFechaSanciones($p[3]);
 			$fecha2=PrepararFechaSanciones($p[6]);
 			$sanctions_output.=  "<tr>";
 			if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELSUS"])){
 				if (!isset($Expr_b)) $sanctions_output.= "<td bgcolor=white><input type=checkbox name=susp value=".$p[8]."></td>";
 			}
-			$sanctions_output.= "<td bgcolor=white nowrap align=center>".$fecha1."</td><td bgcolor=white nowrap align=center>".$p[4]."</td><td bgcolor=white nowrap align=center>".$fecha2."<td bgcolor=white>".$p[7]."</td>";
+			$sanctions_output.= "<td nowrap align=center>".$fecha1."</td>";
+			$sanctions_output.="<td nowrap align=center>".$p[4]."</td>";
+			$sanctions_output.="<td nowrap align=center>".$fecha2."<td>".$p[7]."</td>";
             if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
            	}else{
-           		$sanctions_output.="<td bgcolor=white nowrap align=center>".$p[10]."</td>";
+           		$sanctions_output.="<td nowrap align=center>".$p[10]."</td>";
            		if (isset($Expr_b))
-           			$sanctions_output.="<td bgcolor=white nowrap align=center>".$p[1]."</td><td bgcolor=white nowrap align=center>".$p[9]."</td>";
+           			$sanctions_output.="<td nowrap align=center>".$p[1]."</td><td nowrap align=center>".$p[9]."</td>";
            	}
            	$sanctions_output.= "</tr>";
 
@@ -141,8 +134,8 @@ global $locales,$arrHttp,$CentralPath;
 		}else{
 			if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELSUS"])){
 				if (!isset($Expr_b)) {
-					$sanctions_output.="<a href=javascript:DeleteSuspentions('C')>".$msgstr["cancel"].'</a> &nbsp; | &nbsp; ';
-					$sanctions_output.="<a href=javascript:DeleteSuspentions('D')>".$msgstr["delete"].'</a><br>';
+					$sanctions_output.="<a class='bt bt-red' href=javascript:DeleteSuspentions('C')> <i class=\"far fa-window-close\"></i>  ".$msgstr["cancel"].'</a>';
+					$sanctions_output.="<a class='bt bt-default' href=javascript:DeleteSuspentions('D')> <i class=\"fas fa-trash\"></i> ".$msgstr["delete"].'</a><br>';
 				}
 			}
         }
@@ -155,16 +148,16 @@ global $locales,$arrHttp,$CentralPath;
 
 	$nmulta=0;
 	if (count($multa)>0) {
-		$sanctions_output.=  "<br><strong>".$msgstr["fine"]."</strong><table width=95% bgcolor=#cccccc>";
+		$sanctions_output.=  "<h3>".$msgstr["fine"]."</h3><hr><table class='w-10 table striped'>";
 		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELFINE"]))
 		if (!isset($Expr_b)) $sanctions_output.="<th></th>";
 		$sanctions_output.="<th>".$msgstr["date"]."</th><th>".$msgstr["concept"]."</th><th>".$msgstr["amount"]."</th><th>".$msgstr["comments"]."</th>";
 		if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
 
 		}else{
-			$sanctions_output.="<th>".$msgstr["operator_date_created"]."</th>";
+			if (isset($msgstr["operator_date_created"])) $sanctions_output.="<th>".$msgstr["operator_date_created"]."</th>";
 			if (isset($Expr_b))
-				$sanctions_output.= "<th>Situaciï¿½n</th><th>Cancelado/Pagado</th>";
+				$sanctions_output.= "<th>Situación</th><th>Cancelado/Pagado</th>";
 		}
 		foreach ($multa as $linea) {
 			if (trim($linea)!=""){
@@ -174,14 +167,21 @@ global $locales,$arrHttp,$CentralPath;
 					$fecha1=PrepararFechaSanciones($p[3]);
 					$sanctions_output.= "<tr>";
 					if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELFINE"]))
-						if (!isset($Expr_b))  $sanctions_output.="<td bgcolor=white><input type=checkbox name=pay value=".$p[8]."></td>";
-					$sanctions_output.="<td bgcolor=white nowrap align=center>".$fecha1."</td><td bgcolor=white nowrap align=center>".$p[4]."</td><td bgcolor=white nowrap align=center>".$p[5]."<td bgcolor=white>".$p[7]."</td>";
-
+						if (!isset($Expr_b))  
+					$sanctions_output.="<td><input type=checkbox name=pay value=".$p[8]."></td>";
+					$sanctions_output.="<td nowrap align=center>".$fecha1."</td>";
+					//Concept
+					$sanctions_output.="<td nowrap align=center>".$p[4]."</td>";
+					//Value
+					$sanctions_output.="<td nowrap align=center>".currency_local($p[5])."</td>";
+					// Ref
+					$sanctions_output.="<td>".$p[7]."</td>";
+						
 	            	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ecta_web"){
 	            	}else{
-	            		$sanctions_output.="<td bgcolor=white nowrap align=center>".$p[10]."</td>";
+	            		$sanctions_output.="<td nowrap align=center>".$p[10]."</td>";
            				if (isset($Expr_b))
-           					$sanctions_output.="<td bgcolor=white nowrap align=center>".$p[1]."</td><td bgcolor=white nowrap align=center>".$p[9]."</td>";
+           					$sanctions_output.="<td nowrap align=center>".$p[1]."</td><td nowrap align=center>".$p[9]."</td>";
 	            	}
 	            	$sanctions_output.= "</tr>";
 	            }
@@ -193,9 +193,9 @@ global $locales,$arrHttp,$CentralPath;
 		}else{
 			if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELFINE"])){
         		if (!isset($Expr_b)) {
-	        		$sanctions_output.="<a class='bt bt-green' href=javascript:PagarMultas('P')>".$msgstr["pay"]."</a>" ;
-	        		$sanctions_output.="<a class='bt bt-gray' href=javascript:PagarMultas('C')>".$msgstr["cancel"]."</a>" ;
-	        		$sanctions_output.="<a class='bt bt-red' href=javascript:PagarMultas('D')>".$msgstr["delete"]."</a>";
+	        		$sanctions_output.="<a class='bt bt-green m-2' href=javascript:PagarMultas('P')> <i class=\"fas fa-dollar-sign\"></i> ".$msgstr["pay"]."</a>";
+	        		$sanctions_output.="<a class='bt bt-red m-2' href=javascript:PagarMultas('C')> <i class=\"far fa-window-close\"></i> 	".$msgstr["cancel"]."</a>";
+	        		$sanctions_output.="<a  class='bt bt-default m-2' href=javascript:PagarMultas('D')> <i class=\"fas fa-trash\"></i> ".$msgstr["delete"]."</a>";
 	       		}
     		}
     	}
@@ -205,7 +205,7 @@ global $locales,$arrHttp,$CentralPath;
 //se procesan las notas
     $nnota=0;
 	if (count($nota)>0) {
-		$sanctions_output.=  "<br><strong>".$msgstr["comments"]."</strong><table width=95% bgcolor=#cccccc>";
+		$sanctions_output.=  "<br><strong>".$msgstr["comments"]."</strong><table class='table striped'>";
 		if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"])  or isset($_SESSION["permiso"]["CIRC_DELFINE"]))
 			if (!isset($Expr_b)) $sanctions_output.="<th></th>";
 		$sanctions_output.="<th>".$msgstr["date"]."</th><th>".$msgstr["concept"]."</th><th>".$msgstr["comments"]."</th>";
@@ -229,35 +229,5 @@ global $locales,$arrHttp,$CentralPath;
     	}
     	$sanctions_output.= "\n<script>nNota=".$nnota."</script>";
 	}
-
 	if (($nmulta!=0 or $nsusp!=0) and (isset($arrHttp["inventory"]) or isset($arrHttp["reserve"]))) $ec_output.="<font color=red><strong>".$msgstr["pending_sanctions"]."</strong></font>";
 ?>
-
-<script type="text/javascript">
-
-function PagarMultas(Accion){
-	Mfn=""
-	switch (nMultas){
-		case 1:
-			if (document.ecta.pay.checked){
-            	Mfn=document.ecta.pay.value
-			}
-			break
-		default:
-			for (i=0;i<nMultas;i++){
-				if (document.ecta.pay[i].checked){
-					Mfn+=document.ecta.pay[i].value+"|"
-				}
-			}
-			break
-	}
-	if (Mfn==""){
-		alert("<?php echo $msgstr["selfine"]?>")
-		return
-	}
-	document.multas.Mfn.value=Mfn
-	document.multas.Accion.value=Accion
-	document.multas.Tipo.value="M"
-	document.multas.submit()
-}	
-</script>
