@@ -1,7 +1,21 @@
-'<table> <td width=150><img src="../central/common/show_image.php?image=images/'v620'&base=users" style="max-width: 150px;"></td><td>' "<strong>"v30,'</strong>', 
-'<br>ID:'v20, 
-"<br>CardNo.:"d35, v34"-",v35, "<input type=hidden name=usuario value="v20">"/ "<br>Address:"v45, 
-"<br>City:"v120, 
-'<br>E-mail: <a href="mailto://' v160' ">' v160 '</a><br> Tel.: 'v140,
-'<br>User category: 'v10^a
- '</td></table>',
+'<table>'
+'<td width=150 valign="top">'
+
+if p(v620) then
+'<img src="/central/common/show_image.php?image=images/'v620'&base=users" style="max-width: 150px;">'
+else 
+'<img src="/central/common/show_image.php?image=images/default-user-image.png&base=users" style="max-width: 150px;">'
+fi
+
+'</td><td>'
+'<h3>'v30'</h3>'
+'<p><b>User type:</b> 'v10^*," - "v10^b
+'<br><b>User code:</b> 'v20,
+'<br><b>ID card:</b>' v35 
+'<br><b>Location:</b> 'v45,
+'<br><b>City:</b> 'v120,
+'<br><b>Email:</b> <a href="mailto:'v160'" target="_blank">' v160'</a>'
+'<br><b>Telephone:</b> ' v140
+'</td>'
+'</table>'
+'<input type="hidden" name="usuario" value="v20">'/
