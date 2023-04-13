@@ -17,3 +17,104 @@
 [12-Apr-2023 13:16:53 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
 [12-Apr-2023 13:16:58 America/Sao_Paulo] PHP Warning:  Array to string conversion in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\adm_form_locales.php on line 298
 [12-Apr-2023 13:20:10 America/Sao_Paulo] PHP Warning:  Array to string conversion in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\adm_form_locales.php on line 298
+[12-Apr-2023 22:47:36 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[12-Apr-2023 22:47:36 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[12-Apr-2023 22:47:48 America/Sao_Paulo] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\menu_mantenimiento.php on line 84
+[12-Apr-2023 22:48:30 America/Sao_Paulo] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\menu_mantenimiento.php on line 84
+[12-Apr-2023 22:48:38 America/Sao_Paulo] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\menu_mantenimiento.php on line 84
+[12-Apr-2023 22:48:38 America/Sao_Paulo] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\menu_mantenimiento.php on line 84
+[12-Apr-2023 22:48:38 America/Sao_Paulo] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\menu_mantenimiento.php on line 84
+[12-Apr-2023 22:48:39 America/Sao_Paulo] PHP Warning:  Undefined array key "base" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\menu_mantenimiento.php on line 84
+[12-Apr-2023 22:51:15 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[12-Apr-2023 22:51:15 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 22:53:06 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 22:53:06 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 22:53:06 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 22:53:06 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 22:53:06 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:07:54 America/Sao_Paulo] PHP Warning:  Undefined variable $cod_usuario in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 432
+[16-Mar-2023 23:07:54 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:07:54 America/Sao_Paulo] PHP Warning:  Undefined array key "usuario" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\panel_loans.php on line 773
+[16-Mar-2023 23:08:11 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:08:11 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:08:12 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:08:12 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:08:12 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:08:21 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:08:21 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:08:26 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:08:26 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:08:27 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:08:27 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:08:27 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:08:30 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:08:30 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:08:37 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:08:37 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:08:43 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:08:43 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:08:43 America/Sao_Paulo] PHP Warning:  Undefined variable $OpacHttp in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 272
+[16-Mar-2023 23:09:23 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:09:23 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:09:30 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:09:30 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:09:30 America/Sao_Paulo] PHP Warning:  Undefined variable $OpacHttp in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 272
+[16-Mar-2023 23:09:57 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:09:57 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:10:03 America/Sao_Paulo] PHP Warning:  Undefined array key 7 in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\devolver_ex.php on line 238
+[16-Mar-2023 23:10:03 America/Sao_Paulo] PHP Warning:  Undefined variable $dias_atraso in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\devolver_ex.php on line 370
+[16-Mar-2023 23:10:03 America/Sao_Paulo] PHP Warning:  Undefined array key "real_fine" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\devolver_ex.php on line 411
+[16-Mar-2023 23:11:39 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:11:39 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:11:39 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:11:39 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:11:40 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:12:03 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:12:03 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:12:09 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:12:09 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:12:17 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:12:17 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:12:22 America/Sao_Paulo] PHP Warning:  Undefined array key 7 in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\devolver_ex.php on line 238
+[16-Mar-2023 23:12:22 America/Sao_Paulo] PHP Warning:  Undefined variable $dias_atraso in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\devolver_ex.php on line 370
+[16-Mar-2023 23:12:22 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 263
+[16-Mar-2023 23:12:22 America/Sao_Paulo] PHP Warning:  Undefined variable $script_php in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\scripts_circulation.php on line 269
+[16-Mar-2023 23:12:44 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:12:44 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:12:45 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:12:45 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:12:45 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:13:34 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:13:34 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:13:34 America/Sao_Paulo] PHP Warning:  Undefined variable $OpacHttp in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 272
+[16-Mar-2023 23:14:20 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:14:20 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:14:20 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:14:20 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:14:20 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:14:56 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:14:56 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:14:57 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:14:57 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:14:57 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:16:44 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:16:44 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:16:44 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:16:44 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:16:44 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:17:25 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:17:25 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:17:25 America/Sao_Paulo] PHP Warning:  Undefined variable $OpacHttp in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 272
+[16-Mar-2023 23:18:02 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:18:02 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:18:02 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:18:02 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:18:03 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:18:38 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:18:38 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:18:38 America/Sao_Paulo] PHP Warning:  Undefined variable $bd_obj in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 410
+[16-Mar-2023 23:18:38 America/Sao_Paulo] PHP Warning:  Undefined array key "FECHA_PROGRAMADA" in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\grabar_log.php on line 23
+[16-Mar-2023 23:18:38 America/Sao_Paulo] PHP Warning:  Undefined variable $Mfn_rec in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 448
+[16-Mar-2023 23:19:20 America/Sao_Paulo] PHP Warning:  file(/xampp/htdocs/ABCD2/www/bases-examples_Windows/marc/loans/pt/loans_conf.tab): Failed to open stream: No such file or directory in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 223
+[16-Mar-2023 23:19:20 America/Sao_Paulo] PHP Warning:  foreach() argument must be of type array|object, bool given in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 224
+[16-Mar-2023 23:19:20 America/Sao_Paulo] PHP Warning:  Undefined variable $OpacHttp in C:\xampp\htdocs\ABCD2\www\htdocs\central\circulation\renovar_ex.php on line 272
