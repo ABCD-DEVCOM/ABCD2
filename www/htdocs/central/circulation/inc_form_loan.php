@@ -219,7 +219,12 @@ ASK_LPN="<?php echo $ASK_LPN?>"
 
 
 function EnviarForma_status(Proceso){
+		if (Trim(document.inventorysearch.usuario.value)=="" ){
+		alert("<?php echo $msgstr["falta"]." ".$msgstr["usercode"]?>")
+		return
+	} else {
 	document.inventorysearch.submit()
+	}
 }
 </script>
 
@@ -375,5 +380,10 @@ if (isset($cuenta) and $cuenta==1){
 	        document.inventorysearch.db_inven.selectedIndex=2
 	     </script";
 }
+
+if (file_exists($db_path."loans.dat")){
+	$fp=file($db_path."loans.dat");
+	$sel_base="S";
 ?>
 <script>CambiarBase()</script>
+<?php } ?>

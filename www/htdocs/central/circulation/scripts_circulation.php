@@ -34,28 +34,35 @@ function Reservar(usuario){
 }
 
 function EvaluarRenovacion(p,atraso,fecha_d,nMultas,item){
+	//console.log('p-'+p+'; atraso-'+atraso+'; fecha_d -'+fecha_d+'; nMultas-'+nMultas+'; item -'+item)
+
+	//console.log ('p6: '+p[6]);
 	if (p[6]==0 && p[6]!=""){     // the object does not accept renovations
 		alert(item+". <?php echo $msgstr["noitrenew"] ?>")
-		return false
+		return true
 	}
-   	if (atraso!=0){
+  	if (atraso!=0){
+	//console.log ('p13: '+p[13]);
 		if (p[13]!="Y" ){
-			alert(item+". <?php echo $msgstr["loanoverdued"]?>")
-			return false
+			alert(item+". <?php echo $msgstr["loanoverduedbut"]?>")
+			return true
 		}
 	}
+	//console.log ('p15: '+p[15]);
 	if (Trim(p[15])!=""){
 		if (fecha_d>p[15]){
 			alert(item+". <?php echo $msgstr["limituserdata"]?>"+": "+p[15])
 			return false
 		}
 	}
+	//console.log ('p16: '+p[16]);
 	if (Trim(p[16])!=""){
 		if (fecha_d>p[16]){
 			alert(item+". <?php echo $msgstr["limitobjectdata"]?>"+": "+p[16])
 			return false
 		}
 	}
+	//console.log ('nMultas: '+nMultas);
 	if (nMultas!=0){
 		alert(item+". <?php echo $msgstr["norenew"]?>")
 		return false
@@ -63,7 +70,7 @@ function EvaluarRenovacion(p,atraso,fecha_d,nMultas,item){
 	return true
 }
 
-function DevolverRenovar(Proceso) {
+function DevolverRenovar(Proceso, politica) {
 	if (Proceso=="D"){
 		document.devolver.action="devolver_ex.php"
 	}else{
@@ -76,13 +83,12 @@ function DevolverRenovar(Proceso) {
 	marca="N"
 	search=""
 	atraso=""
-	politica=""
+	//politica=""
 	switch (np){     // número de préstamos del usuario
 		case 1:
 			if (document.ecta.chkPr_1.checked){
 				search=document.ecta.chkPr_1.id
 				atraso=document.ecta.chkPr_1.value
-				politica=document.ecta.politica.value
 				fecha_d="<?php echo date("Ymd")?>"
 				p=politica.split('|')
 				if (Proceso=="R"){
@@ -104,9 +110,9 @@ function DevolverRenovar(Proceso) {
 					search+=Ctrl.id+"$$"
 					atraso=Ctrl.value
 					fecha_d="<?php echo date("Ymd")?>"
-					politica=document.ecta.politica[i-1].value
-					
 					p=politica.split('|')
+
+					//console.log('politica default: '+politica)
 					
 					if (Proceso=="R"){    // si es una renovación
 						res=EvaluarRenovacion(p,atraso,fecha_d,nMultas,i)
@@ -253,6 +259,19 @@ function ImprimirSolvencia(){
 	msgwin.focus()
 	document.solvencia.submit()
 }
+
+
+function checkAll(o) {
+  var boxes = document.getElementsByTagName("input");
+  for (var x = 0; x < boxes.length; x++) {
+    var obj = boxes[x];
+    if (obj.type == "checkbox") {
+      if (obj.name != "pay")
+        obj.checked = o.checked;
+    }
+  }
+}            
+
 </script>
 
 <form name="reservas" method="post" action="../reserve/delete_reserve.php">

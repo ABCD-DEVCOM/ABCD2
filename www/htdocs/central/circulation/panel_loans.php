@@ -188,14 +188,19 @@ $prestamos=array();
 $cont="";
 $np=0;
 $nv=0;
+
 include("ec_include.php");  //se incluye el procedimiento para leer el usuario y los préstamos pendientes
+
+//echo '<script> politica="'.$politica_raw.'"</script>';
+
+
 if ($nsusp!=0 or $nmulta!=0) {
 	$cont="N";
 	unset($arrHttp["inventory"]);
 }
 if (count($prestamos)>0) {
-	$ec_output.= "<strong><a class='bt bt-green' href=javascript:DevolverRenovar('D')>".$msgstr["return"]."</a>
-	<a class='bt bt-blue' href=javascript:DevolverRenovar('R')>".$msgstr["renew"]."</a>";
+	$ec_output.= "<strong><a class='bt bt-green' href=javascript:DevolverRenovar('D',politica)>".$msgstr["return"]."</a>
+	<a class='bt bt-blue' href=javascript:DevolverRenovar('R',politica)>".$msgstr["renew"]."</a>";
 	if (isset($ASK_LPN) AND $ASK_LPN=="Y"){
 		$ec_output.=" ".$msgstr["days"]."<input type=text name=lpn size=4>";
 	}
@@ -517,6 +522,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	        						$prestamos_este=$prestamos_este+1;
 									$ec_output.="$xnum_p. <input type=checkbox name=chkPr_".$xnum_p." value=0  id='".$arrHttp["inventory"]."'>";
 	  								$ec_output.= "<input type=hidden name=politica value=\"".$ppres."\"> \n";
+									
 	  							}else{
 	  								$grabar="N";
 	  								$msg="<font color=red>".$msgstr["nomoreloans"]."</font>";
@@ -530,6 +536,7 @@ if (isset($arrHttp["inventory"]) and $vig=="" and !isset($arrHttp["prestado"]) a
 	  						}
 
   						}
+						
 						$este_prestamo.="</td>";
 						$ec_output.=$este_prestamo;
 						$Opcion="prestar";
