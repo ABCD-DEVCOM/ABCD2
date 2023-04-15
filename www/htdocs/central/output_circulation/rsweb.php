@@ -562,7 +562,7 @@ if ($found==0){
 if (isset($LOAN_POLICY) AND $LOAN_POLICY=="BY_USER")
 	echo "../circulation/ask_policy.php>";
 else
-    echo "../circulation/usuario_prestamos_presentar.php>";
+    echo "../circulation/panel_loans.php>";
 ?>" >
 	<input type="hidden" name="usuario">
 	<input type="hidden" name="inventory">
