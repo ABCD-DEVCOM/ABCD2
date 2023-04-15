@@ -22,7 +22,7 @@ global $arrHttp,$msgstr,$db_path,$valortag,$lista_bases;
 
 if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CIRC_CIRCALL"]) or isset($_SESSION["permiso"]["CIRC_LOAN"])){
 ?>
-						<a href="../circulation/prestar.php?encabezado=s" class="menuButton loanButton">
+						<a href="../circulation/start-loans.php?encabezado=s" class="menuButton loanButton">
 							<span><strong><?php echo $msgstr["loan"]?></strong></span>
 						</a>
 <?php
