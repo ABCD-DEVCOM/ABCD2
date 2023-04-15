@@ -1,0 +1,10 @@
+
+'<tr>','<td valign=top><font face=arial size=2>'v1+|; | if a(v1) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v10+|; | if a(v10) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v20+|; | if a(v20) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v30+|; | if a(v30) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v40+|; | if a(v40) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v50+|; | if a(v50) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v60+|; | if a(v60) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v100+|; | if a(v100) then '&nbsp;' fi,'</td>'/
+'<td valign=top><font face=arial size=2>'v110+|; | if a(v110) then '&nbsp;' fi,'</td>'/
