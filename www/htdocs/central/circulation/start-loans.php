@@ -23,6 +23,9 @@ include("../common/header.php");
 include("../common/institutional_info.php");
 include("../circulation/scripts_circulation.php");
 
+//Horario de la biblioteca, unidades de multa, moneda
+include("locales_read.php");
+
 function LeerPft($pft_name,$base){
 global $arrHttp,$db_path,$lang_db;
 	$pft="";
@@ -59,10 +62,17 @@ global $arrHttp,$db_path,$lang_db;
 		<?php include("inc_form_loan.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+		<?php 
+			if (!isset($locales['decimals'])) echo "<p class='alert'>".$msgstr['set_decimal']." <a href='/central/circulation/adm_form_locales.php'>".$msgstr['click_set']."</a></p>";
+			if (!isset($locales['thousand'])) echo "<p class='alert'>".$msgstr['set_fractional']." <a href='/central/circulation/adm_form_locales.php'>".$msgstr['click_set']."</a></p>";
+		?>	
+
 			<h4><?php echo $msgstr['instructions'];?></h4>
 			<li><?php echo $msgstr['instr1'];?></li>
 			<li><?php echo $msgstr['instr2'];?></li>
 			<li><?php echo $msgstr['instr3'];?></li>
+
+
 	</div>
 	</div>
 </div>
