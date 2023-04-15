@@ -63,8 +63,8 @@ global $arrHttp,$db_path,$lang_db;
 	</div>
 	<div class="formContent col-9 m-2">
 		<?php 
-			if (!isset($locales['decimals'])) echo "<p class='alert'>Configure as casas decimais da moeda <a href='/central/circulation/adm_form_locales.php'> Clique aqui para configurar</a></p>";
-			if (!isset($locales['thousand'])) echo "<p class='alert'>Configure as casas o separador de milhar <a href='/central/circulation/adm_form_locales.php'> Clique aqui para configurar</a></p>";
+			if (!isset($locales['decimals'])) echo "<p class='alert'>".$msgstr['set_decimal']." <a href='/central/circulation/adm_form_locales.php'>".$msgstr['click_set']."</a></p>";
+			if (!isset($locales['thousand'])) echo "<p class='alert'>".$msgstr['set_fractional']." <a href='/central/circulation/adm_form_locales.php'>".$msgstr['click_set']."</a></p>";
 		?>	
 
 			<h4><?php echo $msgstr['instructions'];?></h4>

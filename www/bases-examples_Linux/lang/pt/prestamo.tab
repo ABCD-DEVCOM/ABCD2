@@ -384,4 +384,7 @@ instructions=Instruções
 instr1=1. Identifique o usuário, localizando seu nome na lupa ou digitando seu número de identificação.
 instr2=2. Digite ou localize o número de inventário, um abaixo do outro.
 instr3=3. Se necessário, faça algum comentário, senão, clique em "Emprestar".
+click_set=Clique aqui para configurar
+set_decimal=Configure as casas decimais da moeda.
+set_fractional=Configure as casas o separador da parte fracionária.
 

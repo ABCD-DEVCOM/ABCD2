@@ -387,3 +387,6 @@ instructions=Instructions
 instr1=1. Identify the user by locating their name in the magnifying glass or entering their ID number.
 instr2=Type or locate the inventory number, one below the other.
 instr3=If necessary, make any comments, otherwise click "Circulation an loans".
+click_set=Click here to configure
+set_decimal=Set the decimal places of the currency.
+set_fractional=Set the decimal places of the fractional part.
