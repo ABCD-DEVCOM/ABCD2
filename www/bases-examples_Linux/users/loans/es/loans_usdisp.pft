@@ -1,11 +1,21 @@
-'<table>
-<td width=150><img width="150px" src=/central/common/show_image.php?image='v620'&base=users/images></td><td>'
-"<strong>"v30,'</strong><br>'
-'Tipo de usuario: ' v10^* " - "v10^b,
-'<br>No.carnet:'v20,
-"<br>No.Cédula:"d35, v34"-",v35,
-"<input type=hidden name=usuario value="v20">"/
-"<br>Ubicación:"v45,
-"<br>Ciudad:"v120,
-'<br>E-mail:<br>Teléfono: '
-'</td></table>',
+'<table>'
+'<td width=150 valign="top">'
+
+if p(v620) then
+'<img src="/central/common/show_image.php?image=images/'v620'&base=users" style="max-width: 150px;">'
+else 
+'<img src="/central/common/show_image.php?image=images/default-user-image.png&base=users" style="max-width: 150px;">'
+fi
+
+'</td><td>'
+'<h3>'v30'</h3>'
+'<p><b>Type utilisateur:</b> 'v10^*," - "v10^b
+'<br><b>Code usager:</b> 'v20,
+'<br><b>No. carte d'identité:</b>' v35 
+'<br><b>Localisation:</b> 'v45,
+'<br><b>Ville:</b> 'v120,
+'<br><b>E-mail:</b> <a href="mailto:'v160'" target="_blank">' v160'</a>'
+'<br><b>Téléphone:</b> ' v140
+'</td>'
+'</table>'
+'<input type="hidden" name="usuario" value="v20">'/

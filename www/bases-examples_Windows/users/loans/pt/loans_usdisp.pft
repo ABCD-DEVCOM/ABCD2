@@ -1,11 +1,21 @@
-'<table>
-<td width=150><img src="/central/common/show_image.php?image=images/'v620'&base=users" style="max-width: 150px;"></td><td>'
-"<strong>"v30,'</strong><br>'
-'Tipo de usuário: 'v10^*," - "v10^b
-'<br>No.cartão:'v20,
-"<br>No.Identidade:"d35, v34"-",v35,
-"<input type=hidden name=usuario value="v20">"/
-"<br>Local:"v45,
-"<br>Cidade:"v120,
-'<br>E-mail:<br>Telefone: '
-'</td></table>',
+'<table>'
+'<td width=150 valign="top">'
+
+if p(v620) then
+'<img src="/central/common/show_image.php?image=images/'v620'&base=users" style="max-width: 150px;">'
+else 
+'<img src="/central/common/show_image.php?image=images/default-user-image.png&base=users" style="max-width: 150px;">'
+fi
+
+'</td><td>'
+'<h3>'v30'</h3>'
+'<p><b>Categoria de usuário:</b> 'v10^*," - "v10^b
+'<br><b>Número do cartão:</b> 'v20,
+'<br><b>Doc. de Identidade:</b>' v35 
+'<br><b>Local:</b> 'v45,
+'<br><b>Cidade:</b> 'v120,
+'<br><b>E-mail:</b> <a href="mailto:'v160'" target="_blank">' v160'</a>'
+'<br><b>Telefone:</b> ' v140
+'</td>'
+'</table>'
+'<input type="hidden" name="usuario" value="v20">'/
