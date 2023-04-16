@@ -224,7 +224,7 @@ if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended
 	$charset="ISO-8859-1";
 }
 // Send characterset to the server. Note that the browser gets it via the html header.
-header('Content-type: text/html; charset=$charset');
+header('Content-type: text/html; charset='.$charset.'');
 
 if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
 
