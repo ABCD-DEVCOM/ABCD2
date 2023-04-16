@@ -342,3 +342,5 @@ status_inf_xsl=Required if Site is used
 status_inf_yaz=Required if Z39.50 client is used (to download records via the Z39.50 communication protocol)
 status_inf_v=Version
 status_all_ext=Enabled Extensions
+status_direct=Mandatory PHP directives
+alert_disable_functions=Please edit the <a href='https://www.php.net/manual/en/ini.core.php' target='_blank'>disable_functions directive</a> in the php.ini file to make ABCD work properly.

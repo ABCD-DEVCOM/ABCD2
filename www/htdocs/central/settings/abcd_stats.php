@@ -52,6 +52,17 @@ function show_phpinfo() {
 }
 
 
+function exec_enabled() {
+  global $db_path, $xWxis, $actparfolder, $msgstr;
+  $disabled = explode(',', ini_get('disable_functions'));
+  if(function_exists('exec')) {
+    echo "exec() is enabled <i class='fa fa-check color-green'></i>";
+} else {
+    echo "<p class='color-red'><b>exec() disabled</b>: ".$msgstr['alert_disable_functions']."</p>";
+}
+}
+
+
 function all_databases_list() {
 global $db_path, $xWxis, $actparfolder, $msgstr;
 $lista_bases=array();
@@ -206,6 +217,9 @@ $ip_server = getHostByName(php_uname('n'));
 <tr>
     <th><?php echo $msgstr["status_ip"];?>:</th><td><?php echo $ip_server; ?></td>
 </tr>
+<tr>
+    <th><?php echo $msgstr["status_direct"];?>:</th><td><?php echo exec_enabled(); ?></td>
+</tr>
 </table>
 
 
@@ -230,7 +244,11 @@ $ip_server = getHostByName(php_uname('n'));
     $total_disk = sprintf('%1.2f' , $bytes_total / pow($base,$class_total)) . ' ' . $si_prefix[$class_total] . '<br />';
     $free_disk = sprintf('%1.2f' , $bytes_free / pow($base,$class_free)) . ' ' . $si_prefix[$class_free] . '<br />';
     $used_disk = sprintf('%1.2f' , $bytes_used / pow($base,$class_used)) . ' ' . $si_prefix[$class_used] . '<br />';
- ?>
+
+    
+
+?>
+<hr>
 
 <table>
 <tr><th><?php echo $msgstr["status_total_disk"];?>: </th><td><?php echo $total_disk;?></td></tr>    
@@ -326,6 +344,8 @@ $all = get_loaded_extensions();
     }
  ?>
 </table>
+
+
 
 </div>
 </div>
