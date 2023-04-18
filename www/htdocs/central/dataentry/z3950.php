@@ -5,6 +5,7 @@
 2022-01-08 fho4abcd add home button
 20220713 fho4abcd Use $actparfolder as location for .par files
 20220929 fho4abcd Error message if yaz not loaded or server db not present. Remove close button
+20230418 fho4abcd Unicode improvements, improve second search field. Clean pop-up before search
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -13,24 +14,6 @@
  * @desc:      Search form for z3950 record importing
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 global $arrHttp;
@@ -55,21 +38,12 @@ if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 
 include("../common/header.php");
-
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <script language=javascript>
-   function AbrirVentana(Marc){
-        msgwin=window.open("",Marc,"status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=800,height=600,top=00,left=00")
-        msgwin.focus()
-   }
-   function Reintentar(){
-       document.CapturarZ3950.submit()
-       return true
-   }
-
- function Isbn(){
+function Isbn(){
  	ixdb="HOST"+document.z39.host.selectedIndex
 
 	ix1=document.z39.isbn.length
@@ -84,17 +58,17 @@ include("../common/header.php");
 		}
 	}
 	if (Trim(document.z39.term.value)=="" && Trim(document.z39.term1.value)=="" && listaI==""){
- 		alert("<?php echo $msgstr["faltaexpr"]?>")
+ 		alert("<?php echo $msgstr["z3950_srch_empty"]?>")
  		return
  	}
  	document.z39.isbn_l.value=listaI
- 	<?php if (!isset($arrHttp["desde"])){
- 		echo "msgwin=window.open(\"\",\"z3950\",\"width=750, height=600, scrollbars, resizable\")
-	document.z39.target=\"z3950\"
+ 	<?php if (!isset($arrHttp["desde"])){?>
+    msgwin=window.open("","z3950","width=750, height=600, scrollbars, resizable, menubar=no, toolbar=no, status=yes")
+    msgwin.document.getElementsByTagName('body')[0].innerHTML = '<div>'+'<?php echo $msgstr["z3950_yaz_wait"];?>'+'</div>';
+	document.z39.target="z3950"
 	document.z39.submit()
 	msgwin.focus()
-	";
- 	}else{
+ 	<?php }else{
  		echo "document.z39.submit()\n";
  	}
  	?>
@@ -151,6 +125,10 @@ if ($actparfolder!="par/") {
     $loc_actparfolder="servers/";
 }
 
+// Variables $charset, $unicode, $cisis_ver are modified by the call to wxis_llamar.php
+$targetdb_charset=$charset;
+$targetdb_unicode=$unicode;
+$targetdb_cisis_ver=$cisis_ver;
 $Pft="v1'|'v2'|'v3'|'v4'|'v5/";
 $query = "&base=servers&cipar=".$db_path.$loc_actparfolder."servers.par&from=1&Formato=$Pft&Opcion=rango";
 $IsisScript=$xWxis."imprime.xis";
@@ -176,10 +154,16 @@ if ($err_wxis!=""){
             <select name="host">
             <?php
             foreach ($contenido as $value) {
-                $val=str_replace('|',"",$value);
-                if (trim($val)!="") {
+                if ($value!="") {
                     $s=explode('|',$value);
+                    if($s[0]!=""){
+                    if ($targetdb_charset=="UTF-8") {
+                        if (!mb_check_encoding($s[0],'UTF-8')) {
+                            $s[0]=mb_convert_encoding($s[0],'UTF-8','ISO-8859-1');
+                        }
+                    }
                     echo "<option value=".$s[1].":".$s[2]."/".$s[3]."^susmarc^f".$s[4].">".$s[0]."\n";
+                    }
                 }
             }
             ?>
@@ -209,38 +193,45 @@ if ($err_wxis!=""){
         }
         ?>
 		<tr>
-		<td class=td><?php echo $msgstr["busqueda"]?>:
+		<td class=td><?php echo $msgstr["z3950_search"]?>:
 		</td>
 		<td>
-			<input type="text" size="50" name="term" value="">&nbsp;
+			<input type="text" size="50" name="term" value=""
+                placeholder="<?php echo $msgstr["z3970_srch_inwords"]?>"
+                title="<?php echo $msgstr["z3970_srch_inwild"]?>">&nbsp;
 			<?php echo $msgstr["z3950_in"]?>&nbsp;
 			<select name="field">
 				<option value="Todos los campos"><?php echo $msgstr["z3950_all"]?>
-				<option value="Título"><?php echo $msgstr["z3950_title"]?>
-				<option value="Autor"><?php echo $msgstr["z3950_author"]?>
+				<option value="Titulo"><?php echo $msgstr["z3950_title"]?>
+				<option value="Autor"><?php echo $msgstr["z3950_auth"]?>
 				<option value="ISBN"><?php echo $msgstr["z3950_isbn"]?>
 				<option value="ISSN"><?php echo $msgstr["z3950_issn"]?>
+				<option value="Resumen"><?php echo $msgstr["z3950_abstract"]?>
 			</select>
-
 		</td>
+		</tr>
 		<tr>
-		<td></td>
+		<td class=td style="text-align: right"><?php echo $msgstr["z3950_and"]?>
+		</td>
 		<td>
-			<input type="text" size="50" name="term1" value="">&nbsp;
+			<input type="text" size="50" name="term1" value=""
+                placeholder="<?php echo $msgstr["z3970_srch_inwords"]?>"
+                title="<?php echo $msgstr["z3970_srch_inwild"]?>">&nbsp;
 			<?php echo $msgstr["z3950_in"]?>&nbsp;
 			<select name="field1">
 				<option value="Todos los campos"><?php echo $msgstr["z3950_all"]?>
-				<option value="Título"><?php echo $msgstr["z3950_title"]?>
-				<option value="Autor"><?php echo $msgstr["z3950_author"]?>
+				<option value="Titulo"><?php echo $msgstr["z3950_title"]?>
+				<option value="Autor"><?php echo $msgstr["z3950_auth"]?>
 				<option value="ISBN"><?php echo $msgstr["z3950_isbn"]?>
 				<option value="ISSN"><?php echo $msgstr["z3950_issn"]?>
+				<option value="Resumen"><?php echo $msgstr["z3950_abstract"]?>
 			</select>
 		</td>
-		<tr>
+		</tr>
 	</table>
 	<table width=600>
         <tr>
-		<td colspan=5 bgcolor=linen align=center class=td><?php echo $msgstr["z3950_msg"]?></td>
+		<td colspan=5 bgcolor=linen class=td> &nbsp; <?php echo $msgstr["z3950_srch_isbn"]?></td>
         </tr>
 		<tr>
 		<td align=center><input type=text size=15 name=isbn value=""></td>
