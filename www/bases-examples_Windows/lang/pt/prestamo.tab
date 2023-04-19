@@ -125,6 +125,7 @@ loaned=Emprestado
 loanoper=Operador de Empréstimos
 loanoption=Selecione um método para localizar o exemplar a emprestar. Inserir a informação e clicar [Enter] para continuar.
 loanoverdued=Empréstimo em atraso. Não pode ser renovado
+loanoverduedbut=Empréstimo em atraso, mas será renovado
 loanpolicyexist=Política de empréstimo já existe
 loans=Empréstimos
 loantit=Circulação

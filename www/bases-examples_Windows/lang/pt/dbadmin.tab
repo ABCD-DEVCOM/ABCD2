@@ -579,10 +579,22 @@ whendone=Quando acabar, informe um nome e uma descrição para a planilha de entra
 winisisdb=Base de dados WinIsis
 wosubfields=Sem subcampos
 z3950=Cliente Z39.50
+z3950_and=E
+z3950_con_fail=Função yaz_connect retorna inesperado 0. Incapaz de conectar a
 z3950_cnv=Formatos de conversão
 z3950_cnv_table=Tabela de conversão
 z3950_diacritics=Tabela de conversão de Marc-8 para caracteres ANSI
 z3950_new_table=Nova tabela de conversão	
+z3950_search=Buscar por
 z3950_servers=Servidores Z39.50
+z3950_srch_isbn=Reduza a busca com ISBNs em que você está interessado
+z3950_srch_empty=Por favor, digite os termos para pesquisar
+z3950_srch_empty1=Todos os componentes da expressão de busca estão vazios
+z3970_srch_inwild=O cifrão ($) como último caractere serve como coringa
+z3970_srch_inwords=Uma palavra ou múltiplas palavras para uma frase
+z3950_test=Nenhuma ação. A URL contém uma opção inválida, ausente ou vazia. Opcion=
+z3950_yaz_search=Expressão de busca YAZ
+z3950_yaz_syntax=Sintaxe YAZ
 z3950_yaz_missing=Extensão PHP YAZ não instalada ou não carregada corretamente. Isto é necessário para acessar os Servidores Z39.50
+z3950_yaz_wait=Conexão com YAZ para o servidor Z39.50 ....
 
