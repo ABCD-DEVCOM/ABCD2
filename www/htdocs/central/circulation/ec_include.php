@@ -101,7 +101,9 @@ if (isset($arrHttp["usuario"])){
 				$ec_output.="<td> </td>";
 			}
 
-			$ec_output.="<tr><th>#</th><th>".$msgstr["inventory"]."</th>";
+			$ec_output.="<tr><th class='p-2'>";
+			$ec_output.='<input type="checkbox" id="cc" onclick="javascript:checkAll(this)"/>';
+			$ec_output.="</th><th>".$msgstr["inventory"]."</th>";
 			if (!isset($desde_opac)) $ec_output.="<th>".$msgstr["control_n"]."</th>";
 			$ec_output.="<th>".$msgstr["reference"]."</th>";
 			if (!isset($desde_opac) )
@@ -117,11 +119,13 @@ if (isset($arrHttp["usuario"])){
 					//SI LA POLITICA SE GRABA CON EL REGISTRO DE LA TRANSACCION, ENTONCE SE APLICA ESA
 					// DE OTRA FORMA SE UBICA LA POLiTICA LEIDA DE LA TABLA
 					if (isset($p[17]) and trim($p[17])!=""){
+						$politica_raw=$p[17];
 						$politica_este=explode('|',$p[17]);
 						$politica_str=$politica_este[7];
 					}else{
 						$politica_este=explode('|',$politica[strtoupper($p[3])][strtoupper($p[6])]);
 						$politica_str=$politica[strtoupper($p[3])][strtoupper($p[6])];
+						$politica_raw="";
 			
 					}
 	                $lapso_p=$politica_este[5];
@@ -167,7 +171,9 @@ if (isset($arrHttp["usuario"])){
 							$ec_output.= "<input class=\"form-check-input\"  type=checkbox name=chkPr_".$xnum_p." value=$mora  id='".$p[0]."'>";
 							$ec_output.=' <label class="form-check-label" for="flexCheckDefault">'.$xnum_p.'</label></div>';
 						}
-						$ec_output.= "<input type=hidden name=politica value=\"".$politica_str."\"> \n";
+						$ec_output.= "<input type=hidden name=politica value=\"".$politica_raw."\"> \n";
+						$ec_output.='<script> politica="'. trim(preg_replace('/\s\s+/', ' ', $politica_raw)).'"</script>';
+						
 
 					}
 
@@ -214,7 +220,7 @@ if (isset($arrHttp["usuario"])){
 						 }
 
 						 if ($dias_vencido>0) {
-						 	$total_fine=$dias_vencido*$politica_str;
+						 	$total_fine=$dias_vencido*(float)$politica_str;
 						}else {
 							$total_fine=0;
 						}

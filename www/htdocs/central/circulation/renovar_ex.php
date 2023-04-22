@@ -1,30 +1,13 @@
 <?php
 /**
  * @program:   ABCD - ABCD-Central - https://abcd-community.org/
- * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
  * @file:      renovar_ex.php
  * @desc:      Renews a loan
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
+ * @version:   2.2
  *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
-*/
+ * */
 session_start();
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";//die;
 if (isset($_SESSION["DB_PATH"]))
@@ -33,13 +16,16 @@ if (isset($_REQUEST["db_path"]))$_SESSION["DB_PATH"]=$_REQUEST["db_path"];
 if (!isset($_SESSION["login"])) $_SESSION["login"] ="web";
 include("../common/get_post.php");
 include("../config.php");
+
+include("../config_opac.php");
+
 if (isset($_REQUEST["Web_Dir"])){
 /* para leer el db_path */
 	$Web_Dir=$_REQUEST["Web_Dir"];
 	if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD"){
 		$xis_path=$xWxis;
 		$exe_path=$Wxis;
-		include($Web_Dir."php/config_opac.php");
+		//include("../config_opac.php");
 		$xWxis=$xis_path;
 		$Wxis=$exe_path;
 	}
@@ -78,7 +64,7 @@ if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD"){
 $error="";
 //se busca el numero de control en el archivo de transacciones para ver si el usuario tiene otro ejemplar prestado
 function LocalizarTransacciones($control_number,$prefijo,$base_origen){
-global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$lang_db;
+global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$lang_db,$actparfolder;
 	$tr_prestamos=array();
 	$formato_obj=$db_path."trans/pfts/".$_SESSION["lang"]."/loans_display.pft";
 	if (!file_exists($formato_obj)) $formato_obj=$db_path."trans/pfts/".$lang_db."/loans_display.pft";
@@ -89,7 +75,7 @@ global $db_path,$Wxis,$xWxis,$wxisUrl,$arrHttp,$msgstr,$lang_db;
 		if (isset($arrHttp["volumen"])) $query.="V:".$arrHttp["volumen"];
 		if (isset($arrHttp["numero"])) $query.="N:".$arrHttp["numero"];
 	}
-	$query.="&base=trans&cipar=$db_path"."par/trans.par&Formato=".$formato_obj;
+	$query.="&base=trans&cipar=$db_path".$actparfolder."trans.par&Formato=".$formato_obj;
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	include("../common/wxis_llamar.php");
 	$prestamos=array();
@@ -128,15 +114,15 @@ global $locales,$config_date_format;
 }//end Compare Date
 
 function Reservado($Ctrl,$bd){
-global $xWxis,$Wxis,$wxisUrl,$db_path;
+global $xWxis,$Wxis,$wxisUrl,$db_path,$actparfolder;
 	$Expresion="(ST_0 or ST_3) and CN_".$bd."_$Ctrl";
 	$IsisScript=$xWxis."cipres_usuario.xis";
 	$Pft="v1,'|',v10,'|',v15,'|',v20,'|',v40/";
 	$Formato=$db_path."reserve/pfts/".$_SESSION["lang"]."/tbreserve.pft";
-	$query="&base=reserve&cipar=$db_path"."par/reserve.par&Expresion=$Expresion&Pft=$Pft";
+	$query="&base=reserve&cipar=$db_path".$actparfolder."reserve.par&Expresion=$Expresion&Pft=$Pft";
 	include("../common/wxis_llamar.php");
 	$cuenta=0;
-	//SE OBTIENE EL N�MERO DE RESERVAS
+	//SE OBTIENE EL NUMERO DE RESERVAS
 	foreach ($contenido as $value) {
 		if (trim($value)!=""){
 			$v=explode('|',$value);
@@ -161,17 +147,22 @@ foreach ($items as $num_inv){
 	if ($num_inv!=""){
 		$inventario="TR_P_".$num_inv;
 		if (!isset($arrHttp["base"])) $arrHttp["base"]="trans";
-		//EL CAMPO 81 TIENE EL TIPO DE OBJETO DE LA CONVERSI�N DESDE PRESTA
+		//EL CAMPO 81 TIENE EL TIPO DE OBJETO DE LA CONVERSION DESDE PRESTA
 		$Formato="v10'|$'v20'|$'v30'|$'v35'|$'v40'|$'v45'|$'v70'|$'if p(v81) then v81 else v80 fi'|$'v100,'|$'f(nocc(v200),1,0)'|$'v400,'|$'v95,'|$'v98";
 		//Se agrega el formato para obtener el total de ejemplares prestados
-		$Formato.="'|$'f(npost(['trans']'ON_P_'v95'_'v98),1,0)/";
-		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path"."par/".$arrHttp["base"].".par&count=1&Expresion=".$inventario."&Pft=$Formato";
+		$Formato.="'|$'f(npost(['trans']'ON_P_'v95'_'v98),1,0),'|$'v85/";
+		$query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&count=1&Expresion=".$inventario."&Pft=$Formato";
+
+		ECHO $query."<br>";
+
+
 		$contenido="";
 		$IsisScript=$xWxis."buscar_ingreso.xis";
 		include("../common/wxis_llamar.php");
 		$Total=0;
 		foreach ($contenido as $linea){
 			$linea=trim($linea);
+			
 			if ($linea!="") {
 				$l=explode('|$',$linea);
 				if (substr($linea,0,6)=="[MFN:]"){
@@ -191,7 +182,7 @@ foreach ($items as $num_inv){
 			$error="&error=".$msgstr["notloaned"];
 			$resultado.=";".$num_inv." ".$msgstr["notloaned"];
 		}else{
-	// se extrae la informaci�n del ejemplar a devolver
+	// se extrae la informacion del ejemplar a devolver
 
 			$p=explode('|$',$prestamo);
 			$cod_usuario=$p[1];
@@ -203,9 +194,9 @@ foreach ($items as $num_inv){
 			$tipo_usuario=$p[6];
 			$tipo_objeto=$p[7];
 			$referencia=$p[8];
-			$no_renova=$p[9];         // N�mero de renovaciones procesadas
+			$no_renova=$p[9];         // Numero de renovaciones procesadas
 			$ppres=$p[10];            //Loan policy
-			$num_ctrl=$p[11];         // N�mero de control
+			$num_ctrl=$p[11];         // Numero de control
 			$catalog_db=$p[12];           // Nombre de la base de datos
 			if ($catalog_db=="" and isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD"){
 				$catalog_db="biblo";
@@ -228,11 +219,13 @@ foreach ($items as $num_inv){
 			//Se obtiene el codigo, tipo y vigencia del usuario
 			$formato=$pft_uskey.'\'$$\''.$pft_ustype.'\'$$\''.$pft_usvig;
 			$formato=urlencode($formato);
-			$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path"."par/users.par&Pft=$formato";
+			$query = "&Expresion=".trim($uskey).$arrHttp["usuario"]."&base=users&cipar=$db_path".$actparfolder."users.par&Pft=$formato";
 			$contenido="";
 			$IsisScript=$xWxis."cipres_usuario.xis";
 			include("../common/wxis_llamar.php");
 			//foreach ($contenido as $value) echo "$value<br>";die;
+
+
 
 	//se determina la politica a aplicar
 			if ($ppres==""){
@@ -323,7 +316,7 @@ foreach ($items as $num_inv){
 						if (isset($_SESSION["library"])) $pft_ni=str_replace('#library#',$_SESSION['library'],$pft_ni);
 						$pft_ni="(".$pft_ni."/)";
 					}
-					$query = "&Opcion=disponibilidad&base=$catalog_db&cipar=$db_path"."par/$catalog_db.par&Expresion=".$Expresion."&Pft=".urlencode($pft_ni);
+					$query = "&Opcion=disponibilidad&base=$catalog_db&cipar=$db_path".$actparfolder."$catalog_db.par&Expresion=".$Expresion."&Pft=".urlencode($pft_ni);
 					include("../common/wxis_llamar.php");
 					$obj=array();
 					foreach ($contenido as $value){
@@ -398,12 +391,16 @@ foreach ($items as $num_inv){
 				$ValorCapturado.="<35 0>".$hora_d."</35>";
 				$ValorCapturado.="<40 0>".$fecha_d."</40>";
 				$ValorCapturado.="<45 0>".$hora_d."</45>";
+
+				$o=explode('|',$ppres);
+				if (strtoupper($o[1])==$tipo_usuario and  $tipo_objeto==strtoupper($o[0])) $ValorCapturado.="<85 0>".$ppres."</85>";
+
 				$ValorCapturado.="<200 0>".$f_ant."</200>";
 				$ValorCapturado.="<201 0>^a".$_SESSION["login"]."^b".date("Ymd h:i A")."^tR</201>";
 				$ValorCapturado=urlencode($ValorCapturado);
 				$IsisScript=$xWxis."actualizar_registro.xis";
 				$Formato="";
-				$query = "&base=trans&cipar=$db_path"."par/trans.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&ValorCapturado=".$ValorCapturado;
+				$query = "&base=trans&cipar=$db_path".$actparfolder."trans.par&login=".$_SESSION["login"]."&Mfn=".$Mfn."&ValorCapturado=".$ValorCapturado;
 				$resultado.=";".$num_inv." ".$msgstr["renewed"];
 				if (file_exists($db_path."logtrans/data/logtrans.mst")){
 

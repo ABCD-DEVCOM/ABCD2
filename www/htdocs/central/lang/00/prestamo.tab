@@ -125,6 +125,7 @@ loaned=Loaned
 loanoper=Loan operator
 loanoption=Select one method to locate the item to be borrowed. Insert the required information and press [Enter] to continue.
 loanoverdued=Loan overdue. Cannot be renewed
+loanoverduedbut=Loan due, but will be renewed
 loanpolicyexist=Loan policy already exists
 loans=Loans
 loantit=Circulation
