@@ -168,7 +168,7 @@ $cset=strtoupper($meta_encoding);
 unset($cont_cnv);
 if ($cset=="UTF-8" and strtoupper($unicode)=="ANSI"){
     foreach ($contenido as $value){
-        $cont_cnv[]=utf8_encode($value);
+        $cont_cnv[]=mb_convert_encoding($value, 'UTF-8', 'ISO-8859-1');
     }
     if (isset($cont_cnv))$contenido=$cont_cnv;
 }

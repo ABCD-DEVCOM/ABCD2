@@ -365,7 +365,7 @@ foreach ($bd_list as $base=>$value){
        		else
        			$cset_db="UTF-8";
         if ($cset=="UTF-8" and $cset_db=="ANSI")
-        	$busqueda_decode[$base]=utf8_decode($busqueda);
+        	$busqueda_decode[$base]=mb_convert_encoding($busqueda,'UTF-8', 'ISO-8859-1');
         else
         	$busqueda_decode[$base]=$busqueda;
         if ($busqueda_decode[$base]=="") $busqueda_decode[$base]='$';
