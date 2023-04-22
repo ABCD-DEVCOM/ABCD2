@@ -102,7 +102,7 @@ if (is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){
 	echo "<xmp>";
 	foreach ($fp as $value){
 		if ($charset=="UTF-8")
-			echo utf8_encode($value);
+			echo mb_convert_encoding($value,'UTF-8', 'ISO-8859-1');;
 		else
 			echo $value;
 	}

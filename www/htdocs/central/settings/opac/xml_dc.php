@@ -211,9 +211,8 @@ global $msgstr,$db_path,$charset;
 			foreach ($value_campos as $value) {
 				if ($db_charset!=$charset){
 					if ($charset=="UTF-8" and $db_charset=="ISO-8859-1")
-					   $value=utf8_encode($value);
+					   $value=mb_convert_encoding($value,'UTF-8', 'ISO-8859-1');
 				}
-
 				$v=explode('|',$value);
 				if ($v[0]=="H" or $v[0]=="L") continue;
 				echo "<tr><td>".$v[1]."</td><td>".$v[2]."</td><td>";
