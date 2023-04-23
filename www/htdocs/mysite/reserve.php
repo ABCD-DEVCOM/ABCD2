@@ -274,7 +274,7 @@ if (strlen($legend)==0) $success=true;
 
       echo "<div><table><tr>";
       echo "<td width=180><img src='".$image."' /></td>";
-      echo "<td><h2>".utf8_encode($myresult)."</h2></td></tr><tr><td colspan=2><h3>".utf8_encode($legend)."</h3></td>";
+      echo "<td><h2>".mb_convert_encoding($myresult,'UTF-8', 'ISO-8859-1')."</h2></td></tr><tr><td colspan=2><h3>".mb_convert_encoding($legend,'UTF-8', 'ISO-8859-1')."</h3></td>";
       echo "</tr></table></div>";
 
       //echo $client->request;

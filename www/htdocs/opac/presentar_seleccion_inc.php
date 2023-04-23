@@ -5,7 +5,7 @@
 
 
 ***********************************************/
-	
+
 function DeterminarReservasActivas($db_path,$base,$lang,$msgstr,$Ctrl){
 global $arrHttp,$xWxis, $actparfolder;
 	$data="";
@@ -181,11 +181,14 @@ foreach ($list as $value){
         }
 	}
 }
+
+
+
 foreach ($seleccion as $base=>$value){
     echo "<hr style=\"border: 5px solid #cccccc;border-radius: 5px;\">";
 	echo "<div><h3>";
 	if (file_exists($db_path.$base."/pfts/dcxml.pft") or file_exists($db_path.$base."/pfts/marcxml.pft")){
-		echo "<a class='bt' href=javascript:SendToXML(\"".$xml_base[$base]."\")>XML</a>&nbsp; &nbsp;";
+		echo "<a class='btn btn-primary' href=javascript:SendToXML(\"".$xml_base[$base]."\")>XML</a>&nbsp; &nbsp;";
 	}
 	echo $bd_list[$base]["descripcion"]." ($base)</h3></div><br><br>";
 	$lista_mfn="";

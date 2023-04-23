@@ -142,7 +142,7 @@ foreach ($splittxttit as $onetit)
 if ($onetit!='') $result.=$onetit." ";
 }
 }
-echo utf8_encode($result);
+echo mb_convert_encoding($result,'UTF-8', 'ISO-8859-1');;
 }
 
 
