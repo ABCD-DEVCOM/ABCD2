@@ -13,6 +13,7 @@ Inherited : Super globals $_SESSION and $_SERVER and variables
                        $wiki_help="B%C3%BAsquedas";
                        $wiki_help="B%C3%BAsquedas#B.C3.BAsqueda_Libre";
               If not set the link is not shown
+    $n_wiki_help: Link to the wiki on Github https://abcd-community.github.io/wiki/
 */
 $including_file = pathinfo(debug_backtrace()[0]['file'])['basename'];
 $server_script = $_SERVER['PHP_SELF'];
@@ -32,6 +33,9 @@ if (strstr($server_script,$including_file,true)!=false) unset($including_file);
 <?php } ?>
 <?php if (isset($wiki_help)) {?>
     &nbsp;&nbsp;<a href="http://abcdwiki.net/<?php echo $wiki_help?>" target=_blank>abcdwiki</a>
+<?php }?>
+<?php if (isset($n_wiki_help)) {?>
+    &nbsp;&nbsp;<a href="https://abcd-community.github.io/wiki/<?php echo $n_wiki_help?>" target=_blank>wiki</a>
 <?php }?>
 	&nbsp;&nbsp;Script: <?php echo $server_script; if (isset($including_file)) echo "&#8594;".$including_file; ?> 
 </div>
