@@ -62,7 +62,7 @@ if (file_exists($db_path."opac_conf/".$lang."/sitio.info")){
 					if (file_exists($archivo)){
 						$fp_h=file($archivo);
 						foreach ($fp_h as $linea){
-							echo "$linea";
+							echo $linea;
 						}
 					}
 				}
