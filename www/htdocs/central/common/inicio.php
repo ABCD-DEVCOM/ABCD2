@@ -64,12 +64,7 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	     		if ($ll[0]==$pass){
 	     			$llave_ret=$llave_pft;
 	     			$valortag=array();
-	     		} else {
-					$llave_pft=substr($linea,$pos+8);
-					$pos=strpos($llave_pft, '##');
-					$llave_pft=substr($llave_pft,0,$pos);
-					$llave_ret=$llave_pft;
-				}
+	     		} 
 			}
 		}else{
 			$linea=trim($linea);
