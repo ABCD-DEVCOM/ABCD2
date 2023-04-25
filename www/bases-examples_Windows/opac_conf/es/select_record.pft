@@ -1,4 +1,4 @@
-'<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">'
+qqqqqqqqq'<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">'
 
 '<div class="form-check">'
         '<input class="form-check-input" type="checkbox" name="c_',mstname,'_'f(mfn,1,0)'" id="c_'mstname'_'f(mfn,1,0)'"  onclick="javascript:Seleccionar(this)">'

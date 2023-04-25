@@ -5,12 +5,13 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["buscar_a"]." - ".$msgstr["tipos_registro"];?>
-	</h3>
-	<div class="formContent">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["buscar_a"]." - ".$msgstr["tipos_registro"];?></h3>
 
-<div id="page">
 <?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 if (!isset($_SESSION["db_path"])){
@@ -54,9 +55,8 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 
 ?>
-<form name=indices method=post>
-<input type=hidden name=db_path value=<?php echo $db_path;?>>
-<div id="page">
+<form name="indices" method="post">
+<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
 
 <?php
 //DATABASES
@@ -86,13 +86,9 @@ foreach ($fp as $value){
 	}
 }
 ?>
-</div>
 
 </div>
-</div>
-</div>
 
-<?php include ("../../common/footer.php"); ?>
 <?php
 function Entrada($iD,$name,$lang,$file,$nombre_c,$TM,$base){
 global $msgstr,$db_path;
@@ -134,9 +130,9 @@ $ix=3;
 	}
 
 	echo "<tr><td colspan=2 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD." - ".$TM."\"></td></tr>";
+	echo "<input type=submit value=\"".$msgstr["save"]." ".$iD." - ".$TM."\"></td></tr>";
 	echo "</table>\n";
-	echo "</form></div><br><br><p>";
+	echo "</form></div><br><br>";
 }
 
 ?>
@@ -144,6 +140,11 @@ $ix=3;
 <?php if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
-<input type=hidden name=base>
-<input type=hidden name=lang value="<?php echo $lang;?>">
+<input type="hidden" name="base">
+<input type="hidden" name="lang" value="<?php echo $lang;?>">
 </form>
+
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>

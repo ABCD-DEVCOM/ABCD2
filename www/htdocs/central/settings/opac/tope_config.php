@@ -96,7 +96,6 @@ include("../../common/institutional_info.php");
 			echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	  if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
 			echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
-include("menu_bar.php");
+
 
 ?>
-<a name=inicio>

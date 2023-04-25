@@ -109,9 +109,17 @@ if (file_exists($db_path."opac_conf/opac.def")){
 	}
 }
 ?>
-<form name=parametros method=post>
-<input type=hidden name=db_path value=<?php echo $db_path;?>>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"];?>>
+
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+		<h3><?php echo $msgstr["parametros"]." (opac.def)";?></h3>
+
+<form name="parametros" method="post">
+<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
+<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"];?>">
 <?php
 if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
@@ -133,19 +141,7 @@ if (!isset($shortIcon))$shortIcon="";
 
 ?>
 
-
-<div class="middle form">
-
-   <h3>
-    <?php
-	    echo $msgstr["parametros"]." (opac.def) &nbsp;";
-	 ?>
-	</h3>
-
-	<div class="formContent">
-
-<div id="page">
-    <table cellpading=5>
+    <table class="table striped">
     	<tr>
     		<td><?php echo $msgstr["Web_Dir"];?></td>
     		<td valign=top><input disabled type=text name=conf_Web_Dir size=100 value="<?php echo $Web_Dir?>"></td>
@@ -227,7 +223,6 @@ if (!isset($shortIcon))$shortIcon="";
 <input type="hidden" name="Opcion" value="Guardar">
 <input type="submit" class="bt-green" value="<?php echo $msgstr["save"];?>">
 </form>
-</div>
 </div>
 </div>
 

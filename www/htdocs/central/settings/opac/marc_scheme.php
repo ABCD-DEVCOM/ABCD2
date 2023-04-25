@@ -4,32 +4,37 @@ $wiki_help="OPAC-ABCD_MARCXML";
 include "../../common/inc_div-helper.php";
 ?>
 
-<div class="middle form">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
    <h3><?php 
    		echo "<h3>".$msgstr["xml_marc"]."&nbsp;";
 		echo "<br>".$msgstr["xml_step1"]." &nbsp;";
 		?>
 	</h3>
-	<div class="formContent">
 
-<div id="page">
 <?php
-
 
 //foreach ($_REQUEST as $var=>$value) echo "<xmp>$var=$value</xmp><br>";
 if (!isset($_SESSION["db_path"])){
 	echo "Session expired";die;
 }
 $db_path=$_SESSION["db_path"];
-echo "<form name=marc_scheme method=post>\n";
-echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
-echo "<input type=hidden name=db_path value=".$db_path.">\n";
-echo "<input type=hidden name=Opcion value=Guardar>\n";
-echo "<input type=hidden name=file value=marc_sch.xml>";
+?>
+
+	<form name="marc_scheme" method="post">
+	<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"];?>">
+	<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
+	<input type="hidden" name="Opcion" value="Guardar">
+	<input type="hidden" name="file" value="marc_sch.xml">
+
+<?php
+	$archivo=$db_path."opac_conf/marc_sch.xml";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	echo "</h3>";
 	$lang=$_REQUEST["lang"];
-	$archivo=$db_path."opac_conf/marc_sch.xml";
 	$fout=fopen($archivo,"w");
 	$salida=str_replace(PHP_EOL,"#####",$_REQUEST["conf_marc"]);
 	$esquema=explode('#####',$salida);
@@ -45,6 +50,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	//DATABASES
+	echo "<p>".$archivo."</p>";
 	echo "<div style=\"margin-left:40px;\">";
 	$archivo="marc.xml";
 	$fp=file($archivo);
@@ -52,7 +58,6 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 ?>
 
 	<textarea class="col-12" name=conf_marc rows=20 cols=100>
-
 <?php
 	foreach ($fp as $value){
 		if (trim($value)!=""){
@@ -64,7 +69,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
     echo "</textarea>" ;
 }
 ?>
-	<input type="submit" class="bt-green" name="guardar" value="<?php $msgstr["save"];?> opac_conf/marc_sch.xml"></div>
+	<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
 	</form>
 
 </div>

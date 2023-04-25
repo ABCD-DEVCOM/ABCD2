@@ -10,11 +10,13 @@ include "../../common/inc_div-helper.php";
 ?>
 
 
-<div class="middle form">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
 	<h3><?php echo $msgstr["databases"]?></h3>
-	<div class="formContent">
 
-<div id="page">
     <?php
 
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";  die;
@@ -60,7 +62,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 	 		echo "Database:$value<br><font color=red size=3><strong>".$msgstr["missing_folder"]." $value ".$msgstr["in"]." $db_path</strong></font><br>";
 	 	    $eliminar[$key]="S";
 	 	}
-	 	if (!file_exists($db_path.$actparfolder."/$value.par")){
+	 	if (!file_exists($db_path.$actparfolder."/".$value.".par")){
 	 		echo "Database:$value<br><font color=red size=3><strong>".$msgstr["missing"]." $value.par</strong></font><br>";
             $eliminar[$key]="S";
 	 	}
@@ -80,7 +82,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 			
 			if (!isset($def_base["$key"]))  $def_base["$key"]="";
 				fwrite($fout, $def_base["$key"]);
-				echo "<h3>".$folfer_db." <span class='color-green'>".$msgstr["updated"]."</span></h3><br>";
+				echo "<h3>".$folfer_db.$file_db." <span class='color-green'>".$msgstr["updated"]."</span></h3><br>";
 			fclose($fout);
 		}
 	}
@@ -107,11 +109,11 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 }
 ?>
 
-<form name=actualizar method=post>
+<form name="actualizar" method="post">
 <?php
 $alpha=array();
-if (is_dir($db_path."opac_conf/alpha/$charset")){
-	$handle=opendir($db_path."opac_conf/alpha/$charset");
+if (is_dir($db_path."opac_conf/alpha/".$charset)){
+	$handle=opendir($db_path."opac_conf/alpha/".$charset);
 	while (false !== ($entry = readdir($handle))) {
 		if (!is_file($db_path."opac_conf/alpha/$charset/$entry")) continue;
 		$alpha[$entry]=$entry;
@@ -120,9 +122,11 @@ if (is_dir($db_path."opac_conf/alpha/$charset")){
 
 
 $ix=0;
+?>
+<table class="table striped">
+<tr><th><?php echo $msgstr["db_name"];?></th><th><?php echo $msgstr["db"];?></th><th><?php echo $msgstr["db_desc"];?></th>
 
-echo "<table>";
-echo "<tr><th>".$msgstr["db_name"]."</th><th>".$msgstr["db"]."</th><th>".$msgstr["db_desc"]."</th>";
+<?php
 if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="advanced" and count($alpha)>0){
 	echo "<th>".$msgstr["avail_db_lang"]."</th>";
 }
@@ -133,15 +137,19 @@ if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){
 		if (trim($value)!=""){
 			$l=explode('|',$value);
 			$ix=$ix+1;
-			$base_def="";
-			if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$l[0].".def")){
-				$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$l[0].".def");
-				$base_def=implode(" ",$fp);
-			}
 
 			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
 			echo "<td><input type=text name=conf_ln_".$ix." size=20 value=\"".trim($l[1])."\"></td>";
-			echo "<td><input type=text name=conf_def_".$ix." size=80 value=\"".$base_def."\"></td>";
+
+			$base_def="";
+			$f_base_def=$db_path.$l[0]."/opac/".$_REQUEST["lang"]."/".$l[0].".def";
+			if (file_exists($f_base_def)){
+				$fp=fopen($f_base_def,'r');
+				$contents = fread($fp, filesize($f_base_def));
+				fclose($fp);
+				$cont=nl2br($contents);
+				echo "<td><input type=text name=conf_def_".$ix." size=50 value=\"".$cont."\"></td>";
+			}
 			if (isset($_REQUEST["base"]) and $_REQUEST["base"]=="1"){
 				echo "<td>";
 				$ix_lang=0;
@@ -168,7 +176,7 @@ if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){
 					$value=substr($value,0,$ix_00);
 					echo "<input type=checkbox name=langdb_".$value."_$ix value=\"$value\"";
 					if (isset($langdb[$value])) echo " checked";
-					echo ">$value";
+					echo "> $value";
 					echo "</td>";
 					if ($ix_lang>3){
 						$ix_lang=0;
@@ -191,7 +199,7 @@ for ($i=$ix;$i<$tope;$i++){
 
 	echo "<tr><td><input type=text name=conf_lc_".$i." size=5 value=\"\"></td>";
 	echo "<td><input type=text name=conf_ln_".$i." size=20 value=\"\"></td>";
-	echo "<td><input type=text name=conf_def_".$i." size=80 value=\"\"></td>";
+	echo "<td><input type=text name=conf_def_".$i." size=50 value=\"\"></td>";
 	if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="advanced"){
 		echo "<td>";
 		$ix_lang=0;
@@ -202,7 +210,7 @@ for ($i=$ix;$i<$tope;$i++){
 			echo "<tD>";
 			$ix_00=strrpos($value,".");
 			$value=substr($value,0,$ix_00);
-			echo "<input type=checkbox name=langdb_".$value."_$ix value=\"$value\">$value";
+			echo "<input type=checkbox name=langdb_".$value."_$ix value=\"$value\"> $value";
 			echo "</td>";
 			if ($ix_lang>3){
 				$ix_lang=0;
@@ -216,11 +224,12 @@ for ($i=$ix;$i<$tope;$i++){
 ?>
 
 </table>
-
-<input type="submit" class="bt-green" value="<?php echo $msgstr["save"];?>" >
-
 <input type="hidden" name="lang" value="<?php echo $lang;?>" >
 <input type="hidden" name="Opcion" value="Actualizar" >
+
+<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
+
+
 
 <?php
 if (isset($_REQUEST["conf_level"])){
@@ -230,8 +239,5 @@ if (isset($_REQUEST["conf_level"])){
 </form>
 </div>
 </div>
-</div>
-</div>
-<?php
-include ("../../common/footer.php");
-?>
+
+<?php include ("../../common/footer.php"); ?>

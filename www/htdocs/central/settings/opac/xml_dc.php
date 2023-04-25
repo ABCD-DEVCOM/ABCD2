@@ -9,22 +9,19 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["xml_dc"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["xml_dc"];?>	</h3>
 
 <?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
-if (!isset($_SESSION["db_path"])){
-	echo "Session expired";die;
-}
 
 $db_path=$_SESSION["db_path"];
 $base=$_REQUEST["base"];
-$archivo=$db_path."opac_conf/$lang/bases.dat";
+$archivo=$db_path."opac_conf/".$lang."/bases.dat";
 $fp=file($archivo);
 foreach ($fp as $value){
 	if (trim($value)!=""){
@@ -34,9 +31,7 @@ foreach ($fp as $value){
 
 	}
 }
-echo "<h3><strong>". $name_bd;
-if ($base!="") echo " ($base)";
-echo "</strong>";
+echo "<h4>". $name_bd; if ($base!="") echo " ($base)";echo "</h4>";
 
 if (isset($_REQUEST["Opcion"])){
 	if ($_REQUEST["Opcion"]=="Guardar"){
@@ -96,13 +91,20 @@ if (isset($_REQUEST["Opcion"])){
 		}
 		$formato="\n$formato'</record>'/";
 		fclose($fout);
-		echo "<p><font color=red>".  $archivo." ".$msgstr["updated"]."</font>";
+	?>
+    <h2 class="color-green"><?php echo $archivo." ".$msgstr["updated"];?></h2>
+	<?php
 		echo "<p>".$msgstr["dc_step3"]. " (".$_REQUEST["base"]."/pfts/dcxml.pft)<br>";
     	echo "<textarea name=Pft xcols=80 rows=20 style='width:80%'>$formato</textarea>";
 		echo "<input type=hidden name=Opcion value=\"GuardarPft\">\n";
 		echo "<p>";
-    	echo $msgstr["try_mfn"]." <input type=text name=mfn size=5 id=mfn> <input type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
-		echo "<div><input type=submit name=guardar value=\" ".$msgstr["save"]." ".$_REQUEST["base"]."/pfts/dcxml.pft \" style=\"font-size:15px;\"></div>";
+    	echo $msgstr["try_mfn"]." <input type=text name=mfn size=5 id=mfn>";
+		echo "<input class='bt bt-blue' type=button value=\" ".$msgstr["send"]." \" onclick=Probar()>";
+		echo "<div>";
+		?>
+		<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
+		<?php
+		echo "</div>";
     	echo "</form>";
     }else{
     	if ($_REQUEST["Opcion"]=="GuardarPft"){
@@ -110,7 +112,9 @@ if (isset($_REQUEST["Opcion"])){
         	$fout=fopen($archivo,"w");
         	fwrite($fout,$_REQUEST["Pft"]);
         	fclose($fout);
-        	echo "<h3><font color=red>".  $archivo." ".$msgstr["updated"]."</font></h3>";
+			?>
+			<h2 class="color-green"><?php echo $archivo." ".$msgstr["updated"];?></h2>
+			<?php
     	}
     }
 }
@@ -127,8 +131,7 @@ if (!isset($_REQUEST["Opcion"]) or ($_REQUEST["Opcion"]!="Guardar" and $_REQUEST
 ?>
 </div>
 </div>
-</body
-</html>
+
 <?php
 
 function Entrada($base,$name,$lang,$file){
@@ -148,22 +151,25 @@ global $msgstr,$db_path,$charset;
 	echo "<div style=\"display: flex;\">";
 	$cuenta=0;
 
-	$fdt_db=$db_path.$base."/def/".$_REQUEST["lang"]."/$base.fdt";
+	$fdt_db=$db_path.$base."/def/".$_REQUEST["lang"]."/".$base.".fdt";
     
 	if (file_exists($fdt_db)) {
 		$fp_campos[$base]=file($fdt_db);
 	} else {
-		 $fp_campos[$base]=file($db_path.$base."/def/en/$base.fdt");
+		 $fp_campos[$base]=file($db_path.$base."/def/en/".$base.".fdt");
 	}
 
 	
 	$cuenta=count($fp_campos);
-    echo "<div style=\"flex: 0 0 50%;\">";
-	echo "<form name=$base"."Frm method=post>\n";
-	echo "<input type=hidden name=Opcion value=Guardar>\n";
-    echo "<input type=hidden name=base value=$base>\n";
-    echo "<input type=hidden name=file value=\"$file\">\n";
-    echo "<input type=hidden name=lang value=\"$lang\">\n";
+	?>
+    <div class="w-20">
+	<form name="<?php echo $base;?>Frm" method="post">
+	<input type="hidden" name="Opcion" value="Guardar">
+    <input type="hidden" name="base" value="<?php echo $base;?>">
+    <input type="hidden" name="file" value="<?php echo $file;?>">
+    <input type="hidden" name="lang" value="<?php echo $lang;?>">
+
+	<?php
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
@@ -177,7 +183,7 @@ global $msgstr,$db_path,$charset;
 
 	}
 	echo "<strong>$dc_scheme</strong><br>";
-  	echo "<table bgcolor=#cccccc cellpadding=5>\n";
+  	echo "<table cellpadding=5>\n";
 	echo "<tr><th>".$msgstr["element_dc"]."</th><th>".$msgstr["tagcomma_s"]."</th></tr>\n";
 	$row=0;
 	$fp=file($dc_scheme);
@@ -186,27 +192,35 @@ global $msgstr,$db_path,$charset;
 		if ($value!=""){
 			$v=explode("=",$value);
 			echo "<tr><td colspan=2>".$msgstr["dc_".$v[0]]."</td></tr>";
-			echo "<tr><td bgcolor=white valign=top>";
-			if (isset($v[0])) echo $v[0];
+			echo "<tr><td valign=top>";
+			if (isset($v[0])) echo "<b>".$v[0]."</b>";
 			echo "</td>";
 			echo "<td><input type=text size=50 name=\"conf_".$v[0]."\" value=\"";
 			if (isset($v[1])) echo $v[1];
 			echo "\"></td>";
-			echo "<!--td bgcolor=white>";
+			echo "<!--td>";
 			echo "<textarea name=conf_".$msg_key." value=\"\" row=2 cols=100></textarea>";
 			echo "</td-->\n";
 			echo "</tr>\n";
 		}
 	}
-	echo "</table>\n";
-	echo "<p><div><input class='bt-green' type=submit value=\"".$msgstr["save"]." opac_conf/".$base."_dcxml.tab / ".$msgstr["dc_step3"]."\"  style=\"width:400px;height:60px;font-size:15px;white-space: normal\"></div>";
-	echo "</div>\n";
-	echo "<div style=\"flex: 1\">";
-
+	?>
+		<tr>
+			<td colspan=2 align=center>
+				<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
+			</td>
+		</tr>
+	</table>
+	</div>
+	
+	<div>
+	<?php
 	if ($cuenta>0){
 		foreach ($fp_campos as $key=>$value_campos){
-			echo "<strong>$key/def/$lang/$key.fdt (central ABCD)</strong><br>";
-			echo "<table bgcolor=#cccccc cellpadding=5>\n";
+			echo "<strong>".$key."/def/".$lang."/".$key."fdt (central ABCD)</strong><br>";
+			?>
+			<table class="table striped">
+			<?php
 			echo "<tr><th>tag</th><th></th><th>".$msgstr["subfields"]."</th></tr>\n";
 			foreach ($value_campos as $value) {
 				if ($db_charset!=$charset){
@@ -223,12 +237,17 @@ global $msgstr,$db_path,$charset;
 			echo "</table>";
 		}
 	}
-	echo "</div></div>";
-	echo "</form></div><p>";
+
 }
 ?>
-</body
-</html>
+</form>
+	</div>
+</div>
+	
+</div>
+
+<?php include ("../../common/footer.php"); ?>
+
 <script>
 document.getElementById("mfn").onkeypress = function(e) {
   var key = e.charCode || e.keyCode || 0;
@@ -252,4 +271,3 @@ function Probar(){
 </script>
 
 
-<?php include ("../../common/footer.php"); ?>

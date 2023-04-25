@@ -5,12 +5,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["facetas"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["facetas"];?></h3>
 
 <?php
 
@@ -110,7 +110,7 @@ global $msgstr,$db_path;
 	echo "<strong>". $name. " ($base)</strong>";
 	echo "<div  id='$iD' style=\"width:100%; display: table;\">\n";
 	echo "<div style=\"display: table-row\">";
-	echo "<div style=\"display:table-cell;width:55%;text-align:left;margin-top:0;\">";
+	echo "<div style=\"display:table-cell;width:50%;text-align:left;margin-top:0;\">";
 	$cuenta=0;
 	
 	if ($base!="" and $base!="META"){
@@ -137,8 +137,8 @@ if ($base!="" and $base!="META"){
 		$fp[]='|';
 		$fp[]='|';
 	}
-	echo "<table bgcolor=#cccccc>\n";
-	echo "<tr><td colspan=2 bgcolor=white>";
+	echo "<table >\n";
+	echo "<tr><td colspan=2>";
 		echo "<strong>opac_conf/$lang/$file</strong><br>";
 	echo "</td></tr>";
 	echo "<tr><th>".$msgstr["nombre"]."</th><th>".$msgstr["expr_b"]."</th></tr>\n";
@@ -153,35 +153,44 @@ if ($base!="" and $base!="META"){
 			foreach ($v as $var){
 				$ix=$ix+1;
 				if ($ix>2) break;
-				echo "<td bgcolor=white>";
+				echo "<td>";
 		 		if ($ix==0)
 		 			$size=30;
 				else
-					$size=60;
+					$size=50;
 			 	echo "<input type=text name=conf_base_".$row."_".$ix." value=\"$var\" size=$size>";
 				echo "</td>\n";
 			}
 			echo "</tr>\n";
 		}
 	}
-	echo "<tr><td colspan=2 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD."\"></td></tr>";
-	echo "</table></div>\n";
-	echo "<div style=\"display:table-cell;width:42% ;\">";
+	?>
+		<tr>
+			<td colspan=2 align=center>
+				<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
+			</td>
+		</tr>
+	</table>
+	</div>
+	
+	<div style="display:table-cell;width:42% ;">
+	<?php
 	if ($cuenta>0){
-		echo "<table bgcolor=#cccccc cellpadding=2 width=100%>\n";
+		?>
+		<table class="table striped">
+		<?php
         echo "<tr><td colspan=3>";
-        echo "<strong>$base/data/$base.fst</strong><br><br></td></tr>";
+        echo "<strong>".$base."/data/".$base.".fst</strong><br><br></td></tr>";
 		foreach ($fp_campos as $value) {
 			if (trim($value)!=""){
 				$v=explode(' ',$value,3);
-				echo "<tr><td bgcolor=white>".$v[0]."</td><td bgcolor=white>".$v[1]."</td><td bgcolor=white>".$v[2]."</td></tr>\n";
+				echo "<tr><td>".$v[0]."</td><td>".$v[1]."</td><td>".$v[2]."</td></tr>\n";
 			}
 		}
 		echo "</table>";
 	}
 	echo "</div></div>";
-	echo "</form></div><p>";
+	echo "</form></div>";
 }
 ?>
 

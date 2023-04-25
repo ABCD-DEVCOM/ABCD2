@@ -10,12 +10,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php  echo $msgstr["dbn_par"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php  echo $msgstr["dbn_par"];?></h3>
 
 <?php
 
@@ -143,7 +143,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 ?>
 
-</div>
 </div>
 </div>
 

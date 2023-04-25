@@ -5,12 +5,14 @@ include "../../common/inc_div-helper.php";
 
 ?>
 <script src="../../../opac/js/jscolor.js"></script>
-<div class="middle form">
-   <h3><?php echo $msgstr["styles"];?>
-    </h3>
-    <div class="formContent">
 
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+    
+    <h3><?php echo $msgstr["styles"];?></h3>
 
 <?php
 if (!isset($_SESSION["db_path"])){
@@ -68,7 +70,6 @@ echo $msgstr["styles_body"]?>
 
     </table>
 
-</div>    
 </div>    
 </div>    
 

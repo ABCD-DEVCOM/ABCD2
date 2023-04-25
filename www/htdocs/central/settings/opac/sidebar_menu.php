@@ -2,27 +2,18 @@
 include ("tope_config.php");
 $wiki_help="OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_desplegable_izquierdo";
 include "../../common/inc_div-helper.php";
-
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["sidebar_menu"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+   	
 
 <?php
-
- if (!isset($_SESSION["db_path"])){
-	echo "Session expired";die;
-}
-if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-
-
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>"; //die;
 
-$lang=$_REQUEST["lang"];
 $link=array();
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
@@ -56,11 +47,17 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 	}
 
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+	?>
+    <h2 class="color-green"><?php echo "opac_conf/".$lang."/".$_REQUEST["file"]." ".$msgstr["updated"];?></h2>
+	<?php
 }
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$file="side_bar.info";
+	$path_file=$db_path."opac_conf/".$_REQUEST["lang"]."/".$file;
+?>
+	<h3><?php echo $msgstr["sidebar_menu"];?> (<small><?php echo $path_file;?></small>)</h3>
+<?php
 	echo "<form name=side"."Frm method=post xonSubmit=\"return checkform()\">\n";
 	echo "<input type=hidden name=db_path value=".$db_path.">";
 	echo "<input type=hidden name=Opcion value=Guardar>\n";
@@ -69,8 +66,8 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
    	if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-	if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$file")){
-		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$file");
+	if (file_exists($path_file)){
+		$fp=file($path_file);
 		if (!isset($fp[0]) or $fp[0]!="[SECCION]") $fp[]="[SECCION]";
 		$fp[]='|||';
 		$fp[]='|||';
@@ -115,10 +112,12 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 				if ($ixsec!=0){
 					$ix=$ix+1;
 					AgregarLineas($ix,$ixsec);
-					echo "</table><br><hr size=2 color=darkblue><br>";
+					echo "</table><br><hr><br>";
 					$ix=0;
 				}
-				echo "<table cellpadding=5>";
+				?>
+				<table class="table striped">
+				<?php
 				$ixsec=$ixsec+1;
 				echo "<tr style=\"height:20px;\"><th colspan=2 align=left><strong>".$msgstr["title_sec"]."</strong>&nbsp ";
 				echo "<input type=text name=side_sec_$ixsec"."_0 size=20 value=\"$sec_name\"></th></tr>";
@@ -135,21 +134,21 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 			}
 		}
 	}
-	echo "<tr><td colspan=3 align=center><br><hr size=2 color=darkblue><br><input type=submit value=\"".$msgstr["send"]."\"></td></tr>";
-	echo "</table>";
-	echo "</form>";
-}
-
-
 ?>
+		
+		</table>
+		<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
+	
+	</form>
+
+	<?php } ?>
 
 
-</div>    
 </div>    
 </div>    
 
 <?php include ("../../common/footer.php"); ?>
-</html>
+
 <?php
 function AgregarLineas($ix,$ixsec){
 	for ($i=0;$i<4;$i++){

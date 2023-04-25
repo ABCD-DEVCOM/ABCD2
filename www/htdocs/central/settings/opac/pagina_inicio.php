@@ -2,28 +2,22 @@
 include ("tope_config.php");
 $wiki_help="OPAC-ABCD_Apariencia#Primera_p.C3.A1gina";
 include "../../common/inc_div-helper.php";
-
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["first_page"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+		<h3><?php echo $msgstr["first_page"];?></h3>
 
 <?php
 
-if (!isset($_SESSION["db_path"])){
-	echo "Session expired";die;
-}
-if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
-
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>"; //die;
 
-$lang=$_REQUEST["lang"];
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
-	$archivo=$db_path."opac_conf/$lang/".$_REQUEST["file"];
+	$file_request=$_REQUEST["file"];
+	$archivo=$db_path."opac_conf/".$lang."/".$file_request;
 	$fout=fopen($archivo,"w");
 	foreach ($_REQUEST as $var=>$value){
 		$value=trim($value);
@@ -56,24 +50,30 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+	?>
+    <h2 class="color-green"><?php echo "opac_conf/".$lang."/".$_REQUEST["file"]." ".$msgstr["updated"];?></h2>
+	<?php
 }
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$file="sitio.info";
-	echo "<form name=home"."Frm method=post onSubmit=\"return checkform()\">\n";
-	echo "<input type=hidden name=db_path value=".$db_path.">";
-	echo "<input type=hidden name=Opcion value=Guardar>\n";
-    echo "<input type=hidden name=file value=\"$file\">\n";
-    echo "<input type=hidden name=lang value=\"$lang\">\n";
+?>	
+
+	<form name="homeFrm" method="post" onSubmit="return checkform()">
+	<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
+	<input type="hidden" name="Opcion" value="Guardar">
+	<input type="hidden" name="file" value="<?php echo $file;?>">
+	<input type="hidden" name="lang" value="<?php echo $lang;?>">
+  
+<?php
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
     $home_link="";
     $height_link="";
 	$home_text="";
-	if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$file")){
-		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$file");
+	if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$file)){
+		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$file);
 		foreach ($fp as $value){
 			$value=trim($value);
 			if ($value!=""){
@@ -90,44 +90,50 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 			}
 		}
 	}
-	echo "<table cellpadding=5>";
-	echo "<tr><td colspan=2>"."<font color=darkred size=3><strong>".$msgstr["sel_one"]."</strong></font></td></tr>";
-	echo "<tr><td valign=top nowrap>".$msgstr["base_home_link"]."<br>Ex:http://www.abcdonline.info</td>";
-	echo "<td>"."<input type=text name=home_link size=70 value=\"$home_link\">";
-	echo "&nbsp; ".$msgstr["frame_h"]." <input type=text name=height_link size=5 value=\"$height_link\">px</td></tr>";
-	echo "<tr><td valign=top>".$msgstr["base_home_text"]."</td>";
-	echo "<td>"."<input type=text size=100 name=home_text value=\"$home_text\"";
-	echo "><br><br>";
-	$home_html="";
-	if ($home_text!=""){
-		if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$home_text)){
-			$home_html=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$home_text);
-			$home_html=implode($home_html);
+?>
+	<h4><?php echo $msgstr["sel_one"];?></h4>
+
+	<div class="formRow">
+		<label><?php echo $msgstr["base_home_link"];?><small>Ex: https://abcd-community.org</small></label>
+		<input type="text" name="home_link" size="70" value="<?php echo $home_link;?>">
+	</div>
+
+	<div class="formRow">
+		<label><?php echo $msgstr["frame_h"];?></label>
+		<input type="text" name="height_link" size="5" value="<?php echo $height_link;?>">px
+	</div>
+
+	<div class="w-10 p-2">
+		<label class="w-10"><?php echo $msgstr["base_home_text"];?><small> <br>(<?php echo $db_path."opac_conf/".$_REQUEST["lang"];?>)</small></label>
+		<input type="text" size="100" name="home_text" value="<?php echo $home_text;?>">
+	</div>
+
+	<div class="formRow" id="ckeditorFrm">
+	<?php 
+		$home_html="";
+		if ($home_text!=""){
+			if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$home_text)){
+				$home_html=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$home_text);
+				$home_html=implode($home_html);
+			}
 		}
-	}
 
-	echo "<div style=\"position:relative;display:block;\" id=ckeditorFrm> ";
-	echo "<script src=\"$server_url/".$app_path."/ckeditor/ckeditor.js\"></script>";
+		echo "<script src=\"$server_url/".$app_path."/ckeditor/ckeditor.js\"></script>";
 
-?>
-<textarea cols="80" id="editor1" name="editor1" rows="10" <?php echo $home_html?>></textarea>
-  <script>
-    CKEDITOR.replace('editor1', {
-      height: 260,
-      width: 800,
-    });
-  </script>
-<?php
+	?>
+	<textarea cols="80" id="editor1" name="editor1" rows="10" <?php echo $home_html?>></textarea>
+	<script>
+		CKEDITOR.replace('editor1', {
+		height: 260,
+		width: 800,
+		});
+	</script>
+	</div>
 
-	echo "</div>";
-	echo "</td></tr>";
-	echo "<tr><td colspan=2 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]."\"></td></tr>";
-	echo "</table>";
-	echo "</form>";
-}
-?>
-</div>    
+	<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
+</form>
+
+<?php } ?>
 </div>    
 </div>    
 

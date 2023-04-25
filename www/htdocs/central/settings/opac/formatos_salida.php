@@ -6,11 +6,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["select_formato"];?>
-	</h3>
-	<div class="formContent">
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["select_formato"];?></h3>
 
 <?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
@@ -87,14 +88,12 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="copiarde"){
 
 
 ?>
-<form name=indices method=post>
-<input type=hidden name=db_path value=<?php echo $db_path;?>>
-<div id="page">
-    <h3>
-    <?php
+<form name="indices" method="post">
+<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
 
+<?php
 //DATABASES
-$archivo_conf=$db_path."opac_conf/$lang/bases.dat";
+$archivo_conf=$db_path."opac_conf/".$lang."/bases.dat";
 $fp=file($archivo_conf);
 if ($_REQUEST["base"]=="META"){
 	Entrada("MetaSearch",$msgstr["metasearch"],$lang,"formatos.dat","META");
@@ -111,15 +110,14 @@ if ($_REQUEST["base"]=="META"){
 	}
 }
 ?>
-</div>
 
 
-<form name=copiarde method=post>
-<input type=hidden name=db>
-<input type=hidden name=archivo>
-<input type=hidden name=Opcion value=copiarde>
-<input type=hidden name=lang_copiar>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"]?>>
+<form name="copiarde" method="post">
+<input type="hidden" name="db">
+<input type="hidden" name="archivo">
+<input type="hidden" name="Opcion" value="copiarde">
+<input type="hidden" name="lang_copiar">
+<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"]?>">
 </form>
 
 <script>
@@ -133,6 +131,7 @@ function Copiarde(db,db_name,lang,file){
 	//alert(ln.name)
 }
 </script>
+
 <?php
 function CopiarDe($iD,$name,$lang,$file){
 global $db_path, $archivo_conf;
@@ -169,17 +168,19 @@ global $msgstr,$db_path;
 
 	    $cuenta=count($fp_campos);
     }
-    echo "<div style=\"flex: 0 0 50%;\">";
-	echo "<form name=$iD"."Frm method=post>\n";
-	echo "<input type=hidden name=Opcion value=Guardar>\n";
-    echo "<input type=hidden name=base value=$base>\n";
-    echo "<input type=hidden name=file value=\"$file\">\n";
-    echo "<input type=hidden name=lang value=\"$lang\">\n";
+?>
+    <div class="w-30">
+		<form name="<?php echo $iD;?>Frm" method="post">
+		<input type="hidden" name="Opcion" value=Guardar>
+    	<input type="hidden" name="base" value=$base>
+    	<input type="hidden" name="file" value="<?php echo $file;?>">
+    	<input type="hidden" name="lang" value="<?php echo $lang;?>">
+	<?php
     if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-	echo "<strong>$base/opac/$lang/$file</strong><br>";
-	echo "<font color=red><strong>".$msgstr["no_pft_ext"]."</strong></font><br>";
+	echo "<strong>".$base."/opac/".$lang."/".$file."</strong><br>";
+	echo "<small>".$msgstr["no_pft_ext"]."</small><br>";
 	$cuenta_00=0;
 
 		if (file_exists($db_path.$base."/opac/$lang/$file")){
@@ -193,8 +194,8 @@ global $msgstr,$db_path;
 		$fp[]='||';
 	$ix=0;	
 	$row=0;	
-	echo "<table bgcolor=#cccccc cellpadding=5>\n";
-	echo "<tr><th>Pft</th><th>".$msgstr["nombre"]."</th><th>".$msgstr["pft_meta"]."</th></tr>\n";
+	echo "<table cellpadding=5>\n";
+	echo "<tr><th>Pft</th><th>".$msgstr["nombre"]."</th><th  width=50>".$msgstr["pft_meta"]."</th></tr>\n";
 
 	foreach ($fp as $value) {
 
@@ -210,22 +211,34 @@ global $msgstr,$db_path;
 			 if (isset($l[2]) and trim($l[2])=="Y") echo " checked";
 			echo ">\n";
 			echo "</td><td>";
-			echo  " &nbsp; <a href=javascript:EditarPft('".$l[0]."')>".$msgstr["edit"]."</a>";
+			echo  "<a class='bt bt-blue' href=javascript:EditarPft('".$l[0]."')>".$msgstr["edit"]."</a>";
 			echo "</td>\n";
 			echo "</tr>";
 		}
 	}
 
 	echo "<tr><td colspan=2 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD."\"></td></tr>";
-	echo "</table>\n";
-	echo "</div>\n";
-	echo "<div style=\"flex: 1\">";
+	?>
+	<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
+</form>
+	
+</table>
 
+</div>
+	
+	<div class="w-20">
+
+	<?php
 	if ($cuenta>0){
-		echo "<strong>$base/$lang/formatos.dat</strong><br>";
-		echo "<table bgcolor=#cccccc cellpadding=5>\n";
-		echo "<tr><th>Pft</th><th>".$msgstr["nombre"]."</th></tr>\n";
+		echo "<strong>".$base."/".$lang."/formatos.dat</strong><br>";
+	?>
+
+	<table class="table striped">
+		<tr>
+			<th>Pft</th>
+			<th><?php echo $msgstr["nombre"];?></th>
+		</tr>
+		<?php
 		foreach ($fp_campos as $value) {
 			$value=trim($value);
 			if ($value!=""){
@@ -233,12 +246,22 @@ global $msgstr,$db_path;
 				echo "<tr><td>".$v[0]."</td><td>".$v[1]."</td></tr>\n";
 			}
 		}
-		echo "</table>";
 	}
-	echo "</div></div>";
-	echo "</form></div><p>";
-}
-?>
+	?>
+	</table>
+		
+	
+	
+	<?php } ?>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>
+
 <script>
 function EditarPft(Pft){
 	params ="scrollbars=auto,resizable=yes,status=no,location=no,toolbar=no,menubar=no,width=800,height=600,left=0,top=0"
@@ -247,11 +270,3 @@ function EditarPft(Pft){
 }
 </script>
 
-</div>
-</div>
-</div>
-
-
-
-
-<?php include ("../../common/footer.php"); ?>

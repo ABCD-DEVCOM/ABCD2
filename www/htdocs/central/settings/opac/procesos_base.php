@@ -10,13 +10,12 @@ if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="basic" or !isse
 include "../../common/inc_div-helper.php";
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["db_configuration"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
-
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+		<h3><?php echo $msgstr["db_configuration"];?></h3>
 <?php
 
 include($ABCD_scripts_path."opac/leer_bases.php");
@@ -109,8 +108,8 @@ if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
 			 if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="basic" or !isset($_REQUEST["conf_level"])){
 				echo "<h4>".$msgstr["conf_b"]."</h4>";
 				?>
-            	<li><a href="javascript:SeleccionarProceso('busqueda_libre.php','<?php echo $base?>')"><?php echo $msgstr["free_search"];?></li>
-				<li><a href="javascript:SeleccionarProceso('busqueda_avanzada.php','<?php echo $base?>')"><?php echo $msgstr["buscar_a"];?></li>
+            	<li><a href="javascript:SeleccionarProceso('edit_form-search.php','<?php echo $base?>','libre')"><?php echo $msgstr["free_search"];?></li>
+				<li><a href="javascript:SeleccionarProceso('edit_form-search.php','<?php echo $base?>','avanzada')"><?php echo $msgstr["buscar_a"];?></li>
 		    	<?php
 		    	if ($base!="META"){
 					echo "<li><a href=\"javascript:SeleccionarProceso('formatos_salida.php','$base')\">".$msgstr["select_formato"]."</a></li>";
@@ -193,15 +192,14 @@ if (!isset($_REQUEST["conf_level"])){
 
 </div>
 </div>
-</div>
 
 <?php include ("../../common/footer.php"); ?>
 
 
-<form name=forma1 method=post>
+<form name="forma1" method="post">
 <?php if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
-<input type=hidden name=base>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"]?>>
+<input type="hidden" name="base">
+<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"]?>">
 </form>

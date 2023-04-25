@@ -2,15 +2,14 @@
 include ("tope_config.php");
 $wiki_help="OPAC-ABCD_Apariencia#Agregar_enlaces_al_men.C3.BA_superior_horizontal";
 include "../../common/inc_div-helper.php";
-
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["horizontal_menu"];?>
-	</h3>
-	<div class="formContent">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
 
-<div id="page">
 
 <?php
 
@@ -46,7 +45,9 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		if ($salida!="") fwrite($fout,$salida."\n");
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+    ?>
+    <h2 class="color-green"><?php echo "opac_conf/".$lang."/".$_REQUEST["file"]." ".$msgstr["updated"];?></h2>
+	<?php
 }
 ?>
 
@@ -54,6 +55,10 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	$file="menu.info";
+	$path_file=$db_path."opac_conf/".$_REQUEST["lang"]."/".$file;
+?>
+	   	<h3><?php echo $msgstr["horizontal_menu"];?> (<small><?php echo $path_file;?></small>)</h3>
+<?php
 	echo "<form name=home"."Frm method=post onSubmit=\"return checkform()\">\n";
 	echo "<input type=hidden name=db_path value=".$db_path.">";
 	echo "<input type=hidden name=Opcion value=Guardar>\n";
@@ -62,10 +67,12 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
    	if (isset($_REQUEST["conf_level"])){
 		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 	}
-	echo "<table cellpadding=5>";
+	?>
+	<table class="table striped">
+	<?php
 	echo "<tr><th>".$msgstr["nombre"]."</th><th>".$msgstr["link"]."</th><th>".$msgstr["new_w"]."</th></tr>";
-	if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/$file")){
-		$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/$file");
+	if (file_exists($path_file)){
+		$fp=file($path_file);
 	}else{
 		$fp=array();
 		$fp[]='||';
@@ -88,14 +95,15 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 			echo"</tr>";
 		}
 	}
-	echo "<tr><td colspan=3 align=center>";
-   	echo "<p><input type=submit value=\"".$msgstr["save"]."\"></td></tr>";
-	echo "</table>";
-	echo "</form>";
-}
 ?>
+		
+		</table>
+		<button type="submit" class="bt-green m-2"><?php echo $msgstr["save"]; ?></button>
+	
+	</form>
 
-</div>    
+	<?php } ?>
+
 </div>    
 </div>    
 

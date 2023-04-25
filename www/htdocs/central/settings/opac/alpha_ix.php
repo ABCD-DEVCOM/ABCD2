@@ -5,13 +5,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["indice_alfa"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
-
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["indice_alfa"];?></h3>
 
 <form name="indice"s method="post">
 <input type="hidden" name="db_path" value="<?php echo $db_path;?>">
@@ -232,7 +231,15 @@ global $msgstr,$db_path;
 			$ix=$ix+1;
 			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
 			echo "<td><input type=text name=conf_lp_".$ix." size=30 value=\"".trim($l[1])."\"></td>";
-			echo "<td><input type=text name=conf_ln_".$ix." size=30 value=\"".trim($l[2])."\"></td>";
+			echo "<td><select name=conf_ln_".$ix.">";
+			echo "<option></option>";
+
+			echo "<option value='1'"; if (trim($l[2])==1) echo "selected";
+			echo">1</option>";
+			echo "<option value='2'"; if (trim($l[2])==2) echo "selected";
+			echo ">2</option>";
+			echo "</select>";
+			echo "</td>";
 	 		echo "<td>";
 			echo "<input type=checkbox name=conf_df_".$ix." value=ALL";
 			 if (isset($l[3]) and trim($l[3])=="ALL") echo " checked";
@@ -245,7 +252,7 @@ global $msgstr,$db_path;
 
 	}
 	echo "<tr><td colspan=4 align=center> ";
-	echo "<p><input type=submit value=\"".$msgstr["save"]." ".$iD." (opac_conf/$lang/$file)\"></td></tr>";
+	echo "<input type=submit value=\"".$msgstr["save"]." ".$iD." (opac_conf/$lang/$file)\"></td></tr>";
 	echo "</table>\n";
 	echo "</div>";
 	echo "<div style=\"flex: 1\">";
@@ -254,13 +261,13 @@ global $msgstr,$db_path;
 	    $fp_campos=file($db_path.$base."/data/$base.fst");
 	    $cuenta=count($fp_campos);
 		if ($cuenta>0){
-			echo "<table bgcolor=#cccccc cellpadding=2 width=100%>\n";
+			echo "<table class=\"table striped\" width=100%>\n";
         	echo "<tr><td colspan=3>";
         	echo "<strong>$base/data/$base.fst</strong><br><br></td></tr>";
 			foreach ($fp_campos as $value) {
 				if (trim($value)!=""){
 					$v=explode(' ',$value,3);
-					echo "<tr><td bgcolor=white>".$v[0]."</td><td bgcolor=white>".$v[1]."</td><td bgcolor=white>".$v[2]."</td></tr>\n";
+					echo "<tr><td>".$v[0]."</td><td>".$v[1]."</td><td>".$v[2]."</td></tr>\n";
 				}
 			}
 			echo "</table>";
@@ -274,7 +281,7 @@ global $msgstr,$db_path;
 				$v=explode("|",$value);
 				$bd_ix=$v[0];
 				if (file_exists($db_path.$bd_ix."/opac/".$_REQUEST["lang"]."/$bd_ix.ix")){
-					echo "<p><strong><font color=darkred>".$msgstr["indice_alfa"]." &nbsp$bd_ix.ix</font></strong>";
+					echo "<strong><font color=darkred>".$msgstr["indice_alfa"]." &nbsp$bd_ix.ix</font></strong>";
 					echo "<table bgcolor=#cccccc cellpadding=5>\n";
 					echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th><th>".$msgstr["ix_cols"]."</th><th>".$msgstr["ix_postings"]."</th></tr>\n";
 					$fp=file($db_path.$bd_ix."/opac/".$_REQUEST["lang"]."/$bd_ix.ix");
@@ -315,7 +322,6 @@ global $msgstr,$db_path;
 ?>
 
 
-</div>
 </div>
 </div>
 
