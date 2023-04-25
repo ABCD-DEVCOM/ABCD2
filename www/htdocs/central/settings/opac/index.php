@@ -2,43 +2,11 @@
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
 if (isset($_REQUEST["conf_level"])) unset($_REQUEST["conf_level"]);
 include ("tope_config.php");
-if (isset($_REQUEST["lang_init"])){
-	$_SESSION["lang_init"]=$_REQUEST["lang_init"];
-	unset($_REQUEST["lang_init"]);
-}
+
 $wiki_help="OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci.C3.B3n";
 
-
-if (isset($lang)) $lang=$lang;
-if (!isset($_SESSION["showhelp"])){
-	if (isset($_REQUEST["showhelp"])){
-		if ($_REQUEST["showhelp"]=="Y"){
-			$_SESSION["showhelp"]="Y";
-		}else{
-			$_SESSION["showhelp"]="N";
-		}
-	}else{
-		$_SESSION["showhelp"]="N";
-	}
-}
-if ($_SESSION["showhelp"]=="Y")
-	$showhelp="block";
-else
-	$showhelp="none";
 ?>
-<style>
-	#wwrapper {
-  		display: flex;
-	}
-	#wleft {
-  		flex: 0 0 35%;
-	}
-	#wright {
 
-  		flex: 0 0 65%;
-  		margin: auto;
-	}
-</style>
 <script>
 	function EnviarCopia(){
 		if (document.copiar_a.lang_to.options[document.copiar_a.lang_to.selectedIndex].value=="<?php echo $lang?>"){
@@ -232,96 +200,21 @@ Global $valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per
 	include "../../common/inc_div-helper.php";
 ?>
 
-<div class="middle form">
-	<div class="formContent">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
 
-<div id="page">
-<?php
-
-
-
-?>
-
-
-
-
-
-	<div id=page>
-			<p>
-			<h4><a href="javascript:EnviarForma('diagnostico.php')"><?php echo $msgstr["check_conf"];?></a><h4>
-			<h4><?php echo $msgstr["general"] ?></h4>
-			<ul>
-			<li><a href="javascript:EnviarForma('parametros.php')"><?php echo $msgstr["parametros"];?></a></li>
-			<li><a href="javascript:EnviarForma('lenguajes.php')"><?php echo $msgstr["available_languages"];?></a></li>
-			<li><a href="javascript:EnviarForma('databases.php')"><?php echo $msgstr["databases"];?></a></li>
-			<li><a href="javascript:EnviarForma('record_toolbar.php')"><?php echo $msgstr["rtb"];?></a></li>
-            <li><?php echo $msgstr["meta_schema"]?> </li>
-            <ul>
-            <li><a href="javascript:EnviarForma('marc_scheme.php')"><?php echo $msgstr["xml_marc"];?></a></li>
-            <li><a href="javascript:EnviarForma('dc_scheme.php')"><?php echo $msgstr["xml_dc"];?></a></li>
-            </ul>
-			</ul>
-<?php if (file_exists($db_path."opac_conf/".$lang."/bases.dat") and file_exists($db_path."opac_conf/".$lang."/lang.tab")){
-?>			<h4><?php echo $msgstr["db_configuration"] ?></h4>
-			<?php
-			echo "<ul>";
-
-			if (!file_exists($db_path."opac_conf/".$lang."/bases.dat")){
-				echo "<font color=red>".$msgstr["missing"]."opac_conf/".$lang."/bases.dat";
-			}else{
-
-				$fp=file($db_path."opac_conf/".$lang."/bases.dat");
-				$cuenta=0;
-				foreach ($fp as $value){
-					if (trim($value)!=""){
-						$cuenta=$cuenta+1;
-						$x=explode('|',$value);
-						echo "<li><a href=\"javascript:SeleccionarBase('".$x[0]."')\">".$x[1]."</li>\n";
-					}
-				}
-
-			}
-			if ($cuenta>1)
-				echo "<li><a href=\"javascript:SeleccionarBase('META')\"><strong>".$msgstr["metasearch"]."</strong></a></li>\n";
-
-			?>
-			</ul>
-<?php echo "<h4>".$msgstr["loan_conf"]."</h4>";?>
-			<ul>
-			<li><a href="javascript:EnviarForma('statment_cnf.php')"><?php echo $msgstr["ONLINESTATMENT"]?></a></li>
-			<li><a href="javascript:EnviarForma('renovation_cnf.php')"><?php echo $msgstr["WEBRENOVATION"]?></a></li>
-			<li><a href="javascript:EnviarForma('reservations_cnf.php')"><?php echo $msgstr["WEBRESERVATION"]?></a></li>
-			</ul>
-<?php echo "<h4>".$msgstr["apariencia"]."</h4>";?>
-			<ul>
-			<li><a href="javascript:EnviarForma('pagina_inicio.php')"><?php echo $msgstr["first_page"]?></a></li>
-			<li><a href="javascript:EnviarForma('footer_cfg.php')"><?php echo $msgstr["footer"]?></a></li>
-			<li><a href="javascript:EnviarForma('sidebar_menu.php')"><?php echo $msgstr["sidebar_menu"]?></a></li>
-			<li><a href="javascript:EnviarForma('horizontal_menu.php')"><?php echo $msgstr["horizontal_menu"]?></a></li>
-			<li><a href="javascript:EnviarForma('presentacion.php')"><?php echo $msgstr["pagina_presentacion"];?></a></li>
-			<li><a href="javascript:EnviarForma('opac_msgs.php')"><?php echo $msgstr["sys_msg"];?></a></li>
-			</ul>
-<?php echo "<h4>".$msgstr["charset_cnf"]."</h4>";?>
-			<ul>
-			<li><a href="javascript:EnviarForma('db_langs.php')"><?php echo $msgstr["avail_db_lang"];?></a></li>
-            <li><a href="javascript:SeleccionarProceso('databases.php','1')"><?php echo $msgstr["charset_db"];?></a></li>
-			</ul>
-
-<?php } ?>
-</div>
-</div>
-</div>
-</div>
-
-<?php
-include ("../../common/footer.php");
-?>
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	</div>
+</div> 
+<?php include ("../../common/footer.php"); ?>
 
 <form name=forma1 method=post>
 <?php if (isset($_REQUEST["conf_level"])){
 	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 }?>
-<input type=hidden name=base>
-<input type=hidden name=lang value=<?php echo $lang;?>>
-<input type=hidden name=db_path value=<?php echo $_REQUEST["db_path"]?>>
+<input type="hidden" name="base">
+<input type="hidden" name="lang" value="<?php echo $lang;?>">
+<input type="hidden" name="db_path" value="<?php echo $_REQUEST["db_path"]?>">
 </form>
