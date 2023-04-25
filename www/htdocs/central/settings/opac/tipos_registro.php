@@ -5,12 +5,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["tipos_registro"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["tipos_registro"];?></h3>
 
 <?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
@@ -76,10 +76,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 </div>
 </form>
 
-</div>
-</div>
 
-<?php include ("../../common/footer.php"); ?>
 
 <?php
 function Entrada($iD,$name,$lang,$file,$base){
@@ -118,7 +115,7 @@ global $msgstr,$db_path;
 		$fp[]='||';
 	}
 
-	echo "<table bgcolor=#cccccc cellpadding=5>\n";
+	echo "<br><table class=\"table\" width=100%>\n";
 	echo "<tr><th>".$msgstr["id"]."</th><th>".$msgstr["nombre"]."</th><th>".$msgstr["ix_pref"]."</th></tr>\n";
 	$ix=0;	
 	$row=0;	
@@ -149,7 +146,7 @@ global $msgstr,$db_path;
 	if ($cuenta>0){
 		echo "<div style=\"flex: 1\">";
 		echo "<strong>$base/$lang/typeofrecord.tab</strong><br>";
-		echo "<table bgcolor=#cccccc cellpadding=5>\n";
+		echo "<br><table class=\"table striped\" width=100%>\n";
 		echo "<tr><th>".$msgstr["id"]."</th><th>".$msgstr["nombre"]."</th></tr>\n";
 		foreach ($fp_campos as $value) {
 			if (trim($value)!=""){
@@ -164,3 +161,7 @@ global $msgstr,$db_path;
 	echo "</div></div>";
 }
 ?>
+</div>
+</div>
+
+<?php include ("../../common/footer.php"); ?>

@@ -1,11 +1,9 @@
-<?php
-include("tope_config.php");
+<?php 
+include("tope_config.php"); 
+include "../../common/inc_div-helper.php";
 ?>
-<div id="page">
-	<p>
-    <h3><?php echo $msgstr["avail_db_lang"]?> &nbsp;<a href=http://wiki.abcdonline.info/OPAC-ABCD_configuraci%C3%B3n_avanzada#Juego_de_caracteres_disponibles target=_blank><img src=../../../opac/images_config/helper_bg.png></a></h3><p>
 
-    <p>
+
 <?php
 /*echo "<pre>";
 foreach ($_REQUEST as $var=>$value) echo "$var=>$value \n";
@@ -42,11 +40,21 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 }
 ?>
 
-<form name=actualizar method=post>
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+		<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+
+    <h3><?php echo $msgstr["avail_db_lang"]?></h3>
+
+
+<form name="actualizar" method="post">
 <?php
 $ix=0;
-echo "opac_conf/alpha/$charset";
-echo "<table>";
+
+
+
 
 if (is_dir($db_path."opac_conf/alpha/$charset")){
 	$handle=opendir($db_path."opac_conf/alpha/$charset");
@@ -54,17 +62,27 @@ if (is_dir($db_path."opac_conf/alpha/$charset")){
 		if (!is_file($db_path."opac_conf/alpha/$charset/$entry")) continue;
 		$file = basename($entry, ".tab");
 		$ix=$ix+1;
+
+		$f_entry=$db_path."opac_conf/alpha/".$charset."/".$entry;
+		$fp=file($f_entry);
+
+		echo "<p>".$f_entry."</p>";
+		
+
+		echo "<table>";
 		echo "<tr><th>".$msgstr["lang_name"]."</th><th>".$msgstr["lang_order"]."<br>".$msgstr["uno_por_linea"]."</th></tr>";
 		echo "<tr><td valign=top><input type=text name=conf_lc_".$ix." size=25 value=\"$file\"></td>";
-		$fp=file($db_path."opac_conf/alpha/$charset"."/$entry");
-		echo "<td align=center><textarea cols=10 rows=30  name=conf_ln_".$ix." >";
+
+
+		echo "<td align=center><textarea cols=10 rows=23  name=conf_ln_".$ix." >";
 		foreach ($fp as $value){
 			if (trim($value)!=""){
 			    echo $value;
 			}
 		}
 		echo "</textarea></td></tr>\n";
-		echo "<td colspan=2><hr></td></tr>\n";
+		echo "<td colspan=2></td></tr>\n";
+		echo "</table><hr>";
 	}
 }
 if ($ix==0)
@@ -73,23 +91,24 @@ else
 	$tope=$ix+4;
 $ix=$ix+1;
 for ($i=$ix;$i<$tope;$i++){
+	echo "<table>";
 	echo "<tr><th>".$msgstr["lang_name"]."</th><th>".$msgstr["lang_order"]."<br>".$msgstr["uno_por_linea"]."</th></tr>";
 	echo "<tr><td valign=top><input type=text name=conf_lc_".$i." size=25 value=\"\"></td>";
 	echo "<td align=center><textarea cols=10 rows=30  name=conf_ln_".$i." ></textarea></td>";
 	echo "</tr>";
-	echo "<td colspan=2><hr></td></tr>\n";
+	echo "<td colspan=2></td></tr>\n";
+	echo "</table><hr>";
 }
-echo "</table>";
-echo "<input type=submit value=\"".$msgstr["save"]."\">";
-echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
-echo "<input type=hidden name=Opcion value=Actualizar>";
 ?>
-</form>
+
+	<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"];?>">
+	<input type="hidden" name="Opcion" value="Actualizar">
+	
+	<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
+	</form>
+
 </div>
-<?php
+</div>
+</div>
 
-include ("../../../opac/footer.php");
-?>
-
-</body
-</html>
+<?php include ("../../common/footer.php"); ?>

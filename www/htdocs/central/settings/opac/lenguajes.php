@@ -38,18 +38,25 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 ?>
 
 
-<div class="middle form">
-   <h3><?php echo $msgstr["available_languages"]." &nbsp;";?></h3>
-	<div class="formContent">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+  
 
-<div id="page">
-<form name=actualizar method=post>
+   
+<form name="actualizar" method="post">
 <?php
 $ix=0;
-echo "<table>";
-echo "<tr><th>".$msgstr["lang"]."</th><th>".$msgstr["lang_n"]."</th></tr>";
-if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab")){
-	$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab");
+$lang_tab=$db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab";
+?>
+<h3><?php echo $msgstr["available_languages"]." &nbsp;";?><small>(<?php echo $lang_tab;?>)</small></h3>
+<table class="table striped">
+<tr><th><?php echo $msgstr["lang"];?></th><th><?php echo $msgstr["lang_n"];?></th></tr>
+<?php
+if (file_exists($lang_tab)){
+	$fp=file($lang_tab);
 	foreach ($fp as $value){
 		if (trim($value)!=""){
 			$l=explode('=',$value);
@@ -70,13 +77,13 @@ for ($i=$ix;$i<$tope;$i++){
 	echo "<td><input type=text name=conf_ln_".$i." size=30 value=\"\"></td>";
 	echo "</tr>";
 }
-echo "</table>";
-echo "<input type=submit value=\"".$msgstr["save"]."\">";
-echo "<input type=hidden name=lang value=".$_REQUEST["lang"].">\n";
-echo "<input type=hidden name=Opcion value=Actualizar>";
 ?>
+</table>
+	<input type="hidden" name="lang" value="<?php $_REQUEST["lang"];?>">
+	<input type="hidden" name="Opcion" value="Actualizar">
+	<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
+
 </form>
-</div>
 </div>
 </div>
 

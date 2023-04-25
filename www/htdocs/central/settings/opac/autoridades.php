@@ -5,12 +5,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["aut_opac"];?>
-	</h3>
-	<div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["aut_opac"];?></h3>
 
 <?php
 
@@ -49,7 +49,6 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 }
 
 
-include ("../../../opac/footer.php");
 ?>
 
 <?php
@@ -141,7 +140,7 @@ global $msgstr,$db_path;
 	echo "<strong>". $name."</strong>";
 	echo "<div  id='$iD' style=\" display:block;\">\n";
 	echo "<div style=\"display: flex;\">";
-	echo "<div style=\"flex: 0 0 50%;\">";
+	echo "<div style=\"flex: 0 0 40%;\">";
 	echo "<form name=$iD"."Frm method=post>\n";
 	echo "<input type=hidden name=Opcion value=Guardar>\n";
     echo "<input type=hidden name=base value=$iD>\n";
@@ -168,19 +167,18 @@ global $msgstr,$db_path;
        }
 	}
 
-	echo "<textarea name=conf_autoridades rows=20 cols=100>";
+	echo "<textarea name=conf_autoridades rows=20 cols=90>";
 	$ixcuenta=0;
 	foreach ($fp as $value){
 		echo $value;
 	}
 	echo "</textarea>";
-	echo "<p>";
 	echo  "<div><input type=submit value=\"".$msgstr["save"]." ".$iD."/pfts/autoridades_opac.pft\" style=\"font-size:15px;\"></div>";;
 	echo "</form>";
 
 	echo "</div>";
 
-	echo "<div style=\"flex: 1;border=1px solid\">";
+	echo "<div style=\"display: block-inline; border=1px solid\">";
 	$archivo=$db_path.$base."/opac/".$_REQUEST["lang"]."/$base.ix";
 	$ar=$base."/opac/".$_REQUEST["lang"]."/$base.ix";
 	if (!file_exists($archivo)){
@@ -189,7 +187,7 @@ global $msgstr,$db_path;
 	if (file_exists($archivo)){
 		$fp=file($archivo);
 		echo "<h4>".$msgstr["indice_alfa"]. " (".$base.".ix)</h4>";
-		echo "<table bgcolor=#cccccc cellpadding=5>\n";
+		echo "<br><table class=\"table striped\" width=100%>\n";
 		echo "<tr><th>".$msgstr["ix_nombre"]."</th><th>".$msgstr["ix_pref"]."</th><th>".$msgstr["ix_cols"]."</th><th>".$msgstr["ix_postings"]."</th></tr>\n";
 		$row=0;
 		foreach ($fp as $value) {
@@ -199,24 +197,23 @@ global $msgstr,$db_path;
 				$v=explode('|',$value);
 
 				echo "<tr>";
-				echo "<td bgcolor=white>".$v[0]."</td><td bgcolor=white>".$v[1]."</td>"."<td bgcolor=white>".$v[3]."</td><td bgcolor=white>".$v[4]."</td>";
+				echo "<td>".$v[0]."</td><td>".$v[1]."</td>"."<td>".$v[3]."</td><td>".$v[4]."</td>";
 				echo "</tr>\n";
 			}
 		}
 		echo "</table>";
-		echo "<p>";
 		if ($base!=""){
 	    	$fp_campos=file($db_path.$base."/data/$base.fst");
 	    	$cuenta=count($fp_campos);
     	}
 		if ($cuenta>0){
-			echo "<br><table bgcolor=#cccccc cellpadding=2 width=100%>\n";
+			echo "<br><table class=\"table striped\" width=100%>\n";
         	echo "<tr><th colspan=3>";
         	echo "<strong>$base/data/$base.fst</strong></th></tr>";
 			foreach ($fp_campos as $value) {
 				if (trim($value)!=""){
 					$v=explode(' ',$value,3);
-					echo "<tr><td bgcolor=white>".$v[0]."</td><td bgcolor=white>".$v[1]."</td><td bgcolor=white>".$v[2]."</td></tr>\n";
+					echo "<tr><td>".$v[0]."</td><td>".$v[1]."</td><td>".$v[2]."</td></tr>\n";
 				}
 			}
 			echo "</table>";
@@ -226,3 +223,9 @@ global $msgstr,$db_path;
 	}
 }
 ?>
+
+	</div>
+	</div>
+	</div>
+
+<?php include ("../../common/footer.php"); ?>

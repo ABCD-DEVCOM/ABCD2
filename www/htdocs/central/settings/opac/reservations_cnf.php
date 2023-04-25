@@ -13,17 +13,16 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["WEBRESERVATION"];?>
-	</h3>
-	<div class="formContent">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+	<h3><?php echo $msgstr["WEBRESERVATION"];?></h3>
 
-<div id="page">
-
-
-<form name=reserva method=post>
-<input type=hidden name=db_path value=<?php echo $db_path;?>>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"];?>>
+<form name="reserva" method="post">
+<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
+<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"];?>">
 
     <?php
 

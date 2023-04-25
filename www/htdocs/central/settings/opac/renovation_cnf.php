@@ -5,12 +5,12 @@ include "../../common/inc_div-helper.php";
 
 ?>
 
-<div class="middle form">
-   <h3><?php echo $msgstr["WEBRENOVATION"];?>
-    </h3>
-    <div class="formContent">
-
-<div id="page">
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("menu_bar.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
+    <h3><?php echo $msgstr["WEBRENOVATION"];?></h3>
 
 <?php
 
@@ -28,9 +28,9 @@ if (isset($OpacHttp)) {
 }
 
 ?>
-<form name=parametros method=post>
-<input type=hidden name=db_path value=<?php echo $db_path;?>>
-<input type=hidden name=lang value=<?php echo $_REQUEST["lang"];?>>
+<form name="parametros" method="post">
+<input type="hidden" name="db_path" value=<?php echo $db_path;?>>
+<input type="hidden" name="lang" value=<?php echo $_REQUEST["lang"];?>>
 
 
 <?php
@@ -120,3 +120,4 @@ function url_exists( $url = NULL ) {
 </div>    
 </div>    
 
+<?php echo include ("../common/footer.php"); ?>
