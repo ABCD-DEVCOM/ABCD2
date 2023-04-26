@@ -126,8 +126,11 @@ if (isset($arrHttp["usuario"])){
 						$politica_este=explode('|',$politica[strtoupper($p[3])][strtoupper($p[6])]);
 						$politica_str=$politica[strtoupper($p[3])][strtoupper($p[6])];
 						$politica_raw="";
-			
 					}
+
+					if ($politica_str=="") $politica_str=$locales['fine'];
+			
+
 	                $lapso_p=$politica_este[5];
 	                $obj_ec=strtoupper($politica_este[0]);
 	                if (isset( $total_politica[$obj_ec]))
