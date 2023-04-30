@@ -1,6 +1,7 @@
 <?php
 /*
 20220108 fho4abcd backButton+ div helper+improve html
+20230430 fho4abcd use inframe parameter. Always ISO characterset
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -8,12 +9,17 @@ if (!isset($_SESSION["permiso"])){
 }
 include("../common/get_post.php");
 include("../config.php");
+// Switch to ISO characterset because marc-8 is converted via single byte sequences
+$charset="ISO-8859-1";
+header('Content-type: text/html; charset='.$charset);
 include("../lang/dbadmin.php");
 include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../common/header.php");
 //foreach ($arrHttp as $var=>$value)  echo "$var=$value<br>";
+$inframe=1;                      // The default runs in a frame
 $backtoscript="../dbadmin/z3950_conf.php";
+if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
@@ -123,16 +129,12 @@ function Enviar(){
 }
 </script>
 <?php
-if (isset($arrHttp["encabezado"])){
-	include("../common/institutional_info.php");
-	$encabezado="&encabezado=s";
-}else{
-	$encabezado="";
-}
+// If outside a frame: show institutional info
+if ($inframe!=1) include "../common/institutional_info.php";
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-        <?php echo $msgstr["z3950"].". ".$msgstr["z3950_diacritics"] ?>
+        <?php echo $msgstr["z3950"]." &rarr;<br>".$msgstr["z3950_diacritics"] ?>
 	</div>
 	<div class="actions">
     <?php
@@ -159,7 +161,8 @@ else
 	$fp[]="  ";
 $ix=-1;
 ?>
-<div id=accent style="text-align: center;">Marc-8&nbsp; &nbsp; &nbsp; ANSI
+<table align=center><tr><td>
+<div id=accent>&nbsp; &nbsp; Marc-8 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ANSI
 <?php
 foreach ($fp as $value){
     $value=trim($value);
@@ -169,7 +172,7 @@ foreach ($fp as $value){
 		?>
         <br>
         <input type=text size=3 name=ac<?php echo $ix?> id=iac<?php echo $ix?> value="<?php echo $v[0]?>">&nbsp; &nbsp; &nbsp;
-		<input type=text size=3 name=nac<?php echo $ix?> id=inac<?php echo $ix?> value="<?php echo $v[1]?>"><?php
+		<input type=text size=2 name=nac<?php echo $ix?> id=inac<?php echo $ix?> value="<?php echo $v[1]?>"><?php
 	}
 }
 $ix=$ix+1;
@@ -177,23 +180,33 @@ for ($i=$ix;$i<$ix+5;$i++){
     ?>
     <br>
     <input type=text size=3 name=ac<?php echo $i?> id=iac<?php echo $i?> value="">&nbsp; &nbsp; &nbsp;
-    <input type=text size=3 name=nac<?php echo $i?> id=inac<?php echo $i?> value=""><?php
+    <input type=text size=2 name=nac<?php echo $i?> id=inac<?php echo $i?> value=""><?php
 }
 ?>
 </div>
-<div style="text-align: center;">
-<br>
-<p>
-<?php echo $msgstr["add"]?> <input type=text name=agregar size=3> <?php echo $msgstr["lines"]?>
-&nbsp; <a href='javascript:Agregar("accent")'><?php echo $msgstr["add"]?></a>
-</p>
-<?php
-if (isset($arrHttp["encabezado"]))
-	echo "<input type=hidden name=encabezado value=s>\n";
-?>
-<p><input type=submit value='<?php echo $msgstr["update"]." &nbsp; ".$m2afile?>' onclick=javascript:Enviar()>
+</td>
+<td style="color:blue" valign=top>
+<ul>
+    <li><?php echo $msgstr["z3950_charset"]?></li>
+    <li><?php echo $msgstr["z3950_twice"]?></li>
+</ul>
+</tr>
+<tr><td>
+<?php echo $msgstr["add"]?> &nbsp;
+<input type=text name=agregar size=2> <?php echo $msgstr["lines"]?> &nbsp; 
+<a href='javascript:Agregar("accent")' class="bt bt-gray"><?php echo $msgstr["add"]?></a>
+</td>
+<td style="text-align:center">
+<input type=submit value='<?php echo $msgstr["update"]." &nbsp; ".$m2afile?>'
+    onclick=javascript:Enviar() class="bt bt-green">
+</td></tr>
+</table>
 <input type=hidden name=ValorCapturado>
-</div>
+<?php
+if (isset($arrHttp["inframe"])) {
+    ?>
+	<input type=hidden name=inframe value="<?php echo $inframe?>" >
+<?php } ?>
 </form>
 </div>
 </div>

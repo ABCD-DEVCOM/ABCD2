@@ -127,8 +127,6 @@ if ($actparfolder!="par/") {
 
 // Variables $charset, $unicode, $cisis_ver are modified by the call to wxis_llamar.php
 $targetdb_charset=$charset;
-$targetdb_unicode=$unicode;
-$targetdb_cisis_ver=$cisis_ver;
 $Pft="v1'|'v2'|'v3'|'v4'|'v5/";
 $query = "&base=servers&cipar=".$db_path.$loc_actparfolder."servers.par&from=1&Formato=$Pft&Opcion=rango";
 $IsisScript=$xWxis."imprime.xis";

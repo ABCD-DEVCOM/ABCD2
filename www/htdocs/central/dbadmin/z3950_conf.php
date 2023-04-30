@@ -5,6 +5,7 @@
 20220108 fho4abcd Improve layout&text
 20220124 fho4abcd Ensure current database is present at exit
 20220929 fho4abcd Improve layout, new style buttons, add error messages if yaz not loaded or servers db not present
+20230430 fho4abcd Add inframe for several URL's
 */
 
 /**
@@ -14,24 +15,6 @@
  * @desc:      Configure Z39.50 client
  * @author:    Guilda Ascencio
  * @since:     20091203
- * @version:   1.0
- *
- * == BEGIN LICENSE ==
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as
- *    published by the Free Software Foundation, either version 3 of the
- *    License, or (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- *
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * == END LICENSE ==
 */
 session_start();
 include("../common/get_post.php");
@@ -141,14 +124,14 @@ if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
             ?>
             </td></tr><tr>
             <td>
-                <a class="bt bt-gray" href='z3950_diacritics_edit.php?base=<?php echo $db?>'><?php echo $msgstr["z3950_diacritics"]?></a>
+                <a class="bt bt-gray" href='z3950_diacritics_edit.php?base=<?php echo $db?>&inframe=0'><?php echo $msgstr["z3950_diacritics"]?></a>
             </td>
             </tr>
         </table>
         </td>
     </tr>
     <tr><td>
-        <a class="bt bt-blue" href='../dataentry/z3950.php?base=<?php echo $db.$ciparamp?>&test=Y&Opcion=test&backtoscript=../dbadmin/z3950_conf.php' >
+        <a class="bt bt-blue" href='../dataentry/z3950.php?base=<?php echo $db.$ciparamp?>&test=Y&Opcion=test&inframe=0&backtoscript=../dbadmin/z3950_conf.php' >
             <?php echo $msgstr["test"].": ". $msgstr["catz3950"];?></a>
     </td></tr>
 </table>

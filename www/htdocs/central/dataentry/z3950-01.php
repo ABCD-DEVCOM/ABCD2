@@ -3,6 +3,7 @@
 2021-07-18 fho4abcd Rewrite: Improve html, header, div-helper, undefined indexes, add error messages
 2023-04-18 fho4abcd Moved script to improve debugging.Improve link to stylesheet. Add translation+Standard Doctype
 2023-04-18 fho4abcd Removed hostarray
+2023-04-30 fho4abcd Improve for UTF-8, add processing for field1 and trailing $ (wildcard)+ other functional improvements
 */
 
 /**
@@ -23,7 +24,8 @@ function print_structured_record($ar) {
 }
 /* --------------------------------- */
 function print_marc_record($ar, $inhtml=0) {
-global $marc8,$ansi;
+global $marc8,$ansi,$charset,$htmlchar,$htmlentity;
+;
     $retchar="\n";
     if ($inhtml==1) $retchar="<br>";
     reset($ar);
@@ -33,7 +35,9 @@ global $marc8,$ansi;
         $tagpath=$ar[$i][0];
         $data="";
         if (isset($ar[$i][1])) $data=$ar[$i][1];
-     	$data=str_replace($marc8,$ansi,$data);
+     	$data=str_replace($marc8,$ansi,$data); // Convert marc-8 to ANSI (~latin-1 or whatever the table defines)
+     	$data=str_replace($htmlchar,$htmlentity,$data); // Convert some critical html entities
+        if ($charset=="UTF-8") $data=mb_convert_encoding($data,"UTF-8","ISO-8859-1");
         if (preg_match("/^\(3,([^)]*)\)\(3,@\)$/",$tagpath,$res)) {
             echo $res[1] . ' ' . $data . $retchar;
         } elseif (preg_match("/^\(3,([^)]*)\)\(3,([^)]*)\)$/",$tagpath,$res)) {
@@ -81,31 +85,20 @@ include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../common/get_post.php");
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
-
 if (isset($arrHttp["cnvtab"]) ) {
 	$_SESSION["cnvtab"] = $arrHttp["cnvtab"];
 }else{
 	unset($_SESSION["cnvtab"]);
 }
 
-//get the conversion table from marc-8 to ansi
-$file=$db_path."cnv/marc-8_to_ansi.tab";
-$marc8=array ();
-$ansi=array();
-if (file_exists($file)){
-	$fp=file($file);
-	foreach ($fp as $value){
-		$ar=explode(" ",$value);
-		$marc8[]=trim($ar[0]);
-		$ansi[]=trim($ar[1]);
-	}
-}
-unset($fp);
 
 set_time_limit (120);// Yaz has its own limits. This is a crude fallback.
 if(!isset($arrHttp['Opcion']) ) $arrHttp['Opcion']="";
-$field = $arrHttp['field'];
-$field1 = $arrHttp['field1'];
+$field="";
+if (isset($arrHttp['field']))$field = $arrHttp['field'];
+$field1="";
+if (isset($arrHttp['field1']))$field1 = $arrHttp['field1'];
+
 // get the host specification and unwrap it (hostspec^syntax^felement)
 $host_string=$arrHttp['host'];
 $i=strpos($host_string,"^");
@@ -136,6 +129,8 @@ $term="";
 if(isset($arrHttp['term'])) $term = $arrHttp['term'];
 $term1="";
 if(isset($arrHttp['term1'])) $term1 = $arrHttp['term1'];
+// Characterset hassle
+$charset_conversion="raw"; // Any other conversion results in errors
 
 // Map the form selection values to z3950 search attributes
 // See http://www.loc.gov/z3950/agency/defns/bib1.html
@@ -146,26 +141,46 @@ $fieldmap["ISBN"]             = "@attr 1=7";    // Bib-1 Use Attributes: ISBN
 $fieldmap["ISSN"]             = "@attr 1=8";    // Bib-1 Use Attributes: ISSN
 $fieldmap["Resumen"]          = "@attr 1=62";   // Bib-1 Use Attributes: Abstract
 reset ($fieldmap);
-//  if (empty($syntax)) $syntax = "usmarc";
-$syntaxar["SUTRS"] = "sutrs";
-$syntaxar["USMARC"] = "usmarc";
-$syntaxar["GRS-1"] = "grs-1";
-$syntaxar["OPAC"] = "opac";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" >
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $charset?>" >
     <title>Z39.50</title>
     <link rel="stylesheet" rev="stylesheet" href="/assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
     <link href="/assets/css/all.min.css" rel="stylesheet"> 
-  </head>
+</head>
 <body>
 
 <?php include "../common/inc_div-helper.php";?>
 <div class="middle form">
-
 <?php
+// Get the conversion table from marc-8 to ansi
+// Used by print_marc_record
+$file=$db_path."cnv/marc-8_to_ansi.tab";
+$marc8=array();
+$ansi=array();
+if (file_exists($file)){
+	$fp=file($file);
+	foreach ($fp as $value){
+		$ar=explode(" ",$value);
+		$marc8[]=trim($ar[0]);
+		$ansi[]=trim($ar[1]);
+	}
+}
+unset($fp);
+if ( count($marc8)==0 ) {
+    echo "<p style='color:red'>".$msgstr["archivo"]." ".$file." ".$msgstr["z3950_diafile_err"]."</p>";
+}
+// Create arrays for html entity conversion.
+// Reason: function htmlentities fails in case of unknown characters
+// Used by print_marc_record
+$htmlchar=array();
+$htmlentity=array();
+$htmlchar[]="&"; $htmlentity[]="&amp;";
+$htmlchar[]="<"; $htmlentity[]="&lt;";
+$htmlchar[]=">"; $htmlentity[]="&gt;";
+
 $max_hits = 0;
 if ( empty($term) && empty($term1) && $expr_isbn=="") {
     ?>
@@ -199,8 +214,12 @@ if (empty($number)) $number = 10;
     <td><?php echo $msgstr["z3950_yaz_syntax"];?></td><td>&rarr; </td><td><?php echo $syntax;?></td>
 </tr><tr>
     <td><?php echo $msgstr["z3950_yaz_search"];?></td><td>&rarr; </td><td><?php echo $fullquery;?></td>
+</tr><tr>
+    <td><?php echo $msgstr["z3950_yaz_cnvchr"];?></td><td>&rarr; </td>
+    <td><?php echo str_replace(","," &rArr; ",$charset_conversion);?></td>
 </tr>
 </table>
+
 <form method="get" name=z3950>
 <table  cellspacing="0" cellpadding="3" border="0" bgcolor=--abcd-teal width=100%>
 <?php
@@ -209,7 +228,6 @@ if (empty($number)) $number = 10;
 // Most Z39.50 servers do not support this feature (is ignored).
 // Many servers use the ISO-8859-1 encoding for queries and messages. MARC21/USMARC records are not affected by this setting. 
 $options=array(); // 
-//$options["charset"]="UTF-8";
 $id=null;
 for ($reintentar=0;$reintentar<$intentos;$reintentar++){
     if ($id!=null) yaz_close($id);
@@ -238,7 +256,6 @@ for ($reintentar=0;$reintentar<$intentos;$reintentar++){
     yaz_syntax($id,$syntax);  // no return code
     yaz_range($id,$start,$number); // no return code
     $res=yaz_wait();
-    //echo $res;
     $error = yaz_error($id);
     $errno = yaz_errno($id);
     $addinfo = yaz_addinfo($id);
@@ -264,13 +281,10 @@ for ($reintentar=0;$reintentar<$intentos;$reintentar++){
         $reintentar=999;
         echo "</td></tr>";
         $end = $start + $number;
-        $ixreg=-1;
+        $ixreg=0;
         for ($pos = $start; $pos < $end && $pos<=$max_hits; $pos++) {
-            //$rec = yaz_record($id,$pos,"string; charset=marc-8,ISO-8859-1");var_dump($rec);echo "<br><br>";
-            //$rec = yaz_record($id,$pos,"string; charset=marc-8,UTF-8");var_dump($rec);echo "<br><br>";
-            //$ar = yaz_record($id,$pos,"array;");
-            $rec = yaz_record($id,$pos,"string; charset=marc-8,xISO-8859-1");
-            $ar = yaz_record($id,$pos,"array; charset=marc-8,xISO-8859-1");
+            $rec = yaz_record($id,$pos,"string; charset=".$charset_conversion);
+            $ar = yaz_record($id,$pos,"array; charset=".$charset_conversion);
             $recStatus=substr($rec,5,1);
             $typeOfrec=substr($rec,6,1);
             $bibloLevel=substr($rec,7,1);
@@ -283,20 +297,30 @@ for ($reintentar=0;$reintentar<$intentos;$reintentar++){
             ?>
             <tr><td align="center">
             <table cellspacing="0" cellpadding="2" width="97%"  border="0" bgcolor="#ffffff">
-            <tr><td align="left" valign="top">
+            <tr><td align="left" valign="top" >
             <?php
-            $ixreg=$ixreg+1;
             echo "$pos/$max_hits<br><br><br>";
             if (is_array($ar)){
                 if ($syntax == "GRS-1") {
                     print_structured_record($ar);
                 } else {
+                    if ($ixreg==0) {
+                        // add dummy to enforce an array of text area's
+                        echo '<textarea name=marc hidden>empty</textarea>';
+                    }
+                    $ixreg=$ixreg+1;
                     // Show a button to copy the data
-                    echo '<a href="javascript:Transmitir('.$ixreg.')">';
-                    echo '<img src=img/capturar.gif border=0 alt="'.$msgstr["z3950_copytodb"].'" title="'.$msgstr["z3950_copytodb"].'"></a>';
-                    echo '</td><td>';
+                    ?>
+                    <a href="javascript:Transmitir('<?php echo $ixreg;?>','<?php echo $charset;?>')"
+                    >
+                    <img src=img/capturar.gif border=0 alt="<?php echo $msgstr["z3950_copytodb"]?>"
+                        title="<?php echo$msgstr["z3950_copytodb"]?>"
+                        id="cpbutton_<?php echo $ixreg;?>"></a>
+                    </td><td>
+                    <?php 
                     // The textarea is required for copy of the data
-                    // The textarea width does not react well on widening the window: hidden attribute
+                    // The number of characters is near to unlimited
+                    // The textarea width does not react well on widening the window: it is a hidden attribute
                     echo '<textarea cols=100% rows=20 name=marc hidden>';
                     echo "3005 $recStatus\n";
                     echo "3006 $typeOfrec\n";
@@ -305,7 +329,7 @@ for ($reintentar=0;$reintentar<$intentos;$reintentar++){
                     echo "3019 $descriptive\n";
                     print_marc_record($ar);
                     echo '</textarea>';
-                    // This is the html of the textarea : more readable
+                    // This is the html of the textarea : more readable and reacts better on widening.
                     echo "3005 $recStatus<br>";
                     echo "3006 $typeOfrec<br>";
                     echo "3007 $bibloLevel<br>";
@@ -331,18 +355,15 @@ for ($reintentar=0;$reintentar<$intentos;$reintentar++){
 }
 ?>
 </tr>
-<tr><td align="center" bgcolor=white>
+<tr><td align="center" bgcolor=white>&nbsp;
 <?php
 if ($max_hits > 0) {
-    $host_url = "term=".urlencode($term);
-    $host_url.= "&field=".urlencode($field);
-    $host_url.= "&element=$element";
-    $host_url.= "&syntax=$syntax";
-    $host_url.= '&' . urlencode("host") . '=';
-    $host_url.= urlencode($host_spec);
+    $host_url = "Opcion=".$arrHttp["Opcion"] ;
+    $host_url.= "&term=".urlencode($term)."&field=".urlencode($field);
+    $host_url.= "&term1=".urlencode($term1)."&field1=".urlencode($field1);
+    $host_url.= "&".urlencode("host")."=".urlencode($host_spec);
     $prev_start = $start - $number;
     $i = 1;
-    echo '&nbsp;';
     $tope=0;
     while ($i < $max_hits  && $number > 1) {
         echo '&nbsp;';
@@ -377,45 +398,48 @@ if ($max_hits > 0) {
 </table>
 </form>
 </div>
-	<script language=javascript>
-		function Transmitir(ixT){
-			var Cuenta
-			var Opcion="<?php echo $arrHttp["Opcion"]?>"
-			var Mfn=<?php if (isset($arrHttp["Mfn"])) echo $arrHttp["Mfn"]?>  //COPY TO AN EXISTENT RECORD
-   			Seq="xx"
-   			campo=document.z3950.marc[ixT].value; alert(campo);
-    		if (campo=="") {
-    			alert("<?php echo $msgstr["r_selreg"]?>")
-           		return
-      		}
-       		re = /\$/gi;
-	       	campo=campo.replace(re,"^")
-    		i=campo.indexOf("\n"+"  ",0)
-			while (i>0){
-				campo=campo.substr(0,i-1)+campo.substr(i+2)
-	      		i=campo.indexOf("\n"+"  ",0)
-			}
-			campo=escape(campo)
-			cnvtab=""
-			<?php if (isset($_SESSION["cnvtab"]))
-			echo "\ncnvtab='&cnvtab=".urlencode($_SESSION["cnvtab"])."'\n";
-			?>
-			if (Opcion=="edit"){
-				loc="z3950_copy.php?userid=g&Opcion=capturar&ver=N&Mfn="+Mfn+"&base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>&Opcion_z="+Opcion
-				loc=loc+"&ValorCapturado="+campo+cnvtab
-       			window.opener.top.main.location=loc
-       			document.z3950.marc[ixT].value=""
-				window.opener.top.main.focus()
-			}else if(Opcion=="new"){
-				loc="z3950_copy.php?userid=g&Opcion=capturar&ver=N&Mfn=New&base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>&Opcion_z="+Opcion
-				loc=loc+"&ValorCapturado="+campo+cnvtab
-       			window.opener.top.main.location=loc
-       			document.z3950.marc[ixT].value=""
-				window.opener.top.main.focus()
-			} else {
-                alert ( "<?php echo $msgstr["z3950_test"] ?>"+Opcion )
-            }
-   		}
-   </script>
+<script language=javascript>
+    function Transmitir(ixT, charset){
+        var Cuenta
+        var Opcion="<?php echo $arrHttp["Opcion"]?>"
+        var Mfn=<?php if (isset($arrHttp["Mfn"])) echo $arrHttp["Mfn"]?>  //COPY TO AN EXISTENT RECORD
+        campo=document.z3950.marc[ixT].value;
+        if (campo=="") {
+            alert("<?php echo $msgstr["z3950_empty"]?>")
+            return
+        }
+        re = /\$/gi;
+        campo=campo.replace(re,"^")
+        i=campo.indexOf("\n"+"  ",0)
+        while (i>0){
+            campo=campo.substr(0,i-1)+campo.substr(i+2)
+            i=campo.indexOf("\n"+"  ",0)
+        }
+        if (charset=="UTF-8") {
+            campo=encodeURIComponent (campo)
+        } else {
+            campo=escape(campo)/* escape is deprecated. new function required*/
+        }
+        cnvtab=""
+        <?php if (isset($_SESSION["cnvtab"]))
+        echo "\ncnvtab='&cnvtab=".urlencode($_SESSION["cnvtab"])."'\n";
+        ?>
+        var x = document.getElementById("cpbutton_"+[ixT]);
+        x.style.backgroundColor='green';/* indicates already processed */
+        loc="z3950_copy.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>"
+        loc=loc+"&ValorCapturado="+campo+cnvtab
+        if (Opcion=="edit"){
+            loc=loc+"&Mfn="+Mfn
+            window.opener.top.main.location=loc
+            window.opener.top.main.focus()
+        }else if(Opcion=="new"){
+            loc=loc+"&Mfn=New"
+            window.opener.top.main.location=loc
+            window.opener.top.main.focus()
+        } else {
+            alert ( "<?php echo $msgstr["z3950_test"] ?>"+Opcion )
+        }
+    }
+</script>
 </body>
 </html>
