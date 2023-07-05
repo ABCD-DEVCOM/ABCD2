@@ -4,6 +4,9 @@
 2023-04-18 fho4abcd Moved script to improve debugging.Improve link to stylesheet. Add translation+Standard Doctype
 2023-04-18 fho4abcd Removed hostarray
 2023-04-30 fho4abcd Improve for UTF-8, add processing for field1 and trailing $ (wildcard)+ other functional improvements
+2023-07-04 fho4abcd Replace marc-8 substition code (not dependent on sequence in the file)
+2023-07-04 fho4abcd Improve marc-8 substitution code, attempt to use authentication
+2023-07-05 fho4abcd Add ignore fields table
 */
 
 /**
@@ -24,20 +27,71 @@ function print_structured_record($ar) {
 }
 /* --------------------------------- */
 function print_marc_record($ar, $inhtml=0) {
-global $marc8,$ansi,$charset,$htmlchar,$htmlentity;
-;
+global $marc8,$ansi,$charset,$htmlchar,$htmlentity, $usemarc8;
     $retchar="\n";
     if ($inhtml==1) $retchar="<br>";
     reset($ar);
     $nl = "";
     $arcount=count($ar);
+    $marc8_count=count($marc8);
     for ( $i=0;$i<$arcount;$i++ ){
         $tagpath=$ar[$i][0];
+        if (substr($tagpath,0,7)=="(3,825)") continue;
+        if (substr($tagpath,0,7)=="(3,852)") continue;
+        if (substr($tagpath,0,7)=="(3,926)") continue;
+        if (substr($tagpath,0,7)=="(3,956)") continue;
+        $dataorg="";
+        if (isset($ar[$i][1])) $dataorg=$ar[$i][1];
+     	// Convert marc-8 to ANSI (~latin-1 or whatever the table defines)
+        $datalength=strlen($dataorg);
         $data="";
-        if (isset($ar[$i][1])) $data=$ar[$i][1];
-     	$data=str_replace($marc8,$ansi,$data); // Convert marc-8 to ANSI (~latin-1 or whatever the table defines)
-     	$data=str_replace($htmlchar,$htmlentity,$data); // Convert some critical html entities
+        $pos=0;
+        while ($pos < $datalength) {
+            $byte=substr($dataorg,$pos,1);// Note that values<127 are only there for 3 position codes
+            $hit=0; // set to -1 to get all codes without translation
+            if ($usemarc8=='none') $hit=-1;
+            // check first the 3 position codes
+            if ($hit==0 && $pos<$datalength-2){
+                $marc8_str=substr($dataorg,$pos,3);
+                for ($marc8_index=0; $marc8_index<$marc8_count && $hit==0; $marc8_index++) {
+                    if ($marc8_str == $marc8[$marc8_index]) {
+                        $hit=1;
+                        $pos=$pos+strlen($marc8_str);
+                        $data.=$ansi[$marc8_index];
+                    }
+                }
+            }
+            // check next the 2 position codes
+            if ($hit==0 && $pos<$datalength-1) {
+                $marc8_str=substr($dataorg,$pos,2);
+                for ($marc8_index=0; $marc8_index<$marc8_count && $hit==0; $marc8_index++) {
+                    if ($marc8_str == $marc8[$marc8_index]) {
+                        $hit=1;
+                        $pos=$pos+strlen($marc8_str);
+                        $data.=$ansi[$marc8_index];
+                    }
+                }
+            }
+            // Check the single position codes
+            if ($hit==0) {
+                for ($marc8_index=0; $marc8_index<$marc8_count && $hit==0; $marc8_index++) {
+                    if ($byte == $marc8[$marc8_index]) {
+                        $hit=1;
+                        $pos++;
+                        $data.=$ansi[$marc8_index];
+                    }
+                }
+            }
+            if ($hit<=0) {
+                $pos++;
+                $data.=$byte;
+            }
+        }
+        // Convert some critical html entities
+     	$data=str_replace($htmlchar,$htmlentity,$data);
+        // Convert to UTF-8 if required
         if ($charset=="UTF-8") $data=mb_convert_encoding($data,"UTF-8","ISO-8859-1");
+        // Show the result
         if (preg_match("/^\(3,([^)]*)\)\(3,@\)$/",$tagpath,$res)) {
             echo $res[1] . ' ' . $data . $retchar;
         } elseif (preg_match("/^\(3,([^)]*)\)\(3,([^)]*)\)$/",$tagpath,$res)) {
@@ -90,6 +144,11 @@ if (isset($arrHttp["cnvtab"]) ) {
 }else{
 	unset($_SESSION["cnvtab"]);
 }
+if (isset($arrHttp["igntab"]) ) {
+	$_SESSION["igntab"] = $arrHttp["igntab"];
+}else{
+	unset($_SESSION["igntab"]);
+}
 
 
 set_time_limit (120);// Yaz has its own limits. This is a crude fallback.
@@ -109,7 +168,8 @@ $syntax=substr($host_string,0,$i);
 $host_string=substr($host_string,$i+2);
 $element=substr($host_string,0,strlen($host_string));
 //echo "host=".$host_spec."<br>syntax=".$syntax."<br>elemnt=".$element."<br>";$element="";
-
+$usemarc8='none';
+if (isset($arrHttp['usemarc8']) && $arrHttp['usemarc8']=='on') $usemarc8='on';
 $intentos= $arrHttp['reintentar'];
 $isbn="";
 $expr_isbn="";
@@ -164,8 +224,13 @@ if (file_exists($file)){
 	$fp=file($file);
 	foreach ($fp as $value){
 		$ar=explode(" ",$value);
-		$marc8[]=trim($ar[0]);
-		$ansi[]=trim($ar[1]);
+        if (count($ar)==2) {
+            $marc8[]=trim($ar[0]);
+            $ansi[]=trim($ar[1]);
+        } else if (count($ar)==1) {
+            $marc8[]=trim($ar[0]);
+            $ansi[]="";
+        }
 	}
 }
 unset($fp);
@@ -205,6 +270,13 @@ if ($fullquery!="" && $expr_isbn!=""){
 }
 if (empty($start)) $start = 1;
 if (empty($number)) $number = 10;
+// $options=array("proxy"=>"localhost");
+// $options may contain "charset" => ISO-8859-1, UTF-8, UTF-16.
+// Most Z39.50 servers do not support this feature (is ignored).
+// Many servers use the ISO-8859-1 encoding for queries and messages. MARC21/USMARC records are not affected by this setting. 
+$options=array();
+//$options[]="user=z39";
+//$options[]="password=z39";
 
 ?>
 <table border=0>
@@ -216,18 +288,14 @@ if (empty($number)) $number = 10;
     <td><?php echo $msgstr["z3950_yaz_search"];?></td><td>&rarr; </td><td><?php echo $fullquery;?></td>
 </tr><tr>
     <td><?php echo $msgstr["z3950_yaz_cnvchr"];?></td><td>&rarr; </td>
-    <td><?php echo str_replace(","," &rArr; ",$charset_conversion);?></td>
+    <td><?php echo str_replace(","," &rArr; ",$charset_conversion);?>
+        <?php if ($usemarc8=="on") echo " &rArr; ".$msgstr["z3950_diacrituse"];?></td>
 </tr>
 </table>
 
 <form method="get" name=z3950>
 <table  cellspacing="0" cellpadding="3" border="0" bgcolor=--abcd-teal width=100%>
 <?php
-// $options=array("proxy"=>"localhost");
-// $options may contain "charset" => ISO-8859-1, UTF-8, UTF-16.
-// Most Z39.50 servers do not support this feature (is ignored).
-// Many servers use the ISO-8859-1 encoding for queries and messages. MARC21/USMARC records are not affected by this setting. 
-$options=array(); // 
 $id=null;
 for ($reintentar=0;$reintentar<$intentos;$reintentar++){
     if ($id!=null) yaz_close($id);
@@ -268,7 +336,7 @@ for ($reintentar=0;$reintentar<$intentos;$reintentar++){
         echo "Error: $error (code $errno) $addinfo";
         echo "</td></tr></table>\n";
         echo "</td></tr>";
-        if ($errno==10007)$reintentar=$intentos;
+        if ($errno==10007 ||$errno==10004)$reintentar=$intentos;
     } else {
         echo '<td align="center">';
         $hits = yaz_hits($id);
@@ -365,12 +433,13 @@ if ($max_hits > 0) {
     $prev_start = $start - $number;
     $i = 1;
     $tope=0;
-    while ($i < $max_hits  && $number > 1) {
+    while ($i <= $max_hits  && $number > 1) {
         echo '&nbsp;';
         if ($start != $i) {
             $url = "z3950-01.php";
             $url.= "?start=".$i."&number=".$number."&reintentar=".$intentos;
             $url.= "&".$host_url."^s".$syntax."^f".$element;
+            $url.= "&usemarc8=".$usemarc8;
             if (isset($_SESSION["cnvtab"])) $url.= "&cnvtab=".$_SESSION["cnvtab"];
             $url.= "&base=".$arrHttp["base"]."&cipar=".$arrHttp["base"].".par";
             ?>
@@ -421,13 +490,16 @@ if ($max_hits > 0) {
             campo=escape(campo)/* escape is deprecated. new function required*/
         }
         cnvtab=""
+        igntab=""
         <?php if (isset($_SESSION["cnvtab"]))
         echo "\ncnvtab='&cnvtab=".urlencode($_SESSION["cnvtab"])."'\n";
+        if (isset($_SESSION["igntab"]))
+        echo "\nigntab='&igntab=".urlencode($_SESSION["igntab"])."'\n";
         ?>
         var x = document.getElementById("cpbutton_"+[ixT]);
         x.style.backgroundColor='green';/* indicates already processed */
         loc="z3950_copy.php?base=<?php echo $arrHttp["base"]?>&cipar=<?php echo $arrHttp["cipar"]?>"
-        loc=loc+"&ValorCapturado="+campo+cnvtab
+        loc=loc+"&ValorCapturado="+campo+cnvtab+igntab
         if (Opcion=="edit"){
             loc=loc+"&Mfn="+Mfn
             window.opener.top.main.location=loc

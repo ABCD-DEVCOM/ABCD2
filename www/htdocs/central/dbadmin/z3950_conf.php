@@ -6,6 +6,8 @@
 20220124 fho4abcd Ensure current database is present at exit
 20220929 fho4abcd Improve layout, new style buttons, add error messages if yaz not loaded or servers db not present
 20230430 fho4abcd Add inframe for several URL's
+20230705 fho4abcd Add code to create/edit/delete an ignore file to specify fields to ignore
+20230705 fho4abcd cnvfile (file with table of actual filenames) by parameter
 */
 
 /**
@@ -34,6 +36,9 @@ $db=$db[0];
 $arrHttp["base"]=$db;
 if(!isset($arrHttp["cipar"])) $arrHttp["cipar"]=$db.".par";
 $ciparamp="&amp;cipar=".$arrHttp["cipar"];
+$tabCnvFiles="/def/z3950.cnv";
+$tabIgnFiles="/def/z3950_ignfld.cnv";
+
 include("../common/header.php");
 ?>
 <body>
@@ -46,6 +51,7 @@ function Edit(){
 	document.enviar.action="z3950_conversion.php";
 	document.enviar.Table.value=document.forma1.cnv.options[document.forma1.cnv.selectedIndex].value
 	document.enviar.descr.value=document.forma1.cnv.options[document.forma1.cnv.selectedIndex].text
+    document.enviar.filesTableFile.value="<?php echo $tabCnvFiles?>"
 	document.enviar.Opcion.value="edit"
 	document.enviar.submit()
 }
@@ -56,6 +62,30 @@ function Delete(){
 	}
 	document.enviar.action="z3950_conversion_delete.php";
 	document.enviar.Table.value=document.forma1.cnv.options[document.forma1.cnv.selectedIndex].value
+    document.enviar.filesTableFile.value="<?php echo $tabCnvFiles?>"
+	document.enviar.Opcion.value="delete"
+	document.enviar.submit()
+}
+function EditIgn(){
+	if  (document.forma1.ign.selectedIndex<1){
+		alert('<?php echo $msgstr["z3950_selingtb"]?>')
+		return
+	}
+	document.enviar.action="z3950_ignore.php";
+	document.enviar.Table.value=document.forma1.ign.options[document.forma1.ign.selectedIndex].value
+	document.enviar.descr.value=document.forma1.ign.options[document.forma1.ign.selectedIndex].text
+    document.enviar.filesTableFile.value="<?php echo $tabIgnFiles?>"
+	document.enviar.Opcion.value="edit"
+	document.enviar.submit()
+}
+function DeleteIgn(){
+	if  (document.forma1.ign.selectedIndex<1){
+		alert('<?php echo $msgstr["z3950_selingtb"]?>')
+		return
+	}
+	document.enviar.action="z3950_conversion_delete.php";
+	document.enviar.Table.value=document.forma1.ign.options[document.forma1.ign.selectedIndex].value
+    document.enviar.filesTableFile.value="<?php echo $tabIgnFiles?>"
 	document.enviar.Opcion.value="delete"
 	document.enviar.submit()
 }
@@ -85,7 +115,7 @@ if ( !file_exists($serversfolder)) {
 }
 if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
     $error++;
-    echo "<font color=red><b>".$msgstr["z3950_yaz_missing"]."</b></font><br>";
+    echo "<font color=red><b>".$msgstr["z3950_yaz_missing"]."</b></font><br>\n";
 }
 
 ?>
@@ -95,18 +125,19 @@ if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
         <a class="bt bt-blue" href='../dataentry/browse.php?base=servers&return=../dbadmin/z3950_conf.php|base=<?php echo $db?>'><?php echo $msgstr["z3950_servers"]?></a><br><br>
     </td></tr>
     <tr><td>
-        <h4><?php echo $msgstr["z3950_cnv"]?>
+        <h4><?php echo $msgstr["z3950_cnv"]?></h4>
         </td><td>
         <table>
             <tr>
             <td>
-                <a class="bt bt-green" href='z3950_conversion.php?base=<?php echo $db?>'>
+                <a class="bt bt-green"
+                    href='z3950_conversion.php?base=<?php echo $db?>&filesTableFile=<?php echo $tabCnvFiles?>'>
                     <i class="far fa-plus-square"></i> &nbsp;<?php echo $msgstr["z3950_new_table"]?></a>
             </td>
             <tr><td>
             <?php
-            if (file_exists($db_path.$db."/def/z3950.cnv")){
-                $fp=file($db_path.$db."/def/z3950.cnv");
+            if (file_exists($db_path.$db.$tabCnvFiles)){
+                $fp=file($db_path.$db.$tabCnvFiles);
                 ?>
                 <select name=cnv>
                     <option value=''>
@@ -131,6 +162,40 @@ if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
         </td>
     </tr>
     <tr><td>
+        <h4><?php echo $msgstr["z3950_fld_ignore"]?>
+        </td><td>
+        <table>
+            <tr>
+            <td>
+                <a class="bt bt-green"
+                href='z3950_ignore.php?base=<?php echo $db?>&filesTableFile=<?php echo $tabIgnFiles?>'>
+                    <i class="far fa-plus-square"></i> &nbsp;<?php echo $msgstr["z3950_fld_new"]?></a>
+            </td>
+            <tr><td>
+            <?php
+            if (file_exists($db_path.$db.$tabIgnFiles)){
+                $fp=file($db_path.$db.$tabIgnFiles);
+                ?>
+                <select name=ign>
+                    <option value=''>
+                    <?php
+                    foreach ($fp as $var=>$value){
+                        $o=explode('|',$value);
+                        if (count($o)==2) echo "<option value='".$o[0]."'>".$o[1]."\n";
+                    }
+                    ?>
+                </select> &nbsp;
+                <a class="bt bt-green" href=javascript:EditIgn()><i class="far fa-edit"></i> &nbsp;<?php echo $msgstr["edit"]?></a>
+                <a class="bt bt-red" href=javascript:DeleteIgn()><i class="fas fa-trash"></i> &nbsp;<?php echo $msgstr["delete"]?></a>
+                <?php
+            }
+            ?>
+            </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+    <tr><td>
         <a class="bt bt-blue" href='../dataentry/z3950.php?base=<?php echo $db.$ciparamp?>&test=Y&Opcion=test&inframe=0&backtoscript=../dbadmin/z3950_conf.php' >
             <?php echo $msgstr["test"].": ". $msgstr["catz3950"];?></a>
     </td></tr>
@@ -142,6 +207,7 @@ if (!extension_loaded('yaz') || !function_exists('yaz_connect')) {
 <input type=hidden name=base value=<?php echo $db?>>
 <input type=hidden name=Opcion>
 <input type=hidden name=Table>
+<input type=hidden name=filesTableFile >
 <input type=hidden name=descr>
-<form>
+</form>
 <?php include("../common/footer.php")?>
