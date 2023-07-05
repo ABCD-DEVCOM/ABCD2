@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 20220711 fho4abcd Use $actparfolder as location for .par files
+20230705 fho4abcd Process ignore fields table.In case of wxis errors "die" to show the error
 */
 /**    modificado
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -38,9 +39,29 @@ include ("../config.php");
 include("../lang/dbadmin.php");
 
 include("../lang/soporte.php");
-
+//foreach($arrHttp as $var=>$value) echo "$var=$value<br>";
 $lang=$_SESSION["lang"];
 $Permiso=$_SESSION["permiso"];
+// Remove entries with numbers in the ignorefields table
+if (isset($arrHttp["igntab"])) {
+    $archivo=$db_path.$arrHttp["base"]."/def/".$arrHttp["igntab"];
+	if (file_exists($archivo)){
+        $fields=file($archivo,FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    }
+    $VC=explode("\n",$arrHttp["ValorCapturado"]);
+    $Val="";
+    foreach ($VC as $campo){
+        if (trim($campo)!=""){
+            $ix=strpos($campo," ");
+            $tag=trim(substr($campo,0,$ix));
+            if (!in_array($tag,$fields)){
+                $Val.=$campo."\n";
+            }
+        }
+    }
+    $arrHttp["ValorCapturado"]=$Val;
+}
+// Copy the data to the database
 $VC=explode("\n",$arrHttp["ValorCapturado"]);
 $ValCap="";
 foreach ($VC as $campo){
@@ -57,15 +78,19 @@ if (isset($arrHttp["Mfn"]))
 	$Mfn=$arrHttp["Mfn"];
 else
 	$Mfn="New";
-if (!isset($arrHttp["cnvtab"])){
-// if no conversion
 
+// if no conversion
+if (!isset($arrHttp["cnvtab"])){
 	header("Location:fmt.php?Opcion=capturar&ver=N&Mfn=$Mfn&base=".$arrHttp["base"]."&cipar=".$arrHttp["cipar"]."&ValorCapturado=".$ValorCapturado);
 	die;
 }
+
+// check existence of conversion file
 $file=$db_path.$arrHttp["base"]."/def/".$arrHttp["cnvtab"];
 if (!file_exists($file)) {	header("Location:fmt.php?Opcion=capturar&ver=N&Mfn=$Mfn&base=".$arrHttp["base"]."&cipar=".$arrHttp["cipar"]."&ValorCapturado=".$ValorCapturado);
 	die;}
+
+// Convert the data
 $fp=file($file);
 $Pft="";
 foreach ($fp as $value) {	$value=trim($value);	if ($value!=""){		$ix=strpos($value,':');
@@ -76,7 +101,9 @@ $IsisScript=$xWxis."z3950_cnv.xis";
 $Pft=urlencode($Pft);
 $query = "&base=".$arrHttp["base"] ."&cipar=$db_path".$actparfolder.$arrHttp["base"].".par&ValorCapturado=".$ValCap."&Pft=$Pft";
 include("../common/wxis_llamar.php");
-
+if ($err_wxis!="") {
+    die;
+}
 //foreach ($contenido as $value)  echo "$value<br>";die;
 
 $res=implode("\n",$contenido);

@@ -2,6 +2,7 @@
 /*
 20220108 fho4abcd backButton+ div helper+improve html
 20230430 fho4abcd use inframe parameter. Always ISO characterset
+20230705 fho4abcd No longer sequence warning
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -172,7 +173,7 @@ foreach ($fp as $value){
 		?>
         <br>
         <input type=text size=3 name=ac<?php echo $ix?> id=iac<?php echo $ix?> value="<?php echo $v[0]?>">&nbsp; &nbsp; &nbsp;
-		<input type=text size=2 name=nac<?php echo $ix?> id=inac<?php echo $ix?> value="<?php echo $v[1]?>"><?php
+		<input type=text size=2 name=nac<?php echo $ix?> id=inac<?php echo $ix?> value="<?php if (isset($v[1])) {echo $v[1];}?>"><?php
 	}
 }
 $ix=$ix+1;
@@ -188,7 +189,7 @@ for ($i=$ix;$i<$ix+5;$i++){
 <td style="color:blue" valign=top>
 <ul>
     <li><?php echo $msgstr["z3950_charset"]?></li>
-    <li><?php echo $msgstr["z3950_twice"]?></li>
+    <li><?php echo $msgstr["z3950_indep_seq"]?></li>
 </ul>
 </tr>
 <tr><td>

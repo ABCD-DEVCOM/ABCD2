@@ -1,6 +1,7 @@
 <?php
 /*
 20220108 fho4abcd backButton+ div helper+improve html
+20230705 fho4abcd update to cooperate with other tables.
 */
 
 /**
@@ -42,17 +43,20 @@ $Permiso=$_SESSION["permiso"];
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 $backtoscript="../dbadmin/z3950_conf.php";
 $db=$arrHttp["base"];
+if (!isset($arrHttp["Opcion"])) {
+    $arrHttp["Opcion"]="new";
+}
+
 include("../common/header.php");
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src=../dataentry/js/lr_trim.js></script>
 <script language=javascript>
 function Enviar(){
-	if (Trim(document.cnv.namecnvtb.value)=="" || Trim(document.cnv.descr.value)==""){
+	if (Trim(document.cnv.Table.value)=="" || Trim(document.cnv.descr.value)==""){
 		alert("<?php echo $msgstr["namecnvtamiss"]?>")
 		return
 	}
-	document.cnv.target=""
 	document.cnv.action="z3950_conversion_update.php"
 	document.cnv.submit()
 
@@ -82,8 +86,9 @@ include("../common/institutional_info.php");
 <div class="formContent">
 <form name=cnv  method=post onsubmit="javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=fn value=z3950.cnv>
-<input type=hidden name=encabezado value=s>
+<input type=hidden name=filesTableFile value=<?php echo $arrHttp["filesTableFile"]?>>
+<input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>	
+<input type=hidden name=Type value="convert">	
 <?php
 if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="edit" ){
 	$archivo=$db_path.$arrHttp["base"]."/def/".$arrHttp["Table"];
@@ -133,22 +138,18 @@ foreach ($fp as $value){
 
 
 echo "</table><p><dd>";
-echo $msgstr["namecnvtb"].":";
-if (!isset($arrHttp["Table"])){
-	echo  "<input type=text name=namecnvtb size=30> &nbsp &nbsp;";
-	echo $msgstr["description"].": ";
-	echo "<input type=text name=descr size=30>\n";
-}else{
-	echo "<input type=text name=namecnvtb size=30 value='".$arrHttp["Table"]."'> &nbsp; &nbsp;\n";
-	echo $msgstr["description"].": ";
-	echo "<input type=text name=descr size=30 value='".$arrHttp["descr"]."'>\n";
-}
-echo " &nbsp; ";
-include "../common/inc_save.php";
 ?>
+<table>
+<tr><td><?php echo $msgstr["namecnvtb"]?>:</td>
+    <td><input type=text name=Table size=30 value="<?php if (isset($arrHttp["Table"])) echo $arrHttp["Table"]?>" >
+</tr>
+<tr><td><?php echo $msgstr["description"]?>:</td>
+    <td><input type=text name=descr size=30 value="<?php if (isset($arrHttp["descr"])) echo$arrHttp["descr"]?>" >
+</tr>
+</table>
+<br><?php include "../common/inc_save.php"?> &nbsp;  &nbsp;
 <a href='<?php echo $backtoscript."?base=".$arrHttp["base"]?>' class="bt bt-red" title='<?php echo $msgstr["cancel"]?>'>
     <i class="fas fa-backspace"></i>&nbsp;<?php echo $msgstr["cancel"]?></a>
-
 </form>
 </div>
 </div>

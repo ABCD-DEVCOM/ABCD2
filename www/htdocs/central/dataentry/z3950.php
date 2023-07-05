@@ -6,6 +6,8 @@
 20220713 fho4abcd Use $actparfolder as location for .par files
 20220929 fho4abcd Error message if yaz not loaded or server db not present. Remove close button
 20230418 fho4abcd Unicode improvements, improve second search field. Clean pop-up before search
+20230511 fho4abcd trim database values, improve form layout, add option to disable marc-8 and ignore entries
+20230705 fho4abcd added ignorefields table
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -44,8 +46,6 @@ include("../common/header.php");
 <script language="JavaScript" type="text/javascript" src=js/lr_trim.js></script>
 <script language=javascript>
 function Isbn(){
- 	ixdb="HOST"+document.z39.host.selectedIndex
-
 	ix1=document.z39.isbn.length
 	listaI=""
 	for (i=0;i<ix1;i++){
@@ -140,136 +140,167 @@ if ($err_wxis!=""){
 ?>
 
 <form method="post" action=z3950-01.php
-    <?php if (!isset($arrHttp["desde"])) echo "  target=z3950 "?> onSubmit="javascript:return false" name=z39 >
-    <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-    <input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
-    <table  border=0 cellpadding=0 cellspacing=0>
-        <tr>
-        <td class=td bgcolor=lightgrey>
-            <?php echo $msgstr["connectto"]?>:
-        </td>
-        <td class=td>
-            <select name="host">
-            <?php
-            foreach ($contenido as $value) {
-                if ($value!="") {
-                    $s=explode('|',$value);
-                    if($s[0]!=""){
-                    if ($targetdb_charset=="UTF-8") {
-                        if (!mb_check_encoding($s[0],'UTF-8')) {
-                            $s[0]=mb_convert_encoding($s[0],'UTF-8','ISO-8859-1');
-                        }
+<?php if (!isset($arrHttp["desde"])) echo "  target=z3950 "?> onSubmit="javascript:return false" name=z39 >
+<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+<input type=hidden name=cipar value=<?php echo $arrHttp["cipar"]?>>
+<input type=hidden name=isbn_l value="">
+<input type=hidden name=start value="1">
+<input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
+<table  border=0 cellpadding=0 cellspacing=0>
+    <tr>
+    <td class=td bgcolor=lightgrey>
+        <?php echo $msgstr["connectto"]?>:
+    </td>
+    <td class=td>
+        <select name="host">
+        <?php
+        foreach ($contenido as $value) {
+            $value=trim($value);
+            if ($value!="") {
+                $s=explode('|',$value);
+                if($s[0]!=""){
+                if ($targetdb_charset=="UTF-8") {
+                    if (!mb_check_encoding($s[0],'UTF-8')) {
+                        $s[0]=mb_convert_encoding($s[0],'UTF-8','ISO-8859-1');
                     }
-                    echo "<option value=".$s[1].":".$s[2]."/".$s[3]."^susmarc^f".$s[4].">".$s[0]."\n";
-                    }
+                }
+                echo "<option value=".trim($s[1]).":".trim($s[2])."/".trim($s[3])."^susmarc^f".$s[4].">".$s[0]."\n";
                 }
             }
-            ?>
-			</select>
-        </td>
-        </tr>
-        <?php
-        // File def/z3950,cnv contains the name and filename of specific conversion tables
-        $archivo=$db_path.$arrHttp["base"]."/def/z3950.cnv";
-        if (file_exists($archivo)){
-            ?><tr><td bgcolor=lightgrey><?php
-            echo $msgstr["z3950_cnv_table"].": ";
-            ?></td><td>
-            <select name=cnvtab>
-                <option></option>"
-                <?php
-                $selected=" selected";
-                $fp=file($archivo);
-                foreach ($fp as $value){
-                    $v=explode('|',$value);
-                    echo "<option value='".$v[0]."' $selected>".$v[1]."\n";
-                    $selected="";
-                }
-                ?>
-            </select>
-            </td></tr><?php
         }
         ?>
-		<tr>
-		<td class=td><?php echo $msgstr["z3950_search"]?>:
-		</td>
-		<td>
-			<input type="text" size="50" name="term" value=""
-                placeholder="<?php echo $msgstr["z3970_srch_inwords"]?>"
-                title="<?php echo $msgstr["z3970_srch_inwild"]?>">&nbsp;
-			<?php echo $msgstr["z3950_in"]?>&nbsp;
-			<select name="field">
-				<option value="Todos los campos"><?php echo $msgstr["z3950_all"]?>
-				<option value="Titulo"><?php echo $msgstr["z3950_title"]?>
-				<option value="Autor"><?php echo $msgstr["z3950_auth"]?>
-				<option value="ISBN"><?php echo $msgstr["z3950_isbn"]?>
-				<option value="ISSN"><?php echo $msgstr["z3950_issn"]?>
-				<option value="Resumen"><?php echo $msgstr["z3950_abstract"]?>
-			</select>
-		</td>
-		</tr>
-		<tr>
-		<td class=td style="text-align: right"><?php echo $msgstr["z3950_and"]?>
-		</td>
-		<td>
-			<input type="text" size="50" name="term1" value=""
-                placeholder="<?php echo $msgstr["z3970_srch_inwords"]?>"
-                title="<?php echo $msgstr["z3970_srch_inwild"]?>">&nbsp;
-			<?php echo $msgstr["z3950_in"]?>&nbsp;
-			<select name="field1">
-				<option value="Todos los campos"><?php echo $msgstr["z3950_all"]?>
-				<option value="Titulo"><?php echo $msgstr["z3950_title"]?>
-				<option value="Autor"><?php echo $msgstr["z3950_auth"]?>
-				<option value="ISBN"><?php echo $msgstr["z3950_isbn"]?>
-				<option value="ISSN"><?php echo $msgstr["z3950_issn"]?>
-				<option value="Resumen"><?php echo $msgstr["z3950_abstract"]?>
-			</select>
-		</td>
-		</tr>
-	</table>
-	<table width=600>
-        <tr>
-		<td colspan=5 bgcolor=linen class=td> &nbsp; <?php echo $msgstr["z3950_srch_isbn"]?></td>
+        </select>
+    </td>
+    </tr>
+    <?php
+    // File def/z3950,cnv contains the name and filename of specific conversion tables
+    $archivo=$db_path.$arrHttp["base"]."/def/z3950.cnv";
+    if (file_exists($archivo)){
+        ?><tr><td bgcolor=lightgrey><?php
+        echo $msgstr["z3950_cnv_table"].": ";
+        ?></td><td>
+        <select name=cnvtab>
+            <option></option>"
+            <?php
+            $selected=" selected";
+            $fp=file($archivo);
+            foreach ($fp as $value){
+                $v=explode('|',$value);
+                echo "<option value='".$v[0]."' $selected>".$v[1]."\n";
+                $selected="";
+            }
+            ?>
+        </select>
+        </td></tr><?php
+    }
+    // File def/z3950_ignfld.cnv contains the name and filename of specific ignore fields tables
+    $archivoign=$db_path.$arrHttp["base"]."/def/z3950_ignfld.cnv";
+    if (file_exists($archivoign)){
+        ?><tr><td bgcolor=lightgrey><?php
+        echo $msgstr["z3950_ign_table"].": ";
+        ?></td><td>
+        <select name=igntab>
+            <option></option>"
+            <?php
+            $selected=" selected";
+            $fp=file($archivoign);
+            foreach ($fp as $value){
+                $v=explode('|',$value);
+                echo "<option value='".$v[0]."' $selected>".$v[1]."\n";
+                $selected="";
+            }
+            ?>
+        </select>
+        </td></tr><?php
+    }
+    ?>
+    <tr>
+    <td class=td><?php echo $msgstr["z3950_search"]?>:
+    </td>
+    <td>
+        <input type="text" size="50" name="term" value=""
+            placeholder="<?php echo $msgstr["z3970_srch_inwords"]?>"
+            title="<?php echo $msgstr["z3970_srch_inwild"]?>">&nbsp;
+        <?php echo $msgstr["z3950_in"]?>&nbsp;
+        <select name="field">
+            <option value="Todos los campos"><?php echo $msgstr["z3950_all"]?>
+            <option value="Titulo"><?php echo $msgstr["z3950_title"]?>
+            <option value="Autor"><?php echo $msgstr["z3950_auth"]?>
+            <option value="ISBN"><?php echo $msgstr["z3950_isbn"]?>
+            <option value="ISSN"><?php echo $msgstr["z3950_issn"]?>
+            <option value="Resumen"><?php echo $msgstr["z3950_abstract"]?>
+        </select>
+    </td>
+    </tr>
+    <tr>
+    <td class=td style="text-align: right"><?php echo $msgstr["z3950_and"]?>
+    </td>
+    <td>
+        <input type="text" size="50" name="term1" value=""
+            placeholder="<?php echo $msgstr["z3970_srch_inwords"]?>"
+            title="<?php echo $msgstr["z3970_srch_inwild"]?>">&nbsp;
+        <?php echo $msgstr["z3950_in"]?>&nbsp;
+        <select name="field1">
+            <option value="Todos los campos"><?php echo $msgstr["z3950_all"]?>
+            <option value="Titulo"><?php echo $msgstr["z3950_title"]?>
+            <option value="Autor"><?php echo $msgstr["z3950_auth"]?>
+            <option value="ISBN"><?php echo $msgstr["z3950_isbn"]?>
+            <option value="ISSN"><?php echo $msgstr["z3950_issn"]?>
+            <option value="Resumen"><?php echo $msgstr["z3950_abstract"]?>
+        </select>
+    </td>
+    </tr>
+</table>
+<table>
+    <tr>
+    <td colspan=5 bgcolor=linen class=td> &nbsp; <?php echo $msgstr["z3950_srch_isbn"]?></td>
+    </tr>
+    <tr>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <tr>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+    <td align=center><input type=text size=15 name=isbn value=""></td>
+</table>
+<table>
+<tr><td>
+    <table>
+        <tr><td><?php echo $msgstr["z3950_nrtoshow"]?></td>
+            <td><select name="number">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                </select></td>
         </tr>
-		<tr>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<tr>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<tr>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
-		<td align=center><input type=text size=15 name=isbn value=""></td>
+        <tr><td><?php echo $msgstr["z3950_attempt"]?></td>
+            <td><select name="reintentar">
+                <option value="2">2</option>
+                <option value="5">10</option>
+                </select></td>
+        </tr>
+        <tr><td style="background-color:var(--abcd-gray-200)"><?php echo $msgstr["z3950_diacrituse"]?></td>
+            <td style="text-align:center"><input type="checkbox" name="usemarc8" id="usemarc8"  checked /></td>
+        </tr>
+    </table>
+</td>
+<td style="padding-left:40px"><a class="bt bt-green" type="button" name="action" onclick=Isbn()>
+        <i class="fas fa-search"></i>  <?php echo $msgstr["busqueda"]?></a>
+</td>
+</tr>
+</table>
 
-	</table>
-<input type=hidden name=isbn_l value="">
-<br>
-<?php echo $msgstr["show"]?> &nbsp;<input type=text name=number value="10" size=4> <?php echo $msgstr["registros"]?>.&nbsp; &nbsp; &nbsp; 
-    <?php echo $msgstr["z3950_retray"]?> <input type=text name=reintentar value="10" size=2> <?php echo $msgstr["z3950_times"]?>
-<br><br>
-<a class="bt bt-green" type="button" name="action" onclick=Isbn()><i class="fas fa-search"></i>  <?php echo $msgstr["busqueda"]?></a>
-<input type=hidden name=start value="1">&nbsp; &nbsp;
-<input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
 
 <?php
 if (isset($arrHttp["Mfn"])) echo "<input type=hidden name=Mfn value=".$arrHttp["Mfn"].">\n"; //COPY TO AN EXISTENT RECORD
 if (isset($arrHttp["test"])){
 	echo "<input type=hidden name=test value=Y>\n";
-
 }
 ?>
 </form>
 </div>
-
 </div>
 </div>
 <?php include ("../common/footer.php")?>
