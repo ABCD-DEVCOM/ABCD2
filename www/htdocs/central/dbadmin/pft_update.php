@@ -1,6 +1,9 @@
 <?PHP
 /*
 20220129 fho4abcd backbutton+divhelper+more feedback messages
+20231228 fho4abcd Add separator parameter,
+20231228 fho4abcd remove _h.txt file if no heading specified
+20231228 fho4abcd remove unused code
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -52,7 +55,7 @@ if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
     </div>
 
     <div class="actions">
-<?php
+	<?php
     if ($arrHttp["Opcion"]=="new"){
         $backtoscript="../common/inicio.php?reinicio=s";
 		include "../common/inc_back.php";
@@ -66,7 +69,7 @@ if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
             include "../common/inc_home.php";
         }
 	}
-?>
+	?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
@@ -75,162 +78,89 @@ if (!isset($arrHttp["Opcion"])) $arrHttp["Opcion"]="";
 <div class="formContent">
 <?php
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
-if (!isset($arrHttp["pftname"])){
-	if (isset($arrHttp["pft"]))
-		$arrHttp["pft"]=stripslashes($arrHttp["pft"]);
-	else
-		$arrHttp["pft"]=stripslashes($arrHttp["pftedit"]);
-
-	$arrHttp["nombre"]=trim(strtolower($arrHttp["nombre"]));
-	$arrHttp["nombre"]=str_replace(".pft","",$arrHttp["nombre"]);
-    $archivobase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["nombre"].".pft";
-	$archivo=$db_path.$archivobase;
-	$fp=fopen($archivo,"w");
-	if (!$fp){
-		echo "<h2 style='color:red'>$archivobase ".$msgstr["revisarpermisos"]."</h2>";
-		die;
-	}
-	fputs($fp, $arrHttp["pft"]);
-	fclose($fp);
-	unset($fp);
-	if (isset($arrHttp["headings"])){
-        $archivo_hbase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["nombre"]."_h.txt";
-	   	$archivo_h=$db_path.$archivo_hbase;
-		$fp=fopen($archivo_h,"w");
-		$red=fwrite($fp,$arrHttp["headings"]);
-		fclose($fp);
-        echo "<h3>".$archivo_hbase." ".$msgstr["created"]."</h3>";
-	}
-    if (isset($arrHttp["desde"]) and ($arrHttp["desde"]=="dataentry" or $arrHttp["desde"]=="recibos")){
-	    echo "<script>
-				self.close()
-			 </script>
-			 </body>
-			 </html>";
-    	die;
-    }
-	if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat")){
-		$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
-	}else{
-		if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat")){
-			$fp=file($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat");
-		}
-	}
-	$flag="";
-	// IF THERE IS A HEADING FOR THE FORMAT
-	$head="";
-	$tipof="|";
-	if (isset($arrHttp["headings"])) {
-		$head="Y";
-		$tipof="|".$arrHttp["tipof"];
-	}
-	// DELETE THE FILE FORMAT NAME FROM THE DESCRIPTION OF THE FORMAT
-	$desc=str_replace("(".$arrHttp["nombre"].")","",$arrHttp["descripcion"]);
-    $datbase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat";
-	$dat=$db_path.$datbase;
-	$fp_out=fopen($dat,"w");
-	if (isset($fp)){
-		foreach ($fp as $value){
-			if (trim($value)!=""){
-				$f=explode('|',$value);
-				if ($f[0]==$arrHttp["nombre"]) {
-					fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipof."\n");
-					$flag="S";
-				}else{
-					fputs($fp_out,trim($value)."\n");
-				}
-			}
-		}
-	}
-	fclose($fp_out);
-	if ($flag!="S"){
-		$fp_out=fopen($dat,"a");
-		fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipof."\n");
-		fclose($fp_out);
-	}
-    echo "<h3>".$datbase." ".$msgstr["updated"]."</h3>";
-
-
-}else{
-// SAVE OPERATORS ASSIGNED TO THE PFT
-	if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat")){
-		$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
-	}else{
-		if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat")){
-			$fp=file($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat");
-		}
-	}
-	$p=explode('|',$arrHttp["pftname"]);
-	$pname=$p[0];
-	foreach ($fp as $value){
-		$value=trim($value);
-		$l=explode('|',$value);
-		if (!isset($l[2])) $l[2]="";
-		if ($l[0]==$pname){
-			$salida[]=$l[0]."|".$l[1]."|".$l[2];
-		}else{
-			$salida[]=$value;
-		}
-	}
-    $datbase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat";
-	$dat=$db_path.$datbase;
-	$fp_out=fopen($dat,"w");
-	foreach ($salida as $value) {
-		fputs($fp_out,$value."\n");
-	}
-	fclose($fp_out);
-    echo "<h3>".$datbase." ".$msgstr["updated"]."</h3>";
-}
-
-if (isset($archivo))
-	echo "<h3>$archivobase ".$msgstr["updated"]."</h3>";
+if (isset($arrHttp["pft"]))
+	$arrHttp["pft"]=stripslashes($arrHttp["pft"]);
 else
-	echo "<h3>".$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat ".$msgstr["updated"]."</h3>";
+	$arrHttp["pft"]=stripslashes($arrHttp["pftedit"]);
 
-if (!isset($arrHttp["encabezado"])){
-	$fp = file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
-	if ($fp) {
-		echo "<script>
+$arrHttp["nombre"]=trim(strtolower($arrHttp["nombre"]));
+$arrHttp["nombre"]=str_replace(".pft","",$arrHttp["nombre"]);
+$archivobase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["nombre"].".pft";
+$archivo=$db_path.$archivobase;
+$archivo_hbase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["nombre"]."_h.txt";
+$archivo_h=$db_path.$archivo_hbase;
+//Proces the pft file itself
+$fp=fopen($archivo,"w");
+if (!$fp){
+	echo "<h2 style='color:red'>$archivobase ".$msgstr["revisarpermisos"]."</h2>";
+	die;
+}
+fputs($fp, $arrHttp["pft"]);
+fclose($fp);
+unset($fp);
+echo "<h3>$archivobase ".$msgstr["updated"]."</h3>";
 
-		var i;
-		if (top.ModuloActivo==\"catalog\"){
-			selectbox=top.menu.document.forma1.formato
-			for(i=selectbox.options.length-1;i>=0;i--){
-				selectbox.remove(i);
-			}
-			top.menu.document.forma1.formato.options[0]=new Option('','');
-		";
-		$i=0;
-		$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
-		foreach($fp as $linea){
-			if (trim($linea)!="") {
-				$l=explode('|',$linea);
-				$cod=trim($l[0]);
-				$nom=trim($l[1]);
-				if (trim($cod)!=""){
-					$i=$i+1;
-					echo "
-					top.menu.document.forma1.formato.options[$i]=new Option('$nom','$cod');
-					";
-				}
-			}
+//Process the headings
+if (isset($arrHttp["headings"])){
+	$fp=fopen($archivo_h,"w");
+	$red=fwrite($fp,$arrHttp["headings"]);
+	fclose($fp);
+	echo "<h3>".$archivo_hbase." ".$msgstr["created"]."</h3>";
+} else{
+	if (file_exists($archivo_h)){
+		if (unlink($archivo_h)){
+			echo "<h3>".$archivo_hbase." ".$msgstr["eliminados"]."</h3>";
+		} else {
+			echo "<h3 style='color:red'>".$archivo_hbase." ".$msgstr["nodeleted"]."</h3>";
 		}
-		echo "}\n";
-		$i=$i+1;
-		echo "top.menu.document.forma1.formato.options[$i]=new Option('".$msgstr["noformat"]."','')\n";
-        $i=$i+1;
-		echo "top.menu.document.forma1.formato.options[$i]=new Option('".$msgstr["all"]."','ALL')\n";
-		echo "top.menu.document.forma1.formato.selectedIndex=1
-		     </script>";
 	}
 }
+
+//Process formatos.dat
+if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat")){
+	$fp=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat");
+}else{
+	if (file_exists($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat")){
+		$fp=file($db_path.$arrHttp["base"]."/pfts/".$lang_db."/formatos.dat");
+	}
+}
+$flag="";
+// IF THERE IS A type acronym
+$tipoacro="|";
+if (isset($arrHttp["tipoacro"])) {
+	$tipoacro="|".$arrHttp["tipoacro"];
+}
+// IF THERE IS A separator string
+$separacro="|";
+if (isset($arrHttp["separacro"])){
+	$separacro="|".Trim($arrHttp["separacro"]);
+}
+// DELETE THE FILE FORMAT NAME FROM THE DESCRIPTION OF THE FORMAT
+$desc=$arrHttp["descripcion"];
+$datbase=$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.dat";
+$dat=$db_path.$datbase;
+$fp_out=fopen($dat,"w");
+if (isset($fp)){
+	foreach ($fp as $value){
+		if (trim($value)!=""){
+			$f=explode('|',$value);
+			if ($f[0]==$arrHttp["nombre"]) {
+				fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipoacro.$separacro."\n");
+				$flag="S";
+			}else{
+				fputs($fp_out,trim($value)."\n");
+			}
+		}
+	}
+}
+fclose($fp_out);
+if ($flag!="S"){
+	$fp_out=fopen($dat,"a");
+	fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipoacro.$separacro."\n");
+	fclose($fp_out);
+}
+// echo that formatos.dat is updated
+echo "<h3>".$datbase." ".$msgstr["updated"]."</h3>";
+
 echo "</div></div>";
 include("../common/footer.php");
-if (isset($arrHttp['desde']) and ($arrHttp['desde']=="dataentry" or $arrHttp["desde"]=="recibos" )){
-?>
-<script>
-	self.close()
-</script>
-<?php
-}
-?>

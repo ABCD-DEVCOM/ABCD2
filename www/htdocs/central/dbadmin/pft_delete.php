@@ -1,6 +1,7 @@
 <?php
 /*
 20220129 fho4abcd div-helper+backbutton+improve logic+translation
+20231228 fho4abcd Delete also possible _h.txt file. Cleanup code
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -11,18 +12,6 @@ include ("../config.php");
 
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
-
-include("../lang/soporte.php");
-$lang=$_SESSION["lang"];
-$Permiso=$_SESSION["permiso"];
-$archivo="";
-if (isset($arrHttp["pft"])){
-	$file=$arrHttp["pft"];
-	$url="pft.php";
-	$archivo=$arrHttp["pft"].".pft";
-	$lista="formatos.dat";
-	$arrHttp["path"]="/pfts/".$_SESSION["lang"];
-}
 include("../common/header.php");
 ?>
 <body>
@@ -36,7 +25,7 @@ if (isset($arrHttp["encabezado"])){
 ?>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-    <?php echo $msgstr["pft"]." - ". $msgstr["delete"].": ".$archivo." (".$arrHttp["base"].")"?>
+    <?php echo $msgstr["pft"]." - ". $msgstr["delete"].": ".$arrHttp["pft"]." (".$arrHttp["base"].")"?>
 	</div>
 	<div class="actions">
     <?php
@@ -53,32 +42,48 @@ if (isset($arrHttp["encabezado"])){
 <?php
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";
 
-if ($archivo!=""){
-    $basearchivo=$arrHttp["base"].$arrHttp["path"]."/".$archivo;
-    if (file_exists($db_path.$basearchivo)) {
-        $res=unlink($db_path.$basearchivo);
-    }else{
-        $res=true;
+if (isset($arrHttp["pft"]) && $arrHttp["pft"]!=""){
+	$pft_name=$arrHttp["pft"];
+	$pft_namef=$pft_name.".pft";
+	$pft_nameh=$pft_name."_h.txt";
+	$pft_namel="formatos.dat";
+	$pft_basenamef=$base."/pfts/".$_SESSION["lang"]."/".$pft_namef;
+	$pft_basenameh=$base."/pfts/".$_SESSION["lang"]."/".$pft_nameh;
+	$pft_basenamel=$base."/pfts/".$_SESSION["lang"]."/".$pft_namel;
+ 	$pft_fullnamef=$db_path.$pft_basenamef;
+	$pft_fullnameh=$db_path.$pft_basenameh;
+	$pft_fullnamel=$db_path.$pft_basenamel;
+	$res=true;
+    if (file_exists($pft_fullnamef)) {
+        $res=unlink($pft_fullnamef);
     }
 	if ($res==false){
-		echo "<h2 style='color:red'>".$msgstr["archivo"]." ".$basearchivo.": ".$msgstr["nodeleted"]."</h2>";
+		echo "<h2 style='color:red'>".$msgstr["archivo"]." ".$pft_basenamef.": ".$msgstr["nodeleted"]."</h2>";
 	}else{
-		echo "<h2>".$msgstr["archivo"]." ".$basearchivo.": ".$msgstr["eliminados"]."</h2>";
+		echo "<h2>".$msgstr["archivo"]." ".$pft_basenamef.": ".$msgstr["eliminados"]."</h2>";
 	}
-	if ($lista!=""){
-		$salida="";
-        $baselista=$arrHttp["base"].$arrHttp["path"]."/".$lista;
-		$fp=file($db_path.$baselista);
-		foreach ($fp as $value){
-			$value=trim($value);
-			$v=explode('|',$value);
-			if ($v[0]!=$file) $salida.=$value."\n";
-		}
-        $fp=fopen($db_path.$baselista,"w");
-        fwrite($fp,$salida);
-        fclose($fp);
-        echo "<h3>".$msgstr["archivo"]." ".$baselista.": ".$msgstr["updated"]."</h3>";
+	// Delete the _h.txt file
+	$res=true;
+    if (file_exists($pft_fullnameh)) {
+        $res=unlink($pft_fullnameh);
+    }
+	if ($res==false){
+		echo "<h2 style='color:red'>".$msgstr["archivo"]." ".$pft_basenameh.": ".$msgstr["nodeleted"]."</h2>";
+	}else{
+		echo "<h2>".$msgstr["archivo"]." ".$pft_basenameh.": ".$msgstr["eliminados"]."</h2>";
 	}
+	// update formatos.dat
+	$salida="";
+	$fp=file($pft_fullnamel);
+	foreach ($fp as $value){
+		$value=trim($value);
+		$v=explode('|',$value);
+		if ($v[0]!=$pft_name) $salida.=$value."\n";
+	}
+	$fp=fopen($pft_fullnamel,"w");
+	fwrite($fp,$salida);
+	fclose($fp);
+	echo "<h3>".$msgstr["archivo"]." ".$pft_basenamel.": ".$msgstr["updated"]."</h3>";
 }
 echo "</div></div>";
 include "../common/footer.php";

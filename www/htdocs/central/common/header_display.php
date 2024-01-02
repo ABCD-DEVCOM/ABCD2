@@ -1,7 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+/* modifications
+2024-01-02 fho4abcd simplified DOCTYPE and html tag
+*/
+?>
+<!DOCTYPE html>
 
-<html  xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
+<html  lang="<?php echo $_SESSION["lang"]?>">
 	<head>
 		<title>ABCD</title>
 		<meta http-equiv="Expires" content="-1" />

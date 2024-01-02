@@ -313,6 +313,7 @@ src_top=Go to the top
 sortkey=Sort key
 sortkeycopy=Copy sort key
 sortkeycreate=Create sort key
+sortkeycreeddel=Create/edit/remove sort keys
 specvalue=Please specify a value
 startas=Role
 storein=Store in

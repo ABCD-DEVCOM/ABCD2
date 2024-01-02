@@ -2,9 +2,38 @@
 /*
 20220117 fho4abcd Improve html+divhelper+ typo in the range processing
 20220713 fho4abcd Use $actparfolder as location for .par files
+20240102 fho4abcd Documentation+improved algorithms+better output for preview+print option
+20240102 fho4abcd Removed obsolete pragma, pre-check/post-check and unnecessary cache control
 */
 /*
 ** This module is located in central/dataentry as it is referenced from several sources
+** Exports database content controlled by a pft.
+** - The pft content is given by the caller or from a stored pft.
+** - Record selection is controlled by parameters from the caller
+** - Export target is controlled by a parameter from the caller
+** Parameters:
+	&base		database indicator (<basename>[|<user>]) (required)
+	&cipar		Name of database parameter file
+** Parameters for exports based on supplied (~temporary) pft specification
+	&pft		PFT content to be used.
+				- An empty or omitted value requires that &fgen is set
+	&headings	Headings for columns syntax format (CT/CD)
+	&tipof		Output syntax acronym (T/P/..../CD)
+	&separ		Separator to be used by syntax format CD
+** Parameters for exports based on stored pft
+	&fgen		Indication of the pft to be used. Accepted string values
+				- <pftname>[|<syntax acronym>[|<separator acronym>]]
+				- <pftname>|<description>|<syntax acronym>(tipof)|<separator acronym>
+				- <pftname>          : Filename of the pft. No fullpath, no extension
+				- <syntax acronym>   : The intended output format (PL/CD/...)
+				- <separator acronym>: Acronym of separator in column formats (VBAR/...)
+** Parameters for export target
+	&vp			Acronym for export target
+				- WP:	Export to a word file (.doc)
+				- TB:	Export to an Excel file (.xls)
+				- TXT:	Export to a text file (.txt)
+				- default: Show in browser
+** All other parameters for selection of records
 */
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 set_time_limit(0);
@@ -15,9 +44,21 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include("../config.php");
 include ("../lang/admin.php");
+include ("../dbadmin/inc_pft_files.php");
 
-//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; //die;
+//foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; 
 $data="";
+$headings="";
+$pft_name="";
+$pft_descri="";
+$tipoacro="";
+$separ="|";// was hard coded in previous versions
+$vp="";
+if (isset($arrHttp["vp"])) $vp=$arrHttp["vp"];
+$Opcion="rango";
+if (isset($arrHttp["Expresion"]))		$Opcion="buscar";
+if (isset($arrHttp["seleccionados"])) 	$Opcion="seleccionados";
+
 if (isset($arrHttp["Expresion"])){
 	$arrHttp["Expresion"]=stripslashes($arrHttp["Expresion"]);
 	if (strpos('"',$arrHttp["Expresion"])==0) {
@@ -26,60 +67,70 @@ if (isset($arrHttp["Expresion"])){
 	$Expresion=urlencode($arrHttp["Expresion"]);
 }
 if (isset($arrHttp["pft"])) $arrHttp["pft"]=stripslashes($arrHttp["pft"]);
-
-
 if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
+	// This the case that a pft is supplied.
 	$Formato=urlencode($arrHttp["pft"]);
-}else{
-	if (isset($arrHttp["fgen"]) and $arrHttp["fgen"]!="") {
-		$pft_name=explode('|',trim($arrHttp["fgen"]));
-		$arrHttp["fgen"]=$pft_name[0];
-		if (isset($pft_name[1]))
-			$arrHttp["tipof"]=trim($pft_name[1]);
-		else
-			$arrHttp["tipof"]="";
-		if (strpos($arrHttp["fgen"],'.pft')===false) $arrHttp["fgen"].=".pft";
-	    $Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$arrHttp["fgen"];
-	    if (!file_exists($Formato)){
-	    	$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$arrHttp["fgen"];
-	    }
-	    if (file_exists($Formato)) $Formato="@".$Formato;
-        // READ THE HEADINGS, IF ANY
-	    if ($arrHttp["tipof"]!=""){
-	    	$head=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$pft_name[0]."_h.txt";
-	    	if (!file_exists($head)){
-	    		$head=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$pft_name[0]."_h.txt";
-	    	}
-	    	if (file_exists($head)){
-	    		$fp=file($head);
-	    		$arrHttp["headings"]="";
-	    		foreach ($fp as $value) {
-	    			$arrHttp["headings"].=trim($value)."\r";
-	    		}
-	    	}
-	    }
+	if (isset($arrHttp["headings"])) 	$headings=$arrHttp["headings"];
+	if (isset($arrHttp["tipof"]))		$tipoacro=$arrHttp["tipof"];
+	if (isset($arrHttp["separ"]))		$separ=$arrHttp["separ"];
+}elseif (isset($arrHttp["fgen"]) and $arrHttp["fgen"]!="") {
+	// This the case that a reference to an existing pft file is supplied 
+	$separacro="";
+	$fgenar=explode('|',$arrHttp["fgen"]);
+	if ($fgenar[0]!="") 							$pft_name=Trim($fgenar[0]);
+	if (isset($fgenar[1])&& Trim($fgenar[1]!=""))	$pft_descri=Trim($fgenar[1]);
+	if (isset($fgenar[2])&& Trim($fgenar[2]!=""))	$tipoacro=Trim($fgenar[2]);
+	if (isset($fgenar[3])&& Trim($fgenar[3]!=""))	$separacro=Trim($fgenar[3]);
+	if ($separacro=="COMMA")  $separ=",";// must match with selection in pft.php
+	if ($separacro=="SEMICO") $separ=";";// idem
+	if ($separacro=="VBAR")   $separ="|";// idem
+	// The pft is not read here, but in wxis
+	$Formato=$db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/".$pft_name.".pft";
+	if (!file_exists($Formato)){
+		$Formato=$db_path.$arrHttp["base"]."/pfts/".$lang_db."/".$pft_name.".pft";
 	}
+	if (file_exists($Formato)) $Formato="@".$Formato;
+	// READ THE HEADINGS, IF ANY
+	if (ReadPFT_H($pft_name[0], $headings)!=0) die;
+} else {
+	echo "<div color=red>Coding error: No pft and no pft content</div>";
+	die;
 }
+// Add leading text to the generated output (if necessary)
+if (isset($tipoacro)){
+	switch ($tipoacro){              //TYPE OF FORMAT
+		case "CT": //COLUMNS (TABLE)
+			$data="<table border=1>";
+			if ($headings!=""){
+				$data.="<tr>";
+				$h=explode("\r",$headings);
+				foreach ($h as $value){
+					$data.="<th>$value</th>";
+				}
+				$data.="</tr>";
+			}
+			break;
+		case "CD":
+			if ($vp=="P") $data.="<pre>";
+			if ($headings!=""){
+				$h=explode("\r",$headings);
+				$i=0;
+				foreach ($h as $value){
+					$value=trim($value);
+					if ($i==0){
+						$data=$value;
+					}else{
+						$data.=$separ.$value;
+					}
+					$i++;
+				}
+				$data.="\n";
+			}
+			break;
+	}
+} // end if (isset tipof
 
-if (isset($arrHttp["Expresion"])) {
-    $Opcion="buscar";
-}else{
-	$Opcion="rango";
-}
-if (isset($arrHttp["seleccionados"]))
-	$Opcion="seleccionados";
-
-if (isset($arrHttp["guardarformato"])){
-   	$fp=fopen($db_path.$arrHttp["base"]."/".$arrHttp["Dir"]."/".$arrHttp["nombre"],"w",0);
-   	fputs($fp, $arrHttp["pft"]); #write all of $data to our opened file
- 		fclose($fp); #close the file
- 		$fp=fopen($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/listados.gen","a",0);
-
-   	fputs($fp, "\n".$arrHttp["nombre"]." ".$arrHttp["descripcion"]); #write all of $data to our opened file
- 		fclose($fp); #close the file
-
-}
-
+// Setup the query string for execution of the report
 $query = "&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
 if (isset($Expresion)) $query.="&Expresion=".$Expresion;
 $query.="&Opcion=$Opcion&Word=S&Formato=".$Formato;
@@ -98,7 +149,7 @@ if (isset($arrHttp["seleccionados"])){
 }else {
 	if (isset($arrHttp["Mfn"]) and isset($arrHttp["to"]))
 		$query.="&from=".$arrHttp["Mfn"]."&to=".$arrHttp["to"];
-} // end if (isset selccionades
+} // end if (isset seleccionades
 
 if (!isset($arrHttp["sortkey"])){
 	$IsisScript=$xWxis."imprime.xis";
@@ -106,42 +157,11 @@ if (!isset($arrHttp["sortkey"])){
 	$query.='&sortkey='.urlencode($arrHttp["sortkey"]).",";
 	$IsisScript=$xWxis."sort.xis";
 }
+// Execute the query (== get the report data)
 include("../common/wxis_llamar.php");
 //foreach ($contenido as $value) echo "$value<br>";
 $ficha=$contenido;
 
-if (isset($arrHttp["tipof"])){
-	switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
-		case "T":  //TABLE
-			break;
-		case "P":  //PARRAGRAPH
-			break;
-		case "CT": //COLUMNS (TABLE)
-			$data="<table border=1>";
-			if (isset($arrHttp["headings"])){
-				$h=explode("\r",$arrHttp["headings"]);
-				foreach ($h as $value){
-					$data.="<th>$value</th>";
-				}
-			}
-			break;
-		case "CD":
-			if (isset($arrHttp["headings"])){
-				$h=explode("\r",$arrHttp["headings"]);
-				foreach ($h as $value){
-					if (trim($value)!=""){
-						if ($data==""){
-							$data=$value;
-						}else{
-							$data.="|$value";
-						}
-	               }
-				}
-				$data.="\n";
-			}
-			break;
-	}
-} // end if (isset
 
 foreach ($ficha as $linea){
 	if (substr($linea,0,6)=='$$REF:'){
@@ -179,40 +199,28 @@ foreach ($ficha as $linea){
 		$data.= $linea."\n" ;
 	}
 } // end foreach
-
-
-switch ($arrHttp["vp"]){
+// Modify \n into <br> in case of a preview
+if ($tipoacro=="CD"&& $vp=="P"){
+	$data=str_replace("\n","<br>",$data);
+	$data=str_replace(PHP_EOL,"<br>",$data);
+}
+switch ($vp){
 	case "WP":
     	$filename=$arrHttp["base"].".doc";
 		header('Content-Type: application/msword; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
-   		header("Expires: 0");
-   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-   		header("Pragma: public");
-		#echo '<html xmlns:o="urn:schemas-microsoft-com:office:office"' . "\n";
-		#echo '   xmlns:w="urn:schemas-microsoft-com:office:word"' . "\n";
-		#echo '   xmlns="http://www.w3.org/TR/REC-html40">' . "\n";
 		break;
 	case "TB":
 		$filename=$arrHttp["base"].".xls";
 		header('Content-Type: application/excel; charset=windows-1252');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
-   		header("Expires: 0");
-   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-   		header("Pragma: public");
-		#echo '<html xmlns:o="urn:schemas-microsoft-com:office:office"' . "\n";
-		#echo '   xmlns:w="urn:schemas-microsoft-com:office:word"' . "\n";
-		#echo '   xmlns="http://www.w3.org/TR/REC-html40">' . "\n";
 		break;
 	case "TXT":
 		$filename=$arrHttp["base"].".txt";
-		header('Content-Type: application/excel; charset=windows-1252');
+		header('Content-Type: text/plain');
 		header("Content-Disposition: attachment; filename=\"$filename\"");
-   		header("Expires: 0");
-   		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-   		header("Pragma: public");
-		break;
-	default:
+ 		break;
+	case "P":
 		include("../common/header_display.php");
         ?>
         <body>
@@ -221,17 +229,76 @@ switch ($arrHttp["vp"]){
         ?>
         <div class="formContent">
         <?php
-        //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; 
+		break;
+	case "PRINT":
+		include("../common/header_display.php");
+		?>
+		<style type="text/css">
+			html	{
+			font-family: Arial, Helvetica, sans-serif;
+			background-color: #FFFFFF; 
+			margin: 0px;  /* this affects the margin on the html before sending to printer */
+			}
+
+			body	{
+			margin: 10mm 15mm 10mm 10mm; /* margin you want for the content */
+			padding: 0.5mm;
+			}
+
+			.print {
+			border-collapse: collapse;
+			width: 100%;
+			}
+
+			.print td, .print th {
+			border: 1px solid #ddd;
+			padding: 8px;
+			}
+
+			.print tr:nth-child(even){background-color: #f2f2f2;}
+
+			.print tr:hover {background-color: #ddd;}
+
+			.print th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #708bb1;
+			color: #000;
+			}
+
+			@page {
+			size:  auto;   /* auto is the initial value */
+			margin: 0mm;  /* this affects the margin in the printer settings */
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function() { window.print(); }
+		</script>
+        <body>
+        <?php
+        ?>
+        <div class="formContent">
+        <?php
+		if (isset($institution_name)) echo $institution_name;
+		echo "<h5>ABCD - ".$pft_descri."</h5>";
+		break;
+	default:
+		include("../common/header_display.php");
+        ?>
+        <body>
+        <div class="formContent">
+        <?php
 } // end switch vp
 
 echo $data;
 
-if (isset($arrHttp["tipof"])){
-	switch ($arrHttp["tipof"]){              //TYPE OF FORMAT
+if (isset($tipoacro)){
+	switch ($tipoacro){              //TYPE OF FORMAT
 		case "T":  //TABLE
 			echo "</body></html>";
 			break;
-		case "P":  //PARRAGRAPH
+		case "P":  //PARAGRAPH
 			echo "</body></html>";
 			break;
 		case "CT": //COLUMNS (TABLE)
@@ -242,5 +309,4 @@ if (isset($arrHttp["tipof"])){
 	}
 }
 die;
-
 ?>
