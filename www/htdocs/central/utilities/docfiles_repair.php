@@ -2,6 +2,7 @@
 /* Modifications
 20210903 fho4abcd Created
 20211215 fho4abcd Backbutton by included file
+20240104 fho4abcd Use correct filename for reading the collection configuration file
 **
 ** This file contains functionality for the mitigation of
 ** - Field url: v98 contains no url but only a filename
@@ -81,7 +82,7 @@ if ($inframe!=1) include "../common/institutional_info.php";
 include "../common/inc_div-helper.php";
 include ("../common/inc_get-dbinfo.php");// sets MAXMFN
 // Set collection related parameters and create folders if not present
-include "../utilities/inc_coll_chk_init.php";
+include "../utilities/inc_coll_chk_init.php";// inline code. Sets a.o $tagConfigFull
 // Include configuration functions
 include "inc_coll_read_cfg.php";
 /* =======================================================================
@@ -102,7 +103,7 @@ if ($repdoc_cnfcnt==1) {
     <input type=hidden name=Accion>
     <?php
     $actualField=array();
-    $retval= read_dd_cfg("operate", $metadataConfigFull, $metadataMapCnt,$actualField );
+    $retval= read_dd_cfg("operate", $tagConfigFull, $metadataMapCnt,$actualField );//$tagConfigFull set in inc_coll_chk_init.php
     if ($retval!=0) die;
     for ($i=0;$i<$metadataMapCnt;$i++) {
         echo "<input type=hidden name=".$actualField[$i]["term"]." value='".$actualField[$i]["field"]."'>\n";

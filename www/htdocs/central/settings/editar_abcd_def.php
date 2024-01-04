@@ -9,6 +9,7 @@ linked documents
 2022-01-24 rogercgui Included file renaming to avoid accumulation of images in the upload folder. Even without converting the extension the files will have fixed names.
 2022-02-14 fho4abcd Texts for dr_path+ sequence for dr_path+improved table layout+removed redirect (too rigid for dr_path)
 2022-03-10 fho4abcd Remove unused option barcode1reg from dr_path
+2024-01-04 fho4abcd No typewriter behavior(suppressed errors), give error for wrong upload filetype, no error if nothing to upload
 */
 
 
@@ -565,7 +566,7 @@ global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir;
 if (!is_dir($target_dir)) {
     mkdir($target_dir);
 }
-	
+if ($_FILES[$fileimg]["name"]=="") return;// no more action if no file to upload
 $target_file = $target_dir.basename($_FILES[$fileimg]["name"]);
 
 $temp = explode(".", $target_file);
@@ -607,7 +608,7 @@ if ($_FILES[$fileimg]["size"] > 2097152) {
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
- // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed."."<br>";
+  echo "Sorry, only .jpg, .jpeg, .png & .gif files are allowed."."<br>";
   $uploadOk = 0;
 }
 
@@ -638,7 +639,7 @@ if (!isset($ini["DIRTREE_EXT"]) and $arrHttp["Opcion"]!="css")
 function saveDef() {
 	global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir, $file, $help, $arrHttp;
 
-    echo '<pre  id="typewriter">';
+    echo '<pre>';
     echo "<b>".$msgstr["set_APPLY"]."</b><br>";
     $fp=@fopen($file,"w");
     if (!$fp) {
@@ -654,7 +655,6 @@ function saveDef() {
                 fwrite($fp,$key."=".trim($arrHttp["ini_".$key])."\n");
             }
         }
-        echo '<p id="cursor-line" class="visible">&gt;&gt; <span class="typed-cursor">&#9608;</span></p><br>';
 
         // Upload and save file names. 
         $fileslist=array("ini_LOGO", "ini_RESPONSIBLE_LOGO");
@@ -734,8 +734,6 @@ if (!isset($arrHttp["Accion"])){
 <?php	
 } else {
 	saveDef();
-	echo '<script type="text/javascript" src="/assets/js/typing.js"></script>';
-	//page_redirect();// Redirection is too rigid
 }
 
 ?>

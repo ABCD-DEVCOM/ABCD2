@@ -8,6 +8,7 @@
 20230119 fho4abcd Removed commented style section
 20230203 fho4abcd Removed unused function SeleccionarRegistro
 20230210 fho4abcd Improve text in breadcrumb
+20240103 fho4abcd Add leading zero's to tag if necessary in function Ayuda
 */
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -541,6 +542,8 @@ function CapturarRegistro(){
 
 	function Ayuda (tag) {
 		tagx=String(tag)
+		if (tagx.length<3) tagx="0"+tagx
+		if (tagx.length<3) tagx="0"+tagx
 
 		url="<?php echo "../documentacion/ayuda_db.php?base=".$arrHttp["base"]?>&campo=tag_"+tagx+".html"
 		msgwin=window.open(url,"Ayuda","status=yes,resizable=yes,toolbar=no,menu=no,scrollbars=yes,width=600,height=400,top=100,left=100")

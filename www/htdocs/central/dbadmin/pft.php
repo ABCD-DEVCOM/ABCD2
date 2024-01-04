@@ -12,6 +12,7 @@
 20220918 fho4abcd Explode base before config.php (to get correct value for $actparfolder)
 20221102 fho4abcd Cancel button acts now the same as the back button
 20240102 fho4abcd Cleanup,better messages,correct handle output type, improved Edit, remove Expresion parameter, add Print option
+20240104 fho4abcd Correct creation of wrong folder. No longer browse pft files. Small corrections
 */
 /*
 **Parameters:
@@ -598,22 +599,11 @@ if ($Opcion!="new"){
 	// Set additional variables if not creation of a new database
 	$pftdir="pfts/".$_SESSION["lang"];
 	// Read the list of existing pft Files
-	$pftdirfull=$db_path.$base.$pftdir;
+	$pftdirfull=$db_path.$base."/".$pftdir;
 	if (!file_exists($pftdirfull)) mkdir($pftdirfull,0770,true);
 	if (!file_exists($pftdirfull)){
 		echo "<br><b style='color:red'>".$msgstr["fatal"].". ".$msgstr["folderne"].": ".$pftdirfull."</b>";
 		die;
-	}
-	$handle = opendir($pftdirfull);
-	while (false !== ($file = readdir($handle))) {
-	   if ($file != "." && $file != "..") {
-			if(is_file($pftdirfull."/".$file))
-			   if (substr($file,strlen($file)-4,4)==".pft") $pft[]=$file;
-	   }
-	}
-	closedir($handle);
-	// For the actual pft for edit purposes
-	if ( $Opcion=="edit") {
 	}
 	// Read the fdt file.
 	$fdtarchivo=$db_path.$base."/def/".$_SESSION["lang"]."/".$base.".fdt";
@@ -652,7 +642,6 @@ if ( $Opcion!="new" ) {
 <form name=forma1 method=post action=../dataentry/imprimir_g.php >
 <input type=hidden name=base value=<?php echo $base?>>
 <input type=hidden name=cipar value=<?php echo $cipar?>>
-<input type=hidden name=Dir value='<?php echo $pftdir?>'>
 <input type=hidden name=Modulo value='<?php if (isset($arrHttp["Modulo"])) echo $arrHttp["Modulo"]?>'>
 <input type=hidden name=Opcion>
 <input type=hidden name=vp>
