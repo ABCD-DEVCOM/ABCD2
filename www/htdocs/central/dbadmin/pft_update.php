@@ -4,6 +4,7 @@
 20231228 fho4abcd Add separator parameter,
 20231228 fho4abcd remove _h.txt file if no heading specified
 20231228 fho4abcd remove unused code
+20240115 fho4abcd Store extra options
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
  * @copyright:  Copyright (C) 2009 BIREME/PAHO/WHO - VLIR/UOS
@@ -125,15 +126,22 @@ if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/formatos.
 	}
 }
 $flag="";
-// IF THERE IS A type acronym
-$tipoacro="|";
+// construct the options
+$options="|";
 if (isset($arrHttp["tipoacro"])) {
-	$tipoacro="|".$arrHttp["tipoacro"];
+	$options.=$arrHttp["tipoacro"];
 }
-// IF THERE IS A separator string
-$separacro="|";
+$options.="|";
 if (isset($arrHttp["separacro"])){
-	$separacro="|".Trim($arrHttp["separacro"]);
+	$options.=Trim($arrHttp["separacro"]);
+}
+$options.="|";
+if (isset($arrHttp["prefixsubfieldacro"])){
+	$options.=Trim($arrHttp["prefixsubfieldacro"]);
+}
+$options.="|";
+if (isset($arrHttp["fieldquoteacro"])){
+	$options.=($arrHttp["fieldquoteacro"]);
 }
 // DELETE THE FILE FORMAT NAME FROM THE DESCRIPTION OF THE FORMAT
 $desc=$arrHttp["descripcion"];
@@ -145,7 +153,7 @@ if (isset($fp)){
 		if (trim($value)!=""){
 			$f=explode('|',$value);
 			if ($f[0]==$arrHttp["nombre"]) {
-				fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipoacro.$separacro."\n");
+				fputs($fp_out,$arrHttp["nombre"]."|".$desc.$options."\n");
 				$flag="S";
 			}else{
 				fputs($fp_out,trim($value)."\n");
@@ -156,7 +164,7 @@ if (isset($fp)){
 fclose($fp_out);
 if ($flag!="S"){
 	$fp_out=fopen($dat,"a");
-	fputs($fp_out,$arrHttp["nombre"]."|".$desc.$tipoacro.$separacro."\n");
+	fputs($fp_out,$arrHttp["nombre"]."|".$desc.$options."\n");
 	fclose($fp_out);
 }
 // echo that formatos.dat is updated

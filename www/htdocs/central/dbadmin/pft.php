@@ -13,6 +13,7 @@
 20221102 fho4abcd Cancel button acts now the same as the back button
 20240102 fho4abcd Cleanup,better messages,correct handle output type, improved Edit, remove Expresion parameter, add Print option
 20240104 fho4abcd Correct creation of wrong folder. No longer browse pft files. Small corrections
+20240116 fho4abcd Improved content formats (smaller/functonality). Extra options for template generation. No trim for undefined FDT values(bug).
 */
 /*
 **Parameters:
@@ -23,11 +24,13 @@
 			- "update"	Legacy. Equal to default
 			- default	Run report. Edit/create new can be selected in the code
 	&fgen	Indication of the pft to be used. Accepted string values
-			- <pftname>[|<syntax acronym>[|<separator acronym>]]
-				<pftname>: Filename of the pft. No fullpath, no extension
-				<syntax acronym>: The intended output format (PL/CD/...)
-				<separator acronym>:	The separator in column formats
-				default	Empty and omitted values result in default Opcion
+			- <pftname>[|<syntax acronym>[|<separator acronym>[<prefix subfield acronym>[<field quote acronym>]]]]
+				<pftname>: 			Filename of the pft. No fullpath, no extension
+				<syntax acronym>: 	The intended output format (PL/CD/...)
+				<separator acronym>:		The separator in column formats {VBAR/...
+				<prefix subfield acronym>:	Indicator to prefix subfields with ^s (0/1)
+				<field quote acronym>:		Indicator to enclose fields in quotes (0/1)
+				default	Empty and omitted values result in default values
 	&encabezado	Processed as usual
 	&retorno	Indicator of the caller (==backtoscript)
 	&Modulo		Used for backtoscript by called scripts
@@ -52,12 +55,16 @@ if (isset($arrHttp["descripcion"])) $description=$arrHttp["descripcion"];
 $pft_name="";
 $tipoacro="";
 $separacro="VBAR";// was hard coded in previous versions
+$prefixsubfieldacro=0;//did not exist
+$fieldquoteacro=0;
 if (isset($arrHttp["fgen"]) && $arrHttp["fgen"]!=""){
 	$fgenar=explode('|',$arrHttp["fgen"]);
 	if ($fgenar[0]!="") 							$pft_name=Trim($fgenar[0]);
 	if (isset($fgenar[1])&& Trim($fgenar[1]!=""))	$description=Trim($fgenar[1]);
 	if (isset($fgenar[2])&& Trim($fgenar[2]!=""))	$tipoacro=Trim($fgenar[2]);
 	if (isset($fgenar[3])&& Trim($fgenar[3]!=""))	$separacro=Trim($fgenar[3]);
+	if (isset($fgenar[4])&& Trim($fgenar[4]!=""))	$prefixsubfieldacro=Trim($fgenar[4]);
+	if (isset($fgenar[5])&& Trim($fgenar[5]!=""))	$fieldquoteacro=Trim($fgenar[5]);
 }
 if( $tipoacro=="") $tipoacro="T";// most probable default: for default pft file to view records
 $pft_content="";
@@ -160,6 +167,8 @@ function ClearFormat(){
 		document.forma1.tipof[i].checked=false
 	}
 	document.forma1.separ[0].checked=true // The separator default in history
+	document.forma1.prefixsubfield.checked=false
+	document.forma1.fieldquote.checked=false
 }
 
 function ClearRange(){
@@ -246,56 +255,68 @@ function GenerarFormato(){
    		if (document.forma1.tipof[i].checked)
    			Tipo=document.forma1.tipof[i].value
    	}
+	prefixsubfield=document.forma1.prefixsubfield.checked;
     switch (Tipo){
     	case "T":             //TABLE
-    		formato="'<table border=0 width=90%>'\n"
+			bodystyle="style="+'"'+'font-family:arial;font-size:smaller;vertical-align:top" '
+    		formato ="'<table border=0>'\n"
+			formato+="'<tbody "+bodystyle+">'\n"
     		for (i=0;i<document.forma1.list21.options.length;i++){
-			    campo=document.forma1.list21.options[i].value
-			    t=campo.split('|')
+			    campo=document.forma1.list21.options[i].value;
+				//Type|Tag  |Title            |Prin|Repeatable|Subfields|Pre-literal|Inputtype|....
+				//0   |1    |2                |3   |4         |5        |6          |7        |....
+				//Note: Pre-literal is long ago disappeared from the FDT input. Still present in all FDT files
+				//Examples
+				//F   |1    |Control number   |0   |0         |         |           |AI       ||20|||||||1
+				//T   |10   |LC control number|0   |0         |12a      |           |X        ||||
+				//F   |20   |ISBN             |0   |1         |a        |           |X|       ||||||||1
+			    t=campo.split('|');
 				xTag=t[1]
 				xTipoE=t[0]
 				if (xTag=="" || xTipoE=="L"){
-					campo="'<tr><td colspan=2 valign=top><font face=arial size=2><b>"+t[2]+"</b></font></td>'/\n"
+					campo="'<tr><th colspan=2>"+t[2]+"</th>'/\n"
 		    	}else {
-		    		if(Trim(t[5])!=""){
-						tag=SubFields(xTag,t[5],t[6])
+		    		if(typeof t[5]!=='undefined' && Trim(t[5])!=""){
+						tag=SubFields(xTag,t[5],"<br>",prefixsubfield);
 					}else{
 						tag="v"+xTag+"+|<br>|"
 					}
-			    	campo="if p(v"+xTag+ ") then '<tr><td width=20% valign=top><font face=arial size=2><b>"+t[2]+"</b></font></td><td valign=top><font face=arial size=2>'"+tag+",'</td>' fi/\n"
+			    	campo="if p(v"+xTag+ ") then '<tr><th width=20%>"+t[2]+"</th><td>'"+tag+",'</td>' fi/\n"
 				}
-				formato+=campo
+				formato+=campo;
 			}
-			formato+="'</table><p>'";
+			formato+="'</table>'";
     		break
-    	case "PL":
-    	case "P":
+    	case "PL":	//Paragraph with tags
+    	case "P":	//Paragraph
+			font="'<font face=arial size=2>"
 	    	for (i=0;i<document.forma1.list21.options.length;i++){
 		    	campo=document.forma1.list21.options[i].value
 		    	t=campo.split('|')
 				xTag=t[1]
 				xTipoE=t[0]
 				if (xTag=="" || xTipoE=="L"){
-					campo="'<br><b>"+t[2]+"</b></td>'/\n"
+					campo="'<b>"+t[2]+"</b><br>'/\n"
 		    	}else {
 		    		if (Tipo=='PL')
-		    			label_f=  "<font face=arial size=2><b>"+t[2]+"</b></font>: "
+		    			label_f=  "<b>"+t[2]+"</b>: ' "
 		 			else
-		 				label_f=""
+		 				label_f="'"
 					if(Trim(t[5])!=""){
-						tag=SubFields(xTag,t[5],t[6])
+						tag=SubFields(xTag,t[5],";",prefixsubfield)
 					}else{
 						tag="v"+xTag+"+|; |"
 					}
 
-		    		campo="if p(v"+xTag+ ") then '<br>"+label_f+"<font face=arial size=2>'"+tag+"'</font>'"+", fi/\n"
+		    		campo="if p(v"+xTag+ ") then "+font+label_f+tag+"'</font><br>'"+", fi/\n"
 				}
 				formato+=campo
 			}
-			formato+="'<P>'/\n"
+			formato+="/\n"
     		break
-    	case "CT":
-    		formato+="'<tr>',"
+    	case "CT":	//Columns in table~HTML table
+			rowstyle="style="+'"'+'font-family:arial;font-size:smaller;vertical-align:top" ';
+    		formato+="'<tr "+rowstyle+">',"
     		for (i=0;i<document.forma1.list21.options.length;i++){
 			    campo=document.forma1.list21.options[i].value
 			    t=campo.split('|')
@@ -304,17 +325,19 @@ function GenerarFormato(){
 		  		if (xTag!=""){
 		  			res=""
 					if(Trim(t[5])!=""){
-						tag=SubFields(xTag,t[5],t[6])
+						tag=SubFields(xTag,t[5],"<br>",prefixsubfield)
 					}else{
 						tag="v"+xTag+"+|; |"
 					}
-			    	campo="'<td valign=top><font face=arial size=2>'"+tag+" if a(v"+xTag+") then '&nbsp;' fi,'</font></td>'/\n"
+			    	campo="'<td>'"+tag+" if a(v"+xTag+") then '&nbsp;' fi,'</td>'/\n"
 			    	formato+=campo
 			    	head+=t[2]+"\n"
 				}
 			}
     		break;
-    	case "CD":
+    	case "CD": //Columns delimited
+		quote="";
+		if(document.forma1.fieldquote.checked==true) quote=" '"+'"'+"' ";
     		for (i=0;i<document.forma1.list21.options.length;i++){
 			    campo=document.forma1.list21.options[i].value
 			    t=campo.split('|')
@@ -322,11 +345,11 @@ function GenerarFormato(){
 				xTipoE=t[0]
 		  		if (xTag!=""){
 					if(Trim(t[5])!=""){
-						tag=SubFields(xTag,t[5],t[6])
+						tag=SubFields(xTag,t[5],";",prefixsubfield)
 					}else{
-						tag="v"+xTag
+						tag="v"+xTag+"+|; |";//added separator between repeats
 					}
-			    	campo=tag+",'"+separstr+"',\n"
+			    	campo=quote+tag+","+quote+"'"+separstr+"'\n"
 			    	formato+=campo
 			    	head+=t[2]+"\n"
 				}
@@ -339,26 +362,24 @@ function GenerarFormato(){
 	document.forma1.pft.value=formato
 	document.forma1.headings.value=head
 }
-
-function SubFields(Tag,delim,ed){
-	xtag="(if p(v"+Tag+") then "
-	for (ic=0;ic<delim.length;ic++){
-		if(delim.substr(ic,1)=="-")
-			delimiter="*"
- 		else
- 			delimiter=delim.substr(ic,1)
- 		edicion=ed.substr(ic,1)
- 		if (ic==0)
- 			edicion=""
- 		else
- 			if (edicion!="") edicion=" "+edicion
-			if (edicion!="")
-				xtag+=',|'+edicion+'|v'+Tag+'^'+delimiter+','
-	        else
-			    xtag+="| |v"+Tag+'^'+delimiter+","
+function SubFields(Tag,subfields,repsepar,prefix){
+	// Tag			The tagnumber of the field (e.g. 100)
+	// subfields	String with subfield indicators (e.g. 12ajx)
+	// repsepar		Separator for repeatable fields (e.g. ; or <br>)
+	// prefix		Indicator to add "^<subfield indicator" as prefix to the value (e.g.true/false)
+	var subsepar="";// not used yet
+	xtag="(";// start repeatable group
+	for (ic=0;ic<subfields.length;ic++){
+		subfield_id=subfields.substr(ic,1)
+		if (prefix==true){
+			xtag+="|"+'^'+subfield_id+"|"
+		} else {
+			xtag+="| |"
+		}
+		xtag+="v"+Tag+'^'+subfield_id+'|'+subsepar+'|,'
 	}
-	xtag+=" if iocc<>nocc(v"+Tag+") then '<br>' fi"
-	xtag+=" fi/)"
+	xtag+=" if iocc<>nocc(v"+Tag+") and p(v"+Tag+") then '"+repsepar+"' fi"
+	xtag+=")";// end repeatable group
 	return xtag
 }
 
@@ -393,10 +414,16 @@ function SaveFormat(){
    		if (document.forma1.separ[i].checked)
    			separacro=document.forma1.separ[i].id
    	}
+	prefixsubfieldacro="0";
+	fieldquoteacro="0";
+	if (document.forma1.prefixsubfield.checked==true) prefixsubfieldacro="1";
+	if (document.forma1.fieldquote.checked==true) fieldquoteacro="1";
 	document.guardar.pft.value=document.forma1.pft.value
 	document.guardar.headings.value=document.forma1.headings.value
 	document.guardar.tipoacro.value=tipoacro
 	document.guardar.separacro.value=separacro
+	document.guardar.prefixsubfieldacro.value=prefixsubfieldacro
+	document.guardar.fieldquoteacro.value=fieldquoteacro
 	document.guardar.nombre.value=document.forma1.nombre.value
 	document.guardar.descripcion.value=document.forma1.descripcion.value
 	document.guardar.base.value=document.forma1.base.value
@@ -428,6 +455,9 @@ function SelectExistingFormat(){
 	document.forma1.pft.value=""
 	document.forma1.nombre.value=""
 	document.forma1.descripcion.value=""
+	document.forma1.prefixsubfield.checked=false; //likely default
+	document.forma1.fieldquote.checked=false; //likely default
+	tipoacro="T"; //likely default
 	for (i=0;i<document.forma1.tipof.length;i++){
 		document.forma1.tipof[i].checked=false
 	}
@@ -437,9 +467,9 @@ function SelectExistingFormat(){
 	ix=document.forma1.fgen.selectedIndex
 	if(ix==0) return // the first option is blank
 	format=document.forma1.fgen.options[ix].value
-	formatar=format.split('|') // format is <pftname>|<description>|<syntax acronym>|<separator acronym>
-	separset=false
-	tipoacro=""
+	// format is <pftname>|<description>|<syntax acronym>|<separator acronym>|<prefixsubfieldacronym>
+	formatar=format.split('|')
+	separset=false;
 	if (0 in formatar) document.forma1.nombre.value=formatar[0]
 	if (1 in formatar) document.forma1.descripcion.value=formatar[1]
 	if (2 in formatar){
@@ -460,6 +490,8 @@ function SelectExistingFormat(){
 	}
 	if (!separset && tipoacro=='CT') document.forma1.separ[0].checked=true;// historical situation
 	if (!separset && tipoacro=='CD') document.forma1.separ[0].checked=true;// historical situation
+	if (4 in formatar && formatar[4]=="1") document.forma1.prefixsubfield.checked=true
+	if (5 in formatar && formatar[5]=="1") document.forma1.fieldquote.checked=true
 }
 
 function SendForEdit(){
@@ -508,7 +540,8 @@ function SubmitForm(vp){
 	    	return
 		}
 	}
-	if (Trim(document.forma1.pft.value)=="" && document.forma1.fgen.selectedIndex<1 && Trim(document.forma1.pft.value)==""  ){
+	document.forma1.pft.value=document.forma1.pft.value.trim();//remove trailing whitespace & linefeeds
+	if (document.forma1.pft.value=="" && document.forma1.fgen.selectedIndex<1 && document.forma1.pft.value==""  ){
 	  	alert("<?php echo $msgstr["r_selgen"]?>")
 	  	return
 	}
@@ -669,10 +702,12 @@ if ($Opcion!="new"){
                         $value=trim($value);
                         if ($value!=""){
 							// The syntax of the list of pfts (formatos.dat):
-							// [filename] | [description] | [syntax acronym(tipof)] | [separator acronym]
+							// [filename] | [description] | [syntax acronym(tipof)] | [separator acronym] | [prefix subfield acronym]
                             $pp=explode('|',$value);
                             if (!isset($pp[2])) $pp[2]="";
                             if (!isset($pp[3])) $pp[3]="";
+                            if (!isset($pp[4])) $pp[4]="";
+                            if (!isset($pp[5])) $pp[5]="";
                             if (isset($_SESSION["permiso"]["CENTRAL_ALL"])
                                 or isset($_SESSION["permiso"][$base."_CENTRAL_ALL"])
                                 or isset($_SESSION["permiso"][$base."_pft_ALL"])
@@ -680,7 +715,8 @@ if ($Opcion!="new"){
 									$selected="";
 									if ( $pp[0]==$pft_name) $selected="selected";
                                 echo "<option ".$selected." ";
-								echo "value=\"".$pp[0]."|".$pp[1]."|".$pp[2]."|".$pp[3]."\">".$pp[1]." (".$pp[0].")</option>\n";
+								echo "value=\"".$pp[0]."|".$pp[1]."|".$pp[2]."|".$pp[3]."|".$pp[4]."|".$pp[5]."\">";
+								echo $pp[1]." (".$pp[0].")</option>\n";
                             }
                         }
                     }
@@ -776,8 +812,8 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"])
 			</table>
 			<table>
                 <tr>
-				<td><?php echo $msgstr["pfttemplate"]?></td>
-				<td >
+				<td style="padding-right:10px"><?php echo $msgstr["pfttemplate"]?></td>
+				<td colspan=2>
                 <input type=radio name=tipof value=T  <?php if ($tipoacro=="T")  echo "checked"?>> <?php echo $msgstr["r_tabla"]?>&nbsp;
                 <input type=radio name=tipof value=P  <?php if ($tipoacro=="P")  echo "checked"?>> <?php echo $msgstr["r_parrafo"]?>&nbsp;
                 <input type=radio name=tipof value=PL <?php if ($tipoacro=="PL") echo "checked"?>> <?php echo $msgstr["r_parrafowith"]?>&nbsp;
@@ -785,14 +821,23 @@ if (isset($_SESSION["permiso"]["CENTRAL_ALL"])
                 <input type=radio name=tipof value=CD <?php if ($tipoacro=="CD") echo "checked"?>> <?php echo $msgstr["r_colsdelim"]?>
 				</td>
 				</tr><tr>
-				<td><?php echo $msgstr["pftseparator"]."<br>".$msgstr["r_colsdelim"]?></td>
-				<td>
+				<td><?php echo $msgstr["pftcoldeloptions"]."<br>".$msgstr["r_colsdelim"]?></td>
+				<td title='"..."'>
+				<input type=checkbox name=fieldquote id=fieldquote <?php if ($fieldquoteacro=="1")echo "checked"?>>&nbsp;<?php echo $msgstr["pftfieldquote"]?>
+				</td>
+				<td title='<?php echo $msgstr["pftrepsepar"]?>'><?php echo $msgstr["pftseparfield"]?> &nbsp;
                 <input type=radio name=separ value="|" id=VBAR  <?php if ($separacro=="VBAR") echo "checked"?>><b> | &nbsp; &nbsp;</b>
                 <input type=radio name=separ value="," id=COMMA <?php if ($separacro=="COMMA")echo "checked"?>><b> , &nbsp; &nbsp;</b>
-                <input type=radio name=separ value=";" id=SEMI  <?php if ($separacro=="SEMI") echo "checked"?>><b> ;</b>
-				</td></tr>
-				<tr><td></td>
+                <input type=radio name=separ value="~" id=TILDE <?php if ($separacro=="TILDE")echo "checked"?>><b> ~</b>
+				</td>
+				</tr><tr>
+				<td><?php echo $msgstr["pftsubfoptions"]?></td>
+				<td title='^a<value>'>
+				<input type=checkbox name=prefixsubfield id=prefixsubfield <?php if ($prefixsubfieldacro=="1")echo "checked"?>>&nbsp;<?php echo $msgstr["pftprefsub"]?></td>
 				<td>
+				</td>
+				<tr><td></td>
+				<td colspan=2>
 					<button class="bt-blue" type="button"
 							title="<?php echo $msgstr["pftgenformatplus"]?>" onclick='javascript:GenerarFormato()'>
                             <i class="far fa-plus-square"></i> <?php echo $msgstr["pftgenformat"]?></button>
@@ -1079,6 +1124,8 @@ if ($Opcion!="new"){?>
     <input type=hidden name=descripcion>
     <input type=hidden name=tipoacro>
     <input type=hidden name=separacro>
+    <input type=hidden name=prefixsubfieldacro>
+    <input type=hidden name=fieldquoteacro>
     <input type=hidden name=headings>
     <input type=hidden name=pftname>
     <?php if ($encabezado=="s") echo "<input type=hidden name=encabezado value=s>"; ?>

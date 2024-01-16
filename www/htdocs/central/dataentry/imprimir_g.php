@@ -4,6 +4,7 @@
 20220713 fho4abcd Use $actparfolder as location for .par files
 20240102 fho4abcd Documentation+improved algorithms+better output for preview+print option
 20240102 fho4abcd Removed obsolete pragma, pre-check/post-check and unnecessary cache control
+20240116 fho4abcd Added warning for pft content > 31.000 characters for 16-60 databases
 */
 /*
 ** This module is located in central/dataentry as it is referenced from several sources
@@ -44,6 +45,7 @@ if (!isset($_SESSION["permiso"])){
 include("../common/get_post.php");
 include("../config.php");
 include ("../lang/admin.php");
+include ("../lang/dbadmin.php");
 include ("../dbadmin/inc_pft_files.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>"; 
@@ -69,6 +71,17 @@ if (isset($arrHttp["Expresion"])){
 if (isset($arrHttp["pft"])) $arrHttp["pft"]=stripslashes($arrHttp["pft"]);
 if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
 	// This the case that a pft is supplied.
+	// Check the length for non-bigisis databases
+	if ($cisis_ver!="bigisis") {
+		$pftlength=strlen($arrHttp["pft"]);
+		$pfttoolarge="31000";
+		if ( intval($pftlength) > intval($pfttoolarge)) {
+			echo "<div style='color:red'><b>".$msgstr["warning"]."</b><br>";
+			echo $msgstr["pftcontentsize"].number_format($pftlength,0,',','.')." ".$msgstr["pftbytes"]."<br>";
+			echo $msgstr["pftverylarge"]."<br>";
+			echo $msgstr["pftrecommend"]." ".number_format($pfttoolarge,0,',','.')." ".$msgstr["pftbytes"]."<br><br></div>";
+		}
+	}
 	$Formato=urlencode($arrHttp["pft"]);
 	if (isset($arrHttp["headings"])) 	$headings=$arrHttp["headings"];
 	if (isset($arrHttp["tipof"]))		$tipoacro=$arrHttp["tipof"];
@@ -100,9 +113,9 @@ if (isset($arrHttp["pft"]) and trim($arrHttp["pft"])!=""){
 if (isset($tipoacro)){
 	switch ($tipoacro){              //TYPE OF FORMAT
 		case "CT": //COLUMNS (TABLE)
-			$data="<table border=1>";
+			$data="<table border=1 style='border-collapse: collapse;'>";
 			if ($headings!=""){
-				$data.="<tr>";
+				$data.="<tr style='vertical-align:top'>";
 				$h=explode("\r",$headings);
 				foreach ($h as $value){
 					$data.="<th>$value</th>";
