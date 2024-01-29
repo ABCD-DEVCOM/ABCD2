@@ -1,6 +1,7 @@
 <?php
 /*
 20220207 fho4abcd improve html, remove old style buttons for default settings
+20240129 fho4abcd improve html: end tags
 */
 include("scripts_dataentry.php");
 include("toolbar_record.php");
@@ -20,8 +21,9 @@ if ($arrHttp["Opcion"]!="valdef"){
 	if (!isset($fmt_test)){
 		echo "<B>".$arrHttp["Mfn"];
 		if ($arrHttp["Mfn"]!="New") {
-	    	echo "/$maxmfn</B>";
+	    	echo "/$maxmfn<";
 	    }
+		echo "</b>";
 	 }
 }
 	$xtt="";
@@ -55,6 +57,7 @@ if ($ixIndice=="S"){
 
 // Se inicializa el arreglo con los tags a leer de la base de datos
 PrepararFormato();
+echo "</table></form>\n";// end of form forma1 started in scripts_dataentry
 echo "<script>
 is_marc='$is_marc'
 </script>
@@ -64,7 +67,6 @@ if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se esta
 	$db=$arrHttp["base"];
 	if (!$ver or isset($arrHttp["capturar"])){
 		?>
-		</div>
 		<div style="margin-top: 30px;">
 		<table border=0 cellspacing=5 cellpadding=10 bgcolor=white>
 			<tr>
@@ -88,7 +90,6 @@ if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se esta
 		<?php
 	}
 }
-echo "</form>";// end of previous form. Not the correct place but protects next form
 echo "<form method=post name=forma2 action=fmt.php >\n";
 if (isset($arrHttp["encabezado"])) {
 	 echo "<input type=hidden name=encabezado value=s>\n";
