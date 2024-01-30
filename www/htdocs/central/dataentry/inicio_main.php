@@ -11,6 +11,7 @@
 2022-06-19 fho4abcd Corrected html + removed unreachable js code + removed unreachable frameset
 2023-01-22 fho4abcd Improved height of iframe main. Moved css of iframes to css file
 2023-02-03 fho4abcd Make selected records work, sort selected records. Enter record number works now also for search and selected records
+2024-01-29 fho4abcd Correct typo in iframe
 */
 //error_reporting(E_ALL);
 session_start();
@@ -847,7 +848,7 @@ function Menu(Opcion){
 	<iframe name="menu" id="menu"   class="dataentry-menu"
         src="" >
     </iframe>
-	<iframe name="main" id="main"   class="dataentry-main";
+	<iframe name="main" id="main"   class="dataentry-main"
         src="" >
     </iframe>
 </div>

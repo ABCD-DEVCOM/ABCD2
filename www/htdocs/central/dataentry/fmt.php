@@ -15,6 +15,7 @@
 20230130 fho4abcd Improve setting of browseby menu. Code for showing record value improved and extended for selected records
 20230210 fho4abcd Show backbutton of actualized record for non-dataentry cases (e.g. acces/users/...). Remove unused cases
 20230321 rogercgui Updates compatibility for PHP versions higher than 8xx: $tag=(int)trim(substr($linea,0,4))*(int)1;
+20240128 fho4abcd Show always the footer. Shows only one div-helper/toolbar in case an edit without a format is done
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -704,7 +705,7 @@ if ($arrHttp["Opcion"]=="ver" and $arrHttp["Formato"]=="") $arrHttp["Opcion"]="l
 $recdel="";
 // debug echo "<br>switch option=".$arrHttp["Opcion"]."<br>";
 switch ($arrHttp["Opcion"]) {
-	case "reintentar":           // IF A VALIDATION ERROR OCCURS THE RECORD IS REDISPLAYED
+	case "reintentar":  //retry: IF A VALIDATION ERROR OCCURS THE RECORD IS REDISPLAYED
     case "save":
     	if ($arrHttp["Opcion"]=="reintentar"){
     		$reintentar="S";
@@ -748,7 +749,7 @@ switch ($arrHttp["Opcion"]) {
 			</script>\n";
 		}
 		break;
-	case "buscar":
+	case "buscar":	//Search
 		include("scripts_dataentry.php");
 		//$arrHttp["Expresion"]='"'. $arrHttp["Expresion"].'"';
         $resultado=EjecutarBusqueda();
@@ -861,7 +862,7 @@ switch ($arrHttp["Opcion"]) {
 				include("../common/footer.php");
 			die;
        	break;
-	case "ver":    //Presenta el registro con el formato seleccionado
+	case "ver":    //View:Presenta el registro con el formato seleccionado
 		include ("scripts_dataentry.php");
 		$salida= LeerRegistroFormateado($arrHttp["Formato"]);
 		if ($arrHttp["Opcion"]!="actualizar" and $record_deleted=="Y") include "../common/inc_div-helper.php";
@@ -1073,44 +1074,41 @@ if ($actualizar=="SI"){
 	if (!isset($arrHttp["Formato"])or $arrHttp["Formato"]==""){
 		$regSal=LeerRegistro($base,$cipar,$arrHttp["Mfn"],$maxmfn,$arrHttp["Opcion"],$login,$arrHttp["Formato"]);
     	$arrHttp["Notificacion"]="N";
-		require_once('ingresoadministrador.php');
+		require_once('ingresoadministrador.php');// shows div-helper, toolbar and record content
 	}else{
 		$regSal=LeerRegistroFormateado($arrHttp["Formato"]);
-	}
-    // Show the toolbar for further edits on this record
-    // The included file shows only the toolbar in case "encabezado" is not set:not set in the dataentry menu
-	if (!isset($record_deleted)) $record_deleted="N";
-	if ($record_deleted=="N")include("toolbar_record.php");
-    // Outside the dataentry menus there is a need for breadcrumb, actions (back) and helper
-    if (isset($arrHttp["encabezado"])) {
-        include("../common/institutional_info.php");
-        ?>
-    <div class="sectionInfo">
-        <div class="breadcrumb">
-        <?php echo $msgstr["update_rec"]?>
-        </div>
-        <div class="actions">
-            <?php
-                //$backtoscript="../dataentry/inicio_main.php";
-                include "../common/inc_back.php";
-            ?>
-        </div>
-            <div class="spacer">&#160;</div>
-        </div>
-        <?php
-        unset ($wiki_help);
-		include "../common/inc_div-helper.php";
-    }
+		// Show the toolbar for further edits on this record
+		// The included file shows only the toolbar in case "encabezado" is not set:not set in the dataentry menu
+		if (!isset($record_deleted)) $record_deleted="N";
+		if ($record_deleted=="N")include("toolbar_record.php");
+		// Outside the dataentry menus there is a need for breadcrumb, actions (back) and helper
+		if (isset($arrHttp["encabezado"])) {
+			include("../common/institutional_info.php");
+			?>
+			<div class="sectionInfo">
+			<div class="breadcrumb">
+			<?php echo $msgstr["update_rec"]?>
+			</div>
+			<div class="actions">
+				<?php
+					//$backtoscript="../dataentry/inicio_main.php";
+					include "../common/inc_back.php";
+				?>
+			</div>
+				<div class="spacer">&#160;</div>
+			</div>
+			<?php
+			unset ($wiki_help);
+			include "../common/inc_div-helper.php";
+		}
 
-    echo "<div class='middle form'>\n";
-    echo "<div class='formContent'>\n";
-    echo "<dd><table><tr><td>";
-    echo $regSal;
-    echo "</td></tr></table></dd>\n" ;
-    echo "</div></div>";
-    if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N")){
-		include("../common/footer.php");
-    }
+		echo "<div class='middle form'>\n";
+		echo "<div class='formContent'>\n";
+		echo "<dd><table><tr><td>";
+		echo $regSal;
+		echo "</td></tr></table></dd>\n" ;
+		echo "</div></div>";
+	}
 }else{
 //se lee la fdt de la base de datos
 	if ($arrHttp["Opcion"]=="crear" or $arrHttp["Opcion"]=="capturar") {
@@ -1150,7 +1148,9 @@ if ($actualizar=="SI"){
 	$llamada=$query;
 	$arrHttp["Notificacion"]="N";
 	require_once('ingresoadministrador.php');
-
+    if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N")){
+		include("../common/footer.php");
+    }
 	die;
 
 }
@@ -1164,7 +1164,7 @@ if (isset($arrHttp["ventana"])){
 	</script>
 	";
 }
-
-
-
+if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and $arrHttp["footer"] !="N")){
+		include("../common/footer.php");
+    }
 ?>
