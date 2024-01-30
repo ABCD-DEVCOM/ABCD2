@@ -11,8 +11,10 @@
 20220207 html improvements
 20220214 fho4abcd Replace link to dirs_explorer by javascript+ some html improvements
 20220309 rogercgui Included verification for variable $t17
+20240129 fho4abcd Show correct number of OD entries. Time in 24 hour format. Improve calendar function. Typo's, formatting
 */
 require_once("combo_inc.php");
+require_once("../common/inc_calendar.php");
 
 //include for translate
 include("../lang/dbadmin.php");
@@ -30,11 +32,7 @@ function AsociarVinculo($linea){
 
 function Calendario($campo,$type_de,$iso_tag,$Etq){
 global $config_date_format;
-	if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y"))   { // format of the input field{
-       	$date_format= "%d/%m/%Y";
- 	} else {
-       	$date_format= "%m/%d/%Y";
-	}
+	$date_format=ConvertDateSpec($config_date_format);// format of the input field
 	echo "<!-- calendar attaches to existing form element -->
 		<input tabindex='0' type=text size=10 name=tag$Etq id=tag$Etq value='";
 		if (trim($campo)!="") echo $campo;
@@ -166,11 +164,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 			echo "<tr><td width=20>";
 			switch($t[7]){
 				case "ISO":
-					if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {   // format of the input field
-				        	$date_format= "%d/%m/%Y";
-				        } else {
-				        	$date_format= "%m/%d/%Y";
-						}
+					$date_format=ConvertDateSpec($config_date_format);// format of the input field
 					echo "<!-- calendar attaches to existing form element -->
 							<input tabindex='0' type=text size=8 name=tag$Etq id=tag$Etq value='";
 							if (trim($campo)!="") echo $campo;
@@ -1101,9 +1095,6 @@ Function PrepararFormato() {
 	global $msgstr,$vars,$ver,$fondocelda,$valortag,$ixicampo,$base,$cipar,$arrHttp,$FdtHtml,$Html_ingreso,$tagisis,$db_path,$lang_db,$default_values;
     global $config_date_format,$base_fdt,$is_marc,$reintentar,$tag_tipol,$tag_nivel_r,$OpcionDeEntrada, $tag;
     global $term_prefix,$term_tag,$refer_tag;
-?>    <!--div name="INE" id="INE" style="color:#990000; display:none; font-style:italic; font-weight:bold;"></div>
-<input type=hidden name=INVA id=INVA value="<?php echo $arrHttp["Mfn"]?>~"-->
-<?php
  	$tesaurus="N";
  	if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/"."tesaurus.rel")){
 		include("../tesaurus/leer_relaciones.php");
@@ -1180,13 +1171,13 @@ Function PrepararFormato() {
 		if (isset($t[9])) $len=$t[9];
 		if (isset($t[4])) $rep=$t[4];
 		if (isset($t[1])) $tag=$t[1];
-        
 	//	if (isset($rels[$tag]["tag"])) continue;
 		$delrep="";
 		if (!isset($t[13])) $t[13]="";
 		$fe=urlencode($t[13]);
-		if (isset($t[17]))
+		if (isset($t[17])){
 			if (trim($t[17])!="")$help_url=$t[17]   ;
+		}
 		$tipo_e="";
 		$entryType="";
 		if (!$ver or $ver and isset($valortag[$t[1]]) or ($t[0]=="H" or $t[0]=="L")){
@@ -1306,7 +1297,7 @@ Function PrepararFormato() {
   					$valortag[$tag]=str_replace('"',"&quot;",$valortag[$tag]);
 	  			$ayuda="";
 		 		if (isset($valortag[$tag]) and $t[0]!="H" and $t[0]!="L"){
-   					if ($ver && $valortag[$tag] || !$ver){;
+					if ($ver && $valortag[$tag] || !$ver){
    						if  ($t[7]!="I"){
       						echo "<tr><td class='table-fdt-one'><span class=\"badge\">";
       					}
@@ -1352,7 +1343,6 @@ Function PrepararFormato() {
 		     					}else{
 		     						if ($t[7]!="I") echo "";
 		     					}
-
                             }
            					if ($tipo=="T"  and $tipo_e!="TB") {
                 				if (!isset($arrHttp["wks_a"]))
@@ -1383,12 +1373,10 @@ Function PrepararFormato() {
 											$fe=$arrHttp["wks"];
 										else
 											$fe="";
-
 									}
 						 		}
                                 $help="";
 						 		if (isset($t[16])) $help=$t[16];
-
 					 			if (isset($hlp_tip[$tag]))
 					 				echo "<a class=\"tooltip\"><i class=\"far fa-life-ring\"></i><span>".$hlp_tip[$tag]." </span> </a>";
 						 		if ($help==1 or $help_url!=""){
@@ -1468,11 +1456,13 @@ Function PrepararFormato() {
       									echo "\n<td class='table-fdt-three'>";
       									if (trim($t[5])=="") $t[5]="do";
       									echo trim($titulo)."</td>\n";
-      									echo "\n<td align=left class=' class='table-fdt-four' input-fdt'>\n";
+									echo "\n<td align=left class='table-fdt-four input-fdt'>\n";
       									//KEEP ONLY THE NUMBER OF OCCURRENCES SPECIFIED IN THE COLUMN ROW OF THE FDT
       									$ix=0;
       									$ccc=explode("\n",$campo);
       									if ($t[8]==0) $t[8]=10;
+									// Reduce less in case of "ver"(==standard display) or "actualizar". Not in case of "editar".
+									if ($OpcionDeEntrada=="ver"||$OpcionDeEntrada=="actualizar") $t[8]++;
       									if (count($ccc)>=$t[8]){
       										$campo="";
       										$ix=(int)(count($ccc))-(int)$t[8]+1;
@@ -1487,10 +1477,10 @@ Function PrepararFormato() {
       									if (!$ver ) {
       										if ($reintentar!="S"){
 	      										if ($campo!=""){
-	      											$campo.="\n"."^".substr($t[5],0,1).date("Ymd h:i:s")."^".substr($t[5],1,1).$_SESSION["login"];
-	      										}else{
-	      											$campo.="^".substr($t[5],0,1).date("Ymd h:i:s")."^".substr($t[5],1,1).$_SESSION["login"];
+												$campo.="\n";
 	      										}
+											// 24 hour format
+											$campo.="^".substr($t[5],0,1).date("Ymd H:i:s")."^".substr($t[5],1,1).$_SESSION["login"];
 	      									}
        										echo "<input type=hidden name=tag$tag id=tag$tag value=\"".$campo."\" >\n";
        									}
@@ -1508,21 +1498,17 @@ Function PrepararFormato() {
        										echo "</td></tr>";
        									}
        									echo "</table>";
-       									echo "<br>";
        									echo "</td><tr>\n";
-
        								}
    	   								break;
 		        				case "LDR":
 		        					$is_marc="S";
 		        				    $filas=Array();
     	   							$linea01=$vars[$ivars];
-
                                     $ksc=0;
                                     $ldr_tit=array();
                                     echo "<td>$titulo</td><td><table class='table-fdt' cellpadding=0 cellspacing=0>";
                                     for ($ixsc=1;$ixsc<=100;$ixsc++){
-
         								$ivars=$ivars+1;
         								$linea=$vars[$ivars];
         								if (substr($linea,0,1)!="S"){    //para detectar el fin de la descripción del leader
@@ -1535,7 +1521,6 @@ Function PrepararFormato() {
                                             $ldr_tit[$ksc]=  "<tr><td>".$ld[2]." (".$ld[1].")</td>";
                                             //echo "<td align=center>".$ld[2]." (".$ld[1].")</td>";
         								}
-
 		       						}
 		       						$ksc=0;
        								foreach ($filas as $linea){
@@ -1560,13 +1545,9 @@ Function PrepararFormato() {
                    							$fpleader=file($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$ld[11]);
                    						else
                    						    $fpleader=file($db_path.$arrHttp["base"]."/def/".$lang_db."/".$ld[11]);
-
                    						foreach ($fpleader as $value){
-
                    							$value=trim($value);
-
                       						if ($value!=""){
-
                       							$v=explode("|",$value."|||");
                       							$selected="";
                       							if ( trim($v[0])==trim($ttmsel)) $selected=" selected";
@@ -1592,7 +1573,6 @@ Function PrepararFormato() {
     	   								echo "\n<td width=150><a href=internal_html.php?base=".$arrHttp["base"]."&Mfn=".$arrHttp["Mfn"]."&tag=$tag target=_blank>$titulo</a>\n";
 									}
 									//echo "<!-- &nbsp; &nbsp;<a href=javascript:CopiarHtml(".$tag.",'B','".$arrHttp["Mfn"]."')>upload file</a>-->";
-
 									echo "</td><td>";
     	   							echo "</td></tr>";
     	   							break;
@@ -1603,7 +1583,6 @@ Function PrepararFormato() {
 										DibujarHtmlArea($tag,$vars[$ivars],$t[8],$tipo_e);
 										$a=str_replace("'","\"",$valortag[$tag]);
 									}else{
-
 										echo "<br><font class=td>".$valortag[$tag];
 									}
 									echo "</td></tr>\n";
@@ -1633,33 +1612,21 @@ Function PrepararFormato() {
        											$iso_tag="";
        										}
        									}
-
        									//calendar attaches to existing form element
                                         ?>
        									<input tabindex="0" type="text" name="tag<?php echo $tag;?>"
                                                 id="tag<?php echo $tag;?>_c"
                                                 value="<?php echo $campo?>"
-                                        <?php						
-                                        if ($iso_tag!="")
-                                            ?>
+										<?php if ($iso_tag!="") {?>
                                             onChange='Javascript:DateToIso(this.value,document.forma1.<?php echo $iso_tag?>)'
-                                            <?php
-                                        
-                                        ?>
+										<?php }; ?>
                                         />
                                         <a class="bt-fdt" id="f_tag<?php echo $tag;?>">
                                             <i class="far fa-calendar-alt"  title="Date selector"></i></a>
                                         <script type="text/javascript">
                                         Calendar.setup({
                                             inputField     :    "tag<?php echo $tag?>_c",     // id of the input field
-                                            ifFormat       :
-                                            <?php
-                                            if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {   // format of the input field
-                                                echo "\"%d/%m/%Y\",\n";
-                                            } else {
-                                                echo "\"%m/%d/%Y\",\n";
-											}
-                                            ?>
+										ifFormat       :    "<?php $format=ConvertDateSpec($config_date_format);echo $format?>",
                                             button         :    "f_tag<?php echo $tag?>",  // trigger for the calendar (button ID)
                                             align          :    '',           // alignment (defaults to \"Bl\")
                                             singleClick    :    true
@@ -1674,9 +1641,7 @@ Function PrepararFormato() {
     	   						case "ISO":
     	   							$campo=$valortag[$tag];
         							echo "\n<td class=\"table-fdt-three\">";
-
        								echo trim($titulo)."</td>\n";
-
        								if ($t[4]==1){    //SI ES REPETIBLE
        									$field_t=$vars[$ivars];
        									DibujarTextRepetible($tag,$fondocelda,$field_t);
@@ -1695,14 +1660,7 @@ Function PrepararFormato() {
                                         <script type="text/javascript">
                                             Calendar.setup({
                                                 inputField     :    "tag<?php echo $tag;?>_c",     // id of the input field
-                                                ifFormat       :
-                                                <?php
-                                                if (($config_date_format=="DD/MM/YY") or ($config_date_format=="d/m/Y")) {   // format of the input field
-                                                    echo "\"%d/%m/%Y\",\n";
-                                                } else {
-                                                    echo "\"%m/%d/%Y\",\n";
-												}
-                                                ?>
+											ifFormat       :    "<?php $format=ConvertDateSpec($config_date_format);echo $format?>",
                                                 button         :    "f_tag<?php echo $tag?>",  // trigger for the calendar (button ID)
                                                 align          :    '',           // alignment (defaults to \"Bl\")
                                                 singleClick    :    true
@@ -1724,7 +1682,6 @@ Function PrepararFormato() {
     	   							$linea01=rtrim($vars[$ivars]);
                                     $ksc=0;
        								for ($ixsc=1;$ixsc<=100;$ixsc++){
-
         								$ivars=$ivars+1;
         								$linea=$vars[$ivars];
         								if (substr($linea,0,1)!="S"){
@@ -1734,7 +1691,6 @@ Function PrepararFormato() {
         									$ksc=$ksc+1;
         									$filas[]=rtrim($linea);
         								}
-
 		       						}
 		       						if (substr($valortag[$tag],0,6)=="aammdd" and isset($arrHttp["Mfn"]) and $arrHttp["Mfn"]=="New"){
 		       							$valortag[$tag]=date("ymd").substr($valortag[$tag],6);
@@ -1764,7 +1720,6 @@ Function PrepararFormato() {
 				    	   						}
        											$nx=9999;
        										}
-
        									}
        								}else{
        									for ($ixsc=1;$ixsc<=$nsc;$ixsc++){
@@ -1772,9 +1727,7 @@ Function PrepararFormato() {
     	    								$linea=$vars[$ivars];
         									$filas[]=rtrim($linea);
 		    	   						}
-
        								}
-
 		      						TextBox($linea01,$fondocelda,$titulo,$ver,$len,$tag,$ksc,$tipo,$delrep,"");
     		   						echo "<input type=hidden name=eti$tag value=\"$linea01\">\n";
        								foreach($filas as $lin){
@@ -1820,7 +1773,6 @@ Function PrepararFormato() {
       							case "SRO":
       							case "M":
       							case "MRO":
-
        								if ($t[10]=="D"){
        									TextBox($vars[$ivars],$fondocelda,$titulo,$ver,$len,$tag,$ksc,$rep,$delrep,$ayuda);
        									break;
@@ -1849,7 +1801,6 @@ Function PrepararFormato() {
     	   								$p_combo=$t[11];
     	   							ComboBox($tipo_e,$tag,$width,$rep,$t[10],$p_combo,$t[13],$t[12],$db_path,$arrHttp["base"],$valortag[$tag]);
     	   							break;
-
                                 case "AI":     //autoincrement                                	if ($arrHttp["Mfn"]=="New" and !isset($valortag[$tag]) or $OpcionDeEntrada=="presentar_captura"  or $OpcionDeEntrada=="captura_bd"  or $OpcionDeEntrada=="capturar")
                                 	if ($arrHttp["Mfn"]=="New" and !isset($valortag[$tag]) or $OpcionDeEntrada=="presentar_captura"  or $OpcionDeEntrada=="captura_bd"  or $OpcionDeEntrada=="capturar")
                                 		$valortag[$tag]="";
@@ -1870,16 +1821,14 @@ Function PrepararFormato() {
 	      								}
                                    	}
 	       							break;
-	    			 		}
-   						}else{
-
+						} //end switch tipo_e
 						}
 					}
 				}
   			}
   			echo "</table>";
  		}
-        }
+	} //end for loop $ivars
         if ($cargar_texto=="S") {
         	echo "Cargar texto";
         }
@@ -1906,7 +1855,6 @@ Function PrepararFormato() {
     	echo "
     	ixs=ixs+1
     	secciones[ixs]='$value'\n";
-
     }
 	echo "
 		for (isecc=0;isecc<secciones.length;isecc++){
@@ -1922,7 +1870,4 @@ Function PrepararFormato() {
 
 	require_once("../dataentry/javascript_validation.php");
 }
-
-
 ?>
-
