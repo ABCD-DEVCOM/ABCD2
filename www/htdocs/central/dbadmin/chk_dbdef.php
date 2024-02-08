@@ -54,7 +54,7 @@ function Update(Option){
 
 <body>
 	<?php include("../common/institutional_info.php");?>
-	<?php include("submenu_dbadmin.php");?>
+
 	<div class="sectionInfo">
 		<div class="breadcrumb">
 			<?php echo $msgstr["chk_dbdef"]. ": " . $arrHttp["base"]; ?>
@@ -67,6 +67,7 @@ function Update(Option){
 		</div>
 		<div class="spacer">&#160;</div>
 	</div>
+	<?php include("submenu_dbadmin.php");?>
     <?php include "../common/inc_div-helper.php";?>
 
 	<div class="middle">
