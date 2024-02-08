@@ -143,7 +143,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 
  	}
 
- 	echo "<td nowrap>".$t[2]."<table id=id_$tag>";
+ 	echo '<td nowrap>'.$t[2].'<table id=id_$tag >';
  	$i=-1;
  	$n=100;
 
@@ -268,6 +268,9 @@ global $msgstr,$base;
 	}
 }
 
+
+
+
 function DibujarTabla($filas,$tag,$fondocelda,$field_t){
 //foreach ($filas as $l) echo "$l<br>";
 global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,$msgstr;
@@ -291,12 +294,12 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  	}
  	$seleccion= Array();
  	$ind=Array();
- 	echo "<td class=\"table-fdt-three\"></td>";
- 	echo "<td colspan=5 class='table-fdt-four'><table id=id_".$t[1]." ".$celda.">";
-
-	echo "<td colspan=$cant_cols  class='table-fdt-four'><b>".$t[2]."</b></td><tr>";
+ 	echo "<td class=\"table-fdt-three\">".$t[2]."</td>";
+ 	echo "<td  class='table-fdt-four'>
+				<table id=id_".$t[1]." ".$celda.">";
+				echo "<td colspan=$cant_cols ></td>
+				<tr>";
  	$indice_alfa="";  // para desplegar el índice alfabético del campo
-  //  echo "<td bgcolor=#eeeeee></td>";
 
  	foreach($filas as $lin){
  		global $msgstr;
@@ -347,7 +350,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	  		$ind[$cols]=$lin;
 	  		if (count($filas)>1){
 			if (trim($l[2])!="" and $l[7]!="I") {     //columns title
-		    	echo "<td><b>".trim($l[2])."</b></td>";
+		    	echo "<th>".trim($l[2])."</th>";
 			}
 			}
 		}
@@ -516,7 +519,8 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
 	   									$lengthmax=$maxlength;
 	   								else
 	   									$lengthmax=$maxlength-$lengthmax;
-	   								echo "<br><input tabindex='0' type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."\n";
+									// Displayed in type Table TB
+	   								echo "<input tabindex='0' type=\"text\" name=\"rem$Etq\" size=\"3\" maxlength=\"$maxlength\" value=\"$lengthmax\" class=charCount onfocus=blur()>".$msgstr["avalchars"]."\n";
 	   							}
 	   						}else{
 	   							echo nl2br($campo);
@@ -615,7 +619,7 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
   		}
 
  	}
- 	echo "</TD></tr></table>";
+ 	echo "</td></tr></table>";
  	if ($t[4]==1 and $fixed_rows=="" and !isset($ver)){
  		$vd="";
  		if (count($val_def)>0){
@@ -628,10 +632,11 @@ global $valortag,$fdt,$ver,$arrHttp,$Path,$db_path,$lang_db,$config_date_format,
  		echo "<a href=javascript:addRow('".$t[1]."','$subc','duplicate','')>".$msgstr["duplicate_last"]."</a>";
  		echo " | <a href=javascript:Organizar('".$t[1]."','$subc')>Organizar</a>";
  	}
- 	echo "<br><br></td>";
+ 	echo "<br></td>";
  	echo "\n</td></td>";
- 	//if (substr($linea,37,1)!=1) echo "<td bgcolor=$fondocelda> </td>";
 }
+
+
 
 function DecodificaSubCampos($campo,$numsubc,$subc,$delimsc){
 	if (trim($delimsc)=="") return $salida;
@@ -817,7 +822,7 @@ global $ver,$base,$arrHttp,$Path,$Tabla_sel,$db_path,$lang_db,$msgstr;
 				$opc[$key2]=$key1;
 			}
 		}
-		echo "<select name=tag$tag $TipoS id=tag$tag";
+		echo "<select  name=tag$tag $TipoS id=tag$tag";
 		if ($lensel<>0 and $TipoS==" multiple")
 			echo " size=$lensel";
 		echo ">\n";
@@ -1329,7 +1334,7 @@ Function PrepararFormato() {
    						if ($t[4]==1) $Repetible="R";
    						$postings=1;
    						if (!$ver){
-   							echo "<td class='table-fdt-two'>";
+   							echo "<td class='table-fdt-two' >";
    							if ($t[7]!="COMBO" and $t[7]!="COMBORO"){
 		     					if ($a!="" or $t[10]=="T"){  //es una lista de autoridades o un tesauro
 		     						if ($t[7]!="I" and $t[7]!="TB" and $t[10]!="T" and ($t[10]!="")) echo "<a  class=\"bt-fdt\" href='javascript:AbrirIndiceAlfabetico(document.forma1.tag$tag,\"$a\",\"$c\",\"$separa\",\"$autoridades\",\"$autoridades.par\",\"tag$tag\",\"$postings\",\"$Repetible\",\"".urlencode($fe)."\")'><i class=\"fas fa-search\"></i></a>";
@@ -1527,7 +1532,7 @@ Function PrepararFormato() {
        									$ksc=$ksc+1 ;
        									echo $ldr_tit[$ksc];
                							$ld=explode("|",$linea);
-                      					echo "<td nowrap>";
+                      					echo "<td>";
                       					$ttmsel="";
 	               					    if ($ld[1]==3006){
                    							if (isset($arrHttp["wk_tipom_1"])) {
@@ -1538,7 +1543,7 @@ Function PrepararFormato() {
                    							if (isset($valortag[$ld[1]])) $ttmsel=$valortag[$ld[1]];
                    						}
                    						$ldr_tag[$ksc]=$ld[1];
-                   						echo "<select name=tag".$ld[1]." id=tag".$ld[1].">\n";
+                   						echo "<select  name=tag".$ld[1]." id=tag".$ld[1].">\n";
                    						echo "<option value=\"\"></option>\n";
                    						$fpleader=array();
                    						if (file_exists($db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$ld[11]))
