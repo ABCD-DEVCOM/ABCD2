@@ -20,7 +20,7 @@ function wxisLlamar($base, $query, $IsisScript) {
 
 
 //include ("get_ip_address.php");
-//header('Content-Type: text/html; charset=".$charset."');
+header('Content-Type: text/html; charset=".$charset."');
 header("Cache-Control: no cache");
 session_cache_limiter("private_no_expire");
 
