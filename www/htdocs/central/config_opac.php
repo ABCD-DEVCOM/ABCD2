@@ -6,7 +6,8 @@
 */
 //session_start();
 error_reporting(E_ALL);
-//CHANGE THIS //// 
+
+//CHANGE THIS
 $opac_path="opac/";
 
 include realpath(__DIR__ . '/../central/config_inc_check.php');
@@ -18,18 +19,16 @@ if (isset($_SESSION["db_path"])){
 	$db_path=$_REQUEST["db_path"];
 }
 
+$actualScript = basename($_SERVER['PHP_SELF']);
+$CentralPath = $ABCD_scripts_path.$app_path."/";
+$CentralHttp = $server_url;
+$Web_Dir = $ABCD_scripts_path.$opac_path;
+$NovedadesDir = "";
 
-
-$actualScript=basename($_SERVER['PHP_SELF']);
-$CentralPath=$ABCD_scripts_path.$app_path."/";
-$CentralHttp=$server_url;
-$Web_Dir=$ABCD_scripts_path.$opac_path;
-$NovedadesDir="";
-
-$lang_config=$lang; // save the configured language to preset it later
+$lang_config = $lang; // save the configured language to preset it later
 
 if (isset($_REQUEST["lang"])){
-	$lang=$_REQUEST["lang"];
+	$lang = $_REQUEST["lang"];
 }else{
 	$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 }
@@ -37,91 +36,21 @@ if (isset($_REQUEST["lang"])){
 include ($CentralPath."/lang/opac.php");
 include ($CentralPath."/lang/admin.php");
 
-$galeria="Y";
-$styles="";
+$galeria="N";
 $facetas="Y";
-
-if (empty($_REQUEST['NUM_PAGES'])) $npages="5";
 
 //$logo="assets/img/logoabcd.png";
 $link_logo="/".$opac_path;
-$TituloPagina="ABCD - OPAC";
-$TituloEncabezado=" OPAC ABCD";
-$footer='&copy; 2023 - Consultation databases';
 
 $multiplesBases="Y";   //No access is presented for each of the databases
 $afinarBusqueda="Y";   //Allows you to refine search expression
-$IndicePorColeccion="N";  //Separate indices are maintained for the terms of the collections
-if (file_exists($db_path."/opac_conf/opac.def")){
-	$fp=file($db_path."/opac_conf/opac.def");
-	foreach ($fp as $value){
-		$value=trim($value);
-		if ($value!=""){
-			$v=explode('=',$value);
-			switch ($v[0]){
-				case "logo":
-					$logo=$v[1];
-					break;
-				case "link_logo":
-					$link_logo=$v[1];
-					break;
-				case "TituloPagina":
-					$TituloPagina=$v[1];
-					break;
-				case "TituloEncabezado":
-					$TituloEncabezado=$v[1];
-				case "footer":
-					$footer=$v[1];
-					break;
-				case "charset":
-					if (trim($v[1])!="")
-						$charset=$v[1];
-					break;
-				case "styles":
-					if (trim($v[1])!="")
-						$styles=$v[1];
-					break;
-/*
-				case "Web_Dir":
-					if (trim($v[1])!="")
-						$Web_Dir=$v[1];
-					break;
-*/
-				case "ONLINESTATMENT":
-					if (trim($v[1])!="")
-						$ONLINESTATMENT=$v[1];
-					break;
-				case "WEBRESERVATION":
-					if (trim($v[1])!="")
-						$WEBRESERVATION=$v[1];
-					break;
-				case "WEBRENOVATION":
-					if (trim($v[1])!="")
-						$WEBRENOVATION=$v[1];
-					break;
-				case "NUM_PAGES":
-					if (trim($v[1])!="")
-						$npages=$v[1];
-					break;
-				case "SHOWHELP":
-					if (trim($v[1])!="")
-						$showhide=$v[1];
-					break;
-				case "OpacHttp":
-					if (trim($v[1])!=""){
-						$OpacHttp=$v[1];
-						if (substr($OpacHttp,strlen($OpacHttp)-1,1)!="/")
-							$OpacHttp.="/";
-					}
-					break;
-				case "shortIcon":
-				    $shortIcon=trim($v[1]);
-					break;
-			}
-		}
-	}
-	unset($fp);
-}
+$IndicePorColeccion="Y";  //Separate indices are maintained for the terms of the collections
+
+
+$opac_global_def = $db_path."/opac_conf/opac.def";
+$opac_global_style_def = $db_path."/opac_conf/global_style.def";
+$opac_gdef = parse_ini_file($opac_global_def,true); 
+$charset=$opac_gdef['charset'];
 
 $db_path=trim(urldecode($db_path));
 $ix=explode('/',$db_path);
@@ -132,6 +61,24 @@ for ($i=1;$i<count($ix);$i++) {
 }
 
 
+if (!is_dir($db_path."opac_conf/".$lang)){
+	$lang="en";
+}
 
+$modo = "";
+if (isset($_REQUEST["base"]))
+	$actualbase = $_REQUEST["base"];
+else
+	$actualbase = "";
+if (isset($_REQUEST["xmodo"]) and $_REQUEST["xmodo"] != "") {
+	unset($_REQUEST["base"]);
+	$modo = "integrado";
+}
+
+if (isset($_REQUEST["search_form"])){
+	$search_form=$_REQUEST["search_form"];
+} else {
+	$search_form="free";
+}
 
 ?>
