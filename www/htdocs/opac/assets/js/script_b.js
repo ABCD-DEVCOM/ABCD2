@@ -335,7 +335,7 @@ function PrepararExpresion(Destino){
 		document.diccio.Campos.value=Campos
 	}
 	var mensajes = document.getElementById("mensajes");
-	mensajes.innerHTML="<img src=../images/loading.gif>"
+	mensajes.innerHTML ="<img src=assets/img/loading.gif>"
 	document.diccio.Sub_Expresion.value=Expresion
 	document.diccio.Operadores.value=Operadores
 	document.diccio.action="buscar_integrada.php"
@@ -441,97 +441,33 @@ function ValidarUsuario(){
 	document.estado_de_cuenta.submit()
 }
 
-/* Marcado y presentación de registros*/
-function getCookie(cname) {
-    var name = cname+"=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function Seleccionar(Ctrl){
-	cookie=getCookie('ABCD')
-	if (Ctrl.checked){
-		if (cookie!=""){
-		    c=cookie+"|"
-			if (c.indexOf(Ctrl.name+"|")==-1)
-				cookie=cookie+"|"+Ctrl.name
-		}else{
-			cookie=Ctrl.name
-		}
-	}else{
-		sel=Ctrl.name+"|"
-		c=cookie+"|"
-		n=c.indexOf(sel)
-		if (n!=-1){
-			cookie=cookie.substr(0,n)+ cookie.substr(n+sel.length)
-		}
-
-	}
-	document.cookie="ABCD="+cookie
-	Ctrl=document.getElementById("cookie_div")
-	Ctrl.style.display="inline-block"
-}
-
-function delCookie(){
-
-	for (var i = 0; i < document.continuar.elements.length; i++){
-    	element = document.continuar.elements[i];
-    	switch (element.type){
-      	case 'checkbox':
-      		element.checked=false
-        	break;
-  		}
-	}
-  	document.cookie =  'ABCD=;';
-	alert (msgstr["no_rsel"])
-	Ctrl=document.getElementById("cookie_div")
-	Ctrl.style.display="none"
-
-}
-
-
-function showCookie(cname){
-	cookie=getCookie(cname)
-	if (cookie==""){
-		alert(msgstr["rsel_no"])
-		return
-	}
-    document.buscar.action="presentar_seleccion.php"
-	document.buscar.cookie.value=cookie
-
-	document.buscar.submit()
-}
-
 function SendTo(Accion,Data){
 	switch (Accion){
 		case "word":
-			document.buscar.action="sendtoword.php"
+			document.buscar.action ="components/sendtoword.php"
 			break
 		case "print_one":
-			document.buscar.action="presentar_seleccion.php"
+			window.open("components/sendtoprint.php?cookie=" + Data, "", "width=600, height=600, resizable, scrollbars")
+			//document.buscar.target = window.open("components/sendtoprint.php?base=suggestions&Expresion=CN_" + Expresion, "show", " width=550,height=400,resizable, scrollbars")
+			//document.buscar.target = "_blank"
+			break
+		case "iso":
+			window.open("components/sendtoiso.php?cookie=cookie=" + Data, "", "width=600, height=600, resizable, scrollbars")
+			//document.buscar.target = window.open("components/sendtoprint.php?base=suggestions&Expresion=CN_" + Expresion, "show", " width=550,height=400,resizable, scrollbars")
+			//document.buscar.target = "_blank"
 			break
 		case "mail_one":
-			document.buscar.action="presentar_seleccion.php"
+			document.buscar.action="index.php"
 			break
 		case "reserve_one":
 		    if (WEBRESERVATION!="Y"){
 		    	alert(msgstr["reserv_no"])
 		    	return
 		    }
-			document.buscar.action="presentar_seleccion.php"
+			document.buscar.action="index.php"
 			break
 		case "xml":
-			document.buscar.action="sendtoxml.php"
+			document.buscar.action ="components/sendtoxml.php"
 			document.buscar.target="_blank"
 			break
 	}
@@ -578,6 +514,76 @@ function SolicitarPrestamo(CN,Base,otro){
 	document.buscar.cookie.value=CN
 	document.buscar.submit()
 
-
-
 }
+
+/** BUTTONS **/
+
+function SendToWord(){
+		document.regresar.action="components/sendtoword.php"
+		document.regresar.target=""
+		document.regresar.submit()
+		document.regresar.action="buscar_integrada.php"
+	}
+
+function SendToXML(seleccion){
+		cookie=document.regresar.cookie.value
+		document.regresar.cookie.value=seleccion
+		document.regresar.action="components/sendtoxml.php"
+		document.regresar.target="_blank"
+		document.regresar.submit()
+		document.regresar.action="buscar_integrada.php"
+		document.regresar.target=""
+		document.regresar.cookie=cookie
+	}
+
+function SendToISO(){
+		document.regresar.action="components/sendtoiso.php"
+		document.regresar.submit()
+		document.regresar.action="buscar_integrada.php"
+		document.regresar.target=""
+		document.regresar.cookie = cookie
+	}
+
+function EnviarCorreo() {
+	hayerror = 0
+	document.correo.comentario.value = escape(document.correo.comentario.value)
+	if (Trim(document.correo.email.value) == '' || document.correo.email.value.indexOf('@') == -1) {
+		alert('Correo inválido')
+		hayerror = 1
+	}
+
+	if (hayerror == 1) {
+		return false
+	} else {
+		document.correo.submit()
+	}
+}
+
+function SendToPrint(){
+		cookie = document.regresar.cookie.value
+		window.open("components/sendtoprint.php?cookie=" + cookie, "", "width=600, height=600, resizable, scrollbars");
+
+		//cookie = document.regresar.cookie.value
+		//document.regresar.cookie.value = seleccion
+		//document.regresar.action = "components/sendtoprint.php"
+		//document.regresar.target = "_blank"
+		//document.regresar.submit()
+	}
+
+  	function ShowHide(myDiv) {
+  		if (myDiv=="myMail"){
+  			document.getElementById("myReserve").style.display="none"
+  		}else{
+  			document.getElementById("myMail").style.display="none"
+  			if (Total_No>=contador){
+  				//alert("<?php echo $msgstr["front_nothing_to_reserve"]?>")
+  				return
+  			}
+  		}
+  		var x = document.getElementById(myDiv);
+  		if (x.style.display === "none") {
+    		x.style.display = "block";
+  		} else {
+    		x.style.display = "none";
+  		}
+	} 
