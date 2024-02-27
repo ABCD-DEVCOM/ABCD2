@@ -6,11 +6,9 @@
 
 ***********************************************/
 
-$path="../";
-include("config.php");
-include("leer_bases.php");
+//include("leer_bases.php");
 include("head.php");
-include("navegarpaginas.php");
+include("views/nav_pages.php");
 
 include ("slide_show.php");
 //foreach ($_REQUEST as $key=>$value)    echo "$key=>$value<br>";
@@ -117,6 +115,6 @@ if (isset($total_base) and count($total_base)>1){
 	echo "</table>";
 	echo "</div>";
 }
-include("components/footer.php");
+include("views/footer.php");
 
 ?>

@@ -2,7 +2,6 @@
 $mostrar_libre="N";
 $_REQUEST["submenu"]="N";
 include("../central/config_opac.php");
-include("leer_bases.php");
 include("head.php");
 
 include("Mobile_Detect.php");
@@ -52,7 +51,7 @@ document.onkeypress =
 ?>
 
 <div id="page" class="col">
-	<h2><?php echo $msgstr["diccio"]." "?></h2><hr>
+	<h2><?php echo $msgstr["front_diccio"]." "?></h2><hr>
 
 	<form name="diccionario" method="post" action="diccionario_integrado.php">
 
@@ -61,15 +60,15 @@ if (isset($_REQUEST["campo"])) echo "<h4>".$_REQUEST["campo"]."</h4>";
 
 if ($_REQUEST["Opcion"]=="libre"){
 ?>
-	<label><?php echo $msgstr["unir_con"] ?></label>
+	<label><?php echo $msgstr["front_unir_con"] ?></label>
 
 	<div class="form-check">
 		<input class="form-check-input" type="radio" value="and" name="alcance" id="and" <?php if ($_REQUEST["alcance"]=="and") echo "checked"?>>
-		<label class="form-check-label"><?php echo $msgstr["and"]?></label>
+		<label class="form-check-label"><?php echo $msgstr["front_and"]?></label>
 	</div>
 	<div class="form-check">
 		<input class="form-check-input" type="radio" value="or" name="alcance" id="or" <?php if ($_REQUEST["alcance"]=="or") echo "checked"?>>
-		<label class="form-check-label"><?php echo $msgstr["or"]?></label>
+		<label class="form-check-label"><?php echo $msgstr["front_or"]?></label>
 	</div>
 
 <?php } else { echo "<input type=hidden name=alcance>\n"; 
@@ -82,10 +81,10 @@ if ($_REQUEST["Opcion"]=="libre"){
 	}
 	
 if ($detect->isMobile()) {
-	echo "<p>".$msgstr["clic_sobre"]." <input type=checkbox> ".$msgstr["para_sel"]."<br>".$msgstr["clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["remover_sel"];
+	echo "<p>".$msgstr["front_clic_sobre"]." <input type=checkbox> ".$msgstr["front_para_sel"]."<br>".$msgstr["front_clic_sobre"]." <i class='fas fa-times'></i> ".$msgstr["front_remover_sel"];
  	include("presentar_diccionario_movil.php");
 }else{
-	echo "<p>".$msgstr["dbl_clic"]."</p>";
+	echo "<p>".$msgstr["front_dbl_clic"]."</p>";
 	include("presentar_diccionario_nomovil.php");
 
 }
@@ -147,13 +146,14 @@ if (isset($_REQUEST["lang"]))
 </form>
 
 <div class="row m-3">
-	<input class="btn btn-light" type=button id=search-submit value=" <?php echo $msgstr["back"]?>"  onclick="document.regresar.submit();">
+	<input class="btn btn-light" type=button id=search-submit value=" <?php echo $msgstr["front_back"]?>"  onclick="document.regresar.submit();">
 </div>
 
 </div>
 
 
 <?php
+/*
 echo "<form name=regresar method=post action=avanzada.php>\n";
 foreach ($_REQUEST as $var=>$value){
 	echo "<input type=hidden name=$var value=";
@@ -161,9 +161,12 @@ foreach ($_REQUEST as $var=>$value){
 	echo ">\n";
 }
 echo "</form>";
- include("components/footer.php");
-echo "\n<script>Opcion='";
-if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];
-echo "'\n</script>\n";
+*/
+
+ include("views/footer.php");
+
 ?>
 
+<script>
+Opcion='<?php  if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];?>'
+</script>

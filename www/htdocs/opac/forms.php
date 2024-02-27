@@ -1,12 +1,12 @@
-					<?php
-					if (!isset($_REQUEST["modo"])) $_REQUEST["modo"] = "";
-					if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php")
-						$dir = "/";
+<?php
+if (!isset($_REQUEST["modo"])) $_REQUEST["modo"] = "";
 
-					else
-						$dir = "";
-
-					?>
+if (basename($_SERVER["SCRIPT_FILENAME"]) == "index.php"){
+	$dir = "/";
+} else {
+	$dir = "";
+}
+?>
 
 <form name="buscar" action="buscar_integrada.php" method="post">
 	<input type="hidden" name="cookie">
@@ -74,7 +74,7 @@
 
 <?php
 if (isset($_REQUEST["prefijo"])) {
-	echo "<form name=indice action=alfabetico.php method=post>\n";
+	echo "<form name=indice action=views/alfabetico.php method=post>\n";
 	foreach ($_REQUEST as $var => $value) {
 		if ($var != "letra" and $var != "count")
 			echo "<input type=hidden name=$var value=\"$value\">\n";
@@ -99,11 +99,12 @@ if (isset($_REQUEST["prefijo"])) {
 	echo "\">\n";
 	echo "</form>\n";
 }
+
 ?>
 
-
-
-<form name=activarindice method=post action=alfabetico.php>
+<!--<form name="activarindice" method="post" action="<?php if (isset($scptpath)) echo $scptpath;?>views/alfabetico.php">-->
+<form name="activarindice" method="post">
+	<input type="hidden" name="indice" value="yes">
 	<input type="hidden" name="titulo">
 	<input type="hidden" name="columnas">
 	<input type="hidden" name="Opcion">
@@ -188,6 +189,95 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
+
+<script>
+
+function BuscarIntegrada(base, modo, Opcion, Expresion, Coleccion, titulo_c, resaltar, submenu, Pft, mostrar_exp) {
+	if (mostrar_exp != "") document.bi.action = "inicio_base.php"
+	document.bi.base.value = base
+	document.bi.Opcion.value = Opcion
+	document.bi.modo.value = modo
+	document.bi.home.value = mostrar_exp
+
+	if (Opcion == "libre") {
+		document.bi.coleccion.value = Coleccion
+		document.bi.Expresion.value = Expresion
+	}
+
+	if (Opcion == "directa") {
+		document.bi.Expresion.value = Expresion
+		document.bi.titulo_c.value = titulo_c
+		document.bi.resaltar.value = resaltar
+		document.bi.submenu.value = submenu
+		document.bi.Pft.value = Pft
+		document.bi.mostrar_exp.value = mostrar_exp
+	}
+	document.bi.submit()
+}
+</script>
+
+<form name="bi" action="buscar_integrada.php" method="post">
+	<input type="hidden" name="base">
+	<input type="hidden" name="cipar">
+	<input type="hidden" name="Opcion">
+	<input type="hidden" name="coleccion">
+	<input type="hidden" name="Expresion">
+	<input type="hidden" name="titulo_c">
+	<input type="hidden" name="resaltar">
+	<input type="hidden" name="submenu">
+	<input type="hidden" name="Pft">
+	<input type="hidden" name="mostrar_exp">
+	<input type="hidden" name="home">
+	<?php
+	echo "<input type=hidden name=modo value=\"";
+	if (isset($_REQUEST["modo"])) echo $_REQUEST["modo"];
+	echo "\">\n";
+	if (isset($_REQUEST["integrada"]))
+		echo "<input type=hidden name=integrada value=\"".str_replace('"','&quot;',$_REQUEST["integrada"])."\">\n";
+	if (isset($_REQUEST["db_path"]))
+		echo "<input type=hidden name=db_path value=\"".str_replace('"','&quot;',$_REQUEST["db_path"])."\">\n";
+	if (isset($lang))
+		echo "<input type=hidden name=lang value=\"".str_replace('"','&quot;',$lang)."\">\n";
+	?>
+</form>
+
+
+
+<form name="regresar" action="buscar_integrada.php" method="post">
+	<?php 
+	foreach ($_REQUEST as $key=>$value){
+		echo '<input type=hidden name="'.$key.'" value="'.$value.'">';
+	} ?>
+</form>
+
+
+<form name="indiceAlfa" method="post" action="alfabetico.php">
+	<input type="hidden" name="alfa" value="<?php if (isset($_REQUEST["alfa"]) and $_REQUEST["alfa"]!="") echo $_REQUEST["alfa"];?>">
+	<input type="hidden" name="titulo" value="<?php if (isset($_REQUEST["titulo"])) echo $_REQUEST["titulo"];?>">
+	<input type="hidden" name="columnas" value="<?php if (isset($_REQUEST["columnas"])) echo $_REQUEST["columnas"];?>">
+	<input type="hidden" name="Opcion" value="<?php  if (isset($_REQUEST["Opcion"])) echo $_REQUEST["Opcion"];?>">
+	<input type="hidden" name="count" value="25">
+	<input type="hidden" name="posting" value="<?php if (isset($_REQUEST["posting"])) echo $_REQUEST["posting"];?>">
+	<input type="hidden" name="prefijo" value="<?php if (isset($_REQUEST["prefijo"])) echo $_REQUEST["prefijo"];?>">
+	<input type="hidden" name="prefijoindice" value="<?php if (isset($_REQUEST["prefijo"])) echo $_REQUEST["prefijo"]?>">
+	<input type="hidden" name="ira" value="<?php if (isset($_REQUEST["ira"])) echo $_REQUEST["ira"]?>">
+	<input type="hidden" name="Expresion">
+	<input type="hidden" name="Sub_Expresion">
+	<?php if (isset($primero)) { $letra=$primero; } else { $letra=""; } ?>
+	<input type="hidden" name="letra" value="<?php if (isset($_REQUEST["prefijo"])) echo str_replace($_REQUEST["prefijo"],'',$letra) ?>">
+	<input type="hidden" name="Existencias">
+	<input type="hidden" name="coleccion" value="<?php if (isset($_REQUEST["coleccion"])) echo $_REQUEST["coleccion"]?>">
+	<input type="hidden" name="lang" value="<?php if (isset($_REQUEST["lang"])) echo $_REQUEST["lang"]?>">
+	<?php
+	if (isset($_REQUEST["base"]))  	echo "<input type=hidden name=base value=".$_REQUEST["base"].">\n";
+	if (isset($_REQUEST["indice_base"]))  echo "<input type=hidden name=indice_base value=".$_REQUEST["indice_base"].">\n";
+	if (isset($_REQUEST["cipar"])) echo "<input type=hidden name=cipar value=".$_REQUEST["cipar"].">\n";
+	if (isset($_REQUEST["modo"])) echo "<input type=hidden name=modo value=".$_REQUEST["modo"].">\n";
+	if (isset($_REQUEST["Formato"])) echo "<input type=hidden name=Formato value=\"".$_REQUEST["Formato"]."\">\n";
+	if (isset($_REQUEST["db_path"])) echo "<input type=hidden name=db_path value=\"".$_REQUEST["db_path"]."\">\n";
+	if (isset($_REQUEST["lang"])) echo "<input type=hidden name=lang value=\"".$_REQUEST["lang"]."\">\n";
+	?>
+</form>
 
 <script src="<?php echo $OpacHttp;?>assets/js/bootstrap.bundle.min.js"></script>
 

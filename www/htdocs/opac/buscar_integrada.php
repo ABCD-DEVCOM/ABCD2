@@ -7,10 +7,9 @@
 
 if (isset($_REQUEST["db_path"])) $_REQUEST["db_path"]=urldecode($_REQUEST["db_path"]);
 include("../central/config_opac.php");
-include("leer_bases.php");
-include("presentar_registros.php");
-include('components/nav_pages.php');
-include("head.php");
+include($Web_Dir.'views/presentar_registros.php');
+include($Web_Dir.'views/nav_pages.php');
+include($Web_Dir.'head.php');
 $select_formato="";
 
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
@@ -23,17 +22,18 @@ if (isset($_REQUEST["Formato"])) {
 	}
 }
 function SelectFormato($base,$db_path,$msgstr){
+	global $lang;
 	$PFT="";
 	$Formato="";
 	$archivo=$base."_formatos.dat";
-	if (file_exists($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo)){
-		$fp=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$archivo);
+	if (file_exists($db_path.$base."/opac/".$lang."/".$archivo)){
+		$fp=file($db_path.$base."/opac/".$lang."/".$archivo);
 	}else{
-		echo "<h4><font color=red>".$msgstr["no_format"]."</h4>";
+		echo "<h4><font color=red>".$msgstr["front_no_format"]."</h4>";
 		die;
 	}
 
-	$select_formato=$msgstr["select_formato"]." <select class=\"form-select\" name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
+	$select_formato=$msgstr["front_select_formato"]." <select class=\"form-select\" name=cambio_Pft id=cambio_Pft onchange=CambiarFormato()>";
 	$primero="";
 	$encontrado="";
 	foreach ($fp as $linea){
@@ -85,7 +85,7 @@ if ($_REQUEST["Opcion"]!="directa"){
 	foreach ($_REQUEST as $key=>$value) $_REQUEST[$key]=urldecode($value);
 	//foreach ($_REQUEST as $key=>$value) $_REQUEST[$key]=urldecode($value);
 
-	if (isset($_REQUEST["Sub_Expresion"]))$_REQUEST["Sub_Expresion"] =str_replace('\\','',$_REQUEST["Sub_Expresion"]);
+	if (isset($_REQUEST["Sub_Expresion"])) $_REQUEST["Sub_Expresion"] =str_replace('\\','',$_REQUEST["Sub_Expresion"]);
 	}
 
 	if (isset($rec_pag)) $_REQUEST["count"] = $rec_pag;
@@ -186,9 +186,9 @@ switch ($_REQUEST["Opcion"]){
 			
 		}else{
             if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
-				$fav=file($db_path.$base."/opac/".$_REQUEST["lang"]."/".$_REQUEST["base"]."_avanzada.tab");
+				$fav=file($db_path.$base."/opac/".$lang."/".$_REQUEST["base"]."_avanzada.tab");
 			else
-				$fav=file($db_path."opac_conf/".$_REQUEST["lang"]."/avanzada.tab");
+				$fav=file($db_path."opac_conf/".$lang."/avanzada.tab");
 			$ix=-1;
 			$exp_bb="";
 
@@ -309,7 +309,7 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 if ($Expresion!='$' or isset($Expresion_col)){
 	if (isset($expr_coleccion)  and !isset($yaidentificado)){
 		echo "<div style='margin-top:30px;display: block;width:100%;font-size:12px;'>";
-		echo "<span class=tituloBase>$expr_coleccion</span>";
+		echo "<h3>$expr_coleccion<h3>";
 		echo "</div>";
 	}
 
@@ -345,7 +345,7 @@ foreach ($bd_list as $base=>$value){
        	$cipar=$base;
     if (($Expresion=="" or $Expresion=='$') and (!isset($Expresion_col) or $Expresion_col=="") ){
        	$status="Y";
-       	$query = "&base=$base" . "&cipar=$db_path".$actparfolder."/".$base.".par&Opcion=status&lang=".$_REQUEST["lang"];
+       	$query = "&base=$base" . "&cipar=$db_path".$actparfolder."/".$base.".par&Opcion=status&lang=".$lang;
        	$IsisScript="opac/status.xis";
        	$busqueda_decode["$base"]='$';
     }else{
@@ -357,19 +357,21 @@ foreach ($bd_list as $base=>$value){
        	if (file_exists($db_path.$base."/dr_path.def")){
    			$def_db = parse_ini_file($db_path.$base."/dr_path.def");
    		}
-       	if (!isset($def_db["UNICODE"]) )
+       	if (!isset($def_db["UNICODE"]) ){
        		$cset_db="ANSI";
-       	else
+       	}else { 
        		if ($def_db["UNICODE"]==0)
        			$cset_db= "ANSI";
        		else
        			$cset_db="UTF-8";
+			}
         if ($cset=="UTF-8" and $cset_db=="ANSI")
-        	$busqueda_decode[$base]=mb_convert_encoding($busqueda,'UTF-8', 'ISO-8859-1');
+        	//$busqueda_decode[$base]=mb_convert_encoding($busqueda,'UTF-8', 'ISO-8859-1');
+        	$busqueda_decode[$base]=mb_convert_encoding($busqueda,'ISO-8859-1','UTF-8');
         else
         	$busqueda_decode[$base]=$busqueda;
         if ($busqueda_decode[$base]=="") $busqueda_decode[$base]='$';
-		$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$_REQUEST["lang"];
+		$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$lang;
 	}
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -394,14 +396,19 @@ foreach ($bd_list as $base=>$value){
 			if ($total>0) {
 				$total_base[$base]=$total;
 			}
+			if (isset($_REQUEST["Expresion"])) { 
+				$Expresion=$_REQUEST["Expresion"];
+			} else {
+				$Expresion="$";
+			} 			
 			if ($integrada=="")
-				$integrada=$base.'$$'.$total.'$$'.urlencode($_REQUEST["Expresion"]);
+				$integrada=$base.'$$'.$total.'$$'.urlencode($Expresion);
 			else
-			$integrada.='||'.$base.'$$'.$total.'$$'.urlencode($_REQUEST["Expresion"]);
+			$integrada.='||'.$base.'$$'.$total.'$$'.urlencode($Expresion);
 			$total_base_seq[$base]=$ix;
 			$total_registros=(int)$total_registros+(int)$total;
 		}
-   		$Expresion_base_seq[$base]=urlencode($_REQUEST["Expresion"]);
+   		$Expresion_base_seq[$base]=urlencode($Expresion);
    		
 	}
 
@@ -411,7 +418,7 @@ $_SESSION['primera_base']=$primera_base;
 
 if (!isset($_REQUEST["mostrar_exp"])){
 	// Inserts the search refinement option by opening the advanced form
-	include_once 'components/refine_search.php';
+	include_once $Web_Dir.'components/refine_search.php';
 }
 
 
@@ -444,32 +451,34 @@ $contador=0;
 if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='$';
 
 include_once 'components/total_bases.php';
+
+	if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
+			$Expr_facetas=$_REQUEST["facetas"];
+		}else{
+			$Expr_facetas="";
+		}
+
+
 ?>
 
 
 	<form name="continuar" action="buscar_integrada.php" method="get">
 		<input type="hidden" name="integrada" value="<?php echo $integrada;?>">
 		<input type="hidden" name="existencias">
-
-		<?php
-		echo "<input type=hidden name=facetas value=\"";
-		if (isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!="") {
-			echo $_REQUEST["facetas"];
-			$Expr_facetas=$_REQUEST["facetas"];
-		}else{
-			$Expr_facetas="";
-		}
-		echo "\">\n";
+		<input type="hidden" name="facetas" value="<?php echo $Expr_facetas;?>">
+	
+	<?php
 		if (isset($total_base) and count($total_base)>0 ){
 
 			if (isset($total_fac[$base])){
-				foreach ($total_fac as $key=>$val_fac) echo "$key=$val_fac<br>";
+				foreach ($total_fac as $key=>$val_fac) echo $key=$val_fac."<br>";
 			}
 
-			if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!="")
+			if ($_REQUEST["indice_base"]==1 or isset($_REQUEST["base"]) and $_REQUEST["base"]!=""){
 				$base=$_REQUEST["base"];
-			else
+			} else{
 				$base=$primera_base;
+			}
 				$frm_sel=SelectFormato($base,$db_path,$msgstr);
 				$select_formato=$frm_sel[0];
 				$Formato=$frm_sel[1];
@@ -484,26 +493,16 @@ include_once 'components/total_bases.php';
 
 				$contador=PresentarRegistros($base,$db_path,$busqueda_decode[$base],$Formato,$count,$desde,$ix,$contador,$bd_list,$Expr_facetas);
 
-			}else{
 			}
+			
 		}
 
-		echo "<input type=hidden name=Expresion value=\"".urlencode($Expresion)."\">\n";
-
-
+		echo '<input type="hidden" name="Expresion" value="'.urlencode($Expresion).'">';
 		NavegarPaginas($contador,$count,$desde,$select_formato); 
-
-
-		if (isset($_REQUEST["Campos"])) echo "<input type=hidden name=Campos value=\"".$_REQUEST["Campos"]."\">\n";
-		if (isset($_REQUEST["Operadores"])) echo "<input type=hidden name=Operadores value=\"".$_REQUEST["Operadores"]."\">\n";
-		if (isset($_REQUEST["Sub_Expresion"])) echo "<input type=hidden name=Sub_Expresion value=\"".urlencode($_REQUEST["Sub_Expresion"])."\">\n";
 	?>
-
-
-
-
-				
-
+		<input type="hidden" name="Campos" value="<?php if (isset($_REQUEST["Campos"])) echo $_REQUEST["Campos"];?>">
+		<input type="hidden" name="Operadores" value="<?php if (isset($_REQUEST["Operadores"])) echo $_REQUEST["Operadores"];?>">
+		<input type="hidden" name="Sub_Expresion" value="<?php if (isset($_REQUEST["Sub_Expresion"])) echo urlencode($_REQUEST["Sub_Expresion"]);?>">
 
 	</form>
 
@@ -519,7 +518,7 @@ include_once 'components/total_bases_footer.php';
 if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 	if ((!isset($total_base) or count($total_base)==0) ){
 		echo "<div style='border: 1px solid;width: 98%; margin:0 auto;text-align:center'>";
-		echo "<p><br> <font color=red>".$msgstr["no_rf"]."</font>";
+		echo "<p><br> <font color=red>".$msgstr["front_no_rf"]."</font>";
 
 		if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
 			echo " ". $msgstr["en"]." ";
@@ -529,7 +528,7 @@ if ($Expresion!="" or isset($_REQUEST["facetas"]) and $_REQUEST["facetas"]!=""){
 		}else{
 			if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="")echo " <strong>".$bd_list[$_REQUEST["base"]]["titulo"]."</strong>";
 		}
-		echo "<br>".$msgstr["p_refine"];
+		echo "<br>".$msgstr["front_p_refine"];
 
 		echo "</div>\n";
 	}
@@ -540,7 +539,6 @@ echo "</form>";
 
 include_once ('components/facets.php');
 
-include("components/footer.php");
 
 if (!isset($_REQUEST["base"])) $base="";
 
@@ -550,11 +548,18 @@ if ((!isset($_REQUEST["resaltar"]) or $_REQUEST["resaltar"]=="S")) {
     $Expresion=str_replace('"',"",$Exp_b);
 ?>	
 	<script language="JavaScript">
-		highlightSearchTerms("<?php echo $Expresion;?>")
+		highlightSearchTerms("<?php echo $Expresion;?>");
+		console.log("<?php echo $Expresion;?>");
 	</script>
 
-<?php } ?>
+<?php 
+} 
+
+include("views/footer.php");
+
+?>
 
 	<script>
-		WEBRESERVATION="<?php if (isset($WEBRESERVATION)) echo $WEBRESERVATION; ?>"
+		WEBRESERVATION="<?php if (isset($WebReservation)) echo $WebReservation; ?>"
 	</script>
+

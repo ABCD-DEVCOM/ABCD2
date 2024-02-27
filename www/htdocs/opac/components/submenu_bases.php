@@ -9,7 +9,7 @@ if (!isset($titulo_pagina)){
 	//if (isset($_REQUEST["indice_base"]) and $_REQUEST["indice_base"]=="") unset($_REQUEST["integrada"]);
 	if (isset($_REQUEST["modo"])and  $_REQUEST["modo"]=="integrado"){
 	?>	
-		<span class="tituloBase"><?php echo $msgstr["todos_c"];?></span>
+		<span class="tituloBase"><?php echo $msgstr["front_todos_c"];?></span>
 		<input type="hidden" name="modo" value="integrado">
 	<?php
 	}else{
@@ -43,9 +43,9 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	?>
 
 	<div class="form-search">
-		<input type="text" name="Sub_Expresion" id="search-text" value="" placeholder="<?php echo $msgstr["search"]?>  ..."/>
+		<input type="text" name="Sub_Expresion" id="search-text" value="" placeholder="<?php echo $msgstr["front_search"]?>  ..."/>
 		<button type="submit" class="bt-green" >
-			<i class="fa fa-search"></i> <?php echo $msgstr["search"]?>
+			<i class="fa fa-search"></i> <?php echo $msgstr["front_search"]?>
 		</button>
 	</div> <!--/form-search-->
 	
@@ -54,7 +54,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	?>
 
 	<div class="form-search">
-			<button type="button" class="bt-blue" onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();"/><?php echo $msgstr["buscar_a"]?></button>
+			<button type="button" class="bt-blue" onclick="javascript:document.libre.action='avanzada.php';document.libre.submit();"/><?php echo $msgstr["front_buscar_a"]?></button>
 	<?php
 	}
 
@@ -69,7 +69,7 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 		}
 		if (file_exists($archivo)){
 		?>	
-			<button type="button" class="bt-blue" onclick="showhide('sub_menu')"> <?php echo $msgstr["indice_alfa"];?></button>
+			<button type="button" class="bt-blue" onclick="showhide('sub_menu')"> <?php echo $msgstr["front_indice_alfa"];?></button>
 		
 		<?php
 		}
@@ -79,16 +79,16 @@ if (!isset($mostrar_libre) or $mostrar_libre!="N"){
 	</div>
 
 	<div id="more">
-   		<input type=button height=50 value="<?php echo $msgstr["diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
+   		<input type=button height=50 value="<?php echo $msgstr["front_diccionario"]?>" onclick="javascript:DiccionarioLibre(0)">
 
 		<p class=titulo2>
-			<?php echo $msgstr["resultados_inc"]?>: 
+			<?php echo $msgstr["front_resultados_inc"]?>: 
      		
      		<input type="radio" value="and" name="alcance" id="and">
-    		<label class="titulo2"><?php echo $msgstr["todas_p"]?> </label>
+    		<label class="titulo2"><?php echo $msgstr["front_todas_p"]?> </label>
     		
     		<input type="radio" value="or" name="alcance" id="or"  checked>
-    		<label><?php echo $msgstr["algunas_p"]?></label>
+    		<label><?php echo $msgstr["front_algunas_p"]?></label>
     	</p>
    	</div><!--/more-->
 
