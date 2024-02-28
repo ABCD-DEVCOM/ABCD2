@@ -1,5 +1,5 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
 if (isset($_REQUEST["actualizar"]) and $_REQUEST["actualizar"]=="Actualizar"){
 	ActualizarArchivos();

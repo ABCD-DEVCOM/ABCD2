@@ -1,15 +1,20 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Apariencia#Pie_de_p.C3.A1gina";
 include "../../common/inc_div-helper.php";
 ?>
 
+<script>
+var idPage="apariencia";
+</script>
+
+
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
-	<h3><?php echo $msgstr["footer"];?></h3>
+	<h3><?php echo $msgstr["cfg_footer"];?></h3>
 
 <?php
 
@@ -39,7 +44,7 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 					}
 						break;
 					case "editor1":
-					$salida="[HTML]".$value;
+					$salida="[HTML]  ".$value;
 					if (trim($value)!=""){
 						if (!file_exists($db_path."opac_conf/$lang/$file_request") and trim($_REQUEST["editor1"])==""){
 							echo "<font color=red size=4><strong>".$db_path."opac_conf/$lang/$file_request"." ".$msgstr["missing"]."</strong></font>"."<br>";
@@ -101,7 +106,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 					$footer_file="";
 				}
 				if (substr($value,0,6)=="[HTML]") { 
-					$content_html=substr($value,5);
+					$content_html=substr($value,6);
 				} 
 			}
 		}
@@ -137,7 +142,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 			$footer_html=implode($footer_html);
 		}
 	}
-	echo "<div style=\"position:relative;display:block;\" id=ckeditorFrm> ";
+	echo "<div style=\"position:relative;display:block;\" id=ckeditorFrm>";
 	echo "<script src=\"$server_url/".$app_path."/ckeditor/ckeditor.js\"></script>";
 
 ?>
@@ -154,6 +159,7 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 </form>
 
 <?php } ?>
+</div>    
 </div>    
 </div>    
 

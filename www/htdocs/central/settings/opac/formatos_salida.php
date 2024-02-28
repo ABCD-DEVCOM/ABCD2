@@ -1,14 +1,17 @@
 <?php
-
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
 include "../../common/inc_div-helper.php";
-
 ?>
+
+<script>
+var idPage="db_configuration";
+</script>
+
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
 	<h3><?php echo $msgstr["select_formato"];?></h3>

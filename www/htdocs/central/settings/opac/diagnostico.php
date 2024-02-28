@@ -1,20 +1,20 @@
 <?php
 $n_wiki_help="docs/es/6-opac/more-config";
-
 $config_file="../../config_opac.php";
 
 include "../../config_opac.php";
-
 $no_err=0;
-include ("tope_config.php");
+include ("conf_opac_top.php");
 include "../../common/inc_div-helper.php";
-
-
 ?>
+
+<script>
+	var idPage="general";
+</script>
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
 
@@ -67,7 +67,7 @@ include "../../common/inc_div-helper.php";
 
 	<!--opac.def -> OpacHttp -->
 	<p>
-		<?php echo $msgstr['cfg_click'] ?>: <b> $OpacHttp: <a href="<?php echo $OpacHttp;?>" target="_blank"><?php echo $OpacHttp;?></a></b>
+		<?php echo $msgstr['cfg_click'] ?>: <b> $OpacHttp: <a href="<?php echo $opac_gdef['OpacHttp'];?>" target="_blank"><?php echo $opac_gdef['OpacHttp'];?></a></b>
 	</p>
 
 	<!--/htdocs/opac -->

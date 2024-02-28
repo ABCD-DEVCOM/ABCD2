@@ -2,7 +2,7 @@
 $url_back="procesos_base.php?base=".$_REQUEST["base"].'&';
 $arrHttp=$_REQUEST;
 $arrHttp["Opcion"]="dr_path";
-include ("tope_config.php");
+include ("conf_opac_top.php");
 ?>
 <div id="page">
 	<p>

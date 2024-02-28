@@ -1,12 +1,17 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_MARCXML";
 include "../../common/inc_div-helper.php";
 ?>
 
+<script>
+var idPage="meta_schema";
+</script>
+
+
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
    <h3><?php 
