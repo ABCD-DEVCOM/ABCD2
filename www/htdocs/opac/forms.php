@@ -169,10 +169,10 @@ if (isset($_REQUEST["prefijo"])) {
 	?>
 </form>
 
-<form name="changelanguage" method="post" action="/">
+<form name="changelanguage" method="get">
 	<?php
 	foreach ($_REQUEST as $key => $value) {
-		echo "<input type=hidden name=$key value='$value'>\n";
+		echo '<input type=hidden name="'.$key.'" value="'.$value.'">';
 	}
 	if (!isset($lang))
 		echo "<input type=hidden name=lang value=''>\n";

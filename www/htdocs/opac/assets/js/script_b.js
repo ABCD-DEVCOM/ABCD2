@@ -479,13 +479,17 @@ function SendTo(Accion,Data){
 function ChangeLanguage(){
 
 	var lang = document.getElementById("lang");
+	var actualScript = window.location.pathname;
 	langcode=lang.options[lang.selectedIndex].value
 	for (i=0;i<document.forms.length;i++){
 		document.forms[i].lang.value=langcode
 	}
 
+
 	document.changelanguage.action=actualScript
 	document.changelanguage.submit()
+	console.log("The opac is in language:"+langcode);
+
 }
 /*
 function openNavFacetas() {
