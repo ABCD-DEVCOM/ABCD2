@@ -1,16 +1,21 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
 include "../../common/inc_div-helper.php";
 
 ?>
 
+<script>
+var idPage="loan_conf";
+</script>
+
+
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
-    <h3><?php echo $msgstr["WEBRENOVATION"];?></h3>
+    <h3><?php echo $msgstr["cfg_WEBRENOVATION"];?></h3>
 
 <?php
 
@@ -62,15 +67,15 @@ if (!$urlexists){
 	echo "<br>".$CentralHttp. " is invalid<p>";
 }
 
-echo "<p>".$msgstr["ONLINESTATMENT"];
-if (!isset($ONLINESTATMENT) or $ONLINESTATMENT!="Y"){
+echo "<p>".$msgstr["cfg_ONLINESTATMENT"];
+if (!isset($opac_gdef['ONLINESTATMENT']) or $opac_gdef['ONLINESTATMENT']!="Y"){
     echo ": <font color=darkblue><strong>".$msgstr["is_not_set"]."</strong></font>";
 } else {
     echo ": <font color=darkblue><strong>".$msgstr["is_set"]."</strong></font>";
 }
 
-echo "<p>".$msgstr["WEBRENOVATION"];
-if (!isset($WEBRENOVATION) or $WEBRENOVATION!="Y"){
+echo "<p>".$msgstr["cfg_WEBRENOVATION"];
+if (!isset($opac_gdef['WEBRENOVATION']) or $opac_gdef['WEBRENOVATION']!="Y"){
     echo ": <font color=darkblue><strong>".$msgstr["is_not_set"]."</strong></font>";
 } else {
     echo ": <font color=darkblue><strong>".$msgstr["is_set"]."</strong></font>";

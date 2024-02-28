@@ -6,19 +6,22 @@
 2021-02-03 guilda In this way the same scripts used in central are used in the opac
 */
 
-
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Circulacion_y_pr%C3%A9stamos";
 include "../../common/inc_div-helper.php";
 
 ?>
 
+<script>
+var idPage="loan_conf";
+</script>
+
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
-	<h3><?php echo $msgstr["WEBRESERVATION"];?></h3>
+	<h3><?php echo $msgstr["cfg_WEBRESERVATION"];?></h3>
 
 <form name="reserva" method="post">
 <input type="hidden" name="db_path" value="<?php echo $db_path;?>">
@@ -60,14 +63,14 @@ foreach ($fp as $value){
 		$syspar_array[$x[0]]=$x[1];
 	}
 }
-echo "<p>".$msgstr["ONLINESTATMENT"];
-if (!isset($ONLINESTATMENT) or $ONLINESTATMENT!="Y")
+echo "<p>".$msgstr["cfg_ONLINESTATMENT"];
+if (!isset($opac_gdef['ONLINESTATMENT']) or $opac_gdef['ONLINESTATMENT']!="Y")
 	echo ": <font color=darkblue><strong>".$msgstr["is_not_set"]."</strong></font>";
 else
     echo ": <font color=darkblue><strong>".$msgstr["is_set"]."</strong></font>";
 
-echo "<p>".$msgstr["WEBRESERVATION"];
-if (!isset($WEBRESERVATION) or $WEBRESERVATION!="Y")
+echo "<p>".$msgstr["cfg_WEBRESERVATION"];
+if (!isset($opac_gdef['WEBRESERVATION']) or $opac_gdef['WEBRESERVATION']!="Y")
 	echo ": <font color=darkblue><strong>".$msgstr["is_not_set"]."</strong></font>";
 else
     echo ": <font color=darkblue><strong>".$msgstr["is_set"]."</strong></font>";
@@ -113,11 +116,14 @@ if (is_dir($db_path."reserve/pfts/".$_REQUEST["lang"])){
 	//if (!file_exists($db_path."reserve/pfts/".$_REQUEST["lang"]))
 }
 */
-
-
-echo "<h4>".$msgstr["minf_reservations"]." <a href=http://wiki.abcdonline.info target=_blank><font color=blue>wiki.abcdonline.info</font></a></h4>";
-
 ?>
+
+<h4>
+	<?php echo $msgstr["minf_reservations"];?>
+	<a href="https://abcd-community.github.io/wiki/docs/es/6-opac/opac-circulation" target=_blank>Wiki</a>
+</h4>
+
+
 
 </div>
 </div>
