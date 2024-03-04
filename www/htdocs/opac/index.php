@@ -30,7 +30,7 @@ if (isset($_REQUEST["primeravez"]) and $_REQUEST["primeravez"]=="Y"){ ?>
 }
 include("head.php");
 
-foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
+//foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
 
 if (isset($_REQUEST["cookie"])) {
 	include("views/view_selection.php");
@@ -39,9 +39,6 @@ if (isset($_REQUEST["cookie"])) {
 } else {
 	include("views/content_home.php");
 }
-
-
-
 ?>
 
 <?php include("views/footer.php");?>
