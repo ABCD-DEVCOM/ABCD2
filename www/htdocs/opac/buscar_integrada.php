@@ -25,6 +25,7 @@ function SelectFormato($base,$db_path,$msgstr){
 	global $lang;
 	$PFT="";
 	$Formato="";
+	
 	$archivo=$base."_formatos.dat";
 	if (file_exists($db_path.$base."/opac/".$lang."/".$archivo)){
 		$fp=file($db_path.$base."/opac/".$lang."/".$archivo);
@@ -291,6 +292,7 @@ if (isset($_REQUEST["prefijo"]) or $_REQUEST["Opcion"]=="detalle") {
 }
 
 if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!=""){
+	$Expresion_col="";
 	$coleccion=explode('|',$_REQUEST["coleccion"]);
 	//if (!isset($_REQUEST["titulo_c"]))
 		$_REQUEST["titulo_c"]=$coleccion[1];
@@ -326,52 +328,69 @@ if ($Expresion=='' and !isset($_REQUEST["coleccion"])) $Expresion='';
 
 //echo "<p>$Expresion</p>";
 
-////////
-foreach ($bd_list as $base=>$value){
+
+foreach ($bd_list as $base=>$value) {
 	if (!isset($_REQUEST["modo"]) or $_REQUEST["modo"]!="integrado"){
 		if (isset($_REQUEST["base"]) and $_REQUEST["base"]!="" ){
 			if  ($base!= $_REQUEST["base"]) {
 				continue;
+				echo "continue";
 			}
 		}
 	}
-	if (isset($Expresion_col))
+
+	if (isset($Expresion_col)){
 		$busqueda=$Expresion_col;
-	else
+	} else {
 		$busqueda=$Expresion;
- 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="" )
+	}
+
+ 	if (isset($_REQUEST["cipar"]) and $_REQUEST["cipar"]!="" ){
        	$cipar=$_REQUEST["cipar"];
- 	else
+ 	} else {
        	$cipar=$base;
-    if (($Expresion=="" or $Expresion=='$') and (!isset($Expresion_col) or $Expresion_col=="") ){
-       	$status="Y";
-       	$query = "&base=$base" . "&cipar=$db_path".$actparfolder."/".$base.".par&Opcion=status&lang=".$lang;
-       	$IsisScript="opac/status.xis";
-       	$busqueda_decode["$base"]='$';
-    }else{
-       	$status="N";
-       	//echo "$base<br>";
-       	$facetas=array();
-       	$IsisScript="opac/buscar.xis";
-       	$cset=strtoupper($meta_encoding);
-       	if (file_exists($db_path.$base."/dr_path.def")){
-   			$def_db = parse_ini_file($db_path.$base."/dr_path.def");
-   		}
-       	if (!isset($def_db["UNICODE"]) ){
-       		$cset_db="ANSI";
-       	}else { 
-       		if ($def_db["UNICODE"]==0)
-       			$cset_db= "ANSI";
-       		else
-       			$cset_db="UTF-8";
-			}
-        if ($cset=="UTF-8" and $cset_db=="ANSI")
+	}
+
+
+$dr_path=$db_path.$base."/dr_path.def";
+
+
+$cset_db = ""; 
+
+if (file_exists($dr_path)) {
+    	$def_db = parse_ini_file($dr_path);
+} 
+
+if (!isset($def_db['UNICODE'])) {
+	$cset_db = "ANSI";
+} elseif ($def_db['UNICODE'] == "1") {
+	$cset_db = "UTF-8";
+} else {
+	$cset_db = "ANSI";
+}
+
+	
+	$cset=strtoupper($meta_encoding);
+        if ($cset=="UTF-8" and $cset_db=="ANSI"){
         	//$busqueda_decode[$base]=mb_convert_encoding($busqueda,'UTF-8', 'ISO-8859-1');
         	$busqueda_decode[$base]=mb_convert_encoding($busqueda,'ISO-8859-1','UTF-8');
-        else
+        } else {
         	$busqueda_decode[$base]=$busqueda;
+		}
         if ($busqueda_decode[$base]=="") $busqueda_decode[$base]='$';
-		$query = "&base=$base&cipar=$db_path".$actparfolder."/$cipar.par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$lang;
+
+
+// Toda a busca acontece aqui
+    if (($Expresion=="" or substr($Expresion, -2,-1)=='$') and (!isset($Expresion_col) or $Expresion_col=="") ){
+	   	$status="Y";
+      	$IsisScript="opac/status.xis";
+       	$busqueda_decode["$base"]='$';
+		$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=status&lang=".$lang;
+    } else {
+       	$status="N";
+       	$facetas=array();
+       	$IsisScript="opac/buscar.xis";
+		$query = "&base=".$base."&cipar=".$db_path.$actparfolder.$cipar.".par&Expresion=".$busqueda_decode[$base]."&from=1&count=1&Opcion=buscar&lang=".$lang;
 	}
 
 	$resultado=wxisLlamar($base,$query,$xWxis.$IsisScript);
@@ -457,8 +476,6 @@ include_once 'components/total_bases.php';
 		}else{
 			$Expr_facetas="";
 		}
-
-
 ?>
 
 
@@ -509,7 +526,6 @@ include_once 'components/total_bases.php';
 
 <?php
 // Inserts the total results per database in the footer.
-
 
 
 include_once 'components/total_bases_footer.php';
