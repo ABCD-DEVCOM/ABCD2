@@ -14,6 +14,9 @@ var idPage="db_configuration";
 			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+	<?php include("menu_dbbar.php");  ?>
+
 	<h3><?php echo $msgstr["select_formato"];?></h3>
 
 <?php
@@ -175,7 +178,7 @@ global $msgstr,$db_path;
     <div class="w-30">
 		<form name="<?php echo $iD;?>Frm" method="post">
 		<input type="hidden" name="Opcion" value=Guardar>
-    	<input type="hidden" name="base" value=$base>
+    	<input type="hidden" name="base" value=<?php echo $base;?>>
     	<input type="hidden" name="file" value="<?php echo $file;?>">
     	<input type="hidden" name="lang" value="<?php echo $lang;?>">
 	<?php

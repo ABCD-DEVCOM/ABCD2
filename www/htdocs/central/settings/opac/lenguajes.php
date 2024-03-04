@@ -1,11 +1,20 @@
 <?php
-include("tope_config.php");
+include("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n#Idiomas_disponibles";
 include "../../common/inc_div-helper.php";
+?>
 
+<script>
+var idPage="charset_cnf";
+</script>
 
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("conf_opac_menu.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
 
-
+<?php
 //foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";
 if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 	foreach ($_REQUEST as $var=>$value){
@@ -25,28 +34,34 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 		}
 	}
 
-    $fout=fopen($db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab","w");
+	$file_update=$db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab";
+
+	?>
+
+    <div class="alert success" onload="setTimeout(function () { window.location.reload(); }, 10)" >
+		<?php echo $msgstr["updated"];?>
+		<pre><?php echo $file_update; ?></pre>
+	</div>
+
+	<pre><code>
+<?php
+    $fout=fopen($file_update,"w");
 	foreach ($cod_idioma as $key=>$value){
-		fwrite($fout,$value."=".$nom_idioma[$key]."\n");
+		$data_src= $value."=".$nom_idioma[$key]."\n";
+		$enc = mb_detect_encoding($data_src);
+		$data = mb_convert_encoding($data_src, "UTF-8", $enc);
+		fwrite($fout,$data);
 		echo $value."=".$nom_idioma[$key]."<br>";
 	}
 	fclose($fout);
-	echo "<h2>".$_REQUEST["lang"]."/lang.tab"." ".$msgstr["updated"]."</h2>";
 	die;
 }
 	
 ?>
 
 
-<div class="middle form row m-0">
-	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
-	</div>
-	<div class="formContent col-9 m-2">
-  
-
-   
 <form name="actualizar" method="post">
+	
 <?php
 $ix=0;
 $lang_tab=$db_path."opac_conf/".$_REQUEST["lang"]."/lang.tab";
@@ -79,7 +94,7 @@ for ($i=$ix;$i<$tope;$i++){
 }
 ?>
 </table>
-	<input type="hidden" name="lang" value="<?php $_REQUEST["lang"];?>">
+	<input type="hidden" name="lang" value="<?php echo $_REQUEST["lang"];?>">
 	<input type="hidden" name="Opcion" value="Actualizar">
 	<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
 

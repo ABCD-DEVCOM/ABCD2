@@ -10,7 +10,27 @@ include "../../common/inc_div-helper.php";
 
 <script>
 	var idPage="general";
+
+function Update(Option){
+	if (document.update_base.base.value==""){
+		alert("<?php echo $msgstr["seldb"]?>")
+		return
+	}
+	switch (Option){
+		case "dr_path":
+			document.update_base.Opcion.value="dr_path"
+			document.update_base.action="../editar_abcd_def.php"
+			break;
+	}
+	document.update_base.submit()
+}
+
+
 </script>
+
+
+
+
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
@@ -178,7 +198,7 @@ if ($opac_conf!=""){
 	?>
 
 <hr>
-
+<h4>Checking for the existence of the bases.dat file - responsible for enabling the databases in each language.</h4>
 <?php
  foreach ($dir_arr as $lang) { 
 	$f_bases_dat=$opac_conf."/".$lang."/bases.dat";
@@ -193,9 +213,21 @@ if ($opac_conf!=""){
  }
  ?>
 <hr>
-<h3>Databases</h3>
+<h4>Databases in
+
 <?php
  foreach ($dir_arr as $lang) { 
+		$lang_tab=$opac_conf."/".$lang."/lang.tab";
+		$lang_file=file($lang_tab);
+		
+		foreach ($lang_file as $lang_dat) {
+		$lang_dat=trim($lang_dat);
+           
+		$blang=explode('=',$lang_dat);
+
+		if (($lang==$blang[0]) and ($lang==$_REQUEST['lang']))  { 
+			echo $blang[1].'</h4>'; 
+
 		foreach ($fp as $base_dat) {
             $base_dat=trim($base_dat);
             if ($base_dat=="") continue;
@@ -223,7 +255,8 @@ if ($opac_conf!=""){
 			$opac_db=$db_path.$base."/opac/";
 			
 			?>
-			<h4><?php echo $base_desc." (".$base.") (".$lang.")";?></h4>
+			
+			<h3><?php echo $base_desc." (".$base.")";?></h3>
 
 			<?php
 			if (!is_dir($db_path.$base)){
@@ -245,6 +278,19 @@ if ($opac_conf!=""){
 					}
 
 				}
+			} else {
+				echo '<a href="javascript:Update(\'dr_path\')"><h2 class="color-red">Attention! Create the file dr_path.def!</h1></a>';
+			?>
+
+			<form name=update_base onSubmit="return false" method=post>
+			<input type=hidden name=Opcion value=update>
+			<input type=hidden name=type value="">
+			<input type=hidden name=modulo>
+			<input type=hidden name=format>
+			<input type=hidden name=base value=<?php echo $base;?>>
+			<?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>";?>
+			</form>
+			<?php
 			}
 			
 			echo "<p><b>".$msgstr['cfg_param_db']."</b></p>";
@@ -259,7 +305,7 @@ if ($opac_conf!=""){
 	        echo "<i>These parameters can be updated in the central module</i><br>";
 			?>
 
-			<br><p><b><?php echo $msgstr['cfg_chk_folder']." ".$opac_db.$base ."/opac/".$lang; ?></b></p>
+			<br><b><?php echo $msgstr['cfg_chk_folder']." ".$opac_db.$lang; ?></b>
 			<?php
 			$archivo=$opac_db.$lang."/".$base.".def";
 						if (!file_exists($archivo)){
@@ -367,11 +413,18 @@ if ($opac_conf!=""){
 			} else {
 				echo $msgstr['cfg_file'].": ".$archivo ." <i class=\"fas fa-check color-green\"></i><br>";
 			}
-		echo "<hr>";
-		}
-}
+				echo "<hr>";
 
+		}
+		}
+		
+
+	}
+
+ }
 ?>
+
+
 </div>
 </div>
 

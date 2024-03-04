@@ -10,6 +10,9 @@ include "../../common/inc_div-helper.php";
 			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+	<?php include("menu_dbbar.php");  ?>
+
 	<h3><?php echo $msgstr["tipos_registro"];?></h3>
 
 <?php
