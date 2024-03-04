@@ -78,9 +78,6 @@
 	console.log('OPAC ABCD Version: 1.2.0-beta 20230507');
 </script>
 
-
-
-
 <?php 
 	toTop();
 	include($Web_Dir."forms.php");
