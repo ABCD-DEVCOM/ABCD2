@@ -32,7 +32,6 @@ include("../../common/header.php");
 ?>
 
 	<script src= ../../../opac/assets/js/script_b.js?<?php echo time(); ?>></script>
-
 	<script src= ../../../opac/assets/js/lr_trim.js></script>
 	
 <script>
