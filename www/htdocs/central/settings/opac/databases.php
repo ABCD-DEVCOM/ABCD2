@@ -13,7 +13,7 @@ include "../../common/inc_div-helper.php";
 ?>
 
 <script>
-var idPage="general";
+var idPage="db_configuration";
 </script>
 
 <div class="middle form row m-0">
