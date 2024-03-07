@@ -138,7 +138,7 @@ if (file_exists($db_path."opac_conf/".$lang."/bases.dat") and file_exists($db_pa
 			if (trim($value)!=""){
 				$cuenta=$cuenta+1;
 				$x=explode('|',$value);
-				echo "<li><a href=\"javascript:SeleccionarBase('".$x[0]."')\">".$x[1]." (".$x[0].")</li>";
+				echo "<li><a href=\"javascript:SeleccionarBase('".$x[0]."')\">".$x[1]." (".$x[0].")</a></li>";
 				$base=$x[0];
 				?>
 
