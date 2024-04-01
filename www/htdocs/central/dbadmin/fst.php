@@ -3,6 +3,9 @@
 2021-02-08 fho4abcd Remove code in comment & languaje->language
 2021-02-09 fho4abcd Original name for dhtmlX.js
 2022-01-20 fho4abcd div-helper+ cancel button
+2024-03-28 fho4abcd stylesheet from assets + new look
+*/
+/* See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -44,20 +47,18 @@ else
 	$encabezado="";
 include("../common/header.php");
 ?>
-	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 
-	<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
-        <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
-        <script language=javascript>
+	<script src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+        <script src="../dataentry/js/lr_trim.js"></script>
+        <script>
 		pl_type=""
 		Opcion="<?php echo $arrHttp["Opcion"]?>"
 		valor=""
 		prefix=""
 		fila=""
 		columna=11
-
 		function AgregarFila(ixfila,Option){
-
 			switch (Option){
 				case "BEFORE":
 					ixf=mygrid.getRowsNum()+1
@@ -71,13 +72,10 @@ include("../common/header.php");
 					ixf=mygrid.getRowsNum()+2
 					break
 			}
-
 			linkr="<a href=javascript:EditarFila(\""+ixf+"\","+ixf+")><font size=1>"+ref+"</a>";
 			pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>browse</a>";
 			mygrid.addRow((new Date()).valueOf(),['','',''],ixfila)
-
 		}
-
 		function Asignar(){
 			mygrid.cells2(fila,columna).setValue(valor)
 			mygrid.cells2(fila,12).setValue(prefix)
@@ -97,16 +95,12 @@ include("../common/header.php");
 				}
 			}
 			return VC
-
 		}
-
-
 		function Enviar(){
             <?php if ($arrHttp["Opcion"]=="new") echo "document.forma1.action.value='pft.php'\n"?>
 			document.forma1.ValorCapturado.value=Capturar_Grid()
 			document.forma1.submit()
 		}
-
 		function Test(){
 			if (Trim(document.fst.Mfn.value)==""){
 				alert("<?php echo $msgstr["mismfn"]?>")
@@ -132,7 +126,7 @@ echo "<div class=\"sectionInfo\">
 	<div class=\"actions\">";
 if ($arrHttp["Opcion"]=="new"){
     $backtoscript="../dbadmin/fdt.php?Opcion=new";
-    $backtocancelscript="../dbadmin/menu_modificardb.php";
+    $backtocancelscript="../dbadmin/menu_creardb.php.php";
     include "../common/inc_back.php";
     include "../common/inc_cancel.php";
 }else{
@@ -148,56 +142,39 @@ if ($arrHttp["Opcion"]=="new"){
 <div class="middle form">
 	<div class="formContent">
 
-	<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
-		<?php echo $msgstr["addrowbef"]?>
-	</a>
-	<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">	
-		<?php echo $msgstr["addrowaf"]?>
-	</a>
-	<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
-		<?php echo $msgstr["remselrow"]?>
-	</a>
-	<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span>
-
-
 <div class="row">
-
 <table width=100% border=0>
 	<tr>
 		<td width="50%">
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
+			<?php echo $msgstr["addrowbef"]?>
+			</a>
+			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">	
+				<?php echo $msgstr["addrowaf"]?>
+			</a>
+			<a class="bt bt-red" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
+				<?php echo $msgstr["remselrow"]?>
+			</a><br>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span><br>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_sort']?></span><br>
+			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_move']?></span><br>
+			
 			<div id="gridbox" width="650px" height="250px" style="left:0;top:0;background-color:white;overflow:hidden"></div>
+			<?php if ($arrHttp["Opcion"]!="new"){ ?>
+				<label><?php echo $msgstr["testmfn"];?></label>
+				<input type="text" size="5" name="Mfn">
+					<a class="bt bt-blue" href="javascript:Test()">
+						<?php echo $msgstr["test"];?>
+					</a>
+			<?php
+			}
+			?>
+			<a class="bt bt-green" href="javascript:Enviar()"><?php echo $msgstr["update"]?></a>
 		</td>
 		<td width="50%">
 			<iframe id="cframe" src="fdt_leer.php?Opcion=<?php echo $arrHttp["Opcion"]?>&base=<?php echo $arrHttp["base"]?>" width=100% height=450 scrolling=yes name=fdt></iframe>
 		</td>
 	</tr>
-
-	<tr>
-		<td colspan="100%">
-		<?php if ($arrHttp["Opcion"]!="new"){ ?>
-	
-	<label><?php echo $msgstr["testmfn"];?></label>
-	<input type="text" size="5" name="Mfn">
-		<a class="bt bt-blue" href="javascript:Test()">
-			<?php echo $msgstr["test"];?>
-		</a>
-	<?php	
-	}
-?>
-	 <a class="bt bt-green" href="javascript:Enviar()"><?php echo $msgstr["update"]?></a>
-
-
-<?php
-if ($encabezado=""){
-	if ($arrHttp["Opcion"]!="new")
-		echo "<a href=menu_modificardb.php?base=". $arrHttp["base"].">".$msgstr["cancel"]."</a>";
-		else
-		echo "<a href=menu_creardb.php>".$msgstr["cancel"]."</a>";
-}
-?>	
-		</td>
-	</tr>
-
 </table>
 
 
@@ -207,10 +184,8 @@ if ($encabezado=""){
 
 <script>
 	mygrid = new dhtmlXGridObject('gridbox');
-  // mygrid.setSkin("modern");
-   // mygrid.enableMultiline(true);
 
-	mygrid.setImagePath("../dataentry/js/dhtml_grid/imgs/");
+	mygrid.setImagePath("/assets/images/dhtml_grid/imgs/");
 
 	mygrid.setHeader("<?php echo $msgstr["id"]?>,<?php echo $msgstr["intec"]?> ,<?php echo $msgstr["formate"]?>");
 	mygrid.setInitWidths("40,100,500")
@@ -226,17 +201,13 @@ if ($encabezado=""){
 	mygrid.getCombo(1).put("6","<?php echo $msgstr["fst_6"]?>");
 	mygrid.getCombo(1).put("7","<?php echo $msgstr["fst_7"]?>");
 	mygrid.getCombo(1).put("8","<?php echo $msgstr["fst_8"]?>");
-	mygrid.setColSorting("int,int")
+	mygrid.setColSorting("int,int,str")
     mygrid.enableAutoHeigth(true,400);
+	mygrid.enableAutoWidth(true);
 
     mygrid.enableDragAndDrop(true);
-	//mygrid.enableLightMouseNavigation(true);
-	mygrid.enableMultiselect(true);
-
 	mygrid.init();
-    i=-0
-
-<?php  $i=-1;
+<?php
 	unset($fp);
 	if ($arrHttp["Opcion"]=="update"){
 		$fp=file($db_path.$arrHttp["base"]."/data/".$arrHttp["base"].".fst");
@@ -247,6 +218,9 @@ if ($encabezado=""){
 			$fp=explode("\n",$_SESSION["FST"]);
 		}
 	}
+	?>
+	index=-1;
+	<?php
 	if (isset($fp)){
 		foreach ($fp as $value){
 			if (trim($value)!=""){
@@ -257,22 +231,15 @@ if ($encabezado=""){
 				$t[1]=trim(substr($value,0,$ix));
 				$t2=htmlspecialchars_decode (trim(substr($value,$ix+1)));
 				$t[2]=str_replace("'","\'",trim(substr($value,$ix+1)));
-				$i=$i+1;
-				echo "i=$i\n
-				id=(new Date()).valueOf()
-				mygrid.addRow(id,['".trim($t[0])."','".trim($t[1])."','".trim($t[2])."'],i)\n
-				mygrid.setRowTextStyle( id,\"font-family:courier new;font-size:12px;\")\n ";
+				?>
+				index++;
+				/*first parameter must be unique, also for fast processors*/
+				mygrid.addRow((new Date()).valueOf()+index,['<?php echo $t[0]?>','<?php echo $t[1]?>','<?php echo $t[2]?>'],index)	
+				<?php
 			}
 		}
    }
 ?>
-/*
-	i++
-	for (j=i;j<i+30;j++){
-		mygrid.addRow((new Date()).valueOf(),['','',''],j)
-	}
-*/
-
 	mygrid.clearSelection()
 	mygrid.setSizes();
 </script>

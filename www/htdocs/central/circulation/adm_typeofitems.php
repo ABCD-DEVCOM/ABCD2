@@ -1,6 +1,9 @@
 <?php
 /* Modifications
 2021-02-09 fho4abcd Original name for dhtmlX.js
+2024-04-01 fho4abcd stylesheet from assets + setImagePath + redesign to remove the mix of html and dhtmlx script
+*/
+/* See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -12,22 +15,17 @@ include("../config.php");
 $lang=$_SESSION["lang"];
 
 include("../lang/dbadmin.php");
-
 include("../lang/prestamo.php");
 
 //foreach ($arrHttp as $var=>$value) echo "$var = $value<br>";
-
-$rows_title=array();
-	$rows_title[0]=$msgstr["item"];
-	$rows_title[1]=$msgstr["description"];
 include("../common/header.php");
 ?>
-<link rel="stylesheet" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
-<script language="JavaScript" type="text/javascript" src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
-<script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
+<body>
+<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
+<script src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+<script src="../dataentry/js/lr_trim.js"></script>
 <script>
 	function AgregarFila(ixfila,Option){
-
 		switch (Option){
 			case "BEFORE":
 				ixf=mygrid.getRowsNum()+1
@@ -41,47 +39,28 @@ include("../common/header.php");
 				ixf=mygrid.getRowsNum()+2
 				break
 		}
-
 		mygrid.addRow((new Date()).valueOf(),['',''],ixfila)
        	mygrid.selectRow(ixfila);
 	}
-
 	function Capturar_Grid(){
-			cols=mygrid.getColumnCount()
-			rows=mygrid.getRowsNum()
-			VC=""
-			for (i=0;i<rows;i++){
-				if (Trim(mygrid.cells2(i,0).getValue())!=""){
-					if (VC!="") VC=VC+"\n"
-					for (j=0;j<cols;j++){
-						cell=mygrid.cells2(i,j).getValue()
-						if (j!=13) VC=VC+cell+'|'
-					}
+		cols=mygrid.getColumnCount()
+		rows=mygrid.getRowsNum()
+		VC=""
+		for (i=0;i<rows;i++){
+			if (Trim(mygrid.cells2(i,0).getValue())!=""){
+				if (VC!="") VC=VC+"\n"
+				for (j=0;j<cols;j++){
+					cell=mygrid.cells2(i,j).getValue()
+					if (j!=13) VC=VC+cell+'|'
 				}
 			}
-			return VC
-
 		}
-
-
+		return VC
+	}
 	function Enviar(){
 		document.forma1.ValorCapturado.value=Capturar_Grid()
 		document.forma1.submit()
 	}
-
-	function doBeforeRowDeleted(rowId){
-  		VC=""
-		for (j=0;j<3;j++){
-			cell=mygrid.cells(rowId,j).getValue()
-			VC=VC+cell
-		}
-		if (VC=="")
-			return true
-		else
-			return confirm("Are you sure you want to delete row");
-
-	}
-
 </script>
 <?php
 $encabezado="";
@@ -92,41 +71,35 @@ include("../common/institutional_info.php");
     <?php echo $msgstr["typeofitems"];?>
 	</div>
 	<div class="actions">
-<?php
-	$ayuda="/circulation/loans_typeofitems.html";
-    $backtocancelscript="configure_menu.php?encabezado=s";
-	$savescript="javascript:Enviar()";
-    include "../common/inc_cancel.php";
-    include "../common/inc_save.php";
-
-?>
+	<?php
+		$ayuda="/circulation/loans_typeofitems.html";
+		$backtocancelscript="configure_menu.php?encabezado=s";
+		$savescript="javascript:Enviar()";
+		include "../common/inc_cancel.php";
+		include "../common/inc_save.php";
+	?>
     </div>
     <div class="spacer">&#160;</div>
 </div>
 <?php
 include "../common/inc_div-helper.php";
 ?>
-
-		<div class="middle form">
-			<div class="formContent">
-		<br>
-			<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
-				<?php echo $msgstr["addrowbef"]?>
-			</a>
-
-			<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">
-				<?php echo $msgstr["addrowaf"]?>
-			</a>
-			<a class="bt bt-default mb-2" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
-				<?php echo $msgstr["remselrow"]?>
-			</a>
-
-	<table  style="width:600; height:400px" id=tblToGrid class="dhtmlxGrid">
-<?php
-	echo "<tr>";
-	foreach ($rows_title as $cell) echo "<td>$cell</td>\n";
-  	echo "</tr>";
-
+<div class="middle form">
+	<div class="formContent">
+	<br>
+	<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')">
+		<?php echo $msgstr["addrowbef"]?>
+	</a>
+	<a class="bt bt-blue mb-2" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')">
+		<?php echo $msgstr["addrowaf"]?>
+	</a>
+	<a class="bt bt-red mb-2" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()">
+		<?php echo $msgstr["remselrow"]?>
+	</a><br>
+	<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span><br>
+	<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_sort']?></span><br>
+	<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_move']?></span><br>
+	<?php
 	unset($fp);
 	$archivo=$db_path."circulation/def/".$_SESSION["lang"]."/items.tab" ;
 	if (!file_exists($archivo)) $archivo=$db_path."circulation/def/".$lang_db."/items.tab" ;
@@ -137,62 +110,55 @@ include "../common/inc_div-helper.php";
 		for ($i=0;$i<20;$i++){
 			$fp[$i]=' |';
 		}
-		$tope=20;
 	}
-	$nfilas=0;
-	$i=-1;
+	?>
+<!-- A div that serves as container for the grid Object. Siz is not very important -->
+<div id="gridbox" xwidth="100px" height="100px" style="background-color:white;"></div>
+
+<script>
+    var mygrid = new dhtmlXGridObject('gridbox');
+	mygrid.setImagePath("/assets/images/dhtml_grid/imgs/");
+	mygrid.setHeader("<?php echo $msgstr["item"];?>,<?php echo $msgstr["description"]?>");
+
+	mygrid.setInitWidths("200,400")
+	mygrid.setColAlign("left,left")
+	mygrid.setColTypes("ed,ed");
+	mygrid.setColSorting("str,str")
+    mygrid.enableAutoHeight(true,800);
+	mygrid.enableAutoWidth(true);
+    mygrid.enableDragAndDrop(true);
+	mygrid.init();
+	index=-1;
+	<?php
 	$t=array();
 	foreach ($fp as $value){
 		$value=trim($value);
 		$value.="||";
 		if (trim($value)!=""){
-	    	$nfilas=$nfilas+1;
-			echo "\n<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n";
-			$i=$i+1;
+			$value=str_replace("'","\'",$value);
 			$t=explode("|",$value);
-			echo "<td width=200>".$t[0]."</td><td width=400>".$t[1]."</td>";
-			echo " </tr>";
+			if (!isset($t[0])) $t[0]="";
+			if (!isset($t[1])) $t[1]="";
+			$t[0]=trim($t[0]);
+			$t[1]=trim($t[1]);
+			?>
+			index++;
+			/*first parameter must be unique, also for fast processors*/
+			mygrid.addRow((new Date()).valueOf()+index,['<?php echo $t[0]?>','<?php echo $t[1]?>'],index)
+			<?php
 		}
-
 	}
-
-?>
-
-	</table>
-<script>
-
-    nfilas=<?php echo $nfilas."\n"?>
-    var mygrid = new dhtmlXGridFromTable('tblToGrid');
-
-	mygrid.setInitWidths("200,400")
-	mygrid.setColAlign("left,left")
-	mygrid.setColTypes("ed,ed");
-	mygrid.enableAutoWidth(true);
-    mygrid.enableAutoHeight(true,300);
-
- 	mygrid.setOnBeforeRowDeletedHandler(doBeforeRowDeleted);
- //	mygrid.setOnEditCellHandler(doOnCellEdit);
- 	mygrid.setColSorting("")
-	nfilas++
-	for (j=nfilas;j<nfilas+10;j++){
-		mygrid.addRow((new Date()).valueOf(),['',''],j)
-	}
-
+	?>
 	mygrid.clearSelection()
 	mygrid.setSizes();
-	//mygrid.setColWidth(0,50)
-
+	mygrid.setColWidth(0,60)
 </script>
-</form>
-
 <form name="forma1" action="typeofitems_update.php" method="post">
 	<input type="hidden" name="ValorCapturado">
 	<input type="hidden" name="desc">
 	<input type="hidden" name="Opcion" value="">
 	<input type="hidden" name="base" value="users">
 </form>
-
 </div>
 </div>
-
 <?php include("../common/footer.php"); ?>

@@ -3,6 +3,9 @@
 2021-02-08 fho4abcd Remove code in comment
 2021-02-09 fho4abcd Original name for dhtmlX.js
 2022-02-02 fho4abcd back button, div-helper
+2024-04-01 fho4abcd css from /assets, remove wrong imagepath (was not used)
+*/
+/* See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -17,7 +20,6 @@ include("../lang/dbadmin.php");
 include("../lang/prestamo.php");
 //foreach ($arrHttp as $var=>$value)echo "$var=$value<br>";
 
-//echo $archivo;
 include("../common/header.php");
 ?>
 <body>
@@ -42,9 +44,7 @@ if (strpos($arrHttp["picklist"],'../')!==false){
 }
 ?>
 <script>
-
 	function AgregarFila(ixfila,Option){
-
 		switch (Option){
 			case "BEFORE":
 				ixf=mygrid.getRowsNum()+1
@@ -58,17 +58,11 @@ if (strpos($arrHttp["picklist"],'../')!==false){
 				ixf=mygrid.getRowsNum()+2
 				break
 		}
-
-		linkr="<a href=javascript:EditarFila(\""+ixf+"\","+ixf+")><font size=1>"+ref+"</a>";
-		pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>browse</a>";
 		mygrid.addRow((new Date()).valueOf(),['','',''],ixfila)
-
 	}
-
 	function Cancelar(){
 		document.cancelar.submit()
 	}
-
 	function Enviar(){
 		cols=mygrid.getColumnCount()
 		rows=mygrid.getRowsNum()
@@ -99,12 +93,10 @@ if (strpos($arrHttp["picklist"],'../')!==false){
 		document.forma2.submit()
 	}
 </script>
+<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 
-
-	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
-
-	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
- 	<script  src="../dataentry/js/lr_trim.js"></script>
+<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+<script  src="../dataentry/js/lr_trim.js"></script>
 
 <div class="sectionInfo">
     <div class="breadcrumb">
@@ -124,7 +116,8 @@ if (strpos($arrHttp["picklist"],'../')!==false){
     }
     $savescript="javascript:Enviar()";
     include "../common/inc_save.php";
-    ?></div>
+    ?>
+	</div>
     <div class="spacer">&#160;</div>
 </div>
 <?php
@@ -135,32 +128,33 @@ include "../common/inc_div-helper.php";
 <div class="formContent">
 	<table width="100%">
         <tr>
-        	<td>
-        		<b><?php echo $msgstr["picklistname"].": " .$arrHttp["picklist"]?></b> &nbsp; &nbsp;
-        </td>
-        <tr>
-		<td>
-			<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			&nbsp; &nbsp; &nbsp;<a href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
-			<br><strong><font color=darkred><?php echo $msgstr["dragdrop"];?></font>
-            <br><strong><font color=darkred><?php echo $msgstr["multiselect"];?></font>
-		<br>
-		</td>
-		<tr>
+			<td>
+				<b><?php echo $msgstr["picklistname"].": " .$arrHttp["picklist"]?></b> &nbsp; &nbsp;
+			</td>
+        </tr><tr>
+			<td>
+				<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
+				<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
+				<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a><br>
+				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span><br>
+				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_sort']?></span><br>
+				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_move']?></span><br>
+			</td>
+		</tr><tr>
 			<td>
 				<div id="gridbox" xwidth="780px" height="200px" style="background-color:white;overflow:hidden"></div>
 			</td>
-		</tr>
+		</tr></tr>
 		<tr>
 			<td>
- 			</td>
+				&nbsp; &nbsp;
+				<?php echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>
+			</td>
 		</tr>
 	</table>
 <script>
 	<?php echo "type=\"".$arrHttp["picklist"]."\"\n"?>
 	mygrid = new dhtmlXGridObject('gridbox');
-	mygrid.setImagePath("../dataentry/js/dhtml_grid/imgs/");
 	switch (type){
      	case "ldr_06.tab":
 			mygrid.setHeader("Code, Term, Fixed field structure");
@@ -185,16 +179,13 @@ include "../common/inc_div-helper.php";
 			break
     }
     mygrid.enableAutoHeigth(true,300);
-
-	//mygrid.enableLightMouseNavigation(true);
-	mygrid.enableMultiselect(true);
 	mygrid.enableAutoWidth(true);
     mygrid.enableDragAndDrop(true);
 	mygrid.init();
+	index=-1;
 <?php
 	if (file_exists($archivo)){
 		$fp=file($archivo);
-		$i=-1;
 		$t=array();
 		foreach ($fp as $value){
 			$value=trim($value);
@@ -203,10 +194,15 @@ include "../common/inc_div-helper.php";
 				$t=explode('|',$value);
 				if (!isset($t[1])) $t[1]="";
 				if (!isset($t[2])) $t[2]="";
-				$i=$i+1;
-				echo "i=$i\n";
                 if (!isset($t[2]) and $arrHttp["picklist"]=="ldr_06.tab") $t[2]="";
-				echo "mygrid.addRow((new Date()).valueOf(),['".trim($t[0])."','".trim($t[1])."','".trim($t[2])."'],i)\n";
+				$t[0]=trim($t[0]);
+				$t[1]=trim($t[1]);
+				$t[2]=trim($t[2]);
+				?>
+				index++;
+				/*first parameter must be unique, also for fast processors*/
+				mygrid.addRow((new Date()).valueOf()+index,['<?php echo $t[0]?>','<?php echo $t[1]?>','<?php echo $t[2]?>'],index)
+				<?php
 			}
 		}
 	}else{
@@ -223,7 +219,8 @@ include "../common/inc_div-helper.php";
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=picklist value=<?php echo $arrHttp["picklist"]?>>
 <input type=hidden name=row value=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]?>>
-<?php if (isset($arrHttp["desde"])) echo "<input type=hidden name=desde value=".$arrHttp["desde"].">\n";
+<?php
+if (isset($arrHttp["desde"])) echo "<input type=hidden name=desde value=".$arrHttp["desde"].">\n";
 if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=".$arrHttp["encabezado"].">\n";
 if (isset($arrHttp["Ctrl"])) echo "<input type=hidden name=Ctrl value=".$arrHttp["Ctrl"].">\n";
 ?>
