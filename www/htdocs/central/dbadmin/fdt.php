@@ -1,7 +1,10 @@
 <?php
 /* Modifications
 2021-02-09 fho4abcd Original name for dhtmlX.js
-2011-11-25 fho4abcd Validate tags on int value, not on string (e.g. 1==001->error) + improve html
+2021-11-25 fho4abcd Validate tags on int value, not on string (e.g. 1==001->error) + improve html
+2024-04-01 fho4abcd More error messages. Improve layout,translations. Move dhtmlXGrid images to /assets. Remove unused code
+*/
+/* See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html
 */
 session_start();
 include("../common/get_post.php");
@@ -50,17 +53,18 @@ if ($arrHttp["Opcion"]=="new"){
 
 	<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
- 	<script language="JavaScript" type="text/javascript"  src="../dataentry/js/lr_trim.js"></script>
-	<script languaje=javascript>
+ 	<script  src="../dataentry/js/lr_trim.js"></script>
+	<script>
 	field_type=Array()
 	input_type=Array()
 	pick_type=Array()
 	validation=Array()
-<?php foreach ($field_type as $key=>$value) echo "field_type['$key']='$value'\n";
-  foreach ($input_type as $key=>$value) echo "input_type['$key']='$value'\n";
-  foreach ($pick_type as $key=>$value) echo "pick_type['$key']='$value'\n";
-  foreach ($validation as $key=>$value) echo "validation['$key']='$value'\n";
-?>
+	<?php
+		foreach ($field_type as $key=>$value) echo "field_type['$key']='$value'\n";
+		foreach ($input_type as $key=>$value) echo "input_type['$key']='$value'\n";
+		foreach ($pick_type as $key=>$value) echo "pick_type['$key']='$value'\n";
+		foreach ($validation as $key=>$value) echo "validation['$key']='$value'\n";
+	?>
 	pl_type=""
 	Opcion="<?php echo $arrHttp["Opcion"]?>"
 	valor=""
@@ -70,78 +74,26 @@ if ($arrHttp["Opcion"]=="new"){
 	fila=""
 	columna=12
 
-	function AgregarFila(ixfila,Option){
-
-		switch (Option){
-			case "BEFORE":
-				ixf=mygrid.getRowsNum()+1
-				ref=ixf
-				break
-			case "AFTER":
-				ixf=mygrid.getRowsNum()+2
-				ref=ixf-1
-				break
-			default:
-				ixf=mygrid.getRowsNum()+2
-				break
-		}
-
-		linkr="<a href=javascript:EditarFila(\""+ixf+"\","+ixf+")><font size=1>"+ref+"</a>";
-		pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>browse</a>";
-		mygrid.addRow((new Date()).valueOf(),[linkr,'','','','','','','','','','','','','',pick,'','','','','','','','','','','',''],ixfila)
-       	mygrid.selectRow(ixfila);
-	}
-    function AsignarFila(){
-		mygrid.cells2(fila,columna).setValue(valor)
-		mygrid.cells2(fila,13).setValue(prefix)
-		mygrid.cells2(fila,15).setValue(list)
-		mygrid.cells2(fila,16).setValue(extract)
-	//	closeit()
+function AgregarFila(ixfila,Option){
+	switch (Option){
+		case "BEFORE":
+			ixf=mygrid.getRowsNum()+1
+			ref=ixf
+			break
+		case "AFTER":
+			ixf=mygrid.getRowsNum()+2
+			ref=ixf-1
+			break
+		default:
+			ixf=mygrid.getRowsNum()+2
+			break
 	}
 
-
-	function Asignar(){
-		mygrid.cells2(fila,columna).setValue(valor)
-		mygrid.cells2(fila,13).setValue(prefix)
-		mygrid.cells2(fila,15).setValue(list)
-		mygrid.cells2(fila,16).setValue(extract)
-	//	closeit()
-	}
-
-	function switchDiv(div_id)
-{
-  var style_sheet = getStyleObject(div_id);
-  if (style_sheet)
-  {
- //   hideAll();
-    changeObjectVisibility(div_id, "hidden");
-  }
-  else
-  {
-    alert("sorry, this only works in browsers that do Dynamic HTML");
-  }
+	linkr="<a href=javascript:EditarFila(\""+ixf+"\","+ixf+")><font size=1>"+ref+"</a>";
+	pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>browse</a>";
+	mygrid.addRow((new Date()).valueOf(),[linkr,'','','','','','','','','','','','','',pick,'','','','','','','','','','','',''],ixfila)
+	mygrid.selectRow(ixfila);
 }
-
-var DHTML = (document.getElementById || document.all || document.layers);
-
-function getObj(name){
-  if (document.getElementById)
-  {
-  	this.obj = document.getElementById(name);
-	this.style = document.getElementById(name).style;
-  }
-  else if (document.all)
-  {
-	this.obj = document.all[name];
-	this.style = document.all[name].style;
-  }
-  else if (document.layers)
-  {
-   	this.obj = document.layers[name];
-   	this.style = document.layers[name];
-  }
-}
-
 
 function EditarFila(Fila,id){
    	Fila=mygrid.getRowIndex(mygrid.getSelectedId())
@@ -170,7 +122,6 @@ function EditarFila(Fila,id){
 	    	msgwin.focus()
    	}
 }
-
 function Picklist(name,row,base){
 	prefix=""
 	valor=""
@@ -207,7 +158,6 @@ function Picklist(name,row,base){
 	if (Url=="") document.edit_picklist.submit()
 	msgwin.focus()
 }
-
 function Actualizar(){
 	cols=mygrid.getColumnCount()
 	rows=mygrid.getRowsNum()
@@ -225,7 +175,6 @@ function Actualizar(){
 	document.forma1.submit()
 	return
 }
-
 function Test(){
 	msgwin=window.open("","Test","width=800,height=600,resizable,scrollbars")
 	msgwin.document.close()
@@ -234,7 +183,6 @@ function Test(){
 	msgwin.focus()
 	Actualizar()
 }
-
 function IsNumeric(sText){
    var ValidChars = "0123456789";
    var IsNumber=true;
@@ -247,10 +195,10 @@ function IsNumeric(sText){
    }
    return IsNumber;
 }
-
 function EncabezarFilas(Rows){
+	//Display heading rows
    	msgwin.document.writeln("<tr>")
-   	if (Rows!="") msgwin.document.writeln("<td rowspan=2></td>")
+   	if (Rows!="") msgwin.document.writeln("<td rowspan=2></td>")// cell for the row number
   	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["type"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["tag"]?></td>")
   	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["title"]?></td><td rowspan=2 align=center bgcolor=white>I</td><td rowspan=2 align=center bgcolor=white>R</td><td rowspan=2 align=center  bgcolor=white><?php echo $msgstr["subfields"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["preliteral"]?></td>")
   	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["inputtype"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["rows"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["cols"]?></td>")
@@ -262,7 +210,6 @@ function EncabezarFilas(Rows){
 	msgwin.document.writeln("<td align=center bgcolor=white><?php echo $msgstr["type"]?></td><td bgcolor=white><?php echo $msgstr["name"]?></td><td bgcolor=white><?php echo $msgstr["prefix"]?></td><td bgcolor=white><?php echo $msgstr["pft"]?></td>")
 	msgwin.document.writeln("<td bgcolor=white><?php echo $msgstr["listas"]?></td><td bgcolor=white><?php echo $msgstr["extractas"]?></td>")
 }
-
 function Validate(Opcion){
 	var width = screen.availWidth;
     var height = screen.availHeight
@@ -278,16 +225,20 @@ function Validate(Opcion){
 	msg=""
 	fdt_tag=""
 	mainentry=0
+	displayTag=" <?php echo $msgstr["tag"]?>"+": "
+	displayRow=" <?php echo $msgstr["fdtrow"]?>"+": "
 
 	for (i=0;i<rows;i++){
 		irow=i+1
 		fila=""
+		in_type=""
 		pl_type=""
 		pl_name=""
 		pl_prefix=""
 		pl_format=""
 		pl_display=""
 		cell=""
+		displayRowfull=displayRow+irow
 
 		for (j=1;j<cols;j++){   // Se verifica que la línea no esté en blanco
 			cell=""
@@ -301,13 +252,14 @@ function Validate(Opcion){
         Leader=""
 		if (Trim(fila)!=""){
 			msgwin.document.writeln("<tr><td>"+irow+"</td>")
+			cell_colums=""
+			cell_rows=""
 			for (j=1;j<cols;j++){
-				if (j!=14){
-
+				if (j!=14){// why this exception?
         			cell=Trim(mygrid.cells2(i,j).getValue())
                 	if (cell=="undefined") cell=""
 					switch (j){
-						case 1:
+						case 1: // Record Type. Shown as "type name(shortcut)"
 							cell_type=cell
 							if (cell!=""){
 								cell=field_type[cell]
@@ -316,17 +268,17 @@ function Validate(Opcion){
                             if (cell_type=="LDR") Leader="S"
 
 							break
-						case 2:
+						case 2: // Tag
 							cell_tag=cell
-                            if (cell!="")tag_subc=cell
+                            displayTagfull=displayTag+cell_tag+" &rarr; "
 							break
-						case 3:
+						case 3: // Titel/description
 							cell_desc=cell
 							break
-						case 4:
+						case 4:	// Principle entry
 							cell_index=cell
 							if (cell==1) mainentry++
-						case 5:
+						case 5:	// Repeatable
 							if (cell!=""){
 								if (cell==1)
 									cell="true"
@@ -334,37 +286,50 @@ function Validate(Opcion){
 									cell=""
 							}
 							break
-						case 6:
+						case 6:	//Subfields
 							cell_subc=cell
 							break
-						case 7:
+						case 7:	//Preliterals
 							cell_delim=cell
 							break
-						case 8:
-							if (cell!="") cell=input_type[cell]
+						case 8: // Entry type/Input type
+							in_type=cell
+							displayIn_type=""
+							if (cell!=""){
+								cell=input_type[cell]
+                               	cell=cell+" ("+in_type+")"
+								displayIn_type=cell+" &rarr; "
+                            }
 							break
-						case 11:
+						case 9: //rows
+							cell_rows=cell
+							break
+						case 10:	// columns
+							cell_columns=cell
+							break
+						case 11:	// Picklist type
 							if (Trim(cell)!="") {
 								pl_type=cell
 								cell=pick_type[cell]
       						}
 							break
-						case 12:
+						case 12:	// Picklist name
 							pl_name=cell
 							break
-						case 13:
+						case 13:	// Picklist prefix
 							pl_prefix=cell
 							break
-						case 15:
+							// case 14 is excluded from the loop
+						case 15:	// Display format(PFT)
 							pl_format=cell
 							break
-						case 16:
+						case 16:	// Display as
 							pl_display=cell
 							break;
-       					case 17:
+       					case 17:	// Extract as
        						cell=""
              				break
-                 		case 18:
+                 		case 18:	//Help
                  			if (cell!=""){
 								if (cell==1)
 									cell="true"
@@ -372,10 +337,10 @@ function Validate(Opcion){
 									cell=""
 							}
 							break
-						case 19:
+						case 19:	// Help URL
 							url_help=cell
 							break;
-						case 20:
+						case 20:	// Link FDT
                  			if (cell!=""){
 								if (cell==1)
 									cell="true"
@@ -383,7 +348,7 @@ function Validate(Opcion){
 									cell=""
 							}
 							break
-						case 21:
+						case 21:	// Req?
                  			if (cell!=""){
 								if (cell==1)
 									cell="true"
@@ -391,44 +356,46 @@ function Validate(Opcion){
 									cell=""
 							}
 							break
-						case 22:
+						case 22:	// Field validation (is a picklist)
 							if (cell!=""){
 								cell=validation[cell]
                                	cell=cell+" ("+cell_type+")"
                             }
                             break
-        				case 23:
+        				case 23:	// Validation pattern
 							cell_pattern=cell
 							break
 					}
+					// Display the cell
 					msgwin.document.write("<td bgcolor=white>"+ cell+"&nbsp;</td>")
 				}
-			}
+			} // end of loop over columns in the current row
+			// Check of all entries in the current row that require checking
 			if (cell_type!="L" && cell_type!="MF" && cell_type!="LDR"){       //Todos los campos deben poseer descripcion menos el tipo L y el tipo MF
 				if (cell_desc==""){
-					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["misdesc"]?>"+"<br>"
+					msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["misfdttitle"]?>"+"<br>"
 				}
 			}
 			if (cell_type=="H" || cell_type=="L" ||cell_type=="S"  || cell_type=="LDR"){  //Estos campos no requieren tag
 				if (cell_tag!="" && cell_tag<1){
-					msg+="row: "+irow+" Tag: "+cell_tag+" <?php echo $msgstr["tagnoreq"]?>"+" "+cell_type+"<br>"
+					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["tagnoreq"]?>"+" "+cell_type+"<br>"
 				}
 			}else{
 				if (cell_tag==""){
-					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["tagreq"]?>"+" ** "+cell_type+"<br>"
+					msg+=displayRowfull+" &rarr; <?php echo $msgstr["tagreq"]?>"+" '"+cell_type+"'<br>"
 				}
 				if (cell_tag!="") {
 					if (IsNumeric(cell_tag)==false){
-						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
+						msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["invtag"]?>"+"<br>"
 					} else {
                         tt= parseInt(cell_tag )
                         if (tt<1 || tt>999){
-                            msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["invtag"]?>"+"<br>"
+                            msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["invtag"]?>"+"<br>"
                         }
                         if (fdt_tag.indexOf("|"+tt+"|")==-1){
                             fdt_tag+="|"+tt+"|"
                         }else{
-                            msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["duptag"]?>"+"<br>"
+                            msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["duptag"]?>"+"<br>"
                         }
                     }
               	}
@@ -445,18 +412,18 @@ function Validate(Opcion){
 					}
 				}
 				if (res==false){
-					msg+="row: "+irow+" Tag: "+cell_tag +" <?php echo $msgstr["sfgroup"]?>"+"<br>"
+					msg+=displayRowfull+displayTagfull +" <?php echo $msgstr["sfgroup"]?>"+"<br>"
 				}
 			}
 			if (cell_type=="T"){
 				tag_subc=cell_tag
 				if (cell_subc==""){
-					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["missubf"]?>"+"<br>"
+					msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["missubf"]?>"+"<br>"
 				}else{
 					ix=i+1
 					type=mygrid.cells2(ix,1).getValue()
 					if (type!="S" && FDT=="S" ){
-						msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["missubfge"]?>"+"<br>"
+						msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["missubfge"]?>"+"<br>"
 					}
 				}
 				ixsc=0
@@ -472,31 +439,31 @@ function Validate(Opcion){
 
  				if (nsc!=ixsc){
  					//alert(nsc+"  "+ixsc)
-					msg+="row: "+irow+" Tag: "+cell_tag+" <?php echo $msgstr["sfcounterr"]?>" +"<br>"
+					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["sfcounterr"]?>" +"<br>"
 				}
 			}
 		    switch (pl_type){   // se valida la consistencia de los datos del picklist asignado al campo
 				case "XT":
-					msg+="row: "+irow+" Tag: "+tag_subc+" <?php echo $msgstr["notimplemented"]?>"+"<br>"
+					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["notimplemented"]?>"+"<br>"
 					break
 				case "D":
 				case "T":
 					if (pl_type=="T" && pl_format=="" && pl_display=="" && pl_prefix=="")
 						break
 					if (pl_format==""){
-						msg+="row: "+irow+" Tag: "+tag_subc+" <?php echo $msgstr["misextformat"]?>"+"<br>"
+						msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["misextformat"]?>"+"<br>"
 					}
 					if (pl_display=="" && pl_format==""){
-						msg+="row: "+irow+" Tag: "+tag_subc+" <?php echo $msgstr["misdispformat"]?>"+"<br>"
+						msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["misdispformat"]?>"+"<br>"
 					}
 					i_type=Trim(mygrid.cells2(i,8).getValue())
 					if (i_type!="X"  && i_type!="RO" && i_type!="TB" && i_type!="COMBO" && i_type!="COMBORO" && i_type!="SRO" && i_type !="MRO"){
-						msg+="row: "+irow+" Tag: "+tag_subc+" <?php echo $msgstr["invinputype"]?>"+"<br>"
+						msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["invinputype"]?>"+"<br>"
 					}
 					break;
 				case "P":
 					if (pl_name==""){
-						msg+="row: "+irow+" Tag: "+tag_subc+" <?php echo $msgstr["insplname"]?>"+"<br>"
+						msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["insplname"]?>"+"<br>"
 					}
 					i_type=Trim(mygrid.cells2(i,8).getValue())
 					if (i_type !="C" && i_type!="R" &&  i_type!="COMBO" && i_type!="COMBORO" && i_type!="S" && i_type!="SRO" && i_type!="M" && i_type!="MRO")
@@ -507,17 +474,32 @@ function Validate(Opcion){
 		i_type=Trim(mygrid.cells2(i,8).getValue())
 		if (i_type=="C" || i_type=="R" || i_type=="COMBO" || i_type=="COMBORO" || i_type=="SRO" || i_type =="MRO" ||i_type=="S" || i_type=="M"){
 			if (pl_type=="")
-				msg+="row: "+irow+" Tag: "+tag_subc+" <?php echo $msgstr["picklist"]. " ".$msgstr["missing"]?>"+"<br>"
+				msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["picklist"]. " ".$msgstr["missing"]?>"+"<br>"
 		}
-	}
+		// Check the value of "rows"
+		if (in_type=="OD"){
+			if (cell_rows=="" || IsNumeric(cell_rows)==false || Number(cell_rows)<=0){
+				msg+=displayRowfull+displayTagfull+displayIn_type+ " <?php echo $msgstr["fdterr_int_req_od"]?>"+"<br>"
+			}
+		} else if (in_type=="A" || in_type=="M" || in_type=="T" || in_type=="X") {
+			if (cell_rows!="" && (IsNumeric(cell_rows)==false || Number(cell_rows)<0)){
+				// This requires further investigation. There exists FDT's with value 1.5 and possibly 1/5
+				msg+=displayRowfull+displayTagfull+displayIn_type+ " <?php echo $msgstr["fdterr_noint"]?>"+"<br>"
+			}
+		}
+
+	} // end loop over Rows
+	
 	msgwin.document.writeln("</table>")
 	if (mainentry>1){
 		msg+="<?php echo $msgstr["errmainentry"]?>"
 	}
+	
+	// Display the error messages or "no errors"
 	if (msg!=""){
-		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>nbsp; &nbsp;')
+		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>&nbsp; &nbsp;')
     	msgwin.document.writeln('<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank>edit help file</a>')
-		msgwin.document.writeln("<p>"+msg)
+		msgwin.document.writeln("<p style='color:red'>"+msg)
 		msgwin.focus()
 	}else{
 		msgwin.document.writeln("<p><?php echo $msgstr["noerrors"]?>")
@@ -538,7 +520,6 @@ function Validate(Opcion){
 	msgwin.document.close()
 	msgwin.focus()
 }
-
 function List(){
 	var width = screen.availWidth;
     var height = screen.availHeight
@@ -623,7 +604,6 @@ function List(){
 	msgwin.focus()
 	return
 }
-
 function Enviar(){
 	ret=Validate("Actualizar")
 	if (ret){
@@ -635,43 +615,6 @@ function Enviar(){
 		document.forma1.target="";
 		Actualizar()
 	}
-}
-
-function doBeforeRowDeleted(rowId){
-	VC=""
-	for (j=0;j<3;j++){
-		cell=mygrid.cells(rowId,j).getValue()
-		VC=VC+cell
-	}
-	if (VC=="")
-		return true
-	else
-		return confirm("Are you sure you want to delete row");
-}
-
-function doOnRowSelected(id){
-}
-
-function doOnCellEdit(stage,rowId,cellInd){
-    if (stage==2){
-		if (cellInd==11){
-			cell=mygrid.cells(rowId,11).getValue()
-			if (Trim(cell)==""){
-				mygrid.cells2(i,11).setValue("")
-				mygrid.cells2(i,12).setValue("")
-				mygrid.cells2(i,13).setValue("")
-				mygrid.cells2(i,14).setValue("")
-				mygrid.cells2(i,15).setValue("")
-			}else{
-				tag=mygrid.cells(rowId,1).getValue()
-				tag+=".tab"
-				i=mygrid.getRowIndex(rowId)
-                url="<a href=javascript:Picklist('"+tag+"',i)><font size=1>browse</a>"
-                mygrid.cells2(i,14).setValue(url)
-			}
-		}
-	}
-	return true
 }
 </script>
 
@@ -697,7 +640,6 @@ if (isset($arrHttp["encabezado"])){
 			for ($i=0;$i<20;$i++){
 				$fp[$i]='|||||||||||||||||||||||';
 			}
-			$tope=23;
 
       	}else{
 			$fp=explode("\n",$_SESSION["FDT"]);
@@ -743,10 +685,8 @@ if (isset($arrHttp["encabezado"])){
 
 	echo "</div><div class=\"actions\">";
 	if (!isset($arrHttp["moodle"])){
-
 		if ($arrHttp["Opcion"]=="new"){
 			if (isset($arrHttp["encabezado"])){
-
 				$backtoscript = "../common/inicio.php?reinicio=s";
 				include "../common/inc_back.php";
 			}else{
@@ -759,58 +699,45 @@ if (isset($arrHttp["encabezado"])){
 			} else {
 				$encabezado="";
 			}
-
 			if (isset($arrHttp["Fixed_field"])){
-
 				$backtoscript = "fixed_marc.php?base=". $arrHttp["base"].$encabezado;
 				include "../common/inc_back.php";
-
 			} else {
-				if (!isset($arrHttp["ventana"])) {
-				
-				$backtoscript = "menu_modificardb.php?base=". $arrHttp["base"].$encabezado;
-				include "../common/inc_back.php";
-
+				if (!isset($arrHttp["ventana"])) {	
+					$backtoscript = "menu_modificardb.php?base=". $arrHttp["base"].$encabezado;
+					include "../common/inc_back.php";
 				} else { 
-
-				$backtoscript = "javascript:self.close()";
-				include "../common/inc_back.php";
-
+					$backtoscript = "javascript:self.close()";
+					include "../common/inc_back.php";
+				}
 			}
 		}
-
-	}
-
-}//isset($arrHttp["moodle"]
+		include "../common/inc_home.php";
+	}//isset($arrHttp["moodle"]
 		?>
 				</div>
 				<div class="spacer">&#160;</div>
 		</div>
 
-
 <?php 
 $ayuda = "fdt.html";
 include "../common/inc_div-helper.php";
 ?>
-
 <div class="middle form">
 		<div class="formContent">
 			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
 			<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-			<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
+			<a class="bt bt-red" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a>
 			<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span>
 	
 <div class="row">
 <table  style="width:100%; height:300px;" id="tblToGrid" class="dhtmlxGrid">
 <?php
 echo "<tr>";
-$tope=0;
 foreach ($rows_title as $cell){
-	echo "<td>$cell</td>\n";
-	$tope=$tope+1;
+	echo "<td>".$cell."</td>\n";
 }
 echo "</tr>";
-
 
 $nfilas=0;
 $i=-1;
@@ -881,7 +808,6 @@ if (isset($fp)){
                    		echo $fila;
                    		$FT[$i]=$fila;
                    		break;
-
                    	case 3:
                    		echo "<td $align type=\"ch\">";
                    		echo $fila;
@@ -938,11 +864,13 @@ if (isset($fp)){
 		}
 	}
 }
-
 ?>
-
 	</table>
-</div>		
+</div>
+<?php
+// Error message if no file found. Happens only in erroneous situations but saves a lot of investigations.
+if (!isset($fp)) echo "<p style='color:red'>".$msgstr["file"].": ".$archivo." &rarr; ".$msgstr["ne"]."</p>";
+?>		
 	<a class="bt bt-blue" href=javascript:Test()><?php echo $msgstr["test"]?></a>
 	<a class="bt bt-blue" href=javascript:List()><?php echo $msgstr["list"]?></a>
 	<a class="bt bt-blue" href=javascript:Validate()><?php echo $msgstr["validate"]?></a>
@@ -952,27 +880,24 @@ if (isset($fp)){
 
 <script>
 	var mygrid = new dhtmlXGridFromTable('tblToGrid');
-	mygrid.setImagePath("../dataentry/js/dhtml_grid/imgs/");
+	mygrid.setImagePath("/assets/images/dhtml_grid/imgs/");
 	mygrid.setColTypes("link,coro,ed,ed,ch,ch,ed,ed,coro,ed,ed,coro,ed,ed,link,ed,ed,edtxt,ch,ed,ch,ch,coro,ed");
 	mygrid.getCombo(11).put("","");
 	mygrid.getCombo(1).put("","");
 	mygrid.getCombo(8).put("","");
 	mygrid.getCombo(22).put("","");
 	mygrid.enableResizing("true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true");
-<?php foreach ($field_type as $key=>$value) echo "mygrid.getCombo(1).put(\"".$key."\",\"".$value."\")\n";
-  foreach ($input_type as $key=>$value) echo "mygrid.getCombo(8).put(\"".$key."\",\"".$value."\")\n";
-  foreach ($pick_type as $key=>$value) echo "mygrid.getCombo(11).put(\"".$key."\",\"".$value."\")\n";
-  foreach ($validation as $key=>$value) echo "mygrid.getCombo(22).put(\"".$key."\",\"".$value."\")\n";
+	<?php
+	foreach ($field_type as $key=>$value) echo "mygrid.getCombo(1).put(\"".$key."\",\"".$value."\")\n";
+	foreach ($input_type as $key=>$value) echo "mygrid.getCombo(8).put(\"".$key."\",\"".$value."\")\n";
+	foreach ($pick_type as $key=>$value) echo "mygrid.getCombo(11).put(\"".$key."\",\"".$value."\")\n";
+	foreach ($validation as $key=>$value) echo "mygrid.getCombo(22).put(\"".$key."\",\"".$value."\")\n";
   	if (!isset($arrHttp["encabezado"]))
     	echo  "mygrid.enableAutoHeigth(true,270)\n";
     else
         echo  "mygrid.enableAutoHeigth(true,300)\n";
-?>
 
-
-    <?php
-
-     for ($ix=0;$ix<$nfilas;$ix++){
+    for ($ix=0;$ix<$nfilas;$ix++){
     	if (isset($FT[$ix])) echo "mygrid.cells2($ix,1).setValue('".$FT[$ix]."')\n";
 
     	if (isset($IN[$ix]))
@@ -1004,45 +929,37 @@ if (isset($fp)){
     		echo "mygrid.cells2($ix,22).setValue('".$VAL[$ix]."')\n";
     	else
     		echo "mygrid.cells2($ix,22).setValue('0')\n";
-    }?>
-    i=<?php echo $nfilas."\n"?>
-    tope=10
-	i++
-	/*for (j=i;j<i+tope;j++){
-		linkr="<a href=javascript:EditarFila("+j+",i)><font size=1>"+j+"</a>";
-		mygrid.addRow((new Date()).valueOf(),[linkr,'','','','','','','','','','','','','','','','','','','','','',''],j)
-	}*/
+    }
+	?>
 	mygrid.clearSelection()
     mygrid.setSizes();
-    mygrid.setColWidth(1,60)
-    mygrid.setColWidth(8,80)
 	mygrid.enableResizing("true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true");
-    mygrid.attachHeader("#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,<?php echo $msgstr["dataentry"]?>,#cspan,#cspan,<?php echo $msgstr["picklist"]?>,#cspan,#cspan,#cspan,#cspan,#cspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
+    mygrid.attachHeader("#rspan,<?php echo $msgstr["field_prop"]?>,#cspan,#cspan,#cspan,#cspan,#cspan,#rspan,<?php echo $msgstr["dataentry"]?>,#cspan,#cspan,<?php echo $msgstr["picklist"]?>,#cspan,#cspan,#cspan,#cspan,#cspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
 	mygrid.enableColumnAutoSize(true)
-	mygrid.setColWidth(0,25)
-	mygrid.setColWidth(1,80)
-	mygrid.setColWidth(2,30)
-	mygrid.setColWidth(3,150)
-	mygrid.setColWidth(4,23)
-	mygrid.setColWidth(5,23)
-	mygrid.setColWidth(6,60)
-	mygrid.setColWidth(7,5)    //columnas a eliminar
-    mygrid.setColWidth(8,80)
-    mygrid.setColWidth(9,25)
-    mygrid.setColWidth(10,25)
-    mygrid.setColWidth(11,50)
-    mygrid.setColWidth(12,70)
-    mygrid.setColWidth(13,40)
-    mygrid.setColWidth(19,80)
-    mygrid.setColWidth(20,25)
-    mygrid.setColWidth(22,110)
-    mygrid.setColWidth(23,90)
-    //mygrid.setColAlign("left,left,left,left,center,center,left,left,left,left,left,left,left,left,left,left,left,left,center,left,center,center,left,left")
-	//mygrid.enableLightMouseNavigation(true);
-	//mygrid.enableMultiselect(true);
- 	mygrid.setColSorting("")
- 	//mygrid.enableAutoWidth(true);
+	mygrid.setColWidth(0,35)	//fdt row
+	mygrid.setColWidth(1,80)	//type
+	mygrid.setColWidth(2,35)	//tag
+	mygrid.setColWidth(3,150)	//title
+	mygrid.setColWidth(4,23)	//i:principal entry
+	mygrid.setColWidth(5,23)	//repetible
+	mygrid.setColWidth(6,60)	//subfields
+	mygrid.setColWidth(7,2)    	//columnas a eliminar
+    mygrid.setColWidth(8,120)	//input type
+    mygrid.setColWidth(9,40)	//rows
+    mygrid.setColWidth(10,35)	//cols
+    mygrid.setColWidth(11,50)	//type
+    mygrid.setColWidth(12,70)	//Name
+    mygrid.setColWidth(13,45)	//prefix
 
+	mygrid.setColWidth(18,45)	//help
+    mygrid.setColWidth(19,80)	//help URL
+    mygrid.setColWidth(20,45)	//link fdt
+    mygrid.setColWidth(21,45)	//req?
+    mygrid.setColWidth(22,110)	//field validation
+    mygrid.setColWidth(23,90)	//pattern
+    //mygrid.setColAlign("left,left,left,center,center,center,left,left,left,left,left,left,left,left,left,left,left,left,center,left,center,center,left,left")
+ 	mygrid.setColSorting("")
+ 	//mygrid.enableAutoWidth(true);  // do not set: scroll bar disappears
 
 </script>
 <br><br>

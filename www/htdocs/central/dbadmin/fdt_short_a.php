@@ -2,6 +2,7 @@
 /* Modifications
 2021-02-08 fho4abcd Remove code in comment & languaje->language
 2021-02-09 fho4abcd Original name for dhtmlX.js
+2024-04-01 fho4abcd minimal changes to keep dmhtmlxgrid working
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -28,10 +29,10 @@ if (!isset($arrHttp["Subc"])){
 	include("fdt_include.php");
 	include("../common/header.php");
 ?>
-	<link rel="STYLESHEET" type="text/css" href="../dataentry/js/dhtml_grid/dhtmlXGrid.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/dhtmlXGrid.css">
 
-	<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
- 	<script  src="../dataentry/js/lr_trim.js"></script>
+<script  src="../dataentry/js/dhtml_grid/dhtmlX.js"></script>
+<script  src="../dataentry/js/lr_trim.js"></script>
 
 	<script language=javascript>
 	field_type=Array()
@@ -435,7 +436,7 @@ function Validate(Opcion){
 			}
 			if (cell_type!="L" && cell_type!="MF" && cell_type!="LDR"){       //Todos los campos deben poseer descripcion menos el tipo L y el tipo MF
 				if (cell_desc==""){
-					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["misdesc"]?>"+"<br>"
+					msg+="row: "+irow+" Tag: "+cell_tag + " <?php echo $msgstr["misfdttitle"]?>"+"<br>"
 				}
 			}
 			if (cell_type=="H" || cell_type=="L" ||cell_type=="S"  || cell_type=="LDR"){  //Estos campos no requieren tag
@@ -983,7 +984,7 @@ if (!isset($arrHttp["Subc"])){
 
 <script>
 var mygrid = new dhtmlXGridFromTable('tblToGrid');
-	mygrid.setImagePath("../dataentry/js/dhtml_grid/imgs/");
+	mygrid.setImagePath("/assets/images/dhtml_grid/imgs/");
 	mygrid.setColAlign("left,left,left,left,center,center,left,left,left,left,left,left,left,left,left,left,left,left,center,left,center,center,left,left")
 	mygrid.setColTypes("link,coro,ed,ed,ch,ch,ed,ed,coro,ed,ed,coro,ed,ed,link,ed,ed,ed,ch,ed,ch,ch,coro,ed");
 	mygrid.getCombo(11).put("","");

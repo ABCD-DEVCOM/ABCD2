@@ -1,11 +1,11 @@
 <?php
 /*
 20211225 rogercgui include input type number
-
+20240327 fho4abcd Update some translations
 */
 
 	$rows_title=array();
-	$rows_title[0]=$msgstr["row"];
+	$rows_title[0]=$msgstr["fdtrow"];
 	$rows_title[1]=$msgstr["type"];
 	$rows_title[2]=$msgstr["tag"];
 	$rows_title[3]=$msgstr["title"];
@@ -19,7 +19,7 @@
 	$rows_title[11]=$msgstr["type"];
 	$rows_title[12]=$msgstr["name"];
 	$rows_title[13]=$msgstr["prefix"];
-	$rows_title[14]="browse";
+	$rows_title[14]=$msgstr["picklist_detail"];
 	$rows_title[15]=$msgstr["listas"];
 	$rows_title[16]=$msgstr["extractas"];
 	$rows_title[17]=$msgstr["valdef"];
