@@ -11,6 +11,7 @@
 2023-01-27 fho4abcd Layout improvements+more titles. Moved code for field dropdown to inline
 2023-01-29 fho4abcd quick fix to make browse by menu work again
 2023-02-03 fho4abcd Improve browse by, add code for selected records
+2024-04-02 fho4abcd More translations, layout
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -180,15 +181,18 @@ function GenerarWks(){
         <td class="ph-10">
         <!-- goto record -->
         <label><?php echo $msgstr["m_ir"]?></label>
-        <input type=text  name=ir_a size=15 value='' title='Enter record number' onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
+        <input type=text  name=ir_a size=15 value=''
+			title='<?php echo $msgstr["m_typerecno"]." &rarr; ".$msgstr["src_enter"]?>'
+			onfocus="FocoEn('ira')" onClick="javascript:this.value=''" >
+		<td class="ph-10">
         <!-- quick search -->
-        &nbsp; &nbsp;
-        <label><?php echo $msgstr["buscar"]?></label><?php
+		<?php
         // Create the label + dropdown + icon for the quick serach
         if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab")){
             $fpb=file($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/camposbusqueda.tab");
             ?>
-            <select name=blibre onchange="document.forma1.busqueda_palabras.value=''" title='<?php echo $msgstr["selcampob"];?>'>
+			<label for="blibre"><?php echo $msgstr["m_searchby"]?></label>
+            <select id=blibre name=blibre onchange="document.forma1.busqueda_palabras.value=''" title='<?php echo $msgstr["selcampob"];?>'>
             <?php
             foreach ($fpb as $value){
                 if (trim($value)!=""){
@@ -203,7 +207,6 @@ function GenerarWks(){
                                 $y[2].='W';
                             break;
                         }
-
                     }
                     ?>
                     <option value="<?php echo trim($y[2])?>" ><?php echo trim($y[0]);?></option>
@@ -213,15 +216,16 @@ function GenerarWks(){
             unset($fpb);
             ?>
             </select>
-            <a class='btn-toolbar-blue' href=javascript:Diccionario()>
+            <a class='btn-toolbar-blue' href="javascript:Diccionario()">
                 <i class='fab fa-searchengin' title="<?php echo $msgstr["m_quicksrcwith"]?>"></i>
             </a>
+			<input style="width:30%" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''
+				title="<?php echo $msgstr["m_enterterms"];?>">
             <?php
         }
         ?>
-        <input style="width:25%;" type="text"  name="busqueda_palabras" onfocus="FocoEn('blibre')" value=''
-            title="<?php echo $msgstr["m_enterterms"];?>">
-
+		</td>
+		<td class="ph-10">
         <div class="GenerarWks">	
             <label><?php echo $msgstr["displaypft"]?> </label>
             <select name=formato onChange="Javascript:GenerarDespliegue()">
@@ -240,7 +244,7 @@ function GenerarWks(){
         </td>
     </tr>
     <tr><!-- row and cell with toolbar object + worksheet select-->
-        <td class="ph-10">
+        <td class="ph-10" colspan=3>
             <div id="toolbarBox" style="position:relative"></div>
             <div class="GenerarWks">
                 <label><?php echo $msgstr["fmt"]?> </label>

@@ -1,4 +1,7 @@
 <?php
+/* Modifications
+2024-04-04 fho4abcd button from assets
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -213,7 +216,7 @@ echo "function AbrirIndice(Termino){\n";
 	<br><img src=../dataentry/img/toolbarSearch.png><a href=index.php?base=<?php echo $arrHttp["base"]?>><strong><?php echo $msgstr["tes_alphabetic"]?></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"]?>><?php echo $msgstr["tes_permuted"]?></a></strong><br>
 	<table cellpadding=0 cellspacing=0 border=0 width=100%  height=20% bgcolor=#4E617C>
 		<td valign=top width=100%><a href=Javascript:Continuar() class="defaultButton backButton">
-		<img src="img/arrowRightTwo.png" alt="" title="" />
+		<img src="/assets/images/arrowRightTwo.png" alt="" title="" />
 					<span><strong><?php echo $msgstr["masterm"]?></strong></span></a>
 	    &nbsp;  &nbsp;
 		<?php echo $msgstr["avanzara"]?> &nbsp;<input type=text name=ira size=15 value="" onKeyPress="codes(event)" > &nbsp;<a href=Javascript:IrA()><span><strong><?php echo $msgstr["continuar"]?></strong></span></a></td>

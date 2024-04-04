@@ -2,6 +2,7 @@
 /*
 20220207 fho4abcd improve html, remove old style buttons for default settings
 20240129 fho4abcd improve html: end tags
+20240403 fho4abcd New button for copy from other database
 */
 include("scripts_dataentry.php");
 include("toolbar_record.php");
@@ -72,7 +73,15 @@ if (!isset($fmt_test) and !isset($default_values)) {  //Para indicar que se esta
 			<tr>
 		<?php
 		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
-            echo "<td align=center bgcolor=white ><a href=\"javascript:CapturarRegistro()\"><img src=img/capturar.gif border=0 alt=\"".$msgstr["m_capturar"]."\"></a></td>\n";
+			?>
+            <td align=center bgcolor=white >
+				<a class='bt-lg bt-green' href="javascript:CapturarRegistro()">
+					<img src="../../assets/svg/catalog/ic_fluent_document_copy_24_regular.svg"
+					border=0 title="<?php echo $msgstr["m_capturar_cur"]?>">
+					<?php echo $msgstr["m_capturar_cur"]?>
+				</a>
+			</td>
+			<?php
 		}else{
 
 			if (!isset($arrHttp["encabezado"])){
