@@ -12,6 +12,7 @@
 2023-01-22 fho4abcd Improved height of iframe main. Moved css of iframes to css file
 2023-02-03 fho4abcd Make selected records work, sort selected records. Enter record number works now also for search and selected records
 2024-01-29 fho4abcd Correct typo in iframe
+2024-04-03 fho4abcd Larger window for thesaurus
 */
 //error_reporting(E_ALL);
 session_start();
@@ -212,7 +213,7 @@ if (isset($tacq)){
 
 function Tesaurus(){
 	left=screen.width-450
-  	msgwintesau=window.open("../tesaurus/index.php?base="+base,"tesaurus","width=450,height=600, top=0,left="+left+" menubar=yes, scrollbars=yes, resizable=yes")
+  	msgwintesau=window.open("../tesaurus/index.php?base="+base,"tesaurus","width=450,height=650, top=0,left="+left+" menubar=yes, scrollbars=yes, resizable=yes")
   	msgwintesau.document.close()
   	msgwintesau.focus()
 }

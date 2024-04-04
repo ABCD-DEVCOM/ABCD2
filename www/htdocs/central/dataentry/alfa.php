@@ -5,6 +5,8 @@
 20220114 fho4abcd Reshuffle code to enable visible output. Replace ifp.xis by ifp_slashm.xis:output if indexed with slashm
                   Don't make entries unique(they are unique)+Use correct prefix in case of copy
 20220711 fho4abcd Use $actparfolder as location for .par files
+20240403 fho4abcd Removed onblur:replaced by close button in standard mode
+20240403 fho4abcd Improved help& layout in copy from other database mode
 */
 /*
 ** Functionality:
@@ -55,7 +57,7 @@ $fdtfulldef=$db_path.$base."/def/".$lang_db."/".$base.".fdt";
 if (file_exists($fdtfull))
     $fp=file($fdtfull);
 else
-    $fp=file(fdtfulldef);
+    $fp=file($fdtfulldef);
 /*
 ** Read the fdt file and determine if there is "principal entry" (field 3 = 1)
 */
@@ -81,21 +83,35 @@ foreach($fp as $value) {
 }
 
 ?>
-<body onblur=self.close()>
+<body>
 <div class="sectionInfo">
-    <div class="breadcrumb">
-        <?php echo $msgstr["indicede"].": ".$fdtfieldname." &nbsp;(".urldecode($pref).")"?>
+    <div class="breadcrumb" style="width:auto">
+		<?php
+        echo $msgstr["indicede"].": ".$fdtfieldname." &nbsp;(".urldecode($pref).")";
+		?>
     </div>
-    <div class="actions">
+    <div class="actions" style="width:auto">
+		<?php
+		if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
+			$inframe=true;
+			$smallbutton=true;
+			include "../common/inc_close.php";
+		} else {
+			$smallbutton=true;
+			include "../common/inc_close.php";
+		}
+		?>
     </div>
 <div class="spacer">&#160;</div>
 </div>
 <?php
+if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
+	$ayuda="ayuda_captura.html";
+}
 include "../common/inc_div-helper.php";
 ?>
 <div class="middle form">
 <div class="formContent">
-
 <?php
 //foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
 
@@ -286,6 +302,9 @@ function AbrirIndice(Termino){
 ** si viene de la opción de capturar de otra base de datos se presenta la lista de bases de datos disponibles
 */
 if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
+	?>
+	<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['m_capturar']?></span>
+	<?php
     $key_bd="";
     if (isset($base)) $key_bd=$base;
     $prefijo="";
@@ -323,17 +342,6 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
             }
             ?>
             </select>
-        </td>
-        <td>
-        <a href='../documentacion/ayuda.php?help=<?php echo $lang?>/ayuda_captura.html' target=_blank><?php echo $msgstr["help"]?></a>
-        <?php
-        if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) {
-            ?>
-            <br>
-            <a href='../documentacion/edit.php?archivo=".$lang."/ayuda_captura.html' target=_blank><?php echo $msgstr["edhlp"]?></a>
-            <?php
-        }
-        ?>
         </td>
     </tr>
     <?php

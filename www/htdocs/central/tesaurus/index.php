@@ -1,6 +1,7 @@
 <?php
 /* Modifications
 2022-11-02 fho4abcd actparfolder
+2024-04-03 fho4abcd Use breadcrumb and div-helper, sanitize
 */
 session_start();
 
@@ -47,14 +48,14 @@ if ($actparfolder!="par/") $actparfolder="$tesaurus/";
 $query ="&base=$tesaurus&cipar=$db_path".$actparfolder.$tesaurus.".par&Opcion=autoridades&prefijo=$prefijo&pref=$pref&formato_e=".urlencode($Formato);
 include("../common/wxis_llamar.php");
 $contenido = array_unique ($contenido);
-$subtitle= " Tesaurus";
-//echo $Formato;
 //foreach ($contenido as $var=>$value) echo "$var=$value<br>";die;
 include("../common/header.php");
-
-echo "<script language=\"JavaScript\" type=\"text/javascript\" src=../dataentry/js/lr_trim.js></script>\n";
+?>
+<body>
+<script src="../dataentry/js/lr_trim.js"></script>
+<script>
+<?php
 echo "
-		<script languaje=Javascript>
 		document.onkeypress =
   			function (evt) {
     			var c = document.layers ? evt.which
@@ -143,24 +144,42 @@ echo "function AbrirIndice(Termino){\n";
 		if (Tag!=\"\") URL+='&Tag='+Tag
 		self.location.href=URL
 	}
-
-</script>\n";
+";
 ?>
-	<body>
- <div class="middle form">
-			<div class="formContent">
-	<?php
-		echo "<h3>Tesaurus ($tesaurus)</h3>\n";
-	echo "<font color=#000000>&nbsp; &nbsp; <a href='http://abcdwiki.net/wiki/es/index.php?title=Tesauros' target=_blank>abcdwiki.net</a>";
-	echo "<font color=#000000>&nbsp; &nbsp; Script: tesaurus/index.php" ?>
-</font>
+</script>
+<div class="sectionInfo">
+    <div class="breadcrumb" style="width:auto">
+		<?php
+        echo $msgstr["m_tesaurus"]." (".$tesaurus.")";
+		?>
+    </div>
+    <div class="actions" style="width:auto">
+		<?php
+		$smallbutton=true;
+		include "../common/inc_close.php";
+		?>
+    </div>
+<div class="spacer">&#160;</div>
+</div>
+<?php
+include "../common/inc_div-helper.php";
+?>
+<div class="middle form">
+<div class="formContent">
 <form method=post name=Lista onSubmit="javascript:return false">
 	<table width=100%  style="background:#EEEEEE">
-		<td width=50% bgcolor=#EEEEEE><font color=#000000><img src=../dataentry/img/toolbarSearch.png> <a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=#000000><?php echo $msgstr["tes_alphabetic"]?></strong></font></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><strong><font color=#000000><?php echo $msgstr["tes_permuted"]?></strong></font></a></td>
-    	<td width=50% align=right><font color=#000000><?php echo $msgstr["tes_helpterm"]?><br><img src=../dataentry/img/ficha.png align=bottom> <input type=checkbox name=ficha> </td>
+	<tr>
+		<td width=50% bgcolor=#EEEEEE>
+			<img src=../dataentry/img/toolbarSearch.png>
+			<a href="index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>"><strong><?php echo $msgstr["tes_alphabetic"]?></strong></a>  &nbsp; &nbsp;
+			<a href="perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>"><strong><?php echo $msgstr["tes_permuted"]?></strong></a>
+		</td>
+    	<td width=50% align=right>
+			<input type=checkbox name=ficha>&nbsp;
+			<?php echo $msgstr["tes_helpterm"]?>
+		</td>
+	</tr>
     </table>
-
-
 
 <?php
 // si viene de la opción de capturar de otra base de datos se presenta la lista de bases de datos disponibles
@@ -180,52 +199,57 @@ if (isset($arrHttp["capturar"]) and $arrHttp["capturar"]=="S"){
 		}
 
 	}
-	echo "<a href=../documentacion/ayuda.php?help=".$_SESSION["lang"]."/ayuda_captura.html target=_blank>".$msgstr["help"]."</a>&nbsp &nbsp;";
-	if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"])) echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/ayuda_captura.html target=_blank>".$msgstr["edhlp"]."</a>";
-	echo "<font color=white>&nbsp; &nbsp; Script: alfa.php</font>";
 }
 	$xwidth="400";
-?>
+	?>
 	<table cellpadding=0 cellspacing=0 border=0  height=80%>
-
-
-	<td  width=5% align=center><font size=1 face="verdana"><?php for ($i=65;$i<91;$i++ ) echo "<a href=javascript:AbrirIndice('".chr($i)."')>".chr($i)."</a><br>"?></td>
+	<tr>
+	<td width=5% align=center style='font-size:10px'>
+		<?php for ($i=65;$i<91;$i++ ) {?>
+		<a href="javascript:AbrirIndice('<?php echo chr($i)?>')"><?php echo chr($i)?></a><br>
+		<?php }	?>
+	</td>
 	<td width=95% valign=top>
-	<Select name=autoridades multiple size=28 style="width:<?php echo $xwidth?>px; xheight=300px" onchange=ObtenerTerminos()>
-<?php
-
-	foreach ($contenido as $linea){		$linea=trim($linea);
-		if (trim($linea)!=""){
-            $l=explode('|',$linea);
-		//	if (substr($i,0,strlen($arrHttp["pref"]))!=$arrHttp["pref"]) break;
-			if (isset($l[1])){				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";				echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
-			}else{
-				echo "<option value=\"".$l[0]."\" title='".$l[0]."' alt='".$l[0]."'>".$l[0];
+	<select name=autoridades size=28 style="width:<?php echo $xwidth?>px; height:400px" onchange=ObtenerTerminos()>
+	<?php
+		foreach ($contenido as $linea){			$linea=trim($linea);
+			if (trim($linea)!=""){
+				$l=explode('|',$linea);
+			//	if (substr($i,0,strlen($arrHttp["pref"]))!=$arrHttp["pref"]) break;
+				if (isset($l[1])){					echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>".$l[0]."\n";					echo "<option value=\"".$l[1]."\" title='".$l[1]."' alt='".$l[1]."'>". " &nbsp; &nbsp; &nbsp;<b>USE:</B> ".$l[1]."\n";
+				}else{
+					echo "<option value=\"".$l[0]."\" title='".$l[0]."' alt='".$l[0]."'>".$l[0];
+				}
 			}
-
-
 		}
-	}
-
-?>
-	</select></td>
-
+	?>
+	</select>
+	</td>
 	</table>
-	<a href=index.php?base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><?php echo $msgstr["tes_alphabetic"]?></a>  &nbsp; &nbsp; <a href=perm.php?perm=Y&base=<?php echo $arrHttp["base"];if ($Tag!="") echo "&Tag=$Tag"?>><?php echo $msgstr["tes_permuted"]?></a><br>
-	<table cellpadding=0 cellspacing=0 border=0 width=100%  height=20% bgcolor=#4E617C>
-		<td valign=top width=100%><a href=Javascript:Continuar() class="defaultButton backButton">
-		<img src="img/arrowRightTwo.png" alt="" title="" />
-					<span><strong><?php echo $msgstr["masterm"]?></strong></span></a>
-	    &nbsp;  &nbsp;
-		<?php echo $msgstr["avanzara"]?> &nbsp;<input type=text name=ira size=15 value="" onKeyPress="codes(event)" > &nbsp;<a href=Javascript:IrA()><span><strong><?php echo $msgstr["continuar"]?></strong></span></a></td>
-	</table>
-	</form>
-	</div>
-	</div>
-	</body>
-	</html>
+	<table cellpadding=0 cellspacing=0 border=0 width=100%  height=20%>
+	<tr>
+    <td>
+        <a href="javascript:AbrirIndice(' ')" class="bt bt-gray" title='<?php echo $msgstr["src_top"]?>'>
+             <i class="fas fa-chevron-circle-up"></i> 
+        </a>
+        <a href="javascript:Continuar()" class="bt bt-gray" title='<?php echo $msgstr["masterms"]?>'>
+             <i class="fas fa-chevron-circle-down"></i>
+        </a>
+        &nbsp;
+        <?php echo $msgstr["avanzara"]?>
+        <input type=text name=ira size=5 value="" onKeyPress="codes(event)" title="<?php echo $msgstr["src_advance"];?>">
+        <a href=Javascript:IrA() class="bt bt-gray" title='<?php echo $msgstr["src_enter"]?>'>
+            <i class="fas fa-angle-right"></i></a>
+    </td>
+</tr>
+</table>
+</form>
+</div>
+</div>
 <form name=show method=post action=show.php>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=termino>
 <?php if (isset($arrHttp["Tag"])) echo "<input type=hidden name=Tag value=".$arrHttp["Tag"].">\n";?>
 </form>
+</body>
+</html>

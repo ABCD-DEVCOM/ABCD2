@@ -8,6 +8,7 @@
 20211222 fho4abcd Correct search after redisplay for next list
 20220116 fho4abcd ifp.xis-> ifp_slashm. other "enter" button
 20220711 fho4abcd Use $actparfolder as location for .par files
+20240402 fho4abcd close button+ message if nothing selected
 */
 // Show the dictionary of terms in the database
 
@@ -20,6 +21,7 @@ include("../common/get_post.php");
 //foreach ($arrHttp as $var => $value)     echo "$var = $value<br>";
 include("../config.php");
 include ("../lang/admin.php");
+include ("../lang/dbadmin.php");
 include ("leerregistroisispft.php");
 
 // ------------------------------------------------------
@@ -31,7 +33,7 @@ $prefijo=$arrHttp["prefijo"];
 
 ?>
 <body>
-<script language=javascript>
+<script>
 function EjecutarBusqueda(desde){
     Opcion="<?php echo $arrHttp["Opcion"]?>"
     switch (desde){
@@ -63,6 +65,10 @@ function EjecutarBusqueda(desde){
                 }
             }
             document.forma1.Expresion.value=TerminosSeleccionados
+			if (TerminosSeleccionados==""){
+				alert(<?php echo '"'.$msgstr["src_noselect"].'"' ?>)
+				break
+			}
             document.forma1.action="buscar.php"
             <?php
             if (isset($arrHttp["Tabla"])){
@@ -135,6 +141,10 @@ function RemoveSpan(id){
         <?php echo $msgstr["indicede"].": ".urldecode($arrHttp["campo"])?>
     </div>
     <div class="actions">
+	<?php
+		$smallbutton=true;
+	    include "../common/inc_close.php";
+	?>
     </div>
 <div class="spacer">&#160;</div>
 </div>
@@ -171,9 +181,13 @@ $showsearch=true;
 if (isset($arrHttp["Target"])) $showsearch=false;// Si existe $arrHttp["Target"] no se realiza la búsqueda directamente
 if (isset($arrHttp["toolbar"])) $showsearch=false;
 if ($showsend or $showsearch) {
-    echo "<div>".$msgstr["selmultiple"]."</div>";
+	?>
+	<span style="color:blue"><i class="fas fa-info-circle"></i> <?php echo $msgstr['selmultiple']?></span><br>
+	<?php
 } else {
-    echo "<div>".$msgstr["src_selterm"]."</div>";
+ 	?>
+	<span style="color:blue"><i class="fas fa-info-circle"></i> <?php echo $msgstr['src_selterm']?></span><br>
+	<?php
 }
 ?>
     <div>
