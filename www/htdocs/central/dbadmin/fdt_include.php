@@ -2,8 +2,8 @@
 /*
 20211225 rogercgui include input type number
 20240327 fho4abcd Update some translations
+20240412 fho4abcd Comment/translations
 */
-
 	$rows_title=array();
 	$rows_title[0]=$msgstr["fdtrow"];
 	$rows_title[1]=$msgstr["type"];
@@ -30,21 +30,15 @@
 	$rows_title[22]=$msgstr["field_validation"];
 	$rows_title[23]=$msgstr["pattern"];
 
-
 	$field_type=array();
-	$field_type["F"]=$msgstr["ft_f"];
-	//$field_type["AI"]=$msgstr["ft_ai"];   //
-	$field_type["S"]=$msgstr["ft_s"];
-	$field_type["M"]=$msgstr["ft_m"];
-	$field_type["M5"]=$msgstr["ft_m5"];
-	$field_type["LDR"]=$msgstr["ft_ldr"];
-	$field_type["T"]=$msgstr["ft_t"];
-	$field_type["L"]=$msgstr["ft_l"];
-	$field_type["H"]=$msgstr["ft_h"];
-	//$field_type["OD"]=$msgstr["ft_od"];  //
-	//$field_type["ISO"]=$msgstr["ft_iso"]; //
-	//$field_type["OC"]=$msgstr["ft_oper"]; //
-	//$field_type["DC"]=$msgstr["ft_date"]; //
+	$field_type["F"]=$msgstr["ft_f"];		//Field
+	$field_type["S"]=$msgstr["ft_sub"];		//Subfield
+	$field_type["M"]=$msgstr["ft_m"];		//Fixed Field
+	$field_type["M5"]=$msgstr["ft_m5"];		//Date(MARC 005)
+	$field_type["LDR"]=$msgstr["ft_ldr"];	//MARC-Leader
+	$field_type["T"]=$msgstr["ft_t"];		//Group
+	$field_type["L"]=$msgstr["ft_l"];		//Line
+	$field_type["H"]=$msgstr["ft_h"];		//Heading
 
 	$input_type=array();
 	$input_type["AI"]=$msgstr["ft_ai"];
@@ -75,15 +69,12 @@
 	$input_type["COMBO"]=$msgstr["it_combo"];
 	$input_type["COMBORO"]=$msgstr["it_comboro"];
 
-
 	asort($input_type);
 
-
-
-	$pick_type["D"]=$msgstr["plt_d"];
-	$pick_type["T"]=$msgstr["plt_t"];
+	$pick_type["D"]=$msgstr["plt_d"];	//DB
+	$pick_type["T"]=$msgstr["plt_t"];	//Thesaurus
 	if (isset($arrHttp["Opcion"]))
-		if ($arrHttp["Opcion"]!="new") $pick_type["P"]=$msgstr["plt_p"];
+		if ($arrHttp["Opcion"]!="new") $pick_type["P"]=$msgstr["plt_p"];	// Table
 
 	$validation["X"]=$msgstr["validation_X"];
 	$validation["A"]=$msgstr["validation_A"];
@@ -95,6 +86,4 @@
 	$validation["F"]=$msgstr["validation_F"];
 	$validation["U"]=$msgstr["validation_U"];
 	asort($validation);
-
-
 ?>
