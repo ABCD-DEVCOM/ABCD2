@@ -1,5 +1,7 @@
 <?php
-
+/* Modifications
+2024-04-16 fho4abcd New look+make it working
+*/
 session_start();
 if (!isset($_SESSION["permiso"])){
 	header("Location: ../common/error_page.php") ;
@@ -8,12 +10,13 @@ include("../common/get_post.php");
 include ("../config.php");
 $lang=$_SESSION["lang"];
 
+include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
+include("../common/header.php");
 ?>
-<html>
-<title>PickList</title>
+<body>
 <script>
 function PickList_update(){
 	prefix=document.pl.prefix.value
@@ -29,12 +32,12 @@ function PickList_update(){
 		window.opener.top.frames[2].prefix=prefix
 		window.opener.top.frames[2].list=list
 		window.opener.top.frames[2].extract=extract
-		window.opener.top.frames[2].Asignar()
+		window.opener.top.frames[2].AsignarDbPicklistValues()
 	}else{		window.opener.valor=name
 		window.opener.prefix=prefix
 		window.opener.list=list
 		window.opener.extract=extract
-		window.opener.Asignar()	}
+		window.opener.AsignarDbPicklistValues()	}
 	self.close()
 }
 
@@ -46,19 +49,29 @@ function CambiarBase(){	ix=document.pl.base.selectedIndex
 	}
 	document.cambiarbase.dbsel.value=name
 	document.cambiarbase.base.value=name
-	document.cambiarbase.submit()
-}
+	document.cambiarbase.submit()}
 </script>
-<font size=1 face=arial>
+<div class="sectionInfo">
+	<div class="breadcrumb">
+		<?php echo $msgstr["picklist_db"]?>
+	</div>
+	<div class="actions">
+		<?php include "../common/inc_close.php"?>
+		&nbsp;
+		<a class="bt bt-green" href=javascript:PickList_update()><?php echo $msgstr["updfdt"]?></a>
+	</div>
+	<div class="spacer">&#160;</div>
+</div>
+<?php include "../common/inc_div-helper.php";?>
+<div class="middle form">
+	<div class="formContent">
+		<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['selcapture']?></span>
 <form name=pl>
-<?php echo $msgstr["selcapture"]?>
-<p>
 
 <table border=0>
 <tr>
-<td><font size=1 face=arial>
-<?php echo $msgstr["database"]?></td>
-<td><font size=1 face=arial><Select name=base onchange=javascript:CambiarBase()><option value=>--
+<td><?php echo $msgstr["database"]?></td>
+<td><Select name=base onchange=javascript:CambiarBase()><option value="">
 <?php
 $fp=file($db_path."bases.dat");
 foreach ($fp as $base){
@@ -72,19 +85,14 @@ foreach ($fp as $base){
 }
 ?>
 </Select>
-<a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/picklist_db.html target=_blank><?php echo $msgstr["help"]?></a>&nbsp &nbsp;
-<?php
-if (isset($_SESSION["permiso"]["CENTRAL_EDHLPSYS"]))
-	echo "<a href=../documentacion/edit.php?archivo=".$_SESSION["lang"]."/picklist_db.html target=_blank>".$msgstr["edhlp"]."</a>";
-echo "&nbsp; &nbsp; Script: picklist_db.php";
-?>
 </td>
-<tr><td align=right><font size=1 face=arial><?php echo $msgstr["prefix"]?>: </td><td><input type=text name=prefix size=10 value="<?php if (isset($arrHttp["prefix"])) echo $arrHttp["prefix"]?>"></td>
-<tr><td align=right><font size=1 face=arial><?php echo $msgstr["listas"]?>: </td><td><input type=text name=list size=80 value="<?php if (isset($arrHttp["list"])) echo stripslashes($arrHttp["list"])?>"></td>
-<tr><td><font size=1 face=arial><?php echo $msgstr["extractas"]?>: </td><td><input type=text name=extract size=80 value="<?php if (isset($arrHttp["extract"])) echo stripslashes($arrHttp["extract"])?>"></td>
+<tr><td align=right><?php echo $msgstr["prefix"]?>: </td>
+	<td><input type=text name=prefix size=10 value="<?php if (isset($arrHttp["prefix"])) echo $arrHttp["prefix"]?>"></td>
+<tr><td align=right><?php echo $msgstr["listas"]?>: </td>
+	<td><input type=text name=list size=80 value="<?php if (isset($arrHttp["list"])) echo stripslashes($arrHttp["list"])?>"></td>
+<tr><td><?php echo $msgstr["extractas"]?>: </td>
+	<td><input type=text name=extract size=80 value="<?php if (isset($arrHttp["extract"])) echo stripslashes($arrHttp["extract"])?>"></td>
 </table>
-
-<center><a href=javascript:PickList_update()><?php echo $msgstr["updfdt"]?></a></center>
 </form>
 <div id="dwindow" style="position:relative;background-color:#ffffff;cursor:hand;left:0px;top:0px;height:250" onMousedown="initializedrag(event)" onMouseup="stopdrag()" onSelectStart="return false">
 <div id="dwindowcontent" style="height:100%;">
@@ -96,4 +104,5 @@ echo "&nbsp; &nbsp; Script: picklist_db.php";
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=row value=<?php echo $arrHttp["row"]?>>
 </form>
-</body></html>
+</div></div>
+<?php include ("../common/footer.php");?>
