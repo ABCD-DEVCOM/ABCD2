@@ -4,6 +4,7 @@
 2021-02-09 fho4abcd Original name for dhtmlX.js
 2024-04-01 fho4abcd minimal changes to keep dmhtmlxgrid working
 2024-04-14 fho4abcd More equal to fdt.php
+2024-04-16 fho4abcd Increase row link font, improve indent
 */
 /*
 ** See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html / https://docs.dhtmlx.com/grid__styling.html for grid details
@@ -143,12 +144,12 @@ function Actualizar(){
 }
 function Validate(Opcion){
 	var width = screen.availWidth;
-    var height = screen.availHeight
+	var height = screen.availHeight
 	msgwin=window.open("","Fdt","width="+width+", height="+height+" resizable=yes, scrollbars=yes, menu=yes")
-    msgwin.document.writeln("<html>")
-    msgwin.document.writeln("<style>BODY{font-size: 8pt;}")
-    msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
-    msgwin.document.writeln("</style>")
+	msgwin.document.writeln("<html>")
+	msgwin.document.writeln("<style>BODY{font-size: 8pt;}")
+	msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
+	msgwin.document.writeln("</style>")
 	msgwin.document.writeln("<body><table bgcolor=#F5F5F5>")
 	HeadRowsForValidate("row")
 	cols=mygrid.getColumnCount()
@@ -180,28 +181,27 @@ function Validate(Opcion){
 				fila+=cell
 			}
 		}
-        Leader=""
+		Leader=""
 		if (Trim(fila)!=""){
 			msgwin.document.writeln("<tr><td>"+irow+"</td>")
 			cell_colums=""
 			cell_rows=""
 			for (j=1;j<cols;j++){
 				if (j!=14){// why this exception?
-        			cell=Trim(mygrid.cells2(i,j).getValue())
-                	if (cell=="undefined") cell=""
+					cell=Trim(mygrid.cells2(i,j).getValue())
+					if (cell=="undefined") cell=""
 					switch (j){
 						case 1: // Record Type. Shown as "type name(shortcut)"
 							cell_type=cell
 							if (cell!=""){
 								cell=field_type[cell]
-                               	cell=cell+" ("+cell_type+")"
-                            }
-                            if (cell_type=="LDR") Leader="S"
-
+								cell=cell+" ("+cell_type+")"
+							}
+							if (cell_type=="LDR") Leader="S"
 							break
 						case 2: // Tag
 							cell_tag=cell
-                            displayTagfull=displayTag+cell_tag+" &rarr; "
+							displayTagfull=displayTag+cell_tag+" &rarr; "
 							break
 						case 3: // Titel/description
 							cell_desc=cell
@@ -228,9 +228,9 @@ function Validate(Opcion){
 							displayIn_type=""
 							if (cell!=""){
 								cell=input_type[cell]
-                               	cell=cell+" ("+in_type+")"
+								cell=cell+" ("+in_type+")"
 								displayIn_type=cell+" &rarr; "
-                            }
+							}
 							break
 						case 9: //rows
 							cell_rows=cell
@@ -242,7 +242,7 @@ function Validate(Opcion){
 							if (Trim(cell)!="") {
 								pl_type=cell
 								cell=pick_type[cell]
-      						}
+							}
 							break
 						case 12:	// Picklist name
 							pl_name=cell
@@ -257,22 +257,22 @@ function Validate(Opcion){
 						case 16:	// Display as
 							pl_display=cell
 							break;
-       					case 17:	// Extract as
-       						cell=""
-             				break
-                 		case 18:	//Help
-                 			if (cell!=""){
+						case 17:	// Extract as
+							cell=""
+							break
+						case 18:	//Help
+							if (cell!=""){
 								if (cell==1)
 									cell="true"
 								else
 									cell=""
-								}
-								break
+							}
+							break
 						case 19:	// Help URL
 							url_help=cell
 							break;
 						case 20:	// Link FDT
-                 			if (cell!=""){
+							if (cell!=""){
 								if (cell==1)
 									cell="true"
 								else
@@ -280,7 +280,7 @@ function Validate(Opcion){
 							}
 							break
 						case 21:	// Req?
-                 			if (cell!=""){
+							if (cell!=""){
 								if (cell==1)
 									cell="true"
 								else
@@ -290,10 +290,10 @@ function Validate(Opcion){
 						case 22:	// Field validation (is a picklist)
 							if (cell!=""){
 								cell=validation[cell]
-                               	cell=cell+" ("+cell_type+")"
-                            }
-                            break
-        				case 23:	// Validation pattern
+								cell=cell+" ("+cell_type+")"
+							}
+							break
+						case 23:	// Validation pattern
 							cell_pattern=cell
 							break
 					}
@@ -319,23 +319,23 @@ function Validate(Opcion){
 					if (IsNumeric(cell_tag)==false){
 						msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["invtag"]?>"+"<br>"
 					} else {
-					tt= parseInt(cell_tag )
-					if (tt<1 || tt>999){
-                            msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["invtag"]?>"+"<br>"
-                        }
-                        if (fdt_tag.indexOf("|"+tt+"|")==-1){
-                            fdt_tag+="|"+tt+"|"
-                        }else{
-                            msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["duptag"]?>"+"<br>"
-                        }
+						tt= parseInt(cell_tag )
+						if (tt<1 || tt>999){
+							msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["invtag"]?>"+"<br>"
+						}
+						if (fdt_tag.indexOf("|"+tt+"|")==-1){
+							fdt_tag+="|"+tt+"|"
+						}else{
+							msg+=displayRowfull+displayTagfull + " <?php echo $msgstr["duptag"]?>"+"<br>"
+						}
 					}
-              	}
+				}
 			}
 			if (cell_type=="S"){    // se determina que el subcampo esté precedido por un tipo T o por TB  o por M
 				res=false
-    			for (ix=i-1;ix>=0;ix--){
+				for (ix=i-1;ix>=0;ix--){
 					type=mygrid.cells2(ix,1).getValue()
-     				if (type=="T" || type=="TB" || type=="M" || type=="LDR"){
+					if (type=="T" || type=="TB" || type=="M" || type=="LDR"){
 					res=true
 					ix=-1
 				}else{
@@ -369,14 +369,12 @@ function Validate(Opcion){
 					}
 				}
 				nsc=cell_subc.length
-
- 				if (nsc!=ixsc){
- 					//alert(nsc+"  "+ixsc)
+				if (nsc!=ixsc){
 					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["sfcounterr"]?>" +"<br>"
 				}
 				<?php }?>
 			}
-		    switch (pl_type){   // se valida la consistencia de los datos del picklist asignado al campo
+			switch (pl_type){   // se valida la consistencia de los datos del picklist asignado al campo
 				case "XT":
 					msg+=displayRowfull+displayTagfull+" <?php echo $msgstr["notimplemented"]?>"+"<br>"
 					break
@@ -431,7 +429,7 @@ function Validate(Opcion){
 	// Display the error messages or "no errors"
 	if (msg!=""){
 		msgwin.document.writeln('<p><a href=../documentacion/ayuda.php?help=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank><?php echo $msgstr["err_fdt"]?></a>&nbsp; &nbsp;')
-    	msgwin.document.writeln('<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank>edit help file</a>')
+		msgwin.document.writeln('<a href=../documentacion/edit.php?archivo=<?php echo $_SESSION["lang"]?>/fdt_err.html target=_blank>edit help file</a>')
 		msgwin.document.writeln("<p style='color:red'>"+msg)
 		msgwin.focus()
 	}else{
@@ -443,7 +441,7 @@ function Validate(Opcion){
 		if (msg=="") {
 			msgwin.close()
 			return true
-        }else{
+		}else{
 			msgwin.document.writeln("<h4><?php echo $msgstr["fdterr"]?></h4>")
 			msgwin.focus()
 			alert("<?php echo $msgstr["fdterr"]?>!!!")
@@ -472,7 +470,7 @@ if (!isset($arrHttp["Subc"])){
 			for ($i=0;$i<20;$i++){
 				$fp[$i]='|||||||||||||||||||||||';
 			}
-      	}else{
+		}else{
 			$fp=explode("\n",$_SESSION["FDT"]);
 			$fp[]='||||||||||||||||||||||||||||||||||||||||||||||';
 			$fp[]='||||||||||||||||||||||||||||||||||||||||||||||';
@@ -480,8 +478,8 @@ if (!isset($arrHttp["Subc"])){
 		$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
 		if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
 	}else{
-        if (isset($arrHttp["type"]) and $arrHttp["type"]=="bd"){
-        	$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
+		if (isset($arrHttp["type"]) and $arrHttp["type"]=="bd"){
+			$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["base"].".fdt";
 			if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["base"].".fdt";
 		}else{
 			if (isset($arrHttp["fmt_name"])) {
@@ -492,7 +490,7 @@ if (!isset($arrHttp["Subc"])){
 				$arrHttp["type"]=$arrHttp["fdt_name"];
 			}
 			if (isset($arrHttp["type"])){
-	            $archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["type"];
+				$archivo=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"]."/".$arrHttp["type"];
 				if (!file_exists($archivo)) $archivo=$db_path.$arrHttp["base"]."/def/".$lang_db."/".$arrHttp["type"];
 				$xarch=$arrHttp["type"];
 			}
@@ -502,11 +500,11 @@ if (!isset($arrHttp["Subc"])){
 	}
 	echo "<div class=\"sectionInfo\">
 		<div class=\"breadcrumb\">";
- 	if (isset($arrHttp["fmt_desc"])) {
-      	echo $msgstr["fmt"];
-    }else{
-       	echo $msgstr["fdt"];
-    }
+	if (isset($arrHttp["fmt_desc"])) {
+		echo $msgstr["fmt"];
+	}else{
+		echo $msgstr["fdt"];
+	}
 
 	echo ": ".$xarch;
 	if (isset($arrHttp["fmt_desc"])) echo " (".$arrHttp["fmt_desc"].")";
@@ -578,38 +576,38 @@ if (isset($fp)){
 		if (trim($value)!=""){
 			$value.="|||||||||||||||||||||" ;
 			$t=explode("|",$value);
-   			switch ($t[0]){
-             	case "OD":
-              		$t[0]="F" ;
-              		$t[7]="OD";
-                	break;
-                case "OC":
-                     $t[0]="F";
-                     $t[7]="OC";
-                	break;
-                case "ISO":
-                     $t[0]="F";
-                     $t[7]="ISO";
-                	break;
-                case "DC":
-                    $t[0]="F";
-                  	$t[7]="DC";
-              		break;
-             	case "AI":
-                    $t[0]="F";
-                  	$t[7]="AI";
-              		break;
-      		}
-      		if ($t[1]!="") {
-               	$tag=$t[1];
-               	$Fdt_subc[$tag]=$value;
-            }
-      		if ($t[0]!="S" or isset($arrHttp["Subc"])){
-	      		$nfilas=$nfilas+1;
-	      		echo "\n<tr onmouseover=\"this.className = 'rowOver';\" onmouseout=\"this.className = '';\">\n";
+			switch ($t[0]){
+				case "OD":
+					$t[0]="F" ;
+					$t[7]="OD";
+					break;
+				case "OC":
+					$t[0]="F";
+					$t[7]="OC";
+					break;
+				case "ISO":
+					$t[0]="F";
+					$t[7]="ISO";
+					break;
+				case "DC":
+					$t[0]="F";
+					$t[7]="DC";
+					break;
+				case "AI":
+					$t[0]="F";
+					$t[7]="AI";
+					break;
+			}
+			if ($t[1]!="") {
+				$tag=$t[1];
+				$Fdt_subc[$tag]=$value;
+			}
+			if ($t[0]!="S" or isset($arrHttp["Subc"])){
+				$nfilas=$nfilas+1;
+			echo "\n<tr>\n";
 				$i=$i+1;
 				$irow=$i+1;
-				$linkr="<a href='javascript:EditRow(\"".$irow."\",$i)'><font size=1>$irow</font></a>";
+				$linkr="<a href='javascript:EditRow(\"".$irow."\",$i)'>$irow</a>";
 				echo "<td type=\"link\">$linkr</td>";
 				if ($t[0]=="F" or $t[0]=="S"){
 					if (trim($t[7])=="") $t[7]="X";
@@ -620,77 +618,75 @@ if (isset($fp)){
 					if ($t[10]=="")
 					$pick="<a href='javascript:Picklist(\"".$t[1].".tab\",$i)'><font size=1>browse</font></a>";
 					else
-		    		$pick="<a href='javascript:Picklist(\"".$t[10]."\",$i)'><font size=1>browse</font></a>";
+					$pick="<a href='javascript:Picklist(\"".$t[10]."\",$i)'><font size=1>browse</font></a>";
 				}
-				$irow=$i+1;
-				$linkr="<a href='javascript:EditRow(\"".$irow."\",$i)'><font size=1>$irow</font></a>";
 				if (!isset($t[16])) $t[16]="";
 				$ixt=-1;
 				//"link,coro,ed,ed,ch,ch,ed,ed,coro,ed,ed,coro,ed,ed,link,ed,ed,ed,ch,ed,ch,ch,coro,ed"
 				foreach ($t as $fila) {
-	   				$fila=trim($fila);
-	       			$ixt=$ixt+1;
+					$fila=trim($fila);
+					$ixt=$ixt+1;
 					if ($ixt>21) break;        //NUMERO DE COLUMNAS QUE TIENE LA FDT
-	         		if ($ixt==16 or $ixt==18 or $ixt==19)
-       					$align=" align=center";
-       				else
-       					$align="";
+					if ($ixt==16 or $ixt==18 or $ixt==19)
+						$align=" align=center";
+					else
+						$align="";
 
-	           		switch($ixt){
-	                   	case 0:
-                   	   	echo "<td $align type=\"coro\">";
-	                   		echo $fila;
-	                   		$FT[$i]=$fila;
-	                   		break;
-	                   	case 3:
-                   		echo "<td $align type=\"ch\">";
-	                   		echo $fila;
-	                   		$IN[$i]=$fila;
-	                   		break;
-	                   	case 4:
-                   		echo "<td $align type=\"ch\">";
-	                   		echo $fila;
-	                   		$RE[$i]=$fila;
-	                   		break;
-	                   	case 7:
-                   		echo "<td $align type=\"coro\">";
-	                   		echo $fila;
-	                   		$IT[$i]=$fila;
-	                   		break;
-	                   	case 10:
-                   		echo "<td $align type=\"coro\">";
-	                   		echo $fila;
-	                   		$PL[$i]=$fila;
-	                   		break;
-	                   	case 13:
-                   		echo "<td $align type=\"link\">";
-	                   		if ($pick=="")$pick="&nbsp;";
-	                   		echo $pick;
-	                   		if ($fila=="") $fila="&nbsp;";
-                   		echo"</td><td type=\"ed\">$fila";
-                   		break;
-                   	case 16:
-                   	    echo "<td $align type=\"ch\">";
-                   	    $HP[$i]=$fila;
-                   	    echo $fila;
-	                   		break;
-	                   	case 18:
-                   		echo "<td $align type=\"ch\">";
-	                   		$LKF[$i]=$fila;
-	                   		break;
-	                   	case 19:
-                   		echo "<td $align type=\"ch\">";
-                   			$MANDATORY[$i]=$fila;
-                   			break;
-                   		case 20:
-                   		echo "<td $align type=\"coro\">";
-                   			$VAL[$i]=$fila;
-                   			break;
-                   		default:
-                   		echo "<td $align type=\"edtxt\">";
-                   		 	if ($fila=="") $fila="&nbsp;";
-                   		 	echo $fila;
-                   		 	break;
+					switch($ixt){
+						case 0:
+							echo "<td $align type=\"coro\">";
+							echo $fila;
+							$FT[$i]=$fila;
+							break;
+						case 3:
+							echo "<td $align type=\"ch\">";
+							echo $fila;
+							$IN[$i]=$fila;
+							break;
+						case 4:
+							echo "<td $align type=\"ch\">";
+							echo $fila;
+							$RE[$i]=$fila;
+							break;
+						case 7:
+							echo "<td $align type=\"coro\">";
+							echo $fila;
+							$IT[$i]=$fila;
+							break;
+						case 10:
+							echo "<td $align type=\"coro\">";
+							echo $fila;
+							$PL[$i]=$fila;
+							break;
+						case 13:
+							echo "<td $align type=\"link\">";
+							if ($pick=="")$pick="&nbsp;";
+							echo $pick;
+							if ($fila=="") $fila="&nbsp;";
+							echo"</td><td type=\"ed\">$fila";
+							break;
+						case 16:
+							echo "<td $align type=\"ch\">";
+							$HP[$i]=$fila;
+							echo $fila;
+							break;
+						case 18:
+							echo "<td $align type=\"ch\">";
+							$LKF[$i]=$fila;
+							break;
+						case 19:
+							echo "<td $align type=\"ch\">";
+							$MANDATORY[$i]=$fila;
+							break;
+						case 20:
+							echo "<td $align type=\"coro\">";
+							$VAL[$i]=$fila;
+							break;
+						default:
+							echo "<td $align type=\"edtxt\">";
+							if ($fila=="") $fila="&nbsp;";
+							echo $fila;
+							break;
 					}
 					echo "</td>";
 				}
@@ -736,19 +732,20 @@ if (isset($arrHttp["Subc"])){
 	echo "<input type=hidden name=fmt_name value=".$arrHttp["fmt_name"].">\n";
 }
 	if (isset($arrHttp["fmt_desc"])) echo "<input type=hidden name=fmt_desc value=\"".$arrHttp["fmt_desc"]."\">\n";
-    if (isset($arrHttp["UNICODE"]))  echo "<input type=hidden name=UNICODE value=\"".$arrHttp["UNICODE"]."\">\n";
-    if (isset($arrHttp["CISIS_VERSION"]))  echo "<input type=hidden name=CISIS_VERSION value=\"".$arrHttp["CISIS_VERSION"]."\">\n";
+	if (isset($arrHttp["UNICODE"]))  echo "<input type=hidden name=UNICODE value=\"".$arrHttp["UNICODE"]."\">\n";
+	if (isset($arrHttp["CISIS_VERSION"]))  echo "<input type=hidden name=CISIS_VERSION value=\"".$arrHttp["CISIS_VERSION"]."\">\n";
 ?>
 <input type=hidden name=ValorCapturado>
 <input type=hidden name=desc>
 <input type=hidden name=Opcion value=<?php echo $arrHttp["Opcion"]?>>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=archivo value=<?php echo $xarch?>>
-<?php if (isset( $arrHttp["ventana"])) echo "<input type=hidden name=ventana value=". $arrHttp["ventana"].">\n";
-      if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=S>\n";
-	  if (isset($arrHttp["Fixed_field"]))  echo "<input type=hidden name=Fixed_field value=".$arrHttp["Fixed_field"].">\n";
-	  if (isset($arrHttp["cisis"]))  echo "<input type=hidden name=cisis value=".$arrHttp["cisis"].">\n";
-	  if (isset($arrHttp["dcimport"]))  echo "<input type=hidden name=dcimport value=".$arrHttp["dcimport"].">\n";
+<?php
+	if (isset( $arrHttp["ventana"])) echo "<input type=hidden name=ventana value=". $arrHttp["ventana"].">\n";
+	if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=S>\n";
+	if (isset($arrHttp["Fixed_field"]))  echo "<input type=hidden name=Fixed_field value=".$arrHttp["Fixed_field"].">\n";
+	if (isset($arrHttp["cisis"]))  echo "<input type=hidden name=cisis value=".$arrHttp["cisis"].">\n";
+	if (isset($arrHttp["dcimport"]))  echo "<input type=hidden name=dcimport value=".$arrHttp["dcimport"].">\n";
 ?>
 
 </form>

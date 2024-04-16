@@ -1,6 +1,8 @@
 <?php
 /*
 2024-04-14 fho4abcd Created by extract of code from fdt.php and fdt_short_a.php
+2024-04-16 fho4abcd Increase row link font, improve indent. Error if no row selected. Smaller picklist window
+2024-04-16 fho4abcd Add function AsignarDbPicklistValues (was removed by accident)
 */
 /*
 ** Scripts common and equal for fdt processing
@@ -28,6 +30,7 @@ columna=12
 
 //functions
 function AddRow(ixfila,Option){
+	if (CheckRowSelection()==false) return;
 	switch (Option){
 		case "BEFORE":
 			ixf=mygrid.getRowsNum()+1
@@ -41,11 +44,25 @@ function AddRow(ixfila,Option){
 			ixf=mygrid.getRowsNum()+2
 			break
 	}
-
-	linkr="<a href=javascript:EditRow(\""+ixf+"\","+ixf+")><font size=1>"+ref+"</a>";
+	linkr="<a href=javascript:EditRow(\""+ixf+"\","+ixf+")>"+ref+"</a>";
 	pick="<a href=javascript:Picklist(\"\","+ixf+")><font size=1>browse</a>";
 	mygrid.addRow((new Date()).valueOf(),[linkr,'','','','','','','','','','','','','',pick,'','','','','','','','','','','',''],ixfila)
 	mygrid.selectRow(ixfila);
+}
+// function used by picklist_db.php. Must reside here
+function AsignarDbPicklistValues(){
+	mygrid.cells2(fila,columna).setValue(valor)
+	mygrid.cells2(fila,13).setValue(prefix)
+	mygrid.cells2(fila,15).setValue(list)
+	mygrid.cells2(fila,16).setValue(extract)
+}
+function CheckRowSelection() {
+	var checkid=mygrid.getSelectedRowId();
+	if (checkid==null || IsNumeric(checkid)==false) {
+		alert("<?php echo $msgstr["fdt_selrow"]?>")
+		return false;
+	}
+	return true;
 }
 function Picklist(name,row,base){
 	prefix=""
@@ -76,10 +93,12 @@ function Picklist(name,row,base){
 			Url="picklist_db.php?base=<?php echo $arrHttp["base"]?>&picklist="+name+"&row="+fila+"&dbsel="+dbsel+"&prefix="+prefix+"&list="+list+"&extract="+extract
 			break
 		case "T":
-  			break
+			break
 	}
 	if (Url!="") Url+="&type="+pl_type
-	msgwin=window.open(Url,"PL","menu=0,scrollbars,resizable")
+	var width = window.screen.availWidth/2;
+	var arglist="menu=0,scrollbars,resizable,width="+width;
+	msgwin=window.open(Url,"PL",arglist)
 	if (Url=="") document.edit_picklist.submit()
 	msgwin.focus()
 }
@@ -92,25 +111,25 @@ function Test(){
 	Actualizar()
 }
 function IsNumeric(sText){
-   var ValidChars = "0123456789";
-   var IsNumber=true;
-   var Char;
-   for (itag = 0; itag < sText.length && IsNumber == true; itag++){
-      Char = sText.charAt(itag);
-      if (ValidChars.indexOf(Char) == -1){
-         IsNumber = false;
-      }
-   }
-   return IsNumber;
+	var ValidChars = "0123456789";
+	var IsNumber=true;
+	var Char;
+	for (itag = 0; itag < sText.length && IsNumber == true; itag++){
+		Char = sText.charAt(itag);
+		if (ValidChars.indexOf(Char) == -1){
+			IsNumber = false;
+		}
+	}
+	return IsNumber;
 }
 function HeadRowsForValidate(Rows){
 	//Display heading rows for the validation
-   	msgwin.document.writeln("<tr>")
-   	if (Rows!="") msgwin.document.writeln("<td rowspan=2></td>")// cell for the row number
-  	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["type"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["tag"]?></td>")
-  	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["title"]?></td><td rowspan=2 align=center bgcolor=white>I</td><td rowspan=2 align=center bgcolor=white>R</td><td rowspan=2 align=center  bgcolor=white><?php echo $msgstr["subfields"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["preliteral"]?></td>")
-  	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["inputtype"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["rows"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["cols"]?></td>")
-  	msgwin.document.writeln("<td colspan=6 align=center bgcolor=white><?php echo $msgstr["picklist"]?></td>")
+	msgwin.document.writeln("<tr>")
+	if (Rows!="") msgwin.document.writeln("<td rowspan=2></td>")// cell for the row number
+	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["type"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["tag"]?></td>")
+	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["title"]?></td><td rowspan=2 align=center bgcolor=white>I</td><td rowspan=2 align=center bgcolor=white>R</td><td rowspan=2 align=center  bgcolor=white><?php echo $msgstr["subfields"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["preliteral"]?></td>")
+	msgwin.document.writeln("<td rowspan=2 align=center bgcolor=white><?php echo $msgstr["inputtype"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["rows"]?></td><td rowspan=2 align=center bgcolor=white><?php echo $msgstr["cols"]?></td>")
+	msgwin.document.writeln("<td colspan=6 align=center bgcolor=white><?php echo $msgstr["picklist"]?></td>")
 
 	msgwin.document.writeln("<td bgcolor=white rowspan=2><?php echo $msgstr["help"]?></td>")
 	msgwin.document.writeln("<td bgcolor=white rowspan=2><?php echo $msgstr["url_help"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["link_fdt"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["mandatory"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["field_validation"]?></td><td bgcolor=white rowspan=2><?php echo $msgstr["pattern"]?></td>")
@@ -120,14 +139,14 @@ function HeadRowsForValidate(Rows){
 }
 function List(){
 	var width = screen.availWidth;
-    var height = screen.availHeight
+	var height = screen.availHeight
 	msgwin=window.open("","Fdt","width="+width+", height="+height+" resizable=yes, scrollbars=yes, menu=yes")
 	msgwin.document.close()
-    msgwin.document.writeln("<html>")
+	msgwin.document.writeln("<html>")
 	msgwin.document.writeln("<style>BODY{font-family: 'Trebuchet MS', Arial, Verdana, Helvetica; font-size: 8pt;}")
-    msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
-    msgwin.document.writeln("</style>")
-    msgwin.document.writeln("<body>")
+	msgwin.document.writeln("TD{font-family:arial; font-size:8pt;}")
+	msgwin.document.writeln("</style>")
+	msgwin.document.writeln("<body>")
 	msgwin.document.writeln("<table bgcolor=#CCCCCC>")
 	HeadRowsForValidate("")
 	cols=mygrid.getColumnCount()
@@ -186,7 +205,6 @@ function List(){
 							if (Trim(cell)!="") cell=validation[cell]+" ("+cell+")"
 							break
 						case 23:
-
 							break
 					}
 					msgwin.document.write("<td bgcolor=white>"+cell+"&nbsp;</td>")
