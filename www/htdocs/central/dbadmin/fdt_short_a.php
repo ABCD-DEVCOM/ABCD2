@@ -5,6 +5,7 @@
 2024-04-01 fho4abcd minimal changes to keep dmhtmlxgrid working
 2024-04-14 fho4abcd More equal to fdt.php
 2024-04-16 fho4abcd Increase row link font, improve indent
+2024-04-22 fho4abcd Send title to picklist edit 
 */
 /*
 ** See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html / https://docs.dhtmlx.com/grid__styling.html for grid details
@@ -767,7 +768,7 @@ if (isset($arrHttp["Subc"])){
 <input type=hidden name=pl_type>
 <input type=hidden name=picklist>
 <input type=hidden name=row>
-<input type=hidden name=type>
+<input type=hidden name=title>
 </form>
 <form name=SCedit action=fdt_short_a.php method=post target=WinSc>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>

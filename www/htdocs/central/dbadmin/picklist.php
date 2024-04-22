@@ -1,6 +1,7 @@
 <?php
 /*
 20220202 fh04abcd buttons+div-helper
+20240422 fho4abcd New look,cleanup code,show filenames in table.Revitalize filename check
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -13,54 +14,50 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
 
-include("../common/header.php");
 //foreach ($arrHttp as $var => $value) 	echo "$var = $value<br>";
+include("../common/header.php");
 ?>
 <body>
 <script language="JavaScript" type="text/javascript" src="../dataentry/js/lr_trim.js"></script>
 <script>
-
-function CargarTabla(Tabla){
-	url="picklist_edit.php?base=<?php echo $arrHttp["base"]?>&picklist="+Tabla+"&row=<?php echo $arrHttp["row"]?>&pl_type=<?php echo $arrHttp["pl_type"]?>&type=<?php echo $arrHttp["type"]?>"
-    self.location.href=url
-}
-
 function EditCreate(){
 	if (Trim(document.pl.picklist.value)==""){
 		alert("<?php echo $msgstr["misfilen"].": ".$msgstr["picklistname"]?>")
 		return
 	}
 	fn=document.pl.picklist.value
-	bool=  /^[a-z][\w]+$/i.test(fn)
-	bool=true
- 	if (bool){
-
-   	}
-   	else {
-      	alert("<?php echo $msgstr["errfilename"]?>");
-      	return
-   	}
-
+	fnarr=fn.split(".")
+	if (fnarr.length!=2) {
+		alert("<?php echo $msgstr["errtabfilename"]?>");
+		return
+	}
+	if (fnarr[1]!="tab"){
+		alert("<?php echo $msgstr["errtabfilename"]?>");
+		return
+	}
+	bool=  /^[a-z,0-9][\w-]+$/i.test(fnarr[0]);
+	if (!bool){
+		alert("<?php echo $msgstr["errtabfilename"]?>");
+		return
+	}
 	document.pl.submit()
 }
 
-function Pl_name(Tabla,DB){
-		CargarTabla(Tabla)
-		document.pl.picklist.value=Tabla
-	}
+function Pl_name(Tabla){
+	document.pl.picklist.value=Tabla
+}
 function PickList_update(){
 	row="<?php echo $arrHttp["row"]?>"
 	name=self.document.pl.picklist.value
 	if (window.top.frames.length>1){
 		window.top.frames[2].valor=name
-		window.top.frames[2].Asignar()
+		window.top.frames[2].AsignarTxtPicklistValues()
 	}else{
 		window.opener.valor=name
-		window.opener.Asignar()
+		window.opener.AsignarTxtPicklistValues()
 	}
 	self.close()
 }
-
 
 function EliminarArchivo(){
 	Tabla=Trim(document.pl.picklist.value)
@@ -68,85 +65,93 @@ function EliminarArchivo(){
 		alert("please, select the picklist to be deleted")
 		return
 	}
-    document.frmdelete.tab.value=Tabla
-    document.frmdelete.path.value="def"
-    document.frmdelete.submit()
+	document.frmdelete.tab.value=Tabla
+	document.frmdelete.path.value="def"
+	document.frmdelete.submit()
 }
 </script>
 <div class="sectionInfo">
-    <div class="breadcrumb">
-        <?php echo $msgstr["picklist"]. ": " . $arrHttp["base"]?>
-    </div>
-    <div class="actions">
-        <?php include "../common/inc_close.php";?>
-    </div>
-    <div class="spacer">&#160;</div>
+	<div class="breadcrumb">
+		<?php echo $msgstr["picklist_tab"]?>
+	</div>
+	<div class="actions">
+	<?php include "../common/inc_close.php";?>
+		&nbsp;
+		<a class="bt bt-green" href=javascript:PickList_update()><?php echo $msgstr["updfdt"]?></a>
+	</div>
+	<div class="spacer">&#160;</div>
 </div>
 <?php
 $ayuda="picklist_tab.html";
 include "../common/inc_div-helper.php";
+if (!isset($arrHttp["title"]))$arrHttp["title"]="";
 ?>
 <div class="middle form">
 <div class="formContent">
 <form name=pl method=post action=picklist_edit.php>
 <input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
 <input type=hidden name=row value="<?php echo $arrHttp["row"]?>">
-<input type=hidden name=type value="<?php echo $arrHttp["type"]?>">
-<?php if (isset($arrHttp["pl_type"])) echo "<input type=hidden name=pl_type value=".$arrHttp["pl_type"].">\n"?>
-<?php echo $msgstr["editcreatepl"]?> <span style='color:blue'><?php echo $msgstr["updfdt"]?></span><p>
+<input type=hidden name=title value="<?php echo $arrHttp["title"]?>">
 
-<p><?php echo $msgstr["picklistname"]?>:<input type=text name=picklist value="<?php if (isset($arrHttp["picklist"]))echo $arrHttp["picklist"]?>">
-&nbsp; &nbsp; <a href=javascript:EditCreate()><?php echo $msgstr["editcreate"]?></a>
-&nbsp; | &nbsp;
-<a href=javascript:EliminarArchivo()><?php echo $msgstr["delete"]?></a>
-&nbsp; | &nbsp;
-<a href=javascript:PickList_update()><?php echo $msgstr["updfdt"]?></a>
+<span class="bt-disabled"><i class="fas fa-info-circle"></i>
+	<?php echo $msgstr["editcreatemsg"].": ".$arrHttp["title"]?>
+</span>
+
+<p><?php echo $msgstr["picklistname"]?>: 
+	<input type=text name=picklist title="<?php echo $msgstr["editcreateplname"]?>" value="<?php if (isset($arrHttp["picklist"]))echo $arrHttp["picklist"]?>">
+&nbsp; &nbsp;
+<a class="bt bt-blue" href=javascript:EditCreate()><?php echo $msgstr["editcreate"]?></a>
+&nbsp;
+<a class="bt bt-red" href=javascript:EliminarArchivo()><?php echo $msgstr["delete"]?></a>
+</p>
 </form>
-<form name=explora>
-<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+<br>
+<span class="bt-disabled"><i class="fas fa-info-circle"></i>
+	<?php echo $msgstr["editcreateexist"]?>
+</span>
 <?php
 $Dir=$db_path.$arrHttp["base"]."/def/".$_SESSION["lang"];
 $DirHttp="";
 $handle = opendir($Dir);
-echo "<font face=verdana size=2>";
 $the_array=array();
 while (false !== ($file = readdir($handle))) {
-   if ($file != "." && $file != "..") {
-   		if(is_file($Dir."/".$file)){
-            if  (substr($file,-4,4)==".tab") $the_array[$file]=$file;
-        }else
-
-            $dirs[]=$file;
-   }
+	if ($file != "." && $file != "..") {
+		if(is_file($Dir."/".$file)){
+			if  (substr($file,-4,4)==".tab") $the_array[$file]=$file;
+		}else{
+			$dirs[]=$file;
+		}
+	}
 }
 closedir($handle);
 $Dir=$db_path.$arrHttp["base"]."/def/".$lang_db;
 $handle = opendir($Dir);
 while (false !== ($file = readdir($handle))) {
-   if ($file != "." && $file != "..") {
-   		if(is_file($Dir."/".$file)){
-            if  (substr($file,-4,4)==".tab")
-            	if (!isset($the_array[$file]))$the_array[$file]=$file;
-        }
-   }
+	if ($file != "." && $file != "..") {
+		if(is_file($Dir."/".$file)){
+			if  (substr($file,-4,4)==".tab")
+				if (!isset($the_array[$file]))$the_array[$file]=$file;
+		}
+	}
 }
-$wks="";
-if (isset($arrHttp["wks"])) $wks="&wks=".$arrHttp["wks"];
 sort ($the_array);
 reset ($the_array);
-
+$index=0;
+?>
+<table>
+<?php
 foreach ($the_array as $key=>$val) {
-//	echo "key=".$key."<br>val=$val<br>wks=$wks<br>"  ;
-   echo "<a href=javascript:Pl_name(\"$val\",\"".$arrHttp["base"]."\")>$val</a>; ";
-
+	if ($index%5==0) echo "<tr>";
+	?>
+	<td>
+	<a href='javascript:Pl_name("<?php echo $val;?>")'><?php echo $val?></a>
+	</td>
+	<?php
+	$index++;
+	if ($index%5==0) echo "</tr>";
 }
 ?>
-</td>
 </table>
-
-</form>
-<div id="dwindow" style="position:relative;background-color:#ffffff;cursor:hand;left:0px;top:0px;height:200" onMousedown="initializedrag(event)" onMouseup="stopdrag()" onSelectStart="return false">
-<div id="dwindowcontent" style="height:100%;">
 </div>
 </div>
 <form name=frmdelete action=delete_file.php method=post>
@@ -154,4 +159,4 @@ foreach ($the_array as $key=>$val) {
 <input type=hidden name=path>
 <input type=hidden name=tab>
 </form>
-</body></html>
+<?php include ("../common/footer.php");?>
