@@ -6,6 +6,7 @@
 2024-04-14 fho4abcd Translate function names. Enable Drag&drop + multiselect. Remove unused "moodle". Small updates.
 2024-04-14 fho4abcd Code more equal to fdt_short_a.php + moved "common" code to included files
 2024-04-16 fho4abcd Increase row link font, improve indent
+2024-04-22 fho4abcd Send title to picklist edit 
 */
 /*
 ** See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html / https://docs.dhtmlx.com/grid__styling.html for grid details
@@ -702,7 +703,7 @@ if (!isset($fp)) echo "<p style='color:red'>".$msgstr["file"].": ".$archivo." &r
 <input type=hidden name=pl_type>
 <input type=hidden name=picklist>
 <input type=hidden name=row>
-<input type=hidden name=type>
+<input type=hidden name=title>
 </form>
 <script>
 <?php

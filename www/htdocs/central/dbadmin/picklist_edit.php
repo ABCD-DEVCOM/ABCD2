@@ -4,6 +4,7 @@
 2021-02-09 fho4abcd Original name for dhtmlX.js
 2022-02-02 fho4abcd back button, div-helper
 2024-04-01 fho4abcd css from /assets, remove wrong imagepath (was not used)
+2024-04-22 fho4abcd return title info,Improve buttons
 */
 /* See https://docs.dhtmlx.com/api__dhtmlxgrid_addrow.html
 */
@@ -112,11 +113,9 @@ if (strpos($arrHttp["picklist"],'../')!==false){
     }else{
         // This thread is in a pop-up window
         // The close button is large but does only close.
-        include "../common/inc_close.php";
-    }
-    $savescript="javascript:Enviar()";
-    include "../common/inc_save.php";
-    ?>
+		echo "<a class='bt bt-red' href=javascript:Cancelar()>". $msgstr["cancel"]."</a>";
+   }
+	echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["save"]."</a>";    ?>
 	</div>
     <div class="spacer">&#160;</div>
 </div>
@@ -135,7 +134,7 @@ include "../common/inc_div-helper.php";
 			<td>
 				<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId()),'BEFORE')"><?php echo $msgstr["addrowbef"]?></a>
 				<a class="bt bt-blue" href="javascript:void(0)" onclick="AgregarFila(mygrid.getRowIndex(mygrid.getSelectedId())+1,'AFTER')"><?php echo $msgstr["addrowaf"]?></a>
-				<a class="bt bt-blue" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a><br>
+				<a class="bt bt-red" href="javascript:void(0)" onclick="mygrid.deleteSelectedItem()"><?php echo $msgstr["remselrow"]?></a><br>
 				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['double_click']?></span><br>
 				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_sort']?></span><br>
 				<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['picklist_move']?></span><br>
@@ -143,12 +142,6 @@ include "../common/inc_div-helper.php";
 		</tr><tr>
 			<td>
 				<div id="gridbox" xwidth="780px" height="200px" style="background-color:white;overflow:hidden"></div>
-			</td>
-		</tr></tr>
-		<tr>
-			<td>
-				&nbsp; &nbsp;
-				<?php echo "<a class='bt bt-green' href=javascript:Enviar()>". $msgstr["update"]."</a>";?>
 			</td>
 		</tr>
 	</table>
@@ -217,21 +210,18 @@ include "../common/inc_div-helper.php";
 <form name=forma2 action=picklist_save.php method=post onsubmit="return false">
 <input type=hidden name=ValorCapturado>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=picklist value=<?php echo $arrHttp["picklist"]?>>
+<input type=hidden name=picklist value="<?php echo $arrHttp["picklist"]?>">
 <input type=hidden name=row value=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]?>>
+<input type=hidden name=title value="<?php if (isset($arrHttp["title"])) echo $arrHttp["title"]?>">
 <?php
-if (isset($arrHttp["desde"])) echo "<input type=hidden name=desde value=".$arrHttp["desde"].">\n";
 if (isset($arrHttp["encabezado"]))  echo "<input type=hidden name=encabezado value=".$arrHttp["encabezado"].">\n";
-if (isset($arrHttp["Ctrl"])) echo "<input type=hidden name=Ctrl value=".$arrHttp["Ctrl"].">\n";
 ?>
 </form>
 <form name=cancelar method=post target=PL action=picklist.php>
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=pl_type value=<?php if (isset($arrHttp["pl_type"])) echo $arrHttp["pl_type"]?>>
 <input type=hidden name=picklist value="<?php echo $arrHttp["picklist"]?>">
 <input type=hidden name=row value=<?php if (isset($arrHttp["row"])) echo $arrHttp["row"]?>>
-<input type=hidden name=type value=<?php if (isset($arrHttp["type"])) echo $arrHttp["type"]?>>
-<input type=hidden name=desde vallue=<?php if (isset($arrHttp["desde"])) echo $arrHttp["desde"]?>>
+<input type=hidden name=title value="<?php if (isset($arrHttp["title"])) echo $arrHttp["title"]?>">
 </form>
 </div>
 </div>

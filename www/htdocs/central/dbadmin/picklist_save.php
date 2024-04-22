@@ -1,6 +1,7 @@
 <?php
 /*
 20220202 fho4abcd back button, div-helper
+20240422 fho4abcd return title
 */
 /*
 ** Note that setting a value via the dataentry screen closes the pop-up window without any positive feedback
@@ -28,23 +29,24 @@ if (isset($arrHttp["encabezado"])){
 //die;
 ?>
 <div class="sectionInfo">
-    <div class="breadcrumb">
-        <?php echo $msgstr["picklist"]. ": " . $arrHttp["base"]." - ".$arrHttp["picklist"]?>
-    </div>
-    <div class="actions">
-        <?php
-            if (isset($arrHttp["desde"]) and $arrHttp["desde"]!="dataentry"){
-                $backtoscript="fixed_marc.php";
-                include "../common/inc_back.php";
-            }else{
-                if (!isset($arrHttp["desde"])){
-                    $backtoscript="picklist.php?base=". $arrHttp["base"]."&row=".$arrHttp["row"]."&picklist=".$arrHttp["picklist"];
-                    include "../common/inc_back.php";
-                }
-            }
-        ?>
-    </div>
-    <div class="spacer">&#160;</div>
+	<div class="breadcrumb">
+		<?php echo $msgstr["picklist"]. ": " . $arrHttp["base"]." - ".$arrHttp["picklist"]?>
+	</div>
+	<div class="actions">
+		<?php
+			if (isset($arrHttp["desde"]) and $arrHttp["desde"]!="dataentry"){
+				$backtoscript="fixed_marc.php";
+				include "../common/inc_back.php";
+			}else{
+				if (!isset($arrHttp["desde"])){
+					$backtoscript="picklist.php?base=". $arrHttp["base"]."&row=".$arrHttp["row"]."&picklist=".$arrHttp["picklist"];
+					$backtoscript=$backtoscript."&title=".$arrHttp["title"];
+					include "../common/inc_back.php";
+				}
+			}
+		?>
+	</div>
+	<div class="spacer">&#160;</div>
 </div>
 <?php
 $ayuda="picklist_tab.html";

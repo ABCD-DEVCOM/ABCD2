@@ -3,6 +3,7 @@
 2024-04-14 fho4abcd Created by extract of code from fdt.php and fdt_short_a.php
 2024-04-16 fho4abcd Increase row link font, improve indent. Error if no row selected. Smaller picklist window
 2024-04-16 fho4abcd Add function AsignarDbPicklistValues (was removed by accident)
+2024-04-22 fho4abcd Correct pl_type, send also title of field, Add function AsignarTxtPicklistValues (was removed by accident)
 */
 /*
 ** Scripts common and equal for fdt processing
@@ -49,6 +50,13 @@ function AddRow(ixfila,Option){
 	mygrid.addRow((new Date()).valueOf(),[linkr,'','','','','','','','','','','','','',pick,'','','','','','','','','','','',''],ixfila)
 	mygrid.selectRow(ixfila);
 }
+// function used by picklist.php. Must reside here
+function AsignarTxtPicklistValues(){
+	mygrid.cells2(fila,columna).setValue(valor)
+	mygrid.cells2(fila,13).setValue("")
+	mygrid.cells2(fila,15).setValue("")
+	mygrid.cells2(fila,16).setValue("")
+}
 // function used by picklist_db.php. Must reside here
 function AsignarDbPicklistValues(){
 	mygrid.cells2(fila,columna).setValue(valor)
@@ -78,10 +86,10 @@ function Picklist(name,row,base){
 		case "P":
 			Url=""
 			document.edit_picklist.base.value="<?php echo $arrHttp["base"]?>"
-			document.edit_picklist.pl_type.value="<?php if(isset($arrHttp["type"])) echo $arrHttp["type"]?>"
+			document.edit_picklist.pl_type.value=pl_type
 			document.edit_picklist.picklist.value=pl_name
 			document.edit_picklist.row.value=fila
-			document.edit_picklist.type.value=pl_type
+			document.edit_picklist.title.value=mygrid.cells2(fila,3).getValue()
 			//Url="picklist.php?base=&picklist="+pl_name+"&row="+fila+"&pl_type="
 			break
 		case "D":
