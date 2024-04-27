@@ -3,6 +3,7 @@
 20210311 fho4abcd body tag on correct position
 20210326 guilda Error when searching due to quoting
 20210327 fho4abcd Show error if camposbusqueda.tab is empty (prevents follow up errors)
+20240427 fho4abcd Moved footer from DibujarFormaBusqueda to this file
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -219,6 +220,7 @@ switch ($arrHttp["Opcion"]){
 	case "formab":
 	    $arrHttp["Opcion"]="buscar";
 		DibujarFormaBusqueda();
+		include("../common/footer.php");
 		break;
 	case "buscar":
 		EjecutarBusqueda();
