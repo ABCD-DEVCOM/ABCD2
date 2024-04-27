@@ -3,20 +3,12 @@
 2021-03-08 fho4abcd Replaced helper code fragment by included file
 2021-03-08 fho4abcd Improved html
 2021-03-27 fho4abcd lineends
+2024-04-27 fho4abcd Improve copy stored expr (UI&solve error)+move footer to caller
 */
 function DibujarFormaBusqueda(){
 global $arrHttp,$camposbusqueda,$db_path,$tagisis,$msgstr;
 
 if (!isset($arrHttp["refine"]) ) unset ($_SESSION["Expresion"]);
-// Prepare the advanced search form
-
-	echo "<style type=text/css>
-			#myvar {
-			border:1px solid #ccc;
-			background:#ffffff;
-			padding:2px;}
-		</style>";
-
 //read search expressions stored
 echo "\n<script>
 str_expr=\"\"
@@ -36,10 +28,12 @@ if (isset($fp)){
 	$str_expr="Y";
 	$ix=-1;
 	foreach ($fp as $value){
-		if (trim($value)!=""){
+		$value=trim($value);
+		$value=str_replace('"','\"',$value);
+		if ($value!=""){
 			$ix=$ix+1;
-			$stored[$ix]=trim($value);
-			echo "str_search[$ix]=\"".trim($value)."\"\n";
+			$stored[$ix]=$value;
+			echo "str_search[$ix]=\"".$value."\"\n";
 		}
 	}
 }
@@ -47,7 +41,7 @@ echo "</script>\n";
 
 ?>
 
-<script language=javascript>
+<script>
 document.onkeypress =
 	function (evt) {
 			var c = document.layers ? evt.which
@@ -62,7 +56,6 @@ function CopyExpr(){
 	o=Opc.split('|')
 	document.forma1.expre[copyTo].value=o[1]
 	document.forma1.camp[copyTo].selectedIndex=0
-	document.forma1.submit();
 }
 
 function GetExpression(ic){
@@ -71,8 +64,9 @@ function GetExpression(ic){
 	var winl = (screen.width-300)/2;
 	var wint = (screen.height-100)/2;
 
-	msgwin=window.open("","sst","width=400,height=100,left="+winl+",top="+wint+",scrollbars,resizable")
+	msgwin=window.open("","sst","width=400,height=200,left="+winl+",top="+wint+",scrollbars,resizable")
     msgwin.document.close()
+	msgwin.document.writeln("<!DOCTYPE html>")
 	msgwin.document.writeln("<html><body><form name=forma1>")
 	msgwin.document.writeln("<?php echo $msgstr["copysearch"]?>")
 	msgwin.document.writeln("<select width=250 name=ex onchange=window.opener.stored=document.forma1.ex.options[document.forma1.ex.selectedIndex].value;window.opener.CopyExpr();self.close()>\n")
@@ -81,7 +75,9 @@ function GetExpression(ic){
 	if (isset($stored)){
 		foreach ($stored as $var=>$value){
 			$s=explode("|",$value);
-			echo "msgwin.document.writeln(\"<option value=$var>".$s[0]."\")\n";
+			$optvalue='<option value=\"'.$var.'\">';
+			$optfull=$optvalue.$s[0].'</option>';
+			echo "msgwin.document.writeln(\"$optfull\")\n";
 		}
 	}
 	?>
@@ -194,8 +190,6 @@ function Diccionario(jx){
 <?php
 	echo "document.diccio.base.value=\"".$arrHttp['base']."\"\n";
 	echo "document.diccio.cipar.value=\"".$arrHttp['cipar']."\"\n";
-
-
 ?>
 	document.diccio.Opcion.value="diccionario";
 	nombrec=dt[j][0]
@@ -216,11 +210,9 @@ function Diccionario(jx){
 	}
 
 }
-
-
 </script>
+<script>
 <?php
-	echo "<script>\n";
 	echo "var dt= new Array()\n";
 	$ix=0;
 	echo "dt[".$ix."]= new Array \n";
@@ -228,9 +220,7 @@ function Diccionario(jx){
 	echo "dt[".$ix."][1]=\"\"\n";
 	echo "dt[".$ix."][2]=\"\"\n";
 	echo "dt[".$ix."][3]=\"\"\n";
-
 	foreach ($camposbusqueda as $linea) {
-
 		$ix=$ix+1;
 		$l=explode('|',$linea);
 		if (!isset($l[3])) $l[3]="";
@@ -240,16 +230,17 @@ function Diccionario(jx){
 		echo "dt[".$ix."][2]=\"".$l[2]."\"\n";
 		echo "dt[".$ix."][3]=\"".$l[3]."\"\n";
 	}
-	$Tope=$ix+1;  //significa que se van a colocar 7 cajas de texto con la expresión de búsqueda
-	echo "</script>\n";
-	if (!isset ($arrHttp["encabezado"])){
-        $ayuda="buscar.html";
-        include "../common/inc_div-helper.php";
-	}
+	$Tope=$ix+1;
 	?>
-	<div class="middle">
-			<div class="formContent">
-
+</script>
+<?php
+if (!isset ($arrHttp["encabezado"])){
+	$ayuda="buscar.html";
+	include "../common/inc_div-helper.php";
+}
+?>
+<div class="middle">
+	<div class="formContent">
 <?php
 	echo "<form method=post name=forma1 action=";
 	if (isset($arrHttp["Target"]) and $arrHttp["Target"]=="reserve")
@@ -276,21 +267,18 @@ function Diccionario(jx){
 	if (isset($arrHttp["prestamo"])) echo "<input type=hidden name=prestamo value=\"".$arrHttp['prestamo']."\">\n";
 	if (isset($arrHttp["Tabla"])) echo "<input type=hidden name=Tabla value=".$arrHttp['Tabla'].">\n";
 	if (isset($arrHttp["copies"])) echo "<input type=hidden name=copies value=".$arrHttp['copies'].">\n";
-	echo "<table valign=center cellpadding=2 Cellspacing=0 border=0 width=60%>\n
-			<tr>
-				<td colspan=3>";
-				if (file_exists($db_path.$arrHttp["base"]."/pfts/".$_SESSION["lang"]."/search_expr.tab")){
-					if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$arrHttp["base"]."_EDITSTOREDEXPR"])){
-						if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry")
-							echo "<a class='bt bt-blue' href=\"edit_stored_expr.php?base=".$arrHttp["base"]."\"><i class='far fa-edit'></i> ". $msgstr["edit_search_expr"]."</a>";
-					}
-				}
-				echo "<p>".$msgstr["mensajeb"]."</td>
-			<tr>
-				<td nowrap><b>".$msgstr["campo"]."</b></td>
-				<td><b>".$msgstr["expresion"]."</td>
-				<td>&nbsp;</td>
-			</tr>\n";
+?>
+<table valign=center cellpadding=2 Cellspacing=0 border=0 >
+	<tr>
+		<td colspan=3>
+		<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['search_field']?></span><br>
+		<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr['search_index']?></span>
+	</tr><tr>
+		<td style="text-align:center;background-color:#cccccc"><b><?php echo $msgstr["campo"]?></b></td>
+		<td style="text-align:center;background-color:#cccccc"><b><?php echo $msgstr["expresion"]?></b></td>
+		<td style="text-align:center;background-color:#cccccc">&nbsp;</td>
+	</tr>
+	<?php
 	for ($jx=0;$jx<$Tope;$jx++){
 		echo "<tr><td  valign=center nowrap>";
 		echo "<select name=camp>";
@@ -303,6 +291,7 @@ function Diccionario(jx){
 			$parte2=$l[1];
 			$parte1=$l[0];
 			echo "<option value='".$parte2."'";
+			/* The first field is ---. Is shown if no field is selected */
 			if ($jx==0 and isset($_SESSION["Expresion"])){
 
 			}else{
@@ -316,19 +305,16 @@ function Diccionario(jx){
 		echo "<td align=center>";
 		if (isset($_SESSION["Expresion"]) and $jx==0){
 			$E=str_replace('"',"''",$_SESSION["Expresion"]);
-			//if (substr($E,0,1)=="("){
-			//	$E=substr($E,1);
-			//	if (substr($E,strlen($E)-1)==")")
-			//		$E=substr($E,0,strlen($E)-1);
-			//}
-            //$E=str_replace('"','',$E);
-			echo "<input type=text size=100% name=expre value=\"".$E."\"></td>\n<td nowrap>";
-		//	unset($_SESSION["Expresion"]);
+			echo "<input type=text size=80 name=expre value=\"".$E."\"></td>\n<td nowrap>";
 		}else{
-			echo "<input type=text size=100 name=expre value=\"\"></td>\n<td nowrap>";
+			echo "<input type=text size=80 name=expre value=\"\"></td>\n<td nowrap>";
 		}
-		if ($str_expr=="Y")
-			echo "<a class='button_browse show' href=Javascript:GetExpression($jx)><i class='fa fa-search'  alt=\"".$msgstr["copysearch"]."\"></i></a>";
+		if ($str_expr=="Y") {
+			?>
+			<a  href=Javascript:GetExpression(<?php echo $jx; ?>) title='<?php echo $msgstr["copysearch"]?>'>
+				<i class='fa fa-warehouse'  alt="<?php echo $msgstr["copysearch"]?>"></i></a>
+			<?php
+		}
 		if ($jx<$Tope-1){
        		echo "&nbsp;<select name=oper size=1>";
        		echo "<option value=and selected>and\n";
@@ -336,27 +322,20 @@ function Diccionario(jx){
        		echo "<option value=^>and not\n";
        		echo "</select>\n";
  		}else {
-       		echo "<input type=hidden name=oper>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;";
+       		echo "<input type=hidden name=oper>";
     	}
-
    		echo "</td>\n";
-
 	}
-?>
-
-</tr>
-</table>
-
-
-	<div class="ActionFooter">
+	?>
+	</tr>
+	<tr>
+	<td colspan=3>
         <a href="javascript:PrepararExpresion()" class="bt bt-green">
              <i class="fas fa-search"></i> <?php echo $msgstr["m_buscar"]?>
-        </a>
+        </a>&nbsp;
         <a href="javascript:LimpiarBusqueda(this,1)" class="bt bt-gray">
            <i class="fa fa-times"></i> <?php echo $msgstr["borrar"]?>
-        </a>
-
-
+        </a>&nbsp;
 	<?php
 	if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="reserve"){
 	?>
@@ -364,12 +343,23 @@ function Diccionario(jx){
             <i class="fas fa-search"></i> <?php echo $msgstr["back"]?>
          </a>
 	<?php
-
+	}
+	if ($str_expr=="Y"){
+		if (isset($_SESSION["permiso"]["db_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_ALL"]) or  isset($_SESSION["permiso"][$arrHttp["base"]."_CENTRAL_ALL"])  or  isset($_SESSION["permiso"][$arrHttp["base"]."_EDITSTOREDEXPR"])){
+			if (isset($arrHttp["desde"]) and $arrHttp["desde"]=="dataentry") {
+				?> &nbsp;
+				<a class='bt bt-blue' href="edit_stored_expr.php?base=<?php echo $arrHttp["base"]?>">
+					<i class='far fa-edit'></i> <?php echo $msgstr["edit_search_expr"]?></a> &nbsp;
+				<span style="color:var(--abcd-blue)" class="bt-disabled"><i class="fas fa-info-circle"></i>
+					<?php echo $msgstr['search_stored']?>&nbsp;<i class="fa fa-warehouse"></i></span>
+				<?php
+			}
+		}
 	}
 	?>
-	</div>
-
-		</form>
+	</td>
+</table>
+</form>
 	
 
 	<?php
@@ -404,9 +394,5 @@ function Diccionario(jx){
 	</form>
     </div>
 </div>
-
-
 <?php
-    include("../common/footer.php");
 }
-?>
