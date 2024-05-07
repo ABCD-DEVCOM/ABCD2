@@ -3,6 +3,7 @@
 20220220 fho4abcd Line-ends, newlook, back button&div-helper
 20220310 fho4abcd Translated error+cms->cm+do not show strange comment
 20220321 fho4abcd Modified for new configuration, table dimensions
+20240507 fho4abcd Add Opcion to form
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -219,6 +220,7 @@ if (trim($copies)!="")
 <input type=hidden name=cipar value=<?php echo $base?>.par>
 <input type=hidden name=archivo>
 <input type=hidden name=descripcion>
+<input type=hidden name=Opcion value="edit" >
 </form>
 </div>
 </div>

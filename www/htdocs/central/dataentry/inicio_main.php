@@ -13,6 +13,7 @@
 2023-02-03 fho4abcd Make selected records work, sort selected records. Enter record number works now also for search and selected records
 2024-01-29 fho4abcd Correct typo in iframe
 2024-04-03 fho4abcd Larger window for thesaurus
+2024-05-03 fho4abcd Less options for freesearch
 */
 //error_reporting(E_ALL);
 session_start();
@@ -432,7 +433,7 @@ function Menu(Opcion){
   	  	    	seleccion="&seleccionados="+RegistrosSeleccionados
   	  	   	else
   	  	   		seleccion=""
-			top.main.document.location="freesearch.php?&base="+base+"&cipar="+cipar+"&from=1&ver=N"+FormatoActual+seleccion
+			top.main.document.location="freesearch.php?&base="+base+"&cipar="+cipar+seleccion
 			break;
 		case "administrar":
 			if (RegistrosSeleccionados!="")
