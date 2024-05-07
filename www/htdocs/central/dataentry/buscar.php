@@ -4,6 +4,7 @@
 20210326 guilda Error when searching due to quoting
 20210327 fho4abcd Show error if camposbusqueda.tab is empty (prevents follow up errors)
 20240427 fho4abcd Moved footer from DibujarFormaBusqueda to this file
+20240430 fho4abcd Solve non closing window when expresion contains single quote
 */
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
@@ -239,6 +240,7 @@ switch ($arrHttp["Opcion"]){
 		break;
 	case "solobusqueda":
 	    $Expresion=PrepararBusqueda();
+		$Expresion=str_replace("'","\'",$Expresion);/* quotes in the string prevent running the script*/
 	    if ($arrHttp["Tabla"]=="imprimir" or $arrHttp["Tabla"]=="cGlobal"){
 	    	 $Ctrl='window.opener.document.forma1.Expresion.value=\''.$Expresion.'\'';
 	    }else{

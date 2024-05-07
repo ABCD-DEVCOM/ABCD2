@@ -59,7 +59,7 @@ include "css_settings.php";
             $text2 = "TEXT2";
         }
 ?>
-        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2024-01-04</small></span>
+        <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  -  v2.2.0-beta-1 + ... &rarr; 2024-05-07</small></span>
     </div>
         <div class="distributorLogo">
            <a  href="<?php 

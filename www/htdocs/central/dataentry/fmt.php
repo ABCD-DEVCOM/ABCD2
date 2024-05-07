@@ -16,6 +16,7 @@
 20230210 fho4abcd Show backbutton of actualized record for non-dataentry cases (e.g. acces/users/...). Remove unused cases
 20230321 rogercgui Updates compatibility for PHP versions higher than 8xx: $tag=(int)trim(substr($linea,0,4))*(int)1;
 20240128 fho4abcd Show always the footer. Shows only one div-helper/toolbar in case an edit without a format is done
+20240425 fho4abcd Improve html
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -107,7 +108,7 @@ include("../common/header.php");
 
 function InsertarEnlaces($base){
 	// inserta enlaces para desplegar la fdt, fst y formulario de búsqueda avanzada
-	echo "&nbsp; &nbsp; <a class='bt bt-blue' href=../dbadmin/fst_leer.php?base=$base target=_blank>FST</a>";
+	echo "&nbsp; &nbsp; <a class='bt bt-blue' href=\"../dbadmin/fst_leer.php?base=$base\" target=_blank>FST</a>";
 }
 
 function ReadWorksheetsRights(){
@@ -781,17 +782,17 @@ switch ($arrHttp["Opcion"]) {
         	$arrHttp["Opcion"]=="ninguna";
         	echo "	<div class=\"middle form\">
 						<div class=\"formContent\">
-						<table width=100%><td>\n";
+						<table width=100%><tr><td>\n";
 			//if ($wxisUrl!="") echo $wxisUrl."<br>";
 
-			echo $msgstr["expresion"].":<br>";
-            echo "<textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea>";
-            echo "<br><a class='bt bt-green' href=javascript:NuevaBusqueda()>".$msgstr["buscar"]."</a>";
+			echo $msgstr["expresion"].":<br>\n";
+            echo "<textarea name=nueva_b cols=150 rows=1>".stripslashes($arrHttp["Expresion"])."</textarea>\n";
+            echo "<br><a class='bt bt-green' href=\"javascript:NuevaBusqueda()\">".$msgstr["buscar"]."</a>";
 			InsertarEnlaces($arrHttp["base"]);
-			echo "<h4>".$msgstr["selected_records"].": ".$resultado."</h4></div></div>\n";
+			echo "<h4>".$msgstr["selected_records"].": ".$resultado."</h4>\n";
 			$arrHttp["Mfn"] =1;
 	        ColocarMfn();
-	        echo "</td></table>";
+	        echo "</td></tr></table>";
 	        echo "</div></div>";
 	        if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and strtoupper($arrHttp["footer"])!="N"))
 				include("../common/footer.php");
@@ -857,7 +858,7 @@ switch ($arrHttp["Opcion"]) {
 	        }
 		}
 
-			echo "</form></td></table></div></div>\n";
+			echo "</td></table>\n";
 			if (!isset($arrHttp["footer"]) or (isset($arrHttp["footer"]) and strtoupper($arrHttp["footer"])!="N"))
 				include("../common/footer.php");
 			die;
