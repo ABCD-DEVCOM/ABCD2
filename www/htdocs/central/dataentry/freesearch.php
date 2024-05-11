@@ -3,6 +3,7 @@
 2021-03-03 fho4abcd Replaced helper code fragment by included file
 2021-03-03 fho4abcd Conformance:moved <body>, deleted <td> replaced <center>,...
 2024-05-07 fho4abcd Improved user interface &layout, code cleanup
+2024-05-11 fho4abcd Added sort option, added options to save&recall form parameters
 */
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -23,16 +24,17 @@ include ("../lang/admin.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=".htmlspecialchars($value)."<br>";//die;
 
 $base =$arrHttp["base"];
-$cipar =$arrHttp["base"]."par";
-include("leer_fdt.php");
+include("freesearch_save_inc.php");
+$Savparam_arr=array();
+Freesearch_table_file("Read",$Savparam_arr);
 
+include("leer_fdt.php");
 $Fdt_unsorted=LeerFdt($base);
 $Fdt=array();
 foreach ($Fdt_unsorted as $value){
 	$f=explode('|',$value);
 	$Fdt[$f[1]]=$value;
 }
-
 ksort($Fdt);
 
 if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
@@ -107,6 +109,8 @@ function EnviarForma(){
 		return
 	}
 	document.forma1.fields.value=fields
+	document.forma1.target=""
+	document.forma1.action='freesearch_ex.php'
 	document.forma1.submit()
 }
 
@@ -125,6 +129,50 @@ function Buscar(){
 function ClearSelectField(){
 	document.forma1.seleccionados.value=""
 }
+function DelSavParams(){
+	if (document.forma1.SavParams.length<=1){
+		alert("<?php echo $msgstr["freesearch_nopar"]?>")
+		return
+	}
+	document.delsavparams.target="savefreesearch"
+	var winl = (screen.width-300)/2;
+	var wint = (screen.height-200)/2;
+	msgwin=window.open("","savefreesearch","menu=no,status=yes,width=600, height=400,left="+winl+",top="+wint)
+	msgwin.focus()
+	document.delsavparams.submit()
+}
+function LoadSavParams(){
+	for (i=0;i<document.forma1.SavParams.options.length;i++){
+		if (document.forma1.SavParams.options[i].selected){
+			tag=document.forma1.SavParams.options[i].value
+		}
+	}
+	if(tag!="") {
+		var myurl=window.origin+window.location.pathname+"?"+tag
+		if(top.RegistrosSeleccionados!="") myurl=myurl+"&seleccionados="+top.RegistrosSeleccionados
+		window.open(myurl,'_self');
+	}
+}
+function SaveSavParams(){
+	fields=""
+		for (i=0;i<document.forma1.free_C.options.length;i++){
+			if (document.forma1.free_C.options[i].selected){
+				tag=document.forma1.free_C.options[i].value
+				t=tag.split('|')
+				fields=fields+t[0]+";"
+			}
+		}
+
+	document.forma1.fields.value=fields
+
+	document.forma1.action='freesearch_save.php'
+	document.forma1.target="savefreesearch"
+	var winl = (screen.width-300)/2;
+	var wint = (screen.height-200)/2;
+	msgwin=window.open("","savefreesearch","menu=no,status=yes,width=600, height=400,left="+winl+",top="+wint)
+	msgwin.focus()
+	document.forma1.submit()
+}
 </script>
 <div class="sectionInfo">
 	<div class="breadcrumb">
@@ -141,10 +189,9 @@ function ClearSelectField(){
 <div class="formContent">
 <div align=center>
 
-<form name=forma1 method=post action=freesearch_ex.php onsubmit="Javascript:return false">
+<form name=forma1 method=post><!--action and target set by javascript-->
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
-<input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
-<input type=hidden name=MaxMfn>
+<input type=hidden name=cipar value="<?php echo $arrHttp["base"]?>.par">
 <input type=hidden name=fields>
 <table style="border-spacing:3px;padding-left:2px;padding-right:2px">
 	<tr>
@@ -152,11 +199,11 @@ function ClearSelectField(){
 	<tr>
 		<td nowrap><?php echo $msgstr["cg_rango"]?> &rarr;&nbsp;</td>
 		<td><?php echo $msgstr["cg_from"]?>:
-			<input type=text name=from size=10 value=<?php if(isset($arrHttp["from"])) echo $arrHttp["from"];?>>
+			<input type=text name=from size=10 value="<?php if(isset($arrHttp["from"])) echo $arrHttp["from"];?>">
 			&nbsp; (>0)
 		</td>
 		<td><?php echo $msgstr["cg_to"]?>:
-			<input type=text name=to size=10 value=<?php if(isset($arrHttp["to"])) echo $arrHttp["to"];?>>
+			<input type=text name=to size=10 value="<?php if(isset($arrHttp["to"])) echo $arrHttp["to"];?>">
 			<script> if (top.window.frames.length>0)
 				document.writeln(" &nbsp; (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script></td>
 		<td></td>
@@ -167,11 +214,14 @@ function ClearSelectField(){
 		?>
 		<tr><td colspan=4><hr></td>
 		<tr>
-			<td><?php echo $msgstr["selected_records"]?> &rarr;&nbsp;</td>
+			<td><?php echo $msgstr["selected_records"]?> &rarr;&nbsp;
+				<?php if(isset($arrHttp["seloutdated"])) echo "<br><span style='color:red'>".$msgstr["freesearch_outof"]."!!</span>";?>
+			</td>
 			<td colspan=2>
 				<?php
 				$sel=str_replace("__",",",trim($arrHttp["seleccionados"]));
 				$sel=str_replace("_","",$sel);
+				$sel=ltrim($sel,",");
 				?>
 				<textarea rows=1 cols=60 name=seleccionados readonly
 					title="<?php echo $msgstr["freesearch_ro"]?>"><?php echo $sel?> </textarea>
@@ -198,12 +248,34 @@ function ClearSelectField(){
 	<tr>
 		<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["freesearch_4"]?></td>
 	<tr>
-	<td style="text-align:left;">
-		<input type=radio name=tipob value=string
-			<?php if (isset($arrHttp["tipob"]) && $arrHttp["tipob"]=="string") echo "checked";?>> <?php echo $msgstr["freesearch_5"]?>
-		<br><input type=radio name=tipob value=pft
-			<?php if (isset($arrHttp["tipob"]) && $arrHttp["tipob"]=="pft") echo "checked";?>> <?php echo $msgstr["freesearch_6"]?>
-	<td colspan=3><textarea name=search cols=80 rows=2><?php if (isset($arrHttp["search"])) echo $arrHttp["search"]?></textarea>
+		<td style="text-align:left;"><?php echo $msgstr["freesearch_sort"];?></td>
+		<td>
+			<select name=sorttag size=1>
+				<?php
+					$sorttag="";
+					if (isset($arrHttp["sorttag"])) $sorttag=$arrHttp["sorttag"];
+				?>
+				<option value='' <?php if ($sorttag=="") echo "selected"?>></option>
+				<?php
+				foreach ($Fdt as $linea){
+					$ischecked="";
+					$t=explode('|',$linea);
+					if ($t[1]==$sorttag) {$ischecked=" selected";}
+					echo "<option value='".$t[1]."'".$ischecked.">".$t[2]." [".$t[1]."]";
+					if ($t[5]!="") echo " (".$t[5].")";
+					echo "</option>"."\n";
+				}
+				?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">
+			<input type=radio name=tipob value=string
+				<?php if (isset($arrHttp["tipob"]) && $arrHttp["tipob"]=="string") echo "checked";?>> <?php echo $msgstr["freesearch_5"]?>
+			<br><input type=radio name=tipob value=pft
+				<?php if (isset($arrHttp["tipob"]) && $arrHttp["tipob"]=="pft") echo "checked";?>> <?php echo $msgstr["freesearch_6"]?>
+		<td colspan=3><textarea name=search cols=80 rows=2><?php if (isset($arrHttp["search"])) echo $arrHttp["search"]?></textarea>
 	</td>
 	<tr>
 		<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["freesearch_fld4str"]?></td>
@@ -234,11 +306,39 @@ function ClearSelectField(){
 			</tr>
 			</table>
 	</tr>
-	<tr><td colspan=4 style="text-align:right"><a href="javascript:EnviarForma()" class="bt bt-green">
-		 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?></a>
-		 </td>
+	<tr>
+		<td style="text-align:center;background-color:#cccccc" colspan=4></td>
+	</tr>
+	<tr>
+		<td><?php echo $msgstr["freesearch_use"]?></td>
+		<td colspan=2>
+			<select name=SavParams size=1 onchange="javascript:LoadSavParams()">
+				<option></option>
+				<?php
+				foreach($Savparam_arr as $value){
+					$savarr=explode('|',$value);
+					?><option value="<?php echo $savarr[1]?>"> <?php echo $savarr[0]?></option>
+					<?php
+				}
+				?>
+			</select>
+		</td>
+		<td style="text-align:right"><a href="javascript:EnviarForma()" class="bt bt-green">
+		 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?></a><br>
+		</td>
+	<tr><td colspan=2>
+			<a href="javascript:SaveSavParams()" class="bt bt-blue">
+				<i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a>
+			<a href="javascript:DelSavParams()" class="bt bt-blue"> &nbsp;
+				<i class="fas fa-trash"></i> &nbsp; <?php echo $msgstr["freesearch_del"]?></a>
+		</td>
 	</tr>
 </table>
+</form>
+<form name=delsavparams method=post action="freesearch_save.php">
+<input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
+<input type=hidden name=cipar value="<?php echo $arrHttp["base"]?>.par">
+<input type=hidden name=Option value="delete">
 </form>
 </div>
 </div>
