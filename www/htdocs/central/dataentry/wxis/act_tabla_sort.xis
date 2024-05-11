@@ -1,0 +1,137 @@
+<IsisScript>
+<!--
+-- 20240509 fho4abcd Created by merging act_tabla.xis and sort.xis. Not a direct replacement for these scripts
+-- Output format like
+-- $$POSICION:1                                     $$5883                     |33024|150= Anke____$$$190= Het____$$$
+-- $$POSICION:<Isis_Current=current sequence number>$$<Isis_Items=total in set>|<MFN>|<pft output>
+-- <pft output>: for each value:<string>____$$$
+--
+-- See comments after parameters for some details
+-->
+	<trace>XOn</trace>
+	<section>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=5015>cipar</field>
+		<field action=cgi tag=5016>syspar</field>
+		<field action=cgi tag=3030>Formato</field>	<!-- pft for generating part of the output-->
+		<field action=cgi tag=3035>sortkey</field>	<!-- pft for sortkey (e.g v200)-->
+		<field action=cgi tag=9001>Opcion</field>	<!-- BUSCAR(=search expresion),RANGO(=from-to range),SELECCIONADOS=(Mfn list)-->
+		<field action=cgi tag=3000>Expresion</field>
+		<field action=cgi tag=2000>from</field>
+		<field action=cgi tag=2001>to</field>
+		<field action=cgi tag=2002>fromset</field>	<!-- start sequence nr of subset for output -->
+		<field action=cgi tag=2003>toset</field>	<!-- end sequence nr of subset for output -->
+		<field action=cgi tag=3001>Mfn</field>		<!-- Mfn list e.g. '78772'/,'78976'/,'79445'-->
+		<field action=cgi tag=9088>cttype</field>
+		<field action=cgi tag=1>path_db</field>
+		<display><pft>if p(v9088) then 'Content-type: text/html'/# fi</pft></display>
+		<parm name=cipar>
+			<pft>if p(v5016) then replace(s(cat(v5016)),'%path_database%',v1),fi,/if p(v5015) then replace(s(cat(v5015)),'%path_database%',v1)/ fi</pft>
+		</parm>
+		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
+		<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
+		<parm name="buffersize">200000</parm>
+
+		<flow action=jump>
+			<pft>
+				select s(v9001)
+					case 'buscar':		'BUSCAR'
+					case 'rango':		'RANGO'
+					case 'seleccionados': 'SELECCIONADOS'
+				endsel
+			</pft>
+		</flow>
+
+		<flow action=exit><display><pft>'ERROR in act_tabla_sort.xis wrong value for Opcion'</pft></display></flow>
+
+		<label>BUSCAR</label>
+		<do task=search>
+			<parm name=db><pft>v5001</pft></parm>
+			<parm name=from><pft>'1'</pft></parm>
+			<parm name=expression>
+				<pft>
+					v3000
+				</pft>
+			</parm>
+			<loop>
+				<field action=cgi tag=3035>sortkey</field>
+				<field action=import tag=3030>3030</field>
+				<list action=load type=sort>
+					<pft type=reload><pft>v3035,`'^a',f(mfn,1,0)/`</pft></pft>
+				</list>
+			</loop>
+			<do task=list>
+				<field action=define tag=1>Isis_Item</field>
+				<field action=define tag=1001>Isis_Current</field>
+				<field action=define tag=1002>Isis_Total</field>
+				<parm name=from><pft>v2002</pft></parm>
+				<parm name=to><pft>v2003</pft></parm>
+				<loop>
+					<field action=import tag=5001>5001</field>
+					<field action=import tag=3030>3030</field>
+					<display>
+						<pft>'$$POSICION:'V1001,'$$',V1002'|'v1^a'|'</pft>
+					</display>
+					<display>
+						<pft type=reload><pft>'REF([V5001]val(v1^a),'v3030',)'</pft></pft>
+					</display>
+				</loop>
+			</do>
+		</do>
+		<flow action=exit>1</flow>
+
+   		<label>RANGO</label>
+      	<do task=mfnrange>
+           	<parm name=db><pft>v5001</pft></parm>
+           	<parm name=from><pft>v2000</pft></parm>
+           	<parm name=to><pft>v2001</pft></parm>
+			<loop>
+				<field action=cgi tag=3035>sortkey</field>
+				<list action=load type=sort>
+					<pft type=reload><pft>v3035,`'^a',f(mfn,1,0)/`</pft></pft>
+				</list>
+			</loop>
+			<do task=list>
+				<field action=define tag=1>Isis_Item</field>
+				<field action=define tag=1001>Isis_Current</field>
+				<field action=define tag=1002>Isis_Items</field>
+				<parm name=from><pft>v2002</pft></parm>
+				<parm name=to><pft>v2003</pft></parm>
+				<loop>
+					<field action=import tag=5001>5001</field>
+					<field action=import tag=3030>3030</field>
+					<display>
+						<pft>'$$POSICION:'V1001,'$$',V1002'|'v1^a'|'</pft>
+					</display>
+					<display>
+						<pft type=reload><pft>'REF([V5001]val(v1^a),'v3030',)'</pft></pft>
+					</display>
+				</loop>
+			</do>
+		</do>
+		<flow action=exit>1</flow>
+
+		<label>SELECCIONADOS</label>
+		<field action=cgi tag=5001>base</field>
+		<field action=cgi tag=3035>sortkey</field>
+		<list action=load type=list><pft type=reload><pft>v3001</pft></pft></list>
+		<do task="list">
+				<field action=define tag=1>Isis_Item</field>
+				<field action=define tag=1001>Isis_Current</field>
+				<field action=define tag=1002>Isis_Items</field>
+				<parm name=sort><pft type=reload><pft>'ref([`'v5001[1]'`]val(v1),'v3035'/)'</pft></pft></parm>
+				<loop>
+					<field action=import tag=5001>5001</field>
+					<field action=import tag=3030>3030</field>
+					<display>
+						<pft>'$$POSICION:'V1001,'$$',V1002'|'v1'|'</pft>
+					</display>
+					<display>
+						<pft type=reload><pft>'REF([`'v5001[1]'`]val(v1),',v3030/',)'</pft></pft>
+					</display>
+				</loop>
+		</do>
+		<flow action=exit>1</flow>
+
+</section>
+</IsisScript>
