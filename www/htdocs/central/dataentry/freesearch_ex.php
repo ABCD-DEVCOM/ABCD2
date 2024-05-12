@@ -3,6 +3,7 @@
 20220713 fho4abcd Use $actparfolder as location for .par files
 20220716 fho4abcd div-helper, remove unused functions, improve html
 20240507 fho4abcd Remove bugs, improve counters, add show button, layout, code cleanup
+20240511 fho4abcd Added sort option. Replaced act_tabla.xis by act_tabla_sort.xis.
 */
 session_start();
 include("../common/get_post.php");
@@ -18,63 +19,11 @@ include("../lang/admin.php");
 include("leer_fdt.php");
 set_time_limit(0);
 
-function GenerarSalida($Mfn,$numshown,$total,$Pft){
-	/*
-	** This function shows the output for one selected record.
-	*/
-	global $arrHttp,$xWxis,$db_path,$actparfolder,$msgstr;
-	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"]."&Mfn=$Mfn&count=1";
-  	if ($Pft=="") $Pft=$arrHttp["search"].'#';
-	$query.="&Formato=".urlencode($Pft.'/')."&Opcion=rango";
-	$contenido="";
-	$IsisScript=$xWxis."act_tabla.xis";
-	include("../common/wxis_llamar.php");// sets $contenido
-	foreach ($contenido as $value){
-		if (trim($value)=="") continue;
-		$val=explode('|',$value);
-   		$value=$val[0];
-   		$value=explode('$$',$value);
-   		if ($arrHttp["tipob"]=="pft" and trim($val[2])!=""){
-			$numshown++;
-			$Mfn=$val[1];
-           	echo "<tr>";
-			echo "<td>".$numshown."/".$total."</td>";
-			echo "<td>".$val[1]."</td>";
-			echo "<td>";
-			echo $val[2];
-			echo "</td>";
-	   		ShowActionBox($Mfn);
-   		}else{
-	   		if (stristr($val[2],$arrHttp["search"])!==false){
-				$numshown++;
-	   			$vv=explode('____$$$',$val[2]);
-				$Mfn=$val[1];
-	   			echo "<tr>";
-				echo "<td>".$numshown."/".$total."</td>";
-	   			echo "<td>".$Mfn."</td><td>";
-				$numrecresults=0;
-				$cont="";
-	   			foreach ($vv as $conseguido) {
-	   				$ixc=stripos($conseguido,$arrHttp["search"]);
-	   				if ($ixc!==false){
-						if ( $numrecresults>0) $cont.="<br>";
-						$numrecresults++;
-						$ixter=strlen($arrHttp["search"]);
-	   					$cont.=substr($conseguido,0,$ixc)."<font color=red>".substr($conseguido,$ixc,$ixter)."</font>".substr($conseguido,$ixter+$ixc);
-	   				}
-				}
-				echo $cont;
-				echo "</td>";
-				ShowActionBox($Mfn);
-    		}
-		}
-	}
-	return $numshown;
-}
 function ShowActionBox($Mfn){
 	/*
 	** Shows the tablecell with actions (selectmarker and show button)
 	*/
+	global $msgstr;
 	echo "<td nowrap>";
 	echo "<input type=checkbox name=sel_mfn  value=".$Mfn." id=".$Mfn." onclick=SelecReg(this)>";
 	?>
@@ -166,7 +115,10 @@ table.tabborder td {
 		<?php $backtoscript="freesearch.php?tipob=".$arrHttp["tipob"];
 		if (isset($arrHttp["from"])) $backtoscript.="&from=".$arrHttp["from"];
 		if (isset($arrHttp["to"])) $backtoscript.="&to=".$arrHttp["to"];
-		if (isset($arrHttp["seleccionados"])) $backtoscript.="&seleccionados=".$arrHttp["seleccionados"];
+		if (isset($arrHttp["seleccionados"])){
+			$backtoscript.="&seleccionados=".$arrHttp["seleccionados"];
+			$backtoscript.="&seloutdated=1";
+		}
 		if (isset($arrHttp["Expresion"])) $backtoscript.="&Expresion=".urlencode($arrHttp["Expresion"]);
 		if (isset($arrHttp["search"])){
 			$arrHttp["search"]=urldecode($arrHttp["search"]);
@@ -174,6 +126,7 @@ table.tabborder td {
 		}
 		if (isset($arrHttp["count"])) $backtoscript.="&count=".urlencode($arrHttp["count"]);
 		if (isset($arrHttp["fields"])) $backtoscript.="&fields=".urlencode($arrHttp["fields"]);
+		if (isset($arrHttp["sorttag"])) $backtoscript.="&sorttag=".urlencode($arrHttp["sorttag"]);
 		include "../common/inc_back.php";
 		?>
 	</div>
@@ -225,17 +178,19 @@ if (isset($arrHttp["to"]))		$total=$arrHttp["to"];
 if (isset($arrHttp["total"]))	$total=$arrHttp["total"];
 $count=$arrHttp["count"];
 $numshown=0;
-if (isset($arrHttp["numshown"]))	$numshown=$arrHttp["numshown"];
+if (isset($arrHttp["numshown"]))$numshown=$arrHttp["numshown"];
+$sorttag="";
+if (isset($arrHttp["sorttag"]))	$sorttag="&sortkey=v".$arrHttp["sorttag"];
 $execmode="";
 ?>
 <div align=center>
 <div style="border-style:solid;border-width:2px; text-align:left;">
-<table>
+<table style="table-layout:fixed;margin-left:auto;margin-right:auto;width:100%">
 	<?php
 	if (isset($arrHttp["from"])){
 		$execmode="Range";
 		?>
-		<tr><td><?php echo $msgstr["freesearch_range"]?></td><td>:</td>
+		<tr><td style="width:120px"><?php echo $msgstr["freesearch_range"]?></td><td style="width:10px">:</td>
 			<td><?php echo $msgstr["cg_from"].": ".$arrHttp["from"]." &nbsp; &nbsp; ".$msgstr["cg_to"].": ".$arrHttp["to"];?></td>
 		</tr>
 		<?php
@@ -243,16 +198,23 @@ $execmode="";
 	if (isset($arrHttp["seleccionados"])){
 		$execmode="Selected";
 		?>
-		<tr><td><?php echo $msgstr["freesearch_selec"]?></td><td>:</td>
-			<td><?php echo $arrHttp["seleccionados"];?></td>
+		<tr><td style="width:120px"><?php echo $msgstr["freesearch_selec"]?></td><td style="width:10px">:</td>
+			<td style="word-break: break-word;"><?php echo $arrHttp["seleccionados"];?></td>
 		</tr>
 		<?php
 	}
 	if (isset($arrHttp["Expresion"])){
 		$execmode="Search";
 		?>
-		<tr><td><?php echo $msgstr["cg_search"]?></td>
-			<td>:</td><td><?php echo $arrHttp["Expresion"];?></td>
+		<tr><td style="width:120px"><?php echo $msgstr["cg_search"]?></td><td style="width:10px">:</td>
+			<td style="word-break: break-word;"><?php echo $arrHttp["Expresion"];?></td>
+		</tr>
+		<?php
+	}
+	if (isset($arrHttp["sorttag"])) {
+		?>
+		<tr><td><?php echo $msgstr["freesearch_sort"]?></td><td style="width:10px">:</td>
+			<td><?php echo $arrHttp["sorttag"];?></td>
 		</tr>
 		<?php
 	}
@@ -260,49 +222,61 @@ $execmode="";
 	if ($arrHttp["tipob"]=="pft"){
 		$locsearch=htmlspecialchars($locsearch);
 		?>
-		<tr><td><b><?php echo $msgstr["freesearch_6"]?></b></td><td>:</td><td><b><?php echo $locsearch;?></b></td>
+		<tr><td><b><?php echo $msgstr["freesearch_6"]?></b></td><td>:</td>
+			<td style="word-break: break-word;"><b><?php echo $locsearch;?></b></td>
 		<?php
 	} else {
 		?>
-		<tr><td><b><?php echo $msgstr["freesearch_5"]?></b></td><td>:</td><td><b><?php echo $locsearch;?></b></td>
+		<tr><td><b><?php echo $msgstr["freesearch_5"]?></b></td><td>:</td>
+			<td style="word-break: break-word;"><b><?php echo $locsearch;?></b></td>
 		<?php
 	}
 	if (isset($arrHttp["fields"]) && $arrHttp["fields"]!=""){
 		?>
-		<tr><td><?php echo $msgstr["freesearch_fields"]?></td><td>:</td><td><?php echo $arrHttp["fields"];?></td>
+		<tr><td><?php echo $msgstr["freesearch_fields"]?></td><td>:</td>
+			<td style="word-break: break-word;"><?php echo $arrHttp["fields"];?></td>
 		<?php
 	}
 	?>
 </table>
 </div></div>
 <?php
-$arr_mfn=array();
-$sel_mfn=array();
-if (isset($arrHttp["seleccionados"])){
-	$Mfn=explode(',',$arrHttp["seleccionados"]);
-	foreach ($Mfn as $m){
-		$m=trim($m);
-		if ($m!="" and is_numeric($m) and $m>0)
-			$sel_mfn[$m]=$m;
-	}
-}
-if ($execmode=="Search"||$execmode=="Range"){
 	$total=0;
 	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
   	if ($Pft=="") $Pft=$arrHttp["search"].'#';
 	$query.="&Formato=".urlencode($Pft.'/');
 	if ($execmode=="Search") {
+		$endofset=$count+$startofset-1;
 		$query.="&Expresion=".urlencode(stripslashes($arrHttp["Expresion"]))."&Opcion=buscar";
-		$query.="&from=$startofset&Mfn=$startofset&count=$count";
-	} else {
+		$query.="&fromset=$startofset&toset=$endofset".$sorttag;
+	} elseif ($execmode=="Range") {
 		$total=$arrHttp["to"]-$arrHttp["from"]+1;
-		$Mfn=$arrHttp["from"];
-		if (isset($arrHttp["nextrec"])) $Mfn=$Mfn+$arrHttp["nextrec"]-1;
-		$curcount=$count;
-		if (($arrHttp["to"]-$Mfn)<$curcount) $curcount=$arrHttp["to"]-$Mfn+1;
-		$query.="&Mfn=$Mfn&count=$curcount"."&Opcion=rango";
+		$from=$arrHttp["from"];
+		$to=$arrHttp["to"];
+		$fromset=1;
+		if (isset($arrHttp["nextrec"])) $fromset=$fromset+$arrHttp["nextrec"]-1;
+		$toset=$fromset+$count-1;
+		if ($toset>$to) $toset=$to;
+		$query.="&from=$from&to=$to"."&Opcion=rango";
+		$query.="&fromset=$fromset&toset=$toset".$sorttag;
+	} elseif ($execmode=="Selected") {
+		$seleccion="";
+		$mfn_sel=explode(',',$arrHttp["seleccionados"]);
+		$total=sizeof($mfn_sel);
+		foreach ($mfn_sel as $sel){
+			if ($seleccion==""){
+				$seleccion="'$sel'";
+			}else{
+				$seleccion.="/,'$sel'";
+			}
+		}
+		$query.="&Opcion=seleccionados";
+		$query.="&Mfn=$seleccion".$sorttag;;
+	} else {
+		echo "programming error. die";
+		die;
 	}
-	$IsisScript=$xWxis."act_tabla.xis";
+	$IsisScript=$xWxis."act_tabla_sort.xis";
 	include("../common/wxis_llamar.php");
 	$ix=0;
 	foreach ($contenido as $value){
@@ -313,7 +287,7 @@ if ($execmode=="Search"||$execmode=="Range"){
 			*/
 			$val=explode('|',$value);
 			$pos=explode('$$',$val[0]);
-			if ($execmode=="Search") $total=$pos[2];
+			if ($execmode=="Search") $total=$pos[2]; /* $$POSICION:1$$5883 */
 			$cont="";
 			if ($arrHttp["tipob"]=="string"){
             	if (stristr($val[2],$arrHttp["search"])!==false){
@@ -346,17 +320,6 @@ if ($execmode=="Search"||$execmode=="Range"){
 			}
 		}
 	}
-}
-else {
-	//se construye el rango de Mfn's a procesar
-	$Mfn=explode(',',$arrHttp["seleccionados"]);
-	foreach ($Mfn as $m){
-		$m=trim($m);
-		if ($m!="" and is_numeric($m) and $m>0)
-			$arr_mfn[$m]=$m;
-	}
-	$total=count($arr_mfn);
-}
 ?>
 <div style="text-align:center">
 <?php
@@ -380,29 +343,22 @@ if ($total!=0) { /* display the result table only if any record is found*/
 		<td><input type=checkbox name=chkall onclick=CheckAll() title="<?php echo $msgstr["selected_records_add"]?>"></td>
 	</tr>
 	<?php
-	if ($execmode=="Search" || $execmode=="Range"){
-		if (count($arr_mfn)==0) {
-			$showcount=min($count,$total);
-			?>
-			<tr><td colspan=4><?php echo $msgstr["freesearch_noloc"]." ".$showcount." ".$msgstr["registros"]?>
-			</tr>
-			<?php
-		} else {
-			foreach ($arr_mfn as $Mfn){
-				$numshown++;
-				?>
-				<tr>
-				<td><?php echo $numshown."/".$total?></td>
-				<td><?php echo $Mfn?></td>
-				<td ><?php echo $arr_msg[$Mfn]?></td>
-				<?php
-				ShowActionBox($Mfn);
-			}
-		}
-	}else{
-		$numshown=0;
+	if (count($arr_mfn)==0) {
+		$showcount=min($count,$total);
+		?>
+		<tr><td colspan=4><?php echo $msgstr["freesearch_noloc"]." ".$showcount." ".$msgstr["registros"]?>
+		</tr>
+		<?php
+	} else {
 		foreach ($arr_mfn as $Mfn){
-			$numshown=GenerarSalida($Mfn,$numshown,$total,$Pft);
+			$numshown++;
+			?>
+			<tr>
+			<td><?php echo $numshown."/".$total?></td>
+			<td><?php echo $Mfn?></td>
+			<td ><?php echo $arr_msg[$Mfn]?></td>
+			<?php
+			ShowActionBox($Mfn);
 		}
 	}
 	?>
