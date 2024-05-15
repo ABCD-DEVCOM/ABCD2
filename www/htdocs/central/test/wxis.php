@@ -9,11 +9,15 @@
 20210402 fho4abcd Added test with context
 20220710 fho4abcd More and improved checks, improved html and readbility, fixed security problem, option to vary some parameters
 20221028 fho4abcd Show value of $postMethod + count number of entries with any expiration date (check is left to the user)
+20240515 fho4abcd Add new knowledge about allow_fopen_url. Improve layout and html
 */
+include("../common/get_post.php");
+include(realpath("../config.php"));
 ?>
 <!DOCTYPE html>
-<html>
-<head>
+
+<html lang="<?php echo $lang;?>" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang;?>">
+<font color=blue>Configuration file location'<?php echo realpath("../config.php")?></font><br><br>
 <style>
 table, th, td {
   border: 1px solid black;
@@ -25,11 +29,7 @@ td {
 }
 input[type=text] {border:0px;background-color:#F5FFB7;width:400px;}
 </style>
-</head>
-<font color=blue>Reading configuration from file '<?php echo realpath("../config.php")?></font><br><br>
 <?php
-include("../common/get_post.php");
-include(realpath("../config.php"));
 $tstphp_step=0;
 $tstphp_check=0;
 if (isset($arrHttp["tstphp_step"])) $tstphp_step=$arrHttp["tstphp_step"];
@@ -59,6 +59,12 @@ if ($tstphp_step==0){
         </table>
     </form>
     <?php
+	$inipath = php_ini_loaded_file();
+	if ($inipath) {
+		echo 'Loaded php.ini: ' . $inipath."<br>";
+	} else {
+		echo 'A php.ini file is not loaded';
+	}
 } elseif ($tstphp_step==1) {
     ?>
     <div>This form allows testing with deviations from the configuration<br></div>
@@ -73,18 +79,25 @@ if ($tstphp_step==0){
             <tr><td>Login database ($base)</td><td><input type=text name="tstphp_logindatabase" value="<?php echo $tstphp_logindatabase?>" ></td></tr>
             <tr><td>Path to IsisScripts ($xWxis)</td><td><input type=text name="xWxis" value="<?php echo $xWxis?>" ></td></tr>
             <?php if ($wxisUrl!="") {?>
-                <tr><td>Hello test: URL wxis($wxisUrl) &rarr; POST method.</td><td><input type=text name="wxisUrl" value="<?php echo $wxisUrl?>" ></td></tr>
-                <input type=hidden name="Wxis" value="" >
+                <tr><td>Hello test: URL wxis($wxisUrl) &rarr; POST method.</td>
+				<td><input type=text name="wxisUrl" value="<?php echo $wxisUrl?>" ></td>
+				</tr>
             <?php } else { ?>
                 <tr><td>Path to wxis($Wxis) &rarr; GET method</td><td><input type=text name="Wxis" value="<?php echo $Wxis?>"</td></tr>
-                <input type=hidden name="wxisUrl" value="" >
             <?php } ?>
             <tr><td>Login test: Server URL ($server_url)</td><td><input type=text name="server_url" value="<?php echo $server_url?>" ></td></tr>
             <tr><td colspan=2><input type='submit' value='Continue' title='Continue'></td></tr>
         </table>
+		<input type=hidden name="Wxis" value="" >
+		<input type=hidden name="wxisUrl" value="" >
     </form>
     <?php
-
+	$inipath = php_ini_loaded_file();
+	if ($inipath) {
+		echo 'Loaded php.ini: ' . $inipath."<br>";
+	} else {
+		echo 'A php.ini file is not loaded';
+	}
 } else {
     // the excution of the test commands
     $tstphp_loginname=$arrHttp["tstphp_loginname"];
@@ -102,211 +115,238 @@ if ($tstphp_step==0){
         <input type='submit' value='Modify Parameters' title='Modify Parameters'>
     </form><br><br>
 <?php
-
 echo "<hr>";
-// Test of POST method
-if ($wxisUrl!=""){
-    echo "<font color=blue>Testing the execution of  <b>$wxisUrl</b>, NO context</font><br><hr>";
-    ?>
-    <table >
-    <tr><td>Server URL ($server_url)</td><td><?php echo $server_url?></td></tr>
-    <tr><td>Path to IsisScripts ($xWxis)</td><td><?php echo $xWxis?></td></tr>
-    <?php if ($wxisUrl!="") {?>
-        <tr><td>URL wxis ($wxisUrl) &rarr; POST method</td><td><?php echo $wxisUrl?></td></tr>
-    <?php } else { ?>
-        <tr><td>Path to wxis ($Wxis) &rarr; GET method</td><td><?php echo $Wxis?></td></tr>
-    <?php } ?>
-    <tr><td>Host name detected by gethostname()</td><td><?php echo $tstphp_hostname?></td></tr>
-    </table>
-    <?php
-    echo "<font color=blue>This will always fail for tests with https configured with self-signed certificate</font><br>";
-    $IsisScript=$xWxis.'hello.xis';
-    if (!file_exists($IsisScript)) {
-        echo "<font color=red>Script file not found : <b>".$IsisScript."</b></font><br>";
-    }
-    $command=$wxisUrl."?IsisScript=".$IsisScript;
-    echo "Command = ".$command."<br>";
-    $result =file_get_contents($command);
-    echo $result;
-    //-----------------------------------------------------
-    echo "<hr>";
-    echo "<font color=blue>Testing the execution of  <b>$wxisUrl</b>, WITH context</font><br><hr>";
-    ?>
-    <table >
-    <tr><td>Server URL ($server_url)</td><td><?php echo $server_url?></td></tr>
-    <tr><td>Path to IsisScripts ($xWxis)</td><td><?php echo $xWxis?></td></tr>
-    <?php if ($wxisUrl!="") {?>
-        <tr><td>URL wxis ($wxisUrl) &rarr; POST method</td><td><?php echo $wxisUrl?></td></tr>
-    <?php }
-          if ( $Wxis!="") { ?>
-        <tr><td>Path to wxis ($Wxis) &rarr; GET method</td><td><?php echo $Wxis?></td></tr>
-          <?php } ?>
-    <tr><td>Host name detected by gethostname()</td><td><?php echo $tstphp_hostname?></td></tr>
-    </table>
-    <?php
-    $command=$wxisUrl;
-    $postdata="IsisScript=".$IsisScript; // $ postdata required by inc_setup-stream-context
-    include "../common/inc_setup-stream-context.php";
-    echo "Command = ".$command."<br>Context option = ".$postdata."<br>";
-    $result =file_get_contents($wxisUrl,false,$context);
-    echo $result;
-
-    //-----------------------------------------------------
-    echo "<p><hr>";
-    echo "<font color=blue>Testing acces to the login database by listing the login data for a specific user (using wxis_llamar.php)</font><br><hr>";
-    $IsisScript=$xWxis."login.xis";
-    $tstphp_cipar=$db_path.$actparfolder.$tstphp_logindatabase.".par";
-    $query = "&base=".$tstphp_logindatabase."&cipar=".$tstphp_cipar."&login=".$tstphp_loginname;
-    $tstphp_fulldbpath=$db_path.$tstphp_logindatabase;
-    ?>
-    <table >
-    <tr><td>User name (login)</td><td><?php echo $tstphp_loginname?></td><td></td></tr>
-    <tr><td>Login database ($base)</td><td><?php echo $tstphp_logindatabase?></td><td></td></tr>
-    <tr><td>Path to database ($db_path.$base)</td><td><?php echo $tstphp_fulldbpath?></td>
-        <td><?php if (!file_exists($tstphp_fulldbpath)) {echo "<font color=red>Not found</font>";}
-        elseif (!is_readable($tstphp_fulldbpath)){echo "<font color=red>Not readable</font>";}
-        else{echo "Found";}?></td></tr>
-    <tr><td>Parameter file (cipar)</td><td><?php echo $tstphp_cipar?></td>
-        <td><?php if (!file_exists($tstphp_cipar)) {echo "<font color=red>Not found</font>";}
-        elseif (!is_readable($tstphp_cipar)){echo "<font color=red>Not readable</font>";}
-        else{echo "Found";}?></td></tr>
-    <tr><td>PHP command script</td><td><?php echo "../common/wxis_llamar.php"?></td>
-        <td><?php if (!file_exists("../common/wxis_llamar.php")) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
-    <tr><td>ISIS script ($IsisScript)</td><td><?php echo $IsisScript?></td>
-        <td><?php if (!file_exists($IsisScript)) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
-    <tr><td>Query parameters ($query)</td><td colspan=2><?php echo $query?></td>
-    <tr><td>Server URL ($server_url)</td><td><?php echo $server_url?></td></tr>
-    </table>
-    <?php
-    include("../common/wxis_llamar.php");
-    $tstphp_numentries=0;
-    $testphp_numexp=0;
-    if (sizeof($contenido)>=1 && !empty($contenido[0])) {
-        ?><xmp><?php
-        foreach ($contenido as $linea){
-            echo "$linea";
-            if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;;
-            $lineparts=explode(" ",$linea);
-            if ( sizeof($lineparts) > 3 && $lineparts[3]=="60"){
-                $testphp_numexp++;
-            }
-        }
-        ?></xmp><?php
-    }
-    echo "<font color=purple>".$tstphp_numentries." entries found for User name (login) = ".$tstphp_loginname."</font><br>";
-    echo "<font color=purple>".$testphp_numexp." entries found with non-empty expiration date field [60]</font><br>";
+echo "<font color=blue>Checking general setting</font><br>";
+$inipath = php_ini_loaded_file();
+if ($inipath) {
+    echo 'Loaded php.ini: ' . $inipath."<br>";
 } else {
-    echo "<div><font color=purple>Variable \$wxisUrl is empty. No tests of <b>wxis</b> by an URL</font></div><br>";
+    echo 'A php.ini file is not loaded';
 }
-/// Test of GET method
-if ($Wxis!=""){
-    echo "<hr>";
-    echo "<font color=blue>Testing the execution of  <b>$Wxis</b></font><br>";
-    echo "Command used: "."\"".$Wxis." what\" <p>";
-    putenv('REQUEST_METHOD=GET');
-    putenv('QUERY_STRING='."");
-    unset($contenido);
-    exec("\"".$Wxis."\" what" ,$contenido,$ret);
-    if ($ret==1){
-        echo "<font color=red>The program $Wxis could not be executed";
-        die;
-    }
-    foreach ($contenido as $value) echo "$value<br>";
-    echo "Result: <b>Ok !!!</b><p>";
-    echo "<hr>";
-    $script=$xWxis."hello.xis";
-    echo "<font color=blue>Testing the execution of  <b>$Wxis</b> with the script <b>$script</b>: </font><br>";
-    echo "Command line: ". "\"".$Wxis."\" IsisScript=$script";
-    if (!file_exists($script)){
-        echo "missing $script";
-        die;
-    }
-    echo "<p>";
-    putenv('REQUEST_METHOD=GET');
-    putenv('QUERY_STRING='."");
-    unset($contenido);
-    exec("\"".$Wxis."\" IsisScript=$script ",$contenido,$ret);
-    if ($ret!=0) {
-        echo "no se puede ejecutar el wxis. Código de error: $ret<br>";
-        die;
-    }
-    foreach ($contenido as $value) echo "$value<br>";
+echo "phpversion=".phpversion()."<br>";
 
-//-----------------------------------------------------
-    echo "<br><hr>";
-    unset ($contenido);
-    echo "<div><font color=blue>Testing the acces to the login database using exec</font></div><hr>";
-    $IsisScript=$xWxis."login.xis";
-    $tstphp_cipar=$db_path.$actparfolder.$tstphp_logindatabase.".par";
-    $query = "&base=".$tstphp_logindatabase."&cipar=".$tstphp_cipar."&login=".$tstphp_loginname."&path_db=".$db_path;
-    $command="\"".$Wxis."\" IsisScript=$IsisScript ";
-    $tstphp_fulldbpath=$db_path.$tstphp_logindatabase;
-    ?>
-    <table >
-    <tr><td>User name (login)</td><td><?php echo $tstphp_loginname?></td><td></td></tr>
-    <tr><td>Login database ($base)</td><td><?php echo $tstphp_logindatabase?></td><td></td></tr>
-    <tr><td>Path to database ($db_path.$base)</td><td><?php echo $tstphp_fulldbpath?></td>
-        <td><?php if (!file_exists($tstphp_fulldbpath)) {echo "<font color=red>Not found</font>";}
-        elseif (!is_readable($tstphp_fulldbpath)){echo "<font color=red>Not readable</font>";}
-        else{echo "Found";}?></td></tr>
-    <tr><td>Parameter file (cipar)</td><td><?php echo $tstphp_cipar?></td>
-        <td><?php if (!file_exists($tstphp_cipar)) {echo "<font color=red>Not found</font>";}
-        elseif (!is_readable($tstphp_cipar)){echo "<font color=red>Not readable</font>";}
-        else{echo "Found";}?></td></tr>
-    <tr><td>ISIS script ($IsisScript)</td><td><?php echo $IsisScript?></td>
-        <td><?php if (!file_exists($IsisScript)) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
-    <tr><td>Query parameters ($query)</td><td colspan=2><?php echo $query?></td>
-    <tr><td>Command used in exec</td><td colspan=2><?php echo $command?></td></tr>
-    </table>
-    <?php
-    putenv('REQUEST_METHOD=GET');
-    putenv('QUERY_STRING='."?xx=".$query);
-    exec($command,$contenido);
-    foreach ($contenido as $linea){
-        echo "$linea";
-    }
-//-----------------------------------------------------
-    echo "<br><hr>";
-    echo "<div><font color=blue>Testing the acces to the login database using wxis_llamar.php</font></div><hr>";
-    $IsisScript=$xWxis."login.xis";
-    $tstphp_cipar=$db_path.$actparfolder.$tstphp_logindatabase.".par";
-    $query = "base=".$tstphp_logindatabase."&cipar=".$tstphp_cipar."&login=".$tstphp_loginname;
-    $tstphp_fulldbpath=$db_path.$tstphp_logindatabase;
-    ?>
-    <table >
-    <tr><td>User name (login)</td><td><?php echo $tstphp_loginname?></td><td></td></tr>
-    <tr><td>Login database ($base)</td><td><?php echo $tstphp_logindatabase?></td><td></td></tr>
-    <tr><td>Path to database ($db_path.$base)</td><td><?php echo $tstphp_fulldbpath?></td>
-        <td><?php if (!file_exists($tstphp_fulldbpath)) {echo "<font color=red>Not found</font>";}
-        elseif (!is_readable($tstphp_fulldbpath)){echo "<font color=red>Not readable</font>";}
-        else{echo "Found";}?></td></tr>
-    <tr><td>Parameter file (cipar)</td><td><?php echo $tstphp_cipar?></td>
-        <td><?php if (!file_exists($tstphp_cipar)) {echo "<font color=red>Not found</font>";}
-        elseif (!is_readable($tstphp_cipar)){echo "<font color=red>Not readable</font>";}
-        else{echo "Found";}?></td></tr>
-    <tr><td>PHP command script</td><td><?php echo "../common/wxis_llamar.php"?></td>
-        <td><?php if (!file_exists("../common/wxis_llamar.php")) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
-    <tr><td>ISIS script ($IsisScript)</td><td><?php echo $IsisScript?></td>
-        <td><?php if (!file_exists($IsisScript)) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
-    <tr><td>Query parameters ($query)</td><td colspan=2><?php echo $query?></td>
-    </table>
-    <?php
-    unset($contenido);
-    include("../common/wxis_llamar.php");
-    $tstphp_numentries=0;
-    $testphp_numexp=0;
-    if (sizeof($contenido)>=1 && !empty($contenido[0])) {
-        foreach ($contenido as $linea){
-            echo "$linea";
-            if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;
-            $lineparts=explode(" ",$linea);
-            if ( sizeof($lineparts) > 3 && $lineparts[3]=="60"){
-                $testphp_numexp++;
-            }
-        }
-    }
-    echo "<font color=purple>".$tstphp_numentries." entries found for User name (login) = ".$tstphp_loginname."</font><br>";
-    echo "<font color=purple>".$testphp_numexp." entries found with non-empty expiration date field [60]</font><br>";
-}
+// Test of POST method
+	if ($wxisUrl!=""){
+		echo "Testing the POST method<br>";
+		$urlfopen=ini_get('allow_url_fopen');
+		echo 'PHP configuration option: allow_url_fopen = "' . $urlfopen . '". Changeable by INI_SYSTEM<br>';
+		if ($urlfopen=="") echo "<font color=red>Error: value of allow_url_fopen must be '1' or 'On'</font><br>";
+		echo "<hr><br><br>";
+		echo "<font color=blue>Testing the execution of  <b>$wxisUrl</b>, NO context</font><br>";
+		echo "<font color=blue>This will always fail for tests with https configured with self-signed certificate</font><br>";		$IsisScript=$xWxis.'hello.xis';
+		$command=$wxisUrl."?IsisScript=".$IsisScript;
+		?>
+		<table >
+		<tr><td>Server URL ($server_url)</td><td><?php echo $server_url?></td></tr>
+		<tr><td>Path to IsisScripts ($xWxis)</td><td><?php echo $xWxis?></td></tr>
+		<?php if ($wxisUrl!="") {?>
+			<tr><td>URL wxis ($wxisUrl) &rarr; POST method</td><td><?php echo $wxisUrl?></td></tr>
+		<?php } else { ?>
+			<tr><td>Path to wxis ($Wxis) &rarr; GET method</td><td><?php echo $Wxis?></td></tr>
+		<?php } ?>
+		<tr><td>Host name detected by gethostname()</td><td><?php echo $tstphp_hostname?></td></tr>
+		<tr><td>Command</td><td><?php echo $command?></td></tr>
+	   </table>
+		<?php
+		if (!file_exists($IsisScript)) {
+			echo "<font color=red>Script file not found : <b>".$IsisScript."</b></font><br>";
+		}
+		/* do not use the @ here in order to catch all errors in stead of only the last*/
+		$result =file_get_contents($command);
+		echo "<font color=red>".$result."</font>";/* this does nothing*/
+		//-----------------------------------------------------
+		echo "<br><br><hr><br><br>";
+		echo "<font color=blue>Testing the execution of  <b>$wxisUrl</b>, WITH context</font><br>";
+		echo "<font color=blue>Should produce <b>Hello</b></font><br>";
+		$command=$wxisUrl;
+		$postdata="IsisScript=".$IsisScript; // $ postdata required by inc_setup-stream-context
+		include "../common/inc_setup-stream-context.php";
+		?>
+		<table >
+		<tr><td>Server URL ($server_url)</td><td><?php echo $server_url?></td></tr>
+		<tr><td>Path to IsisScripts ($xWxis)</td><td><?php echo $xWxis?></td></tr>
+		<?php if ($wxisUrl!="") {?>
+			<tr><td>URL wxis ($wxisUrl) &rarr; POST method</td><td><?php echo $wxisUrl?></td></tr>
+		<?php }
+			  if ( $Wxis!="") { ?>
+			<tr><td>Path to wxis ($Wxis) &rarr; GET method</td><td><?php echo $Wxis?></td></tr>
+			  <?php } ?>
+		<tr><td>Host name detected by gethostname()</td><td><?php echo $tstphp_hostname?></td></tr>
+		<tr><td>Command</td><td><?php echo $command?></td></tr>
+		<tr><td>Context option</td><td><?php echo $postdata?></td></tr>
+		</table>
+		<?php
+		$result =@file_get_contents($wxisUrl,false,$context);
+		if ($result === false ) {
+			$file_get_contents_error= error_get_last();
+			$err_wxis="Error &rarr; ".$file_get_contents_error["message"];
+			$err_wxis.="<br> in &rarr; ".$file_get_contents_error["file"];
+			echo "<font color=red size=+1>$err_wxis</font>";
+		} else {
+			echo $result;
+		}
+
+		//-----------------------------------------------------
+		echo "<br><br><hr><br><br>";
+		echo "<font color=blue>Testing acces to the login database by listing the login data for a specific user (using wxis_llamar.php)</font>";
+		$IsisScript=$xWxis."login.xis";
+		$tstphp_cipar=$db_path.$actparfolder.$tstphp_logindatabase.".par";
+		$query = "&base=".$tstphp_logindatabase."&cipar=".$tstphp_cipar."&login=".$tstphp_loginname;
+		$tstphp_fulldbpath=$db_path.$tstphp_logindatabase;
+		?>
+		<table >
+		<tr><td>User name (login)</td><td><?php echo $tstphp_loginname?></td><td></td></tr>
+		<tr><td>Login database ($base)</td><td><?php echo $tstphp_logindatabase?></td><td></td></tr>
+		<tr><td>Path to database ($db_path.$base)</td><td><?php echo $tstphp_fulldbpath?></td>
+			<td><?php if (!file_exists($tstphp_fulldbpath)) {echo "<font color=red>Not found</font>";}
+			elseif (!is_readable($tstphp_fulldbpath)){echo "<font color=red>Not readable</font>";}
+			else{echo "Found";}?></td></tr>
+		<tr><td>Parameter file (cipar)</td><td><?php echo $tstphp_cipar?></td>
+			<td><?php if (!file_exists($tstphp_cipar)) {echo "<font color=red>Not found</font>";}
+			elseif (!is_readable($tstphp_cipar)){echo "<font color=red>Not readable</font>";}
+			else{echo "Found";}?></td></tr>
+		<tr><td>PHP command script</td><td><?php echo "../common/wxis_llamar.php"?></td>
+			<td><?php if (!file_exists("../common/wxis_llamar.php")) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
+		<tr><td>ISIS script ($IsisScript)</td><td><?php echo $IsisScript?></td>
+			<td><?php if (!file_exists($IsisScript)) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
+		<tr><td>Query parameters ($query)</td><td colspan=2><?php echo $query?></td>
+		<tr><td>Server URL ($server_url)</td><td><?php echo $server_url?></td></tr>
+		</table>
+		<?php
+		include("../common/wxis_llamar.php");
+		$tstphp_numentries=0;
+		$testphp_numexp=0;
+		if (sizeof($contenido)>=1 && !empty($contenido[0])) {
+			?><xmp><?php
+			foreach ($contenido as $linea){
+				echo "$linea";
+				if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;;
+				$lineparts=explode(" ",$linea);
+				if ( sizeof($lineparts) > 3 && $lineparts[3]=="60"){
+					$testphp_numexp++;
+				}
+			}
+			?></xmp><?php
+		}
+		echo "<br>";
+		echo "<font color=purple>".$tstphp_numentries." entries found for User name (login) = ".$tstphp_loginname."</font><br>";
+		echo "<font color=purple>".$testphp_numexp." entries found with non-empty expiration date field [60]</font><br>";
+	} else {
+		echo "<div><font color=purple>Variable \$wxisUrl is empty. No tests of <b>wxis</b> by an URL</font></div><br>";
+	}
+///======================================================================
+/// Test of GET method
+	if ($Wxis!=""){
+		echo "<hr>";
+		echo "<font color=blue>Testing the execution of  <b>$Wxis</b></font><br>";
+		echo "Command used: "."\"".$Wxis." what\" <p>";
+		putenv('REQUEST_METHOD=GET');
+		putenv('QUERY_STRING='."");
+		unset($contenido);
+		exec("\"".$Wxis."\" what" ,$contenido,$ret);
+		if ($ret==1){
+			echo "<font color=red>The program $Wxis could not be executed";
+			die;
+		}
+		foreach ($contenido as $value) echo "$value<br>";
+		echo "Result: <b>Ok !!!</b><p>";
+		echo "<hr>";
+		$script=$xWxis."hello.xis";
+		echo "<font color=blue>Testing the execution of  <b>$Wxis</b> with the script <b>$script</b>: </font><br>";
+		echo "Command line: ". "\"".$Wxis."\" IsisScript=$script";
+		if (!file_exists($script)){
+			echo "missing $script";
+			die;
+		}
+		echo "<p>";
+		putenv('REQUEST_METHOD=GET');
+		putenv('QUERY_STRING='."");
+		unset($contenido);
+		exec("\"".$Wxis."\" IsisScript=$script ",$contenido,$ret);
+		if ($ret!=0) {
+			echo "no se puede ejecutar el wxis. Código de error: $ret<br>";
+			die;
+		}
+		foreach ($contenido as $value) echo "$value<br>";
+
+	//-----------------------------------------------------
+		echo "<br><hr>";
+		unset ($contenido);
+		echo "<div><font color=blue>Testing the acces to the login database using exec</font></div><hr>";
+		$IsisScript=$xWxis."login.xis";
+		$tstphp_cipar=$db_path.$actparfolder.$tstphp_logindatabase.".par";
+		$query = "&base=".$tstphp_logindatabase."&cipar=".$tstphp_cipar."&login=".$tstphp_loginname."&path_db=".$db_path;
+		$command="\"".$Wxis."\" IsisScript=$IsisScript ";
+		$tstphp_fulldbpath=$db_path.$tstphp_logindatabase;
+		?>
+		<table >
+		<tr><td>User name (login)</td><td><?php echo $tstphp_loginname?></td><td></td></tr>
+		<tr><td>Login database ($base)</td><td><?php echo $tstphp_logindatabase?></td><td></td></tr>
+		<tr><td>Path to database ($db_path.$base)</td><td><?php echo $tstphp_fulldbpath?></td>
+			<td><?php if (!file_exists($tstphp_fulldbpath)) {echo "<font color=red>Not found</font>";}
+			elseif (!is_readable($tstphp_fulldbpath)){echo "<font color=red>Not readable</font>";}
+			else{echo "Found";}?></td></tr>
+		<tr><td>Parameter file (cipar)</td><td><?php echo $tstphp_cipar?></td>
+			<td><?php if (!file_exists($tstphp_cipar)) {echo "<font color=red>Not found</font>";}
+			elseif (!is_readable($tstphp_cipar)){echo "<font color=red>Not readable</font>";}
+			else{echo "Found";}?></td></tr>
+		<tr><td>ISIS script ($IsisScript)</td><td><?php echo $IsisScript?></td>
+			<td><?php if (!file_exists($IsisScript)) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
+		<tr><td>Query parameters ($query)</td><td colspan=2><?php echo $query?></td>
+		<tr><td>Command used in exec</td><td colspan=2><?php echo $command?></td></tr>
+		</table>
+		<?php
+		putenv('REQUEST_METHOD=GET');
+		putenv('QUERY_STRING='."?xx=".$query);
+		exec($command,$contenido);
+		foreach ($contenido as $linea){
+			echo "$linea";
+		}
+	//-----------------------------------------------------
+		echo "<br><hr>";
+		echo "<div><font color=blue>Testing the acces to the login database using wxis_llamar.php</font></div><hr>";
+		$IsisScript=$xWxis."login.xis";
+		$tstphp_cipar=$db_path.$actparfolder.$tstphp_logindatabase.".par";
+		$query = "base=".$tstphp_logindatabase."&cipar=".$tstphp_cipar."&login=".$tstphp_loginname;
+		$tstphp_fulldbpath=$db_path.$tstphp_logindatabase;
+		?>
+		<table >
+		<tr><td>User name (login)</td><td><?php echo $tstphp_loginname?></td><td></td></tr>
+		<tr><td>Login database ($base)</td><td><?php echo $tstphp_logindatabase?></td><td></td></tr>
+		<tr><td>Path to database ($db_path.$base)</td><td><?php echo $tstphp_fulldbpath?></td>
+			<td><?php if (!file_exists($tstphp_fulldbpath)) {echo "<font color=red>Not found</font>";}
+			elseif (!is_readable($tstphp_fulldbpath)){echo "<font color=red>Not readable</font>";}
+			else{echo "Found";}?></td></tr>
+		<tr><td>Parameter file (cipar)</td><td><?php echo $tstphp_cipar?></td>
+			<td><?php if (!file_exists($tstphp_cipar)) {echo "<font color=red>Not found</font>";}
+			elseif (!is_readable($tstphp_cipar)){echo "<font color=red>Not readable</font>";}
+			else{echo "Found";}?></td></tr>
+		<tr><td>PHP command script</td><td><?php echo "../common/wxis_llamar.php"?></td>
+			<td><?php if (!file_exists("../common/wxis_llamar.php")) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
+		<tr><td>ISIS script ($IsisScript)</td><td><?php echo $IsisScript?></td>
+			<td><?php if (!file_exists($IsisScript)) {echo "<font color=red>Not found</font>";}else{echo "Found";}?></td></tr>
+		<tr><td>Query parameters ($query)</td><td colspan=2><?php echo $query?></td>
+		</table>
+		<?php
+		unset($contenido);
+		include("../common/wxis_llamar.php");
+		$tstphp_numentries=0;
+		$testphp_numexp=0;
+		if (sizeof($contenido)>=1 && !empty($contenido[0])) {
+			foreach ($contenido as $linea){
+				echo "$linea";
+				if (strpos($linea, '##LLAVE=')!==false) $tstphp_numentries++;
+				$lineparts=explode(" ",$linea);
+				if ( sizeof($lineparts) > 3 && $lineparts[3]=="60"){
+					$testphp_numexp++;
+				}
+			}
+		}
+		echo "<br>";
+		echo "<font color=purple>".$tstphp_numentries." entries found for User name (login) = ".$tstphp_loginname."</font><br>";
+		echo "<font color=purple>".$testphp_numexp." entries found with non-empty expiration date field [60]</font><br>";
+	}
 }
 ?>
+<br>
+</html>
