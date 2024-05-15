@@ -1,4 +1,7 @@
 <?php
+/*
+20240514 fho4abcd Added alternative return script. When the standard index.php is forbidden
+*/
 session_start();
 include("../config.php");
 if (file_exists($db_path."logtrans/data/logtrans.mst") and $_SESSION["MODULO"]=="loan"){
@@ -9,8 +12,13 @@ if (file_exists($db_path."logtrans/data/logtrans.mst") and $_SESSION["MODULO"]==
 }
 if (isset($_SESSION["HOME"]))
 	$retorno=$_SESSION["HOME"];
-else
-	$retorno="../../index.php";
+else {
+    if (file_exists("../../index.php")){
+        $retorno="../../index.php";
+    } else {
+        $retorno="../../index_abcd.php";
+    }
+}
 $_SESSION=array();
 unset($_SESSION);
 session_unset();
