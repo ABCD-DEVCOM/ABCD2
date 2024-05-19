@@ -2,6 +2,7 @@
 /*
 20220123 fho4abcd buttons+div-helper
 20220715 fho4abcd Use $actparfolder as location for .par files, note only acces databases
+20240519 fho4abcd Correct $loc_actparfolder while deleting a profile
 */
 /**
  * @program:   ABCD - ABCD-Central - http://reddes.bvsaude.org/projects/abcd
@@ -311,6 +312,7 @@ global $db_path,$msgstr,$encabezado;
 function DeleteProfile(){
 global $actparfolder, $db_path,$msgstr,$lang_db,$arrHttp,$xWxis,$wxisUrl,$Wxis;
 // READ ACCES DATABASE AND FIND IF THE PROFILE IS IN USE
+	$loc_actparfolder=$actparfolder;
     if ($actparfolder!="par/") {
         // recompute $actparfolder for the current base
         $loc_actparfolder="acces/";
@@ -594,4 +596,3 @@ global $db_path,$msgstr,$lang_db,$profiles_path;
 	echo "</script>\n";
 }
 ?>
-
