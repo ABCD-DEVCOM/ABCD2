@@ -405,6 +405,7 @@ valdef=Default value
 valdef_save=Save default values
 validextensions=Valid extensions are:
 ver=Display
+version=ABCD version
 vistap=Preview
 word=Word Processor
 wsproc=Export to Excel
