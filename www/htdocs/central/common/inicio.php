@@ -8,6 +8,7 @@
 2021-08-12 fho4abcd Give message if profiles/adm is missing for emergency user
 2022-01-19 fho4abcd Set default language if none supplied
 2022-07-10 fho4abcd Prepare for .par file in database folder+ no password to llamar_wxis.php
+2024-05-19 fho4abcd Added alternative return script. When the standard index.php is forbidden
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -85,7 +86,7 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 }
 
 function VerificarUsuario(){
-Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password;
+Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password,$retorno;
  	$llave=LeerRegistro();
  	if ($llave!=""){
   		$res=explode('|',$llave);
@@ -105,7 +106,7 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
   		$today=date("Ymd");
   		if (trim($fecha)!=""){
   			if ($today>$fecha){
-  				header("Location: ../../index.php?login=N");
+  				header("Location: ".$retorno."?login=N");
   				die;
   			}
   		}
@@ -164,11 +165,7 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     	}else{
 
  			echo "<script>\n";
- 			if (isset($_SESSION["HOME"]))
- 				echo "self.location.href=\"".$_SESSION["HOME"]."?login=N\"\n";
- 			else
- 				echo "self.location.href=\"../../index.php?login=N\";\n";
-
+ 				echo "self.location.href=\"".$retorno."?login=N\";\n";
  			echo "</script>\n";
   			die;
   		}
@@ -251,7 +248,7 @@ function Session($llave)
   		$today=date("Ymd");
   		if (trim($fecha)!=""){
   			if ($today>$fecha){
-  				header("Location: ../../index.php?login=N");
+  				header("Location: ".$retorno."login=N");
   				die;
   			}
   		}
@@ -308,11 +305,7 @@ Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$no
     		}
     	}else{
  			echo "<script>\n";
- 			if (isset($_SESSION["HOME"]))
- 				echo "self.location.href=\"".$_SESSION["HOME"]."?login=N\"\n";
- 			else
- 				echo "self.location.href=\"../../index.php?login=N\";\n";
-
+ 				echo "self.location.href=\"".$retorno."?login=N\";\n";
  			echo "</script>\n";
   			die;
   		}
@@ -388,6 +381,16 @@ include("../lang/admin.php");
 include("../lang/prestamo.php");
 include("../lang/lang.php");
 include("../lang/acquisitions.php");
+if (isset($_SESSION["HOME"]))
+	$retorno=$_SESSION["HOME"];
+else {
+    if (file_exists("../../index.php")){
+        $retorno="../../index.php";
+    } else {
+        $retorno="../../index_abcd.php";
+    }
+}
+
 
 	if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
 
@@ -433,10 +436,6 @@ include("../lang/acquisitions.php");
 	$Permiso=$_SESSION["permiso"];
 	if (isset($arrHttp["Opcion"]) and $arrHttp["Opcion"]=="chgpsw"){
 		CambiarPassword($arrHttp["Mfn"],$arrHttp["new_password"]);
-		if (isset($_SESSION["HOME"]))
-			$retorno=$_SESSION["HOME"];
-		else
-			$retorno="../../index.php";
 		header("Location: $retorno?login=P");
 	}else{
 		if (isset($_SESSION["meta_encoding"])) $meta_encoding=$_SESSION["meta_encoding"];
