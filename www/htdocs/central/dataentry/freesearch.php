@@ -4,6 +4,7 @@
 2021-03-03 fho4abcd Conformance:moved <body>, deleted <td> replaced <center>,...
 2024-05-07 fho4abcd Improved user interface &layout, code cleanup
 2024-05-11 fho4abcd Added sort option, added options to save&recall form parameters
+2024-05-23 fho4abcd Save parameters controlled by profile,allow PFT and search fields,Add directives for result
 */
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -81,10 +82,7 @@ function EnviarForma(){
 		}
 	}
 	buscar=""
-	if (document.forma1.tipob[0].checked)
-		buscar="valor"
-	if (document.forma1.tipob[1].checked)
-		buscar="pft"
+	if (document.forma1.search.value!="") buscar="valor"
 	fields=""
 	if (buscar=="valor"){
 		for (i=0;i<document.forma1.free_C.options.length;i++){
@@ -100,13 +98,13 @@ function EnviarForma(){
 		alert("<?php echo $msgstr["freesearch_3"]?>")
 		return
 	}
-	if (buscar==""){
-		alert("<?php echo $msgstr["freesearch_psel"]." '".$msgstr["freesearch_4"]."'"?>")
-		return
-	}
-	if (document.forma1.search.value==""){
+	if (document.forma1.search.value=="" && document.forma1.pftstr.value==""){
 		alert("<?php echo $msgstr["freesearch_nostr"]." '".$msgstr["freesearch_4"]."'"?>")
 		return
+	}
+	if (buscar!="valor"){
+		document.forma1.omitrec.value=""
+		document.forma1.omitfld.value=""
 	}
 	document.forma1.fields.value=fields
 	document.forma1.target=""
@@ -270,20 +268,45 @@ function SaveSavParams(){
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:left;">
-			<input type=radio name=tipob value=string
-				<?php if (isset($arrHttp["tipob"]) && $arrHttp["tipob"]=="string") echo "checked";?>> <?php echo $msgstr["freesearch_5"]?>
-			<br><input type=radio name=tipob value=pft
-				<?php if (isset($arrHttp["tipob"]) && $arrHttp["tipob"]=="pft") echo "checked";?>> <?php echo $msgstr["freesearch_6"]?>
-		<td colspan=3><textarea name=search cols=80 rows=2><?php if (isset($arrHttp["search"])) echo $arrHttp["search"]?></textarea>
+		<td style="text-align:left;"><?php echo $msgstr["freesearch_5"]?></td>
+		<td colspan=3><input type=text name=search size=80
+			value="<?php if (isset($arrHttp["search"])) echo $arrHttp["search"]?>">
+	</tr>
+	<tr>
+		<td><?php echo $msgstr["freesearch_fndact"]?></td>
+		<td><input type=checkbox name=omitrec value=omitrec
+			<?php if(isset($arrHttp["omitrec"])&&$arrHttp["omitrec"]=="omitrec") echo "checked";?>> <?php echo $msgstr["freesearch_omitrec"]?> </td>
+		<td><input type=checkbox name=omitfld value=omitfld
+			<?php if(isset($arrHttp["omitfld"])&&$arrHttp["omitfld"]=="omitfld") echo "checked";?>> <?php echo $msgstr["freesearch_omitfld"]?> </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;"><?php echo $msgstr["freesearch_6"]?></td>
+		<td colspan=3><textarea name=pftstr cols=80 rows=2><?php if (isset($arrHttp["pftstr"])) echo $arrHttp["pftstr"]?></textarea>
 	</td>
 	<tr>
 		<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["freesearch_fld4str"]?></td>
 	</tr>
 	<tr><td colspan=4>
 			<table>
-			<tr><td width=30%>
-						<?php echo $msgstr["freesearch_2"]?>
+			<tr><td width=40%>
+					<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr["freesearch_2"];?></span>
+					<br><br>
+					<?php echo $msgstr["freesearch_inst"]?><br>
+					<input type=radio name=repeat_ind value="rep_M" 
+						<?php if (isset($arrHttp["repeat_ind"]) && $arrHttp["repeat_ind"]=="rep_M" ||
+									!isset($arrHttp["repeat_ind"])) echo "checked";?>>
+						<?php echo $msgstr["freesearch_repm"];?><br>
+					<input type=radio name=repeat_ind value="rep_S"
+						<?php if (isset($arrHttp["repeat_ind"]) && $arrHttp["repeat_ind"]=="rep_S") echo "checked";?>>
+						<?php echo $msgstr["freesearch_reps"];?><br>
+					<br>
+					<input type=radio name=title_ind value="tit_Title" 
+						<?php if (isset($arrHttp["title_ind"]) && $arrHttp["title_ind"]=="tit_Title" ||
+									!isset($arrHttp["title_ind"])) echo "checked";?>>
+						<?php echo $msgstr["freesearch_tittit"];?><br>
+					<input type=radio name=title_ind value="tit_Tag"
+						<?php if (isset($arrHttp["title_ind"]) && $arrHttp["title_ind"]=="tit_Tag") echo "checked";?>>
+						<?php echo $msgstr["freesearch_tittag"];?><br>
 				</td><td>&nbsp;</td>
 				<td>
 					<select name=free_C multiple size=10>
@@ -326,13 +349,17 @@ function SaveSavParams(){
 		<td style="text-align:right"><a href="javascript:EnviarForma()" class="bt bt-green">
 		 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?></a><br>
 		</td>
-	<tr><td colspan=2>
+	<?php
+    if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){
+	?>
+ 	<tr><td colspan=2>
 			<a href="javascript:SaveSavParams()" class="bt bt-blue">
 				<i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a>
 			<a href="javascript:DelSavParams()" class="bt bt-blue"> &nbsp;
 				<i class="fas fa-trash"></i> &nbsp; <?php echo $msgstr["freesearch_del"]?></a>
 		</td>
 	</tr>
+	<?php } ?>
 </table>
 </form>
 <form name=delsavparams method=post action="freesearch_save.php">

@@ -4,6 +4,7 @@
 20220716 fho4abcd div-helper, remove unused functions, improve html
 20240507 fho4abcd Remove bugs, improve counters, add show button, layout, code cleanup
 20240511 fho4abcd Added sort option. Replaced act_tabla.xis by act_tabla_sort.xis.
+20240523 fho4abcd Allow Search + PFT actions,improve search&display,several new options to control output
 */
 session_start();
 include("../common/get_post.php");
@@ -43,9 +44,6 @@ function ShowActionBox($Mfn){
 // ==================================================================================================
 // INICIO DEL PROGRAMA
 // ==================================================================================================
-
-//foreach ($arrHttp as $val=>$value) echo "$val=$value<br>";
-
 include ("../common/header.php");
 ?>
 <body>
@@ -105,6 +103,9 @@ table.tabborder {
 table.tabborder td {
 	border: 1px solid black;
 }
+table.noborder td{
+	border: 0;
+}
 </style>
 
 <div class="sectionInfo">
@@ -112,7 +113,23 @@ table.tabborder td {
 	<?php echo $msgstr["m_busquedalibre"].": ".$arrHttp["base"]?>
 	</div>
 	<div class="actions">
-		<?php $backtoscript="freesearch.php?tipob=".$arrHttp["tipob"];
+		<?php
+		// The back to script parameters
+		$locsearch="";
+		$locpftstr="";
+		$omitfld=false;
+		$backtoscript="freesearch.php?";
+		if (isset($arrHttp["omitrec"])){
+			 $backtoscript.="omitrec=".$arrHttp["omitrec"];
+			 $omitrec=true;
+		} else {
+			 $backtoscript.="omitrec=-";
+			 $omitrec=false;
+		}
+		if (isset($arrHttp["omitfld"])) {
+			$backtoscript.="&omitfld=".$arrHttp["omitfld"];
+			$omitfld=true;
+		}
 		if (isset($arrHttp["from"])) $backtoscript.="&from=".$arrHttp["from"];
 		if (isset($arrHttp["to"])) $backtoscript.="&to=".$arrHttp["to"];
 		if (isset($arrHttp["seleccionados"])){
@@ -123,9 +140,17 @@ table.tabborder td {
 		if (isset($arrHttp["search"])){
 			$arrHttp["search"]=urldecode($arrHttp["search"]);
 			$backtoscript.="&search=".urlencode($arrHttp["search"]);
+			$locsearch=Trim($arrHttp["search"]);
+		}
+		if (isset($arrHttp["pftstr"])){
+			$arrHttp["pftstr"]=urldecode($arrHttp["pftstr"]);
+			$backtoscript.="&pftstr=".urlencode($arrHttp["pftstr"]);
+			$locpftstr=Trim($arrHttp["pftstr"]);
 		}
 		if (isset($arrHttp["count"])) $backtoscript.="&count=".urlencode($arrHttp["count"]);
 		if (isset($arrHttp["fields"])) $backtoscript.="&fields=".urlencode($arrHttp["fields"]);
+		if (isset($arrHttp["repeat_ind"])) $backtoscript.="&repeat_ind=".$arrHttp["repeat_ind"];
+		if (isset($arrHttp["title_ind"])) $backtoscript.="&title_ind=".$arrHttp["title_ind"];
 		if (isset($arrHttp["sorttag"])) $backtoscript.="&sorttag=".urlencode($arrHttp["sorttag"]);
 		include "../common/inc_back.php";
 		?>
@@ -139,26 +164,46 @@ table.tabborder td {
 
 $base =$arrHttp["base"];
 $cipar =$arrHttp["cipar"];
-//foreach ($arrHttp as $key => $value) echo "$key = $value <br>";//die;
-// se lee el archivo mm.fdt
 if (!isset($_SESSION["login"])){
   	echo $msgstr["menu_noau"];
   	die;
 }
+/*
+** The FDT was used for field "ALL" (no longer shown)
+** The FDT is used to have a translation table from Tags (=number) to Titles (=string)
+*/
 $Fdt=LeerFdt($base);
-$Pft="";
-if ( $arrHttp["tipob"]=="string"){
-	// Convert the fields into a PFT
+$fdttitles=Array();
+foreach ($Fdt as $tag=>$linea){
+	if (trim($linea)!=""){
+		$t=explode('|',$linea);
+		if ($t[0]!="S" and $t[0]!="H" and $t[0]!="L" and $t[0]!="LDR"){
+			// Tag=t[1], Title=t[2]
+			if ($t[1]!="" && $t[2]!="") $fdttitles[$t[1]]=$t[2];
+		}
+	}
+}
+/*
+** Create a PFT for the selected search fields 
+*/
+$Pftsearch="";
+if ( $locsearch!=""){
+	// Convert the search fields into a PFT
 	$t=explode(';',$arrHttp["fields"]);
 	foreach ($t as $value){
 		if (trim($value)!="" and trim($value)!="ALL"){
-			$Pft.="(if p(v".$value.") then '".$value."= 'v".$value."'____$$$' fi),";
+			if ($arrHttp["repeat_ind"]=="rep_S") {
+				//(...)=repeatable group: Shows the value + ____$$$ for each occurrence
+				$Pftsearch.="(if p(v".$value.") then '".$value."= 'v".$value."'____$$$' fi),";
+			}else {
+				// ...=standard: Shows values on one line separated by ;
+				$Pftsearch.="if p(v".$value.") then '".$value."= 'v".$value."|; |'____$$$' fi,";
+			}
 		}
 	}
-} else {
-	$arrHttp["fields"]="";
 }
-$Pft=str_replace('/','<br>',$Pft);
+//echo "<br>Pftsearch=".$Pftsearch."<br";
+$Pftsearch=str_replace('/','<br>',$Pftsearch);
 $IxMfn=0;
 if (!isset($arrHttp["nextrec"])){
 	$startofset=1;
@@ -185,7 +230,7 @@ $execmode="";
 ?>
 <div align=center>
 <div style="border-style:solid;border-width:2px; text-align:left;">
-<table style="table-layout:fixed;margin-left:auto;margin-right:auto;width:100%">
+<table style="table-layout:fixed;margin-left:auto;margin-right:auto;width:100%;background-color:var(--abcd-gray-500)">
 	<?php
 	if (isset($arrHttp["from"])){
 		$execmode="Range";
@@ -218,14 +263,8 @@ $execmode="";
 		</tr>
 		<?php
 	}
-	$locsearch=$arrHttp["search"];
-	if ($arrHttp["tipob"]=="pft"){
+	if ($locsearch!="") {
 		$locsearch=htmlspecialchars($locsearch);
-		?>
-		<tr><td><b><?php echo $msgstr["freesearch_6"]?></b></td><td>:</td>
-			<td style="word-break: break-word;"><b><?php echo $locsearch;?></b></td>
-		<?php
-	} else {
 		?>
 		<tr><td><b><?php echo $msgstr["freesearch_5"]?></b></td><td>:</td>
 			<td style="word-break: break-word;"><b><?php echo $locsearch;?></b></td>
@@ -237,14 +276,50 @@ $execmode="";
 			<td style="word-break: break-word;"><?php echo $arrHttp["fields"];?></td>
 		<?php
 	}
+	if (isset($arrHttp["omitrec"]) || isset($arrHttp["omitfld"])){
+		?>
+		<tr><td><?php echo $msgstr["freesearch_fndact"]?></td><td>:</td>
+			<td style="word-break: break-word;">
+				<?php
+				if (isset($arrHttp["omitrec"])) echo $msgstr["freesearch_omitrec"];
+				if (isset($arrHttp["omitrec"]) && isset($arrHttp["omitfld"])) echo "&nbsp;+&nbsp;";
+				if (isset($arrHttp["omitfld"])) echo $msgstr["freesearch_omitfld"];
+				?>
+			</td>
+		<?php
+	}
+	if ($locpftstr!="") {
+		$locpftstr=htmlspecialchars($locpftstr);
+		?>
+		<tr><td><b><?php echo $msgstr["freesearch_7"]?></b></td><td>:</td>
+			<td style="word-break: break-word;"><b><?php echo $locpftstr;?></b></td>
+		<?php
+	}
 	?>
 </table>
 </div></div>
 <?php
 	$total=0;
+	/*
+	** Creation of the full PFT with elements
+	**	- applied PFT
+	**	- search fields PFT
+	*/
+	$PftSepar="---$$";
+	$PftTotal="";
+	if (isset($arrHttp["pftstr"])&& $arrHttp["pftstr"]!="") {
+		$PftTotal.=$arrHttp["pftstr"];
+	}
+	$PftTotal.="'".$PftSepar."'";
+	if ($Pftsearch!=""){
+		$PftTotal.=$Pftsearch;
+	}
+	$PftTotal.="#";
+  	if ($Pftsearch=="") $Pftsearch=$arrHttp["pftstr"].'#';
+	/*
+	** Creation of the query for wxis_llamar*/
 	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
-  	if ($Pft=="") $Pft=$arrHttp["search"].'#';
-	$query.="&Formato=".urlencode($Pft.'/');
+	$query.="&Formato=".urlencode($PftTotal.'/');
 	if ($execmode=="Search") {
 		$endofset=$count+$startofset-1;
 		$query.="&Expresion=".urlencode(stripslashes($arrHttp["Expresion"]))."&Opcion=buscar";
@@ -278,45 +353,72 @@ $execmode="";
 	}
 	$IsisScript=$xWxis."act_tabla_sort.xis";
 	include("../common/wxis_llamar.php");
+	/*
+	** Processing the results of the database query
+	*/
 	$ix=0;
-	foreach ($contenido as $value){
-		if (trim($value)!="") {
+	$arr_mfn=Array();
+	$arr_msg=Array();
+	foreach ($contenido as $contenido_ar){
+		if (trim($contenido_ar)!="") {
 			$ix++;
-			/* returned format example:
-				$$POSICION:1$$5883     |33024|150= Anke____$$$190= Het____$$$ 
+			/* 	returned format example:
+					$$POSICION:1$$5883     |33024|150= Anke____$$$190= Het____$$$
+				$val format: $val[0]=$$POSICION:1$$5883
+							 $val[1]=33024								==The MFN
+							 $val[2]=150= Anke____$$$190= Het____$$$	==The complete search result
+				$pos format: $pos[0]=empty
+							 $pos[1]=??
+							 $pos[2]=5883
 			*/
-			$val=explode('|',$value);
+			$val=explode('|',$contenido_ar);
 			$pos=explode('$$',$val[0]);
-			if ($execmode=="Search") $total=$pos[2]; /* $$POSICION:1$$5883 */
+			$res=explode($PftSepar,$val[2]);
+			if ($execmode=="Search") $total=$pos[2];
 			$cont="";
-			if ($arrHttp["tipob"]=="string"){
-            	if (stristr($val[2],$arrHttp["search"])!==false){
-		   			$vv=explode('____$$$',$val[2]);
-					$numrecresults=0;
-		   			foreach ($vv as $conseguido) {
-						$ixc=stripos($conseguido,$arrHttp["search"]);
-						if ($ixc!==false){
-							if ( $numrecresults>0) $cont.="<br>";
-							$numrecresults++;
-							$ixter=strlen($arrHttp["search"]);
-							$cont.=substr($conseguido,0,$ixc)."<font color=red>".substr($conseguido,$ixc,$ixter)."</font>".substr($conseguido,$ixter+$ixc);
-						}
+			$contentnum=0;
+			$numsrcresults=0;
+			if (isset($res[0]) && $res[0]!="" ){
+				$cont.="<td>";
+				$cont.=$res[0];
+				$cont.="</td>";
+				$contentnum++;
+				$numsrcresults++;/* to ensure that this is seen if no search string will be handled*/
+			}
+			if (isset($res[1]) && trim($res[1])!=""){
+				$cont.="<td>";
+				$numsrcresults=0;
+				$numsrcshown=0;
+				$vv=explode('____$$$',$res[1]);
+				foreach ($vv as $conseguido) {
+					$resultlinear=explode("=",$conseguido,2);
+					if (sizeof($resultlinear)==1) break;
+					$resultname=$resultlinear[0];
+					if ( $arrHttp["title_ind"]=="tit_Title" && isset($fdttitles[$resultname])){
+						// Convert the Tag number into the language dependent fdt Title
+						$resultname="<b>".$fdttitles[$resultname]."</b>";
+					}
+					$resultvalue=$resultlinear[1];
+					$ixc=stripos($resultvalue,$arrHttp["search"]);
+					if ($ixc!==false){
+						if ( $numsrcshown>0) $cont.="<br>";
+						$numsrcshown++;
+						$numsrcresults++;
+						$ixter=strlen($arrHttp["search"]);
+						$cont.=$resultname.": ";
+						$cont.=substr($resultvalue,0,$ixc)."<font color=red>".substr($resultvalue,$ixc,$ixter)."</font>".substr($resultvalue,$ixter+$ixc);
+						$contentnum++;
+					} else if (!$omitfld){
+						if ( $numsrcshown>0) $cont.="<br>";
+						$numsrcshown++;
+						$contentnum++;
+						$cont.=$resultname.": ".$resultvalue;
 					}
 				}
 			}
-			if ($arrHttp["tipob"]=="pft" or $cont!=""){
-				if (isset($val[1])){
-					if (!isset($arr_msg[$val[1]])){
-						if (isset($val[2]) and trim($val[2])!=""){
-							$arr_mfn[$val[1]]=$val[1];
-							$arr_msg[$val[1]]=$val[2];
-							if ($cont!="") $arr_msg[$val[1]]=$cont;
-						}
-					}else{
-						$arr_mfn[$val[1]]=$val[1];
-						$arr_msg[$val[1]]=$cont;
-					}
-				}
+			if ($contentnum>0 && ($numsrcresults>0||$omitrec==false)) {
+				$arr_mfn[$val[1]]=$val[1];
+				$arr_msg[$val[1]]="<table class='noborder'><tr>".$cont."</tr></table>";
 			}
 		}
 	}
@@ -368,6 +470,7 @@ foreach ($arrHttp as $var=>$value){
 	if ($var!="nextrec" && $var!="count" ){
 		if ($var=="Expresion") $value=htmlentities($value);
 		if ($var=="search") $value=urlencode($value);
+		if ($var=="pftstr") $value=urlencode($value);
 		echo "<input type=hidden name=$var value=\"$value\">\n";
 	}
 }
@@ -388,6 +491,9 @@ if ($execmode=="Search" || $execmode=="Range"){
 		</a>
 	<?php
 }
+echo "<div style='display:inline-block;tex-align:right'>";
+		include "../common/inc_back.php";
+echo "</div>";
 ?>
 <input type=hidden name=total value=<?php echo $total?>>
 <input type=hidden name=numshown value=<?php echo $numshown?>>
