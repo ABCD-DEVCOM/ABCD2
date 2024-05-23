@@ -1,6 +1,7 @@
 <?php
 /*
 20240509 fho4abcd Created
+20240523 fho4abcd Changed save parameters
 ** Handles the manipulation of freesearch saved parameters.
 ** Requires "freesearch_save_inc.php" to handle related file manipulation.
 ** Major function:
@@ -27,8 +28,8 @@ if (!isset($arrHttp["Option"])) $arrHttp["Option"]="";
 <script>
 function EnviarForma(){
 	document.forma1.description.value=Trim(document.forma1.description.value)
-    if (document.forma1.description.value==""){
-		alert("<?php echo $msgstr["freesearch_nodes"];?>")
+	if (document.forma1.description.value=="" && document.forma1.SavParams.value==""){
+		alert("<?php echo $msgstr["freesearch_selp"]." - ".$msgstr["freesearch_paror"]." ".$msgstr["freesearch_pardes"];?>")
 		return
 	}
 	document.forma1.submit()
@@ -59,6 +60,9 @@ function EnviarFormadel(){
 include "../common/inc_div-helper.php";
 if ($arrHttp["Option"]==""){
 	/* This option is the first step in saving a parameterset. The caller sends only parameters, no Option*/
+	include("freesearch_save_inc.php");
+	$Savparam_arr=array();
+	Freesearch_table_file("Read",$Savparam_arr);
 	?>
 	<form name=forma1 method=post action=freesearch_save.php>
 	<input type=hidden name=base value="<?php echo $arrHttp["base"]?>">
@@ -67,12 +71,29 @@ if ($arrHttp["Option"]==""){
 	<?php
 	if(isset($arrHttp["Expresion"])&& trim($arrHttp["Expresion"])!="") echo '<input type=hidden name=Expresion value="'.urlencode($arrHttp["Expresion"]).'">';
 	if(isset($arrHttp["sorttag"])&& trim($arrHttp["sorttag"])!="") echo '<input type=hidden name=sorttag value="'.$arrHttp["sorttag"].'">';
-	if(isset($arrHttp["tipob"])&& trim($arrHttp["tipob"])!="") echo '<input type=hidden name=tipob value="'.$arrHttp["tipob"].'">';
 	if(isset($arrHttp["search"])&& trim($arrHttp["search"])!="") echo '<input type=hidden name=search value="'.urlencode($arrHttp["search"]).'">';
+	if(isset($arrHttp["omitrec"])&& trim($arrHttp["omitrec"])!="") echo '<input type=hidden name=omitrec value="'.$arrHttp["omitrec"].'">';
+	if(isset($arrHttp["omitfld"])&& trim($arrHttp["omitfld"])!="") echo '<input type=hidden name=omitfld value="'.$arrHttp["omitfld"].'">';
+	if(isset($arrHttp["pftstr"])&& trim($arrHttp["pftstr"])!="") echo '<input type=hidden name=pftstr value="'.urlencode($arrHttp["pftstr"]).'">';
 	if(isset($arrHttp["fields"])&& trim($arrHttp["fields"])!="") echo '<input type=hidden name=fields value="'.urlencode($arrHttp["fields"]).'">';
+	if(isset($arrHttp["repeat_ind"])) echo '<input type=hidden name=repeat_ind value="'.$arrHttp["repeat_ind"].'">';
+	if(isset($arrHttp["title_ind"])) echo '<input type=hidden name=title_ind value="'.$arrHttp["title_ind"].'">';
 	?>
 	<table>
-	<tr><td><?php echo $msgstr["description"]?></td>
+	<tr><td><?php echo $msgstr["freesearch_use"]?></td>
+		<td><select name=SavParams size=1">
+				<option></option>
+				<?php
+				foreach($Savparam_arr as $value){
+					$savarr=explode('|',$value);
+					?><option value="<?php echo $savarr[0]?>"> <?php echo $savarr[0]?></option>
+					<?php
+				}
+				?>
+			</select>
+		</td>
+	<tr><td style="text-align:center"><?php echo $msgstr["freesearch_paror"]?></td></tr>
+	<tr><td><?php echo $msgstr["freesearch_pardes"]?></td>
 		<td><input type=text name=description maxlength=40 size=40></td>
 	<tr><td></td><td align=center>
 		<a href="javascript:EnviarForma()" class="bt bt-green">
@@ -84,20 +105,34 @@ if ($arrHttp["Option"]==""){
 	include("freesearch_save_inc.php");
 	$Savparam_arr=array();
 	Freesearch_table_file("Read",$Savparam_arr);
-	$newkey=trim($arrHttp["description"]);
-	if ( array_key_exists($newkey,$Savparam_arr)==true){
-		unset($Savparam_arr[$newkey]);
-		echo "<h2>".$msgstr["freesearch_repl"].":<br><span  style='color:blue'>".$newkey."</span></h2>";
-	}	
-	$savedurl="";
-	foreach($arrHttp as $var=>$value){
-		if ($var!="Option" && $var!="description"){
-			if ($savedurl!="") $savedurl.="&";
-			$savedurl.=$var."=".urlencode(urldecode($value));
+	$numerrors=0;
+	$oldkey="";
+	if (isset($arrHttp["SavParams"])) $oldkey=$arrHttp["SavParams"];
+	if ($oldkey!="") {
+		unset($Savparam_arr[$oldkey]);
+		echo "<h2>".$msgstr["freesearch_repl"].":<br><span  style='color:blue'>".$oldkey."</span></h2>";
+		$newkey=$oldkey;
+	} else if (isset($arrHttp["description"])) {
+		$newkey=trim($arrHttp["description"]);
+		if ( array_key_exists($newkey,$Savparam_arr)==true){
+			echo "<h2 style='color:red'>".$msgstr["freesearch_parexis"]."</h2>";
+			$numerrors++;
 		}
+	} else {
+		echo "programming error";
+		$numerrors++;
 	}
-	$Savparam_arr[$newkey]=$newkey."|".$savedurl;
-	Freesearch_table_file("Write",$Savparam_arr);
+	if ($numerrors==0) {
+		$savedurl="";
+		foreach($arrHttp as $var=>$value){
+			if ($var!="Option" && $var!="description"){
+				if ($savedurl!="") $savedurl.="&";
+				$savedurl.=$var."=".urlencode(urldecode($value));
+			}
+		}
+		$Savparam_arr[$newkey]=$newkey."|".$savedurl;
+		Freesearch_table_file("Write",$Savparam_arr);
+		}
 	?>
 	<a href="javascript:self.close()" class="bt bt-gray">
 		 <i class="far fa-window-close"></i> &nbsp; <?php echo $msgstr["cerrar"]?></a>
@@ -143,6 +178,10 @@ if ($arrHttp["Option"]==""){
 	$delparamarr=explode("|",$arrHttp["SavParams"]);
 	unset($Savparam_arr[$delparamarr[0]]);
 	Freesearch_table_file("Write",$Savparam_arr);
+	?>
+	<a href="javascript:self.close()" class="bt bt-gray">
+		 <i class="far fa-window-close"></i> &nbsp; <?php echo $msgstr["cerrar"]?></a>
+	<?php
 }
 ?>
 </body></html>
