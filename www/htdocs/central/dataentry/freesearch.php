@@ -5,6 +5,7 @@
 2024-05-07 fho4abcd Improved user interface &layout, code cleanup
 2024-05-11 fho4abcd Added sort option, added options to save&recall form parameters
 2024-05-23 fho4abcd Save parameters controlled by profile,allow PFT and search fields,Add directives for result
+2024-05-26 fho4abcd Sort only on fields without subfields, move use parameterset to top.
 */
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -192,6 +193,23 @@ function SaveSavParams(){
 <input type=hidden name=cipar value="<?php echo $arrHttp["base"]?>.par">
 <input type=hidden name=fields>
 <table style="border-spacing:3px;padding-left:2px;padding-right:2px">
+	<?php if (sizeof($Savparam_arr)>0){ ?>
+	<tr>
+		<td><?php echo $msgstr["freesearch_use"]?></td>
+		<td colspan=2>
+			<select name=SavParams size=1 onchange="javascript:LoadSavParams()">
+				<option></option>
+				<?php
+				foreach($Savparam_arr as $value){
+					$savarr=explode('|',$value);
+					?><option value="<?php echo $savarr[1]?>"> <?php echo $savarr[0]?></option>
+					<?php
+				}
+				?>
+			</select>
+		</td>
+	</tr>
+	<?php } ?>
 	<tr>
 	<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["r_recsel"]?> </td>
 	<tr>
@@ -259,9 +277,11 @@ function SaveSavParams(){
 					$ischecked="";
 					$t=explode('|',$linea);
 					if ($t[1]==$sorttag) {$ischecked=" selected";}
-					echo "<option value='".$t[1]."'".$ischecked.">".$t[2]." [".$t[1]."]";
-					if ($t[5]!="") echo " (".$t[5].")";
-					echo "</option>"."\n";
+					if ($t[5]=="") {
+						/* Show only entries without subfields*/
+						echo "<option value='".$t[1]."'".$ischecked.">".$t[2]." [".$t[1]."]";
+						echo "</option>"."\n";
+					}
 				}
 				?>
 			</select>
@@ -333,33 +353,19 @@ function SaveSavParams(){
 		<td style="text-align:center;background-color:#cccccc" colspan=4></td>
 	</tr>
 	<tr>
-		<td><?php echo $msgstr["freesearch_use"]?></td>
-		<td colspan=2>
-			<select name=SavParams size=1 onchange="javascript:LoadSavParams()">
-				<option></option>
-				<?php
-				foreach($Savparam_arr as $value){
-					$savarr=explode('|',$value);
-					?><option value="<?php echo $savarr[1]?>"> <?php echo $savarr[0]?></option>
-					<?php
-				}
-				?>
-			</select>
-		</td>
-		<td style="text-align:right"><a href="javascript:EnviarForma()" class="bt bt-green">
-		 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?></a><br>
-		</td>
-	<?php
-    if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){
-	?>
- 	<tr><td colspan=2>
+		<td colspan=3>
+			<?php
+			if (isset($_SESSION["permiso"]["CENTRAL_ALL"]) or isset($_SESSION["permiso"]["CENTRAL_SAVEXPR"])){
+			?>
 			<a href="javascript:SaveSavParams()" class="bt bt-blue">
 				<i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a>
 			<a href="javascript:DelSavParams()" class="bt bt-blue"> &nbsp;
 				<i class="fas fa-trash"></i> &nbsp; <?php echo $msgstr["freesearch_del"]?></a>
+			<?php } ?>
 		</td>
-	</tr>
-	<?php } ?>
+		<td style="text-align:right"><a href="javascript:EnviarForma()" class="bt bt-green">
+		 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?></a><br>
+		</td>
 </table>
 </form>
 <form name=delsavparams method=post action="freesearch_save.php">
