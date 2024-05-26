@@ -5,6 +5,7 @@
 20240507 fho4abcd Remove bugs, improve counters, add show button, layout, code cleanup
 20240511 fho4abcd Added sort option. Replaced act_tabla.xis by act_tabla_sort.xis.
 20240523 fho4abcd Allow Search + PFT actions,improve search&display,several new options to control output
+20240526 fho4abcd Typo. Added down button. Prepare for reverse sort
 */
 session_start();
 include("../common/get_post.php");
@@ -97,7 +98,7 @@ function Showrecord(mfn){
 </script>
 <style>
 table.tabborder {
-	border: 1px solid black;
+	border: 0px solid black;
 	border-collapse:collapse;
 }
 table.tabborder td {
@@ -106,6 +107,10 @@ table.tabborder td {
 table.noborder td{
 	border: 0;
 }
+tr td:last-child {
+    border: none;
+}
+
 </style>
 
 <div class="sectionInfo">
@@ -225,7 +230,12 @@ $count=$arrHttp["count"];
 $numshown=0;
 if (isset($arrHttp["numshown"]))$numshown=$arrHttp["numshown"];
 $sorttag="";
-if (isset($arrHttp["sorttag"]))	$sorttag="&sortkey=v".$arrHttp["sorttag"];
+$sortdir="";
+if (isset($arrHttp["sorttag"]))	{
+	$sorttag="&sortkey=v".$arrHttp["sorttag"];
+	$sortdir="&sortdir=";
+	//$sortdir.="On";
+}
 $execmode="";
 ?>
 <div align=center>
@@ -323,7 +333,7 @@ $execmode="";
 	if ($execmode=="Search") {
 		$endofset=$count+$startofset-1;
 		$query.="&Expresion=".urlencode(stripslashes($arrHttp["Expresion"]))."&Opcion=buscar";
-		$query.="&fromset=$startofset&toset=$endofset".$sorttag;
+		$query.="&fromset=$startofset&toset=$endofset".$sorttag.$sortdir;
 	} elseif ($execmode=="Range") {
 		$total=$arrHttp["to"]-$arrHttp["from"]+1;
 		$from=$arrHttp["from"];
@@ -351,6 +361,7 @@ $execmode="";
 		echo "programming error. die";
 		die;
 	}
+	//echo "<br>query=".$query."<br>";
 	$IsisScript=$xWxis."act_tabla_sort.xis";
 	include("../common/wxis_llamar.php");
 	/*
@@ -362,16 +373,20 @@ $execmode="";
 	foreach ($contenido as $contenido_ar){
 		if (trim($contenido_ar)!="") {
 			$ix++;
-			/* 	returned format example:
-					$$POSICION:1$$5883     |33024|150= Anke____$$$190= Het____$$$
+			/* 	returned format examples:
+				$$POSICION:1$$5883     |33024|150= Anke____$$$190= Het____$$$
 				$val format: $val[0]=$$POSICION:1$$5883
 							 $val[1]=33024								==The MFN
 							 $val[2]=150= Anke____$$$190= Het____$$$	==The complete search result
 				$pos format: $pos[0]=empty
 							 $pos[1]=??
 							 $pos[2]=5883
+				$$POSICION:1$$2|36017|---$$196= Sprln164; Nederland; Wiene; Goor; Delden; ____$$$
+				$val format: $val[0]=$$POSICION:1$$2
+							 $val[1]=36017								==The MFN
+							 $val[2]=---$$196= Sprln164; Nederland; Wiene; Goor; Delden; ____$$$==The complete search result
 			*/
-			$val=explode('|',$contenido_ar);
+			$val=explode('|',$contenido_ar);//echo "<br>contenido=".$contenido_ar."<br>";
 			$pos=explode('$$',$val[0]);
 			$res=explode($PftSepar,$val[2]);
 			if ($execmode=="Search") $total=$pos[2];
@@ -439,10 +454,11 @@ if ($total!=0) { /* display the result table only if any record is found*/
 <div align=center >
 <form name=tabla>
 <table  cellspacing=1 cellpadding=5 class=tabborder>
-	<tr><td></td>
+	<tr class=noborder><td></td>
 		<td>Mfn</td>
 		<td></td>
-		<td><input type=checkbox name=chkall onclick=CheckAll() title="<?php echo $msgstr["selected_records_add"]?>"></td>
+		<td nowrap><input type=checkbox name=chkall onclick=CheckAll() title="<?php echo $msgstr["selected_records_add"]?>">
+		<a class="bt bt-blue" href="#bottom"><i class="fa fa-arrow-down"></i></a></td>
 	</tr>
 	<?php
 	if (count($arr_mfn)==0) {
@@ -491,7 +507,7 @@ if ($execmode=="Search" || $execmode=="Range"){
 		</a>
 	<?php
 }
-echo "<div style='display:inline-block;tex-align:right'>";
+echo "<div style='display:inline-block;text-align:right'>";
 		include "../common/inc_back.php";
 echo "</div>";
 ?>
@@ -511,4 +527,5 @@ echo "</div>";
 ?>
 </div>
 </div>
+<div id="bottom"></div>
 <?php include("../common/footer.php")?>
