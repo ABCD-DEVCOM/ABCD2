@@ -6,6 +6,7 @@
 20240511 fho4abcd Added sort option. Replaced act_tabla.xis by act_tabla_sort.xis.
 20240523 fho4abcd Allow Search + PFT actions,improve search&display,several new options to control output
 20240526 fho4abcd Typo. Added down button. Prepare for reverse sort
+20240528 fho4abcd Add reverse sort option
 */
 session_start();
 include("../common/get_post.php");
@@ -157,6 +158,7 @@ tr td:last-child {
 		if (isset($arrHttp["repeat_ind"])) $backtoscript.="&repeat_ind=".$arrHttp["repeat_ind"];
 		if (isset($arrHttp["title_ind"])) $backtoscript.="&title_ind=".$arrHttp["title_ind"];
 		if (isset($arrHttp["sorttag"])) $backtoscript.="&sorttag=".urlencode($arrHttp["sorttag"]);
+		if (isset($arrHttp["sortdir"])) $backtoscript.="&sortdir=".$arrHttp["sortdir"];
 		include "../common/inc_back.php";
 		?>
 	</div>
@@ -234,12 +236,12 @@ $sortdir="";
 if (isset($arrHttp["sorttag"]))	{
 	$sorttag="&sortkey=v".$arrHttp["sorttag"];
 	$sortdir="&sortdir=";
-	//$sortdir.="On";
+	if (isset($arrHttp["sortdir"]))$sortdir.="On";
 }
 $execmode="";
 ?>
 <div align=center>
-<div style="border-style:solid;border-width:2px; text-align:left;">
+<div style="text-align:left;">
 <table style="table-layout:fixed;margin-left:auto;margin-right:auto;width:100%;background-color:var(--abcd-gray-500)">
 	<?php
 	if (isset($arrHttp["from"])){
@@ -269,7 +271,17 @@ $execmode="";
 	if (isset($arrHttp["sorttag"])) {
 		?>
 		<tr><td><?php echo $msgstr["freesearch_sort"]?></td><td style="width:10px">:</td>
-			<td><?php echo $arrHttp["sorttag"];?></td>
+			<td><?php
+				$sorttitle=$arrHttp["sorttag"];
+				$resultname=$sorttitle;
+				if ( isset($fdttitles[$sorttitle])){
+					// Convert the Tag number into the language dependent fdt Title
+					$resultname=$fdttitles[$resultname]." [".$sorttitle."] ";
+				}
+				echo $resultname;
+				if (isset($arrHttp["sortdir"])) echo "&nbsp; &nbsp; ".$msgstr["freesearch_sortrev"];
+				?>
+			</td>
 		</tr>
 		<?php
 	}
@@ -343,7 +355,7 @@ $execmode="";
 		$toset=$fromset+$count-1;
 		if ($toset>$to) $toset=$to;
 		$query.="&from=$from&to=$to"."&Opcion=rango";
-		$query.="&fromset=$fromset&toset=$toset".$sorttag;
+		$query.="&fromset=$fromset&toset=$toset".$sorttag.$sortdir;
 	} elseif ($execmode=="Selected") {
 		$seleccion="";
 		$mfn_sel=explode(',',$arrHttp["seleccionados"]);
@@ -356,7 +368,7 @@ $execmode="";
 			}
 		}
 		$query.="&Opcion=seleccionados";
-		$query.="&Mfn=$seleccion".$sorttag;;
+		$query.="&Mfn=$seleccion".$sorttag.$sortdir;
 	} else {
 		echo "programming error. die";
 		die;
