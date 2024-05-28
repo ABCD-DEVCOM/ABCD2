@@ -1,7 +1,7 @@
 <IsisScript>
 <!--
 -- 20240509 fho4abcd Created by merging act_tabla.xis and sort.xis. Not a direct replacement for these scripts
--- 20240526 fho4abcd Added reverse option
+-- 20240528 fho4abcd Improved reverse option.
 -- Output format like
 -- $$POSICION:1                                     $$5883                     |33024|150= Anke____$$$190= Het____$$$
 -- $$POSICION:<Isis_Current=current sequence number>$$<Isis_Items=total in set>|<MFN>|<pft output>
@@ -16,7 +16,7 @@
 		<field action=cgi tag=5016>syspar</field>
 		<field action=cgi tag=3030>Formato</field>	<!-- pft for generating part of the output-->
 		<field action=cgi tag=3035>sortkey</field>	<!-- pft for sortkey (e.g v200)-->
-		<field action=cgi tag=3036>sortdir</field>	<!-- sortdirection : On=reverse-->
+		<field action=cgi tag=3036>sortdir</field>	<!-- sortdirection : empty=standard,On=reverse-->
 		<field action=cgi tag=9001>Opcion</field>	<!-- BUSCAR(=search expresion),RANGO(=from-to range),SELECCIONADOS=(Mfn list)-->
 		<field action=cgi tag=3000>Expresion</field>
 		<field action=cgi tag=2000>from</field>
@@ -33,7 +33,6 @@
 		<parm name=actab><pft>cat('isisac.tab')</pft></parm>
 		<parm name=uctab><pft>cat('isisuc.tab')</pft></parm>
 		<parm name="buffersize">200000</parm>
-
 		<flow action=jump>
 			<pft>
 				select s(v9001)
@@ -83,11 +82,11 @@
 		</do>
 		<flow action=exit>1</flow>
 
-   		<label>RANGO</label>
-      	<do task=mfnrange>
-           	<parm name=db><pft>v5001</pft></parm>
-           	<parm name=from><pft>v2000</pft></parm>
-           	<parm name=to><pft>v2001</pft></parm>
+		<label>RANGO</label>
+		<do task=mfnrange>
+			<parm name=db><pft>v5001</pft></parm>
+			<parm name=from><pft>v2000</pft></parm>
+			<parm name=to><pft>v2001</pft></parm>
 			<loop>
 				<field action=cgi tag=3035>sortkey</field>
 				<list action=load type=sort>
@@ -100,6 +99,7 @@
 				<field action=define tag=1002>Isis_Items</field>
 				<parm name=from><pft>v2002</pft></parm>
 				<parm name=to><pft>v2003</pft></parm>
+				<parm name=reverse><pft>v3036</pft></parm>
 				<loop>
 					<field action=import tag=5001>5001</field>
 					<field action=import tag=3030>3030</field>

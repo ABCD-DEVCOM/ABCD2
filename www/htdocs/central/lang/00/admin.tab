@@ -150,6 +150,7 @@ freesearch_save=Save parameterset
 freesearch_selec=Selected records
 freesearch_selp=Select parameterset
 freesearch_sort=Sort by field
+freesearch_sortrev=Sort in reverse order
 freesearch_tittag=Show Tag (=number) in result
 freesearch_tittit=Show Title in result
 freesearch_use=Use parameterset

@@ -6,6 +6,7 @@
 2024-05-11 fho4abcd Added sort option, added options to save&recall form parameters
 2024-05-23 fho4abcd Save parameters controlled by profile,allow PFT and search fields,Add directives for result
 2024-05-26 fho4abcd Sort only on fields without subfields, move use parameterset to top.
+2024-05-28 fho4abcd Add reverse sort option
 */
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -107,6 +108,7 @@ function EnviarForma(){
 		document.forma1.omitrec.value=""
 		document.forma1.omitfld.value=""
 	}
+	if (document.forma1.sorttag.value=="" )document.forma1.sortdir.value=""
 	document.forma1.fields.value=fields
 	document.forma1.target=""
 	document.forma1.action='freesearch_ex.php'
@@ -285,6 +287,9 @@ function SaveSavParams(){
 				}
 				?>
 			</select>
+		</td>
+		<td><input type=checkbox name=sortdir value=On
+			<?php if(isset($arrHttp["sortdir"])) echo "checked";?>> <?php echo $msgstr["freesearch_sortrev"]?>
 		</td>
 	</tr>
 	<tr>

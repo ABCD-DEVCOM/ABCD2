@@ -2,6 +2,7 @@
 /*
 20240509 fho4abcd Created
 20240523 fho4abcd Changed save parameters
+20240528 fho4abcd Changed save parameter
 ** Handles the manipulation of freesearch saved parameters.
 ** Requires "freesearch_save_inc.php" to handle related file manipulation.
 ** Major function:
@@ -71,6 +72,7 @@ if ($arrHttp["Option"]==""){
 	<?php
 	if(isset($arrHttp["Expresion"])&& trim($arrHttp["Expresion"])!="") echo '<input type=hidden name=Expresion value="'.urlencode($arrHttp["Expresion"]).'">';
 	if(isset($arrHttp["sorttag"])&& trim($arrHttp["sorttag"])!="") echo '<input type=hidden name=sorttag value="'.$arrHttp["sorttag"].'">';
+	if(isset($arrHttp["sortdir"])&& trim($arrHttp["sortdir"])!="") echo '<input type=hidden name=sortdir value="'.$arrHttp["sortdir"].'">';
 	if(isset($arrHttp["search"])&& trim($arrHttp["search"])!="") echo '<input type=hidden name=search value="'.urlencode($arrHttp["search"]).'">';
 	if(isset($arrHttp["omitrec"])&& trim($arrHttp["omitrec"])!="") echo '<input type=hidden name=omitrec value="'.$arrHttp["omitrec"].'">';
 	if(isset($arrHttp["omitfld"])&& trim($arrHttp["omitfld"])!="") echo '<input type=hidden name=omitfld value="'.$arrHttp["omitfld"].'">';
