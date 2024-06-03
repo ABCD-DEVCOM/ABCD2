@@ -18,6 +18,8 @@
 2022-03-21 fho4abcd  Added variable to set the par folder
 2022-03-31 fho4abcd  Replace fixed localhost by detection of the server name
 2023-02-23 fho4abcd  config.php->config.php.template
+2023-06-01 fho4abcd Improve charset in header statement
+2024-06-01 fho4abcd Add captcha
 */
 
 ini_set('error_reporting', E_ALL);
@@ -204,6 +206,13 @@ if ((isset($def["CHANGE_PASSWORD"])) && ($def["CHANGE_PASSWORD"]=="N")) {
 	$change_password="Y"; 
 	$def["CHANGE_PASSWORD"]=$change_password;
 }
+if ((isset($def["CAPTCHA"])) && ($def["CAPTCHA"]=="N")) {
+	$setcaptcha="N"; 
+	$def["CAPTCHA"]=$setcaptcha;	
+} else {
+	$setcaptcha="Y"; 
+	$def["CAPTCHA"]=$setcaptcha;
+}
 
 
 
@@ -224,7 +233,7 @@ if (file_exists(realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR."config_extended
 	$charset="ISO-8859-1";
 }
 // Send characterset to the server. Note that the browser gets it via the html header.
-header('Content-type: text/html; charset='.$charset.'');
+header('Content-type: text/html; charset='.$charset);
 
 if (session_status() != PHP_SESSION_NONE )  $_SESSION["meta_encoding"]=$meta_encoding;
 

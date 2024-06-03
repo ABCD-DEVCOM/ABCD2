@@ -9,6 +9,7 @@
 2022-01-19 fho4abcd Set default language if none supplied
 2022-07-10 fho4abcd Prepare for .par file in database folder+ no password to llamar_wxis.php
 2024-05-19 fho4abcd Added alternative return script. When the standard index.php is forbidden
+2024-06-01 fho4abcd Check captcha
 */
 global $Permiso, $arrHttp,$valortag,$nombre;
 $arrHttp=Array();
@@ -84,7 +85,26 @@ global $llamada, $valortag,$maxmfn,$arrHttp,$OS,$Bases,$xWxis,$Wxis,$Mfn,$db_pat
 	return $llave_ret;
 
 }
-
+function VerificarCaptcha(){
+Global $arrHttp,$msgstr,$retorno,$setcaptcha;
+	$cap_code="";
+	if (isset($_SESSION['6_letters_code']) && $_SESSION['6_letters_code']!=""){
+		$cap_code=$_SESSION['6_letters_code'];
+	}
+	if ($setcaptcha=="N") return;
+	// a faked case
+	if ($setcaptcha=="Y" && $cap_code=="") {
+		header("Location: ".$retorno."?login=C");
+		die;
+	}
+	$testcaptcha="";
+	if ( isset($arrHttp["captcha"])) $testcaptcha=$arrHttp["captcha"];
+	if ($testcaptcha=="" || $testcaptcha!=$cap_code){
+		header("Location: ".$retorno."?login=C");
+		die;
+	}
+	return;
+}
 function VerificarUsuario(){
 Global $arrHttp,$valortag,$Path,$xWxis,$session_id,$Permiso,$msgstr,$db_path,$nombre,$Per,$adm_login,$adm_password,$retorno;
  	$llave=LeerRegistro();
@@ -395,12 +415,13 @@ else {
 	if (!isset($_SESSION["Expresion"])) $_SESSION["Expresion"]="";
 
 	if (isset($arrHttp["login"])){
-
+		VerificarCaptcha();
 		global $use_ldap;
-		if($use_ldap)
-		VerificarUsuarioLDAP();
-	else
-		VerificarUsuario();
+		if($use_ldap){
+			VerificarUsuarioLDAP();
+		} else {
+			VerificarUsuario();
+		}
         if (isset($arrHttp["lang"]) && $arrHttp["lang"]!="") {
             $_SESSION["lang"]=$arrHttp["lang"];
         } else {

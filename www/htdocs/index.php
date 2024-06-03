@@ -11,6 +11,7 @@
 20230127 fho4abcd Removed unused function, login fail can be caused by expiration: improve message content
                   Removed inline fixed size (clashed often with footer position). Removed unused div sectioninfo
 20230223 fho4abcd Check for existence of config.php
+20230602 fho4abcd Add captcha
 */
 session_start();
 $_SESSION=array();
@@ -91,8 +92,18 @@ document.onkeypress =
 
 
 function CambiarClave(){
-	document.cambiarPass.login.value=Trim(document.administra.login.value)
-	document.cambiarPass.password.value=Trim(document.administra.password.value)
+	login=Trim(document.administra.login.value)
+	password=Trim(document.administra.password.value)
+	captcha=Trim(document.administra.captcha.value)
+	if (login=="" || password==""){
+		alert("<?php echo $msgstr["datosidentificacion"]?>")
+		return
+	}else if (captcha=="") {
+		alert("<?php echo $msgstr["login_nocapt"]?>")
+		return
+	}
+	document.cambiarPass.login.value=login
+	document.cambiarPass.password.value=password
 	ix=document.administra.lang.selectedIndex
 	document.cambiarPass.lang.value=document.administra.lang.options[ix].value
 	ix=document.administra.db_path.value
@@ -102,8 +113,16 @@ function CambiarClave(){
 function Enviar(){
 	login=Trim(document.administra.login.value)
 	password=Trim(document.administra.password.value)
+	captcha="none"
+	var captchaelement =  document.getElementById('captcha');
+	if (typeof(captchaelement) != 'undefined' && captchaelement != null) {
+		captcha=Trim(document.administra.captcha.value)
+	}
 	if (login=="" || password==""){
 		alert("<?php echo $msgstr["datosidentificacion"]?>")
+		return
+	}else if (captcha=="") {
+		alert("<?php echo $msgstr["login_nocapt"]?>")
 		return
 	}else{
 		if (document.administra.newindow.checked){
@@ -126,84 +145,81 @@ include ("$app_path/common/css_settings.php");
 ?>
 </head>
 <body>
-	<header class="heading">
-		<div class="institutionalInfo">
-			<?php
+<header class="heading">
+	<div class="institutionalInfo">
+		<?php
 
-			if (isset($def['LOGO_DEFAULT'])) {
-				echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
-			} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
-				echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
-				if (isset($institution_name)) echo $institution_name;
-				echo "'>";
-			} else {
-				echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
-			}
+		if (isset($def['LOGO_DEFAULT'])) {
+			echo "<img src='/assets/images/logoabcd.png?".time()."' title='$institution_name'>";
+		} elseif ((isset($def["LOGO"])) && (!empty($def["LOGO"]))) {
+			echo "<img src='".$folder_logo.$def["LOGO"]."?".time()."' title='";
+			if (isset($institution_name)) echo $institution_name;
+			echo "'>";
+		} else {
+			echo "<img src='/assets/images/logoabcd.png?".time()."' title='ABCD'>";
+		}
 
-			?>
-		</div>
-		<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding?></div>
+		?>
+	</div>
+	<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding?></div>
 
-		<div class="spacer">&#160;</div>
-	</header>
+	<div class="spacer">&#160;</div>
+</header>
 <form name="administra" onsubmit="javascript:return false" method="post" action="/<?php echo $app_path?>/common/inicio.php">
 <input type="hidden" name="Opcion" value="admin">
 <input type="hidden" name="cipar" value="acces.par">
-	<div class="middle login">
-		<div class="loginForm">
-
-		<div class="boxContent">
-<?php
-if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
-		echo "
-			<div class=\"helper alert\">".$msgstr["menu_ex_noau"]."
-			</div>
-		";
-}
-if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
-		echo "
-			<div class=\"helper success\">".$msgstr["pswchanged"]."
-			</div>
-		";
-}
-?>
-		<div class="formRow">
+<div class="middle login">
+<div class="loginForm">
+<div class="boxContent">
+	<?php
+	if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
+		echo "<div class=\"helper alert\">".$msgstr["menu_ex_noau"]."</div>";
+	}
+	if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
+		echo "<div class=\"helper success\">".$msgstr["pswchanged"]."</div>";
+	}
+	if (isset($arrHttp["login"]) and $arrHttp["login"]=="C"){
+		echo "<div class=\"helper alert\">".$msgstr["login_invcapt"]."</div>";
+	}
+	?>
+<table>
+	<tr><td>
 			<label for="user"><?php echo $msgstr["userid"]?></label>
-<?php
-if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
-		echo "
-			<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry inputAlert\" onfocus=\"this.className = 'textEntry superTextEntry inputAlert textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry inputAlert';\" />\n";
-}else{
-		echo "
-			<input type=\"text\" name=\"login\" id=\"user\" value=\"\" class=\"textEntry superTextEntry\" onfocus=\"this.className = 'textEntry superTextEntry textEntryFocus';\" onblur=\"this.className = 'textEntry superTextEntry';\" />\n";
-}
-
-?>
-		</div>
-
-		<div class="formRow">
-			<label for="pwd"><?php echo $msgstr["password"]?></label>
+		</td>
+		<td>
+			<?php
+			if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
+				echo "<input type='text' name='login' id='user' value='' class='textEntry superTextEntry inputAlert' onfocus=\"this.className='textEntry superTextEntry inputAlert textEntryFocus';\" onblur=\"this.className='textEntry superTextEntry inputAlert';\" />\n";
+			}else{
+				echo "<input type='text' name='login' id='user' value='' class='textEntry superTextEntry' onfocus=\"this.className='textEntry superTextEntry textEntryFocus';\" onblur=\"this.className='textEntry superTextEntry';\" />\n";
+			}
+			?>
+		</td>
+	</tr><tr>
+		<td >
+			<label for="pwd"><?php echo $msgstr["password"]?></label></td><td>
 			<input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
-		   <?php if (isset($change_password) and $change_password=="Y") echo "<br><a href=javascript:CambiarClave()>". $msgstr["chgpass"]."</a>\n";?>
-		</div>
-		<div id="formRow3" class="formRow formRowFocus">
+		</td>
+	</tr>
         <?php
         // Check if the language from the browser is present
         $a=$msg_path."lang/$lang/lang.tab";
         if (!file_exists($a)){
             // switch to configured language if browser language is not present
-            echo "<div>".$msgstr["flang"].": ".$a."<br>";
-            echo $msgstr["using_config"]." '".$lang_config."'<br>&nbsp;</div>";
+            echo "<tr><td colspan=2>".$msgstr["flang"].":<br>".$a."<br>";
+            echo $msgstr["using_config"]." '".$lang_config."'</td></tr>";
             $lang=$lang_config;
         }
         // Check if the language file is present
         $a=$msg_path."lang/$lang/lang.tab";
         if (!file_exists($a)){
-            echo "<div style='color:red'>".$msgstr["fatal"].": ".$msgstr["flang"].": ".$a."</div>";
+            echo "<tr><td colspan=2><div style='color:red'>".$msgstr["fatal"].": ".$msgstr["flang"].": ".$a."</div></td>";
             die;
         }
         ?>
-			<label ><?php echo $msgstr["lang"]?></label> 
+	<tr>
+		<td>
+			<label ><?php echo $msgstr["lang"]?></label> </td><td>
 			<select name=lang class="textEntry singleTextEntry" onchange="this.submit()">
                 <option value=''></option>
                 <?php
@@ -222,42 +238,58 @@ if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
                 }
                 ?>
 			</select>
-		</div>
-		<div class="formRow"><br>
-<?php
-if (file_exists("dbpath.dat")){
-	global $db_path;
-	$fp=file("dbpath.dat");
-	echo $msgstr["database_dir"].': <select class="textEntry singleTextEntry" name=db_path>\n';
-	foreach ($fp as $value){
-		if (trim($value)!=""){
-			$v=explode('|',$value);
-			$v[0]=trim($v[0]);
-			echo "<option value=".trim($v[0]).">".$v[1]."\n";
+		</td>
+	</tr><tr>
+		<?php
+		if (file_exists("dbpath.dat")){
+			global $db_path;
+			$fp=file("dbpath.dat");
+			echo '<td>'.$msgstr["database_dir"].'</td>';
+			echo '<td><select class="textEntry singleTextEntry" name=db_path>\n';
+			foreach ($fp as $value){
+				if (trim($value)!=""){
+					$v=explode('|',$value);
+					$v[0]=trim($v[0]);
+					echo "<option value=".trim($v[0]).">".$v[1]."\n";
+				}
+
+			}
+			echo "</select>";
+		} else {
+			echo '<td><input type="hidden" name="db_path" value="'.$db_path.'"></td>';
 		}
-
-	}
-	echo "</select>";
-} else {
-	echo '<input type="hidden" name="db_path" value="'.$db_path.'">';
-}
-?>
-			<input type="checkbox" name="newindow" value=
-<?php
-if (isset($open_new_window) and $open_new_window=="Y")
-	echo "Y checked";
-else
-	echo "N";
-?> />
-			<label for="setCookie" class="inline"><?php echo $msgstr["openwindow"]?></label>
-		</div>
-		<div class="formRow">
-				<a href="javascript:Enviar()" class="bt bt-blue">
-					<?php echo $msgstr["entrar"]?> 
-				</a>
-		</div>
-	</div>
-
+		?>
+	<tr><td>
+			<label for="newindow" class="inline"><?php echo $msgstr["openwindow"]?></label>
+		</td>
+		<td>
+			<?php $newwindow="";
+			if (isset($open_new_window) and $open_new_window=="Y")$newwindow="checked";
+			?>
+			<input type="checkbox" name="newindow" id="newindow" <?php echo $newwindow?> >
+		</td>
+	<?php if (!isset($setcaptcha) || $setcaptcha!="N") {?>
+	<tr style="background-color:var(--abcd-gray-200);">
+		<td colspan=2 style="text-align:center"><?php echo $msgstr["login_capt"];?></td></tr>
+	<tr>
+		<td><?php
+			include("central/common/captcha_get_font.php");
+			$font=captcha_font();//dies with error if font not found
+		?>
+		<img src="./central/common/captcha_code_file.php" id='captchaimg' ></td>
+		<td><input type="text" name="captcha" id="captcha" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
+	<?php } ?>
+	<tr><td>
+		   <?php if (isset($change_password) and $change_password=="Y") { ?>
+		   <a href="javascript:CambiarClave()" class="bt bt-gray">
+			<i class="fas fa-key"></i> &nbsp;<?php echo $msgstr["chgpass"]?></a>
+		   <?php } ?>
+		</td>
+		<td style="text-align:right"><a href="javascript:Enviar()" class="bt bt-blue">
+		 <i class="fas fa-sign-in-alt"></i> &nbsp; <?php echo $msgstr["login"]?> &nbsp; </a>
+		</td>
+</table>
+</div>
 </div>
 </div>
 </form>
@@ -268,6 +300,5 @@ else
 	<input type="hidden" name="db_path">
 	<input type="hidden" name="Opcion" value="chgpsw">
 </form>
-
 <?php include ("$app_path/common/footer.php");?>
 

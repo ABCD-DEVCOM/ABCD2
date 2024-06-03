@@ -430,6 +430,7 @@ switch ($set_mod){
 					"CHANGE_PASSWORD" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CHANGE_PASSWORD"]),					
 					"SECURE_PASSWORD_LENGTH" => array("it"=>"text","Options"=>"","size"=>1,"Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LENGTH"]),
 					"SECURE_PASSWORD_LEVEL" => array("it"=>"radio","Options"=>"0;1;2;3;4;5","Label"=>"0;1;2;3;4;5","Tip"=>$msgstr["set_TIP_SECURE_PASSWORD_LEVEL"]),
+					"CAPTCHA" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_CAPTCHA"]),
 
 					);
 	/*

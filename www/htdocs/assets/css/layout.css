@@ -1,6 +1,7 @@
 /*
 ** 2021-06-26 fho4abcd Improve distributor logo styles
 ** 2023-01-19 fho4abcd Removed bad !important and }} syntax error
+** 2023-06-01 fho4abcd increase size login box
 */
 /* general styles */
 body, html {
@@ -609,7 +610,7 @@ A.menuButton {
 
 	.login .loginForm {
 		margin: 0px auto;
-		width: 350px;
+		width: 450px;
 	}
 
 	.login .loginForm {
