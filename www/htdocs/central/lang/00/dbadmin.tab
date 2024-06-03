@@ -415,6 +415,7 @@ set_BG_WEB=Bg web (iah)
 set_BODY_BACKGROUND=Background Color
 set_BUTTON=BUTTON
 set_CALENDAR=Calendar
+set_CAPTCHA=Captcha
 set_CHANGE_PASSWORD=Allow user password change
 set_CIRCULATION=Circulation
 set_CISIS_VERSION=CISIS version ?
@@ -509,6 +510,7 @@ set_TIP_FOOTER=Background colour of the footer.
 set_TIP_FOOTER_FONTCOLOR=Colour of the footer text.
 set_TIP_BG_WEB=Background colour of iAH
 set_TIP_CALENDAR=
+set_TIP_CAPTCHA=Captcha protection login window. Default=Yes
 set_TIP_RESERVATION=Activate the booking module.
 set_TIP_LOAN_POLICY=BY_USER means that in the loan system the operator will be presented with the policies to which the user has access so that he can select the one he wishes to apply to the title in the loan process
 set_TIP_EMAIL=
