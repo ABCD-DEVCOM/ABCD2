@@ -15,7 +15,8 @@
 * GNU General Public License for more details: 
 * http://www.gnu.org/licenses/gpl.html
 *
-* 20240530 fho4abcd. Adapted for use in ABCD
+* 20240530 fho4abcd Adapted for use in ABCD
+* 20240604 fho4abcd No longer use imagettfbbox. Gave problems on some hosts. Unreliable.
 */
 
 session_start();
@@ -65,10 +66,14 @@ for( $i=0; $i<$random_dots; $i++ ) {
 for( $i=0; $i<$random_lines; $i++ ) {
 	imageline($image, random_int(0,$image_width), random_int(0,$image_height),random_int(0,$image_width), random_int(0,$image_height), $image_noise_color);
 }
-/* create a text box and add some letters code in it */
-$textbox = imagettfbbox($font_size, 0, $font, $code); 
+/* create a text box and add some letters code in it*/
+/*$textbox = imagettfbbox($font_size, 0, $font, $code); 
 $x = ($image_width - $textbox[4])/2;
 $y = ($image_height - $textbox[5])/2;
+*/
+/* This fails for unknown reasons, so we use fixed positions as alternative*/
+$x=10;
+$y=30;
 imagettftext($image, $font_size, 0, $x, $y, $text_color, $font , $code);
 
 /* Show captcha image in the page html page */
