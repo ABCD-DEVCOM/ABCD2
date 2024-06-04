@@ -7,6 +7,7 @@
 20240523 fho4abcd Allow Search + PFT actions,improve search&display,several new options to control output
 20240526 fho4abcd Typo. Added down button. Prepare for reverse sort
 20240528 fho4abcd Add reverse sort option
+20240604 fho4abcd Avoid display of empty/sparsely filled tables. Processing indicator
 */
 session_start();
 include("../common/get_post.php");
@@ -99,19 +100,14 @@ function Showrecord(mfn){
 </script>
 <style>
 table.tabborder {
-	border: 0px solid black;
 	border-collapse:collapse;
 }
 table.tabborder td {
-	border: 1px solid black;
+	border: 1px solid LightGray;
 }
 table.noborder td{
 	border: 0;
 }
-tr td:last-child {
-    border: none;
-}
-
 </style>
 
 <div class="sectionInfo">
@@ -167,6 +163,8 @@ tr td:last-child {
 <?php $ayuda="freesearch.html";include "../common/inc_div-helper.php" ?>
 <div class="middle form">
 <div class="formContent">
+    <img  src="../dataentry/img/preloader.gif" alt="Loading..." id="preloader"
+          style="visibility:hidden;position:absolute;top:30%;left:45%;border:2px solid;"/>
 <?php
 
 $base =$arrHttp["base"];
@@ -320,26 +318,37 @@ $execmode="";
 	?>
 </table>
 </div></div>
+<script>document.getElementById('preloader').style.visibility='visible'</script>
 <?php
-	$total=0;
+ob_flush();flush();
+$total=0;
+/*
+** Creation of the full PFT with elements
+**	- applied PFT
+**	- search fields PFT
+*/
+$PftSepar="---$$";
+$PftTotal="";
+if (isset($arrHttp["pftstr"])&& $arrHttp["pftstr"]!="") {
+	$PftTotal.=$arrHttp["pftstr"];
+}
+$PftTotal.="'".$PftSepar."'";
+if ($Pftsearch!=""){
+	$PftTotal.=$Pftsearch;
+}
+$PftTotal.="#";
+if ($Pftsearch=="") $Pftsearch=$arrHttp["pftstr"].'#';
+$arr_mfn=Array();
+$arr_msg=Array();
+$actualnumshown=0;
+$stop_iteration="N";
+/*
+** Loop to find records to show
+*/
+while ($actualnumshown<$count && $stop_iteration=="N"){
 	/*
-	** Creation of the full PFT with elements
-	**	- applied PFT
-	**	- search fields PFT
+	** Creation of the query for wxis_llamar
 	*/
-	$PftSepar="---$$";
-	$PftTotal="";
-	if (isset($arrHttp["pftstr"])&& $arrHttp["pftstr"]!="") {
-		$PftTotal.=$arrHttp["pftstr"];
-	}
-	$PftTotal.="'".$PftSepar."'";
-	if ($Pftsearch!=""){
-		$PftTotal.=$Pftsearch;
-	}
-	$PftTotal.="#";
-  	if ($Pftsearch=="") $Pftsearch=$arrHttp["pftstr"].'#';
-	/*
-	** Creation of the query for wxis_llamar*/
 	$query="&base=".$arrHttp["base"]."&cipar=$db_path".$actparfolder.$arrHttp["cipar"];
 	$query.="&Formato=".urlencode($PftTotal.'/');
 	if ($execmode=="Search") {
@@ -350,8 +359,7 @@ $execmode="";
 		$total=$arrHttp["to"]-$arrHttp["from"]+1;
 		$from=$arrHttp["from"];
 		$to=$arrHttp["to"];
-		$fromset=1;
-		if (isset($arrHttp["nextrec"])) $fromset=$fromset+$arrHttp["nextrec"]-1;
+		$fromset=$startofset;
 		$toset=$fromset+$count-1;
 		if ($toset>$to) $toset=$to;
 		$query.="&from=$from&to=$to"."&Opcion=rango";
@@ -373,18 +381,13 @@ $execmode="";
 		echo "programming error. die";
 		die;
 	}
-	//echo "<br>query=".$query."<br>";
 	$IsisScript=$xWxis."act_tabla_sort.xis";
 	include("../common/wxis_llamar.php");
 	/*
 	** Processing the results of the database query
 	*/
-	$ix=0;
-	$arr_mfn=Array();
-	$arr_msg=Array();
 	foreach ($contenido as $contenido_ar){
 		if (trim($contenido_ar)!="") {
-			$ix++;
 			/* 	returned format examples:
 				$$POSICION:1$$5883     |33024|150= Anke____$$$190= Het____$$$
 				$val format: $val[0]=$$POSICION:1$$5883
@@ -398,13 +401,18 @@ $execmode="";
 							 $val[1]=36017								==The MFN
 							 $val[2]=---$$196= Sprln164; Nederland; Wiene; Goor; Delden; ____$$$==The complete search result
 			*/
-			$val=explode('|',$contenido_ar);//echo "<br>contenido=".$contenido_ar."<br>";
+			$val=explode('|',$contenido_ar);
 			$pos=explode('$$',$val[0]);
 			$res=explode($PftSepar,$val[2]);
 			if ($execmode=="Search") $total=$pos[2];
 			$cont="";
 			$contentnum=0;
 			$numsrcresults=0;
+			/*
+			** It may happen that $res[0] is set and $res[0]==""
+			** This indicates that the required fields are not present in the database
+			** We only process records with required fields
+			*/
 			if (isset($res[0]) && $res[0]!="" ){
 				$cont.="<td>";
 				$cont.=$res[0];
@@ -446,27 +454,32 @@ $execmode="";
 			if ($contentnum>0 && ($numsrcresults>0||$omitrec==false)) {
 				$arr_mfn[$val[1]]=$val[1];
 				$arr_msg[$val[1]]="<table class='noborder'><tr>".$cont."</tr></table>";
+				$actualnumshown++;
 			}
+			$startofset++;
 		}
 	}
+	if ($startofset>=$total) $stop_iteration="Y";
+}
 ?>
 <div style="text-align:center">
+	<script>document.getElementById('preloader').style.visibility='hidden'</script>
 <?php
 echo $msgstr["freesearch_found"]." ";
 if ($execmode=="Search") echo $msgstr["cg_search"];
 if ($execmode=="Range") echo $msgstr["freesearch_range"];
 if ($execmode=="Selected") echo $msgstr["freesearch_selec"];
 echo " = ".$total;
-
 ?>
 </div>
 <?php
-if ($total!=0) { /* display the result table only if any record is found*/
+/* Display the result table only if any record is found*/
+if ($total!=0) {
 ?>
 <div align=center >
 <form name=tabla>
 <table  cellspacing=1 cellpadding=5 class=tabborder>
-	<tr class=noborder><td></td>
+	<tr style="background-color:LightGray"><td></td>
 		<td>Mfn</td>
 		<td></td>
 		<td nowrap><input type=checkbox name=chkall onclick=CheckAll() title="<?php echo $msgstr["selected_records_add"]?>">
@@ -502,27 +515,34 @@ foreach ($arrHttp as $var=>$value){
 		echo "<input type=hidden name=$var value=\"$value\">\n";
 	}
 }
+?>
+<br>
+<div style='display:inline-block;float:left'>
+	<?php include "../common/inc_back.php";?>
+</div>
+<?php
 if ($execmode=="Search" || $execmode=="Range"){
-	$hasta=$startofset+$count;
-	if ($hasta>$total){
-		$hasta=1;
+	if ($startofset>$total){
+		$startofset=1;
 		$numshown=0;
-	}
-	?><br>
-        <?php echo $msgstr["cg_nxtr"]?>
-        <input type=text size=5 name=nextrec value='<?php echo $hasta?>'>&nbsp;
-        <?php echo $msgstr["cg_read"]?>&nbsp;
-        <input type=text size=5 name=count value='<?php echo $count?>'>
-        <?php echo $msgstr["cg_morer"]?>&nbsp; &nbsp; &nbsp;
+	} else{
+	?>
+        <div style='display:inline-block'><?php echo $msgstr["cg_nxtr"]?>
+        <input type=text size=5 name=nextrec value='<?php echo $startofset?>'>&nbsp;
+        <input type=hidden name=count value='<?php echo $count?>'>
+        &nbsp;<b>&#8649;</b>&nbsp;
 		<a href="javascript:EnviarForma()" class="bt bt-green">
 			 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?>
 		</a>
+		</div>
 	<?php
+	}
 }
-echo "<div style='display:inline-block;text-align:right'>";
-		include "../common/inc_back.php";
-echo "</div>";
 ?>
+<div style='display:inline-block;float:right'>
+<a class="bt bt-blue" href="#top"><i class="fa fa-arrow-up"></i></a>
+</div>
+<br>
 <input type=hidden name=total value=<?php echo $total?>>
 <input type=hidden name=numshown value=<?php echo $numshown?>>
 </form>
