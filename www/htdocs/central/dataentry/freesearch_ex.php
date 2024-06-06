@@ -8,6 +8,8 @@
 20240526 fho4abcd Typo. Added down button. Prepare for reverse sort
 20240528 fho4abcd Add reverse sort option
 20240604 fho4abcd Avoid display of empty/sparsely filled tables. Processing indicator
+20240606 fho4abcd Better show records if search is active and fields to search are not present. Count fixed to 100
+20240606 fho4abcd Allow fields without active marker. Explicit start output buffer
 */
 session_start();
 include("../common/get_post.php");
@@ -48,6 +50,7 @@ function ShowActionBox($Mfn){
 // INICIO DEL PROGRAMA
 // ==================================================================================================
 include ("../common/header.php");
+ob_start(); //start output buffering
 ?>
 <body>
 <script src="js/lr_trim.js"></script>
@@ -112,7 +115,7 @@ table.noborder td{
 
 <div class="sectionInfo">
 	<div class="breadcrumb">
-	<?php echo $msgstr["m_busquedalibre"].": ".$arrHttp["base"]?>
+	<?php echo $msgstr["freesearch_title"]?>
 	</div>
 	<div class="actions">
 		<?php
@@ -149,7 +152,6 @@ table.noborder td{
 			$backtoscript.="&pftstr=".urlencode($arrHttp["pftstr"]);
 			$locpftstr=Trim($arrHttp["pftstr"]);
 		}
-		if (isset($arrHttp["count"])) $backtoscript.="&count=".urlencode($arrHttp["count"]);
 		if (isset($arrHttp["fields"])) $backtoscript.="&fields=".urlencode($arrHttp["fields"]);
 		if (isset($arrHttp["repeat_ind"])) $backtoscript.="&repeat_ind=".$arrHttp["repeat_ind"];
 		if (isset($arrHttp["title_ind"])) $backtoscript.="&title_ind=".$arrHttp["title_ind"];
@@ -192,7 +194,7 @@ foreach ($Fdt as $tag=>$linea){
 ** Create a PFT for the selected search fields 
 */
 $Pftsearch="";
-if ( $locsearch!=""){
+if(isset($arrHttp["fields"])){
 	// Convert the search fields into a PFT
 	$t=explode(';',$arrHttp["fields"]);
 	foreach ($t as $value){
@@ -215,18 +217,13 @@ if (!isset($arrHttp["nextrec"])){
 }else{
 	$startofset=$arrHttp["nextrec"];
 }
-if(!isset($arrHttp["count"])){
-	if (isset($arrHttp["to"])){
-		$count=$arrHttp["to"]-$arrHttp["from"]+1;
-		if($count>50) $count=50;
-		$arrHttp["count"]=$count;
-	} else {
-		$arrHttp["count"]=50;
-	}
+$count=100;
+if (isset($arrHttp["to"])){
+	$count=$arrHttp["to"]-$arrHttp["from"]+1;
+	if($count>100) $count=100;
 }
 if (isset($arrHttp["to"]))		$total=$arrHttp["to"];
 if (isset($arrHttp["total"]))	$total=$arrHttp["total"];
-$count=$arrHttp["count"];
 $numshown=0;
 if (isset($arrHttp["numshown"]))$numshown=$arrHttp["numshown"];
 $sorttag="";
@@ -286,7 +283,7 @@ $execmode="";
 	if ($locsearch!="") {
 		$locsearch=htmlspecialchars($locsearch);
 		?>
-		<tr><td><b><?php echo $msgstr["freesearch_5"]?></b></td><td>:</td>
+		<tr><td><b><?php echo $msgstr["freesearch_mrk"]?></b></td><td>:</td>
 			<td style="word-break: break-word;"><b><?php echo $locsearch;?></b></td>
 		<?php
 	}
@@ -298,7 +295,7 @@ $execmode="";
 	}
 	if (isset($arrHttp["omitrec"]) || isset($arrHttp["omitfld"])){
 		?>
-		<tr><td><?php echo $msgstr["freesearch_fndact"]?></td><td>:</td>
+		<tr><td><?php echo $msgstr["freesearch_mrkact"]?></td><td>:</td>
 			<td style="word-break: break-word;">
 				<?php
 				if (isset($arrHttp["omitrec"])) echo $msgstr["freesearch_omitrec"];
@@ -309,10 +306,9 @@ $execmode="";
 		<?php
 	}
 	if ($locpftstr!="") {
-		$locpftstr=htmlspecialchars($locpftstr);
 		?>
 		<tr><td><b><?php echo $msgstr["freesearch_7"]?></b></td><td>:</td>
-			<td style="word-break: break-word;"><b><?php echo $locpftstr;?></b></td>
+			<td style="word-break: break-word;"><b><?php echo htmlspecialchars($locpftstr);?></b></td>
 		<?php
 	}
 	?>
@@ -329,23 +325,26 @@ $total=0;
 */
 $PftSepar="---$$";
 $PftTotal="";
-if (isset($arrHttp["pftstr"])&& $arrHttp["pftstr"]!="") {
-	$PftTotal.=$arrHttp["pftstr"];
+if ($locpftstr!="") {
+	$PftTotal.=$locpftstr;
 }
 $PftTotal.="'".$PftSepar."'";
 if ($Pftsearch!=""){
 	$PftTotal.=$Pftsearch;
 }
 $PftTotal.="#";
-if ($Pftsearch=="") $Pftsearch=$arrHttp["pftstr"].'#';
+if ($Pftsearch=="") $Pftsearch=$locpftstr.'#';
 $arr_mfn=Array();
 $arr_msg=Array();
 $actualnumshown=0;
 $stop_iteration="N";
+$iteration=1;
 /*
 ** Loop to find records to show
 */
 while ($actualnumshown<$count && $stop_iteration=="N"){
+	//echo "<br>Iteration=".$iteration++." The time is " . date("e  H:i:s");
+	//flush();ob_flush();
 	/*
 	** Creation of the query for wxis_llamar
 	*/
@@ -403,7 +402,7 @@ while ($actualnumshown<$count && $stop_iteration=="N"){
 			*/
 			$val=explode('|',$contenido_ar);
 			$pos=explode('$$',$val[0]);
-			$res=explode($PftSepar,$val[2]);
+			$res=explode($PftSepar,$val[2]);//$PftSepar="---$$"
 			if ($execmode=="Search") $total=$pos[2];
 			$cont="";
 			$contentnum=0;
@@ -418,7 +417,9 @@ while ($actualnumshown<$count && $stop_iteration=="N"){
 				$cont.=$res[0];
 				$cont.="</td>";
 				$contentnum++;
-				$numsrcresults++;/* to ensure that this is seen if no search string will be handled*/
+				if ($locsearch=="" && $omitrec==false) {
+					$numsrcresults++;/* to ensure that this is seen if no search string will be handled*/
+				}
 			}
 			if (isset($res[1]) && trim($res[1])!=""){
 				$cont.="<td>";
@@ -434,12 +435,16 @@ while ($actualnumshown<$count && $stop_iteration=="N"){
 						$resultname="<b>".$fdttitles[$resultname]."</b>";
 					}
 					$resultvalue=$resultlinear[1];
-					$ixc=stripos($resultvalue,$arrHttp["search"]);
+					if ($locsearch!="") {
+						$ixc=stripos($resultvalue,$arrHttp["search"]);
+					} else {
+						$ixc=false;
+					}
 					if ($ixc!==false){
 						if ( $numsrcshown>0) $cont.="<br>";
 						$numsrcshown++;
 						$numsrcresults++;
-						$ixter=strlen($arrHttp["search"]);
+						$ixter=strlen($locsearch);
 						$cont.=$resultname.": ";
 						$cont.=substr($resultvalue,0,$ixc)."<font color=red>".substr($resultvalue,$ixc,$ixter)."</font>".substr($resultvalue,$ixter+$ixc);
 						$contentnum++;
@@ -529,7 +534,6 @@ if ($execmode=="Search" || $execmode=="Range"){
 	?>
         <div style='display:inline-block'><?php echo $msgstr["cg_nxtr"]?>
         <input type=text size=5 name=nextrec value='<?php echo $startofset?>'>&nbsp;
-        <input type=hidden name=count value='<?php echo $count?>'>
         &nbsp;<b>&#8649;</b>&nbsp;
 		<a href="javascript:EnviarForma()" class="bt bt-green">
 			 <i class="fas fa-search"></i> &nbsp; <?php echo $msgstr["cg_execute"]?>

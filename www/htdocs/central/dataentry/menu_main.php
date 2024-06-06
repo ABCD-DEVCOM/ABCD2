@@ -12,6 +12,7 @@
 2023-01-29 fho4abcd quick fix to make browse by menu work again
 2023-02-03 fho4abcd Improve browse by, add code for selected records
 2024-04-02 fho4abcd More translations, layout
+2024-06-06 fho4abcd Free search->Search, result in list
 */
 session_start();
 if (!isset($_SESSION["permiso"])){
@@ -278,7 +279,7 @@ function GenerarWks(){
         ?>
         toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_notebook_24_regular.svg","24","24",5,"tesaurus","<?php echo $msgstr["m_tesaurussrc"]?>"))
     <?php }?>
-    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_database_search_24_regular.svg","24","24",5,"1_busquedalibre","<?php echo $msgstr["m_busquedalibre"]?>"))
+    toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_database_search_24_regular.svg","24","24",5,"1_busquedalibre","<?php echo $msgstr["freesearch_title"]?>"))
     toolbar.addItem(new dhtmlXImageButtonObject("../../assets/svg/catalog/ic_fluent_book_search_24_regular.svg","24","24",6,"1_alfa","<?php echo $msgstr["m_indiceaz"]?>"))
     toolbar.addItem(new dhtmlXToolbarDividerXObject('div_2'))
 
