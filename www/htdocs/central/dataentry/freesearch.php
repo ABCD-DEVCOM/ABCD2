@@ -7,6 +7,7 @@
 2024-05-23 fho4abcd Save parameters controlled by profile,allow PFT and search fields,Add directives for result
 2024-05-26 fho4abcd Sort only on fields without subfields, move use parameterset to top.
 2024-05-28 fho4abcd Add reverse sort option
+2024-06-06 fho4abcd Layout+texts. Allow field selection without marking
 */
 // ==================================================================================================
 // INICIO DEL PROGRAMA
@@ -41,11 +42,14 @@ foreach ($Fdt_unsorted as $value){
 ksort($Fdt);
 
 if (isset($arrHttp["Expresion"]) and $arrHttp["Expresion"]!=""){
-	$Opcion="buscar";
 	$Expresion=stripslashes($arrHttp["Expresion"]);
 }else{
-  	$Opcion="rango";
   	$Expresion="";
+}
+if (isset($arrHttp["from"])){
+	$displayrange="";
+} else {
+	$displayrange="none";
 }
 include("../common/header.php");
 ?>
@@ -72,6 +76,14 @@ function EnviarForma(){
 		alert(onemethod);
 		return
 	}
+	if ((document.forma1.from.value!="" || document.forma1.to.value!="") && document.forma1.seleccionados.value!=""){
+		alert(onemethod);
+		return
+	}
+	if (document.forma1.seleccionados.value!="" && document.forma1.Expresion.value!=""){
+		alert(onemethod);
+		return
+	}
 	if (document.forma1.from.value!="" || document.forma1.to.value!="") {
 		if (document.forma1.from.value=="" || document.forma1.to.value==""){
 			alert(onemethod);
@@ -82,34 +94,39 @@ function EnviarForma(){
 			alert("<?php echo $msgstr["cg_rango"].": ".$msgstr["numfr"]?>");
 			return
 		}
-	}
-	buscar=""
-	if (document.forma1.search.value!="") buscar="valor"
-	fields=""
-	if (buscar=="valor"){
-		for (i=0;i<document.forma1.free_C.options.length;i++){
-			if (document.forma1.free_C.options[i].selected){
-				tag=document.forma1.free_C.options[i].value
-				t=tag.split('|')
-				fields=fields+t[0]+";"
-			}
+		var maxrange=20000 /* value found by try&error. seems reasonable*/
+		var actrange=document.forma1.to.value-document.forma1.from.value+1
+		if (actrange>maxrange ){
+			alert("<?php echo $msgstr["cg_rango"].": "?>"+actrange+"\n"+
+					"<?php echo $msgstr["freesearch_maxrange"].": "?>"+maxrange);
+			return
 		}
+	}
+	mark=""
+	if (document.forma1.search.value!="") mark="set"
+	fields=""
+	for (i=0;i<document.forma1.free_C.options.length;i++){
+		if (document.forma1.free_C.options[i].selected){
+			tag=document.forma1.free_C.options[i].value
+			t=tag.split('|')
+			fields=fields+t[0]+";"
+		}
+	} 
+	document.forma1.fields.value=fields
 
-	}
-	if (fields=="" && buscar=="valor") {
-		alert("<?php echo $msgstr["freesearch_3"]?>")
+	if (fields=="" && mark=="set") {
+		alert("<?php echo $msgstr["freesearch_selmrk"]?>")
 		return
 	}
-	if (document.forma1.search.value=="" && document.forma1.pftstr.value==""){
-		alert("<?php echo $msgstr["freesearch_nostr"]." '".$msgstr["freesearch_4"]."'"?>")
+	if (document.forma1.fields.value=="" && document.forma1.pftstr.value==""){
+		alert("<?php echo $msgstr["freesearch_nodis"]?>")
 		return
 	}
-	if (buscar!="valor"){
+	if (mark!="set"){
 		document.forma1.omitrec.value=""
 		document.forma1.omitfld.value=""
 	}
 	if (document.forma1.sorttag.value=="" )document.forma1.sortdir.value=""
-	document.forma1.fields.value=fields
 	document.forma1.target=""
 	document.forma1.action='freesearch_ex.php'
 	document.forma1.submit()
@@ -129,6 +146,18 @@ function Buscar(){
 }
 function ClearSelectField(){
 	document.forma1.seleccionados.value=""
+}
+function EraseSelection(){
+	document.forma1.seleccionados.value=""
+	if(top.RegistrosSeleccionados=="") {
+		alert("<?php echo $msgstr["freesearch_nomfn"];?>");
+	} else {
+		top.RegistrosSeleccionados=""
+		alert("<?php echo $msgstr["freesearch_mfncleared"];?>");
+	}
+	var item=top.menu.toolbar.getItem('browseby');
+	item.selElement.options[0].selected =true
+	top.browseby="mfn"
 }
 function DelSavParams(){
 	if (document.forma1.SavParams.length<=1){
@@ -174,10 +203,19 @@ function SaveSavParams(){
 	msgwin.focus()
 	document.forma1.submit()
 }
+
+function Togglerange() {
+    var hiddenRow= document.getElementById('rangerow');
+	if (hiddenRow.style.display === "none") {
+      hiddenRow.style.display = "";
+    } else {
+      hiddenRow.style.display = "none";
+    }
+};
 </script>
 <div class="sectionInfo">
 	<div class="breadcrumb">
-		<?php echo $msgstr["m_busquedalibre"].": ".$arrHttp["base"]?>
+		<?php echo $msgstr["freesearch_title"]?>
 	</div>
 	<div class="actions">
 	</div>
@@ -195,9 +233,9 @@ function SaveSavParams(){
 <input type=hidden name=cipar value="<?php echo $arrHttp["base"]?>.par">
 <input type=hidden name=fields>
 <table style="border-spacing:3px;padding-left:2px;padding-right:2px">
-	<?php if (sizeof($Savparam_arr)>0){ ?>
+	<?php if (sizeof($Savparam_arr)>0){ // Show the saved parameters dropbox ?>
 	<tr>
-		<td><?php echo $msgstr["freesearch_use"]?></td>
+		<td><?php echo $msgstr["freesearch_use"]?>&nbsp;</td>
 		<td colspan=2>
 			<select name=SavParams size=1 onchange="javascript:LoadSavParams()">
 				<option></option>
@@ -215,24 +253,24 @@ function SaveSavParams(){
 	<tr>
 	<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["r_recsel"]?> </td>
 	<tr>
-		<td nowrap><?php echo $msgstr["cg_rango"]?> &rarr;&nbsp;</td>
-		<td><?php echo $msgstr["cg_from"]?>:
-			<input type=text name=from size=10 value="<?php if(isset($arrHttp["from"])) echo $arrHttp["from"];?>">
-			&nbsp; (>0)
+		<td>
+			<a href=javascript:Buscar()>
+			<img src=img/barSearch.png height=24 align=middle border=0><?php echo $msgstr["cg_search"]?></a>
 		</td>
-		<td><?php echo $msgstr["cg_to"]?>:
-			<input type=text name=to size=10 value="<?php if(isset($arrHttp["to"])) echo $arrHttp["to"];?>">
-			<script> if (top.window.frames.length>0)
-				document.writeln(" &nbsp; (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script></td>
-		<td></td>
+		<td colspan=3><?php echo $msgstr["expresion"]?><br>
+		<textarea rows=1 cols=80 name=Expresion><?php if (isset($arrHttp["Expresion"])){ echo $Expresion;}?></textarea>
+		</td>
 	</tr>
 	<?php
 	if (isset($arrHttp["seleccionados"]) &&
 		$arrHttp["seleccionados"]!="" && $arrHttp["seleccionados"]!="__" && $arrHttp["seleccionados"]!="_"){
 		?>
-		<tr><td colspan=4><hr></td>
 		<tr>
-			<td><?php echo $msgstr["selected_records"]?> &rarr;&nbsp;
+			<td></td>
+			<td style="text-align:center;background-color:#cccccc" colspan=3></td>
+		</tr>
+		<tr>
+			<td><?php echo $msgstr["selected_records"]?>&nbsp;
 				<?php if(isset($arrHttp["seloutdated"])) echo "<br><span style='color:red'>".$msgstr["freesearch_outof"]."!!</span>";?>
 			</td>
 			<td colspan=2>
@@ -241,11 +279,15 @@ function SaveSavParams(){
 				$sel=str_replace("_","",$sel);
 				$sel=ltrim($sel,",");
 				?>
-				<textarea rows=1 cols=60 name=seleccionados readonly
+				<textarea rows=2 cols=40 name=seleccionados readonly
 					title="<?php echo $msgstr["freesearch_ro"]?>"><?php echo $sel?> </textarea>
 			</td>
-			<td><a href="javascript:ClearSelectField()" class="bt bt-gray">
-				<i class="fas fa-trash-alt bt-gray"></i> &nbsp; <?php echo $msgstr["freesearch_clear"]?></td>
+			<td style="text-align:right">
+				<a href="javascript:ClearSelectField()" class="bt bt-gray">
+					<i class="fas fa-times bt-gray"></i> &nbsp; <?php echo $msgstr["freesearch_clear"]?>
+				</a>&nbsp;
+				<a href="javascript:EraseSelection()" class="bt bt-red">
+				<i class="fas fa-trash-alt bt-red"></i> &nbsp; <?php echo $msgstr["undo_selected"]?></td>
 			</a>
 			</td>
 		</tr>
@@ -254,15 +296,24 @@ function SaveSavParams(){
 		echo "<tr><td><input type=hidden name=seleccionados value=''></td></tr>";
 	}
 	?>
-	<tr><td colspan=4><hr></td>
 	<tr>
-		<td>
-		<a href=javascript:Buscar()><img src=img/barSearch.png height=24 align=middle border=0><?php echo $msgstr["cg_search"]?> </a>
-		 &rarr;&nbsp;
+		<td></td>
+		<td style="text-align:center;background-color:#cccccc;font-size:10px" colspan=3>
+		<a style="text-decoration:none" title="<?php echo $msgstr["freesearch_shrange"];?>" href="javascript:Togglerange()">
+			<i class="fas fa-chevron-up"></i>&nbsp;  &nbsp; &nbsp;<i class="fas fa-chevron-down"></a></td>
+	<tr>
+	<tr id="rangerow" style="display:<?php echo $displayrange;?>">
+		<td nowrap><?php echo $msgstr["cg_rango"]?>&nbsp;</td>
+		<td><?php echo $msgstr["cg_from"]?>:
+			<input type=text name=from size=10 value="<?php if(isset($arrHttp["from"])) echo $arrHttp["from"];?>">
+			&nbsp; (>0)
 		</td>
-		<td colspan=3><?php echo $msgstr["expresion"]?><br>
-		<textarea rows=1 cols=80 name=Expresion><?php if (isset($arrHttp["Expresion"])){ echo $Expresion;}?></textarea>
-		</td>
+		<td colspan=2><?php echo $msgstr["cg_to"]?>:
+			<input type=text name=to size=10 value="<?php if(isset($arrHttp["to"])) echo $arrHttp["to"];?>">
+			<script> if (top.window.frames.length>0)
+				document.writeln(" &nbsp; (<?php echo $msgstr["maxmfn"]?>: "+top.maxmfn+")")</script></td>
+		<td></td>
+	</tr>
 	<tr>
 		<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["freesearch_4"]?></td>
 	<tr>
@@ -293,46 +344,25 @@ function SaveSavParams(){
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:left;"><?php echo $msgstr["freesearch_5"]?></td>
+		<td style="text-align:left;"><?php echo $msgstr["freesearch_mrk"]?></td>
 		<td colspan=3><input type=text name=search size=80
 			value="<?php if (isset($arrHttp["search"])) echo $arrHttp["search"]?>">
 	</tr>
 	<tr>
-		<td><?php echo $msgstr["freesearch_fndact"]?></td>
+		<td><?php echo $msgstr["freesearch_mrkact"]?></td>
 		<td><input type=checkbox name=omitrec value=omitrec
 			<?php if(isset($arrHttp["omitrec"])&&$arrHttp["omitrec"]=="omitrec") echo "checked";?>> <?php echo $msgstr["freesearch_omitrec"]?> </td>
-		<td><input type=checkbox name=omitfld value=omitfld
+		<td ><input type=checkbox name=omitfld value=omitfld
 			<?php if(isset($arrHttp["omitfld"])&&$arrHttp["omitfld"]=="omitfld") echo "checked";?>> <?php echo $msgstr["freesearch_omitfld"]?> </td>
 	</tr>
 	<tr>
-		<td style="text-align:left;"><?php echo $msgstr["freesearch_6"]?></td>
-		<td colspan=3><textarea name=pftstr cols=80 rows=2><?php if (isset($arrHttp["pftstr"])) echo $arrHttp["pftstr"]?></textarea>
-	</td>
-	<tr>
-		<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["freesearch_fld4str"]?></td>
+		<td style="text-align:center;background-color:#cccccc" colspan=4><?php echo $msgstr["freesearch_spcdisp"]?></td>
 	</tr>
-	<tr><td colspan=4>
+	<tr>
+		<td style="text-align:left;"><?php echo $msgstr["freesearch_fieldsel"]?></td>
+		<td colspan=3>
 			<table>
-			<tr><td width=40%>
-					<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr["freesearch_2"];?></span>
-					<br><br>
-					<?php echo $msgstr["freesearch_inst"]?><br>
-					<input type=radio name=repeat_ind value="rep_M" 
-						<?php if (isset($arrHttp["repeat_ind"]) && $arrHttp["repeat_ind"]=="rep_M" ||
-									!isset($arrHttp["repeat_ind"])) echo "checked";?>>
-						<?php echo $msgstr["freesearch_repm"];?><br>
-					<input type=radio name=repeat_ind value="rep_S"
-						<?php if (isset($arrHttp["repeat_ind"]) && $arrHttp["repeat_ind"]=="rep_S") echo "checked";?>>
-						<?php echo $msgstr["freesearch_reps"];?><br>
-					<br>
-					<input type=radio name=title_ind value="tit_Title" 
-						<?php if (isset($arrHttp["title_ind"]) && $arrHttp["title_ind"]=="tit_Title" ||
-									!isset($arrHttp["title_ind"])) echo "checked";?>>
-						<?php echo $msgstr["freesearch_tittit"];?><br>
-					<input type=radio name=title_ind value="tit_Tag"
-						<?php if (isset($arrHttp["title_ind"]) && $arrHttp["title_ind"]=="tit_Tag") echo "checked";?>>
-						<?php echo $msgstr["freesearch_tittag"];?><br>
-				</td><td>&nbsp;</td>
+			<tr>
 				<td>
 					<select name=free_C multiple size=10>
 						<?php
@@ -351,11 +381,36 @@ function SaveSavParams(){
 						?>
 					</select>
 				</td>
+				<td>&nbsp;</td>
+				<td>
+					<span class="bt-disabled"><i class="fas fa-info-circle"></i> <?php echo $msgstr["freesearch_2"];?></span>
+					<br><br>
+					<?php echo $msgstr["freesearch_inst"]?><br>
+					<input type=radio name=repeat_ind value="rep_M" 
+						<?php if (isset($arrHttp["repeat_ind"]) && $arrHttp["repeat_ind"]=="rep_M" ||
+									!isset($arrHttp["repeat_ind"])) echo "checked";?>>
+						<?php echo $msgstr["freesearch_repm"];?><br>
+					<input type=radio name=repeat_ind value="rep_S"
+						<?php if (isset($arrHttp["repeat_ind"]) && $arrHttp["repeat_ind"]=="rep_S") echo "checked";?>>
+						<?php echo $msgstr["freesearch_reps"];?><br>
+					<br>
+					<input type=radio name=title_ind value="tit_Title" 
+						<?php if (isset($arrHttp["title_ind"]) && $arrHttp["title_ind"]=="tit_Title" ||
+									!isset($arrHttp["title_ind"])) echo "checked";?>>
+						<?php echo $msgstr["freesearch_tittit"];?><br>
+					<input type=radio name=title_ind value="tit_Tag"
+						<?php if (isset($arrHttp["title_ind"]) && $arrHttp["title_ind"]=="tit_Tag") echo "checked";?>>
+						<?php echo $msgstr["freesearch_tittag"];?><br>
+				</td>
 			</tr>
 			</table>
 	</tr>
 	<tr>
-		<td style="text-align:center;background-color:#cccccc" colspan=4></td>
+		<td style="text-align:left;"><?php echo $msgstr["freesearch_6"]?></td>
+		<td colspan=3><textarea name=pftstr cols=80 rows=2><?php if (isset($arrHttp["pftstr"])) echo $arrHttp["pftstr"]?></textarea>
+	</td>
+	<tr>
+		<td style="text-align:center;background-color:#cccccc;" colspan=4>&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan=3>
