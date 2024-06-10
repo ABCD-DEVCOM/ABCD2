@@ -3,6 +3,7 @@
 20240509 fho4abcd Created
 20240523 fho4abcd Changed save parameters
 20240528 fho4abcd Changed save parameter
+20240610 fho4abcd Forbidden characters in description+ increase length of description
 ** Handles the manipulation of freesearch saved parameters.
 ** Requires "freesearch_save_inc.php" to handle related file manipulation.
 ** Major function:
@@ -31,6 +32,11 @@ function EnviarForma(){
 	document.forma1.description.value=Trim(document.forma1.description.value)
 	if (document.forma1.description.value=="" && document.forma1.SavParams.value==""){
 		alert("<?php echo $msgstr["freesearch_selp"]." - ".$msgstr["freesearch_paror"]." ".$msgstr["freesearch_pardes"];?>")
+		return
+	}
+	const specialChars = /["\\|<>]/;
+	if ( specialChars.test(document.forma1.description.value)){
+		alert("<?php echo $msgstr["freesearch_illch"].':'?>" + " \" \\ | < >")
 		return
 	}
 	document.forma1.submit()
@@ -96,7 +102,7 @@ if ($arrHttp["Option"]==""){
 		</td>
 	<tr><td style="text-align:center"><?php echo $msgstr["freesearch_paror"]?></td></tr>
 	<tr><td><?php echo $msgstr["freesearch_pardes"]?></td>
-		<td><input type=text name=description maxlength=40 size=40></td>
+		<td><input type=text name=description maxlength=50 size=50></td>
 	<tr><td></td><td align=center>
 		<a href="javascript:EnviarForma()" class="bt bt-green">
 		 <i class="far fa-save"></i> &nbsp; <?php echo $msgstr["freesearch_save"]?></a></td>
