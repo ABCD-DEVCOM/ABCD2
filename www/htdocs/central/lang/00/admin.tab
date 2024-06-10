@@ -129,6 +129,7 @@ freesearch_fields=In fields
 freesearch_spcdisp=Display field(s) and/or PFT
 freesearch_mrkact=Mark action
 freesearch_found=Records found by
+freesearch_illch=Contains characters that are not allowed here. Check for
 freesearch_inst=Directives for result generation
 freesearch_maxrange=Maximum for this function is
 freesearch_mfncleared=Selected records list reset
