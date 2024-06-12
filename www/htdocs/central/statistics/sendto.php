@@ -1,4 +1,7 @@
 <?php
+/*
+20240612 fho4abcd Default (open in new window) with correct html and stylesheet
+*/
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
 // ==================================================================================================
@@ -33,8 +36,18 @@ switch ($arrHttp["Opcion"]){
 			echo '   xmlns="http://www.w3.org/TR/REC-html40">' . "\n";
 			break;
 		default:
-			echo "<html>
-			<font face=arial size=2>";
+			?><!DOCTYPE html>
+			<html>
+			<head profile="http://www.w3.org/2005/10/profile">
+			<link rel="stylesheet" rev="stylesheet" href="/assets/css/template.css?<?php echo time(); ?>" type="text/css" media="screen"/>
+			</head>
+			<div style="padding-left:10px">
+			<?php
+			echo $arrHttp["html"];
+			?>
+			</div></html>
+			<?php
+			die;
 	}
     echo $arrHttp["html"];
     echo "</html>";
