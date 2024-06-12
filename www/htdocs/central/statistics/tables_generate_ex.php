@@ -1,6 +1,8 @@
 <?php
 /*
-202202216 fho4abcd backbutton,div-helper
+20220216 fho4abcd backbutton,div-helper
+20220220 fho4abcd convert links into buttons
+20240612 fho4abcd cleanup, get Open in New window to work
 */
 // ==================================================================================================
 // GENERA LOS CUADROS ESTADÍSTICOS
@@ -48,35 +50,12 @@ else
 //SE LEE LA LISTA DE VARIABLES
 $tab_vars=LeerVariables($db_path,$arrHttp,$lang_db);
 
-$Pie="";
-
 $Formato=ConstruirFormato($arrHttp,$lang_db,$tab_vars,$db_path);
 //echo $Formato."<p>";  //die;
 ?>
 <script>
-//PARA AGREGAR NUEVAS VARIABLES A LA LISTA
-function returnObjById( id )
-{
-    if (document.getElementById)
-        var returnVar = document.getElementById(id);
-    else if (document.all)
-        var returnVar = document.all[id];
-    else if (document.layers)
-        var returnVar = document.layers[id];
-    return returnVar;
-}
-
-function getElement(psID) {
-	if(!document.all) {
-		return document.getElementById(psID);
-
-	} else {
-		return document.all[psID];
-	}
-}
 
 function SendTo(Opcion){
-
 	switch(Opcion){
 		default:
 			if (Opcion=="P"){
@@ -85,7 +64,7 @@ function SendTo(Opcion){
 			}else{
 				document.sendto.target=""
 			}
-			seccion=returnObjById( "results" )
+			seccion=document.getElementById("results")
 			html=seccion.innerHTML
 			document.sendto.html.value=html
 			document.sendto.Opcion.value=Opcion
@@ -111,18 +90,17 @@ function SendTo(Opcion){
 <?php
 include "../common/inc_div-helper.php";
 ?>
+<div class="middle form">
+	<div class="formContent">
 <form name=forma1 method=post onsubmit="Javascript:return false">
 <input type=hidden name=base value=<?php echo $arrHttp["base"]?>>
 <input type=hidden name=cipar value=<?php echo $arrHttp["base"]?>.par>
 
 <?php if (isset($arrHttp["encabezado"])) echo "<input type=hidden name=encabezado value=s>\n";
 ?>
-<div class="middle form">
-	<div class="formContent">
 
 <div id=results>
 
-<script>Pie="<?php echo $Pie;?>"</script>
 <?php
 $tab=array();
 $total_r=0;
@@ -136,7 +114,7 @@ LeerRegistros($contenido);
 ConstruirSalida($tab,$tabs,$tipo,$rows,$cols);
 
 ?>
-</div></div>
+</div>
 <?php echo $msgstr["sendto"].": ";?> &nbsp;
 <button class="bt-blue" type="button"
     title="<?php echo $msgstr["wks"]?>" onclick='javascript:SendTo("W")'>
@@ -146,13 +124,8 @@ ConstruirSalida($tab,$tabs,$tipo,$rows,$cols);
     <i class="fa fa-file-word"></i> <?php echo $msgstr["doc"]?></button> &nbsp;
 <button class="bt-blue" type="button"
     title="<?php echo $msgstr["openwindow"]?>" onclick='javascript:SendTo("P")'>
-    <i class="fa fa-file-alt"></i> <?php echo $msgstr["openwindow"]?></button>
-<?php
-//if (!isset($arrHttp["proc"]))echo "<a href=javascript:SendTo(\"AG\")>".$msgstr["ag"]."</a> &nbsp; | &nbsp; ";
-//echo "<a href=javascript:SendTo(\"NAG\")>".$msgstr["nag"]."</a> &nbsp; | &nbsp; ";
-?>
+    <i class="fas fa-desktop"></i> <?php echo $msgstr["openwindow"]?></button>
 <p>
-</div>
 </form>
 
 <!-- FORMA PARA ENVIAR LA SALIDA A UNA HOJA DE CALCULO O A UN DOCUMENTO-->
@@ -176,6 +149,8 @@ if (isset($arrHttp["Mfn"]))
 if (isset($arrHttp["to"]))
 	echo "<input type=hidden name=tables value=\"".$arrHttp["Mfn"]."\">\n";
 echo "</form>";
-//PIE DE PAGINA
+?>
+</div></div>
+<?php
 include("../common/footer.php");
 ?>
