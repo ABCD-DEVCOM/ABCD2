@@ -14,9 +14,28 @@ var idPage="apariencia";
 <style>
 table tr td.inputs{ display: inline-flex; margin-right: 30px; }
 table tr td.preview{ vertical-align: top; }
-.sticky-element {
-  position: relative;
+.sticky-element { position: relative; }
+tr td img { text-align: end; }
+
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid blue;
+}
+
+.striped label { display: inline-grid;}
 
 .sticky-element.fixed {
   position: fixed;
