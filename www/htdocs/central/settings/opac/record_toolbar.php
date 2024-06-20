@@ -5,7 +5,7 @@ include "../../common/inc_div-helper.php";
 ?>
 
 <script>
-var idPage="general";
+var idPage="apariencia";
 </script>
 
 <div class="middle form row m-0">

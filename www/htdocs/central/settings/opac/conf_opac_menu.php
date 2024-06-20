@@ -95,7 +95,6 @@ $wiki_help="OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci
 		<li><a href="javascript:EnviarForma('/central/settings/opac/diagnostico.php')"><?php echo $msgstr["check_conf"];?></a></li>
 		<li><a href="javascript:EnviarForma('/central/settings/opac/parametros.php')"><?php echo $msgstr["parametros"];?></a></li>
 
-		<li><a href="javascript:EnviarForma('/central/settings/opac/record_toolbar.php')"><?php echo $msgstr["rtb"];?></a></li>
 		<li><a href="javascript:EnviarForma('/central/settings/opac/adm_email.php')"><?php echo $msgstr["cfg_email"];?></a></li>
 	</div>
    
@@ -110,11 +109,12 @@ $wiki_help="OPAC-ABCD_Detalles_de_la_configuraci%C3%B3n#Men.C3.BA_de_configuraci
 
 	<button  type="button"  class="accordion" id="apariencia"><i class="fas fa-paint-brush"></i> <?php echo $msgstr["apariencia"];?></button>
       <div class="panel">
+			<li><a href="javascript:EnviarForma('/central/settings/opac/presentacion.php')"><?php echo $msgstr["pagina_presentacion"];?></a></li>
+			<li><a href="javascript:EnviarForma('/central/settings/opac/record_toolbar.php')"><?php echo $msgstr["rtb"];?></a></li>
 			<li><a href="javascript:EnviarForma('/central/settings/opac/pagina_inicio.php')"><?php echo $msgstr["first_page"]?></a></li>
 			<li><a href="javascript:EnviarForma('/central/settings/opac/footer_cfg.php')"><?php echo $msgstr["cfg_footer"]?></a></li>
 			<li><a href="javascript:EnviarForma('/central/settings/opac/sidebar_menu.php')"><?php echo $msgstr["sidebar_menu"]?></a></li>
 			<li><a href="javascript:EnviarForma('/central/settings/opac/horizontal_menu.php')"><?php echo $msgstr["horizontal_menu"]?></a></li>
-			<li><a href="javascript:EnviarForma('/central/settings/opac/presentacion.php')"><?php echo $msgstr["pagina_presentacion"];?></a></li>
 			<!--<li><a href="javascript:EnviarForma('/central/settings/opac/opac_msgs.php')"><?php echo $msgstr["sys_msg"];?></a></li>-->
 		</div>
 <?php
