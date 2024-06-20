@@ -1,3 +1,36 @@
+## What's new?
+
+## Opac - v1.1.1-beta (2024-06-18)
+* Improvements to the Opac configuration screen;
+* It's easier to enable and disable bases for Opac, but check the warning below before starting your update;
+* Visual <a href="javascript:EnviarForma('presentacion.php')">editing of styles possible</a>;
+* Menu <a href="javascript:EnviarForma('adm_email.php')">Setup E-mail</a>
+* Google Analytics - parameter <a href="javascript:EnviarForma('parametros.php')">GANALYTICS</a> in the opac.def file to enable the use of Google Analytics;
+* On the front: Added Meta tags for SEO and Social Networks; 
+* On the front: Added dark mode;
+* On the front: Added the option to enlarge and reduce fonts;
+
+
+
+### Alerts
+*  The dbName.def file within /db/opac/lang/ was only used to define the database description, so this functionality has been incorporated into the opac_conf/lang/bases.dat file to maintain the standard for the entire ABCD. If you are updating your ABCD and Opac, please <a href="javascript:EnviarForma('/central/settings/opac/databases.php')">click here to re-generate your bases.dat file</a>.
+
+
+### Corrections
+- Fixed the advanced search form;
+- Fixed the function for sending terms to the advanced search form;
+
+----
+## Opac – v1.1.0-beta (2023-03-28)
+### New features
+- Inclusion of Twitter Booststrap as the basis for new layouts;
+- The OpacHttp parameter becomes mandatory for installations that want Opac to be the publicly accessible homepage;
+- select_record.pft has been adjusted for Bootstrap;
+
+
+
+----
+# OPAC description
 # OPAC-ABCD Description
 
 ### Characteristic

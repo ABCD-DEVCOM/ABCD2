@@ -1,5 +1,6 @@
 # O que há de novo?
-## Opac – v1.1.1-beta (2023-06-18)
+
+## Opac – v1.1.1-beta (2024-06-18)
 *   Melhorias na tela de configuração do Opac;
 *   Ficou mais fácil habilitar e desabilitas bases para o Opac, mas verifique o alerta abaixo antes de iniciar sua atualização;
 *   Possibilidade de <a href="javascript:EnviarForma('presentacion.php')">edição visual dos estilos</a>;
