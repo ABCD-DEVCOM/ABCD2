@@ -1,116 +1,143 @@
 <?php
-/*
-20230305 rogercgui Adds the variable $actparfolder;
+/***
+ * 20230305 rogercgui Adds the variable $actparfolder;
+ * 
+ */
 
-*/
 
-include("tope_config.php");
+include("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n#Bases_de_datos_disponibles";
 include "../../common/inc_div-helper.php";
+
+//foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";  die;
 ?>
 
+<script>
+var idPage="db_configuration";
+</script>
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+		<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+
 	<h3><?php echo $msgstr["databases"]?></h3>
 
-    <?php
 
-//foreach ($_REQUEST as $var=>$value) echo "$var=>$value<br>";  die;
-$def_base=array();
-$eliminar=array();
-if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
-	foreach ($_REQUEST as $var=>$value){
-		if (trim($value)!=""){
-			$code=explode("_",$var);
-			switch ($code[0]){
-				case ("conf"):
-					switch ($code[1]){
-						case "lc":
-							if (!isset($cod_base[$code[2]])){
-								$cod_base[$code[2]]=$value;
-							}
-							break;
-						case "ln":
-							if (!isset($nom_base[$code[2]])){
-								$nom_base[$code[2]]=$value;
-							}
-							break;
-						case "def":
-							if (!isset($def_base[$code[2]])){
-								$def_base[$code[2]]=$value;
-							}
-							break;
-
-					}
-					break;
-				case "langdb":
-					if (!isset($lang_base[$code[2]])){
-						$lang_base[$code[2]]=$value;
-					}else{
-						$lang_base[$code[2]].='|'.$value;
-					}
-					break;
-			}
-		}
-	}
-    foreach ($cod_base as $key=>$value){
-    	if (!is_dir($db_path.$value)){
-	 		echo "Database:$value<br><font color=red size=3><strong>".$msgstr["missing_folder"]." $value ".$msgstr["in"]." $db_path</strong></font><br>";
-	 	    $eliminar[$key]="S";
-	 	}
-	 	if (!file_exists($db_path.$actparfolder."/".$value.".par")){
-	 		echo "Database:$value<br><font color=red size=3><strong>".$msgstr["missing"]." $value.par</strong></font><br>";
-            $eliminar[$key]="S";
-	 	}
-    	if (isset($eliminar[$key]) and $eliminar[$key]=="S")  echo "<font color=red size=3><strong>$value ".$msgstr["discarded"]."</strong></font><br>";
-    }
-	if (isset($cod_base)){
-	    foreach ($cod_base as $key=>$value){
-            if (isset($eliminar[$key]) and $eliminar[$key]=="S") continue;
-			$file_db=$value.".def";
-			$folfer_db=$db_path.$value."/opac/".$_REQUEST["lang"]."/";
-
-			if (!file_exists($folfer_db)) {
-    			mkdir($folfer_db, 0777, true);
-			}
-
-			$fout=fopen($folfer_db.$file_db,"w");
-			
-			if (!isset($def_base["$key"]))  $def_base["$key"]="";
-				fwrite($fout, $def_base["$key"]);
-				echo "<h3>".$folfer_db.$file_db." <span class='color-green'>".$msgstr["updated"]."</span></h3><br>";
-			fclose($fout);
-		}
-	}
-	if (isset($lang_base)){
-	    foreach ($cod_base as $key=>$value){
-	    	if (isset($eliminar[$key]) and $eliminar[$key]=="S") continue;
-	    	if (isset($lang_base[$key])){
-				$fout=fopen($db_path."opac_conf/".$_REQUEST["lang"]."/".$value.".lang","w");
-				fwrite($fout, $lang_base["$key"]);
-				fclose($fout);
-				echo "<h3>".$_REQUEST["lang"]."/$value.lang"." ".$msgstr["updated"]."</h3><br>";
-			}
-		}
-	}
-	$folder_dat=$db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat";
-    $fout=fopen($folder_dat,"w");
-	foreach ($cod_base as $key=>$value){
-		if (isset($eliminar[$key]) and $eliminar[$key]=="S") continue;
-		fwrite($fout,$value."|".$nom_base[$key]."\n");
-	}
-	fclose($fout);
-	echo "<h3>".$folder_dat." <span class='color-green'>".$msgstr["updated"]."</span></h3>";
-	die;
-}
-?>
-
-<form name="actualizar" method="post">
 <?php
+// Função para verificar se um valor está presente em dbopac.dat
+function isInDbopac($valor, $dbopacData) {
+    foreach ($dbopacData as $dbopacLinha) {
+        list($dbopacValor) = explode('|', $dbopacLinha);
+        if ($valor === $dbopacValor) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Ler o conteúdo de bases.dat e dbopac.dat
+$file_conf_opac = $db_path.'opac_conf/'.$lang.'/bases.dat';
+
+$masterData = file($db_path.'bases.dat', FILE_IGNORE_NEW_LINES);
+$dbopacData = file($file_conf_opac, FILE_IGNORE_NEW_LINES);
+
+
+// Processar o envio do formulário
+if (isset($_POST['submit'])) {
+    // Inicializar um array para armazenar os dados atualizados de dbopac.dat
+    $updatedDbopacData = array();
+
+    foreach ($masterData as $linha) {
+        list($valor, $HumanNameDb) = explode('|', $linha);
+
+        // Verificar se o checkbox foi marcado
+        $checkboxName = 'checkbox_' . $valor;
+        $checkboxChecked = isset($_POST[$checkboxName]) ? 'checked' : '';
+
+        // Obter o valor do campo de texto
+        $textInputName = 'text_' . $valor;
+        $textInputValue = $_POST[$textInputName] ?? '';
+
+        // Obter o valor do campo de texto para a descrição completa
+        $textInputDescName = 'text_desc_' . $valor;
+        $textInputDescValue = $_POST[$textInputDescName] ?? '';
+
+        // Se o checkbox estiver marcado, adicione a linha ao array atualizado de dbopac.dat
+        if ($checkboxChecked) {
+            $updatedDbopacData[] = "$valor|$textInputValue";
+
+        // Salvar a descrição completa em um arquivo de texto
+        $defFile = $db_path . $valor . '/opac/' . $lang . '/' . $valor . '.def';
+
+        // Verifica se o arquivo já existe
+        if (!file_exists($defFile)) {
+            // Se o arquivo não existe, cria o diretório se não existir
+            $directory = dirname($defFile);
+            if (!is_dir($directory)) {
+                mkdir($directory, 0777, true);
+            }
+            
+            // Cria o arquivo
+            file_put_contents($defFile, '');
+        }
+
+    // Agora que sabemos que o arquivo existe (ou foi criado), podemos escrever nele
+    file_put_contents($defFile, $textInputDescValue);
+
+
+        } elseif (!$checkboxChecked && isInDbopac($valor, $dbopacData)) {
+            // Se o checkbox estiver desmarcado e o valor existir em dbopac.dat, não inclua no array
+            continue;
+        }
+    }
+
+// Agora, vamos lidar com os campos langdb_
+$uniqueLangValues = array();
+$uniqueSuffixes = array();
+foreach ($_POST as $postField => $postValue) {
+    if (strpos($postField, 'langdb_') === 0) {
+        // Extrair os valores dinâmicos do campo langdb_
+        $parts = explode('_', $postField);
+        if (count($parts) === 3) {
+            $langValue = $postValue;
+            $prefix = $parts[1];
+            $suffix = $parts[2];
+            $alphaInputDb = 'langdb_' . $prefix . '_' . $suffix;
+
+            // Verificar se o checkbox foi marcado para este campo langdb_
+            if (isset($_POST[$alphaInputDb])) {
+                // Adicionar o valor ao array correspondente ao sufixo
+                $uniqueLangValues[$suffix][] = $langValue;
+                // Armazenar o sufixo para evitar duplicatas
+                $uniqueSuffixes[] = $suffix;
+            }
+        }
+    }
+}
+
+// Eliminar duplicatas e salvar nos arquivos correspondentes
+$uniqueSuffixes = array_unique($uniqueSuffixes);
+foreach ($uniqueSuffixes as $suffix) {
+    $uniqueLangValues[$suffix] = array_unique($uniqueLangValues[$suffix]);
+    $file_db_alpha_opac = $db_path . $suffix . '/opac/' . $lang . '/' . $suffix . '.lang';
+    file_put_contents($file_db_alpha_opac, implode(PHP_EOL, $uniqueLangValues[$suffix]));
+    //echo "<h3>" . $lang . "/$suffix.lang" . " " . $msgstr["updated"] . "</h3><br>";
+}
+
+
+    // Gravar os dados atualizados no arquivo dbopac.dat
+    file_put_contents($file_conf_opac, implode(PHP_EOL, $updatedDbopacData));
+
+
+    echo '<div class="alert success">'.$msgstr["updated"].'<pre>'.$file_conf_opac.'</pre></div>';
+
+    // Recarregar os dados de dbopac.dat após a atualização
+    $dbopacData = file($file_conf_opac, FILE_IGNORE_NEW_LINES);
+}
+
 $alpha=array();
 if (is_dir($db_path."opac_conf/alpha/".$charset)){
 	$handle=opendir($db_path."opac_conf/alpha/".$charset);
@@ -120,124 +147,112 @@ if (is_dir($db_path."opac_conf/alpha/".$charset)){
 	}
 }
 
-
-$ix=0;
+// Exibir o formulário
 ?>
-<table class="table striped">
-<tr><th><?php echo $msgstr["db_name"];?></th><th><?php echo $msgstr["db"];?></th><th><?php echo $msgstr["db_desc"];?></th>
+
+    <form method="POST">
+        <?php foreach ($masterData as $linha) {
+            list($valor, $HumanNameDb) = explode('|', $linha);
+
+
+	if ((substr($HumanNameDb,0,3)!="Acq") AND (substr($HumanNameDb,0,4)!="Circ") AND (substr($HumanNameDb,0,3)!="Sys") ) {
+
+            echo '<h3><input class="m-1 p-2" type="checkbox" name="checkbox_' . $valor . '" value="' . $valor . '" ';
+
+
+            // Verificar se o valor existe em dbopac.dat e marcar o checkbox
+            foreach ($dbopacData as $dbopacLinha) {
+                list($dbopacValor) = explode('|', $dbopacLinha);
+                if ($valor === $dbopacValor) {
+                    echo 'checked';
+                    break;
+                }
+            }
+
+            echo '>';
+            echo '<label class="w-3 p-2" >' . $HumanNameDb . '</label></h3>';
+?>
+    <div class="w-10" style="display: flex;" >
+        <div class="w-4 p-3">
 
 <?php
-if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="advanced" and count($alpha)>0){
-	echo "<th>".$msgstr["avail_db_lang"]."</th>";
-}
-echo "</tr>";
-if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat")){
-	$fp=file($db_path."opac_conf/".$_REQUEST["lang"]."/bases.dat");
-	foreach ($fp as $value){
-		if (trim($value)!=""){
-			$l=explode('|',$value);
-			$ix=$ix+1;
+            echo "<label title=".$file_conf_opac.">".$msgstr["db_name"]."</label>";
+            echo '<input class="w-10"  type="text" name="text_' . $valor . '" value="';
 
-			echo "<tr><td><input type=text name=conf_lc_".$ix." size=5 value=\"".trim($l[0])."\"></td>";
-			echo "<td><input type=text name=conf_ln_".$ix." size=20 value=\"".trim($l[1])."\"></td>";
+            // Preencher o campo de texto com o valor correspondente em dbopac.dat
+            foreach ($dbopacData as $dbopacLinha) {
+                list($dbopacValor, $dbopacHumanName) = explode('|', $dbopacLinha);
+                if ($valor === $dbopacValor) {
+                    echo $dbopacHumanName;
+                    break;
+                }
+            }
 
-			$base_def="";
-			$f_base_def=$db_path.$l[0]."/opac/".$_REQUEST["lang"]."/".$l[0].".def";
-			if (file_exists($f_base_def)){
-				$fp=fopen($f_base_def,'r');
-				$contents = fread($fp, filesize($f_base_def));
-				fclose($fp);
-				$cont=nl2br($contents);
-				echo "<td><input type=text name=conf_def_".$ix." size=50 value=\"".$cont."\"></td>";
-			}
-			if (isset($_REQUEST["base"]) and $_REQUEST["base"]=="1"){
-				echo "<td>";
-				$ix_lang=0;
-				echo "<table>";
-				echo "<tr>";
-				$langdb=array();
-				if (file_exists($db_path."opac_conf/".$_REQUEST["lang"]."/".$l[0].".lang")){
-					$fp_lang=file($db_path."opac_conf/".$_REQUEST["lang"]."/".$l[0].".lang");
-					foreach ($fp_lang as $value_lang){
-						if (trim($value_lang)!=""){
-							$fll=explode('|',$value_lang);
-							foreach ($fll as $xfll){
-								$xfll=trim($xfll);
-								$langdb[$xfll]=$xfll;
-							}
+            echo '">';
+?>
+        </div>
+
+        <div class="w-4 p-3">
+
+
+<?php
+
+            // Verificar se o arquivo .def existe e preencher o campo de texto com o seu conteúdo
+            $defFile = $db_path.$valor.'/opac/' . $lang . '/'.$valor . '.def';
+       
+
+
+            echo "<label title=".$defFile.">".$msgstr["db_desc"]."</label>";
+            echo '<input class="w-10"  type="text" name="text_desc_' . $valor . '" value="';
+
+            // Preencher o campo de texto com a descrição completa do banco de dados
+            $textInputDescName = 'text_desc_' . $valor;
+            $textInputDescValue = $_POST[$textInputDescName] ?? '';
+
+            echo htmlspecialchars($textInputDescValue) . '">';
+
+        if (file_exists($defFile)) {
+            $defContents = file_get_contents($defFile);
+            echo '<script>document.getElementsByName("text_desc_' . $valor . '")[0].value = ' . json_encode($defContents) . ';</script>';
+        }
+
+			$ix_lang=0;
+			$langdb=array();
+			if (file_exists($db_path.$valor.'/opac/'.$lang.'/'.$valor.'.lang')){
+				$fp_lang=file($db_path.$valor.'/opac/'.$lang.'/'.$valor.'.lang');
+				foreach ($fp_lang as $value_lang){
+					if (trim($value_lang)!=""){
+						$fll=explode('|',$value_lang);
+						foreach ($fll as $xfll){
+							$xfll=trim($xfll);
+							$langdb[$xfll]=$xfll;
 						}
 					}
-
 				}
-				foreach ($alpha as $value){
-					$ix_lang=$ix_lang+1;
-					echo "<td>";
-					$ix_00=strrpos($value,".");
-					$value=substr($value,0,$ix_00);
-					echo "<input type=checkbox name=langdb_".$value."_$ix value=\"$value\"";
-					if (isset($langdb[$value])) echo " checked";
-					echo "> $value";
-					echo "</td>";
-					if ($ix_lang>3){
-						$ix_lang=0;
-						echo "</tr><tr>";
-					}
-				}
-				echo "</table></td>";
-				echo "</td>";
-			}
-			echo "</tr>";
-		}
-	}
-}
-if ($ix==0)
-	$tope=5;
-else
-	$tope=$ix+4;
-$ix=$ix+1;
-for ($i=$ix;$i<$tope;$i++){
 
-	echo "<tr><td><input type=text name=conf_lc_".$i." size=5 value=\"\"></td>";
-	echo "<td><input type=text name=conf_ln_".$i." size=20 value=\"\"></td>";
-	echo "<td><input type=text name=conf_def_".$i." size=50 value=\"\"></td>";
-	if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="advanced"){
-		echo "<td>";
-		$ix_lang=0;
-		echo "<table>";
-		echo "<tr>";
-		foreach ($alpha as $value){
-			$ix_lang=$ix_lang+1;
-			echo "<tD>";
-			$ix_00=strrpos($value,".");
-			$value=substr($value,0,$ix_00);
-			echo "<input type=checkbox name=langdb_".$value."_$ix value=\"$value\"> $value";
-			echo "</td>";
-			if ($ix_lang>3){
-				$ix_lang=0;
-				echo "</tr><tr>";
 			}
-		}
-		echo "</table></td>";
-	}
-	echo "</tr>";
-}
 ?>
-
-</table>
-<input type="hidden" name="lang" value="<?php echo $lang;?>" >
-<input type="hidden" name="Opcion" value="Actualizar" >
-
-<button type="submit" class="bt-green"><?php echo $msgstr["save"]; ?></button>
-
-
+        </div>
+    </div>
 
 <?php
-if (isset($_REQUEST["conf_level"])){
-	echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
-}
-?>
-</form>
-</div>
-</div>
 
-<?php include ("../../common/footer.php"); ?>
+            echo "<label>".$msgstr["avail_db_lang"]." ".$valor.'</label><br>';
+			foreach ($alpha as $value){
+				$ix_lang=$ix_lang+1;
+				$ix_00=strrpos($value,".");
+				$value=substr($value,0,$ix_00);
+				echo '<input class="m-2" type="checkbox" name="langdb_'.$value.'_'.$valor.'" value="'.$value.'"';
+				if (isset($langdb[$value])) echo " checked";
+				echo ">". $value;
+				if ($ix_lang>3){
+					$ix_lang=0;
+				}
+			}
+
+			echo '<br><br><hr>';
+        } 
+	}
+?>
+        <input class="bt bt-green" type="submit" name="submit" value="Salvar">
+    </form>

@@ -55,12 +55,12 @@ if (file_exists($db_path."/opac_conf/".$_REQUEST["lang"]."/".$_REQUEST["base"]."
                         $ex .= " and " . $Expresion_col;
                     }
                     if (isset($_REQUEST["base"]) and $_REQUEST["base"] != "")
-                        $bb = $_REQUEST["base"];
+                        $base = $_REQUEST["base"];
                     else
-                        $bb = $primera_base;
-                    $query = "&base=$bb&cipar=$db_path" . $actparfolder . "$bb" . ".par&Expresion=" . urlencode($ex) . "&from=1&count=1&Opcion=buscar&lang=".$lang;
+                        $base = $primera_base;
+                    $query = "&base=$base&cipar=$db_path" . $actparfolder . "$base" . ".par&Expresion=" . urlencode($ex) . "&from=1&count=1&Opcion=buscar&lang=".$lang;
                     //echo $query;
-                    $resultado = wxisLlamar($bb, $query, $xWxis . $IsisScript);
+                    $resultado = wxisLlamar($base, $query, $xWxis . $IsisScript);
                     
                     foreach ($resultado as $value) {
                         $value = trim($value);

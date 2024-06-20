@@ -19,10 +19,10 @@ include("presentar_diccionario_inc.php");
 ?>
 		<div class="row g-3 py-3">
 			<div class="col-md-10">
-  				<input class="form-control" type="text" name="IR_A" size="15" placeholder="<?php echo $msgstr["search"]?> ..." >
+  				<input class="form-control" type="text" name="IR_A" size="15" placeholder="<?php echo $msgstr["front_search"]?> ..." >
 			</div>
 			<div class="col-md-2">
-				<input class="btn btn-success" type=button value="<?php echo $msgstr["ira"]?>" onclick="javascript:NavegarDiccionario(this,3)" id=search-submit>
+				<input class="btn btn-success" type=button value="<?php echo $msgstr["front_ira"]?>" onclick="javascript:NavegarDiccionario(this,3)" id=search-submit>
 				<input type="hidden" name="campo" value="<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"])?>">
 			</div>
 		</div>
@@ -33,13 +33,13 @@ include("presentar_diccionario_inc.php");
 		<div class="row g-3">
 
 		<div class="col-md-6">
-			<?php if (isset($_REQUEST["campo"])) echo "<h6>".$_REQUEST["campo"]."</h6>";?>
+			<?php if (isset($_REQUEST["campo"])) echo "<h6 class=\"text-dark\">".$_REQUEST["campo"]."</h6>";?>
    			<select class="form-select"  name="terminos"  multiple="multiple"  size="10"  onDblClick="moveSelectedOptions(document.diccionario.terminos,document.diccionario.TerminosSeleccionados,false)">
 				<?php PresentarDiccionario(); ?>
 			</select>
 
 
-			<input class="btn btn-primary my-2" type="button" value="<?php echo $msgstr["mas_terminos"]?>" id=search-submit onclick="javascript:NavegarDiccionario(this,4)">
+			<input class="btn btn-primary my-2" type="button" value="<?php echo $msgstr["front_mas_terminos"]?>" id=search-submit onclick="javascript:NavegarDiccionario(this,4)">
 			
 			<div id="indice">
 
@@ -113,9 +113,9 @@ include("presentar_diccionario_inc.php");
   	?>
 
 
-	<input class="btn btn-success" type="button" id="search-submit" value="<?php echo $msgstr["enviar_fb"]?>" onclick="javascript:EjecutarBusquedaDiccionario(<?php echo $accion?>)"></a>
+	<input class="btn btn-success" type="button" id="search-submit" value="<?php echo $msgstr["front_enviar_fb"]?>" onclick="javascript:EjecutarBusquedaDiccionario(<?php echo $accion?>)"></a>
    <?php }
      if (!isset($_REQUEST["criterios"]) or $_REQUEST["criterios"]!="S"){
    ?>
-	<input  class="btn btn-success" type=button id=search-submit value=" <?php echo $msgstr["search"]?> " onclick="javascript:EjecutarBusquedaDiccionario(0,'')">
+	<input  class="btn btn-success" type=button id=search-submit value=" <?php echo $msgstr["front_search"]?> " onclick="javascript:EjecutarBusquedaDiccionario(0,'')">
    <?php } ?>

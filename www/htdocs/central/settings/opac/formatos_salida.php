@@ -1,16 +1,22 @@
 <?php
-
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
 include "../../common/inc_div-helper.php";
-
 ?>
+
+<script>
+var idPage="db_configuration";
+</script>
+
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+	<?php include("menu_dbbar.php");  ?>
+
 	<h3><?php echo $msgstr["select_formato"];?></h3>
 
 <?php
@@ -172,7 +178,7 @@ global $msgstr,$db_path;
     <div class="w-30">
 		<form name="<?php echo $iD;?>Frm" method="post">
 		<input type="hidden" name="Opcion" value=Guardar>
-    	<input type="hidden" name="base" value=$base>
+    	<input type="hidden" name="base" value=<?php echo $base;?>>
     	<input type="hidden" name="file" value="<?php echo $file;?>">
     	<input type="hidden" name="lang" value="<?php echo $lang;?>">
 	<?php

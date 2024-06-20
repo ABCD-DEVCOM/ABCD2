@@ -26,7 +26,7 @@ function PresentarDiccionario(){
 
   		<td width=250 valign=top>
   			<font class=titulo2 size=1>
- 			<input type=text name="IR_A" size=15 placeholder="<?php echo $msgstr["search"]?> ..." >	<input type=button value=<?php echo $msgstr["ira"]?> onclick="javascript:NavegarDiccionarioMovil(this,3)" id=search-submit>
+ 			<input type=text name="IR_A" size=15 placeholder="<?php echo $msgstr["front_search"]?> ..." >	<input type=button value=<?php echo $msgstr["front_ira"]?> onclick="javascript:NavegarDiccionarioMovil(this,3)" id=search-submit>
 			<input type=hidden name=campo value="<?php if (isset($_REQUEST["campo"])) echo urldecode($_REQUEST["campo"])?>">
             <BR>
             <div id=terminos style="font-size:10px;width:330px;height:180px;margin-bottom:5px;overflow: auto; overflow-x: hidden;border:1px dotted;"  onDblClick="moveSelectedOptions(document.diccionario.terminos,document.diccionario.TerminosSeleccionados,false)">
@@ -37,7 +37,7 @@ PresentarDiccionario();
 			</table>
 			</div>
 			<br>
-			<input type=button value="<?php echo $msgstr["mas_terminos"]?>" id=search-submit onclick="javascript:NavegarDiccionarioMovil(this,4)">
+			<input type=button value="<?php echo $msgstr["front_mas_terminos"]?>" id=search-submit onclick="javascript:NavegarDiccionarioMovil(this,4)">
 			<div id=indice style="width:330px;font-size:12px;font-family:'courier new'">
 
 			<a href=javascript:AbrirIndiceMovil('')>0-9</a>&nbsp;
@@ -78,7 +78,7 @@ PresentarDiccionario();
  		<td valign=top style="margin-top:4px" align=center>
   			<font class=titulo2>
 
- 		  <?php echo $msgstr["terminos_b"]?><br>
+ 		  <?php echo $msgstr["front_terminos_b"]?><br>
  		 <div id=Terminos style="font-size:10px;width:300px;height:180px;margin-top:7px;margin-bottom:5px;overflow: auto; overflow-x: hidden;text-align:left;border:1px dotted;" >
          <table name=TerminosSeleccionadosTbl id=TerminosSeleccionadosTbl border=0>
 <?php
@@ -112,7 +112,7 @@ if (isset($_REQUEST["Seleccionados"])){
      if (!isset($_REQUEST["criterios"]) or $_REQUEST["criterios"]!="S"){
    ?>
 
- 	&nbsp; <input type=button id=search-submit value=" <?php echo $msgstr["search"]?> " onclick="javascript:EjecutarBusquedaDiccionarioMovil(0,'')">
+ 	&nbsp; <input type=button id=search-submit value=" <?php echo $msgstr["front_search"]?> " onclick="javascript:EjecutarBusquedaDiccionarioMovil(0,'')">
    <?php } ?>
 
 

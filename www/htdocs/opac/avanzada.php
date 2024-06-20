@@ -1,19 +1,12 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-// Para presentar el diccionario de t�rminos consolidado
-include("dibujarformabusqueda_st.php");
+// Para presentar el diccionario de terminos consolidado
 
-//////////////////////////////////////////////////////////////////////////////////////
-// ------------------------------------------------------
-// INICIO DEL PROGRAMA
-// ------------------------------------------------------
-
-$path="../";
 include("../central/config_opac.php");
-include("leer_bases.php");
 $indice_alfa="n";
-
+$mostrar_libre="N";
 include("head.php");
+
 
 
 //foreach ($_REQUEST as $key =>$value) echo "$key =>".urldecode($value)."<br>";
@@ -22,7 +15,7 @@ if (isset($_REQUEST["modo"]) and $_REQUEST["modo"]=="integrado")
 
 if (!isset($_REQUEST["base"]) or $_REQUEST["base"]==""){
 	$base="";
-	 echo "<span class=tituloBase>".$msgstr["todos_c"]."</span>";
+	 echo "<span class=tituloBase>".$msgstr["front_todos_c"]."</span>";
 }else{
 	 echo "<span class=tituloBase>".$bd_list[$_REQUEST["base"]]["titulo"]."</span>";
 
@@ -40,16 +33,13 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
 ?>
 
 
- <h4><?php echo $msgstr["buscar_a"]; ?></h4>
+ <h4><?php echo $msgstr["front_buscar_a"]; ?></h4>
 	<?php
 		$Diccio=-1;
 		DibujarFormaBusqueda($Diccio);
 	?>
 </div>
 
-<div class="row mt-3">
-	<input class="btn btn-light" type="button" id="search-submit" value="<?php echo $msgstr["back"]?>" onclick="javascript:history.back()">
-</div>
 
 <form name="back" method="post" action="buscar_integrada.php">
 <?php
@@ -61,4 +51,4 @@ if (isset($_REQUEST["coleccion"]) and $_REQUEST["coleccion"]!="")  {
 ?>
 </form>
 
-<?php include("components/footer.php"); ?>
+<?php include("views/footer.php"); ?>

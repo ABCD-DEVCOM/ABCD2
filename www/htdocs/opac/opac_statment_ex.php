@@ -1,21 +1,15 @@
 <?php
 /**************** Modifications ****************
-
 2022-03-23 rogercgui change the folder /par to the variable $actparfolder
-
-
 ***********************************************/
 
-session_name("ABCDcn");
-session_start();
+//session_name("ABCDcn");
+//session_start();
 include("../central/config_opac.php");
-include("leer_bases.php");
+//include("leer_bases.php");
 include($CentralPath."common/get_post.php");
 //foreach ($arrHttp as $var=>$value) echo "$var=$value<br>";//die;
-if (isset($_REQUEST["lang"]))
-	$lang=$_REQUEST["lang"];
-else
-	$lang="es";
+
 $lang_db=$lang;
 $_SESSION["lang"]=$lang;
 if (isset($_REQUEST["db_path"])) $db_path=$_REQUEST["db_path"];
@@ -48,7 +42,7 @@ global $Wxis,$xWxis,$db_path,$CentralPath,$actparfolder;
 	}
 	return array($ec_output,$tipo_u);
 }
-//$sidebar="N";
+$sidebar="N";
 $desde="ecta";
 $indice_alfa="N";
 include("head.php");
@@ -88,29 +82,29 @@ function Renovar() {
 	if (marca=="S"){
 		p=politica.split('|')
 		if (p[6]=="0"){     // the object does not accept renovations
-			alert("<?php echo $msgstr["noitrenew"] ?>")
+			alert("<?php echo $msgstr["front_noitrenew"] ?>")
 			return
 		}
 		if (atraso!=0){
 			if (p[13]!="Y"){
-				alert("<?php echo $msgstr["loanoverdued"]?>")
+				alert("<?php echo $msgstr["front_loanoverdued"]?>")
 				return
 			}
 		}
 		if (Trim(p[15])!=""){
 			if (fecha_d>p[15]){
-				alert("<?php echo $msgstr["limituserdate"]?>"+": "+p[15])
+				alert("<?php echo $msgstr["front_limituserdate"]?>"+": "+p[15])
 				return
 			}
 		}
 		if (Trim(p[16])!=""){
 			if (fecha_d>p[16]){
-				alert("<?php echo $msgstr["limitobjectdate"]?>"+": "+p[16])
+				alert("<?php echo $msgstr["front_limitobjectdate"]?>"+": "+p[16])
 				return
 			}
 		}
 		if (nMultas!=0){
-			alert("**<?php echo $msgstr["norenew"]?>")
+			alert("**<?php echo $msgstr["front_norenew"]?>")
 			return
 		}
 		document.renovar.submit()
@@ -122,7 +116,7 @@ function Renovar() {
 		enlace.href="javascript:void(0)"
 
 	}else{
-		alert("<?php echo $msgstr["markloan"]?>")
+		alert("<?php echo $msgstr["front_markloan"]?>")
 	}
 }
 </script>
@@ -130,7 +124,7 @@ function Renovar() {
 <br>
 <table width=100%>
 <td>
-<strong><h3><?php echo $msgstr["ecta"]?></h3></strong><p>
+<strong><h3><?php echo $msgstr["front_ecta"]?></h3></strong><p>
 
 <form name=ecta id=ecta>
 <?php
@@ -154,8 +148,8 @@ $tipo_u=$user[1];
 $user=$user[0];
 
 if ($user==''){
-	if (isset($msgstr["iah_user_notfound"])){
-		echo "<p><strong>".$msgstr["iah_usuario_notfound"]."</strong></p>";
+	if (isset($msgstr["front_iah_user_notfound"])){
+		echo "<p><strong>".$msgstr["front_iah_usuario_notfound"]."</strong></p>";
 	}else{
 		echo "<p><strong>Usuario no existe</strong></p>";
     }
@@ -183,10 +177,10 @@ $ecta_web="N";
 include($CentralPath."circulation/ec_include.php");
 
 if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
-	if (isset($msgstr["iah_usuario_notfound"])){
-		echo "<p><strong>".$msgstr["iah_usuario_notfound"]."</strong></p>";
+	if (isset($msgstr["front_iah_usuario_notfound"])){
+		echo "<p><strong>".$msgstr["front_iah_usuario_notfound"]."</strong></p>";
 	}else{
-	    echo "<p><strong>".$msgstr["user_notfound"]."</strong></p>";
+	    echo "<p><strong>".$msgstr["front_user_notfound"]."</strong></p>";
 	}
 }else{
 	echo $ec_output;
@@ -194,7 +188,7 @@ if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
 		if (count($prestamos)>0 and !isset($_REQUEST["mostrar_reserva"])) {
 			echo  "<strong><input type=button onclick=javascript:Renovar() id=renovar value=\"".$msgstr["renew"]."\"></strong><p>";
 			if (isset($arrHttp["vienede"]) and $arrHttp["vienede"]=="ABCD")
-				if (isset($msgstr["iah_usuario_msgecta"])) echo $msgstr["iah_usuario_msgecta"];
+				if (isset($msgstr["front_iah_usuario_msgecta"])) echo $msgstr["iah_usuario_msgecta"];
 		}
 	}
 	//SE LEEN LAS RESERVAS PENDIENTES
@@ -214,30 +208,31 @@ if (substr(trim($ec_output),0,2)=="**" or trim($ec_output)==""){
 	echo "<br>".$msgstr["reserve_tit_4"].": " .$max_rsvr;
 	$saldo_rsvr=$max_rsvr-$reserves_arr[1];
 	if ($saldo_rsvr<=0){
-		echo "<br><font color=red><strong>".$msgstr["no_more_reservations"]."</strong></font>";
+		echo "<br><font color=red><strong>".$msgstr["front_no_more_reservations"]."</strong></font>";
 	}
 }
-$arrHttp["lang"]="es";
 ?>
 </form>
-<form name=renovar action=renovar_ex.php method=post>
-<input type=hidden name=searchExpr>
-<input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
-<input type=hidden name=vienede value=ABCD>
-<!--input type=hidden name=DB_PATH value=<?php echo $arrHttp["DB_PATH"]?>-->
-<input type=hidden name=lang value=<?php echo $arrHttp["lang"]?>>
+
+<form name="renovar" action="renovar_ex.php" method="post">
+	<input type="hidden" name="searchExpr">
+	<input type="hidden" name="usuario" value=<?php echo $arrHttp["usuario"]?>>
+	<input type="hidden" name="vienede" value="ABCD">
+	<!--input type=hidden name=DB_PATH value=<?php echo $arrHttp["DB_PATH"]?>-->
+	<input type="hidden" name=lang value=<?php echo $arrHttp["lang"]?>>
 </form>
-<form name=anular method=post action=reservar_anular.php>
-<input type=hidden name=Mfn>
-<input type=hidden name=usuario value=<?php echo $arrHttp["usuario"]?>>
-<input type=hidden name=vienede value=ABCD>
-<!--input type=hidden name=DB_PATH value=<?php echo $arrHttp["DB_PATH"]?>-->
-<input type=hidden name=lang value=<?php echo $arrHttp["lang"]?>>
-<?php
-	foreach ($arrHttp as $var=>$value){
-		echo "<input type=hidden name=$var value=$value>\n";
-	}
-?>
+
+<form name="anular" method="post" action="reservar_anular.php">
+	<input type="hidden" name="Mfn">
+	<input type="hidden" name="usuario" value="<?php echo $arrHttp["usuario"]?>">
+	<input type="hidden" name="vienede" value="ABCD">
+	<!--input type=hidden name=DB_PATH value=<?php echo $arrHttp["DB_PATH"]?>-->
+	<input type="hidden" name="lang" value="<?php echo $arrHttp["lang"]?>">
+	<?php
+		foreach ($arrHttp as $var=>$value){
+			echo "<input type=hidden name=$var value=$value>\n";
+		}
+	?>
 </form>
 
 </table>
@@ -270,27 +265,26 @@ if ($ec_output!="**"){
 		echo "<h4>".$msgstr["overdued"]."</h4>";
 	}else{
 		if ($user<>'' and $saldo_rsvr>0){
-			echo "<br><br><input type=button value=\" ".$msgstr["completar_sol"]." \" onclick=javascript:CompletarSolicitud() style='height:50px;font-size:17px;border-radius:8px;background-color:#cccccc;font:black'> ";
+			echo "<input class=\"btn btn-success\"  type=button value=\" ".$msgstr["completar_sol"]." \" onclick=javascript:CompletarSolicitud() > ";
 			echo "<p>";
 		}
 	}
 }
-echo '<form name=regresar action=presentar_seleccion.php method=post>';
-foreach ($_REQUEST as $key=>$value){
-	echo "<input type=hidden name=$key value=\"$value\">\n";
-}
-echo "</form>";
-
-
-session_destroy();
-
 ?>
+<form name="confirm_reserve" action="views/view_selection.php" method="post">
+	<?php
+	foreach ($_REQUEST as $key=>$value){
+		echo "<input type=hidden name=$key value=\"$value\">\n";
+	}
+	?>
+</form>
+
+
 <script>
 function CompletarSolicitud(){
-	document.regresar.action="completar_solicitud.php";
-	document.regresar.submit();
+	document.confirm_reserve.action="completar_solicitud.php";
+	document.confirm_reserve.submit();
 }
 </script>
-<?php
-include("components/footer.php");
-?>
+
+<?php include("views/footer.php"); ?>

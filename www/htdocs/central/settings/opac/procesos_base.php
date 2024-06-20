@@ -1,5 +1,5 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 
 if (isset($_REQUEST["conf_level"]) and $_REQUEST["conf_level"]=="basic" or !isset($_REQUEST["conf_level"])){
 	$wiki_help="OPAC-ABCD_Configuración_de_bases_de_datos#Configuraci.C3.B3n_b.C3.A1sica";
@@ -12,26 +12,16 @@ include "../../common/inc_div-helper.php";
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
-		<h3><?php echo $msgstr["db_configuration"];?></h3>
+	<?php include("menu_dbbar.php");  ?>
+	<h3><?php echo $msgstr["db_configuration"];?></h3>
 <?php
 
-include($ABCD_scripts_path."opac/leer_bases.php");
+//include($ABCD_scripts_path."opac/leer_bases.php");
 ?>
-<style>
-	#wwrapper {
-  		display: flex;
-	}
-	#wleft {
-  		flex: 0 0 50%;
-	}
-	#wright {
-  		flex: 1;
-  		margin: auto;
-	}
-</style>
+
 <script>
 	function EnviarCopia(){
 		if (document.copiar_a.lang_to.options[document.copiar_a.lang_to.selectedIndex].value=="<?php echo $_REQUEST["lang"]?>"){
@@ -54,7 +44,7 @@ if (!isset($_REQUEST["db_path"])){
 if ($_REQUEST["base"]!="META")
 if (isset($_REQUEST["db_path"])) {
 	$_SESSION["db_path"]=$_REQUEST["db_path"];
-	if ($_REQUEST["base"]!="META") $_SESSION["db_path_desc"]=$bd_list[$_REQUEST["base"]]["descripcion"];
+	//if ($_REQUEST["base"]!="META") $_SESSION["db_path_desc"]=$bd_list[$_REQUEST["base"]]["descripcion"];
 }
 if (isset($_REQUEST["lang"])) $_SESSION["lang"]=$_REQUEST["lang"];
 

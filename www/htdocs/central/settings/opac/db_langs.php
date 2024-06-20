@@ -1,8 +1,17 @@
 <?php 
-include("tope_config.php"); 
+include("conf_opac_top.php"); 
 include "../../common/inc_div-helper.php";
 ?>
 
+<script>
+var idPage="charset_cnf";
+</script>
+
+<div class="middle form row m-0">
+	<div class="formContent col-2 m-2">
+			<?php include("conf_opac_menu.php");?>
+	</div>
+	<div class="formContent col-9 m-2">
 
 <?php
 /*echo "<pre>";
@@ -30,23 +39,26 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Actualizar"){
 			}
 		}
 	}
+
+	?>
+
+    <div class="alert success" onload="setTimeout(function () { window.location.reload(); }, 10)" >
+		<?php echo $msgstr["updated"];?>
+
+	<pre><code>
+<?php
+
     foreach ($cod_lang as $key=>$value){
 		$fout=fopen($db_path."opac_conf/alpha/$charset/$value.tab","w");
 		fwrite($fout, $collation[$key]);
 		fclose($fout);
-		echo "<h2>"."alpha/$charset/$value.tab ".$msgstr["updated"]."</h2>";
+		echo "alpha/$charset/$value.tab ".$msgstr["updated"]."\n";
 	}
+	echo "</code></pre></div>";
 	die;
 }
 ?>
 
-<div class="middle form row m-0">
-	<div class="formContent col-2 m-2">
-		<?php include("menu_bar.php");?>
-	</div>
-	<div class="formContent col-9 m-2">
-
-    <h3><?php echo $msgstr["avail_db_lang"]?></h3>
 
 
 <form name="actualizar" method="post">

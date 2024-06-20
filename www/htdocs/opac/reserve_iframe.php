@@ -9,7 +9,7 @@
 			hayerror=0
 			document.enviarreserva.items_por_reservar.value=items_por_reservar;
 			if (Trim(document.enviarreserva.usuario.value)==''  ){
-      			alert("<?php echo $msgstr["missing"]. " ".$msgstr["user_id"]?>")
+      			alert("<?php echo $msgstr["front_missing"]. " ".$msgstr["front_user_id"]?>")
       			hayerror=1
 			}
 
@@ -22,7 +22,7 @@
 	</script>
 
 <div class="py-3 my-3">
-	<h3><?php echo $msgstr["reserve"]?></h3>
+	<h3><?php echo $msgstr["front_reserve"]?></h3>
 </div>
 
 <form name=enviarreserva action=opac_statment_ex.php method=post onSubmit='EnviarReserva();return false' target=_top>
@@ -40,7 +40,7 @@ foreach ($_REQUEST as $key=>$value){
 <div class="row g-3 py-2">
 
 	<div class="col-auto">
-		<label><?php echo $msgstr["user_id"]?>: </label>
+		<label><?php echo $msgstr["front_user_id"]?>: </label>
 	</div>
 
 	<div class="col-auto">
@@ -48,13 +48,13 @@ foreach ($_REQUEST as $key=>$value){
 	</div>
 
 	<div class="col-auto">
-		<input class="btn btn-success" type="submit" value="<?php echo $msgstr["send"]?> ">
+		<input class="btn btn-success" type="submit" value="<?php echo $msgstr["front_send"]?> ">
 	</div>
 </div>
 
 <?php
 if ($accion=="reserve_one"){
-	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["back"]." \" onclick=document.regresar.submit()>";
+	echo "&nbsp; &nbsp; <input type=button value=\" ".$msgstr["front_back"]." \" onclick=document.regresar.submit()>";
 }
 ?>
 

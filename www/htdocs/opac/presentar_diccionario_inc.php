@@ -1,5 +1,5 @@
 <?php
-global $terBd,$db_path,$LastKey,$bd_list,$path,$xWxis,$charset, $actparfolder;
+global $terBd,$db_path,$LastKey,$bd_list,$path,$xWxis,$meta_encoding, $actparfolder;
 	$Prefijo=$_REQUEST["prefijo"];
 	$LastKey="";
 //  Se determinan las últimas claves presentadas para continuar con el recorrido del diccionario

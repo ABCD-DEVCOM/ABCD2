@@ -1,15 +1,19 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#P.C3.A1gina_de_inicio_de_la_base_de_datos";
 include "../../common/inc_div-helper.php";
-
 ?>
+
+<script>
+	var idPage="db_configuration";
+</script>
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+	<?php include("menu_dbbar.php");  ?>
 	<h3><?php echo $msgstr["base_home"];?></h3>
 
 <?php
@@ -83,12 +87,15 @@ if (isset($_REQUEST["Opcion"]) and $_REQUEST["Opcion"]=="Guardar"){
 		}
 	}
 	fclose($fout);
-    echo "<p><font color=red>". "opac_conf/$lang/".$_REQUEST["file"]." ".$msgstr["updated"]."</font>";
+	?>
+    <h2 class="color-green">opac_conf/<?php echo $lang;?>/<?php echo $_REQUEST["file"];?>  <?php echo $msgstr["updated"];?> </h2>
+	<?php
 }
 ?>
 
-<div id="page">
-<br>
+<div id="page"  class="w-10">
+
+
 <?php
 
 if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
@@ -110,12 +117,14 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 	}
 	if ($base!=""){
 		$file=$base."_home.info";
-		echo "<form name=home"."Frm method=post onSubmit=\"return checkform()\">\n";
-		echo "<input type=hidden name=db_path value=".$db_path.">";
-		echo "<input type=hidden name=Opcion value=Guardar>\n";
-    	echo "<input type=hidden name=base value=$base>\n";
-    	echo "<input type=hidden name=file value=\"$file\">\n";
-    	echo "<input type=hidden name=lang value=\"$lang\">\n";
+?>
+	<form name="homeFrm" method="post" onSubmit="return checkform()">
+		<input type="hidden" name="db_path" value="<?php echo $db_path;?>">
+		<input type="hidden" name="Opcion" value="Guardar">
+    	<input type="hidden" name="base" value="<?php echo $base;?>" >
+    	<input type="hidden" name="file" value="<?php echo $file;?>" >
+    	<input type="hidden" name="lang" value="<?php echo $lang;?>" >
+<?php
     	if (isset($_REQUEST["conf_level"])){
 			echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
 		}
@@ -133,21 +142,38 @@ if (!isset($_REQUEST["Opcion"]) or $_REQUEST["Opcion"]!="Guardar"){
 				}
 			}
 		}
-		echo "<table cellpadding=5>";
-		echo "<tr><td colspan=2>"."<font color=darkred size=3><strong>".$msgstr["sel_one"]."</strong></font></td></tr>";
-		echo "<tr><td>".$msgstr["base_home_link"]."</td>";
-		echo "<td>"."<input type=text name=home_link size=100 value=\"$home_link\"> Ex: https://abcd-community.org</td></tr>";
-		echo "<tr><td>".$msgstr["base_home_records"]."</td>";
-		echo "<td>"."<input type=checkbox name=home_mfn value=Y ";
-		if ($home_mfn!="" and $home_mfn=="Y") echo " checked";
-		echo "></td></tr>";
-		echo "<tr><td>".$msgstr["base_home_text"]."</td>";
-		echo "<td>"."<input type=text size=100 name=home_text value=\"$home_text\"";
-		echo "></td></tr>";
-		echo "<tr><td colspan=2 align=center> ";
-	   	echo "<input type=submit value=\"".$msgstr["save"]."\"></td></tr>";
-		echo "</table>";
-		echo "</form>";
+?>		
+		<h3><strong><?php echo $msgstr["sel_one"];?></strong></h3>
+
+		<div class="w-10" style="display: flex;" >
+			<div class="w-4 p-3">
+				<label class="w-3 p-2" ><?php echo $msgstr["base_home_link"];?><small>Ex: https://abcd-community.org</small></label>
+				<input type="text" name="home_link" size="100" value="<?php echo $home_link;?>" > 
+			</div>
+		</div>
+
+		<div class="w-10" style="display: flex;" >
+			<div class="w-5 p-3">
+				
+				<input type="checkbox" name="home_mfn" value="Y" <?php if ($home_mfn!="" and $home_mfn=="Y") echo " checked";?> >
+				<label class="w-3 p-2" ><?php echo $msgstr["base_home_records"];?></label>
+			</div>
+		</div>
+
+		<div class="w-10" style="display: flex;" >
+			<div class="w-4 p-3">
+				<label class="w-3 p-2" ><?php echo $msgstr["base_home_text"];?></label>
+				<input type="text" size="100" name="home_text" value="<?php echo $home_text;?>" >
+			</div>
+		</div>
+
+		<div class="w-10" style="display: flex;" >
+			<div class="w-4 p-3">
+				<input class="bt bt-green" type="submit" value="<?php echo $msgstr["save"];?>">
+			</div>
+		</div>
+		</form>
+<?php		
 	}
 }
 ?>

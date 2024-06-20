@@ -48,6 +48,6 @@ foreach ($_REQUEST as $key=>$value){
 echo "</form>";
 ?>
 <?php
-include("components/footer.php");
+include("views/footer.php");
 
 ?>

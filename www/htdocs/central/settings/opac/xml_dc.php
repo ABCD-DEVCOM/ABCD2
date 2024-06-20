@@ -3,17 +3,25 @@
  * 20230305 rogercgui Fixes bug in the absence of .fdt file in the language in use;
  */
 
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD DCXML";
 include "../../common/inc_div-helper.php";
 
 ?>
 
+<script>
+var idPage="db_configuration";
+</script>
+
+
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+	<?php include("menu_dbbar.php");  ?>
+
 	<h3><?php echo $msgstr["xml_dc"];?>	</h3>
 
 <?php

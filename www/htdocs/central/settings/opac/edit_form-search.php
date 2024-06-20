@@ -4,22 +4,37 @@
  * 20230305 rogercgui Fixes bug in the absence of the file camposbusqueda.tab;
 */
 
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Configuraci%C3%B3n_de_bases_de_datos#B.C3.BAsqueda_Libre";
 include "../../common/inc_div-helper.php";
 ?>
 
+<?php 	if ($_REQUEST["base"]=="META"){   ?>
+	<script>
+	var idPage="metasearch";
+	</script>
+<?php } else{ ?>
+	<script>
+	var idPage="db_configuration";
+	</script>
+<?php } ?>	
+
+
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+		<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+		<?php include("menu_dbbar.php");  ?>
 		<?php if ($_REQUEST['o_conf']=="libre") { ?>
 			<h3><?php echo $msgstr["free_search"];?></h3>
 		<?php } else { ?>
 			<h3><?php echo $msgstr["buscar_a"];?></h3>	
+			
+<?php } ?>
+
+
 <?php
-		}
 //foreach ($_REQUEST as $var=>$value) echo "$var=$value<br>";
 
 
@@ -136,8 +151,8 @@ if ($base!="" and $base!="META"){
     <input type="hidden" name="lang" value="<?php echo $lang;?>">
 
     <?php
-    if (isset($_REQUEST["conf_level"])){
-		echo "<input type=hidden name=conf_level value=".$_REQUEST["conf_level"].">\n";
+    if (isset($_REQUEST["o_conf"])){
+		echo "<input type=hidden name=o_conf value=".$_REQUEST["o_conf"].">\n";
 	}
 	echo "<strong>".$base."/opac/".$lang."/".$file."</strong><br>";
 	$cuenta_00=0;
@@ -196,7 +211,7 @@ for ($i=$ix;$i<$tope;$i++){
 	</div>
 	
 
-	<div style="flex: 1">
+<div>
 <?php
 	if ($cuenta>0){
 			foreach ($fp_campos as $key=>$value_campos){
@@ -216,10 +231,11 @@ for ($i=$ix;$i<$tope;$i++){
 	}
 
 	
-	echo "</div></div>";
 	echo "</form>";
 
 ?>
+
+
 
 </div>
 </div>

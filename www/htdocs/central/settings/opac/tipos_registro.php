@@ -1,5 +1,5 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#Tipos_de_registro";
 include "../../common/inc_div-helper.php";
 
@@ -7,9 +7,12 @@ include "../../common/inc_div-helper.php";
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+	<?php include("menu_dbbar.php");  ?>
+
 	<h3><?php echo $msgstr["tipos_registro"];?></h3>
 
 <?php

@@ -1,8 +1,8 @@
 <?php
-if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="S") {
+if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $multiplesBases=="Y") {
     ?>
 
-<div class="card">
+<div class="card  text-bg-light">
   <div class="card-body">
     <?php
 	$ix=-1;
@@ -22,7 +22,7 @@ if (isset($total_base) and count($total_base)>1 and isset($multiplesBases) and $
     ?>
     <p>
         <strong>
-            <?php echo $msgstr["total_registros"];?> : <?php echo $total_general;?>
+            <?php echo $msgstr["front_total_registros"];?> : <?php echo $total_general;?>
         </strong>
     </p>
   </div>

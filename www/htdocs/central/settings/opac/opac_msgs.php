@@ -1,5 +1,5 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_Apariencia#Mensajes_del_sistema";
 include "../../common/inc_div-helper.php";
 

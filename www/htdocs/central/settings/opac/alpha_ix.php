@@ -1,15 +1,30 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#.C3.8Dndices_alfab.C3.A9ticos";
 include "../../common/inc_div-helper.php";
-
 ?>
 
+<?php 	if ($_REQUEST["base"]=="META"){  echo $_REQUEST["base"]; ?>
+	<script>
+	var idPage="metasearch";
+	</script>
+<?php } else{ ?>
+	<script>
+	var idPage="db_configuration";
+	</script>
+<?php } ?>	
+
+
 <div class="middle form row m-0">
+
+
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+	
+	<?php include("menu_dbbar.php");  ?>
+	
 	<h3><?php echo $msgstr["indice_alfa"];?></h3>
 
 <form name="indice"s method="post">

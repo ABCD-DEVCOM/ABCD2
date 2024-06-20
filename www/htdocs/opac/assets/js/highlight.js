@@ -2,8 +2,8 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
 {
   // the highlightStartTag and highlightEndTag parameters are optional
   if ((!highlightStartTag) || (!highlightEndTag)) {
-    highlightStartTag = "<font style='color:blue; background-color:#EFEFEF;'>";
-    highlightEndTag = "</font>";
+    highlightStartTag = "<mark>";
+    highlightEndTag = "</mark>";
   }
 
   // find all occurences of the search term in the given text,
@@ -28,7 +28,7 @@ function doHighlight(bodyText, searchTerm, highlightStartTag, highlightEndTag)
   lcBodyText = lcBodyText.replace(/[ôöóò]/ig, "o");
   lcBodyText = lcBodyText.replace(/[ùûüú]/ig, "u");
   while (bodyText.length > 0) {
-    i = lcBodyText.indexOf(lcSearchTerm, i+1);
+   i = lcBodyText.indexOf(lcSearchTerm, i+1);
     if (i < 0) {
       newText += bodyText;
       bodyText = "";
@@ -86,13 +86,15 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
   searchArray=searchText.split('|')
   texto=document.getElementById('results');
 
+  console.log(searchArray);
+
   var bodyText = texto.innerHTML;
   for (var ixt = 0; ixt < searchArray.length; ixt++) {
     term=searchArray[ixt];
 	st=term.split(" ")
 	for (ixst=0;ixst<st.length;ixst++){
 		termino=Trim(st[ixst])
-		if (termino!="" && termino.length>3){
+		if (termino!="" && termino.length>=2){
 			ix=termino.lastIndexOf('_')
 			if (ix>0){
 				termino=termino.substring(ix+1)
@@ -101,7 +103,7 @@ function highlightSearchTerms(searchText, treatAsPhrase, warnOnFailure, highligh
 		    if (ix>0){
 		        termino=termino.substring(0,ix)
 			}
-			if (termino.length>3)
+			if (termino.length>=2)
 				bodyText = doHighlight(bodyText,termino , highlightStartTag, highlightEndTag);
 		}
     }

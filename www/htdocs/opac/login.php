@@ -66,14 +66,14 @@ document.onkeypress =
 	}
 
 function UsuarioNoAutorizado(){
-	alert("<?php echo $msgstr["menu_noau"];?>")
+	alert("<?php echo $msgstr["front_menu_noau"];?>")
 }
 function Enviar(id){
 	login=Trim(document.administra.login.value)
 	password=Trim(document.administra.password.value)
 	if (login=="" || password=="")
 	{
-		alert("<?php echo $msgstr["datosidentificacion"];?>")
+		alert("<?php echo $msgstr["front_datosidentificacion"];?>")
 		return
 	}
 	else
@@ -160,7 +160,7 @@ include ("../$app_path/common/css_settings.php");
 
 			?>
 		</div>
-		<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding?></div>
+		<div class="userInfo" style="margin-left: 80%;"><?php echo $meta_encoding;?></div>
 
 		<div class="spacer">&#160;</div>
 	</header>
@@ -182,19 +182,19 @@ include ("../$app_path/common/css_settings.php");
 			<?php
 			if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 					echo "
-						<div class=\"helper alert\">".$msgstr["menu_noau"]."
+						<div class=\"helper alert\">".$msgstr["front_menu_noau"]."
 						</div>
 					";
 			}
 			if (isset($arrHttp["login"]) and $arrHttp["login"]=="P"){
 					echo "
-						<div class=\"helper alert\">".$msgstr["pswchanged"]."
+						<div class=\"helper alert\">".$msgstr["front_pswchanged"]."
 						</div>
 					";
 			}
 			?>
 		<div class="formRow">
-			<label for="user"><?php echo $msgstr["userid"]?></label>
+			<label for="user"><?php echo $msgstr["front_userid"]?></label>
 			<?php
 			if (isset($arrHttp["login"]) and $arrHttp["login"]=="N"){
 					echo "
@@ -206,12 +206,12 @@ include ("../$app_path/common/css_settings.php");
 			?>
 		</div>
 		<div class="formRow">
-			<label for="pwd"><?php echo $msgstr["password"]?></label>
+			<label for="pwd"><?php echo $msgstr["front_password"]?></label>
 			<input type="password" name="password" id="pwd" value="" class="textEntry superTextEntry" onfocus="this.className = 'textEntry superTextEntry textEntryFocus';" onblur="this.className = 'textEntry superTextEntry';" />
 		</div>
 		<div class="formRow">
 				<a href="javascript:Enviar('<?php echo $_GET["id"];?>')" class="bt bt-blue">
-					<?php echo $msgstr["entrar"]?> 
+					<?php echo $msgstr["front_entrar"]?> 
 				</a>
 		</div>	
 	</div>

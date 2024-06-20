@@ -1,17 +1,18 @@
 <?php
 //foreach ($_REQUEST AS $var=>$value) echo "$var=$value<br>";
+include("../central/config_opac.php");
 
 if (isset($_REQUEST["Opcion"])) $_REQUEST["Opcion_Original"]=$_REQUEST["Opcion"];
-include("../central/config_opac.php");
-include("leer_bases.php");
+
 
 $indice_alfa="N";
 $sidebar="N";
 
-$ActualDir=getcwd();
+
 
 include($Web_Dir."/head.php");
 chdir($CentralPath."circulation");
+
 $desde_opac="Y";
 $ecta_web="Y";
 
@@ -42,7 +43,7 @@ $_SESSION["DB_PATH"]=$db_path;
 $_SESSION["super_user"]="";
 
 if (!isset($_REQUEST["lang"]))
-	$_REQUEST["lang"]="es";
+	$_REQUEST["lang"]="en";
 $arrHttp["lang"]=$lang;
 $arrHttp["DB_PATH"]=$db_path;
 $_SESSION["lang"]=$lang;
@@ -56,7 +57,7 @@ $desde="ecta";
 <div id="prestamo">
 	<table class="table">
 		<td>
-			<h4><?php echo $msgstr["ecta"]?></h4><hr>
+			<h4><?php echo $msgstr["front_ecta"]?></h4><hr>
                 
 			<form name="ecta" onsubmit="return false">
 <?php
@@ -70,28 +71,32 @@ include("fecha_de_devolucion.php");
 // se leen las politicas de préstamo
 include("loanobjects_read.php");
 // se lee la configuración de la base de datos de usuarios
+
 include("borrowers_configure_read.php");
 $ec_output="";
+
+
+
 include("ec_include.php");
 //echo $ec_output;
 
 if (substr(trim($ec_output),0,2)=="**" or strlen($ec_output)<100){
-	if (isset($msgstr["iah_usuario_notfound"])){
+	if (isset($msgstr["front_iah_usuario_notfound"])){
 		echo "<p><strong>".$msgstr["iah_usuario_notfound"]."</strong></p>";
 	}else{
 	    echo "<p><strong>User not found</strong></p>";
 	}
 }else{
 	echo $ec_output;
-	if (isset($WEBRENOVATION) and $WEBRENOVATION=="Y"){
+	if (isset($WebRenovation) and $WebRenovation=="Y"){
 		if (count($prestamos)>0) {
-			echo  "<input class='btn btn-success' type=submit value=\"".$msgstr["renew"]."\" onclick=Renovar() id=renovar>";
-			if (isset($msgstr["iah_usuario_msgecta"])) echo "<p>".$msgstr["iah_usuario_msgecta"]."</p>";
+			echo  "<input class='btn btn-success' type=submit value=\"".$msgstr["front_renew"]."\" onclick=Renovar() id=renovar>";
+			if (isset($msgstr["front_iah_usuario_msgecta"])) echo "<p>".$msgstr["front_iah_usuario_msgecta"]."</p>";
 		}
 	}
 	//SE LEEN LAS RESERVAS PENDIENTES
 	$desde_opac="Y";
-	if (isset($WEBRESERVATION) and $WEBRESERVATION=="Y" ){
+	if (isset($WebReservation) and $WebReservation=="Y" ){
 		include("../reserve/reserves_read.php");
 		$reservas_activas=0;
 		$cuenta=0;
@@ -99,7 +104,7 @@ if (substr(trim($ec_output),0,2)=="**" or strlen($ec_output)<100){
 		$reserves_user=$reserves_arr[0];
 		echo $reserves_user;
 		if ($reserves_user!=""){
-			echo "<p>".$msgstr["iah_reserve_msg"];
+			echo "<p>".$msgstr["front_iah_reserve_msg"];
 		}
 	}
 	//if (isset($msgstr["opac_ecta"]))  echo "<br>".$msgstr["opac_ecta"]."<br>";
@@ -152,7 +157,7 @@ if (isset($arrHttp["error"])){
 
 <?php
 chdir($Web_Dir);
-include($Web_Dir."/components/footer.php");
+include($Web_Dir."/views/footer.php");
 ?>
 
 <script>
@@ -188,29 +193,29 @@ function Renovar() {
 	if (marca=="S"){
 		p=politica.split('|')
 		if (p[6]=="0"){     // the object does not accept renovations
-			alert("<?php echo $msgstr["noitrenew"] ?>")
+			alert("<?php echo $msgstr["front_noitrenew"] ?>")
 			return
 		}
 		if (atraso!=0){
 			if (p[13]!="Y"){
-				alert("<?php echo $msgstr["loanoverdued"]?>")
+				alert("<?php echo $msgstr["front_loanoverdued"]?>")
 				return
 			}
 		}
 		if (Trim(p[15])!=""){
 			if (fecha_d>p[15]){
-				alert("<?php echo $msgstr["limituserdate"]?>"+": "+p[15])
+				alert("<?php echo $msgstr["front_limituserdate"]?>"+": "+p[15])
 				return
 			}
 		}
 		if (Trim(p[16])!=""){
 			if (fecha_d>p[16]){
-				alert("<?php echo $msgstr["limitobjectdate"]?>"+": "+p[16])
+				alert("<?php echo $msgstr["front_limitobjectdate"]?>"+": "+p[16])
 				return
 			}
 		}
 		if (nMultas!=0){
-			alert("**<?php echo $msgstr["norenew"]?>")
+			alert("**<?php echo $msgstr["front_norenew"]?>")
 			return
 		}
 		document.renovar.submit()
@@ -222,7 +227,7 @@ function Renovar() {
 		enlace.href="javascript:void(0)"
 
 	}else{
-		alert("<?php echo $msgstr["markloan"]?>")
+		alert("<?php echo $msgstr["front_markloan"]?>")
 	}
 }
 </script>

@@ -1,15 +1,22 @@
 <?php
-include ("tope_config.php");
+include ("conf_opac_top.php");
 $wiki_help="OPAC-ABCD_configuraci%C3%B3n_avanzada#Extracci.C3.B3n_de_claves_para_presentar_el_.C3.ADndice";
 include "../../common/inc_div-helper.php";
-
 ?>
+
+<script>
+var idPage="db_configuration";
+</script>
+
 
 <div class="middle form row m-0">
 	<div class="formContent col-2 m-2">
-			<?php include("menu_bar.php");?>
+			<?php include("conf_opac_menu.php");?>
 	</div>
 	<div class="formContent col-9 m-2">
+
+	<?php include("menu_dbbar.php");  ?>
+
 	<h3><?php echo $msgstr["aut_opac"];?></h3>
 
 <?php
@@ -173,7 +180,7 @@ global $msgstr,$db_path;
 		echo $value;
 	}
 	echo "</textarea>";
-	echo  "<div><input type=submit value=\"".$msgstr["save"]." ".$iD."/pfts/autoridades_opac.pft\" style=\"font-size:15px;\"></div>";;
+	echo  "<div><input type=submit value=\"".$msgstr["save"]." ".$iD."/pfts/autoridades_opac.pft\" class=\"bt-green\"></div>";;
 	echo "</form>";
 
 	echo "</div>";
