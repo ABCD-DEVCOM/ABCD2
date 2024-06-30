@@ -1,9 +1,10 @@
 <?php
+/* Modifications
+20240624 fho4abcd Exit at end of script, improve html, timeout from 1->2 seconds
+*/
 error_reporting(0);
 session_start();
-if (isset($_SESSION["lang"]))
-global $server_url;
-include("../config.php");
+include("../config.php");// sets server_url
 include("get_post.php");
 
 include("../lang/admin.php");
@@ -25,11 +26,12 @@ echo "<br><br><dd><h1>".$msgstr["sessionexpired"]."</h1>";
 <script type="text/javascript">
 	setTimeout(function(){
             top.location.href = '<?php echo $server_url ?>';
-         }, 1000);
+         }, 2000);
 </script>
 
 </div>
 </div>
-<?php include("footer.php")?>
-</body>
-</html>
+<?php
+include("footer.php");
+exit();
+?>

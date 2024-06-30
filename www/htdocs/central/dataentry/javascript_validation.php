@@ -1,9 +1,11 @@
 <?php
 /*
 2022014 fho4abcd Removed extended iso characters from comments
+20240625 fho4abcd Add missing script tag. Translate one more error. Error for select only if required and nothing selected
 */
     //SE CONSTRUYE EL FORMATO DE VALIDACION
-    echo "<script>\n" ;
+?><script>
+<?php
 	echo "var fdt_val= new Array()\n";
     $ix=-1;
 	for ($ivars=0;$ivars<count($vars);$ivars++){
@@ -115,8 +117,8 @@ function ValidarEntrada(Ctrl,tipo,patron,nombre_c,obligatorio){
 			break
 		case "select-one":
 		case "select-multiple":
-			if (Ctrl.selectedIndex==-1 || Ctrl.selectedIndex==0)
-				mens=nombre_c+" ("+t[1]+") "+" debe seleccionar una opcion\n"
+			if (obligatorio==1 && (Ctrl.selectedIndex==-1 || Ctrl.selectedIndex==0))
+				mens=nombre_c+" ("+t[1]+") "+" <?php echo $msgstr['seloption'];?>"
 			break
 		case "radio":
 		case "checkbox":
@@ -149,7 +151,7 @@ function ValidarCampos_FDT(){               //SE REVISA LOS CAMPOS QUE TIENEN VA
 				Ctrl=document.getElementById(obj)
 				if (tipocampo=="D" || tipocampo=="ISO")
 					obj=obj+"_c"
-                Ctrl=document.getElementById(obj)
+                Ctrl=document.getElementById(obj);
 				msg=ValidarEntrada(Ctrl,tipo,patron,nombre_c,obligatorio)
 				if (msg!="")
 					result=result+msg+"\n"
