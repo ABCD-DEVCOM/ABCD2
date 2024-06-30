@@ -352,6 +352,7 @@ seleliminar=Please display the record to be deleted
 selfile=Select file
 selmod=You must select a record using the arrows or the input box [go to]
 selmultiple=Use the Ctrl or Shift keys to select more than one term.
+seloption=Please select an option
 sendto=send to
 sessionexpired=Session expired or you are not logged in
 show=Show

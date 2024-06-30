@@ -59,7 +59,7 @@ include "css_settings.php";
         } else {
             $text2 = "TEXT2";
         }
-		$versioninfo=$msgstr["version"].": v2.2.0-beta-1 + ... &rarr; 2024-05-19";
+		$versioninfo=$msgstr["version"].": v2.2.0-beta-1 + ... &rarr; 2024-06-30";
 ?>
         <span><small><a href="http://www.abcdwiki.net/" target="_blank">Wiki</a>  - <?php echo $versioninfo?> </small></span>
     </div>

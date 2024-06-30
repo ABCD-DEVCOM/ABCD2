@@ -33,7 +33,7 @@ include("../common/institutional_info.php");
 ?>
 <div class="sectionInfo">
     <div class="breadcrumb">
-    <?php echo $msgstr["dblist"] ?>
+    <?php echo $msgstr["editar"].": ".$archivo ?>
     </div>
     <div class="actions">
 		<?php
