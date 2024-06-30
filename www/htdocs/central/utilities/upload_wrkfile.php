@@ -5,6 +5,7 @@
 20211215 fho4abcd Backbutton by included file
 20211216 fho4abcd Backbutton by included file improved
 20220201 fho4abcd Repair upload, translate strings, new style buttons, improve back
+20240626 fho4abcd Caller can specify other folder as "wrk". Default remains "wrk"
 */
 /*
 ** Upload a file from the users environment into the working area of the ABCD base
@@ -23,6 +24,7 @@ $lang=$_SESSION["lang"];
 include("../lang/admin.php");
 include("../lang/dbadmin.php");
 include("../lang/soporte.php");
+//foreach ($arrHttp as $var=>$value) echo "$var=".htmlspecialchars($value)."<br>";//die;
 // ==================================================================================================
 // INICIO DEL PROGRAMA
 // ==================================================================================================
@@ -39,6 +41,8 @@ if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["uplwrk_cnfcnt"])) $uplwrk_cnfcnt=$arrHttp["uplwrk_cnfcnt"];
 if ( !isset($arrHttp["base"])) $arrHttp["base"]=""; // In case of upload errors destroying this option
 $wrk="wrk";
+if ( isset($arrHttp["storein"])) $wrk=$arrHttp["storein"];
+
 $wrkfull=$db_path.$wrk;
 $OK=" &rarr; OK";
 $NOT_OK=" &rarr; <b><font color=red>NOT OK</font></b>";
@@ -103,8 +107,10 @@ if ($uplwrk_cnfcnt<=0) {  /* - First screen: Select the iso file -*/
 ?>
     <form name=uplwrk_continuar action='../utilities/upload_wrkfile.php' method=POST enctype='multipart/form-data'>
     <?php
-            if (isset($arrHttp["backtoscript_org"]))
-                echo "<input type=hidden name=backtoscript_org value='".$arrHttp["backtoscript_org"]."' >";
+	if (isset($arrHttp["backtoscript_org"]))
+		echo "<input type=hidden name=backtoscript_org value='".$arrHttp["backtoscript_org"]."' >";
+	if ( isset($arrHttp["storein"]))
+		echo "<input type=hidden name=storein value='".$arrHttp["storein"]."' >";
     ?>
     <input type=hidden name=base value='<?php echo $arrHttp["base"];?>'>
     <input type=hidden name=uplwrk_cnfcnt value=''>

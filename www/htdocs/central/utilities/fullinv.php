@@ -27,6 +27,7 @@
 20220620 fho4abcd Accept charset=utf-8
 20220711 fho4abcd Use $actparfolder as location for .par files
 20220127 fho4abcd Improve gizmo help text
+20240626 fho4abcd Check line endings isisuc.tab, add gizmo support, improve output
 */
 /**
  * @desc:      Create database index
@@ -65,6 +66,7 @@ include("../lang/admin.php");
 include("../lang/soporte.php");
 include("../lang/dbadmin.php");
 include("../lang/importdoc.php");
+//foreach ($arrHttp as $var=>$value) echo "$var=".htmlspecialchars($value)."<br>";//die;
 /*
 ** Old code might not send specific info.
 ** Set defaults for the return script and frame info
@@ -76,7 +78,7 @@ if ( isset($arrHttp["backtoscript"])) $backtoscript=$arrHttp["backtoscript"];
 if ( isset($arrHttp["inframe"]))      $inframe=$arrHttp["inframe"];
 if ( isset($arrHttp["fstfile"]))      $presetfstfile=$arrHttp["fstfile"];
 ?>
-<body onunload=win.close()>
+<body>
 <script src=../dataentry/js/lr_trim.js></script>
 <script>
 function OpenWindow(){
@@ -196,8 +198,22 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         </td>
         <td><font color=blue><?php echo $msgstr["sourceis"]." FDT";?></font></td>
     </tr>
-    <?php } ?>
-
+    <?php }
+	include("inc_select_gizmo.php");
+	count_gizmo($numgizmos);
+	// It is possible to have 16 gizmos for mx
+	if ($numgizmos>16) $numgizmos=16;
+	
+	?><input type=hidden name=numgizmos value=<?php echo $numgizmos;?>>
+	<?php
+	for($i=1; $i<=$numgizmos; $i++) {
+		?>
+		<tr><td><?php echo $msgstr["gizmoapply"];?></td>
+			<td><?php select_gizmo($i);?></td>
+		</tr>
+		<?php
+	}
+	?>
     <tr><td colspan=3><hr></td></tr>
     <tr><td></td>
         <td><input type='submit' value='<?php echo $msgstr["ejecutar"];?>' title='<?php echo $msgstr["cg_execute"];?>'></td>
@@ -231,6 +247,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     */
     $fullciparpath=$db_path.$actparfolder.$arrHttp["base"].".par";
     if (file_exists($fullciparpath)){
+		echo "<div style=color:blue>".$msgstr["checking"]." ".$actparfolder.$arrHttp["base"].".par"."</div>";
         $def_cipar = parse_ini_file($fullciparpath);
         /*
         ** Get parameters $actab and $uctab and $stw from the .par file.
@@ -263,6 +280,9 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     /*
     ** If actab/uctab/stw still empty try the default file in bases/data
     */
+	if ($actab=="" || $uctab=="" || $stw=="") {
+		echo "<div style=color:blue>".$msgstr["checking"]." ".$arrHttp["base"]."/data/*"."</div>";
+	}
     if ($actab=="") {
         $actab=$db_path.$base."/data/".$actabdeffile;
         if (!is_readable($actab) ) {
@@ -287,6 +307,9 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     /*
     ** If actab/uctab still empty try the default file in bases
     */
+	if ($actab=="" || $uctab=="" ) {
+		echo "<div style=color:blue>".$msgstr["checking"]." ".$db_path."</div>";
+	}
     if ($actab=="") {
         $actab=$db_path.$actabdeffile;
         if (!is_readable($actab) ) {
@@ -301,14 +324,28 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
             $uctab="";
         }
     }
+	echo "<br>";
     /*
     ** If actab/uctab still empty set ansi
     */
     if ($actab=="") $actab="ansi";
     if ($uctab=="") $uctab="ansi";
-
+	/*
+	** Process the gizmo entries (if any)
+	*/
+	$numgizmos=$arrHttp["numgizmos"];
+	$gizmostr="";
+	$gizmoparameter="";
+	for ($i=1;$i<=$numgizmos;$i++){
+		if (isset($arrHttp["gizmo".$i])){
+			$gizmostr=$gizmostr." gizmo=".$db_path.$base."/data/".$arrHttp["gizmo".$i];
+			if($gizmoparameter!="") $gizmoparameter.="<br>";
+			$gizmoparameter.=$db_path.$base."/data/".$arrHttp["gizmo".$i];
+		}
+	}
+	$gizmostr=$gizmostr." ";
     /*
-    ** Determine if the gizmo is required
+    ** Determine if the htmlgizmo is required
     */
     $gizmorequired=0;
     if ( $htmlfiletag!="") $gizmorequired=1;
@@ -317,11 +354,12 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
         if (isset($_POST[$tag]) AND strlen($_POST[$tag])>0 ) $gizmorequired=1;
     }
     /*
-    ** Process the entry for the gizmo
+    ** Process the entry for the htmlgizmo
     */
     $htmlgizmopar="";
+	$htmlgizmoerr="";
     if ( $gizmorequired==1) {
-        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;".$msgstr["examplefor"].": ";
+        $htmlgizmoexample ="<br><span style='color:blue'>&nbsp;&nbsp;&nbsp;&nbsp;".$msgstr["examplefor"].": ";
         $htmlgizmoexample.=$actparfolder.$base.".par &rArr;&nbsp;htmlgizmo.*=";
         $htmlgizmoexample.=$db_path.$base."/data/htmlgizmo.*</span>";
         if (isset($def_cipar["htmlgizmo.*"])) {
@@ -330,33 +368,34 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
             // Check that %path_database% is not used
             $htmlgizmopar1=str_replace("%path_database%",$db_path,$htmlgizmopar);
             if ($htmlgizmopar1!=$def_cipar["htmlgizmo.*"]) {
-                $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmofp"]."</span>";
-                $htmlgizmopar.=$htmlgizmoexample;
+                $htmlgizmoerr="<span style='color:red'>".$msgstr["error_gizmofp"]."</span>";
+                $htmlgizmoerr.=$htmlgizmoexample;
             }
             // Check that the gizmo mst exists
             else {
                 $htmlgizmomst=str_replace(".*",".mst",$htmlgizmopar,$count);
                 if ($count==0 OR !file_exists($htmlgizmomst) ) {
-                    $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmodb"]."</span>";
-                    $htmlgizmopar.=$htmlgizmoexample;
+                    $htmlgizmoerr="<span style='color:red'>".$msgstr["error_gizmodb"]."</span>";
+                    $htmlgizmoerr.=$htmlgizmoexample;
                 }
             }
         } else {
             // The .par does not exist or has no gizmo entry
-            $htmlgizmopar="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path.$actparfolder.$base.".par</span>";
-            $htmlgizmopar.=$htmlgizmoexample;
+            $htmlgizmoerr="<span style='color:red'>".$msgstr["error_gizmospec"]." ".$db_path.$actparfolder.$base.".par</span>";
+            $htmlgizmoerr.=$htmlgizmoexample;
         }
     }
-    $parameters= "<br>";
-    $parameters.= $msgstr["database"]." : ".$bd."/data/".$base."<br>";
-    if ($htmlgizmopar!="") $parameters.= "htmlgizmo: $htmlgizmopar<br>";
-    $parameters.= "fst&nbsp;&nbsp;: @".$bd."/data/".$base.".fst<br>";
-    if ($stw  !="") $parameters.= "stw&nbsp;&nbsp;: @$stw<br>";
-    if ($actab!="") $parameters.= "actab: $actab<br>";
-    if ($uctab!="") $parameters.= "uctab: $uctab<br>";
-    $parameters.= "mx&nbsp;&nbsp;&nbsp;: $mx_path<br>";
-    $parameters.= " &nbsp; ".$testbutton;
-    $parameters.= " &nbsp; ".$showbutton."<br>";
+	if ($htmlgizmoerr!="") {
+		echo "<div>".$htmlgizmoerr."</div>";
+	}
+    $parameters= "\n<table style=' margin-left:auto;margin-right:auto;'>";
+    $parameters.= "<tr><td>".$msgstr["database"]."</td><td>: </td><td>".$bd."/data/".$base."</td>";
+    $parameters.= "<tr><td>"."fst"."</td><td>: </td><td>@".$bd."/data/".$base.".fst</td>";
+    if ($stw  !="") $parameters.= "<tr><td>"."stw"."</td><td>: </td><td>@".$stw."</td>";
+    if ($actab!="") $parameters.= "<tr><td>"."actab"."</td><td>: </td><td>".$actab."</td>";
+    if ($uctab!="") $parameters.= "<tr><td>"."uctab"."</td><td>: </td><td>".$uctab."</td>";
+	if ($gizmoparameter!="") $parameters.= "<tr><td>"."gizmo"."</td><td>: </td><td>".$gizmoparameter."</td>";
+    if ($htmlgizmopar!="") $parameters.= "<tr><td>"."htmlgizmo"."</td><td>: </td><td>".$htmlgizmopar."</td>";
 
     /*
     ** Process slashm parameter for omitting positions in postings
@@ -397,7 +436,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     if ($htmlfiletag!="") {
         // The extra quotes surrounding the procs are required for the linux version
         $strip_var.='"'."proc='Gload/9876='replace(v".$htmlfiletag.",'/docs/','$db_path')".'"';
-        $parameters.=$msgstr["load_htmldata"]." ".$htmlfiletag." &rarr; 9876<br>";
+        $parameters.="<tr><td>".$msgstr["load_htmldata"]."</td><td>: </td><td>".$htmlfiletag." &rarr; 9876</td>";
         $fullfst=$bd."/data/".$fst;
         $fstcontent=file_get_contents($fullfst);
         if ( stripos($fstcontent,"v9876") === false) {
@@ -412,14 +451,14 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     // Digital documents
     if (isset($_POST[$htmlfiletag]) AND strlen($_POST[$htmlfiletag])>0 ) {
         $strip_var.=" \"proc='Ghtmlgizmo,9876'\"";
-        $parameters.=$msgstr["striphtml"].": 9876<br>";
+        $parameters.="<tr><td>".$msgstr["striphtml"]."</td><td>: </td><td>9876</td>";
     }
     // The fields from the FDT are processed with their own tag
     for ($i=0;$i<count($htmlTags);$i++){
         $tag=$htmlTags[$i];
         if (isset($_POST[$tag]) AND strlen($_POST[$tag])>0 ) {
             $strip_var.=" \"proc='Ghtmlgizmo,".$tag."'\"";
-            $parameters.=$msgstr["striphtml"].": ".$tag."<br>";
+            $parameters.="<tr><td>".$msgstr["striphtml"]."</td><td>: </td><td>".$tag."</td>";
         }
     }
     // Check that the lineends fit with the current OS (mx requirement for stw files)
@@ -427,7 +466,18 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     if ( $stw!="" ) {
         $result=check_line_end($stw);
     }
-    echo "<br>";
+    // Check that the lineends fit with the current OS (mx requirement for ansi i files)
+    if ( $uctab!="" && $uctab!="ansi" && $unicode!="utf8") {
+        $result=check_line_end($uctab);
+    }
+	/*
+	** finish parameters list
+	*/
+	$parameters.= "<tr><td>"."mx"."</td><td>: </td><td>".$mx_path."</td>";
+    $parameters.= "<tr><td></td><td></td><td>".$testbutton;
+    $parameters.= " &nbsp; ".$showbutton."</td>";
+	$parameters.="</table>";
+
     /*
     ** Create command for mx.
     ** Note that mx may extract uctab/actab from cipar:
@@ -438,6 +488,7 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     $strINV.=" cipar=".$fullciparpath;
     $strINV.=" db=".$bd."/data/".$base;
     $strINV.=" fst=@".$bd."/data/".$fst;
+	$strINV.=$gizmostr;
     $strINV.=" ".$strip_var;
     if ($actab!="ansi") $strINV.=" actab=".$actab;
     if ($uctab!="ansi") $strINV.=" uctab=".$uctab;
@@ -446,10 +497,10 @@ if(!isset($fst)) { // The form sets the fst: the first action of this php
     // Show the execution parameters
     //echo "<font face=courier size=2>".$parameters."<br>".$msgstr["commandline"].": $strINV<br></font><hr>";
     ?>
-    <font face=courier size=2><?php echo $parameters?><br>
+    <font face=courier size=2><?php echo $parameters?>
           <?php echo $msgstr["commandline"]?>: <?php echo $strINV?><br></font>
     <hr>
-    <span id="working" style="color:red"><b>.... <?php echo $msgstr["system_working"]?> ....</span>
+    <span id="working" style="color:red"><b>.... <?php echo $msgstr["system_working"]?> ....</b></span>
     <?php
     ob_flush();flush();
 

@@ -12,6 +12,7 @@
 20210802 fho4abcd Make Show file work the first time
 20211214 fho4abcd Backbutton by included file
 20221216 fho4abcd Add button to import marc leader information
+20240630 fho4abcd Add option to add gizmo's for the import process
 */
 global $arrHttp;
 set_time_limit(0);
@@ -137,26 +138,57 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
         }
         ?>
         <table cellspacing=5 align=center>
-          <tr> <th colspan=3>
-              <?php echo $msgstr["adjustparms"];?>
-              </th>
-          </tr><tr>
-              <td><?php echo $msgstr["deldb"]?></td>
-              <td><input type=checkbox name=delrec></td>
-              <td><font color=blue><?php echo $msgstr["unch_append"]?></font></td>
-          </tr><tr>
-              <td><?php echo $msgstr["useimportisotag"]?></td>
-              <td><input type=checkbox name=importisotag></td>
-              <td><font color=blue><?php echo $msgstr["unch_noleaderimport"]?></font></td>
-          </tr><tr>
-              <td></td><td><input type=button value='START' onclick=Confirmar()></td><td></td>
-         </tr>       
-        </table>
+			<tr> <th colspan=3>
+			  <?php echo $msgstr["adjustparms"];?>
+			  </th>
+			</tr><tr>
+			  <td><?php echo $msgstr["deldb"]?></td>
+			  <td><input type=checkbox name=delrec></td>
+			  <td><font color=blue><?php echo $msgstr["unch_append"]?></font></td>
+			</tr><tr>
+			  <td><?php echo $msgstr["useimportisotag"]?></td>
+			  <td><input type=checkbox name=importisotag></td>
+			  <td><font color=blue><?php echo $msgstr["unch_noleaderimport"]?></font></td>
+			</tr> 
+				<?php
+				include("inc_select_gizmo.php");
+				count_gizmo($numgizmos);
+				// It is possible to have 16 gizmos for mx
+				if ($numgizmos>16) $numgizmos=16;
+				
+				?><input type=hidden name=numgizmos value=<?php echo $numgizmos;?>>
+				<?php
+				for($i=1; $i<=$numgizmos; $i++) {
+					?>
+					<tr><td><?php echo $msgstr["gizmoapply"];?></td>
+						<td><?php select_gizmo($i);?></td>
+					</tr>
+					<?php
+				}
+				?>
+			</tr><td colspan=3><hr></td>
+			</tr><tr>
+				<td></td><td><input type=button value='START' onclick=Confirmar()></td><td></td>
+       </table>
     </form>
     <?php
 } else if ($confirmcount>1){  /* - Last screen: execution and result -*/
     $file_label=$msgstr["archivo"].": ";
     $file_value=$isofile;
+	/*
+	** Process the gizmo entries (if any)
+	*/
+	$numgizmos=$arrHttp["numgizmos"];
+	$gizmostr="";
+	$gizmoparameter="";
+	for ($i=1;$i<=$numgizmos;$i++){
+		if (isset($arrHttp["gizmo".$i])){
+			$gizmostr=$gizmostr." gizmo=".$db_path.$base."/data/".$arrHttp["gizmo".$i];
+			if($gizmoparameter!="") $gizmoparameter.="<br>";
+			$gizmoparameter.=$db_path.$base."/data/".$arrHttp["gizmo".$i];
+		}
+	}
+	$gizmostr=$gizmostr." ";
     ?>
     <table  cellspacing=5>
         <tr>
@@ -167,6 +199,9 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
         </tr>
         <tr>
             <td><?php echo $file_label;?></td><td><?php echo $file_value;?></td>
+        </tr>
+        <tr>
+            <td>gizmo:</td><td><?php echo $gizmoparameter;?></td>
         </tr>
     </table><hr>
     <?php
@@ -181,7 +216,7 @@ if ($confirmcount==1) {  /* - Second screen: Present a menu with parameters -*/
     else
         $importisotag="";
 
-    $strINV=$mx_path." iso=$fullisoname $accion=".$db_path.$base."/data/".$base." $importisotag  -all now 2>&1";
+    $strINV=$mx_path." iso=".$fullisoname." ".$accion."=".$db_path.$base."/data/".$base." ".$importisotag."  ".$gizmostr."-all now 2>&1";
     exec($strINV, $output,$status);
     $straux="";
     for($i=0;$i<count($output);$i++){
