@@ -1,27 +1,27 @@
-act|Ator
+act|Actor
 adp|Adaptador
-aft|Autor do postface, cólofon
+aft|Autor del postfacio, colofón
 ann|Anotador
-ant|Antecedentes Bibliográficos
-app|Requerente
-aqt|Autor de citações ou resumos
-arc|Arquiteto
+ant|Antecedente bibliográfico
+app|Aspirante
+aqt|Autor de citas o resúmenes
+arc|Arquitecto
 arr|Arranjador
 art|Artista
-asg|Proxy
-asn|Nome do associado
-att|Nome atribuído
-auc|Leiloeiro
-aui|Autor da introdução
-aus|Autor da animação da tela, etc.
+asg|Apoderado
+asn|Nombre asociado
+att|Nombre atribuído
+auc|Subastador
+aui|Autor de la introducción
+aus|Autor de la animación de pantalla, etc.
 aut|Autor
-bdd|Designer de encadernação
-bjd|Designer da capa do livro
-bkd|Desenhista de livros
-bkp|Produtor de livros
-bnd|Encadernador de livros
-bpd|Ex-desenhista da libris
-bsl|Livraria
+bdd|Diseñador de encuadernación
+bjd|Diseñador de la cubierta del libro
+bkd|Diseñador del libro
+bkp|Productor del libro
+bnd|Encuadernador
+bpd|Diseñador del ex libris
+bsl|Librero
 ccp|Autor intelectual
 chr|Coreógrafo
 clb|Colaborador
@@ -30,132 +30,132 @@ cll|Calígrafo
 clt|Clotipiador
 cmm|Comentador
 cmp|Compositor
-cmt|Compositor
-cnd|Maestro
+cmt|Componedor
+cnd|Conductor
 cns|Censor
-coe|Plaintiff-appellee
-col|Coletor
+coe|Demandante-apelado
+col|Coleccionista
 com|Compilador
-cos|Autor
-cot|Recorrente da petição
-cpc|Direitos Autorais Autorais
-cpe|Recorrente da petição
-cph|Detentor dos direitos autorais
-cpl|Reclamante
-cpt|Reclamante-apelente
-cre|Criador
-crp|Correspondente
-crr|Revisor
+cos|Demandante
+cot|Demandante-apelante
+cpc|Demandante del copyright
+cpe|Querellante-apelado
+cph|Titular del copyright
+cpl|Querellante
+cpt|Querellante-apelante
+cre|Creador
+crp|Correspondiente
+crr|Corrector
 csl|Consultor
-cst|Designer de figurino, designer de guarda-roupa
-ctb|Contribuinte
-cte|Recorrente do conteúdo
+cst|Diseñador de trajes, vestuario
+ctb|Contribuyente
+cte|Contendido-apelado
 ctg|Cartógrafo
-ctr|Empreiteiro
-cts|Respondente
-cur|Curadoria
+ctr|Contratista
+cts|Contestado
+cur|Curador
 dfd|Defensor
-dfe|Defender-appellee
-dft|Defensor-apelente
-dis|Palestrante
-dln|Desenhista, desenhista
-dnc|Dançarino
-dnr|Doador
-dpt|Depositário
-drm|Autor
-drt|Diretor
-dsr|Designer
+dfe|Defensor-apelado
+dft|Defensor-apelante
+dis|Disertante
+dln|Delineador, dibujante
+dnc|Bailarín
+dnr|Donante
+dpt|Depositante
+drm|Dibujante
+drt|Director
+dsr|Diseñador
 dst|Distribuidor
-dte|Dedicador
+dte|Dedicado
 dto|Dedicador
-dub|Autor duvidoso
-edt|Editora
-egr|Engraver
-elt|Eletrotipista
-eng|Engenheiro
-etr|Gravador de água dura
-exp|Especialista
+dub|Autor dudoso
+edt|Editor
+egr|Grabador
+elt|Electrotipeador
+eng|Ingeniero
+etr|Grabador al agua fuerte
+exp|Experto
 fac|Facsimilador
-flm|Editor de filmes
-fmo|Proprietário anterior
+flm|Editor de la película
+fmo|Propietario anterior
 fnd|Fundador
-frg|Cineasta
+frg|Forjador
 grt|Técnico gráfico
-hnr|Homenageado
-hst|Anfitrião
+hnr|Honrado
+hst|Anfitrión
 ill|Ilustrador
 ilu|Iluminador
-ins|Marcador
+ins|Rotulador
 inv|Inventor
 itr|Instrumentalista
 ive|Entrevistado
 ivr|Entrevistador
-lbt|Librettist
-lee|Defamed-appellee
+lbt|Libretista
+lee|Difamado-apelado
 lel|Difamado
-len|Fornecedor
-let|Difamado - reclamante
-lie|Defamer-apelente
+len|Prestador
+let|Difamado-apelante
+lie|Difamador-apelado
 lil|Difamador
-lit|Defamer-apelente
-lsa|Arquiteto Paisagista
-lse|Licenciado
-lso|Licenciador
-ltg|Litógrafa
-lyr|Autor da letra de uma canção
-mdc|Contato Metadados
+lit|Difamador-apelante
+lsa|Arquitecto del paisaje
+lse|Beneficiario de la licencia
+lso|Otorgador de licencia
+ltg|Litógrafo
+lyr|Autor de la letra de una canción
+mdc|Contacto de metadatos
 mod|Moderador
 mon|Monitor
-mte|Gravador de latão
+mte|Grabador de metales
 mus|Músico
 nrt|Narrador
-org|Criador
-oth|Outros
-own|Proprietário
-pat|Patrono
-pbd|Diretor de publicação
-pbl|Editora
-pfr|Revisor
+org|Creador
+oth|Otro
+own|Propietario
+pat|Patrón
+pbd|Director de publicación
+pbl|Publicador
+pfr|Corrector de prueba
 pht|Fotógrafo
-plt|Produtor de placas
-pop|Impressora de placas
+plt|Productor de planchas
+pop|Impresor de planchas
 ppm|Fabricante de papel
-prc|Contato do processo
-prd|Pessoal de produção
-prf|Executante
+prc|Contacto de proceso
+prd|Personal de producción
+prf|Ejecutante
 prg|Programador
-pro|Produtor
-prt|Impressora
-pte|Plaintiff-appellee
-ptf|Autor
-pth|Titular da patente
-ptt|Requerente-Apelante
-rbr|Registrado
-rce|Engenheiro de Gravação
-rcp|Destinatário
-red|Editor
-ren|Desenhista de renderização
+pro|Productor
+prt|Impresor
+pte|Demandante-apelado
+ptf|Demandante
+pth|Titular de la patente
+ptt|Demandante-apelante
+rbr|Rubricador
+rce|Ingeniero de grabación
+rcp|Destinatario
+red|Redactor
+ren|Dibujante del rendering
 rev|Revisor
-rse|Respondent-appellee
-rsp|Respondente
-rst|Respondente-atacante
+rse|Demandado-apelado
+rsp|Demandado
+rst|Demandado-apelante
 sad|Consultor científico
-sce|Animador de tela
+sce|Animador de pantalla
 scl|Escultor
-scr|Escreva para
-sec|Secretário
-sgn|Assinante
-sng|Cantor
+scr|Escriba
+sec|Secretaria
+sgn|Firmante
+sng|Cantante
 spk|Orador
-spn|Patrocinador
-srv|Topógrafa
-str|Estereotípico
-ths|Consultor de tese
-trc|Transcriber
-trl|Tradutora
-tyd|Tipo Designer
+spn|Sponsor
+srv|Agrimensor
+str|Estereotipador
+ths|Consultor de tesis
+trc|Transcriptor
+trl|Traductor
+tyd|Diseñador de tipos de letras
 tyg|Tipógrafo
 voc|Vocalista
-wam|Escritor do material de acompanhamento
-wde|Gravador de madeira, cortador de madeira
-wit|Testemunha
+wam|Escritor del material acompañante
+wde|Grabador de madera, cortador de madera
+wit|Testigo
