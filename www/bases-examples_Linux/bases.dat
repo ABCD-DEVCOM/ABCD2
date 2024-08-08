@@ -1,8 +1,8 @@
 marc|MARC|Y
+rda|MARC for RDA (Resource Description & Access)|Y
 marcuni|MARC-UTF8|Y
-dubcore|DublinCore Repository
 isadg|ISAD(G): International Standard Archival Description
-rda|RDA: Resource Description & Access|Y
+dubcore|DublinCore Repository
 agrovoc|Agrovoc Thesaurus
 biblo|Cepal|Y
 dcdspace|dSpace Bridge

@@ -1,3 +1,5 @@
-000|O tempo de execução excede três caracteres
-001-999| Tempo de funcionamento
-nnn|Não aplicável
+000|Tempo de execução excede três dígitos 	
+   |001-999 – Tempo de execução 	
+---|Tempo de execução desconhecido 	
+nnn|Não aplicável 	
+   |Não se tentou codificar	

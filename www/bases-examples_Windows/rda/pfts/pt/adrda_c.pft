@@ -1,6 +1,6 @@
 '<table width=90% border=0>
 <td class=textbody03 colspan=3>
-    <td><a href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=pt&base=MARC"<b>formulário livre</b><IMG src="/central/images/icon/search.png" border=0 alt="Pesquisa"></a><br><br>
+    <td><a href="/cgi-bin/wxis.exe/iah/scripts/?IsisScript=iah.xis&lang=pt&base=RDA"<b>Formulário livre</b></a><br><br>
     <font face=verdana size=-2><b>Registro: ',f(mfn,1,0)'</a>',"    ("v1001" / "v1002")" ' - Nº de controle: ',v1,' - '
 if v3006:'a' and v3007:'m' then
    'Tipo de material: Livro'
@@ -100,7 +100,6 @@ fi,/
 if p(v440) then 
    '<br>      ',v440^a,
 fi,
-"<br align=justify>      "d502,(v502^a," ("v502^b")"," .-- "v502^c,", "v502^e,", "v502^h),
 
 if p(v773) or p(v300) then 
   '<br>      '

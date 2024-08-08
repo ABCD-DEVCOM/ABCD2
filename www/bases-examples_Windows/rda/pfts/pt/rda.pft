@@ -1,5 +1,5 @@
 '<table width=90% border=0>'
-'<td width=10><a href=javascript:LeerRegistro('f(Mfn,1,0)')><img src=../img/i_editar.gif border=0 alt="modificar este registro"></a></td>'/
+'<td width=10></td>'/
 '<td class=textbody03 colspan=3 >'
 '<font face=verdana color=red size=-1><b>Registro: ',f(mfn,1,0)'</a>',"&nbsp; &nbsp; ("v1001" / "v1002")" '</b></td>'/
 '<tr>'/
@@ -129,14 +129,6 @@ fi,/
 if p(v852) then '<b> Ubicación: </b> ',
    (v852^a+|; |)/ fi,
 
-'<br>'
-if p(v920)  then 
-	'<a href=http://srvidormsi.multimedium.com/ucab/texto/'v920^*'>'v920^d'</a><br>'/
-fi,
-if p(v910)  then 
-	'<a href=http://srvidormsi.multimedium.com/ucab/imagen/'v910^*'>'v910^d'</a><br>'/
-fi,
-'<p>'
 
 '</td>'/
 '</table>'/

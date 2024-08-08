@@ -1,0 +1,12 @@
+M|8|Campo fixo (08)|0|0||||||||||||1||0|0|||
+S||00-05 Data entrada no arquivo|0|0|||X||6|||||||0||0|0|||
+S||06-06 Tipo de data/estado de publicação|0|0|||X||1|P|008_06.tab|||||0||0|0|||
+S||07-10 Data 1|0|0|||X||4|||||||0||0|0|||
+S||11-14 Data 2|0|0|||X||4|||||||0||0|0|||
+S||15-17 Local do pub/prod/exec|0|0|||X||3|P|countries.tab|||||0||0|0|||
+S||18-22 Não utilizado|0|0|||X||5|||||||0||0|0|||
+S||23-23 Form of item|0|0|||X||1|P|form_item.tab|||||0||0|0|||
+S||24-24 Não utilizado|0|0|||X||1|||||||0||0|0|||
+S||35-37 Idioma|0|0|||X||3|P|languages.tab|||||0||0|0|||
+S||38-38 Registro modificado|0|0|||X||1|P|008_38.tab|||||0||0|0|||
+S||39-39 Fonte de catalogação|0|0|||X||1|P|008_39.tab|||||0||0|0|||

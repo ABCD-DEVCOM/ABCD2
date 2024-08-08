@@ -1,7 +1,7 @@
 LDR||Leader|0|0||||||||||||1||
 AI|1|Número de controle|0|0|||X||20|||||||1||
 M5|5|Data da última modificação|0|0|||X||20|||||||1||
-M|8|Campo Fixo (08)|0|0|||X||||||||yymmdds        wau--- #     #0     eng d|1||
+M|8|Campo Fixo (08)|0|0|||X||||||||aammdds        bl --- #     #0     por d|1||
 H||DADOS GERAIS|0|0||||||||||||0||
 T|22|ISSN|0|1|12al||X||100|||||||1||
 S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
@@ -119,7 +119,7 @@ S||Nota|0|0|a||X|||||||||0||
 H||ENTRADAS SECUNDÁRIAS|0|0||||||||||||0||
 T|650|Assunto - Termo Tópico|0|1|12avxyz||X|2|100|D||MA_|@autoridades.pft|||1||
 S||Indicador 1|0|0|1||X||1|P|Ind-b.tab|||||0||
-S||Indicador 2|0|0|2||X||1|P|650.ind2.tab|||||0||
+S||Indicador 2|0|0|2||X||1|P|650-ind2.tab|||||0||
 S||Termo tópico|0|0|a||X|||||||||0||
 S||Subdivisão de Forma|0|1|v||X|||||||||0||
 S||Subdivisão geral|0|1|x||X|||||||||0||
@@ -134,13 +134,13 @@ S||Título e outras palavras associadas|0|0|c||X|||||||||0||
 S||Data nac. e morte|0|0|d||X|||||||||0||
 S||Forma completa do nome|0|0|q||X|||||||||0||
 T|710|Ent. secundária - Autor corporatico|0|1|12ab||X|2|100|D||AI_|@autoridades.pft|||1||
-S||Indicador 1|0|0|1||X||1|P|710-in1.tab|||||0||
+S||Indicador 1|0|0|1||X||1|P|710-ind1.tab|||||0||
 S||Indicador 2|0|0|2||X||1|P|710-ind2.tab|||||0||
 S||Nome corporativo|0|0|a||X|||||||||0||
 S||Unidades subordinadas|0|0|b||X|||||||||0||
 H||END. ELETRÔNICO e Nº DE REGISTRO|0|0|||X|||||||||0||
 T|856|Endereço eletrônico|0|1|12auyzq||X|2|100|||||||1||
-S||Indicador 1|0|0|1||X||1|P|865-ind1.tab|||||0||
+S||Indicador 1|0|0|1||X||1|P|856-ind1.tab|||||0||
 S||Indicador 2|0|0|2||X||1|P|856-ind2.tab|||||0||
 S||Nome do servidor|0|0|a||X|||||||||0||
 S||Identificador Uniforme - URI|0|0|u||X|||||||||0||

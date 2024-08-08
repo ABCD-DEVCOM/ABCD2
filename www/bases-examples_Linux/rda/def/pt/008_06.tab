@@ -1,9 +1,7 @@
--|Não se tentou codificar
-b|Nenhuma data indicada
-c|Recurso contínuo atualmente publicado
-d|Os recursos contínuos cessaram a publicação
-e|Data detalhada
-i|Datas inclusivas de coleta
-k|Gama de anos de coleta a granel
-m|Datas múltiplas
-n|Datas desconhecidas
+c|Publicação seriada corrente
+d|Publicação seriada encerrada
+m|Data múltiplas
+r|Data de Reimpressão/reedição e original
+s|Uma única data conhecida/data provável
+t|Data de publicação e de direitos autorais (copyright)
+#| Não se tentou codificar 

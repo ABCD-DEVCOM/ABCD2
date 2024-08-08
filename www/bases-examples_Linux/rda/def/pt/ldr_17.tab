@@ -1,10 +1,17 @@
-5|nível parcial (preliminar)
-#|nível pleno
-1|nível completo, material não examinado
-2|nível menos que cheio, material não examinado
-3|nível abreviado
-4|nível central
-7|nível mínimo
-8|nível de pré-publicação
-u|desconhecido
-z|não aplicável
+#|Nível completo
+1|Nível completo, material não examinado
+2|Nível incompleto, material não examinado
+3|Nível abreviado
+4|Nível básico
+5|Nível parcial (preliminar)
+7|Nível mínimo
+8|Nível de Pré-publicação
+u|Desconhecido
+z|Não aplicável 
+
+
+
+
+
+
+

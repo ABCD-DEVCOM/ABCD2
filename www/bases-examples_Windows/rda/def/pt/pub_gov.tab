@@ -1,12 +1,12 @@
-#|Não é publicação governamental	
-a|Membros autônomos ou semi-autônomos  	
-c|Multilocal 	
-F|Federal/nacional 	
-I|Internacional intergovernamental 	
-l|Local 	
-m|Multiestadual 	
-o|Publicação governamental--nível desconhecido 	
-s|Estadual, provincial, territorial, municipal, etc. 	
-u|Desconhecido. Não se sabe se item é publicação governamental 	
-z|Outro 	
- |Não se tentou codificar	
+#|# Não é publicação governamental	
+a|a Membros autônomos ou semi-autônomos  	
+c|c Multilocal 	
+F|F Federal/nacional 	
+I|I Internacional intergovernamental 	
+l|l Local 	
+m|m Multiestadual 	
+o|o Publicação governamental--nível desconhecido 	
+s|s Estadual, provincial, territorial, municipal, etc. 	
+u|u Desconhecido. Não se sabe se item é publicação governamental 	
+z|z Outro 	
+ |Não se tentou codificar
