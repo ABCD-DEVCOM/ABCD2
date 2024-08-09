@@ -121,7 +121,7 @@ S||Título traduzido|0|0|a||X|||||||||0||1|0|||
 S||Complemento do Título|0|0|b||X|||||||||0||1|0|||
 S||Inf. de Responsabilidade|0|0|c||X|||||||||0||1|0|||
 S||Meio (DGM)|0|0|h||X|||||||||0||1|0|||
-T|245|Título Principal|1|0|¹²abchknp||X||100|||TI_|v245^a," "v245^b,`(` f(mfn,1,0),`)`|f(mfn,1,0)||1||1|0|||
+T|245|Título Principal|1|0|¹²abchknp||X||100|||TI_|v245^a, ' ' v245^b,'(' f(mfn,1,0),')'|f(mfn,1,0)||1||1|0|||
 S||Indicador 1|0|0|¹||S||1|P|245-ind1.tab|||||0||1|0|||
 S||Indicador 2|0|0|²||S||1|P|245-ind2.tab|||||0||1|0|||
 S||Título|0|0|a||X|||||||||0||1|0|||
