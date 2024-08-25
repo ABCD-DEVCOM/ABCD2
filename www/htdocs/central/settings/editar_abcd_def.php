@@ -283,27 +283,27 @@ global $msg_path, $msgstr, $target_dir, $def, $folder_logo;
 .accordion {
 	margin: auto;
 	margin: auto !important;
-  background-color: var(--abcd-light);
-  color: var(--abcd-blue);
-  cursor: pointer;
-  padding: 8px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
+	background-color: var(--abcd-light);
+	color: var(--abcd-blue);
+	cursor: pointer;
+	padding: 8px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+	transition: 0.4s;
 }
 
 .active, .accordion:hover {
-  background-color: #ccc; 
+	background-color: #ccc; 
 }
 
 .panel {
-  padding: 18px;
-  display: none;
-  background-color: white;
-  overflow: hidden;
+	padding: 18px;
+	display: none;
+	background-color: white;
+	overflow: hidden;
 }
 
 </style>
@@ -378,6 +378,7 @@ switch ($set_mod){
 
 					// Local settings
 					"LOCAL_SET" => array("it"=>"title","Label"=>$msgstr["set_local"]),
+					"LOGIN_ERROR_PAGE" => array("it"=>"text","size"=>"70","placeholder"=>$msgstr["set_LOGIN_ERROR_PAGE"],"Tip"=>$msgstr["set_TIP_LOGIN_ERROR_PAGE"]),
 					"MAIN_DATABASE"  => array("it"=>"select","Options"=>$databases_codes,"Label"=>$databases_codes,"Tip"=>$msgstr["set_TIP_MAIN_DATABASE"]),
 					"DEFAULT_LANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_LANG"]),
 					"DEFAULT_DBLANG"  => array("it"=>"select","Options"=>$lang_dir,"Label"=>$lang_dir,"Tip"=>$msgstr["set_DEFAULT_DBLANG"]),
@@ -395,7 +396,7 @@ switch ($set_mod){
 					"RESPONSIBLE_LOGO" => array("it"=>"file","Options"=>"","Label"=>"Reset","default"=>"","ID"=>"RESPONSIBLE_LOGO","Tip"=>$msgstr["set_TIP_RESPONSIBLE_LOGO"]),	
 
 					// Colours
-		     	"COLORS" => array("it"=>"title","Label"=>$msgstr["set_colors"]),	 			
+					"COLORS" => array("it"=>"title","Label"=>$msgstr["set_colors"]),	 			
 					"BODY_BACKGROUND" => array("it"=>"color","default"=>"#ffffff","Label"=>" Default: #ffffff or (R: 255, G: 255, B: 255)","Tip"=>$msgstr["set_TIP_BODY_BACKGROUND"]),
 					"COLOR_LINK" => array("it"=>"color","default"=>"#336699","Label"=>" Default #336699 or (R: 51, G: 102, B: 153)","Tip"=>$msgstr["set_TIP_COLOR_LINK"]),
 					"HEADING" => array("it"=>"color","default"=>"#003366","Label"=>" Default #003366 or (R: 0, G: 51, B: 102)","Tip"=>$msgstr["set_TIP_HEADING"]),
@@ -421,7 +422,7 @@ switch ($set_mod){
 
 					// Security
 					"SECURITY" => array("it"=>"title","Label"=>$msgstr["set_security"]),
-  				"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
+					"UNICODE" => array("it"=>"radio","Options"=>"1;0","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_UNICODE"]),
 					"CISIS_VERSION" => array("it"=>"radio","Options"=>$cisis_versions_allowed,"Label"=>$cisis_versions_allowed,"Tip"=>$msgstr["set_TIP_CISIS_VERSION"]),
 
 					"REG_LOG" => array("it"=>"radio","Options"=>"Y;N","Label"=>"Yes;No","Tip"=>$msgstr["set_TIP_REG_LOG"]),
@@ -561,19 +562,29 @@ if (file_exists($file)){
 }
 
 /* UPLOAD IMAGE */
-function uplodimages($fieldname,$fileimg) {
-global $fieldname, $fp, $msg_path, $msgstr,$def,$target_dir;
 
-if (!is_dir($target_dir)) {
-    mkdir($target_dir);
-}
+
+function uplodimages($fieldname,$fileimg) {
+global $fieldname, $fp, $msgstr, $target_dir;
+
+
+
 if ($_FILES[$fileimg]["name"]=="") return;// no more action if no file to upload
 $target_file = $target_dir.basename($_FILES[$fileimg]["name"]);
+
+if (isset($target_file)) {
+
+	if (!is_dir($target_dir)) {
+		mkdir($target_dir);
+	}
+}
 
 $temp = explode(".", $target_file);
 $newfilename = $fieldname.'.'. end($temp);
 
 $target_file = $target_dir.basename($newfilename);
+
+
 
 $uploadOk = 1;
 
@@ -620,7 +631,7 @@ if ($uploadOk == 0) {
 } else {
 
   if (move_uploaded_file($_FILES[$fileimg]["tmp_name"], $target_file)) {
-    echo $msgstr["set_thefile"]."&nbsp;<b>".htmlspecialchars( basename( $_FILES[$fileimg]["name"]))."</b>&nbsp;".$msgstr["set_has_been_upload"]."<br>";
+    echo $msgstr["set_thefile"]."&nbsp;<b>".$target_file.htmlspecialchars( basename( $_FILES[$fileimg]["name"]))."</b>&nbsp;".$msgstr["set_has_been_upload"]."<br>";
 
   } else {
     echo $msgstr["set_error_upload"]."<br>";
@@ -673,7 +684,7 @@ function saveDef() {
                     if (isset($def[$fieldname]))
                     fwrite($fp,$fieldname."=".$def[$fieldname]."\n");
                 }
-                uplodimages($fieldname,$fileimg);  			
+				uplodimages($fieldname,$fileimg);  			
             }
         }
         if (isset($arrHttp["mod_TITLE"])){

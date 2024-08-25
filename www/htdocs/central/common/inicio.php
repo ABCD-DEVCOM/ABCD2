@@ -401,9 +401,12 @@ include("../lang/admin.php");
 include("../lang/prestamo.php");
 include("../lang/lang.php");
 include("../lang/acquisitions.php");
-if (isset($_SESSION["HOME"]))
-	$retorno=$_SESSION["HOME"];
-else {
+
+if (isset($_SESSION["HOME"])) {
+	$retorno = $_SESSION["HOME"];
+} elseif (isset($def['LOGIN_ERROR_PAGE'])) {
+	$retorno=$def['LOGIN_ERROR_PAGE'];
+} else {
     if (file_exists("../../index.php")){
         $retorno="../../index.php";
     } else {
